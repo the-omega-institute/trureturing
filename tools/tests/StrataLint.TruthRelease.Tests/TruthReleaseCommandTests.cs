@@ -3,6 +3,7 @@ using System.Text;
 using System.Text.Json;
 using StrataLint.Cli;
 using StrataLint.Engine;
+using StrataLint.Scribe;
 using Trureturing.Truth;
 using static StrataLint.TestSupport.FrozenLedgerTestData;
 
@@ -18,7 +19,7 @@ public sealed partial class TruthReleaseCommandTests
         "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"4444444444444444444444444444444444444444\"}],\"version\":\"1.1.0\"}\n";
 
     [Fact]
-    public void CommandProducesAndVerifiesAllSevenArtifactsEndToEnd()
+    public void CommandProducesAndVerifiesAllSixArtifactsEndToEnd()
     {
         using var fixture = CreateFixture();
         using var output = new TemporaryDirectory();
@@ -42,7 +43,13 @@ public sealed partial class TruthReleaseCommandTests
         Assert.Equal(ProducerRepository, verified.Manifest.Producer.PackageRepo);
         Assert.Equal(fixture.ReportBytes.ToArray(), File.ReadAllBytes(
             Path.Combine(output.Path, TruthReleaseBundleWriter.RawLeanReportFileName)));
-        Assert.Equal(7, verified.Manifest.Artifacts.GetType().GetProperties().Length);
+        Assert.Equal(6, verified.Manifest.Artifacts.GetType().GetProperties().Length);
+        Assert.False(File.Exists(Path.Combine(output.Path, "echo-residual-summary.md")));
+        using (var sourceSnapshot = JsonDocument.Parse(File.ReadAllBytes(
+            Path.Combine(output.Path, TruthReleaseBundleWriter.SourceSnapshotFileName))))
+        {
+            Assert.False(sourceSnapshot.RootElement.TryGetProperty("residual_frontier_sha256", out _));
+        }
         using (var head = JsonDocument.Parse(File.ReadAllBytes(
             Path.Combine(output.Path, TruthReleaseBundleWriter.FrozenLedgerHeadFileName))))
         {
@@ -89,22 +96,39 @@ public sealed partial class TruthReleaseCommandTests
         Assert.Equal(1, exitCode);
         Assert.Contains("--commit-on-protected-dev true|false", console.Error, StringComparison.Ordinal);
         Assert.Contains("--required-check NAME=CONCLUSION", console.Error, StringComparison.Ordinal);
-        Assert.Contains("[--scribe-pack FILE --scribe-pack-digest HEX64]", console.Error, StringComparison.Ordinal);
+        Assert.Contains("--scribe-pack FILE --scribe-pack-digest HEX64", console.Error, StringComparison.Ordinal);
         Assert.Empty(Directory.EnumerateFiles(output.Path));
     }
 
     [Fact]
-    public void ReceiptIntegrityFailureFailsClosedWithoutWritingABundle()
+    public void MissingScribePackFailsClosedWithoutWritingABundle()
+    {
+        using var fixture = CreateFixture();
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), []);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("--scribe-pack FILE --scribe-pack-digest HEX64", console.Error,
+            StringComparison.Ordinal);
+        Assert.Empty(Directory.EnumerateFiles(output.Path));
+    }
+
+    [Fact]
+    public void DigestionReceiptIntegrityFailureDoesNotBlockVerifiedLeanRelease()
     {
         using var fixture = Fixture.Create(receiptIntegrityMismatch: true);
         using var output = new TemporaryDirectory();
 
         var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments());
 
-        Assert.Equal(2, exitCode);
-        Assert.Contains("TRUTH_RELEASE_INVALID", console.Error, StringComparison.Ordinal);
-        Assert.Contains("coverage-target-mismatch", console.Error, StringComparison.Ordinal);
-        Assert.Empty(Directory.GetFileSystemEntries(output.Path));
+        Assert.True(exitCode == 0, console.Error);
+        Assert.Empty(console.Error);
+        var publication = TruthReleasePublicationReader.Read(File.ReadAllBytes(
+            Path.Combine(output.Path, TruthReleaseBundleWriter.PublicationFileName)));
+        var verified = TruthReleasePublicationVerification.Verify(output.Path, publication);
+        Assert.Equal(2, verified.ReadTruthExport().Nodes.Length);
+        Assert.False(File.Exists(Path.Combine(output.Path, "echo-residual-summary.md")));
     }
 
     private static (int ExitCode, BufferedConsole Console) Run(
@@ -123,12 +147,27 @@ public sealed partial class TruthReleaseCommandTests
             "--produced-at", "2026-08-23T00:00:00Z",
         };
         arguments.AddRange(trustArguments);
-        if (extraArguments is not null) arguments.AddRange(extraArguments);
-        var exitCode = CliApplication.Run(
-            arguments,
-            fixture.Environment,
-            console);
-        return (exitCode, console);
+        string? generatedPack = null;
+        if (extraArguments is not null)
+        {
+            arguments.AddRange(extraArguments);
+        }
+        else
+        {
+            generatedPack = Path.Combine(Path.GetTempPath(), $"scribe-pack-{Guid.NewGuid():N}.zip");
+            var digest = ScribeResourcePack.Write(generatedPack, PackDefinitions(fixture)).TotalSha256;
+            arguments.AddRange(PackArguments(generatedPack, digest));
+        }
+
+        try
+        {
+            var exitCode = CliApplication.Run(arguments, fixture.Environment, console);
+            return (exitCode, console);
+        }
+        finally
+        {
+            if (generatedPack is not null && File.Exists(generatedPack)) File.Delete(generatedPack);
+        }
     }
 
     private static string[] GreenTrustArguments() =>
@@ -138,7 +177,8 @@ public sealed partial class TruthReleaseCommandTests
         "--required-check", "current=success",
     ];
 
-    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false, bool productionVerifier = false)
+    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false, bool productionVerifier = false,
+        bool additionalLocalSource = false)
     {
         var repositoryRoot = TestRepositoryLayout.FindRoot();
         var blueprintSourcePath = $"Blueprint/{BlueprintGid}.scribe.cs";
@@ -189,6 +229,11 @@ public sealed partial class TruthReleaseCommandTests
         if (receiptIntegrityMismatch)
         {
             AddReceiptIntegrityMismatch(files);
+        }
+        if (additionalLocalSource)
+        {
+            files["Blueprint/D5/S0/Carrier/LocalOnly.scribe.cs"] = "local definition outside the resource pack\n";
+            files["Blueprint/D5/S0/Carrier/LocalOnly.md"] = "# Local projection\n";
         }
         var snapshotWithoutLedger = Decode(files);
         var report = LeanAxiomReport.Create(reports);

@@ -60,103 +60,30 @@ internal static partial class DigestionLedgerAligner
         return atomId;
     }
 
-    private static Dictionary<string, DigestionLedgerSource> BaselineSources(
-        BackfillInventoryDocument? baselineDocument,
-        ImmutableArray<string>.Builder findings)
-    {
-        var result = new Dictionary<string, DigestionLedgerSource>(StringComparer.Ordinal);
-        if (baselineDocument is null)
-        {
-            return result;
-        }
-
-        foreach (var source in baselineDocument.RequireDigestionSources())
-        {
-            if (!result.TryAdd(source.SourceId, source))
-            {
-                findings.Add($"baseline ledger contains duplicate source_id: {source.SourceId}");
-            }
-        }
-
-        return result;
-    }
-
-    private static HashSet<string> InheritedEntries(
-        BackfillInventoryDocument? baselineDocument) =>
-        (baselineDocument?.RequireDigestionSources() ?? [])
-            .SelectMany(source => source.Entries.Select(entry => CanonicalEntry(
-                source,
-                entry)))
-            .ToHashSet(StringComparer.Ordinal);
-
-    private static bool ContentWideIdentityEqual(
-        DigestionLedgerEntry candidate,
-        DigestionLedgerEntry baseline) =>
-        candidate.SourceId == baseline.SourceId
-        && candidate.AtomId == baseline.AtomId
-        && candidate.Fingerprints == baseline.Fingerprints
-        && candidate.CasRef == baseline.CasRef;
-
-    private static DigestionLedgerEntry[] ContentWideReplacementObligations(
-        DigestionLedgerSource baseline,
-        DigestionLedgerSource? candidate,
-        RepositorySnapshot snapshot)
-    {
-        if (!snapshot.TryGetFile(baseline.SourcePath, out var sourceFile))
-        {
-            return [];
-        }
-
-        var contentWide = DigestionFingerprint.ComputeOpaque(sourceFile.RawBytes.AsSpan());
-        return baseline.Entries.Where(entry =>
-            entry.AtomId == contentWide.RawSha256["sha256:".Length..]
-            && entry.Fingerprints == contentWide
-            && entry.CasRef == contentWide.RawSha256
-            && (candidate is null
-                || !candidate.Entries.Any(candidateEntry =>
-                    ContentWideIdentityEqual(candidateEntry, entry))
-                || baseline.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal)
-                || baseline.Atomizer != candidate.Atomizer
-                || HasContentWideReplacementReceipt(candidate, entry)
-                || candidate.AcknowledgedStale.Contains(entry.AtomId, StringComparer.Ordinal)))
-            .ToArray();
-    }
-
-    private static bool HasContentWideReplacementReceipt(
-        DigestionLedgerSource source,
-        DigestionLedgerEntry contentWideEntry) =>
-        AtomizerRegistry.IsRegistered(source.Atomizer)
-        && source.Entries.Any(entry =>
-            entry.Fingerprints.RawSha256 != contentWideEntry.Fingerprints.RawSha256);
-
     internal static bool FingerprintsMatch(DigestionFingerprints left, DigestionFingerprints right) =>
         left.RawSha256 == right.RawSha256
         || left.NormalizedSha256 == right.NormalizedSha256;
 
-    private static bool InheritedSourceRequiresReplay(
-        DigestionLedgerSource source,
-        RawChangeSet? changes,
-        RepositorySnapshot snapshot)
-    {
-        if (changes is null)
-        {
-            return false;
-        }
+    // Atomizer data and implementations reach every source at once.  The
+    // digestion path has its own stable input boundary; it does not consult
+    // the engineering project registry to discover build inputs.
+    private static bool AtomizerInputsChanged(RawChangeSet changes) =>
+        changes.Paths.Any(path =>
+            path.Value == TheoryAtomizerDataLoader.DataPath
+            || path.Value.StartsWith("tools/StrataLint.Engine/Digestion/", StringComparison.Ordinal));
 
+    private static bool SourceChanged(DigestionLedgerSource source, RawChangeSet changes)
+    {
         if (source.Entries.Any(entry => DigestionCasStore.EntryChanged(entry, changes)))
         {
             return true;
         }
 
-        var registeredInputs = EngineeringProjectRegistry.ReadRuleBuildInputs(snapshot);
         var casPaths = source.Entries
             .Select(static entry => DigestionCasStore.RootPath + entry.CasRef["sha256:".Length..])
             .ToHashSet(StringComparer.Ordinal);
         return changes.Paths.Any(path =>
             path.Value == source.SourcePath
-            || path.Value == TheoryAtomizerDataLoader.DataPath
-            || IsAtomizerImplementationPath(path.Value, registeredInputs)
             || casPaths.Contains(path.Value));
     }
-
 }

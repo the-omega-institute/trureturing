@@ -1,0 +1,5 @@
+source_id = "tauceti2026physicalorthonormality"
+path = "Library/Analytic/tauceti2026physicalorthonormality.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

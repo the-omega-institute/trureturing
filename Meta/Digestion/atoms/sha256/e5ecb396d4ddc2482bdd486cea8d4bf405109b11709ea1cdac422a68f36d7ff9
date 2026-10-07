@@ -1,0 +1,66 @@
+**定理 33.2（着色双空窗阈值不是上下文无关语言）。** 定义 33.1 的 $\mathcal P_2$ 不是上下文无关语言。此结论无实际递归的来源条件。
+
+证明。取二轨窗口字母和单位末字母
+
+$$
+X=([5],\mathrm{null}),\qquad
+Y=(\mathrm{null},[5]),\qquad
+\Delta=(\mathrm{null},\mathrm{null}),\qquad
+T=(\underline0,\underline0).
+\tag{33.2}
+$$
+
+另取五个互不相同的新字母 $x,u,y,v,t$，定义字母同态 $h$ 为
+
+$$
+h(x)=X,\qquad h(y)=Y,\qquad
+h(u)=h(v)=\Delta,\qquad h(t)=T.
+$$
+
+令 $\mathcal R$ 为正则语言 $\{xu^r yv^s t:r,s\in\mathbb N\}$，并取 $\mathcal L=h^{-1}(\mathcal P_2)\cap\mathcal R$。若 $\mathcal P_2$ 上下文无关，上述闭合性质就使 $\mathcal L$ 上下文无关。两个空窗段在原字母表中都由 $\Delta$ 组成；新字母 $u,v$ 把它们分别计数，这一步不将原字母的出现总数误当作两个独立段长。
+
+对任意 $r,s\ge0$，像词 $X\Delta^rY\Delta^sT$ 有
+
+$$
+H=r+s+2,\qquad
+A=F_{3H+2},\qquad b=F_{3s+5},\qquad
+p_{3H+2}=2H-2=2r+2s+2.
+\tag{33.3}
+$$
+
+第一轨的唯一占位在最高窗口，第二轨的唯一占位下方恰有 $s$ 个窗口。定义 2.1 的 $[5]$ 权重给出这些整数，且 $L(A)=H$、$L(b)=s+1<H$。两轨各只有一个 Fibonacci 占位，窗口内及全部跨窗接缝均合法；即使 $r=0$，$X,Y$ 中的两个占位也分属不同轨道。单位位均为零，$T$ 与窗口字母不交且只在最后出现一次。故这不是任意编码的阈值，而是原合法同步词的准确切片。又 $H\ge2$，所以 $m=3H+2\ge8$ 且 $m\equiv2\pmod3$；原最短长度 $H=2$ 也在上述解码内，不另删小层。于是
+
+$$
+\mathcal L=
+\left\{xu^r yv^s t:r,s\ge0,\quad F_{3s+5}\le2r+2s+2\right\}.
+\tag{33.4}
+$$
+
+使用 Parikh 的已知半线性定理：上下文无关语言的字母计数像是有限个线性集的并；出处为 Rohit J. Parikh，[“On Context-Free Languages”](https://doi.org/10.1145/321356.321364)，*Journal of the ACM* 13(4)，570–581。若 $\mathcal L$ 上下文无关，其 Parikh 像再投影到 $u,v$ 两个计数坐标，就使
+
+$$
+S=\{(r,s)\in\mathbb N^2:F_{3s+5}\le2r+2s+2\}
+\tag{33.5}
+$$
+
+半线性。这里投影只删计数坐标；线性集的基点与周期向量逐坐标投影后仍为线性集。
+
+以下直接排除半线性，不使用未经证明的边界形状断言。假设 $S$ 为有限个线性分量的并。每一分量可写为
+
+$$
+B=(a,b)+\sum_{i=1}^{q}\mathbb N(p_i,q_i),
+\qquad a,b,p_i,q_i\in\mathbb N,
+\tag{33.6}
+$$
+
+且 $B\subseteq S$。若其中某一周期向量 $(p,q')$ 满足 $q'>0$，将其系数取为 $z\ge0$、其余系数全取零，得到整条射线 $(a+zp,b+zq')\in S$。因此每个 $z\ge0$ 都须满足
+
+$$
+F_{3(b+zq')+5}\le2(a+b+1)+2z(p+q').
+\tag{33.7}
+$$
+
+由 Fibonacci 递推，$F_{k+3}\ge2F_k$ 对 $k\ge2$ 成立。从 $F_5=5$ 迭代，左边至少为 $5\cdot2^{b+zq'}$。由于 $q'\ge1$，它至少为 $5\cdot2^b2^z$；而 $2^z\ge z(z-1)/2$ 对整数 $z\ge2$ 成立，已足以在充分大的 $z$ 超过式 (33.7) 的一次式右边。矛盾。因此每一分量的每个周期向量的第二坐标都只能是零。
+
+这使每一分量的第二坐标恒等于自己的基点第二坐标；有限个分量只能覆盖有限多个 $s$。但对每个 $s\ge0$，取 $r=F_{3s+5}$，就有 $(r,s)\in S$，故 $S$ 的第二坐标无界。再得矛盾。于是 $S$ 非半线性，$\mathcal L$ 非上下文无关，进而 $\mathcal P_2$ 非上下文无关。证毕。
+

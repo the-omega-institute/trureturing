@@ -1,0 +1,76 @@
+{
+  "scope": "Paper model coefficient calculation; not a matrix, Lean or RH certificate",
+  "runtime": {
+    "python": "3.13.12",
+    "python_flint": "0.9.0",
+    "precision_bits": 128
+  },
+  "input_data_sha256": {
+    "derivative-bandwidth-result.json": "a00f013d6d9a1151672a71f6a2e295df54a47af396b4eaa308af58145dd1f0e1",
+    "sharp-center-result.json": "68bf470fc81e1d0765f6fb049cf362fb8e672318cfe6c073bf75ca2859cac952"
+  },
+  "bandwidth_N": 64,
+  "retained_gamma_terms": 1024,
+  "retained_gamma_indices": "0 through 1023",
+  "retained_prime_cutoff": 64,
+  "original_derivative_grid_rerun": false,
+  "s_derivative_sup_upper": [
+    {
+      "display": "[0.78724713685104527647336985717237344724 +/- 4.87e-39]",
+      "dyadic": [
+        "16742894942462852801814066302539325871",
+        "-124"
+      ]
+    },
+    {
+      "display": "[2.8150630797269611073885548266799085032 +/- 1.25e-38]",
+      "dyadic": [
+        "119739540975154603351047536138337229689",
+        "-125"
+      ]
+    },
+    {
+      "display": "[32.690454423690561870769317241601591618 +/- 4.84e-38]",
+      "dyadic": [
+        "86906134429800685250998694010884433655",
+        "-121"
+      ]
+    }
+  ],
+  "sigma_upper": {
+    "display": "[1.1938410456758211790863641923137051340e-7 +/- 3.67e-45]",
+    "dyadic": [
+      "170390687789848624066353442903208338739",
+      "-150"
+    ]
+  },
+  "weighted_second_norm_coefficient_upper": {
+    "display": "[3617.5828011706230360514272700346715199 +/- 4.13e-35]",
+    "dyadic": [
+      "150268510512062783540440327031526829955",
+      "-115"
+    ]
+  },
+  "gamma_action_error_upper": {
+    "display": "[0.00033999777617774444956790672636367073927 +/- 4.16e-42]",
+    "dyadic": [
+      "59235966989116593877212827018357769469",
+      "-137"
+    ]
+  },
+  "full_two_direction_prime_action_error_upper": {
+    "display": "[9.2916739166712295667443496070268208086e-19 +/- 2.20e-57]",
+    "dyadic": [
+      "11391559075582838301837063959410127985",
+      "-183"
+    ]
+  },
+  "full_forward_action_error_upper": {
+    "display": "[0.00033999777617774537873529839348662741371 +/- 4.14e-43]",
+    "dyadic": [
+      "118471933978233511522007659533828209437",
+      "-138"
+    ]
+  },
+  "input_scope": "Uniform on unit even low-band inputs; mean and multiplication terms remain exact; high trials require separate derivative inputs"
+}

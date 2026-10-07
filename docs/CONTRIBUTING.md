@@ -218,6 +218,16 @@ the routing and delivery contracts. Generated Markdown, reports, frozen pins
 and digestion state have designated writers; do not repair them by hand.
 New files must fit the existing [FILEMAP](../Meta/FILEMAP.toml) and routing rules.
 
+Daily Scribe commands diagnose their selected definitions with the SDK from
+`global.json` before executing any script. Set `SCRIBE_DOTNET` to an absolute
+`dotnet` executable path, or supply `DOTNET_HOST_PATH` or `DOTNET_ROOT`; a missing
+SDK is an infrastructure failure. Each definition compiles in a separate temporary
+project under the ignored `build/scribe-sdk/`.
+Projects inherit repository SDK, nullable, warning and analyzer configuration,
+reference the already built Scribe API, and restore package-free locked inputs
+offline. Package analyzers come from the API's locked build. Release resource
+generation uses its separate full-corpus path.
+
 Keep each PR focused. [Current policy](../CLAUDE.md#75-base-判官永久禁令与-sl-030-边界)
 permits a coherent PR to include both content and its checking rules. FILEMAP
 still selects each path's required checks; mixed scope waives none. Different

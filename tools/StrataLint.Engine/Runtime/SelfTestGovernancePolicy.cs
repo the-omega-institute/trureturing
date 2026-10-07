@@ -298,7 +298,12 @@ internal static partial class SelfTestGovernancePolicy
     {
         try
         {
+            var data = File.Exists(Path.Combine(repositoryRoot, FileMapLoader.RelativePath))
+                ? FileMapLoader.LoadRepository(repositoryRoot).Entries.Where(entry => entry.Kind == FileMapKind.Data).ToArray()
+                : [];
             var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
+                .Where(file => file.RelativePath == EngineeringProjectRegistry.ManifestPath
+                    || !data.Any(entry => entry.Matches(file.RelativePath)))
                 .Where(file => file.RelativePath == EngineeringProjectRegistry.ManifestPath
                     || file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal)
                     || file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))

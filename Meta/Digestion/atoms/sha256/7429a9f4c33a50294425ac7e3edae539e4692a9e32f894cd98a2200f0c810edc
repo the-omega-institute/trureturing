@@ -1,0 +1,8 @@
+**Definition 1.4 (the missing-minimum sets).** For a nonempty door
+$(\tau,D)$ and $i\in I$, set
+
+$$M_i=\{y\in T:\forall k\in D\setminus\{i\},\quad m_k(\tau)<_k y\}.$$
+
+When $T$ is finite and $M_i$ is nonempty, its $i$-maximum is the point
+$r_i\in M_i$ with $y\leq_i r_i$ for every $y\in M_i$.
+

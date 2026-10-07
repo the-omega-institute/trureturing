@@ -4,9 +4,105 @@
 
 Alpha leaf queries give exact positive certificates for actual Fibonacci tree images.
 
-Sources are the existing nonempty ordered full binary trees with alpha and beta leaves. The substitution rho sends alpha to beta and beta to (beta,alpha), and preserves pairing. Composition c counts alpha and beta leaves. Paths reuse the frozen ActualTreeReadoutAcquisition.Address type of finite Boolean lists, including the empty root address. Endpoint observations use its Reply and address-first readout; complete leaf sets use ActualImageSevenLeafSeparation.leafAddresses. Leaf labels use true for alpha and false for beta.
+Sources are the existing nonempty ordered full binary trees with alpha and beta leaves. The substitution rho sends alpha to beta and beta to (beta,alpha), and preserves pairing. Composition c counts alpha and beta leaves. Paths reuse the frozen ActualTreeReadoutAcquisition.Address type of finite Boolean lists, including the empty root address. Endpoint observations use its Reply and address-first readout; complete leaf sets use ActualImageSevenLeafSeparation.leafAddresses. Leaf labels use true for alpha and false for beta. Alpha endpoints reuse ActualLeafHistoryRigidity.alphaLeaves, and addressed subtrees reuse its subtree with the address supplied first.
 
-**Theorem 1.1 (Sharp cardinality and depth).**
+**Definition 1.1 (Maximum leaf depth).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.height`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.height` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Height is the height of the existing ordered shape decomposition. A leaf has height zero.
+
+**Definition 1.2 (Actual substitution image).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.ActualImage`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.ActualImage` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+ActualImage(d) is the range of the d-fold native substitution on complete source trees.
+
+**Definition 1.3 (Finite depth window).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Within`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Within` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Within(h,Q) means that each address in the finite set Q has length at most h.
+
+**Definition 1.4 (Positive address certificate).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Sound`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Sound` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Sound(d,V,h,Q) means Within(h,Q) and: every complete tree U with c(U)=c(V) and readout(u,U)=readout(u,V) for every u in Q belongs to ActualImage(d). Exact composition is the only competitor promise, no prefix-closure condition on Q, and no adaptive or random query order.
+
+**Definition 1.5 (Certificates without a composition promise).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.UnSound`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.UnSound` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every complete source U matching all queried endpoint results must belong to ActualImage(d). No composition or leaf-count constraint is placed on U; the depth window is imposed separately.
+
+**Definition 1.6 (Subtree replacement).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.replace`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.replace` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Replacement changes the complete subtree at a valid address and retains the surrounding ordered tree. Invalid paths leave the tree unchanged.
+
+**Definition 1.7 (Alpha coverage of branches).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.AlphaCovered`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.AlphaCovered` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every internal node has an alpha leaf descendant, recursively throughout the tree.
+
+**Definition 1.8 (Right comb source).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.rightComb`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.rightComb` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The zero comb is beta. The successor comb pairs alpha on the left with the preceding comb on the right, giving m alpha side leaves and one terminal beta at m right steps.
+
+**Theorem 1.9 (Sharp cardinality and depth).**
 
 $$\forall k \in Nat, ((1 \leq k) \implies (\forall V \in Source, ((V \in \operatorname{I}\left(3 \cdot k\right)) \implies (\forall h \in Nat, (((h < \operatorname{D}\left(V\right)) \implies (\neg\exists R \in \operatorname{Finset}\left(Address\right), (\operatorname{S}\left(3 \cdot k, V, h, R\right)))) \land ((\operatorname{D}\left(V\right) \leq h) \implies (\exists R \in \operatorname{Finset}\left(Address\right), ((\operatorname{S}\left(3 \cdot k, V, h, R\right)) \land (\operatorname{card}\left(R\right) = \operatorname{a}\left(V\right))))) \land (\forall Q \in \operatorname{Finset}\left(Address\right), ((\operatorname{S}\left(3 \cdot k, V, h, Q\right)) \implies (\operatorname{a}\left(V\right) \leq \operatorname{card}\left(Q\right)))))))))$$
 
@@ -24,7 +120,7 @@ Each alpha leaf is the right endpoint of a terminal pair (beta,alpha). Swapping 
 
 Certificate complexity and lower bounds from disjoint sensitive blocks are classical, as in Nisan's CREW PRAMs and Decision Trees (1991) and Buhrman and de Wolf's Complexity Measures and Decision Tree Complexity: A Survey (2002). The exact cardinality for these actual substitution images with fixed composition is the tree-specific conclusion.
 
-**Theorem 1.2 (Unique optimal certificates and the complete leaf frontier).**
+**Theorem 1.10 (Unique optimal certificates and the complete leaf frontier).**
 
 $$\forall k \in Nat, ((1 \leq k) \implies (\forall V \in Source, ((V \in \operatorname{I}\left(3 \cdot k\right)) \implies ((\forall h \in Nat, ((\operatorname{D}\left(V\right) \leq h) \implies (\forall Q \in \operatorname{Finset}\left(Address\right), ((\operatorname{W}\left(h, Q\right)) \implies (((\operatorname{S}\left(3 \cdot k, V, h, Q\right)) \land (\operatorname{card}\left(Q\right) = \operatorname{a}\left(V\right))) \Leftrightarrow (Q = \operatorname{A}\left(V\right))))))) \land (\forall h \in Nat, (\forall Q \in \operatorname{Finset}\left(Address\right), ((\operatorname{W}\left(h, Q\right)) \implies ((\operatorname{U}\left(3 \cdot k, V, Q\right)) \Leftrightarrow (\operatorname{L}\left(V\right) \subseteq Q))))) \land (\forall h \in Nat, ((h < \operatorname{D}\left(V\right)) \implies (\neg\exists R \in \operatorname{Finset}\left(Address\right), ((\operatorname{W}\left(h, R\right)) \land (\operatorname{U}\left(3 \cdot k, V, R\right)))))) \land (\forall h \in Nat, ((\operatorname{D}\left(V\right) \leq h) \implies ((\operatorname{W}\left(h, \operatorname{L}\left(V\right)\right)) \land (\operatorname{U}\left(3 \cdot k, V, \operatorname{L}\left(V\right)\right)) \land (\operatorname{card}\left(\operatorname{L}\left(V\right)\right) = \operatorname{n}\left(V\right)) \land (\forall Q \in \operatorname{Finset}\left(Address\right), ((\operatorname{W}\left(h, Q\right)) \implies ((\operatorname{U}\left(3 \cdot k, V, Q\right)) \implies ((\operatorname{n}\left(V\right) \leq \operatorname{card}\left(Q\right)) \land ((\operatorname{card}\left(Q\right) = \operatorname{n}\left(V\right)) \Leftrightarrow (Q = \operatorname{L}\left(V\right))))))))))))))$$
 
@@ -42,7 +138,7 @@ Without a composition promise, omitting any leaf permits the frozen flip operati
 
 The shallow-window obstruction follows from the fixed-composition certificate theorem. At or above that depth, all n(V) leaves are available, and the complete-leaf condition gives both the lower bound and uniqueness. The exact uniqueness and complete-leaf equivalence are specific to these substitution images; general decision-tree certificate complexity supplies neighboring background.
 
-**Theorem 1.3 (Sharp leaf budget above a height).**
+**Theorem 1.11 (Sharp leaf budget above a height).**
 
 $$\forall k \in Nat, ((1 \leq k) \implies (\forall h \in Nat, (((\operatorname{D}\left(\operatorname{A}\left(3 \cdot k\right)\right) = 3 \cdot k - 1) \land (\operatorname{D}\left(\operatorname{B}\left(3 \cdot k\right)\right) = 3 \cdot k) \land (\operatorname{c}\left(\operatorname{A}\left(3 \cdot k\right)\right) = (\operatorname{F}\left(3 \cdot k - 1\right), \operatorname{F}\left(3 \cdot k\right))) \land (\operatorname{c}\left(\operatorname{B}\left(3 \cdot k\right)\right) = (\operatorname{F}\left(3 \cdot k\right), \operatorname{F}\left(3 \cdot k + 1\right))) \land (\operatorname{n}\left(\operatorname{A}\left(3 \cdot k\right)\right) = \operatorname{F}\left(3 \cdot k + 1\right)) \land (\operatorname{n}\left(\operatorname{B}\left(3 \cdot k\right)\right) = \operatorname{F}\left(3 \cdot k + 2\right)) \land (\operatorname{F}\left(3 \cdot k + 2\right) = \operatorname{F}\left(3 \cdot k + 1\right) + \operatorname{F}\left(3 \cdot k\right)) \land (\operatorname{F}\left(3 \cdot k + 2\right) < 2 \cdot \operatorname{F}\left(3 \cdot k + 1\right))) \land (\forall X \in Source, ((X \in \operatorname{I}\left(3 \cdot k\right)) \implies ((h < \operatorname{D}\left(X\right)) \implies (\operatorname{C}\left(3 \cdot k, h\right) \leq \operatorname{n}\left(X\right))))) \land (\operatorname{V}\left(3 \cdot k, h\right) \in \operatorname{I}\left(3 \cdot k\right)) \land (h < \operatorname{D}\left(\operatorname{V}\left(3 \cdot k, h\right)\right)) \land (\operatorname{sub}\left(\operatorname{V}\left(3 \cdot k, h\right), \operatorname{r}\left(3 \cdot k, h\right)\right) = \operatorname{some}\left(J\right)) \land (\neg (\operatorname{W}\left(3 \cdot k, h\right) \in \operatorname{I}\left(3 \cdot k\right))) \land (\operatorname{c}\left(\operatorname{W}\left(3 \cdot k, h\right)\right) = \operatorname{c}\left(\operatorname{V}\left(3 \cdot k, h\right)\right)) \land (\forall u \in Address, ((\operatorname{length}\left(u\right) \leq h) \implies (\operatorname{readout}\left(u, \operatorname{W}\left(3 \cdot k, h\right)\right) = \operatorname{readout}\left(u, \operatorname{V}\left(3 \cdot k, h\right)\right)))) \land (\operatorname{n}\left(\operatorname{V}\left(3 \cdot k, h\right)\right) = \operatorname{C}\left(3 \cdot k, h\right)) \land ((3 \cdot k - 1 \leq h) \implies ((\operatorname{c}\left(\operatorname{V}\left(3 \cdot k, h\right)\right) = (\operatorname{F}\left(3 \cdot k - 1\right) \cdot \operatorname{m}\left(3 \cdot k, h\right) + \operatorname{F}\left(3 \cdot k\right), \operatorname{F}\left(3 \cdot k\right) \cdot \operatorname{m}\left(3 \cdot k, h\right) + \operatorname{F}\left(3 \cdot k + 1\right))) \land (\operatorname{sub}\left(\operatorname{V}\left(3 \cdot k, h\right), \operatorname{R}\left(\operatorname{m}\left(3 \cdot k, h\right)\right)\right) = \operatorname{some}\left(\operatorname{B}\left(3 \cdot k\right)\right)))))))$$
 
@@ -62,8 +158,16 @@ Swapping the specified terminal pair preserves exact composition and changes onl
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.ActualImage`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.AlphaCovered`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Sound`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.UnSound`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Within`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.height`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.heightFrontier`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.replace`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.result`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.rightComb`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.rigidity`
-- Dependency: [D5/S3/Arith/FibonacciAtomic/ActualImageAddresses](ActualImageAddresses.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity](ActualLeafHistoryRigidity.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer](SourceTransportCentralizer.md)

@@ -1,0 +1,42 @@
+**定理 366.2（实际族的下集字典、强制反链与支撑投影）。** 以下结论对整个 $\mathcal M$ 成立。
+
+（一）对任意有限正指标集合 $S$ 与任意 $n\ge3$，
+
+$$
+F_n\mid M(S)\quad\Longleftrightarrow\quad\exists s\in S,\ n\mid s,
+\qquad
+I(M(S))=\{d\in P:\exists s\in S,\ d\mid s\}.
+\tag{366.3}
+$$
+
+每个 $I(M)$ 都是有限下集，映射 $M\mapsto I(M)$ 与 $I\mapsto M(I)$ 互逆，并满足 $M\mid N\Longleftrightarrow I(M)\subseteq I(N)$。它们给出整个实际族与 $\mathcal J_{\mathrm{fin}}(P)$ 的序同构；最小元一对应空下集。整数的通常 gcd 与 lcm 都留在实际族内，且
+
+$$
+I(\gcd(M,N))=I(M)\cap I(N),\qquad
+I(\operatorname{lcm}(M,N))=I(M)\cup I(N).
+\tag{366.4}
+$$
+
+因此实际族是无限分配格，而不是有限格或完备格。
+
+（二）$G(M)$ 是实现 $M$ 的唯一包含极小指标集合，也是 $P$ 中实现 $M$ 的唯一有限反链。所有冗余指标和两个单位指标的自由度恰由以下区间给出：
+
+$$
+\Pi(M)=\{S:G(M)\subseteq S\subseteq U(M)\},\qquad
+\#\Pi(M)=2^{\,|I(M)|+2-|G(M)|}.
+\tag{366.5}
+$$
+
+右侧区间中的集合自动是有限正指标集合。不同有限反链实现不同实际整数。对 $M=1$，有 $I(M)=G(M)=\varnothing$，全部呈现恰为 $\varnothing,\{1\},\{2\},\{1,2\}$。
+
+（三）对任意 $I,J\in\mathcal J_{\mathrm{fin}}(P)$，完整素支撑的等价关系恰为
+
+$$
+\operatorname{Supp}(M(I))=\operatorname{Supp}(M(J))
+\quad\Longleftrightarrow\quad
+I\setminus\{6,12\}=J\setminus\{6,12\}.
+\tag{366.6}
+$$
+
+删去六、十二描述的是支撑所遗忘的指标，而不是两个可以独立选择的位；下集条件仍要求十二的出现强迫六的出现。
+

@@ -1,0 +1,32 @@
+**命题 70.51（实际来源与全部共享叶）。** 式（70.20）给 $m=2k+1$ 棵不同正树，其完整前像组成都为 $(2,k+1)^{\mathsf T}$，像组成都为 $(2k+4,3k+7)^{\mathsf T}$。每棵恰有 $n$ 片叶，全部不同成员非冲突：任何共同叶地址的标签相同。
+
+**证明。** $A_b,C_b,B_b,T_b,W_b,K_b$ 的完整三步前像依次为
+
+$$
+\alpha,\quad\beta,\quad\langle\beta,\alpha\rangle,\quad
+\langle\alpha,\beta\rangle,\quad
+\langle\langle\beta,\alpha\rangle,\beta\rangle,\quad
+\langle\langle\alpha,\beta\rangle,\alpha\rangle.
+$$
+
+将相应前像放入式（70.20）的同一个完整右梳，替换的二叉同态性给整棵像等式。三类前像组成分别是 $k(0,1)+(2,1)$、$(k-1)(0,1)+(1,1)+(1,1)$、$(k-1)(0,1)+(1,2)+(1,0)$，均为 $(2,k+1)$；第三步组成矩阵 $\left(\begin{smallmatrix}1&2\\2&3\end{smallmatrix}\right)$ 给所述像组成。异常槽的位置及其五、八、十三叶块类型区分所有来源。
+
+以 $\mathcal F(X)$ 记全部带标签叶前沿。式（70.19）逐孩子展开给 $\mathcal F(\langle X,Y\rangle)=\mathtt L\mathcal F(X)\sqcup\mathtt R\mathcal F(Y)$，并给如下全部交集：
+
+$$
+\begin{array}{c|c|c}
+(X,Y)&H=L(X)\cap L(Y)&\mathcal F(X)|_H=\mathcal F(Y)|_H\\\hline
+(E,C_b)&\varnothing&\varnothing\\
+(A_b,B_b)&\varnothing&\varnothing\\
+(A_b,K_b)&\varnothing&\varnothing\\
+(C_b,T_b)&\mathtt L L(A_b)&\mathtt L\mathcal F(A_b)\\
+(T_b,W_b)&\mathtt R L(C_b)&\mathtt R\mathcal F(C_b)\\
+(C_b,W_b)&\varnothing&\varnothing\\
+(B_b,K_b)&\mathtt{LL}L(A_b)\sqcup\mathtt R L(A_b)&
+\mathtt{LL}\mathcal F(A_b)\sqcup\mathtt R\mathcal F(A_b)
+\end{array}
+\tag{70.21}
+$$
+
+前三行由 $E$ 的叶 $\mathtt L,\mathtt R$ 在 $C_b$ 中为分支，以及 $A_b$ 的叶 $\mathtt{LL},\mathtt{LR},\mathtt R$ 在 $B_b,K_b$ 中为分支给出；其余行按对应孩子使用前三行或相同块，穷尽整个前沿。活动块 $C_b,T_b,W_b$ 与末块 $K_b,B_b,A_b$ 因而各自两两非冲突。槽根前缀不可比且上下文没有槽外叶，所以完整来源的共享叶只能在同一槽内产生；式（70.21）逐槽给全部相同标签。证毕。
+

@@ -17,11 +17,13 @@ public sealed partial class MakeWorkflowTests
         var explicitReport = Path.Combine(fixture.Path, "explicit-report.json");
         var ambientReport = Path.Combine(fixture.Path, "ambient-report.json");
         var scribe = Path.Combine(fixture.Path, "StrataLint.Scribe.dll");
+        var paths = Path.Combine(fixture.Path, "scribe paths");
         var log = Path.Combine(fixture.Path, "scribe.log");
         Directory.CreateDirectory(binDirectory);
         File.WriteAllText(explicitReport, "explicit\n");
         File.WriteAllText(ambientReport, "ambient\n");
         File.WriteAllText(scribe, "fixture\n");
+        File.WriteAllText(paths, "Blueprint/D5/Probe.scribe.cs\0");
         WriteExecutable(
             Path.Combine(binDirectory, "dotnet"),
             "#!/usr/bin/env bash\nprintf '%s|%s\\n' \"$STRATALINT_LEAN_REPORT\" \"$*\" >> \"$SCRIBE_LOG\"");
@@ -50,7 +52,7 @@ public sealed partial class MakeWorkflowTests
             [
                 "-c",
                 "PATH=\"$1:/usr/bin:/bin\" STRATALINT_LEAN_REPORT=\"$2\" SCRIBE_LOG=\"$3\" "
-                    + "exec /bin/bash \"$4\" \"$5\" \"$6\"",
+                    + "exec /bin/bash \"$4\" \"$5\" \"$6\" \"$7\"",
                 "scribe-content-checks",
                 binDirectory,
                 ambientReport,
@@ -58,7 +60,7 @@ public sealed partial class MakeWorkflowTests
                 Path.Combine(root, ScribeContentChecksScriptPath),
                 explicitReport,
                 scribe,
-                baseRevision,
+                paths,
             ],
             root,
             BoundedProcessRunner.HangDetectionBudget,
@@ -73,8 +75,8 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain(invocations, line => line.Contains(ambientReport, StringComparison.Ordinal));
         Assert.Contains(
             invocations,
-            line => line.EndsWith(
-                $" content-check --report {explicitReport}",
+            line => line.Contains(
+                $" content-check --report {explicitReport} --paths-from ",
                 StringComparison.Ordinal));
     }
 
@@ -89,9 +91,11 @@ public sealed partial class MakeWorkflowTests
         var emptyReport = Path.Combine(fixture.Path, "empty-report.json");
         var missingReport = Path.Combine(fixture.Path, "missing-report.json");
         var scribe = Path.Combine(fixture.Path, "StrataLint.Scribe.dll");
+        var paths = Path.Combine(fixture.Path, "scribe paths");
         Directory.CreateDirectory(binDirectory);
         File.WriteAllText(emptyReport, string.Empty);
         File.WriteAllText(scribe, "fixture\n");
+        File.WriteAllText(paths, string.Empty);
         WriteExecutable(Path.Combine(binDirectory, "dotnet"), "#!/usr/bin/env bash\nexit 0");
 
         foreach (var report in new[] { emptyReport, missingReport })
@@ -100,12 +104,13 @@ public sealed partial class MakeWorkflowTests
                 "/bin/bash",
                 [
                     "-c",
-                    "PATH=\"$1:/usr/bin:/bin\" exec /bin/bash \"$2\" \"$3\" \"$4\"",
+                    "PATH=\"$1:/usr/bin:/bin\" exec /bin/bash \"$2\" \"$3\" \"$4\" \"$5\"",
                     "scribe-content-checks-invalid-report",
                     binDirectory,
                     Path.Combine(root, ScribeContentChecksScriptPath),
                     report,
                     scribe,
+                    paths,
                 ],
                 root,
                 BoundedProcessRunner.HangDetectionBudget,

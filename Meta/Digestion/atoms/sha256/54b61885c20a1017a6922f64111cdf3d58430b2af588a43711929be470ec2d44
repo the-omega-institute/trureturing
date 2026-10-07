@@ -1,0 +1,28 @@
+**Theorem 4.1 (scaled Schwartz cutoff).** Let $d\in\mathbb N$,
+$V=\operatorname{EuclideanSpace}_{\mathbb R}(\operatorname{Fin}d)$ and
+$\mathcal H=L^2(V,\mathbb C;\mathrm{volume})$. Let $a,b:\operatorname{Fin}d\to\mathbb R$
+be arbitrary, and let $\varphi\in\mathcal S(V,\mathbb C)$. For a real Schwartz
+function $\chi$ with compact support, $\chi(0)=1$ and $|\chi(x)|\le1$ for every $x$,
+put $R_N=N+1$, $\theta_N(x)=\chi(R_N^{-1}x)$ and
+$\psi_N=\theta_N\varphi$. Then $\psi_N$ is smooth and compactly supported and
+$$
+J\psi_N\longrightarrow J\varphi,\qquad
+JH_{a,b}\psi_N\longrightarrow JH_{a,b}\varphi,
+\quad
+H_{a,b}u=\sum_{j<d}[-a_j\partial_j^2u+b_jx_j^2u]
+$$
+in the actual complex Lebesgue $L^2$ space. The dimension may be zero, and no
+sign restriction on $a,b$ is required. With $a_j=\hbar^2/(2m_j)$ and
+$b_j=m_j\omega_j^2/2$, this is convergence for the physical differential sum.
+
+*Proof.* Scaling multiplies each first cutoff derivative by $R_N^{-1}$ and
+each second derivative by $R_N^{-2}$. Compact support makes their unscaled
+values bounded. The second-derivative product identity expresses the graph
+error as a finite sum of cutoff errors against Schwartz functions.
+Squared dominated convergence gives the simultaneous $L^2$ limits.
+This adapts the cutoff, product and dominated-convergence method of
+`W21_approximation` in the frozen trureturing
+`D5/S3/Weil/ZetaPntBase/Sobolev.lean` to the actual multidimensional $L^2$
+graph norm. That supplier's original one-dimensional norm uses $L^1$ and
+is not the present statement.
+

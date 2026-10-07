@@ -1,0 +1,10 @@
+**证明。** 两个完整前像由原同态规则给出，字面不同及替换单射性给像不同。各树恰含两个 $A$、一个 $C$，组成及叶数随即得到。其完整 $\alpha$ 集为
+
+$$
+\Lambda_\alpha(P_0)=\{\mathtt{LLLR},\mathtt{LRR},\mathtt{RLLR},\mathtt{RRLR}\},\qquad
+\Lambda_\alpha(Q_0)=\{\mathtt{LLLR},\mathtt{LRLR},\mathtt{RLLR},\mathtt{RRR}\}.
+\tag{32.16}
+$$
+
+两者在式（32.13）的实际地址均报告 $\mathsf{leaf}_\alpha$，所以属于同一个 $\mathcal E_{H_*}$；该历史仍只强制 $\mathtt{LL},\mathtt{RL}$ 处的两个 $A$，给相同 $\Gamma_{H_*}$，从式（32.16）扣除后各剩两片。可是 $\mathtt{LRR}$ 在 $P_0$ 的左 $C$ 中为 $\alpha$，在 $Q_0$ 左侧 $\langle A,A\rangle$ 的右 $A$ 中为 $\beta$。这个地址是两者的共享叶且标签冲突，故 $\operatorname{NC}(P_0,Q_0)$ 为假。反例保留实际像、同叶数和同一实际叶历史，准确排除了删除非冲突条件的推论。证毕。
+

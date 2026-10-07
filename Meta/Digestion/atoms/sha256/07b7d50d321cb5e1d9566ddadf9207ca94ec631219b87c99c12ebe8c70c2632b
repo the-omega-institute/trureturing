@@ -1,0 +1,20 @@
+**定义 360.1（四状态边图与固定历史）。** 固定一个实际目标
+$$
+\Omega=L(u,v,w)R_{pq}
+$$
+及其唯一参数。四个状态为 $00,10,01,11$，分别对应 $R_{00},R_{10},R_{01},R_{11}$。把表 359.2 的八条转移视为带字母的有向边：
+$$
+\begin{array}{llll}
+ x_{00}:00\xrightarrow{a}10,&x_{10}:10\xrightarrow{a}00,&
+ x_{01}:01\xrightarrow{a}11,&x_{11}:11\xrightarrow{a}01,\\
+ y_{00}:00\xrightarrow{b}01,&y_{01}:01\xrightarrow{b}00,&
+ y_{10}:10\xrightarrow{b}11,&y_{11}:11\xrightarrow{b}10.
+\end{array}
+$$
+这里下标是出发状态。对组成 $(a_c,b_c)\in\mathbb N^2$ 且 $a_c+b_c\ge1$，定义
+$$
+ X=\frac{a_c-p-2w+2u}{4},\qquad
+ Y=\frac{b_c-q-2u+2v}{4}.
+\tag{360.1}
+$$
+

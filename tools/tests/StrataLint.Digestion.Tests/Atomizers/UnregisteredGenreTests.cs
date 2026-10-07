@@ -211,7 +211,6 @@ public sealed class UnregisteredGenreTests
         return DigestionLedgerAligner.Evaluate(
             ledger,
             DigestionTestSupport.Snapshot(("docs/source.md", bytes)),
-            ledger,
             DigestionAlignmentMode.Ingest);
     }
 }

@@ -1,0 +1,19 @@
+**定理 362.3（全部有限实际 Fibonacci lcm 的共同 Robin 包络）。** 对每个先固定的实数 $1/2<\eta<3/5$，令
+
+$$
+c(\eta)=\frac{3-5\eta}{2(1-\eta)},
+\qquad K_\eta=(2\eta)^{-c(\eta)}\in(0,1).
+\tag{362.15}
+$$
+
+则对每个 $\varepsilon>0$，存在先于一切有限集合 $S\subseteq\mathbb N_{>0}$ 选定的实数 $B_0>0$，使
+
+$$
+\forall S\subseteq\mathbb N_{>0}\text{ 有限},\qquad
+b(S)\ge B_0\ \Longrightarrow
+\bigl(M(S)>5040\ \text{且}\ \mathcal R(M(S))\le K_\eta+\varepsilon\bigr).
+\tag{362.16}
+$$
+
+$B_0$ 仅依赖固定的 $\eta,\varepsilon$ 及下述经典解析供给。没有基数、最大指标、删除方式或嵌套条件。特别地，$\eta=11/20$ 给 $K_\eta=(10/11)^{5/18}<1$；取 $\varepsilon=(1-K_\eta)/2$，整个实际有限族在同一个 $b$ 阈值之后满足严格 Robin 不等式。这里保留任意正误差，不断言 $\varepsilon=0$ 的最终界，不指定数值起点。
+

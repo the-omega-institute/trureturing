@@ -1,0 +1,19 @@
+**Theorem 3.1 (real eigenbasis closure).** Let $\mathcal H$ be a complete
+complex inner product space and $e:I\to\mathcal H$ a Hilbert basis, with no
+restriction on the index type $I$. Let $T$ be a complex linear partial
+operator whose domain is exactly the algebraic span of $e(I)$, and let
+$\lambda:I\to\mathbb R$. If $Te_i=\lambda_i e_i$ for every $i$, then $T$ is
+closable and its genuine closure is self-adjoint. Zero eigenvalues and
+repeated eigenvalues are allowed.
+
+*Proof.* Tom Ole Diem's PhysLean source,
+`PhyslibAlpha/AlgebraicFramework/HilbertSpace/Unbounded/RealAnalytic.lean`,
+revision `b9043cc548ef6d63a28454cf3a57fb12a0c2e142`, constructs the resolvent
+coefficients $c_i/(\lambda_i-\zeta)$ for $\zeta=\pm i$. Their square sum is
+bounded by that of $c$, because $|\lambda_i-\zeta|\ge1$. The same finite sums
+converge in both graph coordinates. Finite-combination symmetry and the
+closed adjoint first give genuine closability. The two surjective resolvents
+of the closure identify it with its adjoint. The supporting unbounded-operator
+arguments are due to Adam Bornemann and Gregory J. Loges in
+`Physlib/QuantumMechanics/Operators/Unbounded.lean` at the same revision.
+

@@ -1,0 +1,4 @@
+**Theorem 3.3 (Scarf's lemma).** For finite nonempty $T,I$, any family of
+linear orders on $T$ indexed by $I$, and any coloring $c:T\to I$, there
+exists a colorful dominant cell $(\sigma,C)$.
+

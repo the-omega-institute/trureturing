@@ -118,7 +118,9 @@ family independently.
 The canonical source is
 `D5/S3/Quantum/Entanglement/FourQubitResidualSumMonotoneRefutation.lean`.
 Its public declarations are `linearEntropy`, `concurrence`, `residualSum`,
-`claim`, `psi`, `instrument` and `result`; the partial traces and the time
+`claim`, `psi`, `instrument`, the coordinate equivalences `pairEquiv`,
+`outEquiv`, `singleEquiv`, `out3Equiv` and `fourEquiv`, and `result`; the
+partial traces and the time
 reversal are frozen in
 `D5/S3/Quantum/Entanglement/PurityTimeReversalOverlapMinimum`, the partial
 trace over the second factor in
@@ -126,11 +128,11 @@ trace over the second factor in
 single-qubit operator `localOp` in
 `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence`.
 The frozen module state has statement identity
-`sha256:00c982b5bcada21cd382a329e018c76bb956a89e7e2f3238561fc61111828a03`. The
+`sha256:e7efbd1d60f0205eef68cba24dd2ef797a820ce4f439f21f7bc4166b3b7eafa9`. The
 result declaration has statement identity
 `sha256:348ca75622d24ba1be6771830ba3706601aa14f655a8a0c927034b382b3f3877`. The
 Freeze event is
-`sha256:341d148480aca74c188abee69fdf7f9f12bc563aac330d6ac9b435dcc97ff517`; its
+`sha256:007f4fa49ea439d0209925a10013eaab4e3031f64359294fd60ae5ebdb0a4d10`; its
 project-level frozen prerequisites are the Freeze events of
 `D5/S3/Quantum/Entanglement/PurityTimeReversalOverlapMinimum` and
 `D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence`.

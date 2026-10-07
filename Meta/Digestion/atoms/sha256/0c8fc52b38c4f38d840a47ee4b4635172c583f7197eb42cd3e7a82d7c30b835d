@@ -1,0 +1,13 @@
+**说明 10.1（供应成果与本卷推导的边界）。** 以下来源只承担表中明确接口。供应卷使用不可变提交链接；未将其正文复制为本卷的交付内容。
+
+| 来源 | 实际使用与界限 |
+| --- | --- |
+| [KBonacci Self-Calibrating Boundaries](https://github.com/the-omega-institute/trureturing/blob/0331a9437150b88f77bd393d43755c727b6a14cc/docs/develop/theory/KBONACCI_SELF_CALIBRATING_BOUNDARIES.md) 定义 6.1、命题 6.3、7.2；命题 9.1–9.3；边界 14.4 | `repo-derived` 供应：共同理想交和实际像、有限 Smith 相容判据、相邻阶互余、不限长间隔提升、实际字的相位更新以及固定长度缺口。本卷的新接口是有限长度增长、尖锐饱和和同来源的取得费用；不重证一般 Smith 或 CRT。 |
+| [RRO Effective Resolution](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md) §1.2.1–1.2.2，TM.374–376；§1.2.6，TM.392–396 | `repo-derived` 供应：合法词计数和值双射、权重时间与相位。这里仅使用词数作容量下界，不把数值地址最短宽度当成余数组的最短取得长度。 |
+| [Formal Prime Observer Dynamics](FORMAL_PRIME_OBSERVER_DYNAMICS.md) 命题 303.2–303.3 | `repo-derived` 供应：相邻阶的单位 Bézout 和联合恢复、非相邻阶不能自动互余。定理 7.2 的目标积等于实际共同像，依赖已满足的相邻互余条件。 |
+| [FIB Continuation Geometry](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) 定义 3.2–3.3、4.1；§6 | `repo-derived` 供应：纤维下降、行为商及 Hankel 最小实现的不同任务。这里的费用 $\ell$ 是来源字长，既不是状态维数，也不是行为商大小。 |
+| [Stacks Project，Lemma 10.15.4，Tag 00DT](https://stacks.math.columbia.edu/tag/00DT) | `literature-attested`：两两互余理想的交等于积，商映射到坐标积为同构；只用于已经核对互余的合同。 |
+| Jeff Erickson，[Models of Computation，Lecture 3: Finite-State Machines](https://jeffe.cs.illinois.edu/teaching/algorithms/models/03-automata.pdf)，§3.2、§3.6–3.7 | `literature-attested`：有限状态逐字更新、拒绝与接受语义、同一输入上的乘积自动机和语言闭包。提供可达层方法的成熟背景，不提供本卷的尖锐取得阈值。 |
+| MIT 18.310，[Polynomial Codes and Some Lore about Polynomials](https://math.mit.edu/~djk/18.310/Lecture-Notes/polynomial_hamming_codes_2007.html)，§10.2、10.4；[Matrix Hamming Codes](https://math.mit.edu/~djk/18.310/Lecture-Notes/matrix_hamming_codes_2007.html)，§9.1 | `literature-attested`：二元多项式余数、幂余数列和模二线性编码。提供线性余数语言，不保证线性组合仍避免原禁词；命题 7.1 明确补上这个合法支撑桥梁。 |
+| 本卷定理 3.1、命题 4.1–4.3、定理 5.1、命题 5.3、定理 6.1 及其费用推论、命题 7.1、定理 7.2和第 8 章反例 | `repo-derived` 普通数学推导：在所写合同内给出全部论证；没有 `suspected-novel` 或文献优先权主张。 |
+

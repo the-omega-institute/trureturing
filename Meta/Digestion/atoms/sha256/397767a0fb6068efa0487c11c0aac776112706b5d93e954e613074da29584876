@@ -1,0 +1,6 @@
+**Definition 3.1 (colorful and nearly colorful cells).** Given $c:T\to I$,
+a cell $(\sigma,C)$ is colorful if $c(\sigma)=C$, nearly colorful if
+$|C\setminus c(\sigma)|=1$, and of missing color $i$ if
+$C\setminus c(\sigma)=\{i\}$. Write $\mathrm{NCdoors}(\sigma,C)$
+for the set of nearly colorful doors incident to $(\sigma,C)$.
+

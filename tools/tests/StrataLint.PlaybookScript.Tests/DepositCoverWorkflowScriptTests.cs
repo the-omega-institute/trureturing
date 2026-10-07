@@ -85,9 +85,8 @@ public sealed partial class DepositCoverWorkflowScriptTests
     [Fact]
     public void DepositRefusesAnAtomIdThatResolvesToNoLedgerEntryAndFreezesNothing()
     {
-        // #6676: 形状合法但并不存在的 atom id(实例 `ATOM_ID=none`,满足 ^[a-z0-9-]+$)
-        // 此前会先走完 freeze,再在 cover 处失败,留下已冻结而无覆盖的模块。
-        // 冻结不可逆,故这里同时断言两件事:非零退出,**且一次冻结都没有发生**。
+        // 形状合法但不存在的 atom id 必须在冻结前被拒绝。
+        // 冻结不可逆,故同时断言非零退出与零次冻结。
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
         fixture.ChangeFormalization();
@@ -100,7 +99,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void DepositBuildsEmitsFreezesCoversAndReemitsWithoutCommitting()
+    public void DepositBuildsEmitsFreezesAndCoversWithoutCommitting()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -123,15 +122,13 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "dotnet:ledger-align",
                 "dotnet:ledger-frozen",
                 "dotnet:cover-atom",
-                "make:emit",
             ],
             fixture.CallKinds());
         Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
-        Assert.Equal("emission: covered\n", fixture.EmissionContents());
     }
 
     [Fact]
-    public void DepositReplaySkipsExistingFreezeAndCoverageAndReemits()
+    public void DepositReplaySkipsExistingFreezeAndCoverage()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -155,7 +152,6 @@ public sealed partial class DepositCoverWorkflowScriptTests
                 "make:emit",
                 "dotnet:ledger-frozen",
                 "dotnet:cover-atom",
-                "make:emit",
             ],
             fixture.CallKinds());
         var error = Encoding.UTF8.GetString(result.StandardError);
@@ -207,7 +203,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
 
         Assert.True(depositStart >= 0 && coverStart > depositStart);
         var depositCase = script[depositStart..coverStart];
-        Assert.Contains("\n    if cover_row; then\n", depositCase, StringComparison.Ordinal);
+        Assert.Contains("\n    cover_row || {\n", depositCase, StringComparison.Ordinal);
         Assert.DoesNotContain("coverage_gids", script, StringComparison.Ordinal);
         Assert.Single(Regex.Matches(script, @"run_cli\s+cover-atom\b").Cast<Match>());
     }
@@ -276,7 +272,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
     }
 
     [Fact]
-    public void CoverWritesEdgeAndReemitsWithoutCommitting()
+    public void CoverWritesEdgeWithoutEmittingOrCommitting()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
@@ -294,11 +290,9 @@ public sealed partial class DepositCoverWorkflowScriptTests
             [
                 "make:lean-report",
                 "dotnet:cover-atom",
-                "make:emit",
             ],
             fixture.CallKinds());
         Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
-        Assert.Equal("emission: covered\n", fixture.EmissionContents());
         Assert.NotEmpty(fixture.Status());
     }
 

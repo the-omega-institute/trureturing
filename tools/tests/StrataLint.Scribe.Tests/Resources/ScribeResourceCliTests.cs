@@ -1,4 +1,3 @@
-using System.Reflection;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Nodes;
@@ -7,14 +6,13 @@ namespace StrataLint.Scribe.Tests;
 
 public sealed class ScribeResourceCliTests
 {
-    private static readonly Assembly Documents = new FixtureAssembly();
 
     [Fact]
     public void GeneralUsageIncludesTheResourcePackCommand()
     {
         using var root = Prepare();
         var error = new StringWriter();
-        Assert.Equal(2, ScribeCli.Run(Documents, [], root.Path, TextWriter.Null, error));
+        Assert.Equal(2, ScribeCli.Run([], root.Path, TextWriter.Null, error));
         Assert.Contains("resources pack --out <file>", error.ToString(), StringComparison.Ordinal);
         Assert.Contains("resources verify --pack <file>", error.ToString(), StringComparison.Ordinal);
         Assert.Contains("resources release --out <directory>", error.ToString(), StringComparison.Ordinal);
@@ -34,7 +32,7 @@ public sealed class ScribeResourceCliTests
         using var root = new TemporaryRoot();
         var error = new StringWriter();
 
-        Assert.Equal(2, ScribeCli.Run(Documents, arguments, root.Path, TextWriter.Null, error));
+        Assert.Equal(2, ScribeCli.Run(arguments, root.Path, TextWriter.Null, error));
         Assert.Contains("resources pack --out <file>", error.ToString(), StringComparison.Ordinal);
         Assert.Contains("resources release --out <directory>", error.ToString(), StringComparison.Ordinal);
         Assert.Contains("resources verify-release --dir <directory>", error.ToString(), StringComparison.Ordinal);
@@ -84,8 +82,7 @@ public sealed class ScribeResourceCliTests
         var error = new StringWriter();
 
         Assert.False(Directory.Exists(root.Resolve("Blueprint")));
-        Assert.Equal(0, ScribeCli.Run(() => throw new InvalidOperationException("Definitions must not be loaded."),
-            ["resources", "verify", "--pack", "resources.zip"], root.Path, output, error));
+        Assert.Equal(0, ScribeCli.Run(["resources", "verify", "--pack", "resources.zip"], root.Path, output, error));
         Assert.Equal($"resources verify: entries={count} totalSha256={digest}{Environment.NewLine}", output.ToString());
         Assert.Empty(error.ToString());
     }
@@ -254,20 +251,6 @@ public sealed class ScribeResourceCliTests
     }
 
     private static int Run(TemporaryRoot root, IReadOnlyList<string> arguments, TextWriter output, TextWriter error) =>
-        ScribeCli.Run(Documents, arguments, root.Path, output, error);
+        ScribeCli.Run(arguments, root.Path, output, error);
 
-    private sealed class FixtureAssembly : Assembly
-    {
-        public override Type[] GetTypes() => [typeof(FirstDefinition), typeof(SecondDefinition)];
-    }
-
-    private sealed class FirstDefinition : IScribeDocumentDefinition
-    {
-        public DocumentDefinition Create() => ScribeResourcePackTests.Definition("First");
-    }
-
-    private sealed class SecondDefinition : IScribeDocumentDefinition
-    {
-        public DocumentDefinition Create() => ScribeResourcePackTests.Definition("Second");
-    }
 }

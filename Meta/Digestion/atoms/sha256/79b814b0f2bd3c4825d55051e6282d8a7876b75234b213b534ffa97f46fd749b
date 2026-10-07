@@ -1,0 +1,6 @@
+**Theorem 7.3 (complete prime census).** For every prime $p$,
+
+$$
+  A(p)=p(p-1)\binom p3.
+$$
+

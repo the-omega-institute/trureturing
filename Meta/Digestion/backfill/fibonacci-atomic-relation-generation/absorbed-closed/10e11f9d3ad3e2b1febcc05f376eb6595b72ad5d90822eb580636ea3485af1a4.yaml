@@ -1,0 +1,13 @@
+fingerprints:
+  raw_sha256: sha256:10e11f9d3ad3e2b1febcc05f376eb6595b72ad5d90822eb580636ea3485af1a4
+  normalized_sha256: sha256:10e11f9d3ad3e2b1febcc05f376eb6595b72ad5d90822eb580636ea3485af1a4
+cas_ref: sha256:10e11f9d3ad3e2b1febcc05f376eb6595b72ad5d90822eb580636ea3485af1a4
+coverage_gids:
+  - gid: D5/S3/Arith/Congruence/PrimePowerAffineBehavior.local_classification
+    target_statement_id: sha256:e3a8a66631d552a4404de5a1a06fb0292379bd24d39ae1c1bfafe091d5f9e995
+  - gid: D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.actual_quantity_scaling
+    target_statement_id: sha256:151783475e1fc5103f5edbc0f8ef99e2b6e287bcad569b1a6852c25b4728b79a
+  - gid: D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.actual_signed_quantity
+    target_statement_id: sha256:aefa590776f634df0f7f319c89b7eb9019527e04846888fb62b7ea45e250bb7e
+receipts:
+  unresolved_subitems: []

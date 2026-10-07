@@ -1,0 +1,10 @@
+## Theorem 1. Oriented skew paired basis
+
+Let E be a finite-dimensional real inner product space of even dimension and let a be a real linear operator satisfying
+$\langle ax,y\rangle=-\langle x,ay\rangle$ for all x,y.
+There are a finite index set K, an orthonormal basis $(p_k,q_k)_{k\in K}$ of E, and nonnegative real numbers $\nu_k$ such that
+$a p_k=-\nu_k q_k$ and $a q_k=\nu_k p_k$ for every k.
+The statement includes dimension zero and the zero operator.
+
+For nonzero a, a negative Rayleigh eigenvalue of $a^2$ gives an invariant oriented orthonormal plane. Its orthogonal complement is invariant because a is skew adjoint. Strong induction on dimension and orthonormal gluing produce the full frame. For zero a in positive even dimension, any orthonormal pair starts the same induction.
+

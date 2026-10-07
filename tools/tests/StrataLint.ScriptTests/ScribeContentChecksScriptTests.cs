@@ -23,6 +23,22 @@ public sealed class ScribeContentChecksScriptTests
             fixture.Invocations);
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MissingPathsFileFailsWithoutRunningScribe(bool explicitMissingFile)
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new ScribeContentFixture();
+
+        var result = fixture.RunWithoutPaths(explicitMissingFile);
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("scribe-content-checks: PATHS_FILE must be a readable regular file",
+            Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+        Assert.Empty(fixture.Invocations);
+    }
+
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
     private sealed class ScribeContentFixture : IDisposable
     {
@@ -36,6 +52,7 @@ public sealed class ScribeContentChecksScriptTests
         private readonly string log;
         private readonly string report;
         private readonly string scribe;
+        private readonly string paths;
 
         internal ScribeContentFixture()
         {
@@ -44,10 +61,12 @@ public sealed class ScribeContentChecksScriptTests
             log = Path.Combine(temporary.Path, "scribe.log");
             report = Path.Combine(temporary.Path, "raw-lean-report.json");
             scribe = Path.Combine(repository, "scribe-fixture");
+            paths = Path.Combine(temporary.Path, "scribe paths");
             ScriptHarnessScratch.EnsureDirectory(bin);
             ScriptHarnessScratch.EnsureDirectory(repository);
             ScriptHarnessScratch.WriteScratchText(report, "{}\n");
             ScriptHarnessScratch.WriteScratchText(scribe, "candidate fixture\n");
+            ScriptHarnessScratch.WriteScratchText(paths, "Blueprint/D5/with spaces.scribe.cs\0");
             ScriptHarnessScratch.CopyScriptInto(
                 Path.Combine(TestRepositoryLayout.FindRoot(), InputHelperPath), Path.Combine(repository, InputHelperPath));
             ScriptHarnessScratch.CopyScriptInto(
@@ -70,7 +89,7 @@ public sealed class ScribeContentChecksScriptTests
             Write("Directory.Build.props", "<Project />\n");
             Write("Directory.Packages.props", "<Project />\n");
             foreach (var project in new[]
-                     { "StrataLint.Cli", "StrataLint.Engine", "StrataLint.Scribe", "StrataLint.Scribe.Documents", "Trureturing.Truth" })
+                     { "StrataLint.Cli", "StrataLint.Engine", "StrataLint.Scribe", "Trureturing.Truth" })
             {
                 Write($"tools/{project}/{project}.csproj", "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
                 Write($"tools/{project}/Fixture.cs", "// fixture\n");
@@ -90,13 +109,18 @@ public sealed class ScribeContentChecksScriptTests
         internal void ChangeFetcher() => ScriptHarnessScratch.AppendScratchText(
             Path.Combine(repository, CacheFetcherPath), "# fetch acceptance changed\n");
 
-        internal ProcessOutput RunGate(int childExit) => TestProcessRunner.Run(
+        internal ProcessOutput RunGate(int childExit) => Run(childExit, [paths]);
+
+        internal ProcessOutput RunWithoutPaths(bool explicitMissingFile) => Run(0,
+            explicitMissingFile ? [Path.Combine(temporary.Path, "missing paths")] : []);
+
+        private ProcessOutput Run(int childExit, string[] pathArguments) => TestProcessRunner.Run(
             "/bin/bash",
             ["-c", "ORIGINAL_PATH=\"$PATH\" PATH=\"$1:$PATH\" SCRIBE_LOG=\"$2\" "
                 + "SCRIBE_EXIT=\"$3\" SCRIBE_FIXTURE_DLL=\"$6\" "
-                + "exec /bin/bash \"$4\" \"$5\" \"$6\"",
+                + "exec /bin/bash \"$4\" \"$5\" \"$6\" \"${@:7}\"",
                 "scribe-current", bin, log, childExit.ToString(CultureInfo.InvariantCulture),
-                Path.Combine(repository, ContentChecksPath), report, scribe],
+                Path.Combine(repository, ContentChecksPath), report, scribe, .. pathArguments],
             repository, TestBudgets.ScriptProcessHangGuard, 1024 * 1024);
 
         private void Write(string relativePath, string contents)
