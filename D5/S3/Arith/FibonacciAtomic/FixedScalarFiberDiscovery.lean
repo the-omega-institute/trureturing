@@ -182,34 +182,35 @@ theorem result (L h : ℕ) :
         have ha : a = 3 := congrArg Prod.fst he
         have hb : b = 5 := congrArg Prod.snd he
         subst a; subst b; rfl
-  have positive_count (t : Source) : 0 < (composition t).1 + (composition t).2 := by
-    induction t with
-    | of b => cases b <;> decide
-    | mul s t hs ht =>
-      simp only [composition, Prod.fst_add, Prod.snd_add]
-      omega
   have single (t : Source) (ht : (composition t).1 + (composition t).2 = 1) :
       ∃ b : Bool, t = .of b := by
     cases t with
     | of b => exact ⟨b,rfl⟩
     | mul s t =>
-      have hs := positive_count s
-      have ht' := positive_count t
+      have hs := ActualImageAddressCertificate.positive s
+      have ht' := ActualImageAddressCertificate.positive t
       simp only [composition, Prod.fst_add, Prod.snd_add] at ht
       omega
   have two (t : Source) (ht : composition t = (1,1)) :
       t = .mul (.of true) (.of false) ∨ t = .mul (.of false) (.of true) := by
-    cases t with
-    | of b => cases b <;> simp [composition] at ht
-    | mul s t =>
-      have hs := positive_count s
-      have ht' := positive_count t
-      have ha := congrArg Prod.fst ht
-      have hb := congrArg Prod.snd ht
-      simp only [composition, Prod.fst_add, Prod.snd_add] at ha hb
-      obtain ⟨b,rfl⟩ := single s (by omega)
-      obtain ⟨c,rfl⟩ := single t (by omega)
-      cases b <;> cases c <;> simp_all [composition]
+    let x : Fiber (1,1) := ⟨.mul (.of true) (.of false), rfl⟩
+    let y : Fiber (1,1) := ⟨.mul (.of false) (.of true), rfl⟩
+    have card : Fintype.card (Fiber (1,1)) = 2 := by
+      rw [← Nat.card_eq_fintype_card, (GenealogicalFiberTransport.result.1 1 1 (by omega)).2.1]
+      norm_num [GenealogicalFiberTransport.fiberCount, catalan_one]
+    have xy : x ≠ y := by
+      intro he
+      have hv := congrArg Subtype.val he
+      cases hv
+    have all : ({x,y} : Finset (Fiber (1,1))) = Finset.univ :=
+      Finset.eq_of_subset_of_card_le (Finset.subset_univ _) (by simp [xy,card])
+    have mem : (⟨t,ht⟩ : Fiber (1,1)) ∈ ({x,y} : Finset (Fiber (1,1))) := by
+      rw [all]
+      exact @Finset.mem_univ (Fiber (1,1))
+        (GenealogicalFiberTransport.fiberFintype (1,1)) ⟨t,ht⟩
+    rcases Finset.mem_insert.mp mem with he | he
+    · exact Or.inl (congrArg Subtype.val he)
+    · exact Or.inr (congrArg Subtype.val (Finset.mem_singleton.mp he))
   have cp : composition P = (3,5) := rfl
   have cq : composition Q = (3,5) := rfl
   have pp : P = substitution^[3] (.mul (.of true) (.of false)) := rfl
@@ -260,19 +261,18 @@ theorem result (L h : ℕ) :
     · rw [if_neg hL] at hc
       exact Or.inl (Or.inr hc)
   have weight_min (t : Source) : 2 ≤ GraftAffineClosure.quantity (composition t) := by
-    have hp := positive_count t
+    have hp := ActualImageAddressCertificate.positive t
     simp only [GraftAffineClosure.quantity]
     omega
   have weight_two (t : Source) (ht : GraftAffineClosure.quantity (composition t) = 2) :
       t = .of true := by
-    have hp := positive_count t
+    have hp := ActualImageAddressCertificate.positive t
     simp only [GraftAffineClosure.quantity] at ht
     obtain ⟨b,rfl⟩ := single t (by omega)
     cases b <;> simp_all [composition]
   have beta_root (t : Source) (ht : readout [] t = .beta) : t = .of false := by
-    cases t with
-    | of b => cases b <;> cases ht <;> rfl
-    | mul s t => cases ht
+    simpa only [ActualLeafHistoryRigidity.subtree, Option.some.injEq] using
+      (ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.1 t [] false ht)
   have beta_P : ∀ U ∈ scalarFiber 0,
       (∀ u ∈ certificate 0 P, readout u U = readout u P) → U = P := by
     intro U hU hm
@@ -373,7 +373,7 @@ theorem result (L h : ℕ) :
           readout u V := by
     intro V hV a ha u hu
     clear literal_data beta_Q beta_P weight_two weight_min beta_root finite finite_fiber
-      classification memQ memP pq pp cq cp two single positive_count scalar
+      classification memQ memP pq pp cq cp two single scalar
     clear L
     rcases hV with rfl | rfl
     all_goals first
@@ -478,30 +478,6 @@ theorem result (L h : ℕ) :
       ((paid t.1).card : ℝ≥0∞))
       (ActualTreeReadoutAcquisition.source_foundation.2.2.2.2.2.2.2 policy
         (Classical.choose h) n [] U _ hb (Classical.choose_spec (Classical.choose_spec h)) he)
-  have run_transfer (policy : Policy) : ∀ n (hist : Hist (fun _ : Address => Reply))
-      (V U : Source) (hb : Hist (fun _ : Address => Reply) × Bool),
-      execute readout policy n hist V = some hb →
-      (∀ u ∈ paid hb.1, readout u U = readout u V) →
-      execute readout policy n hist U = some hb := by
-    intro n
-    induction n with
-    | zero => simp [execute]
-    | succ n ih =>
-      intro hist V U hb he hm
-      cases hp : policy hist with
-      | inr b => simpa [execute,hp] using he
-      | inl q =>
-        cases hr : execute readout policy n (hist ++ [⟨q,readout q V⟩]) V with
-        | none => simp [execute,hp,hr] at he
-        | some x =>
-          have hx : (⟨q,readout q V⟩ :: x.1,x.2) = hb := by simpa [execute,hp,hr] using he
-          subst hb
-          have hq : readout q U = readout q V := hm q (by simp [paid])
-          have hm' : ∀ u ∈ paid x.1, readout u U = readout u V := by
-            intro u hu
-            exact hm u (by simpa [paid] using Or.inr hu)
-          have hs := ih _ V U x hr hm'
-          simp [execute,hp,hq,hs]
   have same_composition_member (V U : Source) (hV : V ∈ scalarFiber L)
       (hc : composition U = composition V) : U ∈ scalarFiber L := by
     simpa [scalarFiber,hc] using hV
@@ -510,7 +486,13 @@ theorem result (L h : ℕ) :
       (he : execute readout policy n [] V = some hb) (ht : hb.2 = true) :
       FiberSound L V (paid hb.1) := by
     intro U hU hm
-    have hre := run_transfer policy n [] V U hb he hm
+    obtain ⟨hread,htransfer⟩ :=
+      D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization.execute_transfer
+        readout policy n [] V hb.1 hb.2 he
+    have hre := htransfer U (by
+      intro a ha
+      exact (hm a.1 (by simpa only [paid, List.mem_toFinset, List.mem_map] using
+        ⟨a,ha,rfl⟩)).trans (hread a ha))
     obtain ⟨m,x,hx,hlabel⟩ := hc U hU
     have hh := ActualTreeReadoutAcquisition.source_foundation.2.2.2.2.2.2.2
       policy n m [] U hb x hre hx
@@ -664,9 +646,9 @@ theorem result (L h : ℕ) :
           (∀ u ∈ certificate L Q, readout u U = readout u Q)) := by
     clear coupled first_paid path_min cert_min cert_sound cert_disjoint cert_geometry
       depth_obstruction path_composition_sound height_V member_V positive_V path_sound
-      same_composition_member run_transfer run_cost beta_minimum obstruct graft_read literal_data
+      same_composition_member run_cost beta_minimum obstruct graft_read literal_data
       beta_Q beta_P weight_two weight_min beta_root finite finite_fiber classification memQ memP
-      pq pp cq cp two single positive_count scalar block
+      pq pp cq cp two single scalar block
     have test_run (label : Reply) (qs : List Address) :
         ∀ (policy : Policy) (U : Source) (baseHist : Hist (fun _ : Address => Reply)) (fuel : ℕ),
         qs.length + 1 ≤ fuel →

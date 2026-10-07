@@ -31,6 +31,13 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
                 StatementSource.FromAuthor(AlphaMulFormula()), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("The alpha address set of pair(s,t) is the union of the left-prefixed alpha addresses of s "
                         + "and the right-prefixed alpha addresses of t. The two prefixes are disjoint."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-image-composition-positive"),
+                DeclarationHandle.Create(Prefix + "positive"), H("Nonempty composition"),
+                StatementSource.FromAuthor(Disp(All("t",V("Source"),Seq(D(0),Sp,Lt,Sp,
+                    Call("a",V("t")),Sp,Plus,Sp,Call("b",V("t")))))),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every complete source t, a(t) and b(t) count its alpha and beta leaves. "
+                        + "Their sum is positive because a free magma tree has at least one leaf."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-image-address-certificate-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Sharp cardinality and depth"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(

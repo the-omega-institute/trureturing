@@ -51,7 +51,8 @@ internal sealed class FixedScalarFiberDiscoveryDocument : IScribeDocumentDefinit
                         + "come from the same original source. Controller computation, scalar acquisition and address text length are free.")),
                     Paragraph(Text("Adjacent Fibonacci coefficients are coprime. Nonnegativity leaves four compositions "
                         + "at stage zero and only (3,5) later. Actual composition transport forces a positive source's "
-                        + "preimage to have one leaf of each label, giving precisely P and Q. Each composition fiber is finite.")),
+                        + "preimage to have one leaf of each label. The composition fiber (1,1) has cardinality two "
+                        + "and is exhausted by the two opposite ordered pairs, giving precisely P and Q. Each composition fiber is finite.")),
                     Paragraph(Text("At stage zero the five beta responses force the branching skeleton and beta slots. "
                         + "The three remaining subtrees have scalar sum six and each contributes at least two, "
                         + "so all three are single alpha leaves. Label exchanges and beta grafts establish the unique minimum beta certificate. "
