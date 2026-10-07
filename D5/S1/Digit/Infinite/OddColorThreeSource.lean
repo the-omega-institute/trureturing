@@ -8,8 +8,10 @@
 
 import D5.S1.Digit.Infinite.ClosedObservationGraphRealization
 import D5.S1.Digit.Infinite.SignedSeriesFibres
+import D5.S1.Digit.Infinite.WindowCylinderPartition
 import Mathlib.Algebra.Ring.Periodic
 import Mathlib.Data.Bool.Basic
+import Mathlib.Data.Nat.SuccPred
 import Mathlib.Data.Set.Card
 
 set_option autoImplicit false
@@ -21,7 +23,6 @@ open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.SignedSeriesRange (signedValue signed_series_range v)
 open D5.S1.Digit.Infinite.SignedSeriesFibres
 open D5.S0.Automata.BinaryZeckendorfBlockSkeleton (ReturnBlock)
-open private prependBlock from D5.S1.Digit.Infinite.SignedSeriesFibres
 
 private theorem shift_add (x : LegalDigits) (a b : ℕ) :
     bitShift (bitShift x a) b = bitShift x (a + b) := by
@@ -37,23 +38,12 @@ private theorem periodic_shift (x : LegalDigits) (d n : ℕ)
 /-- The nonconstant alternating seam tail cannot occur in a purely odd-periodic stream. -/
 private theorem prepend_not_odd_periodic (w : List Block) (d : ℕ) (hd : Odd d) :
     ¬ Function.Periodic (prependWord w v).val d := by
-  induction w with
-  | nil =>
-    intro h
-    have h0 := h 0
-    have hm : d % 2 = 1 := Nat.odd_iff.mp hd
-    simp [prependWord, v, hm] at h0
-  | cons c w ih =>
-    intro h
-    apply ih
-    intro j
-    cases c with
-    | zero =>
-      simpa [prependWord, prependBlock, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
-        using h (j + 1)
-    | oneZero =>
-      simpa [prependWord, prependBlock, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
-        using h (j + 2)
+  intro h
+  have htail := h (len w)
+  rw [D5.S1.Digit.Infinite.WindowCylinderPartition.prepend_digits,
+    D5.S1.Digit.Infinite.WindowCylinderPartition.prepend_digits] at htail
+  have hm : d % 2 = 1 := Nat.odd_iff.mp hd
+  simp [show ¬ len w + d < len w by omega, v, hm] at htail
 
 /-- Apply the frozen fiber classification after excluding its displayed seam streams. -/
 private theorem odd_periodic_scalar_injective (d : ℕ) (hd : Odd d)
@@ -331,10 +321,6 @@ private theorem no_three_sources (β : ℝ) (hb : β < lambda) (m : ℕ)
     simp_rw [hs] at hh
     have hn := congrArg Bool.not hh
     simpa only [Bool.not_not] using hn.symm
-  have htwo : Function.Periodic S 2 := by
-    intro j
-    change S ((j + 1) + 1) = S j
-    rw [hstep, hstep, Bool.not_not]
   have hreturn : S m = S 0 := by
     have hr (i : Fin 3) : bitShift (x i) (3 * m) = x i := by
       apply Subtype.ext
@@ -346,15 +332,10 @@ private theorem no_three_sources (β : ℝ) (hb : β < lambda) (m : ℕ)
     funext i
     rw [hr i]
     rfl
-  obtain ⟨k, hk⟩ : ∃ k : ℕ, m = 2 * k + 1 := by
-    rcases hm with ⟨k, hk⟩
-    exact ⟨k, by omega⟩
   have hodd : S m = !(S 0) := by
-    have he := htwo.nat_mul k 1
-    rw [hk]
-    have he' : S (2 * k + 1) = S 1 := by
-      simpa only [Nat.cast_id, Nat.mul_comm, Nat.add_comm] using he
-    exact he'.trans (hstep 0)
+    have he := (show Function.Semiconj S Nat.succ Bool.not from hstep).iterate_right m 0
+    simpa only [Nat.succ_iterate, Nat.zero_add,
+      (show Function.Involutive Bool.not from Bool.not_not).iterate_odd hm] using he
   exact Bool.not_ne_self _ (hodd.symm.trans hreturn)
 
 /-- Every fixed odd closed color word admits at most two distinct actual periodic

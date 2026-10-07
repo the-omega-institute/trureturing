@@ -27,3 +27,4 @@ For three distinct values, either all three belong to one root group or one grou
 - Truth anchor: `D5/S1/Digit/Infinite/OddColorThreeSource.result`
 - Dependency: [D5/S1/Digit/Infinite/ClosedObservationGraphRealization](ClosedObservationGraphRealization.md)
 - Dependency: [D5/S1/Digit/Infinite/SignedSeriesFibres](SignedSeriesFibres.md)
+- Dependency: [D5/S1/Digit/Infinite/WindowCylinderPartition](WindowCylinderPartition.md)
