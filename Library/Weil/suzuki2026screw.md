@@ -103,3 +103,137 @@ the actual arithmetic estimates remain unproved.
 The [finite-pencil source](shi2026finitepencils.md) has a related
 relative-control problem with a different contrast space and metric;
 no identification of the two metrics is asserted.
+
+
+## A parameter-integrated Fourier bridge for the actual Riemann kernel
+
+Freedman, *Finite-core Volterra reductions for a Weyl-positive Riemann
+phase kernel*, [arXiv:2606.29555v1](https://arxiv.org/html/2606.29555v1),
+uses the actual even Riemann kernel $\Phi$ in Section 3, equations
+(1)–(6). Its operator is distinct from Suzuki's localized Weil operator.
+The inspected source passages are its main reduction status, Section 3,
+Section 15.7 and Appendix C.1; its interval certificates were not rerun
+and its complete analytic proof was not independently audited.
+
+Section 15.7 retains the full trace-space obligation
+$C-\Gamma^*\Gamma\succeq0$. Positivity on $\ker R_{\rm global}$ and
+bounded cross coupling supply a quotient decomposition with a possibly
+nonzero negative trace repair. The source states that the primitive trace
+image is dense in the transported trace space, so the required repair
+cannot be discarded by restricting to primitive original tests. Its
+stress-value calculations at $\omega=0.49$ supply no uniform positivity
+for $0<\omega<1/2$.
+
+Appendix C.1 seeks a same-parameter KLM-to-de Branges pullback. For the
+all-parameter positivity target, parameter integration gives a direct
+alternative interface. This is a paper-level calculation with the source's
+actual kernel, using standard Fourier transport and positivity under
+integration; no new general positivity theorem or originality is claimed.
+
+Set
+
+$$
+F(z)=\int_{\mathbb R}\Phi(t)e^{izt}\,dt,
+\qquad E_\omega(z)=F(z+i\omega).
+$$
+
+The source identifies $F$ with Riemann's $\Xi$ up to its fixed overall
+normalization. Keeping $F$ avoids mixing that scalar with the kernel
+normalization. The displayed theta series is real and even and has
+$\int_{\mathbb R}(1+|t|^2)e^{c|t|}|\Phi(t)|\,dt<\infty$ for every
+$c>0$; its positive-side tail decays superexponentially. Consequently
+$E_\omega^\#(z)=F(z-i\omega)$.
+For $z,w$ in the upper half-plane define the algebraic kernel
+
+$$
+\mathcal D_\omega(w,z)=
+\frac{E_\omega(z)\overline{E_\omega(w)}
+-E_\omega^\#(z)\overline{E_\omega^\#(w)}}
+{2\pi i(\overline w-z)}.
+\tag{W1}
+$$
+
+Calling (W1) an algebraic de Branges kernel does not assume its positivity.
+For the source's physical kernel put $p=(a+b)/2$, $d=(a-b)/2$:
+
+$$
+K_v(a,b)=\frac12\int_{|p|}^\infty
+ y\cosh(2vy)\Phi(y+d)\Phi(y-d)\,dy,
+\qquad 0\le v<1/2.
+\tag{W2}
+$$
+
+Its parameter integral is
+
+$$
+\overline K_\omega(a,b):=\int_0^\omega K_v(a,b)\,dv
+=\frac14\int_{|p|}^\infty
+\sinh(2\omega y)\Phi(y+d)\Phi(y-d)\,dy.
+\tag{W3}
+$$
+
+The exact transport is
+
+$$
+\boxed{\mathcal D_\omega(w,z)=\frac4\pi
+\int_{\mathbb R^2}\overline K_\omega(a,b)
+ e^{iza-i\overline w b}\,da\,db.}
+\tag{W4}
+$$
+
+To check the constants and orientation, write $k=z-\overline w$ and
+$\ell=z+\overline w$. The numerator of (W1), after
+$t_1=y+d$, $t_2=y-d$ and evenness of $\Phi$, is
+
+$$
+-8i\int_{\mathbb R}\int_0^\infty
+\Phi(y+d)\Phi(y-d)\sinh(2\omega y)
+\sin(ky)e^{i\ell d}\,dy\,dd.
+$$
+
+Its denominator is $-2\pi i k$. On the physical side,
+$da\,db=2\,dp\,dd$ and
+$\int_{-y}^y e^{ikp}\,dp=2\sin(ky)/k$.
+Substitution of (W3) therefore gives (W4). The exponential moments above
+dominate all the displayed integrals and the parameter differentiation on
+compact parameter and upper-half-plane evaluation sets. Equivalently,
+
+$$
+\partial_\omega\mathcal D_\omega(w,z)=\frac4\pi
+\int_{\mathbb R^2}K_\omega(a,b)e^{iza-i\overline w b}\,da\,db,
+\qquad \mathcal D_0=0.
+\tag{W5}
+$$
+
+If the actual $K_v$ is positive semidefinite for every $0<v<1/2$,
+then $\overline K_\omega$ is positive semidefinite. Test first with
+$1_{[-R,R]}(a)e^{iza}$ and finite linear combinations. Positivity follows
+from the continuous physical kernel by finite-sum approximation. Dominated
+convergence as $R\to\infty$ and (W4) give positivity of
+$\mathcal D_\omega$ on every finite upper-half-plane evaluation set.
+Thus a positive integral of the parameter family suffices; a pullback from
+one fixed $K_\omega$ is not needed for this implication.
+
+The zero-exclusion endpoint can be checked without assuming a de Branges
+space in advance. If $F$ had a zero $r$ with $\operatorname{Im}r>0$,
+choose $0<\omega<\min\{1/2,\operatorname{Im}r\}$ such that
+$F(r-2i\omega)\ne0$, possible by isolated zeros. At $z=r-i\omega$,
+
+$$
+\mathcal D_\omega(z,z)
+=-\frac{|F(r-2i\omega)|^2}{4\pi\operatorname{Im}z}<0,
+$$
+
+contradicting the transported positivity. Real symmetry then excludes
+lower-half-plane zeros as well. With the actual Riemann $F$, the full
+physical positivity hypothesis would therefore imply RH.
+
+This closes only the conditional Fourier/parameter interface for this
+specific actual-kernel target. The required physical positivity, including
+the trace-space Schur comparison and coverage arbitrarily close to
+$\omega=0$, remains unproved. A single stress value, a positive quotient,
+or a positive shifted Suzuki operator cannot replace it. The averaged
+kernel and the source's stronger parameterwise target are not claimed to
+be equivalent. No identity with Suzuki's Weil form or the same-source
+Robin integral is asserted, and no signed Robin estimate or Lean
+verification is supplied here.
