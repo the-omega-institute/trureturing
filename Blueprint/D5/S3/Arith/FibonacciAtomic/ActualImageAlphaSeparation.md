@@ -92,6 +92,7 @@ At every atom-compound hole, the atomic side contributes at least one alpha defi
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.forwardCount`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.frontier`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.result`
+- Dependency: [D5/S3/Arith/FibonacciAtomic/ActualHistorySingleHoleRecovery](ActualHistorySingleHoleRecovery.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate](ActualImageAddressCertificate.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation](ActualImageSevenLeafSeparation.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/SourceTransportCentralizer](SourceTransportCentralizer.md)
