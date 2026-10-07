@@ -1,0 +1,16 @@
+## 定义 29.3：记忆—时间可行域
+
+定义：
+
+$$
+\mathfrak R
+=
+\left\{
+(K,n):
+\begin{array}{l}
+\text{存在至多 }K\text{ 个控制状态的控制器},\\
+\text{对全部允许初始来源至多 }n\text{ 步完成}
+\end{array}
+\right\}.
+$$
+

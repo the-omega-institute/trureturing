@@ -267,6 +267,71 @@ role is not weakened by this optimization. The proof optimizes only
 certified scalar transport, while the potential improved paired-source
 bounds remain genuine open obligations.
 
+## 7. Unit-floor deletion credit still does not close this scalar budget
+
+The unit-floor conditioning rule is already available in
+[19, PR13](../../001-064/19-1-same-law-inputs-and-definitions.md#the-unchanged-ap46-continuation)
+and [303](../../257-320/303-the-same-law-gamma19-scalar-comparison-needs-joint-observations.md).
+It improves(R1), but does not make the current paired seed pass all three
+reference primes31,37,41. This is an application of the existing rule,
+not a new general conditioning theorem.
+The source is763's reference tuple(3,5,7,13,17,19,23,29), which omits11;
+it is not782's general source on the first eight odd primes.
+
+Scale ONE incoming source to exact mass M, with Gamma at most G. Write
+A=1+a(q)/(1-delta), and let D=G/[4delta(1-delta)(q-1)^2] be the scalar
+loss bound. If D<M and the ACTUAL deletion is d<=D, then each complete
+query square loses at least d because its unit term gives L>=1.
+The actual restricted square integral is consequently at most AG-d.
+Scale that SAME restriction to mass M-D. Since AG>=M, its query bound is
+
+    (M-D)(AG-d)/(M-d)<=AG-D,
+
+as the cross-product difference is(AG-M)(D-d)>=0. Thus the stronger
+paired scalar update is
+
+    M'=M-D, G'=AG-D.                                    (UF1)
+
+The common scaling is necessary: AG-D is not asserted to bound the
+unscaled restriction when d<D. The source is scaled before choosing any
+query, so the bound is simultaneous over all complete numerical layouts.
+
+There is a short obstruction covering EVERY real0<delta<1, without
+another threshold optimization. Put H=G-M. At a step with nonnegative
+incoming mass, (UF1) and A>=1+a(q) give
+
+    H'=H+(A-1)G>=(1+a(q))H,
+    D>=G/(q-1)^2>=H/(q-1)^2.                            (UF2)
+
+Suppose the first two updated mass budgets remain positive. Summing the
+three losses and propagating(UF2) gives
+
+    M3<=M0-(G0-M0)Q,
+    Q=1/30^2+(1+a(31))/36^2
+                +(1+a(31))(1+a(37))/40^2
+      =8777/3240000.
+
+For this report's EXACT paired seed, the right side equals
+
+    -1134029277636903489647/164602368000000000000000
+      =-0.006889507674864698...<0.                       (UF3)
+
+Hence unit-floor credit cannot make all three scalar mass budgets positive.
+Equivalently, this short necessary test requires the incoming ratio to
+exceed8777/3248777; this number is not the exact optimal threshold of(UF1).
+The rescaling inequality, all-real clipping inequalities and(UF3) have a
+scoped transient Lean check with the standard axiom closure; no new
+canonical Lean declaration is introduced. The underlying actual-source
+and full-height transport results retain their ordinary-proof status.
+
+This excludes only(UF1) with the stated scalar coefficients and seed.
+It gives no lower bound on actual deletion or actual Gamma, and no
+non-survival conclusion. In particular, the stronger complete-profile
+continuations in [771](771-stop-loss-profiles-preserve-the-ordinary-source-through-thirteen-primes.md)
+and [773](773-repeated-upper-mass-comparison-lowers-the-fourteen-prime-tail-cutoff.md)
+already retain more than this scalar pair. Their results and the unresolved
+general eight-prime source query condition are unaffected.
+
 ## Exact consumer
 
 The [consumer](../../../frontier/cover-geometry/fibre-credit-depth-two-obstruction/fibre_credit_depth_two_three_step_ratio_barrier.py)

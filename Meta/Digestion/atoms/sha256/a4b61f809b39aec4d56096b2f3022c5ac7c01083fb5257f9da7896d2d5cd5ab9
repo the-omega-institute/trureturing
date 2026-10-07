@@ -1,0 +1,19 @@
+**定理 101.1（有限列的整数最大公因子归一化）。** 令 $\iota$ 是带可判定相等的任意类型，$s\subseteq\iota$ 是有限集，$p\in\iota$ 且 $p\notin s$。给定整数 $a$ 与列 $v:\iota\to\mathbb Z$，存在 $\mathbb Z$-线性等价
+
+$$
+e:(\iota\to\mathbb Z)\simeq_{\mathbb Z}(\iota\to\mathbb Z)
+$$
+
+使得对每个满足 $x(p)=a$ 且 $x(i)=v(i)$（$i\in s$）的 $x$，有
+
+$$
+e(x)(i)=
+\begin{cases}
+\gcd\bigl(|a|,\gcd_{j\in s}|v(j)|\bigr),&i=p,\\
+0,&i\in s,\\
+x(i),&i\ne p\ \text{且}\ i\notin s.
+\end{cases}
+$$
+
+这里右侧的最大公因子先在 $\mathbb N$ 中取值，再嵌入 $\mathbb Z$；有限集为空、$a$ 或某些 $v(j)$ 为零、以及所有输入同时为零的情形都包含在断言中。等价只对满足所列前提的输入作上述值承诺，外部坐标的承诺正是最后一行所写的原值保持。
+

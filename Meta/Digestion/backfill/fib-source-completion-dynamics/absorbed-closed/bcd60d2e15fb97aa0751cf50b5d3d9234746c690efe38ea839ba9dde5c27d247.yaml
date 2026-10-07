@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:bcd60d2e15fb97aa0751cf50b5d3d9234746c690efe38ea839ba9dde5c27d247
+  normalized_sha256: sha256:bcd60d2e15fb97aa0751cf50b5d3d9234746c690efe38ea839ba9dde5c27d247
+cas_ref: sha256:bcd60d2e15fb97aa0751cf50b5d3d9234746c690efe38ea839ba9dde5c27d247
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.complete_closed_graph_common_tail_width
+    target_statement_id: sha256:bba1ed7649791823d87bf38c5440f1cfc6b68e19406686a729fa5060c85d2185
+  - gid: D5/S1/Digit/Infinite/ClosedObservationGraphRealization.closed_observation_graph_realization
+    target_statement_id: sha256:2216344ecd20f42bcc7521b54cb4dca365bfb86273b26a106a3d68bfd09b4f18
+receipts:
+  unresolved_subitems: []
