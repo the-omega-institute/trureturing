@@ -18,3 +18,4 @@ done
 # The current default workflow calls this candidate-only interface. Production,
 # validation, supervision, and publication all belong to the Inspector entry.
 exec env LAKE_BIN="$LAKE_BIN" "$PRODUCER" --repository "$CANDIDATE_ROOT" --output "$CANDIDATE_OUTPUT"
+
