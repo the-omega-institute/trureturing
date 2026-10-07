@@ -1,0 +1,35 @@
+### 38.4 命题：组成到区间的同源桥梁及方向
+
+取实线性读出 $\ell=(1,-t)$。由 $t^2=1-t$，
+
+$$
+\ell M=(-t,1-t)=-t\ell,\qquad
+\ell S_c=\gamma\ell,\qquad \ell d_a=\Delta_a.
+$$
+
+所以对每个规范有限来源 $d\in D$，
+
+$$
+\kappa_0(d)=\ell x(d).
+$$
+
+证明。前两式是矩阵乘法，第三式逐个代入五个 $d_a$。有限和允许逐项施加 $\ell$，从而
+
+$$
+\ell x(d)=\sum_j\ell S_c^j d_{a_j(d)}
+=\sum_j\gamma^j\Delta_{a_j(d)}=\kappa_0(d).
+$$
+
+全程使用同一 $d$，没有从两份独立读数选择尾部。$\square$
+
+对合法有限前接，组成也满足
+
+$$
+x(a\nu)=d_a+S_cx(\nu),\qquad
+x(Td)=S_c^{-1}\bigl(x(d)-d_{\operatorname{head}d}\bigr).
+$$
+
+故前向 $S_c$ 前缀生成，经 $\ell$ 成为 $f_a$ 收缩；符号删窗对应相反方向的分支逆。原子替换 $M$ 与窗口生成 $M^3$ 不能直接当作删窗时钟。本文以 $S_c$ 表示组成矩阵，后文以 $\mathcal S$ 表示双边移位。
+
+等式 $\kappa_0(d)=\ell x(d)$ 在这里只连接规范有限来源。它没有在一般 $K$ 上把 $\kappa_0(\omega)$ 认作独立 $z\in G$ 的实线性读数；本章未给 $G\to\mathbb R$ 的这种延拓。无限地址的 $\kappa$ 由收敛级数定义，不能用未经证明收敛的无限组成和替代。
+

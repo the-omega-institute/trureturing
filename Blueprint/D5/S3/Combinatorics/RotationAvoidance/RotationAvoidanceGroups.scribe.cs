@@ -8,16 +8,16 @@ internal sealed class RotationAvoidanceGroupsDocument : IScribeDocumentDefinitio
     private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/Combinatorics/egecioglu2026rotations");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Representative circular avoidance classes have explicit cardinalities and strict comparisons.",
+        "Three circular representative classes have uniformly separated cardinalities.",
         H("RotationAvoidanceGroups"),
         Blocks(
-            Node("rotationavoidancegroups-circularrepresentativecounts", "Circular representative counts", "circular_representative_counts", "For positive size, the circular avoider classes on size plus one entries have the following cardinalities: the 1234 class is 2 to the size plus one minus twice size minus one minus the binomial coefficient choosing three from size plus one; the 1432 and 2143 classes equal it; the 1342 class is 2 to the size minus size; the 1243 class equals the 1342 class; the 1324 class is the Fibonacci number with index twice size minus one; the 1423 and 2413 classes equal the 1324 class. When size is at least five, the 1342 class is smaller than the 1234 class, which is smaller than the 1324 class.", DescribeRole.Theorem)
+            Node("rotationavoidancegroups-circularrepresentativeseparations", "Strict separation of three circular classes", "circular_representative_separations", "For size at least five, the number of circular permutations of one through size plus one rooted at one and avoiding 1342 is strictly smaller than the number avoiding 1234, which is strictly smaller than the number avoiding 1324. Cutting at the minimum and increasing relabelling identify these circular classes with classical avoidance classes. Their counts are 2^size minus size, 2^(size + 1) minus twice size minus one minus the binomial coefficient choosing three from size plus one, and F_(2 size - 1), respectively. Exponential bounds and a Fibonacci recurrence give the strict comparisons.", DescribeRole.Theorem)
         ), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, string prose,
-        DescribeRole role) =>
+        DescribeRole role, OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 }
 

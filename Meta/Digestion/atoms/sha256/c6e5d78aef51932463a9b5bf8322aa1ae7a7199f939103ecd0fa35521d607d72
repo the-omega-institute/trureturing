@@ -1,0 +1,28 @@
+**定义 72.30（约化三角图）。** 固定 $m\ge2$，令
+
+$$
+T_m=\{(r,e):0\le r<e\le m\},\qquad o=(1,m).
+\tag{72.8}
+$$
+
+状态的动作及后继只有以下两类：
+
+$$
+\begin{array}{c|c|c|c}
+\text{条件}&\text{动作}&(r',e')&\text{本列输出标签}\\ \hline
+2r\ge e&b=1&(2r-e,e)&1,\ldots,e\\
+2r<e&b=0,\quad 0\le h\le2r&(2r-h,e-h)&e-h+1,\ldots,e
+\end{array}
+\tag{72.9}
+$$
+
+$h=0$ 的输出列表为空。$(0,e)$ 只有 $b=h=0$ 的零费用、零锚位自环；$e=1$ 只有 $(0,1)$。对根路径 $s_d=(r_d,e_d)$，第 $d+1$ 列锚位为 $b_{d+1}$，定义
+
+$$
+t_\gamma=\sum_{d=0}^{\infty}2^{-d-1}b_{d+1},\qquad
+C_\gamma=\sum_{d=0}^{\infty}2^{-d}r_d.
+\tag{72.10}
+$$
+
+这里 $r_d$ 是一整层尚未停止的柱集数，不是一次转移要读取 $r_d$ 个随机位。
+

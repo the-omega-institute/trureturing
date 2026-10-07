@@ -1,0 +1,37 @@
+### 定理 9.4（指定未来读出的精确行为商与距离）
+
+继续固定命题 9.3 的逻辑二维子空间，允许其中的全部密度矩阵。上下文恰为按式（9.3）演化任意 $t\ge0$，随后读取首位的两结果概率律；不包含中途测量或其他控制。令
+
+$$
+z=\rho_{00}-\rho_{11},\qquad y=-2\operatorname{Im}\rho_{01},
+$$
+
+其中矩阵元按 $|0,r\rangle,|1,r\rangle$ 取。则
+
+$$
+\dot z=\Omega y,\qquad \dot y=-\Omega z,\qquad
+p_1(t)=\frac{1-z\cos(\Omega t)-y\sin(\Omega t)}2.
+\tag{9.5}
+$$
+
+对任意两态 $\rho,\widetilde\rho$，其未来概率律的上确界全变差距离精确为
+
+$$
+d_{\rm future}(\rho,\widetilde\rho)
+ :=\sup_{t\ge0}d_{\rm TV}\bigl((1-p_1(t),p_1(t)),
+ (1-\widetilde p_1(t),\widetilde p_1(t))\bigr)
+ =\frac12\sqrt{(z-\widetilde z)^2+(y-\widetilde y)^2}.
+\tag{9.6}
+$$
+
+相应面积期望读出的上确界距离为
+
+$$
+d_{\rm area}(\rho,\widetilde\rho)
+:=\sup_{t\ge0}|\mathcal A_\rho(t)-\mathcal A_{\widetilde\rho}(t)|
+=(\log3)d_{\rm future}(\rho,\widetilde\rho).
+\tag{9.7}
+$$
+
+零距离当且仅当 $(z,y)=(\widetilde z,\widetilde y)$。因此这些上下文的精确行为商是闭单位圆盘 $\{(z,y):z^2+y^2\le1\}$，带二分之一欧氏距离；未来演化在商上闭合为式（9.5）的旋转。
+

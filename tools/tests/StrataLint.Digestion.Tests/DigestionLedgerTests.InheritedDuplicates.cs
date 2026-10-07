@@ -11,7 +11,7 @@ public sealed partial class DigestionLedgerTests
     private const string DuplicateProbePath = "D5/S0/Carrier/Probe.lean";
 
     [Fact]
-    public void BaselineInheritedDuplicateAtomIsObservedNotJudged()
+    public void DuplicateAtomIsObservedNotJudged()
     {
         var duplicated = CompleteWitnessAtom();
         var other = CompleteWitnessAtom("second atom receipt\n");
@@ -27,19 +27,17 @@ public sealed partial class DigestionLedgerTests
             document,
             DuplicateSnapshot(duplicated, other),
             AcceptedLean(DuplicateProbePath),
-            baselineDocument: document,
-            baselineSnapshot: DuplicateSnapshot(duplicated, other),
             changes: RawChangeSet.Create(["notes/unrelated.txt"]));
 
         Assert.Empty(evaluation.Findings);
         Assert.Contains(
-            $"duplicate atom_id inherited from baseline (not judged): {duplicatedId}",
+            $"duplicate atom_id (not judged): {duplicatedId}",
             evaluation.Observations);
         Assert.Equal([otherId], evaluation.Entries.Select(static entry => entry.Entry.AtomId));
     }
 
     [Fact]
-    public void InheritedDuplicateParentChainingToInheritedDuplicateChildIsNotJudged()
+    public void DuplicateParentChainingToDuplicateChildIsNotJudged()
     {
         var child = CompleteWitnessAtom();
         var parent = CompleteWitnessAtom("parent clause receipt\n");
@@ -63,66 +61,16 @@ public sealed partial class DigestionLedgerTests
             document,
             DuplicateSnapshot(child, parent, other),
             AcceptedLean(DuplicateProbePath),
-            baselineDocument: document,
-            baselineSnapshot: DuplicateSnapshot(child, parent, other),
             changes: RawChangeSet.Create(["docs/source.md"]));
 
         Assert.True(evaluation.Findings.IsEmpty, string.Join(" | ", evaluation.Findings));
         Assert.Equal([otherId], evaluation.Entries.Select(static entry => entry.Entry.AtomId));
         Assert.Equal(
             [
-                $"duplicate atom_id inherited from baseline (not judged): {childId}",
-                $"duplicate atom_id inherited from baseline (not judged): {parentId}",
+                $"duplicate atom_id (not judged): {childId}",
+                $"duplicate atom_id (not judged): {parentId}",
             ],
             evaluation.Observations.Where(static item => item.StartsWith("duplicate atom_id", StringComparison.Ordinal)).Order(StringComparer.Ordinal));
-    }
-
-    [Fact]
-    public void CandidateIntroducedDuplicateAtomStillBlocks()
-    {
-        var duplicated = CompleteWitnessAtom();
-        var other = CompleteWitnessAtom("second atom receipt\n");
-        var duplicatedId = AtomId(duplicated);
-        var baseline = DuplicateLedger(
-            DuplicateEntry(duplicated, DigestionMigrationState.Partial),
-            DuplicateEntry(other, DigestionMigrationState.Partial));
-        var candidate = DuplicateLedger(
-            DuplicateEntry(duplicated, DigestionMigrationState.Partial),
-            DuplicateEntry(duplicated, DigestionMigrationState.Absorbed),
-            DuplicateEntry(other, DigestionMigrationState.Partial));
-
-        var evaluation = DigestionStatusEvaluator.Evaluate(
-            DigestionEvaluationScope.ChangedSet,
-            candidate,
-            DuplicateSnapshot(duplicated, other),
-            AcceptedLean(DuplicateProbePath),
-            baselineDocument: baseline,
-            baselineSnapshot: DuplicateSnapshot(duplicated, other),
-            changes: RawChangeSet.CreateWithKinds(
-                [(EntryPath(DigestionMigrationState.Absorbed, duplicatedId), RawChangeKind.Added)]));
-
-        Assert.Equal($"duplicate atom_id: {duplicatedId}", Assert.Single(evaluation.Findings));
-        Assert.Empty(evaluation.Entries);
-        Assert.Empty(evaluation.Observations);
-    }
-
-    [Fact]
-    public void DuplicateAtomWithoutBaselineDocumentStillBlocks()
-    {
-        var duplicated = CompleteWitnessAtom();
-        var duplicatedId = AtomId(duplicated);
-        var candidate = DuplicateLedger(
-            DuplicateEntry(duplicated, DigestionMigrationState.Partial),
-            DuplicateEntry(duplicated, DigestionMigrationState.Absorbed));
-
-        var evaluation = DigestionStatusEvaluator.Evaluate(
-            DigestionEvaluationScope.FullScan,
-            candidate,
-            DuplicateSnapshot(duplicated),
-            AcceptedLean(DuplicateProbePath));
-
-        Assert.Equal($"duplicate atom_id: {duplicatedId}", Assert.Single(evaluation.Findings));
-        Assert.Empty(evaluation.Entries);
     }
 
     private static DigestionLedgerEntry WithChain(DigestionLedgerEntry entry, string childId) =>
