@@ -291,18 +291,17 @@ private theorem golden_twentieth (n : ℕ) :
     exact hh
 
 private theorem golden_order_mod_five : orderOf (GoldenMod.phi : GoldenMod 5) = 20 := by
-  apply orderOf_eq_of_pow_and_pow_div_prime (by decide : 0 < 20)
-  · decide
-  · intro p hp hd
-    have hcases : p = 2 ∨ p = 5 := by
-      have : p ∣ 4 * 5 := hd
-      rcases hp.dvd_mul.mp this with h4 | h5
-      · left
-        exact (Nat.prime_dvd_prime_iff_eq hp Nat.prime_two).mp
-          (hp.dvd_of_dvd_pow (by simpa using h4 : p ∣ 2 ^ 2))
-      · right
-        exact (Nat.prime_dvd_prime_iff_eq hp Nat.prime_five).mp h5
-    rcases hcases with rfl | rfl <;> decide
+  let f := (goldenMatrixHom 5).toMonoidHom
+  have hi : Function.Injective f := by
+    intro x y h
+    apply GoldenMod.ext
+    · simpa [f, goldenMatrixHom, multiplicationMatrix] using
+        congrArg (fun M : Mat 5 => M 1 1) h
+    · simpa [f, goldenMatrixHom, multiplicationMatrix] using
+        congrArg (fun M : Mat 5 => M 0 1) h
+  have hperiod := golden_fibonacci_modulus_period 5 (by decide) (by decide)
+  rw [← orderOf_injective f hi]
+  simpa [f, goldenMatrixHom, multiplicationMatrix, GoldenMod.phi, Nat.fib] using hperiod
 
 private theorem golden_order_five_power (a : ℕ) (ha : 1 ≤ a) :
     orderOf (GoldenMod.phi : GoldenMod (5 ^ a)) = 4 * 5 ^ a := by
