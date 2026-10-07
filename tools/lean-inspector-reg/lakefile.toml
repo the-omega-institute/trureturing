@@ -40,3 +40,37 @@ root = "LeanInformationAuditRegTests.CompiledDiscovery"
 name = "nodeFactTests"
 srcDir = "../lean-inspector"
 root = "LeanInformationAuditRegTests.NodeFactMain"
+
+[[lean_exe]]
+name = "k2FactsGenerator"
+srcDir = "../lean-inspector"
+root = "LeanInformationAuditRegAnalysis.K2FactsGenerator"
+supportInterpreter = true
+
+[[lean_exe]]
+name = "k2SourceFactsGenerator"
+srcDir = "../lean-inspector"
+root = "LeanInformationAuditRegAnalysis.K2SourceFactsGenerator"
+supportInterpreter = true
+
+[[lean_exe]]
+name = "k2PostprocessGenerator"
+srcDir = "../lean-inspector"
+root = "LeanInformationAuditRegAnalysis.K2PostprocessGenerator"
+supportInterpreter = true
+
+[[lean_exe]]
+name = "k2OriginalArtifactCheck"
+srcDir = "../lean-inspector"
+root = "LeanInformationAuditRegAnalysis.K2OriginalArtifactCheck"
+
+[[lean_exe]]
+name = "k2ProducerAPICompatibility"
+srcDir = "../lean-inspector"
+root = "LeanInformationAuditRegAnalysis.K2ProducerAPICompatibility"
+
+[[lean_exe]]
+name = "k2SourceOpeningValidation"
+srcDir = "../lean-inspector"
+root = "LeanInformationAuditRegAnalysis.K2SourceOpeningValidation"
+supportInterpreter = true
