@@ -4988,3 +4988,7 @@ $$
 Gaussian 的完整 Möbius 调和衰减是 §471 固定 $x$ 变差与端点的候选算术供应；它仍须经过准确的全体／奇数传输和本库核验。固定 $x$ 的收敛也不支付共同临界尺度上的有符号补偿。以上关系未建立 $5040$、Fibonacci 与拓扑例外的数值同构，亦未证明 Robin 最终符号或 RH。
 
 ## 追加锚（本行以下为增补区）
+
+**§472 引文定位勘正。** 所引固定版本的正确仓库相对路径为 [`lean/OAI/NumberTheory/DirichletL/EulerFactors.lean`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/DirichletL/EulerFactors.lean)；原引文省略了 `lean/` 前缀。本增补仅修正文献定位，不新增数学内容，也不补足算术或权重桥梁。
+
+## 追加锚（本行以下为增补区）
