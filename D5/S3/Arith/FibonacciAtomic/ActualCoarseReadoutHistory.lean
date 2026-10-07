@@ -33,13 +33,10 @@ def kappa_hist (h : Hist (fun _ : Address => Reply)) : Hist (fun _ : Address => 
 
 local notation "κHist" => kappa_hist
 
-/-- The original selector depends only on its coarse chronological history. -/
-def CoarseObservable (p : Policy) : Prop :=
-  ∀ h k, κHist h = κHist k → p h = p k
-
 /-- Distinct nonconflicting positive trees diverge at a fresh coarse query.
 If both have already paid a nonleaf on a shared prefix, one final excess is at least two. -/
-theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservable π.policy)
+theorem shared_history_obstruction (π : Strategy)
+    (observable : Function.FactorsThrough π.policy kappa_hist)
     (U V : Source) (positiveU : Positive U) (_positiveV : Positive V)
     (different : U ≠ V) (nc : Nonconflict U V)
     (h : Hist (fun _ : Address => Option Bool))
@@ -80,7 +77,7 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
       cases m with
       | zero => simp [execute] at runV
       | succ m =>
-        have action := observable a b same
+        have action := observable same
         cases step : π.policy a with
         | inr z =>
           have other : π.policy b = .inr z := action.symm.trans step
