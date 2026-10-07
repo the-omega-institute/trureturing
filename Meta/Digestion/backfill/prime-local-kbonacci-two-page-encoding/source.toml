@@ -1,0 +1,5 @@
+source_id = "prime-local-kbonacci-two-page-encoding"
+path = "docs/develop/theory/PRIME_LOCAL_KBONACCI_TWO_PAGE_ENCODING.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

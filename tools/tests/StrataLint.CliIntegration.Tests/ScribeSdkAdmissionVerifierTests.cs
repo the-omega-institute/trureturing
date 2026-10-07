@@ -12,7 +12,7 @@ public sealed class ScribeSdkAdmissionVerifierTests
     {
         var files = Inputs();
         files[Entry] = Definition("private static int Unused() => 1;");
-        var error = Assert.Throws<ScribeSdkAdmissionException>(() => new ProductionScribeEmissionVerifier().Verify(
+        var error = Assert.Throws<ScribeVerificationException>(() => new ProductionScribeEmissionVerifier().Verify(
             Snapshot(files), EmptyReport(), RawChangeSet.Create([Entry])));
         Assert.Contains("ScribeSdkDiagnostic", error.Message, StringComparison.Ordinal);
         Assert.Contains("IDE0051", error.Message, StringComparison.Ordinal);
@@ -27,7 +27,7 @@ public sealed class ScribeSdkAdmissionVerifierTests
         var files = Inputs();
         files[Entry] = Definition("");
         files.Remove(".editorconfig");
-        var error = Assert.Throws<ScribeSdkAdmissionException>(() => new ProductionScribeEmissionVerifier().Verify(
+        var error = Assert.Throws<ScribeVerificationException>(() => new ProductionScribeEmissionVerifier().Verify(
             Snapshot(files), EmptyReport(), RawChangeSet.Create([Entry])));
         Assert.Contains("ScribeSdkInfrastructure", error.Message, StringComparison.Ordinal);
         Assert.Contains(".editorconfig", error.Message, StringComparison.Ordinal);
