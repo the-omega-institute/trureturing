@@ -59,8 +59,8 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
     let duplicate := mkLambda `index .default (mkApp (mkConst ``Fin) fields[3]!)
       (mkApp fields[4]! (CompiledSeal.indexValue 0 2))
     let arguments := raw.getAppArgs
-    let mutated := { firstCatalog with value := mkAppN raw.getAppFn
-      (arguments.set! (arguments.size - 11 + 4) duplicate) }
+    let mutatedValue := mkAppN raw.getAppFn (arguments.set! (arguments.size - 11 + 4) duplicate)
+    let mutated := { firstCatalog with value := mutatedValue }
     let wrong := { input with catalogs := #[mutated] }
     let rejected ← try
       discard <| (CompiledSeal.consume snapshot root wrong).run state
