@@ -14,6 +14,7 @@
 -/
 
 import D5.S3.Quantum.Foundation.FiniteKrausRepresentation
+import D5.S3.QuantumBounds.PeritoTsirelson
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.LinearAlgebra.Matrix.NonsingularInverse
@@ -46,6 +47,7 @@ open scoped BigOperators CStarAlgebra ComplexOrder MatrixOrder Kronecker
 open D5.S3.Quantum.Foundation.FiniteKrausChannel
 open D5.S3.Quantum.Foundation.FiniteStateChannel
 open D5.S3.Quantum.Information.PartialTraceMutualInformation
+open D5.S3.QuantumBounds.PeritoTsirelson
 
 namespace D5.S3.Quantum.Recovery.LiJiangPolarPairOptimalityRefutation
 
@@ -59,18 +61,11 @@ def lambda2 (d : ℕ) (p : ℝ) : ℝ :=
 def lambda3 (d : ℕ) (p : ℝ) : ℝ :=
   2 * (1 - lambda1 d p)^2 / ((d : ℝ)^2 * lambda4 d p)
 
-/-- The normalized canonical purification of I/d, in physical product order. -/
-def canonicalPurification (d : ℕ) : Fin d × Fin d → ℂ :=
-  fun ij => if ij.1 = ij.2 then ((Real.sqrt (d : ℝ))⁻¹ : ℝ) else 0
-
-def sourcePi (d : ℕ) : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ :=
-  Matrix.vecMulVec (canonicalPurification d) (star (canonicalPurification d))
-
 /-- The positive source matrix Q in Eq.18. -/
 def sourceQ (d : ℕ) (p : ℝ) : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ :=
   (Real.sqrt (d : ℝ) : ℂ) •
-    ((Real.sqrt (lambda4 d p / ((d : ℝ)^2 - 1)) : ℂ) • (1 - sourcePi d) +
-     (Real.sqrt (lambda5 d p) : ℂ) • sourcePi d)
+    ((Real.sqrt (lambda4 d p / ((d : ℝ)^2 - 1)) : ℂ) • (1 - maxEntangled (Fin d)) +
+     (Real.sqrt (lambda5 d p) : ℂ) • maxEntangled (Fin d))
 
 /-- I_L tensor bra(j), tracing out the right factor. -/
 def sourceD (d : ℕ) (j : Fin d) : Matrix (Fin d) (Fin d × Fin d) ℂ :=
@@ -85,7 +80,7 @@ def sourceE (d : ℕ) (p : ℝ) (ij : Fin d × Fin d) :
     Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ :=
   ((Real.sqrt (lambda4 d p))⁻¹ : ℂ) •
     (Matrix.vecMulVec (fun a => if a = ij then (1 : ℂ) else 0)
-       (star (canonicalPurification d)) -
+       (star (maxEntangledVector (Fin d))) -
      (Real.sqrt (lambda5 d p) : ℂ) • (sourceB d p ij).conjTranspose)
 
 def rightTrace (d : ℕ) : PhyslibLeaf.MatrixMap (Fin d × Fin d) (Fin d) ℂ where
@@ -157,10 +152,10 @@ def inputFirstChoi {a b : Type*} [Fintype a] [DecidableEq a]
 
 /-- Genuine canonical-purification overlap for I/d. No output trace renormalization. -/
 def entanglementFidelity (d : ℕ) (f : PhyslibLeaf.MatrixMap (Fin d) (Fin d) ℂ) : ℝ :=
-  let psi := canonicalPurification d
+  let psi := maxEntangledVector (Fin d)
   (dotProduct (star psi)
     ((PhyslibLeaf.MatrixMap.kron f LinearMap.id
-      (Matrix.vecMulVec psi (star psi))).mulVec psi)).re
+      (maxEntangled (Fin d))).mulVec psi)).re
 
 /-- Full original dominance reading of the fixed-p polar-pair optimality question. -/
 def claim : Prop :=
@@ -235,18 +230,18 @@ theorem result : Not claim := by
     have hs2inv : ((Real.sqrt 2)⁻¹ : ℝ) * (Real.sqrt 2)⁻¹ = 1/2 := by
       rw [← mul_inv_rev, ← pow_two, hs2]
       norm_num
-    have hpi : sourcePi 2 = Matrix.of (fun a b : Fin 2 × Fin 2 =>
+    have hpi : maxEntangled (Fin 2) = Matrix.of (fun a b : Fin 2 × Fin 2 =>
         if a.1 = a.2 ∧ b.1 = b.2 then (1/2 : ℂ) else 0) := by
       ext ⟨a,b⟩ ⟨c,d⟩
       fin_cases a <;> fin_cases b <;> fin_cases c <;> fin_cases d <;>
-        norm_num [sourcePi, canonicalPurification, Matrix.vecMulVec,
+        norm_num [maxEntangled, maxEntangledVector, Fintype.card_fin, Matrix.vecMulVec,
           ← Complex.ofReal_mul, hs2inv, Matrix.of_apply]
       all_goals rw [← mul_inv_rev, ← pow_two, hs2c]
       all_goals norm_num
     have hQform : sourceQ 2 (9/13) =
         (Real.sqrt 2 : ℂ) •
-          ((Real.sqrt (4/13) : ℂ) • (1 - sourcePi 2) +
-           (Real.sqrt (1/13) : ℂ) • sourcePi 2) := by
+          ((Real.sqrt (4/13) : ℂ) • (1 - maxEntangled (Fin 2)) +
+           (Real.sqrt (1/13) : ℂ) • maxEntangled (Fin 2)) := by
       simp only [sourceQ, hl4, hl5]
       norm_num only
     rw [hQform, smul_add, smul_smul, smul_smul, hac, hbc, hpi]
@@ -291,11 +286,13 @@ theorem result : Not claim := by
     have hbc : ((Real.sqrt (12/13))⁻¹ : ℂ) * (Real.sqrt (1/13) : ℂ) * ((Real.sqrt 26)⁻¹ : ℂ) = 1 / (2 * (Real.sqrt 78 : ℂ)) := by exact_mod_cast hb
     classical
     let delta : Fin 2 × Fin 2 → ℂ := fun b => if b.1=b.2 then 1 else 0
-    have hpsi : star (canonicalPurification 2) = ((Real.sqrt 2 : ℂ)⁻¹) • delta := by
+    have hpsi : star (maxEntangledVector (Fin 2)) =
+        ((Real.sqrt 2 : ℂ)⁻¹) • delta := by
       ext ⟨a,b⟩
-      fin_cases a <;> fin_cases b <;> norm_num [canonicalPurification, Pi.star_apply, delta, Complex.ofReal_inv]
+      fin_cases a <;> fin_cases b <;>
+        norm_num [maxEntangledVector, Fintype.card_fin, Pi.star_apply, delta, Complex.ofReal_inv]
     have hvec (ij : Fin 2 × Fin 2) :
-        Matrix.vecMulVec (fun a => if a=ij then (1:ℂ) else 0) (star (canonicalPurification 2)) =
+        Matrix.vecMulVec (fun a => if a=ij then (1:ℂ) else 0) (star (maxEntangledVector (Fin 2))) =
           ((Real.sqrt 2 : ℂ)⁻¹) • Matrix.vecMulVec (fun a => if a=ij then (1:ℂ) else 0) delta := by
       rw [hpsi]
       ext a b
@@ -516,30 +513,30 @@ theorem result : Not claim := by
     classical
     let c : ℂ := (Real.sqrt (d : ℝ))⁻¹
     have hcstar : star c = c := by simp [c]
-    have hds : (Real.sqrt (d : ℝ)) ^ 2 = d := Real.sq_sqrt (by positivity)
-    have hn : Real.sqrt (d : ℝ) ≠ 0 := ne_of_gt (Real.sqrt_pos.2 (by positivity))
+    let : NeZero d := ⟨Nat.ne_of_gt hd⟩
     have hcc : c*c = ((d : ℝ)⁻¹ : ℝ) := by
-      have hdsC : (Real.sqrt (d : ℝ) : ℂ)^2 = (d : ℂ) := by exact_mod_cast hds
-      dsimp only [c]
-      rw [← mul_inv_rev, ← pow_two, hdsC]
-      simp only [Complex.ofReal_inv, Complex.ofReal_natCast]
+      simpa [Matrix.single_kronecker_single, Matrix.transpose_single,
+        Matrix.trace_mul_single, maxEntangled, maxEntangledVector,
+        Fintype.card_fin, Matrix.vecMulVec, c] using
+        max_entangled_trace (Fin d) (Matrix.single 0 0 1) (Matrix.single 0 0 1)
     let delta : Fin d × Fin d → ℂ := fun a => if a.1 = a.2 then 1 else 0
-    have hpsi : canonicalPurification d = c • delta := by
+    have hpsi : maxEntangledVector (Fin d) = c • delta := by
       ext a
-      simp [canonicalPurification, c, delta]
-    have hproj : Matrix.vecMulVec (canonicalPurification d) (star (canonicalPurification d)) =
+      simp [maxEntangledVector, Fintype.card_fin, c, delta]
+    have hproj : maxEntangled (Fin d) =
         (c*c) • Matrix.vecMulVec delta (star delta) := by
       ext a b
-      simp [hpsi, Matrix.vecMulVec, hcstar, Pi.star_apply, star_mul]
+      simp [maxEntangled, hpsi, Matrix.vecMulVec, hcstar, Pi.star_apply, star_mul]
       ring
     have hmap : PhyslibLeaf.MatrixMap.kron (PhyslibLeaf.MatrixMap.of_kraus L L) LinearMap.id
-        (Matrix.vecMulVec (canonicalPurification d) (star (canonicalPurification d))) =
+        (maxEntangled (Fin d)) =
         (c*c) • PhyslibLeaf.MatrixMap.choi_matrix (PhyslibLeaf.MatrixMap.of_kraus L L) := by
       rw [hproj, map_smul]
       congr 1
       exact (PhyslibLeaf.MatrixMap.choi_matrix_eq_map_proj _).symm
     have hcontract (M : Matrix (Fin d × Fin d) (Fin d × Fin d) ℂ) :
-        dotProduct (star (canonicalPurification d)) (M.mulVec (canonicalPurification d)) =
+        dotProduct (star (maxEntangledVector (Fin d)))
+          (M.mulVec (maxEntangledVector (Fin d))) =
           (c*c) * ∑ a : Fin d, ∑ b : Fin d, M (a,a) (b,b) := by
       simp [hpsi, Matrix.mulVec, dotProduct, Fintype.sum_prod_type, delta,
         hcstar, Finset.mul_sum, Finset.sum_mul, Pi.star_apply,

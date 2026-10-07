@@ -1,0 +1,3329 @@
+{
+  "bubble_integral": {
+    "denominator": "216",
+    "numerator": "1"
+  },
+  "corner_integral_bridge": {
+    "domain": "independent occupation parameters [0,1]^3",
+    "kernel_integral": [
+      [
+        {
+          "denominator": "1",
+          "numerator": "2"
+        },
+        {
+          "denominator": "4",
+          "numerator": "3"
+        }
+      ],
+      [
+        {
+          "denominator": "2",
+          "numerator": "3"
+        },
+        {
+          "denominator": "2",
+          "numerator": "1"
+        }
+      ]
+    ],
+    "open_integral": {
+      "denominator": "4",
+      "numerator": "11"
+    },
+    "triangle_integral": {
+      "denominator": "2",
+      "numerator": "5"
+    }
+  },
+  "cycles": {
+    "binary_words_examined": 131070,
+    "euler_coefficients_degree_0_to_16": [
+      1,
+      1,
+      2,
+      3,
+      5,
+      8,
+      13,
+      21,
+      34,
+      55,
+      89,
+      144,
+      233,
+      377,
+      610,
+      987,
+      1597
+    ],
+    "lengths": [
+      {
+        "all_binary_words": 2,
+        "cycle_count": 1,
+        "length": 1,
+        "minimal_period_counts": {
+          "1": 1
+        },
+        "open_count": 2,
+        "primitive_marked_count": 1,
+        "primitive_rotation_orbits": 1
+      },
+      {
+        "all_binary_words": 4,
+        "cycle_count": 3,
+        "length": 2,
+        "minimal_period_counts": {
+          "1": 1,
+          "2": 2
+        },
+        "open_count": 3,
+        "primitive_marked_count": 2,
+        "primitive_rotation_orbits": 1
+      },
+      {
+        "all_binary_words": 8,
+        "cycle_count": 4,
+        "length": 3,
+        "minimal_period_counts": {
+          "1": 1,
+          "3": 3
+        },
+        "open_count": 5,
+        "primitive_marked_count": 3,
+        "primitive_rotation_orbits": 1
+      },
+      {
+        "all_binary_words": 16,
+        "cycle_count": 7,
+        "length": 4,
+        "minimal_period_counts": {
+          "1": 1,
+          "2": 2,
+          "4": 4
+        },
+        "open_count": 8,
+        "primitive_marked_count": 4,
+        "primitive_rotation_orbits": 1
+      },
+      {
+        "all_binary_words": 32,
+        "cycle_count": 11,
+        "length": 5,
+        "minimal_period_counts": {
+          "1": 1,
+          "5": 10
+        },
+        "open_count": 13,
+        "primitive_marked_count": 10,
+        "primitive_rotation_orbits": 2
+      },
+      {
+        "all_binary_words": 64,
+        "cycle_count": 18,
+        "length": 6,
+        "minimal_period_counts": {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "6": 12
+        },
+        "open_count": 21,
+        "primitive_marked_count": 12,
+        "primitive_rotation_orbits": 2
+      },
+      {
+        "all_binary_words": 128,
+        "cycle_count": 29,
+        "length": 7,
+        "minimal_period_counts": {
+          "1": 1,
+          "7": 28
+        },
+        "open_count": 34,
+        "primitive_marked_count": 28,
+        "primitive_rotation_orbits": 4
+      },
+      {
+        "all_binary_words": 256,
+        "cycle_count": 47,
+        "length": 8,
+        "minimal_period_counts": {
+          "1": 1,
+          "2": 2,
+          "4": 4,
+          "8": 40
+        },
+        "open_count": 55,
+        "primitive_marked_count": 40,
+        "primitive_rotation_orbits": 5
+      },
+      {
+        "all_binary_words": 512,
+        "cycle_count": 76,
+        "length": 9,
+        "minimal_period_counts": {
+          "1": 1,
+          "3": 3,
+          "9": 72
+        },
+        "open_count": 89,
+        "primitive_marked_count": 72,
+        "primitive_rotation_orbits": 8
+      },
+      {
+        "all_binary_words": 1024,
+        "cycle_count": 123,
+        "length": 10,
+        "minimal_period_counts": {
+          "1": 1,
+          "10": 110,
+          "2": 2,
+          "5": 10
+        },
+        "open_count": 144,
+        "primitive_marked_count": 110,
+        "primitive_rotation_orbits": 11
+      },
+      {
+        "all_binary_words": 2048,
+        "cycle_count": 199,
+        "length": 11,
+        "minimal_period_counts": {
+          "1": 1,
+          "11": 198
+        },
+        "open_count": 233,
+        "primitive_marked_count": 198,
+        "primitive_rotation_orbits": 18
+      },
+      {
+        "all_binary_words": 4096,
+        "cycle_count": 322,
+        "length": 12,
+        "minimal_period_counts": {
+          "1": 1,
+          "12": 300,
+          "2": 2,
+          "3": 3,
+          "4": 4,
+          "6": 12
+        },
+        "open_count": 377,
+        "primitive_marked_count": 300,
+        "primitive_rotation_orbits": 25
+      },
+      {
+        "all_binary_words": 8192,
+        "cycle_count": 521,
+        "length": 13,
+        "minimal_period_counts": {
+          "1": 1,
+          "13": 520
+        },
+        "open_count": 610,
+        "primitive_marked_count": 520,
+        "primitive_rotation_orbits": 40
+      },
+      {
+        "all_binary_words": 16384,
+        "cycle_count": 843,
+        "length": 14,
+        "minimal_period_counts": {
+          "1": 1,
+          "14": 812,
+          "2": 2,
+          "7": 28
+        },
+        "open_count": 987,
+        "primitive_marked_count": 812,
+        "primitive_rotation_orbits": 58
+      },
+      {
+        "all_binary_words": 32768,
+        "cycle_count": 1364,
+        "length": 15,
+        "minimal_period_counts": {
+          "1": 1,
+          "15": 1350,
+          "3": 3,
+          "5": 10
+        },
+        "open_count": 1597,
+        "primitive_marked_count": 1350,
+        "primitive_rotation_orbits": 90
+      },
+      {
+        "all_binary_words": 65536,
+        "cycle_count": 2207,
+        "length": 16,
+        "minimal_period_counts": {
+          "1": 1,
+          "16": 2160,
+          "2": 2,
+          "4": 4,
+          "8": 40
+        },
+        "open_count": 2584,
+        "primitive_marked_count": 2160,
+        "primitive_rotation_orbits": 135
+      }
+    ],
+    "log_zeta_tail_example": {
+      "absolute_tail_upper": {
+        "denominator": "195241519867762611715047424",
+        "numerator": "8650415919381337933"
+      },
+      "cutoff": 16,
+      "head": {
+        "denominator": "619093765914624",
+        "numerator": "231970366415087"
+      },
+      "rational_dominating_r": {
+        "denominator": "32",
+        "numerator": "13"
+      },
+      "t": {
+        "denominator": "4",
+        "numerator": "1"
+      }
+    },
+    "rational_zeta_coefficients_degree_0_to_16": [
+      1,
+      1,
+      2,
+      3,
+      5,
+      8,
+      13,
+      21,
+      34,
+      55,
+      89,
+      144,
+      233,
+      377,
+      610,
+      987,
+      1597
+    ]
+  },
+  "five_modes": {
+    "common_phase_collision": {
+      "common_phase_equal": true,
+      "guarded_independent_values": [
+        0,
+        2
+      ],
+      "guarded_weight_cases": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          0
+        ]
+      ],
+      "independent_sign_eta": [
+        1,
+        0,
+        0
+      ],
+      "independent_values": [
+        -1,
+        1
+      ],
+      "mask_u": [
+        1,
+        0,
+        0
+      ],
+      "mask_v": [
+        0,
+        1,
+        0
+      ]
+    },
+    "phase_grid_size": 8,
+    "phase_polynomials": 256,
+    "triple_count": 64,
+    "triples": [
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          1,
+          0,
+          1,
+          0
+        ],
+        "weights": [
+          0,
+          0,
+          0
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            2,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "weights": [
+          0,
+          0,
+          1
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            3,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          1,
+          4,
+          1,
+          4
+        ],
+        "weights": [
+          0,
+          0,
+          2
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          1,
+          9,
+          1,
+          9
+        ],
+        "weights": [
+          0,
+          0,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          2,
+          0,
+          2,
+          0
+        ],
+        "weights": [
+          0,
+          1,
+          0
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            3,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          2,
+          1,
+          2,
+          1
+        ],
+        "weights": [
+          0,
+          1,
+          1
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          2,
+          4,
+          2,
+          4
+        ],
+        "weights": [
+          0,
+          1,
+          2
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            5,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          2,
+          9,
+          2,
+          9
+        ],
+        "weights": [
+          0,
+          1,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            3,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            3,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          5,
+          0,
+          5,
+          0
+        ],
+        "weights": [
+          0,
+          2,
+          0
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          5,
+          1,
+          5,
+          1
+        ],
+        "weights": [
+          0,
+          2,
+          1
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            5,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          5,
+          4,
+          5,
+          4
+        ],
+        "weights": [
+          0,
+          2,
+          2
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            6,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          5,
+          9,
+          5,
+          9
+        ],
+        "weights": [
+          0,
+          2,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            0
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          10,
+          0,
+          10,
+          0
+        ],
+        "weights": [
+          0,
+          3,
+          0
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            5,
+            0
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          10,
+          1,
+          10,
+          1
+        ],
+        "weights": [
+          0,
+          3,
+          1
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            6,
+            0
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          10,
+          4,
+          10,
+          4
+        ],
+        "weights": [
+          0,
+          3,
+          2
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            7,
+            0
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "phase_squared_means": [
+          10,
+          9,
+          10,
+          9
+        ],
+        "weights": [
+          0,
+          3,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            2,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          2,
+          0,
+          1,
+          0
+        ],
+        "weights": [
+          1,
+          0,
+          0
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          2,
+          2,
+          1,
+          1
+        ],
+        "weights": [
+          1,
+          0,
+          1
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          2,
+          8,
+          1,
+          4
+        ],
+        "weights": [
+          1,
+          0,
+          2
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            2,
+            6
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            4
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          2,
+          18,
+          1,
+          9
+        ],
+        "weights": [
+          1,
+          0,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            3,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            2,
+            1
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          3,
+          0,
+          2,
+          0
+        ],
+        "weights": [
+          1,
+          1,
+          0
+        ]
+      },
+      {
+        "determinant": -1,
+        "kernel": [
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          3,
+          2,
+          2,
+          1
+        ],
+        "weights": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "determinant": -2,
+        "kernel": [
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            3
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          3,
+          8,
+          2,
+          4
+        ],
+        "weights": [
+          1,
+          1,
+          2
+        ]
+      },
+      {
+        "determinant": -3,
+        "kernel": [
+          [
+            3,
+            6
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            5,
+            4
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          3,
+          18,
+          2,
+          9
+        ],
+        "weights": [
+          1,
+          1,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            4,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            3,
+            1
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          6,
+          0,
+          5,
+          0
+        ],
+        "weights": [
+          1,
+          2,
+          0
+        ]
+      },
+      {
+        "determinant": -2,
+        "kernel": [
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            2
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          6,
+          2,
+          5,
+          1
+        ],
+        "weights": [
+          1,
+          2,
+          1
+        ]
+      },
+      {
+        "determinant": -4,
+        "kernel": [
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            5,
+            3
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          6,
+          8,
+          5,
+          4
+        ],
+        "weights": [
+          1,
+          2,
+          2
+        ]
+      },
+      {
+        "determinant": -6,
+        "kernel": [
+          [
+            4,
+            6
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            6,
+            4
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          6,
+          18,
+          5,
+          9
+        ],
+        "weights": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            5,
+            0
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            1
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          11,
+          0,
+          10,
+          0
+        ],
+        "weights": [
+          1,
+          3,
+          0
+        ]
+      },
+      {
+        "determinant": -3,
+        "kernel": [
+          [
+            5,
+            2
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            5,
+            2
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          11,
+          2,
+          10,
+          1
+        ],
+        "weights": [
+          1,
+          3,
+          1
+        ]
+      },
+      {
+        "determinant": -6,
+        "kernel": [
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            6,
+            3
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          11,
+          8,
+          10,
+          4
+        ],
+        "weights": [
+          1,
+          3,
+          2
+        ]
+      },
+      {
+        "determinant": -9,
+        "kernel": [
+          [
+            5,
+            6
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            7,
+            4
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "phase_squared_means": [
+          11,
+          18,
+          10,
+          9
+        ],
+        "weights": [
+          1,
+          3,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            3,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          5,
+          0,
+          1,
+          0
+        ],
+        "weights": [
+          2,
+          0,
+          0
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            3,
+            3
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            2,
+            4
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          5,
+          5,
+          1,
+          1
+        ],
+        "weights": [
+          2,
+          0,
+          1
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            3,
+            6
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            3,
+            6
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          5,
+          20,
+          1,
+          4
+        ],
+        "weights": [
+          2,
+          0,
+          2
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            3,
+            9
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            8
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          5,
+          45,
+          1,
+          9
+        ],
+        "weights": [
+          2,
+          0,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            4,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            2,
+            2
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          6,
+          0,
+          2,
+          0
+        ],
+        "weights": [
+          2,
+          1,
+          0
+        ]
+      },
+      {
+        "determinant": -2,
+        "kernel": [
+          [
+            4,
+            3
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            3,
+            4
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          6,
+          5,
+          2,
+          1
+        ],
+        "weights": [
+          2,
+          1,
+          1
+        ]
+      },
+      {
+        "determinant": -4,
+        "kernel": [
+          [
+            4,
+            6
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            6
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          6,
+          20,
+          2,
+          4
+        ],
+        "weights": [
+          2,
+          1,
+          2
+        ]
+      },
+      {
+        "determinant": -6,
+        "kernel": [
+          [
+            4,
+            9
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            5,
+            8
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          6,
+          45,
+          2,
+          9
+        ],
+        "weights": [
+          2,
+          1,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            5,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            3,
+            2
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          9,
+          0,
+          5,
+          0
+        ],
+        "weights": [
+          2,
+          2,
+          0
+        ]
+      },
+      {
+        "determinant": -4,
+        "kernel": [
+          [
+            5,
+            3
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            4
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          9,
+          5,
+          5,
+          1
+        ],
+        "weights": [
+          2,
+          2,
+          1
+        ]
+      },
+      {
+        "determinant": -8,
+        "kernel": [
+          [
+            5,
+            6
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            5,
+            6
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          9,
+          20,
+          5,
+          4
+        ],
+        "weights": [
+          2,
+          2,
+          2
+        ]
+      },
+      {
+        "determinant": -12,
+        "kernel": [
+          [
+            5,
+            9
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            6,
+            8
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          9,
+          45,
+          5,
+          9
+        ],
+        "weights": [
+          2,
+          2,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            6,
+            0
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            2
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          14,
+          0,
+          10,
+          0
+        ],
+        "weights": [
+          2,
+          3,
+          0
+        ]
+      },
+      {
+        "determinant": -6,
+        "kernel": [
+          [
+            6,
+            3
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            5,
+            4
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          14,
+          5,
+          10,
+          1
+        ],
+        "weights": [
+          2,
+          3,
+          1
+        ]
+      },
+      {
+        "determinant": -12,
+        "kernel": [
+          [
+            6,
+            6
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            6,
+            6
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          14,
+          20,
+          10,
+          4
+        ],
+        "weights": [
+          2,
+          3,
+          2
+        ]
+      },
+      {
+        "determinant": -18,
+        "kernel": [
+          [
+            6,
+            9
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            7,
+            8
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        "phase_squared_means": [
+          14,
+          45,
+          10,
+          9
+        ],
+        "weights": [
+          2,
+          3,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            4,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          10,
+          0,
+          1,
+          0
+        ],
+        "weights": [
+          3,
+          0,
+          0
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            4,
+            4
+          ],
+          [
+            1,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            2,
+            6
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          10,
+          10,
+          1,
+          1
+        ],
+        "weights": [
+          3,
+          0,
+          1
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            4,
+            8
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            3,
+            9
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          10,
+          40,
+          1,
+          4
+        ],
+        "weights": [
+          3,
+          0,
+          2
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            4,
+            12
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            12
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          10,
+          90,
+          1,
+          9
+        ],
+        "weights": [
+          3,
+          0,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            5,
+            0
+          ],
+          [
+            2,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            2,
+            3
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          11,
+          0,
+          2,
+          0
+        ],
+        "weights": [
+          3,
+          1,
+          0
+        ]
+      },
+      {
+        "determinant": -3,
+        "kernel": [
+          [
+            5,
+            4
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            3,
+            6
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          11,
+          10,
+          2,
+          1
+        ],
+        "weights": [
+          3,
+          1,
+          1
+        ]
+      },
+      {
+        "determinant": -6,
+        "kernel": [
+          [
+            5,
+            8
+          ],
+          [
+            2,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            9
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          11,
+          40,
+          2,
+          4
+        ],
+        "weights": [
+          3,
+          1,
+          2
+        ]
+      },
+      {
+        "determinant": -9,
+        "kernel": [
+          [
+            5,
+            12
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            5,
+            12
+          ],
+          [
+            2,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          11,
+          90,
+          2,
+          9
+        ],
+        "weights": [
+          3,
+          1,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            6,
+            0
+          ],
+          [
+            3,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            3,
+            3
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          14,
+          0,
+          5,
+          0
+        ],
+        "weights": [
+          3,
+          2,
+          0
+        ]
+      },
+      {
+        "determinant": -6,
+        "kernel": [
+          [
+            6,
+            4
+          ],
+          [
+            3,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            6
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          14,
+          10,
+          5,
+          1
+        ],
+        "weights": [
+          3,
+          2,
+          1
+        ]
+      },
+      {
+        "determinant": -12,
+        "kernel": [
+          [
+            6,
+            8
+          ],
+          [
+            3,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            5,
+            9
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          14,
+          40,
+          5,
+          4
+        ],
+        "weights": [
+          3,
+          2,
+          2
+        ]
+      },
+      {
+        "determinant": -18,
+        "kernel": [
+          [
+            6,
+            12
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            6,
+            12
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          14,
+          90,
+          5,
+          9
+        ],
+        "weights": [
+          3,
+          2,
+          3
+        ]
+      },
+      {
+        "determinant": 0,
+        "kernel": [
+          [
+            7,
+            0
+          ],
+          [
+            4,
+            0
+          ]
+        ],
+        "native_kernel": [
+          [
+            4,
+            3
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          19,
+          0,
+          10,
+          0
+        ],
+        "weights": [
+          3,
+          3,
+          0
+        ]
+      },
+      {
+        "determinant": -9,
+        "kernel": [
+          [
+            7,
+            4
+          ],
+          [
+            4,
+            1
+          ]
+        ],
+        "native_kernel": [
+          [
+            5,
+            6
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          19,
+          10,
+          10,
+          1
+        ],
+        "weights": [
+          3,
+          3,
+          1
+        ]
+      },
+      {
+        "determinant": -18,
+        "kernel": [
+          [
+            7,
+            8
+          ],
+          [
+            4,
+            2
+          ]
+        ],
+        "native_kernel": [
+          [
+            6,
+            9
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          19,
+          40,
+          10,
+          4
+        ],
+        "weights": [
+          3,
+          3,
+          2
+        ]
+      },
+      {
+        "determinant": -27,
+        "kernel": [
+          [
+            7,
+            12
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "native_kernel": [
+          [
+            7,
+            12
+          ],
+          [
+            4,
+            3
+          ]
+        ],
+        "phase_squared_means": [
+          19,
+          90,
+          10,
+          9
+        ],
+        "weights": [
+          3,
+          3,
+          3
+        ]
+      }
+    ],
+    "weight_values": [
+      0,
+      1,
+      2,
+      3
+    ]
+  },
+  "mobius_5040": {
+    "P_5040": "1984754795257426765853550481825319642727404634975598678259476436988545302497348137839677184609836848124760418620454784318983249489286888703078856698538328277065578612534802958647318939121060509904581541909089539184342297780549853343986283561228055934016986020093136391966979705550455367649827842024225468675162107741437685367112341670052300600768271806495806465147249094609953912406377445088212017197078996846326372531293715410273038561764455020336901028352291335402464902967628253033295842634615765917548084315420922843358715635927869195018021773831439229524590377267805798863141808083866065460069314800389159420861479721620689966210752966091662715050789066479808701492236461046158586207732910538397073788922440253174288947205448151872611133479745021577424969198424038397447626619541538036713493699980316808869165288592267699891061363410083625992539143213294408867018561977482764118743828165845126457330658286532545078566528167404899289511749747399692322243613410928700675903291879759737973782556159495694744031273070704295162840882412885260136227799040",
+    "Z_5040": {
+      "denominator": "105",
+      "numerator": "403"
+    },
+    "divisor_count": 60,
+    "factorization": {
+      "2": 4,
+      "3": 2,
+      "5": 1,
+      "7": 1
+    },
+    "nonzero_terms": 16,
+    "primitive_unmarked_5040": "393800554614568802748720333695499929112580284717380690130848499402489147320902408301523250914650168278722305281836266729956993946287081091880725535424271483544757661217222809255420424428781847203289988474025702219115535273918621695235373722465884113892259130970860395231543592371122096755918222623854259657770259472507477255379432871042123135073069802876152076418104979089276569921900286723851590713706150167921899311764626073466872730508820440543035918323867328452870020430084970839939651316392017047132556411789865643523554689668228014884528129728460164588212376442024960091893215889655965369061371984204198297789976135242200390121181144065806094256108941761866805851634218461539402025343831456031165434310007986740930346667747649181073637595187504281235112936195245713779290995940781356490772559519904128743882001704815019819655032422635640077884750637558414457741778170135469071179330985286731439946559183835822436223517493532718112998363045118986571873732819628710451568113468206297217020348444344383877783982752123868087865254447001043677822976",
+    "radical": 210,
+    "reciprocal_atom": {
+      "denominator": "5040",
+      "numerator": "1"
+    },
+    "terms": [
+      {
+        "cycle_count": "1984754795257426765853550481825319642727404634975598678259476436988545302497348137839677184609836848124760418620454784318983249489286888703078856698538328277065578612534802958647318939121060509904581541909089539184342297780549853343986283561228055934016986020093136391966979705550455367649827842024225468675162107741437685367112341670052300600768271806495806465147249094609953912406377445088212017197078996846326372531293715410273038561764455020336901028352291335402464902967628253033295842634615765917548084315420922843358715680478456118844589536576728119003020588789913568249000321206520282946455902088533388392447630647739669824758334013919311773366429206059478584588434705412407594820301758014052614852485145687335339223639317320420552323108680305360142054625802918272509657209350819591894514828138849031196551003134015808036031748778453380551220202154645116544636822049362331859290794377069902473692939727527191456392860956312425382179365887720494016306442176164581875362185559191032459048516349177956242890121256319042779577288911470291808773248002",
+        "cycle_length": 5040,
+        "mu": 1,
+        "reciprocal_divisor_sum": {
+          "denominator": "105",
+          "numerator": "403"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "105",
+          "numerator": "403"
+        },
+        "squarefree_divisor": 1
+      },
+      {
+        "cycle_count": "44550586923826567762745288889478430211522107769385858513122654217486386587288144228971586150926118979858547581047827649058315640139579669883096198244366249008612568847475655539806851116615115769650008983977241715736136671263524649828542427822544898795903798082677300292334597039662243358142078019576908114088700537068282716432387063987411726487020282601637494903131497735320897141961309119552397716799219899375411536040549829937138595064335573833568110582776786423552943567572247527585152730285063125813288748311666985857312002",
+        "cycle_length": 2520,
+        "mu": -1,
+        "reciprocal_divisor_sum": {
+          "denominator": "7",
+          "numerator": "26"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "7",
+          "numerator": "-26"
+        },
+        "squarefree_divisor": 2
+      },
+      {
+        "cycle_count": "1256711588819045280626424885191306225453492264020258067256884951057330163234686011198877880728793561492560084027572463728531236856296667832681709907171196228140004667491247792014080285417623391438430323364919565837553992726640511530657705240193838312293504266493895571834714479490109147832249995687616897833052928541781402139554384068654625353785472002",
+        "cycle_length": 1680,
+        "mu": -1,
+        "reciprocal_divisor_sum": {
+          "denominator": "35",
+          "numerator": "124"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "35",
+          "numerator": "-124"
+        },
+        "squarefree_divisor": 3
+      },
+      {
+        "cycle_count": "4566057455358058580261224281803804987472894837312642070574400682692823351675778383069598241606741151383506026313692357989625840072550116837765646254155480486161227388436982670384830106188864127401586368827601922",
+        "cycle_length": 1008,
+        "mu": -1,
+        "reciprocal_divisor_sum": {
+          "denominator": "126",
+          "numerator": "403"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "126",
+          "numerator": "-403"
+        },
+        "squarefree_divisor": 5
+      },
+      {
+        "cycle_count": "35450128191856306468309261866833032470650436813206572538783332710810828149887275969546176981352358515289472200628359690299901567950607032186953758164608073028275626744590368002",
+        "cycle_length": 840,
+        "mu": 1,
+        "reciprocal_divisor_sum": {
+          "denominator": "7",
+          "numerator": "24"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "7",
+          "numerator": "24"
+        },
+        "squarefree_divisor": 6
+      },
+      {
+        "cycle_count": "2958700328808246094319486150393236142399333256919870514959109392543297381437911995929662649541219244184267048870978721128004995999740502480971828352002",
+        "cycle_length": 720,
+        "mu": -1,
+        "reciprocal_divisor_sum": {
+          "denominator": "120",
+          "numerator": "403"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "120",
+          "numerator": "-403"
+        },
+        "squarefree_divisor": 7
+      },
+      {
+        "cycle_count": "2136833511380345836666486396734133640122360300747096563176907916722624680662261346601342544874468864666882",
+        "cycle_length": 504,
+        "mu": 1,
+        "reciprocal_divisor_sum": {
+          "denominator": "21",
+          "numerator": "65"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "21",
+          "numerator": "65"
+        },
+        "squarefree_divisor": 10
+      },
+      {
+        "cycle_count": "1720087302670491226575524032755892478949937719722094386828985061067021088002",
+        "cycle_length": 360,
+        "mu": 1,
+        "reciprocal_divisor_sum": {
+          "denominator": "4",
+          "numerator": "13"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "4",
+          "numerator": "13"
+        },
+        "squarefree_divisor": 14
+      },
+      {
+        "cycle_count": "16590028190336798923374342779325237379046533565045845476715076513633282",
+        "cycle_length": 336,
+        "mu": 1,
+        "reciprocal_divisor_sum": {
+          "denominator": "21",
+          "numerator": "62"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "21",
+          "numerator": "62"
+        },
+        "squarefree_divisor": 15
+      },
+      {
+        "cycle_count": "143560069527736735290119259336677691557976524928002",
+        "cycle_length": 240,
+        "mu": 1,
+        "reciprocal_divisor_sum": {
+          "denominator": "10",
+          "numerator": "31"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "10",
+          "numerator": "31"
+        },
+        "squarefree_divisor": 21
+      },
+      {
+        "cycle_count": "128802283327341673812651951847998722",
+        "cycle_length": 168,
+        "mu": -1,
+        "reciprocal_divisor_sum": {
+          "denominator": "7",
+          "numerator": "20"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "7",
+          "numerator": "-20"
+        },
+        "squarefree_divisor": 30
+      },
+      {
+        "cycle_count": "1242282009792667284144565908482",
+        "cycle_length": 144,
+        "mu": 1,
+        "reciprocal_divisor_sum": {
+          "denominator": "144",
+          "numerator": "403"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "144",
+          "numerator": "403"
+        },
+        "squarefree_divisor": 35
+      },
+      {
+        "cycle_count": "11981655542024930675232002",
+        "cycle_length": 120,
+        "mu": -1,
+        "reciprocal_divisor_sum": {
+          "denominator": "1",
+          "numerator": "3"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "1",
+          "numerator": "-3"
+        },
+        "squarefree_divisor": 42
+      },
+      {
+        "cycle_count": "1114577054219522",
+        "cycle_length": 72,
+        "mu": -1,
+        "reciprocal_divisor_sum": {
+          "denominator": "24",
+          "numerator": "65"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "24",
+          "numerator": "-65"
+        },
+        "squarefree_divisor": 70
+      },
+      {
+        "cycle_count": "10749957122",
+        "cycle_length": 48,
+        "mu": -1,
+        "reciprocal_divisor_sum": {
+          "denominator": "12",
+          "numerator": "31"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "12",
+          "numerator": "-31"
+        },
+        "squarefree_divisor": 105
+      },
+      {
+        "cycle_count": "103682",
+        "cycle_length": 24,
+        "mu": 1,
+        "reciprocal_divisor_sum": {
+          "denominator": "2",
+          "numerator": "5"
+        },
+        "signed_reciprocal_term": {
+          "denominator": "2",
+          "numerator": "5"
+        },
+        "squarefree_divisor": 210
+      }
+    ]
+  },
+  "provenance": "new reconstructed asset; original sandbox artifact not retrieved",
+  "response_task": "formal factorized occupation weights; not native additive quantity",
+  "robin": {
+    "arithmetic": {
+      "gamma_harmonic_index": 1024,
+      "gamma_remainder_bounds": [
+        {
+          "denominator": "1",
+          "numerator": "0"
+        },
+        {
+          "denominator": "1024",
+          "numerator": "1"
+        }
+      ],
+      "grid_denominator": "1000000000000000000000000000000",
+      "harmonic_number": {
+        "denominator": "15161806181366890704755537519628428221282838501257142250824360639698299050776571382489681778825684381429314058890905101687022024744606800532531764952734582389201393752832486383043169059475949454418063248428056646723694341952991408637386677631205400831455008554143754794994126167401137152222379676492247471515691285702536834646805381995650206229354446213284302569283840180834930263739794772017863585682362821412785936104792844891075228278568320000",
+        "numerator": "113852666124916486660576988819429846865503886394943491404492327390782388538713454502191389383076154933054707275314439864005454497269185801458595955412744395819937793045143548973521402871902853319909768729800180035563502489674397467600576444605773845049440694581751607642957127128381337487696630859452124788876557627760315566968995024077356615956093475101696822581124280207794839077625535944015646989686149151227490298627573660935745371540890803597"
+      },
+      "log_terms": 20
+    },
+    "boundary_integer_values": [
+      10080,
+      20160,
+      30240
+    ],
+    "gamma": {
+      "lower": {
+        "denominator": "25000000000000000000000000000",
+        "numerator": "14418182604467018480116627543"
+      },
+      "upper": {
+        "denominator": "1000000000000000000000000000000",
+        "numerator": "577703866678680739219711315161"
+      }
+    },
+    "h_log10080": {
+      "lower": {
+        "denominator": "200000000000000000000000000000",
+        "numerator": "1536639658141367162518857611"
+      },
+      "upper": {
+        "denominator": "200000000000000000000000000000",
+        "numerator": "1536639658141367162537725557"
+      }
+    },
+    "log2": {
+      "lower": {
+        "denominator": "250000000000000000000000000000",
+        "numerator": "173286795139986327353934038059"
+      },
+      "upper": {
+        "denominator": "50000000000000000000000000000",
+        "numerator": "34657359027997265470862038679"
+      }
+    },
+    "log3": {
+      "lower": {
+        "denominator": "1000000000000000000000000000000",
+        "numerator": "1098612288668109691393749267699"
+      },
+      "upper": {
+        "denominator": "200000000000000000000000000000",
+        "numerator": "219722457733621938279050777809"
+      }
+    },
+    "pair_area_upper_budget": {
+      "lower": {
+        "denominator": "500000000000000000000000000000",
+        "numerator": "2925377789211515433501606179"
+      },
+      "upper": {
+        "denominator": "20000000000000000000000000000",
+        "numerator": "117015111568460617341915307"
+      }
+    },
+    "positive_rectangle_correction": {
+      "lower": {
+        "denominator": "500000000000000000000000000000",
+        "numerator": "2318672780203128610769174669"
+      },
+      "upper": {
+        "denominator": "1000000000000000000000000000000",
+        "numerator": "4637345560406257238985142007"
+      }
+    },
+    "rectangle_below_pair_budget": true,
+    "shared_Z_ratio": {
+      "denominator": "63",
+      "numerator": "254"
+    },
+    "short_outward_U": {
+      "lower": {
+        "denominator": "62500",
+        "numerator": "-3579"
+      },
+      "upper": {
+        "denominator": "1000000",
+        "numerator": "-56287"
+      }
+    },
+    "signed_boundary": {
+      "lower": {
+        "denominator": "1000000000000000000000000000000",
+        "numerator": "-63114505986731469018987390631"
+      },
+      "upper": {
+        "denominator": "15625000000000000000000000000",
+        "numerator": "-970905366980179202933226801"
+      }
+    },
+    "strict_threshold": {
+      "denominator": "200",
+      "numerator": "-11"
+    },
+    "target_evaluated_after_boundary_certificate": true,
+    "upper_expression_U": {
+      "lower": {
+        "denominator": "1000000000000000000000000000000",
+        "numerator": "-57263750408308438151984178273"
+      },
+      "upper": {
+        "denominator": "500000000000000000000000000000",
+        "numerator": "-28143593954154219060315374957"
+      }
+    },
+    "values": {
+      "10080": {
+        "G": {
+          "lower": {
+            "denominator": "1000000000000000000000000000000",
+            "numerator": "-14771106596920553505067263177"
+          },
+          "upper": {
+            "denominator": "500000000000000000000000000000",
+            "numerator": "-6897272048460276741830730927"
+          }
+        },
+        "Z": {
+          "denominator": "10",
+          "numerator": "39"
+        },
+        "log_n": {
+          "lower": {
+            "denominator": "1000000000000000000000000000000",
+            "numerator": "9218308541625359609563315557917"
+          },
+          "upper": {
+            "denominator": "100000000000000000000000000000",
+            "numerator": "921830854162535960958287563539"
+          }
+        },
+        "loglog_n": {
+          "lower": {
+            "denominator": "1000000000000000000000000000000",
+            "numerator": "2221191565383343319878884444893"
+          },
+          "upper": {
+            "denominator": "250000000000000000000000000000",
+            "numerator": "555297891345835829971380045413"
+          }
+        },
+        "logloglog_n": {
+          "lower": {
+            "denominator": "1000000000000000000000000000000",
+            "numerator": "798043793053840557709748169143"
+          },
+          "upper": {
+            "denominator": "250000000000000000000000000000",
+            "numerator": "199510948263460139428560064401"
+          }
+        }
+      },
+      "20160": {
+        "G": {
+          "lower": {
+            "denominator": "200000000000000000000000000000",
+            "numerator": "-7796909104796869366830826753"
+          },
+          "upper": {
+            "denominator": "50000000000000000000000000000",
+            "numerator": "-1900399151199217340631736071"
+          }
+        },
+        "Z": {
+          "denominator": "420",
+          "numerator": "1651"
+        },
+        "log_n": {
+          "lower": {
+            "denominator": "1000000000000000000000000000000",
+            "numerator": "9911455722185304918979051710153"
+          },
+          "upper": {
+            "denominator": "100000000000000000000000000000",
+            "numerator": "991145572218530491900011640897"
+          }
+        },
+        "loglog_n": {
+          "lower": {
+            "denominator": "500000000000000000000000000000",
+            "numerator": "1146845615910461561145362775967"
+          },
+          "upper": {
+            "denominator": "1000000000000000000000000000000",
+            "numerator": "2293691231820923122297364704059"
+          }
+        },
+        "logloglog_n": {
+          "lower": {
+            "denominator": "200000000000000000000000000000",
+            "numerator": "166032482297603525354617614437"
+          },
+          "upper": {
+            "denominator": "1000000000000000000000000000000",
+            "numerator": "830162411488017626777487220933"
+          }
+        }
+      },
+      "30240": {
+        "G": {
+          "lower": {
+            "denominator": "100000000000000000000000000000",
+            "numerator": "-3890106705966767568561380781"
+          },
+          "upper": {
+            "denominator": "1000000000000000000000000000000",
+            "numerator": "-37924504559667675663244169653"
+          }
+        },
+        "Z": {
+          "denominator": "1",
+          "numerator": "4"
+        },
+        "log_n": {
+          "lower": {
+            "denominator": "200000000000000000000000000000",
+            "numerator": "2063384166058693860191410324837"
+          },
+          "upper": {
+            "denominator": "250000000000000000000000000000",
+            "numerator": "2579230207573367325244532395919"
+          }
+        },
+        "loglog_n": {
+          "lower": {
+            "denominator": "250000000000000000000000000000",
+            "numerator": "583446336593718500616753432157"
+          },
+          "upper": {
+            "denominator": "500000000000000000000000000000",
+            "numerator": "1166892673187437001236785320089"
+          }
+        },
+        "logloglog_n": {
+          "lower": {
+            "denominator": "1000000000000000000000000000000",
+            "numerator": "847491561500877555293060615093"
+          },
+          "upper": {
+            "denominator": "1000000000000000000000000000000",
+            "numerator": "847491561500877555297374797121"
+          }
+        }
+      },
+      "60480": {
+        "G": {
+          "lower": {
+            "denominator": "125000000000000000000000000000",
+            "numerator": "-7309645053290651473030452757"
+          },
+          "upper": {
+            "denominator": "500000000000000000000000000000",
+            "numerator": "-28750298963162605880973396247"
+          }
+        },
+        "Z": {
+          "denominator": "63",
+          "numerator": "254"
+        },
+        "log_n": {
+          "lower": {
+            "denominator": "1000000000000000000000000000000",
+            "numerator": "11010068010853414610372787776421"
+          },
+          "upper": {
+            "denominator": "125000000000000000000000000000",
+            "numerator": "1376258501356676826299421294657"
+          }
+        },
+        "loglog_n": {
+          "lower": {
+            "denominator": "125000000000000000000000000000",
+            "numerator": "299851265988092392716686908269"
+          },
+          "upper": {
+            "denominator": "40000000000000000000000000000",
+            "numerator": "95952405116189565669602408591"
+          }
+        },
+        "logloglog_n": {
+          "lower": {
+            "denominator": "125000000000000000000000000000",
+            "numerator": "109371604296831045890766088363"
+          },
+          "upper": {
+            "denominator": "62500000000000000000000000000",
+            "numerator": "54685802148415522945648130021"
+          }
+        }
+      }
+    }
+  },
+  "schema": "fib-boundary-cycles-exact-v1",
+  "supplier_snapshot": "78d2f7c423b15d01062f3ffacf4f75b8cee44f30",
+  "weighted_readouts": {
+    "case_count": 12,
+    "cases": [
+      {
+        "cycle_weight": 1,
+        "kernel": [
+          [
+            1,
+            0
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "open_weight": 1,
+        "weights": [
+          0
+        ]
+      },
+      {
+        "cycle_weight": 1,
+        "kernel": [
+          [
+            1,
+            1
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "open_weight": 2,
+        "weights": [
+          1
+        ]
+      },
+      {
+        "cycle_weight": 1,
+        "kernel": [
+          [
+            1,
+            2
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "open_weight": 3,
+        "weights": [
+          2
+        ]
+      },
+      {
+        "cycle_weight": 1,
+        "kernel": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            0
+          ]
+        ],
+        "open_weight": 4,
+        "weights": [
+          3
+        ]
+      },
+      {
+        "cycle_weight": 4,
+        "kernel": [
+          [
+            2,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "open_weight": 4,
+        "weights": [
+          1,
+          2
+        ]
+      },
+      {
+        "cycle_weight": 4,
+        "kernel": [
+          [
+            1,
+            3
+          ],
+          [
+            1,
+            3
+          ]
+        ],
+        "open_weight": 4,
+        "weights": [
+          0,
+          3
+        ]
+      },
+      {
+        "cycle_weight": 5,
+        "kernel": [
+          [
+            3,
+            2
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "open_weight": 5,
+        "weights": [
+          2,
+          2
+        ]
+      },
+      {
+        "cycle_weight": 4,
+        "kernel": [
+          [
+            3,
+            2
+          ],
+          [
+            2,
+            1
+          ]
+        ],
+        "open_weight": 5,
+        "weights": [
+          1,
+          1,
+          1
+        ]
+      },
+      {
+        "cycle_weight": 7,
+        "kernel": [
+          [
+            4,
+            6
+          ],
+          [
+            3,
+            3
+          ]
+        ],
+        "open_weight": 10,
+        "weights": [
+          1,
+          2,
+          3
+        ]
+      },
+      {
+        "cycle_weight": 6,
+        "kernel": [
+          [
+            4,
+            8
+          ],
+          [
+            1,
+            2
+          ]
+        ],
+        "open_weight": 12,
+        "weights": [
+          3,
+          0,
+          2
+        ]
+      },
+      {
+        "cycle_weight": 13,
+        "kernel": [
+          [
+            4,
+            12
+          ],
+          [
+            3,
+            9
+          ]
+        ],
+        "open_weight": 16,
+        "weights": [
+          1,
+          2,
+          0,
+          3
+        ]
+      },
+      {
+        "cycle_weight": 23,
+        "kernel": [
+          [
+            13,
+            26
+          ],
+          [
+            5,
+            10
+          ]
+        ],
+        "open_weight": 39,
+        "weights": [
+          2,
+          1,
+          3,
+          0,
+          2
+        ]
+      }
+    ],
+    "empty_cycle_defined": false,
+    "empty_open_weight": 1,
+    "trace_identity_algebraic": 2
+  }
+}
