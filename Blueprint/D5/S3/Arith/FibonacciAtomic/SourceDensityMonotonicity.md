@@ -1,8 +1,8 @@
-# Definitions of Fibonacci Source Density Ratios
+# Fibonacci Source Density Ratios and Logarithmic Compensation
 
 ## Abstract
 
-Shared definitions for the real finite-product extension of Fibonacci source density ratios.
+Three affine logarithmic blocks admit a joint lower bound under a squared determinant identity.
 
 F denotes the natural Fibonacci sequence with F(0)=0 and F(1)=1. Fix natural k>=1 and j. Put d=3k. Nonintegral t is an auxiliary real parameter of finite products; it does not represent a nonintegral number of tree leaves.
 
@@ -162,6 +162,18 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.lowerEnve
 
 The lower envelope is 1/(t-j)-(j+1/2)/(LADt^2)-AE/(2a(a+E))-DA/(2b(b+A)) -LD/((n-1/2)(n+D-1/2)). Its coordinates share the same k,j,t.
 
+**Theorem 1.14 (Joint logarithmic compensation).**
+
+$$\forall e,a,d,l,t,j \in R, ((0 < e) \land (0 < a) \land (0 < d) \land (0 < l) \land (d = e + a) \land (l = a + d) \land ((a^{2} - de)^{2} = 1) \land (0 < t) \land (0 \leq j)) \implies \frac{-(j + \frac{1}{2})}{ladt^{2}} \leq a(\operatorname{log}\left(at + e(j + 1)\right) - \operatorname{log}\left(at + ej\right)) + d(\operatorname{log}\left(dt + a(j + 1)\right) - \operatorname{log}\left(dt + aj\right)) - l(\operatorname{log}\left(lt + d(j + 1)\right) - \operatorname{log}\left(lt + dj\right))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.logarithmic_compensation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For positive e,a,d,l,t and nonnegative j, assume d=e+a, l=a+d and (a^2-de)^2=1. R denotes the real numbers. The weighted increments of the three affine logarithms have lower bound -(j+1/2)/(ladt^2). Along the unit interval, the weighted logarithmic sum has derivative -t(j+s) divided by the product of the three affine coordinates. Adding (js+s^2/2)/(ladt^2) makes the derivative nonnegative, so comparing the endpoints gives the bound.
+
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.A`
@@ -173,6 +185,7 @@ The lower envelope is 1/(t-j)-(j+1/2)/(LADt^2)-AE/(2a(a+E))-DA/(2b(b+A)) -LD/((n
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.b`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.c`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.g`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.logarithmic_compensation`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.lowerEnvelope`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.n`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SourceDensityMonotonicity.q`
