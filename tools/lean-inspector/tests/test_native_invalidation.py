@@ -448,7 +448,6 @@ class NativeSemanticConsumerTests:
         self.assertTrue(list((self.root / '.lake/build/lib').glob('*Audit*.a')))
         self.assertTrue((self.root / '.lake/build/lib/lean/External.olean').is_file())
         self.assertTrue((self.root / '.lake/build/lib/lean/D5/B.olean.private').is_file())
-        self.check_census_modes(rows)
         before = self.stamps()
         self.build(targets=['Audit'])
         self.assertEqual(before, self.stamps(), 'unchanged build extracted rows')

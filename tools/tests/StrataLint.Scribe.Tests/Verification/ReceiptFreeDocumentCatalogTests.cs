@@ -1,6 +1,6 @@
 namespace StrataLint.Scribe.Tests;
 
-public sealed class CensusDerivationTests
+public sealed class ReceiptFreeDocumentCatalogTests
 {
     [Fact]
     public void ReceiptClassificationRejectsAnEmptyDocumentCorpus()

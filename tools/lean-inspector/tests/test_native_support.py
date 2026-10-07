@@ -569,28 +569,6 @@ defaultFacets = ["static"]
             'verify', '--repository', str(self.root), '--report', str(self.root / 'public.json')],
             env=self.env, text=True, capture_output=True, timeout=120)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-    def check_census_modes(self, rows):
-        module = next(row for row in rows if row['module'] == 'D5.B')
-        hidden = next(decl for decl in module['declarations'] if decl['name'] == 'D5.hidden')
-        secret = next(decl for decl in module['declarations'] if decl['name'].endswith('.secret'))
-        olean = self.root / '.lake/build/lib/lean/D5/B.olean'
-        parts = [str(olean) + suffix for suffix in ['', '.server', '.private']]
-        self.write('dependencies.json', json.dumps([['D5.B', parts]]))
-        self.write('identity.json', json.dumps({'keys': [['D5.B', hidden['name_key']]]}))
-        executable = self.root / '.lake/build/lean-inspector/producer/bin/reportInspector'
-        def inspect(*args):
-            output = subprocess.check_output([str(executable), *args], cwd=self.root, env=self.env, text=True, timeout=120)
-            return [json.loads(line) for line in output.splitlines()]
-        bodies = inspect('--dependencies', 'dependencies.json', '-', 'bodies')
-        hidden_body = next(row for row in bodies if row.get('name') == hidden['name_key'] and row['value'] is not None)
-        self.assertIn(secret['name_key'], hidden_body['value'])
-        names = inspect('--dependencies', 'dependencies.json', '-', 'names')
-        self.assertEqual({r['name'] for r in bodies if 'name' in r}, {r['name'] for r in names if 'name' in r})
-        identities = inspect('--statement-identities', 'dependencies.json', 'identity.json')
-        self.assertTrue(identities)
-        self.assertIn(hidden['statement_id'],
-            {materials.declaration_statement_id(module['source_path'], hidden['kind'], hidden['name_key'], r['statement_material'])
-             for r in identities if r['part'] == 'private'})
 
 
 class NativeSharedTestSupport(NativeTestSupport):

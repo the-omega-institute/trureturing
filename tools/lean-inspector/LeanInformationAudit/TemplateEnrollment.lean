@@ -290,7 +290,7 @@ private def judgePackageModule (owner : Name) : Bool :=
   #[`Reg, `LeanInformationAudit, `LeanInformationAuditAnalysis,
     `LeanInformationAuditRegAnalysis, `LeanInformationAuditRegTests,
     `LeanInformationAuditInterface, `InformationSourceFixture,
-    `Inspector, `Census].any (·.isPrefixOf owner)
+    `Inspector].any (·.isPrefixOf owner)
 
 private def independentSource (name : Name) : CompileM Bool := do
   let some identity := (← get).identityState | return false
