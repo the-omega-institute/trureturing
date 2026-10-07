@@ -473,3 +473,203 @@ Independent conductor information or square factors outside this
 supported exception budget could still give a smaller modulus.
 The assumption $|D|\asymp n$ has not been established for the actual
 remaining extremal candidates; (C4) is conditional in that comparison.
+
+## An effective core bound at the selected GA2 source
+
+This application improves the effective positive-core allowance, while
+leaving the complete signed Robin tail unbounded. It uses the same
+critical integer and clock throughout. The envelope theorem, GA2
+comparisons, prime-power estimates, and core identity are existing
+results; no originality or Lean verification is claimed for their
+combination.
+
+Under a Robin counterexample, use the selected source in the
+[Polak application](../Analytic/polak2026finiterobinca.md#application-at-the-same-critical-source-and-clock):
+$N$ is CA and GA2, $A=\log N$, $P=P^+(N)$, and $P<A<P^+$.
+Its actual exponents attain the full-support minimum at price
+$1/(A\log A)$, so
+
+$$
+\Delta(N)=I_\psi(A)+D^*(A),\qquad
+D^*(A)=R_{\rm core}(N,A)-C_{\rm pp}(A).
+\tag{G1}
+$$
+
+Set $L=\log A$ and $T=\sqrt A L$. The classical CA record property in
+[Alaoglu–Erdős](../Arith/alaoglu1944highly.md) gives
+$\Sigma(N)=Z(N)$, where $Z(n)=\sigma(n)/n$.
+Let $x$ be the primorial cutoff
+$\vartheta(x)\le A<\vartheta(x^+)$, so
+$\Phi(N)=\mathcal P(x)$, with
+$\mathcal P(u)=\prod_{q\le u}(1-1/q)^{-1}$.
+Since $\vartheta(P)\le A$, we have $x\ge P$.
+Every prime in $(P,x]$ is absent from $N$ and exceeds $A$.
+
+### Cancelling the suffix at the actual clock
+
+For each such prime $q$, the GA2 comparison with $qN$ gives
+
+$$
+\log(1+1/q)
+\le\log\frac{\log(A+\log q)}{\log A}
+\le\frac{\log q}{A\log A}.
+\tag{G2}
+$$
+
+The final inequality is the concavity tangent for
+$u\mapsto\log\log(A+u)$ at $u=0$. Equivalently, the already established
+CA optimality at price $1/(A\log A)$ supplies this local upper bound.
+It is not a new gain from jointly optimizing different integers.
+Using $\log(q/(q-1))=\log(1+1/q)-\log(1-q^{-2})$ yields
+
+$$
+\log\frac{\mathcal P(x)}{\mathcal P(P)}
+\le\frac{\vartheta(x)-\vartheta(P)}{A\log A}
+  +\sum_{q>A}-\log(1-q^{-2}).
+\tag{G3}
+$$
+
+Put $m=\lfloor A\rfloor$. The prime sum is at most the integer sum,
+which telescopes:
+
+$$
+\sum_{q>A}-\log(1-q^{-2})
+\le\sum_{n=m+1}^\infty-\log(1-n^{-2})
+=\log\frac{m+1}{m}<\frac1{A-1}.
+\tag{G4}
+$$
+
+Consequently Nicolas's effective $R_-(N)$ above and
+$\Sigma(N)=Z(N)$ give
+
+$$
+\begin{aligned}
+R_{\rm core}(N,A)
+&=\frac{A-\vartheta(P)}{A\log A}
+  +\log\frac{\mathcal P(P)}{Z(N)}\\
+&>\log R_-(N)+\frac{A-\vartheta(x)}{A\log A}
+                -\frac1{A-1}\\
+&\ge\log R_-(N)-\frac1{A-1}.
+\end{aligned}
+\tag{G5}
+$$
+
+This uses the primorial cutoff only to cancel its missing-prime suffix.
+It neither transports $I_\psi(A)$ to $x$ nor requires an effective
+prime-gap bound or an endpoint estimate for $\vartheta(x)-x$.
+
+### An effective allowance stronger than the existing core envelope
+
+The [Dusart prime-power input](../Weil/dusart2010estimates.md#同一-robin-来源的有效素数幂修正),
+Proposition 3.2, gives
+$TC_{\rm pp}(A)<2.00014+2.67A^{-1/6}$.
+For $N\ge N^{(0)}$ and $L\ge26$, put
+
+$$
+b(L)=2\sqrt2-\frac{(2+\log2)\sqrt2}{L}+\frac{6.78}{L^2}.
+$$
+
+Then $0<b(L)<3$, and $R_-(N)=1+b(L)/T$.
+The elementary inequality $\log(1+u)\ge u-u^2/2$, $u\ge0$, gives
+$T\log R_-(N)>b(L)-5/T$.
+Also $T/(A-1)<2L/\sqrt A$. Combining these inequalities with
+(G1) and (G5) gives the explicit bound
+
+$$
+\boxed{\sqrt A\log A\,D^*(A)>\mathcal E(L),}
+\tag{G6}
+$$
+
+where
+
+$$
+\mathcal E(L)=2\sqrt2-\frac{(2+\log2)\sqrt2}{L}
+ +\frac{6.78}{L^2}-2.00014-2.67e^{-L/6}
+ -(2L+5/L)e^{-L/2}.
+\tag{G7}
+$$
+
+This is strictly stronger than the published $D_{\rm lb}(A)$ on the
+whole range $L\ge26$, not just its half-unit simplification.
+To check the comparison, set $a=\log2$ and
+
+$$
+U(L)=\frac1{\sqrt2}
+\left(\frac L{L+a}-\frac{2L}{(L+a)^2}\right).
+$$
+
+The displayed definition of $D_{\rm lb}$ in the Polak note, with
+$j_A>0$ and $s_A>0$, gives $D_{\rm lb}(A)<j_A/2<U(L)$.
+For $L\ge26$,
+
+$$
+U'(L)=\frac1{\sqrt2}
+\left(\frac a{(L+a)^2}+\frac{2(L-a)}{(L+a)^3}\right)
+<\frac{a+2}{\sqrt2L^2}.
+$$
+
+Both exponential error terms in (G7) decrease, hence
+
+$$
+(\mathcal E-U)'(L)>
+\frac1{L^2}\left(\frac{a+2}{\sqrt2}-\frac{13.56}{L}\right)>0.
+$$
+
+Elementary rational bounds
+$1.414<\sqrt2<1.415$, $0.69<\log2<0.70$,
+$e^{13/3}>75$, and $e^{13}>400000$ give
+$\mathcal E(26)>0.65$ and $U(26)<0.64$.
+For the exponential bounds one can use
+$\sum_{j=0}^9 4^j/j!>54$,
+$e^{1/3}>25/18$, and $e>8/3$.
+The comparison therefore has the uniform strict surplus
+
+$$
+\mathcal E(L)>D_{\rm lb}(A)+0.01\qquad(L\ge26).
+\tag{G8}
+$$
+
+Moreover $\mathcal E$ is increasing on this range and
+$\lim_{L\to\infty}\mathcal E(L)=2\sqrt2-2.00014$.
+This is the limit of the lower-bound function, not a new assertion
+about the attained core's asymptotic. The core asymptotic
+$2(\sqrt2-1)$ is already recorded in the FIB volume, §93.
+
+### Paying the thresholds and retaining the signed obligation
+
+The existing [Axler finite stop](../notes/axler2023robin.md),
+Lemma 2.3, puts this selected source above the $K$th primorial,
+$K=999999476056$. Hence $A>K\log2>K/2$ and $L>26$.
+For the latter comparison, $e<11/4$ and
+$(11/4)^{26}<4\cdot10^{11}<K/2$ suffice.
+
+The exact $N^{(0)}$ in Nicolas's (3.13), printed p.12, has largest prime
+$1000000007$ and maximum exponent $33$. It divides the $33$rd power of
+that primorial. Dusart's Theorem 5.2, $k=0$, therefore gives
+
+$$
+\log N^{(0)}\le33\vartheta(1000000007)
+<66(1000000007)<K/2<A.
+$$
+
+Thus the $6.78$ branch of Theorem 1.3 is paid using the same finite
+supplier as the previous core application. The decimal approximation
+to $\log N^{(0)}$ is not used to define or certify its threshold.
+No new finite computation, unbounded source sequence, or additional
+large finite Robin theorem is needed for (G6)–(G8).
+
+At this fixed source the resulting sufficient condition is
+
+$$
+\sqrt A\log A\,I_\psi(A)\ge-\mathcal E(\log A).
+\tag{G9}
+$$
+
+The strict core inequality then supplies strict Robin.
+A selected counterexample would instead have to satisfy
+$\sqrt A\log A\,I_\psi(A)<-\mathcal E(\log A)$.
+The new allowance is weaker as a tail requirement than the existing
+$-D_{\rm lb}(A)$ requirement; neither signed tail bound has been proved.
+The full integral over $[A,\infty)$ remains in (G9).
+This paper-level improvement does not prove RH, and finite source
+checks and source inspection do not certify its external premises.
