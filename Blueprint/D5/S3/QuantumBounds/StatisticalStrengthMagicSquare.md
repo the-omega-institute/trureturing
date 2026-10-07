@@ -298,6 +298,10 @@ $$\exists e \in \operatorname{Experiment},\; (\operatorname{Valid}\left(e\right)
 
 *Proof.* Machine-checked in Lean as `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/van-dam-gill-grunwald-2005-two-singlet-strength` (proved) by `D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"van-dam-gill-grunwald-2005-two-singlet-strength","declaration_gid":"D5/S3/QuantumBounds/StatisticalStrengthMagicSquare.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* W. van Dam; R. D. Gill; P. D. Grünwald (2005). *The Statistical Strength of Nonlocality Proofs*. DOI: [10.1109/TIT.2005.851738](https://doi.org/10.1109/TIT.2005.851738). URL: <https://arxiv.org/abs/quant-ph/0307125v2>.

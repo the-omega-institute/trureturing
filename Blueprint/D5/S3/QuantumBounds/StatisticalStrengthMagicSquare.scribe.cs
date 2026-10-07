@@ -67,7 +67,10 @@ internal sealed class StatisticalStrengthMagicSquareDocument : IScribeDocumentDe
                 StatementSource.FromAuthor(ClaimFormula()), AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "The commuting magic-square rows and columns give four nonzero-outcome PVMs on each side. Bob's transpose and local singlet conjugation give the Born trace identity, and losing parity outcomes have zero probability. Every pair of deterministic local response functions wins at most eight of the nine magic-square contexts. Averaging preserves that bound for every normalized local mixture. Coarse-graining the uniform joint law into outside, winning and losing bins and applying the frozen log-sum inequality proves S_uni ≥ (9/16) log(9/8)/log 2. A single local CHSH reference mixture gives S_cor CHSH ≤ c for every setting law. The fulfilled rational logarithm enclosures prove 2c < 93/1000 < 95/1000 < (9/16) log(9/8)/log 2. A nonzero product-operator minor proves that an Alice projector is joint. No exact optimal strength or global optimality claim is made."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("van-dam-gill-grunwald-2005-two-singlet-strength"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock.Describe Definition(string name, string heading, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create("vdgg-" + name.Replace('_', '-').ToLowerInvariant()),
