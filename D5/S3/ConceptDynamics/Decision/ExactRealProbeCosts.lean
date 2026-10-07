@@ -30,7 +30,7 @@ namespace D5.S3.ConceptDynamics.Decision.ExactRealProbeCosts
 open unitInterval
 open MeasureTheory Filter
 open scoped ENNReal
-open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist execute)
+open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist execute execute_mono execute_transfer)
 open D5.S3.ConceptDynamics.EscapeSpectrum.UncountableSingletonCutCountermodel (State)
 
 noncomputable section
@@ -85,8 +85,8 @@ def threeProbe (a c d : I) : Controller := fun h =>
 
 local notation "CodedAction" => I ⊕ Bool
 
-/-- On every finite record length, the seed-record control map is Borel.
-The tuple representation gives the disjoint union of finite product spaces. -/
+/-- On every finite record length, control is measurable for the seed sigma algebra
+and the Borel record space. Tuples represent each finite product space. -/
 def ControlsMeasurably {Ω : Type} [MeasurableSpace Ω] (π : Ω → Controller) : Prop :=
   ∀ n : Nat, Measurable (fun z : Ω × (Fin n → I × Bool) =>
     π z.1 (List.ofFn (fun i => ⟨(z.2 i).1, (z.2 i).2⟩)))
@@ -245,12 +245,6 @@ theorem result :
   have run_stop (π : Controller) (s : Source) (pre : History) (b : Bool)
       (hd : π pre = .inr b) : Run π s pre [] b :=
     ⟨1, by simp [execute, hd]⟩
-  have run_query (π : Controller) (s : Source) (pre : History) (a : I)
-      (t : History) (b : Bool) (hd : π pre = .inl a)
-      (hn : Run π s (pre ++ [⟨a, response a s⟩]) t b) :
-      Run π s pre (⟨a, response a s⟩ :: t) b := by
-    obtain ⟨n, hn⟩ := hn
-    exact ⟨n + 1, by simp [execute, hd, hn]⟩
   have run_cases (π : Controller) (s : Source) (pre t : History) (b : Bool)
       (hr : Run π s pre t b) :
       (π pre = .inr b ∧ t = []) ∨
@@ -273,80 +267,19 @@ theorem result :
   have run_unique (π : Controller) (s : Source) (pre t₁ t₂ : History)
       (b₁ b₂ : Bool) (h₁ : Run π s pre t₁ b₁) (h₂ : Run π s pre t₂ b₂) :
       t₁ = t₂ ∧ b₁ = b₂ := by
-    have aux : ∀ n m (pre t₁ t₂ : History) (b₁ b₂ : Bool),
-        execute response π n pre s = some (t₁, b₁) →
-        execute response π m pre s = some (t₂, b₂) → t₁ = t₂ ∧ b₁ = b₂ := by
-      intro n
-      induction n with
-      | zero => intro m pre t₁ t₂ b₁ b₂ hn hm; simp [execute] at hn
-      | succ n ih =>
-        intro m pre t₁ t₂ b₁ b₂ hn hm
-        cases m with
-        | zero => simp [execute] at hm
-        | succ m =>
-          cases hd : π pre with
-          | inr r =>
-            have he₁ : ([], r) = (t₁, b₁) := by simpa [execute, hd] using hn
-            have he₂ : ([], r) = (t₂, b₂) := by simpa [execute, hd] using hm
-            exact Prod.mk.inj (he₁.symm.trans he₂)
-          | inl a =>
-            simp only [execute, hd] at hn hm
-            obtain ⟨⟨v, r⟩, hv, he₁⟩ := Option.map_eq_some_iff.mp hn
-            obtain ⟨⟨w, k⟩, hw, he₂⟩ := Option.map_eq_some_iff.mp hm
-            rcases Prod.mk.inj he₁ with ⟨ht₁, hb₁⟩
-            rcases Prod.mk.inj he₂ with ⟨ht₂, hb₂⟩
-            obtain ⟨hvw, hrk⟩ := ih _ _ _ _ _ _ hv hw
-            exact ⟨ht₁.symm.trans ((congrArg (List.cons ⟨a, response a s⟩) hvw).trans ht₂),
-              hb₁.symm.trans (hrk.trans hb₂)⟩
-    exact aux h₁.choose h₂.choose pre t₁ t₂ b₁ b₂ h₁.choose_spec h₂.choose_spec
+    obtain ⟨n, hn⟩ := h₁
+    obtain ⟨m, hm⟩ := h₂
+    have hn' := execute_mono response π n (max n m) pre s t₁ b₁
+      (Nat.le_max_left n m) hn
+    have hm' := execute_mono response π m (max n m) pre s t₂ b₂
+      (Nat.le_max_right n m) hm
+    exact Prod.mk.inj (Option.some.inj (hn'.symm.trans hm'))
   have run_consistent (π : Controller) (s : Source) (pre t : History) (b : Bool)
-      (hr : Run π s pre t b) : Consistent t s := by
-    have aux : ∀ n (pre t : History) (b : Bool),
-        execute response π n pre s = some (t, b) → Consistent t s := by
-      intro n
-      induction n with
-      | zero => intro pre t b hn; simp [execute] at hn
-      | succ n ih =>
-        intro pre t b hn
-        cases hd : π pre with
-        | inr r =>
-          have he : ([], r) = (t, b) := by simpa [execute, hd] using hn
-          rcases Prod.mk.inj he with ⟨rfl, rfl⟩
-          simp
-        | inl a =>
-          simp only [execute, hd] at hn
-          obtain ⟨⟨tail, r⟩, hnext, he⟩ := Option.map_eq_some_iff.mp hn
-          rcases Prod.mk.inj he with ⟨rfl, rfl⟩
-          have ht := ih _ _ _ hnext
-          intro p hp
-          rcases List.mem_cons.mp hp with rfl | hp
-          · rfl
-          · exact ht p hp
-    exact aux hr.choose pre t b hr.choose_spec
+      (hr : Run π s pre t b) : Consistent t s :=
+    (execute_transfer response π hr.choose pre s t b hr.choose_spec).1
   have replay (π : Controller) (s s' : Source) (pre t : History) (b : Bool)
-      (hr : Run π s pre t b) (hc : Consistent t s') : Run π s' pre t b := by
-    have aux : ∀ n (pre t : History) (b : Bool),
-        execute response π n pre s = some (t, b) → Consistent t s' → Run π s' pre t b := by
-      intro n
-      induction n with
-      | zero => intro pre t b hn hc; simp [execute] at hn
-      | succ n ih =>
-        intro pre t b hn hc
-        cases hd : π pre with
-        | inr r =>
-          have he : ([], r) = (t, b) := by simpa [execute, hd] using hn
-          rcases Prod.mk.inj he with ⟨rfl, rfl⟩
-          exact run_stop π s' pre r hd
-        | inl a =>
-          simp only [execute, hd] at hn
-          obtain ⟨⟨tail, r⟩, hnext, he⟩ := Option.map_eq_some_iff.mp hn
-          rcases Prod.mk.inj he with ⟨rfl, rfl⟩
-          have he : response a s' = response a s := hc ⟨a, response a s⟩ (by simp)
-          have ht : Consistent tail s' := fun p hp => hc p (by simp [hp])
-          have next := ih _ _ _ hnext ht
-          rw [← he] at next ⊢
-          exact run_query π s' pre a tail r hd next
-    exact aux hr.choose pre t b hr.choose_spec hc
+      (hr : Run π s pre t b) (hc : Consistent t s') : Run π s' pre t b :=
+    ⟨hr.choose, (execute_transfer response π hr.choose pre s t b hr.choose_spec).2 s' hc⟩
   have terminal_sound (π : Controller) (correct : Correct π) (s : Source)
       (t : History) (b : Bool) (hr : Run π s [] t b) : Sound t b := by
     intro s' hc

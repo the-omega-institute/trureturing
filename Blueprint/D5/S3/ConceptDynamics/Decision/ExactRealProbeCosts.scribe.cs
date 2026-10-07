@@ -57,7 +57,7 @@ internal sealed class ExactRealProbeCostsDocument : IScribeDocumentDefinition
                     + "requires Correct(pi(omega)) at every declared seed. expectedCost(mu,pi,s) "
                     + "is the nonnegative extended integral of the execution cost. The "
                     + "randomizedValue(false) and randomizedValue(true) infima range over all "
-                    + "seed spaces, Borel control maps, probability laws, and respectively "
+                    + "seed spaces, measurable control maps, probability laws, and respectively "
                     + "weak or strong contracts, after taking the supremum over sources.")),
                 Paragraph(Text("volumeI is the Lebesgue probability law on the closed unit "
                     + "interval. oneProbe(u) queries u and returns its response. Its error "
@@ -74,12 +74,12 @@ internal sealed class ExactRealProbeCostsDocument : IScribeDocumentDefinition
                     + "source the exceptional seeds form a finite null set. Thus its expected "
                     + "cost is two, whereas every fixed seed has worst cost three.")),
                 Paragraph(Text("ErrorSeeds(pi,s) is the set of seeds with a finite erroneous "
-                    + "return. MeasurableStrategy requires Borel control on the product of "
-                    + "seeds and each finite record space, and measurable costs, termination "
+                    + "return. MeasurableStrategy requires measurable control on the product of "
+                    + "the seed sigma algebra and each Borel finite record space, and measurable costs, termination "
                     + "events, and error events for each source. ControlsMeasurably is its "
                     + "control condition. constantFamily(pi) is the constant family on Unit. "
                     + "jointResponse(a,s) is response(a,s), on the product domain. Both "
-                    + "attaining families and the joint response satisfy these Borel conditions. "
+                    + "attaining families and the joint response satisfy these measurability conditions. "
                     + "The fixed-input expectation convention is acknowledged from Magniez "
                     + "and coauthors; the exact probe sharp values are repository deductions."))),
             DescribeRole.Theorem))));
