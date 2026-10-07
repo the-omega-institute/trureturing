@@ -4746,3 +4746,245 @@ $$
 QO.8–QO.12 排除的是增长全素数剥离在任意输入盒上的统一算子预算。它们没有排除附带实际输入结构的变差估计、随截止增长的定量预算或原 Robin 有符号尾的其它估计。RH 以及该原尾的最终符号仍未由这些有限算子结论确定。
 
 ## 追加锚（本行以下为增补区）
+
+### 471. 实际阶乘余项的固定域求导与完整尾的较低衰减门槛
+
+本节保持原阶乘余项、原 Robin 权及全部无限积分，证明一条固定 $x$ 的充分尾条件。阶乘跳跃留在积分变量中，尺度导数落在光滑权上；这允许直接支付完整导数，而不对一个误差上界求导。所有对数均为自然对数。
+
+#### 471.1 实际对象与完整低高分解
+
+对 $y>0$ 定义
+
+$$
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,
+\qquad w(t)=\frac{1+\log t}{t^2\log^2t}.
+$$
+
+对 $x\ge e$、$s\ge x$ 保持
+
+$$
+P_x(s)=\int_x^\infty\eta(t/s)w(t)\,dt,
+\quad Q_x(s)=sP_x(s),
+\quad b_x(s)=s[P_x(s)-P_x(2s)].
+\tag{FD.1}
+$$
+
+有限恒等式 $\sum_{n=1}^{N}\log n=\log(N!)$ 将 $\eta$ 识别为实际对数前缀的余项。经典有限阶乘误差给出
+
+$$
+\eta(y)=y(1-\log y)\quad(0<y\le1),
+\qquad |\eta(y)|\le1+\log y\quad(y\ge1).
+\tag{FD.2}
+$$
+
+第一式包含 $y=1$，因为 $0!=1!=1$。第二式使用完整有限阶乘误差，不要求 $y$ 是整数。本节直接采用已有有限对数恒等式和阶乘误差，不提出经典标量公式的优先权主张。
+
+令 $\ell=\log x\ge1$、$r=\log s\ge\ell$、$L=\log2$，并令
+
+$$
+c_\ell=\ell^{-1}-\log\ell-1,\quad d_\ell=\ell^{-1}+\ell-1,
+\qquad F_\ell(r)=r\log r+c_\ell r+d_\ell-r^{-1}.
+$$
+
+对每个 $r>0$ 定义完整有符号积分
+
+$$
+E(r)=\int_1^\infty\frac{\eta(y)}{y^2}
+\left[(r+\log y)^{-1}+(r+\log y)^{-2}\right]dy.
+\tag{FD.3}
+$$
+
+**命题 471.1。** 上述实际积分绝对可积，并满足
+
+$$
+Q_x(s)=F_\ell(r)+E(r),\qquad
+|E(r)|\le2(r^{-1}+r^{-2}).
+\tag{FD.4}
+$$
+
+**证明。** 在 $x<t<s$ 使用 FD.2 的低域式，再令 $u=\log t$，得到
+
+$$
+s\int_x^s\eta(t/s)w(t)\,dt
+=\int_\ell^r[(1+r)u^{-2}+r/u-1]du=F_\ell(r).
+$$
+
+在 $t>s$ 令 $t=sy$，则原高域恰为 FD.3；$t=s$ 的单点对 Lebesgue 积分无贡献。FD.2 与 $\log y\ge0$ 给出
+
+$$
+|\eta(y)|y^{-2}[(r+\log y)^{-1}+(r+\log y)^{-2}]
+\le(r^{-1}+r^{-2})(1+\log y)y^{-2}.
+$$
+
+完整主控函数的积分 $\int_1^\infty(1+\log y)y^{-2}dy=2$ 支付绝对可积性和上界。低域连续积分可积，故原 $P_x$ 也绝对可积。证毕。
+
+#### 471.2 求导支付的是原有符号高域
+
+**命题 471.2。** 对每个 $r>0$，
+
+$$
+E'(r)=-\int_1^\infty\frac{\eta(y)}{y^2}
+[(r+\log y)^{-2}+2(r+\log y)^{-3}]dy,
+\qquad |E'(r)|\le2(r^{-2}+2r^{-3}).
+\tag{FD.5}
+$$
+
+**证明。** 固定 $r_0>0$，在邻域 $r_0/2<r<3r_0/2$ 上，逐点导数的绝对值不超过
+
+$$
+(4r_0^{-2}+16r_0^{-3})(1+\log y)y^{-2}.
+$$
+
+该函数在完整 $(1,\infty)$ 可积，$\eta$ 可测，基点的原积分可积。参数积分求导定理因此适用；积分导数的上界再由积分为 $2$ 得出。这里 $\eta(y)$ 始终是固定乘子，没有对阶乘、floor 或 FD.4 的误差不等式求导。证毕。
+
+同一实际 dyadic 权满足
+
+$$
+b_x(s)=F_\ell(r)-\tfrac12F_\ell(r+L)+E(r)-\tfrac12E(r+L).
+\tag{FD.6}
+$$
+
+其中 $1/2$ 来自 $sP_x(2s)=Q_x(2s)/2$，不能删去。对 $s>x$ 求导，得到
+
+$$
+sb'_x(s)=S_\ell(r)+E'(r)-\tfrac12E'(r+L),
+$$
+$$
+S_\ell(r)=\tfrac12\log(r/\ell)+\frac1{2\ell}
+-\tfrac12\log(1+L/r)+r^{-2}-\tfrac12(r+L)^{-2}.
+\tag{FD.7}
+$$
+
+这是对实际 $b_x$ 的恒等式。由 FD.5，完整高域导数误差满足
+
+$$
+|sb'_x(s)-S_\ell(r)|\le3r^{-2}+6r^{-3}.
+\tag{FD.8}
+$$
+
+因为 $0<L<1$、$\log(1+L/r)\le L/r$ 和 $r\ge\ell\ge1$，
+
+$$
+0\le\tfrac12\log(r/\ell)+\frac{1-L}{2\ell}
+\le S_\ell(r)\le\tfrac12\log(r/\ell)+\frac1{2\ell}+r^{-2}.
+$$
+
+故得到完整且显式的导数预算
+
+$$
+\boxed{|sb'_x(s)|\le\tfrac12\log(r/\ell)+\frac1{2\ell}+4r^{-2}+6r^{-3}
+\le\tfrac12\log(r/\ell)+\frac{21}{2\ell}.}
+\tag{FD.9}
+$$
+
+固定 $x$ 时，该界为 $|b'_x(s)|=O_x(\log\log s/s)$；固定 $u>1$ 而取 $s=ux$ 时，它为 $O_u(1/(s\log x))$。
+
+**推论 471.3。** 若 $x\ge\exp22$，则实际 $b_x$ 在 $(x,\infty)$ 严格递增。
+
+**证明。** FD.7–FD.8 给
+
+$$
+sb'_x(s)\ge\tfrac12\log(r/\ell)+\frac{1-L}{2\ell}-3r^{-2}-6r^{-3}.
+$$
+
+使用经典 $\log2<7/10$，非对数部分在 $\ell\ge22$ 时至少为
+
+$$
+\frac{(3/20)\ell^2-3\ell-6}{\ell^3}\ge\frac3{5\ell^3}>0.
+$$
+
+分子在 $[22,\infty)$ 递增，并在 $22$ 等于 $3/5$。因此导数严格为正，由中值定理得到结论。权的正导数不确定 Möbius 加权尾的符号。证毕。
+
+#### 471.3 对固定 x 支付全部端点、变差与原整数截止
+
+令 $G(n)=\sum_{1\le d\le n,\ d\text{ odd}}\mu(d)/d$ 为实际奇数调和 Möbius 前缀。假定某个算术估计已给出 $A\ge0$、$p>1$ 和整数 $D>x$，使
+
+$$
+|G(n)|\le A/(\log n)^p\qquad(n\ge D).
+\tag{FD.10}
+$$
+
+这是本命题的显式算术前提；有限全截止界 $|G(n)|\le4$ 不推出它。令 $q=\log R$，直接代换 $u=\log t$ 并作完整分部积分，得到
+
+$$
+I(R):=\int_R^\infty
+\frac{\tfrac12\log(\log t/\ell)+21/(2\ell)}{t(\log t)^p}dt
+=q^{1-p}\left[\frac{\log(q/\ell)}{2(p-1)}
++\frac1{2(p-1)^2}+\frac{21}{2\ell(p-1)}\right].
+\tag{FD.11}
+$$
+
+该公式对 $R\ge x$ 成立；无穷端点 $u^{1-p}\log u\to0$ 由 $p>1$ 支付。对每个整数 $n\ge D$，FD.9 在完整 $[n,n+1]$ 上成立。令其连续非负主控函数为 $m(t)$，对 $b_x\pm\int m$ 应用导数符号与中值定理，得到 $|b_x(n+1)-b_x(n)|\le\int_n^{n+1}m(t)dt$。这一步不要求另行假定 $b'_x$ 连续。
+
+又 $\log t\le2\log n$ 对 $n\le t\le n+1$、$n\ge D>e$ 成立，因此
+
+$$
+\sum_{n>D}|G(n)|\,|b_x(n+1)-b_x(n)|\le A2^p I(D+1)<\infty.
+\tag{FD.12}
+$$
+
+由 FD.4–FD.6，固定 $x$ 时 $b_x(s)=O_x(\log s\log\log s)$，所以 FD.10 支付完整终端 $b_x(M)G(M)\to0$。对每个自然截止 $M>D$，原有限 Abel 恒等式为
+
+$$
+\sum_{\substack{D<n\le M\\n\text{ odd}}}\mu(n)[P_x(n)-P_x(2n)]
+=b_x(M)G(M)-b_x(D+1)G(D)
+-\sum_{n=D+1}^{M-1}[b_x(n+1)-b_x(n)]G(n).
+\tag{FD.13}
+$$
+
+这里偶数系数为零，$G$ 仍保留所有整数截止；$M=D+1$ 时内部和为空。FD.12 和终端极限证明原自然截止极限 $T_D(x)$ 存在，且
+
+$$
+T_D(x)=-b_x(D+1)G(D)-\sum_{n>D}[b_x(n+1)-b_x(n)]G(n),
+$$
+$$
+|T_D(x)|\le|b_x(D+1)|\,|G(D)|+A2^p I(D+1).
+\tag{FD.14}
+$$
+
+第二个级数绝对收敛；原 Möbius 原子序列只证明按自然截止收敛，没有声称无条件或绝对可和。原 signed anchor $-b_x(D+1)G(D)$ 和整个无限尾均被保留。
+
+这一充分对数幂门槛是 $p>1$。此前粗主控 $(1+\log s)^2/s$ 会要求 $p>3$；FD.9 改变了所需算术供应的强度，但没有构造 FD.10，也没有证明 $p>1$ 是必要条件。
+
+#### 471.4 固定域机制与 RH 临界尺度的界限
+
+固定域代换把全部阶乘跳跃放入与 $r$ 无关的 $\eta(y)$，把参数变化放入可求导、可主控的实际权核。因此准确有符号积分保留下来，同时完整导数可估计。这与有限 Möbius 剥离保留实际前缀和端点的做法相容：重组改变待控接口，不消除算术抵消义务。
+
+对 $D$ 与 $x$ 可比的临界问题，若同一个固定 $A>0$、有限 $p>1$ 的算术界用于 $x\to\infty$，FD.11 给 $I(D+1)=\Theta_p((\log x)^{1-p})$。因此 FD.14 中这一绝对上界项乘以目标 $\sqrt{x}\log x$ 后为 $\Theta_{A,p}(\sqrt{x}(\log x)^{2-p})$，这条估计无法推出临界误差消失；这不是原有符号尾不消失的断言。固定 $x$ 的尾收敛、权的正导数与临界有符号补偿是不同的数学结论。原 prime panel 与其补集的完整有符号补偿以及 RH 的最终符号仍待证明。
+
+## 追加锚（本行以下为增补区）
+
+---
+
+## 472. 外部 RH 库接入口：有限 Euler 剥离可逆，统一储备另需证明
+
+OpenAI/math 固定版本 `adc7f1241b42e322a6451854ab7e4b4c146bf78a` 的 `OAI/NumberTheory/DirichletL/EulerFactors.lean` 给出有限带权 Euler 因子的非零和零点运输。普通 ζ 的同类结论已有本库 `PrimeAddress.finite_prime_modification_preserves_global_zero_set` 与 `EulerWindows.finite_euler_window_ne_zero`，应直接复用。本节仅使用这些有限因子性质，不以 OpenAI 的完整 $7/8$ 主链作为已验收供应。
+
+**定义 472.1（有限带权修改）。** 对有限素数集 $S$、复系数 $|a_p|\le1$，令 $E_S(s)=\prod_{p\in S}(1-a_pp^{-s})$，其中 $p^{-s}=\exp(-s\log p)$。
+
+**定理 472.2（有限级定量可逆性）。** 若 $\operatorname{Re}s\ge\sigma>0$，则
+
+$$
+|E_S(s)|\ge\prod_{p\in S}(1-p^{-\sigma})>0,
+\qquad |E_S(s)^{-1}|\le\prod_{p\in S}(1-p^{-\sigma})^{-1}.
+$$
+
+*证明。* 对每个 $p$，有 $|a_pp^{-s}|=|a_p|p^{-\operatorname{Re}s}\le p^{-\sigma}<1$。反三角不等式给 $|1-a_pp^{-s}|\ge1-p^{-\sigma}>0$，再取有限乘积和倒数。空集给两端恰为 $1$。因此同一实际身份 $L_S=E_SL$ 双向保持这个半平面内的零点。
+
+**定理 472.3（有限可逆性不支付增长素数集的统一逆界）。** 固定 $0<\sigma\le1$，令 $S_P=\{p\le P:p\text{ 为素数}\}$。在允许的实际输入 $a_p=1,s=\sigma$ 上，$E_{S_P}(\sigma)\to0$，故其倒数趋于正无穷。
+
+*证明。* 每个因子为正，由 $\log(1-u)\le-u$，
+
+$$
+\log E_{S_P}(\sigma)\le-\sum_{p\le P}p^{-\sigma}\le-\sum_{p\le P}p^{-1}\longrightarrow-\infty.
+$$
+
+最后一步复用素数调和级数发散；Mathlib 原供应为 `not_summable_one_div_on_primes`。对一般复系数，这个比较只说明保证下界趋零，不能推出实际乘积趋零；上述实际输入专门证明了全体允许输入上的统一正下界不存在。
+
+固定 $\sigma>1$ 时，$\sum_p p^{-\sigma}<\infty$，且 $0\le-\log(1-p^{-\sigma})\le p^{-\sigma}/(1-2^{-\sigma})$，所以保证下界的无限乘积有严格正极限。临界开带的有限零点运输与绝对收敛半平面的统一逆界有不同的解析门槛。
+
+这给“等价形态像群”的直觉一个可检验版本：有限非零乘子的乘除可组合、可逆，保存零点；相应范数常数随素数集增长，不能由可逆性自动控制。§470 的商块范数增长与这里的 Euler 逆界缺口指向同一问题：把有限层之间的精确关系提升到无界层，需要支付实际输入上的抵消或统一储备。
+
+Gaussian 的完整 Möbius 调和衰减是 §471 固定 $x$ 变差与端点的候选算术供应；它仍须经过准确的全体／奇数传输和本库核验。固定 $x$ 的收敛也不支付共同临界尺度上的有符号补偿。以上关系未建立 $5040$、Fibonacci 与拓扑例外的数值同构，亦未证明 Robin 最终符号或 RH。
+
+## 追加锚（本行以下为增补区）
