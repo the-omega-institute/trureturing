@@ -16,6 +16,140 @@ namespace D5.S3.Arith.FibonacciAtomic.MersenneDyadicSupportLines
 open scoped BigOperators
 open D5.S3.Arith.FibonacciAtomic.DyadicSupportLines
 
+/-- Bounds, summability and nonnegativity of the dyadic residual series. -/
+theorem simplex_data (h : ℕ) (P : Fin (2 ^ h - 1) → ℝ) (hS : ∑ i, P i = 1) :
+    (∀ d, 0 ≤ DyadicSupportLines.residual P d ∧
+      DyadicSupportLines.residual P d ≤ (2 ^ h - 1 : ℕ)) ∧
+      Summable (fun d : ℕ => DyadicSupportLines.residual P d / (2 : ℝ) ^ d) ∧ 0 ≤ cost P := by
+  let m := 2 ^ h - 1
+  have bounds (d : ℕ) :
+      0 ≤ DyadicSupportLines.residual P d ∧ DyadicSupportLines.residual P d ≤ m := by
+    have hsum : ∑ i, (2 : ℝ) ^ d * P i = (2 : ℝ) ^ d := by
+      rw [← Finset.mul_sum, hS, mul_one]
+    have hlo := Finset.sum_le_sum (s := Finset.univ)
+      (fun i _ => Int.floor_le ((2 : ℝ) ^ d * P i))
+    have hhi := Finset.sum_le_sum (s := Finset.univ)
+      (fun i _ => (Int.lt_floor_add_one ((2 : ℝ) ^ d * P i)).le)
+    simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
+      Fintype.card_fin, nsmul_eq_mul, hsum] at hlo hhi
+    simp only [DyadicSupportLines.residual, Int.cast_sum]
+    constructor <;> linarith only [hlo, hhi]
+  have nonneg (d : ℕ) : 0 ≤ DyadicSupportLines.residual P d / (2 : ℝ) ^ d :=
+    div_nonneg (bounds d).1 (by positivity)
+  have summable : Summable (fun d : ℕ => DyadicSupportLines.residual P d / (2 : ℝ) ^ d) := by
+    apply Summable.of_nonneg_of_le nonneg
+      (fun d => div_le_div_of_nonneg_right (bounds d).2 (by positivity))
+    simpa [div_pow, div_eq_mul_inv] using
+      (summable_geometric_of_abs_lt_one (r := (1 / 2 : ℝ)) (by norm_num)).mul_left (m : ℝ)
+  exact ⟨bounds, summable, tsum_nonneg nonneg⟩
+
+/-- A lower bound on every coordinate bounds each individual atom above. -/
+theorem simplex_atom_upper (h : ℕ) (P : Fin (2 ^ h - 1) → ℝ) (hS : ∑ i, P i = 1) (t : ℝ)
+    (ht : ∀ i, t ≤ P i) (i : Fin (2 ^ h - 1)) :
+    P i ≤ 1 - (((2 ^ h - 1 : ℕ) : ℝ) - 1) * t := by
+  let m := 2 ^ h - 1
+  have H := Finset.single_le_sum (f := fun j => P j - t)
+    (fun j _ => sub_nonneg.mpr (ht j)) (Finset.mem_univ i)
+  simp only [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ,
+    Fintype.card_fin, nsmul_eq_mul, hS] at H
+  linarith only [H]
+
+/-- The first h floors vanish when the rescaled atoms are below two. -/
+theorem scaling_floors (h : ℕ) (P : Fin (2 ^ h - 1) → ℝ)
+    (hPi : ∀ i, 0 ≤ P i ∧ (2 : ℝ) ^ h * P i < 2)
+    (i : Fin (2 ^ h - 1)) (d : ℕ) (hd : d < h) : ⌊(2 : ℝ) ^ d * P i⌋ = 0 := by
+  let M := (2 : ℝ) ^ h
+  apply Int.floor_eq_iff.mpr
+  simp only [Int.cast_zero, zero_add]
+  refine ⟨mul_nonneg (by positivity) (hPi i).1, ?_⟩
+  have scale := pow_le_pow_right₀ (by norm_num : (1 : ℝ) ≤ 2)
+    (by omega : d + 1 ≤ h)
+  change (2 : ℝ) ^ (d + 1) ≤ M at scale
+  rw [pow_succ] at scale
+  have H := mul_le_mul_of_nonneg_right scale (hPi i).1
+  nlinarith only [H, (hPi i).2]
+
+/-- Exact dyadic cost scaling in the high interval. -/
+theorem scaling (h : ℕ) (hh : 2 ≤ h) (P : Fin (2 ^ h - 1) → ℝ) (hS : ∑ i, P i = 1)
+    (t : ℝ) (ht : ∀ i, t ≤ P i) (hthi : 1 / (2 : ℝ) ^ h < t) :
+    let Q := fun i => (2 : ℝ) ^ h * P i - 1
+    (∀ i, 0 ≤ Q i) ∧ (∑ i, Q i = 1) ∧ cost P = h + cost Q / (2 : ℝ) ^ h := by
+  let m := 2 ^ h - 1
+  let M := (2 : ℝ) ^ h
+  have hm : 0 < m := by dsimp [m]; have := (Nat.lt_two_pow_self (n := h)); omega
+  have hM4 : 4 ≤ M := by
+    have H := pow_le_pow_right₀ (by norm_num : (1 : ℝ) ≤ 2) hh
+    norm_num at H
+    exact H
+  have hM : 0 < M := lt_of_lt_of_le (by norm_num) hM4
+  have hmcast : (m : ℝ) = M - 1 := by
+    dsimp [m, M]
+    rw [Nat.cast_sub (by have := (Nat.lt_two_pow_self (n := h)); omega)]
+    norm_cast
+  have hmc : (0 : ℝ) < m := by exact_mod_cast hm
+  have data := simplex_data h
+  have atom_upper := simplex_atom_upper h
+  change (∑ i : Fin m, P i) = 1 at hS
+  let Q : Fin m → ℝ := fun i => M * P i - 1
+  have hMt : 1 < M * t := by simpa [mul_comm] using (div_lt_iff₀ hM).mp hthi
+  have hQ (i : Fin m) : 0 ≤ Q i := by
+    dsimp only [Q]
+    have H := mul_le_mul_of_nonneg_left (ht i) hM.le
+    linarith only [H, hMt]
+  have hSQ : ∑ i, Q i = 1 := by
+    simp only [Q, Finset.sum_sub_distrib, ← Finset.mul_sum, Finset.sum_const,
+      Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, hS, mul_one, hmcast]
+    ring
+  have hPi (i : Fin m) : 0 ≤ P i ∧ M * P i < 2 := by
+    have H := atom_upper P hS t ht i
+    rw [hmcast] at H
+    have H' := mul_pos (by linarith : 0 < M - 2) (sub_pos.mpr hMt)
+    have H'' := mul_nonneg hM.le (sub_nonneg.mpr H)
+    have htpos : 0 < t := lt_trans (by positivity) hthi
+    exact ⟨le_trans htpos.le (ht i), by nlinarith only [H', H'']⟩
+  have head_floor (i : Fin m) (d : ℕ) (hd : d < h) : ⌊(2 : ℝ) ^ d * P i⌋ = 0 :=
+    scaling_floors h P hPi i d hd
+  have floor_tail (i : Fin m) (d : ℕ) :
+      ⌊(2 : ℝ) ^ (d + h) * P i⌋ = ⌊(2 : ℝ) ^ d * Q i⌋ + (2 : ℤ) ^ d := by
+    have scale : (2 : ℝ) ^ (d + h) * P i =
+        (2 : ℝ) ^ d * Q i + (((2 : ℕ) ^ d : ℕ) : ℝ) := by
+      simp only [Q, M, pow_add, Nat.cast_pow, Nat.cast_ofNat]
+      ring
+    rw [scale, Int.floor_add_natCast]
+    norm_cast
+  have tail (d : ℕ) : DyadicSupportLines.residual P (d + h) / (2 : ℝ) ^ (d + h) =
+      (DyadicSupportLines.residual Q d / (2 : ℝ) ^ d) / M := by
+    have hR : DyadicSupportLines.residual P (d + h) = DyadicSupportLines.residual Q d := by
+      unfold DyadicSupportLines.residual
+      simp_rw [floor_tail]
+      simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
+        Fintype.card_fin, nsmul_eq_mul, pow_add]
+      push_cast
+      rw [hmcast]
+      dsimp only [M]
+      ring
+    rw [hR, pow_add]
+    dsimp only [M]
+    ring
+  have head :
+      ∑ d ∈ Finset.range h, DyadicSupportLines.residual P d / (2 : ℝ) ^ d = h := by
+    have terms (d : ℕ) (hd : d ∈ Finset.range h) :
+        DyadicSupportLines.residual P d / (2 : ℝ) ^ d = 1 := by
+      simp only [DyadicSupportLines.residual, head_floor _ d (Finset.mem_range.mp hd),
+        Int.cast_zero,
+        Finset.sum_const_zero, sub_zero]
+      exact div_self (by positivity)
+    calc
+      _ = ∑ _d ∈ Finset.range h, (1 : ℝ) := Finset.sum_congr rfl (fun d hd => terms d hd)
+      _ = _ := by simp
+  have tails :
+      (∑' d, DyadicSupportLines.residual P (d + h) / (2 : ℝ) ^ (d + h)) = cost Q / M := by
+    simp_rw [tail]
+    exact tsum_div_const
+  have split := Summable.sum_add_tsum_nat_add h (data P hS).2.1
+  rw [head, tails] at split
+  exact ⟨hQ, hSQ, split.symm⟩
+
 /-- The two affine bounds on all real probability laws with `2^h-1` outcomes.
 Zero atoms and terminating dyadic expansions are included. -/
 theorem mersenne_support_lines (h : ℕ) (hh : 2 ≤ h)
@@ -41,36 +175,8 @@ theorem mersenne_support_lines (h : ℕ) (hh : 2 ≤ h)
     rw [Nat.cast_sub (by have := (Nat.lt_two_pow_self (n := h)); omega)]
     norm_cast
   have hmc : (0 : ℝ) < m := by exact_mod_cast hm
-  have data (P : Fin m → ℝ) (hS : ∑ i, P i = 1) :
-      (∀ d, 0 ≤ DyadicSupportLines.residual P d ∧ DyadicSupportLines.residual P d ≤ m) ∧
-        Summable (fun d : ℕ => DyadicSupportLines.residual P d / (2 : ℝ) ^ d) ∧ 0 ≤ cost P := by
-    have bounds (d : ℕ) :
-        0 ≤ DyadicSupportLines.residual P d ∧ DyadicSupportLines.residual P d ≤ m := by
-      have hsum : ∑ i, (2 : ℝ) ^ d * P i = (2 : ℝ) ^ d := by
-        rw [← Finset.mul_sum, hS, mul_one]
-      have hlo := Finset.sum_le_sum (s := Finset.univ)
-        (fun i _ => Int.floor_le ((2 : ℝ) ^ d * P i))
-      have hhi := Finset.sum_le_sum (s := Finset.univ)
-        (fun i _ => (Int.lt_floor_add_one ((2 : ℝ) ^ d * P i)).le)
-      simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
-        Fintype.card_fin, nsmul_eq_mul, hsum] at hlo hhi
-      simp only [DyadicSupportLines.residual, Int.cast_sum]
-      constructor <;> linarith only [hlo, hhi]
-    have nonneg (d : ℕ) : 0 ≤ DyadicSupportLines.residual P d / (2 : ℝ) ^ d :=
-      div_nonneg (bounds d).1 (by positivity)
-    have summable : Summable (fun d : ℕ => DyadicSupportLines.residual P d / (2 : ℝ) ^ d) := by
-      apply Summable.of_nonneg_of_le nonneg
-        (fun d => div_le_div_of_nonneg_right (bounds d).2 (by positivity))
-      simpa [div_pow, div_eq_mul_inv] using
-        (summable_geometric_of_abs_lt_one (r := (1 / 2 : ℝ)) (by norm_num)).mul_left (m : ℝ)
-    exact ⟨bounds, summable, tsum_nonneg nonneg⟩
-  have atom_upper (P : Fin m → ℝ) (hS : ∑ i, P i = 1) (t : ℝ)
-      (ht : ∀ i, t ≤ P i) (i : Fin m) : P i ≤ 1 - ((m : ℝ) - 1) * t := by
-    have H := Finset.single_le_sum (f := fun j => P j - t)
-      (fun j _ => sub_nonneg.mpr (ht j)) (Finset.mem_univ i)
-    simp only [Finset.sum_sub_distrib, Finset.sum_const, Finset.card_univ,
-      Fintype.card_fin, nsmul_eq_mul, hS] at H
-    linarith only [H]
+  have data := simplex_data h
+  have atom_upper := simplex_atom_upper h
   have trunc (P : Fin m → ℝ) (hS : ∑ i, P i = 1) (n : ℕ) :
       ∑ d ∈ Finset.range n, DyadicSupportLines.residual P d / (2 : ℝ) ^ d ≤ cost P :=
     (data P hS).2.1.sum_le_tsum _
@@ -235,77 +341,7 @@ theorem mersenne_support_lines (h : ℕ) (hh : 2 ≤ h)
       field_simp [hM.ne']
     rw [lhs, rhs] at H
     exact H.trans (trunc P hS h)
-  have high (P : Fin m → ℝ) (hS : ∑ i, P i = 1)
-      (t : ℝ) (ht : ∀ i, t ≤ P i) (hthi : 1 / M < t) :
-      let Q := fun i => M * P i - 1
-      (∀ i, 0 ≤ Q i) ∧ (∑ i, Q i = 1) ∧ cost P = h + cost Q / M := by
-    let Q : Fin m → ℝ := fun i => M * P i - 1
-    have hMt : 1 < M * t := by simpa [mul_comm] using (div_lt_iff₀ hM).mp hthi
-    have hQ (i : Fin m) : 0 ≤ Q i := by
-      dsimp only [Q]
-      have H := mul_le_mul_of_nonneg_left (ht i) hM.le
-      linarith only [H, hMt]
-    have hSQ : ∑ i, Q i = 1 := by
-      simp only [Q, Finset.sum_sub_distrib, ← Finset.mul_sum, Finset.sum_const,
-        Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, hS, mul_one, hmcast]
-      ring
-    have hPi (i : Fin m) : 0 ≤ P i ∧ M * P i < 2 := by
-      have H := atom_upper P hS t ht i
-      rw [hmcast] at H
-      have H' := mul_pos (by linarith : 0 < M - 2) (sub_pos.mpr hMt)
-      have H'' := mul_nonneg hM.le (sub_nonneg.mpr H)
-      have htpos : 0 < t := lt_trans (by positivity) hthi
-      exact ⟨le_trans htpos.le (ht i), by nlinarith only [H', H'']⟩
-    have head_floor (i : Fin m) (d : ℕ) (hd : d < h) : ⌊(2 : ℝ) ^ d * P i⌋ = 0 := by
-      apply Int.floor_eq_iff.mpr
-      simp only [Int.cast_zero, zero_add]
-      refine ⟨mul_nonneg (by positivity) (hPi i).1, ?_⟩
-      have scale := pow_le_pow_right₀ (by norm_num : (1 : ℝ) ≤ 2)
-        (by omega : d + 1 ≤ h)
-      change (2 : ℝ) ^ (d + 1) ≤ M at scale
-      rw [pow_succ] at scale
-      have H := mul_le_mul_of_nonneg_right scale (hPi i).1
-      nlinarith only [H, (hPi i).2]
-    have floor_tail (i : Fin m) (d : ℕ) :
-        ⌊(2 : ℝ) ^ (d + h) * P i⌋ = ⌊(2 : ℝ) ^ d * Q i⌋ + (2 : ℤ) ^ d := by
-      have scale : (2 : ℝ) ^ (d + h) * P i =
-          (2 : ℝ) ^ d * Q i + (((2 : ℕ) ^ d : ℕ) : ℝ) := by
-        simp only [Q, M, pow_add, Nat.cast_pow, Nat.cast_ofNat]
-        ring
-      rw [scale, Int.floor_add_natCast]
-      norm_cast
-    have tail (d : ℕ) : DyadicSupportLines.residual P (d + h) / (2 : ℝ) ^ (d + h) =
-        (DyadicSupportLines.residual Q d / (2 : ℝ) ^ d) / M := by
-      have hR : DyadicSupportLines.residual P (d + h) = DyadicSupportLines.residual Q d := by
-        unfold DyadicSupportLines.residual
-        simp_rw [floor_tail]
-        simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
-          Fintype.card_fin, nsmul_eq_mul, pow_add]
-        push_cast
-        rw [hmcast]
-        dsimp only [M]
-        ring
-      rw [hR, pow_add]
-      dsimp only [M]
-      ring
-    have head :
-        ∑ d ∈ Finset.range h, DyadicSupportLines.residual P d / (2 : ℝ) ^ d = h := by
-      have terms (d : ℕ) (hd : d ∈ Finset.range h) :
-          DyadicSupportLines.residual P d / (2 : ℝ) ^ d = 1 := by
-        simp only [DyadicSupportLines.residual, head_floor _ d (Finset.mem_range.mp hd),
-          Int.cast_zero,
-          Finset.sum_const_zero, sub_zero]
-        exact div_self (by positivity)
-      calc
-        _ = ∑ _d ∈ Finset.range h, (1 : ℝ) := Finset.sum_congr rfl (fun d hd => terms d hd)
-        _ = _ := by simp
-    have tails :
-        (∑' d, DyadicSupportLines.residual P (d + h) / (2 : ℝ) ^ (d + h)) = cost Q / M := by
-      simp_rw [tail]
-      exact tsum_div_const
-    have split := Summable.sum_add_tsum_nat_add h (data P hS).2.1
-    rw [head, tails] at split
-    exact ⟨hQ, hSQ, split.symm⟩
+  have high := scaling h hh
   have approximate (n : ℕ) : ∀ (P : Fin m → ℝ), (∑ i, P i = 1) →
       ∀ t : ℝ, 0 ≤ t → t ≤ 1 / (m : ℝ) → (∀ i, t ≤ P i) →
         (((h : ℝ) + 2) * M - 2) * t - 2 - ((h : ℝ) + 3) * (1 / M) ^ n ≤ cost P := by
