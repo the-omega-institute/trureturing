@@ -103,6 +103,30 @@ noncomputable def routeTrace {m : Nat} {F : Fin m → Source} :
     else []
 
 
+/-- A partial prototype verifier accepts exactly matching reports or positive inputs. -/
+theorem verifier (V U : Source) (qs : List Address) :
+    (controllerOutcome (verifyController V qs) U).2 = true ↔
+      (∀ q ∈ qs, readout q U = readout q V) ∨ Positive U := by
+  classical
+  induction qs with
+  | nil => simp [verifyController, controllerOutcome]
+  | cons q qs ih =>
+    by_cases he : readout q U = readout q V
+    · simp only [verifyController, controllerOutcome, he, ↓reduceIte]
+      simpa [he] using ih
+    · simp only [verifyController, controllerOutcome, he, ↓reduceIte]
+      rw [acquisition_foundation.1 U]
+      simp [he]
+
+/-- A prototype matches every requested address of its own verifier. -/
+theorem matched (V : Source) (qs : List Address) :
+    controllerOutcome (verifyController V qs) V =
+      (qs.map (fun q => ⟨q,readout q V⟩),true) := by
+  classical
+  induction qs with
+  | nil => rfl
+  | cons q qs ih => simp [verifyController, controllerOutcome, ih]
+
 theorem phase_foundation :
     (∀ c : Controller, ∀ U : Source,
       execute readout (controllerPolicy c) ((controllerOutcome c U).1.length+1) [] U =
@@ -159,18 +183,6 @@ theorem phase_foundation :
           (fun p => (⟨q,y⟩ :: p.1,p.2)) = _
       rw [hs, ih y]
       rfl
-  have verifier (V U : Source) (qs : List Address) :
-      (controllerOutcome (verifyController V qs) U).2 = true ↔
-        (∀ q ∈ qs, readout q U = readout q V) ∨ Positive U := by
-    induction qs with
-    | nil => simp [verifyController, controllerOutcome]
-    | cons q qs ih =>
-      by_cases he : readout q U = readout q V
-      · simp only [verifyController, controllerOutcome, he, ↓reduceIte]
-        simpa [he] using ih
-      · simp only [verifyController, controllerOutcome, he, ↓reduceIte]
-        rw [acquisition_foundation.1 U]
-        simp [he]
   have correct (V : Source) (hv : Positive V) (U : Source) :
       (controllerOutcome (verifyController V (leaves V)) U).2 = true ↔ Positive U := by
     rw [verifier]
@@ -180,12 +192,6 @@ theorem phase_foundation :
         simpa [he] using hv
       · exact h
     · exact Or.inr
-  have matched (V : Source) (qs : List Address) :
-      controllerOutcome (verifyController V qs) V =
-        (qs.map (fun q => ⟨q,readout q V⟩),true) := by
-    induction qs with
-    | nil => rfl
-    | cons q qs ih => simp [verifyController, controllerOutcome, ih]
   have realized (m : Nat) (F : Fin m → Source) (a : actualVectors F) :
       vector F (representative F a) = a.val :=
     (List.Shortlex.wf (InvImage.wf Bool.toNat Nat.lt_wfRel.wf)).min_mem
@@ -250,7 +256,7 @@ noncomputable def recipeStrategy {m : Nat} {F : Fin m → Source}
     controllerOutcome (recipeController r) U, phase_foundation.1 _ U,
     phase_foundation.2.2.2.1 m F hpos S r U⟩
 
-private theorem cost_foundation :
+theorem cost_foundation :
     (∀ V : Source, (leaves V).Nodup ∧
       ∀ u : Address, chi (readout u V) = if u ∈ leaves V then 0 else 1) ∧
     (∀ (m : Nat) (F : Fin m → Source) (hpos : ∀ i, Positive (F i))
