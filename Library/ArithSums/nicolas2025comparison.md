@@ -3170,6 +3170,52 @@ supplied here. The original full signed Robin condition and RH remain
 unproved, with all coefficients, real parts, multiplicities and
 height ranges unchanged.
 
+### A shrinking strip improvement alone leaves the first-band allowance large
+
+Retain the kernel and complete frequency range of (LM1)–(LM8).
+Grant, only for this comparison, a strengthened source endpoint
+majorant in which $e^{|\tau|/(2V)}$ is replaced by
+$e^{(1/2-\delta(V))|\tau|/V}$, where $\delta(V)\ge0$ and
+$\delta(V)\to0$. No such strengthened GSS estimate is inferred merely
+from a zero-free region. Define $\mathcal B_{V,\delta}$ by this
+replacement in the same unit-coefficient absolute allowance
+$\mathcal B^{\rm GSS}_V$.
+
+Since the retained range has $|\tau|\le K_V=20VL$, direct comparison
+of the existing positive integrals gives
+
+$$
+\mathcal B_{V,\delta}(A)
+\ge e^{-20\delta(V)L}\mathcal B^{\rm GSS}_V(A)
+\ge e^{-20\delta(V)L}\frac{\sqrt A(\log V)^2}{6V^2}.
+$$
+
+On the first band, $V=S=A^{1/6}e^{-\kappa\Omega}$ and eventually
+$W=2S\le T$, the already retained $\log S\ge L/7$ therefore yields
+
+$$
+\mathcal B_{S,\delta}(A)
+\ge\frac{L^2}{294}
+ \exp\!\left(\frac L6+2\kappa\Omega-20\delta(S)L\right)
+\longrightarrow\infty.
+$$
+
+Here $S\to\infty$, $\delta(S)\to0$ and $\Omega=o(L)$.
+For example, the existing gap $\delta(V)=\eta(2V)$ from the
+Vinogradov–Korobov input above has these properties. Thus even granting
+this exponential improvement, while retaining the other endpoint
+prefactors, cannot make the same independently absolute allowance
+uniformly bounded on all middle bands. Any fixed positive source
+coefficient preserves the conclusion.
+
+This is a direct application of (LM8), not a new norm, density or
+zero-free theorem. The lower bound concerns only the defined
+allowance; it is not a lower bound for the actual remainder, a Robin
+violation or a failure at a certified numerical clock. Additional
+prefactor savings, joint signed cancellation, other kernels or a
+favorable combined head/main bound retain their roles. The original
+complete signed estimate and RH remain unproved.
+
 ### Scope of the Gaussian single-zero-sum formula
 
 Kamiya–Suzuki, *An asymptotic formula for a sum involving zeros of
