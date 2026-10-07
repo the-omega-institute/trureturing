@@ -24,7 +24,7 @@ For arbitrary nonnegative real tail weights (alpha,beta,gamma) and scan weights 
 
 The retained slot is uniform. Tail probabilities are (1/3,1/3,1/3) for k=1, (11/24,5/24,1/3) for k=2, ((k+3)/8,(5-k)/8,0) for 3<=k<=5, and (1,0,0) for k>=5. Scan probabilities are (3/8,3/8,1/4) for k=2, ((3k+1)/(8(k-1)),(3k-7)/(8(k-1)),1/4) for 3<=k<=5, and ((k+1)/(3(k-1)),(k-2)/(3(k-1)),(k-2)/(3(k-1))) for k>=5. The k=5 prescriptions agree; k=1 has no other slot.
 
-This nonnegative normalized finite rational law has maximum expected cost n + max((5k-1)/(4k),(4k-2)/(3k)). On the evaluation family every selected controller has maximum cost n+2, so the same law has expected maximum cost n+2. The statement concerns actual address costs and does not impose an input prior. This result supplies attainment; the four-exit coarse lower bounds supply domination of other laws and, together with attainment, the unique nondominated pair.
+This nonnegative normalized finite rational law has maximum expected cost n + max((5k-1)/(4k),(4k-2)/(3k)). On the evaluation family every selected controller has maximum cost n+2, so the same law has expected maximum cost n+2. The statement concerns actual address costs and does not impose an input prior. One common law realizes both the maximum of the rowwise expected costs and the expectation of the seedwise maximum cost.
 
 ## References
 

@@ -49,6 +49,8 @@ internal sealed class FourExitCoarseScanAttainmentDocument : IScribeDocumentDefi
                     "This nonnegative normalized finite rational law has maximum expected cost "
                     + "n + max((5k-1)/(4k),(4k-2)/(3k)). On the evaluation family every selected controller has maximum "
                     + "cost n+2, so the same law has expected maximum cost n+2. "
-                    + "The statement concerns actual address costs and does not impose an input prior. This result supplies attainment; the four-exit coarse lower bounds supply domination of other laws and, together with attainment, the unique nondominated pair."))),
+                    + "The statement concerns actual address costs and does not impose an input prior. "
+                    + "One common law realizes both the maximum of the rowwise expected costs "
+                    + "and the expectation of the seedwise maximum cost."))),
             DescribeRole.Theorem))));
 }
