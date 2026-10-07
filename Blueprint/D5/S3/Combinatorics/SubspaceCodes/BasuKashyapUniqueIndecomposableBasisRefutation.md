@@ -96,6 +96,10 @@ $$\neg \mathrm{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/SubspaceCodes/BasuKashyapUniqueIndecomposableBasisRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/basu-kashyap-2019-unique-indecomposable-basis` (refuted) by `D5/S3/Combinatorics/SubspaceCodes/BasuKashyapUniqueIndecomposableBasisRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"basu-kashyap-2019-unique-indecomposable-basis","declaration_gid":"D5/S3/Combinatorics/SubspaceCodes/BasuKashyapUniqueIndecomposableBasisRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Pranab Basu, Navin Kashyap (2019). *The Lattice Structure of Linear Subspace Codes*. URL: <https://arxiv.org/abs/1911.00721v1>.

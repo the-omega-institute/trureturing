@@ -33,7 +33,10 @@ internal sealed class BasuKashyapUniqueIndecomposableBasisRefutationDocument : I
                 AssessedProvenance.FromRepo(Source), Blocks(
                     Paragraph(Text("For every finite field, split the coordinates into three disjoint blocks I,P,Q of dimensions i,a,b with 0 < i < a and i < b. The subspaces A = I ⊕ P, B = I ⊕ Q and C = P ⊕ Q, together with zero, form a linear subspace code under Klein addition. Their intersections are I,P,Q; their dimensions are i+a,i+b,a+b. Translation preserves the literal integer subspace distance.")),
                     Paragraph(Text("Exactly A and B are indecomposable: C = A ⊞ B has two strictly smaller summands, whereas every decomposition of A or B includes a summand of at least its dimension. The four distinct subset sums of {A,B} exhaust the code, and every indecomposable basis must contain both. The nonzero intersection I is outside the code. The universal conjecture fails at F = ZMod 2, i = 1, a = b = 2, n = 5.")),
-                    Paragraph(Text("Remark 5 on page 21 assumes intersection closure when asserting that the indecomposables form a basis. That qualifier is omitted in the Section 6 recap. The source's intersection-closed direction remains intact, as do its proved lattice statements under that hypothesis; the separate Braun–Etzion–Vardy cardinality conjecture is unaffected."))), DescribeRole.Theorem)),
+                    Paragraph(Text("Remark 5 on page 21 assumes intersection closure when asserting that the indecomposables form a basis. That qualifier is omitted in the Section 6 recap. The source's intersection-closed direction remains intact, as do its proved lattice statements under that hypothesis; the separate Braun–Etzion–Vardy cardinality conjecture is unaffected."))), DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("basu-kashyap-2019-unique-indecomposable-basis"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula, string prose, bool literature) =>
