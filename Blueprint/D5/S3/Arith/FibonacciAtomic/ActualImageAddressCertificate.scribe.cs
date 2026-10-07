@@ -26,6 +26,11 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
             Def("replace", "Subtree replacement", "Replacement changes the complete subtree at a valid address and retains the surrounding ordered tree. Invalid paths leave the tree unchanged."),
             Def("AlphaCovered", "Alpha coverage of branches", "Every internal node has an alpha leaf descendant, recursively throughout the tree."),
             Def("rightComb", "Right comb source", "The zero comb is beta. The successor comb pairs alpha on the left with the preceding comb on the right, giving m alpha side leaves and one terminal beta at m right steps."),
+            Describe.Lean(DescribeId.Create("actual-image-alpha-mul"),
+                DeclarationHandle.Create(Prefix + "alpha_mul"), H("Alpha addresses of a pair"),
+                StatementSource.FromAuthor(AlphaMulFormula()), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("The alpha address set of pair(s,t) is the union of the left-prefixed alpha addresses of s "
+                        + "and the right-prefixed alpha addresses of t. The two prefixes are disjoint."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-image-address-certificate-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Sharp cardinality and depth"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(
@@ -107,6 +112,13 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
         Seq(Forall, Sp, V(x), Sp, InMacro, Sp, domain, Comma, Sp, Par(body));
     private static Formula Exists(string x, Formula domain, Formula body) =>
         Seq(F.Exists, Sp, V(x), Sp, InMacro, Sp, domain, Comma, Sp, Par(body));
+    private static Formula AlphaMulFormula()
+    {
+        Formula s=V("s"),t=V("t");
+        return Disp(All("s",V("Source"),All("t",V("Source"),EqOf(
+            Call("alphaLeaves",Call("pair",s,t)),Call("union",
+                Call("prefixLeft",Call("alphaLeaves",s)),Call("prefixRight",Call("alphaLeaves",t)))))));
+    }
     private static Formula ResultFormula()
     {
         Formula k=V("k"), t=V("V"), h=V("h"), q=V("Q"), d=Seq(D(3),Sp,Cdot,Sp,k);
