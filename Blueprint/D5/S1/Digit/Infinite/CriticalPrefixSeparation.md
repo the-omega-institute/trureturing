@@ -48,7 +48,7 @@ For eventually empty sources each scalar belongs to the embedded golden integer 
 
 For every nonnegative closed error radius epsilon, a uniformly correct prefix decoder on the actual finite-tail observation domain exists exactly when epsilon <= t/4. Strict source separation makes every compatible prefix unique at that radius. Above it, a sufficiently long finite five run and the empty source admit a common midpoint observation with different prefixes.
 
-Give prefix values the discrete topology. At the constant observation t/4 every correct decoder returns the empty prefix. The finite five-run responses minus the constant t/4 vector are actual critical observations converging to that same point, while their decoded prefixes are all five. Hence every correct decoder is discontinuous there.
+Give prefix values the discrete topology. At the constant observation t/4 every correct decoder returns the all-null prefix of length h. The finite five-run responses minus the constant t/4 vector are actual critical observations converging to that same point, while their decoded prefixes are all five. Hence every correct decoder is discontinuous there.
 
 ## References
 

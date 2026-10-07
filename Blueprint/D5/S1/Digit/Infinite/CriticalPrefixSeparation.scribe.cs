@@ -69,7 +69,7 @@ internal sealed class CriticalPrefixSeparationDocument : IScribeDocumentDefiniti
                     + "source admit a common midpoint observation with different prefixes.")),
                 Paragraph(Text(
                     "Give prefix values the discrete topology. At the constant observation t/4 "
-                    + "every correct decoder returns the empty prefix. The finite five-run responses "
+                    + "every correct decoder returns the all-null prefix of length h. The finite five-run responses "
                     + "minus the constant t/4 vector are actual critical observations converging to "
                     + "that same point, while their decoded prefixes are all five. Hence every correct "
                     + "decoder is discontinuous there."))),
