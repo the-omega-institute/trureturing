@@ -43,6 +43,31 @@ public sealed class LedgerFrozenCommandTests
         Assert.Empty(result.Error);
     }
 
+    [Theory]
+    [InlineData("Meta/Digestion/backfill/unrelated/residual-open/" +
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.yaml")]
+    [InlineData("docs/develop/theory/unrelated.md")]
+    public void FrozenMembershipIgnoresUnreadableUnrelatedBody(string unrelatedPath)
+    {
+        var result = Run(createLedgerDirectory: true, activeFreeze: true,
+            unrelatedBody: new RawRepositoryEntry(unrelatedPath, [0xff]));
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Empty(result.Error);
+    }
+
+    [Theory]
+    [InlineData("Golden/Frozen/accepted/unrelated.json")]
+    [InlineData("Golden/Frozen/state/D5/S0/Carrier/Other.lean.json")]
+    public void FrozenMembershipStillRejectsMalformedFrozenInput(string frozenPath)
+    {
+        var result = Run(createLedgerDirectory: true, activeFreeze: true,
+            unrelatedBody: RawRepositoryEntry.FromText(frozenPath, "not json"));
+
+        Assert.Equal(2, result.ExitCode);
+        Assert.Contains("LEDGER_FROZEN_INVALID", result.Error, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void MissingLedgerDirectoryReturnsTwoAsInfrastructureFailure()
     {
@@ -56,7 +81,8 @@ public sealed class LedgerFrozenCommandTests
     }
 
     private static ExplicitCommandResult Run(
-        bool createLedgerDirectory, bool activeFreeze, bool? statePin = null)
+        bool createLedgerDirectory, bool activeFreeze, bool? statePin = null,
+        RawRepositoryEntry? unrelatedBody = null)
     {
         using var temporary = new TemporaryDirectory();
         if (createLedgerDirectory)
@@ -77,6 +103,10 @@ public sealed class LedgerFrozenCommandTests
             entries = entries.Append(RawRepositoryEntry.FromText(
                 "Golden/Frozen/state/D5/S0/Carrier/A.lean.json",
                 "{\"statement_id\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\"}\n"));
+        }
+        if (unrelatedBody is not null)
+        {
+            entries = entries.Append(unrelatedBody);
         }
         return LedgerFrozenCommand.Run(
             temporary.Path,

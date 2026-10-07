@@ -17,9 +17,6 @@ public sealed partial class ReviewRegressionTests
     private static RawRepositorySnapshot Snapshot(IReadOnlyDictionary<string, string> files) =>
         RawRepositorySnapshot.Create(files.Select(pair => RawRepositoryEntry.FromText(pair.Key, pair.Value)));
 
-    private static int Count(string value, string fragment) =>
-        (value.Length - value.Replace(fragment, string.Empty, StringComparison.Ordinal).Length) / fragment.Length;
-
     private static void InitializeRemoteDefaultBranch(
         string remoteRoot,
         string repositoryRoot,

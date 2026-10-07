@@ -1,0 +1,45 @@
+**有限取得采用良基证明：**
+
+$$
+\operatorname{rank}(B_{a,r})
+<
+\operatorname{rank}(B).
+$$
+
+它说明：每种实际响应都使协议向完成推进，而不是在一个自洽循环中无限等待。
+
+用不动点记号表示：
+
+$$
+\boxed{
+\begin{aligned}
+\text{行为不可辨关系}
+&=\nu\Psi,\\
+\text{有限可取得域}
+&=\mu\Phi.
+\end{aligned}
+}
+$$
+
+这里 $\nu$ 表示最大不动点，$\mu$ 表示从完成条件生成的最小不动点。
+
+> **算子与格补注。** 在完整幂集格 $\mathcal P(\mathfrak B)$ 上定义
+>
+> $$
+> \begin{aligned}
+> \operatorname{Pre}(W)&=\{B\in\mathfrak B:\exists a\text{ 在 }B\text{ 上共同合法},\\
+> &\hspace{3em}\forall r,\ B_{a,r}\ne\varnothing\Rightarrow B_{a,r}\in W\},\\
+> \Phi(W)&=\mathcal W_0\cup\operatorname{Pre}(W).
+> \end{aligned}
+> $$
+>
+> 在完整幂集格 $\mathcal P(X\times X)$ 上，对 14.4 的总操作幺半群定义
+>
+> $$
+> \Psi_E(R)=E\cap\bigcap_{T\in\mathscr M}(T\times T)^{-1}(R).
+> $$
+>
+> 两算子单调；$\mu\Phi$、$\nu\Psi_E$ 分别指各自完整格中的最小与最大不动点。总操作幺半群下 $\nu\Psi_E=\mathsf D_{\mathscr M}(E)$；上文的 $\nu\Psi$ 按这个带 $E$ 下标的算子解释。16 节有限合同下 $\mu\Phi=\mathcal W_{\mathrm{fin}}$，由有限取得层达到稳定；这里的有限层构造与稳定界只作有限合同陈述，不据此扩展到任意无限动作或响应合同。
+
+
+

@@ -1,0 +1,25 @@
+**证明。** 页内偏迹用式（6.5）和 $e_{b,j}$ 的正交性直接得到式（6.8）。跨页项在两个偏迹中均为零，因为两侧的页支撑都正交。固定坐标 $W$ 由 $J$ 和所选特征基确定，未随 $\rho$ 改变。每个正权块的 $X$ 特征值为 $p_b\lambda_{b,j}$，$Y$ 特征值为 $p_b\nu_{b,r}\lambda_{b,j}$，其中 $\nu_{b,r}$ 是 $\rho_b$ 的谱。展开 $-\sum t\log t$ 即得式（6.9）。正的 $\rho_{bb}$ 在迹为零时必为零，故零权项确可省略。
+
+精确恢复取如下含义：逻辑算符 $O$ 及 $O^\dagger$ 都有区域代表，在码空间上分别满足 $(O_X\otimes I)J=JO$ 及其伴随版本，或相应的 $Y$ 版本。对 $z=\bigoplus_bz_bI_{M_b}$，取 $z_X=\sum_bz_bQ_{X,b}$；对 $T=\bigoplus_bT_b$，取
+
+$$
+T_Y=W\left[\bigoplus_b(T_b\otimes I_{d_b})\right]W^\dagger.
+\tag{6.12}
+$$
+
+未使用支撑上可置零。把它们作用到式（6.4），分别得到 $Jz$、$JT$，对伴随同样成立。
+
+为证明最大性，通道伴随就是局部算符压缩：$\mathcal N_X^\dagger(R)=J^\dagger(R\otimes I)J$。由式（6.8），
+
+$$
+\mathcal N_X^\dagger(R)=\bigoplus_b\operatorname{Tr}(\sigma_bR)I_{M_b},
+\qquad
+\operatorname{ran}\mathcal N_X^\dagger=\mathcal Z.
+$$
+
+同式说明 $\mathcal N_Y^\dagger$ 的像没有跨页矩阵元，而式（6.12）实现任意页内矩阵，所以 $\operatorname{ran}\mathcal N_Y^\dagger=\mathcal Z'$。任何精确区域代表经压缩必在对应像内，故不存在更大的可恢复代数。两代数互为交换子，且共享中心 $\mathcal Z$。跨页相干由全局等距 $J$ 保存，只是不出现在任一单侧边缘态中。
+
+式（6.11）采用已知的算子代数互补恢复机制：D. Harlow, *The Ryu–Takayanagi Formula from Quantum Error Correction*, [arXiv:1607.03901](https://arxiv.org/abs/1607.03901)，定理 5.1、式（5.22）、（5.24）—（5.28）；仓内对应的固定辅助纠缠构造见 [《算术全息 RT》](ARITHMETIC_HOLOGRAPHIC_RT.md) 第 18 节。此处的具体内容是双页合法地址下的精确实现及容量，而不是另行认领一般熵分解。
+
+最后，插入固定零位的映射 $|x\rangle|y\rangle\mapsto|x0y\rangle$ 将整个乘积合法支撑送进长度 $m_X+m_Y+1$ 的合法词空间：零切断跨界的连续一。把该纯零位归入任一侧，只是局部添加固定纯态，两个熵均不变。证毕。
+

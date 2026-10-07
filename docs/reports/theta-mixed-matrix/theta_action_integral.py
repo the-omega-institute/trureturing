@@ -20,7 +20,7 @@ def load(path, name):
 
 
 support = load(HERE/'theta_direct_action.py', 'theta_action_support')
-bounds = load(Path.cwd()/'docs/reports/theta-mixed-matrix/theta_translation_bounds.py', 'theta_action_bounds')
+bounds = load(HERE/'theta_translation_bounds.py', 'theta_action_bounds')
 
 
 def endpoints(v):
@@ -71,6 +71,10 @@ class Action:
         jets, _ = support.theta_jets(z, order=self.order)
         return z*z-sum((acb(c)*(jets[k]/jets[0]-acb(fmpq(1, 4**k)))
                        for k, c in enumerate(self.a, 1)), acb(0))
+
+    def weighted_source_on_piece(self, z, radial_sign):
+        """The original source is analytic across the two radial charts."""
+        return self.weighted_source(z)
 
     def witness(self, z):
         return sum((acb(c)*(acb(g)*z).cos() for c, g in zip(self.b, self.gammas)), acb(0))/(z/2).cosh()
@@ -151,7 +155,7 @@ class Action:
                 self.calls += 1
                 try:
                     s = r+sign*t
-                    phi, weighted = self.weighted_source(s)
+                    phi, weighted = self.weighted_source_on_piece(s, piece_sign)
                     psi = (-t/2).exp()/(1-(-2*t).exp())
                     edge = 1-psi/(2*(r/2).cosh()*(s/2).cosh())
                     v = edge*(f_at_r*phi-weighted)*(s/2).cosh()
@@ -168,6 +172,8 @@ class Action:
                 cuts.append(r)
             cuts.append(acb(cap))
             for left, right in zip(cuts, cuts[1:]):
+                piece_center = r.real+sign*(left.real+right.real)/2
+                piece_sign = 1 if piece_center > 0 else -1 if piece_center < 0 else 0
                 value = acb.integral(callback, left, right,
                                      abs_tol=arb(tolerance), rel_tol=arb(tolerance),
                                      eval_limit=30000, depth_limit=30)

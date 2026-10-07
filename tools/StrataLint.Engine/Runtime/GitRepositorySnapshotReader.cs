@@ -69,10 +69,29 @@ internal static class GitRepositorySnapshotReader
         HashSet<string> InspectedDirectories) Collect(string root, Func<string, bool>? include,
         Action<RawRepositoryEntry>? visit, Func<string, bool>? readContents, IReadOnlyList<string>? pathspecs)
     {
-        string[] scope = pathspecs is null ? [] : ["--", .. pathspecs];
-        var tracked = ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scope]));
+        var scopes = EnumerationScopes(pathspecs).ToArray();
+        var tracked = ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scopes[0]]));
+        IEnumerable<string> untracked = ParseNulStrings(Git(root,
+            ["ls-files", "--others", "--exclude-standard", "-z", .. scopes[0]]));
+        if (scopes.Length > 1)
+        {
+            var combinedUntracked = untracked.ToHashSet(StringComparer.Ordinal);
+            for (var index = 1; index < scopes.Length; index++)
+            {
+                var scope = scopes[index];
+                foreach (var (path, mode) in ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scope])))
+                {
+                    if (tracked.TryGetValue(path, out var previous) && previous != mode)
+                        throw new InvalidOperationException($"git index mode changed during enumeration: {path}");
+                    tracked[path] = mode;
+                }
+                combinedUntracked.UnionWith(ParseNulStrings(Git(root,
+                    ["ls-files", "--others", "--exclude-standard", "-z", .. scope])));
+            }
+            untracked = combinedUntracked;
+        }
         var paths = tracked.Keys
-            .Concat(ParseNulStrings(Git(root, ["ls-files", "--others", "--exclude-standard", "-z", .. scope])))
+            .Concat(untracked)
             .Distinct(StringComparer.Ordinal)
             .Order(StringComparer.Ordinal)
             .ToArray();
@@ -165,7 +184,44 @@ internal static class GitRepositorySnapshotReader
         return (entries, inventory, links, paths, inspectedDirectories);
     }
 
-    internal static RawRepositorySnapshot ReadRevision(string repositoryRoot, string revision)
+    private static IEnumerable<string[]> EnumerationScopes(IReadOnlyList<string>? pathspecs)
+    {
+        if (pathspecs is null || pathspecs.Count == 0)
+        {
+            yield return pathspecs is null ? [] : ["--"];
+            yield break;
+        }
+
+        // Positive path selections form a union. Other Git magic, including
+        // exclusions, retains its native single-invocation semantics.
+        if (pathspecs.Any(static path => path.StartsWith(':')
+                && !path.StartsWith(":(literal)", StringComparison.Ordinal)
+                && !path.StartsWith(":(glob)", StringComparison.Ordinal)))
+        {
+            yield return ["--", .. pathspecs];
+            yield break;
+        }
+
+        var limit = OperatingSystem.IsWindows() ? 16 * 1024 : 64 * 1024;
+        var batch = new List<string>();
+        var bytes = 0;
+        foreach (var path in pathspecs)
+        {
+            var size = StrictUtf8.GetByteCount(path) + 1 + IntPtr.Size;
+            if (batch.Count > 0 && bytes + size > limit)
+            {
+                yield return ["--", .. batch];
+                batch.Clear();
+                bytes = 0;
+            }
+            batch.Add(path);
+            bytes += size;
+        }
+        if (batch.Count > 0) yield return ["--", .. batch];
+    }
+
+    internal static RawRepositorySnapshot ReadRevision(string repositoryRoot, string revision,
+        IReadOnlyList<string>? paths = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentException.ThrowIfNullOrWhiteSpace(revision);
@@ -176,12 +232,14 @@ internal static class GitRepositorySnapshotReader
                 root,
                 arguments,
                 maximumOutputBytes,
-                standardInput));
+                standardInput),
+            paths);
     }
 
     internal static RawRepositorySnapshot ReadRevision(
         string revision,
-        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit)
+        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
+        IReadOnlyList<string>? paths = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(revision);
         ArgumentNullException.ThrowIfNull(runGit);
@@ -190,7 +248,39 @@ internal static class GitRepositorySnapshotReader
             MaximumGitOutputBytes,
             default);
         EnsureSuccess(treeResult);
-        var tree = ParseTree(treeResult.StandardOutput).ToArray();
+        var all = ParseTree(treeResult.StandardOutput).ToArray();
+        var tree = paths is null ? all : all.Where(entry =>
+            paths.Any(selection => MatchesRevisionSelection(entry.Path, selection))).ToArray();
+        if (paths is not null && tree.Any(static entry => entry.Mode == "120000"))
+            tree = tree.Concat(all.Where(entry => FileMapDocuments.IsPolicyPath(entry.Path)))
+                .DistinctBy(static entry => entry.Path, StringComparer.Ordinal).ToArray();
+        var blobs = new Dictionary<string, ImmutableArray<byte>>(StringComparer.Ordinal);
+        var entries = ReadRevisionEntries(tree, runGit, blobs).ToList();
+        if (paths is not null)
+        {
+            var retained = tree.Select(static entry => entry.Path).ToHashSet(StringComparer.Ordinal);
+            var links = tree.Where(static entry => entry.Mode == "120000").Select(static entry => entry.Path)
+                .ToHashSet(StringComparer.Ordinal);
+            // Include complete target directories, even when the selection already
+            // retained part of them. Chains are rejected by the same policy below.
+            var referents = entries.Where(entry => links.Contains(entry.Path))
+                .Select(static entry => FileMapSymlinkPolicy.Referent(entry.Path, entry.Bytes.AsSpan()))
+                .OfType<string>().Distinct(StringComparer.Ordinal).ToArray();
+            var extra = all.Where(entry => !retained.Contains(entry.Path) && referents.Any(referent =>
+                entry.Path == referent || entry.Path.StartsWith(referent + "/", StringComparison.Ordinal))).ToArray();
+            entries.AddRange(ReadRevisionEntries(extra, runGit, blobs));
+            tree = [.. tree, .. extra];
+        }
+        FileMapSymlinkPolicy.ValidateSnapshot(entries,
+            tree.Where(static entry => entry.Mode == "120000").Select(entry => entry.Path).ToHashSet(StringComparer.Ordinal),
+            all.Select(static entry => entry.Path).ToArray());
+        return RawRepositorySnapshot.Create(entries);
+    }
+
+    private static RawRepositoryEntry[] ReadRevisionEntries(IReadOnlyList<GitRepositoryTreeEntry> tree,
+        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
+        IDictionary<string, ImmutableArray<byte>> blobs)
+    {
         foreach (var entry in tree)
         {
             if (!IsSupportedMode(entry.Mode)
@@ -203,30 +293,32 @@ internal static class GitRepositorySnapshotReader
         }
 
         var objects = tree
+            .Where(entry => !blobs.ContainsKey(entry.ObjectId))
             .DistinctBy(static entry => entry.ObjectId, StringComparer.Ordinal)
             .ToArray();
-        if (objects.Length == 0)
+        if (objects.Length > 0)
         {
-            return RawRepositorySnapshot.Create([]);
+            var input = StrictUtf8.GetBytes(
+                string.Concat(objects.Select(static entry => entry.ObjectId + "\n")));
+            var objectResult = runGit(
+                ["cat-file", "--batch"],
+                BatchOutputLimit(objects),
+                input);
+            EnsureSuccess(objectResult);
+            foreach (var (id, bytes) in ParseBatchObjects(objects, objectResult.StandardOutput)) blobs.Add(id, bytes);
         }
-
-        var input = StrictUtf8.GetBytes(
-            string.Concat(objects.Select(static entry => entry.ObjectId + "\n")));
-        var objectResult = runGit(
-            ["cat-file", "--batch"],
-            BatchOutputLimit(objects),
-            input);
-        EnsureSuccess(objectResult);
-        var blobs = ParseBatchObjects(objects, objectResult.StandardOutput);
-        var entries = tree.Select(entry => new RawRepositoryEntry(
+        return tree.Select(entry => new RawRepositoryEntry(
             entry.Path,
             blobs[entry.ObjectId],
             (entry.ObjectId.Length == 40 ? "git-sha1:" : "git-sha256:") + entry.ObjectId)).ToArray();
-        FileMapSymlinkPolicy.ValidateSnapshot(entries,
-            tree.Where(static entry => entry.Mode == "120000").Select(entry => entry.Path).ToHashSet(StringComparer.Ordinal),
-            tree.Select(entry => entry.Path).ToArray());
-        return RawRepositorySnapshot.Create(entries);
     }
+
+    private static bool MatchesRevisionSelection(string path, string selection) =>
+        selection.StartsWith(":(literal)", StringComparison.Ordinal)
+            ? path == selection[10..] || path.StartsWith(selection[10..] + "/", StringComparison.Ordinal)
+            : selection.StartsWith(":(glob)", StringComparison.Ordinal)
+            ? FileMapGlob.CreateForAdmissionPlane(selection[7..]).IsMatch(path)
+            : path == selection || path.StartsWith(selection + "/", StringComparison.Ordinal);
 
     // policy-override (#11124): bounds how many file bodies a visiting reader holds at
     // once; not derived from host capacity. Exit: a measured memory/throughput receipt.

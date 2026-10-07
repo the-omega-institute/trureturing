@@ -12,6 +12,7 @@ strata_touched:
   - D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceCircular
   - D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceCounts
   - D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceLinear
+  - D5/S3/Combinatorics/RotationAvoidance/RotationAvoidance
   - D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceFibonacci
   - D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceAscending
   - D5/S3/Combinatorics/RotationAvoidance/RotationAvoidanceEnumeration

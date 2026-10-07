@@ -1,0 +1,58 @@
+## 1. Definitions and the native map
+
+Fix a natural number $k\ge2$ and a prime $p>k$. Let
+$K=\operatorname{GaloisField}(p,2)$, and let
+$$
+D:\operatorname{Fin}(k)\times(\operatorname{Fin}(k)\times\operatorname{Fin}(2))\longrightarrow K
+$$
+be an arbitrary matrix. Its entries are written $D(i,(j,s))$, where
+$i,j\in\operatorname{Fin}(k)$ and $s\in\operatorname{Fin}(2)$. The latent
+space is $K^k\times K^k$: $\lambda\in K^k$ is the central coordinate and
+$z\in K^k$ has one loop coordinate $z_j$ per $j$. Since $p>k\ge2$ and $p$ is
+prime, $p\ge3$, so $2\cdot1_K\ne0$.
+
+For $\lambda\in K^k$ put
+$$
+\begin{aligned}
+a_j(\lambda)&=\sum_{i\in\operatorname{Fin}(k)}D(i,(j,0))\lambda_i,\\
+b_j(\lambda)&=\sum_{i\in\operatorname{Fin}(k)}D(i,(j,1))\lambda_i.
+\end{aligned}
+$$
+The actual four-leg map in loop $j$ is
+$$
+(a_j(\lambda)+z_j,\ a_j(\lambda)-z_j,\ b_j(\lambda)+z_j,\ b_j(\lambda)-z_j).
+$$
+For a region $R\subseteq\operatorname{Fin}(k)\times\operatorname{Fin}(4)$,
+let
+$$
+R_j=\{\ell\in\operatorname{Fin}(4):(j,\ell)\in R\},\qquad
+J=\{j:R_j\ne\varnothing\},\qquad H_R=|J|.
+$$
+The selected map $F_R:K^k\times K^k\to K^R$ is the restriction of the
+displayed actual map to the coordinates in $R$; thus
+$$
+(F_R(\lambda,z))_{(j,\ell)}=
+\begin{cases}
+a_j(\lambda)+z_j,&\ell=0,\\
+a_j(\lambda)-z_j,&\ell=1,\\
+b_j(\lambda)+z_j,&\ell=2,\\
+b_j(\lambda)-z_j,&\ell=3.
+\end{cases}
+$$
+
+Define $V_R:K^k\to K^{2k}$ by giving two slots for every $j$ and padding
+unused slots by zero. Its $j$-block is
+$$
+v_{R,j}(\lambda)=
+\begin{cases}
+(0,0),&|R_j|\le1,\\
+(a_j(\lambda),0),&R_j=\{0,1\},\\
+(b_j(\lambda),0),&R_j=\{2,3\},\\
+(a_j(\lambda)-b_j(\lambda),0),&R_j=\{0,2\}\text{ or }R_j=\{1,3\},\\
+(a_j(\lambda)+b_j(\lambda),0),&R_j=\{0,3\}\text{ or }R_j=\{1,2\},\\
+(a_j(\lambda),b_j(\lambda)),&|R_j|\ge3.
+\end{cases}
+$$
+The zero padding is part of the definition and does not change the rank of
+the nonzero central slots.
+
