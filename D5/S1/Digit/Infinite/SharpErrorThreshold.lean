@@ -76,7 +76,31 @@ private theorem residual_error (h : ℕ) (r : Fin (h + 1) → ℝ)
 private theorem nearest_strict (d : ℝ) (l : Label) (he : |d - offset l| < t ^ 2 / 2) :
     nearest d = l ∧ ∀ k : Label, k ≠ l → |d - offset l| < |d - offset k| := by
   have hs (k : Label) (hk : k ≠ l) : |d - offset l| < |d - offset k| := by
-    have hg := label_gap l k hk.symm
+    have hgap (l m : Label) (hne : l ≠ m) : t ^ 2 ≤ |offset l - offset m| := by
+      have ht := golden_facts
+      have hhalf : (1 : ℝ) / 2 < t :=
+        D5.S1.Digit.Infinite.OddColorThreeSource.golden_relations.2.2.2.2
+      have hln0 := l.property 0 (by decide)
+      have hln1 := l.property 1 (by decide)
+      have hmn0 := m.property 0 (by decide)
+      have hmn1 := m.property 1 (by decide)
+      have hext : (l.val 0 = m.val 0 ∧ l.val 1 = m.val 1 ∧ l.val 2 = m.val 2) → l = m := by
+        rintro ⟨h0,h1,h2⟩
+        apply Subtype.ext
+        funext i
+        fin_cases i <;> assumption
+      simp only [Fin.reduceFinMk] at hln0 hln1 hmn0 hmn1
+      cases hl0 : l.val 0 <;> cases hl1 : l.val 1 <;> cases hl2 : l.val 2 <;>
+        cases hm0 : m.val 0 <;> cases hm1 : m.val 1 <;> cases hm2 : m.val 2 <;>
+        simp_all only [Bool.false_eq_true, not_false_eq_true, and_self,
+          and_false, false_and, and_true, true_and]
+      all_goals try contradiction
+      all_goals dsimp only [offset]
+      all_goals simp only [hl0,hl1,hl2,hm0,hm1,hm2, Bool.false_eq_true, ↓reduceIte]
+      all_goals first
+        | exact (le_abs_self _).trans' (by nlinarith [ht.2.2.1])
+        | exact (neg_le_abs _).trans' (by nlinarith [ht.2.2.1])
+    have hg := hgap l k hk.symm
     have hu := abs_sub_le (offset l) d (offset k)
     rw [abs_sub_comm (offset l) d] at hu
     linarith
@@ -87,7 +111,31 @@ private theorem nearest_strict (d : ℝ) (l : Label) (he : |d - offset l| < t ^ 
 private theorem boundary_margin (d : ℝ) (l k : Label) (hk : k ≠ l) (B : ℝ)
     (he : |d - offset l| ≤ B) :
     t ^ 2 / 2 - B ≤ |d - (offset l + offset k) / 2| := by
-  have hg := label_gap l k hk.symm
+  have hgap (l m : Label) (hne : l ≠ m) : t ^ 2 ≤ |offset l - offset m| := by
+    have ht := golden_facts
+    have hhalf : (1 : ℝ) / 2 < t :=
+      D5.S1.Digit.Infinite.OddColorThreeSource.golden_relations.2.2.2.2
+    have hln0 := l.property 0 (by decide)
+    have hln1 := l.property 1 (by decide)
+    have hmn0 := m.property 0 (by decide)
+    have hmn1 := m.property 1 (by decide)
+    have hext : (l.val 0 = m.val 0 ∧ l.val 1 = m.val 1 ∧ l.val 2 = m.val 2) → l = m := by
+      rintro ⟨h0,h1,h2⟩
+      apply Subtype.ext
+      funext i
+      fin_cases i <;> assumption
+    simp only [Fin.reduceFinMk] at hln0 hln1 hmn0 hmn1
+    cases hl0 : l.val 0 <;> cases hl1 : l.val 1 <;> cases hl2 : l.val 2 <;>
+      cases hm0 : m.val 0 <;> cases hm1 : m.val 1 <;> cases hm2 : m.val 2 <;>
+      simp_all only [Bool.false_eq_true, not_false_eq_true, and_self,
+        and_false, false_and, and_true, true_and]
+    all_goals try contradiction
+    all_goals dsimp only [offset]
+    all_goals simp only [hl0,hl1,hl2,hm0,hm1,hm2, Bool.false_eq_true, ↓reduceIte]
+    all_goals first
+      | exact (le_abs_self _).trans' (by nlinarith [ht.2.2.1])
+      | exact (neg_le_abs _).trans' (by nlinarith [ht.2.2.1])
+  have hg := hgap l k hk.symm
   have hu : |offset l - offset k| ≤
       2 * |d - (offset l + offset k) / 2| + 2 * |d - offset l| := by
     calc
