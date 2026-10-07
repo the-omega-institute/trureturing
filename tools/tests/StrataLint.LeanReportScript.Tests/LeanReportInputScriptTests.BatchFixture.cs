@@ -31,19 +31,13 @@ public sealed partial class LeanReportInputScriptTests
 
     private static void WriteFixtureOrigins(string root, string report)
     {
-        using var policy = JsonDocument.Parse(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, "lean-report-inputs.json")));
-        var versions = new
-        {
-            report_cache_release_semantic_version = policy.RootElement.GetProperty("report_cache_release_semantic_version").GetInt32(),
-        };
         using var document = JsonDocument.Parse(TemporaryFileSystem.File.ReadAllBytes(report));
         var origins = document.RootElement.GetProperty("modules").EnumerateArray().ToDictionary(
             row => row.GetProperty("module").GetString()!, row => new
             {
                 module = row.GetProperty("module").GetString(),
                 report_sha256 = Convert.ToHexStringLower(SHA256.HashData(StructuredCanonicalWriter.WriteJson(
-                    JsonSerializer.SerializeToElement(new { schema = "stratalint-raw-lean-report-v2", modules = new[] { row } })).AsSpan())),
-                semantic_versions = versions,
+                    JsonSerializer.SerializeToElement(new { schema = "stratalint-raw-lean-report-v3", modules = new[] { row } })).AsSpan())),
                 input_projection = new { schema = "stratalint-judge-input-projection-v1",
                     module = row.GetProperty("module").GetString(), inputs = System.Array.Empty<object>() },
                 producer_sources_sha256 = new string('1', 64),

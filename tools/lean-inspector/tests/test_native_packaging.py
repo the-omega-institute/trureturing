@@ -163,21 +163,15 @@ class NativePackagingTests(NativeReleaseSupport):
         self.write('tools/lean-inspector/materials.py', '# changed producer bytes\n')
         self.assertEqual(before, partition())
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        policy['report_cache_release_semantic_version'] = 2
-        self.write('lean-report-inputs.json', json.dumps(policy))
-        self.assertEqual(before, partition())
         manifest = json.loads((self.root / 'lake-manifest.json').read_text())
         next(package for package in manifest['packages'] if package['name'] == 'mathlib')['rev'] = 'f' * 40
         self.write('lake-manifest.json', json.dumps(manifest))
         self.assertNotEqual(before, partition())
 
-    def test_release_partition_preserves_semantic_and_selection_changes(self):
+    def test_release_partition_preserves_selection_changes(self):
         self.release_fixture()
         before = json.loads(self.release_run('address').stdout)
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        policy['report_cache_release_semantic_version'] += 1
-        self.write('lean-report-inputs.json', json.dumps(policy))
-        self.assertEqual(before, json.loads(self.release_run('address').stdout))
         policy['report_modules']['exclude'] = ['D5/Alone.lean']
         self.write('lean-report-inputs.json', json.dumps(policy))
         self.assertEqual(before, json.loads(self.release_run('address').stdout))
@@ -252,12 +246,12 @@ class NativePackageConsumerTests(NativeReleaseSupport):
                 STRATALINT_SUPERVISOR_ROOT=str(Path(directory) / 'supervisor'))
             self.assertFalse((clone / '.lake').exists(), 'ensure must retain donor eligibility')
             manifest = (clone / 'lean-report-inputs.json').read_text()
-            self.write('lean-report-inputs.json', manifest.replace('"report_cache_release_semantic_version": 1',
-                                                                 '"report_cache_release_semantic_version": 0'))
+            self.write('lean-report-inputs.json', manifest.replace('"schema_version": 1',
+                                                                 '"schema_version": 0'))
             rejected = subprocess.run(['make', 'lean-report'], cwd=clone, env=self.env,
                 text=True, capture_output=True, timeout=120)
             self.assertNotEqual(rejected.returncode, 0, rejected.stdout + rejected.stderr)
-            self.assertIn('report_cache_release_semantic_version', rejected.stderr)
+            self.assertIn('schema_version', rejected.stderr)
             self.assertFalse((clone / '.lake').exists(), 'rejected inputs must preserve donor eligibility')
             self.write('lean-report-inputs.json', manifest)
             result = subprocess.run(['make', 'lean-report'], cwd=clone, env=self.env,

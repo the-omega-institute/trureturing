@@ -11,8 +11,6 @@ import unittest
 
 
 PROGRAM = Path(__file__).resolve().parents[1] / "reg-verdict-compare.py"
-REPORT_VERSION = json.loads((PROGRAM.parents[3] / "lean-report-inputs.json").read_text(
-    encoding="utf-8"))["report_cache_release_semantic_version"]
 H = "a" * 64
 J = "b" * 64
 ROOT = "Reg.Example"
@@ -46,10 +44,10 @@ def declaration(name="Arena.first.__catalog_irredundant"):
 
 def report(records=None):
     records = [record()] if records is None else records
-    return dict(schema="stratalint-raw-lean-report-v2", modules=[dict(
+    return dict(schema="stratalint-raw-lean-report-v3", modules=[dict(
         module=ROOT, source_path="Reg/Example.lean", source_sha256="sha256:" + H,
         imports=[], declarations=[declaration()], information_registration_errors=[],
-        information_templates=dict(schema_version=1, compatibility_version=REPORT_VERSION,
+        information_templates=dict(schema_version=1,
                                    inventory=[copy.deepcopy(x["key"]) for x in records],
                                    registered=[copy.deepcopy(x["key"]) for x in records],
                                    records=records))])

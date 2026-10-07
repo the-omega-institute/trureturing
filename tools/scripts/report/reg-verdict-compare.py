@@ -297,7 +297,7 @@ class Report:
 def read_report(path):
     raw = read_json(path)
     fields(raw, {"schema", "modules"}, "raw report")
-    require(raw["schema"] == "stratalint-raw-lean-report-v2", "unsupported raw report schema")
+    require(raw["schema"] == "stratalint-raw-lean-report-v3", "unsupported raw report schema")
     report = Report()
     for m in array(raw["modules"], "modules"):
         fields(m, {"module", "source_path", "source_sha256", "imports", "declarations",

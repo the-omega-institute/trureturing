@@ -20,7 +20,7 @@ from typing import BinaryIO, Iterable
 
 
 SPOOL_SCHEMA = "stratalint-lean-inspector-spool-v1"
-REPORT_SCHEMA = "stratalint-raw-lean-report-v2"
+REPORT_SCHEMA = "stratalint-raw-lean-report-v3"
 STATEMENT_DOMAIN = b"trureturing:statement:v1\0"
 MATERIAL_FILE = re.compile(r"^[0-9]+\.statement(?:\.gz)?$")
 SUPPLEMENTARY_SCALAR = re.compile(r"[\U00010000-\U0010FFFF]")
@@ -209,30 +209,7 @@ def stream_spool(spool: pathlib.Path) -> None:
         print("ok", flush=True)
 
 
-def read_manifest_versions(manifest: pathlib.Path) -> dict[str, int]:
-    def unique_fields(pairs):
-        fields = {}
-        for key, value in pairs:
-            if key in fields:
-                raise ValueError("duplicate manifest field")
-            fields[key] = value
-        return fields
-    try:
-        data = json.loads(pathlib.Path(manifest).read_text(encoding="utf-8"), object_pairs_hook=unique_fields)
-        if not isinstance(data, dict):
-            raise ValueError("manifest must be an object")
-        versions = {}
-        for field in ('report_cache_release_semantic_version',):
-            if type(data.get(field)) is not int or data[field] <= 0:
-                raise ValueError(field + " requires a positive integer")
-            versions[field] = data[field]
-        return versions
-    except (OSError, UnicodeError, ValueError, KeyError, TypeError) as error:
-        raise ValueError("DTR-ManifestVersion: lean-report-inputs.json requires positive integer report_cache_release_semantic_version") from error
-
-
-def validate_template_evidence(value: object, manifest: pathlib.Path) -> None:
-    read_manifest_versions(manifest)
+def validate_template_evidence(value: object) -> None:
     evidence = require_keys(value,
         {"schema_version", "inventory", "registered", "records"},
         "Inspector declared-template evidence")
@@ -242,10 +219,8 @@ def validate_template_evidence(value: object, manifest: pathlib.Path) -> None:
         raise ValueError("Inspector declared-template evidence is malformed")
 
 
-def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Path,
-            manifest: pathlib.Path) -> None:
+def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Path) -> None:
     started = time.perf_counter_ns()
-    read_manifest_versions(manifest)
     root = json.loads(spool_report.read_text(encoding="utf-8"))
     require_keys(root, {"modules", "schema"}, "Inspector spool")
     if root["schema"] != SPOOL_SCHEMA or not isinstance(root["modules"], list):
@@ -291,7 +266,7 @@ def compact(spool_report: pathlib.Path, spool: pathlib.Path, output: pathlib.Pat
                 raise ValueError("Inspector registration evidence is malformed")
             information_templates = module.get("information_templates")
             if information_templates is not None:
-                validate_template_evidence(information_templates, manifest)
+                validate_template_evidence(information_templates)
             refutation = module.get("utility_refutation")
             if refutation is not None:
                 require_keys(refutation, {"claim_gid", "claim_source_path", "claim_source_sha256", "result_gid", "is_closed_negation"},
@@ -439,15 +414,14 @@ def main() -> int:
         except (OSError, ValueError) as error:
             print(f"lean-report-materials: {error}", file=sys.stderr)
             return 1
-    if len(sys.argv) != 6 or sys.argv[1] != "compact":
+    if len(sys.argv) != 5 or sys.argv[1] != "compact":
         print(
-            "usage: materials.py compact SPOOL_REPORT SPOOL_DIR OUTPUT MANIFEST | stream SPOOL_DIR",
+            "usage: materials.py compact SPOOL_REPORT SPOOL_DIR OUTPUT | stream SPOOL_DIR",
             file=sys.stderr,
         )
         return 2
     try:
-        compact(pathlib.Path(sys.argv[2]), pathlib.Path(sys.argv[3]), pathlib.Path(sys.argv[4]),
-                pathlib.Path(sys.argv[5]))
+        compact(pathlib.Path(sys.argv[2]), pathlib.Path(sys.argv[3]), pathlib.Path(sys.argv[4]))
         return 0
     except (OSError, EOFError, UnicodeError, ValueError, json.JSONDecodeError) as error:
         print(f"lean-report-materials: {error}", file=sys.stderr)

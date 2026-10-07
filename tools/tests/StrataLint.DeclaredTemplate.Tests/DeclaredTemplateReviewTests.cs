@@ -16,7 +16,7 @@ public sealed class DeclaredTemplateReviewTests
         RuleCatalog.Default.EvaluateSingle(UtilityAdmissionTestSupport.UtilityRuleId, context).Diagnostics;
 
     [Fact]
-    public void same_version_changed_judge_bytes_preserve_binding_evidence()
+    public void changed_judge_bytes_preserve_binding_evidence()
     {
         var before = Files();
         var bytes = RawLeanReportArtifact.Write(Tree(before), Report(before));
@@ -25,20 +25,21 @@ public sealed class DeclaredTemplateReviewTests
         var diagnostics = Dispatch(Context(before, after, report, [Judge]));
         Assert.True(!diagnostics.Any(d => d.AdmissionEffect == AdmissionEffect.Block)
                 && !diagnostics.Any(d => d.Message.StartsWith("DTR-", StringComparison.Ordinal)),
-            "[FAIL] same_version_changed_judge_bytes_preserve_binding_evidence: "
+            "[FAIL] changed_judge_bytes_preserve_binding_evidence: "
             + string.Join("; ", diagnostics.Select(d => d.Message)));
     }
 
     [Fact]
-    public void manifest_only_bump_accepts_current_version()
+    public void binding_evidence_needs_no_semantic_manifest()
     {
         var files = Files();
         var error = Record.Exception(() =>
         {
             var bytes = RawLeanReportArtifact.Write(Tree(files), Report(files));
+            files.Remove("lean-report-inputs.json");
             Assert.Equal(2, RawLeanReportArtifact.Read(bytes.AsSpan(), Tree(files)).Files.Count);
         });
-        Assert.True(error is null, "[FAIL] manifest_only_bump_accepts_current_version: " + error?.Message);
+        Assert.True(error is null, "[FAIL] binding_evidence_needs_no_semantic_manifest: " + error?.Message);
     }
 
     private static Exception? ReadChangedManifest(string? manifest, int compatibility)
@@ -64,42 +65,6 @@ public sealed class DeclaredTemplateReviewTests
         var error = ReadChangedManifest(InformationTemplateFixture.PolicyFiles()["lean-report-inputs.json"], 9);
         Assert.True(error is FormatException && error.Message.Contains("DTR-Evidence", StringComparison.Ordinal),
             "[FAIL] retired_module_version_field_is_rejected: " + error?.Message);
-    }
-
-    [Theory]
-    [InlineData(null)]
-    [InlineData("{}")]
-    [InlineData("{")]
-    [InlineData("[]")]
-    [InlineData("{\"report_cache_release_semantic_version\":null}")]
-    [InlineData("{\"report_cache_release_semantic_version\":\"8\"}")]
-    [InlineData("{\"report_cache_release_semantic_version\":true}")]
-    [InlineData("{\"report_cache_release_semantic_version\":0}")]
-    [InlineData("{\"report_cache_release_semantic_version\":-1}")]
-    [InlineData("{\"report_cache_release_semantic_version\":6.5}")]
-    public void invalid_manifest_version_rejected(string? manifest)
-    {
-        var error = ReadChangedManifest(manifest, 8);
-        Assert.True(error is FormatException && error.Message.Contains("DTR-ManifestVersion", StringComparison.Ordinal),
-            "[FAIL] invalid_manifest_version_rejected: " + error?.Message);
-    }
-
-    [Theory]
-    [InlineData(5)]
-    [InlineData(7)]
-    public void mismatched_report_cache_release_semantic_version_rejects_binding_evidence(int version)
-    {
-        var files = Files();
-        var bytes = RawLeanReportArtifact.Write(Tree(files), Report(files));
-        var wire = System.Text.Json.Nodes.JsonNode.Parse(bytes.AsSpan())!;
-        foreach (var module in wire["modules"]!.AsArray())
-            module!["information_templates"]!["compatibility_version"] = version;
-        var changed = StructuredCanonicalWriter.WriteJson(wire.ToJsonString());
-        var snapshot = Tree(files);
-        var error = Record.Exception(() => InformationTemplateEvidence.Collect(snapshot,
-            RawLeanReportArtifact.Read(changed.AsSpan(), snapshot), [RepoPath.CreateKnown(Registration)]));
-        Assert.True(error is FormatException && error.Message.Contains("DTR-Evidence", StringComparison.Ordinal),
-            "[FAIL] mismatched_report_cache_release_semantic_version_rejects_binding_evidence: " + version);
     }
 
     [Fact]
