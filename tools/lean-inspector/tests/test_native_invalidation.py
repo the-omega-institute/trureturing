@@ -162,107 +162,33 @@ def main (args : List String) : IO Unit := do
         self.assertIn('raw.incomplete_closure:raw_missing', inspect([], False))
         self.assertFalse(output.exists())
 
-    def test_native_typed_owner_version_scope(self):
-        self.copy('tools/lean-inspector/Inspector.lean')
-        self.compiler_seed = None
-        self.env['STRATALINT_ACCEPT_COLD_BUILD'] = '1'
-        self.write('LeanInformationAudit/TemplateEnrollment.lean', '''import Lean
-namespace LeanInformationAudit
-def producerValue : Nat := 1
-''')
-        self.write('LeanInformationAudit/ContractInputs.lean', '''namespace LeanInformationAudit.Contract
-structure Registration where
-  value : Nat
-structure TemplateEnrollment where
-  value : Nat
-structure RootCatalog where
-  value : Nat
-structure Seal where
-  value : Nat
-''')
-        kinds = {'InputRegistration': 'Registration', 'InputEnrollment': 'TemplateEnrollment',
-                 'InputRoot': 'RootCatalog', 'InputSeal': 'Seal'}
-        for name, kind in kinds.items():
-            self.write(name + '.lean', 'import LeanInformationAudit.ContractInputs\n'
-                + f'def {name}.entry : LeanInformationAudit.Contract.{kind} := {{ value := 1 }}\n')
-        self.write('InputAggregate.lean', 'import InputRegistration\ndef InputAggregate.unrelated : Nat := 1\n')
-        self.write('InputEmpty.lean', 'import LeanInformationAudit.ContractInputs\ndef InputEmpty.unrelated : Nat := 1\n')
-        with (self.root / 'lakefile.toml').open('a') as out:
-            for name in [*kinds, 'InputAggregate', 'InputEmpty']:
-                out.write(f'[[lean_lib]]\nname = "{name}"\n')
-        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        policy['dependency_sources']['include'].append(dict(pattern='LeanInformationAudit/**/*.lean', optional=True))
-        for name in [*kinds, 'InputAggregate', 'InputEmpty']:
-            policy['report_modules']['include'].append(dict(pattern=name + '.lean', optional=False))
-        self.write('lean-report-inputs.json', json.dumps(policy))
-
-        def run():
-            self.write('activity.jsonl', '')
-            result = self.guarded_command(['make', 'lean',
-                'LEAN_TARGETS=@trureturing/LeanInformationAudit.TemplateEnrollment :report'],
-                cwd=self.root, env=self.env, capture_output=True, text=True, timeout=120)
-            self.assertEqual(result.returncode, 0, '[FAIL] native_typed_owner_production\n' + result.stdout + result.stderr)
-            return result.stdout + result.stderr
-
-        run()
-        all_modules = set(self.stamps())
-        own_inputs = set(kinds)
-        projections = native.state(self.root) / 'judge-inputs'
-        self.assertEqual({path.stem for path in projections.glob('*.json')
-                          if json.loads(path.read_text())['inputs']}, own_inputs,
-                         '[FAIL] typed_input_owner_membership')
-        before, origins = self.stamps(), self.origins()
-        artifacts = {name: (native.state(self.root) / 'modules' / (name + '.zip')).read_bytes()
-                     for name in all_modules}
-        facts = {path.name: path.read_bytes() for path in projections.glob('*.json')}
-        fact_times = {path.name: path.stat().st_mtime_ns for path in projections.glob('*.json')}
-        policy['report_cache_release_semantic_version'] += 1
-        self.write('lean-report-inputs.json', json.dumps(policy))
-        output = run()
-        self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]}, own_inputs,
-                         '[FAIL] version_bump_invalidates_typed_owners')
-        self.assertEqual({path.name: path.stat().st_mtime_ns for path in projections.glob('*.json')},
-                         fact_times, '[FAIL] version_bump_reuses_input_facts')
-        self.assertEqual({path.name: path.read_bytes() for path in projections.glob('*.json')}, facts)
-        for name in all_modules - own_inputs:
-            self.assertEqual((native.state(self.root) / 'modules' / (name + '.zip')).read_bytes(), artifacts[name],
-                             '[FAIL] version_bump_keeps_nonowner_artifact_bytes')
-            self.assertEqual(self.origins()[name], origins[name], '[FAIL] scoped_origin_accepts_previous_version')
-        self.publish()
-
+    def test_native_report_format_invalidates_every_module(self):
+        # Report format changes invalidate every module row.
+        self.build()
         before = self.stamps()
-        driver = self.root / 'LeanInformationAudit/TemplateEnrollment.lean'
-        driver.write_text(driver.read_text().replace(':= 1', ':= 1 + 0'))
-        run()
-        self.assertEqual(self.stamps(), before, '[FAIL] compatible_program_edit_keeps_reports')
+        compiled = {path: (path.stat().st_mtime_ns, publication.digest(path))
+                    for path in (self.root / '.lake/build').rglob('*.olean')}
+        reader = self.root / 'tools/scripts/report/lean-report-selection.py'
+        next_format = 'stratalint-raw-lean-report-next'
+        reader.write_text(reader.read_text().replace(publication.selection.REPORT_FORMAT, next_format))
+        writer = self.root / 'tools/lean-inspector/materials.py'
+        writer.write_text(writer.read_text().replace(materials.REPORT_SCHEMA, next_format))
+        self.build()
+        changed = {name for name, stamp in self.stamps().items() if stamp != before[name]}
+        activity = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        result = dict(modules=len(before), changed=sorted(changed),
+            extracted=sum(row['count'] for row in activity if row['kind'] == 'extract'),
+            unchanged_oleans=compiled == {path: (path.stat().st_mtime_ns, publication.digest(path))
+                for path in compiled})
+        self.record_result('format-change', result)
+        self.assertEqual(changed, set(before), '[FAIL] format_change_reextracts_all_modules')
+        self.assertEqual(result['extracted'], len(before))
+        self.assertTrue(result['unchanged_oleans'])
 
-        # First and last entries change ownership through the compiler fact.
-        self.write('InputEmpty.lean', 'import LeanInformationAudit.ContractInputs\n'
-            'def InputEmpty.entry : LeanInformationAudit.Contract.Registration := { value := 1 }\n')
-        run()
-        self.assertTrue(json.loads((projections / 'InputEmpty.json').read_text())['inputs'],
-                        '[FAIL] first_entry_acquires_ownership')
-        self.write('InputRegistration.lean', 'import LeanInformationAudit.ContractInputs\ndef InputRegistration.unrelated : Nat := 1\n')
-        run()
-        self.assertFalse(json.loads((projections / 'InputRegistration.json').read_text())['inputs'],
-                         '[FAIL] last_entry_removes_ownership')
-        before = self.stamps()
-        policy['report_cache_release_semantic_version'] += 1
-        self.write('lean-report-inputs.json', json.dumps(policy))
-        run()
-        self.assertEqual({name for name, stamp in self.stamps().items() if stamp != before[name]},
-                         (own_inputs - {'InputRegistration'}) | {'InputEmpty'},
-                         '[FAIL] changed_ownership_controls_next_version_bump')
-
-    def test_native_compatibility_preimage(self):
-        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        for version in [9, 10]:
-            policy['report_cache_release_semantic_version'] = version
-            self.write('lean-report-inputs.json', json.dumps(policy))
-            expected = hashlib.sha256(
-                b'schema=stratalint-lean-report-compatibility-v2\nregistration=' +
-                str(version).encode('ascii') + b'\n').hexdigest()
-            self.assertEqual(publication.selection.Selection(self.root).compatibility(), expected)
+    def test_native_format_preimage(self):
+        self.assertEqual(materials.REPORT_SCHEMA, publication.selection.REPORT_FORMAT)
+        expected = hashlib.sha256(('schema=' + publication.selection.REPORT_FORMAT + '\n').encode('ascii')).hexdigest()
+        self.assertEqual(publication.selection.Selection(self.root).compatibility(), expected)
 
     def test_imported_comment_warm_report_equals_fresh(self):
         self.test_native_module_binding_scope()
@@ -287,22 +213,6 @@ structure Seal where
         self.publish()
         self.assertEqual(warm, self.report()[1:],
                          '[FAIL] imported_comment_warm_report_equals_fresh')
-
-    def test_native_old_manifest_key_rejected(self):
-        manifest = self.root / 'lean-report-inputs.json'
-        policy = json.loads(manifest.read_text())
-        old_key = 'report_' + 'semantic_version'
-        version = policy.pop(old_key, policy.get('report_cache_release_semantic_version', 1))
-        policy['report_cache_release_semantic_version'] = version
-        manifest.write_text(json.dumps(policy))
-        self.assertEqual(publication.selection.Selection(self.root).data[
-            'report_cache_release_semantic_version'], version)
-        policy[old_key] = policy.pop('report_cache_release_semantic_version')
-        manifest.write_text(json.dumps(policy))
-        with self.assertRaisesRegex(ValueError, 'expected fields', msg='[FAIL] old_manifest_key_rejected'):
-            publication.selection.Selection(self.root)
-        with self.assertRaisesRegex(ValueError, 'DTR-ManifestVersion'):
-            materials.read_manifest_versions(manifest)
 
     def test_native_module_binding_scope(self):
         # Native transport fixtures supply empty rows; production assessment
@@ -349,9 +259,6 @@ def producerValue : Nat := 1
         self.write('lake-manifest.json', json.dumps(manifest))
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
         policy['dependency_sources']['include'].append(dict(pattern='unrelated/**/*.lean', optional=True))
-        self.write('lean-report-inputs.json', json.dumps(policy))
-        changed(set())
-        policy['report_cache_release_semantic_version'] += 1
         self.write('lean-report-inputs.json', json.dumps(policy))
         changed(set())
         self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text().replace(':= 1', ':= 2'))
@@ -509,11 +416,11 @@ class NativeSemanticConsumerTests:
         self.assertNotIn('D5.Added', [row['module'] for row in self.report()[0]])
         self.write('Audit.lean', 'def audit : Nat := 2\n')
         changed([])
-        # The fixed judge is version-gated outside a module's compiler closure.
+        # The fixed judge is outside a module's compiler closure.
         self.write('LeanInformationAudit/TemplateEnrollment.lean', 'def fixtureDriver : Nat := 2\n')
         changed([])
 
-    def test_native_judge_semantic_version_gate(self):
+    def test_native_judge_compiler_dependency_scope(self):
         self.write('LeanInformationAudit/Support.lean', 'def judgeSupport : Nat := 1\n')
         driver = 'import LeanInformationAudit.Support\ndef fixtureDriver : Nat := judgeSupport\n'
         self.write('LeanInformationAudit/TemplateEnrollment.lean', driver)
@@ -533,7 +440,7 @@ class NativeSemanticConsumerTests:
             built = self.build()
             after = self.stamps()
             actual = {name for name in after if after[name] != before[name]}
-            self.assertEqual(actual, set(expected), '[FAIL] judge_semantic_version_reuse')
+            self.assertEqual(actual, set(expected), '[FAIL] judge_compiler_dependency_reuse')
             records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
             self.assertEqual(sum(row['count'] for row in records if row['kind'] == 'extract'), len(expected))
             before = after
@@ -555,9 +462,6 @@ class NativeSemanticConsumerTests:
         changed({'D5.A', 'Fixture'})
         self.assertEqual(self.report()[1:], original)
 
-        policy['report_cache_release_semantic_version'] += 1
-        self.write('lean-report-inputs.json', json.dumps(policy))
-        changed(set())
         self.assertEqual(self.report()[1:], original)
         self.write('D5/B.lean', (self.root / 'D5/B.lean').read_text() + '-- content bytes\n')
         changed({'D5.B'})

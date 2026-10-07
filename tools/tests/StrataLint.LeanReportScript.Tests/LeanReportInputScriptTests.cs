@@ -470,7 +470,7 @@ public sealed partial class LeanReportInputScriptTests
                 imports = Array.Empty<string>(), declarations = Array.Empty<object>(),
             });
             File.WriteAllBytes(report, StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(
-                new { schema = "stratalint-raw-lean-report-v2", modules })).ToArray());
+                new { schema = "stratalint-raw-lean-report-v3", modules })).ToArray());
             var digest = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(report)));
             File.WriteAllText(
                 report + ".sha256",

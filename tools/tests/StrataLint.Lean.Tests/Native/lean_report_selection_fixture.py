@@ -26,7 +26,7 @@ def paths(*patterns):
 
 
 def declaration():
-    return dict(schema_version=1, report_cache_release_semantic_version=1,
+    return dict(schema_version=1,
         report_modules=dict(include=[spec('Trureturing.lean'), spec('D5/**/*.lean', True)], exclude=[]),
         inspector_sources=dict(include=[spec('tools/lean-inspector/**/*.lean', True),
             spec('tools/lean-inspector-interface/**/*.lean', True)], exclude=[]),
@@ -177,10 +177,6 @@ class Contract(unittest.TestCase):
         self.assertNotEqual(producer[3], interface_config[3])
         self.assertEqual(producer[1:3], interface_config[1:3])
         producer = interface_config
-        self.policy['report_cache_release_semantic_version'] = 2
-        bumped = self.address()
-        self.assertNotEqual(producer[1], bumped[1])
-        self.assertEqual(producer[2:], bumped[2:])
         self.write('lean-toolchain', 'changed pin')
         config = self.address()
         self.assertNotEqual(producer[3], config[3])

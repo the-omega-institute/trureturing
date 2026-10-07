@@ -286,7 +286,7 @@ public sealed class InformationTemplateEvidenceTests
     {
         var wire = JsonSerializer.SerializeToElement(new
         {
-            schema = "stratalint-raw-lean-report-v2",
+            schema = "stratalint-raw-lean-report-v3",
             modules = new[] { new
             {
                 module = ModuleA,

@@ -99,12 +99,12 @@ package_facet reportSourceModules (pkg : Package) : Lean.NameSet := do
 
 /-- Validate registered inputs without tracing producer implementation.
 Configuration identity belongs to aggregation; module exports carry compiler
-dependencies and typed input owners separately trace the semantic version. -/
+dependencies; every module traces the report format identifier. -/
 package_facet reportProducer (pkg : Package) : Unit := withCurrPackage pkg do
   discard <| (← fetch <| pkg.facet `reportInputs).await
   return Job.nil
 
-/-- Input classification is a compiler fact. Semantic versions and producer
+/-- Input classification is a compiler fact. Report formats and producer
 program traces do not invalidate it. Read only the target's own olean parts. -/
 module_facet judgeInputs (mod : Module) : FilePath := withCurrPackage mod.pkg do
   let pkg := (← getWorkspace).root
@@ -222,9 +222,9 @@ private def prepareNativeModuleReport (mod : Module) : FetchM (Job PreparedArtif
       let some registry := workspace.findModule? `LeanInformationAudit.TemplateEnrollment
         | error "IE-C050 reason=incomplete_closure rule=dtr.report_producer"
       discard <| (← JobM.runFetchM registry.exportInfo.fetch).await
-      let version ← inputBinFile (root / ".lake/build/lean-inspector" / "registration-version")
-      discard <| version.await
-      addTrace version.getTrace
+    let format ← inputBinFile (root / ".lake/build/lean-inspector" / "report-format")
+    discard <| format.await
+    addTrace format.getTrace
     let executable ← inspector.await
     let args := #[root.toString, mod.name.toString, (← IO.FS.realPath mod.leanFile).toString,
       utility.toString, executable.toString, file.toString]

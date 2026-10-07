@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Validate optional evidence that the complete report entry has no new work.
 
-The report semantic version, the report-module and configuration inputs, the explicitly
+The report format, the report-module and configuration inputs, the explicitly
 registered execution environment and the complete five-piece report are sealed
 only after defaults/report/publication succeed. Producer program bytes are not
-part of the seal; the semantic version is their compatibility contract. A receipt selects no rules and grants no check success. A miss returns
+part of the seal; implementation changes retain historical reports. A receipt selects no rules and grants no check success. A miss returns
 to the normal Lake entry; malformed authored registration remains an error.
 """
 import argparse
@@ -22,7 +22,7 @@ import zlib
 import materials
 import publication
 
-SCHEMA = 'stratalint-lean-report-reuse-v3'
+SCHEMA = 'stratalint-lean-report-reuse-v4'
 SUFFIX = '.reuse.json'
 COMPLETED = ['defaults', 'report', 'publication']
 INVALID_SEED = (OSError, UnicodeError, ValueError, KeyError, TypeError,
@@ -38,10 +38,7 @@ class InputMismatch(ValueError):
         if not isinstance(previous, dict) or not isinstance(previous.get('files'), dict):
             return
         old_files, new_files = previous['files'], current['files']
-        old_version = previous.get('semantic_version')
         self.mismatch = dict(
-            cached_semantic_version=old_version if type(old_version) is int else None,
-            current_semantic_version=current['semantic_version'],
             added_inputs=len(new_files.keys() - old_files.keys()),
             removed_inputs=len(old_files.keys() - new_files.keys()),
             changed_inputs=sum(old_files[path] != new_files[path]
@@ -54,12 +51,8 @@ def warn_mismatch(result, stream):
     mismatch = result.get('mismatch')
     if mismatch is None:
         return
-    old = mismatch['cached_semantic_version']
-    new = mismatch['current_semantic_version']
-    impact = ('Semantic-version changes invalidate only typed input owners. '
-              'Lake determines the module work from compiler traces.')
-    message = (f"LEAN_REPORT_CACHE_MISMATCH cached_version={old if old is not None else 'unknown'} "
-               f"current_version={new} added_inputs={mismatch['added_inputs']} "
+    impact = 'Lake determines the module work from compiler traces.'
+    message = (f"LEAN_REPORT_CACHE_MISMATCH added_inputs={mismatch['added_inputs']} "
                f"removed_inputs={mismatch['removed_inputs']} changed_inputs={mismatch['changed_inputs']} "
                f"execution_changed={str(mismatch['execution_changed']).lower()}. {impact} "
                'Lean compilation has independent incremental reuse. Agents: use LEAN_CACHE and LEAN_INSPECTOR_WORK '
@@ -89,13 +82,13 @@ def capture(repository):
     # This receipt binds report data. FILEMAP's registered program targets are
     # a separate Lake build obligation enforced by inspect.sh on both hit/miss.
     # Inspector/audit implementation bytes do not invalidate report data; an
-    # incompatible program change must bump the explicit semantic version.
+    # implementation change retains reports; extraction changes update the format.
     paths = sorted(set(inputs.expand('report_modules') + inputs.expand('config_inputs')))
     files = {}
     for path in paths:
         source = inputs.safe_file(path)
         files[path] = dict(sha256=publication.digest(source), mode=stat.S_IMODE(source.stat().st_mode))
-    return dict(eligible=True, semantic_version=inputs.data['report_cache_release_semantic_version'],
+    return dict(eligible=True, report_format=publication.selection.REPORT_FORMAT,
         files=files,
         execution=dict(toolchain=execution['toolchain'], tools=execution['tools'],
                        platform={name: getattr(platform, name)() for name in execution['platform']},

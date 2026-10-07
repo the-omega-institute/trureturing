@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace StrataLint.Engine;
 
-// Lake traces and the report cache version govern reuse. Null is an old/missing
+// Lake compiler traces and the report format govern reuse. Null is an old/missing
 // producer, never an empty inventory; this reader checks evidence structure.
 internal sealed record InformationTemplateModuleEvidence(
     JsonElement Wire,
@@ -13,38 +13,9 @@ internal sealed record InformationTemplateModuleEvidence(
 
 internal static class InformationTemplateEvidence
 {
-    private static void ValidateManifestVersions(RepositorySnapshot snapshot)
-    {
-        const string error = "DTR-ManifestVersion: lean-report-inputs.json requires positive integer report_cache_release_semantic_version";
-        if (!snapshot.Files.TryGetValue(RepoPath.CreateKnown("lean-report-inputs.json"), out var manifest))
-            throw new FormatException(error);
-        try
-        {
-            using var document = JsonDocument.Parse(manifest.RawBytes.AsMemory());
-            var root = document.RootElement;
-            if (root.ValueKind != JsonValueKind.Object) throw new FormatException(error);
-            foreach (var field in new[] { "report_cache_release_semantic_version" })
-            {
-                if (root.EnumerateObject().Count(p => p.Name == field) != 1
-                    || !root.TryGetProperty(field, out var value)
-                    || value.ValueKind != JsonValueKind.Number)
-                    throw new FormatException(error);
-                var version = value.GetRawText();
-                if (version.Length == 0 || version[0] is < '1' or > '9'
-                    || version.Any(c => c is < '0' or > '9'))
-                    throw new FormatException(error);
-            }
-        }
-        catch (JsonException ex)
-        {
-            throw new FormatException(error, ex);
-        }
-    }
-
     internal static InformationTemplateModuleEvidence Read(
         JsonElement value, string sourcePath, RepositorySnapshot snapshot)
     {
-        ValidateManifestVersions(snapshot);
         InformationTemplateJson.Fields(value, "schema_version", "inventory", "records", "registered");
         InformationTemplateJson.Version(value);
         var inventory = ReadKeys(value.GetProperty("inventory"));

@@ -168,8 +168,8 @@ def prepare(root):
             utility = [by_path[path]] if path in by_path else []
             write_if_changed(state(root) / 'inputs' / (name + '.json'), materials.canonical_json({
                 'utilities': utility, 'claims': sorted({u['claimModule'] for u in utility}), 'source_path': path}))
-        write_if_changed(state(root) / 'registration-version',
-            (str(inputs.data['report_cache_release_semantic_version']) + '\n').encode('ascii'))
+        write_if_changed(state(root) / 'report-format',
+            (selection.REPORT_FORMAT + '\n').encode('ascii'))
     # Membership and full config identity affect aggregation only. Each module
     # traces compatibility, source, utility inputs and Lake's compiler dependencies.
     with phase('native-input-coordinates'):
@@ -247,7 +247,7 @@ def module(root, name, source, utility_path, executable, output):
         capture = retain_request(root, executable, arguments, record['utilities'])
         with phase('native-inspect', request_capture=capture):
             run_inspector(root, executable, arguments)
-        materials.compact(directory / 'spool.json', spool, report, root / 'lean-report-inputs.json')
+        materials.compact(directory / 'spool.json', spool, report)
         public.write_origin(report, name, public.production_origin(root, executable), input_projection(root, name))
         # Like an olean, an artifact is validated once, when it is produced;
         # Lake's trace alone decides later reuse.
@@ -314,7 +314,7 @@ def produce_batch_chunk(requests):
             spool_report = row_dir / 'spool.json'
             spool_report.write_bytes(materials.canonical_json({'schema': materials.SPOOL_SCHEMA, 'modules': [row]}))
             report = row_dir / public.RAW
-            materials.compact(spool_report, row_spool, report, root / 'lean-report-inputs.json')
+            materials.compact(spool_report, row_spool, report)
             public.write_origin(report, name, origin, input_projection(root, name))
             validate_module(report, root, name, utility_path, template_inputs=template_inputs)
             output.parent.mkdir(parents=True, exist_ok=True)
@@ -373,7 +373,6 @@ def aggregate(root, output, *artifacts):
     """Concatenate module artifacts that were validated when produced."""
     root, output = Path(root), Path(output)
     config = public.read_json((state(root) / 'inputs.json').read_bytes())
-    versions = selection.Selection(root).semantic_versions()
     if len(artifacts) != len(config['modules']):
         raise ValueError('native aggregate membership mismatch')
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -394,7 +393,7 @@ def aggregate(root, output, *artifacts):
                 origin = public.read_json(data['.provenance.json'])
                 if [row['module'] for row in current] != [name]:
                     raise ValueError('native aggregate membership mismatch')
-                public.check_origin(origin, current[0], versions, check_report=False)
+                public.check_origin(origin, current[0], check_report=False)
                 origins[name] = origin
                 rows.extend(current)
                 # Produced materials matched their content addresses; move their
@@ -425,7 +424,7 @@ def aggregate(root, output, *artifacts):
                 if len(data) != size:
                     raise ValueError('truncated private material spool')
                 append_compressed(archive, info, data)
-        public.write_sidecars(report, config['coordinates'], origins, semantic_versions=versions)
+        public.write_sidecars(report, config['coordinates'], origins)
         artifact = directory / 'report.zip'
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in public.SUFFIXES])
         os.replace(artifact, output)
@@ -465,12 +464,9 @@ def append_compressed(archive, info, data):
 
 
 def validate_module(report, root, name, utility, *, verified_materials=None, template_inputs=None):
-    rows = public.validate_rows(report, public.member(report, '.materials.zip'), verified_materials,
-                                manifest=Path(root) / 'lean-report-inputs.json')
+    rows = public.validate_rows(report, public.member(report, '.materials.zip'), verified_materials)
     row_binding(rows, root, name, utility, template_inputs=template_inputs)
-    # prepare validated the manifest before any facet could accept an artifact.
-    compatibility = (template_inputs if template_inputs is not None else selection.Selection(root)).semantic_versions()
-    origin = public.validate_origin(report, rows, compatibility)
+    origin = public.validate_origin(report, rows)
     return rows, origin
 
 

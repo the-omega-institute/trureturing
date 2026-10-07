@@ -4,6 +4,67 @@ from test_reuse import EXECUTION
 
 
 class NativeReportConsumerTests:
+    def test_reg_dependency_closure_reassessment(self):
+        # Typed Reg leaf and interface inputs select their compiler dependency closure.
+        # Tiny typed transport inputs exercise production discovery, facets and publication;
+        # mathematical assessment belongs to the compiled Reg judge tests.
+        self.reg_package()
+        core = self.root / 'tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean'
+        original = core.read_text()
+        contract = '\nnamespace LeanInformationAudit.Contract\nstructure Registration where\n  value : Nat\nend LeanInformationAudit.Contract\n'
+        core.write_text(original + contract)
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['config_inputs']['include'].append(dict(
+            pattern='tools/lean-inspector-interface/**/*.lean', optional=False))
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.write('Reg/Leaf.lean', 'import LeanInformationAuditInterface.Contract.Core\n'
+            'def Reg.Leaf.entry : LeanInformationAudit.Contract.Registration := { value := 1 }\n')
+        self.write('Reg/Parent.lean', 'import Reg.Leaf\n'
+            'def Reg.Parent.entry : LeanInformationAudit.Contract.Registration := { value := Reg.Leaf.entry.value + 1 }\n')
+        self.write('Reg/Unrelated.lean', 'def Reg.Unrelated.value : Nat := 1\n')
+        work = self.root / 'module-work.jsonl'
+        self.env['STRATALINT_INSPECTOR_MODULE_WORK'] = str(work)
+        output = self.root / '.lake/build/stratalint/raw-lean-report.json'
+
+        def entry(phase):
+            work.write_text('')
+            before = self.stamps()
+            oleans = {path: (path.stat().st_mtime_ns, publication.digest(path))
+                      for path in (self.root / '.lake/build/reg').rglob('*.olean')}
+            result = self.guarded_command(['make', 'lean-report'], env=self.env)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            records = [json.loads(line) for line in work.read_text().splitlines()]
+            data = dict(exit_code=result.returncode, modules=len(self.stamps()),
+                extracted=sorted(row['module'] for row in records if row['operation'] == 'extract'),
+                assessed=sorted(row['module'] for row in records if row['operation'] == 'assess'),
+                reg_recompiled=sorted(path.relative_to(self.root).as_posix() for path in oleans
+                    if (path.stat().st_mtime_ns, publication.digest(path)) != oleans[path]),
+                report_changed=sorted(name for name, stamp in self.stamps().items()
+                    if name not in before or stamp != before[name]),
+                whole_report_reused='LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0' in result.stdout)
+            self.record_result(phase, data, [work])
+            return data
+
+        initial = entry('initial')
+        self.assertEqual(initial['assessed'], ['Reg.Leaf', 'Reg.Parent'])
+        driver = self.root / 'LeanInformationAudit/TemplateEnrollment.lean'
+        driver.write_text('def fixtureDriver : Nat := 2\n')
+        warm = entry('implementation')
+        self.assertEqual(warm['extracted'], [])
+        self.assertEqual(warm['assessed'], [])
+        self.assertEqual(warm['reg_recompiled'], [])
+        self.assertTrue(warm['whole_report_reused'])
+        leaf = self.root / 'Reg/Leaf.lean'
+        leaf.write_text(leaf.read_text().replace('value := 1', 'value := 2'))
+        changed = entry('leaf')
+        self.assertEqual(changed['extracted'], ['Reg.Leaf', 'Reg.Parent'])
+        self.assertEqual(changed['assessed'], ['Reg.Leaf', 'Reg.Parent'])
+        core.write_text(original + contract.replace('value : Nat', 'value : Int'))
+        changed = entry('interface')
+        self.assertEqual(changed['extracted'], ['Reg.Leaf', 'Reg.Parent'])
+        self.assertEqual(changed['assessed'], ['Reg.Leaf', 'Reg.Parent'])
+        self.assertEqual(len(changed['reg_recompiled']), 2)
+
     def test_impl_resource_preserves_production_reg_on_warm_report(self):
         # Use the default program targets of a direct report call, the package
         # target declarations, report entry and Lake compiler. Only the

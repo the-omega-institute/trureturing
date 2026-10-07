@@ -240,7 +240,7 @@ defaultFacets = ["static"]
         (self.root / 'bin/dotnet').chmod(0o755)
         self.utility()
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-        policy = dict(schema_version=1, report_cache_release_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
+        policy = dict(schema_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
             inspector_sources=paths('tools/lean-inspector/Inspector.lean',
                 'tools/lean-inspector/LeanInformationAudit/RawArtifacts.lean', 'tools/lean-inspector/lakefile.lean'),
             dependency_sources=paths('External.lean', 'ClaimSupport.lean', 'LeanInformationAudit/TemplateEnrollment.lean'),
@@ -544,7 +544,7 @@ defaultFacets = ["static"]
     def report(self):
         with tempfile.TemporaryDirectory(dir=self.root) as directory:
             report = publication.unpack(self.root / '.lake/build/lean-inspector/report.zip', directory)
-            rows = publication.validate_bundle(report, manifest=self.root / 'lean-report-inputs.json')
+            rows = publication.validate_bundle(report)
             return rows, report.read_bytes(), publication.member(report, '.materials.zip').read_bytes()
     def origins(self):
         with zipfile.ZipFile(self.root / '.lake/build/lean-inspector/report.zip') as archive:
