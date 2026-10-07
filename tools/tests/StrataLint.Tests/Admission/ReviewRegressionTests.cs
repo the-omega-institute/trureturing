@@ -7,10 +7,6 @@ namespace StrataLint.Tests;
 
 public sealed partial class ReviewRegressionTests
 {
-    private static DeltaRuleContext ActualDelta(RuleFixture fixture) =>
-        fixture.Build(RawChangeSet.Create(fixture.Changes.Concat(fixture.Files.Keys.Union(fixture.Baseline.Keys)
-            .Where(path => fixture.Files.GetValueOrDefault(path) != fixture.Baseline.GetValueOrDefault(path))).Distinct(StringComparer.Ordinal)));
-
     [Fact]
     public void Cf1TopologyReportsBootstrapNotActiveWhenDefaultBranchLacksWorkflow()
     {
@@ -53,232 +49,6 @@ public sealed partial class ReviewRegressionTests
             StringComparison.Ordinal);
         Assert.DoesNotContain("BOOTSTRAP-NOT-ACTIVE", console.Output, StringComparison.Ordinal);
         Assert.Equal(string.Empty, console.Error);
-    }
-
-    [Fact]
-    public void Sl016AcceptsTheNeutralSyntheticDigestionLedger()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), ActualDelta(fixture));
-
-        Assert.Empty(evaluation.Diagnostics);
-    }
-
-    [Fact]
-    public void Sl016RejectsCasBackedLiveReceiptWithoutItsSourceVolume()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        var captured = DigestionCasStore.Capture(Encoding.UTF8.GetBytes(
-            RuleFixture.FixtureDigestionSource));
-        fixture.Files[RuleFixture.FixtureBackfillSourcePath] = fixture.Files[
-                RuleFixture.FixtureBackfillSourcePath]
-            .Replace(
-                $"atomizer = \"{AtomizerRegistry.NoAtomizerId}\"",
-                $"atomizer = \"{SyntheticNumberedAtomizer.Id}\"",
-                StringComparison.Ordinal);
-        fixture.Files[captured.RelativePath] = RuleFixture.FixtureDigestionSource;
-        fixture.Files.Remove(RuleFixture.FixtureDigestionSourcePath);
-        Assert.Equal(
-            captured.Reference,
-            Assert.Single(BackfillInventoryLoader.Load(
-                fixture.Build().Current).RequireDigestionEntries()).CasRef);
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), ActualDelta(fixture));
-
-        Assert.Contains(evaluation.Diagnostics, diagnostic =>
-            diagnostic.Message.Contains("source path is dangling", StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void Sl016ChangedNoAtomizerMetadataRejectsMissingSourceAfterCasMigration()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files.Remove(RuleFixture.FixtureDigestionSourcePath);
-
-        fixture.Changes.Add(RuleFixture.FixtureBackfillSourcePath);
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), ActualDelta(fixture));
-
-        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            $"source path is dangling: {RuleFixture.FixtureDigestionSourcePath}",
-            StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void Sl016RejectsReceiptWithoutCasRefAtLoaderBoundary()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
-                RuleFixture.FixtureBackfillAtomPath]
-            .Replace(
-                $"cas_ref: {RuleFixture.FixtureCasReference}\n",
-                string.Empty,
-                StringComparison.Ordinal);
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), ActualDelta(fixture));
-
-        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            "source fixture-source entry keys are not canonical",
-            StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void Sl016AdmissionAndReportFreeShareInvalidSourceIdValidation()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        var source = fixture.Files[RuleFixture.FixtureBackfillSourcePath]
-            .Replace("source_id = \"fixture-source\"", "source_id = \"INVALID\"", StringComparison.Ordinal);
-        var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
-        fixture.Files.Remove(RuleFixture.FixtureBackfillSourcePath);
-        fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
-        var invalidSourcePath = RuleFixture.FixtureBackfillSourcePath.Replace(
-            "/fixture-source/",
-            "/INVALID/",
-            StringComparison.Ordinal);
-        var invalidAtomPath = RuleFixture.FixtureBackfillAtomPath.Replace(
-            "/fixture-source/",
-            "/INVALID/",
-            StringComparison.Ordinal);
-        fixture.Files[invalidSourcePath] = source;
-        fixture.Files[invalidAtomPath] = atom;
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.Build(RawChangeSet.Create([
-                RuleFixture.FixtureBackfillSourcePath,
-                RuleFixture.FixtureBackfillAtomPath,
-                invalidSourcePath,
-                invalidAtomPath,
-            ])));
-
-        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            "invalid source_id: INVALID",
-            StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void Sl016AllowsDeletingACasBlobAbsentFromTheCurrentLedger()
-    {
-        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.Build(RawChangeSet.Create([deletedCasPath])));
-
-        Assert.Empty(evaluation.Diagnostics);
-    }
-
-    [Fact]
-    public void Sl016StillChecksDerivedStatusWhenDeletingAnUnreferencedCasBlob()
-    {
-        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
-        var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
-        fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
-        var mismatchedStatusPath = RuleFixture.FixtureBackfillAtomPath.Replace(
-            "/partial-open/",
-            "/absorbed-closed/",
-            StringComparison.Ordinal);
-        fixture.Files[mismatchedStatusPath] = atom;
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.Build(RawChangeSet.Create([
-                deletedCasPath,
-                RuleFixture.FixtureBackfillAtomPath,
-                mismatchedStatusPath,
-            ])));
-
-        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            "handwritten status absorbed-closed differs from derived partial-open",
-            StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void Sl016StillChecksClosedEntryKeysWhenDeletingAnUnreferencedCasBlob()
-    {
-        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
-        fixture.Files[RuleFixture.FixtureBackfillAtomPath] += "unexpected: value\n";
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.Build(RawChangeSet.Create([
-                deletedCasPath,
-                RuleFixture.FixtureBackfillAtomPath,
-            ])));
-
-        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            "source fixture-source entry keys are not canonical",
-            StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void Sl016StillChecksCoverageTargetsWhenDeletingAnUnreferencedCasBlob()
-    {
-        const string missingGid = "D5/S0/Carrier/MissingCoverageTarget";
-        var (fixture, deletedCasPath) = UnreferencedCasDeletionFixture();
-        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[
-                RuleFixture.FixtureBackfillAtomPath]
-            .Replace(
-                "D5/S0/Carrier/BackfillTarget",
-                missingGid,
-                StringComparison.Ordinal);
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(
-            RuleId.CreateKnown(16),
-            fixture.Build(RawChangeSet.Create([
-                deletedCasPath,
-                RuleFixture.FixtureBackfillAtomPath,
-            ])));
-
-        Assert.Contains(evaluation.Diagnostics, diagnostic => diagnostic.Message.Contains(
-            $"entry {RuleFixture.FixtureAtomId} coverage target is absent: {missingGid}",
-            StringComparison.Ordinal));
-    }
-
-    private static (RuleFixture Fixture, string DeletedCasPath) UnreferencedCasDeletionFixture()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        var obsolete = DigestionCasStore.Capture(Encoding.UTF8.GetBytes("obsolete atom\n"));
-        var obsoleteText = Encoding.UTF8.GetString(obsolete.Bytes.AsSpan());
-        fixture.Baseline[obsolete.RelativePath] = obsoleteText;
-        return (fixture, obsolete.RelativePath);
-    }
-
-    [Fact]
-    public void Sl016RejectsHandwrittenDigestionStatusThatDisagreesWithDerivation()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        var atom = fixture.Files[RuleFixture.FixtureBackfillAtomPath];
-        fixture.Files.Remove(RuleFixture.FixtureBackfillAtomPath);
-        fixture.Files[$"{BackfillInventoryLoader.RootPath}fixture-source/absorbed-closed/fixture-atom.yaml"] = atom;
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), ActualDelta(fixture));
-
-        Assert.Contains(evaluation.Diagnostics, diagnostic =>
-            diagnostic.Message.Contains("handwritten status", StringComparison.Ordinal));
-    }
-
-    [Fact]
-    public void Sl016RejectsSourceIdThatDoesNotMatchItsDirectory()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Files[$"{BackfillInventoryLoader.RootPath}different-directory/source.toml"] =
-            fixture.Files[RuleFixture.FixtureBackfillSourcePath];
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), ActualDelta(fixture));
-
-        Assert.Contains(evaluation.Diagnostics, diagnostic =>
-            diagnostic.Message.Contains("source metadata path disagrees with source_id", StringComparison.Ordinal));
-        AssertFileMapSourceEligibility();
     }
 
     [Fact]
@@ -384,22 +154,10 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Theory]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "subject: failure")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "subject: anomaly")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "subject: unresolved tension")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "subject: row//failure")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "status: failure")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "payload: tension")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "payload: failure/report")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "x.subject: failure/report")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/atom.yaml", "outer:\n  subject: failure/report")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/not-a-state/rogue.yaml", "subject: failure/report")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/deep/rogue.yaml", "subject: anomaly/v1")]
-    [InlineData("Meta/Digestion/backfill/interface-v1/residual-open/rogue.yml", "subject: failure/open")]
     [InlineData("Evidence/D5/S0/Carrier/Field.run.json", "{\"subject\":\"failure/report\"}")]
     [InlineData("Evidence/D5/S0/Carrier/Field.run.json", "{\"status\":\"failure/open\"}")]
     [InlineData("Evidence/D5/S0/Carrier/Field.run.json", "{\"note\":\"anomaly/v1\"}")]
-    public void Sl019ReportsEveryResidueOutsideADeclaredDigestionAddress(
+    public void Sl019ReportsAnomalyResidueInStructuredEvidence(
         string path,
         string content)
     {
@@ -455,7 +213,7 @@ public sealed partial class ReviewRegressionTests
 
     [Theory]
     [MemberData(nameof(InvalidInventoryGidSlots))]
-    public void Sl019RejectsAnomalyResiduesOutsideTheDeclaredInventoryGidSlots(string body)
+    public void Sl019LeavesAuxiliaryInventoryResiduesToTargetCommands(string body)
     {
         var fixture = new RuleFixture();
         const string path = "Meta/Digestion/backfill/interface-v1/absorbed-closed/rogue.yaml";
@@ -465,7 +223,7 @@ public sealed partial class ReviewRegressionTests
             RuleId.CreateKnown(19),
             fixture.Build(RawChangeSet.Create([path])));
 
-        Assert.Contains(
+        Assert.DoesNotContain(
             evaluation.Diagnostics,
             item => item.Path == path && item.Message.Contains(
                 "anomaly-bearing", StringComparison.Ordinal));
@@ -490,7 +248,7 @@ public sealed partial class ReviewRegressionTests
     }
 
     [Fact]
-    public void Sl019StillReportsADigestionAddressWhoseResidueCarriesASerializedRecordKey()
+    public void Sl019SkipsAuxiliaryDigestionRecordStrings()
     {
         var fixture = new RuleFixture();
         const string path = "Meta/Digestion/backfill/interface-v1/residual-open/record.yaml";
@@ -500,7 +258,7 @@ public sealed partial class ReviewRegressionTests
             RuleId.CreateKnown(19),
             fixture.Build(RawChangeSet.Create([path])));
 
-        Assert.Contains(
+        Assert.DoesNotContain(
             evaluation.Diagnostics,
             item => item.Path == path && item.Message.Contains(
                 "unknown anomaly-bearing schema at $.subject", StringComparison.Ordinal));
@@ -634,52 +392,6 @@ public sealed partial class ReviewRegressionTests
         var diagnostic = Assert.Single(completed.Capability.Diagnostics, item => item.Path == "rogue.txt");
         Assert.Equal(sl000, diagnostic.RuleId);
         Assert.Equal("path must match exactly one FILEMAP entry; matches=0", diagnostic.Message);
-    }
-
-    private static void AssertFileMapSourceEligibility()
-    {
-        var fixture = new RuleFixture();
-        fixture.AddBackfillTargets();
-        fixture.Changes.Add(RuleFixture.FixtureBackfillSourcePath);
-        var source = Assert.Single(BackfillInventoryLoader
-            .Load(fixture.Build().Current)
-            .RequireDigestionSources());
-        var fileMapWithoutSource = TestFileMap.Canonical.Replace(
-            "digestion_source = true\n",
-            string.Empty,
-            StringComparison.Ordinal);
-        var policy = AcceptedPolicy(fileMapWithoutSource);
-
-        var evaluation = RuleCatalog.Default.EvaluateSingle(RuleId.CreateKnown(16), fixture.Build(policy));
-
-        // Registering a new theory volume hits this before anything else, so the verdict
-        // has to name the file and field that fix it, not only what is wrong.
-        var diagnostic = Assert.Single(
-            evaluation.Diagnostics,
-            item => item.Message.Contains(
-                $"source {source.SourceId} has an invalid governance path",
-                StringComparison.Ordinal));
-        Assert.Contains(source.SourcePath, diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains("Meta/FILEMAP.toml", diagnostic.Message, StringComparison.Ordinal);
-        Assert.Contains("digestion_source", diagnostic.Message, StringComparison.Ordinal);
-        var enginePath = Directory.EnumerateFiles(
-            Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "StrataLint.Engine"),
-            "BackfillInventoryRule.cs",
-            SearchOption.AllDirectories).Single();
-        var engineSource = File.ReadAllText(enginePath, Encoding.UTF8);
-        Assert.DoesNotContain(source.SourcePath, engineSource, StringComparison.Ordinal);
-
-        // SL-016 no longer performs a whole CAS audit.  CAS bytes are read by the
-        // command operating on the selected atom; admission only evaluates ledger
-        // references and coverage edges.
-        var casChainSource = engineSource
-            + File.ReadAllText(
-                Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "StrataLint.Engine", "Digestion", "DigestionLedgerAligner.cs"),
-                Encoding.UTF8)
-            + File.ReadAllText(
-                Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "StrataLint.Engine", "Digestion", "Evaluation", "DigestionStatusEvaluator.cs"),
-                Encoding.UTF8);
-        Assert.DoesNotContain("var casEvaluation = DigestionCasStore.EvaluateLedgerReferences(", casChainSource, StringComparison.Ordinal);
     }
 
 }

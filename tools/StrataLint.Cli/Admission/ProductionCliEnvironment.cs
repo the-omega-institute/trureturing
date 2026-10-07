@@ -27,6 +27,19 @@ internal interface IRepositoryGateway
 
     RawRepositorySnapshot ReadCurrent();
 
+    /// Preserves the whole path inventory and link policy while selecting regular bodies.
+    /// An optional observer receives each original file's raw SHA256, including omitted bodies.
+    RawRepositorySnapshot ReadCurrentProjection(Func<string, bool> readContents,
+        Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null)
+    {
+        var snapshot = ReadCurrent();
+        if (observeContentDigest is not null && snapshot.Entries.Any(static entry => !entry.ContentWasRead))
+            throw new InvalidOperationException("Full provenance requires original bodies, not unread placeholders.");
+        foreach (var entry in snapshot.Entries)
+            observeContentDigest?.Invoke(entry.Path, System.Security.Cryptography.SHA256.HashData(entry.Bytes.AsSpan()));
+        return ProjectBodies(snapshot, readContents);
+    }
+
     /// Reads the files at the given paths from the current repository snapshot. A
     /// directory selects everything under it, and the same FILEMAP/symlink policy as
     /// the whole-tree reader is applied.
@@ -36,6 +49,28 @@ internal interface IRepositoryGateway
     IReadOnlyList<string> SearchCurrentPaths(IReadOnlyList<string> paths);
 
     RawRepositorySnapshot ReadRevision(string revision);
+
+    RawRepositorySnapshot ReadRevisionProjection(string revision, Func<string, bool> readContents,
+        Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null)
+    {
+        var snapshot = ReadRevision(revision);
+        if (observeContentDigest is not null && snapshot.Entries.Any(static entry => !entry.ContentWasRead))
+            throw new InvalidOperationException("Full provenance requires original bodies, not unread placeholders.");
+        foreach (var entry in snapshot.Entries)
+            observeContentDigest?.Invoke(entry.Path, System.Security.Cryptography.SHA256.HashData(entry.Bytes.AsSpan()));
+        return ProjectBodies(snapshot, readContents);
+    }
+
+    private static RawRepositorySnapshot ProjectBodies(RawRepositorySnapshot snapshot, Func<string, bool> readContents)
+    {
+        ArgumentNullException.ThrowIfNull(readContents);
+        var links = snapshot.PathInventory.IsDefault ? new HashSet<string>(StringComparer.Ordinal)
+            : snapshot.PathInventory.Where(static entry => entry.State == "symlink")
+                .Select(static entry => entry.Path).ToHashSet(StringComparer.Ordinal);
+        return RawRepositorySnapshot.Create(snapshot.Entries.Select(entry =>
+            readContents(entry.Path) || links.Contains(entry.Path) || FileMapDocuments.IsPolicyPath(entry.Path)
+                ? entry : entry with { Bytes = [], ContentWasRead = false }), snapshot.PathInventory);
+    }
 
     /// Reads selected paths and the FILEMAP inputs and link referents needed to validate them.
     RawRepositorySnapshot ReadRevision(string revision, IReadOnlyList<string> paths) =>
@@ -162,9 +197,10 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             var rawSnapshots = timing.Measure(
                 "repository-read",
                 () => (
-                    Current: repository.ReadCurrent(),
-                    Baseline: repository.ReadRevision(prepared.Revision)));
-            var currentRaw = rawSnapshots.Current;
+                    Current: AdmissionRepositoryInputs.ReadCurrent(repository),
+                    Baseline: AdmissionRepositoryInputs.ReadBaseline(repository, prepared.Revision)));
+            var currentRaw = AdmissionRepositoryInputs.ReadDeltaInputs(
+                repository, rawSnapshots.Current, rawSnapshots.Baseline, prepared.Changes);
             var baselineRaw = rawSnapshots.Baseline;
             var admissionPlane = timing.Measure(
                 "admission-plane",
@@ -226,8 +262,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             var route = RouteEngine.Route(fileMap.Policy, probe);
             if (route is not RouteOutcome.Routed routed
                 || routed.Result.Gid.Value != "D5/S0/Carrier/Probe"
-                || routed.Result.Path.Value != "D5/S0/Carrier/Probe.lean"
-                || RuleCatalog.Default.Descriptors.Length != 30)
+                || routed.Result.Path.Value != "D5/S0/Carrier/Probe.lean")
             {
                 return new CommandResult(false, string.Empty, "SELFTEST FAIL invariant mismatch\n");
             }

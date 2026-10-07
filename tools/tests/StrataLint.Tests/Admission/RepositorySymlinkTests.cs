@@ -614,8 +614,10 @@ public sealed class RepositorySymlinkTests
         Assert.Throws<InvalidOperationException>(() =>
             GitRepositorySnapshotReader.ReadCurrent(root, readContents: _ => false));
         Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.VisitCurrent(root, _ => { }));
+        Assert.Throws<InvalidOperationException>(() => new GitRepositoryGateway(root).ReadCurrentProjection(static _ => false));
         Commit(root);
         Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadRevision(root, "HEAD"));
+        Assert.Throws<InvalidOperationException>(() => new GitRepositoryGateway(root).ReadRevisionProjection("HEAD", static _ => false));
     }
 
     private static string Text(RawRepositorySnapshot snapshot, string path) =>

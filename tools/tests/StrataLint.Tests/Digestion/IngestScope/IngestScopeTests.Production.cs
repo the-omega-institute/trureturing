@@ -8,6 +8,32 @@ namespace StrataLint.Tests;
 public sealed partial class IngestScopeTests
 {
     [Fact]
+    public void PathScopedIngestSearchesMetadataWithoutLoadingAnEntireMetadataSnapshot()
+    {
+        var fixture = Fixture();
+        fixture.Files[BetaPath] += Addition;
+        using var temporary = new TemporaryDirectory();
+        WriteFixture(temporary, fixture);
+        var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
+        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([BetaPath]),
+            Raw(fixture.Files), Raw(fixture.Baseline));
+        var environment = new ProductionCliEnvironment(temporary.Path, gateway, new FakeLeanReportSource(null));
+
+        var result = environment.Ingest(["--source", BetaPath]);
+
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(0, gateway.WholeTreeReadCount);
+        Assert.DoesNotContain(gateway.ScopedCurrentReads.SelectMany(static scope => scope),
+            static path => path.StartsWith(":(glob)", StringComparison.Ordinal)
+                && path.EndsWith("/source.toml", StringComparison.Ordinal));
+        var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
+        Assert.Single(BackfillInventoryLoader.Load(Decode(after)).RequireDigestionSources()
+            .Single(static source => source.SourceId == "beta").Entries
+            .Where(entry => entry.AtomId == Atom(Addition).Fingerprints.RawSha256[7..]));
+        Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+    }
+
+    [Fact]
     public void ReportFreeIngestReadsSourcesWithoutCoverageOrEngineeringInputs()
     {
         var fixture = Fixture();

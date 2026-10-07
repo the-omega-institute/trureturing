@@ -21,7 +21,8 @@ internal static partial class IngestCommand
                 paths.Add(BackfillInventoryLoader.RootPath + selector + "/source.toml");
                 continue;
             }
-            metadata ??= repository.ReadCurrent([$":(glob){BackfillInventoryLoader.RootPath}*/source.toml"]);
+            metadata ??= DigestionQuerySelection.FindSourceMetadata(repository,
+                selectors.Where(static source => source.Contains('/')).ToArray());
             var matches = metadata.Entries.Where(entry => DigestionQuerySelection.MatchesSourcePath(entry, selector)).ToArray();
             if (matches.Length > 1) throw SourceUsage($"ambiguous --source selector '{selector}'");
             if (matches.Length == 1) paths.Add(matches[0].Path);
