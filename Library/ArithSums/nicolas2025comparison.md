@@ -1962,3 +1962,133 @@ of selected sources. The original same-source condition (G9), with
 its complete signed integral and strict core, remains unproved.
 RH remains unproved. The remaining obstacle includes the signed
 moving finite head; the infinite suffix cannot simply be dropped.
+
+
+## A continuous Gaussian approximation of the complete original zero response
+
+The fixed-family comparison (H3)–(H7) leaves continuous scale mixtures
+and paid approximations available. The following application uses the
+same original coefficient (M1), the already assessed Gaussian coefficient
+of Moriya's Theorem 3.3, and the classical Riemann–von Mangoldt count.
+It supplies a uniform coefficient-error estimate, rather than repeating
+any source proof or claiming an original analytic theorem or Lean
+verification. No nontrivial zero is moved to the critical line.
+
+Fix $A\ge e^2$, $L=\log A$ and $0<a\le1/16$. Retain
+$w(X)=(1+\log X)/\log^2X$. At observation $z=0$ choose, separately
+for each $X\ge A$,
+
+$$
+\alpha_X=\sqrt{a/\log X},\qquad
+G_{X,\alpha_X,0}(s)=\frac{X^s e^{as^2}}s.
+$$
+
+The positive scale measure $w(X)X^{-2}dX$ gives the exact identity
+
+$$
+Q_{A,a}(s):=\int_A^\infty G_{X,\alpha_X,0}(s)
+                      \frac{w(X)}{X^2}\,dX
+=e^{as^2}F_A(s),\qquad 0<\operatorname{Re}s<1.
+\tag{U1}
+$$
+
+For every such $s$, the scale integral is absolutely convergent. The
+width parameter varies with $X$, while the Gaussian coefficient $a$
+is fixed throughout the integral. This realizes the damped coefficient
+exactly; it does not claim exact reconstruction of $F_A$ by a finite
+family of fixed probes.
+
+### A bound valid before taking the infinite scale endpoint
+
+For $R\ge A$ put
+
+$$
+F_{A,R}(s)=\frac1s\int_A^R X^{s-2}w(X)\,dX.
+$$
+
+Since $w$ is positive and decreasing, one integration by parts gives,
+for $\sigma=\operatorname{Re}s<1$ and $s\ne0$,
+
+$$
+|F_{A,R}(s)|\le
+\frac{2w(A)A^{\sigma-1}}{|s||1-s|}.
+\tag{U2}
+$$
+
+Indeed the two endpoint terms and the derivative integral are bounded
+by $A^{\sigma-1}[w(A)+w(R)+\int_A^R|w'(X)|dX]$, which is
+$2A^{\sigma-1}w(A)$. The bound is uniform in $R$. Passing to the
+infinite endpoint gives the same bound for $F_A$. In particular, for
+an actual zero $\rho=\beta+i\gamma$ with $\gamma\ge4$,
+
+$$
+|F_{A,R}(\rho)|,\ |F_A(\rho)|\le\frac{2w(A)}{\gamma^2}.
+$$
+
+This is the same reciprocal-square coefficient control used in the
+existing [Fiori density application](../Analytic/fiori2026shortzerodensity.md),
+now also applied to finite scale intervals. It will justify the
+scale-endpoint passage below; it is not a new zero-density input.
+
+### Pay the discrepancy over all actual zeros
+
+With multiplicities $m_\rho$ retained, uniformly in $A$ and $a$,
+
+$$
+\boxed{
+\sum_{\operatorname{Im}\rho>0}m_\rho
+ |F_A(\rho)-Q_{A,a}(\rho)|
+\ll w(A)\sqrt a\log(2/a).}
+\tag{U3}
+$$
+
+To prove this, set $U=a^{-1/2}\ge4$. For $4\le\gamma\le U$,
+
+$$
+|e^{a\rho^2}-1|
+=\left|a\rho^2\int_0^1e^{ta\rho^2}\,dt\right|
+\le ae^a|\rho|^2\ll a\gamma^2,
+$$
+
+because $0<\beta<1$. The preceding coefficient bound and
+$N(U)\ll U\log(2U)$ give a contribution
+$O(w(A)aU\log(2U))$. For $\gamma>U$ use
+$|e^{a\rho^2}-1|\le1+e^a$ and the classical consequence
+$\sum_{\gamma>U}m_\rho/\gamma^2\ll\log(2U)/U$ of the same
+zero count. Their sum has the size in (U3).
+
+The finite multiset $0<\gamma<4$ is not omitted or assumed empty.
+Directly from the defining integral,
+
+$$
+|F_A(\rho)|\le\frac{w(A)}{|\rho|(1-\beta)},
+$$
+
+so its discrepancy is at most
+$ae^aw(A)\sum_{0<\gamma<4}m_\rho|\rho|/(1-\beta)=O(aw(A))$.
+This fixed zeta-dependent constant is finite and independent of $A,a$;
+it is absorbed into (U3). No finite-height verification is needed for
+this step. All implied constants here are uniform but not numerically
+certified.
+
+Consequently the original conjugate-paired response has allowance
+
+$$
+\sqrt A L\left|2\operatorname{Re}
+ \sum_{\gamma>0}m_\rho(F_A(\rho)-Q_{A,a}(\rho))\right|
+\ll\sqrt{Aa}\log(2/a).
+\tag{U4}
+$$
+
+The admissible choice
+
+$$
+a_A=\frac1{A(\log A)^4}
+$$
+
+makes (U4) $O(1/\log A)$ as $A\to\infty$. This estimate covers the
+complete positive-ordinate multiset and infinite height tail, with
+actual real parts and multiplicities unchanged. It pays unsmoothing
+of the zero response, while giving no signed lower bound for that
+response. Positivity of the scale measure in (U1) is not positivity
+of a sum of complex zero coefficients.
