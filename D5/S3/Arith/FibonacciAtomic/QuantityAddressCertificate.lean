@@ -125,29 +125,41 @@ private theorem leaf_expand (t : Source) (s : Address)
     composition (replace t s (.mul (.of true) (.of true))) + (0, 1) = composition t + (2, 0) ∧
     (∀ u : Address, u ≠ s → u ≠ s ++ [false] → u ≠ s ++ [true] →
       readout u (replace t s (.mul (.of true) (.of true))) = readout u t) := by
-  induction s generalizing t with
-  | nil =>
-    have he : t = .of false := Option.some.inj (by simpa only [subtree] using hs)
-    subst t
-    refine ⟨rfl, by rfl, ?_⟩
-    intro u h hL hR
-    cases u with
-    | nil => exact (h rfl).elim
-    | cons b u =>
+  have hc : composition (replace t s (.mul (.of true) (.of true))) + (0, 1) =
+      composition t + (2, 0) := by
+    obtain ⟨J, haddr, hplug, _⟩ :=
+      ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.1 s t (.of false) hs
+    have he : replace t s (.mul (.of true) (.of true)) = J.plug (.mul (.of true) (.of true)) := by
+      rw [← haddr, ← hplug]
+      simpa only [List.append_nil, replace] using
+        ActualImageAlphaSeparation.path_replace J (.of false) (.mul (.of true) (.of true)) []
+    rw [he, ← hplug]
+    exact ActualImageAlphaSeparation.context_composition J (.mul (.of true) (.of true)) (.of false)
+  have local_support : subtree (s ++ [false]) (replace t s (.mul (.of true) (.of true))) =
+      some (.of true) ∧
+      (∀ u : Address, u ≠ s → u ≠ s ++ [false] → u ≠ s ++ [true] →
+        readout u (replace t s (.mul (.of true) (.of true))) = readout u t) := by
+    clear hc
+    induction s generalizing t with
+    | nil =>
+      have he : t = .of false := Option.some.inj (by simpa only [subtree] using hs)
+      subst t
+      refine ⟨rfl, ?_⟩
+      intro u h hL hR
       cases u with
-      | nil => cases b <;> simp_all
-      | cons c u => cases b <;> rfl
-  | cons b s ih =>
-    cases t with
-    | of c => simp [subtree] at hs
-    | mul v w => cases b with
-      | false =>
-        obtain ⟨hl, hc, ho⟩ := ih v hs
-        refine ⟨hl, ?_, ?_⟩
-        · change (composition (replace v s (.mul (.of true) (.of true))) + composition w) +
-            (0, 1) = (composition v + composition w) + (2, 0)
-          simpa only [add_assoc, add_left_comm, add_comm] using congrArg (· + composition w) hc
-        · intro u h hL hR
+      | nil => exact (h rfl).elim
+      | cons b u =>
+        cases u with
+        | nil => cases b <;> simp_all
+        | cons c u => cases b <;> rfl
+    | cons b s ih =>
+      cases t with
+      | of c => simp [subtree] at hs
+      | mul v w => cases b with
+        | false =>
+          obtain ⟨hl, ho⟩ := ih v hs
+          refine ⟨hl, ?_⟩
+          intro u h hL hR
           cases u with
           | nil => rfl
           | cons b u => cases b with
@@ -156,13 +168,10 @@ private theorem leaf_expand (t : Source) (s : Address)
               exact ho u (fun he => h (congrArg (List.cons false) he))
                 (fun he => hL (congrArg (List.cons false) he))
                 (fun he => hR (congrArg (List.cons false) he))
-      | true =>
-        obtain ⟨hl, hc, ho⟩ := ih w hs
-        refine ⟨hl, ?_, ?_⟩
-        · change (composition v + composition (replace w s (.mul (.of true) (.of true)))) +
-            (0, 1) = (composition v + composition w) + (2, 0)
-          simpa only [add_assoc] using congrArg (composition v + ·) hc
-        · intro u h hL hR
+        | true =>
+          obtain ⟨hl, ho⟩ := ih w hs
+          refine ⟨hl, ?_⟩
+          intro u h hL hR
           cases u with
           | nil => rfl
           | cons b u => cases b with
@@ -171,6 +180,7 @@ private theorem leaf_expand (t : Source) (s : Address)
               exact ho u (fun he => h (congrArg (List.cons true) he))
                 (fun he => hL (congrArg (List.cons true) he))
                 (fun he => hR (congrArg (List.cons true) he))
+  exact ⟨local_support.1, hc, local_support.2⟩
 
 private theorem joint_surgery (V : Source) (x y : Address)
     (hx : readout x V = .beta) (hy : readout y V = .beta) (hxy : x ≠ y) :

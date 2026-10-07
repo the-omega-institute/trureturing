@@ -90,7 +90,7 @@ private theorem leaf_card (t : Source) :
   have he : F = G := FreeMagma.hom_ext (by funext b; cases b <;> rfl)
   exact (congrArg (fun f : Source →ₙ* Multiplicative ℕ => Multiplicative.toAdd (f t)) he).symm
 
-theorem positive (t : Source) : 0 < (composition t).1 + (composition t).2 := by
+private theorem positive (t : Source) : 0 < (composition t).1 + (composition t).2 := by
   rw [← leaf_card t, (ActualImageSevenLeafSeparation.seven_leaf_separation.1 t).1]
   exact FreeMagma.length_pos t
 
@@ -170,7 +170,7 @@ theorem leaf_data (t : Source) :
         Finset.card_image_of_injective _ List.cons_injective,
         Finset.card_image_of_injective _ List.cons_injective, hbs, hbt]
       rfl
-theorem structural (t : Source) :
+private theorem structural (t : Source) :
     AlphaCovered (substitution (substitution t)) ∧
     (∀ u ∈ alphaLeaves (substitution (substitution t)), ∃ r : Address,
       u = r ++ [true] ∧ subtree r (substitution (substitution t)) =
@@ -488,7 +488,7 @@ theorem leaf_change (t : Source) (s : Address) (b c : Bool)
           | cons x u => cases x with
             | false => rfl
             | true => exact ho u (fun he => hu (congrArg (List.cons true) he))
-theorem no_beta_cherry (t : Source) (ht : Positive t) (r : Address)
+private theorem no_beta_cherry (t : Source) (ht : Positive t) (r : Address)
     (hl : readout (r ++ [false]) t = .beta)
     (hr : readout (r ++ [true]) t = .beta) : False := by
   have hs := (ActualLeafHistoryRigidity.actual_address_geometry.2.2.1 t ht r).1 hr

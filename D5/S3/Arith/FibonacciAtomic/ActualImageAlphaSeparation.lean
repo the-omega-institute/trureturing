@@ -78,6 +78,22 @@ def NormalForm (S T : Source) : Prop := ∃ J : TwoHole, ∃ y : Source,
   substitution^[3] T = replace (replace (substitution^[3] (J.fill (.of false) (.of false)))
     J.addresses.1 (.mul A (substitution^[3] y))) J.addresses.2 C
 
+theorem path_replace (H : OutputContext) (M X : Source) (u : Address) :
+    replace (H.plug M) (H.holeAddress ++ u) X = H.plug (replace M u X) := by
+  induction H with
+  | hole => rfl
+  | left H R ih => simpa only [OutputContext.plug, OutputContext.holeAddress, List.cons_append, replace] using congrArg (fun z => FreeMagma.mul z R) ih
+  | right L H ih => simpa only [OutputContext.plug, OutputContext.holeAddress, List.cons_append, replace] using congrArg (FreeMagma.mul L) ih
+
+theorem context_composition (H : OutputContext) (U V : Source) :
+    composition (H.plug U) + composition V = composition (H.plug V) + composition U := by
+  induction H with
+  | hole => exact add_comm _ _
+  | left H R ih =>
+    simpa only [OutputContext.plug, composition, add_assoc, add_left_comm, add_comm] using congrArg (fun z => z + composition R) ih
+  | right L H ih =>
+    simpa only [OutputContext.plug, composition, add_assoc, add_left_comm, add_comm] using congrArg (fun z => composition L + z) ih
+
 /-- Third-image alpha count and its single-alpha source. -/
 theorem alpha_count_facts :
     (∀ p : Source, 1 ≤ (alphaLeaves (substitution^[3] p)).card) ∧
@@ -468,12 +484,6 @@ theorem result :
             (.mul (J.left.plug V) (J.right.plug U))).2.2.1
            simp only [n_pair] at ho; omega,
         by rw [hL'.2.2.2.1, hR'.2.2.2.1, and_comm]⟩
-  have path_replace (H : OutputContext) (M X : Source) (u : Address) :
-      replace (H.plug M) (H.holeAddress ++ u) X = H.plug (replace M u X) := by
-    induction H with
-    | hole => rfl
-    | left H R ih => simpa only [OutputContext.plug, OutputContext.holeAddress, List.cons_append, replace] using congrArg (fun z => FreeMagma.mul z R) ih
-    | right L H ih => simpa only [OutputContext.plug, OutputContext.holeAddress, List.cons_append, replace] using congrArg (FreeMagma.mul L) ih
   have literal_two (J : TwoHole) (X Y Z W : Source) :
       replace (replace (J.fill Z W) J.addresses.1 X) J.addresses.2 Y = J.fill X Y := by
     have at_hole (H : OutputContext) (P Q : Source) : replace (H.plug P) H.holeAddress Q = H.plug Q :=
@@ -578,15 +588,7 @@ theorem result :
               h3, h4⟩
   have swap_composition (J : TwoHole) (X Y : Source) :
       composition (J.fill X Y) = composition (J.fill Y X) := by
-    have total (H : OutputContext) (U V : Source) :
-        composition (H.plug U) + composition V = composition (H.plug V) + composition U := by
-      induction H with
-      | hole => exact add_comm _ _
-      | left H R ih =>
-        simpa only [OutputContext.plug, composition, add_assoc, add_left_comm, add_comm] using congrArg (fun z => z + composition R) ih
-      | right L H ih =>
-        simpa only [OutputContext.plug, composition, add_assoc, add_left_comm, add_comm] using congrArg (fun z => composition L + z) ih
-    have hL := total J.left X Y; have hR := total J.right X Y
+    have hL := context_composition J.left X Y; have hR := context_composition J.right X Y
     apply (one_data J.outer _ _).2.2.2.2
     cases h : J.swapped <;> simp only [TwoHole.fill, h, Bool.false_eq_true, ↓reduceIte] at ⊢
     all_goals apply Prod.ext <;> have a := congrArg Prod.fst hL <;> have b := congrArg Prod.snd hL <;>

@@ -27,6 +27,16 @@ internal sealed class ActualImageAlphaSeparationDocument : IScribeDocumentDefini
             Def("forwardCount", "Atomic-side hole count", "forwardCount(S,T) counts frontier holes whose S side is atomic and T side is compound."),
             Def("NormalForm", "Literal double-hole normal form", "NormalForm(S,T) retains a complete source context J and y equal to beta or (alpha,alpha), with S=fill(J,beta,(alpha,y)) and T=fill(J,(alpha,y),beta). "
                 + "Its frontier is exactly the two named, mutually nonprefix addresses. Writing Y=rho cubed(y) and K=rho cubed(fill(J,beta,beta)), the actual trees are literally replace(replace(K,u,C),v,(A,Y)) and replace(replace(K,u,(A,Y)),v,C). Thus every fixed sibling has an actual preimage."),
+            Describe.Lean(DescribeId.Create("actual-image-alpha-path-replace"),
+                DeclarationHandle.Create(Prefix + "path_replace"), H("Replacement through a context"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every context H, trees M,X and address u, replacement of X in H.plug(M) at H.holeAddress followed by u equals H.plug(replace(M,u,X))."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-image-alpha-context-composition"),
+                DeclarationHandle.Create(Prefix + "context_composition"), H("Composition through a context"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every single-hole context H and trees U,V, composition(H.plug(U)) plus composition(V) equals composition(H.plug(V)) plus composition(U)."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-image-alpha-count-facts"),
                 DeclarationHandle.Create(Prefix + "alpha_count_facts"), H("Positive alpha count and its unit case"),
                 StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
