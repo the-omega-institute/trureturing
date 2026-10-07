@@ -54,7 +54,7 @@ def correct (h : ℕ) (ε : ℝ)
   ∀ (r : observations h ε) (x : LegalDigits), finiteTail x →
     dist r.val (response h x) ≤ ε → decode r = windowPrefix h x
 
-private theorem golden_facts : 0 < t ∧ t < 1 ∧ t ^ 2 + t = 1 ∧ 1 + g = 2 * t := by
+theorem golden_facts : 0 < t ∧ t < 1 ∧ t ^ 2 + t = 1 ∧ 1 + g = 2 * t := by
   have hp : 0 < t := inv_pos.mpr Real.goldenRatio_pos
   have hl : t < 1 := inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio
   have hs : t ^ 2 + t = 1 := by
@@ -70,7 +70,7 @@ private theorem shift_shift (x : LegalDigits) (m n : ℕ) :
   apply Subtype.ext
   exact funext fun j => congrArg x.val (by omega : (j + n) + m = j + (m + n))
 
-private theorem residual (x : LegalDigits) (j : ℕ) :
+theorem residual (x : LegalDigits) (j : ℕ) :
     kappa (bitShift x (3 * j)) + g * kappa (bitShift x (3 * (j + 1))) =
       offset (window x j) := by
   have hr := (closed_observation_graph_realization.2.2.1 (bitShift x (3 * j))).1
@@ -82,7 +82,7 @@ private theorem residual (x : LegalDigits) (j : ℕ) :
   simp only [Nat.mul_add, Nat.mul_one]
   linarith
 
-private theorem label_gap (l m : Label) (hne : l ≠ m) :
+theorem label_gap (l m : Label) (hne : l ≠ m) :
     t ^ 2 ≤ |offset l - offset m| := by
   have ht := golden_facts
   have hhalf : (1 : ℝ) / 2 < t := by nlinarith [ht.2.2.1]
@@ -477,23 +477,20 @@ private theorem response_expansion (x : LegalDigits) (j n : ℕ) :
     kappa (bitShift x (3 * j)) =
       (∑ k ∈ Finset.range n, (-g) ^ k * offset (window x (j + k))) +
       (-g) ^ n * kappa (bitShift x (3 * (j + n))) := by
-  induction n generalizing j with
-  | zero => simp
-  | succ n ih =>
-    have hi := ih (j + 1)
-    have hr := residual x j
-    have hsum : (∑ k ∈ Finset.range n, (-g) ^ (k + 1) * offset (window x (j + (k + 1)))) =
-        -g * (∑ k ∈ Finset.range n, (-g) ^ k * offset (window x ((j + 1) + k))) := by
-      rw [Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro k _
-      rw [show j + (k + 1) = (j + 1) + k by omega, pow_succ]
-      ring
-    rw [Finset.sum_range_succ']
-    simp only [pow_zero, one_mul, Nat.add_zero]
-    rw [hsum, pow_succ, show j + (n + 1) = (j + 1) + n by omega]
-    rw [hi] at hr
-    linarith only [hr]
+  let f (k : ℕ) : ℝ := (-g) ^ k * kappa (bitShift x (3 * (j + k)))
+  have hterm (k : ℕ) : (-g) ^ k * offset (window x (j + k)) = f k - f (k + 1) := by
+    dsimp only [f]
+    rw [← residual x (j + k), pow_succ, Nat.add_assoc]
+    ring
+  have he : (∑ k ∈ Finset.range n, (-g) ^ k * offset (window x (j + k))) =
+      f 0 - f n := by
+    calc
+      _ = ∑ k ∈ Finset.range n, (f k - f (k + 1)) :=
+        Finset.sum_congr rfl (fun k _ => hterm k)
+      _ = f 0 - f n := Finset.sum_range_sub' f n
+  dsimp only [f] at he
+  simp only [pow_zero, one_mul, Nat.add_zero] at he
+  linarith only [he]
 
 private theorem affine_actual (h : ℕ) (x y : LegalDigits)
     (hp : windowPrefix h y = windowPrefix h x) :

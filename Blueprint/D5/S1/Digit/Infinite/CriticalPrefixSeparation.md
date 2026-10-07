@@ -4,7 +4,43 @@
 
 Sharp separation and critical prefix recovery.
 
-**Theorem 1.1 (Sharp separation and critical prefix recovery).**
+**Theorem 1.1 (Golden scalar identities).**
+
+Lean statement: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.golden_facts`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/CriticalPrefixSeparation.golden_facts` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The reciprocal golden ratio t lies strictly between zero and one, satisfies t^2+t=1, and obeys 1+t^3=2t.
+
+**Theorem 1.2 (Exact sample residual).**
+
+Lean statement: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.residual`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/CriticalPrefixSeparation.residual` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every legal source x and every window index j, the scalar after deleting 3j bits plus t^3 times the scalar after deleting 3(j+1) bits equals the translation of the jth window.
+
+**Theorem 1.3 (Separation of window translations).**
+
+Lean statement: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.label_gap`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/CriticalPrefixSeparation.label_gap` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Any two distinct legal three-bit windows have translations whose absolute difference is at least t^2.
+
+**Theorem 1.4 (Sharp separation and critical prefix recovery).**
 
 Lean statement: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.result`
 
@@ -28,5 +64,8 @@ Give prefix values the discrete topology. At the constant observation t/4 every 
 
 ## References
 
+- Truth anchor: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.golden_facts`
+- Truth anchor: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.label_gap`
+- Truth anchor: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.residual`
 - Truth anchor: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.result`
 - Dependency: [D5/S1/Digit/Infinite/ClosedObservationGraphRealization](ClosedObservationGraphRealization.md)

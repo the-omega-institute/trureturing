@@ -7,7 +7,39 @@ internal sealed class CriticalPrefixSeparationDocument : IScribeDocumentDefiniti
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Sharp separation and critical prefix recovery.",
         H("Sharp separation and critical prefix recovery"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("criticalprefixseparation-golden-facts"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/CriticalPrefixSeparation.golden_facts"),
+                H("Golden scalar identities"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The reciprocal golden ratio t lies strictly between zero and one, "
+                    + "satisfies t^2+t=1, and obeys 1+t^3=2t."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("criticalprefixseparation-residual"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/CriticalPrefixSeparation.residual"),
+                H("Exact sample residual"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every legal source x and every window index j, the scalar after "
+                    + "deleting 3j bits plus t^3 times the scalar after deleting 3(j+1) bits "
+                    + "equals the translation of the jth window."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("criticalprefixseparation-label-gap"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/CriticalPrefixSeparation.label_gap"),
+                H("Separation of window translations"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Any two distinct legal three-bit windows have translations whose "
+                    + "absolute difference is at least t^2."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("criticalprefixseparation-result"),
             DeclarationHandle.Create("D5/S1/Digit/Infinite/CriticalPrefixSeparation.result"),
             H("Sharp separation and critical prefix recovery"),
