@@ -87,6 +87,14 @@ def extra (k : Nat) (i : Index k) : Finset Address :=
 def compatible (k t : Nat) (i : Index k) : Prop :=
   ∀ s < t, readout (query s) (family k i) = .alpha
 
+/-- The scan range through k splits at every prefix length t ≤ k. -/
+theorem divide (k t : Nat) (ht : t ≤ k) :
+    List.range (k+1) = List.range t ++ t :: List.range' (t+1) (k-t) := by
+  rw [List.range_eq_range', ← show t + (k-t+1) = k+1 by omega,
+    ← List.range'_append_1]
+  simp only [Nat.zero_add, List.range'_succ, Nat.add_zero, Nat.add_one]
+  rw [← List.range_eq_range']
+
 /-- Literal nested sources and their actual routing reports. -/
 theorem result (k : Nat) (hk : 1 ≤ k) :
     Function.Injective (family k) ∧
@@ -435,12 +443,6 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       have rest := ih (fun s hs => ha s (List.mem_cons_of_mem _ hs))
       simp only [List.cons_append, scan, controllerOutcome, ht, ↓reduceIte, rest,
         List.map_cons, List.cons_append]
-  have divide (t : Nat) (ht : t ≤ k) :
-      List.range (k+1) = List.range t ++ t :: List.range' (t+1) (k-t) := by
-    rw [List.range_eq_range', ← show t + (k-t+1) = k+1 by omega,
-      ← List.range'_append_1]
-    simp only [Nat.zero_add, List.range'_succ, Nat.add_zero, Nat.add_one]
-    rw [← List.range_eq_range']
   have outcomes (i : Index k) :
       controllerOutcome (controller k) (family k i) =
         ((route k i).map (fun q => ⟨q,readout q (family k i)⟩) ++
@@ -457,7 +459,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     | inr p =>
       cases p with
       | inl j =>
-        rw [divide j.val (le_of_lt j.isLt),
+        rw [divide k j.val (le_of_lt j.isLt),
           scan_prefix _ _ _ (fun t ht => (raw_X j).1 t (List.mem_range.mp ht))]
         simp [scan, controllerOutcome, (raw_X j).2,
           ↓reduceIte, choice, dif_pos j.isLt,
@@ -466,7 +468,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           List.singleton_append, List.map_map, Function.comp_def, List.append_assoc]
       | inr i =>
         have hi : 0 < i.val+1 ∧ i.val+1 ≤ k := ⟨by omega, by have := i.isLt; omega⟩
-        rw [divide (i.val+1) hi.2,
+        rw [divide k (i.val+1) hi.2,
           scan_prefix _ _ _ (fun t ht => (raw_Y i).1 t (by have := List.mem_range.mp ht; omega))]
         have he : (⟨i.val+1-1,by have := i.isLt; omega⟩ : Fin k) = i := Fin.ext (by simp only [Fin.val_mk]; omega)
         simp [scan, controllerOutcome, (raw_Y i).2,

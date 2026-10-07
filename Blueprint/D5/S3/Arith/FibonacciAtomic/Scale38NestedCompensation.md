@@ -4,7 +4,19 @@
 
 Nested left combs share a fixed root compensation position and a literal raw scan.
 
-**Theorem 1.1 (Complete sources and exact requested-address bills).**
+**Theorem 1.1 (Splitting the scan range at a prefix).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.divide`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.divide` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all natural numbers t <= k, the list 0,1,...,k is the list 0,...,t-1, followed by t, followed by the consecutive list t+1,...,k.
+
+**Theorem 1.2 (Complete sources and exact requested-address bills).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.result`
 
@@ -28,6 +40,7 @@ The same controller terminates and decides third-image membership for every fini
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.divide`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.result`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion](ActualCoarseReadoutCompletion.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization](FiniteHereditaryPatternRealization.md)

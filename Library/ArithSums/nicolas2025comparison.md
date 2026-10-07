@@ -2491,3 +2491,297 @@ not certify that cost numerically at $A>10^{36}$, control the remaining
 signed response, verify a new zero height, or turn the selected global
 maximizer into the least counterexample. All inputs are reused
 paper-level interfaces without Lean certification; RH remains unproved.
+
+## A smaller moving cut from joint density and zero-free support
+
+The complete coefficient (M1) can use a smaller moving height than
+(J6), by combining two existing inputs on the same actual zero
+multiset. This controls the infinite suffix and reduces the height
+of the still-uncontrolled signed head. It does not establish that
+head's sign or the original selected-source Robin condition.
+
+Corollary 1 and Table 1, printed p.2, of
+[Chourasiya–Simonič, arXiv:2507.15184v2](https://arxiv.org/pdf/2507.15184v2)
+also extend the existing count (W1) in the
+[Polak application](../Analytic/polak2026finiterobinca.md)
+to $5/8\le\sigma<1$, with the same larger constants $47,10,168$.
+The additional rows have $B_1\le13.66$, $B_2\le8.290$, $B_3\le147.0$.
+Lemma 2.10, printed p.6, of
+[Johnston–Yang, arXiv:2204.01980v2](https://arxiv.org/pdf/2204.01980v2)
+supplies Ford's zero-free region
+
+$$
+\beta<1-\eta(\gamma),\qquad
+\eta(t)=\frac1{R(\log t)^{2/3}(\log\log t)^{1/3}},
+\quad R=57.54,\quad \gamma\ge3.
+$$
+
+Their analytic proofs and finite verified-height input remain
+external premises. The constant is sufficient for this interface;
+no optimal-constant claim or source proof rerun is needed.
+
+Put $L=\log A$, $\Omega=(L/\log L)^{1/3}$ and
+
+$$
+\kappa=\frac1{28R},\qquad
+T=A^{1/4}e^{-\kappa\Omega},\qquad U=A^{2/7}.
+$$
+
+Work for sufficiently large $A$ so $T\ge H=3\cdot10^{12}$.
+Then $U>T$, $T\to\infty$, and $T/(A^{1/4}L)\to0$.
+No numerical starting clock is certified here.
+Define
+
+$$
+B_2(A;T)=\sum_{\gamma>T}
+ \frac{m_\rho(A^{\beta-1/2}+A^{1/2-\beta})}{\gamma^2}.
+$$
+
+The full coefficient estimate (H5), including its remainder, and
+multiplicity-preserving reflection give
+
+$$
+\sqrt A L\,2\sum_{\gamma>T}m_\rho|F_A(\rho)|
+\le\frac43(1+1/L)B_2(A;T).
+$$
+
+Thus an absolute bound on $B_2$ pays the original signed suffix.
+The original head $\gamma\le T$, pole and trivial-zero terms remain.
+
+Use the existing layer calculation with
+$\sigma_0=5/8$ and $Q_A(\sigma)=A^{\sigma-1/2}+A^{1/2-\sigma}$.
+For the inclusive count and exclusive suffix, the reflected count
+has the endpoint term
+
+$$
+F_2(\sigma;T)=-\frac{2N(\sigma,T)}{T^2}
+ +4\int_T^\infty\frac{N(\sigma,t)}{t^3}\,dt
+\le4\int_T^\infty\frac{N(\sigma,t)}{t^3}\,dt.
+$$
+
+Consequently,
+
+$$
+B_2(A;T)\le Q_A(\sigma_0)S_2(T)
+ +4\int_{\sigma_0}^1Q_A'(\sigma)
+          \int_T^\infty N(\sigma,t)t^{-3}\,dt\,d\sigma,
+\qquad S_2(T)=\sum_{\gamma>T}\frac{m_\rho}{\gamma^2}.
+$$
+
+Tonelli preserves all heights, real parts and multiplicities.
+Write $\epsilon=1-\sigma$. The existing density exponent satisfies
+$d=3\epsilon/(1+\epsilon)\le3\epsilon$, $d\le9/11$ and
+$q=2+d<3$. Uniformly on this range,
+$N(\sigma,t)\ll t^d(\log t)^3$ and
+$Q_A'(\sigma)\le L\sqrt A e^{-\epsilon L}$.
+
+The classical full zero count gives $S_2(T)\ll\log T/T$.
+The base layer therefore costs
+
+$$
+Q_A(\sigma_0)S_2(T)\ll L A^{-1/8}e^{\kappa\Omega}.
+$$
+
+For $T<t\le U$, finite verification and monotonicity of the
+zero-free region jointly imply $N(\sigma,t)=0$ when
+$\sigma\ge1-\eta(U)$. On this same band,
+
+$$
+A^{-\epsilon}t^d\le e^{-\epsilon L/7},\qquad
+\eta(U)\ge\frac1{RL^{2/3}(\log L)^{1/3}},\qquad
+\int_{\eta(U)}^{3/8}e^{-\epsilon L/7}\,d\epsilon
+\le\frac7L e^{-\eta(U)L/7}.
+$$
+
+If $\eta(U)>3/8$ the band is empty. Otherwise these bounds,
+$\log t\le L$ and $\int_T^Ut^{-3}dt\le1/(2T^2)$ give the
+whole finite-band allowance $O(L^3e^{-\Omega/(14R)})$.
+
+For $t>U$, use the density bound without imposing the fixed-$U$
+zero-free restriction. Uniformly for $0\le d\le9/11$,
+$\int_U^\infty t^{d-3}(\log t)^3dt\ll U^{d-2}(\log U)^3$.
+Also $A^{-\epsilon}U^d\le e^{-\epsilon L/7}$, whose layer
+integral cancels the outer factor $L$. The complete infinite band
+therefore costs $O(L^3\sqrt A/U^2)=O(L^3A^{-1/14})$.
+
+Combining the three allowances yields
+
+$$
+\boxed{
+\sqrt A L\left|2\operatorname{Re}
+             \sum_{\gamma>T}m_\rho F_A(\rho)\right|
+\ll L A^{-1/8}e^{\kappa\Omega}
+    +L^3e^{-\Omega/(14R)}+L^3A^{-1/14}\longrightarrow0.}
+$$
+
+The absolute-sum bound above satisfies the same estimate. Every
+implied constant is independent of $A$; no ordinate tail or
+coefficient correction is dropped. The limit follows from
+$\Omega/\log L\to\infty$ and $\Omega/L\to0$.
+Using the old $3/4$ base clip would instead leave
+$O(Le^{\kappa\Omega})$, so it cannot support this vanishing claim.
+
+This is an asymptotic application of established density and
+zero-free results. The same selected integer, its original clock,
+strict core and complete signed target are retained. The actual
+finite head still grows without bound and remains uncontrolled;
+neither a new finite source-clock exclusion nor RH is proved.
+There is no Lean verification of this application.
+
+## Pay coefficient error below the whole-response cut
+
+The full-response suffix estimate above and the existing coefficient
+comparisons (H1), (H5) can be used together at two different heights.
+Keep the same selected source $A=\log N>10^{36}$, every actual zero real
+part and multiplicity, and the original complete coefficient (M1).
+This is a paper-level application of the already cited density and
+zero-free inputs, without a new source theorem, numerical starting
+clock, originality claim or Lean verification.
+
+Put $L=\log A$, $\Omega=(L/\log L)^{1/3}$, $R=57.54$ and
+$\kappa=1/(28R)$ as above. Define
+
+$$
+S=A^{1/6}e^{-\kappa\Omega},\qquad
+T=A^{1/4}e^{-\kappa\Omega},\qquad U=A^{1/5}.
+$$
+
+Work for sufficiently large $A$ with $S\ge H=3\cdot10^{12}$.
+Then $S<U<T$ eventually. The cut $S$ concerns coefficient error;
+$T$ remains the previously paid cut for the full original response.
+Both cuts tend to infinity, so fixed unverified zero heights remain
+in the exact lower head.
+
+For an actual zero $\rho=\beta+i\gamma$ with $\gamma>0$, set
+
+$$
+G_A(\rho)=\frac{w(A)A^{\rho-1}}{\gamma^2},\qquad
+B_3(A,S)=\sum_{\gamma>S}m_\rho
+ \frac{A^{\beta-1/2}+A^{1/2-\beta}}{\gamma^3},
+\qquad w(A)=\frac{1+L}{L^2}.
+$$
+
+Reflection of this same multiplicity-weighted zero multiset gives
+$B_3(A,S)=2\sum_{\gamma>S}m_\rho A^{\beta-1/2}/\gamma^3$.
+The first inequality of (H5) therefore pays the full approximation
+error by
+
+$$
+\sqrt A L\,2\sum_{\gamma>S}m_\rho
+ |F_A(\rho)-G_A(\rho)|
+ \le(1+1/L)\left(\frac73+\frac1{4S}\right)B_3(A,S).
+\tag{RC1}
+$$
+
+The actual weight $A^{\beta-1/2}$ and phase $e^{i\gamma L}$ remain
+in $G_A$. If a transport instead uses
+$P_A(\rho)=w(A)A^{\rho-1}/[\rho(1-\rho)]$, (H1) gives the
+supplementary bound
+
+$$
+\sqrt A L\,2\sum_{\gamma>S}m_\rho
+ |F_A(\rho)-P_A(\rho)|
+ \le\frac{2(L+2)}{L^2}B_3(A,S).
+\tag{RC2}
+$$
+
+This is an alternative coefficient comparison; it is not an additional
+error to add to (RC1).
+
+### The same layer estimate with a reciprocal cube
+
+Reuse the real-part layer identity with $\sigma_0=5/8$ and
+$Q_A(\sigma)=A^{\sigma-1/2}+A^{1/2-\sigma}$. Replacing the
+reciprocal square by a reciprocal cube changes the reflected
+partial-summation formula to
+
+$$
+F_3(\sigma;S)
+ =-\frac{2N(\sigma,S)}{S^3}
+   +6\int_S^\infty N(\sigma,t)t^{-4}\,dt.
+$$
+
+The endpoint term is nonpositive. Dropping it only for an upper bound,
+with the same inclusive head and exclusive suffix convention, gives
+
+$$
+B_3(A,S)\le Q_A(\sigma_0)S_3(S)
+ +6\int_{\sigma_0}^1 Q_A'(\sigma)
+           \int_S^\infty N(\sigma,t)t^{-4}\,dt\,d\sigma,
+\qquad
+S_3(S)=\sum_{\gamma>S}\frac{m_\rho}{\gamma^3}
+ \ll\frac{\log S}{S^2}.
+\tag{RC3}
+$$
+
+The already retained density bound on $5/8\le\sigma<1$ is
+$N(\sigma,t)\le C_0t^{d(\sigma)}(\log t)^3$ for $t\ge H$,
+where, with $\varepsilon=1-\sigma$,
+$d=3\varepsilon/(1+\varepsilon)\le3\varepsilon$ and $d\le9/11$.
+All constants below are independent of $A$ and $\sigma$.
+
+The base layer in (RC3) is
+$O(LA^{-5/24}e^{2\kappa\Omega})$. On $S<t\le U$, use the same
+actual-zero support $N(\sigma,t)=0$ when
+$\sigma\ge1-\eta(U)$. Here
+
+$$
+A^{-\varepsilon}U^d\le e^{-2\varepsilon L/5},\qquad
+\eta(U)\ge\frac{\Omega}{RL},\qquad
+\int_{\eta(U)}^{3/8}e^{-2\varepsilon L/5}\,d\varepsilon
+ \le\frac5{2L}e^{-2\eta(U)L/5},
+$$
+
+when $\eta(U)\le3/8$; otherwise this count band is empty.
+Using $\log t\le L$ and
+$\int_S^Ut^{-4}dt\le1/(3S^3)$, its allowance is
+$O(L^3e^{-41\Omega/(140R)})$.
+
+Above $U$, no fixed-$U$ zero-free support is imposed.
+Since $3-d\ge24/11$, the complete height integral is bounded uniformly
+by $C_1U^{d-3}(\log U)^3$. Integrating
+$e^{-2\varepsilon L/5}$ over $\varepsilon\ge0$ cancels the outer $L$;
+this entire infinite band costs $O(L^3A^{-1/10})$. Thus
+
+$$
+B_3(A,S)\ll
+ LA^{-5/24}e^{2\kappa\Omega}
+ +L^3e^{-41\Omega/(140R)}+L^3A^{-1/10}
+ \longrightarrow0.
+\tag{RC4}
+$$
+
+All three terms vanish because $\Omega/\log L\to\infty$.
+Equations (RC1) and (RC2) pay complete absolute coefficient errors above
+$S$, rather than just at the larger whole-response cut $T$.
+
+### Retain the exact lower head and the oscillatory middle
+
+Let $Z_{\rm orig}(A)=2\operatorname{Re}\sum_{\gamma>0}
+ m_\rho F_A(\rho)$ denote the original paired zero sum, and set
+
+$$
+Z_{\rm split}(A)=2\operatorname{Re}\left[
+ \sum_{0<\gamma\le S}m_\rho F_A(\rho)
+ +\sum_{S<\gamma\le T}m_\rho G_A(\rho)\right].
+$$
+
+Its contribution to $I_\psi$ is $-Z_{\rm orig}$; the approximation
+there uses $-Z_{\rm split}$ with the same sign. All elementary terms
+remain unchanged. Combining (RC1) with the already retained
+complete absolute suffix estimate gives
+
+$$
+\sqrt A L\,|Z_{\rm orig}(A)-Z_{\rm split}(A)|
+ \le(1+1/L)\left(\frac73+\frac1{4S}\right)B_3(A,S)
+ +\sqrt A L\,2\sum_{\gamma>T}m_\rho|F_A(\rho)|
+ \longrightarrow0.
+\tag{RC5}
+$$
+
+This restores every coefficient error and every infinite height.
+It reduces the range requiring exact-coefficient treatment while
+preserving the actual signed oscillatory middle. Its sign, the exact
+lower head, the original full sufficient Robin bound and RH remain
+unproved. This asymptotic reduction does not certify a finite numerical
+clock exclusion or a uniform safe margin.
