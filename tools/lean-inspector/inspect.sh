@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Inspector producer input.
 set -euo pipefail
 export LC_ALL=C
 
