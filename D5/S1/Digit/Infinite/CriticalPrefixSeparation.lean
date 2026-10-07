@@ -180,7 +180,7 @@ private theorem run_window (N j : ℕ) :
   · simp [hj, window, D5.S1.Digit.Infinite.WindowSuccessorGraph.P, bitShift, fiveRun,
       nullLabel, show ¬i.val + 3 * j < 3 * N by omega]
 
-private theorem run_finite (N : ℕ) : finiteTail (fiveRun N) := by
+theorem run_finite (N : ℕ) : finiteTail (fiveRun N) := by
   refine ⟨3 * N, ?_⟩
   intro j hj
   simp [fiveRun, show ¬j < 3 * N by omega]

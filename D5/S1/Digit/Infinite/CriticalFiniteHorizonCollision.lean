@@ -78,7 +78,7 @@ private theorem finite_approximation (s : Bool) (x : LegalDigits)
   have hf : finiteTail y := by
     apply D5.S1.Digit.Infinite.ClosedObservationCommonTailWidth.finite_unshift y (3 * m)
     rw [ht]
-    exact ⟨0, by simp [fiveRun]⟩
+    exact run_finite 0
   refine ⟨y, hy, hf, ?_, (prefix_bound m y x hp).trans_lt hm⟩
   funext j
   exact congrFun hp ⟨j.val, by have := j.isLt; dsimp [m]; omega⟩
@@ -109,14 +109,13 @@ private theorem cylinder_interval (s : Bool) (x : LegalDigits)
     have hf : finiteTail z := by
       apply D5.S1.Digit.Infinite.ClosedObservationCommonTailWidth.finite_unshift z (3 * n)
       rw [hz]
-      exact ⟨0, by simp [fiveRun]⟩
+      exact run_finite 0
     have ha := congrFun (affine_actual n x z hp) (0 : Fin (n + 1))
-    have hzero : kappa (fiveRun 0) = 0 := by
-      simp [kappa, window, D5.S1.Digit.Infinite.WindowSuccessorGraph.P,
-        bitShift, fiveRun, offset]
+    have hzero : kappa (fiveRun 0) = 0 :=
+      congrFun ((D5.S1.Digit.Infinite.CriticalPrefixSeparation.result 1 (by decide)).2.2.1.1) 0
     obtain ⟨v, hv⟩ := closed_observation_graph_realization.2.2.2.2.2.2.2.1 z hf
     refine ⟨v, ?_⟩
-    simp only [response, affineResponse, Fin.val_zero, Nat.mul_zero, Nat.sub_zero,
+    simp only [response, affineResponse, Fin.val_zero, Nat.sub_zero,
       Nat.zero_add, hz, hzero, mul_zero, add_zero] at ha
     exact hv.symm.trans ha
   have hPR : P ∈ embedding.range :=
@@ -363,7 +362,9 @@ theorem result (Q : ℝ → Fin 6) (hQ : instrument Q) (h : ℕ) :
       constructor <;> linarith [hgδR.1, hgδR.2.2]
     have hclip (z : ℝ) (hz : z ∈ Ioo (cellLower 1) (cellUpper 1)) :
         max (-1) (min (1 + t) z) = z := by
-      rw [min_eq_right (hz.2.le.trans hcell.2.2), max_eq_right (hcell.1.trans hz.1.le)]
+      exact congrArg Subtype.val (Set.projIcc_of_mem
+        (show (-1 : ℝ) ≤ 1 + t by linarith [golden_relations.1])
+        ⟨hcell.1.trans hz.1.le, hz.2.le.trans hcell.2.2⟩)
     refine ⟨?_, ?_, ?_⟩
     · simp only [eL, if_pos hj]
       exact abs_lt.mpr ⟨by linarith [hgδL.2.1], by linarith [hgδL.1]⟩
@@ -372,19 +373,24 @@ theorem result (Q : ℝ → Fin 6) (hQ : instrument Q) (h : ℕ) :
     · rw [hzL, hzR, hclip _ hinsideL, hclip _ hinsideR,
         D5.S1.Digit.Infinite.SevenCycleActualRecords.interior_owned Q hQ 1 _ hinsideL,
         D5.S1.Digit.Infinite.SevenCycleActualRecords.interior_owned Q hQ 1 _ hinsideR]
-  · have hc := abs_lt.mp (hfuture j hj)
-    have hm := root_interval (bitShift lo (3 * j.val))
+  · have hm := root_interval (bitShift lo (3 * j.val))
     have hp := root_interval (bitShift hi (3 * j.val))
     change -1 ≤ response h lo j ∧ response h lo j ≤ 1 + t at hm
     change -1 ≤ response h hi j ∧ response h hi j ≤ 1 + t at hp
     have hmid : max (-1) (min (1 + t) ((response h lo j + response h hi j) / 2)) =
         (response h lo j + response h hi j) / 2 := by
-      rw [min_eq_right (by linarith [hm.2, hp.2]), max_eq_right (by linarith [hm.1, hp.1])]
+      exact congrArg Subtype.val (Set.projIcc_of_mem
+        (show (-1 : ℝ) ≤ 1 + t by linarith [golden_relations.1])
+        ⟨by linarith [hm.1, hp.1], by linarith [hm.2, hp.2]⟩)
     refine ⟨?_, ?_, ?_⟩
     · simp only [eL, if_neg hj]
-      exact abs_lt.mpr ⟨by linarith [hc.2], by linarith [hc.1]⟩
+      rw [abs_div, abs_of_pos (show (0 : ℝ) < 2 by norm_num), abs_sub_comm]
+      exact (div_lt_iff₀ (show (0 : ℝ) < 2 by norm_num)).mpr
+        (by simpa only [mul_comm] using hfuture j hj)
     · simp only [eR, if_neg hj]
-      exact abs_lt.mpr ⟨by linarith [hc.1], by linarith [hc.2]⟩
+      rw [abs_div, abs_of_pos (show (0 : ℝ) < 2 by norm_num)]
+      exact (div_lt_iff₀ (show (0 : ℝ) < 2 by norm_num)).mpr
+        (by simpa only [mul_comm] using hfuture j hj)
     · have heL : response h lo j + eL j = (response h lo j + response h hi j) / 2 := by
         simp only [eL, if_neg hj]
         ring
@@ -393,29 +399,5 @@ theorem result (Q : ℝ → Fin 6) (hQ : instrument Q) (h : ℕ) :
         ring
       rw [heL, heR, hmid]
 
-
-#print axioms finite_cylinder_sides
-#print axioms result
-
-example : LegalDigits := fiveRun 0
-
-example : ∃ Q : ℝ → Fin 6, instrument Q := by
-  obtain ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, hinst, _⟩ :=
-    D5.S1.Digit.Infinite.ClosedObservationCommonTailWidth.complete_closed_graph_common_tail_width
-  obtain ⟨Q, hQ, _, _⟩ := hinst
-  exact ⟨Q, hQ⟩
-
-run_cmd do
-  for n in [
-    `D5.S1.Digit.Infinite.CriticalFiniteHorizonCollision.finite_cylinder_sides,
-    `D5.S1.Digit.Infinite.CriticalFiniteHorizonCollision.result,
-    `D5.S1.Digit.Infinite.CriticalPrefixSeparation.realize_tail,
-    `D5.S1.Digit.Infinite.CriticalPrefixSeparation.affine_actual,
-    `D5.S1.Digit.Infinite.SevenCycleActualRecords.interior_owned] do
-    let info ← Lean.getConstInfo n
-    if let some value := info.value? (allowOpaque := true) then
-      let deps := value.getUsedConstants.filter fun d => d.toString.startsWith "D5." ||
-        d.toString.startsWith "_private.D5.S1.Digit.Infinite.CriticalFiniteHorizonCollision"
-      Lean.logInfo m!"CONSUMPTION {n}: {deps}"
 
 end D5.S1.Digit.Infinite.CriticalFiniteHorizonCollision
