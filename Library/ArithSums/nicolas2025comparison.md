@@ -1483,3 +1483,154 @@ the same selected integer, drop any zero multiplicity or infinite
 height block, or settle RH. The centered arithmetic-main estimates
 (P5)–(P8) remain valid independently; they do not alter the actual
 zero remainder used in (R5).
+
+
+## Fixed Gaussian probes leave a coefficient remainder at unbounded height
+
+Moriya, *A Gaussian-Perron Prime-Side Defect and Local Profiles Near
+Critical-Line Zeros of the Riemann Zeta Function*,
+[arXiv:2607.04316v2](https://arxiv.org/abs/2607.04316v2), Theorem 3.3,
+printed p.7, gives an exact smoothed prime-defect formula with crossed
+zero, pole, trivial-zero and shifted-contour terms. Its zero coefficient,
+at a fixed observation point $z$, is
+
+$$
+G_{X,\alpha,z}(s)
+=\frac{X^{s-z}\exp\!\bigl(\alpha^2\log X\,(s-z)^2\bigr)}{s-z},
+\qquad X>1,\quad\alpha>0.
+$$
+
+Only zeros in the source's crossed strip contribute to that zero term.
+The conditional localization in Theorem 7.4 requires its stated damping,
+pole and contour hypotheses and concerns a fixed simple critical-line
+zero; Theorem 7.6 additionally assumes RH. Those local conclusions are
+not used below. The following paper-level application compares the
+coefficient in Theorem 3.3 with the unchanged original $F_A$ in (M1),
+without repeating the source's explicit-formula proof or asserting
+originality or Lean verification.
+
+### The original coefficient has a uniform algebraic lower bound
+
+Fix $A\ge e^2$, put $L=\log A$, and define
+
+$$
+w(u)=\frac{1+\log u}{\log^2u},\qquad
+h(u)=uw'(u)=-\frac{\log u+2}{\log^3u}.
+$$
+
+For $s=\sigma+it$ with $0<\sigma<1$, two integrations by parts in
+(M1) give
+
+$$
+F_A(s)=\frac{w(A)A^{s-1}}{s(1-s)}
+ +\frac{h(A)A^{s-1}+\int_A^\infty u^{s-1}h'(u)\,du}
+        {s(1-s)^2}.
+\tag{H1}
+$$
+
+The boundary terms at infinity vanish in this strip. Moreover
+$h'(u)=2(\log u+3)/(u\log^4u)>0$ and $h(u)\to0$, so the numerator
+of the remainder has modulus at most $2|h(A)|A^{\sigma-1}$.
+Relative to the leading term its bound is
+
+$$
+\frac{2|h(A)|}{w(A)|1-s|}
+=\frac{2(L+2)}{L(L+1)|1-s|}
+\le\frac4{3|t|}.
+$$
+
+Thus, uniformly throughout the actual critical strip,
+
+$$
+\boxed{
+|F_A(\sigma+it)|
+\ge\frac{2w(A)A^{\sigma-1}}{3|s||1-s|}
+\ge\frac{2w(A)}{3A(1+t^2)}
+\qquad(A\ge e^2,\ |t|\ge4).}
+\tag{H2}
+$$
+
+No real part has been replaced by $1/2$. This is a lower bound on an
+individual complex coefficient's modulus, not on the signed zero sum
+or on the Robin margin.
+
+### Compare any finite family of fixed probes
+
+For this same $A$, choose any finite nonempty family
+$(X_j,\alpha_j,z_j,b_j)$, with $X_j>1$, $\alpha_j>0$ and arbitrary
+complex coefficients $b_j$. The family may depend on $A$, but its
+parameters are fixed as the zero height varies. Put
+
+$$
+a_j=\alpha_j^2\log X_j,\qquad
+a_0=\min_j a_j>0,\qquad H=\max_j|\operatorname{Im}z_j|,
+$$
+
+$$
+C_j=\max_{0\le\sigma\le1}
+ X_j^{\sigma-\operatorname{Re}z_j}
+ e^{a_j(\sigma-\operatorname{Re}z_j)^2},\qquad
+C=\sum_j|b_j|C_j.
+$$
+
+Let $\eta_j(s)$ be the source's crossed-strip indicator; the same
+argument permits any $|\eta_j(s)|\le1$. Define the zero coefficient
+of the proposed finite reconstruction by
+
+$$
+Q(s)=\sum_j b_j\eta_j(s)G_{X_j,\alpha_j,z_j}(s).
+$$
+
+For $0<\sigma<1$ and $|t|\ge\max(4,2H)$, each denominator has
+modulus at least $|t|/2$, and each Gaussian factor has its height part
+at most $e^{-a_0t^2/4}$. Consequently
+
+$$
+\boxed{|Q(\sigma+it)|\le\frac{2C}{|t|}e^{-a_0t^2/4}.}
+\tag{H3}
+$$
+
+The discrepancy even has an explicit height threshold. Since
+$e^x\ge x^2/2$ for $x>0$, (H3) is at most
+$64C/(a_0^2|t|^5)$. Set
+
+$$
+\Gamma=\max\!\left(4,2H,
+ \left[\frac{384AC}{a_0^2w(A)}\right]^{1/3}\right).
+$$
+
+For $|t|\ge\Gamma$, this upper bound is at most
+$w(A)/(3A(1+t^2))$. The triangle inequality and (H2) therefore give
+
+$$
+\boxed{
+|F_A(\sigma+it)-Q(\sigma+it)|
+\ge\frac{w(A)}{3A(1+t^2)}
+\qquad(0<\sigma<1,\ |t|\ge\Gamma).}
+\tag{H4}
+$$
+
+The classical zero-counting theorem supplies actual nontrivial zeros
+at unbounded positive ordinates. Applying (H4) to those zeros shows
+that this finite family cannot match $F_A(\rho)$ at every actual zero,
+even with complex coefficients. Multiplicities remain unchanged:
+multiplying a coefficient by its positive multiplicity cannot remove
+the mismatch. Matching only on the actual zero set already fails in
+this class; an all-strip identity is not required for the conclusion.
+
+This restriction concerns exact coefficient reconstruction by finitely
+many probes with positive fixed Gaussian parameters. It does not
+exclude an identity for the aggregate signed sum, an inequality using
+these probes, or an approximation with an independently paid remainder.
+No conclusion is asserted here for infinite or height-dependent
+reconstructions; unbounded center heights or $\inf_j a_j=0$ are not
+covered by (H3). Pole, trivial-zero and shifted-contour terms from the
+source still need their own treatment; they have not been discarded or
+declared to satisfy the original Robin budget.
+
+The calculation identifies a remainder that any such finite exact
+replacement would otherwise omit. Controlling its signed sum, or
+constructing a different reconstruction with a uniform remainder at
+the same selected integer, remains necessary. Condition (G9), its full
+infinite tail and the strict core remain unchanged and unproved; RH
+remains unproved.
