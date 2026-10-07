@@ -1,11 +1,13 @@
 """Exact actual Report529 side-comb application to the first eight odd primes.
 
-No phase search, LP, integer-period enumeration or large orbit grid is used.
+No phase search, LP or large orbit grid is used. The low-null H=1,2 controls
+enumerate their small integer periods; the main side-comb count is weighted.
 The original family has all nonunit labels 3^i prod(q^e_q), i<=H, e_q<=3.
 For C(p,e,a)=((a+1)p^(e-1)-1) mod p^e, its single original CRT phase is:
 pure3: C(3,i,0); pureq: C(q,e,0); mixed singleton with i>0:
 C(3,i,1),C(q,e,1); support k>=2: ternary C(3,i,1) when i>0,
 and C(q,e,min(2k-2+epsilon,q-2)) at every q, epsilon=1[i>0].
+The high-phase extension checks conditional budgets, not arbitrary families.
 """
 from fractions import Fraction as F
 from functools import lru_cache
@@ -60,6 +62,79 @@ def count_sides(primes, epsilons, first_side):
     count = walk(0, tuple(range(len(events))))
     return dict(count=count, states=visits, cache_hits=walk.cache_info().hits,
                 mixed_side_events=len(events))
+
+
+def high_phase_extension(beta, h):
+    """Conditional budget; low nonpure projections must vanish under one Q law."""
+    require(beta >= 1 and h >= 1, 'complete query norm and positive cut height')
+    loss = (beta-1) / 3**h
+    reserve = 1-loss
+    require(reserve > 0, 'positive reserve required before conditioning')
+    bound = 1+(2*beta-1)/reserve
+    threshold = F(28*3**h+27, 2*3**h+27)
+    require((bound < 28) == (beta < threshold), 'equivalent source threshold')
+    return dict(low_null_through_height=h, arbitrary_mixed_from_height=h+1,
+                beta_upper=str(beta), deletion_upper=str(loss),
+                reserve_lower=str(reserve), complete_query_upper=str(bound),
+                beta_threshold_for_28=str(threshold), below_28=bound < 28,
+                margin_to_28=str(28-bound))
+
+
+def low_null_control(H):
+    """Actual fixed CRT inventory refuting universal economical low-null selection."""
+    require(H in (1,2), 'finite control height')
+
+    def side(p, e, a):
+        return (a+1)*p**(e-1)-1
+
+    def crt(parts):
+        residue, modulus = 0, 1
+        for a, m in parts:
+            residue += modulus*((a-residue)*pow(modulus, -1, m) % m)
+            modulus *= m
+        return residue, modulus
+
+    originals = []
+    projections = []
+    private = []
+    p5, p7 = 5**H, 7**H
+    for e, f in product(range(H+1), repeat=2):
+        if e == f == 0:
+            continue
+        for j in range(3):
+            parts = []
+            x5, x7 = p5-1, p7-1
+            if e:
+                x5 = side(5, e, 3 if f else j)
+                parts.append((x5, 5**e))
+            if f:
+                x7 = side(7, f, 3+j if e else j)
+                parts.append((x7, 7**f))
+            projections.append(crt(parts))
+            originals.append(crt(parts + ([(1, 3**j)] if j else [])))
+            private.append(crt([(1 if j else 0, 9), (x5,p5), (x7,p7)])[0])
+    require(len(originals) == 3*(H*H+2*H), 'complete low-layer original count')
+    require(len({m for _,m in originals}) == len(originals), 'distinct numerical originals')
+    require(all(m > 1 and m % 2 for _,m in originals), 'odd nonunit originals')
+    require(all(x % m == a and sum(x % n == b for b,n in originals) == 1
+                for (a,m),x in zip(originals,private)), 'one private point per original')
+    survivors = {x for x in range(p5*p7)
+                 if all(x % n != a for a,n in projections)}
+    def allowed(x, p, sides):
+        return x % (p**H) == p**H-1 or any(
+            x % (p**e) == side(p,e,a) for e in range(1,H+1) for a in sides)
+    predicted = {x for x in range(p5*p7)
+                 if allowed(x,5,(3,)) and allowed(x,7,(3,4,5))
+                 and (x % p5 == p5-1 or x % p7 == p7-1)}
+    require(survivors == predicted, 'exact common low-projection survivor')
+    period = 9*p5*p7
+    cheap = [x for x in range(period) if x % 3 == 0 and x % 5 == x % 7 == 1]
+    require(len(cheap) == period//105, 'entire cheap product-source support')
+    require(all(all(x % n != a for a,n in originals) for x in cheap),
+            'cheap source avoids every actual original')
+    return dict(H=H,original_count=len(originals),private_witnesses=len(private),
+                projected_period=p5*p7,projected_survivors=len(survivors),
+                actual_period=period,cheap_source_residues=len(cheap))
 
 
 def run(primes=Q):
@@ -117,12 +192,32 @@ def run(primes=Q):
                           below_weaker_threshold=delta<F(21876797,136331397),
                           haar_U=str(F(U,period)),haar_U0=str(F(U0,period))))
     repaired_bound = 2*prod((1+F(1,q-1-2*r) for r,q in enumerate(primes,1)), start=F(1))
+    high_phase_cases = [high_phase_extension(repaired_bound/2, h) for h in (2,4)]
+    low_null_cases = [low_null_control(H) for H in (1,2)]
+    cheap_bound = F(5,2)*F(9,4)*F(13,6)*prod(
+        (F(p,p-1) for p in (11,13,17,19,23)), start=F(1))
+    require(cheap_bound == F(1255501,73728) < 28, 'all-height cheap-source query norm')
+    require(F(7) > F(31,5), 'height-six forced norm excludes low-null source threshold')
     if tuple(primes) == Q:
         require(z['count'] == 16540311957403355160121, 'complete Z fibre')
         require(w['count'] == 2569696844461203895339, 'complete W fibre')
         require(cases[1]['refutes_one_sixth'], 'height-five reserve refutation')
         require(cases[2]['below_weaker_threshold'], 'height-six threshold refutation')
         require(repaired_bound == F(11025,1024) < 28, 'same-family repaired query bound')
+        require(high_phase_cases[0]['reserve_lower'] == '9455/18432',
+                'height-two positive reserve')
+        require(high_phase_cases[0]['complete_query_upper'] == '189473/9455',
+                'arbitrary high phases after depth two')
+        require(high_phase_cases[0]['beta_threshold_for_28'] == '31/5',
+                'height-two complete source threshold')
+        require(high_phase_cases[1]['reserve_lower'] == '156911/165888',
+                'height-four positive reserve')
+        require(high_phase_cases[1]['complete_query_upper'] == '1777073/156911',
+                'arbitrary high phases after depth four')
+        require(F(high_phase_cases[1]['complete_query_upper']) < 12,
+                'height-four stronger query bound')
+        require((repaired_bound/2-1)/3 >= 1,
+                'height-one debit does not certify a positive reserve')
     return dict(primes=[3,*primes],nonternary_height=3,
                 phase_source='Report529 explicit side-comb formula on the first eight odd primes',
                 pure_Q_count=str(pure_count),Q_period=str(cofactor_period),
@@ -130,9 +225,19 @@ def run(primes=Q):
                 Z_fibre=z,W_fibre=w,h_z=str(hz),h_w=str(hw),
                 limiting_delta=str(hw/hz),cases=cases,
                 repaired_query_upper=str(repaired_bound),
-                scope='Actual finite-family counterexample only to the relative-reserve candidate. '
-                      'No phase optimization and no obstruction to existence of a different '
-                      'supported source with complete B<28. No Lean certification claimed here.')
+                arbitrary_high_phase_extension=high_phase_cases,
+                low_projection_obstruction=dict(
+                    controls=low_null_cases,forced_norm_formula='H+1',
+                    height_six_original_count=3*(6**2+2*6),
+                    height_27_original_count=3*(27**2+2*27),
+                    cheap_complete_query_norm=str(cheap_bound),
+                    cheap_margin_to_28=str(28-cheap_bound)),
+                scope='Exact finite controls for the relative-reserve and low-projection strategies; '
+                      'neither obstructs existence of a different supported source with complete B<28. '
+                      'High-phase budgets require one Q law '
+                      'annihilating every low nonpure projection, including ternary-free originals. '
+                      'Arbitrary-height constructions are justified in Report529, not by enumeration. '
+                      'No Lean certification claimed by this arithmetic consumer.')
 
 
 if __name__ == '__main__':
