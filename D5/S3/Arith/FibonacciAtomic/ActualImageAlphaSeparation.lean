@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.FibonacciAtomic.ActualImageSevenLeafSeparation
 import D5.S3.Arith.FibonacciAtomic.ActualImageAddressCertificate
+import D5.S3.Arith.FibonacciAtomic.ActualHistorySingleHoleRecovery
 import D5.S3.Arith.FibonacciAtomic.SourceTransportCentralizer
 
 set_option autoImplicit false
@@ -409,18 +410,23 @@ theorem result :
     have nc_self (Z : Source) : Nonconflict Z Z :=
       (ActualImageSevenLeafSeparation.seven_leaf_separation.2.1 Z Z).2.2.mpr
         (fun _ _ _ ha hb => Option.some.inj (ha.symm.trans hb))
-    induction H with
-    | hole => exact ⟨rfl, rfl, Nat.add_comm _ _, Iff.rfl, id⟩
-    | left H R ih =>
-      simp only [OutputContext.plug, delta_pair, delta_self, nu_pair, nu_self,
-        add_zero, n_pair, nc_pair, nc_self, and_true]
-      exact ⟨ih.1, ih.2.1, by omega, ih.2.2.2.1,
-        fun he => by simp only [composition, ih.2.2.2.2 he]⟩
-    | right L H ih =>
-      simp only [OutputContext.plug, delta_pair, delta_self, nu_pair, nu_self,
-        zero_add, n_pair, nc_pair, nc_self, true_and]
-      exact ⟨ih.1, ih.2.1, by omega, ih.2.2.2.1,
-        fun he => by simp only [composition, ih.2.2.2.2 he]⟩
+    have rest : delta (H.plug X) (H.plug Y) = delta X Y ∧
+        unsharedLeaves (H.plug X) (H.plug Y) = unsharedLeaves X Y ∧
+        (Nonconflict (H.plug X) (H.plug Y) ↔ Nonconflict X Y) ∧
+        (composition X = composition Y → composition (H.plug X) = composition (H.plug Y)) := by
+      induction H with
+      | hole => exact ⟨rfl, rfl, Iff.rfl, id⟩
+      | left H R ih =>
+        simp only [OutputContext.plug, delta_pair, delta_self, nu_pair, nu_self,
+          add_zero, nc_pair, nc_self, and_true]
+        exact ⟨ih.1, ih.2.1, ih.2.2.1, fun he => by simp only [composition, ih.2.2.2 he]⟩
+      | right L H ih =>
+        simp only [OutputContext.plug, delta_pair, delta_self, nu_pair, nu_self,
+          zero_add, nc_pair, nc_self, true_and]
+        exact ⟨ih.1, ih.2.1, ih.2.2.1, fun he => by simp only [composition, ih.2.2.2 he]⟩
+    have size := ActualHistorySingleHoleRecovery.context_length H X
+    have size' := ActualHistorySingleHoleRecovery.context_length H Y
+    exact ⟨rest.1, rest.2.1, by omega, rest.2.2⟩
   have two_data (J : TwoHole) (X Y U V : Source) :
       delta (J.fill X Y) (J.fill U V) = delta X U + delta Y V ∧
       unsharedLeaves (J.fill X Y) (J.fill U V) = unsharedLeaves X U + unsharedLeaves Y V ∧
