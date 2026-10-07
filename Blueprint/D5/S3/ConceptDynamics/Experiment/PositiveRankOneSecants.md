@@ -24,6 +24,10 @@ For a nonzero diagonal choose L = 1 + abs(b) + abs(c), T = (a squared + bc + (b+
 
 For a = 0 and b > 0 > c, put d = sqrt(-2bc). The endpoints have rows (d,b),(-2c,d) and (d,2b),(-c,d). Their entries are positive, both offdiagonal products equal d squared, and their difference is the required matrix. For b < 0 < c apply this construction to the negative difference and exchange the endpoints.
 
+The matrix with rows (1,1),(-1,-1) is nonzero and its square is zero. It is the difference of the positive rank-one matrices with rows (4,4),(2,2) and (3,3),(3,3); both endpoints have trace 6. Thus a singular difference can satisfy the criterion.
+
+The matrix with rows (0,1),(0,0) has a = 0 and bc = 0, so it cannot be such a secant. Both displayed difference matrices have rank one. Their common rank therefore does not decide whether positive endpoints exist.
+
 ## References
 
 - Truth anchor: `D5/S3/ConceptDynamics/Experiment/PositiveRankOneSecants.result`
