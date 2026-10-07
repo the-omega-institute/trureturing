@@ -105,6 +105,31 @@ def divergence (m : Kind → ℤ) (z : State) : ℤ :=
   ∑ e : Kind, m e * ((if e.1 = z then 1 else 0) - (if step e.1 e.2 = z then 1 else 0))
 
 
+def K : (ℝ × ℝ) →ₗ[ℝ] (Matrix (Fin 2) (Fin 2) ℝ) := {
+  toFun x := !![0,x.1+x.2*Real.goldenRatio;x.1+x.2*Real.goldenConj,0]
+  map_add' x y := by ext i j; fin_cases i <;> fin_cases j <;> simp <;> ring
+  map_smul' c x := by ext i j; fin_cases i <;> fin_cases j <;> simp <;> ring
+}
+theorem k_square (x : ℝ × ℝ) : K x*K x=algebraMap ℝ (Matrix (Fin 2) (Fin 2) ℝ) (Q x) := by
+  have hp : (x.1+x.2*Real.goldenRatio)*(x.1+x.2*Real.goldenConj)=Q x := by
+    change _ = x.1*x.1+x.1*x.2-x.2*x.2
+    calc
+      (x.1+x.2*Real.goldenRatio)*(x.1+x.2*Real.goldenConj) =
+        x.1*x.1+x.1*x.2*(Real.goldenRatio+Real.goldenConj)+x.2*x.2*(Real.goldenRatio*Real.goldenConj) := by ring
+      _ = x.1*x.1+x.1*x.2-x.2*x.2 := by
+        rw [Real.goldenRatio_add_goldenConj,Real.goldenRatio_mul_goldenConj]; ring
+  ext i j; fin_cases i <;> fin_cases j <;>
+    simp [K,Matrix.mul_apply,Fin.sum_univ_two,Matrix.algebraMap_eq_diagonal,hp,mul_comm]
+def sep : C →ₐ[ℝ] (Matrix (Fin 2) (Fin 2) ℝ) := CliffordAlgebra.lift Q ⟨K,k_square⟩
+theorem sep_a : sep A=!![0,1;1,0] := by
+  unfold sep A
+  rw [CliffordAlgebra.lift_ι_apply]
+  simp [K]
+theorem sep_b : sep B=!![0,Real.goldenRatio;Real.goldenConj,0] := by
+  unfold sep B
+  rw [CliffordAlgebra.lift_ι_apply]
+  simp [K]
+
 set_option maxHeartbeats 2400000 in
 theorem result (u v w : ℤ) (p q : Bool) (ac bc : ℕ) (hpositive : 1 ≤ ac+bc) :
     (∃ t : Source, W3 t=Omega u v w p q ∧ composition t=(ac,bc)) ↔
@@ -255,30 +280,6 @@ theorem result (u v w : ℤ) (p q : Bool) (ac bc : ℕ) (hpositive : 1 ≤ ac+bc
     all_goals try simp [Q_apply,a_sq,b_sq,au_val,bu_val,su_val,au_sq,bu_sq,au_inv,bu_inv,du_val,value_one,l_zero,mul_assoc]
     all_goals try rw [a_s_inv]
     all_goals try simp [Q_apply,a_sq,b_sq,au_val,bu_val,su_val,au_sq,bu_sq,au_inv,bu_inv,du_val,value_one,l_zero,mul_assoc]
-  let K : (ℝ × ℝ) →ₗ[ℝ] (Matrix (Fin 2) (Fin 2) ℝ) := {
-    toFun x := !![0,x.1+x.2*Real.goldenRatio;x.1+x.2*Real.goldenConj,0]
-    map_add' x y := by ext i j; fin_cases i <;> fin_cases j <;> simp [Q_apply,a_sq,b_sq,au_val,bu_val,su_val,au_sq,bu_sq,au_inv,bu_inv,du_val,value_one,l_zero] <;> ring
-    map_smul' c x := by ext i j; fin_cases i <;> fin_cases j <;> simp [Q_apply,a_sq,b_sq,au_val,bu_val,su_val,au_sq,bu_sq,au_inv,bu_inv,du_val,value_one,l_zero] <;> ring
-  }
-  have k_square (x : ℝ × ℝ) : K x*K x=algebraMap ℝ (Matrix (Fin 2) (Fin 2) ℝ) (Q x) := by
-    have hp : (x.1+x.2*Real.goldenRatio)*(x.1+x.2*Real.goldenConj)=Q x := by
-      rw [Q_apply]
-      calc
-        (x.1+x.2*Real.goldenRatio)*(x.1+x.2*Real.goldenConj) =
-          x.1*x.1+x.1*x.2*(Real.goldenRatio+Real.goldenConj)+x.2*x.2*(Real.goldenRatio*Real.goldenConj) := by ring
-        _ = x.1*x.1+x.1*x.2-x.2*x.2 := by
-          rw [Real.goldenRatio_add_goldenConj,Real.goldenRatio_mul_goldenConj]; ring
-    ext i j; fin_cases i <;> fin_cases j <;>
-      simp [Q_apply,a_sq,b_sq,au_val,bu_val,su_val,au_sq,bu_sq,au_inv,bu_inv,du_val,value_one,l_zero,K,Matrix.mul_apply,Fin.sum_univ_two,Matrix.algebraMap_eq_diagonal,hp,mul_comm]
-  let sep : C →ₐ[ℝ] (Matrix (Fin 2) (Fin 2) ℝ) := CliffordAlgebra.lift Q ⟨K,k_square⟩
-  have sep_a : sep A=!![0,1;1,0] := by
-    unfold sep A
-    rw [CliffordAlgebra.lift_ι_apply]
-    simp [Q_apply,a_sq,b_sq,au_val,bu_val,su_val,au_sq,bu_sq,au_inv,bu_inv,du_val,value_one,l_zero,K]
-  have sep_b : sep B=!![0,Real.goldenRatio;Real.goldenConj,0] := by
-    unfold sep B
-    rw [CliffordAlgebra.lift_ι_apply]
-    simp [Q_apply,a_sq,b_sq,au_val,bu_val,su_val,au_sq,bu_sq,au_inv,bu_inv,du_val,value_one,l_zero,sep_a,K]
   have sep_s : sep (SU:C)=Matrix.diagonal ![Real.goldenRatio,Real.goldenConj] := by
     rw [su_val,map_mul,sep_b,sep_a]
     ext i j; fin_cases i <;> fin_cases j <;> simp [Q_apply,a_sq,b_sq,au_val,bu_val,su_val,au_sq,bu_sq,au_inv,bu_inv,du_val,value_one,l_zero,sep_a,sep_b,Matrix.mul_apply,Fin.sum_univ_two,Matrix.diagonal]
