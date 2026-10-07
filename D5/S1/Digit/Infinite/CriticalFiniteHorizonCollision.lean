@@ -25,8 +25,7 @@ open D5.S0.Carrier (GoldenInt)
 open Set Filter
 open scoped Topology
 
-/-- The interior guard-one coordinate used for the first critical gap. -/
-noncomputable def yStar : ℝ := (t - 4) / 5
+local notation "yStar" => D5.S1.Digit.Infinite.SevenCycleCollisionData.referenceTail
 
 private theorem root_interval (x : LegalDigits) : kappa x ∈ stateInterval false := by
   rw [← closed_observation_graph_realization.2.1 false]
@@ -190,7 +189,7 @@ theorem finite_cylinder_sides :
         yStar - ε < kappa lo ∧ kappa lo < yStar ∧
         yStar < kappa hi ∧ kappa hi < yStar + ε) := by
   have hI : yStar ∈ Ioo (-1) t := by
-    dsimp [yStar]
+    dsimp [D5.S1.Digit.Infinite.SevenCycleCollisionData.referenceTail]
     constructor <;> linarith [golden_relations.1]
   obtain ⟨_, _, _, _, _, _, _, _, _, _, _, _, _, _, _, hscalar, _, _⟩ :=
     D5.S1.Digit.Infinite.ClosedObservationCommonTailWidth.complete_closed_graph_common_tail_width
@@ -200,7 +199,8 @@ theorem finite_cylinder_sides :
     apply hnot
     refine ⟨z, ?_⟩
     rw [htau]
-    simpa only [yStar, sub_eq_add_neg, add_comm] using hz.symm
+    simpa only [D5.S1.Digit.Infinite.SevenCycleCollisionData.referenceTail,
+      sub_eq_add_neg, add_comm] using hz.symm
   refine ⟨cylinder_interval, hI, hn, ?_⟩
   intro x hx hxv n ε hε
   obtain ⟨a, b, hab, ha, hb, himage⟩ := cylinder_interval true x hx n
@@ -239,6 +239,7 @@ theorem finite_cylinder_sides :
     ?_, ?_, ?_, ?_⟩ <;> linarith
 
 set_option maxHeartbeats 1200000 in
+-- The joint construction combines cylinder witnesses with every horizon coordinate.
 /-- At every fixed finite horizon, different finite sources admit the same
 critical color record using errors strictly below the critical radius. -/
 theorem result (Q : ℝ → Fin 6) (hQ : instrument Q) (h : ℕ) :
@@ -255,7 +256,8 @@ theorem result (Q : ℝ → Fin 6) (hQ : instrument Q) (h : ℕ) :
   have hgap : 0 < cuts 1 - cuts 0 := by
     simpa [cellLower, cellUpper] using sub_pos.mpr hcell.2.1
   have hD : 0 < 2 + t := by linarith [golden_relations.1]
-  obtain ⟨k, hk⟩ := exists_pow_lt_of_lt_one (div_pos (mul_pos (show (0 : ℝ) < 2 by norm_num) hLambda) hD)
+  obtain ⟨k, hk⟩ := exists_pow_lt_of_lt_one
+    (div_pos (mul_pos (show (0 : ℝ) < 2 by norm_num) hLambda) hD)
     contraction.2.1
   have hclose : (2 + t) * g ^ k < 2 * lambda := by
     have hh := (lt_div_iff₀ hD).mp hk
@@ -311,7 +313,7 @@ theorem result (Q : ℝ → Fin 6) (hQ : instrument Q) (h : ℕ) :
     obtain ⟨_, _, ht2, hgold, _⟩ := golden_relations
     dsimp [branch, offset, threeLabel, nullLabel] at hL hR
     norm_num at hL hR
-    norm_num [δL, δR, yStar, cuts, lambda]
+    norm_num [δL, δR, D5.S1.Digit.Infinite.SevenCycleCollisionData.referenceTail, cuts, lambda]
     rw [hgold] at hL hR ⊢
     constructor <;> nlinarith only [ht2, hL, hR]
   have hfuture (j : Fin (h + 1)) (hj : j.val ≠ 0) :

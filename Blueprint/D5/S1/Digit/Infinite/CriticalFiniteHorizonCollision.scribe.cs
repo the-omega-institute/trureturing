@@ -54,7 +54,7 @@ internal sealed class CriticalFiniteHorizonCollisionDocument : IScribeDocumentDe
                     Paragraph(Text(
                         "Choose two finite guard-one tails on opposite sides of yStar in a sufficiently "
                         + "long common cylinder. Prepending the three and null labels puts their current "
-                        + "coordinates just inside the two extreme sides of the first critical gap. "
+                        + "coordinates just outside the two sides of the first critical gap. "
                         + "Strictly smaller errors move both targets into the interior of the same cell, "
                         + "so their current colors agree independently of endpoint assignments.")),
                     Paragraph(Text(

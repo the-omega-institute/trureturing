@@ -14,8 +14,9 @@ set_option autoImplicit false
 namespace D5.S1.Digit.Infinite.SevenCycleCollisionResult
 
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
+open D5.S1.Digit.Infinite.SevenCycleCollisionData (referenceTail)
 open private source phaseGuard firstLabel rivalLabel phaseColor lowerEntry upperEntry
-  referenceTail referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase
+  referenceEnd reduction budget firstEntry rivalEntry feedingEntry phase
   from D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
 open D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
 open private denominator orbitVertex

@@ -56,7 +56,7 @@ private noncomputable def lowerEntry : ℝ := 3 * (g - 1) / 5
 /-- The upper critical first-entry coordinate. -/
 private noncomputable def upperEntry : ℝ := (11 * g - 1) / 10
 /-- The center used by the common six-window suffix. -/
-private noncomputable def referenceTail : ℝ := (-4 + t) / 5
+noncomputable def referenceTail : ℝ := (-4 + t) / 5
 /-- The suffix's terminal reference coordinate. -/
 private noncomputable def referenceEnd : ℝ := t / 5
 /-- The strict budget reduction. -/
