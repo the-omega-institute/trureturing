@@ -80,9 +80,9 @@ The canonical sources are:
 
 They reuse the frozen `vec`, `weight`, `proj`, `frame`, `mic` and `gram` of
 `D5/S3/Quantum/Measurement/OrthocrossGramHalfInteger`. That module exposes its basis covariance and
-trace reduction (`proj_eq`, `frame_eq`, `posDef_one`, `gram_eq`, `frame_one`) at their origin. The power-difference estimate `norm_pow_sub_pow_le`, previously a private theorem of
-`D5/S3/AnalyticClosure/Polylogarithm/CompositionBanksLeadingClosure`, now lives in the shared module
-`D5/S3/AnalyticClosure/ComplexPowerDifference`, used by both modules, with its statement and proof unchanged.
+trace reduction (`proj_eq`, `frame_eq`, `posDef_one`, `gram_eq`, `frame_one`) at their origin. The power-difference estimate `norm_pow_sub_pow_le` is owned by
+`D5/S3/AnalyticClosure/ComplexPowerDifference`; `OrthocrossInverseFrame` and
+`D5/S3/AnalyticClosure/Polylogarithm/CompositionBanksLeadingClosure` both apply it.
 
 The axiom closure of `result` is exactly `propext`, `Classical.choice` and `Quot.sound`. There is no
 `sorry`, no `native_decide` and no new axiom.
