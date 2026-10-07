@@ -100,7 +100,7 @@ $$
 \qquad \Delta_z F=(1-z)F.
 $$
 
-变量分别代表已指定的独立格点方向。所用有限几何级数是 [经典单位根多项式的初等因式分解](../../../Library/Factorization/conradcyclotomicextensions.md)；$\Delta_z$ 是坐标移位差分，不是拓扑链复形的边界算子。
+变量分别代表已指定的独立格点方向。所用有限几何级数是 [经典单位根多项式的初等因式分解](../../../Library/Factorization/conrad2025cyclotomicextensions.md)；$\Delta_z$ 是坐标移位差分，不是拓扑链复形的边界算子。
 
 **命题 3.2（独立乘积结构的端点接口）。** 对正整数 $m,n,k$，格点列、长方形与长方体生成式在逐方向差分后，分别由两个、四个、八个带符号端点项表达：
 
@@ -174,7 +174,7 @@ $$
 
 **命题 5.2（圆周读出与 FIB 谱的共同代数）。** 对 $\zeta_m=e^{2\pi i/m}$，$m\ge2$，$[m]_{\zeta_m}=0$。因此 $R_H$ 的因子可分别读取为正五边形、正三角形和两份对径点的闭合关系。五边形的实部读出产生与定义1.1的 $M$ 相同的正特征值方程，但该对应不包含五模式的旋转作用。
 
-**证明。** [Conrad 的经典单位根输入](../../../Library/Factorization/conradcyclotomicextensions.md) 给 $\zeta_m^m=1$、$\zeta_m\ne1$。命题3.2的因式分解给 $(1-\zeta_m)[m]_{\zeta_m}=0$，所以有限和为零。复平面中这 $m$ 个单位向量是等角分布的圆周点，其向量和闭合。对 $m=2$ 是 $1+(-1)=0$；对 $m=3,5$ 分别是三角与五边的相消。本式描述多项式在这些复数上的值，未将六十个约数排列成正多边形。
+**证明。** [Conrad 的经典单位根输入](../../../Library/Factorization/conrad2025cyclotomicextensions.md) 给 $\zeta_m^m=1$、$\zeta_m\ne1$。命题3.2的因式分解给 $(1-\zeta_m)[m]_{\zeta_m}=0$，所以有限和为零。复平面中这 $m$ 个单位向量是等角分布的圆周点，其向量和闭合。对 $m=2$ 是 $1+(-1)=0$；对 $m=3,5$ 分别是三角与五边的相消。本式描述多项式在这些复数上的值，未将六十个约数排列成正多边形。
 
 取 $\zeta=\zeta_5$，令 $x=\zeta+\zeta^{-1}=2\cos(2\pi/5)>0$。把 $1+\zeta+\zeta^2+\zeta^3+\zeta^4=0$ 除以 $\zeta^2$，并用 $\zeta^2+\zeta^{-2}=x^2-2$，得
 
@@ -183,7 +183,7 @@ x^2+x-1=0,\qquad x=\frac{\sqrt5-1}{2},\qquad
 \varphi=1+x,\qquad\varphi^2=\varphi+1.
 $$
 
-另一方面 $\det(\lambda I-M)=\lambda^2-\lambda-1$，唯一正根是 $\varphi$，故这两份读出在该二次方程上对应。对正五边形，半径 $R$ 下的边和对角线分别为 $2R\sin(\pi/5)$、$2R\sin(2\pi/5)$，其比 $y=2\cos(\pi/5)>0$ 满足 $y^2=2+x=(1+x)^2$，故 $y=\varphi$。这一比值是 [Euclid XIII.8 的经典极中比](../../../Library/Geometry/euclidpentagonextrememean.md)。
+另一方面 $\det(\lambda I-M)=\lambda^2-\lambda-1$，唯一正根是 $\varphi$，故这两份读出在该二次方程上对应。对正五边形，半径 $R$ 下的边和对角线分别为 $2R\sin(\pi/5)$、$2R\sin(2\pi/5)$，其比 $y=2\cos(\pi/5)>0$ 满足 $y^2=2+x=(1+x)^2$，故 $y=\varphi$。这一比值是 [Euclid XIII.8 的经典极中比](../../../Library/Geometry/joyce1997euclidpentagon.md)。
 
 共有同一二次方程只识别这份标量关系。要把正五边形的旋转作用移到五模式上，还需定义一个保持模式合法性、数量解释与更新的群作用；上述方程没有提供这样的映射。$\square$
 
