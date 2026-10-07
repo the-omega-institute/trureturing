@@ -275,12 +275,16 @@ private theorem countBefore_total {n : Nat} (R : Finset Nat) (within : R ⊆ Fin
 
 /-- Shortening selected singleton blocks supplies the 2m-color construction.
 The selected set may have any placement around the seam. -/
-theorem low_slot_construction {n m a rho : Nat} (hm : 0 < m) (hsize : m ≤ n)
+theorem low_slot_formula_valid {n m a rho : Nat} (hm : 0 < m) (hsize : m ≤ n)
     (decomposition : n = m * a + rho) (k : Fin n → Nat)
     (demands : ∀ t, k t = 1 ∨ k t = 2)
     (R : Finset Nat) (within : R ⊆ Finset.range n) (removed : R.card = 2 * rho)
     (singletons : ∀ t : Fin n, t.val ∈ R → k t = 1) :
-    ∃ color : Vertex k → Fin (2 * m), Proper m k color := by
+    let s : Nat → Nat := fun i => 2 * i - (R.filter (fun t => t < i)).card
+    s 0 = 0 ∧ (∀ i, s (i + 1) - s i = if i ∈ R then 1 else 2) ∧
+      s n = (2 * m) * a ∧
+      Proper m k (fun x => (⟨(s x.1.val + x.2.val) % (2 * m),
+        Nat.mod_lt _ (by omega)⟩ : Fin (2 * m))) := by
   classical
   let s : Nat → Nat := fun i => 2 * i - countBefore R i
   have bounds := countBefore_bound R
@@ -325,11 +329,24 @@ theorem low_slot_construction {n m a rho : Nat} (hm : 0 < m) (hsize : m ≤ n)
       have increasing := countBefore_mono R (by omega : i ≤ n)
       dsimp [s]
       omega
-  refine ⟨fun x => ⟨(s x.1.val + x.2.val) % (2 * m), Nat.mod_lt _ (by omega)⟩, ?_⟩
+  refine ⟨zero, steps, total, ?_⟩
   apply cyclic_slot_coloring hm hsize (by omega) k s zero
     (fun i _ => positive i) contains
   · rw [total]; simp
   · exact windows
+
+/-- The shortened-slot formula supplies the chosen coloring. -/
+theorem low_slot_construction {n m a rho : Nat} (hm : 0 < m) (hsize : m ≤ n)
+    (decomposition : n = m * a + rho) (k : Fin n → Nat)
+    (demands : ∀ t, k t = 1 ∨ k t = 2)
+    (R : Finset Nat) (within : R ⊆ Finset.range n) (removed : R.card = 2 * rho)
+    (singletons : ∀ t : Fin n, t.val ∈ R → k t = 1) :
+    ∃ color : Vertex k → Fin (2 * m), Proper m k color := by
+  classical
+  let s : Nat → Nat := fun i => 2 * i - (R.filter (fun t => t < i)).card
+  have formula := low_slot_formula_valid hm hsize decomposition k demands R within removed singletons
+  exact ⟨fun x => ⟨(s x.1.val + x.2.val) % (2 * m), Nat.mod_lt _ (by omega)⟩,
+    formula.2.2.2⟩
 
 /-- The low branch selects exactly 2rho of the actual singleton prefixes. -/
 theorem low_branch_coloring {n m a rho : Nat} (hm : 0 < m) (hsize : m ≤ n)
@@ -425,13 +442,15 @@ private theorem spaced_window_count {n m : Nat} (hsize : m ≤ n)
 
 /-- Adding one extra slot at each cyclically m-separated prefix supplies a
 (2m+1)-coloring whenever its total slot count is divisible by 2m+1. -/
-theorem spaced_slot_construction {n m : Nat} (hm : 0 < m) (hsize : m ≤ n)
+private theorem spaced_slot_formula_valid {n m : Nat} (hm : 0 < m) (hsize : m ≤ n)
     (k : Fin n → Nat) (demands : ∀ t, k t ≤ 2)
     (R : Finset Nat) (within : R ⊆ Finset.range n)
     (spaced : ∀ x ∈ R, ∀ y ∈ R, x ≠ y →
       ¬ ((x < y + m ∧ y < x + m) ∨ n + x < y + m ∨ n + y < x + m))
     (divisible : (2 * n + R.card) % (2 * m + 1) = 0) :
-    ∃ color : Vertex k → Fin (2 * m + 1), Proper m k color := by
+    let s : Nat → Nat := fun i => 2 * i + (R.filter (fun t => t < i)).card
+    Proper m k (fun x => (⟨(s x.1.val + x.2.val) % (2 * m + 1),
+      Nat.mod_lt _ (by omega)⟩ : Fin (2 * m + 1))) := by
   classical
   let s : Nat → Nat := fun i => 2 * i + countBefore R i
   have zero : s 0 = 0 := by simp [s, countBefore]
@@ -457,16 +476,34 @@ theorem spaced_slot_construction {n m : Nat} (hm : 0 < m) (hsize : m ≤ n)
       dsimp [s]
       rw [show countBefore R 0 = 0 by simp [countBefore]]
       omega
-  refine ⟨fun x => ⟨(s x.1.val + x.2.val) % (2 * m + 1), Nat.mod_lt _ (by omega)⟩, ?_⟩
   exact cyclic_slot_coloring hm hsize (by omega) k s zero (fun i _ => positive i)
     contains (by rwa [total]) windows
 
+/-- Spaced slots supply the chosen coloring. -/
+theorem spaced_slot_construction {n m : Nat} (hm : 0 < m) (hsize : m ≤ n)
+    (k : Fin n → Nat) (demands : ∀ t, k t ≤ 2)
+    (R : Finset Nat) (within : R ⊆ Finset.range n)
+    (spaced : ∀ x ∈ R, ∀ y ∈ R, x ≠ y →
+      ¬ ((x < y + m ∧ y < x + m) ∨ n + x < y + m ∨ n + y < x + m))
+    (divisible : (2 * n + R.card) % (2 * m + 1) = 0) :
+    ∃ color : Vertex k → Fin (2 * m + 1), Proper m k color := by
+  classical
+  let s : Nat → Nat := fun i => 2 * i + (R.filter (fun t => t < i)).card
+  exact ⟨fun x => ⟨(s x.1.val + x.2.val) % (2 * m + 1), Nat.mod_lt _ (by omega)⟩,
+    spaced_slot_formula_valid hm hsize k demands R within spaced divisible⟩
+
 /-- Multiples 0,m,...,(z-1)m with z=(a-2rho) mod (2m+1) are cyclically
 m-separated and make the slot total divisible. Actual singleton positions are unrestricted. -/
-theorem high_branch_coloring {n m a rho : Nat} (hm : 0 < m) (hsize : m ≤ n)
+theorem high_slot_formula_valid {n m a rho : Nat} (hm : 0 < m) (hsize : m ≤ n)
     (decomposition : n = m * a + rho) (slack : 2 * rho ≤ a)
     (k : Fin n → Nat) (demands : ∀ t, k t ≤ 2) :
-    ∃ color : Vertex k → Fin (2 * m + 1), Proper m k color := by
+    let c := 2 * m + 1
+    let z := (a - 2 * rho) % c
+    let R := (Finset.range z).image (fun q => q * m)
+    let s : Nat → Nat := fun i => 2 * i + (R.filter (fun t => t < i)).card
+    s 0 = 0 ∧ s n = 2 * n + z ∧
+      Proper m k (fun x => (⟨(s x.1.val + x.2.val) % c,
+        Nat.mod_lt _ (by omega)⟩ : Fin c)) := by
   classical
   let c := 2 * m + 1
   let z := (a - 2 * rho) % c
@@ -514,7 +551,22 @@ theorem high_branch_coloring {n m a rho : Nat} (hm : 0 < m) (hsize : m ≤ n)
     have mod := congrArg (fun t => t % c) balance
     simp only [Nat.add_mod, Nat.mul_mod_right, Nat.add_zero, Nat.mod_mod] at mod
     simpa [count, c, Nat.add_mod] using mod
-  exact spaced_slot_construction hm hsize k demands R within spaced divisible
+  refine ⟨by simp, ?_, spaced_slot_formula_valid hm hsize k demands R within spaced divisible⟩
+  change 2 * n + countBefore R n = 2 * n + z
+  rw [countBefore_total R within, count]
+
+/-- The high-slot formula supplies the chosen coloring. -/
+theorem high_branch_coloring {n m a rho : Nat} (hm : 0 < m) (hsize : m ≤ n)
+    (decomposition : n = m * a + rho) (slack : 2 * rho ≤ a)
+    (k : Fin n → Nat) (demands : ∀ t, k t ≤ 2) :
+    ∃ color : Vertex k → Fin (2 * m + 1), Proper m k color := by
+  classical
+  let c := 2 * m + 1
+  let z := (a - 2 * rho) % c
+  let R := (Finset.range z).image (fun q => q * m)
+  let s : Nat → Nat := fun i => 2 * i + (R.filter (fun t => t < i)).card
+  have formula := high_slot_formula_valid hm hsize decomposition slack k demands
+  exact ⟨fun x => ⟨(s x.1.val + x.2.val) % c, Nat.mod_lt _ (by omega)⟩, formula.2.2⟩
 
 /-- The prefix at a cyclic offset, with at most one crossing of the seam. -/
 def cyclicIndex {n m : Nat} (hsize : m ≤ n) (start : Fin n) (i : Fin m) : Fin n :=
