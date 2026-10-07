@@ -23,7 +23,7 @@ namespace D5.S3.Arith.FibonacciAtomic.CliffordLeafOrbit
 
 open GenealogicalFiberTransport (Source substitution composition)
 open GraftAffineClosure (atomicBlock)
-open FixedHistoryComposition (Q E A B)
+open FixedHistoryComposition (Q E A B sep)
 
 local notation "C" => CliffordAlgebra Q
 local notation "α" => (FreeMagma.of true : Source)
@@ -112,39 +112,35 @@ theorem result :
       rw [show j + 1 + 1 = j + 2 by omega, recurrence, ih.1, ih.2]
       have h := phase_rec ⟨j % 6, Nat.mod_lt _ (by decide)⟩
       simpa only [Nat.add_mod, Nat.mod_mod] using h.symm
-  let m : (ℝ × ℝ) →ₗ[ℝ] Matrix (Fin 2) (Fin 2) ℝ :=
-    (LinearMap.fst ℝ ℝ ℝ).smulRight !![1, 0; 0, -1] +
-    (LinearMap.snd ℝ ℝ ℝ).smulRight !![1/2, 1; -5/4, -1/2]
-  have square (v : ℝ × ℝ) : m v * m v = algebraMap ℝ _ (Q v) := by
-    ext i k
-    fin_cases i <;> fin_cases k <;>
-      simp [m, Q, QuadraticMap.linMulLin_apply, Matrix.mul_apply, Fin.sum_univ_two,
-        Matrix.algebraMap_eq_diagonal] <;> ring
-  let rep : C →ₐ[ℝ] Matrix (Fin 2) (Fin 2) ℝ := CliffordAlgebra.lift Q ⟨m, square⟩
-  have images (i : Fin 6) : rep (phases i) =
-      ![!![1, 0; 0, -1], !![1/2, 1; -5/4, -1/2],
-        !![1/2, -1; -5/4, 1/2], !![3/2, 1; -5/4, -3/2],
-        !![-1/2, -1; 5/4, 1/2], !![1/2, 1; 5/4, 1/2]] i := by
+  have images (i : Fin 6) : sep (phases i) =
+      ![!![0, 1; 1, 0], !![0, Real.goldenRatio; Real.goldenConj, 0],
+        !![Real.goldenRatio, 0; 0, Real.goldenConj],
+        !![0, 1 + Real.goldenRatio; 1 + Real.goldenConj, 0],
+        !![0, -Real.goldenRatio; -Real.goldenConj, 0],
+        !![Real.goldenConj, 0; 0, Real.goldenRatio]] i := by
     fin_cases i
-    all_goals simp only [phases, FixedHistoryComposition.A, FixedHistoryComposition.B,
-      map_add, map_neg, map_mul, rep,
-      CliffordAlgebra.lift_ι_apply]
+    all_goals simp only [phases, map_add, map_neg, map_mul,
+      FixedHistoryComposition.sep_a, FixedHistoryComposition.sep_b]
     all_goals ext r s
     all_goals fin_cases r <;> fin_cases s <;>
-      norm_num [m, Matrix.mul_apply, Fin.sum_univ_two]
+      norm_num [FixedHistoryComposition.sep_a, FixedHistoryComposition.sep_b,
+        Matrix.mul_apply, Fin.sum_univ_two]
   have distinct : Function.Injective phases := by
     intro i k h
-    have h' := congrArg rep h
+    have h' := congrArg sep h
     rw [images, images] at h'
     have h00 := congrArg (fun z : Matrix (Fin 2) (Fin 2) ℝ => z 0 0) h'
     have h01 := congrArg (fun z : Matrix (Fin 2) (Fin 2) ℝ => z 0 1) h'
-    have h10 := congrArg (fun z : Matrix (Fin 2) (Fin 2) ℝ => z 1 0) h'
+    have hroot : Real.sqrt 5 ^ 2 = 5 := Real.sq_sqrt (by norm_num)
+    have hroot_nonneg : 0 ≤ Real.sqrt 5 := Real.sqrt_nonneg 5
     fin_cases i
     all_goals fin_cases k
-    all_goals try norm_num at h00
-    all_goals try norm_num at h01
-    all_goals try norm_num at h10
-    all_goals rfl
+    all_goals norm_num at h00 h01
+    all_goals
+      first
+      | rfl
+      | nlinarith only [h00, h01, hroot, hroot_nonneg,
+          Real.one_lt_goldenRatio, Real.goldenConj_neg]
   have fibers (j k : ℕ) : X j = X k ↔ j % 6 = k % 6 := by
     rw [(orbit j).1, (orbit k).1, distinct.eq_iff, Fin.mk.injEq]
   have periodic (j : ℕ) : X (j + 6) = X j := (fibers _ _).mpr (by omega)
@@ -168,7 +164,7 @@ theorem result :
     simp [E, substitution, aa, bb]
   have neg_ne : (-1 : C) ≠ 1 := by
     intro h
-    have hm := congrArg (fun c : C => rep c 0 0) h
+    have hm := congrArg (fun c : C => sep c 0 0) h
     norm_num at hm
   refine ⟨?_, fun j => (orbit j).1, fibers, criterion, ?_, ?_, collision, ?_, ?_⟩
   · intro j
