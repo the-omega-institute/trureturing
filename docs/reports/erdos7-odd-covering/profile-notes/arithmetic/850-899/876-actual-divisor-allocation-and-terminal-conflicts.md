@@ -1179,6 +1179,146 @@ repair needs the full prefix forest or another established joint
 replacement. The missing bridge remains an actual-source joint
 matching, compatible shared output, or fully paid parent exchange.
 
+## A private-region repair for one complete cofactor fiber
+
+There is a local sufficient condition that rules out a special
+case of the three-row deficit in DA35. It does not require a
+complete color to share one original cofactor phase.
+
+In a count-minimal actual cover, two distinct original moduli
+which are comparable by divisibility have disjoint classes.
+Otherwise their intersection would make the larger-modulus class
+a subset of the smaller one, contradicting its private point.
+The original labels q*3^a*m for a fixed numerical m are comparable.
+Consequently, deleting any collection of these slots leaves exactly
+the union of their complete private regions. This is the disjoint
+family case of Report385 PH1--PH2 and PI10; no such identity is
+asserted for an arbitrary family of overlapping classes.
+
+Suppose the actual three slots qm,3qm,9qm occur, q>=7, the same
+cover is count-then-sum-minimal, and no original modulus is divisible
+by 27. Suppose all three complete private regions lie in one old
+word z modulo 9. Let d divide m, suppose their three literal residues
+are congruent to one beta modulo d, and suppose d has three distinct
+positive divisors t_0,t_1,t_2.
+
+For each child c in {0,1,2}, use the new modulus 27t_c with residue
+specified by z+9c modulo 27 (using z modulo 9) and beta modulo t_c.
+The actual labels and no27 imply that m, hence t_c, is coprime to
+three. CRT therefore supplies these output classes. Every private
+point lies in one child and satisfies its divisor phase, so these
+three outputs cover the true joint deletion hole. They are distinct
+odd nonunit moduli, all fresh by no27. Keeping all other classes
+and making this three-for-three replacement gives
+
+$$
+\sum_{c=0}^2 27t_c\le81m<13qm=qm+3qm+9qm,
+$$
+
+contradicting sum minimality. A scoped Lean check constructs the
+actual replacement cover and verifies its count, distinctness and
+cost, using only the standard three axioms and default proof budgets.
+The hypotheses involve every private point in the original F,
+not a chosen representative or only one restricted trace.
+
+Thus a deficit-two maximal cofactor with three rows cannot also
+have this private-word concentration and this common divisor phase.
+DA35 alone provides neither condition. The local contradiction does
+not produce a joint allocation for all fifteen roots.
+
+## Actual stock phases and fixed transverse color covers
+
+Keep one actual count-then-sum-minimal whole cover F, q=113,
+a common period qM with (q,M)=1, no original divisible by 27,
+and the actual modulus-three and modulus-nine guards in distinct
+modulus-three phases. For d dividing the q-free, three-free part
+of M, assume d has at least fifteen positive divisors. Write E_q
+for the exact residual of the q-free originals modulo M, and set
+
+$$
+S_d=\pi_{M,d}(E_q).
+$$
+
+Every actual q-bearing original whose modulus is divisible by d
+has its own fixed residue modulo d in S_d. Indeed, its private
+point misses every q-free original. Reduction modulo M preserves
+that fact, and reduction modulo d gives its own phase. This uses
+a private point of that actual original, not a phase inherited
+from the larger original that caused its divisor label to exist.
+It requires no assertion that the projection E_q to the ancestor
+residual E_d is surjective; generally only S_d contained in E_d
+is available.
+
+Let U be a finite set of numerical labels such that every qdu,
+for u in U, occurs among the actual originals. Numerical
+distinctness embeds U into those originals. DA9 bounds the number
+of such originals at any one d-phase by fourteen, hence for every
+finite phase set T_d containing S_d,
+
+$$
+|U|\le14|S_d|\le14|T_d|.
+$$
+
+In particular U may be the joint divisor stock of several
+originals: repeated labels are counted once, each label keeps its
+actual residue, and actual divisor closure supplies membership.
+The inequality becomes useful only after a separate upper bound
+on the supported phase set; there is no such universal small bound
+established here.
+
+There is also a uniform statement across an entire fixed fiber.
+For b in S_d, let V_d(b) be the literal colors of all actual
+originals whose modulus is divisible by qd and whose residue is b
+modulo d. DA9 gives |V_d(b)| at most fourteen. For every fixed
+color c outside V_d(b), its owners whose stripped modulus is not
+divisible by d cover the entire exact fiber
+
+$$
+E_q(b)=\{x\in E_q:x\equiv b\pmod d\}.
+$$
+
+Thus at least ninety-nine fixed literal colors give complete
+transverse covers of that one fiber. The exceptional set depends
+on b, not on the point x inside the fiber. To see the uniformity,
+take any x in the fiber and its actual owner of color c, supplied
+by whole-cover CRT. If that owner's stripped modulus were
+divisible by d, its phase would be b and c would belong to V_d(b).
+For the actual factorization q*3^r*m with (3,d)=1, transverse here
+is equivalent to d not dividing m. No disjointness, independent
+donor assignment, or common choice of one owner across the fiber
+is asserted.
+
+The actual phase-support statement, its equality with the exact
+finite residual projection, the inventory bound, and the fixed
+ninety-nine-color fiber coverage have scoped exact Lean checks
+using the existing private-point projection, DA9 capacity and
+complete-color supplier. They use only the standard three axioms.
+They are reuse consequences, not newly retained canonical theorem
+wrappers, and do not supply the missing joint fifteen-root repair.
+
+The relation-size input can use an existing joint bound without
+assuming independence. Atserias, Grohe and Marx, *Size Bounds and
+Query Plans for Relational Joins*, [arXiv:1711.03860v1, Section 3.1,
+Lemma 2](https://arxiv.org/abs/1711.03860v1), gives
+
+$$
+|\Join_K S_K|\le\prod_K |S_K|^{\lambda_K}
+$$
+
+for finite relations on common named attributes and nonnegative
+fractional edge-cover weights. In the present coordinates, use all
+CRT prime-power digits of d as attributes; a cut at gcd(d,K)
+retains exactly its prefix digits. Every digit must receive total
+weight at least one. A missing digit requires an additional full
+domain relation, with its actual alphabet size retained. Empty
+relations give an empty join directly. Projected cut relations can
+lose compatibility in discarded coordinates, so their join is only
+an outer approximation to the common supported phases. The lemma
+therefore supplies an upper-bound interface, not a contraction by
+itself. No new effective bound on these actual relation sizes has
+been supplied. This is literature reuse; the joint cardinality
+inequality and its CRT application are not additional Lean claims.
+
 ## A matroidal Helly interface retains a missing geometric hypothesis
 
 Kalai and Meshulam, *A topological colorful Helly theorem*,
@@ -1274,6 +1414,48 @@ failure to obtain such an original-trace certificate would not
 exclude a legal repair: projected divisor outputs can cover more
 than their original traces, and a divisor-one output already covers
 its entire assigned safe root.
+
+For the actual joint target, replace the ground set by root-owner
+occurrences and replace X by the disjoint union of the fifteen
+root-specific sources. Each occurrence covers only its own root
+copy of the corresponding exact trace. Give all occurrences one
+transversal matroid with the same numerical-divisor bank; its
+independent sets are precisely jointly matchable demands. The
+Kalai--Meshulam statement applies to the resulting noncover complex
+under its own Leray hypothesis. At a point (r,x), the active owners
+are in root r, so the previous rank lower bound remains 38. The
+single q owner now covers only one root, and its fifteen copies
+cannot share donor one in an independent set.
+
+The joint Leray hypothesis is stronger than separate hypotheses for
+each root. Choose a minimal same-color cover D_z of each nonempty
+old-word slice, using the empty set for an empty slice. The existing
+private-slice necessity result implies that every owner in a
+complete whole-source color C occurs in at least one D_z: a private
+point is in some safe word. Consequently the sum of their sizes is
+at least |C|. The five safe words are obtained from the existing
+fifteen-safe-root count by an explicit product equivalence with
+three copies per word. Three copies per safe word have disjoint source
+supports. The union of their minimal covers is a minimal cover of
+the disjoint source union, so the joint noncover complex contains an
+induced simplex boundary with at least 3|C| vertices. Its Leray
+number is therefore at least 3|C|-1. The finite bridge has a scoped
+Lean check: Mathlib finite minimality supplies each D_z, actual
+private-point projection proves their union is exactly C, and the
+noncover predicate on the selected joint occurrence set J is proved
+equivalent to being a proper subset of J. It also proves the exact
+cardinality |J|=3 sum_z |D_z| and the actual-source consequence
+|J| at least 42 when s is at least nine. Empty slices require no
+extra assumption. Standard simplex-boundary homology then gives the
+Leray inequality; that topology is not part of the Lean check.
+
+For example, nine distinct prime factors in an actual top cofactor
+give at least 1536 actual q-bearing labels and hence some color of
+size at least fourteen, forcing joint Leray number at least 41.
+This excludes the proposed d at most 37 joint certificate in that
+branch. It neither excludes all uses of matroidal Helly with stronger
+active-rank information nor excludes a repair using the larger
+projected divisor-output sets.
 
 ## Verification and the remaining global obligation
 
