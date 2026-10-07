@@ -3805,3 +3805,289 @@ The same selected integer, complete rational coefficient, actual zero
 real parts and multiplicities, exact low head and all remaining height
 ranges therefore retain their roles in (LM5) and (G9). The required
 joint signed estimate and RH remain unproved.
+
+
+### The same-source price minimum gives a nonnegative heat cost
+
+The existing unrestricted price pressure and selected-source contact
+can be transported into the real heat kernel (HR7). This application
+identifies the direction and scale of the resulting constraint. It
+reuses the pressure, derivative and limit in the
+[FIB theory volume, §98](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md),
+the actual tangent optimum (G1), and (HR1)–(HR10). It does not
+reprove those results or the
+[packet and cone theorems](../Analytic/mantovanelli2026primeworkload.md).
+No mathematical originality or Lean verification is claimed.
+
+Keep the same conditional least global Robin-ratio maximizer $N>5040$,
+$A=\log N$, $L=\log A$ and $U=L/S^2$. Write
+
+$$
+g(x)=\frac1{x\log x},\qquad
+q(x)=-g'(x)=\frac{\log x+1}{x^2(\log x)^2},
+$$
+
+$$
+\mathcal B(\epsilon)=\max_{m\ge1}
+ \{\log Z(m)-\epsilon\log m\},\qquad
+\mathcal P(x)=\gamma+\log\log x-g(x)x-\mathcal B(g(x)).
+$$
+
+Here $\mathcal P$ is the existing $\mathfrak D$, and $q$ is its
+positive derivative weight, not the price. Let
+$a_C(x)=\log C_x$ for an unrestricted optimum at price $g(x)$;
+ties may use either consistent prefix convention. Local finiteness
+of activation events and the existing pressure derivative give
+
+$$
+\mathcal P'(x)=q(x)[x-a_C(x)]\quad\hbox{almost everywhere},
+\qquad \mathcal P(x)\longrightarrow0.
+$$
+
+The selected $N$ attains the optimum at $g(A)$, so
+$\mathcal P(A)=\gamma+\log\log A-\log Z(N)$.
+Choose a fixed $x_0>1$ such that every optimum for $x\ge x_0$
+exceeds $5040$; it suffices that the first thirteen $2$-layers
+are strictly active. The actual global Robin maximum and the
+concavity tangent for $b(t)=\gamma+\log\log t$ imply
+
+$$
+0\le\mathcal P(x)-\mathcal P(A)\le c_A(x)
+\quad(x\ge x_0),\qquad
+c_A(x)=\log\log x-\log\log A+g(x)(A-x).
+\tag{PH1}
+$$
+
+For the lower inequality use the Robin comparison at this same
+$C_x$ and $b(a_C)\le b(x)+g(x)(a_C-x)$.
+For the upper inequality insert the same $N$ as a competitor in
+$\mathcal B(g(x))$. Concavity gives $c_A(x)\ge0$ for all $x>1$.
+The global comparison does not cover optima at most $5040$;
+their fixed interval is paid below, not included in (PH1).
+
+#### A positive kernel row with the correct atom
+
+Put $\ell=\log x$, $d=\log(x/A)$ and
+$a(\ell)=\ell^2/(\ell+1)$. The integrated Gaussian obeys, in
+the distributional sense on the $d$-line,
+
+$$
+K_U''(d)+K_U'(d)=\mathcal G_U(d+U)-\delta_0(d).
+$$
+
+Indeed, this is the heat equation integrated over $0<u<U$;
+the initial Gaussian is a unit atom. Its one-sided derivatives are
+
+$$
+K_U'(d)=
+\begin{cases}
+ \tfrac12e^{-d}\operatorname{erfc}((-d+U)/(2\sqrt U)),&d<0,\\
+ -\tfrac12e^{-d}\operatorname{erfc}((d-U)/(2\sqrt U)),&d>0.
+\end{cases}
+$$
+
+Thus the derivative jumps by $-1$ at $0$. Define
+
+$$
+h(x)=x\,a(\ell)K_U'(d),\qquad
+r(x)=a(\ell)\mathcal G_U(d+U)+a'(\ell)K_U'(d).
+$$
+
+Using one-sided values at $A$ gives the exact row identity
+
+$$
+dh=r(x)\,dx-Aa(L)\delta_A,
+\qquad
+\pi_{A,U}(dx)=\frac{r(x)}{Aa(L)}\,dx.
+\tag{PH2}
+$$
+
+The atom has coefficient $Aa(L)$, including the Jacobian
+$\delta_0(\log(x/A))=A\delta_A(x)$.
+For $d<0$ every term in $r$ is nonnegative. For $d>0$ put
+$t=(d-U)/(2\sqrt U)\ge-1/8$, using $U\le1/16$. Then
+
+$$
+\frac{-K_U'(d)}{\mathcal G_U(d+U)}
+ =\sqrt{\pi U}\,e^{t^2}\operatorname{erfc}(t)
+ \le5\sqrt U.
+$$
+
+For $t\ge0$ use $e^{t^2}\operatorname{erfc}(t)\le1$;
+for $-1/8\le t<0$ use $\operatorname{erfc}(t)\le2$ and
+$e^{t^2}\le e^{1/64}$. Since $x>A$, $L\ge2$ and
+
+$$
+\frac{a(\ell)}{a'(\ell)}
+ =\frac{\ell(\ell+1)}{\ell+2}\ge\frac32
+ >5\sqrt U,
+$$
+
+we again have $r\ge0$. Moreover $h(1+)=h(\infty)=0$;
+the Gaussian decay controls the latter endpoint. Integrating
+(PH2) therefore gives $\int_1^\infty r(x)\,dx=Aa(L)$.
+Consequently $\pi_{A,U}$ is an actual nonnegative probability
+measure on $(1,\infty)$, formed from the same $A$ and kernel.
+It is not an average over independently selected extremal integers.
+
+#### The arithmetic correction vanishes at the paid heat scale
+
+Write $\Delta(x)=\psi(x)-a_C(x)$, so
+
+$$
+\psi(x)-x=-\frac{\mathcal P'(x)}{q(x)}+\Delta(x).
+$$
+
+Only a crude uniform activation estimate is needed here.
+The first active prime layer differs from the cutoff $p\le x$
+only for $x-1<p\le x$: use
+$1/(p+1)<\log(1+1/p)<1/p$ in the activation rule.
+Every active higher layer satisfies $p^j\log p<x\log x$,
+so there are $O(\log x)$ layers and all their primes lie below
+$\sqrt{x\log x/\log2}$. With the elementary
+$\vartheta(t)\le t\log t$, the higher layers of $a_C$ and
+$\psi$ give the uniform bound
+
+$$
+|\Delta(x)|\ll\sqrt x\,[\log(2x)]^{5/2}\qquad(x>1).
+$$
+
+This estimate follows from activation, not from imposing GA1
+on every intervening CA prefix. In particular it uses neither
+a new source-selector theorem nor a square-root PNT error.
+For $d\ne0$, differentiating the integral defining $K_U$ and
+taking absolute values gives the almost-everywhere estimate
+
+$$
+e^{d/2}|K_U'(d)|
+\le\int_0^U
+ \left(\frac{|d|}{2u}+\frac12\right)
+ \mathcal G_u(d)e^{-u/4}\,du.
+$$
+
+Gaussian moments and $0<U\le1/16$ therefore imply
+
+$$
+\int_{\mathbb R}e^{d/2}(1+|d|)^{5/2}|K_U'(d)|\,dd
+ \ll\sqrt U.
+$$
+
+At $d=0$ use the one-sided jump in (PH2); differentiation under
+the integral there does not supply either one-sided derivative.
+
+After $x=Ae^d$, the complete arithmetic correction satisfies
+
+$$
+A^{-1/2}\left|\int_1^\infty\Delta(x)
+ \frac{K_U'(\log(x/A))}{x}\,dx\right|
+\ll(L+1)^{5/2}\sqrt U
+=O(L^3/S)\longrightarrow0.
+\tag{PH3}
+$$
+
+All actual prime powers are present in this comparison. No
+fixed-beta or zero-height simplification is made.
+
+#### Exact direction and the remaining upper requirement
+
+Stieltjes integration by parts in (HR3), including the interval
+$0<x\le1$, yields
+
+$$
+\mathcal D_{A,U}=A^{-1/2}
+ \left[\int_0^1K_U(\log(x/A))\,dx-K_U(-L)
+ +\int_1^\infty(\psi(x)-x)
+   \frac{K_U'(\log(x/A))}{x}\,dx\right].
+$$
+
+The first two terms have allowance
+$O(\sqrt U e^{-L^2/(4U)})$ by (HR7).
+For the pressure term, $1/(xq(x))=xa(\ell)$, so
+integration by parts with (PH2) gives
+
+$$
+-A^{-1/2}\int_1^\infty\mathcal P'(x)h(x)\,dx
+=\sqrt A\,a(L)\left[\int\mathcal P(x)\,\pi_{A,U}(dx)
+ -\mathcal P(A)\right].
+$$
+
+There are no pressure atoms at activation events: the existing
+pressure is continuous and locally absolutely continuous.
+Near $1$, $\mathcal B(g(x))=0$ and
+$\mathcal P(x)=\gamma+\log\ell-1/\ell$, while
+$a(\ell)=O(\ell^2)$ and $a'(\ell)=O(\ell)$.
+These facts justify the lower boundary and integrability.
+At infinity reuse $\mathcal P(x)\to0$ and Gaussian decay.
+
+Set the independently nonnegative cost
+
+$$
+V_{A,U}=\int_{x_0}^\infty
+ [\mathcal P(x)-\mathcal P(A)]\,\pi_{A,U}(dx)\ge0.
+$$
+
+The omitted fixed interval $1<x<x_0$ costs at most
+$O_{x_0}(U^{-1/2}e^{-(L-\log x_0)^2/(4U)})=o(1)$
+after multiplying by $\sqrt A a(L)$. To obtain this bound,
+use the preceding integrability at $1$, boundedness of
+$\mathcal P(A)$ from its existing limit, and the negative-$d$
+derivative formula. No small-prefix Robin comparison is used.
+Together with (PH3), this proves the specific transport
+
+$$
+\boxed{\mathcal D_{A,U}=\sqrt A\,a(L)V_{A,U}+o(1).}
+\tag{PH4}
+$$
+
+Combining with (HR5)–(HR10) retains the exact same-source head:
+
+$$
+\boxed{\sqrt A L Z_{\rm orig}
+ =\mathcal J_{\rm head}
+  +(1+1/L)\sqrt A\,a(L)V_{A,U}+o(1).}
+\tag{PH5}
+$$
+
+All actual zero real parts, multiplicities and heights remain
+as specified in those equations. In particular the unknown
+head above the verified height is not paid by (PH4).
+
+The existing support gap in (PH1) does give an upper allowance,
+but not one of Robin strength. Since $c_A(A)=0$ and
+$c_A'(x)=q(x)(x-A)$, (PH2) and integration by parts give
+
+$$
+\begin{aligned}
+0\le\sqrt A\,a(L)V_{A,U}
+&\le\sqrt A\,a(L)\int_1^\infty c_A(x)\,\pi_{A,U}(dx)\\
+&=A^{-1/2}\left[\int_1^\infty K_U(\log(x/A))\,dx
+ -(A-1)K_U(-L)\right]\\
+&\le\sqrt A\,U
+=L A^{1/6}e^{2\kappa\Omega}.
+\end{aligned}
+\tag{PH6}
+$$
+
+The final normalization uses the already fixed
+$S=A^{1/6}e^{-\kappa\Omega}$.
+The displayed allowance diverges. This is not a lower bound
+on the actual cost and does not rule out a sharper joint estimate.
+It is the same ceiling obtained by merely dropping positive
+prime terms in (HR3); the price constraint has not improved it.
+
+Thus the price minimum supplies $\mathcal D_{A,U}\ge-o(1)$,
+whereas the Robin target, with $I_\psi=-Z_{\rm orig}$, needs
+an upper bound on the complete right side of (PH5).
+The remaining requirement is the joint signed bound
+
+$$
+\mathcal J_{\rm head}
+ +(1+1/L)\sqrt A\,a(L)V_{A,U}
+ \le\mathcal E(L)+o(1),
+$$
+
+with sufficient strict slack for the original core criterion.
+No such bound, numerical starting clock, unbounded sequence of
+selected sources, or proof of RH is established here. The
+nonnegative quantity is independently constructed; naming it
+does not prove that its size fits the available Robin budget.
