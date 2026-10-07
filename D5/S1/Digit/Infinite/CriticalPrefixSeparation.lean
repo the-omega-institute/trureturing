@@ -7,6 +7,8 @@
    digest: Sharp separation and critical recovery for actual finite-tail addresses. -/
 
 import D5.S1.Digit.Infinite.ClosedObservationGraphRealization
+import D5.S1.Digit.Infinite.OddColorThreeSource
+import D5.S1.Digit.Infinite.LateLabelStateBound
 import Mathlib.Analysis.Normed.Group.Constructions
 import Mathlib.Topology.Instances.Discrete
 import Mathlib.Analysis.Normed.Affine.AddTorsor
@@ -65,56 +67,48 @@ theorem golden_facts : 0 < t ∧ t < 1 ∧ t ^ 2 + t = 1 ∧ 1 + g = 2 * t := by
   dsimp [g]
   nlinarith [congrArg (fun z : ℝ => t * z) hs]
 
-private theorem shift_shift (x : LegalDigits) (m n : ℕ) :
-    bitShift (bitShift x m) n = bitShift x (m + n) := by
-  apply Subtype.ext
-  exact funext fun j => congrArg x.val (by omega : (j + n) + m = j + (m + n))
-
 theorem residual (x : LegalDigits) (j : ℕ) :
     kappa (bitShift x (3 * j)) + g * kappa (bitShift x (3 * (j + 1))) =
       offset (window x j) := by
   have hr := (closed_observation_graph_realization.2.2.1 (bitShift x (3 * j))).1
   have hw : window (bitShift x (3 * j)) 0 = window x j := by
-    simp only [window, Nat.mul_zero, shift_shift, Nat.add_zero]
+    simp only [window, Nat.mul_zero,
+      D5.S1.Digit.Infinite.OddColorThreeSource.shift_add, Nat.add_zero]
   rw [hw] at hr
-  simp only [originalT, shift_shift] at hr
+  simp only [originalT, D5.S1.Digit.Infinite.OddColorThreeSource.shift_add] at hr
   dsimp only [branch] at hr
   simp only [Nat.mul_add, Nat.mul_one]
   linarith
 
-/-- The five offsets, in increasing order, are `-t`, `0`, `t^2`, `1`, and
-`1+t^2`. Their adjacent gaps are `t`, `t^2`, `t`, and `t^2`. -/
-theorem label_gap (l m : Label) (hne : l ≠ m) :
-    t ^ 2 ≤ |offset l - offset m| := by
-  have ht := golden_facts
-  have hhalf : (1 : ℝ) / 2 < t := by
-    dsimp [t, D5.S1.Digit.Infinite.SignedSeriesRange.alpha]
-    simpa only [one_div] using
-      one_div_lt_one_div_of_lt Real.goldenRatio_pos Real.goldenRatio_lt_two
-  have hln0 := l.property 0 (by decide)
-  have hln1 := l.property 1 (by decide)
-  have hmn0 := m.property 0 (by decide)
-  have hmn1 := m.property 1 (by decide)
-  have hext : (l.val 0 = m.val 0 ∧ l.val 1 = m.val 1 ∧ l.val 2 = m.val 2) → l = m := by
-    rintro ⟨h0,h1,h2⟩
-    apply Subtype.ext
-    funext i
-    fin_cases i <;> assumption
-  simp only [Fin.reduceFinMk] at hln0 hln1 hmn0 hmn1
-  cases hl0 : l.val 0 <;> cases hl1 : l.val 1 <;> cases hl2 : l.val 2 <;>
-    cases hm0 : m.val 0 <;> cases hm1 : m.val 1 <;> cases hm2 : m.val 2 <;>
-    simp_all only [Bool.false_eq_true, not_false_eq_true, and_self,
-      and_false, false_and, and_true, true_and]
-  all_goals try contradiction
-  all_goals dsimp only [offset]
-  all_goals simp only [hl0,hl1,hl2,hm0,hm1,hm2, Bool.false_eq_true, ↓reduceIte]
-  all_goals first
-    | exact (le_abs_self _).trans' (by nlinarith [ht.2.2.1])
-    | exact (neg_le_abs _).trans' (by nlinarith [ht.2.2.1])
-
 private theorem separation (h : ℕ) (x y : LegalDigits) (hne : windowPrefix h x ≠ windowPrefix h y) :
     t / 2 ≤ dist (response h x) (response h y) := by
   classical
+  have hgap (l m : Label) (hne : l ≠ m) : t ^ 2 ≤ |offset l - offset m| := by
+    have ht := golden_facts
+    have hhalf : (1 : ℝ) / 2 < t := by
+      dsimp [t, D5.S1.Digit.Infinite.SignedSeriesRange.alpha]
+      simpa only [one_div] using
+        one_div_lt_one_div_of_lt Real.goldenRatio_pos Real.goldenRatio_lt_two
+    have hln0 := l.property 0 (by decide)
+    have hln1 := l.property 1 (by decide)
+    have hmn0 := m.property 0 (by decide)
+    have hmn1 := m.property 1 (by decide)
+    have hext : (l.val 0 = m.val 0 ∧ l.val 1 = m.val 1 ∧ l.val 2 = m.val 2) → l = m := by
+      rintro ⟨h0,h1,h2⟩
+      apply Subtype.ext
+      funext i
+      fin_cases i <;> assumption
+    simp only [Fin.reduceFinMk] at hln0 hln1 hmn0 hmn1
+    cases hl0 : l.val 0 <;> cases hl1 : l.val 1 <;> cases hl2 : l.val 2 <;>
+      cases hm0 : m.val 0 <;> cases hm1 : m.val 1 <;> cases hm2 : m.val 2 <;>
+      simp_all only [Bool.false_eq_true, not_false_eq_true, and_self,
+        and_false, false_and, and_true, true_and]
+    all_goals try contradiction
+    all_goals dsimp only [offset]
+    all_goals simp only [hl0,hl1,hl2,hm0,hm1,hm2, Bool.false_eq_true, ↓reduceIte]
+    all_goals first
+      | exact (le_abs_self _).trans' (by nlinarith [ht.2.2.1])
+      | exact (neg_le_abs _).trans' (by nlinarith [ht.2.2.1])
   obtain ⟨j, hj⟩ : ∃ j : Fin h, window x j ≠ window y j := by
     by_contra hh
     push Not at hh
@@ -139,7 +133,7 @@ private theorem separation (h : ℕ) (x y : LegalDigits) (hne : windowPrefix h x
             kappa (bitShift y (3 * (j.val + 1))))| := abs_add_le _ _
       _ ≤ M + g * M := by rw [abs_mul, abs_of_nonneg hg]; gcongr
       _ = (1 + g) * M := by ring
-  have hl := label_gap _ _ hj
+  have hl := hgap _ _ hj
   rw [golden_facts.2.2.2] at hu
   have hp := golden_facts.1
   nlinarith
@@ -161,12 +155,6 @@ private theorem half_not_integral (z : GoldenInt) : embedding z ≠ t / 2 := by
     linarith
   exact Real.goldenRatio_irrational.ne_rational (-2 * z.a - 1) (2 * z.b - 1) hφ
 
-private theorem finite_shift (x : LegalDigits) (hx : finiteTail x) (n : ℕ) :
-    finiteTail (bitShift x n) := by
-  obtain ⟨N,hN⟩ := hx
-  refine ⟨N, fun j hj => hN (j + n) ?_⟩
-  exact hj.trans (Nat.le_add_right j n)
-
 private theorem strict_separation (h : ℕ) (x y : LegalDigits)
     (hx : finiteTail x) (hy : finiteTail y) (hne : windowPrefix h x ≠ windowPrefix h y) :
     t / 2 < dist (response h x) (response h y) := by
@@ -176,9 +164,9 @@ private theorem strict_separation (h : ℕ) (x y : LegalDigits)
   intro he
   obtain ⟨j,hj⟩ := ((dist_pi_eq_iff (div_pos golden_facts.1 (by norm_num))).mp he.symm).1
   obtain ⟨a,ha⟩ := closed_observation_graph_realization.2.2.2.2.2.2.2.1
-    (bitShift x (3 * j.val)) (finite_shift x hx _)
+    (bitShift x (3 * j.val)) (D5.S1.Digit.Infinite.LateLabelStateBound.finite_shift x _ hx)
   obtain ⟨b,hb⟩ := closed_observation_graph_realization.2.2.2.2.2.2.2.1
-    (bitShift y (3 * j.val)) (finite_shift y hy _)
+    (bitShift y (3 * j.val)) (D5.S1.Digit.Infinite.LateLabelStateBound.finite_shift y _ hy)
   have hd : |embedding (a - b)| = t / 2 := by
     rw [map_sub]
     simpa only [response, Real.dist_eq, ha,hb] using hj
@@ -415,19 +403,18 @@ noncomputable def affineResponse (h : ℕ) (x : LegalDigits) (a : ℝ) : Fin (h 
 
 private theorem shifted_window (x : LegalDigits) (n j : ℕ) :
     window (bitShift x (3 * n)) j = window x (n + j) := by
-  simp only [window, shift_shift, Nat.mul_add]
+  simp only [window, D5.S1.Digit.Infinite.OddColorThreeSource.shift_add, Nat.mul_add]
 
 private theorem tail_guard (s : Bool) (x : LegalDigits) (n : ℕ) (hx : stateAddress s x) :
     stateAddress (actualGuard s x n) (bitShift x (3 * n)) := by
-  intro hg
   cases n with
-  | zero => simpa [actualGuard, bitShift] using hx hg
+  | zero => simpa [actualGuard, bitShift] using hx
   | succ n =>
-    have hh := x.property (3 * (n + 1) - 1)
-    have hbit : x.val (3 * (n + 1) - 1) = true := by simpa [actualGuard] using hg
-    have hn : 3 * (n + 1) - 1 + 1 = 3 * (n + 1) := by omega
-    simp only [hbit, hn, true_and, Bool.not_eq_true] at hh
-    simpa [bitShift] using hh
+    have hs := (closed_observation_graph_realization.2.2.1 (bitShift x (3 * n))).2.1
+    simpa [stateAddress, actualGuard, originalT, outgoing, window,
+      D5.S1.Digit.Infinite.WindowSuccessorGraph.P, bitShift,
+      show 3 * (n + 1) - 1 = 2 + 3 * n by omega,
+      Nat.mul_add, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using hs
 
 private theorem guard_step (s : Bool) (x : LegalDigits) (n : ℕ) :
     actualGuard (outgoing (window x 0)) (originalT x) n = actualGuard s x (n + 1) := by
@@ -473,7 +460,7 @@ private theorem realize_tail (h : ℕ) (s : Bool) (x z : LegalDigits)
         rw [shifted_window y 1, shifted_window x 1] at hp
         simpa only [windowPrefix, show 1 + (j.val - 1) = j.val by omega] using hp
     · have he : bitShift y (3 * (h + 1)) = bitShift (originalT y) (3 * h) := by
-        simp only [originalT, shift_shift]
+        simp only [originalT, D5.S1.Digit.Infinite.OddColorThreeSource.shift_add]
         congr 1
         omega
       rw [he,hyt,hvt]

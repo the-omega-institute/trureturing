@@ -28,19 +28,7 @@ Lean statement: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.residual`
 
 For every legal source x and every window index j, the scalar after deleting 3j bits plus t^3 times the scalar after deleting 3(j+1) bits equals the translation of the jth window.
 
-**Theorem 1.3 (Separation of window translations).**
-
-Lean statement: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.label_gap`
-
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/CriticalPrefixSeparation.label_gap` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Commentary.*
-
-Any two distinct legal three-bit windows have translations whose absolute difference is at least t^2. In increasing order the translations are -t, 0, t^2, 1, and 1+t^2; their successive gaps are t, t^2, t, and t^2.
-
-**Theorem 1.4 (Sharp separation and critical prefix recovery).**
+**Theorem 1.3 (Sharp separation and critical prefix recovery).**
 
 Lean statement: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.result`
 
@@ -54,7 +42,7 @@ A source is an infinite Boolean stream with no adjacent occupied bits. One time 
 
 For every h>=1, the sources with one fixed prefix have exactly the closed affine response segment obtained by letting the final scalar range through the legal terminal guard interval. Distinct prefix segments have global minimum distance t/2 in the supremum metric. The empty source and the infinite repetition of five attain it, and both are legal under either incoming guard.
 
-The five translations have smallest gap t^2. Let d_i be the difference of the two sources' samples at time i. At a differing window j the translation difference is d_j+t^3 d_(j+1). Thus the maximum sample difference M satisfies t^2 <= (1+t^3)M = 2tM.
+In increasing order the five translations are -t, 0, t^2, 1, and 1+t^2, with successive gaps t, t^2, t, and t^2. Thus distinct window translations differ by at least t^2. Let d_i be the difference of the two sources' samples at time i. At a differing window j the translation difference is d_j+t^3 d_(j+1). Thus the maximum sample difference M satisfies t^2 <= (1+t^3)M = 2tM.
 
 For eventually empty sources each scalar belongs to the embedded golden integer ring. Irrationality excludes t/2 from that ring. The attained maximum coordinate difference therefore cannot equal t/2, and distinct finite-tail prefixes are strictly farther apart. Their distance infimum is nevertheless t/2: for N>h, N repetitions of five followed by the empty tail have coordinate j equal to (t/2)(1-(-t^3)^(N-j)), and converge to the constant t/2 response.
 
@@ -65,7 +53,8 @@ Give prefix values the discrete topology. At the constant observation t/4 every 
 ## References
 
 - Truth anchor: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.golden_facts`
-- Truth anchor: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.label_gap`
 - Truth anchor: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.residual`
 - Truth anchor: `D5/S1/Digit/Infinite/CriticalPrefixSeparation.result`
 - Dependency: [D5/S1/Digit/Infinite/ClosedObservationGraphRealization](ClosedObservationGraphRealization.md)
+- Dependency: [D5/S1/Digit/Infinite/LateLabelStateBound](LateLabelStateBound.md)
+- Dependency: [D5/S1/Digit/Infinite/OddColorThreeSource](OddColorThreeSource.md)
