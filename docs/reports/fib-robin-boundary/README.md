@@ -998,3 +998,28 @@ Two exact moment constraints and bounded adjacent increments do not
 supply a uniform square-root transmission bound for the general input
 class. The probe inputs are not the actual FIB error; its arithmetic
 correlations and the signed Robin budget still require estimates.
+
+`robin_abel_budget.py` consumes the existing `robin-kernel-ratio.json` and its
+same-source `robin-kernel-diagonal.json` to bound the full Abel error ledger in
+FIB §§409–410. It uses Python 3.9+ standard-library rational arithmetic and
+explicit paths, with no external Python dependency. The ratio-to-diagonal hash
+must match; the consumer checks the scalar enclosures against the stated caps.
+It combines JLT's original Theorem A.1 (arXiv:2408.04143v3) with Lee–Leong's
+Theorem 1.1 (arXiv:2208.06141v5), keeping the latter as a preprint input. It
+checks the joining constants using a positive rational Taylor prefix for
+`exp(28)` and retains every component of the full `Cstar` upper bound.
+
+```sh
+python3 -B docs/reports/fib-robin-boundary/robin_abel_budget.py \
+  --ratio-source docs/reports/fib-robin-boundary/robin-kernel-ratio.json \
+  --diagonal-source docs/reports/fib-robin-boundary/robin-kernel-diagonal.json \
+  --output /tmp/robin-abel-budget.json
+```
+
+The committed `robin-abel-budget.json` records source hashes, exact rational
+bounds `C6=10^17`, `Cstar<3*10^22`, and the sufficient schedule
+`epsilon_x=1/(6*10^22*sqrt(x)*log(x))`. No Binet terms, inverse kernels, Mertens
+sums or zero catalogue are recomputed. The analytic transport is a paper
+application of the cited bounds, not a Lean proof or a published-only
+certificate. The result controls the complete de-damping error; it does not
+bound the signed remaining frequency integral or prove Robin or RH.

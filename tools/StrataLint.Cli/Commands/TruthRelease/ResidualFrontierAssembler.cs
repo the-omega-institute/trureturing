@@ -29,7 +29,6 @@ internal static class ResidualFrontierAssembler
             document,
             snapshot,
             lean,
-            baselineDocument: document,
             truthStates: truthStates);
         if (evaluation.HasReceiptIntegrityFailure)
         {
@@ -41,8 +40,7 @@ internal static class ResidualFrontierAssembler
         var frontier = DigestionFrontierProjection.Create(
             document,
             evaluation,
-            DigestionContentKindResolver.Resolve(snapshot, document),
-            retryDispositions: false);
+            DigestionContentKindResolver.Resolve(snapshot, document));
         var summary = DigestResidualSummary.Render(evaluation, frontier);
         return ImmutableArray.CreateRange(Encoding.UTF8.GetBytes(EchoResidualBlock.Render(summary)));
     }

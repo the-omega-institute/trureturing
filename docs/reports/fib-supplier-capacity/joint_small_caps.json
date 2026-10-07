@@ -1,0 +1,1357 @@
+{
+  "caps": [
+    {
+      "H": 16,
+      "initial_read_image": 1,
+      "one_call_max_response_image": 2,
+      "representatives": [
+        {
+          "coordinate": [
+            2,
+            3
+          ],
+          "first_response": "A",
+          "initial_length": 8,
+          "response_word": "AA",
+          "rho_length": 12,
+          "second_context_length": 4,
+          "second_response": "A",
+          "target": [
+            1,
+            [
+              4,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            4
+          ],
+          "first_response": "A",
+          "initial_length": 12,
+          "response_word": "AR",
+          "rho_length": 16,
+          "second_context_length": 4,
+          "second_response": "R",
+          "target": [
+            1,
+            [
+              8,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 12,
+          "response_word": "RA",
+          "rho_length": 20,
+          "second_context_length": 4,
+          "second_response": "A",
+          "target": [
+            0,
+            1,
+            12
+          ]
+        },
+        {
+          "coordinate": [
+            4,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 16,
+          "response_word": "RR",
+          "rho_length": 20,
+          "second_context_length": 4,
+          "second_response": "R",
+          "target": [
+            0,
+            1,
+            16
+          ]
+        }
+      ],
+      "source_word_count": 920,
+      "target_count": 4,
+      "target_response_image": {
+        "(0, 1, 12)": [
+          "RA"
+        ],
+        "(0, 1, 16)": [
+          "RR"
+        ],
+        "(1, (4, 4), 1, 1)": [
+          "AA"
+        ],
+        "(1, (8, 4), 1, 1)": [
+          "AR"
+        ]
+      },
+      "two_call_policy": {
+        "continuation_action": "right_append_a^(H-12)",
+        "first_action": "rho",
+        "reachable_request_values": 3,
+        "response_codes": [
+          "AA",
+          "AR",
+          "RA",
+          "RR"
+        ],
+        "worst_case_modification_calls": 2,
+        "worst_case_total_source_calls": 2
+      }
+    },
+    {
+      "H": 17,
+      "initial_read_image": 1,
+      "one_call_max_response_image": 2,
+      "representatives": [
+        {
+          "coordinate": [
+            2,
+            3
+          ],
+          "first_response": "A",
+          "initial_length": 8,
+          "response_word": "AA",
+          "rho_length": 12,
+          "second_context_length": 5,
+          "second_response": "A",
+          "target": [
+            1,
+            [
+              4,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            4
+          ],
+          "first_response": "A",
+          "initial_length": 12,
+          "response_word": "AR",
+          "rho_length": 16,
+          "second_context_length": 5,
+          "second_response": "R",
+          "target": [
+            1,
+            [
+              8,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 12,
+          "response_word": "RA",
+          "rho_length": 20,
+          "second_context_length": 5,
+          "second_response": "A",
+          "target": [
+            0,
+            1,
+            12
+          ]
+        },
+        {
+          "coordinate": [
+            4,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 16,
+          "response_word": "RR",
+          "rho_length": 20,
+          "second_context_length": 5,
+          "second_response": "R",
+          "target": [
+            0,
+            1,
+            16
+          ]
+        }
+      ],
+      "source_word_count": 920,
+      "target_count": 4,
+      "target_response_image": {
+        "(0, 1, 12)": [
+          "RA"
+        ],
+        "(0, 1, 16)": [
+          "RR"
+        ],
+        "(1, (4, 4), 1, 1)": [
+          "AA"
+        ],
+        "(1, (8, 4), 1, 1)": [
+          "AR"
+        ]
+      },
+      "two_call_policy": {
+        "continuation_action": "right_append_a^(H-12)",
+        "first_action": "rho",
+        "reachable_request_values": 3,
+        "response_codes": [
+          "AA",
+          "AR",
+          "RA",
+          "RR"
+        ],
+        "worst_case_modification_calls": 2,
+        "worst_case_total_source_calls": 2
+      }
+    },
+    {
+      "H": 18,
+      "initial_read_image": 1,
+      "one_call_max_response_image": 2,
+      "representatives": [
+        {
+          "coordinate": [
+            2,
+            3
+          ],
+          "first_response": "A",
+          "initial_length": 8,
+          "response_word": "AA",
+          "rho_length": 12,
+          "second_context_length": 6,
+          "second_response": "A",
+          "target": [
+            1,
+            [
+              4,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            4
+          ],
+          "first_response": "A",
+          "initial_length": 12,
+          "response_word": "AR",
+          "rho_length": 16,
+          "second_context_length": 6,
+          "second_response": "R",
+          "target": [
+            1,
+            [
+              8,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 12,
+          "response_word": "RA",
+          "rho_length": 20,
+          "second_context_length": 6,
+          "second_response": "A",
+          "target": [
+            0,
+            1,
+            12
+          ]
+        },
+        {
+          "coordinate": [
+            4,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 16,
+          "response_word": "RR",
+          "rho_length": 20,
+          "second_context_length": 6,
+          "second_response": "R",
+          "target": [
+            0,
+            1,
+            16
+          ]
+        }
+      ],
+      "source_word_count": 920,
+      "target_count": 4,
+      "target_response_image": {
+        "(0, 1, 12)": [
+          "RA"
+        ],
+        "(0, 1, 16)": [
+          "RR"
+        ],
+        "(1, (4, 4), 1, 1)": [
+          "AA"
+        ],
+        "(1, (8, 4), 1, 1)": [
+          "AR"
+        ]
+      },
+      "two_call_policy": {
+        "continuation_action": "right_append_a^(H-12)",
+        "first_action": "rho",
+        "reachable_request_values": 3,
+        "response_codes": [
+          "AA",
+          "AR",
+          "RA",
+          "RR"
+        ],
+        "worst_case_modification_calls": 2,
+        "worst_case_total_source_calls": 2
+      }
+    },
+    {
+      "H": 19,
+      "initial_read_image": 1,
+      "one_call_max_response_image": 2,
+      "representatives": [
+        {
+          "coordinate": [
+            2,
+            3
+          ],
+          "first_response": "A",
+          "initial_length": 8,
+          "response_word": "AA",
+          "rho_length": 12,
+          "second_context_length": 7,
+          "second_response": "A",
+          "target": [
+            1,
+            [
+              4,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            4
+          ],
+          "first_response": "A",
+          "initial_length": 12,
+          "response_word": "AR",
+          "rho_length": 16,
+          "second_context_length": 7,
+          "second_response": "R",
+          "target": [
+            1,
+            [
+              8,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "coordinate": [
+            3,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 12,
+          "response_word": "RA",
+          "rho_length": 20,
+          "second_context_length": 7,
+          "second_response": "A",
+          "target": [
+            0,
+            1,
+            12
+          ]
+        },
+        {
+          "coordinate": [
+            4,
+            5
+          ],
+          "first_response": "R",
+          "initial_length": 16,
+          "response_word": "RR",
+          "rho_length": 20,
+          "second_context_length": 7,
+          "second_response": "R",
+          "target": [
+            0,
+            1,
+            16
+          ]
+        }
+      ],
+      "source_word_count": 920,
+      "target_count": 4,
+      "target_response_image": {
+        "(0, 1, 12)": [
+          "RA"
+        ],
+        "(0, 1, 16)": [
+          "RR"
+        ],
+        "(1, (4, 4), 1, 1)": [
+          "AA"
+        ],
+        "(1, (8, 4), 1, 1)": [
+          "AR"
+        ]
+      },
+      "two_call_policy": {
+        "continuation_action": "right_append_a^(H-12)",
+        "first_action": "rho",
+        "reachable_request_values": 3,
+        "response_codes": [
+          "AA",
+          "AR",
+          "RA",
+          "RR"
+        ],
+        "worst_case_modification_calls": 2,
+        "worst_case_total_source_calls": 2
+      }
+    }
+  ],
+  "mixed_history_evidence": {
+    "caps": [
+      16,
+      17,
+      18,
+      19
+    ],
+    "equality_acceptances": 34,
+    "histories": [
+      [
+        [
+          "right",
+          "a"
+        ],
+        [
+          "rho",
+          ""
+        ],
+        [
+          "left",
+          "b"
+        ],
+        [
+          "rho",
+          ""
+        ],
+        [
+          "right",
+          "ba"
+        ]
+      ],
+      [
+        [
+          "left",
+          "ba"
+        ],
+        [
+          "right",
+          "a"
+        ],
+        [
+          "rho",
+          ""
+        ],
+        [
+          "left",
+          "a^H"
+        ]
+      ],
+      [
+        [
+          "rho",
+          ""
+        ],
+        [
+          "right",
+          "a^(H-12)"
+        ],
+        [
+          "left",
+          "b"
+        ],
+        [
+          "rho",
+          ""
+        ]
+      ]
+    ],
+    "histories_per_source_and_cap": 3,
+    "rejected_steps": 190,
+    "response_rows": [
+      {
+        "H": 16,
+        "coordinate": [
+          2,
+          3
+        ],
+        "history": 0,
+        "responses": "AAARA"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          2,
+          3
+        ],
+        "history": 1,
+        "responses": "AAAR"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          2,
+          3
+        ],
+        "history": 2,
+        "responses": "AARR"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          3,
+          4
+        ],
+        "history": 0,
+        "responses": "ARARA"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          3,
+          4
+        ],
+        "history": 1,
+        "responses": "AARR"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          3,
+          4
+        ],
+        "history": 2,
+        "responses": "ARRR"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          3,
+          5
+        ],
+        "history": 0,
+        "responses": "ARARA"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          3,
+          5
+        ],
+        "history": 1,
+        "responses": "AARR"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          3,
+          5
+        ],
+        "history": 2,
+        "responses": "RARR"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          4,
+          5
+        ],
+        "history": 0,
+        "responses": "RRRRR"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          4,
+          5
+        ],
+        "history": 1,
+        "responses": "RRRR"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          4,
+          5
+        ],
+        "history": 2,
+        "responses": "RRRR"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          4,
+          6
+        ],
+        "history": 0,
+        "responses": "RRRRR"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          4,
+          6
+        ],
+        "history": 1,
+        "responses": "RRRR"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          4,
+          6
+        ],
+        "history": 2,
+        "responses": "RRRR"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          4,
+          7
+        ],
+        "history": 0,
+        "responses": "RRRRR"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          4,
+          7
+        ],
+        "history": 1,
+        "responses": "RRRR"
+      },
+      {
+        "H": 16,
+        "coordinate": [
+          4,
+          7
+        ],
+        "history": 2,
+        "responses": "RRRR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          2,
+          3
+        ],
+        "history": 0,
+        "responses": "AAARA"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          2,
+          3
+        ],
+        "history": 1,
+        "responses": "AAAR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          2,
+          3
+        ],
+        "history": 2,
+        "responses": "AARR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          3,
+          4
+        ],
+        "history": 0,
+        "responses": "AARRR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          3,
+          4
+        ],
+        "history": 1,
+        "responses": "AARR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          3,
+          4
+        ],
+        "history": 2,
+        "responses": "ARAR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          3,
+          5
+        ],
+        "history": 0,
+        "responses": "ARARA"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          3,
+          5
+        ],
+        "history": 1,
+        "responses": "AARR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          3,
+          5
+        ],
+        "history": 2,
+        "responses": "RARR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          4,
+          5
+        ],
+        "history": 0,
+        "responses": "ARRRR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          4,
+          5
+        ],
+        "history": 1,
+        "responses": "RARR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          4,
+          5
+        ],
+        "history": 2,
+        "responses": "RRAR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          4,
+          6
+        ],
+        "history": 0,
+        "responses": "ARRRR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          4,
+          6
+        ],
+        "history": 1,
+        "responses": "RARR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          4,
+          6
+        ],
+        "history": 2,
+        "responses": "RRAR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          4,
+          7
+        ],
+        "history": 0,
+        "responses": "ARRRR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          4,
+          7
+        ],
+        "history": 1,
+        "responses": "RARR"
+      },
+      {
+        "H": 17,
+        "coordinate": [
+          4,
+          7
+        ],
+        "history": 2,
+        "responses": "RRAR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          2,
+          3
+        ],
+        "history": 0,
+        "responses": "AAARA"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          2,
+          3
+        ],
+        "history": 1,
+        "responses": "AAAR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          2,
+          3
+        ],
+        "history": 2,
+        "responses": "AARR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          3,
+          4
+        ],
+        "history": 0,
+        "responses": "AAARR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          3,
+          4
+        ],
+        "history": 1,
+        "responses": "AARR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          3,
+          4
+        ],
+        "history": 2,
+        "responses": "ARAR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          3,
+          5
+        ],
+        "history": 0,
+        "responses": "ARARA"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          3,
+          5
+        ],
+        "history": 1,
+        "responses": "AARR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          3,
+          5
+        ],
+        "history": 2,
+        "responses": "RARR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          4,
+          5
+        ],
+        "history": 0,
+        "responses": "ARARR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          4,
+          5
+        ],
+        "history": 1,
+        "responses": "ARRR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          4,
+          5
+        ],
+        "history": 2,
+        "responses": "RRAR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          4,
+          6
+        ],
+        "history": 0,
+        "responses": "ARARR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          4,
+          6
+        ],
+        "history": 1,
+        "responses": "ARRR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          4,
+          6
+        ],
+        "history": 2,
+        "responses": "RRAR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          4,
+          7
+        ],
+        "history": 0,
+        "responses": "ARARR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          4,
+          7
+        ],
+        "history": 1,
+        "responses": "ARRR"
+      },
+      {
+        "H": 18,
+        "coordinate": [
+          4,
+          7
+        ],
+        "history": 2,
+        "responses": "RRAR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          2,
+          3
+        ],
+        "history": 0,
+        "responses": "AAARA"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          2,
+          3
+        ],
+        "history": 1,
+        "responses": "AAAR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          2,
+          3
+        ],
+        "history": 2,
+        "responses": "AARR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          3,
+          4
+        ],
+        "history": 0,
+        "responses": "AAARR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          3,
+          4
+        ],
+        "history": 1,
+        "responses": "AARR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          3,
+          4
+        ],
+        "history": 2,
+        "responses": "ARAR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          3,
+          5
+        ],
+        "history": 0,
+        "responses": "ARARA"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          3,
+          5
+        ],
+        "history": 1,
+        "responses": "AARR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          3,
+          5
+        ],
+        "history": 2,
+        "responses": "RARR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          4,
+          5
+        ],
+        "history": 0,
+        "responses": "ARARR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          4,
+          5
+        ],
+        "history": 1,
+        "responses": "AARR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          4,
+          5
+        ],
+        "history": 2,
+        "responses": "RRAR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          4,
+          6
+        ],
+        "history": 0,
+        "responses": "ARARR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          4,
+          6
+        ],
+        "history": 1,
+        "responses": "AARR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          4,
+          6
+        ],
+        "history": 2,
+        "responses": "RRAR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          4,
+          7
+        ],
+        "history": 0,
+        "responses": "ARARR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          4,
+          7
+        ],
+        "history": 1,
+        "responses": "AARR"
+      },
+      {
+        "H": 19,
+        "coordinate": [
+          4,
+          7
+        ],
+        "history": 2,
+        "responses": "RRAR"
+      }
+    ],
+    "source_compositions": 6,
+    "steps_and_exact_reads_checked": 312
+  },
+  "prefix_free_check": {
+    "binary_modification_alphabet": [
+      "A",
+      "R"
+    ],
+    "kraft_sum": 1.0,
+    "one_call_response_image_upper_bound": 2,
+    "target_count_per_authentic_symbol": 4,
+    "two_call_codewords": [
+      "AA",
+      "AR",
+      "RA",
+      "RR"
+    ]
+  },
+  "schema": "fib-tm63-joint-small-caps-v1",
+  "source_correspondence_witnesses": {
+    "merged_read_after_context_loop": {
+      "H": 16,
+      "accept_continuation": "same_context_request",
+      "actual_right_context": "ba",
+      "distinct_reachable_read_responses": 3,
+      "reject_continuation": "one_common_exact_Read_request",
+      "rows": [
+        {
+          "accepted_context_repetitions": 4,
+          "coordinate": [
+            2,
+            3
+          ],
+          "exact_read": "S^4",
+          "first_rejected_candidate_length": 18,
+          "last_accepted_length": 16,
+          "target": [
+            1,
+            [
+              4,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "accepted_context_repetitions": 2,
+          "coordinate": [
+            3,
+            4
+          ],
+          "exact_read": "S^2",
+          "first_rejected_candidate_length": 18,
+          "last_accepted_length": 16,
+          "target": [
+            1,
+            [
+              8,
+              4
+            ],
+            1,
+            1
+          ]
+        },
+        {
+          "accepted_context_repetitions": 2,
+          "coordinate": [
+            3,
+            5
+          ],
+          "exact_read": "S^2",
+          "first_rejected_candidate_length": 18,
+          "last_accepted_length": 16,
+          "target": [
+            0,
+            1,
+            12
+          ]
+        },
+        {
+          "accepted_context_repetitions": 0,
+          "coordinate": [
+            4,
+            5
+          ],
+          "exact_read": "S^0",
+          "first_rejected_candidate_length": 18,
+          "last_accepted_length": 16,
+          "target": [
+            0,
+            1,
+            16
+          ]
+        },
+        {
+          "accepted_context_repetitions": 0,
+          "coordinate": [
+            4,
+            6
+          ],
+          "exact_read": "S^0",
+          "first_rejected_candidate_length": 18,
+          "last_accepted_length": 16,
+          "target": [
+            0,
+            1,
+            16
+          ]
+        },
+        {
+          "accepted_context_repetitions": 0,
+          "coordinate": [
+            4,
+            7
+          ],
+          "exact_read": "S^0",
+          "first_rejected_candidate_length": 18,
+          "last_accepted_length": 16,
+          "target": [
+            0,
+            1,
+            16
+          ]
+        }
+      ],
+      "successful_four_target_solver": false
+    },
+    "single_rho_after_context": {
+      "H": 16,
+      "J_of_A": "A+B",
+      "actions": [
+        "right_append_a",
+        "rho"
+      ],
+      "exact_reads_after_actions": [
+        "A",
+        "B"
+      ],
+      "lengths": [
+        8,
+        9,
+        13
+      ],
+      "responses": "AA",
+      "source_leaf_word": "abbabaab"
+    }
+  },
+  "source_domain": {
+    "all_bracketings_lifted_by": "Atomic360/TM47 behavior congruence",
+    "caps": [
+      16,
+      17,
+      18,
+      19
+    ],
+    "compositions": [
+      [
+        4,
+        4
+      ],
+      [
+        4,
+        8
+      ],
+      [
+        4,
+        12
+      ],
+      [
+        8,
+        4
+      ],
+      [
+        8,
+        8
+      ],
+      [
+        12,
+        4
+      ]
+    ],
+    "h": 4,
+    "unit_leaf_words": 920
+  }
+}

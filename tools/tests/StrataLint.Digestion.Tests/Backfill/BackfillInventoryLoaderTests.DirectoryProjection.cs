@@ -6,61 +6,7 @@ namespace StrataLint.Digestion.Tests;
 public sealed partial class BackfillInventoryLoaderTests
 {
     [Fact]
-    public void BaselineRepeatedReferenceMappingRetainsBothBucketRecords()
-    {
-        var first = Atom("delta-v0.1", "absorbed-closed", "parent", "theorem/parent");
-        var second = Atom("delta-v0.1", "residual-open", "parent", "theorem/parent");
-        var snapshot = Snapshot(Source("delta-v0.1", "docs/delta.md", "none"), first, second);
-
-        var entries = BackfillInventoryLoader.LoadBaseline(snapshot).RequireDigestionEntries();
-
-        Assert.Equal(2, entries.Length);
-        Assert.All(entries, entry => Assert.Equal(FixtureAtomId("theorem/parent"), entry.AtomId));
-        Assert.Equal(
-            [DigestionMigrationState.Absorbed, DigestionMigrationState.Residual],
-            entries.Select(entry => entry.ProjectedStatus.Migration).ToArray());
-    }
-
-    [Fact]
-    public void BaselineRepeatedReferenceMappingProjectsChainWithoutDroppingRecords()
-    {
-        var parent = Atom("delta-v0.1", "residual-open", "parent", "theorem/parent");
-        var child = Atom("delta-v0.1", "residual-open", "child", "theorem/child");
-        var childText = child.Text.Replace("  chain_atoms: []\n",
-            "  chain_atoms:\n    - legacy-parent\n", StringComparison.Ordinal);
-        var root = BackfillInventoryLoader.RootPath + "delta-v0.1/";
-        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
-            Source("delta-v0.1", "docs/delta.md", "none"),
-            (root + "absorbed-closed/legacy-parent.yaml", parent.Text),
-            (root + "residual-open/legacy-parent.yaml", parent.Text),
-            (child.Path, childText)));
-
-        Assert.Equal(3, document.RequireDigestionEntries().Length);
-        var projectedChild = Assert.Single(document.RequireDigestionEntries(),
-            entry => entry.AtomId == FixtureAtomId("theorem/child"));
-        Assert.Equal([FixtureAtomId("theorem/parent")], projectedChild.Receipts.ChainAtoms.ToArray());
-    }
-
-    [Fact]
-    public void BaselineConflictingReferenceMappingFailsClosed()
-    {
-        var first = Atom("delta-v0.1", "absorbed-closed", "first", "theorem/first");
-        var second = Atom("delta-v0.1", "residual-open", "second", "theorem/second");
-        var root = BackfillInventoryLoader.RootPath + "delta-v0.1/";
-        var error = Assert.Throws<FormatException>(() => BackfillInventoryLoader.LoadBaseline(Snapshot(
-            Source("delta-v0.1", "docs/delta.md", "none"),
-            (root + "absorbed-closed/legacy-atom.yaml", first.Text),
-            (root + "residual-open/legacy-atom.yaml", second.Text))));
-
-        Assert.Contains("ambiguous baseline atom reference: legacy-atom", error.Message, StringComparison.Ordinal);
-        Assert.Contains(FixtureAtomId("theorem/first"), error.Message, StringComparison.Ordinal);
-        Assert.Contains(FixtureAtomId("theorem/second"), error.Message, StringComparison.Ordinal);
-    }
-
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void CurrentCoverageEdgeLoadsForCandidateAndBaseline(bool baseline)
+    public void CurrentCoverageEdgeLoadsForCandidateAndBaseline()
     {
         var atom = Atom("delta-v0.1", "partial-open", "delta-atom", "manual/delta");
         var withCoverage = atom.Text.Replace(
@@ -71,9 +17,7 @@ public sealed partial class BackfillInventoryLoaderTests
         var snapshot = Snapshot(
             Source("delta-v0.1", "docs/delta.md", "none"),
             (atom.Path, withCoverage));
-        var inventory = baseline
-            ? BackfillInventoryLoader.LoadBaseline(snapshot)
-            : BackfillInventoryLoader.Load(snapshot);
+        var inventory = BackfillInventoryLoader.Load(snapshot);
 
         Assert.Equal(
             ["D5/X_Frontier/SyntheticSourceTarget"],
@@ -99,43 +43,6 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Fact]
-    public void BaselineCoverageProjectionRejectsHistoricalTargetField()
-    {
-        var atom = Atom("delta-v0.1", "partial-open", "delta-atom", "manual/delta");
-        var historical = atom.Text.Replace(
-            "coverage_gids: []",
-            "coverage_gids:\n"
-                + "  - gid: D5/S0/Carrier/Probe.probe\n"
-                + "    historical_target_field: not-a-statement-identity",
-            StringComparison.Ordinal);
-
-        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.LoadBaseline(Snapshot(
-            Source("delta-v0.1", "docs/delta.md", "none"),
-            (atom.Path, historical))));
-
-        Assert.Contains("coverage edge keys are not canonical", exception.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void BaselineLegacyCoverageElementFailsClosed()
-    {
-        const string resolvedGid = "D5/S0/Carrier/Probe.resolved";
-        var atom = CanonicalCoverageAtom("coverage_gids: []");
-        var legacy = atom.Text
-            .Replace(
-                "coverage_gids: []\n",
-                $"coverage_gids:\n  - {resolvedGid}\n",
-                StringComparison.Ordinal);
-
-        var exception = Assert.Throws<FormatException>(() =>
-            BackfillInventoryLoader.LoadBaseline(Snapshot(
-                Source("delta-v0.1", "docs/delta.md", "none"),
-                (atom.Path, legacy))));
-
-        Assert.Contains("coverage edge must be a mapping", exception.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
     public void CandidateLegacyCoverageElementFailsClosed()
     {
         const string resolvedGid = "D5/S0/Carrier/Probe.resolved";
@@ -151,20 +58,6 @@ public sealed partial class BackfillInventoryLoaderTests
             (atom.Path, legacy))));
 
         Assert.Contains("coverage edge must be a mapping", exception.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void BaselineLegacyCoverageSchemaRejectsAdditionalUnknownEntryKey()
-    {
-        var atom = CanonicalCoverageAtom("coverage_gids: []");
-        var legacy = atom.Text + "historical_extra: ignored-by-old-reader\n";
-
-        var exception = Assert.Throws<FormatException>(() =>
-            BackfillInventoryLoader.LoadBaseline(Snapshot(
-                Source("delta-v0.1", "docs/delta.md", "none"),
-                (atom.Path, legacy))));
-
-        Assert.Equal("source delta-v0.1 entry keys are not canonical", exception.Message);
     }
 
     [Fact]

@@ -25,8 +25,7 @@ internal sealed class FakeRepositoryGateway(
     internal int WholeTreeReadCount { get; private set; }
 
     internal List<IReadOnlyList<string>> ScopedCurrentReads { get; } = [];
-
-    internal List<IReadOnlyList<string>> ScopedRevisionReads { get; } = [];
+    internal List<IReadOnlyList<string>> CurrentPathSearches { get; } = [];
 
     internal int CurrentRevisionResolutionCount { get; private set; }
 
@@ -57,22 +56,22 @@ internal sealed class FakeRepositoryGateway(
         return ReadWholeCurrent();
     }
 
-    public RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> pathspecs)
+    public RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths)
     {
-        ScopedCurrentReads.Add(pathspecs);
-        return Scoped(ReadWholeCurrent(), pathspecs);
+        ScopedCurrentReads.Add(paths);
+        return Scoped(ReadWholeCurrent(), paths);
+    }
+
+    public IReadOnlyList<string> SearchCurrentPaths(IReadOnlyList<string> paths)
+    {
+        CurrentPathSearches.Add(paths);
+        return Scoped(ReadWholeCurrent(), paths).Entries.Select(static entry => entry.Path).ToArray();
     }
 
     public RawRepositorySnapshot ReadRevision(string revision)
     {
         WholeTreeReadCount++;
         return ReadWholeRevision(revision);
-    }
-
-    public RawRepositorySnapshot ReadRevision(string revision, IReadOnlyList<string> paths)
-    {
-        ScopedRevisionReads.Add(paths);
-        return Scoped(ReadWholeRevision(revision), paths);
     }
 
     private RawRepositorySnapshot ReadWholeCurrent()
@@ -103,16 +102,9 @@ internal sealed class FakeRepositoryGateway(
     }
 
     // A path selects itself and, as a directory, everything under it.
-    private static RawRepositorySnapshot Scoped(RawRepositorySnapshot snapshot, IReadOnlyList<string> scope)
-    {
-        const string literal = ":(literal)";
-        if (scope.Count == 0) throw new ArgumentException("a scoped read needs at least one path", nameof(scope));
-        var paths = scope
-            .Select(static item => item.StartsWith(literal, StringComparison.Ordinal) ? item[literal.Length..] : item)
-            .ToArray();
-        return RawRepositorySnapshot.Create(snapshot.Entries.Where(entry => paths.Any(path =>
-            entry.Path == path || entry.Path.StartsWith(path + "/", StringComparison.Ordinal))));
-    }
+    private static RawRepositorySnapshot Scoped(RawRepositorySnapshot snapshot, IReadOnlyList<string> paths) =>
+        RawRepositorySnapshot.Create(snapshot.Entries.Where(entry => paths.Any(path =>
+            GitRepositoryGateway.MatchesPathSelection(entry.Path, path))));
 
     private static RawRepositorySnapshot WithAtomizerData(RawRepositorySnapshot snapshot) =>
         snapshot.Entries.Any(static entry => entry.Path == TheoryAtomizerDataLoader.DataPath)

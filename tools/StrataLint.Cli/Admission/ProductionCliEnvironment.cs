@@ -24,13 +24,15 @@ internal interface IRepositoryGateway
 
     RawRepositorySnapshot ReadCurrent();
 
-    /// Reads only the working-tree paths selected by the git pathspecs.
-    RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> pathspecs);
+    /// Reads the files at the given paths from the current repository snapshot. A
+    /// directory selects everything under it, and the same FILEMAP/symlink policy as
+    /// the whole-tree reader is applied.
+    RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths);
+
+    /// Searches current paths without reading their file bodies.
+    IReadOnlyList<string> SearchCurrentPaths(IReadOnlyList<string> paths);
 
     RawRepositorySnapshot ReadRevision(string revision);
-
-    /// Reads only the given paths of the revision; a directory selects everything under it.
-    RawRepositorySnapshot ReadRevision(string revision, IReadOnlyList<string> paths);
 
     RawChangeSet ReadCurrentChanges();
 
@@ -59,7 +61,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     private readonly ILeanReportSource leanReportSource;
     private readonly IScribeEmissionVerifier? scribeEmissionVerifier;
     private readonly TimeProvider timeProvider;
-    private readonly IAtomHistorySource atomHistorySource;
     private readonly ReportFreeIngestDependencies reportFreeIngestDependencies;
 
     internal ProductionCliEnvironment(string repositoryRoot)
@@ -88,7 +89,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
-        IAtomHistorySource? atomHistorySource = null,
         ReportFreeIngestDependencies? reportFreeIngestDependencies = null)
         : this(
             repositoryRoot,
@@ -96,7 +96,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             leanReportSource,
             scribeEmissionVerifier,
             TimeProvider.System,
-            atomHistorySource,
             reportFreeIngestDependencies)
     {
     }
@@ -107,7 +106,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
         TimeProvider timeProvider,
-        IAtomHistorySource? atomHistorySource = null,
         ReportFreeIngestDependencies? reportFreeIngestDependencies = null)
     {
         this.repositoryRoot = Path.GetFullPath(repositoryRoot);
@@ -115,7 +113,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         this.leanReportSource = leanReportSource;
         this.scribeEmissionVerifier = scribeEmissionVerifier;
         this.timeProvider = timeProvider;
-        this.atomHistorySource = atomHistorySource ?? new GitAtomHistorySource(this.repositoryRoot);
         this.reportFreeIngestDependencies =
             reportFreeIngestDependencies ?? new ReportFreeIngestDependencies();
     }

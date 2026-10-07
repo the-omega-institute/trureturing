@@ -11,38 +11,6 @@ internal enum DigestionEvaluationScope
 
 internal static class DigestionEvaluationScopes
 {
-    internal static DigestionEvaluationScope ForChanges(
-        RawChangeSet changes,
-        string callerImplementationPath,
-        IReadOnlySet<string> registeredInputs)
-    {
-        ArgumentNullException.ThrowIfNull(changes);
-        ArgumentException.ThrowIfNullOrWhiteSpace(callerImplementationPath);
-        var callerDirectoryEnd = callerImplementationPath.LastIndexOf('/');
-        var callerDirectory = callerDirectoryEnd < 0
-            ? string.Empty
-            : callerImplementationPath[..(callerDirectoryEnd + 1)];
-        return !changes.Paths.Any()
-            || changes.Paths.Any(path =>
-                StrataLintEngineBuildInputs.Contains(path.Value, registeredInputs)
-                || IsCallerImplementationPath(
-                    path.Value,
-                    callerImplementationPath,
-                    callerDirectory))
-            ? DigestionEvaluationScope.FullScan
-            : DigestionEvaluationScope.ChangedSet;
-    }
-
-    private static bool IsCallerImplementationPath(
-        string path,
-        string callerImplementationPath,
-        string callerDirectory) =>
-        string.Equals(path, callerImplementationPath, StringComparison.Ordinal)
-        || (callerDirectory.Length > 0
-            && path.StartsWith(callerDirectory, StringComparison.Ordinal)
-            && path.EndsWith(".cs", StringComparison.Ordinal)
-            && path.AsSpan(callerDirectory.Length).IndexOf('/') < 0);
-
     internal static RawChangeSet? ResolveChanges(
         DigestionEvaluationScope scope,
         RawChangeSet? changes) => scope switch

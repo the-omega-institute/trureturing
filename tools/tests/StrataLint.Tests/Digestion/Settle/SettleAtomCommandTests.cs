@@ -79,7 +79,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         var before = Image(temporary);
         var applyCalls = 0;
         var result = Run(temporary.Path, raw, request,
-            code == "NONPROPOSITIONAL_ABSENT" ? ["--clear", target.AtomId, "--base", "baseline"] : null,
+            code == "NONPROPOSITIONAL_ABSENT" ? ["--clear", target.AtomId] : null,
             (root, current, updates) => { applyCalls++; IngestCommand.ApplyLedgerUpdatesAtomically(root, current, updates); });
         Assert.False(result.Success);
         if (code == "CONTEXT_MISMATCH") output.WriteLine(result.Error.TrimEnd());
@@ -213,7 +213,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
         using var temporary = new TemporaryDirectory();
         var raw = fixture.RawSnapshot();
         WriteFiles(temporary.Path, raw);
-        var result = Run(temporary.Path, raw, "", ["--clear", target.AtomId, "--base", "baseline"]);
+        var result = Run(temporary.Path, raw, "", ["--clear", target.AtomId]);
         Assert.True(result.Success, result.Error);
         Assert.Equal($"SETTLE_CLEARED atom_id={target.AtomId} path={PathFor(target)}\n", result.Output);
         Assert.Equal(BackfillInventoryWriter.WriteAtom(target).ToArray(),
@@ -285,61 +285,11 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     {
         var fixture = AtomContextFixture.Create("## Claim\n\nProse.\n");
         var result = Run("/synthetic", fixture.RawSnapshot(), "",
-            ["--request", "request.toml", "--base", "baseline", "--replace"]);
+            ["--request", "request.toml", "--replace"]);
         Assert.False(result.Success);
         Assert.StartsWith("SETTLE_INVALID ARGUMENTS_INVALID", result.Error, StringComparison.Ordinal);
     }
 
-    [Theory]
-    [InlineData(false, false, false)]
-    [InlineData(true, false, false)]
-    [InlineData(false, true, false)]
-    [InlineData(true, true, false)]
-    [InlineData(false, false, true)]
-    [InlineData(true, false, true)]
-    [InlineData(false, true, true)]
-    [InlineData(true, true, true)]
-    public void SettleAlignRequiredIsPrintedOnlyForCoveredAncestors(bool covered, bool clear, bool transitive)
-    {
-        var fixture = AtomContextFixture.Create(AtomContextFixture.ListClaims, true);
-        var parent = fixture.Ledger.RequireDigestionEntries().Single(entry => !entry.Receipts.ChainAtoms.IsEmpty);
-        var id = parent.Receipts.ChainAtoms[1];
-        var ancestor = AtomContextFixture.Create("## Ancestor\n\nAncestor.\n").Ledger.RequireDigestionEntries().Single();
-        ancestor = ancestor with { Receipts = ancestor.Receipts with { ChainAtoms = [parent.AtomId] } };
-        var coveredId = transitive ? ancestor.AtomId : parent.AtomId;
-        var entries = fixture.Ledger.RequireDigestionEntries().AsEnumerable();
-        if (transitive) entries = entries.Append(ancestor);
-        fixture = fixture.WithEntries(entries.Select(entry =>
-        {
-            if (clear && parent.Receipts.ChainAtoms.Contains(entry.AtomId, StringComparer.Ordinal)) entry = Settled(entry);
-            return entry.AtomId == coveredId && covered ? entry with
-            {
-                Coverage = [new("D5/S0/Carrier/Probe", null)],
-                ProjectedStatus = clear ? new(DigestionMigrationState.Absorbed, DigestionTruthState.Closed) : entry.ProjectedStatus,
-            } : entry;
-        }));
-        using var temporary = new TemporaryDirectory();
-        WriteFiles(temporary.Path, fixture.RawSnapshot());
-        var result = Run(temporary.Path, fixture.RawSnapshot(), Request(fixture, id),
-            clear ? ["--clear", id, "--base", "baseline"] : null);
-        Assert.True(result.Success, result.Error);
-        var lines = result.Output.Split('\n', StringSplitOptions.RemoveEmptyEntries);
-        Assert.Equal(covered ? 2 : 1, lines.Length);
-        if (covered) Assert.Equal("SETTLE_ALIGN_REQUIRED ancestors=" + coveredId, lines[1]);
-    }
-
-    [Fact]
-    public void QuarantineRefusesNonpropositionalReceipt()
-    {
-        var fixture = AtomContextFixture.Create("## Claim\n\nProse.\n");
-        var target = Settled(fixture.Ledger.RequireDigestionEntries().Single());
-        fixture = fixture.WithEntries([target]);
-        var raw = fixture.RawSnapshot();
-        var result = QuarantineAtomCommand.Run("/synthetic", new FakeRepositoryGateway(RawChangeSet.Create([]), raw, raw),
-            ["--clear", target.AtomId, "--base", "baseline"]);
-        Assert.False(result.Success);
-        Assert.StartsWith("QUARANTINE_INVALID NONPROPOSITIONAL_PRESENT", result.Error, StringComparison.Ordinal);
-    }
 
     internal static string Request(AtomContextFixture fixture, string id)
     {
@@ -356,7 +306,7 @@ public sealed class SettleAtomCommandTests(Xunit.Abstractions.ITestOutputHelper 
     {
         return Assert.IsType<CommandResult>(SettleAtomCommand.Run(root,
             new FakeRepositoryGateway(RawChangeSet.Create([]), raw, raw),
-            arguments ?? ["--request", "request.toml", "--base", "baseline"],
+            arguments ?? ["--request", "request.toml"],
             writer ?? BackfillInventoryWriter.WriteAtom,
             (_, _) => [.. Encoding.UTF8.GetBytes(request)],
             apply ?? ((directory, current, updates) => IngestCommand.ApplyLedgerUpdatesAtomically(directory, current, updates))));

@@ -20,8 +20,8 @@ public sealed class DigestionFrontierProjectionTests
         Assert.Equal(
             [DigestionFrontierFixture.ChainParentId],
             byId[DigestionFrontierFixture.QuarantinedId].ParentAtomIds.ToArray());
-        Assert.Equal(DigestionFrontierDisposition.Withheld, byId[DigestionFrontierFixture.CoverWithheldId].PrimaryDisposition);
-        Assert.Equal("cover-disposition", byId[DigestionFrontierFixture.CoverWithheldId].PrimaryDetail);
+        Assert.Equal(DigestionFrontierDisposition.NotFormalizable, byId[DigestionFrontierFixture.CoverWithheldId].PrimaryDisposition);
+        Assert.Equal("definition", byId[DigestionFrontierFixture.CoverWithheldId].PrimaryDetail);
         Assert.Equal(DigestionFrontierDisposition.Withheld, byId[DigestionFrontierFixture.StaleId].PrimaryDisposition);
         Assert.Equal("acknowledged-stale", byId[DigestionFrontierFixture.StaleId].PrimaryDetail);
         Assert.Equal(DigestionFrontierDisposition.ChainChild, byId[DigestionFrontierFixture.ChainChildId].PrimaryDisposition);
@@ -32,9 +32,9 @@ public sealed class DigestionFrontierProjectionTests
         Assert.Equal(DigestionFrontierDisposition.FormalizableClaim, byId[DigestionFrontierFixture.ClaimId].PrimaryDisposition);
 
         Assert.Equal(1, projection.Total.Quarantined);
-        Assert.Equal(2, projection.Total.Withheld);
+        Assert.Equal(1, projection.Total.Withheld);
         Assert.Equal(2, projection.Total.ChainChild);
-        Assert.Equal(1, projection.Total.NotFormalizable);
+        Assert.Equal(2, projection.Total.NotFormalizable);
         Assert.Equal(2, projection.Total.FormalizableClaim);
         Assert.Equal(8, projection.Total.ResidualOpen);
         Assert.Equal(2, projection.Total.FormalizationFrontier);

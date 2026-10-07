@@ -1,0 +1,10 @@
+**命题 285.3（完整终端奇偶核的有限 TV 界及同源消费者）。** 总变差采用有限概率律的约定
+$\|P-Q\|_{\mathrm{TV}}=\frac12\sum_x|P(x)-Q(x)|$。对全部整数 $d\ge2,M\ge3d$，有
+
+$$
+\|\mathsf R_{d,M}-\mathsf Q_{d,M}\|_{\mathrm{TV}}
+\le \epsilon_{d,M}:=
+\min\left\{1,\ 5\left(\frac{\sqrt d}{M}+\frac{d(d-1)}{M^2}\right)\right\}.
+\tag{285.7}
+$$
+

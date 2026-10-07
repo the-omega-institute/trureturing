@@ -32,7 +32,7 @@ internal static class WorktreeCommand
         + "StrataLint worktree with-cache-writer [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree with-cache-reader [--path DIR] -- COMMAND [ARG ...] | "
         + "StrataLint worktree validate-branch --branch NAME | "
-        + "StrataLint worktree remove --names \"NAME [NAME ...]\" | "
+        + "StrataLint worktree remove --names \"NAME [NAME ...]\" [--force] | "
         + "StrataLint worktree --kind KIND --name TASK_CODE --path DIR "
         + "[--base REV] [--source REPO_ROOT] [--skip-restore]. "
         + $"Allowed worktree kinds: {CreationKindList}. "

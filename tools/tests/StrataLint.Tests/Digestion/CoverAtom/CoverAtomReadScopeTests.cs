@@ -31,10 +31,20 @@ public sealed partial class CoverAtomTests
         Assert.True(result.Success, result.Error);
         Assert.Equal(0, repository.WholeTreeReadCount);
         Assert.Equal(2, repository.ScopedCurrentReads.Count);
-        Assert.Equal(["Meta", "D5", "Reg", "Trureturing.lean", "Golden/Frozen/state"], repository.ScopedCurrentReads[0]);
-        Assert.Contains(repository.ScopedCurrentReads[1], spec => spec.StartsWith(":(literal)docs/", StringComparison.Ordinal));
+        Assert.Equal(
+            [
+                BackfillInventoryLoader.RelativePath,
+                BackfillInventoryLoader.RootPath.TrimEnd('/'),
+                TheoryAtomizerDataLoader.DataPath,
+                "D5",
+                "Reg",
+                "Trureturing.lean",
+                "Golden/Frozen/state",
+            ],
+            repository.ScopedCurrentReads[0]);
+        Assert.Contains(repository.ScopedCurrentReads[1], path => path.StartsWith("docs/", StringComparison.Ordinal));
         Assert.All(repository.ScopedCurrentReads.SelectMany(static scope => scope),
-            static spec => Assert.DoesNotContain("docs/reports", spec, StringComparison.Ordinal));
+            static path => Assert.DoesNotContain("docs/reports", path, StringComparison.Ordinal));
         Assert.Empty(repository.ReadRevisionCalls);
         Assert.Empty(repository.ReadChangesCalls);
     }
@@ -54,16 +64,10 @@ public sealed partial class CoverAtomTests
         var repository = new FakeRepositoryGateway(
             RawChangeSet.Create(Array.Empty<string>()), CoverWorld.Raw(files), CoverWorld.Raw(files));
 
-        var current = repository.ReadCurrent(["Meta", "D5", ":(literal)docs/source.md"]);
-        var baseline = repository.ReadRevision("baseline", ["D5", "docs/source.md"]);
+        var current = repository.ReadCurrent(["Meta", "D5", "docs/source.md"]);
 
         Assert.Equal(
             ["D5/S0/Carrier/Probe.lean", "Meta/Digestion/atomizers.toml", "Meta/domains.yaml", "docs/source.md"],
             current.Entries.Select(static entry => entry.Path).Order(StringComparer.Ordinal).ToArray());
-        Assert.Equal(
-            ["D5/S0/Carrier/Probe.lean", "docs/source.md"],
-            baseline.Entries.Select(static entry => entry.Path).Order(StringComparer.Ordinal).ToArray());
-        Assert.Throws<ArgumentException>(() => repository.ReadCurrent([]));
-        Assert.Throws<ArgumentException>(() => repository.ReadRevision("baseline", []));
     }
 }

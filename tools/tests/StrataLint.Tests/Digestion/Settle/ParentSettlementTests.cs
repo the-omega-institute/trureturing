@@ -42,7 +42,7 @@ public sealed class ParentSettlementTests
         AssertUnchangedExcept(before, fixture.Current, parent.AtomId);
         Assert.Equal(parent.Receipts.ChainAtoms.ToArray(), Target(fixture).Receipts.ChainAtoms.ToArray());
         Assert.Equal(State, StateName(Target(fixture).ProjectedStatus));
-        var clear = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "", ["--clear", parent.AtomId, "--base", "baseline"]);
+        var clear = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "", ["--clear", parent.AtomId]);
         Assert.True(clear.Success, clear.Error);
         fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         Assert.Equal(before.Entries.Select(e => (e.Path, Convert.ToHexString(e.Bytes.AsSpan()))).OrderBy(e => e.Path),
