@@ -438,57 +438,12 @@ internal static partial class BackfillInventoryLoader
                 || (state[0] == "nonpropositional" && state[1] == "inapplicable"));
     }
 
-    internal static bool IsInputPath(string path) =>
-        path.StartsWith(RootPath, StringComparison.Ordinal)
-        || string.Equals(path, RelativePath, StringComparison.Ordinal)
-        || IsD5LeanPath(path);
-
-    internal static RepositorySnapshot ProjectInputSnapshot(RepositorySnapshot snapshot)
-    {
-        ArgumentNullException.ThrowIfNull(snapshot);
-        return RepositorySnapshot.Create(snapshot.Files
-            .Where(static pair => IsInputPath(pair.Key.Value))
-            .ToImmutableDictionary());
-    }
-
     internal static BackfillInventoryDocument Load(RepositorySnapshot snapshot) =>
         LoadSnapshot(snapshot, LoadCandidateDirectorySnapshot);
 
-    // Digestion commands never consume the ticket index.  Keep the rule-engine
-    // loader above authoritative, while avoiding a D5-wide TASK scan whenever a
-    // command only needs the ledger projection.
+    // Ledger consumers do not need the D5-wide TASK index.
     internal static BackfillInventoryDocument LoadForDigestion(RepositorySnapshot snapshot) =>
         LoadSnapshot(snapshot, static current => LoadCandidateDirectorySnapshot(current, deriveTickets: false));
-
-    internal static BackfillInventoryDocument LoadCandidateDelta(
-        RepositorySnapshot candidate,
-        RepositorySnapshot baseline,
-        RawChangeSet changes)
-    {
-        ArgumentNullException.ThrowIfNull(candidate);
-        ArgumentNullException.ThrowIfNull(baseline);
-        ArgumentNullException.ThrowIfNull(changes);
-
-        var changed = changes.Paths
-            .Select(static path => path.Value)
-            .ToHashSet(StringComparer.Ordinal);
-        var files = ProjectInputSnapshot(candidate).Files.ToBuilder();
-
-        // Candidate-side parsing is authoritative only for the declared delta. For every
-        // unchanged backfill record still present in the candidate, feed the trusted baseline
-        // bytes to the strict loader. Candidate deletions are absent from the candidate ledger.
-        // This keeps historical projection quirks out of the candidate comparison while
-        // retaining the current tree for all query inputs (Lean, targets, and source files).
-        foreach (var (path, file) in baseline.Files
-                     .Where(static pair => IsCanonicalPath(pair.Key.Value))
-                     .Where(pair => candidate.TryGetFile(pair.Key.Value, out _))
-                     .Where(pair => !changed.Contains(pair.Key.Value)))
-        {
-            files[path] = file;
-        }
-
-        return Load(RepositorySnapshot.Create(files.ToImmutable()));
-    }
 
     private static BackfillInventoryDocument LoadSnapshot(
         RepositorySnapshot snapshot,
