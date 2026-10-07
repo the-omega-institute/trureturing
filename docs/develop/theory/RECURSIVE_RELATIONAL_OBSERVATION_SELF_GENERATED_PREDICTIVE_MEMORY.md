@@ -489,7 +489,7 @@ $$
 }
 $$
 
-The fixed-holding construction attains the last upper bound with minority exit weight $\beta=\alpha_{\mathrm{tail}}\delta_{K_{\mathrm{tail}}}$.
+The fixed-holding construction realizes the $7+K_{\mathrm{tail}}$ option with minority exit weight $\beta=\alpha_{\mathrm{tail}}\delta_{K_{\mathrm{tail}}}$; choosing the smaller of it and the $6+N_1$ source-exact construction realizes the displayed upper bound.
 
 **Proof (6.1).** Choose feasible $t,\beta$. Use the labels
 
