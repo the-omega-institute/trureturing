@@ -7,6 +7,10 @@
    digest: Sharp separation and critical recovery for actual finite-tail addresses. -/
 
 import D5.S1.Digit.Infinite.ClosedObservationGraphRealization
+import D5.S1.Digit.Infinite.OddColorThreeSource
+import D5.S1.Digit.Infinite.LateLabelStateBound
+import D5.S1.Digit.Infinite.FixedTailClosedBudget
+import D5.S1.Digit.Infinite.SevenCycleCoherenceRefutation
 import Mathlib.Analysis.Normed.Group.Constructions
 import Mathlib.Topology.Instances.Discrete
 import Mathlib.Analysis.Normed.Affine.AddTorsor
@@ -55,65 +59,52 @@ def correct (h : ℕ) (ε : ℝ)
     dist r.val (response h x) ≤ ε → decode r = windowPrefix h x
 
 theorem golden_facts : 0 < t ∧ t < 1 ∧ t ^ 2 + t = 1 ∧ 1 + g = 2 * t := by
-  have hp : 0 < t := inv_pos.mpr Real.goldenRatio_pos
-  have hl : t < 1 := inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio
-  have hs : t ^ 2 + t = 1 := by
-    dsimp [t, D5.S1.Digit.Infinite.SignedSeriesRange.alpha]
-    rw [Real.inv_goldenRatio]
-    nlinarith [Real.goldenConj_sq]
-  refine ⟨hp, hl, hs, ?_⟩
-  dsimp [g]
-  nlinarith [congrArg (fun z : ℝ => t * z) hs]
-
-private theorem shift_shift (x : LegalDigits) (m n : ℕ) :
-    bitShift (bitShift x m) n = bitShift x (m + n) := by
-  apply Subtype.ext
-  exact funext fun j => congrArg x.val (by omega : (j + n) + m = j + (m + n))
+  obtain ⟨hp, hl, hs, hg, _⟩ :=
+    D5.S1.Digit.Infinite.OddColorThreeSource.golden_relations
+  exact ⟨hp, hl, by linarith only [hs], by linarith only [hg]⟩
 
 theorem residual (x : LegalDigits) (j : ℕ) :
     kappa (bitShift x (3 * j)) + g * kappa (bitShift x (3 * (j + 1))) =
       offset (window x j) := by
   have hr := (closed_observation_graph_realization.2.2.1 (bitShift x (3 * j))).1
   have hw : window (bitShift x (3 * j)) 0 = window x j := by
-    simp only [window, Nat.mul_zero, shift_shift, Nat.add_zero]
+    simp only [window, Nat.mul_zero,
+      D5.S1.Digit.Infinite.OddColorThreeSource.shift_add, Nat.add_zero]
   rw [hw] at hr
-  simp only [originalT, shift_shift] at hr
+  simp only [originalT, D5.S1.Digit.Infinite.OddColorThreeSource.shift_add] at hr
   dsimp only [branch] at hr
   simp only [Nat.mul_add, Nat.mul_one]
   linarith
 
-theorem label_gap (l m : Label) (hne : l ≠ m) :
-    t ^ 2 ≤ |offset l - offset m| := by
-  have ht := golden_facts
-  have hhalf : (1 : ℝ) / 2 < t := by nlinarith [ht.2.2.1]
-  have hln0 := l.property 0 (by decide)
-  have hln1 := l.property 1 (by decide)
-  have hmn0 := m.property 0 (by decide)
-  have hmn1 := m.property 1 (by decide)
-  have hext : (l.val 0 = m.val 0 ∧ l.val 1 = m.val 1 ∧ l.val 2 = m.val 2) → l = m := by
-    rintro ⟨h0,h1,h2⟩
-    apply Subtype.ext
-    funext i
-    fin_cases i <;> assumption
-  simp only [Fin.reduceFinMk] at hln0 hln1 hmn0 hmn1
-  cases hl0 : l.val 0 <;> cases hl1 : l.val 1 <;> cases hl2 : l.val 2 <;>
-    cases hm0 : m.val 0 <;> cases hm1 : m.val 1 <;> cases hm2 : m.val 2 <;>
-    simp_all only [Bool.false_eq_true, not_false_eq_true, and_self,
-      and_false, false_and, and_true, true_and]
-  all_goals try contradiction
-  all_goals dsimp only [offset]
-  all_goals simp only [hl0,hl1,hl2,hm0,hm1,hm2, Bool.false_eq_true, ↓reduceIte]
-  all_goals first
-    | exact (le_abs_self _).trans' (by nlinarith [ht.2.2.1])
-    | exact (neg_le_abs _).trans' (by nlinarith [ht.2.2.1])
-
 private theorem separation (h : ℕ) (x y : LegalDigits) (hne : windowPrefix h x ≠ windowPrefix h y) :
     t / 2 ≤ dist (response h x) (response h y) := by
   classical
+  have hgap (l m : Label) (hne : l ≠ m) : t ^ 2 ≤ |offset l - offset m| := by
+    have ht := golden_facts
+    have hhalf : (1 : ℝ) / 2 < t :=
+      D5.S1.Digit.Infinite.OddColorThreeSource.golden_relations.2.2.2.2
+    have hln0 := l.property 0 (by decide)
+    have hln1 := l.property 1 (by decide)
+    have hmn0 := m.property 0 (by decide)
+    have hmn1 := m.property 1 (by decide)
+    have hext : (l.val 0 = m.val 0 ∧ l.val 1 = m.val 1 ∧ l.val 2 = m.val 2) → l = m := by
+      rintro ⟨h0,h1,h2⟩
+      apply Subtype.ext
+      funext i
+      fin_cases i <;> assumption
+    simp only [Fin.reduceFinMk] at hln0 hln1 hmn0 hmn1
+    cases hl0 : l.val 0 <;> cases hl1 : l.val 1 <;> cases hl2 : l.val 2 <;>
+      cases hm0 : m.val 0 <;> cases hm1 : m.val 1 <;> cases hm2 : m.val 2 <;>
+      simp_all only [Bool.false_eq_true, not_false_eq_true, and_self,
+        and_false, false_and, and_true, true_and]
+    all_goals try contradiction
+    all_goals dsimp only [offset]
+    all_goals simp only [hl0,hl1,hl2,hm0,hm1,hm2, Bool.false_eq_true, ↓reduceIte]
+    all_goals first
+      | exact (le_abs_self _).trans' (by nlinarith [ht.2.2.1])
+      | exact (neg_le_abs _).trans' (by nlinarith [ht.2.2.1])
   obtain ⟨j, hj⟩ : ∃ j : Fin h, window x j ≠ window y j := by
-    by_contra hh
-    push Not at hh
-    exact hne (funext hh)
+    exact Function.ne_iff.mp hne
   let M := dist (response h x) (response h y)
   have h0 : |kappa (bitShift x (3 * j.val)) - kappa (bitShift y (3 * j.val))| ≤ M := by
     exact dist_le_pi_dist (response h x) (response h y) ⟨j.val, by omega⟩
@@ -134,7 +125,7 @@ private theorem separation (h : ℕ) (x y : LegalDigits) (hne : windowPrefix h x
             kappa (bitShift y (3 * (j.val + 1))))| := abs_add_le _ _
       _ ≤ M + g * M := by rw [abs_mul, abs_of_nonneg hg]; gcongr
       _ = (1 + g) * M := by ring
-  have hl := label_gap _ _ hj
+  have hl := hgap _ _ hj
   rw [golden_facts.2.2.2] at hu
   have hp := golden_facts.1
   nlinarith
@@ -142,10 +133,7 @@ private theorem separation (h : ℕ) (x y : LegalDigits) (hne : windowPrefix h x
 private theorem half_not_integral (z : GoldenInt) : embedding z ≠ t / 2 := by
   intro he
   have ht : t = Real.goldenRatio - 1 := by
-    dsimp [t, D5.S1.Digit.Infinite.SignedSeriesRange.alpha]
-    rw [Real.inv_goldenRatio, Real.goldenConj]
-    dsimp [Real.goldenRatio]
-    ring
+    linarith only [D5.S1.Digit.Infinite.SevenCycleOriginalGraph.golden_ratio_t]
   have hb : 2 * z.b - 1 ≠ 0 := by omega
   have hbr : ((2 * z.b - 1 : ℤ) : ℝ) ≠ 0 := Int.cast_ne_zero.mpr hb
   have hφ : Real.goldenRatio = ((-2 * z.a - 1 : ℤ) : ℝ) /
@@ -156,12 +144,6 @@ private theorem half_not_integral (z : GoldenInt) : embedding z ≠ t / 2 := by
     linarith
   exact Real.goldenRatio_irrational.ne_rational (-2 * z.a - 1) (2 * z.b - 1) hφ
 
-private theorem finite_shift (x : LegalDigits) (hx : finiteTail x) (n : ℕ) :
-    finiteTail (bitShift x n) := by
-  obtain ⟨N,hN⟩ := hx
-  refine ⟨N, fun j hj => hN (j + n) ?_⟩
-  exact hj.trans (Nat.le_add_right j n)
-
 private theorem strict_separation (h : ℕ) (x y : LegalDigits)
     (hx : finiteTail x) (hy : finiteTail y) (hne : windowPrefix h x ≠ windowPrefix h y) :
     t / 2 < dist (response h x) (response h y) := by
@@ -171,9 +153,9 @@ private theorem strict_separation (h : ℕ) (x y : LegalDigits)
   intro he
   obtain ⟨j,hj⟩ := ((dist_pi_eq_iff (div_pos golden_facts.1 (by norm_num))).mp he.symm).1
   obtain ⟨a,ha⟩ := closed_observation_graph_realization.2.2.2.2.2.2.2.1
-    (bitShift x (3 * j.val)) (finite_shift x hx _)
+    (bitShift x (3 * j.val)) (D5.S1.Digit.Infinite.LateLabelStateBound.finite_shift x _ hx)
   obtain ⟨b,hb⟩ := closed_observation_graph_realization.2.2.2.2.2.2.2.1
-    (bitShift y (3 * j.val)) (finite_shift y hy _)
+    (bitShift y (3 * j.val)) (D5.S1.Digit.Infinite.LateLabelStateBound.finite_shift y _ hy)
   have hd : |embedding (a - b)| = t / 2 := by
     rw [map_sub]
     simpa only [response, Real.dist_eq, ha,hb] using hj
@@ -357,11 +339,8 @@ private theorem recovery (h : ℕ) (hh : 1 ≤ h) (ε : ℝ) (_hε : 0 ≤ ε) :
 
 private theorem translated_distance (h : ℕ) (z : Fin (h + 1) → ℝ) (c : ℝ) (hc : 0 < c) :
     dist (fun j => z j - c) z = c := by
-  have he : (fun j => z j - c) - z = fun _ => -c := by
-    funext j
-    dsimp
-    ring
-  rw [dist_eq_norm, he, pi_norm_const, Real.norm_eq_abs, abs_neg, abs_of_pos hc]
+  change dist (z - fun _ => c) z = c
+  rw [dist_self_sub_left, pi_norm_const, Real.norm_eq_abs, abs_of_pos hc]
 
 private theorem critical_member (h : ℕ) :
     (fun _ : Fin (h + 1) => t / 4) ∈ observations h (t / 4) := by
@@ -410,19 +389,18 @@ noncomputable def affineResponse (h : ℕ) (x : LegalDigits) (a : ℝ) : Fin (h 
 
 private theorem shifted_window (x : LegalDigits) (n j : ℕ) :
     window (bitShift x (3 * n)) j = window x (n + j) := by
-  simp only [window, shift_shift, Nat.mul_add]
+  simp only [window, D5.S1.Digit.Infinite.OddColorThreeSource.shift_add, Nat.mul_add]
 
 private theorem tail_guard (s : Bool) (x : LegalDigits) (n : ℕ) (hx : stateAddress s x) :
     stateAddress (actualGuard s x n) (bitShift x (3 * n)) := by
-  intro hg
   cases n with
-  | zero => simpa [actualGuard, bitShift] using hx hg
+  | zero => simpa [actualGuard, bitShift] using hx
   | succ n =>
-    have hh := x.property (3 * (n + 1) - 1)
-    have hbit : x.val (3 * (n + 1) - 1) = true := by simpa [actualGuard] using hg
-    have hn : 3 * (n + 1) - 1 + 1 = 3 * (n + 1) := by omega
-    simp only [hbit, hn, true_and, Bool.not_eq_true] at hh
-    simpa [bitShift] using hh
+    have hs := (closed_observation_graph_realization.2.2.1 (bitShift x (3 * n))).2.1
+    simpa [stateAddress, actualGuard, originalT, outgoing, window,
+      D5.S1.Digit.Infinite.WindowSuccessorGraph.P, bitShift,
+      show 3 * (n + 1) - 1 = 2 + 3 * n by omega,
+      Nat.mul_add, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm] using hs
 
 private theorem guard_step (s : Bool) (x : LegalDigits) (n : ℕ) :
     actualGuard (outgoing (window x 0)) (originalT x) n = actualGuard s x (n + 1) := by
@@ -437,63 +415,78 @@ private theorem realize_tail (h : ℕ) (s : Bool) (x z : LegalDigits)
     (hx : stateAddress s x) (hz : stateAddress (actualGuard s x h) z) :
     ∃ y : LegalDigits, stateAddress s y ∧ windowPrefix h y = windowPrefix h x ∧
       bitShift y (3 * h) = z := by
-  induction h generalizing s x z with
-  | zero =>
-    refine ⟨z,hz,?_,?_⟩
-    · ext j
-      exact Fin.elim0 j
-    · apply Subtype.ext
-      funext i
-      simp [bitShift]
-  | succ h ih =>
-    have hs := (closed_observation_graph_realization.2.2.1 x).2.1
-    rw [← guard_step s x h] at hz
-    obtain ⟨v,hv,hvp,hvt⟩ := ih (outgoing (window x 0)) (originalT x) z hs hz
-    have hl : lawful s (window x 0) (outgoing (window x 0)) := by
-      refine ⟨?_,rfl⟩
-      intro hsg
-      simpa [window, D5.S1.Digit.Infinite.WindowSuccessorGraph.P, bitShift] using hx hsg
-    obtain ⟨y,⟨hy,hyw,hyt⟩,_⟩ := closed_observation_graph_realization.2.2.2.1
-      s (window x 0) (outgoing (window x 0)) v hl hv
-    refine ⟨y,hy,?_,?_⟩
-    · funext j
-      by_cases hj : j.val = 0
-      · simpa [windowPrefix, hj] using hyw
-      · have hk : j.val - 1 < h := by omega
-        have hp := congrFun hvp ⟨j.val - 1,hk⟩
-        change window v (j.val - 1) = window (originalT x) (j.val - 1) at hp
-        rw [← hyt] at hp
-        change window (bitShift y (3 * 1)) (j.val - 1) =
-          window (bitShift x (3 * 1)) (j.val - 1) at hp
-        rw [shifted_window y 1, shifted_window x 1] at hp
-        simpa only [windowPrefix, show 1 + (j.val - 1) = j.val by omega] using hp
-    · have he : bitShift y (3 * (h + 1)) = bitShift (originalT y) (3 * h) := by
-        simp only [originalT, shift_shift]
-        congr 1
-        omega
-      rw [he,hyt,hvt]
+  have word_succ (n : ℕ) (u : LegalDigits) :
+      List.ofFn (windowPrefix (n + 1) u) =
+        window u 0 :: List.ofFn (windowPrefix n (originalT u)) := by
+    rw [List.ofFn_succ]
+    congr 1
+  have path (n : ℕ) (q : Bool) (u : LegalDigits) (hu : stateAddress q u) :
+      D5.S1.Digit.Infinite.FixedTailClosedBudget.SourcePath q
+        (List.ofFn (windowPrefix n u)) (actualGuard q u n) := by
+    induction n generalizing q u with
+    | zero =>
+      simpa only [List.ofFn_zero, actualGuard, ↓reduceIte] using
+        D5.S1.Digit.Infinite.FixedTailClosedBudget.SourcePath.nil q
+    | succ n ih =>
+      rw [word_succ, ← guard_step q u n]
+      apply D5.S1.Digit.Infinite.FixedTailClosedBudget.SourcePath.cons
+      · refine ⟨?_, rfl⟩
+        intro hq
+        simpa [window, D5.S1.Digit.Infinite.WindowSuccessorGraph.P, bitShift] using hu hq
+      · exact ih _ _ (closed_observation_graph_realization.2.2.1 u).2.1
+  have unpack (n : ℕ) (u v a : LegalDigits)
+      (hp : D5.S1.Digit.Infinite.FixedTailClosedBudget.addressPrefix
+        (List.ofFn (windowPrefix n u)) v a) :
+      windowPrefix n v = windowPrefix n u ∧ bitShift v (3 * n) = a := by
+    induction n generalizing u v with
+    | zero =>
+      refine ⟨?_, ?_⟩
+      · ext j
+        exact Fin.elim0 j
+      · simpa only [List.ofFn_zero,
+          D5.S1.Digit.Infinite.FixedTailClosedBudget.addressPrefix, Nat.mul_zero,
+          bitShift, Nat.add_zero] using hp
+    | succ n ih =>
+      rw [word_succ] at hp
+      obtain ⟨hw, ht⟩ := ih (originalT u) (originalT v) hp.2
+      refine ⟨?_, ?_⟩
+      · funext j
+        by_cases hj : j.val = 0
+        · simpa only [windowPrefix, hj] using hp.1
+        · have hk : j.val - 1 < n := by omega
+          have he := congrFun hw ⟨j.val - 1, hk⟩
+          change window (bitShift v (3 * 1)) (j.val - 1) =
+            window (bitShift u (3 * 1)) (j.val - 1) at he
+          rw [shifted_window v 1, shifted_window u 1] at he
+          simpa only [windowPrefix, show 1 + (j.val - 1) = j.val by omega] using he
+      · have he : bitShift v (3 * (n + 1)) = bitShift (originalT v) (3 * n) := by
+          simp only [originalT, D5.S1.Digit.Infinite.OddColorThreeSource.shift_add]
+          congr 1
+          omega
+        rw [he, ht]
+  obtain ⟨y, hy, hp⟩ := D5.S1.Digit.Infinite.FixedTailClosedBudget.source_path_realization
+    (path h s x hx) z hz
+  obtain ⟨hw, ht⟩ := unpack h x y z hp
+  exact ⟨y, hy, hw, ht⟩
 
 private theorem response_expansion (x : LegalDigits) (j n : ℕ) :
     kappa (bitShift x (3 * j)) =
       (∑ k ∈ Finset.range n, (-g) ^ k * offset (window x (j + k))) +
       (-g) ^ n * kappa (bitShift x (3 * (j + n))) := by
-  induction n generalizing j with
-  | zero => simp
-  | succ n ih =>
-    have hi := ih (j + 1)
-    have hr := residual x j
-    have hsum : (∑ k ∈ Finset.range n, (-g) ^ (k + 1) * offset (window x (j + (k + 1)))) =
-        -g * (∑ k ∈ Finset.range n, (-g) ^ k * offset (window x ((j + 1) + k))) := by
-      rw [Finset.mul_sum]
-      apply Finset.sum_congr rfl
-      intro k _
-      rw [show j + (k + 1) = (j + 1) + k by omega, pow_succ]
-      ring
-    rw [Finset.sum_range_succ']
-    simp only [pow_zero, one_mul, Nat.add_zero]
-    rw [hsum, pow_succ, show j + (n + 1) = (j + 1) + n by omega]
-    rw [hi] at hr
-    linarith only [hr]
+  let f (k : ℕ) : ℝ := (-g) ^ k * kappa (bitShift x (3 * (j + k)))
+  have hterm (k : ℕ) : (-g) ^ k * offset (window x (j + k)) = f k - f (k + 1) := by
+    dsimp only [f]
+    rw [← residual x (j + k), pow_succ, Nat.add_assoc]
+    ring
+  have he : (∑ k ∈ Finset.range n, (-g) ^ k * offset (window x (j + k))) =
+      f 0 - f n := by
+    calc
+      _ = ∑ k ∈ Finset.range n, (f k - f (k + 1)) :=
+        Finset.sum_congr rfl (fun k _ => hterm k)
+      _ = f 0 - f n := Finset.sum_range_sub' f n
+  dsimp only [f] at he
+  simp only [pow_zero, one_mul, Nat.add_zero] at he
+  linarith only [he]
 
 private theorem affine_actual (h : ℕ) (x y : LegalDigits)
     (hp : windowPrefix h y = windowPrefix h x) :

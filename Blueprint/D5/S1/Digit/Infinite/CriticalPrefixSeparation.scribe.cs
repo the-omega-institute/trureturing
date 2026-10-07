@@ -7,7 +7,29 @@ internal sealed class CriticalPrefixSeparationDocument : IScribeDocumentDefiniti
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Sharp separation and critical prefix recovery.",
         H("Sharp separation and critical prefix recovery"),
-        Blocks(Describe.Lean(
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("criticalprefixseparation-golden-facts"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/CriticalPrefixSeparation.golden_facts"),
+                H("Golden scalar identities"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The reciprocal golden ratio t lies strictly between zero and one, "
+                    + "satisfies t^2+t=1, and obeys 1+t^3=2t."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("criticalprefixseparation-residual"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/CriticalPrefixSeparation.residual"),
+                H("Exact sample residual"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every legal source x and every window index j, the scalar after "
+                    + "deleting 3j bits plus t^3 times the scalar after deleting 3(j+1) bits "
+                    + "equals the translation of the jth window."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
             DescribeId.Create("criticalprefixseparation-result"),
             DeclarationHandle.Create("D5/S1/Digit/Infinite/CriticalPrefixSeparation.result"),
             H("Sharp separation and critical prefix recovery"),
@@ -26,7 +48,9 @@ internal sealed class CriticalPrefixSeparationDocument : IScribeDocumentDefiniti
                     + "t/2 in the supremum metric. The empty source and the infinite repetition of five "
                     + "attain it, and both are legal under either incoming guard.")),
                 Paragraph(Text(
-                    "The five translations have smallest gap t^2. Let d_i be the difference of "
+                    "In increasing order the five translations are -t, 0, t^2, 1, and 1+t^2, "
+                    + "with successive gaps t, t^2, t, and t^2. Thus distinct window translations "
+                    + "differ by at least t^2. Let d_i be the difference of "
                     + "the two sources' samples at time i. At a differing window j the translation "
                     + "difference is d_j+t^3 d_(j+1). Thus the maximum sample difference M satisfies "
                     + "t^2 <= (1+t^3)M = 2tM.")),
@@ -45,7 +69,7 @@ internal sealed class CriticalPrefixSeparationDocument : IScribeDocumentDefiniti
                     + "source admit a common midpoint observation with different prefixes.")),
                 Paragraph(Text(
                     "Give prefix values the discrete topology. At the constant observation t/4 "
-                    + "every correct decoder returns the empty prefix. The finite five-run responses "
+                    + "every correct decoder returns the all-null prefix of length h. The finite five-run responses "
                     + "minus the constant t/4 vector are actual critical observations converging to "
                     + "that same point, while their decoded prefixes are all five. Hence every correct "
                     + "decoder is discontinuous there."))),
