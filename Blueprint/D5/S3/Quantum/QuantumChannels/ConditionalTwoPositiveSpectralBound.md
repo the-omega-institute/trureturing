@@ -50,6 +50,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/ConditionalTwoPositiveSpectralBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/vom-ende-chruscinski-kimura-muratore-ginanneschi-2025-conditional-two-positive-bound` (proved) by `D5/S3/Quantum/QuantumChannels/ConditionalTwoPositiveSpectralBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"vom-ende-chruscinski-kimura-muratore-ginanneschi-2025-conditional-two-positive-bound","declaration_gid":"D5/S3/Quantum/QuantumChannels/ConditionalTwoPositiveSpectralBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* F. vom Ende, D. Chruściński, G. Kimura, P. Muratore-Ginanneschi (2025). *Universal Bound on the Eigenvalues of 2-Positive Trace-Preserving Maps*. DOI: [10.1016/j.laa.2025.10.022](https://doi.org/10.1016/j.laa.2025.10.022). URL: <https://arxiv.org/abs/2506.02145v1>.

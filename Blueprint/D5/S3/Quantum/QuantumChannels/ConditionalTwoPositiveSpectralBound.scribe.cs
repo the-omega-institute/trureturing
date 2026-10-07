@@ -25,14 +25,18 @@ internal sealed class ConditionalTwoPositiveSpectralBoundDocument : IScribeDocum
                 "Page 11, arXiv:2506.02145v1: \"Hence one may wonder whether all (generators of) completely positive maps, resp. 2-positive maps satisfy\" tr(\u03a6) \u2264 d min \u211c(\u03c3(\u03a6)) + (d\u00b2 \u2212 d) max \u211c(\u03c3(\u03a6)) ? \"With this, (10) becomes really a conjecture about the spectrum of arbitrary conditionally 2-positive maps.\" The encoding quantifies over every positive matrix dimension and every complex-linear endomorphism, uses the literal operator exponential, and takes the real extrema over the roots of its characteristic polynomial. It also asserts that the endomorphism trace is real.", DescribeRole.Definition, Repo()),
             Node("result", "result", "result",
                 Disp(Named("claim")),
-                "Every conditionally 2-positive endomorphism satisfies (10). Adding epsilon times the trace-to-identity map produces a faithful Perron eigenmatrix. Congruence by its square root and division by the Perron eigenvalue give a unital map whose Hilbert\u2013Schmidt adjoint is trace preserving. Theorem 1 transports through this similarity. Letting epsilon tend to zero gives the bound for every 2-positive map; applying it to exp(tL) and passing through the difference quotient at t = 0 gives the asserted bound for L, together with reality of its trace.", DescribeRole.Theorem, Repo()))));
+                "Every conditionally 2-positive endomorphism satisfies (10). Adding epsilon times the trace-to-identity map produces a faithful Perron eigenmatrix. Congruence by its square root and division by the Perron eigenvalue give a unital map whose Hilbert\u2013Schmidt adjoint is trace preserving. Theorem 1 transports through this similarity. Letting epsilon tend to zero gives the bound for every 2-positive map; applying it to exp(tL) and passing through the difference quotient at t = 0 gives the asserted bound for L, together with reality of its trace.", DescribeRole.Theorem, Repo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("vom-ende-chruscinski-kimura-muratore-ginanneschi-2025-conditional-two-positive-bound"),
+                    ResolutionKind.Proved)))));
 
     private static AssessedProvenance Lit() => AssessedProvenance.FromLiterature(Source);
     private static AssessedProvenance Repo() => AssessedProvenance.FromRepo(Source);
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
-        StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role);
+        StatementSource.FromAuthor(formula), provenance, Blocks(Paragraph(Text(prose))), role, resolution);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
 }
