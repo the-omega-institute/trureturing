@@ -15,7 +15,6 @@ internal static partial class CoverAtomCommand
         // The ledger as the session first read it: the state its writes are compared with.
         internal RepositorySnapshot Baseline { get; }
         internal BackfillInventoryDocument Document => document ??= LoadDocument(Current);
-        internal BackfillInventoryDocument BaselineDocument { get; }
         internal LeanAxiomReport Report { get; }
         internal AcceptedLeanClosure Lean { get; }
         internal FrozenStateCatalog FrozenState { get; }
@@ -28,9 +27,8 @@ internal static partial class CoverAtomCommand
             DateTimeOffset recordedAtUtc, string firstGid)
         {
             this.root = root;
-            (CurrentRaw, current, document) = DigestionWorkingTree.Read(repository, Decode, LoadDocument);
+            (CurrentRaw, current, document) = DigestionWorkingTree.ReadEvaluation(repository, Decode, LoadDocument);
             Baseline = current;
-            BaselineDocument = document;
             Report = reportSource.Load(Current);
             Lean = ValidateLean(Current, Report);
             try

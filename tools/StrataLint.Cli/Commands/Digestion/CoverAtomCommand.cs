@@ -45,7 +45,6 @@ internal static partial class CoverAtomCommand
             var current = session.Current;
             var baseline = session.Baseline;
             var document = session.Document;
-            var baselineDocument = session.BaselineDocument;
             var report = session.Report;
             var lean = session.Lean;
 
@@ -243,9 +242,7 @@ internal static partial class CoverAtomCommand
                 plannedDocument,
                 current,
                 lean,
-                baselineDocument,
                 validateProjectedStatus: false,
-                baselineSnapshot: baseline,
                 changes: receiptVerificationChanges,
                 projectedStatusChanges: evaluationChanges,
                 truthStates: truthStates,
@@ -257,15 +254,6 @@ internal static partial class CoverAtomCommand
             {
                 // Initial cover requires the atom to become
                 // deletable Closed with no residual gap.
-                if (!IsClosedDeletable(finalTarget))
-                {
-                    RecordCoverDisposition(
-                        session,
-                        target,
-                        finalTarget,
-                        options.Gids);
-                }
-
                 RequireClosedDeletable(finalTarget);
             }
             else
@@ -279,8 +267,6 @@ internal static partial class CoverAtomCommand
                     document,
                     current,
                     lean,
-                    baselineDocument,
-                    baselineSnapshot: baseline,
                     changes: receiptVerificationChanges,
                     projectedStatusChanges: evaluationChanges,
                     truthStates: truthStates,
@@ -408,33 +394,6 @@ internal static partial class CoverAtomCommand
 
     private static bool IsClosedDeletable(DigestionEntryEvaluation covered) =>
         covered.Deletable && covered.DerivedStatus.Truth == DigestionTruthState.Closed;
-
-    private static void RecordCoverDisposition(
-        Session session,
-        DigestionLedgerEntry target,
-        DigestionEntryEvaluation outcome,
-        ImmutableArray<string> gids)
-    {
-        var disposition = new DigestionCoverDisposition(
-            outcome.DerivedStatus,
-            gids.Order(StringComparer.Ordinal).ToImmutableArray(),
-            outcome.Gaps
-                .Select(static gap => new DigestionDispositionGap(gap.Code, gap.Detail))
-                .OrderBy(static gap => gap.Code, StringComparer.Ordinal)
-                .ThenBy(static gap => gap.Detail, StringComparer.Ordinal)
-                .ToImmutableArray());
-        var dispositionDocument = ReplaceEntry(
-            session.Document,
-            target.AtomId,
-            target with
-            {
-                Receipts = target.Receipts with { CoverDisposition = disposition },
-            });
-        var dispositionRaw = IngestCommand.ReplaceLedger(session.CurrentRaw, session.Document, dispositionDocument);
-        session.Commit(
-            dispositionRaw,
-            IngestCommand.LedgerUpdates(session.CurrentRaw, dispositionRaw, session.Document, dispositionDocument));
-    }
 
     private sealed record CoverArguments(
         string AtomId,

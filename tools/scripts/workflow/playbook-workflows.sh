@@ -6,11 +6,22 @@ PROJECT="tools/StrataLint.Cli/StrataLint.Cli.csproj"
 REPORT=".lake/build/stratalint/raw-lean-report.json"
 FROZEN_LEDGER="Golden/Frozen/accepted"
 COMMAND="${1:-}"
-BASE="${2:-origin/dev}"
-if [[ "$COMMAND" != deposit-uncovered ]]; then
-  ATOM_ID="${3:-}"
-  GID="${4:-}"
-fi
+# cover and cover-batch read nothing from git, so they take no base.
+case "$COMMAND" in
+  cover|cover-batch)
+    BASE=""
+    ATOM_ID="${2:-}"
+    GID="${3:-}"
+    ;;
+  deposit-uncovered)
+    BASE="${2:-origin/dev}"
+    ;;
+  *)
+    BASE="${2:-origin/dev}"
+    ATOM_ID="${3:-}"
+    GID="${4:-}"
+    ;;
+esac
 COVER_FAILURE_REASON=""
 
 run_cli() {
@@ -18,7 +29,7 @@ run_cli() {
 }
 
 run_digest_status() {
-  run_cli digest-status --base "$BASE"
+  run_cli digest-status
 }
 
 align_delivery_ledger() {
@@ -98,7 +109,11 @@ atom_id_resolves() {
 
 require_atom_argument() {
   if [[ ! "$ATOM_ID" =~ ^[a-z0-9-]+$ ]]; then
-    echo "usage: playbook-workflows.sh $COMMAND BASE ATOM_ID GID" >&2
+    if [[ "$COMMAND" == cover ]]; then
+      echo "usage: playbook-workflows.sh cover ATOM_ID GID" >&2
+    else
+      echo "usage: playbook-workflows.sh $COMMAND BASE ATOM_ID GID" >&2
+    fi
     return 2
   fi
 
@@ -125,7 +140,7 @@ require_transaction_arguments() {
 require_cover_batch_arguments() {
   local atoms_file="$ATOM_ID"
   if [[ -z "$atoms_file" || -n "$GID" || ! -f "$atoms_file" || ! -r "$atoms_file" ]]; then
-    echo "usage: playbook-workflows.sh cover-batch BASE ATOMS_FILE" >&2
+    echo "usage: playbook-workflows.sh cover-batch ATOMS_FILE" >&2
     return 2
   fi
 
@@ -298,7 +313,6 @@ case "$COMMAND" in
   deliver-check)
     make lean-report
     make emit
-    make align-digestion-status BASE="$BASE"
     run_digest_status
     # Freeze last among all mutating derivations so the proposition snapshot is current.
     verify_added_frozen_events_v5
@@ -338,7 +352,7 @@ case "$COMMAND" in
     step cover-batch run_cli cover-batch --atoms "$ATOM_ID"
     ;;
   *)
-    echo "usage: playbook-workflows.sh deliver-check|deposit|deposit-uncovered|cover|cover-batch [BASE] [ATOM_ID GID|GID|ATOMS_FILE]" >&2
+    echo "usage: playbook-workflows.sh deliver-check [BASE] | deposit BASE ATOM_ID GID | deposit-uncovered BASE GID | cover ATOM_ID GID | cover-batch ATOMS_FILE" >&2
     exit 2
     ;;
 esac

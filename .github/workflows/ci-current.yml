@@ -176,7 +176,6 @@ jobs:
             !docs/assets/inquiry-cycle.svg
             !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
             !docs/develop/spec/trureturing_engineering_optimization_v1.md
-            !docs/develop/theory/*
             !docs/reports/*
             !tools/TestSupport/StrataLint.RuleTestSupport/*
             !tools/lean-inspector/README.md
@@ -861,7 +860,6 @@ jobs:
             !docs/assets/inquiry-cycle.svg
             !docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md
             !docs/develop/spec/trureturing_engineering_optimization_v1.md
-            !docs/develop/theory/*
             !docs/reports/*
             !tools/TestSupport/StrataLint.RuleTestSupport/*
             !tools/lean-inspector/README.md

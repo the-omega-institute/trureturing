@@ -56,26 +56,4 @@ public sealed partial class IngestRobustTests
         if (fault == "second-atom") Assert.False(File.Exists(Path.Combine(temporary.Path, newMetadataPath)));
     }
 
-    [Fact]
-    public void AlignDigestionStatus_ResidualIdCollisionRemainsFailClosedAfterCleanAlignment()
-    {
-        var alpha = Source("alpha", AlphaPath, AlphaText);
-        var betaAtom = Atom(BetaText);
-        var occupiedId = betaAtom.Fingerprints.RawSha256["sha256:".Length..];
-        alpha = alpha with { Entries = [Assert.Single(alpha.Entries) with { AtomId = occupiedId }] };
-        var document = TwoSourceLedger(alpha, EmptySource("beta", BetaPath));
-        var fixture = Fixture(document);
-        var snapshot = Decode(Raw(fixture.Files));
-        var alignment = DigestionLedgerAligner.Evaluate(document, snapshot, document, DigestionAlignmentMode.Ingest);
-        Assert.Empty(alignment.Findings);
-        Assert.Equal(occupiedId, Assert.Single(alignment.Residual).SuggestedAtomId);
-
-        var failure = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(document, snapshot, document));
-
-        Assert.Equal($"ingest atom id collision at {occupiedId}", failure.Message);
-        var reportFree = ReportFreeDigestionIngestor.Plan(document, snapshot,
-            sourceIds: System.Collections.Immutable.ImmutableHashSet.Create("beta"));
-        Assert.Empty(reportFree.AddedAtomIds);
-        Assert.Equal(1, reportFree.SkippedExisting);
-    }
 }

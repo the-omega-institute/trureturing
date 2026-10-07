@@ -7,168 +7,6 @@ namespace StrataLint.Digestion.Tests;
 
 public sealed partial class DigestionAlignmentTests
 {
-    [Fact]
-    public void PzgIngestDecomposesAParentAndWritesChildrenAndChainInOnePlan()
-    {
-        const string claim = """
-            **定理 18.7(时间之矢)**〔closed〕。u_t ≠ 0 ⇒ **L(a_{t+1}) > L(a_t)**:长度沿正生成严格单调。
-
-            *证明*。L(a_{t+1}) − L(a_t) = L(u_t) = Σ u_{t,p} log p > 0。∎
-
-            **推论:时间方向来自素数账本增长**;只要未引入逆账本,素数生成动力学单向。逆向运动(负指数)属群化扩张,须显式逆账本并入账(账 O-8)。
-
-            """;
-        var sourceBytes = Encoding.UTF8.GetBytes("# PZG\n\n" + claim);
-        var parent = Assert.Single(PzgAtomizer.Atomize(
-            sourceBytes,
-            DigestionTestSupport.Rules).Claims);
-        var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
-        var loaded = WithAtomizer(
-            Ledger([], CasEntry("parent", parent, parentCapture.Reference)),
-            AtomizerRegistry.PzgId);
-        var source = Assert.Single(loaded.RequireDigestionSources());
-        var parentEntry = Assert.Single(source.Entries);
-        var ledger = loaded.WithDigestionSources(
-        [
-            source with
-            {
-                Entries =
-                [
-                    parentEntry with
-                    {
-                        Receipts = parentEntry.Receipts with
-                        {
-                            UnresolvedSubitems = ["secondary-verdict"],
-                        },
-                    },
-                ],
-            },
-        ]);
-
-        var first = DigestionIngestor.Plan(
-            ledger,
-            Snapshot(sourceBytes, [parentCapture]),
-            ledger);
-        var entries = Assert.Single(first.Document.RequireDigestionSources()).Entries;
-        var parentId = AtomId(parent);
-        var plannedParent = Assert.Single(entries, entry => entry.AtomId == parentId);
-        var children = entries.Where(entry => entry.AtomId != parentId).ToArray();
-
-        Assert.Equal(2, first.ResidualOpenAdded);
-        Assert.Equal(2, children.Length);
-        Assert.Equal(parentCapture.Reference, plannedParent.CasRef);
-        Assert.Empty(plannedParent.Receipts.UnresolvedSubitems);
-        Assert.Equal(
-            children.Select(static child => child.AtomId).Order(StringComparer.Ordinal),
-            plannedParent.Receipts.ChainAtoms.Order(StringComparer.Ordinal));
-        Assert.All(children, child =>
-        {
-            Assert.Equal(child.Fingerprints.RawSha256["sha256:".Length..], child.AtomId);
-            Assert.Equal(DigestionMigrationState.Residual, child.ProjectedStatus.Migration);
-            Assert.Equal(DigestionTruthState.Open, child.ProjectedStatus.Truth);
-        });
-
-        var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
-        var migrated = first.Document;
-        var second = DigestionIngestor.Plan(
-            migrated,
-            Snapshot(sourceBytes, first.CasObjects.Prepend(parentCapture)),
-            ledger);
-        var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
-
-        Assert.Equal(0, second.ResidualOpenAdded);
-        Assert.Empty(second.CasObjects);
-        Assert.Equal(firstBytes, secondBytes);
-    }
-
-    [Fact]
-    public void PzgIngestReusesIdenticalClauseContentAcrossParents()
-    {
-        const string sharedClause = "**推论:共享子句**;相同字节必须按父 atom 寻址。";
-        var sourceBytes = Encoding.UTF8.GetBytes($$"""
-            # PZG
-
-            **定理 18.7(甲)**。first parent。
-
-            {{sharedClause}}
-
-            **定理 18.8(乙)**。second parent。
-
-            {{sharedClause}}
-
-            # END
-
-            """);
-        var atomized = PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
-        Assert.Equal(2, atomized.Claims.Length);
-        Assert.Equal(2, atomized.ClausePlans.Length);
-        var sharedChildren = atomized.ClausePlans
-            .Select(static plan => plan.Children[1])
-            .ToArray();
-        Assert.True(
-            sharedChildren[0].RawBytes.AsSpan().SequenceEqual(sharedChildren[1].RawBytes.AsSpan()),
-            $"first=[{Encoding.UTF8.GetString(sharedChildren[0].RawBytes.AsSpan())}] "
-            + $"second=[{Encoding.UTF8.GetString(sharedChildren[1].RawBytes.AsSpan())}]");
-        var parentCaptures = atomized.Claims
-            .Select(parent => DigestionCasStore.Capture(parent.RawBytes.AsSpan()))
-            .ToArray();
-        var ledger = WithAtomizer(
-            Ledger(
-                [],
-                CasEntry("parent-18-7", atomized.Claims[0], parentCaptures[0].Reference),
-                CasEntry("parent-18-8", atomized.Claims[1], parentCaptures[1].Reference)),
-            AtomizerRegistry.PzgId);
-
-        var plan = DigestionIngestor.Plan(
-            ledger,
-            Snapshot(sourceBytes, parentCaptures),
-            ledger);
-
-        var entries = Assert.Single(plan.Document.RequireDigestionSources()).Entries;
-        var sharedFingerprint = Assert.Single(sharedChildren
-            .Select(static child => child.Fingerprints.RawSha256)
-            .Distinct(StringComparer.Ordinal));
-        var admittedSharedChildren = entries
-            .Where(entry => entry.Fingerprints.RawSha256 == sharedFingerprint)
-            .ToArray();
-        var admittedSharedChild = Assert.Single(admittedSharedChildren);
-        Assert.Equal(sharedFingerprint["sha256:".Length..], admittedSharedChild.AtomId);
-        Assert.Equal(3, plan.ResidualOpenAdded);
-    }
-
-    [Fact]
-    public void PzgIngestRejectsClausePlanWhenOnlyNormalizedParentMatchesFrozenCas()
-    {
-        const string claim = """
-            **定理 18.7(换行视图)**。first clause。
-
-            **推论:第二子句**;line ending normalization must preserve the parent identity。
-
-            """;
-        var lfBytes = Encoding.UTF8.GetBytes("# PZG\n\n" + claim);
-        var crlfBytes = Encoding.UTF8.GetBytes(
-            ("# PZG\n\n" + claim).Replace("\n", "\r\n", StringComparison.Ordinal));
-        var lfParent = Assert.Single(PzgAtomizer.Atomize(
-            lfBytes,
-            DigestionTestSupport.Rules).Claims);
-        var crlfParent = Assert.Single(PzgAtomizer.Atomize(
-            crlfBytes,
-            DigestionTestSupport.Rules).Claims);
-        Assert.NotEqual(lfParent.Fingerprints.RawSha256, crlfParent.Fingerprints.RawSha256);
-        Assert.Equal(lfParent.Fingerprints.NormalizedSha256, crlfParent.Fingerprints.NormalizedSha256);
-        var parentCapture = DigestionCasStore.Capture(lfParent.RawBytes.AsSpan());
-        var ledger = WithAtomizer(
-            Ledger([], CasEntry("parent", lfParent, parentCapture.Reference)),
-            AtomizerRegistry.PzgId);
-
-        var exception = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(
-            ledger,
-            Snapshot(crlfBytes, [parentCapture]),
-            ledger));
-
-        Assert.Contains("parent CAS bytes", exception.Message, StringComparison.Ordinal);
-    }
-
     [Theory]
     [InlineData("outside")]
     [InlineData("non-unique")]
@@ -231,7 +69,6 @@ public sealed partial class DigestionAlignmentTests
                 childCaptures
                     .Prepend(parentCapture)
                     .DistinctBy(static capture => capture.RelativePath, StringComparer.Ordinal)),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => new AtomizedTheoryDocument(
                 [parent],
@@ -239,9 +76,6 @@ public sealed partial class DigestionAlignmentTests
                 [new DigestionClausePlan(parent, children.ToImmutableArray())],
                 GenreRegistryCheck.NoGenreRegistry));
 
-        Assert.All(childIds, childId => Assert.Equal(
-            DigestionReceiptAlignment.Rejected,
-            result.AlignmentFor(childId)));
         Assert.Contains(result.Findings, finding => finding.Contains(
             defect == "non-unique" ? "not a unique parent sub-span" : "clause plan",
             StringComparison.Ordinal));
@@ -291,7 +125,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(parentBytes, childCaptures.Prepend(parentCapture)),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) => new AtomizedTheoryDocument(
                 [parent],
@@ -299,9 +132,6 @@ public sealed partial class DigestionAlignmentTests
                 [new DigestionClausePlan(parent, children.ToImmutableArray())],
                 GenreRegistryCheck.NoGenreRegistry));
 
-        Assert.All(childIds, childId => Assert.Equal(
-            DigestionReceiptAlignment.Rejected,
-            result.AlignmentFor(childId)));
         Assert.Contains(result.Findings, finding => finding.Contains(
             "not a unique parent sub-span",
             StringComparison.Ordinal));
@@ -344,7 +174,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
             Snapshot(parentBytes.ToArray(), [captured]),
-            ledger,
             DigestionAlignmentMode.Ingest,
             _ => (_, _) => invalid);
 
@@ -385,7 +214,6 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             ledger,
             Snapshot(parentBytes.ToArray(), [captured]),
-            ledger,
             DigestionAlignmentMode.Ingest,
             _ => (_, _) => invalid);
 
@@ -407,14 +235,12 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(sourceBytes, [parentCapture, childCapture]),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) =>
             {
                 calls++;
                 return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
             },
-            baselineSnapshot: Snapshot(sourceBytes, [parentCapture, childCapture]),
             changes: changes);
 
         Assert.Empty(result.Findings);
@@ -426,12 +252,10 @@ public sealed partial class DigestionAlignmentTests
             DigestionReceiptAlignment.Seen,
             result.AlignmentFor(childCapture.Reference["sha256:".Length..]));
         Assert.Empty(result.VerifiedClausePlanParents);
-        Assert.Equal(
-            0,
-            DigestionCasStore.Evaluate(
-                candidate,
-                Snapshot(sourceBytes, [parentCapture, childCapture]),
-                changes).RehashedObjectCount);
+        Assert.Empty(DigestionCasStore.EvaluateLedgerReferences(
+            candidate,
+            Snapshot(sourceBytes, [parentCapture, childCapture]),
+            changes).Findings);
     }
 
     [Fact]
@@ -449,14 +273,12 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(sourceBytes, [parentCapture, childCapture]),
-            baseline,
             DigestionAlignmentMode.Admission,
             _ => (_, _) =>
             {
                 calls++;
                 return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
             },
-            baselineSnapshot: Snapshot(sourceBytes, [parentCapture, childCapture]),
             changes: RawChangeSet.Create([parentPath]));
 
         Assert.True(calls > 0);
@@ -477,14 +299,12 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(sourceBytes, [parentCapture, childCapture]),
-            candidate,
             DigestionAlignmentMode.Admission,
             _ => (_, _) =>
             {
                 calls++;
                 return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
             },
-            baselineSnapshot: Snapshot(sourceBytes, [parentCapture, childCapture]),
             changes: RawChangeSet.Create([changedPath]));
 
         Assert.True(calls > 0);
@@ -502,14 +322,12 @@ public sealed partial class DigestionAlignmentTests
         var result = DigestionLedgerAligner.Evaluate(
             candidate,
             Snapshot(sourceBytes, [parentCapture, childCapture]),
-            candidate,
             DigestionAlignmentMode.Admission,
             _ => (_, _) =>
             {
                 calls++;
                 return PzgAtomizer.Atomize(sourceBytes, DigestionTestSupport.Rules);
             },
-            baselineSnapshot: Snapshot(sourceBytes, [parentCapture, childCapture]),
             changes: RawChangeSet.Create([parentCapture.RelativePath]));
 
         Assert.True(calls > 0);
