@@ -986,6 +986,22 @@ and conditioning results supply the application; its axiom closure is
 standard and no frozen specialization is added. This check uses explicit
 product-prefix coordinates; it does not verify integer CRT transport,
 padding T<2, infinite-law compatibility, the complete infinite sums or
-AP3's product-Haar interpretation. The remaining general problem is to
-construct one source that retains low-row activation correlations with a
-sufficient complete-query bound when no single-phase common prefix exists.
+AP3's product-Haar interpretation.
+
+The same source also has a compiled finite ninth-coordinate consumer.
+Adjoin one q-letter word with q>=29 and arbitrary finite height H,
+including H=0. Full original depth labels must be injective and nonunit;
+only the subfamily of q-depth zero must satisfy the selected-leaf
+conditions. All positive-q-depth originals have arbitrary phases, and
+their old P8 cofactor may be the unit. The application chooses the old
+law once, completes every fixed-q-depth original slice to a full old
+query layout, and joins one uniform q-word. Each positive slice uses
+the full bound C=10209527/448946, including the unit. Summing its actual
+original hit probabilities gives at most C/(q-1)<1, yielding an actual
+product-word point outside every original. No source, query-budget,
+reserve or covering premise is supplied. This is a finite prefix-space
+noncoverage result with standard axioms; it does not claim integer CRT
+transport or require q to be prime. T>=2 and the q-free selected-leaf
+condition remain explicit. The remaining general problem is to construct
+one source that retains low-row activation correlations with a sufficient
+complete-query bound when no single-phase common prefix exists.
