@@ -2008,3 +2008,271 @@ PrimePrefixPhiCurvature 及其原供应 PrimorialFirstOrderConcentrationCountere
 三者的同源供应是将此比较结果用于实际有限 head 的条件。
 
 ## 追加锚（本行以下为增补区）
+
+## 462. 原实际曲率的完整指数底座与原 A 的严格正储备
+
+保持同一原函数与完整常数
+
+$$
+\Phi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vt}}t\,dt\right),
+\quad B(v)=\Phi''(v),\quad
+\gamma=\gamma_E,\quad C=e^\gamma,\quad k=C-1,
+$$
+
+$$
+A=\int_0^1\frac{\Phi'(v)-1}{v}\,dv
+ +\int_1^\infty\frac{\Phi'(v)-C}{v}\,dv.
+\tag{EFA.1}
+$$
+
+本节从原曲率的完整指数底座推导同一原 A 的严格正下界。
+
+### 462.1 原对象与完整积分供应
+
+复用 §450 的完整端点、质量、矩和对数积分供应：
+
+$$
+B(0)=\tfrac12,\quad B(v)>0\ (v>0),\quad
+\int_0^\infty B(v)\,dv=k,\quad
+\int_0^\infty vB(v)\,dv=1,
+$$
+
+$$
+\int_0^\infty |\log v|B(v)\,dv<\infty,\qquad
+A=-\int_0^\infty\log v\,B(v)\,dv.
+\tag{EFA.2}
+$$
+
+其零点连续性和导数绑定保持 PrimePrefixPhiCurvature；
+原归一化和完整两段 A 保持 PrimePrefixOriginalA；
+上述全部矩保持 PrimePrefixCurvatureMoments。
+也复用 §450 的同一正轴 Euler 表示
+
+$$
+E_1(v)=\int_v^\infty\frac{e^{-w}}w\,dw,\quad
+0<E_1(v)\le e^{-v}/v,\quad
+\Phi(v)=Cv e^{E_1(v)},\quad
+\Phi'(v)=\Phi(v)\frac{1-e^{-v}}v,
+$$
+
+$$
+B(v)=\Phi(v)e^{-v}\frac{v-1+e^{-v}}{v^2}
+=C e^{E_1(v)}e^{-v}
+ \left(1-\frac{1-e^{-v}}v\right)\qquad(v>0).
+\tag{EFA.3}
+$$
+
+这些是原函数已经证明的性质，不是对未知 B 的替代假设。
+
+经典完整积分
+
+$$
+\int_0^\infty e^{-v}\,dv=1,\quad
+\int_0^\infty ve^{-v}\,dv=1,\quad
+\int_0^\infty \log v\,e^{-v}\,dv=-\gamma
+\tag{EFA.4}
+$$
+
+沿用 Gamma 的已有供应。末项绝对收敛：近端由 $\int_0^1|\log v|dv=1$ 支付，远端由 $\log v\le v$ 和指数衰减支付。
+原 OriginalA 的归一化复用 Mertens.Gamma 中的完整积分恒等式
+$\int\log v\,e^{-v}=\Gamma'(1)$，该供应保持 PrimeNumberTheoremAnd 端口来源。
+Gamma 积分的导数定理及 $\gamma=-\Gamma'(1)$ 复用 Mathlib 的
+Complex.hasDerivAt_GammaIntegral 和 Real.eulerMascheroniConstant_eq_neg_deriv。
+
+### 462.2 完整正轴上的严格指数底座
+
+**定理 462.1（原曲率的指数底座）。** 连续延拓到零点的
+
+$$
+F(v)=e^vB(v)\quad(v\ge0)
+$$
+
+在整个非负轴严格递增，且
+
+$$
+F(0)=\tfrac12,\qquad \lim_{v\to\infty}F(v)=C.
+\tag{EFA.5}
+$$
+
+因此对全部 $v>0$，
+
+$$
+\boxed{\qquad \tfrac12e^{-v}<B(v)<Ce^{-v}.\qquad}
+\tag{EFA.6}
+$$
+
+
+**证明。** 对 $v>0$，置 $g(v)=(v-1+e^{-v})/v^2$。
+EFA.3 给 $F=\Phi g$，直接求导并使用原 $\Phi'/\Phi=(1-e^{-v})/v$，得
+
+$$
+\begin{aligned}
+F'(v)
+&=\frac{\Phi(v)}{v^3}
+ \left[(1-e^{-v})(v-1+e^{-v})
+       +v(1-e^{-v})-2(v-1+e^{-v})\right]\\
+&=\frac{\Phi(v)}{v^3}
+ \left(1-2ve^{-v}-e^{-2v}\right)\\
+&=\frac{\Phi(v)e^{-v}}{v^3}
+ \left(e^v-e^{-v}-2v\right)>0.
+\end{aligned}
+\tag{EFA.7}
+$$
+
+最后的严格正性可完全用原实指数函数支付：令
+$p(v)=e^v-e^{-v}-2v$，则 $p(0)=0$，而对 $v>0$，
+
+$$
+p'(v)=e^v+e^{-v}-2
+=\left(e^{v/2}-e^{-v/2}\right)^2>0.
+$$
+
+因此 $p(v)>0$。没有对未知测度求导，也没有使用 A 的符号。
+
+零点由 B 的实际连续性给 $F(0)=1/2$，不在 EFA.7 中代入 v=0。
+对任意 $0\le a<b$，F 在 [a,b] 连续、在其开区间可微且导数严格正，均值定理给严格递增，包括 a=0 的情况。
+
+无穷端由 EFA.3 准确写成
+
+$$
+F(v)=Ce^{E_1(v)}
+ \left(1-\frac{1-e^{-v}}v\right).
+$$
+
+$E_1(v)\le e^{-v}/v\to0$，括号趋于 1，故 F 趋于 C。
+严格递增和有限极限给 $1/2<F(v)<C$ 对每个 v>0 成立。
+乘以 $e^{-v}>0$ 得 EFA.6。证毕。
+
+### 462.3 抽出指数底座后的完整剩余律
+
+定义实际剩余密度和质量
+
+$$
+R(v)=B(v)-\tfrac12e^{-v},\qquad
+r=k-\tfrac12.
+\tag{EFA.8}
+$$
+
+EFA.6 给 R(v)>0 于全部 v>0，且 R(0)=0。
+经典 $\gamma>1/2$ 和 $e^\gamma\ge1+\gamma$ 给
+$k\ge\gamma>1/2$，所以 r>0。
+
+**引理 462.2（完整剩余质量与矩）。** 完整剩余积分满足
+
+$$
+\int_0^\infty R(v)\,dv=r,\qquad
+\int_0^\infty vR(v)\,dv=\tfrac12,\qquad
+\int_0^\infty|\log v|R(v)\,dv<\infty,
+$$
+
+$$
+A=\frac\gamma2-\int_0^\infty\log v\,R(v)\,dv.
+\tag{EFA.9}
+$$
+
+因此 $R(v)dv/r$ 是严格正的正轴概率密度，其均值为 $m=1/(2r)$；它没有零点原子，亦非点质量。
+
+**证明。** R 连续，且 $0<R<B$ 对 v>0 成立。
+EFA.2 已付 B、vB 和 $|\log v|B$ 的完整可积性，因此三种剩余核都绝对可积。用 EFA.2、EFA.4 和完整积分的线性性相减，分别得到质量 r、一阶矩 1/2 与所列原 A 身份。这里没有截取有限尾，也没有把两个不收敛的积分相减。正密度在每个正长度的正轴紧区间有正质量，故均值 m 是有限正数，律非退化。证毕。
+
+### 462.4 剩余严格 Jensen 与原 A 的正性
+
+**定理 462.3（原 A 的严格正储备）。** 原完整两段常数有精确更强的下界
+
+$$
+\boxed{\quad
+A>\frac\gamma2+
+ \left(k-\frac12\right)\log(2k-1).
+\quad}
+\tag{EFA.10}
+$$
+
+进而
+
+$$
+\boxed{\qquad \frac1{16}<A<\frac12.\qquad}
+\tag{EFA.11}
+$$
+
+
+**证明：完整严格 Jensen。** 对 m=1/(2r)>0 和每个 v>0，实对数切线给
+
+$$
+\log v\le\log m+\frac{v-m}{m},
+$$
+
+等号仅在 v=m。线性项和对数项对 R(v)dv 全部绝对可积。
+切线差非负，并在例如 [m+1,m+2] 上严格正，R 在该紧区间严格正；
+连续非负函数的该段积分严格正。因而
+
+$$
+\int_0^\infty\log v\,R(v)\,dv
+<r\log m+\frac1m\left(\tfrac12-mr\right)
+=r\log m.
+$$
+
+代入 EFA.9，并用 $-\log m=\log(2r)$，得 EFA.10。
+
+**证明：统一严格数值储备。** 对任意 x>0，
+
+$$
+x\log x\ge-\frac1e.
+\tag{EFA.12}
+$$
+
+例如把 $\log y\ge1-1/y$ 用于 y=ex，减去 1 后乘以 x，直接得此界；没有需要估计的局部最小值。
+置 x=2r，EFA.10 给
+
+$$
+A>\frac\gamma2+r\log(2r)
+\ge\frac\gamma2-\frac1{2e}.
+$$
+
+经典 $\gamma>1/2$ 已被原供应复用；
+指数正项级数在 x=1 给
+
+$$
+e>1+1+\frac12+\frac16=\frac83.
+$$
+
+因此
+
+$$
+\frac\gamma2-\frac1{2e}>
+\frac14-\frac3{16}=\frac1{16}.
+$$
+
+最后的上界 A<1/2 直接复用原 PrimePrefixOriginalA。
+这整条链不使用待证的 A 正性或任何数值拟合。证毕。
+
+### 462.5 原对数矩、信息散度与 Robin 供应边界
+
+§450 和 PrimePrefixOriginalALogLowerBound 已有
+$A=-\int\log v\,B(v)dv$ 及 $A>k\log k$。
+这里的新增步骤是 EFA.5–EFA.7 的原曲率完整指数底座，以及把该底座完整抽出后使用真实正剩余律，得到 EFA.10–EFA.11。指数底座及剩余质量、一阶矩共同承担这一加强。
+
+若另外沿用 $\mu(dv)=B(v)dv/k$、$\nu(dv)=vB(v)dv$，两者都是完整正轴概率律且相互绝对连续，
+$d\nu/d\mu=kv$。EFA.2 支付对数似然比的绝对可积性，因此经典概率 KL 身份确为
+
+$$
+A-k\log k=kD_{\rm KL}(\mu\Vert\nu).
+\tag{EFA.13}
+$$
+
+其严格非退化性复述已有原 Jensen gap；本节 EFA.10 的额外强度来自已经证明的实际指数底座，不依赖信息散度术语。
+
+本结果仍是原实际常数的解析供应。它没有给真实 Möbius 谱的同源三节点逼近、原 Robin 配对的完整有符号尾或 RH 判据的最终符号；实际 Fibonacci 完整尾运输也不被当成这些未付供应。
+
+### 462.6 来源与证明范围
+
+原对象、完整端点、积分质量和对数矩复用 §§444、450 及
+PrimorialGlobalLaplaceEnvelope、PrimePrefixPhiCurvature、PrimePrefixOriginalA、
+PrimePrefixCurvatureMoments 的对应结果；完整 Gamma 对数矩保持
+Mertens.Gamma 及其 PrimeNumberTheoremAnd 端口来源。指数函数、均值定理、完整积分线性性、
+严格对数切线及 Gamma 对数矩属于经典工具。
+本节的新增解析结论是 EFA.5–EFA.11；EFA.13 将既有严格对数切线缺口写为
+原曲率律与其按变量加权的概率律之间的相对熵。
+上述局部解析结论来自本仓原对象的推导，不作全球文献首创声明。
+新增结论在此给出完整纸面证明，其 Lean 形式化另行交付。
+
+## 追加锚（本行以下为增补区）
