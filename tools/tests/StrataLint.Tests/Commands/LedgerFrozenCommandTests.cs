@@ -59,30 +59,71 @@ public sealed class LedgerFrozenCommandTests
     [Theory]
     [InlineData("Golden/Frozen/accepted/unrelated.json")]
     [InlineData("Golden/Frozen/state/D5/S0/Carrier/Other.lean.json")]
-    public void FrozenMembershipStillRejectsMalformedFrozenInput(string frozenPath)
+    public void FrozenMembershipIgnoresMalformedUnrelatedFrozenInput(string frozenPath)
     {
         var result = Run(createLedgerDirectory: true, activeFreeze: true,
             unrelatedBody: RawRepositoryEntry.FromText(frozenPath, "not json"));
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Empty(result.Error);
+    }
+
+    [Theory]
+    [InlineData(false, 1)]
+    [InlineData(true, 0)]
+    public void FrozenMembershipDoesNotRequireTheHistoricalLedgerDirectory(bool statePin, int exitCode)
+    {
+        var result = Run(createLedgerDirectory: false, activeFreeze: false, statePin: statePin);
+
+        Assert.Equal(exitCode, result.ExitCode);
+        Assert.Empty(result.Error);
+    }
+
+    [Theory]
+    [InlineData("not json")]
+    [InlineData("{\"statement_id\":\"sha256:bad\"}\n")]
+    [InlineData("{\"statement_id\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\",\"extra\":true}\n")]
+    [InlineData("{ \"statement_id\":\"sha256:3333333333333333333333333333333333333333333333333333333333333333\"}\n")]
+    public void FrozenMembershipRejectsMalformedTargetState(string body)
+    {
+        var result = Run(createLedgerDirectory: true, activeFreeze: false,
+            unrelatedBody: RawRepositoryEntry.FromText("Golden/Frozen/state/D5/S0/Carrier/A.lean.json", body));
 
         Assert.Equal(2, result.ExitCode);
         Assert.Contains("LEDGER_FROZEN_INVALID", result.Error, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void MissingLedgerDirectoryReturnsTwoAsInfrastructureFailure()
+    [Theory]
+    [InlineData("D5/S0/Carrier/A.txt")]
+    [InlineData("D5/S0/Carrier/a.lean")]
+    public void NoncanonicalModuleTargetFailsBeforeReading(string target)
     {
-        var result = Run(createLedgerDirectory: false, activeFreeze: false);
+        using var temporary = new TemporaryDirectory();
+        Directory.CreateDirectory(Path.Combine(temporary.Path, FrozenLedgerChangeClassifier.AcceptedRoot));
+        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), RawRepositorySnapshot.Create([]), null);
+
+        var result = LedgerFrozenCommand.Run(temporary.Path, gateway, ["--target", target]);
 
         Assert.Equal(2, result.ExitCode);
-        Assert.Contains(
-            "LEDGER_FROZEN_INVALID frozen ledger is missing: Golden/Frozen/accepted",
-            result.Error,
-            StringComparison.Ordinal);
+        Assert.Equal(0, gateway.ReadCount);
+    }
+
+    [Fact]
+    public void FrozenMembershipReadsOnlyTheTargetState()
+    {
+        var result = Run(createLedgerDirectory: true, activeFreeze: true, assertReads: gateway =>
+        {
+            Assert.Equal(0, gateway.WholeTreeReadCount);
+            Assert.Equal([":(literal)Golden/Frozen/state/D5/S0/Carrier/A.lean.json"],
+                Assert.Single(gateway.ScopedCurrentReads));
+        });
+
+        Assert.Equal(0, result.ExitCode);
     }
 
     private static ExplicitCommandResult Run(
         bool createLedgerDirectory, bool activeFreeze, bool? statePin = null,
-        RawRepositoryEntry? unrelatedBody = null)
+        RawRepositoryEntry? unrelatedBody = null, Action<FakeRepositoryGateway>? assertReads = null)
     {
         using var temporary = new TemporaryDirectory();
         if (createLedgerDirectory)
@@ -108,9 +149,9 @@ public sealed class LedgerFrozenCommandTests
         {
             entries = entries.Append(unrelatedBody);
         }
-        return LedgerFrozenCommand.Run(
-            temporary.Path,
-            new FakeRepositoryGateway(RawChangeSet.Create([]), RawRepositorySnapshot.Create(entries), null),
-            ["--target", PathFor("A")]);
+        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), RawRepositorySnapshot.Create(entries), null);
+        var result = LedgerFrozenCommand.Run(temporary.Path, gateway, ["--target", PathFor("A")]);
+        assertReads?.Invoke(gateway);
+        return result;
     }
 }

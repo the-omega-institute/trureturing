@@ -7,6 +7,58 @@ namespace StrataLint.Tests;
 
 public sealed partial class ProductionEnvironmentTests
 {
+    [Theory]
+    [InlineData("Meta/Digestion/backfill/unrelated/residual-open/" +
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.yaml", true)]
+    [InlineData("Meta/Digestion/backfill/unrelated/source.toml", true)]
+    [InlineData("Meta/Digestion/atoms/sha256/" +
+        "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa", true)]
+    [InlineData("Meta/Digestion/atoms/sha256/not-a-canonical-id", false)]
+    public void CheckSkipsUnrelatedDigestionBodiesWhileEnforcingCanonicalPaths(
+        string unrelatedPath, bool canonicalPath)
+    {
+        var fixture = TrustedFrozenFixture();
+        var current = RawRepositorySnapshot.Create(Snapshot(fixture.Files).Entries
+            .Append(new RawRepositoryEntry(unrelatedPath, [0xff])));
+        var baseline = RawRepositorySnapshot.Create(Snapshot(fixture.Baseline).Entries
+            .Append(new RawRepositoryEntry(unrelatedPath, [0xff])));
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create([RuleFixture.SyntheticProtectedPath]), current, baseline);
+        var environment = new ProductionCliEnvironment("/repo", gateway, new FakeLeanReportSource(null));
+
+        var outcome = CheckWithReports(environment, fixture);
+
+        if (canonicalPath)
+        {
+            Assert.True(outcome is AdmissionOutcome.ProtectedSurfaceChange,
+                outcome is AdmissionOutcome.InfrastructureFailure failure ? failure.Message : outcome.ToString());
+        }
+        else
+        {
+            var rejected = Assert.IsType<AdmissionOutcome.RuleRejected>(outcome);
+            Assert.Contains(rejected.Diagnostics, diagnostic =>
+                diagnostic.RuleId == RuleId.CreateKnown(0) && diagnostic.Path == unrelatedPath);
+        }
+    }
+
+    [Fact]
+    public void CheckStillRejectsUnreadableManagedLeanSource()
+    {
+        var fixture = TrustedFrozenFixture();
+        var current = RawRepositorySnapshot.Create(Snapshot(fixture.Files).Entries
+            .Where(entry => entry.Path != RuleFixture.RingPath)
+            .Append(new RawRepositoryEntry(RuleFixture.RingPath, [0xff])));
+        var gateway = new FakeRepositoryGateway(
+            RawChangeSet.Create([RuleFixture.RingPath]), current, Snapshot(fixture.Baseline));
+        var environment = new ProductionCliEnvironment("/repo", gateway, new FakeLeanReportSource(null));
+
+        var outcome = CheckWithReports(environment, fixture);
+
+        var failure = Assert.IsType<AdmissionOutcome.InfrastructureFailure>(outcome);
+        Assert.Contains("strict UTF-8", failure.Message, StringComparison.Ordinal);
+        Assert.Contains(RuleFixture.RingPath, failure.Message, StringComparison.Ordinal);
+    }
+
     [Fact]
     public void CheckEvaluatesProtectedChangeContentAndReturnsStructuredMetaSignal()
     {
