@@ -1557,7 +1557,7 @@ residues, and failure of (CE) on the actual X_z. It does not supply
 a prescribed mask or an unrelated finite counterexample.
 
 Scoped Lean applications verify universal q-owner membership,
-(CE) equivalence with uniqueness of minimal actual neighborhoods,
+(CE) equivalence with having at most one minimal actual neighborhood,
 the minimal slice-cover bound, the five-word color bound, and the
 actual eight-prime-factor obstruction. They reuse Mathlib finite
 minimality, the actual complete-color supplier, private-point
@@ -1685,6 +1685,151 @@ operations change the source hypergraph or the feasibility contract and
 require a new proof. Nor does failure of this sufficient certificate
 assert failure of the desired fifteen-root repair. One whole-source
 cover alone is already supplied by the modulus-113 owner and donor one.
+
+## Removing unit colors changes the source hypothesis and the donor budget
+
+The universal q-owner obstruction concerns the full original-owner
+ground set. Two conservative reductions use a smaller selection ground
+while keeping the same actual q-free residual source E_q. They do not
+change the original cover, its literal phases, or the retained q-free
+family when defining that source.
+
+Use the same actual count-then-sum-minimal branch, with q=113, all
+original moduli dividing 113R and (113,R)=1, ternary height at most
+two, and the actual q, 3 and 9 labels. For q-bearing originals use
+the ordinary factorization
+
+$$
+n_i=113\,3^{r_i}m_i,\qquad r_i\in\{0,1,2\},\qquad (3,m_i)=1.
+$$
+
+The ternary-coprimality condition is essential when interpreting m_i
+as a donor in the ordinary bank. An arbitrary factorization with a
+row in {0,1,2} does not establish it. Write
+
+$$
+B=\{d:\exists i,\ n_i=113d,\ (3,d)=1\}.
+$$
+
+The bank is shared by all roots. Owner i may use a numerical donor
+d in B only when d divides m_i.
+
+### Remove the q color, retaining donor one
+
+Count minimality and the existing private-point projection show that,
+among q-bearing originals, the literal color of the actual q original
+is exactly its singleton.
+Indeed, the q-stripped trace of this original is the whole E_q; any
+other owner of the same color would lose its projected private point.
+
+Remove this color from the candidate owner set. The remaining 112
+literal colors still each cover the same whole E_q, hence each of its
+old-word slices. This is the all-but-q domain already used in
+Report868, WR20; it is not a new complete-color theorem.
+
+If donor one remains in B, nothing has yet paid for a root. The target
+still has fifteen roots sharing B. Each row remains independently
+matched by i mapped to m_i, because equal rows and equal cofactors
+would give equal original moduli. In particular the donor-side
+three-colorability survives. The unit owners 3q and 9q may still be
+present and may compete for donor one. Removing the q owner does not
+create a separate unit budget for any root.
+
+Under the additional premise that source coverage on this reduced
+ground set is spanning in a matroid for each root, the existing
+matroid-intersection application has the numerical margin
+
+$$
+112\ge3\cdot15.
+$$
+
+That source-side premise is unproved. Removing the universal q owner
+only changes the neighborhood system to which it must be applied.
+Other original traces may still cover an entire particular slice.
+
+### Preallocate donor one to one root
+
+Alternatively choose one of the fifteen safe roots r_0 and use the
+single fresh class r_0 modulo 27. This consumes donor one once and
+covers that root's entire source. The remaining fourteen roots must
+share B minus {1}.
+
+It is incorrect to retain the previous three-row donor coloring
+without further qualification: an owner with m_i=1 has no donor in
+B minus {1}. In the branch with an actual top 9*113*m, divisor closure
+supplies the unit labels q, 3q and 9q. Their ordinary cofactors are one.
+They become loops after the unit donor is removed.
+
+A conservative remedy is to exclude every literal color containing
+any unit-cofactor original from the selection ground. There are at
+most three such colors: distinct unit-cofactor owners have distinct
+rows. At least 110 untouched literal colors remain, and each still
+covers the same E_q. Every owner in these colors has m_i>1.
+Numerical divisor closure supplies the actual label 113m_i, so the
+row assignment i mapped to m_i lies in B minus {1} and is injective
+within each row. The ordinary cofactor condition also gives
+(27,m_i)=1, as required for the root CRT enclosure. The unit-color
+exclusion is already used by the moving-color constructions in
+Reports868 and869; Report861 already uses tag one on one root and
+nonunit tags on the other fourteen roots.
+
+Thus the source-spanning route can instead be posed with
+
+$$
+\boxed{\quad
+\text{at least 110 complete colors},\quad
+14\text{ roots},\quad
+\text{one shared bank }B\setminus\{1\},\quad
+\chi(M)\le3.
+\quad}
+$$
+
+Again, if coverage of each actual root source by these surviving
+owners is exactly spanning in a matroid, the existing intersection
+argument applies because 110 is at least 3 times 14. The resulting
+assignment uses globally distinct remaining donors and no owner
+twice. Adjoining the preallocated unit class gives the full fifteen
+roots. This is a conditional reduction, not evidence for source
+exchange or for existence of the remaining fourteen-root cover.
+
+The external theorem is the base form of matroid intersection,
+Aharoni and Berger, *The intersection of a matroid and a simplicial
+complex*, Theorem4.4, with formula(3): on the same finite ground set,
+a basis of P independent in Q exists exactly when
+r_Q(W) is at least r_P(E) minus r_P(E minus W) for every W.
+The [author text](https://math.haifa.ac.il/berger/matcom.ps) supplies
+that theorem; it is reused, not newly formalized. The additional
+source-spanning hypothesis remains open on either reduced ground.
+
+### Exact finite and arithmetic interfaces
+
+Transient bind-only Lean applications check the actual singleton
+q-color, the 112 surviving complete colors, the at-most-three unit
+colors, the 110 nonunit complete colors, the row injections, and
+actual nonunit donor supply. The bank bridge explicitly assumes
+(3,m_i)=1 and returns (27,m_i)=1; it does not infer ordinary cofactors
+from a row label alone.
+
+A separate exact CRT application takes globally fixed donor, root
+and phase functions covering the actual source on the other fourteen
+safe roots. Its output adjoins r_0 modulo27 and proves coverage of
+the entire same E_q. The root set must have cardinality15 and contain
+all actual residual roots, as supplied by the actual3/9 guards.
+The premise is complete coverage by one common fixed family, not
+pointwise choices made independently for different source points.
+
+The same application directly reuses the existing actual donor-bank
+payment theorem. Adding the unit donor to an injective nonunit donor
+family preserves injectivity, the output count fits the q-bearing
+original inventory, and the total new modulus sum is strictly less
+than the sum of all deleted q-bearing original moduli. This is a
+count-and-sum comparison; freshness additionally uses the branch
+condition that no original modulus is divisible by27. All outputs
+have the form27d, with odd positive d supplied by actual113d originals,
+so their labels are odd nonunits and are fresh under that condition.
+The scoped checks use default budgets and only the standard three
+axioms. They do not prove matroid intersection, source exchange,
+or unconditional existence of the fixed fourteen-root repair.
 
 ## Verification and the remaining global obligation
 
