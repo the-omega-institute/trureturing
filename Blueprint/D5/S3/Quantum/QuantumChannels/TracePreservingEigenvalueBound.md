@@ -98,35 +98,7 @@ $$\forall (\operatorname{d} : \mathbb{N}) , \forall (\operatorname{rho} : (\oper
 
 The displayed statement gives the hypotheses and conclusion for faithful_fourth_roots. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
 
-**Theorem 1.8 (real limit preserves bound).**
-
-$$\forall (\operatorname{f} \operatorname{g} : \mathbb{R} \to \mathbb{R}) , \forall (\operatorname{a} \operatorname{b} : \mathbb{R}) , (\forall \operatorname{t} , 0 < \operatorname{t} \to \operatorname{f} \operatorname{t} \leq \operatorname{g} \operatorname{t}) \to (\operatorname{Tendsto} \operatorname{f} \operatorname{atTop} (\operatorname{nhds} \operatorname{a})) \to (\operatorname{Tendsto} \operatorname{g} \operatorname{atTop} (\operatorname{nhds} \operatorname{b})) \to \operatorname{a} \leq \operatorname{b}$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.real_limit_preserves_bound` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* F. vom Ende, D. Chruściński, G. Kimura, P. Muratore-Ginanneschi (2025). *Universal Bound on the Eigenvalues of 2-Positive Trace-Preserving Maps*. DOI: [10.1016/j.laa.2025.10.022](https://doi.org/10.1016/j.laa.2025.10.022). URL: <https://arxiv.org/abs/2506.02145v1>.
-
-*Commentary.*
-
-The displayed statement gives the hypotheses and conclusion for real_limit_preserves_bound. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
-
-**Theorem 1.9 (real limit preserves bound within).**
-
-$$\forall (\operatorname{f} \operatorname{g} : \mathbb{R} \to \mathbb{R}) (\operatorname{a} \operatorname{b} : \mathbb{R}) , \operatorname{Filter} . \operatorname{Eventually} (\lambda (\operatorname{t} : \mathbb{R}) \mapsto \operatorname{f} \operatorname{t} \leq \operatorname{g} \operatorname{t}) (\operatorname{nhdsWithin} 0 (\operatorname{Ioi} 0)) \to \operatorname{Tendsto} \operatorname{f} (\operatorname{nhdsWithin} 0 (\operatorname{Ioi} 0)) (\operatorname{nhds} \operatorname{a}) \to \operatorname{Tendsto} \operatorname{g} (\operatorname{nhdsWithin} 0 (\operatorname{Ioi} 0)) (\operatorname{nhds} \operatorname{b}) \to \operatorname{a} \leq \operatorname{b}$$
-
-*Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.real_limit_preserves_bound_within` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* F. vom Ende, D. Chruściński, G. Kimura, P. Muratore-Ginanneschi (2025). *Universal Bound on the Eigenvalues of 2-Positive Trace-Preserving Maps*. DOI: [10.1016/j.laa.2025.10.022](https://doi.org/10.1016/j.laa.2025.10.022). URL: <https://arxiv.org/abs/2506.02145v1>.
-
-*Commentary.*
-
-The displayed statement gives the hypotheses and conclusion for real_limit_preserves_bound_within. Matrices are complex matrices of the displayed finite dimension; LinearMap.trace denotes the endomorphism trace. All sums over Fin d run over its full finite universe.
-
-**Theorem 1.10 (theorem1 general).**
+**Theorem 1.8 (theorem1 general).**
 
 $$\operatorname{SourceTheorem1Goal}$$
 
@@ -147,8 +119,6 @@ Theorem 1, page 4, arXiv:2506.02145v1: "Let Φ ∈ L(ℂ^{d×d}) be a 2-positive
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.extrema_hsAdjoint`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.faithful_fourth_roots`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.hsAdjoint_trace`
-- Truth anchor: `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.real_limit_preserves_bound`
-- Truth anchor: `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.real_limit_preserves_bound_within`
 - Truth anchor: `D5/S3/Quantum/QuantumChannels/TracePreservingEigenvalueBound.theorem1_general`
 - Dependency: [D5/S3/Quantum/ChannelFixedState](../ChannelFixedState.md)
 - Dependency: [D5/S3/Quantum/QuantumChannels/TwoPositiveTransitionTrace](TwoPositiveTransitionTrace.md)

@@ -11,6 +11,7 @@
    Module escape_witness: D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.faithful_fixed_eigenvalue_norm_le_one.
    Direct frozen dependencies:
    D5/S3/Quantum/QuantumChannels/TomiyamaDiagonalKPositivity.KPositive: statement_id sha256:cfcd166642f631cc07b186e808f4d33b69142d6b8102039bb244de31a01401c9.
+   D5/S3/Weil/ZetaLinear/RankTrace.trace_mul_nonneg_of_posSemidef: statement_id sha256:fefc8a0805a2b6dd7fcf96418c2412c83986c84d51c5d1731ed8d1cea0a88ca3.
    Information-escape registration is paused under CLAUDE.md §3.9.
    _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.amplification_apply: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.pair_extraction, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.twoPositive_single_star, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.twoPositive_add, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.twoPositive_smul, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.traceIdentity_twoPositive, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.twoPositive_positive, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.positive_diag_of_two, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.amplification_block, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.amplify_star, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.amplification_congruence, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.twoPositive_comp, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.superoperator_trace_real_twoPositive.
    D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.minReSpectrum: proof_shape: not-applicable; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.spectralBound, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.extrema_tendsto, D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.SourceTheorem1Bound, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.minReSpectrum_attained, D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.extrema_hsAdjoint, D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.extrema_conj, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.theorem1_faithful, D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.theorem1_general, _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.SimilarityCertificate, _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.extrema_affine, _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.extrema_smul, _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.unital_similarity_certificate, _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.twoPositive_spectralBound.
@@ -22,7 +23,6 @@
    D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.pair_extraction: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.transition_trace_bound.
    _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.trace_standard: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.transition_trace_bound, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.superoperator_trace_real_twoPositive.
    D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.transition_trace_bound: proof_shape: bind-only; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.real_eigen_trace_bound.
-   _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.single_conjTranspose: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.twoPositive_star_preserving.
    _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.twoPositive_single_star: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.twoPositive_star_preserving.
    D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.twoPositive_star_preserving: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.adjoint_twoPositive, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.real_eigen_trace_bound.
    D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.twoPositive_add: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.regularization_twoPositive, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.theorem1_faithful, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.depolarized_twoPositive.
@@ -37,7 +37,6 @@
    D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.hsInner: proof_shape: not-applicable; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.weightedAdjoint, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.hsAdjoint_inner_left, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.hsAdjoint_entry, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.amplification_adjoint_pair, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.hsAdjoint_star, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.adjoint_twoPositive_of_star, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.unital_iff_adjoint_tracePreserving, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.adjoint_twoPositive, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.hsAdjoint_congr, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.hsAdjoint_comp, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.weightedAdjoint_tracePreserving, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.weightedAdjoint_conjugate, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.weightedSymmetricPart_conjugate, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.hsAdjoint_toMatrix, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.hsAdjoint_charpoly, D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.hsAdjoint_trace, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.hsAdjoint_roots, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.realParts_hsAdjoint, D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.extrema_hsAdjoint, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.weightedAdjoint_supertrace, _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.unital_similarity_certificate.
    D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.weightedAdjoint: proof_shape: not-applicable; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.weightedAdjoint_tracePreserving, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.weightedAdjoint_twoPositive, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.weightedAdjoint_conjugate, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.weightedSymmetricPart, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.weightedAdjoint_supertrace, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.theorem1_faithful.
    D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.hsAdjoint_inner_left: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.hsAdjoint_entry, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.amplification_adjoint_pair, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.unital_iff_adjoint_tracePreserving, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.hsAdjoint_congr, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.weightedAdjoint_tracePreserving.
-   _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.trace_mul_pos_real: proof_shape: bind-only; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.trace_mul_psd_nonneg.
    _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.trace_rank_one: proof_shape: bind-only; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.psd_of_trace_pairing.
    _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.psd_of_trace_pairing: proof_shape: bind-only; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.adjoint_twoPositive_of_star.
    _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.trace_mul_psd_nonneg: proof_shape: bind-only; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.adjoint_twoPositive_of_star.
@@ -74,12 +73,12 @@
    _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.transition_re_stochastic_iff: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.transition_colStochastic.
    _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.matrix_inner_trace: proof_shape: bind-only; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.hsPair_blocks, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.hsPair_left_ext, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.amplification_adjoint_pair, _private.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.0.D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.adjoint_twoPositive_of_star, D5.S3.Quantum.QuantumChannels.TwoPositiveTransitionTrace.unital_iff_adjoint_tracePreserving.
 -/
-import Mathlib.LinearAlgebra.Matrix.Stochastic
 import Mathlib.Analysis.Normed.Field.Approximation
 import Mathlib.LinearAlgebra.Eigenspace.Triangularizable
 import Mathlib.Topology.Algebra.MvPolynomial
 import Mathlib.LinearAlgebra.Matrix.Charpoly.Univ
 import D5.S3.Quantum.QuantumChannels.TomiyamaDiagonalKPositivity
+import D5.S3.Weil.ZetaLinear.RankTrace
 set_option backward.isDefEq.respectTransparency false
 set_option backward.isDefEq.respectTransparency.types false
 set_option backward.isDefEq.respectTransparency false
@@ -190,11 +189,6 @@ theorem transition_trace_bound {d : ℕ} (Φ : (Matrix (Fin d) (Fin d) ℂ →�
 end
 section
 variable {d : ℕ}
-private lemma single_conjTranspose {d : ℕ} (i j : Fin d) (z : ℂ) :
-    (Matrix.single i j z).conjTranspose = Matrix.single j i (star z) := by
-  ext a b
-  simp [Matrix.single, Matrix.conjTranspose_apply, Pi.single_apply]
-  split_ifs <;> simp_all
 private lemma twoPositive_single_star {d : ℕ} (Φ : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix (Fin d) (Fin d) ℂ)) (h2 : (KPositive 2 _ Φ))
     (j k : Fin d) :
     (Φ (Matrix.single k j 1)).conjTranspose = Φ (Matrix.single j k 1) := by
@@ -213,7 +207,7 @@ lemma twoPositive_star_preserving {d : ℕ} (Φ : (Matrix (Fin d) (Fin d) ℂ �
         ∑ x : Fin d, ∑ y : Fin d, star (Y x y) • Matrix.single y x (1 : ℂ) := by
     rw [Matrix.conjTranspose_sum (Finset.univ)]
     simp_rw [Matrix.conjTranspose_sum (Finset.univ), Matrix.conjTranspose_smul,
-      single_conjTranspose]
+      Matrix.conjTranspose_single]
     simp
   rw [hYstar]
   ext i j
@@ -410,40 +404,6 @@ lemma hsAdjoint_inner_left (Phi : (Matrix (Fin d) (Fin d) ℂ →ₗ[ℂ] Matrix
 end
 section
 variable {d : ℕ}
-private lemma trace_mul_pos_real {X Y : (Matrix (Fin d) (Fin d) ℂ)} (hX : X.PosSemidef) (hY : Y.PosSemidef) :
-    0 ≤ (X * Y).trace.re := by
-  rw [hX.isHermitian.spectral_theorem]
-  simp only [Unitary.conjStarAlgAut_apply]
-  let U : (Matrix (Fin d) (Fin d) ℂ) := ↑hX.isHermitian.eigenvectorUnitary
-  let D : (Matrix (Fin d) (Fin d) ℂ) := Matrix.diagonal (Complex.ofReal ∘ hX.isHermitian.eigenvalues)
-  change 0 ≤ (U * D * U.conjTranspose * Y).trace.re
-  have hZ : (U.conjTranspose * Y * U).PosSemidef := by
-    simpa [U, Matrix.conjTranspose_conjTranspose] using
-      hY.mul_mul_conjTranspose_same U.conjTranspose
-  have htrace : (U * D * U.conjTranspose * Y).trace =
-      (D * (U.conjTranspose * Y * U)).trace := by
-    calc
-      (U * D * U.conjTranspose * Y).trace =
-          (Y * U * D * U.conjTranspose).trace := by
-            simpa only [Matrix.mul_assoc] using
-              (Matrix.trace_mul_cycle (U * D) U.conjTranspose Y)
-      _ = (D * (U.conjTranspose * Y * U)).trace := by
-            simpa only [Matrix.mul_assoc] using
-              (Matrix.trace_mul_cycle D U.conjTranspose (Y * U)).symm
-  rw [htrace]
-  have hdiag_trace (Z : (Matrix (Fin d) (Fin d) ℂ)) :
-      (D * Z).trace.re =
-        ∑ i : Fin d, hX.isHermitian.eigenvalues i * (Z i i).re := by
-    simp [Matrix.trace, Matrix.mul_apply, D, Matrix.diagonal, Complex.mul_re]
-  rw [hdiag_trace]
-  apply Finset.sum_nonneg
-  intro i hi
-  apply mul_nonneg
-  · exact hX.eigenvalues_nonneg i
-  · exact (RCLike.nonneg_iff.mp hZ.diag_nonneg).1
-end
-section
-variable {d : ℕ}
 variable {n : Type*} [Fintype n] [DecidableEq n]
 private lemma trace_rank_one (X : Matrix n n ℂ) (v : n → ℂ) :
     (X * Matrix.vecMulVec v (star v)).trace = star v ⬝ᵥ (X *ᵥ v) := by
@@ -462,13 +422,7 @@ variable {d : ℕ}
 private lemma trace_mul_psd_nonneg {n : Type*} [Fintype n] [DecidableEq n]
     {X Y : Matrix n n ℂ} (hX : X.PosSemidef) (hY : Y.PosSemidef) :
     0 ≤ (X * Y).trace.re := by
-  let e := (Fintype.equivFin n).symm
-  have h := trace_mul_pos_real (hX.submatrix e) (hY.submatrix e)
-  rw [Matrix.submatrix_mul_equiv] at h
-  have ht : ((X * Y).submatrix e e).trace = (X * Y).trace := by
-    exact e.sum_comp (fun i => (X * Y) i i)
-  rw [ht] at h
-  exact h
+  exact RHLinalg.trace_mul_nonneg_of_posSemidef hX hY
 end
 section
 variable {d : ℕ}
@@ -856,13 +810,10 @@ private theorem charpoly_end_coeff_continuous {d : ℕ} (i : ℕ) :
 private theorem root_norm_le_operator_norm {d : ℕ} [NeZero d]
     (L : (Matrix (Fin d) (Fin d) ℂ) →L[ℂ] (Matrix (Fin d) (Fin d) ℂ)) (z : ℂ)
     (hz : z ∈ L.toLinearMap.charpoly.roots) : ‖z‖ ≤ ‖L‖ := by
-  have hroot := (Polynomial.mem_roots (LinearMap.charpoly_monic L.toLinearMap).ne_zero).mp hz
-  have hev := (Module.End.hasEigenvalue_iff_isRoot_charpoly L.toLinearMap z).mpr hroot
-  obtain ⟨v, hv⟩ := hev.exists_hasEigenvector
-  have heq : L v = z • v := hv.apply_eq_smul
-  have hn := L.le_opNorm v
-  rw [heq, norm_smul] at hn
-  nlinarith [norm_pos_iff.mpr hv.2]
+  exact spectrum.norm_le_norm_of_mem (𝕜 := ℂ) (a := L) (by
+    rw [ContinuousLinearMap.spectrum_eq]
+    exact (Module.End.mem_spectrum_iff_isRoot_charpoly L.toLinearMap z).mpr
+      ((Polynomial.mem_roots L.toLinearMap.charpoly_monic.ne_zero).mp hz))
 end
 section
 variable {d : ℕ}

@@ -306,8 +306,9 @@ private lemma twoPositive_spectralBound : ∀ d : ℕ, 0 < d → ∀ T : Matrix 
   have hconv := regularized_tendsto T heps
   have hs := extrema_tendsto hconv
   have ht := (superTrace_continuous.tendsto T.toContinuousLinearMap).comp hconv
-  exact real_limit_preserves_bound hbound ((Complex.continuous_re.tendsto _).comp ht)
+  exact le_of_tendsto_of_tendsto ((Complex.continuous_re.tendsto _).comp ht)
     ((hs.1.const_mul (d : ℝ)).add (hs.2.const_mul ((d : ℝ)^2-d)))
+    ((eventually_gt_atTop (0 : ℝ)).mono (fun t ht => hbound t ht))
 end
 section
 variable {d : ℕ}
@@ -419,7 +420,7 @@ lemma result : claim := by
       exact ht.symm
     exact tendsto_nhds_unique ((Complex.continuous_im.tendsto _).comp ht)
       (tendsto_const_nhds.congr' heq)
-  · exact real_limit_preserves_bound_within he ((Complex.continuous_re.tendsto _).comp ht)
-      ((hs.1.const_mul (d : ℝ)).add (hs.2.const_mul ((d : ℝ)^2-d)))
+  · exact le_of_tendsto_of_tendsto ((Complex.continuous_re.tendsto _).comp ht)
+      ((hs.1.const_mul (d : ℝ)).add (hs.2.const_mul ((d : ℝ)^2-d))) he
 end
 end D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound

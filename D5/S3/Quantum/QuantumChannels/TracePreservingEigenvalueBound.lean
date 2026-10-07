@@ -61,8 +61,6 @@
    _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.depolarized_strict: proof_shape: bind-only; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.depolarized_faithful_fixed.
    _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.depolarized_faithful_fixed: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.theorem1_general.
    _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.depolarized_tendsto: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.theorem1_general.
-   D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.real_limit_preserves_bound: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.theorem1_general, _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.twoPositive_spectralBound.
-   D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.real_limit_preserves_bound_within: proof_shape: bind-only; escape_witness: none; consumer: D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.result.
    D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.theorem1_general: proof_shape: content; escape_witness: D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.theorem1_general; consumer: _private.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.0.D5.S3.Quantum.QuantumChannels.ConditionalTwoPositiveSpectralBound.twoPositive_spectralBound.
    _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.selfAdjointPart_complex: proof_shape: bind-only; escape_witness: none; consumer: _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.symmetricPart_symmetric, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.symmetricPart_rayleigh_eigen, _private.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.0.D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound.weighted_bendixson.
 -/
@@ -878,27 +876,6 @@ private lemma depolarized_tendsto {α : Type*} {l : Filter α} (Phi : (Matrix (F
 end
 section
 variable {d : ℕ}
-theorem real_limit_preserves_bound {f g : ℝ → ℝ} {a b : ℝ}
-    (hfg : ∀ t, 0 < t → f t ≤ g t)
-    (hf : Tendsto f atTop (nhds a))
-    (hg : Tendsto g atTop (nhds b)) : a ≤ b := by
-  have hdiff : Tendsto (fun t => f t - g t) atTop (nhds (a - b)) := hf.sub hg
-  have hle : ∀ᶠ t : ℝ in atTop, f t - g t ≤ 0 := by
-    filter_upwards [eventually_gt_atTop (0 : ℝ)] with t ht
-    exact sub_nonpos.mpr (hfg t ht)
-  have hzero : a - b ≤ 0 := le_of_tendsto hdiff hle
-  linarith
-theorem real_limit_preserves_bound_within {f g : ℝ → ℝ} {a b : ℝ}
-    (hfg : ∀ᶠ t : ℝ in nhdsWithin (0 : ℝ) (Ioi 0), f t ≤ g t)
-    (hf : Tendsto f (nhdsWithin (0 : ℝ) (Ioi 0)) (nhds a))
-    (hg : Tendsto g (nhdsWithin (0 : ℝ) (Ioi 0)) (nhds b)) : a ≤ b := by
-  have hdiff : Tendsto (fun t => f t - g t) (nhdsWithin (0 : ℝ) (Ioi 0))
-      (nhds (a - b)) := hf.sub hg
-  have hzero : a - b ≤ 0 := le_of_tendsto hdiff (hfg.mono (fun t ht => sub_nonpos.mpr ht))
-  linarith
-end
-section
-variable {d : ℕ}
 lemma theorem1_general : SourceTheorem1Goal := by
   intro d hd Phi h2 htp
   letI : NeZero d := ⟨ne_of_gt hd⟩
@@ -916,7 +893,8 @@ lemma theorem1_general : SourceTheorem1Goal := by
   have hconv' := depolarized_tendsto Phi heps
   have hs' := extrema_tendsto hconv'
   have ht' := (superTrace_continuous.tendsto Phi.toContinuousLinearMap).comp hconv'
-  exact real_limit_preserves_bound hbound ((Complex.continuous_re.tendsto _).comp ht')
+  exact le_of_tendsto_of_tendsto ((Complex.continuous_re.tendsto _).comp ht')
     ((hs'.1.const_mul (d : ℝ)).add_const ((d : ℝ)^2-d))
+    ((eventually_gt_atTop (0 : ℝ)).mono (fun t ht => hbound t ht))
 end
 end D5.S3.Quantum.QuantumChannels.TracePreservingEigenvalueBound
