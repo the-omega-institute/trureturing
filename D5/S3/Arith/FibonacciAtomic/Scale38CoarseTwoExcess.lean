@@ -15,7 +15,7 @@ namespace D5.S3.Arith.FibonacciAtomic.Scale38CoarseTwoExcess
 
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition
-open ActualCoarseReadoutHistory (kappa kappa_hist CoarseObservable)
+open ActualCoarseReadoutHistory (kappa kappa_hist)
 open ActualCoarseReadoutCompletion (compileRaw encodeHistory cachedExecute completion_contract)
 open ActualJointResponseCostCore (controllerPolicy)
 open ActualImageSevenLeafSeparation (leafLabel leafAddresses seven_leaf_separation A C)
@@ -95,7 +95,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
          (compileRaw (family k ∘ e.symm)
            (fun h => (decode k (List.range (k+1)) h).map e)
            (scan k (List.range (k+1))) []) (encodeHistory (kappa_hist h))) ∧
-      CoarseObservable π.policy ∧
+      Function.FactorsThrough π.policy kappa_hist ∧
       (∀ U : Source, ∃ (n : Nat) (t : RH) (b : Bool) (cache : RH),
         execute readout π.policy n [] U = some (t,b) ∧
         cachedExecute π.policy n [] [] U = some ((t,b),cache) ∧
