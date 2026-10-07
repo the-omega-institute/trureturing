@@ -1743,9 +1743,11 @@ $$
 112\ge3\cdot15.
 $$
 
-That source-side premise is unproved. Removing the universal q owner
-only changes the neighborhood system to which it must be applied.
+Removing the universal q owner changes the neighborhood system.
 Other original traces may still cover an entire particular slice.
+The simultaneous source-side premise, together with the established
+repair and payment, would contradict minimality; the rank argument
+below spells out this implication on the smaller fourteen-root ground.
 
 ### Preallocate donor one to one root
 
@@ -1798,8 +1800,10 @@ complex*, Theorem4.4, with formula(3): on the same finite ground set,
 a basis of P independent in Q exists exactly when
 r_Q(W) is at least r_P(E) minus r_P(E minus W) for every W.
 The [author text](https://math.haifa.ac.il/berger/matcom.ps) supplies
-that theorem; it is reused, not newly formalized. The additional
-source-spanning hypothesis remains open on either reduced ground.
+that theorem; it is reused, not newly formalized. Minimality excludes
+the simultaneous source-spanning hypothesis on either reduced ground.
+Identifying an actual failing root or an explicit exchange obstruction
+requires a separate argument.
 
 ### Exact finite and arithmetic interfaces
 
@@ -1830,6 +1834,79 @@ so their labels are odd nonunits and are fresh under that condition.
 The scoped checks use default budgets and only the standard three
 axioms. They do not prove matroid intersection, source exchange,
 or unconditional existence of the fixed fourteen-root repair.
+
+## The simultaneous reduced source-matroid hypothesis is excluded
+
+Keep the same actual count-then-sum-minimal distinct odd cover, the
+height-one q=113 branch with original moduli dividing 9·113W,
+coprimality of W with 3·113, the actual q label, and the actual 3/9
+guards in different modulus-three phases. Reserve donor 1 for one
+of the fifteen safe ternary roots and use the other
+fourteen roots R. Remove every literal color containing a unit
+ordinary cofactor. The actual suppliers leave c≥110 complete
+literal colors on the surviving owner set G, with nonunit ordinary
+cofactors, three ternary rows, and the actual nonunit donor bank.
+
+Suppose, for each r in R, a matroid P_r on G has spanning sets
+exactly the subsets covering that root's complete actual residual.
+This simultaneous hypothesis is already incompatible with the
+declared minimal cover; it is not merely an unproved sufficient
+premise.
+
+Work on the finite root-owner occurrence ground E=R×G. Let
+P be the direct sum of the P_r. Let M be the actual donor
+transversal matroid on G: an independent set admits an injective
+assignment to nonunit bank divisors of its ordinary cofactors.
+Take Q to be its parallel extension along the owner projection.
+Thus Q-independence requires both an injective owner projection and
+an M-independent image. This is the exact meaning of Mathlib's
+`Matroid.comap_indep_iff`; repeated occurrences of one actual owner
+cannot be spent twice.
+
+For S⊆E put h(S)=r_P(E)−r_P(E\S). Each complete literal-color
+occurrence set E_c spans P. Rank subadditivity therefore gives
+h(S)≤|S∩E_c|. These sets partition E, hence
+
+$$
+c\,h(S)\le |S|.
+$$
+
+The 42 root-row blocks are Q-independent: within one fixed row,
+distinct original moduli have distinct ordinary cofactors, and
+each owner can use its own actual nonunit bank cofactor. Thus
+
+$$
+|S|\le42r_Q(S),\qquad c\ge110>42,
+$$
+
+and consequently h(S)≤r_Q(S) for every S. Apply the existing
+base form of the matroid intersection theorem: Aharoni–Berger,
+*The intersection of a matroid and a simplicial complex*, Theorem
+4.4 and section 3 formula (3). There is a P-base independent in Q.
+Its root parts cover all fourteen actual root sources, while its
+single owner/donor matching supplies globally fixed distinct
+nonunit donors and their projected phases. The established actual
+one-root-plus-remaining-roots CRT gluing adjoins reserved donor 1.
+The actual bank payment then yields a fresh complete residual
+repair with no more classes and strictly smaller modulus sum;
+the retained q-free originals cover the complement. This
+contradicts the original count-then-sum minimum.
+
+Accordingly at least one of these fourteen actual root-cover
+systems does not admit the proposed exact spanning-matroid
+representation. This consequence neither identifies the failing
+root nor supplies an explicit failed exchange pair. It does not
+exclude the projected repair target. Conversely an independent
+arithmetic proof of all the representations would itself
+contradict the hypothetical cover.
+
+This is a reuse consequence of the external intersection theorem
+and the stated actual suppliers. The external intersection step
+has not been compiled in Lean here. The separately compiled
+minimal-cover and whole-hole enclosure applications remain
+conditional local consequences, and do not formalize this global
+exclusion. No new canonical theorem or repeated matroid proof is
+introduced.
 
 ## Reduced source exchange requires one enclosure of each whole deletion hole
 
@@ -2003,6 +2080,106 @@ the standard three axioms. They reuse CRT, actual private-point
 projection and the existing matroid exchange application; no canonical
 wrapper or new generic hull theorem is added. The hull-divisibility
 wording additionally reuses the existing PH3--PH4 characterization.
+
+## A reciprocal swap preserves the objective and can be reversed
+
+The existing RH1--RH6 interface still requires a descendant in the
+actual receiving phase for a strict decrease. Merely having a crowded
+descendant phase somewhere else does not supply that incidence. A
+complete-private-region check makes the neutral part of the operation
+explicit on the same actual whole cover.
+
+Let d and g be different q-bearing original owners of different literal
+q-colors, and choose actual private witnesses w_d in P_d and w_g in P_g.
+Assume the complete reciprocal enclosures
+
+$$
+P_d\subseteq[w_d]_{n_g},\qquad
+P_g\subseteq[w_g]_{n_d}.
+$$
+
+Rephase d to w_g modulo n_d and g to w_d modulo n_g, retaining every
+other original and every numerical modulus. Different q-colors make
+the old two classes disjoint, so there is no point whose only old
+owners are these two. The reciprocal enclosures repair every lost
+private point. The result is therefore another whole cover with the
+same distinct odd moduli, the same number of classes and the same
+modulus sum.
+
+For these two owners there is an exact identity:
+
+$$
+\boxed{P'_d=P_g,\qquad P'_g=P_d.}
+$$
+
+The new d-class is disjoint from the OLD d-class: its center w_g is
+private to g and hence does not lie in the old d-class. The analogous
+statement holds for g. Thus an old private point transferred to the
+opposite owner cannot simultaneously be covered by its original
+owner's new phase. Conversely, a new private point has an old owner
+because F was a whole cover. It has no unchanged owner, and the
+same-modulus phase exclusion rules out the owner carrying its new
+label, leaving exactly the opposite old private region.
+
+This argument uses each new class avoiding its own old counterpart.
+The private regions of the other retained owners can change when
+overlaps change; the displayed identities concern only d and g.
+
+Rephasing d back to w_d and g back to w_g restores membership in every
+original congruence class. These witnesses are congruent to the old
+residues at their respective moduli; their raw integer values need
+not equal the original stored residues. The inverse operation is
+legal as well, by the displayed private-region identities. Hence this
+move is reversible on the class data and preserves the extremal
+objective. In particular, the un-oriented swap relation itself
+cannot furnish a strict well-founded descent whenever such a pair is
+available.
+
+An orientation by proper numerical divisibility could terminate in
+the finite original label set, but that alone gives only an endpoint
+with no further selected move. No contradiction at such an endpoint
+has been established. The enclosing numerical label can already be
+occupied, and a reciprocal enclosure does not put another original
+in the receiving phase. Those remain separate actual-source
+obligations, rather than consequences of reversibility or finiteness.
+
+There is a further boundary when the reciprocal enclosures use the
+owners' actual stripped phases, as required for a source-cover exchange:
+
+$$
+w_g\equiv a_d\pmod {n_d/q},\qquad
+w_d\equiv a_g\pmod {n_g/q}.
+$$
+
+Under these additional hypotheses every q-stripped class has exactly
+the same membership before and after the move, label by label. In
+the height-one q=113 setting the move therefore only exchanges the
+two literal q-colors. Suppose both original colors survive the
+unit-color exclusion and neither selected owner is a unit-cofactor
+owner. All unit owners remain unchanged, so the excluded color set
+is unchanged; the two selected colors swap within its complement.
+Consequently the reduced ground G is the same. The q-free originals
+are unchanged, hence E_q and every root source are also the same.
+
+The complete source-covering predicate on this reduced ground is
+therefore identical before and after this move. Its representability
+as matroid spanning cannot improve through such a swap: the same
+matroid represents both predicates if it represents either one.
+This uses equality of the source and all indexed traces; it does not
+assume representability. It does not apply when an operation changes
+a stripped phase, the retained q-free family, or the surviving ground.
+
+The scoped Lean check constructs the competing actual whole cover,
+proves both complete private-region identities, retains every modulus,
+checks the equal modulus sum, and proves the inverse class-membership
+equivalence. It also proves the labelwise stripped-class equivalence
+under the two explicit stripped-phase hypotheses. The same-source
+matroid statement is a direct consequence of equality, not an added
+Lean wrapper. The check compiles at default budgets with only the standard
+three axioms. This is a transient check of the existing reciprocal
+replacement interface, not a new canonical replacement theorem or an
+unrestricted covering contradiction. It assumes no source-matroid
+property and supplies none.
 
 ## Verification and the remaining global obligation
 
