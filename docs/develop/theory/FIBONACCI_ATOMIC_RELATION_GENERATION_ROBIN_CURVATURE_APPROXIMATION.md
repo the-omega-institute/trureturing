@@ -836,3 +836,745 @@ $v_h-w_h=O(h^4)$。代入（HO.7）给（HO.11）的最大点展开。
 有符号前段下界、相应运输估计或 RH 证明，也没有声称这些高阶结果已形式化。
 
 ## 追加锚（本行以下为增补区）
+
+## 459. 原曲率三点逼近的精确负质量、谱率逃逸与实际 Möbius 配对边界
+
+本节保持 §§450、456–457 的实际曲率
+$$
+\Phi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vt}}t\,dt\right),
+\qquad B(v)=\Phi''(v).
+$$
+对于这一原函数，非负谱率上的三个实际节点具有精确的允许误差与最小原始负质量关系，
+最优测度只含一个正原子和一个负原子。全实谱率没有同类无支持约束的正负质量下界；
+下文给出精确拟合且负质量趋零的构造，并保持实际有限奇 Möbius 阶乘配对的全部来源。
+
+### 459.1 原对象与既有供应
+
+§§456–457 已支付正测度的精确三点距离与全区间最优逼近；
+§448 的真实 $e_6>0$ 支付实际密度的非完全单调性，
+§455.6 支付原实际有限配对与完整余项的精确关系。
+有限 Euler 展开沿用 §§433–435 的同一实际 primorial 对象。
+下面求取同一实际曲率的最小负质量。
+
+复用实际值
+$$
+B(0)=\frac12,\qquad B'(0)=B''(0)=-\frac16,
+$$
+并复用一个固定 $\eta>0$，使 $B>0$、$B'<0$、$B''<0$
+在 $[0,\eta]$ 上同时成立。以下固定 $c>0$。对于
+$0<h<\eta/2$，记
+$$
+u=cB(h),\qquad v=cB(3h/2),\qquad z=cB(2h),
+\quad S=2v+u+z,
+\quad \Delta=v^2-uz>0,
+\quad K=\frac{\Delta}{S}.
+\tag{SNC.1}
+$$
+因此 $u>v>z>0$，且 §456.4 给 $K$ 为正谱精确最小三点误差，
+$$
+K/h^2\longrightarrow c/72.
+\tag{SNC.2}
+$$
+本节的 signed 记号 $\sigma$ 与算术 Möbius 函数 $\mu$ 严格区分。
+
+### 459.2 非负谱率上的精确负质量问题
+
+对 $[0,\infty)$ 上任意有限实有符号 Borel 测度 $\sigma$，取其真实
+Jordan 分解 $\sigma=\sigma^+-\sigma^-$，定义
+$$
+L_\sigma(s)=\int e^{-st}\,d\sigma(t),\qquad
+N_-(\sigma)=\sigma^-([0,\infty)),
+$$
+$$
+E_h(\sigma)=\max_{s\in\{h,3h/2,2h\}}|cB(s)-L_\sigma(s)|.
+\tag{SNC.3}
+$$
+这里每个核在非负轴有界，故三核对总变差都真正可积。
+成本始终是 Jordan 负部的质量；不能用某个含重叠的作者分解代替它。
+
+给定 $0\le\varepsilon\le K$，置
+$$
+U=u+\varepsilon,\qquad V=v-\varepsilon,\qquad Z=z+\varepsilon,
+\qquad \Delta_\varepsilon=V^2-UZ=\Delta-S\varepsilon
+ =S(K-\varepsilon)\ge0,
+\tag{SNC.4}
+$$
+$$
+D_\varepsilon=\sqrt{9V^2-8UZ}
+ =\sqrt{V^2+8\Delta_\varepsilon},\qquad
+r_\varepsilon=\frac{3V-D_\varepsilon}{2U},
+$$
+$$
+n_\varepsilon=\frac{8(V-Ur_\varepsilon)}{r_\varepsilon^3},
+\qquad W_\varepsilon=\frac U{r_\varepsilon^2}+\frac{n_\varepsilon}4.
+\tag{SNC.5}
+$$
+由 $K<v$，有 $V>0$；由 $UZ>0$，有 $D_\varepsilon<3V$。
+又有 $D_\varepsilon\ge V$，因此
+$$
+0<r_\varepsilon\le V/U<1,
+\quad n_\varepsilon\ge0,\quad W_\varepsilon>0.
+\tag{SNC.6}
+$$
+$n_\varepsilon=0$ 恰当且仅当 $\varepsilon=K$。
+
+**引理 459.1（统一小窗口域）。** 存在仅依赖 $c,B$ 的固定
+$0<h_0<\eta/2$，使所有 $0<h<h_0$ 与所有
+$0\le\varepsilon\le K_h$ 同时满足
+$$
+r_*:=2(\sqrt2-1)<r_\varepsilon<1.
+\tag{SNC.7}
+$$
+
+**证明。** $K_h=O(h^2)$，故 $U,V,Z\to c/2$ 对整个
+$\varepsilon\in[0,K_h]$ 一致成立，$\Delta_\varepsilon=O(h^2)$
+也一致成立。（SNC.5）的连续公式由正分母支付，所以
+$r_\varepsilon\to1$ 一致成立。由于 $r_*<1$，可选共同
+$h_0$ 使下界成立，上界已经由（SNC.6）逐点支付。证毕。
+
+**定理 459.2（精确允许误差—负质量关系）。** 对上述同一个 $h_0$，
+任意 $0<h<h_0$ 的真实三点数据均满足
+$$
+\inf_{\substack{\sigma\text{ finite signed on }[0,\infty)\\
+                       E_h(\sigma)\le\varepsilon}}
+N_-(\sigma)
+=
+\begin{cases}
+n_\varepsilon,&0\le\varepsilon\le K_h,\\
+0,&\varepsilon\ge K_h.
+\end{cases}
+\tag{SNC.8}
+$$
+当 $0\le\varepsilon\le K_h$ 时，此最小值由唯一测度达到：
+$$
+t_+=-\frac2h\log r_\varepsilon>0,
+\qquad t_-=t_++\frac{2\log2}h>t_+,
+$$
+$$
+\boxed{\quad\sigma_\varepsilon
+=W_\varepsilon\delta_{t_+}-n_\varepsilon\delta_{t_-}.\quad}
+\tag{SNC.9}
+$$
+在 $\varepsilon=K_h$ 时，负原子系数精确为零，式（SNC.9）是单正原子。
+
+**证明：全体 signed 测度的下界。** 暂记 $r=r_\varepsilon$，
+令 $y=e^{-ht/2}\in(0,1]$。真正的三核非负见证为
+$$
+q_r(t)=e^{-2ht}-2r e^{-3ht/2}+r^2e^{-ht}
+      =y^2(y-r)^2\ge0.
+\tag{SNC.10}
+$$
+对 $0<r<1$，有限闭区间的微分检查给
+$$
+\sup_{t\ge0}q_r(t)
+=\max\{r^4/16,(1-r)^2\}.
+\tag{SNC.11}
+$$
+具体地，$y^2(y-r)^2$ 的导数为
+$2y(y-r)(2y-r)$；只需比较 $y=0,r/2,r,1$。
+$r>r_*$ 恰好保证 $r^2/4>1-r$，故同一域内
+$$
+0\le q_r(t)\le M_r:=r^4/16,
+$$
+且最大值只在 $y=r/2$ 达到，零值在有限谱率上只在 $y=r$ 达到。
+$y=0$ 对应无穷谱率，不是实轴上的另一个原子。
+
+（SNC.5）给
+$$
+Ur^2-3Vr+2Z=0,
+\qquad Z-2rV+r^2U=-\frac{n_\varepsilon r^4}{16}
+ =-M_r n_\varepsilon.
+\tag{SNC.12}
+$$
+若 $E_h(\sigma)\le\varepsilon$，三个线性系数的真实符号给
+$$
+\begin{aligned}
+\int q_r\,d\sigma
+&=L_\sigma(2h)-2rL_\sigma(3h/2)+r^2L_\sigma(h)\\
+&\le(z+\varepsilon)-2r(v-\varepsilon)+r^2(u+\varepsilon)\\
+&=-M_r n_\varepsilon.
+\end{aligned}
+\tag{SNC.13}
+$$
+这里误差盒上的精确最大点是 $(U,V,Z)=(u+\varepsilon,v-\varepsilon,z+\varepsilon)$，
+并未把三个误差的同号当成额外假设。
+另一方面，真实 Jordan 分解和（SNC.11）给
+$$
+\int q_r\,d\sigma
+=\int q_r\,d\sigma^+-\int q_r\,d\sigma^-
+\ge-M_rN_-(\sigma).
+\tag{SNC.14}
+$$
+因此 $N_-(\sigma)\ge n_\varepsilon$。
+
+**证明：真正达到与唯一性。** 两个位置不同，$W_\varepsilon>0$、
+$n_\varepsilon\ge0$，所以（SNC.9）本身就是其 Jordan 分解。
+正原子的 $y$ 值为 $r$，负原子的值为 $r/2$。于是
+$$
+\begin{aligned}
+L_{\sigma_\varepsilon}(h)&=r^2(W_\varepsilon-n_\varepsilon/4)=U,\\
+L_{\sigma_\varepsilon}(3h/2)&=r^3(W_\varepsilon-n_\varepsilon/8)=V,\\
+L_{\sigma_\varepsilon}(2h)&=r^4(W_\varepsilon-n_\varepsilon/16)=Z.
+\end{aligned}
+\tag{SNC.15}
+$$
+第一、二行直接由定义得到；第三行由（SNC.12）的二次方程得到。
+所以其三点最大误差恰好为 $\varepsilon$，负质量恰好为 $n_\varepsilon$。
+
+若任一候选达到此最小值，（SNC.13）–（SNC.14）的全部不等式必须等号。
+非负积分的零值迫使 $\sigma^+$ 支撑在 $q_r=0$，
+$\int(M_r-q_r)d\sigma^-=0$ 迫使 $\sigma^-$ 支撑在 $q_r=M_r$。
+上述真实有限谱率零点与唯一最大点分别是 $t_+$、$t_-$。
+三个误差系数严格不为零，误差盒的等号还迫使真实节点值为 $U,V,Z$，
+从而两个原子质量由（SNC.15）唯一确定。
+此论证也适用于 $n_\varepsilon=0$：Jordan 负部质量零给正测度，
+其正部仍只在 $t_+$，质量唯一。
+对于 $\varepsilon>K_h$，$\sigma_{K_h}$ 已有误差 $K_h$、负质量零；
+成本非负给（SNC.8）的余下范围。证毕。
+
+**全实正部的扩展。** 定理 459.2 的同一结论还适用于实轴上的有限 signed
+测度，只要求真实负部支撑在 $[0,\infty)$，并要求三个实际核对总变差可积。
+其正部可含任意实谱率：平方核（SNC.10）在全部 $y>0$ 上非负，
+而上界 $q_r\le M_r$ 只用于已限制在非负率上的负部。
+唯一达到测度仍为（SNC.9）。因此真正承担负质量下界的是负部的位置条件。
+
+### 459.3 一致二阶常数与负谱必须支付的尺度
+
+**推论 459.3。** 在全部 $0\le\varepsilon\le K_h$ 上，有精确乘法式
+$$
+n_\varepsilon=A_{h,\varepsilon}(K_h-\varepsilon),\qquad
+A_{h,\varepsilon}
+=\frac{32S_h}{r_\varepsilon^3(D_\varepsilon+V)},
+$$
+$$
+\sup_{0\le\varepsilon\le K_h}|A_{h,\varepsilon}-64|
+\longrightarrow0.
+\tag{SNC.16}
+$$
+在 $\varepsilon=K_h$ 时，此式仍给精确零，不作 $0/0$ 比值。
+特别地，精确拟合的最小负质量满足
+$$
+\boxed{\quad n_0/h^2\longrightarrow8c/9.\quad}
+\tag{SNC.17}
+$$
+若 $\varepsilon_h\ge0$ 且 $\varepsilon_h/h^2\to\kappa\in[0,\infty)$，则整个允许误差类的
+最小负质量满足
+$$
+\frac{\inf_{E_h(\sigma)\le\varepsilon_h}N_-(\sigma)}{h^2}
+\longrightarrow\bigl(8c/9-64\kappa\bigr)_+.
+\tag{SNC.18}
+$$
+因此任何误差 $o(h^2)$ 的非负率 signed 候选，都有
+$\liminf N_-(\sigma_h)/h^2\ge8c/9$；这是必要抵消预算，
+其三点常数由（SNC.9）真正达到。
+
+**证明。** 从（SNC.5）有
+$$
+n_\varepsilon
+=\frac{4(D_\varepsilon-V)}{r_\varepsilon^3}
+=\frac{32\Delta_\varepsilon}
+       {r_\varepsilon^3(D_\varepsilon+V)}.
+$$
+代入（SNC.4）给（SNC.16）的精确式。
+同一误差区间内 $S_h\to2c$、$r_\varepsilon\to1$、
+$D_\varepsilon+V\to c$ 一致成立，所以乘子一致趋于 $64$。
+（SNC.2）给（SNC.17）；对（SNC.8）分别在 $\varepsilon_h\le K_h$
+与 $\varepsilon_h>K_h$ 使用正部函数的连续性，得（SNC.18）。证毕。
+
+精确拟合的最优原子还满足
+$$
+t_+\longrightarrow1/3,\qquad
+ht_-\longrightarrow2\log2,\qquad W_0\longrightarrow c/2.
+\tag{SNC.19}
+$$
+事实上 $u=c/2-ch/6+O(h^2)$、$v=c/2-ch/4+O(h^2)$，
+$\Delta=O(h^2)$ 给 $r_0=v/u+O(h^2)=1-h/6+O(h^2)$，
+于是 $-2\log r_0/h\to1/3$，其余由（SNC.5）、（SNC.9）得到。
+最优负谱率随窗口缩小逃到 $1/h$ 尺度，负质量仍为明确的 $h^2$ 量级。
+
+**推论 459.4（有限谱截止的额外必要预算）。** 固定定理 459.2 的小窗口，
+若真实负部进一步支撑于 $[0,T]$，则令
+$$
+M_{h,T,r}:=\max_{0\le t\le T}q_r(t)>0
+$$
+便有
+$$
+N_-(\sigma)\ge\frac{n_\varepsilon r_\varepsilon^4}
+                       {16M_{h,T,r_\varepsilon}}
+\qquad(E_h(\sigma)\le\varepsilon\le K_h).
+\tag{SNC.20}
+$$
+若 $h\downarrow0$、$T_h\to\infty$、$hT_h\to0$，
+而实际误差为 $o(h^2)$，则
+$$
+\boxed{\qquad\liminf_{h\downarrow0}T_h^2N_-(\sigma_h)
+\ge2c/9,\qquad N_-(\sigma_h)/h^2\longrightarrow+\infty.\qquad}
+\tag{SNC.21}
+$$
+
+**证明。** 在（SNC.14）中只需把负部上的核上界改为
+$M_{h,T,r}$，即可得到（SNC.20）。该最大值可直接计算：
+令 $y_T=e^{-hT/2}$，比较两个端点 $y=y_T,1$，
+并在 $y_T\le r/2$ 时额外比较 $y=r/2$ 的值 $r^4/16$；
+其余驻点 $y=r$ 只是零值。
+由 $0\le\varepsilon\le K_h=O(h^2)$，有
+$r_\varepsilon=1-h/6+O(h^2)$ 一致成立。因此在指定截止族上，
+$y_T>r_\varepsilon/2$ 最终成立，端点值满足
+$$
+q_r(0)=(1-r)^2=O(h^2),\qquad
+q_r(T)=y_T^2(y_T-r)^2
+=\frac{h^2T^2}{4}[1+o(1)].
+$$
+后一式使用 $y_T=1-hT/2+O((hT)^2)$、$T\to\infty$
+及 $hT\to0$；所以 $M_{h,T,r}\sim h^2T^2/4$。
+对于误差 $o(h^2)$，（SNC.16）给 $n_\varepsilon\sim8ch^2/9$，
+（SNC.20）便给第一个下极限。第二个结论再用 $h^2T^2\to0$。证毕。
+
+（SNC.8）只求三个实际节点的预算。全区间误差 $o(h^2)$ 自动受其必要下界约束，
+但本节没有把两原子三点构造声明为全区间的最优负质量解。
+
+### 459.4 全实谱率的斜率中心加权预算与无约束逃逸
+
+现取任意固定 $0<a<b<\eta$，$m=(a+b)/2$、$\delta=(b-a)/2$，
+以及真实数据 $u=cB(a),v=cB(m),z=cB(b)$。令
+$$
+\tau=\frac{\log(u/z)}{2\delta}>0,
+\qquad d_G=v-\sqrt{uz}>0.
+\tag{SNC.22}
+$$
+对实轴有限 signed 测度 $\sigma$，明确要求三个指数核对其总变差可积。
+定义真实可积非负核
+$$
+q_\tau(t)=e^{-mt}\bigl[\cosh(\delta(t-\tau))-1\bigr]
+=\tfrac12e^{-\delta\tau}e^{-at}
+ +\tfrac12e^{\delta\tau}e^{-bt}-e^{-mt}.
+\tag{SNC.23}
+$$
+这三个实际核的线性式直接支付其可积性，不对未知测度求导。
+
+**定理 459.5（全实谱率的必要加权抵消预算）。** 若上述三个节点的
+最大误差不超过 $\varepsilon$，则
+$$
+\int q_\tau\,d\sigma^-
+\ge d_G-(1+\cosh(\delta\tau))\varepsilon.
+\tag{SNC.24}
+$$
+若进一步有 $\operatorname{supp}\sigma^-\subset[\tau-T,\tau+T]$，
+$T>0$，则
+$$
+\boxed{\quad
+\int e^{-mt}\,d\sigma^-
+\ge\frac{[d_G-(1+\cosh(\delta\tau))\varepsilon]_+}
+           {\cosh(\delta T)-1}.\quad}
+\tag{SNC.25}
+$$
+对于精确拟合 $\varepsilon=0$，（SNC.25）是准确最小值，并且唯一达到测度为
+$$
+n=\frac{d_G}{\cosh(\delta T)-1},\qquad
+\sigma=(v+n)e^{m\tau}\delta_\tau
+-\frac n2e^{m(\tau-T)}\delta_{\tau-T}
+-\frac n2e^{m(\tau+T)}\delta_{\tau+T}.
+\tag{SNC.26}
+$$
+此 sharp 构造属于全实谱率类；若额外要求非负率，还须 $T\le\tau$。
+
+**证明。** 目标数据代入（SNC.23）得
+$\frac12e^{-\delta\tau}u+\frac12e^{\delta\tau}z-v
+=\sqrt{uz}-v=-d_G$。真实误差盒给
+$\int q_\tau d\sigma\le-d_G+(1+\cosh(\delta\tau))\varepsilon$。
+又有 $\int q_\tau d\sigma=\int q_\tau d\sigma^+-\int q_\tau d\sigma^-$，
+正部积分非负，即得（SNC.24）。在指定负谱支持上，
+$q_\tau(t)\le e^{-mt}(\cosh(\delta T)-1)$，给（SNC.25）。
+
+（SNC.26）三个原子不同，负部的中点加权质量为 $n$。
+中点净值为 $v$，两端净值分别为
+$e^{\delta\tau}[v-n(\cosh(\delta T)-1)]=u$
+与 $e^{-\delta\tau}[v-n(\cosh(\delta T)-1)]=z$。
+因此它精确拟合且达到下界。达到下界迫使正部支撑在 $t=\tau$，
+负部支撑在 $t=\tau\pm T$；两个经倾斜的端点相等又迫使负部的
+中点加权质量各为 $n/2$，故唯一性成立。证毕。
+
+在 $a=h,b=2h$ 上，既有 $K_h/h^2\to c/72$ 与（SNC.1）给
+$$
+d_G/h^2=\frac{\Delta/h^2}{v+\sqrt{uz}}\longrightarrow c/36,
+\qquad\tau\longrightarrow1/3.
+$$
+因此固定 $T>0$ 的精确最小中点加权负质量满足
+$$
+\frac{d_G}{\cosh(hT/2)-1}\longrightarrow\frac{2c}{9T^2}.
+\tag{SNC.27}
+$$
+即使允许误差 $o(h^2)$，（SNC.25）也保留相同必要下极限。
+
+**定理 459.6（全实率没有无支持约束的正负质量下界）。**
+对于任意上述固定严格凹三点，存在有限两原子 signed 测度序列精确拟合
+$u,v,z$，且其原始负质量和中点加权负质量均趋于零。
+
+**证明。** 记 $\Delta=v^2-uz>0$。对充分大 $R>0$，置
+$$
+A_R=u e^{\delta R}+z e^{-\delta R}-2v>0,
+\qquad n_R=\Delta/A_R,
+$$
+$$
+U_R=u+n_Re^{-\delta R},\quad Z_R=z+n_Re^{\delta R},
+\quad t_R=\frac{\log(U_R/Z_R)}{2\delta}.
+$$
+线性代数精确给 $U_RZ_R=(v+n_R)^2$。因此
+$$
+\sigma_R=(v+n_R)e^{mt_R}\delta_{t_R}
+          -n_Re^{-mR}\delta_{-R}
+\tag{SNC.28}
+$$
+在三个节点均精确拟合。这里
+$t_R\to\log(u/v)/\delta>0$，故充分大时两个原子不同，负部确为后一项。
+由 $n_R\sim(\Delta/u)e^{-\delta R}$，有
+$$
+\int e^{-mt}d\sigma_R^-=n_R\to0,
+\qquad N_-(\sigma_R)=n_Re^{-mR}
+\sim(\Delta/u)e^{-bR}\to0.
+$$
+每个测度都只有两个有限实位置，故所有所需核真正可积。
+（SNC.24）的加权核预算仍成立，因为逃逸原子上的核足够大。
+这说明非负率假设在原始负质量问题中承担实际内容。证毕。
+
+### 459.5 保持原 Möbius 有限配对的精确运输与缺口
+
+固定真实 $x\ge e$ 与整数 $N\ge\lceil8x\rceil$，保持同一实际阶乘核
+$$
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,
+\qquad w(t)=\frac{1+\log t}{t^2\log^2t},
+$$
+$$
+P_x^\eta(s)=\int_x^\infty\eta(t/s)w(t)dt,
+\quad J_x^\eta(n)=P_x^\eta(n)-P_x^\eta(n+1),
+\quad\mathscr D_x(m)=P_x^\eta(m)-P_x^\eta(2m)
+=\sum_{n=m}^{2m-1}J_x^\eta(n).
+\tag{SNC.29}
+$$
+§455.6 的真实有限读数是
+$$
+O(n)=\sum_{\substack{m\le n\\m\text{ odd}}}\mu(m),\qquad O(0)=0,
+\quad\mathcal L_x(n)=J_x^\eta(n)-J_x^\eta(2n)-J_x^\eta(2n+1),
+\quad\mathscr F_x(N)=\sum_{n=1}^NO(n)\mathcal L_x(n),
+$$
+其中 $O(N)$ 始终是这个真实奇 Möbius 前缀，不是 Landau 大 $O$ 记号；
+$$
+\mathscr T_x(N)=\sum_{\substack{m\le N\\m\text{ odd}}}\mu(m)\mathscr D_x(m)
+=\mathscr F_x(N)+O(N)\mathscr D_x(N+1)
+=\mathscr C_{x,N}-\mathcal A_x,
+$$
+$$
+I_\psi(x)=\mathscr T_x(N)+\mathscr R_x(N).
+\tag{SNC.30}
+$$
+这些已有等式包含单位 $m=1$、全部奇来源、每份完整偶倍纤维及完整余项。
+使用实际 $\eta$ 后，上游 $\beta_d$ 的完整运输已保留，未作新的 $\beta$ 截断。
+
+现在按每个系数的真实符号定义有限谱
+$$
+a_{x,m}=\mu(m)\mathscr D_x(m),\qquad
+\sigma_{x,N}=\sum_{\substack{m\le N\\m\text{ odd}}}a_{x,m}\delta_{\log m},
+$$
+$$
+L_{x,N}(s)=\int e^{-st}d\sigma_{x,N}(t)
+=\sum_{\substack{m\le N\\m\text{ odd}}}a_{x,m}m^{-s}.
+\tag{SNC.31}
+$$
+所有谱率都非负，且 $L_{x,N}(0)=\mathscr T_x(N)$ 精确成立。
+不同整数有不同谱位置，所以真实 Jordan 负质量为
+$$
+N_-(\sigma_{x,N})
+=\sum_{\substack{m\le N\\m\text{ odd}}}(-a_{x,m})_+.
+\tag{SNC.32}
+$$
+本式不把 $\mu(m)=-1$ 自动当成负部：必须同时保留真实
+$\mathscr D_x(m)$ 的符号。§453 的真实素数面板在其已付共同阈值后
+确有 $\mathscr D_x(p)>0$，它们对（SNC.32）贡献精确的 $\mathcal A_x$；
+这复用既有面板供应，不是全配对符号结论。
+
+这份实际有限谱还有真实截止 $0\le\log m\le\log N$。所以若未来支付
+（SNC.36）的 $o(h^2)$ 误差，而所选联合尺度满足
+$\log N\to\infty$、$h\log N\to0$，推论 459.4 会给
+$$
+\liminf (\log N)^2
+\sum_{\substack{m\le N\\m\text{ odd}}}(-\mu(m)\mathscr D_x(m))_+
+\ge2c/9.
+\tag{SNC.33}
+$$
+例如 $h=x^{-1/4}(\log x)^{-1/2}$ 与 $N\asymp x^A$（固定 $A>1$）
+满足这些截止条件；无截止的最优负原子则对应
+$m=e^{t_-}\asymp\exp(2\log2/h)$，远超该多项式截止。
+（SNC.33）仍明确条件于尚缺的逼近供应。既有真实素数面板本就支付了
+$1/\log^2x$ 级负来源，这个条件约束不是新的无条件全配对障碍。
+
+平方见证运输到同一实际有限配对后，得到无条件精确恒等式
+$$
+\begin{aligned}
+Q_{x,N}(h,r)
+&=L_{x,N}(2h)-2rL_{x,N}(3h/2)+r^2L_{x,N}(h)\\
+&=\sum_{\substack{m\le N\\m\text{ odd}}}
+a_{x,m}m^{-h}(m^{-h/2}-r)^2.
+\end{aligned}
+\tag{SNC.34}
+$$
+若 $r_*<r<1$，其正负源逐项给
+$$
+\sum_{a_{x,m}<0}|a_{x,m}|m^{-h}(m^{-h/2}-r)^2
+\ge-Q_{x,N}(h,r),
+$$
+$$
+-Q_{x,N}(h,r)\le (r^4/16)N_-(\sigma_{x,N}).
+\tag{SNC.35}
+$$
+有限和直接支付交换、核可积性和每个符号；这是忠实的谱运输。
+
+若未来在同一个 $x,N,h,c$ 上，对于 $0<h<h_0$ 与
+$0\le\varepsilon\le K_h$ 真正支付
+$$
+\max_{s\in\{h,3h/2,2h\}}|cB(s)-L_{x,N}(s)|\le\varepsilon,
+\tag{SNC.36}
+$$
+则定理 459.2 立即给同源负预算 $N_-(\sigma_{x,N})\ge n_\varepsilon$。
+上述 §§448–450、453–457 的既有供应尚未支付（SNC.36）。
+（SNC.30）只控制 $s=0$ 的真实读数；它既不是另外三个指数节点的身份，
+也没有把那些节点自动送到 $cB$。
+§449 的（HT.11）–（HT.17）支付的是实际 Fibonacci 对数导数尾
+$I_F$ 到原 $I_\psi$ 的完整临界运输，也没有提供（SNC.36）的局部曲率谱逼近。
+
+必须区分另一项已有真实谱：若
+$z\ge2$、$L=\log z$、$P_z=\prod_{p\le z}p$、
+$E_z(s)=\prod_{p\le z}(1-p^{-s})$、
+$F_z(s)=E_z(1+s/L)/E_z(1)$，有限 Euler 展开确有
+$$
+F_z''(s)=\frac1{E_z(1)}\sum_{d\mid P_z}
+\frac{\mu(d)}d\left(\frac{\log d}{L}\right)^2
+e^{-s\log d/L}.
+\tag{SNC.37}
+$$
+这个真实 finite primorial signed 曲率谱可以消费任何另行支付的
+$F_z''$ 对 $B$ 的节点误差。它的系数是
+$\mu(d)d^{-1}(\log d/L)^2/E_z(1)$、来源截止是 $d\mid P_z$，
+不是（SNC.31）的 $\mu(m)\mathscr D_x(m)$ 与自然截止 $m\le N$。
+特别是它的单位曲率系数为零，而（SNC.30）的原单位首块必须保留。
+因此（SNC.37）不是（SNC.36）的运输证明。
+同样，无权有限读出 $\sum_{m\le N,\ m\text{ odd}}\mu(m)m^{-s}$
+在零点等于 $O(N)$，并不等于实际 $\mathscr T_x(N)$。
+
+要把本节的逼近预算变成原 Robin 临界收益，还须支付（SNC.36）的
+同源逼近或提供另一条明确的同源正负核恒等式，并控制（SNC.30）的完整
+$\mathscr R_x(N)$。负谱不可缺少及其最小质量只说明必要抵消成本；
+它没有给原 $I_\psi(x)$ 的临界符号下界，也没有改变完整 RH 目标。
+
+### 459.6 来源、同对象新增结论与界限
+
+平方见证、Jordan 分解、三点矩线性代数、指数核与有限和属于经典工具。
+本节在实际 $B=\Phi''$ 上新增的精确结果是（SNC.8）–（SNC.19）：
+允许误差盒下的最小原始负质量、唯一两原子最优谱、统一乘法系数 $64$
+及精确拟合常数 $8c/9$。全实率上的中心加权支持预算与精确逃逸构造
+补齐这一结果的适用边界。（SNC.34）–（SNC.37）给出真实算术来源的精确接口，
+并明确保留尚缺的（SNC.36）；不对这些经典供应或全局文献原创性作额外断言。
+
+## 追加锚（本行以下为增补区）
+
+## 460. 原曲率负谱最优性的精确缺口与必须保留的算术单位原子
+
+本节复用 §459 的同一实际 $B=\Phi''$、固定 $c>0$、三个节点
+$h,3h/2,2h$、共同小窗口 $0<h<h_0$ 以及 $0\le\varepsilon\le K_h$。
+沿用 $U,V,Z,r=r_\varepsilon,n=n_\varepsilon$，并记
+$$
+y(t)=e^{-ht/2},\qquad q(t)=y(t)^2(y(t)-r)^2,
+\quad M=r^4/16,\quad \alpha=r^2/4+r-1>0.
+\tag{SDD.1}
+$$
+这里 $r_*=2(\sqrt2-1)<r<1$、$M>0$ 和 $\alpha>0$ 均由 §459.1 的同一域支付。
+测度始终是非负谱率上的真实有限 signed Borel 测度，正负部始终取 Jordan 分解。
+
+### 460.1 达到最小值的三个缺口分别非负
+
+**定理 460.1（精确对偶缺口恒等式）。** 若 $E_h(\sigma)\le\varepsilon$，定义
+$$
+d_{\rm box}=r^2\bigl(U-L_\sigma(h)\bigr)
+ +2r\bigl(L_\sigma(3h/2)-V\bigr)
+ +\bigl(Z-L_\sigma(2h)\bigr).
+\tag{SDD.2}
+$$
+则下列三项均非负，且有精确身份
+$$
+\boxed{\quad
+M\bigl(N_-(\sigma)-n\bigr)
+=d_{\rm box}+\int q\,d\sigma^+
+ +\int(M-q)\,d\sigma^-.
+\quad}
+\tag{SDD.3}
+$$
+每个积分都对整条非负轴进行，没有截尾。
+
+**证明。** 三节点误差盒给 $L_\sigma(h)\le U$、
+$L_\sigma(3h/2)\ge V$、$L_\sigma(2h)\le Z$；由于 $r>0$，
+（SDD.2）的三个加数均非负。§459 的同一平方见证满足 $0\le q\le M$，
+故其余两个积分也非负，且有界核对有限 Jordan 部真正可积。
+令 $Q=\int q\,d\sigma$。有限线性组合与 §459 的原数据恒等式给
+$$
+Q=L_\sigma(2h)-2rL_\sigma(3h/2)+r^2L_\sigma(h)
+ =-Mn-d_{\rm box}.
+$$
+而 Jordan 分解给
+$$
+Q=\int q\,d\sigma^+-MN_-(\sigma)
+       +\int(M-q)\,d\sigma^-.
+$$
+整理得到（SDD.3）。证毕。
+
+这将最优性的剩余成本精确分成节点误差盒缺口、正部偏离平方零点的成本，
+以及负部偏离平方最大点的成本。三个成本都不能靠另一个成本的符号取消。
+当 $N_-=n$ 时，它们同时为零，复得 §459 的唯一两原子；
+下面同时给出接近最优时的定量控制。
+
+### 460.2 接近最优时的谱位置控制及正质量逃逸边界
+
+**推论 460.2（两种准确的集中预算）。** 若定理 460.1 的候选还满足
+$N_-(\sigma)\le n+\rho$，其中 $\rho\ge0$，则
+$$
+\int y^2(y-r)^2\,d\sigma^+\le M\rho,
+\qquad
+\int(y-r/2)^2\,d\sigma^-\le\frac{M\rho}{\alpha},
+\quad d_{\rm box}\le M\rho.
+\tag{SDD.4}
+$$
+因而对每个 $a>0$ 有
+$$
+\sigma^-\{t:|y(t)-r/2|\ge a\}
+\le\frac{M\rho}{\alpha a^2},
+$$
+$$
+\int_{\{|y-r|\ge a\}}y^2\,d\sigma^+
+\le\frac{M\rho}{a^2}.
+\tag{SDD.5}
+$$
+若正部另有真实支持截止 $t\le T$，则还得到原始正质量控制
+$$
+\sigma^+\{t:|y(t)-r|\ge a\}
+\le\frac{M\rho e^{hT}}{a^2}.
+\tag{SDD.6}
+$$
+没有这一截止时，（SDD.5）只控制所写的加权正质量。
+
+**证明。** （SDD.3）的三个非负项分别不超过 $M\rho$。
+对于 $0\le y\le1$，准确因式分解为
+$$
+M-y^2(y-r)^2
+=(y-r/2)^2\bigl(r^2/2-(y-r/2)^2\bigr).
+\tag{SDD.7}
+$$
+因为 $0<r<1$，有 $|y-r/2|\le1-r/2$，所以括号内至少为
+$r^2/2-(1-r/2)^2=\alpha>0$。积分给（SDD.4）第二项；
+其余项直接来自（SDD.3）。在各自所写集合上用距离平方至少为 $a^2$，
+得到（SDD.5）。若 $t\le T$，则 $y^2=e^{-ht}\ge e^{-hT}$，
+得到（SDD.6）。证毕。
+
+正部不能无条件改成原始质量集中：有限谱率上的平方零点只有 $y=r$，
+但 $q(t)\to0$ 当 $t\to\infty$。接近最优允许正质量逃向无穷谱率；
+负部的最大点缺口则有（SDD.7）的统一正系数。这是两种集中结论的准确差别。
+
+### 460.3 实际 Möbius 有限谱的单位成本
+
+保持 §459.5 的原实际有限谱
+$$
+a_{x,m}=\mu(m)\mathscr D_x(m),\qquad
+\sigma_{x,N}=\sum_{\substack{m\le N\\m\text{ odd}}}a_{x,m}\delta_{\log m},
+\quad N\ge1.
+\tag{SDD.8}
+$$
+不同 $m$ 的谱位置不同，故正负部由这些系数的真实符号确定。
+特别地，必须保留的单位 $m=1$ 位于 $t=0$，系数
+$a_{x,1}=\mathscr D_x(1)$；不能用单位曲率系数为零的另一 primorial 谱替换它。
+令 $a_+=\max(a,0)$。
+
+**推论 460.3（单位原子的严格额外成本）。** 若同一实际谱确实满足
+尚需另外支付的三节点供应 $E_h(\sigma_{x,N})\le\varepsilon$，则
+$$
+N_-(\sigma_{x,N})\ge n+
+\frac{(a_{x,1})_+(1-r)^2
+       +(-a_{x,1})_+\bigl(M-(1-r)^2\bigr)}{M}.
+\tag{SDD.9}
+$$
+当 $a_{x,1}\ne0$ 时，右边严格大于 $n$，不要求提前猜测该单位系数的符号。
+
+**证明。** $y(0)=1$，故 $q(0)=(1-r)^2$。实际 Jordan 正部中的单位
+贡献为 $(a_{x,1})_+q(0)$，负部中的单位缺口贡献为
+$(-a_{x,1})_+(M-q(0))$。其余来源与节点缺口均非负，
+由（SDD.3）得到（SDD.9）。$r<1$ 给 $q(0)>0$；
+$r>r_*$ 给 $r^2/4>1-r$，从而 $M>(1-r)^2$。
+因此非零单位系数在任一符号下都支付严格正成本。证毕。
+
+对任意实际 $x,N,h,r$，不用三节点逼近供应也有下面的全来源恒等式：
+$$
+\begin{aligned}
+M N_-(\sigma_{x,N})+Q_{x,N}(h,r)
+={}&\sum_{a_{x,m}>0}a_{x,m}\,m^{-h}(m^{-h/2}-r)^2\\
+ &+\sum_{a_{x,m}<0}|a_{x,m}|\,
+       \bigl(M-m^{-h}(m^{-h/2}-r)^2\bigr).
+\end{aligned}
+\tag{SDD.10}
+$$
+这里求和始终遍及 $m\le N$ 的真实奇来源；所有核与符号都由有限和支付。
+在 $r_*<r<1$ 时右边非负，并含上述单位贡献。
+只有另付同源三节点供应之后，才能用原 $B$ 的 $n$ 代替左边的实际 $-Q/M$。
+
+### 460.4 单位正系数的成本处于同一二阶尺度
+
+**推论 460.4（单位成本的统一二阶系数）。** 在同一固定 $c>0$ 下，
+当 $h\downarrow0$，以下估计对整个 $\varepsilon\in[0,K_h]$ 一致成立：
+$$
+r_\varepsilon=1-h/6+O(h^2),\qquad
+\frac{(1-r_\varepsilon)^2}{M_\varepsilon}
+=\frac49h^2+O(h^3).
+\tag{SDD.11}
+$$
+因此，若满足推论 460.3 的一族真实候选有单位系数
+$a_{x(h),1}\to a>0$，则
+$$
+\liminf_{h\downarrow0}
+\frac{N_-(\sigma_{x(h),N(h)})-n_{\varepsilon_h}}{h^2}
+\ge\frac{4a}{9}.
+\tag{SDD.12}
+$$
+若另有 $\varepsilon_h/h^2\to\kappa$，则 $0\le\kappa\le c/72$，并有
+$$
+\liminf_{h\downarrow0}\frac{N_-(\sigma_{x(h),N(h)})}{h^2}
+\ge\frac{8c}{9}-64\kappa+\frac{4a}{9}.
+\tag{SDD.13}
+$$
+若单位系数趋于一个 $a<0$，则同样的候选满足
+$\liminf N_-\ge|a|$，故 $N_-/h^2\to+\infty$。
+
+**证明。** 原 $B$ 的二阶 Taylor 估计与 $0\le\varepsilon\le K_h=O(h^2)$
+给 $U=c/2-ch/6+O(h^2)$、$V=c/2-ch/4+O(h^2)$ 一致成立。
+又由 §459 的 $\Delta_\varepsilon=O(h^2)$ 和恒等式
+$D_\varepsilon-V=8\Delta_\varepsilon/(D_\varepsilon+V)$，
+有 $D_\varepsilon-V=O(h^2)$ 一致成立；所有分母都一致远离零。
+于是
+$r_\varepsilon=V/U-(D_\varepsilon-V)/(2U)=1-h/6+O(h^2)$。
+代入 $M=r^4/16$ 得（SDD.11）。对单位系数的正极限，
+在（SDD.9）中取正部项并除以 $h^2$ 得（SDD.12）；
+复用 §459.3 的 $n_{\varepsilon_h}/h^2\to8c/9-64\kappa$ 得（SDD.13）。
+对负极限，负部单位乘子 $1-(1-r)^2/M\to1$，
+（SDD.9）及 $n\ge0$ 给所述正下界与发散。证毕。
+
+本推论的单位系数极限是假设，不能从原有限谱定义自动取得。
+如果实际单位系数随 $x$ 衰减，须按（SDD.9）的真实系数结算，
+不能套用固定正极限来声称无条件额外常数。
+
+### 460.5 结论的用途、来源与未决边界
+
+§459 的两原子允许位置连续变化；原算术来源必须保留 $\log1=0$ 的单位原子。
+（SDD.9）给出这一差别造成的准确成本，（SDD.4）–（SDD.7）给出其接近最优时的
+谱位置限制。它们可以检验候选同源运输能否同时满足节点精度、截止与强制来源。
+三点平方对偶、Jordan 分解、非负缺口及距离平方控制是经典工具；本节组合使用
+§459 的同一最优参数，并保留实际 Möbius 系数、完整偶倍纤维与原单位。
+不对这些工具作全局文献原创性声明。
+
+本节是完整纸面证明，没有新增 Lean 验收声称。§459 的（SNC.36）同源逼近仍缺，
+原 $I_\psi$ 的临界有符号下界和完整 RH 目标仍开放。
+
+## 追加锚（本行以下为增补区）
