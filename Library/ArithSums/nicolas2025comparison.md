@@ -4199,3 +4199,162 @@ Theorems B.4–B.5 supply limiting examples for $k_{\rm T}>1/2$: general Dirichl
 For the direct prime-counting series $D(s)=-\zeta'(s)/\zeta(s)$, $\lambda_j=j$, $a_j=\Lambda(j)$ and $\alpha_{\rm T}=m=1$. Each actual zeta zero in the proposed half-plane is an additional pole, so the single-pole hypothesis must be verified for all heights. A finite zero subtraction supplies no such verification for the remaining zeros. Applying Theorem B to a resulting remainder also requires a proved nonnegative-coefficient representation and the stipulated uniform growth bounds; none is supplied by this source application.
 
 The same conditional least integer $N>5040$ attaining the global Robin-ratio maximum remains fixed, with $A=\log N>10^{36}$ and $L=\log A$. The original complete $\sqrt A\,L\,I_\psi(A)$ lower allowance, or equivalently the full zero-plus-remainder upper allowance above, has not been obtained from these hypotheses. The actual zero real parts and multiplicities, every height, all remaining explicit terms and the strict core remain present. The published theorem and examples are reused without reconstructing their proofs; this applicability check supplies neither a new prime-error estimate nor a Robin/RH proof.
+
+### Exact full response and error-aware same-source certificate
+
+Fix the same conditional least global Robin-ratio maximizer $N>5040$
+and its tangent-price optimum. Retain $A=\log N>10^{36}$ and
+
+$$
+L=\log A,\quad \Omega=(L/\log L)^{1/3},\quad
+R=57.54,\quad \kappa=1/(28R),\quad
+S=A^{1/6}e^{-\kappa\Omega},\quad U=L/S^2.
+$$
+
+Use the inherited eventual domain $L\ge2$, $S\ge H=3\cdot10^{12}$ and
+$0<U\le1/16$, with $x_0>1$ fixed independently of $A$ as in (PH1).
+The source-selection, tangent-optimality and strict-core suppliers,
+the pressure regularity, derivative and limit, and the signed and
+Gaussian explicit-formula, zero-free, density, reciprocal-square
+count and verified-height suppliers remain assumptions.
+
+The original weight and complete signed integral are
+
+$$
+g(t)=\frac1{t\log t},\qquad
+q(t)=-g'(t)=\frac{1+\log t}{t^2(\log t)^2},\qquad
+I_\psi(A)=\int_A^\infty(\psi(t)-t)q(t)\,dt,
+$$
+
+$$
+\kappa_0(A)=\int_A^\infty\log(1-t^{-2})q(t)\,dt,\qquad
+F_A(s)=\frac1s\int_A^\infty
+ t^{s-2}\frac{1+\log t}{(\log t)^2}\,dt,
+\quad 0<\operatorname{Re}s<1.
+$$
+
+With the original multiplicity-weighted paired sum
+$Z_{\rm orig}(A)=2\operatorname{Re}\sum_{\gamma>0}m_\rho F_A(\rho)$,
+the signed explicit formula gives exactly
+
+$$
+\boxed{I_\psi(A)=-Z_{\rm orig}(A)
+ -\frac{\log(2\pi)}{AL}-\frac12\kappa_0(A).}
+\tag{ER1}
+$$
+
+The paired-zero shorthand $I_\psi=-Z_{\rm orig}$ in the preceding
+price-heat conclusion is read only as the zero contribution. Indeed, (M1)
+gives that contribution after conjugate pairing, while
+$\int_A^\infty q(t)\,dt=g(A)=1/(AL)$ retains the constant term;
+the trivial-zero integral is $-\kappa_0(A)/2$. These elementary
+terms belong to the complete response even when their normalized
+contributions tend to zero.
+
+Keep the actual pressure and probability row of (PH1)–(PH2), and set
+
+$$
+a(L)=\frac{L^2}{L+1},\qquad c=1+\frac1L,\qquad
+V=V_{A,U}=\int_{x_0}^\infty
+ [\mathcal P(x)-\mathcal P(A)]\,\pi_{A,U}(dx)\ge0.
+$$
+
+The head remains the exact (HR4) expression at this same source:
+
+$$
+\mathcal J_{\rm head}
+=\sqrt A L\,2\operatorname{Re}
+ \sum_{0<\gamma\le S}m_\rho F_A(\rho)
+ -cA^{-1/2}\int_0^U\mathcal H_{\le S}(u,u-L)\,du.
+$$
+
+Both conjugate signs, actual real parts and reflected multiplicities
+are retained. Every zero at $S$ is in the head; heights above $H$
+within it remain exact and uncontrolled. All heights above $S$
+are accounted for by (HR5)–(HR6).
+
+Write the finite signed discrepancies in (PH4) and (HR5) as
+
+$$
+\mathcal D_{A,U}=\sqrt A\,a(L)V+e_{\rm PH},\qquad
+\sqrt A L Z_{\rm orig}
+ =\mathcal J_{\rm head}+c\mathcal D_{A,U}+e_{\rm HR}.
+$$
+
+For suitable fixed nonnegative constants from those estimates, take
+
+$$
+\begin{aligned}
+|e_{\rm PH}|&\le\epsilon_{\rm PH}
+ =C_{\rm PH}\bigl[(L+1)^{5/2}\sqrt U
+ +\sqrt U e^{-L^2/(4U)}\bigr]
+ +C_{x_0}U^{-1/2}e^{-(L-\log x_0)^2/(4U)},\\
+|e_{\rm HR}|&\le\epsilon_{\rm HR}
+ =\frac{2(L+2)}{L^2}B_3(A,S)
+ +C_{\rm HR}\bigl[A^{-1/2}\tfrac{\log S}{S}
+ +\sqrt U\log(2/U)+A^{-1/2}U
+ +A^{-1/2}\sqrt U e^{-L^2/(16U)}\bigr].
+\end{aligned}
+$$
+
+Here $B_3(A,S)$ is the full exclusive suffix in (RC2)–(RC4).
+Constants are independent of $A$, with only $C_{x_0}$ allowed to
+depend on the fixed $x_0$. The PH allowance retains the activation,
+$0<x\le1$ boundary and excluded $1<x<x_0$ contributions.
+This uses the direct full-response (HR5) path: (RC1) is not an
+additional charge, and no second height suffix or arithmetic-window
+error is introduced.
+
+Define
+
+$$
+W=\mathcal J_{\rm head}+c\sqrt A\,a(L)V,\qquad
+\delta=e_{\rm HR}+ce_{\rm PH},\qquad
+\epsilon=\epsilon_{\rm HR}+c\epsilon_{\rm PH}.
+$$
+
+Substitution and $c>0$ give $\sqrt A L Z_{\rm orig}=W+\delta$
+and $|\delta|\le\epsilon$. Multiplying (ER1) by $\sqrt A L$ gives
+
+$$
+e_{\rm el}=-\frac{\log(2\pi)}{\sqrt A}
+ -\frac{\sqrt A L}{2}\kappa_0(A),\qquad
+\boxed{\sqrt A L I_\psi(A)=-W-\delta+e_{\rm el}.}
+\tag{ER2}
+$$
+
+The unchanged target (G9) is equivalent to the first inequality
+below; the second is sufficient:
+
+$$
+\boxed{W+\delta\le\mathcal E(L)+e_{\rm el},}
+\qquad
+\boxed{W+\epsilon\le\mathcal E(L)+e_{\rm el}}
+\ \text{is sufficient}.
+\tag{ER3}
+$$
+
+Indeed (ER2) converts $\sqrt A L I_\psi(A)\ge-\mathcal E(L)$
+into the first inequality, and $\delta\le\epsilon$ proves the
+sufficiency of the second. The budget is literally (G7):
+
+$$
+\mathcal E(L)=2\sqrt2-\frac{(2+\log2)\sqrt2}{L}
+ +\frac{6.78}{L^2}-2.00014-2.67e^{-L/6}
+ -(2L+5/L)e^{-L/2}.
+$$
+
+Keep the inherited strict core $\sqrt A L D^*(A)>\mathcal E(L)$
+and $\Delta(N)=I_\psi(A)+D^*(A)$ from (G1) and (G6). If (ER3)
+is supplied, they give $\sqrt A L\Delta(N)>0$. Neither a bare
+$W\le\mathcal E(L)+o(1)$ nor dropping $e_{\rm el}$ supplies this
+finite certificate without controlled signed errors or enough slack.
+
+Finally $V\ge0$ and the signed (PH4) identity imply only
+$\mathcal D_{A,U}\ge-\epsilon_{\rm PH}$. The (PH6) ceiling
+$\sqrt A U=L A^{1/6}e^{2\kappa\Omega}$ is a diverging upper
+allowance, neither a lower bound on the actual cost nor an
+impossibility result. A suitable joint upper estimate for this same
+$\mathcal J_{\rm head}$ and $c\sqrt A a(L)V$, with (ER3)'s complete
+correction, remains unresolved. No numerical starting clock,
+unbounded eligible-source sequence or proof of RH is asserted.
