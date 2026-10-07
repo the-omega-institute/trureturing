@@ -295,7 +295,6 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           have leaf : q ∈ leafAddresses (F z) := by
             rw [← target_paid]
             simp [paid,full]
-          have target : leafLabel (F z) q ≠ none := (leaf_iff (F z) q).mp leaf
           have group : (fiber (read F) S q none).card ≤ 1 := by
             apply Finset.card_le_one.mpr
             intro i hi j hj
