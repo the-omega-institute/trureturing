@@ -19,6 +19,10 @@ internal sealed class Scale38NestedCompensationDocument : IScribeDocumentDefinit
                 + "leaf of both trees, then the two reports are equal: a common leaf carries "
                 + "the same alpha or beta label in both trees."))),
             DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("scale38nestedcompensation-comb-holes"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.comb_holes"),
+                H("Slot and tail hole table"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every natural n, Source-valued table f on Fin(n) and Source q, comb(n,f,q) equals B(n,Fin.snoc(f,q)): the n left slots followed by the terminal hole."))), DescribeRole.Theorem),
             Describe.Lean(
             DescribeId.Create("nested-compensation-root-excess"),
             DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.root_excess"),
