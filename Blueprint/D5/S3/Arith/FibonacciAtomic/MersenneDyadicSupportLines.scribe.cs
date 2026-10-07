@@ -79,7 +79,7 @@ internal sealed class MersenneDyadicSupportLinesDocument : IScribeDocumentDefini
                 + "The first line follows from the second in the high interval. Zero atoms "
                 + "and terminating dyadic expansions remain included. At h=2 the lines "
                 + "are 6t and 14t-2 on the three-outcome simplex.")),
-                Paragraph(Text("Only these numerical support inequalities are asserted. "
+                Paragraph(Text("These statements concern numerical dyadic costs. "
                 + "They do not assert a sampler optimization, a batch phase transition, "
                 + "an equality classification, or a value at every prescribed minimum atom."))),
             DescribeRole.Theorem))));
