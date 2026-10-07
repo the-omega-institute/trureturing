@@ -67,3 +67,72 @@ The supporting-line description of classical colossally abundant numbers is olde
 For the [project's theory](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md), this source addresses a gap that the restricted family $N_g=1+F_r g$ does not fill: an explicit theorem retaining the full RH test when the observed family is reduced. It does not itself prove Robin on that Fibonacci family, or control the project's increment-source loss $J_s(d)$ and its complementary weighted moments.
 
 The current finite-window certificate is inside previously published verification ranges and serves as a method check. The current progression-concentration deduction needs a separate comparison against existing near-extremal and spacing results; not finding it in this paper establishes no originality. Further work should start from the applicable contact and transfer theorems and state the exact unproved tail or joint estimate that a FIB observation would add. Reproving the supporting-line construction, recursive nesting, or another already-covered finite Robin interval is not by itself progress beyond these sources.
+
+## Quantitative contact restrictions that may be reused
+
+The following are stated in the same v1 primary, §§3.5–3.7, printed
+pp.9–14. They are literature suppliers, rather than new recursive FIB
+results. Let
+
+$$
+S_j(p)=p+\cdots+p^j,\qquad
+\eta(p,j)=\frac{\log(1+1/S_j(p))}{\log p}\quad(j\ge1).
+$$
+
+For an actual arithmetic contact $n$ of order $k$ in Theorem 3.9, the
+additional hypothesis is that $t\mapsto F(\log t)$ is increasing and
+concave on $t\ge\log n_*$. At the same contact, with $b_p=v_p(n)$, one
+common positive parameter obeys
+
+$$
+\frac{(1+1/S_{b_p+1}(p))^k-1}{k\log p}
+\le\varepsilon
+\le\frac{1-(1+1/S_{b_p}(p))^{-k}}{k\log p};
+\tag{Q1}
+$$
+
+the left inequality is for every prime, and the right is only for
+$p\mid n$. The theorem also makes this $n$ a unique classical CA
+maximizer at that parameter. Thus these are joint restrictions on one
+actual exponent vector, not independently attainable per-prime extrema.
+
+Write
+
+$$
+\varepsilon_-(n)=\max_{q\ \mathrm{prime}}\eta(q,b_q+1),\qquad
+\varepsilon_+(n)=\min_{p\mid n}\eta(p,b_p),\qquad
+w_{\rm CA}(n)=\varepsilon_+(n)-\varepsilon_-(n).
+$$
+
+Proposition 3.11, printed p.12, states, for a prime $q$ attaining the
+first maximum,
+
+$$
+w_{\rm CA}(n)>
+\frac{k}{2}\varepsilon_-(n)^2\log q.
+\tag{Q2}
+$$
+
+This width bounds the possible contact orders of a fixed integer. It is
+not a lower separation bound on every pair of classical critical
+parameters. In particular, it does not resolve coincident parameters;
+Remark 3.14 explicitly notes that intermediate tied CA maximizers are
+excluded from these concave arithmetic families.
+
+Corollaries 3.8 and 3.10 give eventual divisibility by every fixed integer
+and, under the concavity condition, a divisibility chain of first
+contacts. Theorem 3.12 is specifically about changing the order: for
+$0<\alpha\le1$, $m_k=\min A_k(\alpha,1)$ and $R_k=m_{k+1}/m_k$,
+
+$$
+\limsup_{k\to\infty}\frac{\log(1+\omega(R_k))}{k}
+=\limsup_{k\to\infty}\frac{\log(1+\Omega(R_k))}{k}
+=\frac1\alpha.
+$$
+
+The paper leaves unbounded prime counts between consecutive members of
+one fixed level unresolved. None of these conclusions transfers merely
+by calling the [selected global Robin maximizer](../Arith/caveney2012sacaga.md)
+a higher-order contact. Maximum preservation is supplied by the different
+construction in §4; the growth and exponent conclusions above are not
+stated for that construction.

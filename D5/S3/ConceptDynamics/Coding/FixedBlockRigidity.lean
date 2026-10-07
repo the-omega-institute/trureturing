@@ -485,13 +485,13 @@ def expandedWordCoordinates (A : GroupMat H n n) {k : ℕ} (hk : 0 < k) :
     · exact forget_lift p.1 p.2
     · simp [liftWord, prefixLabel]
 
-private theorem lift_source {A : GroupMat H n n} {k : ℕ} (hk : 0 < k)
+theorem lift_source {A : GroupMat H n n} {k : ℕ} (hk : 0 < k)
     (w : LegalWord (baseGraph A) k) (g : H) :
     (expandedGraph A).source ((liftWord w g).edge ⟨0,hk⟩) =
       (wordSource hk w,g) := by
   simp [expandedGraph, liftWord, wordSource, prefixLabel]
 
-private theorem lift_target {A : GroupMat H n n} {k : ℕ} (hk : 0 < k)
+theorem lift_target {A : GroupMat H n n} {k : ℕ} (hk : 0 < k)
     (w : LegalWord (baseGraph A) k) (g : H) :
     (expandedGraph A).target ((liftWord w g).edge ⟨k-1,by omega⟩) =
       (wordTarget hk w,g * totalLabel w) := by
@@ -759,7 +759,7 @@ private theorem wordFiber_card_succ (A : GroupMat H n n) :
         simpa using hc.symm
       _ = ((A^(m+1+1)) i j).coeff g := by rw [pow_succ _ (m+1)]
 
-private theorem wordFiber_card (A : GroupMat H n n) {k : ℕ} (hk : 0 < k)
+theorem wordFiber_card (A : GroupMat H n n) {k : ℕ} (hk : 0 < k)
     (i j : Fin n) (g : H) :
     Fintype.card (WordFiber A hk i j g) = ((A^k) i j).coeff g := by
   obtain ⟨m,hm⟩ : ∃ m : ℕ, k = m+1 := ⟨k-1,by omega⟩
