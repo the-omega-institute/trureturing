@@ -38,7 +38,10 @@ internal sealed class HiaiRuskaiRiemannianContractionDocument : IScribeDocumentD
                 H("All three bounds are exact"), StatementSource.FromAuthor(Disp(ClaimBody())),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("For every extreme kernel, a scalar pinching identity bounds the input metric below by 4 y1^2 / (1 - w1^2), and the exact output formula bounds the numerator by the extreme coefficient times that same quantity. Integrating both inequalities with the positive geometric and BKM weights preserves their common denominator. The BKM kernel is dslope Real.log 1. The dual WY kernel is the half mixture of the zero extreme kernel and fun x : ℝ => Real.rpow x (-1/2). The common pair rho = I/2 and A = qubitX attains every upper bound. The argument treats alpha = 0 and both signs of tau."))),
-                DescribeRole.Theorem)),
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("hiai-ruskai-2015-cq-contraction-coefficients"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Definition(string name, string title, Formula formula, string prose) =>

@@ -118,6 +118,10 @@ $$\forall alpha \in \mathbb{R},\; \forall tau \in \mathbb{R},\; (\operatorname{a
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/hiai-ruskai-2015-cq-contraction-coefficients` (proved) by `D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"hiai-ruskai-2015-cq-contraction-coefficients","declaration_gid":"D5/S3/Quantum/QuantumChannels/HiaiRuskaiRiemannianContraction.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Fumio Hiai; Mary Beth Ruskai (2016). *Contraction coefficients for noisy quantum channels*. DOI: [10.1063/1.4936215](https://doi.org/10.1063/1.4936215). URL: <https://arxiv.org/abs/1508.03551v1>.
