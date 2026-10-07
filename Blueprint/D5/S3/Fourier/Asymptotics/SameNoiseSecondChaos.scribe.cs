@@ -12,6 +12,28 @@ internal sealed class SameNoiseSecondChaosDocument : IScribeDocumentDefinition
         H("Same-noise second integral"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("same-noise-rank-one-total"),
+                DeclarationHandle.Create(Module + "rankOne_total"),
+                H("Rank-one kernel totality"),
+                StatementSource.FromAuthor(SpatialHypotheses(All("k",
+                    At("Lp", F.Id("Real"), F.D(2), At("prod", F.Id("mu"), F.Id("mu"))),
+                    All("horthogonal", All("f", HSpace, All("g", HSpace,
+                        Eq(At("inner", At("rankOne", F.Id("mu"), F.Id("f"), F.Id("g")), F.Id("k")), F.D(0)))),
+                        Eq(F.Id("k"), F.D(0)))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Dynamics/nualart2005multiple")),
+                Blocks(Paragraph(Text("A product-space L2 kernel orthogonal to every actual rank-one class is zero. Rectangle indicators and product-measure uniqueness establish the identification used by the actual integral-operator consumer."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("same-noise-rank-one-flip"),
+                DeclarationHandle.Create(Module + "kernelFlip_rankOne"),
+                H("Rank-one coordinate swap"),
+                StatementSource.FromAuthor(SpatialHypotheses(All("f", HSpace, All("g", HSpace,
+                    Eq(At("kernelFlip", F.Id("mu"), At("rankOne", F.Id("mu"), F.Id("f"), F.Id("g"))),
+                        At("rankOne", F.Id("mu"), F.Id("g"), F.Id("f"))))))),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Dynamics/nualart2005multiple")),
+                Blocks(Paragraph(Text("Coordinate swap exchanges the factors of the actual product-measure rank-one kernel. The actual integral-operator symmetry proof consumes this identity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("same-noise-diagonal-image"),
                 DeclarationHandle.Create(Module + "secondIntegral_diagonal"),
                 H("Original diagonal image"),

@@ -1,0 +1,19 @@
+### 39.8 来源、纸面状态与未决边界
+
+数学来源固定为供应仓修订 40d10f50aa9c16adf0a1c5021810be9a1b90bceb。其 [Campbell note，Theorem 1 及 candidate function 分支](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/campbell/note.tex) 给本章作为假设使用的精确公式、初值、奇偶律和规定起点结论；[scale-memory](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/campbell/scale-memory.md) 区分五窗尺度成本、供应时钟、缺陷词及所选状态返回；[GENERAL](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/GENERAL.md) 给两种原递归，来源的 [README](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/README.md) 与 [STATUS](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/STATUS.md) 给整体边界。概述中的“每个内轨道四步”只按 note 的严格陈述理解为从 $n-1$ 出发；本章全合法起点的五步支撑有独立的区间证明。
+
+本章的 repo-derived、PAPER 结果是在假设 17.1 和 $b(1)=1$ 下的完整周期核及钳位盆地律。证明使用普通符号分支、缺额纤维、有限链保序和区间端点代入；不把有限例子、供应源程序读数或有限前缀当作全域证明。五步支撑复用不承担本章新增结论的名义；本卷 15.2、§§36--37 及来源公式也分别保留其原复用身份。这些纸面结果没有 kernel、覆盖或冻结状态。
+
+来源范围比对限于本卷完整正文、所列 Campbell 原生正文和供应概述；相关继承检索是有界检索，未覆盖全部私人资料、第三方库及世界文献，也未核验未取得的上游正文。因此 repo-derived 不宣称世界新颖性。来源的有限计算支持保持独立证据地位，没有以其读数替代 (39.1) 的显式假设。
+
+本章不增加实际 $C$ 的前提或结论。凡继承本卷实际 $C$ 结果，其完整假设 24.1 及经 23.1、21.1 承继的全部条件仍保留；未重算有限前提仍为 ASSUMED-UNVERIFIED，包括比值域 $16384\le n\le131071$、黄金归纳基 $1\le n\le65535$、规定深度入周期基域 $3\le n\le52$，
+
+$$
+\lambda_8=[0,0,0,1,1,2,3,4,5],\qquad
+\lambda_9=[0,0,0,0,1,1,2,2,3,5,6,6,7,8],
+$$
+
+以及其余全部种子、别名、出现重数、各行自身历史、停止条件、取整、共同 $H$、接缝、单位位和原生帽及拆分合法域。这里不使用 §26.22；该接口若用于其他推导，其 $j\ge2H+23$ 条件仍不可省略。
+
+未决内容继续包括实际 Cloitre 的 G.5 后续共同响应与更宽轮廓取得、既有合格域外的实际盆和着陆及校正同历史相位、真实无界周期长度族是否存在、周期与规范缺陷振幅的更强关系、统一缺陷和终端占用控制、联合块补偿与离散度、达到的优化策略、全局 $C(n)/n$ 收敛及完整跨类型结构对应。已证的全域图阻碍不解决这些数值与历史义务，Campbell 的完整盆地也不供应它们。本章完成一个限定的实际数值接口，完整研究目标继续保留。
+

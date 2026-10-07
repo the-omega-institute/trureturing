@@ -1,0 +1,28 @@
+**引理 40.3（置换容量迫使的缺陷总量）。** 设 $0<t<1$、$c\in\mathbb R$、$r\in\mathbb Z$，$A$ 是含 $p\ge1$ 个不同整数的有限集，$f:A\to\mathbb Z$，并令
+
+$$
+g(z)=\lfloor tz+c\rfloor,\qquad f(z)\ge g(z),\qquad
+\sigma(z)=r-f(z).
+$$
+
+假设这个实际给定的 $\sigma$ 是 $A$ 的置换。将 $A$ 排为 $z_1<\cdots<z_p$，置 $\gamma=1-t$、$m=\lfloor p/2\rfloor$、$S=\sum_{z\in A}(f(z)-g(z))$。则每个秩都满足
+
+$$
+z_{p+1-i}+g(z_i)\le r\qquad(1\le i\le p),
+\tag{40.3}
+$$
+
+并且
+
+$$
+\begin{aligned}
+S&\ge\sum_{i=1}^{m}\left\lfloor\gamma(z_{p+1-i}-z_i)\right\rfloor\\
+ &\ge B_t(p):=\sum_{i=1}^{m}\lfloor\gamma(p+1-2i)\rfloor\\
+ &\ge\gamma\left\lfloor\frac{p^2}{4}\right\rfloor-m
+ \ge\frac{\gamma p^2}{4}-\frac p2.
+\end{aligned}
+\tag{40.4}
+$$
+
+空求和取零。这里不要求 $f$ 单调，也不要求置换把原点按反序映到像点。
+
