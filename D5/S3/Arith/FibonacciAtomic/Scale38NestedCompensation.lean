@@ -87,6 +87,55 @@ def extra (k : Nat) (i : Index k) : Finset Address :=
 def compatible (k t : Nat) (i : Index k) : Prop :=
   ∀ s < t, readout (query s) (family k i) = .alpha
 
+/-- Nonconflicting trees give the same report at every address that is a leaf of both. -/
+theorem agree (P Q : Source) (hn : Nonconflict P Q) (u : Address)
+    (hi : chi (readout u P) = 0) (hj : chi (readout u Q) = 0) :
+    readout u P = readout u Q := by
+  have labels := (ActualImageSevenLeafSeparation.seven_leaf_separation.2.1 P Q).2.2.mp hn
+  cases hr : readout u P <;> cases hs : readout u Q <;>
+    simp only [hr,chi] at hi <;> simp only [hs,chi] at hj
+  all_goals try contradiction
+  all_goals try rfl
+  · have hh := labels u true false (by simp [ActualImageSevenLeafSeparation.leafLabel,hr])
+      (by simp [ActualImageSevenLeafSeparation.leafLabel,hs])
+    cases hh
+  · have hh := labels u false true (by simp [ActualImageSevenLeafSeparation.leafLabel,hr])
+      (by simp [ActualImageSevenLeafSeparation.leafLabel,hs])
+    cases hh
+
+/-- In a pairwise nonconflicting family, every recipe on at least two members charges
+some member a positive response excess. -/
+theorem root_excess {m : Nat} (F : Fin m → Source) (nc : ∀ i j, Nonconflict (F i) (F j))
+    (S : Finset (Fin m)) (r : ActualJointResponseCostCore.Recipe F S)
+    (hS : 2 ≤ S.card) : ∃ i ∈ S, 1 ≤ ActualJointResponseCostCore.gain r i := by
+  classical
+  cases r with
+  | singleton i => simp at hS
+  | split S a hs next =>
+    by_contra! hzero
+    have charge (i : Fin m) (hi : i ∈ S) : chi (a.val i) = 0 := by
+      have hz := hzero i hi
+      simp only [ActualJointResponseCostCore.gain,hi,↓reduceDIte] at hz
+      omega
+    obtain ⟨u,hu⟩ := a.property
+    have same (i j : Fin m) (hi : i ∈ S) (hj : j ∈ S) : a.val i = a.val j := by
+      rw [← hu]
+      exact agree (F i) (F j) (nc i j) u (by simpa only [← hu,vector] using charge i hi)
+        (by simpa only [← hu,vector] using charge j hj)
+    obtain ⟨i,hi⟩ := Finset.card_pos.mp (by omega : 0 < S.card)
+    have singleton : S.image a.val = {a.val i} := by
+      ext y
+      constructor
+      · intro hy
+        obtain ⟨j,hj,rfl⟩ := Finset.mem_image.mp hy
+        exact Finset.mem_singleton.mpr (same j i hj hi)
+      · intro hy
+        rw [Finset.mem_singleton] at hy
+        subst y
+        exact Finset.mem_image.mpr ⟨i,hi,rfl⟩
+    rw [singleton,Finset.card_singleton] at hs
+    omega
+
 /-- Literal nested sources and their actual routing reports. -/
 theorem result (k : Nat) (hk : 1 ≤ k) :
     Function.Injective (family k) ∧
@@ -566,54 +615,11 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
   have leaf_length (U : Source) : (leaves U).length = U.length := by
     rw [← List.toFinset_card_of_nodup (ActualJointResponseCostCore.cost_foundation.1 U).1]
     exact (ActualImageSevenLeafSeparation.seven_leaf_separation.1 U).1
-  have agree (u : Address) (i j : Fin m)
-      (hi : chi (readout u (F i)) = 0) (hj : chi (readout u (F j)) = 0) :
-      readout u (F i) = readout u (F j) := by
-    have labels := (ActualImageSevenLeafSeparation.seven_leaf_separation.2.1 (F i) (F j)).2.2.mp
-      (nc (e.symm i) (e.symm j))
-    cases hr : readout u (F i) <;> cases hs : readout u (F j) <;>
-      simp only [hr,chi] at hi <;> simp only [hs,chi] at hj
-    all_goals try contradiction
-    all_goals try rfl
-    · have hh := labels u true false (by simp [ActualImageSevenLeafSeparation.leafLabel,hr])
-        (by simp [ActualImageSevenLeafSeparation.leafLabel,hs])
-      cases hh
-    · have hh := labels u false true (by simp [ActualImageSevenLeafSeparation.leafLabel,hr])
-        (by simp [ActualImageSevenLeafSeparation.leafLabel,hs])
-      cases hh
-  have root_excess (S : Finset (Fin m)) (r : ActualJointResponseCostCore.Recipe F S)
-      (hS : 2 ≤ S.card) : ∃ i ∈ S, 1 ≤ ActualJointResponseCostCore.gain r i := by
-    cases r with
-    | singleton i => simp at hS
-    | split S a hs next =>
-      by_contra! hzero
-      have charge (i : Fin m) (hi : i ∈ S) : chi (a.val i) = 0 := by
-        have hz := hzero i hi
-        simp only [ActualJointResponseCostCore.gain,hi,↓reduceDIte] at hz
-        omega
-      obtain ⟨u,hu⟩ := a.property
-      have same (i j : Fin m) (hi : i ∈ S) (hj : j ∈ S) : a.val i = a.val j := by
-        rw [← hu]
-        exact agree u i j (by simpa only [← hu,vector] using charge i hi)
-          (by simpa only [← hu,vector] using charge j hj)
-      obtain ⟨i,hi⟩ := Finset.card_pos.mp (by omega : 0 < S.card)
-      have singleton : S.image a.val = {a.val i} := by
-        ext y
-        constructor
-        · intro hy
-          obtain ⟨j,hj,rfl⟩ := Finset.mem_image.mp hy
-          exact Finset.mem_singleton.mpr (same j i hj hi)
-        · intro hy
-          rw [Finset.mem_singleton] at hy
-          subst y
-          exact Finset.mem_image.mpr ⟨i,hi,rfl⟩
-      rw [singleton,Finset.card_singleton] at hs
-      omega
   have lower_cost (sigma : Strategy) : ∃ i : Fin m, 3*k+14 ≤ cost sigma (F i) := by
     obtain ⟨v, ⟨r,hr⟩,hv⟩ :=
       (ActualJointResponseCostCore.result m hm F fin_positive fin_injective).2.2.2.1 sigma
-    obtain ⟨i,hi,hgain⟩ := root_excess Finset.univ r (by
-      simp [m,Fintype.card_sum]; omega)
+    obtain ⟨i,hi,hgain⟩ := root_excess F (fun i j => nc (e.symm i) (e.symm j)) Finset.univ r
+      (by simp [m,Fintype.card_sum]; omega)
     refine ⟨i,?_⟩
     have hb := hv i
     rw [hr i,leaf_length] at hb
