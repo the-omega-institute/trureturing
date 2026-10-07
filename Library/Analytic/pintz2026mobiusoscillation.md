@@ -112,3 +112,363 @@ The remaining work is a signed, same-source transport or estimate;
 reproving the envelope comparison would not supply it. This note gives
 no new oscillation theorem, normalized signed bound, Robin verification
 range, or RH proof.
+
+## Exponential smoothing does not give a positive reconstruction of the Robin cutoff
+
+A related primary is Songlin Han, *The Error in a Smooth Weighted Prime
+Number Formula and Zero-free Regions for the Riemann Zeta Function*,
+[arXiv:2505.23795v1](https://arxiv.org/pdf/2505.23795v1), submitted
+26 May 2025. The inspected PDF has 20 pages and SHA-256
+`12c69d640afd1742276303b2f59130c3262875dfe5ca990de1f6c75557d64139`.
+Its definitions and equation (2), printed pp.1–2, use the actual
+prime-power coefficients and the exponential error
+
+$$
+D_{\rm exp}(y)=\sum_{n\ge1}(\Lambda(n)-1)e^{-n/y},\qquad y>0.
+$$
+
+The cited classical Theorem A, printed p.2, bounds this by $O(\sqrt y)$
+**under RH**. The source's further zero-free-region implications do not
+supply an unconditional square-root bound or a signed estimate at the
+selected Robin clock. The interface below uses its exponential weight,
+not an assumed converse or an independent certification of its proofs.
+
+### Keep the actual coefficients and the complete tail
+
+At the [selected critical source](polak2026finiterobinca.md), keep
+$A=\log N>2$, and put
+
+$$
+q(t)=\frac1{t\log t},\qquad k(t)=-q'(t),\qquad
+w_A(n)=q(\max(A,n)).
+$$
+
+For every real $R>A$, finite summation gives the exact identity
+
+$$
+\begin{aligned}
+\int_A^R(\psi(t)-t)k(t)dt
+={}&\sum_{n\le R}(\Lambda(n)-1)
+       [q(\max(A,n))-q(R)]\\
+ &+\int_A^R(\lfloor t\rfloor-t)k(t)dt.
+\end{aligned}
+\tag{S1}
+$$
+
+Indeed, $\psi(t)-\lfloor t\rfloor=\sum_{n\le t}(\Lambda(n)-1)$;
+interchange only this finite sum with the integral. The lower endpoint
+for a term is $\max(A,n)$, and $\int_u^Rk(t)dt=q(u)-q(R)$.
+Thus neither the prime powers nor the upper endpoint is discarded.
+
+The [existing quantitative PNT supplier](../Weil/johnstonyang2022pnt.md)
+ensures convergence of the original improper integral and of the ordered
+series below. Also
+$q(R)[\psi(R)-\lfloor R\rfloor]\to0$. Hence (S1) gives
+
+$$
+I_\psi(A)=\lim_{R\to\infty}\sum_{n\le R}(\Lambda(n)-1)w_A(n)
+              +C_{\rm floor}(A),
+\qquad
+C_{\rm floor}(A)=\int_A^\infty(\lfloor t\rfloor-t)k(t)dt,
+\tag{S2}
+$$
+
+with $-q(A)\le C_{\rm floor}(A)\le0$.
+The series is an ordered, potentially conditional series, not a claim
+of absolute coefficient convergence. This is a finite-summation
+application to the existing Robin kernel, not a new explicit formula or
+prime-distribution theorem.
+
+### The coefficientwise positive-mixture bridge fails
+
+Suppose a nonnegative measure $\nu_A$ on positive scales could reconstruct
+these exact coefficient weights from Han's exponentials:
+
+$$
+w_A(n)=\int_{(0,\infty)}e^{-n/y}\,d\nu_A(y)
+\qquad(n\ge1),
+\tag{S3}
+$$
+
+with every displayed integral finite. Every such sequence is discretely
+convex. For every integer $m\ge2$, linearity of the three finite integrals
+gives
+
+$$
+w_A(m-1)-2w_A(m)+w_A(m+1)
+=\int_{(0,\infty)}e^{-(m-1)/y}(1-e^{-1/y})^2d\nu_A(y)\ge0.
+\tag{S4}
+$$
+
+But take $m=\lfloor A\rfloor\ge2$. The actual Robin weights have
+$w_A(m-1)=w_A(m)=q(A)$ and $w_A(m+1)=q(m+1)<q(A)$, because
+$q$ is strictly decreasing and $m+1>A$. Therefore
+
+$$
+w_A(m-1)-2w_A(m)+w_A(m+1)=q(m+1)-q(A)<0.
+\tag{S5}
+$$
+
+Equations (S4)–(S5) exclude (S3), including at this actual source clock.
+Allowing a nonnegative constant component does not help: its second
+finite difference is zero. The same local obstruction holds for the
+finite weights in (S1) when $R>m+1$, so it is not produced by dropping
+the infinite tail. The argument is the usual convexity of positive
+exponential mixtures applied to the particular cutoff weights; no new
+general mixture theorem or originality is claimed.
+
+Consequently a pointwise one-sided estimate for $D_{\rm exp}(y)$ cannot
+be transported to (S2) by an exact coefficientwise nonnegative mixture
+of these same exponential kernels. This statement concerns that bridge,
+not every possible relation between the two actual arithmetic sums.
+It does not exclude signed inversion, an additional correction term with
+its own bound, Tauberian estimates, or a direct estimate for $I_\psi(A)$.
+Those alternatives must retain $C_{\rm floor}$ and pay the full tail and
+all reconstruction losses at the same source.
+The [existing FIB dilation filter](verjovsky2026mobiussmoothing.md)
+already gives norm estimates in a different coefficient problem; its
+invertibility is not a substitute for (S3) or for sign control here.
+No new signed Robin lower bound, finite verification range, Lean result,
+or proof of RH is supplied by this obstruction.
+
+### Finite weighted variation also excludes an exact signed reconstruction
+
+Allowing both signs does not repair the coefficientwise reconstruction if
+the representing measure has finite variation after weighting at $n=2$.
+More precisely, there is no signed Borel measure $\nu$ on $(0,\infty)$
+such that
+
+$$
+\int_{(0,\infty)}e^{-2/y}\,d|\nu|(y)<\infty,
+\qquad
+w_A(n)=\int_{(0,\infty)}e^{-n/y}\,d\nu(y)
+\quad\text{for every integer }n\ge2.
+\tag{S6}
+$$
+
+Here a locally finite signed measure is allowed; the displayed weighted
+variation makes all the required integrals absolutely defined. This is
+an application of classical compact moment uniqueness, not a new moment
+theorem. The standard suppliers are polynomial density on $[0,1]$ and
+determination of finite measures by continuous tests. They are already
+available at the repository's Mathlib pin
+`db584cd6d46c92f209a44c0f1c829460d327499d` as
+[`polynomialFunctions_closure_eq_top'`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Topology/ContinuousMap/Weierstrass.lean)
+and
+[`Measure.ext_of_integral_eq_on_compactlySupported`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Integral/RieszMarkovKakutani/Real.lean).
+For finite signed measures, apply determination to their Jordan parts.
+These are inspected upstream suppliers, not a compiled Lean application
+of (S6).
+
+To apply them, put $r=e^{-1/y}$ and push the finite signed measure
+$e^{-2/y}\nu$ to $[0,1]$, extending it by zero at the endpoints. Call the
+result $\mu_\nu$. It has no atom at $0$, and (S6) says
+
+$$
+\int_{[0,1]}r^{n-2}\,d\mu_\nu(r)=w_A(n)\qquad(n\ge2).
+\tag{S7}
+$$
+
+The uncut weights $q(n)$ have a positive finite comparison measure.
+Define it on $(0,1)$, with zero endpoint masses, by
+
+$$
+d\mu_q(r)=
+r\left[\int_1^\infty
+\frac{(-\log r)^{s-1}}{\Gamma(s)}\,ds\right]dr.
+\tag{S8}
+$$
+
+The classical Gamma integral
+([DLMF 5.9.1](https://dlmf.nist.gov/5.9.E1), with $\mu=1$, $\nu=s$
+and $z=n$) and the substitution $r=e^{-t}$ give
+$\int_0^1r^{n-1}(-\log r)^{s-1}dr=\Gamma(s)n^{-s}$.
+All integrands in this comparison are nonnegative. Tonelli therefore gives
+
+$$
+\int_{[0,1]}r^{n-2}\,d\mu_q(r)
+=\int_1^\infty n^{-s}ds=q(n)\qquad(n\ge2).
+\tag{S9}
+$$
+
+In particular $\mu_q([0,1])=q(2)<\infty$, which verifies the needed
+finiteness as well as the absence of an atom at $0$.
+
+Let $m=\lfloor A\rfloor\ge2$ and $\eta=\mu_\nu-\mu_q$.
+For every $j\ge0$, the integer $n=m+1+j$ is strictly larger than $A$.
+Equations (S7)–(S9) thus give
+
+$$
+\int r^j\,d(r^{m-1}\eta)(r)=0.
+\tag{S10}
+$$
+
+Compact moment uniqueness implies $r^{m-1}\eta=0$.
+On each $[\varepsilon,1]$ the multiplier has a bounded reciprocal, so
+$\eta$ is zero there. Hence $\eta$ is supported at $0$; both original
+measures have zero mass there, and consequently $\mu_\nu=\mu_q$.
+Their zeroth moments would force $q(A)=q(2)$, whereas $A>2$ and $q$ is
+strictly decreasing. This excludes (S6).
+
+The full tail moments fix the low moments in this finite-variation
+measure class. Merely allowing negative weights therefore cannot alter
+the initial plateau while preserving every later coefficient. This
+does not rule out conditional or distributional inversion outside this
+class, approximate reconstruction with bounded losses, or identities
+specific to the actual arithmetic coefficients $\Lambda(n)-1$.
+
+### An explicit correction retains the actual arithmetic question
+
+There is still a finite correction route. With $a_n=\Lambda(n)-1$ and
+$m=\lfloor A\rfloor$, define
+
+$$
+\Delta_A=\sum_{2\le n\le m}a_n\,[q(A)-q(n)].
+$$
+
+For every $R\ge m$ one has exactly
+
+$$
+\sum_{n\le R}a_nw_A(n)
+=-q(A)+\sum_{2\le n\le R}a_nq(n)+\Delta_A.
+\tag{S11}
+$$
+
+The $n=1$ term is $-q(A)$, since $\Lambda(1)=0$; $q(1)$ is never used.
+Taking the ordered limit justified in (S2) yields
+
+$$
+I_\psi(A)=
+\lim_{R\to\infty}\sum_{2\le n\le R}a_nq(n)
++\Delta_A-q(A)+C_{\rm floor}(A).
+\tag{S12}
+$$
+
+Equation (S12) is finite subtraction followed by the existing ordered
+limit. It asserts neither absolute convergence of the arithmetic series
+nor an exchange with an exponential-mixture integral. The complete
+source dependence now includes the arithmetic signed correction $\Delta_A$;
+bounding the uncut quantity alone does not pay this correction. The
+remaining Robin obligation is a sufficiently strong joint lower bound
+at the same $A$, including $\Delta_A$ and $C_{\rm floor}(A)$.
+No such bound, new prime estimate, originality claim or RH proof is
+provided by this classical moment application.
+
+## A literal probabilistic Möbius supplier fails actual-source checks
+
+Maxie Dion Schmidt, *Picking up the partial sums of the Möbius function
+problem with probabilistic number theory*,
+[arXiv:2604.23517v1](https://arxiv.org/pdf/2604.23517v1), submitted
+26 April 2026, supplies probabilistic hypotheses alongside identities for
+auxiliary arithmetic functions. The inspected PDF has 10 pages and SHA-256
+`1dfc27758a5c7459f86cc68437b2ebbb4ed8335b8620dd6c91ce9709a720ea57`.
+Assertion 1.10, printed p.4, Remarks 1.11–1.12 on p.5, and Theorem 2.2,
+equations (8a)–(8b), on p.6 are the scope of this paper assessment.
+This is neither a complete proof audit nor a Lean result. The identities
+and elementary arithmetic facts below are reused, not claimed as new
+Möbius theory or a new RH criterion.
+
+### The all-order independence statement includes a forbidden fiber
+
+Let $U_x$ be uniform on $\{1,\ldots,\lfloor x\rfloor\}$, $x\ge2$,
+and keep the source's $\Omega(n)$, which counts prime factors with
+multiplicity. Its literal (IH-A) asserts independence of squarefreeness
+and the events $\Omega(U_x)=k$ throughout the stated range $k\le x$.
+The fixed choice $k=1$ is included. Every integer with $\Omega(n)=1$
+is prime, and every prime is squarefree. The conditional event is
+nonempty for every $x\ge2$. Hence, exactly,
+
+$$
+\Pr\{\mu(U_x)^2=1\mid\Omega(U_x)=1\}=1.
+$$
+
+The unconditional squarefree probability instead tends to
+$6/\pi^2<1$, as stated in the source's (IH-C). Thus (IH-A) fails even
+as an asymptotic equality in that literal full range. A central-range
+asymptotic independence statement with a different quantified range is
+not refuted by this fixed-order check. It would need its own theorem
+and weighted error control before supplying the actual arithmetic sum.
+
+### The actual indexed sums must retain their shared sign
+
+The source's (8a) defines, for $1\le n\le x$,
+
+$$
+\widehat Q_{1,n}(x)=\sum_{j\le x}\lambda(nj)\mu(j)^2.
+$$
+
+Complete multiplicativity of $\lambda$ and
+$\lambda(j)\mu(j)^2=\mu(j)$ give the exact same-source identity
+
+$$
+\widehat Q_{1,n}(x)=\lambda(n)M(x),\qquad
+\widehat Q_{1,1}(x)=M(x),\quad
+\widehat Q_{1,2}(x)=-M(x).
+$$
+
+The displayed (8b) assigns both indexed sums the same nonzero asymptotic
+
+$$
+a(x)=\frac{6x}{\pi^2}
+\frac{(-1)^{\lfloor\log\log x\rfloor}}{2\sqrt{2\pi\log\log x}}.
+$$
+
+For the actual sums, their two ratios to $a(x)$ add to zero identically;
+they therefore cannot both tend to one. This tests (8b) as a prediction
+about the actual arithmetic objects. Because the source's stated
+independence premises already fail, it is not a refutation of a logical
+implication from those inconsistent premises. Restoring the missing
+$\lambda(n)$ factor would remove this particular sign conflict; the source's cited Walfisz bound already gives $M(x)/a(x)\to 0$, excluding
+the asserted asymptotic for the actual $M(x)$.
+
+The [existing FIB finite-source identity](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_PRIME_PREFIX.md),
+§455.6, retains the same actual odd Möbius prefix, its exact boundary
+and complete remaining source tail. Neither a randomized surrogate nor
+the literal claims tested here replace those quantities. This source
+does not obtain an unconditional signed estimate from the quoted hypotheses
+or (8b) for
+$T_A I_\psi(A)$ at the selected Robin source $A=\log N$. The original
+unbounded signed target and RH remain unproved; no new Mertens bound,
+mathematical originality or Lean certification is claimed.
+
+
+## An explicit reverse interface and its shifted-numerator budget
+
+The related [Johnston–Trudgian preprint, arXiv:2511.09978v4](https://arxiv.org/pdf/2511.09978v4), *A round of Pintz to celebrate oscillations in sums*, makes a Landau–Pintz arithmetic-to-zero interface explicit. Theorem 1, printed pp.3–4, starts with a polynomial-growth arithmetic function $a(x)$, its Mellin quotient $F/G$, stated half-plane analyticity and growth bounds, and a simple zero $\rho_0=\beta_0+i\gamma_0$ of $G$ with $F(\rho_0)\ne0$. It gives an unsigned average lower bound. A zero-free conclusion additionally needs an upper bound for that same average; the existing GA2 comparisons have not supplied that input for the selected Robin source.
+
+Its $M(x)$ application uses $F(s)=s-1$ and $G(s)=s(s-1)\zeta(s)$, equations (21)–(22), printed p.8. The two large-$Y$ zero-exclusion examples on pp.11–12 assume hypothetical pointwise Mertens upper bounds. Equation (36) instead gives an average lower bound; its numerical constant is not adopted here. The source says its cited actual bound through $10^{16}$ gives only a simple-zero exclusion above real part $0.99$ and below height $5$, which does not extend the already used verification through $3\cdot10^{12}$. These are source statements, not newly certified computations. Theorem 1's simplicity condition is retained; the alternative recalled in equation (37), printed p.12, is a different published Pintz bound. It states $Y^{-1}\int_0^Y|M(x)|\,dx>Y^{\beta_0}/|\gamma_0|^5$ for $\beta_0>1/2$ and $Y\ge|\gamma_0|^5$, without a simplicity assumption.
+
+There is also a precise numerator-shift obligation before using the displayed numerical error. Equation (5), printed p.4, assumes
+
+$$
+|F(\sigma+it)|\le c_F e^\sigma\max(1,|t|^{B_F}).
+$$
+
+In equation (13), printed p.5, the contour numerator is instead
+$F(\beta_0-c_0+i(t+\gamma_0))$. Its following displayed majorant uses
+$c_Fe^{\beta_0-c_0}\max(1,|t|^{B_F})$, omitting the height shift. Both forms occur in the official v4 TeX. For the source's own $F(s)=s-1$, $c_F=\sqrt2$, $B_F=1$, take its quoted first zero with $\beta_0=1/2$, $\gamma_0=14.1347\ldots$, and $c_0=1/10$. At $t=0$,
+
+$$
+|F(2/5+i\gamma_0)|\ge\gamma_0>14,
+\qquad \sqrt2 e^{2/5}<4.
+$$
+
+Thus that pointwise substitution does not follow from the stated growth bound. This tests the numerator majorant, rather than refuting the complete integral estimate, Theorem 1, or the paper's numerical examples.
+
+A sufficient local substitute keeps the shifted factor. The same elementary inequality used for $G$ in equation (17), printed p.6, gives
+
+$$
+\max(1,|t+\gamma_0|^{B_F})
+\le(1+|\gamma_0|)^{B_F}\max(1,|t|^{B_F}).
+$$
+
+For this absolute numerator estimate, the source's $\mathcal E(y)$ can therefore be replaced by
+
+$$
+\mathcal E_{\mathrm{shift}}(y)
+=(1+|\gamma_0|)^{B_F}\mathcal E(y).
+$$
+
+In its Mertens example the extra factor is $1+|\gamma_0|$. This pays only the displayed shift step; the rest of the theorem and its numerical consequences are not independently certified here. The unshifted error is not adopted without another valid justification.
+
+The original target remains the same conditional least global Robin maximizer $N>5040$, with $A=\log N>10^{36}$, all actual zero real parts and multiplicities, the complete infinite tail and strict core. Neither this unsigned-average interface nor the local shift correction supplies its complete signed $I_\psi(A)$ lower bound. The five-window additive FIB labels are not substituted for an arithmetic average certificate. No new source proof, general theorem, numerical zero-height improvement, Lean verification or RH proof is claimed.

@@ -62,7 +62,127 @@ Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_wi
 
 For every positive width L, natural n, and legal word p of width L, q(L,n)=p if and only if the phase of zRow(n) belongs to the open cylinder arc A(p). Natural rows avoid the endpoint alternatives of the closed cylinder.
 
-**Theorem 1.5 (Missing target cuts).**
+**Theorem 1.5 (Distinct cut indices).**
+
+Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.cut_injective`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.cut_injective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The circle cut map E is injective on natural indices.
+
+**Theorem 1.6 (Arbitrarily late open-set visits).**
+
+Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_visit`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_visit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every nonempty open subset U of the circle and every natural bound B, a natural index n greater than B has golden phase in U.
+
+**Theorem 1.7 (Open arcs avoid their cuts).**
+
+Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_avoids_cut`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_avoids_cut` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive width L, legal word p, and index k between one and G(L), the circle cut E(k) lies outside A(p).
+
+**Theorem 1.8 (Open cylinder arcs).**
+
+Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_isOpen`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_isOpen` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every width L and legal word p of that width, A(p) is an open subset of the circle.
+
+**Theorem 1.9 (The reciprocal golden ratio).**
+
+Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.golden_inverse_data`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.golden_inverse_data` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The reciprocal golden ratio alpha is positive, less than one, and satisfies alpha squared plus alpha equals one.
+
+**Theorem 1.10 (Labels away from cuts).**
+
+Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_cover`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_cover` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive width L and every circle point z outside B(L), some legal word p of width L has z in A(p).
+
+**Theorem 1.11 (Integer differences of equal phases).**
+
+Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.circle_integer_offset`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.circle_integer_offset` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If two real numbers x and y have equal images in the circle modulo one, an integer k has real value x minus y.
+
+**Theorem 1.12 (Translation of cut indices).**
+
+Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.translated_cut`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.translated_cut` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For all natural t and j, adding t times the golden ratio modulo one to E(t+j) gives E(j).
+
+**Theorem 1.13 (Every circle phase is realized).**
+
+Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.phase_surjective`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.phase_surjective` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The signed phase map from legal infinite digit rows to the circle is surjective.
+
+**Theorem 1.14 (Unique arc labels).**
+
+Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_unique`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_unique` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every positive width L and legal words p and q, membership of one circle point z in both A(p) and A(q) implies p equals q.
+
+**Theorem 1.15 (Missing target cuts).**
 
 Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.missing_cut_witness`
 
@@ -74,7 +194,7 @@ Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.missing_cu
 
 For 1 at most m at most M, a finite S, 1 at most k at most G(M) with k outside K(m,S), and every natural bound B, two sources greater than B have the same sparse tuple and different M-windows.
 
-**Theorem 1.6 (Extra observation cuts).**
+**Theorem 1.16 (Extra observation cuts).**
 
 Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.extra_cut_witness`
 
@@ -86,7 +206,7 @@ Lean statement: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.extra_cut_
 
 For 1 at most m at most M, a finite S, an index k in K(m,S) outside the target cut interval, and every natural bound B, two sources greater than B have the same M-window and different sparse tuples.
 
-**Theorem 1.7 (Equal cut sets, equal natural fibres, and the canonical actual-image bijection).**
+**Theorem 1.17 (Equal cut sets, equal natural fibres, and the canonical actual-image bijection).**
 
 $$\forall m,M \in \mathbb{N}, \forall S \in \operatorname{Finset}\left(\mathbb{N}\right), (1 \le m \land m \le M) \Rightarrow (((\forall a,b \in \mathbb{N}, (q_{M}(a) = q_{M}(b) \iff \sigma_{m,S}(a) = \sigma_{m,S}(b))) \iff \operatorname{K}\left(m, S\right) = \operatorname{Icc}\left(1, \operatorname{G}\left(M\right)\right)) \land (\operatorname{K}\left(m, S\right) = \operatorname{Icc}\left(1, \operatorname{G}\left(M\right)\right) \Rightarrow (\operatorname{card}\left(\operatorname{range}\left(q_{M}\right)\right) = \operatorname{G}\left(M\right) \land \operatorname{card}\left(\operatorname{range}\left(\sigma_{m,S}\right)\right) = \operatorname{G}\left(M\right) \land (\exists e \in \operatorname{Equiv}\left(\operatorname{X}\left(M\right), \operatorname{range}\left(\sigma_{m,S}\right)\right), (\forall p \in \operatorname{X}\left(M\right), \operatorname{val}\left(e\left(p\right)\right) = \sigma_{m,S}(\operatorname{V}\left(p\right))) \land (\forall n \in \mathbb{N}, \operatorname{val}\left(e\left(q_{M}(n)\right)\right) = \sigma_{m,S}(n)) \land (\forall n \in \mathbb{N}, e^{-1}(\operatorname{actual}\left(n\right)) = q_{M}(n)))))).$$
 
@@ -108,12 +228,22 @@ Each target label occupies one connected open real interval. When the query cuts
 
 ## References
 
+- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.circle_integer_offset`
+- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.cut_injective`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.extra_cut_witness`
+- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.golden_inverse_data`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.missing_cut_witness`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_avoids_cut`
+- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_phase_visit`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_phase`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_row_raw_data`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.natural_window_arc`
+- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.phase_surjective`
 - Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.sparse_window_mutual_determination`
+- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.translated_cut`
+- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_avoids_cut`
+- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_cover`
+- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_isOpen`
+- Truth anchor: `D5/S1/Digit/Infinite/SparseWindowMutualDetermination.window_arc_unique`
 - Dependency: [D5/S1/Digit/Infinite/WindowCylinderPartition](WindowCylinderPartition.md)
 - Dependency: [D5/S1/Phase/Basic](../../Phase/Basic.md)

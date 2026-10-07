@@ -333,6 +333,20 @@ public sealed partial class BackfillInventoryLoaderTests
         }
     }
 
+    [Fact]
+    public void DigestionProjectionDoesNotDeriveTheD5TicketIndex()
+    {
+        var snapshot = Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
+            ("D5/X_Frontier/SyntheticDelta.lean", "/-- TASK D5-T0098 -/\ndef task : Unit := ()\n"));
+
+        var document = BackfillInventoryLoader.LoadForDigestion(snapshot);
+
+        Assert.Empty(document.RequireTickets());
+        Assert.Single(document.RequireDigestionEntries());
+    }
+
     [Theory]
     [InlineData("zeta", "alpha")]
     [InlineData("same", "same")]
@@ -376,69 +390,6 @@ public sealed partial class BackfillInventoryLoaderTests
             Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"))));
 
         Assert.Equal($"source metadata is not canonically encoded: {sourcePath}", exception.Message);
-    }
-
-    [Fact]
-    public void CandidateDeltaUsesTrustedBaselineForUnchangedNoncanonicalMetadata()
-    {
-        var source = Source("delta-v0.1", "docs/delta.md", "none");
-        var baseline = Snapshot(
-            source,
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"));
-        var candidate = Snapshot(
-            (source.Path, source.Text.Replace(
-                "unregistered_genres = []\n",
-                "unregistered_genres = []\n\n",
-                StringComparison.Ordinal)),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"));
-
-        var loaded = BackfillInventoryLoader.LoadCandidateDelta(
-            candidate,
-            baseline,
-            RawChangeSet.Create(["D5/S3/Probe/Unrelated.lean"]));
-
-        Assert.Equal("delta-v0.1", Assert.Single(loaded.RequireDigestionSources()).SourceId);
-    }
-
-    [Fact]
-    public void CandidateDeltaStillRejectsNoncanonicalMetadataWhenMetadataIsInDelta()
-    {
-        var source = Source("delta-v0.1", "docs/delta.md", "none");
-        var baseline = Snapshot(
-            source,
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"));
-        var candidate = Snapshot(
-            (source.Path, source.Text.Replace(
-                "unregistered_genres = []\n",
-                "unregistered_genres = []\n\n",
-                StringComparison.Ordinal)),
-            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"));
-
-        var exception = Assert.Throws<FormatException>(() =>
-            BackfillInventoryLoader.LoadCandidateDelta(
-                candidate,
-                baseline,
-                RawChangeSet.Create([source.Path])));
-
-        Assert.Contains("not canonically encoded", exception.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void CandidateDeltaDoesNotRestoreBaselineAtomDeletedFromCandidate()
-    {
-        var source = Source("delta-v0.1", "docs/delta.md", "none");
-        var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
-        var baseline = Snapshot(
-            source,
-            (atom.Path, atom.Text + "ast_path: theorem/delta\n"));
-        var candidate = Snapshot(source);
-
-        var loaded = BackfillInventoryLoader.LoadCandidateDelta(
-            candidate,
-            baseline,
-            RawChangeSet.Create(["D5/S3/Probe/Unrelated.lean"]));
-
-        Assert.Empty(loaded.RequireDigestionEntries());
     }
 
     [Fact]

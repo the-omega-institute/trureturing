@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:7fe8633802b4d2abdda86aa1bc37c9f6cdad478f45ffe93b7fc35ccca9ba8824
+  normalized_sha256: sha256:7fe8633802b4d2abdda86aa1bc37c9f6cdad478f45ffe93b7fc35ccca9ba8824
+cas_ref: sha256:7fe8633802b4d2abdda86aa1bc37c9f6cdad478f45ffe93b7fc35ccca9ba8824
+coverage_gids:
+  - gid: D5/S3/Estimation/DataProcessing/PartialAssignmentOccupancyFlow.aggregate_incoming
+    target_statement_id: sha256:c6c41bfa2aad77077ec777bff7dabe4584eeef456f67c4fb5c5cff0c8fda7559
+  - gid: D5/S3/Estimation/DataProcessing/PartialAssignmentOccupancyFlow.occupancy_terminal_law_range
+    target_statement_id: sha256:084ad6d4b3172d8e43f84b74e14478c3a23c2756af81415f054a257b99e86547
+receipts:
+  unresolved_subitems: []
