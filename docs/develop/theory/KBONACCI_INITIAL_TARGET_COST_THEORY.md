@@ -3938,3 +3938,306 @@ Moore's single-machine simple experiments and van den Bos–Vaandrager's complet
 
 ## 追加锚（本行以下为增补区）
 
+## 55. Actual positive offspring at even order and width two
+
+**定义 55.1（Full source and the actual chronological coordinates）。** In Chapters 55–59 fix
+
+$$
+k=2p\ge4,\qquad m=2,\qquad T=2p+1,\qquad
+P=\mathbb Z/T\mathbb Z,\qquad F_v(j,s)=f(v,-j,s).
+\tag{55.1}
+$$
+
+The target $f:Q\to Y$ is arbitrary on the full INITIAL record set of Chapter 1. Every phase, every INITIAL tail $0\le s<k$, both free values, and independent initial bottom are retained. Initial bottom returns $f(\bot)$ freely. Since $2<k$, both original alphabets contain exactly $00,01,10,11$; cross-block rejection is still an actual operation. The fee counts complete emitted blocks, including waits and clearing words. A chronological index counts blocks issued by this controller, rather than an unobserved length of the initial history.
+
+At index $t$, write $u=2t\pmod T$. Formula (1.4) gives the actual successful charge sets and tail updates:
+
+$$
+\begin{array}{c|c|c|c}
+B&E_t(B)&\text{safety from common tail }\sigma&\text{new tail}\\ \hline
+00&\varnothing&\text{always}&0\\
+01&\{u+1,u+2\}&\text{always}&1\\
+10&\{u,u+1\}&\sigma+1<k&0\\
+11&\{u,u+2\}&\sigma+2<k&\sigma+2.
+\end{array}
+\tag{55.2}
+$$
+
+All vertices in a row are actual and distinct. Each row is the charge of its displayed literal word, with full physical charges $(x,x\oplus y,y)$ for $B=xy$. A rejected endpoint is bottom, not a binary charge.
+
+A *recorded-zero archive* has paid depth $b\ge1$, has successfully observed every issued endpoint, and contains a zero in its own issued prefix. Its candidates have common observed current value and common current tail $\sigma<k$. Their INITIAL phase support is $S\subseteq P$. Assume one well-defined immutable label $\lambda(j)$ for each $j\in S$: all retained INITIAL tails and histories at that phase have that label. This last assumption is necessary for completion once those histories have merged. Every candidate shares this archive and is an actual continuation of its own original history. No condition is imposed on its original tail except the conditions that produced the archive. Denote its minimum worst-branch additional adaptive fee by $D_{\rm ad}(b,S,\sigma,\lambda)$, excluding the already-paid $b$ blocks; an empty archive has additional fee zero.
+
+**引理 55.2（The tail of a nonconstant positive child）。** At a nonconstant recorded-zero archive, every action in a correct continuation is safe on all its candidates. Its positive-difference child is $A=S\cap E_b(B)$. If that child has unequal labels, then $|A|=2$. Its common tail is zero for $B=10$, one for $B=01$, and two for $B=11$. In the last case the old tail was necessarily zero.
+
+**证明。** All candidates have the same tail and take the same word, so any rejection is simultaneous. It replaces the whole nonconstant archive by one absorbing output and cannot return different INITIAL labels. Thus the next word must be safe. Equation (55.2) gives the support and the first two asserted tails; a singleton or empty support is constant.
+
+For $11$, suppose the old tail is positive. There is a preceding paid block, because a zero has already been recorded. That preceding word ended in one. Its physical window is $\{u-2,u-1,u\}$ and its charge at $u$ is one. If its observed difference was zero, the current support excludes $u$. If its observed difference was one, the current support lies inside that preceding window, which excludes $u+2$: the four residues $u-2,u-1,u,u+2$ are distinct for every odd $T\ge5$. In either case $S\cap\{u,u+2\}$ has at most one member. A nonconstant positive child of $11$ therefore has old tail zero, and new tail two. This argument uses the actual immediately preceding word and observation in the same archive. It does not obtain a missing phase from a sibling. ∎
+
+**定理 55.3（Exact additional side prices）。** At the positive child of an actual safe action at a recorded-zero archive, the minimum additional adaptive fee is the following expression. It also applies to the successful positive child of a first-zero parent $00,01$ or $10$ whenever that parent has retained one well-defined INITIAL label per surviving phase:
+
+$$
+\delta(A,B)=
+\begin{cases}
+0,&\lambda|_A\text{ is constant},\\
+p,&\lambda|_A\text{ is nonconstant and }B=10,\\
+1,&\lambda|_A\text{ is nonconstant and }B\in\{01,11\}.
+\end{cases}
+\tag{55.3}
+$$
+
+Empty children have price zero and are not executed. Every nonconstant price is attained by one fixed literal continuation on that child's own archive, so it is also the minimum preset *continuation* fee there. For $11$ the recorded-zero and common-label hypotheses include Lemma 55.2; an unrelated abstract pair with arbitrary high tail is not covered.
+
+**证明。** A constant child stops at the parent endpoint and returns its common INITIAL label. Otherwise it contains exactly the two phases of its row, which have the same current value after the positive response.
+
+Write $t$ for the parent action's actual chronological index and $u=2t\pmod T$. For $10$ these phases are $u,u+1$, and the child's tail is zero. Their distinct coefficient positions modulo $T$ are $u-1$ and $u+1$; position $u$ is common. The latter distinct position was the zero second bit of the parent. After that parent, both phases have coefficient zero at every absolute bit position from $2t+2$ through $2t+T-2$. Their first possible new separation is at $2t+T-1=2t+2p$, the first bit of block $t+p$. Until that bit they have equal outputs and equal tails under any common actions; an adaptive controller must choose the same actions on both. Common rejection is irreversible and cannot complete unequal labels. Neither source can stop sooner. Hence at least $p$ further complete blocks are necessary, including all waits. Issue
+
+$$
+\underbrace{00\mid\cdots\mid00}_{p-1\text{ paid blocks}}\mid10
+\quad\text{at indices }b+1,\ldots,b+p.
+\tag{55.4}
+$$
+
+The last word has charge $\{u-1,u\}$ and marks exactly phase $u$ within this child. All preceding words keep tail zero; the final isolated one and its clearing zero are safe. Its actual endpoint returns the respective label. The fee is exactly $p$.
+
+For $01$, the phases are $u+1,u+2$, at tail one. The next literal $10$ has charge $\{u+2,u+3\}$ and separates exactly the right member of this pair. Its leading one joins a run of two, strictly below $k$. For $11$, Lemma 55.2 gives phases $u,u+2$ at tail two; the same next $10$ marks only $u+2$ and joins a run of three, strictly below every $k\ge4$. The second bit clears the tail in both cases and is part of the paid block. Unequal labels cannot stop at their common parent archive, so one block is also a lower bound. Both continuations decode their own new endpoint difference. No final cleanup is required after a successful stop. ∎
+
+## 56. Exact prices before the first recorded zero
+
+**定义 56.1（The unzeroed rectangle）。** After $q$ successful words $11$, with no zero yet issued, put
+
+$$
+h_q=k-2q>0.
+\tag{56.1}
+$$
+
+If the acquired phase support is $S$, the INITIAL candidates are exactly $\{(v,-j,s):j\in S,\ 0\le s<h_q\}$. Their current tails are $s+2q$, their current phases are $-j+2q$, and their current value is the common observed value. This is the actual rectangle of (51.17), supplied by [S1, Lemma 4.2], with the remembered *initial* value $v$ in $F_v$. In particular, a positive response does not replace $v$ by the current value in the target.
+
+For a known phase $j$ on such an actually acquired archive, define, for $0\le n\le h_q/2-1$, the condition
+
+$$
+\mathcal R(j,q,n):\quad
+F_v(j,\cdot)\text{ is constant on }[h_q-2i-2,h_q-2i)
+\quad(0\le i<n).
+\tag{56.2}
+$$
+
+Intervals here and below contain integer INITIAL tails. Define the explicit tail price
+
+$$
+\begin{aligned}
+\eta_v(j,q)=\min\Bigl(&\{n:\mathcal R(j,q,n),\
+ F_v(j,\cdot)\text{ constant on }[0,h_q-2n)\}\\
+&\cup\{n+1:\mathcal R(j,q,n),\
+ F_v(j,\cdot)\text{ constant on }[0,h_q-2n-1)\}\Bigr),
+\end{aligned}
+\tag{56.3}
+$$
+
+where $n$ in each set has the range just stated, and an empty minimum is $+\infty$. This is a finite comparison of the original tail table. The first set includes zero precisely for a constant remaining table.
+
+**引理 56.2（Known-phase tail price, with all actions allowed）。** The exact additional adaptive fee on the archive of Definition 56.1 with $S=\{j\}$ is $\eta_v(j,q)$. Each finite value is attained using $n$ further $11$ words, followed either by immediate stopping or by one literal $10$. Every attained endpoint returns the INITIAL label; no phase-recovery operation is needed.
+
+**证明。** Until a zero is issued, all surviving tails at this one phase have the same scalar outputs. A successful $11$ removes exactly the top two INITIAL tails of the current rectangle to one bottom endpoint, and leaves the lower rectangle. Its rejection pair must be homogeneous. After $n$ such words, these requirements are exactly (56.2).
+
+If the lower rectangle is homogeneous, stopping there gives the first candidate in (56.3). Otherwise a word starting zero, either $00$ or $01$, merges every remaining INITIAL tail at the phase. Such a word cannot complete a nonconstant table. A first-zero $10$ rejects the one top tail $h_q-2n-1$ and merges all the lower tails. Its rejection label is automatically well-defined at a known phase; it is correct exactly when the lower interval in the second set is homogeneous. All its survivors have $s+2(q+n)+1<k$ and then take the actual clearing zero. This gives the second candidate and its lawful construction.
+
+These cases also prove the lower bound for every adaptive controller. Before its first zero it can only issue $11$, and each rejected top pair has the condition in (56.2). It may instead stop with a homogeneous lower rectangle. If it reaches a first zero on a nonconstant rectangle, that word must be $10$ and its merged lower interval must be homogeneous. If an all-one word would absorb the whole remaining rectangle, correctness already makes that rectangle homogeneous, so stopping before it improves the fee. Thus a minimum uses at most $h_q/2-1$ further successful all-one words. Its stopping or first-zero event supplies exactly a candidate no greater than its paid fee in (56.3). Conversely the displayed construction realizes every candidate with no larger fee. At the least candidate, an earlier homogeneous stopping archive would give a smaller candidate, so the least fee is attained as an actual maximum, not a count of unused words. Empty rejection intervals are never decoded. ∎
+
+**定义 56.3（The one genuine pre-zero phase pair）。** The positive successful child of the original root $11$ has phase support $\{0,2\}$, paid depth one, current value $v\oplus1$, and INITIAL tails $0\le s<h$, where $h=k-2$. Use the following four possible numbers, only when their accompanying conditions hold:
+
+$$
+\begin{array}{c|l}
+\text{number}&\text{condition}\\ \hline
+0&F_v\text{ constant on }\{0,2\}\times[0,h)\\
+p&F_v(j,\cdot)\text{ constant on }[0,h)\text{ for }j=0,2\\
+1&F_v\text{ constant on }\{0,2\}\times\{h-1\},\quad
+ F_v(j,\cdot)\text{ constant on }[0,h-1)\text{ for }j=0,2\\
+1+\max\{\eta_v(0,2),\eta_v(2,2)\}&h>2,\quad
+ F_v\text{ constant on }\{0,2\}\times[h-2,h).
+\end{array}
+\tag{56.4}
+$$
+
+Let $\chi_v$ be their minimum, with $+\infty$ when there is no finite entry. The $q=2$ tail prices in the last row are used only when $h>2$, so $h_2=k-4>0$. There is no nonexistent height-zero singleton call at $k=4$.
+
+**定理 56.4（Exact root-pair fee）。** The exact minimum additional adaptive fee on the actual root-pair archive of Definition 56.3 is $\chi_v$.
+
+**证明。** If the whole rectangle is homogeneous it stops freely. Otherwise examine all four possible first words at chronological index one, where the physical window is $\{2,3,4\}$ modulo $T$.
+
+A first $00$ or $01$ clears all tails. Neither charges either of phases zero and two: $00$ has no charge and $01$ has charge $\{3,4\}$. Completion therefore requires constancy of each phase's whole INITIAL tail fibre. If their two labels agree, the archive was already homogeneous. If they differ, both sources have coefficient zero after this parent through absolute position $k-1$; the first remaining distinguishing position is $k$, the first bit of block $p$. Common rejection cannot distinguish them. Counting the parent at index one, at least $p$ further blocks are necessary. The literal continuation
+
+$$
+(00)^{p-1}\mid10
+\quad\text{at indices }1,\ldots,p
+\tag{56.5}
+$$
+
+attains $p$: its first word clears all possible tails, its waits are paid, and its last charge $\{k,0\}$ marks only phase zero. This proves the second row of (56.4) whenever it is needed. It is the endpoint-return mechanism of Theorem 2.2 at $N=\lceil(k+1)/2\rceil=p+1$, with its already-paid root block removed; the present archive has exactly that supplier's low-tail pair.
+
+A first $10$ rejects exactly INITIAL tail $h-1$ at both phases, at one common bottom endpoint. Its successful difference marks phase two and not phase zero. The two success archives therefore have known phases, but all their lower tails have already merged at that word's zero. Necessity and sufficiency are exactly the third row of (56.4), and successful and rejected sources stop after this one complete block.
+
+A first $11$ rejects the top two INITIAL tails at both phases. If $h=2$, this absorbs the whole archive and cannot help a nonconstant target. If $h>2$, its successful difference marks phase two and not phase zero, leaving two known-phase rectangles at paid depth two. The common rejection band must be homogeneous. Lemma 56.2 gives the exact further prices of the two success archives, so the last row of (56.4) is both necessary and sufficient. Its rejection sources stop after the first of these additional blocks. These four actions and immediate stopping exhaust every adaptive first choice. Their exact lower bounds and literal constructions prove the minimum. The constant and unequal-label cases, including $p=2$, are included without a special unattainable operation. ∎
+
+**引理 56.5（All other pre-zero positive children are singletons）。** On the chronological zero-difference path of $q$ successful all-one blocks from the root, the phase supports are
+
+$$
+U_0=P,\qquad U_q=P\setminus\{0,2,4,\ldots,2q\}
+\quad(1\le q\le p-1).
+\tag{56.6}
+$$
+
+The positive successful root child is $\{0,2\}$. At an all-one block of index $t$ with $1\le t\le p-2$, its positive child on this path is exactly $\{2t+2\}$, with INITIAL tails $[0,h_{t+1})$, and additional fee $\eta_v(2t+2,t+1)$. Its zero child is $U_{t+1}$. Rejection is the entire rectangle $U_t\times[h_t-2,h_t)$, with the single bottom endpoint.
+
+**证明。** The charge of $11$ is $\{2t,2t+2\}$. At the root both vertices remain. A zero root response removes zero and two. Subsequently $2t$ was removed by the preceding zero response, whereas $2t+2$ has not appeared; no wrap occurs at the stated indices. Induction gives (56.6) and each singleton child. The rejection and surviving tail ranges follow by adding two ones to $s+2t$. Lemma 56.2 applies to the actually acquired singleton rectangle, with its own paid depth and original $v$. All these rectangles consist of jointly actual histories from (1.3). ∎
+
+## 57. A priced literal spine after the recorded zero
+
+**定义 57.1（One chronological spine and its actual maximum）。** Start at a recorded-zero archive $(b,S,\sigma,\lambda)$ of Definition 55.1. A priced spine is a finite sequence of literal words $B_b,\ldots,B_{L-1}$ with $L\ge b$. Set $S_b=S$, $\sigma_b=\sigma$ and, at each issued index $t$, require $S_t$ to be nonempty and $\lambda|_{S_t}$ nonconstant. Require the safety inequality in (55.2), and put
+
+$$
+A_t=S_t\cap E_t(B_t),\qquad
+S_{t+1}=S_t\setminus E_t(B_t),\qquad
+\sigma_{t+1}=\text{the literal new tail in (55.2)}.
+\tag{57.1}
+$$
+
+Require $\lambda|_{S_L}$ to be constant; the empty set is constant. Each $A_t$ is the *first positive* child off this zero-difference spine, with its own acquired archive at paid depth $t+1$. Give it the explicit price (55.3). The certificate's absolute paid depth is
+
+$$
+\Pi=\max\left(\{L\}\cup
+\{t+1+\delta(A_t,B_t):b\le t<L,\ A_t\ne\varnothing\}\right).
+\tag{57.2}
+$$
+
+For an empty sequence $L=b$, a constant or empty support has $\Pi=b$ and additional price zero. An empty support is only a vacuous composition case, not an executed source. No positive child has an optimization variable or another decision tree: its continuation is the specified constant stop, paid return (55.4), or next-block $10$.
+
+**定理 57.2（Exact spine reduction, including waits and seams）。** At every actual archive of Definition 55.1,
+
+$$
+D_{\rm ad}(b,S,\sigma,\lambda)
+=\min_{\text{priced literal spines}}(\Pi-b).
+\tag{57.3}
+$$
+
+Every minimum is attained by a lawful adaptive policy whose choices after the first positive response are a fixed literal stream on that child. For every nonempty starting archive, each certificate realizes exactly the worst actual depth $\Pi$. The zero path and its side streams need not agree after branching.
+
+**证明。** Construct the policy by issuing the next written spine word when all differences acquired since this starting archive have been zero. Safety and (57.1) describe its actual success outputs and common tails. On its first positive response stop for a constant $A_t$; otherwise run the literal continuation of Theorem 55.3 and decode that child's own endpoints. On the terminal zero archive stop with its common label. The support and tail calculations hold inductively on every executed source. A common-tail rejection never occurs. The old zero and all new words belong to this same source's chronological archive.
+
+For each nonempty $A_t$, actual candidates reach that child and its least price is attained, giving a branch of paid depth $t+1+\delta$. If $S_L$ is nonempty, candidates in it traverse every spine word and stop at depth $L$. If $S_L$ is empty and $L>b$, the last nonempty $S_{L-1}$ is wholly sent to the positive child, so some source still reaches and pays the last block at depth $L$. Hence (57.2) is the actual maximum. Zero-charge $00$ rows and every bit of the repair or return words are charged when reached; there is no nominal word counted after stopping.
+
+Conversely, take any finite correct adaptive continuation, stopping a homogeneous archive immediately. At every nonconstant common-tail node its action must be safe by Lemma 55.2. Follow its zero-difference path until it stops or its support becomes empty, retaining those whole words and tails. At each positive child, Theorem 55.3 supplies an exact all-action lower bound for its further subtree. Replace that subtree by its fixed attaining continuation. Its new maximum does not exceed the old maximum. The retained zero path satisfies (57.1), and its terminal support is homogeneous or empty. This yields a priced spine with $\Pi-b$ no greater than the original continuation fee. Both inequalities prove (57.3).
+
+For existence of a finite continuation, use $T-1$ successive $01$ blocks starting at index $b$. Every one starts zero and safely clears any incoming tail. Their actual charge edges $\{2t+1,2t+2\}\pmod T$ are all edges but one of the physical $T$-cycle, because multiplication by two permutes its residues. They form a spanning path. Its incidence columns are distinct on $T\ge5$ vertices: equal nonzero columns at distinct vertices would require a component on those two vertices, and a zero column would require an isolated vertex. Thus these own-archive differences identify $j$ and return $\lambda(j)$, also after restriction to $S$. This is the safe phase-recovery mechanism already supplied by [S1, Theorem 3.1] and the incidence argument of Theorem 52.3. An optimal finite fee is an attained nonnegative integer. The extraction and replacement just proved supply an attaining priced spine. No equality to a single GLOBAL-preset stream is inferred. ∎
+
+## 58. The arbitrary INITIAL adaptive structural minimum
+
+**定义 58.1（The pre-zero prefix price and admissibility）。** Fix a free initial value $v$. Choose $q\in\{0,\ldots,p-1\}$. The principal pre-zero path is $q$ words $11$, all with difference zero, so its actual supports are (56.6). Require, for every $0\le t<q$,
+
+$$
+\begin{gathered}
+F_v\text{ nonconstant on }U_t\times[0,h_t),\\
+F_v\text{ constant on }U_t\times[h_t-2,h_t).
+\end{gathered}
+\tag{58.1}
+$$
+
+The second condition decodes the one actual rejection endpoint of that word. Set
+
+$$
+\Delta_v(q)=\max\left(
+\{q\}\cup\{1+\chi_v:q>0\}\cup
+\{t+1+\eta_v(2t+2,t+1):1\le t<q\}
+\right).
+\tag{58.2}
+$$
+
+If any displayed price is infinite, this prefix is inadmissible. For $q=0$ the two extra sets are empty and $\Delta_v(0)=0$. The quantity is absolute depth from the original initial reading, not a sum of sibling fees. The $q$ term includes every pre-zero rejection depth $t+1\le q$.
+
+There are two terminal choices on this principal path.
+
+A **pre-zero stop** is allowed when $F_v$ is constant on $U_q\times[0,h_q)$. Its complete candidate fee is $\Delta_v(q)$. This includes $q=0$ and all successful-fibre zero-fee cases.
+
+A **first-zero parent** is allowed only on a nonconstant $U_q\times[0,h_q)$. Choose $B_q\in\{00,01,10\}$, and put $r=0$ for $00,01$, $r=1$ for $10$. Require
+
+$$
+\begin{aligned}
+&F_v\text{ constant on }U_q\times[h_q-r,h_q),\\
+&F_v(j,s)=F_v(j,0)
+\quad(j\in U_q,\ 0\le s<h_q-r).
+\end{aligned}
+\tag{58.3}
+$$
+
+For $r=0$ the first set is empty and imposes no label. Write $\lambda_v(j)=F_v(j,0)$ on $U_q$, and let
+
+$$
+A=U_q\cap E_q(B_q),\qquad Z=U_q\setminus E_q(B_q),\qquad b=q+1.
+\tag{58.4}
+$$
+
+The successful parent has common tail $\rho=0$ for $00,10$, and $\rho=1$ for $01$. Assign $A$ its exact additional price $\delta(A,B_q)$ in (55.3). Choose one priced literal spine of Definition 57.1 from the actual zero child $(b,Z,\rho,\lambda_v|_Z)$, with absolute price $\Pi$. Its complete candidate fee is
+
+$$
+M=\max\{\Delta_v(q),\ q+1,\ q+1+\delta(A,B_q),\ \Pi\}.
+\tag{58.5}
+$$
+
+If $A$ is empty, its term is just the already included $q+1$, without an execution. If $Z$ is empty, use its vacuous empty spine with $\Pi=q+1$. These conventions do not create observations on an empty source. A parent's bottom child, when nonempty, stops at depth $q+1$ with the common label of its rejected rectangle in the first line of (58.3).
+
+Let $\mathcal C_v$ contain all pre-zero-stop and first-zero-parent candidate fees just defined that are at most $k$. In particular every chosen post-zero spine has $L\le k$, and every priced side completion also ends by $k$. This is a finite set specified by tail-table comparisons, $q$, and one sequence of at most $k-q-1$ literal words. It contains no off-spine adaptive optimization.
+
+**定理 58.2（Full arbitrary-target law and an optimal literal policy）。** For every arbitrary immutable INITIAL target in (55.1), under both original alphabets,
+
+$$
+\boxed{\quad
+C_{\rm ad}(f)=\max\left\{
+\min\mathcal C_0,\ \min\mathcal C_1
+\right\},\qquad \min\varnothing=+\infty.
+\quad}
+\tag{58.6}
+$$
+
+Every finite minimum has a lawful policy with exactly that maximum ACTUAL emitted-complete-block depth. The equality covers arbitrary tail partitions and labels, all $T$ phases, both values, early stops, intentional rejection, empty children, and infinity. It is a finite structural minimum, rather than a closed scalar evaluation or a sharp uniform ceiling.
+
+**证明（literal upper bound）。** Select a finite candidate on one initial value fibre. On its principal pre-zero path issue the chosen $q$ words $11$ until a nonzero response or rejection occurs. The actual candidates, outputs and rejection bands are those of Definition 56.1 and Lemma 56.5. On a rejected endpoint return its homogeneous band label from (58.1) and stop. On the positive root endpoint use an attaining policy of Theorem 56.4, with the remembered initial $v$; on every later positive endpoint use the attaining known-phase tail policy of Lemma 56.2 at its actual index. Each such branch is an actual acquired rectangle, not an independently chosen initial source. Those subpolicies include their own further rejecting, stopping and clearing endpoints. If all $q$ differences are zero, arrive at $U_q\times[0,h_q)$ at paid depth $q$.
+
+For a pre-zero stop, return its homogeneous label. The source set of this terminal rectangle is nonempty: $|U_q|=T-q-1\ge p+1$ for $q\ge1$, and $U_0=P$. Every INITIAL tail zero at its phases survives, and each preceding principal node was nonconstant by (58.1), so there is an actual source paying all $q$ blocks. Every nonempty side archive has its attained exact continuation price. Formula (58.2) is therefore the actual maximum, including any earlier reject leaf.
+
+For a first-zero parent, the band $s\ge h_q-r$ is rejected before its zero, all at one bottom endpoint. All other sources satisfy $s+2q+r<k$, reach that zero, and finish the parent safely. There can be no further run of length $k$ in its at most two bits. For each surviving phase its INITIAL label is $F_v(j,0)$ by (58.3), so its merged tails lose no required distinction. Its endpoint difference, support and literal tail are exactly (58.4) and (55.2). On a positive endpoint use its constant stop or the prescribed optimal side stream; on a zero endpoint use the chosen priced spine and its prescribed side streams. Theorem 57.2 proves all their seam inequalities and decoding. At every point the current value used as a difference baseline is the source's own observed endpoint. No observation from any other branch is supplied.
+
+Some actual source reaches the parent, because its preceding principal archive was nonconstant and has surviving tail-zero witnesses. All nonempty success children and, for $r=1$, its rejected band have such actual witnesses. The exact prices of Theorems 55.3, 56.4, Lemma 56.2 and Theorem 57.2 are attained on their corresponding archives. Consequently (58.5) is the exact maximum of the original execution depths. The parent, every $00$ wait, all pre-zero words and all padding, repair and clearing blocks are included. No word is charged to a source that already stopped. This constructs each candidate under both alphabets and proves the upper inequality in (58.6).
+
+**证明（all-action lower bound and completeness）。** Take any finite correct controller on this initial value fibre and stop every homogeneous archive immediately. Before its first zero, every issued word must be $11$, and the acquired supports and tail rectangles have the form in Definition 56.1. Follow its zero-difference path. Every successful all-one step on this path has its rejected top-two rectangle homogeneous; otherwise different INITIAL labels enter the same bottom archive. When the step is the root, its positive successful child is precisely the archive priced by $\chi_v$. At each later step the positive child is the singleton of Lemma 56.5, priced by $\eta_v$. Their all-action lower bounds apply to the actual original subtrees, regardless of their later controls. Hence (58.1) holds and (58.2) is no greater than this controller's maximum on the prefix and its side branches.
+
+The zero path can have at most $p-1$ successful $11$ words before its terminal choice. A next $11$ at $q=p-1$ would reject every remaining tail, so at a nonconstant archive it cannot occur in a correct controller. If the path stops before any zero, its rectangle is homogeneous and supplies the pre-zero-stop candidate. Otherwise its first zero is in exactly $00,01$ or $10$, with $r$ as in (58.3). The actual first-zero loss of [S1, Lemma 4.3] forces both conditions (58.3): its rejection band acquires one bottom archive, and each surviving same-phase tail fibre is merged before the next observation. Unequal labels in either merged set cannot be recovered by any future action. These are necessary conditions, not sufficient conditions substituted for the all-action test.
+
+At a successful parent endpoint all retained tails are common and the per-phase INITIAL label is well-defined. The positive child's exact further lower bound is (55.3). Follow the zero child's actual zero-difference path and apply Theorem 57.2 to replace every first-positive subtree by its fixed optimal side stream. This produces a priced spine with absolute maximum no greater than the original subtree's maximum. Thus the controller supplies a complete candidate of cost no greater than its original maximum. The replacement is branchwise; it never changes another sibling's archive or requires their streams to coincide.
+
+To justify the finite restriction $M\le k$, use the supplied adaptive horizon, Theorem 51.4, with $m=2$, even $k\ge4$, full joint source (1.3), free initial value, and the same target and alphabets. Its proof is fibrewise through [S1, Theorem 5.2]; it requires adaptive finiteness, without preset finiteness. Equivalently extend this one-fibre target by a constant target on the other value and an arbitrary bottom label and apply that horizon. Thus every finite optimum on this fibre is at most $k$. Extract the preceding candidate from an optimal controller of that bounded fee; it belongs to $\mathcal C_v$ and costs no more. Conversely every member of $\mathcal C_v$ has the actual controller of the upper-bound construction. Its least value therefore equals the finite optimum. If $\mathcal C_v$ is empty but a finite controller existed, the same horizon and extraction would supply a member, a contradiction. This proves the infinity case as well.
+
+Finally the free initial value selects the independently defined optimal fibre policy, so the full adaptive fee is the maximum of the two fibre minima. No equality between their labels is required. Initial bottom is a distinct free observation and returns its independent target label at fee zero. If both successful fibres are constant, both sets contain zero and the total fee is zero even when their two constant labels and the bottom label are all different. If either fibre has no candidate, no uniform finite correct full controller exists. This proves (58.6) with every original source coordinate retained. ∎
+
+**命题 58.3（Finite presentation and effective selection）。** With a decidable finite target presentation on the INITIAL records, (58.6) can be evaluated by finite enumeration, and a least candidate yields an effectively specified optimal policy. For an arbitrary label set without decidable equality, (58.6) remains a semantic minimum and existence theorem; it does not assert a general algorithm for arbitrary target expressions on histories.
+
+**证明。** There are $2kT+1$ INITIAL records. A finite partition of these records, or a finite label table with decidable equality, decides every constancy and equality condition in (56.2)–(56.4), (58.1) and (58.3). The tail-price sets and root-pair choices are finite. Each $q$ has at most three parents; each chronological spine uses one of four words at each of at most $k-q-1$ indices, and its actual support and tail transitions are explicit. Compute its side prices and maximum, retaining only candidates at most $k$. Thus emptiness, the least fee, and its actual literal witnesses are decidable for this presentation. The stored initial value, issued-block count and own endpoint archive suffice to execute the selected policy. This proves no polynomial bound on enumeration time or memory, and gives no procedure deciding an unspecified infinite history target's factorization through INITIAL records. Without a decidable presentation, the finite comparisons are ordinary mathematical predicates, as in [S1, Note 5.3]. ∎
+
+## 59. Source pullback, supplied overlap and the remaining objective
+
+**命题 59.1（Full joint-source pullback of the structural policy）。** The policy of Theorem 58.2 is a policy on the original matched $V_k\bmod2$ reader and its whole actual-history prior, with exactly the fee in (58.6). Its phase rows and tail rectangles do not replace that reader by a known-source encoding, a marginal reachability model, or a machine with intermediate observations.
+
+**证明。** Here $\gcd(2,T)=1$, so for every specified $(v,-j,s)$ the two congruences in (1.3) admit a complete-block history length $\ell$. That one legal word realizes its value, phase and tail together. Its adjusted first bit and terminal run supply $v$, its length supplies $-j$, and its separating zero keeps the run $s<k$ legal. Its two-bit pieces belong to either alphabet. Distinct phases or tails may use different unknown initial lengths; the controller reads none of those lengths. Independent initial bottom is also an actual history and remains distinct from either scalar value.
+
+Starting from each such word, literal transitions are exactly (1.2). The issued displacement $2t$ gives the window $\{2t,2t+1,2t+2\}$ on the INITIAL index $j$, so (55.2) is the completed endpoint difference of the actual displayed action. Rejection bands follow the actual tail inequality before the first zero, while subsequent common-tail safety follows the same update. The induction proving the rectangles, supports and prices therefore holds for every actual representative, not just for one representative chosen to make a row reachable. Representatives of the same INITIAL record have the same deterministic future; the target is $f$ of that original record throughout. At a side branch the selected stream starts only after its own acquired endpoint, with the baseline and tail proved for that branch. The integer maxima count exactly the blocks emitted on these actual histories. This supplies the source, label, observation, operation and resource correspondence simultaneously. ∎
+
+**数学引文 59.2（Exact reuse and the additional cost content）。** Chapter 1 and the pinned [S1, Definitions 1.2–2.1, Convention 1.3, Lemmas 4.2–4.3, Theorem 5.2 and Note 5.3] supply the original experiment, whole-history prior, pre-zero rectangles, irreversible tail merger, finite attainability interface and presentation boundary. [S2, Theorem 14.1] supplies the matched coefficient period; [S10, Interface 2.1] supplies the literal path charges and inverse. These interfaces are credited, not new reader definitions or new attainability theorems. The supplied adaptive horizon of Theorem 51.4 is used solely to bound the structural search. Theorem 52.3 remains the distinct exact GLOBAL-preset minimum, and Theorems 53.2–53.3 retain their maximal-cut family scope.
+
+The recorded-zero geometric argument of Theorem 27.3 and its spine idea in Theorem 27.5 concern $m\ge3$. Lemma 55.2 proves the width-two instance directly on the original preceding window. Theorem 55.3 then evaluates its actual side prices, rather than substituting a generic availability-code minimum. [S11, Theorem 4.1](https://raw.githubusercontent.com/the-omega-institute/trureturing/ef2fddd6bab3fe4b861b07e4c01577e942912ab8/docs/develop/theory/KBONACCI_COPRIME_PHASE_TARGET_COST.md) already gives the even-order width-two *binary phase-only* scan/repair law, with its literal next-block $10$ on a positive $01$ child. That pulse is credited reuse within Theorem 55.3. The $p$ option in (56.4) reuses Theorem 2.2's acquired endpoint-return pair, while its other options and tail-dependent minimum retain their own hypotheses. The $10$ return price, the general $11$ child condition, the pre-zero prices (56.3)–(56.4), and their arbitrary-tail integration in (58.6) are the reader-specific ordinary cost deductions here. Lemma 25.2a and Theorem 43.2 price different acquired suffixes; neither is asserted to supply an arbitrary pre-zero tail table or the root pair of Definition 56.3. The reduction has one chronological word spine and explicit side prices, rather than an optimization over unknown off-spine adaptive trees.
+
+For the classical comparison, van den Bos and Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2), Definitions 8–11 and Figure 3, define completed leaf observations, compatible tests and adaptive distinguishing graphs, and show that first actions may irreversibly merge initially different states. Those are the appropriate experiment and lower-bound semantics. They provide neither the physical three-vertex charge rows, the paid $p$ return, nor the INITIAL tail-band prices proved here. The single-source comparison with Moore and the reset/transfer and parity-query boundaries in Mathematical Citation 7.2 remain at their stated scopes. No exhaustive literature absence, originality, independent-prior or model-diversity claim accompanies these ordinary deductions.
+
+**定义 59.3（Exact scope and the original all-parameter boundary）。** Equation (58.6) resolves the exact adaptive *structural minimum* for every arbitrary INITIAL target at even $k\ge4,m=2$. It includes semantic infinity and constructs an optimal lawful policy whenever the fee is finite. A numerical closed form for every table and a sharp supremum over finite target fees are separate questions; the supplied bound $k$ is used as a sufficient horizon, without a sharpness claim. Theorem 57.2 allows all later phases and cyclic returns, rather than a first-tour, phase-only or maximal-cut restriction.
+
+The original objective still asks for exact minimum worst-branch actual emitted-complete-block fee for every attainable immutable INITIAL target at all $k\ge2,m\ge1$, separately for adaptive and one-global-stream preset control. The GLOBAL-preset law is still (52.6) on this slice, with its own joined-value conditions and simultaneous seams. Branchwise optimal streams in (58.6) are not flattened into one common stream. The exact unit-width results, odd-order width-two preset result, noncoprime proper-narrow preset result, wide and critical results, finite horizons and scoped families remain supplied at their own hypotheses. Regions outside those results and the present slice retain their stated open boundaries. These are ordinary mathematical proofs; source integrity checks and finite regression calculations do not substitute for them or assert a Lean/kernel status.
+
+## 追加锚（本行以下为增补区）
+
