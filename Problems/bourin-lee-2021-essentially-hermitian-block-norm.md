@@ -73,6 +73,7 @@ This transient example imports the delivered result and proves only its classica
 
 ```lean
 import D5.S3.Quantum.BlockNorm.EssentiallyHermitian
+open Matrix
 open scoped Matrix.Norms.L2Operator ComplexOrder MatrixOrder
 open D5.S3.Quantum.BlockNorm.EssentiallyHermitian
 example {n : ℕ} (hn : 1 ≤ n) (X : Matrix (Fin n) (Fin n) ℂ)
