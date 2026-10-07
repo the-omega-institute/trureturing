@@ -7,7 +7,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void ScopedEmitWithEmptyManifestDoesNotLoadTheDocumentsAssembly()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         Directory.CreateDirectory(root.Resolve("Blueprint"));
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         var error = new StringWriter();
@@ -26,7 +26,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void ScopedCheckNamesMarkdownDriftAndScopedEmitLeavesAttestationAlone()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         const string path = "Blueprint/D5/S0/Test/Scoped.scribe.cs";
         File.WriteAllText(root.Resolve(path), """
@@ -54,7 +54,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void ScopedEmitWithNonEmptyManifestDoesNotLoadTheDocumentsAssembly()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         const string path = "Blueprint/D5/S0/Test/NonEmpty.scribe.cs";
         File.WriteAllText(root.Resolve(path), """
@@ -82,7 +82,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void EmptyChangesSelectNothing()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         Add(root, "Blueprint/D5/S0/Test/First.scribe.cs", "class First {}");
         Assert.Empty(ScribeDefinitionSelector.Select(root.Path, []).Paths);
     }
@@ -92,7 +92,7 @@ public sealed class ScribeDefinitionSelectionTests
     [InlineData(true)]
     public void EmitRejectsCrossDocumentDescribeReferenceInFullAndScopedModes(bool scoped)
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         const string source = "Blueprint/D5/S0/Test/Source.scribe.cs";
         Add(root, source, """
             using StrataLint.Scribe;
@@ -145,7 +145,7 @@ public sealed class ScribeDefinitionSelectionTests
     [InlineData(true, true)]
     public void EmitRejectsDanglingSelfDescribeReferenceInFullAndScopedModes(bool scoped, bool check)
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         const string path = "Blueprint/D5/S0/Test/Local.scribe.cs";
         Add(root, path, """
@@ -188,7 +188,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void ScriptSelfDescribeReferencePreservesFullEmissionBytesInScopedEmitAndCheck()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         const string path = "Blueprint/D5/S0/Test/Local.scribe.cs";
         Add(root, path, """
             using StrataLint.Scribe;
@@ -228,7 +228,7 @@ public sealed class ScribeDefinitionSelectionTests
     [InlineData("Blueprint/D5/S0/Test/Deleted.scribe.cs")]
     public void NonEmptyManifestWithEmptySelectionDoesNotReadLeanReport(string path)
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         Directory.CreateDirectory(root.Resolve("Blueprint"));
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         var error = new StringWriter();
@@ -246,7 +246,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void MissingManifestReturnsTwoWithoutLoadingDocuments()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         Directory.CreateDirectory(root.Resolve("Blueprint"));
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         var error = new StringWriter();
@@ -265,7 +265,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void ChangedDefinitionSelectionIgnoresUnrelatedDefinitions()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         Add(root, "Blueprint/D5/S0/Test/First.scribe.cs", "class First {}");
         Add(root, "Blueprint/D5/S0/Test/Second.scribe.cs", "class Second {}");
 
@@ -298,7 +298,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void LeanAndProjectionInputsMapToDefinitionSources()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         Add(root, "Blueprint/D5/S0/Test/First.scribe.cs", "class First {}");
         Add(root, "Golden/Projection/changed.json", "{\"declarations\":[{\"source_path\":\"D5/S0/Test/First.lean\"}]}");
 
@@ -311,7 +311,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void DeletedDefinitionLeavesItsMarkdownProjectionUntouched()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         const string markdown = "Blueprint/D5/S0/Test/Deleted.md";
         File.WriteAllText(root.Resolve(markdown), "retained\n");

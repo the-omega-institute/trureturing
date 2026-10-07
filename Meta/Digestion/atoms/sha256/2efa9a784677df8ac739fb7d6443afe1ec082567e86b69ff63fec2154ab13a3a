@@ -1,0 +1,55 @@
+### 定理 6.4（互补通道、最大恢复代数与面积算符）
+
+对任一定义 6.1 的编码，沿用式（6.4）的页内谱，记 $\Lambda_b=\operatorname{diag}(\lambda_{b,0},\ldots,\lambda_{b,d_b-1})$。存在与输入无关的 $Y$ 支撑等距
+
+$$
+W:\bigoplus_b(\mathbb C^{M_b}\otimes\mathbb C^{d_b})\longrightarrow\mathcal H_Y,
+\qquad W|b,r,j\rangle=|v_{b,rj}\rangle.
+$$
+
+对每个逻辑矩阵 $A$，置 $A_{bb}=\Pi_bA\Pi_b$，按页内基视为 $M_b$ 阶矩阵，则两个通道为
+
+$$
+\mathcal N_X(A)=\bigoplus_b\operatorname{Tr}(A_{bb})\sigma_b,
+\qquad
+\mathcal N_Y(A):=\operatorname{Tr}_X(JAJ^\dagger)
+=W\left[\bigoplus_b A_{bb}\otimes\Lambda_b\right]W^\dagger.
+\tag{6.8}
+$$
+
+对密度矩阵 $\rho$，令 $p_b=\operatorname{Tr}\rho_{bb}$；只在 $p_b>0$ 时定义 $\rho_b=\rho_{bb}/p_b$，所有零权项省略。则
+
+$$
+\begin{aligned}
+S(\rho_X)&=H(p)+\sum_b p_bS(\sigma_b),\\
+S(\rho_Y)&=H(p)+\sum_b p_bS(\rho_b)+\sum_b p_bS(\sigma_b).
+\end{aligned}
+\tag{6.9}
+$$
+
+两侧最大精确可恢复逻辑代数分别为
+
+$$
+\mathcal Z=\bigoplus_b\mathbb C I_{M_b},\qquad
+\mathcal Z'=\bigoplus_b\operatorname{Mat}_{M_b}(\mathbb C),
+\tag{6.10}
+$$
+
+其中撇号确为在 $\operatorname{End}(\mathcal H_L)$ 中的交换子代数。采用分块代数熵
+
+$$
+S_{\mathcal Z}(\rho)=H(p),\qquad
+S_{\mathcal Z'}(\rho)=H(p)+\sum_b p_bS(\rho_b),
+$$
+
+式（6.9）具有共同中心面积项
+
+$$
+\mathcal L=\bigoplus_bS(\sigma_b)I_{M_b},\qquad
+S(\rho_X)=S_{\mathcal Z}(\rho)+\operatorname{Tr}(\rho\mathcal L),\qquad
+S(\rho_Y)=S_{\mathcal Z'}(\rho)+\operatorname{Tr}(\rho\mathcal L).
+\tag{6.11}
+$$
+
+只有均匀最优选择才使相应特征值等于 $\log D_b$；一般谱必须使用 $S(\sigma_b)$。
+

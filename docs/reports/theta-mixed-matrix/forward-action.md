@@ -7,6 +7,9 @@ It reuses the saved original-theta derivative norms and complete prime
 majorant. It supplies an operator-action truncation error, rather than a
 new inverse-residual theorem or a retained matrix sign.
 
+Complex pairings and rank-one operators follow the
+[first-slot-linear matrix convention](README.md#complex-inner-products-for-matrix-reports).
+
 ## Same operator and whole-line inputs
 
 Keep $c=3/8$, $N=64$, $P=\mathbf1_{|\mathsf D|<N}$ on the even space,
@@ -15,7 +18,7 @@ Write the full operator on its domain as
 
 $$
 Tp=\alpha p+s\,m(\mathsf D)(sp)+c_\Gamma s^2p-Bp
-       +c\langle v_0,p\rangle v_0.
+       +c\langle p,v_0\rangle v_0.
 $$
 
 Let $T_{J,L}$ replace only the Gamma symbol by its first $J$ positive
@@ -121,3 +124,78 @@ deficit or scalar integration grids. The program is project-authored;
 python-flint/FLINT supplies directed arithmetic and its dependency
 licensing. It rejects mismatched input parameters, nonfinite endpoints
 or failure of the declared $1/1000$ error target.
+
+
+## Weighted omitted actions before the sharp high projection
+
+This section uses every subcritical parameter and admissible bandwidth
+of [WH1--WH2](../../../Library/Weil/fukushima2011dirichlet.md#spatially-weighted-high-inverse-at-every-subcritical-parameter),
+rather than the saved fixed-band data above. Keep its
+$\varepsilon,c,\delta,a_N,V,w,P,Q,T_c$ and put
+$H_c=T_c-\varepsilon I$. Let $H_{c,J,L}$ omit only Gamma terms
+with index at least $J$ and prime powers above $L$, keeping both shifted
+adjoints, multiplication and the exact mean. For integers $J,L\ge1$, reuse the
+complete positive symbol tail and the (WC2) envelope above. With any
+supremum bound $S_0\ge\|s\|_\infty$, set
+
+$$
+\kappa_w=\frac{S_0}{\sqrt{\delta+a_NS_0^2}},\qquad
+b_\Gamma=\kappa_w\sigma_J,\qquad
+\sigma_J=\frac1{2(2J-3/2)^2}.
+\tag{WA1}
+$$
+
+Indeed $\sqrt w\,s\le\kappa_w$, since
+$t/\sqrt{\delta+a_Nt^2}$ is increasing for $t\ge0$.
+Thus for each actual whole-line source $u$ with $su\in H^2$,
+
+$$
+\|\sqrt w\,M_s(m-m_J)(\mathsf D)M_su\|_2
+\le b_\Gamma\|(su)''\|_2.
+\tag{WA2}
+$$
+
+For every prime power $n$ and either shifted direction, its weighted
+coefficient has supremum at most
+
+$$
+w_n\min\{\kappa_wS_0,\ \delta^{-1/2}K_0^2e^{-2bn}\},
+\qquad w_n=\Lambda(n)/\sqrt n,\quad b=3/8.
+$$
+
+The first cap uses the output factor $\sqrt w\,s$ and the other
+factor $s$; the second uses the original paired envelope and
+$\sqrt w\le\delta^{-1/2}$. Both adjoint directions have these caps.
+For any integer $M\ge L$, put $\varrho=e^{-2b}$ and
+
+$$
+\begin{aligned}
+b_{\rm p}(L,M)=2\bigg[&\sum_{L<n\le M}w_n
+ \min\{\kappa_wS_0,\delta^{-1/2}K_0^2\varrho^n\}\\
+&+\delta^{-1/2}K_0^2
+ \frac{\varrho^{M+1}((M+1)-M\varrho)}{(1-\varrho)^2}\bigg].
+\end{aligned}
+\tag{WA3}
+$$
+
+The finite sum includes every prime power in its range. Bounding every
+remaining $w_n$ by $n$ gives the displayed geometric tail. Translation
+is unitary, so the complete common action error satisfies
+
+$$
+\|\sqrt w(H_c-H_{c,J,L})u\|_2
+\le b_\Gamma\|(su)''\|_2+b_{\rm p}(L,M)\|u\|_2.
+\tag{WA4}
+$$
+
+These are applications of the existing symbol and prime envelopes,
+not new generic estimates. At $M=L$ the prime budget is the old
+complete prime allowance multiplied by $\delta^{-1/2}$;
+$b_\Gamma\le\delta^{-1/2}S_0\sigma_J$. No old numerical constants
+are supplied for another parameter or bandwidth. The weight applies
+before $Q$: it cannot be assigned to $Q(H_c-H_{c,J,L})u$ by
+commutation. The [common dual-source consumer](sharp-center.md#pay-weighted-action-errors-with-one-common-dual-source)
+uses exactly this unprojected error. High trials require their own
+$\|(su)''\|_2$ inputs. No assumption $H_cu/s\in L^2$ is made.
+Only omitted actions are paid; retained whole-line quadrature, input
+and Gram errors, actual signs and cofinal control remain outstanding.

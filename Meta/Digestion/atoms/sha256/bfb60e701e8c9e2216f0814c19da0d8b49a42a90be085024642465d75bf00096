@@ -1,0 +1,35 @@
+### 40.4 原生捕获域内的一个 M.9 应用
+
+以下只应用 [dispersion，M.7--M.11](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/dispersion.md#two-split-moment-policies-and-cycle-average-dispersion) 的既有结果。额外固定同一个自然闭块状态 $(j,n)$，$j\ge6$、$F_j\le n\le F_{j+1}$，置 $A_j=F_{j-1}$、$B_j=F_{j-2}$、$S_j=F_j=A_j+B_j$，并要求这条实际周期的每个点属于原生捕获拆分域
+
+$$
+K_j(n)=\{x\in\mathbb Z:A_j\le x\le S_j,
+                     \ B_j\le n-x\le A_j\}.
+$$
+
+所有点和相邻像 $y=n-C(x)$ 都在同一 $K_j(n)$ 中。每个拆分的第一子 $x$、第二子 $n-x$ 保留自然阶数 $j-1,j-2$；端点按继承阶数表示，后续仍在阶数四、五停止。此处的方差是这个原生几何拆分的
+
+$$
+v(j,n;x)=\frac{(A_j n-S_jx)^2}{n^2x(n-x)}.
+$$
+
+M.9 已给 $p^{-1}\sum_{x\in O}v(j,n;x)\ge(20pn^2)^{-1}\sum_{x\in O}E_C(x)^2$。令 $\overline E=S_O/p$，由 $\sum_{x\in O}(E_C(x)-\overline E)^2\ge0$ 得 $\sum E_C(x)^2\ge S_O^2/p$。结合非负的 $B_p$，得到这一限定应用
+
+$$
+\frac1p\sum_{x\in O}v(j,n;x)
+\ge\frac{S_O^2}{20n^2p^2}
+\ge\frac{B_p^2}{20n^2p^2}.
+\tag{40.14}
+$$
+
+这是同根的分析性均匀周期平均。要把均匀抽样用作 M.10--M.11 的策略，仍须同时满足原来的两个条件：
+
+$$
+\frac1p\sum_{x\in O}[C(x)+C(n-x)]\ge C(n),
+\qquad
+\frac{S_O}{p}\ge\theta E_C(n),\qquad\theta\ge0.
+\tag{40.15}
+$$
+
+第一条是标量可行性，第二条是相对父缺陷的付款。只有这些完整条件成立，原生 M.11 才给其一代最优策略值至少 $\theta^2(E_C(n)/n)^2/20$。(40.10) 不给第一条，也不保证一个统一有效的 $\theta$；即使另证 $B_p/p\ge\theta E_C(n)$，也只支付第二条。$p/n$ 可以很小，故 (40.14) 本身不供应统一外侧占用、终端方差或块补偿。
+

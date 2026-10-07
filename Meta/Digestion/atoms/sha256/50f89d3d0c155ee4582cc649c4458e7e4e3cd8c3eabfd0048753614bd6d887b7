@@ -1,0 +1,36 @@
+**假设 31.1（完整来源前提与自然闭块包络）。** 全节条件于完整假设 24.1，包括其经假设 23.1、21.1 继承的全部计算辅助基础、合法域、全局上下包络、黄金锚值、有限捕获、规定深度入周期及实际闭块拆分接口。始终使用定义 15.1 的同一个实际 Cloitre 序列，而非另造的比较映射：
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,&D_N&=\{1,\ldots,N-1\},\\
+T_N(x)&=N-C(x),&x_0&=N-1,&x_{i+1}&=T_N(x_i),\\
+d_N&=C(N-1),&g_N&=x_{d_N},\\
+C(N)&=C(g_N)+C(N-g_N)\qquad(N\ge3).
+\end{aligned}
+\tag{31.1}
+$$
+
+沿用 $F_0=0,F_1=1$、$F_{j+1}=F_j+F_{j-1}$、$\alpha=(\sqrt5-1)/2$、$\varphi=\alpha^{-1}$ 与 $G(n)=\lfloor\alpha(n+1)\rfloor$。完整假设 24.1 给出的 $G\le C\le U$、$U$ 非减、$C(F_j)=G(F_j)=F_{j-1}$、$G(F_j+1)=F_{j-1}+1$、$C(F_j-1)=F_{j-1}$ 及各自合法阶数均保留；其中 $U(1)=1$，$F_j\le n<F_{j+1}$、$j\ge3$ 时 $U(n)=\min(n-F_{j-2},F_j)$。对 $j\ge6$、$0\le b\le F_{j-1}$、$N=F_{j+1}-b$，同一 $T_N$ 的全部实际轨道最终进入不变区间 $[F_j-b,F_j]\cap D_N$，周期和所选两子的全锚交集及继承阶数仍按式 (24.3)–(24.4) 使用。这里没有删去其端点条件，也没有把规定深度改成任意周期相位。
+
+对整数 $j\ge8$，采用来源的上锚记号
+
+$$
+Q_j(t)=F_{j-1}-C(F_j-t)=\lambda_j(t),\qquad 0\le t\le F_{j-2},
+$$
+
+其中与本卷 $\lambda_j$ 的对应只在上述自然闭块上使用。直接复用固定版本 [Recursive descent，C.1](https://github.com/the-omega-institute/nested-recurrences/blob/d9dbad876c0d3c7b46b692241569fcdf36594344/cloitre-conway/recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level) 的
+
+$$
+\begin{aligned}
+L_j&=\left\lfloor\frac{2j}{3}\right\rfloor-3,
+&P_9&=13,
+&P_j&=\left\lfloor\frac{(j-2)^2}{3}\right\rfloor-3j+30\quad(j\ge10),\\
+Q_j(t)=0&\ \Longrightarrow\ t\le L_j,
+&Q_j(t)>0&\ \Longrightarrow\ t\le P_jQ_j(t)\qquad(j\ge9),\\
+t&\le L_j+P_jQ_j(t),&L_j&\le P_j.
+\end{aligned}
+\tag{31.2}
+$$
+
+最后一行在 $j\ge9$ 使用，只是同一来源包络的应用。还直接使用 [Fibonacci collars，式 (1.1) 的锚降界](https://github.com/the-omega-institute/nested-recurrences/blob/d9dbad876c0d3c7b46b692241569fcdf36594344/cloitre-conway/fibonacci-collars.md#quantitative-capture-and-a-short-exterior-certificate) 在这些实际闭块上的 $0\le Q_j(t)\le\lfloor2t/3\rfloor$，以及定理 24.3 在 $j\ge8$ 的完整零平台 $Q_j(t)=0\Longleftrightarrow t\le L_j$。这些是来源条件与既有结果的调用，不重新证明平台、锚降界或 C.1。全部继承的计算辅助基础在本节保留为 ASSUMED-UNVERIFIED；以下为条件纸面推导，不是 Lean 核验结论。不另假设 $C$ 单调、黄金收敛、分枝独立或任意宽度的有限种子。
+
