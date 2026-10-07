@@ -15,6 +15,11 @@ triage: anchor
 
 # Stars and bars for composition masses
 
+## Verified locator
+
+Source URL:
+https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Data/Sym/Card.lean
+
 The source title is the `Stars and bars` module documentation in
 `Mathlib/Data/Sym/Card.lean` at the immutable Mathlib revision
 `db584cd6d46c92f209a44c0f1c829460d327499d`. The bibliographic year identifies

@@ -15,6 +15,8 @@ triage: anchor
 
 # Bernoulli parity and conditional normalization
 
+## Verified locator
+
 The source is Kyle Siegrist's online textbook
 [*Random: Probability, Mathematical Statistics, Stochastic Processes*](https://www.randomservices.org/random/).
 The bibliographic year identifies the consulted online version; the pages do
