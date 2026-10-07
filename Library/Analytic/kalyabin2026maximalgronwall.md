@@ -142,12 +142,36 @@ Use the [Caveney–Nicolas–Sondow source reduction](../Arith/caveney2012sacaga
 directly. Under its counterexample hypothesis, let $N>5040$ be the least
 integer attaining the global maximum of $G$ over that range. This is the
 selected extraordinary, CA source, not the least Robin counterexample.
-GA1 and GA2 imply $N\in U_1\subset U_{1,k}$ with $k$ its own support
+GA1 and GA2 imply $N\in U_1$ and $N\in U_{1,k}$ with $k$ its own support
 index, so $k\in E$. Initial CA prime support gives $N\in\widetilde W_k$.
-The source's upper estimate can therefore be applied once its cutoff is
-met. If also $T(p_k)>5040$, every member of $\widetilde W_k$ belongs to
-the global maximization domain, giving $\log G(N)=\widetilde g_k$.
-This last domain condition must be retained when combining both estimates.
+
+The small-support conditions can be discharged for this selected source
+by reusing existing results. If $k\le4$, all prime factors of $N$ lie
+in $\{2,3,5,7\}$. The repository's
+[seven-smooth Robin theorem](../../Blueprint/D5/S3/Arith/Robin/SevenSmooth.md),
+`robin_seven_smooth`, gives $G(N)<e^\gamma$, contradicting the selected
+counterexample-level maximum. Its exponents are unrestricted, so this
+exclusion has no finite enumeration cutoff. Hence $k>4$, and the
+endpoint conditions below give $\log N<p_{k+1}$ at this same integer.
+
+[Axler's existing valuation stop](../notes/axler2023robin.md), author
+version [2110.13478v3](https://arxiv.org/pdf/2110.13478v3), Theorem 1.4
+(published Theorem 3), gives strict Robin for $N>5040$ with
+$v_2(N)\le20$. Thus $v_2(N)\ge21$ at the selected source. If $k=5$,
+the endpoint would give $\log N<13$, whereas
+$\log N\ge21\log2>13$. Therefore $k\ge6$, $P\ge13$, and
+
+$$
+T(P)\ge T(13)=30030>5040.
+$$
+
+Every member of $\widetilde W_k$ consequently belongs to the selected
+global maximization domain, and $\log G(N)=\widetilde g_k$ without an
+extra support-size hypothesis. This is a paper application of the cited
+source conditions and existing seven-smooth theorem, not a new valuation
+bound, enumeration, Lean declaration, or signed Robin estimate.
+The source's asymptotic estimates still require their own
+$k>K_\varepsilon$ cutoff; $k\ge6$ does not pay that requirement.
 
 Consequently the asymptotic calibration along such sources with unbounded
 support is
@@ -163,12 +187,60 @@ critical-source sequence. A single selected global maximizer has fixed
 support; Theorem 1 gives no explicit $K_\varepsilon$ certifying that it lies
 in the asymptotic range.
 
+## Reusing the signed-tail clock comparison
+
+For an actual $N\in U_1$ with $P=P^+(N)=p_k$ and $k>4$, set
+$P^+$ equal to the next prime, and $A=\log N$. The 2026 Theorem
+2(I)(ii)–(iii) and (III), together with the 2018 Lemma 3(i), already give
+
+$$
+P<\xi(P,0)+\log P\le A\le\xi(P^+,0)<P^+.
+$$
+
+Here the largest-prime exponent is one by Theorem 2(I)(ii).
+Thus $\vartheta(A)=\vartheta(P)$; $(P,A]$ has no ordinary prime.
+This is direct use of the published one-step conditions, with no new
+source-selection theorem. The support restriction is material:
+the 2026 footnote 4 records $14\in U_1$, whereas $\log14<7=P^+(14)$.
+
+The signed-tail comparison in the
+[Nicolas card](../ArithSums/nicolas2025comparison.md), under
+“The endpoint condition at actual self-tangent sources”, can be reused
+with the current endpoints $P,A$. The uniform clock expansion above
+gives $A-\vartheta(P)=O(\sqrt P)$ along these $U_1$ sources with support
+tending to infinity. The
+[existing uniform short-interval input](guthmaynard2024largevalues.md)
+gives $A-P\le P^+-P\le P^{2/3}$ eventually. The classical prime-power
+decomposition and monotonicity therefore give the same interval budget
+used in that comparison, $|\psi(u)-u|=O(P^{2/3})$ for $P\le u\le A$.
+Direct integration against its existing kernel yields
+
+$$
+I_\psi(P)=I_\psi(A)+O\!\left(\frac{P^{-2/3}}{\log P}\right),
+\qquad
+Z_\psi(P)=c_NZ_\psi(A)+O(P^{-1/6}),
+\quad
+c_N=\frac{\sqrt P\log P}{\sqrt A\log A}
+=1+O(P^{-1/3}),
+$$
+
+where $Z_\psi(t)=\sqrt t\log t\,I_\psi(t)$. The factor $c_N$ remains;
+ratio convergence alone does not bound the normalized tail. This is an
+application of the existing interval argument at the source's own
+support, not the Nicolas card's primorial cutoff or a selected sieve
+cutoff. It pays the eventual clock comparison on this source class,
+without supplying a signed lower bound, an effective cutoff for a fixed
+critical source, or an unbounded critical-source sequence. It introduces
+no new generic interpolation theorem, prime-gap estimate, or Lean claim,
+and does not extend the self-tangent pressure identity to arbitrary
+$U_1$ hosts.
+
 ## What remains outside this supplier
 
 The calibration leaves the needed one-sided comparison for $Q(P)$ open;
-it does not imply $\log G(N)<\gamma$. Transport to the FIB pressure clock
-$A=\log N$ still requires the actual source conditions and normalized
-$P$-to-$A$ comparison. The support calibration, the classical exponent
+it does not imply $\log G(N)<\gamma$. The eventual source-clock comparison above
+preserves its normalization factor and supplies neither that one-sided
+bound nor a finite-source cutoff. The support calibration, the classical exponent
 construction, and the existing pressure decomposition in
 [the FIB volume](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
 are reused results, not new Robin estimates.
@@ -183,3 +255,82 @@ and its claim that $\log\widetilde G(t)$ tends to zero at infinity differs
 from the displayed formula. The formal theorem statements above are
 recorded with their stated scope; these slips are not silently repaired or
 used as verified intermediate lemmas.
+
+## The 2022 predecessors and the direction of their bounds
+
+The earlier [Remainder in Modified Mertens Formula and Ramanujan Inequality](https://arxiv.org/abs/2201.02663v1),
+submitted 7 January 2022, is the source already cited for the lower
+construction. Its main theorem, the §2 lemma (2.7), §3 and the final
+remarks were inspected in the [versioned primary text](https://arxiv.org/html/2201.02663v1).
+The lemma supplies a constructed integer at each sufficiently large support with a
+$2\sqrt2+o(1)$ loss; this is the predecessor of the 2026 lower
+calibration, not another construction to reproduce.
+
+That paper's main theorem already makes finiteness of
+$\limsup_{x\to\infty}Q(x)\sqrt x\log x$ equivalent to RH and records the
+consequence that the finite limsup is at most $2\sqrt2$.
+Its final remark announces narrower RH-dependent estimates for later
+papers. These are prior criteria and a conditional announcement, not
+an unconditional upper remainder bound.
+
+The follow-on [RH-Dependent Estimates of Remainder in Modified Mertens Formula](https://arxiv.org/abs/2205.05931v1),
+submitted 12 May 2022, states that narrower result. Its main theorem,
+§2's Lemma 1, Remark 2 and equation (2.13), and §3's Corollary 1 were
+inspected in the [primary text](https://arxiv.org/html/2205.05931v1)
+and original TeX. The source archive has SHA-256
+9ae03c336b0c7023231b7ea74b9a151ac57e43f64c43ab6ec0e3eeb7725a87e6.
+Both papers are preprints; their complete proofs are not independently
+certified, and no Lean verification is claimed.
+
+For the same $Q(x)=S(x)-\log\log\vartheta(x)-\gamma$, $x\ge3$,
+the May paper's main theorem explicitly assumes RH and states
+
+$$
+\liminf_{x\to\infty}Q(x)\sqrt x\log x\ge\frac32,\qquad
+\limsup_{x\to\infty}Q(x)\sqrt x\log x\le\frac52.
+$$
+
+These are limiting bounds, with no effective starting threshold for
+the selected critical integer supplied here. Remark 1 makes each
+bound separately equivalent to RH by the preceding Nicolas criteria.
+Neither the later support calibration nor a FIB coordinate change
+discharges that RH premise. The existing
+[weighted-error supplier](bhattacharyamartinsimpson2026weightedprimeerrors.md)
+already retains the same distinction between conditional comparisons
+and an unconditional signed estimate.
+
+The May paper also has an unconditional sign observation, but its
+direction matters. In its notation, define
+
+$$
+H(x)=\lim_{y\to\infty}
+\left[\sum_{x<p\le y}\frac1p-\log\log\vartheta(y^+)
+                         +\log\log\vartheta(x)\right],\qquad x>3.
+$$
+
+For its primitive $\Phi(x)=\int_0^x(\vartheta(t)-t)\,dt$,
+equation (2.9) defines $D(x)$ and $E(x)$ as boundary and integral
+terms linear in $\Phi$. Remark 2 states $H(x)\le D(x)+E(x)$ because
+its Taylor remainder is nonpositive. Equation (2.13) retains the
+exact correction
+
+$$
+Q(x)+H(x)=-T(x),\qquad
+T(x)=\sum_{p>x}\sum_{m\ge2}\frac1{mp^m}\ge0.
+$$
+
+Thus that observation supplies the lower comparison
+$Q(x)\ge-D(x)-E(x)-T(x)$, not the upper comparison needed for
+$Q(P)$ in the selected-source calibration above.
+The paper's Corollary 1 obtains an RH criterion only after imposing
+$\Phi(x)=O_\varepsilon(x^{3/2+\varepsilon})$ for every $\varepsilon>0$;
+the observation alone does not bound $D+E$.
+No such primitive bound or opposite-direction estimate
+is supplied here for the actual critical source.
+
+The original TeX's Proposition 4 prints $x<X_0$, whereas Proposition 5
+uses $x>X_0$; equation (2.7) also prints $\Delta(x)$ inside an integral
+in $t$. These source inconsistencies are not silently repaired or
+treated as certified intermediate facts. The theorem statements,
+source-reported sign relation and their required direction are recorded
+for reuse, without a new Mertens estimate, Robin criterion or RH proof.
