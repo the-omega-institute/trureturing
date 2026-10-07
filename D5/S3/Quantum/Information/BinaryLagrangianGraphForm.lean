@@ -57,7 +57,7 @@ private def swapLinear {N : ℕ} (H : Finset (Fin N)) : E N →ₗ[ZMod 2] E N w
     intro a v
     ext i <;> by_cases hi : i ∈ H <;> simp [swapAt, hi]
 
-private lemma swapAt_involutive {N : ℕ} (H : Finset (Fin N)) (v : E N) :
+lemma swapAt_involutive {N : ℕ} (H : Finset (Fin N)) (v : E N) :
     swapAt H (swapAt H v) = v := by
   ext i <;> by_cases hi : i ∈ H <;> simp [swapAt, hi]
 
