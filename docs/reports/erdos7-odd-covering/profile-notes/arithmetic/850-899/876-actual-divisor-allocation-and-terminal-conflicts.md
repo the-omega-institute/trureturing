@@ -1179,6 +1179,102 @@ repair needs the full prefix forest or another established joint
 replacement. The missing bridge remains an actual-source joint
 matching, compatible shared output, or fully paid parent exchange.
 
+## A matroidal Helly interface retains a missing geometric hypothesis
+
+Kalai and Meshulam, *A topological colorful Helly theorem*,
+Advances in Mathematics 191 (2005), 305--311,
+[Theorem 1.6](https://math.huji.ac.il/~kalai/leray.pdf)
+([DOI](https://doi.org/10.1016/j.aim.2004.03.009)), proves the following:
+if a finite simplicial complex K is d-Leray over the rationals and
+contains the independent-set complex of a matroid M on the same ground
+set I, then there is a face T of K with rank_M(I minus T) at most d.
+The statement is also reproduced as Theorem 1.3 in Kim and Lew,
+[arXiv:2305.12360v1](https://arxiv.org/html/2305.12360v1).
+
+For one actual source X=E_q, let A_i be each original owner's exact
+q-stripped trace in X, and define
+
+$$
+K=\{S\subseteq I:\exists x\in X\quad
+                     \forall i\in S,\ x\notin A_i\}.
+$$
+
+These are precisely the families which fail to cover the source.
+Let M be the divisor-donor transversal matroid. If no independent
+family covers X, then M is contained in K. The cited theorem would
+then give one uncovered point x whose active owners have donor rank
+at most d: choose x missed by T, so every active owner lies outside T.
+
+In the three-row setting, the owners active at any one point are
+partitioned into three independent sets by row, using each owner's
+own cofactor as its numerical donor. Thus the already established
+113-color service gives active donor rank at least 38. A proof that
+this particular K is d-Leray for some d at most 37 would therefore
+supply one independent complete cover. No such Leray bound has been
+obtained; a list of 27 prime directions is not a proof of this
+topological condition. The external theorem and this conditional
+application are literature-based, not a Lean formalization of
+simplicial homology or the Kalai--Meshulam theorem.
+
+The actual private points give a concrete condition that this route
+must respect. For any one complete literal color family C, count
+minimality and private-point projection show that every proper
+subfamily S of C misses a point of the whole E_q. The full C covers
+E_q, so the induced noncover complex on C is exactly the family of
+proper subsets of C. This finite equivalence has a scoped Lean check
+using the existing actual private-point result, standard axioms and
+default proof budgets. It concerns the whole E_q; it does not say
+that every old-word slice retains every owner, or that adjoining C
+to the entire retained family gives a minimally unsatisfiable whole
+formula.
+
+For a color family of size at least two, that induced complex is a
+simplex boundary with nonzero reduced rational homology in degree
+|C|-2. Consequently d-Lerayness requires d at least |C|-1. In
+particular the proposed d at most 37 route would require every
+complete color family to have size at most 38. That color-size bound
+has not been established. This last homological consequence uses
+the standard simplex-boundary computation; it is not part of the
+scoped Lean check.
+
+Actual divisor closure can instead force large color families. If a
+count-then-sum-minimal cover contains the actual label 9*113*m,
+with m coprime to three and at least s distinct prime factors, then
+every label 113*d for d dividing 9m is an actual original. These
+labels are distinct, and their number is
+
+$$
+\tau(9m)=3\tau(m)\ge 3\,2^s.
+$$
+
+They retain their actual literal colors; no residues are reassigned.
+Pigeonhole counting over the 113 colors gives a complete color family
+of size at least the ceiling of 3*2^s/113. In particular s at least
+eleven gives size at least 55, and s at least twelve gives size at
+least 109. Together with the induced-boundary consequence these
+force Leray number at least 54 and 108 respectively, excluding the
+proposed d at most 37 route in these branches. The arithmetic
+inventory, injection and color-count implications have a separate
+scoped Lean check; the topological conclusion remains the standard
+literature consequence. The whole-source boundary application
+continues to require the common period 113R with (113,R)=1. The
+inventory counting alone does not require that extra coprimality.
+This argument uses one actual top label and its divisors, never a
+least common multiple presumed to be an original.
+
+There is a further target boundary in the all-color ground set.
+Actual divisor closure supplies the original modulus q itself. Its
+stripped modulus is one, so its singleton trace covers the whole
+E_q and is independent using numerical donor one. Thus a single
+independent complete cover is already available, and the conditional
+Helly interface above supplies no missing certificate for that
+target. Fifteen safe root copies still need one joint numerical
+assignment: donor one can be used for only one root. Conversely,
+failure to obtain such an original-trace certificate would not
+exclude a legal repair: projected divisor outputs can cover more
+than their original traces, and a divisor-one output already covers
+its entire assigned safe root.
+
 ## Verification and the remaining global obligation
 
 Scoped exact Lean checks cover the actual two-prime incidence
