@@ -55,3 +55,7 @@ git ls-tree -r --name-only "$REV" -- tools/ | grep '\.cs$' | sed 's|/[^/]*$||' \
   left=$((DIR_LIMIT - c))
   [ "$left" -lt "$MARGIN" ] && printf '%d\t%d\t%s\n' "$left" "$c" "${d#tools/}"
 done | sort -n | awk -F'\t' '{printf "  余量%4d  %3d 个  %s\n",$1,$2,$3}'
+
+ci_independence_probe_unregistered_cli() {
+  dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- ci-independence-unregistered
+}
