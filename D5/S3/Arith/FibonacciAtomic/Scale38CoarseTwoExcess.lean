@@ -213,12 +213,6 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       · simpa only [List.cons_append,List.map_cons,runPassiveProtocol,scan,head,
           ↓reduceIte] using congrArg (List.cons (⟨query t,some true⟩ : Sigma (fun _ : Address => Option Bool))) run
       · simpa only [List.cons_append,List.map_cons,decode,↓reduceIte] using decoded
-  have range_split (t : Nat) (ht : t ≤ k) :
-      List.range (k+1) = List.range t ++ t :: List.range' (t+1) (k-t) := by
-    rw [List.range_eq_range',List.range_eq_range']
-    have eq : k+1 = t + ((k-t)+1) := by omega
-    rw [eq,← List.range'_append_1]
-    simp only [Nat.zero_add,List.range'_succ]
   have routes (i : Index k) :
       let h := runPassiveProtocol (fun q U => leafLabel U q) (scan k (List.range (k+1))) (family k i)
       decode k (List.range (k+1)) h = some i ∧
@@ -252,7 +246,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         have hc : compatible k j.val (.inr (.inl j)) :=
           (survivors j.val (by omega) _).mpr (Or.inr (by simp [stop]))
         let ts := List.range' (j.val+1) (k-j.val)
-        have split := range_split j.val (Nat.le_of_lt j.isLt)
+        have split := Scale38NestedCompensation.divide k j.val (Nat.le_of_lt j.isLt)
         obtain ⟨pre_run,pre_decode⟩ := advance (family k (.inr (.inl j)))
           (List.range j.val) (j.val :: ts)
           (runPassiveProtocol (fun q W => leafLabel W q) (scan k (j.val :: ts))
@@ -292,7 +286,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
         have hc : compatible k (i.val+1) (.inr (.inr i)) :=
           (survivors (i.val+1) (by omega) _).mpr (Or.inr (by simp [stop]))
         let ts := List.range' (i.val+2) (k-(i.val+1))
-        have split := range_split (i.val+1) (by omega)
+        have split := Scale38NestedCompensation.divide k (i.val+1) (by omega)
         obtain ⟨pre_run,pre_decode⟩ := advance (family k (.inr (.inr i)))
           (List.range (i.val+1)) ((i.val+1) :: ts)
           (runPassiveProtocol (fun q W => leafLabel W q) (scan k ((i.val+1) :: ts))
