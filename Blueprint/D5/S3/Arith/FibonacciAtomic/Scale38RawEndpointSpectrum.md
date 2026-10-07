@@ -82,4 +82,4 @@ For X_j with j at least two, Y_(j-2) and Y_(j-1) agree on every target leaf. For
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.scanAddress`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.scanLength`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/RawEndpointPeeling](RawEndpointPeeling.md)
-- Dependency: [D5/S3/Arith/FibonacciAtomic/Scale38LeafFrontierResponse](Scale38LeafFrontierResponse.md)
+- Dependency: [D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation](Scale38NestedCompensation.md)
