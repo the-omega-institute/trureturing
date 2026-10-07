@@ -100,14 +100,7 @@ private def judgePayloadType (name : Name) : Bool :=
       `LeanInformationAudit.AutoDerivedSemanticCertificate,
       `LeanInformationAudit.CatalogUnitRecord, `LeanInformationAudit.CatalogRecord,
       `LeanInformationAudit.SealArenaRecord,
-      `LeanInformationAudit.SealedOccurrenceState, `LeanInformationAudit.StagedAnalysisState,
-      `LeanInformationAudit.StructuralProvenanceEntry,
-      `LeanInformationAudit.StructuralRegistrationEvidence,
-      `LeanInformationAudit.BoundedTruncationFamily,
-      `LeanInformationAudit.UnreachableElaborationEvidence,
-      `LeanInformationAudit.AnalysisDisposition, `LeanInformationAudit.CensusAssessment,
-      `LeanInformationAudit.AnalysisObservation, `LeanInformationAudit.DispositionInventory,
-      `LeanInformationAudit.TruncationCertification].contains name
+      `LeanInformationAudit.SealedOccurrenceState, `LeanInformationAudit.StagedAnalysisState].contains name
 
 private def judgePayload (info : ConstantInfo) : Bool :=
   match info with

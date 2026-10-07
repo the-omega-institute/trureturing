@@ -1,7 +1,6 @@
 import LeanInformationAudit.Contract.CompiledExpressions
 import LeanInformationAudit.BindingRecords
 import LeanInformationAudit.CatalogData
-import LeanInformationAudit.StructuralProvenance
 
 /- Implementation-owned plans, assessment records and record computations. -/
 namespace LeanInformationAudit

@@ -49,7 +49,7 @@ private def escapeContinuationJson (residual : EscapeContinuationIdentity) : Jso
   ("statement_identity", toJson residual.statementIdentity),
   ("chain_name", toJson (residual.chainName.map Name.toString))]
 
-/-- Shared record wire for the inspector and census authoritative snapshots. -/
+/-- Record wire for inspector registration output. -/
 def recordJson [Applicative m] (record : BindingRecord) : m Json := do
   let (state, diagnostic, certificate) := match record.result with
     | .undeclared => ("undeclared", toJson (CompiledAssessment.missingDeclarationDiagnostic record.occurrence.key), Json.null)

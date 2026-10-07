@@ -99,7 +99,6 @@ jobs:
             tools/lean-inspector/*.json
             tools/lean-inspector/*.mjs
             tools/lean-inspector/*/*.sh
-            tools/lean-inspector/Census/*
             tools/lean-inspector/LeanInformationAudit/*.py
             tools/lean-inspector/LeanInformationAuditAnalysis/*
             tools/lean-inspector/inspect.sh

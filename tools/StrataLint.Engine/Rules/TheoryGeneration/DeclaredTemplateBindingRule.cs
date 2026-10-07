@@ -138,8 +138,6 @@ internal static class DeclaredTemplateBindingRule
     {
         // Inspector preserves the kernel name: private declarations start with
         // _private.; include_in_statement excludes internal-detail theorems.
-        // Its separate --statement-identities stream's olean part is not a
-        // visibility field in the admission report.
         if (declaration.Kind != "theorem" || !declaration.IncludeInStatement
             || declaration.Name.StartsWith("_private.", StringComparison.Ordinal)) return false;
         // Only theorems the module's source spells out are authored. Everything the

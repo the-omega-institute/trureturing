@@ -526,7 +526,7 @@ class NativeArtifactConsumerTests:
         inspector = self.root / 'tools/lean-inspector/Inspector.lean'
         # A real implementation edit changes executable bytes while preserving
         # valid report semantics. Compilation must still succeed.
-        inspector.write_text(inspector.read_text().replace('expected bodies or names', 'expected census bodies or names'))
+        inspector.write_text(inspector.read_text().replace('at least one module is required', 'a report module is required'))
         self.build()
         self.assertNotEqual(executable_before, publication.digest(executable))
         self.assertEqual(before, self.stamps())
