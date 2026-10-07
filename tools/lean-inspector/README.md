@@ -16,10 +16,12 @@ make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
 和 Python 3。[入口](inspect.sh)负责输入验证、utility 输入工具构建、Lean-cache
 ensure、原生 Lake 报告构建和发布。
 
-Typed contract discovery inspects the five direct compiled Contract heads.
-Entries have safe, closed definition values; the decoder accepts constructor
-trees and safe constant references. Standalone ExpectedDeclaration is rejected
-by the root structure rule. Rigid universe checks apply to the compiled terms.
+Typed contract discovery inspects five direct compiled Contract heads: Registration,
+TemplateEnrollment, RootCatalog, Seal and ExpectedDeclaration. The first four
+are owned report inputs; standalone ExpectedDeclaration is rejected by the root
+structure rule. Entries have safe, closed definition values; the decoder accepts
+constructor trees and safe constant references. Rigid universe checks apply to
+the compiled terms.
 
 `Contract.Ref` stores only `value`. The decoder reads its compiled constant head
 by stripping Expr metadata and following application functions. Lambda, let,
@@ -184,7 +186,7 @@ enrollment plan 不保存源文件字节摘要；plan identity 与模板 assessm
 | 模块 utility 记录变化 | 对应模块报告；声明的 claim 源码、编译工件及其传递依赖同样参与，即使 claim 不在 result 的 import 闭包内。 |
 | 登记的 `config_inputs` 文件字节变化 | 通过 Lake 影响实际编译依赖；整体配置身份只影响聚合。 |
 | 登记的模块成员集合变化 | 汇总按当前集合重建，新成员执行所需报告工作，保留仍有效的模块工件。 |
-| Inspector 编译工件变化，语义版本不变 | 仅实际依赖其报告输入的工作失效；其他报告复用，Inspector 仍须构建成功。 |
+| Inspector 实现编译工件变化，语义版本不变 | 有效模块与整份报告复用，Reg/D5 零重编；Inspector 仍须按 Lake 增量构建成功。 |
 
 `information_templates` 分区携带 occurrence inventory 和 BindingRecord，
 其闭合字段为 `schema_version`、`inventory`、`registered`、`records`，不写全局版本；复用验证检查结构，不重算当前源码摘要。
@@ -192,6 +194,12 @@ C# 消费者检查可解码证据的结构、sidecar 归属及 debt 约束；未
 没有模板模块的隐式导入。独立编码测试使用显式 `--statements-only`，其结果不含
 binding evidence，不能通过声明模板的严格消费者。
 `LeanInformationAuditRegTests` 的生产证据检查要求实际导出的 wire 等于对应 `Compiled*Wire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；当前 wire 只在实际内容改变时同步更新。
+
+登记与模板必须携带 `NodeCoverage`，模板另以 `bodyFact` 绑定实际编译体。内核在 Reg 编译期检查节点类型、证明边界、定义性匹配、相等、等价、逐参数 Bool 反射和完整有限枚举；判官只绑定原始节点及坐标、遍历完整依赖，并执行 E1–E8 等自身规则。`SealCatalogView` 将实际 catalog 与 `SealFacts` 绑定；完整字面行承担计数、轴、状态和分类数据，判官不求值原始函数。公共类型与 Reg 支持库不携带 evaluator、plan、join、判词或报告收据。生产登记、模板、root 和 seal 路径不使用通用比较器；SL-031 utility 路径单独保留 `RawArtifacts.whnf/equalTypes`。
+
+`Reg.Support.CompiledNodeTerm` 的 `compiled_node%` 在 Reg 编译期按字面声明、type/value、路径与宇宙地址，从普通编译器环境读取实际原始节点，并以原 telescope 闭合后交给普通编译器检查。它保留 binder 名、模式、metadata、let 结构与未化简宇宙树，不推断、比较、化简或评定数学项，不导入或调用实现。owner、路径与 coverage 仍由报告期的完整 `NodeCoordinate` 独立核对；适配器不认证坐标，不产生 plan、join、判词或收据。
+
+已精确绑定的事实可按词法闭合后的 alpha 语法形状检索候选；该查找允许忽略 binder 名与模式，不做归约、转换或类型比较。它不放宽保留全部原始信息的坐标绑定，也不替代完整依赖覆盖。报告期只从这些绑定事实及编译常量声明读取类型、证明边界和关系端点；仅 `ExactMatch` 暴露定义性端点，`Eq`/`Iff` 用于数学对应，不授权擦除原始来源。
 
 唯一语义版本只配置于 `lean-report-inputs.json`。兼容程序改动不 bump，不兼容改动在同次交付 bump；契约接口改动须同时迁移全部用法，不做历史兼容。H 由目标自身编译常量的精确契约类型头与 owner 判定，包含 Registration、TemplateEnrollment、RootCatalog、Seal；只 import 登记的汇总模块不在 H。小型类型/owner/名字投影由 Lake 直接调用独立的 `inputDiscovery` 程序产生；它只读取目标的 olean parts，复用相同类型与字面定义检查。投影只以编译闭包追踪，不持久化评定权威，版本升级的暖路径复用它。模块 trace 包含编译闭包与 utility，仅 H 加入语义版本。origin 保留实际生成的版本和输入投影，仅 H 校验版本相等；聚合与整份收据绑定该版本，旧格式拒读。程序字节永不进入数据工件复用条件。
 
@@ -254,7 +262,7 @@ Lean、audit、工具构建和发布失败也返回非零。阶段失败输出�
 The interface consists of typed contract structures, inductives and sort-valued index families. Every Reg
 entry has a contract type and mathematical fields checked by the Reg compiler. The report reads those compiled
 fields and emits structural input evidence; it does not construct or recheck proofs. Runtime DTOs live in Impl;
-no recorder or registration command runs during Reg compilation. Implementation edits rebuild no Reg modules;
+no judge recorder, registration assessment command or implementation runs during Reg compilation. Implementation edits rebuild no Reg modules;
 report reuse depends on Lake inputs and the single semantic version applied only to typed input owners. Interface
 edits atomically migrate every use, remove the old path and bump that version. Historical compatibility is not
 supported. Existing representation upgrades preserving mathematical evidence and registration semantics are
@@ -264,13 +272,15 @@ The production reader uses `RawArtifacts.Store` for every target. It reads compi
 constant tables without creating an Environment, initializing extensions, invoking elaboration, Meta, the type
 checker or the kernel. Contract inputs are decoded from constructor trees and safe constant references in those
 parts. A value that requires evaluation, a missing part, an unknown format or a read failure is a named
-`contract.decode_failed:<owner>:<declaration>:<reason>` or raw-artifact failure; there is no fallback reader. Utility relationships retain
-their bounded computation over compiled terms. `ArtifactAssessment` constructs target-local registration data;
+`contract.decode_failed:<owner>:<declaration>:<reason>` or raw-artifact failure; there is no fallback reader. Only SL-031 utility refutations retain
+the bounded `RawArtifacts.whnf/equalTypes` computation over compiled terms. `ArtifactAssessment` constructs target-local registration data;
 `CompiledAssessment` executes template, evidence and binding gates; `CompiledSeal` checks independent snapshots,
-source uniqueness, joins, qualified-name collisions, catalog membership and every finite vector element, then
-reads compiler-checked row conclusions and computes output statistics. Companion constants are immutable report
-views, never installed declarations. Computing compiled expression shapes and finite projections does not decode
-an otherwise computed top-level contract input. Raw terms never execute code or acquire kernel authority.
+source uniqueness, joins, qualified-name collisions, catalog membership and every position of the literal
+finite tables, then reads compiler-checked row conclusions and computes statistics from those literal rows. Companion constants are immutable report
+views, never installed declarations. Reading raw constructor fields and indexed literal tables does not decode
+an otherwise computed top-level contract input. Registration, template, root and seal paths perform no generic
+semantic comparison, normalization or interpretation of the original functions. Raw terms never execute code
+or acquire kernel authority.
 Report reuse comes only from the Lake trace and the single semantic version.
 
 `STRATALINT_INSPECTOR_MODULE_WORK` 可指定本次调用的模块工作 JSONL，记录 `discover`、`extract` 和 `assess` 的实际模块工作；H 单独由编译输入投影确定。该观测不参与 trace、复用或准入，Lake 重放的构建日志不代表本次执行。
@@ -282,17 +292,18 @@ downstream test library and runs the native compiled judge tests.
 `make compiled-judge-test` builds and runs the native tests against the same
 artifact evaluator used by production, including constructor discovery, source
 reconstruction, negative dependencies and catalog/seal checks. Fixed work and
-depth limits remain effective on shared expression calculations. Calculation
-memos retain the immutable compiled table and lexical context; cached results
-retain their checked depth.
-Equality transports retain their bound-variable context. Distinct rigid term
-types are compared before mathematical data values are reduced.
-A data recursor blocked on a neutral local is compared without computing a
-closed opponent; proof irrelevance and structure eta remain outside this rejection rule.
+depth limits remain effective on raw traversal, literal decoding and fact lookup.
+Invocation-local syntax indexes retain their immutable compiled input and lexical
+context; they contain no importable assessment authority.
+Kernel-checked relations retain their full-telescope endpoints. Endpoint lookup
+and literal field reads do not run beta, delta, recursor, eta or conversion.
+Proof implementations are cut only at a bound proof fact; their proposition
+dependencies remain checked.
 
-Source identity checks reuse the compiler-checked `Registration.variation`
-field only for the exact complete generic Law body. All raw dependencies and
-proper subexpressions retain their identity checks.
+Source statement exclusion uses a coordinate-bound `StatementExclusion` for
+the complete varying Law. Source observations use full-telescope `Eq` or
+`BoolReflection` facts bound to actual source and readout operands. All raw
+dependencies and proper subexpressions retain their independent identity checks.
 
 `make census` projects production registration records without reassessment.
 Independent structural graph and certificate tools do not issue registration
