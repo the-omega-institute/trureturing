@@ -7,8 +7,6 @@ internal sealed class SoutheastFactorizationDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/Hypermatrix/SoutheastFactorization.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Combinatorics/koprowski2026enumeration");
-    private static readonly LibraryNoteRef Koszul =
-        LibraryNoteRef.Create("D5/L/HomologicalAlgebra/berkesch2013tensorcomplexes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Constructive southeast Bruhat factors", H("Constructive southeast Bruhat factors"),

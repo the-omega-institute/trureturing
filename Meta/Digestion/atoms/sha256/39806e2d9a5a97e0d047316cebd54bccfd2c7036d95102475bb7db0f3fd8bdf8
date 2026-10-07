@@ -1,0 +1,46 @@
+**假设 41.1（完整假设 21.1）。** 本章条件于完整假设 21.1，使用定义 15.1 的同一个实际 Cloitre 序列。取
+
+$$
+F_0=0,\qquad F_1=1,\qquad F_{j+1}=F_j+F_{j-1},
+\qquad
+\alpha=\frac{\sqrt5-1}{2},\qquad
+\varphi=\alpha^{-1}.
+$$
+
+对每个整数 $N\ge3$，原始求值关系始终为
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,\\
+D_N&=\{1,\ldots,N-1\},&
+T_N(x)&=N-C(x),\\
+X_N(0)&=N-1,&
+X_N(r+1)&=T_N(X_N(r)),\\
+d_N&=C(N-1),&
+g_N&=X_N(d_N),\\
+C(N)&=C(g_N)+C(N-g_N).
+\end{aligned}
+\tag{41.1}
+$$
+
+完整继承的来源是 [foundations，§§1、4](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/proof.md)、[golden structure，§§5–6](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/golden-proof.md) 与 [Fibonacci collars，§1](https://github.com/the-omega-institute/nested-recurrences/blob/4dff2e7cbab8eb4c7052d2322935ac5cf26b869c/cloitre-conway/fibonacci-collars.md)。它们在本章保留假设 21.1 的全部条件：合法域、$G(n)=\lfloor\alpha(n+1)\rfloor\le C(n)\le U(n)\le n$、$U(1)=1$、$U$ 的非减性及增量界、全部所列锚值与邻点值、全轨道捕获和不变性、全部周期的捕获，以及从 $N-1$ 出发在规定深度 $d_N$ 已入周期的结论。其中
+
+$$
+U(n)=\min\{n-F_{q-2},F_q\}
+\qquad(F_q\le n<F_{q+1},\ q\ge3),
+\tag{41.2}
+$$
+
+且对每个 $q\ge6$、整数 $t\ge0$、$N=F_q+t$，全部周期都在
+
+$$
+I_{q,t}=[F_{q-1},F_{q-1}+t]\cap\mathbb Z\subseteq D_N
+\tag{41.3}
+$$
+
+内。锚值、邻点值及其原阶数范围仍完整沿用假设 21.1；这里只列证明直接使用的分段式与捕获式，不缩减其余前提。
+
+黄金比值基础 $16384\le n\le131071$、黄金归纳基 $1\le n\le65535$、规定深度入周期基础 $3\le N\le52$ 仍是 UNEXECUTED／ASSUMED-UNVERIFIED 的来源条件，本章不给它们独立证明。所引 collars §6 的双种子及固定带 $-12\le t\le32$ 也不成为新的任意宽度前提。此处引用的字面修订与 §§24、28、30、40 各自引用的原生修订分别保留；不把不同修订的 collar、轮廓或种子合并成一个更强假设。
+
+式 (41.1) 的两个加法子项都是原 $C$ 的值。一个子根 $M\ge3$ 的值仍由它自己的 $T_M$、起点 $M-1$、深度 $C(M-1)$ 和所选点 $g_M$ 定义；根 $N$ 的历史不会充当子根的求值历史。两个子出现均保留，即使其物理索引相同也不删去一项。初值 $1,2$ 不作为新的迭代根展开。不假设 $C$ 单调，不另选周期、相位或深度。
+

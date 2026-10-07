@@ -1,0 +1,8 @@
+**引理 137.1（末层条件恰覆盖全塔）。** 对每个 $p,e,S$，
+
+$$
+D_{p,e}(S)\ \Longleftrightarrow\ \mathcal C_{p,e}(S).
+$$
+
+而且这两个条件蕴含 $\mathcal C_{p,m}(S)$ 对每个 $1\le m\le e$ 成立。
+
