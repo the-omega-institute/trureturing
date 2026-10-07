@@ -1409,3 +1409,10 @@ The ordinary proofs and exact finite discriminators establish `repo-derived` ded
 The remaining native correspondence is substantive: exhibit an actually permitted source apparatus implementing an amplitude transfer and between-event Hamiltonian, with matched original actions/records, preparation, clock, errors and prices; bind the authentic source/root/epoch and beta masks using the existing paid acquisition when its exact promises apply, and acquire and retain the consumed hidden coefficients/phases through authorized channels; or prove a different faithful positive interaction bridge. Hypothesis15.1's full rotations, attainable faithful Euclidean displacement, physical field/kinetic/maintenance/precision/record prices and common-environment propagation/task-capacity remain unproved. The unit occurrence geometry is not mesh refinement or an open Euclidean three-dimensional region. Finite-clock full-state preservation is a useful conditional interaction relation on the same original source; it does not by itself settle physical spatial dimension, unbounded time, all-state fidelity or the full why-three-dimensions objective.
 
 ## 58.99 追加锚（本行以下为增补区）
+## 59. 混色实际地址费用的部分界
+
+**定义 59.1（部分界接口）。** 在原定义57.1的同组成、空取得历史与四值原地址合同下，若 $d=3k\ge3$、$a,b>0$、$n=a+b\ge4$、$h\ge d+n-1$，则 [混色实际地址费用卷定理1.4、5.3、7.3](FIB_ATOM_MIXED_ACTUAL_ADDRESS_PARTIAL_BOUNDS.md) 给出 $A+3\le D_h\le A+n-2+c_d(a,b)$，其中 $c_3=a$，$d\ge6$ 时 $c_d=\min(a,b)$；这是部分界，不是准确值。
+
+其普通证明保留同一固定正源的完整原历史、重复动作、不同实际地址收费与两色终端分支；上界实际诊断、真实缓存和完整前沿补查覆盖全部同组成高负源。
+
+## 59.99 追加锚（本行以下为增补区）
