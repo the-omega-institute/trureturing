@@ -33,6 +33,7 @@
         {"pattern": "tools/Architecture/BannedSymbols.Determinism.txt", "optional": false},
         {"pattern": "tools/Architecture/BannedSymbols.Guid.txt", "optional": false},
         {"pattern": "tools/lean-inspector/Inspector.lean", "optional": false},
+        {"pattern": "tools/lean-inspector/build_work.py", "optional": false},
         {"pattern": "tools/lean-inspector/inspect.sh", "optional": false},
         {"pattern": "tools/lean-inspector/materials.py", "optional": false},
         {"pattern": "tools/scripts/report/lean-report.sh", "optional": false},
@@ -61,11 +62,8 @@
     "scribe-content": {
       "include": [
         {"pattern": "tools/StrataLint.Scribe/**/*.cs", "optional": false},
-        {"pattern": "tools/StrataLint.Scribe.Documents/**/*.cs", "optional": false},
         {"pattern": "tools/StrataLint.Scribe/StrataLint.Scribe.csproj", "optional": false},
-        {"pattern": "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj", "optional": false},
         {"pattern": "tools/StrataLint.Scribe/packages.lock.json", "optional": false},
-        {"pattern": "tools/StrataLint.Scribe.Documents/packages.lock.json", "optional": false},
         {"pattern": "tools/StrataLint.Scribe/Vendor/Katex/katex.min.js", "optional": false},
         {"pattern": "tools/scripts/workflow/scribe-content-checks.sh", "optional": false},
         {"pattern": "Blueprint/**/*.scribe.cs", "optional": true}

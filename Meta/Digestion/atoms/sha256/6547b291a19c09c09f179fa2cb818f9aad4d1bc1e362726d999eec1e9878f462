@@ -1,0 +1,52 @@
+**定义 58.1（异质输入类）。** 令 $n\ge4$、 $0<\rho\le1/8$、 $0<a\le1$。字母按低位到高位排列为
+
+$$
+\Sigma=(000,100,010,101,001),\qquad \ell=b_1,\quad h=b_3.
+$$
+
+位置 $i$ 的未知律为 $\mu_i=(u_i,x_i,v_i,t_i,z_i)$，五个质量各至少为 $\rho$、和为1；记全部这类位置律向量为 $\mathcal H_{n,\rho}$。同一份输入中 $W_i\sim\mu_i$ 相互独立，完整训练记录相互独立同分布。独立测试输入使用相同的乘积律 $\bigotimes_i\mu_i$。这里的 IID 是完整记录层面的 IID，不要求位置律相同。
+
+实际联合块及边缘为
+
+$$
+\begin{array}{c|cccc}
+(h_i,\ell_i)&(0,0)&(0,1)&(1,1)&(1,0)\\ \hline
+P&u_i+v_i&x_i&t_i&z_i
+\end{array},\qquad
+H_i=t_i+z_i,\quad L_i=t_i+x_i.
+\tag{58.1}
+$$
+
+故 $H_i,L_i\in[b,c]=[2\rho,1-3\rho]$，而 $\mathbb E[h_i\ell_i]=t_i$；同窗交集不能替换为 $H_iL_i$。不同位置的端点可独立，同一位置的两个端点则使用这张联合块表。
+
+候选集为 $\Theta_n=\{(p,q,r):1\le p<q<r\le n\}$， $N=\binom n3$。对候选 $\tau=(p,q,r)$ 定义
+
+$$
+A_\tau=h_p\ell_q,\quad B_\tau=h_q\ell_r,\quad
+C_\tau=A_\tau+2(1-A_\tau)B_\tau,\quad f_\tau=C_\tau-1.
+\tag{58.2}
+$$
+
+因此 $C_\tau\in\{0,1,2\}$，并且逐词有
+
+$$
+C_\tau=1\iff A_\tau=1,\qquad f_\tau^2=1-A_\tau.
+\tag{58.3}
+$$
+
+真实递增三元组 $\theta$ 未知；原教师目标是 $C_\theta$。标签在给定完整输入后按真实类通过
+
+$$
+R=\begin{pmatrix}
+1/2&1/4&1/4\\
+3/8&1/4&3/8\\
+1/4&1/4&1/2
+\end{pmatrix},\qquad
+R_\alpha=\alpha R+(1-\alpha)J/3,\qquad \alpha\in[a,1]
+\tag{58.4}
+$$
+
+产生 $Y\in\{0,1,2\}$，其中 $J$ 为全1矩阵，共同强度 $\alpha$ 也未知。每份训练记录包含全部 $n$ 个实际窗口及标签。未知律描述不作为学习器输入。
+
+这些对象复用 §2 的字母、式（44.22）的优先门和（49.21）的系数二组合。原 FIB 卷定义104.2还有跨窗接缝合法性；这里声明的独立完整窗口实验没有施加全局接缝条件。实验也没有采用旧 $Q$ 通道，或把原教师换成标签 Bayes 动作。
+

@@ -1,0 +1,53 @@
+**定义 57.1（自由整窗律与原教师）。** 固定 $n\ge4$、 $0<\rho\le1/8$、 $0<a\le1$。按低到高位序取
+
+$$
+\begin{aligned}
+\Sigma&=(000,100,010,101,001),\qquad \ell=b_1,\quad h=b_3,\\
+\mathcal M_\rho^{\rm free}
+&=\{\mu=(u,x,v,t,z):u,x,v,t,z\ge\rho,\quad u+x+v+t+z=1\},\\
+H&=t+z,\qquad L=t+x,\qquad \mathbb E_\mu[h\ell]=t.
+\end{aligned}
+\tag{57.1}
+$$
+
+五个质量均不作为学习器输入；尤其 $t=\mu(101)$ 不固定为 $1/2$。实际端点对 $(h,\ell)$ 的四格质量为 $(0,0):u+v$、 $(0,1):x$、 $(1,1):t$、 $(1,0):z$。因此窗内相关性由同一个字母决定， $t$ 不能换成 $HL$。局部字母及位序取[原卷定义104.2、§141.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#104-规范三位窗口正值-end-与任务相关的联合未来商)；高位优先的素项记号须反转，空窗仍消耗位置。
+
+每份记录的 $n$ 个整个窗口相互独立，同律于同一个未知 $\mu$；不同记录也独立。未知递增三元组及原教师为
+
+$$
+\begin{aligned}
+\Theta_n&=\{(p,q,r):1\le p<q<r\le n\},\qquad N=\binom n3,\\
+A_\theta&=h_p\ell_q,\qquad B_\theta=h_q\ell_r,\\
+G_{1,\theta}&=A_\theta,\qquad
+G_{2,\theta}=(1-A_\theta)B_\theta,\qquad
+C_\theta=A_\theta+2(1-A_\theta)B_\theta.
+\end{aligned}
+\tag{57.2}
+$$
+
+这些门取自本卷式（44.22）、（49.21）的点态多项式，目标保持三值 $C_\theta$，其中系数2不可删去。三个选中窗口组成虚拟教师；没有对跳过的位置进行完整首失败扫描，也没有对产品样本附加接缝或正值 End 筛选。
+
+固定类名和标签名 $0,1,2$，通道准确为
+
+$$
+R=\begin{pmatrix}
+1/2&1/4&1/4\\
+3/8&1/4&3/8\\
+1/4&1/4&1/2
+\end{pmatrix},
+\qquad
+R_\alpha=\alpha R+(1-\alpha)J/3,\qquad \alpha\in[a,1].
+$$
+
+$J$ 是全一矩阵，共同未知 $\alpha$ 在采样前固定。完整记录和标签对比为
+
+$$
+P_{\mu,\alpha,\theta}(w,j)
+=\mu^{\otimes n}(w)(R_\alpha)_{C_\theta(w),j},
+\qquad
+Z=\mathbf1_{\{Y=2\}}-\mathbf1_{\{Y=0\}}.
+\tag{57.3}
+$$
+
+测试记录独立于训练且同律。公开合同包括有限字母表、通道族和递增模板；它不认证某个实际采样装置满足这些假设。定义55.1已允许未知 $\alpha$，定义56.1还要求公开 $t=1/2$。这里比较的自由质量类包含那个半质量子类，准确恢复目标及记录接口保持相同。以下 $\log$ 为自然对数。
+

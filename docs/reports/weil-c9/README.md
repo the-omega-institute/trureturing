@@ -2,7 +2,7 @@
 
 This package publishes project-authored scientific programs and previously computed matrices for one sufficient Weil comparison at the actual support half-width $a=\log3$. It reuses the source formulas and support-independent Gamma moment input described in the [Library note](../../../Library/Weil/liu2026tailcompensation.md). It does not reproduce an author's old finite certificate, claim originality for those formulas, or prove RH.
 
-The kernel input is conditional on the author's assertion that the pinned moment intervals contain their exact scalar moments. Neither the input hashes nor this replay prove that assertion. The numerical source contract has a separate paper/code review; the recorded sign run is local execution by the package producer. Independent execution and independent regeneration of the full matrix inputs have not been obtained.
+The kernel input is conditional on the author's assertion that the pinned moment intervals contain their exact scalar moments. Neither the input hashes nor this replay prove that assertion. The numerical source contract has a separate paper/code review. A separate native Codex CLI session completed a full replay of the same program on the same hash-bound matrix inputs and independently inspected the new result. This supplies independent execution, with the producer's arithmetic environment reused after direct version checks; independent implementation, matrix regeneration and moment containment remain unverified.
 
 ## Replay
 
@@ -18,7 +18,7 @@ The wrapper verifies all listed scientific program hashes and both packed and de
 
 For bindings alone, append `--check-inputs-only`. That mode performs no sign calculation. Full replay at the pinned 1536-bit precision took 14.90 seconds in the producer's local environment; this is an observed runtime, not a bound for another machine.
 
-[`result-summary.json`](result-summary.json) records the local replay against this package's exact manifest. It omits the trial's $256^2$ integer entries; a replay writes them into its full result. Elapsed times and floating proposals are not byte-reproducibility requirements. The scientific success requirement is **all 256 directed pivots strictly positive and no directed negative witness**.
+[`result-summary.json`](result-summary.json) preserves the producer's local replay and adds a compact `independent_execution` record against the same exact manifest. The separate session ran the full wrapper at 1536 bits with exit zero, checked all 256 serialized pivot lower endpoints as strictly positive, and recomputed the exact squared Frobenius norm from all 65,536 trial integers, verifying the bound 32. The floating negative proposal has a positive directed quadratic enclosure, so it supplies no directed negative witness. The record binds the fresh full result by its hash without publishing another trial or pivot snapshot. A replay writes those entries into its full result. Elapsed times and floating proposals are not byte-reproducibility requirements. The scientific success requirement is **all 256 directed pivots strictly positive and no directed negative witness**.
 
 ## Objects and comparison
 

@@ -1,0 +1,28 @@
+**定理 29.2（实际全域取得与逐坐标支配的有限正规形）。** 定义 29.1 的 $\mathcal V_F$ 是非空有限集合。每个 $v\in\mathcal V_F$ 都由一个输入无关的固定策略 $\sigma_v\in\mathfrak D_3$ 同时取得；每个原确定性全域策略都被其中一个费用向量在 $F$ 上逐坐标支配：
+
+$$
+\begin{gathered}
+\forall v\in\mathcal V_F\ \exists\sigma_v\in\mathfrak D_3\ \forall i\in[m],
+\quad C_{\sigma_v}(P_i)=v_i,\\
+\forall\pi\in\mathfrak D_3\ \exists v\in\mathcal V_F\ \forall i\in[m],
+\quad v_i\le C_\pi(P_i),\\
+\mathcal V_F\subseteq\prod_{i\in[m]}
+\bigl(\{n_i,n_i+1,\ldots,n_i+m-1\}\bigr).
+\end{gathered}
+\tag{29.5}
+$$
+
+取得策略使用实际代表路由，再以单点选择相应原型的完整带标签叶测试。若 $B_v(i)$ 是它在 $P_i$ 上的路由地址集合，则同一路径的完整联合向量和实际代表地址都不重复，路由长至多 $m-1$，而最终不同付费地址集合与费用精确为
+
+$$
+\begin{aligned}
+J_{\sigma_v}(P_i)&=B_v(i)\cup L_i,\\
+e_v(i)&=|B_v(i)\setminus L_i|
+       =\sum_{u\in B_v(i)}\chi(\operatorname{out}_{P_i}(u)),\\
+C_{\sigma_v}(P_i)&=n_i+e_v(i)=v_i.
+\end{aligned}
+\tag{29.6}
+$$
+
+式（29.5）的支配只比较 $F$ 上的费用；在 $F$ 外要求新策略独立地正确且有限终止，不要求与原策略的行为或费用相同。
+

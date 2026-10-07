@@ -1,0 +1,25 @@
+## 15. 固定宽度块读出的相邻一窗口边界
+
+本章固定一个原阶 $k\ge2$ 的实际二进制语言
+
+$$
+\mathcal L_k=\{w\in\{0,1\}^{*}:w\text{ 不含连续子词 }1^k\},
+$$
+
+位按低位先读。令 $G_0, G_1,\ldots$ 是本卷前文的原阶 KBonacci 权重，令
+
+$$
+ c_n:=G_n\pmod 2\in\mathbb F_2,
+ \qquad T:=k+1.
+$$
+
+这里的匹配值采用规范多项式 $\Phi_k=X^k-\sum_{j<k}X^j$，不是三项式 $\Psi_k=X^k-X-1$。单探针共同像是 $H_k=\mathbb F_2[X]/(\Phi_k)$，令 $x=X\bmod\Phi_k$，匹配加性读出为 $\lambda_k(\sum_{j<k}a_jx^j)=\sum_{j<k}a_jG_j\bmod2$；这正是[固定版本《KBonacci 固定原阶的最小模值／相位观察器》](https://raw.githubusercontent.com/the-omega-institute/trureturing/73168b5b84a8ba1328b6fa51eb9d722f3d4a7daa/docs/develop/theory/KBONACCI_MINIMAL_MODULAR_OBSERVER.md)第 13 节式 (30)–(31) 的原阶接口。实际加性像 $U=\mathbb F_2$ 的两个值将在引理 15.1 中由实际词同时满足相位和尾条件地取得。该固定版本定理 14.1、式 (34) 已给出
+
+$$
+ c_n=1\iff n\equiv0,-1\pmod T,
+ \qquad c_{n+T}=c_n.
+ \tag{15.1}
+$$
+
+这里的两个一是同一固定原阶权重周期中的相邻循环位置；后文不把它们替换为任意指定的二元窗口。
+

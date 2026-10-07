@@ -14,10 +14,6 @@ namespace StrataLint.Scribe;
 public enum ScribeScriptFailureCode
 {
     InvalidPath,
-    SharedSourceArgument,
-    SharedSourceMissing,
-    SharedSourceOutsideBlueprint,
-    SharedSourceCycle,
     Compilation,
     BannedSymbol,
     DisallowedSymbol,
@@ -95,16 +91,10 @@ public static class ScribeScriptHost
         var root = Path.GetFullPath(repositoryRoot);
         if (parseOptions is null)
             return FailureResult(normalized, ScribeScriptFailureCode.HostConfiguration,
-                "Documents DefineConstants metadata is unavailable or invalid");
+                "Scribe DefineConstants metadata is unavailable or invalid");
         try
         {
-            var sourceGraph = ReadSourceGraph(root, normalized, parseOptions);
-            if (sourceGraph.Failure is not null)
-            {
-                return new(normalized, null, sourceGraph.Failure);
-            }
-    
-            var compilation = Compile(root, normalized, sourceGraph.Sources!.Value, references, analyzers,
+            var compilation = Compile(root, normalized, [normalized], references, analyzers,
                 parseOptions, allowlistPath);
             if (compilation.Failure is not null)
             {
@@ -133,7 +123,7 @@ public static class ScribeScriptHost
                 {
                     CultureInfo.CurrentCulture = CultureInfo.InvariantCulture;
                     CultureInfo.CurrentUICulture = CultureInfo.InvariantCulture;
-                    definition = StatementProjectionFixtureLoader.WithRepositoryRoot(root, () =>
+                    definition = StatementProjectionFixtureLoader.WithScriptRepositoryRoot(root, () =>
                     {
                         var instance = Activator.CreateInstance(type, nonPublic: true)
                             as IScribeDocumentDefinition
@@ -188,104 +178,6 @@ public static class ScribeScriptHost
         return results.OrderBy(result => result.RelativePath, StringComparer.Ordinal).ToImmutableArray();
     }
 
-    private static (ImmutableArray<string>? Sources, ScribeScriptFailure? Failure) ReadSourceGraph(
-        string root,
-        string entry,
-        CSharpParseOptions parseOptions)
-    {
-        var sources = new List<string>();
-        var visiting = new HashSet<string>(StringComparer.Ordinal);
-        var visited = new HashSet<string>(StringComparer.Ordinal);
-        ScribeScriptFailure? failure = null;
-
-        void Visit(string path)
-        {
-            if (failure is not null || visited.Contains(path)) return;
-            if (!visiting.Add(path))
-            {
-                failure = MakeFailure(path, ScribeScriptFailureCode.SharedSourceCycle,
-                    "shared source declaration contains a cycle");
-                return;
-            }
-
-            var full = Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar));
-            if (!File.Exists(full))
-            {
-                failure = MakeFailure(path, ScribeScriptFailureCode.SharedSourceMissing,
-                    "declared shared source does not exist");
-                return;
-            }
-
-            var text = File.ReadAllText(full);
-            var tree = CSharpSyntaxTree.ParseText(text, parseOptions, path: path);
-            foreach (var declaration in tree.GetRoot().DescendantNodes().OfType<TypeDeclarationSyntax>())
-            {
-                foreach (var attribute in declaration.AttributeLists.SelectMany(list => list.Attributes))
-                {
-                    if (!IsSharedSourceAttribute(attribute.Name))
-                    {
-                        continue;
-                    }
-
-                    var arguments = attribute.ArgumentList?.Arguments;
-                    var argument = arguments is { Count: 1 } ? arguments.Value[0] : null;
-                    if (argument?.Expression is not LiteralExpressionSyntax literal
-                        || !literal.IsKind(SyntaxKind.StringLiteralExpression))
-                    {
-                        failure = MakeFailure(path, ScribeScriptFailureCode.SharedSourceArgument,
-                            "shared source attribute requires one string literal argument");
-                        return;
-                    }
-
-                    var declared = NormalizePath(literal.Token.ValueText);
-                    if (declared is null || !declared.StartsWith(BlueprintPrefix, StringComparison.Ordinal)
-                        || !declared.EndsWith(SourceSuffix, StringComparison.Ordinal))
-                    {
-                        failure = MakeFailure(path, ScribeScriptFailureCode.SharedSourceOutsideBlueprint,
-                            $"declared shared source is outside Blueprint/**/*.scribe.cs: {literal.Token.ValueText}");
-                        return;
-                    }
-
-                    Visit(declared);
-                    if (failure is not null) return;
-                }
-            }
-
-            visiting.Remove(path);
-            visited.Add(path);
-            sources.Add(path);
-        }
-
-        Visit(entry);
-        return failure is null
-            ? (sources.ToImmutableArray(), null)
-            : (null, failure);
-    }
-
-    private static bool IsSharedSourceAttribute(NameSyntax name)
-    {
-        var identifier = name switch
-        {
-            IdentifierNameSyntax simple => simple,
-            QualifiedNameSyntax
-            {
-                Right: IdentifierNameSyntax member,
-                Left: QualifiedNameSyntax
-                {
-                    Right: IdentifierNameSyntax { Identifier.ValueText: "Scribe" },
-                    Left: var prefix,
-                },
-            } when prefix is IdentifierNameSyntax { Identifier.ValueText: "StrataLint" }
-                or AliasQualifiedNameSyntax
-                {
-                    Alias.Identifier.ValueText: "global",
-                    Name: IdentifierNameSyntax { Identifier.ValueText: "StrataLint" },
-                } => member,
-            _ => null,
-        };
-        return identifier?.Identifier.ValueText is "ScribeSharedSource" or nameof(ScribeSharedSourceAttribute);
-    }
-
     private static (MemoryStream? Image, string? EntryType, ScribeScriptFailure? Failure) Compile(
         string root,
         string entry,
@@ -295,18 +187,8 @@ public static class ScribeScriptHost
         CSharpParseOptions parseOptions,
         string? allowlistPath)
     {
-        var trees = sources.Select(path => CSharpSyntaxTree.ParseText(
-            File.ReadAllText(Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar))),
-            parseOptions,
-            path: path)).Append(CSharpSyntaxTree.ParseText(
-                "global using System; global using System.Collections.Generic; global using System.IO; "
-                + "global using System.Linq; global using System.Net.Http; global using System.Threading; "
-                + "global using System.Threading.Tasks;", parseOptions, path: "ScriptGlobalUsings.cs")).ToImmutableArray();
-        var compilation = CSharpCompilation.Create(
-            "StrataLint.Scribe.Documents",
-            trees,
-            references,
-            ScriptCompilationOptions);
+        var compilation = CreateSourceCompilation(root, sources, references, parseOptions);
+        var trees = compilation.SyntaxTrees;
 
         if (analyzers.IsEmpty)
             return (null, null, MakeFailure(entry, ScribeScriptFailureCode.HostConfiguration, "banned API analyzer is unavailable"));
@@ -376,7 +258,24 @@ public static class ScribeScriptHost
         return (image, entryTypes[0], null);
     }
 
-    private static ImmutableArray<MetadataReference> ReferenceAssemblies()
+    private static CSharpCompilation CreateSourceCompilation(string root, ImmutableArray<string> sources,
+        ImmutableArray<MetadataReference> references, CSharpParseOptions parseOptions)
+    {
+        var trees = sources.Select(path => CSharpSyntaxTree.ParseText(
+            File.ReadAllText(Path.Combine(root, path.Replace('/', Path.DirectorySeparatorChar))),
+            parseOptions,
+            path: path)).Append(CSharpSyntaxTree.ParseText(
+                "global using System; global using System.Collections.Generic; global using System.IO; "
+                + "global using System.Linq; global using System.Net.Http; global using System.Threading; "
+                + "global using System.Threading.Tasks;", parseOptions, path: "ScriptGlobalUsings.cs")).ToImmutableArray();
+        return CSharpCompilation.Create(
+            "StrataLint.Scribe.Script",
+            trees,
+            references,
+            ScriptCompilationOptions);
+    }
+
+    internal static ImmutableArray<MetadataReference> ReferenceAssemblies()
     {
         var paths = new HashSet<string>(StringComparer.Ordinal);
         var runtimeDirectory = Path.GetDirectoryName(typeof(object).Assembly.Location)!;

@@ -1,0 +1,19 @@
+**定理 362.2（实际有限支撑的 Euler 对数收费）。** 存在一个常数 $A>0$，使任意有限 $S\subseteq\mathbb N_{>0}$、任意整数 $N\ge2$ 与任意实数 $R>5$ 都满足以下蕴涵。令
+
+$$
+\Delta=\frac{LR}{A\log N}-1,
+\qquad
+U=\{p\text{ 为素数}:5<p\le N-1,\ p\mid M(S),\ z(p)\ge R\}.
+\tag{362.3}
+$$
+
+若 $\Delta>0$，则
+
+$$
+\sum_{p\in U}w(p)
+\le\frac{6H_N\log M(S)}{R\Delta}.
+\tag{362.4}
+$$
+
+量词顺序是 $\exists A>0\ \forall S\ \forall N\ge2\ \forall R>5$；$A$ 不依赖集合、截止或秩阈值。结论包括 $S=\varnothing$、$M(S)=1$ 与 $R>N$，不要求指标的基数、最大值或相互包含关系。
+

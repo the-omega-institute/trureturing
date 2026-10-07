@@ -1,0 +1,16 @@
+**定义 56.6（付费经验条件排序）。** 给定 $n$ 和正整数 $m_1,m_2$，取得两批相互独立、同律的完整记录。对某批中的输入组 $A$，只保存
+
+$$
+N_A=\sum_{b=1}^{m_j}\mathbf1_{A}(X_b),\qquad
+S_A=\sum_{b=1}^{m_j}\mathbf1_A(X_b)Z_b.
+\tag{56.14}
+$$
+
+$N_A>0$ 时经验组均值为 $S_A/N_A$；$N_A=0$ 时规定为零并置空组标志，不作零分母除法。所有平局取最小索引。
+
+第一批对每个 $i$ 保存四组 $W_i=001,W_i=000,\ell_i=1,\ell_i=0$ 的计数及有符号和，构造（56.11）的经验 $\widehat T_i,\widehat R_i$。取最大有符号 $\widehat T_i$ 的位置为 $\widehat q$，再在 $i\ne\widehat q$ 中取最大有符号 $\widehat R_i$ 的位置为 $\widehat r$。
+
+第二批只对 $i\notin\{\widehat q,\widehat r\}$ 保存四个实际组 $(h_i,\ell_{\widehat r})=(b,c)$。构造（56.11）的经验 $\widehat U_i$，取最小有符号值的位置为 $\widehat p$。若任何已使用组为空，或 $\widehat p<\widehat q<\widehat r$ 不成立，输出固定合法三元组 $(1,2,3)$；否则输出 $(\widehat p,\widehat q,\widehat r)$。两批均按给定批长取得，空组和破平约定使此映射在每份有限记录上都有定义。
+
+排序输入不含 $u,x,v,z,H,L,\alpha$，不作中心化系数或干扰质量估计。输出预测器直接计算（56.3）的原 $\widehat C$。
+

@@ -1,0 +1,16 @@
+**命题 4.2（The exact scope of the recurrence）。** The seed recurrence holds for every $j\ge0$. For every tree, $c(\rho_{\mathcal T}(t))=Mc(t)$; every element of $X$ is realized by a tree. For every $x\in X$, the scalar sequence $s_j=q(M^jx)$ satisfies $s_{j+2}=s_{j+1}+s_j$. The corresponding ordered-tree equation need not hold away from the seed orbit.
+
+证明。For the first claim, apply $\rho_{\mathcal T}^j$ to the seed equation. Induction on $j$ shows that its iterates distribute across the constructor, giving the stated recurrence. This is the application of theorem [3.2](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L51) to definition 4.1. For composition, the two leaves give $(1,0)\mapsto(0,1)$ and $(0,1)\mapsto(1,1)$; at a node, add the two induction hypotheses and use linearity of $M$. This is precisely theorem [3.4](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md?plain=1#L81). Given $(a,b)\in X$, choose $a+b>0$ leaves, of which $a$ are $A$ and $b$ are $B$, and join them with any fixed ordered binary bracketing. The resulting tree has that composition.
+
+The identity $M^2=M+I$ gives $M^{j+2}x=M^{j+1}x+M^jx$; applying the linear map $q$ gives the scalar recurrence. For the tree $t=\langle A,B\rangle$, however,
+
+$$
+\begin{aligned}
+\rho_{\mathcal T}^2(t)&=\langle\langle B,A\rangle,\langle\langle B,A\rangle,B\rangle\rangle,\\
+\langle\rho_{\mathcal T}(t),t\rangle
+&=\langle\langle B,\langle B,A\rangle\rangle,\langle A,B\rangle\rangle.
+\end{aligned}
+$$
+
+Their left children differ in free syntax. Equal compositions therefore do not establish the universal ordered-tree equation. $\square$
+

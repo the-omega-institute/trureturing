@@ -1,0 +1,11 @@
+**来源 9.2（相关文献及不能省掉的桥梁）。** 一完整块可以作为有限机的一个输入符号，块端点作为响应；叶只需识别 INITIAL 标签，不必识别完整初态。这是既有自适应识别语言的应用，不能给控制器增加复位权。
+
+| 原始文献 | 与本卷的对应及边界 |
+| --- | --- |
+| van den Bos、Vaandrager，[State Identification for Labeled Transition Systems with Inputs and Outputs](https://arxiv.org/html/1907.11034v2)，自适应测试与状态识别部分 | 供应测试树与初动作破坏区分的语义。一般识别算法不直接给（4.3）、（5.2）或（6.3）的实际循环日程。 |
+| Türker、Hierons、Mousavi、El-Fakih，[Efficient State Identification for Finite State Machine-Based Testing，accepted manuscript](https://eprints.whiterose.ac.uk/id/eprint/230260/1/Ordered_Wset_Accepted.pdf)，DOI [10.1109/TSE.2025.3604472](https://doi.org/10.1109/TSE.2025.3604472)，定义11–15及18 | 文献确实研究免额外转移的 ordered characterising sets，不能一概归为必须复位的方法。其合同是从指定起点覆盖每个状态／刻画词对、保留成对最短区分前缀或限制总转移长度；本卷最小化一个未知 INITIAL 标签的最坏实际分支，未建立这两个优化问题的等价归约。 |
+| Szyfelbein、Dereniowski，[Precedence-Constrained Decision Trees and Coverings](https://arxiv.org/html/2602.21312v1)，第2节及3.1节 | 静态测试与先后偏序可启发“取得前必须付位移”，但实际查询还依赖循环绝对位置、活尾及分支。静态偏序不是已证的同费用表示。 |
+| Chistopolskaya、Podolskii，[Parity Decision Tree Complexity is Greater Than Granularity](https://arxiv.org/html/1810.08668v1)，第1节及2.2节 | 允许固定未知布尔输入上的任意子集奇偶查询；本卷只有受当前块位置约束的字面掩码。把相位写成 one-hot 向量不产生任意奇偶访问。 |
+
+文献提供可复用方法和比较对象，本文不从这些一般问题导入一个未核对假设的数值最优定理，也不以有限检索主张不存在覆盖结果。实际等待可类比为必须等到窗口再次经过才能提问；这个图景的数学对应是活动位置（6.7），而收费、合法尾和 INITIAL 标签由同一个实际词及共同档案保证。
+

@@ -1,0 +1,40 @@
+**引理 44.8（完整临界集的正尾式）。** 令 $e_{j,-}=m_j$、$e_{j,+}=M_j$，并保留所有临界端点
+
+$$
+\mathcal A=\{(\alpha,\varepsilon):\alpha\in\mathscr L,
+\ \varepsilon\in\{-,+\},\quad
+\operatorname{dist}(f_\alpha(e_{j(\alpha),\varepsilon}),J_{c_\alpha})=\beta\}.
+$$
+
+它非空，且实例常数
+
+$$
+\boxed{\displaystyle
+\kappa=\min_{(\alpha,\varepsilon)\in\mathcal A}
+|\gamma_\alpha|\,a^{-d_\alpha}D_{j(\alpha),\varepsilon}>0}
+\tag{44.17}
+$$
+
+满足：存在固定整数 $n_0\ge1$，使
+
+$$
+\boxed{B_n=\beta-\kappa a^n\qquad(n\ge n_0),\qquad a=g^{100}.}
+\tag{44.18}
+$$
+
+**证明。** 所有 $D_{j,\varepsilon}>0$、$|\gamma_\alpha|>0$；有限非空集给 $\kappa>0$，且 $\kappa\in\mathbb Q(t)$。由
+
+$$
+\operatorname{dist}(y,[l,u])=\max\{l-y,0,y-u\},
+$$
+
+式 (44.15) 是固定有限条 $b_r+c_ra^n$ 的最大值，所有截距不超过 $\beta$。截距为 $\beta>0$ 的支恰来自完整临界集的格外距离。这样的端点必是其像区间在该格外方向的最外端，否则另一端点距离更大，与 (44.12) 矛盾。从它向像区间内部移动，格外线性支的减少系数恰为 $|\gamma_\alpha|a^{-d_\alpha}D_{j,\varepsilon}$。所以全部最高截距支的最大斜率为 $-\kappa$，它们的最大值恰为 $\beta-\kappa a^n$。
+
+对任一较低截距支 $b_r<\beta$，若 $c_r\le-\kappa$，它始终低于该临界最大支；若 $c_r>-\kappa$，只须
+
+$$
+a^n\le\frac{\beta-b_r}{c_r+\kappa}.
+$$
+
+有限个正右端与 $a^n\to0$ 给出共同 $n_0\ge1$，包括零距离支，证明精确等式 (44.18)。这保留所有临界系数及所有非临界竞争支，不指定一个支配端点。任取满足这些不等式的固定起始层即可，不要求最小 $n_0$。证毕。
+

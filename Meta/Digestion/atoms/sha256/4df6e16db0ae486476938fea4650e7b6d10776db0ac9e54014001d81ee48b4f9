@@ -1,0 +1,6 @@
+## 29. Five-adic rank budget from odd Fibonacci support
+
+For a prime $p$, let $\rho(p)$ be its first positive Fibonacci zero.
+For a finite set $H$ of primes, put
+$R_H=\operatorname{lcm}_{p\in H}\rho(p)$.
+

@@ -1,0 +1,9 @@
+**定义 353.1（前缀缺口）。** 在定义352.1的整数秩与占位条件下，令 $\widetilde x_i=x_i$（$i\in I$），其余整数 $i$ 的 $\widetilde x_i=0$。对 $d\in I$ 定义
+
+$$
+g_d=A(d-r)-\sum_{\substack{i\in I\\i<d}}x_i,
+\qquad H=\sum_{d\in I}x_dg_d.
+$$
+
+$D$ 记录单秩的未填满余量，$H$ 记录相对于完整整数前缀的缺口；二者均按合并后的秩集合计算。
+

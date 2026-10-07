@@ -1,0 +1,17 @@
+**Theorem 8.1 (translation criterion in graph coordinates).** For
+$(a,b,X),(a',b',X')\in\mathcal P_p$, their graph triples are in the
+same translation orbit in $F^2$ if and only if
+
+$$
+  a'=a\quad\text{and}\quad
+  \exists h\in F,\quad X'=h+X,
+  \qquad h+X=\{h+x:x\in X\}.
+$$
+
+More precisely, translation by $(h,k)$ obeys
+
+$$
+  (h,k)+\Gamma(a,b,X)
+    =\Gamma(a,b+k-ah,h+X).
+$$
+

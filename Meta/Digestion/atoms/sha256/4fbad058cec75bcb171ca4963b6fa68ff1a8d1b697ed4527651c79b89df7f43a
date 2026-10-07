@@ -1,0 +1,29 @@
+### 32.5 FIB 的依赖类型特化
+
+对 Fibonacci 生成层，可以令一个源类型承载自由树项，另设游标、纪元和权限的配置类型。叶常元是
+
+$$
+\alpha,\beta:\mathsf{Tree},
+\qquad
+\langle-,-\rangle:\mathsf{Tree}\times\mathsf{Tree}\to\mathsf{Tree},
+\qquad
+\rho:\mathsf{Tree}\to\mathsf{Tree}.
+\tag{TG.3214}
+$$
+
+它们分别是叶生成元、构造器和替换；真正的 \(E_{ij}\) 是带源/靶索引的
+ReadTag、DownL、DownR、Up、ApplyRho 等游标动作。把动作的失败、事件、绝对纪元和
+writer 收据放入 \(\operatorname{step}_e\) 的标签，行为核便同时决定：
+
+$$
+\text{当前读数},\quad
+\text{下一动作是否合法},\quad
+\text{后缀上下文怎样变化},\quad
+\text{未来读数怎样继续}.
+\tag{TG.3215}
+$$
+
+若任务只读取组成，\(\approx\) 可以把不同括号和左右次序合并；若任务包含路径读取，
+（TG.3208）会把这些后继差异保留下来。故“两个不可约关系”准确地说是
+自由语法的两个叶生成元；最小运行边界还必须包含类型化动作和其行为商。
+

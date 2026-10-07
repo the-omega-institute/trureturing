@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:43883e2563595db418f241ad03f401a230847b24f2ae5e4ffaec5d52ae96440d
+  normalized_sha256: sha256:43883e2563595db418f241ad03f401a230847b24f2ae5e4ffaec5d52ae96440d
+cas_ref: sha256:43883e2563595db418f241ad03f401a230847b24f2ae5e4ffaec5d52ae96440d
+coverage_gids:
+  - gid: D5/S1/Words/Patterns/Separable/RecordFirstDecline.actual_four_record_first_decline
+    target_statement_id: sha256:b45d884372a9ae8c24ea81519081a22b6c9f0d588fc3021102388e3cffc4bf54
+receipts:
+  unresolved_subitems: []

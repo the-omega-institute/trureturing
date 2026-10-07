@@ -1,5 +1,3 @@
-using System.Collections.Immutable;
-using System.Reflection;
 using System.Runtime.CompilerServices;
 using StrataLint.Engine;
 
@@ -39,24 +37,6 @@ public sealed record DocumentDefinition
 
 public static class DocumentDefinitions
 {
-    public static ImmutableArray<DocumentDefinition> Discover(Assembly assembly)
-    {
-        ArgumentNullException.ThrowIfNull(assembly);
-        return DiscoverCore(assembly);
-    }
-
-    public static ImmutableArray<DocumentDefinition> Discover(
-        Assembly assembly,
-        string repositoryRoot)
-    {
-        ArgumentNullException.ThrowIfNull(assembly);
-        ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
-
-        return StatementProjectionFixtureLoader.WithRepositoryRoot(
-            repositoryRoot,
-            () => DiscoverCore(assembly));
-    }
-
     internal static string[] CheckRepositorySourceBijection(
         IEnumerable<string> filesystemSources,
         IEnumerable<DocumentDefinition> definitions)
@@ -78,58 +58,6 @@ public static class DocumentDefinitions
                 .Select(static path => $"registered Scribe source is missing: {path}"))
             .Order(StringComparer.Ordinal)
             .ToArray();
-    }
-
-    private static ImmutableArray<DocumentDefinition> DiscoverCore(Assembly assembly)
-    {
-        var definitions = assembly.GetTypes()
-            .Where(static type =>
-                !type.IsAbstract
-                && typeof(IScribeDocumentDefinition).IsAssignableFrom(type))
-            .OrderBy(static type => type.FullName, StringComparer.Ordinal)
-            .Select(CreateDefinition)
-            .OrderBy(static definition => definition.RelativePath.Value, StringComparer.Ordinal)
-            .ToImmutableArray();
-
-        if (definitions.IsEmpty)
-        {
-            throw new InvalidOperationException(
-                $"Assembly {assembly.GetName().Name} contains no Scribe document definitions.");
-        }
-
-        return RequireDistinctEmissionTargets(definitions);
-    }
-
-    /// Two definition classes in one `.scribe.cs` file necessarily carry the same GID, because
-    /// the GID is derived from `[CallerFilePath]` — and both then satisfy the path bijection,
-    /// which is why that bijection cannot catch them. This is where that state is rejected.
-    /// Extracted from the discovery body so the judgement can be pinned directly (#6337).
-    internal static ImmutableArray<DocumentDefinition> RequireDistinctEmissionTargets(
-        ImmutableArray<DocumentDefinition> definitions)
-    {
-        var duplicate = definitions
-            .GroupBy(static definition => definition.RelativePath.Value, StringComparer.Ordinal)
-            .FirstOrDefault(static group => group.Count() > 1);
-        if (duplicate is not null)
-        {
-            throw new InvalidOperationException(
-                $"Multiple Scribe definitions target {duplicate.Key}.");
-        }
-
-        return definitions;
-    }
-
-    private static DocumentDefinition CreateDefinition(Type type)
-    {
-        var instance = Activator.CreateInstance(type, nonPublic: true)
-            as IScribeDocumentDefinition
-            ?? throw new InvalidOperationException(
-                $"Scribe definition {type.FullName} needs a parameterless constructor.");
-        var definition = instance.Create()
-            ?? throw new InvalidOperationException(
-                $"Scribe definition {type.FullName} returned null.");
-        ValidateBijection(definition);
-        return definition;
     }
 
     internal static void ValidateBijection(DocumentDefinition definition)

@@ -11,7 +11,7 @@ public sealed class PlaybookWorkflowScriptTests
     private const string SyntheticBaseSha = "0000000000000000000000000000000000000001";
 
     [Fact]
-    public void DeliverCheckAlignsBeforeReadOnlyChecks()
+    public void DeliverCheckRunsReadOnlyChecksAfterEmission()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new PlaybookFixture();
@@ -23,12 +23,10 @@ public sealed class PlaybookWorkflowScriptTests
             [
                 "make:lean-report",
                 "make:emit",
-                "make:align-digestion-status BASE=synthetic-base",
-                "dotnet:digest-status --base synthetic-base",
                 "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
+                "dotnet:ledger-align --list-closed --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
                 "dotnet:ledger-align --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
-                "dotnet:digest-status --base synthetic-base",
                 $"make:gate BASE=synthetic-base",
                 "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
@@ -53,6 +51,43 @@ public sealed class PlaybookWorkflowScriptTests
             fixture.Calls());
         Assert.True(StateFragmentExists(fixture, module));
         Assert.True(AcceptedEventMentions(fixture, module));
+    }
+
+    [Fact]
+    public void DeliverCheckAddsOnlyClosedModulesWithoutAcceptedSelectors()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new PlaybookFixture();
+        const string frozen = "D5/S0/Carrier/A.lean";
+        const string uncommitted = "D5/S0/Carrier/B.lean";
+        WriteClosedModules(fixture, [frozen, uncommitted]);
+        ScriptHarnessScratch.WriteScratchText(Path.Combine(fixture.Temporary.Path,
+            "Golden/Frozen/accepted/fixture.json"), JsonSerializer.Serialize(new
+            {
+                event_type = "Freeze", schema_version = 5,
+                payload = new { descriptor_selector = frozen },
+            }));
+
+        var result = fixture.Run("deliver-check", "synthetic-base");
+
+        Assert.True(result.ExitCode == 0, Diagnostics(result));
+        Assert.Contains($"dotnet:ledger-align --add {uncommitted} --candidate-lean-report .lake/build/stratalint/raw-lean-report.json", fixture.Calls());
+        Assert.DoesNotContain(fixture.Calls(), call => call.Contains($"--add {frozen}", StringComparison.Ordinal));
+    }
+
+    [Fact]
+    public void DeliverCheckStopsBeforeWritingWhenClosedQueryFails()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var fixture = new PlaybookFixture();
+
+        var result = fixture.Run("deliver-check", "synthetic-base",
+            dotnetFailure: "ledger-align --list-closed", dotnetDiagnostic: "query rejected stale report");
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Contains("query rejected stale report", Diagnostics(result), StringComparison.Ordinal);
+        Assert.DoesNotContain(fixture.Calls(), call => call.StartsWith("dotnet:ledger-align --add", StringComparison.Ordinal)
+            || call.StartsWith("make:gate", StringComparison.Ordinal));
     }
 
     [Theory]
@@ -95,32 +130,16 @@ public sealed class PlaybookWorkflowScriptTests
     }
 
     private static void WriteTruthGraph(PlaybookFixture fixture, string module) =>
-        WriteTruthGraphContent(
-            fixture,
-            JsonSerializer.Serialize(new
-            {
-                truth = new
-                {
-                    nodes = new[] { new { repo_path = module, state = "closed" } },
-                },
-            }));
+        WriteClosedModules(fixture, [module]);
 
     private static void WriteEmptyTruthGraph(PlaybookFixture fixture) =>
-        WriteTruthGraphContent(
-            fixture,
-            JsonSerializer.Serialize(new
-            {
-                truth = new
-                {
-                    nodes = Array.Empty<object>(),
-                },
-            }));
+        WriteClosedModules(fixture, []);
 
-    private static void WriteTruthGraphContent(PlaybookFixture fixture, string content)
+    private static void WriteClosedModules(PlaybookFixture fixture, string[] modules)
     {
-        var path = Path.Combine(fixture.Temporary.Path, "Generated", "truth-graph.v1.json");
+        var path = Path.Combine(fixture.Temporary.Path, "closed-modules.json");
         ScriptHarnessScratch.EnsureDirectory(Path.GetDirectoryName(path)!);
-        ScriptHarnessScratch.WriteScratchText(path, content);
+        ScriptHarnessScratch.WriteScratchText(path, JsonSerializer.Serialize(modules));
     }
 
     private static bool StateFragmentExists(PlaybookFixture fixture, string module) =>
@@ -203,6 +222,7 @@ public sealed class PlaybookWorkflowScriptTests
                 "args=\"$*\"; command=${args##* -- }; printf 'dotnet:%s\\n' \"$command\" >> \"$PLAYBOOK_TEST_CALLS\"; "
                 + "if [[ -n ${PLAYBOOK_DOTNET_FAILURE:-} && $command == $PLAYBOOK_DOTNET_FAILURE* ]]; then "
                 + "printf '%s\\n' \"$PLAYBOOK_DOTNET_DIAGNOSTIC\" >&2; exit 1; fi; "
+                + "if [[ $command == 'ledger-align --list-closed '* ]]; then cat closed-modules.json; exit 0; fi; "
                 + "read -r -a parts <<< \"$command\"; "
                 + "for ((i=1; i<${#parts[@]}; i++)); do "
                 + "if [[ ${parts[i]} == --add ]]; then module=${parts[i+1]}; "

@@ -1,11 +1,10 @@
 using System.Collections.Immutable;
-using System.Reflection;
 
 namespace StrataLint.Scribe;
 
 internal static class ScribeScriptVerifyCommands
 {
-    internal static int Run(Assembly documentsAssembly, IReadOnlyList<string> arguments,
+    internal static int Run(IReadOnlyList<string> arguments,
         string repositoryRoot, TextReader? input, TextWriter output, TextWriter error)
     {
         if (arguments.Count is not (2 or 4) || arguments[0] != "scripts" || arguments[1] != "verify"
@@ -25,8 +24,19 @@ internal static class ScribeScriptVerifyCommands
                 error.WriteLine("EmptyScriptSelection: no definition paths were selected");
                 return 1;
             }
-            var current = DocumentDefinitions.Discover(documentsAssembly, repositoryRoot)
-                .ToDictionary(item => item.Document.Header.Gid.Value, StringComparer.Ordinal);
+            var selection = ScribeDefinitionSelector.Select(repositoryRoot, paths);
+            if (!selection.IsSuccess)
+            {
+                error.WriteLine(selection.Failure);
+                return 2;
+            }
+            var admission = ScribeSdkAdmission.Check(repositoryRoot, selection.Paths);
+            if (admission.ExitCode != 0)
+            {
+                admission.WriteFailure(error);
+                return admission.ExitCode;
+            }
+            paths = selection.Paths;
             var results = ScribeScriptHost.ExecuteBatch(repositoryRoot, paths);
             var resultCounts = results.GroupBy(static result => result.RelativePath, StringComparer.Ordinal)
                 .ToDictionary(static group => group.Key, static group => group.Count(), StringComparer.Ordinal);
@@ -36,24 +46,10 @@ internal static class ScribeScriptVerifyCommands
                     .Select(static path => $"{path}: UnexpectedScriptResult"))
                 .Order(StringComparer.Ordinal).ToArray();
             var failures = results.Where(result => !result.IsSuccess).ToArray();
-            var mismatches = new List<string>();
-            foreach (var result in results.Where(static result => result.IsSuccess))
-            {
-                var gid = result.Definition!.Document.Header.Gid.Value;
-                if (!current.TryGetValue(gid, out var existing))
-                {
-                    mismatches.Add($"{result.RelativePath}: MissingAssemblyDefinition");
-                    continue;
-                }
-                if (!ScribeResourceCodec.Encode(result.Definition).AsSpan()
-                    .SequenceEqual(ScribeResourceCodec.Encode(existing)))
-                    mismatches.Add($"{result.RelativePath}: CanonicalContentMismatch");
-            }
             foreach (var failure in failures) error.WriteLine(failure.Failure);
             foreach (var resultFailure in resultFailures) error.WriteLine(resultFailure);
-            foreach (var mismatch in mismatches.Order(StringComparer.Ordinal)) error.WriteLine(mismatch);
-            output.WriteLine(FormattableString.Invariant($"scripts verify: paths={paths.Length} hostFailures={failures.Length + resultFailures.Length} mismatches={mismatches.Count}"));
-            return failures.Length == 0 && resultFailures.Length == 0 && mismatches.Count == 0 ? 0 : 1;
+            output.WriteLine(FormattableString.Invariant($"scripts verify: paths={paths.Length} hostFailures={failures.Length + resultFailures.Length}"));
+            return failures.Length == 0 && resultFailures.Length == 0 ? 0 : 1;
         }
         catch (Exception exception) when (exception is IOException or UnauthorizedAccessException
             or ArgumentException or FormatException or InvalidOperationException)

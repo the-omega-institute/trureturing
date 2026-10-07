@@ -223,7 +223,7 @@ private theorem axisPartialSum_tail_geometric (x y : ℝ) (hx : 0 < x) (K : ℕ)
   rw [hdiff, abs_neg, abs_of_nonneg (tsum_nonneg fun i => wordWeight_nonneg x y (i + N))]
   simpa only [A, r, N] using htail_le.trans_eq hmajorant_sum
 
-private theorem goldenRatio_pow_div_le_fib_succ (K : ℕ) :
+theorem goldenRatio_pow_div_le_fib_succ (K : ℕ) :
     Real.goldenRatio ^ K / Real.goldenRatio ≤ (Nat.fib (K + 1) : ℝ) := by
   have hphi := Real.goldenRatio_pos
   rw [div_le_iff₀ hphi]

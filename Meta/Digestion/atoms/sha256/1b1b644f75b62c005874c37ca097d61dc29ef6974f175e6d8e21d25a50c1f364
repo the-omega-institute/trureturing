@@ -1,0 +1,21 @@
+**定理 353.3（整数空台阶分解与零缺口的充要条件）。** 对每个 $d\in I$，有
+
+$$
+g_d=\sum_{i=r}^{d-1}(A-\widetilde x_i)\ge0,
+\qquad H\ge0.
+\tag{353.3}
+$$
+
+当 $A>0$ 时，
+
+$$
+H=0
+\quad\Longleftrightarrow\quad
+\forall d\in I\text{ 满足 }x_d>0,\quad
+\forall i\in\mathbb Z\text{ 满足 }r\le i<d,
+\quad i\in I\text{ 且 }x_i=A.
+\tag{353.4}
+$$
+
+这个条件不要求最后一个活跃秩填满。当 $A=0$ 时，所有 $x_d$、$J$、$B$、$D$、$g_d$、$H$ 都为零，零缺口本身不提供任何额外的秩集合归属信息。
+

@@ -1,0 +1,10 @@
+### 33.6 解释、取得合同与来源边界
+
+在这一层，\(K_{\mathrm{end}}\) 是边界/空间的 incidence glue：它说明哪些前缀历史指向同一个实际配置；grade 与 writer 历史仍是路径时间和历史记录；\(K_{\mathrm{beh}}\) 是面向任务的记忆抽象。这里的“空间”和“时间”是这些关系的结构名称，不推出空间度量、物理时间或物理时空完成。
+
+多个根之间的比较必须携带显式 source identity；只有在共同来源合同已经声明时，跨根的 \(\operatorname{EqEnd}\) 才有意义。取得端点比较还需要合法 replay、reference stability、固定 epoch 以及相应 permission；被动响应语义本身只授予输出和后缀行为，不授予端点相等的权限。若这些条件缺失，\(\operatorname{EqEnd}\) 应保持为未取得的接口观测，而不能从相同响应推断。
+
+下一迭代问题是：对选定 carrier，哪一个具体的 FIB cursor/archive/permission 合同能够提供精确的端点比较？
+
+来源边界：本节复用本卷 §§3.3、4.4 的精确纤维与来源/行为分离条件，以及 §30–§32 的四视图、有类型生成器和行为核；它也复用仓内既有 ReachableBehavior* 与 contextual-congruence 结果所承载的可达行为最小性和同余事实。上述结果在此只作接口前提，不在本节重复证明，也不声称本节已有 Lean 验证。本文是理论层追加；端点 acquisition contract 仍由接口所有者给出，长期的物理时空解释仍未解决。
+

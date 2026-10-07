@@ -1,0 +1,6 @@
+**Theorem 6.1 (original rank depth).** If a prime $p$ divides $F_n$
+but does not divide $n$, then
+$$
+v_p(F_n)=v_p(F_{\rho(p)}).
+$$
+

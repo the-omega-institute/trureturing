@@ -1,0 +1,13 @@
+## 66. 六长度 Gram 矩阵的共同截断域
+
+设四个顶点的标签集为 $I=\{0,1,2,3\}$，$l_{ij}=l_{ji}>0$ 对 $i\ne j$。
+令 $x_{ij}=\cosh l_{ij}>1$，并令 $G_{ii}=1$、$G_{ij}=-x_{ij}$ 对 $i\ne j$。
+这些标签对应第 1 节的六个局部边，采用同一个长度向量；对角线长度不参与矩阵。
+定义
+
+$$
+C_l=\left\{\lambda\in\mathbb R^4:\lambda_i\ge0,\quad
+\sum_i\lambda_i=1,\quad (G\lambda)_i\le0\ (i\in I)\right\},
+\qquad q_l(\lambda)=\lambda^T G\lambda.
+$$
+

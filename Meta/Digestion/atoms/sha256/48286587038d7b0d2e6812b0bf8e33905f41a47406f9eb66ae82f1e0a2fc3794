@@ -1,0 +1,28 @@
+**命题 58.6（准确补偿与分歧支持方差）。** 对全部合法异质律，
+
+$$
+\begin{aligned}
+\mathbb E[v(Y)\mid X]&=1-3V=\alpha/4,\\
+\mathbb E[s_\tau\mid X]
+&=\frac\alpha4\left[f_\theta^2-(f_\theta-f_\tau)^2\right],\\
+\mathbb E[s_\theta-s_\tau]&=\alpha d_{\boldsymbol\mu}(\theta,\tau)/4.
+\end{aligned}
+\tag{58.22}
+$$
+
+令 $W=s_\theta-s_\tau,D=C_\theta-C_\tau$，逐记录还有
+
+$$
+W=0\text{ 当 }D=0,\qquad |W|\le4,\qquad W^2\le9D^2,
+\qquad \operatorname{Var}(W)\le9\mathbb ED^2.
+\tag{58.23}
+$$
+
+**证明。** 第一个条件矩由实际标签1列直接给出，是 §54、§57 通道恒等式的复用。将它与（58.14）分别代入线性项和平方项，得到第二式，取真实候选再作差即得第三式。这里不要求 $v$ 与 $Z$ 独立。
+
+方差直接由同一记录上的表核验。候选类相邻时，两行之差是 $(1,2,-3)$ 或 $(-3,2,1)$ 及其相反数，绝对值不超过3，平方不超过 $9D^2$。两端点行之差是 $(4,0,-4)$ 及其相反数；此时 $D^2=4$，平方16不超过36。相同类差为0。于是表给统一范围4和（58.23）。 $\square$
+
+也可令 $T=4v=4-12\mathbf1_{\{Y=1\}}$，其条件均值为 $\alpha$。分数
+$8\sum_s Z_sC_\tau-\sum_sT_sf_\tau^2$
+等于 $4S_\tau+8\sum_sZ_s$，附加项对所有候选相同。这说明补偿来自实际通道的观测量，并不等于免费读取未知强度。它使用同一份完整带标签记录，无需第二批校准或精确实系数。
+

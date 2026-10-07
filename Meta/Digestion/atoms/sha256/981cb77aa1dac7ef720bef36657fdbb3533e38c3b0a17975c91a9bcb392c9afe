@@ -1,0 +1,6 @@
+## 66. Persistent noncube tests and the complete earlier-support field
+
+Use the fields, radicands and specified cube roots of Section 62.
+The predicates in the following assertion are tests on the base field,
+including a terminal predicate $P_J$.
+

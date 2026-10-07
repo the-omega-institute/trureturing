@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:0706d37855d5d8b5a6927ccbfb8071182994c8e60f43bb6d1b3be8a99e7a100f
+  normalized_sha256: sha256:0706d37855d5d8b5a6927ccbfb8071182994c8e60f43bb6d1b3be8a99e7a100f
+cas_ref: sha256:0706d37855d5d8b5a6927ccbfb8071182994c8e60f43bb6d1b3be8a99e7a100f
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/ModulationMaximalDomain.physical_modulation_hasDerivAt_iff
+    target_statement_id: sha256:305d2d83e8e50a9f78219d5c71d024779d5eb2e42cf389040176956cd62b7ee1
+receipts:
+  unresolved_subitems: []

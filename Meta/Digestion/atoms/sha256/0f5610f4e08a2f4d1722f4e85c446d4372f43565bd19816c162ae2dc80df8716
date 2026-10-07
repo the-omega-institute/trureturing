@@ -1,0 +1,11 @@
+### 62.14. 文献与方法来源
+
+- Bshouty–Costa，*Exact Learning of Juntas from Membership Queries*，[arXiv:1706.06934v1](https://arxiv.org/abs/1706.06934v1)。布尔成员查询和自适应/非自适应相关变量学习是既有问题；其完整输入查询有 $O(n)$ 时间费用，不能把查询计数当作总时间。
+- Arpe，*Learning Juntas in the Presence of Noise*，[ECCC TR05-088](https://eccc.weizmann.ac.il/report/2005/088/)。产品属性噪声与分类噪声的布尔 junta 合同不同于本节五窗端点相关、三元实际行，不作为式（62.27）的直接证明。
+- Dereniowski–Łukasiewicz–Uznański，*Noisy (Binary) Searching: Simple, Fast and Correct*，[arXiv:2107.05753v4](https://arxiv.org/abs/2107.05753v4)，定理1.1与1.3分别区分期望查询和最坏查询预算。其固定独立翻转参数不由本节的历史统一错误上界自动给出；式（62.10）—（62.14）承担本节所需的有限条件桥梁。
+- Feige–Raghavan–Peleg–Upfal，*Computing with Noisy Information*，SIAM Journal on Computing 23(5)，1001–1018。端点验证、回退和叶链属于成熟噪声搜索路线；本节不把该文的其他模型直接附接到未知共同 $\alpha$。
+- Teo–Scarlett，*Noisy Adaptive Group Testing via Noisy Binary Search*，[arXiv:2106.12193v2](https://arxiv.org/abs/2106.12193v2)。其组测试噪声合同及定理1的平均测试数不等于本节的固定查询上界。
+- Zhou–Hero，*Resolution Limits for the Noisy Non-Adaptive 20 Questions Problem*，[arXiv:1909.12954v4](https://arxiv.org/abs/1909.12954v4)。测量相关噪声、连续位置分辨率与本节有限教师身份目标不同；支持查询与通道信息的成熟对应，不提供本节角色探针。
+- Kaufmann–Cappé–Garivier，*On the Complexity of Best-Arm Identification in Multi-Armed Bandit Models*，[JMLR 17(1)](https://jmlr.org/papers/v17/kaufman16a.html)，引理1。它在相互绝对连续的臂律与几乎必然有限停止下给事件 KL 换测度界；本节完整输入选择核的相消及有界次数由式（62.19）自足证明。
+- Hoeffding 有界变量浓缩、Fano 熵界、KL 链式法则与 Hamming 三角界分别供应尾界、位置下界、自适应转录分解和严格半径预测归约；这些通用工具不计为本节新方法。
+

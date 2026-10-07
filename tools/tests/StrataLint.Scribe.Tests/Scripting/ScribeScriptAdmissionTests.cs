@@ -5,7 +5,6 @@ namespace StrataLint.Scribe.Tests;
 public sealed class ScribeScriptAdmissionTests
 {
     private const string Entry = "Blueprint/D5/S0/Test/Probe.scribe.cs";
-    private const string Shared = "Blueprint/D5/S0/Test/Shared.scribe.cs";
 
     [Fact]
     public void EntryFinalizerDeclarationIsRejected()
@@ -17,18 +16,6 @@ public sealed class ScribeScriptAdmissionTests
         Reject(result, "finalizer declaration in T:Probe");
         Assert.Equal(Entry, result.Failure!.RelativePath);
         Assert.Contains(Entry + ":3:", result.Failure.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void SharedFinalizerDeclarationIsRejected()
-    {
-        using var root = new TemporaryRoot();
-        Write(root, Shared, "internal sealed class Shared\n{\n    ~Shared() { }\n}");
-        Write(root, Entry, $"[ScribeSharedSource(\"{Shared}\")] " + Definition(""));
-        var result = ScribeScriptHost.Execute(root.Path, Entry);
-        Reject(result, "finalizer declaration in T:Shared");
-        Assert.Equal(Shared, result.Failure!.RelativePath);
-        Assert.Contains(Shared + ":3:", result.Failure.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -52,22 +39,6 @@ public sealed class ScribeScriptAdmissionTests
         using var root = new TemporaryRoot();
         Write(root, Entry, Definition($"_ = {expression};"));
         Reject(ScribeScriptHost.Execute(root.Path, Entry), id);
-    }
-
-    [Theory]
-    [InlineData("\"scribe\".GetHashCode()", "M:System.String.GetHashCode")]
-    [InlineData("new object().GetHashCode()", "M:System.Object.GetHashCode")]
-    [InlineData("\"I\".ToLower()", "M:System.String.ToLower")]
-    [InlineData("1.ToString()", "M:System.Int32.ToString")]
-    [InlineData("\"scribe\".StartsWith(\"s\")", "M:System.String.StartsWith(System.String)")]
-    public void SharedExternalMemberOverloadsAreRejected(string expression, string id)
-    {
-        using var root = new TemporaryRoot();
-        Write(root, Shared, $"internal static class Shared {{ internal static object Value => {expression}; }}");
-        Write(root, Entry, $"[ScribeSharedSource(\"{Shared}\")] " + Definition("_ = Shared.Value;"));
-        var result = ScribeScriptHost.Execute(root.Path, Entry);
-        Reject(result, id);
-        Assert.Equal(Shared, result.Failure!.RelativePath);
     }
 
     [Fact]
@@ -121,6 +92,33 @@ public sealed class ScribeScriptAdmissionTests
         using var root = new TemporaryRoot();
         Write(root, Entry, Definition("lock (new object()) { }"));
         Reject(ScribeScriptHost.Execute(root.Path, Entry), "Lock");
+    }
+
+    [Theory]
+    [InlineData("System.IO.FileInfo")]
+    [InlineData("System.Collections.Generic.List<System.IO.FileInfo>")]
+    public void IsTypeRejectsUnregisteredTypeOperand(string type)
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition($"object value = \"value\";\n_ = value is\n    {type};"));
+        var result = ScribeScriptHost.Execute(root.Path, Entry);
+        Reject(result, "T:System.IO.FileInfo");
+        Assert.Contains(Entry + ":6: disallowed symbol T:System.IO.FileInfo", result.Failure!.Message,
+            StringComparison.Ordinal);
+    }
+
+    [Theory]
+    [InlineData("new Formula.TypeArrow(Id(\"A\"), Id(\"B\"))", "arrow")]
+    [InlineData("Id(\"A\")", "other")]
+    [InlineData("null", "other")]
+    public void IsTypeAcceptsRegisteredTypeOperandAndExecutes(string expression, string expected)
+    {
+        using var root = new TemporaryRoot();
+        Write(root, Entry, Definition($"Formula? domain = {expression};",
+            "domain is Formula.TypeArrow ? \"arrow\" : \"other\""));
+        var result = ScribeScriptHost.Execute(root.Path, Entry);
+        Assert.True(result.IsSuccess, result.Failure?.ToString());
+        Assert.Equal(expected, result.Definition!.Document.Title.Value);
     }
 
     [Fact]

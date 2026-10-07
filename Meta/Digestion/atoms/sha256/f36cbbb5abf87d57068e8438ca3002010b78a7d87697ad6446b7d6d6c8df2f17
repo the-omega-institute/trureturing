@@ -1,0 +1,12 @@
+**定理 16.1（Closed wrong-target sets and a finite successful layer）。** Let $K$ be a compact topological space, and let $D_r$ be nonempty closed subsets with $D_{r+1}\subseteq D_r$. Let $T\subseteq K$ be the desired target and suppose the wrong-target set $W=K\setminus T$ is closed. If $D_\infty=\bigcap_rD_r\subseteq T$, then $D_R\subseteq T$ for some finite $R$, and for every later index as well. It suffices instead that some $D_{r_0}$ be compact, all later fibers be closed relative to it, and $W\cap D_{r_0}$ be relatively closed.
+
+证明。Use the standard finite-intersection characterization of compactness, the same mechanism used for common actual realizations in [过程几何卷](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md?plain=1#L167), theorem [4.4](https://github.com/the-omega-institute/trureturing/blob/5f1ab91c544d8be1f123accd453787f0819fd47d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_PROCESS_GEOMETRY.md?plain=1#L167)(d). Any finite intersection of the nested $D_r$ is its largest-index member, hence nonempty. Compactness gives nonempty $D_\infty$.
+
+If no finite layer were contained in $T$, then $E_r=D_r\cap W$ would be nonempty closed nested subsets of $K$. They too have the finite-intersection property. Compactness would give a point in
+
+$$
+\bigcap_rE_r=D_\infty\cap W,
+$$
+
+contradicting $D_\infty\subseteq T$. Thus $E_R$ is empty for some $R$, exactly the required certificate; nestedness preserves it later. The relative version is the identical argument inside $D_{r_0}$. The required orientation is closed wrong target, equivalently open desired target. Closedness of $T$ alone cannot replace it. $\square$
+

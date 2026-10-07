@@ -1,0 +1,6 @@
+### 10.6 Uniform escape in terms of the largest allowed original prime
+
+For an integer $Q\geq5$ define
+$$Y_Q=\max\left(5,\left\lfloor\frac{Q+1}{2}\right\rfloor\right),
+ \qquad L(Y)=\operatorname{lcm}(1,2,\ldots,Y).$$
+

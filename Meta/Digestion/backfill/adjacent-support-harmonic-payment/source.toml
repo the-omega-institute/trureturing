@@ -1,0 +1,5 @@
+source_id = "adjacent-support-harmonic-payment"
+path = "docs/develop/theory/ADJACENT_SUPPORT_HARMONIC_PAYMENT.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

@@ -1,0 +1,20 @@
+**Theorem 9.1 (affine graph translation stabilizer).** Let $R$ be any
+commutative ring, let $X\subset R$ be a nonempty finite set, and let
+$a,b\in R$. Define
+
+$$
+  \Gamma_{a,b}(X)=\{(x,ax+b):x\in X\},\qquad
+  \operatorname{Stab}_R(X)=\{h\in R:h+X=X\}.
+$$
+
+Then the translation stabilizer of the graph is
+
+$$
+  \operatorname{Stab}_{R^2}(\Gamma_{a,b}(X))
+    =\{(h,ah):h\in\operatorname{Stab}_R(X)\}.
+$$
+
+The map $h\mapsto(h,ah)$ is an injective additive homomorphism and
+identifies these two stabilizers. There is no domain, prime-modulus,
+unit-slope, nonzero-slope, or three-element assumption.
+

@@ -63,3 +63,106 @@ The record's `source.zip`, despite matching its advertised size and MD5, contain
 The valuation filter can be applied to an actual integer whose FIB source has already supplied its exact valuation. It supplies no new relation between a FIB address and divisibility. Its fixed bound on the joint signed prime quantity does not reach the finer scale needed to exclude the surviving candidates.
 
 The preprint itself explains that its necessary conditions for arbitrary counterexamples are weaker than known conditions on a **least** counterexample, which must be superabundant. Its cited single-prime exchanges already give $v_2\ge43$ and $v_3\ge27$ there; these numbers are not the precise values of the stronger floor-log estimates. Thus the $2^{26}$ filter does not improve exclusion of the classical least-counterexample test set. Nor does it change the [zero self-cutoff deficit at every CA integer](../Arith/alaoglu1944highly.md) or supply the [missing actual-candidate signed estimate](nicolas2025comparison.md). It is a reusable source restriction, not progress from a proportion or finite filter to full RH.
+
+## Variable primitive allowance at surviving selected sources
+
+Keeping the variable in the preprint's primitive bound does not by itself
+reach the complete signed Robin target at the remaining selected sources.
+The following is a source-specific comparison of existing estimates, not
+a new prime-error bound, general RH criterion or originality claim.
+It is a paper derivation without Lean certification.
+
+### The primary allowance before the fixed constant
+
+In the cited version-1 PDF, §4.1, printed p.8, let
+
+$$
+w(t)=\frac{1+\log t}{t^2\log^2t},\qquad
+P_1(x)=\int_x^\infty(t-\psi(t))w(t)\,dt=-I_\psi(x).
+$$
+
+Use $H=3\cdot10^{12}$ for the source's verified height, called $T$
+in the paper, and put
+
+$$
+S=2+\gamma-\log(4\pi)>0,\qquad
+\Sigma'=\frac{2(\log(H/(2\pi))+1)}{\pi H},
+$$
+
+$$
+M(t)=St^{3/2}+\Sigma't^2+t\log(2\pi)+2+\frac{\log2}{t}.
+$$
+
+Lemma 4.4, printed p.9, bounds the absolute primitive error by $M(t)$.
+For zeros above $H$ it uses only $\beta\le1$, replacing
+$t^{\beta+1}$ by $t^2$; the resulting positive allowance is
+$\Sigma't^2$. Lemma 4.5, printed pp.9–10, states, for $1<x\le Y$,
+
+$$
+|P_1(x)|\le U(x,Y):=M(x)w(x)+M(Y)w(Y)
+ +\int_x^Y M(t)|w'(t)|\,dt
+ +\int_Y^\infty\epsilon(t)t w(t)\,dt.
+\tag{V1}
+$$
+
+Here $\epsilon$ is the nonnegative pointwise envelope from the source's
+(P6)(c). Every term of $U$ is nonnegative. The original analytic inputs
+and selected certificate checks are reused as described above; none is
+independently reproved or rerun.
+
+### Compare at the actual Robin source
+
+Keep the conditionally selected least global Robin maximizer $N$ and its
+clock $A=\log N$, $L=\log A$, $T_A=\sqrt A\log A$.
+The [existing selected-source restriction](../Analytic/polak2026finiterobinca.md#combining-finite-zero-verification-with-the-classical-zero-free-region),
+(Z8), places every surviving such source at $A>3\cdot10^{23}$.
+This is a restriction on that selected maximizer, not a least-counterexample
+bound or an all-integer finite verification. The [effective core comparison](nicolas2025comparison.md#an-effective-allowance-stronger-than-the-existing-core-envelope),
+(G7)–(G9), supplies the sufficient signed target
+
+$$
+T_A I_\psi(A)\ge-\mathcal E(L),\qquad
+\mathcal E(L)<2\sqrt2-2.00014<1\quad(L\ge26).
+\tag{V2}
+$$
+
+At this same clock, the first endpoint term in (V1) alone gives, for
+every $Y\ge A$,
+
+$$
+T_A U(A,Y)\ge T_A\Sigma'A^2w(A)
+=\Sigma'\sqrt A\left(1+\frac1{\log A}\right).
+\tag{V3}
+$$
+
+The elementary bounds $e<3$ and $\pi<4$ give
+
+$$
+\frac H{2\pi}>\frac H8=375000000000
+>3^{24}=282429536481>e^{24}.
+$$
+
+Thus $\log(H/(2\pi))>24$ and
+$\Sigma'>50/(12\cdot10^{12})>4\cdot10^{-12}$.
+Also $A>3\cdot10^{23}>(5\cdot10^{11})^2$, so (V3) yields
+
+$$
+\boxed{T_A U(A,Y)>2>\mathcal E(L)\qquad(Y\ge A).}
+\tag{V4}
+$$
+
+Consequently the direct absolute primitive allowance (V1), even with
+its handoff $Y$ optimized and its variable dependence retained, cannot
+pay (V2) at any surviving selected source. This is a lower bound on
+the allowance $U$, not on $|P_1|$ or the actual signed integral:
+(V1) still gives only $T_A I_\psi(A)\ge-T_AU(A,Y)$.
+No adverse sign of the actual error, Robin counterexample or impossibility
+of a sharper method follows.
+
+The obstruction is the positive $\Sigma't^2$ envelope for unverified
+zeros, already present at the starting endpoint. A smaller majorant
+using additional zero information, or a genuinely signed estimate,
+would require a different supplier. The existing reflected-zero and
+zero-free-region estimates in the Polak note remain separate, stronger
+inputs; they are not repeated or added to this allowance. The complete
+same-source signed target and RH remain unproved.

@@ -1,0 +1,20 @@
+**推论58.8.1（根的比较，不转移固定预算）。** 令 $z_\infty\in(0,1)$ 是 $z_\infty^6+z_\infty^{20}=1$ 的唯一根，$\alpha_\infty=-\log_2z_\infty$，则
+
+$$
+z_R\downarrow z_\infty,\qquad
+0<\alpha_R\uparrow\alpha_\infty,\qquad \alpha_R<\alpha_\infty.
+\tag{58.34}
+$$
+
+**引用与参数对应。** [定理56.9][ch58-pub56-9] 已给有限帽原根的严格单调、(58.34)及其唯一极限根；乘开方程另有端点根1，它不满足 (58.29) 的原方程。两种实际整族阈值随 $R$ 严格增加至 $\lambda$ 的比较沿用 [推论56.7][ch58-pub56-7]，原族与锚族阈值分别使用本章 $\Theta_R$ 与 $\widehat\Theta_R$ 的实际整族映射。固定预算的量词边界沿用 [推论56.11][ch58-pub56-11]：在固定 $b<\lambda$ 不能让完整可供应的帽族 $R$ 无限制增大，也不能由 (58.34) 把 $\alpha_\infty$ 转移为这个固定预算的下界。所排除的是无界增大的完整帽族；这不排除受限子族或其他来源的正率。阈值相等时仍须检查合同及归属；逐记录余量不提供对所有 $R$ 共用的统一正余量。
+
+[ch58-pub56-2]: https://github.com/the-omega-institute/trureturing/blob/94fcad88b13f7899547a168f2a3a3655f33d331c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L22413-L22441
+[ch58-pub56-3]: https://github.com/the-omega-institute/trureturing/blob/94fcad88b13f7899547a168f2a3a3655f33d331c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L22442-L22489
+[ch58-pub56-5]: https://github.com/the-omega-institute/trureturing/blob/94fcad88b13f7899547a168f2a3a3655f33d331c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L22514-L22580
+[ch58-pub56-100]: https://github.com/the-omega-institute/trureturing/blob/94fcad88b13f7899547a168f2a3a3655f33d331c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L22738-L22755
+[ch58-pub56-6]: https://github.com/the-omega-institute/trureturing/blob/94fcad88b13f7899547a168f2a3a3655f33d331c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L22581-L22595
+[ch58-pub56-7]: https://github.com/the-omega-institute/trureturing/blob/94fcad88b13f7899547a168f2a3a3655f33d331c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L22596-L22618
+[ch58-pub56-8]: https://github.com/the-omega-institute/trureturing/blob/94fcad88b13f7899547a168f2a3a3655f33d331c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L22619-L22645
+[ch58-pub56-9]: https://github.com/the-omega-institute/trureturing/blob/94fcad88b13f7899547a168f2a3a3655f33d331c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L22646-L22679
+[ch58-pub56-11]: https://github.com/the-omega-institute/trureturing/blob/94fcad88b13f7899547a168f2a3a3655f33d331c/docs/develop/theory/FIB_SOURCE_COMPLETION_DYNAMICS.md#L22720-L22735
+

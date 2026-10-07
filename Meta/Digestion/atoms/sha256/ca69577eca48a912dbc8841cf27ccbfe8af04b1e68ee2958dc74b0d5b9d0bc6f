@@ -1,0 +1,9 @@
+**定理49.7（在 $b_\infty$ 避免 $01$ 当且仅当可行）。** 使用尾 $\xi_H,\xi_L$，允许原基本返回的填充长度各为 $m_i\ge1$。两来源和颜色始终共享同一列表
+
+$$
+(\varepsilon_1,m_1),\ldots,(\varepsilon_N,m_N),\qquad
+\varepsilon_i\in\{0,1\}.
+$$
+
+包括 stems 的完整有限历史在 $b_\infty$ 可实际取得，当且仅当类型词 $\varepsilon_1\cdots\varepsilon_N$ 不含相邻 $01$。可行者全部槽严格可行，失败者有严格超预算的实际槽，均不依赖归属。
+

@@ -1,0 +1,2 @@
+- for every $1\leq i\leq n$ and every $e\in\mathbb N$,
+  $P_n(a)$ implies $P_n(a a_i^e)$;

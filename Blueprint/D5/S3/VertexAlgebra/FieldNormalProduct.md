@@ -12,7 +12,7 @@ Lean statement: `D5/S3/VertexAlgebra/FieldNormalProduct.normalMinusOne_translati
 
 *Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/FieldNormalProduct.normalMinusOne_translation` (`✓ std3`). ∎
 
-*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
+*Citation.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
 
 *Commentary.*
 

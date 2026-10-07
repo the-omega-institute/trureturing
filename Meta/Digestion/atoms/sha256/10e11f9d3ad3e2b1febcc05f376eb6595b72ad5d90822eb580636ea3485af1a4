@@ -1,0 +1,14 @@
+**引理 138.1（隔离一个完整素数幂的实际来源）。** 固定 $H>1$ 的完整因子 $P=p^e\parallel H$，置 $Q=H/P$。对任意观察剩余对 $x=(\bar n,\bar z)\bmod P$，逐坐标取最小非负剩余，定义
+
+$$
+A_x=[C^{-1}x]_P
+ =\bigl([5\bar n-3\bar z]_P,[-3\bar n+2\bar z]_P\bigr),\qquad
+V_{H,P}(x)=Q A_x.
+$$
+
+则 $V_{H,P}(x)\in\{0,\ldots,H-1\}^2$ 是实际来源，而且对每个 $k\ge1$，
+
+$$
+g_H(V_{H,P}(x);k)=Qp^{c_x^{(e)}(k)}.
+$$
+

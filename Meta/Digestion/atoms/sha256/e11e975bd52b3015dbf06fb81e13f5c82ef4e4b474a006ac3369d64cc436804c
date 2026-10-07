@@ -1,0 +1,61 @@
+**命题 23.3（实际 FIB 来源的无共享叶族与同组成严格对照）。** 对每个 $d=3k\ge3$，置
+
+$$
+A=\rho^d(\alpha),\qquad
+B=\rho^{d+2}(\alpha)=\rho^2(A),\qquad
+P_{\mathrm{dis}}=\langle A,B\rangle,\qquad
+Q_{\mathrm{dis}}=\langle B,A\rangle.
+\tag{23.7}
+$$
+
+这两个不同正例的叶地址集合互不相交，叶数均为
+
+$$
+n=F_{d+1}+F_{d+3},\qquad F_0=0,\quad F_1=1,\quad F_{j+2}=F_{j+1}+F_j.
+\tag{23.8}
+$$
+
+在定义 23.1 的全来源合同下，$D_d^+(P_{\mathrm{dis}},Q_{\mathrm{dis}})=n+1$、$R_d^+(P_{\mathrm{dis}},Q_{\mathrm{dis}})=n+\tfrac12$。
+
+特别地，在 $d=3$ 置
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle,\qquad
+C=\langle A,E\rangle,\qquad
+B=\langle C,A\rangle,
+\tag{23.9}
+$$
+
+并另取
+
+$$
+P_{\mathrm{con}}=\langle\langle A,A\rangle,C\rangle,
+\qquad
+Q_{\mathrm{con}}=\langle\langle A,C\rangle,A\rangle.
+\tag{23.10}
+$$
+
+四棵指定树均为实际 $\rho^3$ 像，均有 $c=(4,7)^{\mathsf T}$、$n=11$、$q=2\cdot4+3\cdot7=29$；其中
+
+$$
+\operatorname{out}_{P_{\mathrm{con}}}(\mathtt L\mathtt R\mathtt L\mathtt R)
+=\mathsf{leaf}_\alpha,
+\qquad
+\operatorname{out}_{Q_{\mathrm{con}}}(\mathtt L\mathtt R\mathtt L\mathtt R)
+=\mathsf{leaf}_\beta.
+\tag{23.11}
+$$
+
+因此同一组成和数量读数的两个指定正例对有严格不同的尖锐费用：
+
+$$
+\begin{aligned}
+(D_3^+,R_3^+)(P_{\mathrm{dis}},Q_{\mathrm{dis}})&=(12,\tfrac{23}{2}),\\
+(D_3^+,R_3^+)(P_{\mathrm{con}},Q_{\mathrm{con}})&=(11,11).
+\end{aligned}
+\tag{23.12}
+$$
+
+这些组成相等只比较指定的实际评价对象，不向未知输入域增加组成、数量或大小承诺。
+

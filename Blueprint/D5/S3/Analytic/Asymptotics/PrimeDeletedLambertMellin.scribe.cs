@@ -55,8 +55,8 @@ internal sealed class PrimeDeletedLambertMellinDocument : IScribeDocumentDefinit
             Close);
         Formula rightHandSide = Seq(
             Gamma, Open, w, Close, Sp,
-            Zeta, Open, w, Close, Sp,
-            Zeta, Open, shift, Close, Sp,
+            StrataLint.Scribe.FormulaDsl.Zeta, Open, w, Close, Sp,
+            StrataLint.Scribe.FormulaDsl.Zeta, Open, shift, Close, Sp,
             deletedFactor);
 
         return Disp(new Formula.Aligned([

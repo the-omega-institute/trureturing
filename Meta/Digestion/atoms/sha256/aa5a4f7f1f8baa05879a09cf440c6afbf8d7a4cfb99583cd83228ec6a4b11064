@@ -1,0 +1,63 @@
+**证明。** 先建立实际秩、合并纤维容量与素数预算。每个素数的 $z(p)$ 存在，且 $z(p)\ge3$、$p\mid F_{z(p)}$。若 $S$ 是任意有限素数集合，定义
+
+$$
+I=z(S),\qquad
+c_d=\sum_{\substack{p\in S\\z(p)=d}}\log p.
+$$
+
+则对每个 $d\in I$，$0\le c_d\le d\log2$。此外，对全部实数 $x\ge0$ 有 $\vartheta(x)\le2x\log2$；若 $S\subseteq[Y,bY)$、$Y\ge2$、$b>1$，则
+
+$$
+\sum_{d\in I}c_d=\sum_{p\in S}\log p\le2bY\log2.
+\tag{352.3}
+$$
+
+Fibonacci 模周期与首次整除秩的经典背景见 D. D. Wall，*Fibonacci Series Modulo m*，American Mathematical Monthly **67** (1960)，525–532，doi:10.1080/00029890.1960.11989541。这里所需的存在性也可直接证明：矩阵
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}
+$$
+
+在 $\mathrm{GL}_2(\mathbb F_p)$ 中可逆，该群有限，故某个正整数 $h$ 满足 $M^h=I$。因 $M^h(0,1)^{\mathsf T}=(F_h,F_{h+1})^{\mathsf T}$，有 $p\mid F_h$，故最小正秩存在。$F_1=F_2=1$ 排除秩 $1,2$。
+
+由递推归纳得 $0<F_d<2^d$（$d\ge1$）。固定纤维中各素数互异、两两互素，且均整除 $F_d$，所以
+
+$$
+\prod_{\substack{p\in S\\z(p)=d}}p\mid F_d,
+\qquad
+c_d=\log\prod_{\substack{p\in S\\z(p)=d}}p
+\le\log F_d<d\log2.
+$$
+
+非负性来自 $p\ge2$。
+
+为核对 Chebyshev 常数，对整数 $n$ 作强归纳。$n=0,1,2$ 的界直接成立；偶数 $n\ge4$ 不是素数，故 $\vartheta(n)=\vartheta(n-1)\le2(n-1)\log2$。对奇数 $n=2m+1\ge3$，区间 $(m+1,2m+1]$ 中每个素数均整除 $\binom{2m+1}{m}$。第 $m$、$m+1$ 个二项式系数相等，而所有系数之和为 $2^{2m+1}$，故 $\binom{2m+1}{m}\le2^{2m}$。于是
+
+$$
+\begin{aligned}
+\vartheta(2m+1)
+&\le\vartheta(m+1)+\log\binom{2m+1}{m}\\
+&\le2(m+1)\log2+2m\log2
+=2(2m+1)\log2.
+\end{aligned}
+$$
+
+实数情形由 $\vartheta(x)=\vartheta(\lfloor x\rfloor)$ 得到。按秩分纤维不改变总质量，而壳内素数均不超过 $bY$，故（352.3）成立。
+
+用上述合并质量，取定理352.2中的 $r=3$、$A=\log2$、$N=2bY\log2$。此时 $C=5\log2$，并且
+
+$$
+J=\sum_{d\in z(S)}\frac{c_d}{d}
+=\sum_{p\in S}\frac{\log p}{z(p)}.
+$$
+
+在（352.2）中舍弃非负 $D$，再将 $\log2>0$ 从平方根提出，便得（352.4）。因为 $p\ge Y\ge2$，有 $p\log p\ge Y\log Y>0$，逐项写成
+
+$$
+\frac1{p z(p)}
+=\frac{\log p/z(p)}{p\log p}
+\le\frac{\log p/z(p)}{Y\log Y},
+$$
+
+相加即得（352.5）。全程使用的是同一素数集合与合并纤维，不对纤维中的素数分别假设独立容量。$\square$
+

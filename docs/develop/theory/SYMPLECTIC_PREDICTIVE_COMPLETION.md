@@ -3176,3 +3176,193 @@ $$
 证明。将测试导数的紧支扩充一个有界方向线段，以局部可积函数控制所有小平移的差商，得到配对积分的导数。对真实平移后的紧支测试应用弱等式，标量微积分基本定理与连续线性映射的 Bochner 区间积分交换给出每个测试配对的积分恒等式。紧支测试分离及 $L^2$ 的几乎处处外延性将其提升为 $V_b(t)[f]-[f]=\int_0^t V_b(r)[h]\,dr$。真实平移作用的强连续性和向量微积分基本定理给出正向结论；反向结论通过配对求导及导数唯一性得到。
 
 此结论识别单个任意方向的最大一阶平移域；多模态能量算子的闭图、完成张量域、辛实现、一般正常态的有限二阶矩和 Gibbs 迹仍需各自的实际解析桥梁。
+
+
+## 追加锚（本行以下为增补区）
+
+## 30. 实际 Gaussian 多项式测试族的全性
+
+**定理 30.1（任意正宽度的一维 Gaussian 多项式全性）。** 任取 $b>0$ 与复值函数 $g:\mathbb R\to\mathbb C$，只假设 $g\in L^2(\mathbb R,dx)$。若对每个实系数多项式 $q\in\mathbb R[X]$ 均有
+
+$$
+\int_{\mathbb R}q(x)e^{-b x^2/2}g(x)\,dx=0,
+$$
+
+则 $g=0$ 几乎处处。每个上述配对可积；这里的测度是实际 Lebesgue 体积，Gaussian 权重是测试函数的一部分。物理振子参数 $\hbar,m,\omega>0$ 对应 $b=m\omega/\hbar$，没有对被测试函数附加指数衰减或完备性假设。
+
+证明。令 $h(x)=e^{-b x^2/2}g(x)$。平方完成的 Gaussian 上界说明 $x\mapsto e^{|x|-b x^2/2}$ 属于 $L^2(dx)$；Cauchy–Schwarz 因而使 $e^{|x|}h$ 可积。多项式测试取 $q=X^n$，得到 $h$ 的全部矩为零。分别对实部、虚部的正负部分取密度测度；这些有限测度具有一个正速率的指数矩，且两两全部矩相同。它们的复矩母函数在零点的所有导数相同，解析恒等原则将相等传播到共同竖直带和虚轴；特征函数外延性使正负密度测度相同，从而 $h=0$ 几乎处处。Gaussian 因子处处正，故 $g=0$ 几乎处处。
+
+本结论提供实际 Gaussian 多项式全性的解析构造。归一 Hermite 族、多维乘积与 Euclidean 测度对应、共同 Schwartz 微分作用和最大闭图、完成张量域、辛实现以及 Gibbs 迹仍需相应的实际桥梁。
+
+
+## 追加锚（本行以下为增补区）
+
+## 31. 有限物理乘积 Hermite 族的实际全性
+
+**定理 31.1（任意正参数与零模态的物理 Hermite 全性）。** 任意 $d\in\mathbb N$，在 $E=\mathrm{EuclideanSpace}\;\mathbb R\;(\mathrm{Fin}\,d)$ 上使用实际体积测度。取 $\hbar>0$，并对每个 $j<d$ 取 $m_j,\omega_j>0$。令 $\ell_j=\sqrt{\hbar/(m_j\omega_j)}$，$\mathrm{He}_n$ 为 probabilists Hermite 多项式，且
+
+$$
+\Phi_\alpha(x)=\prod_{j<d}\frac{\mathrm{He}_{\alpha_j}(\sqrt2\,x_j/\ell_j)
+ e^{-(x_j/\ell_j)^2/2}}{\sqrt{\ell_j}\sqrt{\alpha_j!\sqrt\pi}},
+\qquad \alpha:\mathrm{Fin}\,d\to\mathbb N.
+$$
+
+每个 $\Phi_\alpha$ 属于实际复 $L^2(E,dx)$，且对任意 $f\in L^2(E,dx)$，若全部实际配对 $\int_E\Phi_\alpha(x)f(x)\,dx=0$，则 $f=0$。这些实值测试的配对与通常的共轭第一槽内积一致。结论不假设物理 Hermite 完备性，不以任意抽象 Hilbert 基代替所示函数。$d=0$ 时体积为 Dirac 测度，唯一空多重指标的函数为常数 $1$，全性仍成立。
+
+证明。每个一维 Hermite 多项式经非零线性缩放仍有精确次数，故这些多项式生成全部实多项式。定理 30.1 给出每个物理一维族的全性；Gaussian 多项式平方可积性给出实际 $L^2$ 测试类。逐坐标对稠密有限跨度作连续配对，将物理族的消失推广到任意一维 $L^2$ 乘积测试。以有限体积矩形的示性函数测试，得到每个矩形上的积分为零；在有限测度矩形内应用生成乘积可测结构的 π-λ 论证，再沿共同的 σ-有限矩形耗尽推广到任意有限体积可测集，$L^2$ 的积分分离性于是给出零函数。最后通过实际体积保持的 Euclidean/乘积坐标等价返回 $E$。空坐标乘积的测度与测试均直接给出同一结论。
+
+正交归一性的积分证明、实际 Schwartz 微分特征作用和共同图截断、最大弱图与加权系数图、完成张量域、相容辛实现、正常态二阶矩以及 Gibbs 迹均仍需各自的证明；本全性结论没有将这些关系定义为真。
+
+## 32. 有限体积 Fourier 窗口的显式有限秩逼近
+
+**定理 32.1（同一 Fourier 窗口的有序单项式逼近与范数误差）。** 任取 $n\in\mathbb N$，令 $E=\mathbb R^n$，使用实际 Lebesgue 体积测度 $\mu$ 和复 Hilbert 空间 $H=L^2(E,\mu)$。取可测集 $A,B\subseteq E$，满足 $\mu(A),\mu(B)<\infty$，并取 $a,b\ge0$，使 $\|x\|\le a$ 对每个 $x\in A$ 成立，$\|\xi\|\le b$ 对每个 $\xi\in B$ 成立。令 $M_A,M_B$ 为实际示性函数乘法算子，$F$ 为采用相位 $e^{-2\pi i\langle x,\xi\rangle}$ 的实际酉 $L^2$ Fourier 变换，且 $T=M_BFM_A$。
+
+记 $q=-2\pi i$、$R=2\pi ab$。对 $k\in\mathbb N$ 与有序坐标元组 $s:\{0,\ldots,k-1\}\to\{0,\ldots,n-1\}$，定义
+
+$$
+m_s(x)=\prod_{j<k}x_{s(j)},\qquad
+v_{k,s}=\mathbf1_A m_s,\qquad
+w_{k,s}=\frac{q^k}{k!}\mathbf1_B m_s.
+$$
+
+这些代表函数属于实际 $L^2$。对同一组 $v_{k,s},w_{k,s}$，定义
+
+$$
+T_N f=\sum_{k<N}\ \sum_s w_{k,s}\langle v_{k,s},f\rangle,
+\qquad
+P_N(x,\xi)=\sum_{k<N}\frac{(q\langle x,\xi\rangle)^k}{k!}.
+$$
+
+内积对第一槽共轭线性；$m_s$ 为实值，因此 $\langle v_{k,s},f\rangle=\int_A m_s(x)f(x)\,d\mu(x)$。实际算子及其同一截断满足几乎处处代表公式
+
+$$
+(Tf)(\xi)=\mathbf1_B(\xi)\int_A e^{q\langle x,\xi\rangle}f(x)\,d\mu(x),
+\qquad
+(T_Nf)(\xi)=\mathbf1_B(\xi)\int_A P_N(x,\xi)f(x)\,d\mu(x).
+$$
+
+对每个 $N$，上述输入向量与输出向量各自的复线性跨度有限维，$T_N$ 的值域有限维且 $T_N$ 为紧算子。$T_0=0$，并且
+
+$$
+\frac{R}{N+1}\le\frac12
+\quad\Longrightarrow\quad
+\|T-T_N\|\le
+\sqrt{\mu(A)\mu(B)}\,\frac{2R^N}{N!}.
+$$
+
+这个比例条件对充分大的 $N$ 成立，$T_N\to T$ 按算子范数收敛，因而 $T$ 为紧算子。若 $\mu(A)=0$ 或 $\mu(B)=0$，则 $T=0$ 且每个 $T_N=0$。若 $N\ne0$ 且 $n=0$、$a=0$ 或 $b=0$ 中至少一项成立，则 $T=T_N$。零维空间的体积为实际 Dirac 体积；空元组的零次单项式为 $1$，不能从 $n=0$ 推出 $T=0$。
+
+**证明。** 原生 $L^2$ Fourier 变换与可积窗口函数的 Fourier 积分通过 Schwartz 测试配对和几乎处处分离相接。每个窗口单项式在有限体积有界集上平方可积；展开内积的坐标和及其幂，将 $P_N$ 表为有序坐标单项式之和，再将有限和移入积分，得到同一组 rank-one 算子的实际代表公式。对 $x\in A$、$\xi\in B$ 有 $|q\langle x,\xi\rangle|\le R$。复指数级数的余项在所示比例条件下不超过 $2R^N/N!$。对任何满足该代表关系和一致核界 $|K(x,\xi)|\le c$ 的窗口积分算子，输入窗口上的 Cauchy–Schwarz 给出 $\int_A|f|\le\sqrt{\mu(A)}\|f\|_2$；输出窗口上的平方可积控制于是给出算子范数界 $\sqrt{\mu(A)\mu(B)}c$。对实际残差核应用此界便得显式误差。有限输入与输出指标给出有限秩和紧性；阶乘余项趋零及紧算子的范数闭性给出 $T$ 的紧性。零体积情形由同一核界处理；零维或零半径时相位在实际窗口上恒为零，任意非零阶截断与指数核相同。
+
+标量指数余项、Hilbert rank-one 算子、$L^2$ 范数控制及紧性闭性复用既有分析结论。这里组合构造的是同一实际窗口的有序单项式截断和显式算子误差，不主张文献原创性。本结论提供定理 2.4 所需的有限窗口逼近；一般态的有限秩紧性、向量级数表示、位置与动量的一阶域及协方差关系仍需各自的证明。
+
+## 追加锚（本行以下为增补区）
+
+## 33. 有限秩紧性与同一态向量级数
+
+本节的复内积在第一变量共轭线性、第二变量线性。记 $B(H)$ 为复 Hilbert 空间 $H$ 上的实际有界复线性算子代数，$1$ 为恒等算子。对一个指标族，$\operatorname{HasSum}$ 表示有限指标子集上的部分和网收敛到所示值；它不只断言某个排列的部分和收敛。
+
+**定理 33.1（有限秩紧性产生同一态向量级数）。** 任取复 Hilbert 空间 $H$，以及保持正序的复线性映射 $\varphi:B(H)\to\mathbb C$，满足 $\varphi(1)=1$。取任意算子序列 $E_j\in B(H)$，其中每个 $E_j$ 都自伴且幂等，实际像 $E_j(H)$ 为有限维复空间，并且
+
+$$
+\operatorname{Re}\varphi(1-E_j)\longrightarrow 0
+\qquad (j\longrightarrow\infty).
+$$
+
+则存在同一个向量族 $u:\mathbb N\to H$，同时满足
+
+$$
+\operatorname{HasSum}\bigl(k\mapsto\|u_k\|^2,1\bigr)
+\quad\text{以及}\quad
+\forall S\in B(H),\qquad
+\operatorname{HasSum}\bigl(k\mapsto\langle u_k,Su_k\rangle,\varphi(S)\bigr).
+$$
+
+第一个级数取值于 $\mathbb R$，第二个取值于 $\mathbb C$。向量族在量化 $S$ 之前选定，因而表示整个泛函。条件不要求 $H$ 可分、$\varphi$ 正常、$E_j$ 单调或两两交换，也不预先给定态向量族或谱标签。
+
+证明。首先对任意正且归一的泛函 $f$，在其 pre-GNS 空间中令 $q(A)$ 为 $A$ 的类的范数。正性与 GNS 左乘算子界给出
+
+$$
+q(1)=1,\qquad q(AB)\le\|A\|q(B),\qquad
+|f(A^*B)|\le q(A)q(B),\qquad q(A)\le\|A\|.
+$$
+
+这里复用的是 GNS 左乘的有界性与内积 Cauchy–Schwarz。特别地 $|f(A)|\le\|A\|$，所以 $f$ 连续。若 $P$ 是任意实际自伴幂等算子，令 $R=1-P$；则 $q(P)\le1$ 且 $q(R)=\sqrt{\operatorname{Re}f(R)}$。由
+
+$$
+S-PSP=RS+PSR
+$$
+
+以及 $q(S^*P)\le\|S\|$，分别控制两个配对项，得到
+
+$$
+|f(S)-f(PSP)|\le
+2\|S\|\sqrt{\operatorname{Re}f(1-P)}.
+$$
+
+这个估计对每个 $S\in B(H)$ 成立，不要求 $S$ 自伴。
+
+定义实际秩一算子 $R_{x,y}z=\langle y,z\rangle x$。连续的半双线性形式 $(v,u)\mapsto\varphi(R_{u,v})$ 经 Hilbert 空间的 Riesz 表示给出有界算子 $\rho$，满足
+
+$$
+\langle\rho v,u\rangle=\varphi(R_{u,v}),
+\qquad
+\langle y,\rho x\rangle=\varphi(R_{x,y}).
+$$
+
+第二式使用正泛函保持伴随与 $R_{x,y}^*=R_{y,x}$。正性使 $\rho\ge0$。复用正算子的连续函数演算平方根，取 $T=\sqrt\rho$，则 $T$ 自伴且 $T^2=\rho$，从而
+
+$$
+\|Tx\|^2=\operatorname{Re}\varphi(R_{x,x}).
+$$
+
+取任意 Hilbert 基 $(b_i)_{i\in I}$，不假设 $I$ 可数，并令 $v_i=Tb_i$。对每个有限集 $F\subset I$，正交性使 $P_F=\sum_{i\in F}R_{b_i,b_i}$ 成为实际自伴幂等算子。于是
+
+$$
+\sum_{i\in F}\|v_i\|^2
+=\operatorname{Re}\varphi(P_F)\le1,
+$$
+
+因为 $1-P_F\ge0$。非负族的有限和有界判据给出平方范数的可和性及总质量 $m=\sum_{i\in I}\|v_i\|^2\le1$。对任意有界算子 $S$，
+
+$$
+|\langle v_i,Sv_i\rangle|\le\|S\|\|v_i\|^2,
+$$
+
+故 $\psi(S)=\sum_{i\in I}\langle v_i,Sv_i\rangle$ 定义一个正复线性泛函，且 $\psi(1)=m$。此时尚未使用 $m=1$。
+
+Parseval 恒等式与 $T$ 的自伴性给出秩一算子的精确配对方向：
+
+$$
+\begin{aligned}
+\psi(R_{x,y})
+&=\sum_{i\in I}\langle Ty,b_i\rangle\langle b_i,Tx\rangle\\
+&=\langle Ty,Tx\rangle
+=\langle y,\rho x\rangle
+=\varphi(R_{x,y}).
+\end{aligned}
+$$
+
+若 $P$ 的实际像有限维，取该像的正交归一基 $(e_a)$。有限投影展开给出 $P=\sum_aR_{e_a,e_a}$，因此
+
+$$
+PSP=\sum_aR_{PSe_a,e_a},
+\qquad \psi(PSP)=\varphi(PSP).
+$$
+
+像为零时这些和为空，上式仍成立。特别地 $\psi(E_j)=\varphi(E_j)$。由 $\psi(1-E_j)\ge0$ 得 $\operatorname{Re}\varphi(E_j)\le m$；另一方面，归一与所给紧性使 $\operatorname{Re}\varphi(E_j)\to1$。结合 $m\le1$，得到 $m=1$。所以 $\psi$ 也归一，且 $\psi(1-E_j)=\varphi(1-E_j)$。
+
+现在对 $\varphi$ 与 $\psi$ 分别应用前述压缩估计，并使用在 $E_jSE_j$ 上的相等，得到
+
+$$
+|\varphi(S)-\psi(S)|\le
+4\|S\|\sqrt{\operatorname{Re}\varphi(1-E_j)}\longrightarrow0.
+$$
+
+因此 $\psi(S)=\varphi(S)$ 对所有 $S\in B(H)$ 同时成立，原族 $(v_i)$ 的质量级数与每个算子配对级数都有所需的 $\operatorname{HasSum}$ 值。
+
+最后，平方范数可和使 $\{i\in I:v_i\ne0\}$ 可数。将这个集合单射到 $\mathbb N$，在其像上保留原向量，在其余指标填零，得到同一个族 $(u_k)$。可和族的支集限制与单射零延拓保持两个 $\operatorname{HasSum}$：分别用于 $x\mapsto\|x\|^2$ 与每个 $x\mapsto\langle x,Sx\rangle$ 即得结论。有限支集同样适用；不需要把整个 Hilbert 基与 $\mathbb N$ 等同。
+
+GNS、Riesz 表示、正平方根、Hilbert 基、Parseval、有限投影展开与可数支集提供上述各个基础步骤。这里从实际泛函构造 $\rho$ 与向量族，由所给有限秩紧性确定其总质量，再由压缩误差极限确定整个有界算子泛函。本条件定理没有从原定理 2.4 的位置或动量上界推出有限秩紧性，也没有识别一阶算子域、建立协方差或完成原定理 2.4。
+
+## 追加锚（本行以下为增补区）

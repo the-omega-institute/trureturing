@@ -1,0 +1,41 @@
+**定义 69.10（嵌套族与端点）。** 沿用 66.10 的全部非空有限有序满树域 $\mathcal T$、叶替换 $\rho(\alpha)=\beta$、$\rho(\beta)=(\beta,\alpha)$ 及全域 $\rho^3(\mathcal T)$ 成员任务。每个确定性控制器共享与输入无关的完整初始化，只能使用自己取得的真实地址—响应历史，必须在每个输入上正确且有限终止。允许任意有限地址（含根）及自适应、重复请求；原始回复为 $\alpha,\beta,\mathrm{br},\bot$，粗回复把后两者合并为 $\nu$。费用 $C_\pi(U)=|J_\pi(U)|$ 是本次实际请求的不同地址数；同地址真实缓存不另收费，地址长度与内部计算不计价。评价族不提供身份、正性、大小、组成或高度承诺。
+
+置
+
+$$
+E=(\beta,\alpha),\quad A=(E,\beta)=\rho^3\alpha,\quad
+C=(A,E)=\rho^3\beta,\quad B=(C,A)=\rho^3(\beta,\alpha),
+$$
+
+$$
+H_0=C,\qquad H_{r+1}=(A,H_r),\qquad N_r=(H_r,A).
+$$
+
+对 $k\ge1$、$1\le j\le k$，$G_{k,j}$ 是以 $C$ 结尾的 $k$ 槽右梳，第 $j$ 槽为 $B$，其余槽为 $A$。固定
+
+$$
+F_k=\{P_0,X_1,\ldots,X_k,Y_0,\ldots,Y_{k-1}\},\qquad
+P_0=(H_k,B),\quad X_j=(G_{k,j},A),\quad Y_i=(H_i,N_{k-i}).
+$$
+
+这是嵌套收缩与补偿，不是第 66、67 章的独立活动槽族。Scale38 给出的完整前像可直接写为：$h_0=\beta$、$h_{r+1}=(\alpha,h_r)$，$g_{k,j}$ 把 $G_{k,j}$ 中的 $A,B,C$ 换成 $\alpha,(\beta,\alpha),\beta$，于是三类前像为
+
+$$
+(h_k,(\beta,\alpha)),\qquad (g_{k,j},\alpha),\qquad
+(h_i,(h_{k-i},\alpha)).
+$$
+
+它们的叶组成均为 $(k+1,2)$，三步像组成为 $(k+5,2k+8)$。因此
+
+$$
+m=|F_k|=2k+1,\qquad n=|L(U)|=3k+13\quad(U\in F_k).
+$$
+
+复用 Scale38 的成员不同、全为正例及两两非冲突（NC）：共享叶地址的标签相同。对接口 $s$，称 $Z\in F_k$ 是端点目标，若存在上述全域控制器 $\sigma_Z$ 满足
+
+$$
+C_{\sigma_Z}(U)=n+1-\mathbf1_{\{U=Z\}}\quad(U\in F_k).
+$$
+
+记目标集合为 $\mathcal E_s(k)$，确定性极小极大为 $D_s(F_k)=\inf_\pi\max_{U\in F_k}C_\pi(U)$；两者是不同问题。
+

@@ -1,0 +1,25 @@
+**定义 1.1（来源与方向）。** 令 $F_0=0,F_1=1,F_{j+2}=F_{j+1}+F_j$，并固定
+
+$$
+\phi=\frac{1+\sqrt5}{2},\qquad \psi=-\phi^{-1},\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+\alpha=\binom10,\qquad \beta=M\alpha=\binom01.
+$$
+
+外部单位位，即权重 $F_2=1$ 的位，恒为零。来源地址的第 $j$ 位对应权重 $F_{j+3}$，因此地址首位对应 $F_3=2$。本卷的有限来源集合为
+
+$$
+D=\{b\in\{0,1\}^{\mathbb N}:b_jb_{j+1}=0\text{ 对所有 }j\ge0,
+\ b_j=0\text{ 对所有充分大的 }j\}.
+$$
+
+有限词按高位补零识别；不存在独立的长度坐标或 End 读出。全零地址 $0^\infty$ 属于 $D$。词 $u=u_0\cdots u_{k-1}$ 一律按低位到高位书写。其组成、数量与首接缝分别为
+
+$$
+t_u=\sum_{j<k}u_jM^j\alpha,\qquad
+x(b)=\sum_{j\ge0}b_jM^j\alpha,\qquad
+q(a,b)=2a+3b,\qquad s(b)=b_0.
+$$
+
+空词的组成为零。这里的 $q$ 是整数格上的行向量 $(2,3)$，不与来源地址中的字母混同。
+

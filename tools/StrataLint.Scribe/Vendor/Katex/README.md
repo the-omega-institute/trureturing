@@ -17,8 +17,11 @@ Only the parser is exercised: the gate calls `katex.renderToString` with
 `throwOnError` and keeps the verdict, never the HTML. Fonts, stylesheets and the
 browser bundle are therefore not vendored.
 
-The gate itself runs on the change: `make test` routes a Blueprint delta through
-`scribe-content-checks.sh`, which hands `markdown-check` the paths the change touched.
+`scribe-content-checks.sh` invokes `content-check` with an explicit Lean report and an
+paths file (or a manifest of all definitions when none is supplied). The command loads the report once, runs `projections --check`,
+the selected definitions' content predicates, and their Markdown formulas in order,
+and stops at the first failure. The caller supplies a NUL-separated path manifest.
+The paths file selects which definitions execute and which Markdown files are checked.
 
 The bundle is a program this assembly executes, not declarative data, which is why it
 lives inside the project that runs it rather than in a data residence.
@@ -29,6 +32,6 @@ previous one accepted, and those documents are not in the diff that raises it:
 
 ```sh
 find Blueprint -name '*.md' -print0 |
-  dotnet run --project tools/StrataLint.Scribe.Documents --configuration Release -- \
+  dotnet run --project tools/StrataLint.Scribe --configuration Release -- \
     markdown-check --report .lake/build/stratalint/raw-lean-report.json --paths-from -
 ```

@@ -14,7 +14,6 @@
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
         "tools/StrataLint.FileMap/StrataLint.FileMap.csproj",
         "tools/StrataLint.Lean/StrataLint.Lean.csproj",
-        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
         "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
         "tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj"
       ],
@@ -87,27 +86,6 @@
       "global_namespace_exceptions": [
         "tools/StrataLint.Lean/Properties/AssemblyInfo.cs"
       ]
-    },
-    {
-      "path": "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
-      "assembly": "StrataLint.Scribe.Documents",
-      "role": "production",
-      "include": [
-        "tools/StrataLint.Scribe.Documents/**/*.cs",
-        "Blueprint/**/*.scribe.cs"
-      ],
-      "exclude": [],
-      "references": [
-        "tools/StrataLint.Scribe/StrataLint.Scribe.csproj"
-      ],
-      "owner": null,
-      "owned_test_assembly": "StrataLint.Scribe.Documents.Tests",
-      "test_partition": null,
-      "root_namespace": "StrataLint.Scribe.Documents",
-      "namespace_exclude": [
-        "Blueprint/**/*.scribe.cs"
-      ],
-      "global_namespace_exceptions": []
     },
     {
       "path": "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
@@ -299,27 +277,6 @@
       "global_namespace_exceptions": [
         "tools/tests/StrataLint.Lean.Tests/Usings.cs"
       ]
-    },
-    {
-      "path": "tools/tests/StrataLint.Scribe.Documents.Tests/StrataLint.Scribe.Documents.Tests.csproj",
-      "assembly": "StrataLint.Scribe.Documents.Tests",
-      "role": "owned-test",
-      "include": [
-        "tools/tests/StrataLint.Scribe.Documents.Tests/**/*.cs"
-      ],
-      "exclude": [],
-      "references": [
-        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj"
-      ],
-      "owner": {
-        "path": "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
-        "assembly": "StrataLint.Scribe.Documents"
-      },
-      "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.Scribe.Documents.Tests",
-      "root_namespace": "StrataLint.Scribe.Documents.Tests",
-      "namespace_exclude": [],
-      "global_namespace_exceptions": []
     },
     {
       "path": "tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj",
@@ -1105,7 +1062,6 @@
         "tools/StrataLint.Configuration/StrataLint.Configuration.csproj",
         "tools/StrataLint.Engine/StrataLint.Engine.csproj",
         "tools/StrataLint.FileMap/StrataLint.FileMap.csproj",
-        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj",
         "tools/StrataLint.Scribe/StrataLint.Scribe.csproj",
         "tools/TestSupport/StrataLint.ConfigurationTestSupport/StrataLint.ConfigurationTestSupport.csproj",
         "tools/TestSupport/StrataLint.ProcessTestSupport/StrataLint.ProcessTestSupport.csproj",
@@ -1168,28 +1124,6 @@
       "global_namespace_exceptions": [
         "tools/tests/StrataLint.LeanCacheScript.Tests/AssemblyInfo.cs",
         "tools/tests/StrataLint.LeanCacheScript.Tests/Usings.cs"
-      ]
-    },
-    {
-      "path": "tools/tests/StrataLint.RepositoryDigestion.Tests/StrataLint.RepositoryDigestion.Tests.csproj",
-      "assembly": "StrataLint.RepositoryDigestion.Tests",
-      "role": "cross-cutting-test",
-      "include": [
-        "tools/tests/StrataLint.RepositoryDigestion.Tests/**/*.cs"
-      ],
-      "exclude": [],
-      "references": [
-        "tools/StrataLint.Engine/StrataLint.Engine.csproj",
-        "tools/TestSupport/StrataLint.TestSupport/StrataLint.TestSupport.csproj"
-      ],
-      "owner": null,
-      "owned_test_assembly": null,
-      "test_partition": "tools/tests/StrataLint.RepositoryDigestion.Tests",
-      "root_namespace": "StrataLint.RepositoryDigestion.Tests",
-      "namespace_exclude": [],
-      "global_namespace_exceptions": [
-        "tools/tests/StrataLint.RepositoryDigestion.Tests/AssemblyInfo.cs",
-        "tools/tests/StrataLint.RepositoryDigestion.Tests/Usings.cs"
       ]
     },
     {

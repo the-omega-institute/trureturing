@@ -1,0 +1,31 @@
+**命题 58.4（异质原始相关的统一置信失效）。** 取 $n=4$，真实教师 $\theta=(1,3,4)$，竞争者 $\tau=(2,3,4)$，并取
+
+$$
+\mu_1=(\rho,\rho,\rho,\rho,1-4\rho),\qquad
+\mu_2=\mu_3=\mu_4=\mu_*.
+\tag{58.16}
+$$
+
+对全部 $0<\rho\le1/8$，这些都是合法律。固定 $\alpha=a>0$，则
+
+$$
+\begin{aligned}
+D&=(h_1-h_2)\ell_3(1-2h_3\ell_4),\\
+d&=2\rho(1-5\rho+12\rho^2),\\
+\mathbb E(f_\theta^2-f_\tau^2)&=-2\rho+10\rho^2,\\
+\mathbb E[ZD]&=3\alpha\rho^3>0,\\
+\operatorname{Var}(ZD)&=\kappa_\alpha d-9\alpha^2\rho^6.
+\end{aligned}
+\tag{58.17}
+$$
+
+对任意固定 $K>0$，令 $m=\lceil K/(a^2\rho^2)\rceil$，以原始分数 $S^{\rm raw}_\sigma=\sum_sZ_sC_\sigma(X_s)$ 排序。则
+
+$$
+\lim_{\rho\downarrow0}
+P(S^{\rm raw}_\theta<S^{\rm raw}_\tau)=\frac12.
+\tag{58.18}
+$$
+
+故任何全候选原始最大分数规则在这些输入上的失败概率下极限至少为 $1/2$；它不能在统一常数倍的 $a^{-2}\rho^{-2}$ 记录数上达到失败至多 $1/4$。
+

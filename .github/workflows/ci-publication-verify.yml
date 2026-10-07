@@ -43,7 +43,13 @@ jobs:
             lean-toolchain
             tools/Architecture/*
             tools/Makefile
+            tools/StrataLint.Cli/*
+            tools/StrataLint.Configuration/*
             tools/StrataLint.Engine/*
+            tools/StrataLint.FileMap/*
+            tools/StrataLint.Lean/*
+            tools/StrataLint.Scribe/*
+            tools/Trureturing.Truth/*
             tools/StrataLint.TestEvidence/*
             tools/scripts/dotnet-test.sh
             tools/scripts/workflow/*
@@ -107,3 +113,100 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: make lean-cache-to-github-without-mathlib LEAN_CACHE_MODE=verification LEAN_CACHE_SOURCE_REF="$GITHUB_REF" LEAN_CACHE_SOURCE_COMMIT="$GITHUB_SHA"
+
+  scribe:
+    name: verify Scribe publication and fetch
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    permissions:
+      contents: write
+    concurrency:
+      group: scribe-resources-verification
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          persist-credentials: false
+      - id: entry
+        name: Validate candidate, check the input patterns and strip checkout remote
+        env:
+          CI_HIT_PATHS: |
+            .editorconfig
+            .github/workflows/ci-publication-verify.yml
+            .github/workflows/scribe-release-publish.yml
+            .gitignore
+            Blueprint/*.scribe.cs
+            Directory.Build.*
+            Directory.Packages.props
+            Golden/Projection/*.json
+            Makefile
+            Meta/FILEMAP.toml
+            global.json
+            nuget.config
+            tools/Architecture/*
+            tools/StrataLint.Cli/*
+            tools/StrataLint.Configuration/*
+            tools/StrataLint.Engine/*
+            tools/StrataLint.FileMap/*
+            tools/StrataLint.Lean/*
+            tools/StrataLint.Scribe/*
+            tools/Trureturing.Truth/*
+            tools/scripts/scribe-release.sh
+            tools/scripts/workflow/ci-entry.sh
+          CI_PUSH_BEFORE: ${{ github.event.before }}
+        run: bash tools/scripts/workflow/ci-entry.sh
+      - name: Validate entry result
+        env:
+          HIT: ${{ steps.entry.outputs.hit }}
+        run: case "$HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR hit output is '$HIT'" >&2; exit 2 ;; esac
+      - if: steps.entry.outputs.hit == 'true'
+        uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - if: steps.entry.outputs.hit == 'true'
+        name: Publish an isolated verification resource pack
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          make scribe-release-publish PREFIX=scribe-resources-verify TARGET="$GITHUB_SHA" \
+            | tee "$RUNNER_TEMP/scribe-release-publish.log"
+      - if: steps.entry.outputs.hit == 'true'
+        name: Fetch the exact verification digest
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          receipt="$(tail -n 1 "$RUNNER_TEMP/scribe-release-publish.log")"
+          [[ "$receipt" =~ ^SCRIBE_RELEASE\ (published|reused)\ tag=scribe-resources-verify-[0-9a-f]{64}\ digest=([0-9a-f]{64})$ ]] \
+            || { echo 'SCRIBE_RELEASE InvalidPublicationReceipt' >&2; exit 2; }
+          make scribe-release-fetch PREFIX=scribe-resources-verify DIGEST="${BASH_REMATCH[2]}"
+      - if: always() && steps.entry.outputs.hit == 'true'
+        name: Clean the verification release and tag created by this job
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          log="$RUNNER_TEMP/scribe-release-publish.log"
+          [[ -f "$log" ]] || exit 0
+          tag="$(sed -n 's/^SCRIBE_RELEASE draft-requested tag=\(scribe-resources-verify-[0-9a-f]\{64\}\) digest=[0-9a-f]\{64\}$/\1/p' "$log")"
+          [[ -n "$tag" ]] || exit 0
+          [[ "$tag" =~ ^scribe-resources-verify-[0-9a-f]{64}$ ]] \
+            || { echo 'SCRIBE_RELEASE InvalidCleanupTag' >&2; exit 2; }
+          if metadata="$(gh release view "$tag" --repo "$GITHUB_REPOSITORY" --json isDraft 2>&1)"; then
+            gh release delete "$tag" --repo "$GITHUB_REPOSITORY" --yes --cleanup-tag
+          else
+            case "$metadata" in
+              *'release not found'*|*'(HTTP 404)'*) ;;
+              *) printf '%s\n' "$metadata" >&2; exit 1 ;;
+            esac
+            if error="$(gh api --method DELETE "repos/$GITHUB_REPOSITORY/git/refs/tags/$tag" 2>&1)"; then
+              :
+            else
+              case "$error" in
+                *'(HTTP 404)'*) ;;
+                *) printf '%s\n' "$error" >&2; exit 1 ;;
+              esac
+            fi
+          fi

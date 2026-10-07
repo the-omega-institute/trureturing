@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:85032fe71b260c4f1a21a06ba26e3e1e7d6a1fb104c3612ba9b0bae5e3bac57b
+  normalized_sha256: sha256:85032fe71b260c4f1a21a06ba26e3e1e7d6a1fb104c3612ba9b0bae5e3bac57b
+cas_ref: sha256:85032fe71b260c4f1a21a06ba26e3e1e7d6a1fb104c3612ba9b0bae5e3bac57b
+coverage_gids:
+  - gid: D5/S3/Geometry/Hyperideal/LengthGramBody.shared_radial_body
+    target_statement_id: sha256:c42b6326f7730df26df086b2308e3cd4f3fb49b4afbfeb4142465391a82ac85a
+receipts:
+  unresolved_subitems: []

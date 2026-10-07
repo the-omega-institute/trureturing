@@ -1,0 +1,41 @@
+**Definition 1.1 (Setting and transport maps).** Let $V$ be a finite vertex type with decidable
+equality, and let $G$ be an undirected simple graph on $V$. Write $xy$ for the unordered pair
+with endpoints $x,y$, an element of $\operatorname{Sym2} V$. Graph edges have distinct endpoints;
+each undirected edge is counted once. A matching is a finite set of graph edges whose distinct
+members have disjoint endpoint sets. A vertex is saturated when it belongs to a matching edge.
+Write $\operatorname{Max}_K(M)$ when $M$ is a matching of $K$ to which no new edge of $K$ can be
+added while retaining the matching property; this means inclusion-maximal, not maximum size.
+
+Fix $u,v,a\in V$ satisfying
+
+$$
+u\ne v,\qquad \deg_G(u)=\deg_G(v)=1,\qquad G(u,a),\qquad G(v,a),
+$$
+
+where $G(x,y)$ denotes adjacency. Thus $u,v$ are leaves in the original graph, each with unique
+neighbour $a$; simplicity gives $a\ne u,v$. Define the actual subtype and induced graph
+
+$$
+W=\{x:V\mathbin{//}x\ne u\},\qquad H=G[W],\qquad
+H(w,z)\ \Longleftrightarrow\ G(w.\mathrm{val},z.\mathrm{val}).
+$$
+
+Here $W$ consists of a vertex together with its proof of inequality to $u$. Every vertex other
+than $u$ is retained, including isolated vertices. For $x\ne u$, write $\bar x\in W$ for this
+subtype element. Define inclusion $i:W\to V$ and the fold $f:V\to W$ by
+
+$$
+i(\bar x)=x,\qquad
+f(x)=\begin{cases}\bar v&x=u,\\\bar x&x\ne u.\end{cases}
+$$
+
+For any vertex map $g$, $\operatorname{Sym2.map}(g)$ sends $xy$ to the unordered pair $g(x)g(y)$.
+For finite edge sets $M$ on $V$ and $N$ on $W$, define finite-set images
+
+$$
+R(M)=\{\operatorname{Sym2.map}(f)(e):e\in M\},\qquad
+L(N)=\{\operatorname{Sym2.map}(i)(e):e\in N\}.
+$$
+
+Coincident images are counted only once, as in a finite-set image.
+

@@ -1,0 +1,11 @@
+**定理 59.3（异质源全类的尖锐分类分离）。** 对定义59.1的源律类，
+
+$$
+\inf_{\boldsymbol\mu\in\mathcal H_{n,\rho}}
+\min_{\theta\ne\tau}D_\mu(\theta,\tau)
+=\eta_\rho:=4\rho^2(1-2\rho)(1+3\rho).
+\tag{59.10}
+$$
+
+它不同于定理58.2的平方分离 $\gamma_\rho=8\rho^2(1-2\rho)$。
+

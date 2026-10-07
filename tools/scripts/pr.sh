@@ -11,7 +11,7 @@ receipt() { printf '%s\n' "$*" >&2; }
 watch_result() { printf 'PR_WATCH_RESULT pr=%s %s head_sha=%s\n' "$1" "$3" "$2"; }
 positive_integer() { [[ "$1" =~ ^[1-9][0-9]*$ ]]; }
 commit_sha() { [[ "$1" =~ ^[0-9a-f]{40}$ ]]; }
-usage_open() { receipt "usage: pr.sh open --head HEAD --message-file FILE [--auto-merge] [--timeout-seconds S] [--interval-seconds S]"; }
+usage_open() { receipt "usage: pr.sh open --head HEAD --message-file FILE [--auto-merge] [--draft] [--timeout-seconds S] [--interval-seconds S]"; }
 usage_watch() { receipt "usage: pr.sh watch --pr NUMBER --head-sha SHA [--timeout-seconds S] [--interval-seconds S]"; }
 PR_SNAPSHOT_QUERY='query($owner:String!,$repo:String!,$pr:Int!,$head:GitObjectID!) {
   repository(owner:$owner,name:$repo) {
@@ -242,13 +242,14 @@ pr_watch_main() {
   done
 }
 pr_open_main() {
-  local head="" head_sha="" head_owner="" head_ref="" message_file="" title="" body_file="" url number rc=0 auto_merge=0
+  local head="" head_sha="" head_owner="" head_ref="" message_file="" title="" body_file="" url number rc=0 auto_merge=0 draft=0
   local timeout_seconds="$PR_WATCH_TIMEOUT_SECONDS" interval_seconds="$PR_WATCH_INTERVAL_SECONDS"
   while [[ $# -gt 0 ]]; do
     case "$1" in
       --head) [[ $# -ge 2 ]] || { usage_open; return 2; }; head="$2"; shift 2 ;;
       --message-file) [[ $# -ge 2 ]] || { usage_open; return 2; }; message_file="$2"; shift 2 ;;
       --auto-merge) auto_merge=1; shift ;;
+      --draft) draft=1; shift ;;
       --timeout-seconds) [[ $# -ge 2 ]] || { usage_open; return 2; }; timeout_seconds="$2"; shift 2 ;;
       --interval-seconds) [[ $# -ge 2 ]] || { usage_open; return 2; }; interval_seconds="$2"; shift 2 ;;
       *) usage_open; return 2 ;;
@@ -278,11 +279,13 @@ pr_open_main() {
   body_file="$(mktemp "${TMPDIR:-/tmp}/pr-body.XXXXXX")"
   tail -n +2 "$message_file" | sed '1{/^$/d;}' > "$body_file"
   local args=(pr create --repo "$PR_REPO" --base "$PR_BASE" --head "$head" --title "$title" --body-file "$body_file")
+  if (( draft == 1 )); then args+=(--draft); fi
   gh_create "${args[@]}" || rc=$?
   rm -f "$body_file"
   (( rc == 0 )) || return "$rc"
   url="$(printf '%s\n' "$BOUNDED_OUTPUT" | tail -n 1)"; number="${url##*/}"
   if ! positive_integer "$number"; then receipt "pr.sh open: create returned no pull request number"; return 1; fi
+  if (( draft == 1 )); then printf '%s\n' "$number"; return 0; fi
   if (( auto_merge == 1 )); then
     gh_local auto-merge "$PR_OPEN_TIMEOUT_SECONDS" pr merge "$number" --repo "$PR_REPO" --auto --merge --match-head-commit "$head_sha" || return $?
   fi

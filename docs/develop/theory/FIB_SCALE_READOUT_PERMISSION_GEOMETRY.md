@@ -5478,3 +5478,8224 @@ $$
 后一等式给出 $W\in\mathcal I_1$ 的实际完整来源；其 $\langle\beta,\beta\rangle$ 末端樱桃排除 $W\in\mathcal I_2$。两树的组成分别为 $(1,2)^{\mathsf T}$ 与 $(0,3)^{\mathsf T}$，所以这个单叶改标见证属于定义 18.2 的无承诺竞争域，不是定义 17.1 的同组成竞争见证。证毕。
 
 ## 追加锚（本行以下为增补区）
+
+## 19. 纯数量竞争域的尖锐地址证书前沿
+
+**定义 19.1（纯数量有声性与地址成本）。** 沿用定义 16.1、17.1、18.1 的自由有序满二叉树集合 $\mathcal T$、四值原始路径读数、实际像 $\mathcal I_d=\rho^d(\mathcal T)$ 及地址窗口 $\Sigma_{\le h}$。对树 $T$ 写
+
+$$
+m(T)=2\,|A(T)|+3\,|B(T)|,
+\tag{19.1}
+$$
+
+其中 $A(T)$、$B(T)$ 分别是 $\alpha$、$\beta$ 叶地址集。固定 $d=3k$、$k\ge1$，以及已知的正实例 $V\in\mathcal I_d$。令
+
+$$
+A=A(V),\qquad B=B(V),\qquad a=|A|,\qquad b=|B|,
+\qquad D=\operatorname{ht}(V).
+\tag{19.2}
+$$
+
+对有限的 $Q\subseteq\Sigma_{\le h}$，称 $Q$ 对 $(V,h)$ **纯数量有声**，若
+
+$$
+\forall U\in\mathcal T,\qquad
+\left(m(U)=m(V)\ \land\ \forall u\in Q,
+\operatorname{out}_U(u)=\operatorname{out}_V(u)\right)
+\Longrightarrow U\in\mathcal I_d.
+\tag{19.3}
+$$
+
+竞争者遍历全部非空有限自由有序满二叉树，只保留精确数量 $m(U)=m(V)$；不附加组成相等、实际像承诺、叶数预算、前缀闭包或高度上界。查询基数 $|Q|$ 只计不同地址，深度成本只由 $h$ 限制地址长度，不计地址文字长度、定位成本、自适应次序或实际逆执行。定义
+
+$$
+\tau_d^{\,m}(V,h)=
+\min\{|Q|:Q\subseteq\Sigma_{\le h}\text{ 纯数量有声}\},
+\qquad \min\varnothing=+\infty.
+\tag{19.4}
+$$
+
+**定理 19.1（纯数量的尖锐证书前沿与全部极小解）。** 对每个定义 19.1 的 $V$，有 $a\ge1$，并且
+
+$$
+\boxed{
+\tau_d^{\,m}(V,h)=+\infty\qquad(h<D).
+}
+\tag{19.5}
+$$
+
+当 $h\ge D$ 时，若 $a\ge2$，则
+
+$$
+\boxed{
+\tau_d^{\,m}(V,h)=b,
+\qquad\text{唯一达到极小值的集合为 }Q=B.
+}
+\tag{19.6}
+$$
+
+若 $a=1$，则必有
+
+$$
+ d=3,\qquad
+ V=\rho^3(\alpha)=\langle\langle\beta,\alpha\rangle,\beta\rangle,
+ \qquad b=2,
+\tag{19.7}
+$$
+
+并且
+
+$$
+\boxed{
+\tau_d^{\,m}(V,h)=2,
+}
+\tag{19.8}
+$$
+
+恰有三组极小查询，即该树三片叶地址的三组二元子集
+
+$$
+\{\mathtt{LL},\mathtt{LR}\},
+\qquad
+\{\mathtt{LL},\mathtt R\},
+\qquad
+\{\mathtt{LR},\mathtt R\}.
+\tag{19.9}
+$$
+
+**证明。** 先记下三个结构事实。每个非空树的数量至少为 $2$，且数量为 $2$ 的非空树恰为单叶 $\alpha$；这是叶权重为 $2,3$ 与满二叉结构的直接归纳。其次，$d\ge3$ 时每个实际像树的每个分支都有一个 $\beta$ 叶后代：两个基本块 $\rho^d(\alpha)$、$\rho^d(\beta)$ 都含有 $\beta$ 叶，分支递归保持这一性质。最后，$\mathcal I_d\subseteq\mathcal I_2$，故 $V$ 的每个末端樱桃均为 $\langle\beta,\alpha\rangle$，沿用定理 16.1、17.1 的结构桥接与 [RA.2207](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#22-一次全局替换的实际节点单孔边界与来源恢复) 的一步像语法。地址读数的唯一解析与全路径恢复沿用[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)；这里只使用其既有读数接口，不重复解析或恢复证明。
+
+若 $h<D$，取 $V$ 的深度为 $D$ 的叶及其末端樱桃，交换该樱桃的两个叶标签得到 $W$。定理 17.1 已给出
+
+$$
+O_h(W)=O_h(V),\qquad c(W)=c(V),
+\qquad W\notin\mathcal I_d.
+\tag{19.10}
+$$
+
+组成相同遂数量相同，故任意 $Q\subseteq\Sigma_{\le h}$ 都被同一个 $W$ 反例击中，得到（19.5）。
+
+以下设 $h\ge D$。先证明全 $\beta$ 查询的充分性。令 $Q=B$，设 $U$ 匹配所有查询且 $m(U)=m(V)$。$V$ 的每个分支都是某个 $\beta$ 叶地址的严格前缀；因该叶在 $U$ 中仍是 $\mathsf{leaf}_\beta$，这些前缀在 $U$ 中全是分支。于是 $U$ 的骨架只能由在 $V$ 的每个 $\alpha$ 叶槽位处替换非空子树得到：记这些子树为 $S_x$（$x\in A$），则
+
+$$
+ m(U)=3b+\sum_{x\in A}m(S_x),
+ \qquad m(S_x)\ge2.
+\tag{19.11}
+$$
+
+而 $m(V)=3b+2a$。数量相等迫使每个 $m(S_x)=2$，从而每个 $S_x=\alpha$，故 $U=V\in\mathcal I_d$。因此 $B$ 有声，且 $\tau_d^{\,m}(V,h)\le b$。
+
+现在给出任意有声集合的二分支约束。若 $Q$ 同时遗漏 $x\in A$ 与 $y\in B$，就在保持括号形状的条件下把 $x$ 的标签 $\alpha$ 改为 $\beta$，把 $y$ 的标签 $\beta$ 改为 $\alpha$，得到 $W$。交换只改变两个叶端点的结果，故
+
+$$
+ m(W)=m(V),
+\qquad
+\operatorname{out}_W(u)=\operatorname{out}_V(u)
+\quad\bigl(u\notin\{x,y\}\bigr).
+\tag{19.12}
+$$
+
+其中严格后代在两树中都为 $\mathsf{absent}$，并且
+
+$$
+\{u:\operatorname{out}_W(u)\ne\operatorname{out}_V(u)\}=\{x,y\}.
+$$
+
+同时 $W\notin\mathcal I_1$：若新 $\alpha$ 叶在左孩子位置，直接违反一步像语法；若它在右孩子位置，则其左兄弟不能是 $\beta$ 叶，因为 $V$ 的末端樱桃全为 $\langle\beta,\alpha\rangle$，故左兄弟为内节点，而 [RA.2207](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#22-一次全局替换的实际节点单孔边界与来源恢复) 要求像中的 $\alpha$ 右孩子左邻为 $\beta$。所以 $W\notin\mathcal I_d$。这与有声性矛盾，遂有
+
+$$
+Q\supseteq A\quad\text{或}\quad Q\supseteq B.
+\tag{19.13}
+$$
+
+还需处理全 $\alpha$ 分支。设 $Q\supseteq A$，并令 $R=B\setminus Q$ 为遗漏的 $\beta$ 叶地址。若 $x,y\in R$ 为两个不同地址，且 $Q$ 不含 $y\mathtt L$、$y\mathtt R$，就在 $y$ 处把单叶 $\beta$ 换成 $\langle\alpha,\alpha\rangle$，在 $x$ 处把 $\beta$ 改成 $\alpha$，得到 $W$。组成变化为
+
+$$
+\Delta(a,b)=(3,-2),
+\qquad
+\Delta m=2\cdot3+3\cdot(-2)=0,
+\tag{19.14}
+$$
+
+故 $m(W)=m(V)$。唯一改变的地址响应恰为
+
+$$
+\{x,y,y\mathtt L,y\mathtt R\};
+\tag{19.15}
+$$
+
+在 $y$ 的更深后代处，两树均先到达叶而为 $\mathsf{absent}$，在 $x$ 的更深后代也同样如此。新树含有以 $\alpha$ 为左孩子的节点，因而 $W\notin\mathcal I_1$。这与 $Q$ 有声矛盾。因此，只要 $|R|\ge2$，每个遗漏的 $\beta$ 地址 $y$ 都必须在 $Q$ 中带有至少一个立即孩子 $y\mathtt L$ 或 $y\mathtt R$；不同遗漏地址的立即孩子互不相同，从而
+
+$$
+|Q|\ge a+(b-|R|)+|R|=a+b.
+\tag{19.16}
+$$
+
+这一步也说明了为什么只查分支或更深的缺失地址不能替代该立即孩子判别器。
+
+若 $|R|=0$，则 $Q$ 至少含有 $A\cup B$，故 $|Q|\ge a+b$；若 $|R|=1$，则 $|Q|\ge a+b-1$。结合（19.13），当 $a\ge2$ 时，全 $\alpha$ 分支的下界始终严格大于 $b$，而全 $\beta$ 分支的下界为 $b$，且等号只可能是 $Q=B$。连同（19.11），得到（19.6）。
+
+若 $a=1$，写来源组成 $c(T)=(x,y)^{\mathsf T}$，其中 $V=\rho^{3k}(T)$。由[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的组成作用，
+
+$$
+(a,b)^{\mathsf T}=S^k(x,y)^{\mathsf T},
+\qquad
+S=M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix}.
+\tag{19.17}
+$$
+
+若 $k\ge2$，则 $S^k$ 的第一行每个系数至少为 $5$，与 $a=1$ 矛盾；故 $k=1$。此时 $x+2y=1$，所以 $(x,y)=(1,0)$，来源树只能是单叶 $\alpha$。这给出（19.7），其叶地址为
+
+$$
+\mathtt{LL}\mapsto\beta,\qquad
+\mathtt{LR}\mapsto\alpha,\qquad
+\mathtt R\mapsto\beta.
+\tag{19.18}
+$$
+
+全 $\beta$ 集合 $\{\mathtt{LL},\mathtt R\}$ 由（19.11）有声。两个混合二元集合也有声：$\{\mathtt{LL},\mathtt{LR}\}$ 固定左子树，剩余右槽位的数量必须为 $3$；$\{\mathtt{LR},\mathtt R\}$ 固定右叶及左子树的右叶，剩余左槽位的数量必须为 $3$。非空树数量为 $3$ 恰唯一实现为单叶 $\beta$，故两者都迫使 $U=V$。
+
+最后，任意有声集合都满足（19.13）。若它含有全部两个 $\beta$ 地址，则在基数为 $2$ 时恰为 $\{\mathtt{LL},\mathtt R\}$；否则它必须含有唯一的 $\alpha$ 地址。若还遗漏两个 $\beta$ 地址，则（19.16）的立即孩子要求使基数至少为 $3$；故基数为 $2$ 时第二个地址必是一个 $\beta$ 叶，恰得到另外两组（19.9）。所以三组且仅三组达到（19.8）。在这个特例中，旧的单独 $\alpha$ 证书确实失败：令
+
+$$
+U_8=\langle\langle\alpha,\alpha\rangle,
+             \langle\alpha,\alpha\rangle\rangle.
+\tag{19.19}
+$$
+
+则 $m(U_8)=8=m(V)$，$\operatorname{out}_{U_8}(\mathtt{LR})=\mathsf{leaf}_\alpha$ 与 $V$ 相同，但 $U_8\notin\mathcal I_1$，且相对 $V$ 的精确改变支持为
+
+$$
+\{\mathtt{LL},\mathtt R,\mathtt{RL},\mathtt{RR}\}.
+\tag{19.20}
+$$
+
+这完成了全部情形。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 20. 已给阶段标量的尖锐地址证书与全部最优解
+
+**定义 20.1（同源阶段标量与原始地址证书）。** 沿用定义 16.1 的非空有限自由有序满二叉树集合 $\mathcal T$、替换 $\rho$、实际像 $\mathcal I_d=\rho^d(\mathcal T)$、四值原始地址响应 $\operatorname{out}$ 与窗口 $\Sigma_{\le h}$。树替换的组成作用直接取自[规范编译卷命题 4.2](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)，树作用的单射性与实际像边界取自同卷命题 4.3；完整树编码及全路径读数接口取自[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)。固定 $d=3k$、$k\ge1$，以及完整已知的正实例 $V\in\mathcal I_d$，记
+
+$$
+c(V)=(a,b)^{\mathsf T},\qquad
+A=A(V),\qquad B=B(V),\qquad
+|A|=a,\quad |B|=b,\quad D=\operatorname{ht}(V).
+$$
+
+$A,B$ 始终是原始 $V$ 的字面 $\alpha,\beta$ 叶地址。另给已知整数 $L\ge0$，并按定义 1.1 的式（1.2）给出精确标量
+
+$$
+f=F_{3L+3},\qquad g=F_{3L+4},\qquad
+N=n_L(c(V))=fa+gb.
+\tag{20.1}
+$$
+
+$N$ 与地址响应共同来源于同一棵 $V$，作为已给输入；其取得不计入查询成本，也不属于本合同授予的操作。替换像的迭代数 $d$、标量阶段 $L$ 与独立地址深度上限 $h\in\mathbb N_0$ 分别固定，地址查询不转移到 $\rho^{3L}(V)$ 上。
+
+对任意有限集合 $Q\subseteq\Sigma_{\le h}$，称 $Q$ **阶段标量有声**，当且仅当
+
+$$
+\forall U\in\mathcal T,\qquad
+\left(
+n_L(c(U))=N
+\ \land\
+\forall u\in Q,\
+\operatorname{out}_U(u)=\operatorname{out}_V(u)
+\right)
+\Longrightarrow U\in\mathcal I_d.
+\tag{20.2}
+$$
+
+竞争树 $U$ 遍历全部合法非空有限自由有序满二叉树，不附加组成相等、实际像、括号形状、叶数或高度承诺。$Q$ 可以含空地址、原始分支地址及原始缺失地址，不要求前缀闭包。成本只计原始 $V$ 上不同地址的数目 $|Q|$，不计地址描述与定位成本；选址在完整 $V$ 已知后进行。定义
+
+$$
+\tau_{d,L}(V,h)
+=\min\{|Q|:Q\subseteq\Sigma_{\le h}
+\text{ 阶段标量有声}\},
+\qquad \min\varnothing=+\infty.
+\tag{20.3}
+$$
+
+这里的结论只取完整树的实际像成员关系，不取组成祖先许可或逆执行动作。
+
+**定理 20.1（任意已知阶段的精确极小值与全部达到集合）。** 对定义 20.1 的每个 $d,L,V,h$，有 $b>a\ge1$。当 $h<D$ 时不存在阶段标量有声集合。当 $h\ge D$ 时，置
+
+$$
+t=\max(0,b-f+1),\qquad M=\min(b,a+t).
+$$
+
+则
+
+$$
+\boxed{
+\tau_{d,L}(V,h)=
+\begin{cases}
++\infty,&h<D,\\[2pt]
+\min\bigl(b,a+\max(0,b-f+1)\bigr),&h\ge D.
+\end{cases}
+}
+\tag{20.4}
+$$
+
+在 $h\ge D$ 时，全部达到极小值的查询集合恰为
+
+$$
+\boxed{
+\{B\mid b=M\}
+\ \cup\
+\{A\cup C\mid C\subseteq B,\ |C|=t,\ a+t=M\}.
+}
+\tag{20.5}
+$$
+
+第一项在 $b\ne M$ 时为空，第二项在 $a+t\ne M$ 时为空。没有任何最优集合含原始根、分支或缺失地址。利用 $b>a\ge1$，全部阶段区间等价地写为：
+
+- 若 $f\le a$，极小值为 $b$，唯一最优集合为 $B$。
+- 若 $f=a+1$，极小值为 $b$；$B$ 及每个 $A\cup C$、$C\subseteq B$、$|C|=b-a$ 同时最优。
+- 若 $a+1<f\le b$，极小值为 $a+b-f+1$；最优集合恰为所有 $A\cup C$、$C\subseteq B$、$|C|=b-f+1$。
+- 若 $f>b$，极小值为 $a$，唯一最优集合为 $A$。
+
+对固定 $V$ 与 $h\ge D$，极小值随整数 $L$ 增大不增，且最终为 $a$。这一价格关系不使全域 $\mathcal T$ 上单个阶段标量的观察纤维形成嵌套细化链。
+
+**证明。** 式（18.4）直接给出 $b>a\ge1$。以下复用定理 17.1 的精确组成 $A$ 刚性与高度障碍、定理 19.1 证明中的 $\beta$ 骨架及端点换标，并用[运输记忆完成卷命题 22.2 的式（RA.2207）](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#22-一次全局替换的实际节点单孔边界与来源恢复)判定实际一步像。
+
+当 $L=0$ 时，$(f,g)=(2,3)$，定义 20.1 就是定义 19.1 的竞争合同，全部结论直接取自定理 19.1：若 $a\ge2$，则 $a+t=a+b-1>b$，唯一最优集合是 $B$；若 $a=1$，该定理已给出 $V=\rho^3(\alpha)$、$b=2$，于是 $t=1$，最优集合为 $B$ 和两组 $A$ 加一个 $\beta$ 端点，恰为式（19.9）的三组。低于 $D$ 的无证书结论也由该定理直接供应。以下证明其余已知阶段 $L\ge1$。
+
+由定义 1.1 的 Fibonacci 递推，有
+
+$$
+\begin{gathered}
+p=g-f=F_{3L+2}>0,\qquad
+q=2f-g=F_{3L+1}>0,\\
+p+q=f,\qquad 2p+q=g,\qquad f<g<2f.
+\end{gathered}
+\tag{20.6}
+$$
+
+相同标量的组成关系直接由定理 1.4 的式（1.12）供应：若 $n_L(c(U))=N$，则存在 $z\in\mathbb Z$ 使
+
+$$
+c(U)=(a+zg,b-zf)^{\mathsf T}.
+\tag{20.7}
+$$
+
+若 $h<D$，定理 17.1 的高度障碍已经给出合法树 $W\notin\mathcal I_d$，满足 $c(W)=c(V)$ 且 $O_h(W)=O_h(V)$。组成相同也使 $n_L(c(W))=N$，所以任何 $Q\subseteq\Sigma_{\le h}$ 都不能有声。这证明式（20.4）的无穷分支；以下设 $h\ge D$。
+
+先证两个候选上界。定理 19.1 证明式（19.11）所用的 $\beta$ 骨架说明：匹配 $B$ 的树 $U$ 保留 $V$ 的全部分支与 $\beta$ 叶槽位，剩余变化只能是在各原始 $\alpha$ 叶槽位 $x\in A$ 填入非空树 $S_x$。将其中的数量权重换成定义 20.1 的 $f,g$，得到
+
+$$
+n_L(c(U))
+=gb+\sum_{x\in A}n_L(c(S_x))
+\ge gb+fa=N.
+\tag{20.8}
+$$
+
+每个非空树 $S$ 的标量至少为 $f$，且等号只在 $S=\alpha$ 时成立：单叶 $\beta$ 的权重为 $g>f$，任何分支树至少有两片叶，权重至少为 $2f>f$。因此相同标量迫使所有 $S_x=\alpha$，从而 $U=V$。这证明 $B$ 有声，成本为 $b$，只在既有骨架内使用新权重。
+
+再取任意 $C\subseteq B$、$|C|=t$，并令 $Q=A\cup C$。匹配这些字面端点的树 $U$ 至少有 $a$ 片 $\alpha$ 叶和 $t$ 片 $\beta$ 叶。代入式（20.7），由于 $g>0$，得到
+
+$$
+z\ge0,\qquad zf\le b-t=\min(b,f-1)<f.
+\tag{20.9}
+$$
+
+整数 $z$ 只能为零，所以 $c(U)=c(V)$。现在直接应用定理 17.1 证明中全 $A$ 的精确组成刚性，得到 $U=V$。因此每个这样的 $A\cup C$ 有声，成本为 $a+t$。两种候选只使用原始叶地址，已在 $h=D$ 时全部可用，遂有 $\tau_{d,L}(V,h)\le M$。
+
+下界针对任意原始地址集合，不预设查询叶。复用定理 19.1 证明式（19.12）–（19.13）的形状保持端点换标：若 $Q$ 同时遗漏 $x\in A$ 与 $y\in B$，交换它们的标签所得到的树保持整个组成，精确响应改变支持恰为 $\{x,y\}$，并由该证明的（RA.2207）像语法论证排除在 $\mathcal I_1$ 之外。组成保持使每个 $n_L$ 保持，故它仍是式（20.2）的反例。于是任何有声 $Q$ 必满足
+
+$$
+A\subseteq Q\qquad\text{或}\qquad B\subseteq Q.
+\tag{20.10}
+$$
+
+严格后代在这一换标中仍为缺失，因而任意分支与缺失查询都不改变该二分约束。
+
+全 $B$ 分支立即给出 $|Q|\ge b$，等号只在 $Q=B$ 时成立。考虑全 $A$ 分支，令
+
+$$
+R=B\setminus Q,\qquad r=|R|,\qquad
+e=|Q\setminus(A\cup B)|,
+\qquad |Q|=a+b-r+e.
+$$
+
+仅当 $y\mathtt L$ 或 $y\mathtt R$ 至少有一个属于 $Q$ 时，才称遗漏的 $\beta$ 槽位 $y\in R$ 被阻挡。这个条件只看字面立即孩子，不把更深的缺失查询或其前缀视为已查询。
+
+设 $r\ge f$，且至少存在 $p$ 个未被阻挡的槽位。选这些槽位中的 $p$ 个组成 $Y$；再从 $R\setminus Y$ 选 $q$ 个组成 $X$。后一步可行，因为 $r-p\ge f-p=q$。在每个 $y\in Y$ 处把原始 $\beta$ 叶替换成 $\langle\alpha,\alpha\rangle$，在每个 $x\in X$ 处把原始 $\beta$ 叶改成 $\alpha$，得到 $W$。所有操作位置都是原始叶，彼此不可比，所以这些同时替换产生一棵合法非空有限有序满二叉树。组成变化及标量变化为
+
+$$
+c(W)-c(V)
+=(2p+q,-p-q)^{\mathsf T}
+=(g,-f)^{\mathsf T},\qquad
+n_L(c(W))-N=fg-gf=0.
+\tag{20.11}
+$$
+
+这里构造了实际树，而不只是在组成格上取一个核向量。每个嫁接都产生一个 $\alpha$ 左孩子，且 $p>0$ 保证至少有一次嫁接；由（RA.2207），$W\notin\mathcal I_1$，从而 $W\notin\mathcal I_d$。
+
+这棵树在全部有限原始地址上的精确改变支持为
+
+$$
+\{u:\operatorname{out}_W(u)\ne\operatorname{out}_V(u)\}
+=
+X\cup Y\cup
+\{y\mathtt L,y\mathtt R:y\in Y\}.
+\tag{20.12}
+$$
+
+在 $X$ 中只改变端点标签；在 $Y$ 中端点由 $\beta$ 叶变为分支，其两个立即孩子由缺失变为 $\alpha$ 叶。嫁接槽位下相对深度至少为二的所有地址，在两棵树中都为缺失；改标槽位的严格后代也仍为缺失。原始分支、其他叶及其余全部地址都未变。由于 $X\cup Y\subseteq R$，这些端点不在 $Q$ 中；$Y$ 未被阻挡，所以其立即孩子也不在 $Q$ 中。因此 $W$ 匹配全部查询，违反有声性。
+
+故当 $r\ge f$ 时，有声性迫使未被阻挡的遗漏槽位至多有 $p-1$ 个，至少有 $r-p+1$ 个被阻挡。每个被阻挡槽位至少消耗一个属于 $Q$ 的立即孩子地址。这些地址在原始 $V$ 中都为缺失，位于 $A\cup B$ 之外；不同原始叶的孩子互不相同。因此 $e\ge r-p+1$，并有
+
+$$
+|Q|
+\ge a+(b-r)+(r-p+1)
+=a+b-p+1
+=a+b-f+1+q
+=a+t+q
+>a+t\ge M.
+\tag{20.13}
+$$
+
+其中 $r\ge f$ 保证 $b\ge f$，所以 $t=b-f+1$。这只给出该区域内有声集合的必要成本下界；严格的 $q>0$ 已足以排除它们达到极小值。
+
+余下 $r<f$ 时，$r\le\min(b,f-1)$，因而
+
+$$
+|Q|=a+b-r+e
+\ge a+b-\min(b,f-1)
+=a+t.
+\tag{20.14}
+$$
+
+等号当且仅当 $r=\min(b,f-1)$ 且 $e=0$。这等价于 $Q=A\cup C$，其中 $C\subseteq B$、$|C|=t$。在 $b<f$ 时等号给出 $r=b$、$Q=A$；在 $b\ge f$ 时等号给出 $r=f-1$，恰查询 $b-f+1$ 个 $\beta$ 端点。这保留了 $b=f-1$ 时 $t=0$ 与 $b=f$ 时 $t=1$ 的边界。与全 $B$ 分支的等号条件比较，两项上界及全部下界证明了式（20.4）–（20.5）。特别地，达到值 $M$ 时全 $A$ 分支必须满足 $a+t=M$，全 $B$ 分支必须满足 $b=M$；任何额外原始根、分支或缺失查询都会破坏相应等号。
+
+上述支持计算也覆盖深度边界。当 $h=D$ 时，遗漏的深度 $D$ 叶的立即孩子不在查询窗口内，所以该槽位自动未被阻挡。嫁接树可有深度 $D+1$，但竞争树本来没有高度承诺。对于任意更大的 $h$，能阻挡该嫁接的仍只有其两个立即孩子；无论允许的缺失地址有多深，在嫁接下相对深度至少为二的结果仍与原始树相同。因而本证明适用于 $h=D$ 及全部 $h>D$，也不使用前缀闭包。
+
+由 $b>a$，在 $b\ge f$ 的区域比较 $a+t-b=a-f+1$，得到 $f\le a$、$f=a+1$ 及 $a+1<f\le b$ 的三个区间；在 $b<f$ 的区域有 $t=0$，唯一最优集合为 $A$。于是四个区间穷尽全部阈值与并列。固定 $V$ 时，$F_{3L+3}$ 随整数 $L$ 严格增大且无界，$t$ 因而不增，$M$ 也不增，最终 $f>b$、$M=a$。阶段序列可以跳过某个阈值，这不改变逐阶段结论。
+
+全域上的单阶段标量纤维并不因此嵌套。由规范编译卷命题 4.2 的组成实现，$(3,0)$ 与 $(0,2)$ 都有合法满二叉树实现；它们在 $L=0$ 的标量均为 $6$，在 $L=1$ 的标量分别为 $24,26$。反向地，$(13,0)$ 与 $(0,8)$ 也都有合法实现，在 $L=1$ 的标量均为 $104$，在 $L=0$ 的标量分别为 $26,24$。所以 $L=0,1$ 的两种标量观察核互不包含。已知正实例的极小价格不增，是上述证书公式的结论。
+
+例如，取
+
+$$
+T=\langle\langle\alpha,\alpha\rangle,
+         \langle\alpha,\alpha\rangle\rangle,
+\qquad V=\rho^3(T).
+$$
+
+由既有组成作用及 $\rho^3(\alpha)$ 的树形，得到 $(a,b)=(4,8)$、$D=4$。在同一个原始 $V$ 上，对任意 $h\ge4$，$L=0,1,2$ 的极小值分别为 $8,5,4$。$L=1$ 时 $(f,g)=(8,13)$、$N=136$，所有 $A$ 加一个 $\beta$ 端点的集合都最优。单独 $A$ 则不有声：在五个 $\beta$ 槽位嫁接 $\langle\alpha,\alpha\rangle$，把其余三个 $\beta$ 槽位改成 $\alpha$，得到组成 $(17,0)$ 的实际合法树，其标量仍为 $136$，匹配全部 $A$，却因 $\alpha$ 左孩子而不属于 $\mathcal I_1$。这正是式（20.11）–（20.12）在该实例中的嫁接与改标。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 21. 固定标量纤维的未知来源发现与正实例费用耦合
+
+**定义 21.1（未知完整树的固定纤维与发现费用）。** 沿用[定义 16.1](#16-实际树像与尖锐有限路径观察前沿)的非空有限自由有序满二叉树集合 $\mathcal T$、替换 $\rho$、四值原始地址响应 $\operatorname{out}$ 与窗口 $\Sigma_{\le h}$，固定实际像迭代数 $d=3$。树形和叶标记不取任何结合或交换商；组成 $c(U)=(a(U),b(U))^{\mathsf T}$ 只计两类叶。完整来源编码与全部路径恢复的接口取自[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)。给定已知整数 $L\ge0$，按[定义 1.1 的式（1.2）](#1-有限预算的尺度读出与逆许可分离)置
+
+$$
+\begin{gathered}
+f_L=F_{3L+3},\qquad g_L=F_{3L+4},\qquad f=f_L,\quad g=g_L,\\
+m=3f+5g,\qquad
+X_L=\{U\in\mathcal T:n_L(c(U))=m\},\\
+P=\rho^3(\langle\alpha,\beta\rangle),\qquad
+Q=\rho^3(\langle\beta,\alpha\rangle),\qquad
+\iota_3(U)=\mathbf1_{\{U\in\rho^3(\mathcal T)\}}.
+\end{gathered}
+\tag{21.1}
+$$
+
+实际输入是未知的 $U\in X_L$；精确标量 $m$ 与所有地址响应来自这同一棵原始 $U$。候选全集恰为 $X_L$ 中的全部合法树，不另给实际像、组成、形状、叶数或高度承诺。标量的取得及控制器计算在下述收费和授权的观察操作之外；观察只是在原始 $U$ 上选取 $u\in\Sigma_{\le h}$ 并返回 $\operatorname{out}_U(u)$，不改变 $U$，不转移到 $\rho^{3L}(U)$，也不解锁动作。$h\in\mathbb N_0$ 独立固定，不要求所选地址前缀闭合。任务的终端值只取 $\iota_3(U)$；组成祖先许可与实际逆执行各是另一个目标。
+
+确定性策略在每个有限地址—响应记录后，依据已知 $L,m,h$ 与该记录选择下一个合法地址，或输出 $0,1$ 并停止。策略不能读取该记录以外的 $U$ 信息。允许缓存重复地址的响应；若在 $U$ 上有限停止，记其所查询的不同地址集合为 $J_\pi(U)$，费用为
+
+$$
+C_\pi(U)=|J_\pi(U)|.
+\tag{21.2}
+$$
+
+费用不计地址文字长度、定位、标量取得或控制器计算。令 $\Pi_{L,h}$ 为在每棵 $U\in X_L$ 上均有限停止且输出 $\iota_3(U)$ 的确定性策略族，并定义全输入最坏费用
+
+$$
+D_{L,h}=\inf_{\pi\in\Pi_{L,h}}\ \sup_{U\in X_L}C_\pi(U),
+\qquad \inf\varnothing=+\infty.
+\tag{21.3}
+$$
+
+有限候选集与纯观察决策的解释沿用[延拓卷定义 11.2](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md#11-自适应分辨率何时可以停止递归)：停止叶须在全部仍相容的候选上给出同一个任务值。此处证书检查属于控制器计算，所声明的费用只为不同地址数。
+
+**定理 21.1（固定纤维的两个实际正例与确定性发现代价）。** 对定义 21.1 的每个 $L$，整个 $X_L$ 有限，其组成集合恰为
+
+$$
+c(X_L)=
+\begin{cases}
+\{(0,7),(3,5),(6,3),(9,1)\},&L=0,\\[2pt]
+\{(3,5)\},&L\ge1,
+\end{cases}
+\qquad
+X_L\cap\rho^3(\mathcal T)=\{P,Q\},\quad P\ne Q.
+\tag{21.4}
+$$
+
+每组组成的全部自由有序满二叉树实现都保留在 $X_L$ 中。置
+
+$$
+k_L=
+\begin{cases}
+5,&L=0,\\
+3,&L\ge1.
+\end{cases}
+\tag{21.5}
+$$
+
+若 $h<4$，则 $\Pi_{L,h}=\varnothing$。若 $h\ge4$，每个 $\pi\in\Pi_{L,h}$ 都满足
+
+$$
+C_\pi(P)\ge k_L,\qquad C_\pi(Q)\ge k_L,\qquad
+C_\pi(P)+C_\pi(Q)\ge2k_L+1,
+\tag{21.6}
+$$
+
+并有精确的全输入最优值
+
+$$
+\boxed{
+D_{L,h}=
+\begin{cases}
++\infty,&h<4,\\
+6,&h\ge4,\ L=0,\\
+4,&h\ge4,\ L\ge1.
+\end{cases}}
+\tag{21.7}
+$$
+
+对于 $h\ge4$，有两种在整个 $X_L$ 上正确的策略 $\pi_P,\pi_Q$，仅查询深度至多 $4$ 的地址，不重复地址，全部输入的费用均至多 $k_L+1$，而正例费用分别为
+
+$$
+\bigl(C_{\pi_P}(P),C_{\pi_P}(Q)\bigr)=(k_L,k_L+1),\qquad
+\bigl(C_{\pi_Q}(P),C_{\pi_Q}(Q)\bigr)=(k_L+1,k_L).
+\tag{21.8}
+$$
+
+**证明。** 先确定完整竞争域。由[定理 1.4 的整数核式（1.12）](#1-有限预算的尺度读出与逆许可分离)，与组成 $(3,5)$ 具有相同 $n_L$ 的整数点全部形如
+
+$$
+(a(U),b(U))=(3+zg,5-zf),\qquad z\in\mathbb Z.
+\tag{21.9}
+$$
+
+当 $L=0$ 时，$f=2,g=3$；两个坐标非负恰给 $-1\le z\le2$，四个整数值分别产生（21.4）中的四组组成。当 $L\ge1$ 时，$f\ge8,g\ge13$；$z\ge1$ 会使第二坐标为负，$z\le-1$ 会使第一坐标为负，故仅有 $z=0$。[规范编译卷命题 4.2](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)供应每个非零非负组成的树实现；标量只依组成，所以对应组成的全部形状及叶序都属于 $X_L$。上述四组的总叶数依次为 $7,8,9,10$，而 $L\ge1$ 时总叶数为 $8$。满二叉树的分支数为叶数减一，沿用定理 17.1 证明中的既有计数恒等式；母卷定理 9.2 的单射结构码对 $n$ 片叶的长度为 $2n+(n-1)=3n-1$。因此 $X_L$ 的结构码长度至多为 $29$，来自有限二字母词集，整个 $X_L$ 有限。这是由给定标量导出的结论，不是输入的叶数承诺。
+
+现在只在条件 $U\in\rho^3(\mathcal T)$ 下取一个实际前像 $T\in\mathcal T$，$U=\rho^3(T)$。由规范编译卷命题 4.2 的组成作用，
+
+$$
+\begin{gathered}
+c(U)=S\,c(T),\qquad S=M^3=\begin{pmatrix}1&2\\2&3\end{pmatrix},\\
+(f_{L+1},g_{L+1})=(f,g)S=(f+2g,2f+3g),\\
+n_{L+1}(c(T))=n_L(c(U))=3f+5g=f_{L+1}+g_{L+1}.
+\end{gathered}
+\tag{21.10}
+$$
+
+把定理 1.4 的式（1.12）应用于阶段 $L+1$，相同读数的前像组成必为
+
+$$
+c(T)=(1+z g_{L+1},1-z f_{L+1})^{\mathsf T},\qquad z\in\mathbb Z.
+\tag{21.11}
+$$
+
+由于 $f_{L+1}\ge8,g_{L+1}\ge13$，非负性迫使 $z=0$。所以 $T$ 有且仅有两片叶，一片 $\alpha$、一片 $\beta$；自由有序满二叉语法只允许 $\langle\alpha,\beta\rangle$ 和 $\langle\beta,\alpha\rangle$。两者的三步像正是 $P,Q$，组成均为 $S(1,1)^{\mathsf T}=(3,5)^{\mathsf T}$，因而都在 $X_L$ 中。[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的树作用单射性及其迭代直接给出 $P\ne Q$。这证明实际正例分类；式（21.11）只约束已经假设存在的实际前像，不从组成逆运算授予任意树前像。
+
+为使用既有证书供应，写 $A_P=A(P),B_P=B(P),A_Q=A(Q),B_Q=B(Q)$。由替换的字面树形，
+
+$$
+\begin{gathered}
+A_3=\rho^3(\alpha)=\langle\langle\beta,\alpha\rangle,\beta\rangle,\\
+B_3=\rho^3(\beta)=
+\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,
+       \langle\beta,\alpha\rangle\rangle,\\
+P=\langle A_3,B_3\rangle,\qquad Q=\langle B_3,A_3\rangle.
+\end{gathered}
+\tag{21.12}
+$$
+
+它们的所有原始叶地址及标签为
+
+$$
+\begin{aligned}
+A_P&=\{\mathtt{LLR},\mathtt{RLLR},\mathtt{RRR}\},\\
+B_P&=\{\mathtt{LLL},\mathtt{LR},\mathtt{RLLL},\mathtt{RLR},\mathtt{RRL}\},\\
+A_Q&=\{\mathtt{LLLR},\mathtt{LRR},\mathtt{RLR}\},\\
+B_Q&=\{\mathtt{LLLL},\mathtt{LLR},\mathtt{LRL},\mathtt{RLL},\mathtt{RR}\}.
+\end{aligned}
+\tag{21.13}
+$$
+
+在 $A_P,A_Q$ 中的响应是 $\mathsf{leaf}_\alpha$，在 $B_P,B_Q$ 中是 $\mathsf{leaf}_\beta$；各树未列的真叶前缀为分支，越过叶的地址为缺失。特别地，两树高度都是 $4$，并且
+
+$$
+A_P\cap A_Q=\varnothing,\qquad B_P\cap B_Q=\varnothing.
+\tag{21.14}
+$$
+
+对于这两棵已知正例，证书的竞争合同恰是[定义 20.1](#20-已给阶段标量的尖锐地址证书与全部最优解)中标量为 $m$ 的整个 $X_L$，没有删去负例。$L=0$ 时直接复用[定理 19.1](#19-纯数量竞争域的尖锐地址证书前沿)的 $a=3\ge2,b=5$ 情形：最小证书基数是 $5$，唯一最小集合分别是 $B_P,B_Q$。$L\ge1$ 时 $f\ge8>b=5$，直接复用[定理 20.1 的式（20.4）–（20.5）](#20-已给阶段标量的尖锐地址证书与全部最优解)：最小基数是 $3$，唯一最小集合分别是 $A_P,A_Q$。因而对 $h\ge4$，可统一记唯一最小集合为
+
+$$
+K_P=
+\begin{cases}B_P,&L=0,\\A_P,&L\ge1,\end{cases}
+\qquad
+K_Q=
+\begin{cases}B_Q,&L=0,\\A_Q,&L\ge1,\end{cases}
+\qquad |K_P|=|K_Q|=k_L,\quad K_P\cap K_Q=\varnothing.
+\tag{21.15}
+$$
+
+有声性、唯一性与全部地址下界由这些供应直接给出，不另限制证书必须查询叶。
+
+深度障碍同样复用[定理 17.1](#17-已知正实例的地址证书基数与尖锐深度障碍)。在 $P$ 的深度 $3$ 地址 $\mathtt{RLL}$ 处，把最深末端樱桃 $\langle\beta,\alpha\rangle$ 换序，得到该定理的见证 $W$。于是对每个 $h<4$，
+
+$$
+c(W)=c(P)=(3,5)^{\mathsf T},\qquad O_h(W)=O_h(P),\qquad
+W\notin\rho^3(\mathcal T).
+\tag{21.16}
+$$
+
+这里的非像结论使用既有[运输记忆完成卷命题 22.2 的式（RA.2207）](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#22-一次全局替换的实际节点单孔边界与来源恢复)：交换产生 $\alpha$ 左孩子，违反实际一步像语法。组成相同给 $W\in X_L$。任何确定性策略在 $P,W$ 上从相同空记录开始；每次查询的地址和响应相同，下一步也相同。有限停止时两输入输出相同，不能分别等于 $1,0$。故 $h<4$ 时没有全输入正确策略。
+
+以下设 $h\ge4$，取任意 $\pi\in\Pi_{L,h}$。在正例 $V\in\{P,Q\}$ 上，它有限停止并接受。其接受路径的不同地址集合 $J_\pi(V)$ 必是定义 20.1 的有声集合。事实上，若 $U\in X_L$ 匹配该集合上的全部 $V$ 响应，则按路径长度归纳：初始记录相同；若前面的有序记录相同，确定性使下一次所选地址相同，该地址属于 $J_\pi(V)$，故下一次响应也相同；重复地址的缓存响应同样相同。于是 $U$ 跟随整个同一接受路径并在同一处停止。全输入正确性给 $U\in\rho^3(\mathcal T)$，恰为有声性所需的全纤维蕴含。因此（21.15）给 $C_\pi(P),C_\pi(Q)\ge k_L$。
+
+由（21.16），$X_L$ 同时有正例和负例，所以全输入正确的策略不能在空记录上停止，必有一个第一查询地址 $u_0$；它在 $P,Q$ 上相同。若两正例费用同时为 $k_L$，唯一最优证书性迫使
+
+$$
+J_\pi(P)=K_P,\qquad J_\pi(Q)=K_Q.
+$$
+
+但第一地址属于两个接受路径集合，这要求 $u_0\in K_P\cap K_Q$，与（21.15）矛盾。费用是整数且各至少 $k_L$，故费用和至少 $2k_L+1$。全输入最坏费用因包含 $P,Q$，至少为 $\lceil(2k_L+1)/2\rceil=k_L+1$。这证明（21.6）及（21.7）的有限分支下界。
+
+上界由两个总策略给出。对有限叶地址集合 $S$ 与标签 $\ell\in\{\alpha,\beta\}$，在本证明中记 $\mathrm T_\ell(S)$ 为以下有限测试：按 $\mathtt L<\mathtt R$ 的字典序依次查询 $S$；每次只有响应 $\mathsf{leaf}_\ell$ 时继续，其余三个响应各立即输出 $0$ 并停止；全部通过后输出 $1$ 并停止。此记法只描述所列固定纤维的策略分支。下表定义首次查询及其全部四种响应分支，$\mathrm{Reject}$ 表示立即输出 $0$ 并停止。
+
+| 阶段及策略 | 首地址 | $\mathsf{leaf}_\alpha$ | $\mathsf{leaf}_\beta$ | $\mathsf{branch}$ | $\mathsf{absent}$ |
+|---|---|---|---|---|---|
+| $L=0,\ \pi_P$ | $\mathtt{LR}$ | $\mathrm{Reject}$ | $\mathrm T_\beta(B_P\setminus\{\mathtt{LR}\})$ | $\mathrm T_\beta(B_Q)$ | $\mathrm{Reject}$ |
+| $L=0,\ \pi_Q$ | $\mathtt{RR}$ | $\mathrm{Reject}$ | $\mathrm T_\beta(B_Q\setminus\{\mathtt{RR}\})$ | $\mathrm T_\beta(B_P)$ | $\mathrm{Reject}$ |
+| $L\ge1,\ \pi_P$ | $\mathtt{LLR}$ | $\mathrm T_\alpha(A_P\setminus\{\mathtt{LLR}\})$ | $\mathrm T_\alpha(A_Q)$ | $\mathrm{Reject}$ | $\mathrm{Reject}$ |
+| $L\ge1,\ \pi_Q$ | $\mathtt{RLR}$ | $\mathrm T_\alpha(A_Q\setminus\{\mathtt{RLR}\})$ | $\mathrm T_\alpha(A_P)$ | $\mathrm{Reject}$ | $\mathrm{Reject}$ |
+
+由（21.12）–（21.13），首地址在两正例上的实际响应为
+
+$$
+\begin{array}{c|cc}
+ &P&Q\\\hline
+\mathtt{LR}&\mathsf{leaf}_\beta&\mathsf{branch}\\
+\mathtt{RR}&\mathsf{branch}&\mathsf{leaf}_\beta\\
+\mathtt{LLR}&\mathsf{leaf}_\alpha&\mathsf{leaf}_\beta\\
+\mathtt{RLR}&\mathsf{leaf}_\beta&\mathsf{leaf}_\alpha
+\end{array}
+\tag{21.17}
+$$
+
+故 $P,Q$ 在每一种策略下都进入对应的完整证书检查并通过。任意接受路径要么把首次符合预期的叶响应与余下测试合成整个 $K_P$ 或 $K_Q$，要么在另一首次响应后检查整个另一正例证书。供应定理的有声性在整个 $X_L$ 上有效，故每次接受都判定了真实正例。反过来，实际正例只有 $P,Q$，且两者均按（21.17）接受；因此每次拒绝都属于负例。表中每个首次响应以及每次后续响应均有指定的有限终端行为，策略在每棵输入上总定义且有限停止。
+
+每条测试最多含 $k_L$ 个地址；在偏向的正例路径上首次地址已经属于其证书，余下只有 $k_L-1$ 个，而另一正例路径需在首次查询后另查 $k_L$ 个。首次地址不属于另一证书，来自（21.14）；测试内部每个地址只列一次。因此所有输入的费用至多 $k_L+1$，两正例的费用恰为（21.8），没有重复地址。所列地址全部长度至多 $4$，故在每个 $h\ge4$ 可用。最坏费用由不受偏向的那个正例达到，结合下界得到（21.7）。证毕。
+
+**定义 21.2（全纤维逐输入零错误与正例期望费用）。** 固定定义 21.1 的 $L,h$。随机策略使用一个与输入 $U$ 无关的概率空间 $(\Omega,\mathcal A,\mu)$；种子 $\omega$ 固定后得到同一合法接口上的确定性策略 $\pi_\omega$。对于每个有限记录，下一地址或停止值作为 $\omega$ 的函数可测。要求对整个 $X_L$ 的每个输入分别满足
+
+$$
+\forall U\in X_L,\qquad
+\mu(E_U)=1,\qquad
+E_U=\{\omega:\pi_\omega\text{ 在 }U\text{ 上有限停止且输出 }\iota_3(U)\}.
+\tag{21.18}
+$$
+
+这些要求同时包含正确性和有限终止，且包括每个负例；$E_U$ 是可测事件。终止时 $C_\omega(U)$ 仍按（21.2）计不同地址，未终止时约定为 $+\infty$。费用是非负可测随机变量，期望只对这一种子律取。没有给输入 $U$ 赋予概率律，也不允许为不同输入更换种子律。定义
+
+$$
+R^+_{L,h}
+=\inf_{(\Omega,\mathcal A,\mu,\pi_\omega)\ \text{满足（21.18）}}
+\max\{\mathbb E_\mu C_\omega(P),\mathbb E_\mu C_\omega(Q)\},
+\qquad\inf\varnothing=+\infty.
+\tag{21.19}
+$$
+
+这是在全纤维上要求逐输入零错误、仅在两个正例上取期望费用最大值的目标；它与（21.3）的全输入确定性最坏费用分别定义。这里沿用 [Frédéric Magniez、Ashwin Nayak、Miklos Santha、Jonah Sherman、Gábor Tardos、David Xiao，*Improved bounds for the randomized decision tree complexity of recursive majority*，arXiv:1309.7565v1，第2页](https://arxiv.org/pdf/1309.7565v1#page=2) 的分布在确定性决策策略上、固定输入费用取该分布期望的框架。该页的标准零错误 $R_0$ 在整个布尔输入域取最大期望费用；（21.19）只对 $P,Q$ 取最大值，因而不定义此纤维的全输入随机最优费用。本文的四值地址查询也不继承该文布尔函数或递归多数函数的数值界。
+
+**定理 21.2（固定纤维的共同种子事件与尖锐正例期望值）。** 在定义 21.2 的合同下，$h<4$ 时不存在满足（21.18）的随机策略。对于每个 $h\ge4$，任意满足（21.18）的策略都有
+
+$$
+\mathbb E_\mu C_\omega(P)+\mathbb E_\mu C_\omega(Q)\ge2k_L+1.
+\tag{21.20}
+$$
+
+其正例期望费用的精确最优值为
+
+$$
+\boxed{
+R^+_{L,h}=
+\begin{cases}
++\infty,&h<4,\\[2pt]
+11/2,&h\ge4,\ L=0,\\[2pt]
+7/2,&h\ge4,\ L\ge1.
+\end{cases}}
+\tag{21.21}
+$$
+
+有限值由以同一个公平种子在定理 21.1 的 $\pi_P,\pi_Q$ 中择一达到；这个达到策略对每个种子、每个 $U\in X_L$ 都正确并有限终止。
+
+**证明。** 定理 21.1 已证明整个 $X_L$ 有限，因此（21.18）的全部事件，包括每个负例的事件，有一个共同的满概率交集
+
+$$
+E=\bigcap_{U\in X_L}E_U,\qquad\mu(E)=1.
+\tag{21.22}
+$$
+
+对每个固定 $\omega\in E$，$\pi_\omega$ 在整个 $X_L$ 上正确且有限停止，而不仅是在两个正例上正确。在这个固定纤维上，每个输入的执行路径有限，有限多个输入的这些路径的并集也有限；删去不能由 $X_L$ 输入到达的分支，并把已问地址用缓存响应继续，得到有限的纯观察决策树，费用仍计原来的不同地址数。每个终端记录的相容候选全部输出同一个正确任务值，所以它符合[延拓卷定义 11.2](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md#11-自适应分辨率何时可以停止递归)的有限认证模型。此处只把该固定纤维的有限路径放入既有模型，不另建立解析、单射或 Bellman 结论。
+
+若 $h<4$，（21.16）的 $P,W$ 具有相同的全部合法地址响应。对任何同一个固定种子，它们的执行记录逐步相同；若二者都有限终止，则终端值相同，不能同时正确。故 $E_P\cap E_W$ 为空，与（21.18）要求它为满概率事件矛盾。这个障碍针对共享的输入无关种子，允许任意自适应查询及重复缓存。
+
+设 $h\ge4$。对 $E$ 中的每个种子，定理 21.1 的确定性接受路径论证和两个唯一最小证书适用，给
+
+$$
+C_\omega(P)+C_\omega(Q)\ge2k_L+1.
+$$
+
+对共同种子律积分，非负费用的期望可加性给（21.20）；若任一期望为无穷，下界同样成立。于是
+
+$$
+\max\{\mathbb E_\mu C_\omega(P),\mathbb E_\mu C_\omega(Q)\}
+\ge\frac{\mathbb E_\mu C_\omega(P)+\mathbb E_\mu C_\omega(Q)}2
+\ge k_L+\frac12.
+\tag{21.23}
+$$
+
+上界取 $\Omega=\{P\text{ 偏向},Q\text{ 偏向}\}$，两种子各占概率 $1/2$，依次使用 $\pi_P,\pi_Q$。定理 21.1 已给出这两种策略对全纤维的每种输入都正确、有限终止及其完整四响应行为；故此同一分布满足（21.18），而且正确性和有限终止对每个种子都成立。由（21.8），
+
+$$
+\mathbb E_\mu C_\omega(P)
+=\mathbb E_\mu C_\omega(Q)
+=\frac{k_L+(k_L+1)}2
+=k_L+\frac12.
+\tag{21.24}
+$$
+
+这达到（21.23），给出（21.21）。每个种子上的全部输入费用仍分别受 $6$ 或 $4$ 限制，但（21.21）的优化域只取正例期望费用；它不结算全输入随机期望费用的最优值。所有期望都来自策略种子，未引入输入先验。证毕。
+
+## 追加锚（本行以下为增补区）
+## 22. 可数只读记录的有声返回与终止、精确探针许可的分界
+
+**定义 22.1（完整初始化纤维、记录与逐来源部分正确性）。** 在带选择公理的通常集合论中，设 $X\ne\varnothing$ 是实际来源集合，$\tau:X\to\mathbb B$，$\mathbb B=\{0,1\}$。全部 $x\in X$ 位于同一完整可访问初始化 $I_0$ 的纤维；$I_0$ 包含已经取得的联合记录、控制器初态、已知设置、接口与任务承诺。$X$ 保留符合这些条件的全部实际实现，不以期望的答案删去竞争来源。来源在以下操作中不改变。
+
+取可数的完整动作—报告字母表 $\mathcal L$。动作的精确查询地址、参数及有效设置均在记录中；种子生成的参数也不能从记录中略去。每一步的动作菜单是此前可见记录的函数，合法性对匹配该记录的来源相同。实际报告由同一来源、此前记录及所选完整动作确定；执行耗时、费用、许可变化或其他量若可被策略观察，须作为报告保留。无报告的内部状态与种子不要求属于可数字母表，但在固定种子后，内部状态、控制、停止与输出须能由 $I_0$ 和此前完整记录重建，不能另外读取来源。
+
+令 $\mathcal H\subseteq\mathcal L^{<\mathbb N}$ 为该接口的全部实际可行有限记录，包括空记录；可行性只依接口和实际来源域，不依某个选定策略。对 $h\in\mathcal H$ 定义完整实际相容纤维
+
+$$
+\mathcal C(h)=\{x\in X:\text{依次执行 }h\text{ 中的合法动作时，全部报告恰为 }h\text{ 所记}\},
+\qquad \mathcal C(h)\ne\varnothing.
+\tag{22.1}
+$$
+
+终端记录 $(h,y)$ 的有声性定义为 $\tau(\mathcal C(h))=\{y\}$。这是[延拓卷定义 11.1、11.2](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md#11-自适应分辨率何时可以停止递归)在完整实际竞争域上的停止证书合同；这里只使用其纤维判据，不把证书存在当作免费取得或有效认证。静态查询族的判据另由既有 [`QueryFamilyIdentification` 的 `identification_iff_kernel_inclusion`](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/D5/S3/ConceptDynamics/Sufficiency/QueryFamilyIdentification.lean)供应。
+
+随机策略 $\pi$ 使用与输入无关的同一个概率空间 $(\Omega,\mathcal A,\mu)$。固定 $\omega$ 后策略确定，所有实际随机选择均包含在 $\omega$ 中；动作须对每个实际运行合法。若该种子在 $x$ 上生成有限前缀 $h$，则它在每个 $z\in\mathcal C(h)$ 上生成相同前缀；若此处返回 $y$，在这些 $z$ 上也同时返回 $y$。此同种子重放采用[运输记忆完成卷第 6.4 节、式（CE.19）—（CE.21）之后的完整初始化合同](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#64-商观察的全部未来与行为纤维)的下降条件；这里的操作是只读接口，不假设平移群或赋予来源平移权限。
+
+记错误返回与未终止的种子集合为
+
+$$
+\begin{aligned}
+W_x^\pi&=\{\omega:\pi_\omega\text{ 在 }x\text{ 上有限返回 }y\ne\tau(x)\},\\
+N_x^\pi&=\{\omega:\pi_\omega\text{ 在 }x\text{ 上不有限终止}\}.
+\end{aligned}
+\tag{22.2}
+$$
+
+核心正确性合同仅为 $W_x^\pi\in\mathcal A$ 及 $\mu(W_x^\pi)=0$，对每个 $x\in X$ 分别要求。它不包含有限终止，不要求各个历史事件可测，不给 $X$ 指定 $\sigma$ 代数、来源概率律或来源—种子联合可测性。涉及终止概率或费用期望时，另要求相应 $N_x^\pi$ 或费用随机变量可测。携带来源信息的种子不属于此输入无关合同。
+
+在原始有限 FIB 树接口上，可取既有定义 21.1 的 $X_L$、$\tau=\iota_3$ 和原始地址四值响应；这不改变定义 21.2 只在 $P,Q$ 上优化的 $R^+_{L,h}$。完整树码与全部路径响应采用[母卷定理 9.2、9.3](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，实际替换单射性采用[规范编译卷命题 4.3](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)。组成、规范数量地址、原始树响应、组成祖先许可与实际逆执行是不同对象或任务；组成上的代数逆不增加此只读菜单，也不供应实际树前像。
+
+**定理 22.1（策略无关的可数错误见证域与有声有限返回）。** 在定义 22.1 的合同下，存在至多可数的实际来源集合 $D\subseteq X$：为每个 $h\in\mathcal H$ 的每个已出现目标值，至多选取一个实际代表。固定这些选择后，$D$ 只依接口、来源域与任务，不依策略、种子空间或种子律。对每个满足同种子重放的策略，逐种子有精确集合等式
+
+$$
+\bigcup_{x\in X}W_x^\pi=\bigcup_{d\in D}W_d^\pi.
+\tag{22.3}
+$$
+
+因此，对每个满足核心正确性合同的 $\pi$，有可测的共同满测度集合
+
+$$
+G_\pi=\Omega\setminus\bigcup_{d\in D}W_d^\pi,
+\qquad \mu(G_\pi)=1.
+\tag{22.4}
+$$
+
+对每个 $\omega\in G_\pi$ 及每个实际来源，凡有限返回的终端记录均有声。$G_\pi$ 可依赖 $\pi$；本结论不对所有策略再取共同交集，也不要求 $G_\pi$ 上的策略在任何来源上终止。
+
+其不同查询数的推论须满足以下附加合同：动作只读取固定的确定性查询族 $q_a:X\to Y_a$，不改变来源或解锁查询；记录中其他报告均由 $I_0$、精确查询及已获响应决定，不额外区分来源；查询权限与所比较确定性证书完全相同。对实际来源 $x$ 定义
+
+$$
+\begin{aligned}
+k(x)=\inf\bigl\{|J|:\;&J\text{ 是该接口允许的有限查询集合，}\\[-2pt]
+&\forall z\in X,\ (\forall a\in J,\ q_a(z)=q_a(x))\Longrightarrow\tau(z)=\tau(x)\bigr\},
+\qquad \inf\varnothing=+\infty.
+\end{aligned}
+\tag{22.5}
+$$
+
+这里比较的是相同原始来源域、初始化、参数精度、报告和许可上的证书，不是删除竞争来源后的证书。有限返回时以 $J_\pi(\omega,x)$ 表示所问的不同查询集合，重复查询只用缓存；未终止时费用规定为 $+\infty$。若这一费用 $C_\pi(\cdot,x)$ 可测，则对每个 $x$ 有
+
+$$
+C_\pi(\omega,x)\ge k(x)\quad(\omega\in G_\pi),
+\qquad \mathbb E_\mu C_\pi(\cdot,x)\ge k(x).
+\tag{22.6}
+$$
+
+更一般地，若可测非负费用 $K_\pi(\cdot,x)$ 在未终止时为 $+\infty$，而相同费用合同下每个有声有限记录在 $x$ 上均至少花费 $\lambda(x)\in[0,+\infty]$，则 $\mathbb E_\mu K_\pi(\cdot,x)\ge\lambda(x)$，包括 $\lambda(x)=+\infty$。这一积分结论只使用有声返回下界；依赖全输入有限终止的确定性不等式，须另满足其全输入有限终止及其他实际前提才能使用。
+
+若 $X$ 本身有限或可数，且另有每个 $N_x^\pi\in\mathcal A$、$\mu(N_x^\pi)=0$，则
+
+$$
+G_\pi^{\mathrm{tot}}=G_\pi\setminus\bigcup_{x\in X}N_x^\pi,
+\qquad \mu(G_\pi^{\mathrm{tot}})=1,
+\tag{22.7}
+$$
+
+其中每个种子在整个 $X$ 上正确且有限终止。有限 $X$ 时每个这样的种子有一个覆盖该有限域的有限执行步数上界；可数 $X$ 时不保证存在这种统一上界。
+
+对于只把输出 $1$ 解释为接受的合同，同一结论有接受专用子句：只要求每个负来源 $x\in\tau^{-1}(0)$ 的错误接受事件可测且为零测，即可使共同满测度种子上的每个有限接受记录满足 $\mathcal C(h)\subseteq\tau^{-1}(1)$。不要求负返回有声、正来源被接受或任何来源终止。
+
+**证明。** 对每个可行 $h$ 及每个 $b\in\tau(\mathcal C(h))$，在通常的选择集合论中固定
+
+$$
+d_{h,b}\in\mathcal C(h),\qquad \tau(d_{h,b})=b,
+\qquad
+D=\{d_{h,b}:h\in\mathcal H,\ b\in\tau(\mathcal C(h))\}.
+\tag{22.8}
+$$
+
+$\mathcal H$ 可数，每个记录至多选两个代表，故 $D$ 至多可数。此选取是证明中的实际见证，不授予策略发现代表或读取来源的权限。
+
+任取 $\omega\in W_x^\pi$。设它在 $x$ 上返回 $(h,y)$，则 $x\in\mathcal C(h)$，$\tau(x)=1-y$。代表 $d_{h,1-y}$ 已固定；同种子重放给它完全相同的返回 $(h,y)$，故 $\omega\in W_{d_{h,1-y}}^\pi$。这给（22.3）的一向；另一向由 $D\subseteq X$ 即得。等式是集合论等式，没有把可能不可测的逐历史事件拿来求并。其右边是可数个可测零测集的并，标准可数零测并的测度仍为零，得到（22.4），同时得到左边并集的可测性。未使用来源上的积分、逐历史可测性或联合可测性。
+
+取 $\omega\in G_\pi$ 上实际返回的 $(h,y)$。若存在 $z\in\mathcal C(h)$、$\tau(z)\ne y$，同种子重放使它在 $z$ 上错误返回；由（22.3）这使 $\omega\notin G_\pi$，矛盾。于是该记录有声。这一步使用完整相容纤维；只比较已经运行过的来源不足以给该结论。
+
+在（22.5）的静态只读合同下，若 $z$ 匹配 $J_\pi(\omega,x)$ 上的全部响应，则它匹配执行记录的全部原始报告；其余报告不带额外来源信息，菜单也相同，故 $z\in\mathcal C(h)$。有声性因此使 $J_\pi(\omega,x)$ 成为同一合同下的确定性证书，给 $|J_\pi(\omega,x)|\ge k(x)$。未终止的费用为无穷，同样满足下界。可测非负函数的扩展积分在满测度集上保持下界，给（22.6）；即使零测集上的费用为无穷，该零测部分的非负积分仍为零。一般费用 $K_\pi$ 同理；$\lambda(x)=+\infty$ 时，每个有声有限返回的费用与未终止费用都为 $+\infty$，故费用几乎处处无穷。证书取得或验证若另有收费动作、额外报告或来源相关许可，必须把它们放入新的费用及接口合同，不能沿用（22.5）未计入的资源。
+
+静态证书的使用只取其已知纤维含义。有限布尔坐标域上的标准先例是 [Chandrima Kayal、Sophie Laplante、Émile Larroque、Krišjānis Prūsis、Jevgenijs Vihrovs，*Certification complexity of Boolean functions*，arXiv:2609.26757v1，定义 1—2、定理 3(1)](https://arxiv.org/pdf/2609.26757v1#page=3)：该文的已知输入认证与证书复杂度等式属于有限布尔查询域。这里（22.3）的任意实际来源域及完整自适应报告合同由上述代表构造承担，不由该有限域等式扩张而来。
+
+若另满足终止假设，有限或可数个 $N_x^\pi$ 的并可测且零测，得（22.7）。有限 $X$ 上取各来源有限执行步数的最大值即得该种子的有限上界；此上界未被要求对种子一致。可数域上取来源 $x^{(m)}=0^{m-1}10^\infty$，$m\ge1$，只读二元档案坐标，任务恒为 $0$。确定性策略按顺序查询到第一个 $1$ 后返回 $0$，在每个来源上有限且正确，终止步数恰为 $m$，却无有限的全来源上界。该例满足相同初始化和可数记录合同。
+
+接受专用子句只为每个 $h$ 中存在的负来源固定 $d_{h,0}$。若某种子在某负来源上接受，同种子重放在相应代表上也接受，故全部负来源错误接受事件的并等于这些代表事件的可数并。去除此零测并后，任何实际接受记录若含相容负来源便有相同矛盾。它没有给拒绝记录或终止添加结论。证毕。
+
+**定义 22.2（另行声明的无限二元档案及五窗嵌入）。** 取实际来源域 $X_\infty=\mathbb B^{\mathbb N_{\ge1}}$，$\tau(x)=x_1$，共同初始化只含这一域、任务及接口声明，不含 $x$ 的坐标或有限支持承诺。动作 $q_n$ 只读原始 $x_n$，$n\ge1$，所有坐标始终可用；费用计所问的不同坐标，未终止时为 $+\infty$。种子域 $\Omega_\infty=\mathbb B^{\mathbb N_{\ge1}}$ 配备乘积 $\sigma$ 代数和独立公平二元乘积概率 $\mu_\infty$，与来源无关。来源域无需概率律。
+
+相应的另一实际对象域可明确声明为无限低到高窗口流
+
+$$
+\varepsilon=0,\qquad
+w_{n-1}(x)=
+\begin{cases}
+\mathsf E=000=\mathrm{null},&x_n=0,\\
+\mathsf B=010=[3],&x_n=1.
+\end{cases}
+\tag{22.9}
+$$
+
+这里 $[3]$ 是窗口模式名，不是窗口在任意位置的整数权重。只读第 $n-1$ 个窗口并区分这两个模式对应 $q_n$；费用仍为一次坐标查询。模式、单位位与有限接缝采用[规范编译卷定义 13.2、命题 13.4](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/docs/develop/theory/FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#13-canonical-position-temporal-iteration-and-modulus-precision)。此域中的对象是已声明的无限流，不要求最终为零，不含 $\mathrm{End}$ 查询或终端证书；$\mathsf E$ 消耗三个位置而不终止。有限自然数编码、完整有限树、组成祖先许可及物理实现都未被声明为该无限流的来源。
+
+**定理 22.2（共同有声性不推出共同终止）。** 在定义 22.2 的二元档案域，考虑以下同种子策略：依次查询 $q_1,q_2,\ldots$，在第一次 $x_n\ne\omega_n$ 时停止并返回已经观察到的 $x_1$。令
+
+$$
+T_x(\omega)=\inf\{n\ge1:x_n\ne\omega_n\},\qquad \inf\varnothing=+\infty.
+\tag{22.10}
+$$
+
+每个实际 $x$ 的 $T_x$ 和费用可测，且对每个整数 $n\ge0$，
+
+$$
+\mu_\infty(T_x>n)=2^{-n},\qquad
+\mu_\infty(T_x<\infty)=1,\qquad
+\mathbb E_{\mu_\infty}C_x=2.
+\tag{22.11}
+$$
+
+每个种子上的每个有限返回记录均有声，然而
+
+$$
+\forall\omega\in\Omega_\infty\ \exists x\in X_\infty,\quad T_x(\omega)=+\infty,
+\qquad
+\bigcap_{x\in X_\infty}\{\omega:T_x(\omega)<\infty\}=\varnothing.
+\tag{22.12}
+$$
+
+相同结论在（22.9）明确声明的无限窗口流接口上成立。（22.11）是此特定策略的期望费用，不是最优费用断言；一次确定性查询 $q_1$ 已可返回目标，费用为 $1$。
+
+**证明。** $\{T_x>n\}$ 正是前 $n$ 个种子坐标与实际 $x$ 匹配的柱集；$n=0$ 时为全空间。各柱集可测，独立公平坐标给测度 $2^{-n}$。$\{T_x=\infty\}$ 是这些递减柱集的交，即单点 $\{x\}$，其测度为 $\lim_n2^{-n}=0$。同时 $\{T_x=n\}$ 是两个可测柱集之差，故 $T_x$ 可测，且几乎处处有限。查询从 $1$ 开始且不重复，费用等于 $T_x$，包含无穷的情形。非负整数值变量的尾和公式给
+
+$$
+\mathbb E_{\mu_\infty}C_x
+=\sum_{n=0}^{\infty}\mu_\infty(T_x>n)
+=\sum_{n=0}^{\infty}2^{-n}=2.
+\tag{22.13}
+$$
+
+每条有限返回记录包含真实 $x_1$；全部相容档案的第一位等于这一报告，所以返回对整个纤维有声，而不仅对该次运行正确。特别地，定义 22.1 的全部错误返回事件为空，共同部分正确性集合可取整个种子域。另一方面，对任意声明种子 $\omega$，实际来源 $x=\omega$ 与它每一位相同，永不触发停止，给（22.12）。于是逐来源零测的未终止事件在这个不可数域上的并是整个种子空间；并没有与（22.3）关于错误返回的可数见证关系冲突。
+
+对窗口流，$\mathsf E$ 与 $\mathsf B$ 的首末位都为零，内部无相邻的两个 $1$；$\varepsilon=0$，故每个有限首窗接缝及窗口间接缝都满足定义 13.2 的乘积为零条件。读取模式逐坐标返回同一二元值，完整相容记录和费用随（22.9）保持，故档案证明原样适用于这个已声明流域。命题 13.4 的 $\mathrm{null}\ne\mathrm{End}$ 防止把匹配到空窗误作终止；没有由合法有限接缝推出整条流有有限支持或有限树实现。确定性读 $q_1$ 返回 $x_1$ 的策略直接给费用 $1$，故期望 $2$ 的扫描不是优化结论。证毕。
+
+**定义 22.3（精确实参数探针及两种逐种子合同）。** 另取实际来源域
+
+$$
+X_{\mathrm{probe}}=[0,1]\times\mathbb B,
+\qquad \tau(x,b)=b,
+\qquad O_a(x,b)=b\mathbin\oplus\mathbf1_{\{a=x\}},\quad a\in[0,1],
+\tag{22.14}
+$$
+
+其中 $\oplus$ 是二元异或。共同初始化只给出此来源域、任务和探针规则，不给任何 $x$、$b$、身份或类别信息。每个实参数 $a$ 始终可选，查询只读 $O_a$，不改变来源、不解锁动作；动作和记录保留 $a$ 的精确值，不把实参数编码的位长算入费用。有限记录 $h=((a_1,r_1),\ldots,(a_m,r_m))$ 的完整相容纤维为
+
+$$
+\mathcal C_{\mathrm{probe}}(h)
+=\{(z,c)\in[0,1]\times\mathbb B:
+\forall i\le m,\ c\oplus\mathbf1_{\{a_i=z\}}=r_i\}.
+\tag{22.15}
+$$
+
+每次有限终止的费用为不同精确参数的个数；任意未终止运行的费用为 $+\infty$，即使它只重复有限个参数或在内部计算中停滞。控制器的纯计算、随机种子取得、相等判断及比较不收费。本接口授予理想精确实参数查询，不声明这些操作在有限表示、图灵机或物理装置上的实现。
+
+有限记录空间取各 $([0,1]\times\mathbb B)^m$ 的不交并及其 Borel 结构。策略允许自适应与重复参数；在给定种子和记录后决定下一个精确参数、有限返回值或不再返回的内部停滞，控制映射须对种子—记录乘积可测。采用同一输入无关概率空间 $(\Omega,\mathcal A,\mu)$，相同种子与相同记录的内部状态和决定相同，不能隐读来源。来源域在此另配积 Borel 结构，以核对响应的联合可测性，仍不给来源概率律。要求每个来源上的终止、错误事件和扩展非负费用可测。
+
+令 $\Pi_{\mathrm{det}}$ 为在整个 $X_{\mathrm{probe}}$ 上正确且有限终止的确定性策略族；令 $\Pi_{\mathrm w}$ 为对每个固定来源分别以概率一正确且有限终止的策略族；令 $\Pi_{\mathrm s}$ 为对每个声明种子、每个实际来源都正确且有限终止的策略族。强合同中的“每个种子”包含零测种子，不仅指概率一事件。定义
+
+$$
+\begin{aligned}
+D_{\mathrm{probe}}&=\inf_{\pi\in\Pi_{\mathrm{det}}}\ \sup_{(x,b)\in X_{\mathrm{probe}}}C_\pi(x,b),\\
+R_{\mathrm w}&=\inf_{\pi\in\Pi_{\mathrm w}}\ \sup_{(x,b)\in X_{\mathrm{probe}}}\mathbb E_\mu C_\pi(\omega;x,b),\\
+R_{\mathrm s}&=\inf_{\pi\in\Pi_{\mathrm s}}\ \sup_{(x,b)\in X_{\mathrm{probe}}}\mathbb E_\mu C_\pi(\omega;x,b).
+\end{aligned}
+\tag{22.16}
+$$
+
+每个期望只对各策略自己的共同种子律取，$\inf\varnothing=+\infty$。它们在全来源域取上确界，与定义 21.2 的正例专用目标不同。固定输入的查询期望惯例采用 [Magniez、Nayak、Santha、Sherman、Tardos、Xiao，*Improved bounds for the randomized decision tree complexity of recursive majority*，arXiv:1309.7565v1，第 2 页](https://arxiv.org/pdf/1309.7565v1#page=2)；该页的输入为有限布尔词，不能将其有限域合同无条件移到此实参数域。
+
+弱合同只要求可测性及逐来源概率一性质，不等于在全输入正确策略上取分布。它也不提供可计算表示或失败识别： [Vasco Brattka、Guido Gherardi、Rupert Hölzl，*Probabilistic Computability and Choice*，arXiv:1312.7305v3，定义 3.1](https://arxiv.org/pdf/1312.7305v3#page=13)的 Las Vegas 可计算性在表示空间上要求可计算 $F_1,F_2$，后者在每个输入表示名及建议上定义，用 Sierpiński 输出识别失败，且前者在成功建议上正确。这些额外合同未包含在（22.14）—（22.16）中，不能仅由弱合同赋予无条件的标准 Las Vegas 算法称谓。
+
+**定理 22.3（证书、确定性发现及两种随机合同的锐值）。** 在定义 22.3 的理想探针接口上，每个实际来源的最小有声证书均需且只需 $2$ 个不同精确参数；而全输入优化值分别为
+
+$$
+\boxed{D_{\mathrm{probe}}=3,\qquad R_{\mathrm w}=1,\qquad R_{\mathrm s}=2.}
+\tag{22.17}
+$$
+
+这些下界对自适应、重复参数及允许零查询返回的策略均成立。弱值由在 $[0,1]$ 上均匀抽取 $u$，只查询 $O_u$ 并返回该响应达到：每个 $(x,b)$ 的错误种子集恰为单点 $\{x\}$，但每个声明种子都有错误来源。
+
+强值可用 $u$ 在 $[0,1)$ 上的均匀律达到。先查询
+
+$$
+a=u,\qquad
+c=s(u)=
+\begin{cases}
+u+\tfrac12,&0\le u<\tfrac12,\\
+u-\tfrac12,&\tfrac12\le u<1.
+\end{cases}
+\tag{22.18}
+$$
+
+若两个响应相等则返回其值；若不同则查询常数参数 $1$ 并返回第三个响应。每个声明种子在每个来源上正确并有限终止，且
+
+$$
+\forall(x,b),\quad \mathbb E C(\cdot;x,b)=2,
+\qquad
+\forall u\in[0,1),\quad \sup_{(x,b)}C(u;x,b)=3.
+\tag{22.19}
+$$
+
+响应、两种达到策略的控制、错误和终止事件以及费用均按定义 22.3 可测。
+
+**证明。** 先在同一个实际域上确定证书。空记录的纤维含两种目标。只问一个不同参数 $a$，即使重复任意有限次，得到的唯一响应 $r$ 仍同时匹配来源
+
+$$
+(a,1-r),\qquad (z,r)\quad(z\in[0,1]\setminus\{a\}).
+\tag{22.20}
+$$
+
+它们的目标相反，所以零或一个不同参数不能有声。对任意给定来源 $(x,b)$，选两个互异参数 $a,c\ne x$；这种选择始终存在，包括 $x=0,1$。两个响应都为 $b$。任意匹配来源 $(z,d)$ 若有 $d=1-b$，须同时满足 $z=a$ 和 $z=c$ 才能将两个响应都翻成 $b$，与 $a\ne c$ 矛盾。因此完整纤维的目标恰为 $b$，得到每个来源的最小证书数 $2$。此存在证书的参数选择可依赖已经指定的来源；它不等于未知来源下的两查询发现策略。
+
+现在取任意全输入正确且有限终止的确定性策略。它不能零查询返回，由（22.20）也不能在只问过一个不同参数时返回。其首个参数记为 $a$，固定首响应 $r\in\mathbb B$。在实际来源 $(a,1-r)$ 上首响应就是 $r$；有限终止及上述证书障碍迫使它在有限时刻第一次查询不同于 $a$ 的参数 $c$。截至这一时刻，控制只依由重复 $a$ 形成的同一记录，故 $c$ 也在另一实际来源 $(c,r)$ 上被同样选取。两来源截至第二个不同参数的全部有序响应一致，最后这次的响应都为 $1-r$：前者在 $a$ 翻转、在 $c$ 不翻转，后者在 $a$ 不翻转、在 $c$ 翻转。
+
+这两个相容来源的目标相反。以后只重复 $a,c$ 也保持相同记录，不能产生正确停止叶；有限终止要求沿这条共同前缀询问第三个不同参数。因此该策略的全输入最坏费用至少为 $3$。这同时处理自适应第二参数、任意重复查询及内部停滞；全输入总性排除在该实际前缀停滞。上界固定查询 $0,\tfrac12$：响应相等时返回共同响应，不同时查询 $1$ 并返回第三响应。相等时实际 $x$ 不等于前两参数；不同时 $x$ 恰是前两参数之一，所以 $x\ne1$，第三响应为 $b$。所有输入均正确、至多三次，且 $x=0$ 或 $\tfrac12$ 时恰三次，故 $D_{\mathrm{probe}}=3$。
+
+弱合同下先排除零查询降低期望。设 $A_j$ 是策略不问任何参数而有限返回 $j$ 的种子事件，$j=0,1$。这些事件由相同初始化和种子决定，与实际来源无关，并按控制可测性可测。在任意固定来源 $(0,1-j)$ 上，$A_j$ 都是错误返回事件的子集，因此弱正确性给 $\mu(A_j)=0$。对任意固定来源，有限终止具有概率一，且 $A_0\cup A_1$ 零测，故费用至少为 $1$ 几乎处处，扩展非负期望也至少为 $1$；未终止的零测种子不降低下界。这适用于全部弱策略，不要求固定种子在全来源上正确。
+
+弱达到策略取 Lebesgue 概率空间 $[0,1]$，精确查询 $u$ 并返回 $O_u(x,b)$。所有来源、所有种子都在一次查询后返回，费用恒为 $1$。固定 $(x,b)$ 时仅 $u=x$ 翻转正确目标，其错误集 $\{x\}$ 可测且零测，包括两个端点；故逐来源正确且有限终止具有概率一。对每个声明的 $u$，来源 $(u,0)$ 使它错误返回 $1$，于是
+
+$$
+\bigcup_{(x,b)\in X_{\mathrm{probe}}}\{u:O_u(x,b)\ne b\}=[0,1],
+\qquad
+\bigcap_{(x,b)}\{u:O_u(x,b)=b\}=\varnothing.
+\tag{22.21}
+$$
+
+结合弱下界得到 $R_{\mathrm w}=1$。单点错误随实际坐标 $x$ 改变，不随标签 $b$ 改变。固定任何种子得到的策略均不是全输入正确策略，所以这个达到分布不在全输入正确确定性策略族上。
+
+强合同下，每个种子在所有实际来源上正确且有限终止。同种子重放使任意有限终端记录有声，故由（22.20）每个来源、每个种子的费用至少为 $2$，积分给 $R_{\mathrm s}\ge2$。不需要把不可数来源的逐来源零测集求并，因为强合同本身逐种子规定全部来源。
+
+对于（22.18）的达到策略，$u,s(u)$ 都属于 $[0,1)$；两者相差 $\tfrac12$ 或 $-\tfrac12$，故始终互异，而且都不同于常数 $1$。这些断言对 $u=0,\tfrac12$ 也成立：两参数分别是 $(0,\tfrac12)$、$(\tfrac12,0)$，没有重合端点。当 $x$ 不在前两参数中，两响应相同且等于 $b$；当 $x$ 恰等于其中一个时，两响应相反，且 $x<1$，第三参数 $1$ 不翻转，返回 $b$。当 $x=1$ 时，前两参数均不翻转，立即以费用 $2$ 返回 $b$。因此每个种子、每个标签、每个来源都有限且正确。
+
+具体费用为
+
+$$
+C(u;x,b)=2+\mathbf1_{\{x=u\ \mathrm{或}\ x=s(u)\}}.
+\tag{22.22}
+$$
+
+固定 $x<1$ 时，$s(s(x))=x$ 且 $s(x)\ne x$，额外一次查询的种子恰为 $\{x,s(x)\}$；固定 $x=1$ 时该集合为空。这些有限种子集的 Lebesgue 测度均为零，给所有来源期望恰为 $2$。反之，对任意固定 $u$，来源 $x=u$ 需要第三参数，不论标签，费用为 $3$；所有来源费用又至多 $3$，得（22.19）并证明强上界 $R_{\mathrm s}\le2$。因此三个锐值都已在原对象、原权限和原费用下达到，而逐种子最坏费用与逐来源期望上确界分别为 $3$ 与 $2$。
+
+最后核对测度合同。精确响应的异常集合
+
+$$
+\{(a,x,b):a=x\}\subseteq[0,1]\times[0,1]\times\mathbb B
+\tag{22.23}
+$$
+
+是闭对角线与离散标签域的乘积，所以 $O_a(x,b)$ 联合 Borel 可测。$s$ 是在两个 Borel 半区间上定义的平移，故 Borel；比较两个二元响应、返回其值或选择常数 $1$ 的控制是可测分支。有限次响应组合保持可测性；（22.22）的两条对角线条件是 Borel，费用可测。弱策略的错误集为可测单点、终止事件为全空间、费用恒定；强策略错误集为空、终止事件为全空间、费用由（22.22）给出。对允许的一般可测控制，逐步组合可测控制与（22.14）给可测有限执行事件，正确返回与终止是其可数并；非终止是补集。不同参数数目在每个有限记录上由有限个对角线相等判断给出，连同非终止费用为无穷的约定得到可测扩展费用。
+
+该接口的参数记录不可数：例如单查询记录 $(a,r)$ 随 $a$ 连续变化。因此定义 22.1 的可数完整记录假设不满足，（22.21）不反驳定理 22.1。既有 [`UncountableSingletonCutCountermodel` 的 `uncountable_singleton_cut_countermodel`](https://github.com/the-omega-institute/trureturing/blob/b992b308b8905fad449b1c0ceb7f7bbeb3c0333d/D5/S3/ConceptDynamics/EscapeSpectrum/UncountableSingletonCutCountermodel.lean)供应不可数单点切割的静态零测现象；（22.17）—（22.22）另外使用此处精确响应、完整相容来源和发现策略，静态现象本身不授予探针权限或任何上述费用最优值。整个论证未把来源分布、有限树实现或物理测量添入模型。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 23. 全有限来源上两个指定正例的共同最优地址费用
+
+**定义 23.1（全来源的两正例费用合同）。** 取非空有限自由有序满二叉树集合
+
+$$
+\mathcal T=\{\alpha,\beta\}\cup\{\langle S,T\rangle:S,T\in\mathcal T\},
+\qquad
+\rho(\alpha)=\beta,\quad
+\rho(\beta)=\langle\beta,\alpha\rangle,\quad
+\rho(\langle S,T\rangle)=\langle\rho(S),\rho(T)\rangle.
+\tag{23.1}
+$$
+
+树相等保留字面的次序、括号形状和叶标记，不取结合或交换商。固定 $d=3k$、整数 $k\ge1$，目标为 $\iota_d(U)=\mathbf 1_{\{U\in\mathcal I_d\}}$，其中 $\mathcal I_d=\rho^d(\mathcal T)$。固定两个完整描述已知的正例 $P,Q\in\mathcal I_d$，仅把它们指定为费用评价的对象。全部未知输入 $U\in\mathcal T$ 有同一个与输入无关的完整初始化；其中可含固定的 $d,P,Q$ 和策略，但不含输入的组成、数量、大小、高度、叶数、正性、所属子类或身份承诺。尤其不承诺 $U\in\{P,Q\}$。
+
+每个有限地址 $u\in\{\mathtt L,\mathtt R\}^{<\mathbb N}$，包括空地址 $\varepsilon$，始终合法。查询只读同一棵不变的 $U$，报告为[定义 16.1](#16-实际树像与尖锐有限路径观察前沿)的四值 $\operatorname{out}_U(u)\in\{\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}\}$；没有其他携带来源信息的报告或访问途径。策略的有限返回值属于 $\{0,1\}$。费用只数所问的不同地址，重复地址复用缓存；地址定位、地址长度、控制器计算和取得种子不收费。未有限终止的费用为 $+\infty$。
+
+记 $\mathfrak D_d$ 为对每个 $U\in\mathcal T$ 都正确返回 $\iota_d(U)$ 且有限终止的确定性策略集合，$C_\pi(U)$ 为其不同地址费用。记 $\mathfrak R_d$ 为以下随机策略集合：使用一个与输入无关的概率空间 $(\Omega,\mathcal A,\mu)$，所有随机选择均包含在种子 $\omega$ 中，固定种子后控制、查询、缓存、停止和输出都由共同初始化及此前完整地址—响应记录决定，并满足同种子重放。对每个 $U\in\mathcal T$ 分别要求错误返回事件、未有限终止事件和非负扩展费用 $C_\Pi(\cdot,U)$ 可测，前两个事件的测度均为零。此处允许零测种子例外，不要求每个声明种子都全域正确；也不为来源指定概率律。记
+
+$$
+\begin{aligned}
+L_P&=L(P),& L_Q&=L(Q),& n_P&=|L_P|,&n_Q&=|L_Q|,\\
+H(P,Q)&\ \Longleftrightarrow\quad
+\exists u\in L_P\cap L_Q:\quad
+\operatorname{out}_P(u)\ne\operatorname{out}_Q(u),\\
+D_d^+(P,Q)&=\inf_{\pi\in\mathfrak D_d}
+\max\{C_\pi(P),C_\pi(Q)\},\\
+R_d^+(P,Q)&=\inf_{\Pi\in\mathfrak R_d}
+\max\{\mathbb E_\mu C_\Pi(\cdot,P),\mathbb E_\mu C_\Pi(\cdot,Q)\}.
+\end{aligned}
+\tag{23.2}
+$$
+
+$L$ 沿用定义 18.1，故 $H(P,Q)$ 恰指某个共享叶地址有相反的 $\alpha/\beta$ 标签。期望是两个固定来源各自对同一输入无关种子律的期望，可以为 $+\infty$；式（23.2）既不是输入先验的平均，也不是在整个 $\mathcal T$ 上优化最坏费用。完整来源、组成 $c$、规范数量地址、原始地址报告、组成祖先许可与实际逆执行分别保留其对象和操作意义；本合同只判完整树的实际像成员身份，不授权逆操作，也不把环境代数中的守恒或可逆性解释成物理对应。
+
+**定理 23.2（叶地址与标签的共同取得判据及两正例锐值）。** 在定义 23.1 的合同下，确定性费用与随机期望费用同时达到两个个体下界 $(n_P,n_Q)$ 的充要条件均为
+
+$$
+P=Q\quad\text{或}\quad H(P,Q).
+\tag{23.3}
+$$
+
+其中 $P=Q$ 只复用同一个正例的最优证书。若 $P\ne Q$ 且 $H(P,Q)$ 不成立，则每个 $\pi\in\mathfrak D_d$ 及每个 $\Pi\in\mathfrak R_d$ 分别满足
+
+$$
+\begin{aligned}
+C_\pi(P)+C_\pi(Q)&\ge n_P+n_Q+1,\\
+\mathbb E_\mu C_\Pi(\cdot,P)+\mathbb E_\mu C_\Pi(\cdot,Q)&\ge n_P+n_Q+1.
+\end{aligned}
+\tag{23.4}
+$$
+
+确定性费用对 $(n_P,n_Q+1)$ 和 $(n_P+1,n_Q)$ 分别由一个全域正确且有限终止的策略取得。两个目标的精确值为
+
+$$
+\begin{aligned}
+D_d^+(P,Q)&=
+\begin{cases}
+n+1,&P\ne Q,\ \neg H(P,Q),\ n_P=n_Q=n,\\
+\max\{n_P,n_Q\},&\text{其余情形},
+\end{cases}\\[3pt]
+R_d^+(P,Q)&=
+\begin{cases}
+n+\tfrac12,&P\ne Q,\ \neg H(P,Q),\ n_P=n_Q=n,\\
+\max\{n_P,n_Q\},&\text{其余情形}.
+\end{cases}
+\end{aligned}
+\tag{23.5}
+$$
+
+式（23.2）的下确界全部达到。所有策略均须在全部 $\mathcal T$ 上满足其正确性和终止合同；取得性不附加未知输入承诺。
+
+**证明。** 先把确定性接受运行的记录接到已有证书。固定 $\pi\in\mathfrak D_d$ 和 $V\in\{P,Q\}$，以 $J_V$ 记它在 $V$ 上终止前所问的不同地址集合。全域有限终止使记录有限；令 $h$ 为其中地址长度的最大值，空记录时取 $h=0$，则 $J_V\subseteq\Sigma_{\le h}$。任何匹配这些四值响应的 $U\in\mathcal T$，在共同初始化下逐步生成相同地址、缓存响应和控制状态，故在同一处返回 $1$。全域正确性使 $J_V$ 按定义 18.2 无承诺有声。直接应用[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)，有
+
+$$
+L(V)\subseteq J_V,\qquad C_\pi(V)=|J_V|\ge |L(V)|.
+\tag{23.6}
+$$
+
+这使用每条实际有限终端记录自己的 $h$，没有预置高度或统一视界。空记录也在该论证内，不能接受这些非空叶前沿的正例。同一已知结果还保证：匹配 $V$ 全部带标签叶响应的完整树只能是 $V$；这一步的完整树恢复直接取自[母卷定理 9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，不重新建立个体证书结论。有限返回所需的任务恒值和认证资源合同取自[延拓卷定义 11.1、11.2](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md#11-自适应分辨率何时可以停止递归)；这里只用终端纤维与证书意义，不把定义 11.2 的有限候选集递推套到无限的 $\mathcal T$。
+
+设 $P\ne Q$。两次运行从同一初始化开始，在第一次不同响应之前，其全部历史、内部控制、查询选择和停止决定相同。这样的不同响应必在任一接受运行停止前出现：若在较早终止处仍未出现，两者将以相同记录同时接受；该记录按（23.6）已包含 $L_P$，而 $Q$ 匹配其全部带标签叶响应，因而 $Q=P$，矛盾。因此存在第一次响应不同的查询，地址记为 $u$，两次运行都实际问了它。$u$ 是新地址：若此前问过，不变来源及缓存使它的响应等于此前已经相同的响应，不可能第一次产生差异。这个前缀归纳使用[运输记忆完成卷第 6.4 节式（CE.19）—（CE.21）之后的完整初始化下降合同](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#64-商观察的全部未来与行为纤维)；这里核对的是只读接口的同记录控制条件，不引入该节的群平移操作。
+
+若 $\neg H(P,Q)$，共享叶地址的标签全部相同，所以这个 $u$ 不在 $L_P\cap L_Q$ 中。它至少位于一方的必查叶集合之外，却在该方运行中被计费；该方的（23.6）下界遂增加一，另一方仍有其全部必查叶费用，得到（23.4）的确定性不等式。论证没有限制第一次查询，也没有假设策略不自适应；重复查询不能成为第一次差异，任何较早停止已由完整叶证书排除。
+
+以下取得构造共用一个后备判定。任一原型测试不匹配时，从空地址起探索实际 $U$，复用全部已缓存答案；仅在报告 $\mathsf{branch}$ 的实际节点处继续查询左右孩子，报告叶时不再扩展。$U$ 有限，所以有限步即恢复整个字面树和实际测得的叶数 $m$，所恢复描述按母卷定理 9.3 唯一。$m$ 是此运行取得的量，不是初始化承诺。随后枚举叶数至多 $m$ 的全部带 $\alpha/\beta$ 标记的有序满二叉树 $T$；有限叶数给有限个形状，每个形状给有限个标记，故这是一个可穷尽的有限枚举。逐个计算描述 $\rho^d(T)$ 并与已恢复的 $U$ 比较，命中则返回 $1$，穷尽而未命中则返回 $0$。每个计算和比较均有限。
+
+一次 $\rho$ 把 $\alpha$ 叶换成一片叶、把 $\beta$ 叶换成两片叶，并保留已有二叉节点，故从不减少叶数。因而 $U=\rho^d(T)$ 的任何实际前像均在这次有限枚举内，正例必命中，负例必穷尽拒绝。[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)已供应树替换的单射性，迭代后命中的完整前像也唯一；判定只需要其存在性。计算枚举对象的替换描述不对未知来源执行替换或逆替换。仅不断搜索直到找到前像不能替代此后备：命题 4.3 已排除 $\alpha\in\rho(\mathcal T)$，所以实际负输入 $\alpha\notin\mathcal I_d$ 上那种无穷搜索不终止。上述有限枚举在 $m=1$ 时仍能穷尽拒绝。后备的运行时间可以依输入增长；这里只要求每个有限来源都有限终止。
+
+若 $P=Q$，依固定次序查询它的全部叶，全部带标签响应匹配则接受，任一不匹配即进入后备。完整匹配唯一确定 $U=P$，所以该策略全域正确且有限终止，在两个相同评价对象上费用均为 $n_P$。
+
+若 $H(P,Q)$，选一个标签冲突的共享叶地址 $u$ 首先查询。响应精确等于 $P$ 在 $u$ 的叶标签时选择 $P$ 测试，精确等于 $Q$ 的相反叶标签时选择 $Q$ 测试；其他两个响应均进入后备。被选原型的其余叶依固定次序查询，全部匹配才接受，任一不匹配则进入后备。每次接受都有完整带标签叶证书，故正确；其余来源由后备正确处理。$P,Q$ 各自选中自己的测试且没有额外叶外查询，因此费用对恰为 $(n_P,n_Q)$。
+
+最后设 $P\ne Q$、$\neg H(P,Q)$。有限满二叉树的两个叶前沿不能严格包含：若 $L_P\subseteq L_Q$，每片 $P$ 叶在 $Q$ 中也为叶，其所有真前缀在两树中都是分支，而这些叶截住了每条向下路径，故两树的形状相同，$L_P=L_Q$。再由共享叶标签相同，得到 $P=Q$，矛盾。因此存在 $p\in L_P\setminus L_Q$，也存在 $q\in L_Q\setminus L_P$。
+
+先查询 $p$，把它的精确 $P$ 叶响应作为选择 $P$ 测试的分支，把精确 $\operatorname{out}_Q(p)$ 作为选择 $Q$ 测试的分支。因为 $p\notin L_Q$，后者必为 $\mathsf{branch}$ 或 $\mathsf{absent}$，与前者不同；每个其他首响应均进入后备。选择 $P$ 后查询其余叶，选择 $Q$ 后查询其全部叶；任一后续不匹配均进入后备，完整匹配才接受。这样在 $P$ 上花费 $n_P$，在 $Q$ 上花费 $n_Q+1$，在所有其他来源上仍正确且有限终止。交换两原型并从 $q$ 开始，取得 $(n_P+1,n_Q)$。原型不匹配本身从未被当作负来源证据。
+
+随机下界须使用全域正确且终止的同一种子策略。由[母卷定理 9.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，$\mathcal T$ 单射编码进两字母的有限词，因而可数。全部有限地址可数，四响应字母表有限，有限地址—响应记录包括空记录也可数。定义 23.1 的完整初始化、合法菜单、不变来源、无额外来源报告和同种子重放满足[定理 22.1](#22-可数只读记录的有声返回与终止精确探针许可的分界)的合同：其式（22.4）提供策略各自的共同满测度有声返回集合。还须分别使用式（22.7）的共同总性子句：本域 $\mathcal T$ 可数，每个来源的未终止事件已要求可测且零测，故有策略各自的共同满测度集合 $G_\Pi^{\mathrm{tot}}$，在其每个种子上固定种子策略都属于 $\mathfrak D_d$。有声返回本身不供应这一全域终止结论；此处也不对所有随机策略取共同种子交集，不声称统一全来源运行时间上界。
+
+于是（23.6）及已经证明的确定性联合不等式均逐种子适用于 $G_\Pi^{\mathrm{tot}}$。对可测非负扩展费用积分，得到每个固定来源的期望下界，以及（23.4）的随机不等式；两来源费用和的非负积分可相加，包括无穷值，零测种子例外不改变这些不等式。因此 $P\ne Q$ 且 $\neg H(P,Q)$ 时，两期望不可能同时等于 $(n_P,n_Q)$；其他情形已经由确定性构造在单点种子空间上取得。这证明（23.3）。
+
+若无冲突且 $n_P=n_Q=n$，（23.4）及确定性费用的整数性给 $\max\{C_\pi(P),C_\pi(Q)\}\ge n+1$，任一端点构造达到它。随机方面，两个期望的最大值至少为其平均，故至少为 $n+\tfrac12$；用一次与输入无关的公平二元种子选择上述两个全域正确且有限终止的端点策略，两个固定来源的期望均为 $n+\tfrac12$。所有种子在所有有限来源上都正确且终止，费用与事件在这个有限种子空间上可测。若无冲突而叶数不等，令较大者为 $n_P>n_Q$，则整数性给 $n_Q+1\le n_P$；费用对 $(n_P,n_Q+1)$ 已达到两个目标的个体下界最大值 $n_P$。$n_Q>n_P$ 时用另一端点。其余情形用已取得的 $(n_P,n_Q)$ 即可。因此（23.5）的每个下确界均由满足全来源合同的策略取得。证毕。
+
+**命题 23.3（实际 FIB 来源的无共享叶族与同组成严格对照）。** 对每个 $d=3k\ge3$，置
+
+$$
+A=\rho^d(\alpha),\qquad
+B=\rho^{d+2}(\alpha)=\rho^2(A),\qquad
+P_{\mathrm{dis}}=\langle A,B\rangle,\qquad
+Q_{\mathrm{dis}}=\langle B,A\rangle.
+\tag{23.7}
+$$
+
+这两个不同正例的叶地址集合互不相交，叶数均为
+
+$$
+n=F_{d+1}+F_{d+3},\qquad F_0=0,\quad F_1=1,\quad F_{j+2}=F_{j+1}+F_j.
+\tag{23.8}
+$$
+
+在定义 23.1 的全来源合同下，$D_d^+(P_{\mathrm{dis}},Q_{\mathrm{dis}})=n+1$、$R_d^+(P_{\mathrm{dis}},Q_{\mathrm{dis}})=n+\tfrac12$。
+
+特别地，在 $d=3$ 置
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle,\qquad
+C=\langle A,E\rangle,\qquad
+B=\langle C,A\rangle,
+\tag{23.9}
+$$
+
+并另取
+
+$$
+P_{\mathrm{con}}=\langle\langle A,A\rangle,C\rangle,
+\qquad
+Q_{\mathrm{con}}=\langle\langle A,C\rangle,A\rangle.
+\tag{23.10}
+$$
+
+四棵指定树均为实际 $\rho^3$ 像，均有 $c=(4,7)^{\mathsf T}$、$n=11$、$q=2\cdot4+3\cdot7=29$；其中
+
+$$
+\operatorname{out}_{P_{\mathrm{con}}}(\mathtt L\mathtt R\mathtt L\mathtt R)
+=\mathsf{leaf}_\alpha,
+\qquad
+\operatorname{out}_{Q_{\mathrm{con}}}(\mathtt L\mathtt R\mathtt L\mathtt R)
+=\mathsf{leaf}_\beta.
+\tag{23.11}
+$$
+
+因此同一组成和数量读数的两个指定正例对有严格不同的尖锐费用：
+
+$$
+\begin{aligned}
+(D_3^+,R_3^+)(P_{\mathrm{dis}},Q_{\mathrm{dis}})&=(12,\tfrac{23}{2}),\\
+(D_3^+,R_3^+)(P_{\mathrm{con}},Q_{\mathrm{con}})&=(11,11).
+\end{aligned}
+\tag{23.12}
+$$
+
+这些组成相等只比较指定的实际评价对象，不向未知输入域增加组成、数量或大小承诺。
+
+**证明。** 由替换的二叉同态规则，式（23.7）分别有完整前像
+
+$$
+P_{\mathrm{dis}}=
+\rho^d\bigl(\langle\alpha,\langle\beta,\alpha\rangle\rangle\bigr),
+\qquad
+Q_{\mathrm{dis}}=
+\rho^d\bigl(\langle\langle\beta,\alpha\rangle,\alpha\rangle\bigr).
+\tag{23.13}
+$$
+
+两前像字面不同，其像的不同性亦直接由规范编译卷命题 4.3 的单射性得到。$\rho^2(\alpha)=\langle\beta,\alpha\rangle$ 和 $\rho^2(\beta)=\langle\langle\beta,\alpha\rangle,\beta\rangle$ 均非叶，所以在 $B=\rho^2(A)$ 中，$A$ 的每片叶都被非叶子树替换；$B$ 的每个叶地址严格延长某个 $A$ 叶地址。$A$ 的叶前沿前缀自由，故没有一个 $A$ 叶地址同时是 $B$ 的叶地址。于是
+
+$$
+\begin{aligned}
+L(P_{\mathrm{dis}})&=\mathtt L L(A)\ \cup\ \mathtt R L(B),\\
+L(Q_{\mathrm{dis}})&=\mathtt L L(B)\ \cup\ \mathtt R L(A),\\
+L(P_{\mathrm{dis}})\cap L(Q_{\mathrm{dis}})&=\varnothing,
+\end{aligned}
+\tag{23.14}
+$$
+
+其中 $\mathtt L L(A)=\{\mathtt L u:u\in L(A)\}$，其他前缀集合相同解释。直接复用[母卷定理 3.2 的种子树递推](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)：种子轨道的叶数从 $1,1$ 开始按 Fibonacci 递推，故 $|L(\rho^j\alpha)|=F_{j+1}$。相加得到（23.8），再用定理 23.2 得到一般族的费用。这里保留 $d=3k\ge3$ 的证书适用范围。
+
+在 $d=3$，同一个既有种子递推给 $E=\rho^2\alpha$、$A=\rho^3\alpha$、$C=\rho^4\alpha=\rho^3\beta$、$B=\rho^5\alpha$，恰为（23.9）的字面展开。除（23.13）的两前像外，另两棵树的完整前像为
+
+$$
+P_{\mathrm{con}}=
+\rho^3\bigl(\langle\langle\alpha,\alpha\rangle,\beta\rangle\bigr),
+\qquad
+Q_{\mathrm{con}}=
+\rho^3\bigl(\langle\langle\alpha,\beta\rangle,\alpha\rangle\bigr).
+\tag{23.15}
+$$
+
+由这些实际前像及 $\rho^3$ 的二叉同态性，四树均在 $\mathcal I_3$。组成加性给 $c(E)=(1,1)^{\mathsf T}$、$c(A)=(1,2)^{\mathsf T}$、$c(C)=(2,3)^{\mathsf T}$、$c(B)=(3,5)^{\mathsf T}$，所以 $c(A)+c(B)=2c(A)+c(C)=(4,7)^{\mathsf T}$，叶数为 $11$，定义 1.1 的数量读数为 $29$。在 $P_{\mathrm{con}}$ 上沿 $\mathtt L\mathtt R$ 到 $A$，再沿 $\mathtt L\mathtt R$ 到 $\alpha$；在 $Q_{\mathrm{con}}$ 上沿 $\mathtt L\mathtt R$ 到 $C$，再沿 $\mathtt L\mathtt R$ 到其左子树 $A$ 的右叶 $\beta$。这证明（23.11），所以该对满足 $H$，而无共享叶对不满足 $H$。定理 23.2 遂给（23.12）。
+
+这两个对照也显示后备判定的必要性：$A=\rho^3\alpha\in\mathcal I_3$ 在 $\mathtt L\mathtt L\mathtt L$ 上报告 $\mathsf{absent}$，而 $P_{\mathrm{dis}}$、$Q_{\mathrm{dis}}$ 分别报告 $\mathsf{leaf}_\beta$、$\mathsf{branch}$；在 $\mathtt L\mathtt R\mathtt L\mathtt R$ 上 $A$ 同样报告 $\mathsf{absent}$，与冲突对的两叶报告都不同。故无论从这里的无共享叶测试地址还是共享冲突测试地址开始，原型之外都存在合法实际正来源；把这种首响应直接判负会违反全来源正确性。定理 23.2 的构造将它们送入有限后备判定。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 24. 两两叶最优与三个实际来源的共同费用障碍
+
+**定义 24.1（三个固定正例的全来源费用合同）。** 将[定义 23.1](#23-全有限来源上两个指定正例的共同最优地址费用)的深度固定为 $d=3$，费用评价对象增为三棵完整描述已知的正例 $P_1,P_2,P_3\in\mathcal I_3$。策略仍在全部非空有限自由有序满二叉树 $\mathcal T$ 上判定 $\iota_3$；共同初始化可含这三个固定描述，却不含未知输入的组成、数量、大小、高度、正性或身份承诺。尤其不承诺未知输入属于 $\{P_1,P_2,P_3\}$。查询仍是任意有限左右地址的原始四值只读报告，费用仍计不同地址并复用缓存，未有限终止时为 $+\infty$，没有其他来源信息渠道。
+
+沿用定义 23.1 的确定性全域正确有限终止策略合同 $\mathfrak D_3$，以及输入无关同种子重放、逐来源几乎处处正确且有限终止、相关事件及非负扩展费用可测的随机策略合同 $\mathfrak R_3$，定义
+
+$$
+\begin{aligned}
+D_3^+(P_1,P_2,P_3)
+&=\inf_{\pi\in\mathfrak D_3}\max_{1\le i\le3}C_\pi(P_i),\\
+R_3^+(P_1,P_2,P_3)
+&=\inf_{\Pi\in\mathfrak R_3}\max_{1\le i\le3}
+\mathbb E_\mu C_\Pi(\cdot,P_i).
+\end{aligned}
+\tag{24.3}
+$$
+
+三项期望使用同一个与输入无关的种子律；没有未知输入先验。随机目标是三个期望的最大值，另一个量 $\mathbb E_\mu\max_i C_\Pi(\cdot,P_i)$ 不作为式（24.3）的目标。正确性与终止仍遍及全部 $\mathcal T$，最优化只评价三个固定来源。实际像成员身份、组成读数与实际逆执行保留定义 23.1 的不同任务含义。
+
+**定理 24.2（同组成实际三正例的两两叶最优与确定性、随机锐值）。** 复用[命题 23.3](#23-全有限来源上两个指定正例的共同最优地址费用)在 $d=3$ 的字面树，置
+
+$$
+\begin{gathered}
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\qquad
+C=\langle A,E\rangle=\rho^3(\beta),\\
+U=\langle\langle A,A\rangle,C\rangle=P_{\mathrm{con}},\qquad
+V=\langle\langle A,C\rangle,A\rangle=Q_{\mathrm{con}},\qquad W=A,
+\end{gathered}
+\tag{24.4}
+$$
+
+并定义三个固定评价来源
+
+$$
+\begin{aligned}
+P_1&=\langle\langle U,U\rangle,A\rangle,\\
+P_2&=\langle\langle V,A\rangle,U\rangle,\\
+P_3&=\langle\langle A,V\rangle,V\rangle.
+\end{aligned}
+\tag{24.5}
+$$
+
+令 $u_0=\langle\langle\alpha,\alpha\rangle,\beta\rangle$、$v_0=\langle\langle\alpha,\beta\rangle,\alpha\rangle$。这些来源的完整前像为
+
+$$
+\begin{aligned}
+U&=\rho^3(u_0),& V&=\rho^3(v_0),\\
+P_1&=\rho^3\bigl(\langle\langle u_0,u_0\rangle,\alpha\rangle\bigr),\\
+P_2&=\rho^3\bigl(\langle\langle v_0,\alpha\rangle,u_0\rangle\bigr),\\
+P_3&=\rho^3\bigl(\langle\langle\alpha,v_0\rangle,v_0\rangle\bigr).
+\end{aligned}
+\tag{24.6}
+$$
+
+三者两两不同，且
+
+$$
+P_i\in\mathcal I_3,\qquad
+c(P_i)=(9,16)^{\mathsf T},\qquad
+|L(P_i)|=25,\qquad q(P_i)=66
+\quad(1\le i\le3).
+\tag{24.7}
+$$
+
+在定义 24.1 的全来源合同下，每个两元素评价对可由一个共同策略同时取得两个个体最小费用 $25$，即
+
+$$
+D_3^+(P_i,P_j)=R_3^+(P_i,P_j)=25
+\quad(1\le i<j\le3).
+\tag{24.8}
+$$
+
+三个对允许选择不同策略。对三元素评价集合，存在三个全域正确且有限终止的确定性策略，其费用向量依次为
+
+$$
+(25,25,26),\qquad(25,26,25),\qquad(26,25,25).
+\tag{24.9}
+$$
+
+每个 $\pi\in\mathfrak D_3$ 及每个 $\Pi\in\mathfrak R_3$ 均满足
+
+$$
+\begin{gathered}
+\sum_{i=1}^3 C_\pi(P_i)\ge76,\qquad
+\sum_{i=1}^3\mathbb E_\mu C_\Pi(\cdot,P_i)\ge76,\\
+\boxed{\quad D_3^+(P_1,P_2,P_3)=26,\qquad
+R_3^+(P_1,P_2,P_3)=\frac{76}{3}.\quad}
+\end{gathered}
+\tag{24.10}
+$$
+
+两个下确界均达到。随机锐值由一次共同、输入无关的均匀三元种子选择式（24.9）的三个策略取得；在这一混合上，三个固定来源的期望各为 $76/3$，而 $\mathbb E_\mu\max_i C_\Pi(\cdot,P_i)=26$。因此两两共同取得叶数个体最小值，不足以使同一个策略对这三个指定实际正来源共同取得。
+
+**证明。** 命题 23.3 的式（23.9）、（23.10）、（23.15）已给出 $A,C,U,V$ 的字面展开与实际完整前像。将这些前像代入定义 23.1 的二叉替换同态规则，直接得到式（24.6），所以三个 $P_i$ 都是实际三步像。式（24.6）的三个前像两两字面不同；[规范编译卷命题 4.3 的树替换单射性](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)在三次迭代后仍单射，因而三棵像树两两不同，且这些完整前像各自唯一。这里的前像由实际树替换给出，不从组成上的逆矩阵推断。
+
+命题 23.3 已供应 $c(A)=(1,2)^{\mathsf T}$ 和 $c(U)=c(V)=(4,7)^{\mathsf T}$。组成在二叉拼接下相加，故
+
+$$
+\begin{aligned}
+c(P_1)&=2c(U)+c(A),\\
+c(P_2)&=c(V)+c(A)+c(U),\\
+c(P_3)&=c(A)+2c(V),\\
+2(4,7)^{\mathsf T}+(1,2)^{\mathsf T}&=(9,16)^{\mathsf T},\\
+9+16&=25,\qquad 2\cdot9+3\cdot16=66.
+\end{aligned}
+\tag{24.11}
+$$
+
+最后一个读数使用定义 1.1 的 $q=(2,3)$，得到式（24.7）。这些相等是对三个固定完整来源的读数计算，不加入未知输入承诺。
+
+取三个地址
+
+$$
+s_{12}=\mathtt L\mathtt L\mathtt L\mathtt R\mathtt L\mathtt R,
+\qquad
+s_{13}=\mathtt L\mathtt R\mathtt L\mathtt R\mathtt L\mathtt R,
+\qquad
+s_{23}=\mathtt R\mathtt L\mathtt R\mathtt L\mathtt R.
+$$
+
+其完整响应表为
+
+$$
+\begin{array}{c|ccc}
+\text{地址}&\operatorname{out}_{P_1}&\operatorname{out}_{P_2}&\operatorname{out}_{P_3}\\ \hline
+s_{12}&\mathsf{leaf}_\alpha&\mathsf{leaf}_\beta&\mathsf{absent}\\
+s_{13}&\mathsf{leaf}_\alpha&\mathsf{absent}&\mathsf{leaf}_\beta\\
+s_{23}&\mathsf{absent}&\mathsf{leaf}_\alpha&\mathsf{leaf}_\beta
+\end{array}
+\tag{24.12}
+$$
+
+逐行从式（24.4）、（24.5）核对。第一行在 $P_1$ 上先沿 $\mathtt L\mathtt L$ 到 $U$，再沿 $\mathtt L\mathtt R$ 到 $A$，最后沿 $\mathtt L\mathtt R$ 到 $\alpha$；在 $P_2$ 上先沿 $\mathtt L\mathtt L$ 到 $V$，再沿 $\mathtt L\mathtt R$ 到 $C$，最后沿 $\mathtt L\mathtt R$ 到 $C$ 左子树 $A$ 的右叶 $\beta$；在 $P_3$ 上先沿 $\mathtt L\mathtt L$ 到 $A$，再沿 $\mathtt L\mathtt R$ 到叶 $\alpha$，剩余的 $\mathtt L\mathtt R$ 越过该叶，故报告不存在。
+
+第二行在 $P_1$ 上先沿 $\mathtt L\mathtt R$ 到 $U$，再沿 $\mathtt L\mathtt R$ 到 $A$，最后沿 $\mathtt L\mathtt R$ 到 $\alpha$；在 $P_2$ 上先沿 $\mathtt L\mathtt R$ 到 $A$，再沿 $\mathtt L\mathtt R$ 到叶 $\alpha$，剩余的 $\mathtt L\mathtt R$ 越过该叶；在 $P_3$ 上先沿 $\mathtt L\mathtt R$ 到 $V$，再沿 $\mathtt L\mathtt R$ 到 $C$，最后沿 $\mathtt L\mathtt R$ 到 $\beta$。这分别给出第二行的 $\mathsf{leaf}_\alpha$、$\mathsf{absent}$、$\mathsf{leaf}_\beta$。
+
+第三行在 $P_1$ 上先沿 $\mathtt R$ 到 $A$，再沿 $\mathtt L\mathtt R$ 到叶 $\alpha$，剩余的 $\mathtt L\mathtt R$ 越过该叶；在 $P_2$ 上先沿 $\mathtt R$ 到 $U$，再沿 $\mathtt L\mathtt R$ 到 $A$，最后沿 $\mathtt L\mathtt R$ 到 $\alpha$；在 $P_3$ 上先沿 $\mathtt R$ 到 $V$，再沿 $\mathtt L\mathtt R$ 到 $C$，最后沿 $\mathtt L\mathtt R$ 到 $\beta$。这给出第三行。三行中的 $U,V$ 局部标签冲突正是命题 23.3 式（23.11）的 $t=\mathtt L\mathtt R\mathtt L\mathtt R$ 冲突在不同外层位置的应用；上述逐行核对还保留了第三个来源的不存在响应。
+
+于是 $s_{ij}$ 是 $P_i,P_j$ 标签相反的共享叶地址，三个对分别满足定理 23.2 的 $H$ 判据。直接应用该定理，得到每对存在共同策略取得 $(25,25)$，以及式（24.8）。个体下界由[定理 18.2 的完整叶条件](#18-精确组成最优证书的唯一性与无承诺叶前沿)供应，其深度条件在这里为 $d=3=3\cdot1$。并未把三个分别优化的费用对视作同一个策略。
+
+接着核对三重叶交集。由 $A=\langle\langle\beta,\alpha\rangle,\beta\rangle$，以及 $U,V$ 的字面定义，有
+
+$$
+\begin{gathered}
+L(A)=\{\mathtt L\mathtt L,\mathtt L\mathtt R,\mathtt R\},\\
+U|_{\mathtt L\mathtt L}=A,\quad
+U|_{\mathtt L\mathtt R}=A,\quad U|_{\mathtt R}=C,\\
+V|_{\mathtt L\mathtt L}=A,\quad
+V|_{\mathtt L\mathtt R}=C,\quad V|_{\mathtt R}=A,\\
+L(A)\cap L(U)=L(A)\cap L(V)=\varnothing.
+\end{gathered}
+\tag{24.13}
+$$
+
+因为 $A,C$ 都为分支，$U,V$ 在 $A$ 的全部三个叶地址上均报告 $\mathsf{branch}$，故最后一行成立。三个互不为前缀的外层位置 $\mathtt L\mathtt L$、$\mathtt L\mathtt R$、$\mathtt R$ 覆盖每棵 $P_i$ 的全部叶，其子树分别为
+
+$$
+\begin{array}{c|ccc}
+\text{外层位置}&P_1&P_2&P_3\\ \hline
+\mathtt L\mathtt L&U&V&A\\
+\mathtt L\mathtt R&U&A&V\\
+\mathtt R&A&U&V
+\end{array}
+\qquad
+\boxed{\ L(P_1)\cap L(P_2)\cap L(P_3)=\varnothing.\ }
+\tag{24.14}
+$$
+
+确切地说，每个共同叶地址必落在这三个位置中的同一个位置内；该位置上的三个叶集合交集是该前缀与 $L(U)\cap L(V)\cap L(A)$ 的拼接，而式（24.13）使它为空。三个位置的祖先在各树中都是分支，所以祖先自身也不是共同叶。由此得到式（24.14）。
+
+固定任意 $\pi\in\mathfrak D_3$。在第一次查询前，控制、内部计算、停止及输出只依共同初始化，不依输入。它不能不作查询而有限返回：$A\in\mathcal I_3$，而规范编译卷命题 4.3 给 $\alpha\notin\rho(\mathcal T)$，从而 $\alpha\notin\mathcal I_3$，同一个无查询返回值不能同时正确处理这两个输入。它也不能在无查询状态永久内部计算，因为这违反全域有限终止。因此必在有限内部计算后作一个首查询，其地址 $s$ 在所有输入上相同，且因尚无查询而是首次计费地址。
+
+令 $J_i$ 为该策略在 $P_i$ 上有限接受前所问的不同地址集合。直接应用定理 23.2 证明中的终端记录结论（23.6），有 $L(P_i)\subseteq J_i$。该结论使用每条实际终端记录自己的有限最大地址长度，并由定理 18.2 供应完整叶必要性，不需要预置高度。式（24.14）使这个共同首地址 $s$ 至少不属于一个 $L(P_i)$，但 $s\in J_i$ 对三个 $i$ 都成立。故至少一项费用在其 $25$ 个必查叶之外多计一个地址，其余两项仍至少为 $25$，从而
+
+$$
+\sum_{i=1}^3 C_\pi(P_i)\ge25+25+26=76,
+\qquad
+\max_i C_\pi(P_i)\ge
+\left\lceil\frac{76}{3}\right\rceil=26.
+\tag{24.15}
+$$
+
+这一论证允许任意自适应后续查询、任意地址长度及重复查询；首次地址即已造成联合费用障碍。
+
+为取得式（24.9），分别从式（24.12）的三行地址开始构造策略。对某一行，首先查询其地址。该行的三个不同响应各自选择对应的 $P_i$ 作暂定原型，包括 $\mathsf{absent}$ 所对应的原型；尚未使用的第四个响应 $\mathsf{branch}$ 直接进入定理 23.2 证明中已有的全有限来源后备判定。选中某一原型后，依固定次序核对它的全部 $25$ 个带标签叶地址，复用此前缓存。任一后续叶响应不匹配即进入同一个后备判定；只有全部带标签叶响应匹配时才接受。
+
+定理 18.2 的充分性及其引用的[母卷定理 9.3 的字面恢复](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)保证，完整叶匹配的未知树只能等于所选原型，故该处接受正确。首响应只选择暂定测试，尤其不存在响应既不证明树身份，也不证明正性。其余输入由定理 23.2 已证明全域正确且有限终止的后备处理；缓存只复用已取得的确定性响应。原型测试至多核对有限的 $25$ 个叶，因而整个策略在每个实际有限树上都有限终止。原型之外的正来源与全部负来源都保留在这个合同内：它们不能完整匹配一个原型的带标签叶证书，故由首分支或后续不匹配送入后备，而不因测试失败直接判负。
+
+在被评价的 $P_i$ 上，首响应恰选中自己，后续全部匹配。首地址若为其叶，则已查询的那个叶由缓存计入 $25$ 个完整叶，总费用为 $25$；若为不存在地址，则不在叶集合内，完整叶仍需全部查询，总费用为 $26$。式（24.12）的三个不存在位置依次是 $P_3,P_2,P_1$，遂逐一得到式（24.9）。结合式（24.15），确定性锐值为 $26$。
+
+现在固定任意 $\Pi\in\mathfrak R_3$。由[母卷定理 9.2 的单射有限词编码](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，整个 $\mathcal T$ 可数；全部有限地址可数，四值响应有限，因此完整有限地址—响应记录也可数。定义 24.1 继承的输入无关初始化、任意地址合法菜单、固定只读来源、无额外来源报告及同种子重放，满足[定理 22.1](#22-可数只读记录的有声返回与终止精确探针许可的分界)的合同。其式（22.4）给该策略自己的共同满测度有声有限返回集合 $G_\Pi$。
+
+还必须另行应用该定理的总性子句（22.7）：$\mathcal T$ 可数，且对每个实际来源分别要求未有限终止事件可测并为零测，所以存在 $G_\Pi^{\mathrm{tot}}\subseteq G_\Pi$，测度为 $1$，其中每个固定种子策略都在整个 $\mathcal T$ 上正确且有限终止。仅有（22.4）的有声返回不能替代这个全域总性条件。共同满测度集合可依赖 $\Pi$；这里没有对所有随机策略取共同种子交集，也没有使用统一全来源运行时间上界。
+
+对每个 $\omega\in G_\Pi^{\mathrm{tot}}$，该固定种子策略属于 $\mathfrak D_3$，故式（24.15）的同一策略费用和下界逐种子成立。对三个可测非负扩展费用积分，有限和的非负积分可相加，包括无穷值，得到
+
+$$
+\begin{aligned}
+\sum_{i=1}^3\mathbb E_\mu C_\Pi(\cdot,P_i)
+&=\int_\Omega\sum_{i=1}^3 C_\Pi(\omega,P_i)\,d\mu(\omega)
+\ge76,\\
+\max_i\mathbb E_\mu C_\Pi(\cdot,P_i)&\ge\frac{76}{3}.
+\end{aligned}
+\tag{24.16}
+$$
+
+零测种子例外不改变这些非负积分不等式。这不是把三对分别优化的结果相加，而是先在每个共同正确且全域终止的种子上比较三个实际运行，再对同一策略积分。
+
+最后，在共同初始化下取输入无关的均匀种子 $\omega\in\{1,2,3\}$，分别选择式（24.9）的三个确定性策略；只取这一次种子，不按未知输入再选择策略。每个声明种子在全部 $\mathcal T$ 上都正确且有限终止，有限种子空间上的相关事件和费用均可测，所以该混合属于 $\mathfrak R_3$。每个固定来源恰在两个种子上费用为 $25$、一个种子上费用为 $26$，从而
+
+$$
+\mathbb E_\mu C_\Pi(\cdot,P_i)=\frac{25+25+26}{3}
+=\frac{76}{3}\quad(1\le i\le3),
+\qquad
+\mathbb E_\mu\max_i C_\Pi(\cdot,P_i)=26.
+\tag{24.17}
+$$
+
+式（24.16）与（24.17）给随机锐值和取得性，完成式（24.10）的全部结论。证明只针对式（24.5）的三个实际三步像及声明的全有限来源四值接口；不要求未知输入承诺，也不推出任意三来源分类或这一见证的全局最小规模。证毕。
+
+## 追加锚（本行以下为增补区）
+## 25. 有限正来源族的遗传共享叶分离与四元共同费用
+
+**定义 25.1（遗传信息叶与共同取得）。** 将[定义 23.1](#23-全有限来源上两个指定正例的共同最优地址费用)固定为 $d=3$，沿用其 $\mathcal T$、$\rho$、$\mathcal I_3$、$\iota_3$、$\mathfrak D_3$、$\mathfrak R_3$ 和费用 $C$。未知输入仍遍历全部非空有限自由有序满二叉 $\alpha/\beta$ 树；有限评价族 $F\subseteq\mathcal I_3$ 的完整描述可在共同初始化中给定，却不构成输入属于 $F$ 的承诺。每个有限左右地址，包括空地址，均合法；报告仅为不变来源的原始 $\mathsf{leaf}_\alpha$、$\mathsf{leaf}_\beta$、$\mathsf{branch}$、$\mathsf{absent}$。费用只计缓存后的不同地址，其他计算、地址长度、定位和种子取得均不收费，未有限终止时为 $+\infty$。确定性策略在整个 $\mathcal T$ 上正确且有限终止；随机策略使用一个输入无关的可测种子律，满足同种子重放、逐来源几乎处处正确且有限终止，以及非负扩展费用可测的合同。
+
+对 $P\in\mathcal I_3$，令 $L(P)$ 为叶地址集，$\lambda_P:L(P)\to\{\alpha,\beta\}$ 为叶标签，$n_P=|L(P)|$。对有限非单元素族 $S\subseteq\mathcal I_3$，定义其信息性共同叶集
+
+$$
+\Delta(S)=\left\{u\in\bigcap_{P\in S}L(P):
+\{\lambda_P(u):P\in S\}=\{\alpha,\beta\}\right\}.
+\tag{25.7}
+$$
+
+称有限族 $F$ **确定性相容**，若存在一个 $\pi\in\mathfrak D_3$ 对所有 $P\in F$ 同时有 $C_\pi(P)=n_P$；称其 **期望相容**，若存在一个 $\Pi\in\mathfrak R_3$ 对所有 $P\in F$ 同时有 $\mathbb E_\mu C_\Pi(\cdot,P)=n_P$。空族的这些要求为空约束。对非空 $F$，记
+
+$$
+\begin{aligned}
+D_3^+(F)&=\inf_{\pi\in\mathfrak D_3}\max_{P\in F}C_\pi(P),\\
+R_3^+(F)&=\inf_{\Pi\in\mathfrak R_3}\max_{P\in F}
+\mathbb E_\mu C_\Pi(\cdot,P).
+\end{aligned}
+\tag{25.8}
+$$
+
+这里的随机目标是固定来源各自期望的最大值，不是期望最大值，也没有来源先验。叶安全只表示一次查询属于当前原型的必需叶证书，不缩小合法地址菜单。对非空 $F$，**叶安全递归路由树**是以下有限二叉路由：根标为 $F$，非单元素节点 $S$ 选 $u\in\Delta(S)$，两个孩子分别为 $S_\alpha=\{P\in S:\lambda_P(u)=\alpha\}$、$S_\beta=\{P\in S:\lambda_P(u)=\beta\}$，终端节点为单元素族；到终端后还须核对该原型的全部带标签叶，任何非叶路由响应或核对不匹配均转入定理 23.2 证明中的全域后备判定。路由节点的 $S$ 只保留匹配历史的评价原型，不是全部实际相容来源纤维。
+
+个体最小费用 $n_P$ 及其完整叶证书直接采用[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)，其条件在此为 $d=3=3\cdot1$。已知输入认证的有限布尔域合同见 [Kayal、Laplante、Larroque、Prūsis、Vihrovs，*Certification complexity of Boolean functions*，arXiv:2609.26757v1，定义 1—2、定理 3(1)](https://arxiv.org/pdf/2609.26757v1#page=3)；本定义保留整个 $\mathcal T$ 上的判定合同，不采用该文已知输入认证问题的缩减输入域。完整来源、组成、规范数量地址、原始地址响应、组成祖先许可与实际逆执行仍是定义 23.1 的不同对象和任务。
+
+**定理 25.2（有限族的遗传信息叶判据）。** 对每个有限族 $F\subseteq\mathcal I_3$，有
+
+$$
+\boxed{\quad
+F\text{ 确定性相容}
+\ \Longleftrightarrow\
+F\text{ 期望相容}
+\ \Longleftrightarrow\
+\forall S\subseteq F,\ |S|\ge2\Longrightarrow\Delta(S)\ne\varnothing.
+\quad}
+\tag{25.9}
+$$
+
+对非空 $F$，这些条件亦等价于存在定义 25.1 的叶安全递归路由树。其路由路径至多使用 $|F|-1$ 个不同地址，接上完整叶核对和全域后备后，对每个 $P\in F$ 的总费用恰为 $n_P$。
+
+**证明。** 先设一个 $\pi\in\mathfrak D_3$ 同时取得全部 $n_P$，任取 $S\subseteq F$、$|S|\ge2$。令 $J_P$ 为该策略在 $P$ 上接受前所问的不同地址集合。直接使用定理 23.2 证明中的式（23.6），得到 $L(P)\subseteq J_P$；费用等于 $n_P$ 遂使 $J_P=L(P)$。式（23.6）适用于各自实际有限记录的最大地址长度，不预置未知输入高度。
+
+所有 $P\in S$ 的运行具有相同初始化。在第一次响应差异之前，同记录重放保证查询、缓存、内部控制和停止决定相同；这里直接使用[运输记忆完成卷第 6.4 节、式（CE.19）—（CE.21）之后的完整初始化下降合同](https://github.com/the-omega-institute/trureturing/blob/3b7e298150f95ea135afc222e230c614d03c02e1/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#64-商观察的全部未来与行为纤维)的只读同历史条件，不调用群平移。第一次差异必在任一运行停止前发生。否则，在最早停止时所有运行都凭同一记录同时接受；该记录含任取一个 $P$ 的全部带标签叶，而所有其他成员均匹配它。定理 18.2 所供应的完整叶恢复使每个成员都等于 $P$，与 $|S|\ge2$ 矛盾。因此确有第一次差异地址 $u$，且每个 $P\in S$ 都实际问了 $u$。由 $J_P=L(P)$，$u$ 是所有成员的叶；不同的叶响应必包含两种标签，故 $u\in\Delta(S)$。不变来源上的重复地址不能产生第一次响应差异。任意 $S$ 均满足所需条件。
+
+反之，设式（25.9）的遗传条件成立，先取 $F\ne\varnothing$。在所有有限地址的固定短词优先次序下，非单元素节点 $S$ 选择有限非空集 $\Delta(S)$ 的首地址。两种叶标签将 $S$ 分成两个非空真子集；每个非单元素孩子仍满足遗传条件，故按 $|S|$ 归纳得到有限路由树。选中的分离地址不曾在同一路径上查询：先前记录中的每个地址在当前全部幸存原型上具有相同响应，不能属于 $\Delta(S)$。每次路由严格减少原型数，因而每条路径至多有 $|F|-1$ 个不同路由地址。
+
+将此路由实际用于未知 $T\in\mathcal T$。路由查询报告叶时进入相应孩子，报告分支或不存在时进入定理 23.2 证明中的后备。达到单元素节点 $\{P\}$ 后按固定次序核对 $P$ 的全部带标签叶，复用缓存；任一不匹配进入同一后备，完整匹配才返回 $1$。完整匹配的充分性与字面唯一性直接取自定理 18.2 及其引用的[母卷定理 9.3](https://github.com/the-omega-institute/trureturing/blob/3b7e298150f95ea135afc222e230c614d03c02e1/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，故接受正确。原型路由与核对均有限；其余来源直接交给已有后备：它恢复实际有限树及实际叶数 $m$，在叶数至多 $m$ 的前像树中作有限穷尽判定，适用于全部正来源与负来源。此调用使用定理 23.2 已证的替换不减叶数与全域终止结论，不把原型不匹配当作负性证明。
+
+在固定评价来源 $P\in F$ 上，每次路由都保留 $P$，全部路由地址均为 $P$ 的叶；终端核对恰补齐 $L(P)$，没有额外地址。因此该全域策略的费用为 $n_P$。$F=\varnothing$ 时直接采用同一已有全域后备即可。确定性相容又以单点种子律给期望相容。
+
+现在设 $\Pi\in\mathfrak R_3$ 同时取得每个 $n_P$ 的期望。由[母卷定理 9.2 的单射有限词编码](https://github.com/the-omega-institute/trureturing/blob/3b7e298150f95ea135afc222e230c614d03c02e1/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，整个 $\mathcal T$ 可数；有限地址和完整有限四值记录也可数。定义 25.1 的接口满足[定理 22.1](#22-可数只读记录的有声返回与终止精确探针许可的分界)：先由其式（22.4）取该策略的共同满测度有声返回集 $G_\Pi$，再另行应用总性子句（22.7），得到共同满测度集 $G_\Pi^{\mathrm{tot}}\subseteq G_\Pi$，其中每个固定种子策略都属于 $\mathfrak D_3$。这一步分别用到全部来源可数和逐来源可测零测未终止事件；有声返回本身不蕴含总性。
+
+对 $\omega\in G_\Pi^{\mathrm{tot}}$，式（23.6）给每个 $P\in F$ 的 $C_\Pi(\omega,P)\ge n_P$。已知期望恰为有限值 $n_P$，所以可测非负超额 $(C_\Pi(\cdot,P)-n_P)_+$ 的积分为零，从而 $C_\Pi(\cdot,P)=n_P$ 几乎处处。有限交集因此满足
+
+$$
+G_\Pi^*=G_\Pi^{\mathrm{tot}}\cap
+\bigcap_{P\in F}\{\omega:C_\Pi(\omega,P)=n_P\},
+\qquad \mu(G_\Pi^*)=1.
+\tag{25.10}
+$$
+
+取其中一个种子便得同时取得全部 $n_P$ 的全域正确总策略，已证的必要性遂给遗传条件。满测度集允许依赖 $\Pi$，没有对所有随机策略取共同交集，也没有要求统一全来源时间界。
+
+最后，任一这样的递归路由树接上核对与后备，已由上述构造给确定性相容，进而给遗传条件；遗传条件又已构造路由树。因此所述路由等价也成立。证毕。
+
+**推论 25.3（三元均取得时的四元条件）。** 设 $F\subseteq\mathcal I_3$ 有四个元素，每个三元素子族都确定性相容，或等价地都期望相容。则
+
+$$
+\boxed{\quad
+F\text{ 确定性相容}
+\ \Longleftrightarrow\
+F\text{ 期望相容}
+\ \Longleftrightarrow\
+\Delta(F)\ne\varnothing.
+\quad}
+\tag{25.11}
+$$
+
+**证明。** 共同取得在限制评价族后仍成立，所以每个二元素子族也相容。定理 25.2 因而已保证所有真非单元素子族的 $\Delta$ 非空；四元族只剩 $\Delta(F)$ 这一个条件。再用该定理即得式（25.11）。这里需要在四者之间产生不同叶标签的共同叶；四者标签相同的共同叶不属于 $\Delta(F)$，不能分裂共同历史。证毕。
+
+**定义 25.4（循环四孔实际来源）。** 直接复用[命题 23.3 的式（23.9）、（23.10）、（23.15）](#23-全有限来源上两个指定正例的共同最优地址费用)，记
+
+$$
+\begin{gathered}
+E=\langle\beta,\alpha\rangle,\quad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\quad
+C=\langle A,E\rangle=\rho^3(\beta),\\
+u_0=\langle\langle\alpha,\alpha\rangle,\beta\rangle,
+\quad v_0=\langle\langle\alpha,\beta\rangle,\alpha\rangle,\\
+U=\langle\langle A,A\rangle,C\rangle=\rho^3(u_0),
+\qquad V=\langle\langle A,C\rangle,A\rangle=\rho^3(v_0).
+\end{gathered}
+\tag{25.12}
+$$
+
+定义四孔拼接映射 $B:\mathcal T^4\to\mathcal T$ 和孔地址
+
+$$
+B(x_1,x_2,x_3,x_4)=\langle\langle x_1,x_2\rangle,\langle x_3,x_4\rangle\rangle,
+\qquad (p_1,p_2,p_3,p_4)=(\mathtt{LL},\mathtt{LR},\mathtt{RL},\mathtt{RR}).
+\tag{25.13}
+$$
+
+四个完整评价来源及指定完整前像为
+
+$$
+\begin{aligned}
+P_1&=B(A,U,U,V)=\rho^3\bigl(B(\alpha,u_0,u_0,v_0)\bigr),\\
+P_2&=B(V,A,U,U)=\rho^3\bigl(B(v_0,\alpha,u_0,u_0)\bigr),\\
+P_3&=B(U,V,A,U)=\rho^3\bigl(B(u_0,v_0,\alpha,u_0)\bigr),\\
+P_4&=B(U,U,V,A)=\rho^3\bigl(B(u_0,u_0,v_0,\alpha)\bigr),
+\qquad F_4=\{P_1,P_2,P_3,P_4\}.
+\end{aligned}
+\tag{25.14}
+$$
+
+对完整树 $X$，以 $\mathcal F(X)=\{(u,\lambda_X(u)):u\in L(X)\}$ 记其带标签叶前沿；地址拼接记为 $pu$。以下下标均按四循环解释，$P_{j+4}=P_j$、$p_{j+4}=p_j$。本定义只指定完整来源与观察地址，不从组成逆矩阵生成树前像，也不向未知输入提供免费读数。
+
+**定理 25.5（循环四族的完整前沿与三元可取得、四元不可取得）。** 定义 25.4 的四棵树是两两不同的实际三步像，式（25.14）给各自唯一完整前像；每个前像的组成为 $(7,3)^{\mathsf T}$，且
+
+$$
+P_i\in\mathcal I_3,\qquad
+c(P_i)=(13,23)^{\mathsf T},\qquad n_{P_i}=36,\qquad q(P_i)=95
+\quad(1\le i\le4).
+\tag{25.15}
+$$
+
+三个块的全部带标签叶前沿为
+
+$$
+\begin{aligned}
+\mathcal F(A)=\{& (\mathtt{LL},\beta),(\mathtt{LR},\alpha),(\mathtt R,\beta)\},\\
+\mathcal F(U)=\{& (\mathtt{LLLL},\beta),(\mathtt{LLLR},\alpha),(\mathtt{LLR},\beta),\\
+& (\mathtt{LRLL},\beta),(\mathtt{LRLR},\alpha),(\mathtt{LRR},\beta),\\
+& (\mathtt{RLLL},\beta),(\mathtt{RLLR},\alpha),(\mathtt{RLR},\beta),\\
+& (\mathtt{RRL},\beta),(\mathtt{RRR},\alpha)\},\\
+\mathcal F(V)=\{& (\mathtt{LLLL},\beta),(\mathtt{LLLR},\alpha),(\mathtt{LLR},\beta),\\
+& (\mathtt{LRLLL},\beta),(\mathtt{LRLLR},\alpha),(\mathtt{LRLR},\beta),\\
+& (\mathtt{LRRL},\beta),(\mathtt{LRRR},\alpha),\\
+& (\mathtt{RLL},\beta),(\mathtt{RLR},\alpha),(\mathtt{RR},\beta)\}.
+\end{aligned}
+\tag{25.16}
+$$
+
+对式（25.14）的每一行 $(X_1,X_2,X_3,X_4)$，该目标的全部 $36$ 片带标签叶精确给为
+
+$$
+\mathcal F\bigl(B(X_1,X_2,X_3,X_4)\bigr)
+=\bigsqcup_{h=1}^4\{(p_hu,\ell):(u,\ell)\in\mathcal F(X_h)\}.
+\tag{25.17}
+$$
+
+令 $t=\mathtt{LRLR}$、$q_j=p_jt$，其完整四值响应表为
+
+$$
+\begin{array}{c|cccc}
+\text{地址}&\operatorname{out}_{P_1}&\operatorname{out}_{P_2}&\operatorname{out}_{P_3}&\operatorname{out}_{P_4}\\ \hline
+q_1=\mathtt{LLLRLR}&\mathsf{absent}&\mathsf{leaf}_\beta&\mathsf{leaf}_\alpha&\mathsf{leaf}_\alpha\\
+q_2=\mathtt{LRLRLR}&\mathsf{leaf}_\alpha&\mathsf{absent}&\mathsf{leaf}_\beta&\mathsf{leaf}_\alpha\\
+q_3=\mathtt{RLLRLR}&\mathsf{leaf}_\alpha&\mathsf{leaf}_\alpha&\mathsf{absent}&\mathsf{leaf}_\beta\\
+q_4=\mathtt{RRLRLR}&\mathsf{leaf}_\beta&\mathsf{leaf}_\alpha&\mathsf{leaf}_\alpha&\mathsf{absent}
+\end{array}
+\tag{25.18}
+$$
+
+每个三元素子族同时取得三个个体最小费用 $36$，而四元族不相容。更确切地，
+
+$$
+q_j\in\Delta(F_4\setminus\{P_j\})\quad(1\le j\le4),
+\qquad \bigcap_{i=1}^4L(P_i)=\varnothing,
+\qquad \Delta(F_4)=\varnothing.
+\tag{25.19}
+$$
+
+**证明。** 式（25.12）的完整块前像取自命题 23.3；$\rho^3$ 保持二叉构造，故拼接这些前像便给式（25.14）的完整实际等式。四个前像在 $\alpha$ 原子所在孔位上不同，因而两两字面不同。[规范编译卷命题 4.3 的树替换单射性](https://github.com/the-omega-institute/trureturing/blob/3b7e298150f95ea135afc222e230c614d03c02e1/docs/develop/theory/FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)经三次复合仍单射，给四个像的不同性和前像唯一性。该命题的字面树结论与其组成逆公式分别使用。
+
+$u_0,v_0$ 各有两片 $\alpha$ 和一片 $\beta$，所以四个前像均有 $7$ 片 $\alpha$、$3$ 片 $\beta$。命题 23.3 已给 $c(A)=(1,2)^{\mathsf T}$、$c(U)=c(V)=(4,7)^{\mathsf T}$。各行有一个 $A$、三个 $U/V$，由[母卷定义 3.3、定理 3.4 的组成加性与替换作用](https://github.com/the-omega-institute/trureturing/blob/3b7e298150f95ea135afc222e230c614d03c02e1/docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)，有
+
+$$
+(1,2)^{\mathsf T}+3(4,7)^{\mathsf T}=(13,23)^{\mathsf T},
+\qquad 13+23=36,
+\qquad 2\cdot13+3\cdot23=95.
+\tag{25.20}
+$$
+
+最后一式使用定义 1.1 的数量读数。这些都是固定完整原型的静态计算，不是未知来源运行中免费取得的组成、数量或叶数报告。
+
+为核对式（25.16），$A$ 的两片左叶来自 $E$，右叶为 $\beta$。$C=\langle A,E\rangle$ 的全部叶为 $\mathtt{LLL}:\beta$、$\mathtt{LLR}:\alpha$、$\mathtt{LR}:\beta$、$\mathtt{RL}:\beta$、$\mathtt{RR}:\alpha$。$U$ 在孔位 $\mathtt{LL},\mathtt{LR},\mathtt R$ 分别放入 $A,A,C$，$V$ 在这三个孔位分别放入 $A,C,A$；将这些完整前沿逐一加上相应前缀，恰得到式（25.16）的每一项，分别共 $3,11,11$ 项。四孔上下文的全部叶均位于四个互不为前缀的 $p_h$ 下，所以其带标签前沿正是式（25.17）的不交并，没有省略的子树。
+
+$t=\mathtt{LRLR}$ 在 $A$ 上先到 $\mathtt{LR}$ 的 $\alpha$ 叶，再越过该叶，故响应为不存在；在 $U,V$ 上的响应分别是 $\alpha,\beta$ 叶，这两项直接复用命题 23.3 的式（23.11），也由式（25.16）给出。将这三个局部响应按式（25.14）放入每个孔，便逐项给出式（25.18）。省去 $P_j$ 后，第 $j$ 行的三个剩余响应含一个 $\beta$ 叶和两个 $\alpha$ 叶，故 $q_j\in\Delta(F_4\setminus\{P_j\})$。六个二元子族 $(1,2),(1,3),(1,4),(2,3),(2,4),(3,4)$ 分别在 $q_4,q_2,q_3,q_1,q_1,q_2$ 上有相反叶标签；因此所有真非单元素子族都满足定理 25.2 的分离条件，各三元族相容。
+
+四重叶交集必须检查全部地址。由式（25.12），$U,V$ 在 $A$ 的全部三个叶地址 $\mathtt{LL},\mathtt{LR},\mathtt R$ 上均为分支，故 $L(A)\cap L(U)=L(A)\cap L(V)=\varnothing$。每个孔位 $p_h$ 在四个目标中恰有一个 $A$ 和三个 $U/V$，所以该孔位内不可能有四者共同叶。其余可能的节点只有上下文祖先 $\varepsilon,\mathtt L,\mathtt R$，均为分支；所有叶均由式（25.17）覆盖。因而四重叶交集为空，$\Delta(F_4)$ 也为空。定理 25.2 或推论 25.3 遂给四元不相容，得到式（25.19）及全部取得结论。证毕。
+
+**定理 25.6（同一策略联合费用下界与循环端点锐值）。** 对定义 25.4 的 $F_4$，存在四个 $\pi_j\in\mathfrak D_3$，满足
+
+$$
+C_{\pi_j}(P_i)=36+\mathbf1_{\{i=j\}},
+\qquad
+\bigl(C_{\pi_j}(P_1),\ldots,C_{\pi_j}(P_4)\bigr)=
+\begin{cases}
+(37,36,36,36),&j=1,\\
+(36,37,36,36),&j=2,\\
+(36,36,37,36),&j=3,\\
+(36,36,36,37),&j=4.
+\end{cases}
+\tag{25.21}
+$$
+
+每个 $\pi\in\mathfrak D_3$ 和每个 $\Pi\in\mathfrak R_3$ 分别有
+
+$$
+\sum_{i=1}^4C_\pi(P_i)\ge145,
+\qquad
+\sum_{i=1}^4\mathbb E_\mu C_\Pi(\cdot,P_i)\ge145.
+\tag{25.22}
+$$
+
+因此两个优化值均达到，且精确为
+
+$$
+\boxed{\qquad D_3^+(F_4)=37,
+\qquad R_3^+(F_4)=\frac{145}{4}.\qquad}
+\tag{25.23}
+$$
+
+均匀选取 $j\in\{1,2,3,4\}$ 并运行 $\pi_j$ 的共同输入无关混合，使每个固定 $P_i$ 的期望为 $145/4$；对这个混合，另一个量 $\mathbb E_\mu\max_i C_\Pi(\cdot,P_i)$ 等于 $37$。
+
+**证明。** 固定 $j$，先查询 $q_j$。若为 $\mathsf{absent}$，暂定原型为 $P_j$；若为 $\mathsf{leaf}_\beta$，暂定为 $P_{j+1}$；若为 $\mathsf{leaf}_\alpha$，再查询 $q_{j+1}$，第二响应为 $\mathsf{leaf}_\beta$ 时暂定为 $P_{j+2}$，为 $\mathsf{leaf}_\alpha$ 时暂定为 $P_{j+3}$。第一响应为分支，或第二响应为分支、不存在时，直接进入定理 23.2 已证的全域后备。选中原型后核对式（25.17）的全部带标签叶，复用缓存；任何不匹配进入同一后备，完整匹配才接受。
+
+定理 18.2 的完整叶充分性保证这里的接受正确。路由至多两次，原型核对只有有限片叶，后备对实际有限来源全域正确且有限终止，所以这些 $\pi_j$ 都属于 $\mathfrak D_3$。不存在响应只用于暂定选择，不承担身份或正性结论；原型之外的正来源和负来源都由完整核对或已有后备处理。
+
+在 $P_j$ 上，式（25.18）使首响应为不存在，$q_j\notin L(P_j)$；核对仍需全部 $36$ 片叶，费用为 $37$。在 $P_{j+1}$ 上首响应为 $\beta$ 叶，首查询已经属于其完整叶前沿，费用为 $36$。在 $P_{j+2},P_{j+3}$ 上首响应均为 $\alpha$ 叶，第二响应分别为 $\beta,\alpha$ 叶；两个查询位于不同孔，地址不同且均属于相应来源的叶，完整核对复用二者，费用仍为 $36$。每个评价来源都暂定选中自己且全部核对匹配，故没有进入后备，得到式（25.21）。特别地，$\pi_j$ 对省去 $P_j$ 的三元族同时取得所有个体最小值。
+
+现固定任意一个 $\pi\in\mathfrak D_3$。它必须在有限内部计算后作首查询。否则，无查询的有限返回在共同初始化下对所有输入相同，不能同时正确处理 $A=\rho^3(\alpha)\in\mathcal I_3$ 与 $\alpha\notin\mathcal I_3$；后一个负性直接取自规范编译卷命题 4.3 的 $\alpha\notin\rho(\mathcal T)$。无查询而永久内部计算又违反全域有限终止。于是首地址 $s$ 在四个目标上相同，且是首次计费地址。
+
+式（25.19）的四重叶交集为空，故 $s\notin L(P_i)$ 至少对一个 $i$ 成立。另一方面，四个接受运行均满足定理 23.2 证明中的式（23.6）：其不同地址集 $J_i$ 包含全部 $36$ 个必查叶，同时 $s\in J_i$。至少一个运行额外计一个叶外地址，故
+
+$$
+\sum_{i=1}^4C_\pi(P_i)\ge4\cdot36+1=145,
+\qquad \max_i C_\pi(P_i)\ge37.
+\tag{25.24}
+$$
+
+这是一项对同一策略四个实际运行的联合不等式，允许全部自适应后续和任意长地址，不是四个分别优化的三元族不等式之和。式（25.21）的任一端点策略取得最大费用 $37$，给确定性锐值。
+
+固定 $\Pi\in\mathfrak R_3$。与定理 25.2 的证明相同，母卷定理 9.2 给全来源可数；先应用定理 22.1 的有声返回式（22.4），再另行应用其共同总性式（22.7），得到该 $\Pi$ 的可测满测度集 $G_\Pi^{\mathrm{tot}}$。每个 $\omega$ 在这个集合上给一个属于 $\mathfrak D_3$ 的固定种子策略，所以式（25.24）的同策略和下界逐种子成立。可测非负扩展费用的有限和允许积分相加，包括无穷期望，得到
+
+$$
+\sum_{i=1}^4\mathbb E_\mu C_\Pi(\cdot,P_i)
+=\int_\Omega\sum_{i=1}^4 C_\Pi(\omega,P_i)\,d\mu(\omega)
+\ge145,
+\qquad
+\max_i\mathbb E_\mu C_\Pi(\cdot,P_i)\ge\frac{145}{4}.
+\tag{25.25}
+$$
+
+例外零测种子不改变非负积分下界；这里仍只对一个固定 $\Pi$ 取共同种子集。
+
+最后，取一次输入无关的均匀四元种子，选择式（25.21）的四个策略。每个声明种子都已全域正确且有限终止，有限种子空间使全部所需事件与费用可测，所以此混合属于 $\mathfrak R_3$。每个固定 $P_i$ 恰在一个种子上费用为 $37$、三个种子上费用为 $36$，于是
+
+$$
+\mathbb E_\mu C_\Pi(\cdot,P_i)
+=\frac{37+36+36+36}{4}=\frac{145}{4}\quad(1\le i\le4),
+\qquad
+\mathbb E_\mu\max_i C_\Pi(\cdot,P_i)=37.
+\tag{25.26}
+$$
+
+结合式（25.25）得到随机锐值、取得性及式（25.22）、（25.23）的全部结论。所有量仅涉及指定实际四族及定义 25.1 的全域接口，不推出任意四来源的锐值分类、最小见证规模、一般遗传模式的实际替换实现或物理逆操作。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 26. 同组成实际三步像的有限遗传相容模式与无统一 Helly 阶数
+
+**定义 26.1（全域合同、指标信息叶与全孔上下文）。** 固定[定义 25.1](#25-有限正来源族的遗传共享叶分离与四元共同费用)的全部合同：未知输入为所有非空有限自由有序满二叉 $\alpha/\beta$ 树组成的 $\mathcal T$，$d=3$，$\mathcal I_3=\rho^3(\mathcal T)$，目标为 $\iota_3(T)=\mathbf1_{\{T\in\mathcal I_3\}}$。树的次序、括号和标签均保留。所有有限左右地址，包括空地址 $\varepsilon$，均合法；查询只报告同一不变来源的原始 $\mathsf{leaf}_\alpha$、$\mathsf{leaf}_\beta$、$\mathsf{branch}$ 或 $\mathsf{absent}$。费用只计缓存后的不同地址，未有限终止时为 $+\infty$。地址长度、定位、计算和种子取得沿用原费用约定；地址查询无须先查询其前缀。
+
+$\mathfrak D_3$ 中每个策略在整个 $\mathcal T$ 上正确且有限终止。$\mathfrak R_3$ 中每个策略带有一个输入无关的可测种子律，满足同种子重放、逐来源几乎处处正确且有限终止，以及非负扩展费用可测。每个策略的完整初始化与实际输入无关，可包含固定的完整评价原型，作为取得费用的设计资料；这不承诺输入的正性、身份、组成、叶数、深度或所属子族，也不产生额外免费来源报告。对子族共同取得费用，必须使用同一个全域策略；随机情形同时固定它的同一个种子律，分别计算每个实际来源上的期望，不给来源先验，也不把这些期望换成期望最大费用。接受仍须完成[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)的全部带标签叶证书，原型不匹配仍由[定理 23.2](#23-全有限来源上两个指定正例的共同最优地址费用)已有的全域有限后备处理。
+
+设 $\boldsymbol P=(P_1,\ldots,P_m)$ 是一个有限指标树族。对非空 $S\subseteq[m]=\{1,\ldots,m\}$，定义
+
+$$
+\Delta_{\boldsymbol P}(S)=
+\left\{w\in\bigcap_{i\in S}L(P_i):
+\{\lambda_{P_i}(w):i\in S\}=\{\alpha,\beta\}\right\}.
+\tag{26.1}
+$$
+
+该式允许不同指标对应同一棵树。若 $P_i$ 两两不同且 $|S|\ge2$，它就是定义 25.1 的 $\Delta(P_S)$，其中 $P_S=\{P_i:i\in S\}$；单元素指标集的信息叶集为空。
+
+直接沿用[命题 23.3 的式（23.9）、（23.10）、（23.15）](#23-全有限来源上两个指定正例的共同最优地址费用)及[定义 25.4](#25-有限正来源族的遗传共享叶分离与四元共同费用)的完整块和前像：
+
+$$
+\begin{gathered}
+E=\langle\beta,\alpha\rangle,\quad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\quad
+C=\langle A,E\rangle=\rho^3(\beta),\\
+u_0=\langle\langle\alpha,\alpha\rangle,\beta\rangle,
+\qquad v_0=\langle\langle\alpha,\beta\rangle,\alpha\rangle,\\
+U=\langle\langle A,A\rangle,C\rangle=\rho^3(u_0),
+\qquad V=\langle\langle A,C\rangle,A\rangle=\rho^3(v_0),\\
+c(A)=(1,2)^{\mathsf T},\qquad c(U)=c(V)=(4,7)^{\mathsf T}.
+\end{gathered}
+\tag{26.2}
+$$
+
+[定理 25.5 的完整前沿式（25.16）](#25-有限正来源族的遗传共享叶分离与四元共同费用)供应
+
+$$
+L(A)\cap L(U)=L(A)\cap L(V)=\varnothing,
+\qquad
+D:=\Delta(\{U,V\})\ni t:=\mathtt{LRLR}.
+\tag{26.3}
+$$
+
+同一既有前沿给 $U,V$ 在 $A$ 的三个叶地址 $\mathtt{LL},\mathtt{LR},\mathtt R$ 上均为分支，且
+
+$$
+\bigl(\operatorname{out}_A(t),\operatorname{out}_U(t),
+\operatorname{out}_V(t)\bigr)
+=(\mathsf{absent},\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta).
+\tag{26.4}
+$$
+
+对整数 $T\ge1$，定义每片叶都是孔的有序满二叉上下文
+
+$$
+\begin{aligned}
+B_1(x_1)&=x_1,\\
+B_T(x_1,\ldots,x_T)&=
+\langle x_1,B_{T-1}(x_2,\ldots,x_T)\rangle\quad(T\ge2).
+\end{aligned}
+\tag{26.5}
+$$
+
+孔按叶序编号，地址记为 $p_1,\ldots,p_T$。$T=1$ 时 $p_1=\varepsilon$；$T\ge2$ 时 $p_j=\mathtt R^{j-1}\mathtt L$（$j<T$），$p_T=\mathtt R^{T-1}$。上下文没有孔以外的字面叶。记 $pD=\{pw:w\in D\}$，$p\prec w$ 表示 $p$ 是 $w$ 的真前缀。
+
+**引理 26.2（任意块表的全部地址报告与信息叶恒等式）。** 给定整数 $m,T\ge1$ 和任意表 $X_{ij}\in\{A,U,V\}$，令 $P_i=B_T(X_{i1},\ldots,X_{iT})$。对每个有限地址 $w$，原始四值报告精确为
+
+$$
+\operatorname{out}_{P_i}(w)=
+\begin{cases}
+\mathsf{branch},&w\prec p_j\text{ 对某个 }j,\\
+\operatorname{out}_{X_{ij}}(v),&w=p_jv\text{ 对唯一的 }j.
+\end{cases}
+\tag{26.6}
+$$
+
+两种情形互斥且穷尽。对每个 $S\subseteq[m]$、$|S|\ge2$，有精确不交并
+
+$$
+\boxed{\quad
+\Delta_{\boldsymbol P}(S)=
+\bigsqcup_{\substack{1\le j\le T\\
+\{X_{ij}:i\in S\}=\{U,V\}}}p_jD.
+\quad}
+\tag{26.7}
+$$
+
+因此，信息叶非空当且仅当某列在 $S$ 上同时出现 $U,V$ 且不出现 $A$。
+
+**证明。** 上下文的孔地址前缀自由。沿任意有限词 $w$ 从根下降，或者该词在上下文内节点处结束，或者经过唯一一个孔 $p_j$ 后继续读取残词 $v$。上下文有限且满二叉，所以没有未到孔便离开上下文的第三种路径。前一种情形等价于 $w$ 是某个孔的真前缀，且该节点在全部 $P_i$ 中均为分支。后一种情形恰读取已填入的 $X_{ij}$：它包含残词为空时的块根报告，也包含越过块叶之后的不存在报告。这证明式（26.6），包括空地址与所有任意长地址。
+
+特别地，各行的全部带标签叶前沿为
+
+$$
+\mathcal F(P_i)=
+\bigsqcup_{j=1}^T
+\{(p_jv,\ell):(v,\ell)\in\mathcal F(X_{ij})\}.
+\tag{26.8}
+$$
+
+若 $w$ 是全部 $i\in S$ 的共同叶，它不能是上下文内节点。式（26.6）及孔地址的唯一性使它在每一行都位于同一个孔 $p_j$ 下；残词 $v$ 必为该列全部块的共同叶。由此逐列检查即可穷尽全部共同叶，没有跨孔拼接产生的叶。
+
+一列在 $S$ 上只有一种块时，所有共同叶的标签都相同，故无信息叶。一列同时含 $A$ 和 $U$ 或 $V$ 时，式（26.3）的叶地址不交关系使它没有共同叶。其余可能的非恒定列恰含 $U,V$ 而不含 $A$，共同叶中标签不同的残词正是 $D$，其贡献为 $p_jD$。这些情况穷尽三种块的所有列模式。不同孔的贡献不交，得到式（26.7）；再用 $t\in D$，得到非空性的充要条件。证毕。
+
+**定理 26.3（面表、无信息补齐与同组成完整前像）。** 设 $m\ge2$，$K\subseteq2^{[m]}$ 下闭且包含每个单元素集：
+
+$$
+S\in K,\ R\subseteq S\Longrightarrow R\in K,
+\qquad \{i\}\in K\quad(1\le i\le m).
+\tag{26.9}
+$$
+
+令 $\mathcal M(K)$ 为 $K$ 的全部极大面。它们非空且覆盖 $[m]$。对每个 $F\in\mathcal M(K)$ 和 $k\in F$，建立一列 $(F,k)$，在行 $i$ 填入
+
+$$
+X_{i,(F,k)}=
+\begin{cases}
+V,&i=k,\\
+U,&i\in F\setminus\{k\},\\
+A,&i\notin F.
+\end{cases}
+\tag{26.10}
+$$
+
+置
+
+$$
+N=\sum_{F\in\mathcal M(K)}|F|,
+\qquad
+\ell_i=\sum_{\substack{F\in\mathcal M(K)\\i\in F}}|F|,
+\qquad M=\max_{1\le i\le m}\ell_i.
+\tag{26.11}
+$$
+
+对每个行 $i$，再添加 $M-\ell_i$ 个分别属于该行的列；每个这样的列只在行 $i$ 填 $U$，其余行全部填 $A$。最终列数为
+
+$$
+T=N+\sum_{i=1}^m(M-\ell_i)\ge1.
+\tag{26.12}
+$$
+
+固定全部列的一个次序，在同一个 $B_T$ 中填入最终表，得到 $P_i$。同时把表中 $A,U,V$ 分别换成 $\alpha,u_0,v_0$，记所得条目为 $Z_{ij}$，并定义完整树
+
+$$
+Q_i=B_T(Z_{i1},\ldots,Z_{iT}).
+\tag{26.13}
+$$
+
+则 $Q_1,\ldots,Q_m$ 两两不同，$P_1,\ldots,P_m$ 也两两不同，各 $Q_i$ 是 $P_i$ 的唯一完整三步前像，且
+
+$$
+\begin{aligned}
+\rho^3(Q_i)&=P_i\in\mathcal I_3,\\
+c(Q_i)&=(T+M,M)^{\mathsf T},\\
+c(P_i)&=(T+3M,2T+5M)^{\mathsf T},
+\qquad n_{P_i}=3T+8M.
+\end{aligned}
+\tag{26.14}
+$$
+
+对每个 $S\subseteq[m]$、$|S|\ge2$，还同时有
+
+$$
+\boxed{\quad \Delta(P_S)\ne\varnothing\ \Longleftrightarrow\ S\in K.\quad}
+\tag{26.15}
+$$
+
+**证明。** 因 $K$ 有限且含每个 $\{i\}$，每个面包含于一个极大面，每个指标属于一个极大面；空面不可能极大。因此式（26.10）的原始列存在，$N\ge m$，各 $\ell_i\ge1$。固定 $S$ 且 $|S|\ge2$。若 $S\in K$，取极大面 $F\supseteq S$ 和 $k\in S$。列 $(F,k)$ 在行 $k$ 为 $V$，在其余 $S$ 行为 $U$，因此由引理 26.2 提供非空的信息叶贡献。
+
+若 $S\notin K$，没有极大面包含 $S$，否则下闭性会给 $S\in K$。故对每一原始列 $(F,k)$，$S$ 上至少出现一个 $A$：$S\cap F=\varnothing$ 时全部是 $A$，$S\cap F\ne\varnothing$ 时同时出现 $A$ 和非 $A$ 块。两种情况在式（26.7）中均无贡献。原始列遂恰编码所有非单元素面。
+
+再固定一个属于行 $i$ 的补齐列。若 $i\notin S$，该列在 $S$ 上恒为 $A$；若 $i\in S$，因 $|S|\ge2$，它在 $S$ 上同时出现 $U,A$。故每个补齐列在每个非单元素 $S$ 上的信息叶贡献都为空。全部列一次填入最终的 $B_T$ 后，原始列保留其局部块关系，孔地址由这个最终上下文统一确定。引理 26.2 排除了补齐后产生跨列或上下文共同信息叶的可能，原始列所得非空性等价关系因而仍成立。
+
+每行原有 $\ell_i$ 个非 $A$ 块，又在自己的补齐列增加 $M-\ell_i$ 个 $U$，别人的补齐列在该行都是 $A$。于是最终每行恰有 $M$ 个 $U/V$ 和 $T-M$ 个 $A$。由式（26.2）及[母卷定义 3.3、定理 3.4 的组成加性与替换作用](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)，有
+
+$$
+\begin{aligned}
+c(P_i)&=(T-M)(1,2)^{\mathsf T}+M(4,7)^{\mathsf T}
+=(T+3M,2T+5M)^{\mathsf T},\\
+c(Q_i)&=(T-M)(1,0)^{\mathsf T}+M(2,1)^{\mathsf T}
+=(T+M,M)^{\mathsf T}.
+\end{aligned}
+\tag{26.16}
+$$
+
+相加像的两个组成坐标即得 $n_{P_i}=3T+8M$。这些计数是指定完整树的构造读数，不是未知输入的初始化承诺。
+
+$\rho^3$ 保持每个二叉构造；式（26.2）已给三个块的字面前像。因此将式（26.13）的每个孔分别替换，直接得到
+
+$$
+\rho^3(Q_i)
+=B_T\bigl(\rho^3(Z_{i1}),\ldots,\rho^3(Z_{iT})\bigr)
+=B_T(X_{i1},\ldots,X_{iT})=P_i.
+\tag{26.17}
+$$
+
+这是完整实际树的等式。对 $i\ne j$，选一个含 $i$ 的极大面 $F$。原始列 $(F,i)$ 在行 $i$ 是 $V$，在行 $j$ 则为 $U$ 或 $A$；对应前像在同一个孔分别为 $v_0$ 和 $u_0$ 或 $\alpha$。三个前像字面不同，固定上下文的该孔子树不同就使完整树不同，所以 $Q_i\ne Q_j$。添加列保留了此原始列，不能消去这处差别。
+
+直接调用[规范编译卷命题 4.3 的树替换单射性](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)三次，得到 $\rho^3$ 单射、$P_i\ne P_j$，并得到式（26.13）前像的唯一性；该卷原子 $A,B$ 在这里分别对应 $\alpha,\beta$。此调用使用字面树的单射结论，组成逆公式不承担实际前像存在性。最终各行不同，使式（26.7）的指标信息叶就是 $\Delta(P_S)$，故此前的非空性等价给式（26.15）。证毕。
+
+**定理 26.4（全部有限遗传相容模式的精确实际实现）。** 在定义 26.1 的全来源合同下，对每个 $m\ge2$ 和每个满足式（26.9）的 $K$，存在定理 26.3 的两两不同同组成完整树 $Q_i$ 及两两不同同组成正来源 $P_i=\rho^3(Q_i)$，使对每个 $S\subseteq[m]$，
+
+$$
+\boxed{
+\begin{aligned}
+S\in K
+&\ \Longleftrightarrow\quad
+\exists\pi\in\mathfrak D_3\ \forall i\in S:
+C_\pi(P_i)=n_{P_i}\\
+&\ \Longleftrightarrow\quad
+\exists\Pi\in\mathfrak R_3\ \forall i\in S:
+\mathbb E_\mu C_\Pi(\cdot,P_i)=n_{P_i}.
+\end{aligned}}
+\tag{26.18}
+$$
+
+反之，每个由有限个不同正来源的共同个体最优取得所定义的指标相容族，必下闭且包含空集和所有单元素集。因此，在此实际同组成接口中，这些条件完整刻画有限相容模式。
+
+**证明。** 对 $|S|\ge2$，直接应用[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)，其确定性和期望相容都等价于
+
+$$
+\forall R\subseteq S,\quad |R|\ge2\Longrightarrow\Delta(P_R)\ne\varnothing.
+\tag{26.19}
+$$
+
+定理 26.3 将每个这样的非空信息叶条件精确换成 $R\in K$。若 $S\in K$，下闭性给全部这些 $R\in K$；若 $S\notin K$，取 $R=S$ 即使条件失败。这证明非单元素子族的式（26.18）。这里调用的是既有相容定理的完整结论：它的取得策略在路由结束后补齐全部带标签叶，并在路由响应不是叶或核对不匹配时使用定理 23.2 的全域有限后备。因此这些策略仍处理全部 $\mathcal T$，并未因表的行数有限而缩减实际相容来源域。
+
+此随机等价的前提亦保持原范围：[母卷定理 9.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)供应全树域的单射有限词编码，母卷定理 9.3 与定理 18.2 供应完整叶恢复；定理 25.2 的随机论证分别使用[定理 22.1 的有声返回式（22.4）与另行要求总性的式（22.7）](#22-可数只读记录的有声返回与终止精确探针许可的分界)。其中共同满测度种子集属于一个固定随机策略，依赖该策略；没有覆盖所有策略的共同通用种子，也没有从有声返回单独推出全域终止。式（26.18）直接复用该结论及其前提，不另作种子交换或输入平均。
+
+$S=\{i\}$ 时，定理 18.2 在 $d=3=3\cdot1$ 的范围内已给个体叶最小值及完整证书；采用定理 23.2 的单原型核对及已有后备即取得 $n_{P_i}$。这是既有个体结果的应用。确定性策略以单点种子律也属于 $\mathfrak R_3$，故期望同样取得。$S=\varnothing$ 时，全域有限后备本身给 $\mathfrak D_3\ne\varnothing$，其单点种子策略给 $\mathfrak R_3\ne\varnothing$，空约束也取得。式（26.9）本已使这些 $S$ 属于 $K$，从而涵盖所有子集。
+
+反向，固定任意有限个不同正来源。某个策略在一族上取得所有个体最优时，将评价指标限制到任一子族，仍由同一个策略满足原全域合同且取得对应费用；随机情形连种子律也保持同一个。因此两种指标相容族都下闭。既有个体取得与全域后备使所有单元素集和空集在其中，而定理 25.2 使两种族一致。定理 26.3 与式（26.18）已经在同组成实际三步像中实现每个满足这些必要条件的 $K$，所以没有更多有限模式限制。共同组成为式（26.14）给出的每次构造的一个组成，允许随 $K,m$ 改变。证毕。
+
+**定义 26.5（固定策略空间中的个体最优集合与 Helly 阶数）。** 对每个 $P\in\mathcal I_3$，在固定的全域确定性策略空间中定义
+
+$$
+\mathcal O(P)=\{\pi\in\mathfrak D_3:C_\pi(P)=n_P\}.
+\tag{26.20}
+$$
+
+还固定一次种子概率空间
+
+$$
+(\Omega_{\mathrm u},\mathcal A_{\mathrm u},\mu_{\mathrm u})
+=([0,1],\mathcal L,\operatorname{Leb}),
+\tag{26.21}
+$$
+
+其中 $\mathcal L$ 为 Lebesgue 可测集。以 $\mathfrak R_3^{\mathrm u}$ 记恰在这个空间与种子律上满足定义 25.1 的随机策略集合，并定义
+
+$$
+\mathcal O_{\mathrm u}(P)=
+\{\Pi\in\mathfrak R_3^{\mathrm u}:
+\mathbb E_{\mu_{\mathrm u}}C_\Pi(\cdot,P)=n_P\}.
+\tag{26.22}
+$$
+
+$\mathfrak R_3^{\mathrm u}$ 是指定种子空间的策略类；这里只按其合同将每个元素视为 $\mathfrak R_3$ 中的一个随机策略，不把不同种子空间与种子律的控制器相互识别。两个固定空间均由已有后备非空，每个上述个体最优集合也非空；确定性个体取得策略在固定均匀种子上作常值提升即可供应后一结论。空交分别解释为 $\mathfrak D_3$ 和 $\mathfrak R_3^{\mathrm u}$。
+
+对任一固定空间中的集合系统，称整数 $h\ge1$ 是其有限 Helly 阶数，若每个有限子系统在所有至多 $h$ 个集合的交都非空时，全体交必非空。此处只比较集合系统 $\{\mathcal O(P):P\in\mathcal I_3\}$ 或 $\{\mathcal O_{\mathrm u}(P):P\in\mathcal I_3\}$；同组成限定表示每个被检验的有限来源族内部有一个共同组成。
+
+**定理 26.6（任意规模的实际极小不相容族与无统一有限 Helly 阶数）。** 对每个 $m\ge2$，取
+
+$$
+K_m=2^{[m]}\setminus\{[m]\}.
+\tag{26.23}
+$$
+
+用有序对 $(r,k)$、$r\ne k$ 编号各列，在行 $i$ 置
+
+$$
+X_{i,(r,k)}=
+\begin{cases}
+A,&i=r,\\
+V,&i=k,\\
+U,&i\notin\{r,k\}.
+\end{cases}
+\tag{26.24}
+$$
+
+固定列的一个次序，以 $p_{(r,k)}$ 记列 $(r,k)$ 的孔地址。在一个共同的 $B_T$ 中填入该表，并按式（26.13）构造完整前像，则得到两两不同的实际正来源 $P_1,\ldots,P_m$。无需补齐，各行的共同构造读数为
+
+$$
+\begin{aligned}
+T&=m(m-1),\qquad M=(m-1)^2,\\
+c(Q_i)&=\bigl((m-1)(2m-1),(m-1)^2\bigr)^{\mathsf T},\\
+c(P_i)&=(m-1)(4m-3,7m-5)^{\mathsf T},\\
+n_{P_i}&=(m-1)(11m-8).
+\end{aligned}
+\tag{26.25}
+$$
+
+在两个分别固定的策略空间中，同时有
+
+$$
+\begin{aligned}
+\bigcap_{i\in S}\mathcal O(P_i)\ne\varnothing
+&\ \Longleftrightarrow\ S\subsetneq[m],\\
+\bigcap_{i\in S}\mathcal O_{\mathrm u}(P_i)\ne\varnothing
+&\ \Longleftrightarrow\ S\subsetneq[m]
+\qquad(S\subseteq[m]).
+\end{aligned}
+\tag{26.26}
+$$
+
+故每个规模 $m$ 都有实际同组成的极小不相容族：全部真子族取得各自全部个体最优，而全族不能取得。两个个体最优集合系统均没有统一有限 Helly 阶数，即使每个检验族均限制为两两不同的同组成正来源。
+
+**证明。** $K_m$ 的极大面恰为 $F_r=[m]\setminus\{r\}$。式（26.24）是定理 26.3 的列 $(F_r,k)$ 的完整展开，各面有 $m-1$ 个指标，故列数为 $m(m-1)$。对固定行 $i$，$r=i$ 的 $m-1$ 列为 $A$，其余 $(m-1)^2$ 列均为 $U/V$，于是所有 $\ell_i$ 已等于 $M$。代入式（26.14）得到式（26.25）；完整前像、字面不同性及实际正性均由定理 26.3 直接供应。这些数值是该具体构造的组成与叶数，没有最小规模断言。
+
+也可从全部地址恒等式直接读出此表的障碍。固定真非单元素 $S\subsetneq[m]$，选 $r\notin S$ 和 $k\in S$。列 $(r,k)$ 在 $S$ 上含一个 $V$ 和其余 $U$，所以 $p_{(r,k)}t\in\Delta(P_S)$。在全族上，每列既有行 $r$ 的 $A$，又有行 $k$ 的 $V$。式（26.3）与引理 26.2 的完整孔分解遂给
+
+$$
+\Delta(P_S)\ne\varnothing\quad(2\le|S|<m),
+\qquad
+\bigcap_{i=1}^mL(P_i)=\varnothing,
+\qquad \Delta(P_{[m]})=\varnothing.
+\tag{26.27}
+$$
+
+$m=2$ 时第一个范围为空，但每列的 $A,V$ 叶不交仍给后两个结论。定理 26.4，包括其单元素与空族结论，给式（26.26）的确定性等价。
+
+更一般地，对定理 26.3 实现的任意 $K$，式（26.18）直接给
+
+$$
+\bigcap_{i\in S}\mathcal O(P_i)\ne\varnothing
+\ \Longleftrightarrow\ S\in K.
+\tag{26.28}
+$$
+
+若此确定性交非空，固定其中一个 $\pi$，在式（26.21）的种子空间上定义对所有 $\omega$ 都运行 $\pi$ 的常值策略。它在全部输入上正确且有限终止，各来源费用是种子的常值可测函数，故属于 $\mathfrak R_3^{\mathrm u}$，并同时取得该子族全部期望最优。反之，若 $\mathfrak R_3^{\mathrm u}$ 中某策略同时取得这些期望，它也是定义 25.1 合同下的一个 $\mathfrak R_3$ 策略，定理 25.2 已保证确定性相容，遂有同一个确定性策略取得全部对应个体最优。因此在固定均匀种子空间内也有
+
+$$
+\bigcap_{i\in S}\mathcal O_{\mathrm u}(P_i)\ne\varnothing
+\ \Longleftrightarrow\ S\in K.
+\tag{26.29}
+$$
+
+此论证不迁移或识别任何其他种子律；全族不可取得对所有原合同随机策略成立，而真子族的取得已在一个预先固定的均匀种子空间内完成。取 $K=K_m$ 即得式（26.26）的第二行。
+
+现在任给候选阶数 $h\ge1$，取 $m=h+1$。在这 $m$ 个非空个体最优集合中，每个至多 $h$ 个集合的交都对应真子集，因此非空；全部 $m$ 个的交为空。这同时反驳两个固定空间各自的 $h$ 阶 Helly 性。每个 $h$ 都被实际同组成且不同的有限正来源族反驳，故没有统一有限阶数。共同组成随 $m$ 按式（26.25）变化；固定一个组成时，叶数固定，有序满二叉形状和叶标记只有有限种，因此本结论的量词不要求在一个对所有 $m$ 通用的固定组成内实现无界规模。整个结论只涉及 $d=3$ 下共同取得个体叶最优的交模式。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 27. 实际三步像的面费用核心与分数面覆盖锐值
+
+**定义 27.1（指定私有列的完整表与原费用合同）。** 沿用[定义 26.1](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)的全部来源和策略合同。未知输入遍历所有非空有限自由有序满二叉 $\alpha/\beta$ 树 $\mathcal T$，目标是 $\iota_3(W)=\mathbf1_{\{W\in\rho^3(\mathcal T)\}}$；每个有限左右地址都可直接查询，报告仍是同一不变来源的四个原始值，费用仍只计缓存后的不同地址。$\mathfrak D_3$ 要求每个有限输入都正确且有限终止；$\mathfrak R_3$ 要求一个输入无关的种子律、同种子重放、逐来源可测的零测错误及未终止事件，以及可测非负扩展费用。$\mathfrak R_3^{\mathrm u}$ 恰使用式（26.21）已经固定的 $([0,1],\mathcal L,\operatorname{Leb})$，不把其他种子空间或种子律与它识别。
+
+固定整数 $m\ge2$ 和满足式（26.9）的有限下闭族 $K\subseteq2^{[m]}$。取定理 26.3 已完成补齐的表 $X^0=(X^0_{ij})$，其列数和每行非 $A$ 块数分别记为 $T_0,M_0$。全部块 $A,U,V$ 及其字面前像 $\alpha,u_0,v_0$ 直接取式（26.2），不另改块的树语法。固定原列次序，再在末尾对每个 $r\in[m]$ 添加恰一个指定列 $g_r=T_0+r$。置
+
+$$
+T=T_0+m,\qquad H=M_0+1,\qquad n_0=3T_0+8M_0.
+\tag{27.1}
+$$
+
+最终的整个 $m\times T$ 表定义为
+
+$$
+X_{ij}=X^0_{ij}\quad(1\le j\le T_0),\qquad
+X_{i,g_r}=\begin{cases}U,&i=r,\\ A,&i\ne r.\end{cases}
+\tag{27.2}
+$$
+
+只使用一个最终上下文 $B_T$。所有原列和新列的孔地址都按这个 $B_T$ 重新确定；以前 $B_{T_0}$ 的最后一孔地址不能沿用。令 $Z_{ij}$ 是将最终表中的 $A,U,V$ 分别换成 $\alpha,u_0,v_0$ 的条目，定义
+
+$$
+\begin{gathered}
+p_j=\mathtt R^{j-1}\mathtt L\quad(1\le j<T),\qquad
+p_T=\mathtt R^{T-1},\\
+Q_i=B_T(Z_{i1},\ldots,Z_{iT}),\qquad
+P_i=B_T(X_{i1},\ldots,X_{iT})\quad(i\in[m]).
+\end{gathered}
+\tag{27.3}
+$$
+
+这里给的是实际完整前像和像的描述。初始化可含固定的 $K$、最终表、原型和策略，仍不含未知输入的身份、正性、组成、大小、高度或所属子族承诺。以下最大值只在非空评价指标集 $[m]$ 上取；空评价指标集没有这里的最大费用目标。
+
+**定理 27.2（私有列保留相容模式并提供一个叶外分支）。** 定义 27.1 的 $Q_i$ 两两不同且同组成，$P_i$ 两两不同且同组成；$Q_i$ 是 $P_i$ 的唯一完整三步前像。其共同组成和共同叶数为
+
+$$
+\begin{aligned}
+\rho^3(Q_i)&=P_i\in\mathcal I_3,\\
+c(Q_i)&=(T+H,H)^{\mathsf T},\\
+c(P_i)&=(T+3H,2T+5H)^{\mathsf T},\\
+n:=|L(P_i)|&=3T+8H=n_0+3m+8.
+\end{aligned}
+\tag{27.4}
+$$
+
+对每个 $S\subseteq[m]$，该最终族满足
+
+$$
+\begin{aligned}
+|S|\ge2&\ \Longrightarrow\quad
+\bigl(\Delta(P_S)\ne\varnothing\ \Longleftrightarrow\ S\in K\bigr),\\
+S\in K&\ \Longleftrightarrow\quad
+\exists\pi\in\mathfrak D_3\ \forall i\in S:\ C_\pi(P_i)=n.
+\end{aligned}
+\tag{27.5}
+$$
+
+在指定地址 $a_r=p_{g_r}\mathtt{LL}$ 上，有
+
+$$
+\operatorname{out}_{P_i}(a_r)=
+\begin{cases}
+\mathsf{branch},&i=r,\\
+\mathsf{leaf}_\beta,&i\ne r,
+\end{cases}
+\qquad
+a_r\notin L(P_r),\quad a_r\in L(P_i)\ (i\ne r).
+\tag{27.6}
+$$
+
+**证明。** 原表每行恰有 $M_0$ 个 $U/V$ 块。新增 $m$ 列在行 $i$ 中恰贡献一个 $U$ 和 $m-1$ 个 $A$，所以最终每行恰有 $H$ 个 $U/V$ 和 $T-H$ 个 $A$。式（26.2）的块组成及定理 26.3 所调用的组成加性，直接给式（27.4）的两个组成坐标和叶数。$\rho^3$ 保持每个有序二叉构造，且三个条目已有字面前像，故在最终的整个 $B_T$ 中逐孔替换就得到 $\rho^3(Q_i)=P_i$。这不是由组成逆矩阵推断树前像存在。
+
+当 $i\ne j$，指定列 $g_i$ 在行 $i,j$ 的字面前像分别为 $u_0,\alpha$，它们不同；最终上下文的同一个孔子树不同，故 $Q_i\ne Q_j$。直接复用[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的树替换单射性并复合三次，得到 $P_i\ne P_j$ 及完整前像的唯一性。该命题的原子 $A,B$ 在此对应 $\alpha,\beta$，不对应本章作为完整块名字的 $A,U,V$。
+
+固定 $|S|\ge2$。每个新列 $g_r$ 在 $S$ 上或者恒为 $A$，或者含一个 $U$ 和至少一个 $A$。由引理 26.2 的全部孔分解和式（26.7），两种模式均不贡献信息叶。原列的局部模式没有改变；定理 26.3 已证明它们在 $S$ 上贡献非空信息叶的充要条件是 $S\in K$。虽然原孔的完整地址可能改变，引理 26.2 仍在最终 $B_T$ 中排除了跨孔或上下文产生信息叶，故得到式（27.5）的第一行。下闭性再使每个非空面及其全部非单元素子面满足定理 25.2 的遗传条件；反向取子面 $S$ 本身。单元素面用既有单原型完整叶测试，空面用定理 23.2 的全域后备，得到第二行。
+
+最后，式（26.2）给 $A=\langle\langle\beta,\alpha\rangle,\beta\rangle$，故 $\mathtt{LL}$ 在 $A$ 中是 $\beta$ 叶；$U=\langle\langle A,A\rangle,C\rangle$ 的 $\mathtt{LL}$ 子树是分支块 $A$。在最终孔 $p_{g_r}$ 下使用引理 26.2 的原始报告式（26.6）即得式（27.6）。不同孔地址前缀自由，所以全部 $a_r$ 两两不同。新增列对非单元素相容性中性，绝不表示对原始响应信息中性：式（27.6）的分支和叶报告正好区分评价行。证毕。
+
+**引理 27.3（真实缓存供应的独立后续接）。** 设 $\sigma\in\mathfrak D_3$ 是一个固定全域策略。在任意实际 $W\in\mathcal T$ 上先作有限个合法原始查询，得到不同地址集合 $J$ 及其真实缓存。随后给 $\sigma$ 建立它单独运行时的初始化、空逻辑历史和初始控制状态；这个逻辑状态不预填扫描历史，也不把已有缓存当成 $\sigma$ 已执行过的步骤。每当它请求地址 $u$，若外层缓存已有 $u$ 就供应其中的真实报告，否则查询同一 $W$、存入外层缓存并供应报告。将每次请求及所供应报告写入 $\sigma$ 自己的逻辑历史，照它原控制继续。
+
+这样得到的虚拟执行逐步等于 $\sigma$ 从头单独读取 $W$ 的执行，返回值和终止性相同。若 $J_\sigma(W)$ 是该单独执行请求的不同地址集合，则合成执行所付费的不同地址集合恰为
+
+$$
+J\cup J_\sigma(W).
+\tag{27.7}
+$$
+
+此结论也适用于根据有限前缀的报告，从一个固定有限策略菜单中选择后续策略；每种选择都须从被选策略自己的初态开始。
+
+**证明。** 单独执行与虚拟执行在第零步具有相同的 $\sigma$ 初始化、空逻辑历史和控制状态。若它们在某个有限逻辑步骤前相同，内部计算、停止判断和下一查询选择也相同。请求 $u$ 时，外层缓存若命中，其值正是先前对不变 $W$ 取得的 $\operatorname{out}_W(u)$；若未命中，新原始查询同样给 $\operatorname{out}_W(u)$。两执行因此写入相同的新逻辑记录，转到相同状态。归纳涵盖内部步骤、缓存重复请求、所有四值报告和最终返回。
+
+单独的 $\sigma$ 在每个有限 $W$ 上有限终止，虚拟执行只在每个有限请求处做有限的缓存查找或一次合法查询，故也有限终止，且正确返回 $\iota_3(W)$。先前集合 $J$ 中的地址已经各付费一次；后续只有 $J_\sigma(W)\setminus J$ 中的地址新增付费，重复请求均免费。因此不同付费地址集合正是式（27.7）。从固定有限菜单选择一个策略后，同一归纳逐个适用；前缀只决定所选策略，不替它改变初始化或推断输入身份。证毕。
+
+**定理 27.4（每个面的实际精确额外费用）。** 对定义 27.1 的最终族，每个 $F\in K$ 都有一个全域正确且有限终止的确定性策略 $\pi_F\in\mathfrak D_3$，使所有评价来源同时满足
+
+$$
+C_{\pi_F}(P_i)=b_F(i),\qquad
+b_F(i):=n+\mathbf1_{\{i\notin F\}}\quad(i\in[m]).
+\tag{27.8}
+$$
+
+更精确地，以 $J_{\pi_F}(P_i)$ 记接受前实际付费的不同地址集合，有
+
+$$
+J_{\pi_F}(P_i)=
+\begin{cases}
+L(P_i),&i\in F,\\
+L(P_i)\cup\{a_i\},&i\notin F.
+\end{cases}
+\tag{27.9}
+$$
+
+**证明。** 先固定有限的后续策略菜单。对每个 $r$，令 $\sigma_r$ 为定理 23.2 已有的单原型全带标签叶测试：核对 $P_r$ 的全部叶，任何不匹配交给同定理的全域有限后备，完整匹配才接受。它在全部 $\mathcal T$ 上正确且有限终止，在 $P_r$ 上请求的不同地址恰为 $L(P_r)$。对非空 $F\in K$，式（27.5）和下闭性提供定理 25.2 的叶安全 $\{P_i:i\in F\}$ 路由；令 $\sigma_F$ 为该既有路由接完整带标签叶核对及同一后备的全域策略。它在每个 $P_i$、$i\in F$ 上请求的不同地址恰为 $L(P_i)$。单元素 $F$ 的路由没有分离节点，仍做完整核对。令 $\sigma_\varnothing$ 为定理 23.2 的全域有限后备本身。
+
+策略 $\pi_F$ 按指标递增次序扫描全部 $r\notin F$ 的 $a_r$，精确响应为 $\mathsf{leaf}_\beta$ 时继续扫描；响应为 $\mathsf{branch}$ 时停止扫描，只暂选后续 $\sigma_r$；响应为另外两个原始值时停止扫描并暂选 $\sigma_\varnothing$。若扫描完成且全部报告均精确为 $\mathsf{leaf}_\beta$，则非空 $F$ 选择 $\sigma_F$，空 $F$ 选择 $\sigma_\varnothing$。扫描只作有限次查询，没有在此阶段返回任务答案。被选后续一律以引理 27.3 的独立逻辑历史和真实缓存供应执行；后续内部的不匹配仍由它自己的全域后备处理。
+
+对每个实际有限 $W$，扫描有限，被选后续属于全域有限策略菜单。引理 27.3 保证其返回与单独执行相同，所以合成策略正确且有限终止。特别地，分支报告只暂选原型测试，并不证明 $W=P_r$ 或 $W\in\mathcal I_3$；即使全部扫描报告符合预期，也未证明输入属于 $F$。每次原型接受仍必须有完整带标签叶匹配。所有原型外正例和负例仍由既有后备正确处理。
+
+现在只计算该全域策略在指定 $P_i$ 上的费用。若 $i\in F$，每个被扫描的 $r\notin F$ 都不同于 $i$，式（27.6）给响应 $\mathsf{leaf}_\beta$，且 $a_r\in L(P_i)$。全部扫描完成后选择 $\sigma_F$。其独立运行在 $P_i$ 上恰请求 $L(P_i)$；缓存只提前供应其中一些真实答案，式（27.7）遂给总付费集合 $L(P_i)$。
+
+若 $i\notin F$，扫描到 $r=i$ 以前，每个被问 $a_r$ 都在 $L(P_i)$ 且报告 $\mathsf{leaf}_\beta$；到 $a_i$ 时报告 $\mathsf{branch}$，扫描立即停止并选择 $\sigma_i$。该地址不在 $L(P_i)$，而 $\sigma_i$ 的独立执行恰请求全部 $L(P_i)$ 并匹配接受。引理 27.3 给总集合恰为 $L(P_i)\cup\{a_i\}$，没有再扫描其他列或请求其他叶外地址。这证明式（27.9），式（27.8）由集合基数得到。
+
+$F=\varnothing$ 时，在每个 $P_i$ 上总会先遇到它自己的分支并接 $\sigma_i$；扫描全部结束后的后备分支只处理其他实际输入，评价费用仍为 $n+1$。若 $[m]\in K$，取 $F=[m]$ 时没有扫描，直接执行 $\sigma_F$，每个评价费用为 $n$。空面、满面及单元素面均包含在同一全域构造中。证毕。
+
+**定理 27.5（确定性费用的逐坐标核心与全部 Pareto 极小元）。** 固定定义 27.1 的最终族。对每个 $\pi\in\mathfrak D_3$，定义它在评价族上的零超额指标集
+
+$$
+Z_\pi=\{i\in[m]:C_\pi(P_i)=n\}.
+\qquad
+Z_\pi\in K,\qquad
+b_{Z_\pi}(i)\le C_\pi(P_i)\quad(i\in[m]).
+\tag{27.10}
+$$
+
+每个确定性费用向量都逐坐标大于或等于某个实际取得的极大面费用向量。以较小费用为优，定义性地称一个可取得向量 Pareto 极小，若没有另一个可取得向量逐坐标不大于它且至少一坐标严格较小。全部确定性 Pareto 极小向量恰为
+
+$$
+\{b_M:M\in\mathcal M(K)\}.
+\tag{27.11}
+$$
+
+**证明。** 定理 18.2 和式（23.6）使每个正确接受 $P_i$ 的运行都查询全部 $L(P_i)$，所以 $C_\pi(P_i)\ge n$。同一个 $\pi$ 在 $Z_\pi$ 的所有坐标取得 $n$，式（27.5）遂给 $Z_\pi\in K$。在其余坐标，有限终止使费用为整数，严格大于 $n$ 就至少为 $n+1$，证明式（27.10）。空 $Z_\pi$ 也属于 $K$。
+
+因 $K$ 有限，每个 $Z_\pi$ 包含于一个极大面 $M$，且 $b_M\le b_{Z_\pi}$。定理 27.4 已给实际 $\pi_M$ 取得 $b_M$，故它确是一个可取得的逐坐标支配向量。若原费用向量是 Pareto 极小，这个支配不能有严格坐标，原向量遂等于 $b_M$。
+
+反之，设某可取得向量 $c$ 满足 $c\le b_M$，其中 $M$ 极大。对每个 $i\in M$，必需叶下界给 $c(i)=n$，因此 $M\subseteq Z_c$，这里 $Z_c$ 是取得 $c$ 的策略的零超额集。已证 $Z_c\in K$，极大性迫使 $Z_c=M$。对每个 $i\notin M$，整数费用于是至少为 $n+1$，而 $c\le b_M$ 又给至多 $n+1$，故 $c=b_M$。没有严格改进，得到式（27.11）。不同极大面互不包含，相应向量也不能严格支配彼此。这里刻画的是全部极小元和向下比较核心，不断言每个大于某个 $b_M$ 的数值向量均可由实际查询策略取得，也不建立确定性或实费用的完整向上闭包。证毕。
+
+**定理 27.6（可测固定种子的同时面比较）。** 对定义 27.1 的最终族，固定任一 $\Pi\in\mathfrak R_3$ 及它自己的概率空间 $(\Omega,\mathcal A,\mu)$。存在可测满测度集合 $G_\Pi^{\mathrm{tot}}$，其每个种子在整个 $\mathcal T$ 上确定一个属于 $\mathfrak D_3$ 的策略。存在一个可测的有限值面变量 $Z:\Omega\to K$，使 $\mu$ 的面推前律 $p_F=\mu\{Z=F\}$ 满足
+
+$$
+\mathbb E_\mu C_\Pi(\cdot,P_i)
+\ \ge\ \sum_{F\in K}p_F b_F(i)
+\ =\ n+1-\sum_{\substack{F\in K\\i\in F}}p_F
+\quad(i\in[m]).
+\tag{27.12}
+$$
+
+允许左侧为无穷；全部坐标使用同一个面律。每个随机期望费用向量因而逐坐标大于或等于实际面费用向量的一个有限凸组合。
+
+**证明。** [母卷定理 9.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)已给整个 $\mathcal T$ 到有限两字母词的单射编码，故全来源域可数；有限地址和完整有限四值记录也可数。原始菜单、输入无关初始化、同种子重放和逐来源错误事件可测满足定理 22.1。先用其有声返回式（22.4）取得这个固定 $\Pi$ 的可测满测度 $G_\Pi$，再另外使用逐来源可测零测未终止事件及式（22.7），取得
+
+$$
+G_\Pi^{\mathrm{tot}}
+=G_\Pi\setminus\bigcup_{W\in\mathcal T}
+\{\omega:\Pi(\omega,W)\text{ 未有限终止}\},
+\qquad \mu(G_\Pi^{\mathrm{tot}})=1.
+\tag{27.13}
+$$
+
+因此每个 $\omega\in G_\Pi^{\mathrm{tot}}$ 的固定种子策略都全域正确且有限终止。仅有式（22.4）的有声有限返回不能供应这里的总性；也没有对所有随机策略取得一个通用种子集，或取得一个全来源统一终止步数。
+
+定义
+
+$$
+Z(\omega)=
+\begin{cases}
+\{i\in[m]:C_\Pi(\omega,P_i)=n\},
+&\omega\in G_\Pi^{\mathrm{tot}},\\
+\varnothing,&\omega\notin G_\Pi^{\mathrm{tot}}.
+\end{cases}
+\tag{27.14}
+$$
+
+好种子上应用定理 27.5 得 $Z(\omega)\in K$；坏种子上空面也在 $K$。每个 $\{C_\Pi(\cdot,P_i)=n\}$ 可测，有限个这样的集合、补集与 $G_\Pi^{\mathrm{tot}}$ 的交并给每个 $\{Z=F\}$ 可测。面变量因此确有有限概率律，且 $\sum_{F\in K}p_F=1$。
+
+在这个同一个好种子集上，定理 27.5 同时给所有 $i$ 的 $C_\Pi(\omega,P_i)\ge b_{Z(\omega)}(i)$。对非负扩展可测费用积分，忽略零测补集并用有限面分拆，得到式（27.12）；无穷期望同样满足该不等式。定理 27.4 使右侧每个 $b_F$ 都有真实全域策略，故它是实际向量的有限凸组合。这个结论是存在性的数值下比较：不提供从任意控制器计算 $p_F$、离线重放执行或计算全来源好种子事件的算法；也不称每个这种凸组合均 Pareto 极小，更不以此识别全部可取得的实期望向量。证毕。
+
+**定义 27.7（顶点的分数面边覆盖与最小覆盖概率）。** 将 $[m]$ 作为有限超图的顶点，将 $\mathcal M(K)$ 的非空极大面作为边。定义分数边覆盖数
+
+$$
+\tau(K)=
+\min\left\{
+\sum_{M\in\mathcal M(K)}w_M:
+w_M\ge0,\quad
+\sum_{\substack{M\in\mathcal M(K)\\i\in M}}w_M\ge1
+\ \ (i\in[m])\right\}.
+\tag{27.15}
+$$
+
+这是用面边分数覆盖顶点，不是分数顶点覆盖边。每个顶点在某个极大面中，故存在有限覆盖。若改用 $K$ 的全部非空面作为边，给每个面选一个包含它的极大面并合并权重，不增加总权重而不减少任何顶点覆盖量；反向极大面本就在 $K$ 中，所以最小值不变。空面不覆盖任何顶点，可以直接删去其权重。
+
+以 $\mathcal P(K)$ 记 $K$ 上的全部概率律，定义
+
+$$
+t(K)=\max_{p\in\mathcal P(K)}\min_{i\in[m]}q_i(p),
+\qquad
+q_i(p)=\sum_{\substack{F\in K\\i\in F}}p_F.
+\tag{27.16}
+$$
+
+把任一面的概率质量转移到一个包含它的极大面，不减少全部 $q_i$；因此此最大值也可只在极大面概率律上取。面律是随机选择全域策略的律，没有在实际来源上设置概率先验。标准分数边覆盖定义及有限最优有理权重参见 [Martin Grohe、Dániel Marx，*Constraint Solving via Fractional Edge Covers*，arXiv:1711.04506v1，第 1 节和引理 3.2 的证明](https://arxiv.org/pdf/1711.04506v1#page=2)；这里只复用它们的有限超图覆盖对象与有理最优取得，不使用该文的 CSP 输入承诺或其复杂度结论。
+
+**命题 27.8（覆盖归一化、有限对偶与有理最优面律）。** 对定义 27.7，最小值和最大值均取得，且有最优有理面律。准确的归一化关系是
+
+$$
+t(K)=\frac1{\tau(K)},\qquad
+w_M=\frac{p_M}{t(K)}\ \text{ 对最优极大面律 }p,
+\qquad
+p_M=\frac{w_M}{\tau(K)}\ \text{ 对最优覆盖 }w.
+\tag{27.17}
+$$
+
+其有限覆盖对偶为
+
+$$
+\tau(K)=
+\max\left\{
+\sum_{i=1}^m y_i:
+y_i\ge0,\quad
+\sum_{i\in M}y_i\le1
+\ \ (M\in\mathcal M(K))\right\}.
+\tag{27.18}
+$$
+
+这里的 $y_i$ 是解析上的 packing 见证，不是未知来源的抽样律。
+
+**证明。** 概率单纯形有限维且紧，$\min_i q_i$ 连续，所以 $t(K)$ 取得。给每个单元素面概率 $1/m$ 就使每个顶点有覆盖概率 $1/m$，故 $t(K)>0$。每个顶点在一个极大面中，选择至多 $m$ 个这样的面并各赋单位权重，给覆盖总量至多 $m$。覆盖目标非负；将其限制到总量至多 $m$ 的非空可行子水平集，该集合闭且有界，故 $\tau(K)$ 取得。对任一顶点，它的 incident 权重和至少为 $1$，所以 $\tau(K)\ge1$。
+
+取只支持极大面的最优 $p$，每个 $q_i(p)\ge t(K)$，于是 $w_M=p_M/t(K)$ 可行，给 $\tau(K)\le1/t(K)$。反向取最优覆盖 $w$，以 $p_M=w_M/\tau(K)$ 归一化，它的总质量为 $1$，且每个 $q_i(p)\ge1/\tau(K)$，故 $t(K)\ge1/\tau(K)$。两个不等式等价地给 $t(K)\le1/\tau(K)$ 和 $t(K)\ge1/\tau(K)$，得到等式及两个最优转换。特别地，从最优覆盖得到的最小覆盖概率不能严格大于 $1/\tau(K)$，否则第一个转换就产生更小覆盖。
+
+式（27.15）是有限 $0/1$ incidence 矩阵的非负覆盖 LP。直接复用[运输记忆完成卷第 4.6.5 节式（TM.226）—（TM.227）](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#465-分数覆盖的直接对偶是支持次概率-packing)的有限覆盖—packing 对偶形式，以列对象为这里的面、被覆盖对象为这里的顶点、各列价格为 $1$，就得到式（27.18）。有限 LP 的强对偶及其可行性条件采用 [Stephen Boyd、Lieven Vandenberghe，*Convex Optimization*，第 5.2.3—5.2.4 节，尤其第 227 页的 “Lagrange dual of LP”](https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf#page=241)；原论证所用的覆盖集合在本应用中是面，并不引入运输记忆完成卷的实际逐步抽样合同。原问题已有限可行且有界；对偶零向量可行，每个 $i$ 所在的某面约束又使 $y_i\le1$，故对偶有界并取得。该覆盖、packing 与概率归一化的不同约束分别保留，不把非负见证质量直接当概率。
+
+最优覆盖可取有理权重，直接采用 Grohe—Marx 引理 3.2 证明中使用的标准有限有理 LP 取得结果；本矩阵和右端均为整数，每个顶点都被覆盖，没有无覆盖顶点的退化情形。于是 $\tau(K)$ 为正有理数，式（27.17）得到有理最优面律。有限 LP 与上述归一化只处理已定义的有限 incidence 数据；实际查询取得性须由定理 27.4 和引理 27.3 另行承担。证毕。
+
+**定理 27.9（原随机类与固定均匀种子类的共同锐值）。** 对定义 27.1 的最终族，原随机类与式（26.21）的固定均匀种子子类分别有达到的下确界，且
+
+$$
+\inf_{\Pi\in\mathfrak R_3}\max_{i\in[m]}
+\mathbb E_\mu C_\Pi(\cdot,P_i)
+=\inf_{\Pi\in\mathfrak R_3^{\mathrm u}}\max_{i\in[m]}
+\mathbb E_{\mu_{\mathrm u}}C_\Pi(\cdot,P_i)
+=n+1-\frac1{\tau(K)}.
+\tag{27.19}
+$$
+
+取得策略可用有理有限混合构造，在每个种子及每个有限来源上均正确且有限终止。
+
+**证明。** 对任意固定 $\Pi\in\mathfrak R_3$，定理 27.6 给同一个面概率律 $p$ 及逐坐标下界。因此即使某个期望无穷，也有
+
+$$
+\max_i\mathbb E_\mu C_\Pi(\cdot,P_i)
+\ge\max_i\bigl(n+1-q_i(p)\bigr)
+=n+1-\min_i q_i(p)
+\ge n+1-t(K).
+\tag{27.20}
+$$
+
+这里是固定来源期望向量的最大坐标，不是对来源积分。命题 27.8 将最后一项化为式（27.19）的右侧。
+
+现取有理最优面律，只列出其正质量面 $F_1,\ldots,F_s\in\mathcal M(K)$ 及概率 $p_1,\ldots,p_s$。它们满足 $s\ge1$、$p_j>0$、$\sum_jp_j=1$。令 $r_0=0$、$r_j=\sum_{k=1}^jp_k$，所以所有端点有理且 $r_s=1$。在预先固定的 $\Omega_{\mathrm u}=[0,1]$ 上定义
+
+$$
+\Pi^{\mathrm{opt}}(\omega,\cdot)=
+\begin{cases}
+\pi_{F_j}(\cdot),&r_{j-1}\le\omega<r_j\quad(1\le j\le s),\\
+\pi_{F_s}(\cdot),&\omega=1.
+\end{cases}
+\tag{27.21}
+$$
+
+这是以一次输入无关种子选择一个定理 27.4 的真实全域策略，选定后按该策略原始初始化和缓存合同执行。每个种子都选择到一个正确且有限终止的确定性策略，包括端点 $1$，所以每个有限 $W$ 的错误和未终止事件均为空。对任意固定有限 $W$，每个 $C_{\pi_{F_j}}(W)$ 是有限整数，且
+
+$$
+\begin{aligned}
+C_{\Pi^{\mathrm{opt}}}(\omega,W)
+&=\sum_{j=1}^s
+\mathbf1_{[r_{j-1},r_j)}(\omega)C_{\pi_{F_j}}(W)
++\mathbf1_{\{1\}}(\omega)C_{\pi_{F_s}}(W),\\
+\mathbb E_{\mu_{\mathrm u}}C_{\Pi^{\mathrm{opt}}}(\cdot,P_i)
+&=\sum_{j=1}^s p_j b_{F_j}(i)
+=n+1-q_i(p).
+\end{aligned}
+\tag{27.22}
+$$
+
+半开区间和单点都是 Lebesgue 可测集；固定来源的费用是有限阶梯函数，执行事件也是这些有限区间的并，满足原有可测合同和同种子重放。端点单点不改变积分，但其明确选择保证逐种子全域正确总性。于是 $\Pi^{\mathrm{opt}}\in\mathfrak R_3^{\mathrm u}$，最大期望费用为 $n+1-t(K)$，达到下界。该子类的元素也属于原 $\mathfrak R_3$，所以同一个已构造策略达到两类各自的下确界。两类种子合同保持不同，只是这个目标的锐值和取得性相同。证毕。
+
+**定理 27.10（确定性最坏费用与期望最大费用的分离）。** 对同一最终族，分别定义
+
+$$
+D(K)=\inf_{\pi\in\mathfrak D_3}\max_{i\in[m]}C_\pi(P_i),
+\qquad
+W(K)=\inf_{\Pi\in\mathfrak R_3}
+\mathbb E_\mu\left[\max_{i\in[m]}C_\Pi(\cdot,P_i)\right].
+\tag{27.23}
+$$
+
+二者均取得，且
+
+$$
+D(K)=W(K)=
+\begin{cases}
+n,&[m]\in K,\\
+n+1,&[m]\notin K.
+\end{cases}
+\tag{27.24}
+$$
+
+将 $W(K)$ 限制到 $\mathfrak R_3^{\mathrm u}$ 后值仍相同且取得。若 $[m]\notin K$，则
+
+$$
+1<\tau(K)\le m,\qquad 0<t(K)<1,\qquad
+n<n+1-\frac1{\tau(K)}<n+1.
+\tag{27.25}
+$$
+
+因而式（27.19）的 $\inf_\Pi\max_i\mathbb E C_\Pi(P_i)$ 严格小于 $W(K)$。
+
+**证明。** 必需叶下界使任意确定性评价最大费用至少为 $n$。若 $[m]\in K$，下闭性给 $K=2^{[m]}$，定理 27.4 的 $\pi_{[m]}$ 在全部评价来源上取得 $n$，故 $D(K)=n$。其在固定均匀空间上的常值提升又使每个种子最大费用为 $n$，得到两种随机类的 $W(K)\le n$。定理 27.6 的好种子上全部费用至少为 $n$，积分给反向下界，故均为 $n$。
+
+若 $[m]\notin K$，任一确定性 $\pi$ 的 $Z_\pi\in K$ 都是真子集，故至少一个坐标的整数费用为 $n+1$ 或更多。于是评价最大费用至少为 $n+1$。任选一个面 $F\in K$，定理 27.4 的 $b_F$ 在至少一个坐标等于 $n+1$、其余不超过 $n+1$，得到 $D(K)=n+1$ 并取得。对任意固定 $\Pi$，定理 27.6 的同一个可测满测度好种子集上，每个固定种子策略都满足这个确定性最大费用下界。有限个可测非负扩展费用的最大值可测，积分因此至少为 $n+1$。常值提升 $\pi_F$ 在固定均匀空间中取得该值，证明 $W(K)=n+1$ 以及限制子类的同值取得。这里逐种子先取最大值再积分；不能用各个坐标的最佳平均表现替代这个共同种子比较。
+
+命题 27.8 的构造已给 $\tau(K)\le m$ 和 $t(K)>0$。若 $\tau(K)=1$，取其已取得的最优覆盖 $w$。对每个顶点 $i$，incident 权重和至少为 $1$，总权重也为 $1$，所以不含 $i$ 的全部面权重和为零。任何正权重面于是必须同时含全部顶点；至少有一个面正权重，这将使 $[m]\in K$，矛盾。因此 $\tau(K)>1$，再用 $t(K)=1/\tau(K)$ 得其余严格不等式。满面情形的最优覆盖只需给 $[m]$ 权重 $1$，故 $\tau(K)=t(K)=1$，式（27.19）也为 $n$。证毕。
+
+**推论 27.11（极小不相容模式的覆盖费用）。** 对定理 26.6 已有的 $K_m=2^{[m]}\setminus\{[m]\}$，在定义 27.1 中只向其已完成的原表添加指定私有列，不另建立原表的规模定理。所得实际族的值为
+
+$$
+\begin{aligned}
+\tau(K_m)&=\frac{m}{m-1},\qquad t(K_m)=\frac{m-1}{m},\\
+\inf_{\Pi\in\mathfrak R_3}\max_i\mathbb E C_\Pi(\cdot,P_i)
+&=n+\frac1m,\qquad D(K_m)=W(K_m)=n+1,\\
+n&=(m-1)(11m-8)+3m+8.
+\end{aligned}
+\tag{27.26}
+$$
+
+固定均匀种子空间也取得相同随机锐值。
+
+**证明。** 定理 26.6 已给原表 $T_0=m(m-1)$、$M_0=(m-1)^2$ 及 $n_0=(m-1)(11m-8)$，所以式（27.4）给所示 $n$。$K_m$ 的极大面为 $F_r=[m]\setminus\{r\}$。任意分数覆盖对全部顶点的约束求和，得到 $(m-1)\sum_rw_{F_r}\ge m$，故总量至少为 $m/(m-1)$；令每个 $w_{F_r}=1/(m-1)$ 就恰好覆盖每个顶点，取得该值。式（27.17）、（27.19）和（27.24）给全部目标值。最优面律可取各 $F_r$ 概率 $1/m$，用式（27.21）的区间构造即在固定均匀空间取得。$m=2$ 同样适用。这是已知模式在新增私有列族上的费用推论，不断言第26章未加指定列的原族具有同样完整费用核心，也不声称这里的叶数最小。证毕。
+
+**命题 27.12（单指标边界）。** 若要求涵盖全部非空有限指标集，$m=1$ 的下闭且含单元素族只能是 $K=\{\varnothing,\{1\}\}$。可单独取实际来源 $P_1=U=\rho^3(u_0)$，其叶数为 $n=11$；完整带标签叶测试及 $\mathtt{LL}$ 先查再测试分别给
+
+$$
+b_{\{1\}}(1)=11,\qquad b_\varnothing(1)=12,
+\qquad \tau(K)=t(K)=1.
+\tag{27.27}
+$$
+
+确定性 Pareto 核心只含 $(11)$，三个最坏费用目标均为 $11$。
+
+**证明。** 式（26.2）已给 $U$ 的组成 $(4,7)^{\mathsf T}$、完整前像及实际正性。定理 23.2 的单原型全叶测试在 $U$ 上恰花费 $11$，且在原型外使用既有全域有限后备。$\operatorname{out}_U(\mathtt{LL})=\mathsf{branch}$，故先查该地址再以引理 27.3 接同一测试，在 $U$ 上付费集合恰为 $L(U)\cup\{\mathtt{LL}\}$，花费 $12$；它在其他有限输入上仍正确且有限终止。唯一非空极大面为 $\{1\}$，覆盖值和覆盖概率均为 $1$。必需叶下界与全叶测试给确定性极小值 $11$，定理 22.1 的有声返回和总性桥梁给随机下界，常值提升给两种随机最大费用目标的取得。单指标费用没有跨来源次序交换，故两种随机目标在此一致。证毕。
+
+**注记 27.13（实际取得与结论范围）。** 式（27.8）—（27.12）的对象是定义 27.1 特定构造的完整实际树族；共同组成允许依 $K,m$ 改变。相容模式本身不在本章被证明足以确定任意其他既有族的全部超额费用、随机锐值或最小实现叶数。确定性结果给极小元，随机结果给有限凸组合的下比较和一个指定目标的锐取得，未给全部真实费用的向上闭包、全部随机 Pareto 边界、任意策略的面律可计算性或离线执行恢复。有限覆盖的强对偶和有理最优属于既有有限 LP 结果；完整前像、最终地址上的私有列扫描、真实缓存后续接及同一好种子集上的面费用比较共同承担这里从覆盖数回到实际全域策略的关系。运输记忆完成卷第 4.6.4—4.6.5 节已经区分静态覆盖松弛与实际逐步取得，不能以一个 LP 可行点代替定理 27.4 的全域执行证明。
+
+全部叶证书调用只在 $d=3=3\cdot1$ 的原范围内使用，不扩张到其他替换深度、改变输入承诺或另设查询精度。完整树来源、组成、规范数量地址、原始响应、组成祖先许可与实际逆执行仍是不同对象和任务；组成计数和有限种子混合不提供物理对应、实际逆操作许可或环境代数守恒的物理解释。有限分数边覆盖、LP 对偶、有理混合和母卷编码不被称为新建立的标准理论，实际构造与费用关系也不在未经相应文献论证的情况下被称为世界原创。
+
+## 追加锚（本行以下为增补区）
+## 28. 同组成与同零超额相容复形的实际取得费用分离
+
+**定义 28.1（四来源评价与三个费用目标）。** 固定[定义 23.1](#23-全有限来源上两个指定正例的共同最优地址费用)、[定义 25.1](#25-有限正来源族的遗传共享叶分离与四元共同费用)和[定义 26.1](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)的原合同，取 $d=3$。未知输入为全部非空有限自由有序满二叉 $\alpha/\beta$ 树 $T\in\mathcal T$，目标为 $\iota_3(T)=\mathbf1_{\{T\in\rho^3(\mathcal T)\}}$。次序、括号与叶标签都是字面结构。全部有限左右地址，包括 $\varepsilon$，始终合法，无须先访问前缀；查询只读同一不变输入的原始四值报告。重复地址使用真实缓存，费用计不同地址个数；计算、地址长度、定位与种子取得不收费，未有限终止费用为 $+\infty$。共同初始化可以含完整评价原型与策略，却不承诺未知输入属于原型，也不承诺其正性、组成、叶数、大小或高度。
+
+沿用全域正确且有限终止的确定性类 $\mathfrak D_3$ 和原随机类 $\mathfrak R_3$。每个随机策略使用自己的一个输入无关概率空间 $(\Omega,\mathcal A,\mu)$，同种子与同完整记录决定相同控制、查询、缓存、停止和输出；每个固定 $T$ 的错误返回事件与未有限终止事件可测且零测，非负扩展费用可测。此合同允许零测种子例外。固定均匀子类 $\mathfrak R_3^{\mathrm u}$ 仍恰使用式（26.21）的 $([0,1],\mathcal L,\operatorname{Leb})$。对四个不同正来源的指标族 $\boldsymbol P=(P_1,P_2,P_3,P_4)$，定义
+
+$$
+\begin{aligned}
+K_{\mathrm d}(\boldsymbol P)&=\{S\subseteq[4]:\exists\pi\in\mathfrak D_3\ \forall i\in S,
+ C_\pi(P_i)=|L(P_i)|\},\\
+K_{\mathrm e}(\boldsymbol P)&=\{S\subseteq[4]:\exists\Pi\in\mathfrak R_3\ \forall i\in S,
+ \mathbb E_\mu C_\Pi(\cdot,P_i)=|L(P_i)|\},\\
+D(\boldsymbol P)&=\inf_{\pi\in\mathfrak D_3}\max_{i\in[4]}C_\pi(P_i),\\
+R(\boldsymbol P)&=\inf_{\Pi\in\mathfrak R_3}\max_{i\in[4]}\mathbb E_\mu C_\Pi(\cdot,P_i),\\
+W(\boldsymbol P)&=\inf_{\Pi\in\mathfrak R_3}\mathbb E_\mu[\max_{i\in[4]}C_\Pi(\cdot,P_i)].
+\end{aligned}
+\tag{28.1}
+$$
+
+$R$ 先对每个固定来源取种子期望再取最大值；$W$ 在同一个种子下比较四次实际运行，先取最大值再积分。这里没有输入分布，也不对确定性策略空间规定测度。将随机下确界限制为 $\mathfrak R_3^{\mathrm u}$，分别记为 $R_{\mathrm u},W_{\mathrm u}$。固定输入期望后再取最坏输入的惯例参见 [Magniez、Nayak、Santha、Sherman、Tardos、Xiao，*Improved bounds for the randomized decision tree complexity of recursive majority*，arXiv:1309.7565v1，第 2 页](https://arxiv.org/pdf/1309.7565v1#page=2)；该文的输入是有限布尔词，本章的全有限树合同及共同种子桥梁另由第22、23章供应。
+
+**定义 28.2（平衡六孔族与共同补块私有五孔族）。** 直接复用式（23.9）、（23.15）、（25.12）、（26.2）的字面块和来源：
+
+$$
+\begin{gathered}
+E=\langle\beta,\alpha\rangle,\quad A=\langle E,\beta\rangle=\rho^3(\alpha),\quad
+C=\langle A,E\rangle=\rho^3(\beta),\\
+u_0=\langle\langle\alpha,\alpha\rangle,\beta\rangle,\qquad
+U=\langle\langle A,A\rangle,C\rangle=\rho^3(u_0),\\
+R_0=B_6(\alpha,\alpha,\alpha,\alpha,\beta,\beta),\qquad
+R=B_6(A,A,A,A,C,C)=\rho^3(R_0).
+\end{gathered}
+\tag{28.2}
+$$
+
+$B_T$ 始终是式（26.5）的精确右梳上下文：
+
+$$
+\begin{aligned}
+B_1(x_1)&=x_1,\qquad B_T(x_1,\ldots,x_T)=\langle x_1,B_{T-1}(x_2,\ldots,x_T)\rangle\quad(T\ge2),\\
+p_j^{(T)}&=\mathtt R^{j-1}\mathtt L\quad(j<T),\qquad p_T^{(T)}=\mathtt R^{T-1}\quad(T\ge2).
+\end{aligned}
+\tag{28.3}
+$$
+
+取四行二元词 $b_1=000111$、$b_2=110001$、$b_3=101010$、$b_4=011100$，以 $0$ 填 $A$、$1$ 填 $U$。两族的完整块表为
+
+$$
+\begin{array}{c|cccccc}
+\text{平衡族行}&1&2&3&4&5&6\\ \hline
+1&A&A&A&U&U&U\\ 2&U&U&A&A&A&U\\ 3&U&A&U&A&U&A\\ 4&A&U&U&U&A&A
+\end{array}
+\qquad
+\begin{array}{c|ccccc}
+\text{私有族行}&1&2&3&4&5\\ \hline
+1&U&A&A&A&R\\ 2&A&U&A&A&R\\ 3&A&A&U&A&R\\ 4&A&A&A&U&R
+\end{array}
+\tag{28.4}
+$$
+
+以 $X^{\mathrm b}_{ij},X^{\mathrm p}_{ij}$ 记条目，定义
+
+$$
+\begin{aligned}
+P_i^{\mathrm b}&=B_6(X^{\mathrm b}_{i1},\ldots,X^{\mathrm b}_{i6}),&
+Q_i^{\mathrm b}&=B_6(Z^{\mathrm b}_{i1},\ldots,Z^{\mathrm b}_{i6}),\\
+P_i^{\mathrm p}&=B_5(X^{\mathrm p}_{i1},\ldots,X^{\mathrm p}_{i5}),&
+Q_i^{\mathrm p}&=B_5(Z^{\mathrm p}_{i1},\ldots,Z^{\mathrm p}_{i5}).
+\end{aligned}
+\tag{28.5}
+$$
+
+$Z$ 逐项把 $A,U,R$ 换成 $\alpha,u_0,R_0$。私有族的字面括号是 $\langle X_{i1}^{\mathrm p},\langle X_{i2}^{\mathrm p},\langle X_{i3}^{\mathrm p},\langle X_{i4}^{\mathrm p},R\rangle\rangle\rangle\rangle$，第五孔为 $\mathtt{RRRR}$。$R$ 内部另有自己的六孔右梳，外层孔与内层孔分别保留。记 $\boldsymbol P^{\mathrm b}=(P_1^{\mathrm b},\ldots,P_4^{\mathrm b})$、$\boldsymbol P^{\mathrm p}=(P_1^{\mathrm p},\ldots,P_4^{\mathrm p})$。
+
+**命题 28.3（字面来源、完整前沿与全部地址分类）。** 两族各自的四棵树两两不同，式（28.5）给各自唯一完整三步前像。每个评价来源及其前像满足
+
+$$
+\begin{gathered}
+\rho^3(Q_i^{\mathrm b})=P_i^{\mathrm b}\in\mathcal I_3,\quad
+\rho^3(Q_i^{\mathrm p})=P_i^{\mathrm p}\in\mathcal I_3,\\
+c(Q_i^{\mathrm b})=c(Q_i^{\mathrm p})=(9,3)^{\mathsf T},\quad
+c(P_i^{\mathrm b})=c(P_i^{\mathrm p})=(15,27)^{\mathsf T},\\
+|L(P_i^{\mathrm b})|=|L(P_i^{\mathrm p})|=42,\quad
+c(R_0)=(4,2)^{\mathsf T},\quad c(R)=(8,14)^{\mathsf T},\quad |L(R)|=22.
+\end{gathered}
+\tag{28.6}
+$$
+
+$A,U$ 的原始响应在所有有限残词 $v$ 上恰为下表。最后一行是前六行地址集合的补集，包含全部更长残词。
+
+$$
+\begin{array}{c|c|l}
+\operatorname{out}_A(v)&\operatorname{out}_U(v)&v\\ \hline
+\mathsf{branch}&\mathsf{branch}&\varepsilon,\ \mathtt L\\
+\mathsf{leaf}_\beta&\mathsf{branch}&\mathtt{LL},\ \mathtt R\\
+\mathsf{leaf}_\alpha&\mathsf{branch}&\mathtt{LR}\\
+\mathsf{absent}&\mathsf{branch}&\mathtt{LLL},\ \mathtt{LRL},\ \mathtt{RL},\ \mathtt{RLL},\ \mathtt{RR}\\
+\mathsf{absent}&\mathsf{leaf}_\alpha&\mathtt{LLLR},\ \mathtt{LRLR},\ \mathtt{RLLR},\ \mathtt{RRR}\\
+\mathsf{absent}&\mathsf{leaf}_\beta&\mathtt{LLLL},\ \mathtt{LLR},\ \mathtt{LRLL},\ \mathtt{LRR},\ \mathtt{RLLL},\ \mathtt{RLR},\ \mathtt{RRL}\\
+\mathsf{absent}&\mathsf{absent}&\text{其余全部有限词}
+\end{array}
+\tag{28.7}
+$$
+
+以 $\mathcal F(X)$ 记带标签叶前沿。$A,U$ 的前沿取自式（25.16）；共同补块继承的 $A,C$ 前沿完整写为
+
+$$
+\begin{aligned}
+\mathcal F(A)&=\{(\mathtt{LL},\beta),(\mathtt{LR},\alpha),(\mathtt R,\beta)\},\\
+\mathcal F(C)&=\{(\mathtt{LLL},\beta),(\mathtt{LLR},\alpha),(\mathtt{LR},\beta),
+(\mathtt{RL},\beta),(\mathtt{RR},\alpha)\}.
+\end{aligned}
+\tag{28.8}
+$$
+
+令 $(s_1,\ldots,s_6)=(\mathtt L,\mathtt{RL},\mathtt{RRL},\mathtt{RRRL},\mathtt{RRRRL},\mathtt{RRRRR})$ 为 $R$ 内部六孔地址，其全部 $22$ 片带标签叶恰为
+
+$$
+\begin{aligned}
+\mathcal F(R)=&\bigsqcup_{j=1}^4
+\{(s_j\mathtt{LL},\beta),(s_j\mathtt{LR},\alpha),(s_j\mathtt R,\beta)\}\\
+&\sqcup\bigsqcup_{j=5}^6\{(s_j\mathtt{LLL},\beta),(s_j\mathtt{LLR},\alpha),
+(s_j\mathtt{LR},\beta),(s_j\mathtt{RL},\beta),(s_j\mathtt{RR},\alpha)\}.
+\end{aligned}
+\tag{28.9}
+$$
+
+对两族各自的 $T=6,5$ 及每个有限地址 $w$，全部上下文祖先报告分支，其余词唯一分解为 $p_j^{(T)}v$ 并读取该孔条目：
+
+$$
+\begin{aligned}
+\operatorname{out}_{B_T(X_1,\ldots,X_T)}(w)&=
+\begin{cases}\mathsf{branch},&w\prec p_j^{(T)}\text{ 对某个 }j,\\
+\operatorname{out}_{X_j}(v),&w=p_j^{(T)}v\text{ 对唯一的 }j,\end{cases}\\
+\mathcal F(B_T(X_1,\ldots,X_T))&=
+\bigsqcup_{j=1}^T\{(p_j^{(T)}v,\ell):(v,\ell)\in\mathcal F(X_j)\}.
+\end{aligned}
+\tag{28.10}
+$$
+
+平衡族的任一非常值查询都恰产生 $2+2$ 划分；其在四行上为常值的查询全部报告非叶值。私有族的任一非常值查询都恰产生 $1+3$ 划分；第五孔的全部报告恒同。每个非常值查询的两个不同报告中，至少一个是非叶值；两族各自任意两行在共享叶地址上的标签都相同。
+
+**证明。** $\rho^3$ 保留每个有序二叉构造，式（28.2）的 $A,U$ 是既有完整实际三步像，逐孔替换 $R_0$ 又给 $R$，所以式（28.5）的前像等式直接成立。平衡表每行三个 $A$、三个 $U$，前像三个 $\alpha$、三个 $u_0$；私有表每行三个 $A$、一个 $U$、一个 $R$，前像三个 $\alpha$、一个 $u_0$、一个 $R_0$。由[母卷定义 3.3、定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的组成加性与替换作用，已知 $c(A)=(1,2)^{\mathsf T}$、$c(U)=(4,7)^{\mathsf T}$、$c(C)=(2,3)^{\mathsf T}$、$c(u_0)=(2,1)^{\mathsf T}$，得到
+
+$$
+\begin{aligned}
+c(R)&=4(1,2)^{\mathsf T}+2(2,3)^{\mathsf T}=(8,14)^{\mathsf T},\\
+c(Q_i^{\mathrm b})&=3(1,0)^{\mathsf T}+3(2,1)^{\mathsf T}=(9,3)^{\mathsf T},\\
+c(Q_i^{\mathrm p})&=3(1,0)^{\mathsf T}+(2,1)^{\mathsf T}+(4,2)^{\mathsf T}=(9,3)^{\mathsf T},\\
+c(P_i^{\mathrm b})&=3(1,2)^{\mathsf T}+3(4,7)^{\mathsf T}=(15,27)^{\mathsf T},\\
+c(P_i^{\mathrm p})&=3(1,2)^{\mathsf T}+(4,7)^{\mathsf T}+(8,14)^{\mathsf T}=(15,27)^{\mathsf T}.
+\end{aligned}
+\tag{28.11}
+$$
+
+平衡表各行的前两位 $00,11,10,01$ 不同，故前像在至少一个相同孔分别为 $\alpha,u_0$，字面不同。私有表在自己的第 $i$ 孔为 $u_0$，其他行该孔为 $\alpha$，也使前像两两不同。直接调用[规范编译卷命题 4.3 的字面树替换单射性](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)，其三次复合使两族分别有不同的像与唯一完整前像。该命题中的原子 $A,B$ 在此对应 $\alpha,\beta$；组成逆公式不承担前像存在或字面恢复。
+
+对有限树 $X$，令 $N(X)$ 为全部存在节点的地址集合，包括内节点与叶；它是 $L(X)$ 的全部前缀集合。式（25.16）的完整 $U$ 前沿给其内节点集合恰为
+
+$$
+\begin{aligned}
+N(U)\setminus L(U)&=\{\varepsilon,\mathtt L,\mathtt{LL},\mathtt{LLL},\mathtt{LR},
+\mathtt{LRL},\mathtt R,\mathtt{RL},\mathtt{RLL},\mathtt{RR}\},\\
+N(A)&=\{\varepsilon,\mathtt L,\mathtt{LL},\mathtt{LR},\mathtt R\}\subseteq N(U).
+\end{aligned}
+\tag{28.12}
+$$
+
+$U$ 的其余存在节点正是式（25.16）的十一片叶，按标签分成式（28.7）的四个 $\alpha$ 地址与七个 $\beta$ 地址。$A$ 的两个内节点、三片叶在式（28.12）中全部列出，三片叶都变成 $U$ 的内节点。于是 $N(A)\cup N(U)=N(U)$ 的全部 $21$ 个节点逐项给出式（28.7）的前六行，集合外地址在两块中都不存在。这是有限节点集合及其补集的符号穷尽，不以有限长度截断代替任意长地址论证。特别地，$L(A)\cap L(U)=\varnothing$，任何不同的局部报告都不能同时是两片叶。
+
+式（28.8）的 $A$ 前沿直接取式（25.16），$C$ 前沿取定理 25.5 证明对 $C=\langle A,E\rangle$ 的完整展开。加上内部孔前缀 $s_j$ 即得式（28.9）；孔地址前缀自由，各并互不交，总数 $4\cdot3+2\cdot5=22$。$R$ 的节点集合是这 $22$ 个叶地址的全部前缀：叶地址按式（28.9）给标签，真前缀报告分支，集合外的所有地址报告不存在。这也精确规定穿过任一补块叶之后的全部更长查询。
+
+式（28.10）复用[引理 26.2 的全部地址上下文分解式（26.6）、（26.8）](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)。其路径证明只用上下文满二叉、每片上下文叶都是孔以及孔前缀自由，与所填块的名字无关，故同一分解适用于第五孔的 $R$。路径或者结束于某个孔的真前缀，或者经过唯一孔而留下任意残词，没有第三类词。第五孔内部再用同一分解读取 $B_6(A,A,A,A,C,C)$，连同式（28.8）、（28.9）覆盖全部存在、缺失与任意长地址。平衡前沿给 $3\cdot3+3\cdot11=42$ 片；私有前四孔给 $3\cdot3+11=20$ 片，再加第五孔 $22$ 片也为 $42$。共同补块叶均包含在完整带标签前沿中。
+
+平衡表每列恰有两个 $A$、两个 $U$。上下文祖先为常值分支；孔内两块响应相同只可能是式（28.7）的分支—分支或不存在—不存在，其余查询恰按该列分成两个二元素响应类。因此常值查询都是非叶，非常值查询都是 $2+2$，至少一类报告非叶。私有前四列各有一个 $U$、三个 $A$，同一表给 $1+3$；第五孔是完全相同的 $R$，其常值查询允许报告叶。在每个族内部，对任意两行，在不同块的孔内没有共同叶，在同块的孔内字面相同保证叶标签相同，上下文祖先不是叶。式（28.10）排除跨孔遗漏，故共享叶没有标签冲突。证毕。
+
+**定理 28.4（两族相同的零超额相容复形）。** 两族在确定性与期望意义下均有且只有空面和四个单元素面：
+
+$$
+K_{\mathrm d}(\boldsymbol P^{\mathrm b})=K_{\mathrm e}(\boldsymbol P^{\mathrm b})
+=K_{\mathrm d}(\boldsymbol P^{\mathrm p})=K_{\mathrm e}(\boldsymbol P^{\mathrm p})
+=K_\circ:=\{\varnothing,\{1\},\{2\},\{3\},\{4\}\}.
+\tag{28.13}
+$$
+
+**证明。** 命题 28.3 使每个族内部任意两行没有标签冲突的共同叶，故对每个二元素指标集 $S$，式（26.1）的 $\Delta_{\boldsymbol P}(S)$ 为空。直接应用[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)的遗传信息叶判据，所有二元素子族在确定性和期望意义下都不相容；较大子族含这样的子族，也不相容。恒同补块虽有 $22$ 片共同叶，但标签不变，不能贡献信息叶。单元素族采用定理 23.2 的单原型完整带标签叶测试与已有全域有限后备，取得个体下界 $42$；确定性常值提升也取得期望下界。空约束由同一后备满足，得到式（28.13）。这里复用零超额判据，不把它解释成超额费用分类。证毕。
+
+**定理 28.5（条件共同历史中的新增收费下界）。** 固定任意 $\pi\in\mathfrak D_3$。对两族分别令 $J_i$ 为它在 $P_i$ 上有限接受前请求的不同地址集合，令 $e_i$ 为叶外地址数，则
+
+$$
+L(P_i)\subseteq J_i,\qquad C_\pi(P_i)=42+e_i,\qquad
+ e_i=|J_i\setminus L(P_i)|\in\mathbb N_0.
+\tag{28.14}
+$$
+
+平衡族有 $\sum_i e_i\ge4$ 且 $\max_i e_i\ge2$；私有族有 $\sum_i e_i\ge3$ 且 $\max_i e_i\ge1$。同一个全域策略的联合下界为
+
+$$
+\begin{array}{c|cc}
+\text{评价族}&\sum_{i=1}^4 C_\pi(P_i)&\max_{i\in[4]}C_\pi(P_i)\\ \hline
+\boldsymbol P^{\mathrm b}&\ge172&\ge44\\
+\boldsymbol P^{\mathrm p}&\ge171&\ge43
+\end{array}
+\tag{28.15}
+$$
+
+**证明。** 四个评价树都是三步正像。全域总性给有限接受记录，同记录重放与全域正确性使各终端记录无承诺有声。直接使用[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)及其在式（23.6）中的运行应用，得到 $L(P_i)\subseteq J_i$，其条件恰为 $d=3=3\cdot1$。叶数为 $42$，有限集合分解给式（28.14），不预置查询视界或输入高度。
+
+先处理平衡族。直到四次运行第一次出现不恒同的响应，它们的全部记录、缓存、内部控制、下一查询选择与停止决定相同，包括重复查询与内部计算。首次差异必在任何接受之前出现：否则最早接受处四者具有同一个记录并同时接受。该记录按式（28.14）包含任取一个 $P_i$ 的全部带标签叶，而所有其他行匹配它。定理 18.2 证明中的完整叶恢复使其他行都等于 $P_i$，与命题 28.3 的不同性矛盾。这一步用完整有限满树的带标签叶集决定字面树，并最终调用[母卷定理 9.3 的全路径恢复](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)。全域有限终止也排除共同前缀永久停滞。
+
+设首个非常值查询的地址为 $a$，查询前四者共同的不同地址缓存为 $H$。$a\notin H$：若已在缓存中，不变来源使本次报告仍等于此前的共同报告，不能首次分裂。命题 28.3 给这次响应恰把指标分成两个二元素集 $S_0,S_1$。至少一个响应类是非叶，故存在 $S_\star\in\{S_0,S_1\}$，其两个成员都为 $a$ 支付一笔新的叶外费用。记这一地址的初次收费为
+
+$$
+a_i=\mathbf1_{\{a\notin L(P_i^{\mathrm b})\}},\qquad
+\sum_{i=1}^4a_i\ge2,\qquad \sum_{i\in S_\star}a_i=2.
+\tag{28.16}
+$$
+
+分别固定一个幸存对 $S=\{r,s\}\in\{S_0,S_1\}$。两次运行在首分裂之后仍有相同完整历史：此前共同记录与在 $a$ 上这一对共同的响应全部保留，共同缓存已经是 $H\cup\{a\}$。同历史控制归纳使此后直到该对首次响应不同，两运行的查询、内部状态与缓存仍相同。任意接受之前必须出现该对的首次差异；否则在较早接受处两者一起接受，记录包含 $P_r^{\mathrm b}$ 全部带标签叶，又为 $P_s^{\mathrm b}$ 匹配，完整叶恢复使二者相等，矛盾。有限接受与不同性保证该首次差异确在有限步骤出现。
+
+记该地址为 $a_S$，问它之前这一对的整个共同不同地址缓存为 $H_S$。$H_S$ 包含 $H\cup\{a\}$ 以及首分裂后的全部同响应查询。必须有 $a_S\notin H_S$：若曾问过，两个不变输入的该地址报告早已相同，再次读取或缓存重放不能成为首次差异。因此此次收费对两个运行都是新收费，且与式（28.16）计入的 $a$ 不同。两行在同块列上的报告相同，故此次差异来自一个 $A/U$ 不同块列。式（28.7）没有不同标签的共同叶报告，至少一方报告非叶，该方支付一笔新的叶外费用。令
+
+$$
+b_i=\mathbf1_{\{a_S\notin L(P_i^{\mathrm b})\}}\quad(i\in S),\qquad
+\sum_{i\in S}b_i\ge1\quad(S=S_0,S_1).
+\tag{28.17}
+$$
+
+对每个指标 $i$，$a$ 与其所属对的 $a_S$ 都实际被请求且地址不同，所以 $e_i\ge a_i+b_i$。两个不同对的 $a_{S_0},a_{S_1}$ 可以是同一个字；它们属于不同实际运行，不会在同一运行重复收费。于是
+
+$$
+\sum_{i=1}^4e_i\ge\sum_{i=1}^4a_i+
+\sum_{i\in S_0}b_i+\sum_{i\in S_1}b_i\ge2+1+1=4,\qquad
+\sum_{i\in S_\star}e_i\ge2+1=3.
+\tag{28.18}
+$$
+
+后一个不等式在同一二元素对内使用首轮两笔费用与该对后来新增的一笔，整数性使至少一个 $e_i\ge2$。单靠四个坐标和至少为 $4$ 不能给这个最大值下界，故须保留 $S_\star$ 的条件共同历史。首分裂前的常值查询在平衡族上全部报告非叶，其每个新地址额外增加四次运行的费用，不减弱下界；后续常值查询不能替代首次差异。这里未把无条件两来源费用不等式再加到首轮收费上，每项增量都由相对于该对整个共同缓存的新地址承担，因而没有重计。
+
+私有族的共同补块含叶，不能沿用常值非叶断言。改用式（28.13）：同一个 $\pi$ 的零超额集 $Z=\{i:e_i=0\}$ 属于 $K_\circ$，故 $|Z|\le1$。其余至少三个有限整数 $e_i$ 大于零，各至少为 $1$，所以 $\sum_i e_i\ge3$、$\max_i e_i\ge1$。共同补块叶属于各行必查的 $42$ 叶；它们允许相同历史中的叶收费，但不改变零超额至多一个的结论。代回式（28.14）得到式（28.15）。证毕。
+
+**定理 28.6（两个族的精确全域取得策略）。** 存在四个平衡策略 $\pi_t^{\mathrm b}\in\mathfrak D_3$ 和四个私有策略 $\pi_t^{\mathrm p}\in\mathfrak D_3$，其各自四个评价来源的超额向量依 $t=1,2,3,4$ 为
+
+$$
+\begin{aligned}
+(C_{\pi_t^{\mathrm b}}(P_i^{\mathrm b})-42)_{i=1}^4&=
+\begin{cases}(0,2,1,1),&t=1,\\(2,0,1,1),&t=2,\\(1,1,0,2),&t=3,\\(1,1,2,0),&t=4,\end{cases}\\
+(C_{\pi_t^{\mathrm p}}(P_i^{\mathrm p})-42)_{i=1}^4&=
+(\mathbf1_{\{i\ne t\}})_{i=1}^4.
+\end{aligned}
+\tag{28.19}
+$$
+
+每个策略在全部 $\mathcal T$ 上正确且有限终止。评价来源上最终核对全部 $42$ 片带标签叶，私有核对包含补块的全部 $22$ 片叶；路由本身从不接受。
+
+**证明。** 固定一个有限后续菜单。对每个原型 $P_i$，取[定理 23.2](#23-全有限来源上两个指定正例的共同最优地址费用)已有的单原型策略 $\sigma_i$：从自己的空记录开始，按固定顺序测试全部带标签叶，任一不匹配进入同定理的全域有限后备，完整匹配才接受。它属于 $\mathfrak D_3$，在自身原型上请求的不同地址恰为 $L(P_i)$。另令 $\sigma_\perp$ 为该后备本身。后备从根探索实际有限输入，只扩展实际分支，复用真实缓存，恢复字面树与实际叶数 $m$，在叶数至多 $m$ 的全部字面前像中穷尽检验 $\rho^3$ 像成员身份。其正确总性已由定理 23.2 的替换不减叶数证明，这里直接复用，不把原型不匹配当作负性证明。
+
+任一路由完成后，以[引理 27.3](#27-实际三步像的面费用核心与分数面覆盖锐值)接被选后续：建立该 $\sigma$ 自己的初始化、空逻辑历史与初始控制状态，外层缓存只在它请求地址时供应同一输入的真实报告，每个请求与报告记入它自己的逻辑历史。绝不把路由历史预填为它已经执行的步骤。若路由不同地址集为 $J_{\mathrm{route}}$，总不同付费地址精确为
+
+$$
+J_{\mathrm{route}}\cup J_\sigma(T).
+\tag{28.20}
+$$
+
+引理 27.3 保证虚拟后续与 $\sigma$ 单独从头运行相同，任意有限路由选择都保持全域正确总性。
+
+平衡策略固定目标行 $t$ 的前两位 $(b_{t1},b_{t2})$，依次为 $00,11,10,01$。对 $j=1,2$ 直接查询
+
+$$
+a_j^{(t)}=p_j^{(6)}v_{tj},\qquad
+v_{tj}=\begin{cases}\mathtt{LL},&b_{tj}=0,\\\mathtt{LLLL},&b_{tj}=1.\end{cases}
+\tag{28.21}
+$$
+
+目标位为 $0$ 时，允许的两个路由响应是精确的 $\mathsf{leaf}_\beta$ 与 $\mathsf{branch}$，分别记暂定观测位为 $0,1$；目标位为 $1$ 时，允许的两个响应是精确的 $\mathsf{leaf}_\beta$ 与 $\mathsf{absent}$，分别记暂定观测位为 $1,0$。其他原始报告立即选择 $\sigma_\perp$。两个允许的观测位完成后，按 $00,11,10,01$ 唯一暂选一行 $i$，以式（28.20）接 $\sigma_i$。二位选择只在评价原型间路由，未知输入仍可能是任何完整有限树，须经全叶核对或后备才返回答案。
+
+在评价行 $i$ 上，式（28.7）说明每次路由的叶报告当且仅当 $b_{ij}=b_{tj}$；不匹配位报告分支或不存在。暂定观测位恰为自身真实块位，两位暂选 $i$，后续完整匹配接受。两个路由地址在不同孔，故互异；匹配位地址属于 $L(P_i^{\mathrm b})$，不匹配位地址不属于该叶集。式（28.20）给
+
+$$
+C_{\pi_t^{\mathrm b}}(P_i^{\mathrm b})=42+
+\mathbf1_{\{b_{i1}\ne b_{t1}\}}+\mathbf1_{\{b_{i2}\ne b_{t2}\}}.
+\tag{28.22}
+$$
+
+四个二位词的距离逐项给式（28.19）的平衡向量。没有从识别评价行直接接受，也没有多查上下文前缀。
+
+私有策略固定 $t$，按指标递增的固定次序只扫描 $r\in[4]\setminus\{t\}$ 的地址
+
+$$
+a_r=p_r^{(5)}\mathtt{LL},\qquad
+\operatorname{out}_{P_i^{\mathrm p}}(a_r)=
+\begin{cases}\mathsf{branch},&i=r,\\\mathsf{leaf}_\beta,&i\ne r.\end{cases}
+\tag{28.23}
+$$
+
+精确 $\beta$ 叶报告继续；精确分支报告停止扫描并暂选 $\sigma_r$；另外两个报告选择 $\sigma_\perp$。所有被扫描地址均报告 $\beta$ 叶时暂选 $\sigma_t$。全部后续仍按式（28.20）执行，扫描不返回任务值。
+
+在 $P_t^{\mathrm p}$ 上，扫描地址都是自己的必查 $\beta$ 叶，$\sigma_t$ 补齐全部叶，总不同付费集恰为 $L(P_t^{\mathrm p})$。在 $P_i^{\mathrm p}$、$i\ne t$ 上，到 $i$ 之前所问地址均为自己的 $\beta$ 叶；问 $a_i$ 时得到分支并暂选 $\sigma_i$。此前地址均为自己的叶，只有 $a_i$ 是新的叶外地址，总集恰为 $L(P_i^{\mathrm p})\cup\{a_i\}$，超额为 $1$。$\sigma_i$ 按式（28.9）、（28.10）核对第五孔的全部带标签叶，扫描未替它省略补块核对。这给私有向量。
+
+原型外任意实际输入的路由至多两次或三次，所选后续是全域正确且有限终止的固定菜单元素。引理 27.3 保证相同返回与有限终止，后续原型不匹配由已有后备处理，因此八个策略均属于 $\mathfrak D_3$。证毕。
+
+**定理 28.7（原随机合同与固定均匀子类的三个锐值）。** 两族的全部下确界均达到，且
+
+$$
+\boxed{\begin{aligned}
+(D,R,W)(\boldsymbol P^{\mathrm b})&=(44,43,44),\\
+(D,R,W)(\boldsymbol P^{\mathrm p})&=\left(43,\frac{171}{4},43\right),\\
+(R_{\mathrm u},W_{\mathrm u})(\boldsymbol P^{\mathrm b})&=(43,44),\\
+(R_{\mathrm u},W_{\mathrm u})(\boldsymbol P^{\mathrm p})&=\left(\frac{171}{4},43\right).
+\end{aligned}}
+\tag{28.24}
+$$
+
+每个定理 28.6 的确定性目标策略都取得相应 $D$；各族均匀混合四个目标策略同时取得相应 $R,W$，并能在固定的 $[0,1]$ 种子空间中逐种子全域正确且有限终止地实现。
+
+**证明。** 定理 28.5 给任意确定性全域策略的评价最大费用至少为 $44,43$。定理 28.6 的每个平衡向量最大超额是 $2$，每个私有向量最大超额是 $1$，加 $42$ 即取得下界，证明确定性锐值。
+
+固定任意 $\Pi\in\mathfrak R_3$ 及它自己的种子律。[母卷定理 9.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)的单射有限词编码使整个 $\mathcal T$ 可数；有限地址与完整有限四值记录也可数。原合同满足[定义 22.1、定理 22.1](#22-可数只读记录的有声返回与终止精确探针许可的分界)的只读菜单、同种子重放与逐来源错误事件可测条件。先由有声返回式（22.4）取得这个策略的可测满测度集 $G_\Pi$；再另行使用逐来源零测可测未终止事件与共同总性式（22.7），取得
+
+$$
+G_\Pi^{\mathrm{tot}}=G_\Pi\setminus\bigcup_{T\in\mathcal T}N_T^\Pi,
+\qquad\mu(G_\Pi^{\mathrm{tot}})=1.
+\tag{28.25}
+$$
+
+每个 $\omega\in G_\Pi^{\mathrm{tot}}$ 的固定种子策略在整个 $\mathcal T$ 上有声、正确且有限终止，属于 $\mathfrak D_3$。有声有限返回与全域有限终止分别来自（22.4）与（22.7），前者没有单独推出后者。这个可测好种子集依赖当前 $\Pi$；两个联合下界必须使用同一个 $G_\Pi^{\mathrm{tot}}$，不对所有随机策略取共同交集，也不声称全来源统一运行时间上界。
+
+定理 28.5 的和与最大值下界在式（28.25）的同一集合上逐种子同时成立。四个可测非负扩展费用的和与最大值可测，分别积分得
+
+$$
+\begin{array}{c|cc}
+\text{评价族}&\displaystyle\sum_{i=1}^4\mathbb E_\mu C_\Pi(\cdot,P_i)
+&\displaystyle\mathbb E_\mu\max_{i\in[4]}C_\Pi(\cdot,P_i)\\ \hline
+\boldsymbol P^{\mathrm b}&\ge172&\ge44\\
+\boldsymbol P^{\mathrm p}&\ge171&\ge43
+\end{array}
+\tag{28.26}
+$$
+
+有限和的非负积分可相加，包括无穷期望；零测补集不降低下界。最大固定来源期望至少为四个期望的平均，故 $R(\boldsymbol P^{\mathrm b})\ge43$、$R(\boldsymbol P^{\mathrm p})\ge171/4$；另一列独立给 $W$ 的下界。不能把固定来源期望的最大值替换成同种子最大值的积分。推导没有输入分布或来源—种子联合积分，也没有先假设原随机类就是全域确定性策略上的分布；固定种子的全域性质由式（28.25）建立。
+
+分别在两族上一次均匀选择 $t\in[4]$，运行定理 28.6 的对应策略。式（28.19）使每个平衡评价行的四个超额之和为 $4$，每个私有评价行的四个超额之和为 $3$；每个种子的评价最大超额分别恒为 $2,1$。故
+
+$$
+\begin{aligned}
+\mathbb E C^{\mathrm b}(\cdot,P_i^{\mathrm b})&=42+\frac44=43,
+&\mathbb E\max_i C^{\mathrm b}(\cdot,P_i^{\mathrm b})&=44,\\
+\mathbb E C^{\mathrm p}(\cdot,P_i^{\mathrm p})&=42+\frac34=\frac{171}{4},
+&\mathbb E\max_i C^{\mathrm p}(\cdot,P_i^{\mathrm p})&=43.
+\end{aligned}
+\tag{28.27}
+$$
+
+在预先固定的均匀空间上，令 $I_t=[(t-1)/4,t/4)$，在 $I_t$ 上选择目标策略 $t$；端点 $\omega=1$ 明确选择第四个目标策略。四个半开区间加该端点穷尽 $[0,1]$，每个种子都选到一个全域正确且有限终止的确定性策略。对任意固定实际 $T$，费用精确为
+
+$$
+C_{\Pi_{\mathrm u}^{\mathrm a}}(\omega,T)=
+\sum_{t=1}^4\mathbf1_{I_t}(\omega)C_{\pi_t^{\mathrm a}}(T)
++\mathbf1_{\{1\}}(\omega)C_{\pi_4^{\mathrm a}}(T),
+\qquad\mathrm a\in\{\mathrm b,\mathrm p\}.
+\tag{28.28}
+$$
+
+每个确定性值是有限整数，半开区间与端点单集可测，所以固定来源费用是可测有限阶梯函数，错误和未终止事件均为空。同一可测四值选择决定各个固定输入的执行事件，选定后保留原策略的初始化及同种子重放。端点不改变积分，但明确选择保证每个声明种子的全域正确总性。因此两策略属于 $\mathfrak R_3^{\mathrm u}$，式（28.27）在该固定空间成立。子类中的策略亦属于原类，原类下界适用于子类，故两类下确界同值且均取得，完成式（28.24）。证毕。
+
+**推论 28.8（组成与零超额相容复形的成对不足）。** 在定义 28.1 的全部来源、报告、权限、缓存费用及正确总性合同不变时，逐来源的组成与零超额相容复形这两项资料不能决定四来源评价的 $D,R,W$。式（28.5）的两族逐行具有相同组成 $(15,27)^{\mathsf T}$、相同叶数 $42$、相同确定性及期望复形 $K_\circ$，而式（28.24）的三个实际锐值逐项不同。
+
+**证明。** 组成与叶数相等由命题 28.3 给出，两种相容复形相等由定理 28.4 给出，锐值及全域取得由定理 28.7 给出。若只按组成与复形确定任一锐值，就会在这两组相同资料上给相同结果，与 $44\ne43$、$43\ne171/4$、$44\ne43$ 分别矛盾。
+
+两项资料在这两个构造中遗忘的是条件响应划分与叶／非叶的收费关系。平衡族首次非常值查询只能分成两对，至少一对的两个运行先各付一笔叶外费用；该对下一次分离又须相对于整个共同缓存新增收费。私有族的非常值查询分成一个单行与三个其余行，式（28.23）的扫描把叶外费用留给被扫描的自身私有列，共同补块增加必须核对的恒同带标签叶。两族没有信息性共同叶，零超额复形相同，却保留不同的条件取得结构。这些收费已由定理 28.5、28.6 在实际运行上证明。
+
+按响应划分幸存假设的标准图景参见 [Robert D. Nowak，*The Geometry of Generalized Binary Search*，arXiv:0910.4397v5，第 I 节](https://arxiv.org/pdf/0910.4397v5#page=1)与 [Sanjoy Dasgupta，*Analysis of a greedy active learning strategy*，NIPS 2004，第 2 节](https://proceedings.neurips.cc/paper_files/paper/2004/file/c61fbef63df5ff317aecdc3670094472-Paper.pdf)。这里只借用响应分裂的关系图景；这些文献的假设类、查询域、损失和输入承诺不同，不供应全部有限树上的正确总性、完整叶证书或上述新增收费下界。Magniez 等的固定输入期望惯例只承担定义 28.1 注明的角色。实际前像、任意长地址穷尽、条件缓存收费与全域取得共同承担本章的具体分离；它不被称为这些标准查询理论的新建立，也不从所列有限文献范围推出世界原创。
+
+结论只否定这两项资料对于所给成对实际费用的充分性，不给任意来源族的费用分类、一般费用核心或 Pareto 边界、费用向上闭包、最小实现族或叶数。所有叶证书只在 $d=3$ 的既有适用范围内调用，未推出其他替换深度的结论。完整树来源、组成、规范数量地址、原始响应、组成祖先许可与实际逆执行保持不同，此只读任务及代数组成不提供实际逆执行或物理世界对应。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 29. 任意有限实际正来源族的联合响应费用核心与全域取得
+
+**定义 29.1（实际联合响应数据、分裂核心与费用目标）。** 沿用定义 23.1、28.1 的原始只读合同，固定 $d=3$。未知输入仍遍历全部非空有限自由有序满二叉 $\alpha/\beta$ 树 $U\in\mathcal T$，任务仍为 $\iota_3(U)=\mathbf1_{\{U\in\rho^3(\mathcal T)\}}$。共同初始化与输入无关；没有组成、叶数、大小、高度、正性或有限候选承诺。每个有限左右地址，包括 $\varepsilon$，始终可以直接查询，报告为同一不变输入的四值；费用只计不同实际地址，重复请求由真实缓存供应，未有限终止费用为 $+\infty$。计算、定位、地址长度与种子取得不收费。$\mathfrak D_3$、$\mathfrak R_3$、$\mathfrak R_3^{\mathrm u}$ 分别保留全域确定性正确总性、原逐来源随机合同及固定 $([0,1],\mathcal L,\operatorname{Leb})$ 种子合同；原随机空间不要求完备。
+
+取整数 $m\ge1$ 及两两不同、完整描述已知的实际树 $F=(P_i)_{i\in[m]}$，其中 $P_i\in\rho^3(\mathcal T)$。它们仅是费用评价对象。定义
+
+$$
+\begin{gathered}
+\mathcal B=\{\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,
+                 \mathsf{branch},\mathsf{absent}\},\qquad
+\Sigma=\{\mathtt L,\mathtt R\}^{<\mathbb N},\\
+L_i=L(P_i),\qquad n_i=|L_i|,\qquad \boldsymbol n=(n_i)_{i\in[m]},\\
+a(u)=(\operatorname{out}_{P_i}(u))_{i\in[m]}\in\mathcal B^{[m]},
+\qquad \mathcal A_F=\{a(u):u\in\Sigma\},\\
+\chi(\mathsf{leaf}_\alpha)=\chi(\mathsf{leaf}_\beta)=0,
+\qquad \chi(\mathsf{branch})=\chi(\mathsf{absent})=1.
+\end{gathered}
+\tag{29.1}
+$$
+
+$\mathcal A_F$ 是实际联合响应向量的集合，不计相同向量出现于多少地址，不是任意填写的响应表。固定地址的短词优先次序，等长时取 $\mathtt L<\mathtt R$；对每个 $a\in\mathcal A_F$，以 $r_F(a)$ 记满足 $a(u)=a$ 的首个实际地址。令 $N_i$ 为 $P_i$ 的全部实际节点地址；确定这些代表可以使用有限集合 $\bigcup_iN_i$ 及其外首个地址。代表替换始终使用完整 $m$ 坐标向量。
+
+对非空 $S\subseteq[m]$、$a\in\mathcal A_F$，定义
+
+$$
+S_{a,y}=\{i\in S:a_i=y\},\qquad
+Y_a(S)=\{a_i:i\in S\},\qquad
+\mathcal A_+(S)=\{a\in\mathcal A_F:|Y_a(S)|\ge2\}.
+\tag{29.2}
+$$
+
+只在非空幸存指标集上递归定义非负整数向量集合 $\Gamma_F(S)\subseteq\mathbb N_0^S$：
+
+$$
+\begin{aligned}
+\Gamma_F(\{i\})&=\{(0)\},\\
+\Gamma_F(S)&=
+\bigcup_{a\in\mathcal A_+(S)}
+\left\{
+ \bigl(\chi(a_i)+g^{a_i}_i\bigr)_{i\in S}:
+ g^y\in\Gamma_F(S_{a,y})\ \text{对每个 }y\in Y_a(S)
+\right\}\quad(|S|\ge2),\\
+\mathcal V_F&=\{\boldsymbol n+g:g\in\Gamma_F([m])\}.
+\end{aligned}
+\tag{29.3}
+$$
+
+递归所选 $a\in\mathcal A_+(S)$ 的每个非空 $S_{a,y}$ 都是真子集，故这是按 $|S|$ 的有限递归；空孩子不进入递归。递归中的一个选择树在非单元素节点 $S$ 选择 $a\in\mathcal A_+(S)$，按实际报告进入相应非空孩子，到单点结束路由；单点本身不是未知输入的接受证书。这里不把已付费地址集 $Q$ 放入 $\Gamma_F$ 的自变量，实际执行仍保留完整地址缓存。
+
+把定义 28.1 的目标推广到这 $m$ 个评价对象：
+
+$$
+\begin{aligned}
+D(F)&=\inf_{\pi\in\mathfrak D_3}\max_{i\in[m]}C_\pi(P_i),\\
+R(F)&=\inf_{\Pi\in\mathfrak R_3}\max_{i\in[m]}\mathbb E C_\Pi(\cdot,P_i),&
+R_{\mathrm u}(F)&=\inf_{\Pi\in\mathfrak R_3^{\mathrm u}}\max_{i\in[m]}\mathbb E C_\Pi(\cdot,P_i),\\
+W(F)&=\inf_{\Pi\in\mathfrak R_3}\mathbb E\!\left[\max_{i\in[m]}C_\Pi(\cdot,P_i)\right],&
+W_{\mathrm u}(F)&=\inf_{\Pi\in\mathfrak R_3^{\mathrm u}}\mathbb E\!\left[\max_{i\in[m]}C_\Pi(\cdot,P_i)\right].
+\end{aligned}
+\tag{29.4}
+$$
+
+每个最大值中的各次评价使用同一控制器和同一种子；期望仅在该策略自己的输入无关种子律上取，不给 $F$ 或 $\mathcal T$ 设置来源先验。
+
+**定理 29.2（实际全域取得与逐坐标支配的有限正规形）。** 定义 29.1 的 $\mathcal V_F$ 是非空有限集合。每个 $v\in\mathcal V_F$ 都由一个输入无关的固定策略 $\sigma_v\in\mathfrak D_3$ 同时取得；每个原确定性全域策略都被其中一个费用向量在 $F$ 上逐坐标支配：
+
+$$
+\begin{gathered}
+\forall v\in\mathcal V_F\ \exists\sigma_v\in\mathfrak D_3\ \forall i\in[m],
+\quad C_{\sigma_v}(P_i)=v_i,\\
+\forall\pi\in\mathfrak D_3\ \exists v\in\mathcal V_F\ \forall i\in[m],
+\quad v_i\le C_\pi(P_i),\\
+\mathcal V_F\subseteq\prod_{i\in[m]}
+\bigl(\{n_i,n_i+1,\ldots,n_i+m-1\}\bigr).
+\end{gathered}
+\tag{29.5}
+$$
+
+取得策略使用实际代表路由，再以单点选择相应原型的完整带标签叶测试。若 $B_v(i)$ 是它在 $P_i$ 上的路由地址集合，则同一路径的完整联合向量和实际代表地址都不重复，路由长至多 $m-1$，而最终不同付费地址集合与费用精确为
+
+$$
+\begin{aligned}
+J_{\sigma_v}(P_i)&=B_v(i)\cup L_i,\\
+e_v(i)&=|B_v(i)\setminus L_i|
+       =\sum_{u\in B_v(i)}\chi(\operatorname{out}_{P_i}(u)),\\
+C_{\sigma_v}(P_i)&=n_i+e_v(i)=v_i.
+\end{aligned}
+\tag{29.6}
+$$
+
+式（29.5）的支配只比较 $F$ 上的费用；在 $F$ 外要求新策略独立地正确且有限终止，不要求与原策略的行为或费用相同。
+
+**证明。** 每个 $P_i$ 有有限个节点，故 $N=\bigcup_iN_i$ 有限。$u\notin N$ 时所有坐标都是 $\mathsf{absent}$；$u\in N$ 时由实际描述取得四值。因此 $\mathcal A_F$ 恰由 $N$ 上的实际向量及一个全不存在向量组成，既有限又有实际代表。短词优先次序使每个代表有限取得；全不存在向量的首代表是 $N$ 外首地址。这里仅从指定实际树的描述读出数据，没有为虚构向量建立实现。
+
+若 $i\ne j$，两树不同，由[母卷定理 9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)有实际地址区分它们，故 $\mathcal A_F$ 分离所有不同指标。对每个非空 $S$，将既有 [AdaptiveSeparationDepthUpperBound](../../../D5/S3/Observer/Budget/AdaptiveSeparationDepthUpperBound.lean) 的私有 exists_bounded_separating_protocol 及公开 adaptive_separation_depth_upper_bound 的有限候选含义用于状态 $S$、查询 $\mathcal A_F$、读数 $(a,i)\mapsto a_i$。它们供应实际分离读数上的有限协议与 $|S|-1$ 深度界；所用查询、响应及指标对应均已明确，不把有限候选识别当成全域成员判定。该构造在每个非单元素队列选择区分其中两个指标的向量，故所有非空响应孩子都是真子集；其终端记录在 $S$ 上单射，所以每个非空终端队列恰为单点。忽略空孩子后，这正是式（29.3）所枚举的选择树类型。因此每个 $\Gamma_F(S)$ 非空。每个节点的菜单有限，孩子严格较小，使用[延拓卷定义 11.2](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md#11-自适应分辨率何时可以停止递归)的有限纯观察树形分解，在这有限菜单上按 $|S|$ 枚举所有孩子选择，得到全部选择树及有限 $\Gamma_F(S)$。该分解只用于有限候选上的严格缩小树形；这里的响应相关超额按式（29.3）逐坐标拼接，并由式（29.6）的实际不同地址集合核算，不直接代入定义 11.2 的固定动作价格 $c(a)$ 标量公式，也没有把无限的 $\mathcal T$ 代入有限候选递推。
+
+固定式（29.3）的一棵选择树。任一先前选中的完整向量 $a$ 在所进入的孩子上有同一个响应 $y$，在其任意后代幸存集上仍是常值，所以不能再次属于 $\mathcal A_+(S)$。这同时排除不同地址携带相同完整向量而在同一路径上重复分裂。用 $r_F(a)$ 替换每个选择向量后，若同一路径两个代表地址相同，它们的完整向量也相同，与上述性质矛盾。互不相交的不同分支可以用同一代表；一次运行只走一条路径。每个非空孩子严格减少指标数，故该路径至多 $m-1$ 个地址。这解释了 $\Gamma_F$ 为什么无需 $Q$：在这种已限定的分裂路由内，再次使用任何已问向量必为常值，不能新增一个合法分裂。它没有删除运行缓存，也没有给一般历史、许可或费用状态的消去定理。
+
+现把选择树编译为读取任意实际 $U\in\mathcal T$ 的策略。在节点 $S$ 实际请求 $r_F(a)$，只按真实四值报告更新：报告 $y\in Y_a(S)$ 时进入 $S_{a,y}$，任何其他报告立即选择定理 23.2 证明中的全域总后备。到达单点 $\{i\}$ 时仅选择该证明中取两个评价对象同为 $P_i$ 的全域单原型策略：依固定次序请求 $P_i$ 的全部带标签叶，全部精确匹配才接受；任何叶标签、分支或不存在的不匹配都进入同一后备。所选单原型策略从它自己的完整初始化、空逻辑历史和初始控制状态开始；每次进入后备，包括叶核对中发生不匹配后进入后备，也给后备建立其独立初态和空逻辑历史。应用[引理 27.3](#27-实际三步像的面费用核心与分数面覆盖锐值)，先前路由及叶核对的真实报告仍留在外层实际缓存中，但只在后续策略请求相同地址时供应，并将这次请求及报告写入该后续策略自己的逻辑历史。后备从根开始的请求因此逐步等于它单独运行的请求；没有把路由或核对历史预填进任何续接的初态。
+
+完整叶核对的充分性与字面唯一性直接使用[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)及式（23.6）中的完整叶恢复，深度取其适用的 $d=3=3\cdot1$。因此任何接受都确实有 $U=P_i\in\rho^3(\mathcal T)$。单点路由本身不产生这种结论；不匹配也不被解释为负性证据。其余来源由定理 23.2 已证明的后备处理：从根起恢复实际有限树及实际测得叶数 $\ell$，只在分支处扩展，再对叶数至多 $\ell$ 的全部实际候选前像作有限枚举，比较其三步替换描述。该后备的完备性使用替换不减叶数，所需字面前像单射性与非满射性直接使用[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)。枚举的是已知描述，不对未知输入执行逆操作。
+
+特别地，未知输入为根叶 $\alpha$ 或 $\beta$ 时，若路由出现意外报告便立即进入总后备；若全部路由报告仍沿某条原型路径，则有限路由终至单点。由式（18.4），每个 $P_i$ 至少有三片叶，其叶地址都非空，而未知根叶在每个这样的地址都报 $\mathsf{absent}$；所选原型测试遂发生叶响应不匹配并进入同一总后备。恢复所得 $\ell=1$，候选前像只有两种根叶，三步替换均为分支树，有限比较后拒绝。三步替换作用于原分支时也保留根分支，故这两种未知根叶确实都是负例。没有使用等待某个前像出现的无穷搜索。一般有限正负输入同样由既有后备有限终止，而路由和叶核对各自有限，故整个新策略在全部 $\mathcal T$ 上正确且有限终止；它的初始化仅依固定 $F$、选择树与既有测试。
+
+在评价输入 $P_i$ 上，每个真实路由报告都在当前 $Y_a(S)$ 中并保留 $i$，最终恰选择自己的测试。它不会进入后备，后续测试的独立执行请求集合恰为 $L_i$。引理 27.3 遂给最终付费集合 $B_v(i)\cup L_i$。叶报告的路由地址属于 $L_i$，已包含在基线 $n_i$ 中，故其额外费用 $\chi$ 为零；分支或不存在地址都不属于 $L_i$，每个不同地址新增费用一，故其 $\chi$ 为一。同一路径地址无重复，所以额外费用正是式（29.6）的和。式（29.3）逐层拼接这些贡献，得到 $v_i=n_i+e_v(i)$，并由路由长度得式（29.5）的坐标界。于是每个数值核心向量都有一棵实际代表选择树和一个全域正确总控制器取得，不只是有限承诺域上的费用。
+
+为证支配，固定任意 $\pi\in\mathfrak D_3$。它在每个 $P_i$ 上的完整有限请求—响应记录记为 $h_i$，重复缓存请求也保留；无报告内部计算和实际停止决定由共同初始化与该记录决定。以 $J_i$ 记其不同付费地址集。直接用式（23.6），有 $L_i\subseteq J_i$。若 $P_j$ 匹配 $h_i$ 的全部报告，则同记录重放使它在该处同时接受；这份记录已经包含 $P_i$ 的全部带标签叶，定理 18.2 的完整叶唯一性遂给 $P_j=P_i$，从而 $j=i$。因此每份接受记录在 $F$ 中的完整相容队列恰为 $\{i\}$，特别地，不同指标不能有相同完整终端记录。也不能有一个原型在另一原型的相同记录真前缀处接受：同记录停止决定会使后者同时停止，归入刚排除的情形。
+
+全部 $h_i$ 的前缀并是有限的，全部出现过的原地址并 $Q_\pi=\bigcup_iJ_i$ 也有限。由这些实际运行作静态有限前缀树：在共同记录处采用原策略的下一请求，遇到实际响应分支后继续对应的原型子队列，终端保留原接受标签。同一共同记录的下一请求或停止决定由原控制唯一确定；已排除的终端真前缀情形保证这里不会同时要求停止与继续。内部计算仅确定这些已有节点，不充当新报告。把前缀树作为有限查询类型 $Q_\pi$ 上的只读选择器，实际原型运行与 $h_i$ 完全相同；在未出现的记录上固定返回接受标签，只用于定义这个有限设计对象，不把它当作未知输入上的正确策略。这个选择器的请求燃料可取 $1+\max_i|h_i|$，预算可取 $\max_i|h_i|$；它们由有限族的实际终端记录取得，不声称原 $\pi$ 有全树统一燃料。
+
+现在直接复用 [PassivePolicyNormalization](../../../D5/S3/ConceptDynamics/Experiment/PassivePolicyNormalization.lean) 证明内的 normalize_bounded 有限剪枝及公开 result 的终端纤维、子序列和深度部分。对应取状态 $[m]$、查询 $Q_\pi$、共同四值响应、读数 $\operatorname{out}_{P_i}(u)$；可取唯一接受标签、恒真有限设计合法谓词、零终端价格、单位查询价格及上述预算，输出与目标取同一单点度量空间。公开结果要求的每个候选及响应纤维上免费合法标签于是均存在，实际原型运行的每次请求价格和也不超过预算；这个辅助预算只确保该有限设计满足原结果的假设，不替代不同地址费用合同。该已知剪枝给一个静态协议，其在 $P_i$ 上的完整请求—响应列 $t_i$ 是 $h_i$ 的子序列；每个终端相容队列与原记录的终端队列完全相同，每个保留查询的非空响应孩子严格较小，路径长至多 $m-1$。原终端队列已为单点，剪枝后仍是单点。这里使用的是已有有限剪枝的这些含义，不另外建立剪枝或深度包装命题。
+
+缓存重复请求在当前队列上必为常值，常值地址的报告也只是在设计时由实际原型数据确定，因而这两类请求被删去。剪枝证明以这些设计常值选择静态子树；这不要求在新的实际运行中取得或伪造被删报告。删去的响应没有写入新运行的逻辑记录或外层缓存；新策略不恢复原 $\pi$ 的内部状态，也不以虚构的历史继续执行 $\pi$。有限承诺分裂的标准对应可参见 [Nowak，*The Geometry of Generalized Binary Search*，arXiv:0910.4397v5，第 I 节、第 II.A 节](https://arxiv.org/pdf/0910.4397v5#page=3) 的有限假设及查询等价分区，以及 [Dasgupta，*Analysis of a greedy active learning strategy*，第 2 节](https://proceedings.neurips.cc/paper_files/paper/2004/file/c61fbef63df5ff317aecdc3670094472-Paper.pdf#page=3) 的有限假设搜索。它们的有限目标假设与来源律不供应这里无承诺的 $\rho^3(\mathcal T)$ 成员判定。
+
+在剪枝协议的一条原型路径上，某个已问地址的完整联合向量在对应后代队列上恒定，因此不能再次分裂；同一个完整向量的任何其他地址也不能在这条路径上分裂。由此，所有保留的原地址互异。对同一个实际 $P_i$，它们由 $t_i$ 是 $h_i$ 的子序列而都是原运行中的实际请求，所以每个保留的原非叶地址都是 $J_i\setminus L_i$ 的不同成员。四值中的叶报告恰指地址属于 $L_i$，分支与不存在恰指地址不属于 $L_i$，因而沿 $t_i$ 的 $\chi$ 和正是这些不同保留原非叶地址的个数，不超过 $|J_i\setminus L_i|$。这个结论同时覆盖原策略的重复缓存、常值查询和不收费内部计算；它没有从另一个原型的付费记录借用地址。
+
+最后将每个保留原地址 $u$ 替换为 $r_F(a(u))$。完整 $m$ 坐标响应相同，故各原型的分支、终端单点与每个 $\chi$ 都保持；不能只保留当前队列上的局部向量后任意换址。前述常值后代性质排除完整向量在同一路径上重现，也排除两个代表在同一路径上别名为同一地址。代表替换不继承旧地址的缓存条目：只有这个实际代表已经在当前新运行中被请求才可命中缓存，而路径非重复使路由阶段没有这种命中。实际叶测试中可以命中同一代表地址的真实缓存，这正由式（29.6）计费。响应相关费用的有限测试模型可参见 [Saettler、Laber、Cicalese，*Trading off Worst and Expected Cost in Decision Tree Problems and a Value Dependent Model*，arXiv:1406.3655v1，第 1.1 节](https://arxiv.org/pdf/1406.3655v1#page=3)；其有限 DFEP 的固定测试费用版本见 [Cicalese、Laber、Saettler，*Decision Trees for Function Evaluation: Simultaneous Optimization of Worst and Expected Cost*，arXiv:1309.2796v2，第 2—3 页](https://arxiv.org/pdf/1309.2796v2#page=2)。这里的零或一是扣除完整叶基线后的超额，不是把原叶查询改为免费动作。
+
+所得代表选择树属于式（29.3）的递归。接上已经证明全域正确总性的独立叶测试与后备，得到某个 $v\in\mathcal V_F$。被删去的原叶观察在最后的完整叶测试中恢复，它们的不同地址费用仍包含在一次性的 $n_i$ 内；不向新路由免费供应旧策略的未取得观察。因而对每个 $i$，新费用为 $n_i$ 加保留原非叶数，不超过 $n_i+|J_i\setminus L_i|=|J_i|=C_\pi(P_i)$。这证明全部支配子句。有限学习目标中删去单响应动作的另一表述是 [Sabato，*Submodular Learning and Covering with Response-Dependent Costs*，arXiv:1602.07120v3，第 2 节、引理 4.5](https://arxiv.org/pdf/1602.07120v3#page=12) 的 bifurcating 算法；其引理要求学习目标与既有最优算法，只在其有限动作—响应模型内使用。本证明的任意策略终端队列与子序列由上述既有有限剪枝供应，全域认证、代表实际计费和后备由前面的桥梁供应，不从该有限学习结论扩大输入域。证毕。
+
+**定理 29.3（原随机合同的有限可测投影与全部五个锐值）。** 对每个定义 29.1 的原随机策略 $\Pi$，存在 $\mathcal V_F$ 上的概率向量 $p=(p_v)_{v\in\mathcal V_F}$ 及以同一所选控制器共同评价全部原型的有限混合 $\widehat\Pi$，使
+
+$$
+\begin{aligned}
+\mathbb E C_{\widehat\Pi}(\cdot,P_i)
+ &=\sum_{v\in\mathcal V_F}p_vv_i
+ \le\mathbb E C_\Pi(\cdot,P_i)\quad(i\in[m]),\\
+\mathbb E\!\left[\max_i C_{\widehat\Pi}(\cdot,P_i)\right]
+ &=\sum_{v\in\mathcal V_F}p_v\max_i v_i
+ \le\mathbb E\!\left[\max_i C_\Pi(\cdot,P_i)\right].
+\end{aligned}
+\tag{29.7}
+$$
+
+原期望允许无穷。每个概率向量 $p$ 的有限混合都可用固定 $[0,1]$ 种子空间实际取得，在每个声明种子和每个有限树上均正确且有限终止；每个固定树的费用是有限可测阶梯函数。于是
+
+$$
+\begin{aligned}
+D(F)&=\min_{v\in\mathcal V_F}\max_i v_i,\\
+R(F)=R_{\mathrm u}(F)
+ &=\min_{p\in\Delta(\mathcal V_F)}\max_i\sum_{v\in\mathcal V_F}p_vv_i,\\
+W(F)=W_{\mathrm u}(F)
+ &=\min_{p\in\Delta(\mathcal V_F)}\sum_{v\in\mathcal V_F}p_v\max_i v_i
+ =D(F),
+\end{aligned}
+\tag{29.8}
+$$
+
+其中 $\Delta(\mathcal V_F)=\{p:p_v\ge0,\ \sum_vp_v=1\}$。这些下确界全部有限取得，$R(F)$ 有理且有有理最优权重；其精确有限 LP 为
+
+$$
+\begin{aligned}
+\text{最小化 }&t,\\
+p_v&\ge0\quad(v\in\mathcal V_F),\qquad \sum_vp_v=1,\\
+\sum_vp_vv_i&\le t\quad(i\in[m]),\qquad
+0\le t\le M_F,\qquad M_F=\max_{v\in\mathcal V_F}\max_i v_i.
+\end{aligned}
+\tag{29.9}
+$$
+
+$m=1$ 时 $\mathcal V_F=\{(n_1)\}$，五个值均为 $n_1$。概率质量的存在不要求在线执行原策略的反事实评价、检验好种子集或计算任意原策略的律。
+
+**证明。** [母卷定理 9.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)把全部 $\mathcal T$ 单射编码进有限二字母词，故整个未知输入域可数。全部地址和有限四值请求—响应记录也可数，原合同的完整初始化、合法菜单、来源不变与同种子重放恰满足定理 22.1 的原假设。对这一个 $\Pi$，先用式（22.4）取可测满测度有声返回集，再另用式（22.7）的全部来源未终止事件并，得到一个策略专属集合
+
+$$
+G_\Pi=G_\Pi^{\mathrm{sound}}\setminus
+        \bigcup_{U\in\mathcal T}N_U^\Pi\in\mathcal A,
+\qquad \mu(G_\Pi)=1,\qquad
+\omega\in G_\Pi\Longrightarrow\Pi_\omega\in\mathfrak D_3.
+\tag{29.10}
+$$
+
+第一步供应所有实际来源上的有声有限返回，第二步供应所有实际来源上的有限终止；不能以第一步代替第二步。可数并中的各事件可测且零测正是原随机合同，没有对所有策略取共同交集，也没有只在 $F$ 上取好种子或取得统一全树时间界。
+
+枚举有限核心为互异向量 $v^1,\ldots,v^s$，$s\ge1$，为每个向量固定定理 29.2 的一个实际控制器 $\sigma_j$。令 $c_i(\omega)=C_\Pi(\omega,P_i)$，它们是原合同已经要求的非负扩展可测费用，有限最大值 $\max_i c_i$ 也因此可测，无须新增逐历史可测性合同。定义仅含有限数字比较的集合
+
+$$
+E_j=\bigcap_{i\in[m]}\{\omega:c_i(\omega)\ge v^j_i\}
+\quad(1\le j\le s).
+\tag{29.11}
+$$
+
+这些集合可测，包括费用为无穷的种子。对每个 $\omega\in G_\Pi$，定理 29.2 适用于同一个全域正确总策略 $\Pi_\omega$，所以至少一个 $E_j$ 包含该种子。采用固定顺序的首匹配单元
+
+$$
+\begin{aligned}
+B_1&=(G_\Pi\cap E_1)\cup(\Omega\setminus G_\Pi),\\
+B_j&=G_\Pi\cap\left(E_j\setminus\bigcup_{k<j}E_k\right)
+\quad(2\le j\le s),\\
+p_j&=\mu(B_j),\qquad
+\theta(\omega)=j\quad(\omega\in B_j).
+\end{aligned}
+\tag{29.12}
+$$
+
+$B_j$ 两两不交且并为整个 $\Omega$，都属于原 $\mathcal A$，故 $p_j\ge0$ 且 $\sum_jp_j=1$。在 $G_\Pi$ 上，同一个 $\theta$ 同时满足全部坐标比较，并因而满足最大值比较：
+
+$$
+v^{\theta(\omega)}_i\le c_i(\omega)\quad(i\in[m]),
+\qquad \max_i v^{\theta(\omega)}_i\le\max_i c_i(\omega).
+\tag{29.13}
+$$
+
+这里未选择原型各自的不同控制器或不同种子。单元只由费用数值与一个已知可测的策略专属集合形成；没有使用逐历史事件、可测转录、策略空间测度或来源先验。在非完备空间上也成立：好集合及其整个补集都是已证明可测的集合，没有任取不可测的零测子集。式（29.12）在好集合外固定选 $1$，而不是赋予那些种子未经验证的原策略性质。
+
+在同一 $\Omega$ 上把 $\theta$ 看作有限控制器的耦合选择，仅为比较取期望。非负扩展积分的几乎处处单调性及有限阶梯函数积分给
+
+$$
+\begin{aligned}
+\int v^{\theta(\omega)}_i\,d\mu
+ &=\sum_{j=1}^sp_jv^j_i\le\int c_i\,d\mu,\\
+\int\max_i v^{\theta(\omega)}_i\,d\mu
+ &=\sum_{j=1}^sp_j\max_i v^j_i
+ \le\int\max_i c_i\,d\mu.
+\end{aligned}
+\tag{29.14}
+$$
+
+零测例外上的原费用即使为无穷也不改变这些积分比较；原期望无限时同一不等式仍成立。由此存在有限质量 $p$，而实际新混合只需把 $j$ 本身作为输入无关有限种子，并从 $\sigma_j$ 的完整初态运行。它没有在未知输入上计算 $\theta$、运行全部反事实原型、测试 $G_\Pi$ 或求取原策略律。式（29.12）仅为质量存在及同时支配的数学构造。
+
+对任意给定概率向量 $p$，包括有零权重的情形，置 $q_0=0$、$q_j=\sum_{k=1}^jp_k$，故 $q_s=1$。在已经固定的均匀种子空间定义
+
+$$
+\sigma(\omega)=
+\begin{cases}
+\sigma_j,&0\le\omega<1,\quad q_{j-1}\le\omega<q_j,\\
+\sigma_s,&\omega=1.
+\end{cases}
+\tag{29.15}
+$$
+
+正长度半开区间两两不交并覆盖 $[0,1)$；零权重的区间为空，不造成缺口。端点 $1$ 显式分配给 $\sigma_s$，即使 $p_s=0$，它仍是全域正确总控制器。选择仅依种子和固定菜单，所有输入使用同一规则。每个种子选中的控制器都对每个有限树正确且有限终止；对每个固定 $U$，费用在这些有限可测区间及端点上分别为有限常数 $C_{\sigma_j}(U)$。所以费用是有限可测阶梯函数，错误和未终止事件均为空，这确实属于 $\mathfrak R_3^{\mathrm u}$。在全部原型上同一个 $j$ 给费用向量 $v^j$，其坐标均值及同种子最大值均值正是式（29.7）的有限和。有限菜单取得性连同式（29.14）证明该式。
+
+现在比较目标。对任意 $\pi\in\mathfrak D_3$，定理 29.2 供应某个 $v$ 满足 $\max_i v_i\le\max_i C_\pi(P_i)$；有限核心中最小的 $\max_i v_i$ 又由相应 $\sigma_v$ 取得。这给式（29.8）的 $D$ 等式。对任意原随机 $\Pi$，式（29.7）给某个有限 $p$ 的所有坐标均值同时不大于原值，因此有限概率单纯形上目标的最小值是 $R$ 的下界；反向由式（29.15）实现任意 $p$，特别是其最优 $p$，同时属于两种随机类，给 $R=R_{\mathrm u}$。同理，最大值的同种子比较给 $W$ 的下界，任意 $p$ 的实际混合给上界及 $W=W_{\mathrm u}$。令 $M(v)=\max_i v_i$，每个 $p$ 都满足 $\sum_vp_vM(v)\ge\min_vM(v)$，而把全部质量放在一个极小向量取得等号，故 $W=W_{\mathrm u}=D$。该论证保留了 $\max_i\mathbb E C_i$ 与 $\mathbb E\max_i C_i$ 的次序，不将二者互换。
+
+$\mathcal V_F$ 非空有限，概率单纯形紧，$p\mapsto\max_i\sum_vp_vv_i$ 连续，故其最小值有限取得。式（29.9）只是此目标的有限 epigraph LP；对任意 $p$，取 $t=\max_i\sum_vp_vv_i$ 均有 $0\le t\le M_F$，所以此上界不删去任何概率向量的目标值。其系数及右端均为整数，约束后的多面体非空有界。复用[命题 27.8](#27-实际三步像的面费用核心与分数面覆盖锐值)所引用的标准有限有理 LP 取得事实；[Grohe、Marx，*Constraint Solving via Fractional Edge Covers*，arXiv:1711.04506v1，引理 3.2 的证明](https://arxiv.org/pdf/1711.04506v1#page=6) 在其有限覆盖 LP 中使用的正是有理最优权重事实。在这里，线性目标的非空最优面含有多面体的一个顶点；该顶点由等式及取等号约束中的满秩子系确定，整数系数的满秩线性系统有有理解。因此可以选有理最优 $p,t$，最优 $t=R(F)$ 也有理。这里只在上述实质定理的优化步骤内借用标准 LP 事实，未把式（29.9）称为分数覆盖，也未采用 CSP 输入承诺。有理最优 $p$ 给式（29.15）的有理端点及真实全域取得；$D,W,W_{\mathrm u}$ 则由整数核心的一个点质量取得。
+
+最后 $m=1$ 时式（29.3）从单点零向量开始，完全没有路由，定理 29.2 仍接上完整叶测试与全域后备。故核心只有 $(n_1)$，其点质量和固定区间全部给费用 $n_1$；原随机下界仍由整个可数域的式（29.10）供应，五个值均为 $n_1$。没有额外的正性承诺或端点遗漏。证毕。
+
+**推论 29.4（实际联合响应集合与叶数的数值充分性）。** 设 $F=(P_i)_{i\in[m]}$、$F'=(P'_i)_{i\in[m]}$ 都满足定义 29.1，且存在同一个指标置换 $\eta:[m]\to[m]$。对任意坐标向量 $x$，定义 $(T_\eta x)_{\eta(i)}=x_i$。若
+
+$$
+n'_{\eta(i)}=n_i\quad(i\in[m]),\qquad
+\mathcal A_{F'}=\{T_\eta a:a\in\mathcal A_F\},
+\tag{29.16}
+$$
+
+则其核心逐坐标对应，五个数值目标相等：
+
+$$
+\begin{gathered}
+\Gamma_{F'}(\eta(S))=T_\eta\Gamma_F(S)
+\quad(\varnothing\ne S\subseteq[m]),\qquad
+\mathcal V_{F'}=T_\eta\mathcal V_F,\\
+(D,R,R_{\mathrm u},W,W_{\mathrm u})(F')
+ =(D,R,R_{\mathrm u},W,W_{\mathrm u})(F).
+\end{gathered}
+\tag{29.17}
+$$
+
+这是实际族之间对本合同的充分资料；不附带该资料的必要性、极小性或任意抽象响应表的实际可实现性。两个族各自使用自己的真实地址、代表、完整叶测试及后备。
+
+**证明。** 对 $a'=T_\eta a$ 有 $a'_{\eta(i)}=a_i$，所以响应孩子满足 $\eta(S_{a,y})=\eta(S)_{a',y}$，报告字母及其 $\chi$ 相同，有用菜单也通过 $T_\eta$ 一一对应。单点递归的零向量对应；对 $|S|$ 归纳，式（29.3）的每个孩子向量及每个拼接贡献逐坐标对应，得到式（29.17）的 $\Gamma$ 等式。叶数的同一置换再给核心等式。对应的有限概率质量在核心间搬运，保留 $\max_i v_i$、各坐标均值的最大值以及 $\sum_vp_v\max_i v_i$，因此定理 29.3 的有限表达式给全部五个目标相同；有理最优质量也被保留。
+
+对应只涉及实际原型上的完整联合向量。若 $r_F(a)$ 与 $r_{F'}(T_\eta a)$ 为不同地址，它们在各自原型族上分别实现所需向量；定理 29.2 各自在原合同下编译实际控制器，定理 29.3 各自把相同最优数值质量变为实际混合。故不需要跨族继承缓存或转移旧地址的记录，也没有证明在两个原型族之外的响应、行为或费用相同。共同叶数没有抹去叶标签与形状，完整向量集合没有被改成边缘响应或任意行可重排的局部数据；所有向量必须使用同一个置换 $\eta$。
+
+式（29.5）只给一个实际可取得、逐坐标向下支配原评价费用的有限集合，式（29.7）只给同一有限混合的共同积分比较；它们未给全部可实现费用的向上集合等式。式（29.3）忽略地址重数的合法性限于纯只读、固定四值、不同地址收费及终端完整叶基线；实际缓存仍在控制器中。若改变为历史相关费用、许可变化、扰动或其他状态，前述常值删减与基线计费的假设不再由本合同供应，不能据此消去这些状态。全部叶证书只调用 $d=3$ 的既有适用范围，完整树来源、组成、规范数量地址、原始报告、组成祖先许可与实际逆执行保持不同。本结论的量词不含其他替换深度、物理对应、统一全树运行时间界或时间及位复杂度界；有限实际描述供应构造，但任意原随机策略的质量选择仅为存在结论。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 30. 实际三步像的分歧前沿、七叶分离与有限容量
+
+**定义 30.1（等规模实际像与共享叶）。** 固定定义 23.1、29.1 的 $d=3$ 原始只读合同。来源域仍为全部非空有限自由有序满二叉 $\alpha/\beta$ 树 $\mathcal T$，正来源集合为 $\mathcal I_3=\rho^3(\mathcal T)$；来源相等保留字面括号、次序和叶标签。有限评价族的共同叶数只约束评价对象，不给未知输入任何组成、叶数、高度、正性或候选身份承诺。所有有限左右地址均合法，报告仍为同一不变来源的四值，费用仍计真实缓存后的不同实际地址。
+
+对任意树 $P,Q$，记
+
+$$
+\begin{gathered}
+n(P)=|L(P)|,\qquad
+s(P,Q)=|L(P)\cap L(Q)|,\qquad
+\nu(P,Q)=|L(P)\setminus L(Q)|=n(P)-s(P,Q),\\
+\operatorname{NC}(P,Q)\quad\Longleftrightarrow\quad
+\forall u\in L(P)\cap L(Q),\ \lambda_P(u)=\lambda_Q(u).
+\end{gathered}
+\tag{30.1}
+$$
+
+$\operatorname{NC}$ 只要求共享叶地址上的标签一致；它允许在同一地址分别报告叶、分支或不存在。沿用命题 23.3 的字面树
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\qquad
+C=\langle A,E\rangle=\rho^3(\beta),\qquad
+B=\langle C,A\rangle.
+\tag{30.2}
+$$
+
+它们的叶数分别为 $2,3,5,8$。由原替换的二叉同态规则，每个 $P\in\mathcal I_3$ 按其前像根类型写成 $A$、$C$ 或 $\langle X,Y\rangle$，其中 $X,Y\in\mathcal I_3$。该前像和相应递归解析的唯一性直接采用[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的单射性；这是对既有实际像的解析，不将组成点或任意响应表当作完整树。原语法、替换及编码分别沿用[母卷定义 2.1、3.1、9.1 与定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)。
+
+**引理 30.2（原子像与复合像的全部非冲突比较）。** 对 $X,Y\in\mathcal I_3$，原子像之间只有相同者满足 $\operatorname{NC}$。原子像与复合像的比较恰为以下情形：
+
+$$
+\begin{aligned}
+\operatorname{NC}(A,\langle X,Y\rangle)
+&\Longleftrightarrow X\ne A,\\
+\operatorname{NC}(C,\langle X,Y\rangle)
+&\Longleftrightarrow
+Y\ne A\ \land\
+\left(X=A\ \lor\
+\bigl(\exists X_1,X_2\in\mathcal I_3,
+X=\langle X_1,X_2\rangle\ \land\ X_1\ne A\bigr)\right).
+\end{aligned}
+\tag{30.3}
+$$
+
+第一行成立时，共享叶数为零，$n(\langle X,Y\rangle)\ge8$，且大小恰为 $8$ 的唯一可能是 $\langle X,Y\rangle=B$。第二行中，若 $X=A$，共享叶数恰为 $3$，两侧未共享叶数分别为 $2$ 和 $n(Y)\ge5$；若 $X$ 为其中的复合像，共享叶数为零，且 $n(X)\ge8$、$n(Y)\ge5$。因此每个非冲突的原子／复合比较中，原子侧严格较小，原子侧至少有 $2$ 片未共享叶，复合侧至少有 $5$ 片未共享叶；两侧总叶数分别至少为 $3$ 和 $8$。
+
+**证明。** 每个实际三步像的根和左孩子都是分支：$A,C$ 的字面描述满足这一点，复合像的两个孩子本身都是实际三步像。按唯一前像的结构归纳，原子前像给大小 $3$ 或 $5$，分支前像的两个子像各至少有 $3$ 片叶，故每个实际像至少有 $3$ 片叶，复合像至少有 $6$ 片叶。因此大小 $3$ 只可能为 $A$；除 $A$ 外至少有 $5$ 片叶，大小 $5$ 只可能为 $C$。
+
+$A$ 与 $C$ 在共同叶地址 $\mathtt{LR}$ 分别标记 $\alpha$ 与 $\beta$，故它们不满足 $\operatorname{NC}$。相同原子像则当然满足，穷尽了原子／原子比较。
+
+$A$ 的叶地址是 $\mathtt{LL},\mathtt{LR},\mathtt R$。在 $\langle X,Y\rangle$ 中，$\mathtt R$ 的子树为 $Y$，$\mathtt{LL}$ 的子树为 $X$ 的左孩子，二者都为分支。若 $X=A$，地址 $\mathtt{LR}$ 在复合像中标记 $\beta$，与 $A$ 的 $\alpha$ 冲突。若 $X\ne A$，则 $X=C$ 或 $X$ 为复合像；其右孩子分别为 $E$ 或一个实际像，都为分支。因此 $A$ 的三个叶地址在该复合像中全部是分支，两树没有共享叶，且 $\operatorname{NC}$ 成立。此时 $n(X)\ge5$、$n(Y)\ge3$；大小 $8$ 强制 $X=C,Y=A$，得到唯一的 $B$。
+
+比较 $C=\langle A,E\rangle$ 与 $\langle X,Y\rangle$ 时，$\operatorname{NC}$ 分别限制左子树 $A,X$ 和右子树 $E,Y$。$E$ 的叶地址是 $\mathtt L,\mathtt R$。若 $Y=A$，右端标签分别为 $\alpha,\beta$，发生冲突。若 $Y\ne A$，则 $Y=C$ 或为复合像；其左右孩子都是分支，故 $E,Y$ 没有共享叶，此时 $n(Y)\ge5$。左侧比较中，$X=A$ 给出完全相同的三片叶；$X=C$ 已被原子／原子冲突排除；$X=\langle X_1,X_2\rangle$ 时，已证的第一行说明它恰在 $X_1\ne A$ 时合法，且没有共享叶、$n(X)\ge8$。左右地址不交，故共享叶数和未共享叶数按两侧相加，得到全部陈述。原子侧大小为 $3$ 或 $5$，复合侧在相应情形至少为 $8$、$8$ 或 $13$，所以大小关系严格。证毕。
+
+**引理 30.3（唯一前像上的有限分歧前沿与加法分解）。** 设 $P,Q\in\mathcal I_3$、$P\ne Q$ 且 $\operatorname{NC}(P,Q)$。存在有限非空前缀自由地址集 $H$，使得对每个 $w\in H$，两棵子树 $P_w=P|_w,Q_w=Q|_w$ 恰是一侧原子像、另一侧复合像的非冲突比较；在全部集合 $w\Sigma$（$w\in H$）之外，两树的四值报告相同。存在非负整数 $h_0$，为这些孔以外相同部分的叶数，满足
+
+$$
+\begin{aligned}
+n(P)&=h_0+\sum_{w\in H}n(P_w),&
+n(Q)&=h_0+\sum_{w\in H}n(Q_w),\\
+s(P,Q)&=h_0+\sum_{w\in H}s(P_w,Q_w),\\
+\nu(P,Q)&=\sum_{w\in H}\nu(P_w,Q_w),&
+\nu(Q,P)&=\sum_{w\in H}\nu(Q_w,P_w),\\
+n(P)-n(Q)&=\sum_{w\in H}\bigl(n(P_w)-n(Q_w)\bigr).
+\end{aligned}
+\tag{30.4}
+$$
+
+这里 $\Sigma=\{\mathtt L,\mathtt R\}^{<\mathbb N}$，$w\Sigma$ 包含孔根 $w$。每项大小差非零；其符号由原子／复合的朝向决定。
+
+**证明。** 取既有单射性供应的唯一前像 $p,q$。在共同地址处递归比较前像子树。如果两前像子树相同，保留该相同子树并停止比较；若两者都是分支，保留共同的有序二叉节点，分别比较左右孩子；若恰有一者是原子，记录该地址为孔并停止比较。两者为不同原子的情形不可能出现：其像是 $A,C$，引理 30.2 给出局部共享叶标签冲突，而在共同地址前加同一个前缀会把它变成 $P,Q$ 的共享叶标签冲突。$\operatorname{NC}$ 因而排除了该情形。
+
+每次递归进入更小的有限前像子树，所以比较有限终止；停止后不再比较该孔的后代，故 $H$ 前缀自由。若 $H$ 为空，所有终端前像子树都相同，共同构造逐层给出 $p=q$，从而 $P=Q$，矛盾。因此 $H$ 非空。替换保持每个原有二叉节点及其左右地址；在孔处，前像的原子或分支分别替换为原子像或复合像。任何该处的共享叶都前加同一个 $w$，所以其局部比较仍满足 $\operatorname{NC}$。
+
+共同二叉节点、相同终端子树和记录的孔构成一个有限有序满二叉上下文；替换后，相同终端子树仍相同。孔外地址若在共同部分中，其四值报告相同；若越过共同部分的一片叶，其报告在两侧都为不存在。取 $h_0$ 为这些相同终端像的总叶数。孔的地址互不为前缀，因而不同孔内的叶地址集合不交，也不与共同部分的叶相交。全部叶恰由这些集合分割，共享叶也逐孔分割。由此得到前三个叶数等式，未共享叶和大小差等式随即由相减得到。各孔满足引理 30.2，其原子侧严格较小，故每个局部大小差均非零。证毕。
+
+**定理 30.4（等规模非冲突实际像的七叶分离）。** 对任意不同的 $P,Q\in\mathcal I_3$，若 $n(P)=n(Q)=n$ 且 $\operatorname{NC}(P,Q)$，则
+
+$$
+\boxed{\qquad
+n\ge11,\qquad
+\nu(P,Q)=\nu(Q,P)\ge7,\qquad
+s(P,Q)\le n-7.
+\qquad}
+\tag{30.5}
+$$
+
+未共享叶的常数 $7$ 在实际同组成来源中达到。具体地，
+
+$$
+\begin{gathered}
+P_{13}=\langle C,\langle A,C\rangle\rangle
+ =\rho^3\bigl(\langle\beta,\langle\alpha,\beta\rangle\rangle\bigr),\\
+Q_{13}=\langle\langle A,C\rangle,C\rangle
+ =\rho^3\bigl(\langle\langle\alpha,\beta\rangle,\beta\rangle\bigr),\\
+c(P_{13})=c(Q_{13})=(5,8)^{\mathsf T},\qquad
+n(P_{13})=n(Q_{13})=13,\qquad s(P_{13},Q_{13})=6.
+\end{gathered}
+\tag{30.6}
+$$
+
+**证明。** 在引理 30.3 的分解中，全部非零大小差的和为零。因此至少有一个孔在 $P$ 侧为原子像，另一个孔在 $Q$ 侧为原子像；只有一种朝向时，所有差同号，不可能相加为零。在这两个不同的孔上，$P$ 分别含有至少 $3$ 和至少 $8$ 片叶，$Q$ 也分别含有至少 $8$ 和至少 $3$ 片叶。其余项非负，故 $n\ge11$。同样，引理 30.2 使 $P$ 在这两孔分别至少有 $2$ 和 $5$ 片未共享叶，$Q$ 分别至少有 $5$ 和 $2$ 片；式（30.4）遂给两侧至少为 $7$。等叶数使两个未共享叶数相等，再用式（30.1）得到共享叶上界。
+
+式（30.6）的前像由替换同态规则直接给出，两个前像字面不同，既有单射性供应像的不同性。比较 $C$ 与 $\langle A,C\rangle$ 时，引理 30.2 的 $X=A,Y=C$ 情形恰共享左侧的三片 $A$ 叶，其他叶均不共享，且共享标签相同。在根的左右孩子处各作一次相反朝向的该比较，所以 $P_{13},Q_{13}$ 满足 $\operatorname{NC}$，恰有以下六个共同带标签叶：
+
+$$
+\begin{array}{c|cccccc}
+u&\mathtt{LLLL}&\mathtt{LLLR}&\mathtt{LLR}&\mathtt{RLLL}&\mathtt{RLLR}&\mathtt{RLR}\\
+\lambda(u)&\beta&\alpha&\beta&\beta&\alpha&\beta
+\end{array}
+\tag{30.7}
+$$
+
+$A$ 的组成为 $(1,2)^{\mathsf T}$，$C$ 的组成为 $(2,3)^{\mathsf T}$，每棵所示树都由一个 $A$ 和两个 $C$ 组成，故组成为 $(5,8)^{\mathsf T}$、叶数为 $13$，两侧各有 $13-6=7$ 片未共享叶。这只取得式（30.5）的分离常数，不给后续容量上界的取等构造。证毕。
+
+**定理 30.5（最小十一叶规模的完整分类）。** 对任意不同的 $P,Q\in\mathcal I_3$，若 $n(P)=n(Q)=11$ 且 $\operatorname{NC}(P,Q)$，则其无序对必为
+
+$$
+\boxed{\quad
+\{P,Q\}=\{\langle A,B\rangle,\langle B,A\rangle\},
+\qquad B=\langle C,A\rangle.
+\quad}
+\tag{30.8}
+$$
+
+反之，该对满足这些条件。它字面上就是命题 23.3 在 $d=3$ 时的 $P_{\mathrm{dis}},Q_{\mathrm{dis}}$；特别地，任意两两不同、两两 $\operatorname{NC}$ 的十一叶实际像族至多有两个元素。
+
+**证明。** 在引理 30.3 的前沿中，定理 30.4 的证明已给两个相反朝向的孔。在 $P$ 中，这两孔的叶数下界之和为 $3+8=11$。既然总叶数恰为 $11$，这两个下界都取等，没有其他孔，也没有共同部分的叶，即 $h_0=0$。$Q$ 中同样强制叶数为 $8+3$。因此每个孔的原子侧都恰为三叶的 $A$，复合侧都恰为八叶；引理 30.2 的唯一八叶情形强制该复合侧为 $B=\langle C,A\rangle$。
+
+比较上下文没有相同终端子树，因为任一这样的实际像至少贡献三片共同部分的叶，与 $h_0=0$ 矛盾。其终端恰为两个孔；一个有两个终端的有限满二叉上下文只能是根的左右两个孔：根为分支后，若任何一侧再分支，终端数就至少为三。因此孔地址恰为 $\mathtt L,\mathtt R$，两侧朝向相反，得到式（30.8）。
+
+反向所需的实际前像、十一叶大小及无共享叶性质直接采用[命题 23.3 的式（23.7）—（23.9）、（23.13）](#23-全有限来源上两个指定正例的共同最优地址费用)，不另建来源对。若一个两两非冲突的十一叶族含任意两个不同元素，式（30.8）已固定这两个元素；第三个不同元素与其中任一个成对时仍须得到同一个无序对，故不能存在。证毕。
+
+**定义 30.6（固定叶数的零超额容量）。** 对 $n,t\in\mathbb N_0$，令
+
+$$
+\begin{gathered}
+\mathcal I_3(n)=\{P\in\mathcal I_3:n(P)=n\},\qquad
+\mathcal N=\{3p+5q:p,q\in\mathbb N_0, p+q\ge1\},\\
+K(F)=\left\{S\subseteq F:\exists\pi\in\mathfrak D_3,
+\forall P\in S, C_\pi(P)=n(P)\right\},\qquad
+K_\circ(F)=\{\varnothing\}\cup\{\{P\}:P\in F\},\\
+\mathsf{Cap}(n,t)=\max\left\{|F|:
+F\subseteq\mathcal I_3(n),\ F\text{ 有限},\
+K(F)=K_\circ(F),\ D(F)\le n+t\right\}.
+\end{gathered}
+\tag{30.9}
+$$
+
+$D$ 对非空族仍是式（29.4）的全域确定性最坏取得费用；只为该容量定义约定 $D(\varnothing)=0$。空族允许，空或不可行叶数的容量取零。由[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)，$K(F)$ 亦等于共同取得全部个体最优期望所定义的复形。实际三步像的有限计数直接复用[第 12 章式（12.3）、（12.15）](#12-完整树替换像的计数密度祖先混合与共轭来源偏差)，记
+
+$$
+N_n=|\mathcal I_3(n)|=
+\sum_{\substack{p,q\ge0,\ p+q\ge1\\3p+5q=n}}
+\mathrm{Cat}_{p+q-1}\binom{p+q}{p},
+\qquad
+\mathrm{Cat}_j=\frac1{j+1}\binom{2j}{j},
+\tag{30.10}
+$$
+
+空和为零；因此式（30.9）取有限集合上的最大值。这里的 Catalan 形状及有序叶着色计数沿用第 12 章所引 [Flajolet–Sedgewick，*Analytic Combinatorics*，第 6–7 页](https://algo.inria.fr/flajolet/Publications/book.pdf) 与 [Stanley，*Enumerative Combinatorics* 第二卷，习题 6.19(b)、(d)](https://math.mit.edu/~rstan/ec/catalan.pdf)。另定义用于路由计数的整数函数
+
+$$
+M(0,t)=M(r,0)=1\quad(r,t\ge0),\qquad
+M(r,t)=M(r-1,t)+2M(r,t-1)\quad(r,t\ge1).
+\tag{30.11}
+$$
+
+该函数的边界值 $1$ 是单个终端队列的计数界；它不是空孩子的元素数，空孩子始终贡献零。
+
+**定理 30.7（实际分离约束下的有限容量上界）。** 设 $n\ge11$、$t\in\mathbb N_0$，$F\subseteq\mathcal I_3(n)$ 为非空有限族。若 $K(F)=K_\circ(F)$ 且 $D(F)\le n+t$，则
+
+$$
+\boxed{\quad
+|F|\le M(n-6,t)
+=\sum_{j=0}^{t}2^j\binom{n+j-7}{j},\qquad
+\mathsf{Cap}(n,t)\le\min\{N_n,M(n-6,t)\}.
+\quad}
+\tag{30.12}
+$$
+
+对任意 $r\ge1,t\ge0$，式（30.11）的闭式为 $M(r,t)=\sum_{j=0}^t2^j\binom{r+j-1}{j}$。式（30.12）亦适用于将费用前提替换为 $W(F)\le n+t$ 或 $W_{\mathrm u}(F)\le n+t$ 的情形。
+
+**证明。** 任意不同的 $P,Q\in F$ 都满足 $\operatorname{NC}(P,Q)$。否则它们有标签冲突的共享叶，即 $\Delta(\{P,Q\})\ne\varnothing$；对二元素族，定理 25.2 的全部非单元素子族只有它自身，所以该对属于 $K(F)$，与 $K(F)=K_\circ(F)$ 矛盾。于是定理 30.4 使任意不同的两者共享叶数至多为 $n-7$。
+
+直接使用[定理 29.2、29.3 的式（29.5）、（29.6）、（29.8）](#29-任意有限实际正来源族的联合响应费用核心与全域取得)：$D(F)$ 由一个实际代表严格分裂路由及其全域正确总控制器取得。选择达到该最小值的路由树。每个非空孩子都是当前队列的真子集，终端是单点；同一路径的实际地址不重复。对任一原型 $P$，终端完整叶核对后费用恰为 $n$ 加该同一实际路径上的非叶报告数。因此在每条原型路由路径上，报告分支或不存在的地址数至多为 $t$。
+
+固定这棵路由树中的一个非空队列 $S$。令 $f$ 为到此为止实际请求且报告叶的不同地址数，$c$ 为到此为止实际请求且报告分支或不存在的不同地址数。该节点的全部幸存原型具有同一个实际地址—响应历史；所以这 $f$ 个地址在每个原型中都确为同标签叶，这 $c$ 个地址在每个原型中都确为非叶。$f,c$ 来自同一历史，不从不同原型的分别最优运行拼接。
+
+若 $|S|\ge2$，任选其两个不同原型，它们共享这 $f$ 片叶，因而 $f\le n-7$。故 $f=n-6$ 时队列已为单点。在任一严格分裂地址处，非冲突性还使至多一个叶响应孩子非空：若两个不同叶标签孩子都非空，从各取一个原型就会在该地址产生冲突。其余可能孩子只有分支和不存在两个，每个均使 $c$ 增加一；叶响应孩子使 $f$ 增加一。因此每个严格节点至多有一个不增加超额的孩子、两个增加一笔超额的孩子。严格分裂至少有两个非空响应孩子，故至少有一个非叶孩子。若 $c=t$ 仍有严格节点，选择该非叶孩子中的一个原型，其后续终端非叶数至少为 $t+1$，与所有原型路径的超额界矛盾。所以 $c=t$ 时队列也已为单点。
+
+路由到单点即停止，故从严格节点的一次请求至多使 $f$ 从 $n-7$ 增至 $n-6$，不能再超过该值；各路径的终端超额界也给 $c\le t$。在节点处写非负剩余计数参数为 $r=n-6-f$、$b=t-c$。空孩子贡献零；单点终端贡献一。上段说明，$r=0$ 或 $b=0$ 的非空队列只能为单点。对于 $r,b\ge1$ 的严格节点，至多一个叶孩子具有参数 $(r-1,b)$，至多两个非叶孩子具有参数 $(r,b-1)$。按 $r+b$ 归纳，该子树的单点终端总数至多为
+
+$$
+M(r-1,b)+2M(r,b-1)=M(r,b).
+\tag{30.13}
+$$
+
+缺失孩子的零贡献仍不超过相应项；不能把缺失孩子替换为一个实际单点。每个原型沿其真实报告恰到一个单点终端，根节点的参数为 $(n-6,t)$，于是 $|F|\le M(n-6,t)$。这是对已取得的实际路由的资源路径计数；式（30.11）的初等计数只作中间步骤。承重限制是实际像的七叶分离，以及它把同一历史的叶报告阈值降为 $n-6$。一般有限认证树的形状分解可参见[延拓卷定义 11.2](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md#11-自适应分辨率何时可以停止递归)；其固定动作价格不替代这里扣除完整叶基线后、依实际响应取值的超额。
+
+为求闭式，令 $S_r(t)=\sum_{j=0}^t2^j\binom{r+j-1}{j}$，$r\ge1$。$S_r(0)=1$，且 $S_1(t)=2^{t+1}-1$ 满足 $S_1(t)=1+2S_1(t-1)$。$r\ge2,t\ge1$ 时，Pascal 恒等式给
+
+$$
+\begin{aligned}
+S_r(t)-2S_r(t-1)
+&=1+\sum_{j=1}^t2^j
+\left[\binom{r+j-1}{j}-\binom{r+j-2}{j-1}\right]\\
+&=\sum_{j=0}^t2^j\binom{r+j-2}{j}=S_{r-1}(t).
+\end{aligned}
+\tag{30.14}
+$$
+
+故它满足式（30.11）的全部所需边界及递推，按 $r+t$ 归纳即为 $M(r,t)$。代入 $r=n-6$，再用 $|F|\le N_n$，得到式（30.12）的容量结论；空评价族的大小零也满足该上界。$W(F)=W_{\mathrm u}(F)=D(F)$ 直接取自式（29.8），所以所列替换前提等价于本前提，没有把逐来源期望最大值 $R$ 或 $R_{\mathrm u}$ 代入同一证明。
+
+最后核对原判定合同。$f=n-6$ 的结论只识别当前评价队列，不把未读叶变成缓存报告，也不允许据此接受未知来源。在原型 $P$ 上，路由已取得的 $f$ 个叶地址属于 $L(P)$；单点测试仍须真实请求全部 $n$ 个带标签叶，复用的仅是此前真实取得的相同地址，尚缺的 $n-f$ 个叶地址全部补查。路由的 $c$ 个非叶地址不属于 $L(P)$，实际付费地址总数因此仍为 $f+c+(n-f)=n+c$。完整叶认证及必要性采用[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)的 $d=3=3\cdot1$ 范围。意外路由响应或任一叶核对不匹配，都由定理 29.2 的独立初始化、保留真实外层缓存的全域有限后备处理；后备恢复实际有限输入并作有限前像比较，处理整个 $\mathcal T$，不把不匹配当成负性证明。本证明不增加输入承诺，不授予实际逆执行，也不改变地址长度不收费的约定。证毕。
+
+**推论 30.8（可行叶数与十一叶容量的锐值）。** 定义 30.6 的可行叶数恰为
+
+$$
+\mathcal N=\{3,5,6\}\cup\{n\in\mathbb N:n\ge8\}.
+\tag{30.15}
+$$
+
+若 $n\notin\mathcal N$，则对每个 $t\ge0$ 有 $\mathsf{Cap}(n,t)=0$，特别地 $\mathsf{Cap}(0,t)=0$。若 $n\in\mathcal N$ 且 $n<11$，则对每个 $t\ge0$ 有 $\mathsf{Cap}(n,t)=1$。对所有可行 $n$，还有 $\mathsf{Cap}(n,0)=1$。在最小非平凡规模，
+
+$$
+\boxed{\qquad
+N_{11}=6,\qquad
+\mathsf{Cap}(11,t)=
+\begin{cases}
+1,&t=0,\\
+2,&t\ge1.
+\end{cases}
+\qquad}
+\tag{30.16}
+$$
+
+$t\ge1$ 时取得二元素容量的族唯一为式（30.8）的旧来源对，其全域确定性最坏费用为 $12$。
+
+**证明。** 对前像组成 $(p,q)^{\mathsf T}$，母卷定理 3.4 的组成作用给三步像组成 $(p+2q,2p+3q)^{\mathsf T}$，叶数为 $3p+5q$。每个非零 $(p,q)$ 均由实际自由树实现；第 12 章既有像双射与 Catalan 计数按这些组成分别相加，正是式（30.10），不重复建立树形计数。$3,5,6$ 可行，$8,9,10$ 分别为 $3+5,3+3+3,5+5$，再逐次加 $3$ 得所有 $n\ge8$。其余非负整数 $0,1,2,4,7$ 不能写成允许的 $3p+5q$，所以得到式（30.15）。不可行时只有空评价族，容量为零。可行时任取一棵对应实际像，其单元素族满足 $K=K_\circ$；定理 29.3 的单元素情形与定理 18.2 的完整叶下界已给 $D=n$，故对任何 $t\ge0$ 容量至少为一。
+
+$K(F)=K_\circ(F)$ 已由定理 30.7 证明中的定理 25.2 应用迫使两两 $\operatorname{NC}$；该应用不依赖 $n\ge11$。若 $n<11$，定理 30.4 排除任意两个不同元素，故容量至多为一。对任意可行 $n$，若非空族满足 $D(F)\le n$，定理 29.3 取得该最小值的全域确定性策略在每个原型上费用至多为 $n$；定理 18.2 又使每个费用至少为 $n$。于是同一个策略共同取得全部个体最优，整个 $F$ 属于 $K(F)$。在 $K=K_\circ$ 条件下只能有 $|F|=1$，得到所有可行规模的零超额容量。
+
+$3p+5q=11$ 的唯一解为 $(p,q)=(2,1)$，式（30.10）遂给 $N_{11}=\mathrm{Cat}_2\binom32=2\cdot3=6$。定理 30.5 已完整分类其中的非冲突对，故满足所需复形的族至多有两个元素，且二元素族只能是式（30.8）。该旧来源对无共享叶，定理 25.2 给出其复形恰为空集与单点。其原全域取得锐值 $D_3^+(P_{\mathrm{dis}},Q_{\mathrm{dis}})=12$ 直接采用[命题 23.3 的式（23.12）](#23-全有限来源上两个指定正例的共同最优地址费用)，不重证或改名交付旧费用定理。因此 $t\ge1$ 时该对达到容量二，$t=0$ 时只有容量一，得到式（30.16）。
+
+七叶常数的取等与十一叶容量的取等是两个不同陈述；前者由式（30.6）取得，后者由完整分类及既有费用定理取得。式（30.12）对一般 $n,t$ 只给上界，没有断言其可取得或为锐值；逐来源期望目标 $R,R_{\mathrm u}$ 不由该确定性容量证明控制。上述对象及关系全部属于指定自由树、实际替换、原始地址报告和全域成员判定合同，组成守恒或形式代数的可逆性不作为物理对应或实际逆执行许可。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 31. 任意地址叶报告的块强制、单孔刚性与容量阈值
+
+**定义 31.1（正评价族、实际历史与叶报告队列）。** 沿用[定义 29.1](#29-任意有限实际正来源族的联合响应费用核心与全域取得)的全有限树只读合同，固定 $d=3$。原始语法与替换仍为[母卷定义 2.1、3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#2-原始语法与结构解释)的
+
+$$
+\mathcal T:\quad U::=\alpha\mid\beta\mid\langle U,U\rangle,\qquad
+\rho(\alpha)=\beta,\quad
+\rho(\beta)=\langle\beta,\alpha\rangle,\quad
+\rho(\langle X,Y\rangle)=\langle\rho(X),\rho(Y)\rangle .
+\tag{31.1}
+$$
+
+相等保持左右次序、括号与叶标签。记 $\mathcal I_3=\rho^3(\mathcal T)$、$\Sigma=\{\mathtt L,\mathtt R\}^{<\mathbb N}$；所有 $u\in\Sigma$，包括 $\varepsilon$，均可直接查询同一不变输入的原始四值 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$。未知输入始终遍历整个 $\mathcal T$。确定性策略属于 $\mathfrak D_3$，在全域正确且有限终止；费用只计真实缓存后的不同实际地址，计算、定位与地址长度不收费。
+
+取整数 $m\ge1$ 及两两不同的评价对象 $F=(P_i)_{i\in[m]}$，其中每个 $P_i\in\mathcal I_3$ 有 $n$ 片叶。由[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的替换单射性复合三次，记其唯一前像为 $Q_i$，写 $c(Q_i)=(a_i,b_i)^{\mathsf T}$。令
+
+$$
+\Lambda_\alpha(P)=\{u\in\Sigma:\operatorname{out}_P(u)=\mathsf{leaf}_\alpha\},
+\qquad
+n=3a_i+5b_i,\qquad
+s_i=|\Lambda_\alpha(P_i)|=a_i+2b_i,\qquad
+s=\max_{i\in[m]}s_i .
+\tag{31.2}
+$$
+
+式（31.2）的组成关系直接取自[母卷定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)。$s$ 数的是像树的 $\alpha$ 叶，不是前像的 $\alpha$ 叶。
+
+有限实际请求—响应历史写为 $H=((u_j,y_j))_{j=1}^{\ell}$，允许一般历史含缓存重复请求。记 $H^{\mathrm{leaf}}$ 为其中报告叶的子列。定义
+
+$$
+\begin{aligned}
+S_H&=\{i\in[m]:\forall j,\ \operatorname{out}_{P_i}(u_j)=y_j\},\\
+\mathcal E_H&=\{P\in\mathcal I_3:
+ \forall (u,y)\in H^{\mathrm{leaf}},\ \operatorname{out}_P(u)=y\},\\
+f(H)&=|\{u_j:y_j\in\{\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta\}\}|,\\
+c(H)&=|\{u_j:y_j\in\{\mathsf{branch},\mathsf{absent}\}\}|.
+\end{aligned}
+\tag{31.3}
+$$
+
+以下只在 $S_H\ne\varnothing$ 时使用评价历史，故 $\mathcal E_H$ 非空。$\mathcal E_H$ 是只保留先前叶报告的正来源比较集合，不要求成员匹配非叶报告；$P_i$ 在 $i\in S_H$ 时属于它。严格路由节点在当前 $S_H$ 上选择至少有两个非空四值响应孩子的实际地址。历史、队列及后面的块强制仅描述同一次实际路由；逻辑推论不增加缓存条目，也不使未知输入取得正性、同叶数或候选身份承诺。
+
+**引理 31.2（任意地址的完整位置分类与小子树唯一性）。** 采用[式（30.2）](#30-实际三步像的分歧前沿七叶分离与有限容量)的字面树
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\qquad
+C=\langle A,E\rangle=\rho^3(\beta).
+\tag{31.4}
+$$
+
+对任意 $P=\rho^3(Q)\in\mathcal I_3$，$Q$ 的每片叶地址 $v$ 对应一个规范块：该叶标记 $\alpha$ 时 $P|_v=A$，标记 $\beta$ 时 $P|_v=C$。这些规范块的根前缀自由。每个任意地址 $u\in\Sigma$ 恰属于以下位置之一：
+
+1. $u$ 是 $Q$ 的内部节点地址；此时 $P|_u=\langle X,Y\rangle$，其中 $X,Y\in\mathcal I_3$。
+2. $u$ 是 $Q$ 的叶地址；此时它是一个规范 $A$ 或 $C$ 块的根。
+3. $u=vz$，其中 $v$ 是 $Q$ 的叶地址，$z$ 非空，且它位于该规范块内。全部存在的真偏移及子树为
+
+$$
+\begin{array}{c|c|c}
+\text{规范块}&z&P|_{vz}\\ \hline
+A&\mathtt L&E\\
+A&\mathtt{LL}&\beta\\
+A&\mathtt{LR}&\alpha\\
+A&\mathtt R&\beta\\ \hline
+C&\mathtt L&A\\
+C&\mathtt{LL}&E\\
+C&\mathtt{LLL}&\beta\\
+C&\mathtt{LLR}&\alpha\\
+C&\mathtt{LR}&\beta\\
+C&\mathtt R&E\\
+C&\mathtt{RL}&\beta\\
+C&\mathtt{RR}&\alpha
+\end{array}
+\tag{31.5}
+$$
+
+4. $u$ 严格延伸某片输出叶地址；此时报告 $\mathsf{absent}$。
+
+因此每个 $A$ 子树出现位置恰为规范 $A$ 根或规范 $C$ 的立即左孩子，每个 $C$ 子树出现位置恰为规范 $C$ 根；每个 $E$ 出现位置恰为某个 $A$ 出现位置的立即左孩子，或某个规范 $C$ 的立即右孩子。在任何正来源的任意存在地址，二叶子树唯一为 $E$，三叶子树唯一为 $A$。根地址也在分类内；正来源的根总是分支，原子根只可能是未知输入的情形。
+
+**证明。** 唯一前像及替换保持原有二叉节点的结论取自规范编译卷命题 4.3 和母卷定义 3.1，不另建立替换解析。若 $u$ 不是 $Q$ 的节点地址，沿 $u$ 在有限满二叉 $Q$ 中行走，必先到达唯一的一片叶 $v$；余下的字只能在该叶的替换块内继续。对式（31.4）列出全部节点，正是式（31.5）。其外地址必已越过块的一片叶，故为不存在。这同时穷尽上下文根、块根、块内分支、输出叶与不存在地址，不要求查询前缀闭合。
+
+[引理 30.2 的证明](#30-实际三步像的分歧前沿七叶分离与有限容量)已给每个正来源至少三叶，复合正来源至少六叶。第一类地址因而不能产生二叶或三叶子树，第二类大小为三或五；第三类表中，二叶只有 $E$，三叶只有 $A$。同表又给 $A,C,E$ 的全部出现位置及所述父子关系。证毕。
+
+**定义 31.3（由实际叶报告强制的块与被覆盖 $\alpha$）。** 对每个正来源兼容的叶报告，按下表定义唯一的强制块 $(w,T)$，其中 $T\in\{A,C\}$。$w$ 可以是空地址；表中的根不是预先给定的前像地址。
+
+$$
+\begin{array}{c|c|c}
+\text{实际报告}&\text{强制块}&\text{该块的 }\alpha\text{ 地址}\\ \hline
+\operatorname{out}(w\mathtt R)=\mathsf{leaf}_\beta
+ &(w,A)&\{w\mathtt{LR}\}\\
+\operatorname{out}(w\mathtt{LL})=\mathsf{leaf}_\beta
+ &(w,A)&\{w\mathtt{LR}\}\\
+\operatorname{out}(w\mathtt{LR})=\mathsf{leaf}_\alpha
+ &(w,A)&\{w\mathtt{LR}\}\\
+\operatorname{out}(w\mathtt{RL})=\mathsf{leaf}_\beta
+ &(w,C)&\{w\mathtt{LLR},w\mathtt{RR}\}\\
+\operatorname{out}(w\mathtt{RR})=\mathsf{leaf}_\alpha
+ &(w,C)&\{w\mathtt{LLR},w\mathtt{RR}\}
+\end{array}
+\tag{31.6}
+$$
+
+令 $\mathcal B_H$ 为仅对 $H^{\mathrm{leaf}}$ 中实际叶报告应用式（31.6）所得的有限块集合，重复的块只保留一次；令
+
+$$
+\Gamma_H=
+ \bigcup_{(w,T)\in\mathcal B_H}
+ \{wv:v\in\Lambda_\alpha(T)\},
+\qquad g(H)=|\Gamma_H|.
+\tag{31.7}
+$$
+
+$\Gamma_H$ 是由先前叶报告固定的 $\alpha$ 地址并集；不将分支或不存在报告产生的推论加入此集合。它是集合并，不把重叠块重复计数。凡 $P\in\mathcal E_H$，均有 $P|_w=T$ 对所有 $(w,T)\in\mathcal B_H$ 成立，特别地 $\Gamma_H\subseteq\Lambda_\alpha(P)$。块中的其余带标签叶及分支也因此在正比较集合内固定，但仍不是实际缓存报告。
+
+**引理 31.4（五行强制、块重叠与严格叶增益）。** 式（31.6）覆盖正来源的每片叶，且每行强制结论对全部 $\mathcal E_H$ 成立。两个在同一正来源内成立的 $A/C$ 块，只可能相同、根地址互不为前缀，或一个 $C$ 包含其立即左孩子 $A$。若 $H$ 后的下一实际地址 $u$ 在 $S_H$ 上严格分裂，且某个非空孩子报告叶 $y$，则在该孩子的新历史 $H'=H\mathbin{\frown}(u,y)$ 上有
+
+$$
+|\Gamma_{H'}\setminus\Gamma_H|\ge1.
+\tag{31.8}
+$$
+
+因此从空历史开始的严格路由，每个非空队列的共同历史都满足 $g(H)\ge f(H)$。
+
+**证明。** 引理 31.2 的表说明，$\beta$ 叶若是右孩子，其父必为 $A$：$E$ 的右孩子为 $\alpha$，上下文的孩子为正来源分支，不能给另一种 $\beta$ 右端。若 $\beta$ 是左孩子，其父必为 $E$。这个 $E$ 若在其父的左侧，父为 $A$；若在右侧，父为规范 $C$，分别给出后缀 $\mathtt{LL}$ 与 $\mathtt{RL}$ 两行。所有 $\alpha$ 叶都是 $E$ 的右孩子；$E$ 位于左侧或右侧时分别给 $\mathtt{LR}$ 与 $\mathtt{RR}$ 两行。正来源没有根叶，也没有深度一的 $\alpha$ 叶；深度一的 $\beta$ 叶只能是根 $A$ 的右端，已被第一行包含。故没有遗漏空根、短地址或嵌在 $C$ 左侧的 $A$。每一行仅使用正来源和当前的一个实际叶报告，所以凡匹配该报告的正来源都满足整块等式。
+
+比较两个块根。若相同，字面树 $A\ne C$ 使类型也必须相同；若不可比，所在子树不交；若一个严格在另一个内，引理 31.2 的完整真偏移表只允许 $C$ 的立即左孩子为 $A$。特别地，共享 $\alpha$ 地址的两个块必为相同块，或上述 $C/A$ 包含情形。
+
+在新叶孩子中选一个实际原型 $P$，令新报告按表强制块 $(w,T)$。全部旧块与新块都在这一个 $P$ 内成立，故可使用刚证的重叠分类。假设新块的 $\alpha$ 地址全部已在 $\Gamma_H$ 中。若 $T=A$，覆盖其唯一 $\alpha$ 地址的某个旧块必为同一个 $A$，或为包含这个 $A$ 的 $C$；两种情形都使 $P'|_w=A$ 对每个 $P'\in\mathcal E_H$ 已经成立。若 $T=C$，考虑其右侧 $\alpha$ 地址 $w\mathtt{RR}$。它不在该 $C$ 的左 $A$ 内；覆盖它的旧 $A/C$ 块按重叠分类只能是同一个 $C$。因此整个新块在 $\mathcal E_H$ 中也早已固定。两种情形下，地址 $u$ 是这个固定块的指定带标签叶，故对全部 $i\in S_H$ 都给同一个 $y$，与严格分裂矛盾。于是新块至少贡献一个此前未覆盖的 $\alpha$，得到式（31.8）。
+
+严格节点不可能请求历史中已请求的地址，因为该响应在当前幸存队列上恒定。因此每次保留的叶报告使 $f$ 增加一，非叶报告不改变 $f$ 或 $\Gamma_H$。从 $f=g=0$ 开始逐节点应用式（31.8），得 $g\ge f$。这不是任意不同地址叶请求的结论，常值请求不满足严格性。证毕。
+
+**引理 31.5（完整固定前沿、共同字面单孔与同规模正来源刚性）。** 对任意有限历史 $H$、任意 $P\in\mathcal E_H$，若
+
+$$
+|\Lambda_\alpha(P)\setminus\Gamma_H|\le1,
+\tag{31.9}
+$$
+
+则每个 $P'\in\mathcal E_H$ 且 $n(P')=n(P)$ 都等于 $P$。更具体地，没有未覆盖 $\alpha$ 时，全部字面输出树已由强制块固定；恰有一片时，存在一个有限有序字面输出上下文 $J[\square]$ 及孔地址 $h$，使 $P=J[X]$，其中 $X=A$ 或 $X=E$，而每个 $P'\in\mathcal E_H$ 都写成同一个 $J[Y]$。这里的 $J$ 是输出树的字面上下文，不预设 $P,P'$ 有相同前像上下文。
+
+**证明。** 先在 $P$ 自己的唯一前像上定位规范块，随后只使用它们在输出树中的地址和完整标签。若一个规范 $A$ 的 $\alpha$ 已覆盖，覆盖它的旧块按引理 31.4 只能是这个 $A$，或一个包含它的 $C$，所以这个 $A$ 的全部带标签叶固定。若一个规范 $C$ 的右 $\alpha$ 已覆盖，覆盖它的旧块只能是同一个 $C$，所以整个 $C$ 的全部带标签叶固定。若所有 $\alpha$ 均已覆盖，每个规范块因此完整固定；这些规范块的叶并恰为 $P$ 的完整叶前沿。采用[定理 18.2 证明中的完整带标签叶恢复](#18-精确组成最优证书的唯一性与无承诺叶前沿)及[母卷定理 9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，每个 $P'\in\mathcal E_H$ 都等于 $P$，此时不需要同叶数条件。
+
+现在设唯一未覆盖的 $\alpha$ 地址为 $x$。若它属于规范 $A$，取孔为这个 $A$ 的根 $h$，令 $X=A$。若它属于规范 $C$，它不能是该块左 $A$ 的 $\alpha$：否则该块的右 $\alpha$ 已覆盖，会使整个 $C$ 固定，连 $x$ 也覆盖，矛盾。因此 $x$ 只能是该 $C$ 的右 $\alpha$；左 $\alpha$ 已覆盖，而整个 $C$ 尚未固定。重叠分类遂保证旧块中有该 $C$ 的左 $A$。取孔为此 $C$ 的立即右孩子 $h$，令 $X=E$。这是两种孔位置的全部情形。
+
+除孔所在的特殊块外，每个规范 $A$ 的 $\alpha$、每个规范 $C$ 的右 $\alpha$ 均已覆盖，故其完整叶前沿都固定。在特殊 $C$ 情形，其孔外左 $A$ 的完整叶前沿也固定。因此 $P$ 在 $h\Sigma$ 外的每片带标签叶均位于某个旧固定块内。旧固定块不能穿过孔：在 $A$ 孔情形，任何相交的 $A/C$ 块按重叠分类都会包含 $x$；在右 $E$ 孔情形，位置分类使相交的 $A/C$ 块只能包含这个 $E$，同样会覆盖 $x$。两者均与 $x\notin\Gamma_H$ 矛盾。
+
+把 $P$ 中的 $X$ 换成一个孔，得到字面输出上下文 $J[\square]$。为证明这个上下文对所有 $P'\in\mathcal E_H$ 相同，沿 $\varepsilon$ 到 $h$ 的路径考察每个严格前缀 $z$。该路径的另一个孩子是一个完整非空子树；其每片叶都在孔外，因而其完整带标签叶前沿由旧固定块给出。$P'$ 匹配这些叶：每个叶的真前缀必须为分支，叶本身不能再扩展；完整前沿没有其他可增加节点的位置。于是该旁支的全部四值读数固定，由母卷定理 9.3，它与 $P$ 的旁支字面相等。这个旁支的非空前沿还迫使 $z$ 为分支，所以路径上的下一个孩子以及最终的孔根 $h$ 都在 $P'$ 中存在。逐个旁支得到同一个 $J$，故 $P'=J[Y]$，其中 $Y=P'|_h$。这一步不比较两棵前像，也不假设它们的上下文相同。若 $h=\varepsilon$，没有旁支，$J$ 就是单孔，根存在由非空树语法给出；这包含 $P=A$、$\Gamma_H=\varnothing$ 的根孔情形。
+
+令 $n(J)$ 表示 $J$ 孔外的叶数。由于上下文字面相同，
+
+$$
+n(P)=n(J)+n(X),\qquad n(P')=n(J)+n(Y).
+\tag{31.10}
+$$
+
+同叶数遂给 $n(Y)=n(X)\in\{2,3\}$。此处 $P'$ 的正性使引理 31.2 适用于任意孔地址 $h$：二叶只能为 $E$，三叶只能为 $A$。故 $Y=X$，得到 $P'=P$。没有孔的情形已由完整前沿处理；根孔与非根孔均在上述推导内。证毕。
+
+**命题 31.6（同规模、正性与严格性的必要边界）。** 字面树 $C$ 与 $\langle A,C\rangle$ 都为正来源，并共享立即左子树 $A$，但分别有五叶、八叶；$C$ 与 $\langle A,\langle\alpha,\beta\rangle\rangle$ 共享同一个左 $A$ 且都有五叶，但后者不是正来源。因此，引理 31.5 的同叶数与正性两项均不能删除。不同地址的常值叶请求也可以没有新增被覆盖 $\alpha$。
+
+**证明。** $C=\rho^3(\beta)$，且 $\langle A,C\rangle=\rho^3(\langle\alpha,\beta\rangle)$，两者的叶数由式（31.4）分别为 $5,8$。单个实际报告 $\mathsf{leaf}_\alpha$ 于 $\mathtt{LLR}$ 只强制左 $A$，在 $C$ 中恰留下右侧的一片未覆盖 $\alpha$；所以删除同叶数时，这一历史兼容上述两个不同正来源。另一棵所示五叶树右孩子为 $\langle\alpha,\beta\rangle\ne E$，与 $C$ 字面不同；引理 31.2 的根分类使唯一五叶正来源为 $C$，故它是负来源。同一叶历史也匹配它，说明不能把正队列内的单孔结论扩张到任意未知输入。
+
+在兼容 $C,\langle A,C\rangle$ 的叶历史 $(\mathtt{LLR},\mathsf{leaf}_\alpha)$ 后，再请求不同地址 $\mathtt{LR}$，两者都报告 $\mathsf{leaf}_\beta$。式（31.6）在两次报告中都只强制地址 $\mathtt L$ 处的同一个 $A$，被覆盖并集没有增长。该请求在队列上为常值，故不是严格节点；重复同一请求也必为常值。证毕。
+
+**定理 31.7（实际严格叶增益给出的更低容量阈值）。** 对定义 31.1 的任意非空有限评价族 $F\subseteq\mathcal I_3(n)$ 及任意整数 $t\ge0$，若 $K(F)=K_\circ(F)$ 且 $D(F)\le n+t$，则
+
+$$
+\boxed{\quad |F|\le M(s-1,t).\quad}
+\tag{31.11}
+$$
+
+$K,K_\circ$ 与 $M$ 分别就是[定义 30.6 的式（30.9）、（30.11）](#30-实际三步像的分歧前沿七叶分离与有限容量)，不另定义或改变计数函数。结论覆盖 $s=1$、$t=0$ 及全部可行的小叶数。费用前提可以等价替换为 $W(F)\le n+t$ 或 $W_{\mathrm u}(F)\le n+t$，仅使用既有 $W=W_{\mathrm u}=D$。
+
+**证明。** 由[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)，$K(F)=K_\circ(F)$ 迫使不同评价来源两两 $\operatorname{NC}$；这是定理 30.7 证明中已作的同一应用，不要求 $n\ge11$。直接采用[定理 29.2、29.3 的式（29.5）、（29.6）、（29.8）](#29-任意有限实际正来源族的联合响应费用核心与全域取得)，选择取得 $D(F)$ 的实际代表严格路由。它在单点结束，同一路径的实际地址不重复；对每个 $P_i$，接上完整带标签叶核对后的费用恰为 $n$ 加其路由中分支或不存在报告的地址数。因此每条评价路径的最终 $c$ 至多为 $t$。
+
+在任意非空队列 $S_H$ 上，所有成员匹配同一个实际历史。引理 31.4 给 $g(H)\ge f(H)$。若 $f(H)\ge s-1$，任取 $i\in S_H$，有
+
+$$
+|\Lambda_\alpha(P_i)\setminus\Gamma_H|
+ =s_i-g(H)\le s-f(H)\le1.
+\tag{31.12}
+$$
+
+引理 31.5 对所有其余幸存成员使用同叶数 $n$，使它们都等于 $P_i$；评价对象两两不同，故 $S_H$ 为单点。因此 $f=s-1$ 已是终端阈值。这个阈值由实际强制块的并集和共同字面单孔供应，不从旧同组成 $\alpha$ 证书推出；这里没有给未知输入组成或叶数。
+
+在严格节点，两两 $\operatorname{NC}$ 使至多一个叶标签孩子非空；其余孩子只能是 $\mathsf{branch}$ 与 $\mathsf{absent}$。叶孩子使 $f$ 增加一而 $c$ 不变，非叶孩子使 $c$ 增加一而 $f$ 不变。严格节点至少有两个非空孩子，故至少有一个非叶孩子。若 $c=t$ 仍严格，选取这个非叶孩子中的一个实际原型，其终端非叶数至少为 $t+1$，与费用界矛盾。因此 $c=t$ 也迫使单点。
+
+现在直接使用[第 30 章式（30.13）的资源路径计数](#30-实际三步像的分歧前沿七叶分离与有限容量)，其参数在这里为 $r=s-1-f(H)$、$b=t-c(H)$。非空边界 $r=0$ 或 $b=0$ 都已证明为单点；每个内部节点至多一个 $(r-1,b)$ 叶孩子、两个 $(r,b-1)$ 非叶孩子，空孩子贡献零。故既有计数 $M(r,b)$ 适用，根给 $M(s-1,t)$ 个单点终端上界。每个实际原型到自己的一个终端，得到式（31.11）。若 $s=1$，空历史已满足式（31.12），根直接是单点，使用 $M(0,t)=1$；若 $t=0$，根由非叶预算边界为单点，使用 $M(s-1,0)=1$。不排除任何可行小 $n$。
+
+终端阈值只识别评价队列，不能替代对未知输入的接受核验。在实际原型上，路由的 $f$ 个叶地址是此前实际取得的叶报告；核对仍真实请求全部 $n$ 个带标签叶，只在请求同一实际地址时命中缓存。路由的 $c$ 个非叶地址不在该原型叶集中，所以实际不同付费地址总数为 $f+c+(n-f)=n+c$，不是 $g+c+(n-g)$ 的虚构缓存账。块强制所推出但未请求的叶仍需实际取得。全叶必要性、充分性与恢复沿用[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)的 $d=3=3\cdot1$ 范围；意外路由响应或叶核对不匹配仍按定理 29.2 接入独立初始化、保留真实外层缓存的全域有限后备。不匹配不被直接解释为负性，后备继续处理整个 $\mathcal T$。
+
+最后，式（29.8）的 $W=W_{\mathrm u}=D$ 给两项替换前提；它没有把 $\max_i\mathbb E C_i$ 与 $\mathbb E\max_i C_i$ 互换，也没有将 $R,R_{\mathrm u}$ 纳入此界。证毕。
+
+**推论 31.8（可行规模的组成最大值与一次超额界）。** 仅对[式（30.15）](#30-实际三步像的分歧前沿七叶分离与有限容量)中的可行叶数 $n\in\mathcal N=\{3,5,6\}\cup\{n\ge8\}$，定义
+
+$$
+q(n)=\max\{a+2b:a,b\in\mathbb N_0,\ 3a+5b=n,\ a+b>0\}.
+\tag{31.13}
+$$
+
+对定理 31.7 的全部评价族及 $t\ge0$，有
+
+$$
+\boxed{\quad
+|F|\le M(s-1,t)\le M(q(n)-1,t),\qquad
+q(n)\le\left\lfloor\frac{2n}{5}\right\rfloor,\qquad
+\mathsf{Cap}(n,t)\le\min\{N_n,M(q(n)-1,t)\}.
+\quad}
+\tag{31.14}
+$$
+
+特别地，$t=1$ 时 $|F|\le2s-1\le2q(n)-1$。不可行叶数不定义 $q(n)$，其容量零结论仍直接取自推论 30.8。
+
+**证明。** 可行性使式（31.13）的有限集合非空，每个唯一前像组成属于此集合，故 $1\le s\le q(n)$。对每个可行组成，$5(a+2b)=2n-a\le2n$，给所列整数上界。$M$ 对第一参数的单调性及 $M(r,1)=1+2r$ 直接取自式（30.11）和定理 30.7 的既有闭式；$r=0$ 使用原边界 $M(0,t)=1$。结合定理 31.7 与原实际像计数 $N_n$，得到式（31.14）和一次超额结论。
+
+例如 $n=14$ 的唯一前像组成是 $(3,1)$，故 $s=q(14)=5$。当 $t=1$ 时，上界为 $M(4,1)=9$，第 30 章的上界为 $M(8,1)=17$，其式（30.10）给 $N_{14}=20$。这些都是上界比较，不断言存在满足合同的九元素族，不断言一般达到性或锐值。可行小规模及零超额容量仍采用推论 30.8 的原结论。
+
+上述关系均属于自由有序树、实际替换、原始地址响应和全域成员判定。母卷定理 9.2 的编码、规范编译卷命题 4.3 的单射性、定理 18.2 的完整叶条件、第 29 章的实际核心与全域续接、第 30 章的 $M$ 计数各在其原范围内使用。第 17 章及定理 18.1 的精确组成证书、第 19 章的纯数量证书、第 20 章的阶段标量证书分别附加各自读数条件，不能替代本合同的无承诺完整叶核对；有限决策树的文献背景沿用[第 29 章所引响应相关费用模型](#29-任意有限实际正来源族的联合响应费用核心与全域取得)。本结论不授予实际逆执行，不从组成守恒推导物理、时间、量子或 Lorentz 对应，也不声称文献范围外的原创性。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 32. 非冲突分歧的 α 分离、双孔取等与递归容量
+
+**定义 32.1（定向 $\alpha$ 缺额与实际像双孔上下文）。** 沿用[定义 30.1](#30-实际三步像的分歧前沿七叶分离与有限容量)、[定义 31.1—31.3](#31-任意地址叶报告的块强制单孔刚性与容量阈值)的全有限树只读合同、$\mathcal I_3$、$n$、$\operatorname{NC}$、$A,C$、$\Lambda_\alpha$、$\mathcal E_H$ 和 $\Gamma_H$。对 $T\in\mathcal I_3$ 及 $P,Q\in\mathcal I_3$，记
+
+$$
+\mu(T)=|\Lambda_\alpha(T)|,\qquad
+\delta(P,Q)=|\Lambda_\alpha(P)\setminus\Lambda_\alpha(Q)|.
+\tag{32.1}
+$$
+
+不同、非冲突的 $P,Q$ 的规范分歧前沿是[引理 30.3](#30-实际三步像的分歧前沿七叶分离与有限容量)在其唯一前像上递归比较所得的前缀自由孔集；相同前像子树处停止，两侧均为分支时进入左右孩子，恰一侧为原子时记录孔。实际像双孔上下文 $J[\square_1,\square_2]$ 由有序二叉配对、固定的 $\mathcal I_3$ 子树及两个各出现一次的不同孔构成，保留每条固定旁支和每个孔的地址。它的固定旁支有实际前像，配对使用[母卷定义 2.1、3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#2-原始语法与结构解释)的原有构造；唯一前像沿用[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)。这里的上下文不取交换或结合商，也不允许用组成相等替代完整树相等。
+
+**定理 32.2（三片 $\alpha$ 分离与全部双孔取等形）。** 对任意 $P,Q\in\mathcal I_3$，若 $P\ne Q$、$n(P)=n(Q)$ 且 $\operatorname{NC}(P,Q)$，则
+
+$$
+\delta(P,Q)\ge3,\qquad \delta(Q,P)\ge3.
+\tag{32.2}
+$$
+
+而且下列三个条件等价：$\delta(P,Q)=3$；$\delta(Q,P)=3$；规范分歧前沿恰有两个孔，适当命名后存在同一个实际像双孔上下文 $J$ 和同一个
+
+$$
+Y\in\{C,\langle A,A\rangle\}
+\tag{32.3}
+$$
+
+使
+
+$$
+P=J[C,\langle A,Y\rangle],\qquad
+Q=J[\langle A,Y\rangle,C].
+\tag{32.4}
+$$
+
+$J$ 的固定部分正是引理 30.3 给出的共同部分。反之，每个这样的 $J,Y$ 都给出不同、等叶数、非冲突的实际三步像，两个定向 $\alpha$ 缺额均为 $3$。取等必有 $c(P)=c(Q)$，唯一前像的组成也相等；两侧总未共享叶数在 $Y=C$ 时均为 $7$，在 $Y=\langle A,A\rangle$ 时均为 $8$。
+
+**证明。** 全部局部非冲突情形直接采用引理 30.2，不另设响应表。先由式（31.2）确定这些实际树的 $\alpha$ 权重。若唯一前像组成为 $(a,b)^{\mathsf T}$，则
+
+$$
+\mu(T)=a+2b,\qquad n(T)=3a+5b,\qquad a,b\ge0,\quad a+b>0.
+\tag{32.5}
+$$
+
+这是[母卷定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的既有组成作用。因此 $\mu(T)\ge1$；$\mu(T)=1$ 只能有 $(a,b)=(1,0)$，前像为单叶 $\alpha$，所以 $T=A$。$\mu(T)=2$ 只能有 $(a,b)=(0,1)$ 或 $(2,0)$，其前像分别唯一为 $\beta$ 或 $\langle\alpha,\alpha\rangle$，所以
+
+$$
+\mu(T)=2\quad\Longleftrightarrow\quad
+T=C\ \text{或}\ T=\langle A,A\rangle.
+\tag{32.6}
+$$
+
+相应叶数为 $5,6$。式（32.5）也说明，实际五叶像唯一为 $C$，实际六叶像唯一为 $\langle A,A\rangle$：方程 $3a+5b=5,6$ 的允许解分别只有 $(0,1),(2,0)$，上述完整前像已唯一。此处唯一性是在自由树语法上使用既有替换单射性，不从一般组成观察推断任意树形唯一。
+
+对一个分歧孔，把原子侧记为 $T_0$、复合侧记为 $T_1$。引理 30.2 的三个字面情形给以下权重和叶数差，所有 $X,Y,X_1,X_2$ 都属于 $\mathcal I_3$：
+
+$$
+\begin{array}{c|c|c|c}
+(T_0,T_1)&\delta(T_0,T_1)&\delta(T_1,T_0)&n(T_1)-n(T_0)\\ \hline
+(A,\langle X,Y\rangle),\ X\ne A
+ &1&\mu(X)+\mu(Y)\ge3&n(X)+n(Y)-3\ge5\\
+(C,\langle A,Y\rangle),\ Y\ne A
+ &1&\mu(Y)\ge2&n(Y)-2\ge3\\
+(C,\langle\langle X_1,X_2\rangle,Y\rangle),\ X_1\ne A,\ Y\ne A
+ &2&\mu(X_1)+\mu(X_2)+\mu(Y)\ge5
+ &n(X_1)+n(X_2)+n(Y)-5\ge8
+\end{array}
+\tag{32.7}
+$$
+
+第一、三行没有共享叶，所以 $\alpha$ 缺额就是各自全部 $\alpha$ 数。第二行恰共享左侧的 $A$，其一个 $\alpha$ 从 $C$ 的两个 $\alpha$ 中扣除；复合侧剩余的 $\alpha$ 恰为 $Y$ 的全部 $\alpha$。下界使用 $X\ne A$、$X_1\ne A$、$Y\ne A$ 时的 $\mu\ge2,n\ge5$，以及任意实际像的 $\mu\ge1,n\ge3$；这些限制正是引理 30.2 的非冲突条件。因此三行是既有字面比较的权重计算，而非独立假设。
+
+在引理 30.3 的前缀自由孔集上，令 $k$ 为 $P$ 侧是原子的孔数，$l$ 为 $P$ 侧是复合像的孔数。共同部分的 $\alpha$ 地址完全相同；各孔的地址集合互不相交，前加孔地址保持局部标签和地址相等关系。因此式（30.4）的叶分割也给
+
+$$
+\delta(P,Q)=\sum_w\delta(P|_w,Q|_w),\qquad
+\delta(Q,P)=\sum_w\delta(Q|_w,P|_w).
+\tag{32.8}
+$$
+
+每个孔的复合侧严格较大。等叶数使全部局部大小差的和为零，孔集又非空，故两种朝向都必须出现，即 $k,l\ge1$。式（32.7）逐孔相加给
+
+$$
+\delta(P,Q)\ge k+2l\ge3,\qquad
+\delta(Q,P)\ge2k+l\ge3,
+\tag{32.9}
+$$
+
+证明分离结论；这没有把等叶数换成等 $\alpha$ 数。
+
+设 $\delta(P,Q)=3$。因 $k,l$ 为正整数，$k+2l\le3$ 强制 $k=l=1$，所有局部下界也必须取等。命名两孔为 $u,v$，使 $P|_u$ 为原子、$P|_v$ 为复合像；在 $u$ 处 $P$ 的缺额为 $1$，在 $v$ 处为 $2$。式（32.7）说明，复合侧缺额 $2$ 只可能来自第二行，故
+
+$$
+(P|_v,Q|_v)=(\langle A,Y\rangle,C),\qquad \mu(Y)=2.
+\tag{32.10}
+$$
+
+由式（32.6），$Y=C$ 或 $\langle A,A\rangle$，该孔的大小增加量 $n(Y)-2$ 分别为 $3$ 或 $4$。两孔以外完全相同，等叶数遂使 $u$ 处的复合侧增加量也恰为同一个 $3$ 或 $4$。$u$ 处原子侧缺额 $1$ 排除第三行；第一行的增加量至少为 $5$，不能平衡 $v$。所以 $u$ 必为第二行：
+
+$$
+(P|_u,Q|_u)=(C,\langle A,Z\rangle),\qquad
+n(Z)-2=n(Y)-2.
+\tag{32.11}
+$$
+
+因此 $n(Z)=n(Y)\in\{5,6\}$。实际五叶、六叶像的上述唯一性给 $Z=Y$。引理 30.3 的共同部分遂正是式（32.4）的 $J$，且没有第三个分歧孔。两孔现在都为第二行且具有同一个 $\mu(Y)=2$，故反方向缺额也为 $2+1=3$。交换 $P,Q$，同样证明 $\delta(Q,P)=3$ 推出这一正常形。
+
+反向，给定式（32.3）—（32.4），两种 $Y$ 均不同于 $A$，引理 30.2 的第二行在每孔给合法的非冲突比较。固定旁支都有实际前像，$C$ 与 $\langle A,Y\rangle$ 也都有实际前像；原替换的同态规则使两棵填充树都在 $\mathcal I_3$ 中。两孔互不为前缀，其外完全相同，所以局部非冲突性给全树非冲突性，两个相反大小差抵消给等叶数。在各孔，$C$ 的前像为原子 $\beta$，$\langle A,Y\rangle$ 的前像为分支；共同祖先和固定旁支相同，故引理 30.3 的递归恰在这两个孔停止。孔内树大小不同，保证全树不同。式（32.8）给两侧 $\alpha$ 缺额均为 $1+2=3$，证明充分性。
+
+两棵树各含一个 $C$、一个 $\langle A,Y\rangle$ 和完全相同的固定旁支，组成加法因而给 $c(P)=c(Q)$；规范编译卷命题 4.3 的组成作用单射性连续使用三次，给唯一前像的组成相等。在第二行比较中，原子侧恰有 $2$ 片未共享叶，复合侧恰有 $n(Y)$ 片未共享叶。每棵树在两孔中各取一次原子侧和复合侧，故其总未共享叶数为 $2+n(Y)$，分别为 $7,8$。$Y=C$ 的已有取等对正是[式（30.6）](#30-实际三步像的分歧前沿七叶分离与有限容量)的 $P_{13},Q_{13}$，无需另建该来源对。
+
+等组成是取等的结论，不是本定理的前提。具体地，令 $U_5=\langle\alpha,\langle\alpha,\langle\alpha,\langle\alpha,\alpha\rangle\rangle\rangle\rangle$、$V_3=\langle\beta,\langle\beta,\beta\rangle\rangle$，取 $Y_5=\rho^3(U_5)$、$Z_3=\rho^3(V_3)$。实际树 $\langle C,\langle A,Y_5\rangle\rangle$ 与 $\langle\langle A,Z_3\rangle,C\rangle$ 的前像组成分别为 $(6,1)^{\mathsf T}$、$(1,4)^{\mathsf T}$，式（32.5）给共同叶数 $23$、$\alpha$ 数 $8,9$。两孔都满足引理 30.2 的第二行，共享的 $\alpha$ 恰为两个共同 $A$ 的唯一 $\alpha$；所以该对非冲突、两个定向缺额为 $6,7$。这说明等叶数的量词确实包含不同组成；由已证取等分类，任意这样的不同组成对的两个定向缺额都至少为 $4$。本证明的关系是既有实际像语法与分歧前沿上的仓内推导。证毕。
+
+**命题 32.3（十四叶双孔取等与三片残差的共同历史）。** 令
+
+$$
+\begin{aligned}
+P_{14}&=\langle C,\langle A,\langle A,A\rangle\rangle\rangle
+ =\rho^3\bigl(\langle\beta,\langle\alpha,\langle\alpha,\alpha\rangle\rangle\rangle\bigr),\\
+Q_{14}&=\langle\langle A,\langle A,A\rangle\rangle,C\rangle
+ =\rho^3\bigl(\langle\langle\alpha,\langle\alpha,\alpha\rangle\rangle,\beta\rangle\bigr).
+\end{aligned}
+\tag{32.12}
+$$
+
+它们不同、非冲突，且 $c(P_{14})=c(Q_{14})=(5,9)^{\mathsf T}$、$n(P_{14})=n(Q_{14})=14$。其全部共享带标签叶恰为式（30.7）的六片，两侧共享 $\alpha$ 地址恰为 $\{\mathtt{LLLR},\mathtt{RLLR}\}$；两个定向 $\alpha$ 缺额均为 $3$，两个总叶缺额均为 $8$。合法的实际历史
+
+$$
+H_*=\bigl((\mathtt{LLLR},\mathsf{leaf}_\alpha),
+          (\mathtt{RLLR},\mathsf{leaf}_\alpha)\bigr)
+\tag{32.13}
+$$
+
+同时匹配两者，且 $\Gamma_{H_*}=\{\mathtt{LLLR},\mathtt{RLLR}\}$，每棵树仍有三片未覆盖 $\alpha$。
+
+**证明。** 式（32.12）的两个前像由母卷定义 3.1 的同态规则给出；它们字面不同，规范编译卷命题 4.3 给像不同。取 $J[X,Z]=\langle X,Z\rangle$、$Y=\langle A,A\rangle$，定理 32.2 的充分性给非冲突和取等。每棵树恰由三个 $A$ 与一个 $C$ 组成，故由 $c(A)=(1,2)^{\mathsf T}$、$c(C)=(2,3)^{\mathsf T}$ 得组成 $(5,9)^{\mathsf T}$ 与叶数 $14$。
+
+为确定所有地址，在每个根孩子处比较 $C$ 与 $\langle A,\langle A,A\rangle\rangle$。引理 30.2 给共享子树恰为左 $A$，右侧没有任何共享叶；前加孔地址 $\mathtt L$ 或 $\mathtt R$，全部共享叶遂正是式（30.7）已列的六片，标签依次为 $\beta,\alpha,\beta,\beta,\alpha,\beta$。$A$ 的唯一 $\alpha$ 地址为 $\mathtt{LR}$，$C$ 的两片为 $\mathtt{LLR},\mathtt{RR}$。将这些字面地址前加式（32.12）的各块位置，得到
+
+$$
+\begin{aligned}
+\Lambda_\alpha(P_{14})
+ &=\{\mathtt{LLLR},\mathtt{LRR},\mathtt{RLLR},
+       \mathtt{RRLLR},\mathtt{RRRLR}\},\\
+\Lambda_\alpha(Q_{14})
+ &=\{\mathtt{LLLR},\mathtt{LRLLR},\mathtt{LRRLR},
+       \mathtt{RLLR},\mathtt{RRR}\},\\
+\Lambda_\alpha(P_{14})\setminus\Lambda_\alpha(Q_{14})
+ &=\{\mathtt{LRR},\mathtt{RRLLR},\mathtt{RRRLR}\},\\
+\Lambda_\alpha(Q_{14})\setminus\Lambda_\alpha(P_{14})
+ &=\{\mathtt{LRLLR},\mathtt{LRRLR},\mathtt{RRR}\}.
+\end{aligned}
+\tag{32.14}
+$$
+
+这给完整 $\alpha$ 地址证书；全部共同叶只有六片，故总叶缺额为 $14-6=8$，并非 $7$。
+
+两次历史报告都是式（31.6）的 $w\mathtt{LR}$ 行，分别强制 $w=\mathtt{LL}$、$w=\mathtt{RL}$ 处的 $A$。它们的 $\alpha$ 并集恰为式（32.13）的两个地址，按定义 31.3 没有其他块加入 $\mathcal B_{H_*}$，所以得到所述 $\Gamma_{H_*}$ 和三片残差。两次地址都在全部未知输入的合法菜单内，指定两棵固定输入也都真实报告相应叶值。
+
+于是，对任意同叶数非冲突的 $\mathcal E_H$ 成员，仅凭一侧未覆盖 $\alpha$ 数至多 $3$ 不能推出唯一性。这两次查询在二元素评价族 $\{P_{14},Q_{14}\}$ 上都为常值，第一步就不是严格分裂；它们给出共同历史的残差边界，不能作为严格路由中 $f$ 阈值最优或容量上界取得的证书。证毕。
+
+**命题 32.4（两片残差不能删除非冲突条件）。** 取实际像
+
+$$
+\begin{aligned}
+P_0&=\langle C,\langle A,A\rangle\rangle
+ =\rho^3\bigl(\langle\beta,\langle\alpha,\alpha\rangle\rangle\bigr),\\
+Q_0&=\langle\langle A,A\rangle,C\rangle
+ =\rho^3\bigl(\langle\langle\alpha,\alpha\rangle,\beta\rangle\bigr).
+\end{aligned}
+\tag{32.15}
+$$
+
+两者不同，组成都为 $(4,7)^{\mathsf T}$，叶数均为 $11$，并都属于 $\mathcal E_{H_*}$；各有两片未覆盖 $\alpha$，但不满足 $\operatorname{NC}$。因此，引理 31.5 对全部同叶数 $\mathcal E_H$ 成员的残差上界 $1$，不能无条件换成 $2$。
+
+**证明。** 两个完整前像由原同态规则给出，字面不同及替换单射性给像不同。各树恰含两个 $A$、一个 $C$，组成及叶数随即得到。其完整 $\alpha$ 集为
+
+$$
+\Lambda_\alpha(P_0)=\{\mathtt{LLLR},\mathtt{LRR},\mathtt{RLLR},\mathtt{RRLR}\},\qquad
+\Lambda_\alpha(Q_0)=\{\mathtt{LLLR},\mathtt{LRLR},\mathtt{RLLR},\mathtt{RRR}\}.
+\tag{32.16}
+$$
+
+两者在式（32.13）的实际地址均报告 $\mathsf{leaf}_\alpha$，所以属于同一个 $\mathcal E_{H_*}$；该历史仍只强制 $\mathtt{LL},\mathtt{RL}$ 处的两个 $A$，给相同 $\Gamma_{H_*}$，从式（32.16）扣除后各剩两片。可是 $\mathtt{LRR}$ 在 $P_0$ 的左 $C$ 中为 $\alpha$，在 $Q_0$ 左侧 $\langle A,A\rangle$ 的右 $A$ 中为 $\beta$。这个地址是两者的共享叶且标签冲突，故 $\operatorname{NC}(P_0,Q_0)$ 为假。反例保留实际像、同叶数和同一实际叶历史，准确排除了删除非冲突条件的推论。证毕。
+
+**推论 32.5（非冲突同规模队列的两片残差终端条件）。** 对任意有限历史 $H$ 和任意 $P,Q\in\mathcal E_H$，若 $n(P)=n(Q)$、$\operatorname{NC}(P,Q)$ 且
+
+$$
+|\Lambda_\alpha(P)\setminus\Gamma_H|\le2,
+\tag{32.17}
+$$
+
+则 $P=Q$。若在相同等叶数、非冲突条件下 $P\ne Q$ 且一侧残差恰为 $3$，则两者必为定理 32.2 的双孔取等形，而且
+
+$$
+\Gamma_H=\Lambda_\alpha(P)\cap\Lambda_\alpha(Q).
+\tag{32.18}
+$$
+
+**证明。** 引理 31.4 的强制结论使 $\Gamma_H$ 包含于每个 $\mathcal E_H$ 成员的 $\alpha$ 地址集。因此
+
+$$
+\Lambda_\alpha(P)\setminus\Lambda_\alpha(Q)
+ \subseteq\Lambda_\alpha(P)\setminus\Gamma_H.
+\tag{32.19}
+$$
+
+若 $P\ne Q$，定理 32.2 使左侧基数至少为 $3$，与式（32.17）矛盾，得到唯一性。若右侧基数恰为 $3$ 且两者不同，则同一下界与包含关系使两集合相等，$\delta(P,Q)=3$；取等分类随即适用。$\Gamma_H$ 已包含于两棵树的共同 $\alpha$ 集，而共同集在 $\Lambda_\alpha(P)$ 中的补集正是式（32.19）的左侧；两补集相等遂给式（32.18）。这一推论不要求 $H$ 严格；命题 32.3 使其残差 $2$ 截点不能普遍提高到 $3$，命题 32.4 则说明本推论的非冲突条件不能删除。证毕。
+
+**推论 32.6（严格叶增益的两片残差容量界）。** 对任意非空有限 $F\subseteq\mathcal I_3(n)$ 和任意整数 $t\ge0$，仍令 $s=\max_{P\in F}\mu(P)$。采用[式（30.9）、（30.11）](#30-实际三步像的分歧前沿七叶分离与有限容量)原有的 $K,K_\circ,M$。若 $K(F)=K_\circ(F)$ 且 $D(F)\le n+t$，则
+
+$$
+\boxed{\quad |F|\le M(\max\{s-2,0\},t).\quad}
+\tag{32.20}
+$$
+
+费用前提可以替换为 $W(F)\le n+t$ 或 $W_{\mathrm u}(F)\le n+t$，仅通过既有等式 $W=W_{\mathrm u}=D$。
+
+**证明。** [定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)的二元素子族条件给不同成员两两非冲突：若一对有冲突的共同叶，该对的 $\Delta$ 非空，从而整对共同取得个体最优，属于 $K(F)$，与 $K(F)=K_\circ(F)$ 矛盾。这一应用不要求 $n\ge11$，也不增加组成条件。
+
+直接使用[定理 29.2、29.3 的式（29.5）、（29.6）、（29.8）](#29-任意有限实际正来源族的联合响应费用核心与全域取得)，选择取得 $D(F)$ 的实际代表严格路由。它在单点结束，同一路径地址互异；每个评价输入的费用恰为 $n$ 加该路径的非叶报告数，故各路径最终 $c\le t$。在一个非空幸存队列 $S_H$ 上，全部成员匹配同一个实际历史 $H$，属于 $\mathcal E_H$。令 $r_0=\max\{s-2,0\}$。若 $s\le2$，空历史的 $\Gamma$ 为空，任取 $P,Q\in F$ 已满足推论 32.5 的残差条件，所以根为单点，式（32.20）由 $M(0,t)=1$ 得到。
+
+以下取 $s\ge3$。沿从空历史开始的实际严格路由，引理 31.4 给 $g(H)=|\Gamma_H|\ge f(H)$。若 $f(H)\ge s-2=r_0$，则任意幸存的 $P$ 都满足
+
+$$
+|\Lambda_\alpha(P)\setminus\Gamma_H|
+ =\mu(P)-g(H)\le s-f(H)\le2.
+\tag{32.21}
+$$
+
+幸存对象等叶数且两两非冲突，推论 32.5 遂使队列为单点。因此 $f=r_0$ 已是终端阈值。这里每一项都来自同一实际历史，未把分别可达的来源最优值拼成共同历史。
+
+非叶预算边界与[定理 31.7](#31-任意地址叶报告的块强制单孔刚性与容量阈值)相同。在严格节点，两两非冲突使至多一个叶响应孩子非空；另外至多有分支和不存在两个非叶孩子。严格节点至少有两个非空响应孩子，因而至少有一个非叶孩子。若 $c(H)=t$ 而节点仍严格，取该非叶孩子中的一个评价输入，其终端非叶数至少为 $t+1$，违反同一路径的费用界。因此 $c=t$ 的非空队列也为单点。特别地，$t=0$ 时根即为单点，使用 $M(r_0,0)=1$。
+
+路由到单点停止，所以每条路径上的 $0\le f(H)\le r_0$、$0\le c(H)\le t$。在节点处令 $r=r_0-f(H)$、$b=t-c(H)$。非空边界 $r=0$ 或 $b=0$ 已为单点；严格节点的至多一个叶孩子使参数成为 $(r-1,b)$，至多两个非叶孩子使参数成为 $(r,b-1)$，空孩子贡献零。这正是既有[式（30.13）及定理 31.7 的资源路径计数](#30-实际三步像的分歧前沿七叶分离与有限容量)的假设，只改变第一参数的终端阈值。直接应用该计数得到节点终端数至多为 $M(r,b)$，根的终端数至多为 $M(r_0,t)$。每个不同评价来源恰到自己的一个单点终端，故得到式（32.20）。这里未定义新递推或重新建立路由正规形。
+
+终端的单点结论只识别有限评价队列。未知输入仍遍历[定义 29.1](#29-任意有限实际正来源族的联合响应费用核心与全域取得)的全部非空有限有序满二叉 $\alpha/\beta$ 树，没有组成、规模、叶数、高度、正性或候选身份承诺；根和每个有限地址仍可直接查询，实际输入保持不变，原始报告仍恰有四值。全域接受仍须实际请求选中原型的全部 $n$ 个带标签叶，采用[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)的 $d=3=3\cdot1$ 完整叶条件及[母卷定理 9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)的字面恢复。$\Gamma_H$ 及固定块中由推论得到的其余叶不进入真实缓存，也不能充当已取得的接受证书。此前真实请求的 $f$ 个叶可在相同地址上复用，其余 $n-f$ 个仍须补查；$c$ 个实际非叶地址不属于原型叶集，故不同实际地址费用仍为 $f+c+(n-f)=n+c$。
+
+意外路由响应或完整叶核对不匹配仍使用定理 29.2 的独立初始化全域有限后备，真实外层缓存只在后备实际请求同址时供应。后备恢复实际有限输入，按实际叶数作有限前像比较；其有限描述与恢复分别使用[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，实际替换像与前像单射性使用规范编译卷命题 4.3。不匹配不直接被判为负性，根叶输入及其他全部有限正负输入仍在该后备的原范围内。地址长度、定位和计算的费用约定也保持不变。
+
+最后直接应用式（29.8）的 $W=W_{\mathrm u}=D$ 得两项费用替换；没有交换逐来源期望的最大值与同种子最大值的期望，因而本推论不对 $R,R_{\mathrm u}$ 给同一界。命题 32.3 的常值历史不证明严格 $f=r_0$ 阈值最优，式（32.20）也没有容量取得结论。所有对象和操作都属于原自由树、替换和只读判定合同；前像的描述比较不是实际逆执行，组成代数的守恒或单射性不提供物理对应。证毕。
+
+**推论 32.7（全局容量与十四叶的一次超额比较）。** 对全部可行 $n\in\mathcal N$，保持[式（31.13）](#31-任意地址叶报告的块强制单孔刚性与容量阈值)的 $q(n)$ 不变。任意整数 $t\ge0$ 满足
+
+$$
+\boxed{\quad
+\mathsf{Cap}(n,t)
+ \le\min\{N_n,M(\max\{q(n)-2,0\},t)\}.
+\quad}
+\tag{32.22}
+$$
+
+特别地，$n=14,t=1$ 时该上界为 $7$，第 31 章相应上界为 $9$；这是上界的数值比较。
+
+**证明。** 对每个非空符合容量条件的 $F$，式（31.2）与推论 31.8 给 $1\le s\le q(n)$。既有 $M$ 对第一参数的单调性覆盖零边界，所以推论 32.6 给
+
+$$
+|F|\le M(\max\{s-2,0\},t)
+ \le M(\max\{q(n)-2,0\},t).
+\tag{32.23}
+$$
+
+同时 $|F|\le N_n$。空族的基数零也满足这些上界；定义 30.6 的容量在有限集合上取最大值，故得到式（32.22），而非以某一个评价族的 $s$ 代替全局 $q(n)$。若 $q(n)\le2$，任一这样的非空族由推论 32.6 的根边界为单点，仍使用原有 $M(0,t)=1$。$t=0$ 使用 $M(r,0)=1$，与推论 30.8 的可行规模零超额容量一致。不可行叶数不定义 $q(n)$，其容量为零仍直接采用推论 30.8。
+
+$n=14$ 的唯一前像组成是 $(3,1)^{\mathsf T}$，由式（31.13）有 $q(14)=5$，原计数式（30.10）给 $N_{14}=20$。直接用既有 $M(r,1)=1+2r$，得到 $M(3,1)=7$，而第 31 章的参数给 $M(4,1)=9$。十四叶取等对只取得定理 32.2 的分离常数；没有由此推出七元素评价族存在、一般容量界达到或严格路由阈值最优。本节的承重分类及其消费者由所引仓内实际像、前沿与历史接口推导，有限响应相关费用的文献背景沿用第 29 章所引模型，不对文献范围外的原创性作结论。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 33. 十四叶实际像的非冲突族分类与一次超额锐容量
+
+**定义 33.1（十四叶块与两个三槽族）。** 沿用[定义 30.1、30.6](#30-实际三步像的分歧前沿七叶分离与有限容量)的 $\mathcal I_3(14)$、$\operatorname{NC}$、$K$、$K_\circ$、$D$ 和 $\mathsf{Cap}$，以及式（30.2）的实际像 $A,C,B$。另置
+
+$$
+\begin{gathered}
+H=\langle A,A\rangle,\qquad T=\langle A,C\rangle,\qquad
+S=\langle A,H\rangle,\qquad R=\langle H,A\rangle,\\
+D_0=\langle A,B\rangle,\qquad D_1=\langle A,T\rangle,\\
+\mathcal V=\{\langle C,H\rangle,\langle H,C\rangle,
+                 \langle B,A\rangle,\langle T,A\rangle\},
+\qquad \mathcal Z=\mathcal V\cup\{D_0,D_1\}.
+\end{gathered}
+\tag{33.1}
+$$
+
+这里 $H$ 是一棵固定的六叶树，不是历史或孔集；$T$ 是一棵固定的八叶树，不是来源域 $\mathcal T$。这些块的叶数为
+
+$$
+\begin{gathered}
+n(A)=3,\quad n(C)=5,\quad n(H)=6,\quad
+n(B)=n(T)=8,\quad n(S)=n(R)=9,\\
+n(D_0)=n(D_1)=n(D)=11\quad(D\in\mathcal V).
+\end{gathered}
+\tag{33.2}
+$$
+
+定义两个有序三槽上下文及其槽地址：
+
+$$
+\begin{aligned}
+J_{\mathrm R}[X_1,X_2,X_3]&=\langle X_1,\langle X_2,X_3\rangle\rangle,
+ &(p_1,p_2,p_3)_{\mathrm R}&=(\mathtt L,\mathtt{RL},\mathtt{RR}),\\
+J_{\mathrm L}[X_1,X_2,X_3]&=\langle\langle X_1,X_2\rangle,X_3\rangle,
+ &(p_1,p_2,p_3)_{\mathrm L}&=(\mathtt{LL},\mathtt{LR},\mathtt R).
+\end{aligned}
+\tag{33.3}
+$$
+
+对 $\eta\in\{\mathrm R,\mathrm L\}$、$j\in\{1,2,3\}$，令 $P_j^\eta$ 是 $J_\eta$ 的第 $j$ 槽填 $B$、其余两槽填 $A$ 的树，记 $F_\eta=\{P_1^\eta,P_2^\eta,P_3^\eta\}$。于是
+
+$$
+\begin{aligned}
+F_{\mathrm R}
+ &=\{\langle B,H\rangle,\langle A,\langle B,A\rangle\rangle,
+                  \langle A,\langle A,B\rangle\rangle\},\\
+F_{\mathrm L}
+ &=\{\langle\langle B,A\rangle,A\rangle,
+        \langle\langle A,B\rangle,A\rangle,\langle H,B\rangle\}.
+\end{aligned}
+\tag{33.4}
+$$
+
+$\eta$ 仅标记这两个固定上下文，不把树取结合商。控制器仍使用[定义 29.1](#29-任意有限实际正来源族的联合响应费用核心与全域取得)的全来源只读合同：未知输入为任意 $U\in\mathcal T$，初始化不含输入组成、叶数、高度、正性或候选身份承诺；每个有限地址均合法，四值报告来自同一个不变的 $U$，仅不同实际请求地址收费；$F_\eta$ 是初始化中给定的费用评价族，不是输入身份承诺。
+
+**命题 33.2（十四叶实际像的根分解全集）。** 全部十四叶实际三步像恰为以下三个互不相交的集合之并：
+
+$$
+\boxed{\begin{aligned}
+\mathcal I_3(14)
+={}&\{\langle A,D\rangle,\langle D,A\rangle:D\in\mathcal Z\}\\
+ &\ \cup\{\langle C,S\rangle,\langle S,C\rangle,
+               \langle C,R\rangle,\langle R,C\rangle\}\\
+ &\ \cup\{\langle H,T\rangle,\langle T,H\rangle,
+               \langle H,B\rangle,\langle B,H\rangle\}.
+\end{aligned}}
+\tag{33.5}
+$$
+
+它们共有二十棵，每棵的唯一实际前像组成都为 $(3,1)^{\mathsf T}$，输出组成都为 $(5,9)^{\mathsf T}$。特别地，式（33.4）的六棵树互不相同，均具有这种前像和输出组成。
+
+**证明。** [式（32.5）](#32-非冲突分歧的-α-分离双孔取等与递归容量)由母卷定理 3.4 的三步组成作用给出：前像组成 $(a,b)^{\mathsf T}$ 的像有 $3a+5b$ 片叶，输出组成为 $(a+2b,2a+3b)^{\mathsf T}$。非负整数方程 $3a+5b=14$ 只有解 $(a,b)=(3,1)$：模 $3$ 给 $b\equiv1\pmod3$，而 $5b\le14$，故 $b=1,a=3$。像的输出组成随即为 $(5,9)^{\mathsf T}$。这里组成只限定可能的前像叶数和标记，不决定括号或次序。
+
+采用引理 30.2 之前的唯一实际像语法：每棵实际像是 $A$、$C$ 或 $\langle X,Y\rangle$，其中 $X,Y\in\mathcal I_3$。唯一前像与解析直接来自[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)，不另立替换单射性。逐个检查所需的小叶数根分拆，得到
+
+$$
+\begin{aligned}
+\mathcal I_3(3)&=\{A\}, &\mathcal I_3(5)&=\{C\},
+ &\mathcal I_3(6)&=\{H\},\\
+\mathcal I_3(8)&=\{\langle C,A\rangle,\langle A,C\rangle\}=\{B,T\},
+ &\mathcal I_3(9)&=\{\langle A,H\rangle,\langle H,A\rangle\}=\{S,R\},\\
+\mathcal I_3(11)&=
+ \{\langle A,B\rangle,\langle A,T\rangle,
+      \langle B,A\rangle,\langle T,A\rangle,
+      \langle C,H\rangle,\langle H,C\rangle\}
+ =\mathcal Z.
+\end{aligned}
+\tag{33.6}
+$$
+
+具体地，原子像的叶数只有 $3,5$，复合像的每个孩子至少有三片叶，且除 $A$ 外至少有五片叶。六叶的唯一根分拆是 $3+3$；八叶是 $3+5$ 或 $5+3$；九叶是 $3+6$ 或 $6+3$，因为四叶像不存在；十一叶是 $3+8,8+3,5+6,6+5$。各孩子已由更小叶数的语法确定，这就给式（33.6）的全部选择，不是由一个有限响应表推断全集。
+
+十四叶像不可能为原子。对其两个孩子，正叶数都属于既有可行集 $\mathcal N$；小于十四时，能配对相加为十四的叶数仅有
+
+$$
+3+11,\quad 11+3,\quad 5+9,\quad 9+5,\quad 6+8,\quad 8+6.
+\tag{33.7}
+$$
+
+例如 $10,12,13$ 分别需要不存在的四叶、二叶、一叶孩子，七叶孩子也不存在；其余小叶数已在上述分拆中。代入式（33.6），$3+11$ 及其逆序各有六种，$5+9$ 及其逆序各有两种，$6+8$ 及其逆序各有两种，恰得式（33.5）。不同根分拆的左右叶数不同，集合互不相交；同一根分拆内孩子的字面语法不同，故没有重复。于是总数为 $12+4+4=20$，与原有[式（30.10）及推论 32.7](#32-非冲突分歧的-α-分离双孔取等与递归容量)的 $N_{14}=20$ 一致；计数只作核对，全集已由根语法给出。
+
+式（33.5）的每棵树都由 $A,C$ 以原有二叉构造组成。将每个 $A$ 换成 $\alpha$、每个 $C$ 换成 $\beta$，给出它的实际前像；母卷定义 3.1 的同态规则保证三步像正是原树，规范编译卷命题 4.3 保证此前像唯一。对 $F_\eta$，也可直接在式（33.3）中把 $B$ 换成 $\langle\beta,\alpha\rangle$、把两棵 $A$ 换成 $\alpha$，得到三个完整前像。按 $\eta=\mathrm R,\mathrm L$ 各自的槽编号，六棵前像明确为
+
+$$
+\begin{aligned}
+&\langle\langle\beta,\alpha\rangle,\langle\alpha,\alpha\rangle\rangle,
+&&\langle\alpha,\langle\langle\beta,\alpha\rangle,\alpha\rangle\rangle,
+&&\langle\alpha,\langle\alpha,\langle\beta,\alpha\rangle\rangle\rangle,\\
+&\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,\alpha\rangle,
+&&\langle\langle\alpha,\langle\beta,\alpha\rangle\rangle,\alpha\rangle,
+&&\langle\langle\alpha,\alpha\rangle,\langle\beta,\alpha\rangle\rangle.
+\end{aligned}
+$$
+
+它们各有三片 $\alpha$、一片 $\beta$；在左右孩子的形状或标签上逐字不同。因此它们的像也互不相同，不能仅凭相同组成代替这种不同性。证毕。
+
+**定理 33.3（十四叶的全部非冲突边与评价族）。** 在顶点集 $\mathcal I_3(14)$ 上，以不同顶点的无序对 $\{P,Q\}$ 满足 $\operatorname{NC}(P,Q)$ 为边。全部边恰为以下互不重复的二十七条：
+
+$$
+\boxed{\begin{aligned}
+\mathscr E_{14}={}&
+ \bigl\{\{\langle A,D\rangle,\langle D',A\rangle\}:D,D'\in\mathcal V\bigr\}\\
+&\ \cup\bigl\{\{\langle A,D_j\rangle,\langle R,C\rangle\},
+              \{\langle D_j,A\rangle,\langle C,R\rangle\}:j=0,1\bigr\}\\
+&\ \cup\bigl\{\{\langle C,S\rangle,\langle S,C\rangle\}\bigr\}\\
+&\ \cup\binom{F_{\mathrm R}}2\ \cup\binom{F_{\mathrm L}}2.
+\end{aligned}}
+\tag{33.8}
+$$
+
+其中 $\binom F2$ 指 $F$ 的全部二元素子集。全部两两非冲突评价族恰为空族、单元素族、式（33.8）的边，以及 $F_{\mathrm R},F_{\mathrm L}$。这两个族是仅有的三元素族，不存在四元素两两非冲突族。
+
+**证明。** 先作穷尽性的结构归约。任取不同的 $P,Q\in\mathcal I_3(14)$ 且 $\operatorname{NC}(P,Q)$。使用[引理 30.3](#30-实际三步像的分歧前沿七叶分离与有限容量)在唯一前像上供应的分歧孔集，另记为 $\mathcal H$，其共同部分叶数为 $h_0$。每孔的原子／复合大小差非零，而式（30.4）使这些差之和为零，故至少有两个孔，且原子侧分别在 $P,Q$ 的相反朝向出现。引理 30.2 又使每孔两侧叶数之和至少为 $3+8=11$。于是
+
+$$
+28=2h_0+\sum_{w\in\mathcal H}\bigl(n(P|_w)+n(Q|_w)\bigr)
+ \ge 2h_0+11|\mathcal H|.
+\tag{33.9}
+$$
+
+三个孔会使右侧至少为 $33$，故 $|\mathcal H|=2$ 且 $0\le h_0\le3$。共同部分的叶来自引理 30.3 中保留下来的相同终端实际像；每个非空终端至少有三片叶。因此 $h_0$ 只有 $0,3$ 两种可能。
+
+若 $h_0=3$，共同部分恰有一个终端，且只能为 $A$。式（33.9）取等，两个孔的各自总叶数都为十一；这强制原子侧为三叶的 $A$、复合侧为八叶，并由引理 30.2 的唯一八叶情形强制为 $B$。两个孔朝向相反。保留的有序满二叉上下文有且仅有三个终端：两个孔和一个固定的 $A$。三个终端的有序满二叉上下文只有式（33.3）的两种括号，每个被填后的树恰在一槽有 $B$、另外两槽为 $A$，两个不同的树把 $B$ 放在不同槽。故这一情形恰给 $\binom{F_{\mathrm R}}2$ 与 $\binom{F_{\mathrm L}}2$。反之，这些对在两个不同槽上比较 $A,B$，引理 30.2 给没有共享叶的局部非冲突比较，其余一槽相同，所以它们全部非冲突。各槽真实地址前缀互不包含，局部判断因此确实组合成同一全树上的判断。
+
+若 $h_0=0$，保留的上下文没有相同终端，恰有两个孔。只有两个终端的满二叉上下文只能把孔放在根的左右孩子；否则任一孩子再分支就会产生至少第三个终端。每孔是一侧原子、另一侧复合，等叶数又使两孔的朝向相反。因此一棵树的左孩子为原子、另一棵的右孩子为原子，原子组合只能是 $AA,AC,CA,CC$。在这种根分拆上，$\operatorname{NC}$ 等价于左右孩子各自非冲突：所有共享叶地址都分别以 $\mathtt L$ 或 $\mathtt R$ 开始，两个集合不交。
+
+所需的全部小块比较直接由引理 30.2 和式（33.6）求得：
+
+$$
+\begin{aligned}
+Z\in\mathcal I_3(11):\quad
+ &\operatorname{NC}(A,Z)\ \Longleftrightarrow\ Z\in\mathcal V,
+ &\operatorname{NC}(C,Z)\ \Longleftrightarrow\ Z\in\{D_0,D_1\},\\
+Z\in\mathcal I_3(9):\quad
+ &\operatorname{NC}(A,Z)\ \Longleftrightarrow\ Z=R,
+ &\operatorname{NC}(C,Z)\ \Longleftrightarrow\ Z=S.
+\end{aligned}
+\tag{33.10}
+$$
+
+为写清这四个筛选，十一叶块中 $D_0,D_1$ 的左孩子为 $A$，其余四棵即 $\mathcal V$ 的左孩子都不同于 $A$，故得到第一项。与 $C$ 比较时，引理 30.2 要求右孩子不同于 $A$，并要求左孩子为 $A$，或左孩子复合且其左孩子不同于 $A$。$D_0,D_1$ 满足第一种；$\langle C,H\rangle$ 的左孩子为原子 $C$，$\langle H,C\rangle$ 的左孩子 $H$ 以 $A$ 为左孩子，均不满足；$\langle B,A\rangle,\langle T,A\rangle$ 的右孩子为 $A$，也不满足。九叶块只有 $S=\langle A,H\rangle$ 与 $R=\langle H,A\rangle$；第一行的左孩子条件只保留 $R$，与 $C$ 比较的右孩子条件及左侧条件则只保留 $S$。这证明式（33.10）而不隐去根例。
+
+现在令原子在第一棵的左孩子、第二棵的右孩子；交换整对不改变边。$AA$ 情形写成 $\langle A,D\rangle,\langle D',A\rangle$，两棵复合孩子都为十一叶，式（33.10）恰要求 $D,D'\in\mathcal V$，给式（33.8）的十六条边。$AC$ 情形是 $\langle A,D\rangle,\langle Z,C\rangle$，其中 $n(D)=11,n(Z)=9$；式（33.10）强制 $D=D_j,Z=R$，给两条 $\{\langle A,D_j\rangle,\langle R,C\rangle\}$。$CA$ 情形同样强制为 $\{\langle C,R\rangle,\langle D_j,A\rangle\}$，再给两条。$CC$ 情形强制两个复合孩子均为 $S$，只给 $\{\langle C,S\rangle,\langle S,C\rangle\}$，它正是[命题 32.3](#32-非冲突分歧的-α-分离双孔取等与递归容量)的既有十四叶对。反向，每项都满足式（33.10）的两个孩子条件，故确实非冲突。$h_0=0,3$ 已穷尽一切可能，所以没有其他边。
+
+最后从这个符号关系证明族分类。记 $x_D=\langle A,D\rangle$、$y_D=\langle D,A\rangle$。第一项是 $\{x_D:D\in\mathcal V\}$ 与 $\{y_D:D\in\mathcal V\}$ 之间的完整二部关系，它本身没有三角形。其余根边使 $\langle R,C\rangle$ 只邻接 $x_{D_0},x_{D_1}$，使 $\langle C,R\rangle$ 只邻接 $y_{D_0},y_{D_1}$；各自的两个邻点之间都没有边，故它们不参与三角形。$\langle C,S\rangle,\langle S,C\rangle$ 只互相邻接，$\langle H,T\rangle,\langle T,H\rangle$ 没有邻点，也不参与三角形。
+
+剩下的边恰为两个指定三角形。右侧三角形的三个顶点为 $\langle B,H\rangle,x_{\langle B,A\rangle},x_{D_0}$；其中 $\langle B,H\rangle$ 只邻接另外两者。$x_{D_0}$ 除这两者外只邻接 $\langle R,C\rangle$，而后者不邻接 $x_{\langle B,A\rangle}$。$x_{\langle B,A\rangle}$ 的其余邻点都是二部关系的 $y_D$（$D\in\mathcal V$），它们均不邻接 $x_{D_0}$。因此包含两个 $x$ 顶点的三角形只能是 $F_{\mathrm R}$。左侧完全按式（33.8）核对：$\langle H,B\rangle$ 只邻接 $y_{\langle B,A\rangle},y_{D_0}$，$y_{D_0}$ 的另一个邻点只有 $\langle C,R\rangle$，而二部关系中的 $x_D$ 都不邻接 $y_{D_0}$。故包含两个 $y$ 顶点的三角形只能是 $F_{\mathrm L}$。其他顶点已排除，跨二部关系又不可能在两侧各只取一个顶点而构成三角形，所以这两者是全部三角形。
+
+任一四元素两两非冲突族的任意三元素子族都须是三角形；取其中一个三角形，它有一个只邻接该三角形另外两者的顶点，即上述 $\langle B,H\rangle$ 或 $\langle H,B\rangle$，无法再加入与它相邻的第四顶点。因此没有四元素族，更大的族也不可能。空族和单元素族的成对条件为空约束，二元素族恰为边，三元素族恰为两个三角形，给全部评价族分类。前三项分别有 $16,4,1$ 条边，两三角形各有三条，字面顶点及所述孔情形表明各项不重复，合计 $27$。证毕。
+
+**定理 33.4（两个三槽族的实际全域控制器及收费账）。** 对每个 $\eta\in\{\mathrm R,\mathrm L\}$，存在一个输入无关初始化的确定性控制器 $\pi_\eta\in\mathfrak D_3$，在全部非空有限有序满二叉 $\alpha/\beta$ 树上正确判定 $\iota_3$ 且有限终止。它在式（33.3）的三槽族上的路由只使用以下两个实际地址：
+
+$$
+\begin{aligned}
+(q_1,q_2)_{\mathrm R}
+ &=(p_1\mathtt{LR},p_2\mathtt{LR})_{\mathrm R}
+   =(\mathtt{LLR},\mathtt{RLLR}),\\
+(q_1,q_2)_{\mathrm L}
+ &=(p_1\mathtt{LR},p_2\mathtt{LR})_{\mathrm L}
+   =(\mathtt{LLLR},\mathtt{LRLR}).
+\end{aligned}
+\tag{33.11}
+$$
+
+按槽编号 $j=1,2,3$，评价输入 $P_j^\eta$ 的路由叶报告数 $f_j$、非叶报告数 $c_j$ 及总费用分别为
+
+$$
+\boxed{\quad
+(f_1,c_1)=(0,1),\qquad(f_2,c_2)=(1,1),\qquad
+(f_3,c_3)=(2,0),\qquad
+\bigl(C_{\pi_\eta}(P_j^\eta)\bigr)_{j=1}^3=(15,15,14).
+\quad}
+\tag{33.12}
+$$
+
+此费用陈述只评价 $F_\eta$；对族外输入仍要求正确及有限终止，不给统一十五次地址上界。
+
+**证明。** 只用实际树的字面语法，$A=\langle\langle\beta,\alpha\rangle,\beta\rangle$ 在地址 $\mathtt{LR}$ 报 $\mathsf{leaf}_\alpha$；$B=\langle C,A\rangle$ 在同址读到 $C$ 的右孩子 $\langle\beta,\alpha\rangle$，报 $\mathsf{branch}$。因此两个骨架都可以按相同槽次序路由。首先实际请求 $q_1$；报告分支时选择原型 $P_1^\eta$，报告 $\mathsf{leaf}_\alpha$ 时实际请求 $q_2$，报告 $\mathsf{leaf}_\beta$ 或 $\mathsf{absent}$ 时进入全域后备。在 $q_2$，报告分支时选择 $P_2^\eta$，报告 $\mathsf{leaf}_\alpha$ 时选择 $P_3^\eta$，另外两个报告仍进入后备。所有四种原始报告在两个路由节点上都有指定去向。两个地址长度有限且互不相同，不预读它们的前缀；原合同允许直接请求全部有限地址，故它们对根叶和任意其他输入也始终合法。
+
+原型选择后只开始完整带标签叶核对，不返回接受。对所选 $P_j^\eta$，按固定短词优先次序实际请求其全部十四个叶地址，每一地址要求与该原型的叶标签精确匹配；真正已经请求过的同址报告可由实际缓存供应，推断出的块、叶或标签不能加入缓存。任一报告为错误叶标签、分支或不存在即进入后备，全部十四片都匹配才返回 $1$。直接复用[定理 18.2 的式（18.9）](#18-精确组成最优证书的唯一性与无承诺叶前沿)，其适用深度为 $d=3=3\cdot1$：完整带标签叶匹配使未知 $U$ 恰为所选原型，故该次接受正确。完整树恢复采用该定理所引[母卷定理 9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)。这一步并非以三槽中哪个位置是 $B$ 的推断代替证书；路由取得的至多两条报告还缺少原型的大部分叶，按定理 18.2 本身不构成无承诺有声接受记录。
+
+所有进入后备的情形，包括核对中途不匹配，都采用[定理 29.2 证明中的全域总后备及引理 27.3 的续接](#29-任意有限实际正来源族的联合响应费用核心与全域取得)。被选原型测试和后备分别从自己的完整初始化、空逻辑历史与初始控制状态开始；真实外层缓存保留此前实际报告，仅在续接策略确实请求同址时供应，并把这次请求及报告写入续接自己的历史。路由历史不预填为后备的运行历史，不匹配不直接推出 $\iota_3(U)=0$。这个既有后备从空地址恢复实际有限树及实际叶数 $m$，仅在真实分支处扩展，然后在叶数至多 $m$ 的全部有限前像描述中比较三步替换像。其有限描述、字面恢复分别复用母卷定理 9.2、9.3，其实际替换及唯一前像复用规范编译卷命题 4.3；这里不重新证明后备或编译性质。
+
+特别地，$U=\alpha$ 或 $U=\beta$ 时，第一个非空路由地址即报 $\mathsf{absent}$，立即进入上述后备。后备实际取得 $m=1$，在两种根叶前像的有限比较中拒绝。其他输入或在完整叶核对后正确接受，或进入同一个已证的全域正确总后备。两次路由、至多十四次叶请求及后备均有限，故 $\pi_\eta$ 确实在整个 $\mathcal T$ 上正确且有限终止；其初始化只依固定骨架、三个原型及既有后备。地址描述长度、定位和控制计算仍按原合同不收费，不把费用十五解释为运行时间界。
+
+对同一个评价输入 $P_j^\eta$，路由必选择其自身且核对全部匹配，不会进入后备。其实际报告和不同收费地址可逐路径核算为
+
+$$
+\begin{array}{c|c|c|c}
+\text{评价输入}&\text{实际路由记录}&\text{最终不同收费地址集合}&\text{基数}\\ \hline
+P_1^\eta&(q_1,\mathsf{branch})
+ &L(P_1^\eta)\cup\{q_1\}&14+1\\
+P_2^\eta&(q_1,\mathsf{leaf}_\alpha),(q_2,\mathsf{branch})
+ &L(P_2^\eta)\cup\{q_2\}&14+1\\
+P_3^\eta&(q_1,\mathsf{leaf}_\alpha),(q_2,\mathsf{leaf}_\alpha)
+ &L(P_3^\eta)&14
+\end{array}
+\tag{33.13}
+$$
+
+第一条路径的 $q_1$ 是原型的真实分支地址，不属于其叶集。第二条路径的 $q_1$ 是原型中另一槽 $A$ 的真实 $\alpha$ 叶，已计入叶集；$q_2$ 是 $B$ 槽的分支，恰增加一笔叶外费用。第三条路径的两个不同地址都是 $A$ 槽中的真实 $\alpha$ 叶，均已计入叶集。因此叶核对补问的不同地址数分别为 $14,13,12$，路由的不同地址数分别为 $1,2,2$，合计 $15,15,14$，亦即统一账式 $f_j+c_j+(14-f_j)=14+c_j$。每项属于该原型自身的同一实际运行，没有从另一来源借用历史、最优费用或缓存。有限候选查询及响应相关费用的文献背景沿用[第 29 章所引 Nowak、Saettler–Laber–Cicalese 与 Sabato](#29-任意有限实际正来源族的联合响应费用核心与全域取得)；那些有限模型不供应这里无输入承诺的完整叶认证或全域后备。本定理的新增关系是式（33.4）的实际三槽族与式（33.11）—（33.13）的共同取得。证毕。
+
+**推论 33.5（十四叶容量的锐值与全部最大族）。** 对每个非负整数 $t$，定义 30.6 的容量满足
+
+$$
+\boxed{\qquad
+\mathsf{Cap}(14,t)=
+\begin{cases}
+1,&t=0,\\
+3,&t\ge1.
+\end{cases}
+\qquad}
+\tag{33.14}
+$$
+
+$t\ge1$ 时，达到三元素容量的评价族恰为 $F_{\mathrm R}$、$F_{\mathrm L}$；两者均满足 $K(F_\eta)=K_\circ(F_\eta)$，其原全域确定性最坏费用恰为 $D(F_\eta)=15$。
+
+**证明。** 先把既有[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)逐子集应用到这里的实际像，而不把成对响应诊断当成整个复形判据。若 $F\subseteq\mathcal I_3(14)$ 满足 $K(F)=K_\circ(F)$，取任意不同的 $P,Q\in F$。若它们在共享叶地址上有标签冲突，则 $\Delta(\{P,Q\})\ne\varnothing$。这个二元素族唯一的非单元素子族就是其自身，故定理 25.2 的全部遗传条件都成立，$\{P,Q\}\in K(F)$，矛盾。因此 $F$ 必两两非冲突。
+
+反向，设 $F$ 两两非冲突。任取 $S\subseteq F$ 且 $|S|\ge2$，取其中两个不同成员 $P,Q$。非冲突使 $\Delta(\{P,Q\})=\varnothing$，所以 $S$ 的遗传条件已在该二元素子集处失败，定理 25.2 给 $S\notin K(F)$。空族与单点的遗传要求为空，仍由该定理及既有单原型策略取得个体最优。于是对所有子集都已确定 $K(F)=K_\circ(F)$。这一等价在此只是直接使用既有遗传判据，不新增一般相容性定理；同一个定理亦已供应期望相容复形与 $K$ 的一致性。
+
+定理 33.3 遂使任何满足容量复形条件的 $F$，无论费用预算多少，都有 $|F|\le3$；等号只可能是 $F_{\mathrm R}$ 或 $F_{\mathrm L}$，且它们确实满足所需复形。定理 33.4 的单个全域控制器在各自三棵来源上同时取得费用 $(15,15,14)$，故 $D(F_\eta)\le15$。取 $F_\eta$ 中任意两个不同成员，定理 33.3 给它们非冲突、叶数同为十四。直接使用[定理 23.2 的确定性两正例锐值](#23-全有限来源上两个指定正例的共同最优地址费用)，有 $D_3^+(P,Q)=15$。任一在 $F_\eta$ 上评价的全域控制器限制到这两个评价对象，仍是同一个全域正确总控制器，故其族内最大费用至少为十五。对所有控制器取下确界即得 $D(F_\eta)\ge15$，于是 $D(F_\eta)=15$。没有把分别可达的三个个体最优当成共同实现。
+
+$t\ge1$ 时，$15\le14+t$，两个三元素族都合法且达到上界三，给式（33.14）的第二行及全部最大族。$14\in\mathcal N$，$t=0$ 的容量一直接复用[推论 30.8](#30-实际三步像的分歧前沿七叶分离与有限容量)的可行规模零超额结论，不重复个体证书或零超额证明。
+
+这里的锐值只属于十四叶评价族上的确定性地址费用。族外输入的有限总性已由定理 33.4 给出，但其费用不受十五约束；任意其他叶数的容量取得性也不由式（33.14）推出。若改用 $W$ 或 $W_{\mathrm u}$，仅可直接采用[式（29.8）](#29-任意有限实际正来源族的联合响应费用核心与全域取得)的 $W=W_{\mathrm u}=D$；没有据此交换逐来源期望最大值与最大值的期望，也没有给 $R,R_{\mathrm u}$ 断言同一锐值。所有来源、括号、次序、标签及地址都是原自由树与三步替换中的实际对象；组成观察及规范数量地址仍不恢复任意完整树，组成祖先许可不等于实际逆执行，环境代数的守恒或单射性不提供物理时间、Lorentz 结构或物理对应。式（33.5）、（33.8）及三槽共同费用是上述仓内语法和已引关系的推导，不承担所引有限查询文献之外的世界原创性结论。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 34. 四来源一次超额共同取得的首次叶数
+
+**定义 34.1（小块、根位置与四槽评价族）。** 沿用[定义 30.1、30.6](#30-实际三步像的分歧前沿七叶分离与有限容量)的实际像 $\mathcal I_3$、叶数 $n$、非冲突关系 $\operatorname{NC}$、相容复形 $K,K_\circ$、确定性费用 $D$ 和容量 $\mathsf{Cap}$。来源域仍为全部非空有限自由有序满二叉 $\alpha/\beta$ 树 $\mathcal T$；初始化不给未知输入叶数、高度、组成、正性或候选身份承诺。所有有限左右地址，包括空地址，均可查询同一不变输入；四值报告为 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$。只计真实缓存后不同的实际请求地址，地址长度、定位与内部计算不收费。
+
+取[式（30.2）、（33.1）](#33-十四叶实际像的非冲突族分类与一次超额锐容量)的 $A,C,B,H,T,S,R,D_0,D_1,\mathcal V,\mathcal Z$，另记
+
+$$
+\begin{gathered}
+G=\langle C,C\rangle,\quad X=\langle C,T\rangle,\quad Y=\langle T,C\rangle,\\
+D_S=\langle A,S\rangle,\quad D_R=\langle A,R\rangle,\quad
+K_B=\langle B,A\rangle,\quad K_T=\langle T,A\rangle,\\
+U_0=\langle A,G\rangle,\quad U_1=\langle G,A\rangle,\quad
+W_0=\langle C,B\rangle,\quad W_1=\langle B,C\rangle,\\
+\mathcal Q=\{\langle S,A\rangle,\langle R,A\rangle,\langle H,H\rangle\},\quad
+\mathcal D=\{D_S,D_R\},\quad \mathcal W_{12}=\mathcal Q\cup\mathcal D,\\
+\mathcal W_{13}=\{U_0,U_1,W_0,W_1,X,Y\},\quad
+\mathcal A_{13}=\{U_1,W_0,W_1,X,Y\},\quad
+\mathcal C_{13}=\{U_0,W_1\}.
+\end{gathered}
+\tag{34.1}
+$$
+
+只为记录根位置，写
+
+$$
+\ell(Z)=\langle A,Z\rangle,\quad r(Z)=\langle Z,A\rangle,\quad
+c_\ell(Z)=\langle C,Z\rangle,\quad c_r(Z)=\langle Z,C\rangle.
+\tag{34.2}
+$$
+
+这些是构造记号，不是原始查询操作。沿用式（33.3）的三槽上下文 $J_{\mathrm R},J_{\mathrm L}$，仅对 $Z\in\{R,G\}$ 记
+
+$$
+\mathcal F_\eta(Z)=\{J_\eta[Z,A,A],J_\eta[A,Z,A],J_\eta[A,A,Z]\}
+\quad(\eta\in\{\mathrm R,\mathrm L\}).
+\tag{34.3}
+$$
+
+固定四槽上下文及实际槽地址
+
+$$
+J[z_1,z_2,z_3,z_4]=\langle\langle z_1,z_2\rangle,\langle z_3,z_4\rangle\rangle,
+\qquad(p_1,p_2,p_3,p_4)=(\mathtt{LL},\mathtt{LR},\mathtt{RL},\mathtt{RR}).
+\tag{34.4}
+$$
+
+令 $P_j$ 在第 $j$ 槽放 $B$、其余三槽放 $A$，$F_{17}=\{P_1,P_2,P_3,P_4\}$；另令
+
+$$
+F_{16}=\{\ell(X),\ell(Y),r(X),r(Y)\},
+\tag{34.5}
+$$
+
+式（34.5）的顺序用于费用向量。这些集合只是费用评价对象，不缩小未知输入域。
+
+**定理 34.2（双孔归约与十二、十三、十五叶的完整排除）。** 不同的 $P,Q\in\mathcal I_3(n)$ 若满足 $n\le16$ 及 $\operatorname{NC}(P,Q)$，则引理 30.3 的分歧前沿恰有两个反向孔，共同部分叶数 $h_0\in\{0,3,5\}$。$h_0>0$ 时，共同部分恰为一个终端块，分别是 $A,C$，比较上下文恰有三个终端。十二叶的全部非冲突边只有
+
+$$
+\{\langle A,R\rangle,\langle R,A\rangle\};
+\tag{34.6}
+$$
+
+十三叶的全部非冲突边只有
+
+$$
+\{U_0,U_1\},\qquad\{X,Y\}.
+\tag{34.7}
+$$
+
+十五叶没有四元素两两非冲突族。这些结论遍历全部组成与全部有序树形。
+
+**证明。** 唯一实际前像与解析直接取自[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)。按引理 30.3 比较此前像，每孔大小差非零，等规模使这些差之和为零，故至少有两个孔且有相反朝向。引理 30.2 给每孔两侧总叶数至少十一，因而
+
+$$
+2n=2h_0+\sum_{w\in\mathcal H}\bigl(n(P|_w)+n(Q|_w)\bigr)
+\ge2h_0+11|\mathcal H|,\qquad 2n\le32<33.
+\tag{34.8}
+$$
+
+故恰有两个反向孔，$h_0\le n-11\le5$。每个相同终端像至少三叶，两个会贡献至少六叶；非空共同部分因此只能是一个三叶 $A$ 或五叶 $C$。$h_0=0$ 时上下文只有两个孔，必为根的左右孩子，全部边必且只可能形如
+
+$$
+\{\langle a,Z\rangle,\langle Z',b\rangle\},\quad
+a,b\in\{A,C\},\quad n(Z)=n-n(a),\quad n(Z')=n-n(b),
+\quad\operatorname{NC}(a,Z'),\quad\operatorname{NC}(b,Z).
+\tag{34.9}
+$$
+
+左右孩子的共享叶地址不交，故两个局部条件也充分。$h_0>0$ 时，三个终端只有 $J_{\mathrm R},J_{\mathrm L}$ 两种有序括号。按顺序仅保留两孔，得到一个 $h_0=0$、两侧规模为 $n-h_0$ 的根比较；反向把固定块插回任一槽，也恢复合法比较。这覆盖全部三个共同块位置，不要求两孔互为兄弟。
+
+复用[式（33.6）](#33-十四叶实际像的非冲突族分类与一次超额锐容量)的小规模根解析，得到
+
+$$
+\begin{aligned}
+\mathcal I_3(10)&=\{G\},&\mathcal I_3(12)&=\mathcal W_{12},&
+\mathcal I_3(13)&=\mathcal W_{13},\\
+\mathcal I_3(15)&=\{\ell(Z),r(Z):Z\in\mathcal W_{12}\}
+\cup\{\langle C,G\rangle,\langle G,C\rangle\}
+\cup\{\langle H,Z\rangle,\langle Z,H\rangle:Z\in\{S,R\}\}.
+\end{aligned}
+\tag{34.10}
+$$
+
+十叶根只有 $5+5$；十二叶是 $3+9,9+3,6+6$；十三叶是 $3+10,10+3,5+8,8+5$；十五叶是 $3+12,12+3,5+10,10+5,6+9,9+6$。这些分拆由[推论 30.8](#30-实际三步像的分歧前沿七叶分离与有限容量)的可行叶数集穷尽，且均非原子。代入更小规模的唯一根语法逐项给式（34.10），所以列的是完整来源，不是数值计数或响应诊断。将每个 $A,C$ 换成 $\alpha,\beta$ 给实际前像，由替换同态规则及既有单射性得到实际实现与不同性。母卷定理 3.4 给 $n=3a+5b$：十二、十三叶前像组成分别只有 $(4,0),(1,2)$；十五叶的 $(5,0),(0,3)$ 都在式（34.10）中，未作同组成删选。
+
+引理 30.2 给全部所需筛选：
+
+$$
+\begin{array}{c|c|c}
+Z\text{ 的全集}&\operatorname{NC}(A,Z)\text{ 的成员}&\operatorname{NC}(C,Z)\text{ 的成员}\\ \hline
+\{S,R\}&\{R\}&\{S\}\\
+\{G\}&\{G\}&\varnothing\\
+\mathcal W_{12}&\mathcal Q&\mathcal D\\
+\mathcal W_{13}&\mathcal A_{13}&\mathcal C_{13}
+\end{array}
+\tag{34.11}
+$$
+
+九叶筛选直接复用式（33.10）。$G$ 左孩子为 $C$，故与 $A$ 非冲突，但与 $C$ 比较的左孩子条件失败。十二叶中仅 $D_S,D_R$ 左孩子为 $A$，给 $A$ 列；与 $C$ 比较时，这两者左孩子为 $A$、右孩子非 $A$，其余两棵 $\langle S,A\rangle,\langle R,A\rangle$ 右孩子为 $A$，$\langle H,H\rangle$ 的左孩子 $H$ 又以 $A$ 为左孩子，均排除。十三叶中仅 $U_0$ 左孩子为 $A$，给 $A$ 列；$C$ 列保留 $U_0$ 及左孩子为 $B=\langle C,A\rangle$、右孩子为 $C$ 的 $W_1$。$U_1$ 右孩子为 $A$，$W_0,X$ 左孩子为原子 $C$，$Y$ 左孩子为 $T=\langle A,C\rangle$，分别违反引理 30.2 的条件。这说明每个保留与排除。
+
+$n=12,13$ 时式（34.8）迫使 $h_0=0$。逐个取式（34.9）的 $AA,AC,CA,CC$：十二叶 $AA$ 只保留九叶块 $R$，含 $C$ 就需要不可行的七叶孩子，故只有式（34.6）。十三叶 $AA$ 只用十叶块 $G$，$CC$ 的八叶块只保留 $T$，给式（34.7）；$AC,CA$ 均要求已排除的 $\operatorname{NC}(C,G)$。第二条边正是[式（30.6）](#30-实际三步像的分歧前沿七叶分离与有限容量)的已有来源对，不另建该构造。
+
+$n=15$ 时 $h_0\in\{0,3\}$。零共同部分的全部根边为
+
+$$
+\begin{aligned}
+\mathscr E_{15}^{(0)}={}&\{\{\ell(Z),r(Z')\}:Z,Z'\in\mathcal Q\}\\
+&\cup\{\{\ell(D),\langle G,C\rangle\},\{r(D),\langle C,G\rangle\}:D\in\mathcal D\}.
+\end{aligned}
+\tag{34.12}
+$$
+
+两行分别是 $AA$ 及 $AC,CA$，$CC$ 仍因 $\operatorname{NC}(C,G)$ 失败而排除。$h_0=3$ 时固定块为 $A$，去掉它后恰为式（34.6）的十二叶比较。插回两个三槽括号的全部三个位置，得到全部其余边
+
+$$
+\mathscr E_{15}^{(3)}=\binom{\mathcal F_{\mathrm R}(R)}2\cup\binom{\mathcal F_{\mathrm L}(R)}2.
+\tag{34.13}
+$$
+
+每对在两槽比较 $A,R$，其余槽相同，故这些局部比较充分；式（34.8）排除其他共同部分。
+
+根两侧均非原子的四个 $H/Z$ 顶点中，$\langle R,H\rangle,\langle H,R\rangle$ 各只在对应的三槽族中有两个邻点，$\langle S,H\rangle,\langle H,S\rangle$ 无边。两个 $C/G$ 顶点也各只有式（34.12）的两个邻点。因此四元完全子图不能含这些点。余下只有 $\ell(\mathcal W_{12}),r(\mathcal W_{12})$。每侧内部仅有一条边：
+
+$$
+\{\ell(\langle R,A\rangle),\ell(D_R)\},\qquad
+\{r(\langle R,A\rangle),r(D_R)\}.
+\tag{34.14}
+$$
+
+跨侧边只在 $\mathcal Q$ 与 $\mathcal Q$ 之间，$D_R\notin\mathcal Q$。每侧最多选两个相邻点；四元完全子图必须每侧选两个，必含式（34.14）的 $D_R$ 端点，因而缺少跨侧边，矛盾。这一排除覆盖全部根解析、组成与孔上下文。证毕。
+
+**定理 34.3（十六叶的唯一四元非冲突族）。** $F_{16}$ 是 $\mathcal I_3(16)$ 中唯一的四元素两两非冲突族；不存在五元素两两非冲突族。它的四个成员有不同的实际前像，前像组成均为 $(2,2)^{\mathsf T}$，输出组成都为 $(6,10)^{\mathsf T}$。
+
+**证明。** 十六叶的全部根分拆是 $3+13,5+11,6+10,8+8$ 及其逆序。代入式（33.6）、（34.10），得到完整而互不相交的根类型：
+
+$$
+\begin{aligned}
+\mathcal I_3(16)={}&\{\ell(Z),r(Z):Z\in\mathcal W_{13}\}\\
+&\cup\{c_\ell(D),c_r(D):D\in\mathcal Z\}\\
+&\cup\{\langle G,H\rangle,\langle H,G\rangle\}\\
+&\cup\{\langle Z,Z'\rangle:Z,Z'\in\{B,T\}\}.
+\end{aligned}
+\tag{34.15}
+$$
+
+原子根只有三叶或五叶，故不遗漏原子。前像组成方程 $3a+5b=16$ 给 $b\equiv2\pmod3$、$5b\le16$，所以 $(a,b)=(2,2)$；式（34.15）仍按完整根语法保留每个有序形状。
+
+采用定理 34.2 的双孔归约。$h_0=0$ 的全部边，由式（34.9）、（34.11）及既有十一叶筛选（33.10）恰为
+
+$$
+\begin{aligned}
+\mathscr E_{16}^{(0)}={}&\{\{\ell(Z),r(Z')\}:Z,Z'\in\mathcal A_{13}\}\\
+&\cup\{\{\ell(Z),c_r(D)\},\{r(Z),c_\ell(D)\}:
+ Z\in\mathcal C_{13},\ D\in\mathcal V\}\\
+&\cup\{\{c_\ell(D_i),c_r(D_j)\}:i,j\in\{0,1\}\}.
+\end{aligned}
+\tag{34.16}
+$$
+
+三行分别穷尽 $AA$、$AC/CA$、$CC$。$h_0=3$ 时固定终端为 $A$，两孔合计规模十三，式（34.7）只允许 $A/G$ 或 $C/T$ 交换。前者给 $\binom{\mathcal F_{\mathrm R}(G)}2\cup\binom{\mathcal F_{\mathrm L}(G)}2$；后者把固定 $A$ 放进两个括号的全部三个位置，给下表前六条边。$h_0=5$ 时固定终端为 $C$，余下十一叶比较只用[定理 30.5](#30-实际三步像的分歧前沿七叶分离与有限容量)的 $A/B$ 交换，给下表后六条边：
+
+$$
+\begin{array}{c|c|c}
+\text{共同块及括号}&\text{共同块槽号}&\text{两个端点}\\ \hline
+A,\ J_{\mathrm R}&1&\ell(X),\ell(Y)\\
+A,\ J_{\mathrm R}&2&c_\ell(D_1),\langle T,T\rangle\\
+A,\ J_{\mathrm R}&3&c_\ell(K_T),\langle T,B\rangle\\
+A,\ J_{\mathrm L}&1&\langle T,T\rangle,c_r(D_1)\\
+A,\ J_{\mathrm L}&2&\langle B,T\rangle,c_r(K_T)\\
+A,\ J_{\mathrm L}&3&r(X),r(Y)\\ \hline
+C,\ J_{\mathrm R}&1&c_\ell(D_0),c_\ell(K_B)\\
+C,\ J_{\mathrm R}&2&\ell(W_0),\langle B,B\rangle\\
+C,\ J_{\mathrm R}&3&\ell(W_1),\langle B,T\rangle\\
+C,\ J_{\mathrm L}&1&\langle B,B\rangle,r(W_0)\\
+C,\ J_{\mathrm L}&2&\langle T,B\rangle,r(W_1)\\
+C,\ J_{\mathrm L}&3&c_r(D_0),c_r(K_B)
+\end{array}
+\tag{34.17}
+$$
+
+每行恰保留固定块，另两槽交换上述已分类的两孔。槽地址前缀自由，局部非冲突充分。双孔归约已穷尽 $h_0$ 与上下文，故式（34.16）、（34.17）连同两个 $G$ 三槽族的边就是全部边，涵盖式（34.15）的每个根分拆及逆序。
+
+从这一完整边集，两个六叶／十叶顶点及四个八叶／八叶顶点的全部邻点为
+
+$$
+\begin{array}{c|c}
+\text{顶点}&\text{全部邻点}\\ \hline
+\langle G,H\rangle&\ell(U_0),\ell(U_1)\\
+\langle H,G\rangle&r(U_0),r(U_1)\\
+\langle B,B\rangle&\ell(W_0),r(W_0)\\
+\langle B,T\rangle&\ell(W_1),c_r(K_T)\\
+\langle T,B\rangle&c_\ell(K_T),r(W_1)\\
+\langle T,T\rangle&c_\ell(D_1),c_r(D_1)
+\end{array}
+\tag{34.18}
+$$
+
+它们都只有两个邻点，不能进入四元完全子图。五叶／十一叶根的全部邻点为
+
+$$
+\begin{array}{c|c}
+\text{顶点}&\text{全部邻点}\\ \hline
+c_\ell(D_0)&c_r(D_0),c_r(D_1),c_\ell(K_B)\\
+c_\ell(D_1)&c_r(D_0),c_r(D_1),\langle T,T\rangle\\
+c_\ell(K_B)&r(U_0),r(W_1),c_\ell(D_0)\\
+c_\ell(K_T)&r(U_0),r(W_1),\langle T,B\rangle\\
+c_\ell(\langle C,H\rangle)&r(U_0),r(W_1)\\
+c_\ell(\langle H,C\rangle)&r(U_0),r(W_1)
+\end{array}
+\tag{34.19}
+$$
+
+十一叶／五叶根的邻点由只交换最外层两个孩子得到，即 $\ell\leftrightarrow r$、$c_\ell\leftrightarrow c_r$、$\langle T,B\rangle\leftrightarrow\langle B,T\rangle$。根交换保持每对的非冲突，因为仅交换左右孩子的比较条件，并不反转块内地址。
+
+式（34.19）每个三邻点集合都不是三元完全子图：前两行的 $c_r(D_0),c_r(D_1)$ 不相邻；第三、四行的 $r(U_0),r(W_1)$ 不相邻。后两行不足三个邻点，交换根型同理。故四元完全子图不能包含任何 $c_\ell,c_r$ 顶点。余下只有 $\ell(\mathcal W_{13}),r(\mathcal W_{13})$。每侧内部只有两条不相交边：
+
+$$
+\{\ell(U_0),\ell(U_1)\},\quad\{\ell(X),\ell(Y)\},\qquad
+\{r(U_0),r(U_1)\},\quad\{r(X),r(Y)\}.
+\tag{34.20}
+$$
+
+跨侧边恰在 $\mathcal A_{13}$ 与 $\mathcal A_{13}$ 之间。每侧最多选两个相邻点，任何四元完全子图必须每侧选两个。含 $U_0$ 的内部边不可用，因为 $U_0\notin\mathcal A_{13}$，没有跨侧边。因此唯一选择是 $F_{16}$；四条跨侧边与两条侧内边确实都在完整边集内。其余根型已排除，而两侧各至多两点亦排除任何五元族。
+
+按式（34.5）次序，四个实际前像为
+
+$$
+\begin{aligned}
+&\langle\alpha,\langle\beta,\langle\alpha,\beta\rangle\rangle\rangle,
+&&\langle\alpha,\langle\langle\alpha,\beta\rangle,\beta\rangle\rangle,\\
+&\langle\langle\beta,\langle\alpha,\beta\rangle\rangle,\alpha\rangle,
+&&\langle\langle\langle\alpha,\beta\rangle,\beta\rangle,\alpha\rangle.
+\end{aligned}
+\tag{34.21}
+$$
+
+它们字面不同，各有两片 $\alpha$、两片 $\beta$。母卷定义 3.1 的同态规则给三步像恰为 $F_{16}$，规范编译卷命题 4.3 给不同性及唯一前像。母卷定理 3.4 给输出 $(2+2\cdot2,2\cdot2+3\cdot2)^{\mathsf T}=(6,10)^{\mathsf T}$，叶数十六。证毕。
+
+**定理 34.4（十六叶四元族的第二笔叶外费用）。** 在全有限树合同下，
+
+$$
+\boxed{D(F_{16})=18.}
+\tag{34.22}
+$$
+
+有一个共同初始化的确定性全域正确总控制器，按式（34.5）次序取得实际费用 $(16,17,17,18)$。任意这样的控制器都有一个族内成员付费至少十八。
+
+**证明。** 任取 $\pi\in\mathfrak D_3$。它在四个正来源上必须接受，并由[定理 18.2 及式（23.6）](#18-精确组成最优证书的唯一性与无承诺叶前沿)请求各自全部十六个带标签叶。故不能在尚无实际查询时停止接受；共同初始化使首个实际查询地址 $u$ 对四者相同，内部无报告计算不改变这一点。
+
+若 $u=\varepsilon$，四者均报告分支，可取任意两个不同成员。若 $u=\mathtt Lw$，$\ell(X),\ell(Y)$ 的报告均为 $\operatorname{out}_A(w)$；该报告为分支或不存在时，取这一对。若它为叶，$w$ 必在 $A$ 的全部叶地址 $\{\mathtt{LL},\mathtt{LR},\mathtt R\}$ 中。$X,Y$ 的左孩子分别为 $C,T$，都非 $A$；引理 30.2 第一行的字面比较说明 $X,Y$ 在这三个地址都报告分支。此时取 $r(X),r(Y)$，它们在 $u$ 共同报告分支。若 $u=\mathtt Rw$，交换这两对即可。这覆盖任意长的越叶地址、共同不存在的地址及对整族常值的查询：只区分 $A(w)$ 是否为叶，不要求 $w$ 存在或查询前缀闭合。
+
+首问因此总供应两个不同的非冲突来源 $V,V'$，共享同一个非叶响应，其首问后实际历史相同。直接沿用定理 23.2 的同历史论证，接受前必有第一次不同响应；否则较早的接受决定在另一来源上也重放，接受记录已含前者全部带标签叶，定理 18.2 的字面唯一性将强制 $V=V'$。记第一次差异地址为 $v$。它是新的实际地址，因为不变输入上此前已问地址在两个共同历史中响应相同，缓存重复不能产生第一次差异；特别地 $v\ne u$。非冲突使这两个不同响应不能都是叶标签，所以至少一方在 $v$ 报告分支或不存在。该方同一次运行已在 $u,v$ 支付两个不同叶外地址，还必须请求自己的十六个实际叶地址，故费用至少十八。该下界覆盖自适应、重复、常值和不存在查询，不依赖有限候选输入承诺。
+
+取得策略先实际查询 $q_1=\mathtt{LLR}$。响应为 $\mathsf{leaf}_\alpha$ 时，再实际查询 $q_2=\mathtt{RLRR}$；其响应为 $\mathsf{leaf}_\alpha$ 选择 $\ell(X)$，为 $\mathsf{branch}$ 选择 $\ell(Y)$。首响应为 $\mathsf{branch}$ 时，改查 $q_2=\mathtt{LLRR}$；其响应为 $\mathsf{leaf}_\alpha$ 选择 $r(X)$，为 $\mathsf{branch}$ 选择 $r(Y)$。任一所述路由位置报告 $\mathsf{leaf}_\beta$ 或 $\mathsf{absent}$ 都进入全域后备。四者的实际路由及费用为
+
+$$
+\begin{array}{c|c|c|c|c|c}
+\text{来源}&\operatorname{out}(q_1)&q_2&\operatorname{out}(q_2)&(f,c)&\text{最终费用}\\ \hline
+\ell(X)&\mathsf{leaf}_\alpha&\mathtt{RLRR}&\mathsf{leaf}_\alpha&(2,0)&16\\
+\ell(Y)&\mathsf{leaf}_\alpha&\mathtt{RLRR}&\mathsf{branch}&(1,1)&17\\
+r(X)&\mathsf{branch}&\mathtt{LLRR}&\mathsf{leaf}_\alpha&(1,1)&17\\
+r(Y)&\mathsf{branch}&\mathtt{LLRR}&\mathsf{branch}&(0,2)&18
+\end{array}
+\tag{34.23}
+$$
+
+$f,c$ 分别计该来源同一次路由中真正取得的不同叶与非叶地址。字面上 $A(\mathtt{LR})=\alpha$，$X(\mathtt{LR})=Y(\mathtt{LR})=\mathsf{branch}$，$X(\mathtt{LRR})=\alpha$、$Y(\mathtt{LRR})=\mathsf{branch}$；前加根孩子地址即得全部响应。
+
+原型选择后不接受。按固定短词优先次序请求所选原型的全部十六个带标签叶；只有同址真实报告已经取得时，才用真实外层缓存供应该次叶请求。识别或推断出的块、叶与标签不能填入缓存。任一核对出现错误叶标签、分支或不存在，都进入全域后备，全部叶精确匹配才返回 $1$。完整匹配的充分性及全部叶的必要性直接复用定理 18.2，深度是 $d=3=3\cdot1$；字面恢复来自[母卷定理 9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)。路由的 $f$ 个真实叶地址属于原型叶集，$c$ 个非叶地址在其外；补查的不同叶地址恰为 $16-f$，费用为 $f+c+(16-f)=16+c$。两条路由地址互异，未从另一来源借用缓存或费用。
+
+所有意外路由及核对不匹配都续接[定理 29.2 的全域总后备与引理 27.3](#29-任意有限实际正来源族的联合响应费用核心与全域取得)。后备从独立的完整初始化、空逻辑历史和初始控制状态开始；既有真实报告只留在外层缓存，仅在后备实际请求同址时供应并写入它自己的历史。后备恢复实际有限树及实际叶数 $m$，在叶数至多 $m$ 的有限前像描述中作三步替换比较；有限描述、全路径恢复分别使用[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，唯一前像使用规范编译卷命题 4.3。这里调用已有有限总后备，不把原型不匹配当作负性证明，不从外部承诺取得 $m$。未知根叶在 $q_1$ 报告不存在，直接进入同一后备；其余任意有限正负输入也被覆盖。有限路由和有限叶核对接上已有总后备，故控制器在全部 $\mathcal T$ 上正确且有限终止。十八的上界仅在评价族上成立。取得策略与普遍首问下界分别给 $D\le18,D\ge18$。证毕。
+
+**定理 34.5（十七叶四槽族的实际一次超额取得）。** 四棵 $P_j$ 是不同实际正来源，前像组成均为 $(4,1)^{\mathsf T}$，输出组成都为 $(6,11)^{\mathsf T}$，叶数十七，六对均非冲突。一个共同初始化的确定性全域正确总控制器，在 $P_1,P_2,P_3,P_4$ 上取得 $(18,18,18,17)$，且
+
+$$
+\boxed{D(F_{17})=18.}
+\tag{34.24}
+$$
+
+**证明。** 实际完整前像明确为
+
+$$
+\begin{aligned}
+Q_1&=\langle\langle\langle\beta,\alpha\rangle,\alpha\rangle,\langle\alpha,\alpha\rangle\rangle,\\
+Q_2&=\langle\langle\alpha,\langle\beta,\alpha\rangle\rangle,\langle\alpha,\alpha\rangle\rangle,\\
+Q_3&=\langle\langle\alpha,\alpha\rangle,\langle\langle\beta,\alpha\rangle,\alpha\rangle\rangle,\\
+Q_4&=\langle\langle\alpha,\alpha\rangle,\langle\alpha,\langle\beta,\alpha\rangle\rangle\rangle.
+\end{aligned}
+\tag{34.25}
+$$
+
+即第 $j$ 槽放 $\langle\beta,\alpha\rangle$、其余三槽放 $\alpha$。它们字面不同，各有四片 $\alpha$、一片 $\beta$。替换同态规则给 $\rho^3(Q_j)=P_j$，规范编译卷命题 4.3 给四个像互异。母卷定理 3.4 给输出 $(4+2,8+3)^{\mathsf T}=(6,11)^{\mathsf T}$，亦即三个三叶 $A$ 和一个八叶 $B$ 共十七叶。任意 $i\ne j$ 只在第 $i,j$ 槽比较 $A,B$，其余槽为相同的 $A$。引理 30.2 给局部 $A/B$ 非冲突且无共享叶；四个槽前缀自由，其余共同叶标签相同，故全部六对非冲突。
+
+控制器依次使用三个真实地址
+
+$$
+(q_1,q_2,q_3)=(p_1\mathtt{LR},p_2\mathtt{LR},p_3\mathtt{LR})
+=(\mathtt{LLLR},\mathtt{LRLR},\mathtt{RLLR}).
+\tag{34.26}
+$$
+
+第 $j\le3$ 问报告 $\mathsf{branch}$ 时暂选 $P_j$，停止路由；报告 $\mathsf{leaf}_\alpha$ 时继续下一问，三问均为 $\mathsf{leaf}_\alpha$ 时暂选 $P_4$。任意 $\mathsf{leaf}_\beta$ 或 $\mathsf{absent}$ 均进入独立全域后备。$A(\mathtt{LR})=\alpha$、$B(\mathtt{LR})=\mathsf{branch}$ 给全部实际路径：
+
+$$
+\begin{array}{c|c|c|c|c}
+\text{来源}&\text{实际路由响应列}&(f,c)&\text{待补不同叶地址数}&\text{最终费用}\\ \hline
+P_1&\mathsf{branch}&(0,1)&17&18\\
+P_2&\mathsf{leaf}_\alpha,\mathsf{branch}&(1,1)&16&18\\
+P_3&\mathsf{leaf}_\alpha,\mathsf{leaf}_\alpha,\mathsf{branch}&(2,1)&15&18\\
+P_4&\mathsf{leaf}_\alpha,\mathsf{leaf}_\alpha,\mathsf{leaf}_\alpha&(3,0)&14&17
+\end{array}
+\tag{34.27}
+$$
+
+三个地址互异，每条路径的 $f$ 个真实叶地址属于该来源的十七叶集合，$c$ 个分支地址在其外。暂选原型后仍请求全部十七个带标签叶，规则与定理 34.4 的完整核对及真实缓存供应相同；推断报告不进入缓存，全部精确匹配才接受，任一不匹配进入同一个独立初始化的全域总后备。实际最终付费地址集恰为原型叶集与本路径非叶地址集之并，费用为 $f+c+(17-f)=17+c$。
+
+全域正确性与有限总性逐项使用定理 34.4 所接的既有供应：定理 18.2 的 $d=3$ 完整叶认证、母卷定理 9.2、9.3 的有限描述与恢复、定理 29.2 的全域后备、引理 27.3 的独立续接。路由最多三问，核对有限；根叶在首问即报告不存在，族外其他有限正负输入亦由核对或后备正确处理。没有给未知输入组成、规模或正性承诺，也未对族外输入给十八的费用上界。
+
+同一个控制器给 $D(F_{17})\le18$。任取两个不同成员，它们非冲突、同为十七叶，[定理 23.2 的式（23.5）](#23-全有限来源上两个指定正例的共同最优地址费用)给该对的确定性共同最坏费用至少十八。每个四源控制器限制评价到该对仍是同一个全域正确总控制器，故 $D(F_{17})\ge18$。这证明式（34.24），未把分别最优的个体证书拼成共同运行。证毕。
+
+**推论 34.6（四来源一次超额容量的最小可行规模）。** 在定义 30.6 的原全有限树合同下，
+
+$$
+\boxed{\min\{n\in\mathbb N_0:\mathsf{Cap}(n,1)\ge4\}=17.}
+\tag{34.28}
+$$
+
+所有 $n<17$ 都有 $\mathsf{Cap}(n,1)\le3$，而 $\mathsf{Cap}(17,1)\ge4$。这里不确定 $\mathsf{Cap}(17,1)$ 的完整锐值。
+
+**证明。** 先逐子集使用[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)。任意有限 $F\subseteq\mathcal I_3$ 若满足 $K(F)=K_\circ(F)$，则每对不同成员都非冲突；否则该对有冲突共享叶，其 $\Delta$ 非空，而二元素族唯一的非单元素子族就是自身，原遗传判据使它成为 $K(F)$ 的面，矛盾。反向，若 $F$ 两两非冲突，任取每一个 $S\subseteq F$。$|S|\ge2$ 时取其中两个不同成员 $V,V'$，$\Delta(\{V,V'\})=\varnothing$，所以 $S$ 的遗传条件在该二元素子集处失败，$S\notin K(F)$。空集与所有单点的遗传条件为空，由原定理及既有单原型取得供应个体最优。故对所有子集均得 $K(F)=K_\circ(F)$。这是原判据在当前实际像上的应用，不另立一般相容性定理，也不以整个族自身的 $\Delta$ 代替全部子集检查。
+
+不可行叶数及可行 $n<11$、$n=11$，直接用[推论 30.8](#30-实际三步像的分歧前沿七叶分离与有限容量)，一次超额容量分别为零、一、二。$n=12,13$ 的完整边集由定理 34.2 给任一非冲突族至多二元素，十三叶两条边端点不重合。$n=14$ 的锐容量三直接用[推论 33.5](#33-十四叶实际像的非冲突族分类与一次超额锐容量)。$n=15$ 的四元族由定理 34.2 排除，故容量至多三。
+
+$n=16$ 时，任何满足复形条件的四元素子族只能为 $F_{16}$。若 $|F|\ge4$ 且 $D(F)\le17$，取任意四元素子族 $S$，则两两非冲突且 $S=F_{16}$。每个全域控制器限制评价集合只会降低最大费用，对控制器取下确界仍给 $D(S)\le D(F)\le17$，与定理 34.4 的 $D(F_{16})=18$ 矛盾。这同时排除恰有四者及所有更大族。至此每个非负整数 $n<17$ 的不可行、低规模与新增规模都已覆盖。
+
+$F_{17}$ 的四个不同成员两两非冲突，上面对每个子集的应用给 $K(F_{17})=K_\circ(F_{17})$，定理 34.5 给同一个全域控制器取得 $D(F_{17})=18=17+1$。它因此是容量定义中的合法四元素族，$\mathsf{Cap}(17,1)\ge4$；结合更小规模的完整排除即得式（34.28）。一个取得族不决定十七叶容量的精确值。
+
+上述关系是指定实际替换、完整树语法、原始四值报告与同一运行费用之间的仓内推导。有限识别及响应相关费用的背景仅沿用[Nowak，*The Geometry of Generalized Binary Search*，arXiv:0910.4397v5，第 II.A 节](https://arxiv.org/pdf/0910.4397v5#page=3)、[Saettler–Laber–Cicalese，*Trading off Worst and Expected Cost in Decision Tree Problems and a Value Dependent Model*，arXiv:1406.3655v1，第 1.1 节](https://arxiv.org/pdf/1406.3655v1#page=3)及[Sabato，*Submodular Learning and Covering with Response-Dependent Costs*，arXiv:1602.07120v3，定义 4.4、引理 4.5](https://arxiv.org/pdf/1602.07120v3#page=12)。这些有限模型不供应全有限树域的完整叶认证、总后备或十七叶门槛，也不由所引范围推出世界原创性。式（34.28）只属于确定性不同实际地址费用，不扩展为随机逐来源期望目标。完整树来源、组成、规范数量地址与观察响应保持原类型；组成祖先许可不成为实际逆执行，环境代数守恒或单射性不建立物理时间或 Lorentz 对应。证毕。
+
+## 追加锚（本行以下为增补区）
+## 35. 十七叶五来源的条件非叶退出与一次超额门槛
+
+### 35.1 完整前像与十个共享叶前沿
+
+**定义 35.1（同组成五来源与原全有限树合同）。** 沿用[定义 30.1、30.6](#30-实际三步像的分歧前沿七叶分离与有限容量)的 $\mathcal T$、$\mathcal I_3=\rho^3(\mathcal T)$、$\mathcal I_3(n)$、$\operatorname{NC}$、$K,K_\circ,D$ 和 $\mathsf{Cap}$。未知输入仍为任意非空有限自由有序满二叉 $\alpha/\beta$ 树 $U\in\mathcal T$；同一个确定性控制器须在全部 $\mathcal T$ 上正确判定 $\iota_3(U)$ 并有限终止。共同初始化只含固定描述，不给未知输入组成、叶数、高度、正性或候选身份承诺。所有有限左右地址，包括空地址，均可直接查询同一不变输入；四值报告保持 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$，费用只计真实缓存后的不同实际请求地址。计算、定位和地址长度沿用原费用约定。
+
+以下 $P_i,Q_i,F$ 均限于本章。直接使用式（30.2）的既有字面块
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\qquad
+C=\langle A,E\rangle=\rho^3(\beta),\qquad
+B=\langle C,A\rangle=\rho^3(\langle\beta,\alpha\rangle).
+\tag{35.1}
+$$
+
+取五棵完整树及五个完整字面前像描述：
+
+$$
+\begin{aligned}
+P_1&=\langle A,\langle A,\langle A,B\rangle\rangle\rangle,
+&Q_1&=\langle\alpha,\langle\alpha,\langle\alpha,\langle\beta,\alpha\rangle\rangle\rangle\rangle,\\
+P_2&=\langle A,\langle A,\langle B,A\rangle\rangle\rangle,
+&Q_2&=\langle\alpha,\langle\alpha,\langle\langle\beta,\alpha\rangle,\alpha\rangle\rangle\rangle,\\
+P_3&=\langle A,\langle B,\langle A,A\rangle\rangle\rangle,
+&Q_3&=\langle\alpha,\langle\langle\beta,\alpha\rangle,\langle\alpha,\alpha\rangle\rangle\rangle,\\
+P_4&=\langle B,\langle A,\langle A,A\rangle\rangle\rangle,
+&Q_4&=\langle\langle\beta,\alpha\rangle,\langle\alpha,\langle\alpha,\alpha\rangle\rangle\rangle,\\
+P_5&=\langle\langle\langle A,\langle A,A\rangle\rangle,A\rangle,C\rangle,
+&Q_5&=\langle\langle\langle\alpha,\langle\alpha,\alpha\rangle\rangle,\alpha\rangle,\beta\rangle,\\
+F&=\{P_1,P_2,P_3,P_4,P_5\}.&&
+\end{aligned}
+\tag{35.2}
+$$
+
+对树 $T$ 记 $\mathcal F(T)=\{(u,\lambda_T(u)):u\in L(T)\}$。对地址 $w$ 及带标签前沿 $\Phi$，写 $w\Phi=\{(wu,\ell):(u,\ell)\in\Phi\}$；$wL(T)$ 同样表示地址拼接。若 $V$ 是地址集，$\mathcal F(T)|_V$ 表示保留地址属于 $V$ 的带标签叶。本定义只指定实际树和只读接口，不以组成逆公式生成前像。
+
+**定理 35.2（十七叶实际五族与全部子集的相容复形）。** 定义 35.1 的五个 $Q_i$ 是两两不同的完整前像，并且
+
+$$
+\begin{gathered}
+\rho^3(Q_i)=P_i\in\mathcal I_3(17),\qquad
+c(Q_i)=(4,1)^{\mathsf T},\qquad
+c(P_i)=(6,11)^{\mathsf T},\qquad n(P_i)=17
+\quad(1\le i\le5),\\
+|F|=5,\qquad
+\operatorname{NC}(P_i,P_j)\quad(1\le i<j\le5),\qquad
+K(F)=K_\circ(F).
+\end{gathered}
+\tag{35.3}
+$$
+
+最后一个等式确定每个子集的共同叶最优取得性，不只是整个 $F$ 的不相容性。
+
+**证明。** [母卷定义 3.1 的二叉同态替换](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)把式（35.2）每个 $Q_i$ 中的 $\alpha$、$\beta$、$\langle\beta,\alpha\rangle$ 分别送到 $A,C,B$，保留所有括号与左右次序，逐行得到 $\rho^3(Q_i)=P_i$。五个 $Q_i$ 的字面括号或叶位置不同。[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的既有树替换单射性复合三次，直接给五个像的不同性与这些前像的唯一性。每个所列 $Q_i$ 恰有四片 $\alpha$、一片 $\beta$。母卷定义 3.3、定理 3.4 的组成作用给
+
+$$
+c(P_i)=
+\begin{pmatrix}1&2\\2&3\end{pmatrix}
+\begin{pmatrix}4\\1\end{pmatrix}
+=\begin{pmatrix}6\\11\end{pmatrix},
+\qquad n(P_i)=6+11=17.
+\tag{35.4}
+$$
+
+这只是已指定完整树的组成计算，不给未知输入任何免费组成报告。
+
+为证明全部十对非冲突，先展开式（35.1）的完整带标签前沿：
+
+$$
+\begin{aligned}
+\mathcal F(A)=\{& (\mathtt{LL},\beta),(\mathtt{LR},\alpha),(\mathtt R,\beta)\},\\
+\mathcal F(C)=\{& (\mathtt{LLL},\beta),(\mathtt{LLR},\alpha),(\mathtt{LR},\beta),
+(\mathtt{RL},\beta),(\mathtt{RR},\alpha)\},\\
+\mathcal F(B)=\{& (\mathtt{LLLL},\beta),(\mathtt{LLLR},\alpha),(\mathtt{LLR},\beta),
+(\mathtt{LRL},\beta),(\mathtt{LRR},\alpha),\\
+& (\mathtt{RLL},\beta),(\mathtt{RLR},\alpha),(\mathtt{RR},\beta)\}.
+\end{aligned}
+\tag{35.5}
+$$
+
+这些局部展开是既有 $A,C,B$ 在当前构造中的代入。令 $S_i$ 为第 $i$ 棵树中所列 $A$ 块的根，$v_i$ 为剩余块的根，$T_i$ 为该剩余块。式（35.2）保留的全部块根精确为
+
+$$
+\begin{array}{c|c|c|c}
+i&S_i&v_i&T_i\\ \hline
+1&\{\mathtt L,\mathtt{RL},\mathtt{RRL}\}&\mathtt{RRR}&B\\
+2&\{\mathtt L,\mathtt{RL},\mathtt{RRR}\}&\mathtt{RRL}&B\\
+3&\{\mathtt L,\mathtt{RRL},\mathtt{RRR}\}&\mathtt{RL}&B\\
+4&\{\mathtt{RL},\mathtt{RRL},\mathtt{RRR}\}&\mathtt L&B\\
+5&\{\mathtt{LLL},\mathtt{LLRL},\mathtt{LLRR},\mathtt{LR}\}&\mathtt R&C
+\end{array}
+\tag{35.6}
+$$
+
+每一行的块根构成该树全部终端块的前缀自由集合。因此，没有遗漏的叶，且
+
+$$
+\mathcal F(P_i)=
+\left(\bigsqcup_{w\in S_i}w\mathcal F(A)\right)
+\sqcup v_i\mathcal F(T_i).
+\tag{35.7}
+$$
+
+把式（35.5）的每个地址按式（35.6）逐项加前缀，取任意两行的地址交集，得到下表的 $U_{ij}$。表的含义同时包括地址和标签的完整等式：
+
+$$
+\begin{aligned}
+V_{ij}:=L(P_i)\cap L(P_j)
+ &=\bigsqcup_{w\in U_{ij}}wL(A),\\
+\mathcal F(P_i)|_{V_{ij}}
+ &=\mathcal F(P_j)|_{V_{ij}}
+ =\bigsqcup_{w\in U_{ij}}w\mathcal F(A).
+\end{aligned}
+\tag{35.8}
+$$
+
+$$
+\begin{array}{c|c|c}
+(i,j)&U_{ij}&|V_{ij}|\\ \hline
+(1,2)&\{\mathtt L,\mathtt{RL}\}&6\\
+(1,3)&\{\mathtt L,\mathtt{RRL}\}&6\\
+(1,4)&\{\mathtt{RL},\mathtt{RRL}\}&6\\
+(1,5)&\{\mathtt{RL}\}&3\\
+(2,3)&\{\mathtt L,\mathtt{RRR}\}&6\\
+(2,4)&\{\mathtt{RL},\mathtt{RRR}\}&6\\
+(2,5)&\{\mathtt{RL}\}&3\\
+(3,4)&\{\mathtt{RRL},\mathtt{RRR}\}&6\\
+(3,5)&\varnothing&0\\
+(4,5)&\{\mathtt{LLL},\mathtt{LR},\mathtt{RL}\}&9
+\end{array}
+\tag{35.9}
+$$
+
+为逐类核对这些等式，前四行来源在四个互不为前缀的槽位 $\mathtt L,\mathtt{RL},\mathtt{RRL},\mathtt{RRR}$ 中各放三个 $A$ 和一个 $B$。式（35.5）给 $L(A)\cap L(B)=\varnothing$；两个不同来源的 $B$ 位不同，因而它们只有剩下两个共同 $A$ 位的叶能重合，恰给表中六个 $i,j\le4$ 的交集和相同标签。
+
+与 $P_5$ 比较时，先按式（35.5）展开右侧 $C$：它在 $\mathtt{RL}$ 下恰为 $A$，在 $\mathtt{RR}$ 下为 $E$。$P_1,P_2,P_4$ 在 $\mathtt{RL}$ 下也恰为 $A$，$P_3$ 在该处为 $B$ 而无共同叶。在 $\mathtt{RR}$ 下，前三棵来源 $P_1,P_2,P_3$ 的子树分别是 $\langle A,B\rangle,\langle B,A\rangle,\langle A,A\rangle$，$P_4$ 的子树也是 $\langle A,A\rangle$。其根的两个孩子都为分支，而 $E$ 的两个孩子是叶，故这里没有重合叶。
+
+$P_5$ 的左子树是 $\langle\langle A,\langle A,A\rangle\rangle,A\rangle$。它在左子树内部的 $\mathtt{LL},\mathtt{LR},\mathtt R$ 三个 $A$ 叶地址上都为分支，所以与 $P_1,P_2,P_3$ 的左块 $A$ 没有共同叶。与 $P_4$ 的左块 $B=\langle C,A\rangle$ 比较，右孩子都是 $A$，给全树地址前缀 $\mathtt{LR}$ 的共同前沿；左孩子分别为 $\langle A,\langle A,A\rangle\rangle$ 和 $C=\langle A,E\rangle$，它们的左孩子都是 $A$，给前缀 $\mathtt{LLL}$ 的共同前沿。其右孩子 $\langle A,A\rangle$ 与 $E$ 没有共同叶，因为前者在 $\mathtt L,\mathtt R$ 处为分支，后者在这两个地址为叶。加上右侧已核对的前缀 $\mathtt{RL}$，恰给最后一行三个带相同标签的 $A$ 前沿。这核对了与 $P_5$ 的全部四对及其余位置无共同叶，故式（35.8）不是只比较共享叶数量，也没有漏查相反标签。每对的带标签限制相同，遂有全部十个 $\operatorname{NC}(P_i,P_j)$。
+
+最后对每个 $S\subseteq F$ 直接应用[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)。若 $|S|\ge2$，取其中两个不同成员 $P_i,P_j$；式（35.8）使 $\Delta(\{P_i,P_j\})=\varnothing$。因 $\{P_i,P_j\}\subseteq S$，原定理对 $S$ 的遗传条件在这个二元素子集处失败，故 $S\notin K(F)$。空集及每个单点的遗传条件为空，原定理与既有单原型完整叶测试供应其相容性。因此所有子集的成员身份均已确定，得到 $K(F)=K_\circ(F)$。证毕。
+
+### 35.2 三个条件地址与一个全域总控制器
+
+**定理 35.3（五来源的同一控制器与十八地址锐费用）。** 定义 35.1 的原全有限树合同下，存在一个 $\sigma\in\mathfrak D_3$，使它在五个指定来源上的实际不同付费地址集精确为
+
+$$
+\begin{aligned}
+J_\sigma(P_1)&=L(P_1),\\
+J_\sigma(P_2)&=L(P_2)\cup\{\mathtt{RRLR}\},\\
+J_\sigma(P_3)&=L(P_3)\cup\{\mathtt{RLR}\},\\
+J_\sigma(P_4)&=L(P_4)\cup\{\mathtt{LR}\},\\
+J_\sigma(P_5)&=L(P_5)\cup\{\mathtt{RRLR}\}.
+\end{aligned}
+\tag{35.10}
+$$
+
+每行新列出的非叶地址确实在该行的叶集之外，并且
+
+$$
+\bigl(C_\sigma(P_1),C_\sigma(P_2),C_\sigma(P_3),
+C_\sigma(P_4),C_\sigma(P_5)\bigr)
+=(17,18,18,18,18),\qquad D(F)=18.
+\tag{35.11}
+$$
+
+**证明。** 固定三个互异的实际地址
+
+$$
+q_1=\mathtt{RLR},\qquad
+q_2=\mathtt{RRLR},\qquad
+q_3=\mathtt{LR}.
+\tag{35.12}
+$$
+
+控制器从空的外层真实缓存开始，先请求 $q_1$。若报告 $\mathsf{branch}$，暂选 $P_3$ 并结束路由；若报告 $\mathsf{leaf}_\beta$，才请求 $q_2$；若报告 $\mathsf{leaf}_\alpha$ 或 $\mathsf{absent}$，进入全域总后备。在 $q_2$ 上，报告 $\mathsf{branch}$ 时暂选 $P_2$，报告 $\mathsf{absent}$ 时暂选 $P_5$，二者均结束路由；报告 $\mathsf{leaf}_\beta$ 时才请求 $q_3$，报告 $\mathsf{leaf}_\alpha$ 时进入同一总后备。在 $q_3$ 上，报告 $\mathsf{leaf}_\beta$ 时暂选 $P_1$，报告 $\mathsf{branch}$ 时暂选 $P_4$；另两个报告均进入同一总后备。因此 $q_2$ 只在一个 $\beta$ 叶报告之后请求，$q_3$ 只在连续两个 $\beta$ 叶报告之后请求。暂选不承担接受或正性证明。
+
+完整原型核对使用[定理 29.2](#29-任意有限实际正来源族的联合响应费用核心与全域取得)已有的单原型叶测试：从被选测试自己的完整初始化、空逻辑历史和初始控制状态开始，按固定顺序请求式（35.7）的全部十七个带标签叶。每个请求只有精确等于该原型的叶标签报告才匹配；相反标签、分支或不存在都立即转入同一个总后备。全部叶精确匹配才返回 $1$。外层缓存只保存当前实际 $U$ 的已请求地址及其原始报告；仅在后续请求完全相同的地址时供应该真实报告，并将此次请求—报告写入后续测试自己的逻辑历史。推断的报告、其他原型的描述和未请求的前缀都不写入真实缓存。
+
+每次进入总后备，无论发生于哪个意外路由报告或哪次原型核对不匹配，都建立后备自己的独立初始化、空逻辑历史与初始控制状态；外层真实缓存只在后备实际请求相同地址时供应。这正使用[引理 27.3](#27-实际三步像的面费用核心与分数面覆盖锐值)的独立续接，不把此前路由或核对历史预填入后备的控制状态。
+
+总后备使用定理 23.2、29.2 已有的从根恢复实际有限树的遍历：请求 $\varepsilon$，只在实际报告为 $\mathsf{branch}$ 的节点继续请求左右孩子，遇叶停止扩展。来源是有限满二叉树，遍历只访问它的有限节点，故有限终止，恢复完整字面树 $\widehat U=U$；有限描述与路径恢复直接沿用[母卷定理 9.2、9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)。恢复之后，用定义 30.1 已给的实际像语法
+
+$$
+X::=A\mid C\mid\langle X,X\rangle
+\tag{35.13}
+$$
+
+作有限成员检查：所测子树字面等于 $A$ 或 $C$ 时通过，否则仅在它是二叉节点且两孩子都通过时通过，原子叶不通过。每次递归进入严格较小的已恢复子树，所以这项计算有限。式（35.13）就是 $\rho^3$ 的两个原子像及二叉同态作用：每个实际三步像按前像根分解属于该语法，每个该语法描述也由其原子 $A,C$ 的既有前像和有序配对产生实际三步像。因此后备返回此检查的真值恰为 $\iota_3(U)$。这里的语法检查只判已恢复字面树的成员身份，不对未知树执行替换或逆替换，也不从组成许可推出完整树身份。
+
+完整叶接受的正确性直接采用[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)在 $d=3=3\cdot1$ 的充分性：匹配所选原型全部带标签叶的完整树只能是该原型，故确在 $\mathcal I_3$。任一未接受的路径进入正确总后备；路由至多三问，核对至多十七个叶请求，每个实际有限输入的后备均有限终止。于是这个固定控制器属于 $\mathfrak D_3$。根叶输入在 $q_1$ 上报告不存在并由后备拒绝；族外的其他有限正、负输入同样由完整核对或后备正确处理。不向族外输入断言十八地址上界。
+
+再逐行验证实际路由。由式（35.2），$P_3|_{q_1}=A$，其余四棵在 $q_1$ 处都是 $\beta$ 叶。第一次 $\beta$ 报告后的四个评价幸存者为 $P_1,P_2,P_4,P_5$；在 $q_2$ 处，$P_1,P_4$ 是 $\beta$ 叶，$P_2|_{q_2}=A$ 是分支，$P_5$ 则已在前缀 $\mathtt{RRL}$ 到达 $\beta$ 叶，故继续到 $\mathtt{RRLR}$ 的报告为不存在。剩余 $P_1,P_4$ 在 $q_3$ 上分别是 $\beta$ 叶和子树 $A$ 的分支。故所有实际请求列为
+
+$$
+\begin{array}{c|c|c|c|c}
+\text{来源}&q_1&q_2&q_3&\text{暂选原型}\\ \hline
+P_1&\mathsf{leaf}_\beta&\mathsf{leaf}_\beta&\mathsf{leaf}_\beta&P_1\\
+P_2&\mathsf{leaf}_\beta&\mathsf{branch}&\text{未请求}&P_2\\
+P_3&\mathsf{branch}&\text{未请求}&\text{未请求}&P_3\\
+P_4&\mathsf{leaf}_\beta&\mathsf{leaf}_\beta&\mathsf{branch}&P_4\\
+P_5&\mathsf{leaf}_\beta&\mathsf{absent}&\text{未请求}&P_5
+\end{array}
+\tag{35.14}
+$$
+
+表中没有给未请求地址免费报告。在实际评价输入 $P_i$ 上，路由恰选中自身，完整叶核对全部匹配，不调用后备。引理 27.3 的真实缓存并集费用因此给 $J_\sigma(P_i)=L(P_i)\cup B_i$，其中 $B_i$ 是该行真正请求的路由地址集。$P_1$ 的三个路由地址都是自身叶；$P_2,P_3,P_4,P_5$ 的路由叶外地址分别且仅为 $q_2,q_1,q_3,q_2$。这证明式（35.10）。五行路由已查叶数分别为 $3,1,0,2,1$，核对还需新增 $14,16,17,15,16$ 个不同叶地址。路由叶外地址分别为 $0,1,1,1,1$ 个，各行付费集大小遂为 $17,18,18,18,18$。这里不把逻辑历史长度、地址长度或复用请求次数当成不同地址费用。
+
+尤其在历史 $(q_1,\mathsf{leaf}_\beta)$ 之后，$q_2$ 的 $\mathsf{branch}$ 与 $\mathsf{absent}$ 是两个不同的非叶响应孩子，分别只有 $P_2$ 与 $P_5$。二者各自只花这一片叶外地址，接上各自完整叶证书即可结束评价路由；把二者合为一个非叶符号会消去本控制器在此处的两个单点退出，改变原四值观察合同。这一实际条件分裂允许五来源在十七叶规模共同取得一次超额，并不要求每增加一个来源都添一个新的三叶槽位。
+
+同一个控制器已经给 $D(F)\le18$。反向，任取 $\pi\in\mathfrak D_3$，将其评价限制到不同、非冲突且同为十七叶的 $P_3,P_5$。直接应用[定理 23.2 的式（23.4）](#23-全有限来源上两个指定正例的共同最优地址费用)，有 $C_\pi(P_3)+C_\pi(P_5)\ge35$。两个费用均为整数，故 $\max_{P\in F}C_\pi(P)\ge18$；对全部同一合同控制器取下确界仍得 $D(F)\ge18$。这与上界合起来证明式（35.11），无须把个体最优证书拼成不同控制器的共同运行。证毕。
+
+### 35.3 五来源首次规模与统一线性门槛的反例
+
+**推论 35.4（五来源一次超额的首次规模与 $3m+5$ 的失效）。** 在定义 30.6 的原全有限树合同下，
+
+$$
+\boxed{\mathsf{Cap}(17,1)\ge5,\qquad
+\min\{n\in\mathbb N_0:\mathsf{Cap}(n,1)\ge5\}=17.}
+\tag{35.15}
+$$
+
+因此，以下全量词必要性命题为假：
+
+$$
+\begin{gathered}
+\forall n\in\mathbb N_0\ \forall F'\subseteq\mathcal I_3(n),\quad
+\bigl(F'\text{ 有限},\ |F'|\ge2,\ K(F')=K_\circ(F'),\ D(F')\le n+1\bigr)\\
+\Longrightarrow\quad n\ge3|F'|+5.
+\end{gathered}
+\tag{35.16}
+$$
+
+相应的统一公式 $\min\{n\in\mathbb N_0:\mathsf{Cap}(n,1)\ge m\}=3m+5$ 不能对所有整数 $m\ge2$ 同时成立。
+
+**证明。** 定理 35.2 给 $F\subseteq\mathcal I_3(17)$、$|F|=5$ 与逐子集成立的 $K(F)=K_\circ(F)$；定理 35.3 给同一个全域正确总控制器取得 $D(F)=18=17+1$。所以这个实际族满足定义 30.6 的全部容量条件，$\mathsf{Cap}(17,1)\ge5$。对每个非负整数 $n<17$，直接使用[推论 34.6](#34-四来源一次超额共同取得的首次叶数)已经证明的完整排除 $\mathsf{Cap}(n,1)\le3$，特别地小于五。这些排除的域与费用合同和此处相同，不要求未知输入属于某个评价族，故得到式（35.15）的首次规模。
+
+式（35.16）在 $n=17,F'=F$ 的所有前提均成立，结论却要求
+
+$$
+17\ge3\cdot5+5=20,
+\qquad\text{而实际为}\quad17<20.
+\tag{35.17}
+$$
+
+这给完整实际树族和同一全域控制器的反例。统一首次规模公式在 $m=5$ 也给二十，与式（35.15）的十七不同。既有二、三、四来源门槛只是所引范围内的结果，不足以推出该全量词公式；本推论不改变它们，也不把槽位类比作为证明。
+
+式（35.15）只给十七叶容量的下界和五来源的首次规模，不给 $\mathsf{Cap}(17,1)$ 的精确值或任意 $n,m$ 的完整公式。这些结论限定于原确定性不同实际地址费用，不推出随机逐来源期望值。式（35.2）、（35.8）和（35.14）连接的是完整树来源、带标签地址前沿与实际四值报告；组成相等、规范数量地址、组成祖先许可与实际逆执行保持不同类型。成员判定不授权实际逆执行，环境代数守恒或单射性不建立物理时间对应。上述反例是这些指定来源与既有结果的仓内推导，不由其有限范围推出世界原创性。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 36. 任意规模的二重条件退出、共同补偿与一次超额增长
+
+### 36.1 完整前像与带标签槽前沿
+
+**定义 36.1（固定三步深度的共同补偿族）。** 沿用[定义 30.1、30.6](#30-实际三步像的分歧前沿七叶分离与有限容量)的 $\mathcal T$、$\rho$、$\mathcal I_3$、$\mathcal I_3(n)$、$\operatorname{NC}$、$K,K_\circ,D$ 与 $\mathsf{Cap}$。替换深度固定为 $d=3$；以下整数 $k\ge1$ 只计构造槽数，不改变替换深度。未知输入仍为所有非空有限自由有序满二叉 $\alpha/\beta$ 树中的任意 $Z\in\mathcal T$，任务为 $\iota_3(Z)=\mathbf1_{\{Z\in\mathcal I_3\}}$。一个确定性策略必须在全部 $\mathcal T$ 上正确且有限终止，才属于 $\mathfrak D_3$。共同初始化与实际输入无关，不给组成、叶数、大小、高度、正性或候选身份承诺。所有有限左右地址，包括空地址 $\varepsilon$，均合法且可直接查询；报告只为同一不变输入的 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$。费用只计真实缓存后不同的实际请求地址，未有限终止费用为 $+\infty$；地址长度、定位、内部计算与种子取得沿用原费用约定。
+
+直接使用[式（30.2）](#30-实际三步像的分歧前沿七叶分离与有限容量)、[式（33.1）](#33-十四叶实际像的非冲突族分类与一次超额锐容量)和[式（34.1）](#34-四来源一次超额共同取得的首次叶数)的既有字面块：
+
+$$
+\begin{gathered}
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle,\qquad
+C=\langle A,E\rangle,\qquad B=\langle C,A\rangle,\\
+T=\langle A,C\rangle,\qquad
+W_1=\langle B,C\rangle,\qquad K_T=\langle T,A\rangle.
+\end{gathered}
+\tag{36.1}
+$$
+
+$T$ 在此仍是固定八叶块，不是来源域 $\mathcal T$。直接使用[式（26.5）](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)的右梳全孔上下文 $B_s$，取 $s=k+1$。它的槽根为
+
+$$
+p_j=\mathtt R^{j-1}\mathtt L\quad(1\le j\le k),\qquad
+p_{k+1}=\mathtt R^k.
+\tag{36.2}
+$$
+
+以下 $P_0,U_j,V_j,Q_0,Q_j^U,Q_j^V,F_k$ 仅在本章使用；本章的 $U_j,V_j$ 不指式（26.2）的固定块 $U,V$，也不指式（34.1）的固定块 $U_0,U_1$。定义完整评价原型
+
+$$
+\begin{aligned}
+P_0&=B_{k+1}(\underbrace{C,\ldots,C}_{k\text{ 个}},K_T),\\
+U_j&=B_{k+1}(\underbrace{C,\ldots,C}_{j-1\text{ 个}},T,
+                  \underbrace{C,\ldots,C}_{k-j\text{ 个}},B),\\
+V_j&=B_{k+1}(\underbrace{C,\ldots,C}_{j-1\text{ 个}},W_1,
+                  \underbrace{C,\ldots,C}_{k-j\text{ 个}},A)
+                  \quad(1\le j\le k),\\
+F_k&=\{P_0\}\cup\{U_j,V_j:1\le j\le k\},\qquad n_k=5k+11.
+\end{aligned}
+\tag{36.3}
+$$
+
+零个块表示空列表。每个原型都有 $k$ 个活动槽与同一个末槽位置；末槽的块随原型为 $K_T,B,A$ 之一。带标签叶前沿 $\mathcal F(X)$、地址加前缀 $w\mathcal F(X)$ 与前沿限制 $\mathcal F(X)|_H$ 直接沿用[定义 35.1](#35-十七叶五来源的条件非叶退出与一次超额门槛)。
+
+**定理 36.2（任意槽数的实际同组成来源与全部子集复形）。** 对每个整数 $k\ge1$，定义 36.1 的全部原型均有唯一完整前像，分别记为 $Q_0,Q_j^U,Q_j^V$，并且
+
+$$
+\begin{gathered}
+F_k\subseteq\mathcal I_3(n_k),\qquad |F_k|=2k+1,\\
+c(Q_0)=c(Q_j^U)=c(Q_j^V)=\begin{pmatrix}2\\k+1\end{pmatrix},\qquad
+c(P_0)=c(U_j)=c(V_j)=\begin{pmatrix}2k+4\\3k+7\end{pmatrix}
+\quad(1\le j\le k),\\
+\forall P,Q\in F_k,\ P\ne Q\Longrightarrow\operatorname{NC}(P,Q),\qquad
+K(F_k)=K_\circ(F_k).
+\end{gathered}
+\tag{36.4}
+$$
+
+最后一个等式逐一确定每个 $S\subseteq F_k$ 的共同个体最优取得性。
+
+**证明。** [母卷定义 3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的实际替换保留二叉构造及左右次序。式（36.1）所用六个三步像块的完整字面前像依次是
+
+$$
+\begin{array}{c|c}
+\text{像块}&\text{三步前像}\\ \hline
+A&\alpha\\
+C&\beta\\
+B&\langle\beta,\alpha\rangle\\
+T&\langle\alpha,\beta\rangle\\
+W_1&\langle\langle\beta,\alpha\rangle,\beta\rangle\\
+K_T&\langle\langle\alpha,\beta\rangle,\alpha\rangle
+\end{array}
+\tag{36.5}
+$$
+
+把这些前像放入同一个 $B_{k+1}$，得到全部完整树，而不是只给组成点：
+
+$$
+\begin{aligned}
+Q_0&=B_{k+1}(\underbrace{\beta,\ldots,\beta}_{k\text{ 个}},
+                     \langle\langle\alpha,\beta\rangle,\alpha\rangle),\\
+Q_j^U&=B_{k+1}(\underbrace{\beta,\ldots,\beta}_{j-1\text{ 个}},
+                \langle\alpha,\beta\rangle,
+                \underbrace{\beta,\ldots,\beta}_{k-j\text{ 个}},
+                \langle\beta,\alpha\rangle),\\
+Q_j^V&=B_{k+1}(\underbrace{\beta,\ldots,\beta}_{j-1\text{ 个}},
+                \langle\langle\beta,\alpha\rangle,\beta\rangle,
+                \underbrace{\beta,\ldots,\beta}_{k-j\text{ 个}},\alpha).
+\end{aligned}
+\tag{36.6}
+$$
+
+二叉同态作用逐槽给 $\rho^3(Q_0)=P_0$、$\rho^3(Q_j^U)=U_j$、$\rho^3(Q_j^V)=V_j$。[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的树替换单射性复合三次，供应每个前像的唯一性。$P_0$ 的活动槽全为五叶 $C$，$U_j$ 的唯一异常活动槽为八叶 $T$，$V_j$ 的唯一异常活动槽为十三叶 $W_1$；异常槽位置与类型都由完整描述确定。因此这 $2k+1$ 棵树两两不同，前像也两两不同。这包括 $k=1$ 的两个槽根 $\mathtt L,\mathtt R$。
+
+由母卷定义 3.3 的组成加法，三类前像的组成分别为
+
+$$
+\begin{aligned}
+c(Q_0)&=k\binom01+\binom21,\\
+c(Q_j^U)&=(k-1)\binom01+\binom11+\binom11,\\
+c(Q_j^V)&=(k-1)\binom01+\binom12+\binom10,
+\end{aligned}
+\qquad\text{均为 }\binom{2}{k+1}.
+\tag{36.7}
+$$
+
+母卷定理 3.4 的实际组成运输于是给
+
+$$
+c(\rho^3(Q))=
+\begin{pmatrix}1&2\\2&3\end{pmatrix}\binom{2}{k+1}
+=\binom{2k+4}{3k+7},\qquad n(\rho^3(Q))=5k+11
+\quad(Q\in\{Q_0,Q_j^U,Q_j^V:1\le j\le k\}).
+\tag{36.8}
+$$
+
+这些是已指定完整来源的组成，不是未知输入的免费报告。
+
+为核对所有共享叶的标签，先将既有局部块的完整带标签前沿代入：
+
+$$
+\begin{aligned}
+\mathcal F(E)&=\{(\mathtt L,\beta),(\mathtt R,\alpha)\},\\
+\mathcal F(A)&=\{(\mathtt{LL},\beta),(\mathtt{LR},\alpha),(\mathtt R,\beta)\},\\
+\mathcal F(C)&=\mathtt L\mathcal F(A)\sqcup\mathtt R\mathcal F(E),\\
+\mathcal F(B)&=\mathtt L\mathcal F(C)\sqcup\mathtt R\mathcal F(A),\\
+\mathcal F(T)&=\mathtt L\mathcal F(A)\sqcup\mathtt R\mathcal F(C),\\
+\mathcal F(W_1)&=\mathtt L\mathcal F(B)\sqcup\mathtt R\mathcal F(C),\\
+\mathcal F(K_T)&=\mathtt{LL}\mathcal F(A)\sqcup
+                 \mathtt{LR}\mathcal F(C)\sqcup\mathtt R\mathcal F(A).
+\end{aligned}
+\tag{36.9}
+$$
+
+下表每行同时给地址交集 $H=L(X)\cap L(Y)$ 及其全部标签；第三列表示完整等式 $\mathcal F(X)|_H=\mathcal F(Y)|_H$，不只是相同标签叶的部分集合：
+
+$$
+\begin{array}{c|c|c}
+(X,Y)&H&\mathcal F(X)|_H=\mathcal F(Y)|_H\\ \hline
+(E,C)&\varnothing&\varnothing\\
+(A,B)&\varnothing&\varnothing\\
+(A,K_T)&\varnothing&\varnothing\\
+(C,T)&\mathtt L L(A)&\mathtt L\mathcal F(A)\\
+(T,W_1)&\mathtt R L(C)&\mathtt R\mathcal F(C)\\
+(C,W_1)&\varnothing&\varnothing\\
+(B,K_T)&\mathtt{LL}L(A)\sqcup\mathtt R L(A)&
+         \mathtt{LL}\mathcal F(A)\sqcup\mathtt R\mathcal F(A)
+\end{array}
+\tag{36.10}
+$$
+
+确实，$E$ 的两个叶地址 $\mathtt L,\mathtt R$ 在 $C$ 中都为分支；$A$ 的三个叶地址 $\mathtt{LL},\mathtt{LR},\mathtt R$ 在 $B$ 与 $K_T$ 中也都为分支，给前三行的完整空交集。$C,T$ 的左孩子相同为 $A$，右孩子 $E,C$ 没有共同叶，给第四行。$T,W_1$ 的左孩子 $A,B$ 没有共同叶，右孩子相同为 $C$，给第五行。$C,W_1$ 的左右孩子分别是刚核对的 $A,B$ 与 $E,C$，给第六行。$B,K_T$ 的左孩子分别为 $C,T$，第四行给再加一层 $\mathtt L$ 的共同 $A$ 前沿；右孩子都为 $A$，给最后一行。式（36.9）保留每片 $\alpha/\beta$ 标签，所以每个非空交集的限制确实等于表中带标签前沿。这同时证明活动槽的 $C,T,W_1$ 两两非冲突，以及末槽的 $K_T,B,A$ 两两非冲突；相同块的共同前沿当然也带相同标签。
+
+式（26.5）的全孔路径分解直接沿用[引理 26.2 证明首段](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)：槽根前缀自由，上下文没有孔以外的字面叶，每个原型叶都在唯一一个 $p_i$ 下。因此原型间一个共享叶在两边都属于同一个槽，不能在不同槽间重合。该路径分解只依赖全孔上下文，当前所填块仍为完整树。对式（36.3）的任意两棵原型，前 $k$ 槽从 $C,T,W_1$ 取块，末槽从 $K_T,B,A$ 取块；式（36.10）逐槽穷尽全部共享叶并保持标签，故所有不同原型都满足 $\operatorname{NC}$。
+
+最后任取 $S\subseteq F_k$。若 $|S|\ge2$，取其中两个不同成员 $P,Q$。已核对的全部共享叶标签一致，故 $\Delta(\{P,Q\})=\varnothing$。由于 $\{P,Q\}\subseteq S$，[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)对 $S$ 的遗传条件在这个二元素子集处失败，得到 $S\notin K(F_k)$。空集及单元素子集的同一遗传条件为空约束，原定理供应它们的相容性。因而所有子集恰按 $K_\circ(F_k)$ 分类，得到式（36.4）。证毕。
+
+### 36.2 条件路由、独立认证与实际付费集
+
+**定义 36.3（同一初始化的两个条件地址）。** 对每个固定整数 $k\ge1$，用式（36.2）的活动槽根定义
+
+$$
+a_j=p_j\mathtt{LLR},\qquad b_j=p_j\mathtt{RR}
+\quad(1\le j\le k).
+\tag{36.11}
+$$
+
+一个固定控制器 $\pi_k$ 的完整初始化只含 $k$、式（36.3）的全部完整原型、以下有限路由、既有单原型完整叶测试及一个既有全域总后备。它从空外层真实缓存和 $j=1$ 开始。到达槽 $j\le k$ 时先实际请求 $a_j$：报告 $\mathsf{branch}$ 时暂选 $V_j$ 并结束路由；报告 $\mathsf{leaf}_\alpha$ 时才请求 $b_j$；报告 $\mathsf{leaf}_\beta$ 或 $\mathsf{absent}$ 时进入总后备。在这个有条件到达的 $b_j$ 上，报告 $\mathsf{branch}$ 时暂选 $U_j$ 并结束路由；报告 $\mathsf{leaf}_\alpha$ 时令 $j$ 增加一；另两个报告均进入同一总后备。若全部 $k$ 槽都给这两个 $\alpha$ 叶报告，则暂选 $P_0$。暂选从不接受，不返回成员身份，也不把某个原型描述当成实际输入。
+
+暂选原型 $P$ 后，直接接入[定理 23.2、29.2](#29-任意有限实际正来源族的联合响应费用核心与全域取得)已有的单原型完整带标签叶测试，从该测试自己的完整初始化、空逻辑历史及初始控制状态开始，依固定顺序请求 $L(P)$ 的全部叶。每个报告必须精确等于该原型的叶标签；相反标签、分支或不存在都属于不匹配。只在全部带标签叶匹配时返回 $1$，每次不匹配均进入同一总后备。
+
+总后备采用[定理 23.2 证明](#23-全有限来源上两个指定正例的共同最优地址费用)中的既有全域有限判定：从根恢复实际有限树并取得它的实际叶数 $m$，再在叶数至多 $m$ 的完整前像树中有限穷尽判定第三步像成员身份。每次进入后备，无论由意外路由响应还是叶核对不匹配触发，都建立后备自己的独立初始化、空逻辑历史和初始控制状态。直接使用[引理 27.3](#27-实际三步像的面费用核心与分数面覆盖锐值)的续接合同：外层缓存只含本次运行已经实际请求的地址及同一不变输入的真实原始报告；只有后续测试或后备实际请求完全相同的地址时，才供应其中报告，并将此次请求和报告写入后续策略自己的逻辑历史。路由或核对历史不预填进后续策略初态，描述中的叶、推断的前缀或其他原型的报告不写入真实缓存。
+
+**定理 36.4（任意 $k$ 的全域总性、精确付费集与共同锐费用）。** 对每个整数 $k\ge1$，定义 36.3 的同一个控制器 $\pi_k$ 属于 $\mathfrak D_3$，且在式（36.3）的评价族上有
+
+$$
+\begin{aligned}
+J_{\pi_k}(P_0)&=L(P_0),\\
+J_{\pi_k}(U_j)&=L(U_j)\cup\{b_j\},\\
+J_{\pi_k}(V_j)&=L(V_j)\cup\{a_j\}
+\quad(1\le j\le k),\\
+b_j&\notin L(U_j),\qquad a_j\notin L(V_j),\\
+C_{\pi_k}(P_0)&=5k+11,\qquad
+C_{\pi_k}(U_j)=C_{\pi_k}(V_j)=5k+12,\\
+D(F_k)&=5k+12.
+\end{aligned}
+\tag{36.12}
+$$
+
+正确性与有限终止的量词覆盖全部 $Z\in\mathcal T$；式（36.12）的费用上界只约束 $F_k$ 中的评价输入。
+
+**证明。** 首先对定义 36.3 的有限路由作任意 $k$ 的实际响应核对。活动块的两个相对地址报告为
+
+$$
+\begin{array}{c|c|c}
+X&\operatorname{out}_X(\mathtt{LLR})&
+   \operatorname{out}_X(\mathtt{RR})\\ \hline
+C&\mathsf{leaf}_\alpha&\mathsf{leaf}_\alpha\\
+T&\mathsf{leaf}_\alpha&\mathsf{branch}\\
+W_1&\mathsf{branch}&\mathsf{branch}
+\end{array}
+\tag{36.13}
+$$
+
+式（36.1）确给 $C$ 在这两个地址的 $\alpha$ 叶，以及 $T|_{\mathtt{LLR}}=\alpha$、$T|_{\mathtt{RR}}=E$、$W_1|_{\mathtt{LLR}}=E$、$W_1|_{\mathtt{RR}}=E$；这里 $E$ 的根为实际分支。因所有槽根前缀不可比，$a_i,b_i$ 在不同槽间互异，同一槽的 $\mathtt{LLR},\mathtt{RR}$ 也不同，故全部 $2k$ 个路由地址互异。
+
+在槽 $j$ 开始前，若前 $j-1$ 槽都给两个 $\alpha$ 叶报告，则恰有以下评价原型匹配已经实际取得的完整路由历史：
+
+$$
+S_j=\{P_0\}\cup\{U_\ell,V_\ell:j\le\ell\le k\}
+\quad(1\le j\le k+1),\qquad S_{k+1}=\{P_0\}.
+\tag{36.14}
+$$
+
+按 $j$ 归纳证明这个幸存集等式。$j=1$ 时历史为空，$S_1=F_k$。设等式在某个 $j\le k$ 成立。$V_j$ 在第 $j$ 槽放 $W_1$，$U_j$ 放 $T$，其余 $S_j$ 成员在此槽都放 $C$。式（36.13）使 $a_j$ 的分支孩子在 $S_j$ 中恰为 $\{V_j\}$；$\alpha$ 叶孩子恰为 $S_j\setminus\{V_j\}$。只有这个 $\alpha$ 叶孩子实际继续请求 $b_j$，其分支孩子恰为 $\{U_j\}$，其 $\alpha$ 叶孩子恰为 $S_j\setminus\{V_j,U_j\}=S_{j+1}$。这证明归纳步与全部退出身份。$k=1$ 时归纳从三元素 $\{P_0,U_1,V_1\}$ 开始，两次 $\alpha$ 报告后恰剩 $P_0$，没有另加槽数条件。
+
+$S_j$ 只是匹配历史的评价原型集，不能代替未知输入的全来源纤维。尤其 $b_j$ 的分支在未查询 $a_j$ 时并不全局私有：$U_j,V_j$ 均在 $b_j$ 报告分支。它仅在已取得 $a_j$ 的 $\alpha$ 叶报告、$V_j$ 已退出的条件队列中选出 $U_j$；没有未请求的 $b_j$ 报告被免费写入 $V_j$ 的历史。
+
+再核对全域正确性。暂选后采用的完整叶接受充分性直接取自[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)，所需替换深度在此为 $3=3\cdot1$：任意完整树若匹配所选正原型的全部带标签叶，就等于该原型而属于 $\mathcal I_3$。完整树的路径恢复与有限描述供应分别为[母卷定理 9.3、9.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)。因此路由不会承担无承诺接受证明，完整叶匹配才承担接受。
+
+任何意外路由报告或原型叶不匹配均调用既有总后备。它从空地址开始，只在实际分支节点继续读取左右孩子，遇叶停止扩展；每个实际 $Z$ 有限，故恢复有限且得到的字面树就是 $Z$。实际取得的 $m$ 不是初始化中的大小承诺。后续有限前像判定的正确性与穷尽性直接由定理 23.2、29.2 供应：实际替换不减少叶数，任何第三步前像都在该次叶数至多 $m$ 的有限集合内。该后备在族外正树、族外负树及两个根叶输入上同样有限终止，不使用等待前像出现的无穷搜索。所选测试与后备各自独立初始化，只有真实同地址缓存供应，故引理 27.3 保证续接逐步等于各自独立执行。路由最多 $2k$ 个请求，叶阶段最多 $n_k$ 个请求，后备对每个实际有限输入有限终止。因此整个固定 $\pi_k$ 在全部 $\mathcal T$ 上正确且有限终止，确属 $\mathfrak D_3$，不要求族外输入满足 $n_k+1$ 的费用界。
+
+在实际评价输入上，式（36.14）的归纳使路由恰选中输入自身。它的全部叶匹配，后备不使用。三类真正请求的路由地址集合精确为
+
+$$
+\begin{aligned}
+\mathcal R(P_0)&=\{a_i,b_i:1\le i\le k\},\\
+\mathcal R(U_j)&=\{a_i,b_i:1\le i<j\}\cup\{a_j,b_j\},\\
+\mathcal R(V_j)&=\{a_i,b_i:1\le i<j\}\cup\{a_j\}.
+\end{aligned}
+\tag{36.15}
+$$
+
+$P_0$ 的这些地址全是自己的 $\alpha$ 叶。$U_j$ 的较早槽全为 $C$，其全部较早请求及 $a_j$ 都是自己的 $\alpha$ 叶，唯 $b_j$ 报告实际分支。$V_j$ 的较早请求同样全是自己的 $\alpha$ 叶，唯 $a_j$ 报告实际分支；该行不请求 $b_j$ 或后续槽。式（36.13）使这两类额外地址确实不在各自叶集中。随后单原型测试的独立请求集正是自己的完整叶集。引理 27.3 的真实缓存并集费用因而给
+
+$$
+J_{\pi_k}(P)=\mathcal R(P)\cup L(P)\qquad(P\in F_k).
+\tag{36.16}
+$$
+
+由式（36.15）逐行消去已经包含在自身叶集中的路由地址，得到式（36.12）的三个精确付费集，而非仅有费用估计。互异地址的基数分别为 $n_k,n_k+1,n_k+1$，所以同一个 $\pi_k$ 给 $D(F_k)\le n_k+1$。
+
+反向任取 $\pi\in\mathfrak D_3$。因 $k\ge1$，实际对 $P_0,U_1$ 始终存在，定理 36.2 已给它们不同、非冲突且同为 $n_k$ 叶。[定理 23.2 的式（23.4）](#23-全有限来源上两个指定正例的共同最优地址费用)直接给
+
+$$
+C_\pi(P_0)+C_\pi(U_1)\ge2n_k+1.
+\tag{36.17}
+$$
+
+两个实际有限费用都是整数，故 $\max_{P\in F_k}C_\pi(P)\ge n_k+1$。对同一全域合同的全部策略取下确界，得到 $D(F_k)\ge n_k+1$，与实际取得上界合起来证明 $D(F_k)=5k+12$。这里的下界供应是既有两来源结论，不另建立一般路由或认证定理。证毕。
+
+### 36.3 五叶二退出的资源关系与子序列增长
+
+**推论 36.5（共同末槽补偿、构造增量与容量增长下界）。** 对每个整数 $k\ge1$ 和每个 $1\le j\le k$，定义 36.1 的 $P_0,U_j,V_j$ 在第 $j$ 活动槽与末槽分别有完整块配对 $(C,K_T)$、$(T,B)$、$(W_1,A)$。它们的前像组成均为 $(2,2)^{\mathsf T}$，像的两块合计均有十六片叶。这三棵原型的其余 $k-1$ 活动槽均为五叶 $C$。因此这族构造具有精确增量
+
+$$
+n_{k+1}-n_k=5,\qquad |F_{k+1}|-|F_k|=2,
+\tag{36.18}
+$$
+
+且在定义 30.6 的原确定性不同实际地址费用合同下，
+
+$$
+\boxed{\quad
+\mathsf{Cap}(5k+11,1)\ge2k+1\quad(k\ge1),\qquad
+\limsup_{n\to\infty}\frac{\mathsf{Cap}(n,1)}{n}\ge\frac25.
+\quad}
+\tag{36.19}
+$$
+
+**证明。** 式（36.5）的字面前像给三种配对的组成加法分别为
+
+$$
+\binom01+\binom21
+=\binom11+\binom11
+=\binom12+\binom10
+=\binom22.
+\tag{36.20}
+$$
+
+像块叶数从相同描述直接得到
+
+$$
+\begin{gathered}
+n(C)+n(K_T)=5+11=16,\\
+n(T)+n(B)=8+8=16,\qquad
+n(W_1)+n(A)=13+3=16.
+\end{gathered}
+\tag{36.21}
+$$
+
+因此在任一指定活动槽，$C$ 换为 $T$ 的原型描述增三片叶，末槽 $K_T$ 换为 $B$ 的描述减三片；$C$ 换为 $W_1$ 增八片，末槽 $K_T$ 换为 $A$ 减八片。两种配对各自对应同一完整原型中的活动块与末块，前像组成与总叶数都相容；没有把分别可达的块值当成同一原型同时取值。对每棵非基准原型，唯一异常活动槽与末槽恰给式（36.20）、（36.21）的一行；对 $P_0$ 可选任一活动槽配对。加上另外 $k-1$ 个 $C$，得到 $16+5(k-1)=5k+11$。
+
+参数从 $k$ 增至 $k+1$ 时，式（36.3）多一个普通 $C$ 活动槽，基准叶数增加五。在 $F_{k+1}$ 的记号中，该槽按式（36.13）、（36.14）提供 $V_{k+1}$ 和 $U_{k+1}$ 两个依次有条件到达的退出；每个退出仍只增加一个实际叶外付费地址。末槽仍从 $K_T,B,A$ 取块，保持上述补偿关系，正给式（36.18）的 $(5,2)$ 构造增量。这是不同完整不变原型描述之间的关系，不是读取时转移资源、改变输入树、物理守恒或从未请求地址推断缓存值。
+
+定理 36.2 已给 $F_k\subseteq\mathcal I_3(5k+11)$、$|F_k|=2k+1$，并对全部子集给 $K(F_k)=K_\circ(F_k)$；定理 36.4 已给同一个全域正确总控制器取得 $D(F_k)=5k+12$。这些都是定义 30.6 的实际容量条件，因此得到式（36.19）的逐 $k$ 下界。特别地，只沿 $n_k=5k+11\to\infty$ 有
+
+$$
+\frac{\mathsf{Cap}(n_k,1)}{n_k}
+\ge\frac{2k+1}{5k+11}\longrightarrow\frac25,
+\tag{36.22}
+$$
+
+故整个整数序列的上极限至少为 $2/5$。
+
+式（36.19）是此实际构造供应的充分下界，不给所有 $n$ 的下极限、精确容量、完整分类或最优密度，也不结算任何随机费用目标。完整树来源、组成、规范数量地址、原始观察响应、组成祖先许可与实际逆执行仍保持不同类型；全域成员判定不授权实际逆执行，环境代数守恒不建立物理或时间对应。上述无穷实际族与资源关系为所引既有块、遗传条件、取得供应及两来源下界的仓内推导，不由这些对应或增长界推出世界原创性。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 37. 四重条件退出、单一补偿槽与半密度增长
+
+### 37.1 五种实际块配对与任意槽数的非冲突族
+
+**定义 37.1（固定三步深度的四退出共同补偿族）。** 沿用[定义 23.1、30.1、30.6](#30-实际三步像的分歧前沿七叶分离与有限容量)的非空有限自由有序满二叉树域 $\mathcal T$、实际替换 $\rho$、三步像 $\mathcal I_3=\rho^3(\mathcal T)$、等叶数像集 $\mathcal I_3(n)$、叶地址集 $L$、叶标签 $\lambda$、非冲突关系 $\operatorname{NC}$、相容复形 $K,K_\circ$、确定性费用 $D$ 与容量 $\mathsf{Cap}$。树相等保留全部括号、左右次序和 $\alpha/\beta$ 标签。替换深度固定为 $d=3$，以下整数 $k\ge1$ 只计活动槽数。
+
+未知输入为任意 $U\in\mathcal T$；策略必须在整个 $\mathcal T$ 上正确判定 $\iota_3(U)=\mathbf1_{\{U\in\mathcal I_3\}}$ 并有限终止，才属于 $\mathfrak D_3$。对每个固定 $k$，全部输入使用相同且与输入无关的完整初始化，不给组成、叶数、大小、高度、正性或候选身份承诺。任意有限左右地址，包括空地址 $\varepsilon$，都合法且可直接查询，无须先请求其前缀；报告仅为同一不变输入的四个原始值 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$。费用只计真实缓存后不同的实际请求地址；地址长度、定位和内部计算不收费，未有限终止费用为 $+\infty$。
+
+直接使用[式（30.2）、（36.1）](#36-任意规模的二重条件退出共同补偿与一次超额增长)的字面块
+
+$$
+\begin{gathered}
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle,\qquad
+C=\langle A,E\rangle,\qquad B=\langle C,A\rangle,\\
+T=\langle A,C\rangle,\qquad
+W_1=\langle B,C\rangle,\qquad K_T=\langle T,A\rangle,
+\end{gathered}
+\tag{37.1}
+$$
+
+并定义完整块
+
+$$
+Y=\langle W_1,A\rangle,\qquad Z=\langle C,B\rangle,\qquad
+R_0=\langle T,B\rangle,\qquad
+R_{\mathrm{abs}}=\langle T,Z\rangle.
+\tag{37.2}
+$$
+
+$T$ 仍为固定八叶块，$Z$ 在本章为固定十三叶块，均不是未知输入变量。右梳全孔上下文直接取[式（26.5）](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)的 $B_s$：$B_1(X_1)=X_1$，$B_s(X_1,\ldots,X_s)=\langle X_1,B_{s-1}(X_2,\ldots,X_s)\rangle$（$s\ge2$）。取 $s=k+1$，活动槽根与唯一补偿槽根分别为
+
+$$
+p_j=\mathtt R^{j-1}\mathtt L\quad(1\le j\le k),\qquad
+p_{k+1}=\mathtt R^k.
+\tag{37.3}
+$$
+
+它们前缀自由，上下文没有槽以外的字面叶。以下 $P_0,P_j^{\mathrm{abs}},P_j^Y,P_j^K,P_j^Z,F_k,n_k$ 均为本章局部记号，不指第36章的评价族；上标 $K$ 只标记活动块 $K_T$，不改变复形 $K$。定义全部完整评价树
+
+$$
+\begin{aligned}
+P_0&=B_{k+1}(\underbrace{B,\ldots,B}_{k\text{ 个}},R_0),\\
+P_j^{\mathrm{abs}}&=B_{k+1}(\underbrace{B,\ldots,B}_{j-1\text{ 个}},A,
+                    \underbrace{B,\ldots,B}_{k-j\text{ 个}},R_{\mathrm{abs}}),\\
+P_j^Y&=B_{k+1}(\underbrace{B,\ldots,B}_{j-1\text{ 个}},Y,
+                    \underbrace{B,\ldots,B}_{k-j\text{ 个}},B),\\
+P_j^K&=B_{k+1}(\underbrace{B,\ldots,B}_{j-1\text{ 个}},K_T,
+                    \underbrace{B,\ldots,B}_{k-j\text{ 个}},Z),\\
+P_j^Z&=B_{k+1}(\underbrace{B,\ldots,B}_{j-1\text{ 个}},Z,
+                    \underbrace{B,\ldots,B}_{k-j\text{ 个}},K_T)
+                    \quad(1\le j\le k),\\
+F_k&=\{P_0\}\cup
+     \{P_j^{\mathrm{abs}},P_j^Y,P_j^K,P_j^Z:1\le j\le k\},
+\qquad n_k=8k+16.
+\end{aligned}
+\tag{37.4}
+$$
+
+零个块表示空列表。每棵原型恰有 $k$ 个活动槽和一个共同位置的补偿槽；一棵非基准原型只有一个异常活动槽。
+
+**定理 37.2（四种退出的同组成完整前像与全部子集复形）。** 对每个整数 $k\ge1$，定义 37.1 的每棵原型有唯一完整三步前像，分别记为 $Q_0,Q_j^{\mathrm{abs}},Q_j^Y,Q_j^K,Q_j^Z$。记它们的集合为 $\mathcal Q_k$，则
+
+$$
+\begin{gathered}
+\rho^3(Q_0)=P_0,\qquad
+\rho^3(Q_j^\eta)=P_j^\eta
+\quad(1\le j\le k,\ \eta\in\{\mathrm{abs},Y,K,Z\}),\\
+F_k\subseteq\mathcal I_3(n_k),\qquad |F_k|=4k+1,\\
+\forall Q\in\mathcal Q_k,\quad c(Q)=\binom{k+2}{k+2},\qquad
+\forall P\in F_k,\quad c(P)=\binom{3k+6}{5k+10},\\
+\forall P,Q\in F_k,\quad
+P\ne Q\Longrightarrow\operatorname{NC}(P,Q),\qquad
+K(F_k)=K_\circ(F_k).
+\end{gathered}
+\tag{37.5}
+$$
+
+最后一个等式确定每个 $S\subseteq F_k$ 的共同个体最优取得性。
+
+**证明。** [母卷定义 3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的实际 $\rho$ 保留每个有序二叉构造。令
+
+$$
+\begin{gathered}
+a=\alpha,\qquad c_\beta=\beta,\qquad
+b=\langle\beta,\alpha\rangle,\qquad t=\langle\alpha,\beta\rangle,\\
+w=\langle b,\beta\rangle,\qquad h=\langle w,\alpha\rangle,\qquad
+z=\langle\beta,b\rangle,\qquad q=\langle t,\alpha\rangle,\\
+r_0=\langle t,b\rangle,\qquad r_{\mathrm{abs}}=\langle t,z\rangle.
+\end{gathered}
+\tag{37.6}
+$$
+
+$c_\beta$ 是树名，$c(\cdot)$ 仍是组成观察。原子规则和二叉同态性逐项给出完整字面等式
+
+$$
+\begin{array}{c|cccccccccc}
+Q&a&c_\beta&b&t&w&h&z&q&r_0&r_{\mathrm{abs}}\\ \hline
+\rho^3(Q)&A&C&B&T&W_1&Y&Z&K_T&R_0&R_{\mathrm{abs}}
+\end{array}
+\tag{37.7}
+$$
+
+其中 $\rho^3(\alpha)=A$、$\rho^3(\beta)=C$ 直接取[母卷定义 3.1、定理 3.2](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)及既有式（30.2）；其余各列把两片已确定子树的第三步像按原括号配对即可。因而全部完整前像明确为
+
+$$
+\begin{aligned}
+Q_0&=B_{k+1}(\underbrace{b,\ldots,b}_{k\text{ 个}},r_0),\\
+Q_j^{\mathrm{abs}}&=B_{k+1}(\underbrace{b,\ldots,b}_{j-1\text{ 个}},a,
+                    \underbrace{b,\ldots,b}_{k-j\text{ 个}},r_{\mathrm{abs}}),\\
+Q_j^Y&=B_{k+1}(\underbrace{b,\ldots,b}_{j-1\text{ 个}},h,
+                    \underbrace{b,\ldots,b}_{k-j\text{ 个}},b),\\
+Q_j^K&=B_{k+1}(\underbrace{b,\ldots,b}_{j-1\text{ 个}},q,
+                    \underbrace{b,\ldots,b}_{k-j\text{ 个}},z),\\
+Q_j^Z&=B_{k+1}(\underbrace{b,\ldots,b}_{j-1\text{ 个}},z,
+                    \underbrace{b,\ldots,b}_{k-j\text{ 个}},q).
+\end{aligned}
+\tag{37.8}
+$$
+
+这些是有限原始树的全部括号和标签，不是组成可行性断言。逐槽应用式（37.7）得到第三步像等式。[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的树替换单射性复合三次，供应每个完整前像的唯一性；该命题中的原子 $A,B$ 在此对应 $\alpha,\beta$，不对应本章的块 $A,B$。
+
+由[母卷定义 3.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的组成加法，
+
+$$
+\begin{gathered}
+c(b)=\binom11,\quad c(a)=\binom10,\quad c(h)=\binom22,
+\quad c(q)=\binom21,\quad c(z)=\binom12,\\
+c(r_0)=\binom22,\qquad c(r_{\mathrm{abs}})=\binom23,\\
+c(b)+c(r_0)=c(a)+c(r_{\mathrm{abs}})
+=c(h)+c(b)=c(q)+c(z)=c(z)+c(q)=\binom33.
+\end{gathered}
+\tag{37.9}
+$$
+
+每棵非基准原型的异常活动槽与补偿槽采用这些配对之一；基准树可取任意活动槽与补偿槽配对。其余 $k-1$ 个前像槽都是 $b$，所以每个完整前像的组成为 $(k-1)(1,1)^{\mathsf T}+(3,3)^{\mathsf T}=(k+2,k+2)^{\mathsf T}$。直接应用[母卷定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)，得到
+
+$$
+c(\rho^3(Q))=
+\begin{pmatrix}1&2\\2&3\end{pmatrix}\binom{k+2}{k+2}
+=\binom{3k+6}{5k+10},\qquad
+n(\rho^3(Q))=8k+16\quad(Q\in\mathcal Q_k).
+\tag{37.10}
+$$
+
+活动块 $B,A,Y,K_T,Z$ 的叶数依次为 $8,3,16,11,13$，两两不同。基准树的每个活动槽都是 $B$，其余各树在唯一异常槽的类型和位置不同；共同上下文的同一槽子树不同就使完整树不同。因此恰有 $4k+1$ 棵不同原型。$k=1$ 时两个槽根为 $\mathtt L,\mathtt R$，五棵原型分别为 $\langle B,R_0\rangle$、$\langle A,R_{\mathrm{abs}}\rangle$、$\langle Y,B\rangle$、$\langle K_T,Z\rangle$、$\langle Z,K_T\rangle$，均为二十四叶；式（37.8）分别给 $\langle b,r_0\rangle$、$\langle a,r_{\mathrm{abs}}\rangle$、$\langle h,b\rangle$、$\langle q,z\rangle$、$\langle z,q\rangle$。
+
+对于两个根均为分支的树，左右地址前缀不交，故它们非冲突恰当且仅当相应两对孩子都非冲突；这是定义 30.1 的叶地址条件在二叉构造下的直接分解。相同树当然非冲突。[引理 30.2](#30-实际三步像的分歧前沿七叶分离与有限容量)给 $\operatorname{NC}(A,\langle X,Y'\rangle)\Longleftrightarrow X\ne A$（$X,Y'\in\mathcal I_3$）。$B,Y,K_T,Z$ 的左孩子分别为 $C,W_1,T,C$，全不等于 $A$，所以 $A$ 与其余四个活动块均非冲突。
+
+直接复用[式（36.10）](#36-任意规模的二重条件退出共同补偿与一次超额增长)的完整带标签前沿：$C,T$ 恰共享左侧的 $A$ 前沿，$T,W_1$ 恰共享右侧的 $C$ 前沿，$C,W_1$ 没有共享叶。这三对均非冲突。活动块中余下六对的孩子比较恰为
+
+$$
+\begin{array}{c|c|c}
+\text{活动块对}&\text{左孩子对}&\text{右孩子对}\\ \hline
+(B,Y)&(C,W_1)&(A,A)\\
+(B,K_T)&(C,T)&(A,A)\\
+(B,Z)&(C,C)&(A,B)\\
+(Y,K_T)&(W_1,T)&(A,A)\\
+(Y,Z)&(W_1,C)&(A,B)\\
+(K_T,Z)&(T,C)&(A,B)
+\end{array}
+\tag{37.11}
+$$
+
+左右两列均由刚引用的局部事实或相同块给非冲突，故这六对也非冲突。连同 $A$ 的四对，穷尽了五个活动块的十个不同无序对。
+
+再看同一个补偿槽的全部可能块。$A,B,Z$ 两两非冲突：$A,B$ 与 $A,Z$ 已由引理 30.2 给出，$B,Z$ 已在式（37.11）核对。五个补偿块的左右孩子分别为
+
+$$
+\begin{array}{c|cc}
+\text{补偿块}&\text{左孩子}&\text{右孩子}\\ \hline
+R_0&T&B\\
+R_{\mathrm{abs}}&T&Z\\
+B&C&A\\
+Z&C&B\\
+K_T&T&A
+\end{array}
+\tag{37.12}
+$$
+
+任意两行的左孩子属于非冲突对 $\{C,T\}$，右孩子属于非冲突三元组 $\{A,B,Z\}$；孩子相同时也非冲突。二叉叶地址分解因此给出五个补偿块的全部十个不同无序对均非冲突，而非只比较每个补偿块与基准块。
+
+最后应用[引理 26.2 证明首段的全孔路径分解](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)：前缀自由槽根和没有槽外字面叶的上下文，使任意共享全局叶在两棵原型中都位于同一个槽。该分解只依赖上下文，各槽内在此填入的仍为完整树。活动槽和补偿槽的全部比较遂保证任意两棵不同原型的所有共享叶标签一致，故 $F_k$ 两两非冲突。
+
+对每个 $S\subseteq F_k$ 直接使用[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)。$|S|\ge2$ 时选其中两个不同成员 $P,Q$；非冲突使 $\Delta(\{P,Q\})=\varnothing$，所以原遗传判据在 $S$ 的这个二元素子集处失败，$S\notin K(F_k)$。空集和所有单元素子集的遗传要求为空，原定理及既有单原型取得供应它们的相容性。因此全部子集恰按 $K_\circ(F_k)$ 分类。个体最优仍取[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)的 $d=3=3\cdot1$ 范围，固定策略空间中的个体最优集合仍为[定义 26.5](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)的 $\mathcal O(P)$；这些应用不改变未知输入域或策略合同。证毕。
+
+### 37.2 四个条件退出与同一全域总控制器
+
+**定义 37.3（三个地址的顺序路由与独立续接）。** 对每个固定整数 $k\ge1$，由式（37.3）的活动槽根定义
+
+$$
+a_j=p_j\mathtt{LLLR},\qquad
+b_j=p_j\mathtt{LRR},\qquad
+c_j=p_j\mathtt{RLR}\quad(1\le j\le k).
+\tag{37.13}
+$$
+
+控制器 $\pi_k$ 的完整初始化只依赖固定公开的 $k$、式（37.4）的全部完整原型、以下路由、既有单原型完整带标签叶测试及一个既有全域总后备；对每个未知输入完全相同，外层真实缓存初始为空。从 $j=1$ 开始，到达槽 $j\le k$ 时先实际请求 $a_j$。报告 $\mathsf{absent}$ 时暂选 $P_j^{\mathrm{abs}}$，报告 $\mathsf{branch}$ 时暂选 $P_j^Y$，均结束路由；报告 $\mathsf{leaf}_\alpha$ 时才继续请求 $b_j$；报告 $\mathsf{leaf}_\beta$ 时进入总后备。在这个有条件到达的 $b_j$ 上，报告 $\mathsf{branch}$ 时暂选 $P_j^K$ 并结束路由，报告 $\mathsf{leaf}_\alpha$ 时才请求 $c_j$，其他两个报告均进入总后备。在这个有条件到达的 $c_j$ 上，报告 $\mathsf{branch}$ 时暂选 $P_j^Z$ 并结束路由，报告 $\mathsf{leaf}_\alpha$ 时令 $j$ 增加一，其他两个报告均进入总后备。若全部 $k$ 槽都给三个 $\alpha$ 叶报告，则暂选 $P_0$。每个暂选只选择后续测试，绝不接受或返回成员身份。
+
+暂选原型 $P$ 后，直接采用[定理 23.2、29.2](#29-任意有限实际正来源族的联合响应费用核心与全域取得)已有的全域单原型策略。从该策略自己的完整初始化、空逻辑历史和初始控制状态开始，依固定次序请求 $L(P)$ 的每个带标签叶。任一相反叶标签、分支或不存在报告都是不匹配，均进入同一总后备；只有全部叶的原始报告精确匹配才返回 $1$。
+
+总后备直接取[定理 23.2 证明](#23-全有限来源上两个指定正例的共同最优地址费用)中的全域有限判定。每次进入后备，无论由路由意外报告还是叶核对不匹配触发，都建立该后备自己的完整初始化、空逻辑历史和初始控制状态。从空地址起恢复实际树，只在真实分支处请求左右孩子、在真实叶处停止扩展，取得实际叶数 $m$；然后有限枚举叶数至多 $m$ 的全部完整带标签前像树，逐个比较其第三步像与刚恢复的实际树，命中返回 $1$，穷尽而不命中返回 $0$。
+
+所有后续接均使用[引理 27.3](#27-实际三步像的面费用核心与分数面覆盖锐值)的真实同地址缓存供应：外层缓存只存本次运行已实际请求的地址及同一不变输入的真实原始报告。后续策略请求完全相同的地址时，才供应相应缓存值，否则实际查询该地址并存入缓存；每次请求及报告都追加到后续策略自己的逻辑历史。先前路由或核对历史不预填进后续初态；原型描述、推断的前缀、未请求的后缀和其他原型的报告都不生成缓存条目。$m$ 由后备实际取得，不是免费输入报告或初始化承诺。
+
+**定理 37.4（任意 $k$ 的共同幸存队列、精确付费集与锐费用）。** 对每个整数 $k\ge1$，定义 37.3 的同一个控制器 $\pi_k$ 属于 $\mathfrak D_3$，在定义 37.1 的全部评价来源上有
+
+$$
+\begin{aligned}
+J_{\pi_k}(P_0)&=L(P_0),\\
+J_{\pi_k}(P_j^{\mathrm{abs}})&=L(P_j^{\mathrm{abs}})\cup\{a_j\},\\
+J_{\pi_k}(P_j^Y)&=L(P_j^Y)\cup\{a_j\},\\
+J_{\pi_k}(P_j^K)&=L(P_j^K)\cup\{b_j\},\\
+J_{\pi_k}(P_j^Z)&=L(P_j^Z)\cup\{c_j\}
+\quad(1\le j\le k),\\
+a_j&\notin L(P_j^{\mathrm{abs}})\cup L(P_j^Y),\qquad
+b_j\notin L(P_j^K),\qquad c_j\notin L(P_j^Z),\\
+C_{\pi_k}(P_0)&=n_k,\qquad
+C_{\pi_k}(P_j^\eta)=n_k+1
+\quad(1\le j\le k,\ \eta\in\{\mathrm{abs},Y,K,Z\}),\\
+D(F_k)&=n_k+1=8k+17.
+\end{aligned}
+\tag{37.14}
+$$
+
+其中 $J_{\pi_k}(P)$ 是该运行真正付费的不同地址集合。正确性与有限终止覆盖所有 $U\in\mathcal T$；式（37.14）的费用界只约束评价族 $F_k$。关于 $k$ 的统一性是一个有限算法模式为每个固定 $k$ 给出 $\pi_k$，不是不含 $k$ 的单个控制器。
+
+**证明。** 直接沿字面树读取三个相对地址，在每一行的条件退出处停止，真正到达的响应为
+
+$$
+\begin{array}{c|ccc}
+\text{活动块}&\mathtt{LLLR}&\mathtt{LRR}&\mathtt{RLR}\\ \hline
+B&\mathsf{leaf}_\alpha&\mathsf{leaf}_\alpha&\mathsf{leaf}_\alpha\\
+A&\mathsf{absent}&\text{未请求}&\text{未请求}\\
+Y&\mathsf{branch}&\text{未请求}&\text{未请求}\\
+K_T&\mathsf{leaf}_\alpha&\mathsf{branch}&\text{未请求}\\
+Z&\mathsf{leaf}_\alpha&\mathsf{leaf}_\alpha&\mathsf{branch}
+\end{array}
+\tag{37.15}
+$$
+
+确实，$B=\langle C,A\rangle$ 的 $\mathtt{LLLR},\mathtt{LRR},\mathtt{RLR}$ 分别到达 $C$ 的左孩子 $A$ 内 $E$ 的右叶 $\alpha$、$C$ 内右侧 $E$ 的右端 $\alpha$、$A$ 内 $E$ 的右端 $\alpha$。$A|_{\mathtt{LL}}=\beta$ 是实际叶，再沿非空后缀 $\mathtt{LR}$ 必报告不存在。$Y|_{\mathtt{LLLR}}=E$，故该地址报告实际分支。$K_T|_{\mathtt{LLLR}}=\alpha$、$K_T|_{\mathtt{LRR}}=E$。$Z|_{\mathtt{LLLR}}=Z|_{\mathtt{LRR}}=\alpha$、$Z|_{\mathtt{RLR}}=E$。这里 $E$ 始终为实际分支。表中“未请求”不是报告值，不加入历史或缓存，也不承担后续决策。
+
+槽根前缀不可比，三个相对后缀两两不同。因此全部 $3k$ 个 $a_i,b_i,c_i$ 两两不同。按[引理 26.2 证明的全孔路径分解](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)，式（37.15）的相对响应在前加 $p_j$ 后就是每棵完整原型的真实全局报告。
+
+对任意 $k$，定义
+
+$$
+S_j=\{P_0\}\cup
+\{P_\ell^{\mathrm{abs}},P_\ell^Y,P_\ell^K,P_\ell^Z:j\le\ell\le k\}
+\quad(1\le j\le k+1),\qquad S_{k+1}=\{P_0\}.
+\tag{37.16}
+$$
+
+证明：到达槽 $j$、此前每槽三个请求均精确报告 $\mathsf{leaf}_\alpha$ 时，匹配已经实际取得的完整路由历史的评价原型恰为 $S_j$。$j=1$ 时历史为空，$S_1=F_k$。设某个 $j\le k$ 的断言成立。只有四棵 $j$ 标记的原型在该槽异常，其他 $S_j$ 成员都放 $B$。式（37.15）使 $a_j$ 的不存在孩子恰为 $\{P_j^{\mathrm{abs}}\}$，分支孩子恰为 $\{P_j^Y\}$，$\alpha$ 叶孩子恰为 $S_j\setminus\{P_j^{\mathrm{abs}},P_j^Y\}$；其 $\beta$ 叶孩子在评价族内为空。在已到达的 $\alpha$ 孩子上，$b_j$ 的分支孩子恰为 $\{P_j^K\}$，$\alpha$ 叶孩子再删去 $P_j^K$，其余报告孩子为空。在这个再次有条件到达的孩子上，$c_j$ 的分支孩子恰为 $\{P_j^Z\}$，$\alpha$ 叶孩子恰为 $S_{j+1}$，其余报告孩子为空。这证明归纳步和每个退出身份，全部 $k$ 槽继续后只留下 $P_0$。$k=1$ 时归纳从五棵原型开始，三个继续报告后恰剩基准树，没有额外的小规模例外。
+
+$S_j$ 只表示共同实际历史中的评价原型队列，不是所有未知来源的相容纤维。每个退出的单点性均在此前已取得的响应条件下成立；表中未请求的后缀不参与这项条件。单点选择不直接接受，仍须定义 37.3 的完整叶测试。既有[定理 29.2、29.3](#29-任意有限实际正来源族的联合响应费用核心与全域取得)已供应有限实际路由、独立认证、全域取得及费用核心的接口；这里增加的是式（37.1）—（37.12）的共同字面实现和式（37.16）的任意槽数队列，不另外建立一般正规形或随机投影结论。
+
+暂选后的完整叶匹配充分性直接取[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)，适用深度为 $3=3\cdot1$；任何 $U\in\mathcal T$ 若匹配所选原型的全部带标签叶，则 $U=P\in\mathcal I_3$。其完整字面恢复取自[母卷定理 9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，有限描述取自母卷定理 9.2。因此接受仅由完整叶匹配承担，暂选、补偿组成和评价队列都不替代它。
+
+任一路由意外报告或叶核对不匹配都调用同一个已有全域总后备。从根只在实际分支处扩展，有限 $U$ 的整个字面树和实际叶数 $m$ 在有限步内取得。叶数至多 $m$ 的满二叉形状有限，每个形状的两类叶标记有限，所以全部完整前像描述有限可枚举。[定理 23.2 证明](#23-全有限来源上两个指定正例的共同最优地址费用)已经给出这项有限判定的正确性、穷尽性和总性：实际替换从不减少叶数，故 $U=\rho^3(Q)$ 的每个可能前像都在该次有限枚举内。字面替换单射性复用规范编译卷命题 4.3，不从组成逆矩阵推出前像存在，也不采用等待前像出现的无穷搜索。
+
+每次后续接都从被选策略自己的初态开始；仅在它请求相同地址时供应先前真正取得的原始报告。引理 27.3 保证这段执行逐步等于该策略从头独立读取同一 $U$ 的执行，返回和终止性保持。路由至多 $3k$ 个请求，所选原型叶测试至多 $n_k$ 个请求，后备对每个实际有限 $U$ 有限终止。所以 $\pi_k$ 在所有非空有限树上正确且有限终止。根叶 $\alpha$ 或 $\beta$ 在首个 $a_1$ 上均报告不存在，只会暂选 $P_1^{\mathrm{abs}}$；它们在该分支原型的非空叶地址上不能匹配，遂进入同一后备。恢复得到 $m=1$，两种根叶候选的第三步像分别为 $A,C$，均非根叶，有限比较后拒绝。族外正树与负树也都受上述同一总性论证覆盖；任意长合法后缀的不存在报告保留为真正查询结果，未缩小菜单。共同初始化只依固定 $k$ 和固定描述，故 $\pi_k\in\mathfrak D_3$。
+
+现在确定评价族上的实际付费集合。令
+
+$$
+E_j=\{a_i,b_i,c_i:1\le i<j\}\quad(1\le j\le k),
+\tag{37.17}
+$$
+
+则归纳已经确定各运行真正请求的路由地址集合为
+
+$$
+\begin{aligned}
+\mathcal R(P_0)&=\{a_i,b_i,c_i:1\le i\le k\},\\
+\mathcal R(P_j^{\mathrm{abs}})&=E_j\cup\{a_j\},\\
+\mathcal R(P_j^Y)&=E_j\cup\{a_j\},\\
+\mathcal R(P_j^K)&=E_j\cup\{a_j,b_j\},\\
+\mathcal R(P_j^Z)&=E_j\cup\{a_j,b_j,c_j\}.
+\end{aligned}
+\tag{37.18}
+$$
+
+在 $P_0$ 上全部这些地址都是该输入自身的 $\alpha$ 叶。每棵退出原型的较早活动槽都为 $B$，故 $E_j$ 全属于该棵输入自己的叶集；当前槽内每个继续的 $\alpha$ 报告也属于自己的叶集。$P_j^{\mathrm{abs}}$ 的唯一叶外路由地址为 $a_j$，其报告确为不存在；$P_j^Y$ 的唯一叶外路由地址也为 $a_j$，其报告确为分支；$P_j^K$ 的唯一叶外路由地址为 $b_j$，$P_j^Z$ 的唯一叶外路由地址为 $c_j$，两者报告确为分支。它们都不在各自 $L(P)$ 中，未请求地址没有加入式（37.18）。
+
+路由在每棵评价树上恰选中输入自身，随后全部叶测试匹配，后备不使用。该单原型测试从自己初态运行的请求集恰为 $L(P)$。引理 27.3 的真实缓存并集计费遂给
+
+$$
+J_{\pi_k}(P)=\mathcal R(P)\cup L(P)\qquad(P\in F_k).
+\tag{37.19}
+$$
+
+逐行消去已经属于自身叶集的路由地址，即得式（37.14）的五类精确付费集合。其基数分别为 $n_k$ 和四类 $n_k+1$，故同一个全域总策略取得 $D(F_k)\le n_k+1$，没有把四个分别可达的最优策略合称共同取得。
+
+反向任取 $\pi\in\mathfrak D_3$。因 $k\ge1$，$P_0,P_1^{\mathrm{abs}}$ 始终是族中两个不同、非冲突、同为 $n_k$ 叶的实际正例。直接应用[定理 23.2 的式（23.4）](#23-全有限来源上两个指定正例的共同最优地址费用)，得到
+
+$$
+C_\pi(P_0)+C_\pi(P_1^{\mathrm{abs}})\ge2n_k+1.
+\tag{37.20}
+$$
+
+两个实际有限费用都是整数，所以 $\max_{P\in F_k}C_\pi(P)\ge n_k+1$。在原全域策略空间取下确界，得 $D(F_k)\ge n_k+1$。与式（37.19）的共同取得合并，得到锐值 $D(F_k)=8k+17$。证毕。
+
+### 37.3 八叶四退出的资源关系与容量下界
+
+**推论 37.5（单一补偿槽的五配对关系与半密度增长）。** 对每个整数 $k\ge1$，定义 37.1 的五种活动块／补偿块配对
+
+$$
+(B,R_0),\qquad (A,R_{\mathrm{abs}}),\qquad
+(Y,B),\qquad(K_T,Z),\qquad(Z,K_T)
+\tag{37.21}
+$$
+
+分别有完整前像配对 $(b,r_0),(a,r_{\mathrm{abs}}),(h,b),(q,z),(z,q)$，其合计前像组成都为 $(3,3)^{\mathsf T}$，合计像组成都为 $(9,15)^{\mathsf T}$，合计叶数都为二十四。每棵原型的其余 $k-1$ 个活动槽均为八叶 $B$，补偿槽始终只有一个。构造增量与原不同实际地址费用合同下的容量结论为
+
+$$
+\begin{gathered}
+n_{k+1}-n_k=8,\qquad |F_{k+1}|-|F_k|=4,\\
+\boxed{\quad
+\mathsf{Cap}(8k+16,1)\ge4k+1\quad(k\ge1),\qquad
+\limsup_{n\to\infty}\frac{\mathsf{Cap}(n,1)}{n}\ge\frac12>\frac25.
+\quad}
+\end{gathered}
+\tag{37.22}
+$$
+
+**证明。** 完整前像配对及组成等式已由式（37.6）—（37.9）给出；实际组成运输乘以 $M^3$，把 $(3,3)^{\mathsf T}$ 送到 $(9,15)^{\mathsf T}$。像块的叶数从字面构造相加，分别为
+
+$$
+\begin{aligned}
+n(B)+n(R_0)&=8+16=24,\\
+n(A)+n(R_{\mathrm{abs}})&=3+21=24,\\
+n(Y)+n(B)&=16+8=24,\\
+n(K_T)+n(Z)&=11+13=24,\\
+n(Z)+n(K_T)&=13+11=24.
+\end{aligned}
+\tag{37.23}
+$$
+
+五行各自属于同一完整原型的指定活动槽和唯一补偿槽。相对于基准配对，活动槽改为 $A,Y,K_T,Z$ 的叶数变化分别是 $-5,8,3,5$，同一原型中的补偿槽变化分别是 $5,-8,-3,-5$；各行的两个组成坐标也同时由对应完整前像相加保持。没有将来自不同实际原型的分别可达数值拼成一个共同实现。加上其余 $k-1$ 个 $B$，得到 $24+8(k-1)=8k+16$。
+
+从 $k$ 到 $k+1$，普通活动槽增加一个八叶 $B$。在 $F_{k+1}$ 的完整描述中，新槽供应四种异常活动块及其各自配对补偿块；式（37.16）的同一幸存队列使它们成为四个依次有条件到达的退出，各自仍恰付一个实际叶外地址。原有槽根随右梳上下文重新确定，不能把此前最后一个槽的完整地址当作未改变的地址沿用。来源数由 $4k+1$ 增至 $4(k+1)+1$，补偿槽数仍为一，给出式（37.22）的 $(8,4)$ 精确构造增量。这个关系比较不同的完整不变原型描述；读取时没有修改实际输入、移动叶子或执行补偿操作。
+
+定理 37.2 已给 $F_k\subseteq\mathcal I_3(8k+16)$、$|F_k|=4k+1$，并对所有子集给 $K(F_k)=K_\circ(F_k)$；定理 37.4 给同一个满足全部未知输入合同的控制器取得 $D(F_k)=8k+17$。它们满足定义 30.6 的全部实际容量条件，故逐 $k$ 有 $\mathsf{Cap}(8k+16,1)\ge4k+1$。沿 $n_k=8k+16\to\infty$，
+
+$$
+\frac{\mathsf{Cap}(n_k,1)}{n_k}
+\ge\frac{4k+1}{8k+16}\longrightarrow\frac12,
+\tag{37.24}
+$$
+
+所以整个整数序列的上极限至少为 $1/2$。此下界严格高于[式（36.19）](#36-任意规模的二重条件退出共同补偿与一次超额增长)的 $2/5$，仍保留该既有下界；任意 $k$ 的字面前像、非冲突比较、队列归纳与同地址计费承担全称论证，不以有限拟合或插值代替。
+
+式（37.22）只给这族构造在所示子序列上的容量下界，不给精确容量、所有叶数的下极限、最优密度或完整分类，也不确定原随机最坏期望值。完整树来源、组成、规范数量地址、原始四值响应、组成祖先许可和实际逆执行仍为不同对象与操作；此全域像成员判定不授权实际逆执行，配对组成等式不建立物理或时间对应。上述四退出／单补偿槽关系是所引实际块、原型认证、遗传相容判据、独立续接及两来源下界之上的仓内推导，不由这些对应或密度数值推出世界原创性。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 38. 嵌套后缀收缩、固定补偿位置与三分之二密度
+
+**定义 38.1（嵌套活动子树与固定右根补偿族）。** 沿用[定义 23.1、30.1、30.6](#30-实际三步像的分歧前沿七叶分离与有限容量)的非空有限自由有序满二叉树域 $\mathcal T$、实际替换 $\rho$、三步像 $\mathcal I_3=\rho^3(\mathcal T)$、等叶数像集 $\mathcal I_3(n)$、叶地址集 $L$、叶标签 $\lambda$、非冲突关系 $\operatorname{NC}$、相容复形 $K,K_\circ$、确定性共同费用 $D$ 与容量 $\mathsf{Cap}$。所有树相等均保留原始括号、左右次序和 $\alpha/\beta$ 标签。替换深度固定为 $d=3$；以下整数 $k\ge1$ 是族参数，与深度无关。
+
+未知输入仍为任意 $U\in\mathcal T$，任务仍为 $\iota_3(U)=\mathbf1_{\{U\in\mathcal I_3\}}$。策略属于 $\mathfrak D_3$ 的条件是对全部 $\mathcal T$ 正确且有限终止。每个固定 $k$ 的共同完整初始化与实际输入无关，不含输入的组成、叶数、大小、高度、正性或候选身份承诺。任意有限左右地址，包括空地址 $\varepsilon$，均合法且可直接请求；报告仅为同一不变输入的 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$。费用只计真实缓存后不同的实际请求地址，地址长度、定位与内部计算不收费，未有限终止费用为 $+\infty$。
+
+直接使用[式（30.2）](#30-实际三步像的分歧前沿七叶分离与有限容量)的字面块，并记其指定前像为 $b$：
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\qquad
+C=\langle A,E\rangle=\rho^3(\beta),\qquad
+b=\langle\beta,\alpha\rangle,\qquad B=\langle C,A\rangle=\rho^3(b).
+\tag{38.1}
+$$
+
+对每个整数 $r\ge0$，递归定义完整树
+
+$$
+\begin{aligned}
+h_0&=\beta,&h_{r+1}&=\langle\alpha,h_r\rangle,\\
+H_0&=C,&H_{r+1}&=\langle A,H_r\rangle,\\
+N_r&=\langle H_r,A\rangle.&&
+\end{aligned}
+\tag{38.2}
+$$
+
+因此 $N_0=B$。右梳全孔上下文 $B_s$ 只取[定义 26.1 的式（26.5）](#26-同组成实际三步像的有限遗传相容模式与无统一-helly-阶数)。对固定 $k\ge1$、$1\le j\le k$，定义
+
+$$
+\begin{aligned}
+g_{k,j}&=B_{k+1}(\underbrace{\alpha,\ldots,\alpha}_{j-1\text{ 个}},b,
+                    \underbrace{\alpha,\ldots,\alpha}_{k-j\text{ 个}},\beta),\\
+G_{k,j}&=B_{k+1}(\underbrace{A,\ldots,A}_{j-1\text{ 个}},B,
+                    \underbrace{A,\ldots,A}_{k-j\text{ 个}},C).
+\end{aligned}
+\tag{38.3}
+$$
+
+零个条目表示空列表，$B_1(X)=X$。下面的 $P_0,X_j,Y_i,F_k,n_k$ 均为本章局部记号，定义全部完整评价来源为
+
+$$
+\begin{aligned}
+P_0&=\langle H_k,B\rangle,\\
+X_j&=\langle G_{k,j},A\rangle\quad(1\le j\le k),\\
+Y_i&=\langle H_i,N_{k-i}\rangle\quad(0\le i<k),\\
+F_k&=\{P_0\}\cup\{X_j:1\le j\le k\}\cup\{Y_i:0\le i<k\},
+\qquad n_k=3k+13.
+\end{aligned}
+\tag{38.4}
+$$
+
+活动子树始终位于根的左孩子，补偿子树始终位于根的右孩子。不同 $Y_i$ 的左侧右梳终点位于不同深度，其补偿树仍在同一个完整地址 $\mathtt R$；不把这些终点当作共同上下文中的独立固定槽。
+
+**定理 38.2（嵌套收缩的实际同组成来源与全部非冲突对）。** 对每个整数 $k\ge1$，定义 38.1 的全部来源有唯一完整三步前像，具体为
+
+$$
+\begin{aligned}
+Q_0&=\langle h_k,b\rangle,\\
+Q_j^X&=\langle g_{k,j},\alpha\rangle\quad(1\le j\le k),\\
+Q_i^Y&=\langle h_i,\langle h_{k-i},\alpha\rangle\rangle
+                              \quad(0\le i<k).
+\end{aligned}
+\tag{38.5}
+$$
+
+它们满足
+
+$$
+\begin{gathered}
+\rho^3(Q_0)=P_0,\qquad \rho^3(Q_j^X)=X_j,\qquad
+\rho^3(Q_i^Y)=Y_i,\\
+c(Q_0)=c(Q_j^X)=c(Q_i^Y)=\binom{k+1}{2},\qquad
+c(P_0)=c(X_j)=c(Y_i)=\binom{k+5}{2k+8},\\
+F_k\subseteq\mathcal I_3(n_k),\qquad |F_k|=2k+1,\\
+\forall P,Q\in F_k,\quad\operatorname{NC}(P,Q),\qquad
+K(F_k)=K_\circ(F_k).
+\end{gathered}
+\tag{38.6}
+$$
+
+所有涉及 $i,j$ 的等式均取式（38.5）的完整指标范围；最后一个等式逐一确定每个 $S\subseteq F_k$ 的共同个体最优取得性。
+
+**证明。** [母卷定义 3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的替换保留每个二叉括号及左右次序。由式（38.1）、（38.2）按 $r$ 归纳，得到 $\rho^3(h_r)=H_r$、$\rho^3(\langle h_r,\alpha\rangle)=N_r$。同态规则在式（38.3）的整个右梳上下文逐孔给 $\rho^3(g_{k,j})=G_{k,j}$，再在根配对即得式（38.5）的三类完整像等式。[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的既有树替换单射性复合三次，供应每个完整前像的唯一性。该命题的原子 $A,B$ 在此对应 $\alpha,\beta$，不是本章的完整块名字。
+
+[母卷定义 3.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的组成加法给 $c(h_r)=(r,1)^{\mathsf T}$。$g_{k,j}$ 的 $k-1$ 个普通 $\alpha$ 槽、一个 $b$ 槽和末端 $\beta$ 给 $c(g_{k,j})=(k,2)^{\mathsf T}$。于是三类前像的组成分别为
+
+$$
+\begin{aligned}
+c(Q_0)&=\binom{k}{1}+\binom11,\\
+c(Q_j^X)&=\binom{k}{2}+\binom10,\\
+c(Q_i^Y)&=\binom{i}{1}+\binom{k-i}{1}+\binom10,
+\end{aligned}
+\qquad\text{均为 }\binom{k+1}{2}.
+\tag{38.7}
+$$
+
+直接应用母卷定理 3.4 的实际组成作用，
+
+$$
+c(\rho^3(Q))=
+\begin{pmatrix}1&2\\2&3\end{pmatrix}\binom{k+1}{2}
+=\binom{k+5}{2k+8},\qquad n(\rho^3(Q))=3k+13
+\quad(Q\in\{Q_0,Q_j^X,Q_i^Y\}).
+\tag{38.8}
+$$
+
+此外 $n(H_r)=3r+5$、$n(N_r)=3r+8$、$n(G_{k,j})=3k+10$。$Y_i$ 的左孩子 $H_i$ 具有两两不同的叶数，且严格小于 $P_0$ 的左孩子 $H_k$；每个 $X_j$ 的左孩子又严格大于 $H_k$，所以这三类来源互不相同。不同 $j$ 的 $G_{k,j}$ 在同一个右梳的第 $j$ 孔分别出现 $B$ 与 $A$，两块字面不同，故这些左孩子也不同。这给 $|F_k|=2k+1$，不是由组成相等推断来源相等。
+
+现在穷尽所有活动子树的比较。相同树当然非冲突；两个根为分支的树是否非冲突，按定义 30.1 分解为对应左右孩子的两项条件。以下只在这项直接分解中使用[引理 30.2 的式（30.3）](#30-实际三步像的分歧前沿七叶分离与有限容量)。它给 $\operatorname{NC}(A,B)$，并对每个 $r\ge0$ 给
+
+$$
+\operatorname{NC}(C,\langle A,H_r\rangle),
+\qquad H_r\ne A.
+\tag{38.9}
+$$
+
+其中 $H_r\ne A$ 已由 $n(H_r)=3r+5\ge5>3$ 确定。任意 $H_r,H_s$，若 $r<s$，逐层去掉相同的 $r$ 个左 $A$，剩余比较为 $C$ 与 $H_{s-r}=\langle A,H_{s-r-1}\rangle$，由式（38.9）非冲突。$s<r$ 对称，$s=r$ 相同。因此全部 $H_r$ 两两非冲突。
+
+$G_{k,j},G_{k,\ell}$ 在共同右梳各孔中只比较相同块或 $A,B$，末端均为 $C$，故全部非冲突；$H_k$ 与每个 $G_{k,j}$ 同样只在第 $j$ 孔比较 $A,B$。这是指定块的直接子树比较，不调用引理 26.2 对其特定填块表的信息叶结论。
+
+还须比较 $H_i$ 与 $G_{k,j}$，其中 $0\le i<k$。若 $j\le i$，前 $i$ 层的左孩子除第 $j$ 层为 $A,B$ 外均为相同的 $A$，这些比较全非冲突；在该前缀末端，比较 $C$ 与尚有 $k-i\ge1$ 个普通 $A$ 的 $H_{k-i}$，式（38.9）给非冲突。若 $j>i$，先去掉共同的 $i$ 个左 $A$。$G_{k,j}$ 的剩余后缀有 $k-i\ge1$ 层，写成 $\langle D,Z\rangle$。它的左孩子 $D$ 在 $j=i+1$ 时为 $B=\langle C,A\rangle$，在 $j>i+1$ 时为 $A$；右孩子 $Z$ 是以 $C$ 结束的普通或含一个 $B$ 的正后缀，故 $Z\in\mathcal I_3$ 且 $n(Z)\ge5$，特别地 $Z\ne A$。当 $D=A$，式（30.3）的第二行直接适用；当 $D=B$，其左孩子 $C\ne A$，同一行的复合左孩子条件适用。两种情况下均得 $\operatorname{NC}(C,\langle D,Z\rangle)$，于是 $H_i,G_{k,j}$ 非冲突。$i=0$ 取空共同前缀；$j=k$ 的末层右孩子就是 $C$，也满足该条件。两种指标关系覆盖全部活动比较。
+
+补偿子树的所有可能值恰为 $A,N_0,N_1,\ldots,N_k$。$N_r=\langle H_r,A\rangle$ 与 $N_s$ 的左孩子已非冲突，右孩子相同，所以全部 $N_r,N_s$ 非冲突；式（30.3）的第一行及 $H_r\ne A$ 又给 $\operatorname{NC}(A,N_r)$。这里 $N_0=B$ 包含基准补偿，$N_{k-i}$ 包含每个收缩补偿，没有只将补偿块与基准块成对比较。
+
+完整来源的不同无序对恰由下表五类穷尽：
+
+$$
+\begin{array}{c|c|c}
+\text{来源对}&\text{左孩子对}&\text{右孩子对}\\ \hline
+(P_0,X_j)&(H_k,G_{k,j})&(N_0,A)\\
+(P_0,Y_i)&(H_k,H_i)&(N_0,N_{k-i})\\
+(X_j,X_\ell),\ j\ne\ell&(G_{k,j},G_{k,\ell})&(A,A)\\
+(X_j,Y_i)&(G_{k,j},H_i)&(A,N_{k-i})\\
+(Y_i,Y_\ell),\ i\ne\ell&(H_i,H_\ell)&(N_{k-i},N_{k-\ell})
+\end{array}
+\tag{38.10}
+$$
+
+左右两列均已证明非冲突，根的叶地址分解因此给全部 $F_k$ 的非冲突关系。对任意 $S\subseteq F_k$，若 $|S|\ge2$，取两个不同成员 $P,Q$；非冲突使 $\Delta(\{P,Q\})=\varnothing$。[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)的遗传信息叶条件在这个二元素子集处失败，故 $S\notin K(F_k)$。空集和单元素子集的遗传条件为空约束，由同一定理及既有单原型完整叶测试取得。因此 $K(F_k)=K_\circ(F_k)$，证明了全部子集而非仅两两最优性。
+
+在边界 $k=1$，$H_1=\langle A,C\rangle=T$、$G_{1,1}=\langle B,C\rangle=W_1$、$N_1=\langle T,A\rangle=K_T$，故 $F_1=\{\langle T,B\rangle,\langle W_1,A\rangle,\langle C,K_T\rangle\}$。这正是[式（36.3）](#36-任意规模的二重条件退出共同补偿与一次超额增长)的十六叶三来源族，只有局部名称不同；式（38.2）—（38.10）同时覆盖这个边界和全部更大的 $k$。证毕。
+
+**定义 38.3（沿嵌套后缀的同一全域控制器）。** 对每个固定整数 $k\ge1$，定义互异有限地址
+
+$$
+q_t=\mathtt L\mathtt R^{t-1}\mathtt{LLR}
+\quad(1\le t\le k+1).
+\tag{38.11}
+$$
+
+控制器 $\pi_k$ 的完整初始化只依固定 $k$、式（38.4）的全部完整原型、下述路由以及[定理 23.2、29.2](#29-任意有限实际正来源族的联合响应费用核心与全域取得)已有的单原型完整带标签叶测试和全域总后备。外层真实缓存初始为空。按 $t=1,\ldots,k+1$ 依次请求 $q_t$：报告 $\mathsf{leaf}_\alpha$ 时继续；报告 $\mathsf{branch}$ 且 $t\le k$ 时暂选 $X_t$；报告 $\mathsf{absent}$ 且 $2\le t\le k+1$ 时暂选 $Y_{t-2}$。每个暂选都结束路由并选择后续认证；若全部 $k+1$ 个报告均为 $\mathsf{leaf}_\alpha$，则暂选 $P_0$。全部其他情形，即任意 $\mathsf{leaf}_\beta$、$t=1$ 的 $\mathsf{absent}$ 和 $t=k+1$ 的 $\mathsf{branch}$，都进入同一个总后备。暂选不返回任务答案。
+
+暂选 $P$ 后，从单原型测试自己的完整初始化、空逻辑历史和初始控制状态开始，以固定短词优先次序请求 $L(P)$ 的全部带标签叶。每次真实报告必须精确等于 $P$ 在该地址的叶标签；相反叶标签、分支和不存在均是不匹配，进入总后备；全部叶匹配才返回 $1$。总后备直接取定理 23.2 证明中的既有全域有限判定：从根仅在真实分支节点处扩展左右孩子，恢复实际有限树并取得实际叶数 $m$，然后有限枚举叶数至多 $m$ 的全部完整带标签前像树，比较第三步像，命中返回 $1$，穷尽未命中返回 $0$。每次进入后备，包括认证不匹配后进入，都建立后备自己的完整初始化、空逻辑历史和初始控制状态；$m$ 由本次后备运行取得。
+
+每段续接均采用[引理 27.3](#27-实际三步像的面费用核心与分数面覆盖锐值)的真实同地址缓存供应。外层缓存只存本次运行已经实际请求的地址及同一不变输入的原始报告；后续实际请求完全相同的地址时才供应缓存，未命中则实际读取并保存。该次请求及报告写入后续策略自己的逻辑历史，原有路由和认证历史不预填其初态。原型描述、正队列内的推论、未请求的后缀及其他来源的报告都不生成缓存条目。
+
+**定理 38.4（条件幸存集、精确付费集合与任意参数的锐费用）。** 对每个整数 $k\ge1$，定义 38.3 的同一个控制器 $\pi_k$ 属于 $\mathfrak D_3$。在定义 38.1 的评价族上，其实际付费的不同地址集合和费用恰为
+
+$$
+\begin{aligned}
+J_{\pi_k}(P_0)&=L(P_0),\\
+J_{\pi_k}(X_j)&=L(X_j)\cup\{q_j\},
+ &q_j&\notin L(X_j)\quad(1\le j\le k),\\
+J_{\pi_k}(Y_i)&=L(Y_i)\cup\{q_{i+2}\},
+ &q_{i+2}&\notin L(Y_i)\quad(0\le i<k),\\
+C_{\pi_k}(P_0)&=n_k,
+ &C_{\pi_k}(X_j)&=C_{\pi_k}(Y_i)=n_k+1,\\
+D(F_k)&=n_k+1=3k+14.&&
+\end{aligned}
+\tag{38.12}
+$$
+
+正确性和有限终止覆盖每个未知 $U\in\mathcal T$；式（38.12）的费用界只针对 $F_k$。参数统一性是为每个固定 $k$ 提供一个输入无关的 $\pi_k$。
+
+**证明。** 先从完整字面描述确定真正到达的报告。式（38.1）给 $A|_{\mathtt{LR}}=\alpha$、$B|_{\mathtt{LR}}=E$、$C|_{\mathtt{LLR}}=\alpha$。而在 $C$ 上沿 $\mathtt{RLLR}$ 行走，先到右孩子 $E$，再到其左叶 $\beta$，尚余非空后缀 $\mathtt{LR}$，故该地址报告 $\mathsf{absent}$。由此三类实际来源的已请求报告精确为
+
+$$
+\begin{array}{c|c|c}
+\text{来源}&\text{实际到达的指标}&\operatorname{out}(q_t)\\ \hline
+P_0&1\le t\le k+1&\mathsf{leaf}_\alpha\\
+X_j&1\le t<j&\mathsf{leaf}_\alpha\\
+X_j&t=j&\mathsf{branch}\\
+Y_i&1\le t\le i+1&\mathsf{leaf}_\alpha\\
+Y_i&t=i+2&\mathsf{absent}
+\end{array}
+\tag{38.13}
+$$
+
+确实，$P_0$ 的 $t\le k$ 请求位于左侧右梳第 $t$ 个 $A$ 内的 $\mathtt{LR}$，最后一个位于末端 $C$ 内的 $\mathtt{LLR}$。$X_j$ 的先前槽同为 $A$，到第 $j$ 槽才在 $B$ 内读到分支 $E$。$Y_i$ 的前 $i$ 槽为 $A$，第 $i+1$ 个报告取其左侧末端 $C$ 的 $\alpha$ 叶；第 $i+2$ 个才请求这个 $C$ 的 $\mathtt{RLLR}$ 不存在地址。退出以后没有继续请求更大的 $t$，表中的范围之外不向该运行供应任何报告。各 $q_t$ 长度为 $t+3$，所以互异；地址不要求前缀闭合。
+
+对 $1\le t\le k+2$ 定义评价原型集
+
+$$
+S_t=\{P_0\}\cup\{X_j:t\le j\le k\}
+       \cup\{Y_i:\max(0,t-2)\le i<k\}.
+\tag{38.14}
+$$
+
+断言：在请求 $q_t$ 前，此前实际路由请求全部报告 $\mathsf{leaf}_\alpha$ 时，匹配该路由历史的评价成员恰为 $S_t$；$t=k+2$ 表示全部路由完成后的集合，不再请求 $q_{k+2}$。$t=1$ 时历史为空，$S_1=F_k$。若断言在 $t\le k+1$ 成立，式（38.13）在 $S_t$ 上给：$t\le k$ 时分支孩子恰为 $\{X_t\}$，$t=k+1$ 时分支孩子为空；$t\ge2$ 时不存在孩子恰为 $\{Y_{t-2}\}$，$t=1$ 时不存在孩子为空；$\beta$ 叶孩子始终为空。剩余的 $\alpha$ 叶孩子恰为 $S_{t+1}$。这证明归纳步，最终 $S_{k+2}=\{P_0\}$。因此每个合法退出仅在此前已取得的历史条件下暂选对应来源，且同一控制器同时实现全部这些条件。
+
+$i=0$ 时 $Y_0$ 首先在 $C$ 的 $\mathtt{LLR}$ 报告 $\alpha$，到 $q_2$ 才退出；$i=k-1$ 时在最后一个 $q_{k+1}$ 退出。$j=1$ 时 $X_1$ 首问退出，$j=k$ 时在 $q_k$ 退出。$k=1$ 的两问路由先在 $q_1$ 分出 $X_1$，再在 $q_2$ 分出 $Y_0$，两个 $\alpha$ 报告后只剩 $P_0$。这些边界全在同一个归纳中。$S_t$ 仅是有限评价族匹配历史的集合，不是全部未知输入的相容纤维；尤其未请求的后缀不决定停止或接受。
+
+全域正确性采用已有认证与后备供应。[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)在本章所需的 $d=3=3\cdot1$ 范围直接给出：任意 $U\in\mathcal T$ 若匹配所选正原型 $P$ 的全部带标签叶，则 $U=P\in\mathcal I_3$。完整字面恢复的供应是[母卷定理 9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)，有限完整描述的供应是同节定理 9.2。故认证后的接受正确，暂选只决定有限测试。意外路由报告或任一叶不匹配均不判负，而交给已有总后备。
+
+后备正确性和有限总性直接复用[定理 23.2 证明与定理 29.2](#29-任意有限实际正来源族的联合响应费用核心与全域取得)：每个实际 $U$ 有限，从根只在真实分支处扩展的恢复有限终止；取得 $m$ 后，有限前像枚举可穷尽。原替换不减少叶数，故每个实际第三步前像都在叶数至多 $m$ 的枚举中。命中及未命中分别正确给出成员身份，既有规范编译卷命题 4.3 供应字面前像单射性；组成逆矩阵不承担前像存在性。引理 27.3 的独立初态及真实同址缓存使每段续接逐步等于其从头单独读取同一 $U$ 的执行，因而保留其返回和终止性。路由至多 $k+1$ 问，认证有限，后备对每个实际有限输入有限，故 $\pi_k$ 在全部 $\mathcal T$ 上正确且有限终止。
+
+特别地，两个未知根叶在非空 $q_1$ 上都报告 $\mathsf{absent}$，立即进入同一总后备。恢复所得 $m=1$，仅有两个根叶候选前像，其第三步像分别为分支树 $A,C$，有限比较后拒绝。族外任意有限正树和负树同样由上述认证或后备处理，没有预置大小承诺或等待前像出现的无穷搜索。
+
+在评价来源上，式（38.14）的归纳恰选中来源自身，所以其全部叶匹配，后备不运行。真正请求的路由地址集合为
+
+$$
+\begin{aligned}
+\mathcal R(P_0)&=\{q_t:1\le t\le k+1\},\\
+\mathcal R(X_j)&=\{q_t:1\le t\le j\},\\
+\mathcal R(Y_i)&=\{q_t:1\le t\le i+2\}.
+\end{aligned}
+\tag{38.15}
+$$
+
+式（38.13）说明 $\mathcal R(P_0)$ 全是它自己的 $\alpha$ 叶，$\mathcal R(X_j)$ 除唯一分支地址 $q_j$ 外全是 $X_j$ 自己的 $\alpha$ 叶，$\mathcal R(Y_i)$ 除唯一不存在地址 $q_{i+2}$ 外全是 $Y_i$ 自己的 $\alpha$ 叶。各独立单原型测试在该原型上请求的不同地址恰为它自己的全部叶。直接使用引理 27.3 的实际并集计费，
+
+$$
+J_{\pi_k}(P)=\mathcal R(P)\cup L(P)\qquad(P\in F_k).
+\tag{38.16}
+$$
+
+消去已属各自叶集的路由地址即得式（38.12）的三个精确集合；唯一分支或不存在地址确在自身叶集之外。因此同一个 $\pi_k$ 取得费用 $n_k,n_k+1,n_k+1$，给 $D(F_k)\le n_k+1$。
+
+反向任取 $\pi\in\mathfrak D_3$。因 $k\ge1$，$P_0,X_1$ 始终存在；定理 38.2 给它们不同、非冲突且同为 $n_k$ 叶。直接应用[定理 23.2 的式（23.4）](#23-全有限来源上两个指定正例的共同最优地址费用)，
+
+$$
+C_\pi(P_0)+C_\pi(X_1)\ge2n_k+1.
+\tag{38.17}
+$$
+
+两个有限不同地址费用为整数，故 $\max_{P\in F_k}C_\pi(P)\ge n_k+1$。对原全域策略空间取下确界，得 $D(F_k)\ge n_k+1$，与式（38.16）的共同取得合并，得到 $D(F_k)=3k+14$。证毕。
+
+**推论 38.5（固定补偿位置的收缩资源关系与三分之二容量下界）。** 对每个整数 $k\ge1$，式（38.4）的活动子树和同一右根补偿子树有精确叶数关系
+
+$$
+\begin{aligned}
+n(H_k)+n(B)&=(3k+5)+8,\\
+n(G_{k,j})+n(A)&=(3k+10)+3\quad(1\le j\le k),\\
+n(H_i)+n(N_{k-i})&=(3i+5)+(3(k-i)+8)\quad(0\le i<k),
+\end{aligned}
+\qquad\text{均为 }3k+13.
+\tag{38.18}
+$$
+
+这族实际来源具有构造增量及一次超额容量下界
+
+$$
+\begin{gathered}
+n_{k+1}-n_k=3,\qquad |F_{k+1}|-|F_k|=2,\\
+\boxed{\quad
+\mathsf{Cap}(3k+13,1)\ge2k+1\quad(k\ge1),\qquad
+\limsup_{n\to\infty}\frac{\mathsf{Cap}(n,1)}{n}\ge\frac23.
+\quad}
+\end{gathered}
+\tag{38.19}
+$$
+
+**证明。** 式（38.7）的每一行都是同一完整来源左右孩子的前像组成之和，式（38.18）是这些指定完整子树的叶数之和。与基准的左侧 $H_k$、右侧 $B=N_0$ 比较，$X_j$ 的左侧以 $B$ 代替一个 $A$，增五叶，右侧以 $A$ 代替 $B$，减五叶；$Y_i$ 的左侧从 $H_k$ 收缩为 $H_i$，减 $3(k-i)$ 叶，右侧从 $N_0$ 变为 $N_{k-i}$，增 $3(k-i)$ 叶。后一关系在前像中把左侧少掉的 $k-i$ 个 $\alpha$ 放在固定右根的完整前像 $\langle h_{k-i},\alpha\rangle$ 内，两个组成坐标同时保持。式（38.9）、（38.10）保证这种嵌套后缀与所有其他活动和补偿选择联合非冲突；式（38.14）保证不同收缩深度在同一取得历史中形成各自有条件到达的退出。
+
+参数从 $k$ 变为 $k+1$ 时，基准左侧增加一个三叶 $A$，来源数增加两个；$F_{k+1}$ 的路由在式（38.11）给定的新范围内，同时保留全部新的分支和收缩退出，每个非基准来源仍只请求一个自身叶外地址。这些关系比较不同完整且各自不变的来源描述；实际读取没有移动叶、改写输入或执行补偿。
+
+定理 38.2 已给 $F_k\subseteq\mathcal I_3(3k+13)$、$|F_k|=2k+1$、$K(F_k)=K_\circ(F_k)$，定理 38.4 已给同一个全域总策略取得 $D(F_k)=3k+14$。它们正是[定义 30.6](#30-实际三步像的分歧前沿七叶分离与有限容量)的实际容量条件，故逐 $k$ 有 $\mathsf{Cap}(3k+13,1)\ge2k+1$。沿明确子序列 $n_k=3k+13\to\infty$，
+
+$$
+\frac{\mathsf{Cap}(n_k,1)}{n_k}
+\ge\frac{2k+1}{3k+13}\longrightarrow\frac23>\frac12,
+\tag{38.20}
+$$
+
+得到整个整数序列的上极限下界；任意 $k$ 的字面前像、全部非冲突比较、幸存集归纳和同址计费承担这个结论。式（38.19）给所示子序列的充分下界和此族的锐费用，不给所有叶数的容量下界、全局上界、最优密度、精确容量或随机费用结论。完整树来源、组成、规范数量地址、四值观察响应、组成祖先许可及实际逆执行保留各自的对象与操作意义；全域成员判定不授权实际逆执行，配对组成关系不建立物理或时间对应。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 39. 同一实际来源的规范块退出界与一次超额密度
+
+**定理 39.1（末端来源的规范块退出界）。** 沿用[定义 29.1、30.6](#30-实际三步像的分歧前沿七叶分离与有限容量)的 $d=3$ 全有限树只读合同、实际像集 $\mathcal I_3(n)$、相容复形 $K,K_\circ$ 和确定性共同费用 $D$。未知输入遍历全部非空有限自由有序满二叉 $\alpha/\beta$ 树 $\mathcal T$；共同完整初始化与输入无关，没有组成、叶数、大小、高度、正性或候选身份承诺。每个有限左右地址，包括 $\varepsilon$，均合法，查询报告仅为同一不变输入的 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$。费用只计真实同址缓存后的不同实际请求地址，地址长度、定位与计算不收费；策略在全部 $\mathcal T$ 上正确且有限终止。
+
+对每个 $n\in\mathbb N_0$ 和每个非空有限族 $F\subseteq\mathcal I_3(n)$，若 $K(F)=K_\circ(F)$ 且 $D(F)\le n+1$，则存在同一实际成员 $P^\ast\in F$，使其唯一完整第三步前像 $Q^\ast$、前像组成和输出 $\beta$ 叶集满足
+
+$$
+\begin{gathered}
+\rho^3(Q^\ast)=P^\ast,\qquad
+c(Q^\ast)=\binom{a^\ast}{b^\ast},\qquad
+\Lambda_\beta(P^\ast)=\{u:\operatorname{out}_{P^\ast}(u)=\mathsf{leaf}_\beta\},\\
+\boxed{\quad
+|F|\le2a^\ast+3b^\ast+2
+      =|\Lambda_\beta(P^\ast)|+2.
+\quad}
+\end{gathered}
+\tag{39.1}
+$$
+
+这里不要求 $F$ 的全部前像具有相同组成。
+
+**证明。** 完整前像的唯一性直接采用[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的树替换单射性复合三次。其原子 $A,B$ 对应这里的 $\alpha,\beta$，不同于以下使用的完整块名称。若 $F$ 为单元素族，取其唯一成员为 $P^\ast$；非空前像给 $a^\ast+b^\ast\ge1$，所以式（39.1）的不等式成立，输出 $\beta$ 叶数等式由[母卷定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的第三步组成作用给出。
+
+以下设 $|F|\ge2$。任意不同的 $P,Q\in F$ 都满足[式（30.1）](#30-实际三步像的分歧前沿七叶分离与有限容量)的 $\operatorname{NC}$。否则存在两者标签相反的共享叶，二元素族的遗传信息叶条件成立；[定理 25.2](#25-有限正来源族的遗传共享叶分离与四元共同费用)使该对共同取得各自完整叶下界，从而属于 $K(F)$，与 $K(F)=K_\circ(F)$ 矛盾。因此，在任意幸存队列的严格节点，至多一个叶标签孩子非空；其余可能孩子只有分支和不存在。
+
+直接使用[定理 29.2、29.3 的式（29.5）、（29.6）、（29.8）](#29-任意有限实际正来源族的联合响应费用核心与全域取得)，选取达到 $D(F)$ 的一棵实际代表严格路由。每个非空响应孩子都是当前队列的真子集，到单点结束；同一路径上的完整联合响应向量及实际代表地址均不重复。对每个实际 $P\in F$，接上完整带标签叶认证后的费用为
+
+$$
+C_\sigma(P)=n+
+\bigl|\{u\in B(P):
+\operatorname{out}_P(u)\in\{\mathsf{branch},\mathsf{absent}\}\}\bigr|
+\le n+1,
+\tag{39.2}
+$$
+
+其中 $B(P)$ 是这同一棵路由在 $P$ 上实际请求的地址集合。故每条评价路径最多有一次非叶路由报告。任何非叶孩子必为单点：若其中仍有至少两个成员，它的下一严格节点至少有一个非叶孩子，因为两个不同叶标签孩子不能同时非空；从该非叶孩子取一个实际成员，其路径已有两次非叶报告。两次地址互异，由式（39.2）违反一次超额界。这一论证使用同一实际成员的路径，不拼接不同成员的费用。
+
+于是所有非单点继续节点都沿唯一的叶响应孩子形成一条有限链。保留这条链中有非空叶孩子的全部严格节点，依次记其实际地址为 $u_1,\ldots,u_\ell$。该链或者经最后一个叶孩子到达单点，或者到达一个没有叶孩子的严格节点；后一节点只有分支和不存在两个非空孩子，且两者均为单点。分别把该单点或最后这个二元素队列记为 $R$，令 $\tau=|R|\in\{1,2\}$；后一情形的最后一次非叶分裂不列入 $u_1,\ldots,u_\ell$。若根节点已经没有叶孩子，则 $\ell=0$、$R=F$、$\tau=2$。
+
+在每个保留节点，令 $e_j$ 为其非叶孩子中的成员总数。各非叶孩子已为单点，所以 $e_j\le2$。这些成员类是沿同一叶响应链的互不相交首次退出类，剩余类恰为 $R$。取任意 $P^\ast\in R$，则每个 $u_j$ 都是这个同一 $P^\ast$ 的叶，且
+
+$$
+|F|=\sum_{j=1}^{\ell}e_j+\tau,\qquad
+\tau\le2,\qquad
+u_j\in L(P^\ast)\quad(1\le j\le\ell).
+\tag{39.3}
+$$
+
+采用[引理 31.2 的式（31.4）、（31.5）](#31-任意地址叶报告的块强制单孔刚性与容量阈值)的字面块
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle=\rho^3(\alpha),\qquad
+C=\langle A,E\rangle=\rho^3(\beta).
+\tag{39.4}
+$$
+
+$Q^\ast$ 的叶地址是前缀自由的规范块根；它的 $a^\ast$ 个 $\alpha$ 叶和 $b^\ast$ 个 $\beta$ 叶分别给 $P^\ast$ 中的规范 $A$ 和规范 $C$。这些块的输出叶前沿不交，并恰分割 $L(P^\ast)$。把每个 $u_j$ 分配给包含它的唯一规范块。这个分配只用 $Q^\ast$，不要求其他评价成员有相同的前像组成或规范块根。
+
+设一个规范 $A$ 的根为 $v$。它的三个叶偏移为 $\mathtt{LL},\mathtt{LR},\mathtt R$，标签依次为 $\beta,\alpha,\beta$。按[定义 31.3、引理 31.4 的全部五行强制规则（31.6）](#31-任意地址叶报告的块强制单孔刚性与容量阈值)，在这些地址的任一个匹配叶报告都强制整个 $A$ 位于 $v$。因此该块中第一次保留查询的叶孩子里，每个幸存评价成员都满足 $U|_v=A$；此后的所有幸存队列仍保留这个等式。这个 $A$ 内的其他地址已为常值，不能再作严格查询。故一个规范 $A$ 至多承载一个 $u_j$，贡献至多两名首次退出成员。
+
+设一个规范 $C$ 的根为 $v$。其左 $A$ 组和右 $E$ 组的叶偏移分别为
+
+$$
+\{\mathtt{LLL},\mathtt{LLR},\mathtt{LR}\},
+\qquad
+\{\mathtt{RL},\mathtt{RR}\}.
+\tag{39.5}
+$$
+
+五行规则的前三行应用于 $v\mathtt L$，使左组的任一个匹配叶报告强制 $U|_{v\mathtt L}=A$；最后两行应用于 $v$，使右组的任一个匹配叶报告强制 $U|_v=C$。每组因而至多承载一个严格保留查询。若两组都有保留查询，则左组必须在先：右组报告一旦固定整个 $C$，后来的左组地址也为常值。
+
+此处使用如下任意地址的实际父子结论：对每个 $U\in\mathcal I_3$ 和每个有限地址 $v$，包括 $v=\varepsilon$，
+
+$$
+U|_{v\mathtt L}=A
+\quad\Longrightarrow\quad
+U|_v=C\quad\text{或}\quad
+U|_v=\langle A,T\rangle\text{，其中 }T\in\mathcal I_3.
+\tag{39.6}
+$$
+
+为证式（39.6），对 $v$ 应用引理 31.2 的完整位置分类。若 $v$ 是唯一前像的内部节点，两个输出孩子都属于 $\mathcal I_3$；左孩子等于 $A$ 时即得 $\langle A,T\rangle$。若 $v$ 是规范块根，$A$ 根的左孩子为 $E\ne A$，只有 $C$ 根的左孩子为 $A$，给第一种情形。若 $v$ 是规范块的真内部偏移，式（31.5）列出的分支子树只有 $A,E$；它们的左孩子分别为 $E,\beta$，均不为 $A$。同表的输出叶 $\alpha,\beta$ 没有左子树；不存在地址也不能有左子树 $A$。这穷尽前像内部节点、规范根、真块内分支、叶与不存在地址，且空地址直接属于前两类之一。式（39.6）得证。
+
+所以式（39.6）的前提还给
+
+$$
+U|_{v\mathtt R}=E\quad\text{或}\quad
+U|_{v\mathtt R}=T\in\mathcal I_3,
+\qquad
+v\mathtt{RL},\ v\mathtt{RR}\text{ 均存在于 }U.
+\tag{39.7}
+$$
+
+这里 $E$ 为分支，每个实际三步像 $T$ 也为分支，直接使用引理 31.2 的根分类。若一个规范 $C$ 有两次保留查询，左组查询的叶孩子内每个实际幸存成员都满足式（39.6）的前提，之后在其他块的任何交错查询只会缩小队列，故到右组查询时式（39.7）仍同时成立。右组查询因此没有不存在孩子；两两非冲突又排除与 $P^\ast$ 相反的叶标签孩子。除了 $P^\ast$ 所走的叶孩子，只剩至多一个分支孩子，且它为单点。因此左组至多贡献两名首次退出成员，右组至多贡献一名，总共至多三名。若该 $C$ 只有一次保留查询，则贡献至多两名；没有保留查询时贡献零。故每个规范 $C$ 一律贡献至多三名。
+
+对 $P^\ast$ 的不交规范块求和，式（39.3）遂给
+
+$$
+\sum_{j=1}^{\ell}e_j\le2a^\ast+3b^\ast,
+\qquad
+|F|\le2a^\ast+3b^\ast+2.
+\tag{39.8}
+$$
+
+母卷定理 3.4 给 $c(P^\ast)=(a^\ast+2b^\ast,\,2a^\ast+3b^\ast)^{\mathsf T}$，所以后一坐标恰为 $|\Lambda_\beta(P^\ast)|$，完成式（39.1）。所有首次退出和块贡献均取自同一棵实际路由及同一个实际成员 $P^\ast$。
+
+所用路由的全域认证和总性仍由定理 29.2 供应。单点路由只选择原型；接受仍须实际请求其完整带标签叶前沿，应用[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)的 $d=3=3\cdot1$ 条件及[母卷定理 9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)的完整树恢复。块强制与式（39.6）的推论只约束正评价队列，不产生缓存条目。任何意外路由响应或叶核对不匹配都转入定理 23.2、29.2 的独立初始化全域总后备，不把不匹配判为负性；[引理 27.3](#27-实际三步像的面费用核心与分数面覆盖锐值)只在后续实际请求相同地址时供应此前真实缓存报告。由此式（39.2）仍计不同的实际请求地址，而全部未知有限正负树仍在原正确性及有限终止合同内。证毕。
+
+**推论 39.2（组成细化、全规模上界与上极限密度）。** 在定理 39.1 的条件下，若全部 $P\in F$ 的唯一完整第三步前像具有同一组成 $(a,b)^{\mathsf T}$，则
+
+$$
+\boxed{\quad
+|F|\le2a+3b+2=\frac{2n-b}{3}+2.
+\quad}
+\tag{39.9}
+$$
+
+不要求共同前像组成时，对每个 $n\in\mathbb N_0$ 仍有
+
+$$
+\boxed{\quad
+\mathsf{Cap}(n,1)\le\left\lfloor\frac{2n}{3}\right\rfloor+2,
+\qquad
+\limsup_{n\to\infty}\frac{\mathsf{Cap}(n,1)}{n}=\frac23.
+\quad}
+\tag{39.10}
+$$
+
+上极限沿全部正整数 $n$ 取；不可行叶数的容量仍为零。
+
+**证明。** 对定理 39.1 选出的实际 $P^\ast$，母卷定理 3.4 的第三步组成作用给
+
+$$
+n=3a^\ast+5b^\ast,\qquad
+2a^\ast+3b^\ast
+ =\frac{2n-b^\ast}{3}\le\frac{2n}{3}.
+\tag{39.11}
+$$
+
+若共同前像组成存在，则 $(a^\ast,b^\ast)=(a,b)$，式（39.1）、（39.11）直接给式（39.9）。一般情形对每个非空符合[定义 30.6](#30-实际三步像的分歧前沿七叶分离与有限容量)容量条件的实际族分别使用其自己的 $P^\ast$；$|F|$ 为整数，故 $|F|\le\lfloor2n/3\rfloor+2$。这一步不跨族选择共同组成。空族的大小零也满足该界；$\mathcal I_3(n)$ 为空时只有空族，容量为零。式（30.10）的实际像计数已保证容量在有限集合上取最大值，因此得到式（39.10）的全部 $n$ 上界，包含单元素族及不可行规模。
+
+对 $n\ge1$ 除以上界中的 $n$，有 $\mathsf{Cap}(n,1)/n\le2/3+2/n$，给上极限至多 $2/3$。反向直接使用[推论 38.5 的式（38.19）、（38.20）](#38-嵌套后缀收缩固定补偿位置与三分之二密度)：其实际同组成族在 $n_k=3k+13$ 处有 $2k+1$ 个来源、$K=K_\circ$，并由同一个输入无关全域总控制器取得一次超额费用。因此
+
+$$
+\limsup_{n\to\infty}\frac{\mathsf{Cap}(n,1)}{n}
+\ge\lim_{k\to\infty}\frac{2k+1}{3k+13}=\frac23.
+\tag{39.12}
+$$
+
+两方向合并即得式（39.10）的上极限等式。这个等式不含普通密度极限、精确有限容量、全叶数下界、其他替换深度或随机化最优值的断言。完整树来源、组成、规范数量地址、原始观察响应、组成祖先许可与实际逆执行保持各自的对象和操作；只读成员判定与前像描述的唯一性不授予实际逆执行，环境代数关系不承担物理对应。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 40. 历史残余 β 资源、三 β 共享来源与两次超额系数
+
+**定义 40.1（同一实际历史的固定块与残余资源）。** 沿用[定义 29.1、30.1、30.6、31.1—31.3](#31-任意地址叶报告的块强制单孔刚性与容量阈值)的自由有序满二叉树域 $\mathcal T$、实际替换 $\rho$、$\mathcal I_3=\rho^3(\mathcal T)$、等叶数像集 $\mathcal I_3(n)$、叶地址集 $L$、标签 $\lambda$、四值报告 $\operatorname{out}$、非冲突关系 $\operatorname{NC}$、相容复形 $K,K_\circ$、全域确定性策略空间 $\mathfrak D_3$、共同费用 $D$ 与容量 $\mathsf{Cap}$。替换深度始终为 $d=3$。未知输入遍历全部非空有限带 $\alpha/\beta$ 标签的有序满二叉树，没有大小、组成、叶数、高度、正性、所属子类或候选身份承诺。每个有限左右地址，包括根 $\varepsilon$，都可直接请求；地址长度、定位与计算不收费。四种实际报告 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$ 保持不同，费用仅计真实同址缓存后不同的实际请求地址。
+
+取非空有限评价族 $F\subseteq\mathcal I_3(n)$。对同一实际请求—响应历史 $H$，记
+
+$$
+S_H=\{P\in F:P\text{ 匹配 }H\text{ 的全部实际报告}\},\qquad
+\Lambda_\beta(P)=\{u:\operatorname{out}_P(u)=\mathsf{leaf}_\beta\}.
+\tag{40.1}
+$$
+
+只对 $S_H\ne\varnothing$ 使用以下资源。令 $\mathcal B_H$ 恰为定义 31.3 对 $H$ 中实际叶报告应用五行规则（31.6）得到的 $A/C$ 块集合；分支、不存在及其他逻辑推论不增加块条目。采用式（30.2）的完整字面树
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle,\qquad
+C=\langle A,E\rangle,\qquad
+B=\langle C,A\rangle,
+\tag{40.2}
+$$
+
+定义固定的 $\beta$ 地址并集、其大小及任一统一整数上界 $W$ 下的残余为
+
+$$
+\begin{aligned}
+\Psi(H)&=\bigcup_{(v,T)\in\mathcal B_H}v\Lambda_\beta(T),
+ &m(H)&=|\Psi(H)|,\\
+\Lambda_\beta(A)&=\{\mathtt{LL},\mathtt R\},
+ &\Lambda_\beta(C)&=\{\mathtt{LLL},\mathtt{LR},\mathtt{RL}\},\\
+W&\ge\max_{P\in F}|\Lambda_\beta(P)|,
+ &R(H)&=W-m(H).
+\end{aligned}
+\tag{40.3}
+$$
+
+$vX=\{vx:x\in X\}$ 表示在地址前加同一有限字。集合并消去重复块和包含块造成的重复地址。$\Psi(H)$ 仅是正评价队列的数学约束，不能作未知输入的已取得报告或缓存条目。以下严格路由均取第 29 章的实际有限路由：非单点节点真实请求一个使当前队列严格分裂的地址，按实际四值进入非空真子队列，终端为单点；单点只选择完整带标签叶测试。
+
+**定理 40.2（严格叶孩子的 β 增益与非叶孩子数）。** 设 $F$ 两两非冲突，$H$ 是一棵上述严格路由的共同历史，$S_H\ne\varnothing$。若下一地址 $u$ 有非空叶响应孩子，令该唯一叶标签为 $y$，$H'=H\mathbin{\frown}(u,y)$，并令 $d$ 为该节点非空分支、不存在孩子的数目，则
+
+$$
+\Psi(H)\subseteq\Lambda_\beta(P)\quad(P\in S_H),\qquad
+w:=|\Psi(H')\setminus\Psi(H)|\in\{1,2,3\},\qquad
+1\le d\le\min\{2,w\}.
+\tag{40.4}
+$$
+
+其中 $w=1$ 恰对应新报告补全一个此前只固定立即左 $A$ 的 $C$；此时不存在孩子为空。结论允许任意块根及查询地址，包括空根，不要求请求的地址集合前缀闭合。
+
+**证明。** 引理 31.4 的五行强制适用于全部匹配旧实际叶报告的正来源，所以每个旧 $(v,T)$ 都满足 $P|_v=T$，从而式（40.3）的每个地址确为所有 $P\in S_H$ 的 $\beta$ 叶。非冲突性使一个地址不能在两个成员上分别为相反标签的叶；故至多一个叶孩子非空。严格节点至少有两个非空孩子，另外只可能有分支、不存在两种，所以 $1\le d\le2$。
+
+具体地，五行叶报告 $v\mathtt R$ 的 $\beta$、$v\mathtt{LL}$ 的 $\beta$、$v\mathtt{LR}$ 的 $\alpha$ 都强制 $P|_v=A$；$v\mathtt{RL}$ 的 $\beta$、$v\mathtt{RR}$ 的 $\alpha$ 都强制 $P|_v=C$。这些是定义 31.3 的全部行，任意正叶按引理 31.2 的完整位置分类必属于其中一行；没有另加根叶或短地址例外。令新报告的强制块为 $(v,T)$，在叶孩子中选择一个实际 $P$。旧块及新块均在这个同一 $P$ 中成立，因此引理 31.4 的重叠分类可逐对应用。
+
+若 $T=A$，任何相交旧块只能是同一个 $A$，或是以这个 $A$ 为立即左孩子的 $C$；其余旧块根与 $v$ 不可比。前两种相交情形都会在报告前固定整个新 $A$，使 $u$ 在 $S_H$ 上已有常值叶响应，与严格性矛盾。于是新 $A$ 的两片 $\beta$ 都未在旧并集中，$w=2$。
+
+若 $T=C$，同根旧 $C$ 也会使本次请求为常值，故不能存在。按同一重叠分类，新 $C$ 内唯一可能的旧块是其立即左 $A$；没有更大的 $A/C$ 能严格包含一个 $C$。其余旧块与新 $C$ 不交。若左 $A$ 尚未列入旧块，三片 $\beta$ 全部新增，$w=3$。若它已经固定，旧并集在新 $C$ 内恰为
+
+$$
+\{v\mathtt{LLL},v\mathtt{LR}\},\qquad
+\Psi(H')\setminus\Psi(H)=\{v\mathtt{RL}\},
+\tag{40.5}
+$$
+
+所以 $w=1$。这同时证明了没有其他部分重叠或零增益情形，且所有重叠只按地址集合计一次。
+
+最后处理 $w=1$ 的非叶孩子。旧报告使每个当前成员 $U$ 都满足 $U|_{v\mathtt L}=A$。第 39 章式（39.6）—（39.7）在任意有限 $v$ 上给
+
+$$
+U|_v=C\quad\text{或}\quad U|_v=\langle A,T_0\rangle,
+\quad T_0\in\mathcal I_3;\qquad
+v\mathtt{RL},v\mathtt{RR}\text{ 均存在}.
+\tag{40.6}
+$$
+
+其位置分类穷尽前像内部节点、规范块根及真块内位置；根 $v=\varepsilon$ 也已包含，块内其他分支 $A,E$ 的左孩子都不等于 $A$。新报告强制 $C$，故 $u$ 必为右组的 $v\mathtt{RL}$ 或 $v\mathtt{RR}$。式（40.6）排除这个地址上的不存在报告；相反叶标签又由非冲突性排除。唯一可能的非叶孩子是分支，严格性使它非空，所以 $d=1$。在 $w=2,3$ 时原有 $d\le2$ 已足够。所有约束都在同一实际幸存队列中成立；对任意负未知输入没有采用这些正性推论。证毕。
+
+**定理 40.3（继承历史的单次非叶后缀界）。** 设 $F$ 两两非冲突，$H$ 是一棵有限严格路由中的共同前缀，$S_H\ne\varnothing$，且从这个节点起，每个实际成员的后缀路径至多有一次分支或不存在报告。则存在这棵同一后缀路由的一个实际末端成员 $P^\ast\in S_H$，使
+
+$$
+\boxed{\quad
+|S_H|\le |\Lambda_\beta(P^\ast)\setminus\Psi(H)|+2
+          \le W-m(H)+2.
+\quad}
+\tag{40.7}
+$$
+
+这里的 $H$ 可包含此前的非叶报告；不重新初始化历史，也不为各个首次退出成员另选一棵最优路由。
+
+**证明。** 每个非叶孩子必为单点。若其中仍有两个成员，它的下一严格节点因非冲突性至少有一个非叶孩子；取该孩子内的实际成员，它在这个同一后缀已有两次非叶报告。两地址不同：先前真实问过的地址在当前匹配队列上为常值，不可能再严格分裂。因此这条实际路径违反后缀前提。
+
+于是所有非单点继续节点都沿唯一叶孩子形成有限链。把有叶孩子的严格节点依次记为 $1,\ldots,q$；令 $H_0=H$，$H_j$ 为走过第 $j$ 个叶孩子后的共同历史，令 $d_j$ 为该节点的非叶孩子数，并记
+
+$$
+w_j=|\Psi(H_j)\setminus\Psi(H_{j-1})|.
+\tag{40.8}
+$$
+
+这些非叶孩子都是单点，是沿这同一链的互不相交首次退出成员。链的剩余队列 $T$ 或为一个单点，或停在没有叶孩子的严格节点；后一节点只可能有分支、不存在两个孩子，且都为单点，所以 $|T|\le2$。不把后一终端分裂列入 $q$ 个叶节点。该情形包括 $q=0$ 和根已为单点的边界。选任意 $P^\ast\in T$，则
+
+$$
+|S_H|=\sum_{j=1}^q d_j+|T|,\qquad
+\Psi(H_0)\subseteq\cdots\subseteq\Psi(H_q)
+                    \subseteq\Lambda_\beta(P^\ast).
+\tag{40.9}
+$$
+
+最后的包含是在同一个 $P^\ast$ 上成立：它匹配原 $H$ 的全部叶报告，并真正走过所列每个叶孩子，所以所有旧块、新块都在它的相应字面地址出现。以 $P^\ast$ 的唯一完整前像定位规范块，引理 31.2 进一步给：继承的每个 $C$ 必是该前像的规范 $C$；继承的每个 $A$ 必是规范 $A$ 或规范 $C$ 的立即左孩子。这无需其他成员具有相同前像形状、规范根或组成。若后续报告补全这种左 $A$ 所在的 $C$，式（40.5）只增加右侧一片 $\beta$；若早先已经固定整 $C$，它的左 $A$ 不再提供严格节点。因此部分 $C$、交错查询及包含重叠均与式（40.9）的单一地址并集对齐，旧资源没有被第二次使用。
+
+逐个应用定理 40.2，$d_j\le w_j$。单调并集的新增部分两两不交，故
+
+$$
+\sum_{j=1}^q d_j\le\sum_{j=1}^q w_j
+ =|\Psi(H_q)\setminus\Psi(H)|
+ \le|\Lambda_\beta(P^\ast)\setminus\Psi(H)|.
+\tag{40.10}
+$$
+
+将 $|T|\le2$ 代入式（40.9），即得第一不等式。再由旧并集已包含于 $\Lambda_\beta(P^\ast)$ 及 $|\Lambda_\beta(P^\ast)|\le W$ 得第二不等式。没有把终端最后一次非叶分裂的两名成员误计为新增块，也没有把这些固定但未请求的叶当作已付费缓存。证毕。
+
+**定理 40.4（两次超额的历史残余二次上界）。** 对每个 $n\in\mathbb N_0$、每个非空有限 $F\subseteq\mathcal I_3(n)$，若 $K(F)=K_\circ(F)$ 且 $D(F)\le n+2$，则对任意整数 $W\ge\max_{P\in F}|\Lambda_\beta(P)|$ 有
+
+$$
+\boxed{\quad
+|F|\le\Phi(W),\qquad \Phi(R)=\frac{R^2}{2}+3R+4\quad(R\ge0).
+\quad}
+\tag{40.11}
+$$
+
+特别地，若全部唯一完整前像具有共同组成 $(a,b)^{\mathsf T}$，可取 $W=2a+3b$；无共同组成要求时，全体规模满足
+
+$$
+\boxed{\quad
+\mathsf{Cap}(n,2)\le
+\Phi\!\left(\left\lfloor\frac{2n}{3}\right\rfloor\right).
+\quad}
+\tag{40.12}
+$$
+
+**证明。** 定理 25.2 的二元素遗传信息叶条件使不同成员两两非冲突。直接使用定理 29.2、29.3 的有限取得式（29.5）、（29.6）、（29.8），选一棵达到 $D(F)$ 的实际严格路由。每个成员的路由地址互异；接上全部带标签叶认证后的费用恰为 $n$ 加该成员路由上的非叶报告数，所以每条评价路径至多两次非叶报告。这里是一个实际共同控制器取得的路径前提，不以不同成员各自的最优控制器拼接。
+
+从根沿唯一的叶响应孩子走，直至单点或没有叶孩子的严格节点。这个有限零非叶链上的共同历史记为 $H$，令 $R=W-m(H)\ge0$。在任一这样的节点，其非叶孩子对应同一历史的第一次非叶退出；进入之后，每条后缀路径至多还有一次非叶报告。这个非叶报告不增加 $\mathcal B_H$ 或 $\Psi(H)$，故定理 40.3 对每个这样的实际孩子给大小至多 $R+2$。其末端成员可不同，但都匹配同一个继承块集合；统一 $W$ 只用于它们各自的剩余 $\beta$ 数上界，不把分别最优值解释为共同实现。
+
+若该节点有叶孩子，定理 40.2 给其资源降到 $R-w$，其中 $w\in\{1,2,3\}$，$1\le d\le\min(2,w)$。叶孩子非空，其任一实际成员都包含增大后的固定并集，所以 $R\ge w$。对上述唯一的 $\Phi$，有
+
+$$
+\begin{aligned}
+\Phi(R)-\Phi(R-1)&=R+\frac52\ge R+2,\\
+\Phi(R)-\Phi(R-2)&=2R+4=2(R+2),\\
+\Phi(R)-\Phi(R-3)&=3R+\frac92\ge2(R+2)\quad(R\ge3).
+\end{aligned}
+\tag{40.13}
+$$
+
+因此所有可能的 $(w,d)$ 都满足
+
+$$
+\Phi(R-w)+d(R+2)\le\Phi(R).
+\tag{40.14}
+$$
+
+链的端点若为单点，其大小 $1\le\Phi(R)$。若端点没有叶孩子，它只有分支、不存在两个非空孩子；分别应用定理 40.3，端点大小至多 $2(R+2)$，而
+
+$$
+2(R+2)\le\Phi(R),\qquad
+\Phi(R)-2(R+2)=\frac{R^2}{2}+R\ge0.
+\tag{40.15}
+$$
+
+从这个实际链端点向根作有限逆向归纳：叶孩子队列至多 $\Phi(R-w)$，$d$ 个互不相交首次退出孩子各至多 $R+2$，式（40.14）遂界住当前整个队列。空孩子不贡献成员。根的空历史有 $m=0$，得到式（40.11）。若根已经单点或已经没有叶孩子，同一端点论证直接适用，包含全部小规模边界。
+
+每个实际 $P$ 的唯一前像若有组成 $(a_P,b_P)^{\mathsf T}$，母卷定理 3.4 的第三步组成作用给
+
+$$
+n=3a_P+5b_P,\qquad
+|\Lambda_\beta(P)|=2a_P+3b_P
+ =\frac{2n-b_P}{3}\le\frac{2n}{3}.
+\tag{40.16}
+$$
+
+共同组成时取 $W=2a+3b$；一般情形逐个成员使用式（40.16），故同一个 $W=\lfloor2n/3\rfloor$ 适用于全族。定义 30.6 的容量在有限实际像集上取最大值，得到式（40.12）；空族贡献零，不可行 $n$ 的容量为零，故也在所列全规模界内。
+
+这棵路由的全域控制器仍是第 29 章的控制器。单点不是接受条件；定理 18.2 在 $d=3=3\cdot1$ 的完整叶条件使接受仍须全部实际带标签叶。意外路由报告及任一认证不匹配均由定理 23.2、29.2 的独立初态总后备处理，引理 27.3 只供应后续真正请求的同址缓存。资源并集不改变路由报告或认证步骤，未请求的强制叶仍须请求。因而式（40.11）—（40.12）的超额仍按不同实际地址计数，全有限树正确性、根地址合法性与有限终止合同保持。证毕。
+
+**定义 40.5（三 β 的可变行与标记槽完整族）。** 以下记号均为本章局部记号。对任意完整树 $T$ 及有限树列，定义右梳
+
+$$
+\mathcal R_T()=T,\qquad
+\mathcal R_T(x_1,\ldots,x_r)
+ =\langle x_1,\mathcal R_T(x_2,\ldots,x_r)\rangle\quad(r\ge1),
+\qquad b=\langle\beta,\alpha\rangle.
+\tag{40.17}
+$$
+
+对每个整数 $k\ge1$，参数取
+
+$$
+\ell\in\{1,2,3\},\quad
+r_1,\ldots,r_\ell\in\mathbb N_0,\quad
+\sum_{j=1}^\ell r_j=k,\quad
+S_j\subseteq\{1,\ldots,r_j\},\quad
+\sum_{j=1}^\ell|S_j|=3-\ell.
+\tag{40.18}
+$$
+
+零长度行和空标记集均允许。设
+
+$$
+\begin{aligned}
+d_{j,t}&=\begin{cases}b,&t\in S_j,\\ \alpha,&t\notin S_j,\end{cases}
+ &D_{j,t}&=\begin{cases}B,&t\in S_j,\\ A,&t\notin S_j,\end{cases}\\
+h_j&=\mathcal R_\beta(d_{j,1},\ldots,d_{j,r_j}),
+ &T_j&=\mathcal R_C(D_{j,1},\ldots,D_{j,r_j}),\\
+Q(\ell,\boldsymbol r,\boldsymbol S)&=\mathcal R_\alpha(h_1,\ldots,h_\ell),
+ &P(\ell,\boldsymbol r,\boldsymbol S)&=\mathcal R_A(T_1,\ldots,T_\ell),\\
+F_k&=\{P(\ell,\boldsymbol r,\boldsymbol S):\text{式（40.18）成立}\},
+ &n_k&=3k+18.
+\end{aligned}
+\tag{40.19}
+$$
+
+每个 $Q$ 和 $P$ 都是保留全部括号、次序、叶标签的完整树；行边界不预设固定深度。其共享来源约束为 $\ell+\sum_j|S_j|=3$：同一份三片前像 $\beta$ 资源或用于行末，或用于标记槽 $b$。
+
+**定理 40.6（三 β 族的完整前像、全对非冲突与计数）。** 对每个 $k\ge1$，式（40.19）给全部唯一完整三步前像，且
+
+$$
+\begin{gathered}
+\rho^3\bigl(Q(\ell,\boldsymbol r,\boldsymbol S)\bigr)
+     =P(\ell,\boldsymbol r,\boldsymbol S),\\
+c(Q)=\binom{k+1}{3},\qquad c(P)=\binom{k+7}{2k+11},\qquad
+F_k\subseteq\mathcal I_3(n_k),\\
+|F_k|=\binom{k}{2}+k(k+1)+\binom{k+2}{2}=2k^2+2k+1,\\
+\forall P,P'\in F_k,\quad \operatorname{NC}(P,P'),\qquad
+K(F_k)=K_\circ(F_k).
+\end{gathered}
+\tag{40.20}
+$$
+
+**证明。** 母卷定义 3.1 的替换同态规则及式（40.2）给 $\rho^3(\alpha)=A$、$\rho^3(\beta)=C$、$\rho^3(b)=B$。将它直接应用于式（40.19）的每个槽、每个行末及外层末端，得到整棵完整像等式。规范编译卷命题 4.3 的单射性复合三次，使所给 $Q$ 是该完整 $P$ 的唯一前像；不是由组成相等推断前像存在或树相等。
+
+每个普通槽 $\alpha$ 和标记槽 $b$ 都恰贡献一片 $\alpha$，仅标记槽另外贡献一片 $\beta$。每行末端再贡献一片 $\beta$，外层末端贡献一片 $\alpha$，所以 $c(Q)=(k+1,\ell+\sum_j|S_j|)^{\mathsf T}=(k+1,3)^{\mathsf T}$。母卷定理 3.4 给
+
+$$
+\begin{pmatrix}1&2\\2&3\end{pmatrix}\binom{k+1}{3}
+ =\binom{k+7}{2k+11},\qquad n(P)=3k+18.
+\tag{40.21}
+$$
+
+不同参数确实产生不同完整前像。沿 $Q$ 的外层右脊行走，在末端原子 $\alpha$ 停止，恢复唯一有序行列 $h_1,\ldots,h_\ell$；不能越过这个叶继续解析。对每个 $h_j$ 沿其右脊行走，在末端原子 $\beta$ 停止，恢复全部左槽。普通槽为原子 $\alpha$，标记槽为完整分支 $b$，两者字面不同，故同时恢复 $r_j,S_j$。零长度行就是原子 $\beta$，与非空行的根分支不同。标记槽内部的右 $\alpha$ 不在该行右脊上，也不在外层右脊上，不会造成提前停止。这给参数到 $Q$ 的单射；再用既有替换单射性给参数到 $P$ 的单射。
+
+$\ell=1$ 时 $r_1=k$，选择两个标记槽，计 $\binom{k}{2}$ 个；$k=1$ 时这一层为空。$\ell=2$ 时有 $k+1$ 个有序弱分拆 $(r_1,r_2)$，每个有恰 $k$ 个可选标记槽，计 $k(k+1)$ 个。$\ell=3$ 时全部槽普通，弱分拆数为 $\binom{k+2}{2}$。这些层由前述解析区分，不重复计数，相加得到式（40.20）。
+
+该多项式是经典的非中心 Delannoy 数 $D_{k,2}$。具体对应是：按行次序把普通槽写为步 $(1,0)$，标记槽写为步 $(1,1)$，两行之间的边界写为步 $(0,1)$；不把最后一行的末端记为一步。总第一坐标为 $k$，总第二坐标为 $\sum_j|S_j|+\ell-1=2$。反向按每个 $(0,1)$ 切出行，$(1,0),(1,1)$ 分别恢复普通与标记槽，允许开头、结尾或连续边界造成零长度行，所以是双射。这里采用 [Banderier、Schwer，*Why Delannoy numbers?*，arXiv:math/0411128v1，第 2 节](https://arxiv.org/html/math/0411128v1#S2) 的端点及三种步定义；该节的步序列几何级数 $\sum_{q\ge0}(x+y+xy)^q t^q=(1-t(x+y+xy))^{-1}$ 及二项式表达式是已有计数。上述实际树、非冲突关系及后面的真实请求取得性并非由这个路径计数供应。
+
+现在证明全部来源对非冲突。先比较任意两棵以 $C$ 结束、左槽来自 $\{A,B\}$ 的右梳，不要求槽数或标记数相同。每棵都在 $\mathcal I_3$ 中且至少五叶，故不同于 $A$。两个槽比较只可能为 $A/A,B/B,A/B$；相同者当然非冲突，$A/B$ 由引理 30.2 的 $B=\langle C,A\rangle$、$C\ne A$ 情形非冲突。当两个右梳都有槽时，比较对应左槽并递归比较右后缀，按总槽数归纳。若一侧已结束于 $C$，另一侧仍为 $\langle D,Z\rangle$，则 $Z$ 仍是一个 $C$ 末端右梳，故 $Z\ne A$；若 $D=A$，引理 30.2 第二行直接给非冲突；若 $D=B=\langle C,A\rangle$，其左孩子 $C\ne A$，同一行的复合左孩子条件给非冲突。两侧同时结束时为相同 $C$。这穷尽任意两个行树，包括空行对、不同长度行及任意标记位置。
+
+再比较两个以 $A$ 结束的外层行列。对应位置仍有行时，左孩子是刚证明的两个非冲突行树，右孩子递归比较。若较短行列已经结束于 $A$，较长行列仍为 $\langle T,R\rangle$，则 $T$ 是至少五叶的行树，$T\ne A$，而 $R\in\mathcal I_3$；引理 30.2 第一行给 $\operatorname{NC}(A,\langle T,R\rangle)$。两侧同时结束时末端 $A$ 相同。两个分支的共享叶条件恰分解为左右对应子树条件，前加同一地址保持标签一致，故该归纳给 $F_k$ 的全部无序对，包括不同 $\ell$ 的跨层对。
+
+对任意 $S\subseteq F_k$，若 $|S|\ge2$，选一对不同成员；非冲突性使这二元素子族的遗传信息叶集合为空。定理 25.2 使 $S$ 不相容。空集、单点的遗传条件为空约束，完整单原型测试取得相应个体叶下界，所以 $K(F_k)=K_\circ(F_k)$。这一结论涉及全部子族，不仅与某个基准来源的成对比较。证毕。
+
+**定义 40.7（两次实际非叶事件的同一全域控制器）。** 对每个固定 $k\ge1$，控制器 $\pi_k$ 的完整初始化只依 $k,F_k$ 的完整描述、以下有限扫描及定理 23.2、29.2 的完整单原型测试与总后备。外层真实缓存初始为空。扫描初态为 $(j,t,e)=(1,1,0)$、实际历史为空、幸存集 $S=F_k$；$e$ 只计已到达的分支或不存在报告。每次扫描真正请求
+
+$$
+u(j,t)=\mathtt R^{j-1}\mathtt L\mathtt R^{t-1}\mathtt{LLR}.
+\tag{40.22}
+$$
+
+若下一请求的 $t>k+2$，立即进入总后备而不再扫描；每次请求后，以这一实际报告更新 $S$ 为匹配全部扫描历史的 $F_k$ 成员。$S$ 为空或报告为 $\mathsf{leaf}_\beta$ 时进入总后备。其余报告按下述不同规则推进：$\mathsf{leaf}_\alpha$ 使 $t$ 加一；$\mathsf{branch}$ 使 $e,t$ 各加一；$\mathsf{absent}$ 使 $e,j$ 各加一并令 $t=1$。第二次非叶报告到达时立即结束扫描，不请求更新状态中的下一地址；若此时 $S$ 为单点，暂选其原型，否则进入总后备。扫描中的单点也不提前接受。
+
+暂选原型后，从其完整单原型测试自己的初始化、空逻辑历史和初始控制状态出发，按固定短词优先次序请求该原型的全部带标签叶。每个地址都须得到相同叶标签，全部精确匹配才返回 $1$；相反标签、分支或不存在的任一不匹配都进入总后备。每次进入总后备，包括扫描意外与认证不匹配后进入，都建立该后备自己的完整初始化、空逻辑历史和初始控制状态。后备直接采用定理 23.2 的全域有限判定：从根仅在实际分支处扩展，恢复未知有限树和实际测得叶数 $m$；有限枚举叶数至多 $m$ 的完整前像，比较其第三步替换描述，命中返回 $1$，穷尽未命中返回 $0$。
+
+各段续接只按引理 27.3 供应真实同址缓存：外层仅存本次运行已真正请求的地址及同一不变输入的原始报告，后续请求完全相同地址才可复用；每次供应都写入后续策略自己的逻辑历史。先前扫描历史不预填续接初态，强制块、原型描述、未请求后缀及其他来源的报告均不生成缓存条目。
+
+**定理 40.8（四种共同历史解码、完整认证与精确付费集合）。** 对每个 $k\ge1$，定义 40.7 的一个输入无关控制器 $\pi_k$ 属于 $\mathfrak D_3$。在每个 $P\in F_k$ 上，其第二次非叶报告到达时的实际扫描历史在 $F_k$ 中恰有一个匹配成员，就是 $P$。若 $e_1(P),e_2(P)$ 为这两个非叶报告的真正请求地址，则
+
+$$
+\boxed{\quad
+J_{\pi_k}(P)=L(P)\cup\{e_1(P),e_2(P)\},\qquad
+e_1(P)\ne e_2(P),\quad e_i(P)\notin L(P),\qquad
+C_{\pi_k}(P)=n_k+2.
+\quad}
+\tag{40.23}
+$$
+
+因此 $D(F_k)\le n_k+2$；族外未知树仍在全域正确且有限终止合同内，其费用不由式（40.23）限制。
+
+**证明。** 先计算在同一个实际来源上真正到达的报告。第 $j$ 个行根为 $v_j=\mathtt R^{j-1}\mathtt L$。在该行长度 $r_j$ 内，地址 $u(j,t)$ 落在第 $t$ 个左槽的偏移 $\mathtt{LR}$；普通 $A$ 槽给 $\mathsf{leaf}_\alpha$，标记 $B$ 槽给 $\mathsf{branch}$，因为 $A|_{\mathtt{LR}}=\alpha$、$B|_{\mathtt{LR}}=E$。行末 $C$ 在 $v_j\mathtt R^{r_j}$，故
+
+$$
+\begin{array}{c|c}
+\text{真正到达的位置}&\operatorname{out}_P(u(j,t))\\ \hline
+1\le t\le r_j,\quad t\notin S_j&\mathsf{leaf}_\alpha\\
+1\le t\le r_j,\quad t\in S_j&\mathsf{branch}\\
+t=r_j+1&\mathsf{leaf}_\alpha\\
+t=r_j+2&\mathsf{absent}
+\end{array}
+\tag{40.24}
+$$
+
+第三行是 $C|_{\mathtt{LLR}}=\alpha$；第四行的 $\mathtt{RLLR}$ 在 $C$ 中越过右侧 $E$ 的左叶 $\beta$，余下非空后缀，所以不存在。行末的 $\alpha$ 报告不能被当作已发现行边界；不存在事件到达后才确认该行有 $t-2$ 个槽。表仅断言扫描停止前真正到达的位置，不在退出后供应报告。
+
+实际扫描中，所有标记槽各给一个分支事件，非末行各给一个不存在事件。在到达末行终端后的不存在地址之前，这些事件合计恰为
+
+$$
+\sum_j|S_j|+(\ell-1)=(3-\ell)+(\ell-1)=2.
+\tag{40.25}
+$$
+
+故在末行之后的第三个事件可能被请求以前，扫描已在第二个事件立即停止。$r_j\le k$，所以非末行的不存在位置至多 $k+2$，末行的每个标记位置也至多 $k$；扫描在评价来源上不触发地址上限。$\ell=1$ 时两个事件都是该行的两个标记；$\ell=2$ 时一个标记和一个第一行边界；$\ell=3$ 时没有标记，两个事件是前两行边界。零长度行在 $t=1$ 给末端 $\alpha$、在 $t=2$ 给不存在，仍满足同一计数，末行可为零长度。
+
+现在用这同一个实际历史证明单点纤维。以 $p,q$ 分别记第一、第二事件在各自当前行的 $t$ 值。第一行从 $t=1$ 开始；分支继续同一行，不存在开始下一行。所有中间报告都是实际 $\alpha$ 叶。因此完整历史决定事件次序和这些位置；其四种可能及唯一参数为
+
+$$
+\begin{array}{c|c|c|c}
+\text{事件次序}&\ell&\text{行长}&\text{标记集}\\ \hline
+\mathsf{branch},\mathsf{branch}
+ &1&r_1=k&S_1=\{p,q\},\quad p<q\\
+\mathsf{branch},\mathsf{absent}
+ &2&r_1=q-2,\ r_2=k-r_1&S_1=\{p\},\ S_2=\varnothing\\
+\mathsf{absent},\mathsf{branch}
+ &2&r_1=p-2,\ r_2=k-r_1&S_1=\varnothing,\ S_2=\{q\}\\
+\mathsf{absent},\mathsf{absent}
+ &3&r_1=p-2,\ r_2=q-2,\ r_3=k-r_1-r_2
+ &S_1=S_2=S_3=\varnothing
+\end{array}
+\tag{40.26}
+$$
+
+各行只在式（40.18）的非负性和槽范围成立时出现，$k=1$ 的第一种为空。第一种次序不能有行边界，所以资源等式强制一个行、两个标记，两个实际分支位置就是标记。第二种在一个标记之后跨过第一行边界，所以资源等式强制两个行、恰一个标记，$q-2$ 给第一行长度，剩余 $\alpha$ 槽数确定第二行，第二行没有标记。第三种先确认第一行长度，再在第二行遇到唯一标记，第二行长度由总槽数确定。第四种有两个边界，强制三个无标记行；前两次不存在确定前两行长度，剩余槽数给第三行。每种次序在第二事件之后只剩一个前像 $\beta$ 用于最后的行末，不能再增加标记或边界。分支和不存在在此有不同数学作用，不能合并。
+
+任意另一个 $F_k$ 成员若匹配这个完整实际历史，会使同一个扫描规则到达同一第二事件，故也必须落在表中同一行，且具有完全相同的参数。定理 40.6 的参数单射遂给它等于 $P$。这证明实际共同历史纤维是单点，不仅证明事件表能够给某个候选。评价来源始终匹配自己的报告，幸存集不会变空，所选原型恰为来源自身。
+
+扫描对任意未知 $U\in\mathcal T$ 都有限。停止前非叶事件数为零或一，所以已发生的不存在报告至多一次，$j$ 至多为二；每个当前行从 $t=1$ 开始，除不存在重置外每次请求使 $t$ 加一，并在 $t>k+2$ 时停止扫描。故扫描至多请求 $2(k+2)$ 个地址，或更早选择认证、后备。所有四值及空幸存集都已有确定去向，没有等待未请求报告的情形；即使扫描一直报 $\alpha$ 也会触发有限上限。
+
+暂选只决定下一完整测试。任意 $U$ 若匹配所选原型的全部带标签叶，定理 18.2 在 $d=3=3\cdot1$ 的完整叶条件及母卷定理 9.3 的字面恢复给 $U=P\in\mathcal I_3$，所以接受正确。任何意外扫描响应、空队列、非单点第二事件或叶不匹配，都不被解释为负性，独立初始化的既有总后备继续判定整个 $\mathcal T$。定理 23.2、29.2 保证从根恢复实际有限树及按实际测得 $m$ 枚举前像的正确性与有限终止；替换不减少叶数，故真正前像必在该有限枚举中。母卷定理 9.2 供应有限描述，规范编译卷命题 4.3 供应替换单射性，不使用组成逆矩阵替代完整前像。引理 27.3 使每段续接的请求及报告逐步等于其单独初态执行；真实外层缓存不预填逻辑历史。因此扫描、认证及可能的后备均有限，整个 $\pi_k$ 全域正确且有限终止。未知根叶在第一次非空地址请求报不存在；即使未立即使队列为空，也在有限扫描后进入认证或后备。原型的叶地址全非空，根叶不能通过完整认证；后备测得 $m=1$，有限比较两个根叶前像的三步像 $A,C$ 后拒绝，符合它们确为负例的事实。
+
+最后逐地址核算评价来源的费用。在同一行内，$u(j,t)$ 的长度为 $j+t+2$，不同 $t$ 给不同地址；不同行根 $\mathtt R^{j-1}\mathtt L$ 前缀不可比，其下任意请求都不同。扫描到第二事件止，故两个非叶地址互异，恰为分支或不存在，均不属于该 $P$ 的叶集。式（40.24）中其他真正到达的报告全为这个同一 $P$ 的实际 $\alpha$ 叶，没有借用别的来源或逻辑强制报告。令 $\mathcal Q_k(P)$ 为它真正请求的扫描地址集，则
+
+$$
+\mathcal Q_k(P)\setminus L(P)=\{e_1(P),e_2(P)\},\qquad
+J_{\pi_k}(P)=\mathcal Q_k(P)\cup L(P).
+\tag{40.27}
+$$
+
+第二式直接应用引理 27.3：完整独立单原型测试请求全部 $L(P)$，已请求同址叶才命中真实缓存，其他叶仍逐一请求。在 $P$ 上没有不匹配，后备不运行。因此式（40.27）消去已在叶集内的扫描地址后正是式（40.23），费用为 $n_k+2$。同一个 $\pi_k$ 同时取得全部这些来源上的费用，得到所列 $D$ 上界。证毕。
+
+**定理 40.9（两次超额容量的上极限系数）。** 在定义 30.6 的原全有限树、四报告、自由地址长度及不同实际请求地址合同下，
+
+$$
+\boxed{\quad
+\mathsf{Cap}(3k+18,2)\ge2k^2+2k+1\quad(k\ge1),\qquad
+\limsup_{n\to\infty}\frac{\mathsf{Cap}(n,2)}{n^2}=\frac29.
+\quad}
+\tag{40.28}
+$$
+
+上极限沿全部正整数取，不可行规模的容量为零；结论不含普通密度极限、精确有限容量、全规模下界或任意超额次数的分类。
+
+**证明。** 定理 40.6 给实际等叶数族 $F_k\subseteq\mathcal I_3(3k+18)$、精确基数和 $K=K_\circ$；定理 40.8 给同一个输入无关全域控制器的共同费用至多 $3k+20$。这恰满足定义 30.6 的容量条件，故得到式（40.28）的子序列下界，以及
+
+$$
+\limsup_{n\to\infty}\frac{\mathsf{Cap}(n,2)}{n^2}
+\ge\lim_{k\to\infty}\frac{2k^2+2k+1}{(3k+18)^2}=\frac29.
+\tag{40.29}
+$$
+
+反向使用定理 40.4 的唯一二次估计。$W_n=\lfloor2n/3\rfloor$ 满足 $W_n/n\to2/3$，所以
+
+$$
+\limsup_{n\to\infty}\frac{\mathsf{Cap}(n,2)}{n^2}
+\le\lim_{n\to\infty}\frac{W_n^2/2+3W_n+4}{n^2}=\frac29.
+\tag{40.30}
+$$
+
+两方向合并给所述上极限等式。下界只用 $3k+18$ 子序列，上界包含不同前像组成的全部实际族；没有把子序列取得性扩展为每个规模的取得性。
+
+为明确与既有关系的比较，直接复用第 38 章参数为 $r,s\ge1$ 的两个完整族并在根配对，得到基数 $(2r+1)(2s+1)$、共同叶数 $3(r+s)+26$。其完整前像共同组成为 $(r+s+2,4)^{\mathsf T}$；像组成由母卷定理 3.4 为 $(r+s+10,2r+2s+16)^{\mathsf T}$。左右前缀不交，第 38 章的全部非冲突对给配对族的全部非冲突对，既有替换单射性给不同配对的不同来源。依次使用左、右前缀下两个有限路由，每部分至多一次实际非叶请求，再核对配对来源的全部带标签叶，意外响应和不匹配仍独立初始化同一总后备，真实缓存只同址复用。故该复用比较族满足 $K=K_\circ$、共同费用至多叶数加二。其二次系数至多 $1/9$，因为 $4rs\le(r+s)^2$，而 $r=s\to\infty$ 时取得 $1/9$。式（40.18）的行与标记共享三片 $\beta$，给出的 $2/9$ 因此严格超过这项独立根配对的系数；不是把两个既有最优值假定为同一实现。
+
+另一项比较直接来自推论 32.7 的 $M$ 界及原式（30.11）：$M(r,2)=2r^2+4r+1$，$q(n)\le2n/5$，所以该既有资源路径上界的二次系数为 $8/25$。式（40.12）的改进使用同一实际历史内已经固定的字面块、继承资源的扣除及部分 $C$ 时不存在孩子的排除；它不是把原 $M$ 换参数后展开。经典 Delannoy 计数的出处附于定理 40.6，有限响应相关费用的背景沿用第 29 章所引模型；这里的承重关系为实际树上的历史残余估计、三 $\beta$ 来源构造与同一真实控制器取得性。它们不提供文献范围之外的原创性断言，不把完整树来源与组成、规范数量地址、原始响应或组成祖先许可混为一类，也不从前像描述唯一性授予实际逆执行，不将环境代数关系解释为物理对应。证毕。
+
+## 追加锚（本行以下为增补区）
+## 41. 任意固定超额的继承历史界与共享行标记取得
+
+**定义 41.1（固定原族的历史资源与统一势）。** 沿用[定义 29.1、30.6、40.1](#40-历史残余-β-资源三-β-共享来源与两次超额系数)的 $\mathcal T$、$\rho$、$\mathcal I_3(n)$、$L$、$\Lambda_\beta$、$\operatorname{NC}$、$K,K_\circ$、$\mathfrak D_3$、$D$ 与 $\mathsf{Cap}$。替换深度固定为 $d=3$。未知输入始终为全部非空有限带 $\alpha/\beta$ 标签的有序满二叉树；共同完整初始化与输入无关，不含大小、组成、叶数、高度、正性、所属子类或候选身份承诺。全部有限左右地址，包括根 $\varepsilon$，均合法；报告仅为同一不变输入的 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$。地址长度、定位和计算不收费，费用只计不同的实际请求地址；真实缓存仅复用本次运行已经请求的完全相同地址。策略在整个 $\mathcal T$ 上正确且有限终止。
+
+固定非空有限两两非冲突族 $F\subseteq\mathcal I_3(n)$ 和第 29 章的一棵有限实际严格路由。其每个非单点节点真实请求一个严格分裂当前评价队列的地址，终端为单点，单点仅选择完整叶认证。对这棵同一路由的任意非空节点历史 $H$，包括已经含非叶报告的历史，直接取式（40.1）—（40.3）的 $S_H,\mathcal B_H,\Psi(H)$。其中 $\mathcal B_H$ 只由已实际报告的叶按五行强制产生，$\Psi(H)$ 为这些字面块的 $\beta$ 叶地址并集；分支、不存在和进一步推论不增加条目。一次选定整数
+
+$$
+W\ge\max_{P\in F}|\Lambda_\beta(P)|,\qquad
+R(H)=W-|\Psi(H)|.
+\tag{41.1}
+$$
+
+$W$ 在全部后缀及全部孩子中保持为这个原族的同一个上界。对整数 $b\ge0$ 定义多项式
+
+$$
+\Phi_0(z)=1,\qquad
+\Phi_b(z)=\frac1{b!}\prod_{j=1}^b(z+2j)\quad(b\ge1).
+\tag{41.2}
+$$
+
+实际资源参数只取非负整数 $z=R(H)$。$\Psi(H)$ 不产生已取得报告或缓存条目，$R(H)$ 也不替代执行所需的完整历史。
+
+**定理 41.2（任意非叶后缀预算的继承资源界）。** 在定义 41.1 的同一实际路由上，若从非空节点 $H$ 起，每个 $P\in S_H$ 的后缀路径至多有 $b$ 次分支或不存在报告，其中 $b\in\mathbb N_0$，则
+
+$$
+\boxed{\quad |S_H|\le\Phi_b(R(H)).\quad}
+\tag{41.3}
+$$
+
+特别地，对所有 $n,t\in\mathbb N_0$，每个非空有限 $F\subseteq\mathcal I_3(n)$ 若满足 $K(F)=K_\circ(F)$、$D(F)\le n+t$，则对任何式（41.1）的统一 $W$ 有
+
+$$
+\boxed{\quad
+|F|\le\Phi_t(W),\qquad
+\mathsf{Cap}(n,t)\le
+\Phi_t\!\left(\left\lfloor\frac{2n}{3}\right\rfloor\right).
+\quad}
+\tag{41.4}
+$$
+
+若全部唯一完整前像具有共同组成 $(a,q)^{\mathsf T}$，第一式可以取 $W=2a+3q$。历史界允许不同成员的前像组成不同。
+
+**证明。** 定理 40.2 已证明 $\Psi(H)\subseteq\Lambda_\beta(P)$ 对每个 $P\in S_H$ 成立，所以 $R(H)\ge0$。每个孩子都是同一路由的实际真子队列。分支或不存在孩子的历史为 $H\mathbin{\frown}(u,y)$，但依资源的原定义，它的 $\Psi$ 恰等于 $\Psi(H)$；只把剩余非叶次数从 $b$ 减为 $b-1$。若有非空叶孩子，非冲突性使叶标签唯一，定理 40.2 直接供应
+
+$$
+w=|\Psi(H\mathbin{\frown}(u,y))\setminus\Psi(H)|
+ \in\{1,2,3\},\qquad
+1\le d\le\min(2,w),
+\tag{41.5}
+$$
+
+其中 $d$ 是该节点非空分支、不存在孩子的数目。叶孩子的实际成员包含整个新增并集，故 $R(H)\ge w$，其资源恰为 $R(H)-w$，剩余非叶预算仍为 $b$。尤其 $w=1$ 的部分 $C$ 补全直接采用定理 40.2 的不存在孩子排除；不重新建立块强制或父子分类。所有孩子保留原 $W$，非叶孩子也保留全部旧块，不从空历史重开。
+
+以下只在此归纳内计算式（41.2）的多项式。对 $b\ge1$ 提取公共乘积 $\prod_{j=1}^{b-1}(R+2j)$，得
+
+$$
+\Phi_b(R)-\Phi_b(R-2)=2\Phi_{b-1}(R),\qquad
+\Phi_b(R)=\frac{R+2b}{b}\Phi_{b-1}(R).
+\tag{41.6}
+$$
+
+在 $[0,\infty)$ 上每个因子非负且非减，所以 $\Phi_b$ 非减。所需的一单位差也在这个有限乘积计算内直接按 $b$ 归纳。$b=1$ 时 $\Phi_1(R)-\Phi_1(R-1)=1=\Phi_0(R)$。若 $b\ge2$、$R\ge1$，先用式（41.6）的第二式于 $R$ 和 $R-1$，再用归纳假设，得到
+
+$$
+\begin{aligned}
+\Phi_b(R)-\Phi_b(R-1)
+&=\frac1b\Phi_{b-1}(R)
+ +\frac{R+2b-1}{b}\bigl(\Phi_{b-1}(R)-\Phi_{b-1}(R-1)\bigr)\\
+&\ge\frac1b\Phi_{b-1}(R)+\frac{R+2b-1}{b}\Phi_{b-2}(R)\\
+&=\Phi_{b-1}(R)+\frac1b\Phi_{b-2}(R)
+ \ge\Phi_{b-1}(R).
+\end{aligned}
+\tag{41.7}
+$$
+
+第三行再次使用式（41.6）给 $\Phi_{b-1}(R)=(R+2b-2)\Phi_{b-2}(R)/(b-1)$。全部求值资源非负；归纳只证明这里需要的势差，不另引入计数或优化结论。式（41.6）的二单位差给 $w=2$ 的估计；$R\ge3$ 时非减性给 $\Phi_b(R-3)\le\Phi_b(R-2)$，于是也给 $w=3$ 的估计。结合 $w=1$ 时 $d=1$、$w=2,3$ 时 $d\le2$，全部实际叶节点都满足
+
+$$
+\Phi_b(R-w)+d\Phi_{b-1}(R)\le\Phi_b(R).
+\tag{41.8}
+$$
+
+此外，对 $R\ge0$，式（41.6）给 $\Phi_b(R)\ge2\Phi_{b-1}(R)$；$\Phi_b(R)\ge\Phi_b(0)=2^b\ge1$，而 $\Phi_0(R)=1$。这些边界包括 $R=0$。$\Phi_1(R)=R+2$、$\Phi_2(R)=R^2/2+3R+4$ 正是第 40 章所用的线性、二次势。
+
+现在对这棵有限后缀路由的节点数作结构归纳，归纳陈述同时量化所有允许的整数 $b$。单点节点有大小一，上述边界给结论。若 $b=0$ 而队列不是单点，下一严格节点至少有两个非空孩子，至多一个是叶孩子，故有非叶孩子；其中任一实际成员的后缀会发生一次非叶报告，违反前提。因此零预算只能是单点。
+
+在非单点且 $b\ge1$ 时，先处理有叶孩子的节点。对同一实际叶孩子用较小后缀树的归纳假设，大小至多 $\Phi_b(R-w)$；对每个实际非叶孩子用其继承历史和预算 $b-1$，大小至多 $\Phi_{b-1}(R)$。这些孩子是当前队列的不交分割，空孩子贡献零；式（41.8）界住它们的总和。若没有叶孩子，非空孩子仅可能为分支、不存在，故至多两个；各自继承同一 $R$ 并用预算 $b-1$。总大小至多 $2\Phi_{b-1}(R)\le\Phi_b(R)$。这完成所有节点和预算的归纳，得到式（41.3）。归纳没有为孩子另选最优路由，没有重置旧并集，也没有把不同来源各自达到的资源组合成一次运行。
+
+为应用于容量，定理 25.2 的二元素遗传信息叶判据直接使 $K(F)=K_\circ(F)$ 的不同成员两两非冲突。[定理 29.2、29.3 的式（29.5）、（29.6）、（29.8）](#29-任意有限实际正来源族的联合响应费用核心与全域取得)供应一棵达到 $D(F)$ 的实际严格路由。其在每个评价成员 $P$ 上的不同路由地址集记为 $B(P)$；接完整带标签叶认证后的费用为
+
+$$
+C(P)=n+|B(P)\setminus L(P)|,
+\qquad
+|B(P)\setminus L(P)|
+=|\{u\in B(P):\operatorname{out}_P(u)\in
+\{\mathsf{branch},\mathsf{absent}\}\}|\le t.
+\tag{41.9}
+$$
+
+同一路径的地址互异，故这里的次数恰为不同实际非叶地址数。根历史为空，$\Psi(\varnothing)=\varnothing$，式（41.3）遂给 $|F|\le\Phi_t(W)$。
+
+每个 $P$ 的唯一完整前像若具有组成 $(a_P,q_P)^{\mathsf T}$，[母卷定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)直接给
+
+$$
+n=3a_P+5q_P,\qquad
+|\Lambda_\beta(P)|=2a_P+3q_P
+=\frac{2n-q_P}{3}\le\left\lfloor\frac{2n}{3}\right\rfloor.
+\tag{41.10}
+$$
+
+共同组成时 $W=2a+3q$ 可用；一般情形同一个 $W=\lfloor2n/3\rfloor$ 对原族的全部成员同时可用。定义 30.6 在有限实际像集合上取最大值，所以对每个符合条件的非空族应用上述界即给式（41.4）。空族贡献零；不可行 $n$ 的容量为零，仍满足全规模上界。$t=0$ 也已在零预算归纳内。
+
+式（41.9）的全域取得、完整叶必要性和续接直接复用[定理 18.2、23.2、引理 27.3](#27-实际三步像的面费用核心与分数面覆盖锐值)及定理 29.2：$d=3=3\cdot1$ 时正例接受仍须全部带标签叶；单点只选择认证，任何意外路由响应或认证不匹配都独立初始化既有总后备。后续只有真正请求相同地址时才使用外层真实缓存，强制但未请求的叶仍须请求。因而资源归纳只界评价队列，不给未知输入正性或大小承诺，不改变根和其他有限地址的合法性，不扩大证书、缓存或实际逆执行的权限。证毕。
+
+**定义 41.3（共享 $t+1$ 片 $\beta$ 的完整行标记族）。** 固定整数 $t\ge3$、$k\ge1$。直接使用[定义 40.5 的右梳 $\mathcal R_T$ 和 $b=\langle\beta,\alpha\rangle$](#40-历史残余-β-资源三-β-共享来源与两次超额系数)，以及式（40.2）的完整块 $A,C,B$；这里的树 $b$ 不表示定理 41.2 的整数预算。参数集合 $\Theta_{k,t}$ 由
+
+$$
+1\le\ell\le t+1,\qquad
+r_j\in\mathbb N_0,\qquad
+\sum_{j=1}^{\ell}r_j=k,\qquad
+S_j\subseteq\{1,\ldots,r_j\},\qquad
+\ell+\sum_{j=1}^{\ell}|S_j|=t+1
+\tag{41.11}
+$$
+
+定义；每个零长度行的槽集为空，允许初始、末端和连续零长度行。对 $\theta=(\ell,\boldsymbol r,\boldsymbol S)\in\Theta_{k,t}$，设
+
+$$
+\begin{aligned}
+d_{j,h}&=\begin{cases}b,&h\in S_j,\\\alpha,&h\notin S_j,\end{cases}
+&D_{j,h}&=\begin{cases}B,&h\in S_j,\\A,&h\notin S_j,\end{cases}\\
+h_j&=\mathcal R_\beta(d_{j,1},\ldots,d_{j,r_j}),
+&T_j&=\mathcal R_C(D_{j,1},\ldots,D_{j,r_j}),\\
+Q_\theta&=\mathcal R_\alpha(h_1,\ldots,h_\ell),
+&P_\theta&=\mathcal R_A(T_1,\ldots,T_\ell),\\
+F_{k,t}&=\{P_\theta:\theta\in\Theta_{k,t}\},
+&n_{k,t}&=3k+5t+8.
+\end{aligned}
+\tag{41.12}
+$$
+
+每个式子描述整棵带括号、左右次序和叶标签的树。末端 $\beta$ 与标记槽共享同一前像资源，不把各行当作独立费用最优族。
+
+**定义 41.4（统一事件扫描、历史解码与独立认证）。** 对每个固定 $(k,t)$，控制器 $\pi_{k,t}$ 的共同完整初始化只依 $k,t,F_{k,t}$ 的完整描述、下述规则及定理 23.2、29.2 的既有完整单原型测试和总后备。外层真实缓存初始为空，扫描初态为 $(j,h,e)=(1,1,0)$，实际历史为空，幸存集 $S=F_{k,t}$。每次扫描实际请求
+
+$$
+u(j,h)=\mathtt R^{j-1}\mathtt L\mathtt R^{h-1}\mathtt{LLR}.
+\tag{41.13}
+$$
+
+请求前若 $h>k+2$，即停止扫描并进入总后备。每次请求后把真实地址—报告加入扫描历史，以完整历史更新 $S$。报告为 $\mathsf{leaf}_\beta$ 或 $S=\varnothing$ 时进入总后备。其余情形中，$\mathsf{leaf}_\alpha$ 使 $h$ 加一；$\mathsf{branch}$ 使 $h,e$ 各加一；$\mathsf{absent}$ 使 $j,e$ 各加一并重置 $h=1$。在第 $t$ 次非叶报告到达后立即停止扫描，不请求更新状态的下一地址；较早出现单点也不提前接受。
+
+对停止历史，令 $q$ 为实际不存在报告数，$p$ 为实际分支报告数，故 $p+q=t$。依这些实际报告的到达次序，每个不存在报告在其当时的 $(j,h)$ 处暂定已完成行长 $r_j=h-2$；暂定总行数 $\ell=q+1$，最后行长 $r_\ell=k-\sum_{j<\ell}r_j$；各行标记集恰取该行实际分支报告的 $h$ 值。没有扫描的最后行取空标记集。这给一份待核的完整参数。若它不满足式（41.11）、不能按式（41.12）给出完整原型 $P_\theta$，或 $S\ne\{P_\theta\}$，则进入总后备；否则仅暂选该原型，开始认证。
+
+认证直接采用既有完整单原型测试，从该测试自己的完整初始化、空逻辑历史和初始控制状态出发，按固定短词优先次序请求 $L(P_\theta)$ 的全部带标签叶。每个报告须精确等于原型在该地址的叶标签；全部匹配才返回 $1$。任一相反标签、分支或不存在的不匹配均进入总后备，原型暂选不返回任务答案。
+
+每次进入后备，包括扫描意外、无效解码、无效原型与认证不匹配后进入，都建立[定理 23.2 证明中的总后备](#23-全有限来源上两个指定正例的共同最优地址费用)自己的完整初始化、空逻辑历史和初始控制状态。它从根仅在真实分支处扩展，恢复实际有限树并取得实际叶数 $m$，有限枚举叶数至多 $m$ 的完整带标签前像，比较第三步像，命中返回 $1$，穷尽未命中返回 $0$；$m$ 不预置于初始化。
+
+所有续接直接使用引理 27.3：外层只存本次运行已真正请求的地址及同一不变输入的原始报告，后续真正请求完全相同的地址才供应真实缓存，否则实际读取并存入。每次供应都写入所选后续策略自己的逻辑历史；扫描历史不预填认证或后备初态。参数推断、强制块、未请求后缀、原型描述及其他来源的报告均不建立缓存条目。
+
+**定理 41.5（共享族的完整实现、统一历史纤维与精确取得集合）。** 对全部整数 $t\ge3$、$k\ge1$，定义 41.3 的参数到完整前像和像的映射均单射，且每个 $P_\theta$ 的唯一完整三步前像恰为 $Q_\theta$。有
+
+$$
+\begin{gathered}
+\rho^3(Q_\theta)=P_\theta,\qquad
+c(Q_\theta)=\binom{k+1}{t+1},\qquad
+c(P_\theta)=\binom{k+2t+3}{2k+3t+5},\\
+F_{k,t}\subseteq\mathcal I_3(n_{k,t}),\qquad
+\forall P,P'\in F_{k,t},\quad\operatorname{NC}(P,P'),\qquad
+K(F_{k,t})=K_\circ(F_{k,t}),\\
+|F_{k,t}|=D_{k,t}
+=\sum_{i=0}^{\min(k,t)}2^i\binom{k}{i}\binom{t}{i}.
+\end{gathered}
+\tag{41.14}
+$$
+
+这里 $D_{k,t}$ 是以 $(1,0),(1,1),(0,1)$ 为步、从 $(0,0)$ 到 $(k,t)$ 的经典 Delannoy 路径数。定义 41.4 的同一个输入无关控制器属于 $\mathfrak D_3$，其扫描在每个未知输入上至多请求 $t(k+2)$ 个地址。对每个评价成员 $P\in F_{k,t}$，扫描到第 $t$ 次非叶事件时的完整实际历史在 $F_{k,t}$ 内恰有一个匹配成员，就是 $P$。若 $E_{k,t}(P)$ 为这 $t$ 次事件的实际地址集合，则
+
+$$
+\boxed{\quad
+|E_{k,t}(P)|=t,\qquad E_{k,t}(P)\cap L(P)=\varnothing,\qquad
+J_{\pi_{k,t}}(P)=L(P)\cup E_{k,t}(P),\qquad
+C_{\pi_{k,t}}(P)=n_{k,t}+t.
+\quad}
+\tag{41.15}
+$$
+
+因此 $D(F_{k,t})\le n_{k,t}+t$；这一式不宣称该族的最优费用等于所构造控制器的费用。族外费用只受全域正确性与有限终止合同约束。
+
+**证明。** 先在完整树上核对实现及参数。母卷定义 3.1 的替换同态和式（40.2）给 $\rho^3(\alpha)=A$、$\rho^3(\beta)=C$、$\rho^3(b)=B$。在式（41.12）的每个槽、每个行末及外层末端直接应用这些既有等式，得到整棵 $\rho^3(Q_\theta)=P_\theta$。[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的树替换单射性复合三次，使这个实际给出的完整前像唯一；该命题中的原子名字对应这里的 $\alpha,\beta$，不是完整块 $A,B$。
+
+沿 $Q_\theta$ 的外层右脊行走，每次分支恢复其完整左行树，直到原子 $\alpha$ 停止，恢复唯一有序行列及 $\ell$。再沿每个行树的右脊行走，直到原子 $\beta$ 停止，恢复全部左槽及其个数 $r_j$。各左槽是原子 $\alpha$ 或完整分支 $b$，字面区别恢复所有 $S_j$。标记槽内的右 $\alpha$ 位于行的左槽内部，不在行右脊或外层右脊上，不能造成提前停止。空行本身为 $\beta$，外层中相邻的空行仍为不同的左孩子出现。因此上述解析适用于任意行数、任意零行位置和标记位置，给参数到 $Q_\theta$ 的单射；既有替换单射性给参数到 $P_\theta$ 的单射。它们不是由组成或基数推断树相等。
+
+每个普通或标记槽都贡献一片 $\alpha$，标记另外贡献一片 $\beta$；每行末端贡献一片 $\beta$，外层末端贡献一片 $\alpha$。式（41.11）遂给 $c(Q_\theta)=(k+1,t+1)^{\mathsf T}$。母卷定理 3.4 的第三步组成作用直接给
+
+$$
+\begin{pmatrix}1&2\\2&3\end{pmatrix}\binom{k+1}{t+1}
+=\binom{k+2t+3}{2k+3t+5},\qquad
+n(P_\theta)=3k+5t+8.
+\tag{41.16}
+$$
+
+全部非冲突比较直接应用[定理 40.6 证明中不限制槽数和标记数的两段归纳](#40-历史残余-β-资源三-β-共享来源与两次超额系数)，不把其三 $\beta$ 计数限制当作这些归纳的假设。具体对应如下：每个 $T_j$ 都是任意长度的以 $C$ 结束、左槽属于 $\{A,B\}$ 的右梳；这些行树彼此全部非冲突，包括空行 $C$。槽对只为 $A/A,B/B,A/B$，其中 $A/B$ 由引理 30.2 供应。行长不同时，较短侧到 $C$，较长侧为 $\langle D,Z\rangle$，$D\in\{A,B\}$，$Z$ 仍以 $C$ 结束而 $Z\ne A$；既有归纳在 $D=A$ 与 $D=B=\langle C,A\rangle$ 两种情形都直接使用引理 30.2 的第二行。因而所有零长度、不同长度和任意标记组合都在原比较的范围内。
+
+每个 $T_j$ 至少五叶，所以它不同于 $A$。外层正是以 $A$ 结束的任意有序行列；定理 40.6 的另一段归纳逐行应用上述行对比较。外层行数不同时，末端 $A$ 与剩余 $\langle T,R\rangle$ 由 $T\ne A$、$R\in\mathcal I_3$ 及引理 30.2 第一行比较。两分支的共享叶条件按左右前缀分解。因此相同或不同 $\ell$、相同或不同各行长度、所有标记模式的每一对均由这两个既有一般比较覆盖。对任意 $S\subseteq F_{k,t}$、$|S|\ge2$，其中任一不同成员对的遗传信息叶集为空，定理 25.2 排除 $S\in K$；空集、单点由同一定理和完整单原型测试取得。故 $K(F_{k,t})=K_\circ(F_{k,t})$ 涉及全部子族。
+
+再把这些不同的完整实际树与经典路径对应。按行次序把普通槽写为 $(1,0)$，标记槽写为 $(1,1)$，非末行之后的边界写为 $(0,1)$，最后一行末端不写一步。第一坐标总增量为 $\sum_jr_j=k$，第二坐标为 $\sum_j|S_j|+\ell-1=t$。反向对任一路径按每个 $(0,1)$ 切行，水平和对角步恢复槽及标记。开头的竖步给初始空行，末尾的竖步给末端空行，连续竖步给连续空行；没有竖步时只有一行。竖步数至多 $t$，所以恢复的 $\ell\le t+1$，全部参数满足式（41.11）。两方向互逆，再结合参数单射，得到路径与 $F_{k,t}$ 的实际双射。[Banderier、Schwer，*Why Delannoy numbers?*，arXiv:math/0411128v1，第 2 节](https://arxiv.org/html/math/0411128v1#S2) 的三步模型及二项式表达式直接给式（41.14）的 $D_{k,t}$；这里不另证明经典枚举。$k<t$ 时超过 $k$ 个标记的参数层为空，求和上限 $\min(k,t)$ 恰保留这一边界；全普通槽的 $\ell=t+1$ 层始终非空。
+
+现在固定一个实际 $P=P_\theta$，证明同一扫描的到达历史。行根为 $v_j=\mathtt R^{j-1}\mathtt L$。直接使用第 40 章字面计算（40.24）：$A|_{\mathtt{LR}}=\alpha$、$B|_{\mathtt{LR}}=E$、$C|_{\mathtt{LLR}}=\alpha$，而 $C$ 的 $\mathtt{RLLR}$ 越过 $E$ 的左叶 $\beta$ 后还有非空后缀，故不存在。对尚在第 $j$ 行的实际请求，由式（41.12）有
+
+$$
+\begin{array}{c|c}
+\text{实际到达位置}&\operatorname{out}_P(u(j,h))\\ \hline
+1\le h\le r_j,\ h\notin S_j&\mathsf{leaf}_\alpha\\
+1\le h\le r_j,\ h\in S_j&\mathsf{branch}\\
+h=r_j+1&\mathsf{leaf}_\alpha\\
+h=r_j+2&\mathsf{absent}
+\end{array}
+\tag{41.17}
+$$
+
+不存在事件后扫描转到下一行，不再请求这个行内更大的 $h$。末端 $\alpha$ 与普通槽的报告相同，单独一条末端 $\alpha$ 不确认边界；只有随后到达的不存在事件才确认 $r_j=h-2$。空行也按同一计算先在 $h=1$ 报 $\alpha$，在 $h=2$ 报不存在。
+
+设想只为定位事件，在完整描述上把每行所有槽、行末 $\alpha$ 以及非末行的首个不存在位置按顺序列出；这不是额外执行或免费供应报告。每个标记给一次分支，每个非末行给一次不存在，合计
+
+$$
+\sum_j|S_j|+(\ell-1)=t.
+\tag{41.18}
+$$
+
+沿这份有限列表，定义 41.4 的真实推进规则正依次请求相应地址，直到第 $t$ 个事件即停。最后行末的不存在若继续执行才会是第 $t+1$ 个事件，故绝不被请求。非末行的不存在位置至多 $k+2$，所有标记位置至多 $k$，所以在评价成员上事件数到 $t$ 之前不会触发上限。每个已取得报告都保留 $P$ 于幸存集，$\beta$ 报告不会发生；故本次运行确实到达这 $t$ 个事件。
+
+统一解码须对整个实际历史纤维证明，而非只给当前参数的一种表示。任取另一个 $P'\in F_{k,t}$ 匹配 $P$ 到第 $t$ 个事件的全部地址—报告。控制从相同初始化出发，按实际历史选择后续地址；逐步归纳使 $P'$ 的扫描到达同一地址、同一报告和同一事件停止点。对 $P'$ 也有式（41.17）、（41.18），所以它的前 $t$ 个事件都在最后行末不存在之前；每个已观察不存在都是非末行边界，每个分支都是一个实际标记。
+
+在这一个共同停止历史中仍以 $q,p$ 记不存在数、分支数，$p+q=t$。若 $P'$ 的参数为 $\ell',r'_j,S'_j$，则
+
+$$
+\ell'\ge q+1,\qquad
+\sum_j|S'_j|\ge p,
+\qquad
+\ell'+\sum_j|S'_j|=t+1=(q+1)+p.
+\tag{41.19}
+$$
+
+两个下界与总资源等式强迫两者分别取等：$\ell'=q+1$，$\sum_j|S'_j|=p$。因而没有未观察的标记，也没有未观察的行边界。前 $q$ 个已完成行的长度全部由其不存在事件当时的 $h-2$ 确定；所有标记位置全部由各行实际分支报告的 $h$ 确定。余下唯一最后行的长度只能是
+
+$$
+r'_{q+1}=k-\sum_{j=1}^{q}r'_j.
+\tag{41.20}
+$$
+
+这些就是定义 41.4 的完整解码参数，而且它们对 $P$ 和每个匹配 $P'$ 相同。参数单射使 $P'=P$，所以停止纤维是单点，解码有效，暂选原型恰为 $P$。
+
+这个论证量化了每个实际可到达事件词，未枚举 $2^t$ 张响应表。若最后事件是分支，式（41.19）表明所在行已经是最后行，全部标记已到达，余下后缀全为普通槽，长度仍由式（41.20）确定。若最后事件是不存在，它完成第 $q$ 行，更新后的第 $q+1$ 行尚未请求，必无标记，其长度同样由式（41.20）确定，允许为零。初始零行、连续零行都由各自 $h=2$ 的不存在确定，不把前一行末端 $\alpha$ 借作后一行的读数；没有不存在时 $q=0$，最后行长直接为 $k$。$k<t$ 不影响两个非负资源下界或其取等，只使一些标记层及事件词不可实现，不删去原输入域或任何可行参数。
+
+对任意未知 $U\in\mathcal T$，扫描本身也有限。在第 $t$ 个事件前至多有 $t-1$ 次不存在，故下一实际请求所在行号 $j\le t$。同一行从 $h=1$ 开始，除不存在重置到新行之外，每次请求后 $h$ 加一；上限使每行至多有 $k+2$ 次请求。最后一次事件若把 $j$ 更新为 $t+1$，停止已经发生，不再请求该行。故所有未知输入的扫描请求数至多 $t(k+2)$，包括始终报告 $\alpha$、没有达到第 $t$ 个事件的情形；后者由有限上限转入后备。全部四值、空幸存集、无效参数、无效原型和非单点停止纤维均有定义中的有限去向。
+
+暂选原型仅启动既有完整测试。[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)在 $d=3=3\cdot1$ 的完整叶条件及[母卷定理 9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)的恢复保证：任意未知 $U$ 若匹配所选原型的全部带标签叶，则 $U=P_\theta\in\mathcal I_3$。这是原型认证分支的唯一接受途径，故接受正确；必需但未扫描的叶全部仍须请求。任何扫描意外或认证不匹配都交给既有总后备，不据此拒绝。定理 23.2、29.2 已证明这个后备对每棵有限 $U$ 都有限恢复并有限判定：实际测得 $m$ 后，替换不减叶数使所有第三步前像都在叶数至多 $m$ 的有限枚举内，正例命中，负例穷尽拒绝。母卷定理 9.2 供应有限完整描述，规范编译卷命题 4.3 供应完整前像单射性；不由组成逆矩阵产生前像。
+
+引理 27.3 的独立初始化和真实同址缓存使每段后续执行逐步等于其从自己的初态单独读取同一 $U$ 的执行，因此保留返回与终止性。扫描有限，认证有限，后备在每个实际有限树上有限，故整个 $\pi_{k,t}\in\mathfrak D_3$。特别地，未知根叶在首个非空 $u(1,1)$ 报不存在，而全部评价原型在此只报 $\alpha$ 或分支，幸存集立即为空，遂进入同一总后备；恢复 $m=1$ 后两个根叶前像的三步像是分支树 $A,C$，有限比较拒绝。其余任意有限正负树同样在上述全域合同内；参数 $k,t$ 和有限族描述只定控制器，不定未知来源。
+
+最后核算每个评价成员的实际付费集合。同一行内 $u(j,h)$ 的长度为 $j+h+2$，不同 $h$ 给不同地址；不同行根 $\mathtt R^{j-1}\mathtt L$ 互不为前缀，其下请求也不会同址。因此全部扫描地址互异，恰到第 $t$ 次非叶事件止的事件地址集 $E_{k,t}(P)$ 有大小 $t$。每个事件报告分支或不存在，所以这些地址均不在该同一 $P$ 的叶集；由式（41.17），其余所有实际扫描请求恰为这个 $P$ 的 $\alpha$ 叶。若 $\mathcal Q_{k,t}(P)$ 为实际扫描请求集，则
+
+$$
+\mathcal Q_{k,t}(P)\setminus L(P)=E_{k,t}(P),\qquad
+J_{\pi_{k,t}}(P)=\mathcal Q_{k,t}(P)\cup L(P).
+\tag{41.21}
+$$
+
+后一式直接用引理 27.3 的实际并集计费：扫描后的独立完整单原型测试请求全部 $L(P)$，此前真正请求的同址叶才命中缓存，其他叶仍实际请求；评价成员通过全部认证，后备不运行。消去已在叶集内的扫描地址即得式（41.15）。这核算的是一个共同控制器在全部评价成员上的不同实际地址，不把强制资源、未请求后缀或别的来源报告计作免费认证。证毕。
+
+**推论 41.6（每个固定任意超额的上极限系数）。** 在定义 30.6 的原全有限树只读合同下，对每个固定整数 $t\ge3$ 有
+
+$$
+\boxed{\quad
+\mathsf{Cap}(3k+5t+8,t)\ge D_{k,t}\quad(k\ge1),\qquad
+\limsup_{n\to\infty}\frac{\mathsf{Cap}(n,t)}{n^t}
+=\frac{(2/3)^t}{t!}.
+\quad}
+\tag{41.22}
+$$
+
+上极限沿全部正整数规模取，不可行规模的容量仍为零；特别地 $t=3$ 的系数为 $4/81$。
+
+**证明。** 定理 41.5 的完整实际同叶数族、全对非冲突及 $K=K_\circ$，连同同一个全域总控制器的共同费用至多 $n_{k,t}+t$，满足定义 30.6 的容量条件，给第一式。先固定 $t$ 再令 $k\to\infty$；直接使用所引 Banderier—Schwer 第 2 节的经典二项式表达式，及固定阶二项式的多项式首项，得到
+
+$$
+D_{k,t}=\frac{2^t}{t!}k^t+O_t(k^{t-1}),\qquad
+\frac{D_{k,t}}{(3k+5t+8)^t}
+\longrightarrow\frac{(2/3)^t}{t!}.
+\tag{41.23}
+$$
+
+这里只在 $k\ge t$ 的最终范围用第 $i=t$ 项取首项；$k<t$ 的实际族已由定理 41.5 覆盖。沿明确子序列 $n_{k,t}=3k+5t+8\to\infty$，式（41.23）给全整数序列上极限至少所列系数。
+
+反向，定理 41.2 的唯一统一势给全部 $n$ 的上界。令 $W_n=\lfloor2n/3\rfloor$，固定 $t$ 时式（41.2）的有限乘积首项直接给
+
+$$
+\Phi_t(W_n)=\frac{W_n^t}{t!}+O_t(W_n^{t-1}),\qquad
+\frac{\Phi_t(W_n)}{n^t}\longrightarrow\frac{(2/3)^t}{t!}.
+\tag{41.24}
+$$
+
+因此全规模上极限至多该系数，与实际子序列下界合并即得式（41.22）。取 $t=3$ 为 $(2/3)^3/3!=4/81$；不是从一次、两次超额系数外推该值。
+
+这里的经典枚举直接采用所引结果，有限乘积计算只用于路由归纳；承重关系为同一实际历史的任意预算资源归纳和共享行标记族的统一历史解码、全域认证与精确付费集合。式（41.22）不含普通密度极限、全规模下界、精确有限容量分类、随机化最优、随 $n$ 增长的 $t$ 的统一渐近或其他替换深度的结论，也不对文献范围之外的原创性作断言。完整树来源、组成、规范数量地址、四值响应、组成祖先许可及实际逆执行保持各自对象与操作；唯一前像的纸面描述及只读成员判定不授权实际逆执行，环境代数关系不建立物理对应。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 42. 单 β 四 α 替换的四行区间障碍
+
+**定义 42.1（完整二十变体语法与联合选择）。** 固定整数 $m\ge1$，取[定义 41.3 的完整参数集 $\Theta_{m,3}$、前像 $Q_\theta$ 和像 $P_\theta$](#41-任意固定超额的继承历史界与共享行标记取得)。沿用定义 30.1 的 $\operatorname{NC}$、式（30.2）的完整块 $A=\rho^3(\alpha)$、$C=\rho^3(\beta)$，以及定义 40.5 的右梳 $\mathcal R_T$。令 $\mathcal Z_4$ 为全部恰有四片叶、叶标签全为 $\alpha$ 的有序满二叉树，即
+
+$$
+\begin{aligned}
+\mathcal Z_4=\{\,&
+\langle\langle\langle\alpha,\alpha\rangle,\alpha\rangle,\alpha\rangle,
+\ \langle\langle\alpha,\langle\alpha,\alpha\rangle\rangle,\alpha\rangle,
+\ \langle\langle\alpha,\alpha\rangle,\langle\alpha,\alpha\rangle\rangle,\\
+&\langle\alpha,\langle\langle\alpha,\alpha\rangle,\alpha\rangle\rangle,
+\ \langle\alpha,\langle\alpha,\langle\alpha,\alpha\rangle\rangle\rangle\,\}.
+\end{aligned}
+\tag{42.1}
+$$
+
+对 $Q_\theta$ 的任一实际 $\beta$ 叶出现地址 $p$ 和任一 $Z\in\mathcal Z_4$，只将该处完整叶替为 $Z$，其余括号、左右次序与标签逐字保持，记所得完整前像为 $Q_\theta[p\leftarrow Z]$。相应候选是整棵树
+
+$$
+\widetilde P_{\theta,p,Z}=\rho^3\bigl(Q_\theta[p\leftarrow Z]\bigr).
+\tag{42.2}
+$$
+
+由定理 41.5，每个原前像恰有四片 $\beta$，故每个参数至多有二十个候选。联合选择是在每个 $\theta$ 处任取一对 $\sigma(\theta)=(p_\theta,Z_\theta)$；地址和形状均可任意依赖整个参数及 $m$，不要求统一选择同一出现、同一行或同一形状。记 $\widetilde P_\theta=\widetilde P_{\theta,p_\theta,Z_\theta}$。完整前像与像的对应直接采用[母卷定义 2.1、3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的自由树与替换同态；[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)复合三次保证每个已给出的像拥有唯一的所示完整前像，并不保证不同参数所选的新前像互不相同。
+
+以下规模关系只是既有组成作用的应用。定理 41.5 给 $c(Q_\theta)=(m+1,4)^{\mathsf T}$；一次所规定替换把组成改变为 $(m+5,3)^{\mathsf T}$。[母卷定理 3.4](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的第三步作用因而给
+
+$$
+\begin{gathered}
+c\bigl(Q_\theta[p\leftarrow Z]\bigr)=\binom{m+5}{3},\qquad
+c(\widetilde P_{\theta,p,Z})=
+\begin{pmatrix}1&2\\2&3\end{pmatrix}\binom{m+5}{3}
+=\binom{m+11}{2m+19},\\
+\widetilde P_{\theta,p,Z}\in\mathcal I_3(3m+30).
+\end{gathered}
+\tag{42.3}
+$$
+
+未知输入仍是定义 29.1 的全部非空有限带标签有序满二叉树 $U\in\mathcal T$；上述参数和候选仅描述评价来源，不给 $U$ 任何承诺。全部有限地址包括根均合法，报告为同一不变 $U$ 的四值；费用只计实际请求的不同地址。选择原型不接受，完整认证仍须实际请求所选整棵原型的全部带标签叶，真实缓存仅复用实际请求过的同址报告，后备仍须有自己的完整初态和空逻辑历史。
+
+**定理 42.2（任意联合选择的四行区间界与统一障碍）。** 令 $\Xi_m\subseteq\Theta_{m,3}$ 为全部四行、没有标记槽的参数，即
+
+$$
+\Xi_m=\{(4,\boldsymbol r,\boldsymbol\varnothing):
+ r_1,r_2,r_3,r_4\in\mathbb N_0,\ r_1+r_2+r_3+r_4=m\}.
+\tag{42.4}
+$$
+
+对任意 $X\subseteq\Xi_m$，在每个 $\theta\in X$ 上作定义 42.1 所允许的任意选择。如果这些选定完整像两两满足 $\operatorname{NC}$，则
+
+$$
+\boxed{\qquad |X|\le16\binom{m+2}{2}.\qquad}
+\tag{42.5}
+$$
+
+特别地，对每个 $m\ge46$，不存在定义在全部 $\Theta_{m,3}$ 上、使全部选定像两两满足 $\operatorname{NC}$ 的联合选择。因此不存在某个 $m_0$ 以及对所有 $m\ge m_0$ 的联合选择，同时取得参数到完整来源的单射、全对 $\operatorname{NC}$，以及一个在全部原未知输入上正确且有限终止、在每个选定成员上费用至多 $3m+33$ 的共同控制器。此障碍不以单射或费用条件为前提。
+
+**证明。** 在 $\Xi_m$ 中每个槽都为普通 $\alpha$；四片 $\beta$ 恰是四个行末。因而每个允许选择必替换某一行末，记该行号为 $j(\theta)\in\{1,2,3,4\}$。这个四行子族包含初始、末端和连续零长度行；外层四个行根的共同地址始终是
+
+$$
+v_j=\mathtt R^{j-1}\mathtt L\qquad(1\le j\le4).
+\tag{42.6}
+$$
+
+若所选形状为 $Z_\theta$，记 $H_\theta=\rho^3(Z_\theta)$。沿用式（41.12）的字面树表示，选定来源的第 $i$ 行完整子树为
+
+$$
+\widetilde P_\theta|_{v_i}=
+\begin{cases}
+\mathcal R_{H_\theta}(\underbrace{A,\ldots,A}_{r_i}),&i=j(\theta),\\
+\mathcal R_C(\underbrace{A,\ldots,A}_{r_i}),&i\ne j(\theta).
+\end{cases}
+\tag{42.7}
+$$
+
+这里仅将行末 $C$ 换成其实际四 $\alpha$ 前像的像；外层末端仍是 $A$。式（42.7）由母卷定义 3.1 直接作用于完整行及外层上下文得到。也可逐步使用[运输记忆完成卷命题 22.2 的（RA.2206）](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#22-一次全局替换的实际节点单孔边界与来源恢复)：它的前提是同一完整源及该源的实际节点，所用行根、行右脊和被替换行末都满足该前提；这里只作描述对应，不把输出新增节点当作旧源切口，不调用虚拟输入控制器。
+
+现在固定任意两个参数 $\theta,\eta\in X$，满足 $j(\theta)=j(\eta)=j$。设其被替换行的长度分别为 $a=r_j(\theta)$、$b=r_j(\eta)$，并假设 $b-a\ge4$。在短行所选树 $Z_\theta$ 中，从根一直沿右孩子走，最终到达最右侧 $\alpha$ 叶；记该叶地址为 $\mathtt R^q$。由于 $Z_\theta$ 恰有四片叶，有
+
+$$
+1\le q\le3.
+\tag{42.8}
+$$
+
+确切地，这条路径的每个分支各有一个不交的非空左子树，它们各含至少一片叶，再加最右端叶，给 $q+1\le4$；根不是叶，故 $q\ge1$。这个论证覆盖全部五种形状，而不要求两参数选择相同形状。
+
+替换同态在原有分支处保持左右地址，因此短行在地址 $v_j\mathtt R^{a+q}$ 的完整像子树恰为 $A$。长行在同一地址尚未到达其被替换行末：因为 $b-a-q\ge1$，该处仍是一个普通槽及其右后缀组成的分支，完整子树恰为 $\langle A,Y\rangle$，其中 $Y\in\mathcal I_3$。所以两棵选定来源在同一个合法有限地址
+
+$$
+w=v_j\mathtt R^{a+q}\mathtt{LR}
+\tag{42.9}
+$$
+
+拥有相反标签的实际叶：
+
+$$
+\operatorname{out}_{\widetilde P_\theta}(w)=\mathsf{leaf}_\alpha,
+\qquad
+\operatorname{out}_{\widetilde P_\eta}(w)=\mathsf{leaf}_\beta.
+\tag{42.10}
+$$
+
+第一项是式（30.2）的 $A|_{\mathtt{LR}}=\alpha$；第二项是 $\langle A,Y\rangle|_{\mathtt{LR}}=A|_{\mathtt R}=\beta$。这也是引理 30.2 第一行中 $\operatorname{NC}(A,\langle A,Y\rangle)$ 失败的既有局部比较。共同前缀将该局部冲突送到完整来源；其他三行的长度、两参数各自的所选形状与外层末端都不改变这个地址的两个叶报告。这里描述来源上的真实四值，不将未执行的查询报告放入任何缓存。
+
+式（42.10）直接违背全对 $\operatorname{NC}$。因此，同一替换行号的任意两个参数必须满足
+
+$$
+|r_j(\theta)-r_j(\eta)|\le3
+\qquad\bigl(j(\theta)=j(\eta)=j\bigr).
+\tag{42.11}
+$$
+
+将 $X$ 按所选行号分为四个互不相交的集合 $X_j$。非空 $X_j$ 的 $r_j$ 值由式（42.11）包含在至多四个连续整数内；这一限制不按五种形状再分组，允许每个参数独立改变形状。对固定 $r_j=s\in\{0,\ldots,m\}$，其余三行的非负长度之和为 $m-s$。用两个分隔位置描述这些有序弱分拆，恰有
+
+$$
+\binom{m-s+2}{2}\le\binom{m+2}{2}
+\tag{42.12}
+$$
+
+个原参数。每个原参数只属于一个 $X_j$，不按它的多个候选重复计数。因此 $|X_j|\le4\binom{m+2}{2}$；空 $X_j$ 同样满足该界。对四个行号相加，得到式（42.5）。这是一条对任意部分选择的结构界，不是有限样本检验或对二十项菜单的逐项失败推断。
+
+最后，三个分隔位置给全部四行参数的精确数目
+
+$$
+|\Xi_m|=\binom{m+3}{3}
+=\frac{m+3}{3}\binom{m+2}{2}.
+\tag{42.13}
+$$
+
+若全部 $\Theta_{m,3}$ 存在全对非冲突联合选择，限制到 $\Xi_m$ 仍满足式（42.5）。但 $m\ge46$ 时 $(m+3)/3>16$，式（42.13）严格超过式（42.5），矛盾。任意声称适用于所有 $m\ge m_0$ 的选择都在 $m\ge\max\{m_0,46\}$ 遇到这个矛盾。由于必要的来源关系已经失败，增加路由、认证或后备不能使该选择同时满足列出的三个条件；无需假定它们各自无法构造，也不从缺少控制器证明反推障碍。证毕。
+
+**注记 42.3（参数对应、复用及未决边界）。** 原有限目标的参数为 $m=k-2$。定理 41.5 已给 $|\Theta_{m,3}|=D_{m,3}$；式（42.3）给指定语法的共同叶数 $3m+30=3k+24$，其拟议三次超额费用为 $3m+33=3k+27$。定理 42.2 排除的是对全部原参数各选一个字面变体、并保持全对非冲突的方案，特别覆盖所有 $k\ge48$，不把原 Delannoy 计数或组成等式当作新来源关系。门槛 $46$ 是所证估计给出的充分门槛，不宣称首次失败恰为该值。
+
+该定理不排除舍弃部分原参数后另外引入其他来源，也不排除改变多处资源或采用所指定语法以外的完整前像。它没有给 $\mathsf{Cap}(3m+30,3)$ 的上界，没有证明任意同组成族不可能，更没有证明不受本语法限制的 $G_k$ 不存在。寻找 $G_k\subseteq\mathcal I_3(3k+24)$、$|G_k|\ge D_{k-2,3}$、$K(G_k)=K_\circ(G_k)$，并由一个原全域正确总控制器同时取得成员费用至多 $3k+27$，仍未由本章证明或反驳。定理 18.2、23.2、25.2、29.2 与引理 27.3 的完整认证、共同取得及独立续接保持原有适用范围；本章不另立这些既有桥梁的伴随证明，也不以普通全规模极限的复用应用代替上述语法障碍。
+
+右梳、原参数解析、替换单射及组成作用是仓内既有结果的应用；经典 Delannoy 数及其所引文献沿用定理 41.5 的出处。这里的承重关系是任意联合选择所满足的同一行号区间限制、实际相反叶标签见证及由此得到的全参数障碍，不作世界原创性声明。完整树来源、组成、规范数量地址、原始四值响应、组成祖先许可与实际逆执行仍是不同对象与操作；完整前像描述不授权实际逆执行，环境代数关系不提供物理对应。
+
+## 追加锚（本行以下为增补区）
+
+## 43. 混合完整来源的三响应联合取得与有限 Delannoy 阈值
+
+### 43.1 来源、参数与原只读合同
+
+沿用定义 23.1、30.1、30.6 的全部非空有限自由有序满二叉 $\alpha/\beta$ 树 $\mathcal T$、实际三步像 $\mathcal I_3=\rho^3(\mathcal T)$、等叶数像集 $\mathcal I_3(n)$、叶地址集 $L(X)$、非冲突关系 $\operatorname{NC}$、相容复形 $K,K_\circ$ 与全域正确总控制器类 $\mathfrak D_3$。未知输入 $U\in\mathcal T$ 不附叶数、高度、组成、正性或候选身份承诺；每个有限左右地址，包括空地址，都允许查询同一不变 $U$，报告恰为 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$。费用 $C_\sigma(U)=|J_\sigma(U)|$ 只计本次运行真正请求的不同地址，地址长度、定位与内部计算不收费。$J_\sigma(U)$ 不包括由原型、来源组成或强制关系推断而未请求的地址。
+
+仅为统一记号，对正整数 $r$ 置
+
+$$
+\mathcal F[r,2]=F_r\quad\text{（定义 40.5）},\qquad
+\mathcal F[r,3]=F_{r,3}\quad\text{（定义 41.3）}.
+\tag{43.1}
+$$
+
+$Q_{r,t}(P)$ 表示定理 40.6、41.5 已给出的 $P\in\mathcal F[r,t]$ 的唯一完整前像，$t\in\{2,3\}$。这些记号不扩展原族的参数范围。它们的行树是以 $C$ 结束、左槽属于 $\{A,B\}$ 的右梳，外层是以 $A$ 结束的有序行列；允许全部原有零长度行和标记模式。原参数满足
+
+$$
+1\le\ell\le t+1,\qquad
+\sum_{j=1}^{\ell}r_j=r,\qquad
+S_j\subseteq\{1,\ldots,r_j\},\qquad
+\ell+\sum_{j=1}^{\ell}|S_j|=t+1.
+\tag{43.2}
+$$
+
+$t=2$ 的约束就是式（40.18），$t=3$ 的约束就是式（41.11）。直接采用原完整实现、计数及扫描结果：
+
+$$
+c(Q_{r,t}(P))=\binom{r+1}{t+1},\qquad
+n(P)=3r+5t+8,\qquad
+|\mathcal F[r,t]|=D(r,t).
+\tag{43.3}
+$$
+
+这里 $D(r,t)=D_{r,t}$ 是经典 Delannoy 路径数，不是确定性联合费用 $D(F)$；其非负整数指标仍采用定理 41.5 的三种步定义。式（43.1）的树族只在 $r\ge1$ 使用。
+
+沿用式（30.2）、（34.1）—（34.2）的完整字面块及连接树：
+
+$$
+E=\langle\beta,\alpha\rangle,\quad
+A=\langle E,\beta\rangle=\rho^3\alpha,\quad
+C=\langle A,E\rangle=\rho^3\beta,\quad
+B=\langle C,A\rangle=\rho^3\langle\beta,\alpha\rangle,\quad
+W_1=\langle B,C\rangle.
+\tag{43.4}
+$$
+
+**定义 43.1（三个完整来源类）。** 对每个整数 $m\ge3$，定义
+
+$$
+\begin{aligned}
+H_0(m)&=\{\langle P,\langle C,C\rangle\rangle:P\in\mathcal F[m-1,3]\},\\
+H_b(m)&=\{\langle P,\langle W_1,C\rangle\rangle:P\in\mathcal F[m-2,2]\},\\
+H_a(m)&=\{\langle P,A\rangle:P\in\mathcal F[m+3,2]\},\\
+H(m)&=H_0(m)\cup H_b(m)\cup H_a(m),\qquad n_m=3m+30.
+\end{aligned}
+\tag{43.5}
+$$
+
+对 $m\in\{0,1,2\}$，只定义 $H_a(m)$ 为式（43.5）的第三类，并令 $H(m)=H_a(m)$、$n_m=3m+30$。其载荷参数 $m+3$ 为正，不使用零参数或负参数的来源族。每个元素都保留全部括号、左右次序及叶标签；$H(m)$ 是费用评价族，不是未知输入域。
+
+### 43.2 一个实际类查询与有界左前缀核
+
+**定义 43.2（原输入上的联合控制器）。** 固定 $m\ge0$。控制器 $\sigma_m$ 的完整初始化只依 $m$、式（43.5）的有限完整树描述和以下规则，外层真实缓存为空。$m\ge3$ 时先实际请求
+
+$$
+q=\mathtt{RLRR}.
+\tag{43.6}
+$$
+
+报告 $\mathsf{leaf}_\alpha,\mathsf{branch},\mathsf{absent}$ 分别选择 $(r,t)=(m-1,3),(m-2,2),(m+3,2)$ 的有限扫描核，以及相应的整个右连接树 $\langle C,C\rangle,\langle W_1,C\rangle,A$；报告 $\mathsf{leaf}_\beta$ 直接进入下面的原输入总后备。$m\in\{0,1,2\}$ 时不作类查询，直接选择 $(r,t)=(m+3,2)$ 的核与右连接树 $A$。选择类或原型都不返回任务答案。
+
+核只抽取定义 40.7、41.4 的有界路由段。其独立初态为 $(j,h,e)=(1,1,0)$、空核逻辑历史和幸存集 $S=\mathcal F[r,t]$；$e$ 计已到达的分支或不存在事件。把每个核请求
+
+$$
+u(j,h)=\mathtt R^{j-1}\mathtt L\mathtt R^{h-1}\mathtt{LLR}
+\quad\text{映到实际请求}\quad
+\mathtt L u(j,h)
+\tag{43.7}
+$$
+
+后，只读取原始 $U$ 在这个完整地址的报告。核历史在索引 $u(j,h)$ 处记下该报告；更新 $S$ 时将它与载荷原型在 $u(j,h)$ 的报告比较。请求前若 $h>r+2$，进入总后备。请求后若 $S$ 为空或报告为 $\mathsf{leaf}_\beta$，进入总后备。其余三种报告的推进规则为：$\mathsf{leaf}_\alpha$ 使 $h$ 加一，$\mathsf{branch}$ 使 $h,e$ 各加一，$\mathsf{absent}$ 使 $j,e$ 各加一并重置 $h=1$。第 $t$ 个事件到达时立即停止核，不请求更新状态中的下一地址，较早出现单点也不提前结束认证任务。
+
+在这个停止历史中，设不存在数为 $a$、分支数为 $b$，$a+b=t$。采用原事件解码：暂定 $\ell=a+1$，各已完成行长为其不存在事件当时的 $h-2$，最后行长为 $r-\sum_{j<\ell}r_j$，各行标记集由实际分支事件的 $h$ 值给出。若最后事件为不存在，更新后的最后行尚未请求，取空标记集；若最后事件为分支，保留该最后行已观察的全部标记。核验证式（43.2）的全部约束、完整原型的有效性及 $S=\{P\}$；任一无效解码、无效原型或非单点停止纤维都进入总后备。验证成功只暂选完整包裹原型 $X=\langle P,K\rangle$，其中 $K$ 是本段已选的整个右连接树。
+
+暂选后，独立初始化定理 23.2、29.2 的完整单原型测试，以空逻辑历史按固定短词优先次序请求整个 $L(X)$ 的每片带标签叶，包含右连接树的全部叶。只有每个请求都得到该地址的精确叶标签才返回 $1$。相反标签、分支或不存在的任一认证不匹配都进入总后备；载荷解码、类响应与字面固定块不代替叶认证。
+
+每次进入总后备都建立定理 23.2、29.2 的既有后备自己的完整初始化、空逻辑历史和初始控制状态。它从原始不变 $U$ 的根开始，仅在实际分支处扩展，恢复实际有限树及其实际叶数 $N$，有限枚举叶数至多 $N$ 的完整带标签前像，比较第三步替换描述；命中返回 $1$，穷尽未命中返回 $0$。它不读取任何虚拟载荷，不接收预置的 $N$ 或来源组成。
+
+所有段只依引理 27.3 续接：外层缓存仅存本次运行已真正请求的完整原地址及同一不变 $U$ 的报告，后段真正请求完全相同地址时才供应该缓存，否则实际读取并存入。每次供应都写入后段自己的逻辑历史；类查询或核历史不预填认证、后备的初态。前缀索引、原型描述、未请求后缀和其他来源的报告不建立缓存条目。这里没有在未知 $U$ 上执行来源替换、拼接或逆操作。
+
+### 43.3 联合构造定理及完整证明
+
+**定理 43.3（三响应混合来源的有限阈值取得）。** 在第 43.1 节的原全有限树只读合同下，定义 43.1、43.2 对每个整数 $m\ge0$ 满足
+
+$$
+\begin{gathered}
+H(m)\subseteq\mathcal I_3(n_m),\qquad
+\forall X,Y\in H(m),\ \operatorname{NC}(X,Y),\qquad
+K(H(m))=K_\circ(H(m)),\\
+\sigma_m\in\mathfrak D_3,\qquad
+\forall U\in\mathcal T,\quad
+\sigma_m(U)=\mathbf1_{\mathcal I_3}(U),\\
+|H(m)|=D(m,3)+8m+28\quad(m\ge3),\\
+|H(m)|=D(m+3,2)\ge D(m,3)\quad(0\le m\le2),\\
+\forall X\in H(m),\quad C_{\sigma_m}(X)\le n_m+3.
+\end{gathered}
+\tag{43.8}
+$$
+
+$m\ge3$ 时三个类两两不交，每个成员的费用恰为 $n_m+3$。更精确地，记 $E_{r,t}(P)$ 为原载荷核在实际 $P$ 上真正到达的 $t$ 个非叶事件地址集，$\mathtt L V=\{\mathtt L u:u\in V\}$。在同一实际运行中，
+
+$$
+J_{\sigma_m}(X)=
+\begin{cases}
+L(X)\cup\mathtt L E_{m-1,3}(P),
+ &X=\langle P,\langle C,C\rangle\rangle\in H_0(m),\\
+L(X)\cup\{q\}\cup\mathtt L E_{m-2,2}(P),
+ &X=\langle P,\langle W_1,C\rangle\rangle\in H_b(m),\\
+L(X)\cup\{q\}\cup\mathtt L E_{m+3,2}(P),
+ &X=\langle P,A\rangle\in H_a(m),\ m\ge3,\\
+L(X)\cup\mathtt L E_{m+3,2}(P),
+ &X=\langle P,A\rangle\in H(m),\ 0\le m\le2.
+\end{cases}
+\tag{43.9}
+$$
+
+因此，只在非负指标的定义范围 $k\ge2$ 置 $G_k=H(k-2)$，便有
+
+$$
+G_k\subseteq\mathcal I_3(3k+24),\qquad
+|G_k|\ge D(k-2,3),\qquad
+K(G_k)=K_\circ(G_k),\qquad
+\max_{X\in G_k}C_{\sigma_{k-2}}(X)\le3k+27.
+\tag{43.10}
+$$
+
+这是一个共同初始化、在所有原始未知有限树上正确并有限停止的控制器对各评价成员同时满足的结论。
+
+**证明。** 首先验证完整来源，而不只验证组成。定理 40.6、41.5 给每个载荷的实际完整前像 $Q_{r,t}(P)$。对三个类，完整包裹前像依次是
+
+$$
+\begin{aligned}
+X=\langle P,\langle C,C\rangle\rangle:
+ &\quad\widehat Q_0(P)=\langle Q_{m-1,3}(P),\langle\beta,\beta\rangle\rangle,\\
+X=\langle P,\langle W_1,C\rangle\rangle:
+ &\quad\widehat Q_b(P)=\langle Q_{m-2,2}(P),
+          \langle\langle\langle\beta,\alpha\rangle,\beta\rangle,\beta\rangle\rangle,\\
+X=\langle P,A\rangle:
+ &\quad\widehat Q_a(P)=\langle Q_{m+3,2}(P),\alpha\rangle.
+\end{aligned}
+\tag{43.11}
+$$
+
+[母卷定义 2.1、3.1](FIBONACCI_ATOMIC_RELATION_GENERATION.md#3-fibonacci-替换与组成动力学)的自由有序树和替换同态直接把这三棵整树送到式（43.5）的相应整树，因为 $\rho^3\langle\beta,\alpha\rangle=B$、$\rho^3\langle\langle\beta,\alpha\rangle,\beta\rangle=W_1$。每个括号和叶标签均在同态等式中保留。[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)的替换单射性复合三次，保证式（43.11）为相应整像的唯一完整前像；母卷第 9 节的完整树编码与恢复不把这些树替换为组成点。
+
+原载荷的前像组成是 $(r+1,t+1)^{\mathsf T}$。右前像 $\langle\beta,\beta\rangle$、$\langle\langle\langle\beta,\alpha\rangle,\beta\rangle,\beta\rangle$、$\alpha$ 的组成分别为 $(0,2)^{\mathsf T},(1,3)^{\mathsf T},(1,0)^{\mathsf T}$。故 $\widehat Q_0,\widehat Q_b$ 具有组成 $(m,6)^{\mathsf T}$，$\widehat Q_a$ 具有组成 $(m+5,3)^{\mathsf T}$。母卷定理 3.4 的第三步组成矩阵给
+
+$$
+\begin{pmatrix}1&2\\2&3\end{pmatrix}\binom m6
+ =\binom{m+12}{2m+18},\qquad
+\begin{pmatrix}1&2\\2&3\end{pmatrix}\binom{m+5}{3}
+ =\binom{m+11}{2m+19}.
+\tag{43.12}
+$$
+
+二者总叶数都为 $3m+30$。也可直接核对载荷与右连接树的叶数：三个载荷依次为 $3m+20,3m+12,3m+27$，而 $\langle C,C\rangle,\langle W_1,C\rangle,A$ 依次为 $10,18,3$。小参数只用第三个等式，且 $m+3\ge1$。所以全部 $H(m)$ 的成员都有所述实际完整来源和共同叶数；不同类不必有相同组成。
+
+接着验证包括交叉类的全部非冲突比较。直接应用定理 40.6 证明中两个不限行长、槽数、标记数或行数的归纳，而不把其三片前像 $\beta$ 的计数约束附加给归纳。第一段已经比较所有以 $C$ 结束、左槽属于 $\{A,B\}$ 的右梳；它包括空行、不同长度的行以及任意标记位置。第二段已经比较所有以 $A$ 结束的这些行的有序列；不同外层长度时由行树至少五叶而不等于 $A$ 使用引理 30.2 的第一行。定理 41.5 也明确直接使用这两个无限制归纳。因此任取本章任意两个载荷，即使分属 $\mathcal F[m-1,3],\mathcal F[m-2,2],\mathcal F[m+3,2]$，也属于原归纳的对象范围，彼此非冲突；参数及资源预算不同不改变该对应。
+
+右侧连接树同样逐对可比。式（36.10）已证明 $C,W_1$ 的共享叶集为空并满足 $\operatorname{NC}$；式（37.11）使用同一比较。故 $\langle C,C\rangle$ 与 $\langle W_1,C\rangle$ 的左对由该事实、右对由相同的 $C$ 给出非冲突。$C\ne A$、$W_1\ne A$，引理 30.2 第一行分别给 $A$ 与这两个连接树的非冲突；相同连接树自然非冲突。对整树 $\langle P,K\rangle,\langle P',K'\rangle$，任何共享叶或者同时在左地址前缀下，或者同时在右地址前缀下，左右不能相交；因此整树的共享叶标签条件就是上述载荷对与连接树对的条件。所有类内、类间的整树对都满足 $\operatorname{NC}$。任意含两个不同成员的子族，其某个二元素子集的信息叶集为空，定理 25.2 的遗传判据排除该子族的相容性；空集和单点由同一定理取得相容性。这给 $K(H(m))=K_\circ(H(m))$，不是只对某个基准成员的比较。
+
+现在从完整整树直接计算类响应。$q$ 的第一步 $\mathtt R$ 进入右连接树，余下后缀是 $\mathtt{LRR}$。在 $\langle C,C\rangle$ 中，第一步 $\mathtt L$ 进入 $C$，而 $C|_{\mathtt{RR}}=E|_{\mathtt R}=\alpha$；在 $\langle W_1,C\rangle$ 中，同一步进入 $W_1$，而 $W_1|_{\mathtt{RR}}=C|_{\mathtt R}=E$ 是分支；在 $A$ 中，$A|_{\mathtt{LR}}=\alpha$，剩余非空的 $\mathtt R$ 越过这片叶，故不存在。于是对完整评价成员有实际报告表
+
+$$
+\begin{array}{c|c|c}
+X\text{ 所属类}&\operatorname{out}_X(\mathtt{RLRR})&\text{选定载荷核 }(r,t)\\ \hline
+H_0(m)&\mathsf{leaf}_\alpha&(m-1,3)\\
+H_b(m)&\mathsf{branch}&(m-2,2)\\
+H_a(m)&\mathsf{absent}&(m+3,2)
+\end{array}
+\tag{43.13}
+$$
+
+此表与左载荷无关。同一棵树在同一地址只有一个报告，故三个类两两不交。各类内根包裹不合并不同载荷，原载荷参数映射又已单射，所以类内基数仍为原载荷基数。表不声称任意未知输入的响应能证明其类身份，第四种报告也有定义 43.2 的后备去向。
+
+固定一个评价成员 $X=\langle P,K\rangle$。它的左孩子就是实际 $P$，所以每个真正请求的 $\mathtt L u$ 在 $X$ 上给出 $P$ 在 $u$ 上的同一报告。核从原扫描初态开始，且仅由已经取得的报告推进；对请求步数归纳，整个映射核的历史、幸存队列及事件停止点都与原载荷核一致。不是把多个来源各自最佳的费用拼接成一个实现。为明确第 $t$ 个事件后的实际纤维，在整树 $X$ 的实际第 $j$ 行逐项使用原式（40.24）、（41.17），得到精确前缀请求表：
+
+$$
+\begin{array}{c|c|c}
+\text{实际到达位置}&\text{原始整树请求}&\operatorname{out}_X(\mathtt L u(j,h))\\ \hline
+1\le h\le r_j,\ h\notin S_j
+ &\mathtt L\mathtt R^{j-1}\mathtt L\mathtt R^{h-1}\mathtt{LLR}
+ &\mathsf{leaf}_\alpha\\
+1\le h\le r_j,\ h\in S_j
+ &\mathtt L\mathtt R^{j-1}\mathtt L\mathtt R^{h-1}\mathtt{LLR}
+ &\mathsf{branch}\\
+h=r_j+1
+ &\mathtt L\mathtt R^{j-1}\mathtt L\mathtt R^{r_j}\mathtt{LLR}
+ &\mathsf{leaf}_\alpha\\
+h=r_j+2
+ &\mathtt L\mathtt R^{j-1}\mathtt L\mathtt R^{r_j+1}\mathtt{LLR}
+ &\mathsf{absent}
+\end{array}
+\tag{43.14}
+$$
+
+前两行的槽内后缀为 $\mathtt{LR}$，而 $A|_{\mathtt{LR}}=\alpha$、$B|_{\mathtt{LR}}=E$ 是分支。第三行给 $C|_{\mathtt{LLR}}=\alpha$；第四行给 $C|_{\mathtt{RLLR}}$，它越过 $E$ 的左叶 $\beta$ 后仍有非空后缀，故不存在。这些都是同一实际 $X$ 的原地址报告，表只适用于扫描停止前真正请求的位置；它不供应退出后、未请求行或未请求后缀的报告。末端 $\alpha$ 本身不确认行界，只有随后实际请求的不存在才确定行长为 $h-2$。空行仍在 $h=1,2$ 给这两种报告。
+
+在最后行末的不存在之前，标记事件及非末行边界的总数恰为 $\sum_j|S_j|+\ell-1=t$，所以核在第 $t$ 个事件即停，绝不请求最后行末的下一不存在；所有实际到达位置均有 $h\le r+2$。对同一停止历史的任意匹配载荷，设其行数和标记数为 $\ell',s'$。已经到达的 $a$ 个不存在及 $b$ 个分支分别给 $\ell'\ge a+1,s'\ge b$，而原参数关系给 $\ell'+s'=t+1=(a+1)+b$。于是两个下界都取等，没有未观察的行界或标记。前 $a$ 行长由各不存在的 $h-2$ 决定，全部标记由各分支的 $h$ 决定，唯一最后行长由总槽数 $r$ 减去前述行长决定。这正是定义 43.2 的解码，原参数单射使停止纤维恰为 $\{P\}$。这也是定理 40.8、41.5 的原同历史结论的直接应用。若最后事件为分支，该行已经是最后行，保留全部已观察标记，剩余槽只能普通；若最后事件为不存在，更新后的唯一最后行尚未请求且无标记，其长度仍由总槽数确定，允许为零。连续空行的边界分别由各自 $h=2$ 的实际不存在报告确定；没有不存在时 $a=0$，唯一行长就是 $r$。大参数的类查询先排除另两类，随后这个左核纤维使整个 $H(m)$ 内匹配的包裹原型也唯一；小参数从一开始只有第三类。评价成员不会触发任何核失败，所选整原型恰为 $X$。
+
+全域有限性须单独处理，不由评价成员的历史推出。对任意四值报告序列，核在第 $t$ 个事件前至多发生 $t-1$ 次不存在，所以下一请求所在行号 $j\le t$。同一行从 $h=1$ 起步，除不存在重置至新行外，每次请求使 $h$ 加一；$h>r+2$ 的出口使一行最多请求 $r+2$ 次。因此最多 $t(r+2)$ 次实际请求后核已停止，或更早进入后备。第 $t$ 个事件即使把状态更新到下一行，也不再请求那个地址。始终报告 $\alpha$ 的路径会触发上限，$\beta$、空幸存集、无效解码、无效原型及非单点停止纤维也全有有限出口。这个证明只依核的有界控制规则与实际报告；不以 $U|_{\mathtt L}$ 存在、为非空树或在 $\mathcal I_3$ 中为前提，也不运行旧整个控制器于该虚拟对象。
+
+特别地，若 $U$ 是任一根叶，大参数的类查询报告不存在，只选择第三类的有限核。它的第一次实际请求是 $\mathtt L u(1,1)=\mathtt{LLLLR}$，在根叶上仍报告不存在；全部第三类载荷在 $u(1,1)$ 只报告 $\alpha$ 叶或分支，包括第一行为空的情况，所以幸存集立即为空并进入原输入后备。小参数直接核也有同一出口。原输入的左孩子若是一片叶，也在同一首请求处如此退出；左孩子完全不存在时已由根叶情况覆盖。不存在的虚拟载荷从未被传给任何旧全域控制器。
+
+暂选后的整树认证有限，因为所选整原型的叶集有限。对任何未知 $U$，若它匹配 $X$ 的全部带标签叶，[定理 18.2](#18-精确组成最优证书的唯一性与无承诺叶前沿)在 $d=3=3\cdot1$ 的完整叶条件及[母卷定理 9.3](FIBONACCI_ATOMIC_RELATION_GENERATION.md#9-不预置自然数的结构编码)的字面恢复给 $U=X\in\mathcal I_3$；这是原型分支的唯一接受条件。认证包括固定连接树的每片实际叶，已经真正取得的同址报告可以供给同一认证请求，其余叶必须读取，不能由固定块描述补齐证书。任何不匹配只切换后备，不据此拒绝未知输入。
+
+后备始终作用于原始不变 $U$。定理 23.2、29.2 已证明从根沿实际分支恢复任何有限 $U$ 的有限性，以及按实际叶数 $N$ 的完整前像枚举判定。母卷定理 9.2 的有限完整描述给有限枚举；替换不减少叶数，故任一真正第三步前像的叶数不超过 $N$，正例必命中、负例穷尽拒绝。引理 27.3 的独立初态与真实同址缓存保证后段每一步报告、控制和返回都等于它从自己的初态单独读取同一 $U$，而不是把先前历史当作初始证明。类查询、核、认证及后备均有限且所有响应都有去向，认证接受正确、后备判定正确，于是 $\sigma_m\in\mathfrak D_3$。若任意未知 $U$ 在某个失败前缀后进入后备，记 $J_{\mathrm{pre}}(U)$ 为类查询、核及已经执行的认证前缀的真正请求集，$J_{\mathrm{fb}}(U)$ 为该既有后备从自己的初态单独读取原始 $U$ 的请求集，则实际付费集合恰为
+
+$$
+J_{\sigma_m}(U)=J_{\mathrm{pre}}(U)\cup J_{\mathrm{fb}}(U).
+\tag{43.15}
+$$
+
+这包含所有族外正负树的出口与缓存，未给它们承诺评价成员的费用界。
+
+再核算每个评价成员的同一实际付费集合。原核的事件地址恰有 $t$ 个且两两不同，报告为分支或不存在，故 $E_{r,t}(P)\cap L(P)=\varnothing$；原式（40.24）、（41.17）、（41.21）保证其他真正核请求都是同一 $P$ 的 $\alpha$ 叶。左前缀映射保持地址互异，且
+
+$$
+L(X)=\mathtt L L(P)\ \sqcup\ \mathtt R L(K),\qquad
+\mathtt L E_{r,t}(P)\cap L(X)=\varnothing.
+\tag{43.16}
+$$
+
+实际类查询 $q$ 在右孩子中，与所有左前缀核请求不同。式（43.13）使 $q\in L(X)$ 恰在第一类；第二、第三类中 $q\notin L(X)$。整个叶认证最终请求全部 $L(X)$，评价成员精确通过且后备不运行。于是引理 27.3 的同址并集计费直接给式（43.9）：第一类除了全部叶恰有三个左核事件，另两类除了全部叶恰有类查询与两个左核事件，三者均恰为 $n_m+3$。小参数没有类查询，除了全部叶只有两个左核事件，所以费用为 $n_m+2\le n_m+3$；这些端点不具有本构造的精确 $n_m+3$ 费用。该等式不把未请求的强制叶、事件之外的原型推断或别的来源报告当作免费缓存。
+
+最后计算有限基数。三类的实际响应互异已给两两不交，载荷到整树单射给 $m\ge3$ 时
+
+$$
+|H(m)|=D(m-1,3)+D(m-2,2)+D(m+3,2).
+\tag{43.17}
+$$
+
+直接用定理 40.6、41.5 所引的经典二项式表达式，即 [Banderier、Schwer，*Why Delannoy numbers?*，第 2 节](https://arxiv.org/html/math/0411128v1#S2)，有
+
+$$
+D(r,2)=2r^2+2r+1,\qquad
+D(r,3)=\frac{4r^3+6r^2+8r+3}{3}\quad(r\in\mathbb N_0).
+$$
+
+因此 $D(m,3)-D(m-1,3)=4m^2+2$，而 $D(m-2,2)+D(m+3,2)=4m^2+8m+30$；代入式（43.17）得到 $D(m,3)+8m+28$。这里只使用非负 Delannoy 指标，实际载荷参数仍为正。对小参数，第三类单射给 $|H(m)|=D(m+3,2)$，且
+
+$$
+D(m+3,2)-D(m,3)=\frac{-4m^3+34m+72}{3}.
+$$
+
+$0\le m\le2$ 时 $m^3\le4m$，故该差至少为 $6m+24>0$。这是同一符号不等式，不要求扩展任何来源族至零参数。取 $m=k-2$，$k\ge2$，共同叶数及费用分别成为 $3k+24,3k+27$ 的所列界，基数与相容复形也由同一个 $H(m)$ 继承，得到式（43.10）。证毕。
+
+### 43.4 关系范围与来源边界
+
+式（43.11）—（43.16）连接完整实际来源、交叉类非冲突、一个真实类报告及同一次执行的精确付费集。它改变整来源族，以两个原二次族补充移位后的三次族，允许两种完整前像组成；它不是第 42 章在每个原参数处选择单 $\beta$ 四 $\alpha$ 字面替换的语法。定理 42.2 对那个语法的四行区间障碍保持其原范围，定理 43.3 在 $k\ge2$ 的非负 Delannoy 指标范围给出式（43.10）的有限共同取得。它不指定负指标，也不将本构造费用断言为最优容量、随机最优值或任意增大超额参数的结论。
+
+完整来源及替换复用[母卷第 2、3、9 节](FIBONACCI_ATOMIC_RELATION_GENERATION.md)、[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md)，被动地址的子树对应遵守[运输记忆完成卷第 22 节](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md)。该卷第 35—37 节的取得合同使用当前 Clifford 读出、受固定活上限守卫的实际来源替换或上下文拼接，并在合同 A 中供应初始同源侧信息，目标是初始行为商 $q_H$，费用按来源调用计；其第 37 节的全实际家族容量及节省关系保持这些假设。它们不把主动动作、标签供应或 Clifford 窗口变成式（43.6）—（43.7）的被动原地址权限，也不供应整原型叶认证的免费报告。母卷第 283—298 节的物理、统计及尺度结论带各自外加结构与假设，第 355—357、359—360 节的 Clifford 叶积、正词及窗口像结论保留各自语义；完整括号树的来源存在性不等于本章四值地址响应与同历史付费集。这些不同对象不作权限替换。
+
+定理 18.2、23.2、25.2、引理 27.3、第 29 章的原认证、遗传判据、独立续接与后备，以及第 38—41 章的来源和有限核结果，在证明中按原假设直接使用；经典路径计数只提供式（43.17）的基数计算。有限响应学习和决策树的文献背景沿用第 29 章附着的原文来源，它们的有限学习域不替代这里整个 $\mathcal T$ 上的接受与停止合同。这里的构造和证明是普通纸面数学推导，不是 Lean 内核验证；没有数值实验或物理对应结论。来源描述、组成、规范数量地址、原始响应、组成祖先许可与实际逆执行仍是不同任务，完整前像唯一性不授权在未知 $U$ 上执行逆过程。
+
+## 追加锚（本行以下为增补区）
+
+## 44. 四片残余 β 的唯一伴随来源与三次超额有限界
+
+**定义 44.1（共同 β 地址与固定参考来源）。** 沿用定义 29.1、30.1、30.6的原全有限树只读合同、实际像 $\mathcal I_3=\rho^3(\mathcal T)$、等叶数集合 $\mathcal I_3(n)$、非冲突关系 $\operatorname{NC}$、相容复形 $K,K_\circ$、全域确定性策略空间 $\mathfrak D_3$、共同费用 $D$ 和容量 $\mathsf{Cap}$。未知输入仍遍历全部非空有限自由有序满二叉 $\alpha/\beta$ 树；所有有限左右地址，包括根，都可直接查询同一不变输入的原始四值。评价族的正性、共同叶数和完整描述均不成为未知输入的承诺。费用仍只计真实同址缓存后不同的实际请求地址。
+
+采用原有字面树，并给八叶树另设不混淆左右次序的记号：
+
+$$
+E=\langle\beta,\alpha\rangle,\qquad
+A=\langle E,\beta\rangle,\qquad
+C=\langle A,E\rangle,\qquad
+T_*=\langle A,C\rangle.
+\tag{44.1}
+$$
+
+这里 $T_*\ne B=\langle C,A\rangle$；$B$ 保持式（30.2）的原义。对正来源定义定向缺额
+
+$$
+\delta_\beta(P,Q)=|\Lambda_\beta(P)\setminus\Lambda_\beta(Q)|.
+\tag{44.2}
+$$
+
+实际像双孔上下文仍取定义 32.1 的对象：两个各出现一次的孔、保留次序的二叉配对以及固定的实际正子树。完整前像的存在与唯一性只使用母卷定义 2.1、3.1及规范编译卷命题 4.3，不由组成相等推断完整树相等。
+
+**引理 44.2（四片共同残差的唯一伴随来源）。** 设 $S\subseteq\mathcal I_3(n)$ 非空有限且两两非冲突，固定
+
+$$
+Z\subseteq\bigcap_{Q\in S}\Lambda_\beta(Q).
+$$
+
+若存在一个参考来源 $P\in S$，则有
+
+$$
+\boxed{
+\begin{aligned}
+|\Lambda_\beta(P)\setminus Z|\le3&\ \Longrightarrow\ |S|=1,\\
+|\Lambda_\beta(P)\setminus Z|\le4&\ \Longrightarrow\ |S|\le2.
+\end{aligned}}
+\tag{44.3}
+$$
+
+第二式中，相对于同一个 $P,Z$，至多存在一个不同于 $P$ 的兼容来源；不要求整个族具有预先共同的前像骨架。
+
+**证明。** 先在本证明内计算既有规范分歧前沿的 $\beta$ 缺额。若正来源 $T$ 的唯一完整前像组成为 $(a,q)^{\mathsf T}$，令 $\omega(T)=|\Lambda_\beta(T)|$。直接使用母卷定理 3.4 的第三步组成作用，有
+
+$$
+\omega(T)=2a+3q,\qquad n(T)=3a+5q,\qquad
+a,q\in\mathbb N_0,\quad a+q>0.
+\tag{44.4}
+$$
+
+所以 $\omega(T)\ge2$，$\omega(T)=2$ 只可能为 $T=A$；$T\ne A$ 时 $\omega(T)\ge3$，而 $\omega(T)=3$ 只可能为 $T=C$。最后两个唯一性是在完整前像上成立的：对应组成分别只有 $(1,0)$ 与 $(0,1)$，非空满二叉前像因而分别是单叶 $\alpha$ 与单叶 $\beta$。同理，五叶正来源唯一为 $C$。这些不是一般组成观察的单射性断言。
+
+对不同、等叶数且非冲突的 $P,Q$，直接取引理 30.3的规范分歧前沿。在每个孔上将原子侧记为 $T_0$、复合侧记为 $T_1$。引理 30.2已经穷尽全部可能比较；在其原字面对象上，缺额恰为
+
+$$
+\begin{array}{c|c|c|c}
+(T_0,T_1)&\delta_\beta(T_0,T_1)&\delta_\beta(T_1,T_0)&n(T_1)-n(T_0)\\ \hline
+(A,\langle X,Y\rangle),\ X\ne A
+&2&\omega(X)+\omega(Y)\ge5&n(X)+n(Y)-3\ge5\\
+(C,\langle A,Y\rangle),\ Y\ne A
+&1&\omega(Y)\ge3&n(Y)-2\ge3\\
+(C,\langle\langle X_1,X_2\rangle,Y\rangle),\ X_1\ne A,\ Y\ne A
+&3&\omega(X_1)+\omega(X_2)+\omega(Y)\ge8
+&n(X_1)+n(X_2)+n(Y)-5\ge8
+\end{array}
+\tag{44.5}
+$$
+
+表内所有变量均属于 $\mathcal I_3$。第一、三行没有共享叶，故缺额就是各侧全部 $\beta$ 数。第二行恰共享左侧的 $A$：$C$ 的三片 $\beta$ 扣除该 $A$ 的两片后剩一片，复合侧则剩下 $Y$ 的全部 $\beta$。各下界分别使用非 $A$ 正来源至少三片 $\beta$、任意正来源至少两片 $\beta$，以及引理 30.2 的叶数下界。因此没有加入抽象响应表或未实现的局部类型。
+
+令 $k$ 为前沿中 $P$ 侧为原子的孔数，$l$ 为 $P$ 侧为复合像的孔数。每个孔的复合侧严格较大；等叶数使全部有符号大小差之和为零，非空前沿遂迫使 $k,l\ge1$。前沿的孔根前缀自由，孔外完全相同，故与定理 32.2 证明中式（32.8）的地址分割相同，定向 $\beta$ 缺额也逐孔相加。于是
+
+$$
+\delta_\beta(P,Q)\ge k+3l\ge4,\qquad
+\delta_\beta(Q,P)\ge3k+l\ge4.
+\tag{44.6}
+$$
+
+若第一方向取等，$k+3l\le4$ 强制 $k=l=1$，且 $P$ 在原子孔的缺额为一，在复合孔的缺额为三。将这两个孔分别命名为 $u,v$。表（44.5）说明两孔都必须属于第二行。在 $v$ 处有
+
+$$
+(P|_v,Q|_v)=(\langle A,Y\rangle,C),\qquad \omega(Y)=3,
+$$
+
+因而 $Y=C$，该孔的大小增加量为三。在 $u$ 处写
+
+$$
+(P|_u,Q|_u)=(C,\langle A,Y'\rangle).
+$$
+
+两孔以外相同，等叶数使 $n(Y')-2=3$；五叶正来源的唯一性给 $Y'=C$。所以存在这一对来源自己的实际像双孔上下文 $J$，使
+
+$$
+P=J[C,T_*],\qquad Q=J[T_*,C].
+\tag{44.7}
+$$
+
+反方向取等给相同结论；式（44.7）又使两个方向的缺额均为四。这也说明，定理 32.2 的 $\alpha$ 取等分类中允许的 $\langle A,A\rangle$ 填充没有在这里被当成 $C$：它有四片 $\beta$，不能满足本处的三片复合侧缺额。
+
+为核对该形状的充分性及完整来源，取任意定义 32.1 的实际像双孔上下文 $J$。把它的每个固定正旁支换成各自的完整前像，得到保留同一配对和孔位置的上下文 $J_0$。两棵完整树
+
+$$
+J_0[\beta,\langle\alpha,\beta\rangle],\qquad
+J_0[\langle\alpha,\beta\rangle,\beta]
+$$
+
+的第三步像正是式（44.7）的两树。规范编译卷命题 4.3 给这些完整前像的唯一性。两个孔各是原子前像与分支前像的比较，因此原规范前沿恰在这两个孔停止。引理 30.2 第二行给每孔的非冲突性；相反的三叶大小差抵消，给等叶数；孔内不同子树给整树不同。局部共有部分恰为左 $A$，所以两个定向 $\beta$ 缺额均为 $1+3=4$。至此，取等形的两个方向和全部实际前像均已核对，而没有改变既有 $\alpha$ 分离定理。
+
+更精确地，$C$ 的 $\beta$ 地址为 $\{\mathtt{LLL},\mathtt{LR},\mathtt{RL}\}$，$T_*$ 与它共享左 $A$ 的两片 $\beta$。因此在式（44.7）的 $P$ 中，四个失去的地址恰为
+
+$$
+\Lambda_\beta(P)\setminus\Lambda_\beta(Q)
+=\{u\mathtt{RL}\}\ \sqcup\ v\mathtt R\Lambda_\beta(C).
+\tag{44.8}
+$$
+
+这里的并不交，因为 $u,v$ 是不同且前缀不可比的孔地址；孔外没有任何缺额。
+
+现在固定引理中的 $P,Z$，令 $D_P=\Lambda_\beta(P)\setminus Z$。对任意 $Q\in S$，共同地址条件给
+
+$$
+\Lambda_\beta(P)\setminus\Lambda_\beta(Q)\subseteq D_P.
+$$
+
+若 $|D_P|\le3$，式（44.6）排除任何 $Q\ne P$，得到第一式。若 $|D_P|\le4$ 且存在 $Q\ne P$，同一下界强迫
+
+$$
+|D_P|=4,\qquad
+D_P=\Lambda_\beta(P)\setminus\Lambda_\beta(Q),\qquad
+Z=\Lambda_\beta(P)\cap\Lambda_\beta(Q).
+\tag{44.9}
+$$
+
+每一个不同兼容来源都因而具有式（44.7）—（44.8）的形状，但在此之前不假设它们的上下文或孔相同。
+
+只在固定的完整 $P$ 中考察所有字面 $C$ 出现。由引理 31.2 的完整位置分类，每一个这样的出现恰为 $P$ 的一个规范 $C$ 根；这些根是其唯一前像的叶地址，因而前缀自由。不同根 $r,r'$ 下的完整三元组 $r\Lambda_\beta(C)$ 与 $r'\Lambda_\beta(C)$ 不交：若有共同地址，两根都会是该地址的前缀，必可比较，违背前缀自由性。
+
+四元集合 $D_P$ 至多包含一个这样的完整规范 $C$ 三元组，否则两个不交三元组会使其大小至少为六。而式（44.8）已经供应一个，根为 $r=v\mathtt R$。所以该根由 $P,D_P$ 唯一确定，删去其最后一个字母 $\mathtt R$ 后，$v$ 唯一确定。集合 $D_P\setminus r\Lambda_\beta(C)$ 恰有一个地址，式（44.8）说明它是 $u\mathtt{RL}$；自由地址词的右消去性使 $u$ 也唯一确定。最后，在固定的 $P$ 上，把地址 $u$ 的 $C$ 换为 $T_*$，把地址 $v$ 的 $T_*$ 换为 $C$，其余字面子树不动，结果只能是一棵树。因此不同于 $P$ 的兼容来源至多一个，证明第二式。这个唯一性使用固定 $P$ 的真实规范块位置；四元集合的抽象分拆本身没有供应它，也没有预置全族共同的前像上下文。
+
+残差四确实允许两个来源。直接复用式（30.6）的十三叶对 $P_{13}=\langle C,T_*\rangle$、$Q_{13}=\langle T_*,C\rangle$；不另构造来源或控制器。共同实际历史
+
+$$
+H_*=\bigl((\mathtt{LLLR},\mathsf{leaf}_\alpha),
+(\mathtt{RLLR},\mathsf{leaf}_\alpha)\bigr)
+$$
+
+按原五行强制规则只加入根为 $\mathtt{LL},\mathtt{RL}$ 的两个 $A$，所以
+
+$$
+\Psi(H_*)=
+\{\mathtt{LLLL},\mathtt{LLR},\mathtt{RLLL},\mathtt{RLR}\}
+=\Lambda_\beta(P_{13})\cap\Lambda_\beta(Q_{13}).
+\tag{44.10}
+$$
+
+每棵树有八片 $\beta$，故各剩四片。两次查询在这个二元素族上都是常值，第一步就不是严格分裂；它们只校准共同历史的残差边界，不证明严格路由容量或任何全局容量上界取等。证毕。
+
+**定义 44.3（同一实际后缀与整数势）。** 固定非空有限两两非冲突的 $F\subseteq\mathcal I_3(n)$，并固定第 29 章的一棵实际有限严格路由 $r$。每个非单点节点按一个真正请求地址的四值响应分裂，非空孩子都是当前队列的真子集，单点终止路由。对这棵路由上实际可达的共同前缀 $H$，只在非空队列上使用
+
+$$
+\begin{aligned}
+S_H&=\{P\in F:\forall(u,y)\in H,\ \operatorname{out}_P(u)=y\},\\
+\Psi(H)&=\bigcup_{(v,T)\in\mathcal B_H}v\Lambda_\beta(T),\\
+W_\beta&\in\mathbb N_0,\qquad
+W_\beta\ge\max_{P\in F}|\Lambda_\beta(P)|,\\
+R(H)&=W_\beta-|\Psi(H)|.
+\end{aligned}
+\tag{44.11}
+$$
+
+$\mathcal B_H,\Psi(H)$ 完全采用定义 31.3、40.1：只将已经实际报告的叶按式（31.6）变成强制块，重复地址按集合并处理。分支、不存在及进一步推论都不增加块或缓存条目。$S_H$ 匹配全部四类报告，而不是仅匹配叶报告。$W_\beta$ 对原族一次选定，随后所有孩子、后缀都继承同一个数。
+
+记 $r_H$ 为原路由 $r$ 在前缀 $H$ 上已经选定的后缀。这里直接采用 ActualStrictHistoryCapacity 的 `reached_prefix`及其蓝图定理 1.1的实际含义：队列恰为全部报告相容者，后续记录与 $H$ 拼接，活孩子恰为原节点代表地址的非空真实响应纤维。$r_H$ 不是在 $S_H$ 上重新优化选出的路由。
+
+对 $R\in\mathbb N_0$，定义
+
+$$
+\begin{aligned}
+U_0(R)&=1,\\
+U_1(R)&=\max\{1,R-2\},\\
+U_2(R)&=
+\begin{cases}
+1,&0\le R\le3,\\
+2,&R=4,\\
+\left\lfloor\dfrac{R^2-2R-1}{2}\right\rfloor,&R\ge5,
+\end{cases}\\
+U_3(R)&=
+\begin{cases}
+1,&0\le R\le3,\\
+2,&R=4,\\
+\dfrac{R^3-7R}{6},&R\ge5\text{ 为奇数},\\
+\dfrac{R^3-10R}{6},&R\ge6\text{ 为偶数}.
+\end{cases}
+\end{aligned}
+\tag{44.12}
+$$
+
+**定理 44.4（残差四几何约束下的同后缀界）。** 在定义 44.3 的同一实际路由上，设 $S_H\ne\varnothing$，$b\in\{0,1,2,3\}$，且每个 $P\in S_H$ 在已经选定的 $r_H$ 中至多还有 $b$ 次分支或不存在报告。则
+
+$$
+\boxed{\quad |S_H|\le U_b(R(H)).\quad}
+\tag{44.13}
+$$
+
+该结论允许 $H$ 已含非叶报告，允许成员的完整前像组成不同，并包含零预算、零残余及全部可行小叶数。
+
+**证明。** 先确定归纳所用的真实孩子。定理 40.2 给 $\Psi(H)\subseteq\Lambda_\beta(P)$ 对每个 $P\in S_H$ 成立，因此 $R(H)\ge0$。非叶孩子只在 $H$ 后接一个分支或不存在报告，故其固定块并集恰不变，资源仍为 $R(H)$，后缀非叶预算减少一。若存在非空叶孩子，非冲突性使叶标签唯一；直接使用定理 40.2，有
+
+$$
+w=|\Psi(H')\setminus\Psi(H)|\in\{1,2,3\},\qquad
+1\le d\le\min\{2,w\},\qquad R(H')=R(H)-w,
+\tag{44.14}
+$$
+
+其中 $d$ 是这个节点的非空非叶孩子数。叶孩子中的实际成员包含新增后的全部并集，故 $R(H)\ge w$。$w=1$ 时只补全旧左 $A$ 所在的 $C$，不存在孩子为空，因而 $d=1$；这项限制采用原完整位置证明，不从一般四值菜单推断。若没有叶孩子，严格节点只有分支、不存在两个非空孩子。所有孩子都属于同一个 $r_H$，保留原来的 $W_\beta$ 和此前全部报告。
+
+接着在本归纳内核算式（44.12）。$U_0,U_1,U_2$ 显然取整数。整数 $R$ 的三个连续因子给 $(R^3-R)/6\in\mathbb Z$；奇数分支的 $U_3$ 是这个整数减去 $R$，偶数分支是它减去整数 $3R/2$，所以 $U_3$ 也取整数。
+
+对 $R\ge5$，令 $\epsilon_R=0$ 当 $R$ 为奇数，$\epsilon_R=1$ 当 $R$ 为偶数，则
+
+$$
+U_2(R)=\frac{R^2-2R-1-\epsilon_R}{2}.
+\tag{44.15}
+$$
+
+$U_1$ 对 $R$ 非减。对 $R\ge6$，直接相减得到
+
+$$
+\begin{aligned}
+U_2(R)-U_2(R-1)&=
+\begin{cases}R-1,&R\text{ 为奇数},\\R-2,&R\text{ 为偶数},\end{cases}\\
+U_3(R)-U_3(R-1)&=
+\begin{cases}(R^2-3)/2,&R\text{ 为奇数},\\(R^2-2R-2)/2,&R\text{ 为偶数}.
+\end{cases}
+\end{aligned}
+\tag{44.16}
+$$
+
+上述奇数分支自动有 $R\ge7$。在与小残余定义连接的地方，$U_2(5)-U_2(4)=7-2=5$，$U_3(5)-U_3(4)=15-2=13$；从 $R=3$ 到 $R=4$ 两者都由一增到二，而 $0\le R\le3$ 时恒为一。于是每个 $U_b$ 对全部非负整数 $R$ 非减，并始终为正整数。
+
+以下数值递推只在 $R\ge5$ 使用。对 $b=1$，有
+
+$$
+U_1(R)-U_1(R-1)=1=U_0(R),\qquad
+U_1(R)-U_1(R-2)=2=2U_0(R).
+$$
+
+这里 $R=5$ 时第二个式子的较小参数是三，仍由 $U_1(3)=1$ 成立。对 $b=2$，式（44.16）及 $R=5$ 的连接差说明
+
+$$
+U_2(R)-U_2(R-1)\ge R-2=U_1(R).
+$$
+
+当 $R\ge7$ 时，两单位差的两个参数都处于式（44.15）的范围且奇偶相同，所以
+
+$$
+U_2(R)-U_2(R-2)=2R-4=2U_1(R).
+$$
+
+余下连接点分别是 $R=5$ 时 $7-1=6=2U_1(5)$，以及 $R=6$ 时 $11-2=9\ge8=2U_1(6)$。这些等式和不等式覆盖全部 $R\ge5$，没有把 $R=4$ 的分段值代入不适用的二次表达式。
+
+对 $b=3$，偶数 $R\ge6$ 的一单位差恰为 $U_2(R)$。奇数 $R\ge7$ 时，式（44.15）—（44.16）给
+
+$$
+U_3(R)-U_3(R-1)-U_2(R)=R-1\ge0.
+$$
+
+$R=5$ 的连接差为 $13\ge7=U_2(5)$。对 $R\ge7$，两单位差保留同一奇偶分支，直接相减给
+
+$$
+U_3(R)-U_3(R-2)=
+\begin{cases}
+R^2-2R-1,&R\text{ 为奇数},\\
+R^2-2R-2,&R\text{ 为偶数},
+\end{cases}
+=2U_2(R).
+\tag{44.17}
+$$
+
+两个剩余连接点为
+
+$$
+U_3(5)-U_3(3)=15-1=14=2U_2(5),\qquad
+U_3(6)-U_3(4)=26-2=24\ge22=2U_2(6).
+\tag{44.18}
+$$
+
+因此，对所有 $R\ge5$、$b\in\{1,2,3\}$，已经符号证明
+
+$$
+\begin{aligned}
+U_b(R-1)+U_{b-1}(R)&\le U_b(R),\\
+U_b(R-2)+2U_{b-1}(R)&\le U_b(R).
+\end{aligned}
+$$
+
+$U_b$ 的单调性又给 $U_b(R-3)\le U_b(R-2)$。结合式（44.14）的真实 $(w,d)$ 限制，得到归纳需要的全部高资源不等式
+
+$$
+\boxed{
+\begin{aligned}
+U_b(R-w)+dU_{b-1}(R)&\le U_b(R),
+&&w\in\{1,2,3\},\quad d\le\min\{2,w\},\\
+2U_{b-1}(R)&\le U_b(R),
+&&R\ge5.
+\end{aligned}}
+\tag{44.19}
+$$
+
+第二行也直接由两单位差和 $U_b(R-2)\ge1$ 得到。它同时说明 $R\ge5$ 時这些函数对预算 $b$ 非减；在 $R\le3$ 时四个函数均为一，在 $R=4$ 时依次为一、二、二、二，故预算方向的单调性亦覆盖全部参数。
+
+小资源处不能宣称式（44.19）无条件延伸。例如
+
+$$
+U_2(3)+U_1(4)=1+2=3>2=U_2(4).
+\tag{44.20}
+$$
+
+这个形式递推的失败不被用于改变 $U_2$ 或删去实际节点。实际队列具有引理 44.2 的额外共同几何：取 $Z=\Psi(H)$，任一参考 $P\in S_H$ 都满足
+
+$$
+|\Lambda_\beta(P)\setminus Z|
+=|\Lambda_\beta(P)|-|\Psi(H)|\le R(H).
+$$
+
+所以 $R(H)\le3$ 时队列已经是单点；$R(H)=4$ 时队列至多有两个成员。后一情形若节点严格，则它恰把这两个成员分到两个非空单点孩子；有叶孩子时非叶孩子恰一个，没有叶孩子时两个孩子恰为分支与不存在。因此实际孩子大小之和恰为二，而不是式（44.20）中分别放大两个纤维后得到的三。小资源边界是在同一队列上成立的联合约束，不要求不同孩子同时达到各自粗上界。这只估计原后缀的大小，不提前接受输入，也不重新选择或替换后缀。
+
+现在对已经选定的有限后缀 $r_H$ 的节点数作结构归纳，归纳陈述同时量化 $b\in\{0,1,2,3\}$。单点节点的大小为一，已经证明 $U_b(R)\ge1$。若 $b=0$ 而节点严格，则至少有两个非空响应孩子，非冲突性使至多一个为叶孩子，故至少一个非叶孩子非空。选择其中一个实际成员，它在这个后缀立即发生一次非叶报告，与预算前提矛盾。因此零预算只允许单点。
+
+余下取 $b\ge1$。若 $R\le3$，用刚证明的单点结论；若 $R=4$，用 $|S_H|\le2=U_b(4)$。这也覆盖这些低资源节点的全部真实孩子，无须调用已经显示不成立的无条件递推。
+
+若 $R\ge5$ 且有叶孩子，其较小实际后缀继承预算 $b$、资源 $R-w$；各非叶孩子继承预算 $b-1$、资源 $R$。结构归纳分别给大小至多 $U_b(R-w)$ 和 $U_{b-1}(R)$。这些活孩子是不交的真实响应纤维，并为当前队列的全部成员所覆盖，式（44.19）第一行遂给当前队列大小至多 $U_b(R)$。若没有叶孩子，两个实际非叶孩子同样用预算 $b-1$ 的归纳假设，再用式（44.19）第二行。空响应纤维始终贡献零，不被替换为大小一的虚构终端；不相容的历史也不成为归纳中的非空节点。
+
+所有归纳调用都施于 $r_H$ 已经包含的真后缀，固定块和 $W_\beta$ 原样继承。原实际路由的严格性使历史中已经请求的地址不可能再次成为严格分裂地址：它在当前全报告相容队列上必为常值。因此后缀中的非叶次数保留其不同实际地址意义。原 reached_prefix 的队列、拼接和活纤维结论保证，这些是同一个共同控制过程的分支，而非分别优化的延续。结构归纳完成，得到式（44.13）。证毕。
+
+**推论 44.5（原全域合同的三次超额有限上界与已有下界）。** 设 $F\subseteq\mathcal I_3(n)$ 非空有限，$K(F)=K_\circ(F)$ 且 $D(F)\le n+3$。令 $s=\max_{P\in F}|\Lambda_\alpha(P)|$，并取任意定义 44.3 的统一整数 $W_\beta$。则
+
+$$
+\boxed{\quad
+|F|\le\min\left\{N_n,\ M(\max\{s-2,0\},3),\ U_3(W_\beta)\right\}.
+\quad}
+\tag{44.21}
+$$
+
+其中 $N_n,M$ 保持定义 30.6 的原义。对每个可行叶数 $n\in\mathcal N$，令 $q(n)$ 保持式（31.13）的原义，有
+
+$$
+\boxed{\quad
+\mathsf{Cap}(n,3)\le
+\min\left\{
+N_n,\ M(\max\{q(n)-2,0\},3),\
+U_3\!\left(\left\lfloor\frac{2n}{3}\right\rfloor\right)
+\right\}.
+\quad}
+\tag{44.22}
+$$
+
+不可行叶数的容量仍为零。式（44.21）的费用前提可以通过既有等式 $W(F)=W_{\mathrm u}(F)=D(F)$ 替换为对应的 $W$ 或 $W_{\mathrm u}$ 前提；这里的费用目标 $W(F)$ 与资源上界 $W_\beta$ 不混用。
+
+**证明。** 定理 25.2的二元素遗传判据使 $K(F)=K_\circ(F)$ 的不同成员两两非冲突。直接使用定理 29.2、29.3的有限取得式，选择一棵达到 $D(F)$ 的实际代表严格路由 $r$，以及该定理已经给出的同一个全域控制器 $\sigma_r$。对每个评价成员 $P$，其路由不同地址集记为 $B_r(P)$。既有精确付费集合为
+
+$$
+J_{\sigma_r}(P)=B_r(P)\cup L(P),\qquad
+C_{\sigma_r}(P)=n+|B_r(P)\setminus L(P)|.
+\tag{44.23}
+$$
+
+非叶报告恰来自 $B_r(P)\setminus L(P)$，路径地址互异，所以每条评价路径至多三次非叶报告。根历史为空，$\Psi(\varnothing)=\varnothing$。定理 44.4 取 $b=3$ 给 $|F|\le U_3(W_\beta)$，没有另造一棵控制器或重证路由正规形。
+
+推论 32.5的两片 $\alpha$ 残差终端条件及推论 32.6 已给 $M(\max\{s-2,0\},3)$ 这一独立上界，直接保留。它不弱于定理 31.7 及 ActualStrictHistoryCapacity 的 `result` 与蓝图定理 1.2所供应的 $M(s-1,3)$；这里不重证那些计数结论，也不以新的 $\beta$ 上界取代更强的既有小规模限制。再保留实际像计数 $|F|\le N_n$，得到式（44.21）。
+
+每个 $P$ 的完整前像组成可不同。逐个使用母卷定理 3.4，有
+
+$$
+n=3a_P+5q_P,\qquad
+|\Lambda_\beta(P)|=2a_P+3q_P
+=\frac{2n-q_P}{3}
+\le\left\lfloor\frac{2n}{3}\right\rfloor.
+\tag{44.24}
+$$
+
+所以同一个 $W_\beta=\lfloor2n/3\rfloor$ 对全体规模为 $n$ 的评价成员可用；式（31.13）又给 $s\le q(n)$。既有 $M$ 的单调性覆盖零边界，定义 30.6 在有限实际像集上取最大值，于是得到式（44.22）。空族贡献零，不可行规模沿用推论 30.8 的容量零结论，不在那里定义 $q(n)$。费用目标的两个替换前提仅使用式（29.8）的既有等式，不交换逐来源期望最大值与同种子最大值的期望。
+
+核对式（44.23）的全域含义时，单点队列仍只选择原型测试，不是接受条件。定理 18.2在 $d=3=3\cdot1$ 的适用范围要求全部实际带标签叶；母卷定理 9.3给完整前沿的字面恢复。若路由真正请求了 $f$ 个叶地址和 $c$ 个非叶地址，则完整认证仍须补查其余 $n-f$ 个叶，费用恰为 $f+c+(n-f)=n+c$。$\Psi(H)$ 中逻辑固定但未请求的叶不能代替这些请求，不能进入真实缓存。
+
+任何意外路由报告或任一叶认证不匹配，仍由定理 23.2、29.2 的既有总后备处理，不直接判负。后备从它自己的完整初始化、空逻辑历史和初始控制状态开始，始终读取原始不变 $U$；引理 27.3只在后备真正请求相同地址时供应本次运行的真实外层缓存。后备从根沿实际分支恢复有限 $U$，取得实际叶数后作有限完整前像比较；母卷定理 9.2 的有限描述和替换不减叶数保证该枚举的有限性及完备性。根叶、族外正树和全部负树都在这个同一后备范围内。前像的纸面比较不是对 $U$ 的逆执行，也没有加入大小、正性或候选身份承诺。
+
+与定理 41.2的原有限势比较，直接展开其三因子乘积。对整数 $W\ge5$，有
+
+$$
+\Phi_3(W)-U_3(W)=
+\begin{cases}
+2W^2+\dfrac{17W}{2}+8,&W\text{ 为奇数},\\
+2W^2+9W+8,&W\text{ 为偶数},
+\end{cases}
+\qquad
+\Phi_3(W)=\frac{(W+2)(W+4)(W+6)}6.
+\tag{44.25}
+$$
+
+事实上该乘积的分子为 $W^3+12W^2+44W+48$，分别减去式（44.12）的奇偶分子便得到所列差。$0\le W\le4$ 时 $U_3(W)\le2$，而 $\Phi_3(W)\ge\Phi_3(0)=8$。因此这是对原 $\Phi_3$ 的严格有限改进，但不宣称它在每个规模都强于式（44.21）保留的其他上界。
+
+最后直接保留定理 43.3已经实际取得的族及同一全域控制器。对每个 $m\ge3$，其叶数为 $n_m=3m+30$，故本章与该定理共同给出
+
+$$
+\boxed{
+\begin{aligned}
+D(m,3)+8m+28
+&\le\mathsf{Cap}(3m+30,3)\\
+&\le\min\left\{
+N_{3m+30},\
+M(\max\{q(3m+30)-2,0\},3),\
+\frac{(2m+20)^3-10(2m+20)}6
+\right\}.
+\end{aligned}}
+\tag{44.26}
+$$
+
+这里 $D(m,3)$ 正是第 43 章的经典 Delannoy 数，基数下界、共同取得及其实际付费集合均直接取自该章，不另建立计数或扫描。无条件规模资源是 $\lfloor2(3m+30)/3\rfloor=2m+20$。式（43.12）所给特定族 $H(m)$ 的最大 $\beta$ 数则为 $2m+19$：前两类为 $2m+18$，第三类为 $2m+19$。后一个数可用于这个固定族本身的式（44.21），不能替换式（44.26）对所有同叶数实际族使用的 $2m+20$。
+
+引理 44.2 排除的是同一共同地址集合下的第三个残差四来源；定理 44.4 将这一联合限制接到原实际后缀，而非断言一个抽象菜单能够逐层达到每个整数上界。式（44.26）仍不确定 unrestricted 的精确有限容量、$U_3$ 的取得性，或共同 $\beta$ 残差至少五时的完整实际历史分类。十三叶常值历史也不解决这些取得问题。全部结论仅涉及原自由有序树、实际替换、同一只读历史和不同实际地址费用；没有随机最优、其他替换深度、实际逆执行或物理对应结论。证毕。
+
+## 追加锚（本行以下为增补区）
+
+
+## 45. 固定参考来源的五片 β 残余分类与同一严格历史的有限界
+
+**定义 45.1（实际交换与固定残余）。** 采用定义 44.1 的原全有限树被动只读合同、实际三步像 $\mathcal I_3(n)$、带标签叶地址集 $\Lambda_\alpha,\Lambda_\beta$ 和非冲突关系 $\operatorname{NC}$。未知输入仍为整个非空有限自由有序满二叉树域 $\mathcal T$，原始四值报告、同一不变来源、共同初始化和真实同址缓存的不同地址计费均保持。记号 $E,A,C,T_*$ 保持式（44.1）的原义，另令
+
+$$
+G=\langle A,A\rangle=\rho^3(\langle\alpha,\alpha\rangle),\qquad
+T_G=\langle A,G\rangle
+=\rho^3(\langle\alpha,\langle\alpha,\alpha\rangle\rangle).
+\tag{45.1}
+$$
+
+因此 $n(C)=5,n(G)=6,n(T_*)=8,n(T_G)=9$，其 $\beta$ 数依次为 $3,4,5,6$。这些是完整实际来源，不是组成向量的形式填充。
+
+对整数 $h\ge1$，一个实际像 $h$ 孔上下文，是由 $h$ 个各出现一次的具名孔、保留左右次序的二叉配对和固定的 $\mathcal I_3$ 旁支构成的有限表达式；它是定义 32.1 的双孔对象的同类型扩展。孔地址两两前缀不可比。将固定旁支换成其唯一完整前像，得到前像上下文 $J_0$，故任意正像填充均有实际完整前像。这里的唯一性直接采用[规范编译卷命题 4.3](FIBONACCI_CANONICAL_WINDOW_COMPILER_GEOMETRY.md#4-tree-action-seed-recurrence-and-composition-dynamics)，不把组成观察当作树的单射表示。
+
+固定 $P\in\mathcal I_3(n)$、$Z\subseteq\Lambda_\beta(P)$，令
+
+$$
+D_P=\Lambda_\beta(P)\setminus Z,\qquad
+\mathscr C(P,Z)=\{Q\in\mathcal I_3(n):Q\ne P,\quad
+\operatorname{NC}(P,Q),\ Z\subseteq\Lambda_\beta(Q)\}.
+\tag{45.2}
+$$
+
+对 $Y\in\{C,G\}$，定义 $\mathscr E_Y(P,D_P)$ 为所有有序地址对 $(u,v)$，满足
+
+$$
+\begin{gathered}
+u,v\text{ 前缀不可比},\qquad
+P|_u=C,\qquad P|_v=\langle A,Y\rangle,\\
+\{u\mathtt{RL}\}\sqcup v\mathtt R\Lambda_\beta(Y)\subseteq D_P.
+\end{gathered}
+\tag{45.3}
+$$
+
+记 $P^{Y}_{u,v}$ 为在这同一个完整 $P$ 中，将 $u$ 处的 $C$ 换成 $\langle A,Y\rangle$、将 $v$ 处的 $\langle A,Y\rangle$ 换成 $C$ 所得的树。两处替换不交，其余完整字面子树保持。
+
+**定理 45.2（定向缺额至多五的完整实际来源对）。** 对任意 $n\in\mathbb N_0$ 及不同的 $P,Q\in\mathcal I_3(n)$，若 $\operatorname{NC}(P,Q)$ 且 $\delta_\beta(P,Q)\le5$，则存在 $Y\in\{C,G\}$ 和这对来源自己的实际像双孔上下文 $J$，使
+
+$$
+P=J[C,\langle A,Y\rangle],\qquad
+Q=J[\langle A,Y\rangle,C].
+\tag{45.4}
+$$
+
+反之，每个这样的实际上下文及填充都给不同、等叶数、非冲突的实际像；两个方向的缺额均为
+
+$$
+\delta_\beta(P,Q)=\delta_\beta(Q,P)=
+\begin{cases}4,&Y=C,\\5,&Y=G.\end{cases}
+\tag{45.5}
+$$
+
+相对于每个固定 $P,Z$ 且 $|D_P|\le5$，全部伴随来源的精确分类为
+
+$$
+\boxed{\quad
+\mathscr C(P,Z)=
+\{P^Y_{u,v}:Y\in\{C,G\},\ (u,v)\in\mathscr E_Y(P,D_P)\}.
+\quad}
+\tag{45.6}
+$$
+
+不预设两来源或全部伴随来源有共同组成或前像骨架。
+
+**证明。** 直接采用引理 30.3 的规范分歧前沿和式（44.5）的完整局部缺额表。令 $k$ 为前沿上 $P$ 为原子侧的孔数，$l$ 为 $P$ 为复合侧的孔数。式（44.6）的证明已经给出：等叶数和每处严格大小增加使 $k,l\ge1$，前缀自由孔上的定向缺额相加，故
+
+$$
+k+3l\le\delta_\beta(P,Q)\le5.
+\tag{45.7}
+$$
+
+因此 $l=1$，且 $k\in\{1,2\}$。
+
+若 $k=2$，全部五片缺额必须由两个一片的原子侧缺额及一个三片的复合侧缺额组成。表（44.5）迫使三孔均属第二行；复合侧恰为 $\langle A,C\rangle$，因为其右侧正像的 $\beta$ 数恰为三，而式（44.4）及单叶前像唯一性给该正像只能是 $C$。这个收缩孔减少三片叶；两个展开孔各至少增加三片叶，总增加至少六，不能维持等叶数。故 $k=2$ 被排除。
+
+剩下 $k=l=1$。唯一复合侧孔的缺额至多四，排除表（44.5）的第一、三行，所以该孔必为 $(\langle A,Y\rangle,C)$，且 $Y\ne A$、$\omega(Y)\le4$。母卷定理 3.4 所供应的 $\omega(Y)=2a+3q$，在实际非空完整前像上给出：$\omega=3$ 只有单叶 $\beta$，故 $Y=C$；$\omega=4$ 只有两片 $\alpha$，唯一有序满二叉前像为 $\langle\alpha,\alpha\rangle$，故 $Y=G$。收缩孔的叶数差相应为三或四。
+
+原子侧若是 $A$，表（44.5）的第一行使其展开至少增加五片叶，不能抵消三或四；第三行的 $C$ 展开至少增加八，也不可能。因此原子侧也只能属第二行，写为 $(C,\langle A,Y'\rangle)$。等叶数给 $n(Y')=n(Y)\in\{5,6\}$。方程 $3a+5q=5$ 只有 $(0,1)$，方程 $3a+5q=6$ 只有 $(2,0)$；对应实际前像分别只有 $\beta$、$\langle\alpha,\alpha\rangle$。故 $Y'=Y$。前沿恰有这两个孔，孔外相同，得到（45.4）。这一大小平衡同时排除了所有多孔情形，不只分类某个预设家族。
+
+反向，在固定旁支的完整前像上下文 $J_0$ 中，$C$ 的前像为 $\beta$，$\langle A,Y\rangle$ 的前像为 $\langle\alpha,Y_0\rangle$，其中 $Y_0=\beta$ 或 $\langle\alpha,\alpha\rangle$。这两种填充给两棵真正的完整前像，其三步像恰为（45.4）。两孔都由引理 30.2 第二行给非冲突，孔外完全相同；一增一减的相同大小差给等叶数，两孔的不同子树给不同树。规范编译卷命题 4.3 给各自唯一完整前像。
+
+在孔 $u$，共同部分恰为左 $A$，失去的 $\beta$ 只有 $u\mathtt{RL}$；在孔 $v$，共同部分同样恰为左 $A$，失去的 $\beta$ 恰为 $v\mathtt R\Lambda_\beta(Y)$。因此
+
+$$
+\Lambda_\beta(P)\setminus\Lambda_\beta(Q)
+=\{u\mathtt{RL}\}\sqcup v\mathtt R\Lambda_\beta(Y).
+\tag{45.8}
+$$
+
+反方向交换两孔后给同样的 $1+\omega(Y)$，即（45.5）。任意伴随 $Q$ 满足定向缺额包含于 $D_P$，所以刚证分类给（45.3）中的地址对；反向，（45.3）及（45.8）保证 $P$ 中属于 $Z$ 的每个 $\beta$ 地址在交换后仍为 $\beta$，而已证反向保证实际性、同规模与非冲突性。遂得精确集合等式（45.6）。证毕。
+
+**定理 45.3（固定来源的伴随数与全部三成员情形）。** 在定义 45.1 中，若 $|D_P|\le5$，则
+
+$$
+|\mathscr C(P,Z)|\le2.
+\tag{45.9}
+$$
+
+若 $\mathscr E_G(P,D_P)\ne\varnothing$，则恰有一个伴随，且 $\mathscr E_C(P,D_P)=\varnothing$。若有两个伴随，则 $|D_P|=5$，它们都为 $Y=C$ 型，共有同一个收缩地址 $v$ 和两个不同展开地址 $u_1,u_2$，并且
+
+$$
+D_P=v\mathtt R\Lambda_\beta(C)
+\sqcup\{u_1\mathtt{RL},u_2\mathtt{RL}\}.
+\tag{45.10}
+$$
+
+特别地，对任意非空有限两两非冲突的 $S\subseteq\mathcal I_3(n)$，任意 $P\in S$ 和任意 $Z\subseteq\bigcap_{Q\in S}\Lambda_\beta(Q)$，
+
+$$
+|\Lambda_\beta(P)\setminus Z|\le5\quad\Longrightarrow\quad |S|\le3.
+\tag{45.11}
+$$
+
+该前提下 $|S|=3$ 当且仅当，适当命名三棵树及三孔后，有一个实际像三孔上下文 $J$，使
+
+$$
+S=\{J[T_*,C,C],\ J[C,T_*,C],\ J[C,C,T_*]\},\qquad
+Z=\bigcap_{Q\in S}\Lambda_\beta(Q).
+\tag{45.12}
+$$
+
+此时每个成员相对于这个 $Z$ 都恰剩五片 $\beta$。
+
+**证明。** 全部计数在一个已固定的完整 $P$ 内进行。引理 31.2 的完整位置分类说明：任何字面 $C$ 出现都是规范 $C$ 根，其根是唯一前像的一片 $\beta$ 叶地址。不同规范叶根前缀自由，因而不同规范 $C$ 的完整三元组 $r\Lambda_\beta(C)$ 不交。
+
+同一个位置分类又说明，任何 $G=\langle A,A\rangle$ 出现只能来自完整前像的一个分支：它有六片叶，不可能处于单个 $A/C$ 的内部；其两个 $A$ 孩子是该前像的两片 $\alpha$ 叶。因此其四片 $\beta$ 是两个规范 $A$ 叶块的完整并。两个不同 $G$ 根不可能嵌套，因为 $G$ 的严格子树都小于六片叶；若它们不交，则各自的四元组不交。于是不同 $G$ 四元组互不交叠。每个这样的四元组与每个规范 $C$ 三元组也不交，因为它们使用同一前像中不同类型的规范叶根。这里排除的是规范 $A$ 叶根与规范 $C$ 叶根的交叠，不否认一个 $C$ 的内部左孩子字面上为 $A$。
+
+对任一 $C$ 型伴随，（45.8）要求 $D_P$ 包含根 $r=v\mathtt R$ 的完整规范 $C$ 三元组。五元集合至多包含一个这样的三元组；故 $r$ 唯一，删除最后的 $\mathtt R$ 得到唯一 $v$。除去它后至多还有两个地址，每个伴随需一个 $u\mathtt{RL}$。自由地址词的右消去性给每个剩余地址至多一个 $u$；在固定 $P$ 的两处交换产生唯一树。故此型至多两个伴随，且两个不同地址确实给不同树：一个结果在 $u_1$ 展开，另一个在那里仍为 $C$。
+
+对任一 $G$ 型伴随，（45.8）要求一个完整 $G$ 四元组及一个在另一孔的 $u\mathtt{RL}$。五元集合至多容纳一个这样的四元组，故 $v\mathtt R$ 和 $v$ 唯一；余下地址至多一个，给 $u$ 唯一，因此此型至多一个伴随。一个规范 $C$ 三元组与一个 $G$ 四元组不交，大小共七，所以两种类型不能在同一个 $D_P$ 中同时出现。结合定理 45.2 的精确分类，证明（45.9）和 $G$ 型断言。
+
+若有两个伴随，只能为 $C$ 型，唯一三元组加上两个不同单址恰用五片，所以（45.10）成立。$u_1,u_2$ 是不同规范 $C$ 根，互不为前缀；每个又与 $v$ 前缀不可比，这是其各自实际交换的条件。故在 $P$ 中去掉三处完整子树，导出一个共同三孔上下文，得到 $P=J[C,C,T_*]$ 和另外两个交换结果。其孔外旁支来自 $P$ 的实际前像，均是实际正像；上下文并非预先指定。
+
+不同成员在两个变化孔比较 $C/T_*$，其余孔相同，所以由引理 30.2 第二行，它们两两非冲突。三者的共同 $\beta$ 地址在每个变化孔内恰为左 $A$ 的两片，孔外全部保持。相对于 $P$，不在三重交中的地址恰为（45.10）。原 $Z$ 包含于三重交，而 $\Lambda_\beta(P)\setminus Z$ 已恰用这五片，故 $Z$ 必等于三重交；没有多余可删除的共同地址。这给（45.12）的必要性和全部三成员情形。
+
+反向，任何实际三孔上下文中的（45.12）都有完整前像：三个孔依次填一个 $\langle\alpha,\beta\rangle$ 和两个 $\beta$，固定旁支取原完整前像。每棵的变化孔共十八片叶，且树互异。上述局部非冲突证明仍适用。在它自己的 $T_*$ 孔，三重交之外有右 $C$ 的三片 $\beta$；在两个 $C$ 孔，各有右 $E$ 的一片 $\beta$，合计五片。因此三棵都满足残余五。最后任意 $S$ 的其他成员都在 $\mathscr C(P,Z)$，所以（45.9）给（45.11），三成员时恰为以上情形。残余至多三及至多四的更细界直接保留引理 44.2，不在这里另立重复结论。证毕。
+
+**命题 45.4（十八叶三来源的实际校准与独立严格取得）。** 取三孔上下文
+
+$$
+J[X_1,X_2,X_3]=\langle X_1,\langle X_2,X_3\rangle\rangle,
+\qquad(p_1,p_2,p_3)=(\mathtt L,\mathtt{RL},\mathtt{RR}),
+$$
+
+并令 $P_i$ 在第 $i$ 孔放 $T_*$、其余两孔放 $C$，$S_* =\{P_1,P_2,P_3\}$。它们是三个不同、两两非冲突的十八叶实际像，完整前像分别为 $J_0[\langle\alpha,\beta\rangle,\beta,\beta]$ 的三个位置排列，前像组成为 $(1,3)^{\mathsf T}$，像组成为 $(7,11)^{\mathsf T}$。共同实际历史
+
+$$
+H_*=\bigl((p_1\mathtt{LLR},\mathsf{leaf}_\alpha),
+(p_2\mathtt{LLR},\mathsf{leaf}_\alpha),
+(p_3\mathtt{LLR},\mathsf{leaf}_\alpha)\bigr)
+\tag{45.13}
+$$
+
+满足
+
+$$
+\Psi(H_*)=\bigsqcup_{i=1}^3p_i\mathtt L\Lambda_\beta(A)
+=\bigcap_{P\in S_*}\Lambda_\beta(P),\qquad
+|\Psi(H_*)|=6,
+\quad |\Lambda_\beta(P)\setminus\Psi(H_*)|=5.
+\tag{45.14}
+$$
+
+它是共同历史校准。另从空历史出发，有一个全域正确、有限终止的同一确定性策略，在 $P_1,P_2,P_3$ 上费用依次为 $19,19,18$，并且 $D(S_*)=19$。
+
+**证明。** 实际性和全部前像来自定义 45.1 的上下文同态；互异及非冲突性来自定理 45.3。母卷定理 3.4 在同一个实际前像上给输出 $(1+2\cdot3,2+3\cdot3)=(7,11)$，叶数十八。每个孔的 $C$ 或 $T_*$ 左孩子都为 $A$，所以三次报告确为 $\alpha$。式（31.6）的 $w\mathtt{LR}$ 行在 $w=p_i\mathtt L$ 强制该 $A$，按定义 40.1 仅加入这三个块。孔内的三重共同 $\beta$ 恰为这些左 $A$，由前缀自由性得到（45.14）。三次查询在 $S_*$ 上都是常值，故该历史不是原严格路由的一个分裂前缀，不证明 $V_b(5)$ 的严格路由取得性。
+
+独立取得策略不先执行（45.13）。它先问 $q_1=p_1\mathtt{RR}=\mathtt{LRR}$：分支选择 $P_1$，$\alpha$ 叶继续问 $q_2=p_2\mathtt{RR}=\mathtt{RLRR}$；第二次分支选择 $P_2$，第二次 $\alpha$ 叶选择 $P_3$。任一其余报告进入原全域后备。这里 $C|_{\mathtt{RR}}=\alpha$，$T_*|_{\mathtt{RR}}=C|_{\mathtt R}=E$，故原始报告分别为 $\mathsf{leaf}_\alpha$ 与 $\mathsf{branch}$；因此两次所用分裂都严格，真实路由叶／非叶数 $(f,c)$ 依次为 $(0,1),(1,1),(2,0)$。
+
+暂选原型后仍核对全部十八片带标签叶。只有已经实际请求的同址真实报告供应缓存，其余叶逐个请求；全部精确匹配才接受，任一不匹配接定理 29.2 的总后备。定理 18.2 在 $d=3=3\cdot1$ 的完整叶必要性、充分性和母卷定理 9.3 的字面恢复保证认证的全域含义。两个地址不同，真实叶都属于各自原型的叶集，非叶都在其外，故既有付费集合接口给费用 $f+c+(18-f)=18+c$，即所列三值。所有族外正负有限树、根叶和任何意外报告，都由定理 29.2 的独立初态后备及引理 27.3 的真实同址缓存续接处理；无未知叶数或成员身份承诺。
+
+任取两个成员，定理 23.2 的同规模非冲突来源下界给共同最坏费用至少十九；上面的同一策略达到十九，故 $D(S_*)=19$。该费用取得与常值历史的资源校准分别成立，不把两份记录拼成一个严格历史，也不据此声称全局十八叶容量的锐值。证毕。
+
+**定义 45.5（同一已选后缀的整数势）。** 固定非空有限两两非冲突 $F\subseteq\mathcal I_3(n)$、一棵第 29 章的实际有限严格路由 $r$、一个在 $r$ 上实际可达的全部报告共同前缀 $H$ 和一个对原 $F$ 统一选择的整数 $W_\beta\ge\max_{P\in F}|\Lambda_\beta(P)|$。$S_H,\mathcal B_H,\Psi(H),R(H)=W_\beta-|\Psi(H)|$ 保持定义 44.3，所有子节点继承这个同一个 $W_\beta$。$S_H$ 匹配叶、分支、不存在全部四类实际报告，$\Psi$ 只取真实叶报告按原五行规则强制的块并集；推论不加入缓存。
+
+$r_H$ 始终是原 $r$ 已经选定的后缀。队列、拼接和活孩子采用 [ActualStrictHistoryCapacity 的 `reached_prefix`](../../../D5/S3/Arith/FibonacciAtomic/ActualStrictHistoryCapacity.lean) 及其 [Blueprint 定理 1.1](../../../Blueprint/D5/S3/Arith/FibonacciAtomic/ActualStrictHistoryCapacity.md) 的原含义，不重新优化 $S_H$ 上的路由。对全部整数 $R\ge0$ 定义
+
+$$
+\begin{aligned}
+V_0(R)&=U_0(R)=1,\qquad V_1(R)=U_1(R)=\max\{1,R-2\},\\
+V_2(R)&=\begin{cases}
+1,&0\le R\le3,\\2,&R=4,\\3,&R=5,\\
+(R^2-2R-4)/2,&R\ge6\text{ 为偶数},\\
+(R^2-2R-5)/2,&R\ge7\text{ 为奇数},
+\end{cases}\\
+V_3(R)&=\begin{cases}
+1,&0\le R\le3,\\2,&R=4,\\3,&R=5,\\
+(R^3-16R+12)/6,&R\ge6\text{ 为偶数},\\
+(R^3-19R+12)/6,&R\ge7\text{ 为奇数}.
+\end{cases}
+\end{aligned}
+\tag{45.15}
+$$
+
+$U_b$ 保持式（44.12）的原定义。
+
+**定理 45.6（五片联合残余约束下的同后缀统一界）。** 对每个定义 45.5 的实际可达 $H$ 和每个 $b\in\{0,1,2,3\}$，若 $S_H\ne\varnothing$，且每个 $P\in S_H$ 在同一个已经选定的 $r_H$ 中至多还有 $b$ 次分支或不存在报告，则
+
+$$
+\boxed{\quad |S_H|\le V_b\bigl(W_\beta-|\Psi(H)|\bigr).\quad}
+\tag{45.16}
+$$
+
+结论允许 $H$ 已含非叶报告、不同成员具有不同完整前像组成，并包含全部非负资源、小规模及零预算边界。
+
+**证明。** 先直接使用定理 40.2 的实际几何。每个幸存 $P$ 都包含同一个 $\Psi(H)$，故 $R=R(H)\ge0$。原 reached_prefix 的活孩子是同一地址上的非空真实响应纤维；非冲突使至多一个叶孩子，严格节点至少一个非叶孩子。如果有叶孩子，其新历史 $H'$ 满足
+
+$$
+w=|\Psi(H')\setminus\Psi(H)|\in\{1,2,3\},\qquad
+1\le d\le\min\{2,w\},\qquad R(H')=R-w,
+\tag{45.17}
+$$
+
+其中 $d$ 为非空非叶孩子数，且实际叶孩子存在保证 $R\ge w$。$w=1$ 时不存在孩子为空，只有一个非叶孩子；这是原规范块位置限制。每个非叶孩子继承资源 $R$ 和预算 $b-1$，叶孩子继承资源 $R-w$ 和预算 $b$。若没有叶孩子，严格节点只有两个非空非叶孩子。未实际报告的推论始终不改变这些历史或缓存。
+
+在同一个队列内取任意 $P\in S_H$，令 $Z=\Psi(H)$，则
+
+$$
+|\Lambda_\beta(P)\setminus Z|
+=|\Lambda_\beta(P)|-|\Psi(H)|\le R.
+\tag{45.18}
+$$
+
+引理 44.2 因而给 $R\le3$ 时队列单点、$R=4$ 时至多两成员；定理 45.3 给 $R=5$ 时至多三成员。这些是全部真实孩子所在的同一队列的联合约束，无须假定各孩子能同时达到各自上界。
+
+为进行 $R\ge6$ 的结构归纳，在本证明内核算整数势。$V_2$ 的奇偶分子都为偶数。对 $R\ge6$，由旧整数 $U_3$ 有
+
+$$
+V_3(R)=\begin{cases}U_3(R)-(R-2),&R\text{ 偶},\\
+U_3(R)-(2R-2),&R\text{ 奇};\end{cases}
+\tag{45.19}
+$$
+
+奇数分支自动要求 $R\ge7$，故 $V_3$ 为整数。$V_b(0),\ldots,V_b(5)$ 均为正整数。对 $b=2,3$，需要且将证明
+
+$$
+\begin{aligned}
+V_b(R)-V_b(R-1)&\ge V_{b-1}(R),\\
+V_b(R)-V_b(R-2)&\ge2V_{b-1}(R),\qquad R\ge6.
+\end{aligned}
+\tag{45.20}
+$$
+
+对 $V_2$，奇数 $R\ge7$ 的一单位差为 $R-2$，偶数 $R\ge8$ 的一单位差为 $R-1$，都至少为 $V_1(R)=R-2$。连接点 $R=6$ 为 $10-3=7\ge4$。两单位差在 $R\ge8$ 为 $2R-4=2V_1(R)$；连接点 $R=6,7$ 分别为 $10-2=8=2V_1(6)$、$15-3=12\ge10=2V_1(7)$。
+
+对 $V_3$，奇数 $R\ge7$ 的一单位差为 $(R^2-2R-5)/2=V_2(R)$；偶数 $R\ge8$ 的一单位差为 $(R^2-6)/2=V_2(R)+R-1$。连接点 $R=6$ 为 $22-3=19\ge10=V_2(6)$。两单位差对偶数 $R\ge8$ 为 $R^2-2R-4=2V_2(R)$，对奇数 $R\ge9$ 为 $R^2-2R-5=2V_2(R)$；连接点分别为 $22-2=20=2V_2(6)$、$37-3=34\ge30=2V_2(7)$。因此（45.20）覆盖所有参数，没有把小资源的分段值代入不适用的多项式。
+
+上述差以及 $1,2,3$ 的连接，证明 $V_2,V_3$ 在全部非负整数上非减、为正整数。$V_0,V_1$ 的同样性质沿用其定义。对 $b=2,3,R\ge6$，（45.20）及非减性给全部（45.17）的局部和界：
+
+$$
+V_b(R-w)+dV_{b-1}(R)\le V_b(R),\qquad
+2V_{b-1}(R)\le V_b(R).
+\tag{45.21}
+$$
+
+第一式在 $w=1$ 时用一单位差、$d=1$；在 $w=2$ 时用两单位差、$d\le2$；在 $w=3$ 时用 $V_b(R-3)\le V_b(R-2)$ 和两单位差。第二式由两单位差及 $V_b(R-2)\ge1$ 得到。这里只使用 $R\ge6$，不把形式纤维相加规则扩展到不适用的残余五边界。
+
+现在对原有限后缀 $r_H$ 作结构归纳，归纳命题量化所有允许的 $b$。单点时 $1\le V_b(R)$。$b=0$ 时若节点严格，至少一个非叶孩子含实际成员，该成员立即用掉一次非叶，与零预算矛盾，所以只能单点。$b=1$ 的全部资源直接应用定理 44.4 的同后缀 $U_1=V_1$，不重证已有一次超额界。
+
+对 $b=2,3$，$R\le5$ 时直接用（45.18）之后的联合队列界，得到（45.16）。$R\ge6$ 且有叶孩子时，结构归纳在其原叶后缀给 $V_b(R-w)$，在各原非叶后缀给 $V_{b-1}(R)$；这些实际纤维不交且穷尽当前队列，（45.21）给所需和界。没有叶孩子时，用其两个原非叶后缀和（45.21）第二式。空纤维贡献零，不成为虚构终端。
+
+全部归纳调用都在原 $r$ 的已经选定后缀上，保留一个继承 $W_\beta$ 及所有旧报告。严格节点不能再次请求已经在 $H$ 中出现的地址，否则在全部报告相容队列上响应恒定；因此非叶次数仍计不同实际地址。结构归纳只界定原后缀的成员数，没有提前接受未知输入、替换后缀或拼接不同成员各自优化的控制器。证毕。
+
+**推论 45.7（完整保留最小值及全规模三次超额改进）。** 设 $F\subseteq\mathcal I_3(n)$ 非空有限，$K(F)=K_\circ(F)$、$D(F)\le n+3$，$s=\max_{P\in F}|\Lambda_\alpha(P)|$，$W_\beta$ 是对原族统一选择的整数上界。则
+
+$$
+\boxed{\quad |F|\le
+\min\{N_n,\ M(\max\{s-2,0\},3),\ V_3(W_\beta)\}.\quad}
+\tag{45.22}
+$$
+
+对每个可行 $n\in\mathcal N$，采用式（31.13）的 $q(n)$，有
+
+$$
+\boxed{\quad
+\mathsf{Cap}(n,3)\le
+\min\left\{N_n,\ M(\max\{q(n)-2,0\},3),\quad
+V_3\!\left(\left\lfloor\frac{2n}{3}\right\rfloor\right)\right\}.
+\quad}
+\tag{45.23}
+$$
+
+不可行规模的容量仍为零。对每个整数 $m\ge5$，旧式（44.22）的保留最小值恰为 $U_3(2m+20)$，而
+
+$$
+\boxed{
+\begin{aligned}
+D(m,3)+8m+28
+&\le\mathsf{Cap}(3m+30,3)\\
+&\le V_3(2m+20)\\
+&=U_3(2m+20)-(2m+18)\\
+&\le U_3(2m+20)-(2m+16).
+\end{aligned}}
+\tag{45.24}
+$$
+
+这里 $D(m,3)$ 保持第 43 章的 Delannoy 数原义。结论加强原保留最小值，但不确定精确有限容量或这个上界的实际取得性。
+
+**证明。** 定理 25.2 的二元素遗传判据使 $F$ 两两非冲突。直接采用定理 29.2、29.3 的有限取得结论，选一棵取得 $D(F)$ 的实际严格路由 $r$ 及它已有的全域控制器。每个评价成员的原精确付费集合与费用仍为
+
+$$
+J_{\sigma_r}(P)=B_r(P)\cup L(P),\qquad
+C_{\sigma_r}(P)=n+|B_r(P)\setminus L(P)|.
+\tag{45.25}
+$$
+
+这些都是同一次真实运行的地址；完整带标签叶认证所需的 $n$ 片叶没有被强制块推论替代。路径地址互异，费用前提给每条路由至多三次非叶。根历史为空，$\Psi=\varnothing$，定理 45.6 取 $b=3$ 得 $|F|\le V_3(W_\beta)$。同时保留推论 32.6 已有更强的 $\alpha$ 项 $M(\max\{s-2,0\},3)$，以及定义 30.6 的实际来源数 $N_n$，得到（45.22）。不以 ActualStrictHistoryCapacity 的旧 $M(s-1,3)$ 取代这里的更强项。
+
+母卷定理 3.4 对每个完整前像分别给 $n=3a_P+5b_P$、$|\Lambda_\beta(P)|=(2n-b_P)/3\le\lfloor2n/3\rfloor$，故这个同一整数上界可对所有 $n$ 叶实际像使用，无共同组成假设。又有 $s\le q(n)$，已有 $M$ 的单调性给（45.23）。空族及不可行规模按推论 30.8 处理。若把费用前提换为 $W(F)\le n+3$ 或 $W_{\mathrm u}(F)\le n+3$，只应用式（29.8）的原等式，不作最大值与逐来源期望的交换。
+
+现证明（45.24）改变的是完整旧最小值。令 $n=3m+30$、$W=2m+20$。实际前像组成 $(m+5,3)$ 满足 $3(m+5)+5\cdot3=n$，故 $q(n)\ge m+11$。在本消费者内用定义 30.6 的既有递推求和，得到
+
+$$
+M(r,3)=\frac{4r^3+18r^2+20r+3}{3}.
+$$
+
+具体地 $M(r,1)=2r+1$，$M(r,2)=2r^2+4r+1$，于是 $M(r,3)=1+2\sum_{j=1}^{r}(2j^2+4j+1)$，给上述式子；这里只展开原计数，不另交付一般 Delannoy 公式。直接相减可得
+
+$$
+M(m+9,3)-U_3(2m+20)
+=\frac{6m^2+126m+657}{3}>0.
+\tag{45.26}
+$$
+
+所以旧 $\alpha$ 项严格大于旧 $\beta$ 项。
+
+来源数也严格较大。取全部叶为 $\alpha$、叶数 $m+10$ 的完整有序前像；第三步像有 $3m+30$ 片叶，规范编译卷命题 4.3 的单射性使它们给 $N_n\ge\mathrm{Cat}_{m+9}$。这个 Catalan 计数直接沿用第 12 章及式（30.10）。其既有递推中的左右两个端项给 $\mathrm{Cat}_{k+1}\ge2\mathrm{Cat}_k$ 对 $k\ge1$ 成立，$\mathrm{Cat}_1=1$，因此 $N_n\ge2^{m+8}$。$m=5$ 时 $2^{13}=8192>4450=U_3(30)$。令 $x=m+10\ge15$，有
+
+$$
+2U_3(2x)-U_3(2x+2)
+=\frac{4x^3-12x^2-22x+6}{3}>0.
+\tag{45.27}
+$$
+
+最后严格号例如由 $4x^2(x-3)-22x+6>0$ 在 $x\ge15$ 得到。于是按 $m$ 归纳，$2^{m+8}>U_3(2m+20)$ 对所有 $m\ge5$ 成立。来源数和 $\alpha$ 项都严格较大，故旧三项最小值恰为 $U_3(W)$。$W$ 为偶数，（45.19）给新项 $V_3(W)=U_3(W)-(W-2)$，这证明至少要求的下降量，并说明它在整条无界规模族上真正改变保留最小值。
+
+（45.24）的下界及其原型、全域控制器、实际付费集合直接取自定理 43.3。其特定族最大 $\beta$ 数 $2m+19$ 仍可用于该族本身，不能替代全规模的 $2m+20$。这里没有重新构造那些来源或扩展其计数，既有下界不因新上界改写。
+
+最后核对所有取得语义。达到单点只是选定原型；原策略仍在 $d=3$ 的定理 18.2 范围内核对每片实际带标签叶。真正问过的 $f$ 片叶、$c$ 个非叶与补问的 $n-f$ 片叶给 $n+c$；$\Psi(H)$ 的未读叶不进入缓存。每个意外响应及认证失败仍接定理 29.2 的全域总后备，它从自己的完整初始化、空逻辑历史和初始控制状态开始，通过引理 27.3 仅复用本次运行实际取得的同址报告，始终作用于同一原始不变 $U$。母卷定理 9.2、9.3 的有限描述及字面恢复供应该既有后备；前像枚举比较不是来源的实际逆执行。
+
+新承重关系是固定实际来源中三元与四元规范块的相互排除，以及由它导出的全部伴随与三成员上下文；整数势及计数比较是其实际同后缀消费者。四残余唯一伴随、旧 $U_b$、路由正规形、原 $n+c$ 付费接口、经典计数与已有首项容量均按各自原范围复用。一般有限询问与响应费用的方法背景仍采用第 29、34 章所附 Nowak 与 Saettler–Laber–Cicalese 的原文接口；它们不供应这里的三步像解析、全域叶认证或五残余分类。证明为这些实际对象上的仓内普通数学推导，不主张世界原创性或形式内核核验。
+
+定理 45.3 完整分类的是固定参考来源和共同 $Z$ 的至多五残余情形；没有分类所有更大残余历史。定理 45.6 在每棵已选严格路由上给统一上界，没有证明不同兄弟纤维能同时取到各个数值势。十八叶常值校准也不提供该严格历史的取等。因而（45.24）的下上界缺口、unrestricted 精确三次超额有限容量和新势的实际取得性仍未确定。完整树来源、组成、规范地址、观察响应、组成祖先许可与实际逆执行保持不同对象；[母卷 §§371–380](FIBONACCI_ATOMIC_RELATION_GENERATION.md) 的环境、规范、量子与时空条件接口不改变这个被动报告合同，环境代数守恒不建立物理对应。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 46. 六片 β 残余的实际伴随共存与同一严格历史的有限界
+
+**定义 46.1（六残余交换的实际关联）。** 采用定义 44.1、45.1 的全部原对象和操作合同。特别地，$\mathcal I_3(n)$ 是完整实际三步像的等叶数集合；$\operatorname{NC}$ 只排除同址的相反标签叶，不将分支与不存在合并。未知输入仍遍历全部非空有限带标签有序满二叉树，所有有限地址，包括根，均合法，四值读作用于同一不变来源。$E,A,C,B,T_*,G,T_G$ 保持式（40.2）、（44.1）、（45.1）的字面含义；本章的 $G$ 始终为 $\langle A,A\rangle$。另记
+
+$$
+K_B=\langle A,B\rangle,\qquad K_T=\langle A,T_*\rangle,\qquad
+\mathcal Y=\{(C,C),(G,G)\}\ \cup\
+\bigl(\{B,T_*\}\times\{B,T_*\}\bigr).
+\tag{46.1}
+$$
+
+$B=\rho^3(\langle\beta,\alpha\rangle)$、$T_*=\rho^3(\langle\alpha,\beta\rangle)$ 都是八叶、五片 $\beta$ 的实际像；$K_B,K_T$ 都是十一叶、七片 $\beta$ 的实际像。这里的配对有固定左右次序。
+
+对固定 $P\in\mathcal I_3(n)$、$Z\subseteq\Lambda_\beta(P)$，仍用（45.2）的 $D_P=\Lambda_\beta(P)\setminus Z$ 和 $\mathscr C(P,Z)$。对 $(Y,Y')\in\mathcal Y$，令 $\mathscr E_{Y,Y'}(P,D_P)$ 为所有有序地址对 $(u,v)$，满足
+
+$$
+\begin{gathered}
+u,v\text{ 前缀不可比},\qquad
+P|_u=C,\qquad P|_v=\langle A,Y\rangle,\\
+\{u\mathtt{RL}\}\sqcup v\mathtt R\Lambda_\beta(Y)\subseteq D_P.
+\end{gathered}
+\tag{46.2}
+$$
+
+记 $P^{Y,Y'}_{u,v}$ 为在这个完整 $P$ 中，将 $u$ 处的 $C$ 换成 $\langle A,Y'\rangle$、将 $v$ 处的 $\langle A,Y\rangle$ 换成 $C$ 所得的完整树；孔外全部保持。对 $Y=C,G$，$\mathscr E_{Y,Y}$ 与定义 45.1 的 $\mathscr E_Y$ 相同。对混合两种 $Y'$，关联条件相同，但填充结果不同。实际像上下文仍严格采用定义 45.1：固定旁支属于 $\mathcal I_3$，每个具名孔只出现一次，保留括号与地址。
+
+**定理 46.2（至多六片定向缺额的任意完整实际来源对）。** 对每个 $n\in\mathbb N_0$ 及不同的 $P,Q\in\mathcal I_3(n)$，以下条件等价：
+
+(i) $\operatorname{NC}(P,Q)$ 且 $\delta_\beta(P,Q)\le6$；
+
+(ii) 存在 $(Y,Y')\in\mathcal Y$ 及这对来源自己的实际像双孔上下文 $J$，使
+
+$$
+P=J[C,\langle A,Y\rangle],\qquad
+Q=J[\langle A,Y'\rangle,C].
+\tag{46.3}
+$$
+
+此时两个方向的缺额相同，依 $Y=C,G$ 或 $Y\in\{B,T_*\}$，分别为 $4,5,6$。对每个固定 $P,Z$ 且 $|D_P|\le6$，有精确集合等式
+
+$$
+\boxed{\quad
+\mathscr C(P,Z)=
+\{P^{Y,Y'}_{u,v}:(Y,Y')\in\mathcal Y,\
+ (u,v)\in\mathscr E_{Y,Y'}(P,D_P)\}.
+\quad}
+\tag{46.4}
+$$
+
+每个右侧结果唯一确定其 $u,v,Y,Y'$；不预设来源对的共同组成或共同前像骨架。
+
+**证明。** 至多五片的部分直接复用定理 45.2。为覆盖六片及排除其他形状，对任意满足 (i) 的完整来源对使用引理 30.3 的规范分歧前沿。它来自各自唯一完整前像的递归比较，孔外相同，孔根前缀自由。令 $k$ 为 $P$ 在孔上是原子的次数，$l$ 为 $P$ 是复合像的次数。式（44.5）的完整局部表及其逐孔相加证明给
+
+$$
+k,l\ge1,\qquad k+3l\le6.
+\tag{46.5}
+$$
+
+因此 $l=1$、$k\le3$。若 $k\ge2$，唯一收缩孔的 $P$ 侧缺额至多四。式（44.5）排除其第一、三行，第二行的右像 $Y$ 满足 $\omega(Y)\le4$。式（44.4）及定理 45.2 的完整前像唯一性给 $Y=C$ 或 $G$，收缩分别减少三或四片叶。其他每个展开孔至少增加三片叶，两个展开已经至少增加六，无法与这个唯一收缩平衡。故 $k=l=1$；这一步没有事先限制孔数。
+
+唯一收缩孔的缺额至多五。第三行的复合侧缺额至少八，故不可能。若是第一行，则 $\omega(X)+\omega(Y)\le5$，而其条件 $X\ne A$ 给 $\omega(X)\ge3$，任意实际 $Y$ 给 $\omega(Y)\ge2$。只能有 $X=C,Y=A$，所以该孔恰为 $B\to A$，缺额五、叶数减少五。余下展开孔的缺额至多一，必须为第二行 $C\to\langle A,Y'\rangle$。叶数平衡要求 $n(Y')-2=5$，即 $n(Y')=7$；但实际前像的非负整数组成须满足 $3a+5q=7$，没有解。这排除了唯一可能的第一行收缩。
+
+因此收缩孔必为第二行
+$(\langle A,Y\rangle,C)$，$Y\ne A$、$\omega(Y)\le5$。
+母卷定理 3.4 的原第三步作用给 $\omega(Y)=2a+3q$、$n(Y)=3a+5q$。权重三、四的完整实际像正是已用的 $C,G$。权重五只有 $(a,q)=(1,1)$；两叶有序满二叉前像只有 $\langle\alpha,\beta\rangle$ 和 $\langle\beta,\alpha\rangle$，所以恰为 $T_*,B$，各有八叶。这是对完整前像的有限形状判断，不是组成映射在任意树上的单射性。
+
+若 $Y=C$ 或 $G$，收缩减少三或四片叶。第一行展开至少增加五，第三行至少增加八，都不能平衡；所以展开也为第二行，等叶数使 $n(Y')=n(Y)=5$ 或 $6$。定理 45.2 的完整唯一性给 $Y'=Y$。若 $Y=B$ 或 $T_*$，收缩缺额五已经用掉五片预算；展开的缺额只能为一，故仍为第二行。其叶数增加须为六，因而 $n(Y')=8$。方程 $3a+5q=8$ 只有 $(1,1)$，上述两种完整前像穷尽实际八叶像，所以 $Y'\in\{B,T_*\}$。这证明全部可能恰为 $\mathcal Y$。将展开孔、收缩孔分别记为 $u,v$，规范前沿的共同部分导出（46.3）的 $J$。
+
+反向，取任意（46.3）。在 $J$ 的固定旁支上使用各自完整前像，得到实际前像上下文 $J_0$。若 $Y_0,Y'_0$ 分别为 $Y,Y'$ 的完整前像，则两棵完整树
+
+$$
+J_0[\beta,\langle\alpha,Y_0\rangle],\qquad
+J_0[\langle\alpha,Y'_0\rangle,\beta]
+\tag{46.6}
+$$
+
+的三步像正是（46.3）；规范编译卷命题 4.3 的树替换单射性给各自前像唯一。每种 $Y,Y'$ 均不同于 $A$，引理 30.2 的第二行给两孔非冲突，孔外相同使全树非冲突。$\mathcal Y$ 中 $n(Y)=n(Y')$，故相反大小差抵消；两孔中的原子与复合像不同，保证整树不同。每孔共同叶恰是左 $A$，因而
+
+$$
+\begin{aligned}
+\Lambda_\beta(P)\setminus\Lambda_\beta(Q)
+ &=\{u\mathtt{RL}\}\sqcup v\mathtt R\Lambda_\beta(Y),\\
+\Lambda_\beta(Q)\setminus\Lambda_\beta(P)
+ &=u\mathtt R\Lambda_\beta(Y')\sqcup\{v\mathtt{RL}\}.
+\end{aligned}
+\tag{46.7}
+$$
+
+这些并均不交。$\omega(Y)=\omega(Y')$ 分别为三、四、五，证明两个方向都是 $1+\omega(Y)$。特别地，两个六缺额来源不必在两孔使用同一个混合八叶像。
+
+对伴随 $Q$，$Z\subseteq\Lambda_\beta(Q)$ 使第一式的缺额包含于 $D_P$；刚证的任意来源对分类给（46.2）。反向，（46.2）、（46.7）保证 $Z$ 的每个地址在替换后仍为 $\beta$，而前面已证明实际性、等叶数及非冲突性，遂得（46.4）。最后，规范分歧前沿由两棵完整前像唯一决定，且恰有这两个相反朝向的孔，所以结果 $Q$ 唯一确定展开 $u$ 和收缩 $v$。$P|_v$ 的右孩子给 $Y$，$Q|_u$ 的右孩子给 $Y'$。因此不同关联数据不能产生同一个伴随。证毕。
+
+**引理 46.3（固定实际来源的规范支撑及全部相关重叠）。** 固定任意完整 $P\in\mathcal I_3$。每个字面 $C$ 出现的根是其唯一前像的一个规范 $\beta$ 叶根，称其三元支撑为 $r\Lambda_\beta(C)$。每个字面 $G,B,T_*$ 出现的根是完整前像的一个两叶分支根，称其四元或五元支撑为 $r\Lambda_\beta(G)$、$r\Lambda_\beta(B)$ 或 $r\Lambda_\beta(T_*)$。这些支撑满足：
+
+不同三元支撑不交；所有不同四元、五元支撑彼此不交。三元支撑与四元支撑不交；三元支撑与五元支撑或者不交，或者恰为该五元支撑内唯一的完整规范 $C$ 三元组。在 $\langle A,B\rangle$ 内，这个规范 $C$ 根为 $\mathtt{RL}$，其父为 $B$；在 $\langle A,T_*\rangle$ 内，根为 $\mathtt{RR}$，其父为 $T_*$。
+
+若 $P|_u=C$，则单址 $u\mathtt{RL}$ 不属于任何四元支撑。它属于某个三元支撑时，该支撑的根必为 $u$；属于某个五元支撑时，$u$ 必为其中唯一的规范 $C$ 根。上述结论量化全部真实出现，不假设 $P$ 由这些块预先组装。
+
+**证明。** 三元支撑的规范性、互不交叠和 $G$ 的四元支撑直接使用引理 31.2 的完整位置分类及定理 45.3 的原证明。为核对新涉及的混合支撑，在唯一前像的每片叶上，三步像是规范 $A$ 或规范 $C$；其内部严格子树都小于六叶。故六叶 $G$ 及八叶 $B,T_*$ 的任意出现都不能藏于单个规范叶块内部，只能位于完整前像的内部节点。像替换保留该节点的二叉配对；规范编译卷命题 4.3 使孩子 $A,C$ 的完整前像分别只能为单叶 $\alpha,\beta$。于是 $G$ 对应 $\alpha\alpha$ 两叶分支，$B,T_*$ 分别对应 $\beta\alpha,\alpha\beta$ 两叶分支。
+
+同一完整前像中的不同两叶分支根前缀不可比，因为一个两叶分支的两个孩子都是叶，下面不再有分支根。它们在实际像中的全部叶地址集合因而不交，这同时处理四元与五元之间、不同五元之间的重叠。$G$ 的支撑由两个规范 $A$ 叶块组成；$B,T_*$ 的支撑各由一个规范 $A$ 的二元组和一个规范 $C$ 的三元组组成。完整前像的规范叶根前缀自由，故任何其他规范 $C$ 支撑都与这些规范块不交；只有该混合分支自身的那个规范 $C$ 能被包含。左、右位置直接由 $B=\langle C,A\rangle$、$T_*=\langle A,C\rangle$ 及其前加的 $\langle A,\cdot\rangle$ 给出。
+
+最后 $u\mathtt{RL}$ 是根 $u$ 的规范 $C$ 中一片真正 $\beta$ 叶。其他规范叶块与这一块不交，所以它不能属于规范 $A$ 支撑，只能属于包含这个同一规范 $C$ 的支撑。包含于另一规范 $C$ 支撑时，两个根相同；包含于混合五元支撑时，该支撑唯一的规范 $C$ 根就是 $u$。这是规范块的真实相容性，不能由抽象四元、五元集合的大小单独推出。证毕。
+
+**定理 46.4（六残余的全部伴随关联与共同非冲突分类）。** 对任意定义 46.1 的固定 $P,Z$，若 $|D_P|\le6$，则
+
+$$
+\boxed{\quad |\mathscr C(P,Z)|\le3.\quad}
+\tag{46.8}
+$$
+
+全部关联及伴随间的共存恰为下列互斥情形；在每一情形，所有伴随都与参考 $P$ 非冲突。
+
+(i) 若存在 $Y\in\{B,T_*\}$ 型关联，则其 $u,v,Y$ 唯一，$|D_P|=6$，且 $D_P=\{u\mathtt{RL}\}\sqcup v\mathtt R\Lambda_\beta(Y)$。在切出 $u,v$ 后的实际上下文 $J$ 中，全部伴随及其相互非冲突关系为
+
+$$
+\begin{array}{c|c|c}
+P&\mathscr C(P,Z)&
+ \text{伴随之间的非冲突无序对}\\ \hline
+J[C,K_B]&\{J[K_B,C],J[K_T,C]\}&\varnothing\\
+J[C,K_T]&\{J[T_*,T_*],J[K_B,C],J[K_T,C]\}
+ &\bigl\{\{J[T_*,T_*],J[K_T,C]\}\bigr\}.
+\end{array}
+\tag{46.9}
+$$
+
+因此三个分别合法伴随不保证连同参考组成四成员非冲突族。
+
+(ii) 若存在 $G$ 型关联，则收缩地址 $v$ 唯一，无 $C$ 型或混合型关联。全部伴随为 $P^{G,G}_{u,v}$，其中 $u$ 遍历（46.2）允许的展开地址，至多有两个。这些伴随彼此非冲突。
+
+(iii) 若没有混合型或 $G$ 型关联，则只有 $C$ 型。令 $t$ 为 $D_P$ 中包含的完整规范 $C$ 三元支撑数，必有 $t\in\{0,1,2\}$。$t=0$ 时无伴随。$t=1$ 时，若唯一支撑根 $r$ 的父地址 $v$ 满足 $r=v\mathtt R$、$P|_v=T_*$，令
+
+$$
+U_v=\{u:(u,v)\in\mathscr E_{C,C}(P,D_P)\}.
+\tag{46.10}
+$$
+
+则 $\mathscr C(P,Z)=\{P^{C,C}_{u,v}:u\in U_v\}$，$|U_v|\le|D_P|-3\le3$，这些伴随彼此非冲突；父条件不成立时无伴随。$t=2$ 时，$D_P$ 恰为两个三元支撑之并，根记为 $r_1,r_2$。第 $i$ 个支撑只在 $r_i=v_i\mathtt R$、$P|_{v_i}=T_*$ 且 $r_j,v_i$ 前缀不可比时给一个伴随，展开地址必须为另一个根 $r_j$，其中 $\{i,j\}=\{1,2\}$。所有伴随由这两个条件穷尽，至多两个且彼此非冲突。两个条件均成立时，切出 $v_1,v_2$ 得到实际上下文 $J$，三棵树恰为
+
+$$
+P=J[T_*,T_*],\qquad
+\mathscr C(P,Z)=\{J[C,K_T],J[K_T,C]\}.
+\tag{46.11}
+$$
+
+特别地，恰有三个伴随且它们彼此全部非冲突，当且仅当情形 (iii) 的 $t=1$、$|U_v|=3$；此时全部六片残余由该一个完整三元组和三个不同的展开单址恰好用尽。
+
+**证明。** 定理 46.2 已提供每个伴随的必要充分关联，以下只在这个固定完整 $P$ 内决定哪些关联能够同时出现，不从分别可能的交换拼成未核对的共同实现。
+
+若混合型关联存在，其（46.2）包含一个五元支撑，以及孔外单址 $u\mathtt{RL}$，两者不交。残余上限六使它们恰好用尽 $D_P$。引理 46.3 使另一个不同的五元支撑与这个支撑不交，故不能同时包含于 $D_P$。支撑根 $v\mathtt R$ 唯一，右消去一个 $\mathtt R$ 后 $v$ 唯一；它的真实子树决定 $Y$。唯一孔外单址再由自由词的右消去决定 $u$。两个 $Y'$ 都满足同一个关联条件，定理 46.2 的反向给两个不同的实际伴随；不能因其中一个后来发生伴随间冲突而删掉它的个体合法性。
+
+任何 $G$ 支撑与此五元支撑不交，至少需九片残余，所以 $G$ 型不可能。若另有 $C$ 型，其三元支撑或者是混合支撑中唯一的规范 $C$，或者与该五元支撑不交；后一情形至少需八片，故不可能。对于前一情形，$C$ 型的收缩地址是这个规范 $C$ 的父。$Y=B$ 时规范 $C$ 为左孩子，父是 $B$，不满足收缩 $T_*$ 的条件，所以没有 $C$ 型。$Y=T_*$ 时规范 $C$ 为右孩子，父地址为 $v\mathtt R$，子树恰为 $T_*$，故可收缩。其展开单址必须在该三元支撑之外。剩余地址为原孔外的 $u\mathtt{RL}$ 与混合支撑内规范 $A$ 的两片 $\beta$；引理 46.3 排除后两片成为任何规范 $C$ 的展开单址。于是展开根仍只能为原 $u$，并且与 $v\mathtt R$ 前缀不可比。它确实产生第三伴随 $J[T_*,T_*]$，没有其他候选。这证明（46.9）两行的集合等式。
+
+还须核对伴随彼此，而不只核对它们与 $P$。令 $Q_B=J[K_B,C]$、$Q_T=J[K_T,C]$。在展开孔地址 $u\mathtt R$，它们分别为 $B,T_*$；直接由字面树，
+
+$$
+\operatorname{out}_{Q_B}(u\mathtt{RLLR})=\mathsf{leaf}_\beta,\qquad
+\operatorname{out}_{Q_T}(u\mathtt{RLLR})=\mathsf{leaf}_\alpha.
+\tag{46.12}
+$$
+
+故 $Q_B,Q_T$ 冲突。在第二行，$Q_0=J[T_*,T_*]$ 与 $Q_B$ 在孔 $u$ 分别为 $T_*,K_B$；其右孩子分别为 $C,B$，所以
+
+$$
+\operatorname{out}_{Q_0}(u\mathtt{RRR})=\mathsf{leaf}_\alpha,\qquad
+\operatorname{out}_{Q_B}(u\mathtt{RRR})=\mathsf{leaf}_\beta.
+\tag{46.13}
+$$
+
+这对也冲突。$Q_0,Q_T$ 则在孔 $u$ 的共同左 $A$ 之外比较 $C,T_*$，在孔 $v$ 比较 $T_*,C$；两处都由引理 30.2 第二行非冲突，孔外相同，故整对非冲突。这穷尽三伴随的全部无序对。这里的十六叶局部三树 $J[C,K_T]$、$J[T_*,T_*]$、$J[K_T,C]$ 直接保留定理 34.3 的原图关系；新增的是它在任意固定实际来源的六残余关联中是否出现及其穷尽性，不另将该有限图计作新关系。
+
+若 $G$ 型关联存在，$D_P$ 包含一完整四元支撑。不同四元支撑不交，故它唯一；收缩 $v$ 由其根右消去确定。除去这四片至多还有两片，每个允许 $u$ 都需一个不同的 $u\mathtt{RL}$，所以至多两个。$C$ 支撑与此四元支撑不交，需要至少七片；混合支撑与它不交，需要至少九片。因此其他两型都排除。不同展开 $u$ 是不同规范 $C$ 根，彼此前缀不可比，且都与收缩 $v$ 不可比。两个结果在 $v$ 都收缩为同一 $C$；在各展开位置仅比较 $C,T_G$，由引理 30.2 第二行非冲突；其余子树相同。这证明 (ii)，包括只有一个关联的情形。
+
+现在只有 $C$ 型可能活跃。不同完整三元支撑不交，故 $t\le2$。$t=0$ 时（46.2）不可能。$t=1$ 时收缩必用唯一支撑，其根必须是 $v\mathtt R$ 且父子树为 $T_*$；这个条件失败便没有收缩。条件成立时全部展开恰为（46.10），每个需要三元支撑之外的一片单址。不同 $u$ 的单址不同，给出所述基数界。所有 $u$ 是不同规范 $C$ 根，互不为前缀；每个又与同一 $v$ 不可比。两个伴随在 $v$ 相同，在不同展开孔只作 $C/T_*$ 比较，故全体彼此非冲突。不存在隐藏的第三种关联，因为 (iii) 的前提已经排除了混合型与 $G$ 型。
+
+$t=2$ 时两支撑合计六片，必恰等于 $D_P$。若使用第 $i$ 个支撑收缩，展开单址不得落在这一收缩孔内，只能落在另一三元组。引理 46.3 使其规范 $C$ 根只能为 $r_j$，不能把该三元组的另两片叶各当成一个新展开根。父条件与前缀条件正是（46.2），所以它们是必要且充分的。如果两个收缩都存在，$v_1,v_2$ 是同一完整前像中的两个 $\alpha\beta$ 两叶分支根，前缀不可比，导出（46.11）。它们的伴随在两孔比较 $C,K_T$；共同左 $A$ 之外是 $E,T_*$，引理 30.2 的 $C$ 与 $\langle A,Y\rangle$ 比较（此处 $Y=T_*\ne A$）给非冲突。这也与（46.9）第二行的三树局部关系一致。只有一个收缩时当然不需额外成对条件。因此 (iii) 的全部情况已覆盖。
+
+(i) 的伴随数至多三，但三者中两对冲突；(ii) 和 (iii) 的 $t=2$ 至多两个；(iii) 的 $t=1$ 至多三个且全部非冲突。这证明（46.8）及最后的必要充分结论。三展开时，一个三元支撑与三个不同孔外单址共六片，残余上限使并集恰为 $D_P$。至多五片的伴随数、三成员分类和四片唯一伴随仍直接复用定理 45.2—45.3、引理 44.2；它们不是本处新分类的替代靶。证毕。
+
+**定理 46.5（任意实际同规模族的四成员取等形）。** 对每个 $n\in\mathbb N_0$、非空有限两两非冲突的 $S\subseteq\mathcal I_3(n)$、每个 $P\in S$ 和每个
+
+$$
+Z\subseteq\bigcap_{Q\in S}\Lambda_\beta(Q),
+\qquad |\Lambda_\beta(P)\setminus Z|\le6,
+\tag{46.14}
+$$
+
+都有 $|S|\le4$。在此前提下，$|S|=4$ 当且仅当存在一个实际像四孔上下文 $J$，使 $S$ 恰为在四个不同孔中分别放一个 $T_*$、其余三个孔放 $C$ 的全部四棵填充树，且
+
+$$
+Z=\bigcap_{Q\in S}\Lambda_\beta(Q).
+\tag{46.15}
+$$
+
+四个位置全部出现，每个成员相对于这个 $Z$ 都恰剩六片 $\beta$。必要性从任意完整实际来源导出上下文，不把共同骨架或共同组成作为假设。
+
+**证明。** 每个 $Q\in S\setminus\{P\}$ 属于同一个 $\mathscr C(P,Z)$，定理 46.4 给基数至多三，故 $|S|\le4$。若等于四，三个伴随必须彼此非冲突；定理 46.4 的最后结论强制情形 (iii) 的 $t=1$ 且有三个不同展开 $u_1,u_2,u_3$，共享一个收缩 $v$。并且
+
+$$
+D_P=v\mathtt R\Lambda_\beta(C)
+ \sqcup\{u_1\mathtt{RL},u_2\mathtt{RL},u_3\mathtt{RL}\},
+\qquad |D_P|=6.
+\tag{46.16}
+$$
+
+$u_i$ 为不同规范 $C$ 根，互不为前缀；每个又与 $v$ 不可比。因此这四处完整子树可以同时切出。在 $P$ 的唯一完整前像中，它们分别为三个原子 $\beta$ 与一个完整两叶分支 $\langle\alpha,\beta\rangle$；切出它们留下保持所有配对和旁支的四孔前像上下文 $J_0$。其固定旁支的三步像给一个真正的实际像上下文 $J$。以 $v$ 为第一孔，$P=J[T_*,C,C,C]$；三个伴随分别将这个 $T_*$ 移到 $u_1,u_2,u_3$。这证明同一四孔对象是结论，而非预置的比较框架。
+
+在每孔内，至少一个成员放 $C$，至少一个放 $T_*$，共同 $\beta$ 恰为左 $A$ 的二元组；孔外全部相同。故相对于 $P$，四重交外的地址恰为（46.16），没有其他缺额。原 $Z$ 包含于四重交，而 $P$ 相对于 $Z$ 至多六片；四重交外已经恰为六片，不能再从四重交删去一片。因此 $Z$ 等于四重交，证明必要性，包括 $Z$ 的完整性。
+
+反向，取任意实际像四孔上下文。在 $J_0$ 中四个位置依次填一个 $\langle\alpha,\beta\rangle$ 和三个 $\beta$，母卷定义 3.1 的原替换同态及规范编译卷命题 4.3 给所述四棵实际像及各自唯一完整前像。它们的变化孔合计均为 $8+3\cdot5=23$ 片叶，固定旁支相同，故等叶数；$T_*$ 的位置不同使四树不同。任意两棵在两个变化孔仅比较 $C,T_*$，由引理 30.2 第二行非冲突，其他孔与固定旁支相同，所以全族两两非冲突。
+
+在某一成员自己的 $T_*$ 孔，四重交外有右 $C$ 的三片 $\beta$；在其他三个 $C$ 孔，各有一片 $\mathtt{RL}$ 的 $\beta$ 不在四重交。四孔不交，故恰为 $3+1+1+1=6$。取（46.15）的 $Z$，全部成员都满足（46.14），并有基数四。这完成充分性与所有成员的残余计算。
+
+本定理中 $Z$ 可以是任意共同地址集合；没有声称它由某个原严格路由前缀达到。上述上下文给出完整来源的必要充分形状，不供应严格前缀可达性、上界取得性或新的共同取得下界族。即使另外指定共同常值叶历史，也不能把常值查询算作严格分裂。证毕。
+
+**定义 46.6（一个继承资源上的六残余整数势）。** 固定定义 45.5 的同一个非空有限两两非冲突原族 $F\subseteq\mathcal I_3(n)$、原有限严格路由 $r$、在该 $r$ 上实际可达的全部地址—四响应共同前缀 $H$，以及一次为原 $F$ 选定的整数
+
+$$
+W_\beta\ge\max_{P\in F}|\Lambda_\beta(P)|.
+$$
+
+沿全部孩子继承这个同一个 $W_\beta$。$S_H$ 匹配 $H$ 中全部叶、分支、不存在报告；$\mathcal B_H$、$\Psi(H)$ 只由真实叶报告按式（31.6）的原五行规则产生，取地址集合并去重。仍令
+
+$$
+R=R(H)=W_\beta-|\Psi(H)|,\qquad
+r_H=\text{原 }r\text{ 在 }H\text{ 上已经选定的后缀}.
+\tag{46.17}
+$$
+
+$r_H$ 不在幸存族上重新优化、重新初始化或另行选择。原 ActualStrictHistoryCapacity 的 reached_prefix 及其蓝图定理 1.1 给这个实际后缀的含义：队列是原族全部报告相容者，继续报告与原 $H$ 拼接，活孩子是原节点同一代表地址的非空真实纤维。
+
+对每个整数 $R\ge0$ 定义
+
+$$
+\begin{aligned}
+X_0(R)&=1,\qquad X_1(R)=\max\{1,R-2\},\\
+X_2(R)&=
+\begin{cases}
+1,&0\le R\le3,\\
+2,&R=4,\\
+3,&R=5,\\
+4,&R=6,\\
+(R^2-2R-10)/2,&R\ge7\text{ 为偶数},\\
+(R^2-2R-9)/2,&R\ge7\text{ 为奇数},
+\end{cases}\\
+X_3(R)&=
+\begin{cases}
+1,&0\le R\le3,\\
+2,&R=4,\\
+3,&R=5,\\
+4,&R=6,\\
+(R^3-34R+48)/6,&R\ge7\text{ 为偶数},\\
+(R^3-31R+48)/6,&R\ge7\text{ 为奇数}.
+\end{cases}
+\end{aligned}
+\tag{46.18}
+$$
+
+$X_0,X_1$ 保留定理 44.4 的既有界，$V_b$ 保持定义 45.5。数学强制地址不成为真实缓存条目，$R$ 只用于原正评价队列的上界证明。
+
+**定理 46.7（六残余共同约束下的同一已选后缀界）。** 对每个定义 46.6 的实际可达 $H$，设 $S_H\ne\varnothing$。对每个 $b\in\{0,1,2,3\}$，若每个 $P\in S_H$ 在同一个原后缀 $r_H$ 中至多还有 $b$ 次分支或不存在报告，则
+
+$$
+\boxed{\quad |S_H|\le X_b\bigl(W_\beta-|\Psi(H)|\bigr).\quad}
+\tag{46.19}
+$$
+
+结论允许前缀已含非叶报告、成员的完整前像组成不同，包含全部非负整数资源和预算连接点。
+
+**证明。** 原 reached_prefix 给每个活节点和真实孩子的队列及拼接；定理 40.2 保证 $\Psi(H)\subseteq\Lambda_\beta(P)$ 对全部 $P\in S_H$ 成立。故 $R\ge0$，且对在这个同一队列内任选的参考 $P$，
+
+$$
+|\Lambda_\beta(P)\setminus\Psi(H)|
+=|\Lambda_\beta(P)|-|\Psi(H)|\le R.
+\tag{46.20}
+$$
+
+取共同 $Z=\Psi(H)$。引理 44.2 给 $0\le R\le3$ 时队列单点、$R=4$ 时至多两成员；定理 45.3 给 $R=5$ 时至多三成员；定理 46.5 给 $R=6$ 时至多四成员。它们都是当前队列的实际联合限制，不先假定各兄弟孩子能同时达到各自计数界。
+
+在严格节点处，非冲突性使至多一个非空叶孩子；严格分裂至少还有一个非叶孩子。若叶孩子的共同后继历史为 $H'$，定理 40.2、式（45.17）已给全部可能
+
+$$
+w=|\Psi(H')\setminus\Psi(H)|\in\{1,2,3\},\quad
+1\le d\le\min\{2,w\},\quad
+R(H')=R-w\ge0,
+\tag{46.21}
+$$
+
+其中 $d$ 为非空分支、不存在孩子数。每个非叶孩子仍有资源 $R$，后缀预算降为 $b-1$；叶孩子预算仍为 $b$。$w=1$ 时不存在孩子为空，只有一个非叶孩子；这一限制来自原实际块位置，不能改成两个形式非叶纤维。没有叶孩子时，原严格节点只有两个非空非叶孩子，各继承 $R$ 和 $b-1$。
+
+现在在本证明内核对整数势的全部连接及差分。$X_2$ 的奇偶分子为偶数；对 $R\ge7$，直接用旧 $V_3$ 的整数性及其原定义，有
+
+$$
+X_3(R)=
+\begin{cases}
+V_3(R)-(3R-6),&R\text{ 偶},\\
+V_3(R)-(2R-6),&R\text{ 奇}.
+\end{cases}
+\tag{46.22}
+$$
+
+偶数分支从八开始，奇数分支从七开始；该式不用于 $R=6$ 的分段值。所有小资源值都是正整数，且
+$X_2(7)=13,X_2(8)=19$、
+$X_3(7)=29,X_3(8)=48$。下面对 $b=2,3$ 证明
+
+$$
+\begin{aligned}
+X_b(R)-X_b(R-1)&\ge X_{b-1}(R),\\
+X_b(R)-X_b(R-2)&\ge2X_{b-1}(R)
+\qquad(R\ge7).
+\end{aligned}
+\tag{46.23}
+$$
+
+对 $b=2$，一单位差在偶数 $R\ge8$ 为 $R-2$，在奇数 $R\ge9$ 为 $R-1$，均至少为 $X_1(R)=R-2$。连接 $R=7$ 为 $13-4=9\ge5=X_1(7)$。两单位差在 $R\ge9$ 的两种奇偶中均为 $2R-4=2X_1(R)$；两个连接分别为
+
+$$
+X_2(7)-X_2(5)=13-3=10=2X_1(7),\qquad
+X_2(8)-X_2(6)=19-4=15\ge12=2X_1(8).
+\tag{46.24}
+$$
+
+对 $b=3$，一单位差在偶数 $R\ge8$ 为
+$(R^2-2R-10)/2=X_2(R)$；在奇数 $R\ge9$ 为
+$(R^2-11)/2=X_2(R)+R-1$。连接 $R=7$ 为
+$29-4=25\ge13=X_2(7)$。两单位差在偶数 $R\ge10$ 为 $R^2-2R-10=2X_2(R)$，在奇数 $R\ge9$ 为 $R^2-2R-9=2X_2(R)$。剩下两个连接为
+
+$$
+X_3(7)-X_3(5)=29-3=26=2X_2(7),\qquad
+X_3(8)-X_3(6)=48-4=44\ge38=2X_2(8).
+\tag{46.25}
+$$
+
+所以（46.23）覆盖全部整数 $R\ge7$，没有将六残余的分段值延伸为多项式。上述一单位差为正，连同小资源序列 $1,1,1,1,2,3,4$ 及七的连接，给 $X_2,X_3$ 在全部非负整数上非减、为正整数；$X_0,X_1$ 的同样性质由原定义直接保留。
+
+对所有实际（46.21）且 $R\ge7$，这些差与非减性给
+
+$$
+X_b(R-w)+dX_{b-1}(R)\le X_b(R),\qquad
+2X_{b-1}(R)\le X_b(R),\qquad b=2,3.
+\tag{46.26}
+$$
+
+第一式在 $w=1$ 时使用第一差及 $d=1$；在 $w=2$ 时使用第二差及 $d\le2$；在 $w=3$ 时用
+$X_b(R-3)\le X_b(R-2)$ 再用第二差。第二式由第二差及 $X_b(R-2)\ge1$ 得到。$R-w$ 全部非负。小资源不使用这个局部相加规则，而已由（46.20）的实际联合分类直接控制。
+
+最后对原有限后缀 $r_H$ 作结构归纳，归纳命题同时量化所有允许的 $b$。单点时 $1\le X_b(R)$。$b=0$ 若仍为严格节点，至少一个非叶孩子含实际成员，该成员立即产生一次非叶报告，与零预算矛盾；故只能单点。$b=1$ 的全部资源直接应用定理 44.4 的同后缀界 $U_1=X_1$，不重新证明一次超额结论。
+
+对 $b=2,3$，$R\le6$ 时用（46.20）后的真实队列界得到（46.19）。$R\ge7$ 且有叶孩子时，结构归纳分别在这个原叶孩子后缀给 $X_b(R-w)$，在 $d$ 个原非叶孩子后缀给 $X_{b-1}(R)$；原活纤维互不交且穷尽当前队列，（46.26）第一式给总界。没有叶孩子时，对原来的两个非叶孩子使用（46.26）第二式。空孩子贡献零，不被替换为虚构单点。
+
+所有归纳调用保持同一个原 $F,r,W_\beta$、原全部报告及其已选后缀。严格节点不能再次请求前缀中已经请求的地址，否则全部报告相容成员在那里有同一个报告，无法严格分裂。因此非叶次数仍计不同的真实请求地址；没有重新计费、移除旧非叶报告或用另一个来源的报告推进。所得是原路由上的同历史上界，不把数值势的相加当作兄弟纤维共同取得证明。证毕。
+
+**推论 46.8（完整保留最小值的三次超额改进）。** 对每个 $n\in\mathbb N_0$ 及非空有限 $F\subseteq\mathcal I_3(n)$，设 $K(F)=K_\circ(F)$、$D(F)\le n+3$。保持原族参数
+
+$$
+s=\max_{P\in F}|\Lambda_\alpha(P)|,\qquad
+W_\beta\in\mathbb N_0,\quad
+W_\beta\ge\max_{P\in F}|\Lambda_\beta(P)|,
+$$
+
+其中 $W_\beta$ 一次选择后不改变。则
+
+$$
+\boxed{\quad
+|F|\le\min\{N_n,\ M(\max\{s-2,0\},3),\ X_3(W_\beta)\}.
+\quad}
+\tag{46.27}
+$$
+
+对每个可行 $n\in\mathcal N$，采用原式（31.13）的 $q(n)$，有
+
+$$
+\boxed{\quad
+\mathsf{Cap}(n,3)\le
+\min\left\{N_n,\ M(\max\{q(n)-2,0\},3),\
+ X_3\!\left(\left\lfloor\frac{2n}{3}\right\rfloor\right)\right\}.
+\quad}
+\tag{46.28}
+$$
+
+不可行 $n$ 的容量为零。对每个整数 $m\ge5$，第 43 章的旧实际取得下界保持，且
+
+$$
+\boxed{
+\begin{aligned}
+D(m,3)+8m+28
+&\le\mathsf{Cap}(3m+30,3)\\
+&\le X_3(2m+20)\\
+&=V_3(2m+20)-(6m+54).
+\end{aligned}}
+\tag{46.29}
+$$
+
+这里 $D(m,3)$ 保持定理 43.3 的经典 Delannoy 数含义，与 $D(F)$ 的共同费用区分。对这些全部规模，原式（45.23）的完整三项最小值恰为 $V_3(2m+20)$，新式（46.28）的完整最小值恰为 $X_3(2m+20)$，所以完整旧界确实下降 $6m+54$。
+
+**证明。** 定理 25.2 的二元素遗传判据使 $F$ 两两非冲突。定理 29.2、29.3 的原有限取得结论及 ActualJointResponseCostCore 的对应正规形给一棵取得 $D(F)$ 的实际有限严格路由 $r$；只调用其已有全域控制器。每个成员的同一次原运行仍有
+
+$$
+J_{\sigma_r}(P)=B_r(P)\cup L(P),\qquad
+C_{\sigma_r}(P)=n+|B_r(P)\setminus L(P)|.
+\tag{46.30}
+$$
+
+路由地址互异，费用前提使每条评价路径至多三次分支或不存在。根的实际历史为空，$\Psi(\varnothing)=\varnothing$，定理 46.7 取 $b=3$ 给 $|F|\le X_3(W_\beta)$。定义 30.6 的实际来源数 $N_n$ 和推论 32.6 已有的更强 $\alpha$ 项
+$M(\max\{s-2,0\},3)$ 同时保留，得到（46.27）。不将 native ActualStrictHistoryCapacity 的旧 $M(s-1,3)$ 替代这个更强项。
+
+每个 $n$ 叶实际来源的唯一前像分别有组成 $(a_P,b_P)$，母卷定理 3.4 给
+
+$$
+n=3a_P+5b_P,\qquad
+|\Lambda_\beta(P)|=2a_P+3b_P=\frac{2n-b_P}{3}
+ \le\left\lfloor\frac{2n}{3}\right\rfloor.
+\tag{46.31}
+$$
+
+故全规模可用同一个 $W_\beta=\lfloor2n/3\rfloor$，没有共同组成假设。$s\le q(n)$ 与原 $M$ 的单调性给（46.28）；空评价族贡献零，不可行规模直接用推论 30.8 的零容量。式（46.18）的全部小资源界已覆盖可行小叶数。若原费用前提为 $W(F)\le n+3$ 或 $W_{\mathrm u}(F)\le n+3$，只用定理 29.3 的原 $W=W_{\mathrm u}=D$ 转回上述前提，不交换逐来源期望与最大值，也不把 $R(F)$ 或 $R_{\mathrm u}(F)$ 纳入这个推论。
+
+为证明（46.29）真正改变完整旧最小值，令 $n=3m+30$、$W=2m+20$。$W\ge30$ 为偶数，式（46.22）直接给
+
+$$
+X_3(W)=V_3(W)-(3W-6)
+       =V_3(W)-(6m+54).
+\tag{46.32}
+$$
+
+同时，推论 45.7 在同一个 $n$ 上给出两个其他项的比较：实际前像组成 $(m+5,3)$ 给 $q(n)\ge m+11$，所以更强 $\alpha$ 项至少为 $M(m+9,3)$；其原式（45.26）为
+
+$$
+M(m+9,3)-U_3(W)
+=\frac{6m^2+126m+657}{3}>0.
+\tag{46.33}
+$$
+
+来源数的原证明取全部叶为 $\alpha$、叶数 $m+10$ 的有序前像，使用规范编译卷命题 4.3 的单射性及既有 Catalan 计数，给
+
+$$
+N_n\ge\mathrm{Cat}_{m+9}\ge2^{m+8}>U_3(W)
+\qquad(m\ge5).
+\tag{46.34}
+$$
+
+最后一个严格不等式的全参数依据是原证明的起点
+$2^{13}=8192>4450=U_3(30)$，以及式（45.27）在 $x=m+10\ge15$ 的
+$2U_3(2x)>U_3(2x+2)$；按 $m$ 归纳保留它的全部无界整数范围。这两项都是既有源计数与更强 $\alpha$ 项的比较，不另计作新数学。
+
+旧式（45.19）给 $V_3(W)=U_3(W)-(W-2)$，故（46.32）—（46.34）形成同一规模上的严格关系
+
+$$
+N_n>U_3(W)>V_3(W)>X_3(W),\qquad
+M(\max\{q(n)-2,0\},3)>U_3(W).
+\tag{46.35}
+$$
+
+因此原三项最小值为 $V_3(W)$，新三项最小值为 $X_3(W)$，严格下降恰为 $6m+54$。这没有只比较一个被其他项遮蔽的 $\beta$ 多项式。
+
+（46.29）的下界完整取自定理 43.3：其 $D(m,3)+8m+28$ 个来源、原严格控制器、联合非冲突性、完整认证与同次精确付费集合均保持。该特定取得族的最大 $\beta$ 数 $2m+19$ 可以用于其族内（46.27），不能取代全规模（46.28）的 $2m+20$；这里不扩充该下界族，也不对新上界宣称取得。
+
+最后核对原全域任务。路由达到单点仅选定原型，不返回接受。定理 18.2 在 $d=3=3\cdot1$ 的原完整带标签叶条件、母卷定理 9.2—9.3 的有限描述与字面恢复继续承担认证和总后备。原型的每片叶仍须真正请求；先前实际取得 $f$ 片叶和 $c$ 个非叶，再补问 $n-f$ 片叶，费用仍为 $n+c$，$\Psi(H)$ 中未请求的强制叶从不预填缓存。意外路由报告、族外树、负树、未知根叶及任何认证不匹配仍交给定理 23.2、29.2 的原独立总后备，从其完整初始化、空逻辑历史和初始控制状态出发。引理 27.3 只复用同次运行已经真实取得的完全同址报告，每次供应仍进入后续策略自己的逻辑历史。后备在实际测得有限叶数后有限枚举完整前像，使用母卷定理 9.2 与规范编译卷命题 4.3 的原有限描述和替换单射性比较；这不授予在未知来源上实际改变来源或执行逆操作的权限。
+
+本章承重关系是任意完整来源的六缺额正常形、规范三元与混合五元支撑的真实重叠及全部伴随共存、由此导出的四成员必要充分条件。整数势和完整保留最小值是这些关系在同一个已选严格历史上的消费者。至多五残余分类、十六叶局部图、源计数、原更强 $\alpha$ 项、原 controller 与 replay、既有取得下界及已有首项和渐近系数均按原范围复用。母卷 §§371–380 的外加环境与动力学接口、FIB 来源完成卷的规范位地址、运输—记忆—完成卷 §§44–46 的受守卫源变换，以及观察者相容恢复卷 §§45–51 的就绪证据和时序资源，具有各自不同的对象与操作条件，不供应这里被动不变来源的四响应或免费的实际叶证书。所用原树替换、正规形、块刚性与单孔恢复的数学接口来自各处原陈述与证明；一般有限询问背景沿用第 29、34 章所附文献，不以其有限查询模型证明这里的六残余几何或无承诺接受。
+
+这些结论为上述完整实际对象上的普通数学推导，不主张世界原创性或 Lean 内核核验。来源替换只用于比较两棵已给定树，不成为运行时动作；完整树来源、组成、规范地址、观察响应、组成祖先许可与实际逆执行保持区别，环境代数守恒不建立物理对应。定理 46.5 不证明取等形能到达某个严格共同前缀；定理 46.7 不证明不同兄弟纤维同时取得势值。因此 unrestricted 精确三次超额有限容量、上界取得性以及（46.29）仍存的下上界缺口未确定；本章不建立新的 leading 或渐近容量系数。证毕。
+
+## 追加锚（本行以下为增补区）
+
+## 47. 任意尺度的四元字面梳乘积与两额外地址的加性
+
+本节固定第 28 章的两组四行块。记 $I=[4]$，并对 $k\ge1$ 用第 26.5 节的字面右梳
+
+$$
+B_1(x_1)=x_1,\qquad B_k(x_1,\ldots,x_k)=\langle x_1,B_{k-1}(x_2,\ldots,x_k)\rangle .
+$$
+
+其第 $j$ 个孔地址仍为 $p_j^{(k)}=\mathtt R^{j-1}\mathtt L$（$j<k$）及
+$p_k^{(k)}=\mathtt R^{k-1}$。对 $x\in\{\mathrm b,\mathrm p\}$，定义
+
+$$
+F_k^x(s)=B_k(P_{s_1}^x,\ldots,P_{s_k}^x),\qquad
+Q_k^x(s)=B_k(Q_{s_1}^x,\ldots,Q_{s_k}^x)\quad(s=(s_1,\ldots,s_k)\in I^k).
+$$
+
+这里的 $P_i^x,Q_i^x$ 恰是定义 28.2、式（28.5）的已发表块和完整三步前像；没有替换块、补孔或改变原始地址合同。以下 $L(T)$ 表示带标签叶地址集，费用仍是原合同中真实缓存后的不同地址数。
+
+**引理 47.1（乘积族的实际性、组成及唯一前像）。** 对每个 $k\ge1$、$s\in I^k$ 及 $x\in\{\mathrm b,\mathrm p\}$，有
+
+$$
+\begin{gathered}
+\rho^3(Q_k^x(s))=F_k^x(s),\qquad
+c(Q_k^x(s))=(9k,3k)^{\mathsf T},\qquad
+c(F_k^x(s))=(15k,27k)^{\mathsf T},\\
+|L(F_k^x(s))|=42k,\qquad
+L(F_k^x(s))=\bigsqcup_{j=1}^k p_j^{(k)}L(P_{s_j}^x).
+\end{gathered}
+$$
+
+每个 $F_k^x(s)$ 都有且只有这个完整三步前像 $Q_k^x(s)$；$F_k^x(s)$（以及 $Q_k^x(s)$）随 $s$ 两两不同。因此 $\eta_k:I^k\to I^k$、$\eta_k(s)=s$ 是两组之间的字面指标双射。
+
+**证明。** 第 28.3 节给出每个 $P_i^x$ 的组成 $(15,27)^{\mathsf T}$、42 片叶及唯一前像 $Q_i^x$ 的组成 $(9,3)^{\mathsf T}$。第 26.2 节的孔地址分解给出最后一个不交并。组成的加性和替换对二叉构造的同态性于是给出所列两个组成等式及
+
+$$
+\rho^3(Q_k^x(s))
+=B_k(\rho^3(Q_{s_1}^x),\ldots,\rho^3(Q_{s_k}^x))
+=F_k^x(s).
+$$
+
+若 $s\ne t$，取 $j$ 使 $s_j\ne t_j$。第 28.3 节的四个块在字面上两两不同，故第 $j$ 个孔中的子树不同；孔前缀自由性使两棵梳树不同。$Q_k^x(s)\ne Q_k^x(t)$ 同理。规范编译卷命题 4.3 的树替换单射性给出 $\rho^3$ 在全部完整有序树上的单射性，所以若另有 $R$ 满足 $\rho^3(R)=F_k^x(s)$，则 $R=Q_k^x(s)$。证毕。
+
+**引理 47.2（全部确定性及期望零超额面）。** 对 $x\in\{\mathrm b,\mathrm p\}$，令 $\boldsymbol F_k^x=(F_k^x(s))_{s\in I^k}$，并按第 28.1 节分别定义 $K_{\mathrm d}(\boldsymbol F_k^x)$ 与 $K_{\mathrm e}(\boldsymbol F_k^x)$。则对每个 $S\subseteq I^k$，
+
+$$
+S\in K_{\mathrm d}(\boldsymbol F_k^x)
+\Longleftrightarrow
+S\in K_{\mathrm e}(\boldsymbol F_k^x)
+\Longleftrightarrow
+\bigl(S=\varnothing\ \text{或}\ |S|=1\bigr).
+$$
+
+因而两组的完整确定性及期望相容复形均为
+
+$$
+K_\circ(I^k)=\{\varnothing\}\cup\bigl\{\{s\}:s\in I^k\bigr\},
+$$
+
+并由恒等双射 $\eta_k$ 精确对应；也就是说，对每个 $S\subseteq I^k$，同时有
+
+$$
+S\in K_{\mathrm d}(\boldsymbol F_k^{\mathrm b})\Longleftrightarrow
+\eta_k(S)\in K_{\mathrm d}(\boldsymbol F_k^{\mathrm p}),\qquad
+S\in K_{\mathrm e}(\boldsymbol F_k^{\mathrm b})\Longleftrightarrow
+\eta_k(S)\in K_{\mathrm e}(\boldsymbol F_k^{\mathrm p}),
+$$
+
+且这些等价式的两侧都恰在 $S=\varnothing$ 或 $|S|=1$ 时成立。
+
+**证明。** 单元素和空集由第 23.2 节的全域单原型测试及其后备策略取得。设 $s\ne t$，取坐标 $j$ 使 $s_j\ne t_j$。第 28.3 节的完整前沿和式（28.10）说明，$P_{s_j}^x$ 与 $P_{t_j}^x$ 在同一个孔内没有带相反标签的共同叶；更强地，它们的共同叶信息集合为空。由第 26.2 节的孔分解，$F_k^x(s)$ 与 $F_k^x(t)$ 的共同叶只能来自同一孔，而该孔的共同信息叶为空，故
+
+$$
+\Delta(\{F_k^x(s),F_k^x(t)\})=\varnothing .
+$$
+
+第 25.2 节的遗传共享叶判据遂排除任何含有这两个指标的确定性共同个体最优策略，也排除期望共同个体最优策略。任意 $|S|\ge2$ 都含这样一对，故不在两个复形中。证毕。
+
+**引理 47.3（私有乘积的一个全域总控制器）。** 对每个 $k\ge1$，存在一个原合同中的全域正确且有限终止确定性策略 $\pi_k^{\mathrm p}\in\mathfrak D_3$，使
+
+$$
+\forall s\in I^k,\qquad C_{\pi_k^{\mathrm p}}(F_k^{\mathrm p}(s))\le43k.
+$$
+
+**证明。** 在每个孔 $p_j^{(k)}$ 内运行第 28.6 节私有策略 $\pi^{\mathrm p}_1$ 的路由部分，固定其目标行为 $t=1$，并把其每一个局部地址 $v$ 改为 $p_j^{(k)}v$。扫描只接受第 28.6 节允许的精确叶 $\mathsf{leaf}_\beta$ 和分支报告；其他报告立即进入第 23.2 节的全域后备。若一个孔的扫描给出候选 $s_j$，继续扫描下一孔。全部 $k$ 个候选得到后，运行 $F_k^{\mathrm p}(s)$ 的完整带标签叶测试：$42k$ 片叶必须逐一以真实查询核对，只有全部匹配才接受；任一不匹配仍进入同一后备。
+
+该控制器的初始化只含固定的 $k$、已知的有限评价描述及这些既有策略。后备从自己的初始状态和空逻辑历史开始；此前历史只在它再次请求同一真实地址时由原缓存供应，故引理 27.3 的独立续接等式适用。第 23.2 节的后备在全部非空有限树上正确且有限终止，所以上述控制器也满足原全域合同。
+
+在 $F_k^{\mathrm p}(s)$ 上，第 28.6 节的私有扫描在每个孔至多产生一个不属于该孔目标行叶集的地址，其余扫描地址都是该行的真实叶。不同孔的地址集合不交，完整测试的叶集合正是引理 47.1 的不交并；因此扫描与完整测试的实际付费并集至多为
+
+$$
+42k+\sum_{j=1}^k1\le43k.
+$$
+
+没有把孔前缀、叶报告或未请求的叶预置为缓存，故这个计数遵守原始实际地址费用。证毕。
+
+**引理 47.4（平衡乘积的两额外地址直接和）。** 对每个 $k\ge1$ 及每个 $\pi\in\mathfrak D_3$，存在 $s\in I^k$ 使
+
+$$
+C_\pi(F_k^{\mathrm b}(s))\ge42k+2k=44k.
+$$
+
+**证明。** 把对手写成同时适用于任意交错历史的在线规则。每个孔 $j$ 维护幸存集 $S_j\subseteq I$，初始为 $I$。在该孔收到地址 $p_j^{(k)}v$ 时，若四行在 $S_j$ 上的报告相同，就返回这个共同报告并保持 $S_j$；若 $S_j=I$ 时报告不恒定，表（28.7）给出两个二元响应类，选择其中报告为非叶值的一类，将 $S_j$ 更新为该二元类，并把该地址记为第一次收费；这种类必存在。此后 $S_j$ 恰为二元集。若在二元集上报告仍恒定，就保持它；首次不恒定时，由同址无相反叶标签的非冲突性，二行中至少有一行给非叶报告，选择该行并把 $S_j$ 更新为该单点，记该地址为第二次收费。单点以后始终返回该行的真实报告。上下文孔前缀的报告恒为分支，所以这套逐孔规则给出一个完整的乘积报告：每个地址只落在一个孔内，或是与指标无关的上下文地址。
+
+该在线规则始终与至少一个四行指标一致，因为每次更新都取当前响应类中的行；第二次收费后则由单点行唯一确定。策略不能在某个孔仍有两个幸存指标时接受：若 $S_j$ 有两个成员，固定其他孔的当前幸存行，便得到两棵不同的完整来源，它们在该全局历史上的所有报告相同；同一个接受记录既不能给二者同时提供各自的完整带标签叶证书，也不能由全路径恢复使它们相等。这与原合同的全域正确性矛盾。
+在线路径本身必有限：每个 $S_j$ 只会从四元集收缩为二元集再收缩为单点，最多发生 $2k$ 次收缩；若某一阶段有无限多个查询而没有收缩，任选该阶段各孔的一个幸存指标便得到一个固定实际乘积来源，其所有报告都与这条无限路径相同，违背策略在每个原始正来源上有限终止；最后一次收缩之后同理。故上述排除接受的论证确实迫使每个孔完成两次更新，并给出一个 $s=(s_1,\ldots,s_k)\in I^k$。
+
+两次收费在同一孔必为不同地址：第一次地址在其所选二元集上已经有共同报告，重复查询不可能成为后来首次分歧。每次收费对最终单点行都是非叶报告，故两地址均在该行的叶集之外。不同孔的地址前缀互斥，于是这 $2k$ 个地址两两不同，并且都不在 $L(F_k^{\mathrm b}(s))$。
+
+引理 47.1 给基线叶数 $42k$，遂有
+
+$$
+C_\pi(F_k^{\mathrm b}(s))-42k\ge2k.
+$$
+
+证毕。
+
+**定理 47.5（任意 $k$ 的确定性及 $W/W_{\mathrm u}$ 加性分离）。** 置
+
+$$
+D_k^x=D(\boldsymbol F_k^x),\qquad
+W_k^x=W(\boldsymbol F_k^x),\qquad
+W_{\mathrm u,k}^x=W_{\mathrm u}(\boldsymbol F_k^x).
+$$
+
+则对每个 $k\ge1$，
+
+$$
+D_k^{\mathrm b}\ge44k,\qquad D_k^{\mathrm p}\le43k,\qquad
+D_k^{\mathrm b}-D_k^{\mathrm p}\ge k,
+$$
+
+并且
+
+$$
+W_k^{\mathrm b}-W_k^{\mathrm p}
+=W_{\mathrm u,k}^{\mathrm b}-W_{\mathrm u,k}^{\mathrm p}
+=D_k^{\mathrm b}-D_k^{\mathrm p}\ge k.
+$$
+
+**证明。** 引理 47.4 对每个全域确定性策略给出平衡族的最大费用至少 $44k$，取下确界即得第一式。引理 47.3 给出一个同一全域策略在私有族全部 $4^k$ 个评价输入上的费用至多 $43k$，故第二式成立，差值不小于 $k$。第 29.3 节的实际有限联合响应核心定理适用于任意有限的两两不同正来源族，并在原全域合同下给
+
+$$
+W(F)=W_{\mathrm u}(F)=D(F).
+$$
+
+分别应用于两族即得所列两个 $W$ 差值。没有把这个复用扩展为 $R$ 或 $R_{\mathrm u}$ 的锐值，也没有声称 $D_k^{\mathrm b}$ 或 $D_k^{\mathrm p}$ 的精确值。证毕。
+
+本节的新增桥梁是引理 47.4 的产品对手：它把第 28.5 节的两次真实非叶分歧在任意交错的多孔历史中逐孔同时实现。第 28 章的四行块、完整叶证书、原全域后备、真实缓存和独立续接均按原范围复用；第 47.3 节的私有上界也只把既有单孔路由放入不相交孔。ResponseKernelRecursion 与 NarrowWindowCost 的当前声明及其 Blueprint 只涉及各自的响应递推和文字窗口取得，不供应本节的树地址费用或乘积对手，因此没有把它们当作本节证明的替代来源。结论仍限于 $d=3$、上述两族、原始全有限树输入域和 $W/W_{\mathrm u}$；不提供 $R,R_{\mathrm u}$ 表、任意来源族分类、尖锐全 $k$ 的两个 $D$ 值或长期目标完成。
+
+## 追加锚（本行以下为增补区）

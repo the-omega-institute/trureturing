@@ -1,0 +1,14 @@
+**Corollary 10.7 (size growth of an actual external odd-depth witness).**
+Set $P_U(n)=\max(\{5\}\cup U(n))$. Then
+$$\log n\leq\log10+\psi(Y_{P_U(n)}),\qquad
+ \liminf_{n\to\infty}\frac{P_U(n)}{\log n}\geq2.\tag{GSE5}$$
+Here $\psi(Y)=\log L(Y)$ is the Chebyshev function.
+
+Proof. Apply GSE4 with $Q=P_U(n)$ and take logarithms. The bound implies
+$P_U(n)\to\infty$ as $n\to\infty$. The classical prime number theorem
+in the form $\psi(Y)\sim Y$ and $Y_Q\sim Q/2$ give the liminf.
+No optimality claim is made for the constant two. On any unbounded
+sequence of powerful Fibonacci indices, $P_U(n)>5$ eventually and
+is the size of an original odd-super-depth WSS factor. This is a
+conditional application to that sequence, not a proof that it exists.
+

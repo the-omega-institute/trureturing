@@ -19,6 +19,7 @@ triage: anchor
 - DOI: 10.48550/arXiv.2606.04225
 - URL: https://arxiv.org/abs/2606.04225v1
 - Version: arXiv:2606.04225v1.
+- Open Problem 1.3, printed page 2: show that $p_{2m,S_1}(1/2-m)\neq0$ for every positive natural $m$, with $S_1$ defined by equation (1.8).
 
 ## Source statement
 

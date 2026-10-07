@@ -1,0 +1,20 @@
+**引理 56.2（条件行及噪声底）。** 置 $Z=\mathbf1_{\{Y=2\}}-\mathbf1_{\{Y=0\}}$、$\beta=2/3+\alpha/12$。对每个由输入定义、质量为正的事件 $A$，令 $g_A=\mathbb E[C_\theta\mid A]$、$m_A=\alpha(g_A-1)/4$。有
+
+$$
+\operatorname{Law}(Y\mid A)
+=\left(\frac\beta2-\frac{m_A}2,\ 1-\beta,\
+\frac\beta2+\frac{m_A}2\right),\qquad
+\mathbb E[Z\mid A]=m_A,\qquad \mathbb E[Z^2\mid A]=\beta.
+\tag{56.5}
+$$
+
+每个条件行坐标至少为 $1/4$，且
+
+$$
+\operatorname{Var}(Z\mid A)=\beta-m_A^2
+\ge\frac23+\frac\alpha{12}-\frac{\alpha^2}{16}\ge\frac23.
+\tag{56.6}
+$$
+
+**证明。** 式（55.6）的三类条件均值及常数二阶矩给前两种矩；每个通道坐标是 $C$ 的仿射函数，混合后便准确得到（56.5），而非仅凭一个矩猜测标签行。$R_\alpha$ 各坐标至少为 $1/4$，其条件混合也如此。$0\le g_A\le2$ 给 $|m_A|\le\alpha/4$，且 $\alpha/12-\alpha^2/16\ge0$，得到方差界。$\square$
+

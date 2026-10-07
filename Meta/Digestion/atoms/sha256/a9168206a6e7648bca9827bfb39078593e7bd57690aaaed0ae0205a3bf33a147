@@ -1,0 +1,27 @@
+**推论 359.4（逐分量的显式联合检验）。** 设候选三元组的三个分量已经各自写成唯一形式
+$$
+\Xi_\nu=(-1)^{\varepsilon_\nu}S^{k_\nu}A^{e_\nu},
+\qquad \varepsilon_\nu\in\{0,1\},\ k_\nu\in\mathbb Z,\ e_\nu\in\{0,1\}.
+$$
+它属于实际 $W_3$ 像，当且仅当
+$$
+ p=e_1,\qquad q=e_2,\qquad e_0\equiv p+q\pmod2,
+$$
+并且
+$$
+\begin{aligned}
+ u&=\frac{k_0-q+2pq}{2},&
+ v&=\frac{k_1-p-q+2pq}{2},&
+ w&=\frac{k_2-p-2q}{2}
+\end{aligned}
+\tag{359.2}
+$$
+都是整数，且
+$$
+\varepsilon_0\equiv v+pq,\qquad
+\varepsilon_1\equiv w+pq,\qquad
+\varepsilon_2\equiv u
+\pmod2.
+\tag{359.3}
+$$
+

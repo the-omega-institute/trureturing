@@ -17,6 +17,22 @@ public sealed class StatementProjectionResolutionTests
     private static LeanDeclarationRef Generated => LeanDeclarationRef.Create(GeneratedPath[..^5] + ".ext");
 
     [Fact]
+    public void ProjectionLoaderCanReadAfterAMissingFixtureIsCreated()
+    {
+        var pin = new StatementProjectionTestRepository.Pin(GeneratedName, GeneratedPath, Equality(1));
+        using var repository = new StatementProjectionTestRepository(pin);
+        var path = System.IO.Path.Combine(repository.Path, "Golden", "Projection", "statement-projection-pilot-v1.json");
+        TemporaryFileSystem.File.Delete(path);
+
+        var failure = Assert.Throws<FileNotFoundException>(() =>
+            repository.Run(() => StatementProjectionFixtureLoader.Assess(Generated)));
+        Assert.Equal(path, failure.FileName);
+        repository.WriteFixture("pilot", pin);
+
+        repository.Run(() => AssertProjected(Generated, "1 = 1", Equality(1)));
+    }
+
+    [Fact]
     public void GeneratedKernelExtDoesNotResolvePinnedTotalCodeExt()
     {
         using var repository = new StatementProjectionTestRepository(

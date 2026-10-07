@@ -1,0 +1,8 @@
+For the specified set $S=\{13\}$, its closure is
+$H(S)=\{2,3,5,7,13\}$ and $R_S=840$. The procedure has 48 candidate
+divisors of 4200. Exact evaluation gives
+$$\{n\geq1:U(n)\subseteq\{13\}\}
+ =\{1,2,3,4,5,6,7,12\}.$$
+The completeness of this finite certificate uses GSE2, rather than a
+freely chosen scan cutoff. Thirteen is not asserted to be WSS.
+

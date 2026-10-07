@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:5569425de9704a75ea1b4c3de55cf0c7e2a16f37f6868c2c3a7184df3946f4f2
+  normalized_sha256: sha256:5569425de9704a75ea1b4c3de55cf0c7e2a16f37f6868c2c3a7184df3946f4f2
+cas_ref: sha256:5569425de9704a75ea1b4c3de55cf0c7e2a16f37f6868c2c3a7184df3946f4f2
+coverage_gids:
+  - gid: D5/S1/Words/Patterns/Separable/ActualCardinality.actual_schroder_cardinality
+    target_statement_id: sha256:6cba88ba142c838501cacacec57b3599f3d50b85f19e1302c1dde685257174df
+receipts:
+  unresolved_subitems: []

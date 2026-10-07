@@ -1,0 +1,16 @@
+**引理60.2（任意分类器的逐点多数下界）。** 对非空 $S\subseteq[M]$，令 $k=|S|$、$B_k\sim\operatorname{Bin}(k,\tau)$，并定义
+
+$$
+r_k(s)=\frac{\tau}{k}\mathbb E\min\{B_k,k-B_k\}
+=\frac{\tau}{k}\sum_{j=0}^k\min\{j,k-j\}{k\choose j}\tau^j(1-\tau)^{k-j}.
+\tag{60.3}
+$$
+
+则对所有分类器（允许使用全部 $n$ 个窗口）都有
+
+$$
+\min_f\max_{i\in S}L_s(i,f)
+=\min_f\frac1k\sum_{i\in S}L_s(i,f)=r_k(s).
+\tag{60.4}
+$$
+

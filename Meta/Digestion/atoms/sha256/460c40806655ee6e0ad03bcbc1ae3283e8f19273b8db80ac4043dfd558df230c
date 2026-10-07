@@ -1,0 +1,18 @@
+**定义 57.8（未知干扰参数的 minimax 风险）。** 学习器可使用公开 $n,a,\rho$、任意完整记录计算和独立参数无关随机化，但不可读取真实 $\mu,\alpha,\theta$。置
+
+$$
+\begin{aligned}
+\mathfrak R_m^{\rm free}(n,a,\rho)
+&=\inf_{\mathcal A}
+\sup_{\mu\in\mathcal M_\rho^{\rm free},\,\alpha\in[a,1],\,\theta\in\Theta_n}
+P_{\mu,\alpha,\theta}^m\{\mathcal A(D_m)\ne\theta\},\\
+m_*^{\rm free}(n,a,\rho,\delta)
+&=\inf\{m\in\mathbb N_0:\mathfrak R_m^{\rm free}\le\delta\},
+\qquad \inf\varnothing=+\infty.
+\end{aligned}
+\tag{57.23}
+$$
+
+准确函数版本允许输出任意 $f:\Sigma^n\to\{0,1,2\}$，成功指逐词
+$f=C_\theta$。这些定义不限制计数器、特征、批次数或运行时间。
+

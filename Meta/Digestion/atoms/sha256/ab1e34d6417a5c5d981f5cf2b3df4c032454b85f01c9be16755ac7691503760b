@@ -1,0 +1,37 @@
+**定理 54.11（两独立批次恢复）。** 在定理 54.9 的同一参数域下，取互相独立、同律的两批完整记录，大小分别为
+
+$$
+\begin{aligned}
+m_1&\ge\left\lceil\frac8{a^2}
+\max\left(\frac{M_\eta^2}{g_q^2},\frac{M_\mu^2}{g_r^2}\right)
+\log\frac{8n}{\delta}\right\rceil,\\
+m_2&\ge\left\lceil\frac{8M_\mu^4}{a^2g_p^2}
+\log\frac{4n}{\delta}\right\rceil.
+\end{aligned}
+\tag{54.32}
+$$
+
+第一批取最大有符号 $\eta Z$ 经验均值的位置为 $\widehat q$；排除它后取最大有符号 $\psi Z$ 经验均值的位置为 $\widehat r$。第二批在排除 $\widehat q,\widehat r$ 后，取最大绝对配对经验值 $|\widehat T_{i\widehat r}|$ 的位置为 $\widehat p$，最后递增排序三个位置。固定按索引破平。此规则对全部教师和 $\alpha\in[a,1]$ 成功概率至少为 $1-\delta$。
+
+在 $\mathcal M^{1/2}_\rho$ 上，以下两条统一充分预算成立：
+
+$$
+m_1\ge\left\lceil\frac{32}{a^2\rho^4}\log\frac{8n}{\delta}\right\rceil,
+\qquad
+m_2\ge\left\lceil\frac{10368}{625a^2\rho^4}\log\frac{4n}{\delta}\right\rceil.
+\tag{54.33}
+$$
+
+**证明。** 第一批的两组分数是在选位置前就固定的 $2n$ 个变量族，绝对值分别不超过 $M_\eta,M_\mu$。对它们分别使用误差阈值 $ag_q/2,ag_r/2$，式（54.29）与并集界给全部误差严格小于阈值的概率至少为 $1-\delta/2$。在该事件 $E_1$ 上，唯一正 $\eta$ 均值确定真实 $q$；排除它后，唯一正平衡均值确定真实 $r$。
+
+条件于第一批的 $E_1$，第二批仍是原来的独立同分布记录，且所选锚点等于真实 $r$。此时最多 $n$ 个固定配对变量的范围为 $[-M_\mu^2,M_\mu^2]$。误差阈值 $ag_p/2$ 与第二条预算给条件失败概率至多 $\delta/2$，并严格分开唯一活动 $p$。总失败概率至多 $P(E_1^c)+P(E_2^c\mid E_1)\le\delta$。这没有假设由同一批数据选出的随机分数无条件仍独立同分布。
+
+统一预算使用引理 54.8 的 $K_h,K_\ell\ge5\rho/2$，故
+
+$$
+g_q\ge\rho^2/4,\qquad g_r\ge5\rho/16,\qquad g_p\ge25\rho^2/16.
+$$
+
+又 $M_\eta\le1/2$、$M_\mu\le3/2$，于是第一条最大比值至多
+$\max(4/\rho^4,576/(25\rho^2))=4/\rho^4$，其中等式使用 $\rho\le1/8$。第二条系数至多 $8(81/16)\cdot256/(625\rho^4)=10368/(625\rho^4)$。$\square$
+

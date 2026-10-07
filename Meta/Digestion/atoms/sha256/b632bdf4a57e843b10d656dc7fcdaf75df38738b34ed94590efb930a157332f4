@@ -1,0 +1,11 @@
+**付费重复完整词的均匀比较。** 点态通道反射沿用第 62.7 节：独立生成 $S_H$ 个 $\mu_n^+$ 完整词，每词支付 $K_H=\lceil32a^{-2}\ln8\rceil$ 个新标签，取 $T_X=\operatorname{sign}\sum Z$，约定 $\operatorname{sign}(0)=0$。反射及类 $1$ 的对称性给 $\mathbb E[T_X\mid X]=b_\alpha f_\theta(X)$，同一个 $b_\alpha\ge3/4$。以 $(f_\kappa-T_X)^2$ 的累积值选择候选。
+
+令 $d=f_\kappa-f_\theta$；平方损失差的均值为 $\mathbb E[d^2+2(1-b_\alpha)f_\theta d]\ge\mathbb E d^2/2$，因为 $|f_\theta d|\le d^2$。其幅度至多 $4$，平方至多 $9d^2$，而均值至多 $\mathbb E d^2$。以独立完整块作 Bernstein 得错误类概率至多 $\exp(-S_H\gamma/96)$。因此
+
+$$
+S_H=\lceil96\gamma^{-1}\ln(2(M_n-1)/\delta)\rceil
+\tag{63.33}
+$$
+
+足够，另分配 $\delta/2$ 给采样中止。标签数 $K_HS_H$ 同阶，生成配置和候选处理分别为 $S_H,M_nS_H$。完整运行合同仍支付每标签的 $n$ 窗重放；若另外提供保留配置后刷新标签的接口，写入才可按 $nS_H$ 计算，重读、通道与终端处理仍收费。这说明条件控制器没有相对均匀合法设计的标签阶或保留配置阶优势。
+

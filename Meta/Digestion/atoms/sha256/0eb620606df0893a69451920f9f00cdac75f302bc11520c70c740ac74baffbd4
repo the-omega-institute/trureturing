@@ -1,0 +1,36 @@
+**外加保留核 294.1。** 若要研究随机分支，给每个类型和环境状态 `\vartheta` 附加子代保留的概率生成函数
+
+$$
+f_i^{\vartheta}(s_\alpha,s_\beta)
+=\mathbb E\!\left[
+s_\alpha^{N_{i\alpha}}s_\beta^{N_{i\beta}}
+\mid\vartheta
+\right],
+\qquad i\in\{\alpha,\beta\}.
+\tag{294.3}
+$$
+
+其均值矩阵为
+
+$$
+K(\vartheta)_{ij}
+=\left.
+\frac{\partial f_i^{\vartheta}}
+{\partial s_j}
+\right|_{(1,1)}.
+\tag{294.4}
+$$
+
+在给定同一环境历史 `\vartheta_0,\ldots,\vartheta_{n-1}`、且不同母体的保留事件条件独立时，随机存活向量 `\widetilde Z_n` 满足
+
+$$
+\mathbb E[\widetilde Z_{n+1}\mid
+\widetilde Z_n,\vartheta_n]
+=K(\vartheta_n)^{\mathsf T}\widetilde Z_n.
+\tag{294.5}
+$$
+
+这里 `K` 的行指标是母体类型、列指标是子代类型；若改用行向量记号，转置相应消失。FIB 只决定 `K` 中哪些类型转移可以非零；保留概率、环境过程和条件独立性都是外加假设。
+
+在固定环境 `\vartheta` 且满足有限型、不可约和适当矩条件时，`\rho(K(\vartheta))` 是平均分支阈值的候选量：小于一时平均规模衰减，大于一时可能存在正存活概率，等于一是临界候选。这里的“可能”需要由生成函数的非退化性、初态和可达性补足；不能把 `\rho(K)` 的数值直接当作原始 FIB 树的灭绝结论。
+

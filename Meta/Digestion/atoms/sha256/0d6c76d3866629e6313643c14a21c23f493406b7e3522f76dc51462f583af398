@@ -1,0 +1,12 @@
+**命题 43.5（同号时的共同实际 $D/D$ 充分性）。** 假设 $\varepsilon_1=\varepsilon_2=\varepsilon\in\{-1,+1\}$，并且参考点各自沿该方向有一个共同的非空开幅度区间：存在 $\eta>0$，使每个 $0<\kappa<\eta$ 都满足
+
+$$
+ h+\varepsilon\kappa\in J_{s_1}^{\mathrm{fin}},\qquad y+\varepsilon\kappa\in J_{s_2}^{\mathrm{fin}}.
+$$
+
+则对任意 $\eta_0\in(0,\eta)$，存在 $0<\kappa<\eta_0$ 使两个点同时属于 $T_{s_1},T_{s_2}$，当且仅当
+
+$$\boxed{h-y\in R.}$$
+
+选定一次这样的 $\kappa$ 后，两个有限尾字面量可以固定用于所有后续历史。
+

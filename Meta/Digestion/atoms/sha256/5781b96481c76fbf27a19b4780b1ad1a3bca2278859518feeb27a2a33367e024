@@ -1,0 +1,7 @@
+## Verified locator
+
+The immutable source revision is `f9dc162170e8711f78059a87edcd38ffc44a1bfb` at
+[https://github.com/math-xmum/Brouwer/tree/f9dc162170e8711f78059a87edcd38ffc44a1bfb](https://github.com/math-xmum/Brouwer/tree/f9dc162170e8711f78059a87edcd38ffc44a1bfb).
+The exact source files and declarations used here are:
+
+- `Gametheory/Scarf.lean`: `isDominant_erase_iff_M_set_empty`, `internal_door_two_rooms`, `doors_of_NCroom`, and `Scarf`.

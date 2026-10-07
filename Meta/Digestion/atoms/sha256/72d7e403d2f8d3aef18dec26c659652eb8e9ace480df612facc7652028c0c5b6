@@ -1,0 +1,30 @@
+**定义 358.1（实际前缀与首现层）。** 取实际整数序列
+
+$$
+F_0=0,\qquad F_1=1,\qquad F_{n+2}=F_{n+1}+F_n.
+$$
+
+对整数 $m\ge1$，令 $Q_m=\operatorname{lcm}(F_1,\ldots,F_m)$、$b_m=\log Q_m$。对整数 $d\ge2$，$z(d)$ 是满足 $d\mid F_n$ 的最小正指标；其存在性由下述有限模数论证保证。对 $n\ge1$，先在正有理数中定义
+
+$$
+\Psi_n=\prod_{d\mid n}F_d^{\mu(n/d)},\qquad
+\Phi=\frac{1+\sqrt5}{2},\quad L=\log\Phi,\quad
+\kappa=\frac{L}{\zeta(2)},\quad H_m=\sum_{j=1}^m\frac1j.
+\tag{358.1}
+$$
+
+这里 $\mu$ 是 Möbius 函数，$\varphi$ 是 Euler totient 函数，$\zeta(2)=\sum_{j\ge1}j^{-2}$；$\Psi_n$ 的整性是结论，不是定义中的假设。对素数 $p$，$v_p$ 在正整数上是通常赋值，在正有理数上以分子赋值减分母赋值延拓。另取 $\gamma$ 为 Euler 常数，$\sigma(M)=\sum_{a\mid M}a$，并定义
+
+$$
+\begin{aligned}
+w(p)&=-\log(1-1/p),&
+A(M)&=\sum_{p\mid M}w(p),\\
+E(M)&=\sum_{p\mid M}\log(1-p^{-v_p(M)-1}),&
+B_0(x)&=\sum_{p\le x}w(p)\quad(x>1),\\
+G(M)&=\log\frac{\sigma(M)}{e^\gamma M\log\log M}\quad(M>5040).
+\end{aligned}
+\tag{358.2}
+$$
+
+各素数和均只取素数；$A(1)=E(1)=0$。
+

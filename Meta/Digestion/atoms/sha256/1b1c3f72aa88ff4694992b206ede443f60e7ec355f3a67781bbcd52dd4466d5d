@@ -1,0 +1,39 @@
+### 28.1 临界闭扩张关系与有限来源的完整记录
+
+记引理27.3的临界切点为
+
+$$
+\begin{aligned}
+p_1^\star=a^\star&=-t^2-\lambda,&
+p_2^\star=b^\star&=g-3\lambda,&
+p_3^\star=c^\star&=t-5\lambda,\\
+p_4^\star=d^\star&=2t-7\lambda,&
+p_5^\star=e^\star&=2t+\lambda.&&
+\end{aligned}
+\tag{28.1}
+$$
+
+其六格闭包依次为 $[-1,a^\star],[a^\star,b^\star],\ldots,[e^\star,\phi]$。令
+
+$$
+\begin{aligned}
+E_0&=[-1,-t^2],\\
+E_1&=[-t^2-2\lambda,g-2\lambda],\\
+E_2&=[g-4\lambda,t-4\lambda],\\
+E_3&=[t-6\lambda,2t-6\lambda],\\
+E_4&=[2t-8\lambda,2t+2\lambda],\\
+E_5&=[2t,\phi].
+\end{aligned}
+\tag{28.2}
+$$
+
+对颜色流 $R\in\mathcal C^{\mathbb N_0}$，定义完整闭扩张关系的来源纤维
+
+$$
+P_E(R)=
+\{\omega\in D:x_j(\omega)\in E_{R_j}\text{ 对全部 }j\ge0\}.
+\tag{28.3}
+$$
+
+任何临界闭预算下的实际记录都满足该关系。事实上，若裁剪前误差不超过 $\lambda$，裁剪后目标到 $x_j\in X$ 的距离也不超过 $\lambda$；目标在其颜色格内，故 $x_j$ 在该格闭包的 $\lambda$ 扩张与 $X$ 的交中，恰为 (28.2)。这里只使用必要包含，不把闭扩张端点的接触当作实际可取得的等价判据。
+

@@ -1,0 +1,11 @@
+## 2. Boundary and source
+
+Theorem 1.1 does not assert that either lattice is the full ring of
+integers. The primes dividing its residual index, and the normalization
+index of the order in Section 11, require separate local arguments.
+The rational power basis is a hypothesis; the theorem does not construct
+it from an irreducibility condition on $X^3-mn^2$.
+The trace-form change-of-basis rule and the power-basis discriminant
+formula are the pinned Mathlib results
+`Algebra.discr_of_matrix_vecMul` and `Algebra.discr_powerBasis_eq_norm`.
+

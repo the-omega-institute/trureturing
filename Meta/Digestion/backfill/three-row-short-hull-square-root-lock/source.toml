@@ -1,0 +1,5 @@
+source_id = "three-row-short-hull-square-root-lock"
+path = "docs/develop/theory/THREE_ROW_SHORT_HULL_SQUARE_ROOT_LOCK.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

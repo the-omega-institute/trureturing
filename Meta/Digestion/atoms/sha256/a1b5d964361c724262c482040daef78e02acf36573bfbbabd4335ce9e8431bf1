@@ -1,0 +1,20 @@
+**定理 353.2（精确恒等式与最大秩预算不变量）。** 定义353.1的量满足
+
+$$
+J^2+CJ+D+2H=2AB.
+\tag{353.1}
+$$
+
+加入最大秩 $a$、占位 $x=x_a$ 时，旧秩的 $g_d$ 均不变。若 $J_0$ 是旧总占位，则
+
+$$
+\begin{aligned}
+\Delta(J^2+CJ+D)&=2x(J_0+rA),\\
+\Delta H&=x\bigl(A(a-r)-J_0\bigr)=xg_a,\\
+2Aax-\Delta(J^2+CJ+D)&=2xg_a.
+\end{aligned}
+\tag{353.2}
+$$
+
+因此每步以新增预算 $ax$ 同时支付主项增量与精确缺口；在 $B\le N$ 时，$J^2+CJ+D+2H\le2AN$。
+

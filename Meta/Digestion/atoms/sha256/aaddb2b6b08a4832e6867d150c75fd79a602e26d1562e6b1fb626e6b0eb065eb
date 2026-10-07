@@ -1,0 +1,13 @@
+* \(\sigma:E\to S\) 是可选的空间支持或边权数据。若空间被定义为过程支持，需要另声明从 \(S\) 到支持图的解释；若空间有独立连接或度量，\(\sigma\) 必须作为额外数据声明。\(\sigma\) 本身不是动作选择器；若它参与选择，必须另给出可访问的选择合同。
+
+路径是 \(E\) 中满足 \(\mathsf D\) 的有限词；\(\operatorname{Path}(\mathfrak P)\) 还包含单位路径和合法复合，单位路径长度为零。定义 \(\operatorname{grade}:\operatorname{Path}(\mathfrak P)\to G\) 为
+
+$$
+\operatorname{grade}(1_x)=0,\qquad
+\operatorname{grade}(e)=\delta_1(e),\qquad
+\operatorname{grade}(e_2\circ e_1)=\operatorname{grade}(e_1)+\operatorname{grade}(e_2).
+\tag{PG.3002}
+$$
+
+顺序写在复合符号中：先执行 \(e_1\)，再执行 \(e_2\)。若一个接口可以有多个后继，由 \(s,a,t\) 给出的可接续关系不是函数；不能把关系的多值性偷偷改写成一个选择器。
+

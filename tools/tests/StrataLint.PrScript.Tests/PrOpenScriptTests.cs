@@ -599,6 +599,54 @@ public sealed class PrOpenScriptTests
         Assert.DoesNotContain(fixture.Invocations, IsAutoMergeInvocation);
         Assert.Contains(fixture.Invocations, IsWatchInvocation);
     }
+    [Theory]
+    [InlineData("pr", "", false, true)]
+    [InlineData("pr-open", "", false, true)]
+    [InlineData("pr", "0", false, false)]
+    [InlineData("pr-open", "0", false, false)]
+    [InlineData("pr", "", true, false)]
+    [InlineData("pr-open", "", true, false)]
+    [InlineData("pr", "1", true, false)]
+    [InlineData("pr-open", "1", true, false)]
+    public void MakePrDefaultsToAutoMergeAndHonorsDraftAndOptOut(
+        string target, string autoMerge, bool draft, bool expectedAutoMerge)
+    {
+        using var fixture = new PrScriptFixture();
+        var result = fixture.RunMakeOpen(target, autoMerge, draft);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(expectedAutoMerge, fixture.Invocations.Any(IsAutoMergeInvocation));
+        Assert.Equal(!draft, fixture.Invocations.Any(IsWatchInvocation));
+        Assert.Equal(draft, fixture.LaunchArguments("gh").Contains("--draft", StringComparer.Ordinal));
+        if (draft)
+        {
+            Assert.Equal("42\n", Text(result.StandardOutput));
+            Assert.Equal(2, fixture.Invocations.Count);
+        }
+        else
+        {
+            Assert.StartsWith($"42\nPR_WATCH_RESULT pr=42 outcome=green head_sha={HeadSha}\n",
+                Text(result.StandardOutput), StringComparison.Ordinal);
+        }
+    }
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void PrOpenDraftReturnsWithoutMergingOrWatchingEvenWhenAutoMergeIsRequested(bool autoMerge)
+    {
+        using var fixture = new PrScriptFixture();
+        var result = fixture.RunOpen([
+            "--head", "topic", "--message-file", fixture.Message("Draft title\n\nDraft body\n"),
+            "--draft", .. (autoMerge ? new[] { "--auto-merge" } : Array.Empty<string>())]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal("42\n", Text(result.StandardOutput));
+        Assert.Equal(2, fixture.Invocations.Count);
+        Assert.Contains("--draft", fixture.LaunchArguments("gh"));
+        Assert.DoesNotContain(fixture.Invocations, IsAutoMergeInvocation);
+        Assert.DoesNotContain(fixture.Invocations, IsWatchInvocation);
+        Assert.Equal("Draft body\n", fixture.CreatedBody);
+    }
     [Fact]
     public void PrOpenPropagatesWatchExitCodeAfterPrintingNumber()
     {
@@ -636,6 +684,7 @@ public sealed class PrOpenScriptTests
         Assert.Equal(2, result.ExitCode);
         Assert.Contains("pr.sh open", Text(result.StandardError), StringComparison.Ordinal);
         Assert.Contains("[--auto-merge]", Text(result.StandardError), StringComparison.Ordinal);
+        Assert.Contains("[--draft]", Text(result.StandardError), StringComparison.Ordinal);
         Assert.Empty(fixture.Invocations);
     }
     [Fact]
@@ -1030,6 +1079,10 @@ public sealed class PrOpenScriptTests
             Assert.All(BrokerCalls, call => Assert.Equal("token --auto|stdout=pipe", call));
         }
         internal ProcessOutput RunMakeWatch42() => Run(["make", "pr-watch", "PR=42", "HEAD_SHA=" + HeadSha, "WATCH_INTERVAL_SECONDS=1"]);
+        internal ProcessOutput RunMakeOpen(string target, string autoMerge, bool draft) =>
+            Run(["make", target, "HEAD=topic", "MESSAGE=" + Message("title\n"),
+                .. (autoMerge.Length == 0 ? Array.Empty<string>() : ["AUTO_MERGE=" + autoMerge]),
+                .. (draft ? new[] { "DRAFT=1" } : Array.Empty<string>())]);
         internal ProcessOutput RunWatchWithBlockedBroker()
         {
             useDeadlineClock = true;

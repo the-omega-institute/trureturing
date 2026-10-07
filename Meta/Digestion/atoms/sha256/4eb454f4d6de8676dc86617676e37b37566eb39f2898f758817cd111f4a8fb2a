@@ -1,0 +1,45 @@
+**定理 14.13（逆极限、删除和有限层的失败）。** 逆极限
+\[
+\varprojlim(\mathcal R_h,\pi_h)
+\]
+同胚于 $A_0$。删除首坐标的映射
+\[
+d_h:\mathcal R_{h+1}\to\mathcal R_h,\qquad
+d_h(z_0,\ldots,z_{h+1})=(z_1,\ldots,z_{h+1})
+\]
+连续满射，并满足
+\[
+d_hZ_{h+1}=Z_hT,\qquad
+\pi_hd_{h+1}=d_h\pi_{h+1}.
+\]
+因此逆极限上存在连续自映射 $\widehat T$，且它与 $T$ 共轭。另一方面，对任意固定 $h$，不存在单值映射 $A_h:\mathcal R_h\to\mathcal R_h$ 使
+\[
+A_hZ_h=Z_hT.
+\]
+对于同时保留当前列表 $Z_h$ 和一次删窗后的列表 $Z_hT$ 的指定任务，二者的联合纤维恰为 $Z_{h+1}$ 的纤维。具体地，$Z_{h+1}$ 有 $h+2$ 个坐标，索引为 $0,\ldots,h+1$，且
+\[
+(Z_h(\omega),Z_h(T\omega))
+=\bigl((z_0,\ldots,z_h),(z_1,\ldots,z_{h+1})\bigr),
+\qquad (z_0,\ldots,z_{h+1})=Z_{h+1}(\omega).
+\]
+因此 $\mathcal R_{h+1}$ 是这项配对响应任务的纤维商；这不使它成为可自主更新的有限层边界。
+
+证明。映射
+\[
+J(\omega)=(Z_h(\omega))_{h\ge0}
+\]
+连续。若 $J(\omega)=J(\nu)$，则
+\[
+\Delta_{\sigma_n(\omega)}
+=Z_{n+1}(\omega)_n-\gamma Z_{n+1}(\omega)_{n+1}
+=Z_{n+1}(\nu)_n-\gamma Z_{n+1}(\nu)_{n+1}
+=\Delta_{\sigma_n(\nu)}
+\]
+对所有 $n$ 成立，故 $\omega=\nu$。反之，给定逆极限中的相容族，集合
+\[
+C_h=\{\omega:Z_h(\omega)=b_h\}
+\]
+是非空闭集且递减；$A_0$ 是有限离散字母乘积中的紧闭子集，故 $\bigcap_hC_h$ 非空。于是 $J$ 满射；紧到 Hausdorff 的连续双射是同胚。$A_0$ 是紧、零维、无孤立点空间，故按 Cantor 空间刻画同胚于 Cantor 空间。$d_h$ 的等式由删去首窗口直接得出；任意 $\omega$ 可由 $\mathrm{null}\omega$ 前接，故满射，交换式给出逆极限上的 $\widehat T$。
+
+最后，取命题14.8的 $a,b$，在前面各加 $h$ 个 $\mathrm{null}$，得到相同的 $Z_h$，而 $Z_hT$ 的末坐标分别为 $-1$ 和 $\phi$，故同层单值更新不存在。配对列表与 $Z_{h+1}$ 可按上式互相恢复，所以两者的相等关系完全一致。任何能解码这两个列表的摘要 $\eta$ 都满足 $\ker\eta\subseteq\ker Z_{h+1}$，因而在其实际像上有唯一满射到 $\mathcal R_{h+1}$，将 $\eta(\omega)$ 送到 $Z_{h+1}(\omega)$；反向 $Z_{h+1}$ 直接解码两列表。这是指定任务的集合论商最小性，不声称任意连续边界的最粗细化。证毕。
+

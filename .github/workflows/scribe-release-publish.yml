@@ -1,0 +1,37 @@
+name: Scribe resource publication
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: Ref to publish
+        required: false
+        default: dev
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: scribe-resources-publication
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    name: Publish the Scribe resource pack
+    runs-on: ubuntu-24.04-arm
+    timeout-minutes: 120
+    steps:
+      - id: checkout
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ inputs.ref || 'dev' }}
+          persist-credentials: false
+      - uses: actions/setup-dotnet@v5
+        with:
+          global-json-file: global.json
+      - name: Publish the exact content digest
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TARGET: ${{ steps.checkout.outputs.commit }}
+        run: make scribe-release-publish TARGET="$RELEASE_TARGET"

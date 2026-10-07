@@ -1,0 +1,61 @@
+**Theorem 3.1 (actual invariant moved-support bound).** Let $n\ge3$ be odd, let $X=\{0,\ldots,n-1\}$ and $R=\{0,\ldots,2n-1\}$, and let $\rho:R\to\operatorname{Perm}(X)$ be one indexed row family. Assume every actual fibre $F_{x,p}=\{t:\rho_t(x)=p\}$ has cardinality two. For distinct columns $x,y$ and distinct symbols $p,q$, assume
+
+$$
+|\{t:\rho_t(x)=p,\ \rho_t(y)=q\}|
+=|\{t:\rho_t(x)=q,\ \rho_t(y)=p\}|.
+$$
+
+Choose distinct row indices $r,s$. Put $\sigma=\rho_r^{-1}\circ\rho_s$, $D=\{x:\sigma(x)\ne x\}$, and let $U\subseteq D$ satisfy $\sigma(U)=U$. Put $V=D\setminus U$, $a=|U|$, $b=|V|$ and $d=|D|$. Then
+
+$$
+n+d\le a^2+b^2+1.
+$$
+
+Either block may be empty. The hypotheses concern actual row indices and joint counts of the same array; they require no commutation, row sorting, identity first row, or additional distinctness of row permutations.
+
+Proof. Write $S=X\setminus D$ and, for each row $t$, $\tau_t=\rho_r^{-1}\circ\rho_t$. Fix $t\notin\{r,s\}$ and abbreviate $\tau=\tau_t$. At any $x\in S$, rows $r$ and $s$ exhaust $F_{x,\rho_r(x)}$. Thus $\tau(x)\ne x$. If $x,y\in S$ and $\tau(x)=y$, then $x\ne y$. Rows $r,s$ both realize the pattern $(\rho_r(x),\rho_r(y))$ in columns $(x,y)$, and the fibre bound makes its count exactly two. Reflection gives exactly two occurrences of the reversed pattern. These exhaust $F_{x,\rho_r(y)}$, which contains $t$. Consequently $\tau(y)=x$. Thus all $S$-to-$S$ entries of $\tau$ form disjoint fixed-point-free transpositions.
+
+Let $A=\{x\in S:\tau(x)\in S\}$, and let $\ell$ be the number of $D$-to-$S$ entries of $\tau$. Bijectivity gives the same number of $S$-to-$D$ entries. The transpositions make $|A|$ even. If $k=|\{u\in D:\tau(u)\in D\}|$, then
+
+$$
+n=|A|+2\ell+k.
+$$
+
+Therefore $k$ is odd.
+
+For $u\in D$ with $x=\tau(u)\in S$, reflection also forces
+
+$$
+\tau(x)\in\{u,\sigma(u)\}.
+$$
+
+Indeed, at columns $(x,u)$, rows $r$ and $s$ realize respectively $(\rho_r(x),\rho_r(u))$ and $(\rho_r(x),\rho_s(u))$. The pairs differ because $u\in D$. Each reflected pattern has a positive count, and the two reflected row sets are disjoint subsets of the actual two-element fibre $F_{u,\rho_r(x)}$. Their union is therefore that entire fibre. Row $t$ lies in the union, giving the displayed alternative.
+
+Define on $D$
+
+$$
+h(u)=\begin{cases}
+\tau(u),&\tau(u)\in D,\\
+\tau(\tau(u)),&\tau(u)\in S.
+\end{cases}
+$$
+
+This is a genuine permutation of $D$. For the two-step case, $\tau(\tau(u))$ cannot lie in $S$: the internal transposition rule would imply $\tau(\tau(u))=u$, contradicting $u\in D$. To check injectivity, two one-step images cancel through $\tau$, and two two-step images cancel twice. Equality between a one-step image and a two-step image would make one input equal to the other input's first image in $S$, contradicting that both inputs lie in $D$. Finite injectivity yields bijectivity.
+
+Each contracted edge $u\mapsto h(u)$ lies within the $\sigma$-invariant block containing $u$, since its endpoint is $u$ or $\sigma(u)$. Hence every edge of $h$ between $U$ and $V$ is an actual, uncontracted entry of $\tau$. The two directions have equal cardinality, say $c$ each: a permutation sends as many elements out of a finite subset as into it. If $w_t$ counts the actual entries of row $t$ in $(U\times\rho_r(U))\cup(V\times\rho_r(V))$, then
+
+$$
+k=w_t+2c.
+$$
+
+Thus $w_t$ is odd and at least one.
+
+Finally, summing the actual block counts over all row indices gives $2(a^2+b^2)$, because each column-symbol fibre has size two and $\rho_r$ is injective. Rows $r$ and $s$ each contribute $d$, since their relative permutations are the identity and $\sigma$, both preserving $U$ and $V$. The other $2n-2$ rows each contribute at least one. Therefore
+
+$$
+2(a^2+b^2)\ge2d+2n-2,
+$$
+
+which proves the claimed bound. $\square$
+
+The actual array hypotheses use the same source domain as Theorem 1.1. Generic involution parity and finite permutation cardinality are standard; the argument uses the original reflected incidences to justify saturation and contraction.

@@ -1,0 +1,16 @@
+**定义 56.12（未知律的 minimax 风险）。** 允许任意存储、计算、完整记录特征和独立随机化，学习器只能使用公开 $n,a,\rho$，不能读取未知 $\mu,\alpha,\theta$。置
+
+$$
+\begin{aligned}
+\mathfrak R_m^{\rm unk}(n,a,\rho)
+&=\inf_A\sup_{\mu\in\mathcal M_\rho,\ \alpha\in[a,1],\ \theta\in\Theta_n}
+P_{\mu,\alpha,\theta}^m\{A(D_m)\ne\theta\},\\
+m_*^{\rm unk}(n,a,\rho,\delta)
+&=\inf\{m\in\mathbb N_0:\mathfrak R_m^{\rm unk}\le\delta\},
+\qquad \inf\varnothing=+\infty.
+\end{aligned}
+\tag{56.25}
+$$
+
+准确函数恢复版本允许输出任意 $f:\Sigma^n\to\{0,1,2\}$，以逐词 $f=C_\theta$ 为成功，而非只允许教师类输出。
+

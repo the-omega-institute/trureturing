@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:83c6c7e219c75bd68a15aec110b3a835a856296746c3579d02247f8d1a03bd61
+  normalized_sha256: sha256:83c6c7e219c75bd68a15aec110b3a835a856296746c3579d02247f8d1a03bd61
+cas_ref: sha256:83c6c7e219c75bd68a15aec110b3a835a856296746c3579d02247f8d1a03bd61
+coverage_gids:
+  - gid: D5/S3/Quantum/Divergence/CanonicalProductRecovery.canonical_product_recovery_chain
+    target_statement_id: sha256:56bf98cd8990143986336d06cac95eae1b1f4b21757b9a69d2be1b9d89cac79f
+receipts:
+  unresolved_subitems: []

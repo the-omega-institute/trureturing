@@ -1,0 +1,1 @@
+| [C3] Petra van den Bos and Frits Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [arXiv:1907.11034v2](https://arxiv.org/pdf/1907.11034v2)。 | pp.10–12，定义12–14、17、20，以无环测试、允许输入及不交的完整叶观测定义自适应识别。p.12、Figure 3展示首动作合并导致无自适应区分图的实例。这是通用障碍与算法供应；本卷的引理4.3和定理7.2–7.3还须证明这种障碍在实际 KBonacci 来源和全部完整块首动作上成立。 

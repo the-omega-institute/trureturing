@@ -1,0 +1,14 @@
+## Theorem 2. Positive Williamson congruence
+
+For any finite set L, let M be a positive-definite real matrix indexed by $L\sqcup L$ and put
+$J=\begin{pmatrix}0&-I\\ I&0\end{pmatrix}$.
+There exist one real matrix S and strictly positive frequencies $\nu_i$, i in L, such that
+$SJS^T=J$, $S^TJS=J$, and
+$S^TMS=\begin{pmatrix}\operatorname{diag}(\nu)&0\\0&\operatorname{diag}(\nu)\end{pmatrix}$.
+No nonempty-mode hypothesis or supplied paired basis is required.
+
+Set $R=\sqrt M$ and $A=RJR$. Apply the oriented skew paired basis construction to A; its frame matrix O satisfies
+$O^TAO=\begin{pmatrix}0&D\\-D&0\end{pmatrix}$ with $D=\operatorname{diag}(\nu)$.
+Since R and J are invertible, A is injective. A zero frequency would annihilate a nonzero orthonormal basis vector, so all frequencies are strictly positive.
+With $E=\begin{pmatrix}0&\sqrt D\\\sqrt D&0\end{pmatrix}$, the same $S=R^{-1}OE$ satisfies all three congruences. The empty set gives vacuous frequency positivity and the unique empty matrices.
+

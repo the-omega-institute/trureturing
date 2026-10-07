@@ -1,0 +1,4 @@
+**Theorem 4.3 (Brouwer on real standard simplices).** For every positive
+integer $n$ and every continuous $f:\Delta_n\to\Delta_n$, there exists
+$p\in\Delta_n$ with $f(p)=p$.
+

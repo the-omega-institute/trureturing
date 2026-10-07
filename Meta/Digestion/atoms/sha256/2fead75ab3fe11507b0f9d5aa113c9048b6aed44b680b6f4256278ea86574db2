@@ -1,0 +1,12 @@
+令 $N_{\mathrm{live}}(X)$ 统计区间 $X/10<r\le X/7$ 中平方自由且与 70 互素的 $r$。固定模数的平方自由密度为
+
+$$
+\frac1{\zeta(2)}\frac23\frac56\frac78=\frac{35}{12\pi^2},
+$$
+
+区间长度为 $3X/70$，故
+
+$$
+\boxed{N_{\mathrm{live}}(X)=\frac{X}{8\pi^2}+O(\sqrt X).}
+$$
+

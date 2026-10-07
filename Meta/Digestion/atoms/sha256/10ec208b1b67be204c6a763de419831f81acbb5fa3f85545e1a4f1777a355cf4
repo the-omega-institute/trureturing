@@ -1,0 +1,54 @@
+## 54. 原图侧别、实际偶返回与最小两支路的几何障碍
+
+本节承接51.1、51.5及51.9—51.10，只研究已经给定的原完整规范全包含配对图。置
+$$
+t=\frac{\sqrt5-1}{2},\quad \phi=1+t,\quad
+g=t^3=2t-1,\quad u=t^2,\quad \lambda=u/10,\quad
+0\le\beta<\lambda,\quad \delta=\lambda-\beta>0.
+$$
+实际来源的一个时间步删除一个三位窗口，标签按空间次序为 $3,0,5,2,25$，其中 $25$ 是一个标签。沿用同一地址域 $A_1\subset A_0$、$I_0=[-1,\phi]$、$I_1=[-1,t]$，以及
+$$
+f_a(x)=\Delta_a-gx,\quad F_a(x)=(\Delta_a-x)/g,\quad
+(\Delta_3,\Delta_0,\Delta_5,\Delta_2,\Delta_{25})=(-t,0,u,1,2-t),
+$$
+$$
+0\to0:3,0,2;\qquad0\to1:5,25;\qquad
+1\to0:3,0;\qquad1\to1:5.
+$$
+合法根像依次为 $[-1,-u],[-u,g],[g,t],[t,2t],[2t,\phi]$；guard一只允许前三块。有限词的复合按 $f_{a_0\cdots a_{L-1}}=f_{a_0}\circ\cdots\circ f_{a_{L-1}}$ 读取。
+
+六个原闭色 $E_c^\beta$ 使用51.1的切点，不改变端点归属。为后面的逐项比较，记
+$$
+\begin{aligned}
+\alpha&=3(g-1)/5,&\zeta&=(11g-1)/10,&
+\chi&=(6g-1)/5,&\omega&=(3+7g)/10,\\
+\varepsilon&=(1+4g)/5,&\varphi&=(7+13g)/10,&
+\tau&=(3+7g)/5,&\iota&=(11+9g)/10.
+\end{aligned}
+$$
+于是
+$$
+\begin{aligned}
+E_0^\beta&=[-1,-u-\delta],&E_1^\beta&=[\alpha+\delta,\zeta-\delta],\\
+E_2^\beta&=[\chi+\delta,\omega-\delta],&E_3^\beta&=[\varepsilon+\delta,\varphi-\delta],\\
+E_4^\beta&=[\tau+\delta,\iota-\delta],&E_5^\beta&=[2t+\delta,\phi].
+\end{aligned}
+$$
+端色0、5分别只允许标签3、25；内色1、2、3、4只允许相邻对 $(3,0),(0,5),(5,2),(2,25)$，宽度依次为 $t-2\delta,u-2\delta,t-2\delta,u-2\delta$，严格小于对应平移差。非相邻闭色不交，每点至多有两个相邻允许色。这些原数据及共同尾严格宽度采用固定源12e9e70中的定义14.5、命题14.6、定理14.7与17.2、式(28.1)—(28.2)、引理36.16和定义45.1。
+
+默认 $\beta\in\mathbb Q(t)$。若允许一般实 $\beta$，必须另外供应满足以下合同的有限原图，不能由域内端点构造推出它存在。共同有限端点集 $B$ 包含全部观察、guard及分支端点，并在所有落入 $I_0$ 的 $F_a$ 下闭合；$B_s=B\cap I_s$ 的每个单点及每对相邻端点间整个闭片均保留。来源边恰为
+$$
+(s,P)\xrightarrow{a}(s',Q)
+\quad\Longleftrightarrow\quad
+s\xrightarrow{a}s'\text{ 合法},\quad
+P\subseteq f_a(I_{s'}),\quad f_a(Q)\subseteq P.
+$$
+片允许色 $c$ 恰当 $P\subseteq E_c^\beta$；配对顶点保留两个实际guard及两片，配对边取两条原边，共同色在出发顶点选取，有限路径终端不另观察一次。引理31.2、定义31.3和定理31.4供应端点闭合及联合提升：任取终端片中同guard合法终尾，可沿一整条有限路径倒向前接；无限路径由嵌套闭像及 $g^N\operatorname{diam}I_0$ 的直径界实现为同一对实际地址。闭成员相容不自动等于指定切点归属下的实际颜色取得。
+
+固定此图的含环SCC $S$，$n=|V(S)|$。须已给至少一个第二片为原单点，或直接给整个第二投影为相干singleton rival；独立给一个周期点不创造其原单点成员资格。命题39.6.1及定理36.22给整个第二投影单点且相干、同一个实际rival的本原周期 $p$、坐标 $y_r$、标签 $R_r$ 和原顶点相位 $\vartheta:S\to\mathbb Z/p\mathbb Z$；以下另假设 $p$ 为奇数。各边使相位加一，各返回长被 $p$ 整除。第一返回不相干时，51.5使所有第一片非退化并严格位于相应 $y_r$ 的一侧。这里的相干始终按同步后的第一字面词相等定义，颜色或图路径可以不同。令
+$$
+h=\gcd\{\text{$S$的非空实际返回长度}},\qquad
+\kappa:S\to\mathbb Z/h\mathbb Z,\quad \kappa(w)=\kappa(v)+1\ (v\to w).
+$$
+循环类由基点至顶点的实际路径长度模 $h$ 定义；接同一返程即知其良定义，且 $p\mid h$。任取非空返回，其长度为 $h$ 的正倍数，沿它的前 $h$ 步见到全部 $h$ 类；$\vartheta$ 是 $\kappa$ 模 $p$ 加一个固定常数。以下偶返回分支另要求每个非空返回均为偶数倍 $p$，于是 $2p\mid h$。所有路径留在所给 $S$ 中；如原先要求可达性，也保持原入口。本节不改端点集、不细分原片、不使用相位或侧别商图代替原图。
+

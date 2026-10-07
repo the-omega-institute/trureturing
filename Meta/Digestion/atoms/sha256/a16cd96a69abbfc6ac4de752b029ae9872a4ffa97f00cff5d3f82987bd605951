@@ -1,0 +1,117 @@
+**定理 37.2（有序 FIB 源运输的中心化刚性）。** 在 (PG.3701)–(PG.3702)
+的自由有限树上，对任意总映射 $F:\mathcal T\to\mathcal T$，有
+
+$$
+\boxed{F\text{ 满足 (PG.3703)}
+\iff \exists!\,k\in\mathbb N:\ F=\rho^k,}
+\qquad \mathbb N=\{0,1,2,\ldots\}.
+\tag{PG.3704}
+$$
+
+每个这样的 $F$ 都单射；它作为 $\mathcal T\to\mathcal T$ 的映射双射，
+当且仅当 $k=0$。对 $k>0$，$\rho^k$ 只在其实际像
+$I_k:=\rho^k[\mathcal T]$ 上有唯一的逆映射 $I_k\to\mathcal T$，
+没有全体 $\mathcal T$ 上的双侧逆。
+
+证明。先复用 (RA.2207) 的解析，并明确其中的排碰条件。替换的根输出只有
+叶 $\beta$、特殊块 $\langle\beta,\alpha\rangle$ 或内部配对像
+$\langle\rho(s),\rho(t)\rangle$，因此
+
+$$
+\alpha\notin\operatorname{im}\rho,
+\qquad
+\rho(a)=\rho(b)\Longrightarrow a=b.
+\tag{PG.3705}
+$$
+
+第二式的解析理由是：叶 $\beta$ 与两个配对情形不交；特殊块的右孩子是
+$\alpha$，内部配对像的右孩子则为 $\rho(t)\in\operatorname{im}\rho$，
+故二者不能相撞。两个内部配对像相等时，有序构造分别消去，递归到严格更小的
+源子树，得到两棵源树相等。这里排除的是内部配对像的右孩子为 $\alpha$，
+并非声称特殊块没有这个右孩子。由此每个 $\rho^j$，特别是 $\rho^2$，均单射。
+
+设 $F$ 满足 (PG.3703)，置 $u=F(\alpha)$、$v=F(\beta)$。
+生成元判据 (RA.1512) 恰给出
+
+$$
+v=\rho(u),\qquad \rho(v)=\langle v,u\rangle,
+\qquad
+E(u):\quad \rho^2(u)=\langle\rho(u),u\rangle.
+\tag{PG.3706}
+$$
+
+现在分类有限树中的全部 $E$ 解。两个叶都满足 $E$：
+
+$$
+\rho^2(\alpha)=\langle\beta,\alpha\rangle
+ =\langle\rho(\alpha),\alpha\rangle,
+\qquad
+\rho^2(\beta)=\langle\langle\beta,\alpha\rangle,\beta\rangle
+ =\langle\rho(\beta),\beta\rangle.
+\tag{PG.3707}
+$$
+
+若 $u=\langle s,t\rangle$ 满足 $E$，则其等式两边的根构造比较给出
+
+$$
+\rho^2(t)=u,\qquad
+\rho^2(s)=\rho(u)=\rho^3(t)=\rho^2(\rho(t)).
+\tag{PG.3708}
+$$
+
+由 $\rho^2$ 的单射性，$s=\rho(t)$。于是
+
+$$
+u=\langle\rho(t),t\rangle=\rho^2(t),
+\qquad E(t),\qquad |t|<|u|,
+\quad
+|\alpha|=|\beta|=1,\quad
+|\langle s,t\rangle|=1+|s|+|t|.
+\tag{PG.3709}
+$$
+
+按有限节点数作良基归纳：叶情形分别是 $\rho^0(\alpha)$ 与
+$\rho^1(\alpha)$；配对情形由较小的 $t=\rho^j(\alpha)$ 得
+$u=\rho^{j+2}(\alpha)$。反向地，对 $E(z)$ 的等式施加保持配对的 $\rho$，
+即得 $E(\rho(z))$，从 $E(\alpha)$ 出发得到每个轨道项。因此
+
+$$
+\{u\in\mathcal T:E(u)\}
+ =\{\rho^k(\alpha):k\in\mathbb N\}.
+\tag{PG.3710}
+$$
+
+对原来的 $F$，存在 $k$ 使
+
+$$
+F(\alpha)=\rho^k(\alpha),\qquad
+F(\beta)=\rho^{k+1}(\alpha)=\rho^k(\beta).
+\tag{PG.3711}
+$$
+
+$F$ 与 $\rho^k$ 都保持配对，又在两个自由生成元上相同，故由 FIB §2
+的唯一延拓，$F=\rho^k$。反向地，$\rho$ 的每个非负幂都保持配对且与
+$\rho$ 交换，所以满足 (PG.3703)。
+
+若 $m<n$ 且 $\rho^m(\alpha)=\rho^n(\alpha)$，消去单射的 $\rho^m$ 得
+
+$$
+\alpha=\rho^{n-m}(\alpha)\in\operatorname{im}\rho,
+\tag{PG.3712}
+$$
+
+与 (PG.3705) 矛盾。轨道项两两不同，在 $\alpha$ 上比较即可确定幂指数的唯一性。
+$\rho^k$ 的单射性已经成立；$k=0$ 时是恒等映射，$k>0$ 时
+$I_k\subseteq\operatorname{im}\rho$，缺少 $\alpha$，故不满射。准确限制余域后，
+它是 $\mathcal T\to I_k$ 的双射，唯一逆 $\delta_k=(\rho^k)^{-1}:I_k\to\mathcal T$
+满足
+
+$$
+\delta_k\rho^k=\operatorname{id}_{\mathcal T},
+\qquad
+\rho^k\delta_k=\operatorname{id}_{I_k}.
+\tag{PG.3713}
+$$
+
+像外没有原像；任意补写像外函数值都不能成为全域双侧逆。证毕。
+

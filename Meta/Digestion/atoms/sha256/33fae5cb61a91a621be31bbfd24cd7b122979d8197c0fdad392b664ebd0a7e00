@@ -1,0 +1,42 @@
+**引理 57.2（有限支撑约化与共同矩）。** 对同一个 $\mu$，所有 $\theta\in\Theta_n$ 的类质量及前两个矩相同，准确为
+
+$$
+\begin{aligned}
+\pi_1&=HL,\qquad \pi_2=HL(1-t),\qquad
+\pi_0=1-HL(2-t),\\
+\mathbb E_\mu C_\theta&=HL(3-2t),\qquad
+\mathbb E_\mu C_\theta^2=HL(5-4t).
+\end{aligned}
+\tag{57.4}
+$$
+
+三个类都具有正质量。任意两个教师的平方分歧
+
+$$
+d_\mu(\theta,\tau)=\mathbb E_{\mu^{\otimes n}}(C_\theta-C_\tau)^2
+\tag{57.5}
+$$
+
+只依赖其至多六个选中位置的升序重叠模式。
+
+**证明。** 不同窗口独立，故
+$\mathbb EA_\theta=\mathbb EB_\theta=HL$，而
+
+$$
+\mathbb E[A_\theta B_\theta]
+=\mathbb E h_p\,\mathbb E(\ell_qh_q)\,\mathbb E\ell_r
+=HtL.
+$$
+
+$C_\theta=1$ 当且仅当 $A_\theta=1$，而 $C_\theta=2$ 当且仅当 $A_\theta=0,B_\theta=1$。这给类质量和两个矩；中窗必须使用实际联合质量 $t$。 $H,L>0,t<1$ 给前两个非零类正质量；事件 $h_p=h_q=0$ 保证类0，故 $\pi_0\ge(1-H)^2>0$。
+
+令 $U=\{p,q,r,p',q',r'\}$， $k=|U|\le6$。对只依赖 $W_U$ 的任意函数 $f$，对其他窗口逐个求和得到
+
+$$
+\mathbb E_{\mu^{\otimes n}}f(W_U)
+=\sum_{w_U\in\Sigma^U}f(w_U)\prod_{i\in U}\mu(w_i),
+\tag{57.6}
+$$
+
+因为每个被积分窗口的质量和为1。把 $U$ 按升序双射到 $\{1,\ldots,k\}$，保留每个教师的三个角色与每个窗内的 $h,\ell$，便得到相同的乘积质量和同一门表达式。绝对位置及未选中窗口不贡献额外项。这是完整产品律中的解析约化，不依赖有限枚举。共同矩是总体结论，不能理解为不同候选的经验均值或经验平方范数也相等。证毕。 $\square$
+

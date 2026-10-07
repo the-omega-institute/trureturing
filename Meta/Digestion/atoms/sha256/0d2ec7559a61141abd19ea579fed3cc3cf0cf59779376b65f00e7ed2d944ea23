@@ -1,0 +1,1 @@
+| [Flajolet–Zimmermann–Van Cutsem, RR1830](https://algo.inria.fr/flajolet/Publications/RR-1830.pdf)，§3 | union/product 按计数权重取样；(64.29) 的初态、末窗、逆排整数位费和全局公平位截断仍须明确实现。 

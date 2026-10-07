@@ -1,0 +1,16 @@
+**命题 58.10（整数充分预算）。** 排序例程只接收有限整数 $n,m$。一个不含实数查询的预算前端可以接收正整数 $A,R,d_{\rm cert}$，具有数学承诺
+
+$$
+1/A\le a,\qquad 1/R\le\rho,\qquad 2^{-d_{\rm cert}}\le\delta.
+$$
+
+对 $n\ge4$，用整数算术计算 $N=n(n-1)(n-2)/6$、
+$b_N=\operatorname{bitlength}(N-1)=\lceil\log_2N\rceil$，然后取
+
+$$
+m=128A^2R^2(b_N+d_{\rm cert}).
+\tag{58.29}
+$$
+
+这满足（58.25）。匹配下界的范围可取 $d_{\rm cert}\ge2$。
+

@@ -1,0 +1,53 @@
+### 33.2 端点商就是可达根图
+
+定义实际的可达根标记 decorated typed transition graph \(\mathcal G_R\)。其签名包含顶点集 \(V_R=\operatorname{Reach}(R)\)、根标记 \(R\to V_R\) 的指定映射，以及顶点的来源/epoch/类型标签、当前读出 \(q_{\xi,\nu,i}\) 和所有已供应且声明为端点不变量的 support 字段。其边关系 \(\mathcal E_R\) 由带标签的 step 在 \(V_R\) 上诱导；边装饰保留动作 \(a(e)\)、原子标识 \(\iota(e)\)、原子标签 \(\lambda(e)\)、返回事件 \(\ell\) 及已供应的单步 grade \(\delta_1(e)\)。这些装饰是图签名的输入，未供应的字段不由端点商恢复。对 \(s\in V_R\cap S_{\xi,\nu,i}\)、\(s'\in V_R\cap S_{\xi,\nu,j}\) 和 \(e\in E_{ij}\)，令
+
+$$
+s\xrightarrow{e,\ell}_{\mathcal G_R}s'
+\quad\Longleftrightarrow\quad
+\operatorname{step}_{\xi,\nu,e}(s)=\operatorname{some}(\ell,s').
+\tag{EG.3305}
+$$
+
+端点映射先诱导顶点集之间唯一的良定义双射
+
+$$
+\overline\eta:H_R/K_{\mathrm{end}}\;\longrightarrow\;V_R,
+\qquad
+\overline\eta([h])=\eta(h).
+\tag{EG.3306}
+$$
+
+其理由是：\(\eta\) 按可达性的定义满射；两个历史落在同一端点类当且仅当它们的 \(\eta\) 值相等，所以商后单射；每个根的空历史保留根的类型与来源标签。商上的边只在扩展合法时定义：
+
+$$
+[h]\xrightarrow{e,\ell}_{H_R/K_{\mathrm{end}}}[he]
+\quad\Longleftrightarrow\quad
+he\in H_R\ \land\
+\operatorname{step}_e(\eta(h))=\operatorname{some}(\ell,\eta(he)).
+\tag{EG.3307}
+$$
+
+该定义与代表无关。若 \([h]=[h']\)，则 \(\eta(h)=\eta(h')\)；同一实际配置给出相同的 typed edge 合法性、事件和标签，并给出端点相同的后继，于是 \(he\) 与 \(h'e\) 仍属于同一 \(K_{\mathrm{end}}\)-类。配上上述诱导边关系及装饰后，\(\overline\eta\) 才成为根标记 decorated typed graph 的同构：它保持并反映类型、边的合法性、事件/标签、当前读出 \(q\) 和已供应的单步 grade。商边的 grade 读出 \(\overline\delta_1\) 定义为沿用原子边的 \(\delta_1(e)\)：
+
+$$
+q([h])=q(\eta(h)),
+\qquad
+\operatorname{lab}([h],e)=\operatorname{lab}(\eta(h),e),
+\qquad
+\overline\delta_1\bigl([h]\xrightarrow{e,\ell}[he]\bigr):=\delta_1(e).
+\tag{EG.3308}
+$$
+
+任何已供应且声明为端点不变量的 support 字段也同样下降到商。在 §32 的加法幺半群约定下，历史的累计 grade 是按执行次序累加的路径数据；若还声明了序，则沿用该序：
+
+$$
+\operatorname{Grade}(\varepsilon_r)=0,
+\qquad
+\operatorname{Grade}(h e)
+ =\operatorname{Grade}(h)+\delta_1(e),
+\tag{EG.3309}
+$$
+
+不同长度或不同绕行历史可以到达同一顶点而具有不同的累计值，因此累计 grade 一般不下降为顶点坐标。这一商是“根标记可达图”的规范实现；它不把不可达配置加入图，也不把路径记忆误写成顶点属性。
+
