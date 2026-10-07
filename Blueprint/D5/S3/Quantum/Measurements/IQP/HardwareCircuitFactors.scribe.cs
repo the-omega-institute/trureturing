@@ -217,6 +217,8 @@ internal sealed class HardwareCircuitFactorsDocument : IScribeDocumentDefinition
         return result;
     }
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Coerce(Formula value, Formula type) =>
+        Parenthesized(Seq(value, Sp, Colon, Sp, type));
     private static Formula SortedPair(Formula u, Formula v) =>
         Seq(Parenthesized(Seq(Call("Sym2.sortEquiv"), Sp, Seq(Call("s"), Parenthesized(Seq(u, Comma, v))))), Dot, Call("val"));
     private static Formula BoolCoordinate(Formula b) =>
@@ -264,8 +266,14 @@ internal sealed class HardwareCircuitFactorsDocument : IScribeDocumentDefinition
         Seq(Forall, Sp, Parenthesized(Seq(Call("m"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(Call("G"), Sp, Colon, Sp, Call("Finset"), Sp, Parenthesized(Parenthesized(Seq(Call("Fin"), Sp, Parenthesized(Seq(D(6), Sp, Cdot, Sp, Call("m"))), Sp, Times, Sp, Call("Fin"), Sp, Parenthesized(Seq(D(6), Sp, Cdot, Sp, Call("m")))))))), Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(Theta, Sp, Colon, Sp, Parenthesized(Seq(Call("Fin"), Sp, Parenthesized(Seq(D(6), Sp, Cdot, Sp, Call("m"))))), Sp, To, Sp, Seq(Mathbb, Grp(F.Id("R"))))), Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(Call("s"), Sp, Colon, Sp, Parenthesized(Seq(Call("Fin"), Sp, Parenthesized(Seq(D(6), Sp, Cdot, Sp, Call("m"))), Sp, To, Sp, Call("Bool"))))), Comma, Sp, Parenthesized(Seq(Call("outputProbability"), Sp, Call("G"), Sp, Theta, Sp, Call("s"), Sp, Eq, Sp, Seq(Call("Complex"), Dot, Call("normSq")), Sp, Parenthesized(Seq(Call("circuit"), Sp, Call("G"), Sp, Theta, Sp, Call("s"), Sp, Parenthesized(Seq(Call("fun"), Sp, Cdot, Sp, Mapsto, Sp, Call("false")))))))))))))));
     private static Formula F15() => Disp(
         Seq(Forall, Sp, Parenthesized(Seq(Call("m"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Comma, Sp, Parenthesized(Seq(Call("uniformAngles"), Sp, Call("m"), Sp, Eq, Sp, Seq(Call("Measure"), Dot, Call("pi")), Sp, Call("fun"), Sp, Cdot, Sp, Mapsto, Sp, Parenthesized(Seq(Seq(Call("ProbabilityTheory"), Dot, Call("cond")), Sp, Call("volume"), Sp, Parenthesized(Seq(Seq(Call("Set"), Dot, Call("Ico")), Sp, D(0), Sp, Parenthesized(Seq(D(2), Sp, Cdot, Sp, Seq(Call("Real"), Dot, Call("pi"))))))))))));
-    private static Formula F16() => Disp(
-        Seq(Forall, Sp, Parenthesized(Seq(Call("m"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Comma, Sp, Parenthesized(Seq(Call("joint"), Sp, Call("m"), Sp, Eq, Sp, Parenthesized(Parenthesized(Seq(Seq(Call("ProbabilityTheory"), Dot, Call("uniformOn")), Sp, Parenthesized(Seq(Call("val"), Parenthesized(Seq(Call("F4"), Sp, Call("m")))))))), Dot, Call("prod"), Sp, Parenthesized(Seq(Call("uniformAngles"), Sp, Call("m")))))));
+    private static Formula F16()
+    {
+        Formula vertices = Seq(Call("Fin"), Sp, Parenthesized(Seq(D(6), Sp, Cdot, Sp, Call("m"))));
+        Formula factors = Seq(Call("Finset"), Sp, Parenthesized(Seq(vertices, Sp, Times, Sp, vertices)));
+        Formula factorSet = Seq(Call("Set"), Sp, Parenthesized(factors));
+        return Disp(
+            Seq(Forall, Sp, Parenthesized(Seq(Call("m"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Comma, Sp, Parenthesized(Seq(Call("joint"), Sp, Call("m"), Sp, Eq, Sp, Parenthesized(Parenthesized(Seq(Seq(Call("ProbabilityTheory"), Dot, Call("uniformOn")), Sp, Coerce(Seq(Call("F4"), Sp, Call("m")), factorSet)))), Dot, Call("prod"), Sp, Parenthesized(Seq(Call("uniformAngles"), Sp, Call("m")))))));
+    }
     private static Formula F17() => Disp(
         Seq(Forall, Sp, Parenthesized(Seq(Call("m"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("N"))))), Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(Call("a"), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))))), Comma, Sp, Parenthesized(Seq(Forall, Sp, Parenthesized(Seq(Call("s"), Sp, Colon, Sp, Parenthesized(Seq(Call("Fin"), Sp, Parenthesized(Seq(D(6), Sp, Cdot, Sp, Call("m"))), Sp, To, Sp, Call("Bool"))))), Comma, Sp, Parenthesized(Seq(Call("tailProbability"), Sp, Call("m"), Sp, Call("a"), Sp, Call("s"), Sp, Eq, Sp, Parenthesized(Seq(Call("joint"), Sp, Call("m"))), Dot, Call("real"), Sp, Seq(OpenBrace, Seq(Omega, Sp, Bar, Sp, Call("a"), Sp, Cdot, Sp, new Formula.Power(Parenthesized(new Formula.Power(Parenthesized(Seq(D(2), Sp, Colon, Sp, Seq(Mathbb, Grp(F.Id("R"))))), Seq(D(6), Sp, Cdot, Sp, Call("m")))), Seq(Minus, D(1))), Sp, Leq, Sp, Call("outputProbability"), Sp, Omega, Dot, D(1), Sp, Omega, Dot, D(2), Sp, Call("s")), CloseBrace)))))))));
     private static Formula F18() => Disp(

@@ -138,7 +138,7 @@ The angle distribution is specified on p. 4, verbatim from the source TeX: "We c
 
 **Definition 1.12 (joint).**
 
-$$\forall (\operatorname{m} : \mathbb{N}), (\operatorname{joint} \operatorname{m} = ((\operatorname{ProbabilityTheory}.\operatorname{uniformOn} (\operatorname{val}(\operatorname{F4} \operatorname{m})))).\operatorname{prod} (\operatorname{uniformAngles} \operatorname{m}))$$
+$$\forall (\operatorname{m} : \mathbb{N}), (\operatorname{joint} \operatorname{m} = ((\operatorname{ProbabilityTheory}.\operatorname{uniformOn} (\operatorname{F4} \operatorname{m} : \operatorname{Set} (\operatorname{Finset} (\operatorname{Fin} (6 \cdot \operatorname{m}) \times \operatorname{Fin} (6 \cdot \operatorname{m})))))).\operatorname{prod} (\operatorname{uniformAngles} \operatorname{m}))$$
 
 *Formalization.* `D5/S3/Quantum/Measurements/IQP/HardwareCircuitFactors.joint` (`✓ std3`).
 
