@@ -26,6 +26,18 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
             Def("replace", "Subtree replacement", "Replacement changes the complete subtree at a valid address and retains the surrounding ordered tree. Invalid paths leave the tree unchanged."),
             Def("AlphaCovered", "Alpha coverage of branches", "Every internal node has an alpha leaf descendant, recursively throughout the tree."),
             Def("rightComb", "Right comb source", "The zero comb is beta. The successor comb pairs alpha on the left with the preceding comb on the right, giving m alpha side leaves and one terminal beta at m right steps."),
+            Helper("image_positive", "Third-image inclusion", "For every natural d at least three and every U in I(d), U is a third substitution image."),
+            Helper("positive", "Positive leaf total", "Every nonempty source has strictly positive sum of alpha and beta composition counts."),
+            Helper("alpha_card", "Alpha cardinality", "For every complete source t, the cardinality of alphaLeaves(t) equals the alpha component of composition(t)."),
+            Helper("leaf_data", "Leaf depth and beta cardinality", "For every source t, all its leaf addresses have length at most height(t), and its beta-filtered leaf set has cardinality equal to the beta composition component."),
+            Helper("structural", "Twice-substituted structure", "For every source t, rho squared(t) is AlphaCovered; each alpha leaf is the right child of a terminal pair(beta,alpha), and some alpha leaf reaches maximum height."),
+            Helper("no_left_alpha", "Left alpha obstruction", "For every third image t and every address r, a subtree alpha at r followed by a left step is impossible."),
+            Helper("leaf_change", "Changing a leaf label", "Replacing the leaf b at address s by c retains a leaf c there, adds composition(c) while removing composition(b), and preserves every readout away from s."),
+            Helper("no_beta_cherry", "Double beta obstruction", "A third image cannot have beta replies at both immediate children of a single address."),
+            Helper("image_structure", "Image alpha structure", "For every k at least one and every U in I(3k), U is AlphaCovered and each alpha address is the right child of a terminal pair(beta,alpha)."),
+            Helper("beta_surplus", "Strict beta surplus", "For every k at least one and every V in I(3k), the beta composition count is strictly larger than its alpha count."),
+            Helper("exchange_composition", "Exchange composition", "For every source V and two addresses s,t, the two leaf-change composition equations for alpha to beta at s and beta to alpha at t imply that the resulting composition equals composition(V)."),
+            Helper("exchange_conflict", "Exchange obstruction", "Let V,Wone,W be sources, s and t distinct addresses and s the right child of r. Suppose the subtree at r in V is pair(beta,alpha), t has beta reply in V, s is beta in Wone, t is alpha in W, Wone matches V away from s, and W matches Wone away from t. Then W cannot be a third image."),
             Describe.Lean(DescribeId.Create("actual-image-alpha-mul"),
                 DeclarationHandle.Create(Prefix + "alpha_mul"), H("Alpha addresses of a pair"),
                 StatementSource.FromAuthor(AlphaMulFormula()), AssessedProvenance.FromRepo(), Blocks(
@@ -92,6 +104,11 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
                         + "including branches and absent endpoints. The left alpha leaf excludes W from the actual image. "
                         + "The universal lower bound together with the explicit attaining image characterizes the minimum "
                         + "leaf budget over images whose height exceeds h."))), DescribeRole.Theorem))));
+
+    private static DocumentBlock Helper(string name, string title, string prose) => Describe.Lean(
+        DescribeId.Create("actual-image-address-helper-" + name.Replace("_", "-")), DeclarationHandle.Create(Prefix + name),
+        H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
         DescribeId.Create("actual-image-address-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),

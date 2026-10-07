@@ -27,6 +27,11 @@ internal sealed class ActualImageAlphaSeparationDocument : IScribeDocumentDefini
             Def("forwardCount", "Atomic-side hole count", "forwardCount(S,T) counts frontier holes whose S side is atomic and T side is compound."),
             Def("NormalForm", "Literal double-hole normal form", "NormalForm(S,T) retains a complete source context J and y equal to beta or (alpha,alpha), with S=fill(J,beta,(alpha,y)) and T=fill(J,(alpha,y),beta). "
                 + "Its frontier is exactly the two named, mutually nonprefix addresses. Writing Y=rho cubed(y) and K=rho cubed(fill(J,beta,beta)), the actual trees are literally replace(replace(K,u,C),v,(A,Y)) and replace(replace(K,u,(A,Y)),v,C). Thus every fixed sibling has an actual preimage."),
+            Describe.Lean(DescribeId.Create("actual-image-alpha-count-facts"),
+                DeclarationHandle.Create(Prefix + "alpha_count_facts"), H("Positive alpha count and its unit case"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every complete source p, rho cubed(p) has at least one alpha leaf. If it has exactly one alpha leaf, p is the single leaf alpha."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-image-alpha-separation-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Sharp Alpha Separation"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(

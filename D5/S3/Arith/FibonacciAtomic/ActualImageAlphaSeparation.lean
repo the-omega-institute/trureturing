@@ -78,6 +78,33 @@ def NormalForm (S T : Source) : Prop := ∃ J : TwoHole, ∃ y : Source,
   substitution^[3] T = replace (replace (substitution^[3] (J.fill (.of false) (.of false)))
     J.addresses.1 (.mul A (substitution^[3] y))) J.addresses.2 C
 
+/-- Third-image alpha count and its single-alpha source. -/
+theorem alpha_count_facts :
+    (∀ p : Source, 1 ≤ (alphaLeaves (substitution^[3] p)).card) ∧
+    (∀ p : Source, (alphaLeaves (substitution^[3] p)).card = 1 → p = .of true) := by
+  let f : Source → Source := substitution^[3]
+  let m (X : Source) := (alphaLeaves X).card
+  have f_alpha : f (.of true) = A := rfl
+  have f_beta : f (.of false) = C := rfl
+  have f_pair (p q : Source) : f (.mul p q) = .mul (f p) (f q) := by
+    exact Function.Semiconj₂.iterate
+      (show Function.Semiconj₂ substitution FreeMagma.mul FreeMagma.mul from
+        fun p q => substitution.map_mul p q) 3 p q
+  have m_pair (X Y : Source) : m (.mul X Y) = m X + m Y := by
+    simp only [m, ActualImageAddressCertificate.alpha_card, composition, Prod.fst_add]
+  have m_counts : m A = 1 ∧ m C = 2 := by decide
+  have min_alpha (p : Source) : 1 ≤ m (f p) := by
+    induction p with
+    | of b => cases b <;> simp only [f_alpha, f_beta] <;> omega
+    | mul p q hp hq => rw [f_pair, m_pair]; omega
+  have one_alpha (p : Source) (h : m (f p) = 1) : p = .of true := by
+    cases p with
+    | of b => cases b <;> simp only [f_alpha, f_beta] at h <;> first | rfl | omega
+    | mul p q =>
+      have hp := min_alpha p; have hq := min_alpha q
+      rw [f_pair, m_pair] at h; omega
+  exact ⟨min_alpha, one_alpha⟩
+
 /-- Sharp alpha separation, retaining
 all literal two-hole equality cases. -/
 theorem result :
@@ -192,16 +219,8 @@ theorem result :
       rw [f_pair]
       simp [shared, hE, alpha_mul, alpha_nil, FreeMagma.mul_eq]
   have m_counts : m A = 1 ∧ m C = 2 := by decide
-  have min_alpha (p : Source) : 1 ≤ m (f p) := by
-    induction p with
-    | of b => cases b <;> simp only [f_alpha, f_beta] <;> omega
-    | mul p q hp hq => rw [f_pair, m_pair]; omega
-  have one_alpha (p : Source) (h : m (f p) = 1) : p = .of true := by
-    cases p with
-    | of b => cases b <;> simp only [f_alpha, f_beta] at h <;> first | rfl | omega
-    | mul p q =>
-      have hp := min_alpha p; have hq := min_alpha q
-      rw [f_pair, m_pair] at h; omega
+  have min_alpha (p : Source) : 1 ≤ m (f p) := alpha_count_facts.1 p
+  have one_alpha (p : Source) (h : m (f p) = 1) : p = .of true := alpha_count_facts.2 p h
   have two_alpha (p : Source) (h : m (f p) = 2) :
       p = .of false ∨ p = .mul (.of true) (.of true) := by
     cases p with
