@@ -38,7 +38,7 @@ public sealed partial class CoverBatchCommandTests
         using var batch = new BatchWorld { UseGitReader = true };
         WriteEmissionInputs(batch.Root);
         var reportPath = batch.WriteReportBundle();
-        foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", CanonicalValuesWriter.RelativePath })
+        foreach (var path in new[] { "Blueprint/D5/S0/Carrier/Probe.md", GeneratedArtifactInventory.Values.Path })
         {
             TestGit.Run(batch.Root, "ls-files", "--error-unmatch", path);
             TemporaryFileSystem.File.Delete(Path.Combine(batch.Root, path));
@@ -61,7 +61,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.Equal(sequential.LedgerImage(), batch.LedgerImage());
         Assert.Empty(result.Error);
         Assert.False(File.Exists(Path.Combine(batch.Root, "Blueprint/D5/S0/Carrier/Probe.md")));
-        foreach (var path in new[] { CanonicalValuesWriter.RelativePath })
+        foreach (var path in new[] { GeneratedArtifactInventory.Values.Path })
         {
             Assert.NotEmpty(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(batch.Root, path)));
             Assert.Single(result.Output.Split('\n'), line => line.Contains(path, StringComparison.Ordinal));
@@ -170,13 +170,13 @@ public sealed partial class CoverBatchCommandTests
 
     private static void WriteEmissionInputs(string root)
     {
-        TemporaryFileSystem.File.Delete(Path.Combine(root, ScribeEmissionAttestation.RelativePath));
+        TemporaryFileSystem.File.Delete(Path.Combine(root, GeneratedArtifactInventory.ScribeAttestation.Path));
         WriteProblem(root);
         WriteScribeFixture(root, "Trureturing.lean", "-- synthetic root module\n");
         WriteScribeFixture(root, ".gitignore",
             File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), ".gitignore")));
         WriteScribeFixture(root, "Blueprint/D5/S0/Carrier/Probe.md", "old blueprint projection\n");
-        WriteScribeFixture(root, CanonicalValuesWriter.RelativePath, "old values projection\n");
+        WriteScribeFixture(root, GeneratedArtifactInventory.Values.Path, "old values projection\n");
         WriteValuesInputs(root);
         var repositoryRoot = TestRepositoryLayout.FindRoot();
         var documents = FileMapDocuments.Resolve(
