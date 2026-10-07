@@ -1826,3 +1826,90 @@ RH remain unproved. In particular the growing fixed-$H$ allowance
 in (X2) is still present; the finite interval cannot be extrapolated
 to all clocks. This is a paper-level application of existing results,
 without a mathematical originality claim or Lean certification.
+
+## A finite log-free density row lowers the complete upper envelope
+
+Chiara Bellotti, *An explicit log-free zero density estimate for the
+Riemann zeta-function*,
+[arXiv:2405.12545v2](https://arxiv.org/pdf/2405.12545v2), Theorem 1.1
+on printed pp.2–3 and Table 2 on printed p.28, supplies
+
+$$
+N_>(\sigma,t)\le C t^{B(1-\sigma)},\qquad
+C=6.23\cdot10^6,\quad B=2.152,
+\quad 0.985\le\sigma<1,\quad e^{500}<t\le e^{1000}.
+\tag{Y1}
+$$
+
+Here $N_>$ uses the source's strict conditions $\beta>\sigma$ and
+$0<\gamma<t$, with the zero-count multiplicities. Its analytic proof
+and table computation remain external inputs. The publication locator
+is [J. Number Theory 269 (2025), 37–77](https://doi.org/10.1016/j.jnt.2024.10.001);
+the cited interface is the pinned preprint, without an assertion that
+its text equals the published version. Only this table row is used.
+
+Let $D_I(\sigma,t)$ denote the existing right side of (W1), and put
+$\alpha=197/200$, $u=e^{500}$, $v=e^{1000}$. Define
+
+$$
+M(\sigma,t)=
+\begin{cases}
+\min\{D_I(\sigma,t),Ct^{B(1-\sigma)}\},
+ &\alpha\le\sigma<1,\ u<t\le v,\\
+D_I(\sigma,t),&\text{otherwise}.
+\end{cases}
+\tag{Y2}
+$$
+
+Both inputs bound the same actual strict count, so $N_>\le M$
+on the whole original domain. For the strict reflected sum, (W2)
+gives $F_2^>(\sigma)\le4\int_H^\infty M(\sigma,t)t^{-3}\,dt$.
+The strict height endpoints do not change this counting integral.
+Strict real-part endpoints do not change (W5)'s layer integral;
+zeros on $\beta=\alpha$ retain their layers below $\alpha$.
+Reflection and every multiplicity keep the original factor $4$.
+
+On the rectangle in (Y1),
+$B<3/(2-\sigma)$, $q(\sigma)\ge2$, and
+$C<47\cdot500^2=11.75\cdot10^6$ imply
+$Ct^{B(1-\sigma)}<D_I(\sigma,t)$.
+For $A>1$, reuse $Q_A$ and $S_2(H)$ from (W5) and define
+
+$$
+U_M(A)=Q_A(3/4)S_2(H)
+ +4\int_{3/4}^1 Q_A'(\sigma)
+       \int_H^\infty M(\sigma,t)t^{-3}\,dt\,d\sigma.
+\tag{Y3}
+$$
+
+Let $U_I$ be the same expression with $D_I$ in place of $M$.
+These envelopes are finite at each $A>1$, and (W5) gives
+$B_2(A)\le U_M(A)$. Their exact difference is
+
+$$
+U_I(A)-U_M(A)
+=4\int_\alpha^1 Q_A'(\sigma)
+       \int_u^v\bigl[D_I(\sigma,t)-Ct^{B(1-\sigma)}\bigr]
+                    t^{-3}\,dt\,d\sigma>0.
+\tag{Y4}
+$$
+
+Finally, (W7) and $B_3\le B_2/H$ preserve the original coefficient
+factors and give, with $L=\log A$,
+
+$$
+C_{\rm high}(A)\le
+\left[1+\frac1L+\frac2H\left(\frac1L+\frac2{L^2}\right)\right]U_M(A).
+\tag{Y5}
+$$
+
+Outside the finite rectangle, the original Ingham envelope still
+extends to infinity. Thus this is a complete high-part allowance,
+with no discarded heights, real parts or multiplicities. The low
+and elementary contributions, selected integer, its clock and the
+strict core are unchanged. Equation (Y4) improves explicit upper
+envelopes; it supplies no cancellation theorem, certified numerical
+Robin margin, new source-clock exclusion or uniform bound as
+$A\to\infty$. The complete selected-source signed target and RH
+remain unproved. This reuses Bellotti and (W2), (W5), (W7), without
+reproving a density theorem or claiming Lean verification.
