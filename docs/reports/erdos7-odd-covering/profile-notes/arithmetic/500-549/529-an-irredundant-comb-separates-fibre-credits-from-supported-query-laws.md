@@ -824,3 +824,146 @@ selection rule; those arguments are given above. It adds no frozen
 wrapper declaration. The existing general prefix-capacity realization
 result supplies no way around FG6: the obstruction holds for every
 law on the stated support, irrespective of its construction.
+
+## A depth-two leaf supplies a conditional source for the actual family
+
+The active-root argument AR2 also has a leaf version. Keep a finite
+distinct nonunit P8-smooth family with globally fixed original phases,
+where P8={3,5,7,11,13,17,19,23} and Q=P8 minus{3}. Choose r mod9 whose
+leaf avoids every actual pure modulus3 and modulus9 original. For each
+complete nonunit Q-smooth numerical cofactor n, collect the full mod-n
+phases of its j=0 original and all originals3^j n at j=1,2,3 whose
+ternary cylinders intersect the leaf. Require at most ONE distinct
+phase in this collection. Equal phases may be merged; inactive
+originals are omitted. Intersection means agreement modulo3^min(j,2).
+This condition concerns complete cofactor residues, not prime supports.
+
+The merged collection is a finite distinct nonunit Q-smooth family,
+so [Report563 MT11](../550-599/563-prefix-free-rooted-labels-admit-all-later-four-mixed-towers.md#83-a-seven-prime-companion-and-the-remaining-boundary)
+provides ONE law eta avoiding it, with
+
+    1<=beta=B_Q(eta)<=A=13463054/5049311.                    (AL1)
+
+Normalize ternary Haar on the selected leaf after removing every
+actual pure ternary original. Pure depths1,2 are already inactive.
+At most one original occurs at each higher numerical power, and the
+family is finite, so the retained unnormalized mass is strictly above
+
+    1/9-sum_(j>=3)3^-j=1/18.
+
+The resulting single law u simultaneously satisfies
+
+    q_3(u)=q_9(u)=1,
+    q_(3^j)(u)<=18/3^j for j>=3,
+    B_{3}(u)<=1+1+1+18 sum_(j>=3)3^-j=4.                  (AL2)
+
+On the fixed product rho=u times eta, every pure original and every
+nonpure original through j=3 is null: the latter is either inactive
+on the leaf or has its full cofactor phase excluded by eta. Only mixed
+originals j>=4,n>1 remain. Numerical distinctness gives at most one
+original per pair(j,n). Thus their actual union D obeys
+
+    rho(D)<=18 sum_(j>=4)3^-j sum_(n>1)q_n(eta)
+           =(beta-1)/3,
+    B_(P8)(rho)<=4 beta.
+
+The unit cofactor is omitted from the deletion sum because pure
+ternary originals are already avoided. It remains in the complete
+query norm. Since beta<4, condition this product once on avoidance of
+D. The unit query stays exactly1, giving one complete survivor law nu:
+
+    B_(P8)(nu)<=1+(4 beta-1)/(1-(beta-1)/3)
+               =(1+11 beta)/(4-beta)
+               <=10209527/448946<28.                       (AL3)
+
+The expression increases on beta<4 and is below28 exactly when
+beta<37/13. At A the reserve is2244730/5049311, and the gap from28
+is2360961/448946. The same source and final conditioning event are
+fixed before every query label and phase. Nonnegative complete sums
+and geometric tails preserve all heights, as in
+[Report572's query-profile transport](../550-599/572-compatible-fibres-lift-one-six-prime-query-law.md#unequal-fibres-can-be-retained-as-a-query-profile).
+AL3 directly reuses MT11 and AR2's conditioning mechanism; it is not
+a new general source or capacity theorem.
+
+For FG7, neither available first root satisfies AR1: root0 activates
+the mod5 phases0 and1 from labels5 and15, while root1 activates those
+phases from labels5 and45. Choose instead r=4 or7 mod9. The15 original
+lies on root0 and the45 original on leaf1 mod9, so both are inactive.
+The merged cofactor inventory is exactly
+
+    0 mod5, 2 mod25, 7 mod125, 32 mod625.                    (AL4)
+
+It meets AL1 without the auxiliary1 mod5 guard. This proves the
+conditional all-height extension for FG7 after arbitrary finite mixed
+additions with j>=4 and arbitrary pure ternary additions with j>=3.
+All numerical moduli remain distinct. Additions at j=0,1,2,3 must
+preserve the stated full-phase test; low pure additions must preserve
+the chosen leaf. In particular, j=3 is part of the hypothesis, not the
+unrestricted tail. FG7 lies outside AR1 and satisfies the leaf criterion.
+AR1 stops at j=2, whereas the leaf condition also tests active j=3 rows.
+Both sufficient criteria remain available with their respective
+hypotheses.
+
+## No depth of a common prefix universally supplies one cofactor phase
+
+The leaf condition is not automatic, even for irredundant families.
+Consider the five actual originals
+
+    2 mod3, 0 mod5, 6 mod15, 0 mod7, 1 mod21.              (AP1)
+
+Their odd nonunit numerical moduli are distinct. Private witnesses
+modulo105 for labels3,5,15,7,21 are respectively2,10,6,7,1. Any pure-legal
+ternary prefix at depth h>=1 has first root0 or1. On root0, labels5 and15
+are both active and have cofactor5 phases0 and1. On root1, labels7 and21
+are both active and have cofactor7 phases0 and1. The mixed originals
+already have ternary depth1, so refining within either root cannot
+make that conflicting row inactive. Therefore
+
+    for every h>=1 and every pure-legal prefix r mod3^h,
+    some nonunit numerical cofactor has two active phases. (AP2)
+
+Here active means the full original arithmetic class and the prefix
+contain a common natural number. Coprime CRT makes depth-zero rows
+active on every prefix; a depth-one row a mod3n is active exactly when
+r mod3=a mod3. This proves AP2 at arbitrary depth without substituting
+finite enumeration for the quantifier. It rules out universal existence
+of a single-phase COMMON prefix, not cofactor-dependent choices,
+multiple-phase suppliers or correlated survivor laws.
+
+Indeed AP1 has a cheap actual law: normalize Haar on ternary root0,
+on5-root2 and outside7-root0, and use independent Haar at11,13,17,19,23.
+Its support modulo105 is{12,27,57,72,87,102}. The21 row is inactive;
+the15 row has excluded5-phase1; all pure rows are avoided. Its complete
+all-height product norm, including the unit, is
+
+    (5/2)(9/4)(43/36) product_(p=11,13,17,19,23)p/(p-1)
+      =4152811/442368<28.                                  (AP3)
+
+The fixed first-root norm is1+p/(p-1), while the norm of Haar outside
+one first p-root is1+p/(p-1)^2. These geometric sums supply the first
+three factors. In particular,12 is an actual escaping integer; AP2 is
+a source-selection obstruction, not a covering counterexample.
+
+AP1 also already lies in the restricted nine-prime class of
+[Report569 SD11--SD13](../550-599/569-complete-suffix-debits-close-the-six-prime-query-target.md#scope-and-a-restricted-original-modulus-consumer).
+Its full Q6={5,7,11,13,17,19} projections have exactly the two phases0,1
+at numerical cofactors5 and7, and none elsewhere. The existing two-phase
+source therefore applies, including arbitrary finite added originals
+supported on the first nine odd primes and touching23 or29, while
+preserving distinct numerical moduli. Failure of
+the single-phase common-prefix criterion does not obstruct that
+already available source; no new two-phase estimate is needed here.
+
+The existing exact consumer checks AL3, every legal FG7 root and leaf,
+the complete merged phases AL4, AP1's private points and six legal
+mod9 leaf conflicts, and AP3's support and rational product. Its activity
+test is checked against actual common integers. A scoped Lean application
+verifies AP1's distinct odd nonunit inventory, derives activity from
+CRT, proves AP2 for every natural h>=1, and verifies12 escapes, using
+only the standard three axioms. It is an application of existing CRT
+results and adds no frozen wrapper. AL1--AL3's arbitrary-family measure
+construction and infinite sums, and AP3's product-Haar interpretation,
+remain ordinary mathematics; the finite consumer does not certify them
+in Lean. The remaining general problem is to construct one source that
+retains low-row activation correlations with a sufficient complete-query
+bound when no single-phase common prefix exists.
