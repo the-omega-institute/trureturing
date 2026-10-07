@@ -38,11 +38,13 @@ Lean statement: `D5/S3/TotalVariation/ParityKernelMasses.parity_reference_mass`
 
 *Proof.* Machine-checked in Lean as `D5/S3/TotalVariation/ParityKernelMasses.parity_reference_mass` (`✓ std3`). ∎
 
-*Citation.* Kyle Siegrist (2026). *Random: Probability, Mathematical Statistics, Stochastic Processes*. URL: <https://www.randomservices.org/random/>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Kyle Siegrist (2026). *Random: Probability, Mathematical Statistics, Stochastic Processes*. URL: <https://www.randomservices.org/random/>.
 
 *Commentary.*
 
-Fix positive d and M. Put nu=M/(2M+d), eta=d/(2M+d), and pe=(1+(-1)^M eta^d)/2. Let Q(x)=nu^h(x) (1-nu)^(d-h(x))/pe when h(x) mod 2=M mod 2, and Q(x)=0 otherwise. Then pe>0, every Q(x) is nonnegative, and the values of Q sum to one. The product weights of independent Bernoulli(nu) bits sum to one, and their sign-twisted sum by (-1)^h(x) factorizes coordinatewise to (1-2nu)^d=eta^d. Averaging the two sums isolates the parity event, whose probability is pe; 0<=eta<1 gives pe>0. This is the standard parity computation for a sum of independent Bernoulli bits; the declaration records it for the conditioned law.
+Fix positive d and M. The statistical-laws reference definition prescribes the bias nu=M/(2M+d). Put eta=d/(2M+d), and pe=(1+(-1)^M eta^d)/2. Let Q(x)=nu^h(x) (1-nu)^(d-h(x))/pe when h(x) mod 2=M mod 2, and Q(x)=0 otherwise. Then pe>0, every Q(x) is nonnegative, and the values of Q sum to one. The product weights of independent Bernoulli(nu) bits sum to one, and their sign-twisted sum by (-1)^h(x) factorizes coordinatewise to (1-2nu)^d=eta^d. Averaging the two sums isolates the parity event, whose probability is pe; 0<=eta<1 gives pe>0. This is the standard parity computation for a sum of independent Bernoulli bits, following Siegrist; the declaration records it for the prescribed conditioned law.
 
 ## References
 

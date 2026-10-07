@@ -16,7 +16,7 @@ $$\forall d,M \in \mathbb{N}, \forall \xi, \operatorname{R}\left(d, M, \xi\right
 
 *Commentary.*
 
-The parameters d and M are natural numbers, xi : Fin d -> Bool, and h is the number of true coordinates of xi. The guard requires h <= M and h mod 2 = M mod 2. The mass is zero when either test fails; the binomial coefficient in the nonzero branch is evaluated only for the resulting natural parameters. Its numerator counts the weak compositions of M into d parts with parity vector xi.
+The parameters d and M are natural numbers, xi : Fin d -> Bool, and h is the number of true coordinates of xi. The guard requires h <= M and h mod 2 = M mod 2. The mass is zero when either test fails; the binomial coefficient in the nonzero branch is evaluated only for the resulting natural parameters. For d>0, its numerator counts the weak compositions of M into d parts with parity vector xi. For d=0, the binomial expression is 1 and has no zero-dimensional weak-composition interpretation.
 
 **Definition 1.2 (Conditioned Bernoulli mass).**
 
@@ -24,11 +24,13 @@ $$\forall d,M \in \mathbb{N}, \forall \xi, \operatorname{Q}\left(d, M, \xi\right
 
 *Formalization.* `D5/S3/TotalVariation/TreeParityKernel.Q` (`✓ std3`).
 
-*Citation.* Kyle Siegrist (2026). *Random: Probability, Mathematical Statistics, Stochastic Processes*. URL: <https://www.randomservices.org/random/>.
+*Source.* Repository-derived.
+
+*Acknowledgement.* Kyle Siegrist (2026). *Random: Probability, Mathematical Statistics, Stochastic Processes*. URL: <https://www.randomservices.org/random/>.
 
 *Commentary.*
 
-Here nu = M/(2M+d), eta = d/(2M+d), and p_e = (1+(-1)^M eta^d)/2. The mass is zero when h mod 2 differs from M mod 2. For positive d and M, this formula describes independent Bernoulli(nu) bits conditioned on the terminal parity. The conditioned bits are not asserted to be independent. Both masses have exactly the form used by the finite parity bound.
+The statistical-laws reference definition prescribes the bias nu = M/(2M+d). Here eta = d/(2M+d), and p_e = (1+(-1)^M eta^d)/2. The mass is zero when h mod 2 differs from M mod 2. For positive d and M, this formula describes independent Bernoulli(nu) bits conditioned on the terminal parity. The conditioned bits are not asserted to be independent. Both masses have exactly the form used by the finite parity bound. The Bernoulli parity computation follows Siegrist.
 
 **Definition 1.3 (Shapes and complete gaps).**
 
