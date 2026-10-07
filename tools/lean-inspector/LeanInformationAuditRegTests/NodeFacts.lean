@@ -46,6 +46,23 @@ def otherTruth : Prop := ¬ False
 
 def certifiedProof : True := True.intro
 
+structure ProofCarrier where
+  property : True
+
+def proofCarrier : ProofCarrier := ⟨True.intro⟩
+
+def projectedProof : True := compiled_term%
+  "[[\"const\",[\"LeanInformationAuditRegTests\",\"NodeFacts\",\"proofCarrier\"],[]],[\"proj\",[\"LeanInformationAuditRegTests\",\"NodeFacts\",\"ProofCarrier\"],0,0]]"
+
+def projectionProofBoundary : NodeFact := compiled_fact% "proof"
+  "{\"declaration\":[\"LeanInformationAuditRegTests\",\"NodeFacts\",\"projectedProof\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+def projectionProofCoverage : NodeCoverage where
+  roots := [{ owner := `LeanInformationAuditRegTests.NodeFacts,
+    declaration := `LeanInformationAuditRegTests.NodeFacts.projectedProof,
+    part := .value, path := [] }]
+  facts := [`LeanInformationAuditRegTests.NodeFacts.projectionProofBoundary]
+
 def proofAsData : NodeFact := .data True True.intro {
   owner := `LeanInformationAuditRegTests.NodeFacts
   declaration := `LeanInformationAuditRegTests.NodeFacts.certifiedProof
@@ -361,6 +378,18 @@ unsafe def check : IO Unit := do
     external := fun n => n == ``Eq || view.external n }
   reject "proof proposition retained" "contract.node_binding:closure_unsafe:Eq"
     (Contract.NodeFacts.coverage tainted #[location] cover.value)
+  let some (.defnInfo projectionCover) := view.find
+      `LeanInformationAuditRegTests.NodeFacts.projectionProofCoverage
+    | throw <| IO.userError "projection_coverage.definition"
+  let projectionLocation : NodeCoordinate := {
+    owner := `LeanInformationAuditRegTests.NodeFacts,
+    declaration := `LeanInformationAuditRegTests.NodeFacts.projectedProof,
+    part := .value, path := [] }
+  reject "external projection receiver before proof cut"
+    "contract.node_binding:closure_unsafe:LeanInformationAuditRegTests.NodeFacts.proofCarrier"
+    (Contract.NodeFacts.coverage { view with external := fun name =>
+      name == `LeanInformationAuditRegTests.NodeFacts.proofCarrier || view.external name }
+      #[projectionLocation] projectionCover.value)
   let some (.defnInfo discarded) := view.find `LeanInformationAuditRegTests.NodeFacts.discardedCoverage
     | throw <| IO.userError "discarded.definition"
   let dataTainted : Contract.NodeFacts.View := {

@@ -300,7 +300,7 @@ def coverage (view : View) (expected : Array NodeCoordinate) (payload : Expr)
         unless remaining > 0 do bad "coverage_fuel"
         remaining := remaining - 1
         match head with
-        | .app function _ | .mdata _ function => head := function
+        | .app function _ | .mdata _ function | .proj _ _ function => head := function
         | _ => break
       if let .const name _ := head then
         let some info := view.find name | bad s!"closure_missing:{name}"
