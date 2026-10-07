@@ -22,4 +22,5 @@ The assertion quantifies over every positive subcritical budget and original end
 
 - Truth anchor: `D5/S1/Digit/Infinite/SevenCycleCoherenceRefutation.claim`
 - Dependency: [D5/S1/Digit/Infinite/SevenCycleSeparationRefutation](SevenCycleSeparationRefutation.md)
+- Dependency: [D5/S1/Digit/Infinite/WindowCylinderPartition](WindowCylinderPartition.md)
 - Dependency: [D5/S1/Words/ReturnWords/CoherentReturnPathTemplates](../../Words/ReturnWords/CoherentReturnPathTemplates.md)
