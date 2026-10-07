@@ -154,7 +154,7 @@ private theorem finite_address_unique (x y : LegalDigits) (hx : finiteTail x)
   obtain ⟨z, hz, hu⟩ := signed_series_fibres.2.2 (signedValue x) hr hn
   exact (hu y hv).trans (hu x rfl).symm
 
-private theorem finite_shift (x : LegalDigits) (n : ℕ) (hx : finiteTail x) :
+theorem finite_shift (x : LegalDigits) (n : ℕ) (hx : finiteTail x) :
     finiteTail (bitShift x n) := by
   exact Filter.eventually_atTop.mp
     ((Filter.tendsto_add_atTop_nat n).eventually (Filter.eventually_atTop.mpr hx))

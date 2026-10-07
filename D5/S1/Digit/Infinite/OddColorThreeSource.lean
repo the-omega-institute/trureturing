@@ -24,7 +24,7 @@ open D5.S1.Digit.Infinite.SignedSeriesRange (signedValue signed_series_range v)
 open D5.S1.Digit.Infinite.SignedSeriesFibres
 open D5.S0.Automata.BinaryZeckendorfBlockSkeleton (ReturnBlock)
 
-private theorem shift_add (x : LegalDigits) (a b : ℕ) :
+theorem shift_add (x : LegalDigits) (a b : ℕ) :
     bitShift (bitShift x a) b = bitShift x (a + b) := by
   apply Subtype.ext
   funext j
