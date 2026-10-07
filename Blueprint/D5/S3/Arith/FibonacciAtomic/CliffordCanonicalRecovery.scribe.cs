@@ -10,7 +10,7 @@ internal sealed class CliffordCanonicalRecoveryDocument : IScribeDocumentDefinit
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The complete infinite canonical Clifford orbit permits exactly the stated modular readers.",
         H("Sharp Clifford Canonical Recovery"), Blocks(
-            Paragraph(Text("Use the Clifford algebra and leaf observation E from CliffordLeafOrbit. The canonical source is T(j)=rho^j(alpha), "
+            Paragraph(Text("Use the Clifford algebra and leaf observation E from FixedHistoryComposition, and the canonical observation X from CliffordLeafOrbit. The canonical source is T(j)=rho^j(alpha), "
                 + "its observation is X(j), and its composition is z(j)=M^j(1,0), with M(a,b)=(b,a+b). "
                 + "A factorizing reader is a function on the range of X; it receives the algebra element alone. The residueTarget(D) maps j to z(j) modulo D.")),
             Def("low", "Standard low representatives", "For positive d, low(d,j) is the pair of standard representatives of z(j) modulo d."),

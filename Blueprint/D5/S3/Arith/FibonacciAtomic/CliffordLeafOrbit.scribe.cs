@@ -13,8 +13,8 @@ internal sealed class CliffordLeafOrbitDocument : IScribeDocumentDefinition
             Paragraph(Text("Let Q(a,b)=a*a+a*b-b*b on the real coordinate plane, and let C be its Clifford algebra with v*v=Q(v)1. "
                 + "Write A and B for the canonical images of (1,0) and (0,1). Sources are the existing ordered Boolean leaf trees; "
                 + "alpha is true and beta is false. The existing substitution sends alpha to beta and beta to (beta,alpha).")),
-            Def("Q", "Quadratic form", "The quadratic form is the sum of the first-coordinate square and the coordinate product, minus the second-coordinate square."),
-            Def("E", "Ordered leaf product", "The free-magma homomorphism sends alpha to A and beta to B. Its value is the leaf product in source order."),
+            Paragraph(Text("The quadratic form Q and ordered leaf product E are those of FixedHistoryComposition. "
+                + "The free-magma homomorphism E sends alpha to A and beta to B, and multiplies the leaves in source order.")),
             Def("X", "Canonical observation", "X(j)=E(rho^j(alpha)) for every natural index j."),
             Def("phases", "Six chronological phases", "The six values are A, B, BA, A+B, -B, AB, in that order."),
             Def("Factors", "Reader on the canonical image", "A target g factors when a function on the range of X takes X(j) to g(j) for every natural j. The reader receives only the algebra element."),

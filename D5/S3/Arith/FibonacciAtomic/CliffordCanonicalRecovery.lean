@@ -16,7 +16,8 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.FibonacciAtomic.CliffordCanonicalRecovery
 
-open CliffordLeafOrbit (Q E X Factors)
+open CliffordLeafOrbit (X Factors)
+open FixedHistoryComposition (Q E A)
 open GenealogicalFiberTransport (Source substitution composition)
 open GraftAffineClosure (atomicBlock residue step quantity)
 
@@ -25,7 +26,6 @@ local notation "κ" d:max j:max =>
     (residue d (atomicBlock j))
 
 local notation "C" => CliffordAlgebra Q
-local notation "A" => CliffordAlgebra.ι Q (1, 0)
 local notation "α" => (FreeMagma.of true : Source)
 
 /-- Standard low representatives of the actual canonical composition. -/

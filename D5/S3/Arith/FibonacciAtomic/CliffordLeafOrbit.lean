@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport
 import D5.S3.Arith.FibonacciAtomic.SourceTransportCentralizer
+import D5.S3.Arith.FibonacciAtomic.FixedHistoryComposition
 import Mathlib.LinearAlgebra.CliffordAlgebra.Basic
 import Mathlib.LinearAlgebra.Matrix.Notation
 import Mathlib.Data.Nat.Periodic
@@ -22,22 +23,12 @@ namespace D5.S3.Arith.FibonacciAtomic.CliffordLeafOrbit
 
 open GenealogicalFiberTransport (Source substitution composition)
 open GraftAffineClosure (atomicBlock)
-
-/-- The quadratic form on the ordered pair of real coordinates. -/
-noncomputable def Q : QuadraticForm ℝ (ℝ × ℝ) :=
-  QuadraticMap.linMulLin (LinearMap.fst ℝ ℝ ℝ) (LinearMap.fst ℝ ℝ ℝ) +
-  QuadraticMap.linMulLin (LinearMap.fst ℝ ℝ ℝ) (LinearMap.snd ℝ ℝ ℝ) -
-  QuadraticMap.linMulLin (LinearMap.snd ℝ ℝ ℝ) (LinearMap.snd ℝ ℝ ℝ)
+open FixedHistoryComposition (Q E A B)
 
 local notation "C" => CliffordAlgebra Q
-local notation "A" => CliffordAlgebra.ι Q (1, 0)
-local notation "B" => CliffordAlgebra.ι Q (0, 1)
 local notation "α" => (FreeMagma.of true : Source)
 local notation "β" => (FreeMagma.of false : Source)
 local notation "T" => (fun j : ℕ => substitution^[j] α)
-
-/-- Ordered leaf multiplication in the actual Clifford algebra. -/
-noncomputable def E : Source →ₙ* C := FreeMagma.lift fun b => if b then A else B
 
 /-- Clifford observations of the canonical substituted source. -/
 noncomputable def X (j : ℕ) : C := E (T j)
@@ -68,9 +59,11 @@ theorem result :
       ∀ j, j < 6 → f ⟨X j, ⟨j, rfl⟩⟩ = g j) := by
   classical
   have aa : A * A = 1 := by
+    change CliffordAlgebra.ι Q (1, 0) * CliffordAlgebra.ι Q (1, 0) = 1
     rw [CliffordAlgebra.ι_sq_scalar, show Q (1, 0) = 1 by
       norm_num [Q, QuadraticMap.linMulLin_apply], map_one]
   have bb : B * B = -1 := by
+    change CliffordAlgebra.ι Q (0, 1) * CliffordAlgebra.ι Q (0, 1) = -1
     rw [CliffordAlgebra.ι_sq_scalar, show Q (0, 1) = -1 by
       norm_num [Q, QuadraticMap.linMulLin_apply], map_neg, map_one]
   have swap : A * B + B * A = 1 := by
@@ -133,7 +126,8 @@ theorem result :
         !![1/2, -1; -5/4, 1/2], !![3/2, 1; -5/4, -3/2],
         !![-1/2, -1; 5/4, 1/2], !![1/2, 1; 5/4, 1/2]] i := by
     fin_cases i
-    all_goals simp only [phases, map_add, map_neg, map_mul, rep,
+    all_goals simp only [phases, FixedHistoryComposition.A, FixedHistoryComposition.B,
+      map_add, map_neg, map_mul, rep,
       CliffordAlgebra.lift_ι_apply]
     all_goals ext r s
     all_goals fin_cases r <;> fin_cases s <;>
