@@ -41,7 +41,7 @@ a connected graph other than a path or cycle, and simulation of circuits
 on $\Omega(\sqrt n)$ encoded qubits with polynomial operation overhead.
 The XY-only construction is treated separately in Section IV and Theorem 3.
 
-[FIB continuation Theorem 61.7](../../docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md#61-source-owned-hard-core-green-interactions-and-population-uniform-renewal-retention)
+[FIB continuation Theorem 62.7](../../docs/develop/theory/FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY_CONTINUATION.md#62-source-owned-hard-core-green-interactions-and-population-uniform-renewal-retention)
 consumes the exact matrix in equation (4), the zero-auxiliary routing
 principle and the branching-wire setting. Its particular P/B product,
 seven-swap controlled sign and 89-block density-phase word are established
