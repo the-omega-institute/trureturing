@@ -25,7 +25,7 @@ open ActualImageSevenLeafSeparation (leafAddresses leafLabel)
 open scoped BigOperators
 
 /-- The three blocks in a column. -/
-inductive Block | a | u | v deriving DecidableEq
+inductive Block | a | u | v
 
 /-- Literal complete preimages of the three blocks. -/
 def preimage : Block → Source
@@ -169,7 +169,7 @@ theorem result :
     have hole_locate (n : ℕ) (j : Fin (n + 1)) (v : Address) :
         locate n (hole n j ++ v) = some (j, v) := by
       induction n with
-      | zero => have hj : j = 0 := Fin.ext (by omega); subst j; rfl
+      | zero => have hj : j = 0 := Fin.eq_zero j; subst j; rfl
       | succ n hn =>
         refine Fin.cases ?_ (fun k => ?_) j
         · rfl
@@ -180,7 +180,7 @@ theorem result :
         locate n w = some (j, v) ↔ w = hole n j ++ v := by
       induction n generalizing w with
       | zero =>
-        have hj : j = 0 := Fin.ext (by omega)
+        have hj : j = 0 := Fin.eq_zero j
         subst j
         simp [locate, hole]
       | succ n hn =>
@@ -456,11 +456,12 @@ theorem result :
       rw [hn]
   have pre_composition (b : Block) :
       composition (preimage b) = (1 + (if b = .a then 0 else 1), if b = .a then 0 else 1) := by
-    cases b <;> rfl
+    cases b <;> simp [preimage, composition]
   have block_composition (b : Block) :
       composition (block b) =
         (1 + 3 * (if b = .a then 0 else 1), 2 + 5 * (if b = .a then 0 else 1)) := by
-    cases b <;> rfl
+    cases b <;> simp [ActualImageSevenLeafSeparation.thirdImage, preimage,
+      Function.iterate_succ_apply', substitution, composition]
   refine ⟨address_facts.1, context_prefix, ?_, ?_, ?_⟩
   · intro m n X S w
     exact delta_comb n X S w
