@@ -18,7 +18,7 @@ internal sealed class Scale38RawEndpointSpectrumDocument : IScribeDocumentDefini
             Def("endpointTargets", "Endpoint targets", "The baseline, X_1, and contracted positions satisfying i + 2 at least k."),
             Def("scanLength", "Literal scan lengths", "The baseline and X_1 scans have k + 1 queries. The last Y position has k + 1 queries; the preceding Y position has k + 2."),
             Def("scanAddress", "Literal scan addresses", "The baseline scans q_1 through q_(k+1). X_1 scans q_2 through q_(k+1), then d = RR. Y_(k-2) scans q_1 through q_(k-1), then b_1, b_2, b_3. Y_(k-1) scans q_1 through q_k, then b_2. Here b_h = RLR^(h-1)LLR and q_t = LR^(t-1)LLR."),
-            Def("exitAddress", "Exact competitor exit addresses", "For a distinct competitor, this is its first nonleaf address in the target scan. The target has no extra paid address."),
+            Def("exitAddress", "Exact competitor exit addresses", "For a target in endpointTargets and a distinct competitor, this is the competitor's first nonleaf address in the target scan. The target has no extra paid address."),
             Describe.Lean(DescribeId.Create("scale38-raw-endpoint-spectrum"),
                 DeclarationHandle.Create(Prefix + "result"),
                 H("Complete spectrum, safe scans and exact paid sets"),

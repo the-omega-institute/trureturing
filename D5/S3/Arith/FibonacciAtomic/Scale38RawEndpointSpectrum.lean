@@ -10,7 +10,6 @@ import D5.S3.Arith.FibonacciAtomic.Scale38NestedCompensation
 import Mathlib.Data.Fin.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxHeartbeats 2000000
 namespace D5.S3.Arith.FibonacciAtomic.Scale38RawEndpointSpectrum
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition (Address Reply readout leaves vector chi Strategy terminal paid cost)
@@ -65,6 +64,7 @@ def exitAddress (k : Nat) : Index k → Index k → Address
   | .inr (.inr i), .inr (.inl j) => if j.val ≤ i.val then query j.val else true :: query 0
   | .inr (.inr i), .inr (.inr j) => if j.val < i.val then query (j.val+1) else true :: query 2
 
+set_option maxHeartbeats 2000000 in -- Full leaf-response exclusions and literal scan construction.
 /-- The complete raw endpoint spectrum, literal safe scans, actual controllers,
 and exact paid address sets for every family member. -/
 theorem result (k : Nat) (hk : 1 ≤ k) :

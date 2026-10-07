@@ -52,7 +52,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38RawEndpointSpectrum.exitAddr
 
 *Commentary.*
 
-For a distinct competitor, this is its first nonleaf address in the target scan. The target has no extra paid address.
+For a target in endpointTargets and a distinct competitor, this is the competitor's first nonleaf address in the target scan. The target has no extra paid address.
 
 **Theorem 1.5 (Complete spectrum, safe scans and exact paid sets).**
 
