@@ -121,16 +121,9 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       D (Fintype.card (Index k)) (by simp [Fintype.card_sum]) (family k ∘ e.symm) =
         ((3*k+14 : Nat) : ℝ≥0∞)) ∧ Function.Injective query := by
   classical
-  have hom (s t : Source) : thirdImage (.mul s t) = .mul (thirdImage s) (thirdImage t) :=
-    Function.Semiconj₂.iterate
-      (show Function.Semiconj₂ substitution FreeMagma.mul FreeMagma.mul from
-        substitution.map_mul) 3 s t
   have fold_image : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
-      thirdImage (comb n f q) = comb n (fun i => thirdImage (f i)) (thirdImage q) := by
-    intro n
-    induction n with
-    | zero => intro f q; rfl
-    | succ n ih => intro f q; rw [comb, hom, ih]; rfl
+      thirdImage (comb n f q) = comb n (fun i => thirdImage (f i)) (thirdImage q) :=
+    fun n f q => (comb_foundation n f f q q).1
   have fold_comp : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
       composition (comb n f q) = (∑ i, composition (f i)) + composition q := by
     intro n
@@ -140,24 +133,19 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       intro f q
       simp only [comb, composition, ih, Fin.sum_univ_succ, add_assoc]
   have fold_len : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
-      (comb n f q).length = (∑ i, (f i).length) + q.length := by
-    intro n
-    induction n with
-    | zero => intro f q; simp [comb]
-    | succ n ih =>
-      intro f q
-      simp only [comb, FreeMagma.length, ih, Fin.sum_univ_succ, Nat.add_assoc]
+      (comb n f q).length = (∑ i, (f i).length) + q.length :=
+    fun n f q => (comb_foundation n f f q q).2.1
   have images (i : Index k) : thirdImage (preFamily k i) = family k i := by
     cases i with
-    | inl u => cases u; simp only [preFamily, family, hom, fold_image]; rfl
+    | inl u => cases u; simp only [preFamily, family, fold_image]; rfl
     | inr p =>
       cases p with
       | inl j =>
-        simp only [preFamily, family, hom, fold_image]
+        simp only [preFamily, family, fold_image]
         congr 2
         funext l
         split_ifs <;> rfl
-      | inr i => simp only [preFamily, family, hom, fold_image]; rfl
+      | inr i => simp only [preFamily, family, fold_image]; rfl
   have precomp (i : Index k) : composition (preFamily k i) = (k+1,2) := by
     cases i with
     | inl u =>
@@ -186,16 +174,28 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     rw [images] at tr
     simp only [GraftAffineClosure.step, Function.iterate_succ_apply', Function.iterate_zero_apply] at tr
     convert tr using 1 <;> ext <;> simp only [Prod.fst, Prod.snd] <;> omega
-  have comp_length (U : Source) : (composition U).1 + (composition U).2 = U.length := by
-    induction U with
-    | of b => cases b <;> rfl
-    | mul s t hs ht =>
-      simp only [composition, Prod.fst_add, Prod.snd_add, FreeMagma.length]
-      omega
+  have block_lengths : A.length = 3 ∧ (B).length = 8 ∧ C.length = 5 := ⟨rfl,rfl,rfl⟩
   have size (i : Index k) : (family k i).length = 3*k+13 := by
-    have hc := comp_length (family k i)
-    rw [comp] at hc
-    omega
+    cases i with
+    | inl u =>
+      cases u
+      simp [family, H, fold_len, block_lengths.1, block_lengths.2.1, block_lengths.2.2]
+    | inr p =>
+      cases p with
+      | inl j =>
+        simp only [family, fold_len, FreeMagma.length, block_lengths.1,
+          block_lengths.2.1, block_lengths.2.2]
+        rw [← Finset.sum_erase_add _ _ (Finset.mem_univ j)]
+        have unchanged (l : Fin k) (hl : l ∈ (Finset.univ : Finset (Fin k)).erase j) :
+            (if l = j then B else A).length = 3 := by
+          rw [if_neg (Finset.mem_erase.mp hl).1, block_lengths.1]
+        rw [Finset.sum_congr rfl unchanged]
+        simp [Finset.card_erase_of_mem (Finset.mem_univ j), block_lengths.1,
+          block_lengths.2.1, block_lengths.2.2]
+        omega
+      | inr i =>
+        simp [family, H, fold_len, block_lengths.1, block_lengths.2.1,
+          block_lengths.2.2]
   have raw_H (n t : Nat) (ht : t ≤ n) :
       readout (List.replicate t true ++ [false,false,true]) (H n) = .alpha := by
     by_cases hlt : t < n
@@ -228,7 +228,6 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     rw [List.replicate_add]
     simpa only [List.replicate_one, List.append_assoc, List.singleton_append] using
       hs.trans (show readout [true,false,false,true] C = .absent from rfl)
-  have block_lengths : A.length = 3 ∧ (B).length = 8 ∧ C.length = 5 := ⟨rfl,rfl,rfl⟩
   have injective : Function.Injective (family k) := by
     have left_size : ∀ i : Index k,
         (match family k i with | .of _ => 0 | .mul l _ => l.length) =
