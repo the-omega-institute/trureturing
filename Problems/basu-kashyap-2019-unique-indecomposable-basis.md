@@ -43,7 +43,7 @@ screen. The source has only arXiv v1. The recorded MathDB entry
 has no solution; the recorded arXiv and Crossref searches identify no settlement
 or journal version. These are bounded literature readings, not a global
 priority claim. The source's intersection-closed implication is a proved result
-in Remark 5 and Proposition 17, not the missing converse.
+in Remark 5 (page 21) and Proposition 17 (page 20), not the missing converse.
 
 ## Route
 
@@ -90,7 +90,7 @@ outside the Lean kernel; they do not constitute a formal proof of minimality.
 | Item | Status | Evidence kind and scope |
 | --- | --- | --- |
 | Three coordinate-block intersections escape the Klein code; the dimension gaps leave exactly two indecomposable words forming its unique basis. | proved | Kernel-checked private `family`, `realizeFin_inter`, `klein_indecomposable`, `klein_unique_basis` and `family_intersection_missing`, consumed by `result`; the block nonmembership argument below handles $P,Q$. Every finite field, $0<i<a$, $i<b$. |
-| Intersection-closed codes have a unique indecomposable basis. | proved | Literature reading: Proposition 17 (label `11`) and Remark 5 (label `R`), page 21; Section 6, page 22. This implication is not formalized here. |
+| Intersection-closed codes have a unique indecomposable basis. | proved | Literature reading: Proposition 17 (label `11`, page 20) and Remark 5 (label `R`, page 21); Section 6, page 22. This implication is not formalized here. |
 | Over $\mathbb F_2$, $n\le5$, codes of size $\le4$, the smallest counterexample dimension is $5$ and every counterexample has Klein addition. | computed | Exhaustive programs below, commands, exits 0 and SHA-256 values; all distinct ambient subspace sets, not isomorphism classes. |
 | Remark 5 includes "closed under intersection"; the Section 6 recap omits that qualifier. | proved | Literature reading: exact quotations below; this is a textual conclusion, not a Lean theorem. |
 | A weaker intersection or lattice property characterizing unique indecomposable bases. | open | No characterization established by this module or the finite computation. |

@@ -1774,3 +1774,12 @@ The larger example of Proposition60.8 has exactly $5,033,600$ blocks, magnitude 
 The finite calculations support the expanded ordinary proofs and their explicit ideal apparatus hypotheses. They supply no current Lean evidence, physical calibration, exact-probability measurement, all-history machine verification, unbounded-clock theorem or complete why-three-dimensions conclusion.
 
 ## 60.99 追加锚（本行以下为增补区）
+
+
+## 61. 两个四叶混色格的显式证书入口
+
+**定义 61.1（具体证书与原供应）。** 对原定义57.1的完整同组成来源、原四值端点、空取得历史与不同实际地址收费，[四叶显式证书卷定理5.1](FIB_ATOM_MIXED_FOUR_LEAF_EXPLICIT_CERTIFICATES.md#5-具体证书有效性的普通证明与精确费用)列全 $(a,b,d)=(2,2,3),(3,1,3)$ 的有限普通上界证书，并证明其对全部同组成负源正确且有限终止。与[混色部分界卷定义9.1及定理5.3](FIB_ATOM_MIXED_ACTUAL_ADDRESS_PARTIAL_BOUNDS.md#9-两个四叶混色格的显式证书)所引下界配合，对每个 $h\ge6$ 含无穷得到费用9、8。
+
+定义57.11已经报告混色四叶 $E=3$ 的有限数值；定理57.3提供两色完整前沿与同组成刚性，定理57.4提供深度独立性，定理57.7已提供真实诊断、缓存和补查的实际取得桥。新增内容归于两张具体上界证书的完整有限证据与普通有效性证明，不归于数值发现、一般操作桥或下界。原一般混色、GeneralH、同一实际整数严格预算及长期几何代数目标保持原域和未解边界。
+
+## 61.99 追加锚（本行以下为增补区）
