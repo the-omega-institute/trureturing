@@ -1,7 +1,7 @@
 ---
-bibkey: euclidpentagonextrememean
-authors: Euclid
-year: null
+bibkey: joyce1997euclidpentagon
+authors: Euclid; D. E. Joyce (ed.)
+year: 1997
 title: Elements, Book XIII, Proposition 8
 doi: null
 url: https://mathcs.clarku.edu/~djoyce/elements/bookXIII/propXIII8.html
