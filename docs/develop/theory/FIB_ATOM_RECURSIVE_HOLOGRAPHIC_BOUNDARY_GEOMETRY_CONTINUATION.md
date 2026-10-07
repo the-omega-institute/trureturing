@@ -408,3 +408,346 @@ The positive field and binding results answer an actual missing same-source corr
 Hypothesis15.1's native full-rotation bridge, faithful actual displacement bridge, physical maintenance/leakage/precision/record price bridge and common-environment propagation/task-capacity bridge all remain unproved. A native operation/metric/field/kinetic realization, authentic spectral acquisition, physical clock and component laws, and many-body scale consistency require separate evidence. The present joint realization is ordinary conditional mathematics; it does not establish a physical realization or the full why-three-dimensions objective.
 
 ## 追加锚（本行以下为增补区）
+
+## 56. Fixed positive Read noise: the exact original minimax risk and nonattainment
+
+**Definition 56.1 (unchanged INITIAL contract and contact parameter).** This chapter uses exactly original Boundary Definitions54.1,45.1,46.1,51.1, with
+
+$$
+E=\operatorname{Im}\mathbb H,\qquad W=E\oplus\mathbb H,\qquad
+\mathcal D_2=E\times
+\{b:|b|\in\{7,25\},\ \operatorname{Re}b\ge(4/5)|b|\}.
+\tag{56.1}
+$$
+
+The initial $a$ is independent of $b$, arbitrary and unbounded, including zero. Both radius caps are closed and unlabelled. The sole overwritten register has only the original exact updates
+$A_c(a',b')=(c\times a',b'c)$ for pure imaginary $|c|\le1$, and
+$A_d(a',b')=(\operatorname{Im}b',-a')$.
+Every nondestructive Read returns $a'+e$ with $|e|\le\delta$; the closed error balls may be jointly adversarial, correlated and history dependent. Repeated Reads confer no averaging guarantee.
+The controller has common source-independent initialization, is deterministic and causal on actual finite prefixes, and retains every actual Read, ordered action identity and Stop. Every original finite or natural-number-indexed countable complete history remains in scope, with its original $W$-valued estimate and no event after an infinite prefix. The target is the full INITIAL $(a,b)$ with its Euclidean distance, not a later state, a hidden coordinate alone or a radius label. There is no reset, copy, hidden tag, new archive or observation port, limit Read or native realization privilege.
+
+Fix $0<\delta\le1/100$. Keep $K,t_R,S_R,B,\rho_-,\rho_+$ exactly as defined in original (54.2); in particular
+$B(\rho,\delta)=\sqrt{2\delta^2+S_{25}(\rho,\delta)^2}$,
+$\rho_-=\delta/12$ and $\rho_+=\delta/12+\delta^2/100$.
+The new public parameter is the contact root
+
+$$
+g(\rho):=24\rho-7(1-K(\rho)),\qquad
+g(\rho_*)=2\delta,\qquad \rho_-<\rho_*<\rho_+.
+\tag{56.2}
+$$
+
+The risks $\mathcal E_\pi(\delta),R_N(\delta),R_\infty(\delta)$ and policy classes are the unchanged original (46.3). The budget counts only original destructive updates; Reads, control descriptions, arithmetic, records and physical costs are separate resources.
+
+**Proposition 56.2 (unique root, explicit value and order).** The root in (56.2) exists uniquely in $[0,1/10]$. With $m=7+2\delta$ it is
+
+$$
+\rho_*=
+\frac{24m-7\sqrt{625-m^2}}{625}
+=\frac{4\delta(7+\delta)}
+ {24m+7\sqrt{625-m^2}}.
+\tag{56.3}
+$$
+
+Furthermore $B(\rho_*,\delta)<1$, and $B(\rho,\delta)$ is strictly increasing in $\rho$ on $[0,1/10]$.
+
+Proof. On this interval $K\ge99/100$ and
+$g'(\rho)=24-7\rho/K>23$. At the lower comparison point,
+$g(\rho_-)-2\delta=-7(1-K(\rho_-))<0$.
+Use the unchanged endpoint estimate (54.16), whose assumptions are precisely $\rho=\rho_+$ and $0<\delta\le1/100$:
+
+$$
+g(\rho_+)-2\delta
+\ge\frac{551}{3025}\delta^2>0,\qquad
+0<\rho_+\le\delta/11<1/10.
+\tag{56.4}
+$$
+
+Continuity and strict monotonicity give the asserted root and both strict orders. The unsquared root equation is $24\rho+7K=m$. Squaring gives
+$625\rho^2-48m\rho+m^2-49=0$, with roots
+$(24m\pm7\sqrt{625-m^2})/625$.
+The plus root has $m-24\rho<0$: here $7<m\le351/50$ and $\sqrt{625-m^2}>23$, so $7m-24\sqrt{625-m^2}<0$.
+It cannot satisfy the unsquared equation. For the minus root,
+$m-24\rho=7(7m+24\sqrt{625-m^2})/625>0$, so it has the required sign. Rationalizing its numerator gives the second expression in (56.3), using $m^2-49=4\delta(7+\delta)$.
+
+Strict increase of $B$ is exactly the derivative calculation (54.11), not a new envelope. For the needed comparison with the large-error witnesses, $\rho_+\le\delta/11$ gives
+$25\rho_+\le1/44$ and
+$t_{25}(\rho_+,\delta)^2\le100\delta+625\delta^2/121<121/100$.
+Consequently
+
+$$
+B(\rho_*,\delta)^2\le B(\rho_+,\delta)^2
+<\frac1{5000}+\left(\frac{247}{440}\right)^2<1.
+\tag{56.5}
+$$
+
+These statements use only the public $\delta$. They supply neither a source observation nor a radius label. □
+
+**Theorem 56.3 (strict bound for every original policy).** Every individual authorized original policy, including the entire finite/countable class $\mathcal P_\infty$, satisfies
+
+$$
+\mathcal E_\pi(\delta)>B(\rho_*,\delta).
+\tag{56.6}
+$$
+
+Each lower bound below comes from two fixed original INITIAL sources and a common actual complete history.
+
+Proof. Fix $\pi$. Before the first anchor, follow the common zero-report branch. For $a=0$ all those reports are exact. For either $a=\delta v$ or $a=-\delta v$, with any fixed unit $v\in E$, every internal prefix still has visible norm at most $\delta$, so its opposite is a legal error yielding the same zero report. Thus this branch, its action identities and its stopping decision are determined without the hidden source or a radius tag.
+
+Reuse the first-anchor state law and contraction argument from original §§40,46 and Theorem54.2. If a first anchor occurs, it is a finite event. Before it the actual internal product and visible map are
+
+$$
+p=c_1\cdots c_k,\qquad
+M=(c_k\times)\cdots(c_1\times),\qquad
+(a',b')=(Ma,bp).
+\tag{56.7}
+$$
+
+The empty product is one and the empty $M$ is the identity. If $p\ne0$, write
+$p=\sigma\lambda q$ with $0<\lambda=|p|\le1$,
+$\sigma\in\{1,-1\}$,
+$q=\alpha+\nu u$, $\alpha\ge0$, $\nu=\sqrt{1-\alpha^2}$ and $|u|=1$.
+The sign is retained in the actual response, and $\|M\|\le\lambda\le1$.
+The first anchor gives $(\sigma\lambda\operatorname{Im}(bq),-Ma)$.
+
+The original continuation argument applies whenever, just after this anchor, both current difference slots have norm at most $2\delta$.
+Every common $A_c$ contracts them separately. Every common $A_d$ sends them to
+$(\operatorname{Im}\Delta b',-\Delta a')$, preserving that bound.
+At each actual Read use the midpoint of the two current visible values; its two errors are opposite half differences and lie in the closed $\delta$ balls.
+Equal actual report prefixes force the same next event, control and Stop.
+The complete finite records coincide; for a countable history every finite prefix coincides. This adds no event after an infinite prefix and uses only the output already assigned to that complete record by the original contract.
+Two-run comparison here is a proof of a lower bound, not a second register supplied to $\pi$.
+
+The following cases exhaust the common zero-report branch.
+
+1. **No anchor, or an erased register before the first anchor.** Take $a=0$ in both runs and $b_0=20-15i$, $b_1=20+15i$. These are actual radius25 cap points. Without an anchor every Read remains zero, including an infinite internal/Read history or a finite Stop. If $p=0$ at a finite first anchor, one earlier internal control was zero; with $a=0$ that action erased the whole register, so subsequent states and records agree. The INITIAL half-distance is $15>B(\rho_*,\delta)$.
+
+2. **A nonzero product with $\alpha\ge3/5$.** Take $a=0$ and exactly the two different-radius same-projection sources of original Lemma45.2(ii): for $3/5\le\alpha<4/5$ set its $h=(4/5)\nu-(3/5)\alpha$, $H=(4/5)\nu+(3/5)\alpha$, choose $r=(25h+7H)/2\in[25h,7H]$ and $b_R=(\sqrt{R^2-r^2}+ru)q^{-1}$; for $\alpha\ge4/5$ choose $b_R=Rq^{-1}$, $R=7,25$. Their source legality and identical projections are the unchanged lemma. Both full states agree after the first anchor. Their INITIAL distance is at least $25-7=18$, hence the half-distance is at least $9>B(\rho_*,\delta)$. Zero future errors give a common record.
+
+3. **A nonzero product with $0\le\alpha<3/5$ and $\rho>1/10$.** Use original (45.4),
+$\rho=(3/5)\nu-(4/5)\alpha>0$ and
+$K=(3/5)\alpha+(4/5)\nu=\sqrt{1-\rho^2}$.
+Take $a=0$ and the original Lemma45.2(i) sources
+$b_\pm=(\pm25\rho+25Ku)q^{-1}$.
+They have identical first-anchor projections and identical full states thereafter. Their INITIAL half-distance is $25\rho>5/2>B(\rho_*,\delta)$.
+
+4. **The same direction range, with $0<\rho\le\rho_*$.** Instantiate exactly the original cross-layer cap witnesses (54.7):
+
+$$
+h=(4/5)\nu-(3/5)\alpha=\frac{7K+24\rho}{25},\qquad
+l=(4/5)\alpha+(3/5)\nu,\qquad
+b_7=(7u)q^{-1},\quad b_{25}=(25l+25hu)q^{-1}.
+\tag{56.8}
+$$
+
+Use $a=0$ in both runs. The original cap check gives $|b_7|=7$,
+$\operatorname{Re}b_7=7\nu\ge28/5$, $|b_{25}|=25$ and
+$\operatorname{Re}b_{25}=20$; $l^2+h^2=1$.
+Monotonicity of $g$ gives
+$0<g=25h-7\le2\delta$.
+The first-anchor difference is $(\sigma\lambda gu,0)$, so the common midpoint continuation above is legal. The actual INITIAL half-distance, rather than a distance between later visible states, is
+
+$$
+\frac{|b_{25}-b_7|}{2}
+=\sqrt{\frac{(25l)^2+(25h-7)^2}{4}}
+=\sqrt{144-\frac72g}
+\ge\sqrt{144-7\delta}>1>B(\rho_*,\delta).
+\tag{56.9}
+$$
+
+5. **The remaining range $\rho_*<\rho\le1/10$.** Use the unchanged same-layer witnesses (54.8), now in their already proved range $\rho\ge\rho_->0$:
+
+$$
+t=t_{25}(\rho,\delta),\qquad
+x_0=(\delta v,(-25\rho+25Ku)q^{-1}),\qquad
+x_1=(-\delta v,(t+(25K-2\delta)u)q^{-1}).
+\tag{56.10}
+$$
+
+Both hidden points are original radius25 cap points by (54.9), and the independent initial $a$ contract allows both full sources.
+Every pre-anchor Read has the same zero report with error norm at most $\delta$. Immediately after the anchor the visible difference has norm $2\lambda\delta\le2\delta$, and the hidden difference has norm $2\delta|Mv|\le2\delta$.
+The same common continuation therefore supplies an actual complete record. Original (54.10), including the initial $a$ difference, gives
+$|x_1-x_0|/2=B(\rho,\delta)>B(\rho_*,\delta)$ by strict monotonicity.
+
+In each case both sources can be fixed before the run: the pre-anchor zero branch determining the case and $q$ does not depend on $b$, and the selected $a$ values legally realize that branch. Sources are not changed during continuation. The common complete record has one estimate in $W$; the original same-data half-distance argument forces loss at least the stated half-distance for one of its two fixed INITIAL sources.
+This proves the strict inequality separately for every $\pi$, without a uniform positive excess over all policies. Contractions, extra anchors, adaptive future controls, repeated Reads, early Stops and countable histories are all included. □
+
+**Definition 56.4 (public finite family and total original decoder).** For every public parameter
+$\rho\in(\rho_*,\rho_+]$, reuse exactly original (54.12)–(54.14), replacing their single selected value $\rho_+$ by this $\rho$. Explicitly set
+
+$$
+\alpha=(3/5)K(\rho)-(4/5)\rho,\qquad
+\nu=(4/5)K(\rho)+(3/5)\rho,\qquad q=\alpha+\nu i,
+\quad c_1=j,\quad c_2=-\alpha j+\nu k,\quad
+h=\frac{7K(\rho)+24\rho}{25},\quad T=\frac{7+25h}{2}.
+\tag{56.11}
+$$
+
+These are public exact constants, $c_1,c_2$ are unit pure imaginary controls, and $c_1c_2=q$. The controller $\pi_\rho$ executes the fixed original events
+
+$$
+\operatorname{Read}(y_0);\ A_{c_1};\
+\operatorname{Read}(y_1);\ A_{c_2};\
+\operatorname{Read}(y_2);\ A_d;\
+\operatorname{Read}(y_3);\ \operatorname{Stop}.
+\tag{56.12}
+$$
+
+Keep all four reports and all three action identities and Stop. On the entire report space $E^4$, put $r=|y_3|$, select $R=7$ if $r\le T$ and $R=25$ otherwise, and use the unchanged scalar decoder and closed-ball projection (54.14):
+
+$$
+\begin{aligned}
+d_R^-&=\min\{R,\max(0,r-\delta)\},&
+d_R^+&=\min\{R,r+\delta\},\\
+\ell_R&=\sqrt{R^2-(d_R^+)^2},&
+u_R&=\sqrt{R^2-(d_R^-)^2},\\
+\widehat s&=
+\begin{cases}
+(\ell_R+u_R)/2,&\ell_R>R\rho,\\
+(u_R-R\rho)/2,&\ell_R\le R\rho,
+\end{cases}
+&\widehat w&=P_R(y_3),\\
+\widehat x_\rho&=(y_0,(\widehat s+\widehat w)q^{-1}).&&
+\end{aligned}
+\tag{56.13}
+$$
+
+Here $P_R(y)=y$ for $|y|\le R$, and $P_R(y)=Ry/|y|$ otherwise. In particular zero reports require no division. For every report, including impossible reports, $0\le d_R^-\le d_R^+\le R$, so this is a total $W$-valued decoder. The two middle report values need not enter the output formula, but their actual acquisition and retention are part of (56.12).
+The computational branch $R$ is determined from $y_3$, not supplied at initialization as a cap tag. The only initial $a$ estimate is its acquired first report $y_0$.
+
+**Theorem 56.5 (exact own risk and its actual maximum).** For every $\rho\in(\rho_*,\rho_+]$, the lawful finite policy in Definition56.4 has exactly three original updates and four actual Reads, and
+
+$$
+\mathcal E_{\pi_\rho}(\delta)=B(\rho,\delta).
+\tag{56.14}
+$$
+
+Its worst loss is realized by explicit original sources and legal errors. At the common witness report its output is also the unique Chebyshev center of that report's full INITIAL candidate fiber.
+
+Proof. The sole additional condition needed to reuse the original upper-bound proof is strict layer separation. Proposition56.2 gives
+$g(\rho)>g(\rho_*)=2\delta$.
+For any actual original source $bq=s+w$, the unchanged cap estimates from §45 and Theorem54.4 give
+$s\ge-R_0\rho$, $R_0h\le|w|\le R_0$, $R_0=|b|$.
+Thus the actual fourth report obeys
+
+$$
+R_0=7\ \Longrightarrow\ r\le7+\delta<T,\qquad
+R_0=25\ \Longrightarrow\ r\ge25h-\delta>T.
+\tag{56.15}
+$$
+
+The decoder selects the true layer on every legal history.
+Apply exactly the original scalar interval estimates (54.17)–(54.19) to this same report and the true $R_0$: they imply
+$|\widehat s-s|\le S_{R_0}(\rho,\delta)\le S_{25}(\rho,\delta)$.
+In particular the allowed-negative-sign branch still uses its own report condition $r\ge R_0K- \delta$; no independently optimal radial endpoints are combined.
+The unchanged ball-projection estimate gives $|\widehat w-w|\le\delta$, and the actual initial Read gives $|y_0-a|\le\delta$ for every unbounded initial $a$.
+Their orthogonal INITIAL error decomposition (54.20) proves the upper bound $B(\rho,\delta)$ on the whole source and all jointly adversarial errors. No statistical independence is used.
+
+For equality instantiate the published witness (54.22) at this $\rho$:
+
+$$
+x_0=(\delta j,(-25\rho+25Ki)q^{-1}),\qquad
+x_1=(-\delta j,(t_{25}(\rho,\delta)+(25K-2\delta)i)q^{-1}).
+\tag{56.16}
+$$
+
+The existing cap check (54.9) applies throughout this parameter interval. The actual four errors are respectively
+$(-\delta j,0,0,-\delta i)$ and $(\delta j,0,0,\delta i)$.
+The first $j$ action kills both visible states, the next internal action keeps them zero, and the anchor exposes the two specified imaginary parts. All four actual reports, actions and Stop are common:
+
+$$
+(y_0,y_1,y_2,y_3)=(0,0,0,(25K-\delta)i).
+\tag{56.17}
+$$
+
+This report is in the radius25 branch by (56.15). As in original Proposition54.5,
+$d_{25}^-=25K-2\delta$, $d_{25}^+=25K$,
+$\ell_{25}=25\rho$ and $u_{25}=t_{25}(\rho,\delta)$.
+The equality branch in (56.13) therefore outputs the exact Euclidean midpoint of $x_0,x_1$. Their full INITIAL half-distance is $B(\rho,\delta)$ by (54.10), and each endpoint has that loss. The upper bound is consequently an attained maximum for this individual policy, not just a supremum approached by examples.
+
+For any legal report of this finite word the full candidate fiber is compact: $y_0$ confines $a$ to a closed ball of radius $\delta$, both $b$ caps are compact, and all four exact-menu/error constraints are closed. Classical finite-dimensional minimax-center existence applies in $W$; it supplies an output center, not another event or source port. The explicit decoder uses centers of enclosing scalar intervals and is not claimed to minimize every report's exact fiber radius. At (56.17), however, the upper bound encloses the entire fiber in its midpoint ball of radius $B(\rho,\delta)$, while the two actual endpoints force that radius. A ball of this radius containing two points at distance $2B(\rho,\delta)$ has their midpoint as its unique center. Thus the asserted local center attainment follows.
+Any alternative decoder for the same finite word also faces those endpoints; its risk cannot be smaller than $B(\rho,\delta)$. None of these decoder or maximum attainments asserts attainment of the infimum over policies. □
+
+**Proposition 56.6 (closed contact pair and all-continuation obstruction).** At $\rho=\rho_*$, the same original three-update word has two legal fixed INITIAL sources with the common four reports $(0,0,0,(7+\delta)i)$ and INITIAL half-distance $\sqrt{144-7\delta}$. Every authorized future continuation of that common prefix can still be given identical actual reports and actions for these two sources. In particular arbitrary report postprocessing or continuation cannot turn the contact direction into a policy with risk $B(\rho_*,\delta)$.
+
+Proof. Use (56.11) with $\rho=\rho_*$, and let
+$l=(4/5)\alpha+(3/5)\nu$.
+The actual full source pair is the original cross-layer pair (54.7), written in original coordinates:
+
+$$
+x_7=(0,7\nu+7\alpha i)=(0,(7i)q^{-1}),\qquad
+x_{25}=(0,20-15i)
+       =(0,(25l+(7+2\delta)i)q^{-1}).
+\tag{56.18}
+$$
+
+Indeed $25h=7+2\delta$ at contact,
+$l^2+h^2=1$ and $\alpha l+\nu h=4/5$.
+The inner source has norm7 and real part $7\nu\ge28/5$; the outer source has norm25 and real part exactly20, on its original closed cap boundary. Both initial visible coordinates are exactly zero.
+Under the literal original events (56.12), the first three true visible values are zero. The fourth values are respectively $7i$ and $(7+2\delta)i$.
+Choose errors $(0,0,0,\delta i)$ and $(0,0,0,-\delta i)$.
+They are legal on the closed error-ball boundary, and give the common report $(7+\delta)i$ exactly. The full ordered action records and Stop, if taken there, are identical.
+
+The two fixed INITIAL values satisfy
+
+$$
+\frac{|x_{25}-x_7|^2}{4}
+=\frac{(25l)^2+(2\delta)^2}{4}
+=\frac{625-(7+2\delta)^2+4\delta^2}{4}
+=144-7\delta.
+\tag{56.19}
+$$
+
+This is the full INITIAL distance. It does not pair independently chosen maxima from different realizations.
+After the fourth Read the actual residual states are $(7i,0)$ and $((7+2\delta)i,0)$: their histories agree, while their visible state difference is exactly $2\delta i$ and their hidden difference is zero.
+The original two-slot contraction and midpoint continuation used in Theorem56.3 preserves differences of norm at most $2\delta$ in each slot under every future original action. Every subsequent actual Read can therefore be common with errors of norm at most $\delta$.
+Causality keeps the future actions and stopping decisions common, for finite or countable continuations, with no post-infinite event. The erased real-coordinate distinction cannot be recovered by any of these continuations.
+
+The two closed report balls touch at the actual fourth report, and the outer cap point attaining the smaller outer projection is allowed. Strict $g(\rho)>2\delta$ is consequently essential for uniform separation in this word; equality cannot be repaired by a choice of threshold or a decoder tie rule. The common-record half-distance gives risk at least
+$\sqrt{144-7\delta}>1>B(\rho_*,\delta)$ for every such continuation. This is a source-realizable contact obstruction, not only an overlap of numerical ranges. □
+
+**Theorem 56.7 (all budgets at least three, exact infimum and nonattainment).** For every $0<\delta\le1/100$ and every integer $N\ge3$,
+
+$$
+R_N(\delta)=R_\infty(\delta)=B(\rho_*,\delta).
+\tag{56.20}
+$$
+
+No individual original policy in any of these classes attains this infimum. Every positive approximation tolerance is nevertheless realized by a finite three-update/four-Read policy with a total decoder.
+
+Proof. Theorem56.3 supplies $R_\infty(\delta)\ge B(\rho_*,\delta)$, and $\mathcal P_N\subseteq\mathcal P_\infty$ supplies the same lower bound for $R_N$.
+For an unambiguous tolerance choice, given public $\varepsilon>0$ take
+
+$$
+\rho_\varepsilon=\rho_*+
+\min\left\{\frac{\rho_+-\rho_*}{2},\frac{\varepsilon}{26}\right\}.
+\tag{56.21}
+$$
+
+It lies strictly in $(\rho_*,\rho_+]$.
+Reuse the derivative bound (54.26), valid on the unchanged interval $[\rho_-,\rho_+]$, to obtain
+
+$$
+0<\mathcal E_{\pi_{\rho_\varepsilon}}(\delta)-B(\rho_*,\delta)
+=B(\rho_\varepsilon,\delta)-B(\rho_*,\delta)
+\le13(\rho_\varepsilon-\rho_*)\le\varepsilon/2<\varepsilon.
+\tag{56.22}
+$$
+
+Definition56.4 and Theorem56.5 make this a source-independent lawful finite policy in $\mathcal P_3\subseteq\mathcal P_N\subseteq\mathcal P_\infty$, with its exact own risk. Taking the infimum for every positive $\varepsilon$ proves all equalities, without exchanging an update-budget limit with an infimum.
+The strict individual inequality (56.6) rules out every optimizer, including a policy with countable complete histories. Conversely (56.22) rules out a uniform positive excess shared by all policies.
+
+Equivalently the public choices
+$\rho_m=\rho_*+(\rho_+-\rho_*)/(m+1)$, $m=1,2,\ldots$, give a sequence of separate finite policies with risks decreasing to the displayed infimum. This sequence is not one execution, adds no infinite-prefix operation, and does not authorize a root-direction limit Read.
+The distinctions are exact: the global policy infimum is not attained; a report's minimax center can be attained; and each constructed $\pi_\rho$ has an attained own-policy worst loss (56.17). No claim is made that an arbitrary original policy's worst-loss supremum is attained. □
+
+**Definition 56.8 (reused mathematics and retained limits).** The first-anchor state law, pure-imaginary menu, contractions, cap direction classification, cross-layer witnesses, same-layer witnesses, scalar decoder and envelope are the unchanged original §§40,45,46,51,54 prerequisites. The additional deduction is the exact contact root, the strict all-policy bound at that root, the enlarged admissible parameter interval for the existing finite decoder, and the exact fixed-positive-noise infima and their global nonattainment. The contact pair and the full INITIAL endpoint witnesses provide the actual same-history bridges. Original §54.8's fixed-positive-noise minimax question is answered by (56.20) in this range.
+
+Same-data half-distance bounds, interval midpoints, closed-ball projections and finite-dimensional Chebyshev centers are mature mathematics. Reuse [Recovery Geometry §3.1–3.2](RECURSIVE_RELATIONAL_OBSERVATION_RECOVERY_GEOMETRY.md#31-候选纤维半径与恢复的最小最坏误差) in its stated source/target relation; its unrestricted per-fiber map selection is not an implementation theorem for an adaptive destructive controller.
+Foucart–Liao, [*Optimal Recovery from Inaccurate Data in Hilbert Spaces: Regularize, but what of the Parameter?*, arXiv:2111.02601v1, §1.1 and Lemma11](https://arxiv.org/html/2111.02601v1), supplies classical same-data lower-bound background. Its subspace-approximation and fixed linear-observation assumptions in Theorem10, and the two-affine-norm-constraint assumptions in Theorem4, are not the union of two caps and the adaptive overwritten-register menu here. Neither theorem is used to assert this all-policy equality. The original §54.8 references on local centers retain their own scopes. These are ordinary *repo-derived* deductions on the declared original source, with no mathematical priority or current Lean/kernel certification claim.
+
+The result fixes $0<\delta\le1/100$, exact real arithmetic and original exact actuation. It supplies no new result for $N\le2$, larger noise, randomized control, noisy actuation, higher asymptotic coefficients or a generic recovery framework.
+Source preparation and calibration, exact directions and control identities, Read precision, report storage, arithmetic and control descriptions, finite-bit realization and physical costs remain separately supplied or priced. Three destructive updates and four Reads are only the original mathematical event counts.
+The native full-rotation, faithful displacement, physical maintenance/leakage/precision/record-price and common-environment propagation/task-capacity bridges remain unproved. No extra source port, physical realization, full DEV/RH result or completion of a broader research objective follows from (56.20).
+
+## 56.99 追加锚（本行以下为增补区）
