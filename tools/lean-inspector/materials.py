@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compact Inspector statement spools into the canonical v2 report bundle."""
+"""Compact Inspector statement spools into the canonical v3 report bundle."""
 
 from __future__ import annotations
 

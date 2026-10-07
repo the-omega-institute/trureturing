@@ -178,9 +178,8 @@ class CompareTests(unittest.TestCase):
 
     def test_duplicate_json_members_and_nonfinite_numbers(self):
         self.assertEqual(self.run_compare(report(), report(), raw='{"schema":"a","schema":"b","modules":[]}')[0], 2)
-        raw = json.dumps(report()).replace(f'"compatibility_version": {REPORT_VERSION}',
-                                           '"compatibility_version": NaN')
-        self.assertIn('"compatibility_version": NaN', raw)
+        raw = json.dumps(report()).replace('"schema_version": 1', '"schema_version": NaN')
+        self.assertIn('"schema_version": NaN', raw)
         self.assertEqual(self.run_compare(report(), report(), raw=raw)[0], 2)
 
     def test_duplicate_modules_and_declarations(self):
@@ -214,10 +213,10 @@ class CompareTests(unittest.TestCase):
         mapping = relocation("root", ROOT, ROOT)
         self.assertEqual(self.run_compare(report(), report(), [mapping, mapping])[0], 2)
 
-    def test_compatibility_versions_are_independent(self):
+    def test_retired_module_version_is_rejected(self):
         changed = report()
-        changed["modules"][0]["information_templates"]["compatibility_version"] = REPORT_VERSION + 1
-        self.assertEqual(self.run_compare(report(), changed)[0], 0)
+        changed["modules"][0]["information_templates"]["compatibility_version"] = 9
+        self.assertEqual(self.run_compare(report(), changed)[0], 2)
 
     def test_arena_and_catalog_relocations_are_exact(self):
         before, after = report(), report([record("Arena.second")])

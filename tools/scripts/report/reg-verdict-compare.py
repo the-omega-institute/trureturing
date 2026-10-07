@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare raw v2 registration verdicts using Python 3.12+ (standard library).
+"""Compare raw v3 registration verdicts using Python 3.12+ (standard library).
 
 Usage: reg-verdict-compare.py BEFORE AFTER [--mapping FILE|-]
        [--before-seal ROOT FILE] [--after-seal ROOT FILE]
@@ -13,7 +13,7 @@ quoted components. No prefix replacement or inferred relocation is performed.
 Unlisted values retain their identity. Endpoints must exist in their respective
 reports and the effective mapping must be injective, including unmoved values.
 
-Each side validates its own versions; compatibility versions may differ. This
+Each side uses the current strict report format. This
 tool compares report data, without loading Lean or rerunning either judge.
 Full record/certificate differences are printed, including identity changes.
 Exit 0 means agreement within the checked report scope, 1 means a verdict or
@@ -291,7 +291,6 @@ class Report:
     declarations: dict = field(default_factory=dict)
     seals: dict = field(default_factory=dict)
     support: dict = field(default_factory=lambda: {f: set() for f in MAP_FIELDS})
-    versions: set = field(default_factory=set)
 
 
 def read_report(path):
@@ -332,13 +331,10 @@ def read_report(path):
             if generated_seal(dn):
                 report.seals[name, dn] = d["kind"]
         e = m["information_templates"]
-        fields(e, {"schema_version", "compatibility_version", "inventory", "registered", "records"},
+        fields(e, {"schema_version", "inventory", "registered", "records"},
                "information_templates")
         require(type(e["schema_version"]) is int and e["schema_version"] == 1,
                 "unsupported information_templates schema")
-        require(natural(e["compatibility_version"], "compatibility_version") > 0,
-                "compatibility_version must be positive")
-        report.versions.add(e["compatibility_version"])
         lists = {}
         for f in ("inventory", "registered"):
             lists[f] = [read_key(x) for x in array(e[f], f)]
@@ -353,7 +349,6 @@ def read_report(path):
             report.records[k] = row
             for f in MOVABLE:
                 report.support[f].add(row["key"][f])
-    require(len(report.versions) <= 1, "mixed compatibility versions within one report")
     return report
 
 
@@ -586,7 +581,6 @@ def compare(before, after, mapping, before_seals, after_seals):
                 seal="checked" if seal_checked else "not_checked", matched_records=len(aligned),
                 before_states=dict(sorted(Counter(r["state"] for r in before.records.values()).items())),
                 after_states=dict(sorted(Counter(r["state"] for r in after.records.values()).items())),
-                compatibility_versions={"before": sorted(before.versions), "after": sorted(after.versions)},
                 differences=differences, information_registration_errors=errors,
                 seal_declarations={"before": len(before.seals), "after": len(after.seals),
                                    "matched": len(mapped_seals.keys() & after.seals.keys())},

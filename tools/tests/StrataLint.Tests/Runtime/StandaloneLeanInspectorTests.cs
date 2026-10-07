@@ -542,7 +542,7 @@ public sealed class StandaloneLeanInspectorTests
                     Path.Combine(
                         TestRepositoryLayout.FindRoot(),
                         "tools", "lean-inspector", "materials.py"),
-                    "compact", spoolReport, spoolMaterials, output, manifest,
+                    "compact", spoolReport, spoolMaterials, output,
                 ],
                 repositoryRoot,
                 TestBudgets.LeanProcessHangGuard,

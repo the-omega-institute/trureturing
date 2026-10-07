@@ -393,7 +393,7 @@ def aggregate(root, output, *artifacts):
                 origin = public.read_json(data['.provenance.json'])
                 if [row['module'] for row in current] != [name]:
                     raise ValueError('native aggregate membership mismatch')
-                public.check_origin(origin, current[0], versions, check_report=False)
+                public.check_origin(origin, current[0], check_report=False)
                 origins[name] = origin
                 rows.extend(current)
                 # Produced materials matched their content addresses; move their
