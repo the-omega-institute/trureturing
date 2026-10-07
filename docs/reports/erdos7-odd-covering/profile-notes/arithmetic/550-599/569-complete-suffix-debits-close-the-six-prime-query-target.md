@@ -908,6 +908,87 @@ for the actual integral `B_7` and compatible interpolation/screening;
 the old branch fields do not automatically determine it. That missing
 interface is immaterial to the negative result, which granted `B_7=0`.
 
+## The maximum-weight selector hides the first private-hull reservation
+
+The two-largest-weight choice in SD14 need not preserve the regions
+that a private-hull argument would charge. For the first reservation
+forced by [Report528 FC943](../500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md#private-hull-descendants-reserve-entire-parent-phases),
+the following local conditions force its entire parent cylinder to
+have zero mass under that choice of source.
+
+Fix a nonunit Q-smooth cofactor d. Its actual rows3^e d have at most
+one original at each exponent. Suppose d and3d occur, with distinct
+cofactor phases r0,r1 modulo d, and let b be the first ternary digit
+of the3d original. If an actual pure3 original occurs, suppose its
+digit differs from b. All deeper pure and same-cofactor originals
+have arbitrary phases and finite heights, with at most one per depth.
+Whole coverage and private-hull assumptions are not needed for this
+local statement.
+
+Choose H>=1 resolving those ternary depths. On the finite ternary
+carrier let lambda be uniform, V the actual pure survivor, S=lambda(V),
+and W_r=lambda(V intersect U_(d,r)). These are the actual UNION events
+from SD14. Put
+
+    T_H=sum_(j=2..H)3^(-j)=(1-3^(1-H))/6<1/6.
+
+The exponent-zero row gives W_r0=S. The pure3 cylinder misses the
+b-root; all deeper pure deletions cost at most T_H, so
+
+    S>=2/3-T_H>1/2,
+    W_r1>=lambda(V intersect[b]_3)>=1/3-T_H.
+
+For every r outside{r0,r1}, only exponent-at-least-two rows contribute,
+giving W_r<=T_H. The pure tail and the same-cofactor tail are different
+event families, bounded separately on the same lambda. No independence
+or disjointness of their unions is used. Thus
+
+    W_r1-W_r>=1/3-2T_H=3^(-H)>0,
+    W_r0>W_r.                                          (SD34)
+
+Dividing by the same positive S preserves the rankings. Both dominant
+weights are positive, so the UNIQUE at-most-two-phase set minimizing
+the SD14 residual sum is{r0,r1}. Missing depths only strengthen the
+bounds. Pure3 may be absent; coincident low cofactor phases or a3d
+root deleted by pure3 are outside the stated conditions. The strict
+gap need not stay bounded away from zero as H grows.
+
+The chosen Q source therefore satisfies nu_Q([r1]_d)=0. Consequently
+rho=nu3 times nu_Q gives zero mass to the ENTIRE parent cylinder
+R={all ternary states} times[r1]_d and every subregion of R, including
+its intersection with any query phase. This is stronger than merely
+avoiding the original3d class, which fixes a ternary digit as well.
+
+In the globally count-then-modulus-sum minimal whole cover considered
+by FC943, its explicit crossing and proper-multiple premises supply
+the actual hull descendant3d. Comparable disjointness supplies the
+two local phase conditions above. Hence its forced reservation
+R_(3d) is null under the SD14 maximum-weight source. FC942's geometric
+payment inequality remains valid, but this particular reservation
+has zero demand under that law. This establishes a specific instance
+of FC942's existing zero-source warning; it does not invalidate the
+private-hull theorem.
+
+An arbitrary selector need not choose these phases. A different source,
+or a deeper reservation outside the selected cylinders, may retain
+positive mass, but its full loss and query bounds must be established
+together. No decrease of the actual continuation margin, impossibility
+of another supported law, or covering counterexample follows.
+
+A scoped Lean application verifies the actual finite prefix-union
+ranking, positivity of S, and the exact normalized residual-minimizer
+conclusion, allowing arbitrary missing depths. It also verifies the
+parent nullity for a GIVEN Q law satisfying the selected-support
+contract, and any ternary probability joined to it. The standard axiom
+closure is unchanged. The application reuses prefix counts, finite
+union bounds, geometric estimates and finite selection identities;
+no canonical specialization is added. It proves the strict ordering
+needed by the selector, not the displayed closed-form gap3^(-H).
+The numerical cofactor interpretation and the FC943 whole-cover
+consumer above remain ordinary applications of their stated results;
+this check does not reconstruct the two-phase Q source or formalize
+whole-cover minimality.
+
 ## Verification
 
 The [standard-library producer](../../../frontier/cover-geometry/no-mod3-through2/pa_complete_suffix_debits.py)
@@ -949,3 +1030,597 @@ Run without `-O`, since the unchanged external verifier uses assertions:
 ```sh
 python3 -I -S -B docs/reports/erdos7-odd-covering/frontier/cover-geometry/seven-core-suffix-branch/seven_core_suffix_branch.py --source-root /path/to/nine-prime-support
 ```
+
+## A common source controls one-slot changes, but cannot restore excluded support
+
+Suppose two finite selected Q libraries share every forbidden class
+except one optional or differing second phase at the same numerical
+cofactor d. First apply the existing two-copy supplier to their COMMON
+library, obtaining one probability mu. Write B0 and B1 for the two
+additional phases; an absent phase is the empty event. Distinct phases
+at the same cofactor are disjoint. Put
+
+\[
+b_i=\mu(B_i),\qquad \delta=\max(b_0,b_1)<1,\qquad
+\nu_i=\mu(\,\cdot\mid B_i^c).
+\tag{SD35}
+\]
+
+These are two explicit laws derived from one source. Both preserve every
+common forbidden class as a null event and avoid their own additional
+phase. For a finite nonunit query inventory M, let
+`q_m(eta)=max_a eta([a]_m)` and `R_M(eta)=sum_(m in M)q_m(eta)`.
+The ordinary conditioning bound holds for every phase before taking
+maxima, so
+
+\[
+\sum_{m\in M}\max\{q_m(\nu_0),q_m(\nu_1)\}
+\le \frac{R_M(\mu)}{1-\delta}.
+\tag{SD36}
+\]
+
+Thus two separately constructed source bounds need not be added.
+The same denominator works for every finite window; exhaustion gives
+the corresponding complete-query bound when the common source has one.
+The unit query is excluded here. Including it requires the common-source
+budget `1+R_Q(mu)`.
+
+For the SD1 source, `mu<=Lambda Haar_Q`, where
+`Lambda=9/alpha_min` uses SD16's unchanged density constant. Consequently
+`b_i<=Lambda/d`; if `d>Lambda`, SD36 is at most
+`B_*/(1-Lambda/d)`. This is a sufficient one-slot estimate, not a uniform
+small-cofactor bound or a new noncoverage class.
+
+Disjointness also gives the exact retained masses
+
+\[
+\nu_0(B_1)=\frac{\mu(B_1)}{1-b_0},\qquad
+\nu_1(B_0)=\frac{\mu(B_0)}{1-b_1}.
+\tag{SD37}
+\]
+
+In particular, positive retained mass is equivalent to positive mass
+under the common source. SD36 does not supply that positivity. The
+existing PA construction has full support on the actual common-library
+survivor V: its raw measure satisfies
+`Haar_Q restricted to V<=lambda_final<=9 Haar_Q`, with total mass at
+most one. Hence `mu(E)>=Haar_Q(E intersect V)`. On a resolving finite
+CRT carrier, `mu(E)>0` holds exactly when `E intersect V` is nonempty.
+The missing condition is therefore actual surviving support.
+
+### An inactive parent can be excluded by another cofactor
+
+The following finite family demonstrates the distinction while keeping
+actual original labels, their crossing, and their complete private
+region. All entries and private points are modulo105.
+
+| Original modulus | Original residue | A private point |
+|---:|---:|---:|
+|3|0|3|
+|5|2|7|
+|7|2|16|
+|15|10|10|
+|21|1|1|
+|35|0|35|
+|105|50|50|
+
+The labels are exactly the nonunit divisors of105. They are distinct
+odd integers, all twelve comparable pairs of classes are disjoint,
+and the private points prove irredundancy. The COMPLETE private region
+of the35 class is `{35}` modulo105, so its congruence hull is105.
+Moreover, `A_15 intersect A_35={70}`. Thus the crossing and private-hull
+data used for the35-parent reservation are present in this example.
+It is a NONCOVER:4 avoids every listed class. No claim of global
+count-then-sum minimality is made.
+
+The105 class has ternary root2 and parent
+
+\[
+R_{105}=[15]_{35}=\{15,50,85\}\pmod {105}.
+\tag{SD38}
+\]
+
+The first point is pure3-deleted, the second is the105 original, and
+the third lies in the15 original. In particular, the entire parent
+on inactive ternary root1 is already covered by an actual lower original.
+
+On root1, the exact Q library obtained from the active originals is
+
+\[
+5:\{2,0\},\qquad 7:\{2,1\},\qquad 35:\{0\}.
+\tag{SD39}
+\]
+
+It has15 surviving points modulo35, but none in `[15]_35`: the common
+forbidden class `[0]_5` already contains that target. Adding the optional
+second phase15 at cofactor35 therefore leaves its survivor unchanged.
+Both libraries have at most two phases per numerical cofactor. The same
+probability on their common survivor serves both, so on every query
+window their joint envelope equals its ordinary single-law envelope.
+Its extra joint cost is zero, while every supported law gives the target
+zero mass.
+
+This one-slot comparison is SD39 with and without the extra35 phase.
+It is not the pair of natural root1 and root2 libraries: the latter
+root has `5:{2}, 7:{2}, 35:{0,15}`, changing three secondary choices.
+The example therefore isolates retained support without attributing a
+one-slot relation to those two actual roots.
+
+FC941 excludes other35-multiples from the parent;15 is a complementary
+label, which FC942 expressly allows to cover its reserved hole. Thus
+divisor closure, comparable disjointness, irredundancy and the displayed
+private-hull crossing do not force positive inactive-root parent mass.
+A whole-minimal-cover argument would need an additional consequence of
+its global hypotheses; this finite noncover does not refute such an
+argument.
+
+If an old selected phase is contained in the union of the UNCHANGED
+common forbidden classes, removing that redundant slot preserves all
+old avoidance requirements. Within the same cofactor's remaining
+two-phase allowance, one may then select a fixed further actual phase,
+construct the new source, and check its joint budget. Being null only
+under the old law does not justify this replacement after a source
+change. The set-containment argument reuses
+[Report528 FC455--FC457](../500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md)
+and [Report626](../600-649/626-free-square-roots-admit-one-complete-boundary-gate.md),
+not a new source theorem. Neither skipping a redundant phase nor SD36
+supplies a uniformly useful reservation. The remaining task is to find
+an actual target escaping the ENTIRE common library, quantify its mass,
+and apply the existing all-competitive-phase debit and complementary-tail
+payment on that same source.
+
+### A deep original supplies support on its own root
+
+There is a useful positive statement when the original has ternary
+depth at least two. Let `m=3^e d` be one actual original, with `e>=2`,
+`d>1` and d supported on Q. Assume it has a COMPLETE original private
+integer w: w lies in its class and in no other original class. Whole
+coverage is not required for this support statement.
+
+Put `b=w mod3`. For each nonunit Q-smooth c, select exactly the Q
+phases of every actual original c and every actual original3c whose
+first ternary root is b.
+Call this library L_b. Numerical distinctness gives at most two phases
+per numerical cofactor. No deeper or inactive-root phase is added.
+Let N_Q resolve d and every selected Q cofactor, and let V_b be the
+complete survivor of L_b modulo N_Q. Then
+
+\[
+x_0=w\bmod N_Q\ \in\ V_b\cap[a_m]_d.
+\tag{SD40}
+\]
+
+Indeed, a selected phase containing x_0 would, together with the fixed
+root b when needed, put w in a different actual original. This contradicts
+privacy. The argument uses the same w for all selected constraints.
+It gives no assertion about a different root or a selector that inserts
+extra deeper phases.
+
+Choose finite H resolving m and every actual pure3 original. Let
+`tau_H` be uniform ternary Haar, T_b the pure-surviving part of root b,
+and C_m the original m's ternary prefix. An actual pure3 class at depth1
+cannot occupy b, by privacy of w. At most one pure class occurs at each
+larger depth. Thus
+
+\[
+\tau_H(T_b)\ge \frac13-\sum_{k=2}^{H}3^{-k}>\frac16,
+\qquad \tau_H(C_m)=3^{-e}\le\frac19,
+\]
+
+and consequently
+
+\[
+\tau_H(T_b\setminus C_m)>\frac1{18}.
+\tag{SD41}
+\]
+
+This changes only the ternary tail, keeping root b and the complete Q
+point x_0. The resulting configurations avoid every selected low original,
+every pure3 original, and the original m itself; they remain in its
+mod-d parent. Other deep mixed originals may still cover them.
+
+Apply the existing PA supplier once to L_b, with its original raw
+support bound and total mass at most one. Its normalized law nu_b has
+`nu_b({x_0})>=1/N_Q`. For the UNNORMALIZED root measure
+
+\[
+\eta_b=(\tau_H|_{T_b})\otimes\nu_b
+\]
+
+it follows that
+
+\[
+\eta_b\bigl([a_m]_d\setminus A_m\bigr)
+>\frac1{18N_Q}>0.
+\tag{SD42}
+\]
+
+Here the parent cylinder includes the whole ternary coordinate; the
+product of `T_b minus C_m` with the singleton x_0 already supplies the
+bound. Missing pure depths are permitted. The constant depends on the
+actual finite Q resolution and is not a uniform bound over all original
+heights.
+
+This reuses actual private-point projection and the root-capacity
+calculation of Report528 FC704--FC712; its FC1066--FC1068 already
+separates positive private-head support from a sufficient continuation
+budget. The present application specifies a parent HOLE by leaving the
+deep original while keeping its first root. At depth1 that operation
+cannot stay on the same root, which is precisely the obstruction in
+SD38--SD39.
+
+To use FC942's complementary-label payment, one additionally needs the
+actual parent d and `m in H_d`, including `m | Gamma_d` for the COMPLETE
+d-private region, under FC942's whole-minimal-cover hypotheses. First
+extend eta_b uniformly on the fibres of a common CRT period resolving
+ALL original moduli. This preserves its existing marginal and SD42;
+every complementary original is evaluated on that single extension.
+The smaller period used for SD40--SD42 need not resolve every remaining
+deep mixed or outside-prime original. Positivity in SD42 does not prove
+the required hull membership.
+FC943 automatically supplies3d in its crossing case, whose depth1 is
+outside SD40--SD42. Nor does this one-root law inherit the query budget
+of a different selected source. Existence of a useful deep hull pair,
+a quantitatively sufficient same-source query debit, and payment of the
+remaining original tail all remain unresolved.
+
+### A fixed mixture supplies all deep private holes before deletion
+
+The fixed-mixture argument of
+[Report530 GD4](../500-549/530-one-supported-law-controls-unused-and-deep-occupied-labels.md)
+applies to SD40--SD42 with the following actual source choices. Keep
+`P={3,5,7,11,13,17,19}` and `Q=P minus {3}`. Fix one finite family of
+distinct odd original moduli and one common finite CRT resolution of
+all its originals. Each chosen deep mixed original
+`m=3^e d`, with `e>=2`, `d>1` and d Q-smooth, is assumed to have a
+COMPLETE private point. Count minimality of a hypothetical whole cover
+supplies that premise. No selected phase or probability below depends
+on the subsequent query.
+All laws have uniform Haar tails beyond the finite coordinate heights;
+outside-P CRT coordinates are extended uniformly before whole-family
+tests. The query norms below include those complete tails.
+
+Let `L_all` contain the Q projections of every actual original c and
+3c, for nonunit Q-smooth c. It has at most two phases per complete
+cofactor. SD1's PA construction supplies one law `nu_all` avoiding
+this library, with complete nonunit query norm at most
+
+\[
+B=B_*=
+\frac{432040125182653876501}{86355045355449035400}.
+\]
+
+Let u be normalized Haar on the complement of ALL actual pure-three
+classes. Their finite total Haar mass is less than `1/2`, so u has
+density at most2 and complete ternary query norm at most1. Consequently
+`rho_0=u tensor nu_all` avoids every pure-three original and every
+actual P-only original of ternary depth zero or one, and
+
+\[
+R_P(\rho_0)\le A_0=1+2B.
+\tag{SD43}
+\]
+
+This law need not give a deep parent hole positive mass: its library
+also includes projected phases from inactive first roots.
+
+For each first root b containing a chosen deep original, instead
+apply PA to its OWN-root library `L_b` of SD40. This library depends
+only on b and the fixed original family. It therefore supplies one
+law `nu_b` usable for ALL chosen deep originals in that root. Take
+one common Q resolution `N_Q` resolving these originals and the low
+libraries; extra digits receive the usual uniform extension. The PA
+survivor lower bound gives every relevant private Q point mass at
+least `1/N_Q` under this same `nu_b`.
+
+Write `a_b=tau(T_b)`, where `T_b` is the pure-surviving part of b, and
+set `rho_b=(tau restricted to T_b)/a_b tensor nu_b`. SD41 gives
+`1/6<a_b<=1/3`. SD42, divided by a_b, yields for every chosen m in b,
+with `R_m=[a_m]_d`,
+
+\[
+\rho_b(R_m\setminus A_m)>\frac1{6N_Q}.
+\tag{SD44}
+\]
+
+This normalized law also avoids ALL actual low P-only originals:
+other-root rows cannot meet its ternary support, and the active rows
+were included in `L_b`.
+
+For the complete ternary query norm of normalized root Haar, the
+depth-one contribution is1 and the remaining absolute cylinder
+maxima sum to at most `sum_(k>=2)3^-k=1/6`. Thus
+`r_b<=1+1/(6a_b)<2`. The product identity, including the unit query in
+each factor, gives
+
+\[
+R_P(\rho_b)=r_b+(1+r_b)R_Q(\nu_b)<2+3B.
+\]
+
+This is the root law's own budget. Indeed every law supported on one
+first root has `r_b>=3/2`; such a bare product could itself satisfy
+`R_P<566/49` only if `R_Q(nu_b)<197/49`. Inserting the upper bound B
+does not certify that condition and does not prove its failure.
+
+For a nonempty choice of deep originals, fix nonnegative root weights
+theta summing to1, positive on every
+chosen root. There are at most three such roots; if pure3 is present
+there are at most two. Set
+
+\[
+\rho_+=(\sum_b\theta_b\rho_b),\qquad
+\rho_\varepsilon=(1-\varepsilon)\rho_0+
+\varepsilon\rho_+,
+\qquad 0<\varepsilon\le1.
+\]
+
+All these components avoid the same actual low originals. Convexity
+of each literal query maximum and then the nonnegative query sum
+give, on this ONE fixed mixed law,
+
+\[
+\begin{aligned}
+R_P(\rho_\varepsilon)&\le1+2B+\varepsilon(1+B),\\
+\rho_\varepsilon(R_m\setminus A_m)&>
+\frac{\varepsilon\theta_b}{6N_Q}
+\quad(m\text{ in root }b).
+\end{aligned}
+\tag{SD45}
+\]
+
+Finite query inventories suffice for convexity; the complete sum
+follows by monotone passage through them. No separate optimizer is
+chosen for a different modulus or phase. If the PA density cap is
+`Lambda=9/min alpha`, rho_0 and rho_b have density at most `2 Lambda`
+and `6 Lambda`, respectively. The same mixture therefore has density
+at most `(2+4 epsilon)Lambda` relative to the common CRT Haar law.
+
+Choose `epsilon=1/20` and uniform weights on the nonempty set of
+chosen roots. Every chosen deep parent hole then has mass greater
+than `1/(360N_Q)`, while
+
+\[
+\begin{aligned}
+R_P(\rho_{1/20})&\le A_\varepsilon=
+\frac{19527101084953238679941}{1727100907108980708000}
+<\frac{566}{49},\\
+K_\varepsilon=566-49A_\varepsilon&=
+\frac{20711160260974385410891}{1727100907108980708000}>0.
+\end{aligned}
+\tag{SD46}
+\]
+
+For one chosen root the hole bound is `1/(120N_Q)`. With no chosen
+deep originals, use rho_0 and make no hole assertion. Neither the
+resolution-dependent lower bound nor convex support restoration
+supplies private-hull membership for a chosen pair.
+
+### The remaining loss must be measured on this mixture
+
+Let D be the union of ALL remaining actual P-only originals, including
+the deep mixed ones, and restrict this SAME rho to `D`'s complement
+to obtain sigma. For every complete nonunit query modulus q write
+`M_q=max_a rho([a]_q)` and
+
+\[
+c_q=\min_a\bigl(M_q-\rho([a]_q)+
+\rho(D\cap[a]_q)\bigr).
+\]
+
+The exact deletion identity of
+[Report571 JB7--JB9](571-joint-residual-laws-retain-conditional-and-query-incidence.md)
+and its weighted form in
+[Report752 JC1--JC4](../750-799/752-joint-deletion-credit-distinguishes-equal-marginal-sources.md)
+then give the sufficient test
+
+\[
+566\delta-49\sum_q t_q<K_\varepsilon,
+\qquad
+\delta\ge\rho_{1/20}(D),\quad 0\le t_q\le c_q.
+\tag{SD47}
+\]
+
+Without certified query credit this requires
+`delta<20711160260974385410891/977539113423683080728000`, approximately
+0.02118704. Support restoration consumes part of the old preliminary
+margin; it does not automatically improve the deletion estimate.
+The actual D mass and all competitive phase intersections remain to
+be bounded. Positive mass in one parent hole is not a lower bound on
+every query credit. In particular SD46 concerns a law avoiding the
+low library, whereas the continuation gate requires sigma to avoid
+ALL actual P-only originals. This distinction remains even when a
+chosen deep original belongs to a supplied private hull.
+
+### Private-hull reservations restrict the entire tail phase menu
+
+There is a stronger use of a supplied private-hull reservation than
+concentrating the source on one parent hole. Keep one actual family,
+one preliminary law rho from SD43, its remaining P-only union D, and
+sigma=rho restricted to D-complement. Write s=sigma(1). This subsection
+assumes the ENTIRE original prime support lies in P union {23,29}.
+Any further outside primes require their own continuation payment.
+
+Choose a finite set H of actual pairs (d,m), with d>1, d|m, m>d,
+and BOTH d,m supported on P, for which FC941 holds:
+
+    R_m=[a_m]_d,
+    n!=m and d|n ==> A_n intersect R_m=empty.
+
+Under the hypothetical whole-minimal-cover premises, this follows
+when d is an original parent and m|Gamma_d. The numerical labels,
+complete private hulls and phases all belong to the SAME family.
+A private point of m alone does not establish this hypothesis.
+
+For every nonunit P-smooth query label k, define the finite menu
+
+\[
+\mathcal A_k=\{a\bmod k:
+  a\not\equiv a_m\pmod d\text{ for every }(d,m)\in\mathcal H
+  \text{ with }d\mid k\}.
+\]
+
+Every actual23/29-touching original whose old cofactor is k has its
+actual phase in this menu. Such an original is different from each
+P-only m, and d|k implies d divides its full numerical modulus, so
+FC941 excludes the entire R_m. No phase or source is reselected.
+
+Define maxima with a zero option, including when the menu is empty:
+
+\[
+q_k^{\mathcal H}(\sigma)=
+\max\bigl(\{0\}\cup\{\sigma([a]_k):a\in\mathcal A_k\}\bigr),
+\qquad R_{\mathcal H}(\sigma)=\sum_{k>1}q_k^{\mathcal H}(\sigma).
+\]
+
+Condition23 and29 Haar on their actual pure-power survivors, exactly
+as in SD15. The old nonunit costs are now R_H/21 and R_H/27. Originals
+touching both primes cost at most(R_H+s)/567. The old unit is still
+present in the last expression: no parent d>1 divides1. Consequently
+this SAME product submeasure has full survivor mass at least
+
+\[
+\frac{566s-49R_{\mathcal H}(\sigma)}{567}.
+\tag{SD48}
+\]
+
+Thus positivity contradicts whole coverage. This reuses SD15's
+original-label count with the smaller justified phase menus. Since
+R_H<=R_P, it never weakens the old certificate on the fixed sigma.
+Strict improvement requires actual phase information.
+
+### Pay the remaining competitors once
+
+Let M_k=max_a rho([a]_k), and let
+s_(k,a)=M_k-rho([a]_k) be the old phase slack. The exact total reduction
+from the old unrestricted query to the new tail menu is
+
+\[
+\begin{aligned}
+h_k&=M_k-q_k^{\mathcal H}(\sigma)\\
+&=\min\left(\{M_k\}\cup
+ \{s_{k,a}+\rho(D\cap[a]_k):a\in\mathcal A_k\}\right).
+\end{aligned}
+\tag{SD49}
+\]
+
+This is Report571 JB7 / Report752 JC1 applied to the restricted menu.
+The extra M_k represents the zero option. With an empty menu h_k=M_k,
+and no actual tail original may use that old cofactor. Otherwise
+EVERY remaining competitive phase is included. Removing one old
+maximizer is insufficient if an uncharged competitor remains.
+
+All series converge by the finite bound SD46 on R_P(rho); each term
+is nonnegative and bounded by its unrestricted counterpart. Menu
+inclusion and the unchanged law give
+
+\[
+h_k\ge c_k\ge0,\qquad
+R_{\mathcal H}(\sigma)=R_P(\rho)-\sum_{k>1}h_k.
+\tag{SD50}
+\]
+
+Here h_k already contains both deletion and phase restriction. It
+must not be added to the old c_k as a second saving. Overlapping
+reservations are combined in A_k before taking the maximum.
+
+For a finite query test set J, same-source bounds
+0<=t_k<=h_k and delta>=rho(D) therefore give the sufficient gate
+
+\[
+566\delta-49\sum_{k\in J}t_k<K_\varepsilon.
+\tag{SD51}
+\]
+
+A useful simpler bound is h_k>=M_k-max({0} union
+{rho([a]_k):a in A_k}). It is positive exactly when M_k>0 and every
+old maximizing phase is excluded. SD49 can additionally charge
+actual D-intersections in the surviving near-maximal phases.
+
+Choose K0 resolving rho, D and all selected d,m, with every prime
+height positive; retain Haar tails. For g=gcd(k,K0), d|k iff d|g,
+and A_k is the inverse image of A_g. The exact finite reduction is
+
+\[
+R_{\mathcal H}(\sigma)=
+\sum_{\substack{g\mid K_0\\g>1}}\gamma_g q_g^{\mathcal H}(\sigma),
+\qquad
+\gamma_g=\prod_{\substack{p\in P\\v_p(g)=v_p(K_0)}}\frac p{p-1}.
+\tag{SD52}
+\]
+
+This reuses JB5, with maxima over the declared menus. It retains all
+higher query exponents. Actual finite phase histograms and reservation
+congruences suffice; separate query-dependent source laws do not.
+
+### Saturated parent phases remove a complete numerical cone
+
+For one actual parent d define its literal divisor-survivor residues
+
+\[
+S_d=\{z\bmod d:\ z\not\equiv a_e\pmod e
+     \text{ for every actual original }e>1\text{ with }e\mid d\}.
+\]
+
+This definition INCLUDES the original d itself. Because sigma avoids
+all P-only originals, its mod-d support lies in S_d. Comparable
+original disjointness puts every selected descendant's mod-d phase
+in S_d, and FC941 makes those phases pairwise distinct.
+
+Suppose the selected P-only descendants of d occupy every residue
+of S_d. Equivalently their number equals |S_d|. Then every k divisible
+by d has qH_k(sigma)=0: each phase meeting sigma is forbidden to the
+tail. This deletes the entire numerical cone, uniformly in the actual
+weights of sigma and in all query heights.
+
+For every k, the partition into k phases gives q_k(sigma)>=s/k.
+Put C_P=product_(p in P)p/(p-1)=323323/110592. Therefore
+
+\[
+R_P(\sigma)-R_{\mathcal H}(\sigma)
+\ge\sum_{d\mid k}q_k(\sigma)\ge\frac{C_P}{d}s.
+\tag{SD53}
+\]
+
+With R_P(sigma)<=A_epsilon and s>=1-delta, a uniform sufficient
+condition under this ACTUAL saturation premise is
+
+\[
+(566+49C_P/d)(1-\delta)>49A_\varepsilon.
+\tag{SD54}
+\]
+
+For SD46's A_epsilon this allows respectively
+
+| Saturated parent d | Sufficient delta upper threshold |
+|---:|---:|
+|5|0.06834734010495902...|
+|7|0.05534316295050326...|
+|35|0.028214444129245873...|
+
+The thresholds mean strict inequality. The previous bound without
+certified query saving is0.021187039962459072.... These are conditional
+certificate improvements; no saturation occurrence is asserted.
+For several saturated parents, replace C_P/d by C_P times the finite
+inclusion-exclusion sum of reciprocal lcms. This counts each removed
+numerical query once, even when its label lies in several cones.
+
+Divisor closure provides an explicit sufficient route to saturation.
+If m=d r lies in H_d, every d t with t|r and t>1 is another such child.
+Thus tau(r)-1 distinct phases lie in S_d. If
+
+    tau(r)-1=|S_d|,
+
+saturation follows. In particular for prime d=p, |S_p|=p-1, so the
+condition tau(r)=p suffices. For m=3^e d the forced child count is e.
+These are conditions on an actual hull descendant, not a claim that
+whole minimality supplies equality. A smaller child count leaves
+unreserved phases which must still be paid in SD49.
+
+The general unresolved input is now precise: force enough of these
+actual reservations to eliminate near-maximal tail phases, or bound
+D-intersections on every competitor that remains, while simultaneously
+bounding the TOTAL D loss on the same rho. Saturation gives one uniform
+sufficient branch, but existence of deep hull pairs, saturation or
+adequate nonsaturated joint incidence has not been proved for every
+hypothetical whole cover. All-height menu reduction and the ordinary
+proofs above are not new Lean verification or an Erdős #7 solution.
