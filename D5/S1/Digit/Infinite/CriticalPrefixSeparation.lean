@@ -57,15 +57,9 @@ def correct (h : ℕ) (ε : ℝ)
     dist r.val (response h x) ≤ ε → decode r = windowPrefix h x
 
 theorem golden_facts : 0 < t ∧ t < 1 ∧ t ^ 2 + t = 1 ∧ 1 + g = 2 * t := by
-  have hp : 0 < t := inv_pos.mpr Real.goldenRatio_pos
-  have hl : t < 1 := inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio
-  have hs : t ^ 2 + t = 1 := by
-    dsimp [t, D5.S1.Digit.Infinite.SignedSeriesRange.alpha]
-    rw [Real.inv_goldenRatio]
-    nlinarith [Real.goldenConj_sq]
-  refine ⟨hp, hl, hs, ?_⟩
-  dsimp [g]
-  nlinarith [congrArg (fun z : ℝ => t * z) hs]
+  obtain ⟨hp, hl, hs, hg, _⟩ :=
+    D5.S1.Digit.Infinite.OddColorThreeSource.golden_relations
+  exact ⟨hp, hl, by linarith only [hs], by linarith only [hg]⟩
 
 theorem residual (x : LegalDigits) (j : ℕ) :
     kappa (bitShift x (3 * j)) + g * kappa (bitShift x (3 * (j + 1))) =
@@ -85,10 +79,8 @@ private theorem separation (h : ℕ) (x y : LegalDigits) (hne : windowPrefix h x
   classical
   have hgap (l m : Label) (hne : l ≠ m) : t ^ 2 ≤ |offset l - offset m| := by
     have ht := golden_facts
-    have hhalf : (1 : ℝ) / 2 < t := by
-      dsimp [t, D5.S1.Digit.Infinite.SignedSeriesRange.alpha]
-      simpa only [one_div] using
-        one_div_lt_one_div_of_lt Real.goldenRatio_pos Real.goldenRatio_lt_two
+    have hhalf : (1 : ℝ) / 2 < t :=
+      D5.S1.Digit.Infinite.OddColorThreeSource.golden_relations.2.2.2.2
     have hln0 := l.property 0 (by decide)
     have hln1 := l.property 1 (by decide)
     have hmn0 := m.property 0 (by decide)
