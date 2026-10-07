@@ -1,4 +1,3 @@
 import LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.Facts.Shard0000
 import LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.Facts.Shard0001
 import LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.Facts.Shard0002
-import LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.Facts.Shard0003

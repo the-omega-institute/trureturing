@@ -2,123 +2,6 @@ import LeanInformationAuditRegTests.Fixtures.Provenance
 import LeanInformationAuditInterface.Contract.NodeFactsCore
 import Reg.Support.CompiledNodeTerm
 
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_129.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Eq\"],\"part\":\"type\",\"path\":[\"body\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_130.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Eq\"],\"part\":\"type\",\"path\":[\"body\",\"domain\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_131.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Eq\"],\"part\":\"type\",\"path\":[\"body\",\"body\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_132.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Eq\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"domain\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_133.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Eq\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_134.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "type" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_135.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "type" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"domain\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_136.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_137.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"domain\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_138.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_138.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_exact% "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\"],\"levels\":[[\"param\",[\"u_1\"]]]}" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_139.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_139.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_exact% "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_140.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_140.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_exact% "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_141.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_141.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_exact% "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_142.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_143.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_144.{u_1} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Eq\",\"refl\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_145 : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "type" "{\"declaration\":[\"Nat\"],\"part\":\"type\",\"path\":[],\"levels\":[]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_146 : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "type" "{\"declaration\":[\"Nat\",\"zero\"],\"part\":\"type\",\"path\":[],\"levels\":[]}"
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_146 : LeanInformationAudit.Contract.NodeFact :=
-  compiled_exact% "{\"declaration\":[\"Nat\",\"zero\"],\"part\":\"type\",\"path\":[],\"levels\":[]}" "{\"declaration\":[\"Nat\",\"zero\"],\"part\":\"type\",\"path\":[],\"levels\":[]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_147 : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "type" "{\"declaration\":[\"Nat\",\"succ\"],\"part\":\"type\",\"path\":[],\"levels\":[]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_148 : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "type" "{\"declaration\":[\"Nat\",\"succ\"],\"part\":\"type\",\"path\":[\"domain\"],\"levels\":[]}"
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_148 : LeanInformationAudit.Contract.NodeFact :=
-  compiled_exact% "{\"declaration\":[\"Nat\",\"succ\"],\"part\":\"type\",\"path\":[\"domain\"],\"levels\":[]}" "{\"declaration\":[\"Nat\",\"succ\"],\"part\":\"type\",\"path\":[\"domain\"],\"levels\":[]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_149 : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"Nat\",\"succ\"],\"part\":\"type\",\"path\":[\"body\"],\"levels\":[]}"
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_149 : LeanInformationAudit.Contract.NodeFact :=
-  compiled_exact% "{\"declaration\":[\"Nat\",\"succ\"],\"part\":\"type\",\"path\":[\"body\"],\"levels\":[]}" "{\"declaration\":[\"Nat\",\"succ\"],\"part\":\"type\",\"path\":[\"body\"],\"levels\":[]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_150.{u} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "type" "{\"declaration\":[\"OfNat\",\"ofNat\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_151.{u} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "type" "{\"declaration\":[\"OfNat\",\"ofNat\"],\"part\":\"type\",\"path\":[\"domain\"],\"levels\":[[\"param\",[\"u\"]]]}"
-
-
-noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_152.{u} : LeanInformationAudit.Contract.NodeFact :=
-  compiled_fact% "data" "{\"declaration\":[\"OfNat\",\"ofNat\"],\"part\":\"type\",\"path\":[\"body\"],\"levels\":[[\"param\",[\"u\"]]]}"
-
-
 noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_153.{u} : LeanInformationAudit.Contract.NodeFact :=
   compiled_fact% "data" "{\"declaration\":[\"OfNat\",\"ofNat\"],\"part\":\"type\",\"path\":[\"body\",\"domain\"],\"levels\":[[\"param\",[\"u\"]]]}"
 
@@ -693,3 +576,223 @@ noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.p
 
 noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_275.{u, v, w} : LeanInformationAudit.Contract.NodeFact :=
   compiled_exact% "{\"declaration\":[\"HMul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}" "{\"declaration\":[\"HMul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_276.{u, v, w} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"HMul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"function\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_276.{u, v, w} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"HMul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"function\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}" "{\"declaration\":[\"HMul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"function\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_277.{u, v, w} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"HMul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_277.{u, v, w} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"HMul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}" "{\"declaration\":[\"HMul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_278.{u, v, w} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"HMul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"function\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_278.{u, v, w} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"HMul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"function\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}" "{\"declaration\":[\"HMul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"function\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_279.{u, v, w} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"HMul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_280.{u, v, w} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"HMul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_281.{u, v, w} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"HMul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]],[\"param\",[\"w\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_282.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "type" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_283.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "type" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"domain\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_284.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_285.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"domain\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_285.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"domain\"],\"levels\":[[\"param\",[\"u_1\"]]]}" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"domain\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_286.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"domain\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_286.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"domain\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"domain\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_287.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"domain\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_288.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_288.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\"],\"levels\":[[\"param\",[\"u_1\"]]]}" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_289.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_289.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_290.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_290.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_291.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_291.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"function\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_292.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_293.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_294.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"instHMul\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_295.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "type" "{\"declaration\":[\"Mul\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_296.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "type" "{\"declaration\":[\"Mul\"],\"part\":\"type\",\"path\":[\"domain\"],\"levels\":[[\"param\",[\"u\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_297.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Mul\"],\"part\":\"type\",\"path\":[\"body\"],\"levels\":[[\"param\",[\"u\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_298.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "type" "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_299.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "type" "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[\"domain\"],\"levels\":[[\"param\",[\"u\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_300.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\"],\"levels\":[[\"param\",[\"u\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_301.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"domain\"],\"levels\":[[\"param\",[\"u\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_302.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"domain\",\"domain\"],\"levels\":[[\"param\",[\"u\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_303.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"domain\",\"body\"],\"levels\":[[\"param\",[\"u\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_304.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"domain\",\"body\",\"domain\"],\"levels\":[[\"param\",[\"u\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_305.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"domain\",\"body\",\"body\"],\"levels\":[[\"param\",[\"u\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_306.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\"],\"levels\":[[\"param\",[\"u\"]]]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_306.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\"],\"levels\":[[\"param\",[\"u\"]]]}" "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\"],\"levels\":[[\"param\",[\"u\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_307.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\"],\"levels\":[[\"param\",[\"u\"]]]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_307.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\"],\"levels\":[[\"param\",[\"u\"]]]}" "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\"],\"levels\":[[\"param\",[\"u\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_308.{u} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Mul\",\"mk\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_309 : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "type" "{\"declaration\":[\"instMulNat\"],\"part\":\"type\",\"path\":[],\"levels\":[]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_309 : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"instMulNat\"],\"part\":\"type\",\"path\":[],\"levels\":[]}" "{\"declaration\":[\"instMulNat\"],\"part\":\"type\",\"path\":[],\"levels\":[]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_310 : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"instMulNat\"],\"part\":\"type\",\"path\":[\"function\"],\"levels\":[]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_310 : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"instMulNat\"],\"part\":\"type\",\"path\":[\"function\"],\"levels\":[]}" "{\"declaration\":[\"instMulNat\"],\"part\":\"type\",\"path\":[\"function\"],\"levels\":[]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_311 : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "type" "{\"declaration\":[\"instMulNat\"],\"part\":\"type\",\"path\":[\"argument\"],\"levels\":[]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_311 : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"instMulNat\"],\"part\":\"type\",\"path\":[\"argument\"],\"levels\":[]}" "{\"declaration\":[\"instMulNat\"],\"part\":\"type\",\"path\":[\"argument\"],\"levels\":[]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_312.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "type" "{\"declaration\":[\"Dvd\",\"dvd\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_313.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "type" "{\"declaration\":[\"Dvd\",\"dvd\"],\"part\":\"type\",\"path\":[\"domain\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_314.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Dvd\",\"dvd\"],\"part\":\"type\",\"path\":[\"body\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_315.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Dvd\",\"dvd\"],\"part\":\"type\",\"path\":[\"body\",\"domain\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_315.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"Dvd\",\"dvd\"],\"part\":\"type\",\"path\":[\"body\",\"domain\"],\"levels\":[[\"param\",[\"u_1\"]]]}" "{\"declaration\":[\"Dvd\",\"dvd\"],\"part\":\"type\",\"path\":[\"body\",\"domain\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_316.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Dvd\",\"dvd\"],\"part\":\"type\",\"path\":[\"body\",\"domain\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeExact_316.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"Dvd\",\"dvd\"],\"part\":\"type\",\"path\":[\"body\",\"domain\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}" "{\"declaration\":[\"Dvd\",\"dvd\"],\"part\":\"type\",\"path\":[\"body\",\"domain\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_317.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Dvd\",\"dvd\"],\"part\":\"type\",\"path\":[\"body\",\"domain\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+
+noncomputable def _root_.LeanInformationAuditRegTests.Fixtures.ProvenanceFacts.provenanceNodeFact_318.{u_1} : LeanInformationAudit.Contract.NodeFact :=
+  compiled_fact% "data" "{\"declaration\":[\"Dvd\",\"dvd\"],\"part\":\"type\",\"path\":[\"body\",\"body\"],\"levels\":[[\"param\",[\"u_1\"]]]}"
