@@ -2491,3 +2491,681 @@ not certify that cost numerically at $A>10^{36}$, control the remaining
 signed response, verify a new zero height, or turn the selected global
 maximizer into the least counterexample. All inputs are reused
 paper-level interfaces without Lean certification; RH remains unproved.
+
+## A smaller moving cut from joint density and zero-free support
+
+The complete coefficient (M1) can use a smaller moving height than
+(J6), by combining two existing inputs on the same actual zero
+multiset. This controls the infinite suffix and reduces the height
+of the still-uncontrolled signed head. It does not establish that
+head's sign or the original selected-source Robin condition.
+
+Corollary 1 and Table 1, printed p.2, of
+[Chourasiya–Simonič, arXiv:2507.15184v2](https://arxiv.org/pdf/2507.15184v2)
+also extend the existing count (W1) in the
+[Polak application](../Analytic/polak2026finiterobinca.md)
+to $5/8\le\sigma<1$, with the same larger constants $47,10,168$.
+The additional rows have $B_1\le13.66$, $B_2\le8.290$, $B_3\le147.0$.
+Lemma 2.10, printed p.6, of
+[Johnston–Yang, arXiv:2204.01980v2](https://arxiv.org/pdf/2204.01980v2)
+supplies Ford's zero-free region
+
+$$
+\beta<1-\eta(\gamma),\qquad
+\eta(t)=\frac1{R(\log t)^{2/3}(\log\log t)^{1/3}},
+\quad R=57.54,\quad \gamma\ge3.
+$$
+
+Their analytic proofs and finite verified-height input remain
+external premises. The constant is sufficient for this interface;
+no optimal-constant claim or source proof rerun is needed.
+
+Put $L=\log A$, $\Omega=(L/\log L)^{1/3}$ and
+
+$$
+\kappa=\frac1{28R},\qquad
+T=A^{1/4}e^{-\kappa\Omega},\qquad U=A^{2/7}.
+$$
+
+Work for sufficiently large $A$ so $T\ge H=3\cdot10^{12}$.
+Then $U>T$, $T\to\infty$, and $T/(A^{1/4}L)\to0$.
+No numerical starting clock is certified here.
+Define
+
+$$
+B_2(A;T)=\sum_{\gamma>T}
+ \frac{m_\rho(A^{\beta-1/2}+A^{1/2-\beta})}{\gamma^2}.
+$$
+
+The full coefficient estimate (H5), including its remainder, and
+multiplicity-preserving reflection give
+
+$$
+\sqrt A L\,2\sum_{\gamma>T}m_\rho|F_A(\rho)|
+\le\frac43(1+1/L)B_2(A;T).
+$$
+
+Thus an absolute bound on $B_2$ pays the original signed suffix.
+The original head $\gamma\le T$, pole and trivial-zero terms remain.
+
+Use the existing layer calculation with
+$\sigma_0=5/8$ and $Q_A(\sigma)=A^{\sigma-1/2}+A^{1/2-\sigma}$.
+For the inclusive count and exclusive suffix, the reflected count
+has the endpoint term
+
+$$
+F_2(\sigma;T)=-\frac{2N(\sigma,T)}{T^2}
+ +4\int_T^\infty\frac{N(\sigma,t)}{t^3}\,dt
+\le4\int_T^\infty\frac{N(\sigma,t)}{t^3}\,dt.
+$$
+
+Consequently,
+
+$$
+B_2(A;T)\le Q_A(\sigma_0)S_2(T)
+ +4\int_{\sigma_0}^1Q_A'(\sigma)
+          \int_T^\infty N(\sigma,t)t^{-3}\,dt\,d\sigma,
+\qquad S_2(T)=\sum_{\gamma>T}\frac{m_\rho}{\gamma^2}.
+$$
+
+Tonelli preserves all heights, real parts and multiplicities.
+Write $\epsilon=1-\sigma$. The existing density exponent satisfies
+$d=3\epsilon/(1+\epsilon)\le3\epsilon$, $d\le9/11$ and
+$q=2+d<3$. Uniformly on this range,
+$N(\sigma,t)\ll t^d(\log t)^3$ and
+$Q_A'(\sigma)\le L\sqrt A e^{-\epsilon L}$.
+
+The classical full zero count gives $S_2(T)\ll\log T/T$.
+The base layer therefore costs
+
+$$
+Q_A(\sigma_0)S_2(T)\ll L A^{-1/8}e^{\kappa\Omega}.
+$$
+
+For $T<t\le U$, finite verification and monotonicity of the
+zero-free region jointly imply $N(\sigma,t)=0$ when
+$\sigma\ge1-\eta(U)$. On this same band,
+
+$$
+A^{-\epsilon}t^d\le e^{-\epsilon L/7},\qquad
+\eta(U)\ge\frac1{RL^{2/3}(\log L)^{1/3}},\qquad
+\int_{\eta(U)}^{3/8}e^{-\epsilon L/7}\,d\epsilon
+\le\frac7L e^{-\eta(U)L/7}.
+$$
+
+If $\eta(U)>3/8$ the band is empty. Otherwise these bounds,
+$\log t\le L$ and $\int_T^Ut^{-3}dt\le1/(2T^2)$ give the
+whole finite-band allowance $O(L^3e^{-\Omega/(14R)})$.
+
+For $t>U$, use the density bound without imposing the fixed-$U$
+zero-free restriction. Uniformly for $0\le d\le9/11$,
+$\int_U^\infty t^{d-3}(\log t)^3dt\ll U^{d-2}(\log U)^3$.
+Also $A^{-\epsilon}U^d\le e^{-\epsilon L/7}$, whose layer
+integral cancels the outer factor $L$. The complete infinite band
+therefore costs $O(L^3\sqrt A/U^2)=O(L^3A^{-1/14})$.
+
+Combining the three allowances yields
+
+$$
+\boxed{
+\sqrt A L\left|2\operatorname{Re}
+             \sum_{\gamma>T}m_\rho F_A(\rho)\right|
+\ll L A^{-1/8}e^{\kappa\Omega}
+    +L^3e^{-\Omega/(14R)}+L^3A^{-1/14}\longrightarrow0.}
+$$
+
+The absolute-sum bound above satisfies the same estimate. Every
+implied constant is independent of $A$; no ordinate tail or
+coefficient correction is dropped. The limit follows from
+$\Omega/\log L\to\infty$ and $\Omega/L\to0$.
+Using the old $3/4$ base clip would instead leave
+$O(Le^{\kappa\Omega})$, so it cannot support this vanishing claim.
+
+This is an asymptotic application of established density and
+zero-free results. The same selected integer, its original clock,
+strict core and complete signed target are retained. The actual
+finite head still grows without bound and remains uncontrolled;
+neither a new finite source-clock exclusion nor RH is proved.
+There is no Lean verification of this application.
+
+## Pay coefficient error below the whole-response cut
+
+The full-response suffix estimate above and the existing coefficient
+comparisons (H1), (H5) can be used together at two different heights.
+Keep the same selected source $A=\log N>10^{36}$, every actual zero real
+part and multiplicity, and the original complete coefficient (M1).
+This is a paper-level application of the already cited density and
+zero-free inputs, without a new source theorem, numerical starting
+clock, originality claim or Lean verification.
+
+Put $L=\log A$, $\Omega=(L/\log L)^{1/3}$, $R=57.54$ and
+$\kappa=1/(28R)$ as above. Define
+
+$$
+S=A^{1/6}e^{-\kappa\Omega},\qquad
+T=A^{1/4}e^{-\kappa\Omega},\qquad U=A^{1/5}.
+$$
+
+Work for sufficiently large $A$ with $S\ge H=3\cdot10^{12}$.
+Then $S<U<T$ eventually. The cut $S$ concerns coefficient error;
+$T$ remains the previously paid cut for the full original response.
+Both cuts tend to infinity, so fixed unverified zero heights remain
+in the exact lower head.
+
+For an actual zero $\rho=\beta+i\gamma$ with $\gamma>0$, set
+
+$$
+G_A(\rho)=\frac{w(A)A^{\rho-1}}{\gamma^2},\qquad
+B_3(A,S)=\sum_{\gamma>S}m_\rho
+ \frac{A^{\beta-1/2}+A^{1/2-\beta}}{\gamma^3},
+\qquad w(A)=\frac{1+L}{L^2}.
+$$
+
+Reflection of this same multiplicity-weighted zero multiset gives
+$B_3(A,S)=2\sum_{\gamma>S}m_\rho A^{\beta-1/2}/\gamma^3$.
+The first inequality of (H5) therefore pays the full approximation
+error by
+
+$$
+\sqrt A L\,2\sum_{\gamma>S}m_\rho
+ |F_A(\rho)-G_A(\rho)|
+ \le(1+1/L)\left(\frac73+\frac1{4S}\right)B_3(A,S).
+\tag{RC1}
+$$
+
+The actual weight $A^{\beta-1/2}$ and phase $e^{i\gamma L}$ remain
+in $G_A$. If a transport instead uses
+$P_A(\rho)=w(A)A^{\rho-1}/[\rho(1-\rho)]$, (H1) gives the
+supplementary bound
+
+$$
+\sqrt A L\,2\sum_{\gamma>S}m_\rho
+ |F_A(\rho)-P_A(\rho)|
+ \le\frac{2(L+2)}{L^2}B_3(A,S).
+\tag{RC2}
+$$
+
+This is an alternative coefficient comparison; it is not an additional
+error to add to (RC1).
+
+### The same layer estimate with a reciprocal cube
+
+Reuse the real-part layer identity with $\sigma_0=5/8$ and
+$Q_A(\sigma)=A^{\sigma-1/2}+A^{1/2-\sigma}$. Replacing the
+reciprocal square by a reciprocal cube changes the reflected
+partial-summation formula to
+
+$$
+F_3(\sigma;S)
+ =-\frac{2N(\sigma,S)}{S^3}
+   +6\int_S^\infty N(\sigma,t)t^{-4}\,dt.
+$$
+
+The endpoint term is nonpositive. Dropping it only for an upper bound,
+with the same inclusive head and exclusive suffix convention, gives
+
+$$
+B_3(A,S)\le Q_A(\sigma_0)S_3(S)
+ +6\int_{\sigma_0}^1 Q_A'(\sigma)
+           \int_S^\infty N(\sigma,t)t^{-4}\,dt\,d\sigma,
+\qquad
+S_3(S)=\sum_{\gamma>S}\frac{m_\rho}{\gamma^3}
+ \ll\frac{\log S}{S^2}.
+\tag{RC3}
+$$
+
+The already retained density bound on $5/8\le\sigma<1$ is
+$N(\sigma,t)\le C_0t^{d(\sigma)}(\log t)^3$ for $t\ge H$,
+where, with $\varepsilon=1-\sigma$,
+$d=3\varepsilon/(1+\varepsilon)\le3\varepsilon$ and $d\le9/11$.
+All constants below are independent of $A$ and $\sigma$.
+
+The base layer in (RC3) is
+$O(LA^{-5/24}e^{2\kappa\Omega})$. On $S<t\le U$, use the same
+actual-zero support $N(\sigma,t)=0$ when
+$\sigma\ge1-\eta(U)$. Here
+
+$$
+A^{-\varepsilon}U^d\le e^{-2\varepsilon L/5},\qquad
+\eta(U)\ge\frac{\Omega}{RL},\qquad
+\int_{\eta(U)}^{3/8}e^{-2\varepsilon L/5}\,d\varepsilon
+ \le\frac5{2L}e^{-2\eta(U)L/5},
+$$
+
+when $\eta(U)\le3/8$; otherwise this count band is empty.
+Using $\log t\le L$ and
+$\int_S^Ut^{-4}dt\le1/(3S^3)$, its allowance is
+$O(L^3e^{-41\Omega/(140R)})$.
+
+Above $U$, no fixed-$U$ zero-free support is imposed.
+Since $3-d\ge24/11$, the complete height integral is bounded uniformly
+by $C_1U^{d-3}(\log U)^3$. Integrating
+$e^{-2\varepsilon L/5}$ over $\varepsilon\ge0$ cancels the outer $L$;
+this entire infinite band costs $O(L^3A^{-1/10})$. Thus
+
+$$
+B_3(A,S)\ll
+ LA^{-5/24}e^{2\kappa\Omega}
+ +L^3e^{-41\Omega/(140R)}+L^3A^{-1/10}
+ \longrightarrow0.
+\tag{RC4}
+$$
+
+All three terms vanish because $\Omega/\log L\to\infty$.
+Equations (RC1) and (RC2) pay complete absolute coefficient errors above
+$S$, rather than just at the larger whole-response cut $T$.
+
+### Retain the exact lower head and the oscillatory middle
+
+Let $Z_{\rm orig}(A)=2\operatorname{Re}\sum_{\gamma>0}
+ m_\rho F_A(\rho)$ denote the original paired zero sum, and set
+
+$$
+Z_{\rm split}(A)=2\operatorname{Re}\left[
+ \sum_{0<\gamma\le S}m_\rho F_A(\rho)
+ +\sum_{S<\gamma\le T}m_\rho G_A(\rho)\right].
+$$
+
+Its contribution to $I_\psi$ is $-Z_{\rm orig}$; the approximation
+there uses $-Z_{\rm split}$ with the same sign. All elementary terms
+remain unchanged. Combining (RC1) with the already retained
+complete absolute suffix estimate gives
+
+$$
+\sqrt A L\,|Z_{\rm orig}(A)-Z_{\rm split}(A)|
+ \le(1+1/L)\left(\frac73+\frac1{4S}\right)B_3(A,S)
+ +\sqrt A L\,2\sum_{\gamma>T}m_\rho|F_A(\rho)|
+ \longrightarrow0.
+\tag{RC5}
+$$
+
+This restores every coefficient error and every infinite height.
+It reduces the range requiring exact-coefficient treatment while
+preserving the actual signed oscillatory middle. Its sign, the exact
+lower head, the original full sufficient Robin bound and RH remain
+unproved. This asymptotic reduction does not certify a finite numerical
+clock exclusion or a uniform safe margin.
+
+## Localized complex Mellin transport of the moving middle
+
+Reuse (RC2), (RC4) and the complete original suffix above $T$;
+their density and zero-free-region proofs are not repeated. The
+following application of Mellin inversion keeps the actual real
+parts and multiplicities. It supplies a finite-frequency interface
+to the unconditional Theorem 2 of
+[Garunkštis–Sourmelidis–Steuding, version 1](https://arxiv.org/abs/2505.14228v1),
+without repeating that theorem's proof or using its RH-conditional
+corollary. This is a paper-level transport, with no originality or
+Lean-verification claim.
+
+Keep $A,L,S,T,B_3$ as in (RC1)–(RC5), and assume $A$ is sufficiently
+large that $S\ge H$, $S\ge L\ge1$ and $L/\log S\le7$. These are
+eventual conditions, not a certified numerical starting threshold.
+Partition $(S,T]$ into disjoint bands $(V,W]$, where $V=2^jS$ and
+$W=\min(2V,T)$. A zero at a shared endpoint belongs to exactly one
+band. Every sum below retains $m_\rho$.
+
+### Localize the kernel and pay the compensating weight
+
+For $\rho=\beta+i\gamma$ put
+
+$$
+r=i(1/2-\rho)=\gamma+i\delta,\qquad
+\delta=1/2-\beta,\qquad
+f_L(r)=\frac{e^{iLr}}{r^2+1/4}.
+$$
+
+The rational coefficient from (RC2) satisfies the exact identity
+$\sqrt A L P_A(\rho)=(1+1/L)f_L(r)$.
+For each band set $c_{\rm loc}=3/2$, $a_V=L/V^2$ and
+
+$$
+f_V(r)=e^{-a_V(r-c_{\rm loc}V)^2}f_L(r),\qquad
+h_V(v)=\frac{e^{a_V(v-c_{\rm loc}V)^2}}v,\qquad
+J_V(\tau)=\sum_{V<\gamma\le W}m_\rho
+ h_V(\gamma)r^{-i\tau}.
+\tag{LM1}
+$$
+
+All complex powers use the principal logarithm in $\operatorname{Re}r>0$.
+The kernel reconstructed with this height weight is
+
+$$
+h_V(\gamma)r f_V(r)
+ =\frac r\gamma e^{E_\rho}f_L(r),\qquad
+E_\rho=a_V\delta^2-2ia_V\delta(\gamma-c_{\rm loc}V).
+$$
+
+Since $|\delta|\le1/2$ and $|\gamma-c_{\rm loc}V|\le V/2$,
+$|E_\rho|\le L/(4V^2)+L/(2V)\le3L/(4V)\le1$.
+Using $|e^z-1|\le e|z|$ on $|z|\le1$ and $e<3$ gives
+
+$$
+\left|\frac r\gamma e^{E_\rho}-1\right|
+ \le\frac{4L}V.
+$$
+
+Also $|r^2+1/4|=|\rho(1-\rho)|\ge\gamma^2$ and
+$|e^{iLr}|=A^{\beta-1/2}$. Thus $\gamma\le2V$ and reflection
+in $\beta=1/2$ give the complete paired approximation allowance
+
+$$
+2(1+1/L)\sum_{\text{bands}}\sum_{V<\gamma\le W}m_\rho
+ |h_V(\gamma)r f_V(r)-f_L(r)|
+ \le8(1+1/L)L B_3(A,S)\longrightarrow0.
+\tag{LM2}
+$$
+
+The final limit uses the explicit terms of (RC4), which remain
+vanishing after multiplication by $L$. This error pays both the
+local Gaussian compensation and the outer $\gamma$ versus $r$
+weight. No replacement $\beta=1/2$ is made.
+
+### Absolute inversion on the actual complex zeros
+
+Define the real-axis Mellin transform
+
+$$
+M_V(\tau)=\int_0^\infty
+ e^{-a_V(u-c_{\rm loc}V)^2}\frac{e^{iLu}}{u^2+1/4}u^{i\tau}\,du.
+$$
+
+In the logarithmic coordinate the profile is $g_V(z)=e^z f_V(e^z)$.
+Shift its Fourier contour to $\operatorname{Im}z=\pm\alpha_V$,
+where $\alpha_V=1/V$. There are no poles in this strip and
+$\cos(2/V)\ge1/2$. On either boundary line the real part of
+the exponential exponent is at most
+
+$$
+-a_V\cos(2/V)u^2+b u-a_Vc_{\rm loc}^2V^2,
+\qquad b\le2a_Vc_{\rm loc}V+L/V=4L/V.
+$$
+
+Completing the square bounds it by
+$8L-9L/4=23L/4<6L$.
+The denominator satisfies
+$|u^2e^{\pm2i/V}+1/4|\ge\tfrac12(u^2+1/4)$;
+the integral of $(u^2+1/4)^{-1}$ on $(0,\infty)$ is $\pi$.
+Consequently
+
+$$
+|M_V(\tau)|\le2\pi e^{6L}e^{-|\tau|/V}.
+\tag{LM3}
+$$
+
+The vertical contour sides vanish: near zero the logarithmic
+profile is $O(e^{\operatorname{Re}z})$, and at infinity the positive
+$\cos(2/V)$ gives quadratic damping. Fourier inversion and analytic
+continuation therefore give
+
+$$
+f_V(r)=\frac1{2\pi r}\int_{\mathbb R}
+ M_V(\tau)r^{-i\tau}\,d\tau
+\qquad(|\arg r|<1/V).
+$$
+
+For every actual zero in the band,
+$|\arg r|\le1/(2\gamma)\le1/(2V)$, so this inverse converges
+absolutely. Define
+
+$$
+Q_V=\frac{1+1/L}{\pi}\operatorname{Re}
+ \int_{\mathbb R}M_V(\tau)J_V(\tau)\,d\tau.
+$$
+
+Finite summation with multiplicity commutes with the absolute integral,
+and exactly
+$Q_V=2(1+1/L)\operatorname{Re}\sum_{V<\gamma\le W}
+m_\rho h_V(\gamma)r f_V(r)$.
+
+### Pay the entire frequency tail within a fixed source range
+
+Let $n_V=\sum_{V<\gamma\le W}m_\rho$ and let $Q_{V,K}$ use
+only $|\tau|\le K$. Since
+
+$$
+h_V(\gamma)\le e^{L/4}/V,\qquad
+|J_V(\tau)|\le\frac{n_V e^{L/4}}V e^{|\tau|/(2V)},
+$$
+
+(LM3) pays the complete two-sided omitted frequency integral:
+
+$$
+|Q_V-Q_{V,K}|
+ \le8(1+1/L)n_V e^{25L/4}e^{-K/(2V)}.
+$$
+
+Choose $K_V=20VL$. Then this allowance is
+$8(1+1/L)n_V A^{-15/4}$.
+The bands are disjoint, so $\sum n_V\le N_0(T)\ll T\log T$.
+Using the retained $T=A^{1/4}e^{-\kappa\Omega}$ gives
+
+$$
+\sum_{\text{bands}}|Q_V-Q_{V,K_V}|
+ \ll LA^{-7/2}\longrightarrow0.
+\tag{LM4}
+$$
+
+Moreover $K_V/(V\log V)=20L/\log V\le140$ under the stated
+eventual conditions. The positive frequencies lie within the fixed
+$O(V\log V)$ range of GSS Theorem 2; its implied constants must
+be those for this prescribed fixed range. Reflection preserves
+$h_V(\gamma)$ and sends $r$ to $\overline r$, hence
+$J_V(-\tau)=\overline{J_V(\tau)}$. This accesses negative frequencies
+without assuming RH. The frequency-range statement alone supplies
+no signed bound.
+
+### Height weights, endpoint atoms and the remaining source error
+
+For $V\le v\le W$ let
+$I_V(v,\tau)=\sum_{V<\gamma\le v}m_\rho r^{-i\tau}$.
+Ordinary finite partial summation yields
+
+$$
+J_V(\tau)=h_V(W)I_V(W,\tau)
+ -\int_V^W h_V'(v)I_V(v,\tau)\,dv,
+\qquad
+|h_V'(v)|\le\frac{e^{L/4}(L+1)}{V^2}.
+$$
+
+The source uses $[V,v)$ rather than $(V,v]$. Define the exact atom
+$E_z(\tau)=\sum_{\gamma=z}m_\rho r^{-i\tau}$. Then
+
+$$
+I_V(v,\tau)=I_{\rm GSS}(V,v,\tau)+E_v(\tau)-E_V(\tau).
+$$
+
+Keep these atoms in the endpoint term and in the partial-summation
+integral. In that integral $E_v$ is supported on finitely many
+ordinates and contributes zero as a Lebesgue integral; the lower
+$E_V$ term and the upper $E_W$ term still require their exact
+contributions. Equivalently, the exact weighted correction to the
+source partial sum is $h_V(W)E_W(\tau)-h_V(V)E_V(\tau)$.
+At $v=V$, use the empty sum. Every other pair $(V,v)$
+is comparable; the whole interval $(S,T]$ is never substituted as
+a comparable source interval.
+
+Fix the independent GSS splitting parameter $c_{\rm GSS}=1/2$;
+its low/high-frequency transition is $\tau=V\log2/2$.
+GSS's high-frequency remainder includes
+
+$$
+e^{\tau/(2V)}
+ \left((\log V)^2+(\tau/V)^2\log V\right)
+ +\frac{\tau^{3/2}}V e^{\tau/(2V)-\tau/v}.
+$$
+
+Its low-frequency remainder is $O((\log V)^2)$.
+Retain both, as well as the main prime sum and the exact endpoint
+atoms. The elementary absolute envelope (LM3) combined with
+the displayed height-weight bounds gives, for the integrated
+source remainder on one band, only the coarse allowance
+
+$$
+O\!\left(A^{25/4}
+ \left(L^3+V^{1/2}L\right)\right).
+$$
+
+For example the first term uses
+$\int_0^\infty e^{-\tau/(2V)}
+[(\log V)^2+(\tau/V)^2\log V]d\tau=O(VL^2)$;
+the second uses $v\le2V$ and
+$\int_0^\infty\tau^{3/2}e^{-\tau/V}d\tau=O(V^{5/2})$.
+The partial-summation weight has total bound
+$e^{L/4}(L+2)/V$.
+There are $O(L)$ bands and $\sum\sqrt V=O(\sqrt T)$, so the
+corresponding allowance for the entire middle is
+$O(A^{25/4}(L^4+\sqrt T\,L))$.
+This growing upper allowance does not control the desired signed
+response. It is neither a lower bound for the actual remainder nor
+an impossibility result for cancellation or a sharper transport.
+
+### Restore the complete original response
+
+Put
+
+$$
+Y(A)=\sqrt A L\,2\operatorname{Re}
+ \sum_{0<\gamma\le S}m_\rho F_A(\rho)
+ +\sum_{\text{bands}}Q_{V,K_V}.
+$$
+
+(RC2), (LM2), (LM4) and the retained complete original suffix give
+
+$$
+\begin{aligned}
+|\sqrt A L Z_{\rm orig}(A)-Y(A)|
+\le{}&\left(\frac{2(L+2)}{L^2}+8(1+1/L)L\right)B_3(A,S)\\
+&+\sqrt A L\,2\sum_{\gamma>T}m_\rho|F_A(\rho)|
+ +O(LA^{-7/2})\longrightarrow0.
+\end{aligned}
+\tag{LM5}
+$$
+
+Every actual real part, multiplicity, coefficient and height is
+retained or covered by an explicit error. The contribution to
+$I_\psi$ is $-Z_{\rm orig}$, so its normalized approximation is
+$-Y(A)$; all elementary terms and the strict core remain unchanged.
+The exact low head, the signed transformed middle and its integrated
+GSS prime and error contributions are still unpaid. This interface
+does not prove the full signed Robin estimate, a numerical threshold,
+a uniform strict margin or RH.
+
+## A norm floor for the local GSS absolute endpoint allowance
+
+The local inversion permits a sharper method diagnosis than the
+growing sufficient allowance displayed above. Retain exactly the
+kernel, height weight and cutoff in (LM1)–(LM5), on the same bands
+$S\le V<W\le\min(2V,T)$, with the same eventual
+conditions. Put $\tau_0=V\log2/2$, the fixed GSS splitting point.
+As in (R5)–(R7), distinguish a positive majorant allowance from the
+actual signed source error. The following is a paper-level application
+of the existing inverse, with no originality or Lean-verification claim.
+
+### The actual transform has an in-range weighted norm floor
+
+Use the analytic test point
+$r_*=c_{\rm loc}V-i/2$, with $c_{\rm loc}=3/2$.
+It is not an asserted zeta zero. Since $|\arg r_*|\le1/(3V)$,
+the absolute inverse from (LM3) gives
+
+$$
+\int_{\mathbb R}|M_V(\tau)|e^{|\tau|/(2V)}\,d\tau
+ \ge2\pi|r_*f_V(r_*)|\ge\frac{2\pi\sqrt A}{3V}.
+\tag{LM6}
+$$
+
+For the last inequality write $x=c_{\rm loc}V\ge1$.
+The Gaussian factor has modulus $e^{a_V/4}\ge1$ and
+$|e^{iLr_*}|=\sqrt A$. Moreover
+
+$$
+\frac{|r_*|}{|r_*^2+1/4|}
+ =\frac{\sqrt{x^2+1/4}}{x\sqrt{x^2+1}}
+ \ge\frac1{2x}=\frac1{3V}.
+$$
+
+This uses the chosen analytic kernel at a test point, without replacing
+any actual zero's real part.
+
+The floor cannot be assigned only to frequencies outside GSS's retained
+range. In the defining real-axis integral for $M_V$, split at $V/2$.
+On the lower part the Gaussian is at most $A^{-1}$; on the upper
+part $(u^2+1/4)^{-1}\le4/V^2$ and the complete real Gaussian
+integral is $\sqrt\pi V/\sqrt L$. Thus, for every real $\tau$,
+
+$$
+|M_V(\tau)|\le\frac\pi A+\frac{4\sqrt\pi}{V\sqrt L}.
+$$
+
+Consequently the weighted norm on $|\tau|\le\tau_0$ is at most
+$2\pi V/A+8\sqrt\pi/\sqrt L$. From (LM3), the entire weighted
+norm beyond $K_V=20VL$ is at most
+
+$$
+\int_{|\tau|>K_V}|M_V(\tau)|e^{|\tau|/(2V)}\,d\tau
+ \le8\pi V e^{6L-K_V/(2V)}=8\pi V A^{-4}.
+$$
+
+Subtract both parts from (LM6) to obtain
+
+$$
+\begin{aligned}
+\int_{\tau_0<|\tau|\le K_V}|M_V(\tau)|e^{|\tau|/(2V)}\,d\tau
+\ge{}&\frac{2\pi\sqrt A}{3V}-\frac{2\pi V}A
+ -\frac{8\sqrt\pi}{\sqrt L}-8\pi V A^{-4}\\
+\ge{}&\frac{\pi\sqrt A}{3V}
+\qquad\text{eventually, uniformly for }S\le V\le T.
+\end{aligned}
+\tag{LM7}
+$$
+
+Indeed $\sqrt A/V\ge A^{1/4}e^{\kappa\Omega}$ grows, whereas
+each subtracted bound vanishes uniformly. The source range and
+negative-frequency reflection are precisely those already retained
+in (LM4); no new source theorem or range calculation is required.
+
+### The defined endpoint budget cannot tend to zero
+
+GSS's high-frequency remainder includes the positive majorant shape
+$e^{\tau/(2V)}(\log V)^2$. Define the **unit-coefficient allowance**
+for its term-by-term absolute propagation through the weighted
+height endpoint by
+
+$$
+\mathcal B^{\rm GSS}_V(A)=\frac{1+1/L}{\pi}
+ h_V(W)(\log V)^2
+ \int_{\tau_0<|\tau|\le K_V}
+ |M_V(\tau)|e^{|\tau|/(2V)}\,d\tau.
+$$
+
+Since $h_V(W)\ge1/W\ge1/(2V)$, (LM7) gives
+
+$$
+\mathcal B^{\rm GSS}_V(A)
+ \ge\frac{\sqrt A(\log V)^2}{6V^2}
+ \ge\frac{L^2e^{2\kappa\Omega}}{294}
+ \longrightarrow\infty.
+\tag{LM8}
+$$
+
+Here $\log V\ge\log S\ge L/7$ and
+$V\le T=A^{1/4}e^{-\kappa\Omega}$.
+Multiplying the printed majorant shape by any fixed positive source
+coefficient multiplies this floor by that coefficient. No numerical
+value for it or effective starting threshold follows from big-$O$
+notation. No unbounded sequence of selected integer sources is
+asserted, nor a failure at a particular selected $A$.
+
+This is a lower bound for the explicitly defined allowance, not for
+the actual remainder, its integral, the total propagated error or a
+Robin violation. The second printed source-error shape, derivative
+terms and endpoint atoms retain their roles in (LM5).
+Because (LM8) uses the actual transform, merely sharpening its crude
+upper bound $e^{6L}$ cannot make this same absolute endpoint budget
+tend to zero. Joint cancellation, stronger source information,
+another kernel or a favorable bound for the combined main and exact
+low head could change the budget comparison; none is excluded or
+supplied here. The original full signed Robin condition and RH remain
+unproved, with all coefficients, real parts, multiplicities and
+height ranges unchanged.
