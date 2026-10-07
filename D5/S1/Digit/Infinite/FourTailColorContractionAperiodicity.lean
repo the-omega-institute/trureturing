@@ -11,6 +11,7 @@ import D5.S1.Digit.Infinite.SixCellPositiveMarginObstruction
 import D5.S1.Digit.Infinite.OddColorThreeSource
 import Mathlib.Topology.Order.IntermediateValue
 import Mathlib.Data.Fintype.EquivFin
+import Mathlib.Dynamics.PeriodicPts.Defs
 
 set_option autoImplicit false
 
@@ -24,7 +25,6 @@ open D5.S1.Digit.Infinite.OddColorThreeSource (golden_relations)
 open Function
 
 local notation "I" => stateInterval true
-local notation "X" => stateInterval false
 local notation "embed" => (Fin.castLE (by decide : 4 ≤ 5) : Fin 4 → Fin 5)
 
 /-- Exact decoding of all legal closed branches, with the normalized endpoint colors.
@@ -100,18 +100,11 @@ private theorem column_injective (Q : ℝ → Fin 5) (D : Fin 5 → Fin 5 → La
     cases h : outgoing (labelIndex i)
     · exact state_subset true y.property
     · exact y.property
-  have ho : Injective outputs := by
-    intro i j he
-    apply label_index_injective
-    rw [← decoded i, ← decoded j, he]
-  have hsurj : Surjective outputs := (Finite.injective_iff_surjective).mp ho
-  intro r s he
-  obtain ⟨i, rfl⟩ := hsurj r
-  obtain ⟨j, rfl⟩ := hsurj s
-  change D (outputs i) (embed c) = D (outputs j) (embed c) at he
-  apply congrArg outputs
-  apply label_index_injective
-  rwa [decoded i, decoded j] at he
+  have hcomp : Injective ((fun r => D r (embed c)) ∘ outputs) := by
+    have he : ((fun r => D r (embed c)) ∘ outputs) = labelIndex := funext decoded
+    rw [he]
+    exact label_index_injective
+  exact hcomp.of_comp_right (Finite.injective_iff_surjective.mp hcomp.of_comp)
 
 private theorem branch_color_decode (Q : ℝ → Fin 5) (D : Fin 5 → Fin 5 → Label)
     (hD : DecoderContract Q D) (hs : Q '' I = Set.range embed) (i : Fin 3) (c : Fin 4) :
@@ -163,9 +156,8 @@ private theorem fixed_color (Q : ℝ → Fin 5) (hs : Q '' I = Set.range embed)
     ∃ c : Fin 4, T c = c := by
   have hI : (-1 : ℝ) ≤ t := by linarith [golden_relations.1]
   obtain ⟨z, hz, he⟩ := exists_mem_Icc_isFixedPt_of_mapsTo hf.continuousOn hI hm
-  refine ⟨tailColor Q hs ⟨z, hz⟩, ?_⟩
-  rw [← hi ⟨z, hz⟩]
-  exact congrArg (tailColor Q hs) (Subtype.ext he)
+  have hfix : IsFixedPt (hm.restrict f I I) ⟨z, hz⟩ := Subtype.ext he
+  exact ⟨tailColor Q hs ⟨z, hz⟩, hfix.map hi⟩
 
 /-- Three disjoint fixed-color sets leave room for at most one periodic color. -/
 private theorem fixed_colors_obstruct_cycle (F : Fin 3 → Fin 4 → Fin 4)
@@ -211,13 +203,12 @@ private theorem fixed_colors_obstruct_cycle (F : Fin 3 → Fin 4 → Fin 4)
         Nat.sub_add_cancel hm]
       exact hd
     exact hi (hsep _ (he.trans ha.symm))
-  have htc : T^[m] (T c) = T c := by
-    rw [← iterate_succ_apply, iterate_succ_apply', hc]
+  have htc : T^[m] (T c) = T c := (show IsPeriodicPt T m c from hc).apply
   have hntc : T (T c) ≠ T c := by
     intro he
-    have hp : T^[m] c = T c := by
-      rw [← Nat.sub_add_cancel hm, iterate_succ_apply, iterate_fixed he]
-    exact hn (hp.symm.trans hc)
+    have hp := (show IsPeriodicPt T m c from hc).eq_of_apply_eq_same
+      (show IsPeriodicPt T m (T c) from htc) (by omega) he.symm
+    exact hn hp.symm
   let roots (i : Fin 3) := Classical.choose (hroots i)
   have hr (i : Fin 3) : L i (roots i) = roots i := Classical.choose_spec (hroots i)
   have hrne (i j : Fin 3) (hij : i ≠ j) : roots i ≠ roots j := by
@@ -240,7 +231,7 @@ private theorem fixed_colors_obstruct_cycle (F : Fin 3 → Fin 4 → Fin 4)
   have h02 := hrne 0 2 (by decide)
   have h12 := hrne 1 2 (by decide)
   have hcard : ({c, T c, roots 0, roots 1, roots 2} : Finset (Fin 4)).card = 5 := by
-    simp [Finset.card_insert_eq_ite, hcne 0, hcne 1, hcne 2,
+    simp [hcne 0, hcne 1, hcne 2,
       htne 0, htne 1, htne 2, h01, h02, h12, Ne.symm hn]
   rw [hcard] at hbound
   norm_num at hbound
