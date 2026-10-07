@@ -14,6 +14,15 @@ internal sealed class CumulantRenyiDataProcessingRefutationDocument : IScribeDoc
         "Meunson and Deesuwan (arXiv:2606.31205) define a cumulant-based quantum relative Renyi functional for alpha > 1 and state in the abstract and conclusion that its quantum data-processing inequality under arbitrary CPTP maps remains open. For every alpha > 1 a pair of positive definite qubit states and the complete dephasing channel increase the functional, so the inequality fails at every order above one.",
         H("Data processing fails for the cumulant-based Renyi functional at every order above one"),
         Blocks(
+            Node("dephasing-action", "The action of complete dephasing",
+                Disp(All(F.Id("A"), Mat(D(2)), Equal(Apply(Call("pinchingEnd"), F.Id("A")),
+                    Call("diagonal", Call("diag", F.Id("A")))))),
+                "For every complex two by two matrix A, complete dephasing keeps its two diagonal entries and sets the off-diagonal entries to zero.",
+                "dephase_apply", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
+            Node("dephasing-kraus", "The Kraus representation of complete dephasing",
+                Disp(Equal(Call("pinchingEnd"), Call("ofKraus", BasisProjectors(), BasisProjectors()))),
+                "For j in Fin 2, the family K(j)=single(j,j,1) consists of the two computational basis projectors. The linear map pinchingEnd is exactly their finite Kraus map, ofKraus(K,K).",
+                "pinching_kraus", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("functional", "The cumulant-based relative Renyi functional", FunctionalFormula(),
                 "Definition 3 of the paper, on faithful inputs: for complex d by d matrices A and B and real alpha, the value is 1/(alpha-1) times the real logarithm of the real part of Tr(A exp((alpha-1)(log A - log B))). Log of a matrix is continuous functional calculus for the real logarithm and exp is the matrix exponential, as in the frozen alpha-zero refutation for the same paper. On positive definite A and B the trace is a positive real number, and the formula is the paper's.",
                 "cuRenyi", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
@@ -41,6 +50,9 @@ internal sealed class CumulantRenyiDataProcessingRefutationDocument : IScribeDoc
             Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
+    private static Formula BasisProjectors() => Seq(Open, LambdaLower, Sp, F.Id("j"), Sp,
+        Colon, Sp, Call("Fin", D(2)), Comma, Sp,
+        Call("single", F.Id("j"), F.Id("j"), D(1)), Close);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.Apply(Named(name), [.. args]);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
