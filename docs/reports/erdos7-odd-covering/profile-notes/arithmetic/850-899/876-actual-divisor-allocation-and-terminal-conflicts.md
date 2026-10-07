@@ -2181,6 +2181,70 @@ replacement interface, not a new canonical replacement theorem or an
 unrestricted covering contradiction. It assumes no source-matroid
 property and supplies none.
 
+## A reciprocal move into a different divisor phase needs a free place
+
+Keep one actual count-then-sum-minimal odd distinct cover with no
+original modulus divisible by 27, and actual modulus-three and
+modulus-nine guards in different modulus-three phases. Use the
+reciprocal swap above with q=113, different literal q-colors and
+complete private witnesses w_i,w_j. Let t be positive, odd and
+coprime to three, with at least fifteen positive divisors. Define
+
+$$
+N_t(b)=\#\{k:113t\mid n_k,\ a_k\equiv b\pmod t\}.
+$$
+
+Suppose
+
+$$
+113t\mid n_i,\qquad113t\nmid n_j,\qquad
+ a_i\not\equiv w_j\pmod t.
+$$
+
+Then the existing phase bound implies the sharper necessary condition
+
+$$
+\boxed{N_t(w_j)\le13.}
+$$
+
+Indeed, let C be the old receiving fiber counted by N_t(w_j).
+The phase inequality excludes i from C, while the divisibility
+condition excludes j. Every member of C is retained with its old
+phase. In the swapped cover, i is an additional original with
+113t dividing its modulus and phase w_j modulo t. Applying DA9
+to the injectively indexed set C union {i} gives |C|+1 at most
+fourteen.
+
+All hypotheses of DA9 hold for this competing whole cover. Every
+numerical modulus stays fixed, so no27 and the original sum minimum
+are preserved. The same count minimum applies to it. Neither
+selected modulus can equal 3 or 9 because each is divisible by
+113, so both guard residues and their separation stay fixed.
+The argument does not assume a phase bound for the new cover:
+it obtains that bound from the existing actual-cover theorem.
+
+Consequently, a receiving phase already containing fourteen
+qualified originals forbids this reciprocal move. An actual
+saturated receiving fiber, the asymmetric divisibility and the
+changed phase must all hold together to use the criterion. No
+supplier of that joint configuration is established here.
+
+For the source-derived swaps preserving the literal stripped
+classes, w_j is congruent to a_i modulo n_i/113. Since 113t divides
+n_i, t divides n_i/113, so their t-phases are equal. Such a swap
+cannot satisfy the displayed phase-change hypothesis. Its full
+N_t phase counts stay fixed. Thus this necessary receiving-space
+condition concerns exchanges changing a stripped phase; it adds
+no obstruction to the neutral source-preserving exchanges above.
+
+A scoped transient Lean application constructs the actual swapped
+cover, transports the minimum and guard hypotheses, inserts i
+into the old receiving fiber, and applies DA9 directly. It compiles
+with default budgets and only propext, Classical.choice and
+Quot.sound. No q-height-one assumption is used by this application.
+It is an exact reuse consequence, not a newly retained canonical
+theorem or a proof that the required reciprocal pair exists.
+
 ## Verification and the remaining global obligation
 
 Scoped exact Lean checks cover the actual two-prime incidence
