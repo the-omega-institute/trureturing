@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using static StrataLint.Cli.RegisteredWorktreeInventory;
 using System.Text;
 using System.Text.Json;

@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using System.Diagnostics;
 using System.Text;
 using StrataLint.Cli;
@@ -92,11 +93,11 @@ public sealed partial class LeanCacheProvisionerTests
             System.Security.Cryptography.SHA256.HashData(File.ReadAllBytes(path))))
         .ToArray();
 
-    private static StrataLint.Engine.ProcessOutput RunGitReader(
+    private static StrataLint.Runtime.ProcessOutput RunGitReader(
         PrivateReaderFixture fixture, string dependency, params string[] arguments) =>
         RunGitReaderWithConfiguration(fixture, dependency, "02", arguments);
 
-    private static StrataLint.Engine.ProcessOutput RunGitReaderWithConfiguration(
+    private static StrataLint.Runtime.ProcessOutput RunGitReaderWithConfiguration(
         PrivateReaderFixture fixture, string dependency, string count, params string[] arguments)
     {
         var script = Path.Combine(fixture.Reader, "tools/scripts/worktree/lean-cache-run.sh");
