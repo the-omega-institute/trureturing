@@ -128,7 +128,7 @@ Inspector 的可复用工件由 [Lake facets](lakefile.lean) 管理，均在当�
 | `producer/` | 原生编译的 inspector 可执行程序及其构建产物。 |
 | `modules/<Lean.Module>.zip` | 每模块报告、materials 与实际生成来源。 |
 | `report.zip` | 汇总后的完整规范报告 bundle。 |
-| `inputs/`、`inputs.json`、`compatibility` | 从登记输入生成的模块输入、成员集合及兼容标识。 |
+| `inputs/`、`inputs.json`、`report-format` | 当前模块输入、成员及配置坐标、报告格式标识。 |
 
 这些是构建产物，不提交为源码。Lean-cache 发布先经同一 `make lean-report` / `inspect.sh`
 入口完成登记的程序目标、原生报告及完整校验，再打包根 buildDir；不另跑一轮 `lake build`。
@@ -212,7 +212,7 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 导出证据和来源 sidecar 不重复存储导入源码的原始摘要。
 外部包依赖由登记的 Lake manifest pin 约束。
 
-兼容身份与实际产地分别记录。[provenance-v4](publication.py) 的
+报告格式身份与实际产地分别记录。[provenance-v4](publication.py) 的
 `producer_sha256`、`repository_inspector_sha256` 承载报告格式标识的哈希；实际生成来源的摘要记在
 `module_origins` 各模块的 `producer_sources_sha256` 和
 `inspector_executable_sha256`，并绑定该模块报告哈希。复用保持原始来源，增量汇总可含
@@ -223,7 +223,7 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 发布和导出报告的 [输入验证](../scripts/report/lean-report-input.sh) 核对来源记录、模块成员与登记路径，
 不重算当前源码、claim 源码或捕获依赖的文件摘要来决定复用。
 提取语义或报告格式改变时更新报告格式标识；判官实现或规则改动保留未改动登记的既有判词。
-兼容 producer 改动不要求旧行的生成指纹等于当前 producer；重新生成的行才记录新指纹。
+判官实现改动不要求旧行的生成指纹等于当前 producer；重新生成的行才记录新指纹。
 仓库输入地址与 provenance 的 `input_address` 由同一输入工具按各自编码计算，
 不能互换，commit ID 与工作树名称不参与这些地址。
 
@@ -287,7 +287,7 @@ Report reuse comes from the Lake compiler trace, utility inputs and the report f
 
 Seals retain compiler-checked nondegeneracy, bundle nonemptiness, lowering/triviality and semantic-closure membership, catalog redundancy and kernel-collision obligations. The judge checks that the arena, catalog and complete ordered unit vector match exactly the registrations in the import closure. Seal contracts and reports contain no counts, state partitions, primitive statistics or role buckets.
 
-Utility refutations require the raw claim type `Prop` and the raw result type `Not claim`. The judge compares those compiled types literally; it does not unfold definitions, reduce aliases or use a Reg refutation certificate.
+Utility refutations require the raw claim type `Prop` and the raw result type `Not claim`. The judge compares those compiled types literally, without unfolding or reduction. The utility and DTR exemption use the same selector: the unique included declaration with that final name component in the designated compiled module. Its full name supplies the exemption in every namespace, including no namespace. Other new public theorems remain subject to DTR; an ambiguous selector exempts none.
 
 The implementation library contains the production artifact evaluator and its pure
 support modules. Tests and independent analyses live in the downstream Reg host.

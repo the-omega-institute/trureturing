@@ -46,7 +46,7 @@ An unfinished registration must not be reported as `declared_validated`; disclos
 
 Helpers in `Reg`, `Interface` and `Impl` create no recursive D5 audit target and retain their existing checks. Reuse with no new Lean declaration creates no audit target. Keep successful Reg audit evidence in the run record; an unfinished audit and its issue must be disclosed even when the final answer is plain prose.
 
-Utility refutations require the claim definition’s compiled type to be literally `Prop` and the result theorem’s compiled type to be literally `Not claim`. Write the result as `theorem result : ¬ claim := …`; definitionally equivalent aliases or expanded conclusions do not pass SL-031. The result is exempt from four-slot escape registration and needs no Reg refutation certificate.
+Utility refutations require the claim definition’s compiled type to be literally `Prop` and the result theorem’s compiled type to be literally `Not claim`. Write the result as `theorem result : ¬ claim := …`; definitionally equivalent aliases or expanded conclusions do not pass SL-031. The designated result is exempt from four-slot escape registration. Its selector resolves to the unique included compiled declaration with that final name component in the designated module, regardless of namespace; other new public theorems keep their obligations. A missing or ambiguous selector exempts nothing.
 
 ## Compilation scope
 
