@@ -1,6 +1,6 @@
 {
-  "scope": "Exact rational constants; the actual-source and all-height argument is Report563 section8.",
-  "script_sha256": "b7d2c37ad7395570418db161f6213c019e3639bfcdf01bd8357c8d2d0e4d7c0b",
+  "scope": "Exact rational constants; actual-source and all-height arguments are in Report563 sections8 and9.",
+  "script_sha256": "533a20484faedc948b2fb0e1f84114b3005201acbeb13a9307cf62e67136206e",
   "primes": [
     3,
     5,
@@ -714,14 +714,119 @@
     ],
     "meaning": "Negative upper-activity polynomial; no all-law obstruction."
   },
+  "phase_union_budget": {
+    "thresholds": [
+      {
+        "prime": 5,
+        "tau": "1129026791/10906481736",
+        "activity_at_threshold": "1129026791/40899306510",
+        "gap_activity_derivative": "-50492971/2650725"
+      },
+      {
+        "prime": 7,
+        "tau": "7903187537/45977658372",
+        "activity_at_threshold": "1129026791/38314715310",
+        "gap_activity_derivative": "-141906353/7952175"
+      },
+      {
+        "prime": 11,
+        "tau": "12419294701/38927263500",
+        "activity_at_threshold": "1129026791/35034537150",
+        "gap_activity_derivative": "-320389/19635"
+      },
+      {
+        "prime": 13,
+        "tau": "14677348283/37248983352",
+        "activity_at_threshold": "1129026791/34144901406",
+        "gap_activity_derivative": "-8211857/516375"
+      },
+      {
+        "prime": 17,
+        "tau": "19193455447/35211078432",
+        "activity_at_threshold": "1129026791/33010386030",
+        "gap_activity_derivative": "-13584521/883575",
+        "eta_half_query_bound": "64168877249/2348456910"
+      },
+      {
+        "prime": 19,
+        "tau": "21451509029/34547909724",
+        "activity_at_threshold": "1129026791/32628581406",
+        "gap_activity_derivative": "-35543117/2338875",
+        "eta_half_query_bound": "72359284393/2733458520"
+      },
+      {
+        "prime": 23,
+        "tau": "25967616193/33598694052",
+        "activity_at_threshold": "1129026791/32071480686",
+        "gap_activity_derivative": "-9427243/631125",
+        "eta_half_query_bound": "88703129633/3495407100"
+      }
+    ],
+    "base_gap": "1129026791/2147087250",
+    "meaning": "Sufficient sum eta_q/tau_q<1 under one fixed pure reference; not universal.",
+    "five_prime_failure_ratio": "2625634492/1129026791",
+    "failure_family_alternative_bound": "3380195/663552",
+    "actual_families": {
+      "new_scope": [
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          51
+        ],
+        [
+          136,
+          153
+        ],
+        [
+          274,
+          459
+        ],
+        [
+          904,
+          1377
+        ]
+      ],
+      "budget_failure": [
+        [
+          2,
+          3
+        ],
+        [
+          1,
+          15
+        ],
+        [
+          10,
+          45
+        ],
+        [
+          112,
+          135
+        ],
+        [
+          13,
+          405
+        ]
+      ]
+    }
+  },
   "checks": {
     "source_arithmetic": 13,
     "independent_polynomial_equalities": 640,
     "positive_coordinate_subsets": 384,
     "claimed_constants": 9,
     "query_contract": 4,
-    "probability_corrections": 4
+    "probability_corrections": 4,
+    "phase_union_thresholds": 21,
+    "phase_union_polynomial": 1792,
+    "phase_union_positive_corollaries": 771,
+    "phase_union_simultaneous": 257,
+    "phase_union_constants": 6,
+    "phase_union_actual_examples": 38
   },
-  "passed_checks": 1054,
+  "passed_checks": 3939,
   "claim_limit": "No unrestricted eight-prime query theorem, optimizer, or Lean verification."
 }
