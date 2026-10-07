@@ -17,7 +17,7 @@ namespace D5.S3.Arith.FibonacciAtomic.CoarseEndpointPeeling
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition
 open ActualCoarseReadoutHistory (kappa kappa_hist shared_history_obstruction)
-open ActualCoarseReadoutCompletion (compileRaw encodeHistory cachedExecute completion_contract)
+open ActualCoarseReadoutCompletion (compileRaw encodeHistory completion_contract)
 open ActualJointResponseCostCore (controllerPolicy)
 open ActualImageSevenLeafSeparation (leafLabel leafAddresses Nonconflict seven_leaf_separation)
 open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist execute fiber)
@@ -26,7 +26,6 @@ open D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound
 
 local notation "CH" => Hist (fun _ : Address => Option Bool)
 local notation "RH" => Hist (fun _ : Address => Reply)
-local notation "CoarseObservable" => fun p => Function.FactorsThrough p kappa_hist
 local notation "read" => fun {m : Nat} (F : Fin m → Source) (q : Address) (i : Fin m) =>
   leafLabel (F i) q
 
@@ -68,13 +67,13 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
     let e := Fintype.equivFin (Unit ⊕ (Fin k ⊕ Fin k))
     let F := Scale38NestedCompensation.family k ∘ e.symm
     ∀ z : Fin m,
-      ((∃ π : Strategy, CoarseObservable π.policy ∧
+      ((∃ π : Strategy, Function.FactorsThrough π.policy kappa_hist ∧
         ∀ i, cost π (F i) = 3*k+14 - (if i = z then 1 else 0)) ↔
         ∃ qs : List Address, Peels F z Finset.univ qs) ∧
       (∀ qs : List Address, Peels F z Finset.univ qs → ∃ π : Strategy,
         π.policy = (fun h => controllerPolicy
           (compileRaw F (peelDecode F z Finset.univ qs) (peelRoute F z qs) [])
-          (encodeHistory (kappa_hist h))) ∧ CoarseObservable π.policy ∧
+          (encodeHistory (kappa_hist h))) ∧ Function.FactorsThrough π.policy kappa_hist ∧
         (∀ i, cost π (F i) = 3*k+14 - (if i = z then 1 else 0)) ∧
         paid (terminal π (F z)).1 = leafAddresses (F z) ∧
         ∀ i, i ≠ z → ∃ q,
@@ -156,7 +155,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
       ∃ π : Strategy,
         π.policy = (fun h => controllerPolicy
           (compileRaw F (peelDecode F z Finset.univ qs) (peelRoute F z qs) [])
-          (encodeHistory (kappa_hist h))) ∧ CoarseObservable π.policy ∧
+          (encodeHistory (kappa_hist h))) ∧ Function.FactorsThrough π.policy kappa_hist ∧
         (∀ i, cost π (F i) = 3*k+14 - (if i = z then 1 else 0)) ∧
         paid (terminal π (F z)).1 = leafAddresses (F z) ∧
         ∀ i, i ≠ z → ∃ q,
