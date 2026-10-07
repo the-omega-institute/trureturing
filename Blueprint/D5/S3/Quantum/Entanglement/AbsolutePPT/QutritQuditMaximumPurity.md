@@ -26,6 +26,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritQuditMaximumPurity.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/ahiable-kothakonda-winter-2026-appt-qutrit-maximum-purity` (proved) by `D5/S3/Quantum/Entanglement/AbsolutePPT/QutritQuditMaximumPurity.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"ahiable-kothakonda-winter-2026-appt-qutrit-maximum-purity","declaration_gid":"D5/S3/Quantum/Entanglement/AbsolutePPT/QutritQuditMaximumPurity.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Jennifer Ahiable; Naga Bhavya Teja Kothakonda; Andreas Winter (2026). *The geometry of absolute separability and other convex matrix properties from spectrum*. DOI: [10.48550/arXiv.2608.03390](https://doi.org/10.48550/arXiv.2608.03390). URL: <https://arxiv.org/abs/2608.03390v2>.
