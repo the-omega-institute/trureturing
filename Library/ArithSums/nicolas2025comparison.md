@@ -3620,6 +3620,144 @@ here by the required margin. In particular the head subtraction
 does not establish positivity or an estimate for the unverified
 head. The full original Robin bound and RH remain unproved.
 
+### The heat prime response has a paid finite arithmetic window
+
+The positive kernel in (HR3) permits an unconditional localization
+of its prime sum. This uses only $\Lambda(n)\le\log n$, the
+Gaussian bound below and the same $A,L,S,u_*$. It is an application
+estimate for this profile, not a new prime-distribution theorem,
+an originality claim or a Lean-verified result.
+
+For $0<U\le1/16$ and $d\in\mathbb R$, put
+
+$$
+K_U(d)=\int_0^U\mathcal G_u(d+u)\,du.
+$$
+
+Expanding the square inside the Gaussian gives
+
+$$
+0\le K_U(d)
+=e^{-d/2}\int_0^U
+ \frac{e^{-d^2/(4u)-u/4}}{\sqrt{4\pi u}}\,du
+\le\sqrt{U/\pi}\,e^{-d/2}e^{-d^2/(4U)}.
+\tag{HR7}
+$$
+
+For $A\ge e^2$, $L=\log A$ and any $D>0$, split the last
+Gaussian exponent into two equal parts. On $|d|>D$ one part is
+at most $e^{-D^2/(8U)}$. Consequently
+
+$$
+\sum_{|\log(n/A)|>D}\Lambda(n)K_U(\log(n/A))
+\ll\sqrt U\,e^{-D^2/(8U)}\sum_{n\ge2}f_{A,U}(n),
+$$
+
+where
+
+$$
+f_{A,U}(x)=\log x\,(A/x)^{1/2}
+ \exp\!\left[-\frac{(\log x-L)^2}{8U}\right],\qquad x\ge1.
+$$
+
+This nonnegative function vanishes at $1$ and at infinity and
+has just one maximum. Indeed, for $t=\log x>0$, its logarithmic
+derivative with respect to $t$ is
+$1/t-1/2-(t-L)/(4U)$, which is strictly decreasing from positive
+infinity to negative infinity. The elementary unimodal
+sum–integral comparison therefore gives
+
+$$
+\sum_{n\ge2}f_{A,U}(n)
+\le\int_1^\infty f_{A,U}(x)\,dx
+    +2\sup_{x\ge1}f_{A,U}(x).
+$$
+
+Write $d=\log x-L$. Completing the square first with
+$e^{-d/2}$ and then with $e^{d/2}$ gives, uniformly in the stated
+parameters,
+
+$$
+\sup_{x\ge1}f_{A,U}(x)
+\le e^{U/2}(L+2U+2\sqrt U)\ll L+1,
+$$
+
+$$
+\begin{aligned}
+\int_1^\infty f_{A,U}(x)\,dx
+&\le A e^{U/2}\int_{\mathbb R}
+ (L+|d|)e^{-(d-2U)^2/(8U)}\,dd\\
+&\ll A\sqrt U(L+1).
+\end{aligned}
+$$
+
+These comparisons account for the integer grid as well as the
+continuous background. Combining them with (HR7) proves the
+complete positive arithmetic tail bound
+
+$$
+\boxed{
+\sum_{|\log(n/A)|>D}\Lambda(n)K_U(\log(n/A))
+\ll (L+1)(AU+\sqrt U)e^{-D^2/(8U)}.}
+\tag{HR8}
+$$
+
+No prime powers outside the displayed window are dropped before
+this bound is applied, and no prime-counting asymptotic or average
+over $A$ is assumed.
+
+Now use the same $U=u_*=L/S^2$ as (HR1)–(HR6), and take
+
+$$
+D_*=4\sqrt{u_*L}=\frac{4L}{S},\qquad
+\mathcal W_A=\{n\ge2:Ae^{-D_*}\le n\le Ae^{D_*}\}.
+$$
+
+Keep both endpoints in this finite window. Define
+
+$$
+\mathcal D^{\rm loc}_{A,u_*}
+=A^{-1/2}\left[
+ Au_*-\sum_{n\in\mathcal W_A}\Lambda(n)
+       K_{u_*}(\log(n/A))\right].
+$$
+
+Since $e^{-D_*^2/(8u_*)}=A^{-2}$, (HR8) yields
+
+$$
+0\le\mathcal D^{\rm loc}_{A,u_*}-\mathcal D_{A,u_*}
+\ll(L+1)\left(\sqrt A\,u_*+
+ \frac{\sqrt{u_*}}{\sqrt A}\right)A^{-2}
+\longrightarrow0.
+\tag{HR9}
+$$
+
+The direction is relevant to Robin: removing the outside positive
+prime terms increases $\mathcal D$, hence gives an upper estimate
+for its contribution to $Z_{\rm orig}$ and a lower estimate for
+the corresponding contribution $-Z_{\rm orig}$ to $I_\psi$.
+The separate bound in (HR9) also pays the absolute discrepancy.
+Together with (HR5)–(HR6), it gives
+
+$$
+\sqrt A L\,Z_{\rm orig}(A)
+=\mathcal J_{\rm head}(A)
+ +(1+1/L)\mathcal D^{\rm loc}_{A,u_*}+o(1),
+\tag{HR10}
+$$
+
+with no discarded zero heights or unpaid arithmetic tail.
+
+The relative log window $D_*=4L/S$ tends to zero. Its continuous
+arithmetic width is asymptotic to $8AL/S$; this is a window at
+$A=\log N$, not a window at the original integer $N$. The weighted
+prime-power sum within it is still not estimated by the required
+signed margin. Nor is the exact unknown head in (HR4) paid by
+localization. The original selected-source joint estimate, strict
+core, all actual real parts and multiplicities remain unchanged,
+and RH remains unproved. All limits are eventual, with no
+certified numerical starting clock.
+
 ## Whole multiplicative sums do not control prescribed prime blocks
 
 Granville–Lamzouri, *Large values of exponential sums with
