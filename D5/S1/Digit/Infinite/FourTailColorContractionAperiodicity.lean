@@ -50,18 +50,15 @@ private theorem tail_color_embed (Q : ℝ → Fin 5) (hs : Q '' I = Set.range em
   apply Fin.ext
   rfl
 
-private theorem tail_represented (Q : ℝ → Fin 5) (hs : Q '' I = Set.range embed)
-    (c : Fin 4) : ∃ y : I, tailColor Q hs y = c := by
+private theorem tail_represented (Q : ℝ → Fin 5) (hs : Q '' I = Set.range embed) :
+    Surjective (tailColor Q hs) := by
+  intro c
   have hc : embed c ∈ Q '' I := hs ▸ Set.mem_range_self c
   obtain ⟨y, hy, he⟩ := hc
   refine ⟨⟨y, hy⟩, ?_⟩
   apply Fin.ext
   change (Q y).val = c.val
   exact congrArg Fin.val he
-
-private noncomputable def representative (Q : ℝ → Fin 5)
-    (hs : Q '' I = Set.range embed) (c : Fin 4) : I :=
-  Classical.choose (tail_represented Q hs c)
 
 private theorem inward_maps (i : Fin 3) :
     Set.MapsTo (branch (labelIndex (i.castLE (by decide)))) I I := by
@@ -80,19 +77,20 @@ private theorem inward_maps (i : Fin 3) :
 /-- The unique inward output color of a tail-color column, realized by an actual tail. -/
 noncomputable def branchColor (Q : ℝ → Fin 5) (hs : Q '' I = Set.range embed)
     (i : Fin 3) (c : Fin 4) : Fin 4 :=
-  tailColor Q hs ⟨branch (labelIndex (i.castLE (by decide))) (representative Q hs c),
-    inward_maps i (representative Q hs c).property⟩
+  let y : I := surjInv (tail_represented Q hs) c
+  tailColor Q hs ⟨branch (labelIndex (i.castLE (by decide))) y,
+    inward_maps i y.property⟩
 
 private theorem representative_color (Q : ℝ → Fin 5)
     (hs : Q '' I = Set.range embed) (c : Fin 4) :
-    Q (representative Q hs c) = embed c := by
+    Q (surjInv (tail_represented Q hs) c : I) = embed c := by
   rw [← tail_color_embed Q hs]
-  exact congrArg embed (Classical.choose_spec (tail_represented Q hs c))
+  exact congrArg embed (surjInv_eq (tail_represented Q hs) c)
 
 private theorem column_injective (Q : ℝ → Fin 5) (D : Fin 5 → Fin 5 → Label)
     (hD : DecoderContract Q D) (hs : Q '' I = Set.range embed) (c : Fin 4) :
     Injective (fun r => D r (embed c)) := by
-  let y := representative Q hs c
+  let y : I := surjInv (tail_represented Q hs) c
   let outputs (i : Fin 5) := Q (branch (labelIndex i) y)
   have decoded (i : Fin 5) : D (outputs i) (embed c) = labelIndex i := by
     rw [← representative_color Q hs c]
@@ -112,8 +110,8 @@ private theorem branch_color_decode (Q : ℝ → Fin 5) (D : Fin 5 → Fin 5 →
   rw [branchColor, tail_color_embed, ← representative_color Q hs c]
   apply hD.decode
   cases h : outgoing (labelIndex (i.castLE (by decide)))
-  · exact state_subset true (representative Q hs c).property
-  · exact (representative Q hs c).property
+  · exact state_subset true (surjInv (f := tailColor Q hs) (tail_represented Q hs) c).property
+  · exact (surjInv (f := tailColor Q hs) (tail_represented Q hs) c).property
 
 private theorem branch_color_actual (Q : ℝ → Fin 5) (D : Fin 5 → Fin 5 → Label)
     (hD : DecoderContract Q D) (hs : Q '' I = Set.range embed) (i : Fin 3) (y : I) :
