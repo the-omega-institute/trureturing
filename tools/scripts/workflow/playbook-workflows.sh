@@ -28,10 +28,6 @@ run_cli() {
   dotnet run --project "$PROJECT" --configuration Release -- "$@"
 }
 
-run_digest_status() {
-  run_cli digest-status
-}
-
 align_delivery_ledger() {
   local accepted_modules='[]' closed_modules module closed_query_output
   local accepted_files=("$FROZEN_LEDGER"/*.json)
@@ -313,11 +309,9 @@ case "$COMMAND" in
   deliver-check)
     make lean-report
     make emit
-    run_digest_status
     # Freeze last among all mutating derivations so the proposition snapshot is current.
     verify_added_frozen_events_v5
     align_delivery_ledger
-    run_digest_status
     make gate BASE="$BASE"
     verify_added_frozen_events_v5
     ;;

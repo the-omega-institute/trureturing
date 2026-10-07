@@ -538,10 +538,9 @@ public sealed partial class LedgerAlignWriterTests
         public AdmissionOutcome Check(IReadOnlyList<string> arguments) => throw Unsupported();
         public AdmissionTopologyOutcome Topology(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult Coverage(IReadOnlyList<string> arguments) => throw Unsupported();
-        public CommandResult DigestStatus(IReadOnlyList<string> arguments) => throw Unsupported();
+        public CommandResult SearchAtoms(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult ShowAtom(IReadOnlyList<string> arguments) => throw Unsupported();
         public CommandResult AtomContext(IReadOnlyList<string> arguments) => throw Unsupported();
-        public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) => throw Unsupported();
         public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) => throw Unsupported();
         public ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments) => throw Unsupported();
         public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) => throw Unsupported();

@@ -180,6 +180,16 @@ internal sealed partial class GitRepositoryGateway : IRepositoryGateway
                 maximumOutputBytes,
                 standardInput));
 
+    public RawRepositorySnapshot ReadRevision(string revision, IReadOnlyList<string> paths) =>
+        GitRepositorySnapshotReader.ReadRevision(
+            revision,
+            (arguments, maximumOutputBytes, standardInput) => GitRaw(
+                arguments,
+                allowNonzero: false,
+                maximumOutputBytes,
+                standardInput),
+            paths);
+
     private string GitText(params string[] arguments) => StrictUtf8.GetString(GitBytes(arguments));
 
     private byte[] GitBytes(params string[] arguments)
