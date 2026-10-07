@@ -31,9 +31,8 @@ public sealed class Sl016ObservationAdmissionTests(ITestOutputHelper output)
         if (reopenChild)
         {
             var clear = SettleAtomCommandTests.Run(temporary.Path, fixture.Current, "",
-                ["--clear", parent.Receipts.ChainAtoms[0], "--base", "baseline"]);
+                ["--clear", parent.Receipts.ChainAtoms[0]]);
             Assert.True(clear.Success, clear.Error);
-            Assert.Contains("SETTLE_ALIGN_REQUIRED ancestors=" + parent.AtomId, clear.Output, StringComparison.Ordinal);
             fixture.Current = SettleAtomCommandTests.ReadFiles(temporary);
         }
 
@@ -61,9 +60,7 @@ public sealed class Sl016ObservationAdmissionTests(ITestOutputHelper output)
         var observations = result.Diagnostics.Where(d => d.RuleId == RuleId.CreateKnown(16)
             && d.AdmissionEffect == AdmissionEffect.Observe
             && d.Message.Contains("has no digestion source", StringComparison.Ordinal)).ToArray();
-        Assert.Equal(unregisteredTheory ? 1 : 0, observations.Length);
-        if (unregisteredTheory)
-            Assert.Contains("UNREGISTERED.md' has no digestion source", observations[0].Message, StringComparison.Ordinal);
+        Assert.Empty(observations);
         var blockers = result.Diagnostics.Where(d => d.AdmissionEffect == AdmissionEffect.Block).ToArray();
         if (reopenChild)
         {

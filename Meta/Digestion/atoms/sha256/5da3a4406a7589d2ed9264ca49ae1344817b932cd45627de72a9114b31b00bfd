@@ -1,0 +1,26 @@
+**引理 39.2（周期不超过二，缺额纤维穷尽）。** 在约定 39.1 下，所有 $T_n$ 周期长度均为一或二。对 $u,v\in D_n$ 且 $u,v\ge2$，有
+
+$$
+T_n(u)=v,\quad T_n(v)=u
+\quad\Longleftrightarrow\quad
+\exists c\in\mathbb Z_{>0}\cap(2\mathbb Z+1):
+\quad h(u)=h(v)=c,\quad u+v=n+c,
+\qquad h(x)=x-b(x).
+\tag{39.5}
+$$
+
+$h$ 取正奇整数，其完整纤维如下：
+
+$$
+\begin{array}{c|c|c}
+\text{缺额 }c&\text{偶整数纤维}&\text{奇整数纤维}\\ \hline
+c=s=3^k\ge3 &[2s,4s]_{\rm e}&[5s/3,3s]_{\rm o}\\
+c=1&\{2,4\}&\{3\}\\
+s<c<3s,\ c\text{ 为奇数且不是三的幂}
+&\{c+3s\}&\{c+2s\}.
+\end{array}
+\tag{39.6}
+$$
+
+最后一行的 $s$ 唯一。
+

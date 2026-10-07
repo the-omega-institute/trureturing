@@ -484,7 +484,7 @@ internal sealed class ReportSupervisorFixture : IDisposable
                 .Any(line => line.StartsWith(prefix, StringComparison.Ordinal)));
     }
 
-    private string WriteExecutable(string name, string contents)
+    internal string WriteExecutable(string name, string contents)
     {
         var path = Path.Combine(Root, name);
         File.WriteAllText(path, contents + "\n", new UTF8Encoding(false));
