@@ -97,7 +97,7 @@ private def judgePayloadType (name : Name) : Bool :=
       `LeanInformationAudit.TemplateBinding.JoinedRecords,
       `LeanInformationAudit.AutoDerivedSemanticCertificate,
       `LeanInformationAudit.CatalogUnitRecord, `LeanInformationAudit.CatalogRecord,
-      `LeanInformationAudit.SealTheoremRecord, `LeanInformationAudit.SealArenaRecord,
+      `LeanInformationAudit.SealArenaRecord,
       `LeanInformationAudit.SealedOccurrenceState, `LeanInformationAudit.StagedAnalysisState,
       `LeanInformationAudit.StructuralProvenanceEntry,
       `LeanInformationAudit.StructuralRegistrationEvidence,

@@ -549,7 +549,7 @@ private unsafe def produceCompiled (reportOutput materialSpool : System.FilePath
             let validated := own.filter (fun record => record.result matches .declaredValidated _)
             let unresolved := own.filter (fun record => record.result matches .declaredUnresolved _)
             let ownSeals := seals.filter (·.catalog.rootId == target)
-            (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE compiled_assess_ns={(← IO.monoNanosNow) - start} module={target} registrations={own.size} validated={validated.size} unresolved={unresolved.size} undeclared={own.size - validated.size - unresolved.size} seal_catalogs={ownSeals.size} seal_theorems={ownSeals.foldl (fun count sealRecord => count + sealRecord.theorems.size) 0}"
+            (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE compiled_assess_ns={(← IO.monoNanosNow) - start} module={target} registrations={own.size} validated={validated.size} unresolved={unresolved.size} undeclared={own.size - validated.size - unresolved.size} seal_catalogs={ownSeals.size}"
           pure (assessment.store, assessment.generated.filter (·.2 == target) |>.map Prod.fst,
             ← ArtifactRegistration.targetJson target assessment, assessment.enrollmentErrors)
         else pure (store, #[], empty, #[])

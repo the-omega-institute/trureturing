@@ -1,3 +1,36 @@
+import D5.S3.ConceptDynamics.Aggregation.AgendaPower
+import D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause
+import D5.S3.ConceptDynamics.CIRPT.PrimitiveKernel
+import D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification
+import D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange
+import D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope
+import D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign
+import D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction
+import D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
+import D5.S3.ConceptDynamics.InformationEscape.SharedArenaFiniteTemplates
+import D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers
+import D5.S3.ConceptDynamics.InformationEscape.TemplateShadow
+import D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange
+import D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause
+import D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas
+import D5.S3.ConceptDynamics.InformationEscapeCounting.Fused
+import D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint
+import D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation
+import D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation
+import Mathlib.Data.Fin.VecNotation
+import Mathlib.Data.Finset.Defs
+import Mathlib.Data.Fintype.Basic
+import Mathlib.Data.Fintype.Defs
+import Reg.Support.LegacyAgenda
+import Reg.Support.LegacyCausalCoordinates
+import Reg.Support.LegacyCausalFinite
+import Reg.Support.LegacyCausalSlots
+import Reg.Support.LegacyContextReplacement
+import Reg.Support.LegacyFiniteTransport
+import Reg.Support.LegacyGluing
+import Reg.Support.LegacyResidue
+import Reg.Support.LegacySpectrum
+import Reg.Support.LegacyStaticDesign
 import Mathlib.Tactic.FinCases
 import LeanInformationAuditInterface.Contract.Catalog
 import D5.S3.ConceptDynamics.InformationEscape.ExactRate
@@ -19,12 +52,272 @@ import Reg.D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.TemplateShadow
 import Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.TemplateShadow
 import Reg.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.TemplateShadow
 import Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.TemplateShadow
-import Reg.Catalogs.TemplateShadow.SealData.Data0
-import Reg.Catalogs.TemplateShadow.SealData.Data1
-import Reg.Catalogs.TemplateShadow.SealData.Data2
 
 namespace Reg.Catalogs.TemplateShadow.SealedCatalog
 open LeanInformationAudit
+
+noncomputable def catalog_0 : Contract.SealCatalog := {
+      arenaName := `Reg.Support.LegacyAgenda.arena
+      catalogId := `Reg.Support.LegacyAgenda.arena
+      arena := (_root_.Reg.Support.LegacyAgenda.arena).toArena
+      size := 1
+      units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateDecidableEq (Reg.Support.LegacyAgenda.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power) }]
+      nondegenerate := by decide +kernel
+      bundleNonempty := by intro index; fin_cases index <;> decide +kernel
+      stateCard := 27
+      stateCardEq := by decide +kernel
+      full := 132
+      fullEq := by letI := ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateFintype; letI := ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateDecidableEq; let states : _root_.D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration (_root_.Reg.Support.LegacyAgenda.arena).toArena := _root_.Reg.Support.LegacyAgenda.enumeration; let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateDecidableEq (Reg.Support.LegacyAgenda.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power) }]; let indices := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration 1; exact (catalog.fusedFull_eq_escapeNumerator states indices).symm.trans (by decide +kernel)
+      rows := Fin.cases ({ unique := 570, uniqueEq := by letI := ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateFintype; letI := ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateDecidableEq; let states : _root_.D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration (_root_.Reg.Support.LegacyAgenda.arena).toArena := _root_.Reg.Support.LegacyAgenda.enumeration; let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateDecidableEq (Reg.Support.LegacyAgenda.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power) }]; let indices := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration 1; exact (catalog.fusedUnique_eq_uniqueCaptureCount states indices (0 : Fin 1)).symm.trans (by decide +kernel), without := 702, withoutEq := by letI := ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateFintype; letI := ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateDecidableEq; let states : _root_.D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration (_root_.Reg.Support.LegacyAgenda.arena).toArena := _root_.Reg.Support.LegacyAgenda.enumeration; let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateDecidableEq (Reg.Support.LegacyAgenda.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power) }]; let indices := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration 1; exact (catalog.fusedWithout_eq_escapeNumerator_without states indices (0 : Fin 1)).symm.trans (by decide +kernel), roleBins := ![0, 84, 0, 0, 0, 0, 0, 318, 0, 168, 0, 0, 0, 0, 0], roleEq := by letI := ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateFintype; letI := ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateDecidableEq; let states : _root_.D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration (_root_.Reg.Support.LegacyAgenda.arena).toArena := _root_.Reg.Support.LegacyAgenda.enumeration; let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateDecidableEq (Reg.Support.LegacyAgenda.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power) }]; let indices := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration 1; exact fun bucket => (catalog.fusedRoleBins_eq_roleHistogram states indices (0 : Fin 1) bucket).symm.trans (congrFun (by decide +kernel : (catalog.fusedCounts states indices).roleBins (0 : Fin 1) = ![0, 84, 0, 0, 0, 0, 0, 318, 0, 168, 0, 0, 0, 0, 0]) bucket), roleTotal := by decide +kernel, conclusion := .positive (by decide +kernel) (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateDecidableEq (Reg.Support.LegacyAgenda.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
+      collisions := #[]
+      conclusion := .irredundant (by
+        intro index
+        fin_cases index
+        · exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyAgenda.arena).toArena).stateDecidableEq (Reg.Support.LegacyAgenda.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel))
+      enumeration := _root_.Reg.Support.LegacyAgenda.enumeration
+    }
+
+noncomputable def facts_0 : Contract.SealFacts catalog_0 where
+  units := { entries := [{ position := 0, within := by decide +kernel, item := (Reg.Support.LegacyAgenda.bridge.toTheoremUnit D5.S3.ConceptDynamics.Aggregation.AgendaPower.agenda_power), correct := by rfl }]
+             complete := rfl }
+
+noncomputable def catalog_1 : Contract.SealCatalog := {
+      arenaName := `Reg.Support.LegacyCausalCoordinates.icObjectArena
+      catalogId := `Reg.Support.LegacyCausalCoordinates.icObjectArena
+      arena := (_root_.Reg.Support.LegacyCausalCoordinates.icObjectArena)
+      size := 1
+      units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.icObjectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.localActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual) }]
+      nondegenerate := by decide +kernel
+      bundleNonempty := by intro index; fin_cases index <;> decide +kernel
+      stateCard := 16
+      stateCardEq := by decide +kernel
+      full := 0
+      fullEq := by let states : _root_.D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration (_root_.Reg.Support.LegacyCausalCoordinates.icObjectArena) := ⟨([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)), (by change ([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)).Nodup; decide +kernel), (by change ([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)).toFinset = (Finset.univ : Finset (Bool × Bool × Bool × Bool)); decide +kernel)⟩; let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.icObjectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.localActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual) }]; let indices := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration 1; exact (catalog.fusedFull_eq_escapeNumerator states indices).symm.trans (by decide +kernel)
+      rows := Fin.cases ({ unique := 240, uniqueEq := by let states : _root_.D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration (_root_.Reg.Support.LegacyCausalCoordinates.icObjectArena) := ⟨([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)), (by change ([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)).Nodup; decide +kernel), (by change ([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)).toFinset = (Finset.univ : Finset (Bool × Bool × Bool × Bool)); decide +kernel)⟩; let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.icObjectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.localActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual) }]; let indices := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration 1; exact (catalog.fusedUnique_eq_uniqueCaptureCount states indices (0 : Fin 1)).symm.trans (by decide +kernel), without := 240, withoutEq := by let states : _root_.D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration (_root_.Reg.Support.LegacyCausalCoordinates.icObjectArena) := ⟨([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)), (by change ([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)).Nodup; decide +kernel), (by change ([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)).toFinset = (Finset.univ : Finset (Bool × Bool × Bool × Bool)); decide +kernel)⟩; let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.icObjectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.localActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual) }]; let indices := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration 1; exact (catalog.fusedWithout_eq_escapeNumerator_without states indices (0 : Fin 1)).symm.trans (by decide +kernel), roleBins := ![0, 0, 0, 0, 0, 0, 0, 240, 0, 0, 0, 0, 0, 0, 0], roleEq := by let states : _root_.D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration (_root_.Reg.Support.LegacyCausalCoordinates.icObjectArena) := ⟨([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)), (by change ([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)).Nodup; decide +kernel), (by change ([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)).toFinset = (Finset.univ : Finset (Bool × Bool × Bool × Bool)); decide +kernel)⟩; let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.icObjectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.localActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual) }]; let indices := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration 1; exact fun bucket => (catalog.fusedRoleBins_eq_roleHistogram states indices (0 : Fin 1) bucket).symm.trans (congrFun (by decide +kernel : (catalog.fusedCounts states indices).roleBins (0 : Fin 1) = ![0, 0, 0, 0, 0, 0, 0, 240, 0, 0, 0, 0, 0, 0, 0]) bucket), roleTotal := by decide +kernel, conclusion := .positive (by decide +kernel) (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.icObjectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.localActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
+      collisions := #[]
+      conclusion := .irredundant (by
+        intro index
+        fin_cases index
+        · exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyCausalCoordinates.icObjectArena)).stateDecidableEq (Reg.Support.LegacyCausalFinite.localActual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel))
+      enumeration := ⟨([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)), (by change ([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)).Nodup; decide +kernel), (by change ([false, true].flatMap fun a => [false, true].flatMap fun b => [false, true].flatMap fun c => [false, true].map fun d => (a, b, c, d) : List (Bool × Bool × Bool × Bool)).toFinset = (Finset.univ : Finset (Bool × Bool × Bool × Bool)); decide +kernel)⟩
+    }
+
+noncomputable def facts_1 : Contract.SealFacts catalog_1 where
+  units := { entries := [{ position := 0, within := by decide +kernel, item := (Reg.Support.LegacyCausalFinite.local_bridge.toTheoremUnit
+           D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.intervention_strictly_weaker_than_counterfactual), correct := by rfl }]
+             complete := rfl }
+
+noncomputable def catalog_2 : Contract.SealCatalog := {
+      arenaName := `Reg.Support.LegacyContextReplacement.objectArena
+      catalogId := `Reg.Support.LegacyContextReplacement.objectArena
+      arena := (_root_.Reg.Support.LegacyContextReplacement.objectArena)
+      size := 1
+      units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyContextReplacement.objectArena)).stateDecidableEq (Reg.Support.LegacyContextReplacement.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points) }]
+      nondegenerate := by decide +kernel
+      bundleNonempty := by intro index; fin_cases index <;> decide +kernel
+      stateCard := 8
+      stateCardEq := by decide +kernel
+      full := 0
+      fullEq := by decide +kernel
+      rows := Fin.cases ({ unique := 56, uniqueEq := by decide +kernel, without := 56, withoutEq := by decide +kernel, roleBins := ![0, 0, 0, 0, 0, 0, 0, 56, 0, 0, 0, 0, 0, 0, 0], roleEq := by decide +kernel, roleTotal := by decide +kernel, conclusion := .positive (by decide +kernel) (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyContextReplacement.objectArena)).stateDecidableEq (Reg.Support.LegacyContextReplacement.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
+      collisions := #[]
+      conclusion := .irredundant (by
+        intro index
+        fin_cases index
+        · exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyContextReplacement.objectArena)).stateDecidableEq (Reg.Support.LegacyContextReplacement.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel))
+      enumeration := by letI := ((_root_.Reg.Support.LegacyContextReplacement.objectArena)).stateFintype; letI := ((_root_.Reg.Support.LegacyContextReplacement.objectArena)).stateDecidableEq; exact ⟨Finset.univ.toList, Finset.nodup_toList _, by simp⟩
+    }
+
+noncomputable def facts_2 : Contract.SealFacts catalog_2 where
+  units := { entries := [{ position := 0, within := by decide +kernel, item := (Reg.Support.LegacyContextReplacement.bridge.toTheoremUnit
+           D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points), correct := by rfl }]
+             complete := rfl }
+
+noncomputable def catalog_3 : Contract.SealCatalog := {
+      arenaName := `Reg.Support.LegacyGluing.arena
+      catalogId := `Reg.Support.LegacyGluing.arena
+      arena := (_root_.Reg.Support.LegacyGluing.arena).toArena
+      size := 1
+      units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyGluing.arena).toArena).stateDecidableEq (Reg.Support.LegacyGluing.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state) }]
+      nondegenerate := by decide +kernel
+      bundleNonempty := by intro index; fin_cases index <;> decide +kernel
+      stateCard := 8
+      stateCardEq := by decide +kernel
+      full := 8
+      fullEq := by decide +kernel
+      rows := Fin.cases ({ unique := 48, uniqueEq := by decide +kernel, without := 56, withoutEq := by decide +kernel, roleBins := ![0, 48, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], roleEq := by decide +kernel, roleTotal := by decide +kernel, conclusion := .positive (by decide +kernel) (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyGluing.arena).toArena).stateDecidableEq (Reg.Support.LegacyGluing.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
+      collisions := #[]
+      conclusion := .irredundant (by
+        intro index
+        fin_cases index
+        · exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyGluing.arena).toArena).stateDecidableEq (Reg.Support.LegacyGluing.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel))
+      enumeration := by letI := ((_root_.Reg.Support.LegacyGluing.arena).toArena).stateFintype; letI := ((_root_.Reg.Support.LegacyGluing.arena).toArena).stateDecidableEq; exact ⟨Finset.univ.toList, Finset.nodup_toList _, by simp⟩
+    }
+
+noncomputable def facts_3 : Contract.SealFacts catalog_3 where
+  units := { entries := [{ position := 0, within := by decide +kernel, item := (Reg.Support.LegacyGluing.bridge.toTheoremUnit
+           D5.S3.ConceptDynamics.Gluing.LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state), correct := by rfl }]
+             complete := rfl }
+
+noncomputable def catalog_4 : Contract.SealCatalog := {
+      arenaName := `Reg.Support.LegacyResidue.arena
+      catalogId := `Reg.Support.LegacyResidue.arena
+      arena := (_root_.Reg.Support.LegacyResidue.arena).toArena
+      size := 1
+      units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyResidue.arena).toArena).stateDecidableEq (Reg.Support.LegacyResidue.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification) }]
+      nondegenerate := by decide +kernel
+      bundleNonempty := by intro index; fin_cases index <;> decide +kernel
+      stateCard := 4
+      stateCardEq := by decide +kernel
+      full := 0
+      fullEq := by decide +kernel
+      rows := Fin.cases ({ unique := 12, uniqueEq := by decide +kernel, without := 12, withoutEq := by decide +kernel, roleBins := ![0, 0, 0, 0, 0, 0, 0, 12, 0, 0, 0, 0, 0, 0, 0], roleEq := by decide +kernel, roleTotal := by decide +kernel, conclusion := .positive (by decide +kernel) (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyResidue.arena).toArena).stateDecidableEq (Reg.Support.LegacyResidue.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
+      collisions := #[]
+      conclusion := .irredundant (by
+        intro index
+        fin_cases index
+        · exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyResidue.arena).toArena).stateDecidableEq (Reg.Support.LegacyResidue.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel))
+      enumeration := by letI := ((_root_.Reg.Support.LegacyResidue.arena).toArena).stateFintype; letI := ((_root_.Reg.Support.LegacyResidue.arena).toArena).stateDecidableEq; exact ⟨Finset.univ.toList, Finset.nodup_toList _, by simp⟩
+    }
+
+noncomputable def facts_4 : Contract.SealFacts catalog_4 where
+  units := { entries := [{ position := 0, within := by decide +kernel, item := (Reg.Support.LegacyResidue.bridge.toTheoremUnit
+           D5.S3.ConceptDynamics.Coding.AdaptiveResidueIdentification.two_step_adaptive_residue_identification), correct := by rfl }]
+             complete := rfl }
+
+noncomputable def catalog_5 : Contract.SealCatalog := {
+      arenaName := `Reg.Support.LegacyStaticDesign.arena
+      catalogId := `Reg.Support.LegacyStaticDesign.arena
+      arena := (_root_.Reg.Support.LegacyStaticDesign.arena).toArena
+      size := 1
+      units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyStaticDesign.arena).toArena).stateDecidableEq (Reg.Support.LegacyStaticDesign.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design) }]
+      nondegenerate := by decide +kernel
+      bundleNonempty := by intro index; fin_cases index <;> decide +kernel
+      stateCard := 3
+      stateCardEq := by decide +kernel
+      full := 0
+      fullEq := by decide +kernel
+      rows := Fin.cases ({ unique := 6, uniqueEq := by decide +kernel, without := 6, withoutEq := by decide +kernel, roleBins := ![0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0], roleEq := by decide +kernel, roleTotal := by decide +kernel, conclusion := .positive (by decide +kernel) (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyStaticDesign.arena).toArena).stateDecidableEq (Reg.Support.LegacyStaticDesign.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
+      collisions := #[]
+      conclusion := .irredundant (by
+        intro index
+        fin_cases index
+        · exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.Reg.Support.LegacyStaticDesign.arena).toArena).stateDecidableEq (Reg.Support.LegacyStaticDesign.actual)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel))
+      enumeration := by letI := ((_root_.Reg.Support.LegacyStaticDesign.arena).toArena).stateFintype; letI := ((_root_.Reg.Support.LegacyStaticDesign.arena).toArena).stateDecidableEq; exact ⟨Finset.univ.toList, Finset.nodup_toList _, by simp⟩
+    }
+
+noncomputable def facts_5 : Contract.SealFacts catalog_5 where
+  units := { entries := [{ position := 0, within := by decide +kernel, item := (Reg.Support.LegacyStaticDesign.bridge.toTheoremUnit
+           D5.S3.ConceptDynamics.ExperimentDesign.StaticExactExperimentDesign.static_exact_design), correct := by rfl }]
+             complete := rfl }
+
+noncomputable def catalog_6_units : Fin 1 → D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
+    (D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena) :=
+  ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena)).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention) }]
+
+noncomputable def catalog_6 : Contract.SealCatalog := {
+      arenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena
+      catalogId := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena
+      arena := (_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena)
+      size := 1
+      units := catalog_6_units
+      nondegenerate := by decide +kernel
+      bundleNonempty := by intro index; fin_cases index <;> decide +kernel
+      stateCard := 32
+      stateCardEq := by decide +kernel
+      full := 24
+      fullEq := by letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena)).stateFintype; letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena)).stateDecidableEq; let states : _root_.D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration (_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena) := _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena.__state_enumeration; let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector catalog_6_units; let indices := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration 1; exact (catalog.fusedFull_eq_escapeNumerator states indices).symm.trans (by decide +kernel)
+      rows := Fin.cases ({ unique := 968, uniqueEq := by letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena)).stateFintype; letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena)).stateDecidableEq; let states : _root_.D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration (_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena) := _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena.__state_enumeration; let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector catalog_6_units; let indices := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration 1; exact (catalog.fusedUnique_eq_uniqueCaptureCount states indices (0 : Fin 1)).symm.trans (by decide +kernel), without := 992, withoutEq := by letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena)).stateFintype; letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena)).stateDecidableEq; let states : _root_.D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration (_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena) := _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena.__state_enumeration; let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector catalog_6_units; let indices := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration 1; exact (catalog.fusedWithout_eq_escapeNumerator_without states indices (0 : Fin 1)).symm.trans (by decide +kernel), roleBins := ![0, 0, 0, 0, 0, 0, 0, 968, 0, 0, 0, 0, 0, 0, 0], roleEq := by letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena)).stateFintype; letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena)).stateDecidableEq; let states : _root_.D5.S3.ConceptDynamics.InformationEscape.Arena.StateEnumeration (_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena) := _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena.__state_enumeration; let catalog := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector catalog_6_units; let indices := _root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.finIndexEnumeration 1; exact fun bucket => (catalog.fusedRoleBins_eq_roleHistogram states indices (0 : Fin 1) bucket).symm.trans (congrFun (by decide +kernel : (catalog.fusedCounts states indices).roleBins (0 : Fin 1) = ![0, 0, 0, 0, 0, 0, 0, 968, 0, 0, 0, 0, 0, 0, 0]) bucket), roleTotal := by decide +kernel, conclusion := .positive (by decide +kernel) (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector catalog_6_units).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
+      collisions := #[]
+      conclusion := .irredundant (by
+        intro index
+        fin_cases index
+        · exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector catalog_6_units).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel))
+      enumeration := _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena.__state_enumeration
+    }
+
+noncomputable def facts_6 : Contract.SealFacts catalog_6 where
+  units := { entries := [{ position := 0, within := by decide +kernel, item := (D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservation_bridge.toTheoremUnit
+           D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention), correct := by rfl }]
+             complete := rfl }
+
+noncomputable def catalog_7 : Contract.SealCatalog := {
+      arenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena
+      catalogId := `D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena
+      arena := (_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena).toArena
+      size := 1
+      units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.completionRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary) }]
+      nondegenerate := by decide +kernel
+      bundleNonempty := by intro index; fin_cases index <;> decide +kernel
+      stateCard := 4
+      stateCardEq := by decide +kernel
+      full := 0
+      fullEq := by decide +kernel
+      rows := Fin.cases ({ unique := 12, uniqueEq := by decide +kernel, without := 12, withoutEq := by decide +kernel, roleBins := ![0, 0, 0, 6, 0, 0, 0, 0, 0, 0, 0, 6, 0, 0, 0], roleEq := by decide +kernel, roleTotal := by decide +kernel, conclusion := .positive (by decide +kernel) (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.completionRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
+      collisions := #[]
+      conclusion := .irredundant (by
+        intro index
+        fin_cases index
+        · exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.completionRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel))
+      enumeration := by letI := ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena).toArena).stateFintype; letI := ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena).toArena).stateDecidableEq; exact ⟨Finset.univ.toList, Finset.nodup_toList _, by simp⟩
+    }
+
+noncomputable def facts_7 : Contract.SealFacts catalog_7 where
+  units := { entries := [{ position := 0, within := by decide +kernel, item := (D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.completion_bridge.toTheoremUnit
+           D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary), correct := by rfl }]
+             complete := rfl }
+
+noncomputable def catalog_8 : Contract.SealCatalog := {
+      arenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena
+      catalogId := `D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena
+      arena := (_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena).toArena
+      size := 1
+      units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.preemptionRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause) }]
+      nondegenerate := by decide +kernel
+      bundleNonempty := by intro index; fin_cases index <;> decide +kernel
+      stateCard := 9
+      stateCardEq := by decide +kernel
+      full := 12
+      fullEq := by decide +kernel
+      rows := Fin.cases ({ unique := 60, uniqueEq := by decide +kernel, without := 72, withoutEq := by decide +kernel, roleBins := ![0, 0, 12, 0, 0, 0, 0, 30, 0, 0, 18, 0, 0, 0, 0], roleEq := by decide +kernel, roleTotal := by decide +kernel, conclusion := .positive (by decide +kernel) (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.preemptionRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
+      collisions := #[]
+      conclusion := .irredundant (by
+        intro index
+        fin_cases index
+        · exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.preemptionRealization)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel))
+      enumeration := by letI := ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena).toArena).stateFintype; letI := ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.EndStateOmitsPreemptingCause.endStateOmitsPreemptingCauseArena).toArena).stateDecidableEq; exact ⟨Finset.univ.toList, Finset.nodup_toList _, by simp⟩
+    }
+
+noncomputable def facts_8 : Contract.SealFacts catalog_8 where
+  units := { entries := [{ position := 0, within := by decide +kernel, item := (D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.preemption_bridge.toTheoremUnit
+           D5.S3.ConceptDynamics.Attribution.EndStateOmitsPreemptingCause.end_state_omits_preempting_cause), correct := by rfl }]
+             complete := rfl }
+
+noncomputable def catalog_9 : Contract.SealCatalog := {
+      arenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena
+      catalogId := `D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena
+      arena := (_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena).toArena
+      size := 1
+      units := ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena).toArena).stateDecidableEq (@D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates.cutRealization D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.SpectrumAtom (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) fun (atom : D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.SpectrumAtom) => Reg.Support.LegacySpectrum.indexReadout atom)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective) }]
+      nondegenerate := by decide +kernel
+      bundleNonempty := by intro index; fin_cases index <;> decide +kernel
+      stateCard := 5
+      stateCardEq := by decide +kernel
+      full := 0
+      fullEq := by decide +kernel
+      rows := Fin.cases ({ unique := 20, uniqueEq := by decide +kernel, without := 20, withoutEq := by decide +kernel, roleBins := ![0, 0, 0, 0, 0, 0, 0, 20, 0, 0, 0, 0, 0, 0, 0], roleEq := by decide +kernel, roleTotal := by decide +kernel, conclusion := .positive (by decide +kernel) (by exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena).toArena).stateDecidableEq (@D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates.cutRealization D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.SpectrumAtom (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) fun (atom : D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.SpectrumAtom) => Reg.Support.LegacySpectrum.indexReadout atom)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel)) }) (fun i => Fin.elim0 i)
+      collisions := #[]
+      conclusion := .irredundant (by
+        intro index
+        fin_cases index
+        · exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena).toArena).stateDecidableEq (@D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates.cutRealization D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.SpectrumAtom (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) fun (atom : D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.SpectrumAtom) => Reg.Support.LegacySpectrum.indexReadout atom)), Statement := _, proof := (@_root_.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel))
+      enumeration := by letI := ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena).toArena).stateFintype; letI := ((_root_.D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena).toArena).stateDecidableEq; exact ⟨Finset.univ.toList, Finset.nodup_toList _, by simp⟩
+    }
+
+noncomputable def facts_9 : Contract.SealFacts catalog_9 where
+  units := { entries := [{ position := 0, within := by decide +kernel, item := (Reg.Support.LegacySpectrum.bridge.toTheoremUnit
+           D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective), correct := by rfl }]
+             complete := rfl }
 
 def rootCatalog : Contract.RootCatalog := { data := {
   rootId := `Reg.Catalogs.TemplateShadow.SealedCatalog,

@@ -78,9 +78,6 @@ run_meta do
     ``LeanInformationAudit.Contract.Implementation.Correspondence,
     ``LeanInformationAudit.Contract.SealRow,
     ``LeanInformationAudit.Contract.SealCatalog,
-    ``LeanInformationAudit.Contract.AxisRow,
-    ``LeanInformationAudit.Contract.AxisTable,
-    ``LeanInformationAudit.Contract.SealFactRow,
     ``LeanInformationAudit.Contract.SealFacts,
     ``LeanInformationAudit.Contract.SealCatalogView,
     ``LeanInformationAudit.Contract.Seal]

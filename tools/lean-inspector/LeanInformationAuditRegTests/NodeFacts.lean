@@ -137,18 +137,6 @@ def tableEvidence : FiniteTable twoValues where
     { position := 1, within := by decide, item := 1, correct := rfl }]
   complete := rfl
 
-def identityPartition : FinitePartition Bool Eq where
-  rows := [{ item := false, classId := 0 }, { item := true, classId := 1 }]
-  nodup := by decide +kernel
-  complete := by decide +kernel
-  classes := by decide +kernel
-
-def shiftedPartition : FinitePartition Bool Eq where
-  rows := [{ item := false, classId := 1 }, { item := true, classId := 2 }]
-  nodup := by decide +kernel
-  complete := by decide +kernel
-  classes := by decide +kernel
-
 def discards : Nat → Nat := fun _ => 0
 def discardedInput : Nat := discards dataValue
 def discardedCoverage : NodeCoverage where
@@ -323,14 +311,7 @@ unsafe def check : IO Unit := do
     throw <| IO.userError "table.values"
   reject "omitted table row" "contract.node_binding:table_positions"
     (Contract.NodeFacts.table view tab.value 3)
-  let some (.defnInfo partition) := view.find `LeanInformationAuditRegTests.NodeFacts.identityPartition
-    | throw <| IO.userError "partition.definition"
-  let ids ← accept "canonical partition labels" <| Contract.NodeFacts.partition view partition.value
-  unless ids == #[0,1] do throw <| IO.userError "partition.labels"
-  let some (.defnInfo shifted) := view.find `LeanInformationAuditRegTests.NodeFacts.shiftedPartition
-    | throw <| IO.userError "partition.shifted_definition"
-  reject "noncanonical partition labels" "contract.node_binding:partition_numbering"
-    (Contract.NodeFacts.partition view shifted.value)
+
   let rootCount ← accept "root catalog" <| Contract.NodeFacts.root view
     `Reg.Catalogs.IffRegistrations.SealedCatalog.rootCatalog
   unless rootCount == 2 do throw <| IO.userError "root.count"
@@ -343,10 +324,8 @@ unsafe def check : IO Unit := do
       declaration := `Reg.Catalogs.IffRegistrations.SealedCatalog.view_0
       part := .value
       path := [.function, .argument] }
-  unless sealReadout.units == 1 && sealReadout.rows.size == 1 && sealReadout.rows[0]!.1 == 8 &&
-      sealReadout.rows[0]!.2.1 == 12 && sealReadout.rows[0]!.2.2.1 == #[0,0,0,0,0,0,0,8,0,0,0,0,0,0,0] &&
-      sealReadout.rows[0]!.2.2.2.1 == #[0,1,1,0] && sealReadout.rows[0]!.2.2.2.2.size == 2 do
-    throw <| IO.userError s!"seal.readout:{repr sealReadout}"
+  unless sealReadout.size == 1 do
+    throw <| IO.userError "seal.unit_membership"
   let some (.defnInfo cover) := view.find `LeanInformationAuditRegTests.NodeFacts.proofCoverage
     | throw <| IO.userError "coverage.definition"
   let location : NodeCoordinate := {
@@ -354,7 +333,7 @@ unsafe def check : IO Unit := do
     declaration := `LeanInformationAuditRegTests.NodeFacts.keepsProof,
     part := .value, path := [] }
   let walked ← accept "complete raw coverage" <| Contract.NodeFacts.coverage view #[location] cover.value
-  IO.println s!"READOUT coverage_nodes={walked} root_rows={rootCount} seal_rows={sealReadout.rows.size}"
+  IO.println s!"READOUT coverage_nodes={walked} root_rows={rootCount} seal_units={sealReadout.size}"
   let tainted : Contract.NodeFacts.View := {
     view with
     external := fun n => n == ``Eq || view.external n }

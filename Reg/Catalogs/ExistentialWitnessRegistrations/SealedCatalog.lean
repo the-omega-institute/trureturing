@@ -11,29 +11,8 @@ import D5.S3.ConceptDynamics.InformationEscapeHierarchy.RefinementMatrix
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 import Reg.D5.S0.Diagonal.Lawvere.QualitativeEscape
 import Reg.D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States0
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States1
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States10
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States11
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States12
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States13
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States14
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States15
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States16
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States17
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States18
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States19
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States2
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States3
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States4
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States5
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States6
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States7
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States8
-import Reg.Catalogs.ExistentialWitnessRegistrations.SealData.States9
 
 namespace Reg.Catalogs.ExistentialWitnessRegistrations.SealedCatalog
-set_option backward.isDefEq.respectTransparency.types false
 
 open LeanInformationAudit
 
@@ -64,119 +43,13 @@ noncomputable def catalog_0 : Contract.SealCatalog := {
         intro index
         fin_cases index
         · exact ((_root_.D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector ![{ primitives := (@_root_.D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle _ _ ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena).toArena).stateDecidableEq (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedRealization)), Statement := _, proof := (@_root_.D5.S0.Diagonal.Lawvere.QualitativeEscape.exists_captured_listing_of_fixedPoint) }]).lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by decide +kernel))
-      enumeration := {
-        states := ([(state_0), (state_1), (state_2), (state_3), (state_4), (state_5), (state_6), (state_7)] : List (Prod (Bool → Bool) (Unit → Unit → Bool)))
-        nodup := by letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena).toArena).stateDecidableEq; letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena).toArena).stateFintype; decide +kernel
-        complete := by letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena).toArena).stateDecidableEq; letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena).toArena).stateFintype; decide +kernel }
+      enumeration := by letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena).toArena).stateFintype; letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena).toArena).stateDecidableEq; exact ⟨Finset.univ.toList, Finset.nodup_toList _, by simp⟩
     }
 
 noncomputable def facts_0 : Contract.SealFacts catalog_0 where
   units := { entries := [{ position := 0, within := by decide +kernel, item := (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.captured_bridge.toTheoremUnit
            D5.S0.Diagonal.Lawvere.QualitativeEscape.exists_captured_listing_of_fixedPoint), correct := by rfl }]
              complete := rfl }
-  rows := [{
-      position := 0
-      within := by decide +kernel
-      row := {
-        unique := 32
-        uniqueEq := ((catalog_0.rows (⟨0, by decide +kernel⟩ : Fin catalog_0.size)).uniqueEq).trans (by rfl)
-        without := 56
-        withoutEq := ((catalog_0.rows (⟨0, by decide +kernel⟩ : Fin catalog_0.size)).withoutEq).trans (by rfl)
-        roleBins := ![0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        roleEq := by intro bucket; exact ((catalog_0.rows (⟨0, by decide +kernel⟩ : Fin catalog_0.size)).roleEq bucket).trans (congrFun (by rfl : (catalog_0.rows (⟨0, by decide +kernel⟩ : Fin catalog_0.size)).roleBins = ![0, 32, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) bucket)
-        roleTotal := by decide +kernel
-        conclusion := .positive (by decide +kernel) (by
-          apply (D5.S3.ConceptDynamics.InformationEscape.Catalog.lowersEscape_iff_uniqueCaptureCount_pos _ _ catalog_0.nondegenerate).mpr
-          rw [(catalog_0.rows (⟨0, by decide +kernel⟩ : Fin catalog_0.size)).uniqueEq]
-          decide +kernel) }
-      correct := by rfl
-      bins := { entries := [{ position := 0, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 1, within := by decide +kernel, item := 32, correct := by decide +kernel },
-                  { position := 2, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 3, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 4, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 5, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 6, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 7, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 8, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 9, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 10, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 11, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 12, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 13, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 14, within := by decide +kernel, item := 0, correct := by decide +kernel }]
-                complete := rfl }
-      axes := { rows := [{ index := by change Sum _ _; exact (@Sum.inl
-              (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Index
-                D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena.State
-                (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-                  (Prod (Bool → Bool) (Unit → Unit → Bool))))
-              (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.AnchorIndex
-                D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena.State
-                (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-                  (Prod (Bool → Bool) (Unit → Unit → Bool))))
-              PUnit.unit), axis := D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.admit, correct := by decide +kernel }]
-                nodup := by
-                  change ([(@Sum.inl
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Index
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Unit → Unit → Bool))))
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.AnchorIndex
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Unit → Unit → Bool))))
-          PUnit.unit)] : List (Sum
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Index
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Unit → Unit → Bool))))
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.AnchorIndex
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Unit → Unit → Bool)))))).Nodup
-                  letI : DecidableEq (Sum _ _) := (by change DecidableEq ((catalog_0.units (⟨0, by decide +kernel⟩ : Fin catalog_0.size)).primitives.Index); exact (catalog_0.units (⟨0, by decide +kernel⟩ : Fin catalog_0.size)).primitives.indexDecidableEq); letI : Fintype (Sum _ _) := (by change Fintype ((catalog_0.units (⟨0, by decide +kernel⟩ : Fin catalog_0.size)).primitives.Index); exact (catalog_0.units (⟨0, by decide +kernel⟩ : Fin catalog_0.size)).primitives.indexFintype)
-                  decide +kernel
-                complete := by
-                  change ∀ i : (Sum
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Index
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Unit → Unit → Bool))))
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.AnchorIndex
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Unit → Unit → Bool))))), i ∈ [(@Sum.inl
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Index
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Unit → Unit → Bool))))
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.AnchorIndex
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.capturedArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Unit → Unit → Bool))))
-          PUnit.unit)]
-                  letI : DecidableEq (Sum _ _) := (by change DecidableEq ((catalog_0.units (⟨0, by decide +kernel⟩ : Fin catalog_0.size)).primitives.Index); exact (catalog_0.units (⟨0, by decide +kernel⟩ : Fin catalog_0.size)).primitives.indexDecidableEq); letI : Fintype (Sum _ _) := (by change Fintype ((catalog_0.units (⟨0, by decide +kernel⟩ : Fin catalog_0.size)).primitives.Index); exact (catalog_0.units (⟨0, by decide +kernel⟩ : Fin catalog_0.size)).primitives.indexFintype)
-                  decide +kernel }
-      partition := { rows := [{ item := (state_0), classId := 0 },
-                       { item := (state_1), classId := 1 },
-                       { item := (state_2), classId := 0 },
-                       { item := (state_3), classId := 0 },
-                       { item := (state_4), classId := 1 },
-                       { item := (state_5), classId := 1 },
-                       { item := (state_6), classId := 1 },
-                       { item := (state_7), classId := 0 }]
-                     nodup := by
-                       letI := catalog_0.arena.stateDecidableEq; letI := catalog_0.arena.stateFintype
-                       change ([(state_0), (state_1), (state_2), (state_3), (state_4), (state_5), (state_6), (state_7)] : List (Prod (Bool → Bool) (Unit → Unit → Bool))).Nodup
-                       decide +kernel
-                     complete := by
-                       letI := catalog_0.arena.stateDecidableEq; letI := catalog_0.arena.stateFintype
-                       change ∀ x : (Prod (Bool → Bool) (Unit → Unit → Bool)), x ∈ [(state_0), (state_1), (state_2), (state_3), (state_4), (state_5), (state_6), (state_7)]
-                       decide +kernel
-                     classes := by letI := catalog_0.arena.stateDecidableEq; letI := catalog_0.arena.stateFintype; decide +kernel }
-      stateOrder := by rfl }]
-  complete := rfl
 
 noncomputable def view_0 : Contract.SealCatalogView := { catalog := catalog_0, facts := facts_0 }
 
@@ -487,175 +360,13 @@ noncomputable def catalog_1 : Contract.SealCatalog := {
         have uniqueEq := (catalog.fusedUnique_eq_uniqueCaptureCount states indices (0 : Fin 1)).symm.trans (congrFun (congrArg (fun c => c.unique) computed) 0)
         intro index; fin_cases index
         exact (catalog.lowersEscape_iff_uniqueCaptureCount_pos 0 (by decide +kernel)).mpr (by rw [uniqueEq]; decide))
-      enumeration := {
-        states := ([(state_8), (state_9), (state_10), (state_11), (state_12), (state_13), (state_14), (state_15), (state_16), (state_17), (state_18), (state_19), (state_20), (state_21), (state_22), (state_23), (state_24), (state_25), (state_26), (state_27), (state_28), (state_29), (state_30), (state_31), (state_32), (state_33), (state_34), (state_35), (state_36), (state_37), (state_38), (state_39), (state_40), (state_41), (state_42), (state_43), (state_44), (state_45), (state_46), (state_47), (state_48), (state_49), (state_50), (state_51), (state_52), (state_53), (state_54), (state_55), (state_56), (state_57), (state_58), (state_59), (state_60), (state_61), (state_62), (state_63), (state_64), (state_65), (state_66), (state_67), (state_68), (state_69), (state_70), (state_71)] : List (Prod (Bool → Bool) (Prod (Bool → Bool) (Prod Bool Bool))))
-        nodup := by letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena).toArena).stateDecidableEq; letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena).toArena).stateFintype; decide +kernel
-        complete := by letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena).toArena).stateDecidableEq; letI := ((_root_.D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena).toArena).stateFintype; decide +kernel }
+      enumeration := ⟨(([(fun _ : Bool => false), (fun x : Bool => x), (fun x : Bool => !x), (fun _ : Bool => true)]).flatMap fun f => ([(fun _ : Bool => false), (fun x : Bool => x), (fun x : Bool => !x), (fun _ : Bool => true)]).flatMap fun g => [false, true].flatMap fun a => [false, true].map fun b => (f, g, a, b) : List ((Bool → Bool) × (Bool → Bool) × Bool × Bool)), (by change (([(fun _ : Bool => false), (fun x : Bool => x), (fun x : Bool => !x), (fun _ : Bool => true)]).flatMap fun f => ([(fun _ : Bool => false), (fun x : Bool => x), (fun x : Bool => !x), (fun _ : Bool => true)]).flatMap fun g => [false, true].flatMap fun a => [false, true].map fun b => (f, g, a, b) : List ((Bool → Bool) × (Bool → Bool) × Bool × Bool)).Nodup; decide +kernel), (by change (([(fun _ : Bool => false), (fun x : Bool => x), (fun x : Bool => !x), (fun _ : Bool => true)]).flatMap fun f => ([(fun _ : Bool => false), (fun x : Bool => x), (fun x : Bool => !x), (fun _ : Bool => true)]).flatMap fun g => [false, true].flatMap fun a => [false, true].map fun b => (f, g, a, b) : List ((Bool → Bool) × (Bool → Bool) × Bool × Bool)).toFinset = (Finset.univ : Finset ((Bool → Bool) × (Bool → Bool) × Bool × Bool)); decide +kernel)⟩
     }
 
 noncomputable def facts_1 : Contract.SealFacts catalog_1 where
   units := { entries := [{ position := 0, within := by decide +kernel, item := (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognition_bridge.toTheoremUnit
            D5.S3.ConceptDynamics.Communication.MutualRecognitionIsJointRealizability.mutual_recognition_does_not_require_equal_concepts), correct := by rfl }]
              complete := rfl }
-  rows := [{
-      position := 0
-      within := by decide +kernel
-      row := {
-        unique := 1848
-        uniqueEq := ((catalog_1.rows (⟨0, by decide +kernel⟩ : Fin catalog_1.size)).uniqueEq).trans (by rfl)
-        without := 4032
-        withoutEq := ((catalog_1.rows (⟨0, by decide +kernel⟩ : Fin catalog_1.size)).withoutEq).trans (by rfl)
-        roleBins := ![0, 1848, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        roleEq := by intro bucket; exact ((catalog_1.rows (⟨0, by decide +kernel⟩ : Fin catalog_1.size)).roleEq bucket).trans (congrFun (by rfl : (catalog_1.rows (⟨0, by decide +kernel⟩ : Fin catalog_1.size)).roleBins = ![0, 1848, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) bucket)
-        roleTotal := by decide +kernel
-        conclusion := .positive (by decide +kernel) (by
-          apply (D5.S3.ConceptDynamics.InformationEscape.Catalog.lowersEscape_iff_uniqueCaptureCount_pos _ _ catalog_1.nondegenerate).mpr
-          rw [(catalog_1.rows (⟨0, by decide +kernel⟩ : Fin catalog_1.size)).uniqueEq]
-          decide +kernel) }
-      correct := by rfl
-      bins := { entries := [{ position := 0, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 1, within := by decide +kernel, item := 1848, correct := by decide +kernel },
-                  { position := 2, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 3, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 4, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 5, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 6, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 7, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 8, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 9, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 10, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 11, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 12, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 13, within := by decide +kernel, item := 0, correct := by decide +kernel },
-                  { position := 14, within := by decide +kernel, item := 0, correct := by decide +kernel }]
-                complete := rfl }
-      axes := { rows := [{ index := by change Sum _ _; exact (@Sum.inl
-              (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Index
-                D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena.State
-                (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-                  (Prod (Bool → Bool) (Prod (Bool → Bool) (Prod Bool Bool)))))
-              (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.AnchorIndex
-                D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena.State
-                (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-                  (Prod (Bool → Bool) (Prod (Bool → Bool) (Prod Bool Bool)))))
-              PUnit.unit), axis := D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.admit, correct := by decide +kernel }]
-                nodup := by
-                  change ([(@Sum.inl
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Index
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Prod (Bool → Bool) (Prod Bool Bool)))))
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.AnchorIndex
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Prod (Bool → Bool) (Prod Bool Bool)))))
-          PUnit.unit)] : List (Sum
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Index
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Prod (Bool → Bool) (Prod Bool Bool)))))
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.AnchorIndex
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Prod (Bool → Bool) (Prod Bool Bool))))))).Nodup
-                  letI : DecidableEq (Sum _ _) := (by change DecidableEq ((catalog_1.units (⟨0, by decide +kernel⟩ : Fin catalog_1.size)).primitives.Index); exact (catalog_1.units (⟨0, by decide +kernel⟩ : Fin catalog_1.size)).primitives.indexDecidableEq); letI : Fintype (Sum _ _) := (by change Fintype ((catalog_1.units (⟨0, by decide +kernel⟩ : Fin catalog_1.size)).primitives.Index); exact (catalog_1.units (⟨0, by decide +kernel⟩ : Fin catalog_1.size)).primitives.indexFintype)
-                  decide +kernel
-                complete := by
-                  change ∀ i : (Sum
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Index
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Prod (Bool → Bool) (Prod Bool Bool)))))
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.AnchorIndex
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Prod (Bool → Bool) (Prod Bool Bool)))))), i ∈ [(@Sum.inl
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.Index
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Prod (Bool → Bool) (Prod Bool Bool)))))
-          (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature.AnchorIndex
-            D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrations.recognitionArena.State
-            (D5.S3.ConceptDynamics.InformationEscape.ExistentialWitnessRegistrationTemplates.existentialWitnessSignature
-              (Prod (Bool → Bool) (Prod (Bool → Bool) (Prod Bool Bool)))))
-          PUnit.unit)]
-                  letI : DecidableEq (Sum _ _) := (by change DecidableEq ((catalog_1.units (⟨0, by decide +kernel⟩ : Fin catalog_1.size)).primitives.Index); exact (catalog_1.units (⟨0, by decide +kernel⟩ : Fin catalog_1.size)).primitives.indexDecidableEq); letI : Fintype (Sum _ _) := (by change Fintype ((catalog_1.units (⟨0, by decide +kernel⟩ : Fin catalog_1.size)).primitives.Index); exact (catalog_1.units (⟨0, by decide +kernel⟩ : Fin catalog_1.size)).primitives.indexFintype)
-                  decide +kernel }
-      partition := { rows := [{ item := (state_8), classId := 0 },
-                       { item := (state_9), classId := 0 },
-                       { item := (state_10), classId := 0 },
-                       { item := (state_11), classId := 0 },
-                       { item := (state_12), classId := 1 },
-                       { item := (state_13), classId := 1 },
-                       { item := (state_14), classId := 0 },
-                       { item := (state_15), classId := 0 },
-                       { item := (state_16), classId := 1 },
-                       { item := (state_17), classId := 1 },
-                       { item := (state_18), classId := 0 },
-                       { item := (state_19), classId := 0 },
-                       { item := (state_20), classId := 0 },
-                       { item := (state_21), classId := 1 },
-                       { item := (state_22), classId := 0 },
-                       { item := (state_23), classId := 0 },
-                       { item := (state_24), classId := 1 },
-                       { item := (state_25), classId := 0 },
-                       { item := (state_26), classId := 1 },
-                       { item := (state_27), classId := 0 },
-                       { item := (state_28), classId := 0 },
-                       { item := (state_29), classId := 0 },
-                       { item := (state_30), classId := 0 },
-                       { item := (state_31), classId := 0 },
-                       { item := (state_32), classId := 0 },
-                       { item := (state_33), classId := 1 },
-                       { item := (state_34), classId := 1 },
-                       { item := (state_35), classId := 0 },
-                       { item := (state_36), classId := 0 },
-                       { item := (state_37), classId := 1 },
-                       { item := (state_38), classId := 0 },
-                       { item := (state_39), classId := 1 },
-                       { item := (state_40), classId := 1 },
-                       { item := (state_41), classId := 0 },
-                       { item := (state_42), classId := 1 },
-                       { item := (state_43), classId := 0 },
-                       { item := (state_44), classId := 0 },
-                       { item := (state_45), classId := 1 },
-                       { item := (state_46), classId := 1 },
-                       { item := (state_47), classId := 0 },
-                       { item := (state_48), classId := 0 },
-                       { item := (state_49), classId := 0 },
-                       { item := (state_50), classId := 0 },
-                       { item := (state_51), classId := 0 },
-                       { item := (state_52), classId := 0 },
-                       { item := (state_53), classId := 1 },
-                       { item := (state_54), classId := 0 },
-                       { item := (state_55), classId := 1 },
-                       { item := (state_56), classId := 0 },
-                       { item := (state_57), classId := 0 },
-                       { item := (state_58), classId := 1 },
-                       { item := (state_59), classId := 0 },
-                       { item := (state_60), classId := 0 },
-                       { item := (state_61), classId := 0 },
-                       { item := (state_62), classId := 1 },
-                       { item := (state_63), classId := 1 },
-                       { item := (state_64), classId := 0 },
-                       { item := (state_65), classId := 0 },
-                       { item := (state_66), classId := 1 },
-                       { item := (state_67), classId := 1 },
-                       { item := (state_68), classId := 0 },
-                       { item := (state_69), classId := 0 },
-                       { item := (state_70), classId := 0 },
-                       { item := (state_71), classId := 0 }]
-                     nodup := by
-                       letI := catalog_1.arena.stateDecidableEq; letI := catalog_1.arena.stateFintype
-                       change ([(state_8), (state_9), (state_10), (state_11), (state_12), (state_13), (state_14), (state_15), (state_16), (state_17), (state_18), (state_19), (state_20), (state_21), (state_22), (state_23), (state_24), (state_25), (state_26), (state_27), (state_28), (state_29), (state_30), (state_31), (state_32), (state_33), (state_34), (state_35), (state_36), (state_37), (state_38), (state_39), (state_40), (state_41), (state_42), (state_43), (state_44), (state_45), (state_46), (state_47), (state_48), (state_49), (state_50), (state_51), (state_52), (state_53), (state_54), (state_55), (state_56), (state_57), (state_58), (state_59), (state_60), (state_61), (state_62), (state_63), (state_64), (state_65), (state_66), (state_67), (state_68), (state_69), (state_70), (state_71)] : List (Prod (Bool → Bool) (Prod (Bool → Bool) (Prod Bool Bool)))).Nodup
-                       decide +kernel
-                     complete := by
-                       letI := catalog_1.arena.stateDecidableEq; letI := catalog_1.arena.stateFintype
-                       change ∀ x : (Prod (Bool → Bool) (Prod (Bool → Bool) (Prod Bool Bool))), x ∈ [(state_8), (state_9), (state_10), (state_11), (state_12), (state_13), (state_14), (state_15), (state_16), (state_17), (state_18), (state_19), (state_20), (state_21), (state_22), (state_23), (state_24), (state_25), (state_26), (state_27), (state_28), (state_29), (state_30), (state_31), (state_32), (state_33), (state_34), (state_35), (state_36), (state_37), (state_38), (state_39), (state_40), (state_41), (state_42), (state_43), (state_44), (state_45), (state_46), (state_47), (state_48), (state_49), (state_50), (state_51), (state_52), (state_53), (state_54), (state_55), (state_56), (state_57), (state_58), (state_59), (state_60), (state_61), (state_62), (state_63), (state_64), (state_65), (state_66), (state_67), (state_68), (state_69), (state_70), (state_71)]
-                       decide +kernel
-                     classes := by letI := catalog_1.arena.stateDecidableEq; letI := catalog_1.arena.stateFintype; decide +kernel }
-      stateOrder := by rfl }]
-  complete := rfl
 
 noncomputable def view_1 : Contract.SealCatalogView := { catalog := catalog_1, facts := facts_1 }
 

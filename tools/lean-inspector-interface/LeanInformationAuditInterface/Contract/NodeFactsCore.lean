@@ -66,19 +66,6 @@ structure FiniteTable {size : Nat} {T : Fin size → Type u} (value : ∀ i, T i
   entries : List (TableEntry value)
   complete : entries.map TableEntry.position = List.range size
 
-/-- Class labels certify a relation on a complete, duplicate-free enumeration.
- Canonical first-occurrence numbering is a mechanical report rule. -/
-structure PartitionRow (T : Type u) where
-  item : T
-  classId : Nat
-
-structure FinitePartition (T : Type u) (relation : T → T → Prop) where
-  rows : List (PartitionRow T)
-  nodup : (rows.map PartitionRow.item).Nodup
-  complete : ∀ x, x ∈ rows.map PartitionRow.item
-  classes : ∀ left ∈ rows, ∀ right ∈ rows,
-    (left.classId = right.classId ↔ relation left.item right.item)
-
 /-- This excludes a fixed source proposition from the complete varying Law.
  It makes no claim that two true propositions are logically unequal. -/
 structure StatementExclusion {T : Type u} (law : T → Prop) (statement : Prop) where

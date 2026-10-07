@@ -87,34 +87,9 @@ structure SealCatalog where
   conclusion : SealCatalogConclusion (Catalog.ofVector units)
   enumeration : arena.StateEnumeration
 
-structure AxisRow {T : Type u} (bundle : D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.{u,v} T) where
-  index : bundle.Index
-  axis : D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis
-  correct : (bundle.atom index).axis = axis
-
-structure AxisTable {T : Type u} (bundle : D5.S3.ConceptDynamics.CIRPT.PrimitiveBundle.{u,v} T) where
-  rows : List (AxisRow bundle)
-  nodup : (rows.map AxisRow.index).Nodup
-  complete : ∀ i, i ∈ rows.map AxisRow.index
-
-/-- Seal output is a typed literal view of its actual catalog. Functions occur
- only as indices and propositions; the report consumes constructor rows. -/
-structure SealFactRow (catalog : SealCatalog.{u,v}) where
-  position : Nat
-  within : position < catalog.size
-  row : SealRow (Catalog.ofVector catalog.units) ⟨position, within⟩
-  correct : catalog.rows ⟨position, within⟩ = row
-  bins : FiniteTable row.roleBins
-  axes : AxisTable (catalog.units ⟨position, within⟩).primitives
-  partition : FinitePartition catalog.arena.State
-    (catalog.units ⟨position, within⟩).primitives.toKernel.relation
-  stateOrder : partition.rows.map PartitionRow.item = catalog.enumeration.states
-
+/-- Complete unit membership of the exact kernel-checked catalog. -/
 structure SealFacts (catalog : SealCatalog.{u,v}) where
   units : FiniteTable catalog.units
-  rows : List (SealFactRow catalog)
-  complete : rows.map SealFactRow.position = List.range catalog.size
-
 
 structure SealCatalogView where
   catalog : SealCatalog.{u,v}

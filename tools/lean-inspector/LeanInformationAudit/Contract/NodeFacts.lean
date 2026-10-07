@@ -344,18 +344,6 @@ def table (view : View) (value : Expr) (size : Nat) : Except String (Array Expr)
   unless positions == (List.range size).toArray do bad "table_positions"
   return rows.map (·[2]!)
 
-def partition (view : View) (value : Expr) : Except String (Array Nat) := do
-  let fs ← Literal.fields view.find ``FinitePartition value 4
-  let entries ← Literal.list "partition.rows" (← Literal.referencedValue view.find fs[0]!)
-  let rows ← entries.mapM fun e => Literal.fields view.find ``PartitionRow e 2
-  let ids ← rows.mapM fun fs => Literal.nat "partition.class" fs[1]!
-  let mut seen : Array Nat := #[]
-  for id in ids do
-    unless seen.contains id do
-      unless id == seen.size do bad "partition_numbering"
-      seen := seen.push id
-  return ids
-
 def exclusion (view : View) (name : Name) : Except String Unit := do
   let some (.defnInfo info) := view.find name | bad "exclusion_definition"
   unless info.safety == .safe do bad "unsafe_definition"
@@ -392,12 +380,9 @@ def root (view : View) (name : Name) : Except String Nat := do
         row[1]!.constLevels!.length == target.levelParams.length do bad "root_proof_reference"
   return expected.size
 
-structure SealReadout where
-  rows : Array (Nat × Nat × Array Nat × Array Nat × Array Name)
-  units : Nat
-  deriving Repr
-
-def sealFacts (view : View) (reference : Expr) (catalogAt : NodeCoordinate) : Except String SealReadout := do
+/-- Check the actual catalog binding and publish only its complete unit vector. -/
+def sealFacts (view : View) (reference : Expr) (catalogAt : NodeCoordinate)
+    : Except String (Array Expr) := do
   let reference := reference.consumeMData
   unless reference.isConst do bad "seal_facts_reference"
   let name := reference.constName!
@@ -411,26 +396,7 @@ def sealFacts (view : View) (reference : Expr) (catalogAt : NodeCoordinate) : Ex
   unless (← locate view catalogAt).equal type.appArg! do bad "seal_catalog_binding"
   let cs ← Literal.fields view.find ``SealCatalog type.appArg! 15
   let size ← Literal.nat "seal.size" cs[3]!
-  let fs ← Literal.fields view.find ``SealFacts value 3
-  let units ← table view fs[0]! size
-  let entries ← Literal.list "seal.rows" (← Literal.referencedValue view.find fs[1]!)
-  let rows ← entries.mapM fun value => do
-    let es ← Literal.fields view.find ``SealFactRow value 8
-    let position ← Literal.nat "seal.position" es[0]!
-    let row ← Literal.fields view.find ``SealRow es[2]! 8
-    let bins ← (← table view es[4]! 15).mapM (Literal.nat "seal.bin")
-    let axes ← Literal.fields view.find ``AxisTable es[5]! 3
-    let axes ← (← Literal.list "seal.axes" (← Literal.referencedValue view.find axes[0]!)).mapM fun e => do
-      let axis ← Literal.fields view.find ``AxisRow e 3
-      let label ← tag view.find axis[1]!
-      unless #[`D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.cut,
-        `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.flow,
-        `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.admit,
-        `D5.S3.ConceptDynamics.CIRPT.PrimitiveAxis.anchor].contains label do bad "seal.axis"
-      return label
-    return (position, (← Literal.nat "seal.unique" row[0]!),
-      (← Literal.nat "seal.without" row[2]!), bins, (← partition view es[6]!), axes)
-  unless rows.map (·.1) == (List.range size).toArray do bad "seal_positions"
-  return { units := units.size, rows := rows.map (·.2) }
+  let fs ← Literal.fields view.find ``SealFacts value 1
+  table view fs[0]! size
 
 end LeanInformationAudit.Contract.NodeFacts

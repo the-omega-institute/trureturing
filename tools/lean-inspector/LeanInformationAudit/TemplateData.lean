@@ -250,25 +250,6 @@ def InformationRegistryEntry.effectiveCatalogId
     (entry : InformationRegistryEntry) : CatalogId :=
   if entry.catalogId.isAnonymous then entry.canonicalObjectArenaName else entry.catalogId
 
-def OccurrenceCertificate.name : OccurrenceCertificate → Name
-  | .positive name | .trivial name => name
-
-def OccurrenceCertificate.suffix : OccurrenceCertificate → String
-  | .positive _ => "__lowers_escape"
-  | .trivial _ => "__trivial_in_catalog"
-
-def CatalogVerdict.name : CatalogVerdict → Name
-  | .irredundant name | .redundant name => name
-
-def CatalogVerdict.label : CatalogVerdict → String
-  | .irredundant _ => "irredundant"
-  | .redundant _ => "redundant"
-
-def CatalogVerdict.suffix : CatalogVerdict → String
-  | .irredundant _ => "__catalog_irredundant"
-  | .redundant _ => "__catalog_redundant"
-
-def SealTheoremRecord.certificateName (row : SealTheoremRecord) : Name := row.certificate.name
 
 end LeanInformationAudit
 
