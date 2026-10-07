@@ -219,7 +219,6 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (γ : RootPath m) :
       intro D i hi
       have ta := Tstep D i
       have aa := Astep D
-      have hl := γ.legal D
       have hn := γ.step D
       cases ha : γ.action D with
       | one =>
@@ -330,8 +329,6 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (γ : RootPath m) :
     rwa [onevalue] at H
   have pT (i : Fin m) : probability γ i = T 0 i := by
     simp [probability, T, Real.ofDigits, Real.ofDigitsTerm, div_eq_mul_inv]
-  have tA : anchorMass γ = A 0 := by
-    simp [anchorMass, A, Real.ofDigits, Real.ofDigitsTerm, div_eq_mul_inv]
   have expansion (D : ℕ) (i : Fin m) :
       (2 : ℝ) ^ D * probability γ i = (binaryPrefix γ i D : ℝ) + T D i := by
     induction D with
