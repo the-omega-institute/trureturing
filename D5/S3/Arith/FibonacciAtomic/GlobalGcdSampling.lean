@@ -95,7 +95,7 @@ private theorem cast_state_semiconj (m : ℕ) : Function.Semiconj (castState m) 
 private theorem signed_modular_value (m k : ℕ) (x : ℤ × ℤ) :
     (signedValue (k + 1) x : ZMod m) = (step^[k] (castState m x)).2 := by
   simpa [signedValue, castState] using (iterate_second k (castState m x)).symm
-private theorem rank_facts (p : ℕ) (hp : p.Prime) (e : ℕ) (he : 1 ≤ e) :
+theorem rank_facts (p : ℕ) (hp : p.Prime) (e : ℕ) (he : 1 ≤ e) :
     3 ≤ zeroRank (p ^ e) ∧ p ^ e ∣ Nat.fib (zeroRank (p ^ e)) ∧
     ∀ k : ℕ, p ^ e ∣ Nat.fib k ↔ zeroRank (p ^ e) ∣ k := by
   have hm := (PrimePowerGcdHorizon.sharp_prime_power_gcd_horizon p 2 hp le_rfl).1 e

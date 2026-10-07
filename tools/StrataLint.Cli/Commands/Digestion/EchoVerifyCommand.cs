@@ -11,15 +11,11 @@ internal static class EchoVerifyCommand
         string repositoryRoot,
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
-        IScribeEmissionVerifier scribeEmissionVerifier,
-        IReadOnlyList<string> arguments,
-        IAtomHistorySource atomHistorySource,
-        TimeProvider timeProvider)
+        IReadOnlyList<string> arguments)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(repository);
         ArgumentNullException.ThrowIfNull(leanReportSource);
-        ArgumentNullException.ThrowIfNull(scribeEmissionVerifier);
         ArgumentNullException.ThrowIfNull(arguments);
         try
         {
@@ -34,31 +30,28 @@ internal static class EchoVerifyCommand
                         $"ECHO_TEMPLATE_INVALID {finding}\n")));
             }
 
-            var baseRevision = Parse(arguments);
-            var prepared = repository.Prepare(baseRevision);
-            var summary = DigestStatusCommand.Run(
-                repository,
-                leanReportSource,
-                scribeEmissionVerifier,
-                ["--residual-summary", "--base", prepared.Revision],
-                atomHistorySource,
-                timeProvider);
-            if (!summary.Success)
+            Parse(arguments);
+            string summary;
+            IReadOnlyDictionary<string, string> shards;
+            try
+            {
+                (summary, shards) = DigestStatusCommand.RenderResidual(repository, leanReportSource);
+            }
+            catch (Exception exception) when (
+                exception is FormatException
+                    or InvalidOperationException
+                    or IOException
+                    or ArgumentException)
             {
                 return new ExplicitCommandResult(
                     2,
                     string.Empty,
-                    "ECHO_VERIFY_INFRASTRUCTURE residual derivation failed\n" + summary.Error);
+                    "ECHO_VERIFY_INFRASTRUCTURE residual derivation failed\n"
+                    + exception.Message.TrimEnd() + "\n");
             }
 
-            var expected = EchoResidualBlock.Render(summary.Output);
-            WriteShards(
-                repositoryRoot,
-                DigestStatusCommand.RenderShards(
-                    repository,
-                    leanReportSource,
-                    scribeEmissionVerifier,
-                    prepared.Revision));
+            var expected = EchoResidualBlock.Render(summary);
+            WriteShards(repositoryRoot, shards);
             return new ExplicitCommandResult(0, expected, string.Empty);
         }
         catch (Exception exception) when (
@@ -105,36 +98,13 @@ internal static class EchoVerifyCommand
         }
     }
 
-    private static string Parse(IReadOnlyList<string> arguments)
+    private static void Parse(IReadOnlyList<string> arguments)
     {
-        var emit = false;
-        string? baseRevision = null;
-        for (var index = 0; index < arguments.Count; index++)
+        if (arguments.Count != 1 || arguments[0] != "--emit")
         {
-            switch (arguments[index])
-            {
-                case "--emit" when !emit:
-                    emit = true;
-                    break;
-                case "--base" when baseRevision is null && index + 1 < arguments.Count:
-                    baseRevision = arguments[++index];
-                    if (string.IsNullOrWhiteSpace(baseRevision)) throw Usage();
-                    break;
-                default:
-                    throw Usage();
-            }
+            throw new InvalidOperationException("USAGE: StrataLint echo-verify --emit");
         }
-
-        if (!emit || baseRevision is null)
-        {
-            throw Usage();
-        }
-
-        return baseRevision;
     }
-
-    private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint echo-verify --emit --base REV");
 }
 
 internal static class EchoTemplatePolicy

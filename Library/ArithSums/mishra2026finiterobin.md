@@ -40,3 +40,64 @@ The same paper claims that the $\omega$-inequality is equivalent to Robin's ineq
 The truncation order is the distinct-prime count $\omega(n)$, while a FIB five-window address records additive Zeckendorf inclusion states. No statement in the source bounds $\omega(N_g)$ for the canonical FIB family $N_g=1+F_r g$, and the local labels $[null,2,3,2\,5,5]$ do not encode the prime factorization of $N_g$. Thus the $\omega\le6$ theorem cannot be applied to that family without a new arithmetic bound.
 
 The source's superabundant/CA reduction also requires the actual integer to be an extremizer for $\sigma(n)/n$. A FIB address, a congruence $N_g\equiv1\pmod{F_r}$, or a reversible composition coordinate does not establish that extremality. The result is therefore a candidate-class filter and an alternative Robin criterion, not the missing same-price bridge or a proof of RH.
+
+
+## Primary proof locators and their unpaid premises
+
+In the versioned PDF, Lemma 4 supplies the $\omega(n)\le6$ case;
+Theorem 1 concerns primorials. These are the precise separate locators
+for the two unconditional source claims described above.
+
+Lemma 20, printed p.13, states that a hypothetical **least counterexample
+to the $\omega$-inequality** has $K=\omega(n)\ge21$.
+It uses the author's finite candidate check (L.5), with the candidate
+exponent bounds from Corollary 17. This is a statement about that least
+counterexample, not a stated factor-count bound on every arbitrary FIB
+integer $N_g$ or on a least Robin counterexample. Such an application
+must retain the source's minimality condition for the same inequality.
+
+For that same hypothetical least counterexample, Lemma 21, printed
+pp.13–14, sets $t=\log\log\log n$, $\tau_K=\log\log(6K\log K)$ and
+uses the preceding structural bound $\log n<6K\log K$ to obtain
+
+$$
+\begin{aligned}
+T_K(t)&:=\log\log n-P_K(t)\\
+&<E_K:=\frac{\tau_K^{K+1}}{(K+1)!}
+ \left(1-\frac{\tau_K}{K+2}\right)^{-1}
+<\frac{6.4\times10^{-15}}{\sqrt{\log n}}.
+\end{aligned}
+$$
+
+This controls the truncation tail at the source's specified integer.
+It supplies no unconditional lower bound for the Robin margin
+$\log\log n-e^{-\gamma}\sigma(n)/n$.
+
+Theorem 4, printed p.16, proves the converse implication from RH
+by combining this tail bound with Lemma 23, equation (25): **under RH**,
+for every $n>5040$,
+
+$$
+\frac{\sigma(n)}n
+<e^\gamma\left(\log\log n-\frac{0.095}{\sqrt{\log n}}\right).
+$$
+
+The source attributes this input to Corollary 1.2 of Nicolas,
+*The sum of divisors function and the Riemann hypothesis*,
+*The Ramanujan Journal* **58** (2022), 1113–1157,
+[DOI 10.1007/s11139-021-00491-y](https://doi.org/10.1007/s11139-021-00491-y).
+The Nicolas original proof has not been inspected here; the
+[existing source-access boundary](axler2024primorialcounting.md#fixed-price-finiteness-and-the-actual-finite-application)
+also records that its publisher PDF endpoint returned an access page.
+This 2022 input is distinct from the
+[unconditional envelope comparisons in Nicolas's 2025 manuscript](nicolas2025comparison.md).
+
+Thus the published equivalence proof uses an RH-conditional margin;
+the small truncation tail cannot be used to remove that premise.
+Theorem 4 uses Lemma 21, while the separate superabundance conclusion
+in Theorem 3 also uses Lemma 22 and its finite check (L.6).
+The author's finite checks and supporting analytic estimates remain
+external premises; no notebook or old computation is rerun or certified
+by this note. This dependency map identifies the relevant source
+statements and quantifiers, with no new criterion, unconditional
+signed estimate, cofinal theta sign or Lean result.

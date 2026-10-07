@@ -1,0 +1,23 @@
+## 定义 24.3：最小历史标签数
+
+假设每个单历史问题都在预算内可解。
+
+定义：
+
+$$
+\boxed{
+\kappa_n^{\mathrm{hist}}
+=
+\min_{\mathcal P}
+|\mathcal P|,
+}
+$$
+
+其中 $\mathcal P$ 遍历 $I$ 的所有划分，并要求每一块满足：
+
+$$
+P\in\mathcal K_n.
+$$
+
+它度量的是：
+
