@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory
 import Reg.Support.DependentFamily
@@ -125,9 +128,686 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, definition := none, coordinates := #[0, 3, 10], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "fn", "arg", "body"], stateBinder := 14, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.has_law_traj_measure, part := .type, path := [], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u, .param `v] }], facts := [`Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.canonicalArenaFact, `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.sourceBridgeFact, `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.observationFact0, `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 end
 end Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory
+
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.canonicalArenaOperand.{u, v} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (u + 1) (v + 1), v, 0, u, 0} :=
+  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.arena.{u, v}
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.canonicalArenaFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  .evidence
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.canonicalObjectArenaOperand.{u, v} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (u + 1) (v + 1), v, 0, u, 0} :=
+  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.arena.{u, v}
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.canonicalObjectArenaFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.sourceLaw.{u, v} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u + 1) (v + 1), v, 0, u, 0}
+  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.arena.{u, v}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u + 1) (v + 1), v, 0, u, 0}
+    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.arena.{u, v}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (v + 1) (u + 1), v, 0, u, 0}
+      Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.arena.{u, v}
+      Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.actual.{u, v})
+    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration.{u, v})
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.sourceBridgeFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"has_law_traj_measure\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.has_law_traj_measure, part := .type, path := [], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u + 1) (v + 1), v, 0, u, 0}
+  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.arena.{u, v}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (v + 1) (u + 1), v, 0, u, 0}
+    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.arena.{u, v}
+    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.actual.{u, v})
+  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration.{u, v})
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.observation0.{u, v} : {Ω : Type v} →
+  {mΩ : MeasurableSpace.{v} Ω} →
+    {P : @MeasureTheory.Measure.{v} Ω mΩ} →
+      {X : Nat → Type u} →
+        [inst : (n : Nat) → MeasurableSpace.{u} (X n)] →
+          {κ :
+              (n : Nat) →
+                @ProbabilityTheory.Kernel.{u, u}
+                  ((i :
+                      @Subtype.{1} Nat fun (x : Nat) =>
+                        @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                          (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                          (@Finset.Iic.{0} Nat Nat.instPreorder
+                            (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                              Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                            n)
+                          x) →
+                    X
+                      (@Subtype.val.{1} Nat
+                        (fun (x : Nat) =>
+                          @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                            (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                            (@Finset.Iic.{0} Nat Nat.instPreorder
+                              (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                              n)
+                            x)
+                        i))
+                  (X
+                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                  (@MeasurableSpace.pi.{0, u}
+                    (@Subtype.{1} Nat fun (x : Nat) =>
+                      @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                        (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                        (@Finset.Iic.{0} Nat Nat.instPreorder
+                          (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                            Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                          n)
+                        x)
+                    (fun
+                        (i :
+                          @Subtype.{1} Nat fun (x : Nat) =>
+                            @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                              (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                              (@Finset.Iic.{0} Nat Nat.instPreorder
+                                (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                  Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                n)
+                              x) =>
+                      X
+                        (@Subtype.val.{1} Nat
+                          (fun (x : Nat) =>
+                            @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                              (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                              (@Finset.Iic.{0} Nat Nat.instPreorder
+                                (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                  Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                n)
+                              x)
+                          i))
+                    fun
+                      (a :
+                        @Subtype.{1} Nat fun (x : Nat) =>
+                          @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                            (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                            (@Finset.Iic.{0} Nat Nat.instPreorder
+                              (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                              n)
+                            x) =>
+                    inst
+                      (@Subtype.val.{1} Nat
+                        (fun (x : Nat) =>
+                          @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                            (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                            (@Finset.Iic.{0} Nat Nat.instPreorder
+                              (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                              n)
+                            x)
+                        a))
+                  (inst
+                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))} →
+            [∀ (n : Nat),
+                  @ProbabilityTheory.IsMarkovKernel.{u, u}
+                    ((i :
+                        @Subtype.{1} Nat fun (x : Nat) =>
+                          @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                            (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                            (@Finset.Iic.{0} Nat Nat.instPreorder
+                              (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                              n)
+                            x) →
+                      X
+                        (@Subtype.val.{1} Nat
+                          (fun (x : Nat) =>
+                            @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                              (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                              (@Finset.Iic.{0} Nat Nat.instPreorder
+                                (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                  Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                n)
+                              x)
+                          i))
+                    (X
+                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                    (@MeasurableSpace.pi.{0, u}
+                      (@Subtype.{1} Nat fun (x : Nat) =>
+                        @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                          (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                          (@Finset.Iic.{0} Nat Nat.instPreorder
+                            (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                              Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                            n)
+                          x)
+                      (fun
+                          (i :
+                            @Subtype.{1} Nat fun (x : Nat) =>
+                              @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                                (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                                (@Finset.Iic.{0} Nat Nat.instPreorder
+                                  (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                    Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                  n)
+                                x) =>
+                        X
+                          (@Subtype.val.{1} Nat
+                            (fun (x : Nat) =>
+                              @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                                (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                                (@Finset.Iic.{0} Nat Nat.instPreorder
+                                  (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                    Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                  n)
+                                x)
+                            i))
+                      fun
+                        (a :
+                          @Subtype.{1} Nat fun (x : Nat) =>
+                            @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                              (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                              (@Finset.Iic.{0} Nat Nat.instPreorder
+                                (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                  Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                n)
+                              x) =>
+                      inst
+                        (@Subtype.val.{1} Nat
+                          (fun (x : Nat) =>
+                            @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                              (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                              (@Finset.Iic.{0} Nat Nat.instPreorder
+                                (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                  Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                n)
+                              x)
+                          a))
+                    (inst
+                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                    (κ n)] →
+              {μ₀ :
+                  @MeasureTheory.Measure.{u} (X (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+                    (inst (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))} →
+                [@MeasureTheory.IsProbabilityMeasure.{u}
+                      (X (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+                      (inst (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))) μ₀] →
+                  [@MeasureTheory.IsFiniteMeasure.{v} Ω mΩ P] →
+                    {Y : (n : Nat) → Ω → X n} →
+                      (hY_meas : ∀ (n : Nat), @Measurable.{v, u} Ω (X n) mΩ (inst n) (Y n)) →
+                        (h0 :
+                            @ProbabilityTheory.HasLaw.{v, u} Ω
+                              (X (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))) mΩ
+                              (inst (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+                              (Y (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))) μ₀ P) →
+                          (h_condDistrib :
+                              ∀ (n : Nat),
+                                @ProbabilityTheory.HasCondDistrib.{v, u, u} Ω
+                                  ((i :
+                                      @Subtype.{1} Nat fun (x : Nat) =>
+                                        @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                                          (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat
+                                            (@Finset.instSetLike.{0} Nat))
+                                          (@Finset.Iic.{0} Nat Nat.instPreorder
+                                            (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                              Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                            n)
+                                          x) →
+                                    X
+                                      (@Subtype.val.{1} Nat
+                                        (fun (x : Nat) =>
+                                          @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                                            (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat
+                                              (@Finset.instSetLike.{0} Nat))
+                                            (@Finset.Iic.{0} Nat Nat.instPreorder
+                                              (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                                Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                              n)
+                                            x)
+                                        i))
+                                  (X
+                                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                  mΩ
+                                  (@MeasurableSpace.pi.{0, u}
+                                    (@Subtype.{1} Nat fun (x : Nat) =>
+                                      @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                                        (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat
+                                          (@Finset.instSetLike.{0} Nat))
+                                        (@Finset.Iic.{0} Nat Nat.instPreorder
+                                          (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                            Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                          n)
+                                        x)
+                                    (fun
+                                        (i :
+                                          @Subtype.{1} Nat fun (x : Nat) =>
+                                            @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                                              (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat
+                                                (@Finset.instSetLike.{0} Nat))
+                                              (@Finset.Iic.{0} Nat Nat.instPreorder
+                                                (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                                  Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                                n)
+                                              x) =>
+                                      X
+                                        (@Subtype.val.{1} Nat
+                                          (fun (x : Nat) =>
+                                            @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                                              (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat
+                                                (@Finset.instSetLike.{0} Nat))
+                                              (@Finset.Iic.{0} Nat Nat.instPreorder
+                                                (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                                  Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                                n)
+                                              x)
+                                          i))
+                                    fun
+                                      (a :
+                                        @Subtype.{1} Nat fun (x : Nat) =>
+                                          @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                                            (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat
+                                              (@Finset.instSetLike.{0} Nat))
+                                            (@Finset.Iic.{0} Nat Nat.instPreorder
+                                              (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                                Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                              n)
+                                            x) =>
+                                    inst
+                                      (@Subtype.val.{1} Nat
+                                        (fun (x : Nat) =>
+                                          @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                                            (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat
+                                              (@Finset.instSetLike.{0} Nat))
+                                            (@Finset.Iic.{0} Nat Nat.instPreorder
+                                              (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                                Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                              n)
+                                            x)
+                                        a))
+                                  (inst
+                                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                  (Y
+                                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                  (fun (ω : Ω)
+                                      (i :
+                                        @Subtype.{1} Nat fun (x : Nat) =>
+                                          @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                                            (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat
+                                              (@Finset.instSetLike.{0} Nat))
+                                            (@Finset.Iic.{0} Nat Nat.instPreorder
+                                              (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                                Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                              n)
+                                            x) =>
+                                    Y
+                                      (@Subtype.val.{1} Nat
+                                        (fun (x : Nat) =>
+                                          @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                                            (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat
+                                              (@Finset.instSetLike.{0} Nat))
+                                            (@Finset.Iic.{0} Nat Nat.instPreorder
+                                              (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder
+                                                Nat.instLocallyFiniteOrder Nat.instOrderBot)
+                                              n)
+                                            x)
+                                        i)
+                                      ω)
+                                  (κ n) P) →
+                            (ω : Ω) →
+                              D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{max (u + 1)
+                                    (v + 1),
+                                  v, 0, u, 0}
+                                Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.signature.{u, v}
+                                PUnit.unit.{1}
+                                (@Sigma.mk.{v + 1, max (max u v) (u + 1)} (Type v)
+                                  (fun (Ω : Type v) =>
+                                    @Sigma.{u + 1, max u v} (Nat → Type u) fun (X : Nat → Type u) =>
+                                      (n : Nat) → Ω → X n)
+                                  Ω
+                                  (@Sigma.mk.{u + 1, max u v} (Nat → Type u)
+                                    (fun (X : Nat → Type u) => (n : Nat) → Ω → X n) X Y)) :=
+  fun {Ω : Type v} {mΩ : MeasurableSpace.{v} Ω} {P : @MeasureTheory.Measure.{v} Ω mΩ} {X : Nat → Type u}
+    [(n : Nat) → MeasurableSpace.{u} (X n)]
+    {κ :
+      (n : Nat) →
+        @ProbabilityTheory.Kernel.{u, u}
+          ((i :
+              @Subtype.{1} Nat fun (x : Nat) =>
+                @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                  (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                  (@Finset.Iic.{0} Nat Nat.instPreorder
+                    (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                      Nat.instOrderBot)
+                    n)
+                  x) →
+            X
+              (@Subtype.val.{1} Nat
+                (fun (x : Nat) =>
+                  @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                    (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                    (@Finset.Iic.{0} Nat Nat.instPreorder
+                      (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                        Nat.instOrderBot)
+                      n)
+                    x)
+                i))
+          (X
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+          (@MeasurableSpace.pi.{0, u}
+            (@Subtype.{1} Nat fun (x : Nat) =>
+              @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                (@Finset.Iic.{0} Nat Nat.instPreorder
+                  (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                    Nat.instOrderBot)
+                  n)
+                x)
+            (fun
+                (i :
+                  @Subtype.{1} Nat fun (x : Nat) =>
+                    @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                      (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                      (@Finset.Iic.{0} Nat Nat.instPreorder
+                        (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                          Nat.instOrderBot)
+                        n)
+                      x) =>
+              X
+                (@Subtype.val.{1} Nat
+                  (fun (x : Nat) =>
+                    @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                      (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                      (@Finset.Iic.{0} Nat Nat.instPreorder
+                        (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                          Nat.instOrderBot)
+                        n)
+                      x)
+                  i))
+            fun
+              (a :
+                @Subtype.{1} Nat fun (x : Nat) =>
+                  @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                    (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                    (@Finset.Iic.{0} Nat Nat.instPreorder
+                      (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                        Nat.instOrderBot)
+                      n)
+                    x) =>
+            inst
+              (@Subtype.val.{1} Nat
+                (fun (x : Nat) =>
+                  @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                    (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                    (@Finset.Iic.{0} Nat Nat.instPreorder
+                      (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                        Nat.instOrderBot)
+                      n)
+                    x)
+                a))
+          (inst
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))}
+    [∀ (n : Nat),
+        @ProbabilityTheory.IsMarkovKernel.{u, u}
+          ((i :
+              @Subtype.{1} Nat fun (x : Nat) =>
+                @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                  (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                  (@Finset.Iic.{0} Nat Nat.instPreorder
+                    (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                      Nat.instOrderBot)
+                    n)
+                  x) →
+            X
+              (@Subtype.val.{1} Nat
+                (fun (x : Nat) =>
+                  @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                    (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                    (@Finset.Iic.{0} Nat Nat.instPreorder
+                      (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                        Nat.instOrderBot)
+                      n)
+                    x)
+                i))
+          (X
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+          (@MeasurableSpace.pi.{0, u}
+            (@Subtype.{1} Nat fun (x : Nat) =>
+              @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                (@Finset.Iic.{0} Nat Nat.instPreorder
+                  (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                    Nat.instOrderBot)
+                  n)
+                x)
+            (fun
+                (i :
+                  @Subtype.{1} Nat fun (x : Nat) =>
+                    @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                      (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                      (@Finset.Iic.{0} Nat Nat.instPreorder
+                        (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                          Nat.instOrderBot)
+                        n)
+                      x) =>
+              X
+                (@Subtype.val.{1} Nat
+                  (fun (x : Nat) =>
+                    @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                      (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                      (@Finset.Iic.{0} Nat Nat.instPreorder
+                        (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                          Nat.instOrderBot)
+                        n)
+                      x)
+                  i))
+            fun
+              (a :
+                @Subtype.{1} Nat fun (x : Nat) =>
+                  @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                    (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                    (@Finset.Iic.{0} Nat Nat.instPreorder
+                      (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                        Nat.instOrderBot)
+                      n)
+                    x) =>
+            inst
+              (@Subtype.val.{1} Nat
+                (fun (x : Nat) =>
+                  @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                    (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                    (@Finset.Iic.{0} Nat Nat.instPreorder
+                      (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                        Nat.instOrderBot)
+                      n)
+                    x)
+                a))
+          (inst
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+          (κ n)]
+    {μ₀ :
+      @MeasureTheory.Measure.{u} (X (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+        (inst (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))}
+    [@MeasureTheory.IsProbabilityMeasure.{u} (X (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+        (inst (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))) μ₀]
+    [@MeasureTheory.IsFiniteMeasure.{v} Ω mΩ P] {Y : (n : Nat) → Ω → X n}
+    (hY_meas : ∀ (n : Nat), @Measurable.{v, u} Ω (X n) mΩ (inst n) (Y n))
+    (h0 :
+      @ProbabilityTheory.HasLaw.{v, u} Ω (X (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))) mΩ
+        (inst (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+        (Y (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))) μ₀ P)
+    (h_condDistrib :
+      ∀ (n : Nat),
+        @ProbabilityTheory.HasCondDistrib.{v, u, u} Ω
+          ((i :
+              @Subtype.{1} Nat fun (x : Nat) =>
+                @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                  (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                  (@Finset.Iic.{0} Nat Nat.instPreorder
+                    (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                      Nat.instOrderBot)
+                    n)
+                  x) →
+            X
+              (@Subtype.val.{1} Nat
+                (fun (x : Nat) =>
+                  @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                    (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                    (@Finset.Iic.{0} Nat Nat.instPreorder
+                      (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                        Nat.instOrderBot)
+                      n)
+                    x)
+                i))
+          (X
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+          mΩ
+          (@MeasurableSpace.pi.{0, u}
+            (@Subtype.{1} Nat fun (x : Nat) =>
+              @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                (@Finset.Iic.{0} Nat Nat.instPreorder
+                  (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                    Nat.instOrderBot)
+                  n)
+                x)
+            (fun
+                (i :
+                  @Subtype.{1} Nat fun (x : Nat) =>
+                    @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                      (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                      (@Finset.Iic.{0} Nat Nat.instPreorder
+                        (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                          Nat.instOrderBot)
+                        n)
+                      x) =>
+              X
+                (@Subtype.val.{1} Nat
+                  (fun (x : Nat) =>
+                    @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                      (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                      (@Finset.Iic.{0} Nat Nat.instPreorder
+                        (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                          Nat.instOrderBot)
+                        n)
+                      x)
+                  i))
+            fun
+              (a :
+                @Subtype.{1} Nat fun (x : Nat) =>
+                  @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                    (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                    (@Finset.Iic.{0} Nat Nat.instPreorder
+                      (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                        Nat.instOrderBot)
+                      n)
+                    x) =>
+            inst
+              (@Subtype.val.{1} Nat
+                (fun (x : Nat) =>
+                  @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                    (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                    (@Finset.Iic.{0} Nat Nat.instPreorder
+                      (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                        Nat.instOrderBot)
+                      n)
+                    x)
+                a))
+          (inst
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+          (Y
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+          (fun (ω : Ω)
+              (i :
+                @Subtype.{1} Nat fun (x : Nat) =>
+                  @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                    (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                    (@Finset.Iic.{0} Nat Nat.instPreorder
+                      (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                        Nat.instOrderBot)
+                      n)
+                    x) =>
+            Y
+              (@Subtype.val.{1} Nat
+                (fun (x : Nat) =>
+                  @Membership.mem.{0, 0} Nat (Finset.{0} Nat)
+                    (@SetLike.instMembership.{0, 0} (Finset.{0} Nat) Nat (@Finset.instSetLike.{0} Nat))
+                    (@Finset.Iic.{0} Nat Nat.instPreorder
+                      (@LocallyFiniteOrder.toLocallyFiniteOrderBot.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+                        Nat.instOrderBot)
+                      n)
+                    x)
+                i)
+              ω)
+          (κ n) P)
+    (ω : Ω) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{max (u + 1) (v + 1), v, 0, u, 0}
+    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.signature.{u, v}
+    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.actual.{u, v} PUnit.unit.{1}
+    (@Sigma.mk.{v + 1, max (max u v) (u + 1)} (Type v)
+      (fun (Ω : Type v) => @Sigma.{u + 1, max u v} (Nat → Type u) fun (X : Nat → Type u) => (n : Nat) → Ω → X n) Ω
+      (@Sigma.mk.{u + 1, max u v} (Nat → Type u) (fun (X : Nat → Type u) => (n : Nat) → Ω → X n) X Y))
+    ω
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.observationFact0.{u, v} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"has_law_traj_measure\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"function\",\"argument\",\"body\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.has_law_traj_measure, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .function, .function, .argument, .body], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.observation0, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.varyingLawInput.{u, v} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.canonicalArenaOperand.{u, v})
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.varyingLaw.{u, v}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.statementExclusion.{u, v} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"has_law_traj_measure\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  statementLocation := { owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.has_law_traj_measure, part := .type, path := [], levels := [(.param `u), (.param `v)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration.{u, v}).actual (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration.{u, v}).variation.2.choose (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration.{u, v}).variation.1 (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration.{u, v}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1.descriptorFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"HasLawTrajectory\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.HasLawTrajectory.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u), (.param `v)] }
+  (by first | rfl | (ext <;> rfl))

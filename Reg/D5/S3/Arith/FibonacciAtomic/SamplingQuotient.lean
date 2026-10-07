@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.SamplingQuotient
 import Reg.Support.DependentFamily
@@ -117,9 +120,203 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.SamplingQuotient, definition := none, coordinates := #[0, 1, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "value"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `D5.S3.Arith.FibonacciAtomic.SamplingQuotient.sampling_quotient, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.canonicalArenaFact, `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.sourceBridgeFact, `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.observationFact0, `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 
 end Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient
+
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.arena
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.arena
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.arena Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.actual)
+    Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration)
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"sampling_quotient\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `D5.S3.Arith.FibonacciAtomic.SamplingQuotient.sampling_quotient, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.arena Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.actual)
+  Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration)
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.observation0 : (n m : Nat) →
+  (hn : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) n) →
+    (hm : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) m) →
+      (t : Fin m → Nat) →
+        (ht :
+            @StrictMono.{0, 0} (Fin m) Nat (@PartialOrder.toPreorder.{0} (Fin m) (@Fin.instPartialOrder m))
+              Nat.instPreorder t) →
+          D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.State.{0, 0, 0, 0, 0}
+              Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.signature
+              (@Sigma.mk.{0, 0} Nat (fun (_n : Nat) => @Sigma.{0, 0} Nat fun (m : Nat) => Fin m → Nat) n
+                (@Sigma.mk.{0, 0} Nat (fun (m : Nat) => Fin m → Nat) m t)) →
+            D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+              Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.signature PUnit.unit.{1}
+              (@Sigma.mk.{0, 0} Nat (fun (_n : Nat) => @Sigma.{0, 0} Nat fun (m : Nat) => Fin m → Nat) n
+                (@Sigma.mk.{0, 0} Nat (fun (m : Nat) => Fin m → Nat) m t)) :=
+  fun (n m : Nat) (hn : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) n)
+    (hm : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) m) (t : Fin m → Nat)
+    (ht :
+      @StrictMono.{0, 0} (Fin m) Nat (@PartialOrder.toPreorder.{0} (Fin m) (@Fin.instPartialOrder m)) Nat.instPreorder
+        t) =>
+  have M :
+    (N : Nat) →
+      Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (ZMod N) :=
+    fun (N : Nat) =>
+    @DFunLike.coe.{1, 1, 1}
+      (Equiv.{1, 1}
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) →
+          Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) → ZMod N)
+        (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (ZMod N)))
+      (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) →
+        Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) → ZMod N)
+      (fun
+          (x :
+            Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) →
+              Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) → ZMod N) =>
+        Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (ZMod N))
+      (@EquivLike.toFunLike.{1, 1, 1}
+        (Equiv.{1, 1}
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) →
+            Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) → ZMod N)
+          (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (ZMod N)))
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) →
+          Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) → ZMod N)
+        (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (ZMod N))
+        (@Equiv.instEquivLike.{1, 1}
+          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) →
+            Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) → ZMod N)
+          (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (ZMod N))))
+      (@Matrix.of.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (ZMod N))
+      (@Matrix.vecCons.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) → ZMod N)
+        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+        (@Matrix.vecCons.{0} (ZMod N) (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+          (@OfNat.ofNat.{0} (ZMod N) (nat_lit 0)
+            (@Zero.toOfNat0.{0} (ZMod N)
+              (@MulZeroClass.toZero.{0} (ZMod N)
+                (@instMulZeroClassOfSemiring.{0} (ZMod N)
+                  (@CommSemiring.toSemiring.{0} (ZMod N) (@CommRing.toCommSemiring.{0} (ZMod N) (ZMod.commRing N)))))))
+          (@Matrix.vecCons.{0} (ZMod N) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+            (@OfNat.ofNat.{0} (ZMod N) (nat_lit 1)
+              (@One.toOfNat1.{0} (ZMod N)
+                (@AddMonoidWithOne.toOne.{0} (ZMod N)
+                  (@AddGroupWithOne.toAddMonoidWithOne.{0} (ZMod N)
+                    (@Ring.toAddGroupWithOne.{0} (ZMod N) (@CommRing.toRing.{0} (ZMod N) (ZMod.commRing N)))))))
+            (@Matrix.vecEmpty.{0} (ZMod N))))
+        (@Matrix.vecCons.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) → ZMod N)
+          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+          (@Matrix.vecCons.{0} (ZMod N) (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+            (@OfNat.ofNat.{0} (ZMod N) (nat_lit 1)
+              (@One.toOfNat1.{0} (ZMod N)
+                (@AddMonoidWithOne.toOne.{0} (ZMod N)
+                  (@AddGroupWithOne.toAddMonoidWithOne.{0} (ZMod N)
+                    (@Ring.toAddGroupWithOne.{0} (ZMod N) (@CommRing.toRing.{0} (ZMod N) (ZMod.commRing N)))))))
+            (@Matrix.vecCons.{0} (ZMod N) (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+              (@OfNat.ofNat.{0} (ZMod N) (nat_lit 1)
+                (@One.toOfNat1.{0} (ZMod N)
+                  (@AddMonoidWithOne.toOne.{0} (ZMod N)
+                    (@AddGroupWithOne.toAddMonoidWithOne.{0} (ZMod N)
+                      (@Ring.toAddGroupWithOne.{0} (ZMod N) (@CommRing.toRing.{0} (ZMod N) (ZMod.commRing N)))))))
+              (@Matrix.vecEmpty.{0} (ZMod N))))
+          (@Matrix.vecEmpty.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) → ZMod N))));
+  have S : (N : Nat) → Prod.{0, 0} (ZMod N) (ZMod N) → Prod.{0, 0} (ZMod N) (ZMod N) :=
+    fun (N : Nat) (x : Prod.{0, 0} (ZMod N) (ZMod N)) =>
+    @Prod.mk.{0, 0} (ZMod N) (ZMod N) (@Prod.snd.{0, 0} (ZMod N) (ZMod N) x)
+      (@HAdd.hAdd.{0, 0, 0} (ZMod N) (ZMod N) (ZMod N)
+        (@instHAdd.{0} (ZMod N)
+          (@Distrib.toAdd.{0} (ZMod N)
+            (@instDistribOfSemiring.{0} (ZMod N)
+              (@CommSemiring.toSemiring.{0} (ZMod N) (@CommRing.toCommSemiring.{0} (ZMod N) (ZMod.commRing N))))))
+        (@Prod.fst.{0, 0} (ZMod N) (ZMod N) x) (@Prod.snd.{0, 0} (ZMod N) (ZMod N) x));
+  have i0 : Fin m :=
+    @Fin.mk m (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+      (@Decidable.byContradiction
+        (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) m)
+        (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) m)
+        fun (a : Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) m)) =>
+        D5.S3.Arith.FibonacciAtomic.SamplingQuotient.sampling_quotient._proof_1 n m hm a);
+  have s : Nat := t i0;
+  have g : Nat :=
+    @Finset.gcd.{0, 0} Nat (Fin m) Nat.instCommMonoidWithZero
+      (@instNormalizedGCDMonoidOfStrongNormalizedGCDMonoid.{0} Nat Nat.instCommMonoidWithZero
+        instStrongNormalizedGCDMonoidNat)
+      (@Finset.erase.{0} (Fin m) (instDecidableEqFin m) (@Finset.univ.{0} (Fin m) (Fin.fintype m)) i0)
+      fun (i : Fin m) => @HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) (t i) s;
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.signature Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.actual
+    PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat (fun (_n : Nat) => @Sigma.{0, 0} Nat fun (m : Nat) => Fin m → Nat) n
+      (@Sigma.mk.{0, 0} Nat (fun (m : Nat) => Fin m → Nat) m t))
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"sampling_quotient\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"letBody\",\"letBody\",\"letBody\",\"letBody\",\"letBody\",\"letValue\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `D5.S3.Arith.FibonacciAtomic.SamplingQuotient.sampling_quotient, part := .type, path := [.body, .body, .body, .body, .body, .body, .letBody, .letBody, .letBody, .letBody, .letBody, .letValue], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"sampling_quotient\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `D5.S3.Arith.FibonacciAtomic.SamplingQuotient.sampling_quotient, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration).actual (Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration).variation.2.choose (Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration).variation.1 (Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"SamplingQuotient\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.SamplingQuotient.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

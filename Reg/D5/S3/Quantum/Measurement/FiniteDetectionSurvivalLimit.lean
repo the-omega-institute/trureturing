@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit
 import Reg.Support.DependentFamily
@@ -115,7 +118,17 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
   sourceSelection := some { owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, definition := none, coordinates := #[0, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn", "arg", "body"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.finite_detection_survival_limit, part := .type, path := [], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [`Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.observationFact0, `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.anchorEnumeration }
 
 
 #print axioms actual_law
@@ -232,7 +245,17 @@ noncomputable def registration_2.{u_1} : LeanInformationAudit.Contract.Registrat
   sourceSelection := some { owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, definition := none, coordinates := #[0, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "body", "arg"], stateBinder := 9, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.dark_block_contraction, part := .type, path := [], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [`Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.canonicalArenaFact, `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.sourceBridgeFact, `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.observationFact0, `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.anchorEnumeration }
 
 
 #print axioms actual_law
@@ -243,3 +266,389 @@ noncomputable def registration_2.{u_1} : LeanInformationAudit.Contract.Registrat
 end DarkBlock
 
 end Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit
+
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.canonicalArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.arena.{u_1}
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.canonicalArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.canonicalObjectArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.arena.{u_1}
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.canonicalObjectArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.canonicalArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.arena.{u_1}
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.canonicalArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"DarkBlock\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"DarkBlock\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.canonicalObjectArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.arena.{u_1}
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.canonicalObjectArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"DarkBlock\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"DarkBlock\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.sourceLaw.{u_1} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.arena.{u_1}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.arena.{u_1}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.arena.{u_1}
+      Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.actual)
+    Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"finite_detection_survival_limit\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.finite_detection_survival_limit, part := .type, path := [], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.arena.{u_1}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.arena.{u_1}
+    Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.actual)
+  Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.observation0.{u_1} : {d : Nat} →
+  {ι : Type u_1} →
+    [inst : Fintype.{u_1} ι] →
+      (Q : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) →
+        (L : ι → Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) →
+          (hcomp :
+              @Eq.{1} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                (@HAdd.hAdd.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                  (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                  (@instHAdd.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                    (@Matrix.add.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAdd))
+                  (@HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                    (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                    (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex
+                      (Fin.fintype d) Complex.instMul Complex.instAddCommMonoid)
+                    (@Matrix.conjTranspose.{0, 0, 0} (Fin d) (Fin d) Complex
+                      (@InvolutiveStar.toStar.{0} Complex
+                        (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                          (@AddCommMonoid.toAddMonoid.{0} Complex
+                            (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                              (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                  (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                    Complex.instNonUnitalCommRing)))))
+                          (@StarRing.toStarAddMonoid.{0} Complex
+                            (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                              (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                  Complex.instNonUnitalCommRing)))
+                            Complex.instStarRing)))
+                      Q)
+                    Q)
+                  (@Finset.sum.{u_1, 0} ι (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                    (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                    (@Finset.univ.{u_1} ι inst) fun (x : ι) =>
+                    @HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                      (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                      (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex
+                        (Fin.fintype d) Complex.instMul Complex.instAddCommMonoid)
+                      (@Matrix.conjTranspose.{0, 0, 0} (Fin d) (Fin d) Complex
+                        (@InvolutiveStar.toStar.{0} Complex
+                          (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                            (@AddCommMonoid.toAddMonoid.{0} Complex
+                              (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                  (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                    (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                      Complex.instNonUnitalCommRing)))))
+                            (@StarRing.toStarAddMonoid.{0} Complex
+                              (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                  (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                    Complex.instNonUnitalCommRing)))
+                              Complex.instStarRing)))
+                        (L x))
+                      (L x)))
+                (@OfNat.ofNat.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (nat_lit 1)
+                  (@One.toOfNat1.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                    (@Matrix.one.{0, 0} (Fin d) Complex (instDecidableEqFin d) Complex.instZero Complex.instOne)))) →
+            (N : Nat) →
+              D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.survivalSignature PUnit.unit.{1}
+                (@Sigma.mk.{0, 0} Nat (fun (d : Nat) => Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) d Q) :=
+  fun {d : Nat} {ι : Type u_1} [Fintype.{u_1} ι] (Q : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+    (L : ι → Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+    (hcomp :
+      @Eq.{1} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+        (@HAdd.hAdd.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+          (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+          (@instHAdd.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Matrix.add.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAdd))
+          (@HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex (Fin.fintype d)
+              Complex.instMul Complex.instAddCommMonoid)
+            (@Matrix.conjTranspose.{0, 0, 0} (Fin d) (Fin d) Complex
+              (@InvolutiveStar.toStar.{0} Complex
+                (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                  (@AddCommMonoid.toAddMonoid.{0} Complex
+                    (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+                  (@StarRing.toStarAddMonoid.{0} Complex
+                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                    Complex.instStarRing)))
+              Q)
+            Q)
+          (@Finset.sum.{u_1, 0} ι (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+            (@Finset.univ.{u_1} ι inst) fun (x : ι) =>
+            @HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+              (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+              (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex
+                (Fin.fintype d) Complex.instMul Complex.instAddCommMonoid)
+              (@Matrix.conjTranspose.{0, 0, 0} (Fin d) (Fin d) Complex
+                (@InvolutiveStar.toStar.{0} Complex
+                  (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                    (@AddCommMonoid.toAddMonoid.{0} Complex
+                      (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                        (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                              Complex.instNonUnitalCommRing)))))
+                    (@StarRing.toStarAddMonoid.{0} Complex
+                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                      Complex.instStarRing)))
+                (L x))
+              (L x)))
+        (@OfNat.ofNat.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (nat_lit 1)
+          (@One.toOfNat1.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Matrix.one.{0, 0} (Fin d) Complex (instDecidableEqFin d) Complex.instZero Complex.instOne))))
+    (N : Nat) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.survivalSignature
+    Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat (fun (d : Nat) => Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) d Q) N
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.observationFact0.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"finite_detection_survival_limit\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"function\",\"function\",\"argument\",\"body\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.finite_detection_survival_limit, part := .type, path := [.body, .body, .body, .body, .body, .body, .function, .argument, .function, .function, .argument, .body], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.varyingLawInput.{u_1} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.canonicalArenaOperand.{u_1})
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.varyingLaw.{u_1}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.statementExclusion.{u_1} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"finite_detection_survival_limit\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  statementLocation := { owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.finite_detection_survival_limit, part := .type, path := [], levels := [(.param `u_1)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration.{u_1}).actual (Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration.{u_1}).variation.2.choose (Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration.{u_1}).variation.1 (Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration.{u_1}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.sourceLaw.{u_1} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.arena.{u_1}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.arena.{u_1}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.arena.{u_1}
+      Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.actual)
+    Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"dark_block_contraction\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"DarkBlock\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.dark_block_contraction, part := .type, path := [], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.arena.{u_1}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.arena.{u_1}
+    Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.actual)
+  Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.observation0.{u_1} : {d : Nat} →
+  {ι : Type u_1} →
+    [inst : Fintype.{u_1} ι] →
+      (Q : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) →
+        (L : ι → Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) →
+          (hcomp :
+              @Eq.{1} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                (@HAdd.hAdd.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                  (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                  (@instHAdd.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                    (@Matrix.add.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAdd))
+                  (@HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                    (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                    (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex
+                      (Fin.fintype d) Complex.instMul Complex.instAddCommMonoid)
+                    (@Matrix.conjTranspose.{0, 0, 0} (Fin d) (Fin d) Complex
+                      (@InvolutiveStar.toStar.{0} Complex
+                        (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                          (@AddCommMonoid.toAddMonoid.{0} Complex
+                            (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                              (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                  (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                    Complex.instNonUnitalCommRing)))))
+                          (@StarRing.toStarAddMonoid.{0} Complex
+                            (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                              (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                  Complex.instNonUnitalCommRing)))
+                            Complex.instStarRing)))
+                      Q)
+                    Q)
+                  (@Finset.sum.{u_1, 0} ι (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                    (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                    (@Finset.univ.{u_1} ι inst) fun (x : ι) =>
+                    @HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                      (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                      (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex
+                        (Fin.fintype d) Complex.instMul Complex.instAddCommMonoid)
+                      (@Matrix.conjTranspose.{0, 0, 0} (Fin d) (Fin d) Complex
+                        (@InvolutiveStar.toStar.{0} Complex
+                          (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                            (@AddCommMonoid.toAddMonoid.{0} Complex
+                              (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                  (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                    (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                      Complex.instNonUnitalCommRing)))))
+                            (@StarRing.toStarAddMonoid.{0} Complex
+                              (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                  (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                    Complex.instNonUnitalCommRing)))
+                              Complex.instStarRing)))
+                        (L x))
+                      (L x)))
+                (@OfNat.ofNat.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (nat_lit 1)
+                  (@One.toOfNat1.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                    (@Matrix.one.{0, 0} (Fin d) Complex (instDecidableEqFin d) Complex.instZero Complex.instOne)))) →
+            (hd : @Ne.{1} Nat d (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))) →
+              (g : Real) →
+                (c : Nat → Real) →
+                  (N : Nat) →
+                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                      Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.survivalSignature PUnit.unit.{1}
+                      (@Sigma.mk.{0, 0} Nat (fun (d : Nat) => Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) d Q) :=
+  fun {d : Nat} {ι : Type u_1} [Fintype.{u_1} ι] (Q : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+    (L : ι → Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+    (hcomp :
+      @Eq.{1} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+        (@HAdd.hAdd.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+          (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+          (@instHAdd.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Matrix.add.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAdd))
+          (@HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex (Fin.fintype d)
+              Complex.instMul Complex.instAddCommMonoid)
+            (@Matrix.conjTranspose.{0, 0, 0} (Fin d) (Fin d) Complex
+              (@InvolutiveStar.toStar.{0} Complex
+                (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                  (@AddCommMonoid.toAddMonoid.{0} Complex
+                    (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+                  (@StarRing.toStarAddMonoid.{0} Complex
+                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                    Complex.instStarRing)))
+              Q)
+            Q)
+          (@Finset.sum.{u_1, 0} ι (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+            (@Finset.univ.{u_1} ι inst) fun (x : ι) =>
+            @HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+              (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+              (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex
+                (Fin.fintype d) Complex.instMul Complex.instAddCommMonoid)
+              (@Matrix.conjTranspose.{0, 0, 0} (Fin d) (Fin d) Complex
+                (@InvolutiveStar.toStar.{0} Complex
+                  (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                    (@AddCommMonoid.toAddMonoid.{0} Complex
+                      (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                        (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                              Complex.instNonUnitalCommRing)))))
+                    (@StarRing.toStarAddMonoid.{0} Complex
+                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                      Complex.instStarRing)))
+                (L x))
+              (L x)))
+        (@OfNat.ofNat.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (nat_lit 1)
+          (@One.toOfNat1.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Matrix.one.{0, 0} (Fin d) Complex (instDecidableEqFin d) Complex.instZero Complex.instOne))))
+    (hd : @Ne.{1} Nat d (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))) (g : Real) (c : Nat → Real)
+    (N : Nat) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.survivalSignature
+    Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat (fun (d : Nat) => Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) d Q) N
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.observationFact0.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"dark_block_contraction\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"argument\",\"body\",\"argument\",\"argument\",\"argument\",\"argument\",\"argument\",\"function\",\"argument\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"DarkBlock\",\"registration_2\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.dark_block_contraction, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .argument, .body, .argument, .body, .argument, .argument, .argument, .argument, .argument, .function, .argument, .body, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.observation0, part := .value, path := [], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.varyingLawInput.{u_1} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.canonicalArenaOperand.{u_1})
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.varyingLaw.{u_1}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"DarkBlock\",\"registration_2\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.statementExclusion.{u_1} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"DarkBlock\",\"registration_2\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"dark_block_contraction\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.varyingLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  statementLocation := { owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.dark_block_contraction, part := .type, path := [], levels := [(.param `u_1)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration.{u_1}).actual (Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration.{u_1}).variation.2.choose (Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration.{u_1}).variation.1 (Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration.{u_1}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"DarkBlock\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"FiniteDetectionSurvivalLimit\",\"DarkBlock\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, declaration := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))

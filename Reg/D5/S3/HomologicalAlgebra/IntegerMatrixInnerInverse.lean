@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse
 import Reg.Support.DependentFamily
@@ -89,8 +92,112 @@ noncomputable def registration_1.{u_1, u_2} : LeanInformationAudit.Contract.Regi
   sourceSelection := some { owner := `D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.exists_integer_inner_inverse, part := .type, path := [], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2] }], facts := [`Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.canonicalArenaFact, `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.sourceBridgeFact, `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.observationFact0, `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 end Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse
+
+
+noncomputable def Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.canonicalArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2, 0} :=
+  Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.arena.{u_1, u_2}
+noncomputable def Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.canonicalArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"HomologicalAlgebra\",\"IntegerMatrixInnerInverse\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"HomologicalAlgebra\",\"IntegerMatrixInnerInverse\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+noncomputable def Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.canonicalObjectArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2, 0} :=
+  Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.arena.{u_1, u_2}
+noncomputable def Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.canonicalObjectArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"HomologicalAlgebra\",\"IntegerMatrixInnerInverse\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"HomologicalAlgebra\",\"IntegerMatrixInnerInverse\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.sourceLaw.{u_1, u_2} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2,
+    0}
+  Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.arena.{u_1, u_2}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u_1 + 1) (u_2 + 1), max u_1 u_2,
+        0, max u_1 u_2, 0}
+    Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.arena.{u_1, u_2}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_2 + 1) (u_1 + 1), max u_2 u_1, 0,
+        max u_2 u_1, 0}
+      Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.arena.{u_1, u_2}
+      Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.actual.{u_1, u_2})
+    Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration.{u_1, u_2})
+
+noncomputable def Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"HomologicalAlgebra\",\"IntegerMatrixInnerInverse\",\"exists_integer_inner_inverse\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"HomologicalAlgebra\",\"IntegerMatrixInnerInverse\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.exists_integer_inner_inverse, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0,
+      max u_1 u_2, 0}
+  Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.arena.{u_1, u_2}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_2 + 1) (u_1 + 1), max u_2 u_1, 0,
+      max u_2 u_1, 0}
+    Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.arena.{u_1, u_2}
+    Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.actual.{u_1, u_2})
+  Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration.{u_1, u_2})
+
+noncomputable def Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.observation0.{u_1, u_2} : {m : Type u_1} →
+  {n : Type u_2} →
+    [Fintype.{u_1} m] →
+      [Fintype.{u_2} n] →
+        (A : Matrix.{u_1, u_2, 0} m n Int) →
+          (hA : @Matrix.IsTotallyUnimodular.{u_1, u_2, 0} m n Int Int.instCommRing A) →
+            (B : Matrix.{u_2, u_1, 0} n m Int) →
+              D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{max (u_1 + 1) (u_2 + 1),
+                  max u_1 u_2, 0, max u_1 u_2, 0}
+                Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.signature.{u_1, u_2} PUnit.unit.{1}
+                (@Sigma.mk.{u_1 + 1, u_2 + 1} (Type u_1) (fun (x : Type u_1) => Type u_2) m n) :=
+  fun {m : Type u_1} {n : Type u_2} [Fintype.{u_1} m] [Fintype.{u_2} n] (A : Matrix.{u_1, u_2, 0} m n Int)
+    (hA : @Matrix.IsTotallyUnimodular.{u_1, u_2, 0} m n Int Int.instCommRing A) (B : Matrix.{u_2, u_1, 0} n m Int) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0,
+        max u_1 u_2, 0}
+    Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.signature.{u_1, u_2}
+    Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.actual.{u_1, u_2} PUnit.unit.{1}
+    (@Sigma.mk.{u_1 + 1, u_2 + 1} (Type u_1) (fun (x : Type u_1) => Type u_2) m n) A
+
+noncomputable def Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.observationFact0.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"HomologicalAlgebra\",\"IntegerMatrixInnerInverse\",\"exists_integer_inner_inverse\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"HomologicalAlgebra\",\"IntegerMatrixInnerInverse\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.exists_integer_inner_inverse, part := .type, path := [.body, .body, .body, .body, .body, .body, .argument, .body, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.varyingLawInput.{u_1, u_2} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.canonicalArenaOperand.{u_1, u_2})
+noncomputable def Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.varyingLaw.{u_1, u_2}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"HomologicalAlgebra\",\"IntegerMatrixInnerInverse\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"
+
+noncomputable def Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.statementExclusion.{u_1, u_2} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"HomologicalAlgebra\",\"IntegerMatrixInnerInverse\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"HomologicalAlgebra\",\"IntegerMatrixInnerInverse\",\"exists_integer_inner_inverse\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  statementLocation := { owner := `D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.exists_integer_inner_inverse, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration.{u_1, u_2}).actual (Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration.{u_1, u_2}).variation.2.choose (Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration.{u_1, u_2}).variation.1 (Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration.{u_1, u_2}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1.descriptorFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"HomologicalAlgebra\",\"IntegerMatrixInnerInverse\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"HomologicalAlgebra\",\"IntegerMatrixInnerInverse\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse, declaration := `Reg.D5.S3.HomologicalAlgebra.IntegerMatrixInnerInverse.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))

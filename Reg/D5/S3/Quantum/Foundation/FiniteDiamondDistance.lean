@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Foundation.FiniteDiamondDistance
 import Reg.Support.DependentFamily
@@ -110,8 +113,135 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Quantum.Foundation.FiniteDiamondDistance, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `D5.S3.Quantum.Foundation.FiniteDiamondDistance.result, part := .type, path := [], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u, .param `v] }], facts := [`Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.observationFact0, `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 end Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance
+
+
+noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.canonicalArenaOperand.{u, v} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.arena.{u, v}
+noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.canonicalArenaFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.canonicalObjectArenaOperand.{u, v} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.arena.{u, v}
+noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.canonicalObjectArenaFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.sourceLaw.{u, v} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.arena.{u, v}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.arena.{u, v}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.arena.{u, v}
+      Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.actual)
+    Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration.{u, v})
+
+noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.sourceBridgeFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `D5.S3.Quantum.Foundation.FiniteDiamondDistance.result, part := .type, path := [], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.arena.{u, v}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.arena.{u, v}
+    Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.actual)
+  Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration.{u, v})
+
+noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.observation0.{u} : {a b : Type u} →
+  [inst : Fintype.{u} a] →
+    [inst_1 : DecidableEq.{u + 1} a] →
+      [inst_2 : Fintype.{u} b] →
+        [inst_3 : DecidableEq.{u + 1} b] →
+          (first second :
+              @D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.{u, u} a b inst inst_1 inst_2 inst_3) →
+            D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+              Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.signature PUnit.unit.{1} PUnit.unit.{1} :=
+  fun {a b : Type u} [inst : Fintype.{u} a] [inst_1 : DecidableEq.{u + 1} a] [inst_2 : Fintype.{u} b]
+    [inst_3 : DecidableEq.{u + 1} b]
+    (first second : @D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.{u, u} a b inst inst_1 inst_2 inst_3) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.signature
+    Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.actual PUnit.unit.{1} PUnit.unit.{1}
+    (@Union.union.{0} (Set.{0} Real) (@Set.instUnion.{0} Real)
+      (@Singleton.singleton.{0, 0} Real (Set.{0} Real) (@Set.instSingletonSet.{0} Real)
+        (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))
+      (@Set.ofPred.{0} Real fun (x : Real) =>
+        @Exists.{u + 1}
+          (@D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState.{u}
+            (Prod.{0, u} (Fin (@Fintype.card.{u} a inst)) a)
+            (@instFintypeProd.{0, u} (Fin (@Fintype.card.{u} a inst)) a (Fin.fintype (@Fintype.card.{u} a inst)) inst)
+            fun (a_1 b : Prod.{0, u} (Fin (@Fintype.card.{u} a inst)) a) =>
+            @instDecidableEqProd.{0, u} (Fin (@Fintype.card.{u} a inst)) a
+              (instDecidableEqFin (@Fintype.card.{u} a inst)) inst_1 a_1 b)
+          fun
+            (tau :
+              @D5.S3.Quantum.Foundation.FiniteStateChannel.DensityState.{u}
+                (Prod.{0, u} (Fin (@Fintype.card.{u} a inst)) a)
+                (@instFintypeProd.{0, u} (Fin (@Fintype.card.{u} a inst)) a (Fin.fintype (@Fintype.card.{u} a inst))
+                  inst)
+                fun (a_1 b : Prod.{0, u} (Fin (@Fintype.card.{u} a inst)) a) =>
+                @instDecidableEqProd.{0, u} (Fin (@Fintype.card.{u} a inst)) a
+                  (instDecidableEqFin (@Fintype.card.{u} a inst)) inst_1 a_1 b) =>
+          And
+            (@D5.S3.Quantum.Foundation.FiniteDiamondDistance.IsPure.{u} (Prod.{0, u} (Fin (@Fintype.card.{u} a inst)) a)
+              (@instFintypeProd.{0, u} (Fin (@Fintype.card.{u} a inst)) a (Fin.fintype (@Fintype.card.{u} a inst)) inst)
+              (fun (a_1 b : Prod.{0, u} (Fin (@Fintype.card.{u} a inst)) a) =>
+                @instDecidableEqProd.{0, u} (Fin (@Fintype.card.{u} a inst)) a
+                  (instDecidableEqFin (@Fintype.card.{u} a inst)) inst_1 a_1 b)
+              tau)
+            (@Eq.{1} Real x
+              (@D5.S3.Quantum.Foundation.FiniteDiamondDistance.referenceError.{0, u, u} (Fin (@Fintype.card.{u} a inst))
+                a b (Fin.fintype (@Fintype.card.{u} a inst)) (instDecidableEqFin (@Fintype.card.{u} a inst)) inst inst_1
+                inst_2 inst_3 first second tau))))
+
+noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.observationFact0.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"result\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `D5.S3.Quantum.Foundation.FiniteDiamondDistance.result, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .argument, .argument, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.observation0, part := .value, path := [], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.varyingLawInput.{u, v} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.canonicalArenaOperand.{u, v})
+noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.varyingLaw.{u, v}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.statementExclusion.{u, v} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  statementLocation := { owner := `D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `D5.S3.Quantum.Foundation.FiniteDiamondDistance.result, part := .type, path := [], levels := [(.param `u), (.param `v)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration.{u, v}).actual (Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration.{u, v}).variation.2.choose (Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration.{u, v}).variation.1 (Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration.{u, v}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Foundation\",\"FiniteDiamondDistance\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance, declaration := `Reg.D5.S3.Quantum.Foundation.FiniteDiamondDistance.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u), (.param `v)] }
+  (by first | rfl | (ext <;> rfl))

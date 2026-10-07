@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.CountedExchangeChain
 import Reg.Support.DependentFamily
@@ -85,9 +88,107 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CountedExchangeChain, definition := none, coordinates := #[1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `D5.S3.ConceptDynamics.Coding.CountedExchangeChain.chain_has_window_conjugacy, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.canonicalArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.sourceBridgeFact, `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.observationFact0, `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 
 end Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain
+
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.arena
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.arena
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.arena
+    (∀ {n m : Nat} {A : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n n}
+      {B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat m m} {L : Nat}
+      (c : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{0} Nat Nat.instSemiring n m A B L),
+      Nonempty.{1} (@D5.S3.ConceptDynamics.Coding.CountedExchangeChain.WindowConjugacy n m A B L))
+    Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"chain_has_window_conjugacy\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `D5.S3.ConceptDynamics.Coding.CountedExchangeChain.chain_has_window_conjugacy, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.arena
+  (∀ {n m : Nat} {A : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n n}
+    {B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat m m} {L : Nat}
+    (c : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{0} Nat Nat.instSemiring n m A B L),
+    Nonempty.{1} (@D5.S3.ConceptDynamics.Coding.CountedExchangeChain.WindowConjugacy n m A B L))
+  Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.observation0 : {n m : Nat} →
+  {A : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n n} →
+    {B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat m m} →
+      {L : Nat} →
+        (c :
+            @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{0} Nat Nat.instSemiring n m A B
+              L) →
+          D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+            Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.signature PUnit.unit.{1} m :=
+  fun {n m : Nat} {A : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n n}
+    {B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat m m} {L : Nat}
+    (c : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{0} Nat Nat.instSemiring n m A B L) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.signature
+    Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.actual PUnit.unit.{1} m B
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"chain_has_window_conjugacy\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `D5.S3.ConceptDynamics.Coding.CountedExchangeChain.chain_has_window_conjugacy, part := .type, path := [.body, .body, .body, .body, .body, .body, .argument, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"chain_has_window_conjugacy\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `D5.S3.ConceptDynamics.Coding.CountedExchangeChain.chain_has_window_conjugacy, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration).actual (Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration).variation.2.choose (Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration).variation.1 (Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CountedExchangeChain\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CountedExchangeChain.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

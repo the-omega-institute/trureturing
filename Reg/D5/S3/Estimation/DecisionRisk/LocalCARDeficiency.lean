@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Estimation.DecisionRisk.LocalCARDeficiency
 import Reg.Support.DependentFamily
@@ -131,7 +134,191 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
   sourceSelection := some { owner := `D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.result, part := .type, path := [], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [`Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.canonicalArenaFact, `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.sourceBridgeFact, `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.observationFact0, `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.anchorEnumeration }
 
 
 end Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency
+
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.canonicalArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, u_1, 0, 0} :=
+  Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.arena.{u_1}
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.canonicalArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"LocalCARDeficiency\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"LocalCARDeficiency\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.canonicalObjectArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, u_1, 0, 0} :=
+  Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.arena.{u_1}
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.canonicalObjectArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"LocalCARDeficiency\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"LocalCARDeficiency\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.sourceLaw.{u_1} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u_1, 0, 0}
+  Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.arena.{u_1}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, u_1, 0, 0}
+    Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.arena.{u_1}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u_1, 0, 0}
+      Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.arena.{u_1}
+      Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.actual.{u_1})
+    Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"LocalCARDeficiency\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"LocalCARDeficiency\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.result, part := .type, path := [], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, u_1, 0, 0}
+  Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.arena.{u_1}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u_1, 0, 0}
+    Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.arena.{u_1}
+    Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.actual.{u_1})
+  Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.roleEnumeration.{u_1} : LeanInformationAudit.Contract.FiniteEnumeration (ULift.{u_1, 0} Unit) where
+  values := [@ULift.up.{u_1, 0} Unit Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.observation0.{u_1} : {A : Type u_1} →
+  [inst : Fintype.{u_1} A] →
+    [inst_1 : DecidableEq.{u_1 + 1} A] →
+      [Nonempty.{u_1 + 1} A] →
+        (U : Finset.{u_1} A) →
+          (hm :
+              @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                (@Finset.card.{u_1} A U)) →
+            (a : Real) →
+              (ha :
+                  @LE.le.{0} Real Real.instLE
+                    (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) a) →
+                (w : D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.Block.{u_1} A → Real) →
+                  (hw :
+                      ∀ (B : D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.Block.{u_1} A),
+                        @LE.le.{0} Real Real.instLE
+                          (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) (w B)) →
+                    (hrow :
+                        ∀ (i : A),
+                          @Eq.{1} Real
+                            (@Finset.sum.{u_1, 0} (D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.Block.{u_1} A) Real
+                              Real.instAddCommMonoid
+                              (@Finset.univ.{u_1} (D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.Block.{u_1} A)
+                                (@D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.blockFintype.{u_1} A inst))
+                              fun (B : D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.Block.{u_1} A) =>
+                              @D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.experiment.{u_1} A inst_1 w i B)
+                            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →
+                      (hcap :
+                          ∀ (B : D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.Block.{u_1} A),
+                            @LE.le.{u_1} (Finset.{u_1} A)
+                                (@Preorder.toLE.{u_1} (Finset.{u_1} A)
+                                  (@PartialOrder.toPreorder.{u_1} (Finset.{u_1} A) (@Finset.instPartialOrder.{u_1} A)))
+                                (@Subtype.val.{u_1 + 1} (Finset.{u_1} A)
+                                  (fun (B : Finset.{u_1} A) => @Finset.Nonempty.{u_1} A B) B)
+                                U →
+                              @Eq.{1} Nat
+                                  (@Finset.card.{u_1} A
+                                    (@Subtype.val.{u_1 + 1} (Finset.{u_1} A)
+                                      (fun (B : Finset.{u_1} A) => @Finset.Nonempty.{u_1} A B) B))
+                                  (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) →
+                                @LE.le.{0} Real Real.instLE a (w B)) →
+                        D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, u_1, 0, 0}
+                          Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.signature.{u_1}
+                          (@ULift.up.{u_1, 0} Unit Unit.unit) PUnit.unit.{1} :=
+  fun {A : Type u_1} [Fintype.{u_1} A] [inst_1 : DecidableEq.{u_1 + 1} A] [Nonempty.{u_1 + 1} A] (U : Finset.{u_1} A)
+    (hm :
+      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) (@Finset.card.{u_1} A U))
+    (a : Real)
+    (ha : @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) a)
+    (w : D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.Block.{u_1} A → Real)
+    (hw :
+      ∀ (B : D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.Block.{u_1} A),
+        @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) (w B))
+    (hrow :
+      ∀ (i : A),
+        @Eq.{1} Real
+          (@Finset.sum.{u_1, 0} (D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.Block.{u_1} A) Real
+            Real.instAddCommMonoid
+            (@Finset.univ.{u_1} (D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.Block.{u_1} A)
+              (@D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.blockFintype.{u_1} A inst))
+            fun (B : D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.Block.{u_1} A) =>
+            @D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.experiment.{u_1} A inst_1 w i B)
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+    (hcap :
+      ∀ (B : D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.Block.{u_1} A),
+        @LE.le.{u_1} (Finset.{u_1} A)
+            (@Preorder.toLE.{u_1} (Finset.{u_1} A)
+              (@PartialOrder.toPreorder.{u_1} (Finset.{u_1} A) (@Finset.instPartialOrder.{u_1} A)))
+            (@Subtype.val.{u_1 + 1} (Finset.{u_1} A) (fun (B : Finset.{u_1} A) => @Finset.Nonempty.{u_1} A B) B) U →
+          @Eq.{1} Nat
+              (@Finset.card.{u_1} A
+                (@Subtype.val.{u_1 + 1} (Finset.{u_1} A) (fun (B : Finset.{u_1} A) => @Finset.Nonempty.{u_1} A B) B))
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) →
+            @LE.le.{0} Real Real.instLE a (w B)) =>
+  have v : D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.Block.{u_1} A → Real :=
+    @D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.plus.{u_1} A inst_1 w U a;
+  have ep : Real :=
+    @HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) a
+        (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+          (@Nat.cast.{0} Real Real.instNatCast (@Finset.card.{u_1} A U))
+          (@OfNat.ofNat.{0} Real (nat_lit 2)
+            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
+      (@Nat.cast.{0} Real Real.instNatCast (@Finset.card.{u_1} A U));
+  have em : Real :=
+    @HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) a
+        (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+          (@Nat.cast.{0} Real Real.instNatCast (@Finset.card.{u_1} A U))
+          (@OfNat.ofNat.{0} Real (nat_lit 2)
+            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
+      (@OfNat.ofNat.{0} Real (nat_lit 2)
+        (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+          (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+            (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))));
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, u_1, 0, 0}
+    Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.signature.{u_1}
+    Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.actual.{u_1} (@ULift.up.{u_1, 0} Unit Unit.unit) PUnit.unit.{1}
+    ep
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.observationFact0.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"LocalCARDeficiency\",\"result\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"letBody\",\"letBody\",\"letBody\",\"argument\",\"argument\",\"argument\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"LocalCARDeficiency\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.result, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .letBody, .letBody, .letBody, .argument, .argument, .argument, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.varyingLawInput.{u_1} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.canonicalArenaOperand.{u_1})
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.varyingLaw.{u_1}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"LocalCARDeficiency\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.statementExclusion.{u_1} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"LocalCARDeficiency\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"LocalCARDeficiency\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  statementLocation := { owner := `D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.result, part := .type, path := [], levels := [(.param `u_1)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration.{u_1}).actual (Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration.{u_1}).variation.2.choose (Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration.{u_1}).variation.1 (Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration.{u_1}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1.descriptorFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"LocalCARDeficiency\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"LocalCARDeficiency\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency, declaration := `Reg.D5.S3.Estimation.DecisionRisk.LocalCARDeficiency.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))

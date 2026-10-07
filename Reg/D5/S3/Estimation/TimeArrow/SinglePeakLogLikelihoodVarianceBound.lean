@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound
 import Reg.Support.DependentFamily
@@ -103,7 +106,234 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
   sourceSelection := some { owner := `D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.uniform_single_peak_log_likelihood_variance_bound, part := .type, path := [], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [`Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.canonicalArenaFact, `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.sourceBridgeFact, `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.observationFact0, `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.anchorEnumeration }
 
 
 end Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound
+
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.canonicalArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, u_1, 0, 0} :=
+  Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.arena.{u_1}
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.canonicalArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakLogLikelihoodVarianceBound\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakLogLikelihoodVarianceBound\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.canonicalObjectArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, u_1, 0, 0} :=
+  Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.arena.{u_1}
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.canonicalObjectArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakLogLikelihoodVarianceBound\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakLogLikelihoodVarianceBound\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.sourceLaw.{u_1} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u_1, 0, 0}
+  Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.arena.{u_1}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, u_1, 0, 0}
+    Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.arena.{u_1}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u_1, 0, 0}
+      Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.arena.{u_1}
+      Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.actual.{u_1})
+    Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakLogLikelihoodVarianceBound\",\"uniform_single_peak_log_likelihood_variance_bound\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakLogLikelihoodVarianceBound\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.uniform_single_peak_log_likelihood_variance_bound, part := .type, path := [], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, u_1, 0, 0}
+  Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.arena.{u_1}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u_1, 0, 0}
+    Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.arena.{u_1}
+    Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.actual.{u_1})
+  Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.roleEnumeration.{u_1} : LeanInformationAudit.Contract.FiniteEnumeration (ULift.{u_1, 0} Unit) where
+  values := [@ULift.up.{u_1, 0} Unit Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.observation0.{u_1} : {X : Type u_1} →
+  [inst : Fintype.{u_1} X] →
+    (chi : X → Real) →
+      (hchi :
+          ∀ (x : X),
+            Or (@Eq.{1} Real (chi x) (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+              (@Eq.{1} Real (chi x)
+                (@Neg.neg.{0} Real Real.instNeg
+                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))) →
+        (z : X) →
+          (hz : @Eq.{1} Real (chi z) (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →
+            (r q : Real) →
+              (hr0 :
+                  @LT.lt.{0} Real Real.instLT
+                    (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) r) →
+                (hr1 :
+                    @LT.lt.{0} Real Real.instLT r
+                      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →
+                  (M : Nat) →
+                    (hcard :
+                        @Eq.{1} Nat (@Fintype.card.{u_1} X inst)
+                          (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
+                            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) M)) →
+                      (hplus :
+                          @Eq.{1} Nat
+                            (@Finset.card.{u_1} X
+                              (@Finset.filter.{u_1} X
+                                (fun (x : X) =>
+                                  @Eq.{1} Real (chi x)
+                                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+                                (fun (a : X) =>
+                                  Real.decidableEq (chi a)
+                                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+                                (@Finset.univ.{u_1} X inst)))
+                            M) →
+                        (hM :
+                            @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) M) →
+                          (hq :
+                              @Eq.{1} Real q
+                                (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                                  (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid)) r
+                                  (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+                                    (@Nat.cast.{0} Real Real.instNatCast M)
+                                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))) →
+                            (u : Real) →
+                              @LT.lt.{0} Real Real.instLT (@abs.{0} Real Real.lattice Real.instAddGroup u)
+                                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)) →
+                                D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, u_1, 0,
+                                    0}
+                                  Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.signature.{u_1}
+                                  (@ULift.up.{u_1, 0} Unit Unit.unit) PUnit.unit.{1} :=
+  fun {X : Type u_1} [inst : Fintype.{u_1} X] (chi : X → Real)
+    (hchi :
+      ∀ (x : X),
+        Or (@Eq.{1} Real (chi x) (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+          (@Eq.{1} Real (chi x)
+            (@Neg.neg.{0} Real Real.instNeg (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))))
+    (z : X) (hz : @Eq.{1} Real (chi z) (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+    (r q : Real)
+    (hr0 : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) r)
+    (hr1 : @LT.lt.{0} Real Real.instLT r (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+    (M : Nat)
+    (hcard :
+      @Eq.{1} Nat (@Fintype.card.{u_1} X inst)
+        (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat)
+          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) M))
+    (hplus :
+      @Eq.{1} Nat
+        (@Finset.card.{u_1} X
+          (@Finset.filter.{u_1} X
+            (fun (x : X) =>
+              @Eq.{1} Real (chi x) (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+            (fun (a : X) =>
+              Real.decidableEq (chi a) (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+            (@Finset.univ.{u_1} X inst)))
+        M)
+    (hM : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) M)
+    (hq :
+      @Eq.{1} Real q
+        (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid)) r
+          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (@Nat.cast.{0} Real Real.instNatCast M)
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))) =>
+  have P : (x y : X) → Real :=
+    @D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.kernel.{u_1} X chi z r q
+      (@Nat.cast.{0} Real Real.instNatCast (@Fintype.card.{u_1} X inst));
+  have k : Real :=
+    @HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) (@Nat.cast.{0} Real Real.instNatCast M)
+      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne));
+  have I : Real :=
+    @HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+      (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
+        (D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance.phi r)
+        (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) k
+          (D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance.phi q)))
+      (@Nat.cast.{0} Real Real.instNatCast (@Fintype.card.{u_1} X inst));
+  have J : Real :=
+    @HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+      (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+        (D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance.xi r)
+        (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) k
+          (D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance.xi q)))
+      (@Nat.cast.{0} Real Real.instNatCast (@Fintype.card.{u_1} X inst));
+  have v : Real :=
+    @HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+      (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+        (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
+          (D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance.psi r)
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) k
+            (D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance.psi q)))
+        (@Nat.cast.{0} Real Real.instNatCast (@Fintype.card.{u_1} X inst)))
+      (@HPow.hPow.{0, 0, 0} Real Nat Real
+        (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) I
+        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))));
+  have Prev : (y x : X) → Real := @Function.swap.{u_1 + 1, u_1 + 1, 1} X X (fun (x y : X) => Real) P;
+  have Lrev :
+    (s : Nat) →
+      (Fin
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) s
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →
+          X) →
+        Real :=
+    fun (s : Nat)
+      (x :
+        Fin
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) s
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →
+          X) =>
+    @D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance.logLikelihoodSum.{u_1} X inst chi z r q s
+      fun
+        (t :
+          Fin
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) s
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>
+      x
+        (@Fin.rev
+          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) s
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+          t);
+  fun (u : Real)
+    (a :
+      @LT.lt.{0} Real Real.instLT (@abs.{0} Real Real.lattice Real.instAddGroup u)
+        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, u_1, 0, 0}
+    Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.signature.{u_1}
+    Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.actual.{u_1} (@ULift.up.{u_1, 0} Unit Unit.unit)
+    PUnit.unit.{1} (D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance.phi u)
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.observationFact0.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakLogLikelihoodVarianceBound\",\"uniform_single_peak_log_likelihood_variance_bound\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"letBody\",\"letBody\",\"letBody\",\"letBody\",\"letBody\",\"letBody\",\"letBody\",\"function\",\"argument\",\"body\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakLogLikelihoodVarianceBound\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.uniform_single_peak_log_likelihood_variance_bound, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .letBody, .letBody, .letBody, .letBody, .letBody, .letBody, .letBody, .function, .argument, .body, .body, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.varyingLawInput.{u_1} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.canonicalArenaOperand.{u_1})
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.varyingLaw.{u_1}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakLogLikelihoodVarianceBound\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.statementExclusion.{u_1} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakLogLikelihoodVarianceBound\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakLogLikelihoodVarianceBound\",\"uniform_single_peak_log_likelihood_variance_bound\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  statementLocation := { owner := `D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.uniform_single_peak_log_likelihood_variance_bound, part := .type, path := [], levels := [(.param `u_1)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration.{u_1}).actual (Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration.{u_1}).variation.2.choose (Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration.{u_1}).variation.1 (Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration.{u_1}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1.descriptorFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakLogLikelihoodVarianceBound\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakLogLikelihoodVarianceBound\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodVarianceBound.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))

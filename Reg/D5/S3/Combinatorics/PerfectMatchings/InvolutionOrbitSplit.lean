@@ -1,3 +1,5 @@
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import Reg.Support.NodeFacts
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit
@@ -103,7 +105,17 @@ def registration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
-  options := #[] }
+  options := #[],
+  coverage := { roots := [
+    { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_reflection_exclusion, part := .type, path := [], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u] }], facts := [`Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.canonicalArenaFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.canonicalObjectArenaFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.sourceBridgeFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.observationFact0, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.anchorEnumeration }
 
 end Reflection
 
@@ -190,7 +202,17 @@ def registration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
-  options := #[] }
+  options := #[],
+  coverage := { roots := [
+    { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_rotation_separation, part := .type, path := [], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u] }], facts := [`Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.canonicalArenaFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.canonicalObjectArenaFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.sourceBridgeFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.observationFact0, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.anchorEnumeration }
 
 end Separation
 
@@ -279,7 +301,17 @@ def registration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
-  options := #[] }
+  options := #[],
+  coverage := { roots := [
+    { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.connected_iff_rotation_orbits, part := .type, path := [], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u] }], facts := [`Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.canonicalArenaFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.canonicalObjectArenaFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.sourceBridgeFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.observationFact0, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.anchorEnumeration }
 
 end Reachability
 
@@ -372,7 +404,17 @@ def splitRegistration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
       stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
-  options := #[] }
+  options := #[],
+  coverage := { roots := [
+    { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.component_split, part := .type, path := [], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u] }], facts := [`Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.canonicalArenaFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.canonicalObjectArenaFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.sourceBridgeFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.observationFact0, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.anchorEnumeration }
 
 def coincidentRejected : Realization signature.{u} := realize signature
   (fun _ p x => RotationOrbit (p.2.1 * p.2.2) (p.2.1 x)) (fun e => nomatch e)
@@ -436,7 +478,17 @@ def classesRegistration_contract : Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,
       stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
-  options := #[] }
+  options := #[],
+  coverage := { roots := [
+    { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.component_orbit_classes, part := .type, path := [], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u] }], facts := [`Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.canonicalArenaFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.canonicalObjectArenaFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.sourceBridgeFact, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.observationFact0, `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.anchorEnumeration }
 
 end Components
 
@@ -507,3 +559,649 @@ def observationFact : NodeFact := .equal
 
 end
 end Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection
+
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.canonicalArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u + 1, u, 0, u, 0} :=
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesArena.{u}
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.canonicalArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"classesRegistration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"classesRegistration_contract\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.canonicalObjectArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u + 1, u, 0, u, 0} :=
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesArena.{u}
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.canonicalObjectArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"classesRegistration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"classesRegistration_contract\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.canonicalArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u + 1, u, 0, 0, 0} :=
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.arena.{u}
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.canonicalArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reachability\",\"registration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reachability\",\"registration_contract\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.canonicalObjectArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u + 1, u, 0, 0, 0} :=
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.arena.{u}
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.canonicalObjectArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reachability\",\"registration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reachability\",\"registration_contract\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.canonicalArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u + 1, u, 0, 0, 0} :=
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.arena.{u}
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.canonicalArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Separation\",\"registration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Separation\",\"registration_contract\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.canonicalObjectArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u + 1, u, 0, 0, 0} :=
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.arena.{u}
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.canonicalObjectArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Separation\",\"registration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Separation\",\"registration_contract\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.canonicalArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u + 1, u, 0, u, 0} :=
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitArena.{u}
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.canonicalArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"splitRegistration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"splitRegistration_contract\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.canonicalObjectArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u + 1, u, 0, u, 0} :=
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitArena.{u}
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.canonicalObjectArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"splitRegistration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"splitRegistration_contract\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.canonicalArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u + 1, u, 0, u, 0} :=
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.arena.{u}
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.canonicalArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reflection\",\"registration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reflection\",\"registration_contract\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.canonicalObjectArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u + 1, u, 0, u, 0} :=
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.arena.{u}
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.canonicalObjectArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reflection\",\"registration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reflection\",\"registration_contract\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.sourceLaw.{u} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesArena.{u}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u + 1, u, 0, u, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesArena.{u}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
+      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesArena.{u}
+      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.actual.{u})
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration.{u})
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"component_orbit_classes\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"classesRegistration_contract\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.component_orbit_classes, part := .type, path := [], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u + 1, u, 0, u, 0}
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesArena.{u}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesArena.{u}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.actual.{u})
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration.{u})
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.observation0.{u} : {X : Type u} →
+  (s t : Equiv.Perm.{u + 1} X) →
+    (hs :
+        @Function.Involutive.{u + 1} X
+          (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+            (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+              (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+            s)) →
+      (ht :
+          @Function.Involutive.{u + 1} X
+            (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+              (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+                (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+              t)) →
+        (hsl :
+            ∀ (x : X),
+              @Ne.{u + 1} X
+                (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+                  (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+                    (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+                  s x)
+                x) →
+          (htr :
+              ∀ (x : X),
+                @Ne.{u + 1} X
+                  (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+                    (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+                      (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+                    t x)
+                  x) →
+            (x : X) →
+              D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u + 1, u, 0, u, 0}
+                Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.signature.{u} PUnit.unit.{1}
+                (@Sigma.mk.{u + 1, u} (Type u)
+                  (fun (X : Type u) =>
+                    @Sigma.{u, u} (Equiv.Perm.{u + 1} X) fun (_s : Equiv.Perm.{u + 1} X) => Equiv.Perm.{u + 1} X)
+                  X
+                  (@Sigma.mk.{u, u} (Equiv.Perm.{u + 1} X) (fun (_s : Equiv.Perm.{u + 1} X) => Equiv.Perm.{u + 1} X) s
+                    t)) :=
+  fun {X : Type u} (s t : Equiv.Perm.{u + 1} X)
+    (hs :
+      @Function.Involutive.{u + 1} X
+        (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+          (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+            (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+          s))
+    (ht :
+      @Function.Involutive.{u + 1} X
+        (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+          (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+            (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+          t))
+    (hsl :
+      ∀ (x : X),
+        @Ne.{u + 1} X
+          (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+            (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+              (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+            s x)
+          x)
+    (htr :
+      ∀ (x : X),
+        @Ne.{u + 1} X
+          (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+            (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+              (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+            t x)
+          x)
+    (x : X) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u + 1, u, 0, u, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.signature.{u}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.actual.{u} PUnit.unit.{1}
+    (@Sigma.mk.{u + 1, u} (Type u)
+      (fun (X : Type u) => @Sigma.{u, u} (Equiv.Perm.{u + 1} X) fun (_s : Equiv.Perm.{u + 1} X) => Equiv.Perm.{u + 1} X)
+      X (@Sigma.mk.{u, u} (Equiv.Perm.{u + 1} X) (fun (_s : Equiv.Perm.{u + 1} X) => Equiv.Perm.{u + 1} X) s t))
+    x
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.observationFact0.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"component_orbit_classes\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"classesRegistration_contract\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.component_orbit_classes, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .argument, .function, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.observation0, part := .value, path := [], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.varyingLawInput.{u} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.canonicalArenaOperand.{u})
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.varyingLaw.{u}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"classesRegistration_contract\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.statementExclusion.{u} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"classesRegistration_contract\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"component_orbit_classes\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.varyingLaw, part := .value, path := [], levels := [(.param `u)] }
+  statementLocation := { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.component_orbit_classes, part := .type, path := [], levels := [(.param `u)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration.{u}).actual (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration.{u}).variation.2.choose (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration.{u}).variation.1 (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration.{u}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract.descriptorFact.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"classesRegistration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"classesRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.classesRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.sourceLaw.{u} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, 0, 0}
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.arena.{u}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u + 1, u, 0, 0, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.arena.{u}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, 0, 0}
+      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.arena.{u}
+      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.actual.{u})
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration.{u})
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"connected_iff_rotation_orbits\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reachability\",\"registration_contract\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.connected_iff_rotation_orbits, part := .type, path := [], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u + 1, u, 0, 0, 0}
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.arena.{u}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, 0, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.arena.{u}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.actual.{u})
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration.{u})
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.observation0.{u} : {X : Type u} →
+  (s t : Equiv.Perm.{u + 1} X) →
+    (hs :
+        @Function.Involutive.{u + 1} X
+          (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+            (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+              (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+            s)) →
+      (ht :
+          @Function.Involutive.{u + 1} X
+            (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+              (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+                (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+              t)) →
+        (x y : X) →
+          D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u + 1, u, 0, 0, 0}
+            Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.signature.{u} PUnit.unit.{1}
+            (@Sigma.mk.{u + 1, u} (Type u)
+              (fun (X : Type u) =>
+                @Sigma.{u, u} (Equiv.Perm.{u + 1} X) fun (_s : Equiv.Perm.{u + 1} X) =>
+                  @Sigma.{u, u} (Equiv.Perm.{u + 1} X) fun (_t : Equiv.Perm.{u + 1} X) => X)
+              X
+              (@Sigma.mk.{u, u} (Equiv.Perm.{u + 1} X)
+                (fun (_s : Equiv.Perm.{u + 1} X) =>
+                  @Sigma.{u, u} (Equiv.Perm.{u + 1} X) fun (_t : Equiv.Perm.{u + 1} X) => X)
+                s (@Sigma.mk.{u, u} (Equiv.Perm.{u + 1} X) (fun (_t : Equiv.Perm.{u + 1} X) => X) t x))) :=
+  fun {X : Type u} (s t : Equiv.Perm.{u + 1} X)
+    (hs :
+      @Function.Involutive.{u + 1} X
+        (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+          (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+            (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+          s))
+    (ht :
+      @Function.Involutive.{u + 1} X
+        (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+          (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+            (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+          t))
+    (x y : X) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u + 1, u, 0, 0, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.signature.{u}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.actual.{u} PUnit.unit.{1}
+    (@Sigma.mk.{u + 1, u} (Type u)
+      (fun (X : Type u) =>
+        @Sigma.{u, u} (Equiv.Perm.{u + 1} X) fun (_s : Equiv.Perm.{u + 1} X) =>
+          @Sigma.{u, u} (Equiv.Perm.{u + 1} X) fun (_t : Equiv.Perm.{u + 1} X) => X)
+      X
+      (@Sigma.mk.{u, u} (Equiv.Perm.{u + 1} X)
+        (fun (_s : Equiv.Perm.{u + 1} X) => @Sigma.{u, u} (Equiv.Perm.{u + 1} X) fun (_t : Equiv.Perm.{u + 1} X) => X) s
+        (@Sigma.mk.{u, u} (Equiv.Perm.{u + 1} X) (fun (_t : Equiv.Perm.{u + 1} X) => X) t x)))
+    y
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.observationFact0.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"connected_iff_rotation_orbits\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reachability\",\"registration_contract\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.connected_iff_rotation_orbits, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .function, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.observation0, part := .value, path := [], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.varyingLawInput.{u} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.canonicalArenaOperand.{u})
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.varyingLaw.{u}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reachability\",\"registration_contract\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.statementExclusion.{u} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reachability\",\"registration_contract\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"connected_iff_rotation_orbits\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.varyingLaw, part := .value, path := [], levels := [(.param `u)] }
+  statementLocation := { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.connected_iff_rotation_orbits, part := .type, path := [], levels := [(.param `u)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration.{u}).actual (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration.{u}).variation.2.choose (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration.{u}).variation.1 (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration.{u}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract.descriptorFact.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reachability\",\"registration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reachability\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reachability.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.sourceLaw.{u} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, 0, 0}
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.arena.{u}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u + 1, u, 0, 0, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.arena.{u}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, 0, 0}
+      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.arena.{u}
+      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.actual.{u})
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration.{u})
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"fixedPointFree_iff_rotation_separation\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Separation\",\"registration_contract\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_rotation_separation, part := .type, path := [], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u + 1, u, 0, 0, 0}
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.arena.{u}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, 0, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.arena.{u}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.actual.{u})
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration.{u})
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.observation0.{u} : {X : Type u} →
+  (s t : Equiv.Perm.{u + 1} X) →
+    (hs :
+        @Function.Involutive.{u + 1} X
+          (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+            (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+              (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+            s)) →
+      (ht :
+          @Function.Involutive.{u + 1} X
+            (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+              (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+                (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+              t)) →
+        (x : X) →
+          D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u + 1, u, 0, 0, 0}
+            Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.signature.{u} PUnit.unit.{1}
+            (@Sigma.mk.{u + 1, u} (Type u)
+              (fun (X : Type u) =>
+                @Sigma.{u, u} (Equiv.Perm.{u + 1} X) fun (_s : Equiv.Perm.{u + 1} X) => Equiv.Perm.{u + 1} X)
+              X (@Sigma.mk.{u, u} (Equiv.Perm.{u + 1} X) (fun (_s : Equiv.Perm.{u + 1} X) => Equiv.Perm.{u + 1} X) s t)) :=
+  fun {X : Type u} (s t : Equiv.Perm.{u + 1} X)
+    (hs :
+      @Function.Involutive.{u + 1} X
+        (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+          (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+            (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+          s))
+    (ht :
+      @Function.Involutive.{u + 1} X
+        (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+          (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+            (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+          t))
+    (x : X) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u + 1, u, 0, 0, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.signature.{u}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.actual.{u} PUnit.unit.{1}
+    (@Sigma.mk.{u + 1, u} (Type u)
+      (fun (X : Type u) => @Sigma.{u, u} (Equiv.Perm.{u + 1} X) fun (_s : Equiv.Perm.{u + 1} X) => Equiv.Perm.{u + 1} X)
+      X (@Sigma.mk.{u, u} (Equiv.Perm.{u + 1} X) (fun (_s : Equiv.Perm.{u + 1} X) => Equiv.Perm.{u + 1} X) s t))
+    x
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.observationFact0.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"fixedPointFree_iff_rotation_separation\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Separation\",\"registration_contract\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_rotation_separation, part := .type, path := [.body, .body, .body, .body, .body, .argument, .body, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.observation0, part := .value, path := [], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.varyingLawInput.{u} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.canonicalArenaOperand.{u})
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.varyingLaw.{u}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Separation\",\"registration_contract\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.statementExclusion.{u} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Separation\",\"registration_contract\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"fixedPointFree_iff_rotation_separation\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.varyingLaw, part := .value, path := [], levels := [(.param `u)] }
+  statementLocation := { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_rotation_separation, part := .type, path := [], levels := [(.param `u)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration.{u}).actual (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration.{u}).variation.2.choose (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration.{u}).variation.1 (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration.{u}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract.descriptorFact.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Separation\",\"registration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Separation\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Separation.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.sourceLaw.{u} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitArena.{u}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u + 1, u, 0, u, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitArena.{u}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
+      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitArena.{u}
+      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.actual.{u})
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration.{u})
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"component_split\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"splitRegistration_contract\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.component_split, part := .type, path := [], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u + 1, u, 0, u, 0}
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitArena.{u}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitArena.{u}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.actual.{u})
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration.{u})
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.observation0.{u} : {X : Type u} →
+  (s t : Equiv.Perm.{u + 1} X) →
+    (hs :
+        @Function.Involutive.{u + 1} X
+          (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+            (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+              (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+            s)) →
+      (ht :
+          @Function.Involutive.{u + 1} X
+            (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+              (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+                (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+              t)) →
+        (hsl :
+            ∀ (x : X),
+              @Ne.{u + 1} X
+                (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+                  (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+                    (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+                  s x)
+                x) →
+          (htr :
+              ∀ (x : X),
+                @Ne.{u + 1} X
+                  (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+                    (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+                      (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+                    t x)
+                  x) →
+            (x : X) →
+              D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u + 1, u, 0, u, 0}
+                Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.signature.{u} PUnit.unit.{1}
+                (@Sigma.mk.{u + 1, u} (Type u)
+                  (fun (X : Type u) =>
+                    @Sigma.{u, u} (Equiv.Perm.{u + 1} X) fun (_s : Equiv.Perm.{u + 1} X) => Equiv.Perm.{u + 1} X)
+                  X
+                  (@Sigma.mk.{u, u} (Equiv.Perm.{u + 1} X) (fun (_s : Equiv.Perm.{u + 1} X) => Equiv.Perm.{u + 1} X) s
+                    t)) :=
+  fun {X : Type u} (s t : Equiv.Perm.{u + 1} X)
+    (hs :
+      @Function.Involutive.{u + 1} X
+        (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+          (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+            (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+          s))
+    (ht :
+      @Function.Involutive.{u + 1} X
+        (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+          (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+            (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+          t))
+    (hsl :
+      ∀ (x : X),
+        @Ne.{u + 1} X
+          (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+            (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+              (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+            s x)
+          x)
+    (htr :
+      ∀ (x : X),
+        @Ne.{u + 1} X
+          (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+            (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+              (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+            t x)
+          x)
+    (x : X) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u + 1, u, 0, u, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.signature.{u}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.actual.{u} PUnit.unit.{1}
+    (@Sigma.mk.{u + 1, u} (Type u)
+      (fun (X : Type u) => @Sigma.{u, u} (Equiv.Perm.{u + 1} X) fun (_s : Equiv.Perm.{u + 1} X) => Equiv.Perm.{u + 1} X)
+      X (@Sigma.mk.{u, u} (Equiv.Perm.{u + 1} X) (fun (_s : Equiv.Perm.{u + 1} X) => Equiv.Perm.{u + 1} X) s t))
+    x
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.observationFact0.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"component_split\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"splitRegistration_contract\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.component_split, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .argument, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.observation0, part := .value, path := [], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.varyingLawInput.{u} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.canonicalArenaOperand.{u})
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.varyingLaw.{u}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"splitRegistration_contract\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.statementExclusion.{u} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"splitRegistration_contract\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"component_split\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.varyingLaw, part := .value, path := [], levels := [(.param `u)] }
+  statementLocation := { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.component_split, part := .type, path := [], levels := [(.param `u)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration.{u}).actual (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration.{u}).variation.2.choose (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration.{u}).variation.1 (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration.{u}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract.descriptorFact.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"splitRegistration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Components\",\"splitRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Components.splitRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.sourceLaw.{u} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.arena.{u}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u + 1, u, 0, u, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.arena.{u}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
+      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.arena.{u}
+      Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.actual.{u})
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration.{u})
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"fixedPointFree_iff_reflection_exclusion\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reflection\",\"registration_contract\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_reflection_exclusion, part := .type, path := [], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u + 1, u, 0, u, 0}
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.arena.{u}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.arena.{u}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.actual.{u})
+  Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration.{u})
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.observation0.{u} : {X : Type u} →
+  (s t : Equiv.Perm.{u + 1} X) →
+    (hs :
+        @Function.Involutive.{u + 1} X
+          (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+            (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+              (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+            s)) →
+      (ht :
+          @Function.Involutive.{u + 1} X
+            (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+              (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+                (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+              t)) →
+        (k : Int) →
+          (x : X) →
+            D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u + 1, u, 0, u, 0}
+              Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.signature.{u} PUnit.unit.{1}
+              (@Sigma.mk.{u + 1, u} (Type u)
+                (fun (X : Type u) =>
+                  @Sigma.{u, u} (Equiv.Perm.{u + 1} X) fun (_s : Equiv.Perm.{u + 1} X) =>
+                    @Sigma.{u, 0} (Equiv.Perm.{u + 1} X) fun (_t : Equiv.Perm.{u + 1} X) => Int)
+                X
+                (@Sigma.mk.{u, u} (Equiv.Perm.{u + 1} X)
+                  (fun (_s : Equiv.Perm.{u + 1} X) =>
+                    @Sigma.{u, 0} (Equiv.Perm.{u + 1} X) fun (_t : Equiv.Perm.{u + 1} X) => Int)
+                  s (@Sigma.mk.{u, 0} (Equiv.Perm.{u + 1} X) (fun (_t : Equiv.Perm.{u + 1} X) => Int) t k))) :=
+  fun {X : Type u} (s t : Equiv.Perm.{u + 1} X)
+    (hs :
+      @Function.Involutive.{u + 1} X
+        (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+          (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+            (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+          s))
+    (ht :
+      @Function.Involutive.{u + 1} X
+        (@DFunLike.coe.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X (fun (x : X) => X)
+          (@EquivLike.toFunLike.{u + 1, u + 1, u + 1} (Equiv.Perm.{u + 1} X) X X
+            (@Equiv.instEquivLike.{u + 1, u + 1} X X))
+          t))
+    (k : Int) (x : X) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u + 1, u, 0, u, 0}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.signature.{u}
+    Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.actual.{u} PUnit.unit.{1}
+    (@Sigma.mk.{u + 1, u} (Type u)
+      (fun (X : Type u) =>
+        @Sigma.{u, u} (Equiv.Perm.{u + 1} X) fun (_s : Equiv.Perm.{u + 1} X) =>
+          @Sigma.{u, 0} (Equiv.Perm.{u + 1} X) fun (_t : Equiv.Perm.{u + 1} X) => Int)
+      X
+      (@Sigma.mk.{u, u} (Equiv.Perm.{u + 1} X)
+        (fun (_s : Equiv.Perm.{u + 1} X) => @Sigma.{u, 0} (Equiv.Perm.{u + 1} X) fun (_t : Equiv.Perm.{u + 1} X) => Int)
+        s (@Sigma.mk.{u, 0} (Equiv.Perm.{u + 1} X) (fun (_t : Equiv.Perm.{u + 1} X) => Int) t k)))
+    x
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.observationFact0.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"fixedPointFree_iff_reflection_exclusion\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"body\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reflection\",\"registration_contract\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_reflection_exclusion, part := .type, path := [.body, .body, .body, .body, .body, .argument, .body, .body, .function, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.observation0, part := .value, path := [], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.varyingLawInput.{u} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.canonicalArenaOperand.{u})
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.varyingLaw.{u}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reflection\",\"registration_contract\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.statementExclusion.{u} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reflection\",\"registration_contract\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"fixedPointFree_iff_reflection_exclusion\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.varyingLaw, part := .value, path := [], levels := [(.param `u)] }
+  statementLocation := { owner := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.fixedPointFree_iff_reflection_exclusion, part := .type, path := [], levels := [(.param `u)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration.{u}).actual (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration.{u}).variation.2.choose (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration.{u}).variation.1 (Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration.{u}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract.descriptorFact.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reflection\",\"registration_contract\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"PerfectMatchings\",\"InvolutionOrbitSplit\",\"Reflection\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration_contract, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit, declaration := `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))

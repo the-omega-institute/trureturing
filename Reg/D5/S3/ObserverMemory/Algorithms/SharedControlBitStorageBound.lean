@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound
 import Reg.Support.DependentFamily
@@ -149,7 +152,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, definition := none, coordinates := #[0, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "domain", "fn", "arg", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.shared_control_bit_storage_bound, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.canonicalArenaFact, `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.sourceBridgeFact, `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.observationFact0, `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.anchorEnumeration }
 
 
 #print axioms actual_law
@@ -159,3 +172,128 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
 
 
 end Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound
+
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{1, 0, 0, 0, 0} :=
+  Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.arena
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{1, 0, 0, 0, 0} :=
+  Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.arena
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
+  Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{1, 0, 0, 0, 0}
+    Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
+      Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.arena
+      Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.actual)
+    Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration)
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"shared_control_bit_storage_bound\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.shared_control_bit_storage_bound, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{1, 0, 0, 0, 0}
+  Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
+    Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.arena
+    Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.actual)
+  Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration)
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.observation0 : (d : Nat) →
+  (hd : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) d) →
+    {α β : Type} →
+      [Finite.{1} α] →
+        [Finite.{1} β] →
+          (u :
+              Prod.{0, 0} (Fin d → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                  (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) →
+                α) →
+            (v :
+                Prod.{0, 0} (Fin d → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                    (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) →
+                  β) →
+              (hu : @D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.DynamicallyClosed.{0} d α u) →
+                (hv : @D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.DynamicallyClosed.{0} d β v) →
+                  (hjoint :
+                      @Function.Injective.{1, 1}
+                        (Prod.{0, 0} (Fin d → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                          (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+                        (Prod.{0, 0} α β)
+                        fun
+                          (z :
+                            Prod.{0, 0} (Fin d → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+                              (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))) =>
+                        @Prod.mk.{0, 0} α β (u z) (v z)) →
+                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{1, 0, 0, 0, 0}
+                      Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.signature PUnit.unit.{1}
+                      (@Sigma.mk.{0, 1} Nat (fun (x : Nat) => Type) d α) :=
+  fun (d : Nat) (hd : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) d)
+    {α β : Type} [Finite.{1} α] [Finite.{1} β]
+    (u :
+      Prod.{0, 0} (Fin d → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) →
+        α)
+    (v :
+      Prod.{0, 0} (Fin d → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) →
+        β)
+    (hu : @D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.DynamicallyClosed.{0} d α u)
+    (hv : @D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.DynamicallyClosed.{0} d β v)
+    (hjoint :
+      @Function.Injective.{1, 1}
+        (Prod.{0, 0} (Fin d → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+          (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+        (Prod.{0, 0} α β)
+        fun
+          (z :
+            Prod.{0, 0} (Fin d → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))) =>
+        @Prod.mk.{0, 0} α β (u z) (v z)) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{1, 0, 0, 0, 0}
+    Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.signature
+    Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 1} Nat (fun (x : Nat) => Type) d α) u
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"shared_control_bit_storage_bound\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\",\"function\",\"argument\",\"domain\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.shared_control_bit_storage_bound, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .argument, .function, .argument, .domain, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"shared_control_bit_storage_bound\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.shared_control_bit_storage_bound, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration).actual (Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration).variation.2.choose (Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration).variation.1 (Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"SharedControlBitStorageBound\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.SharedControlBitStorageBound.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Factorization.Galois.CubicRadicalTowerDegree
 import Reg.Support.DependentFamily
@@ -150,10 +153,582 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Factorization.Galois.CubicRadicalTowerDegree, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `D5.S3.Factorization.Galois.CubicRadicalTowerDegree.finite_valuation_degree_and_unit_noncube, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.canonicalArenaFact, `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.sourceBridgeFact, `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.observationFact0, `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 
 end
 end Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree
+
+
+noncomputable def Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.arena
+noncomputable def Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"CubicRadicalTowerDegree\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"CubicRadicalTowerDegree\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.arena
+noncomputable def Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"CubicRadicalTowerDegree\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"CubicRadicalTowerDegree\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.arena
+      Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.actual)
+    Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration)
+
+noncomputable def Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"Galois\",\"CubicRadicalTowerDegree\",\"finite_valuation_degree_and_unit_noncube\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"CubicRadicalTowerDegree\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `D5.S3.Factorization.Galois.CubicRadicalTowerDegree.finite_valuation_degree_and_unit_noncube, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.arena
+    Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.actual)
+  Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration)
+
+noncomputable def Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.observation0 : {K L : Type} →
+  [inst : Field.{0} K] →
+    [inst_1 : Field.{0} L] →
+      [inst_2 :
+          @Algebra.{0, 0} K L (@Semifield.toCommSemiring.{0} K (@Field.toSemifield.{0} K inst))
+            (@DivisionSemiring.toSemiring.{0} L
+              (@Semifield.toDivisionSemiring.{0} L (@Field.toSemifield.{0} L inst_1)))] →
+        {ι : Type} →
+          [Fintype.{0} ι] →
+            (ζ : K) →
+              (hζ :
+                  @IsPrimitiveRoot.{0} K (@CommRing.toCommMonoid.{0} K (@Field.toCommRing.{0} K inst)) ζ
+                    (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) →
+                (rad : ι → K) →
+                  (root : ι → L) →
+                    (hroot :
+                        ∀ (i : ι),
+                          @Eq.{1} L
+                            (@HPow.hPow.{0, 0, 0} L Nat L
+                              (@instHPow.{0, 0} L Nat
+                                (@NPow.toPow.{0} L
+                                  (@Monoid.toNPow.{0} L
+                                    (@Semiring.toMonoid.{0} L
+                                      (@DivisionSemiring.toSemiring.{0} L
+                                        (@Semifield.toDivisionSemiring.{0} L (@Field.toSemifield.{0} L inst_1)))))))
+                              (root i) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
+                            (@DFunLike.coe.{1, 1, 1}
+                              (@RingHom.{0, 0} K L
+                                (@Semiring.toNonAssocSemiring.{0} K
+                                  (@CommSemiring.toSemiring.{0} K
+                                    (@Semifield.toCommSemiring.{0} K (@Field.toSemifield.{0} K inst))))
+                                (@Semiring.toNonAssocSemiring.{0} L
+                                  (@DivisionSemiring.toSemiring.{0} L
+                                    (@Semifield.toDivisionSemiring.{0} L (@Field.toSemifield.{0} L inst_1)))))
+                              K (fun (x : K) => L)
+                              (@RingHom.instFunLike.{0, 0} K L
+                                (@Semiring.toNonAssocSemiring.{0} K
+                                  (@CommSemiring.toSemiring.{0} K
+                                    (@Semifield.toCommSemiring.{0} K (@Field.toSemifield.{0} K inst))))
+                                (@Semiring.toNonAssocSemiring.{0} L
+                                  (@DivisionSemiring.toSemiring.{0} L
+                                    (@Semifield.toDivisionSemiring.{0} L (@Field.toSemifield.{0} L inst_1)))))
+                              (@Algebra.algebraMap.{0, 0} K L
+                                (@Semifield.toCommSemiring.{0} K (@Field.toSemifield.{0} K inst))
+                                (@DivisionSemiring.toSemiring.{0} L
+                                  (@Semifield.toDivisionSemiring.{0} L (@Field.toSemifield.{0} L inst_1)))
+                                inst_2)
+                              (rad i))) →
+                      (hrad :
+                          ∀ (i : ι),
+                            @Ne.{1} K (rad i)
+                              (@OfNat.ofNat.{0} K (nat_lit 0)
+                                (@Zero.toOfNat0.{0} K
+                                  (@MulZeroClass.toZero.{0} K
+                                    (@instMulZeroClassOfSemiring.{0} K
+                                      (@DivisionSemiring.toSemiring.{0} K
+                                        (@Semifield.toDivisionSemiring.{0} K (@Field.toSemifield.{0} K inst)))))))) →
+                        (ν :
+                            ι →
+                              @Valuation.{0, 0} K (WithZero.{0} (Multiplicative.{0} Int))
+                                (@WithZero.instLinearOrderedCommMonoidWithZero.{0} (Multiplicative.{0} Int)
+                                  (@Multiplicative.commMonoid.{0} Int Int.instAddCommMonoid)
+                                  (@Multiplicative.linearOrder.{0} Int Int.instLinearOrder)
+                                  (@Multiplicative.isOrderedCancelMonoid.{0} Int Int.instAddCommMonoid
+                                    (@PartialOrder.toPreorder.{0} Int
+                                      (@SemilatticeInf.toPartialOrder.{0} Int
+                                        (@Lattice.toSemilatticeInf.{0} Int
+                                          (@DistribLattice.toLattice.{0} Int
+                                            (@instDistribLatticeOfLinearOrder.{0} Int Int.instLinearOrder)))))
+                                    (@IsStrictOrderedRing.toIsOrderedCancelAddMonoid.{0} Int Int.instSemiring
+                                      (@ConditionallyCompletePartialOrderSup.toPartialOrder.{0} Int
+                                        (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup.{0}
+                                          Int
+                                          (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder.{0} Int
+                                            (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice.{0} Int
+                                              Int.instConditionallyCompleteLinearOrder))))
+                                      Int.instIsStrictOrderedRing)))
+                                (@DivisionRing.toRing.{0} K (@Field.toDivisionRing.{0} K inst))) →
+                          (hdiag :
+                              ∀ (i : ι),
+                                Not
+                                  (@Dvd.dvd.{0} Int Int.instDvd
+                                    (@OfNat.ofNat.{0} Int (nat_lit 3) (@instOfNat (nat_lit 3)))
+                                    (@WithZero.log.{0} Int Int.instAddMonoid
+                                      (@DFunLike.coe.{1, 1, 1}
+                                        (@Valuation.{0, 0} K (WithZero.{0} (Multiplicative.{0} Int))
+                                          (@WithZero.instLinearOrderedCommMonoidWithZero.{0} (Multiplicative.{0} Int)
+                                            (@Multiplicative.commMonoid.{0} Int Int.instAddCommMonoid)
+                                            (@Multiplicative.linearOrder.{0} Int Int.instLinearOrder)
+                                            (@Multiplicative.isOrderedCancelMonoid.{0} Int Int.instAddCommMonoid
+                                              (@PartialOrder.toPreorder.{0} Int
+                                                (@SemilatticeInf.toPartialOrder.{0} Int
+                                                  (@Lattice.toSemilatticeInf.{0} Int
+                                                    (@DistribLattice.toLattice.{0} Int
+                                                      (@instDistribLatticeOfLinearOrder.{0} Int Int.instLinearOrder)))))
+                                              (@IsStrictOrderedRing.toIsOrderedCancelAddMonoid.{0} Int Int.instSemiring
+                                                (@ConditionallyCompletePartialOrderSup.toPartialOrder.{0} Int
+                                                  (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup.{0}
+                                                    Int
+                                                    (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder.{0}
+                                                      Int
+                                                      (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice.{0}
+                                                        Int Int.instConditionallyCompleteLinearOrder))))
+                                                Int.instIsStrictOrderedRing)))
+                                          (@DivisionRing.toRing.{0} K (@Field.toDivisionRing.{0} K inst)))
+                                        K (fun (x : K) => WithZero.{0} (Multiplicative.{0} Int))
+                                        (@Valuation.instFunLike.{0, 0} K (WithZero.{0} (Multiplicative.{0} Int))
+                                          (@DivisionRing.toRing.{0} K (@Field.toDivisionRing.{0} K inst))
+                                          (@WithZero.instLinearOrderedCommMonoidWithZero.{0} (Multiplicative.{0} Int)
+                                            (@Multiplicative.commMonoid.{0} Int Int.instAddCommMonoid)
+                                            (@Multiplicative.linearOrder.{0} Int Int.instLinearOrder)
+                                            (@Multiplicative.isOrderedCancelMonoid.{0} Int Int.instAddCommMonoid
+                                              (@PartialOrder.toPreorder.{0} Int
+                                                (@SemilatticeInf.toPartialOrder.{0} Int
+                                                  (@Lattice.toSemilatticeInf.{0} Int
+                                                    (@DistribLattice.toLattice.{0} Int
+                                                      (@instDistribLatticeOfLinearOrder.{0} Int Int.instLinearOrder)))))
+                                              (@IsStrictOrderedRing.toIsOrderedCancelAddMonoid.{0} Int Int.instSemiring
+                                                (@ConditionallyCompletePartialOrderSup.toPartialOrder.{0} Int
+                                                  (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup.{0}
+                                                    Int
+                                                    (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder.{0}
+                                                      Int
+                                                      (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice.{0}
+                                                        Int Int.instConditionallyCompleteLinearOrder))))
+                                                Int.instIsStrictOrderedRing))))
+                                        (ν i) (rad i))))) →
+                            (hoff :
+                                ∀ (i j : ι),
+                                  @Ne.{1} ι i j →
+                                    @Eq.{1} (WithZero.{0} (Multiplicative.{0} Int))
+                                      (@DFunLike.coe.{1, 1, 1}
+                                        (@Valuation.{0, 0} K (WithZero.{0} (Multiplicative.{0} Int))
+                                          (@WithZero.instLinearOrderedCommMonoidWithZero.{0} (Multiplicative.{0} Int)
+                                            (@Multiplicative.commMonoid.{0} Int Int.instAddCommMonoid)
+                                            (@Multiplicative.linearOrder.{0} Int Int.instLinearOrder)
+                                            (@Multiplicative.isOrderedCancelMonoid.{0} Int Int.instAddCommMonoid
+                                              (@PartialOrder.toPreorder.{0} Int
+                                                (@SemilatticeInf.toPartialOrder.{0} Int
+                                                  (@Lattice.toSemilatticeInf.{0} Int
+                                                    (@DistribLattice.toLattice.{0} Int
+                                                      (@instDistribLatticeOfLinearOrder.{0} Int Int.instLinearOrder)))))
+                                              (@IsStrictOrderedRing.toIsOrderedCancelAddMonoid.{0} Int Int.instSemiring
+                                                (@ConditionallyCompletePartialOrderSup.toPartialOrder.{0} Int
+                                                  (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup.{0}
+                                                    Int
+                                                    (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder.{0}
+                                                      Int
+                                                      (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice.{0}
+                                                        Int Int.instConditionallyCompleteLinearOrder))))
+                                                Int.instIsStrictOrderedRing)))
+                                          (@DivisionRing.toRing.{0} K (@Field.toDivisionRing.{0} K inst)))
+                                        K (fun (x : K) => WithZero.{0} (Multiplicative.{0} Int))
+                                        (@Valuation.instFunLike.{0, 0} K (WithZero.{0} (Multiplicative.{0} Int))
+                                          (@DivisionRing.toRing.{0} K (@Field.toDivisionRing.{0} K inst))
+                                          (@WithZero.instLinearOrderedCommMonoidWithZero.{0} (Multiplicative.{0} Int)
+                                            (@Multiplicative.commMonoid.{0} Int Int.instAddCommMonoid)
+                                            (@Multiplicative.linearOrder.{0} Int Int.instLinearOrder)
+                                            (@Multiplicative.isOrderedCancelMonoid.{0} Int Int.instAddCommMonoid
+                                              (@PartialOrder.toPreorder.{0} Int
+                                                (@SemilatticeInf.toPartialOrder.{0} Int
+                                                  (@Lattice.toSemilatticeInf.{0} Int
+                                                    (@DistribLattice.toLattice.{0} Int
+                                                      (@instDistribLatticeOfLinearOrder.{0} Int Int.instLinearOrder)))))
+                                              (@IsStrictOrderedRing.toIsOrderedCancelAddMonoid.{0} Int Int.instSemiring
+                                                (@ConditionallyCompletePartialOrderSup.toPartialOrder.{0} Int
+                                                  (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup.{0}
+                                                    Int
+                                                    (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder.{0}
+                                                      Int
+                                                      (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice.{0}
+                                                        Int Int.instConditionallyCompleteLinearOrder))))
+                                                Int.instIsStrictOrderedRing))))
+                                        (ν i) (rad j))
+                                      (@OfNat.ofNat.{0} (WithZero.{0} (Multiplicative.{0} Int)) (nat_lit 1)
+                                        (@One.toOfNat1.{0} (WithZero.{0} (Multiplicative.{0} Int))
+                                          (@WithZero.one.{0} (Multiplicative.{0} Int)
+                                            (@instOneMultiplicativeOfZero.{0} Int
+                                              (@MulZeroClass.toZero.{0} Int
+                                                (@instMulZeroClassOfSemiring.{0} Int Int.instSemiring))))))) →
+                              (u : K) →
+                                (hu0 :
+                                    @Ne.{1} K u
+                                      (@OfNat.ofNat.{0} K (nat_lit 0)
+                                        (@Zero.toOfNat0.{0} K
+                                          (@MulZeroClass.toZero.{0} K
+                                            (@instMulZeroClassOfSemiring.{0} K
+                                              (@DivisionSemiring.toSemiring.{0} K
+                                                (@Semifield.toDivisionSemiring.{0} K
+                                                  (@Field.toSemifield.{0} K inst)))))))) →
+                                  (hunoncube :
+                                      Not
+                                        (@Exists.{1} K fun (c : K) =>
+                                          @Eq.{1} K
+                                            (@HPow.hPow.{0, 0, 0} K Nat K
+                                              (@instHPow.{0, 0} K Nat
+                                                (@NPow.toPow.{0} K
+                                                  (@Monoid.toNPow.{0} K
+                                                    (@Semiring.toMonoid.{0} K
+                                                      (@DivisionSemiring.toSemiring.{0} K
+                                                        (@Semifield.toDivisionSemiring.{0} K
+                                                          (@Field.toSemifield.{0} K inst)))))))
+                                              c (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
+                                            u)) →
+                                    (huval :
+                                        ∀ (i : ι),
+                                          @Eq.{1} Int
+                                            (@WithZero.log.{0} Int Int.instAddMonoid
+                                              (@DFunLike.coe.{1, 1, 1}
+                                                (@Valuation.{0, 0} K (WithZero.{0} (Multiplicative.{0} Int))
+                                                  (@WithZero.instLinearOrderedCommMonoidWithZero.{0}
+                                                    (Multiplicative.{0} Int)
+                                                    (@Multiplicative.commMonoid.{0} Int Int.instAddCommMonoid)
+                                                    (@Multiplicative.linearOrder.{0} Int Int.instLinearOrder)
+                                                    (@Multiplicative.isOrderedCancelMonoid.{0} Int Int.instAddCommMonoid
+                                                      (@PartialOrder.toPreorder.{0} Int
+                                                        (@SemilatticeInf.toPartialOrder.{0} Int
+                                                          (@Lattice.toSemilatticeInf.{0} Int
+                                                            (@DistribLattice.toLattice.{0} Int
+                                                              (@instDistribLatticeOfLinearOrder.{0} Int
+                                                                Int.instLinearOrder)))))
+                                                      (@IsStrictOrderedRing.toIsOrderedCancelAddMonoid.{0} Int
+                                                        Int.instSemiring
+                                                        (@ConditionallyCompletePartialOrderSup.toPartialOrder.{0} Int
+                                                          (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup.{0}
+                                                            Int
+                                                            (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder.{0}
+                                                              Int
+                                                              (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice.{0}
+                                                                Int Int.instConditionallyCompleteLinearOrder))))
+                                                        Int.instIsStrictOrderedRing)))
+                                                  (@DivisionRing.toRing.{0} K (@Field.toDivisionRing.{0} K inst)))
+                                                K (fun (x : K) => WithZero.{0} (Multiplicative.{0} Int))
+                                                (@Valuation.instFunLike.{0, 0} K (WithZero.{0} (Multiplicative.{0} Int))
+                                                  (@DivisionRing.toRing.{0} K (@Field.toDivisionRing.{0} K inst))
+                                                  (@WithZero.instLinearOrderedCommMonoidWithZero.{0}
+                                                    (Multiplicative.{0} Int)
+                                                    (@Multiplicative.commMonoid.{0} Int Int.instAddCommMonoid)
+                                                    (@Multiplicative.linearOrder.{0} Int Int.instLinearOrder)
+                                                    (@Multiplicative.isOrderedCancelMonoid.{0} Int Int.instAddCommMonoid
+                                                      (@PartialOrder.toPreorder.{0} Int
+                                                        (@SemilatticeInf.toPartialOrder.{0} Int
+                                                          (@Lattice.toSemilatticeInf.{0} Int
+                                                            (@DistribLattice.toLattice.{0} Int
+                                                              (@instDistribLatticeOfLinearOrder.{0} Int
+                                                                Int.instLinearOrder)))))
+                                                      (@IsStrictOrderedRing.toIsOrderedCancelAddMonoid.{0} Int
+                                                        Int.instSemiring
+                                                        (@ConditionallyCompletePartialOrderSup.toPartialOrder.{0} Int
+                                                          (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup.{0}
+                                                            Int
+                                                            (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder.{0}
+                                                              Int
+                                                              (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice.{0}
+                                                                Int Int.instConditionallyCompleteLinearOrder))))
+                                                        Int.instIsStrictOrderedRing))))
+                                                (ν i) u))
+                                            (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))) →
+                                      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0,
+                                          0, 0}
+                                        Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.signature PUnit.unit.{1}
+                                        PUnit.unit.{1} :=
+  fun {K L : Type} [Field.{0} K] [Field.{0} L]
+    [@Algebra.{0, 0} K L (@Semifield.toCommSemiring.{0} K (@Field.toSemifield.{0} K inst))
+        (@DivisionSemiring.toSemiring.{0} L (@Semifield.toDivisionSemiring.{0} L (@Field.toSemifield.{0} L inst_1)))]
+    {ι : Type} [inst_3 : Fintype.{0} ι] (ζ : K)
+    (hζ :
+      @IsPrimitiveRoot.{0} K (@CommRing.toCommMonoid.{0} K (@Field.toCommRing.{0} K inst)) ζ
+        (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
+    (rad : ι → K) (root : ι → L)
+    (hroot :
+      ∀ (i : ι),
+        @Eq.{1} L
+          (@HPow.hPow.{0, 0, 0} L Nat L
+            (@instHPow.{0, 0} L Nat
+              (@NPow.toPow.{0} L
+                (@Monoid.toNPow.{0} L
+                  (@Semiring.toMonoid.{0} L
+                    (@DivisionSemiring.toSemiring.{0} L
+                      (@Semifield.toDivisionSemiring.{0} L (@Field.toSemifield.{0} L inst_1)))))))
+            (root i) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
+          (@DFunLike.coe.{1, 1, 1}
+            (@RingHom.{0, 0} K L
+              (@Semiring.toNonAssocSemiring.{0} K
+                (@CommSemiring.toSemiring.{0} K (@Semifield.toCommSemiring.{0} K (@Field.toSemifield.{0} K inst))))
+              (@Semiring.toNonAssocSemiring.{0} L
+                (@DivisionSemiring.toSemiring.{0} L
+                  (@Semifield.toDivisionSemiring.{0} L (@Field.toSemifield.{0} L inst_1)))))
+            K (fun (x : K) => L)
+            (@RingHom.instFunLike.{0, 0} K L
+              (@Semiring.toNonAssocSemiring.{0} K
+                (@CommSemiring.toSemiring.{0} K (@Semifield.toCommSemiring.{0} K (@Field.toSemifield.{0} K inst))))
+              (@Semiring.toNonAssocSemiring.{0} L
+                (@DivisionSemiring.toSemiring.{0} L
+                  (@Semifield.toDivisionSemiring.{0} L (@Field.toSemifield.{0} L inst_1)))))
+            (@Algebra.algebraMap.{0, 0} K L (@Semifield.toCommSemiring.{0} K (@Field.toSemifield.{0} K inst))
+              (@DivisionSemiring.toSemiring.{0} L
+                (@Semifield.toDivisionSemiring.{0} L (@Field.toSemifield.{0} L inst_1)))
+              inst_2)
+            (rad i)))
+    (hrad :
+      ∀ (i : ι),
+        @Ne.{1} K (rad i)
+          (@OfNat.ofNat.{0} K (nat_lit 0)
+            (@Zero.toOfNat0.{0} K
+              (@MulZeroClass.toZero.{0} K
+                (@instMulZeroClassOfSemiring.{0} K
+                  (@DivisionSemiring.toSemiring.{0} K
+                    (@Semifield.toDivisionSemiring.{0} K (@Field.toSemifield.{0} K inst))))))))
+    (ν :
+      ι →
+        @Valuation.{0, 0} K (WithZero.{0} (Multiplicative.{0} Int))
+          (@WithZero.instLinearOrderedCommMonoidWithZero.{0} (Multiplicative.{0} Int)
+            (@Multiplicative.commMonoid.{0} Int Int.instAddCommMonoid)
+            (@Multiplicative.linearOrder.{0} Int Int.instLinearOrder)
+            (@Multiplicative.isOrderedCancelMonoid.{0} Int Int.instAddCommMonoid
+              (@PartialOrder.toPreorder.{0} Int
+                (@SemilatticeInf.toPartialOrder.{0} Int
+                  (@Lattice.toSemilatticeInf.{0} Int
+                    (@DistribLattice.toLattice.{0} Int
+                      (@instDistribLatticeOfLinearOrder.{0} Int Int.instLinearOrder)))))
+              (@IsStrictOrderedRing.toIsOrderedCancelAddMonoid.{0} Int Int.instSemiring
+                (@ConditionallyCompletePartialOrderSup.toPartialOrder.{0} Int
+                  (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup.{0} Int
+                    (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder.{0} Int
+                      (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice.{0} Int
+                        Int.instConditionallyCompleteLinearOrder))))
+                Int.instIsStrictOrderedRing)))
+          (@DivisionRing.toRing.{0} K (@Field.toDivisionRing.{0} K inst)))
+    (hdiag :
+      ∀ (i : ι),
+        Not
+          (@Dvd.dvd.{0} Int Int.instDvd (@OfNat.ofNat.{0} Int (nat_lit 3) (@instOfNat (nat_lit 3)))
+            (@WithZero.log.{0} Int Int.instAddMonoid
+              (@DFunLike.coe.{1, 1, 1}
+                (@Valuation.{0, 0} K (WithZero.{0} (Multiplicative.{0} Int))
+                  (@WithZero.instLinearOrderedCommMonoidWithZero.{0} (Multiplicative.{0} Int)
+                    (@Multiplicative.commMonoid.{0} Int Int.instAddCommMonoid)
+                    (@Multiplicative.linearOrder.{0} Int Int.instLinearOrder)
+                    (@Multiplicative.isOrderedCancelMonoid.{0} Int Int.instAddCommMonoid
+                      (@PartialOrder.toPreorder.{0} Int
+                        (@SemilatticeInf.toPartialOrder.{0} Int
+                          (@Lattice.toSemilatticeInf.{0} Int
+                            (@DistribLattice.toLattice.{0} Int
+                              (@instDistribLatticeOfLinearOrder.{0} Int Int.instLinearOrder)))))
+                      (@IsStrictOrderedRing.toIsOrderedCancelAddMonoid.{0} Int Int.instSemiring
+                        (@ConditionallyCompletePartialOrderSup.toPartialOrder.{0} Int
+                          (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup.{0} Int
+                            (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder.{0} Int
+                              (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice.{0} Int
+                                Int.instConditionallyCompleteLinearOrder))))
+                        Int.instIsStrictOrderedRing)))
+                  (@DivisionRing.toRing.{0} K (@Field.toDivisionRing.{0} K inst)))
+                K (fun (x : K) => WithZero.{0} (Multiplicative.{0} Int))
+                (@Valuation.instFunLike.{0, 0} K (WithZero.{0} (Multiplicative.{0} Int))
+                  (@DivisionRing.toRing.{0} K (@Field.toDivisionRing.{0} K inst))
+                  (@WithZero.instLinearOrderedCommMonoidWithZero.{0} (Multiplicative.{0} Int)
+                    (@Multiplicative.commMonoid.{0} Int Int.instAddCommMonoid)
+                    (@Multiplicative.linearOrder.{0} Int Int.instLinearOrder)
+                    (@Multiplicative.isOrderedCancelMonoid.{0} Int Int.instAddCommMonoid
+                      (@PartialOrder.toPreorder.{0} Int
+                        (@SemilatticeInf.toPartialOrder.{0} Int
+                          (@Lattice.toSemilatticeInf.{0} Int
+                            (@DistribLattice.toLattice.{0} Int
+                              (@instDistribLatticeOfLinearOrder.{0} Int Int.instLinearOrder)))))
+                      (@IsStrictOrderedRing.toIsOrderedCancelAddMonoid.{0} Int Int.instSemiring
+                        (@ConditionallyCompletePartialOrderSup.toPartialOrder.{0} Int
+                          (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup.{0} Int
+                            (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder.{0} Int
+                              (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice.{0} Int
+                                Int.instConditionallyCompleteLinearOrder))))
+                        Int.instIsStrictOrderedRing))))
+                (ν i) (rad i)))))
+    (hoff :
+      ∀ (i j : ι),
+        @Ne.{1} ι i j →
+          @Eq.{1} (WithZero.{0} (Multiplicative.{0} Int))
+            (@DFunLike.coe.{1, 1, 1}
+              (@Valuation.{0, 0} K (WithZero.{0} (Multiplicative.{0} Int))
+                (@WithZero.instLinearOrderedCommMonoidWithZero.{0} (Multiplicative.{0} Int)
+                  (@Multiplicative.commMonoid.{0} Int Int.instAddCommMonoid)
+                  (@Multiplicative.linearOrder.{0} Int Int.instLinearOrder)
+                  (@Multiplicative.isOrderedCancelMonoid.{0} Int Int.instAddCommMonoid
+                    (@PartialOrder.toPreorder.{0} Int
+                      (@SemilatticeInf.toPartialOrder.{0} Int
+                        (@Lattice.toSemilatticeInf.{0} Int
+                          (@DistribLattice.toLattice.{0} Int
+                            (@instDistribLatticeOfLinearOrder.{0} Int Int.instLinearOrder)))))
+                    (@IsStrictOrderedRing.toIsOrderedCancelAddMonoid.{0} Int Int.instSemiring
+                      (@ConditionallyCompletePartialOrderSup.toPartialOrder.{0} Int
+                        (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup.{0} Int
+                          (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder.{0} Int
+                            (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice.{0} Int
+                              Int.instConditionallyCompleteLinearOrder))))
+                      Int.instIsStrictOrderedRing)))
+                (@DivisionRing.toRing.{0} K (@Field.toDivisionRing.{0} K inst)))
+              K (fun (x : K) => WithZero.{0} (Multiplicative.{0} Int))
+              (@Valuation.instFunLike.{0, 0} K (WithZero.{0} (Multiplicative.{0} Int))
+                (@DivisionRing.toRing.{0} K (@Field.toDivisionRing.{0} K inst))
+                (@WithZero.instLinearOrderedCommMonoidWithZero.{0} (Multiplicative.{0} Int)
+                  (@Multiplicative.commMonoid.{0} Int Int.instAddCommMonoid)
+                  (@Multiplicative.linearOrder.{0} Int Int.instLinearOrder)
+                  (@Multiplicative.isOrderedCancelMonoid.{0} Int Int.instAddCommMonoid
+                    (@PartialOrder.toPreorder.{0} Int
+                      (@SemilatticeInf.toPartialOrder.{0} Int
+                        (@Lattice.toSemilatticeInf.{0} Int
+                          (@DistribLattice.toLattice.{0} Int
+                            (@instDistribLatticeOfLinearOrder.{0} Int Int.instLinearOrder)))))
+                    (@IsStrictOrderedRing.toIsOrderedCancelAddMonoid.{0} Int Int.instSemiring
+                      (@ConditionallyCompletePartialOrderSup.toPartialOrder.{0} Int
+                        (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup.{0} Int
+                          (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder.{0} Int
+                            (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice.{0} Int
+                              Int.instConditionallyCompleteLinearOrder))))
+                      Int.instIsStrictOrderedRing))))
+              (ν i) (rad j))
+            (@OfNat.ofNat.{0} (WithZero.{0} (Multiplicative.{0} Int)) (nat_lit 1)
+              (@One.toOfNat1.{0} (WithZero.{0} (Multiplicative.{0} Int))
+                (@WithZero.one.{0} (Multiplicative.{0} Int)
+                  (@instOneMultiplicativeOfZero.{0} Int
+                    (@MulZeroClass.toZero.{0} Int (@instMulZeroClassOfSemiring.{0} Int Int.instSemiring)))))))
+    (u : K)
+    (hu0 :
+      @Ne.{1} K u
+        (@OfNat.ofNat.{0} K (nat_lit 0)
+          (@Zero.toOfNat0.{0} K
+            (@MulZeroClass.toZero.{0} K
+              (@instMulZeroClassOfSemiring.{0} K
+                (@DivisionSemiring.toSemiring.{0} K
+                  (@Semifield.toDivisionSemiring.{0} K (@Field.toSemifield.{0} K inst))))))))
+    (hunoncube :
+      Not
+        (@Exists.{1} K fun (c : K) =>
+          @Eq.{1} K
+            (@HPow.hPow.{0, 0, 0} K Nat K
+              (@instHPow.{0, 0} K Nat
+                (@NPow.toPow.{0} K
+                  (@Monoid.toNPow.{0} K
+                    (@Semiring.toMonoid.{0} K
+                      (@DivisionSemiring.toSemiring.{0} K
+                        (@Semifield.toDivisionSemiring.{0} K (@Field.toSemifield.{0} K inst)))))))
+              c (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
+            u))
+    (huval :
+      ∀ (i : ι),
+        @Eq.{1} Int
+          (@WithZero.log.{0} Int Int.instAddMonoid
+            (@DFunLike.coe.{1, 1, 1}
+              (@Valuation.{0, 0} K (WithZero.{0} (Multiplicative.{0} Int))
+                (@WithZero.instLinearOrderedCommMonoidWithZero.{0} (Multiplicative.{0} Int)
+                  (@Multiplicative.commMonoid.{0} Int Int.instAddCommMonoid)
+                  (@Multiplicative.linearOrder.{0} Int Int.instLinearOrder)
+                  (@Multiplicative.isOrderedCancelMonoid.{0} Int Int.instAddCommMonoid
+                    (@PartialOrder.toPreorder.{0} Int
+                      (@SemilatticeInf.toPartialOrder.{0} Int
+                        (@Lattice.toSemilatticeInf.{0} Int
+                          (@DistribLattice.toLattice.{0} Int
+                            (@instDistribLatticeOfLinearOrder.{0} Int Int.instLinearOrder)))))
+                    (@IsStrictOrderedRing.toIsOrderedCancelAddMonoid.{0} Int Int.instSemiring
+                      (@ConditionallyCompletePartialOrderSup.toPartialOrder.{0} Int
+                        (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup.{0} Int
+                          (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder.{0} Int
+                            (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice.{0} Int
+                              Int.instConditionallyCompleteLinearOrder))))
+                      Int.instIsStrictOrderedRing)))
+                (@DivisionRing.toRing.{0} K (@Field.toDivisionRing.{0} K inst)))
+              K (fun (x : K) => WithZero.{0} (Multiplicative.{0} Int))
+              (@Valuation.instFunLike.{0, 0} K (WithZero.{0} (Multiplicative.{0} Int))
+                (@DivisionRing.toRing.{0} K (@Field.toDivisionRing.{0} K inst))
+                (@WithZero.instLinearOrderedCommMonoidWithZero.{0} (Multiplicative.{0} Int)
+                  (@Multiplicative.commMonoid.{0} Int Int.instAddCommMonoid)
+                  (@Multiplicative.linearOrder.{0} Int Int.instLinearOrder)
+                  (@Multiplicative.isOrderedCancelMonoid.{0} Int Int.instAddCommMonoid
+                    (@PartialOrder.toPreorder.{0} Int
+                      (@SemilatticeInf.toPartialOrder.{0} Int
+                        (@Lattice.toSemilatticeInf.{0} Int
+                          (@DistribLattice.toLattice.{0} Int
+                            (@instDistribLatticeOfLinearOrder.{0} Int Int.instLinearOrder)))))
+                    (@IsStrictOrderedRing.toIsOrderedCancelAddMonoid.{0} Int Int.instSemiring
+                      (@ConditionallyCompletePartialOrderSup.toPartialOrder.{0} Int
+                        (@ConditionallyCompletePartialOrder.toConditionallyCompletePartialOrderSup.{0} Int
+                          (@ConditionallyCompleteLattice.toConditionallyCompletePartialOrder.{0} Int
+                            (@ConditionallyCompleteLinearOrder.toConditionallyCompleteLattice.{0} Int
+                              Int.instConditionallyCompleteLinearOrder))))
+                      Int.instIsStrictOrderedRing))))
+              (ν i) u))
+          (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.signature
+    Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.actual PUnit.unit.{1} PUnit.unit.{1}
+    (@Fintype.card.{0} ι inst_3)
+
+noncomputable def Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"Galois\",\"CubicRadicalTowerDegree\",\"finite_valuation_degree_and_unit_noncube\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"CubicRadicalTowerDegree\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `D5.S3.Factorization.Galois.CubicRadicalTowerDegree.finite_valuation_degree_and_unit_noncube, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"CubicRadicalTowerDegree\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"CubicRadicalTowerDegree\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"Galois\",\"CubicRadicalTowerDegree\",\"finite_valuation_degree_and_unit_noncube\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `D5.S3.Factorization.Galois.CubicRadicalTowerDegree.finite_valuation_degree_and_unit_noncube, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration).actual (Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration).variation.2.choose (Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration).variation.1 (Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"CubicRadicalTowerDegree\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"CubicRadicalTowerDegree\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree, declaration := `Reg.D5.S3.Factorization.Galois.CubicRadicalTowerDegree.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

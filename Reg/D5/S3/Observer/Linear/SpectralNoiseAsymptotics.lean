@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.Linear.SpectralNoiseAsymptotics
 import Reg.Support.DependentFamily
@@ -104,6 +107,212 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Observer.Linear.SpectralNoiseAsymptotics, definition := none, coordinates := #[6, 11, 12], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "fn", "arg", "body", "fn", "arg", "arg", "arg", "body"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg", "arg", "fn", "arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `D5.S3.Observer.Linear.SpectralNoiseAsymptotics.spectral_noise_asymptotics, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.canonicalArenaFact, `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.sourceBridgeFact, `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.observationFact0, `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.anchorEnumeration }
 
 end Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics
+
+
+noncomputable def Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.arena
+noncomputable def Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"SpectralNoiseAsymptotics\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"SpectralNoiseAsymptotics\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.arena
+noncomputable def Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"SpectralNoiseAsymptotics\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"SpectralNoiseAsymptotics\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.arena
+      Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.actual)
+    Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration)
+
+noncomputable def Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"Linear\",\"SpectralNoiseAsymptotics\",\"spectral_noise_asymptotics\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"SpectralNoiseAsymptotics\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `D5.S3.Observer.Linear.SpectralNoiseAsymptotics.spectral_noise_asymptotics, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.arena Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.actual)
+  Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration)
+
+noncomputable def Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.observation0 : (n : Nat) →
+  (q :
+      Fin
+          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →
+        Nat) →
+    (hq :
+        ∀
+          (i :
+            Fin
+              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))),
+          @LE.le.{0} Nat instLENat (q i) (q (Fin.last n))) →
+      (lam :
+          Real →
+            Fin
+                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →
+              Real) →
+        (c C β : Real) →
+          (hc :
+              @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+                c) →
+            (hC :
+                @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+                  C) →
+              (hβ :
+                  @LT.lt.{0} Real Real.instLT
+                    (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) β) →
+                (hbounds :
+                    @Filter.Eventually.{0} Real
+                      (fun (T : Real) =>
+                        ∀
+                          (i :
+                            Fin
+                              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))),
+                          And
+                            (@LE.le.{0} Real Real.instLE
+                              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) c
+                                (@HPow.hPow.{0, 0, 0} Real Nat Real
+                                  (@instHPow.{0, 0} Real Nat
+                                    (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid)))
+                                  T (q i)))
+                              (lam T i))
+                            (@LE.le.{0} Real Real.instLE (lam T i)
+                              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) C
+                                (@HPow.hPow.{0, 0, 0} Real Nat Real
+                                  (@instHPow.{0, 0} Real Nat
+                                    (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid)))
+                                  T (q i)))))
+                      (@nhdsWithin.{0} Real
+                        (@UniformSpace.toTopologicalSpace.{0} Real
+                          (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                        (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+                        (@Set.Ioi.{0} Real Real.instPreorder
+                          (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))) →
+                  (α T : Real) →
+                    (i :
+                        Fin
+                          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) →
+                      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                        Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.signature PUnit.unit.{1}
+                        (@Sigma.mk.{0, 0} Real (fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Real) β
+                          (@Sigma.mk.{0, 0} Real (fun (x : Real) => Real) α T)) :=
+  fun (n : Nat)
+    (q :
+      Fin
+          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →
+        Nat)
+    (hq :
+      ∀
+        (i :
+          Fin
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))),
+        @LE.le.{0} Nat instLENat (q i) (q (Fin.last n)))
+    (lam :
+      Real →
+        Fin
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →
+          Real)
+    (c C β : Real)
+    (hc : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) c)
+    (hC : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) C)
+    (hβ : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) β)
+    (hbounds :
+      @Filter.Eventually.{0} Real
+        (fun (T : Real) =>
+          ∀
+            (i :
+              Fin
+                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))),
+            And
+              (@LE.le.{0} Real Real.instLE
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) c
+                  (@HPow.hPow.{0, 0, 0} Real Nat Real
+                    (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) T
+                    (q i)))
+                (lam T i))
+              (@LE.le.{0} Real Real.instLE (lam T i)
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) C
+                  (@HPow.hPow.{0, 0, 0} Real Nat Real
+                    (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) T
+                    (q i)))))
+        (@nhdsWithin.{0} Real
+          (@UniformSpace.toTopologicalSpace.{0} Real
+            (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+          (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+          (@Set.Ioi.{0} Real Real.instPreorder
+            (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))))
+    (α T : Real)
+    (i :
+      Fin
+        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.signature
+    Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Real (fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Real) β
+      (@Sigma.mk.{0, 0} Real (fun (x : Real) => Real) α T))
+    (lam T i)
+
+noncomputable def Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"Linear\",\"SpectralNoiseAsymptotics\",\"spectral_noise_asymptotics\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"body\",\"function\",\"argument\",\"body\",\"function\",\"argument\",\"argument\",\"argument\",\"body\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"SpectralNoiseAsymptotics\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `D5.S3.Observer.Linear.SpectralNoiseAsymptotics.spectral_noise_asymptotics, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .function, .argument, .body, .function, .argument, .body, .function, .argument, .argument, .argument, .body], levels := [] }
+  { owner := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"SpectralNoiseAsymptotics\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"SpectralNoiseAsymptotics\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"Linear\",\"SpectralNoiseAsymptotics\",\"spectral_noise_asymptotics\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `D5.S3.Observer.Linear.SpectralNoiseAsymptotics.spectral_noise_asymptotics, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration).actual (Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration).variation.2.choose (Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration).variation.1 (Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"SpectralNoiseAsymptotics\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"SpectralNoiseAsymptotics\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics, declaration := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

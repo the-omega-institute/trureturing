@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.Mertens.Gamma
 import Reg.Support.DependentFamily
@@ -91,9 +94,139 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Weil.Mertens.Gamma, definition := none, coordinates := #[], readouts := #[{ path := #["fn", "arg", "arg", "body"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Weil.Mertens.Gamma, declaration := `integral_log_mul_exp_neg_eq_deriv_Gamma, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Weil.Mertens.Gamma, declaration := `Reg.D5.S3.Weil.Mertens.Gamma.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Weil.Mertens.Gamma, declaration := `Reg.D5.S3.Weil.Mertens.Gamma.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Weil.Mertens.Gamma, declaration := `Reg.D5.S3.Weil.Mertens.Gamma.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Weil.Mertens.Gamma, declaration := `Reg.D5.S3.Weil.Mertens.Gamma.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Weil.Mertens.Gamma.registration_1.canonicalArenaFact, `Reg.D5.S3.Weil.Mertens.Gamma.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Weil.Mertens.Gamma.registration_1.sourceBridgeFact, `Reg.D5.S3.Weil.Mertens.Gamma.registration_1.observationFact0, `Reg.D5.S3.Weil.Mertens.Gamma.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Weil.Mertens.Gamma.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Weil.Mertens.Gamma.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Weil.Mertens.Gamma.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 end
 end Reg.D5.S3.Weil.Mertens.Gamma
+
+
+noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Weil.Mertens.Gamma.arena
+noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"Mertens\",\"Gamma\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"Mertens\",\"Gamma\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Weil.Mertens.Gamma, declaration := `Reg.D5.S3.Weil.Mertens.Gamma.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Weil.Mertens.Gamma, declaration := `Reg.D5.S3.Weil.Mertens.Gamma.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Weil.Mertens.Gamma.arena
+noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"Mertens\",\"Gamma\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"Mertens\",\"Gamma\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Weil.Mertens.Gamma, declaration := `Reg.D5.S3.Weil.Mertens.Gamma.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Weil.Mertens.Gamma, declaration := `Reg.D5.S3.Weil.Mertens.Gamma.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0} Reg.D5.S3.Weil.Mertens.Gamma.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Weil.Mertens.Gamma.arena
+    (@Eq.{1} Real
+      (@MeasureTheory.integral.{0, 0} Real Real Real.normedAddCommGroup
+        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@MeasureTheory.Measure.restrict.{0} Real
+          (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+          (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)
+          (@Set.Ioi.{0} Real Real.instPreorder
+            (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))
+        fun (t : Real) =>
+        @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (Real.log t)
+          (Real.exp (@Neg.neg.{0} Real Real.instNeg t)))
+      (@deriv.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+        Real.instAddCommGroup
+        (@Semiring.toModule.{0} Real
+          (@DivisionSemiring.toSemiring.{0} Real
+            (@Semifield.toDivisionSemiring.{0} Real
+              (@Field.toSemifield.{0} Real
+                (@NormedField.toField.{0} Real
+                  (@NontriviallyNormedField.toNormedField.{0} Real
+                    (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)))))))
+        (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+        Real.Gamma (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
+    Reg.D5.S3.Weil.Mertens.Gamma.registration)
+
+noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"integral_log_mul_exp_neg_eq_deriv_Gamma\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"Mertens\",\"Gamma\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Weil.Mertens.Gamma, declaration := `integral_log_mul_exp_neg_eq_deriv_Gamma, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Weil.Mertens.Gamma, declaration := `Reg.D5.S3.Weil.Mertens.Gamma.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Weil.Mertens.Gamma.arena
+  (@Eq.{1} Real
+    (@MeasureTheory.integral.{0, 0} Real Real Real.normedAddCommGroup
+      (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+        (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+        (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+      (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+      (@MeasureTheory.Measure.restrict.{0} Real
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)
+        (@Set.Ioi.{0} Real Real.instPreorder
+          (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))
+      fun (t : Real) =>
+      @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (Real.log t)
+        (Real.exp (@Neg.neg.{0} Real Real.instNeg t)))
+    (@deriv.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+      Real.instAddCommGroup
+      (@Semiring.toModule.{0} Real
+        (@DivisionSemiring.toSemiring.{0} Real
+          (@Semifield.toDivisionSemiring.{0} Real
+            (@Field.toSemifield.{0} Real
+              (@NormedField.toField.{0} Real
+                (@NontriviallyNormedField.toNormedField.{0} Real
+                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)))))))
+      (@UniformSpace.toTopologicalSpace.{0} Real (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+      Real.Gamma (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
+  Reg.D5.S3.Weil.Mertens.Gamma.registration)
+
+noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.observation0 : (t : Real) →
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Weil.Mertens.Gamma.signature PUnit.unit.{1} PUnit.unit.{1} :=
+  fun (t : Real) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Weil.Mertens.Gamma.signature Reg.D5.S3.Weil.Mertens.Gamma.actual PUnit.unit.{1} PUnit.unit.{1} t
+
+noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"integral_log_mul_exp_neg_eq_deriv_Gamma\"],\"part\":\"type\",\"path\":[\"function\",\"argument\",\"argument\",\"body\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"Mertens\",\"Gamma\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Weil.Mertens.Gamma, declaration := `integral_log_mul_exp_neg_eq_deriv_Gamma, part := .type, path := [.function, .argument, .argument, .body], levels := [] }
+  { owner := `Reg.D5.S3.Weil.Mertens.Gamma, declaration := `Reg.D5.S3.Weil.Mertens.Gamma.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Weil.Mertens.Gamma.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"Mertens\",\"Gamma\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"Mertens\",\"Gamma\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"integral_log_mul_exp_neg_eq_deriv_Gamma\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Weil.Mertens.Gamma, declaration := `Reg.D5.S3.Weil.Mertens.Gamma.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Weil.Mertens.Gamma, declaration := `integral_log_mul_exp_neg_eq_deriv_Gamma, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Weil.Mertens.Gamma.registration).actual (Reg.D5.S3.Weil.Mertens.Gamma.registration).variation.2.choose (Reg.D5.S3.Weil.Mertens.Gamma.registration).variation.1 (Reg.D5.S3.Weil.Mertens.Gamma.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Weil.Mertens.Gamma.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"Mertens\",\"Gamma\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"Mertens\",\"Gamma\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Weil.Mertens.Gamma, declaration := `Reg.D5.S3.Weil.Mertens.Gamma.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Weil.Mertens.Gamma, declaration := `Reg.D5.S3.Weil.Mertens.Gamma.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

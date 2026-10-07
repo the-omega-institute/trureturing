@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Factorization.Galois.SparseCharacterSynchronization
 import Reg.Support.DependentFamily
@@ -132,9 +135,181 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Factorization.Galois.SparseCharacterSynchronization, definition := none, coordinates := #[0, 1, 2, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `D5.S3.Factorization.Galois.SparseCharacterSynchronization.edge_difference_kernel_eq_constants_iff, part := .type, path := [], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u, .param `v] }], facts := [`Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.canonicalArenaFact, `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.sourceBridgeFact, `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.observationFact0, `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 
 end Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization
+
+
+noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.canonicalArenaOperand.{u, v} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (u + 1) (v + 1), max u v, 0, max u v, 0} :=
+  Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.arena.{u, v}
+noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.canonicalArenaFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  .evidence
+noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.canonicalObjectArenaOperand.{u, v} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (u + 1) (v + 1), max u v, 0, max u v, 0} :=
+  Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.arena.{u, v}
+noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.canonicalObjectArenaFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.sourceLaw.{u, v} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u + 1) (v + 1), max u v, 0, max u v, 0}
+  Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.arena.{u, v}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u + 1) (v + 1), max u v, 0,
+        max u v, 0}
+    Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.arena.{u, v}
+    (∀ {V : Type u} (G : SimpleGraph.{u} V) (A : Type v) [inst : AddCommGroup.{v} A] [Nontrivial.{v} A],
+      Iff
+        (@Eq.{max (u + 1) (v + 1)}
+          (@AddSubgroup.{max u v} (V → A)
+            (@Pi.addGroup.{u, v} V (fun (a : V) => A) fun (i : V) => @AddCommGroup.toAddGroup.{v} A inst))
+          (@AddMonoidHom.ker.{max u v, max u v} (V → A)
+            (@Pi.addGroup.{u, v} V (fun (a : V) => A) fun (i : V) => @AddCommGroup.toAddGroup.{v} A inst)
+            ((@Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
+                @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e)) →
+              A)
+            (@Pi.addZeroClass.{u, v}
+              (@Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
+                @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e))
+              (fun
+                  (a :
+                    @Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
+                      @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e)) =>
+                A)
+              fun
+                (i :
+                  @Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
+                    @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e)) =>
+              @AddMonoid.toAddZeroClass.{v} A
+                (@SubNegMonoid.toAddMonoid.{v} A
+                  (@AddGroup.toSubNegMonoid.{v} A (@AddCommGroup.toAddGroup.{v} A inst))))
+            (@D5.S3.Factorization.Galois.SparseCharacterSynchronization.edgeDifference.{u, v} V G A inst))
+          (@AddMonoidHom.range.{v, max u v} A (@AddCommGroup.toAddGroup.{v} A inst) (V → A)
+            (@Pi.addGroup.{u, v} V (fun (a : V) => A) fun (i : V) => @AddCommGroup.toAddGroup.{v} A inst)
+            (@Pi.constAddMonoidHom.{u, v} V A
+              (@AddMonoid.toAddZeroClass.{v} A
+                (@SubNegMonoid.toAddMonoid.{v} A
+                  (@AddGroup.toSubNegMonoid.{v} A (@AddCommGroup.toAddGroup.{v} A inst)))))))
+        (@SimpleGraph.Preconnected.{u} V G))
+    Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration.{u, v})
+
+noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.sourceBridgeFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"edge_difference_kernel_eq_constants_iff\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `D5.S3.Factorization.Galois.SparseCharacterSynchronization.edge_difference_kernel_eq_constants_iff, part := .type, path := [], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u + 1) (v + 1), max u v, 0, max u v,
+      0}
+  Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.arena.{u, v}
+  (∀ {V : Type u} (G : SimpleGraph.{u} V) (A : Type v) [inst : AddCommGroup.{v} A] [Nontrivial.{v} A],
+    Iff
+      (@Eq.{max (u + 1) (v + 1)}
+        (@AddSubgroup.{max u v} (V → A)
+          (@Pi.addGroup.{u, v} V (fun (a : V) => A) fun (i : V) => @AddCommGroup.toAddGroup.{v} A inst))
+        (@AddMonoidHom.ker.{max u v, max u v} (V → A)
+          (@Pi.addGroup.{u, v} V (fun (a : V) => A) fun (i : V) => @AddCommGroup.toAddGroup.{v} A inst)
+          ((@Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
+              @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e)) →
+            A)
+          (@Pi.addZeroClass.{u, v}
+            (@Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
+              @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e))
+            (fun
+                (a :
+                  @Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
+                    @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e)) =>
+              A)
+            fun
+              (i :
+                @Subtype.{u + 1} (Prod.{u, u} V V) fun (e : Prod.{u, u} V V) =>
+                  @SimpleGraph.Adj.{u} V G (@Prod.fst.{u, u} V V e) (@Prod.snd.{u, u} V V e)) =>
+            @AddMonoid.toAddZeroClass.{v} A
+              (@SubNegMonoid.toAddMonoid.{v} A (@AddGroup.toSubNegMonoid.{v} A (@AddCommGroup.toAddGroup.{v} A inst))))
+          (@D5.S3.Factorization.Galois.SparseCharacterSynchronization.edgeDifference.{u, v} V G A inst))
+        (@AddMonoidHom.range.{v, max u v} A (@AddCommGroup.toAddGroup.{v} A inst) (V → A)
+          (@Pi.addGroup.{u, v} V (fun (a : V) => A) fun (i : V) => @AddCommGroup.toAddGroup.{v} A inst)
+          (@Pi.constAddMonoidHom.{u, v} V A
+            (@AddMonoid.toAddZeroClass.{v} A
+              (@SubNegMonoid.toAddMonoid.{v} A
+                (@AddGroup.toSubNegMonoid.{v} A (@AddCommGroup.toAddGroup.{v} A inst)))))))
+      (@SimpleGraph.Preconnected.{u} V G))
+  Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration.{u, v})
+
+noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.observation0.{u, v} : {V : Type u} →
+  (G : SimpleGraph.{u} V) →
+    (A : Type v) →
+      [inst : AddCommGroup.{v} A] →
+        [Nontrivial.{v} A] →
+          D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{max (u + 1) (v + 1), max u v, 0,
+              max u v, 0}
+            Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.signature.{u, v} PUnit.unit.{1}
+            (@Sigma.mk.{u + 1, max (v + 1) u} (Type u)
+              (fun (V : Type u) =>
+                @Sigma.{u, v + 1} (SimpleGraph.{u} V) fun (x : SimpleGraph.{u} V) =>
+                  @Sigma.{v + 1, v} (Type v) fun (A : Type v) => AddCommGroup.{v} A)
+              V
+              (@Sigma.mk.{u, v + 1} (SimpleGraph.{u} V)
+                (fun (x : SimpleGraph.{u} V) => @Sigma.{v + 1, v} (Type v) fun (A : Type v) => AddCommGroup.{v} A) G
+                (@Sigma.mk.{v + 1, v} (Type v) (fun (A : Type v) => AddCommGroup.{v} A) A inst))) :=
+  fun {V : Type u} (G : SimpleGraph.{u} V) (A : Type v) [inst : AddCommGroup.{v} A] [Nontrivial.{v} A] =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{max (u + 1) (v + 1), max u v, 0,
+        max u v, 0}
+    Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.signature.{u, v}
+    Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.actual.{u, v} PUnit.unit.{1}
+    (@Sigma.mk.{u + 1, max (v + 1) u} (Type u)
+      (fun (V : Type u) =>
+        @Sigma.{u, v + 1} (SimpleGraph.{u} V) fun (x : SimpleGraph.{u} V) =>
+          @Sigma.{v + 1, v} (Type v) fun (A : Type v) => AddCommGroup.{v} A)
+      V
+      (@Sigma.mk.{u, v + 1} (SimpleGraph.{u} V)
+        (fun (x : SimpleGraph.{u} V) => @Sigma.{v + 1, v} (Type v) fun (A : Type v) => AddCommGroup.{v} A) G
+        (@Sigma.mk.{v + 1, v} (Type v) (fun (A : Type v) => AddCommGroup.{v} A) A inst)))
+    (@D5.S3.Factorization.Galois.SparseCharacterSynchronization.edgeDifference.{u, v} V G A inst)
+
+noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.observationFact0.{u, v} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"edge_difference_kernel_eq_constants_iff\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `D5.S3.Factorization.Galois.SparseCharacterSynchronization.edge_difference_kernel_eq_constants_iff, part := .type, path := [.body, .body, .body, .body, .body, .function, .argument, .function, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.observation0, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.varyingLawInput.{u, v} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.canonicalArenaOperand.{u, v})
+noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.varyingLaw.{u, v}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"
+
+noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.statementExclusion.{u, v} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"edge_difference_kernel_eq_constants_iff\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  statementLocation := { owner := `D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `D5.S3.Factorization.Galois.SparseCharacterSynchronization.edge_difference_kernel_eq_constants_iff, part := .type, path := [], levels := [(.param `u), (.param `v)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration.{u, v}).actual (Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration.{u, v}).variation.2.choose (Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration.{u, v}).variation.1 (Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration.{u, v}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1.descriptorFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"SparseCharacterSynchronization\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization, declaration := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u), (.param `v)] }
+  (by first | rfl | (ext <;> rfl))

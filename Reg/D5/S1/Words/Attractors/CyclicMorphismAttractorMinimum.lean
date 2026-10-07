@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum
@@ -151,7 +154,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, definition := none, coordinates := #[0, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }, { path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.result, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.canonicalArenaFact, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.canonicalObjectArenaFact, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.sourceBridgeFact, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.observationFact0, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.observationFact1, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.anchorEnumeration }
 
 
 #print axioms registration
@@ -236,7 +249,17 @@ noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.cyclic_fractional_prefix, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.canonicalArenaFact, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.canonicalObjectArenaFact, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.sourceBridgeFact, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.observationFact0, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.descriptorFact] },
+  exclusion := some `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.anchorEnumeration }
 
 
 
@@ -311,7 +334,17 @@ noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "arg", "arg", "fn", "arg", "body", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.cyclic_iterate_structure, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.canonicalArenaFact, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.canonicalObjectArenaFact, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.sourceBridgeFact, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.descriptorFact] },
+  exclusion := some `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.anchorEnumeration }
 
 
 
@@ -380,7 +413,17 @@ noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg", "body", "body", "fn", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.cyclic_word_recurrence, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.canonicalArenaFact, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.canonicalObjectArenaFact, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.sourceBridgeFact, `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.descriptorFact] },
+  exclusion := some `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.anchorEnumeration }
 
 
 
@@ -388,3 +431,728 @@ end Recurrence
 
 end
 end Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits
+
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.arena
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Structure\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Structure\",\"registration_3\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.arena
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Structure\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Structure\",\"registration_3\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.arena
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Fractional\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Fractional\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.arena
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Fractional\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Fractional\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.arena
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Recurrence\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Recurrence\",\"registration_4\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.arena
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Recurrence\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Recurrence\",\"registration_4\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena
+    (∀ {k : Nat} (hk : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k)
+      (c : Fin k → Nat),
+      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+          (c
+            (@Fin.mk k (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+              (@Decidable.byContradiction
+                (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                fun
+                  (a :
+                    Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+                @Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena._proof_1 k hk a))) →
+        @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+            (c
+              (@Fin.mk k
+                (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                (@Decidable.byContradiction
+                  (@LT.lt.{0} Nat instLTNat
+                    (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                    k)
+                  (Nat.decLt
+                    (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                    k)
+                  fun
+                    (a :
+                      Not
+                        (@LT.lt.{0} Nat instLTNat
+                          (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                          k)) =>
+                  @Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena._proof_2 k hk a))) →
+          @D5.S1.Words.Attractors.CyclicMaximal k c →
+            @D5.S1.Words.Attractors.CyclicAttractorMinimum k
+              (@Decidable.byContradiction
+                (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                fun
+                  (a :
+                    Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+                @Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena._proof_1 k hk a)
+              c)
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration)
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.result, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena
+  (∀ {k : Nat} (hk : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k)
+    (c : Fin k → Nat),
+    @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+        (c
+          (@Fin.mk k (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+            (@Decidable.byContradiction
+              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+              (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+              fun
+                (a : Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+              @Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena._proof_1 k hk a))) →
+      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+          (c
+            (@Fin.mk k
+              (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+              (@Decidable.byContradiction
+                (@LT.lt.{0} Nat instLTNat
+                  (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                  k)
+                (Nat.decLt
+                  (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                  k)
+                fun
+                  (a :
+                    Not
+                      (@LT.lt.{0} Nat instLTNat
+                        (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                        k)) =>
+                @Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena._proof_2 k hk a))) →
+        @D5.S1.Words.Attractors.CyclicMaximal k c →
+          @D5.S1.Words.Attractors.CyclicAttractorMinimum k
+            (@Decidable.byContradiction
+              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+              (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+              fun
+                (a : Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+              @Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.arena._proof_1 k hk a)
+            c)
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration)
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) where
+  values := [(fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) => i)
+  (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) (nat_lit 0)
+    (@Nat.le_of_lt (nat_lit 1) (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+      (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))), (fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) => i)
+  (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) (nat_lit 1)
+    (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.observation0 : {k : Nat} →
+  (hk : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k) →
+    (c : Fin k → Nat) →
+      (h0 :
+          @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+            (c
+              (@Fin.mk k (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                (@Decidable.byContradiction
+                  (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                  (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                  fun
+                    (a :
+                      Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+                  @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_1 k hk a)))) →
+        (hlast :
+            @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (c
+                (@Fin.mk k
+                  (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                  (@Decidable.byContradiction
+                    (@LT.lt.{0} Nat instLTNat
+                      (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      k)
+                    (Nat.decLt
+                      (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      k)
+                    fun
+                      (a :
+                        Not
+                          (@LT.lt.{0} Nat instLTNat
+                            (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                            k)) =>
+                    @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_2 k hk c a)))) →
+          (hcyc : @D5.S1.Words.Attractors.CyclicMaximal k c) →
+            (m : Nat) →
+              @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) m →
+                (i : Nat) →
+                  @LE.le.{0} Nat instLENat i
+                      (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) →
+                    @LE.le.{0} Nat instLENat
+                        (@D5.S1.Words.Attractors.cyclicLength k
+                          (@Decidable.byContradiction
+                            (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                            (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                            fun
+                              (a :
+                                Not
+                                  (@LT.lt.{0} Nat instLTNat
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+                            @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_3 k hk c a)
+                          c i)
+                        m →
+                      @LT.lt.{0} Nat instLTNat m
+                          (@D5.S1.Words.Attractors.cyclicLength k
+                            (@Decidable.byContradiction
+                              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                              (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                              fun
+                                (a :
+                                  Not
+                                    (@LT.lt.{0} Nat instLTNat
+                                      (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+                              @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_3 k hk c a)
+                            c
+                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) i
+                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) →
+                        D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                          Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.signature
+                          ((fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) => i)
+                            (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) (nat_lit 0)
+                              (@Nat.le_of_lt (nat_lit 1) (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))
+                          (@Sigma.mk.{0, 0} Nat (fun (k : Nat) => Fin k → Nat) k c) :=
+  fun {k : Nat} (hk : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k)
+    (c : Fin k → Nat)
+    (h0 :
+      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+        (c
+          (@Fin.mk k (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+            (@Decidable.byContradiction
+              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+              (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+              fun
+                (a : Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+              @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_1 k hk a))))
+    (hlast :
+      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+        (c
+          (@Fin.mk k
+            (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+            (@Decidable.byContradiction
+              (@LT.lt.{0} Nat instLTNat
+                (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                k)
+              (Nat.decLt
+                (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                k)
+              fun
+                (a :
+                  Not
+                    (@LT.lt.{0} Nat instLTNat
+                      (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      k)) =>
+              @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_2 k hk c a))))
+    (hcyc : @D5.S1.Words.Attractors.CyclicMaximal k c) (m : Nat)
+    (a : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) m) (i : Nat)
+    (a_1 :
+      @LE.le.{0} Nat instLENat i
+        (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+    (a_2 :
+      @LE.le.{0} Nat instLENat
+        (@D5.S1.Words.Attractors.cyclicLength k
+          (@Decidable.byContradiction
+            (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+            (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+            fun (a : Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+            @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_3 k hk c a)
+          c i)
+        m)
+    (a_3 :
+      @LT.lt.{0} Nat instLTNat m
+        (@D5.S1.Words.Attractors.cyclicLength k
+          (@Decidable.byContradiction
+            (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+            (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+            fun (a : Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+            @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_3 k hk c a)
+          c
+          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) i
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.signature
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.actual
+    ((fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) => i)
+      (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) (nat_lit 0)
+        (@Nat.le_of_lt (nat_lit 1) (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+          (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))
+    (@Sigma.mk.{0, 0} Nat (fun (k : Nat) => Fin k → Nat) k c)
+    (@D5.S1.Words.Attractors.cyclicPrefix k
+      (@Decidable.byContradiction
+        (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+        (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+        fun (a : Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+        @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_3 k hk c a)
+      c m)
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"result\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.result, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .function, .argument, .body, .body, .body, .body, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.observation1 : {k : Nat} →
+  (hk : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k) →
+    (c : Fin k → Nat) →
+      (h0 :
+          @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+            (c
+              (@Fin.mk k (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                (@Decidable.byContradiction
+                  (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                  (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                  fun
+                    (a :
+                      Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+                  @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_1 k hk a)))) →
+        (hlast :
+            @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (c
+                (@Fin.mk k
+                  (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                  (@Decidable.byContradiction
+                    (@LT.lt.{0} Nat instLTNat
+                      (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      k)
+                    (Nat.decLt
+                      (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      k)
+                    fun
+                      (a :
+                        Not
+                          (@LT.lt.{0} Nat instLTNat
+                            (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                            k)) =>
+                    @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_2 k hk c a)))) →
+          (hcyc : @D5.S1.Words.Attractors.CyclicMaximal k c) →
+            (m : Nat) →
+              @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) m →
+                @LE.le.{0} Nat instLENat
+                    (@D5.S1.Words.Attractors.cyclicLength k
+                      (@Decidable.byContradiction
+                        (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                        (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                        fun
+                          (a :
+                            Not
+                              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                                k)) =>
+                        @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_3 k hk c a)
+                      c
+                      (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                    m →
+                  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.signature
+                    ((fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) => i)
+                      (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) (nat_lit 1)
+                        (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+                    (@Sigma.mk.{0, 0} Nat (fun (k : Nat) => Fin k → Nat) k c) :=
+  fun {k : Nat} (hk : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k)
+    (c : Fin k → Nat)
+    (h0 :
+      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+        (c
+          (@Fin.mk k (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+            (@Decidable.byContradiction
+              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+              (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+              fun
+                (a : Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+              @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_1 k hk a))))
+    (hlast :
+      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+        (c
+          (@Fin.mk k
+            (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+            (@Decidable.byContradiction
+              (@LT.lt.{0} Nat instLTNat
+                (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                k)
+              (Nat.decLt
+                (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                k)
+              fun
+                (a :
+                  Not
+                    (@LT.lt.{0} Nat instLTNat
+                      (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      k)) =>
+              @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_2 k hk c a))))
+    (hcyc : @D5.S1.Words.Attractors.CyclicMaximal k c) (m : Nat)
+    (a : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) m)
+    (a_1 :
+      @LE.le.{0} Nat instLENat
+        (@D5.S1.Words.Attractors.cyclicLength k
+          (@Decidable.byContradiction
+            (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+            (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+            fun (a : Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+            @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_3 k hk c a)
+          c
+          (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+        m) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.signature
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.actual
+    ((fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) => i)
+      (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) (nat_lit 1)
+        (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))))
+    (@Sigma.mk.{0, 0} Nat (fun (k : Nat) => Fin k → Nat) k c)
+    (@D5.S1.Words.Attractors.cyclicPrefix k
+      (@Decidable.byContradiction
+        (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+        (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+        fun (a : Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+        @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_3 k hk c a)
+      c m)
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.observationFact1 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"result\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"registration_1\",\"observation1\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.result, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .argument, .body, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.observation1, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.result, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration).actual (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration).variation.2.choose (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration).variation.1 (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.arena
+      Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.actual)
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration)
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"cyclic_iterate_structure\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Structure\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.cyclic_iterate_structure, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.arena
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.actual)
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration)
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.canonicalArenaOperand)
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Structure\",\"registration_3\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Structure\",\"registration_3\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"cyclic_iterate_structure\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.cyclic_iterate_structure, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration).actual (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration).variation.2.choose (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration).variation.1 (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Structure\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Structure\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Structure.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.arena
+      Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.actual)
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration)
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"cyclic_fractional_prefix\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Fractional\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.cyclic_fractional_prefix, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.arena
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.actual)
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration)
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.observation0 : {k : Nat} →
+  (hk : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k) →
+    (c : Fin k → Nat) →
+      (h0 :
+          @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+            (c
+              (@Fin.mk k (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                (@Decidable.byContradiction
+                  (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                  (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+                  fun
+                    (a :
+                      Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+                  @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_1 k hk a)))) →
+        (hlast :
+            @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (c
+                (@Fin.mk k
+                  (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                  (@Decidable.byContradiction
+                    (@LT.lt.{0} Nat instLTNat
+                      (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      k)
+                    (Nat.decLt
+                      (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      k)
+                    fun
+                      (a :
+                        Not
+                          (@LT.lt.{0} Nat instLTNat
+                            (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                            k)) =>
+                    @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_2 k hk c a)))) →
+          (hcyc : @D5.S1.Words.Attractors.CyclicMaximal k c) →
+            (n : Nat) →
+              D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.signature
+                PUnit.unit.{1} k :=
+  fun {k : Nat} (hk : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k)
+    (c : Fin k → Nat)
+    (h0 :
+      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+        (c
+          (@Fin.mk k (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+            (@Decidable.byContradiction
+              (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+              (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+              fun
+                (a : Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+              @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_1 k hk a))))
+    (hlast :
+      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+        (c
+          (@Fin.mk k
+            (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+            (@Decidable.byContradiction
+              (@LT.lt.{0} Nat instLTNat
+                (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                k)
+              (Nat.decLt
+                (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                k)
+              fun
+                (a :
+                  Not
+                    (@LT.lt.{0} Nat instLTNat
+                      (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) k
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                      k)) =>
+              @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_2 k hk c a))))
+    (hcyc : @D5.S1.Words.Attractors.CyclicMaximal k c) (n : Nat) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.signature
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.actual PUnit.unit.{1} k
+    (@D5.S1.Words.Attractors.cyclicWord k
+      (@Decidable.byContradiction
+        (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+        (Nat.decLt (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)
+        fun (a : Not (@LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) k)) =>
+        @D5.S1.Words.Attractors.cyclic_iterate_structure._proof_3 k hk c a)
+      c
+      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"cyclic_fractional_prefix\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Fractional\",\"registration_2\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.cyclic_fractional_prefix, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.canonicalArenaOperand)
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Fractional\",\"registration_2\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Fractional\",\"registration_2\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"cyclic_fractional_prefix\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.cyclic_fractional_prefix, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration).actual (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration).variation.2.choose (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration).variation.1 (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Fractional\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Fractional\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Fractional.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.arena
+      Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.actual)
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration)
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"cyclic_word_recurrence\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Recurrence\",\"registration_4\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.cyclic_word_recurrence, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.arena
+    Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.actual)
+  Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration)
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.canonicalArenaOperand)
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Recurrence\",\"registration_4\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Recurrence\",\"registration_4\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"cyclic_word_recurrence\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `D5.S1.Words.Attractors.cyclic_word_recurrence, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration).actual (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration).variation.2.choose (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration).variation.1 (Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Recurrence\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"CyclicMorphismAttractorMinimum\",\"HelperAudits\",\"Recurrence\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum, declaration := `Reg.D5.S1.Words.Attractors.CyclicMorphismAttractorMinimum.HelperAudits.Recurrence.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

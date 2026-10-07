@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Factorization.MordellTwoAdicNonTorsion
 import Reg.Support.DependentFamily
@@ -101,7 +104,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "domain", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_negative_two_adic_x, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.canonicalArenaFact, `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.sourceBridgeFact, `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.observationFact0, `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.anchorEnumeration }
 
 
 def yArena : Arena where
@@ -152,10 +165,192 @@ noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "domain", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_unit_x_positive_two_adic_y, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.canonicalArenaFact, `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.canonicalObjectArenaFact, `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.sourceBridgeFact, `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.observationFact0, `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.anchorEnumeration }
 
 
 #print axioms xRegistration
 #print axioms yRegistration
 
 end Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion
+
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.actual)
+    Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yRegistration)
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"infinite_add_order_of_unit_x_positive_two_adic_y\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_unit_x_positive_two_adic_y, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yArena Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.actual)
+  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yRegistration)
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.observation0 : (b : Int) →
+  {x y : Rat} →
+    (h :
+        @WeierstrassCurve.Affine.Nonsingular.{0} Rat Rat.commRing
+          (D5.S3.Factorization.MordellTwoAdicNonTorsion.mordellCurve b) x y) →
+      (hx0 : @Ne.{1} Rat x (@OfNat.ofNat.{0} Rat (nat_lit 0) (@Rat.instOfNat (nat_lit 0)))) →
+        (hx :
+            @Eq.{1} Int (padicValRat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) x)
+              (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))) →
+          D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+            Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.signature PUnit.unit.{1} PUnit.unit.{1} :=
+  fun (b : Int) {x y : Rat}
+    (h :
+      @WeierstrassCurve.Affine.Nonsingular.{0} Rat Rat.commRing
+        (D5.S3.Factorization.MordellTwoAdicNonTorsion.mordellCurve b) x y)
+    (hx0 : @Ne.{1} Rat x (@OfNat.ofNat.{0} Rat (nat_lit 0) (@Rat.instOfNat (nat_lit 0))))
+    (hx :
+      @Eq.{1} Int (padicValRat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) x)
+        (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.signature Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.actual
+    PUnit.unit.{1} PUnit.unit.{1} y
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"infinite_add_order_of_unit_x_positive_two_adic_y\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"domain\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_2\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_unit_x_positive_two_adic_y, part := .type, path := [.body, .body, .body, .body, .body, .body, .domain, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_2\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_2\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"infinite_add_order_of_unit_x_positive_two_adic_y\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_unit_x_positive_two_adic_y, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yRegistration).actual (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yRegistration).variation.2.choose (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yRegistration).variation.1 (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yRegistration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"yRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.yRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.actual)
+    Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xRegistration)
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"infinite_add_order_of_negative_two_adic_x\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_negative_two_adic_x, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xArena Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.actual)
+  Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xRegistration)
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.observation0 : (b : Int) →
+  {x y : Rat} →
+    (h :
+        @WeierstrassCurve.Affine.Nonsingular.{0} Rat Rat.commRing
+          (D5.S3.Factorization.MordellTwoAdicNonTorsion.mordellCurve b) x y) →
+      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+        Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.signature PUnit.unit.{1} PUnit.unit.{1} :=
+  fun (b : Int) {x y : Rat}
+    (h :
+      @WeierstrassCurve.Affine.Nonsingular.{0} Rat Rat.commRing
+        (D5.S3.Factorization.MordellTwoAdicNonTorsion.mordellCurve b) x y) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.signature Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.actual
+    PUnit.unit.{1} PUnit.unit.{1} x
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"infinite_add_order_of_negative_two_adic_x\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"domain\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_negative_two_adic_x, part := .type, path := [.body, .body, .body, .body, .domain, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"infinite_add_order_of_negative_two_adic_x\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `D5.S3.Factorization.MordellTwoAdicNonTorsion.infinite_add_order_of_negative_two_adic_x, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xRegistration).actual (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xRegistration).variation.2.choose (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xRegistration).variation.1 (Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xRegistration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"MordellTwoAdicNonTorsion\",\"xRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion, declaration := `Reg.D5.S3.Factorization.MordellTwoAdicNonTorsion.xRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

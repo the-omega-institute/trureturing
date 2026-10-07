@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
 import Reg.Support.DependentFamily
@@ -204,7 +207,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, definition := none, coordinates := #[0, 1, 5], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "body", "arg"], stateBinder := 9, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.square_lifts_left_forgetting, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.canonicalArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.sourceBridgeFact, `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.observationFact0, `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.anchorEnumeration }
 
 
 #print axioms registration
@@ -298,7 +311,17 @@ noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, definition := none, coordinates := #[1, 2, 4, 9, 10], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "value", "arg"], stateBinder := 12, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.square_lifts_right_forgetting, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.canonicalArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.canonicalObjectArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.sourceBridgeFact, `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.observationFact0, `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.descriptorFact] },
+  exclusion := some `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.anchorEnumeration }
 
 
 #print axioms registration
@@ -385,7 +408,17 @@ noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, definition := none, coordinates := #[0, 1, 5], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg", "arg", "body"], stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.square_graph_essential_and_projections, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.canonicalArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.canonicalObjectArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.sourceBridgeFact, `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.observationFact0, `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.descriptorFact] },
+  exclusion := some `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.anchorEnumeration }
 
 
 #print axioms registration
@@ -393,3 +426,337 @@ noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_
 end SourceProjection
 
 end Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting
+
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.arena
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"SourceProjection\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"SourceProjection\",\"registration_3\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.arena
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"SourceProjection\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"SourceProjection\",\"registration_3\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.arena
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"RightForgetting\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"RightForgetting\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.arena
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"RightForgetting\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"RightForgetting\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.arena
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"LeftForgetting\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"LeftForgetting\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.arena
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"LeftForgetting\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"LeftForgetting\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.arena
+      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.actual)
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"square_graph_essential_and_projections\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"SourceProjection\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.square_graph_essential_and_projections, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.arena
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.actual)
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.observation0 : {n k m : Nat} →
+  {A : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n n} →
+    {B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k} →
+      {R : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n k} →
+        {S : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k n} →
+          (c : @D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate n k A B R S m) →
+            (r : @D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.Edge n k R) →
+              D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.signature PUnit.unit.{1}
+                (@Sigma.mk.{0, 0} Nat
+                  (fun (n : Nat) =>
+                    @Sigma.{0, 0} Nat fun (k : Nat) => D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n k)
+                  n
+                  (@Sigma.mk.{0, 0} Nat
+                    (fun (k : Nat) => D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n k) k R)) :=
+  fun {n k m : Nat} {A : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n n}
+    {B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k}
+    {R : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n k}
+    {S : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k n}
+    (c : @D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate n k A B R S m)
+    (r : @D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.Edge n k R) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.signature
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat
+      (fun (n : Nat) =>
+        @Sigma.{0, 0} Nat fun (k : Nat) => D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n k)
+      n (@Sigma.mk.{0, 0} Nat (fun (k : Nat) => D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n k) k R))
+    r
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"square_graph_essential_and_projections\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\",\"function\",\"argument\",\"argument\",\"body\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"SourceProjection\",\"registration_3\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.square_graph_essential_and_projections, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .argument, .argument, .function, .argument, .argument, .body], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"SourceProjection\",\"registration_3\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"SourceProjection\",\"registration_3\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"square_graph_essential_and_projections\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.square_graph_essential_and_projections, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration).actual (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration).variation.2.choose (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration).variation.1 (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"SourceProjection\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"SourceProjection\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.SourceProjection.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.arena
+      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.actual)
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"square_lifts_right_forgetting\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"RightForgetting\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.square_lifts_right_forgetting, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.arena
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.actual)
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.observation0 : {n k m : Nat} →
+  {A : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n n} →
+    {B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k} →
+      {R : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n k} →
+        {S : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k n} →
+          (c : @D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate n k A B R S m) →
+            {i : Fin n} →
+              {t z : Fin k} →
+                (r : Fin (R i t)) →
+                  (beta : @D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel.FinitePath k B m t z) →
+                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.signature
+                      PUnit.unit.{1}
+                      (@Sigma.mk.{0, 0} Nat
+                        (fun (k : Nat) =>
+                          @Sigma.{0, 0} Nat fun (m : Nat) =>
+                            @Sigma.{0, 0} (D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k)
+                              fun (B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k) =>
+                              @Sigma.{0, 0} (Fin k) fun (x : Fin k) => Fin k)
+                        k
+                        (@Sigma.mk.{0, 0} Nat
+                          (fun (m : Nat) =>
+                            @Sigma.{0, 0} (D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k)
+                              fun (B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k) =>
+                              @Sigma.{0, 0} (Fin k) fun (x : Fin k) => Fin k)
+                          m
+                          (@Sigma.mk.{0, 0} (D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k)
+                            (fun (B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k) =>
+                              @Sigma.{0, 0} (Fin k) fun (x : Fin k) => Fin k)
+                            B (@Sigma.mk.{0, 0} (Fin k) (fun (x : Fin k) => Fin k) t z)))) :=
+  fun {n k m : Nat} {A : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n n}
+    {B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k}
+    {R : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n k}
+    {S : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k n}
+    (c : @D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate n k A B R S m) {i : Fin n}
+    {t z : Fin k} (r : Fin (R i t))
+    (beta : @D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel.FinitePath k B m t z) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.signature
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat
+      (fun (k : Nat) =>
+        @Sigma.{0, 0} Nat fun (m : Nat) =>
+          @Sigma.{0, 0} (D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k)
+            fun (B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k) =>
+            @Sigma.{0, 0} (Fin k) fun (x : Fin k) => Fin k)
+      k
+      (@Sigma.mk.{0, 0} Nat
+        (fun (m : Nat) =>
+          @Sigma.{0, 0} (D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k)
+            fun (B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k) =>
+            @Sigma.{0, 0} (Fin k) fun (x : Fin k) => Fin k)
+        m
+        (@Sigma.mk.{0, 0} (D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k)
+          (fun (B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k) =>
+            @Sigma.{0, 0} (Fin k) fun (x : Fin k) => Fin k)
+          B (@Sigma.mk.{0, 0} (Fin k) (fun (x : Fin k) => Fin k) t z))))
+    beta
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"square_lifts_right_forgetting\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"letValue\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"RightForgetting\",\"registration_2\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.square_lifts_right_forgetting, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .letValue, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"RightForgetting\",\"registration_2\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"RightForgetting\",\"registration_2\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"square_lifts_right_forgetting\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.square_lifts_right_forgetting, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration).actual (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration).variation.2.choose (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration).variation.1 (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"RightForgetting\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"RightForgetting\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.RightForgetting.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.arena
+      Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.edgeActual)
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"square_lifts_left_forgetting\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"LeftForgetting\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.square_lifts_left_forgetting, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.arena
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.edgeActual)
+  Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.observation0 : {n k m : Nat} →
+  {A : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n n} →
+    {B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k} →
+      {R : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n k} →
+        {S : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k n} →
+          (c : @D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate n k A B R S m) →
+            (a : @D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.Edge n n A) →
+              (r : @D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.Edge n k R) →
+                (h :
+                    @Eq.{1} (Fin n) (@D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.Edge.target n n A a)
+                      (@D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.Edge.source n k R r)) →
+                  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.edgeSignature PUnit.unit.{1}
+                    (@Sigma.mk.{0, 0} Nat
+                      (fun (n : Nat) =>
+                        @Sigma.{0, 0} Nat fun (k : Nat) =>
+                          D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n k)
+                      n
+                      (@Sigma.mk.{0, 0} Nat
+                        (fun (k : Nat) => D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n k) k R)) :=
+  fun {n k m : Nat} {A : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n n}
+    {B : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k k}
+    {R : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n k}
+    {S : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat k n}
+    (c : @D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate n k A B R S m)
+    (a : @D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.Edge n n A)
+    (r : @D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.Edge n k R)
+    (h :
+      @Eq.{1} (Fin n) (@D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.Edge.target n n A a)
+        (@D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.Edge.source n k R r)) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.edgeSignature
+    Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.edgeActual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat
+      (fun (n : Nat) =>
+        @Sigma.{0, 0} Nat fun (k : Nat) => D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n k)
+      n (@Sigma.mk.{0, 0} Nat (fun (k : Nat) => D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat n k) k R))
+    r
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"square_lifts_left_forgetting\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"LeftForgetting\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.square_lifts_left_forgetting, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .function, .argument, .body, .body, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"LeftForgetting\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"LeftForgetting\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"CompatibleCertificate\",\"square_lifts_left_forgetting\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.CompatibleCertificate.square_lifts_left_forgetting, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration).actual (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration).variation.2.choose (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration).variation.1 (Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"LeftForgetting\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"CompatibleResponseForgetting\",\"LeftForgetting\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting, declaration := `Reg.D5.S3.ConceptDynamics.Coding.CompatibleResponseForgetting.LeftForgetting.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

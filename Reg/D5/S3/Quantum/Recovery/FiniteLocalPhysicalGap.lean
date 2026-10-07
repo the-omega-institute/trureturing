@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap
 import Reg.Support.DependentFamily
@@ -147,7 +150,135 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "arg", "arg", "arg", "fn", "arg", "body", "fn", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.full_source_finite_recovery_gap, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.observationFact0, `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.anchorEnumeration }
 
 
 end Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap
+
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.arena
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalPhysicalGap\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalPhysicalGap\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.arena
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalPhysicalGap\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalPhysicalGap\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.arena
+    Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.sourceStatement
+    Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration)
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalPhysicalGap\",\"full_source_finite_recovery_gap\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalPhysicalGap\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.full_source_finite_recovery_gap, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.arena
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.sourceStatement
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration)
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.observation0 : (r : Real) →
+  (hr : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) r) →
+    (hlo :
+        @LT.lt.{0} Real Real.instLT
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+          (@HPow.hPow.{0, 0, 0} Real Nat Real
+            (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) r
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))) →
+      (hhi :
+          @LT.lt.{0} Real Real.instLT
+            (@HPow.hPow.{0, 0, 0} Real Nat Real
+              (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) r
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))) →
+        (z : D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.State) →
+          D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+            Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.signature Unit.unit r :=
+  fun (r : Real)
+    (hr : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) r)
+    (hlo :
+      @LT.lt.{0} Real Real.instLT
+        (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+          (@OfNat.ofNat.{0} Real (nat_lit 2)
+            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+        (@HPow.hPow.{0, 0, 0} Real Nat Real
+          (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) r
+          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+    (hhi :
+      @LT.lt.{0} Real Real.instLT
+        (@HPow.hPow.{0, 0, 0} Real Nat Real
+          (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) r
+          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+        (@OfNat.ofNat.{0} Real (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+    (z : D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.State) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.signature Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.actual
+    Unit.unit r z
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalPhysicalGap\",\"full_source_finite_recovery_gap\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\",\"argument\",\"function\",\"argument\",\"body\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalPhysicalGap\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.full_source_finite_recovery_gap, part := .type, path := [.body, .body, .body, .body, .argument, .argument, .argument, .function, .argument, .body, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalPhysicalGap\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalPhysicalGap\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalPhysicalGap\",\"full_source_finite_recovery_gap\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.full_source_finite_recovery_gap, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration).actual (Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration).variation.2.choose (Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration).variation.1 (Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalPhysicalGap\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalPhysicalGap\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalPhysicalGap.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

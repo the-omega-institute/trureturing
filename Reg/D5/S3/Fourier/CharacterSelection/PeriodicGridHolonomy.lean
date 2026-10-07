@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy
 import Reg.Support.DependentFamily
@@ -89,7 +92,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.flat_label_card, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.canonicalArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.sourceBridgeFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.observationFact0, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.anchorEnumeration }
 
 
 def dimensionActual : Realization signature :=
@@ -173,7 +186,17 @@ noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "arg", "fn", "arg", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.periodic_grid_linear_statistics, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.canonicalArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.canonicalObjectArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.sourceBridgeFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.observationFact0, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.anchorEnumeration }
 
 
 namespace HolonomyConstant
@@ -258,7 +281,17 @@ noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0, 1, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body", "fn", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.flat_holonomy_constant, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.canonicalArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.canonicalObjectArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.sourceBridgeFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.observationFact0, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.anchorEnumeration }
 
 
 end HolonomyConstant
@@ -331,7 +364,17 @@ noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.edge_label_card, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.canonicalArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.canonicalObjectArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.sourceBridgeFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.observationFact0, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.anchorEnumeration }
 
 
 end EdgeCardinality
@@ -406,7 +449,17 @@ noncomputable def registration_5 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.anchored_vertex_card, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.canonicalArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.canonicalObjectArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.sourceBridgeFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.observationFact0, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.anchorEnumeration }
 
 
 end AnchoredVertexCard
@@ -481,7 +534,17 @@ noncomputable def registration_6 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.holonomy_sector_card, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.canonicalArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.canonicalObjectArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.sourceBridgeFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.observationFact0, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.anchorEnumeration }
 
 
 end HolonomySectorCard
@@ -556,7 +619,17 @@ noncomputable def registration_7 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.exact_label_card, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.canonicalArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.canonicalObjectArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.sourceBridgeFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.observationFact0, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.anchorEnumeration }
 
 
 end ExactLabelCard
@@ -637,7 +710,17 @@ noncomputable def registration_8 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, definition := none, coordinates := #[0, 1, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "body", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.seam_holonomy, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.canonicalArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.canonicalObjectArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.sourceBridgeFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.observationFact0, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.anchorEnumeration }
 
 
 end SeamHolonomy
@@ -658,3 +741,669 @@ end SeamHolonomy
 #print axioms SeamHolonomy.registration
 
 end Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy
+
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"SeamHolonomy\",\"registration_8\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"SeamHolonomy\",\"registration_8\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"SeamHolonomy\",\"registration_8\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"SeamHolonomy\",\"registration_8\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"ExactLabelCard\",\"registration_7\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"ExactLabelCard\",\"registration_7\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"ExactLabelCard\",\"registration_7\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"ExactLabelCard\",\"registration_7\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"EdgeCardinality\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"EdgeCardinality\",\"registration_4\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"EdgeCardinality\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"EdgeCardinality\",\"registration_4\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionArena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionArena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomyConstant\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomyConstant\",\"registration_3\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomyConstant\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomyConstant\",\"registration_3\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomySectorCard\",\"registration_6\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomySectorCard\",\"registration_6\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomySectorCard\",\"registration_6\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomySectorCard\",\"registration_6\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"AnchoredVertexCard\",\"registration_5\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"AnchoredVertexCard\",\"registration_5\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"AnchoredVertexCard\",\"registration_5\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"AnchoredVertexCard\",\"registration_5\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.arena
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.actual)
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"seam_holonomy\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"SeamHolonomy\",\"registration_8\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.seam_holonomy, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.arena
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.actual)
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.observation0 : {M N : Nat} →
+  [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M] →
+    [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N] →
+      (h v : ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) →
+        (j : Fin N) →
+          D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+            Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.signature PUnit.unit.{1}
+            (@Sigma.mk.{0, 0} Nat
+              (fun (M : Nat) =>
+                @Sigma.{0, 0} Nat fun (N : Nat) => ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              M
+              (@Sigma.mk.{0, 0} Nat
+                (fun (N : Nat) => ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) N h)) :=
+  fun {M N : Nat} [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M]
+    [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N]
+    (h v : ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) (j : Fin N) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.signature
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat
+      (fun (M : Nat) =>
+        @Sigma.{0, 0} Nat fun (N : Nat) => ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+      M
+      (@Sigma.mk.{0, 0} Nat (fun (N : Nat) => ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) N h))
+    v
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"seam_holonomy\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"SeamHolonomy\",\"registration_8\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.seam_holonomy, part := .type, path := [.body, .body, .body, .body, .body, .body, .argument, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"SeamHolonomy\",\"registration_8\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"SeamHolonomy\",\"registration_8\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"seam_holonomy\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.seam_holonomy, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration).actual (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration).variation.2.choose (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration).variation.1 (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"SeamHolonomy\",\"registration_8\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"SeamHolonomy\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration_8, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.SeamHolonomy.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.arena
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.actual)
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"exact_label_card\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"ExactLabelCard\",\"registration_7\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.exact_label_card, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.arena
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.actual)
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.observation0 : (M N : Nat) →
+  [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M] →
+    [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N] →
+      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+        Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.signature PUnit.unit.{1} M :=
+  fun (M N : Nat) [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M]
+    [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N] =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.signature
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.actual PUnit.unit.{1} M N
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"exact_label_card\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"ExactLabelCard\",\"registration_7\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.exact_label_card, part := .type, path := [.body, .body, .body, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"ExactLabelCard\",\"registration_7\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"ExactLabelCard\",\"registration_7\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"exact_label_card\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.exact_label_card, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration).actual (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration).variation.2.choose (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration).variation.1 (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"ExactLabelCard\",\"registration_7\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"ExactLabelCard\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration_7, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.ExactLabelCard.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.arena
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.actual)
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"edge_label_card\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"EdgeCardinality\",\"registration_4\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.edge_label_card, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.arena
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.actual)
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.observation0 : (M N : Nat) →
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.signature PUnit.unit.{1} M :=
+  fun (M N : Nat) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.signature
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.actual PUnit.unit.{1} M N
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"edge_label_card\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"EdgeCardinality\",\"registration_4\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.edge_label_card, part := .type, path := [.body, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"EdgeCardinality\",\"registration_4\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"EdgeCardinality\",\"registration_4\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"edge_label_card\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.edge_label_card, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration).actual (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration).variation.2.choose (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration).variation.1 (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"EdgeCardinality\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"EdgeCardinality\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeCardinality.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionArena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionArena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionArena
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionActual)
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionRegistration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"periodic_grid_linear_statistics\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.periodic_grid_linear_statistics, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionArena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionArena
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionActual)
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionRegistration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.observation0 : (M N : Nat) →
+  [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M] →
+    [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N] →
+      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+        Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.signature PUnit.unit.{1} M :=
+  fun (M N : Nat) [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M]
+    [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N] =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.signature
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionActual PUnit.unit.{1} M N
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"periodic_grid_linear_statistics\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"argument\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_2\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.periodic_grid_linear_statistics, part := .type, path := [.body, .body, .body, .body, .argument, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_2\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_2\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"periodic_grid_linear_statistics\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.periodic_grid_linear_statistics, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionRegistration).actual (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionRegistration).variation.2.choose (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionRegistration).variation.1 (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionRegistration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"dimensionRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.dimensionRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.arena
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.actual)
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"flat_holonomy_constant\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomyConstant\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.flat_holonomy_constant, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.arena
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.actual)
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.observation0 : {M N : Nat} →
+  [inst : @NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M] →
+    [inst_1 : @NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N] →
+      (y : D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeLabel M N) →
+        (hy : @D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.Flat M N inst inst_1 y) →
+          (i : Fin M) →
+            D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+              Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.signature PUnit.unit.{1}
+              (@Sigma.mk.{0, 0} Nat
+                (fun (M : Nat) =>
+                  @Sigma.{0, 0} Nat fun (N : Nat) =>
+                    D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeLabel M N)
+                M
+                (@Sigma.mk.{0, 0} Nat
+                  (fun (N : Nat) => D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeLabel M N) N y)) :=
+  fun {M N : Nat} [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M]
+    [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N]
+    (y : D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeLabel M N)
+    (hy : @D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.Flat M N inst inst_1 y) (i : Fin M) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.signature
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat
+      (fun (M : Nat) =>
+        @Sigma.{0, 0} Nat fun (N : Nat) => D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeLabel M N)
+      M
+      (@Sigma.mk.{0, 0} Nat (fun (N : Nat) => D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeLabel M N) N y))
+    i
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"flat_holonomy_constant\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"body\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomyConstant\",\"registration_3\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.flat_holonomy_constant, part := .type, path := [.body, .body, .body, .body, .body, .body, .function, .argument, .body, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomyConstant\",\"registration_3\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomyConstant\",\"registration_3\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"flat_holonomy_constant\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.flat_holonomy_constant, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration).actual (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration).variation.2.choose (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration).variation.1 (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomyConstant\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomyConstant\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomyConstant.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.arena
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.actual)
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"holonomy_sector_card\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomySectorCard\",\"registration_6\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.holonomy_sector_card, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.arena
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.actual)
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.observation0 : (M N : Nat) →
+  [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M] →
+    [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N] →
+      (h v : ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) →
+        D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+          Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.signature PUnit.unit.{1} M :=
+  fun (M N : Nat) [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M]
+    [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N]
+    (h v : ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.signature
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.actual PUnit.unit.{1} M N
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"holonomy_sector_card\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomySectorCard\",\"registration_6\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.holonomy_sector_card, part := .type, path := [.body, .body, .body, .body, .body, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomySectorCard\",\"registration_6\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomySectorCard\",\"registration_6\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"holonomy_sector_card\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.holonomy_sector_card, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration).actual (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration).variation.2.choose (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration).variation.1 (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomySectorCard\",\"registration_6\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"HolonomySectorCard\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration_6, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.HolonomySectorCard.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.arena
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.actual)
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"anchored_vertex_card\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"AnchoredVertexCard\",\"registration_5\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.anchored_vertex_card, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.arena
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.actual)
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.observation0 : (M N : Nat) →
+  [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M] →
+    [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N] →
+      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+        Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.signature PUnit.unit.{1} M :=
+  fun (M N : Nat) [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M]
+    [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N] =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.signature
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.actual PUnit.unit.{1} M N
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"anchored_vertex_card\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"AnchoredVertexCard\",\"registration_5\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.anchored_vertex_card, part := .type, path := [.body, .body, .body, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"AnchoredVertexCard\",\"registration_5\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"AnchoredVertexCard\",\"registration_5\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"anchored_vertex_card\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.anchored_vertex_card, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration).actual (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration).variation.2.choose (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration).variation.1 (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"AnchoredVertexCard\",\"registration_5\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"AnchoredVertexCard\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.AnchoredVertexCard.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.arena
+      Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.actual)
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"flat_label_card\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.flat_label_card, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.arena
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.actual)
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.observation0 : (M N : Nat) →
+  [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M] →
+    [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N] →
+      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+        Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.signature PUnit.unit.{1} M :=
+  fun (M N : Nat) [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M]
+    [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N] =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.signature
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.actual PUnit.unit.{1} M N
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"flat_label_card\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.flat_label_card, part := .type, path := [.body, .body, .body, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"flat_label_card\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.flat_label_card, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration).actual (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration).variation.2.choose (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration).variation.1 (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridHolonomy\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

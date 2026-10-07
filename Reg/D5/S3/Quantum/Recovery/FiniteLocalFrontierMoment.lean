@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment
 import Reg.Support.DependentFamily
@@ -152,7 +155,226 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, definition := none, coordinates := #[4, 5], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.same_tree_stopped_moment_certificate, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.observationFact0, `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.anchorEnumeration }
 
 
 end Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment
+
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.arena
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalFrontierMoment\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalFrontierMoment\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.arena
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalFrontierMoment\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalFrontierMoment\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.arena
+    Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.sourceStatement
+    Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration)
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalBellmanEnvelope\",\"same_tree_stopped_moment_certificate\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalFrontierMoment\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.same_tree_stopped_moment_certificate, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.arena
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.sourceStatement
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration)
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.observation0 : (r : Real) →
+  (hr : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) r) →
+    (hlo :
+        @LT.lt.{0} Real Real.instLT
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+          (@HPow.hPow.{0, 0, 0} Real Nat Real
+            (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) r
+            (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))) →
+      (hhi :
+          @LT.lt.{0} Real Real.instLT
+            (@HPow.hPow.{0, 0, 0} Real Nat Real
+              (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) r
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))) →
+        (z : D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.State) →
+          (T : D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Tree z) →
+            (mark : @D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Tree.Leaves z T → Bool) →
+              (accepted :
+                  ∀ (l : @D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Tree.Leaves z T),
+                    @Eq.{1} Bool (mark l) Bool.true →
+                      @Membership.mem.{0, 0}
+                        (Prod.{0, 0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                          D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch)
+                        (Set.{0}
+                          (Prod.{0, 0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                            D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch))
+                        (@Set.instMembership.{0}
+                          (Prod.{0, 0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                            D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch))
+                        (D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.K_s r)
+                        (@Prod.mk.{0, 0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                          D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                          (@Subtype.val.{1} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                            (fun (x : D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch) =>
+                              @Membership.mem.{0, 0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                                (Set.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch)
+                                (@Set.instMembership.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch)
+                                D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Ball x)
+                            (@Prod.fst.{0, 0}
+                              (@Set.Elem.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                                D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Ball)
+                              (@Set.Elem.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                                D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Ball)
+                              (@D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Tree.endpoint z T l)))
+                          (@Subtype.val.{1} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                            (fun (x : D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch) =>
+                              @Membership.mem.{0, 0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                                (Set.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch)
+                                (@Set.instMembership.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch)
+                                D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Ball x)
+                            (@Prod.snd.{0, 0}
+                              (@Set.Elem.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                                D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Ball)
+                              (@Set.Elem.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                                D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Ball)
+                              (@D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Tree.endpoint z T l))))) →
+                D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                  Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.signature Unit.unit
+                  (@Sigma.mk.{0, 0} D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.State
+                    (fun (z : D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.State) =>
+                      Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.BT z)
+                    z T) :=
+  fun (r : Real)
+    (hr : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) r)
+    (hlo :
+      @LT.lt.{0} Real Real.instLT
+        (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+          (@OfNat.ofNat.{0} Real (nat_lit 2)
+            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+        (@HPow.hPow.{0, 0, 0} Real Nat Real
+          (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) r
+          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))
+    (hhi :
+      @LT.lt.{0} Real Real.instLT
+        (@HPow.hPow.{0, 0, 0} Real Nat Real
+          (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) r
+          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+        (@OfNat.ofNat.{0} Real (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+    (z : D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.State)
+    (T : D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Tree z)
+    (mark : @D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Tree.Leaves z T → Bool)
+    (accepted :
+      ∀ (l : @D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Tree.Leaves z T),
+        @Eq.{1} Bool (mark l) Bool.true →
+          @Membership.mem.{0, 0}
+            (Prod.{0, 0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+              D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch)
+            (Set.{0}
+              (Prod.{0, 0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch))
+            (@Set.instMembership.{0}
+              (Prod.{0, 0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch))
+            (D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.K_s r)
+            (@Prod.mk.{0, 0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+              D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+              (@Subtype.val.{1} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                (fun (x : D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch) =>
+                  @Membership.mem.{0, 0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                    (Set.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch)
+                    (@Set.instMembership.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch)
+                    D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Ball x)
+                (@Prod.fst.{0, 0}
+                  (@Set.Elem.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                    D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Ball)
+                  (@Set.Elem.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                    D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Ball)
+                  (@D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Tree.endpoint z T l)))
+              (@Subtype.val.{1} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                (fun (x : D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch) =>
+                  @Membership.mem.{0, 0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                    (Set.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch)
+                    (@Set.instMembership.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch)
+                    D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Ball x)
+                (@Prod.snd.{0, 0}
+                  (@Set.Elem.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                    D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Ball)
+                  (@Set.Elem.{0} D5.S3.Quantum.Recovery.FiniteLocalLatitudeGeometry.Bloch
+                    D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Ball)
+                  (@D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.Tree.endpoint z T l))))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.signature
+    Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.actual Unit.unit
+    (@Sigma.mk.{0, 0} D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.State
+      (fun (z : D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.State) =>
+        Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.BT z)
+      z T)
+    mark
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalBellmanEnvelope\",\"same_tree_stopped_moment_certificate\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalFrontierMoment\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.same_tree_stopped_moment_certificate, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .function, .argument, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalFrontierMoment\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalFrontierMoment\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalBellmanEnvelope\",\"same_tree_stopped_moment_certificate\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `D5.S3.Quantum.Recovery.FiniteLocalBellmanEnvelope.same_tree_stopped_moment_certificate, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration).actual (Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration).variation.2.choose (Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration).variation.1 (Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalFrontierMoment\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalFrontierMoment\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalFrontierMoment.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.Linear.GaussianObservationLaw
 import Reg.Support.DependentFamily
@@ -194,6 +197,124 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Observer.Linear.GaussianObservationLaw, definition := none, coordinates := #[0, 1, 6, 7, 8], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "fn", "arg", "body"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg", "arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `D5.S3.Observer.Linear.GaussianObservationLaw.gaussian_observation_law, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.canonicalArenaFact, `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.sourceBridgeFact, `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.observationFact0, `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.anchorEnumeration }
 
 end Reg.D5.S3.Observer.Linear.GaussianObservationLaw
+
+
+noncomputable def Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{1, 0, 0, 0, 0} :=
+  Reg.D5.S3.Observer.Linear.GaussianObservationLaw.arena
+noncomputable def Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"GaussianObservationLaw\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"GaussianObservationLaw\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{1, 0, 0, 0, 0} :=
+  Reg.D5.S3.Observer.Linear.GaussianObservationLaw.arena
+noncomputable def Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"GaussianObservationLaw\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"GaussianObservationLaw\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
+  Reg.D5.S3.Observer.Linear.GaussianObservationLaw.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{1, 0, 0, 0, 0}
+    Reg.D5.S3.Observer.Linear.GaussianObservationLaw.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
+      Reg.D5.S3.Observer.Linear.GaussianObservationLaw.arena Reg.D5.S3.Observer.Linear.GaussianObservationLaw.actual)
+    Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration)
+
+noncomputable def Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"Linear\",\"GaussianObservationLaw\",\"gaussian_observation_law\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"GaussianObservationLaw\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `D5.S3.Observer.Linear.GaussianObservationLaw.gaussian_observation_law, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{1, 0, 0, 0, 0}
+  Reg.D5.S3.Observer.Linear.GaussianObservationLaw.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
+    Reg.D5.S3.Observer.Linear.GaussianObservationLaw.arena Reg.D5.S3.Observer.Linear.GaussianObservationLaw.actual)
+  Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration)
+
+noncomputable def Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.observation0 : {n p : Type} →
+  [inst : Fintype.{0} n] →
+    [inst_1 : DecidableEq.{1} n] →
+      [inst_2 : Fintype.{0} p] →
+        [inst_3 : DecidableEq.{1} p] →
+          (M : Matrix.{0, 0, 0} p n Real) →
+            (β σ : Real) →
+              (hβ :
+                  @LT.lt.{0} Real Real.instLT
+                    (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) β) →
+                (hσ :
+                    @LT.lt.{0} Real Real.instLT
+                      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+                      (@HPow.hPow.{0, 0, 0} Real Nat Real
+                        (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) σ
+                        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))) →
+                  (z : D5.S3.Observer.Linear.GaussianObservationLaw.E (Sum.{0, 0} n p)) →
+                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{1, 0, 0, 0, 0}
+                      Reg.D5.S3.Observer.Linear.GaussianObservationLaw.signature PUnit.unit.{1}
+                      (Reg.D5.S3.Observer.Linear.GaussianObservationLaw.Parameters.mk n p inst inst_1 inst_2 inst_3 M β
+                        σ) :=
+  fun {n p : Type} [inst : Fintype.{0} n] [inst_1 : DecidableEq.{1} n] [inst_2 : Fintype.{0} p]
+    [inst_3 : DecidableEq.{1} p] (M : Matrix.{0, 0, 0} p n Real) (β σ : Real)
+    (hβ : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) β)
+    (hσ :
+      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+        (@HPow.hPow.{0, 0, 0} Real Nat Real
+          (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) σ
+          (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))) =>
+  have τ : Real :=
+    @Inv.inv.{0} Real Real.instInv
+      (@HPow.hPow.{0, 0, 0} Real Nat Real
+        (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) σ
+        (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))));
+  fun (z : D5.S3.Observer.Linear.GaussianObservationLaw.E (Sum.{0, 0} n p)) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{1, 0, 0, 0, 0}
+    Reg.D5.S3.Observer.Linear.GaussianObservationLaw.signature Reg.D5.S3.Observer.Linear.GaussianObservationLaw.actual
+    PUnit.unit.{1} (Reg.D5.S3.Observer.Linear.GaussianObservationLaw.Parameters.mk n p inst inst_1 inst_2 inst_3 M β σ)
+    z
+
+noncomputable def Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"Linear\",\"GaussianObservationLaw\",\"gaussian_observation_law\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"letBody\",\"argument\",\"function\",\"argument\",\"function\",\"argument\",\"function\",\"argument\",\"function\",\"argument\",\"body\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"GaussianObservationLaw\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `D5.S3.Observer.Linear.GaussianObservationLaw.gaussian_observation_law, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .letBody, .argument, .function, .argument, .function, .argument, .function, .argument, .function, .argument, .body], levels := [] }
+  { owner := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"GaussianObservationLaw\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"GaussianObservationLaw\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"Linear\",\"GaussianObservationLaw\",\"gaussian_observation_law\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `D5.S3.Observer.Linear.GaussianObservationLaw.gaussian_observation_law, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration).actual (Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration).variation.2.choose (Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration).variation.1 (Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"GaussianObservationLaw\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"Linear\",\"GaussianObservationLaw\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw, declaration := `Reg.D5.S3.Observer.Linear.GaussianObservationLaw.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

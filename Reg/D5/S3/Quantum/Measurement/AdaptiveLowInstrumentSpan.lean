@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan
 import Reg.Support.DependentFamily
@@ -158,7 +161,17 @@ noncomputable def registration_1.{u_1, u_3} : LeanInformationAudit.Contract.Regi
   sourceSelection := some { owner := `D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, definition := none, coordinates := #[0, 3, 8], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "arg", "arg", "fn", "arg"], stateBinder := 10, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.actual_adaptive_span, part := .type, path := [], levels := [.param `u_1, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_3] }], facts := [`Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.observationFact0, `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.anchorEnumeration }
 
 
 #print axioms actual_law
@@ -167,3 +180,269 @@ noncomputable def registration_1.{u_1, u_3} : LeanInformationAudit.Contract.Regi
 #print axioms dependence
 
 end Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan
+
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.canonicalArenaOperand.{u_1, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (u_1 + 1) (u_3 + 1), u_1, 0, max u_1 u_3, 0} :=
+  Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena.{u_1, u_3}
+noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.canonicalArenaFact.{u_1, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_3)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.canonicalObjectArenaOperand.{u_1, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (u_1 + 1) (u_3 + 1), u_1, 0, max u_1 u_3, 0} :=
+  Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena.{u_1, u_3}
+noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.canonicalObjectArenaFact.{u_1, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_3)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.sourceLaw.{u_1, u_3} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_3 + 1), u_1, 0, max u_1 u_3, 0}
+  Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena.{u_1, u_3}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u_1 + 1) (u_3 + 1), u_1, 0,
+        max u_1 u_3, 0}
+    Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena.{u_1, u_3}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_3 + 1), u_1, 0, max u_1 u_3, 0}
+      Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena.{u_1, u_3}
+      Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.actual.{u_1, u_3})
+    Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration.{u_1, u_3})
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.sourceBridgeFact.{u_1, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"actual_adaptive_span\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.actual_adaptive_span, part := .type, path := [], levels := [(.param `u_1), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_3)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u_1 + 1) (u_3 + 1), u_1, 0,
+      max u_1 u_3, 0}
+  Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena.{u_1, u_3}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_3 + 1), u_1, 0, max u_1 u_3, 0}
+    Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.arena.{u_1, u_3}
+    Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.actual.{u_1, u_3})
+  Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration.{u_1, u_3})
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.observation0.{u_1, u_3} : {a : Type u_1} →
+  [inst : Fintype.{u_1} a] →
+    [inst_1 : DecidableEq.{u_1 + 1} a] →
+      {h : Type u_3} →
+        [inst_2 : Fintype.{u_3} h] →
+          [inst_3 : DecidableEq.{u_3 + 1} h] →
+            [inst_4 : Nonempty.{u_1 + 1} a] →
+              [inst_5 : Nonempty.{u_3 + 1} h] →
+                (W : CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex) →
+                  (hW :
+                      And
+                        (@Eq.{max (u_1 + 1) (u_3 + 1)}
+                          (CStarMatrix.{max u_1 u_3, max u_1 u_3, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                            Complex)
+                          (@HMul.hMul.{max u_1 u_3, max u_1 u_3, max u_1 u_3}
+                            (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                              Complex)
+                            (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                              Complex)
+                            (CStarMatrix.{max u_1 u_3, max u_1 u_3, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                              Complex)
+                            (@CStarMatrix.instHMulOfFintypeOfMulOfAddCommMonoid.{max u_1 u_3, max u_1 u_3, 0,
+                                  max u_1 u_3}
+                              (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex (Prod.{u_1, u_3} a h)
+                              (@instFintypeProd.{u_1, u_3} a h inst inst_2) Complex.instMul Complex.instAddCommMonoid)
+                            (@Star.star.{max u_1 u_3}
+                              (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                                Complex)
+                              (@CStarMatrix.instStar.{max u_1 u_3, 0} (Prod.{u_1, u_3} a h) Complex
+                                (@InvolutiveStar.toStar.{0} Complex
+                                  (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                                    (@AddCommMonoid.toAddMonoid.{0} Complex
+                                      (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                        (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                              Complex.instNonUnitalCommRing)))))
+                                    (@StarRing.toStarAddMonoid.{0} Complex
+                                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                            Complex.instNonUnitalCommRing)))
+                                      Complex.instStarRing))))
+                              W)
+                            W)
+                          (@OfNat.ofNat.{max u_1 u_3}
+                            (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                              Complex)
+                            (nat_lit 1)
+                            (@One.toOfNat1.{max u_1 u_3}
+                              (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                                Complex)
+                              (@CStarMatrix.instOne.{max u_1 u_3, 0} (Prod.{u_1, u_3} a h) Complex
+                                (fun (a_1 b : Prod.{u_1, u_3} a h) =>
+                                  @instDecidableEqProd.{u_1, u_3} a h inst_1 inst_3 a_1 b)
+                                Complex.instZero Complex.instOne))))
+                        (@Eq.{max (u_1 + 1) (u_3 + 1)}
+                          (CStarMatrix.{max u_1 u_3, max u_1 u_3, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                            Complex)
+                          (@HMul.hMul.{max u_1 u_3, max u_1 u_3, max u_1 u_3}
+                            (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                              Complex)
+                            (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                              Complex)
+                            (CStarMatrix.{max u_1 u_3, max u_1 u_3, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                              Complex)
+                            (@CStarMatrix.instHMulOfFintypeOfMulOfAddCommMonoid.{max u_1 u_3, max u_1 u_3, 0,
+                                  max u_1 u_3}
+                              (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex (Prod.{u_1, u_3} a h)
+                              (@instFintypeProd.{u_1, u_3} a h inst inst_2) Complex.instMul Complex.instAddCommMonoid)
+                            W
+                            (@Star.star.{max u_1 u_3}
+                              (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                                Complex)
+                              (@CStarMatrix.instStar.{max u_1 u_3, 0} (Prod.{u_1, u_3} a h) Complex
+                                (@InvolutiveStar.toStar.{0} Complex
+                                  (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                                    (@AddCommMonoid.toAddMonoid.{0} Complex
+                                      (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                        (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                              Complex.instNonUnitalCommRing)))))
+                                    (@StarRing.toStarAddMonoid.{0} Complex
+                                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                            Complex.instNonUnitalCommRing)))
+                                      Complex.instStarRing))))
+                              W))
+                          (@OfNat.ofNat.{max u_1 u_3}
+                            (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                              Complex)
+                            (nat_lit 1)
+                            (@One.toOfNat1.{max u_1 u_3}
+                              (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                                Complex)
+                              (@CStarMatrix.instOne.{max u_1 u_3, 0} (Prod.{u_1, u_3} a h) Complex
+                                (fun (a_1 b : Prod.{u_1, u_3} a h) =>
+                                  @instDecidableEqProd.{u_1, u_3} a h inst_1 inst_3 a_1 b)
+                                Complex.instZero Complex.instOne))))) →
+                    (e : @D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.Event.{u_1} a inst inst_1) →
+                      (rho :
+                          CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h)
+                            Complex) →
+                        D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{max (u_1 + 1)
+                              (u_3 + 1),
+                            u_1, 0, max u_1 u_3, 0}
+                          Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.signature.{u_1, u_3} PUnit.unit.{1}
+                          (Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.Model.mk.{u_1, u_3} a h inst inst_1
+                            inst_4 inst_2 inst_3 inst_5 W) :=
+  fun {a : Type u_1} [inst : Fintype.{u_1} a] [inst_1 : DecidableEq.{u_1 + 1} a] {h : Type u_3} [inst_2 : Fintype.{u_3} h]
+    [inst_3 : DecidableEq.{u_3 + 1} h] [inst_4 : Nonempty.{u_1 + 1} a] [inst_5 : Nonempty.{u_3 + 1} h]
+    (W : CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex)
+    (hW :
+      And
+        (@Eq.{max (u_1 + 1) (u_3 + 1)}
+          (CStarMatrix.{max u_1 u_3, max u_1 u_3, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex)
+          (@HMul.hMul.{max u_1 u_3, max u_1 u_3, max u_1 u_3}
+            (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex)
+            (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex)
+            (CStarMatrix.{max u_1 u_3, max u_1 u_3, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex)
+            (@CStarMatrix.instHMulOfFintypeOfMulOfAddCommMonoid.{max u_1 u_3, max u_1 u_3, 0, max u_1 u_3}
+              (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex (Prod.{u_1, u_3} a h)
+              (@instFintypeProd.{u_1, u_3} a h inst inst_2) Complex.instMul Complex.instAddCommMonoid)
+            (@Star.star.{max u_1 u_3}
+              (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex)
+              (@CStarMatrix.instStar.{max u_1 u_3, 0} (Prod.{u_1, u_3} a h) Complex
+                (@InvolutiveStar.toStar.{0} Complex
+                  (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                    (@AddCommMonoid.toAddMonoid.{0} Complex
+                      (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                        (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                              Complex.instNonUnitalCommRing)))))
+                    (@StarRing.toStarAddMonoid.{0} Complex
+                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                      Complex.instStarRing))))
+              W)
+            W)
+          (@OfNat.ofNat.{max u_1 u_3}
+            (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex) (nat_lit 1)
+            (@One.toOfNat1.{max u_1 u_3}
+              (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex)
+              (@CStarMatrix.instOne.{max u_1 u_3, 0} (Prod.{u_1, u_3} a h) Complex
+                (fun (a_1 b : Prod.{u_1, u_3} a h) => @instDecidableEqProd.{u_1, u_3} a h inst_1 inst_3 a_1 b)
+                Complex.instZero Complex.instOne))))
+        (@Eq.{max (u_1 + 1) (u_3 + 1)}
+          (CStarMatrix.{max u_1 u_3, max u_1 u_3, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex)
+          (@HMul.hMul.{max u_1 u_3, max u_1 u_3, max u_1 u_3}
+            (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex)
+            (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex)
+            (CStarMatrix.{max u_1 u_3, max u_1 u_3, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex)
+            (@CStarMatrix.instHMulOfFintypeOfMulOfAddCommMonoid.{max u_1 u_3, max u_1 u_3, 0, max u_1 u_3}
+              (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex (Prod.{u_1, u_3} a h)
+              (@instFintypeProd.{u_1, u_3} a h inst inst_2) Complex.instMul Complex.instAddCommMonoid)
+            W
+            (@Star.star.{max u_1 u_3}
+              (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex)
+              (@CStarMatrix.instStar.{max u_1 u_3, 0} (Prod.{u_1, u_3} a h) Complex
+                (@InvolutiveStar.toStar.{0} Complex
+                  (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                    (@AddCommMonoid.toAddMonoid.{0} Complex
+                      (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                        (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                              Complex.instNonUnitalCommRing)))))
+                    (@StarRing.toStarAddMonoid.{0} Complex
+                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                      Complex.instStarRing))))
+              W))
+          (@OfNat.ofNat.{max u_1 u_3}
+            (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex) (nat_lit 1)
+            (@One.toOfNat1.{max u_1 u_3}
+              (CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex)
+              (@CStarMatrix.instOne.{max u_1 u_3, 0} (Prod.{u_1, u_3} a h) Complex
+                (fun (a_1 b : Prod.{u_1, u_3} a h) => @instDecidableEqProd.{u_1, u_3} a h inst_1 inst_3 a_1 b)
+                Complex.instZero Complex.instOne)))))
+    (e : @D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.Event.{u_1} a inst inst_1)
+    (rho : CStarMatrix.{max u_3 u_1, max u_3 u_1, 0} (Prod.{u_1, u_3} a h) (Prod.{u_1, u_3} a h) Complex) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{max (u_1 + 1) (u_3 + 1), u_1, 0,
+        max u_1 u_3, 0}
+    Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.signature.{u_1, u_3}
+    Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.actual.{u_1, u_3} PUnit.unit.{1}
+    (Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.Model.mk.{u_1, u_3} a h inst inst_1 inst_4 inst_2 inst_3
+      inst_5 W)
+    e
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.observationFact0.{u_1, u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"actual_adaptive_span\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"body\",\"body\",\"argument\",\"argument\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.actual_adaptive_span, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .function, .argument, .body, .body, .argument, .argument, .function, .argument], levels := [(.param `u_1), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.varyingLawInput.{u_1, u_3} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.canonicalArenaOperand.{u_1, u_3})
+noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.varyingLaw.{u_1, u_3}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.statementExclusion.{u_1, u_3} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"actual_adaptive_span\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_3)] }
+  statementLocation := { owner := `D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.actual_adaptive_span, part := .type, path := [], levels := [(.param `u_1), (.param `u_3)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration.{u_1, u_3}).actual (Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration.{u_1, u_3}).variation.2.choose (Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration.{u_1, u_3}).variation.1 (Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration.{u_1, u_3}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1.descriptorFact.{u_1, u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"AdaptiveLowInstrumentSpan\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan, declaration := `Reg.D5.S3.Quantum.Measurement.AdaptiveLowInstrumentSpan.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))

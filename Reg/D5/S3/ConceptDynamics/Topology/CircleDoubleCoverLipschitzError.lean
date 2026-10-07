@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError
 import Reg.Support.DependentFamily
@@ -141,7 +144,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lower_bound, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.canonicalArenaFact, `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.sourceBridgeFact, `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.observationFact0, `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.anchorEnumeration }
 
 
 noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpness) (type_of% (realize.{0, 0, 0, 0, 0} signature
@@ -172,7 +185,17 @@ noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "arg", "body", "arg", "fn", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpness, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.canonicalArenaFact, `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.canonicalObjectArenaFact, `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.sourceBridgeFact, `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.observationFact0, `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.descriptorFact] },
+  exclusion := some `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.anchorEnumeration }
 
 
 #print axioms lowerRegistration
@@ -181,3 +204,1021 @@ noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_
 end
 
 end Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError
+
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpArena
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpArena
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerArena
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerArena
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpArena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpArena
+    (∀ (L : NNReal),
+      @LE.le.{0} Real Real.instLE
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+          (NNReal.toReal L) →
+        @Exists.{1}
+          (@AddCircle.{0} Real Real.instAddCommGroup
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi) →
+            @AddCircle.{0} Real Real.instAddCommGroup
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi))
+          fun
+            (s :
+              @AddCircle.{0} Real Real.instAddCommGroup
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi) →
+                @AddCircle.{0} Real Real.instAddCommGroup
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi)) =>
+          And
+            (@LipschitzWith.{0, 0}
+              (@AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi))
+              (@AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi))
+              (@EMetricSpace.toPseudoEMetricSpace.{0}
+                (@AddCircle.{0} Real Real.instAddCommGroup
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi))
+                (@MetricSpace.toEMetricSpace.{0}
+                  (@AddCircle.{0} Real Real.instAddCommGroup
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                      (@OfNat.ofNat.{0} Real (nat_lit 2)
+                        (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                          (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                      Real.pi))
+                  (@NormedAddCommGroup.toMetricSpace.{0}
+                    (@AddCircle.{0} Real Real.instAddCommGroup
+                      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                        (@OfNat.ofNat.{0} Real (nat_lit 2)
+                          (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                        Real.pi))
+                    (AddCircle.instNormedAddCommGroupReal
+                      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                        (@OfNat.ofNat.{0} Real (nat_lit 2)
+                          (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                        Real.pi)))))
+              (@EMetricSpace.toPseudoEMetricSpace.{0}
+                (@AddCircle.{0} Real Real.instAddCommGroup
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi))
+                (@MetricSpace.toEMetricSpace.{0}
+                  (@AddCircle.{0} Real Real.instAddCommGroup
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                      (@OfNat.ofNat.{0} Real (nat_lit 2)
+                        (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                          (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                      Real.pi))
+                  (@NormedAddCommGroup.toMetricSpace.{0}
+                    (@AddCircle.{0} Real Real.instAddCommGroup
+                      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                        (@OfNat.ofNat.{0} Real (nat_lit 2)
+                          (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                        Real.pi))
+                    (AddCircle.instNormedAddCommGroupReal
+                      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                        (@OfNat.ofNat.{0} Real (nat_lit 2)
+                          (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                        Real.pi)))))
+              L s)
+            (@Eq.{1} Real
+              (@MeasureTheory.integral.{0, 0}
+                (@AddCircle.{0} Real Real.instAddCommGroup
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi))
+                Real Real.normedAddCommGroup
+                (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+                  (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+                (@QuotientAddGroup.measurableSpace.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)
+                  Real.measurableSpace
+                  (@AddSubgroup.zmultiples.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                      (@OfNat.ofNat.{0} Real (nat_lit 2)
+                        (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                          (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                      Real.pi)))
+                (@AddCircle.haarAddCircle
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi)
+                  Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.instFactLtRealOfNatHMulPi_reg)
+                fun
+                  (x :
+                    @AddCircle.{0} Real Real.instAddCommGroup
+                      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                        (@OfNat.ofNat.{0} Real (nat_lit 2)
+                          (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                        Real.pi)) =>
+                D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.circle_error s x)
+              (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    (NNReal.toReal L))
+                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))))
+    Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpRegistration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"sharpness\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpness, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpArena
+  (∀ (L : NNReal),
+    @LE.le.{0} Real Real.instLE
+        (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+          (@OfNat.ofNat.{0} Real (nat_lit 2)
+            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+        (NNReal.toReal L) →
+      @Exists.{1}
+        (@AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi) →
+          @AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi))
+        fun
+          (s :
+            @AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi) →
+              @AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi)) =>
+        And
+          (@LipschitzWith.{0, 0}
+            (@AddCircle.{0} Real Real.instAddCommGroup
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi))
+            (@AddCircle.{0} Real Real.instAddCommGroup
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi))
+            (@EMetricSpace.toPseudoEMetricSpace.{0}
+              (@AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi))
+              (@MetricSpace.toEMetricSpace.{0}
+                (@AddCircle.{0} Real Real.instAddCommGroup
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi))
+                (@NormedAddCommGroup.toMetricSpace.{0}
+                  (@AddCircle.{0} Real Real.instAddCommGroup
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                      (@OfNat.ofNat.{0} Real (nat_lit 2)
+                        (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                          (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                      Real.pi))
+                  (AddCircle.instNormedAddCommGroupReal
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                      (@OfNat.ofNat.{0} Real (nat_lit 2)
+                        (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                          (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                      Real.pi)))))
+            (@EMetricSpace.toPseudoEMetricSpace.{0}
+              (@AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi))
+              (@MetricSpace.toEMetricSpace.{0}
+                (@AddCircle.{0} Real Real.instAddCommGroup
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi))
+                (@NormedAddCommGroup.toMetricSpace.{0}
+                  (@AddCircle.{0} Real Real.instAddCommGroup
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                      (@OfNat.ofNat.{0} Real (nat_lit 2)
+                        (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                          (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                      Real.pi))
+                  (AddCircle.instNormedAddCommGroupReal
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                      (@OfNat.ofNat.{0} Real (nat_lit 2)
+                        (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                          (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                      Real.pi)))))
+            L s)
+          (@Eq.{1} Real
+            (@MeasureTheory.integral.{0, 0}
+              (@AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi))
+              Real Real.normedAddCommGroup
+              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+              (@QuotientAddGroup.measurableSpace.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)
+                Real.measurableSpace
+                (@AddSubgroup.zmultiples.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi)))
+              (@AddCircle.haarAddCircle
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi)
+                Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.instFactLtRealOfNatHMulPi_reg)
+              fun
+                (x :
+                  @AddCircle.{0} Real Real.instAddCommGroup
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                      (@OfNat.ofNat.{0} Real (nat_lit 2)
+                        (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                          (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                      Real.pi)) =>
+              D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.circle_error s x)
+            (@HDiv.hDiv.{0, 0, 0} Real Real Real
+              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  (NNReal.toReal L))
+                (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))))
+  Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpRegistration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.observation0 : (L : NNReal) →
+  (hL :
+      @LE.le.{0} Real Real.instLE
+        (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+          (@OfNat.ofNat.{0} Real (nat_lit 2)
+            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+        (NNReal.toReal L)) →
+    (s :
+        @AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi) →
+          @AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi)) →
+      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+        Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.signature PUnit.unit.{1} L :=
+  fun (L : NNReal)
+    (hL :
+      @LE.le.{0} Real Real.instLE
+        (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+          (@OfNat.ofNat.{0} Real (nat_lit 2)
+            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+        (NNReal.toReal L))
+    (s :
+      @AddCircle.{0} Real Real.instAddCommGroup
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            Real.pi) →
+        @AddCircle.{0} Real Real.instAddCommGroup
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            Real.pi)) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.signature
+    Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.actual PUnit.unit.{1} L s
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"sharpness\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"argument\",\"body\",\"argument\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_2\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpness, part := .type, path := [.body, .body, .argument, .body, .argument, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_2\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_2\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"sharpness\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpness, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpRegistration).actual (Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpRegistration).variation.2.choose (Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpRegistration).variation.1 (Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpRegistration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"sharpRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerArena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerArena
+    (∀ (L : NNReal)
+      (s :
+        @AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi) →
+          @AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi)),
+      @LipschitzWith.{0, 0}
+          (@AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi))
+          (@AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi))
+          (@EMetricSpace.toPseudoEMetricSpace.{0}
+            (@AddCircle.{0} Real Real.instAddCommGroup
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi))
+            (@MetricSpace.toEMetricSpace.{0}
+              (@AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi))
+              (@NormedAddCommGroup.toMetricSpace.{0}
+                (@AddCircle.{0} Real Real.instAddCommGroup
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi))
+                (AddCircle.instNormedAddCommGroupReal
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi)))))
+          (@EMetricSpace.toPseudoEMetricSpace.{0}
+            (@AddCircle.{0} Real Real.instAddCommGroup
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi))
+            (@MetricSpace.toEMetricSpace.{0}
+              (@AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi))
+              (@NormedAddCommGroup.toMetricSpace.{0}
+                (@AddCircle.{0} Real Real.instAddCommGroup
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi))
+                (AddCircle.instNormedAddCommGroupReal
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi)))))
+          L s →
+        @LE.le.{0} Real Real.instLE
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                (NNReal.toReal L))
+              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
+          (@MeasureTheory.integral.{0, 0}
+            (@AddCircle.{0} Real Real.instAddCommGroup
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi))
+            Real Real.normedAddCommGroup
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            (@QuotientAddGroup.measurableSpace.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)
+              Real.measurableSpace
+              (@AddSubgroup.zmultiples.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi)))
+            (@AddCircle.haarAddCircle
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi)
+              Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.instFactLtRealOfNatHMulPi_reg)
+            fun
+              (x :
+                @AddCircle.{0} Real Real.instAddCommGroup
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi)) =>
+            D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.circle_error s x))
+    Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerRegistration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"lower_bound\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lower_bound, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerArena
+  (∀ (L : NNReal)
+    (s :
+      @AddCircle.{0} Real Real.instAddCommGroup
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            Real.pi) →
+        @AddCircle.{0} Real Real.instAddCommGroup
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            Real.pi)),
+    @LipschitzWith.{0, 0}
+        (@AddCircle.{0} Real Real.instAddCommGroup
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            Real.pi))
+        (@AddCircle.{0} Real Real.instAddCommGroup
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            Real.pi))
+        (@EMetricSpace.toPseudoEMetricSpace.{0}
+          (@AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi))
+          (@MetricSpace.toEMetricSpace.{0}
+            (@AddCircle.{0} Real Real.instAddCommGroup
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi))
+            (@NormedAddCommGroup.toMetricSpace.{0}
+              (@AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi))
+              (AddCircle.instNormedAddCommGroupReal
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi)))))
+        (@EMetricSpace.toPseudoEMetricSpace.{0}
+          (@AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi))
+          (@MetricSpace.toEMetricSpace.{0}
+            (@AddCircle.{0} Real Real.instAddCommGroup
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi))
+            (@NormedAddCommGroup.toMetricSpace.{0}
+              (@AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi))
+              (AddCircle.instNormedAddCommGroupReal
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi)))))
+        L s →
+      @LE.le.{0} Real Real.instLE
+        (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+          (@OfNat.ofNat.{0} Real (nat_lit 2)
+            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+          (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              (NNReal.toReal L))
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
+        (@MeasureTheory.integral.{0, 0}
+          (@AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi))
+          Real Real.normedAddCommGroup
+          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+            (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+          (@QuotientAddGroup.measurableSpace.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)
+            Real.measurableSpace
+            (@AddSubgroup.zmultiples.{0} Real (@AddCommGroup.toAddGroup.{0} Real Real.instAddCommGroup)
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi)))
+          (@AddCircle.haarAddCircle
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi)
+            Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.instFactLtRealOfNatHMulPi_reg)
+          fun
+            (x :
+              @AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi)) =>
+          D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.circle_error s x))
+  Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerRegistration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.observation0 : (L : NNReal) →
+  (s :
+      @AddCircle.{0} Real Real.instAddCommGroup
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            Real.pi) →
+        @AddCircle.{0} Real Real.instAddCommGroup
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            Real.pi)) →
+    (hs :
+        @LipschitzWith.{0, 0}
+          (@AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi))
+          (@AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi))
+          (@EMetricSpace.toPseudoEMetricSpace.{0}
+            (@AddCircle.{0} Real Real.instAddCommGroup
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi))
+            (@MetricSpace.toEMetricSpace.{0}
+              (@AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi))
+              (@NormedAddCommGroup.toMetricSpace.{0}
+                (@AddCircle.{0} Real Real.instAddCommGroup
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi))
+                (AddCircle.instNormedAddCommGroupReal
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi)))))
+          (@EMetricSpace.toPseudoEMetricSpace.{0}
+            (@AddCircle.{0} Real Real.instAddCommGroup
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi))
+            (@MetricSpace.toEMetricSpace.{0}
+              (@AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi))
+              (@NormedAddCommGroup.toMetricSpace.{0}
+                (@AddCircle.{0} Real Real.instAddCommGroup
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi))
+                (AddCircle.instNormedAddCommGroupReal
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@OfNat.ofNat.{0} Real (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    Real.pi)))))
+          L s) →
+      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+        Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.signature PUnit.unit.{1} L :=
+  fun (L : NNReal)
+    (s :
+      @AddCircle.{0} Real Real.instAddCommGroup
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            Real.pi) →
+        @AddCircle.{0} Real Real.instAddCommGroup
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            Real.pi))
+    (hs :
+      @LipschitzWith.{0, 0}
+        (@AddCircle.{0} Real Real.instAddCommGroup
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            Real.pi))
+        (@AddCircle.{0} Real Real.instAddCommGroup
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            Real.pi))
+        (@EMetricSpace.toPseudoEMetricSpace.{0}
+          (@AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi))
+          (@MetricSpace.toEMetricSpace.{0}
+            (@AddCircle.{0} Real Real.instAddCommGroup
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi))
+            (@NormedAddCommGroup.toMetricSpace.{0}
+              (@AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi))
+              (AddCircle.instNormedAddCommGroupReal
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi)))))
+        (@EMetricSpace.toPseudoEMetricSpace.{0}
+          (@AddCircle.{0} Real Real.instAddCommGroup
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              Real.pi))
+          (@MetricSpace.toEMetricSpace.{0}
+            (@AddCircle.{0} Real Real.instAddCommGroup
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                (@OfNat.ofNat.{0} Real (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                Real.pi))
+            (@NormedAddCommGroup.toMetricSpace.{0}
+              (@AddCircle.{0} Real Real.instAddCommGroup
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi))
+              (AddCircle.instNormedAddCommGroupReal
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@OfNat.ofNat.{0} Real (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  Real.pi)))))
+        L s) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.signature
+    Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.actual PUnit.unit.{1} L s
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"lower_bound\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lower_bound, part := .type, path := [.body, .body, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"lower_bound\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lower_bound, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerRegistration).actual (Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerRegistration).variation.2.choose (Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerRegistration).variation.1 (Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerRegistration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Topology\",\"CircleDoubleCoverLipschitzError\",\"lowerRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, declaration := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

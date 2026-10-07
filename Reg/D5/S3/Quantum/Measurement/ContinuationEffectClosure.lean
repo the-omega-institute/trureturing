@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.ContinuationEffectClosure
 import Reg.Support.DependentFamily
@@ -113,7 +116,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Quantum.Measurement.ContinuationEffectClosure, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "body", "body", "body", "arg"], stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `D5.S3.Quantum.Measurement.ContinuationEffectClosure.continuationSpace_closure, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.observationFact0, `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.anchorEnumeration }
 
 
 #print axioms actual_law
@@ -122,3 +135,820 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
 #print axioms dependence_proof
 
 end Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure
+
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.arena
+noncomputable def Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"ContinuationEffectClosure\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"ContinuationEffectClosure\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.arena
+noncomputable def Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"ContinuationEffectClosure\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"ContinuationEffectClosure\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.arena
+      Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.actual)
+    Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration)
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"ContinuationEffectClosure\",\"continuationSpace_closure\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"ContinuationEffectClosure\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `D5.S3.Quantum.Measurement.ContinuationEffectClosure.continuationSpace_closure, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.arena
+    Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.actual)
+  Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration)
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.observation0 : {d : Nat} →
+  {J : Type} →
+    {κ : J → Type} →
+      [inst : (j : J) → Fintype.{0} (κ j)] →
+        (K : (j : J) → κ j → Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) →
+          (Z₀ :
+              @Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                  (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                      instInnerProductSpaceRealComplex)))) →
+            (hZ₀ :
+                ∀ (H : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex),
+                  @Membership.mem.{0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                      (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                        (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                        (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                          Complex.instAddCommMonoid
+                          (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                  (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                    (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                            (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                              instInnerProductSpaceRealComplex))))
+                      (@SetLike.instMembership.{0, 0}
+                        (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                          (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                          (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                            Complex.instAddCommMonoid
+                            (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                              (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                                instInnerProductSpaceRealComplex))))
+                        (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                        (@Submodule.setLike.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                          (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                          (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                            Complex.instAddCommMonoid
+                            (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                              (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                                instInnerProductSpaceRealComplex)))))
+                      Z₀ H →
+                    @Eq.{1} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                      (@Matrix.conjTranspose.{0, 0, 0} (Fin d) (Fin d) Complex
+                        (@InvolutiveStar.toStar.{0} Complex
+                          (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                            (@AddCommMonoid.toAddMonoid.{0} Complex
+                              (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                  (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                    (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                      Complex.instNonUnitalCommRing)))))
+                            (@StarRing.toStarAddMonoid.{0} Complex
+                              (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                  (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                    Complex.instNonUnitalCommRing)))
+                              Complex.instStarRing)))
+                        H)
+                      H) →
+              (W :
+                  @Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                    (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                    (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                      (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                              (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                        (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                          instInnerProductSpaceRealComplex)))) →
+                @LE.le.{0}
+                    (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                      (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                      (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                        (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                          (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                  (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                    (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                            instInnerProductSpaceRealComplex))))
+                    (@Preorder.toLE.{0}
+                      (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                        (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                        (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                          Complex.instAddCommMonoid
+                          (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                  (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                    (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                            (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                              instInnerProductSpaceRealComplex))))
+                      (@PartialOrder.toPreorder.{0}
+                        (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                          (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                          (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                            Complex.instAddCommMonoid
+                            (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                              (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                                instInnerProductSpaceRealComplex))))
+                        (@Submodule.instPartialOrder.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                          Real.semiring
+                          (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                          (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                            Complex.instAddCommMonoid
+                            (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                              (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                                instInnerProductSpaceRealComplex))))))
+                    Z₀ W →
+                  (∀ (j : J) (H : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex),
+                      @Membership.mem.{0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                          (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                            (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                            (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                              Complex.instAddCommMonoid
+                              (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                            instCommCStarAlgebraComplex)))))
+                                  instInnerProductSpaceRealComplex))))
+                          (@SetLike.instMembership.{0, 0}
+                            (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                              (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                              (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                                Complex.instAddCommMonoid
+                                (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                            instCommCStarAlgebraComplex)))))
+                                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                              instCommCStarAlgebraComplex)))))
+                                    instInnerProductSpaceRealComplex))))
+                            (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                            (@Submodule.setLike.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                              (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                              (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                                Complex.instAddCommMonoid
+                                (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                            instCommCStarAlgebraComplex)))))
+                                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                              instCommCStarAlgebraComplex)))))
+                                    instInnerProductSpaceRealComplex)))))
+                          W H →
+                        @Membership.mem.{0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                          (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                            (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                            (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                              Complex.instAddCommMonoid
+                              (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                            instCommCStarAlgebraComplex)))))
+                                  instInnerProductSpaceRealComplex))))
+                          (@SetLike.instMembership.{0, 0}
+                            (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                              (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                              (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                                Complex.instAddCommMonoid
+                                (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                            instCommCStarAlgebraComplex)))))
+                                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                              instCommCStarAlgebraComplex)))))
+                                    instInnerProductSpaceRealComplex))))
+                            (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                            (@Submodule.setLike.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                              (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                              (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                                Complex.instAddCommMonoid
+                                (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                            instCommCStarAlgebraComplex)))))
+                                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                              instCommCStarAlgebraComplex)))))
+                                    instInnerProductSpaceRealComplex)))))
+                          W
+                          (@DFunLike.coe.{1, 1, 1}
+                            (@LinearMap.{0, 0, 0, 0} Real Real Real.semiring Real.semiring
+                              (@RingHom.id.{0} Real (@Semiring.toNonAssocSemiring.{0} Real Real.semiring))
+                              (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                              (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                              (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                              (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                                Complex.instAddCommMonoid
+                                (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                            instCommCStarAlgebraComplex)))))
+                                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                              instCommCStarAlgebraComplex)))))
+                                    instInnerProductSpaceRealComplex)))
+                              (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                                Complex.instAddCommMonoid
+                                (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                            instCommCStarAlgebraComplex)))))
+                                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                              instCommCStarAlgebraComplex)))))
+                                    instInnerProductSpaceRealComplex))))
+                            (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                            (fun (x : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) =>
+                              Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                            (@LinearMap.instFunLike.{0, 0, 0, 0} Real Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                              (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring Real.semiring
+                              (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                              (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                              (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                                Complex.instAddCommMonoid
+                                (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                            instCommCStarAlgebraComplex)))))
+                                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                              instCommCStarAlgebraComplex)))))
+                                    instInnerProductSpaceRealComplex)))
+                              (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring
+                                Complex.instAddCommMonoid
+                                (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                            instCommCStarAlgebraComplex)))))
+                                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                              instCommCStarAlgebraComplex)))))
+                                    instInnerProductSpaceRealComplex)))
+                              (@RingHom.id.{0} Real (@Semiring.toNonAssocSemiring.{0} Real Real.semiring)))
+                            (@D5.S3.Quantum.Measurement.ContinuationEffectClosure.branchDual d J κ inst K j) H)) →
+                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                      Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.signature PUnit.unit.{1} d :=
+  fun {d : Nat} {J : Type} {κ : J → Type} [(j : J) → Fintype.{0} (κ j)]
+    (K : (j : J) → κ j → Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+    (Z₀ :
+      @Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+        (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+        (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+          (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                  (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                    (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+              instInnerProductSpaceRealComplex))))
+    (hZ₀ :
+      ∀ (H : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex),
+        @Membership.mem.{0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+              (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+              (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    instInnerProductSpaceRealComplex))))
+            (@SetLike.instMembership.{0, 0}
+              (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                  (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                      instInnerProductSpaceRealComplex))))
+              (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+              (@Submodule.setLike.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                  (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                      instInnerProductSpaceRealComplex)))))
+            Z₀ H →
+          @Eq.{1} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Matrix.conjTranspose.{0, 0, 0} (Fin d) (Fin d) Complex
+              (@InvolutiveStar.toStar.{0} Complex
+                (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                  (@AddCommMonoid.toAddMonoid.{0} Complex
+                    (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+                  (@StarRing.toStarAddMonoid.{0} Complex
+                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                    Complex.instStarRing)))
+              H)
+            H)
+    (W :
+      @Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+        (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+        (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+          (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                  (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                    (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+              instInnerProductSpaceRealComplex))))
+    (a :
+      @LE.le.{0}
+        (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+          (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+          (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+            (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+              (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                instInnerProductSpaceRealComplex))))
+        (@Preorder.toLE.{0}
+          (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+            (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+            (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+              (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                  instInnerProductSpaceRealComplex))))
+          (@PartialOrder.toPreorder.{0}
+            (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+              (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+              (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    instInnerProductSpaceRealComplex))))
+            (@Submodule.instPartialOrder.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+              (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+              (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    instInnerProductSpaceRealComplex))))))
+        Z₀ W)
+    (a_1 :
+      ∀ (j : J) (H : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex),
+        @Membership.mem.{0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+              (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+              (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    instInnerProductSpaceRealComplex))))
+            (@SetLike.instMembership.{0, 0}
+              (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                  (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                      instInnerProductSpaceRealComplex))))
+              (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+              (@Submodule.setLike.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                  (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                      instInnerProductSpaceRealComplex)))))
+            W H →
+          @Membership.mem.{0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+              (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+              (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    instInnerProductSpaceRealComplex))))
+            (@SetLike.instMembership.{0, 0}
+              (@Submodule.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                  (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                      instInnerProductSpaceRealComplex))))
+              (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+              (@Submodule.setLike.{0, 0} Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring
+                (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                  (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                      instInnerProductSpaceRealComplex)))))
+            W
+            (@DFunLike.coe.{1, 1, 1}
+              (@LinearMap.{0, 0, 0, 0} Real Real Real.semiring Real.semiring
+                (@RingHom.id.{0} Real (@Semiring.toNonAssocSemiring.{0} Real Real.semiring))
+                (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                  (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                      instInnerProductSpaceRealComplex)))
+                (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                  (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                      instInnerProductSpaceRealComplex))))
+              (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+              (fun (x : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) => Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+              (@LinearMap.instFunLike.{0, 0, 0, 0} Real Real (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) Real.semiring Real.semiring
+                (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                  (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                      instInnerProductSpaceRealComplex)))
+                (@Matrix.module.{0, 0, 0, 0} (Fin d) (Fin d) Real Complex Real.semiring Complex.instAddCommMonoid
+                  (@NormedSpace.toModule.{0, 0} Real Complex Real.normedField
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                    (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))
+                      instInnerProductSpaceRealComplex)))
+                (@RingHom.id.{0} Real (@Semiring.toNonAssocSemiring.{0} Real Real.semiring)))
+              (@D5.S3.Quantum.Measurement.ContinuationEffectClosure.branchDual d J κ inst K j) H)) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.signature
+    Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.actual PUnit.unit.{1} d W
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"ContinuationEffectClosure\",\"continuationSpace_closure\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\",\"argument\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"ContinuationEffectClosure\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `D5.S3.Quantum.Measurement.ContinuationEffectClosure.continuationSpace_closure, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .argument, .argument, .argument, .body, .body, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"ContinuationEffectClosure\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"ContinuationEffectClosure\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"ContinuationEffectClosure\",\"continuationSpace_closure\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `D5.S3.Quantum.Measurement.ContinuationEffectClosure.continuationSpace_closure, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration).actual (Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration).variation.2.choose (Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration).variation.1 (Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"ContinuationEffectClosure\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"ContinuationEffectClosure\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure, declaration := `Reg.D5.S3.Quantum.Measurement.ContinuationEffectClosure.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound
 import Reg.Support.DependentFamily
@@ -115,9 +118,175 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, definition := none, coordinates := #[0, 1, 2, 6], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "arg", "body", "arg"], stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.affine_valuation_query_lower_bound, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.canonicalArenaFact, `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.sourceBridgeFact, `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.observationFact0, `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 
 end Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound
+
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.arena
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"AffineValuationQueryLowerBound\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"AffineValuationQueryLowerBound\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.arena
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"AffineValuationQueryLowerBound\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"AffineValuationQueryLowerBound\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.arena
+      Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.actual)
+    Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration)
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"AffineValuationQueryLowerBound\",\"affine_valuation_query_lower_bound\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"AffineValuationQueryLowerBound\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.affine_valuation_query_lower_bound, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.arena
+    Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.actual)
+  Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration)
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.observation0 : (p e d : Nat) →
+  (hp : Nat.Prime p) →
+    (he : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) e) →
+      (hd : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) d) →
+        (T :
+            D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.PassiveProtocol.{0, 0}
+              (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d)
+              fun (x : D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d) => Nat) →
+          @Function.Injective.{1, 1} (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.Point p e d)
+              (List.{0}
+                (@Sigma.{0, 0} (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d)
+                  fun (experiment : D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d) =>
+                  Nat))
+              (@D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.runPassiveProtocol.{0, 0, 0}
+                (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d)
+                (fun (experiment : D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d) => Nat)
+                (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.Point p e d)
+                (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.affineReadout p e d) T) →
+            (x : D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.Point p e d) →
+              D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.signature PUnit.unit.{1}
+                (@Sigma.mk.{0, 0} Nat
+                  (fun (p : Nat) =>
+                    @Sigma.{0, 0} Nat fun (e : Nat) =>
+                      @Sigma.{0, 0} Nat fun (d : Nat) =>
+                        D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.PassiveProtocol.{0, 0}
+                          (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d)
+                          fun (x : D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d) => Nat)
+                  p
+                  (@Sigma.mk.{0, 0} Nat
+                    (fun (e : Nat) =>
+                      @Sigma.{0, 0} Nat fun (d : Nat) =>
+                        D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.PassiveProtocol.{0, 0}
+                          (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d)
+                          fun (x : D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d) => Nat)
+                    e
+                    (@Sigma.mk.{0, 0} Nat
+                      (fun (d : Nat) =>
+                        D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.PassiveProtocol.{0, 0}
+                          (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d)
+                          fun (x : D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d) => Nat)
+                      d T))) :=
+  fun (p e d : Nat) (hp : Nat.Prime p)
+    (he : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) e)
+    (hd : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) d)
+    (T :
+      D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.PassiveProtocol.{0, 0}
+        (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d)
+        fun (x : D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d) => Nat)
+    (a :
+      @Function.Injective.{1, 1} (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.Point p e d)
+        (List.{0}
+          (@Sigma.{0, 0} (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d)
+            fun (experiment : D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d) => Nat))
+        (@D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.runPassiveProtocol.{0, 0, 0}
+          (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d)
+          (fun (experiment : D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d) => Nat)
+          (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.Point p e d)
+          (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.affineReadout p e d) T))
+    (x : D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.Point p e d) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.signature
+    Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat
+      (fun (p : Nat) =>
+        @Sigma.{0, 0} Nat fun (e : Nat) =>
+          @Sigma.{0, 0} Nat fun (d : Nat) =>
+            D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.PassiveProtocol.{0, 0}
+              (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d)
+              fun (x : D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d) => Nat)
+      p
+      (@Sigma.mk.{0, 0} Nat
+        (fun (e : Nat) =>
+          @Sigma.{0, 0} Nat fun (d : Nat) =>
+            D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.PassiveProtocol.{0, 0}
+              (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d)
+              fun (x : D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d) => Nat)
+        e
+        (@Sigma.mk.{0, 0} Nat
+          (fun (d : Nat) =>
+            D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound.PassiveProtocol.{0, 0}
+              (D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d)
+              fun (x : D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.AffineQuery p e d) => Nat)
+          d T)))
+    x
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"AffineValuationQueryLowerBound\",\"affine_valuation_query_lower_bound\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"body\",\"body\",\"argument\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"AffineValuationQueryLowerBound\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.affine_valuation_query_lower_bound, part := .type, path := [.body, .body, .body, .body, .body, .body, .function, .argument, .body, .body, .argument, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"AffineValuationQueryLowerBound\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"AffineValuationQueryLowerBound\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"AffineValuationQueryLowerBound\",\"affine_valuation_query_lower_bound\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.affine_valuation_query_lower_bound, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration).actual (Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration).variation.2.choose (Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration).variation.1 (Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"AffineValuationQueryLowerBound\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"AffineValuationQueryLowerBound\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.AffineValuationQueryLowerBound.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Words.Attractors.PeriodicPrefixAttractors
 import Reg.Support.DependentFamily
@@ -101,7 +104,17 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
   sourceSelection := some { owner := `D5.S1.Words.Attractors.PeriodicPrefixAttractors, definition := none, coordinates := #[1, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "body", "arg"], stateBinder := 16, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `D5.S1.Words.Attractors.nested_word_endpoint_attractors, part := .type, path := [], levels := [.param `u_1] },
+    { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [`Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.canonicalArenaFact, `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.canonicalObjectArenaFact, `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.sourceBridgeFact, `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.observationFact0, `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.anchorEnumeration }
 
 
 
@@ -196,7 +209,17 @@ noncomputable def registration_2.{u_1} : LeanInformationAudit.Contract.Registrat
   sourceSelection := some { owner := `D5.S1.Words.Attractors.PeriodicPrefixAttractors, definition := none, coordinates := #[0, 23], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg"], stateBinder := 14, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `D5.S1.Words.Attractors.periodic_residual_scan, part := .type, path := [], levels := [.param `u_1] },
+    { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [`Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.canonicalArenaFact, `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.canonicalObjectArenaFact, `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.sourceBridgeFact, `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.observationFact0, `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.descriptorFact] },
+  exclusion := some `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.anchorEnumeration }
 
 
 
@@ -204,3 +227,370 @@ end Scan
 
 end
 end Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits
+
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.canonicalArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_1 + 1, u_1, 0, u_1, 0} :=
+  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.arena.{u_1}
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.canonicalArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Scan\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Scan\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.canonicalObjectArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_1 + 1, u_1, 0, u_1, 0} :=
+  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.arena.{u_1}
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.canonicalObjectArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Scan\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Scan\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.canonicalArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.arena.{u_1}
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.canonicalArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Endpoints\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Endpoints\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.canonicalObjectArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.arena.{u_1}
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.canonicalObjectArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Endpoints\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Endpoints\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.sourceLaw.{u_1} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
+  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.arena.{u_1}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_1 + 1, u_1, 0, u_1, 0}
+    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.arena.{u_1}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
+      Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.arena.{u_1}
+      Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.actual.{u_1})
+    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration.{u_1})
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"periodic_residual_scan\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Scan\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `D5.S1.Words.Attractors.periodic_residual_scan, part := .type, path := [], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_1 + 1, u_1, 0, u_1, 0}
+  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.arena.{u_1}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
+    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.arena.{u_1}
+    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.actual.{u_1})
+  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration.{u_1})
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.observation0.{u_1} : {α : Type u_1} →
+  (w : Nat → List.{u_1} α) →
+    (U b : Nat → Nat) →
+      (hlen : ∀ (m : Nat), @Eq.{1} Nat (@List.length.{u_1} α (w m)) m) →
+        (hprefix :
+            ∀ (m n : Nat),
+              @LE.le.{0} Nat instLENat m n → @Eq.{u_1 + 1} (List.{u_1} α) (w m) (@List.take.{u_1} α m (w n))) →
+          (hU : @StrictMono.{0, 0} Nat Nat Nat.instPreorder Nat.instPreorder U) →
+            (hpos :
+                ∀ (n : Nat),
+                  @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) (U n)) →
+              (hperiod :
+                  ∀ (n : Nat),
+                    @List.HasPeriod.{u_1} α
+                      (w
+                        (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+                          (U
+                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                      (U n)) →
+                (count t N r : Nat) →
+                  (X W : List.{u_1} α) →
+                    (hcount :
+                        @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) count) →
+                      (hX :
+                          @List.IsPrefix.{u_1} α X
+                            (w
+                              (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+                                (U
+                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) t
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))) →
+                        (hR :
+                            @LT.lt.{0} Nat instLTNat (@List.length.{u_1} α X)
+                              (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+                                (U
+                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) t
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) →
+                          (hr : @LE.le.{0} Nat instLENat r (@List.length.{u_1} α X)) →
+                            (hstack :
+                                @Eq.{u_1 + 1} (List.{u_1} α) W
+                                  (@HAppend.hAppend.{u_1, u_1, u_1} (List.{u_1} α) (List.{u_1} α) (List.{u_1} α)
+                                    (@instHAppendOfAppend.{u_1} (List.{u_1} α) (@List.instAppend.{u_1} α))
+                                    (@D5.S1.Words.Attractors.descendingBlocks.{u_1} α w U b count t) X)) →
+                              (hsize :
+                                  @Eq.{1} Nat (@List.length.{u_1} α W)
+                                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) N r)) →
+                                (htop :
+                                    @LT.lt.{0} Nat instLTNat
+                                      (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+                                        (U (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) t count))
+                                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+                                      (@List.length.{u_1} α W)) →
+                                  (h p : Nat) →
+                                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u_1 + 1,
+                                        u_1, 0, u_1, 0}
+                                      Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.signature.{u_1}
+                                      PUnit.unit.{1}
+                                      (@Sigma.mk.{u_1 + 1, 0} (Type u_1) (fun (_α : Type u_1) => Nat) α p) :=
+  fun {α : Type u_1} (w : Nat → List.{u_1} α) (U b : Nat → Nat)
+    (hlen : ∀ (m : Nat), @Eq.{1} Nat (@List.length.{u_1} α (w m)) m)
+    (hprefix :
+      ∀ (m n : Nat), @LE.le.{0} Nat instLENat m n → @Eq.{u_1 + 1} (List.{u_1} α) (w m) (@List.take.{u_1} α m (w n)))
+    (hU : @StrictMono.{0, 0} Nat Nat Nat.instPreorder Nat.instPreorder U)
+    (hpos : ∀ (n : Nat), @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) (U n))
+    (hperiod :
+      ∀ (n : Nat),
+        @List.HasPeriod.{u_1} α
+          (w
+            (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+              (U
+                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+          (U n))
+    (count t N r : Nat) (X W : List.{u_1} α)
+    (hcount : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) count)
+    (hX :
+      @List.IsPrefix.{u_1} α X
+        (w
+          (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+            (U
+              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) t
+                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+    (hR :
+      @LT.lt.{0} Nat instLTNat (@List.length.{u_1} α X)
+        (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+          (U
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) t
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+    (hr : @LE.le.{0} Nat instLENat r (@List.length.{u_1} α X))
+    (hstack :
+      @Eq.{u_1 + 1} (List.{u_1} α) W
+        (@HAppend.hAppend.{u_1, u_1, u_1} (List.{u_1} α) (List.{u_1} α) (List.{u_1} α)
+          (@instHAppendOfAppend.{u_1} (List.{u_1} α) (@List.instAppend.{u_1} α))
+          (@D5.S1.Words.Attractors.descendingBlocks.{u_1} α w U b count t) X))
+    (hsize : @Eq.{1} Nat (@List.length.{u_1} α W) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) N r))
+    (htop :
+      @LT.lt.{0} Nat instLTNat
+        (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+          (U (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) t count))
+          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+        (@List.length.{u_1} α W))
+    (h p : Nat) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u_1 + 1, u_1, 0, u_1, 0}
+    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.signature.{u_1}
+    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.actual.{u_1} PUnit.unit.{1}
+    (@Sigma.mk.{u_1 + 1, 0} (Type u_1) (fun (_α : Type u_1) => Nat) α p) W
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.observationFact0.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"periodic_residual_scan\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"argument\",\"body\",\"argument\",\"argument\",\"argument\",\"argument\",\"argument\",\"argument\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Scan\",\"registration_2\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `D5.S1.Words.Attractors.periodic_residual_scan, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .body, .argument, .body, .argument, .argument, .argument, .argument, .argument, .argument, .function, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.observation0, part := .value, path := [], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.varyingLawInput.{u_1} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.canonicalArenaOperand.{u_1})
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.varyingLaw.{u_1}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Scan\",\"registration_2\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.statementExclusion.{u_1} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Scan\",\"registration_2\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"periodic_residual_scan\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.varyingLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  statementLocation := { owner := `D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `D5.S1.Words.Attractors.periodic_residual_scan, part := .type, path := [], levels := [(.param `u_1)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration.{u_1}).actual (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration.{u_1}).variation.2.choose (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration.{u_1}).variation.1 (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration.{u_1}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2.descriptorFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Scan\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Scan\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Scan.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.sourceLaw.{u_1} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.arena.{u_1}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.arena.{u_1}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.arena.{u_1}
+      Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.actual)
+    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration.{u_1})
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"nested_word_endpoint_attractors\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Endpoints\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `D5.S1.Words.Attractors.nested_word_endpoint_attractors, part := .type, path := [], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.arena.{u_1}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.arena.{u_1}
+    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.actual)
+  Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration.{u_1})
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.observation0.{u_1} : {α : Type u_1} →
+  (k : Nat) →
+    (hk : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k) →
+      (w : Nat → List.{u_1} α) →
+        (U : Nat → Nat) →
+          (hlen : ∀ (m : Nat), @Eq.{1} Nat (@List.length.{u_1} α (w m)) m) →
+            (hprefix :
+                ∀ (m n : Nat),
+                  @LE.le.{0} Nat instLENat m n → @Eq.{u_1 + 1} (List.{u_1} α) (w m) (@List.take.{u_1} α m (w n))) →
+              (hU0 :
+                  @Eq.{1} Nat (U (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →
+                (hU : @StrictMono.{0, 0} Nat Nat Nat.instPreorder Nat.instPreorder U) →
+                  (hgaps :
+                      @Monotone.{0, 0} Nat Nat Nat.instPreorder Nat.instPreorder fun (n : Nat) =>
+                        @HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+                          (U
+                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                          (U n)) →
+                    (hperiod :
+                        ∀ (n : Nat),
+                          @List.HasPeriod.{u_1} α
+                            (w
+                              (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+                                (U
+                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                            (U n)) →
+                      (hsuffix :
+                          ∀ (n : Nat),
+                            @LE.le.{0} Nat instLENat k n →
+                              @List.IsSuffix.{u_1} α
+                                (w (U (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) n k)))
+                                (w (U n))) →
+                        have B : (n : Nat) → Nat := fun (n : Nat) =>
+                          @HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+                            (U
+                              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)));
+                        have Δ : (n : Nat) → Nat := fun (n : Nat) =>
+                          @HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) (B n) (U n);
+                        have P : (n : Nat) → Nat := fun (n : Nat) =>
+                          @HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (U n)
+                            (@ite.{1} Nat (@LT.lt.{0} Nat instLTNat n k) (Nat.decLt n k)
+                              (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                              (Δ (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) n k)));
+                        (n m : Nat) →
+                          @LE.le.{0} Nat instLENat (P n) m →
+                            @LE.le.{0} Nat instLENat m (B n) →
+                              D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                                Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.signature
+                                PUnit.unit.{1} (@Sigma.mk.{0, 0} Nat (fun (_k : Nat) => Nat → Nat) k U) :=
+  fun {α : Type u_1} (k : Nat)
+    (hk : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) k)
+    (w : Nat → List.{u_1} α) (U : Nat → Nat) (hlen : ∀ (m : Nat), @Eq.{1} Nat (@List.length.{u_1} α (w m)) m)
+    (hprefix :
+      ∀ (m n : Nat), @LE.le.{0} Nat instLENat m n → @Eq.{u_1 + 1} (List.{u_1} α) (w m) (@List.take.{u_1} α m (w n)))
+    (hU0 :
+      @Eq.{1} Nat (U (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+    (hU : @StrictMono.{0, 0} Nat Nat Nat.instPreorder Nat.instPreorder U)
+    (hgaps :
+      @Monotone.{0, 0} Nat Nat Nat.instPreorder Nat.instPreorder fun (n : Nat) =>
+        @HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+          (U
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+          (U n))
+    (hperiod :
+      ∀ (n : Nat),
+        @List.HasPeriod.{u_1} α
+          (w
+            (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+              (U
+                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+          (U n))
+    (hsuffix :
+      ∀ (n : Nat),
+        @LE.le.{0} Nat instLENat k n →
+          @List.IsSuffix.{u_1} α (w (U (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) n k)))
+            (w (U n))) =>
+  have B : (n : Nat) → Nat := fun (n : Nat) =>
+    @HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+      (U
+        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)));
+  have Δ : (n : Nat) → Nat := fun (n : Nat) =>
+    @HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) (B n) (U n);
+  have P : (n : Nat) → Nat := fun (n : Nat) =>
+    @HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (U n)
+      (@ite.{1} Nat (@LT.lt.{0} Nat instLTNat n k) (Nat.decLt n k)
+        (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+        (Δ (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) n k)));
+  have Γ : (n : Nat) → Finset.{0} Nat := fun (n : Nat) =>
+    @Finset.image.{0, 0} Nat Nat instDecidableEqNat
+      (fun (j : Nat) =>
+        @HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat) (U j)
+          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+      (@Finset.Icc.{0} Nat Nat.instPreorder Nat.instLocallyFiniteOrder
+        (@HSub.hSub.{0, 0, 0} Nat Nat Nat (@instHSub.{0} Nat instSubNat)
+          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))
+          k)
+        n);
+  fun (n m : Nat) (a : @LE.le.{0} Nat instLENat (P n) m) (a_1 : @LE.le.{0} Nat instLENat m (B n)) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.signature
+    Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat (fun (_k : Nat) => Nat → Nat) k U) n
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.observationFact0.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"nested_word_endpoint_attractors\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"letBody\",\"letBody\",\"letBody\",\"letBody\",\"body\",\"argument\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Endpoints\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `D5.S1.Words.Attractors.nested_word_endpoint_attractors, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .letBody, .letBody, .letBody, .letBody, .body, .argument, .body, .body, .body, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.varyingLawInput.{u_1} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.canonicalArenaOperand.{u_1})
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.varyingLaw.{u_1}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Endpoints\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.statementExclusion.{u_1} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Endpoints\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S1\",\"Words\",\"Attractors\",\"nested_word_endpoint_attractors\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  statementLocation := { owner := `D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `D5.S1.Words.Attractors.nested_word_endpoint_attractors, part := .type, path := [], levels := [(.param `u_1)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration.{u_1}).actual (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration.{u_1}).variation.2.choose (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration.{u_1}).variation.1 (Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration.{u_1}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Endpoints\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Attractors\",\"PeriodicPrefixAttractors\",\"HelperAudits\",\"Endpoints\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors, declaration := `Reg.D5.S1.Words.Attractors.PeriodicPrefixAttractors.HelperAudits.Endpoints.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))

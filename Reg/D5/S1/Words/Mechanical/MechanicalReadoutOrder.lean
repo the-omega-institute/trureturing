@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -125,7 +128,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := none,
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `D5.S1.Words.Mechanical.MechanicalReadoutOrder.local_order_iff_decreasing_weights, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_1.canonicalArenaFact, `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_1.canonicalObjectArenaFact] },
+  exclusion := none,
+  finiteLift := none,
+  roleEnumeration := none,
+  anchorEnumeration := none }
 
 
 noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion) (type_of% (@mechanicalReadoutRealization CompletionOutput (Classical.decEq.{1} _)
@@ -150,7 +163,48 @@ noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := none,
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `D5.S1.Words.Mechanical.MechanicalReadoutOrder.geometric_readout_isometric_completion, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_2.canonicalArenaFact, `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_2.canonicalObjectArenaFact] },
+  exclusion := none,
+  finiteLift := none,
+  roleEnumeration := none,
+  anchorEnumeration := none }
 
 
 end Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder
+
+
+noncomputable def Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_2.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.{0, 0, 0, 0} :=
+  D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.isometricArena
+noncomputable def Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_2.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Mechanical\",\"MechanicalReadoutOrder\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Mechanical\",\"MechanicalReadoutOrder\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_2.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.{0, 0, 0, 0} :=
+  D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.isometricArena
+noncomputable def Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_2.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Mechanical\",\"MechanicalReadoutOrder\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Mechanical\",\"MechanicalReadoutOrder\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.{0, 0, 0, 0} :=
+  D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.localOrderArena
+noncomputable def Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Mechanical\",\"MechanicalReadoutOrder\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Mechanical\",\"MechanicalReadoutOrder\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.{0, 0, 0, 0} :=
+  D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.localOrderArena
+noncomputable def Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Mechanical\",\"MechanicalReadoutOrder\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S1\",\"Words\",\"Mechanical\",\"MechanicalReadoutOrder\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder, declaration := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutOrder.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence

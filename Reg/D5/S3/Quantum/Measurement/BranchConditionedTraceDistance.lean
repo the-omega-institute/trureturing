@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.BranchConditionedTraceDistance
 import Reg.Support.DependentFamily
@@ -134,7 +137,17 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
   sourceSelection := some { owner := `D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, definition := none, coordinates := #[0, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.branch_conditioned_trace_distance, part := .type, path := [], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [`Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.observationFact0, `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.anchorEnumeration }
 
 
 #print axioms rejected_law
@@ -144,3 +157,249 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
 
 
 end Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance
+
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.canonicalArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.arena.{u_1}
+noncomputable def Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.canonicalArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"BranchConditionedTraceDistance\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"BranchConditionedTraceDistance\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.canonicalObjectArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.arena.{u_1}
+noncomputable def Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.canonicalObjectArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"BranchConditionedTraceDistance\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"BranchConditionedTraceDistance\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.sourceLaw.{u_1} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.arena.{u_1}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.arena.{u_1}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.arena.{u_1}
+      Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.actual)
+    Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"BranchConditionedTraceDistance\",\"branch_conditioned_trace_distance\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"BranchConditionedTraceDistance\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.branch_conditioned_trace_distance, part := .type, path := [], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.arena.{u_1}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.arena.{u_1}
+    Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.actual)
+  Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.observation0.{u_1} : {d : Nat} →
+  {ι : Type u_1} →
+    [inst : Fintype.{u_1} ι] →
+      (ρ σ : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) →
+        (K : ι → Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) →
+          (hρ :
+              @Matrix.PosSemidef.{0, 0} (Fin d) Complex Complex.instRing Complex.partialOrder Complex.instStarRing ρ) →
+            (hρtrace :
+                @Eq.{1} Complex (@Matrix.trace.{0, 0} (Fin d) Complex (Fin.fintype d) Complex.instAddCommMonoid ρ)
+                  (@OfNat.ofNat.{0} Complex (nat_lit 1) (@One.toOfNat1.{0} Complex Complex.instOne))) →
+              (hσ :
+                  @Matrix.PosSemidef.{0, 0} (Fin d) Complex Complex.instRing Complex.partialOrder Complex.instStarRing
+                    σ) →
+                (hσtrace :
+                    @Eq.{1} Complex (@Matrix.trace.{0, 0} (Fin d) Complex (Fin.fintype d) Complex.instAddCommMonoid σ)
+                      (@OfNat.ofNat.{0} Complex (nat_lit 1) (@One.toOfNat1.{0} Complex Complex.instOne))) →
+                  (hB :
+                      @LE.le.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                        (@Preorder.toLE.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                          (@Matrix.instPreOrder.{0, 0} Complex (Fin d) Complex.instRCLike))
+                        (@Finset.sum.{u_1, 0} ι (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                          (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+                          (@Finset.univ.{u_1} ι inst) fun (i : ι) =>
+                          @HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                            (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex
+                              (Fin.fintype d) Complex.instMul Complex.instAddCommMonoid)
+                            (@Matrix.conjTranspose.{0, 0, 0} (Fin d) (Fin d) Complex
+                              (@InvolutiveStar.toStar.{0} Complex
+                                (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                                  (@AddCommMonoid.toAddMonoid.{0} Complex
+                                    (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                            Complex.instNonUnitalCommRing)))))
+                                  (@StarRing.toStarAddMonoid.{0} Complex
+                                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                          Complex.instNonUnitalCommRing)))
+                                    Complex.instStarRing)))
+                              (K i))
+                            (K i))
+                        (@OfNat.ofNat.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (nat_lit 1)
+                          (@One.toOfNat1.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+                            (@Matrix.one.{0, 0} (Fin d) Complex (instDecidableEqFin d) Complex.instZero
+                              Complex.instOne)))) →
+                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                      Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.branchSignature PUnit.unit.{1}
+                      (@Sigma.mk.{0, 0} Nat (fun (d : Nat) => Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) d ρ) :=
+  fun {d : Nat} {ι : Type u_1} [inst : Fintype.{u_1} ι] (ρ σ : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+    (K : ι → Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+    (hρ : @Matrix.PosSemidef.{0, 0} (Fin d) Complex Complex.instRing Complex.partialOrder Complex.instStarRing ρ)
+    (hρtrace :
+      @Eq.{1} Complex (@Matrix.trace.{0, 0} (Fin d) Complex (Fin.fintype d) Complex.instAddCommMonoid ρ)
+        (@OfNat.ofNat.{0} Complex (nat_lit 1) (@One.toOfNat1.{0} Complex Complex.instOne)))
+    (hσ : @Matrix.PosSemidef.{0, 0} (Fin d) Complex Complex.instRing Complex.partialOrder Complex.instStarRing σ)
+    (hσtrace :
+      @Eq.{1} Complex (@Matrix.trace.{0, 0} (Fin d) Complex (Fin.fintype d) Complex.instAddCommMonoid σ)
+        (@OfNat.ofNat.{0} Complex (nat_lit 1) (@One.toOfNat1.{0} Complex Complex.instOne)))
+    (hB :
+      @LE.le.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+        (@Preorder.toLE.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+          (@Matrix.instPreOrder.{0, 0} Complex (Fin d) Complex.instRCLike))
+        (@Finset.sum.{u_1, 0} ι (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+          (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid)
+          (@Finset.univ.{u_1} ι inst) fun (i : ι) =>
+          @HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex (Fin.fintype d)
+              Complex.instMul Complex.instAddCommMonoid)
+            (@Matrix.conjTranspose.{0, 0, 0} (Fin d) (Fin d) Complex
+              (@InvolutiveStar.toStar.{0} Complex
+                (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                  (@AddCommMonoid.toAddMonoid.{0} Complex
+                    (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+                  (@StarRing.toStarAddMonoid.{0} Complex
+                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                    Complex.instStarRing)))
+              (K i))
+            (K i))
+        (@OfNat.ofNat.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (nat_lit 1)
+          (@One.toOfNat1.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Matrix.one.{0, 0} (Fin d) Complex (instDecidableEqFin d) Complex.instZero Complex.instOne)))) =>
+  have B : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex :=
+    @Finset.sum.{u_1, 0} ι (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+      (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid) (@Finset.univ.{u_1} ι inst)
+      fun (i : ι) =>
+      @HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+        (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+        (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex (Fin.fintype d)
+          Complex.instMul Complex.instAddCommMonoid)
+        (@Matrix.conjTranspose.{0, 0, 0} (Fin d) (Fin d) Complex
+          (@InvolutiveStar.toStar.{0} Complex
+            (@StarAddMonoid.toInvolutiveStar.{0} Complex
+              (@AddCommMonoid.toAddMonoid.{0} Complex
+                (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                  (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                    (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                      (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+              (@StarRing.toStarAddMonoid.{0} Complex
+                (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                  (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                    (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                Complex.instStarRing)))
+          (K i))
+        (K i);
+  have Φ : (X : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) → Matrix.{0, 0, 0} (Fin d) (Fin d) Complex :=
+    fun (X : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) =>
+    @Finset.sum.{u_1, 0} ι (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+      (@Matrix.addCommMonoid.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instAddCommMonoid) (@Finset.univ.{u_1} ι inst)
+      fun (i : ι) =>
+      @HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+        (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+        (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex (Fin.fintype d)
+          Complex.instMul Complex.instAddCommMonoid)
+        (@HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+          (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+          (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex (Fin.fintype d)
+            Complex.instMul Complex.instAddCommMonoid)
+          (K i) X)
+        (@Matrix.conjTranspose.{0, 0, 0} (Fin d) (Fin d) Complex
+          (@InvolutiveStar.toStar.{0} Complex
+            (@StarAddMonoid.toInvolutiveStar.{0} Complex
+              (@AddCommMonoid.toAddMonoid.{0} Complex
+                (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                  (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                    (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                      (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+              (@StarRing.toStarAddMonoid.{0} Complex
+                (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                  (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                    (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                Complex.instStarRing)))
+          (K i));
+  have p : Real :=
+    Complex.re
+      (@Matrix.trace.{0, 0} (Fin d) Complex (Fin.fintype d) Complex.instAddCommMonoid
+        (@HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+          (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+          (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex (Fin.fintype d)
+            Complex.instMul Complex.instAddCommMonoid)
+          ρ B));
+  have q : Real :=
+    Complex.re
+      (@Matrix.trace.{0, 0} (Fin d) Complex (Fin.fintype d) Complex.instAddCommMonoid
+        (@HMul.hMul.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+          (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+          (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, 0, 0, 0} (Fin d) (Fin d) (Fin d) Complex (Fin.fintype d)
+            Complex.instMul Complex.instAddCommMonoid)
+          σ B));
+  have D : (X Y : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) → Real :=
+    fun (X Y : Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) =>
+    @HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+      (@D5.S3.Quantum.Foundation.FiniteTraceDistance.traceNorm.{0, 0, 0} (Fin d) (Fin d) Complex (Fin.fintype d)
+        (Fin.fintype d) Complex.instRCLike
+        (@HSub.hSub.{0, 0, 0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+          (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+          (@instHSub.{0} (Matrix.{0, 0, 0} (Fin d) (Fin d) Complex)
+            (@Matrix.sub.{0, 0, 0} (Fin d) (Fin d) Complex Complex.instSub))
+          X Y))
+      (@OfNat.ofNat.{0} Real (nat_lit 2)
+        (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+          (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+            (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))));
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.branchSignature
+    Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat (fun (d : Nat) => Matrix.{0, 0, 0} (Fin d) (Fin d) Complex) d ρ) σ
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.observationFact0.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"BranchConditionedTraceDistance\",\"branch_conditioned_trace_distance\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"letBody\",\"letBody\",\"letBody\",\"letBody\",\"letBody\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"BranchConditionedTraceDistance\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.branch_conditioned_trace_distance, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .letBody, .letBody, .letBody, .letBody, .letBody, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.varyingLawInput.{u_1} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.canonicalArenaOperand.{u_1})
+noncomputable def Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.varyingLaw.{u_1}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"BranchConditionedTraceDistance\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.statementExclusion.{u_1} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"BranchConditionedTraceDistance\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"BranchConditionedTraceDistance\",\"branch_conditioned_trace_distance\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  statementLocation := { owner := `D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.branch_conditioned_trace_distance, part := .type, path := [], levels := [(.param `u_1)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration.{u_1}).actual (Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration.{u_1}).variation.2.choose (Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration.{u_1}).variation.1 (Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration.{u_1}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"BranchConditionedTraceDistance\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"BranchConditionedTraceDistance\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance, declaration := `Reg.D5.S3.Quantum.Measurement.BranchConditionedTraceDistance.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))

@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.SpectralFamilyGeometry
 import Reg.Support.DependentFamily
@@ -121,8 +124,132 @@ noncomputable def registration_1.{u_1, u_2} : LeanInformationAudit.Contract.Regi
   sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.finite_spectral_family_geometry, part := .type, path := [], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2] }], facts := [`Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.observationFact0, `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 end Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry
+
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.canonicalArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.arena.{u_1, u_2}
+noncomputable def Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.canonicalArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"SpectralFamilyGeometry\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"SpectralFamilyGeometry\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.canonicalObjectArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.arena.{u_1, u_2}
+noncomputable def Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.canonicalObjectArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"SpectralFamilyGeometry\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"SpectralFamilyGeometry\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.sourceLaw.{u_1, u_2} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.arena.{u_1, u_2}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.arena.{u_1, u_2}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.arena.{u_1, u_2}
+      Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.actual)
+    Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration.{u_1, u_2})
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"SpectralFamilyGeometry\",\"finite_spectral_family_geometry\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"SpectralFamilyGeometry\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.finite_spectral_family_geometry, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.arena.{u_1, u_2}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.arena.{u_1, u_2}
+    Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.actual)
+  Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration.{u_1, u_2})
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.observation0.{u_1, u_2} : {Sector : Type u_1} →
+  {Coord : Type u_2} →
+    [inst : Fintype.{u_1} Sector] →
+      [inst_1 : Fintype.{u_2} Coord] →
+        [Nonempty.{u_1 + 1} Sector] →
+          (spectrum : Sector → Coord → Real) →
+            (hnonneg :
+                ∀ (s : Sector) (j : Coord),
+                  @LE.le.{0} Real Real.instLE
+                    (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) (spectrum s j)) →
+              (hnormal :
+                  ∀ (s : Sector),
+                    @Eq.{1} Real
+                      (@Finset.sum.{u_2, 0} Coord Real Real.instAddCommMonoid (@Finset.univ.{u_2} Coord inst_1)
+                        fun (j : Coord) => spectrum s j)
+                      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →
+                (p : Sector → Real) →
+                  @Membership.mem.{u_1, u_1} (Sector → Real) (Set.{u_1} (Sector → Real))
+                      (@Set.instMembership.{u_1} (Sector → Real))
+                      (@stdSimplex.{u_1, 0} Real Sector Real.semiring Real.partialOrder inst) p →
+                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                      Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.signature PUnit.unit.{1} PUnit.unit.{1} :=
+  fun {Sector : Type u_1} {Coord : Type u_2} [inst : Fintype.{u_1} Sector] [inst_1 : Fintype.{u_2} Coord]
+    [Nonempty.{u_1 + 1} Sector] (spectrum : Sector → Coord → Real)
+    (hnonneg :
+      ∀ (s : Sector) (j : Coord),
+        @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+          (spectrum s j))
+    (hnormal :
+      ∀ (s : Sector),
+        @Eq.{1} Real
+          (@Finset.sum.{u_2, 0} Coord Real Real.instAddCommMonoid (@Finset.univ.{u_2} Coord inst_1) fun (j : Coord) =>
+            spectrum s j)
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+    (p : Sector → Real)
+    (a :
+      @Membership.mem.{u_1, u_1} (Sector → Real) (Set.{u_1} (Sector → Real)) (@Set.instMembership.{u_1} (Sector → Real))
+        (@stdSimplex.{u_1, 0} Real Sector Real.semiring Real.partialOrder inst) p) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.signature
+    Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.actual PUnit.unit.{1} PUnit.unit.{1}
+    (@D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.spectralGramEnergy.{u_1, u_2} Sector Coord inst inst_1 spectrum
+      p)
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.observationFact0.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"SpectralFamilyGeometry\",\"finite_spectral_family_geometry\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"body\",\"body\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"SpectralFamilyGeometry\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.finite_spectral_family_geometry, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .function, .argument, .body, .body, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.varyingLawInput.{u_1, u_2} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.canonicalArenaOperand.{u_1, u_2})
+noncomputable def Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.varyingLaw.{u_1, u_2}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"SpectralFamilyGeometry\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.statementExclusion.{u_1, u_2} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"SpectralFamilyGeometry\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"SpectralFamilyGeometry\",\"finite_spectral_family_geometry\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  statementLocation := { owner := `D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.finite_spectral_family_geometry, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration.{u_1, u_2}).actual (Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration.{u_1, u_2}).variation.2.choose (Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration.{u_1, u_2}).variation.1 (Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration.{u_1, u_2}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"SpectralFamilyGeometry\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"SpectralFamilyGeometry\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry, declaration := `Reg.D5.S3.Quantum.Entanglement.SpectralFamilyGeometry.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))

@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent
 import Reg.Support.PathCurrentRegistrationTemplates
@@ -177,7 +180,17 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
   sourceSelection := some { owner := `D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, definition := none, coordinates := #[0, 1, 3, 5, 6, 7, 11], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 12, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.log_forward_div_reverse_eq_current, part := .type, path := [], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [`Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.canonicalArenaFact, `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.sourceBridgeFact, `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.observationFact0, `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.anchorEnumeration }
 
 
 #print axioms rejected_law
@@ -186,3 +199,165 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
 
 
 end Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent
+
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.canonicalArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_1 + 1, u_1, 0, 0, 0} :=
+  Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.arena.{u_1}
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.canonicalArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakPathCurrent\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakPathCurrent\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.canonicalObjectArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_1 + 1, u_1, 0, 0, 0} :=
+  Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.arena.{u_1}
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.canonicalObjectArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakPathCurrent\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakPathCurrent\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.sourceLaw.{u_1} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, 0, 0}
+  Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.arena.{u_1}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_1 + 1, u_1, 0, 0, 0}
+    Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.arena.{u_1}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, 0, 0}
+      Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.arena.{u_1}
+      Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.actual.{u_1})
+    Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakPathCurrent\",\"log_forward_div_reverse_eq_current\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakPathCurrent\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.log_forward_div_reverse_eq_current, part := .type, path := [], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_1 + 1, u_1, 0, 0, 0}
+  Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.arena.{u_1}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, 0, 0}
+    Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.arena.{u_1}
+    Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.actual.{u_1})
+  Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.observation0.{u_1} : {X : Type u_1} →
+  (χ : X → Real) →
+    (hχ :
+        ∀ (x : X),
+          Or (@Eq.{1} Real (χ x) (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+            (@Eq.{1} Real (χ x)
+              (@Neg.neg.{0} Real Real.instNeg
+                (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))) →
+      (z : X) →
+        (hz : @Eq.{1} Real (χ z) (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →
+          (r q N : Real) →
+            (hr :
+                @LT.lt.{0} Real Real.instLT (@abs.{0} Real Real.lattice Real.instAddGroup r)
+                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →
+              (hq :
+                  @LT.lt.{0} Real Real.instLT (@abs.{0} Real Real.lattice Real.instAddGroup q)
+                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →
+                (hN :
+                    @LT.lt.{0} Real Real.instLT
+                      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) N) →
+                  (T : Nat) →
+                    (x : Nat → X) →
+                      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u_1 + 1, u_1, 0, 0, 0}
+                        D5.S3.ConceptDynamics.InformationEscape.PathCurrentRegistrationTemplates.signedPeakPathSignature.{u_1}
+                        PUnit.unit.{1}
+                        (@Sigma.mk.{u_1 + 1, u_1} (Type u_1)
+                          (fun (X : Type u_1) =>
+                            @Sigma.{u_1, u_1} (X → Real) fun (x : X → Real) =>
+                              @Sigma.{u_1, 0} X fun (x : X) =>
+                                @Sigma.{0, 0} Real fun (x : Real) =>
+                                  @Sigma.{0, 0} Real fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Nat)
+                          X
+                          (@Sigma.mk.{u_1, u_1} (X → Real)
+                            (fun (x : X → Real) =>
+                              @Sigma.{u_1, 0} X fun (x : X) =>
+                                @Sigma.{0, 0} Real fun (x : Real) =>
+                                  @Sigma.{0, 0} Real fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Nat)
+                            χ
+                            (@Sigma.mk.{u_1, 0} X
+                              (fun (x : X) =>
+                                @Sigma.{0, 0} Real fun (x : Real) =>
+                                  @Sigma.{0, 0} Real fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Nat)
+                              z
+                              (@Sigma.mk.{0, 0} Real
+                                (fun (x : Real) =>
+                                  @Sigma.{0, 0} Real fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Nat)
+                                r
+                                (@Sigma.mk.{0, 0} Real (fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Nat) q
+                                  (@Sigma.mk.{0, 0} Real (fun (x : Real) => Nat) N T)))))) :=
+  fun {X : Type u_1} (χ : X → Real)
+    (hχ :
+      ∀ (x : X),
+        Or (@Eq.{1} Real (χ x) (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+          (@Eq.{1} Real (χ x)
+            (@Neg.neg.{0} Real Real.instNeg (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))))
+    (z : X) (hz : @Eq.{1} Real (χ z) (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+    (r q N : Real)
+    (hr :
+      @LT.lt.{0} Real Real.instLT (@abs.{0} Real Real.lattice Real.instAddGroup r)
+        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+    (hq :
+      @LT.lt.{0} Real Real.instLT (@abs.{0} Real Real.lattice Real.instAddGroup q)
+        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+    (hN : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) N)
+    (T : Nat) (x : Nat → X) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u_1 + 1, u_1, 0, 0, 0}
+    D5.S3.ConceptDynamics.InformationEscape.PathCurrentRegistrationTemplates.signedPeakPathSignature.{u_1}
+    Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.actual.{u_1} PUnit.unit.{1}
+    (@Sigma.mk.{u_1 + 1, u_1} (Type u_1)
+      (fun (X : Type u_1) =>
+        @Sigma.{u_1, u_1} (X → Real) fun (x : X → Real) =>
+          @Sigma.{u_1, 0} X fun (x : X) =>
+            @Sigma.{0, 0} Real fun (x : Real) =>
+              @Sigma.{0, 0} Real fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Nat)
+      X
+      (@Sigma.mk.{u_1, u_1} (X → Real)
+        (fun (x : X → Real) =>
+          @Sigma.{u_1, 0} X fun (x : X) =>
+            @Sigma.{0, 0} Real fun (x : Real) =>
+              @Sigma.{0, 0} Real fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Nat)
+        χ
+        (@Sigma.mk.{u_1, 0} X
+          (fun (x : X) =>
+            @Sigma.{0, 0} Real fun (x : Real) =>
+              @Sigma.{0, 0} Real fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Nat)
+          z
+          (@Sigma.mk.{0, 0} Real
+            (fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Nat) r
+            (@Sigma.mk.{0, 0} Real (fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Nat) q
+              (@Sigma.mk.{0, 0} Real (fun (x : Real) => Nat) N T))))))
+    x
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.observationFact0.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakPathCurrent\",\"log_forward_div_reverse_eq_current\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakPathCurrent\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.log_forward_div_reverse_eq_current, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .function, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.varyingLawInput.{u_1} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.canonicalArenaOperand.{u_1})
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.varyingLaw.{u_1}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakPathCurrent\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.statementExclusion.{u_1} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakPathCurrent\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakPathCurrent\",\"log_forward_div_reverse_eq_current\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  statementLocation := { owner := `D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.log_forward_div_reverse_eq_current, part := .type, path := [], levels := [(.param `u_1)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration.{u_1}).actual (Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration.{u_1}).variation.2.choose (Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration.{u_1}).variation.1 (Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration.{u_1}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1.descriptorFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakPathCurrent\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"TimeArrow\",\"SinglePeakPathCurrent\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent, declaration := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakPathCurrent.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))

@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation
 import Reg.Support.DependentFamily
@@ -223,7 +226,17 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
   sourceSelection := some { owner := `D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, definition := none, coordinates := #[6], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "domain", "arg", "arg"], stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.pure_cubic_mixed_prime_saturation, part := .type, path := [], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [`Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.canonicalArenaFact, `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.sourceBridgeFact, `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.observationFact0, `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.anchorEnumeration }
 
 
 #print axioms registration
@@ -231,3 +244,125 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
 
 end
 end Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation
+
+
+noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.canonicalArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.arena.{u_1}
+noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.canonicalArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.canonicalObjectArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.arena.{u_1}
+noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.canonicalObjectArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.sourceLaw.{u_1} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.arena.{u_1}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.arena.{u_1}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.arena.{u_1}
+      Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.actual)
+    Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"pure_cubic_mixed_prime_saturation\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.pure_cubic_mixed_prime_saturation, part := .type, path := [], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.arena.{u_1}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.arena.{u_1}
+    Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.actual)
+  Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.observation0.{u_1} : {K : Type u_1} →
+  [inst : Field.{u_1} K] →
+    [@CharZero.{u_1} K
+          (@AddGroupWithOne.toAddMonoidWithOne.{u_1} K
+            (@Ring.toAddGroupWithOne.{u_1} K (@DivisionRing.toRing.{u_1} K (@Field.toDivisionRing.{u_1} K inst))))] →
+      [inst_2 :
+          @Algebra.{0, u_1} Rat K Rat.commSemiring
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))] →
+        (pb :
+            @PowerBasis.{0, u_1} Rat K Rat.commRing (@DivisionRing.toRing.{u_1} K (@Field.toDivisionRing.{u_1} K inst))
+              inst_2) →
+          (h3 :
+              @Eq.{1} Nat
+                (@PowerBasis.dim.{0, u_1} Rat K Rat.commRing
+                  (@DivisionRing.toRing.{u_1} K (@Field.toDivisionRing.{u_1} K inst)) inst_2 pb)
+                (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) →
+            (m n c a k v : Int) →
+              (hm : @Ne.{1} Int m (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))) →
+                (hn : @Ne.{1} Int n (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0)))) →
+                  (hv :
+                      Or (@Eq.{1} Int v (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+                        (@Eq.{1} Int v
+                          (@Neg.neg.{0} Int Int.instNegInt
+                            (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))))) →
+                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                      Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.signature PUnit.unit.{1} m :=
+  fun {K : Type u_1} [Field.{u_1} K]
+    [@CharZero.{u_1} K
+        (@AddGroupWithOne.toAddMonoidWithOne.{u_1} K
+          (@Ring.toAddGroupWithOne.{u_1} K (@DivisionRing.toRing.{u_1} K (@Field.toDivisionRing.{u_1} K inst))))]
+    [@Algebra.{0, u_1} Rat K Rat.commSemiring
+        (@DivisionSemiring.toSemiring.{u_1} K
+          (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))]
+    (pb :
+      @PowerBasis.{0, u_1} Rat K Rat.commRing (@DivisionRing.toRing.{u_1} K (@Field.toDivisionRing.{u_1} K inst))
+        inst_2)
+    (h3 :
+      @Eq.{1} Nat
+        (@PowerBasis.dim.{0, u_1} Rat K Rat.commRing (@DivisionRing.toRing.{u_1} K (@Field.toDivisionRing.{u_1} K inst))
+          inst_2 pb)
+        (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
+    (m n c a k v : Int) (hm : @Ne.{1} Int m (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))
+    (hn : @Ne.{1} Int n (@OfNat.ofNat.{0} Int (nat_lit 0) (@instOfNat (nat_lit 0))))
+    (hv :
+      Or (@Eq.{1} Int v (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+        (@Eq.{1} Int v
+          (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1)))))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.signature
+    Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.actual PUnit.unit.{1} m n
+
+noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.observationFact0.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"pure_cubic_mixed_prime_saturation\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"domain\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.pure_cubic_mixed_prime_saturation, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .domain, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.varyingLawInput.{u_1} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.canonicalArenaOperand.{u_1})
+noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.varyingLaw.{u_1}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.statementExclusion.{u_1} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"pure_cubic_mixed_prime_saturation\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  statementLocation := { owner := `D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.pure_cubic_mixed_prime_saturation, part := .type, path := [], levels := [(.param `u_1)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration.{u_1}).actual (Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration.{u_1}).variation.2.choose (Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration.{u_1}).variation.1 (Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration.{u_1}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"Lattices\",\"PureCubicMixedPrimeSaturation\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation, declaration := `Reg.D5.S3.Arith.Lattices.PureCubicMixedPrimeSaturation.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))

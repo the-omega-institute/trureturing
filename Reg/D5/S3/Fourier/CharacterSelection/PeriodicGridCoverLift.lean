@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift
 import Reg.Support.DependentFamily
@@ -95,7 +98,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg"], stateBinder := 9, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.flat_unique_cover_lift, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.canonicalArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.sourceBridgeFact, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.observationFact0, `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.anchorEnumeration }
 
 
 #print axioms actual_law
@@ -104,3 +117,110 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
 #print axioms dependence_proof
 
 end Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift
+
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.arena
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.arena
+    (∀ {M N : Nat} [inst : @NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M]
+      [inst_1 : @NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N]
+      (_hM : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) M)
+      (_hN : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) N)
+      (y : D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeLabel M N)
+      (_hy : @D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.Flat M N inst inst_1 y)
+      (a : ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))),
+      @ExistsUnique.{1} (Int → Int → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+        fun (x : Int → Int → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) =>
+        @D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.IsCoverLift M N inst inst_1 y a x)
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"flat_unique_cover_lift\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.flat_unique_cover_lift, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.arena
+  (∀ {M N : Nat} [inst : @NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M]
+    [inst_1 : @NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N]
+    (_hM : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) M)
+    (_hN : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) N)
+    (y : D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeLabel M N)
+    (_hy : @D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.Flat M N inst inst_1 y)
+    (a : ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))),
+    @ExistsUnique.{1} (Int → Int → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+      fun (x : Int → Int → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) =>
+      @D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.IsCoverLift M N inst inst_1 y a x)
+  Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration)
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.observation0 : {M N : Nat} →
+  [inst : @NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M] →
+    [inst_1 : @NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N] →
+      (_hM : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) M) →
+        (_hN : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) N) →
+          (y : D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeLabel M N) →
+            (hy : @D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.Flat M N inst inst_1 y) →
+              (a : ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) →
+                (x : Int → Int → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) →
+                  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.signature PUnit.unit.{1} PUnit.unit.{1} :=
+  fun {M N : Nat} [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) M]
+    [@NeZero.{0} Nat (@MulZeroClass.toZero.{0} Nat Nat.instMulZeroClass) N]
+    (_hM : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) M)
+    (_hN : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) N)
+    (y : D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.EdgeLabel M N)
+    (hy : @D5.S3.Fourier.CharacterSelection.PeriodicGridHolonomy.Flat M N inst inst_1 y)
+    (a : ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+    (x : Int → Int → ZMod (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.signature
+    Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.actual PUnit.unit.{1} PUnit.unit.{1} x
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"flat_unique_cover_lift\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.flat_unique_cover_lift, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"flat_unique_cover_lift\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.flat_unique_cover_lift, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration).actual (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration).variation.2.choose (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration).variation.1 (Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"CharacterSelection\",\"PeriodicGridCoverLift\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift, declaration := `Reg.D5.S3.Fourier.CharacterSelection.PeriodicGridCoverLift.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

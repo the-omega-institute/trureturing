@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials
 import Reg.Support.DependentFamily
@@ -77,10 +80,108 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, definition := some { owner := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, name := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.claim, path := #[] }, coordinates := #[0, 1, 3], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.result, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] },
+    { owner := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.claim, part := .value, path := [], levels := [] }], facts := [`Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.observationFact0, `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 
 end
 end Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials
+
+
+noncomputable def Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.arena
+noncomputable def Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"TwoPhotonRabiConstraintPolynomials\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"TwoPhotonRabiConstraintPolynomials\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.arena
+noncomputable def Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"TwoPhotonRabiConstraintPolynomials\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"TwoPhotonRabiConstraintPolynomials\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.arena
+    D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.claim
+    Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration)
+
+noncomputable def Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"TwoPhotonRabiConstraintPolynomials\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"TwoPhotonRabiConstraintPolynomials\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.result, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.arena
+  D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.claim
+  Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration)
+
+noncomputable def Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.observation0 : (N : Nat) →
+  (ρ : Real) →
+    Or (@Eq.{1} Real ρ (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))
+        (@Eq.{1} Real ρ (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →
+      (ε : Real) →
+        D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+          Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.signature PUnit.unit.{1}
+          (@Sigma.mk.{0, 0} Nat (fun (x : Nat) => @Sigma.{0, 0} Real fun (x : Real) => Real) N
+            (@Sigma.mk.{0, 0} Real (fun (x : Real) => Real) ρ ε)) :=
+  fun (N : Nat) (ρ : Real)
+    (a :
+      Or (@Eq.{1} Real ρ (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)))
+        (@Eq.{1} Real ρ (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
+    (ε : Real) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.signature
+    Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat (fun (x : Nat) => @Sigma.{0, 0} Real fun (x : Real) => Real) N
+      (@Sigma.mk.{0, 0} Real (fun (x : Real) => Real) ρ ε))
+    N
+
+noncomputable def Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"TwoPhotonRabiConstraintPolynomials\",\"claim\"],\"part\":\"value\",\"path\":[\"body\",\"body\",\"body\",\"function\",\"argument\",\"body\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"TwoPhotonRabiConstraintPolynomials\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.claim, part := .value, path := [.body, .body, .body, .function, .argument, .body, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"TwoPhotonRabiConstraintPolynomials\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"TwoPhotonRabiConstraintPolynomials\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"TwoPhotonRabiConstraintPolynomials\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.result, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration).actual (Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration).variation.2.choose (Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration).variation.1 (Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"TwoPhotonRabiConstraintPolynomials\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"TwoPhotonRabiConstraintPolynomials\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials, declaration := `Reg.D5.S3.Quantum.Dynamics.TwoPhotonRabiConstraintPolynomials.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

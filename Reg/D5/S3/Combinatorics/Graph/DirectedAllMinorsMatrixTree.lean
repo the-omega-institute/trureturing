@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree
 import Reg.Support.DependentFamily
@@ -176,7 +179,77 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
   sourceSelection := some { owner := `D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, definition := none, coordinates := #[0, 1, 2, 3, 5, 6, 7, 8, 9], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.directed_all_minors_matrix_tree, part := .type, path := [], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [`Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.canonicalArenaFact, `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.sourceBridgeFact, `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.anchorEnumeration }
 
 
 end Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree
+
+
+noncomputable def Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.canonicalArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_1 + 1, u_1, 0, u_1, 0} :=
+  Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.arena.{u_1}
+noncomputable def Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.canonicalArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"DirectedAllMinorsMatrixTree\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"DirectedAllMinorsMatrixTree\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+noncomputable def Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.canonicalObjectArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_1 + 1, u_1, 0, u_1, 0} :=
+  Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.arena.{u_1}
+noncomputable def Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.canonicalObjectArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"DirectedAllMinorsMatrixTree\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"DirectedAllMinorsMatrixTree\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.sourceLaw.{u_1} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
+  Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.arena.{u_1}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_1 + 1, u_1, 0, u_1, 0}
+    Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.arena.{u_1}
+    Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.SourceClaim.{u_1}
+    Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"DirectedAllMinorsMatrixTree\",\"directed_all_minors_matrix_tree\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"DirectedAllMinorsMatrixTree\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.directed_all_minors_matrix_tree, part := .type, path := [], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_1 + 1, u_1, 0, u_1, 0}
+  Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.arena.{u_1}
+  Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.SourceClaim.{u_1}
+  Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.varyingLawInput.{u_1} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.canonicalArenaOperand.{u_1})
+noncomputable def Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.varyingLaw.{u_1}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"DirectedAllMinorsMatrixTree\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.statementExclusion.{u_1} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"DirectedAllMinorsMatrixTree\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"DirectedAllMinorsMatrixTree\",\"directed_all_minors_matrix_tree\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  statementLocation := { owner := `D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.directed_all_minors_matrix_tree, part := .type, path := [], levels := [(.param `u_1)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration.{u_1}).actual (Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration.{u_1}).variation.2.choose (Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration.{u_1}).variation.1 (Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration.{u_1}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1.descriptorFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"DirectedAllMinorsMatrixTree\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"Graph\",\"DirectedAllMinorsMatrixTree\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree, declaration := `Reg.D5.S3.Combinatorics.Graph.DirectedAllMinorsMatrixTree.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))

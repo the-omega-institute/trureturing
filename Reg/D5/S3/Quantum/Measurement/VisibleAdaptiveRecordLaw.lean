@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw
 import Reg.Support.DependentFamily
@@ -179,7 +182,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "value", "body", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.visible_adaptive_record_law_and_absolute_minimax, part := .type, path := [], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u] }], facts := [`Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.observationFact0, `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.anchorEnumeration }
 
 
 #print axioms actual_law
@@ -188,3 +201,1219 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
 #print axioms dependence_proof
 
 end Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw
+
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.canonicalArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.arena.{u}
+noncomputable def Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.canonicalArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"VisibleAdaptiveRecordLaw\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"VisibleAdaptiveRecordLaw\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.canonicalObjectArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.arena.{u}
+noncomputable def Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.canonicalObjectArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"VisibleAdaptiveRecordLaw\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"VisibleAdaptiveRecordLaw\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.sourceLaw.{u} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.arena.{u}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.arena.{u}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.arena.{u}
+      Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.actual)
+    Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration.{u})
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"VisibleAdaptiveRecordLaw\",\"visible_adaptive_record_law_and_absolute_minimax\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"VisibleAdaptiveRecordLaw\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.visible_adaptive_record_law_and_absolute_minimax, part := .type, path := [], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.arena.{u}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.arena.{u}
+    Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.actual)
+  Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration.{u})
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.observation0.{u} : {A : Type} →
+  [inst : Fintype.{0} A] →
+    [inst_1 : DecidableEq.{1} A] →
+      (e : Nat) →
+        (he : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) e) →
+          (β : Real) →
+            (hβ :
+                @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+                  β) →
+              (N : Nat) →
+                (F :
+                    Fin
+                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) N
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →
+                      Type u) →
+                  [inst_2 :
+                      (i :
+                          Fin
+                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) N
+                              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) →
+                        MeasurableSpace.{u} (F i)] →
+                    (D : Type u) →
+                      [inst_3 : MeasurableSpace.{u} D] →
+                        (P :
+                            @D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.FiniteStoppedPolicy.{u} N F D A inst_2
+                              inst_3 inst inst_1) →
+                          (H_A : Matrix.{0, 0, 0} A A Complex) →
+                            (hH_A :
+                                @Matrix.IsHermitian.{0, 0} Complex A
+                                  (@InvolutiveStar.toStar.{0} Complex
+                                    (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                                      (@AddCommMonoid.toAddMonoid.{0} Complex
+                                        (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                          (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                            (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                              (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                                Complex.instNonUnitalCommRing)))))
+                                      (@StarRing.toStarAddMonoid.{0} Complex
+                                        (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                              Complex.instNonUnitalCommRing)))
+                                        Complex.instStarRing)))
+                                  H_A) →
+                              (h₀ :
+                                  F
+                                    (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                      (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))) →
+                                (ρ₀ : Matrix.{0, 0, 0} A A Complex) →
+                                  (hρ₀ :
+                                      @Matrix.PosSemidef.{0, 0} A Complex Complex.instRing Complex.partialOrder
+                                        Complex.instStarRing ρ₀) →
+                                    (hρ₀trace :
+                                        @Eq.{1} Complex
+                                          (@Matrix.trace.{0, 0} A Complex inst Complex.instAddCommMonoid ρ₀)
+                                          (@OfNat.ofNat.{0} Complex (nat_lit 1)
+                                            (@One.toOfNat1.{0} Complex Complex.instOne))) →
+                                      (G :
+                                          @D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState.{0}
+                                              (Fin e) (Fin.fintype e) (instDecidableEqFin e) →
+                                            (i :
+                                                Fin
+                                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) N
+                                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) →
+                                              @D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.{u, 0}
+                                                (F i) (Prod.{0, 0} A (Fin e)) (inst_2 i)
+                                                (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))) →
+                                        (hinit :
+                                            ∀
+                                              (σ :
+                                                @D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState.{0}
+                                                  (Fin e) (Fin.fintype e) (instDecidableEqFin e)),
+                                              @Eq.{u + 1}
+                                                (@MeasureTheory.Measure.{u}
+                                                  (F
+                                                    (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                                      (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                                                  (inst_2
+                                                    (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                                      (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))
+                                                (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.law.{u,
+                                                      0}
+                                                  (F
+                                                    (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                                      (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                                                  (Prod.{0, 0} A (Fin e))
+                                                  (inst_2
+                                                    (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                                      (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                                                  (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+                                                  (G σ
+                                                    (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                                      (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))
+                                                (@MeasureTheory.Measure.dirac.{u}
+                                                  (F
+                                                    (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                                      (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                                                  (inst_2
+                                                    (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                                      (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                                                  h₀)) →
+                                          (hproduct :
+                                              ∀
+                                                (σ :
+                                                  @D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState.{0}
+                                                    (Fin e) (Fin.fintype e) (instDecidableEqFin e)),
+                                                @Filter.EventuallyEq.{u, 0}
+                                                  (F
+                                                    (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                                      (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                                                  (Matrix.{0, 0, 0} (Prod.{0, 0} A (Fin e)) (Prod.{0, 0} A (Fin e))
+                                                    Complex)
+                                                  (@MeasureTheory.ae.{u, u}
+                                                    (F
+                                                      (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                                        (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                                                    (@MeasureTheory.Measure.{u}
+                                                      (F
+                                                        (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                          N
+                                                          (@OfNat.ofNat.{0} Nat (nat_lit 0)
+                                                            (instOfNatNat (nat_lit 0)))))
+                                                      (inst_2
+                                                        (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                          N
+                                                          (@OfNat.ofNat.{0} Nat (nat_lit 0)
+                                                            (instOfNatNat (nat_lit 0))))))
+                                                    (@MeasureTheory.Measure.instFunLike.{u}
+                                                      (F
+                                                        (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                          N
+                                                          (@OfNat.ofNat.{0} Nat (nat_lit 0)
+                                                            (instOfNatNat (nat_lit 0)))))
+                                                      (inst_2
+                                                        (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                          N
+                                                          (@OfNat.ofNat.{0} Nat (nat_lit 0)
+                                                            (instOfNatNat (nat_lit 0))))))
+                                                    (@MeasureTheory.Measure.instOuterMeasureClass.{u}
+                                                      (F
+                                                        (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                          N
+                                                          (@OfNat.ofNat.{0} Nat (nat_lit 0)
+                                                            (instOfNatNat (nat_lit 0)))))
+                                                      (inst_2
+                                                        (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                          N
+                                                          (@OfNat.ofNat.{0} Nat (nat_lit 0)
+                                                            (instOfNatNat (nat_lit 0))))))
+                                                    (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.law.{u,
+                                                          0}
+                                                      (F
+                                                        (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                          N
+                                                          (@OfNat.ofNat.{0} Nat (nat_lit 0)
+                                                            (instOfNatNat (nat_lit 0)))))
+                                                      (Prod.{0, 0} A (Fin e))
+                                                      (inst_2
+                                                        (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                          N
+                                                          (@OfNat.ofNat.{0} Nat (nat_lit 0)
+                                                            (instOfNatNat (nat_lit 0)))))
+                                                      (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+                                                      (G σ
+                                                        (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                          N
+                                                          (@OfNat.ofNat.{0} Nat (nat_lit 0)
+                                                            (instOfNatNat (nat_lit 0)))))))
+                                                  (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.density.{u,
+                                                        0}
+                                                    (F
+                                                      (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                                        (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                                                    (Prod.{0, 0} A (Fin e))
+                                                    (inst_2
+                                                      (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                                        (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+                                                    (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+                                                    (G σ
+                                                      (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                                        (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))
+                                                  fun
+                                                    (x :
+                                                      F
+                                                        (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                          N
+                                                          (@OfNat.ofNat.{0} Nat (nat_lit 0)
+                                                            (instOfNatNat (nat_lit 0))))) =>
+                                                  @Matrix.kroneckerMap.{0, 0, 0, 0, 0, 0, 0} Complex Complex Complex A A
+                                                    (Fin e) (Fin e)
+                                                    (fun (x1 x2 : Complex) =>
+                                                      @HMul.hMul.{0, 0, 0} Complex Complex Complex
+                                                        (@instHMul.{0} Complex Complex.instMul) x1 x2)
+                                                    ρ₀
+                                                    (@DFunLike.coe.{1, 1, 1}
+                                                      (Equiv.{1, 1} (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                        (Matrix.{0, 0, 0} (Fin e) (Fin e) Complex))
+                                                      (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                      (fun (x : CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex) =>
+                                                        Matrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                      (@EquivLike.toFunLike.{1, 1, 1}
+                                                        (Equiv.{1, 1} (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                          (Matrix.{0, 0, 0} (Fin e) (Fin e) Complex))
+                                                        (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                        (Matrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                        (@Equiv.instEquivLike.{1, 1}
+                                                          (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                          (Matrix.{0, 0, 0} (Fin e) (Fin e) Complex)))
+                                                      (@Equiv.symm.{1, 1} (Matrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                        (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                        (@CStarMatrix.ofMatrix.{0, 0, 0} (Fin e) (Fin e) Complex))
+                                                      (@Subtype.val.{1} (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                        (fun (rho : CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex) =>
+                                                          And
+                                                            (@LE.le.{0} (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                              (@Preorder.toLE.{0}
+                                                                (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                                (@PartialOrder.toPreorder.{0}
+                                                                  (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                                  (@CStarMatrix.instPartialOrder.{0, 0} Complex
+                                                                    (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0}
+                                                                      Complex
+                                                                      (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0}
+                                                                        Complex instCommCStarAlgebraComplex))
+                                                                    Complex.partialOrder
+                                                                    (@RCLike.toStarOrderedRing.{0} Complex
+                                                                      Complex.instRCLike)
+                                                                    (Fin e) (Fin.fintype e))))
+                                                              (@OfNat.ofNat.{0}
+                                                                (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                                (nat_lit 0)
+                                                                (@Zero.toOfNat0.{0}
+                                                                  (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                                                                  (@CStarMatrix.instZero.{0, 0, 0} (Fin e) (Fin e)
+                                                                    Complex Complex.instZero)))
+                                                              rho)
+                                                            (@Eq.{1} Complex
+                                                              (@Matrix.trace.{0, 0} (Fin e) Complex (Fin.fintype e)
+                                                                Complex.instAddCommMonoid rho)
+                                                              (@OfNat.ofNat.{0} Complex (nat_lit 1)
+                                                                (@One.toOfNat1.{0} Complex Complex.instOne))))
+                                                        σ))) →
+                                            (hnormalized :
+                                                ∀
+                                                  (σ :
+                                                    @D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState.{0}
+                                                      (Fin e) (Fin.fintype e) (instDecidableEqFin e))
+                                                  (n : Nat) (hn : @LT.lt.{0} Nat instLTNat n N),
+                                                  @Filter.Eventually.{u}
+                                                    (F
+                                                      (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                                        n))
+                                                    (fun
+                                                        (h :
+                                                          F
+                                                            (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                              N n)) =>
+                                                      Not
+                                                          (@Membership.mem.{u, u}
+                                                            (F
+                                                              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                N n))
+                                                            (Set.{u}
+                                                              (F
+                                                                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                  N n)))
+                                                            (@Set.instMembership.{u}
+                                                              (F
+                                                                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                  N n)))
+                                                            (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.FiniteStoppedPolicy.stop.{u}
+                                                              N F D A inst_2 inst_3 inst inst_1 P n hn)
+                                                            h) →
+                                                        ∀ (X : Matrix.{0, 0, 0} A A Complex),
+                                                          @Eq.{1} Complex
+                                                            (@Matrix.trace.{0, 0} A Complex inst
+                                                              Complex.instAddCommMonoid
+                                                              (@DFunLike.coe.{1, 1, 1}
+                                                                (Equiv.{1, 1} (CStarMatrix.{0, 0, 0} A A Complex)
+                                                                  (Matrix.{0, 0, 0} A A Complex))
+                                                                (CStarMatrix.{0, 0, 0} A A Complex)
+                                                                (fun (x : CStarMatrix.{0, 0, 0} A A Complex) =>
+                                                                  Matrix.{0, 0, 0} A A Complex)
+                                                                (@EquivLike.toFunLike.{1, 1, 1}
+                                                                  (Equiv.{1, 1} (CStarMatrix.{0, 0, 0} A A Complex)
+                                                                    (Matrix.{0, 0, 0} A A Complex))
+                                                                  (CStarMatrix.{0, 0, 0} A A Complex)
+                                                                  (Matrix.{0, 0, 0} A A Complex)
+                                                                  (@Equiv.instEquivLike.{1, 1}
+                                                                    (CStarMatrix.{0, 0, 0} A A Complex)
+                                                                    (Matrix.{0, 0, 0} A A Complex)))
+                                                                (@Equiv.symm.{1, 1} (Matrix.{0, 0, 0} A A Complex)
+                                                                  (CStarMatrix.{0, 0, 0} A A Complex)
+                                                                  (@CStarMatrix.ofMatrix.{0, 0, 0} A A Complex))
+                                                                (@DFunLike.coe.{1, 1, 1}
+                                                                  (@CompletelyPositiveMap.{0, 0}
+                                                                    (CStarMatrix.{0, 0, 0} A A Complex)
+                                                                    (CStarMatrix.{0, 0, 0} A A Complex)
+                                                                    (@CStarMatrix.instNonUnitalCStarAlgebra.{0, 0}
+                                                                      Complex
+                                                                      (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0}
+                                                                        Complex
+                                                                        (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0}
+                                                                          Complex instCommCStarAlgebraComplex))
+                                                                      Complex.partialOrder
+                                                                      (@RCLike.toStarOrderedRing.{0} Complex
+                                                                        Complex.instRCLike)
+                                                                      A inst)
+                                                                    (@CStarMatrix.instNonUnitalCStarAlgebra.{0, 0}
+                                                                      Complex
+                                                                      (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0}
+                                                                        Complex
+                                                                        (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0}
+                                                                          Complex instCommCStarAlgebraComplex))
+                                                                      Complex.partialOrder
+                                                                      (@RCLike.toStarOrderedRing.{0} Complex
+                                                                        Complex.instRCLike)
+                                                                      A inst)
+                                                                    (@CStarMatrix.instPartialOrder.{0, 0} Complex
+                                                                      (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0}
+                                                                        Complex
+                                                                        (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0}
+                                                                          Complex instCommCStarAlgebraComplex))
+                                                                      Complex.partialOrder
+                                                                      (@RCLike.toStarOrderedRing.{0} Complex
+                                                                        Complex.instRCLike)
+                                                                      A inst)
+                                                                    (@CStarMatrix.instPartialOrder.{0, 0} Complex
+                                                                      (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0}
+                                                                        Complex
+                                                                        (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0}
+                                                                          Complex instCommCStarAlgebraComplex))
+                                                                      Complex.partialOrder
+                                                                      (@RCLike.toStarOrderedRing.{0} Complex
+                                                                        Complex.instRCLike)
+                                                                      A inst)
+                                                                    (@CStarMatrix.instStarOrderedRing.{0, 0} Complex
+                                                                      (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0}
+                                                                        Complex
+                                                                        (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0}
+                                                                          Complex instCommCStarAlgebraComplex))
+                                                                      Complex.partialOrder
+                                                                      (@RCLike.toStarOrderedRing.{0} Complex
+                                                                        Complex.instRCLike)
+                                                                      A inst)
+                                                                    (@CStarMatrix.instStarOrderedRing.{0, 0} Complex
+                                                                      (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0}
+                                                                        Complex
+                                                                        (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0}
+                                                                          Complex instCommCStarAlgebraComplex))
+                                                                      Complex.partialOrder
+                                                                      (@RCLike.toStarOrderedRing.{0} Complex
+                                                                        Complex.instRCLike)
+                                                                      A inst))
+                                                                  (CStarMatrix.{0, 0, 0} A A Complex)
+                                                                  (fun (x : CStarMatrix.{0, 0, 0} A A Complex) =>
+                                                                    CStarMatrix.{0, 0, 0} A A Complex)
+                                                                  (@CompletelyPositiveMap.instFunLike.{0, 0}
+                                                                    (CStarMatrix.{0, 0, 0} A A Complex)
+                                                                    (CStarMatrix.{0, 0, 0} A A Complex)
+                                                                    (@CStarMatrix.instNonUnitalCStarAlgebra.{0, 0}
+                                                                      Complex
+                                                                      (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0}
+                                                                        Complex
+                                                                        (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0}
+                                                                          Complex instCommCStarAlgebraComplex))
+                                                                      Complex.partialOrder
+                                                                      (@RCLike.toStarOrderedRing.{0} Complex
+                                                                        Complex.instRCLike)
+                                                                      A inst)
+                                                                    (@CStarMatrix.instNonUnitalCStarAlgebra.{0, 0}
+                                                                      Complex
+                                                                      (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0}
+                                                                        Complex
+                                                                        (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0}
+                                                                          Complex instCommCStarAlgebraComplex))
+                                                                      Complex.partialOrder
+                                                                      (@RCLike.toStarOrderedRing.{0} Complex
+                                                                        Complex.instRCLike)
+                                                                      A inst)
+                                                                    (@CStarMatrix.instPartialOrder.{0, 0} Complex
+                                                                      (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0}
+                                                                        Complex
+                                                                        (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0}
+                                                                          Complex instCommCStarAlgebraComplex))
+                                                                      Complex.partialOrder
+                                                                      (@RCLike.toStarOrderedRing.{0} Complex
+                                                                        Complex.instRCLike)
+                                                                      A inst)
+                                                                    (@CStarMatrix.instPartialOrder.{0, 0} Complex
+                                                                      (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0}
+                                                                        Complex
+                                                                        (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0}
+                                                                          Complex instCommCStarAlgebraComplex))
+                                                                      Complex.partialOrder
+                                                                      (@RCLike.toStarOrderedRing.{0} Complex
+                                                                        Complex.instRCLike)
+                                                                      A inst)
+                                                                    (@CStarMatrix.instStarOrderedRing.{0, 0} Complex
+                                                                      (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0}
+                                                                        Complex
+                                                                        (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0}
+                                                                          Complex instCommCStarAlgebraComplex))
+                                                                      Complex.partialOrder
+                                                                      (@RCLike.toStarOrderedRing.{0} Complex
+                                                                        Complex.instRCLike)
+                                                                      A inst)
+                                                                    (@CStarMatrix.instStarOrderedRing.{0, 0} Complex
+                                                                      (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0}
+                                                                        Complex
+                                                                        (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0}
+                                                                          Complex instCommCStarAlgebraComplex))
+                                                                      Complex.partialOrder
+                                                                      (@RCLike.toStarOrderedRing.{0} Complex
+                                                                        Complex.instRCLike)
+                                                                      A inst))
+                                                                  (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualEventStage.operation.{u,
+                                                                        0}
+                                                                    (F
+                                                                      (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                        N n))
+                                                                    (F
+                                                                      (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                        N
+                                                                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                          (@instHAdd.{0} Nat instAddNat) n
+                                                                          (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                            (instOfNatNat (nat_lit 1))))))
+                                                                    A
+                                                                    (inst_2
+                                                                      (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                        N n))
+                                                                    (inst_2
+                                                                      (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                        N
+                                                                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                          (@instHAdd.{0} Nat instAddNat) n
+                                                                          (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                            (instOfNatNat (nat_lit 1))))))
+                                                                    inst inst_1
+                                                                    (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.FiniteStoppedPolicy.stage.{u}
+                                                                      N F D A inst_2 inst_3 inst inst_1 P n hn)
+                                                                    h
+                                                                    (@Set.univ.{u}
+                                                                      (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualEventStage.Outcome.{u,
+                                                                            0}
+                                                                        (F
+                                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                            N n))
+                                                                        (F
+                                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                            N
+                                                                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                              (@instHAdd.{0} Nat instAddNat) n
+                                                                              (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                                (instOfNatNat (nat_lit 1))))))
+                                                                        A
+                                                                        (inst_2
+                                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                            N n))
+                                                                        (inst_2
+                                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                            N
+                                                                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                              (@instHAdd.{0} Nat instAddNat) n
+                                                                              (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                                (instOfNatNat (nat_lit 1))))))
+                                                                        inst inst_1
+                                                                        (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.FiniteStoppedPolicy.stage.{u}
+                                                                          N F D A inst_2 inst_3 inst inst_1 P n hn)
+                                                                        h)))
+                                                                  (@DFunLike.coe.{1, 1, 1}
+                                                                    (Equiv.{1, 1} (Matrix.{0, 0, 0} A A Complex)
+                                                                      (CStarMatrix.{0, 0, 0} A A Complex))
+                                                                    (Matrix.{0, 0, 0} A A Complex)
+                                                                    (fun (x : Matrix.{0, 0, 0} A A Complex) =>
+                                                                      CStarMatrix.{0, 0, 0} A A Complex)
+                                                                    (@EquivLike.toFunLike.{1, 1, 1}
+                                                                      (Equiv.{1, 1} (Matrix.{0, 0, 0} A A Complex)
+                                                                        (CStarMatrix.{0, 0, 0} A A Complex))
+                                                                      (Matrix.{0, 0, 0} A A Complex)
+                                                                      (CStarMatrix.{0, 0, 0} A A Complex)
+                                                                      (@Equiv.instEquivLike.{1, 1}
+                                                                        (Matrix.{0, 0, 0} A A Complex)
+                                                                        (CStarMatrix.{0, 0, 0} A A Complex)))
+                                                                    (@CStarMatrix.ofMatrix.{0, 0, 0} A A Complex) X))))
+                                                            (@Matrix.trace.{0, 0} A Complex inst
+                                                              Complex.instAddCommMonoid X))
+                                                    (@MeasureTheory.ae.{u, u}
+                                                      (F
+                                                        (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                          N n))
+                                                      (@MeasureTheory.Measure.{u}
+                                                        (F
+                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                            N n))
+                                                        (inst_2
+                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                            N n)))
+                                                      (@MeasureTheory.Measure.instFunLike.{u}
+                                                        (F
+                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                            N n))
+                                                        (inst_2
+                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                            N n)))
+                                                      (@MeasureTheory.Measure.instOuterMeasureClass.{u}
+                                                        (F
+                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                            N n))
+                                                        (inst_2
+                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                            N n)))
+                                                      (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.law.{u,
+                                                            0}
+                                                        (F
+                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                            N n))
+                                                        (Prod.{0, 0} A (Fin e))
+                                                        (inst_2
+                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                            N n))
+                                                        (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+                                                        (G σ
+                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                            N n))))) →
+                                              (hphysical :
+                                                  ∀
+                                                    (σ :
+                                                      @D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState.{0}
+                                                        (Fin e) (Fin.fintype e) (instDecidableEqFin e))
+                                                    (n : Nat) (hn : @LT.lt.{0} Nat instLTNat n N)
+                                                    (E :
+                                                      Set.{u}
+                                                        (F
+                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                            N
+                                                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                              (@instHAdd.{0} Nat instAddNat) n
+                                                              (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                (instOfNatNat (nat_lit 1))))))),
+                                                    @MeasurableSet.{u}
+                                                        (F
+                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                            N
+                                                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                              (@instHAdd.{0} Nat instAddNat) n
+                                                              (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                (instOfNatNat (nat_lit 1))))))
+                                                        (inst_2
+                                                          (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                            N
+                                                            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                              (@instHAdd.{0} Nat instAddNat) n
+                                                              (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                (instOfNatNat (nat_lit 1))))))
+                                                        E →
+                                                      ∀ (i j : Prod.{0, 0} A (Fin e)),
+                                                        @Eq.{1} Complex
+                                                          (@MeasureTheory.integral.{u, 0}
+                                                            (F
+                                                              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                N
+                                                                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                  (@instHAdd.{0} Nat instAddNat) n
+                                                                  (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                    (instOfNatNat (nat_lit 1))))))
+                                                            Complex Complex.instNormedAddCommGroup
+                                                            (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex
+                                                              Real.instRCLike
+                                                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex
+                                                                Complex.instNormedAddCommGroup)
+                                                              instInnerProductSpaceRealComplex)
+                                                            (inst_2
+                                                              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                N
+                                                                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                  (@instHAdd.{0} Nat instAddNat) n
+                                                                  (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                    (instOfNatNat (nat_lit 1))))))
+                                                            (@MeasureTheory.Measure.restrict.{u}
+                                                              (F
+                                                                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                  N
+                                                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                    (@instHAdd.{0} Nat instAddNat) n
+                                                                    (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                      (instOfNatNat (nat_lit 1))))))
+                                                              (inst_2
+                                                                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                  N
+                                                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                    (@instHAdd.{0} Nat instAddNat) n
+                                                                    (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                      (instOfNatNat (nat_lit 1))))))
+                                                              (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.law.{u,
+                                                                    0}
+                                                                (F
+                                                                  (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                    N
+                                                                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                      (@instHAdd.{0} Nat instAddNat) n
+                                                                      (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                        (instOfNatNat (nat_lit 1))))))
+                                                                (Prod.{0, 0} A (Fin e))
+                                                                (inst_2
+                                                                  (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                    N
+                                                                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                      (@instHAdd.{0} Nat instAddNat) n
+                                                                      (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                        (instOfNatNat (nat_lit 1))))))
+                                                                (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+                                                                (G σ
+                                                                  (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                    N
+                                                                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                      (@instHAdd.{0} Nat instAddNat) n
+                                                                      (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                        (instOfNatNat (nat_lit 1)))))))
+                                                              E)
+                                                            fun
+                                                              (h :
+                                                                F
+                                                                  (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                    N
+                                                                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                      (@instHAdd.{0} Nat instAddNat) n
+                                                                      (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                        (instOfNatNat (nat_lit 1)))))) =>
+                                                            @D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.density.{u,
+                                                                  0}
+                                                              (F
+                                                                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                  N
+                                                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                    (@instHAdd.{0} Nat instAddNat) n
+                                                                    (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                      (instOfNatNat (nat_lit 1))))))
+                                                              (Prod.{0, 0} A (Fin e))
+                                                              (inst_2
+                                                                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                  N
+                                                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                    (@instHAdd.{0} Nat instAddNat) n
+                                                                    (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                      (instOfNatNat (nat_lit 1))))))
+                                                              (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+                                                              (G σ
+                                                                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                  N
+                                                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat
+                                                                    (@instHAdd.{0} Nat instAddNat) n
+                                                                    (@OfNat.ofNat.{0} Nat (nat_lit 1)
+                                                                      (instOfNatNat (nat_lit 1))))))
+                                                              h i j)
+                                                          (@MeasureTheory.integral.{u, 0}
+                                                            (F
+                                                              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                N n))
+                                                            Complex Complex.instNormedAddCommGroup
+                                                            (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex
+                                                              Real.instRCLike
+                                                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex
+                                                                Complex.instNormedAddCommGroup)
+                                                              instInnerProductSpaceRealComplex)
+                                                            (inst_2
+                                                              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                N n))
+                                                            (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.law.{u,
+                                                                  0}
+                                                              (F
+                                                                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                  N n))
+                                                              (Prod.{0, 0} A (Fin e))
+                                                              (inst_2
+                                                                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                  N n))
+                                                              (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+                                                              (G σ
+                                                                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                  N n)))
+                                                            fun
+                                                              (h :
+                                                                F
+                                                                  (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                    N n)) =>
+                                                            @D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.actualFiniteStep.{u}
+                                                              N F D A (Fin e) inst_2 inst_3 inst inst_1 (Fin.fintype e)
+                                                              (instDecidableEqFin e) P H_A n hn h E
+                                                              (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.density.{u,
+                                                                    0}
+                                                                (F
+                                                                  (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                    N n))
+                                                                (Prod.{0, 0} A (Fin e))
+                                                                (inst_2
+                                                                  (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                    N n))
+                                                                (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+                                                                (G σ
+                                                                  (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex
+                                                                    N n))
+                                                                h)
+                                                              i j)) →
+                                                (σ :
+                                                    @D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState.{0}
+                                                      (Fin e) (Fin.fintype e) (instDecidableEqFin e)) →
+                                                  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0,
+                                                      0, 0, 0, 0}
+                                                    Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.signature
+                                                    PUnit.unit.{1} PUnit.unit.{1} :=
+  fun {A : Type} [Fintype.{0} A] [DecidableEq.{1} A] (e : Nat)
+    (he : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) e) (β : Real)
+    (hβ : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) β)
+    (N : Nat)
+    (F :
+      Fin
+          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) N
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →
+        Type u)
+    [(i :
+          Fin
+            (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) N
+              (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) →
+        MeasurableSpace.{u} (F i)]
+    (D : Type u) [MeasurableSpace.{u} D]
+    (P : @D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.FiniteStoppedPolicy.{u} N F D A inst_2 inst_3 inst inst_1)
+    (H_A : Matrix.{0, 0, 0} A A Complex)
+    (hH_A :
+      @Matrix.IsHermitian.{0, 0} Complex A
+        (@InvolutiveStar.toStar.{0} Complex
+          (@StarAddMonoid.toInvolutiveStar.{0} Complex
+            (@AddCommMonoid.toAddMonoid.{0} Complex
+              (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                  (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                    (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+            (@StarRing.toStarAddMonoid.{0} Complex
+              (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                  (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+              Complex.instStarRing)))
+        H_A)
+    (h₀ :
+      F
+        (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+          (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+    (ρ₀ : Matrix.{0, 0, 0} A A Complex)
+    (hρ₀ : @Matrix.PosSemidef.{0, 0} A Complex Complex.instRing Complex.partialOrder Complex.instStarRing ρ₀)
+    (hρ₀trace :
+      @Eq.{1} Complex (@Matrix.trace.{0, 0} A Complex inst Complex.instAddCommMonoid ρ₀)
+        (@OfNat.ofNat.{0} Complex (nat_lit 1) (@One.toOfNat1.{0} Complex Complex.instOne)))
+    (G :
+      @D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState.{0} (Fin e) (Fin.fintype e)
+          (instDecidableEqFin e) →
+        (i :
+            Fin
+              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) N
+                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) →
+          @D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.{u, 0} (F i) (Prod.{0, 0} A (Fin e))
+            (inst_2 i) (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e)))
+    (hinit :
+      ∀
+        (σ :
+          @D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState.{0} (Fin e) (Fin.fintype e)
+            (instDecidableEqFin e)),
+        @Eq.{u + 1}
+          (@MeasureTheory.Measure.{u}
+            (F
+              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+            (inst_2
+              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))
+          (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.law.{u, 0}
+            (F
+              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+            (Prod.{0, 0} A (Fin e))
+            (inst_2
+              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+            (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+            (G σ
+              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))
+          (@MeasureTheory.Measure.dirac.{u}
+            (F
+              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+            (inst_2
+              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+            h₀))
+    (hproduct :
+      ∀
+        (σ :
+          @D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState.{0} (Fin e) (Fin.fintype e)
+            (instDecidableEqFin e)),
+        @Filter.EventuallyEq.{u, 0}
+          (F
+            (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+              (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+          (Matrix.{0, 0, 0} (Prod.{0, 0} A (Fin e)) (Prod.{0, 0} A (Fin e)) Complex)
+          (@MeasureTheory.ae.{u, u}
+            (F
+              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+            (@MeasureTheory.Measure.{u}
+              (F
+                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                  (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+              (inst_2
+                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                  (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))
+            (@MeasureTheory.Measure.instFunLike.{u}
+              (F
+                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                  (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+              (inst_2
+                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                  (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))
+            (@MeasureTheory.Measure.instOuterMeasureClass.{u}
+              (F
+                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                  (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+              (inst_2
+                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                  (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))
+            (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.law.{u, 0}
+              (F
+                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                  (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+              (Prod.{0, 0} A (Fin e))
+              (inst_2
+                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                  (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+              (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+              (G σ
+                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                  (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+          (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.density.{u, 0}
+            (F
+              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+            (Prod.{0, 0} A (Fin e))
+            (inst_2
+              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))
+            (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+            (G σ
+              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))
+          fun
+            (x :
+              F
+                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                  (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))) =>
+          @Matrix.kroneckerMap.{0, 0, 0, 0, 0, 0, 0} Complex Complex Complex A A (Fin e) (Fin e)
+            (fun (x1 x2 : Complex) =>
+              @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul) x1 x2)
+            ρ₀
+            (@DFunLike.coe.{1, 1, 1}
+              (Equiv.{1, 1} (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex) (Matrix.{0, 0, 0} (Fin e) (Fin e) Complex))
+              (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+              (fun (x : CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex) => Matrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+              (@EquivLike.toFunLike.{1, 1, 1}
+                (Equiv.{1, 1} (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                  (Matrix.{0, 0, 0} (Fin e) (Fin e) Complex))
+                (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex) (Matrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                (@Equiv.instEquivLike.{1, 1} (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                  (Matrix.{0, 0, 0} (Fin e) (Fin e) Complex)))
+              (@Equiv.symm.{1, 1} (Matrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                (@CStarMatrix.ofMatrix.{0, 0, 0} (Fin e) (Fin e) Complex))
+              (@Subtype.val.{1} (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                (fun (rho : CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex) =>
+                  And
+                    (@LE.le.{0} (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                      (@Preorder.toLE.{0} (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                        (@PartialOrder.toPreorder.{0} (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                          (@CStarMatrix.instPartialOrder.{0, 0} Complex
+                            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+                              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+                            Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) (Fin e)
+                            (Fin.fintype e))))
+                      (@OfNat.ofNat.{0} (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex) (nat_lit 0)
+                        (@Zero.toOfNat0.{0} (CStarMatrix.{0, 0, 0} (Fin e) (Fin e) Complex)
+                          (@CStarMatrix.instZero.{0, 0, 0} (Fin e) (Fin e) Complex Complex.instZero)))
+                      rho)
+                    (@Eq.{1} Complex
+                      (@Matrix.trace.{0, 0} (Fin e) Complex (Fin.fintype e) Complex.instAddCommMonoid rho)
+                      (@OfNat.ofNat.{0} Complex (nat_lit 1) (@One.toOfNat1.{0} Complex Complex.instOne))))
+                σ)))
+    (hnormalized :
+      ∀
+        (σ :
+          @D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState.{0} (Fin e) (Fin.fintype e)
+            (instDecidableEqFin e))
+        (n : Nat) (hn : @LT.lt.{0} Nat instLTNat n N),
+        @Filter.Eventually.{u} (F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+          (fun (h : F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n)) =>
+            Not
+                (@Membership.mem.{u, u} (F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+                  (Set.{u} (F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n)))
+                  (@Set.instMembership.{u} (F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n)))
+                  (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.FiniteStoppedPolicy.stop.{u} N F D A inst_2
+                    inst_3 inst inst_1 P n hn)
+                  h) →
+              ∀ (X : Matrix.{0, 0, 0} A A Complex),
+                @Eq.{1} Complex
+                  (@Matrix.trace.{0, 0} A Complex inst Complex.instAddCommMonoid
+                    (@DFunLike.coe.{1, 1, 1}
+                      (Equiv.{1, 1} (CStarMatrix.{0, 0, 0} A A Complex) (Matrix.{0, 0, 0} A A Complex))
+                      (CStarMatrix.{0, 0, 0} A A Complex)
+                      (fun (x : CStarMatrix.{0, 0, 0} A A Complex) => Matrix.{0, 0, 0} A A Complex)
+                      (@EquivLike.toFunLike.{1, 1, 1}
+                        (Equiv.{1, 1} (CStarMatrix.{0, 0, 0} A A Complex) (Matrix.{0, 0, 0} A A Complex))
+                        (CStarMatrix.{0, 0, 0} A A Complex) (Matrix.{0, 0, 0} A A Complex)
+                        (@Equiv.instEquivLike.{1, 1} (CStarMatrix.{0, 0, 0} A A Complex)
+                          (Matrix.{0, 0, 0} A A Complex)))
+                      (@Equiv.symm.{1, 1} (Matrix.{0, 0, 0} A A Complex) (CStarMatrix.{0, 0, 0} A A Complex)
+                        (@CStarMatrix.ofMatrix.{0, 0, 0} A A Complex))
+                      (@DFunLike.coe.{1, 1, 1}
+                        (@CompletelyPositiveMap.{0, 0} (CStarMatrix.{0, 0, 0} A A Complex)
+                          (CStarMatrix.{0, 0, 0} A A Complex)
+                          (@CStarMatrix.instNonUnitalCStarAlgebra.{0, 0} Complex
+                            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+                              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+                            Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) A inst)
+                          (@CStarMatrix.instNonUnitalCStarAlgebra.{0, 0} Complex
+                            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+                              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+                            Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) A inst)
+                          (@CStarMatrix.instPartialOrder.{0, 0} Complex
+                            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+                              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+                            Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) A inst)
+                          (@CStarMatrix.instPartialOrder.{0, 0} Complex
+                            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+                              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+                            Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) A inst)
+                          (@CStarMatrix.instStarOrderedRing.{0, 0} Complex
+                            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+                              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+                            Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) A inst)
+                          (@CStarMatrix.instStarOrderedRing.{0, 0} Complex
+                            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+                              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+                            Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) A inst))
+                        (CStarMatrix.{0, 0, 0} A A Complex)
+                        (fun (x : CStarMatrix.{0, 0, 0} A A Complex) => CStarMatrix.{0, 0, 0} A A Complex)
+                        (@CompletelyPositiveMap.instFunLike.{0, 0} (CStarMatrix.{0, 0, 0} A A Complex)
+                          (CStarMatrix.{0, 0, 0} A A Complex)
+                          (@CStarMatrix.instNonUnitalCStarAlgebra.{0, 0} Complex
+                            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+                              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+                            Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) A inst)
+                          (@CStarMatrix.instNonUnitalCStarAlgebra.{0, 0} Complex
+                            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+                              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+                            Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) A inst)
+                          (@CStarMatrix.instPartialOrder.{0, 0} Complex
+                            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+                              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+                            Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) A inst)
+                          (@CStarMatrix.instPartialOrder.{0, 0} Complex
+                            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+                              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+                            Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) A inst)
+                          (@CStarMatrix.instStarOrderedRing.{0, 0} Complex
+                            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+                              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+                            Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) A inst)
+                          (@CStarMatrix.instStarOrderedRing.{0, 0} Complex
+                            (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+                              (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+                            Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) A inst))
+                        (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualEventStage.operation.{u, 0}
+                          (F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+                          (F
+                            (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+                          A (inst_2 (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+                          (inst_2
+                            (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                              (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                                (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+                          inst inst_1
+                          (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.FiniteStoppedPolicy.stage.{u} N F D A
+                            inst_2 inst_3 inst inst_1 P n hn)
+                          h
+                          (@Set.univ.{u}
+                            (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualEventStage.Outcome.{u, 0}
+                              (F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+                              (F
+                                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+                              A (inst_2 (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+                              (inst_2
+                                (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                                  (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+                              inst inst_1
+                              (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.FiniteStoppedPolicy.stage.{u} N F D A
+                                inst_2 inst_3 inst inst_1 P n hn)
+                              h)))
+                        (@DFunLike.coe.{1, 1, 1}
+                          (Equiv.{1, 1} (Matrix.{0, 0, 0} A A Complex) (CStarMatrix.{0, 0, 0} A A Complex))
+                          (Matrix.{0, 0, 0} A A Complex)
+                          (fun (x : Matrix.{0, 0, 0} A A Complex) => CStarMatrix.{0, 0, 0} A A Complex)
+                          (@EquivLike.toFunLike.{1, 1, 1}
+                            (Equiv.{1, 1} (Matrix.{0, 0, 0} A A Complex) (CStarMatrix.{0, 0, 0} A A Complex))
+                            (Matrix.{0, 0, 0} A A Complex) (CStarMatrix.{0, 0, 0} A A Complex)
+                            (@Equiv.instEquivLike.{1, 1} (Matrix.{0, 0, 0} A A Complex)
+                              (CStarMatrix.{0, 0, 0} A A Complex)))
+                          (@CStarMatrix.ofMatrix.{0, 0, 0} A A Complex) X))))
+                  (@Matrix.trace.{0, 0} A Complex inst Complex.instAddCommMonoid X))
+          (@MeasureTheory.ae.{u, u} (F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+            (@MeasureTheory.Measure.{u} (F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+              (inst_2 (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n)))
+            (@MeasureTheory.Measure.instFunLike.{u}
+              (F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+              (inst_2 (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n)))
+            (@MeasureTheory.Measure.instOuterMeasureClass.{u}
+              (F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+              (inst_2 (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n)))
+            (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.law.{u, 0}
+              (F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n)) (Prod.{0, 0} A (Fin e))
+              (inst_2 (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+              (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+              (G σ (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n)))))
+    (hphysical :
+      ∀
+        (σ :
+          @D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState.{0} (Fin e) (Fin.fintype e)
+            (instDecidableEqFin e))
+        (n : Nat) (hn : @LT.lt.{0} Nat instLTNat n N)
+        (E :
+          Set.{u}
+            (F
+              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))),
+        @MeasurableSet.{u}
+            (F
+              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+            (inst_2
+              (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                  (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+            E →
+          ∀ (i j : Prod.{0, 0} A (Fin e)),
+            @Eq.{1} Complex
+              (@MeasureTheory.integral.{u, 0}
+                (F
+                  (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+                Complex Complex.instNormedAddCommGroup
+                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                  instInnerProductSpaceRealComplex)
+                (inst_2
+                  (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                    (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+                (@MeasureTheory.Measure.restrict.{u}
+                  (F
+                    (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+                  (inst_2
+                    (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+                  (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.law.{u, 0}
+                    (F
+                      (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+                    (Prod.{0, 0} A (Fin e))
+                    (inst_2
+                      (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+                    (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+                    (G σ
+                      (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
+                  E)
+                fun
+                  (h :
+                    F
+                      (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))) =>
+                @D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.density.{u, 0}
+                  (F
+                    (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+                  (Prod.{0, 0} A (Fin e))
+                  (inst_2
+                    (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+                  (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+                  (G σ
+                    (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N
+                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+                  h i j)
+              (@MeasureTheory.integral.{u, 0} (F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+                Complex Complex.instNormedAddCommGroup
+                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                  instInnerProductSpaceRealComplex)
+                (inst_2 (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+                (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.law.{u, 0}
+                  (F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n)) (Prod.{0, 0} A (Fin e))
+                  (inst_2 (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+                  (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+                  (G σ (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n)))
+                fun (h : F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n)) =>
+                @D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.actualFiniteStep.{u} N F D A (Fin e) inst_2 inst_3
+                  inst inst_1 (Fin.fintype e) (instDecidableEqFin e) P H_A n hn h E
+                  (@D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.ActualHistory.density.{u, 0}
+                    (F (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n)) (Prod.{0, 0} A (Fin e))
+                    (inst_2 (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n))
+                    (@instFintypeProd.{0, 0} A (Fin e) inst (Fin.fintype e))
+                    (G σ (D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.historyIndex N n)) h)
+                  i j))
+    (σ :
+      @D5.S3.Quantum.Divergence.QuantumRelativeEntropyDefectComposition.DensityState.{0} (Fin e) (Fin.fintype e)
+        (instDecidableEqFin e)) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.signature
+    Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.actual PUnit.unit.{1} PUnit.unit.{1} β
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.observationFact0.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"VisibleAdaptiveRecordLaw\",\"visible_adaptive_record_law_and_absolute_minimax\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"letValue\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"VisibleAdaptiveRecordLaw\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.visible_adaptive_record_law_and_absolute_minimax, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .letValue, .body, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.observation0, part := .value, path := [], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.varyingLawInput.{u} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.canonicalArenaOperand.{u})
+noncomputable def Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.varyingLaw.{u}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"VisibleAdaptiveRecordLaw\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.statementExclusion.{u} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"VisibleAdaptiveRecordLaw\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"VisibleAdaptiveRecordLaw\",\"visible_adaptive_record_law_and_absolute_minimax\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u)] }
+  statementLocation := { owner := `D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.visible_adaptive_record_law_and_absolute_minimax, part := .type, path := [], levels := [(.param `u)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration.{u}).actual (Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration.{u}).variation.2.choose (Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration.{u}).variation.1 (Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration.{u}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"VisibleAdaptiveRecordLaw\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Measurement\",\"VisibleAdaptiveRecordLaw\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw, declaration := `Reg.D5.S3.Quantum.Measurement.VisibleAdaptiveRecordLaw.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))

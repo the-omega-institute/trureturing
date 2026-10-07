@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman
 import Reg.Support.DependentFamily
@@ -90,7 +93,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.rough_prime_suffix_complete, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.canonicalArenaFact, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.sourceBridgeFact, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.observationFact0, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.anchorEnumeration }
 
 
 #print axioms rejected_law
@@ -167,7 +180,17 @@ noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.suffix_prime_factors, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.canonicalArenaFact, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.canonicalObjectArenaFact, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.sourceBridgeFact, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.observationFact0, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.anchorEnumeration }
 
 
 @[reducible] def bellmanArena : Arena where
@@ -224,7 +247,17 @@ noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "arg", "arg", "body", "body", "body", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellman_complete, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.canonicalArenaFact, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.canonicalObjectArenaFact, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.sourceBridgeFact, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.observationFact0, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.anchorEnumeration }
 
 
 abbrev finiteSignature : Signature where
@@ -293,7 +326,17 @@ noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "arg", "arg", "body", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.feasible_finite, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.canonicalArenaFact, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.canonicalObjectArenaFact, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.sourceBridgeFact, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.observationFact0, `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.anchorEnumeration }
 
 
 #print axioms supportRegistration
@@ -301,3 +344,331 @@ noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_
 #print axioms finiteRegistration
 
 end Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman
+
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteArena
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_4\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteArena
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_4\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportArena
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportArena
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.arena
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.arena
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanArena
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_3\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanArena
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_3\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteArena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteArena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteArena
+      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteActual)
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteRegistration)
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"feasible_finite\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_4\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.feasible_finite, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteArena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteArena
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteActual)
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteRegistration)
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.observation0 : (y i b h : Nat) →
+  (t : List.{0} Nat) →
+    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteSignature PUnit.unit.{1} PUnit.unit.{1} :=
+  fun (y i b h : Nat) (t : List.{0} Nat) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteSignature
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteActual PUnit.unit.{1} PUnit.unit.{1} t
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"feasible_finite\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_4\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.feasible_finite, part := .type, path := [.body, .body, .body, .body, .argument, .argument, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_4\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_4\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"feasible_finite\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.feasible_finite, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteRegistration).actual (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteRegistration).variation.2.choose (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteRegistration).variation.1 (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteRegistration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"finiteRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.finiteRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportArena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportArena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportArena
+      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportActual)
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportRegistration)
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"suffix_prime_factors\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.suffix_prime_factors, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportArena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportArena
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportActual)
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportRegistration)
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.observation0 : (y i : Nat) →
+  (t : List.{0} Nat) →
+    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportSignature PUnit.unit.{1}
+      (@Sigma.mk.{0, 0} Nat (fun (x : Nat) => Nat) y i) :=
+  fun (y i : Nat) (t : List.{0} Nat) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportSignature
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportActual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat (fun (x : Nat) => Nat) y i) t
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"suffix_prime_factors\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_2\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.suffix_prime_factors, part := .type, path := [.body, .body, .body, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_2\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_2\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"suffix_prime_factors\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.suffix_prime_factors, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportRegistration).actual (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportRegistration).variation.2.choose (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportRegistration).variation.1 (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportRegistration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"supportRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.supportRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.arena
+      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.actual)
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration)
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"rough_prime_suffix_complete\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.rough_prime_suffix_complete, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.arena
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.actual)
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration)
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.observation0 : (y B : Nat) →
+  (_hy : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) y) →
+    (hB : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) B) →
+      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+        Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.signature PUnit.unit.{1} PUnit.unit.{1} :=
+  fun (y B : Nat) (_hy : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) y)
+    (hB : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) B) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.signature
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.actual PUnit.unit.{1} PUnit.unit.{1} B
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"rough_prime_suffix_complete\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\",\"argument\",\"argument\",\"argument\",\"argument\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.rough_prime_suffix_complete, part := .type, path := [.body, .body, .body, .body, .argument, .argument, .argument, .argument, .argument, .argument, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"rough_prime_suffix_complete\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.rough_prime_suffix_complete, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration).actual (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration).variation.2.choose (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration).variation.1 (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanArena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanArena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanArena
+      Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.actual)
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanRegistration)
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"bellman_complete\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellman_complete, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanArena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanArena
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.actual)
+  Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanRegistration)
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.observation0 : (y i b h : Nat) →
+  (hb : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) b) →
+    (a : Nat) →
+      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) a →
+        @LE.le.{0} Nat instLENat
+            (@HPow.hPow.{0, 0, 0} Nat Nat Nat
+              (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
+              (D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.prime y i) a)
+            b →
+          D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+            Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.signature PUnit.unit.{1} PUnit.unit.{1} :=
+  fun (y i b h : Nat) (hb : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) b)
+    (a : Nat) (a_1 : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) a)
+    (a_2 :
+      @LE.le.{0} Nat instLENat
+        (@HPow.hPow.{0, 0, 0} Nat Nat Nat
+          (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
+          (D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.prime y i) a)
+        b) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.signature
+    Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.actual PUnit.unit.{1} PUnit.unit.{1} b
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"bellman_complete\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\",\"argument\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_3\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellman_complete, part := .type, path := [.body, .body, .body, .body, .body, .argument, .argument, .argument, .body, .body, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_3\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_3\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"bellman_complete\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellman_complete, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanRegistration).actual (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanRegistration).variation.2.choose (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanRegistration).variation.1 (Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanRegistration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"ExponentExchange\",\"RoughPrimeSuffixBellman\",\"bellmanRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman, declaration := `Reg.D5.S3.Arith.ExponentExchange.RoughPrimeSuffixBellman.bellmanRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

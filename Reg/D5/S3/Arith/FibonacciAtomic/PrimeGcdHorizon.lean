@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon
 import Reg.Support.DependentFamily
@@ -113,9 +116,199 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, definition := none, coordinates := #[0, 3, 6], readouts := #[{ path := #["body", "body", "fn", "arg", "body", "body", "body", "body", "domain", "body", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg", "arg", "fn", "arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.sharp_prime_gcd_horizon, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.canonicalArenaFact, `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.sourceBridgeFact, `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.observationFact0, `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 
 end Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon
+
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.arena
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.arena
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.arena
+    (∀ (p : Nat) (hp : Nat.Prime p),
+      And
+        (∀ (n z n' z' : Int),
+          (∀ (k : Nat),
+              @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
+                @LE.le.{0} Nat instLENat k (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) →
+                  @Eq.{1} Nat
+                    (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n z)) p)
+                    (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n' z')) p)) →
+            ∀ (k : Nat),
+              @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
+                @Eq.{1} Nat
+                  (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n z)) p)
+                  (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n' z')) p))
+        (And
+          (∀ (a b c d : Nat),
+            (∀ (k : Nat),
+                @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
+                  @LE.le.{0} Nat instLENat k (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) →
+                    @Eq.{1} Nat (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k a b) p)
+                      (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k c d) p)) →
+              ∀ (k : Nat),
+                @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
+                  @Eq.{1} Nat (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k a b) p)
+                    (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k c d) p))
+          (@Exists.{1} Nat fun (a : Nat) =>
+            @Exists.{1} Nat fun (b : Nat) =>
+              @Exists.{1} Nat fun (c : Nat) =>
+                @Exists.{1} Nat fun (d : Nat) =>
+                  And (@LT.lt.{0} Nat instLTNat a p)
+                    (And (@LT.lt.{0} Nat instLTNat b p)
+                      (And (@LT.lt.{0} Nat instLTNat c p)
+                        (And (@LT.lt.{0} Nat instLTNat d p)
+                          (And
+                            (∀ (k : Nat),
+                              @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
+                                @LT.lt.{0} Nat instLTNat k (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) →
+                                  @Eq.{1} Nat
+                                    (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k a b) p)
+                                    (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k c d) p))
+                            (@Ne.{1} Nat
+                              (Nat.gcd
+                                (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation
+                                  (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) a b)
+                                p)
+                              (Nat.gcd
+                                (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation
+                                  (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) c d)
+                                p)))))))))
+    Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration)
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"sharp_prime_gcd_horizon\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.sharp_prime_gcd_horizon, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.arena
+  (∀ (p : Nat) (hp : Nat.Prime p),
+    And
+      (∀ (n z n' z' : Int),
+        (∀ (k : Nat),
+            @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
+              @LE.le.{0} Nat instLENat k (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) →
+                @Eq.{1} Nat
+                  (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n z)) p)
+                  (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n' z')) p)) →
+          ∀ (k : Nat),
+            @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
+              @Eq.{1} Nat (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n z)) p)
+                (Nat.gcd (Int.natAbs (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signedObservation k n' z')) p))
+      (And
+        (∀ (a b c d : Nat),
+          (∀ (k : Nat),
+              @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
+                @LE.le.{0} Nat instLENat k (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) →
+                  @Eq.{1} Nat (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k a b) p)
+                    (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k c d) p)) →
+            ∀ (k : Nat),
+              @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
+                @Eq.{1} Nat (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k a b) p)
+                  (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k c d) p))
+        (@Exists.{1} Nat fun (a : Nat) =>
+          @Exists.{1} Nat fun (b : Nat) =>
+            @Exists.{1} Nat fun (c : Nat) =>
+              @Exists.{1} Nat fun (d : Nat) =>
+                And (@LT.lt.{0} Nat instLTNat a p)
+                  (And (@LT.lt.{0} Nat instLTNat b p)
+                    (And (@LT.lt.{0} Nat instLTNat c p)
+                      (And (@LT.lt.{0} Nat instLTNat d p)
+                        (And
+                          (∀ (k : Nat),
+                            @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
+                              @LT.lt.{0} Nat instLTNat k (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) →
+                                @Eq.{1} Nat (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k a b) p)
+                                  (Nat.gcd (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation k c d) p))
+                          (@Ne.{1} Nat
+                            (Nat.gcd
+                              (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation
+                                (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) a b)
+                              p)
+                            (Nat.gcd
+                              (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.observation
+                                (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) c d)
+                              p)))))))))
+  Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration)
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.observation0 : (p : Nat) →
+  (hp : Nat.Prime p) →
+    (n z n' z' : Int) →
+      (k : Nat) →
+        @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k →
+          @LE.le.{0} Nat instLENat k (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p) →
+            D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+              Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signature PUnit.unit.{1}
+              (@Sigma.mk.{0, 0} Nat (fun (_p : Nat) => @Sigma.{0, 0} Int fun (_z : Int) => Nat) p
+                (@Sigma.mk.{0, 0} Int (fun (_z : Int) => Nat) z k)) :=
+  fun (p : Nat) (hp : Nat.Prime p) (n z n' z' : Int) (k : Nat)
+    (a : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) k)
+    (a_1 : @LE.le.{0} Nat instLENat k (D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.horizon p)) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.signature Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.actual
+    PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat (fun (_p : Nat) => @Sigma.{0, 0} Int fun (_z : Int) => Nat) p
+      (@Sigma.mk.{0, 0} Int (fun (_z : Int) => Nat) z k))
+    n
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"sharp_prime_gcd_horizon\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"function\",\"argument\",\"body\",\"body\",\"body\",\"body\",\"domain\",\"body\",\"body\",\"body\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.sharp_prime_gcd_horizon, part := .type, path := [.body, .body, .function, .argument, .body, .body, .body, .body, .domain, .body, .body, .body, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"sharp_prime_gcd_horizon\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.sharp_prime_gcd_horizon, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration).actual (Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration).variation.2.choose (Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration).variation.1 (Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"PrimeGcdHorizon\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.PrimeGcdHorizon.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

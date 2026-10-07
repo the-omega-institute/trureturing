@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Estimation.DecisionRisk.CARApproximateRecovery
 import Reg.Support.DependentFamily
@@ -130,7 +133,253 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
   sourceSelection := some { owner := `D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "arg", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.result, part := .type, path := [], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [`Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.canonicalArenaFact, `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.sourceBridgeFact, `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.observationFact0, `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.anchorEnumeration }
 
 
 end Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery
+
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.canonicalArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, u_1, 0, 0} :=
+  Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.arena.{u_1}
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.canonicalArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"CARApproximateRecovery\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"CARApproximateRecovery\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.canonicalObjectArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, u_1, 0, 0} :=
+  Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.arena.{u_1}
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.canonicalObjectArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"CARApproximateRecovery\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"CARApproximateRecovery\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.sourceLaw.{u_1} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u_1, 0, 0}
+  Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.arena.{u_1}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, u_1, 0, 0}
+    Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.arena.{u_1}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u_1, 0, 0}
+      Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.arena.{u_1}
+      Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.actual.{u_1})
+    Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"CARApproximateRecovery\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"CARApproximateRecovery\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.result, part := .type, path := [], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, u_1, 0, 0}
+  Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.arena.{u_1}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u_1, 0, 0}
+    Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.arena.{u_1}
+    Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.actual.{u_1})
+  Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.roleEnumeration.{u_1} : LeanInformationAudit.Contract.FiniteEnumeration (ULift.{u_1, 0} Unit) where
+  values := [@ULift.up.{u_1, 0} Unit Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.observation0.{u_1} : {A : Type u_1} →
+  [inst : Fintype.{u_1} A] →
+    [inst_1 : DecidableEq.{u_1 + 1} A] →
+      [Nonempty.{u_1 + 1} A] →
+        (w v : D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A → Real) →
+          (hw :
+              ∀ (B : D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A),
+                @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+                  (w B)) →
+            (hv :
+                ∀ (C : D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A),
+                  @LE.le.{0} Real Real.instLE
+                    (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) (v C)) →
+              (hwrow :
+                  ∀ (i : A),
+                    @Eq.{1} Real
+                      (@Finset.sum.{u_1, 0} (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A) Real
+                        Real.instAddCommMonoid
+                        (@Finset.univ.{u_1} (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+                          (@Subtype.fintype.{u_1} (Finset.{u_1} A) (@Finset.Nonempty.{u_1} A)
+                            (@Finset.decidableNonempty.{u_1} A) (@Finset.fintype.{u_1} A inst)))
+                        fun (B : D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A) =>
+                        @D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.row.{u_1} A inst_1 w i B)
+                      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →
+                (hvrow :
+                    ∀ (i : A),
+                      @Eq.{1} Real
+                        (@Finset.sum.{u_1, 0} (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A) Real
+                          Real.instAddCommMonoid
+                          (@Finset.univ.{u_1} (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+                            (@Subtype.fintype.{u_1} (Finset.{u_1} A) (@Finset.Nonempty.{u_1} A)
+                              (@Finset.decidableNonempty.{u_1} A) (@Finset.fintype.{u_1} A inst)))
+                          fun (C : D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A) =>
+                          @D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.row.{u_1} A inst_1 v i C)
+                        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))) →
+                  (H R :
+                      @D5.S3.Estimation.DecisionRisk.DescentDefectBounds.FiniteMarkovKernel.{u_1, u_1}
+                        (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+                        (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+                        (@Subtype.fintype.{u_1} (Finset.{u_1} A) (@Finset.Nonempty.{u_1} A)
+                          (@Finset.decidableNonempty.{u_1} A) (@Finset.fintype.{u_1} A inst))) →
+                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, u_1, 0, 0}
+                      Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.signature.{u_1}
+                      (@ULift.up.{u_1, 0} Unit Unit.unit) PUnit.unit.{1} :=
+  fun {A : Type u_1} [inst : Fintype.{u_1} A] [inst_1 : DecidableEq.{u_1 + 1} A] [inst_2 : Nonempty.{u_1 + 1} A]
+    (w v : D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A → Real)
+    (hw :
+      ∀ (B : D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A),
+        @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) (w B))
+    (hv :
+      ∀ (C : D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A),
+        @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) (v C))
+    (hwrow :
+      ∀ (i : A),
+        @Eq.{1} Real
+          (@Finset.sum.{u_1, 0} (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A) Real
+            Real.instAddCommMonoid
+            (@Finset.univ.{u_1} (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+              (@Subtype.fintype.{u_1} (Finset.{u_1} A) (@Finset.Nonempty.{u_1} A) (@Finset.decidableNonempty.{u_1} A)
+                (@Finset.fintype.{u_1} A inst)))
+            fun (B : D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A) =>
+            @D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.row.{u_1} A inst_1 w i B)
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+    (hvrow :
+      ∀ (i : A),
+        @Eq.{1} Real
+          (@Finset.sum.{u_1, 0} (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A) Real
+            Real.instAddCommMonoid
+            (@Finset.univ.{u_1} (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+              (@Subtype.fintype.{u_1} (Finset.{u_1} A) (@Finset.Nonempty.{u_1} A) (@Finset.decidableNonempty.{u_1} A)
+                (@Finset.fintype.{u_1} A inst)))
+            fun (C : D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A) =>
+            @D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.row.{u_1} A inst_1 v i C)
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+    (H :
+      @D5.S3.Estimation.DecisionRisk.DescentDefectBounds.FiniteMarkovKernel.{u_1, u_1}
+        (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+        (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+        (@Subtype.fintype.{u_1} (Finset.{u_1} A) (@Finset.Nonempty.{u_1} A) (@Finset.decidableNonempty.{u_1} A)
+          (@Finset.fintype.{u_1} A inst))) =>
+  have ε : (i : A) → Real := fun (i : A) =>
+    @D5.S3.TotalVariation.Pinsker.totalVariation.{u_1}
+      (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+      (@Subtype.fintype.{u_1} (Finset.{u_1} A) (@Finset.Nonempty.{u_1} A) (@Finset.decidableNonempty.{u_1} A)
+        (@Finset.fintype.{u_1} A inst))
+      (@D5.S3.Divergence.ClassicalDPI.channelOutput.{u_1, u_1}
+        (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+        (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+        (@Subtype.fintype.{u_1} (Finset.{u_1} A) (@Finset.Nonempty.{u_1} A) (@Finset.decidableNonempty.{u_1} A)
+          (@Finset.fintype.{u_1} A inst))
+        (@Subtype.val.{u_1 + 1}
+          (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A →
+            D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A → Real)
+          (fun
+              (K :
+                D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A →
+                  D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A → Real) =>
+            @D5.S3.Estimation.DecisionRisk.DescentDefectBounds.IsRowStochastic.{u_1, u_1}
+              (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+              (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+              (@Subtype.fintype.{u_1} (Finset.{u_1} A) (@Finset.Nonempty.{u_1} A) (@Finset.decidableNonempty.{u_1} A)
+                (@Finset.fintype.{u_1} A inst))
+              K)
+          H)
+        (@D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.row.{u_1} A inst_1 w i))
+      (@D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.row.{u_1} A inst_1 v i);
+  have Δ : (i j : A) → Real := fun (i j : A) =>
+    @HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+      (@D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.pair.{u_1} A inst_1 inst v i j)
+      (@D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.pair.{u_1} A inst_1 inst w i j);
+  have b : (i : A) → Real := fun (i : A) =>
+    @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+      (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+        (@OfNat.ofNat.{0} Real (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+      (@Finset.sum.{u_1, 0} A Real Real.instAddCommMonoid (@Finset.erase.{u_1} A inst_1 (@Finset.univ.{u_1} A inst) i)
+        fun (j : A) =>
+        @HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
+          (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd) (Δ i j) (ε i)) (ε j));
+  have εmax : Real :=
+    @Finset.sup'.{0, u_1} Real A Real.instSemilatticeSup (@Finset.univ.{u_1} A inst)
+      (@Finset.univ_nonempty.{u_1} A inst inst_2) ε;
+  have η : Real :=
+    @Finset.sup'.{0, u_1} Real (Prod.{u_1, u_1} A A) Real.instSemilatticeSup
+      (@Finset.univ.{u_1} (Prod.{u_1, u_1} A A) (@instFintypeProd.{u_1, u_1} A A inst inst))
+      (@Finset.univ_nonempty.{u_1} (Prod.{u_1, u_1} A A) (@instFintypeProd.{u_1, u_1} A A inst inst)
+        (@instNonemptyProd.{u_1, u_1} A A inst_2 inst_2))
+      fun (ij : Prod.{u_1, u_1} A A) =>
+      @ite.{1} Real (@Eq.{u_1 + 1} A (@Prod.fst.{u_1, u_1} A A ij) (@Prod.snd.{u_1, u_1} A A ij))
+        (inst_1 (@Prod.fst.{u_1, u_1} A A ij) (@Prod.snd.{u_1, u_1} A A ij))
+        (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+        (@abs.{0} Real Real.lattice Real.instAddGroup (Δ (@Prod.fst.{u_1, u_1} A A ij) (@Prod.snd.{u_1, u_1} A A ij)));
+  have bmax : Real :=
+    @Finset.sup'.{0, u_1} Real A Real.instSemilatticeSup (@Finset.univ.{u_1} A inst)
+      (@Finset.univ_nonempty.{u_1} A inst inst_2) b;
+  fun
+    (R :
+      @D5.S3.Estimation.DecisionRisk.DescentDefectBounds.FiniteMarkovKernel.{u_1, u_1}
+        (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+        (D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.Block.{u_1} A)
+        (@Subtype.fintype.{u_1} (Finset.{u_1} A) (@Finset.Nonempty.{u_1} A) (@Finset.decidableNonempty.{u_1} A)
+          (@Finset.fintype.{u_1} A inst))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, u_1, 0, 0}
+    Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.signature.{u_1}
+    Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.actual.{u_1} (@ULift.up.{u_1, 0} Unit Unit.unit)
+    PUnit.unit.{1}
+    (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
+      (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+        (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+            (@Nat.cast.{0} Real Real.instNatCast (@Fintype.card.{u_1} A inst))
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+          η)
+        (@OfNat.ofNat.{0} Real (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+        (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+          (@Nat.cast.{0} Real Real.instNatCast (@Fintype.card.{u_1} A inst))
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+        εmax))
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.observationFact0.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"CARApproximateRecovery\",\"result\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"letBody\",\"letBody\",\"letBody\",\"letBody\",\"letBody\",\"letBody\",\"argument\",\"body\",\"argument\",\"argument\",\"argument\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"CARApproximateRecovery\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.result, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .letBody, .letBody, .letBody, .letBody, .letBody, .letBody, .argument, .body, .argument, .argument, .argument, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.varyingLawInput.{u_1} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.canonicalArenaOperand.{u_1})
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.varyingLaw.{u_1}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"CARApproximateRecovery\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.statementExclusion.{u_1} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"CARApproximateRecovery\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"CARApproximateRecovery\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  statementLocation := { owner := `D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.result, part := .type, path := [], levels := [(.param `u_1)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration.{u_1}).actual (Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration.{u_1}).variation.2.choose (Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration.{u_1}).variation.1 (Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration.{u_1}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1.descriptorFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"CARApproximateRecovery\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Estimation\",\"DecisionRisk\",\"CARApproximateRecovery\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery, declaration := `Reg.D5.S3.Estimation.DecisionRisk.CARApproximateRecovery.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))

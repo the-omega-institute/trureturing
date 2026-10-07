@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.Computability.BinaryNameComparison
 import Reg.Support.PhysicalParserCells
@@ -101,6 +104,32 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   continuation := .unknown,
   familyRecord := none,
   options := #[{ name := `autoImplicit, value := .bool false },
-    { name := `backward.isDefEq.respectTransparency, value := .bool false }] }
+    { name := `backward.isDefEq.respectTransparency, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S0.Computability.BinaryNameComparison, declaration := `PredictiveThermodynamic.BinaryNames.name_compare_run, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S0.Computability.BinaryNameComparison, declaration := `Reg.D5.S0.Computability.BinaryNameComparison.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S0.Computability.BinaryNameComparison, declaration := `Reg.D5.S0.Computability.BinaryNameComparison.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S0.Computability.BinaryNameComparison, declaration := `Reg.D5.S0.Computability.BinaryNameComparison.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S0.Computability.BinaryNameComparison, declaration := `Reg.D5.S0.Computability.BinaryNameComparison.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S0.Computability.BinaryNameComparison.registration_1.canonicalArenaFact, `Reg.D5.S0.Computability.BinaryNameComparison.registration_1.canonicalObjectArenaFact] },
+  exclusion := none,
+  finiteLift := none,
+  roleEnumeration := none,
+  anchorEnumeration := none }
 
 end Reg.D5.S0.Computability.BinaryNameComparison
+
+
+noncomputable def Reg.D5.S0.Computability.BinaryNameComparison.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.{0, 0, 0} :=
+  Reg.D5.S0.Computability.BinaryNameComparison.arena
+noncomputable def Reg.D5.S0.Computability.BinaryNameComparison.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S0\",\"Computability\",\"BinaryNameComparison\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S0\",\"Computability\",\"BinaryNameComparison\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S0.Computability.BinaryNameComparison, declaration := `Reg.D5.S0.Computability.BinaryNameComparison.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S0.Computability.BinaryNameComparison, declaration := `Reg.D5.S0.Computability.BinaryNameComparison.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S0.Computability.BinaryNameComparison.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.{0, 0, 0} :=
+  Reg.D5.S0.Computability.BinaryNameComparison.arena
+noncomputable def Reg.D5.S0.Computability.BinaryNameComparison.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S0\",\"Computability\",\"BinaryNameComparison\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S0\",\"Computability\",\"BinaryNameComparison\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S0.Computability.BinaryNameComparison, declaration := `Reg.D5.S0.Computability.BinaryNameComparison.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S0.Computability.BinaryNameComparison, declaration := `Reg.D5.S0.Computability.BinaryNameComparison.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence

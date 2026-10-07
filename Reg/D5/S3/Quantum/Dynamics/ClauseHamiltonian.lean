@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Dynamics.ClauseHamiltonian
 import Reg.Support.BoundedRunSpace
@@ -191,7 +194,33 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := none,
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Dynamics.ClauseHamiltonian, declaration := `PredictiveThermodynamic.Physical.clause_partition_recovery, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian, declaration := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian, declaration := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian, declaration := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian, declaration := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.registration_1.canonicalObjectArenaFact] },
+  exclusion := none,
+  finiteLift := none,
+  roleEnumeration := none,
+  anchorEnumeration := none }
 
 
 end Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian
+
+
+noncomputable def Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.{0, 0, 0} :=
+  Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.arena
+noncomputable def Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"ClauseHamiltonian\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"ClauseHamiltonian\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian, declaration := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian, declaration := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.{0, 0, 0} :=
+  Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.arena
+noncomputable def Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"ClauseHamiltonian\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Dynamics\",\"ClauseHamiltonian\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian, declaration := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian, declaration := `Reg.D5.S3.Quantum.Dynamics.ClauseHamiltonian.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence

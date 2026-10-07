@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.GreedyBrick.RestBlock
 import Reg.Support.DependentFamily
@@ -90,8 +93,118 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Combinatorics.GreedyBrick.RestBlock, definition := none, coordinates := #[], readouts := #[{ path := #["body", "arg", "body", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `D5.S3.Combinatorics.GreedyBrick.RestBlock.literal_rest_block, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.canonicalArenaFact, `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.sourceBridgeFact, `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.observationFact0, `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 end Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock
+
+
+noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.arena
+noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.arena
+noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.arena
+    (∀ (s : D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState),
+      @Exists.{1} D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState
+        fun (t : D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState) =>
+        And
+          (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestEventStep s t
+            (D5.S3.Combinatorics.GreedyBrick.RestBlock.firstZeroBin
+              (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity s)))
+          (@Eq.{1} (List.{0} Nat)
+            (D5.S3.Combinatorics.GreedyBrick.RestBlock.placeBricks
+              (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.endpoint s)
+              (@List.reverse.{0} Nat (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity s))
+              (D5.S3.Combinatorics.GreedyBrick.RestBlock.firstZeroBin
+                (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity s)))
+            (@List.reverse.{0} Nat (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity t))))
+    Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration)
+
+noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"literal_rest_block\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `D5.S3.Combinatorics.GreedyBrick.RestBlock.literal_rest_block, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.arena
+  (∀ (s : D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState),
+    @Exists.{1} D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState
+      fun (t : D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState) =>
+      And
+        (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestEventStep s t
+          (D5.S3.Combinatorics.GreedyBrick.RestBlock.firstZeroBin
+            (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity s)))
+        (@Eq.{1} (List.{0} Nat)
+          (D5.S3.Combinatorics.GreedyBrick.RestBlock.placeBricks
+            (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.endpoint s)
+            (@List.reverse.{0} Nat (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity s))
+            (D5.S3.Combinatorics.GreedyBrick.RestBlock.firstZeroBin
+              (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity s)))
+          (@List.reverse.{0} Nat (D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState.capacity t))))
+  Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration)
+
+noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.observation0 : (s t : D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState) →
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.signature PUnit.unit.{1} PUnit.unit.{1} :=
+  fun (s t : D5.S3.Combinatorics.GreedyBrick.SuccessorBand.RestState) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.signature Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.actual
+    PUnit.unit.{1} PUnit.unit.{1} s
+
+noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"literal_rest_block\"],\"part\":\"type\",\"path\":[\"body\",\"argument\",\"body\",\"argument\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `D5.S3.Combinatorics.GreedyBrick.RestBlock.literal_rest_block, part := .type, path := [.body, .argument, .body, .argument, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"literal_rest_block\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `D5.S3.Combinatorics.GreedyBrick.RestBlock.literal_rest_block, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration).actual (Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration).variation.2.choose (Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration).variation.1 (Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Combinatorics\",\"GreedyBrick\",\"RestBlock\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock, declaration := `Reg.D5.S3.Combinatorics.GreedyBrick.RestBlock.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

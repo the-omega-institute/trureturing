@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct
 import Reg.Support.DependentFamily
@@ -110,7 +113,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "value"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.golden_cubic_primary_product, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.canonicalArenaFact, `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.sourceBridgeFact, `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.observationFact0, `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.anchorEnumeration }
 
 
 #print axioms registration
@@ -118,3 +131,92 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
 end
 
 end Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct
+
+
+noncomputable def Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.arena
+noncomputable def Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"QuadraticIdeals\",\"GoldenCubicPrimaryProduct\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"QuadraticIdeals\",\"GoldenCubicPrimaryProduct\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.arena
+noncomputable def Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"QuadraticIdeals\",\"GoldenCubicPrimaryProduct\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"QuadraticIdeals\",\"GoldenCubicPrimaryProduct\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.arena
+      Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.actual)
+    Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration)
+
+noncomputable def Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"QuadraticIdeals\",\"GoldenCubicPrimaryProduct\",\"golden_cubic_primary_product\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"QuadraticIdeals\",\"GoldenCubicPrimaryProduct\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.golden_cubic_primary_product, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.arena
+    Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.actual)
+  Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration)
+
+noncomputable def Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.observation0 : (j : Nat) →
+  (hj : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) j) →
+    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.signature PUnit.unit.{1} PUnit.unit.{1} :=
+  fun (j : Nat) (hj : @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) j) =>
+  have x : Int :=
+    D5.S1.Scale.goldenLucas
+      (@HPow.hPow.{0, 0, 0} Nat Nat Nat
+        (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid)))
+        (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) j);
+  have b : Nat :=
+    Int.toNat
+      (@HSub.hSub.{0, 0, 0} Int Int Int (@instHSub.{0} Int Int.instSub) x
+        (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))));
+  have B : Nat := D5.S3.Factorization.QuadraticIdeals.EisensteinOddQuotient.blockNorm b;
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.signature
+    Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.actual PUnit.unit.{1} PUnit.unit.{1} j
+
+noncomputable def Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"QuadraticIdeals\",\"GoldenCubicPrimaryProduct\",\"golden_cubic_primary_product\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"letBody\",\"letBody\",\"letBody\",\"letValue\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"QuadraticIdeals\",\"GoldenCubicPrimaryProduct\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.golden_cubic_primary_product, part := .type, path := [.body, .body, .letBody, .letBody, .letBody, .letValue], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"QuadraticIdeals\",\"GoldenCubicPrimaryProduct\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"QuadraticIdeals\",\"GoldenCubicPrimaryProduct\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"QuadraticIdeals\",\"GoldenCubicPrimaryProduct\",\"golden_cubic_primary_product\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.golden_cubic_primary_product, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration).actual (Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration).variation.2.choose (Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration).variation.1 (Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"QuadraticIdeals\",\"GoldenCubicPrimaryProduct\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"QuadraticIdeals\",\"GoldenCubicPrimaryProduct\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct, declaration := `Reg.D5.S3.Factorization.QuadraticIdeals.GoldenCubicPrimaryProduct.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

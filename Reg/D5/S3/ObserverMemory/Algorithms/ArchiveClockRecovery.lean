@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery
 import Reg.Support.DependentFamily
@@ -129,7 +132,17 @@ noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract
   sourceSelection := some { owner := `D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "body", "arg", "arg", "body", "arg", "arg", "arg", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.archive_clock_recovery_and_finite_ambiguity, part := .type, path := [], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] }], facts := [`Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.canonicalArenaFact, `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.sourceBridgeFact, `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.observationFact0, `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.anchorEnumeration }
 
 
 #print axioms ambiguity_not_recoverable
@@ -139,3 +152,101 @@ noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract
 end
 
 end Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery
+
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.canonicalArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.arena.{u_1, u_2, u_3}
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.canonicalArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.canonicalObjectArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.arena.{u_1, u_2, u_3}
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.canonicalObjectArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.sourceLaw.{u_1, u_2, u_3} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.arena.{u_1, u_2, u_3}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.arena.{u_1, u_2, u_3}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.arena.{u_1, u_2, u_3}
+      Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.actual)
+    Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration.{u_1, u_2, u_3})
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"archive_clock_recovery_and_finite_ambiguity\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.archive_clock_recovery_and_finite_ambiguity, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.arena.{u_1, u_2, u_3}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.arena.{u_1, u_2, u_3}
+    Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.actual)
+  Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration.{u_1, u_2, u_3})
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.observation0.{u_1, u_2, u_3} : {X : Type u_1} →
+  {A : Type u_2} →
+    {Y : Type u_3} →
+      [inst : Fintype.{u_1} X] →
+        [Fintype.{u_2} A] →
+          [Fintype.{u_3} Y] →
+            (n : Nat) →
+              (hcard : @Eq.{1} Nat (@Fintype.card.{u_1} X inst) n) →
+                (X0 : Set.{u_1} X) →
+                  (_hX0 : @Set.Nonempty.{u_1} X X0) →
+                    (S : D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.System.{u_1, u_2, u_3} X A Y) →
+                      Not
+                          (@D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.ArchiveRecoverable.{u_1, u_2, u_3} X A
+                            Y S X0) →
+                        (x x' : X) →
+                          (word : List.{u_2} A) →
+                            D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                              Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.signature PUnit.unit.{1}
+                              PUnit.unit.{1} :=
+  fun {X : Type u_1} {A : Type u_2} {Y : Type u_3} [Fintype.{u_1} X] [Fintype.{u_2} A] [Fintype.{u_3} Y] (n : Nat)
+    (hcard : @Eq.{1} Nat (@Fintype.card.{u_1} X inst) n) (X0 : Set.{u_1} X) (_hX0 : @Set.Nonempty.{u_1} X X0)
+    (S : D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.System.{u_1, u_2, u_3} X A Y)
+    (a : Not (@D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.ArchiveRecoverable.{u_1, u_2, u_3} X A Y S X0))
+    (x x' : X) (word : List.{u_2} A) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.signature
+    Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.actual PUnit.unit.{1} PUnit.unit.{1} n
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.observationFact0.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"archive_clock_recovery_and_finite_ambiguity\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"argument\",\"body\",\"argument\",\"argument\",\"body\",\"argument\",\"argument\",\"body\",\"argument\",\"argument\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.archive_clock_recovery_and_finite_ambiguity, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .body, .argument, .body, .argument, .argument, .body, .argument, .argument, .body, .argument, .argument, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.varyingLawInput.{u_1, u_2, u_3} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.canonicalArenaOperand.{u_1, u_2, u_3})
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.varyingLaw.{u_1, u_2, u_3}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.statementExclusion.{u_1, u_2, u_3} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"archive_clock_recovery_and_finite_ambiguity\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  statementLocation := { owner := `D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.archive_clock_recovery_and_finite_ambiguity, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration.{u_1, u_2, u_3}).actual (Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration.{u_1, u_2, u_3}).variation.2.choose (Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration.{u_1, u_2, u_3}).variation.1 (Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration.{u_1, u_2, u_3}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ObserverMemory\",\"Algorithms\",\"ArchiveClockRecovery\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery, declaration := `Reg.D5.S3.ObserverMemory.Algorithms.ArchiveClockRecovery.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))

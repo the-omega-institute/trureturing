@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.SpectralTransposeRecovery
 import Reg.Support.DependentFamily
@@ -88,7 +91,17 @@ noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn"], stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectral_support_on_kraus, part := .type, path := [], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] }], facts := [`Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.observationFact0, `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.anchorEnumeration }
 
 
 #print axioms registration
@@ -180,10 +193,315 @@ noncomputable def registration_2.{u_1, u_2, u_3} : LeanInformationAudit.Contract
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery, definition := none, coordinates := #[1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectral_transpose_candidate, part := .type, path := [], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] }], facts := [`Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.canonicalArenaFact, `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.sourceBridgeFact, `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.observationFact0, `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.anchorEnumeration }
 
 
 #print axioms registration
 end Candidate
 
 end Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery
+
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.canonicalArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1),
+  max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0} :=
+  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.arena.{u_1, u_2, u_3}
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.canonicalArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Support\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Support\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.canonicalObjectArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1),
+  max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0} :=
+  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.arena.{u_1, u_2, u_3}
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.canonicalObjectArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Support\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Support\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.canonicalArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_2 + 1, u_2, 0, u_2, 0} :=
+  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.arena.{u_1, u_2, u_3}
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.canonicalArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Candidate\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Candidate\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.canonicalObjectArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_2 + 1, u_2, 0, u_2, 0} :=
+  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.arena.{u_1, u_2, u_3}
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.canonicalObjectArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Candidate\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Candidate\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.sourceLaw.{u_1, u_2, u_3} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1),
+    max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
+  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.arena.{u_1, u_2, u_3}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (max (u_1 + 1) (u_2 + 1))
+          (u_3 + 1),
+        max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
+    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.arena.{u_1, u_2, u_3}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (max (u_3 + 1) (u_2 + 1)) (u_1 + 1),
+        max (max u_3 u_2) u_1, 0, max (max u_3 u_2) u_1, 0}
+      Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.arena.{u_1, u_2, u_3}
+      Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.actual.{u_1, u_2, u_3})
+    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration.{u_1, u_2, u_3})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"spectral_support_on_kraus\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Support\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectral_support_on_kraus, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1),
+      max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
+  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.arena.{u_1, u_2, u_3}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (max (u_3 + 1) (u_2 + 1)) (u_1 + 1),
+      max (max u_3 u_2) u_1, 0, max (max u_3 u_2) u_1, 0}
+    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.arena.{u_1, u_2, u_3}
+    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.actual.{u_1, u_2, u_3})
+  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration.{u_1, u_2, u_3})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.observation0.{u_1, u_2, u_3} : {n : Type u_1} →
+  {d : Type u_2} →
+    {s : Type u_3} →
+      [Fintype.{u_1} n] →
+        [DecidableEq.{u_1 + 1} n] →
+          [Fintype.{u_2} d] →
+            [DecidableEq.{u_2 + 1} d] →
+              [Fintype.{u_3} s] →
+                (E : s → Matrix.{u_1, u_2, 0} n d Complex) →
+                  (a : s) →
+                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{max
+                          (max (u_1 + 1) (u_2 + 1)) (u_3 + 1),
+                        max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
+                      Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.signature.{u_1, u_2, u_3} Unit.unit
+                      (@Sigma.mk.{u_1 + 1, max (u_3 + 1) (u_2 + 1)} (Type u_1)
+                        (fun (x : Type u_1) => @Sigma.{u_2 + 1, u_3 + 1} (Type u_2) fun (x : Type u_2) => Type u_3) n
+                        (@Sigma.mk.{u_2 + 1, u_3 + 1} (Type u_2) (fun (x : Type u_2) => Type u_3) d s)) :=
+  fun {n : Type u_1} {d : Type u_2} {s : Type u_3} [Fintype.{u_1} n] [DecidableEq.{u_1 + 1} n] [Fintype.{u_2} d]
+    [DecidableEq.{u_2 + 1} d] [Fintype.{u_3} s] (E : s → Matrix.{u_1, u_2, 0} n d Complex) (a : s) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1),
+        max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0}
+    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.signature.{u_1, u_2, u_3}
+    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.actual.{u_1, u_2, u_3} Unit.unit
+    (@Sigma.mk.{u_1 + 1, max (u_3 + 1) (u_2 + 1)} (Type u_1)
+      (fun (x : Type u_1) => @Sigma.{u_2 + 1, u_3 + 1} (Type u_2) fun (x : Type u_2) => Type u_3) n
+      (@Sigma.mk.{u_2 + 1, u_3 + 1} (Type u_2) (fun (x : Type u_2) => Type u_3) d s))
+    E
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.observationFact0.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"spectral_support_on_kraus\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Support\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectral_support_on_kraus, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .function], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.varyingLawInput.{u_1, u_2, u_3} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.canonicalArenaOperand.{u_1, u_2, u_3})
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.varyingLaw.{u_1, u_2, u_3}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Support\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.statementExclusion.{u_1, u_2, u_3} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Support\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"spectral_support_on_kraus\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  statementLocation := { owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectral_support_on_kraus, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration.{u_1, u_2, u_3}).actual (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration.{u_1, u_2, u_3}).variation.2.choose (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration.{u_1, u_2, u_3}).variation.1 (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration.{u_1, u_2, u_3}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1.descriptorFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Support\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Support\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Support.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.sourceLaw.{u_1, u_2, u_3} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
+  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.arena.{u_1, u_2, u_3}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_2 + 1, u_2, 0, u_2, 0}
+    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.arena.{u_1, u_2, u_3}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
+      Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.arena.{u_1, u_2, u_3}
+      Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.actual.{u_2})
+    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration.{u_1, u_2, u_3})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"spectral_transpose_candidate\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Candidate\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectral_transpose_candidate, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_2 + 1, u_2, 0, u_2, 0}
+  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.arena.{u_1, u_2, u_3}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
+    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.arena.{u_1, u_2, u_3}
+    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.actual.{u_2})
+  Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration.{u_1, u_2, u_3})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.observation0.{u_1, u_2, u_3} : {n : Type u_1} →
+  {d : Type u_2} →
+    {s : Type u_3} →
+      [inst : Fintype.{u_1} n] →
+        [inst_1 : DecidableEq.{u_1 + 1} n] →
+          [inst_2 : Fintype.{u_2} d] →
+            [inst_3 : DecidableEq.{u_2 + 1} d] →
+              [Fintype.{u_3} s] →
+                (E : s → Matrix.{u_1, u_2, 0} n d Complex) →
+                  (v : d) →
+                    (recovery :
+                        @D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.{u_1, u_2} n d inst inst_1 inst_2
+                          inst_3) →
+                      (X : Matrix.{u_1, u_1, 0} n n Complex) →
+                        D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u_2 + 1, u_2, 0, u_2,
+                            0}
+                          Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.signature.{u_2} Unit.unit d :=
+  fun {n : Type u_1} {d : Type u_2} {s : Type u_3} [inst : Fintype.{u_1} n] [inst_1 : DecidableEq.{u_1 + 1} n]
+    [inst_2 : Fintype.{u_2} d] [inst_3 : DecidableEq.{u_2 + 1} d] [inst_4 : Fintype.{u_3} s]
+    (E : s → Matrix.{u_1, u_2, 0} n d Complex) (v : d) =>
+  have Q : Matrix.{u_1, u_1, 0} n n Complex :=
+    @Finset.sum.{u_3, u_1} s (Matrix.{u_1, u_1, 0} n n Complex)
+      (@Matrix.addCommMonoid.{0, u_1, u_1} n n Complex Complex.instAddCommMonoid) (@Finset.univ.{u_3} s inst_4)
+      fun (a : s) =>
+      @HMul.hMul.{max u_1 u_2, max u_1 u_2, u_1} (Matrix.{u_1, u_2, 0} n d Complex) (Matrix.{u_2, u_1, 0} d n Complex)
+        (Matrix.{u_1, u_1, 0} n n Complex)
+        (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_1, u_2, u_1} n d n Complex inst_2 Complex.instMul
+          Complex.instAddCommMonoid)
+        (E a)
+        (@Matrix.conjTranspose.{0, u_1, u_2} n d Complex
+          (@InvolutiveStar.toStar.{0} Complex
+            (@StarAddMonoid.toInvolutiveStar.{0} Complex
+              (@AddCommMonoid.toAddMonoid.{0} Complex
+                (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                  (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                    (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                      (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+              (@StarRing.toStarAddMonoid.{0} Complex
+                (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                  (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                    (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                Complex.instStarRing)))
+          (E a));
+  have P : Matrix.{u_1, u_1, 0} n n Complex :=
+    @D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectralSupport.{u_1} n inst inst_1 Q;
+  have W : Matrix.{u_1, u_1, 0} n n Complex :=
+    @D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectralInverseSqrt.{u_1} n inst inst_1 Q;
+  fun (recovery : @D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.{u_1, u_2} n d inst inst_1 inst_2 inst_3)
+    (X : Matrix.{u_1, u_1, 0} n n Complex) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u_2 + 1, u_2, 0, u_2, 0}
+    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.signature.{u_2}
+    Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.actual.{u_2} Unit.unit d
+    (@DFunLike.coe.{max (u_1 + 1) (u_2 + 1), u_1 + 1, u_2 + 1}
+      (@CompletelyPositiveMap.{u_1, u_2} (CStarMatrix.{u_1, u_1, 0} n n Complex) (CStarMatrix.{u_2, u_2, 0} d d Complex)
+        (@CStarMatrix.instNonUnitalCStarAlgebra.{0, u_1} Complex
+          (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+            (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+          Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) n inst)
+        (@CStarMatrix.instNonUnitalCStarAlgebra.{0, u_2} Complex
+          (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+            (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+          Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) d inst_2)
+        (@CStarMatrix.instPartialOrder.{0, u_1} Complex
+          (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+            (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+          Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) n inst)
+        (@CStarMatrix.instPartialOrder.{0, u_2} Complex
+          (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+            (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+          Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) d inst_2)
+        (@CStarMatrix.instStarOrderedRing.{0, u_1} Complex
+          (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+            (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+          Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) n inst)
+        (@CStarMatrix.instStarOrderedRing.{0, u_2} Complex
+          (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+            (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+          Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) d inst_2))
+      (CStarMatrix.{u_1, u_1, 0} n n Complex)
+      (fun (x : CStarMatrix.{u_1, u_1, 0} n n Complex) => CStarMatrix.{u_2, u_2, 0} d d Complex)
+      (@CompletelyPositiveMap.instFunLike.{u_1, u_2} (CStarMatrix.{u_1, u_1, 0} n n Complex)
+        (CStarMatrix.{u_2, u_2, 0} d d Complex)
+        (@CStarMatrix.instNonUnitalCStarAlgebra.{0, u_1} Complex
+          (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+            (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+          Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) n inst)
+        (@CStarMatrix.instNonUnitalCStarAlgebra.{0, u_2} Complex
+          (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+            (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+          Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) d inst_2)
+        (@CStarMatrix.instPartialOrder.{0, u_1} Complex
+          (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+            (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+          Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) n inst)
+        (@CStarMatrix.instPartialOrder.{0, u_2} Complex
+          (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+            (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+          Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) d inst_2)
+        (@CStarMatrix.instStarOrderedRing.{0, u_1} Complex
+          (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+            (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+          Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) n inst)
+        (@CStarMatrix.instStarOrderedRing.{0, u_2} Complex
+          (@NonUnitalCommCStarAlgebra.toNonUnitalCStarAlgebra.{0} Complex
+            (@CommCStarAlgebra.toNonUnitalCommCStarAlgebra.{0} Complex instCommCStarAlgebraComplex))
+          Complex.partialOrder (@RCLike.toStarOrderedRing.{0} Complex Complex.instRCLike) d inst_2))
+      (@D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.toCompletelyPositiveMap.{u_1, u_2} n d inst inst_1
+        inst_2 inst_3 recovery)
+      (@DFunLike.coe.{max 1 (u_1 + 1), max 1 (u_1 + 1), max 1 (u_1 + 1)}
+        (Equiv.{max 1 (u_1 + 1), max 1 (u_1 + 1)} (Matrix.{u_1, u_1, 0} n n Complex)
+          (CStarMatrix.{u_1, u_1, 0} n n Complex))
+        (Matrix.{u_1, u_1, 0} n n Complex)
+        (fun (x : Matrix.{u_1, u_1, 0} n n Complex) => CStarMatrix.{u_1, u_1, 0} n n Complex)
+        (@EquivLike.toFunLike.{max 1 (u_1 + 1), max 1 (u_1 + 1), max 1 (u_1 + 1)}
+          (Equiv.{max 1 (u_1 + 1), max 1 (u_1 + 1)} (Matrix.{u_1, u_1, 0} n n Complex)
+            (CStarMatrix.{u_1, u_1, 0} n n Complex))
+          (Matrix.{u_1, u_1, 0} n n Complex) (CStarMatrix.{u_1, u_1, 0} n n Complex)
+          (@Equiv.instEquivLike.{max 1 (u_1 + 1), max 1 (u_1 + 1)} (Matrix.{u_1, u_1, 0} n n Complex)
+            (CStarMatrix.{u_1, u_1, 0} n n Complex)))
+        (@CStarMatrix.ofMatrix.{u_1, u_1, 0} n n Complex) X))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.observationFact0.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"spectral_transpose_candidate\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"letBody\",\"letBody\",\"letBody\",\"argument\",\"body\",\"body\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Candidate\",\"registration_2\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectral_transpose_candidate, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .letBody, .letBody, .letBody, .argument, .body, .body, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.varyingLawInput.{u_1, u_2, u_3} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.canonicalArenaOperand.{u_1, u_2, u_3})
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.varyingLaw.{u_1, u_2, u_3}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Candidate\",\"registration_2\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.statementExclusion.{u_1, u_2, u_3} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Candidate\",\"registration_2\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"spectral_transpose_candidate\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  statementLocation := { owner := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `D5.S3.Quantum.Recovery.SpectralTransposeRecovery.spectral_transpose_candidate, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration.{u_1, u_2, u_3}).actual (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration.{u_1, u_2, u_3}).variation.2.choose (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration.{u_1, u_2, u_3}).variation.1 (Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration.{u_1, u_2, u_3}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2.descriptorFact.{u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Candidate\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralTransposeRecovery\",\"Candidate\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralTransposeRecovery.Candidate.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))

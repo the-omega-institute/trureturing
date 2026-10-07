@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks
 import Reg.Support.DependentFamily
@@ -90,7 +93,17 @@ noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract
   sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg", "arg", "arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.actual_coefficient_block, part := .type, path := [], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] }], facts := [`Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.observationFact0, `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.anchorEnumeration }
 
 
 #print axioms coefficientActualLaw
@@ -98,3 +111,239 @@ noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract
 #print axioms coefficientRegistration
 
 end Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks
+
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.canonicalArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientArena.{u_1, u_2, u_3}
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.canonicalArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteAdditiveReadoutBlocks\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteAdditiveReadoutBlocks\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.canonicalObjectArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientArena.{u_1, u_2, u_3}
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.canonicalObjectArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteAdditiveReadoutBlocks\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteAdditiveReadoutBlocks\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.sourceLaw.{u_1, u_2, u_3} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientArena.{u_1, u_2, u_3}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientArena.{u_1, u_2, u_3}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientArena.{u_1, u_2, u_3}
+      Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientActual)
+    Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientRegistration.{u_1, u_2, u_3})
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteAdditiveReadoutBlocks\",\"actual_coefficient_block\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteAdditiveReadoutBlocks\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.actual_coefficient_block, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientArena.{u_1, u_2, u_3}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientArena.{u_1, u_2, u_3}
+    Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientActual)
+  Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientRegistration.{u_1, u_2, u_3})
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.observation0.{u_1, u_2, u_3} : {G : Type u_1} →
+  {A : Type u_2} →
+    {B : Type u_3} →
+      [inst : AddCommGroup.{u_1} G] →
+        [inst_1 : AddCommGroup.{u_2} A] →
+          [inst_2 : AddCommGroup.{u_3} B] →
+            [Fintype.{u_1} G] →
+              [Fintype.{u_2} A] →
+                [Fintype.{u_3} B] →
+                  [DecidableEq.{u_1 + 1} G] →
+                    [DecidableEq.{u_2 + 1} A] →
+                      [DecidableEq.{u_3 + 1} B] →
+                        (alpha :
+                            @AddMonoidHom.{u_1, u_2} G A
+                              (@AddZeroClass.toAddZero.{u_1} G
+                                (@AddMonoid.toAddZeroClass.{u_1} G
+                                  (@SubNegMonoid.toAddMonoid.{u_1} G
+                                    (@AddGroup.toSubNegMonoid.{u_1} G (@AddCommGroup.toAddGroup.{u_1} G inst)))))
+                              (@AddZeroClass.toAddZero.{u_2} A
+                                (@AddMonoid.toAddZeroClass.{u_2} A
+                                  (@SubNegMonoid.toAddMonoid.{u_2} A
+                                    (@AddGroup.toSubNegMonoid.{u_2} A (@AddCommGroup.toAddGroup.{u_2} A inst_1)))))) →
+                          (beta :
+                              @AddMonoidHom.{u_1, u_3} G B
+                                (@AddZeroClass.toAddZero.{u_1} G
+                                  (@AddMonoid.toAddZeroClass.{u_1} G
+                                    (@SubNegMonoid.toAddMonoid.{u_1} G
+                                      (@AddGroup.toSubNegMonoid.{u_1} G (@AddCommGroup.toAddGroup.{u_1} G inst)))))
+                                (@AddZeroClass.toAddZero.{u_3} B
+                                  (@AddMonoid.toAddZeroClass.{u_3} B
+                                    (@SubNegMonoid.toAddMonoid.{u_3} B
+                                      (@AddGroup.toSubNegMonoid.{u_3} B (@AddCommGroup.toAddGroup.{u_3} B inst_2)))))) →
+                            (hpair :
+                                @Function.Injective.{u_1 + 1, max (u_3 + 1) (u_2 + 1)} G (Prod.{u_2, u_3} A B)
+                                  fun (x : G) =>
+                                  @Prod.mk.{u_2, u_3} A B
+                                    (@DFunLike.coe.{max (u_1 + 1) (u_2 + 1), u_1 + 1, u_2 + 1}
+                                      (@AddMonoidHom.{u_1, u_2} G A
+                                        (@AddZeroClass.toAddZero.{u_1} G
+                                          (@AddMonoid.toAddZeroClass.{u_1} G
+                                            (@SubNegMonoid.toAddMonoid.{u_1} G
+                                              (@AddGroup.toSubNegMonoid.{u_1} G
+                                                (@AddCommGroup.toAddGroup.{u_1} G inst)))))
+                                        (@AddZeroClass.toAddZero.{u_2} A
+                                          (@AddMonoid.toAddZeroClass.{u_2} A
+                                            (@SubNegMonoid.toAddMonoid.{u_2} A
+                                              (@AddGroup.toSubNegMonoid.{u_2} A
+                                                (@AddCommGroup.toAddGroup.{u_2} A inst_1))))))
+                                      G (fun (x : G) => A)
+                                      (@AddMonoidHom.instFunLike.{u_1, u_2} G A
+                                        (@AddZeroClass.toAddZero.{u_1} G
+                                          (@AddMonoid.toAddZeroClass.{u_1} G
+                                            (@SubNegMonoid.toAddMonoid.{u_1} G
+                                              (@AddGroup.toSubNegMonoid.{u_1} G
+                                                (@AddCommGroup.toAddGroup.{u_1} G inst)))))
+                                        (@AddZeroClass.toAddZero.{u_2} A
+                                          (@AddMonoid.toAddZeroClass.{u_2} A
+                                            (@SubNegMonoid.toAddMonoid.{u_2} A
+                                              (@AddGroup.toSubNegMonoid.{u_2} A
+                                                (@AddCommGroup.toAddGroup.{u_2} A inst_1))))))
+                                      alpha x)
+                                    (@DFunLike.coe.{max (u_1 + 1) (u_3 + 1), u_1 + 1, u_3 + 1}
+                                      (@AddMonoidHom.{u_1, u_3} G B
+                                        (@AddZeroClass.toAddZero.{u_1} G
+                                          (@AddMonoid.toAddZeroClass.{u_1} G
+                                            (@SubNegMonoid.toAddMonoid.{u_1} G
+                                              (@AddGroup.toSubNegMonoid.{u_1} G
+                                                (@AddCommGroup.toAddGroup.{u_1} G inst)))))
+                                        (@AddZeroClass.toAddZero.{u_3} B
+                                          (@AddMonoid.toAddZeroClass.{u_3} B
+                                            (@SubNegMonoid.toAddMonoid.{u_3} B
+                                              (@AddGroup.toSubNegMonoid.{u_3} B
+                                                (@AddCommGroup.toAddGroup.{u_3} B inst_2))))))
+                                      G (fun (x : G) => B)
+                                      (@AddMonoidHom.instFunLike.{u_1, u_3} G B
+                                        (@AddZeroClass.toAddZero.{u_1} G
+                                          (@AddMonoid.toAddZeroClass.{u_1} G
+                                            (@SubNegMonoid.toAddMonoid.{u_1} G
+                                              (@AddGroup.toSubNegMonoid.{u_1} G
+                                                (@AddCommGroup.toAddGroup.{u_1} G inst)))))
+                                        (@AddZeroClass.toAddZero.{u_3} B
+                                          (@AddMonoid.toAddZeroClass.{u_3} B
+                                            (@SubNegMonoid.toAddMonoid.{u_3} B
+                                              (@AddGroup.toSubNegMonoid.{u_3} B
+                                                (@AddCommGroup.toAddGroup.{u_3} B inst_2))))))
+                                      beta x)) →
+                              (a : A) →
+                                (b : B) →
+                                  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0,
+                                      0}
+                                    Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientSignature
+                                    PUnit.unit.{1} PUnit.unit.{1} :=
+  fun {G : Type u_1} {A : Type u_2} {B : Type u_3} [AddCommGroup.{u_1} G] [AddCommGroup.{u_2} A] [AddCommGroup.{u_3} B]
+    [inst_3 : Fintype.{u_1} G] [Fintype.{u_2} A] [Fintype.{u_3} B] [DecidableEq.{u_1 + 1} G] [DecidableEq.{u_2 + 1} A]
+    [DecidableEq.{u_3 + 1} B]
+    (alpha :
+      @AddMonoidHom.{u_1, u_2} G A
+        (@AddZeroClass.toAddZero.{u_1} G
+          (@AddMonoid.toAddZeroClass.{u_1} G
+            (@SubNegMonoid.toAddMonoid.{u_1} G
+              (@AddGroup.toSubNegMonoid.{u_1} G (@AddCommGroup.toAddGroup.{u_1} G inst)))))
+        (@AddZeroClass.toAddZero.{u_2} A
+          (@AddMonoid.toAddZeroClass.{u_2} A
+            (@SubNegMonoid.toAddMonoid.{u_2} A
+              (@AddGroup.toSubNegMonoid.{u_2} A (@AddCommGroup.toAddGroup.{u_2} A inst_1))))))
+    (beta :
+      @AddMonoidHom.{u_1, u_3} G B
+        (@AddZeroClass.toAddZero.{u_1} G
+          (@AddMonoid.toAddZeroClass.{u_1} G
+            (@SubNegMonoid.toAddMonoid.{u_1} G
+              (@AddGroup.toSubNegMonoid.{u_1} G (@AddCommGroup.toAddGroup.{u_1} G inst)))))
+        (@AddZeroClass.toAddZero.{u_3} B
+          (@AddMonoid.toAddZeroClass.{u_3} B
+            (@SubNegMonoid.toAddMonoid.{u_3} B
+              (@AddGroup.toSubNegMonoid.{u_3} B (@AddCommGroup.toAddGroup.{u_3} B inst_2))))))
+    (hpair :
+      @Function.Injective.{u_1 + 1, max (u_3 + 1) (u_2 + 1)} G (Prod.{u_2, u_3} A B) fun (x : G) =>
+        @Prod.mk.{u_2, u_3} A B
+          (@DFunLike.coe.{max (u_1 + 1) (u_2 + 1), u_1 + 1, u_2 + 1}
+            (@AddMonoidHom.{u_1, u_2} G A
+              (@AddZeroClass.toAddZero.{u_1} G
+                (@AddMonoid.toAddZeroClass.{u_1} G
+                  (@SubNegMonoid.toAddMonoid.{u_1} G
+                    (@AddGroup.toSubNegMonoid.{u_1} G (@AddCommGroup.toAddGroup.{u_1} G inst)))))
+              (@AddZeroClass.toAddZero.{u_2} A
+                (@AddMonoid.toAddZeroClass.{u_2} A
+                  (@SubNegMonoid.toAddMonoid.{u_2} A
+                    (@AddGroup.toSubNegMonoid.{u_2} A (@AddCommGroup.toAddGroup.{u_2} A inst_1))))))
+            G (fun (x : G) => A)
+            (@AddMonoidHom.instFunLike.{u_1, u_2} G A
+              (@AddZeroClass.toAddZero.{u_1} G
+                (@AddMonoid.toAddZeroClass.{u_1} G
+                  (@SubNegMonoid.toAddMonoid.{u_1} G
+                    (@AddGroup.toSubNegMonoid.{u_1} G (@AddCommGroup.toAddGroup.{u_1} G inst)))))
+              (@AddZeroClass.toAddZero.{u_2} A
+                (@AddMonoid.toAddZeroClass.{u_2} A
+                  (@SubNegMonoid.toAddMonoid.{u_2} A
+                    (@AddGroup.toSubNegMonoid.{u_2} A (@AddCommGroup.toAddGroup.{u_2} A inst_1))))))
+            alpha x)
+          (@DFunLike.coe.{max (u_1 + 1) (u_3 + 1), u_1 + 1, u_3 + 1}
+            (@AddMonoidHom.{u_1, u_3} G B
+              (@AddZeroClass.toAddZero.{u_1} G
+                (@AddMonoid.toAddZeroClass.{u_1} G
+                  (@SubNegMonoid.toAddMonoid.{u_1} G
+                    (@AddGroup.toSubNegMonoid.{u_1} G (@AddCommGroup.toAddGroup.{u_1} G inst)))))
+              (@AddZeroClass.toAddZero.{u_3} B
+                (@AddMonoid.toAddZeroClass.{u_3} B
+                  (@SubNegMonoid.toAddMonoid.{u_3} B
+                    (@AddGroup.toSubNegMonoid.{u_3} B (@AddCommGroup.toAddGroup.{u_3} B inst_2))))))
+            G (fun (x : G) => B)
+            (@AddMonoidHom.instFunLike.{u_1, u_3} G B
+              (@AddZeroClass.toAddZero.{u_1} G
+                (@AddMonoid.toAddZeroClass.{u_1} G
+                  (@SubNegMonoid.toAddMonoid.{u_1} G
+                    (@AddGroup.toSubNegMonoid.{u_1} G (@AddCommGroup.toAddGroup.{u_1} G inst)))))
+              (@AddZeroClass.toAddZero.{u_3} B
+                (@AddMonoid.toAddZeroClass.{u_3} B
+                  (@SubNegMonoid.toAddMonoid.{u_3} B
+                    (@AddGroup.toSubNegMonoid.{u_3} B (@AddCommGroup.toAddGroup.{u_3} B inst_2))))))
+            beta x))
+    (a : A) (b : B) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientSignature
+    Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientActual PUnit.unit.{1} PUnit.unit.{1}
+    (@Nat.cast.{0} Real Real.instNatCast (@Fintype.card.{u_1} G inst_3))
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.observationFact0.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteAdditiveReadoutBlocks\",\"actual_coefficient_block\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteAdditiveReadoutBlocks\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.actual_coefficient_block, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.varyingLawInput.{u_1, u_2, u_3} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.canonicalArenaOperand.{u_1, u_2, u_3})
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.varyingLaw.{u_1, u_2, u_3}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteAdditiveReadoutBlocks\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.statementExclusion.{u_1, u_2, u_3} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteAdditiveReadoutBlocks\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteAdditiveReadoutBlocks\",\"actual_coefficient_block\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  statementLocation := { owner := `D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.actual_coefficient_block, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientRegistration.{u_1, u_2, u_3}).actual (Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientRegistration.{u_1, u_2, u_3}).variation.2.choose (Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientRegistration.{u_1, u_2, u_3}).variation.1 (Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientRegistration.{u_1, u_2, u_3}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteAdditiveReadoutBlocks\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteAdditiveReadoutBlocks\",\"coefficientRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteAdditiveReadoutBlocks.coefficientRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))

@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
 import Reg.Support.DependentFamily
@@ -86,7 +89,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, definition := none, coordinates := #[6], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_zero_power, part := .type, path := [], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u] }], facts := [`Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.canonicalArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.sourceBridgeFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.observationFact0, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.anchorEnumeration }
 
 
 #print axioms chainZeroRegistration
@@ -171,7 +184,17 @@ noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_depth_barrier, part := .type, path := [], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u] }], facts := [`Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.canonicalArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.canonicalObjectArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.sourceBridgeFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.observationFact0, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.descriptorFact] },
+  exclusion := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.anchorEnumeration }
 
 
 abbrev chainReverseSignature : Signature where
@@ -248,7 +271,17 @@ noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, definition := none, coordinates := #[6], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_zero_power_reverse, part := .type, path := [], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u] }], facts := [`Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.canonicalArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.canonicalObjectArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.sourceBridgeFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.observationFact0, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.descriptorFact] },
+  exclusion := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.anchorEnumeration }
 
 
 abbrev rectangularSignature : Signature where
@@ -324,7 +357,17 @@ noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangular_exchange_power, part := .type, path := [], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u] }], facts := [`Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.canonicalArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.canonicalObjectArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.sourceBridgeFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.observationFact0, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.descriptorFact] },
+  exclusion := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.anchorEnumeration }
 
 
 abbrev mapSignature : Signature where
@@ -427,7 +470,518 @@ noncomputable def registration_5 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.map_exchange_chain, part := .type, path := [], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u, .param `v] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u, .param `v] }], facts := [`Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.canonicalArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.canonicalObjectArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.sourceBridgeFact, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.observationFact0, `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.descriptorFact] },
+  exclusion := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.anchorEnumeration }
 
 
 end Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
+
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.canonicalArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularArena.{u}
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.canonicalArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_4\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.canonicalObjectArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularArena.{u}
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.canonicalObjectArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_4\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.canonicalArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthArena.{u}
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.canonicalArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.canonicalObjectArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthArena.{u}
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.canonicalObjectArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.canonicalArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroArena.{u}
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.canonicalArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.canonicalObjectArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroArena.{u}
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.canonicalObjectArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.canonicalArenaOperand.{u, v} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapArena.{u, v}
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.canonicalArenaFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_5\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_5\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  .evidence
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.canonicalObjectArenaOperand.{u, v} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapArena.{u, v}
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.canonicalObjectArenaFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_5\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_5\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.canonicalArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseArena.{u}
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.canonicalArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_3\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.canonicalObjectArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseArena.{u}
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.canonicalObjectArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_3\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.sourceLaw.{u} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularArena.{u}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularArena.{u}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularArena.{u}
+      Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularActual)
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularRegistration.{u})
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"rectangular_exchange_power\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_4\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangular_exchange_power, part := .type, path := [], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularArena.{u}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularArena.{u}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularActual)
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularRegistration.{u})
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.observation0.{u} : {R : Type u} →
+  [Semiring.{u} R] →
+    {n m : Nat} →
+      (U : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n m) →
+        (V : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m n) →
+          (j : Nat) →
+            D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+              Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularSignature PUnit.unit.{1}
+              PUnit.unit.{1} :=
+  fun {R : Type u} [Semiring.{u} R] {n m : Nat}
+    (U : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n m)
+    (V : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m n) (j : Nat) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularSignature
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularActual PUnit.unit.{1} PUnit.unit.{1} j
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.observationFact0.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"rectangular_exchange_power\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_4\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangular_exchange_power, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.observation0, part := .value, path := [], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.varyingLawInput.{u} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.canonicalArenaOperand.{u})
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.varyingLaw.{u}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_4\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.statementExclusion.{u} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_4\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"rectangular_exchange_power\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.varyingLaw, part := .value, path := [], levels := [(.param `u)] }
+  statementLocation := { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangular_exchange_power, part := .type, path := [], levels := [(.param `u)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularRegistration.{u}).actual (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularRegistration.{u}).variation.2.choose (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularRegistration.{u}).variation.1 (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularRegistration.{u}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"rectangularRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.sourceLaw.{u} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthArena.{u}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthArena.{u}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthArena.{u}
+      Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthActual)
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthRegistration.{u})
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"chain_depth_barrier\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_depth_barrier, part := .type, path := [], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthArena.{u}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthArena.{u}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthActual)
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthRegistration.{u})
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.observation0.{u} : {R : Type u} →
+  [inst : Semiring.{u} R] →
+    {n m : Nat} →
+      {A : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n} →
+        {B : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m} →
+          {a b L : Nat} →
+            (c : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{u} R inst n m A B L) →
+              (ha : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExactDepth.{u} R inst n A a) →
+                (hb : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExactDepth.{u} R inst m B b) →
+                  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthSignature PUnit.unit.{1}
+                    PUnit.unit.{1} :=
+  fun {R : Type u} [Semiring.{u} R] {n m : Nat}
+    {A : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n}
+    {B : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m} {a b L : Nat}
+    (c : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{u} R inst n m A B L)
+    (ha : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExactDepth.{u} R inst n A a)
+    (hb : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExactDepth.{u} R inst m B b) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthSignature
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthActual PUnit.unit.{1} PUnit.unit.{1} a
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.observationFact0.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"chain_depth_barrier\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_2\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_depth_barrier, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .function, .argument, .function, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.observation0, part := .value, path := [], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.varyingLawInput.{u} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.canonicalArenaOperand.{u})
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.varyingLaw.{u}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_2\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.statementExclusion.{u} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_2\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"chain_depth_barrier\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.varyingLaw, part := .value, path := [], levels := [(.param `u)] }
+  statementLocation := { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_depth_barrier, part := .type, path := [], levels := [(.param `u)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthRegistration.{u}).actual (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthRegistration.{u}).variation.2.choose (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthRegistration.{u}).variation.1 (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthRegistration.{u}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"chainDepthRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.sourceLaw.{u} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroArena.{u}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroArena.{u}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroArena.{u}
+      Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroActual)
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroRegistration.{u})
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"chain_zero_power\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_zero_power, part := .type, path := [], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroArena.{u}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroArena.{u}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroActual)
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroRegistration.{u})
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.observation0.{u} : {R : Type u} →
+  [inst : Semiring.{u} R] →
+    {n m : Nat} →
+      {A : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n} →
+        {B : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m} →
+          {L : Nat} →
+            (c : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{u} R inst n m A B L) →
+              (j : Nat) →
+                @Eq.{u + 1} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m)
+                    (@HPow.hPow.{u, 0, u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m) Nat
+                      (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m)
+                      (@instHPow.{u, 0} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m) Nat
+                        (@NPow.toPow.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m)
+                          (@Monoid.toNPow.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m)
+                            (@Semiring.toMonoid.{u}
+                              (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m)
+                              (@Matrix.semiring.{u, 0} (Fin m) R inst (Fin.fintype m) (instDecidableEqFin m))))))
+                      B j)
+                    (@OfNat.ofNat.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m)
+                      (nat_lit 0)
+                      (@Zero.toOfNat0.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m)
+                        (@Matrix.zero.{u, 0, 0} (Fin m) (Fin m) R
+                          (@MulZeroClass.toZero.{u} R (@instMulZeroClassOfSemiring.{u} R inst))))) →
+                  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroSignature PUnit.unit.{1} L :=
+  fun {R : Type u} [Semiring.{u} R] {n m : Nat}
+    {A : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n}
+    {B : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m} {L : Nat}
+    (c : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{u} R inst n m A B L) (j : Nat)
+    (a :
+      @Eq.{u + 1} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m)
+        (@HPow.hPow.{u, 0, u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m) Nat
+          (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m)
+          (@instHPow.{u, 0} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m) Nat
+            (@NPow.toPow.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m)
+              (@Monoid.toNPow.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m)
+                (@Semiring.toMonoid.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m)
+                  (@Matrix.semiring.{u, 0} (Fin m) R inst (Fin.fintype m) (instDecidableEqFin m))))))
+          B j)
+        (@OfNat.ofNat.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m) (nat_lit 0)
+          (@Zero.toOfNat0.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m)
+            (@Matrix.zero.{u, 0, 0} (Fin m) (Fin m) R
+              (@MulZeroClass.toZero.{u} R (@instMulZeroClassOfSemiring.{u} R inst)))))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroSignature
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroActual PUnit.unit.{1} L j
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.observationFact0.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"chain_zero_power\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_zero_power, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.observation0, part := .value, path := [], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.varyingLawInput.{u} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.canonicalArenaOperand.{u})
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.varyingLaw.{u}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.statementExclusion.{u} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"chain_zero_power\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u)] }
+  statementLocation := { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_zero_power, part := .type, path := [], levels := [(.param `u)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroRegistration.{u}).actual (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroRegistration.{u}).variation.2.choose (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroRegistration.{u}).variation.1 (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroRegistration.{u}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"chainZeroRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.sourceLaw.{u, v} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapArena.{u, v}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapArena.{u, v}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapArena.{u, v}
+      Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapActual)
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapRegistration.{u, v})
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.sourceBridgeFact.{u, v} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"map_exchange_chain\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_5\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.map_exchange_chain, part := .type, path := [], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.sourceLaw, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapArena.{u, v}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapArena.{u, v}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapActual)
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapRegistration.{u, v})
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.observation0.{u, v} : {R : Type u} →
+  {S : Type v} →
+    [inst : Semiring.{u} R] →
+      [inst_1 : Semiring.{v} S] →
+        (f :
+            @NonUnitalRingHom.{u, v} R S
+              (@NonAssocSemiring.toNonUnitalNonAssocSemiring.{u} R (@Semiring.toNonAssocSemiring.{u} R inst))
+              (@NonAssocSemiring.toNonUnitalNonAssocSemiring.{v} S (@Semiring.toNonAssocSemiring.{v} S inst_1))) →
+          {n m L : Nat} →
+            {A : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n} →
+              {B : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m} →
+                (c : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{u} R inst n m A B L) →
+                  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapSignature PUnit.unit.{1}
+                    PUnit.unit.{1} :=
+  fun {R : Type u} {S : Type v} [Semiring.{u} R] [Semiring.{v} S]
+    (f :
+      @NonUnitalRingHom.{u, v} R S
+        (@NonAssocSemiring.toNonUnitalNonAssocSemiring.{u} R (@Semiring.toNonAssocSemiring.{u} R inst))
+        (@NonAssocSemiring.toNonUnitalNonAssocSemiring.{v} S (@Semiring.toNonAssocSemiring.{v} S inst_1)))
+    {n m L : Nat} {A : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n}
+    {B : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m}
+    (c : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{u} R inst n m A B L) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapSignature
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapActual PUnit.unit.{1} PUnit.unit.{1} L
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.observationFact0.{u, v} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"map_exchange_chain\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_5\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.map_exchange_chain, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.observation0, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.varyingLawInput.{u, v} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.canonicalArenaOperand.{u, v})
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.varyingLaw.{u, v}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_5\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.statementExclusion.{u, v} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_5\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"map_exchange_chain\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.varyingLaw, part := .value, path := [], levels := [(.param `u), (.param `v)] }
+  statementLocation := { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.map_exchange_chain, part := .type, path := [], levels := [(.param `u), (.param `v)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapRegistration.{u, v}).actual (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapRegistration.{u, v}).variation.2.choose (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapRegistration.{u, v}).variation.1 (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapRegistration.{u, v}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_5\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"mapRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]],[\"param\",[\"v\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u), (.param `v)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u), (.param `v)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.sourceLaw.{u} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseArena.{u}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseArena.{u}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseArena.{u}
+      Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseActual)
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseRegistration.{u})
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"chain_zero_power_reverse\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_zero_power_reverse, part := .type, path := [], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseArena.{u}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseArena.{u}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseActual)
+  Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseRegistration.{u})
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.observation0.{u} : {R : Type u} →
+  [inst : Semiring.{u} R] →
+    {n m : Nat} →
+      {A : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n} →
+        {B : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m} →
+          {L : Nat} →
+            (c : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{u} R inst n m A B L) →
+              (j : Nat) →
+                @Eq.{u + 1} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n)
+                    (@HPow.hPow.{u, 0, u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n) Nat
+                      (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n)
+                      (@instHPow.{u, 0} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n) Nat
+                        (@NPow.toPow.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n)
+                          (@Monoid.toNPow.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n)
+                            (@Semiring.toMonoid.{u}
+                              (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n)
+                              (@Matrix.semiring.{u, 0} (Fin n) R inst (Fin.fintype n) (instDecidableEqFin n))))))
+                      A j)
+                    (@OfNat.ofNat.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n)
+                      (nat_lit 0)
+                      (@Zero.toOfNat0.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n)
+                        (@Matrix.zero.{u, 0, 0} (Fin n) (Fin n) R
+                          (@MulZeroClass.toZero.{u} R (@instMulZeroClassOfSemiring.{u} R inst))))) →
+                  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseSignature PUnit.unit.{1} L :=
+  fun {R : Type u} [Semiring.{u} R] {n m : Nat}
+    {A : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n}
+    {B : D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R m m} {L : Nat}
+    (c : @D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.ExchangeChain.{u} R inst n m A B L) (j : Nat)
+    (a :
+      @Eq.{u + 1} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n)
+        (@HPow.hPow.{u, 0, u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n) Nat
+          (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n)
+          (@instHPow.{u, 0} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n) Nat
+            (@NPow.toPow.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n)
+              (@Monoid.toNPow.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n)
+                (@Semiring.toMonoid.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n)
+                  (@Matrix.semiring.{u, 0} (Fin n) R inst (Fin.fintype n) (instDecidableEqFin n))))))
+          A j)
+        (@OfNat.ofNat.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n) (nat_lit 0)
+          (@Zero.toOfNat0.{u} (D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.Mat.{u} R n n)
+            (@Matrix.zero.{u, 0, 0} (Fin n) (Fin n) R
+              (@MulZeroClass.toZero.{u} R (@instMulZeroClassOfSemiring.{u} R inst)))))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseSignature
+    Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseActual PUnit.unit.{1} L j
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.observationFact0.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"chain_zero_power_reverse\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_3\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_zero_power_reverse, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.observation0, part := .value, path := [], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.varyingLawInput.{u} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.canonicalArenaOperand.{u})
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.varyingLaw.{u}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_3\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.statementExclusion.{u} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_3\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"chain_zero_power_reverse\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.varyingLaw, part := .value, path := [], levels := [(.param `u)] }
+  statementLocation := { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_zero_power_reverse, part := .type, path := [], levels := [(.param `u)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseRegistration.{u}).actual (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseRegistration.{u}).variation.2.choose (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseRegistration.{u}).variation.1 (Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseRegistration.{u}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"RectangularNilpotenceBarrier\",\"chainReverseRegistration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, declaration := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseRegistration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))

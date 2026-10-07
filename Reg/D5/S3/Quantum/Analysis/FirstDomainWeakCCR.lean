@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Analysis.FirstDomainWeakCCR
@@ -123,7 +126,2023 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }, { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "fn", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }, { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR.first_domain_weak_ccr, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.observationFact0, `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.observationFact1, `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.observationFact2, `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.anchorEnumeration }
 
 
 end Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR
+
+
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.arena
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.arena
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.arena Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.actual)
+    Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration)
+
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"first_domain_weak_ccr\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR.first_domain_weak_ccr, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.arena Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.actual)
+  Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration)
+
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) where
+  values := [(fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) => i)
+  (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) (nat_lit 0)
+    (@Nat.le_of_lt (nat_lit 1) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+      (@Nat.le_of_lt (nat_lit 2) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+        (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))), (fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) => i)
+  (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) (nat_lit 1)
+    (@Nat.le_of_lt (nat_lit 2) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+      (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))), (fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) => i)
+  (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) (nat_lit 2)
+    (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.observation0 : (hbar : Real) →
+  (hhbar :
+      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) hbar) →
+    (f g df dg : Real → Complex) →
+      (hf :
+          @MeasureTheory.MemLp.{0, 0} Real Complex
+            (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+            (@ContinuousENorm.toENorm.{0} Complex
+              (@UniformSpace.toTopologicalSpace.{0} Complex
+                (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                  (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                    (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+              (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+            (@UniformSpace.toTopologicalSpace.{0} Complex
+              (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                  (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+            f
+            (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                  (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+        (hg :
+            @MeasureTheory.MemLp.{0, 0} Real Complex
+              (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+              (@ContinuousENorm.toENorm.{0} Complex
+                (@UniformSpace.toTopologicalSpace.{0} Complex
+                  (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                    (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                      (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                              (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+                (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                  (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+              (@UniformSpace.toTopologicalSpace.{0} Complex
+                (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                  (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                    (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+              g
+              (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                  (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                    (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+          (hdf :
+              @MeasureTheory.MemLp.{0, 0} Real Complex
+                (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                (@ContinuousENorm.toENorm.{0} Complex
+                  (@UniformSpace.toTopologicalSpace.{0} Complex
+                    (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                      (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                        (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+                  (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                    (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+                (@UniformSpace.toTopologicalSpace.{0} Complex
+                  (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                    (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                      (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+                df
+                (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                    (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                      (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+            (hdg :
+                @MeasureTheory.MemLp.{0, 0} Real Complex
+                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                  (@ContinuousENorm.toENorm.{0} Complex
+                    (@UniformSpace.toTopologicalSpace.{0} Complex
+                      (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                        (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                          (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                  (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                    (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+                    (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                      (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                              (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+                  (@UniformSpace.toTopologicalSpace.{0} Complex
+                    (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                      (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                        (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+                  dg
+                  (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                      (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                        (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+              (hxf :
+                  @MeasureTheory.MemLp.{0, 0} Real Complex
+                    (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                    (@ContinuousENorm.toENorm.{0} Complex
+                      (@UniformSpace.toTopologicalSpace.{0} Complex
+                        (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                          (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                        instCommCStarAlgebraComplex)))))))))
+                      (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                        (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+                    (@UniformSpace.toTopologicalSpace.{0} Complex
+                      (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                        (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                          (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+                    (fun (x : Real) =>
+                      @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                        (Complex.ofReal x) (f x))
+                    (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                        (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                          (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+                (hxg :
+                    @MeasureTheory.MemLp.{0, 0} Real Complex
+                      (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                      (@ContinuousENorm.toENorm.{0} Complex
+                        (@UniformSpace.toTopologicalSpace.{0} Complex
+                          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                            (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                              (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                          instCommCStarAlgebraComplex)))))))))
+                        (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                          (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                  (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                    (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+                      (@UniformSpace.toTopologicalSpace.{0} Complex
+                        (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                          (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                            (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                              (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+                      (fun (x : Real) =>
+                        @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                          (Complex.ofReal x) (g x))
+                      (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                        (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                          (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                            (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                          (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                      (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+                  (hwf :
+                      ∀ (φ : Real → Real),
+                        @ContDiff.{0, 0, 0} Real
+                            (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+                            Real.normedAddCommGroup
+                            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+                              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+                            Real Real.normedAddCommGroup
+                            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+                              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+                            (@WithTop.some.{0} ENat (@Top.top.{0} ENat instTopENat)) φ →
+                          @HasCompactSupport.{0, 0} Real Real
+                              (@UniformSpace.toTopologicalSpace.{0} Real
+                                (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                              Real.instZero φ →
+                            @Eq.{1} Complex
+                              (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex
+                                    Complex.instNormedAddCommGroup)
+                                  instInnerProductSpaceRealComplex)
+                                (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                                (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                                @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                                  (Complex.ofReal
+                                    (@deriv.{0, 0} Real
+                                      (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+                                      Real Real.instAddCommGroup
+                                      (@Semiring.toModule.{0} Real
+                                        (@DivisionSemiring.toSemiring.{0} Real
+                                          (@Semifield.toDivisionSemiring.{0} Real
+                                            (@Field.toSemifield.{0} Real
+                                              (@NormedField.toField.{0} Real
+                                                (@NontriviallyNormedField.toNormedField.{0} Real
+                                                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real
+                                                    Real.denselyNormedField)))))))
+                                      (@UniformSpace.toTopologicalSpace.{0} Real
+                                        (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                                      φ x))
+                                  (f x))
+                              (@Neg.neg.{0} Complex Complex.instNeg
+                                (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                    (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex
+                                      Complex.instNormedAddCommGroup)
+                                    instInnerProductSpaceRealComplex)
+                                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                                  @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                                    (Complex.ofReal (φ x)) (df x)))) →
+                    (hwg :
+                        ∀ (φ : Real → Real),
+                          @ContDiff.{0, 0, 0} Real
+                              (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+                              Real.normedAddCommGroup
+                              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+                                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+                              Real Real.normedAddCommGroup
+                              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+                                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+                              (@WithTop.some.{0} ENat (@Top.top.{0} ENat instTopENat)) φ →
+                            @HasCompactSupport.{0, 0} Real Real
+                                (@UniformSpace.toTopologicalSpace.{0} Real
+                                  (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                                Real.instZero φ →
+                              @Eq.{1} Complex
+                                (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                    (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex
+                                      Complex.instNormedAddCommGroup)
+                                    instInnerProductSpaceRealComplex)
+                                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                                  @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                                    (Complex.ofReal
+                                      (@deriv.{0, 0} Real
+                                        (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+                                        Real Real.instAddCommGroup
+                                        (@Semiring.toModule.{0} Real
+                                          (@DivisionSemiring.toSemiring.{0} Real
+                                            (@Semifield.toDivisionSemiring.{0} Real
+                                              (@Field.toSemifield.{0} Real
+                                                (@NormedField.toField.{0} Real
+                                                  (@NontriviallyNormedField.toNormedField.{0} Real
+                                                    (@DenselyNormedField.toNontriviallyNormedField.{0} Real
+                                                      Real.denselyNormedField)))))))
+                                        (@UniformSpace.toTopologicalSpace.{0} Real
+                                          (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                                        φ x))
+                                    (g x))
+                                (@Neg.neg.{0} Complex Complex.instNeg
+                                  (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                                    (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                      (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex
+                                        Complex.instNormedAddCommGroup)
+                                      instInnerProductSpaceRealComplex)
+                                    (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                                    (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                                    @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                                      (Complex.ofReal (φ x)) (dg x)))) →
+                      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.State.{0, 0, 0, 0, 0}
+                          Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.signature PUnit.unit.{1} →
+                        D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                          Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.signature
+                          ((fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) => i)
+                            (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) (nat_lit 0)
+                              (@Nat.le_of_lt (nat_lit 1) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                                (@Nat.le_of_lt (nat_lit 2) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                                  (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))))
+                          PUnit.unit.{1} :=
+  fun (hbar : Real)
+    (hhbar :
+      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) hbar)
+    (f g df dg : Real → Complex)
+    (hf :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        f
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hg :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        g
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hdf :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        df
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hdg :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        dg
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hxf :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        (fun (x : Real) =>
+          @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul) (Complex.ofReal x) (f x))
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hxg :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        (fun (x : Real) =>
+          @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul) (Complex.ofReal x) (g x))
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hwf :
+      ∀ (φ : Real → Real),
+        @ContDiff.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+            Real.normedAddCommGroup
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            Real Real.normedAddCommGroup
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            (@WithTop.some.{0} ENat (@Top.top.{0} ENat instTopENat)) φ →
+          @HasCompactSupport.{0, 0} Real Real
+              (@UniformSpace.toTopologicalSpace.{0} Real
+                (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+              Real.instZero φ →
+            @Eq.{1} Complex
+              (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                  instInnerProductSpaceRealComplex)
+                (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                  (Complex.ofReal
+                    (@deriv.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+                      Real Real.instAddCommGroup
+                      (@Semiring.toModule.{0} Real
+                        (@DivisionSemiring.toSemiring.{0} Real
+                          (@Semifield.toDivisionSemiring.{0} Real
+                            (@Field.toSemifield.{0} Real
+                              (@NormedField.toField.{0} Real
+                                (@NontriviallyNormedField.toNormedField.{0} Real
+                                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)))))))
+                      (@UniformSpace.toTopologicalSpace.{0} Real
+                        (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                      φ x))
+                  (f x))
+              (@Neg.neg.{0} Complex Complex.instNeg
+                (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                    (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                    instInnerProductSpaceRealComplex)
+                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                  @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                    (Complex.ofReal (φ x)) (df x))))
+    (hwg :
+      ∀ (φ : Real → Real),
+        @ContDiff.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+            Real.normedAddCommGroup
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            Real Real.normedAddCommGroup
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            (@WithTop.some.{0} ENat (@Top.top.{0} ENat instTopENat)) φ →
+          @HasCompactSupport.{0, 0} Real Real
+              (@UniformSpace.toTopologicalSpace.{0} Real
+                (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+              Real.instZero φ →
+            @Eq.{1} Complex
+              (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                  instInnerProductSpaceRealComplex)
+                (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                  (Complex.ofReal
+                    (@deriv.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+                      Real Real.instAddCommGroup
+                      (@Semiring.toModule.{0} Real
+                        (@DivisionSemiring.toSemiring.{0} Real
+                          (@Semifield.toDivisionSemiring.{0} Real
+                            (@Field.toSemifield.{0} Real
+                              (@NormedField.toField.{0} Real
+                                (@NontriviallyNormedField.toNormedField.{0} Real
+                                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)))))))
+                      (@UniformSpace.toTopologicalSpace.{0} Real
+                        (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                      φ x))
+                  (g x))
+              (@Neg.neg.{0} Complex Complex.instNeg
+                (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                    (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                    instInnerProductSpaceRealComplex)
+                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                  @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                    (Complex.ofReal (φ x)) (dg x)))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.signature Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.actual
+    ((fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) => i)
+      (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) (nat_lit 0)
+        (@Nat.le_of_lt (nat_lit 1) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+          (@Nat.le_of_lt (nat_lit 2) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+            (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))))
+    PUnit.unit.{1}
+
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"first_domain_weak_ccr\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"function\",\"argument\",\"function\",\"function\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR.first_domain_weak_ccr, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .function, .argument, .function, .argument, .function, .function], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.observation1 : (hbar : Real) →
+  (hhbar :
+      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) hbar) →
+    (f g df dg : Real → Complex) →
+      (hf :
+          @MeasureTheory.MemLp.{0, 0} Real Complex
+            (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+            (@ContinuousENorm.toENorm.{0} Complex
+              (@UniformSpace.toTopologicalSpace.{0} Complex
+                (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                  (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                    (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+              (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+            (@UniformSpace.toTopologicalSpace.{0} Complex
+              (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                  (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+            f
+            (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                  (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+        (hg :
+            @MeasureTheory.MemLp.{0, 0} Real Complex
+              (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+              (@ContinuousENorm.toENorm.{0} Complex
+                (@UniformSpace.toTopologicalSpace.{0} Complex
+                  (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                    (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                      (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                              (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+                (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                  (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+              (@UniformSpace.toTopologicalSpace.{0} Complex
+                (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                  (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                    (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+              g
+              (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                  (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                    (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+          (hdf :
+              @MeasureTheory.MemLp.{0, 0} Real Complex
+                (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                (@ContinuousENorm.toENorm.{0} Complex
+                  (@UniformSpace.toTopologicalSpace.{0} Complex
+                    (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                      (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                        (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+                  (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                    (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+                (@UniformSpace.toTopologicalSpace.{0} Complex
+                  (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                    (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                      (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+                df
+                (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                    (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                      (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+            (hdg :
+                @MeasureTheory.MemLp.{0, 0} Real Complex
+                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                  (@ContinuousENorm.toENorm.{0} Complex
+                    (@UniformSpace.toTopologicalSpace.{0} Complex
+                      (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                        (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                          (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                  (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                    (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+                    (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                      (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                              (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+                  (@UniformSpace.toTopologicalSpace.{0} Complex
+                    (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                      (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                        (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+                  dg
+                  (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                      (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                        (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+              (hxf :
+                  @MeasureTheory.MemLp.{0, 0} Real Complex
+                    (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                    (@ContinuousENorm.toENorm.{0} Complex
+                      (@UniformSpace.toTopologicalSpace.{0} Complex
+                        (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                          (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                        instCommCStarAlgebraComplex)))))))))
+                      (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                        (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+                    (@UniformSpace.toTopologicalSpace.{0} Complex
+                      (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                        (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                          (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+                    (fun (x : Real) =>
+                      @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                        (Complex.ofReal x) (f x))
+                    (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                        (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                          (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+                (hxg :
+                    @MeasureTheory.MemLp.{0, 0} Real Complex
+                      (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                      (@ContinuousENorm.toENorm.{0} Complex
+                        (@UniformSpace.toTopologicalSpace.{0} Complex
+                          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                            (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                              (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                          instCommCStarAlgebraComplex)))))))))
+                        (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                          (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                  (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                    (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+                      (@UniformSpace.toTopologicalSpace.{0} Complex
+                        (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                          (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                            (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                              (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+                      (fun (x : Real) =>
+                        @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                          (Complex.ofReal x) (g x))
+                      (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                        (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                          (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                            (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                          (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                      (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+                  (hwf :
+                      ∀ (φ : Real → Real),
+                        @ContDiff.{0, 0, 0} Real
+                            (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+                            Real.normedAddCommGroup
+                            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+                              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+                            Real Real.normedAddCommGroup
+                            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+                              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+                            (@WithTop.some.{0} ENat (@Top.top.{0} ENat instTopENat)) φ →
+                          @HasCompactSupport.{0, 0} Real Real
+                              (@UniformSpace.toTopologicalSpace.{0} Real
+                                (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                              Real.instZero φ →
+                            @Eq.{1} Complex
+                              (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex
+                                    Complex.instNormedAddCommGroup)
+                                  instInnerProductSpaceRealComplex)
+                                (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                                (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                                @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                                  (Complex.ofReal
+                                    (@deriv.{0, 0} Real
+                                      (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+                                      Real Real.instAddCommGroup
+                                      (@Semiring.toModule.{0} Real
+                                        (@DivisionSemiring.toSemiring.{0} Real
+                                          (@Semifield.toDivisionSemiring.{0} Real
+                                            (@Field.toSemifield.{0} Real
+                                              (@NormedField.toField.{0} Real
+                                                (@NontriviallyNormedField.toNormedField.{0} Real
+                                                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real
+                                                    Real.denselyNormedField)))))))
+                                      (@UniformSpace.toTopologicalSpace.{0} Real
+                                        (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                                      φ x))
+                                  (f x))
+                              (@Neg.neg.{0} Complex Complex.instNeg
+                                (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                    (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex
+                                      Complex.instNormedAddCommGroup)
+                                    instInnerProductSpaceRealComplex)
+                                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                                  @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                                    (Complex.ofReal (φ x)) (df x)))) →
+                    (hwg :
+                        ∀ (φ : Real → Real),
+                          @ContDiff.{0, 0, 0} Real
+                              (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+                              Real.normedAddCommGroup
+                              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+                                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+                              Real Real.normedAddCommGroup
+                              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+                                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+                              (@WithTop.some.{0} ENat (@Top.top.{0} ENat instTopENat)) φ →
+                            @HasCompactSupport.{0, 0} Real Real
+                                (@UniformSpace.toTopologicalSpace.{0} Real
+                                  (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                                Real.instZero φ →
+                              @Eq.{1} Complex
+                                (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                    (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex
+                                      Complex.instNormedAddCommGroup)
+                                    instInnerProductSpaceRealComplex)
+                                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                                  @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                                    (Complex.ofReal
+                                      (@deriv.{0, 0} Real
+                                        (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+                                        Real Real.instAddCommGroup
+                                        (@Semiring.toModule.{0} Real
+                                          (@DivisionSemiring.toSemiring.{0} Real
+                                            (@Semifield.toDivisionSemiring.{0} Real
+                                              (@Field.toSemifield.{0} Real
+                                                (@NormedField.toField.{0} Real
+                                                  (@NontriviallyNormedField.toNormedField.{0} Real
+                                                    (@DenselyNormedField.toNontriviallyNormedField.{0} Real
+                                                      Real.denselyNormedField)))))))
+                                        (@UniformSpace.toTopologicalSpace.{0} Real
+                                          (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                                        φ x))
+                                    (g x))
+                                (@Neg.neg.{0} Complex Complex.instNeg
+                                  (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                                    (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                      (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex
+                                        Complex.instNormedAddCommGroup)
+                                      instInnerProductSpaceRealComplex)
+                                    (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                                    (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                                    @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                                      (Complex.ofReal (φ x)) (dg x)))) →
+                      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.State.{0, 0, 0, 0, 0}
+                          Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.signature PUnit.unit.{1} →
+                        D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                          Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.signature
+                          ((fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) => i)
+                            (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) (nat_lit 1)
+                              (@Nat.le_of_lt (nat_lit 2) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+                                (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))
+                          PUnit.unit.{1} :=
+  fun (hbar : Real)
+    (hhbar :
+      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) hbar)
+    (f g df dg : Real → Complex)
+    (hf :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        f
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hg :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        g
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hdf :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        df
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hdg :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        dg
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hxf :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        (fun (x : Real) =>
+          @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul) (Complex.ofReal x) (f x))
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hxg :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        (fun (x : Real) =>
+          @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul) (Complex.ofReal x) (g x))
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hwf :
+      ∀ (φ : Real → Real),
+        @ContDiff.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+            Real.normedAddCommGroup
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            Real Real.normedAddCommGroup
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            (@WithTop.some.{0} ENat (@Top.top.{0} ENat instTopENat)) φ →
+          @HasCompactSupport.{0, 0} Real Real
+              (@UniformSpace.toTopologicalSpace.{0} Real
+                (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+              Real.instZero φ →
+            @Eq.{1} Complex
+              (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                  instInnerProductSpaceRealComplex)
+                (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                  (Complex.ofReal
+                    (@deriv.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+                      Real Real.instAddCommGroup
+                      (@Semiring.toModule.{0} Real
+                        (@DivisionSemiring.toSemiring.{0} Real
+                          (@Semifield.toDivisionSemiring.{0} Real
+                            (@Field.toSemifield.{0} Real
+                              (@NormedField.toField.{0} Real
+                                (@NontriviallyNormedField.toNormedField.{0} Real
+                                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)))))))
+                      (@UniformSpace.toTopologicalSpace.{0} Real
+                        (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                      φ x))
+                  (f x))
+              (@Neg.neg.{0} Complex Complex.instNeg
+                (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                    (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                    instInnerProductSpaceRealComplex)
+                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                  @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                    (Complex.ofReal (φ x)) (df x))))
+    (hwg :
+      ∀ (φ : Real → Real),
+        @ContDiff.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+            Real.normedAddCommGroup
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            Real Real.normedAddCommGroup
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            (@WithTop.some.{0} ENat (@Top.top.{0} ENat instTopENat)) φ →
+          @HasCompactSupport.{0, 0} Real Real
+              (@UniformSpace.toTopologicalSpace.{0} Real
+                (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+              Real.instZero φ →
+            @Eq.{1} Complex
+              (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                  instInnerProductSpaceRealComplex)
+                (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                  (Complex.ofReal
+                    (@deriv.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+                      Real Real.instAddCommGroup
+                      (@Semiring.toModule.{0} Real
+                        (@DivisionSemiring.toSemiring.{0} Real
+                          (@Semifield.toDivisionSemiring.{0} Real
+                            (@Field.toSemifield.{0} Real
+                              (@NormedField.toField.{0} Real
+                                (@NontriviallyNormedField.toNormedField.{0} Real
+                                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)))))))
+                      (@UniformSpace.toTopologicalSpace.{0} Real
+                        (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                      φ x))
+                  (g x))
+              (@Neg.neg.{0} Complex Complex.instNeg
+                (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                    (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                    instInnerProductSpaceRealComplex)
+                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                  @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                    (Complex.ofReal (φ x)) (dg x)))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.signature Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.actual
+    ((fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) => i)
+      (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) (nat_lit 1)
+        (@Nat.le_of_lt (nat_lit 2) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))
+          (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))))
+    PUnit.unit.{1}
+
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.observationFact1 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"first_domain_weak_ccr\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"argument\",\"function\",\"function\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"registration_1\",\"observation1\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR.first_domain_weak_ccr, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .function, .argument, .argument, .function, .function], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.observation1, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.observation2 : (hbar : Real) →
+  (hhbar :
+      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) hbar) →
+    (f g df dg : Real → Complex) →
+      (hf :
+          @MeasureTheory.MemLp.{0, 0} Real Complex
+            (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+            (@ContinuousENorm.toENorm.{0} Complex
+              (@UniformSpace.toTopologicalSpace.{0} Complex
+                (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                  (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                    (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+              (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+            (@UniformSpace.toTopologicalSpace.{0} Complex
+              (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                  (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+            f
+            (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                  (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+            (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+        (hg :
+            @MeasureTheory.MemLp.{0, 0} Real Complex
+              (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+              (@ContinuousENorm.toENorm.{0} Complex
+                (@UniformSpace.toTopologicalSpace.{0} Complex
+                  (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                    (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                      (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                              (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+                (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                  (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                    (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                      (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                        (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+              (@UniformSpace.toTopologicalSpace.{0} Complex
+                (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                  (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                    (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+              g
+              (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                  (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                    (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+              (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+          (hdf :
+              @MeasureTheory.MemLp.{0, 0} Real Complex
+                (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                (@ContinuousENorm.toENorm.{0} Complex
+                  (@UniformSpace.toTopologicalSpace.{0} Complex
+                    (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                      (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                        (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+                  (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                    (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                      (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                        (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                          (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+                (@UniformSpace.toTopologicalSpace.{0} Complex
+                  (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                    (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                      (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+                df
+                (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                  (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                    (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                      (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+            (hdg :
+                @MeasureTheory.MemLp.{0, 0} Real Complex
+                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                  (@ContinuousENorm.toENorm.{0} Complex
+                    (@UniformSpace.toTopologicalSpace.{0} Complex
+                      (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                        (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                          (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                  (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                    (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+                    (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                      (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                        (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                          (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                            (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                              (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+                  (@UniformSpace.toTopologicalSpace.{0} Complex
+                    (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                      (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                        (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+                  dg
+                  (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                    (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                      (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                        (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+              (hxf :
+                  @MeasureTheory.MemLp.{0, 0} Real Complex
+                    (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                    (@ContinuousENorm.toENorm.{0} Complex
+                      (@UniformSpace.toTopologicalSpace.{0} Complex
+                        (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                          (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                        instCommCStarAlgebraComplex)))))))))
+                      (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                        (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                          (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                            (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                              (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+                    (@UniformSpace.toTopologicalSpace.{0} Complex
+                      (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                        (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                          (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+                    (fun (x : Real) =>
+                      @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                        (Complex.ofReal x) (f x))
+                    (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                      (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                        (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                          (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                    (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+                (hxg :
+                    @MeasureTheory.MemLp.{0, 0} Real Complex
+                      (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                      (@ContinuousENorm.toENorm.{0} Complex
+                        (@UniformSpace.toTopologicalSpace.{0} Complex
+                          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                            (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                              (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                                (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                                  (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                    (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex
+                                          instCommCStarAlgebraComplex)))))))))
+                        (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+                          (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                            (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                              (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                                (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                                  (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                    (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+                      (@UniformSpace.toTopologicalSpace.{0} Complex
+                        (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                          (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                            (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                              (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+                      (fun (x : Real) =>
+                        @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                          (Complex.ofReal x) (g x))
+                      (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+                        (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+                          (@AddMonoidWithOne.toNatCast.{0} ENNReal
+                            (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+                          (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                            (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+                      (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)) →
+                  (hwf :
+                      ∀ (φ : Real → Real),
+                        @ContDiff.{0, 0, 0} Real
+                            (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+                            Real.normedAddCommGroup
+                            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+                              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+                            Real Real.normedAddCommGroup
+                            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+                              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+                            (@WithTop.some.{0} ENat (@Top.top.{0} ENat instTopENat)) φ →
+                          @HasCompactSupport.{0, 0} Real Real
+                              (@UniformSpace.toTopologicalSpace.{0} Real
+                                (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                              Real.instZero φ →
+                            @Eq.{1} Complex
+                              (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex
+                                    Complex.instNormedAddCommGroup)
+                                  instInnerProductSpaceRealComplex)
+                                (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                                (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                                @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                                  (Complex.ofReal
+                                    (@deriv.{0, 0} Real
+                                      (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+                                      Real Real.instAddCommGroup
+                                      (@Semiring.toModule.{0} Real
+                                        (@DivisionSemiring.toSemiring.{0} Real
+                                          (@Semifield.toDivisionSemiring.{0} Real
+                                            (@Field.toSemifield.{0} Real
+                                              (@NormedField.toField.{0} Real
+                                                (@NontriviallyNormedField.toNormedField.{0} Real
+                                                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real
+                                                    Real.denselyNormedField)))))))
+                                      (@UniformSpace.toTopologicalSpace.{0} Real
+                                        (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                                      φ x))
+                                  (f x))
+                              (@Neg.neg.{0} Complex Complex.instNeg
+                                (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                    (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex
+                                      Complex.instNormedAddCommGroup)
+                                    instInnerProductSpaceRealComplex)
+                                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                                  @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                                    (Complex.ofReal (φ x)) (df x)))) →
+                    (hwg :
+                        ∀ (φ : Real → Real),
+                          @ContDiff.{0, 0, 0} Real
+                              (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+                              Real.normedAddCommGroup
+                              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+                                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+                              Real Real.normedAddCommGroup
+                              (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+                                (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+                                (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+                              (@WithTop.some.{0} ENat (@Top.top.{0} ENat instTopENat)) φ →
+                            @HasCompactSupport.{0, 0} Real Real
+                                (@UniformSpace.toTopologicalSpace.{0} Real
+                                  (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                                Real.instZero φ →
+                              @Eq.{1} Complex
+                                (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                    (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex
+                                      Complex.instNormedAddCommGroup)
+                                    instInnerProductSpaceRealComplex)
+                                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                                  @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                                    (Complex.ofReal
+                                      (@deriv.{0, 0} Real
+                                        (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+                                        Real Real.instAddCommGroup
+                                        (@Semiring.toModule.{0} Real
+                                          (@DivisionSemiring.toSemiring.{0} Real
+                                            (@Semifield.toDivisionSemiring.{0} Real
+                                              (@Field.toSemifield.{0} Real
+                                                (@NormedField.toField.{0} Real
+                                                  (@NontriviallyNormedField.toNormedField.{0} Real
+                                                    (@DenselyNormedField.toNontriviallyNormedField.{0} Real
+                                                      Real.denselyNormedField)))))))
+                                        (@UniformSpace.toTopologicalSpace.{0} Real
+                                          (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                                        φ x))
+                                    (g x))
+                                (@Neg.neg.{0} Complex Complex.instNeg
+                                  (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                                    (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                                      (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex
+                                        Complex.instNormedAddCommGroup)
+                                      instInnerProductSpaceRealComplex)
+                                    (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                                    (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                                    @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                                      (Complex.ofReal (φ x)) (dg x)))) →
+                      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.State.{0, 0, 0, 0, 0}
+                          Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.signature PUnit.unit.{1} →
+                        D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                          Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.signature
+                          ((fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) => i)
+                            (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) (nat_lit 2)
+                              (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))
+                          PUnit.unit.{1} :=
+  fun (hbar : Real)
+    (hhbar :
+      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) hbar)
+    (f g df dg : Real → Complex)
+    (hf :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        f
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hg :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        g
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hdf :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        df
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hdg :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        dg
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hxf :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        (fun (x : Real) =>
+          @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul) (Complex.ofReal x) (f x))
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hxg :
+      @MeasureTheory.MemLp.{0, 0} Real Complex
+        (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+        (@ContinuousENorm.toENorm.{0} Complex
+          (@UniformSpace.toTopologicalSpace.{0} Complex
+            (@PseudoMetricSpace.toUniformSpace.{0} Complex
+              (@SeminormedAddGroup.toPseudoMetricSpace.{0} Complex
+                (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+                  (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                    (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                      (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                        (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                          (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))))
+          (@SeminormedAddGroup.toContinuousENorm.{0} Complex
+            (@SeminormedAddCommGroup.toSeminormedAddGroup.{0} Complex
+              (@NonUnitalSeminormedRing.toSeminormedAddCommGroup.{0} Complex
+                (@NonUnitalSeminormedCommRing.toNonUnitalSeminormedRing.{0} Complex
+                  (@SeminormedCommRing.toNonUnitalSeminormedCommRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+        (fun (x : Real) =>
+          @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul) (Complex.ofReal x) (g x))
+        (@OfNat.ofNat.{0} ENNReal (nat_lit 2)
+          (@instOfNatAtLeastTwo.{0} ENNReal (nat_lit 2)
+            (@AddMonoidWithOne.toNatCast.{0} ENNReal
+              (@AddCommMonoidWithOne.toAddMonoidWithOne.{0} ENNReal ENNReal.instAddCommMonoidWithOne))
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))
+        (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace))
+    (hwf :
+      ∀ (φ : Real → Real),
+        @ContDiff.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+            Real.normedAddCommGroup
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            Real Real.normedAddCommGroup
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            (@WithTop.some.{0} ENat (@Top.top.{0} ENat instTopENat)) φ →
+          @HasCompactSupport.{0, 0} Real Real
+              (@UniformSpace.toTopologicalSpace.{0} Real
+                (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+              Real.instZero φ →
+            @Eq.{1} Complex
+              (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                  instInnerProductSpaceRealComplex)
+                (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                  (Complex.ofReal
+                    (@deriv.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+                      Real Real.instAddCommGroup
+                      (@Semiring.toModule.{0} Real
+                        (@DivisionSemiring.toSemiring.{0} Real
+                          (@Semifield.toDivisionSemiring.{0} Real
+                            (@Field.toSemifield.{0} Real
+                              (@NormedField.toField.{0} Real
+                                (@NontriviallyNormedField.toNormedField.{0} Real
+                                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)))))))
+                      (@UniformSpace.toTopologicalSpace.{0} Real
+                        (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                      φ x))
+                  (f x))
+              (@Neg.neg.{0} Complex Complex.instNeg
+                (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                    (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                    instInnerProductSpaceRealComplex)
+                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                  @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                    (Complex.ofReal (φ x)) (df x))))
+    (hwg :
+      ∀ (φ : Real → Real),
+        @ContDiff.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+            Real.normedAddCommGroup
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            Real Real.normedAddCommGroup
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            (@WithTop.some.{0} ENat (@Top.top.{0} ENat instTopENat)) φ →
+          @HasCompactSupport.{0, 0} Real Real
+              (@UniformSpace.toTopologicalSpace.{0} Real
+                (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+              Real.instZero φ →
+            @Eq.{1} Complex
+              (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                  instInnerProductSpaceRealComplex)
+                (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                  (Complex.ofReal
+                    (@deriv.{0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)
+                      Real Real.instAddCommGroup
+                      (@Semiring.toModule.{0} Real
+                        (@DivisionSemiring.toSemiring.{0} Real
+                          (@Semifield.toDivisionSemiring.{0} Real
+                            (@Field.toSemifield.{0} Real
+                              (@NormedField.toField.{0} Real
+                                (@NontriviallyNormedField.toNormedField.{0} Real
+                                  (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField)))))))
+                      (@UniformSpace.toTopologicalSpace.{0} Real
+                        (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                      φ x))
+                  (g x))
+              (@Neg.neg.{0} Complex Complex.instNeg
+                (@MeasureTheory.integral.{0, 0} Real Complex Complex.instNormedAddCommGroup
+                  (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                    (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                    instInnerProductSpaceRealComplex)
+                  (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+                  (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace) fun (x : Real) =>
+                  @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+                    (Complex.ofReal (φ x)) (dg x)))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.signature Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.actual
+    ((fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) => i)
+      (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) (nat_lit 2)
+        (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))
+    PUnit.unit.{1}
+
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.observationFact2 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"first_domain_weak_ccr\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\",\"function\",\"function\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"registration_1\",\"observation2\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR.first_domain_weak_ccr, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .argument, .function, .function], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.observation2, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"first_domain_weak_ccr\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR.first_domain_weak_ccr, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration).actual (Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration).variation.2.choose (Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration).variation.1 (Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Analysis\",\"FirstDomainWeakCCR\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR, declaration := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

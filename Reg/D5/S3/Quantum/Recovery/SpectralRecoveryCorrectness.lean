@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness
 import Reg.Support.DependentFamily
@@ -110,9 +113,353 @@ noncomputable def registration_1.{u_1, u_2, u_3, u_4} : LeanInformationAudit.Con
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, definition := none, coordinates := #[3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 17, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.computed_recovery_of_kraus_left_inverse, part := .type, path := [], levels := [.param `u_1, .param `u_2, .param `u_3, .param `u_4] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3, .param `u_4] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3, .param `u_4] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3, .param `u_4] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2, .param `u_3, .param `u_4] }], facts := [`Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.observationFact0, `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 
 end Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness
+
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.canonicalArenaOperand.{u_1, u_2, u_3, u_4} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_4 + 1, u_4, 0, u_4, 0} :=
+  Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena.{u_1, u_2, u_3, u_4}
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.canonicalArenaFact.{u_1, u_2, u_3, u_4} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.canonicalObjectArenaOperand.{u_1, u_2, u_3, u_4} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_4 + 1, u_4, 0, u_4, 0} :=
+  Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena.{u_1, u_2, u_3, u_4}
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.canonicalObjectArenaFact.{u_1, u_2, u_3, u_4} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.sourceLaw.{u_1, u_2, u_3, u_4} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_4 + 1, u_4, 0, u_4, 0}
+  Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena.{u_1, u_2, u_3, u_4}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_4 + 1, u_4, 0, u_4, 0}
+    Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena.{u_1, u_2, u_3, u_4}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_4 + 1, u_4, 0, u_4, 0}
+      Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena.{u_1, u_2, u_3, u_4}
+      Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.actual.{u_4})
+    Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration.{u_1, u_2, u_3, u_4})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.sourceBridgeFact.{u_1, u_2, u_3, u_4} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"computed_recovery_of_kraus_left_inverse\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.computed_recovery_of_kraus_left_inverse, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_4 + 1, u_4, 0, u_4, 0}
+  Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena.{u_1, u_2, u_3, u_4}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_4 + 1, u_4, 0, u_4, 0}
+    Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.arena.{u_1, u_2, u_3, u_4}
+    Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.actual.{u_4})
+  Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration.{u_1, u_2, u_3, u_4})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.observation0.{u_1, u_2, u_3, u_4} : {s : Type u_1} →
+  {t : Type u_2} →
+    {n : Type u_3} →
+      {d : Type u_4} →
+        [inst : Fintype.{u_1} s] →
+          [DecidableEq.{u_1 + 1} s] →
+            [inst_2 : Fintype.{u_2} t] →
+              [inst_3 : Fintype.{u_3} n] →
+                [inst_4 : DecidableEq.{u_3 + 1} n] →
+                  [inst_5 : Fintype.{u_4} d] →
+                    [inst_6 : DecidableEq.{u_4 + 1} d] →
+                      (E : s → Matrix.{u_3, u_4, 0} n d Complex) →
+                        (hTP :
+                            @Eq.{u_4 + 1} (Matrix.{u_4, u_4, 0} d d Complex)
+                              (@Finset.sum.{u_1, u_4} s (Matrix.{u_4, u_4, 0} d d Complex)
+                                (@Matrix.addCommMonoid.{0, u_4, u_4} d d Complex Complex.instAddCommMonoid)
+                                (@Finset.univ.{u_1} s inst) fun (a : s) =>
+                                @HMul.hMul.{max u_3 u_4, max u_3 u_4, u_4} (Matrix.{u_4, u_3, 0} d n Complex)
+                                  (Matrix.{u_3, u_4, 0} n d Complex) (Matrix.{u_4, u_4, 0} d d Complex)
+                                  (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_4, u_3, u_4} d n d Complex inst_3
+                                    Complex.instMul Complex.instAddCommMonoid)
+                                  (@Matrix.conjTranspose.{0, u_3, u_4} n d Complex
+                                    (@InvolutiveStar.toStar.{0} Complex
+                                      (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                                        (@AddCommMonoid.toAddMonoid.{0} Complex
+                                          (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                            (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                              (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                                (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                                  Complex.instNonUnitalCommRing)))))
+                                        (@StarRing.toStarAddMonoid.{0} Complex
+                                          (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                            (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                              (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                                Complex.instNonUnitalCommRing)))
+                                          Complex.instStarRing)))
+                                    (E a))
+                                  (E a))
+                              (@OfNat.ofNat.{u_4} (Matrix.{u_4, u_4, 0} d d Complex) (nat_lit 1)
+                                (@One.toOfNat1.{u_4} (Matrix.{u_4, u_4, 0} d d Complex)
+                                  (@Matrix.one.{0, u_4} d Complex inst_6 Complex.instZero Complex.instOne)))) →
+                          (A : t → Matrix.{u_4, u_3, 0} d n Complex) →
+                            (hA :
+                                @Eq.{u_3 + 1} (Matrix.{u_3, u_3, 0} n n Complex)
+                                  (@Finset.sum.{u_2, u_3} t (Matrix.{u_3, u_3, 0} n n Complex)
+                                    (@Matrix.addCommMonoid.{0, u_3, u_3} n n Complex Complex.instAddCommMonoid)
+                                    (@Finset.univ.{u_2} t inst_2) fun (b : t) =>
+                                    @HMul.hMul.{max u_3 u_4, max u_3 u_4, u_3} (Matrix.{u_3, u_4, 0} n d Complex)
+                                      (Matrix.{u_4, u_3, 0} d n Complex) (Matrix.{u_3, u_3, 0} n n Complex)
+                                      (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_3, u_4, u_3} n d n Complex
+                                        inst_5 Complex.instMul Complex.instAddCommMonoid)
+                                      (@Matrix.conjTranspose.{0, u_4, u_3} d n Complex
+                                        (@InvolutiveStar.toStar.{0} Complex
+                                          (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                                            (@AddCommMonoid.toAddMonoid.{0} Complex
+                                              (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                                (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                                  (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                                    (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                                      Complex.instNonUnitalCommRing)))))
+                                            (@StarRing.toStarAddMonoid.{0} Complex
+                                              (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                                (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                                  (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                                    Complex.instNonUnitalCommRing)))
+                                              Complex.instStarRing)))
+                                        (A b))
+                                      (A b))
+                                  (@OfNat.ofNat.{u_3} (Matrix.{u_3, u_3, 0} n n Complex) (nat_lit 1)
+                                    (@One.toOfNat1.{u_3} (Matrix.{u_3, u_3, 0} n n Complex)
+                                      (@Matrix.one.{0, u_3} n Complex inst_4 Complex.instZero Complex.instOne)))) →
+                              (hleft :
+                                  ∀ (X : Matrix.{u_4, u_4, 0} d d Complex),
+                                    @Eq.{u_4 + 1} (Matrix.{u_4, u_4, 0} d d Complex)
+                                      (@Finset.sum.{u_2, u_4} t (Matrix.{u_4, u_4, 0} d d Complex)
+                                        (@Matrix.addCommMonoid.{0, u_4, u_4} d d Complex Complex.instAddCommMonoid)
+                                        (@Finset.univ.{u_2} t inst_2) fun (b : t) =>
+                                        @HMul.hMul.{max u_3 u_4, max u_3 u_4, u_4} (Matrix.{u_4, u_3, 0} d n Complex)
+                                          (Matrix.{u_3, u_4, 0} n d Complex) (Matrix.{u_4, u_4, 0} d d Complex)
+                                          (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_4, u_3, u_4} d n d
+                                            Complex inst_3 Complex.instMul Complex.instAddCommMonoid)
+                                          (@HMul.hMul.{max u_3 u_4, u_3, max u_3 u_4} (Matrix.{u_4, u_3, 0} d n Complex)
+                                            (Matrix.{u_3, u_3, 0} n n Complex) (Matrix.{u_4, u_3, 0} d n Complex)
+                                            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_4, u_3, u_3} d n n
+                                              Complex inst_3 Complex.instMul Complex.instAddCommMonoid)
+                                            (A b)
+                                            (@Finset.sum.{u_1, u_3} s (Matrix.{u_3, u_3, 0} n n Complex)
+                                              (@Matrix.addCommMonoid.{0, u_3, u_3} n n Complex
+                                                Complex.instAddCommMonoid)
+                                              (@Finset.univ.{u_1} s inst) fun (a : s) =>
+                                              @HMul.hMul.{max u_3 u_4, max u_3 u_4, u_3}
+                                                (Matrix.{u_3, u_4, 0} n d Complex) (Matrix.{u_4, u_3, 0} d n Complex)
+                                                (Matrix.{u_3, u_3, 0} n n Complex)
+                                                (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_3, u_4, u_3} n d n
+                                                  Complex inst_5 Complex.instMul Complex.instAddCommMonoid)
+                                                (@HMul.hMul.{max u_3 u_4, u_4, max u_3 u_4}
+                                                  (Matrix.{u_3, u_4, 0} n d Complex) (Matrix.{u_4, u_4, 0} d d Complex)
+                                                  (Matrix.{u_3, u_4, 0} n d Complex)
+                                                  (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_3, u_4, u_4} n d
+                                                    d Complex inst_5 Complex.instMul Complex.instAddCommMonoid)
+                                                  (E a) X)
+                                                (@Matrix.conjTranspose.{0, u_3, u_4} n d Complex
+                                                  (@InvolutiveStar.toStar.{0} Complex
+                                                    (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                                                      (@AddCommMonoid.toAddMonoid.{0} Complex
+                                                        (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                                          (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0}
+                                                            Complex
+                                                            (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0}
+                                                              Complex
+                                                              (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0}
+                                                                Complex Complex.instNonUnitalCommRing)))))
+                                                      (@StarRing.toStarAddMonoid.{0} Complex
+                                                        (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                                          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0}
+                                                            Complex
+                                                            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                                              Complex.instNonUnitalCommRing)))
+                                                        Complex.instStarRing)))
+                                                  (E a))))
+                                          (@Matrix.conjTranspose.{0, u_4, u_3} d n Complex
+                                            (@InvolutiveStar.toStar.{0} Complex
+                                              (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                                                (@AddCommMonoid.toAddMonoid.{0} Complex
+                                                  (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                                          Complex.instNonUnitalCommRing)))))
+                                                (@StarRing.toStarAddMonoid.{0} Complex
+                                                  (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                                    (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                                      (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                                        Complex.instNonUnitalCommRing)))
+                                                  Complex.instStarRing)))
+                                            (A b)))
+                                      X) →
+                                (v : d) →
+                                  (X : Matrix.{u_4, u_4, 0} d d Complex) →
+                                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u_4 + 1,
+                                        u_4, 0, u_4, 0}
+                                      Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.signature.{u_4} Unit.unit d :=
+  fun {s : Type u_1} {t : Type u_2} {n : Type u_3} {d : Type u_4} [Fintype.{u_1} s] [DecidableEq.{u_1 + 1} s]
+    [Fintype.{u_2} t] [Fintype.{u_3} n] [DecidableEq.{u_3 + 1} n] [Fintype.{u_4} d] [DecidableEq.{u_4 + 1} d]
+    (E : s → Matrix.{u_3, u_4, 0} n d Complex)
+    (hTP :
+      @Eq.{u_4 + 1} (Matrix.{u_4, u_4, 0} d d Complex)
+        (@Finset.sum.{u_1, u_4} s (Matrix.{u_4, u_4, 0} d d Complex)
+          (@Matrix.addCommMonoid.{0, u_4, u_4} d d Complex Complex.instAddCommMonoid) (@Finset.univ.{u_1} s inst)
+          fun (a : s) =>
+          @HMul.hMul.{max u_3 u_4, max u_3 u_4, u_4} (Matrix.{u_4, u_3, 0} d n Complex)
+            (Matrix.{u_3, u_4, 0} n d Complex) (Matrix.{u_4, u_4, 0} d d Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_4, u_3, u_4} d n d Complex inst_3 Complex.instMul
+              Complex.instAddCommMonoid)
+            (@Matrix.conjTranspose.{0, u_3, u_4} n d Complex
+              (@InvolutiveStar.toStar.{0} Complex
+                (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                  (@AddCommMonoid.toAddMonoid.{0} Complex
+                    (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+                  (@StarRing.toStarAddMonoid.{0} Complex
+                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                    Complex.instStarRing)))
+              (E a))
+            (E a))
+        (@OfNat.ofNat.{u_4} (Matrix.{u_4, u_4, 0} d d Complex) (nat_lit 1)
+          (@One.toOfNat1.{u_4} (Matrix.{u_4, u_4, 0} d d Complex)
+            (@Matrix.one.{0, u_4} d Complex inst_6 Complex.instZero Complex.instOne))))
+    (A : t → Matrix.{u_4, u_3, 0} d n Complex)
+    (hA :
+      @Eq.{u_3 + 1} (Matrix.{u_3, u_3, 0} n n Complex)
+        (@Finset.sum.{u_2, u_3} t (Matrix.{u_3, u_3, 0} n n Complex)
+          (@Matrix.addCommMonoid.{0, u_3, u_3} n n Complex Complex.instAddCommMonoid) (@Finset.univ.{u_2} t inst_2)
+          fun (b : t) =>
+          @HMul.hMul.{max u_3 u_4, max u_3 u_4, u_3} (Matrix.{u_3, u_4, 0} n d Complex)
+            (Matrix.{u_4, u_3, 0} d n Complex) (Matrix.{u_3, u_3, 0} n n Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_3, u_4, u_3} n d n Complex inst_5 Complex.instMul
+              Complex.instAddCommMonoid)
+            (@Matrix.conjTranspose.{0, u_4, u_3} d n Complex
+              (@InvolutiveStar.toStar.{0} Complex
+                (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                  (@AddCommMonoid.toAddMonoid.{0} Complex
+                    (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+                  (@StarRing.toStarAddMonoid.{0} Complex
+                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                    Complex.instStarRing)))
+              (A b))
+            (A b))
+        (@OfNat.ofNat.{u_3} (Matrix.{u_3, u_3, 0} n n Complex) (nat_lit 1)
+          (@One.toOfNat1.{u_3} (Matrix.{u_3, u_3, 0} n n Complex)
+            (@Matrix.one.{0, u_3} n Complex inst_4 Complex.instZero Complex.instOne))))
+    (hleft :
+      ∀ (X : Matrix.{u_4, u_4, 0} d d Complex),
+        @Eq.{u_4 + 1} (Matrix.{u_4, u_4, 0} d d Complex)
+          (@Finset.sum.{u_2, u_4} t (Matrix.{u_4, u_4, 0} d d Complex)
+            (@Matrix.addCommMonoid.{0, u_4, u_4} d d Complex Complex.instAddCommMonoid) (@Finset.univ.{u_2} t inst_2)
+            fun (b : t) =>
+            @HMul.hMul.{max u_3 u_4, max u_3 u_4, u_4} (Matrix.{u_4, u_3, 0} d n Complex)
+              (Matrix.{u_3, u_4, 0} n d Complex) (Matrix.{u_4, u_4, 0} d d Complex)
+              (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_4, u_3, u_4} d n d Complex inst_3 Complex.instMul
+                Complex.instAddCommMonoid)
+              (@HMul.hMul.{max u_3 u_4, u_3, max u_3 u_4} (Matrix.{u_4, u_3, 0} d n Complex)
+                (Matrix.{u_3, u_3, 0} n n Complex) (Matrix.{u_4, u_3, 0} d n Complex)
+                (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_4, u_3, u_3} d n n Complex inst_3 Complex.instMul
+                  Complex.instAddCommMonoid)
+                (A b)
+                (@Finset.sum.{u_1, u_3} s (Matrix.{u_3, u_3, 0} n n Complex)
+                  (@Matrix.addCommMonoid.{0, u_3, u_3} n n Complex Complex.instAddCommMonoid)
+                  (@Finset.univ.{u_1} s inst) fun (a : s) =>
+                  @HMul.hMul.{max u_3 u_4, max u_3 u_4, u_3} (Matrix.{u_3, u_4, 0} n d Complex)
+                    (Matrix.{u_4, u_3, 0} d n Complex) (Matrix.{u_3, u_3, 0} n n Complex)
+                    (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_3, u_4, u_3} n d n Complex inst_5
+                      Complex.instMul Complex.instAddCommMonoid)
+                    (@HMul.hMul.{max u_3 u_4, u_4, max u_3 u_4} (Matrix.{u_3, u_4, 0} n d Complex)
+                      (Matrix.{u_4, u_4, 0} d d Complex) (Matrix.{u_3, u_4, 0} n d Complex)
+                      (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_3, u_4, u_4} n d d Complex inst_5
+                        Complex.instMul Complex.instAddCommMonoid)
+                      (E a) X)
+                    (@Matrix.conjTranspose.{0, u_3, u_4} n d Complex
+                      (@InvolutiveStar.toStar.{0} Complex
+                        (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                          (@AddCommMonoid.toAddMonoid.{0} Complex
+                            (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                              (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                  (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                    Complex.instNonUnitalCommRing)))))
+                          (@StarRing.toStarAddMonoid.{0} Complex
+                            (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                              (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                  Complex.instNonUnitalCommRing)))
+                            Complex.instStarRing)))
+                      (E a))))
+              (@Matrix.conjTranspose.{0, u_4, u_3} d n Complex
+                (@InvolutiveStar.toStar.{0} Complex
+                  (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                    (@AddCommMonoid.toAddMonoid.{0} Complex
+                      (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                        (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                              Complex.instNonUnitalCommRing)))))
+                    (@StarRing.toStarAddMonoid.{0} Complex
+                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                      Complex.instStarRing)))
+                (A b)))
+          X)
+    (v : d) (X : Matrix.{u_4, u_4, 0} d d Complex) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u_4 + 1, u_4, 0, u_4, 0}
+    Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.signature.{u_4}
+    Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.actual.{u_4} Unit.unit d X
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.observationFact0.{u_1, u_2, u_3, u_4} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"computed_recovery_of_kraus_left_inverse\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.computed_recovery_of_kraus_left_inverse, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.varyingLawInput.{u_1, u_2, u_3, u_4} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.canonicalArenaOperand.{u_1, u_2, u_3, u_4})
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.varyingLaw.{u_1, u_2, u_3, u_4}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.statementExclusion.{u_1, u_2, u_3, u_4} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"computed_recovery_of_kraus_left_inverse\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
+  statementLocation := { owner := `D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.computed_recovery_of_kraus_left_inverse, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration.{u_1, u_2, u_3, u_4}).actual (Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration.{u_1, u_2, u_3, u_4}).variation.2.choose (Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration.{u_1, u_2, u_3, u_4}).variation.1 (Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration.{u_1, u_2, u_3, u_4}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1.descriptorFact.{u_4} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"SpectralRecoveryCorrectness\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]],[\"param\",[\"u_4\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness, declaration := `Reg.D5.S3.Quantum.Recovery.SpectralRecoveryCorrectness.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3), (.param `u_4)] }
+  (by first | rfl | (ext <;> rfl))

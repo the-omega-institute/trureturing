@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.VertexAlgebra.MonsterFanoReconstruction
 import Reg.Support.DependentFamily
@@ -101,7 +104,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction, definition := none, coordinates := #[3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `D5.S3.VertexAlgebra.MonsterFanoReconstruction.complement_symmDiff_mem, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.canonicalArenaFact, `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.sourceBridgeFact, `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.observationFact0, `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.anchorEnumeration }
 
 
 #print axioms registration
@@ -187,7 +200,17 @@ noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction, definition := none, coordinates := #[2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `D5.S3.VertexAlgebra.MonsterFanoReconstruction.block_intersection_le_one, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.canonicalArenaFact, `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.canonicalObjectArenaFact, `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.sourceBridgeFact, `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.observationFact0, `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.descriptorFact] },
+  exclusion := some `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.anchorEnumeration }
 
 
 #print axioms registration
@@ -195,3 +218,371 @@ noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_
 end Intersection
 
 end Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction
+
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.arena
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.arena
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.arena
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"Intersection\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"Intersection\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.arena
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"Intersection\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"Intersection\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.arena Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.actual)
+    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration)
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"complement_symmDiff_mem\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `D5.S3.VertexAlgebra.MonsterFanoReconstruction.complement_symmDiff_mem, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.arena Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.actual)
+  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration)
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.observation0 : (blocks : Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))) →
+  (hcard :
+      ∀ (A : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))),
+        @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+            (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+            (@SetLike.instMembership.{0, 0}
+              (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+              (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+              (@Finset.instSetLike.{0}
+                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))))
+            blocks A →
+          @Eq.{1} Nat (@Finset.card.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))) A)
+            (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) →
+    (hpair :
+        ∀ (i j : Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))),
+          @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))) i j →
+            @ExistsUnique.{1} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+              fun (A : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))) =>
+              And
+                (@Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                  (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                  (@SetLike.instMembership.{0, 0}
+                    (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                    (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                    (@Finset.instSetLike.{0}
+                      (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))))
+                  blocks A)
+                (And
+                  (@Membership.mem.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                    (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                    (@SetLike.instMembership.{0, 0}
+                      (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                      (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                      (@Finset.instSetLike.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                    A i)
+                  (@Membership.mem.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                    (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                    (@SetLike.instMembership.{0, 0}
+                      (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                      (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                      (@Finset.instSetLike.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                    A j))) →
+      {A B : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))} →
+        (hA :
+            @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+              (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+              (@SetLike.instMembership.{0, 0}
+                (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                (@Finset.instSetLike.{0}
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))))
+              blocks A) →
+          (hB :
+              @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                (@SetLike.instMembership.{0, 0}
+                  (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                  (@Finset.instSetLike.{0}
+                    (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))))
+                blocks B) →
+            (hne : @Ne.{1} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))) A B) →
+              D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.signature PUnit.unit.{1} A :=
+  fun (blocks : Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+    (hcard :
+      ∀ (A : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))),
+        @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+            (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+            (@SetLike.instMembership.{0, 0}
+              (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+              (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+              (@Finset.instSetLike.{0}
+                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))))
+            blocks A →
+          @Eq.{1} Nat (@Finset.card.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))) A)
+            (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))
+    (hpair :
+      ∀ (i j : Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))),
+        @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))) i j →
+          @ExistsUnique.{1} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+            fun (A : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))) =>
+            And
+              (@Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                (@SetLike.instMembership.{0, 0}
+                  (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                  (@Finset.instSetLike.{0}
+                    (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))))
+                blocks A)
+              (And
+                (@Membership.mem.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                  (@SetLike.instMembership.{0, 0}
+                    (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                    (@Finset.instSetLike.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                  A i)
+                (@Membership.mem.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                  (@SetLike.instMembership.{0, 0}
+                    (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                    (@Finset.instSetLike.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                  A j)))
+    {A B : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))}
+    (hA :
+      @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+        (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+        (@SetLike.instMembership.{0, 0}
+          (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+          (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+          (@Finset.instSetLike.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))))
+        blocks A)
+    (hB :
+      @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+        (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+        (@SetLike.instMembership.{0, 0}
+          (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+          (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+          (@Finset.instSetLike.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))))
+        blocks B)
+    (hne : @Ne.{1} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))) A B) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.signature Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.actual
+    PUnit.unit.{1} A B
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"complement_symmDiff_mem\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `D5.S3.VertexAlgebra.MonsterFanoReconstruction.complement_symmDiff_mem, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"complement_symmDiff_mem\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `D5.S3.VertexAlgebra.MonsterFanoReconstruction.complement_symmDiff_mem, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration).actual (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration).variation.2.choose (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration).variation.1 (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.arena
+      Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.actual)
+    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration)
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"block_intersection_le_one\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"Intersection\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `D5.S3.VertexAlgebra.MonsterFanoReconstruction.block_intersection_le_one, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.arena
+    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.actual)
+  Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration)
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.observation0 : (blocks : Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))) →
+  (hpair :
+      ∀ (i j : Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))),
+        @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))) i j →
+          @ExistsUnique.{1} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+            fun (A : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))) =>
+            And
+              (@Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                (@SetLike.instMembership.{0, 0}
+                  (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                  (@Finset.instSetLike.{0}
+                    (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))))
+                blocks A)
+              (And
+                (@Membership.mem.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                  (@SetLike.instMembership.{0, 0}
+                    (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                    (@Finset.instSetLike.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                  A i)
+                (@Membership.mem.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                  (@SetLike.instMembership.{0, 0}
+                    (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                    (@Finset.instSetLike.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                  A j))) →
+    {A B : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))} →
+      (hA :
+          @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+            (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+            (@SetLike.instMembership.{0, 0}
+              (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+              (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+              (@Finset.instSetLike.{0}
+                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))))
+            blocks A) →
+        (hB :
+            @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+              (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+              (@SetLike.instMembership.{0, 0}
+                (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                (@Finset.instSetLike.{0}
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))))
+              blocks B) →
+          (hne : @Ne.{1} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))) A B) →
+            D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+              Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.signature PUnit.unit.{1} A :=
+  fun (blocks : Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+    (hpair :
+      ∀ (i j : Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))),
+        @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))) i j →
+          @ExistsUnique.{1} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+            fun (A : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))) =>
+            And
+              (@Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                (@SetLike.instMembership.{0, 0}
+                  (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                  (@Finset.instSetLike.{0}
+                    (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))))
+                blocks A)
+              (And
+                (@Membership.mem.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                  (@SetLike.instMembership.{0, 0}
+                    (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                    (@Finset.instSetLike.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                  A i)
+                (@Membership.mem.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                  (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                  (@SetLike.instMembership.{0, 0}
+                    (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+                    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))
+                    (@Finset.instSetLike.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+                  A j)))
+    {A B : Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))}
+    (hA :
+      @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+        (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+        (@SetLike.instMembership.{0, 0}
+          (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+          (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+          (@Finset.instSetLike.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))))
+        blocks A)
+    (hB :
+      @Membership.mem.{0, 0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+        (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+        (@SetLike.instMembership.{0, 0}
+          (Finset.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))))
+          (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))
+          (@Finset.instSetLike.{0} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7)))))))
+        blocks B)
+    (hne : @Ne.{1} (Finset.{0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 7) (instOfNatNat (nat_lit 7))))) A B) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.signature
+    Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.actual PUnit.unit.{1} A B
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"block_intersection_le_one\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"Intersection\",\"registration_2\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `D5.S3.VertexAlgebra.MonsterFanoReconstruction.block_intersection_le_one, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"Intersection\",\"registration_2\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"Intersection\",\"registration_2\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"block_intersection_le_one\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `D5.S3.VertexAlgebra.MonsterFanoReconstruction.block_intersection_le_one, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration).actual (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration).variation.2.choose (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration).variation.1 (Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"Intersection\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"VertexAlgebra\",\"MonsterFanoReconstruction\",\"Intersection\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction, declaration := `Reg.D5.S3.VertexAlgebra.MonsterFanoReconstruction.Intersection.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

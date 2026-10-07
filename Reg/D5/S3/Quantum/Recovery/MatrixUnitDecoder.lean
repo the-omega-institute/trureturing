@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.MatrixUnitDecoder
 import Reg.Support.DependentFamily
@@ -101,7 +104,17 @@ noncomputable def registration_1.{u_1, u_2} : LeanInformationAudit.Contract.Regi
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_kraus_gram, part := .type, path := [], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2] }], facts := [`Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.observationFact0, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.anchorEnumeration }
 
 
 #print axioms registration
@@ -203,7 +216,17 @@ noncomputable def registration_2.{u_1, u_2} : LeanInformationAudit.Contract.Regi
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, definition := none, coordinates := #[1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg"], stateBinder := 10, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_trace_pairing, part := .type, path := [], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2] }], facts := [`Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.canonicalArenaFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.sourceBridgeFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.observationFact0, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.anchorEnumeration }
 
 
 #print axioms registration
@@ -272,7 +295,17 @@ noncomputable def registration_3.{u_1, u_2} : LeanInformationAudit.Contract.Regi
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg"], stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.represented_matrix_mul, part := .type, path := [], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2] }], facts := [`Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.canonicalArenaFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.sourceBridgeFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.observationFact0, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.anchorEnumeration }
 
 
 #print axioms registration
@@ -345,7 +378,17 @@ noncomputable def registration_4.{u_1, u_2} : LeanInformationAudit.Contract.Regi
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, definition := none, coordinates := #[1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "body", "body", "fn", "arg", "fn", "fn", "arg", "arg", "arg"], stateBinder := 11, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.matrix_unit_decoder_channel, part := .type, path := [], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2] }], facts := [`Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.canonicalArenaFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.sourceBridgeFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.observationFact0, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.anchorEnumeration }
 
 
 #print axioms registration
@@ -423,7 +466,17 @@ noncomputable def registration_5.{u_1, u_2} : LeanInformationAudit.Contract.Regi
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "body", "arg"], stateBinder := 15, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_recovers_commutant_weight, part := .type, path := [], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2] }], facts := [`Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.canonicalArenaFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.sourceBridgeFact, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.observationFact0, `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.anchorEnumeration }
 
 
 #print axioms registration
@@ -431,3 +484,791 @@ end Recovery
 
 end
 end Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder
+
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.canonicalArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_1 + 1, u_1, 0, u_1, 0} :=
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena.{u_1, u_2}
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.canonicalArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Multiplication\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Multiplication\",\"registration_3\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.canonicalObjectArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_1 + 1, u_1, 0, u_1, 0} :=
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena.{u_1, u_2}
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.canonicalObjectArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Multiplication\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Multiplication\",\"registration_3\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.canonicalArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_1 + 1, u_1, 0, u_1, 0} :=
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena.{u_1, u_2}
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.canonicalArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Recovery\",\"registration_5\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Recovery\",\"registration_5\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.canonicalObjectArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_1 + 1, u_1, 0, u_1, 0} :=
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena.{u_1, u_2}
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.canonicalObjectArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Recovery\",\"registration_5\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Recovery\",\"registration_5\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.canonicalArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_2 + 1, u_2, 0, u_2, 0} :=
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena.{u_1, u_2}
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.canonicalArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Channel\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Channel\",\"registration_4\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.canonicalObjectArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_2 + 1, u_2, 0, u_2, 0} :=
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena.{u_1, u_2}
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.canonicalObjectArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Channel\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Channel\",\"registration_4\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.canonicalArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_2 + 1, u_2, 0, u_2, 0} :=
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena.{u_1, u_2}
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.canonicalArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Pairing\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Pairing\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.canonicalObjectArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_2 + 1, u_2, 0, u_2, 0} :=
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena.{u_1, u_2}
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.canonicalObjectArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Pairing\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Pairing\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.canonicalArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2, 0} :=
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena.{u_1, u_2}
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.canonicalArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Gram\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Gram\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.canonicalObjectArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2, 0} :=
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena.{u_1, u_2}
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.canonicalObjectArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Gram\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Gram\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.sourceLaw.{u_1, u_2} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena.{u_1, u_2}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_1 + 1, u_1, 0, u_1, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena.{u_1, u_2}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
+      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena.{u_1, u_2}
+      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_1})
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration.{u_1, u_2})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"represented_matrix_mul\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Multiplication\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.represented_matrix_mul, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_1 + 1, u_1, 0, u_1, 0}
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena.{u_1, u_2}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.arena.{u_1, u_2}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_1})
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration.{u_1, u_2})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.observation0.{u_1, u_2} : {d : Type u_1} →
+  {n : Type u_2} →
+    [Fintype.{u_1} d] →
+      [inst : DecidableEq.{u_1 + 1} d] →
+        [inst_1 : Fintype.{u_2} n] →
+          [DecidableEq.{u_2 + 1} n] →
+            (F : d → d → Matrix.{u_2, u_2, 0} n n Complex) →
+              (hmul :
+                  ∀ (i j k l : d),
+                    @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+                      (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+                        (Matrix.{u_2, u_2, 0} n n Complex)
+                        (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_1
+                          Complex.instMul Complex.instAddCommMonoid)
+                        (F i j) (F k l))
+                      (@ite.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex) (@Eq.{u_1 + 1} d j k) (inst j k) (F i l)
+                        (@OfNat.ofNat.{u_2} (Matrix.{u_2, u_2, 0} n n Complex) (nat_lit 0)
+                          (@Zero.toOfNat0.{u_2} (Matrix.{u_2, u_2, 0} n n Complex)
+                            (@Matrix.zero.{0, u_2, u_2} n n Complex Complex.instZero))))) →
+                (A B : Matrix.{u_1, u_1, 0} d d Complex) →
+                  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u_1 + 1, u_1, 0, u_1, 0}
+                    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.signature.{u_1} Unit.unit d :=
+  fun {d : Type u_1} {n : Type u_2} [Fintype.{u_1} d] [DecidableEq.{u_1 + 1} d] [Fintype.{u_2} n]
+    [DecidableEq.{u_2 + 1} n] (F : d → d → Matrix.{u_2, u_2, 0} n n Complex)
+    (hmul :
+      ∀ (i j k l : d),
+        @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+          (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+            (Matrix.{u_2, u_2, 0} n n Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_2 Complex.instMul
+              Complex.instAddCommMonoid)
+            (F i j) (F k l))
+          (@ite.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex) (@Eq.{u_1 + 1} d j k) (inst_1 j k) (F i l)
+            (@OfNat.ofNat.{u_2} (Matrix.{u_2, u_2, 0} n n Complex) (nat_lit 0)
+              (@Zero.toOfNat0.{u_2} (Matrix.{u_2, u_2, 0} n n Complex)
+                (@Matrix.zero.{0, u_2, u_2} n n Complex Complex.instZero)))))
+    (A B : Matrix.{u_1, u_1, 0} d d Complex) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u_1 + 1, u_1, 0, u_1, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.signature.{u_1}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_1} Unit.unit d A
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.observationFact0.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"represented_matrix_mul\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Multiplication\",\"registration_3\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.represented_matrix_mul, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .argument, .function, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.varyingLawInput.{u_1, u_2} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.canonicalArenaOperand.{u_1, u_2})
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.varyingLaw.{u_1, u_2}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Multiplication\",\"registration_3\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.statementExclusion.{u_1, u_2} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Multiplication\",\"registration_3\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"represented_matrix_mul\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  statementLocation := { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.represented_matrix_mul, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration.{u_1, u_2}).actual (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration.{u_1, u_2}).variation.2.choose (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration.{u_1, u_2}).variation.1 (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration.{u_1, u_2}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3.descriptorFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Multiplication\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Multiplication\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Multiplication.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.sourceLaw.{u_1, u_2} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena.{u_1, u_2}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_1 + 1, u_1, 0, u_1, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena.{u_1, u_2}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
+      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena.{u_1, u_2}
+      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_1})
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration.{u_1, u_2})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"decoder_recovers_commutant_weight\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Recovery\",\"registration_5\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_recovers_commutant_weight, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_1 + 1, u_1, 0, u_1, 0}
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena.{u_1, u_2}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.arena.{u_1, u_2}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_1})
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration.{u_1, u_2})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.observation0.{u_1, u_2} : {d : Type u_1} →
+  {n : Type u_2} →
+    [inst : Fintype.{u_1} d] →
+      [inst_1 : DecidableEq.{u_1 + 1} d] →
+        [inst_2 : Fintype.{u_2} n] →
+          [inst_3 : DecidableEq.{u_2 + 1} n] →
+            (F : d → d → Matrix.{u_2, u_2, 0} n n Complex) →
+              (hmul :
+                  ∀ (i j k l : d),
+                    @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+                      (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+                        (Matrix.{u_2, u_2, 0} n n Complex)
+                        (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_2
+                          Complex.instMul Complex.instAddCommMonoid)
+                        (F i j) (F k l))
+                      (@ite.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex) (@Eq.{u_1 + 1} d j k) (inst_1 j k) (F i l)
+                        (@OfNat.ofNat.{u_2} (Matrix.{u_2, u_2, 0} n n Complex) (nat_lit 0)
+                          (@Zero.toOfNat0.{u_2} (Matrix.{u_2, u_2, 0} n n Complex)
+                            (@Matrix.zero.{0, u_2, u_2} n n Complex Complex.instZero))))) →
+                (hstar :
+                    ∀ (i j : d),
+                      @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+                        (@Matrix.conjTranspose.{0, u_2, u_2} n n Complex
+                          (@InvolutiveStar.toStar.{0} Complex
+                            (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                              (@AddCommMonoid.toAddMonoid.{0} Complex
+                                (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                  (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                    (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                      (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                        Complex.instNonUnitalCommRing)))))
+                              (@StarRing.toStarAddMonoid.{0} Complex
+                                (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                  (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                    (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                      Complex.instNonUnitalCommRing)))
+                                Complex.instStarRing)))
+                          (F i j))
+                        (F j i)) →
+                  (v : d) →
+                    (Q : Matrix.{u_2, u_2, 0} n n Complex) →
+                      (hcomm :
+                          ∀ (i j : d),
+                            @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+                              (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex)
+                                (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+                                (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_2
+                                  Complex.instMul Complex.instAddCommMonoid)
+                                Q (F i j))
+                              (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex)
+                                (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+                                (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_2
+                                  Complex.instMul Complex.instAddCommMonoid)
+                                (F i j) Q)) →
+                        (hsupport :
+                            @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+                              (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex)
+                                (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+                                (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_2
+                                  Complex.instMul Complex.instAddCommMonoid)
+                                (@D5.S3.Quantum.Recovery.MatrixUnitDecoder.unitSupport.{u_1, u_2} d n inst F) Q)
+                              Q) →
+                          (htrace :
+                              @Eq.{1} Complex
+                                (@Matrix.trace.{u_2, 0} n Complex inst_2 Complex.instAddCommMonoid
+                                  (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex)
+                                    (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+                                    (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex
+                                      inst_2 Complex.instMul Complex.instAddCommMonoid)
+                                    (F v v) Q))
+                                (@OfNat.ofNat.{0} Complex (nat_lit 1) (@One.toOfNat1.{0} Complex Complex.instOne))) →
+                            (decoder :
+                                @D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.{u_2, u_1} n d inst_2 inst_3
+                                  inst inst_1) →
+                              (A : Matrix.{u_1, u_1, 0} d d Complex) →
+                                D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u_1 + 1, u_1,
+                                    0, u_1, 0}
+                                  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.signature.{u_1}
+                                  Unit.unit d :=
+  fun {d : Type u_1} {n : Type u_2} [Fintype.{u_1} d] [DecidableEq.{u_1 + 1} d] [Fintype.{u_2} n]
+    [DecidableEq.{u_2 + 1} n] (F : d → d → Matrix.{u_2, u_2, 0} n n Complex)
+    (hmul :
+      ∀ (i j k l : d),
+        @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+          (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+            (Matrix.{u_2, u_2, 0} n n Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_2 Complex.instMul
+              Complex.instAddCommMonoid)
+            (F i j) (F k l))
+          (@ite.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex) (@Eq.{u_1 + 1} d j k) (inst_1 j k) (F i l)
+            (@OfNat.ofNat.{u_2} (Matrix.{u_2, u_2, 0} n n Complex) (nat_lit 0)
+              (@Zero.toOfNat0.{u_2} (Matrix.{u_2, u_2, 0} n n Complex)
+                (@Matrix.zero.{0, u_2, u_2} n n Complex Complex.instZero)))))
+    (hstar :
+      ∀ (i j : d),
+        @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+          (@Matrix.conjTranspose.{0, u_2, u_2} n n Complex
+            (@InvolutiveStar.toStar.{0} Complex
+              (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                (@AddCommMonoid.toAddMonoid.{0} Complex
+                  (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+                (@StarRing.toStarAddMonoid.{0} Complex
+                  (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                    (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                      (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                  Complex.instStarRing)))
+            (F i j))
+          (F j i))
+    (v : d) (Q : Matrix.{u_2, u_2, 0} n n Complex)
+    (hcomm :
+      ∀ (i j : d),
+        @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+          (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+            (Matrix.{u_2, u_2, 0} n n Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_2 Complex.instMul
+              Complex.instAddCommMonoid)
+            Q (F i j))
+          (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+            (Matrix.{u_2, u_2, 0} n n Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_2 Complex.instMul
+              Complex.instAddCommMonoid)
+            (F i j) Q))
+    (hsupport :
+      @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+        (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+          (Matrix.{u_2, u_2, 0} n n Complex)
+          (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_2 Complex.instMul
+            Complex.instAddCommMonoid)
+          (@D5.S3.Quantum.Recovery.MatrixUnitDecoder.unitSupport.{u_1, u_2} d n inst F) Q)
+        Q)
+    (htrace :
+      @Eq.{1} Complex
+        (@Matrix.trace.{u_2, 0} n Complex inst_2 Complex.instAddCommMonoid
+          (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+            (Matrix.{u_2, u_2, 0} n n Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_2 Complex.instMul
+              Complex.instAddCommMonoid)
+            (F v v) Q))
+        (@OfNat.ofNat.{0} Complex (nat_lit 1) (@One.toOfNat1.{0} Complex Complex.instOne)))
+    (decoder : @D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.{u_2, u_1} n d inst_2 inst_3 inst inst_1)
+    (A : Matrix.{u_1, u_1, 0} d d Complex) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u_1 + 1, u_1, 0, u_1, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.signature.{u_1}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_1} Unit.unit d A
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.observationFact0.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"decoder_recovers_commutant_weight\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Recovery\",\"registration_5\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_recovers_commutant_weight, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .body, .body, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.varyingLawInput.{u_1, u_2} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.canonicalArenaOperand.{u_1, u_2})
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.varyingLaw.{u_1, u_2}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Recovery\",\"registration_5\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.statementExclusion.{u_1, u_2} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Recovery\",\"registration_5\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"decoder_recovers_commutant_weight\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  statementLocation := { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_recovers_commutant_weight, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration.{u_1, u_2}).actual (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration.{u_1, u_2}).variation.2.choose (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration.{u_1, u_2}).variation.1 (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration.{u_1, u_2}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5.descriptorFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Recovery\",\"registration_5\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Recovery\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Recovery.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.sourceLaw.{u_1, u_2} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena.{u_1, u_2}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_2 + 1, u_2, 0, u_2, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena.{u_1, u_2}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
+      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena.{u_1, u_2}
+      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_2})
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration.{u_1, u_2})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"matrix_unit_decoder_channel\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Channel\",\"registration_4\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.matrix_unit_decoder_channel, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_2 + 1, u_2, 0, u_2, 0}
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena.{u_1, u_2}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.arena.{u_1, u_2}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_2})
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration.{u_1, u_2})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.observation0.{u_1, u_2} : {d : Type u_1} →
+  {n : Type u_2} →
+    [inst : Fintype.{u_1} d] →
+      [inst_1 : DecidableEq.{u_1 + 1} d] →
+        [inst_2 : Fintype.{u_2} n] →
+          [inst_3 : DecidableEq.{u_2 + 1} n] →
+            (F : d → d → Matrix.{u_2, u_2, 0} n n Complex) →
+              (hmul :
+                  ∀ (i j k l : d),
+                    @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+                      (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+                        (Matrix.{u_2, u_2, 0} n n Complex)
+                        (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_2
+                          Complex.instMul Complex.instAddCommMonoid)
+                        (F i j) (F k l))
+                      (@ite.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex) (@Eq.{u_1 + 1} d j k) (inst_1 j k) (F i l)
+                        (@OfNat.ofNat.{u_2} (Matrix.{u_2, u_2, 0} n n Complex) (nat_lit 0)
+                          (@Zero.toOfNat0.{u_2} (Matrix.{u_2, u_2, 0} n n Complex)
+                            (@Matrix.zero.{0, u_2, u_2} n n Complex Complex.instZero))))) →
+                (hstar :
+                    ∀ (i j : d),
+                      @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+                        (@Matrix.conjTranspose.{0, u_2, u_2} n n Complex
+                          (@InvolutiveStar.toStar.{0} Complex
+                            (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                              (@AddCommMonoid.toAddMonoid.{0} Complex
+                                (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                  (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                    (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                      (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                        Complex.instNonUnitalCommRing)))))
+                              (@StarRing.toStarAddMonoid.{0} Complex
+                                (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                  (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                    (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                      Complex.instNonUnitalCommRing)))
+                                Complex.instStarRing)))
+                          (F i j))
+                        (F j i)) →
+                  (v : d) →
+                    (decoder :
+                        @D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.{u_2, u_1} n d inst_2 inst_3 inst
+                          inst_1) →
+                      (X : Matrix.{u_2, u_2, 0} n n Complex) →
+                        (i j : d) →
+                          D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u_2 + 1, u_2, 0,
+                              u_2, 0}
+                            Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.signature.{u_2} Unit.unit n :=
+  fun {d : Type u_1} {n : Type u_2} [Fintype.{u_1} d] [DecidableEq.{u_1 + 1} d] [Fintype.{u_2} n]
+    [DecidableEq.{u_2 + 1} n] (F : d → d → Matrix.{u_2, u_2, 0} n n Complex)
+    (hmul :
+      ∀ (i j k l : d),
+        @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+          (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+            (Matrix.{u_2, u_2, 0} n n Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_2 Complex.instMul
+              Complex.instAddCommMonoid)
+            (F i j) (F k l))
+          (@ite.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex) (@Eq.{u_1 + 1} d j k) (inst_1 j k) (F i l)
+            (@OfNat.ofNat.{u_2} (Matrix.{u_2, u_2, 0} n n Complex) (nat_lit 0)
+              (@Zero.toOfNat0.{u_2} (Matrix.{u_2, u_2, 0} n n Complex)
+                (@Matrix.zero.{0, u_2, u_2} n n Complex Complex.instZero)))))
+    (hstar :
+      ∀ (i j : d),
+        @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+          (@Matrix.conjTranspose.{0, u_2, u_2} n n Complex
+            (@InvolutiveStar.toStar.{0} Complex
+              (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                (@AddCommMonoid.toAddMonoid.{0} Complex
+                  (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+                (@StarRing.toStarAddMonoid.{0} Complex
+                  (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                    (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                      (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                  Complex.instStarRing)))
+            (F i j))
+          (F j i))
+    (v : d)
+    (decoder : @D5.S3.Quantum.Foundation.FiniteStateChannel.QuantumChannel.{u_2, u_1} n d inst_2 inst_3 inst inst_1)
+    (X : Matrix.{u_2, u_2, 0} n n Complex) (i j : d) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u_2 + 1, u_2, 0, u_2, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.signature.{u_2}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_2} Unit.unit n X
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.observationFact0.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"matrix_unit_decoder_channel\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Channel\",\"registration_4\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.matrix_unit_decoder_channel, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .body, .body, .body, .body, .function, .argument, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.varyingLawInput.{u_1, u_2} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.canonicalArenaOperand.{u_1, u_2})
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.varyingLaw.{u_1, u_2}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Channel\",\"registration_4\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.statementExclusion.{u_1, u_2} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Channel\",\"registration_4\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"matrix_unit_decoder_channel\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  statementLocation := { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.matrix_unit_decoder_channel, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration.{u_1, u_2}).actual (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration.{u_1, u_2}).variation.2.choose (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration.{u_1, u_2}).variation.1 (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration.{u_1, u_2}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4.descriptorFact.{u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Channel\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Channel\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Channel.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.sourceLaw.{u_1, u_2} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena.{u_1, u_2}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_2 + 1, u_2, 0, u_2, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena.{u_1, u_2}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
+      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena.{u_1, u_2}
+      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_2})
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration.{u_1, u_2})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"decoder_trace_pairing\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Pairing\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_trace_pairing, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_2 + 1, u_2, 0, u_2, 0}
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena.{u_1, u_2}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_2 + 1, u_2, 0, u_2, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.arena.{u_1, u_2}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_2})
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration.{u_1, u_2})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.observation0.{u_1, u_2} : {d : Type u_1} →
+  {n : Type u_2} →
+    [Fintype.{u_1} d] →
+      [inst : DecidableEq.{u_1 + 1} d] →
+        [inst_1 : Fintype.{u_2} n] →
+          [DecidableEq.{u_2 + 1} n] →
+            (F : d → d → Matrix.{u_2, u_2, 0} n n Complex) →
+              (hmul :
+                  ∀ (i j k l : d),
+                    @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+                      (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+                        (Matrix.{u_2, u_2, 0} n n Complex)
+                        (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_1
+                          Complex.instMul Complex.instAddCommMonoid)
+                        (F i j) (F k l))
+                      (@ite.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex) (@Eq.{u_1 + 1} d j k) (inst j k) (F i l)
+                        (@OfNat.ofNat.{u_2} (Matrix.{u_2, u_2, 0} n n Complex) (nat_lit 0)
+                          (@Zero.toOfNat0.{u_2} (Matrix.{u_2, u_2, 0} n n Complex)
+                            (@Matrix.zero.{0, u_2, u_2} n n Complex Complex.instZero))))) →
+                (hstar :
+                    ∀ (i j : d),
+                      @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+                        (@Matrix.conjTranspose.{0, u_2, u_2} n n Complex
+                          (@InvolutiveStar.toStar.{0} Complex
+                            (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                              (@AddCommMonoid.toAddMonoid.{0} Complex
+                                (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                  (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                    (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                      (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                        Complex.instNonUnitalCommRing)))))
+                              (@StarRing.toStarAddMonoid.{0} Complex
+                                (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                  (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                    (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                      Complex.instNonUnitalCommRing)))
+                                Complex.instStarRing)))
+                          (F i j))
+                        (F j i)) →
+                  (v : d) →
+                    (X : Matrix.{u_2, u_2, 0} n n Complex) →
+                      (i j : d) →
+                        D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u_2 + 1, u_2, 0, u_2,
+                            0}
+                          Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.signature.{u_2} Unit.unit n :=
+  fun {d : Type u_1} {n : Type u_2} [Fintype.{u_1} d] [DecidableEq.{u_1 + 1} d] [Fintype.{u_2} n]
+    [DecidableEq.{u_2 + 1} n] (F : d → d → Matrix.{u_2, u_2, 0} n n Complex)
+    (hmul :
+      ∀ (i j k l : d),
+        @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+          (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+            (Matrix.{u_2, u_2, 0} n n Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_2 Complex.instMul
+              Complex.instAddCommMonoid)
+            (F i j) (F k l))
+          (@ite.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex) (@Eq.{u_1 + 1} d j k) (inst_1 j k) (F i l)
+            (@OfNat.ofNat.{u_2} (Matrix.{u_2, u_2, 0} n n Complex) (nat_lit 0)
+              (@Zero.toOfNat0.{u_2} (Matrix.{u_2, u_2, 0} n n Complex)
+                (@Matrix.zero.{0, u_2, u_2} n n Complex Complex.instZero)))))
+    (hstar :
+      ∀ (i j : d),
+        @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+          (@Matrix.conjTranspose.{0, u_2, u_2} n n Complex
+            (@InvolutiveStar.toStar.{0} Complex
+              (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                (@AddCommMonoid.toAddMonoid.{0} Complex
+                  (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+                (@StarRing.toStarAddMonoid.{0} Complex
+                  (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                    (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                      (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                  Complex.instStarRing)))
+            (F i j))
+          (F j i))
+    (v : d) (X : Matrix.{u_2, u_2, 0} n n Complex) (i j : d) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u_2 + 1, u_2, 0, u_2, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.signature.{u_2}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.MatrixObservation.actual.{u_2} Unit.unit n X
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.observationFact0.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"decoder_trace_pairing\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Pairing\",\"registration_2\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_trace_pairing, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.varyingLawInput.{u_1, u_2} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.canonicalArenaOperand.{u_1, u_2})
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.varyingLaw.{u_1, u_2}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Pairing\",\"registration_2\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.statementExclusion.{u_1, u_2} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Pairing\",\"registration_2\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"decoder_trace_pairing\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  statementLocation := { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_trace_pairing, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration.{u_1, u_2}).actual (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration.{u_1, u_2}).variation.2.choose (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration.{u_1, u_2}).variation.1 (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration.{u_1, u_2}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2.descriptorFact.{u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Pairing\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Pairing\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Pairing.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.sourceLaw.{u_1, u_2} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2,
+    0}
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena.{u_1, u_2}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u_1 + 1) (u_2 + 1), max u_1 u_2,
+        0, max u_1 u_2, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena.{u_1, u_2}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_2 + 1) (u_1 + 1), max u_2 u_1, 0,
+        max u_2 u_1, 0}
+      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena.{u_1, u_2}
+      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.actual.{u_1, u_2})
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration.{u_1, u_2})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"decoder_kraus_gram\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Gram\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_kraus_gram, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0,
+      max u_1 u_2, 0}
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena.{u_1, u_2}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_2 + 1) (u_1 + 1), max u_2 u_1, 0,
+      max u_2 u_1, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.arena.{u_1, u_2}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.actual.{u_1, u_2})
+  Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration.{u_1, u_2})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.observation0.{u_1, u_2} : {d : Type u_1} →
+  {n : Type u_2} →
+    [Fintype.{u_1} d] →
+      [inst : DecidableEq.{u_1 + 1} d] →
+        [inst_1 : Fintype.{u_2} n] →
+          [DecidableEq.{u_2 + 1} n] →
+            (F : d → d → Matrix.{u_2, u_2, 0} n n Complex) →
+              (hmul :
+                  ∀ (i j k l : d),
+                    @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+                      (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+                        (Matrix.{u_2, u_2, 0} n n Complex)
+                        (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_1
+                          Complex.instMul Complex.instAddCommMonoid)
+                        (F i j) (F k l))
+                      (@ite.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex) (@Eq.{u_1 + 1} d j k) (inst j k) (F i l)
+                        (@OfNat.ofNat.{u_2} (Matrix.{u_2, u_2, 0} n n Complex) (nat_lit 0)
+                          (@Zero.toOfNat0.{u_2} (Matrix.{u_2, u_2, 0} n n Complex)
+                            (@Matrix.zero.{0, u_2, u_2} n n Complex Complex.instZero))))) →
+                (hstar :
+                    ∀ (i j : d),
+                      @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+                        (@Matrix.conjTranspose.{0, u_2, u_2} n n Complex
+                          (@InvolutiveStar.toStar.{0} Complex
+                            (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                              (@AddCommMonoid.toAddMonoid.{0} Complex
+                                (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                  (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                    (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                      (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                        Complex.instNonUnitalCommRing)))))
+                              (@StarRing.toStarAddMonoid.{0} Complex
+                                (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                  (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                    (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                      Complex.instNonUnitalCommRing)))
+                                Complex.instStarRing)))
+                          (F i j))
+                        (F j i)) →
+                  (v : d) →
+                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{max (u_1 + 1) (u_2 + 1),
+                        max u_1 u_2, 0, max u_1 u_2, 0}
+                      Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.signature.{u_1, u_2} Unit.unit
+                      (@Sigma.mk.{u_1 + 1, u_2 + 1} (Type u_1) (fun (d : Type u_1) => Type u_2) d n) :=
+  fun {d : Type u_1} {n : Type u_2} [Fintype.{u_1} d] [DecidableEq.{u_1 + 1} d] [Fintype.{u_2} n]
+    [DecidableEq.{u_2 + 1} n] (F : d → d → Matrix.{u_2, u_2, 0} n n Complex)
+    (hmul :
+      ∀ (i j k l : d),
+        @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+          (@HMul.hMul.{u_2, u_2, u_2} (Matrix.{u_2, u_2, 0} n n Complex) (Matrix.{u_2, u_2, 0} n n Complex)
+            (Matrix.{u_2, u_2, 0} n n Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_2, u_2, u_2} n n n Complex inst_2 Complex.instMul
+              Complex.instAddCommMonoid)
+            (F i j) (F k l))
+          (@ite.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex) (@Eq.{u_1 + 1} d j k) (inst_1 j k) (F i l)
+            (@OfNat.ofNat.{u_2} (Matrix.{u_2, u_2, 0} n n Complex) (nat_lit 0)
+              (@Zero.toOfNat0.{u_2} (Matrix.{u_2, u_2, 0} n n Complex)
+                (@Matrix.zero.{0, u_2, u_2} n n Complex Complex.instZero)))))
+    (hstar :
+      ∀ (i j : d),
+        @Eq.{u_2 + 1} (Matrix.{u_2, u_2, 0} n n Complex)
+          (@Matrix.conjTranspose.{0, u_2, u_2} n n Complex
+            (@InvolutiveStar.toStar.{0} Complex
+              (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                (@AddCommMonoid.toAddMonoid.{0} Complex
+                  (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+                (@StarRing.toStarAddMonoid.{0} Complex
+                  (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                    (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                      (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                  Complex.instStarRing)))
+            (F i j))
+          (F j i))
+    (v : d) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0,
+        max u_1 u_2, 0}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.signature.{u_1, u_2}
+    Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.actual.{u_1, u_2} Unit.unit
+    (@Sigma.mk.{u_1 + 1, u_2 + 1} (Type u_1) (fun (d : Type u_1) => Type u_2) d n) F
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.observationFact0.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"decoder_kraus_gram\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Gram\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_kraus_gram, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.varyingLawInput.{u_1, u_2} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.canonicalArenaOperand.{u_1, u_2})
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.varyingLaw.{u_1, u_2}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Gram\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.statementExclusion.{u_1, u_2} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Gram\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"decoder_kraus_gram\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  statementLocation := { owner := `D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `D5.S3.Quantum.Recovery.MatrixUnitDecoder.decoder_kraus_gram, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration.{u_1, u_2}).actual (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration.{u_1, u_2}).variation.2.choose (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration.{u_1, u_2}).variation.1 (Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration.{u_1, u_2}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1.descriptorFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Gram\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"MatrixUnitDecoder\",\"Gram\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder, declaration := `Reg.D5.S3.Quantum.Recovery.MatrixUnitDecoder.Gram.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))

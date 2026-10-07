@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition
 import Reg.Support.DependentFamily
@@ -88,9 +91,152 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "arg", "body"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.integral_exp_neg_mul_cos, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.canonicalArenaFact, `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.sourceBridgeFact, `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.observationFact0, `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 end
 end Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition
+
+
+noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.arena
+noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.arena
+noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.arena
+    (∀ {c t : Real},
+      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) c →
+        @Eq.{1} Real
+          (@MeasureTheory.integral.{0, 0} Real Real Real.normedAddCommGroup
+            (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+              (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+              (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+            (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+            (@MeasureTheory.Measure.restrict.{0} Real
+              (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+              (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)
+              (@Set.Ioi.{0} Real Real.instPreorder
+                (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))
+            fun (x : Real) =>
+            @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+              (Real.exp
+                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                  (@Neg.neg.{0} Real Real.instNeg c) x))
+              (Real.cos (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) t x)))
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            c
+            (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
+              (@HPow.hPow.{0, 0, 0} Real Nat Real
+                (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) c
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+              (@HPow.hPow.{0, 0, 0} Real Nat Real
+                (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) t
+                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))
+    Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration)
+
+noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"integral_exp_neg_mul_cos\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.integral_exp_neg_mul_cos, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.arena
+  (∀ {c t : Real},
+    @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) c →
+      @Eq.{1} Real
+        (@MeasureTheory.integral.{0, 0} Real Real Real.normedAddCommGroup
+          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+            (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+          (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+          (@MeasureTheory.Measure.restrict.{0} Real
+            (@MeasureTheory.MeasureSpace.toMeasurableSpace.{0} Real Real.measureSpace)
+            (@MeasureTheory.MeasureSpace.volume.{0} Real Real.measureSpace)
+            (@Set.Ioi.{0} Real Real.instPreorder
+              (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))
+          fun (x : Real) =>
+          @HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (Real.exp
+              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) (@Neg.neg.{0} Real Real.instNeg c)
+                x))
+            (Real.cos (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) t x)))
+        (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid)) c
+          (@HAdd.hAdd.{0, 0, 0} Real Real Real (@instHAdd.{0} Real Real.instAdd)
+            (@HPow.hPow.{0, 0, 0} Real Nat Real
+              (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) c
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))
+            (@HPow.hPow.{0, 0, 0} Real Nat Real
+              (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) t
+              (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))))))
+  Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration)
+
+noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.observation0 : {c t : Real} →
+  (hc : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) c) →
+    (x : Real) →
+      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+        Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.signature PUnit.unit.{1}
+        (@Sigma.mk.{0, 0} Real (fun (x : Real) => Real) c t) :=
+  fun {c t : Real}
+    (hc : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) c)
+    (x : Real) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.signature
+    Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Real (fun (x : Real) => Real) c t) x
+
+noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"integral_exp_neg_mul_cos\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"function\",\"argument\",\"argument\",\"body\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.integral_exp_neg_mul_cos, part := .type, path := [.body, .body, .body, .function, .argument, .argument, .body], levels := [] }
+  { owner := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"integral_exp_neg_mul_cos\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.integral_exp_neg_mul_cos, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration).actual (Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration).variation.2.choose (Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration).variation.1 (Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"ZetaGamma\",\"ArchimedeanJumpDecomposition\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition, declaration := `Reg.D5.S3.Weil.ZetaGamma.ArchimedeanJumpDecomposition.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

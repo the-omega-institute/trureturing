@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.FirstResponseDiamond
 import D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
@@ -123,9 +126,119 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "arg", "fn", "arg", "arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.first_response_diamond, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.canonicalArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.sourceBridgeFact, `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.observationFact0, `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 
 end Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond
+
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.arena
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"FirstResponseDiamond\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"FirstResponseDiamond\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.arena
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"FirstResponseDiamond\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"FirstResponseDiamond\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.arena
+      Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.actual)
+    Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"FirstResponseDiamond\",\"first_response_diamond\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"FirstResponseDiamond\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.first_response_diamond, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.arena
+    Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.actual)
+  Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.observation0 : {q r s : Nat} →
+  (C : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat q q) →
+    (leftClass : Fin q → Fin r) →
+      (rightClass : Fin q → Fin s) →
+        (leftRep : Fin r → Fin q) →
+          (rightRep : Fin s → Fin q) →
+            (hleftRep : ∀ (f : Fin r), @Eq.{1} (Fin r) (leftClass (leftRep f)) f) →
+              (hrightRep : ∀ (h : Fin s), @Eq.{1} (Fin s) (rightClass (rightRep h)) h) →
+                (hcolumns :
+                    ∀ (u v : Fin q),
+                      @Eq.{1} (Fin r) (leftClass u) (leftClass v) → ∀ (i : Fin q), @Eq.{1} Nat (C i u) (C i v)) →
+                  (hrows :
+                      ∀ (u v : Fin q),
+                        @Eq.{1} (Fin s) (rightClass u) (rightClass v) → ∀ (k : Fin q), @Eq.{1} Nat (C u k) (C v k)) →
+                    (D : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat s r) →
+                      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                        Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.signature PUnit.unit.{1} q :=
+  fun {q r s : Nat} (C : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat q q) (leftClass : Fin q → Fin r)
+    (rightClass : Fin q → Fin s) (leftRep : Fin r → Fin q) (rightRep : Fin s → Fin q)
+    (hleftRep : ∀ (f : Fin r), @Eq.{1} (Fin r) (leftClass (leftRep f)) f)
+    (hrightRep : ∀ (h : Fin s), @Eq.{1} (Fin s) (rightClass (rightRep h)) h)
+    (hcolumns :
+      ∀ (u v : Fin q), @Eq.{1} (Fin r) (leftClass u) (leftClass v) → ∀ (i : Fin q), @Eq.{1} Nat (C i u) (C i v))
+    (hrows :
+      ∀ (u v : Fin q), @Eq.{1} (Fin s) (rightClass u) (rightClass v) → ∀ (k : Fin q), @Eq.{1} Nat (C u k) (C v k))
+    (D : D5.S3.ConceptDynamics.Coding.CountedMatrixOverlap.CountMat s r) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.signature
+    Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.actual PUnit.unit.{1} q C
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"FirstResponseDiamond\",\"first_response_diamond\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"function\",\"argument\",\"function\",\"argument\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"FirstResponseDiamond\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.first_response_diamond, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .body, .function, .argument, .function, .argument, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"FirstResponseDiamond\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"FirstResponseDiamond\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"FirstResponseDiamond\",\"first_response_diamond\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.first_response_diamond, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration).actual (Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration).variation.2.choose (Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration).variation.1 (Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"FirstResponseDiamond\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"Coding\",\"FirstResponseDiamond\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, declaration := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

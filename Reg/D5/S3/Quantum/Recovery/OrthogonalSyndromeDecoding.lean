@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding
 import Reg.Support.DependentFamily
@@ -178,7 +181,17 @@ noncomputable def registration_1.{u_1, u_2, u_3} : LeanInformationAudit.Contract
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, definition := none, coordinates := #[2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 10, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.decoding_syndrome_block, part := .type, path := [], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] }], facts := [`Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.observationFact0, `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.anchorEnumeration }
 
 
 #print axioms registration
@@ -268,7 +281,17 @@ noncomputable def registration_2.{u_1, u_2, u_3} : LeanInformationAudit.Contract
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, definition := none, coordinates := #[2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg"], stateBinder := 11, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.orthogonal_syndrome_recovery, part := .type, path := [], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] }], facts := [`Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.canonicalArenaFact, `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.sourceBridgeFact, `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.observationFact0, `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.anchorEnumeration }
 
 
 #print axioms registration
@@ -348,7 +371,17 @@ noncomputable def registration_3.{u_1, u_2, u_3} : LeanInformationAudit.Contract
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, definition := none, coordinates := #[0, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "fn"], stateBinder := 10, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }, { name := `trace.InformationRegistration.check, value := .bool true }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.syndrome_transport_orthogonal, part := .type, path := [], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] }], facts := [`Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.canonicalArenaFact, `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.sourceBridgeFact, `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.observationFact0, `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.anchorEnumeration }
 
 
 #print axioms registration
@@ -356,3 +389,352 @@ end SyndromeTransportOrthogonal
 
 
 end Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding
+
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.canonicalArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_3 + 1, u_3, 0, u_3, 0} :=
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.arena.{u_1, u_2, u_3}
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.canonicalArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"DecodingSyndromeBlock\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"DecodingSyndromeBlock\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.canonicalObjectArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_3 + 1, u_3, 0, u_3, 0} :=
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.arena.{u_1, u_2, u_3}
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.canonicalObjectArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"DecodingSyndromeBlock\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"DecodingSyndromeBlock\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.canonicalArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (u_1 + 1) (u_3 + 1), max u_1 u_3, 0, max u_1 u_3, 0} :=
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.arena.{u_1, u_2, u_3}
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.canonicalArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"SyndromeTransportOrthogonal\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"SyndromeTransportOrthogonal\",\"registration_3\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.canonicalObjectArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (u_1 + 1) (u_3 + 1), max u_1 u_3, 0, max u_1 u_3, 0} :=
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.arena.{u_1, u_2, u_3}
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.canonicalObjectArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"SyndromeTransportOrthogonal\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"SyndromeTransportOrthogonal\",\"registration_3\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.canonicalArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_3 + 1, u_3, 0, u_3, 0} :=
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.arena.{u_1, u_2, u_3}
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.canonicalArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"OrthogonalSyndromeRecovery\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"OrthogonalSyndromeRecovery\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.canonicalObjectArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_3 + 1, u_3, 0, u_3, 0} :=
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.arena.{u_1, u_2, u_3}
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.canonicalObjectArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"OrthogonalSyndromeRecovery\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"OrthogonalSyndromeRecovery\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.sourceLaw.{u_1, u_2, u_3} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.arena.{u_1, u_2, u_3}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_3 + 1, u_3, 0, u_3, 0}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.arena.{u_1, u_2, u_3}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
+      Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.arena.{u_1, u_2, u_3}
+      Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.actual.{u_3})
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration.{u_1, u_2, u_3})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"decoding_syndrome_block\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"DecodingSyndromeBlock\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.decoding_syndrome_block, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_3 + 1, u_3, 0, u_3, 0}
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.arena.{u_1, u_2, u_3}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.arena.{u_1, u_2, u_3}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.actual.{u_3})
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration.{u_1, u_2, u_3})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.observation0.{u_1, u_2, u_3} : {s : Type u_1} →
+  {n : Type u_2} →
+    {d : Type u_3} →
+      [Fintype.{u_1} s] →
+        [inst : DecidableEq.{u_1 + 1} s] →
+          [inst_1 : Fintype.{u_2} n] →
+            [Fintype.{u_3} d] →
+              [inst_3 : DecidableEq.{u_3 + 1} d] →
+                (S : s → Matrix.{u_2, u_3, 0} n d Complex) →
+                  (hS :
+                      @D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromes.{u_1, u_2, u_3} s n d inst
+                        inst_1 inst_3 S) →
+                    (rho : Matrix.{u_3, u_3, 0} d d Complex) →
+                      (j k : s) →
+                        D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u_3 + 1, u_3, 0, u_3,
+                            0}
+                          Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.matrixSignature.{u_3} Unit.unit d :=
+  fun {s : Type u_1} {n : Type u_2} {d : Type u_3} [Fintype.{u_1} s] [DecidableEq.{u_1 + 1} s] [Fintype.{u_2} n]
+    [Fintype.{u_3} d] [DecidableEq.{u_3 + 1} d] (S : s → Matrix.{u_2, u_3, 0} n d Complex)
+    (hS :
+      @D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromes.{u_1, u_2, u_3} s n d inst_1 inst_2 inst_4
+        S)
+    (rho : Matrix.{u_3, u_3, 0} d d Complex) (j k : s) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u_3 + 1, u_3, 0, u_3, 0}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.matrixSignature.{u_3}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.actual.{u_3} Unit.unit d rho
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.observationFact0.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"decoding_syndrome_block\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"DecodingSyndromeBlock\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.decoding_syndrome_block, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.varyingLawInput.{u_1, u_2, u_3} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.canonicalArenaOperand.{u_1, u_2, u_3})
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.varyingLaw.{u_1, u_2, u_3}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"DecodingSyndromeBlock\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.statementExclusion.{u_1, u_2, u_3} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"DecodingSyndromeBlock\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"decoding_syndrome_block\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  statementLocation := { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.decoding_syndrome_block, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration.{u_1, u_2, u_3}).actual (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration.{u_1, u_2, u_3}).variation.2.choose (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration.{u_1, u_2, u_3}).variation.1 (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration.{u_1, u_2, u_3}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1.descriptorFact.{u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"DecodingSyndromeBlock\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"DecodingSyndromeBlock\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.DecodingSyndromeBlock.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.sourceLaw.{u_1, u_2, u_3} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_3 + 1), max u_1 u_3, 0, max u_1 u_3,
+    0}
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.arena.{u_1, u_2, u_3}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u_1 + 1) (u_3 + 1), max u_1 u_3,
+        0, max u_1 u_3, 0}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.arena.{u_1, u_2, u_3}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_3 + 1) (u_1 + 1), max u_3 u_1, 0,
+        max u_3 u_1, 0}
+      Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.arena.{u_1, u_2, u_3}
+      Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.familyActual.{u_1, u_3})
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration.{u_1, u_2, u_3})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"syndrome_transport_orthogonal\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"SyndromeTransportOrthogonal\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.syndrome_transport_orthogonal, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u_1 + 1) (u_3 + 1), max u_1 u_3, 0,
+      max u_1 u_3, 0}
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.arena.{u_1, u_2, u_3}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_3 + 1) (u_1 + 1), max u_3 u_1, 0,
+      max u_3 u_1, 0}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.arena.{u_1, u_2, u_3}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.familyActual.{u_1, u_3})
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration.{u_1, u_2, u_3})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.observation0.{u_1, u_2, u_3} : {s : Type u_1} →
+  {n : Type u_2} →
+    {d : Type u_3} →
+      [Fintype.{u_1} s] →
+        [inst : DecidableEq.{u_1 + 1} s] →
+          [inst_1 : Fintype.{u_2} n] →
+            [inst_2 : Fintype.{u_3} d] →
+              [inst_3 : DecidableEq.{u_3 + 1} d] →
+                (S : s → Matrix.{u_2, u_3, 0} n d Complex) →
+                  (hS :
+                      @D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromes.{u_1, u_2, u_3} s n d inst
+                        inst_1 inst_3 S) →
+                    (V : s → Matrix.{u_3, u_3, 0} d d Complex) →
+                      (hV :
+                          ∀ (i : s),
+                            @Eq.{u_3 + 1} (Matrix.{u_3, u_3, 0} d d Complex)
+                              (@HMul.hMul.{u_3, u_3, u_3} (Matrix.{u_3, u_3, 0} d d Complex)
+                                (Matrix.{u_3, u_3, 0} d d Complex) (Matrix.{u_3, u_3, 0} d d Complex)
+                                (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_3, u_3, u_3} d d d Complex inst_2
+                                  Complex.instMul Complex.instAddCommMonoid)
+                                (@Matrix.conjTranspose.{0, u_3, u_3} d d Complex
+                                  (@InvolutiveStar.toStar.{0} Complex
+                                    (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                                      (@AddCommMonoid.toAddMonoid.{0} Complex
+                                        (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                          (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                            (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                              (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                                Complex.instNonUnitalCommRing)))))
+                                      (@StarRing.toStarAddMonoid.{0} Complex
+                                        (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                              Complex.instNonUnitalCommRing)))
+                                        Complex.instStarRing)))
+                                  (V i))
+                                (V i))
+                              (@OfNat.ofNat.{u_3} (Matrix.{u_3, u_3, 0} d d Complex) (nat_lit 1)
+                                (@One.toOfNat1.{u_3} (Matrix.{u_3, u_3, 0} d d Complex)
+                                  (@Matrix.one.{0, u_3} d Complex inst_3 Complex.instZero Complex.instOne)))) →
+                        (i : s) →
+                          D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{max (u_1 + 1)
+                                (u_3 + 1),
+                              max u_1 u_3, 0, max u_1 u_3, 0}
+                            Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.familySignature.{u_1, u_3} Unit.unit
+                            (@Sigma.mk.{u_1 + 1, u_3 + 1} (Type u_1) (fun (s : Type u_1) => Type u_3) s d) :=
+  fun {s : Type u_1} {n : Type u_2} {d : Type u_3} [Fintype.{u_1} s] [DecidableEq.{u_1 + 1} s] [Fintype.{u_2} n]
+    [Fintype.{u_3} d] [DecidableEq.{u_3 + 1} d] (S : s → Matrix.{u_2, u_3, 0} n d Complex)
+    (hS :
+      @D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromes.{u_1, u_2, u_3} s n d inst_1 inst_2 inst_4
+        S)
+    (V : s → Matrix.{u_3, u_3, 0} d d Complex)
+    (hV :
+      ∀ (i : s),
+        @Eq.{u_3 + 1} (Matrix.{u_3, u_3, 0} d d Complex)
+          (@HMul.hMul.{u_3, u_3, u_3} (Matrix.{u_3, u_3, 0} d d Complex) (Matrix.{u_3, u_3, 0} d d Complex)
+            (Matrix.{u_3, u_3, 0} d d Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_3, u_3, u_3} d d d Complex inst_3 Complex.instMul
+              Complex.instAddCommMonoid)
+            (@Matrix.conjTranspose.{0, u_3, u_3} d d Complex
+              (@InvolutiveStar.toStar.{0} Complex
+                (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                  (@AddCommMonoid.toAddMonoid.{0} Complex
+                    (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+                  (@StarRing.toStarAddMonoid.{0} Complex
+                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                    Complex.instStarRing)))
+              (V i))
+            (V i))
+          (@OfNat.ofNat.{u_3} (Matrix.{u_3, u_3, 0} d d Complex) (nat_lit 1)
+            (@One.toOfNat1.{u_3} (Matrix.{u_3, u_3, 0} d d Complex)
+              (@Matrix.one.{0, u_3} d Complex inst_4 Complex.instZero Complex.instOne))))
+    (i : s) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{max (u_1 + 1) (u_3 + 1), max u_1 u_3, 0,
+        max u_1 u_3, 0}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.familySignature.{u_1, u_3}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.familyActual.{u_1, u_3} Unit.unit
+    (@Sigma.mk.{u_1 + 1, u_3 + 1} (Type u_1) (fun (s : Type u_1) => Type u_3) s d) V
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.observationFact0.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"syndrome_transport_orthogonal\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"argument\",\"function\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"SyndromeTransportOrthogonal\",\"registration_3\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.syndrome_transport_orthogonal, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .body, .argument, .function], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.varyingLawInput.{u_1, u_2, u_3} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.canonicalArenaOperand.{u_1, u_2, u_3})
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.varyingLaw.{u_1, u_2, u_3}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"SyndromeTransportOrthogonal\",\"registration_3\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.statementExclusion.{u_1, u_2, u_3} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"SyndromeTransportOrthogonal\",\"registration_3\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"syndrome_transport_orthogonal\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  statementLocation := { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.syndrome_transport_orthogonal, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration.{u_1, u_2, u_3}).actual (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration.{u_1, u_2, u_3}).variation.2.choose (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration.{u_1, u_2, u_3}).variation.1 (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration.{u_1, u_2, u_3}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3.descriptorFact.{u_1, u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"SyndromeTransportOrthogonal\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"SyndromeTransportOrthogonal\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.SyndromeTransportOrthogonal.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.sourceLaw.{u_1, u_2, u_3} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.arena.{u_1, u_2, u_3}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_3 + 1, u_3, 0, u_3, 0}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.arena.{u_1, u_2, u_3}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
+      Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.arena.{u_1, u_2, u_3}
+      Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.actual.{u_3})
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration.{u_1, u_2, u_3})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"orthogonal_syndrome_recovery\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"OrthogonalSyndromeRecovery\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.orthogonal_syndrome_recovery, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_3 + 1, u_3, 0, u_3, 0}
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.arena.{u_1, u_2, u_3}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_3 + 1, u_3, 0, u_3, 0}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.arena.{u_1, u_2, u_3}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.actual.{u_3})
+  Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration.{u_1, u_2, u_3})
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.observation0.{u_1, u_2, u_3} : {s : Type u_1} →
+  {n : Type u_2} →
+    {d : Type u_3} →
+      [Fintype.{u_1} s] →
+        [inst : DecidableEq.{u_1 + 1} s] →
+          [inst_1 : Fintype.{u_2} n] →
+            [Fintype.{u_3} d] →
+              [inst_3 : DecidableEq.{u_3 + 1} d] →
+                (S : s → Matrix.{u_2, u_3, 0} n d Complex) →
+                  (hS :
+                      @D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromes.{u_1, u_2, u_3} s n d inst
+                        inst_1 inst_3 S) →
+                    (sigma : Matrix.{u_1, u_1, 0} s s Complex) →
+                      (rho : Matrix.{u_3, u_3, 0} d d Complex) →
+                        D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u_3 + 1, u_3, 0, u_3,
+                            0}
+                          Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.matrixSignature.{u_3} Unit.unit d :=
+  fun {s : Type u_1} {n : Type u_2} {d : Type u_3} [Fintype.{u_1} s] [DecidableEq.{u_1 + 1} s] [Fintype.{u_2} n]
+    [Fintype.{u_3} d] [DecidableEq.{u_3 + 1} d] (S : s → Matrix.{u_2, u_3, 0} n d Complex)
+    (hS :
+      @D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromes.{u_1, u_2, u_3} s n d inst_1 inst_2 inst_4
+        S)
+    (sigma : Matrix.{u_1, u_1, 0} s s Complex) (rho : Matrix.{u_3, u_3, 0} d d Complex) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u_3 + 1, u_3, 0, u_3, 0}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.matrixSignature.{u_3}
+    Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.actual.{u_3} Unit.unit d rho
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.observationFact0.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"orthogonal_syndrome_recovery\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"OrthogonalSyndromeRecovery\",\"registration_2\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.orthogonal_syndrome_recovery, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.varyingLawInput.{u_1, u_2, u_3} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.canonicalArenaOperand.{u_1, u_2, u_3})
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.varyingLaw.{u_1, u_2, u_3}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"OrthogonalSyndromeRecovery\",\"registration_2\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.statementExclusion.{u_1, u_2, u_3} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"OrthogonalSyndromeRecovery\",\"registration_2\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"orthogonal_syndrome_recovery\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  statementLocation := { owner := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.orthogonal_syndrome_recovery, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration.{u_1, u_2, u_3}).actual (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration.{u_1, u_2, u_3}).variation.2.choose (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration.{u_1, u_2, u_3}).variation.1 (Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration.{u_1, u_2, u_3}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2.descriptorFact.{u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"OrthogonalSyndromeRecovery\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"OrthogonalSyndromeDecoding\",\"OrthogonalSyndromeRecovery\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding, declaration := `Reg.D5.S3.Quantum.Recovery.OrthogonalSyndromeDecoding.OrthogonalSyndromeRecovery.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))

@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.TotalVariation.PrimitiveBridgeCancellation
 import Reg.Support.DependentFamily
@@ -111,8 +114,150 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
   sourceSelection := some { owner := `D5.S3.TotalVariation.PrimitiveBridgeCancellation, definition := none, coordinates := #[7, 12], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "fn", "arg", "body", "fn", "arg", "arg"], stateBinder := 14, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `D5.S3.TotalVariation.PrimitiveBridgeCancellation.primitive_bridge_cancellation, part := .type, path := [], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [`Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.canonicalArenaFact, `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.sourceBridgeFact, `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.observationFact0, `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 end Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation
+
+
+noncomputable def Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.canonicalArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.arena.{u_1}
+noncomputable def Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.canonicalArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"TotalVariation\",\"PrimitiveBridgeCancellation\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"TotalVariation\",\"PrimitiveBridgeCancellation\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+noncomputable def Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.canonicalObjectArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.arena.{u_1}
+noncomputable def Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.canonicalObjectArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"TotalVariation\",\"PrimitiveBridgeCancellation\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"TotalVariation\",\"PrimitiveBridgeCancellation\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.sourceLaw.{u_1} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.arena.{u_1}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.arena.{u_1}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.arena.{u_1}
+      Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.actual)
+    Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration.{u_1})
+
+noncomputable def Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"TotalVariation\",\"PrimitiveBridgeCancellation\",\"primitive_bridge_cancellation\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"TotalVariation\",\"PrimitiveBridgeCancellation\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `D5.S3.TotalVariation.PrimitiveBridgeCancellation.primitive_bridge_cancellation, part := .type, path := [], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.arena.{u_1}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.arena.{u_1}
+    Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.actual)
+  Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration.{u_1})
+
+noncomputable def Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.observation0.{u_1} : {V : Type u_1} →
+  [inst : Fintype.{u_1} V] →
+    [inst_1 : DecidableEq.{u_1 + 1} V] →
+      [Nonempty.{u_1 + 1} V] →
+        (P : Matrix.{u_1, u_1, 0} V V Real) →
+          (hstoch :
+              @Membership.mem.{u_1, u_1} (Matrix.{u_1, u_1, 0} V V Real)
+                (@Submonoid.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+                  (@MulZeroOneClass.toMulOneClass.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+                    (@instMulZeroOneClassOfSemiring.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+                      (@Matrix.semiring.{0, u_1} V Real Real.semiring inst inst_1))))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Submonoid.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+                    (@MulZeroOneClass.toMulOneClass.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+                      (@instMulZeroOneClassOfSemiring.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+                        (@Matrix.semiring.{0, u_1} V Real Real.semiring inst inst_1))))
+                  (Matrix.{u_1, u_1, 0} V V Real)
+                  (@Submonoid.instSetLike.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+                    (@MulZeroOneClass.toMulOneClass.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+                      (@instMulZeroOneClassOfSemiring.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+                        (@Matrix.semiring.{0, u_1} V Real Real.semiring inst inst_1)))))
+                (@Matrix.rowStochastic.{0, u_1} Real V inst inst_1 Real.semiring Real.partialOrder
+                  Real.instIsOrderedRing)
+                P) →
+            (hprim : @Matrix.IsPrimitive.{u_1, 0} V Real Real.instRing Real.linearOrder inst inst_1 P) →
+              {q : Nat} →
+                (g : V → V → Fin q → Int) →
+                  (iStar jStar : V) →
+                    (L : Nat) →
+                      (F : Finset.{0} (Fin q → Int)) →
+                        (c : Real) →
+                          (x : Fin q → Real) →
+                            D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                              Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.signature PUnit.unit.{1}
+                              (@Sigma.mk.{0, 0} Nat (fun (q : Nat) => Finset.{0} (Fin q → Int)) q F) :=
+  fun {V : Type u_1} [Fintype.{u_1} V] [DecidableEq.{u_1 + 1} V] [Nonempty.{u_1 + 1} V]
+    (P : Matrix.{u_1, u_1, 0} V V Real)
+    (hstoch :
+      @Membership.mem.{u_1, u_1} (Matrix.{u_1, u_1, 0} V V Real)
+        (@Submonoid.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+          (@MulZeroOneClass.toMulOneClass.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+            (@instMulZeroOneClassOfSemiring.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+              (@Matrix.semiring.{0, u_1} V Real Real.semiring inst inst_1))))
+        (@SetLike.instMembership.{u_1, u_1}
+          (@Submonoid.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+            (@MulZeroOneClass.toMulOneClass.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+              (@instMulZeroOneClassOfSemiring.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+                (@Matrix.semiring.{0, u_1} V Real Real.semiring inst inst_1))))
+          (Matrix.{u_1, u_1, 0} V V Real)
+          (@Submonoid.instSetLike.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+            (@MulZeroOneClass.toMulOneClass.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+              (@instMulZeroOneClassOfSemiring.{u_1} (Matrix.{u_1, u_1, 0} V V Real)
+                (@Matrix.semiring.{0, u_1} V Real Real.semiring inst inst_1)))))
+        (@Matrix.rowStochastic.{0, u_1} Real V inst inst_1 Real.semiring Real.partialOrder Real.instIsOrderedRing) P)
+    (hprim : @Matrix.IsPrimitive.{u_1, 0} V Real Real.instRing Real.linearOrder inst inst_1 P) {q : Nat}
+    (g : V → V → Fin q → Int) (iStar jStar : V) (L : Nat) (F : Finset.{0} (Fin q → Int)) (c : Real)
+    (x : Fin q → Real) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.signature
+    Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Nat (fun (q : Nat) => Finset.{0} (Fin q → Int)) q F) x
+
+noncomputable def Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.observationFact0.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"TotalVariation\",\"PrimitiveBridgeCancellation\",\"primitive_bridge_cancellation\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"argument\",\"argument\",\"body\",\"argument\",\"body\",\"argument\",\"argument\",\"argument\",\"argument\",\"function\",\"argument\",\"body\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"TotalVariation\",\"PrimitiveBridgeCancellation\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `D5.S3.TotalVariation.PrimitiveBridgeCancellation.primitive_bridge_cancellation, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .body, .argument, .argument, .body, .argument, .body, .argument, .argument, .argument, .argument, .function, .argument, .body, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.varyingLawInput.{u_1} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.canonicalArenaOperand.{u_1})
+noncomputable def Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.varyingLaw.{u_1}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"TotalVariation\",\"PrimitiveBridgeCancellation\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.statementExclusion.{u_1} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"TotalVariation\",\"PrimitiveBridgeCancellation\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"TotalVariation\",\"PrimitiveBridgeCancellation\",\"primitive_bridge_cancellation\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  statementLocation := { owner := `D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `D5.S3.TotalVariation.PrimitiveBridgeCancellation.primitive_bridge_cancellation, part := .type, path := [], levels := [(.param `u_1)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration.{u_1}).actual (Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration.{u_1}).variation.2.choose (Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration.{u_1}).variation.1 (Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration.{u_1}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"TotalVariation\",\"PrimitiveBridgeCancellation\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"TotalVariation\",\"PrimitiveBridgeCancellation\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation, declaration := `Reg.D5.S3.TotalVariation.PrimitiveBridgeCancellation.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))

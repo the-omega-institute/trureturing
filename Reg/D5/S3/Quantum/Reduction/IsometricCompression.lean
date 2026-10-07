@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Reduction.IsometricCompression
 import Reg.Support.DependentFamily
@@ -87,8 +90,145 @@ noncomputable def registration_1.{u_1, u_2, u_5} : LeanInformationAudit.Contract
   sourceSelection := some { owner := `D5.S3.Quantum.Reduction.IsometricCompression, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Reduction.IsometricCompression, declaration := `D5.S3.Quantum.Reduction.IsometricCompression.word_intertwines, part := .type, path := [], levels := [.param `u_1, .param `u_2, .param `u_5] },
+    { owner := `Reg.D5.S3.Quantum.Reduction.IsometricCompression, declaration := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_5] },
+    { owner := `Reg.D5.S3.Quantum.Reduction.IsometricCompression, declaration := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_5] },
+    { owner := `Reg.D5.S3.Quantum.Reduction.IsometricCompression, declaration := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_5] },
+    { owner := `Reg.D5.S3.Quantum.Reduction.IsometricCompression, declaration := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2, .param `u_5] }], facts := [`Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.observationFact0, `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 end Reg.D5.S3.Quantum.Reduction.IsometricCompression
+
+
+noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.canonicalArenaOperand.{u_1, u_2, u_5} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2, 0} :=
+  Reg.D5.S3.Quantum.Reduction.IsometricCompression.arena.{u_1, u_2, u_5}
+noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.canonicalArenaFact.{u_1, u_2, u_5} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Reduction.IsometricCompression, declaration := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_5)] }
+  { owner := `Reg.D5.S3.Quantum.Reduction.IsometricCompression, declaration := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_5)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.canonicalObjectArenaOperand.{u_1, u_2, u_5} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2, 0} :=
+  Reg.D5.S3.Quantum.Reduction.IsometricCompression.arena.{u_1, u_2, u_5}
+noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.canonicalObjectArenaFact.{u_1, u_2, u_5} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Reduction.IsometricCompression, declaration := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_5)] }
+  { owner := `Reg.D5.S3.Quantum.Reduction.IsometricCompression, declaration := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_5)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.sourceLaw.{u_1, u_2, u_5} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0, max u_1 u_2,
+    0}
+  Reg.D5.S3.Quantum.Reduction.IsometricCompression.arena.{u_1, u_2, u_5}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{max (u_1 + 1) (u_2 + 1), max u_1 u_2,
+        0, max u_1 u_2, 0}
+    Reg.D5.S3.Quantum.Reduction.IsometricCompression.arena.{u_1, u_2, u_5}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_2 + 1) (u_1 + 1), max u_2 u_1, 0,
+        max u_2 u_1, 0}
+      Reg.D5.S3.Quantum.Reduction.IsometricCompression.arena.{u_1, u_2, u_5}
+      Reg.D5.S3.Quantum.Reduction.IsometricCompression.actual.{u_1, u_2})
+    Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration.{u_1, u_2, u_5})
+
+noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.sourceBridgeFact.{u_1, u_2, u_5} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"word_intertwines\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}"))
+  { owner := `D5.S3.Quantum.Reduction.IsometricCompression, declaration := `D5.S3.Quantum.Reduction.IsometricCompression.word_intertwines, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_5)] }
+  { owner := `Reg.D5.S3.Quantum.Reduction.IsometricCompression, declaration := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_5)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0,
+      max u_1 u_2, 0}
+  Reg.D5.S3.Quantum.Reduction.IsometricCompression.arena.{u_1, u_2, u_5}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{max (u_2 + 1) (u_1 + 1), max u_2 u_1, 0,
+      max u_2 u_1, 0}
+    Reg.D5.S3.Quantum.Reduction.IsometricCompression.arena.{u_1, u_2, u_5}
+    Reg.D5.S3.Quantum.Reduction.IsometricCompression.actual.{u_1, u_2})
+  Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration.{u_1, u_2, u_5})
+
+noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.observation0.{u_1, u_2, u_5} : {n : Type u_1} →
+  {d : Type u_2} →
+    [inst : Fintype.{u_1} n] →
+      [DecidableEq.{u_1 + 1} n] →
+        [inst_2 : Fintype.{u_2} d] →
+          [DecidableEq.{u_2 + 1} d] →
+            {ι : Type u_5} →
+              (U : Matrix.{u_1, u_2, 0} n d Complex) →
+                (K : ι → Matrix.{u_1, u_1, 0} n n Complex) →
+                  (k : ι → Matrix.{u_2, u_2, 0} d d Complex) →
+                    (h :
+                        ∀ (a : ι),
+                          @Eq.{max (u_1 + 1) (u_2 + 1)} (Matrix.{u_1, u_2, 0} n d Complex)
+                            (@HMul.hMul.{u_1, max u_1 u_2, max u_1 u_2} (Matrix.{u_1, u_1, 0} n n Complex)
+                              (Matrix.{u_1, u_2, 0} n d Complex) (Matrix.{u_1, u_2, 0} n d Complex)
+                              (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_1, u_1, u_2} n n d Complex inst
+                                Complex.instMul Complex.instAddCommMonoid)
+                              (K a) U)
+                            (@HMul.hMul.{max u_1 u_2, u_2, max u_1 u_2} (Matrix.{u_1, u_2, 0} n d Complex)
+                              (Matrix.{u_2, u_2, 0} d d Complex) (Matrix.{u_1, u_2, 0} n d Complex)
+                              (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_1, u_2, u_2} n d d Complex inst_2
+                                Complex.instMul Complex.instAddCommMonoid)
+                              U (k a))) →
+                      (w : List.{u_5} ι) →
+                        D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{max (u_1 + 1)
+                              (u_2 + 1),
+                            max u_1 u_2, 0, max u_1 u_2, 0}
+                          Reg.D5.S3.Quantum.Reduction.IsometricCompression.signature.{u_1, u_2} Unit.unit
+                          (@Sigma.mk.{u_1 + 1, u_2 + 1} (Type u_1) (fun (x : Type u_1) => Type u_2) n d) :=
+  fun {n : Type u_1} {d : Type u_2} [Fintype.{u_1} n] [DecidableEq.{u_1 + 1} n] [Fintype.{u_2} d]
+    [DecidableEq.{u_2 + 1} d] {ι : Type u_5} (U : Matrix.{u_1, u_2, 0} n d Complex)
+    (K : ι → Matrix.{u_1, u_1, 0} n n Complex) (k : ι → Matrix.{u_2, u_2, 0} d d Complex)
+    (h :
+      ∀ (a : ι),
+        @Eq.{max (u_1 + 1) (u_2 + 1)} (Matrix.{u_1, u_2, 0} n d Complex)
+          (@HMul.hMul.{u_1, max u_1 u_2, max u_1 u_2} (Matrix.{u_1, u_1, 0} n n Complex)
+            (Matrix.{u_1, u_2, 0} n d Complex) (Matrix.{u_1, u_2, 0} n d Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_1, u_1, u_2} n n d Complex inst Complex.instMul
+              Complex.instAddCommMonoid)
+            (K a) U)
+          (@HMul.hMul.{max u_1 u_2, u_2, max u_1 u_2} (Matrix.{u_1, u_2, 0} n d Complex)
+            (Matrix.{u_2, u_2, 0} d d Complex) (Matrix.{u_1, u_2, 0} n d Complex)
+            (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u_1, u_2, u_2} n d d Complex inst_2 Complex.instMul
+              Complex.instAddCommMonoid)
+            U (k a)))
+    (w : List.{u_5} ι) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{max (u_1 + 1) (u_2 + 1), max u_1 u_2, 0,
+        max u_1 u_2, 0}
+    Reg.D5.S3.Quantum.Reduction.IsometricCompression.signature.{u_1, u_2}
+    Reg.D5.S3.Quantum.Reduction.IsometricCompression.actual.{u_1, u_2} Unit.unit
+    (@Sigma.mk.{u_1 + 1, u_2 + 1} (Type u_1) (fun (x : Type u_1) => Type u_2) n d) U
+
+noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.observationFact0.{u_1, u_2, u_5} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"word_intertwines\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}"))
+  { owner := `D5.S3.Quantum.Reduction.IsometricCompression, declaration := `D5.S3.Quantum.Reduction.IsometricCompression.word_intertwines, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_5)] }
+  { owner := `Reg.D5.S3.Quantum.Reduction.IsometricCompression, declaration := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_5)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.varyingLawInput.{u_1, u_2, u_5} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.canonicalArenaOperand.{u_1, u_2, u_5})
+noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.varyingLaw.{u_1, u_2, u_5}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.statementExclusion.{u_1, u_2, u_5} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"word_intertwines\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Reduction.IsometricCompression, declaration := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_5)] }
+  statementLocation := { owner := `D5.S3.Quantum.Reduction.IsometricCompression, declaration := `D5.S3.Quantum.Reduction.IsometricCompression.word_intertwines, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_5)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration.{u_1, u_2, u_5}).actual (Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration.{u_1, u_2, u_5}).variation.2.choose (Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration.{u_1, u_2, u_5}).variation.1 (Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration.{u_1, u_2, u_5}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1.descriptorFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Reduction\",\"IsometricCompression\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_5\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Reduction.IsometricCompression, declaration := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_5)] }
+  { owner := `Reg.D5.S3.Quantum.Reduction.IsometricCompression, declaration := `Reg.D5.S3.Quantum.Reduction.IsometricCompression.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_5)] }
+  (by first | rfl | (ext <;> rfl))

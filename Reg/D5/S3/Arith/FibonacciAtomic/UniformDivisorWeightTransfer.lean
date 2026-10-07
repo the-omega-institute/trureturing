@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer
 import Reg.Support.DependentFamily
@@ -98,10 +101,267 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, definition := none, coordinates := #[], readouts := #[{ path := #["arg", "fn", "arg", "body", "body", "body", "body", "fn", "arg", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "fn", "arg", "fn", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.result, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.canonicalArenaFact, `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.sourceBridgeFact, `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.observationFact0, `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 
 end
 end Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer
+
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.arena
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"UniformDivisorWeightTransfer\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"UniformDivisorWeightTransfer\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.arena
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"UniformDivisorWeightTransfer\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"UniformDivisorWeightTransfer\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.arena
+    (And
+      (∀ (m n : Nat),
+        @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) m →
+          @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) n →
+            ∀ (X : Real),
+              @LE.le.{0} Real Real.instLE (@Nat.cast.{0} Real Real.instNatCast m) X →
+                And
+                  (@LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+                    (D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.highWeight m n))
+                  (@LE.le.{0} Real Real.instLE (D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.highWeight m n)
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                      (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                        (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                        (D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.primeProduct X)
+                        (D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.primeProduct
+                          (@Nat.cast.{0} Real Real.instNatCast m)))
+                      (Real.exp
+                        (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                          (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                          (Real.log (@Nat.cast.{0} Real Real.instNatCast n))
+                          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                            (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) X
+                              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+                            (Real.log X)))))))
+      (And
+        (∀ (C : Real),
+          @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) C →
+            ∀ (ε : Real),
+              @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+                  ε →
+                @Filter.Eventually.{0} Nat
+                  (fun (m : Nat) =>
+                    ∀ (a b : Nat),
+                      @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) a →
+                        @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) b →
+                          @LE.le.{0} Real Real.instLE (@Nat.cast.{0} Real Real.instNatCast a)
+                              (Real.exp
+                                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) C
+                                    (@Nat.cast.{0} Real Real.instNatCast m))
+                                  (Real.log (@Nat.cast.{0} Real Real.instNatCast m)))) →
+                            @LE.le.{0} Real Real.instLE (@Nat.cast.{0} Real Real.instNatCast b)
+                                (Real.exp
+                                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) C
+                                      (@Nat.cast.{0} Real Real.instNatCast m))
+                                    (Real.log (@Nat.cast.{0} Real Real.instNatCast m)))) →
+                              Nat.ModEq (Nat.factorial m) a b →
+                                @LT.lt.{0} Real Real.instLT
+                                  (@abs.{0} Real Real.lattice Real.instAddGroup
+                                    (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+                                      (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                                        (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                                        (D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.normalizedWeight a)
+                                        (D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.normalizedWeight b))
+                                      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
+                                  ε)
+                  (@Filter.atTop.{0} Nat Nat.instPreorder))
+        (∀ (C : Real),
+          @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) C →
+            @Filter.Tendsto.{0, 0} Nat Real
+              (fun (m : Nat) => D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.uniformError C m)
+              (@Filter.atTop.{0} Nat Nat.instPreorder)
+              (@nhds.{0} Real
+                (@UniformSpace.toTopologicalSpace.{0} Real
+                  (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+                (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))))
+    Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration)
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"UniformDivisorWeightTransfer\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"UniformDivisorWeightTransfer\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.result, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.arena
+  (And
+    (∀ (m n : Nat),
+      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) m →
+        @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) n →
+          ∀ (X : Real),
+            @LE.le.{0} Real Real.instLE (@Nat.cast.{0} Real Real.instNatCast m) X →
+              And
+                (@LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+                  (D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.highWeight m n))
+                (@LE.le.{0} Real Real.instLE (D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.highWeight m n)
+                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                    (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                      (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                      (D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.primeProduct X)
+                      (D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.primeProduct
+                        (@Nat.cast.{0} Real Real.instNatCast m)))
+                    (Real.exp
+                      (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                        (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                        (Real.log (@Nat.cast.{0} Real Real.instNatCast n))
+                        (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                          (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub) X
+                            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+                          (Real.log X)))))))
+    (And
+      (∀ (C : Real),
+        @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) C →
+          ∀ (ε : Real),
+            @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) ε →
+              @Filter.Eventually.{0} Nat
+                (fun (m : Nat) =>
+                  ∀ (a b : Nat),
+                    @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) a →
+                      @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) b →
+                        @LE.le.{0} Real Real.instLE (@Nat.cast.{0} Real Real.instNatCast a)
+                            (Real.exp
+                              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) C
+                                  (@Nat.cast.{0} Real Real.instNatCast m))
+                                (Real.log (@Nat.cast.{0} Real Real.instNatCast m)))) →
+                          @LE.le.{0} Real Real.instLE (@Nat.cast.{0} Real Real.instNatCast b)
+                              (Real.exp
+                                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) C
+                                    (@Nat.cast.{0} Real Real.instNatCast m))
+                                  (Real.log (@Nat.cast.{0} Real Real.instNatCast m)))) →
+                            Nat.ModEq (Nat.factorial m) a b →
+                              @LT.lt.{0} Real Real.instLT
+                                (@abs.{0} Real Real.lattice Real.instAddGroup
+                                  (@HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+                                    (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                                      (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                                      (D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.normalizedWeight a)
+                                      (D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.normalizedWeight b))
+                                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))))
+                                ε)
+                (@Filter.atTop.{0} Nat Nat.instPreorder))
+      (∀ (C : Real),
+        @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) C →
+          @Filter.Tendsto.{0, 0} Nat Real
+            (fun (m : Nat) => D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.uniformError C m)
+            (@Filter.atTop.{0} Nat Nat.instPreorder)
+            (@nhds.{0} Real
+              (@UniformSpace.toTopologicalSpace.{0} Real
+                (@PseudoMetricSpace.toUniformSpace.{0} Real Real.pseudoMetricSpace))
+              (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))))))
+  Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration)
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.observation0 : (C : Real) →
+  @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) C →
+    (ε : Real) →
+      @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) ε →
+        (m a b : Nat) →
+          @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) a →
+            @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) b →
+              @LE.le.{0} Real Real.instLE (@Nat.cast.{0} Real Real.instNatCast a)
+                  (Real.exp
+                    (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) C
+                        (@Nat.cast.{0} Real Real.instNatCast m))
+                      (Real.log (@Nat.cast.{0} Real Real.instNatCast m)))) →
+                @LE.le.{0} Real Real.instLE (@Nat.cast.{0} Real Real.instNatCast b)
+                    (Real.exp
+                      (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                        (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) C
+                          (@Nat.cast.{0} Real Real.instNatCast m))
+                        (Real.log (@Nat.cast.{0} Real Real.instNatCast m)))) →
+                  Nat.ModEq (Nat.factorial m) a b →
+                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.State.{0, 0, 0, 0, 0}
+                        Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.signature PUnit.unit.{1} →
+                      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                        Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.signature PUnit.unit.{1}
+                        PUnit.unit.{1} :=
+  fun (C : Real)
+    (a : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) C)
+    (ε : Real)
+    (a_1 : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) ε)
+    (m a_2 b : Nat) (a_3 : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) a_2)
+    (a_4 : @LT.lt.{0} Nat instLTNat (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))) b)
+    (a_5 :
+      @LE.le.{0} Real Real.instLE (@Nat.cast.{0} Real Real.instNatCast a_2)
+        (Real.exp
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) C
+              (@Nat.cast.{0} Real Real.instNatCast m))
+            (Real.log (@Nat.cast.{0} Real Real.instNatCast m)))))
+    (a_6 :
+      @LE.le.{0} Real Real.instLE (@Nat.cast.{0} Real Real.instNatCast b)
+        (Real.exp
+          (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+            (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) C
+              (@Nat.cast.{0} Real Real.instNatCast m))
+            (Real.log (@Nat.cast.{0} Real Real.instNatCast m)))))
+    (a_7 : Nat.ModEq (Nat.factorial m) a_2 b) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.signature
+    Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.actual PUnit.unit.{1} PUnit.unit.{1}
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"UniformDivisorWeightTransfer\",\"result\"],\"part\":\"type\",\"path\":[\"argument\",\"function\",\"argument\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"argument\",\"function\",\"argument\",\"function\",\"argument\",\"function\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"UniformDivisorWeightTransfer\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.result, part := .type, path := [.argument, .function, .argument, .body, .body, .body, .body, .function, .argument, .body, .body, .body, .body, .body, .body, .body, .body, .function, .argument, .argument, .function, .argument, .function, .argument, .function], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"UniformDivisorWeightTransfer\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"UniformDivisorWeightTransfer\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"UniformDivisorWeightTransfer\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.result, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration).actual (Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration).variation.2.choose (Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration).variation.1 (Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"UniformDivisorWeightTransfer\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Arith\",\"FibonacciAtomic\",\"UniformDivisorWeightTransfer\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer, declaration := `Reg.D5.S3.Arith.FibonacciAtomic.UniformDivisorWeightTransfer.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

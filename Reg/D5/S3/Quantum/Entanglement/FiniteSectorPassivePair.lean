@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.FiniteSectorPassivePair
 import Reg.Support.DependentFamily
@@ -123,8 +126,883 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "arg", "body", "arg", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.sector_pair, part := .type, path := [], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u] }], facts := [`Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.observationFact0, `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.anchorEnumeration }
 
 
 
 end Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair
+
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.canonicalArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, u, 0, 0} :=
+  Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.arena.{u}
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.canonicalArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorPassivePair\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorPassivePair\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.canonicalObjectArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, u, 0, 0} :=
+  Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.arena.{u}
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.canonicalObjectArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorPassivePair\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorPassivePair\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.sourceLaw.{u} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0}
+  Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.arena.{u}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, u, 0, 0}
+    Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.arena.{u}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0}
+      Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.arena.{u}
+      Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.actual.{u})
+    Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration.{u})
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorChannelOptimality\",\"sector_pair\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorPassivePair\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.sector_pair, part := .type, path := [], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, u, 0, 0}
+  Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.arena.{u}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, u, 0, 0}
+    Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.arena.{u}
+    Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.actual.{u})
+  Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration.{u})
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.roleEnumeration.{u} : LeanInformationAudit.Contract.FiniteEnumeration (ULift.{u, 0} Unit) where
+  values := [@ULift.up.{u, 0} Unit Unit.unit]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.observation0.{u} : {Sector EX EY : Type u} →
+  [inst : Fintype.{u} Sector] →
+    [inst_1 : DecidableEq.{u + 1} Sector] →
+      [inst_2 : Fintype.{u} EX] →
+        [DecidableEq.{u + 1} EX] →
+          [inst_4 : Fintype.{u} EY] →
+            [DecidableEq.{u + 1} EY] →
+              {J : Nat} →
+                (M : @D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.{u} Sector inst J) →
+                  (VX :
+                      Matrix.{u, u, 0}
+                        (Prod.{u, u} EX
+                          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+                        (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                          (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+                        Complex) →
+                    (VY :
+                        Matrix.{u, u, 0}
+                          (Prod.{u, u} EY
+                            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+                          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+                          Complex) →
+                      (hVX :
+                          @Eq.{u + 1}
+                            (Matrix.{u, u, 0}
+                              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+                              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+                              Complex)
+                            (@HMul.hMul.{u, u, u}
+                              (Matrix.{u, u, 0}
+                                (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                  (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                    M))
+                                (Prod.{u, u} EX
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M)))
+                                Complex)
+                              (Matrix.{u, u, 0}
+                                (Prod.{u, u} EX
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M)))
+                                (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                  (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                    M))
+                                Complex)
+                              (Matrix.{u, u, 0}
+                                (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                  (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                    M))
+                                (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                  (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                    M))
+                                Complex)
+                              (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u, u, u}
+                                (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                  (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                    M))
+                                (Prod.{u, u} EX
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M)))
+                                (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                  (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                    M))
+                                Complex
+                                (@instFintypeProd.{u, u} EX
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M))
+                                  inst_2
+                                  (@Sigma.instFintype.{u, 0} Sector
+                                    (fun (s : Sector) =>
+                                      Fin
+                                        (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector
+                                          inst J M s))
+                                    (fun (i : Sector) =>
+                                      Fin.fintype
+                                        (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector
+                                          inst J M i))
+                                    inst))
+                                Complex.instMul Complex.instAddCommMonoid)
+                              (@Matrix.conjTranspose.{0, u, u}
+                                (Prod.{u, u} EX
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M)))
+                                (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                  (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                    M))
+                                Complex
+                                (@InvolutiveStar.toStar.{0} Complex
+                                  (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                                    (@AddCommMonoid.toAddMonoid.{0} Complex
+                                      (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                        (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                              Complex.instNonUnitalCommRing)))))
+                                    (@StarRing.toStarAddMonoid.{0} Complex
+                                      (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                        (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                          (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                            Complex.instNonUnitalCommRing)))
+                                      Complex.instStarRing)))
+                                VX)
+                              VX)
+                            (@OfNat.ofNat.{u}
+                              (Matrix.{u, u, 0}
+                                (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                  (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                    M))
+                                (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                  (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                    M))
+                                Complex)
+                              (nat_lit 1)
+                              (@One.toOfNat1.{u}
+                                (Matrix.{u, u, 0}
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M))
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M))
+                                  Complex)
+                                (@Matrix.one.{0, u}
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M))
+                                  Complex
+                                  (fun
+                                      (a b :
+                                        @D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector
+                                          (Fin J)
+                                          (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector
+                                            inst J M)) =>
+                                    @Sigma.instDecidableEqSigma.{u, 0} Sector
+                                      (fun (s : Sector) =>
+                                        Prod.{0, 0}
+                                          (Fin
+                                            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u}
+                                              Sector inst J M s))
+                                          (Fin J))
+                                      inst_1
+                                      (fun (a : Sector)
+                                          (a_1 b :
+                                            Prod.{0, 0}
+                                              (Fin
+                                                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u}
+                                                  Sector inst J M a))
+                                              (Fin J)) =>
+                                        @instDecidableEqProd.{0, 0}
+                                          (Fin
+                                            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u}
+                                              Sector inst J M a))
+                                          (Fin J)
+                                          ((fun (a : Sector) =>
+                                              instDecidableEqFin
+                                                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u}
+                                                  Sector inst J M a))
+                                            a)
+                                          (instDecidableEqFin J) a_1 b)
+                                      a b)
+                                  Complex.instZero Complex.instOne)))) →
+                        (hVY :
+                            @Eq.{u + 1}
+                              (Matrix.{u, u, 0}
+                                (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                  (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                    M))
+                                (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                  (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                    M))
+                                Complex)
+                              (@HMul.hMul.{u, u, u}
+                                (Matrix.{u, u, 0}
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M))
+                                  (Prod.{u, u} EY
+                                    (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                                      (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst
+                                        J M)))
+                                  Complex)
+                                (Matrix.{u, u, 0}
+                                  (Prod.{u, u} EY
+                                    (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                                      (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst
+                                        J M)))
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M))
+                                  Complex)
+                                (Matrix.{u, u, 0}
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M))
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M))
+                                  Complex)
+                                (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u, u, u}
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M))
+                                  (Prod.{u, u} EY
+                                    (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                                      (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst
+                                        J M)))
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M))
+                                  Complex
+                                  (@instFintypeProd.{u, u} EY
+                                    (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                                      (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst
+                                        J M))
+                                    inst_4
+                                    (@Sigma.instFintype.{u, 0} Sector
+                                      (fun (s : Sector) =>
+                                        Fin
+                                          (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector
+                                            inst J M s))
+                                      (fun (i : Sector) =>
+                                        Fin.fintype
+                                          (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector
+                                            inst J M i))
+                                      inst))
+                                  Complex.instMul Complex.instAddCommMonoid)
+                                (@Matrix.conjTranspose.{0, u, u}
+                                  (Prod.{u, u} EY
+                                    (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                                      (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst
+                                        J M)))
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M))
+                                  Complex
+                                  (@InvolutiveStar.toStar.{0} Complex
+                                    (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                                      (@AddCommMonoid.toAddMonoid.{0} Complex
+                                        (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                                          (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                            (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                              (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                                Complex.instNonUnitalCommRing)))))
+                                      (@StarRing.toStarAddMonoid.{0} Complex
+                                        (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                                          (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                                            (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex
+                                              Complex.instNonUnitalCommRing)))
+                                        Complex.instStarRing)))
+                                  VY)
+                                VY)
+                              (@OfNat.ofNat.{u}
+                                (Matrix.{u, u, 0}
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M))
+                                  (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J
+                                      M))
+                                  Complex)
+                                (nat_lit 1)
+                                (@One.toOfNat1.{u}
+                                  (Matrix.{u, u, 0}
+                                    (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                      (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst
+                                        J M))
+                                    (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                      (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst
+                                        J M))
+                                    Complex)
+                                  (@Matrix.one.{0, u}
+                                    (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                                      (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst
+                                        J M))
+                                    Complex
+                                    (fun
+                                        (a b :
+                                          @D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector
+                                            (Fin J)
+                                            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u}
+                                              Sector inst J M)) =>
+                                      @Sigma.instDecidableEqSigma.{u, 0} Sector
+                                        (fun (s : Sector) =>
+                                          Prod.{0, 0}
+                                            (Fin
+                                              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u}
+                                                Sector inst J M s))
+                                            (Fin J))
+                                        inst_1
+                                        (fun (a : Sector)
+                                            (a_1 b :
+                                              Prod.{0, 0}
+                                                (Fin
+                                                  (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u}
+                                                    Sector inst J M a))
+                                                (Fin J)) =>
+                                          @instDecidableEqProd.{0, 0}
+                                            (Fin
+                                              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u}
+                                                Sector inst J M a))
+                                            (Fin J)
+                                            ((fun (a : Sector) =>
+                                                instDecidableEqFin
+                                                  (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u}
+                                                    Sector inst J M a))
+                                              a)
+                                            (instDecidableEqFin J) a_1 b)
+                                        a b)
+                                    Complex.instZero Complex.instOne)))) →
+                          (s t : Sector) →
+                            (ex : EX) →
+                              (ey : EY) →
+                                D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, u, 0, 0}
+                                  Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.signature.{u}
+                                  (@ULift.up.{u, 0} Unit Unit.unit) PUnit.unit.{1} :=
+  fun {Sector EX EY : Type u} [inst : Fintype.{u} Sector] [inst_1 : DecidableEq.{u + 1} Sector] [Fintype.{u} EX]
+    [DecidableEq.{u + 1} EX] [Fintype.{u} EY] [DecidableEq.{u + 1} EY] {J : Nat}
+    (M : @D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.{u} Sector inst J)
+    (VX :
+      Matrix.{u, u, 0}
+        (Prod.{u, u} EX
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+        (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+          (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+        Complex)
+    (VY :
+      Matrix.{u, u, 0}
+        (Prod.{u, u} EY
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+        (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+          (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+        Complex)
+    (hVX :
+      @Eq.{u + 1}
+        (Matrix.{u, u, 0}
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+          Complex)
+        (@HMul.hMul.{u, u, u}
+          (Matrix.{u, u, 0}
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            (Prod.{u, u} EX
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+            Complex)
+          (Matrix.{u, u, 0}
+            (Prod.{u, u} EX
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            Complex)
+          (Matrix.{u, u, 0}
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            Complex)
+          (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u, u, u}
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            (Prod.{u, u} EX
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            Complex
+            (@instFintypeProd.{u, u} EX
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+              inst_2
+              (@Sigma.instFintype.{u, 0} Sector
+                (fun (s : Sector) =>
+                  Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s))
+                (fun (i : Sector) =>
+                  Fin.fintype (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M i))
+                inst))
+            Complex.instMul Complex.instAddCommMonoid)
+          (@Matrix.conjTranspose.{0, u, u}
+            (Prod.{u, u} EX
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            Complex
+            (@InvolutiveStar.toStar.{0} Complex
+              (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                (@AddCommMonoid.toAddMonoid.{0} Complex
+                  (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+                (@StarRing.toStarAddMonoid.{0} Complex
+                  (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                    (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                      (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                  Complex.instStarRing)))
+            VX)
+          VX)
+        (@OfNat.ofNat.{u}
+          (Matrix.{u, u, 0}
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            Complex)
+          (nat_lit 1)
+          (@One.toOfNat1.{u}
+            (Matrix.{u, u, 0}
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+              Complex)
+            (@Matrix.one.{0, u}
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+              Complex
+              (fun
+                  (a b :
+                    @D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                      (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)) =>
+                @Sigma.instDecidableEqSigma.{u, 0} Sector
+                  (fun (s : Sector) =>
+                    Prod.{0, 0}
+                      (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s))
+                      (Fin J))
+                  inst_1
+                  (fun (a : Sector)
+                      (a_1 b :
+                        Prod.{0, 0}
+                          (Fin
+                            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M a))
+                          (Fin J)) =>
+                    @instDecidableEqProd.{0, 0}
+                      (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M a))
+                      (Fin J)
+                      ((fun (a : Sector) =>
+                          instDecidableEqFin
+                            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M a))
+                        a)
+                      (instDecidableEqFin J) a_1 b)
+                  a b)
+              Complex.instZero Complex.instOne))))
+    (hVY :
+      @Eq.{u + 1}
+        (Matrix.{u, u, 0}
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+          Complex)
+        (@HMul.hMul.{u, u, u}
+          (Matrix.{u, u, 0}
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            (Prod.{u, u} EY
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+            Complex)
+          (Matrix.{u, u, 0}
+            (Prod.{u, u} EY
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            Complex)
+          (Matrix.{u, u, 0}
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            Complex)
+          (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u, u, u}
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            (Prod.{u, u} EY
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            Complex
+            (@instFintypeProd.{u, u} EY
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+              inst_4
+              (@Sigma.instFintype.{u, 0} Sector
+                (fun (s : Sector) =>
+                  Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s))
+                (fun (i : Sector) =>
+                  Fin.fintype (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M i))
+                inst))
+            Complex.instMul Complex.instAddCommMonoid)
+          (@Matrix.conjTranspose.{0, u, u}
+            (Prod.{u, u} EY
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            Complex
+            (@InvolutiveStar.toStar.{0} Complex
+              (@StarAddMonoid.toInvolutiveStar.{0} Complex
+                (@AddCommMonoid.toAddMonoid.{0} Complex
+                  (@NonUnitalNonAssocSemiring.toAddCommMonoid.{0} Complex
+                    (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                      (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                        (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))))
+                (@StarRing.toStarAddMonoid.{0} Complex
+                  (@NonUnitalNonAssocRing.toNonUnitalNonAssocSemiring.{0} Complex
+                    (@NonUnitalNonAssocCommRing.toNonUnitalNonAssocRing.{0} Complex
+                      (@NonUnitalCommRing.toNonUnitalNonAssocCommRing.{0} Complex Complex.instNonUnitalCommRing)))
+                  Complex.instStarRing)))
+            VY)
+          VY)
+        (@OfNat.ofNat.{u}
+          (Matrix.{u, u, 0}
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            Complex)
+          (nat_lit 1)
+          (@One.toOfNat1.{u}
+            (Matrix.{u, u, 0}
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+              Complex)
+            (@Matrix.one.{0, u}
+              (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+              Complex
+              (fun
+                  (a b :
+                    @D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+                      (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)) =>
+                @Sigma.instDecidableEqSigma.{u, 0} Sector
+                  (fun (s : Sector) =>
+                    Prod.{0, 0}
+                      (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s))
+                      (Fin J))
+                  inst_1
+                  (fun (a : Sector)
+                      (a_1 b :
+                        Prod.{0, 0}
+                          (Fin
+                            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M a))
+                          (Fin J)) =>
+                    @instDecidableEqProd.{0, 0}
+                      (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M a))
+                      (Fin J)
+                      ((fun (a : Sector) =>
+                          instDecidableEqFin
+                            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M a))
+                        a)
+                      (instDecidableEqFin J) a_1 b)
+                  a b)
+              Complex.instZero Complex.instOne)))) =>
+  have C :
+    Sector →
+      Matrix.{u, u, 0}
+        (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+          (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+        (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+          (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+        Complex :=
+    fun (s : Sector) =>
+    @Matrix.diagonal.{0, u}
+      (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+        (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+      Complex
+      (fun
+          (a b :
+            @D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)) =>
+        @Sigma.instDecidableEqSigma.{u, 0} Sector
+          (fun (s : Sector) =>
+            Prod.{0, 0} (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s))
+              (Fin J))
+          inst_1
+          (fun (a : Sector)
+              (a_1 b :
+                Prod.{0, 0}
+                  (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M a))
+                  (Fin J)) =>
+            @instDecidableEqProd.{0, 0}
+              (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M a)) (Fin J)
+              ((fun (a : Sector) =>
+                  instDecidableEqFin
+                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M a))
+                a)
+              (instDecidableEqFin J) a_1 b)
+          a b)
+      Complex.instZero
+      fun
+        (u :
+          @D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)) =>
+      @ite.{1} Complex
+        (@Eq.{u + 1} Sector
+          (@Sigma.fst.{u, 0} Sector
+            (fun (s : Sector) =>
+              Prod.{0, 0}
+                (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s)) (Fin J))
+            u)
+          s)
+        (inst_1
+          (@Sigma.fst.{u, 0} Sector
+            (fun (s : Sector) =>
+              Prod.{0, 0}
+                (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s)) (Fin J))
+            u)
+          s)
+        (Complex.ofReal
+          (Real.sqrt
+            (@HDiv.hDiv.{0, 0, 0} Real Real Real
+              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.spectrum.{u} Sector inst J M s
+                (@Prod.snd.{0, 0}
+                  (Fin
+                    (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M
+                      (@Sigma.fst.{u, 0} Sector
+                        (fun (s : Sector) =>
+                          Prod.{0, 0}
+                            (Fin
+                              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s))
+                            (Fin J))
+                        u)))
+                  (Fin J)
+                  (@Sigma.snd.{u, 0} Sector
+                    (fun (s : Sector) =>
+                      Prod.{0, 0}
+                        (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s))
+                        (Fin J))
+                    u)))
+              (@Nat.cast.{0} Real Real.instNatCast
+                (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s)))))
+        (@OfNat.ofNat.{0} Complex (nat_lit 0) (@Zero.toOfNat0.{0} Complex Complex.instZero));
+  have Q :
+    (s : Sector) →
+      Matrix.{u, u, 0}
+        (Prod.{u, u} EX
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+        (Prod.{u, u} EY
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+        Complex :=
+    fun (s : Sector) =>
+    @HMul.hMul.{u, u, u}
+      (Matrix.{u, u, 0}
+        (Prod.{u, u} EX
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+        (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+          (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+        Complex)
+      (Matrix.{u, u, 0}
+        (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+          (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+        (Prod.{u, u} EY
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+        Complex)
+      (Matrix.{u, u, 0}
+        (Prod.{u, u} EX
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+        (Prod.{u, u} EY
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+        Complex)
+      (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u, u, u}
+        (Prod.{u, u} EX
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+        (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+          (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+        (Prod.{u, u} EY
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+        Complex
+        (@Sigma.instFintype.{u, 0} Sector
+          (fun (s : Sector) =>
+            Prod.{0, 0} (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s))
+              (Fin J))
+          (fun (i : Sector) =>
+            @instFintypeProd.{0, 0}
+              (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M i)) (Fin J)
+              (Fin.fintype (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M i))
+              (Fin.fintype J))
+          inst)
+        Complex.instMul Complex.instAddCommMonoid)
+      (@HMul.hMul.{u, u, u}
+        (Matrix.{u, u, 0}
+          (Prod.{u, u} EX
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+          Complex)
+        (Matrix.{u, u, 0}
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+          Complex)
+        (Matrix.{u, u, 0}
+          (Prod.{u, u} EX
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+          Complex)
+        (@Matrix.instHMulOfFintypeOfMulOfAddCommMonoid.{0, u, u, u}
+          (Prod.{u, u} EX
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+          Complex
+          (@Sigma.instFintype.{u, 0} Sector
+            (fun (s : Sector) =>
+              Prod.{0, 0}
+                (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s)) (Fin J))
+            (fun (i : Sector) =>
+              @instFintypeProd.{0, 0}
+                (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M i)) (Fin J)
+                (Fin.fintype (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M i))
+                (Fin.fintype J))
+            inst)
+          Complex.instMul Complex.instAddCommMonoid)
+        VX (C s))
+      (@Matrix.transpose.{0, u, u}
+        (Prod.{u, u} EY
+          (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+            (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M)))
+        (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.SourceLocal.{u, 0} Sector (Fin J)
+          (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+        Complex VY);
+  have Z : Sector → Matrix.{u, u, 0} EX EY Complex := fun (s : Sector) (ex : EX) (ey : EY) =>
+    @HMul.hMul.{0, 0, 0} Complex Complex Complex (@instHMul.{0} Complex Complex.instMul)
+      (Complex.ofReal
+        (@Inv.inv.{0} Real Real.instInv
+          (Real.sqrt
+            (@Nat.cast.{0} Real Real.instNatCast
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s)))))
+      (@Finset.sum.{0, 0}
+        (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s)) Complex
+        Complex.instAddCommMonoid
+        (@Finset.univ.{0}
+          (Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s))
+          (Fin.fintype (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s)))
+        fun (a : Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s)) =>
+        Q s
+          (@Prod.mk.{u, u} EX
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            ex
+            (@Sigma.mk.{u, 0} Sector
+              (fun (s : Sector) =>
+                Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s))
+              s a))
+          (@Prod.mk.{u, u} EY
+            (@D5.S3.Quantum.Entanglement.SectorSchmidtEncoding.TargetLocal.{u} Sector
+              (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M))
+            ey
+            (@Sigma.mk.{u, 0} Sector
+              (fun (s : Sector) =>
+                Fin (@D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.Model.d.{u} Sector inst J M s))
+              s a)));
+  fun (s t : Sector) (ex : EX) (ey : EY) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, u, 0, 0}
+    Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.signature.{u}
+    Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.actual.{u} (@ULift.up.{u, 0} Unit Unit.unit) PUnit.unit.{1}
+    (Z s ex ey)
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.observationFact0.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorChannelOptimality\",\"sector_pair\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"letBody\",\"letBody\",\"letBody\",\"body\",\"body\",\"function\",\"argument\",\"argument\",\"argument\",\"body\",\"argument\",\"body\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorPassivePair\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.sector_pair, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .letBody, .letBody, .letBody, .body, .body, .function, .argument, .argument, .argument, .body, .argument, .body, .function, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.observation0, part := .value, path := [], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.varyingLawInput.{u} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.canonicalArenaOperand.{u})
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.varyingLaw.{u}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorPassivePair\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.statementExclusion.{u} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorPassivePair\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorChannelOptimality\",\"sector_pair\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u)] }
+  statementLocation := { owner := `D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `D5.S3.Quantum.Entanglement.FiniteSectorChannelOptimality.sector_pair, part := .type, path := [], levels := [(.param `u)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration.{u}).actual (Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration.{u}).variation.2.choose (Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration.{u}).variation.1 (Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration.{u}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1.descriptorFact.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorPassivePair\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"FiniteSectorPassivePair\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair, declaration := `Reg.D5.S3.Quantum.Entanglement.FiniteSectorPassivePair.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))

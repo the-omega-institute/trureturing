@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum
 import Reg.Support.DependentFamily
@@ -90,10 +93,105 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, definition := some { owner := `D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, name := `D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.claim, path := #[] }, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "fn", "arg", "body", "domain", "fn", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.result, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] },
+    { owner := `D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.claim, part := .value, path := [], levels := [] }], facts := [`Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.observationFact0, `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 
 end
 end Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum
+
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.arena
+noncomputable def Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PurityTimeReversalOverlapMinimum\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PurityTimeReversalOverlapMinimum\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.arena
+noncomputable def Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PurityTimeReversalOverlapMinimum\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PurityTimeReversalOverlapMinimum\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.arena
+    D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.claim
+    Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration)
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PurityTimeReversalOverlapMinimum\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PurityTimeReversalOverlapMinimum\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.result, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.arena
+  D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.claim
+  Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration)
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.observation0 : (N : Nat) →
+  (A : Finset.{0} (Fin N)) →
+    @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+        (@Finset.card.{0} (Fin N) A) →
+      @LT.lt.{0} Nat instLTNat (@Finset.card.{0} (Fin N) A) N →
+        (ψ : (Fin N → Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → Complex) →
+          D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+            Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.signature PUnit.unit.{1} N :=
+  fun (N : Nat) (A : Finset.{0} (Fin N))
+    (a :
+      @LE.le.{0} Nat instLENat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+        (@Finset.card.{0} (Fin N) A))
+    (a_1 : @LT.lt.{0} Nat instLTNat (@Finset.card.{0} (Fin N) A) N)
+    (ψ : (Fin N → Fin (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))) → Complex) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.signature
+    Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.actual PUnit.unit.{1} N ψ
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PurityTimeReversalOverlapMinimum\",\"claim\"],\"part\":\"value\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"body\",\"domain\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PurityTimeReversalOverlapMinimum\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.claim, part := .value, path := [.body, .body, .body, .body, .function, .argument, .body, .domain, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PurityTimeReversalOverlapMinimum\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PurityTimeReversalOverlapMinimum\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PurityTimeReversalOverlapMinimum\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.result, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration).actual (Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration).variation.2.choose (Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration).variation.1 (Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PurityTimeReversalOverlapMinimum\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Entanglement\",\"PurityTimeReversalOverlapMinimum\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum, declaration := `Reg.D5.S3.Quantum.Entanglement.PurityTimeReversalOverlapMinimum.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

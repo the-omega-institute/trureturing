@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass
 import Reg.Support.DependentFamily
@@ -103,9 +106,120 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, definition := none, coordinates := #[0, 7], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg", "body"], stateBinder := 9, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.markov_chain_law_map_prefix_apply_singleton, part := .type, path := [], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u] },
+    { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u] }], facts := [`Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.canonicalArenaFact, `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.sourceBridgeFact, `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.observationFact0, `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 end
 end Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass
+
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.canonicalArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u + 1, u, 0, u, 0} :=
+  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.arena.{u}
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.canonicalArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.canonicalObjectArenaOperand.{u} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u + 1, u, 0, u, 0} :=
+  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.arena.{u}
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.canonicalObjectArenaFact.{u} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.sourceLaw.{u} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
+  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.arena.{u}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u + 1, u, 0, u, 0}
+    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.arena.{u}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
+      Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.arena.{u}
+      Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.actual.{u})
+    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration.{u})
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.sourceBridgeFact.{u} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"markov_chain_law_map_prefix_apply_singleton\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.markov_chain_law_map_prefix_apply_singleton, part := .type, path := [], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u + 1, u, 0, u, 0}
+  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.arena.{u}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u + 1, u, 0, u, 0}
+    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.arena.{u}
+    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.actual.{u})
+  Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration.{u})
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.observation0.{u} : {α : Type u} →
+  [inst : MeasurableSpace.{u} α] →
+    (ν : @MeasureTheory.Measure.{u} α inst) →
+      (κ : @ProbabilityTheory.Kernel.{u, u} α α inst inst) →
+        [@ProbabilityTheory.IsMarkovKernel.{u, u} α α inst inst κ] →
+          [@MeasureTheory.IsProbabilityMeasure.{u} α inst ν] →
+            [@MeasurableSingletonClass.{u} α inst] →
+              (n : Nat) →
+                (w :
+                    Fin
+                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →
+                      α) →
+                  (x : (n : Nat) → α) →
+                    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u + 1, u, 0, u, 0}
+                      Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.signature.{u}
+                      PUnit.unit.{1} (@Sigma.mk.{u + 1, 0} (Type u) (fun (x : Type u) => Nat) α n) :=
+  fun {α : Type u} [MeasurableSpace.{u} α] (ν : @MeasureTheory.Measure.{u} α inst)
+    (κ : @ProbabilityTheory.Kernel.{u, u} α α inst inst) [@ProbabilityTheory.IsMarkovKernel.{u, u} α α inst inst κ]
+    [@MeasureTheory.IsProbabilityMeasure.{u} α inst ν] [@MeasurableSingletonClass.{u} α inst] (n : Nat)
+    (w :
+      Fin
+          (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+            (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) →
+        α)
+    (x : (n : Nat) → α) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u + 1, u, 0, u, 0}
+    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.signature.{u}
+    Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.actual.{u} PUnit.unit.{1}
+    (@Sigma.mk.{u + 1, 0} (Type u) (fun (x : Type u) => Nat) α n) x
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.observationFact0.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"markov_chain_law_map_prefix_apply_singleton\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"function\",\"argument\",\"function\",\"argument\",\"function\",\"argument\",\"body\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.markov_chain_law_map_prefix_apply_singleton, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .function, .argument, .function, .argument, .function, .argument, .body], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.observation0, part := .value, path := [], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.varyingLawInput.{u} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.canonicalArenaOperand.{u})
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.varyingLaw.{u}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}"
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.statementExclusion.{u} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"markov_chain_law_map_prefix_apply_singleton\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u)] }
+  statementLocation := { owner := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.markov_chain_law_map_prefix_apply_singleton, part := .type, path := [], levels := [(.param `u)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration.{u}).actual (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration.{u}).variation.2.choose (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration.{u}).variation.1 (Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration.{u}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1.descriptorFact.{u} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Observer\",\"ProbabilisticClosure\",\"TrajectoryLaws\",\"MarkovPrefixMass\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u\"]]]}"))
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u)] }
+  { owner := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass, declaration := `Reg.D5.S3.Observer.ProbabilisticClosure.TrajectoryLaws.MarkovPrefixMass.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u)] }
+  (by first | rfl | (ext <;> rfl))

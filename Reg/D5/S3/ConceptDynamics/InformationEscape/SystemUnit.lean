@@ -1,3 +1,5 @@
+import Reg.Support.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.NodeFacts
 import Reg.Support.LegacyRelations.System
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
@@ -81,7 +83,18 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit, definition := some { owner := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit, name := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.SystemStatement, path := #[] }, coordinates := #[], readouts := #[{ path := #["fn", "arg", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := some ⟨_, ⟨(Reg.Support.LegacyRelations.System.registration)⟩⟩,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] },
+    { owner := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.SystemStatement, part := .value, path := [], levels := [] }], facts := [`Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.canonicalArenaFact, `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.sourceBridgeFact, `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.observationFact0, `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.descriptorFact, `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.liftedActualFact] },
+  exclusion := some `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.statementExclusion,
+  finiteLift := some `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.finiteLiftFacts,
+  roleEnumeration := some `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.anchorEnumeration }
 
 end
 
@@ -104,3 +117,113 @@ noncomputable def finiteLiftFacts : FiniteLiftFacts
   observations := []
 
 end Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit
+
+
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.{0, 0, 0} :=
+  D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"SystemUnit\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"SystemUnit\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.{0, 0, 0} :=
+  D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"SystemUnit\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"SystemUnit\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.Support.LegacyRelations.System.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.Support.LegacyRelations.System.arena D5.S3.ConceptDynamics.InformationEscape.SystemUnit.SystemStatement
+    Reg.Support.LegacyRelations.System.registration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"SystemUnit\",\"engine_census_self_application\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"SystemUnit\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.Support.LegacyRelations.System.arena D5.S3.ConceptDynamics.InformationEscape.SystemUnit.SystemStatement
+  Reg.Support.LegacyRelations.System.registration)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Fin (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) where
+  values := [(fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) => i)
+  (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) (nat_lit 0)
+    (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Fin (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.observation0 : (stage :
+    D5.S3.ConceptDynamics.InformationEscape.Arena.State.{0}
+      (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0}
+        D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena)) →
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+    Reg.Support.LegacyRelations.System.signature
+    ((fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) => i)
+      (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) (nat_lit 0)
+        (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+    PUnit.unit.{1} :=
+  fun
+    (stage :
+      D5.S3.ConceptDynamics.InformationEscape.Arena.State.{0}
+        (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0}
+          D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena)) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.Support.LegacyRelations.System.signature Reg.Support.LegacyRelations.System.actual
+    ((fun (i : Fin (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) => i)
+      (@Fin.mk (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))) (nat_lit 0)
+        (Nat.le_refl (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))))
+    PUnit.unit.{1} stage
+
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"SystemUnit\",\"SystemStatement\"],\"part\":\"value\",\"path\":[\"function\",\"argument\",\"body\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"SystemUnit\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.SystemStatement, part := .value, path := [.function, .argument, .body, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.varyingLaw : (r :
+    D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.{0, 0, 0, 0, 0}
+      Reg.Support.LegacyRelations.System.signature) →
+  Prop :=
+  fun
+    (r :
+      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.{0, 0, 0, 0, 0}
+        Reg.Support.LegacyRelations.System.signature) =>
+  D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.Law.{0, 0, 0}
+    D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena (Reg.Support.LegacyRelations.System.toLegacy r)
+
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"SystemUnit\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"SystemUnit\",\"engine_census_self_application\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.Support.LegacyRelations.System.registration).actual (Reg.Support.LegacyRelations.System.registration).variation.2.choose (Reg.Support.LegacyRelations.System.registration).variation.1 (Reg.Support.LegacyRelations.System.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"SystemUnit\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"Support\",\"LegacyRelations\",\"System\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.Support.LegacyRelations.System, declaration := `Reg.Support.LegacyRelations.System.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.finiteLiftFacts : LeanInformationAudit.Contract.FiniteLiftFacts (D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena) (Reg.Support.LegacyRelations.System.arena) (@Reg.Support.LegacyRelations.System.fromLegacy) (@Reg.Support.LegacyRelations.System.toLegacy) where
+  lowerLift := Reg.Support.LegacyRelations.System.to_from_legacy
+  liftLower := Reg.Support.LegacyRelations.System.from_to_legacy
+  law := by intro r; rw [Reg.Support.LegacyRelations.System.full_law_transport, Reg.Support.LegacyRelations.System.to_from_legacy]
+  observations := []
+
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.liftedActual : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.{0, 0, 0, 0, 0}
+  Reg.Support.LegacyRelations.System.signature :=
+  Reg.Support.LegacyRelations.System.fromLegacy D5.S3.ConceptDynamics.InformationEscape.SystemUnit.systemRealization
+
+noncomputable def Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.liftedActualFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"Support\",\"LegacyRelations\",\"System\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"SystemUnit\",\"registration_1\",\"liftedActual\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.Support.LegacyRelations.System, declaration := `Reg.Support.LegacyRelations.System.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit, declaration := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.registration_1.liftedActual, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))

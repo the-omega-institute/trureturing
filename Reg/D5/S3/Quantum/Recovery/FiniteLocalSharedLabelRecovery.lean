@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery
 import Reg.Support.DependentFamily
@@ -251,7 +254,17 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, definition := none, coordinates := #[0, 1, 4], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "body", "arg", "fn", "arg", "body", "fn", "arg"], stateBinder := 9, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 1000000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 1000000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.actual_shared_label_support_rigidity, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.canonicalArenaFact, `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.sourceBridgeFact, `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.observationFact0, `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.anchorEnumeration }
 
 
 #print axioms actual_law
@@ -260,3 +273,278 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
 
 end
 end Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery
+
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{1, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.arena
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalSharedLabelRecovery\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalSharedLabelRecovery\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{1, 0, 0, 0, 0} :=
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.arena
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalSharedLabelRecovery\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalSharedLabelRecovery\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{1, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{1, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.arena
+    Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.sourceStatement
+    Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration)
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalSharedLabelRecovery\",\"actual_shared_label_support_rigidity\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalSharedLabelRecovery\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.actual_shared_label_support_rigidity, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{1, 0, 0, 0, 0}
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.arena
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.sourceStatement
+  Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration)
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.observation0 : {Y : Type} →
+  (P : D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.ActualProtocol Y) →
+    (r : Real) →
+      (hr : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) r) →
+        (accept : Y → Prop) →
+          (U :
+              Y →
+                @Subtype.{1}
+                  (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                  fun
+                    (x :
+                      Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex) =>
+                  @Membership.mem.{0, 0}
+                    (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                      (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                    (@Submonoid.{0}
+                      (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                      (@MulZeroOneClass.toMulOneClass.{0}
+                        (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                        (@instMulZeroOneClassOfSemiring.{0}
+                          (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                          (@Matrix.semiring.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                            Complex
+                            (@CommSemiring.toSemiring.{0} Complex
+                              (@CommRing.toCommSemiring.{0} Complex Complex.commRing))
+                            (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                            (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))))))
+                    (@SetLike.instMembership.{0, 0}
+                      (@Submonoid.{0}
+                        (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                        (@MulZeroOneClass.toMulOneClass.{0}
+                          (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                          (@instMulZeroOneClassOfSemiring.{0}
+                            (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                            (@Matrix.semiring.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                              Complex
+                              (@CommSemiring.toSemiring.{0} Complex
+                                (@CommRing.toCommSemiring.{0} Complex Complex.commRing))
+                              (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                              (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))))))
+                      (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                      (@Submonoid.instSetLike.{0}
+                        (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                        (@MulZeroOneClass.toMulOneClass.{0}
+                          (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                          (@instMulZeroOneClassOfSemiring.{0}
+                            (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                            (@Matrix.semiring.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                              Complex
+                              (@CommSemiring.toSemiring.{0} Complex
+                                (@CommRing.toCommSemiring.{0} Complex Complex.commRing))
+                              (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                              (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))))))))
+                    (@Matrix.unitaryGroup.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                      (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                      (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex
+                      Complex.commRing Complex.instStarRing)
+                    x) →
+            (p : Real) →
+              (hp :
+                  @LE.le.{0} Real Real.instLE
+                    (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) p) →
+                (recovery :
+                    ∀
+                      (X :
+                        Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex),
+                      @Eq.{1}
+                        (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                          (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                        (@D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.acceptedMap Y P r accept U X)
+                        (@HSMul.hSMul.{0, 0, 0} Complex
+                          (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                          (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                          (@instHSMul.{0, 0} Complex
+                            (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                            (@Matrix.smul.{0, 0, 0, 0}
+                              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex Complex
+                              (@instSMulOfMul.{0} Complex Complex.instMul)))
+                          (Complex.ofReal p) X)) →
+                  (w : @D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.Accepted Y P accept) →
+                    @Eq.{1} Real p (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) →
+                      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{1, 0, 0, 0, 0}
+                        Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.signature PUnit.unit.{1}
+                        (@Sigma.mk.{1, 0} Type
+                          (fun (Y : Type) =>
+                            @Sigma.{0, 0} (D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.ActualProtocol Y)
+                              fun (P : D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.ActualProtocol Y) =>
+                              Y → Prop)
+                          Y
+                          (@Sigma.mk.{0, 0} (D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.ActualProtocol Y)
+                            (fun (P : D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.ActualProtocol Y) =>
+                              Y → Prop)
+                            P accept)) :=
+  fun {Y : Type} (P : D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.ActualProtocol Y) (r : Real)
+    (hr : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) r)
+    (accept : Y → Prop)
+    (U :
+      Y →
+        @Subtype.{1}
+          (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+          fun
+            (x :
+              Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex) =>
+          @Membership.mem.{0, 0}
+            (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+            (@Submonoid.{0}
+              (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+              (@MulZeroOneClass.toMulOneClass.{0}
+                (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                  (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                (@instMulZeroOneClassOfSemiring.{0}
+                  (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                  (@Matrix.semiring.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex
+                    (@CommSemiring.toSemiring.{0} Complex (@CommRing.toCommSemiring.{0} Complex Complex.commRing))
+                    (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                    (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))))))
+            (@SetLike.instMembership.{0, 0}
+              (@Submonoid.{0}
+                (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                  (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                (@MulZeroOneClass.toMulOneClass.{0}
+                  (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                  (@instMulZeroOneClassOfSemiring.{0}
+                    (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                      (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                    (@Matrix.semiring.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex
+                      (@CommSemiring.toSemiring.{0} Complex (@CommRing.toCommSemiring.{0} Complex Complex.commRing))
+                      (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                      (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))))))
+              (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+              (@Submonoid.instSetLike.{0}
+                (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                  (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                (@MulZeroOneClass.toMulOneClass.{0}
+                  (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                  (@instMulZeroOneClassOfSemiring.{0}
+                    (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                      (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+                    (@Matrix.semiring.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex
+                      (@CommSemiring.toSemiring.{0} Complex (@CommRing.toCommSemiring.{0} Complex Complex.commRing))
+                      (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                      (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))))))))
+            (@Matrix.unitaryGroup.{0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+              (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+              (Fin.fintype (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex Complex.commRing
+              Complex.instStarRing)
+            x)
+    (p : Real)
+    (hp : @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) p)
+    (recovery :
+      ∀
+        (X :
+          Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex),
+        @Eq.{1}
+          (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+            (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+          (@D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.acceptedMap Y P r accept U X)
+          (@HSMul.hSMul.{0, 0, 0} Complex
+            (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+            (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+            (@instHSMul.{0, 0} Complex
+              (Matrix.{0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex)
+              (@Matrix.smul.{0, 0, 0, 0} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) Complex Complex
+                (@instSMulOfMul.{0} Complex Complex.instMul)))
+            (Complex.ofReal p) X))
+    (w : @D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.Accepted Y P accept)
+    (a : @Eq.{1} Real p (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{1, 0, 0, 0, 0}
+    Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.signature
+    Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.actual PUnit.unit.{1}
+    (@Sigma.mk.{1, 0} Type
+      (fun (Y : Type) =>
+        @Sigma.{0, 0} (D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.ActualProtocol Y)
+          fun (P : D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.ActualProtocol Y) => Y → Prop)
+      Y
+      (@Sigma.mk.{0, 0} (D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.ActualProtocol Y)
+        (fun (P : D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.ActualProtocol Y) => Y → Prop) P accept))
+    w
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalSharedLabelRecovery\",\"actual_shared_label_support_rigidity\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\",\"argument\",\"argument\",\"argument\",\"argument\",\"argument\",\"body\",\"argument\",\"function\",\"argument\",\"body\",\"function\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalSharedLabelRecovery\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.actual_shared_label_support_rigidity, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .argument, .argument, .argument, .argument, .argument, .argument, .body, .argument, .function, .argument, .body, .function, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalSharedLabelRecovery\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalSharedLabelRecovery\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalSharedLabelRecovery\",\"actual_shared_label_support_rigidity\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.actual_shared_label_support_rigidity, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration).actual (Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration).variation.2.choose (Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration).variation.1 (Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalSharedLabelRecovery\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Quantum\",\"Recovery\",\"FiniteLocalSharedLabelRecovery\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery, declaration := `Reg.D5.S3.Quantum.Recovery.FiniteLocalSharedLabelRecovery.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

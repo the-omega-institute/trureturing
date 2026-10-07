@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import Reg.Support.SourceSelection
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Resource.MinimumRetrievalTime
@@ -148,7 +151,17 @@ noncomputable def registration_2.{u_1, u_2, u_3} : LeanInformationAudit.Contract
   sourceSelection := some { owner := `D5.S3.Resource.MinimumRetrievalTime, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.retrieval_time_probability_bridge, part := .type, path := [], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] }], facts := [`Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.canonicalArenaFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.canonicalObjectArenaFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.sourceBridgeFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.observationFact0, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.anchorEnumeration }
 
 
 #print axioms registration
@@ -212,7 +225,17 @@ noncomputable def registration_3.{u_1, u_2} : LeanInformationAudit.Contract.Regi
   sourceSelection := some { owner := `D5.S3.Resource.MinimumRetrievalTime, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.old_code_actual_expectations, part := .type, path := [], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2] }], facts := [`Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.canonicalArenaFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.canonicalObjectArenaFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.sourceBridgeFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.observationFact0, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.anchorEnumeration }
 
 
 #print axioms registration
@@ -305,7 +328,17 @@ noncomputable def registration_4.{u_1, u_2, u_3} : LeanInformationAudit.Contract
   sourceSelection := some { owner := `D5.S3.Resource.MinimumRetrievalTime, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_three_kernel_obstruction, part := .type, path := [], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] }], facts := [`Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.canonicalArenaFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.canonicalObjectArenaFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.sourceBridgeFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.observationFact0, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.anchorEnumeration }
 
 
 #print axioms registration
@@ -391,7 +424,17 @@ noncomputable def registration_5.{u_1, u_2} : LeanInformationAudit.Contract.Regi
   sourceSelection := some { owner := `D5.S3.Resource.MinimumRetrievalTime, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_bad_pairs_obstruction, part := .type, path := [], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2] }], facts := [`Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.canonicalArenaFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.canonicalObjectArenaFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.sourceBridgeFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.observationFact0, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.anchorEnumeration }
 
 
 #print axioms registration
@@ -483,7 +526,17 @@ noncomputable def registration_6.{u_1, u_2, u_3} : LeanInformationAudit.Contract
   sourceSelection := some { owner := `D5.S3.Resource.MinimumRetrievalTime, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_projected_obstruction, part := .type, path := [], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] },
+    { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1, .param `u_2, .param `u_3] }], facts := [`Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.canonicalArenaFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.canonicalObjectArenaFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.sourceBridgeFact, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.observationFact0, `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.anchorEnumeration }
 
 
 #print axioms registration
@@ -578,3 +631,1652 @@ end Universal
 #print axioms Universal.actualLaw
 end
 end Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary
+
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.canonicalArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.arena.{u_1,
+  u_2, u_3}
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.canonicalArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"Projected\",\"registration_6\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"Projected\",\"registration_6\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.canonicalObjectArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.arena.{u_1,
+  u_2, u_3}
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.canonicalObjectArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"Projected\",\"registration_6\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"Projected\",\"registration_6\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.canonicalArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.arena.{u_1,
+  u_2}
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.canonicalArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"OldCode\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"OldCode\",\"registration_3\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.canonicalObjectArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.arena.{u_1,
+  u_2}
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.canonicalObjectArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"OldCode\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"OldCode\",\"registration_3\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.canonicalArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.arena.{u_1,
+  u_2, u_3}
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.canonicalArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ThreeKernel\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ThreeKernel\",\"registration_4\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.canonicalObjectArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.arena.{u_1,
+  u_2, u_3}
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.canonicalObjectArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ThreeKernel\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ThreeKernel\",\"registration_4\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.canonicalArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.arena.{u_1,
+  u_2, u_3}
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.canonicalArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ProbabilityBridge\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ProbabilityBridge\",\"registration_2\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.canonicalObjectArenaOperand.{u_1, u_2, u_3} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.arena.{u_1,
+  u_2, u_3}
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.canonicalObjectArenaFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ProbabilityBridge\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ProbabilityBridge\",\"registration_2\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  .evidence
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.canonicalArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.arena.{u_1,
+  u_2}
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.canonicalArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"BadPairs\",\"registration_5\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"BadPairs\",\"registration_5\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.canonicalObjectArenaOperand.{u_1, u_2} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.arena.{u_1,
+  u_2}
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.canonicalObjectArenaFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"BadPairs\",\"registration_5\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"BadPairs\",\"registration_5\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.sourceLaw.{u_1, u_2, u_3} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.arena.{u_1,
+    u_2, u_3}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.arena.{u_1,
+      u_2, u_3}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.arena.{u_1,
+        u_2, u_3}
+      (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
+        (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
+        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))))
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration.{u_1,
+      u_2, u_3})
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"five_column_projected_obstruction\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"Projected\",\"registration_6\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_projected_obstruction, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.arena.{u_1,
+    u_2, u_3}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.arena.{u_1,
+      u_2, u_3}
+    (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
+      (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
+      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))))
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration.{u_1,
+    u_2, u_3})
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.observation0.{u_1, u_2, u_3} : {K : Type u_1} →
+  {V : Type u_2} →
+    {W : Type u_3} →
+      [inst : Field.{u_1} K] →
+        [inst_1 : AddCommGroup.{u_2} V] →
+          [inst_2 :
+              @Module.{u_1, u_2} K V
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)] →
+            [inst_3 : AddCommGroup.{u_3} W] →
+              [inst_4 :
+                  @Module.{u_1, u_3} K W
+                    (@DivisionSemiring.toSemiring.{u_1} K
+                      (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                    (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3)] →
+                (columns : Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) → V) →
+                  (file :
+                      @Submodule.{u_1, u_2} K V
+                        (@DivisionSemiring.toSemiring.{u_1} K
+                          (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                        (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2) →
+                    (projection :
+                        @LinearMap.{u_1, u_1, u_2, u_3} K K
+                          (@DivisionSemiring.toSemiring.{u_1} K
+                            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                          (@DivisionSemiring.toSemiring.{u_1} K
+                            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                          (@RingHom.id.{u_1} K
+                            (@Semiring.toNonAssocSemiring.{u_1} K
+                              (@DivisionSemiring.toSemiring.{u_1} K
+                                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))))
+                          V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)
+                          (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4) →
+                      (target : V) →
+                        (htarget :
+                            @Membership.mem.{u_2, u_2} V
+                              (@Submodule.{u_1, u_2} K V
+                                (@DivisionSemiring.toSemiring.{u_1} K
+                                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                              (@SetLike.instMembership.{u_2, u_2}
+                                (@Submodule.{u_1, u_2} K V
+                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                V
+                                (@Submodule.setLike.{u_1, u_2} K V
+                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2))
+                              file target) →
+                          (htargetNe :
+                              @Ne.{u_2 + 1} V target
+                                (@OfNat.ofNat.{u_2} V (nat_lit 0)
+                                  (@Zero.toOfNat0.{u_2} V
+                                    (@NegZeroClass.toZero.{u_2} V
+                                      (@SubNegZeroMonoid.toNegZeroClass.{u_2} V
+                                        (@SubtractionMonoid.toSubNegZeroMonoid.{u_2} V
+                                          (@SubtractionCommMonoid.toSubtractionMonoid.{u_2} V
+                                            (@AddCommGroup.toDivisionAddCommMonoid.{u_2} V inst_1)))))))) →
+                            (htargetProjection :
+                                @Eq.{u_3 + 1} W
+                                  (@DFunLike.coe.{max (u_2 + 1) (u_3 + 1), u_2 + 1, u_3 + 1}
+                                    (@LinearMap.{u_1, u_1, u_2, u_3} K K
+                                      (@DivisionSemiring.toSemiring.{u_1} K
+                                        (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                      (@DivisionSemiring.toSemiring.{u_1} K
+                                        (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                      (@RingHom.id.{u_1} K
+                                        (@Semiring.toNonAssocSemiring.{u_1} K
+                                          (@DivisionSemiring.toSemiring.{u_1} K
+                                            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))))
+                                      V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)
+                                      (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4)
+                                    V (fun (x : V) => W)
+                                    (@LinearMap.instFunLike.{u_1, u_1, u_2, u_3} K K V W
+                                      (@DivisionSemiring.toSemiring.{u_1} K
+                                        (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                      (@DivisionSemiring.toSemiring.{u_1} K
+                                        (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                      (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)
+                                      (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4
+                                      (@RingHom.id.{u_1} K
+                                        (@Semiring.toNonAssocSemiring.{u_1} K
+                                          (@DivisionSemiring.toSemiring.{u_1} K
+                                            (@Semifield.toDivisionSemiring.{u_1} K
+                                              (@Field.toSemifield.{u_1} K inst))))))
+                                    projection target)
+                                  (@OfNat.ofNat.{u_3} W (nat_lit 0)
+                                    (@Zero.toOfNat0.{u_3} W
+                                      (@NegZeroClass.toZero.{u_3} W
+                                        (@SubNegZeroMonoid.toNegZeroClass.{u_3} W
+                                          (@SubtractionMonoid.toSubNegZeroMonoid.{u_3} W
+                                            (@SubtractionCommMonoid.toSubtractionMonoid.{u_3} W
+                                              (@AddCommGroup.toDivisionAddCommMonoid.{u_3} W inst_3)))))))) →
+                              (left right third : Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) →
+                                (hleftRight :
+                                    @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) left
+                                      right) →
+                                  (hleftThird :
+                                      @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) left
+                                        third) →
+                                    (hrightThird :
+                                        @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                                          right third) →
+                                      (hindependent :
+                                          @LinearIndependent.{0, u_1, u_3}
+                                            (Fin
+                                              (Nat.succ
+                                                (Nat.succ
+                                                  (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))
+                                            K W
+                                            (@Matrix.vecCons.{u_3} W
+                                              (Nat.succ (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+                                              (@DFunLike.coe.{max (u_2 + 1) (u_3 + 1), u_2 + 1, u_3 + 1}
+                                                (@LinearMap.{u_1, u_1, u_2, u_3} K K
+                                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                                    (@Semifield.toDivisionSemiring.{u_1} K
+                                                      (@Field.toSemifield.{u_1} K inst)))
+                                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                                    (@Semifield.toDivisionSemiring.{u_1} K
+                                                      (@Field.toSemifield.{u_1} K inst)))
+                                                  (@RingHom.id.{u_1} K
+                                                    (@Semiring.toNonAssocSemiring.{u_1} K
+                                                      (@DivisionSemiring.toSemiring.{u_1} K
+                                                        (@Semifield.toDivisionSemiring.{u_1} K
+                                                          (@Field.toSemifield.{u_1} K inst)))))
+                                                  V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)
+                                                  (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4)
+                                                V (fun (x : V) => W)
+                                                (@LinearMap.instFunLike.{u_1, u_1, u_2, u_3} K K V W
+                                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                                    (@Semifield.toDivisionSemiring.{u_1} K
+                                                      (@Field.toSemifield.{u_1} K inst)))
+                                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                                    (@Semifield.toDivisionSemiring.{u_1} K
+                                                      (@Field.toSemifield.{u_1} K inst)))
+                                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)
+                                                  (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4
+                                                  (@RingHom.id.{u_1} K
+                                                    (@Semiring.toNonAssocSemiring.{u_1} K
+                                                      (@DivisionSemiring.toSemiring.{u_1} K
+                                                        (@Semifield.toDivisionSemiring.{u_1} K
+                                                          (@Field.toSemifield.{u_1} K inst))))))
+                                                projection (columns left))
+                                              (@Matrix.vecCons.{u_3} W
+                                                (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                                                (@DFunLike.coe.{max (u_2 + 1) (u_3 + 1), u_2 + 1, u_3 + 1}
+                                                  (@LinearMap.{u_1, u_1, u_2, u_3} K K
+                                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                                      (@Semifield.toDivisionSemiring.{u_1} K
+                                                        (@Field.toSemifield.{u_1} K inst)))
+                                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                                      (@Semifield.toDivisionSemiring.{u_1} K
+                                                        (@Field.toSemifield.{u_1} K inst)))
+                                                    (@RingHom.id.{u_1} K
+                                                      (@Semiring.toNonAssocSemiring.{u_1} K
+                                                        (@DivisionSemiring.toSemiring.{u_1} K
+                                                          (@Semifield.toDivisionSemiring.{u_1} K
+                                                            (@Field.toSemifield.{u_1} K inst)))))
+                                                    V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)
+                                                    (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4)
+                                                  V (fun (x : V) => W)
+                                                  (@LinearMap.instFunLike.{u_1, u_1, u_2, u_3} K K V W
+                                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                                      (@Semifield.toDivisionSemiring.{u_1} K
+                                                        (@Field.toSemifield.{u_1} K inst)))
+                                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                                      (@Semifield.toDivisionSemiring.{u_1} K
+                                                        (@Field.toSemifield.{u_1} K inst)))
+                                                    (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)
+                                                    (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4
+                                                    (@RingHom.id.{u_1} K
+                                                      (@Semiring.toNonAssocSemiring.{u_1} K
+                                                        (@DivisionSemiring.toSemiring.{u_1} K
+                                                          (@Semifield.toDivisionSemiring.{u_1} K
+                                                            (@Field.toSemifield.{u_1} K inst))))))
+                                                  projection (columns right))
+                                                (@Matrix.vecEmpty.{u_3} W)))
+                                            (@DivisionSemiring.toSemiring.{u_1} K
+                                              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                            (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_4) →
+                                        (hthird :
+                                            Not
+                                              (@Membership.mem.{u_2, u_2} V
+                                                (@Submodule.{u_1, u_2} K V
+                                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                                    (@Semifield.toDivisionSemiring.{u_1} K
+                                                      (@Field.toSemifield.{u_1} K inst)))
+                                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                                (@SetLike.instMembership.{u_2, u_2}
+                                                  (@Submodule.{u_1, u_2} K V
+                                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                                      (@Semifield.toDivisionSemiring.{u_1} K
+                                                        (@Field.toSemifield.{u_1} K inst)))
+                                                    (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                                  V
+                                                  (@Submodule.setLike.{u_1, u_2} K V
+                                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                                      (@Semifield.toDivisionSemiring.{u_1} K
+                                                        (@Field.toSemifield.{u_1} K inst)))
+                                                    (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2))
+                                                (@Submodule.span.{u_1, u_2} K V
+                                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                                    (@Semifield.toDivisionSemiring.{u_1} K
+                                                      (@Field.toSemifield.{u_1} K inst)))
+                                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2
+                                                  (@Singleton.singleton.{u_2, u_2} V (Set.{u_2} V)
+                                                    (@Set.instSingletonSet.{u_2} V) (columns third)))
+                                                target)) →
+                                          (hfile :
+                                              @LE.le.{u_2}
+                                                (@Submodule.{u_1, u_2} K V
+                                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                                    (@Semifield.toDivisionSemiring.{u_1} K
+                                                      (@Field.toSemifield.{u_1} K inst)))
+                                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                                (@Preorder.toLE.{u_2}
+                                                  (@Submodule.{u_1, u_2} K V
+                                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                                      (@Semifield.toDivisionSemiring.{u_1} K
+                                                        (@Field.toSemifield.{u_1} K inst)))
+                                                    (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                                  (@PartialOrder.toPreorder.{u_2}
+                                                    (@Submodule.{u_1, u_2} K V
+                                                      (@DivisionSemiring.toSemiring.{u_1} K
+                                                        (@Semifield.toDivisionSemiring.{u_1} K
+                                                          (@Field.toSemifield.{u_1} K inst)))
+                                                      (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                                    (@Submodule.instPartialOrder.{u_1, u_2} K V
+                                                      (@DivisionSemiring.toSemiring.{u_1} K
+                                                        (@Semifield.toDivisionSemiring.{u_1} K
+                                                          (@Field.toSemifield.{u_1} K inst)))
+                                                      (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)))
+                                                file
+                                                (@Submodule.span.{u_1, u_2} K V
+                                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                                    (@Semifield.toDivisionSemiring.{u_1} K
+                                                      (@Field.toSemifield.{u_1} K inst)))
+                                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2
+                                                  (@Set.range.{u_2, 1} V
+                                                    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                                                    columns))) →
+                                            D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0,
+                                                0, 0, 0, 0}
+                                              (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralSignature
+                                                (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                                              PUnit.unit.{1} PUnit.unit.{1} :=
+  fun {K : Type u_1} {V : Type u_2} {W : Type u_3} [inst : Field.{u_1} K] [inst_1 : AddCommGroup.{u_2} V]
+    [inst_2 :
+      @Module.{u_1, u_2} K V
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)]
+    [AddCommGroup.{u_3} W]
+    [@Module.{u_1, u_3} K W
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3)]
+    (columns : Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) → V)
+    (file :
+      @Submodule.{u_1, u_2} K V
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+    (projection :
+      @LinearMap.{u_1, u_1, u_2, u_3} K K
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@RingHom.id.{u_1} K
+          (@Semiring.toNonAssocSemiring.{u_1} K
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))))
+        V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4)
+    (target : V)
+    (htarget :
+      @Membership.mem.{u_2, u_2} V
+        (@Submodule.{u_1, u_2} K V
+          (@DivisionSemiring.toSemiring.{u_1} K
+            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+          (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+        (@SetLike.instMembership.{u_2, u_2}
+          (@Submodule.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+          V
+          (@Submodule.setLike.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2))
+        file target)
+    (htargetNe :
+      @Ne.{u_2 + 1} V target
+        (@OfNat.ofNat.{u_2} V (nat_lit 0)
+          (@Zero.toOfNat0.{u_2} V
+            (@NegZeroClass.toZero.{u_2} V
+              (@SubNegZeroMonoid.toNegZeroClass.{u_2} V
+                (@SubtractionMonoid.toSubNegZeroMonoid.{u_2} V
+                  (@SubtractionCommMonoid.toSubtractionMonoid.{u_2} V
+                    (@AddCommGroup.toDivisionAddCommMonoid.{u_2} V inst_1))))))))
+    (htargetProjection :
+      @Eq.{u_3 + 1} W
+        (@DFunLike.coe.{max (u_2 + 1) (u_3 + 1), u_2 + 1, u_3 + 1}
+          (@LinearMap.{u_1, u_1, u_2, u_3} K K
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@RingHom.id.{u_1} K
+              (@Semiring.toNonAssocSemiring.{u_1} K
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))))
+            V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2
+            inst_4)
+          V (fun (x : V) => W)
+          (@LinearMap.instFunLike.{u_1, u_1, u_2, u_3} K K V W
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4
+            (@RingHom.id.{u_1} K
+              (@Semiring.toNonAssocSemiring.{u_1} K
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst))))))
+          projection target)
+        (@OfNat.ofNat.{u_3} W (nat_lit 0)
+          (@Zero.toOfNat0.{u_3} W
+            (@NegZeroClass.toZero.{u_3} W
+              (@SubNegZeroMonoid.toNegZeroClass.{u_3} W
+                (@SubtractionMonoid.toSubNegZeroMonoid.{u_3} W
+                  (@SubtractionCommMonoid.toSubtractionMonoid.{u_3} W
+                    (@AddCommGroup.toDivisionAddCommMonoid.{u_3} W inst_3))))))))
+    (left right third : Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+    (hleftRight : @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) left right)
+    (hleftThird : @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) left third)
+    (hrightThird : @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) right third)
+    (hindependent :
+      @LinearIndependent.{0, u_1, u_3}
+        (Fin (Nat.succ (Nat.succ (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))) K W
+        (@Matrix.vecCons.{u_3} W (Nat.succ (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+          (@DFunLike.coe.{max (u_2 + 1) (u_3 + 1), u_2 + 1, u_3 + 1}
+            (@LinearMap.{u_1, u_1, u_2, u_3} K K
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@RingHom.id.{u_1} K
+                (@Semiring.toNonAssocSemiring.{u_1} K
+                  (@DivisionSemiring.toSemiring.{u_1} K
+                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))))
+              V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2
+              inst_4)
+            V (fun (x : V) => W)
+            (@LinearMap.instFunLike.{u_1, u_1, u_2, u_3} K K V W
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2
+              inst_4
+              (@RingHom.id.{u_1} K
+                (@Semiring.toNonAssocSemiring.{u_1} K
+                  (@DivisionSemiring.toSemiring.{u_1} K
+                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst))))))
+            projection (columns left))
+          (@Matrix.vecCons.{u_3} W (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+            (@DFunLike.coe.{max (u_2 + 1) (u_3 + 1), u_2 + 1, u_3 + 1}
+              (@LinearMap.{u_1, u_1, u_2, u_3} K K
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@RingHom.id.{u_1} K
+                  (@Semiring.toNonAssocSemiring.{u_1} K
+                    (@DivisionSemiring.toSemiring.{u_1} K
+                      (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))))
+                V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2
+                inst_4)
+              V (fun (x : V) => W)
+              (@LinearMap.instFunLike.{u_1, u_1, u_2, u_3} K K V W
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2
+                inst_4
+                (@RingHom.id.{u_1} K
+                  (@Semiring.toNonAssocSemiring.{u_1} K
+                    (@DivisionSemiring.toSemiring.{u_1} K
+                      (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst))))))
+              projection (columns right))
+            (@Matrix.vecEmpty.{u_3} W)))
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_4)
+    (hthird :
+      Not
+        (@Membership.mem.{u_2, u_2} V
+          (@Submodule.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+          (@SetLike.instMembership.{u_2, u_2}
+            (@Submodule.{u_1, u_2} K V
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+            V
+            (@Submodule.setLike.{u_1, u_2} K V
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2))
+          (@Submodule.span.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2
+            (@Singleton.singleton.{u_2, u_2} V (Set.{u_2} V) (@Set.instSingletonSet.{u_2} V) (columns third)))
+          target))
+    (hfile :
+      @LE.le.{u_2}
+        (@Submodule.{u_1, u_2} K V
+          (@DivisionSemiring.toSemiring.{u_1} K
+            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+          (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+        (@Preorder.toLE.{u_2}
+          (@Submodule.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+          (@PartialOrder.toPreorder.{u_2}
+            (@Submodule.{u_1, u_2} K V
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+            (@Submodule.instPartialOrder.{u_1, u_2} K V
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)))
+        file
+        (@Submodule.span.{u_1, u_2} K V
+          (@DivisionSemiring.toSemiring.{u_1} K
+            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+          (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2
+          (@Set.range.{u_2, 1} V (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) columns))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralSignature
+      (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+    (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
+      (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
+      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration._proof_1)
+    PUnit.unit.{1} PUnit.unit.{1}
+    fun (sample : Nat → Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) =>
+    ENNReal.toReal
+      (@D5.S3.Resource.MinimumRetrievalTime.retrievalTime.{u_1, u_2, 0} K V
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) inst inst_1 inst_2 columns file sample)
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.observationFact0.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"five_column_projected_obstruction\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"Projected\",\"registration_6\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_projected_obstruction, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.varyingLawInput.{u_1, u_2, u_3} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.canonicalArenaOperand.{u_1, u_2, u_3})
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.varyingLaw.{u_1, u_2, u_3}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"Projected\",\"registration_6\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.statementExclusion.{u_1, u_2, u_3} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"Projected\",\"registration_6\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"five_column_projected_obstruction\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  statementLocation := { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_projected_obstruction, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration.{u_1,
+  u_2, u_3}).actual (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration.{u_1,
+  u_2, u_3}).variation.2.choose (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration.{u_1,
+  u_2, u_3}).variation.1 (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration.{u_1,
+  u_2, u_3}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"Projected\",\"registration_6\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"_private\",\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",0,\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"Projected\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration_6, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.Projected.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.sourceLaw.{u_1, u_2} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.arena.{u_1,
+    u_2}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.arena.{u_1,
+      u_2}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.arena.{u_1,
+        u_2}
+      (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
+        (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))
+        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration.{u_1,
+      u_2})
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"old_code_actual_expectations\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"OldCode\",\"registration_3\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.old_code_actual_expectations, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.arena.{u_1,
+    u_2}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.arena.{u_1,
+      u_2}
+    (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
+      (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))
+      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))))))
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration.{u_1,
+    u_2})
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.observation0.{u_1, u_2} : {K : Type u_1} →
+  {V : Type u_2} →
+    [inst : Field.{u_1} K] →
+      [inst_1 : AddCommGroup.{u_2} V] →
+        [inst_2 :
+            @Module.{u_1, u_2} K V
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)] →
+          (basis :
+              @Module.Basis.{0, u_1, u_2} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) K V
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2) →
+            D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+              (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralSignature
+                (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))
+              PUnit.unit.{1} PUnit.unit.{1} :=
+  fun {K : Type u_1} {V : Type u_2} [inst : Field.{u_1} K] [inst_1 : AddCommGroup.{u_2} V]
+    [inst_2 :
+      @Module.{u_1, u_2} K V
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)]
+    (basis :
+      @Module.Basis.{0, u_1, u_2} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))) K V
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralSignature
+      (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))
+    (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
+      (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))
+      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration._proof_1)
+    PUnit.unit.{1} PUnit.unit.{1}
+    fun (sample : Nat → Fin (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))) =>
+    ENNReal.toReal
+      (@D5.S3.Resource.MinimumRetrievalTime.retrievalTime.{u_1, u_2, 0} K V
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4)))) inst inst_1 inst_2
+        (@D5.S3.Resource.MinimumRetrievalTime.oldColumns.{u_1, u_2} K V inst inst_1 inst_2 basis)
+        (@D5.S3.Resource.MinimumRetrievalTime.oldSecondFile.{u_1, u_2} K V inst inst_1 inst_2 basis) sample)
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.observationFact0.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"old_code_actual_expectations\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"OldCode\",\"registration_3\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.old_code_actual_expectations, part := .type, path := [.body, .body, .body, .body, .body, .body, .argument, .argument, .function, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.varyingLawInput.{u_1, u_2} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.canonicalArenaOperand.{u_1, u_2})
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.varyingLaw.{u_1, u_2}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"OldCode\",\"registration_3\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.statementExclusion.{u_1, u_2} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"OldCode\",\"registration_3\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"old_code_actual_expectations\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  statementLocation := { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.old_code_actual_expectations, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration.{u_1,
+  u_2}).actual (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration.{u_1,
+  u_2}).variation.2.choose (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration.{u_1,
+  u_2}).variation.1 (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration.{u_1,
+  u_2}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"OldCode\",\"registration_3\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"_private\",\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",0,\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"OldCode\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration_3, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.OldCode.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.sourceLaw.{u_1, u_2, u_3} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.arena.{u_1,
+    u_2, u_3}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.arena.{u_1,
+      u_2, u_3}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.arena.{u_1,
+        u_2, u_3}
+      (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
+        (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
+        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))))
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration.{u_1,
+      u_2, u_3})
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"five_column_three_kernel_obstruction\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ThreeKernel\",\"registration_4\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_three_kernel_obstruction, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.arena.{u_1,
+    u_2, u_3}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.arena.{u_1,
+      u_2, u_3}
+    (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
+      (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
+      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))))
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration.{u_1,
+    u_2, u_3})
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.observation0.{u_1, u_2, u_3} : {K : Type u_1} →
+  {V : Type u_2} →
+    {W : Type u_3} →
+      [inst : Field.{u_1} K] →
+        [inst_1 : AddCommGroup.{u_2} V] →
+          [inst_2 :
+              @Module.{u_1, u_2} K V
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)] →
+            [inst_3 : AddCommGroup.{u_3} W] →
+              [inst_4 :
+                  @Module.{u_1, u_3} K W
+                    (@DivisionSemiring.toSemiring.{u_1} K
+                      (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                    (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3)] →
+                (columns : Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) → V) →
+                  (file :
+                      @Submodule.{u_1, u_2} K V
+                        (@DivisionSemiring.toSemiring.{u_1} K
+                          (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                        (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2) →
+                    (projection :
+                        @LinearMap.{u_1, u_1, u_2, u_3} K K
+                          (@DivisionSemiring.toSemiring.{u_1} K
+                            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                          (@DivisionSemiring.toSemiring.{u_1} K
+                            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                          (@RingHom.id.{u_1} K
+                            (@Semiring.toNonAssocSemiring.{u_1} K
+                              (@DivisionSemiring.toSemiring.{u_1} K
+                                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))))
+                          V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)
+                          (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4) →
+                      (first second : V) →
+                        (hfirst :
+                            @Membership.mem.{u_2, u_2} V
+                              (@Submodule.{u_1, u_2} K V
+                                (@DivisionSemiring.toSemiring.{u_1} K
+                                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                              (@SetLike.instMembership.{u_2, u_2}
+                                (@Submodule.{u_1, u_2} K V
+                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                V
+                                (@Submodule.setLike.{u_1, u_2} K V
+                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2))
+                              file first) →
+                          (hsecond :
+                              @Membership.mem.{u_2, u_2} V
+                                (@Submodule.{u_1, u_2} K V
+                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                (@SetLike.instMembership.{u_2, u_2}
+                                  (@Submodule.{u_1, u_2} K V
+                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                      (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                    (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                  V
+                                  (@Submodule.setLike.{u_1, u_2} K V
+                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                      (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                    (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2))
+                                file second) →
+                            (hindependent :
+                                @LinearIndependent.{0, u_1, u_3}
+                                  (Fin
+                                    (Nat.succ (Nat.succ (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))
+                                  K W
+                                  (@Matrix.vecCons.{u_3} W
+                                    (Nat.succ (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+                                    (@DFunLike.coe.{max (u_2 + 1) (u_3 + 1), u_2 + 1, u_3 + 1}
+                                      (@LinearMap.{u_1, u_1, u_2, u_3} K K
+                                        (@DivisionSemiring.toSemiring.{u_1} K
+                                          (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                        (@DivisionSemiring.toSemiring.{u_1} K
+                                          (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                        (@RingHom.id.{u_1} K
+                                          (@Semiring.toNonAssocSemiring.{u_1} K
+                                            (@DivisionSemiring.toSemiring.{u_1} K
+                                              (@Semifield.toDivisionSemiring.{u_1} K
+                                                (@Field.toSemifield.{u_1} K inst)))))
+                                        V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)
+                                        (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4)
+                                      V (fun (x : V) => W)
+                                      (@LinearMap.instFunLike.{u_1, u_1, u_2, u_3} K K V W
+                                        (@DivisionSemiring.toSemiring.{u_1} K
+                                          (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                        (@DivisionSemiring.toSemiring.{u_1} K
+                                          (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                        (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)
+                                        (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4
+                                        (@RingHom.id.{u_1} K
+                                          (@Semiring.toNonAssocSemiring.{u_1} K
+                                            (@DivisionSemiring.toSemiring.{u_1} K
+                                              (@Semifield.toDivisionSemiring.{u_1} K
+                                                (@Field.toSemifield.{u_1} K inst))))))
+                                      projection first)
+                                    (@Matrix.vecCons.{u_3} W
+                                      (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+                                      (@DFunLike.coe.{max (u_2 + 1) (u_3 + 1), u_2 + 1, u_3 + 1}
+                                        (@LinearMap.{u_1, u_1, u_2, u_3} K K
+                                          (@DivisionSemiring.toSemiring.{u_1} K
+                                            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                          (@DivisionSemiring.toSemiring.{u_1} K
+                                            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                          (@RingHom.id.{u_1} K
+                                            (@Semiring.toNonAssocSemiring.{u_1} K
+                                              (@DivisionSemiring.toSemiring.{u_1} K
+                                                (@Semifield.toDivisionSemiring.{u_1} K
+                                                  (@Field.toSemifield.{u_1} K inst)))))
+                                          V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)
+                                          (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4)
+                                        V (fun (x : V) => W)
+                                        (@LinearMap.instFunLike.{u_1, u_1, u_2, u_3} K K V W
+                                          (@DivisionSemiring.toSemiring.{u_1} K
+                                            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                          (@DivisionSemiring.toSemiring.{u_1} K
+                                            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                          (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)
+                                          (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4
+                                          (@RingHom.id.{u_1} K
+                                            (@Semiring.toNonAssocSemiring.{u_1} K
+                                              (@DivisionSemiring.toSemiring.{u_1} K
+                                                (@Semifield.toDivisionSemiring.{u_1} K
+                                                  (@Field.toSemifield.{u_1} K inst))))))
+                                        projection second)
+                                      (@Matrix.vecEmpty.{u_3} W)))
+                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                  (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_4) →
+                              (left right : Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) →
+                                (hleftRight :
+                                    @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) left
+                                      right) →
+                                  (hzero :
+                                      ∀ (index : Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))),
+                                        @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                                            index left →
+                                          @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                                              index right →
+                                            @Eq.{u_3 + 1} W
+                                              (@DFunLike.coe.{max (u_2 + 1) (u_3 + 1), u_2 + 1, u_3 + 1}
+                                                (@LinearMap.{u_1, u_1, u_2, u_3} K K
+                                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                                    (@Semifield.toDivisionSemiring.{u_1} K
+                                                      (@Field.toSemifield.{u_1} K inst)))
+                                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                                    (@Semifield.toDivisionSemiring.{u_1} K
+                                                      (@Field.toSemifield.{u_1} K inst)))
+                                                  (@RingHom.id.{u_1} K
+                                                    (@Semiring.toNonAssocSemiring.{u_1} K
+                                                      (@DivisionSemiring.toSemiring.{u_1} K
+                                                        (@Semifield.toDivisionSemiring.{u_1} K
+                                                          (@Field.toSemifield.{u_1} K inst)))))
+                                                  V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)
+                                                  (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4)
+                                                V (fun (x : V) => W)
+                                                (@LinearMap.instFunLike.{u_1, u_1, u_2, u_3} K K V W
+                                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                                    (@Semifield.toDivisionSemiring.{u_1} K
+                                                      (@Field.toSemifield.{u_1} K inst)))
+                                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                                    (@Semifield.toDivisionSemiring.{u_1} K
+                                                      (@Field.toSemifield.{u_1} K inst)))
+                                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)
+                                                  (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4
+                                                  (@RingHom.id.{u_1} K
+                                                    (@Semiring.toNonAssocSemiring.{u_1} K
+                                                      (@DivisionSemiring.toSemiring.{u_1} K
+                                                        (@Semifield.toDivisionSemiring.{u_1} K
+                                                          (@Field.toSemifield.{u_1} K inst))))))
+                                                projection (columns index))
+                                              (@OfNat.ofNat.{u_3} W (nat_lit 0)
+                                                (@Zero.toOfNat0.{u_3} W
+                                                  (@NegZeroClass.toZero.{u_3} W
+                                                    (@SubNegZeroMonoid.toNegZeroClass.{u_3} W
+                                                      (@SubtractionMonoid.toSubNegZeroMonoid.{u_3} W
+                                                        (@SubtractionCommMonoid.toSubtractionMonoid.{u_3} W
+                                                          (@AddCommGroup.toDivisionAddCommMonoid.{u_3} W
+                                                            inst_3)))))))) →
+                                    (hfile :
+                                        @LE.le.{u_2}
+                                          (@Submodule.{u_1, u_2} K V
+                                            (@DivisionSemiring.toSemiring.{u_1} K
+                                              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                          (@Preorder.toLE.{u_2}
+                                            (@Submodule.{u_1, u_2} K V
+                                              (@DivisionSemiring.toSemiring.{u_1} K
+                                                (@Semifield.toDivisionSemiring.{u_1} K
+                                                  (@Field.toSemifield.{u_1} K inst)))
+                                              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                            (@PartialOrder.toPreorder.{u_2}
+                                              (@Submodule.{u_1, u_2} K V
+                                                (@DivisionSemiring.toSemiring.{u_1} K
+                                                  (@Semifield.toDivisionSemiring.{u_1} K
+                                                    (@Field.toSemifield.{u_1} K inst)))
+                                                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                              (@Submodule.instPartialOrder.{u_1, u_2} K V
+                                                (@DivisionSemiring.toSemiring.{u_1} K
+                                                  (@Semifield.toDivisionSemiring.{u_1} K
+                                                    (@Field.toSemifield.{u_1} K inst)))
+                                                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)))
+                                          file
+                                          (@Submodule.span.{u_1, u_2} K V
+                                            (@DivisionSemiring.toSemiring.{u_1} K
+                                              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2
+                                            (@Set.range.{u_2, 1} V
+                                              (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                                              columns))) →
+                                      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0,
+                                          0, 0}
+                                        (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralSignature
+                                          (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                                        PUnit.unit.{1} PUnit.unit.{1} :=
+  fun {K : Type u_1} {V : Type u_2} {W : Type u_3} [inst : Field.{u_1} K] [inst_1 : AddCommGroup.{u_2} V]
+    [inst_2 :
+      @Module.{u_1, u_2} K V
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)]
+    [AddCommGroup.{u_3} W]
+    [@Module.{u_1, u_3} K W
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3)]
+    (columns : Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) → V)
+    (file :
+      @Submodule.{u_1, u_2} K V
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+    (projection :
+      @LinearMap.{u_1, u_1, u_2, u_3} K K
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@RingHom.id.{u_1} K
+          (@Semiring.toNonAssocSemiring.{u_1} K
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))))
+        V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2 inst_4)
+    (first second : V)
+    (hfirst :
+      @Membership.mem.{u_2, u_2} V
+        (@Submodule.{u_1, u_2} K V
+          (@DivisionSemiring.toSemiring.{u_1} K
+            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+          (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+        (@SetLike.instMembership.{u_2, u_2}
+          (@Submodule.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+          V
+          (@Submodule.setLike.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2))
+        file first)
+    (hsecond :
+      @Membership.mem.{u_2, u_2} V
+        (@Submodule.{u_1, u_2} K V
+          (@DivisionSemiring.toSemiring.{u_1} K
+            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+          (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+        (@SetLike.instMembership.{u_2, u_2}
+          (@Submodule.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+          V
+          (@Submodule.setLike.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2))
+        file second)
+    (hindependent :
+      @LinearIndependent.{0, u_1, u_3}
+        (Fin (Nat.succ (Nat.succ (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))) K W
+        (@Matrix.vecCons.{u_3} W (Nat.succ (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))
+          (@DFunLike.coe.{max (u_2 + 1) (u_3 + 1), u_2 + 1, u_3 + 1}
+            (@LinearMap.{u_1, u_1, u_2, u_3} K K
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@RingHom.id.{u_1} K
+                (@Semiring.toNonAssocSemiring.{u_1} K
+                  (@DivisionSemiring.toSemiring.{u_1} K
+                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))))
+              V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2
+              inst_4)
+            V (fun (x : V) => W)
+            (@LinearMap.instFunLike.{u_1, u_1, u_2, u_3} K K V W
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2
+              inst_4
+              (@RingHom.id.{u_1} K
+                (@Semiring.toNonAssocSemiring.{u_1} K
+                  (@DivisionSemiring.toSemiring.{u_1} K
+                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst))))))
+            projection first)
+          (@Matrix.vecCons.{u_3} W (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))
+            (@DFunLike.coe.{max (u_2 + 1) (u_3 + 1), u_2 + 1, u_3 + 1}
+              (@LinearMap.{u_1, u_1, u_2, u_3} K K
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@RingHom.id.{u_1} K
+                  (@Semiring.toNonAssocSemiring.{u_1} K
+                    (@DivisionSemiring.toSemiring.{u_1} K
+                      (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))))
+                V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2
+                inst_4)
+              V (fun (x : V) => W)
+              (@LinearMap.instFunLike.{u_1, u_1, u_2, u_3} K K V W
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2
+                inst_4
+                (@RingHom.id.{u_1} K
+                  (@Semiring.toNonAssocSemiring.{u_1} K
+                    (@DivisionSemiring.toSemiring.{u_1} K
+                      (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst))))))
+              projection second)
+            (@Matrix.vecEmpty.{u_3} W)))
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_4)
+    (left right : Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+    (hleftRight : @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) left right)
+    (hzero :
+      ∀ (index : Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))),
+        @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) index left →
+          @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) index right →
+            @Eq.{u_3 + 1} W
+              (@DFunLike.coe.{max (u_2 + 1) (u_3 + 1), u_2 + 1, u_3 + 1}
+                (@LinearMap.{u_1, u_1, u_2, u_3} K K
+                  (@DivisionSemiring.toSemiring.{u_1} K
+                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                  (@DivisionSemiring.toSemiring.{u_1} K
+                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                  (@RingHom.id.{u_1} K
+                    (@Semiring.toNonAssocSemiring.{u_1} K
+                      (@DivisionSemiring.toSemiring.{u_1} K
+                        (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))))
+                  V W (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3)
+                  inst_2 inst_4)
+                V (fun (x : V) => W)
+                (@LinearMap.instFunLike.{u_1, u_1, u_2, u_3} K K V W
+                  (@DivisionSemiring.toSemiring.{u_1} K
+                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                  (@DivisionSemiring.toSemiring.{u_1} K
+                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) (@AddCommGroup.toAddCommMonoid.{u_3} W inst_3) inst_2
+                  inst_4
+                  (@RingHom.id.{u_1} K
+                    (@Semiring.toNonAssocSemiring.{u_1} K
+                      (@DivisionSemiring.toSemiring.{u_1} K
+                        (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst))))))
+                projection (columns index))
+              (@OfNat.ofNat.{u_3} W (nat_lit 0)
+                (@Zero.toOfNat0.{u_3} W
+                  (@NegZeroClass.toZero.{u_3} W
+                    (@SubNegZeroMonoid.toNegZeroClass.{u_3} W
+                      (@SubtractionMonoid.toSubNegZeroMonoid.{u_3} W
+                        (@SubtractionCommMonoid.toSubtractionMonoid.{u_3} W
+                          (@AddCommGroup.toDivisionAddCommMonoid.{u_3} W inst_3))))))))
+    (hfile :
+      @LE.le.{u_2}
+        (@Submodule.{u_1, u_2} K V
+          (@DivisionSemiring.toSemiring.{u_1} K
+            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+          (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+        (@Preorder.toLE.{u_2}
+          (@Submodule.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+          (@PartialOrder.toPreorder.{u_2}
+            (@Submodule.{u_1, u_2} K V
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+            (@Submodule.instPartialOrder.{u_1, u_2} K V
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)))
+        file
+        (@Submodule.span.{u_1, u_2} K V
+          (@DivisionSemiring.toSemiring.{u_1} K
+            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+          (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2
+          (@Set.range.{u_2, 1} V (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) columns))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralSignature
+      (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+    (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
+      (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
+      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration._proof_1)
+    PUnit.unit.{1} PUnit.unit.{1}
+    fun (sample : Nat → Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) =>
+    ENNReal.toReal
+      (@D5.S3.Resource.MinimumRetrievalTime.retrievalTime.{u_1, u_2, 0} K V
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) inst inst_1 inst_2 columns file sample)
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.observationFact0.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"five_column_three_kernel_obstruction\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ThreeKernel\",\"registration_4\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_three_kernel_obstruction, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.varyingLawInput.{u_1, u_2, u_3} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.canonicalArenaOperand.{u_1, u_2, u_3})
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.varyingLaw.{u_1, u_2, u_3}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ThreeKernel\",\"registration_4\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.statementExclusion.{u_1, u_2, u_3} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ThreeKernel\",\"registration_4\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"five_column_three_kernel_obstruction\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  statementLocation := { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_three_kernel_obstruction, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration.{u_1,
+  u_2, u_3}).actual (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration.{u_1,
+  u_2, u_3}).variation.2.choose (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration.{u_1,
+  u_2, u_3}).variation.1 (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration.{u_1,
+  u_2, u_3}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ThreeKernel\",\"registration_4\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"_private\",\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",0,\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ThreeKernel\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration_4, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.sourceLaw.{u_1, u_2, u_3} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.arena.{u_1,
+    u_2, u_3}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.arena.{u_1,
+      u_2, u_3}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.arena.{u_1,
+        u_2, u_3}
+      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.actual)
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration.{u_1,
+      u_2, u_3})
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.sourceBridgeFact.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"retrieval_time_probability_bridge\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ProbabilityBridge\",\"registration_2\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.retrieval_time_probability_bridge, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.arena.{u_1,
+    u_2, u_3}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.arena.{u_1,
+      u_2, u_3}
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.actual)
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration.{u_1,
+    u_2, u_3})
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.observation0.{u_1, u_2, u_3} : {K : Type u_1} →
+  {V : Type u_2} →
+    {alphabet : Type u_3} →
+      [inst : Field.{u_1} K] →
+        [inst_1 : AddCommGroup.{u_2} V] →
+          [inst_2 :
+              @Module.{u_1, u_2} K V
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)] →
+            [Fintype.{u_3} alphabet] →
+              [Nonempty.{u_3 + 1} alphabet] →
+                [inst_5 : MeasurableSpace.{u_3} alphabet] →
+                  [@MeasurableSingletonClass.{u_3} alphabet inst_5] →
+                    (columns : alphabet → V) →
+                      (file :
+                          @Submodule.{u_1, u_2} K V
+                            (@DivisionSemiring.toSemiring.{u_1} K
+                              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2) →
+                        (hfile :
+                            @LE.le.{u_2}
+                              (@Submodule.{u_1, u_2} K V
+                                (@DivisionSemiring.toSemiring.{u_1} K
+                                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                              (@Preorder.toLE.{u_2}
+                                (@Submodule.{u_1, u_2} K V
+                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                (@PartialOrder.toPreorder.{u_2}
+                                  (@Submodule.{u_1, u_2} K V
+                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                      (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                    (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                  (@Submodule.instPartialOrder.{u_1, u_2} K V
+                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                      (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                    (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)))
+                              file
+                              (@Submodule.span.{u_1, u_2} K V
+                                (@DivisionSemiring.toSemiring.{u_1} K
+                                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2
+                                (@Set.range.{u_2, u_3 + 1} V alphabet columns))) →
+                          D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                            _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.signature
+                            PUnit.unit.{1} PUnit.unit.{1} :=
+  fun {K : Type u_1} {V : Type u_2} {alphabet : Type u_3} [inst : Field.{u_1} K] [inst_1 : AddCommGroup.{u_2} V]
+    [inst_2 :
+      @Module.{u_1, u_2} K V
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)]
+    [inst_3 : Fintype.{u_3} alphabet] [inst_4 : Nonempty.{u_3 + 1} alphabet] [inst_5 : MeasurableSpace.{u_3} alphabet]
+    [@MeasurableSingletonClass.{u_3} alphabet inst_5] (columns : alphabet → V)
+    (file :
+      @Submodule.{u_1, u_2} K V
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+    (hfile :
+      @LE.le.{u_2}
+        (@Submodule.{u_1, u_2} K V
+          (@DivisionSemiring.toSemiring.{u_1} K
+            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+          (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+        (@Preorder.toLE.{u_2}
+          (@Submodule.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+          (@PartialOrder.toPreorder.{u_2}
+            (@Submodule.{u_1, u_2} K V
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+            (@Submodule.instPartialOrder.{u_1, u_2} K V
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)))
+        file
+        (@Submodule.span.{u_1, u_2} K V
+          (@DivisionSemiring.toSemiring.{u_1} K
+            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+          (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2 (@Set.range.{u_2, u_3 + 1} V alphabet columns))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.signature
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.actual
+    PUnit.unit.{1} PUnit.unit.{1}
+    (@MeasureTheory.lintegral.{u_3} (Nat → alphabet)
+      (@MeasurableSpace.pi.{0, u_3} Nat (fun (a : Nat) => alphabet) fun (a : Nat) => inst_5)
+      (@D5.S3.Resource.MinimumRetrievalTime.uniformSamples.{u_3} alphabet inst_3 inst_4 inst_5)
+      fun (sample : Nat → alphabet) =>
+      @D5.S3.Resource.MinimumRetrievalTime.retrievalTime.{u_1, u_2, u_3} K V alphabet inst inst_1 inst_2 columns file
+        sample)
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.observationFact0.{u_1, u_2, u_3} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"retrieval_time_probability_bridge\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"argument\",\"argument\",\"argument\",\"argument\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ProbabilityBridge\",\"registration_2\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.retrieval_time_probability_bridge, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument, .argument, .argument, .argument, .argument, .argument, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.varyingLawInput.{u_1, u_2, u_3} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.canonicalArenaOperand.{u_1, u_2, u_3})
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.varyingLaw.{u_1, u_2, u_3}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ProbabilityBridge\",\"registration_2\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.statementExclusion.{u_1, u_2, u_3} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ProbabilityBridge\",\"registration_2\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"retrieval_time_probability_bridge\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  statementLocation := { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.retrieval_time_probability_bridge, part := .type, path := [], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration.{u_1,
+  u_2, u_3}).actual (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration.{u_1,
+  u_2, u_3}).variation.2.choose (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration.{u_1,
+  u_2, u_3}).variation.1 (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration.{u_1,
+  u_2, u_3}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ProbabilityBridge\",\"registration_2\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}")) (@(compiled_node% "{\"declaration\":[\"_private\",\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",0,\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"ProbabilityBridge\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]],[\"param\",[\"u_3\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration_2, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ProbabilityBridge.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2), (.param `u_3)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.sourceLaw.{u_1, u_2} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.arena.{u_1,
+    u_2}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.arena.{u_1,
+      u_2}
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.arena.{u_1,
+        u_2}
+      (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
+        (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
+        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))))
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration.{u_1,
+      u_2})
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.sourceBridgeFact.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"five_column_bad_pairs_obstruction\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"BadPairs\",\"registration_5\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_bad_pairs_obstruction, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.sourceLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.arena.{u_1,
+    u_2}
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.arena.{u_1,
+      u_2}
+    (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
+      (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
+      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 4) (instOfNatNat (nat_lit 4))))))
+  _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration.{u_1,
+    u_2})
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.observation0.{u_1, u_2} : {K : Type u_1} →
+  {V : Type u_2} →
+    [inst : Field.{u_1} K] →
+      [inst_1 : AddCommGroup.{u_2} V] →
+        [inst_2 :
+            @Module.{u_1, u_2} K V
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)] →
+          (columns : Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) → V) →
+            (file :
+                @Submodule.{u_1, u_2} K V
+                  (@DivisionSemiring.toSemiring.{u_1} K
+                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2) →
+              (common left right : Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) →
+                (hcommonLeft :
+                    @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) common left) →
+                  (hcommonRight :
+                      @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) common right) →
+                    (hleftRight :
+                        @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) left right) →
+                      (hbadLeft :
+                          Not
+                            (@LE.le.{u_2}
+                              (@Submodule.{u_1, u_2} K V
+                                (@DivisionSemiring.toSemiring.{u_1} K
+                                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                              (@Preorder.toLE.{u_2}
+                                (@Submodule.{u_1, u_2} K V
+                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                (@PartialOrder.toPreorder.{u_2}
+                                  (@Submodule.{u_1, u_2} K V
+                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                      (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                    (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                  (@Submodule.instPartialOrder.{u_1, u_2} K V
+                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                      (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                    (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)))
+                              file
+                              (@Submodule.span.{u_1, u_2} K V
+                                (@DivisionSemiring.toSemiring.{u_1} K
+                                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2
+                                (@Insert.insert.{u_2, u_2} V (Set.{u_2} V) (@Set.instInsert.{u_2} V) (columns common)
+                                  (@Singleton.singleton.{u_2, u_2} V (Set.{u_2} V) (@Set.instSingletonSet.{u_2} V)
+                                    (columns left)))))) →
+                        (hbadRight :
+                            Not
+                              (@LE.le.{u_2}
+                                (@Submodule.{u_1, u_2} K V
+                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                (@Preorder.toLE.{u_2}
+                                  (@Submodule.{u_1, u_2} K V
+                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                      (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                    (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                  (@PartialOrder.toPreorder.{u_2}
+                                    (@Submodule.{u_1, u_2} K V
+                                      (@DivisionSemiring.toSemiring.{u_1} K
+                                        (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                      (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                    (@Submodule.instPartialOrder.{u_1, u_2} K V
+                                      (@DivisionSemiring.toSemiring.{u_1} K
+                                        (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                      (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)))
+                                file
+                                (@Submodule.span.{u_1, u_2} K V
+                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2
+                                  (@Insert.insert.{u_2, u_2} V (Set.{u_2} V) (@Set.instInsert.{u_2} V) (columns common)
+                                    (@Singleton.singleton.{u_2, u_2} V (Set.{u_2} V) (@Set.instSingletonSet.{u_2} V)
+                                      (columns right)))))) →
+                          (hfile :
+                              @LE.le.{u_2}
+                                (@Submodule.{u_1, u_2} K V
+                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                (@Preorder.toLE.{u_2}
+                                  (@Submodule.{u_1, u_2} K V
+                                    (@DivisionSemiring.toSemiring.{u_1} K
+                                      (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                    (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                  (@PartialOrder.toPreorder.{u_2}
+                                    (@Submodule.{u_1, u_2} K V
+                                      (@DivisionSemiring.toSemiring.{u_1} K
+                                        (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                      (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+                                    (@Submodule.instPartialOrder.{u_1, u_2} K V
+                                      (@DivisionSemiring.toSemiring.{u_1} K
+                                        (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                      (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)))
+                                file
+                                (@Submodule.span.{u_1, u_2} K V
+                                  (@DivisionSemiring.toSemiring.{u_1} K
+                                    (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                                  (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2
+                                  (@Set.range.{u_2, 1} V
+                                    (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) columns))) →
+                            D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+                              (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralSignature
+                                (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+                              PUnit.unit.{1} PUnit.unit.{1} :=
+  fun {K : Type u_1} {V : Type u_2} [inst : Field.{u_1} K] [inst_1 : AddCommGroup.{u_2} V]
+    [inst_2 :
+      @Module.{u_1, u_2} K V
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1)]
+    (columns : Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))) → V)
+    (file :
+      @Submodule.{u_1, u_2} K V
+        (@DivisionSemiring.toSemiring.{u_1} K (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+        (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+    (common left right : Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+    (hcommonLeft : @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) common left)
+    (hcommonRight : @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) common right)
+    (hleftRight : @Ne.{1} (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) left right)
+    (hbadLeft :
+      Not
+        (@LE.le.{u_2}
+          (@Submodule.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+          (@Preorder.toLE.{u_2}
+            (@Submodule.{u_1, u_2} K V
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+            (@PartialOrder.toPreorder.{u_2}
+              (@Submodule.{u_1, u_2} K V
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+              (@Submodule.instPartialOrder.{u_1, u_2} K V
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)))
+          file
+          (@Submodule.span.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2
+            (@Insert.insert.{u_2, u_2} V (Set.{u_2} V) (@Set.instInsert.{u_2} V) (columns common)
+              (@Singleton.singleton.{u_2, u_2} V (Set.{u_2} V) (@Set.instSingletonSet.{u_2} V) (columns left))))))
+    (hbadRight :
+      Not
+        (@LE.le.{u_2}
+          (@Submodule.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+          (@Preorder.toLE.{u_2}
+            (@Submodule.{u_1, u_2} K V
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+            (@PartialOrder.toPreorder.{u_2}
+              (@Submodule.{u_1, u_2} K V
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+              (@Submodule.instPartialOrder.{u_1, u_2} K V
+                (@DivisionSemiring.toSemiring.{u_1} K
+                  (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+                (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)))
+          file
+          (@Submodule.span.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2
+            (@Insert.insert.{u_2, u_2} V (Set.{u_2} V) (@Set.instInsert.{u_2} V) (columns common)
+              (@Singleton.singleton.{u_2, u_2} V (Set.{u_2} V) (@Set.instSingletonSet.{u_2} V) (columns right))))))
+    (hfile :
+      @LE.le.{u_2}
+        (@Submodule.{u_1, u_2} K V
+          (@DivisionSemiring.toSemiring.{u_1} K
+            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+          (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+        (@Preorder.toLE.{u_2}
+          (@Submodule.{u_1, u_2} K V
+            (@DivisionSemiring.toSemiring.{u_1} K
+              (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+            (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+          (@PartialOrder.toPreorder.{u_2}
+            (@Submodule.{u_1, u_2} K V
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)
+            (@Submodule.instPartialOrder.{u_1, u_2} K V
+              (@DivisionSemiring.toSemiring.{u_1} K
+                (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+              (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2)))
+        file
+        (@Submodule.span.{u_1, u_2} K V
+          (@DivisionSemiring.toSemiring.{u_1} K
+            (@Semifield.toDivisionSemiring.{u_1} K (@Field.toSemifield.{u_1} K inst)))
+          (@AddCommGroup.toAddCommMonoid.{u_2} V inst_1) inst_2
+          (@Set.range.{u_2, 1} V (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) columns))) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralSignature
+      (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))
+    (@_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.integralActual
+      (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))
+      _private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.ThreeKernel.registration._proof_1)
+    PUnit.unit.{1} PUnit.unit.{1}
+    fun (sample : Nat → Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) =>
+    ENNReal.toReal
+      (@D5.S3.Resource.MinimumRetrievalTime.retrievalTime.{u_1, u_2, 0} K V
+        (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) inst inst_1 inst_2 columns file sample)
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.observationFact0.{u_1, u_2} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"five_column_bad_pairs_obstruction\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"BadPairs\",\"registration_5\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_bad_pairs_obstruction, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .body, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.observation0, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.varyingLawInput.{u_1, u_2} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.canonicalArenaOperand.{u_1, u_2})
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.varyingLaw.{u_1, u_2}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"BadPairs\",\"registration_5\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.statementExclusion.{u_1, u_2} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"BadPairs\",\"registration_5\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"five_column_bad_pairs_obstruction\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.varyingLaw, part := .value, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  statementLocation := { owner := `D5.S3.Resource.MinimumRetrievalTime, declaration := `D5.S3.Resource.MinimumRetrievalTime.five_column_bad_pairs_obstruction, part := .type, path := [], levels := [(.param `u_1), (.param `u_2)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration.{u_1,
+  u_2}).actual (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration.{u_1,
+  u_2}).variation.2.choose (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration.{u_1,
+  u_2}).variation.1 (_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration.{u_1,
+  u_2}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"BadPairs\",\"registration_5\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}")) (@(compiled_node% "{\"declaration\":[\"_private\",\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",0,\"Reg\",\"D5\",\"S3\",\"Resource\",\"MinimumRetrievalTime\",\"Auxiliary\",\"BadPairs\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]],[\"param\",[\"u_2\"]]]}"))
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration_5, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  { owner := `Reg.D5.S3.Resource.MinimumRetrievalTime, declaration := `_private.Reg.D5.S3.Resource.MinimumRetrievalTime.0.Reg.D5.S3.Resource.MinimumRetrievalTime.Auxiliary.BadPairs.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1), (.param `u_2)] }
+  (by first | rfl | (ext <;> rfl))

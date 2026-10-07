@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness
 import Reg.Support.DependentFamily
@@ -156,10 +159,188 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "body", "arg", "arg", "body", "arg", "body", "arg", "fn", "arg", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.actual_complete_cubic_cyclotomic_disjointness, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.canonicalArenaFact, `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.sourceBridgeFact, `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.observationFact0, `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 
 end
 end Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness
+
+
+noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.arena
+noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.arena
+noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.arena
+    (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+      Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.arena
+      Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.actual)
+    Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration)
+
+noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"actual_complete_cubic_cyclotomic_disjointness\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.actual_complete_cubic_cyclotomic_disjointness, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.arena
+  (D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.arena
+    Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.actual)
+  Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration)
+
+noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.observation0 : (j : Nat) →
+  let I : Type := D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.radicalIndex j;
+  (ζ : D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.L) →
+    (π : Nat → D5.S3.Factorization.QuadraticIdeals.EisensteinOddQuotient.EisensteinOrder) →
+      (root : I → D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.L) →
+        D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0, 0, 0}
+          Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.signature PUnit.unit.{1}
+          PUnit.unit.{1} :=
+  fun (j : Nat) =>
+  have φ :
+    @AlgEquiv.{0, 0, 0} Int D5.S3.Factorization.QuadraticIdeals.EisensteinOddQuotient.EisensteinOrder
+      (@NumberField.RingOfIntegers.{0} D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.E
+        (@CyclotomicField.instField.{0} (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) Rat
+          Rat.instField))
+      Int.instCommSemiring
+      (@CommSemiring.toSemiring.{0} D5.S3.Factorization.QuadraticIdeals.EisensteinOddQuotient.EisensteinOrder
+        (@QuadraticAlgebra.instCommSemiring.{0} Int
+          (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+          (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+          Int.instCommSemiring))
+      (@CommSemiring.toSemiring.{0}
+        (@NumberField.RingOfIntegers.{0} D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.E
+          (@CyclotomicField.instField.{0} (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) Rat
+            Rat.instField))
+        (@CommRing.toCommSemiring.{0}
+          (@NumberField.RingOfIntegers.{0} D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.E
+            (@CyclotomicField.instField.{0} (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) Rat
+              Rat.instField))
+          (@NumberField.instCommRingRingOfIntegers.{0}
+            D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.E
+            (@CyclotomicField.instField.{0} (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) Rat
+              Rat.instField))))
+      (@QuadraticAlgebra.instAlgebra.{0, 0} Int Int
+        (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+        (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+        Int.instCommSemiring Int.instCommSemiring (@Algebra.id.{0} Int Int.instCommSemiring))
+      (@Ring.toIntAlgebra.{0}
+        (@NumberField.RingOfIntegers.{0} D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.E
+          (@CyclotomicField.instField.{0} (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) Rat
+            Rat.instField))
+        (@CommRing.toRing.{0}
+          (@NumberField.RingOfIntegers.{0} D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.E
+            (@CyclotomicField.instField.{0} (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) Rat
+              Rat.instField))
+          (@NumberField.instCommRingRingOfIntegers.{0}
+            D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.E
+            (@CyclotomicField.instField.{0} (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) Rat
+              Rat.instField)))) :=
+    @Classical.choice.{1}
+      (@AlgEquiv.{0, 0, 0} Int D5.S3.Factorization.QuadraticIdeals.EisensteinOddQuotient.EisensteinOrder
+        (@NumberField.RingOfIntegers.{0} D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.E
+          (@CyclotomicField.instField.{0} (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) Rat
+            Rat.instField))
+        Int.instCommSemiring
+        (@CommSemiring.toSemiring.{0} D5.S3.Factorization.QuadraticIdeals.EisensteinOddQuotient.EisensteinOrder
+          (@QuadraticAlgebra.instCommSemiring.{0} Int
+            (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+            (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+            Int.instCommSemiring))
+        (@CommSemiring.toSemiring.{0}
+          (@NumberField.RingOfIntegers.{0} D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.E
+            (@CyclotomicField.instField.{0} (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) Rat
+              Rat.instField))
+          (@CommRing.toCommSemiring.{0}
+            (@NumberField.RingOfIntegers.{0} D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.E
+              (@CyclotomicField.instField.{0} (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) Rat
+                Rat.instField))
+            (@NumberField.instCommRingRingOfIntegers.{0}
+              D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.E
+              (@CyclotomicField.instField.{0} (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) Rat
+                Rat.instField))))
+        (@QuadraticAlgebra.instAlgebra.{0, 0} Int Int
+          (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+          (@Neg.neg.{0} Int Int.instNegInt (@OfNat.ofNat.{0} Int (nat_lit 1) (@instOfNat (nat_lit 1))))
+          Int.instCommSemiring Int.instCommSemiring (@Algebra.id.{0} Int Int.instCommSemiring))
+        (@Ring.toIntAlgebra.{0}
+          (@NumberField.RingOfIntegers.{0} D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.E
+            (@CyclotomicField.instField.{0} (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) Rat
+              Rat.instField))
+          (@CommRing.toRing.{0}
+            (@NumberField.RingOfIntegers.{0} D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.E
+              (@CyclotomicField.instField.{0} (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) Rat
+                Rat.instField))
+            (@NumberField.instCommRingRingOfIntegers.{0}
+              D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.E
+              (@CyclotomicField.instField.{0} (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3))) Rat
+                Rat.instField)))))
+      D5.S3.Factorization.QuadraticIdeals.EisensteinCyclotomicBridge.eisenstein_cyclotomic_equiv_exists;
+  have B : Nat → Nat := D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.blockValue;
+  have S : Finset.{0} Nat := D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.support j;
+  let I : Type := D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.radicalIndex j;
+  fun (ζ : D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.L)
+    (π : Nat → D5.S3.Factorization.QuadraticIdeals.EisensteinOddQuotient.EisensteinOrder)
+    (root : I → D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.L) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.signature
+    Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.actual PUnit.unit.{1} PUnit.unit.{1} ζ
+
+noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"actual_complete_cubic_cyclotomic_disjointness\"],\"part\":\"type\",\"path\":[\"body\",\"letBody\",\"letBody\",\"letBody\",\"letBody\",\"argument\",\"body\",\"argument\",\"argument\",\"body\",\"argument\",\"body\",\"argument\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.actual_complete_cubic_cyclotomic_disjointness, part := .type, path := [.body, .letBody, .letBody, .letBody, .letBody, .argument, .body, .argument, .argument, .body, .argument, .body, .argument, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"actual_complete_cubic_cyclotomic_disjointness\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.actual_complete_cubic_cyclotomic_disjointness, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration).actual (Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration).variation.2.choose (Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration).variation.1 (Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Factorization\",\"Galois\",\"GoldenCubicCompleteCyclotomicDisjointness\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness, declaration := `Reg.D5.S3.Factorization.Galois.GoldenCubicCompleteCyclotomicDisjointness.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))

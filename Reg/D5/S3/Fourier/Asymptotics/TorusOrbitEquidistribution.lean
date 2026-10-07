@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution
 import Reg.Support.DependentFamily
@@ -113,9 +116,2351 @@ noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registrat
   sourceSelection := some { owner := `D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, definition := none, coordinates := #[0, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "arg", "body", "fn", "fn", "arg", "body", "fn", "arg", "arg", "body", "fn", "arg"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.result, part := .type, path := [], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [.param `u_1] },
+    { owner := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [.param `u_1] }], facts := [`Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.canonicalArenaFact, `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.sourceBridgeFact, `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.observationFact0, `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.anchorEnumeration }
 
 
 #print axioms registration
 
 end Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution
+
+
+noncomputable def Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.canonicalArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_1 + 1, u_1, 0, u_1, 0} :=
+  Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.arena.{u_1}
+noncomputable def Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.canonicalArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"Asymptotics\",\"TorusOrbitEquidistribution\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"Asymptotics\",\"TorusOrbitEquidistribution\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+noncomputable def Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.canonicalObjectArenaOperand.{u_1} : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{u_1 + 1, u_1, 0, u_1, 0} :=
+  Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.arena.{u_1}
+noncomputable def Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.canonicalObjectArenaFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"Asymptotics\",\"TorusOrbitEquidistribution\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"Asymptotics\",\"TorusOrbitEquidistribution\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [(.param `u_1)] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.sourceLaw.{u_1} : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{u_1 + 1, u_1, 0, u_1, 0}
+  Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.arena.{u_1}
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{u_1 + 1, u_1, 0, u_1, 0}
+    Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.arena.{u_1}
+    (∀ {I : Type u_1} [Fintype.{u_1} I] (g : I → Circle),
+      let G :
+        @Subgroup.{u_1} (I → Circle)
+          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+            @CommGroup.toGroup.{0} Circle Circle.instCommGroup) :=
+        @Subgroup.topologicalClosure.{u_1} (I → Circle)
+          (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+          (@Pi.topologicalGroup.{u_1, 0} I (fun (a : I) => Circle) (fun (i : I) => instTopologicalSpaceCircle)
+            (fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup) fun (b : I) =>
+            Circle.instIsTopologicalGroup)
+          (@Subgroup.zpowers.{u_1} (I → Circle)
+            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+            g);
+      have μ :
+        @MeasureTheory.Measure.{u_1}
+          (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+            @Membership.mem.{u_1, u_1} (I → Circle)
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (@SetLike.instMembership.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+              G x)
+          (@borel.{u_1}
+            (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+              (fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))) :=
+        @MeasureTheory.Measure.haarMeasure.{u_1}
+          (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+            @Membership.mem.{u_1, u_1} (I → Circle)
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (@SetLike.instMembership.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+              G x)
+          (@Subgroup.toGroup.{u_1} (I → Circle)
+            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+            G)
+          (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+            (fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+          (@Subgroup.instIsTopologicalGroupSubtypeMem.{u_1} (I → Circle)
+            (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+            (@Pi.topologicalGroup.{u_1, 0} I (fun (a : I) => Circle) (fun (i : I) => instTopologicalSpaceCircle)
+              (fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup) fun (b : I) =>
+              Circle.instIsTopologicalGroup)
+            G)
+          (@borel.{u_1}
+            (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+              (fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)))
+          (@BorelSpace.mk.{u_1}
+            (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+              (fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+            (@borel.{u_1}
+              (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                (fun (x : I → Circle) =>
+                  @Membership.mem.{u_1, u_1} (I → Circle)
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (@SetLike.instMembership.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                    G x)
+                (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)))
+            (@rfl.{u_1 + 1}
+              (MeasurableSpace.{u_1}
+                (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                  @Membership.mem.{u_1, u_1} (I → Circle)
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (@SetLike.instMembership.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                    G x))
+              (@borel.{u_1}
+                (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                  @Membership.mem.{u_1, u_1} (I → Circle)
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (@SetLike.instMembership.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                    G x)
+                (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                  (fun (x : I → Circle) =>
+                    @Membership.mem.{u_1, u_1} (I → Circle)
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (@SetLike.instMembership.{u_1, u_1}
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (I → Circle)
+                        (@Subgroup.instSetLike.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                      G x)
+                  (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) =>
+                    instTopologicalSpaceCircle)))))
+          (@Top.top.{u_1}
+            (@TopologicalSpace.PositiveCompacts.{u_1}
+              (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                (fun (x : I → Circle) =>
+                  @Membership.mem.{u_1, u_1} (I → Circle)
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (@SetLike.instMembership.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                    G x)
+                (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)))
+            (@TopologicalSpace.PositiveCompacts.instTopOfCompactSpaceOfNonempty.{u_1}
+              (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                (fun (x : I → Circle) =>
+                  @Membership.mem.{u_1, u_1} (I → Circle)
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (@SetLike.instMembership.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                    G x)
+                (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+              (@Iff.mp
+                (@IsCompact.{u_1} (I → Circle)
+                  (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+                  (@SetLike.coe.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    G))
+                (@CompactSpace.{u_1}
+                  (@Set.Elem.{u_1} (I → Circle)
+                    (@SetLike.coe.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      G))
+                  (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                    (fun (x : I → Circle) =>
+                      @Membership.mem.{u_1, u_1} (I → Circle) (Set.{u_1} (I → Circle))
+                        (@Set.instMembership.{u_1} (I → Circle))
+                        (@SetLike.coe.{u_1, u_1}
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (I → Circle)
+                          (@Subgroup.instSetLike.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          G)
+                        x)
+                    (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) =>
+                      instTopologicalSpaceCircle)))
+                (@isCompact_iff_compactSpace.{u_1} (I → Circle)
+                  (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+                  (@SetLike.coe.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    G))
+                (@IsClosed.isCompact.{u_1} (I → Circle)
+                  (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+                  (@SetLike.coe.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (@Subgroup.topologicalClosure.{u_1} (I → Circle)
+                      (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) =>
+                        instTopologicalSpaceCircle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                      (@Pi.topologicalGroup.{u_1, 0} I (fun (a : I) => Circle)
+                        (fun (i : I) => instTopologicalSpaceCircle)
+                        (fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup) fun (b : I) =>
+                        Circle.instIsTopologicalGroup)
+                      (@Subgroup.zpowers.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                        g)))
+                  (@Function.compactSpace.{0, u_1} Circle I instTopologicalSpaceCircle Circle.instCompactSpace)
+                  (@Subgroup.isClosed_topologicalClosure.{u_1} (I → Circle)
+                    (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                    (@Pi.topologicalGroup.{u_1, 0} I (fun (a : I) => Circle) (fun (i : I) => instTopologicalSpaceCircle)
+                      (fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup) fun (b : I) =>
+                      Circle.instIsTopologicalGroup)
+                    (@Subgroup.zpowers.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                      g))))
+              (@Torsor.nonempty.{u_1, u_1}
+                (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                  @Membership.mem.{u_1, u_1} (I → Circle)
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (@SetLike.instMembership.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                    G x)
+                (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                  @Membership.mem.{u_1, u_1} (I → Circle)
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (@SetLike.instMembership.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                    G x)
+                (@Subgroup.toGroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                  G)
+                (@Group.instTorsor.{u_1}
+                  (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                    @Membership.mem.{u_1, u_1} (I → Circle)
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (@SetLike.instMembership.{u_1, u_1}
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (I → Circle)
+                        (@Subgroup.instSetLike.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                      G x)
+                  (@Subgroup.toGroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                    G)))));
+      And
+        (@Eq.{u_1 + 1} (Set.{u_1} (I → Circle))
+          (@SetLike.coe.{u_1, u_1}
+            (@Subgroup.{u_1} (I → Circle)
+              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+            (I → Circle)
+            (@Subgroup.instSetLike.{u_1} (I → Circle)
+              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+            G)
+          (@closure.{u_1} (I → Circle)
+            (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+            (@Set.range.{u_1, 1} (I → Circle) Nat fun (n : Nat) =>
+              @HPow.hPow.{u_1, 0, u_1} (I → Circle) Nat (I → Circle)
+                (@instHPow.{u_1, 0} (I → Circle) Nat
+                  (@Pi.instPow.{u_1, 0, 0} I Nat (fun (a : I) => Circle) fun (i : I) =>
+                    @NPow.toPow.{0} Circle
+                      (@Monoid.toNPow.{0} Circle
+                        (@DivInvMonoid.toMonoid.{0} Circle
+                          (@Group.toDivInvMonoid.{0} Circle (@CommGroup.toGroup.{0} Circle Circle.instCommGroup))))))
+                g n)))
+        (∀
+          (f :
+            @ContinuousMap.{u_1, 0}
+              (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              Complex
+              (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                (fun (x : I → Circle) =>
+                  @Membership.mem.{u_1, u_1} (I → Circle)
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (@SetLike.instMembership.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                    G x)
+                (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+              (@UniformSpace.toTopologicalSpace.{0} Complex
+                (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                  (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                    (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))),
+          @Filter.Tendsto.{0, 0} Nat Complex
+            (fun (N : Nat) =>
+              @HDiv.hDiv.{0, 0, 0} Complex Complex Complex
+                (@instHDiv.{0} Complex (@DivInvMonoid.toDiv.{0} Complex Complex.instDivInvMonoid))
+                (@Finset.sum.{0, 0} Nat Complex Complex.instAddCommMonoid (Finset.range N) fun (n : Nat) =>
+                  @DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+                    (@ContinuousMap.{u_1, 0}
+                      (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                        @Membership.mem.{u_1, u_1} (I → Circle)
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (@SetLike.instMembership.{u_1, u_1}
+                            (@Subgroup.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                            (I → Circle)
+                            (@Subgroup.instSetLike.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                          G x)
+                      Complex
+                      (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                        (fun (x : I → Circle) =>
+                          @Membership.mem.{u_1, u_1} (I → Circle)
+                            (@Subgroup.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                            (@SetLike.instMembership.{u_1, u_1}
+                              (@Subgroup.{u_1} (I → Circle)
+                                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                              (I → Circle)
+                              (@Subgroup.instSetLike.{u_1} (I → Circle)
+                                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                            G x)
+                        (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) =>
+                          instTopologicalSpaceCircle))
+                      (@UniformSpace.toTopologicalSpace.{0} Complex
+                        (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                          (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                            (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                              (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))
+                    (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                      @Membership.mem.{u_1, u_1} (I → Circle)
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (@SetLike.instMembership.{u_1, u_1}
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (I → Circle)
+                          (@Subgroup.instSetLike.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                        G x)
+                    (fun
+                        (x :
+                          @Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                            @Membership.mem.{u_1, u_1} (I → Circle)
+                              (@Subgroup.{u_1} (I → Circle)
+                                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                              (@SetLike.instMembership.{u_1, u_1}
+                                (@Subgroup.{u_1} (I → Circle)
+                                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                                (I → Circle)
+                                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                              G x) =>
+                      Complex)
+                    (@ContinuousMap.instFunLike.{u_1, 0}
+                      (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                        @Membership.mem.{u_1, u_1} (I → Circle)
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (@SetLike.instMembership.{u_1, u_1}
+                            (@Subgroup.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                            (I → Circle)
+                            (@Subgroup.instSetLike.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                          G x)
+                      Complex
+                      (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                        (fun (x : I → Circle) =>
+                          @Membership.mem.{u_1, u_1} (I → Circle)
+                            (@Subgroup.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                            (@SetLike.instMembership.{u_1, u_1}
+                              (@Subgroup.{u_1} (I → Circle)
+                                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                              (I → Circle)
+                              (@Subgroup.instSetLike.{u_1} (I → Circle)
+                                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                            G x)
+                        (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) =>
+                          instTopologicalSpaceCircle))
+                      (@UniformSpace.toTopologicalSpace.{0} Complex
+                        (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                          (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                            (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                              (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                                (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))
+                    f
+                    (@Subtype.mk.{u_1 + 1} (I → Circle)
+                      (fun (x : I → Circle) =>
+                        @Membership.mem.{u_1, u_1} (I → Circle)
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (@SetLike.instMembership.{u_1, u_1}
+                            (@Subgroup.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                            (I → Circle)
+                            (@Subgroup.instSetLike.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                          G x)
+                      (@HPow.hPow.{u_1, 0, u_1} (I → Circle) Nat (I → Circle)
+                        (@instHPow.{u_1, 0} (I → Circle) Nat
+                          (@Pi.instPow.{u_1, 0, 0} I Nat (fun (a : I) => Circle) fun (i : I) =>
+                            @NPow.toPow.{0} Circle
+                              (@Monoid.toNPow.{0} Circle
+                                (@DivInvMonoid.toMonoid.{0} Circle
+                                  (@Group.toDivInvMonoid.{0} Circle
+                                    (@CommGroup.toGroup.{0} Circle Circle.instCommGroup))))))
+                        g
+                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                      (@Subgroup.pow_mem.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                        G g
+                        (@subset_closure.{u_1} (I → Circle)
+                          (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) =>
+                            instTopologicalSpaceCircle)
+                          (@SetLike.coe.{u_1, u_1}
+                            (@Subgroup.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                            (I → Circle)
+                            (@Subgroup.instSetLike.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                            (@Subgroup.zpowers.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                              g))
+                          g
+                          (@Subgroup.mem_zpowers.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                            g))
+                        (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                          (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
+                (@Nat.cast.{0} Complex Complex.instNatCast N))
+            (@Filter.atTop.{0} Nat Nat.instPreorder)
+            (@nhds.{0} Complex
+              (@UniformSpace.toTopologicalSpace.{0} Complex
+                (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                  (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                    (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                      (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                        (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+              (@MeasureTheory.integral.{u_1, 0}
+                (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                  @Membership.mem.{u_1, u_1} (I → Circle)
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (@SetLike.instMembership.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                    G x)
+                Complex Complex.instNormedAddCommGroup
+                (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                  (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                  instInnerProductSpaceRealComplex)
+                (@borel.{u_1}
+                  (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                    @Membership.mem.{u_1, u_1} (I → Circle)
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (@SetLike.instMembership.{u_1, u_1}
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (I → Circle)
+                        (@Subgroup.instSetLike.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                      G x)
+                  (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                    (fun (x : I → Circle) =>
+                      @Membership.mem.{u_1, u_1} (I → Circle)
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (@SetLike.instMembership.{u_1, u_1}
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (I → Circle)
+                          (@Subgroup.instSetLike.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                        G x)
+                    (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) =>
+                      instTopologicalSpaceCircle)))
+                μ
+                fun
+                  (z :
+                    @Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                      @Membership.mem.{u_1, u_1} (I → Circle)
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (@SetLike.instMembership.{u_1, u_1}
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (I → Circle)
+                          (@Subgroup.instSetLike.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                        G x) =>
+                @DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+                  (@ContinuousMap.{u_1, 0}
+                    (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                      @Membership.mem.{u_1, u_1} (I → Circle)
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (@SetLike.instMembership.{u_1, u_1}
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (I → Circle)
+                          (@Subgroup.instSetLike.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                        G x)
+                    Complex
+                    (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                      (fun (x : I → Circle) =>
+                        @Membership.mem.{u_1, u_1} (I → Circle)
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (@SetLike.instMembership.{u_1, u_1}
+                            (@Subgroup.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                            (I → Circle)
+                            (@Subgroup.instSetLike.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                          G x)
+                      (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) =>
+                        instTopologicalSpaceCircle))
+                    (@UniformSpace.toTopologicalSpace.{0} Complex
+                      (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                        (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                          (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))
+                  (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                    @Membership.mem.{u_1, u_1} (I → Circle)
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (@SetLike.instMembership.{u_1, u_1}
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (I → Circle)
+                        (@Subgroup.instSetLike.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                      G x)
+                  (fun
+                      (x :
+                        @Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                          @Membership.mem.{u_1, u_1} (I → Circle)
+                            (@Subgroup.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                            (@SetLike.instMembership.{u_1, u_1}
+                              (@Subgroup.{u_1} (I → Circle)
+                                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                              (I → Circle)
+                              (@Subgroup.instSetLike.{u_1} (I → Circle)
+                                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                            G x) =>
+                    Complex)
+                  (@ContinuousMap.instFunLike.{u_1, 0}
+                    (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                      @Membership.mem.{u_1, u_1} (I → Circle)
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (@SetLike.instMembership.{u_1, u_1}
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (I → Circle)
+                          (@Subgroup.instSetLike.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                        G x)
+                    Complex
+                    (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                      (fun (x : I → Circle) =>
+                        @Membership.mem.{u_1, u_1} (I → Circle)
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (@SetLike.instMembership.{u_1, u_1}
+                            (@Subgroup.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                            (I → Circle)
+                            (@Subgroup.instSetLike.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                          G x)
+                      (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) =>
+                        instTopologicalSpaceCircle))
+                    (@UniformSpace.toTopologicalSpace.{0} Complex
+                      (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                        (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                          (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))
+                  f z))))
+    Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.sourceBridgeFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"Asymptotics\",\"TorusOrbitEquidistribution\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"Asymptotics\",\"TorusOrbitEquidistribution\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.result, part := .type, path := [], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.sourceLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{u_1 + 1, u_1, 0, u_1, 0}
+  Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.arena.{u_1}
+  (∀ {I : Type u_1} [Fintype.{u_1} I] (g : I → Circle),
+    let G :
+      @Subgroup.{u_1} (I → Circle)
+        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+          @CommGroup.toGroup.{0} Circle Circle.instCommGroup) :=
+      @Subgroup.topologicalClosure.{u_1} (I → Circle)
+        (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+        (@Pi.topologicalGroup.{u_1, 0} I (fun (a : I) => Circle) (fun (i : I) => instTopologicalSpaceCircle)
+          (fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup) fun (b : I) =>
+          Circle.instIsTopologicalGroup)
+        (@Subgroup.zpowers.{u_1} (I → Circle)
+          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+          g);
+    have μ :
+      @MeasureTheory.Measure.{u_1}
+        (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+          @Membership.mem.{u_1, u_1} (I → Circle)
+            (@Subgroup.{u_1} (I → Circle)
+              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+            (@SetLike.instMembership.{u_1, u_1}
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (I → Circle)
+              (@Subgroup.instSetLike.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+            G x)
+        (@borel.{u_1}
+          (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+            @Membership.mem.{u_1, u_1} (I → Circle)
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (@SetLike.instMembership.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+              G x)
+          (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+            (fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))) :=
+      @MeasureTheory.Measure.haarMeasure.{u_1}
+        (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+          @Membership.mem.{u_1, u_1} (I → Circle)
+            (@Subgroup.{u_1} (I → Circle)
+              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+            (@SetLike.instMembership.{u_1, u_1}
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (I → Circle)
+              (@Subgroup.instSetLike.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+            G x)
+        (@Subgroup.toGroup.{u_1} (I → Circle)
+          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+          G)
+        (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+          (fun (x : I → Circle) =>
+            @Membership.mem.{u_1, u_1} (I → Circle)
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (@SetLike.instMembership.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+              G x)
+          (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+        (@Subgroup.instIsTopologicalGroupSubtypeMem.{u_1} (I → Circle)
+          (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+          (@Pi.topologicalGroup.{u_1, 0} I (fun (a : I) => Circle) (fun (i : I) => instTopologicalSpaceCircle)
+            (fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup) fun (b : I) =>
+            Circle.instIsTopologicalGroup)
+          G)
+        (@borel.{u_1}
+          (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+            @Membership.mem.{u_1, u_1} (I → Circle)
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (@SetLike.instMembership.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+              G x)
+          (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+            (fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)))
+        (@BorelSpace.mk.{u_1}
+          (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+            @Membership.mem.{u_1, u_1} (I → Circle)
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (@SetLike.instMembership.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+              G x)
+          (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+            (fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+          (@borel.{u_1}
+            (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+              (fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)))
+          (@rfl.{u_1 + 1}
+            (MeasurableSpace.{u_1}
+              (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x))
+            (@borel.{u_1}
+              (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                (fun (x : I → Circle) =>
+                  @Membership.mem.{u_1, u_1} (I → Circle)
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (@SetLike.instMembership.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                    G x)
+                (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)))))
+        (@Top.top.{u_1}
+          (@TopologicalSpace.PositiveCompacts.{u_1}
+            (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+              (fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)))
+          (@TopologicalSpace.PositiveCompacts.instTopOfCompactSpaceOfNonempty.{u_1}
+            (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+              (fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+            (@Iff.mp
+              (@IsCompact.{u_1} (I → Circle)
+                (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+                (@SetLike.coe.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  G))
+              (@CompactSpace.{u_1}
+                (@Set.Elem.{u_1} (I → Circle)
+                  (@SetLike.coe.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    G))
+                (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                  (fun (x : I → Circle) =>
+                    @Membership.mem.{u_1, u_1} (I → Circle) (Set.{u_1} (I → Circle))
+                      (@Set.instMembership.{u_1} (I → Circle))
+                      (@SetLike.coe.{u_1, u_1}
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (I → Circle)
+                        (@Subgroup.instSetLike.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        G)
+                      x)
+                  (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)))
+              (@isCompact_iff_compactSpace.{u_1} (I → Circle)
+                (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+                (@SetLike.coe.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  G))
+              (@IsClosed.isCompact.{u_1} (I → Circle)
+                (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+                (@SetLike.coe.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@Subgroup.topologicalClosure.{u_1} (I → Circle)
+                    (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                    (@Pi.topologicalGroup.{u_1, 0} I (fun (a : I) => Circle) (fun (i : I) => instTopologicalSpaceCircle)
+                      (fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup) fun (b : I) =>
+                      Circle.instIsTopologicalGroup)
+                    (@Subgroup.zpowers.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                      g)))
+                (@Function.compactSpace.{0, u_1} Circle I instTopologicalSpaceCircle Circle.instCompactSpace)
+                (@Subgroup.isClosed_topologicalClosure.{u_1} (I → Circle)
+                  (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                  (@Pi.topologicalGroup.{u_1, 0} I (fun (a : I) => Circle) (fun (i : I) => instTopologicalSpaceCircle)
+                    (fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup) fun (b : I) =>
+                    Circle.instIsTopologicalGroup)
+                  (@Subgroup.zpowers.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                    g))))
+            (@Torsor.nonempty.{u_1, u_1}
+              (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@Subgroup.toGroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                G)
+              (@Group.instTorsor.{u_1}
+                (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                  @Membership.mem.{u_1, u_1} (I → Circle)
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (@SetLike.instMembership.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                    G x)
+                (@Subgroup.toGroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                  G)))));
+    And
+      (@Eq.{u_1 + 1} (Set.{u_1} (I → Circle))
+        (@SetLike.coe.{u_1, u_1}
+          (@Subgroup.{u_1} (I → Circle)
+            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+          (I → Circle)
+          (@Subgroup.instSetLike.{u_1} (I → Circle)
+            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+          G)
+        (@closure.{u_1} (I → Circle)
+          (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+          (@Set.range.{u_1, 1} (I → Circle) Nat fun (n : Nat) =>
+            @HPow.hPow.{u_1, 0, u_1} (I → Circle) Nat (I → Circle)
+              (@instHPow.{u_1, 0} (I → Circle) Nat
+                (@Pi.instPow.{u_1, 0, 0} I Nat (fun (a : I) => Circle) fun (i : I) =>
+                  @NPow.toPow.{0} Circle
+                    (@Monoid.toNPow.{0} Circle
+                      (@DivInvMonoid.toMonoid.{0} Circle
+                        (@Group.toDivInvMonoid.{0} Circle (@CommGroup.toGroup.{0} Circle Circle.instCommGroup))))))
+              g n)))
+      (∀
+        (f :
+          @ContinuousMap.{u_1, 0}
+            (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            Complex
+            (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+              (fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+            (@UniformSpace.toTopologicalSpace.{0} Complex
+              (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                  (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))),
+        @Filter.Tendsto.{0, 0} Nat Complex
+          (fun (N : Nat) =>
+            @HDiv.hDiv.{0, 0, 0} Complex Complex Complex
+              (@instHDiv.{0} Complex (@DivInvMonoid.toDiv.{0} Complex Complex.instDivInvMonoid))
+              (@Finset.sum.{0, 0} Nat Complex Complex.instAddCommMonoid (Finset.range N) fun (n : Nat) =>
+                @DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+                  (@ContinuousMap.{u_1, 0}
+                    (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                      @Membership.mem.{u_1, u_1} (I → Circle)
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (@SetLike.instMembership.{u_1, u_1}
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (I → Circle)
+                          (@Subgroup.instSetLike.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                        G x)
+                    Complex
+                    (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                      (fun (x : I → Circle) =>
+                        @Membership.mem.{u_1, u_1} (I → Circle)
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (@SetLike.instMembership.{u_1, u_1}
+                            (@Subgroup.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                            (I → Circle)
+                            (@Subgroup.instSetLike.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                          G x)
+                      (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) =>
+                        instTopologicalSpaceCircle))
+                    (@UniformSpace.toTopologicalSpace.{0} Complex
+                      (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                        (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                          (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))
+                  (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                    @Membership.mem.{u_1, u_1} (I → Circle)
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (@SetLike.instMembership.{u_1, u_1}
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (I → Circle)
+                        (@Subgroup.instSetLike.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                      G x)
+                  (fun
+                      (x :
+                        @Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                          @Membership.mem.{u_1, u_1} (I → Circle)
+                            (@Subgroup.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                            (@SetLike.instMembership.{u_1, u_1}
+                              (@Subgroup.{u_1} (I → Circle)
+                                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                              (I → Circle)
+                              (@Subgroup.instSetLike.{u_1} (I → Circle)
+                                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                            G x) =>
+                    Complex)
+                  (@ContinuousMap.instFunLike.{u_1, 0}
+                    (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                      @Membership.mem.{u_1, u_1} (I → Circle)
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (@SetLike.instMembership.{u_1, u_1}
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (I → Circle)
+                          (@Subgroup.instSetLike.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                        G x)
+                    Complex
+                    (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                      (fun (x : I → Circle) =>
+                        @Membership.mem.{u_1, u_1} (I → Circle)
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (@SetLike.instMembership.{u_1, u_1}
+                            (@Subgroup.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                            (I → Circle)
+                            (@Subgroup.instSetLike.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                          G x)
+                      (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) =>
+                        instTopologicalSpaceCircle))
+                    (@UniformSpace.toTopologicalSpace.{0} Complex
+                      (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                        (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                          (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                            (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                              (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))
+                  f
+                  (@Subtype.mk.{u_1 + 1} (I → Circle)
+                    (fun (x : I → Circle) =>
+                      @Membership.mem.{u_1, u_1} (I → Circle)
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (@SetLike.instMembership.{u_1, u_1}
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (I → Circle)
+                          (@Subgroup.instSetLike.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                        G x)
+                    (@HPow.hPow.{u_1, 0, u_1} (I → Circle) Nat (I → Circle)
+                      (@instHPow.{u_1, 0} (I → Circle) Nat
+                        (@Pi.instPow.{u_1, 0, 0} I Nat (fun (a : I) => Circle) fun (i : I) =>
+                          @NPow.toPow.{0} Circle
+                            (@Monoid.toNPow.{0} Circle
+                              (@DivInvMonoid.toMonoid.{0} Circle
+                                (@Group.toDivInvMonoid.{0} Circle
+                                  (@CommGroup.toGroup.{0} Circle Circle.instCommGroup))))))
+                      g
+                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))
+                    (@Subgroup.pow_mem.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                      G g
+                      (@subset_closure.{u_1} (I → Circle)
+                        (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) =>
+                          instTopologicalSpaceCircle)
+                        (@SetLike.coe.{u_1, u_1}
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (I → Circle)
+                          (@Subgroup.instSetLike.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (@Subgroup.zpowers.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                            g))
+                        g
+                        (@Subgroup.mem_zpowers.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                          g))
+                      (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) n
+                        (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
+              (@Nat.cast.{0} Complex Complex.instNatCast N))
+          (@Filter.atTop.{0} Nat Nat.instPreorder)
+          (@nhds.{0} Complex
+            (@UniformSpace.toTopologicalSpace.{0} Complex
+              (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                  (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))
+            (@MeasureTheory.integral.{u_1, 0}
+              (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              Complex Complex.instNormedAddCommGroup
+              (@InnerProductSpace.toNormedSpace.{0, 0} Real Complex Real.instRCLike
+                (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Complex Complex.instNormedAddCommGroup)
+                instInnerProductSpaceRealComplex)
+              (@borel.{u_1}
+                (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                  @Membership.mem.{u_1, u_1} (I → Circle)
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (@SetLike.instMembership.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                    G x)
+                (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                  (fun (x : I → Circle) =>
+                    @Membership.mem.{u_1, u_1} (I → Circle)
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (@SetLike.instMembership.{u_1, u_1}
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (I → Circle)
+                        (@Subgroup.instSetLike.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                      G x)
+                  (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)))
+              μ
+              fun
+                (z :
+                  @Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                    @Membership.mem.{u_1, u_1} (I → Circle)
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (@SetLike.instMembership.{u_1, u_1}
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (I → Circle)
+                        (@Subgroup.instSetLike.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                      G x) =>
+              @DFunLike.coe.{u_1 + 1, u_1 + 1, 1}
+                (@ContinuousMap.{u_1, 0}
+                  (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                    @Membership.mem.{u_1, u_1} (I → Circle)
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (@SetLike.instMembership.{u_1, u_1}
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (I → Circle)
+                        (@Subgroup.instSetLike.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                      G x)
+                  Complex
+                  (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                    (fun (x : I → Circle) =>
+                      @Membership.mem.{u_1, u_1} (I → Circle)
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (@SetLike.instMembership.{u_1, u_1}
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (I → Circle)
+                          (@Subgroup.instSetLike.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                        G x)
+                    (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+                  (@UniformSpace.toTopologicalSpace.{0} Complex
+                    (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                      (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                        (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))
+                (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                  @Membership.mem.{u_1, u_1} (I → Circle)
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (@SetLike.instMembership.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                    G x)
+                (fun
+                    (x :
+                      @Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                        @Membership.mem.{u_1, u_1} (I → Circle)
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (@SetLike.instMembership.{u_1, u_1}
+                            (@Subgroup.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                            (I → Circle)
+                            (@Subgroup.instSetLike.{u_1} (I → Circle)
+                              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                                @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                          G x) =>
+                  Complex)
+                (@ContinuousMap.instFunLike.{u_1, 0}
+                  (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                    @Membership.mem.{u_1, u_1} (I → Circle)
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (@SetLike.instMembership.{u_1, u_1}
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (I → Circle)
+                        (@Subgroup.instSetLike.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                      G x)
+                  Complex
+                  (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                    (fun (x : I → Circle) =>
+                      @Membership.mem.{u_1, u_1} (I → Circle)
+                        (@Subgroup.{u_1} (I → Circle)
+                          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                            @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                        (@SetLike.instMembership.{u_1, u_1}
+                          (@Subgroup.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                          (I → Circle)
+                          (@Subgroup.instSetLike.{u_1} (I → Circle)
+                            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                        G x)
+                    (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+                  (@UniformSpace.toTopologicalSpace.{0} Complex
+                    (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                      (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                        (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                          (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                            (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))
+                f z))))
+  Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration.{u_1})
+
+noncomputable def Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.observation0.{u_1} : {I : Type u_1} →
+  [Fintype.{u_1} I] →
+    (g : I → Circle) →
+      let G :
+        @Subgroup.{u_1} (I → Circle)
+          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+            @CommGroup.toGroup.{0} Circle Circle.instCommGroup) :=
+        @Subgroup.topologicalClosure.{u_1} (I → Circle)
+          (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+          (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+            @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+          (@Pi.topologicalGroup.{u_1, 0} I (fun (a : I) => Circle) (fun (i : I) => instTopologicalSpaceCircle)
+            (fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup) fun (b : I) =>
+            Circle.instIsTopologicalGroup)
+          (@Subgroup.zpowers.{u_1} (I → Circle)
+            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+              @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+            g);
+      (f :
+          @ContinuousMap.{u_1, 0}
+            (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            Complex
+            (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+              (fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+            (@UniformSpace.toTopologicalSpace.{0} Complex
+              (@PseudoMetricSpace.toUniformSpace.{0} Complex
+                (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+                  (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                    (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                      (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex))))))) →
+        (N n : Nat) →
+          D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{u_1 + 1, u_1, 0, u_1, 0}
+            Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.signature.{u_1} PUnit.unit.{1}
+            (@Sigma.mk.{u_1 + 1, u_1} (Type u_1) (fun (I : Type u_1) => I → Circle) I g) :=
+  fun {I : Type u_1} [Fintype.{u_1} I] (g : I → Circle) =>
+  let G :
+    @Subgroup.{u_1} (I → Circle)
+      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+        @CommGroup.toGroup.{0} Circle Circle.instCommGroup) :=
+    @Subgroup.topologicalClosure.{u_1} (I → Circle)
+      (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+      (@Pi.topologicalGroup.{u_1, 0} I (fun (a : I) => Circle) (fun (i : I) => instTopologicalSpaceCircle)
+        (fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup) fun (b : I) =>
+        Circle.instIsTopologicalGroup)
+      (@Subgroup.zpowers.{u_1} (I → Circle)
+        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+        g);
+  have μ :
+    @MeasureTheory.Measure.{u_1}
+      (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+        @Membership.mem.{u_1, u_1} (I → Circle)
+          (@Subgroup.{u_1} (I → Circle)
+            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+          (@SetLike.instMembership.{u_1, u_1}
+            (@Subgroup.{u_1} (I → Circle)
+              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+            (I → Circle)
+            (@Subgroup.instSetLike.{u_1} (I → Circle)
+              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+          G x)
+      (@borel.{u_1}
+        (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+          @Membership.mem.{u_1, u_1} (I → Circle)
+            (@Subgroup.{u_1} (I → Circle)
+              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+            (@SetLike.instMembership.{u_1, u_1}
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (I → Circle)
+              (@Subgroup.instSetLike.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+            G x)
+        (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+          (fun (x : I → Circle) =>
+            @Membership.mem.{u_1, u_1} (I → Circle)
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (@SetLike.instMembership.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+              G x)
+          (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))) :=
+    @MeasureTheory.Measure.haarMeasure.{u_1}
+      (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+        @Membership.mem.{u_1, u_1} (I → Circle)
+          (@Subgroup.{u_1} (I → Circle)
+            (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+              @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+          (@SetLike.instMembership.{u_1, u_1}
+            (@Subgroup.{u_1} (I → Circle)
+              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+            (I → Circle)
+            (@Subgroup.instSetLike.{u_1} (I → Circle)
+              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+          G x)
+      (@Subgroup.toGroup.{u_1} (I → Circle)
+        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+        G)
+      (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+        (fun (x : I → Circle) =>
+          @Membership.mem.{u_1, u_1} (I → Circle)
+            (@Subgroup.{u_1} (I → Circle)
+              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+            (@SetLike.instMembership.{u_1, u_1}
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (I → Circle)
+              (@Subgroup.instSetLike.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+            G x)
+        (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+      (@Subgroup.instIsTopologicalGroupSubtypeMem.{u_1} (I → Circle)
+        (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+        (@Pi.topologicalGroup.{u_1, 0} I (fun (a : I) => Circle) (fun (i : I) => instTopologicalSpaceCircle)
+          (fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup) fun (b : I) =>
+          Circle.instIsTopologicalGroup)
+        G)
+      (@borel.{u_1}
+        (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+          @Membership.mem.{u_1, u_1} (I → Circle)
+            (@Subgroup.{u_1} (I → Circle)
+              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+            (@SetLike.instMembership.{u_1, u_1}
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (I → Circle)
+              (@Subgroup.instSetLike.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+            G x)
+        (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+          (fun (x : I → Circle) =>
+            @Membership.mem.{u_1, u_1} (I → Circle)
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (@SetLike.instMembership.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+              G x)
+          (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)))
+      (@BorelSpace.mk.{u_1}
+        (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+          @Membership.mem.{u_1, u_1} (I → Circle)
+            (@Subgroup.{u_1} (I → Circle)
+              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+            (@SetLike.instMembership.{u_1, u_1}
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (I → Circle)
+              (@Subgroup.instSetLike.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+            G x)
+        (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+          (fun (x : I → Circle) =>
+            @Membership.mem.{u_1, u_1} (I → Circle)
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (@SetLike.instMembership.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+              G x)
+          (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+        (@borel.{u_1}
+          (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+            @Membership.mem.{u_1, u_1} (I → Circle)
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (@SetLike.instMembership.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+              G x)
+          (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+            (fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)))
+        (@rfl.{u_1 + 1}
+          (MeasurableSpace.{u_1}
+            (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x))
+          (@borel.{u_1}
+            (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+              (fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)))))
+      (@Top.top.{u_1}
+        (@TopologicalSpace.PositiveCompacts.{u_1}
+          (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+            @Membership.mem.{u_1, u_1} (I → Circle)
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (@SetLike.instMembership.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+              G x)
+          (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+            (fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)))
+        (@TopologicalSpace.PositiveCompacts.instTopOfCompactSpaceOfNonempty.{u_1}
+          (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+            @Membership.mem.{u_1, u_1} (I → Circle)
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (@SetLike.instMembership.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+              G x)
+          (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+            (fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+          (@Iff.mp
+            (@IsCompact.{u_1} (I → Circle)
+              (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+              (@SetLike.coe.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                G))
+            (@CompactSpace.{u_1}
+              (@Set.Elem.{u_1} (I → Circle)
+                (@SetLike.coe.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  G))
+              (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+                (fun (x : I → Circle) =>
+                  @Membership.mem.{u_1, u_1} (I → Circle) (Set.{u_1} (I → Circle))
+                    (@Set.instMembership.{u_1} (I → Circle))
+                    (@SetLike.coe.{u_1, u_1}
+                      (@Subgroup.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      (I → Circle)
+                      (@Subgroup.instSetLike.{u_1} (I → Circle)
+                        (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                          @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                      G)
+                    x)
+                (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)))
+            (@isCompact_iff_compactSpace.{u_1} (I → Circle)
+              (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+              (@SetLike.coe.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                G))
+            (@IsClosed.isCompact.{u_1} (I → Circle)
+              (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+              (@SetLike.coe.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@Subgroup.topologicalClosure.{u_1} (I → Circle)
+                  (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                  (@Pi.topologicalGroup.{u_1, 0} I (fun (a : I) => Circle) (fun (i : I) => instTopologicalSpaceCircle)
+                    (fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup) fun (b : I) =>
+                    Circle.instIsTopologicalGroup)
+                  (@Subgroup.zpowers.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                    g)))
+              (@Function.compactSpace.{0, u_1} Circle I instTopologicalSpaceCircle Circle.instCompactSpace)
+              (@Subgroup.isClosed_topologicalClosure.{u_1} (I → Circle)
+                (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                (@Pi.topologicalGroup.{u_1, 0} I (fun (a : I) => Circle) (fun (i : I) => instTopologicalSpaceCircle)
+                  (fun (i : I) => @CommGroup.toGroup.{0} Circle Circle.instCommGroup) fun (b : I) =>
+                  Circle.instIsTopologicalGroup)
+                (@Subgroup.zpowers.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                  g))))
+          (@Torsor.nonempty.{u_1, u_1}
+            (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+              @Membership.mem.{u_1, u_1} (I → Circle)
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (@SetLike.instMembership.{u_1, u_1}
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (I → Circle)
+                  (@Subgroup.instSetLike.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                G x)
+            (@Subgroup.toGroup.{u_1} (I → Circle)
+              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+              G)
+            (@Group.instTorsor.{u_1}
+              (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+                @Membership.mem.{u_1, u_1} (I → Circle)
+                  (@Subgroup.{u_1} (I → Circle)
+                    (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                      @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                  (@SetLike.instMembership.{u_1, u_1}
+                    (@Subgroup.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                    (I → Circle)
+                    (@Subgroup.instSetLike.{u_1} (I → Circle)
+                      (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                        @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+                  G x)
+              (@Subgroup.toGroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup)
+                G)))));
+  fun
+    (f :
+      @ContinuousMap.{u_1, 0}
+        (@Subtype.{u_1 + 1} (I → Circle) fun (x : I → Circle) =>
+          @Membership.mem.{u_1, u_1} (I → Circle)
+            (@Subgroup.{u_1} (I → Circle)
+              (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+            (@SetLike.instMembership.{u_1, u_1}
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (I → Circle)
+              (@Subgroup.instSetLike.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+            G x)
+        Complex
+        (@instTopologicalSpaceSubtype.{u_1} (I → Circle)
+          (fun (x : I → Circle) =>
+            @Membership.mem.{u_1, u_1} (I → Circle)
+              (@Subgroup.{u_1} (I → Circle)
+                (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                  @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+              (@SetLike.instMembership.{u_1, u_1}
+                (@Subgroup.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup))
+                (I → Circle)
+                (@Subgroup.instSetLike.{u_1} (I → Circle)
+                  (@Pi.group.{u_1, 0} I (fun (a : I) => Circle) fun (i : I) =>
+                    @CommGroup.toGroup.{0} Circle Circle.instCommGroup)))
+              G x)
+          (@Pi.topologicalSpace.{0, u_1} I (fun (a : I) => Circle) fun (i : I) => instTopologicalSpaceCircle))
+        (@UniformSpace.toTopologicalSpace.{0} Complex
+          (@PseudoMetricSpace.toUniformSpace.{0} Complex
+            (@SeminormedRing.toPseudoMetricSpace.{0} Complex
+              (@SeminormedCommRing.toSeminormedRing.{0} Complex
+                (@NormedCommRing.toSeminormedCommRing.{0} Complex
+                  (@CommCStarAlgebra.toNormedCommRing.{0} Complex instCommCStarAlgebraComplex)))))))
+    (N n : Nat) =>
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{u_1 + 1, u_1, 0, u_1, 0}
+    Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.signature.{u_1}
+    Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.actual.{u_1} PUnit.unit.{1}
+    (@Sigma.mk.{u_1 + 1, u_1} (Type u_1) (fun (I : Type u_1) => I → Circle) I g) f
+
+noncomputable def Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.observationFact0.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"Asymptotics\",\"TorusOrbitEquidistribution\",\"result\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"letBody\",\"letBody\",\"argument\",\"body\",\"function\",\"function\",\"argument\",\"body\",\"function\",\"argument\",\"argument\",\"body\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"Asymptotics\",\"TorusOrbitEquidistribution\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.result, part := .type, path := [.body, .body, .body, .letBody, .letBody, .argument, .body, .function, .function, .argument, .body, .function, .argument, .argument, .body, .function, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.observation0, part := .value, path := [], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.varyingLawInput.{u_1} :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.canonicalArenaOperand.{u_1})
+noncomputable def Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.varyingLaw.{u_1}  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"Asymptotics\",\"TorusOrbitEquidistribution\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}"
+
+noncomputable def Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.statementExclusion.{u_1} : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"Asymptotics\",\"TorusOrbitEquidistribution\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"D5\",\"S3\",\"Fourier\",\"Asymptotics\",\"TorusOrbitEquidistribution\",\"result\"],\"part\":\"type\",\"path\":[],\"levels\":[[\"param\",[\"u_1\"]]]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.varyingLaw, part := .value, path := [], levels := [(.param `u_1)] }
+  statementLocation := { owner := `D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.result, part := .type, path := [], levels := [(.param `u_1)] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration.{u_1}).actual (Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration.{u_1}).variation.2.choose (Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration.{u_1}).variation.1 (Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration.{u_1}).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1.descriptorFact.{u_1} : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"Asymptotics\",\"TorusOrbitEquidistribution\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Fourier\",\"Asymptotics\",\"TorusOrbitEquidistribution\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[[\"param\",[\"u_1\"]]]}"))
+  { owner := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [(.param `u_1)] }
+  { owner := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution, declaration := `Reg.D5.S3.Fourier.Asymptotics.TorusOrbitEquidistribution.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [(.param `u_1)] }
+  (by first | rfl | (ext <;> rfl))

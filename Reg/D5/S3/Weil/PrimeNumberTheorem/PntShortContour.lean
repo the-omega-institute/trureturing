@@ -1,3 +1,6 @@
+import Reg.Support.NodeFacts
+import LeanInformationAuditInterface.Contract.NodeFacts
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Weil.PrimeNumberTheorem.PntShortContour
 import Reg.Support.DependentFamily
@@ -122,10 +125,471 @@ noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_
   sourceSelection := some { owner := `D5.S3.Weil.PrimeNumberTheorem.PntShortContour, definition := none, coordinates := #[6, 12, 14, 17], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg", "fn", "arg", "fn", "arg"], booleanPredicate := false }] },
   continuation := .unknown,
   familyRecord := none,
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  coverage := { roots := [
+    { owner := `D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `I4Bound, part := .type, path := [], levels := [] },
+    { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument], levels := [] },
+    { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }], facts := [`Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.canonicalArenaFact, `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.canonicalObjectArenaFact, `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.sourceBridgeFact, `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.observationFact0, `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.descriptorFact] },
+  exclusion := some `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.statementExclusion,
+  finiteLift := none,
+  roleEnumeration := some `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.roleEnumeration,
+  anchorEnumeration := some `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.anchorEnumeration }
 
 
 end I4Bound
 
 end
 end Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour
+
+
+noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.canonicalArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.arena
+noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.canonicalArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"PntShortContour\",\"I4Bound\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"PntShortContour\",\"I4Bound\",\"registration_1\",\"canonicalArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.canonicalArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.canonicalObjectArenaOperand : D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.{0, 0, 0, 0, 0} :=
+  Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.arena
+noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.canonicalObjectArenaFact : LeanInformationAudit.Contract.NodeFact := .exact
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"PntShortContour\",\"I4Bound\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"PntShortContour\",\"I4Bound\",\"registration_1\",\"canonicalObjectArenaOperand\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.canonicalObjectArenaOperand, part := .value, path := [], levels := [] }
+  .evidence
+
+
+noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.sourceLaw : Prop :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.arena
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.actual.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.arena
+    (∀ {SmoothingF : Real → Real}
+      (suppSmoothingF :
+        @LE.le.{0} (Set.{0} Real) (@Set.instLE.{0} Real) (@Function.support.{0, 0} Real Real Real.instZero SmoothingF)
+          (@Set.Icc.{0} Real Real.instPreorder
+            (@HDiv.hDiv.{0, 0, 0} Real Real Real
+              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
+      (ContDiffSmoothingF :
+        @ContDiff.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+          Real.normedAddCommGroup
+          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+            (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+          Real Real.normedAddCommGroup
+          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+            (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+          (@OfNat.ofNat.{0} (WithTop.{0} ENat) (nat_lit 1)
+            (@One.toOfNat1.{0} (WithTop.{0} ENat)
+              (@WithTop.one.{0} ENat (@AddMonoidWithOne.toOne.{0} ENat instAddMonoidWithOneENat))))
+          SmoothingF)
+      {σ₂ : Real} (h_logDeriv_holo : LogDerivZetaIsHoloSmall σ₂)
+      (hσ₂ :
+        @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
+          (@Set.Ioo.{0} Real Real.instPreorder
+            (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+          σ₂)
+      {A : Real}
+      (hA :
+        @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
+          (@Set.Ioc.{0} Real Real.instPreorder
+            (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+            (@HDiv.hDiv.{0, 0, 0} Real Real Real
+              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+              (@OfNat.ofNat.{0} Real (nat_lit 2)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
+          A),
+      @Exists.{1} Real fun (C : Real) =>
+        @Exists.{0}
+          (@LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) C)
+          fun
+            (x :
+              @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+                C) =>
+          @Exists.{1} Real fun (Tlb : Real) =>
+            @Exists.{0}
+              (@LT.lt.{0} Real Real.instLT
+                (@OfNat.ofNat.{0} Real (nat_lit 3)
+                  (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast
+                    (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                      (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
+                Tlb)
+              fun
+                (x :
+                  @LT.lt.{0} Real Real.instLT
+                    (@OfNat.ofNat.{0} Real (nat_lit 3)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
+                    Tlb) =>
+              ∀ (X : Real),
+                @LT.lt.{0} Real Real.instLT
+                    (@OfNat.ofNat.{0} Real (nat_lit 3)
+                      (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast
+                        (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                          (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
+                    X →
+                  ∀ {ε : Real},
+                    @LT.lt.{0} Real Real.instLT
+                        (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) ε →
+                      @LT.lt.{0} Real Real.instLT ε
+                          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)) →
+                        ∀ {T : Real},
+                          @LT.lt.{0} Real Real.instLT Tlb T →
+                            have σ₁ : Real :=
+                              @HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+                                (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+                                (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                                  (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid)) A
+                                  (@HPow.hPow.{0, 0, 0} Real Nat Real
+                                    (@instHPow.{0, 0} Real Nat
+                                      (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid)))
+                                    (Real.log T) (@OfNat.ofNat.{0} Nat (nat_lit 9) (instOfNatNat (nat_lit 9)))));
+                            @LE.le.{0} Real Real.instLE
+                              (@Norm.norm.{0} Complex Complex.instNorm (I₄ SmoothingF ε X σ₁ σ₂))
+                              (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                                (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                                  (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) C X)
+                                  (@HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow) X
+                                    (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                                      (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                                      (@Neg.neg.{0} Real Real.instNeg A)
+                                      (@HPow.hPow.{0, 0, 0} Real Nat Real
+                                        (@instHPow.{0, 0} Real Nat
+                                          (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid)))
+                                        (Real.log T) (@OfNat.ofNat.{0} Nat (nat_lit 9) (instOfNatNat (nat_lit 9)))))))
+                                ε))
+    Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration)
+
+noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.sourceBridgeFact : LeanInformationAudit.Contract.NodeFact := .equivalent
+  (@(compiled_node% "{\"declaration\":[\"I4Bound\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"PntShortContour\",\"I4Bound\",\"registration_1\",\"sourceLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `I4Bound, part := .type, path := [], levels := [] }
+  { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.sourceLaw, part := .value, path := [], levels := [] }
+  (@D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Registration.bridge.{0, 0, 0, 0, 0}
+  Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.arena
+  (∀ {SmoothingF : Real → Real}
+    (suppSmoothingF :
+      @LE.le.{0} (Set.{0} Real) (@Set.instLE.{0} Real) (@Function.support.{0, 0} Real Real Real.instZero SmoothingF)
+        (@Set.Icc.{0} Real Real.instPreorder
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+          (@OfNat.ofNat.{0} Real (nat_lit 2)
+            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
+    (ContDiffSmoothingF :
+      @ContDiff.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+        Real.normedAddCommGroup
+        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+        Real Real.normedAddCommGroup
+        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+        (@OfNat.ofNat.{0} (WithTop.{0} ENat) (nat_lit 1)
+          (@One.toOfNat1.{0} (WithTop.{0} ENat)
+            (@WithTop.one.{0} ENat (@AddMonoidWithOne.toOne.{0} ENat instAddMonoidWithOneENat))))
+        SmoothingF)
+    {σ₂ : Real} (h_logDeriv_holo : LogDerivZetaIsHoloSmall σ₂)
+    (hσ₂ :
+      @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
+        (@Set.Ioo.{0} Real Real.instPreorder (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+        σ₂)
+    {A : Real}
+    (hA :
+      @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
+        (@Set.Ioc.{0} Real Real.instPreorder (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
+        A),
+    @Exists.{1} Real fun (C : Real) =>
+      @Exists.{0}
+        (@LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) C)
+        fun
+          (x :
+            @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+              C) =>
+        @Exists.{1} Real fun (Tlb : Real) =>
+          @Exists.{0}
+            (@LT.lt.{0} Real Real.instLT
+              (@OfNat.ofNat.{0} Real (nat_lit 3)
+                (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast
+                  (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                    (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
+              Tlb)
+            fun
+              (x :
+                @LT.lt.{0} Real Real.instLT
+                  (@OfNat.ofNat.{0} Real (nat_lit 3)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
+                  Tlb) =>
+            ∀ (X : Real),
+              @LT.lt.{0} Real Real.instLT
+                  (@OfNat.ofNat.{0} Real (nat_lit 3)
+                    (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast
+                      (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                        (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
+                  X →
+                ∀ {ε : Real},
+                  @LT.lt.{0} Real Real.instLT
+                      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) ε →
+                    @LT.lt.{0} Real Real.instLT ε
+                        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)) →
+                      ∀ {T : Real},
+                        @LT.lt.{0} Real Real.instLT Tlb T →
+                          have σ₁ : Real :=
+                            @HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+                              (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+                              (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                                (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid)) A
+                                (@HPow.hPow.{0, 0, 0} Real Nat Real
+                                  (@instHPow.{0, 0} Real Nat
+                                    (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid)))
+                                  (Real.log T) (@OfNat.ofNat.{0} Nat (nat_lit 9) (instOfNatNat (nat_lit 9)))));
+                          @LE.le.{0} Real Real.instLE
+                            (@Norm.norm.{0} Complex Complex.instNorm (I₄ SmoothingF ε X σ₁ σ₂))
+                            (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                              (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                              (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul)
+                                (@HMul.hMul.{0, 0, 0} Real Real Real (@instHMul.{0} Real Real.instMul) C X)
+                                (@HPow.hPow.{0, 0, 0} Real Real Real (@instHPow.{0, 0} Real Real Real.instPow) X
+                                  (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                                    (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                                    (@Neg.neg.{0} Real Real.instNeg A)
+                                    (@HPow.hPow.{0, 0, 0} Real Nat Real
+                                      (@instHPow.{0, 0} Real Nat
+                                        (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid)))
+                                      (Real.log T) (@OfNat.ofNat.{0} Nat (nat_lit 9) (instOfNatNat (nat_lit 9)))))))
+                              ε))
+  Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration)
+
+noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.roleEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (PUnit.{1}) where
+  values := [PUnit.unit.{1}]
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.anchorEnumeration : LeanInformationAudit.Contract.FiniteEnumeration (Empty) where
+  values := []
+  nodup := by decide +kernel
+  complete := by decide +kernel
+
+noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.observation0 : {SmoothingF : Real → Real} →
+  (suppSmoothingF :
+      @LE.le.{0} (Set.{0} Real) (@Set.instLE.{0} Real) (@Function.support.{0, 0} Real Real Real.instZero SmoothingF)
+        (@Set.Icc.{0} Real Real.instPreorder
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+          (@OfNat.ofNat.{0} Real (nat_lit 2)
+            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))) →
+    (ContDiffSmoothingF :
+        @ContDiff.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+          Real.normedAddCommGroup
+          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+            (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+          Real Real.normedAddCommGroup
+          (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+            (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+            (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+          (@OfNat.ofNat.{0} (WithTop.{0} ENat) (nat_lit 1)
+            (@One.toOfNat1.{0} (WithTop.{0} ENat)
+              (@WithTop.one.{0} ENat (@AddMonoidWithOne.toOne.{0} ENat instAddMonoidWithOneENat))))
+          SmoothingF) →
+      {σ₂ : Real} →
+        (h_logDeriv_holo : LogDerivZetaIsHoloSmall σ₂) →
+          (hσ₂ :
+              @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
+                (@Set.Ioo.{0} Real Real.instPreorder
+                  (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+                  (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+                σ₂) →
+            {A : Real} →
+              (hA :
+                  @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
+                    (@Set.Ioc.{0} Real Real.instPreorder
+                      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+                      (@HDiv.hDiv.{0, 0, 0} Real Real Real
+                        (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+                        (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+                        (@OfNat.ofNat.{0} Real (nat_lit 2)
+                          (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
+                    A) →
+                (C : Real) →
+                  @LE.le.{0} Real Real.instLE
+                      (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) C →
+                    (Tlb : Real) →
+                      @LT.lt.{0} Real Real.instLT
+                          (@OfNat.ofNat.{0} Real (nat_lit 3)
+                            (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast
+                              (@Nat.instAtLeastTwoHAddOfNat
+                                (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
+                          Tlb →
+                        (X : Real) →
+                          @LT.lt.{0} Real Real.instLT
+                              (@OfNat.ofNat.{0} Real (nat_lit 3)
+                                (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast
+                                  (@Nat.instAtLeastTwoHAddOfNat
+                                    (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+                                    (@Nat.instNeZeroSucc
+                                      (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
+                              X →
+                            {ε : Real} →
+                              @LT.lt.{0} Real Real.instLT
+                                  (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) ε →
+                                @LT.lt.{0} Real Real.instLT ε
+                                    (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)) →
+                                  {T : Real} →
+                                    @LT.lt.{0} Real Real.instLT Tlb T →
+                                      D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Signature.Output.{0, 0, 0,
+                                          0, 0}
+                                        Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.signature
+                                        PUnit.unit.{1}
+                                        (@Sigma.mk.{0, 0} Real
+                                          (fun (x : Real) =>
+                                            @Sigma.{0, 0} Real fun (x : Real) =>
+                                              @Sigma.{0, 0} Real fun (x : Real) => Real)
+                                          A
+                                          (@Sigma.mk.{0, 0} Real
+                                            (fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Real) X
+                                            (@Sigma.mk.{0, 0} Real (fun (x : Real) => Real) ε T))) :=
+  fun {SmoothingF : Real → Real}
+    (suppSmoothingF :
+      @LE.le.{0} (Set.{0} Real) (@Set.instLE.{0} Real) (@Function.support.{0, 0} Real Real Real.instZero SmoothingF)
+        (@Set.Icc.{0} Real Real.instPreorder
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0))))))))
+          (@OfNat.ofNat.{0} Real (nat_lit 2)
+            (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+              (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
+    (ContDiffSmoothingF :
+      @ContDiff.{0, 0, 0} Real (@DenselyNormedField.toNontriviallyNormedField.{0} Real Real.denselyNormedField) Real
+        Real.normedAddCommGroup
+        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+        Real Real.normedAddCommGroup
+        (@InnerProductSpace.toNormedSpace.{0, 0} Real Real Real.instRCLike
+          (@NormedAddCommGroup.toSeminormedAddCommGroup.{0} Real Real.normedAddCommGroup)
+          (@RCLike.toInnerProductSpaceReal.{0} Real Real.instRCLike))
+        (@OfNat.ofNat.{0} (WithTop.{0} ENat) (nat_lit 1)
+          (@One.toOfNat1.{0} (WithTop.{0} ENat)
+            (@WithTop.one.{0} ENat (@AddMonoidWithOne.toOne.{0} ENat instAddMonoidWithOneENat))))
+        SmoothingF)
+    {σ₂ : Real} (h_logDeriv_holo : LogDerivZetaIsHoloSmall σ₂)
+    (hσ₂ :
+      @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
+        (@Set.Ioo.{0} Real Real.instPreorder (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+          (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+        σ₂)
+    {A : Real}
+    (hA :
+      @Membership.mem.{0, 0} Real (Set.{0} Real) (@Set.instMembership.{0} Real)
+        (@Set.Ioc.{0} Real Real.instPreorder (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero))
+          (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid))
+            (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+            (@OfNat.ofNat.{0} Real (nat_lit 2)
+              (@instOfNatAtLeastTwo.{0} Real (nat_lit 2) Real.instNatCast
+                (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))
+                  (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 0) (instOfNatNat (nat_lit 0)))))))))
+        A)
+    (C : Real)
+    (x : @LE.le.{0} Real Real.instLE (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) C)
+    (Tlb : Real)
+    (x_1 :
+      @LT.lt.{0} Real Real.instLT
+        (@OfNat.ofNat.{0} Real (nat_lit 3)
+          (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
+        Tlb)
+    (X : Real)
+    (x_2 :
+      @LT.lt.{0} Real Real.instLT
+        (@OfNat.ofNat.{0} Real (nat_lit 3)
+          (@instOfNatAtLeastTwo.{0} Real (nat_lit 3) Real.instNatCast
+            (@Nat.instAtLeastTwoHAddOfNat (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2)))
+              (@Nat.instNeZeroSucc (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))
+        X)
+    {ε : Real}
+    (x_3 : @LT.lt.{0} Real Real.instLT (@OfNat.ofNat.{0} Real (nat_lit 0) (@Zero.toOfNat0.{0} Real Real.instZero)) ε)
+    (x_4 : @LT.lt.{0} Real Real.instLT ε (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne)))
+    {T : Real} (x_5 : @LT.lt.{0} Real Real.instLT Tlb T) =>
+  have σ₁ : Real :=
+    @HSub.hSub.{0, 0, 0} Real Real Real (@instHSub.{0} Real Real.instSub)
+      (@OfNat.ofNat.{0} Real (nat_lit 1) (@One.toOfNat1.{0} Real Real.instOne))
+      (@HDiv.hDiv.{0, 0, 0} Real Real Real (@instHDiv.{0} Real (@DivInvMonoid.toDiv.{0} Real Real.instDivInvMonoid)) A
+        (@HPow.hPow.{0, 0, 0} Real Nat Real
+          (@instHPow.{0, 0} Real Nat (@NPow.toPow.{0} Real (@Monoid.toNPow.{0} Real Real.instMonoid))) (Real.log T)
+          (@OfNat.ofNat.{0} Nat (nat_lit 9) (instOfNatNat (nat_lit 9)))));
+  @D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Realization.readout.{0, 0, 0, 0, 0}
+    Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.signature
+    Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.actual PUnit.unit.{1}
+    (@Sigma.mk.{0, 0} Real
+      (fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Real) A
+      (@Sigma.mk.{0, 0} Real (fun (x : Real) => @Sigma.{0, 0} Real fun (x : Real) => Real) X
+        (@Sigma.mk.{0, 0} Real (fun (x : Real) => Real) ε T)))
+    C
+
+noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.observationFact0 : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"I4Bound\"],\"part\":\"type\",\"path\":[\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"argument\",\"body\",\"argument\",\"body\",\"argument\",\"body\",\"argument\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"body\",\"letBody\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"PntShortContour\",\"I4Bound\",\"registration_1\",\"observation0\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"))
+  { owner := `D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `I4Bound, part := .type, path := [.body, .body, .body, .body, .body, .body, .body, .body, .argument, .body, .argument, .body, .argument, .body, .argument, .body, .body, .body, .body, .body, .body, .body, .body, .letBody, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.observation0, part := .value, path := [], levels := [] }
+  (by first | rfl | (ext <;> rfl))
+
+noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.varyingLawInput :=
+  D5.S3.ConceptDynamics.InformationEscape.DependentFamily.Arena.Law (Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.canonicalArenaOperand)
+noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.varyingLaw  :=
+  compiled_head% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"PntShortContour\",\"I4Bound\",\"registration_1\",\"varyingLawInput\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.statementExclusion : LeanInformationAudit.Contract.StatementExclusion (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"PntShortContour\",\"I4Bound\",\"registration_1\",\"varyingLaw\"],\"part\":\"value\",\"path\":[],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"I4Bound\"],\"part\":\"type\",\"path\":[],\"levels\":[]}")) where
+  lawLocation := { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.varyingLaw, part := .value, path := [], levels := [] }
+  statementLocation := { owner := `D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `I4Bound, part := .type, path := [], levels := [] }
+  excludes := Reg.Support.NodeFacts.excludeFixed _ _ (Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration).actual (Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration).variation.2.choose (Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration).variation.1 (Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration).variation.2.choose_spec
+
+noncomputable def Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1.descriptorFact : LeanInformationAudit.Contract.NodeFact := .equal
+  (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"PntShortContour\",\"I4Bound\",\"registration_1\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"function\",\"argument\",\"argument\"],\"levels\":[]}")) (@(compiled_node% "{\"declaration\":[\"Reg\",\"D5\",\"S3\",\"Weil\",\"PrimeNumberTheorem\",\"PntShortContour\",\"I4Bound\",\"registration\"],\"part\":\"value\",\"path\":[\"function\",\"function\",\"function\",\"function\",\"argument\"],\"levels\":[]}"))
+  { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration_1, part := .value, path := [.function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .function, .argument, .argument], levels := [] }
+  { owner := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour, declaration := `Reg.D5.S3.Weil.PrimeNumberTheorem.PntShortContour.I4Bound.registration, part := .value, path := [.function, .function, .function, .function, .argument], levels := [] }
+  (by first | rfl | (ext <;> rfl))
