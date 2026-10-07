@@ -51,9 +51,11 @@ internal sealed class SourceDensityMonotonicityDocument : IScribeDocumentDefinit
                 H("Joint logarithmic compensation"),
                 StatementSource.FromAuthor(CompensationFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("For positive e,a,d,l,t and nonnegative j, assume d=e+a, "
-                    + "l=a+d and (a^2-de)^2=1. The weighted increments of the three affine "
+                    + "l=a+d and (a^2-de)^2=1. R denotes the real numbers. "
+                    + "The weighted increments of the three affine "
                     + "logarithms have lower bound -(j+1/2)/(ladt^2). Along the unit interval, "
-                    + "their derivative is -t(j+s) divided by the product of the three affine "
+                    + "the weighted logarithmic sum has derivative -t(j+s) divided by the product of "
+                    + "the three affine "
                     + "coordinates. Adding (js+s^2/2)/(ladt^2) makes the derivative nonnegative, "
                     + "so comparing the endpoints gives the bound."))), DescribeRole.Theorem))));
 

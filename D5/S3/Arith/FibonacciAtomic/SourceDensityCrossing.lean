@@ -824,8 +824,11 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
     <;> ring
   have count_pos (x y : ℕ) (hxy : 1 ≤ x + y) :
       (0 : ℝ) < GenealogicalFiberTransport.fiberCount (x, y) := by
-    rw [count_formula x y hxy]
-    exact div_pos (factorial_pos _) (by positivity)
+    have hf := GenealogicalFiberTransport.result.1 x y hxy
+    letI : Finite (GenealogicalFiberTransport.Fiber (x, y)) := hf.1
+    letI : Nonempty (GenealogicalFiberTransport.Fiber (x, y)) := hf.2.2.1
+    exact_mod_cast (by simpa only [hf.2.1] using
+      (Nat.card_pos (α := GenealogicalFiberTransport.Fiber (x, y))))
   have source_ratio (t : ℕ) (ht : j + 1 ≤ t) :
       (GenealogicalFiberTransport.fiberCount (t - (j + 1), j + 1) : ℝ) /
         (GenealogicalFiberTransport.fiberCount (t - j, j) : ℝ) =
