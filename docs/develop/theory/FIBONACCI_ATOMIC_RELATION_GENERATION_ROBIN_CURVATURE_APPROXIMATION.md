@@ -2008,3 +2008,914 @@ PrimePrefixPhiCurvature 及其原供应 PrimorialFirstOrderConcentrationCountere
 三者的同源供应是将此比较结果用于实际有限 head 的条件。
 
 ## 追加锚（本行以下为增补区）
+
+## 462. 原实际曲率的完整指数底座与原 A 的严格正储备
+
+保持同一原函数与完整常数
+
+$$
+\Phi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vt}}t\,dt\right),
+\quad B(v)=\Phi''(v),\quad
+\gamma=\gamma_E,\quad C=e^\gamma,\quad k=C-1,
+$$
+
+$$
+A=\int_0^1\frac{\Phi'(v)-1}{v}\,dv
+ +\int_1^\infty\frac{\Phi'(v)-C}{v}\,dv.
+\tag{EFA.1}
+$$
+
+本节从原曲率的完整指数底座推导同一原 A 的严格正下界。
+
+### 462.1 原对象与完整积分供应
+
+复用 §450 的完整端点、质量、矩和对数积分供应：
+
+$$
+B(0)=\tfrac12,\quad B(v)>0\ (v>0),\quad
+\int_0^\infty B(v)\,dv=k,\quad
+\int_0^\infty vB(v)\,dv=1,
+$$
+
+$$
+\int_0^\infty |\log v|B(v)\,dv<\infty,\qquad
+A=-\int_0^\infty\log v\,B(v)\,dv.
+\tag{EFA.2}
+$$
+
+其零点连续性和导数绑定保持 PrimePrefixPhiCurvature；
+原归一化和完整两段 A 保持 PrimePrefixOriginalA；
+上述全部矩保持 PrimePrefixCurvatureMoments。
+也复用 §450 的同一正轴 Euler 表示
+
+$$
+E_1(v)=\int_v^\infty\frac{e^{-w}}w\,dw,\quad
+0<E_1(v)\le e^{-v}/v,\quad
+\Phi(v)=Cv e^{E_1(v)},\quad
+\Phi'(v)=\Phi(v)\frac{1-e^{-v}}v,
+$$
+
+$$
+B(v)=\Phi(v)e^{-v}\frac{v-1+e^{-v}}{v^2}
+=C e^{E_1(v)}e^{-v}
+ \left(1-\frac{1-e^{-v}}v\right)\qquad(v>0).
+\tag{EFA.3}
+$$
+
+这些是原函数已经证明的性质，不是对未知 B 的替代假设。
+
+经典完整积分
+
+$$
+\int_0^\infty e^{-v}\,dv=1,\quad
+\int_0^\infty ve^{-v}\,dv=1,\quad
+\int_0^\infty \log v\,e^{-v}\,dv=-\gamma
+\tag{EFA.4}
+$$
+
+沿用 Gamma 的已有供应。末项绝对收敛：近端由 $\int_0^1|\log v|dv=1$ 支付，远端由 $\log v\le v$ 和指数衰减支付。
+原 OriginalA 的归一化复用 Mertens.Gamma 中的完整积分恒等式
+$\int\log v\,e^{-v}=\Gamma'(1)$，该供应保持 PrimeNumberTheoremAnd 端口来源。
+Gamma 积分的导数定理及 $\gamma=-\Gamma'(1)$ 复用 Mathlib 的
+Complex.hasDerivAt_GammaIntegral 和 Real.eulerMascheroniConstant_eq_neg_deriv。
+
+### 462.2 完整正轴上的严格指数底座
+
+**定理 462.1（原曲率的指数底座）。** 连续延拓到零点的
+
+$$
+F(v)=e^vB(v)\quad(v\ge0)
+$$
+
+在整个非负轴严格递增，且
+
+$$
+F(0)=\tfrac12,\qquad \lim_{v\to\infty}F(v)=C.
+\tag{EFA.5}
+$$
+
+因此对全部 $v>0$，
+
+$$
+\boxed{\qquad \tfrac12e^{-v}<B(v)<Ce^{-v}.\qquad}
+\tag{EFA.6}
+$$
+
+
+**证明。** 对 $v>0$，置 $g(v)=(v-1+e^{-v})/v^2$。
+EFA.3 给 $F=\Phi g$，直接求导并使用原 $\Phi'/\Phi=(1-e^{-v})/v$，得
+
+$$
+\begin{aligned}
+F'(v)
+&=\frac{\Phi(v)}{v^3}
+ \left[(1-e^{-v})(v-1+e^{-v})
+       +v(1-e^{-v})-2(v-1+e^{-v})\right]\\
+&=\frac{\Phi(v)}{v^3}
+ \left(1-2ve^{-v}-e^{-2v}\right)\\
+&=\frac{\Phi(v)e^{-v}}{v^3}
+ \left(e^v-e^{-v}-2v\right)>0.
+\end{aligned}
+\tag{EFA.7}
+$$
+
+最后的严格正性可完全用原实指数函数支付：令
+$p(v)=e^v-e^{-v}-2v$，则 $p(0)=0$，而对 $v>0$，
+
+$$
+p'(v)=e^v+e^{-v}-2
+=\left(e^{v/2}-e^{-v/2}\right)^2>0.
+$$
+
+因此 $p(v)>0$。没有对未知测度求导，也没有使用 A 的符号。
+
+零点由 B 的实际连续性给 $F(0)=1/2$，不在 EFA.7 中代入 v=0。
+对任意 $0\le a<b$，F 在 [a,b] 连续、在其开区间可微且导数严格正，均值定理给严格递增，包括 a=0 的情况。
+
+无穷端由 EFA.3 准确写成
+
+$$
+F(v)=Ce^{E_1(v)}
+ \left(1-\frac{1-e^{-v}}v\right).
+$$
+
+$E_1(v)\le e^{-v}/v\to0$，括号趋于 1，故 F 趋于 C。
+严格递增和有限极限给 $1/2<F(v)<C$ 对每个 v>0 成立。
+乘以 $e^{-v}>0$ 得 EFA.6。证毕。
+
+### 462.3 抽出指数底座后的完整剩余律
+
+定义实际剩余密度和质量
+
+$$
+R(v)=B(v)-\tfrac12e^{-v},\qquad
+r=k-\tfrac12.
+\tag{EFA.8}
+$$
+
+EFA.6 给 R(v)>0 于全部 v>0，且 R(0)=0。
+经典 $\gamma>1/2$ 和 $e^\gamma\ge1+\gamma$ 给
+$k\ge\gamma>1/2$，所以 r>0。
+
+**引理 462.2（完整剩余质量与矩）。** 完整剩余积分满足
+
+$$
+\int_0^\infty R(v)\,dv=r,\qquad
+\int_0^\infty vR(v)\,dv=\tfrac12,\qquad
+\int_0^\infty|\log v|R(v)\,dv<\infty,
+$$
+
+$$
+A=\frac\gamma2-\int_0^\infty\log v\,R(v)\,dv.
+\tag{EFA.9}
+$$
+
+因此 $R(v)dv/r$ 是严格正的正轴概率密度，其均值为 $m=1/(2r)$；它没有零点原子，亦非点质量。
+
+**证明。** R 连续，且 $0<R<B$ 对 v>0 成立。
+EFA.2 已付 B、vB 和 $|\log v|B$ 的完整可积性，因此三种剩余核都绝对可积。用 EFA.2、EFA.4 和完整积分的线性性相减，分别得到质量 r、一阶矩 1/2 与所列原 A 身份。这里没有截取有限尾，也没有把两个不收敛的积分相减。正密度在每个正长度的正轴紧区间有正质量，故均值 m 是有限正数，律非退化。证毕。
+
+### 462.4 剩余严格 Jensen 与原 A 的正性
+
+**定理 462.3（原 A 的严格正储备）。** 原完整两段常数有精确更强的下界
+
+$$
+\boxed{\quad
+A>\frac\gamma2+
+ \left(k-\frac12\right)\log(2k-1).
+\quad}
+\tag{EFA.10}
+$$
+
+进而
+
+$$
+\boxed{\qquad \frac1{16}<A<\frac12.\qquad}
+\tag{EFA.11}
+$$
+
+
+**证明：完整严格 Jensen。** 对 m=1/(2r)>0 和每个 v>0，实对数切线给
+
+$$
+\log v\le\log m+\frac{v-m}{m},
+$$
+
+等号仅在 v=m。线性项和对数项对 R(v)dv 全部绝对可积。
+切线差非负，并在例如 [m+1,m+2] 上严格正，R 在该紧区间严格正；
+连续非负函数的该段积分严格正。因而
+
+$$
+\int_0^\infty\log v\,R(v)\,dv
+<r\log m+\frac1m\left(\tfrac12-mr\right)
+=r\log m.
+$$
+
+代入 EFA.9，并用 $-\log m=\log(2r)$，得 EFA.10。
+
+**证明：统一严格数值储备。** 对任意 x>0，
+
+$$
+x\log x\ge-\frac1e.
+\tag{EFA.12}
+$$
+
+例如把 $\log y\ge1-1/y$ 用于 y=ex，减去 1 后乘以 x，直接得此界；没有需要估计的局部最小值。
+置 x=2r，EFA.10 给
+
+$$
+A>\frac\gamma2+r\log(2r)
+\ge\frac\gamma2-\frac1{2e}.
+$$
+
+经典 $\gamma>1/2$ 已被原供应复用；
+指数正项级数在 x=1 给
+
+$$
+e>1+1+\frac12+\frac16=\frac83.
+$$
+
+因此
+
+$$
+\frac\gamma2-\frac1{2e}>
+\frac14-\frac3{16}=\frac1{16}.
+$$
+
+最后的上界 A<1/2 直接复用原 PrimePrefixOriginalA。
+这整条链不使用待证的 A 正性或任何数值拟合。证毕。
+
+### 462.5 原对数矩、信息散度与 Robin 供应边界
+
+§450 和 PrimePrefixOriginalALogLowerBound 已有
+$A=-\int\log v\,B(v)dv$ 及 $A>k\log k$。
+这里的新增步骤是 EFA.5–EFA.7 的原曲率完整指数底座，以及把该底座完整抽出后使用真实正剩余律，得到 EFA.10–EFA.11。指数底座及剩余质量、一阶矩共同承担这一加强。
+
+若另外沿用 $\mu(dv)=B(v)dv/k$、$\nu(dv)=vB(v)dv$，两者都是完整正轴概率律且相互绝对连续，
+$d\nu/d\mu=kv$。EFA.2 支付对数似然比的绝对可积性，因此经典概率 KL 身份确为
+
+$$
+A-k\log k=kD_{\rm KL}(\mu\Vert\nu).
+\tag{EFA.13}
+$$
+
+其严格非退化性复述已有原 Jensen gap；本节 EFA.10 的额外强度来自已经证明的实际指数底座，不依赖信息散度术语。
+
+本结果仍是原实际常数的解析供应。它没有给真实 Möbius 谱的同源三节点逼近、原 Robin 配对的完整有符号尾或 RH 判据的最终符号；实际 Fibonacci 完整尾运输也不被当成这些未付供应。
+
+### 462.6 来源与证明范围
+
+原对象、完整端点、积分质量和对数矩复用 §§444、450 及
+PrimorialGlobalLaplaceEnvelope、PrimePrefixPhiCurvature、PrimePrefixOriginalA、
+PrimePrefixCurvatureMoments 的对应结果；完整 Gamma 对数矩保持
+Mertens.Gamma 及其 PrimeNumberTheoremAnd 端口来源。指数函数、均值定理、完整积分线性性、
+严格对数切线及 Gamma 对数矩属于经典工具。
+本节的新增解析结论是 EFA.5–EFA.11；EFA.13 将既有严格对数切线缺口写为
+原曲率律与其按变量加权的概率律之间的相对熵。
+上述局部解析结论来自本仓原对象的推导，不作全球文献首创声明。
+新增结论在此给出完整纸面证明，其 Lean 形式化另行交付。
+
+## 追加锚（本行以下为增补区）
+
+## 463. 原曲率的正 Volterra 递归与收敛到原 A 的严格下界
+
+保持同一个原函数、原实际曲率和完整两段常数：
+
+$$
+\Phi(v)=\exp\!\left(\int_0^1\frac{1-e^{-vt}}t\,dt\right),
+\qquad B(v)=\Phi''(v),\qquad
+\gamma=\gamma_E,\quad C=e^\gamma,\quad k=C-1,
+$$
+
+$$
+A=\int_0^1\frac{\Phi'(v)-1}{v}\,dv
+ +\int_1^\infty\frac{\Phi'(v)-C}{v}\,dv.
+\tag{RVF.1}
+$$
+
+本节构造原 B 的正积分递归。每个有限递归层都给出一个严格下界，
+这些下界严格递增到同一个原 A；整个无穷尾有显式误差界。
+下文未注明区间的积分一律是完整正轴上的 Lebesgue 积分
+$\int_0^\infty$。零点没有原子，对数只在正轴上使用。
+
+### 463.1 原对象与完整供应
+
+复用 §§444、450、462 已支付的同一原对象性质：
+
+$$
+\Phi(0)=\Phi'(0)=1,\quad B(0)=\tfrac12,\quad
+0<B(v)<\tfrac12\quad(v>0),
+$$
+
+$$
+\int B=k,\qquad \int vB=1,\qquad
+\int |\log v|B<\infty,\qquad A=-\int\log v\,B(v)\,dv,
+\tag{RVF.2}
+$$
+
+$$
+\tfrac12e^{-v}<B(v)<Ce^{-v}\quad(v>0).
+\tag{RVF.3}
+$$
+
+原 $\Phi$ 及 B 的连续性、导数绑定来自 PrimePrefixPhiCurvature；
+原归一化和完整两段 A 来自 PrimePrefixOriginalA；
+完整质量、一阶矩和绝对对数可积性来自 PrimePrefixCurvatureMoments。
+RVF.3 是 §462 的实际指数底座，非另选一个满足矩约束的密度。
+还复用 §462 已给出的同一原 F 的正轴导数身份：
+
+$$
+F(v)=e^vB(v),\qquad F(0)=\tfrac12,\qquad
+F'(v)=\Phi(v)e^{-v}\frac{e^v-e^{-v}-2v}{v^3}\quad(v>0).
+\tag{RVF.4}
+$$
+
+以下先在有限区间建立精确递归，再用 RVF.2–RVF.3 处理完整积分。
+
+### 463.2 递归系数的零端点与完整正指数表示
+
+置
+
+$$
+p(v)=e^v-e^{-v}-2v,\qquad
+a(v)=\begin{cases}e^{-v}p(v)/v^3,&v>0,\\[2pt]1/3,&v=0.\end{cases}
+\tag{RVF.5}
+$$
+
+**引理 463.1（系数的完整表示）。** 对全部 $v\ge0$，
+
+$$
+\boxed{\quad
+a(v)=\frac12\int_0^1(1-t)^2
+ \left[e^{-v(1-t)}+e^{-v(1+t)}\right]dt.
+\quad}
+\tag{RVF.6}
+$$
+
+因此 a 在非负轴连续，且
+
+$$
+a(0)=\tfrac13,\qquad 0<a(v)\le\tfrac13\quad(v\ge0),
+\qquad a(v)<\tfrac13\quad(v>0).
+\tag{RVF.7}
+$$
+
+**证明。** $p(0)=p'(0)=p''(0)=0$ 且 $p'''(s)=e^s+e^{-s}$。
+有限区间上的三次 FTC 或 Taylor 积分余项给
+
+$$
+p(v)=\frac12\int_0^v(v-s)^2(e^s+e^{-s})\,ds\qquad(v\ge0).
+\tag{RVF.8}
+$$
+
+对 v>0 乘以 $e^{-v}/v^3$ 并置 s=vt，得到 RVF.6。
+右侧在 v=0 的值是 $\int_0^1(1-t)^2dt=1/3$，且其被积函数在每个
+有限参数窗口联合连续，故它给出准确的连续零端点。
+两指数均严格正，且在 v,t 的所列域均不超过 1，得到 RVF.7 的
+正性和上界。v>0 时第二指数在整个 [0,1] 小于 1，权重在 [0,1) 正，
+故积分上界严格。证毕。
+
+换元还把同一系数写成紧支撑的正 Laplace 混合：
+
+$$
+a(v)=\int_0^2 e^{-\lambda v}w(\lambda)\,d\lambda,
+\qquad
+w(\lambda)=\begin{cases}
+\lambda^2/2,&0\le\lambda\le1,\\
+(2-\lambda)^2/2,&1\le\lambda\le2.
+\end{cases}
+\tag{RVF.9}
+$$
+
+两段在 λ=1 一致，且 $\int_0^2w=1/3$。
+右侧还定义全实轴上的光滑延拓，以下导数使用该延拓。
+有限 λ 区间允许逐次在积分号下求导；因而对每个整数 j≥0 和 v≥0，
+$(-1)^ja^{(j)}(v)=\int_0^2\lambda^je^{-\lambda v}w(\lambda)d\lambda>0$。
+这里的正指数混合属于递归系数 a。
+
+### 463.3 同一原 B 的精确正 Volterra 方程
+
+**定理 463.2（原对象的递归方程）。** 对任意连续
+$f:[0,\infty)\to\mathbb R$，定义仅涉及有限连续积分的
+
+$$
+b(v)=e^{-v}\left[\frac12+\int_0^v a(s)(1+s)\,ds\right],
+$$
+
+$$
+(Tf)(v)=e^{-v}\int_0^v a(s)
+ \int_0^s(s-t)f(t)\,dt\,ds.
+\tag{RVF.10}
+$$
+
+则 b 和 Tf 连续，$b(v)>0$ 对全部 v≥0 成立，并且
+
+$$
+\boxed{\qquad B=b+TB.\qquad}
+\tag{RVF.11}
+$$
+
+**证明。** 原 $\Phi(0)=\Phi'(0)=1$ 和 $\Phi''=B$ 的两次有限 FTC 给
+
+$$
+\Phi(s)=1+s+\int_0^s(s-t)B(t)\,dt\qquad(s\ge0).
+\tag{RVF.12}
+$$
+
+RVF.4 在正轴上是 $F'=a\Phi$。对 $0<\varepsilon<v$ 用 FTC，再令
+ε↓0。F 的实际连续性和 aΦ 在 [0,v] 的连续性分别支付两端极限，得到
+
+$$
+B(v)=e^{-v}\left[\frac12+\int_0^v a(s)\Phi(s)\,ds\right].
+\tag{RVF.13}
+$$
+
+v=0 时此式同样由 B(0)=1/2 成立；不向 RVF.4 的除式代入零点。
+把 RVF.12 代入 RVF.13，准确得到 RVF.10–RVF.11。
+连续性来自有限参数积分，b 的正性来自括号内的正常数和非负积分。
+证毕。
+
+有限三角域上的 Fubini 给同一个算子的核表示
+
+$$
+(Tf)(v)=\int_0^vK(v,t)f(t)\,dt,\qquad
+K(v,t)=e^{-v}\int_t^v a(s)(s-t)\,ds.
+\tag{RVF.14}
+$$
+
+K 在 $0\le t\le v$ 的每个紧三角域连续，K(v,v)=0，且
+K(v,t)>0 对 $0\le t<v$ 成立。特别地，T 是线性正算子；若
+f 在整个正轴严格正，则 Tf(v)>0 对每个 v>0 成立。
+最后的严格性可在 $t\in[v/4,v/2]$ 上积分连续严格正函数支付。
+这里只交换有限积分，未要求一般 f 在无穷轴可积。
+
+### 463.4 每一个有限递归层与端点严格性
+
+定义自然数指标的递归、真实剩余与新增层
+
+$$
+B_0=0,\qquad B_{n+1}=b+TB_n,\qquad
+R_n=B-B_n,\qquad D_n=B_{n+1}-B_n.
+\tag{RVF.15}
+$$
+
+**定理 463.3（严格正的实际分层）。** 对每个 n≥0，
+
+$$
+R_n=T^nB,\qquad D_n=T^nb,\qquad
+R_n=R_{n+1}+D_n,
+\tag{RVF.16}
+$$
+
+$$
+0\le B_n(v)<B_{n+1}(v)<B(v)\quad(v>0),\qquad
+R_n(v)>0,\quad D_n(v)>0\quad(v>0).
+\tag{RVF.17}
+$$
+
+全部函数连续。零端点准确为
+
+$$
+\begin{gathered}
+B_0(0)=0,\quad B_n(0)=\tfrac12\ (n\ge1),\\
+R_0(0)=\tfrac12,\quad R_n(0)=0\ (n\ge1),\\
+D_0(0)=\tfrac12,\quad D_n(0)=0\ (n\ge1).
+\end{gathered}
+\tag{RVF.18}
+$$
+
+**证明。** RVF.11 和线性性给
+$R_{n+1}=T(B-B_n)=TR_n$；R0=B，故 $R_n=T^nB$。
+同理 D0=b、$D_{n+1}=TD_n$，得到第二个身份。第三个身份由定义相减。
+原 B 和 b 在正轴严格正，RVF.14 的严格正算子性质归纳给所有
+R_n、D_n 的正性。B0=0，$B_{n+1}=B_n+D_n$，故 Bn 非负且严格递增；
+Rn>0 给对 B 的严格上界。连续性逐层由 RVF.10 得到。
+最后 $(Tf)(0)=0$、b(0)=1/2 给 RVF.18 的每一项。
+所有有限层的严格不等式均明确位于 v>0。证毕。
+
+### 463.5 三重积分的阶乘误差与实际曲率的局部一致恢复
+
+**定理 463.4（全轴逐点界与紧窗一致收敛）。** 置
+
+$$
+c_n=\frac1{2\cdot3^n(3n)!}.
+$$
+
+则对全部 n≥0 和 v≥0，
+
+$$
+\boxed{\qquad 0\le R_n(v)\le c_nv^{3n}.\qquad}
+\tag{RVF.19}
+$$
+
+每个固定 V≥0 上，
+
+$$
+\sup_{0\le v\le V}|B(v)-B_n(v)|\le c_nV^{3n}\longrightarrow0.
+\tag{RVF.20}
+$$
+
+特别地，同一个原曲率有正层展开
+
+$$
+B_n=\sum_{j=0}^{n-1}T^jb,\qquad
+B=\sum_{j=0}^\infty T^jb,
+\tag{RVF.21}
+$$
+
+n=0 时有限和为空。无穷和在每个紧窗一致收敛，在完整非负轴逐点成立。
+
+**证明。** RVF.7 和 $e^{-v}\le1$ 给
+
+$$
+0\le K(v,t)\le\frac{(v-t)^2}{6}\qquad(0\le t\le v).
+\tag{RVF.22}
+$$
+
+RVF.19 的 n=0 是原 $B\le1/2$。若 n 的界成立，则由 Rn+1=TRn，
+
+$$
+R_{n+1}(v)\le\frac{c_n}6\int_0^v(v-t)^2t^{3n}\,dt
+=\frac{c_n}3\frac{(3n)!}{(3n+3)!}v^{3n+3}
+=c_{n+1}v^{3n+3}.
+\tag{RVF.23}
+$$
+
+中间积分用整数幂展开积分或 Beta 积分均可直接得到；这是有限积分。
+对 V>0，RVF.20 右侧相邻项比值是
+$V^3/[3(3n+1)(3n+2)(3n+3)]\to0$，故趋零；V=0 由 RVF.18 单独给出。
+有限和身份由递归归纳，无穷和身份由 RVF.20 取极限。
+证毕。
+
+每轮恰好累加三次有限积分的阶数，因而出现 (3n)!。
+局部一致收敛由这一 Volterra 三角域结构保证。
+完整无穷轴的积分收敛在下一小节由原完整供应支付。
+
+### 463.6 全部剩余质量、矩与对数积分
+
+定义完整剩余预算和新增层预算
+
+$$
+r_n=\int R_n,\quad m_n=\int vR_n,\qquad
+z_n=\int D_n,\quad t_n=\int vD_n.
+\tag{RVF.24}
+$$
+
+**引理 463.5（完整可积性与极限）。** 对每个有限 n，Bn、Rn、Dn
+以及各自乘以 v、$|\log v|$ 的函数，在完整正轴上可积。并且
+
+$$
+r_n=k-\int B_n>0,\qquad m_n=1-\int vB_n>0,
+\qquad z_n>0,\quad t_n>0,
+$$
+
+$$
+r_n=r_{n+1}+z_n,\qquad m_n=m_{n+1}+t_n,
+\tag{RVF.25}
+$$
+
+$$
+r_n\downarrow0,\qquad m_n\downarrow0,\qquad
+\ell_n:=\int|\log v|R_n(v)\,dv\longrightarrow0.
+\tag{RVF.26}
+$$
+
+因此
+
+$$
+\int B_n\longrightarrow k,\quad
+\int vB_n\longrightarrow1,\quad
+-\int\log v\,B_n(v)\,dv\longrightarrow A.
+\tag{RVF.27}
+$$
+
+**证明。** RVF.16–RVF.17 给
+$0\le B_n\le B$、$0\le R_n\le B$、$0\le D_n\le R_n\le B$。
+RVF.2 的三种可积主导同时支付全部所列完整积分；有符号对数项
+由相应绝对对数项支付。正密度在例如 [1,2] 上连续严格正，故其
+质量和一阶矩均严格正。RVF.25 由完整可积积分的线性性得到。
+RVF.20 给 Rn 逐点趋零。对 Rn、vRn 和 $|\log v|R_n$ 分别使用
+B、vB、$|\log v|B$ 的 DCT，得到 RVF.26。
+其中 rn、mn 的递减由 RVF.25 的严格正新增预算得到。
+最后准确相减得到 RVF.27；有符号对数极限亦可直接由同一绝对主导得到。
+整个论证保留无穷尾，并未从紧窗一致收敛直接推出无穷积分极限。证毕。
+
+### 463.7 完整严格 Jensen 与预算合并
+
+对正质量和正一阶矩定义
+
+$$
+\mathcal F(r,m)=r\log(r/m)\qquad(r,m>0).
+\tag{RVF.28}
+$$
+
+**引理 463.6（严格密度 Jensen）。** 若连续密度 f 在正轴处处严格正，
+f、vf、$|\log v|f$ 完整可积，r=∫f>0、m=∫vf>0，则
+
+$$
+\mathcal J(f):=-\int\log v\,f(v)\,dv>\mathcal F(r,m).
+\tag{RVF.29}
+$$
+
+**证明。** 置 μ=m/r>0。对每个 v>0，实对数切线给
+
+$$
+\log v\le\log\mu+\frac{v-\mu}{\mu},
+$$
+
+等号仅在 v=μ。切线差乘以 f 后绝对可积；在 [μ+1,μ+2] 上连续
+严格正，故完整积分严格正。于是
+$\int\log v\,f<r\log\mu+(m-\mu r)/\mu=r\log\mu$。
+取负号并用 $-\log\mu=\log(r/m)$ 得 RVF.29。证毕。
+
+**引理 463.7（两个完整预算的合并）。** 对 r1,r2,m1,m2>0，
+
+$$
+\mathcal F(r_1,m_1)+\mathcal F(r_2,m_2)
+\ge\mathcal F(r_1+r_2,m_1+m_2).
+\tag{RVF.30}
+$$
+
+等号恰在 m1/r1=m2/r2 成立。
+
+**证明。** 对权重 $r_i/(r_1+r_2)$ 使用实 log 的严格凹性：
+
+$$
+\frac{r_1}{r_1+r_2}\log\frac{m_1}{r_1}
++\frac{r_2}{r_1+r_2}\log\frac{m_2}{r_2}
+\le\log\frac{m_1+m_2}{r_1+r_2}.
+$$
+
+乘以负数 $-(r_1+r_2)$ 得 RVF.30。
+两权重严格正，故严格凹性的等号条件正是所列均值条件。证毕。
+
+还需要一个不依赖 r 与 m 比值的完整界：
+
+$$
+\mathcal F(r,m)\ge-\frac m e\qquad(r,m>0).
+\tag{RVF.31}
+$$
+
+事实上 q=r/m>0 给 $\mathcal F=mq\log q$，而经典
+$q\log q\ge-1/e$ 可由 log 切线支付：将
+$\log y\ge1-1/y$ 用于 y=eq，再减去 1 并乘以 q。
+
+### 463.8 收敛到原 A 的严格递增下界
+
+定义完整递归下界
+
+$$
+\boxed{\quad
+L_n=\mathcal J(B_n)+\mathcal F(r_n,m_n)
+=-\int\log v\,B_n(v)\,dv+r_n\log(r_n/m_n).
+\quad}
+\tag{RVF.32}
+$$
+
+**定理 463.8（严格递增与准确极限）。** 对全部 n≥0，
+
+$$
+L_0=k\log k,\qquad L_n<L_{n+1}<A,\qquad L_n\longrightarrow A.
+\tag{RVF.33}
+$$
+
+更准确地，整个无穷轴上的剩余误差满足
+
+$$
+\boxed{\qquad 0<A-L_n\le\ell_n+\frac{m_n}{e}\longrightarrow0.\qquad}
+\tag{RVF.34}
+$$
+
+**证明：每一步的严格下界与极限。** 原 A 身份和完整积分线性性给
+$A=\mathcal J(B_n)+\mathcal J(R_n)$。
+RVF.29 对真实 Rn 的严格性成立于每个有限 n，包括 R0=B；
+RVF.26 已支付全部矩且 Rn 在整个正轴严格正。因此
+$A-L_n=\mathcal J(R_n)-\mathcal F(r_n,m_n)>0$。
+又 $|\mathcal J(R_n)|\le\ell_n$，RVF.31 给
+$A-L_n\le\ell_n+m_n/e$，这就是 RVF.34。
+RVF.26 使右侧趋零，故 Ln 趋于同一个原 A。
+等价地，$-m_n/e\le\mathcal F(r_n,m_n)<\mathcal J(R_n)\le\ell_n$
+把看似可能奇异的剩余项 $r_n\log(r_n/m_n)$ 夹至零，
+不需要假定 rn/mn 的极限。n=0 的 B0=0、r0=k、m0=1 给 L0。
+
+**证明：全部有限 n 的严格改进。** RVF.25 与线性性给精确差式
+
+$$
+\begin{aligned}
+L_{n+1}-L_n
+={}&\underbrace{\mathcal J(D_n)-\mathcal F(z_n,t_n)}_{>0}\\
+ &+\underbrace{\mathcal F(r_{n+1},m_{n+1})
+       +\mathcal F(z_n,t_n)-\mathcal F(r_n,m_n)}_{\ge0}.
+\end{aligned}
+\tag{RVF.35}
+$$
+
+第一项由新增层 Dn 的完整严格 Jensen 支付；第二项由 RVF.30 和
+RVF.25 支付。Dn 在正轴处处严格正，所以即使第二项恰好为零，
+第一项仍严格正。这支付每一个有限 n 的严格改进。证毕。
+
+### 463.9 保留完整尾的显式收敛误差
+
+**定理 463.9（完整显式误差）。** 对任意 n≥0、V≥1，
+
+$$
+\begin{aligned}
+\ell_n\le{}&c_n\left[
+ \frac1{(3n+1)^2}
+ +\frac{\log V\,(V^{3n+1}-1)}{3n+1}\right]
+ +C(V+1)e^{-V},\\
+m_n\le{}&\frac{c_nV^{3n+2}}{3n+2}+C(V+1)e^{-V}.
+\end{aligned}
+\tag{RVF.36}
+$$
+
+因而
+
+$$
+\begin{aligned}
+0<A-L_n\le{}&c_n\left[
+ \frac1{(3n+1)^2}
+ +\frac{\log V\,(V^{3n+1}-1)}{3n+1}
+ +\frac{V^{3n+2}}{e(3n+2)}\right]\\
+ &+C(V+1)(1+1/e)e^{-V}.
+\end{aligned}
+\tag{RVF.37}
+$$
+
+特别地，令 $q=e^3/81<1/3$。对每个 n≥1 取 V=n，得到
+
+$$
+\boxed{\begin{aligned}
+0<A-L_n\le{}&\frac{q^n}{2}\left[
+ \frac1{(3n+1)^2}
+ +\frac{n\log n}{3n+1}
+ +\frac{n^2}{e(3n+2)}\right]\\
+ &+C(n+1)(1+1/e)e^{-n}.
+\end{aligned}}
+\tag{RVF.38}
+$$
+
+这是同一原 A 的完整轴误差；右侧每一项都有准确的来源。
+
+**证明。** RVF.3 与 RVF.19 同时给
+
+$$
+0\le R_n(v)\le\min\{c_nv^{3n},Ce^{-v}\}\quad(v>0).
+\tag{RVF.39}
+$$
+
+把绝对对数积分分成 (0,1)、[1,V] 与 (V,∞)。第一段用准确积分
+$\int_0^1(-\log v)v^{3n}dv=1/(3n+1)^2$；第二段用
+$\log v\le\log V$；第三段用 $\log v\le v$ 和
+$\int_V^\infty ve^{-v}dv=(V+1)e^{-V}$。这给 RVF.36 第一行。
+一阶矩在 (0,V) 使用幂界，在 (V,∞) 使用同一完整指数尾，给第二行。
+代入 RVF.34 得 RVF.37。
+
+经典阶乘界 $N!\ge(N/e)^N$ 可由
+$\log(N!)\ge\int_1^N\log x\,dx=N\log N-N+1$ 直接得到。
+对 N=3n、n≥1 使用它，得
+
+$$
+c_n\le\frac{q^n}{2n^{3n}}.
+$$
+
+将 V=n 代入 RVF.37，使用 $n^{3n}\ge1$ 并在中段舍去负的 −1，
+逐项得到 RVF.38。经典 e<3 给 $q<27/81=1/3$；例如指数级数与
+$j!\ge2^{j-1}$（j≥1，j=3 时严格）给
+$e=1+\sum_{j\ge1}1/j!<1+\sum_{j\ge1}2^{1-j}=3$。
+几何衰减压过括号内的多项式和对数增长，另一完整尾项也趋零。
+没有截断后丢掉尾部。证毕。
+
+### 463.10 固定指数族、第二层底座与递归的严格包含
+
+递归的正性还准确连接 §462 的抽底座办法。
+对 $0\le\alpha\le1/2$，置 $R_\alpha=B-\alpha e^{-v}$。
+RVF.3 支付其完整严格正性，经典 Gamma 对数积分支付
+$\mathcal J(\alpha e^{-v})=\alpha\gamma$，故完整严格 Jensen 给
+
+$$
+A>G(\alpha):=\alpha\gamma+(k-\alpha)
+ \log\frac{k-\alpha}{1-\alpha}.
+\tag{RVF.40}
+$$
+
+这里的剩余完整质量为 k−α>0、一阶矩为 1−α>0，绝对对数可积性
+由 B 与指数核支付。写 $u=(k-\alpha)/(1-\alpha)>0$，直接求导得
+
+$$
+G'(\alpha)=\gamma+u-1-\log u>0.
+\tag{RVF.41}
+$$
+
+$\log u\le u-1$ 和 γ>1/2 支付严格性。因此该固定指数族在 α=1/2
+取最强端点，即 §462 的下界。任何常系数完整底座
+$\alpha e^{-v}\le B(v)$ 的 v↓0 极限都要求 α≤B(0)=1/2；
+α=1/2 已由 RVF.3 实现，故这个系数端点也准确最优。
+
+RVF.8 还给 $p(s)>s^3/3$ 对每个 s>0 成立：被积函数中
+$e^t+e^{-t}>2$ 对 t>0 成立，三次积分的其余权重在内部严格正。
+于是 $a(s)>e^{-s}/3$，从 b 的准确有限积分得到
+
+$$
+B(v)>b(v)>b_2(v):=\frac56e^{-v}-\frac13e^{-2v}
+>\frac12e^{-v}>0\qquad(v>0).
+\tag{RVF.42}
+$$
+
+其中 $b>b_2$ 使用 $a(s)(1+s)>e^{-s}/3$ 并从 0 积分；
+$b_2-e^{-v}/2=\frac13(e^{-v}-e^{-2v})>0$。
+B>b 是实际 TB 的严格正性。
+完整两指数核的准确矩为
+
+$$
+\int b_2=\frac23,\qquad \int vb_2=\frac34,\qquad
+\mathcal J(b_2)=\frac23\gamma-\frac16\log2.
+\tag{RVF.43}
+$$
+
+对数矩使用经典完整 Gamma 身份
+$\int\log v\,e^{-\lambda v}dv=(-\gamma-\log\lambda)/\lambda$（λ>0）；
+这由 w=λv 的换元和 §462 的 λ=1 完整绝对可积积分直接得到。
+$R_2^*=B-b_2$ 在整个正轴严格正，完整质量 $r=k-2/3>0$、一阶矩 1/4。
+r 的正性来自实际正剩余的积分。严格 Jensen 因而给
+
+$$
+A>H_2:=\frac23\gamma-\frac16\log2+r\log(4r).
+\tag{RVF.44}
+$$
+
+该下界有统一的严格正数值储备：
+
+$$
+H_2>\frac13-\frac18-\frac3{32}=\frac{11}{96}.
+\tag{RVF.45}
+$$
+
+具体地，γ>1/2，$e^{3/4}>1+3/4+(3/4)^2/2=65/32>2$
+给 log2<3/4；$e>1+1+1/2+1/6=8/3$ 以及
+$r\log(4r)\ge-1/(4e)>-3/32$ 给最后一项。
+所有积分均完整，数值界不用拟合 k 或 A。
+
+最后，两底座之间的差 b−b2 在正轴严格正，且不超过 B，三种完整
+可积性均已支付；真实剩余 B−b 同样严格正。
+将 RVF.35 的同一个预算分割恒等式用于
+$B-b_2=(b-b_2)+(B-b)$，得到 $L_1>H_2$。
+再用于 $B-e^{-v}/2=(b_2-e^{-v}/2)+(B-b_2)$，得到
+$H_2>G(1/2)$。因而这条包含链准确为
+
+$$
+\boxed{\quad
+L_0<G(1/2)<H_2<L_1<L_2<\cdots<A,\qquad
+L_n>\frac{11}{96}\quad(n\ge1).
+\quad}
+\tag{RVF.46}
+$$
+
+固定指数底座、显式两指数底座和原曲率递归在同一个 B 上给出
+逐层严格加强；每一步都保留相应完整剩余矩。
+
+### 463.11 剩余散度、隐含关系与 Robin 供应边界
+
+每个有限剩余都定义两份完整正轴概率律
+
+$$
+\mu_n(dv)=\frac{R_n(v)}{r_n}\,dv,\qquad
+\nu_n(dv)=\frac{vR_n(v)}{m_n}\,dv.
+$$
+
+两者相互绝对连续，$d\nu_n/d\mu_n=(r_n/m_n)v$。
+RVF.26 的绝对对数可积性支付完整 log 似然比，因而
+
+$$
+\boxed{\qquad A-L_n=r_nD_{\rm KL}(\mu_n\Vert\nu_n)>0.\qquad}
+\tag{RVF.47}
+$$
+
+这只是准确积分身份：展开右侧就是
+$-\int\log v\,R_n-r_n\log(r_n/m_n)$。
+它把剩余负对数矩、按变量加权的概率律和递归下界连在同一真实密度上。
+RVF.35 进一步把每次改进准确拆成新增正层内部的严格 Jensen 缺口，
+以及合并两个质量—一阶矩预算时的非负 log-sum 缺口。
+因此“正分层—保留剩余矩—严格改进”具有同一原对象的精确恒等式。
+
+这里获得正 Laplace 表示的是递归系数 a；实际 B 由正 Volterra
+分层恢复。原 Φ 的既有高阶导数障碍仍适用，未由 RVF.9 改写。
+原 Robin 配对的同源 Möbius 谱供应、完整有符号尾控制和最终符号
+仍是另需支付的算术桥梁。实际 Fibonacci 完整尾运输及其递归结构
+可以提供比较思路，但本节没有给出从这些对象到真实 Möbius 尾的传输定理。
+RVF.33、RVF.38 和 RVF.46 提供的是原 A 的完整解析储备与显式逼近。
+
+### 463.12 来源与证明范围
+
+原曲率、原 A、完整矩和指数底座复用 §§444、450、462 及
+PrimePrefixPhiCurvature、PrimePrefixOriginalA、PrimePrefixCurvatureMoments。
+Gamma 对数积分保持 §462 所述 Mertens.Gamma、PrimeNumberTheoremAnd
+端口及 Mathlib Gamma 导数定理的来源。FTC、有限 Fubini、DCT、
+严格 log 切线、log 凹性、Taylor 积分余项和阶乘界是经典工具。
+
+本节由同一原曲率的正系数积分表示与三角域算子结构导出
+严格递增的完整对数矩下界及明确无穷尾误差。
+本节的局部新推导不作全球文献首创声明。
+上述递归关系、严格改进及误差界均由同一实际曲率的完整积分导出。
+
+## 追加锚（本行以下为增补区）

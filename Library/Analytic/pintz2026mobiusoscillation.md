@@ -353,3 +353,80 @@ remaining Robin obligation is a sufficiently strong joint lower bound
 at the same $A$, including $\Delta_A$ and $C_{\rm floor}(A)$.
 No such bound, new prime estimate, originality claim or RH proof is
 provided by this classical moment application.
+
+## A literal probabilistic Möbius supplier fails actual-source checks
+
+Maxie Dion Schmidt, *Picking up the partial sums of the Möbius function
+problem with probabilistic number theory*,
+[arXiv:2604.23517v1](https://arxiv.org/pdf/2604.23517v1), submitted
+26 April 2026, supplies probabilistic hypotheses alongside identities for
+auxiliary arithmetic functions. The inspected PDF has 10 pages and SHA-256
+`1dfc27758a5c7459f86cc68437b2ebbb4ed8335b8620dd6c91ce9709a720ea57`.
+Assertion 1.10, printed p.4, Remarks 1.11–1.12 on p.5, and Theorem 2.2,
+equations (8a)–(8b), on p.6 are the scope of this paper assessment.
+This is neither a complete proof audit nor a Lean result. The identities
+and elementary arithmetic facts below are reused, not claimed as new
+Möbius theory or a new RH criterion.
+
+### The all-order independence statement includes a forbidden fiber
+
+Let $U_x$ be uniform on $\{1,\ldots,\lfloor x\rfloor\}$, $x\ge2$,
+and keep the source's $\Omega(n)$, which counts prime factors with
+multiplicity. Its literal (IH-A) asserts independence of squarefreeness
+and the events $\Omega(U_x)=k$ throughout the stated range $k\le x$.
+The fixed choice $k=1$ is included. Every integer with $\Omega(n)=1$
+is prime, and every prime is squarefree. The conditional event is
+nonempty for every $x\ge2$. Hence, exactly,
+
+$$
+\Pr\{\mu(U_x)^2=1\mid\Omega(U_x)=1\}=1.
+$$
+
+The unconditional squarefree probability instead tends to
+$6/\pi^2<1$, as stated in the source's (IH-C). Thus (IH-A) fails even
+as an asymptotic equality in that literal full range. A central-range
+asymptotic independence statement with a different quantified range is
+not refuted by this fixed-order check. It would need its own theorem
+and weighted error control before supplying the actual arithmetic sum.
+
+### The actual indexed sums must retain their shared sign
+
+The source's (8a) defines, for $1\le n\le x$,
+
+$$
+\widehat Q_{1,n}(x)=\sum_{j\le x}\lambda(nj)\mu(j)^2.
+$$
+
+Complete multiplicativity of $\lambda$ and
+$\lambda(j)\mu(j)^2=\mu(j)$ give the exact same-source identity
+
+$$
+\widehat Q_{1,n}(x)=\lambda(n)M(x),\qquad
+\widehat Q_{1,1}(x)=M(x),\quad
+\widehat Q_{1,2}(x)=-M(x).
+$$
+
+The displayed (8b) assigns both indexed sums the same nonzero asymptotic
+
+$$
+a(x)=\frac{6x}{\pi^2}
+\frac{(-1)^{\lfloor\log\log x\rfloor}}{2\sqrt{2\pi\log\log x}}.
+$$
+
+For the actual sums, their two ratios to $a(x)$ add to zero identically;
+they therefore cannot both tend to one. This tests (8b) as a prediction
+about the actual arithmetic objects. Because the source's stated
+independence premises already fail, it is not a refutation of a logical
+implication from those inconsistent premises. Restoring the missing
+$\lambda(n)$ factor would remove this particular sign conflict; the source's cited Walfisz bound already gives $M(x)/a(x)\to 0$, excluding
+the asserted asymptotic for the actual $M(x)$.
+
+The [existing FIB finite-source identity](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_PRIME_PREFIX.md),
+§455.6, retains the same actual odd Möbius prefix, its exact boundary
+and complete remaining source tail. Neither a randomized surrogate nor
+the literal claims tested here replace those quantities. This source
+does not obtain an unconditional signed estimate from the quoted hypotheses
+or (8b) for
+$T_A I_\psi(A)$ at the selected Robin source $A=\log N$. The original
+unbounded signed target and RH remain unproved; no new Mertens bound,
+mathematical originality or Lean certification is claimed.
