@@ -64,7 +64,7 @@ internal static class DeclaredTemplateBindingRule
             var currentNames = LeanDeclarationSourceNames.Read(context.Current.Files[path].Text);
             var baseNames = context.Baseline.Files.TryGetValue(path, out var baseline)
                 ? LeanDeclarationSourceNames.Read(baseline.Text) : ImmutableDictionary<string, string>.Empty;
-            var refutationResult = RefutationResult(path, context.Current.Files[path].Text);
+            var refutationResult = RefutationResult(path, context.Current.Files[path].Text, module);
             var newTheorems = module.Declarations
                 .Where(declaration => IsPublicTheorem(declaration, currentNames)
                     && declaration.Name != refutationResult
@@ -104,7 +104,7 @@ internal static class DeclaredTemplateBindingRule
         }
     }
 
-    private static string? RefutationResult(RepoPath path, string source)
+    private static string? RefutationResult(RepoPath path, string source, LeanFileReport module)
     {
         if (!RepositoryRules.TryHeader(source, out var header)
             || !UtilitySyntax.TryParse(header.Utility, out var utility, out _)
@@ -113,7 +113,8 @@ internal static class DeclaredTemplateBindingRule
             return null;
         // SL-031 independently checks the utility relation. This exemption names
         // just its result; it does not exempt the module's other public theorems.
-        return InformationTemplateEvidence.ModuleForSource(path.Value) + "." + target.Declaration;
+        return UtilityDeclarationValidator.TryResolveDeclaration(result, module, out var declaration)
+            ? declaration!.Name : null;
     }
 
     private static RuleFinding Finding(RepoPath path, InformationTemplateOccurrence occurrence)
