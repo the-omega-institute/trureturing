@@ -1,7 +1,7 @@
 ---
-bibkey: conradcyclotomicextensions
+bibkey: conrad2025cyclotomicextensions
 authors: Keith Conrad
-year: null
+year: 2025
 title: Cyclotomic extensions
 doi: null
 url: https://kconrad.math.uconn.edu/blurbs/galoistheory/cyclotomic.pdf
