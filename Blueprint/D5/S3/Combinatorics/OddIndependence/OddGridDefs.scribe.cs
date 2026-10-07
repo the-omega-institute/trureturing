@@ -1,6 +1,6 @@
 using static StrataLint.Scribe.DefinitionDsl;
 
-namespace StrataLint.Scribe.Blueprint.OddIndependence;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Combinatorics.OddIndependence;
 
 internal sealed class OddGridDefsDocument : IScribeDocumentDefinition
 {
