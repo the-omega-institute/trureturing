@@ -4445,3 +4445,304 @@ WN.14 的绝对值作用于同列的有符号系数合并以后；WN.11 的逆�
 原 Robin 有符号尾仍有自己的增长权、截止、完整端点及共同临界尺度义务。要把这里的变差成本用于该尾，仍须准确控制同一来源、同一尺度的运输；有限绝对范数也不提供所需算术符号。对实际商区间系数的定量估计和增长集合 $S_N$ 的联合预算是尚未完成的数学问题，RH 及原尾的最终符号继续开放。
 
 ## 追加锚（本行以下为增补区）
+
+## 470. 单点商块与增长素数剥离的统一算子预算障碍
+
+保持 §468–§469 的实际空间 $V_N$、$T_d$、$U_p$、$P_N$ 与标准 Möbius 调和前缀 $H$。本节给出 WN.16 中完整正向成本的下界，确定随截止增长的全素数剥离不能在任意输入的加权最大范数上拥有统一预算。所用素数倒数发散是经典定理，见 Aigner–Ziegler《Proofs from THE BOOK》第一章的 Erdős 证明；有限最大范数及商块恒等式沿用 §469。本节不提出这些经典结果的数学优先权主张。
+
+#### 470.1 同一实际前缀的行预算
+
+对自然数 $k$ 与正整数 $j$，定义
+
+$$
+c_{k,j}=H(\lfloor k/j\rfloor)-H(\lfloor k/(j+1)\rfloor),
+\qquad
+V_k(w)=\sum_{j=1}^{k}|c_{k,j}|w(j).
+\tag{QO.1}
+$$
+
+由 WN.15，$c_{k,j}$ 正是所有 $1\le d\le k$ 且 $\lfloor k/d\rfloor=j$ 的实际有符号系数 $\mu(d)/d$ 之和。正整数商的完整区间为 $(\lfloor k/(j+1)\rfloor,\lfloor k/j\rfloor]$。商零的实际纤维为空；QO.1 的前缀差公式只对正 $j$ 使用。
+
+对 $\alpha\ge0$，定义完整加权行成本
+
+$$
+w_{k,\alpha}(j)=\left(\frac{k+1}{j+1}\right)^\alpha,
+\qquad
+R_\alpha(k)=V_k(w_{k,\alpha}).
+\tag{QO.2}
+$$
+
+$k=0$ 时这些行和均为空，值为零；$k\ge1$ 时 WN.16 给
+
+$$
+\left\|\prod_{p\le N}U_p\right\|_{\alpha,N}
+=\max_{1\le k\le N}R_\alpha(k)
+\qquad(N\ge1).
+\tag{QO.3}
+$$
+
+当 $\alpha\ge1$ 时，仍用 §469.1 的显示公式定义有限加权最大范数。QO.3 的正权有限行最大值证明不使用 $\alpha<1$，因此也适用于这一范围。
+
+这里单位输入盒为 $|f(j)|\le(j+1)^{-\alpha}$；$R_\alpha(k)$ 包括输出坐标的因子 $(k+1)^\alpha$。对每个固定行，其系数符号的有限选择达到该行成本。达到某一行的输入可以依赖该行，QO.3 不要求一个输入同时达到全部行。
+
+#### 470.2 小分母的实际商纤维为单点
+
+**命题 470.1（完整单点商块）。** 设 $L\ge1$、$k\ge L(L+1)$ 为整数。对每个 $1\le d\le L$，写 $q_d=\lfloor k/d\rfloor$，则 $1\le q_d\le k$，并且
+
+$$
+\{e:1\le e\le k,\ \lfloor k/e\rfloor=q_d\}=\{d\}.
+\tag{QO.4}
+$$
+
+这些 $q_d$ 互不相同，实际商块系数满足
+
+$$
+c_{k,q_d}=\frac{\mu(d)}d.
+\tag{QO.5}
+$$
+
+**证明。** 因为 $k\ge L(L+1)\ge d(d+1)$，
+
+$$
+\frac{k}{d}-\frac{k}{d+1}=\frac{k}{d(d+1)}\ge1.
+$$
+
+对实数 $x\ge y+1$ 有 $\lfloor x\rfloor\ge\lfloor y\rfloor+1$，因此
+
+$$
+\lfloor k/d\rfloor>\lfloor k/(d+1)\rfloor.
+\tag{QO.6}
+$$
+
+若 $d>1$，同理由 $k\ge d(d-1)$ 得
+
+$$
+\lfloor k/(d-1)\rfloor>\lfloor k/d\rfloor.
+\tag{QO.7}
+$$
+
+函数 $e\mapsto\lfloor k/e\rfloor$ 在正整数上递减。任何 $e>d$ 的商不超过 QO.6 的右项，任何 $e<d$ 的商在 $d>1$ 时不小于 QO.7 的左项，因而都不能等于 $q_d$。当 $d=1$ 时不存在正整数 $e<d$。分母 $d$ 本身满足原窗口条件，故纤维准确为 $\{d\}$。
+
+$1\le d\le k$ 给 $q_d\ge1$，且 $q_d\le k$。若两个小分母给同一个商，QO.4 强制它们相等，所以这些商互异。对原有符号纤维求和即得 QO.5；其中没有其它分母的项可以抵消。证毕。
+
+#### 470.3 完整有限下界与加权预算发散
+
+**命题 470.2（同一行预算的准确来源下界）。** 对命题 470.1 的 $L,k$ 和每个 $\alpha\ge0$，
+
+$$
+\boxed{
+R_\alpha(k)\ge
+2^{-\alpha}\sum_{d=1}^{L}|\mu(d)|d^{\alpha-1}
+\ge2^{-\alpha}\sum_{\substack{p\le L\\p\ \mathrm{prime}}}
+p^{\alpha-1}.}
+\tag{QO.8}
+$$
+
+完整有限上界仍为
+
+$$
+R_\alpha(k)\le\sum_{d=1}^{k}|\mu(d)|d^{\alpha-1}
+\le\sum_{d=1}^{k}d^{\alpha-1}.
+\tag{QO.9}
+$$
+
+对每个固定 $\alpha\ge0$，$R_\alpha(k)\to+\infty$，特别是普通行预算 $V_k(1)=R_0(k)$ 不统一有界。于是
+
+$$
+\boxed{
+\left\|\prod_{p\le N}U_p\right\|_{\alpha,N}
+\longrightarrow+\infty\quad(N\to\infty).}
+\tag{QO.10}
+$$
+
+**证明。** QO.4–QO.5 给互异的单点坐标，故在完整非负行和中只保留这些坐标，得到
+
+$$
+R_\alpha(k)\ge\sum_{d=1}^{L}\frac{|\mu(d)|}{d}
+\left(\frac{k+1}{q_d+1}\right)^\alpha.
+$$
+
+准确整数商给 $dq_d\le k$，而 $d\le k$，所以
+
+$$
+d(q_d+1)\le k+d\le2(k+1),\qquad
+\frac{k+1}{q_d+1}\ge\frac d2.
+$$
+
+因为 $\alpha\ge0$，提升到该幂次保持不等号，便得 QO.8 的第一个下界。素数 $p$ 满足 $\mu(p)=-1$，只保留素数项给第二个下界。$\alpha=0$ 时因子 $2^{-\alpha}$ 为一，直接得到
+
+$$
+V_k(1)\ge\sum_{d=1}^{L}\frac{|\mu(d)|}d
+\ge\sum_{\substack{p\le L\\p\ \mathrm{prime}}}\frac1p.
+\tag{QO.11}
+$$
+
+为证 QO.9，在每个完整纤维内使用三角不等式，随后对原全部分母求和。WN.1 给 $(k+1)/(\lfloor k/d\rfloor+1)\le d$，因此
+
+$$
+R_\alpha(k)\le\sum_{d=1}^{k}\frac{|\mu(d)|}d
+\left(\frac{k+1}{\lfloor k/d\rfloor+1}\right)^\alpha
+\le\sum_{d=1}^{k}|\mu(d)|d^{\alpha-1}.
+$$
+
+$|\mu(d)|\le1$ 给剩余上界，未移除任何实际有限项。
+
+对每个素数 $p$，$p^\alpha\ge1$，故 $p^{\alpha-1}\ge1/p$。经典素数倒数发散定理说明 QO.8 的素数部分和随 $L$ 趋于正无穷。对任给实数 $B$，选 $L\ge1$ 使该下界大于 $B$；然后每个 $k\ge L(L+1)$ 都满足 $R_\alpha(k)>B$。这证明整条序列趋于正无穷，而不只是某个子列无界。
+
+最后，对任意 $N\ge1$，QO.3 的完整行最大值至少为 $R_\alpha(N)$。因此行成本的发散推出 QO.10。此处只是用末行提供下界，没有把准确最大值替换为末行。证毕。
+
+#### 470.4 平方自由计数给出完整量化增长
+
+写 $a_d=|\mu(d)|$，并定义
+
+$$
+Q(L)=\sum_{d=1}^{L}a_d,\qquad
+\mathcal H_L=\sum_{d=1}^{L}\frac1d,
+$$
+
+两者在 $L=0$ 时均为零。对正 $d$，$a_d$ 是平方自由整数的指示系数。
+
+**命题 470.3（实际有符号算子的量化成本）。** 对每个自然数 $L$，
+
+$$
+Q(L)\ge\frac L4,\qquad
+\sum_{d=1}^{L}\frac{|\mu(d)|}d\ge\frac14\mathcal H_L.
+\tag{QO.14}
+$$
+
+因此，当 $L\ge1$、$k\ge L(L+1)$ 时，
+
+$$
+R_0(k)\ge\frac14\mathcal H_L,\qquad
+R_\alpha(k)\ge2^{-\alpha-2}L^\alpha\quad(0<\alpha<1).
+\tag{QO.15}
+$$
+
+记 $F_{\alpha,N}=\|\prod_{p\le N}U_p\|_{\alpha,N}$。对每个 $N\ge16$，有完整界
+
+$$
+\boxed{\frac1{16}\log N\le F_{0,N}\le\mathcal H_N\le1+\log N,}
+\tag{QO.16}
+$$
+
+以及
+
+$$
+\boxed{
+2^{-2\alpha-2}N^{\alpha/2}\le F_{\alpha,N}
+\le1+\frac{N^\alpha-1}{\alpha}
+\quad(0<\alpha<1).}
+\tag{QO.17}
+$$
+
+特别地，普通正向范数为 $\Theta(\log N)$；对 $\alpha=1/2$，正向范数至少为 $N^{1/4}/8$。QO.17 没有断言正 $\alpha$ 的准确增长阶等于 $N^{\alpha/2}$。
+
+**证明。** 每个正的非平方自由整数 $d\le L$ 都有某个整数 $n\ge2$ 满足 $n^2\mid d$，且 $n\le d\le L$。因此全部非平方自由整数被有限集合
+
+$$
+B_n(L)=\{d:1\le d\le L,\ n^2\mid d\},\qquad2\le n\le L,
+$$
+
+覆盖。每个 $B_n(L)$ 的基数准确为 $\lfloor L/n^2\rfloor$，由 $m\mapsto mn^2$ 与 $1\le m\le\lfloor L/n^2\rfloor$ 的双射给出。当 $n^2>L$ 时，该集合及其计数均为零。有限并集的基数不超过各基数之和，故
+
+$$
+L-Q(L)\le\sum_{n=2}^{L}\lfloor L/n^2\rfloor
+\le L\sum_{n=2}^{L}\frac1{n^2}\le\frac{3L}4.
+$$
+
+最后一步在 $L\ge2$ 时由完整有限望远镜和给出：
+
+$$
+\sum_{n=2}^{L}\frac1{n^2}
+\le\frac14+\sum_{n=3}^{L}\frac1{n(n-1)}
+=\frac34-\frac1L\le\frac34.
+$$
+
+$L=2$ 时中间和为空，等式右端为 $1/4$。$L=0,1$ 的非平方自由集合为空，且 $Q(0)=0$、$Q(1)=1$，直接满足计数界。这证明 QO.14 的第一式，未用无穷并集，也未把实数界替换为未证明的整数取整界。
+
+对 $L\ge1$，完整有限 Abel 恒等式保留终端项：
+
+$$
+\sum_{d=1}^{L}\frac{a_d}d
+=\frac{Q(L)}L+
+\sum_{m=1}^{L-1}Q(m)\left(\frac1m-\frac1{m+1}\right).
+$$
+
+括号内系数非负，把每个 $Q(m)$ 的计数界及终端 $Q(L)\ge L/4$ 代入，得到
+
+$$
+\sum_{d=1}^{L}\frac{a_d}d
+\ge\frac14+\frac14\sum_{m=1}^{L-1}\frac1{m+1}
+=\frac14\mathcal H_L.
+$$
+
+$L=1$ 时内部和为空；$L=0$ 时原两边均为零，独立成立。对 $0<\alpha<1$ 和 $L\ge1$，因为 $d^{\alpha-1}\ge L^{\alpha-1}$ 对 $1\le d\le L$ 成立，
+
+$$
+\sum_{d=1}^{L}a_dd^{\alpha-1}
+\ge L^{\alpha-1}Q(L)\ge\frac14L^\alpha.
+$$
+
+将这两个界代入 QO.8 或 QO.11，得到 QO.15。
+
+现在取 $N\ge16$，令 $s=\lfloor\sqrt N\rfloor$、$L=s-1$。因为 $\sqrt N\ge4$，有 $L\ge\sqrt N-2\ge\sqrt N/2\ge1$，并且 $L(L+1)=s(s-1)\le s^2\le N$。QO.3 与 QO.15 给
+
+$$
+F_{\alpha,N}\ge R_\alpha(N)
+\ge2^{-\alpha-2}L^\alpha
+\ge2^{-2\alpha-2}N^{\alpha/2}
+\quad(0<\alpha<1).
+$$
+
+普通调和和的积分比较给 $\mathcal H_L\ge\log(L+1)$ 和 $\mathcal H_N\le1+\log N$。又 $L+1=s\ge\sqrt N/2$，所以
+
+$$
+F_{0,N}\ge\frac14\log(L+1)
+\ge\frac18\log N-\frac14\log2
+\ge\frac1{16}\log N,
+$$
+
+最后一步使用 $\log N\ge\log16=4\log2$。完整 QO.9 对每个 $k\le N$ 给 $R_0(k)\le\mathcal H_k\le\mathcal H_N$，得到 QO.16 的上界。对正 $\alpha<1$，同样对全部行使用 QO.9，然后用递减函数 $x^{\alpha-1}$ 的积分比较，得到
+
+$$
+F_{\alpha,N}\le\sum_{d=1}^{N}d^{\alpha-1}
+\le1+\int_1^N x^{\alpha-1}\,dx
+=1+\frac{N^\alpha-1}{\alpha}.
+$$
+
+这证明 QO.17。$\alpha=1/2$ 时下界系数为 $2^{-3}=1/8$。证毕。
+
+#### 470.5 任意输入盒、固定剥离及实际算术状态的不同量词
+
+**推论 470.4（统一任意输入预算的障碍）。** 对每个固定 $\alpha\ge0$， 不存在不依赖 $N$ 的实数 $C$，使每个 $N\ge1$ 和每个 $f\in V_N$ 都满足
+
+$$
+\left\|\left(\prod_{p\le N}U_p\right)f\right\|_{\alpha,N}
+\le C\|f\|_{\alpha,N}.
+\tag{QO.12}
+$$
+
+**证明。** 如果这样的 $C$ 存在，取单位输入的上确界，全部诱导范数不超过 $C$，与 QO.10 矛盾。等价地，在 QO.3 的最大行按合并系数选择有限输入符号，即得违反任何给定统一 $C$ 的向量。证毕。
+
+对 $0\le\alpha<1$ 及固定有限素数集合 $S$，WN.10 的双向运输常数 $B_\alpha(S)$、$C_\alpha(S)$ 仍然有限且不依赖 $N$，给定幂次衰减类的等价性保持成立。QO.10 使用的是随 $N$ 增长的 $P_N$，因此没有否定固定集合的运输结论。
+
+实际算术输入也可以与最大范数见证具有不同的符号结构。令 $\mathbf1_+(0)=0$、$\mathbf1_+(j)=1$ 对所有正 $j$，则同一实际算子满足
+
+$$
+\left(\prod_{p\le N}U_p\right)\mathbf1_+(k)
+=\sum_{d=1}^{k}\frac{\mu(d)}d=H(k),\qquad1\le k\le N.
+\tag{QO.13}
+$$
+
+经典 Möbius floor 恒等式 $\sum_{d=1}^{k}\mu(d)\lfloor k/d\rfloor=1$ 保留完整小数余项，给
+
+$$
+kH(k)=1+\sum_{d=1}^{k}\mu(d)\{k/d\},\qquad
+|H(k)|\le1+1/k\le2\quad(k\ge1).
+$$
+
+因此在普通最大范数中，这个特定输入的输出统一有界，而 QO.10 的算子范数仍然发散。对于实际 $H$ 的更强衰减或原 Robin 权族，需要直接控制它们的相关符号与完整端点；任意输入盒的绝对范数会允许独立选择符号，不能代替这些算术条件。
+
+QO.8–QO.12 排除的是增长全素数剥离在任意输入盒上的统一算子预算。它们没有排除附带实际输入结构的变差估计、随截止增长的定量预算或原 Robin 有符号尾的其它估计。RH 以及该原尾的最终符号仍未由这些有限算子结论确定。
+
+## 追加锚（本行以下为增补区）
