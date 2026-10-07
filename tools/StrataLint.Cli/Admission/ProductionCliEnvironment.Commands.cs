@@ -22,8 +22,8 @@ internal sealed partial class ProductionCliEnvironment
     public CommandResult Coverage(IReadOnlyList<string> arguments) =>
         CoverageCommand.Run(repository, leanReportSource, arguments);
 
-    public CommandResult DigestStatus(IReadOnlyList<string> arguments) =>
-        DigestStatusCommand.Run(repository, leanReportSource, arguments);
+
+    public CommandResult SearchAtoms(IReadOnlyList<string> arguments) => SearchAtomsCommand.Run(repository, arguments);
 
     public CommandResult ShowAtom(IReadOnlyList<string> arguments) =>
         ShowAtomCommand.Run(repository, arguments);
@@ -31,8 +31,6 @@ internal sealed partial class ProductionCliEnvironment
     public CommandResult AtomContext(IReadOnlyList<string> arguments) =>
         AtomContextCommand.Run(repository, arguments);
 
-    public ExplicitCommandResult EchoVerify(IReadOnlyList<string> arguments) =>
-        EchoVerifyCommand.Run(repositoryRoot, repository, leanReportSource, arguments);
 
     public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) =>
         GateAuthorityCommand.Run(repositoryRoot, arguments);
