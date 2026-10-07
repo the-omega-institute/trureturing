@@ -22,7 +22,7 @@ local notation "m(" t ")" => GraftAffineClosure.quantity (composition t)
 local notation "B(" t ")" => Finset.filter (fun u => readout u t = Reply.beta) (leafAddresses t)
 
 /-- Exact scalar quantity is the only promise on the complete competitor tree. -/
-def Sound (d : ℕ) (V : Source) (h : ℕ) (Q : Finset Address) : Prop :=
+def QuantitySound (d : ℕ) (V : Source) (h : ℕ) (Q : Finset Address) : Prop :=
   Within h Q ∧ ∀ U : Source, m(U) = m(V) →
     (∀ u ∈ Q, readout u U = readout u V) → U ∈ ActualImage d
 
@@ -102,7 +102,7 @@ private theorem beta_recovery (V U : Source) (hc : BetaCovered V)
 
 private theorem beta_sound (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (hV : V ∈ ActualImage (3 * k)) (h : ℕ) (hh : height V ≤ h) :
-    Sound (3 * k) V h B(V) := by
+    QuantitySound (3 * k) V h B(V) := by
   obtain ⟨T, hT⟩ := hV
   let S := substitution^[3 * k - 2] T
   have he : V = substitution (substitution S) := by
@@ -228,7 +228,7 @@ private theorem immediate_block (k : ℕ) (hk : 1 ≤ k) (V : Source)
 
 private theorem dichotomy (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (hV : V ∈ ActualImage (3 * k)) (h : ℕ) (Q : Finset Address)
-    (hs : Sound (3 * k) V h Q) : alphaLeaves V ⊆ Q ∨ B(V) ⊆ Q := by
+    (hs : QuantitySound (3 * k) V h Q) : alphaLeaves V ⊆ Q ∨ B(V) ⊆ Q := by
   classical
   by_contra hn
   obtain ⟨ha, hb⟩ := not_or.mp hn
@@ -271,7 +271,7 @@ private theorem child_absent (V : Source) (y : Address) (hy : y ∈ B(V)) (b : B
   rfl
 
 private theorem alpha_branch_bound (k : ℕ) (hk : 1 ≤ k) (V : Source)
-    (h : ℕ) (Q : Finset Address) (hs : Sound (3 * k) V h Q) (ha : alphaLeaves V ⊆ Q) :
+    (h : ℕ) (Q : Finset Address) (hs : QuantitySound (3 * k) V h Q) (ha : alphaLeaves V ⊆ Q) :
     (alphaLeaves V).card + B(V).card - 1 ≤ Q.card ∧
     (2 ≤ (B(V) \ Q).card → (alphaLeaves V).card + B(V).card ≤ Q.card) := by
   classical
@@ -422,23 +422,23 @@ set_option maxHeartbeats 2000000 in -- Joint surgery, disjoint counting and exac
 theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (hV : V ∈ ActualImage (3 * k)) (h : ℕ) :
     1 ≤ (alphaLeaves V).card ∧
-    (h < height V → ¬ ∃ Q : Finset Address, Sound (3 * k) V h Q) ∧
+    (h < height V → ¬ ∃ Q : Finset Address, QuantitySound (3 * k) V h Q) ∧
     (height V ≤ h → 2 ≤ (alphaLeaves V).card →
-      Sound (3 * k) V h B(V) ∧ ∀ Q : Finset Address, Sound (3 * k) V h Q →
+      QuantitySound (3 * k) V h B(V) ∧ ∀ Q : Finset Address, QuantitySound (3 * k) V h Q →
         B(V).card ≤ Q.card ∧ (Q.card = B(V).card ↔ Q = B(V))) ∧
     ((alphaLeaves V).card = 1 →
       3 * k = 3 ∧ V = substitution^[3] (.of true) ∧ B(V).card = 2 ∧
       (height V ≤ h →
-        (∀ Q : Finset Address, Sound (3 * k) V h Q →
+        (∀ Q : Finset Address, QuantitySound (3 * k) V h Q →
           2 ≤ Q.card ∧ (Q.card = 2 ↔
             Q = {[false, false], [false, true]} ∨ Q = {[false, false], [true]} ∨
               Q = {[false, true], [true]})) ∧
         (∀ Q : Finset Address,
           (Q = {[false, false], [false, true]} ∨ Q = {[false, false], [true]} ∨
-            Q = {[false, true], [true]}) → Sound (3 * k) V h Q))) := by
+            Q = {[false, true], [true]}) → QuantitySound (3 * k) V h Q))) := by
   classical
   have ha := image_alpha k hk V hV
-  have lower (Q : Finset Address) (hs : Sound (3 * k) V h Q) : B(V).card ≤ Q.card := by
+  have lower (Q : Finset Address) (hs : QuantitySound (3 * k) V h Q) : B(V).card ≤ Q.card := by
     rcases dichotomy k hk V hV h Q hs with hA | hB
     · have hb := (alpha_branch_bound k hk V h Q hs hA).1
       omega

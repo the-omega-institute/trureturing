@@ -18,7 +18,7 @@ internal sealed class QuantityAddressCertificateDocument : IScribeDocumentDefini
                 + "I(d) is the range of rho iterated d times. D(V) is maximum leaf depth, with root depth zero. "
                 + "Addresses and all four raw replies reuse ActualTreeReadoutAcquisition. LL, LR and R denote "
                 + "the Boolean lists [false,false], [false,true] and [true]. Pairset(x,y) denotes their unordered two-element set.")),
-            Describe.Lean(DescribeId.Create("quantity-address-sound"), DeclarationHandle.Create(Prefix + "Sound"),
+            Describe.Lean(DescribeId.Create("quantity-address-sound"), DeclarationHandle.Create(Prefix + "QuantitySound"),
                 H("Quantity soundness"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
                     Paragraph(Text("S(d,V,h,Q) means that every address in the finite set Q has length at most h, "
                         + "and every complete source U with m(U)=m(V) and matching raw replies at all addresses in Q lies in I(d). "

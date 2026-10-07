@@ -29,7 +29,7 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
             Helper("image_positive", "Third-image inclusion", "For every natural d at least three and every U in I(d), U is a third substitution image."),
             Helper("alpha_card", "Alpha cardinality", "For every complete source t, the cardinality of alphaLeaves(t) equals the alpha component of composition(t)."),
             Helper("leaf_data", "Leaf depth and beta cardinality", "For every source t, all its leaf addresses have length at most height(t), and its beta-filtered leaf set has cardinality equal to the beta composition component."),
-            Helper("no_left_alpha", "Left alpha obstruction", "For every third image t and every address r, a subtree alpha at r followed by a left step is impossible."),
+            Helper("no_left_alpha", "Left alpha obstruction", "For every third image t and every address r, the left child of r cannot be an alpha leaf."),
             Helper("leaf_change", "Changing a leaf label", "Replacing the leaf b at address s by c retains a leaf c there, adds composition(c) while removing composition(b), and preserves every readout away from s."),
             Helper("image_structure", "Image alpha structure", "For every k at least one and every U in I(3k), U is AlphaCovered and each alpha address is the right child of a terminal pair(beta,alpha)."),
             Helper("beta_surplus", "Strict beta surplus", "For every k at least one and every V in I(3k), the beta composition count is strictly larger than its alpha count."),
