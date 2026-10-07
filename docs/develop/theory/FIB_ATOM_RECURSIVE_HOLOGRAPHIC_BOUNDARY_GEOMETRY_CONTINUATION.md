@@ -751,3 +751,323 @@ Source preparation and calibration, exact directions and control identities, Rea
 The native full-rotation, faithful displacement, physical maintenance/leakage/precision/record-price and common-environment propagation/task-capacity bridges remain unproved. No extra source port, physical realization, full DEV/RH result or completion of a broader research objective follows from (56.20).
 
 ## 56.99 追加锚（本行以下为增补区）
+
+## 57. Uniform paid acquisition of actual-image certificates at exact composition
+
+**Definition 57.1 (source, target, actual replies and the two costs).** The source is one unknown complete, nonempty, finite ordered binary tree $U$ whose leaves have the literal labels $\alpha,\beta$. Brackets, left/right order, and distinct occurrences are retained. Use exactly
+
+$$
+\rho\alpha=\beta,\qquad \rho\beta=(\beta,\alpha),\qquad
+\rho(S,T)=(\rho S,\rho T),\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix}.
+\tag{57.1}
+$$
+
+Fix public integers $d=3k$, $k\ge1$, $a,b\ge0$, $n=a+b\ge1$. The exact composition promise is
+
+$$
+C=(A,B)=M^d(a,b)
+=\bigl(F_{d-1}a+F_db,\ F_da+F_{d+1}b\bigr),
+\qquad N=A+B,
+\tag{57.2}
+$$
+
+where $F_0=0,F_1=1$. Let $\mathcal T_C$ contain *every* complete ordered tree of this composition and let
+$\mathcal P=\mathcal T_C\cap\operatorname{im}\rho^d$.
+The Boolean target is literal membership in $\operatorname{im}\rho^d$, on all of $\mathcal T_C$. There is no promise that a negative source has the height of a positive source. The structural fact that an $N$-leaf complete binary tree has height at most $N-1$ is available; replacing the negative domain by trees of positive height is not.
+
+An address is any finite word in $L,R$, with root $\varepsilon$ at depth zero. Its exact endpoint reply is $\alpha$ or $\beta$ at that labelled leaf, $\mathsf{br}$ at a branch, and $\varnothing$ after crossing a leaf. A legal query requests the endpoint of one such word with $|u|\le h$. It neither changes the tree nor requires a preceding query of its ancestors. This is the address port specified by `ActualTreeReadoutAcquisition.readout`; it is not a physical navigation operation. A policy has common source-independent initialization and empty acquired history. Each next address or Boolean return depends only on its own finite chronological actual query/reply history and the public parameters. It must halt correctly on every $U\in\mathcal T_C$.
+
+For an actual terminal transcript $T$, its primary cost is $|Q(T)|$, where $Q(T)$ is the set of *distinct requested addresses*. Every reply type is paid. Its query-action count is the length of $T$, including repeats. Repeating an address can add an action without adding a paid address. Let
+
+$$
+D_h(a,b;d)=\min_\pi\max_{V\in\mathcal P}|Q(T_\pi(V))|,
+\tag{57.3}
+$$
+
+with value $+\infty$ if no correct depth-$h$ policy exists. The maximum prices positive inputs; correctness and finite termination also include all negative inputs. $D_\infty$ allows arbitrary finite address depths, with the same finite-run requirement. Neither quantity is the original globally correct third-image `Strategy` optimization over every composition. Control computation, candidate tables, memory, word encoding, output events, and physical traversal have no price assigned by (57.3). The constructions below specify and pay every actual address request; they do not claim these other resources are free or have a runtime bound.
+
+**Lemma 57.2 (literal block calculus and the positive family).** Put $X_t=\rho^t\alpha$. Then $\rho^d\beta=X_{d+1}$ and
+
+$$
+X_0=\alpha,\quad X_1=\beta,\quad
+X_t=(X_{t-1},X_{t-2})\quad(t\ge2).
+\tag{57.4}
+$$
+
+For $t\ge2$ put $w(u)=\#L(u)+2\#R(u)$. The *entire* endpoint table of $X_t$ is
+
+$$
+r_{X_t}(u)=
+\begin{cases}
+\mathsf{br},&w(u)\le t-2,\\
+\beta,&w(u)=t-1,\\
+\alpha,&w(u)=t\ \text{and }u\text{ ends in }R,\\
+\varnothing,&\text{otherwise}.
+\end{cases}
+\tag{57.5}
+$$
+
+Write $z_t=L^{t-2}R$ for $t\ge2$. Thus $z_t$ is an actual $\alpha$ address of $X_t$. If $r_{X_t}(u)=\alpha$, deleting the first letter of $u$ cannot leave another $\alpha$ address of $X_t$. Heights are $\operatorname{ht}(X_t)=t-1$ for $t\ge1$. There are exactly
+
+$$
+p:=|\mathcal P|=\operatorname{Cat}_{n-1}\binom na
+\tag{57.6}
+$$
+
+positive trees. They are obtained by replacing the leaves of every ordered $n$-leaf tree of composition $(a,b)$ by $X_d,X_{d+1}$ respectively, preserving every original bracket.
+
+Proof. Equation (57.4) follows from the literal substitution. Along a path, $L$ subtracts one and $R$ subtracts two from the block index until index one or zero is reached. Every word of weight at most $t-2$ ends at an index at least two and is a branch. Weight $t-1$ ends at index one and gives $\beta$. Weight $t$ can reach index zero exactly when its last step is $R$; a last $L$ would already have crossed the index-one leaf. Larger weights cross a leaf. This proves all four cases, including absent replies, and the deletion assertion follows because the deleted positive weight makes the remaining weight strictly less than $t$. Induction in (57.4) gives the heights.
+
+The substitution is injective on complete ordered trees. At one step an output root $\beta$ decodes to $\alpha$; the literal pair $(\beta,\alpha)$ decodes to $\beta$; any other image branch must decode recursively as a source branch. The special pair cannot also be the image of a source branch, since no one-step image has root $\alpha$. This gives a unique inverse on the image, and iteration remains injective. Since $\det M=-1$, an image of composition $C$ has initial composition exactly $(a,b)$. The classical Catalan shape count and the choice of $a$ labelled positions now give (57.6). These counts describe public candidates, not a known index of the actual source. □
+
+**Theorem 57.3 (complete one-colour certificates, rigidity and actual histories).** For $V\in\mathcal P$ write $\mathcal A(V),\mathcal B(V)$ for its actual $\alpha,\beta$ address sets. A finite set $Q$ is a sound positive certificate at $V$ on the exact competitor domain $\mathcal T_C$ if and only if
+
+$$
+\mathcal A(V)\subseteq Q\quad\text{or}\quad\mathcal B(V)\subseteq Q.
+\tag{57.7}
+$$
+
+Here sound means that *every* $U\in\mathcal T_C$ agreeing with $V$ at all requested endpoints in $Q$ is positive. In fact either complete colour frontier uniquely determines $V$ within $\mathcal T_C$. Moreover
+
+$$
+B-A=F_{d-2}a+F_{d-1}b\ge n>0.
+\tag{57.8}
+$$
+
+The minimum static cost is $A$, and its unique minimum set is $\mathcal A(V)$. Every correct uniform policy's actual terminal paid set at a positive $V$ satisfies (57.7). If that actual cost is less than $B$, it contains *all* $\mathcal A(V)$, and
+
+$$
+|Q(T_\pi(V))|
+=A+|Q(T_\pi(V))\setminus\mathcal A(V)|.
+\tag{57.9}
+$$
+
+Proof. Reuse the static minimum, unique-optimum and sensitive-swap mechanisms supplied by `ActualImageAddressCertificate.result` and `rigidity`, as ordinary mathematical prerequisites. Their relevant literal structure can also be checked directly: every twice-substituted tree is assembled from $(\beta,\alpha)$ and $((\beta,\alpha),\beta)$ blocks. Every branch has both an $\alpha$ descendant and a $\beta$ descendant; every $\alpha$ is the right leaf of a $(\beta,\alpha)$ cherry. No $\alpha$ is a left leaf, and no terminal cherry is $(\beta,\beta)$. Further substitution preserves membership in the twice-image.
+
+For sufficiency there is a useful symmetric reconstruction argument. Take either colour $c$, its full address frontier in $V$, and the finite trie consisting of all prefixes of these addresses. Every branch of $V$ lies in this trie because it has a $c$ descendant. Its missing child slots are therefore precisely opposite-coloured single leaves in $V$. A complete competitor agreeing at all these $c$ endpoints must contain the same trie. Its exact number of $c$ leaves is already exhausted there. Each missing slot must contain a nonempty all-opposite-colour subtree. The exact total leaf count is the minimum completion count already attained by $V$, so every slot must contain just one leaf. Hence the competitor equals $V$. This argument also proves the $\beta$-frontier sufficiency, without a height assumption on the competitor.
+
+For necessity suppose that $x\in\mathcal A(V)$ and $y\in\mathcal B(V)$ both escape $Q$. Exchange just their leaf labels, retaining the entire shape. The resulting complete tree $W$ has composition $C$, and every endpoint except $x,y$ has exactly its former reply, including branches and absent endpoints. Let $x=rR$ and let $rL$ be its $\beta$ sibling. If $y=rL$, the new left leaf is $\alpha$, which is forbidden in an image. Otherwise the old cherry at $r$ becomes $(\beta,\beta)$, also forbidden. Thus $W$ is a same-composition negative agreeing on $Q$, proving necessity. Equation (57.8) is the Fibonacci difference in (57.2), with both coefficients at least one. The static statements follow immediately from (57.7).
+
+Finally let a uniform policy actually accept $V$, after its own paid transcript. Any competitor agreeing on that paid set reproduces the *whole chronological history*: at each step the deterministic selector sees the same prefix and requests the same next address, with the same reply, including repetitions. It therefore takes the same finite return. Correctness makes the paid set sound. This is a causal proof about one actual transcript, rather than a replacement of acquisition by an existential static set. Below $B$, (57.7) forces the alpha frontier and yields (57.9). □
+
+**Theorem 57.4 (exact depth solvability and independence above the frontier).** Define
+
+$$
+H=d+n-2+\mathbf1_{b>0}.
+\tag{57.10}
+$$
+
+A uniform correct policy exists if and only if $h\ge H$. At every feasible cap,
+
+$$
+D_h(a,b;d)=D_H(a,b;d)=D_\infty(a,b;d).
+\tag{57.11}
+$$
+
+The equality is on this exact composition contract; it adds no height promise for negatives.
+
+Proof. A positive tree substitutes blocks into an $n$-leaf macro tree. Every macro leaf has depth at most $n-1$; its block height is $d-1$ for $\alpha$ and $d$ for $\beta$. This gives the upper bound $H$. A comb attains depth $n-1$ at a leaf of type $\beta$ when $b>0$; otherwise all leaves have type $\alpha$. For $n=1$ the appropriate sole block attains the same expression. Thus $H$ is the exact maximum positive height. Its attaining tree has a deepest $\alpha$ leaf: (57.4), or the twice-image cherry description, shows this first for each block and then for their assembled tree. Its $\beta$ sibling has the same depth $H$.
+
+If $h<H$, exchange this deepest cherry's labels. It is a same-composition negative, unchanged at every endpoint of depth at most $h$. Every causal history remains common, so correct opposite returns are impossible. If $h\ge H$, query the finite union of all positive alpha frontiers and accept exactly when some candidate's entire alpha frontier has returned $\alpha$. Theorem57.3 proves correctness on every complete competitor, with no positive-height restriction on it. This gives finite termination and solvability.
+
+For independence, take any correct policy with unrestricted finite query depths. Keep only its finitely many positive terminal executions, making the finite decision tree of these actual histories. Repeated queries can be suppressed by using their already acquired exact replies. Any edge with no positive-compatible continuation returns false. Every positive terminal leaf names one particular $V$, because its paid set contains a complete colour frontier and that frontier determines $V$ within $\mathcal T_C$.
+
+An address deeper than $H$ has reply $\varnothing$ on *every positive candidate*. Delete that query node and retain its $\varnothing$ continuation. The compressed selector uses only its actual acquired history and a public decision-tree template. Deleted replies are not entered as acquired reports; the common candidate prediction merely specifies which public continuation replaces the removed node. Every complete colour frontier from a positive terminal execution lies at depth at most $H$, so its actual requests remain in the compressed tree. A positive follows its former path and pays no more. A negative either reaches a rejected edge or a positive-labelled terminal leaf; the latter would require the actual matching complete colour frontier and hence, by Theorem57.3, would equal that positive. Wrong acceptance is impossible. The resulting finite tree is therefore a genuine depth-$H$ policy correct on all competitors, with no larger positive cost. This proves $D_H\le D_\infty$; the reverse inequality and (57.11) follow from nested policy permissions.
+
+Minima in (57.3) exist when feasible. The competitor set and depth-$H$ alphabet are finite, exact replies are deterministic, and repeats add no information. One may minimize over finite trees without repeated queries on a path; the exhaustive finite address scan already solves the target. Thus (57.11) compares attained integer minima, not an unattained limit of controllers. □
+
+**Theorem 57.5 (pointwise favouritism does not make a uniform static optimum).** Any one uniform policy pays exactly $A$ on at most one positive tree. Conversely for every separately chosen $V_0\in\mathcal P$ there is a uniform policy correct on all of $\mathcal T_C$ whose actual cost on $V_0$ is $A$. At feasible depth,
+
+$$
+D_h=A\quad\Longleftrightarrow\quad p=1
+\quad\Longleftrightarrow\quad
+n=1\ \text{or}\ (n=2\text{ and }ab=0).
+\tag{57.12}
+$$
+
+Proof. A cost-$A$ accepting run has paid set exactly $\mathcal A(V)$ and therefore every chronological reply is $\alpha$, even if it repeats requests. A source-independent deterministic selector has only one such all-alpha trajectory and return. Two positives attaining $A$ would have the same actual trajectory, the same paid alpha frontier and hence the same tree. This excludes a policy attaining the static optimum on two different positives.
+
+To favour $V_0$, request its public alpha template first, with no acquired record at initialization. On a mismatch continue a finite correct union-frontier scan, using and retaining the replies actually obtained; on completion accept. Every candidate, including $V_0$, still has its addresses paid when requested. Theorem57.3 makes both branches correct against all negatives. On $V_0$ exactly its $A$ addresses are requested. This is a separately parameterized policy, not a controller secretly initialized with the actual source. The cardinality formula (57.6), $\operatorname{Cat}_0=\operatorname{Cat}_1=1$ and $\operatorname{Cat}_{n-1}>1$ for $n\ge3$ give (57.12). □
+
+**Corollary 57.5a (an explicit static/uniform separation).** At $d=3$, $(a,b)=(1,1)$, let $X=X_3=((\beta,\alpha),\beta)$ and $Y=X_4=(X,(\beta,\alpha))$. The two positives $V=(X,Y)$ and $W=(Y,X)$ have exact composition $(A,B)=(3,5)$, with
+
+$$
+\mathcal A(V)=\{LLR,RLLR,RRR\},\qquad
+\mathcal A(W)=\{LLLR,LRR,RLR\}.
+\tag{57.12a}
+$$
+
+Each unique static minimum is three, but no uniform policy attains three on both. At every $h\ge4$ the query $LLR$ replies alpha on $V$ and beta on $W$; subsequent actual alpha completion pays respectively three and four. Thus $D_h=4$, against all complete $(3,5)$ competitors, whose possible native heights extend to seven. This witness preserves the distinction between $\forall V\,\exists Q$ and $\exists\pi\,\forall V$ rather than inferring one from the other. The lower bound is Theorem57.5 and the upper procedure is the literal two-leaf diagnostic in Theorem57.10. □
+
+**Definition 57.6 (finite weighted identification on the matched positive family).** A positive-identification decision tree uses only original actual address replies, has no repeated address on a path, and has a terminal label $V\in\mathcal P$ which must be correct when its actual source is positive. It is a public finite diagnostic tree, not an acquired tree identifier or a new task required on negatives. For a query at $u$ its weight on $V$ is
+
+$$
+\omega_V(u)=\mathbf1_{r_V(u)\ne\alpha}.
+\tag{57.13}
+$$
+
+Let $E_h$ be the minimum worst positive sum of these weights. It is sufficient to use the finite union of positive node addresses: elsewhere every positive replies absent. Uniformly constant replies can be removed for identification. For a nonempty candidate set $S$ put $e(S)=0$ when $|S|=1$ and otherwise
+
+$$
+e(S)=\min_{u\ \mathrm{splits}\ S}\
+\max_{y:S_y\ne\emptyset}
+\left(\mathbf1_{y\ne\alpha}+e(S_y)\right),
+\quad S_y=\{V\in S:r_V(u)=y\}.
+\tag{57.14}
+$$
+
+The minimum ranges over allowed addresses with at least two realized replies. This is the ordinary finite decision-tree recurrence with source-dependent path weights. It counts every non-alpha reply, including $\beta$, branch and absence; it is not an alpha-only query budget. At $h\ge H$ the candidates are distinguishable, the recurrence is finite, $E_h=e(\mathcal P)$, and $E_h=E_H=E_\infty$.
+
+**Theorem 57.7 (verified identification-to-acquisition bridge and its threshold).** At every feasible depth,
+
+$$
+D_h\le A+E_h.
+\tag{57.15}
+$$
+
+If $D_h<B$, then $E_h\le D_h-A$. In particular
+
+$$
+A+E_h<B\quad\Longrightarrow\quad D_h=A+E_h.
+\tag{57.16}
+$$
+
+More generally either $D_h\ge B$ or $D_h=A+E_h$. No unconditional identity $D_h=A+E_h$ across the beta-frontier threshold is asserted.
+
+Proof. Run a finite weighted identification tree, recording every actual request and reply. Reject immediately on an edge not realized by any surviving positive. When a leaf names $V$, request every *still unqueried* address of $\mathcal A(V)$ and check for $\alpha$. A mismatch rejects; completion accepts. On a positive all these requests are within $H$, its diagnostic leaf is correct, and the distinct acquired alpha addresses finally total $A$. The other distinct requests are exactly its diagnostic non-alpha addresses. Hence its paid cost is $A$ plus its diagnostic weight. Every actual negative either takes a rejected diagnostic edge, fails the final frontier, or would supply an entire matching frontier of $V$; the last case is impossible by Theorem57.3. This proves (57.15) for an actual causal policy against the whole negative domain.
+
+For the converse restrict an optimal policy with $D_h<B$ to its positive actual runs. Its terminal transcripts contain all alphas and uniquely identify their positive source. Suppress repeats and discard empty positive edges to obtain a finite positive-identification tree. Its path weight at $V$ is exactly the non-alpha term in (57.9), so $E_h\le D_h-A$. If $A+E_h<B$, (57.15) puts the optimum below $B$ and the two inequalities give (57.16). If the optimum is below $B$ without that hypothesis, the same lower inequality and (57.15) still give equality. Identification depth independence follows by deleting universally absent queries deeper than $H$, exactly as in Theorem57.4. □
+
+**Theorem 57.8 (nonrepeated finite universal upper constructions).** Let
+$\mathcal F=\bigcup_{V\in\mathcal P}\mathcal A(V)$. At feasible depth,
+
+$$
+D_h\le A+E_h\le
+\min\{A+p-1,\ |\mathcal F|\}
+=\min\left\{A+\operatorname{Cat}_{n-1}\binom na-1,
+\left|\bigcup_{V\in\mathcal P}\mathcal A(V)\right|\right\}.
+\tag{57.17}
+$$
+
+Both stated upper protocols terminate correctly on every negative, with no repeated query calls. The candidate protocol makes at most $A+p$ calls on any competitor and at most $A+p-1$ on a positive. The union protocol makes at most $|\mathcal F|$ calls on any competitor.
+
+Proof. For candidate verification maintain the set of public positives compatible with the entire actual transcript. Choose any remaining candidate by one fixed public order. Request its unqueried alpha endpoints in a fixed order until all are verified or one reply differs from $\alpha$. A mismatch is one paid non-alpha address and removes that candidate; full agreement accepts by Theorem57.3. Previously requested endpoints use their actual retained replies and are not requested again. On a positive its true candidate is never removed, so there are at most $p-1$ mismatch calls. Distinct alpha-returning addresses number at most $A$ on *every* source in $\mathcal T_C$, since its alpha count is exactly $A$. On a negative no candidate can pass; at most $p$ mismatch calls remove them all and cause rejection. This proves all call bounds and the first inequality for $E_h$.
+
+Alternatively request each member of $\mathcal F$ once and test whether any whole candidate alpha frontier has all actual replies $\alpha$. Theorem57.3 gives correctness for tall negatives as well as positives. Each positive returns $\alpha$ at exactly $A$ members of $\mathcal F$, so the diagnostic non-alpha weight is at most $|\mathcal F|-A$. One may identify its positive candidate after this scan and use Theorem57.7, or use the direct membership test. Every response is paid in either version. The public candidate/frontier computation, endpoint-word construction and finite bookkeeping are specified control tasks, with resources distinct from these call counts. □
+
+**Lemma 57.9 (a two-unit weighted obstruction with literal witnesses).** For mixed composition $ab>0$, $n\ge3$, or homogeneous composition $ab=0$, $n\ge4$, every finite positive-identification tree has worst non-alpha weight at least two. Consequently
+
+$$
+D_h\ge A+2
+\tag{57.18}
+$$
+
+at every feasible depth in these ranges.
+
+Proof. First consider six three-leaf macro trees with two occurrences of block $Z$ and one of block $W$, where $Z$ is either $X_d$ or $X_{d+1}$ and $W$ is the other. At either root child their actual subtree multiset is
+
+$$
+\{Z,Z,W,(Z,Z),(Z,W),(W,Z)\}.
+\tag{57.19}
+$$
+
+For any nonempty raw address $u=cv$, if $r_Z(v)\ne\alpha$, its two copies in (57.19) already give a non-alpha reply bucket of size at least two. If $r_Z(v)=\alpha$, then $v$ is nonempty, and deleting its first letter leaves a non-alpha address of $Z$ by (57.5). Among the three pairs in (57.19), two have $Z$ on the side selected by that first letter. They therefore give that same non-alpha reply, again in a bucket of size at least two. The root itself gives six common branch replies. Thus every address has some non-alpha reply realized by at least two different candidates.
+
+For the five homogeneous four-leaf shapes define
+
+$$
+\begin{aligned}
+S_1&=(((Z,Z),Z),Z),&S_2&=((Z,(Z,Z)),Z),\\
+S_3&=((Z,Z),(Z,Z)),&S_4&=(Z,((Z,Z),Z)),\\
+S_5&=(Z,(Z,(Z,Z))).&&
+\end{aligned}
+\tag{57.20}
+$$
+
+At either root child the subtree multiset is
+$\{Z,Z,(Z,Z),((Z,Z),Z),(Z,(Z,Z))\}$.
+The two copies of $Z$ give the same argument when $r_Z(v)\ne\alpha$. When it is alpha, the pair $(Z,Z)$ and one of the two triples have $Z$ on the side selected by the first letter of $v$; both reply at the shortened non-alpha address. The root is again a repeated branch reply. This verifies the same obstruction for all raw addresses, rather than only at macro leaves or a selected positive-height enumeration.
+
+An identification tree with worst weight at most one cannot operate on either core family. Queries which return alpha on every candidate do not shrink that family. At the first other query there is a non-alpha bucket containing at least two candidates. Its query has spent their only non-alpha allowance. From that node all their subsequent replies would have to be alpha, so the deterministic all-alpha continuation could not separate those two distinct candidates into correct leaves. This is a decision-tree contradiction, not a vote about a proposed strategy.
+
+For any larger mixed composition choose two leaves of a majority colour and one of the other colour, and put the six alternatives into one fixed ordered context. Fill all remaining leaves with the remaining prescribed labels. For a larger homogeneous composition similarly put the five four-leaf shapes into a fixed context. Inside the hole the same raw-address obstruction holds. Outside it all candidates have the same reply: a common alpha gives no separation, and any common non-alpha also has a bucket of size at least two. The embedded candidates have the required exact common composition. Thus the lower bound transfers without changing their actual readout port.
+
+Finally a policy costing at most $A+1$ in these ranges would be below $B$ by (57.8). Theorem57.7 would yield an identification tree of weight at most one, contradicting the cores. Since the primary cost is integral, (57.18) follows. In particular static existence of an $A$-set is not a universal $A$ acquisition algorithm. □
+
+**Theorem 57.10 (exact low-macro-leaf regimes, with all-negative-correct implementations).** At every $h\ge H$,
+
+| Exact initial composition | Uniform positive worst paid cost |
+| --- | --- |
+| $n=1$, or $n=2$ and $ab=0$ | $A$ |
+| $n=2$, $a=b=1$; or $n=3$, $ab=0$ | $A+1$ |
+| $n=3$, $ab>0$; or $n=4$, $ab=0$ | $A+2$ |
+
+Each equality holds for every $d=3k$, $k\ge1$. The following explicit diagnostic tables followed by the actual alpha-frontier completion of Theorem57.7 attain them. Every omitted reply edge rejects, every repeated request is suppressed, and every final alpha request is actually acquired and checked. Thus none of these implementations classifies merely a positive enumeration.
+
+For a singleton family use no diagnostic queries and check its alpha frontier. For the mixed two-leaf candidates $(X_d,X_{d+1})$ and $(X_{d+1},X_d)$, query $Lz_d$: its replies are respectively $\alpha,\beta$. This identifies them with at most one non-alpha reply.
+
+For three homogeneous macro leaves put $Z=X_t$, where $t=d$ for initial alpha and $t=d+1$ for initial beta. Query $Lz_t$. The right-associated tree $(Z,(Z,Z))$ replies alpha and the left-associated tree $((Z,Z),Z)$ replies beta. Its maximum diagnostic weight is one.
+
+For $(a,b)=(2,1)$ enumerate the six macro trees in this order, with $x=\alpha,y=\beta$ before substitution:
+
+$$
+(x,(x,y)),\ (x,(y,x)),\ (y,(x,x)),\
+((x,x),y),\ ((x,y),x),\ ((y,x),x).
+\tag{57.21}
+$$
+
+Their positive indices are $0,1,\ldots,5$. The entire diagnostic is specified by this table; a candidate-set row is the set reaching that node, and a singleton reply is the identified index.
+
+| Reaching indices | Actual query | Reply and continuation |
+| --- | --- | --- |
+| $0,1,2,3,4,5$ | $z_d$ | $\beta:\{0,1\}$; $\mathsf{br}:\{2,3,4,5\}$ |
+| $0,1$ | $Rz_d$ | $\beta:0$; $\mathsf{br}:1$ |
+| $2,3,4,5$ | $Lz_{d+1}$ | $\beta:5$; $\alpha:\{2,3,4\}$ |
+| $2,3,4$ | $LRz_{d-1}$ | $\alpha:2$; $\beta:3$; $\mathsf{br}:4$ |
+
+The first query spends one non-alpha unit on every positive. In the beta branch only one more query is used. In the branch branch, a beta terminates with the second unit; an alpha keeps indices $2,3,4$ and their final query spends at most the second unit. Thus the worst diagnostic weight is exactly two, with at most three actual diagnostic calls.
+
+For $(a,b)=(1,2)$ enumerate instead
+
+$$
+(x,(y,y)),\ (y,(x,y)),\ (y,(y,x)),\
+((x,y),y),\ ((y,x),y),\ ((y,y),x).
+\tag{57.22}
+$$
+
+Use the following complete positive diagnostic, retaining every absent reply as a paid query result.
+
+| Reaching indices | Actual query | Reply and continuation |
+| --- | --- | --- |
+| $0,1,2,3,4,5$ | $z_d$ | $\beta:0$; $\mathsf{br}:\{1,2,3,4,5\}$ |
+| $1,2,3,4,5$ | $RRz_{d-1}$ | $\mathsf{br}:1$; $\beta:2$; $\alpha:\{3,4\}$; $\varnothing:5$ |
+| $3,4$ | $Lz_d$ | $\beta:3$; $\mathsf{br}:4$ |
+
+The first query spends one unit. Every non-alpha second reply identifies its source with the second unit, whereas an alpha second reply leaves the pair resolved with one more non-alpha unit. There are at most three diagnostic calls. The longest query in (57.21) has depth $d+1$, and every query in (57.22) has depth at most $d$. They obey the feasible mixed-three cap $H=d+2$.
+
+For four homogeneous macro leaves use (57.20), $Z=X_t$. The table is
+
+| Reaching candidates | Actual query | Reply and continuation |
+| --- | --- | --- |
+| $S_1,S_2,S_3,S_4,S_5$ | $Lz_t$ | $\mathsf{br}:S_1$; $\beta:\{S_2,S_3\}$; $\alpha:\{S_4,S_5\}$ |
+| $S_2,S_3$ | $Rz_t$ | $\alpha:S_2$; $\beta:S_3$ |
+| $S_4,S_5$ | $RLz_t$ | $\beta:S_4$; $\alpha:S_5$ |
+
+Its maximum diagnostic weight is two, attained at $S_3$. Its addresses have depth at most $t+1$, below $H=t+2$. The table supplies an ordinary proof of the homogeneous-four upper bound in addition to the independent core lower bound; this regime is not left to positive-only numerical evidence.
+
+Proof of all table entries and minima. Apply (57.5) after the displayed macro prefix. For example $r_{X_d}(z_d)=\alpha$, $r_{X_{d+1}}(z_d)=\beta$, and removing the initial $L$ from $z_d$ leaves weight $d-1$, which yields beta in $X_d$ and branch in $X_{d+1}$. In (57.21), $Lz_{d+1}$ leaves weight $d+1$ in a sole left $X_{d+1}$ but weight $d$ after the two left macro edges in a pair; this yields the stated three-alpha/one-beta split. The query $LRz_{d-1}$ leaves respectively weight $d+1$ in the sole left $X_{d+1}$, weight $d-1$ in a right $X_d$ of the left pair, and weight $d-1$ in its right $X_{d+1}$; these replies are alpha, beta, branch. In (57.22), $RRz_{d-1}$ reads within a right pair at weight $d-1$, giving branch for its $X_{d+1}$ and beta for its $X_d$; within a sole right block its remaining weight is $d+1$, giving alpha for $X_{d+1}$ and absent for $X_d$. The other entries follow by the same literal one- or two-edge calculation, including $d=3$ where $z_{d-1}=R$.
+
+Alpha completion makes the paid positive cost $A$ plus the diagnostic non-alpha weight, rather than $A$ plus the number of diagnostic calls. Its already queried alpha endpoints are retained and not bought again. A singleton cannot improve on $A$. Theorem57.5 gives the $A+1$ lower bound for every nonsingleton; Lemma57.9 gives the $A+2$ lower bound in the final row. All the upper costs are below $B$, since $B-A\ge n$, so the weighted bridge also matches these minima. The final actual frontier check proves negative correctness, even for replies compatible with a diagnostic positive leaf. □
+
+**Definition 57.11 (finite verification scope and unclosed targets).** The general assertions above have ordinary proofs. Finite diagnostics independently used literal tree substitution, endpoint recursion, and inverse parsing rather than treating positive votes or an identification table as a hypothesis. They checked: the block reply formula at $t=3,\ldots,14$ for every word of length at most $t+1$; every exact low-regime diagnostic/completion construction at $d=3,6,9,12,15$; and the sensitive exchanges for every composition with macro $n=1,\ldots,4$ at $d=3$. A separate exhaustive finite decision-tree recurrence on the union of positive nodes was evaluated at $d=3,6,9$, all compositions with $n=1,\ldots,4$. It returned the respective diagnostic weights $0$, $1$, and $2$ for the regimes asserted in Theorem57.10; for mixed four-leaf compositions it returned $3$ in those tested depths. These latter finite values are not a formula for all depths or larger families.
+
+Every complete same-composition competitor was also enumerated at $d=3$ for initial compositions $(1,0),(0,1),(2,0),(1,1),(0,2),(3,0)$. These domains have respectively $6,140,630,24024,1021020,120120$ trees, using the Catalan shape count and every permitted label placement. They include all their tall negatives, with no height filter; the maximum native competitor heights are respectively $2,4,5,7,9,8$. The construction's return was compared with independent inverse parsing on every such tree. Its actual calls were nonrepeated and within the asserted cap. Both complete-colour reconstruction tests were also checked on these entire domains. The successful checks cover 55 positive parameter cases and 160 positive runs, 5502 sensitive swaps, and 1165940 complete competitors, including 1130084 negatives taller than the corresponding $H$. The decision-tree recurrence covers 42 parameter cases. A separate execution of its resulting diagnostics followed by actual alpha completion checked 306 positive runs and the identity paid cost $=A+$ non-alpha diagnostic weight. It also checked 804168 actual absent replies at depth $H+1$ across those cases; they support the finite implementation of the compression argument without serving as its universal proof. All of these completed bounded checks returned exit zero. These bounded checks do not replace the all-negative proofs of Theorems57.3,57.7 and57.10.
+
+The exact uniform minimum for mixed $n\ge4$ or homogeneous $n\ge5$ remains open here. What is established for those ranges is (57.10)–(57.11), the two-unit lower bound, the finite universal upper bound (57.17), and the threshold-qualified weighted reduction (57.16). Computing $E_h$ in larger families, or determining when a strategy acquiring the beta frontier beats the alpha-completion route, is a separate remaining problem. No larger closed formula follows from the low-order tables or finite recurrence values. The selected source is finite, deterministic and exact; this chapter gives no randomized, runtime, memory, finite-bit, address-encoding, physical-traversal, original global `Strategy`, physical realization or full broader-goal result.
+
+**Definition 57.12 (sources, mathematical standing and verification boundary).** The matched ordinary suppliers are the `ActualImageAddressCertificate` Blueprint and its `result`, `rigidity` and structural swap arguments, the original `ActualTreeReadoutAcquisition` endpoint/policy/paid definitions, and `ActualLeafHistoryRigidity`'s literal actual-address geometry. Their filenames identify fallible mathematical sources, not current kernel evidence. All the complete-colour, actual-history, depth-independence, weighted-threshold and low-regime claims in this chapter are ordinary mathematical derivations, with the independent finite implementation checks specified in Definition57.11. No Lean was written or compiled, no ingestion or coverage state was produced, and no independent review is claimed.
+
+Classical certificate complexity and deterministic decision trees, the Catalan enumeration of ordered binary trees, tries, finite weighted decision-tree recursion and version-space elimination are reused tools. The background references already accompanying the certificate supplier are Nisan, *CREW PRAMs and Decision Trees* (1991), and Buhrman–de Wolf, *Complexity Measures and Decision Tree Complexity: A Survey* (2002). Those general tools do not by themselves supply the literal source-specific tables, the exact competing-tree domain, actual causal acquisition, or the paid-cost/colour-frontier bridge. The results here are repo-derived deductions under the explicit matched contract. There is no exhaustive literature search, novelty or priority claim, and no inference from a search miss. The chapter does not grant an old-source archive, a true candidate index, free actual frontiers, a reset, a new readout or a physical source action to the controller.
+
+## 57.99 追加锚（本行以下为增补区）
