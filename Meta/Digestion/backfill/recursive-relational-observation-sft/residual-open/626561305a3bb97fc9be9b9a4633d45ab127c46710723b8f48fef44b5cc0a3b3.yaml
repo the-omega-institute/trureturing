@@ -5,6 +5,22 @@ cas_ref: sha256:626561305a3bb97fc9be9b9a4633d45ab127c46710723b8f48fef44b5cc0a3b3
 coverage_gids: []
 receipts:
   unresolved_subitems: []
+  cover_disposition:
+    outcome: partial-closed
+    gids:
+      - D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.finiteEquivariantTableExists_correct
+      - D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.finiteTableExists_correct
+      - D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.original23_1
+      - D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.original23_1_equivariant
+      - D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.originalEquivariantExistenceDecidable
+      - D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.originalExistenceDecidable
+      - D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.rejected_candidate_has_finite_witness
+      - D5/S3/ConceptDynamics/Coding/FiniteWindowTableCriterion.rejected_equivariant_candidate_has_finite_witness
+    gaps:
+      - code: chain-migration-incomplete
+        detail: 107d01c69b50fc8c543b6edcd55b1650d4dd47d469b4f177357d1898c26cec1a
+      - code: chain-migration-incomplete
+        detail: 76d0ec0ec9557725a8aed984229360d08c553b56659e85d1fd24fad7184c1d54
   chain_atoms:
     - 76d0ec0ec9557725a8aed984229360d08c553b56659e85d1fd24fad7184c1d54
     - 107d01c69b50fc8c543b6edcd55b1650d4dd47d469b4f177357d1898c26cec1a

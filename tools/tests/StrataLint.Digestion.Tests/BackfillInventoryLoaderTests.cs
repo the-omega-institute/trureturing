@@ -333,6 +333,20 @@ public sealed partial class BackfillInventoryLoaderTests
         }
     }
 
+    [Fact]
+    public void DigestionProjectionDoesNotDeriveTheD5TicketIndex()
+    {
+        var snapshot = Snapshot(
+            Source("delta-v0.1", "docs/delta.md", "none"),
+            Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta"),
+            ("D5/X_Frontier/SyntheticDelta.lean", "/-- TASK D5-T0098 -/\ndef task : Unit := ()\n"));
+
+        var document = BackfillInventoryLoader.LoadForDigestion(snapshot);
+
+        Assert.Empty(document.RequireTickets());
+        Assert.Single(document.RequireDigestionEntries());
+    }
+
     [Theory]
     [InlineData("zeta", "alpha")]
     [InlineData("same", "same")]

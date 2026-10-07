@@ -13,7 +13,7 @@
 | 生成 Lean 报告 / 发射 Scribe | `make lean-report` / `make emit` |
 | 摄入指定理论源 | `make ingest SOURCE="<source-id 或源文件路径>"` |
 | 查看 atom / 连读上下文 | `make show-atom ATOM_ID=<id>` / `make atom-context ATOM_ID=<id>` |
-| 查看开放 atom 的就绪情况 | `make digestion-readiness` |
+| 搜索指定理论的 atom | `make search-atoms SOURCE=<源ID或理论路径> [TEXT=<关键词>] [STATE=<目录状态>] [LIMIT=<上限>]` |
 | 构建、冻结并覆盖锚点 atom | `make deposit ATOM_ID=<id> GID=<gid>` |
 | 构建并冻结无 atom 的形式化 | `make deposit-uncovered GID=<gid>` |
 | 用既有冻结声明覆盖 atom | `make cover ATOM_ID=<id> GID=<gid>`；批量用 `make cover-batch ATOMS=<TSV文件>` |
@@ -258,9 +258,10 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 - **形式化遇到理论缺口，可以直接推理补足。** 缺少定义、桥接引理、不变量、构造或证明步骤时，agent 可以在当前目标内研究并补足，继续形式化，无须等待用户补写理论或另行授权。补足的内容可以直接写成 D5 Lean 与 Blueprint Scribe，不必先写入理论卷(第 1.2 条)；选择写入理论卷时，归入既有相关理论卷并遵守本节追加纪律。补足须保持原问题的目标、假设与量词；尚未证成的部分明确标为待证，不冒称定理。数学真值仍只由内核验证的形式化代码承担。
 - **新增理论 PR 可不做消化。** 仅新增或追加 `docs/develop/theory/**` 正文、且不提交形式化、覆盖、冻结或消化工件的 PR，可以不运行 `make ingest`，不要求同时新增 atom CAS 或 backfill，也不要求先取得任何消化状态。正文仍须遵守本节的纯数学、文献尽调与追加纪律；若以后需要把该卷接入消化账本，另行提交 canonical ingest PR。含有 ingest、cover、deposit 或其它消化工件的 PR，仍按第 4.7 条对应链路核对。
 - **理论推理只包含定义、假设、定理与证明。** `docs/develop/theory/**` 的正文保持纯数学:引理、命题、推论归入定理,例子与反例写成命题并给出证明,符号约定与数学引文附于对应条目。不得混入模型调用、工程实现、代码或测试、核验日志、摄入流程、评审记录、工单与交付状态;正式成果按既有归属置于正文之外;过程材料依第 2.10 条不保存。
+- **理论单卷上限为 5,000 行。** SL-003 的 delta 谓词检查 `docs/develop/theory/**` 中新增或修改的 Markdown 全文,包括空行,末尾换行符不多计一行;超过上限即拒绝,未触及的历史长卷不进入检查。超出单卷篇幅的新内容写入同主题续卷并通过引用衔接,保留既有卷的条目、编号与引用;不得用新卷重复已有内容。
 - **理论文档须可持续追加。** 新理论接在文末,保留既有条目的文本、编号与引用;新定义、新假设和新定理使用新编号,不复用旧编号、不整体重排。需要修正时,追加明确指向原条目的更正命题、适用假设与证明,说明替代关系;不得静默改写旧假设、结论或证明,也不得把被更正的结论继续当作有效前提。追加纪律自卷合入 `dev` 起生效;合入前的草稿可在其 PR 内就地修订。
 - **禁止把已存在的理论新增到 `docs/develop/theory/**`。** 新卷与新增章节的承重命题必须是本仓新增的数学内容。凡经第 3.7 条尽调判为 `literature-attested`(整体、逐字或仅换记号地对应已发表定理、已公开草稿或教科书结果)者,不得作为新卷、新章或新增定理写入,只以 `Library/` note 引用;需要形式化时走第 3.6 条硬规则①的 `make cover` 或 `FromLiterature` 前置。已知定理只可作为新内容承重推导的中间步骤附于新条目之内,逐条标注先例,不单列为定理;一卷或一批增补的承重命题全部为已知结果者,评审打回、不得合入。
-〔守护:**软**·由作者与独立评审检查正文的数学边界、追加方式及是否为已有理论,不冒称已有机器强制;不可 lint 不豁免,冒充新内容与第 2.4 条冒领同罪。〕
+〔守护:**硬+软**·单卷行数由 SL-003 delta 谓词执法;正文的数学边界、追加方式及是否为已有理论由作者与独立评审检查,不冒称已有机器强制;不可 lint 不豁免,冒充新内容与第 2.4 条冒领同罪。〕
 
 ### 3.9 登记即声明模板与 delta 判官
 
@@ -336,7 +337,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 4.6 run-local 投影的归宿
 
-**run-local 投影不入 Git 索引**:`Generated/echo-residuals/<source_id>.md` 由 `.gitignore`+FILEMAP 声明为 run-local,按需现算。分片只缩小冲突面,出库才消除该族的合并冲突面;tracked 投影仍属 merge unit。`FILEMAP-RUN-LOCAL-TRACKED` 对任一分片回索引报红,声明是权威,树须服从。
+**run-local 投影不入 Git 索引**:FILEMAP 声明的 run-local 产物按需现算。分片只缩小冲突面,出库才消除该族的合并冲突面;tracked 投影仍属 merge unit。`FILEMAP-RUN-LOCAL-TRACKED` 对声明为 run-local 的产物回索引报红,声明是权威,树须服从。
 
 ### 4.7 生产链、冻结与消化状态
 
@@ -372,7 +373,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 - **cover**:同一 `atom_id` 的账目条目写入 coverage 边,并由 residual-open 迁入机器派生的目标状态。
 - **ingest**:`docs/develop/theory/**` + `atoms/sha256/*` + `backfill/**/residual-open/*`。
 **停用机制边界**:两 PR 律、预登记 formalization 收据及其机器均已退役;「边即数据,不记动作」,不得据此重建动作收据或要求 deposit/cover 分两 PR。
-**coverage 边当前 contract**:持久化键名为 `coverage_gids`,每个元素的键集恰为 `{gid,target_statement_id}`,其中 `target_statement_id` 可为 `null`;candidate 与 protected-base loader 均只接受这一形态。字符串元素、`receipts.coverage`、`source_sha256`、`statement_id_history` 与 `recorded_at_utc` 一律 fail-closed;writer 只写对象形。`align-digestion-status` 从当前 report 与冻结账本直接刷新 target,不保留旧值;任一 coverage target 未解析即令 truth 状态为 `Open`。L2 三步迁移只属已完成的 contract 判例,不构成现役迁移流程或兼容机制;当前没有 alias、双读或第二 canonical 格式。
+**coverage 边当前 contract**:持久化键名为 `coverage_gids`,每个元素的键集恰为 `{gid,target_statement_id}`,其中 `target_statement_id` 可为 `null`;账本 loader 只接受这一形态。字符串元素、`receipts.coverage`、`source_sha256`、`statement_id_history` 与 `recorded_at_utc` 一律 fail-closed;writer 只写对象形。`cover-atom` 在写入前按当前 report 与冻结账本解析本次 GID，未解析即失败；任一 coverage target 未解析即令 truth 状态为 `Open`。L2 三步迁移只属已完成的 contract 判例,不构成现役迁移流程或兼容机制;当前没有 alias、双读或第二 canonical 格式。
 **冻结态与消化态是两个正交状态机,禁互相冒充**:
 
 - **冻结态(真值侧,二值)**:`Golden/Frozen/state/<module>.lean.json` 存在 ⟺ 已冻结,这是当前成员身份的唯一判据;**永不解冻**是第 1.3 条冻结律的数学规范。SL-008 判当前态 C1–C5 与当前树一致,pin 改变以 `FROZEN_PIN_CHANGE` Observe 点名;历史由 git 记录,无历史只增判官。
@@ -380,7 +381,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 - **消化态(账目侧,四值)**:`residual-open`(尚无 GID 覆盖)/ `partial-closed`(子项部分覆盖)/ `absorbed-closed`(覆盖 GID 与 coverage 数据齐备)/ `nonpropositional-inapplicable`(**无需项目覆盖的终结**:非命题,或命题但仅由钉版上游闭合而仓内无 GID;#5770 方向③,#8049 owner 2026-09-15 裁决复用)。第四态**不是**由 atom 字节或 kind 派生的,而是由 `receipts.nonpropositional`(`justification` + 连读的 `previous_atom_id`/`next_atom_id`,边界为 `null`)经 `DigestionStatusEvaluator` 机器派生:收据在而目录不对、目录在而收据缺、或与 coverage / quarantine / cover_disposition 共存,皆 SL-016 红。唯一写者是 `settle-atom`(`make settle` / `make settle-clear`),写前必须以 `make atom-context ATOM_ID=x` 连读前后 atom,writer 复算邻接不等即拒;`--clear` 原路退回 `residual-open`。它对链闭合视同已闭(`chain_atoms` 子项为 Absorbed 或 Nonpropositional 即闭),对 Lean 真值零主张、不计入可形式化分母、`Deletable` 不因它为真。「不新增持久化状态」(#5533 L3)的例外仅限此类;`section/*` 等仍走查询时 `not-formalizable(kind)` 投影。
 - **bind-only atom 的结算**:全 bind-only 的命题 atom 按第 3.2 条直接走既有覆盖与子句链闭合,到达 `absorbed-closed` 即处理完成;不产生新的 Lean 声明或冻结事件。仅由钉版上游闭合而无项目 GID 者按第 3.2 条以 `settle-atom` 的 justification 收据终结,不手写已完成。
-- **文献已发表、仓内无冻结 GID 覆盖的命题 atom**:能由钉版上游闭合者按第 3.2 条以 `settle-atom` 收据终结;其余留 `residual-open`(无 GID 不满足 `absorbed-closed`)。`receipts.quarantine` 仅有封闭 `blocker_class={already-covered, missing-prerequisite, multi-clause-guard}` 与 `reentry_condition`,可用 `make quarantine-clear` 撤;`receipts.cover_disposition` 是 cover 未闭合时 writer 的失败回执。两者均非终态,不得挪用;文献判词的重复选题/核对缺口只在 PR/issue 正文保留必要判词,不另造终态(owner 2026-09-15)。
+- **文献已发表、仓内无冻结 GID 覆盖的命题 atom**:能由钉版上游闭合者按第 3.2 条以 `settle-atom` 收据终结;其余留 `residual-open`(无 GID 不满足 `absorbed-closed`)。历史账目可以携带 `receipts.quarantine` 或 `receipts.cover_disposition`，loader 保留其结构并将其作为当前一致性输入；现役流程不再提供独立 quarantine 管理或 cover disposition 重试命令，cover 失败直接返回给 AI 修正后重新调用。
 - **两者不同构,故是两句话**:定理已冻结 **⇏** 其 atom 已 `absorbed-closed`(还差 cover 那一步);atom `absorbed-closed` **⟹** 其 `coverage_gids[].gid` 所指声明已冻结。汇报与 PR 说明里把"冻结了"写成"消化了"(或反之)即第 2.4 条冒领。
 **含消化或冻结工件的理论 PR 说明须写清三项(承第 5.2 条产地,不另立格式)**:①**形态**(deposit / deposit-uncovered / cover / deposit+cover / ingest);②**链上这一环**——哪个 `source_id` 的哪个 `atom_id` → 哪个 GID,无 atom 时写明无 atom 及冻结的 GID;③**落地后的状态**——冻结事件的 `event_hash`(deposit),或 atom 由哪态迁到哪态(cover)。纯理论正文 PR 不要求这三项，只需明确其未进入消化链。判据是"读者能否据此在链上定位这次改动",不是"提没提这几个词"。
 **反面即病(如何自查)**:①手改 `Blueprint/**/*.md` —— 它是 `ScribeEmitter` 的投影,改它即造第二真源(第 4.2 条),正解是改 `.scribe.cs` 后 `make emit`;②手改 `atoms/sha256/*` —— atom 一经产出不可变(第 1.2 条总则「atoms 不删」),勘误走"追加散文 + 追加新 atom";③冻结后原地编辑 `.lean` 想修补 —— 必撞 SL-008,正解是弃分支重做一次 deposit。
