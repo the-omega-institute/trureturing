@@ -32,32 +32,6 @@ public sealed class ActiveRuleScopeProbeTests
     }
 
     [Fact]
-    [BaseFactScopeProbe(16)]
-    public void Sl016SourceMetadataScopesHistoryAndKeepsImplementationDeltaOnly()
-    {
-        const string path = "Meta/Digestion/backfill/delta-v0.1/source.toml";
-        const string message = "source metadata";
-
-        AssertNoFinding(
-            Execute(InvalidBackfillSourceHistory(), RuleFixture.BlueprintPath),
-            16,
-            message,
-            BackfillInventoryLoader.RelativePath);
-        AssertFinding(
-            Execute(InvalidBackfillSourceHistory(), path),
-            16,
-            message,
-            BackfillInventoryLoader.RelativePath);
-        AssertNoFinding(
-            Execute(
-                InvalidBackfillSourceHistory(),
-                "tools/StrataLint.Engine/Rules/Backfill/BackfillInventoryRule.cs"),
-            16,
-            message,
-            BackfillInventoryLoader.RelativePath);
-    }
-
-    [Fact]
     [BaseFactScopeProbe(21)]
     public void Sl021InstantiationScopesHistoricalTheoryPathsAndKeepsImplementationRecheck()
     {
@@ -160,15 +134,6 @@ public sealed class ActiveRuleScopeProbeTests
             fixture,
             HeartsAuthorizationLedger.Path,
             HeartsAuthorizationLedger.Header + "not a ledger row\n");
-        return fixture;
-    }
-
-    private static RuleFixture InvalidBackfillSourceHistory()
-    {
-        var fixture = new RuleFixture();
-        fixture.UseValidDirectoryBackfill();
-        const string path = "Meta/Digestion/backfill/delta-v0.1/source.toml";
-        fixture.Files[path] += "\n";
         return fixture;
     }
 

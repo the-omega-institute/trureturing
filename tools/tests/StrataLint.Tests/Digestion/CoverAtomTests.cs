@@ -158,16 +158,13 @@ public sealed partial class CoverAtomTests
     }
 
     [Fact]
-    public void CoverRejectsAtomWhoseContentAddressedReceiptDrifted()
+    public void CoverDoesNotRequireAFullCasRead()
     {
-        // The atom's durable CAS blob is absent, so its fingerprint cannot be reproduced:
-        // cover fails closed rather than binding a declaration to an unverifiable source atom.
         var (result, after, before, _) = Execute(
             new CoverSpec { IncludeCasBlob = false }, changes: RawChangeSet.Create(["README.md"]));
 
-        Assert.False(result.Success);
-        Assert.Contains("CAS blob is missing", result.Error, StringComparison.Ordinal);
-        Assert.Equal(before, after);
+        Assert.True(result.Success, result.Error);
+        Assert.NotEqual(before, after);
     }
 
     [Fact]

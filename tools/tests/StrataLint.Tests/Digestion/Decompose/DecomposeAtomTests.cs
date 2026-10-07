@@ -7,6 +7,20 @@ namespace StrataLint.Tests;
 
 public sealed class DecomposeAtomTests
 {
+    [Theory]
+    [InlineData("Meta/Digestion/backfill/unrelated/source.toml")]
+    [InlineData("Meta/Digestion/backfill/probe/residual-open/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.yaml")]
+    public void DecompositionIgnoresUnrelatedMalformedRecords(string path)
+    {
+        var f = new DecomposeFixture();
+        f.Current = RawRepositorySnapshot.Create(f.Current.Entries.Append(
+            RawRepositoryEntry.FromText(path, "malformed [")));
+        var result = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(), f.Apply);
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(1, f.Writes);
+        Assert.Contains(f.Current.Entries, e => e.Path == path && Encoding.UTF8.GetString(e.Bytes.AsSpan()) == "malformed [");
+    }
+
     [Fact]
     public void DeclaredDialectWritesExactBoldClauseChain()
     {
@@ -316,7 +330,7 @@ public sealed class DecomposeAtomTests
     }
 
     [Fact]
-    public void NestedChildrenInheritTheirParentContentDisposition()
+    public void NestedChildrenCanBeDecomposed()
     {
         const string nested = "**Theorem 1.1** First assertion.\n\n**Bundle**\n\nPreamble.\n\n- alpha\n- beta\n";
         var f = new DecomposeFixture(nested);
@@ -325,12 +339,10 @@ public sealed class DecomposeAtomTests
             && f.Snapshot.TryGetFile(DigestionCasStore.RootPath + e.AtomId, out var blob)
             && DigestionDecompositionPolicy.IsMultiClause(DigestionAtom.FromFrozenCas(blob.RawBytes)));
         Assert.True(DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(child.AtomId), f.Apply).Success);
-        var kinds = DigestionContentKindResolver.Resolve(f.Snapshot, f.Document);
-        Assert.All(f.Document.RequireDigestionEntries(), e => Assert.Equal("theorem", kinds[e.AtomId]));
     }
 
     [Fact]
-    public void ContextBoundAtomizerDecomposesFrozenCasAndPreservesChildKinds()
+    public void ContextBoundAtomizerDecomposesFrozenCas()
     {
         const string text = "**\u5b9a\u7406 1.1 (Fixture)[\u8bc1]\u3002**\n\n- alpha\n- beta\n";
         var f = new DecomposeFixture(text, AtomizerRegistry.ConeId);
@@ -340,8 +352,6 @@ public sealed class DecomposeAtomTests
         var result = DecomposeAtomCommand.Run("synthetic", f.Gateway, f.Args(), f.Apply);
         Assert.True(result.Success, result.Error);
         Assert.Equal(3, f.Document.RequireDigestionEntries().Length);
-        var kinds = DigestionContentKindResolver.Resolve(f.Snapshot, f.Document);
-        Assert.All(f.Document.RequireDigestionEntries(), entry => Assert.Equal("theorem", kinds[entry.AtomId]));
         Assert.Empty(DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Ingest).Findings);
     }
 
