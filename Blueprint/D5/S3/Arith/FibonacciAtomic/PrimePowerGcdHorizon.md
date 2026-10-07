@@ -40,7 +40,31 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/PrimePowerGcdHorizon.horizon`
 
 For prime p and e at least 2, put P=p^e, q=p^(e-1), r=zeroRank(P) and R=zeroRank(q), using the least positive Fibonacci zero rank. The horizon is T=r when r=R and T=r-R otherwise. The theorem proves that the only alternative is r=pR, so the growth horizon is (p-1)R.
 
-**Theorem 1.4 (The exact unconditional horizon).**
+**Theorem 1.4 (Primitive states and adjacent observations).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/PrimePowerGcdHorizon.adjacent_divisibility`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/PrimePowerGcdHorizon.adjacent_divisibility` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every prime p, integers n,z and natural s, p divides both Y(s) and Y(s+1) exactly when p divides both initial coordinates n,z. This includes s=0.
+
+**Theorem 1.5 (The omitted child of a primitive parent hit).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/PrimePowerGcdHorizon.parent_hit_decoder`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/PrimePowerGcdHorizon.parent_hit_decoder` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every prime p and e>=2 with r=pR, a primitive signed pair and any natural s with p^(e-1) dividing Y(s), p^e divides Y(s+(p-1)R) exactly when p^e divides none of Y(s+jR) for 0<=j<p-1. Here R=zeroRank(p^(e-1)) and r=zeroRank(p^e). Only divisibility is inferred; no higher-precision numerical reply is supplied.
+
+**Theorem 1.6 (The exact unconditional horizon).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/PrimePowerGcdHorizon.sharp_prime_power_gcd_horizon`
 
@@ -60,7 +84,9 @@ For sharpness use K(t)=(F(t),-F(t-1)); its reading has absolute value F(t-k) for
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimePowerGcdHorizon.adjacent_divisibility`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimePowerGcdHorizon.horizon`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimePowerGcdHorizon.parent_hit_decoder`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimePowerGcdHorizon.sharp_prime_power_gcd_horizon`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimePowerGcdHorizon.signedObservation`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimePowerGcdHorizon.sourceObservation`

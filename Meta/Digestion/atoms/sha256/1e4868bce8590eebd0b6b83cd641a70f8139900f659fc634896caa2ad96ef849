@@ -1,0 +1,4 @@
+**证明。** 此时 $X=1,Y=0$，四条 $a$ 边均有重数一，四条 $b$ 边均为零。$00\leftrightarrow10$ 与 $01\leftrightarrow11$ 是两个不同连通分量；定理 360.2 的连通条件失败。 $\square$
+
+数学范围与文献：Lundholm–Svensson，*Clifford algebra, geometric algebra, and applications*，arXiv:0907.5356v1，§§2.1、2.3，提供这里沿用的 Clifford 平方约定、极化关系和保持乘法次序的等级对合；Gardam，*A counterexample to the unit conjecture for group rings*，arXiv:2102.11818v1，§§2、3.1，提供命题 359.5 所指的 Hantzsche–Wendt/Promislow 群结构。§§355–357 的六周期、等级、模五字符、模四恢复和完整历史同纤维关系作为既有前置使用。本文新增的是这些既有关系在实际有序正原树上的三窗口联合正规形、正来源构造、单纤维八边消元与 Euler 充要判据；不把成熟群结构或群环单位结论冒称为本卷原创，也不把不同括号的原树识别为同一来源。
+

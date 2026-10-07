@@ -1,8 +1,10 @@
 using System.Collections.Immutable;
 using System.Text;
 using System.Text.Json;
+using System.Security.Cryptography;
 using StrataLint.Cli;
 using StrataLint.Engine;
+using StrataLint.Scribe;
 using Trureturing.Truth;
 using static StrataLint.TestSupport.FrozenLedgerTestData;
 
@@ -18,7 +20,7 @@ public sealed partial class TruthReleaseCommandTests
         "{\"packages\":[{\"name\":\"mathlib\",\"rev\":\"4444444444444444444444444444444444444444\"}],\"version\":\"1.1.0\"}\n";
 
     [Fact]
-    public void CommandProducesAndVerifiesAllSevenArtifactsEndToEnd()
+    public void CommandProducesAndVerifiesAllSixArtifactsEndToEnd()
     {
         using var fixture = CreateFixture();
         using var output = new TemporaryDirectory();
@@ -42,7 +44,13 @@ public sealed partial class TruthReleaseCommandTests
         Assert.Equal(ProducerRepository, verified.Manifest.Producer.PackageRepo);
         Assert.Equal(fixture.ReportBytes.ToArray(), File.ReadAllBytes(
             Path.Combine(output.Path, TruthReleaseBundleWriter.RawLeanReportFileName)));
-        Assert.Equal(7, verified.Manifest.Artifacts.GetType().GetProperties().Length);
+        Assert.Equal(6, verified.Manifest.Artifacts.GetType().GetProperties().Length);
+        Assert.False(File.Exists(Path.Combine(output.Path, "echo-residual-summary.md")));
+        using (var sourceSnapshot = JsonDocument.Parse(File.ReadAllBytes(
+            Path.Combine(output.Path, TruthReleaseBundleWriter.SourceSnapshotFileName))))
+        {
+            Assert.False(sourceSnapshot.RootElement.TryGetProperty("residual_frontier_sha256", out _));
+        }
         using (var head = JsonDocument.Parse(File.ReadAllBytes(
             Path.Combine(output.Path, TruthReleaseBundleWriter.FrozenLedgerHeadFileName))))
         {
@@ -89,29 +97,75 @@ public sealed partial class TruthReleaseCommandTests
         Assert.Equal(1, exitCode);
         Assert.Contains("--commit-on-protected-dev true|false", console.Error, StringComparison.Ordinal);
         Assert.Contains("--required-check NAME=CONCLUSION", console.Error, StringComparison.Ordinal);
-        Assert.Contains("[--scribe-pack FILE --scribe-pack-digest HEX64]", console.Error, StringComparison.Ordinal);
+        Assert.Contains("--scribe-pack FILE --scribe-pack-digest HEX64", console.Error, StringComparison.Ordinal);
         Assert.Empty(Directory.EnumerateFiles(output.Path));
     }
 
     [Fact]
-    public void ReceiptIntegrityFailureFailsClosedWithoutWritingABundle()
+    public void MissingScribePackFailsClosedWithoutWritingABundle()
+    {
+        using var fixture = CreateFixture();
+        using var output = new TemporaryDirectory();
+
+        var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments(), []);
+
+        Assert.Equal(2, exitCode);
+        Assert.Contains("--scribe-pack FILE --scribe-pack-digest HEX64", console.Error,
+            StringComparison.Ordinal);
+        Assert.Empty(Directory.EnumerateFiles(output.Path));
+    }
+
+    [Fact]
+    public void DigestionReceiptIntegrityFailureDoesNotBlockVerifiedLeanRelease()
     {
         using var fixture = Fixture.Create(receiptIntegrityMismatch: true);
         using var output = new TemporaryDirectory();
 
         var (exitCode, console) = Run(fixture, output.Path, GreenTrustArguments());
 
-        Assert.Equal(2, exitCode);
-        Assert.Contains("TRUTH_RELEASE_INVALID", console.Error, StringComparison.Ordinal);
-        Assert.Contains("coverage-target-mismatch", console.Error, StringComparison.Ordinal);
-        Assert.Empty(Directory.GetFileSystemEntries(output.Path));
+        Assert.True(exitCode == 0, console.Error);
+        Assert.Empty(console.Error);
+        var publication = TruthReleasePublicationReader.Read(File.ReadAllBytes(
+            Path.Combine(output.Path, TruthReleaseBundleWriter.PublicationFileName)));
+        var verified = TruthReleasePublicationVerification.Verify(output.Path, publication);
+        Assert.Equal(2, verified.ReadTruthExport().Nodes.Length);
+        Assert.False(File.Exists(Path.Combine(output.Path, "echo-residual-summary.md")));
+    }
+
+    [Fact]
+    public void StreamedProvenanceProducesTheSameBundleAsAFullRevisionWithLargeDigestionBodies()
+    {
+        using var fixture = CreateFixture(largeDigestionBodies: true);
+        using var streamedOutput = new TemporaryDirectory();
+        using var fullOutput = new TemporaryDirectory();
+        var capture = new CapturingScribeVerifier();
+        var projectedEnvironment = new ProductionCliEnvironment(fixture.RepositoryRoot,
+            fixture.Gateway, fixture.MutableLeanReportSource, capture);
+        var fullEnvironment = new ProductionCliEnvironment(fixture.RepositoryRoot,
+            new FullSnapshotGateway(fixture.Gateway), fixture.MutableLeanReportSource,
+            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
+
+        var streamed = Run(fixture, streamedOutput.Path, GreenTrustArguments(), environment: projectedEnvironment);
+        var full = Run(fixture, fullOutput.Path, GreenTrustArguments(), environment: fullEnvironment);
+
+        Assert.True(streamed.ExitCode == 0, streamed.Console.Error);
+        Assert.True(full.ExitCode == 0, full.Console.Error);
+        var captured = Assert.IsType<RepositorySnapshot>(capture.Snapshot);
+        Assert.All(captured.Files.Values.Where(static file => file.Path.Value.StartsWith("Meta/Digestion/", StringComparison.Ordinal)),
+            static file => { Assert.Empty(file.RawBytes); Assert.False(file.ContentWasRead); });
+        Assert.Contains(captured.Files.Values, static file => file.Path.Value.StartsWith("Meta/Digestion/atoms/", StringComparison.Ordinal));
+        var expectedFiles = Directory.GetFiles(fullOutput.Path).Select(Path.GetFileName).Order(StringComparer.Ordinal).ToArray();
+        Assert.Equal(expectedFiles, Directory.GetFiles(streamedOutput.Path).Select(Path.GetFileName).Order(StringComparer.Ordinal));
+        foreach (var path in expectedFiles)
+            Assert.Equal(File.ReadAllBytes(Path.Combine(fullOutput.Path, path!)), File.ReadAllBytes(Path.Combine(streamedOutput.Path, path!)));
     }
 
     private static (int ExitCode, BufferedConsole Console) Run(
         Fixture fixture,
         string outputDirectory,
         IReadOnlyList<string> trustArguments,
-        IReadOnlyList<string>? extraArguments = null)
+        IReadOnlyList<string>? extraArguments = null,
+        ICliEnvironment? environment = null)
     {
         var console = new BufferedConsole();
         var arguments = new List<string>
@@ -123,12 +177,27 @@ public sealed partial class TruthReleaseCommandTests
             "--produced-at", "2026-08-23T00:00:00Z",
         };
         arguments.AddRange(trustArguments);
-        if (extraArguments is not null) arguments.AddRange(extraArguments);
-        var exitCode = CliApplication.Run(
-            arguments,
-            fixture.Environment,
-            console);
-        return (exitCode, console);
+        string? generatedPack = null;
+        if (extraArguments is not null)
+        {
+            arguments.AddRange(extraArguments);
+        }
+        else
+        {
+            generatedPack = Path.Combine(Path.GetTempPath(), $"scribe-pack-{Guid.NewGuid():N}.zip");
+            var digest = ScribeResourcePack.Write(generatedPack, PackDefinitions(fixture)).TotalSha256;
+            arguments.AddRange(PackArguments(generatedPack, digest));
+        }
+
+        try
+        {
+            var exitCode = CliApplication.Run(arguments, environment ?? fixture.Environment, console);
+            return (exitCode, console);
+        }
+        finally
+        {
+            if (generatedPack is not null && File.Exists(generatedPack)) File.Delete(generatedPack);
+        }
     }
 
     private static string[] GreenTrustArguments() =>
@@ -138,7 +207,8 @@ public sealed partial class TruthReleaseCommandTests
         "--required-check", "current=success",
     ];
 
-    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false, bool productionVerifier = false)
+    private static Fixture CreateFixture(bool receiptIntegrityMismatch = false, bool productionVerifier = false,
+        bool additionalLocalSource = false, bool largeDigestionBodies = false)
     {
         var repositoryRoot = TestRepositoryLayout.FindRoot();
         var blueprintSourcePath = $"Blueprint/{BlueprintGid}.scribe.cs";
@@ -190,6 +260,11 @@ public sealed partial class TruthReleaseCommandTests
         {
             AddReceiptIntegrityMismatch(files);
         }
+        if (additionalLocalSource)
+        {
+            files["Blueprint/D5/S0/Carrier/LocalOnly.scribe.cs"] = "local definition outside the resource pack\n";
+            files["Blueprint/D5/S0/Carrier/LocalOnly.md"] = "# Local projection\n";
+        }
         var snapshotWithoutLedger = Decode(files);
         var report = LeanAxiomReport.Create(reports);
         if (productionVerifier)
@@ -213,6 +288,13 @@ public sealed partial class TruthReleaseCommandTests
         var lean = Assert.IsType<LeanValidationOutcome.Accepted>(
             LeanClosureValidator.Validate(snapshotWithoutLedger, report)).Capability;
         var dag = TruthDagProjectionAssembler.Build(snapshotWithoutLedger, lean);
+        if (largeDigestionBodies)
+        {
+            for (var index = 0; index < 64; index++)
+                files[$"Meta/Digestion/backfill/unused{index}/atoms.jsonl"] = new string('x', 8192) + "\n";
+            var large = new string('z', 4 * 1024 * 1024);
+            files["Meta/Digestion/atoms/sha256/" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(large)))] = large;
+        }
         var temporary = new TemporaryDirectory();
         var gitRoot = Path.Combine(temporary.Path, "repository");
         Directory.CreateDirectory(gitRoot);
@@ -403,6 +485,8 @@ public sealed partial class TruthReleaseCommandTests
 
         internal ProductionCliEnvironment Environment { get; } = environment;
 
+        internal string RepositoryRoot => Path.Combine(temporary.Path, "repository");
+
         internal GitRepositoryGateway Gateway { get; } = gateway;
 
         internal FakeLeanReportSource MutableLeanReportSource { get; } = mutableLeanReportSource;
@@ -420,5 +504,38 @@ public sealed partial class TruthReleaseCommandTests
         internal int FrozenLedgerSequence { get; } = frozenLedgerSequence;
 
         public void Dispose() => temporary.Dispose();
+    }
+
+    private sealed class CapturingScribeVerifier : IScribeEmissionVerifier
+    {
+        internal RepositorySnapshot? Snapshot { get; private set; }
+        public VerifiedScribeEmissions Verify(RepositorySnapshot snapshot, LeanAxiomReport report,
+            IReadOnlyList<DocumentDefinition> definitions)
+        { Snapshot = snapshot; return VerifiedScribeEmissions.Empty; }
+        public VerifiedScribeEmissions Verify(RepositorySnapshot snapshot, LeanAxiomReport report,
+            RawChangeSet? changes = null, FrozenStateCatalog? frozenStates = null,
+            FrozenStatementIndex? frozenStatements = null)
+        { Snapshot = snapshot; return VerifiedScribeEmissions.Empty; }
+    }
+
+    private sealed class FullSnapshotGateway(IRepositoryGateway inner) : IRepositoryGateway
+    {
+        public AdmissionTopologyOutcome InspectAdmissionTopology() => inner.InspectAdmissionTopology();
+        public PreparedRepository Prepare(string? protectedBase) => inner.Prepare(protectedBase);
+        public FrozenRevisionIdentity ResolveCurrentRevision() => inner.ResolveCurrentRevision();
+        public RawRepositorySnapshot ReadCurrent() => inner.ReadCurrent();
+        public RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths) => inner.ReadCurrent(paths);
+        public IReadOnlyList<string> SearchCurrentPaths(IReadOnlyList<string> paths) => inner.SearchCurrentPaths(paths);
+        public RawRepositorySnapshot ReadRevision(string revision) => inner.ReadRevision(revision);
+        public RawRepositorySnapshot ReadRevisionProjection(string revision, Func<string, bool> readContents,
+            Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null)
+        {
+            var snapshot = inner.ReadRevision(revision);
+            foreach (var entry in snapshot.Entries)
+                observeContentDigest?.Invoke(entry.Path, SHA256.HashData(entry.Bytes.AsSpan()));
+            return snapshot;
+        }
+        public RawChangeSet ReadCurrentChanges() => inner.ReadCurrentChanges();
+        public RawChangeSet ReadChanges(string revision) => inner.ReadChanges(revision);
     }
 }

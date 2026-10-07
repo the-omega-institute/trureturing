@@ -221,21 +221,15 @@ public sealed class StatementProjectionPilotTests
         var sources = repository.EnumerateFiles(RepositoryRelativePath.Create("Blueprint"), "*.scribe.cs")
             .Select(repository.ReadAllText).ToArray();
 
-        // Projection-derived statements are written two ways while the migration runs:
-        // the legacy loader call, and StatementSource.FromLean() on the report-derived entry.
-        // Both count.
+        // Count both projection-derived forms: StatementProjectionFixtureLoader.FromLean()
+        // and StatementSource.FromLean() on the report-derived entry.
         var projected = sources.Sum(source =>
             source.Split("StatementProjectionFixtureLoader.FromLean(", StringSplitOptions.None).Length - 1
             + source.Split("StatementSource.FromLean()", StringSplitOptions.None).Length - 1);
 
-        // A floor, not an equality. Within a fixed exclusivity domain the quantity only grows:
-        // an authored statement is illegal wherever the projector can produce one, so migrations
-        // and projector improvements move declarations in and none leave. Correcting the domain
-        // itself does shrink it — that happened once, when non-theorem declarations were judged
-        // unprojectable because the projector projects a declaration's type and a definition's type
-        // is only its signature. The floor is therefore re-derived from the current domain rather
-        // than presented as monotone. The real enforcement is the emit-time exclusivity check,
-        // which is stronger than any count; this test only catches regression.
+        // The floor belongs to the current projection domain. A theorem's type is its proposition;
+        // a definition's type is only its signature and cannot supply its defining statement.
+        // Emission enforces statement-source exclusivity; this count checks minimum usage.
         Assert.True(
             projected >= 7,
             $"projection-derived statements regressed to {projected}, below the floor of 7");
@@ -355,7 +349,6 @@ public sealed class StatementProjectionPilotTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
-            DocumentlessAssembly.Value,
             ["projections", "--check", "--report", "live-report.json"],
             repository.Path,
             output,
@@ -377,7 +370,6 @@ public sealed class StatementProjectionPilotTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
-            DocumentlessAssembly.Value,
             ["projections", "--check", "--report", "live-report.json"],
             repository.Path,
             TextWriter.Null,
@@ -404,7 +396,6 @@ public sealed class StatementProjectionPilotTests
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
-            DocumentlessAssembly.Value,
             arguments,
             TemporaryFileSystem.Directory.GetCurrentDirectory(),
             TextWriter.Null,

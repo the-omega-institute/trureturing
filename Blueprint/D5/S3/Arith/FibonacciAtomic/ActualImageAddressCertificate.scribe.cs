@@ -15,7 +15,17 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
                 + "The substitution rho sends alpha to beta and beta to (beta,alpha), and preserves pairing. "
                 + "Composition c counts alpha and beta leaves. Paths reuse the frozen ActualTreeReadoutAcquisition.Address type of finite Boolean lists, including the empty root address. "
                 + "Endpoint observations use its Reply and address-first readout; complete leaf sets use ActualImageSevenLeafSeparation.leafAddresses. "
-                + "Leaf labels use true for alpha and false for beta.")),
+                + "Leaf labels use true for alpha and false for beta. Alpha endpoints reuse ActualLeafHistoryRigidity.alphaLeaves, and addressed subtrees reuse its subtree with the address supplied first.")),
+            Def("height", "Maximum leaf depth", "Height is the height of the existing ordered shape decomposition. A leaf has height zero."),
+            Def("ActualImage", "Actual substitution image", "ActualImage(d) is the range of the d-fold native substitution on complete source trees."),
+            Def("Within", "Finite depth window", "Within(h,Q) means that each address in the finite set Q has length at most h."),
+            Def("Sound", "Positive address certificate", "Sound(d,V,h,Q) means Within(h,Q) and: every complete tree U with c(U)=c(V) "
+                + "and readout(u,U)=readout(u,V) for every u in Q belongs to ActualImage(d). Exact composition is the only competitor promise, "
+                + "no prefix-closure condition on Q, and no adaptive or random query order."),
+            Def("UnSound", "Certificates without a composition promise", "Every complete source U matching all queried endpoint results must belong to ActualImage(d). No composition or leaf-count constraint is placed on U; the depth window is imposed separately."),
+            Def("replace", "Subtree replacement", "Replacement changes the complete subtree at a valid address and retains the surrounding ordered tree. Invalid paths leave the tree unchanged."),
+            Def("AlphaCovered", "Alpha coverage of branches", "Every internal node has an alpha leaf descendant, recursively throughout the tree."),
+            Def("rightComb", "Right comb source", "The zero comb is beta. The successor comb pairs alpha on the left with the preceding comb on the right, giving m alpha side leaves and one terminal beta at m right steps."),
             Describe.Lean(DescribeId.Create("actual-image-address-certificate-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Sharp cardinality and depth"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(
@@ -77,6 +87,11 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
                         + "including branches and absent endpoints. The left alpha leaf excludes W from the actual image. "
                         + "The universal lower bound together with the explicit attaining image characterizes the minimum "
                         + "leaf budget over images whose height exceeds h."))), DescribeRole.Theorem))));
+
+    private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
+        DescribeId.Create("actual-image-address-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
+        H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula V(string s) => F.Id(s);
     private static Formula Par(Formula f) => Seq(Open, f, Close);

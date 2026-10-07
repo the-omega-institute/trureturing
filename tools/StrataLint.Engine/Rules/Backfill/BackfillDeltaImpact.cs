@@ -50,8 +50,8 @@ internal static class BackfillDeltaImpactResolver
             frozenState,
             frozenStatements);
 
-        // Raw frozen and Lean paths have historically widened one dependency change to every
-        // edge. Their value changes are represented by the affected entry paths above instead.
+        // Represent frozen and Lean value changes by their affected entry paths so one
+        // dependency change does not widen evaluation to unrelated edges.
         var evaluationEntries = repositoryChanges.Entries
             .Where(static change =>
                 !FrozenLedgerChangeClassifier.IsAcceptedEventPath(change.Path.Value)
@@ -109,24 +109,6 @@ internal static class BackfillDeltaImpactResolver
             return true;
         }
 
-        foreach (var gid in entry.CoverageGids)
-        {
-            var documentGid = ScribeEmissionAttestation.DocumentGid(gid);
-            if (FileValueChanged(
-                    ScribeEmissionAttestation.DefinitionPath(documentGid),
-                    current,
-                    baseline,
-                    changedPaths)
-                || FileValueChanged(
-                    ScribeEmissionAttestation.EmissionPath(documentGid),
-                    current,
-                    baseline,
-                    changedPaths))
-            {
-                return true;
-            }
-        }
-
         return false;
     }
 
@@ -177,7 +159,7 @@ internal static class BackfillDeltaImpactResolver
             exception is FormatException or InvalidOperationException)
         {
             // Frozen-state shape and the Lean report have their own admission owners. An
-            // invalid authority has no comparable statement value for SL-016 to propagate.
+            // Invalid authority has no comparable statement value for status propagation.
             return;
         }
 

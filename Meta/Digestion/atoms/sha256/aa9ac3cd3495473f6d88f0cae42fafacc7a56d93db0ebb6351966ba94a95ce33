@@ -1,0 +1,6 @@
+**Lemma 2.1 (erasing an index).** For finite $T$, a nonempty door
+$(\tau,D)$ and every $i\in D$, dominance of $(\tau,D\setminus\{i\})$
+is equivalent to existence of distinct $a,b\in D$ satisfying
+
+$$m_a(\tau)=m_b(\tau),\qquad i\in\{a,b\},\qquad M_i=\varnothing.$$
+

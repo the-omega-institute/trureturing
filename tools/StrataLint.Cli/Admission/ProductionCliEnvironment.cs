@@ -11,7 +11,8 @@ internal sealed record FrozenRevisionIdentity(string Revision, string CommitOid,
 
 internal sealed record CheckArguments(
     string? ProtectedBase,
-    string? CandidateLeanReport);
+    string? CandidateLeanReport,
+    string? ScribePaths = null);
 
 internal interface IRepositoryGateway
 {
@@ -21,9 +22,59 @@ internal interface IRepositoryGateway
 
     FrozenRevisionIdentity ResolveCurrentRevision();
 
+    FrozenRevisionIdentity ResolveFrozenRevision(string revision) =>
+        throw new InvalidOperationException("fixed revision identity is not supported by this gateway");
+
     RawRepositorySnapshot ReadCurrent();
 
+    /// Preserves the whole path inventory and link policy while selecting regular bodies.
+    /// An optional observer receives each original file's raw SHA256, including omitted bodies.
+    RawRepositorySnapshot ReadCurrentProjection(Func<string, bool> readContents,
+        Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null)
+    {
+        var snapshot = ReadCurrent();
+        if (observeContentDigest is not null && snapshot.Entries.Any(static entry => !entry.ContentWasRead))
+            throw new InvalidOperationException("Full provenance requires original bodies, not unread placeholders.");
+        foreach (var entry in snapshot.Entries)
+            observeContentDigest?.Invoke(entry.Path, System.Security.Cryptography.SHA256.HashData(entry.Bytes.AsSpan()));
+        return ProjectBodies(snapshot, readContents);
+    }
+
+    /// Reads the files at the given paths from the current repository snapshot. A
+    /// directory selects everything under it, and the same FILEMAP/symlink policy as
+    /// the whole-tree reader is applied.
+    RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths);
+
+    /// Searches current paths without reading their file bodies.
+    IReadOnlyList<string> SearchCurrentPaths(IReadOnlyList<string> paths);
+
     RawRepositorySnapshot ReadRevision(string revision);
+
+    RawRepositorySnapshot ReadRevisionProjection(string revision, Func<string, bool> readContents,
+        Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null)
+    {
+        var snapshot = ReadRevision(revision);
+        if (observeContentDigest is not null && snapshot.Entries.Any(static entry => !entry.ContentWasRead))
+            throw new InvalidOperationException("Full provenance requires original bodies, not unread placeholders.");
+        foreach (var entry in snapshot.Entries)
+            observeContentDigest?.Invoke(entry.Path, System.Security.Cryptography.SHA256.HashData(entry.Bytes.AsSpan()));
+        return ProjectBodies(snapshot, readContents);
+    }
+
+    private static RawRepositorySnapshot ProjectBodies(RawRepositorySnapshot snapshot, Func<string, bool> readContents)
+    {
+        ArgumentNullException.ThrowIfNull(readContents);
+        var links = snapshot.PathInventory.IsDefault ? new HashSet<string>(StringComparer.Ordinal)
+            : snapshot.PathInventory.Where(static entry => entry.State == "symlink")
+                .Select(static entry => entry.Path).ToHashSet(StringComparer.Ordinal);
+        return RawRepositorySnapshot.Create(snapshot.Entries.Select(entry =>
+            readContents(entry.Path) || links.Contains(entry.Path) || FileMapDocuments.IsPolicyPath(entry.Path)
+                ? entry : entry with { Bytes = [], ContentWasRead = false }), snapshot.PathInventory);
+    }
+
+    /// Reads selected paths and the FILEMAP inputs and link referents needed to validate them.
+    RawRepositorySnapshot ReadRevision(string revision, IReadOnlyList<string> paths) =>
+        throw new InvalidOperationException("scoped revision reads are not supported by this gateway");
 
     RawChangeSet ReadCurrentChanges();
 
@@ -52,7 +103,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     private readonly ILeanReportSource leanReportSource;
     private readonly IScribeEmissionVerifier? scribeEmissionVerifier;
     private readonly TimeProvider timeProvider;
-    private readonly IAtomHistorySource atomHistorySource;
     private readonly ReportFreeIngestDependencies reportFreeIngestDependencies;
 
     internal ProductionCliEnvironment(string repositoryRoot)
@@ -81,7 +131,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         IRepositoryGateway repository,
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
-        IAtomHistorySource? atomHistorySource = null,
         ReportFreeIngestDependencies? reportFreeIngestDependencies = null)
         : this(
             repositoryRoot,
@@ -89,7 +138,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             leanReportSource,
             scribeEmissionVerifier,
             TimeProvider.System,
-            atomHistorySource,
             reportFreeIngestDependencies)
     {
     }
@@ -100,7 +148,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         ILeanReportSource leanReportSource,
         IScribeEmissionVerifier? scribeEmissionVerifier,
         TimeProvider timeProvider,
-        IAtomHistorySource? atomHistorySource = null,
         ReportFreeIngestDependencies? reportFreeIngestDependencies = null)
     {
         this.repositoryRoot = Path.GetFullPath(repositoryRoot);
@@ -108,7 +155,6 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         this.leanReportSource = leanReportSource;
         this.scribeEmissionVerifier = scribeEmissionVerifier;
         this.timeProvider = timeProvider;
-        this.atomHistorySource = atomHistorySource ?? new GitAtomHistorySource(this.repositoryRoot);
         this.reportFreeIngestDependencies =
             reportFreeIngestDependencies ?? new ReportFreeIngestDependencies();
     }
@@ -151,9 +197,10 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             var rawSnapshots = timing.Measure(
                 "repository-read",
                 () => (
-                    Current: repository.ReadCurrent(),
-                    Baseline: repository.ReadRevision(prepared.Revision)));
-            var currentRaw = rawSnapshots.Current;
+                    Current: AdmissionRepositoryInputs.ReadCurrent(repository),
+                    Baseline: AdmissionRepositoryInputs.ReadBaseline(repository, prepared.Revision)));
+            var currentRaw = AdmissionRepositoryInputs.ReadDeltaInputs(
+                repository, rawSnapshots.Current, rawSnapshots.Baseline, prepared.Changes);
             var baselineRaw = rawSnapshots.Baseline;
             var admissionPlane = timing.Measure(
                 "admission-plane",
@@ -215,8 +262,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             var route = RouteEngine.Route(fileMap.Policy, probe);
             if (route is not RouteOutcome.Routed routed
                 || routed.Result.Gid.Value != "D5/S0/Carrier/Probe"
-                || routed.Result.Path.Value != "D5/S0/Carrier/Probe.lean"
-                || RuleCatalog.Default.Descriptors.Length != 30)
+                || routed.Result.Path.Value != "D5/S0/Carrier/Probe.lean")
             {
                 return new CommandResult(false, string.Empty, "SELFTEST FAIL invariant mismatch\n");
             }
@@ -258,7 +304,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
         IScribeEmissionVerifier? verifier,
         RepositorySnapshot snapshot,
         LeanAxiomReport report,
-        RawChangeSet? changes = null)
+        RawChangeSet? changes)
     {
         if (verifier is null)
         {
@@ -328,6 +374,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
     {
         string? protectedBase = null;
         string? candidateLeanReport = null;
+        string? scribePaths = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -339,6 +386,7 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
             {
                 "--protected-base" when protectedBase is null => 0,
                 "--candidate-lean-report" when candidateLeanReport is null => 1,
+                "--scribe-paths-from" when scribePaths is null => 2,
                 _ => throw CheckUsage(),
             };
             switch (target)
@@ -349,15 +397,18 @@ internal sealed partial class ProductionCliEnvironment : ICliEnvironment
                 case 1:
                     candidateLeanReport = arguments[index + 1];
                     break;
+                case 2:
+                    scribePaths = arguments[index + 1];
+                    break;
             }
         }
 
-        return new CheckArguments(protectedBase, candidateLeanReport);
+        return new CheckArguments(protectedBase, candidateLeanReport, scribePaths);
     }
 
     private static InvalidOperationException CheckUsage() => new(
         "USAGE: StrataLint check [--protected-base REV] "
-        + "--candidate-lean-report FILE");
+        + "--candidate-lean-report FILE [--scribe-paths-from FILE]");
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch

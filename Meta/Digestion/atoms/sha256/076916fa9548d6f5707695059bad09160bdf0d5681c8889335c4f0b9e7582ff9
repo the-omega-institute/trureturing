@@ -1,0 +1,71 @@
+## Raw traces and the finite chain
+
+For arbitrary complex matrices M,X,Y of the relevant sizes,
+
+$$
+\operatorname{Tr}(M(X\otimes I_B))=
+\operatorname{Tr}((\operatorname{Tr}_B M)X),\qquad
+\operatorname{Tr}(M(I_A\otimes Y))=
+\operatorname{Tr}((\operatorname{Tr}_A M)Y).
+$$
+
+The first identity expands on both sides to
+∑_(x,z,y) M_(x,y),(z,y) X_(z,x); the second expands to
+∑_(x,y,t) M_(x,y),(x,t) Y_(t,y). These are equalities of complex traces,
+before taking real parts, with no commutation hypothesis.
+
+Use the exact singular tensor log and rho Q=rho. Tensor multiplication gives
+(P_R tensor L(B))=Q(I_A tensor L(B)). Therefore
+
+$$
+\operatorname{Tr}\rho L(\widehat\rho)
+=\operatorname{Tr}RL(R)+\operatorname{Tr}SL(B),\qquad
+\operatorname{Tr}\rho L(\gamma)
+=\operatorname{Tr}RL(C)+\operatorname{Tr}SL(B).
+$$
+
+Let T(X)=Re Tr(X L(X)). The receiving finite trace-log expressions are
+
+$$
+\begin{aligned}
+D_{\mathrm{fin}}(\rho\Vert\gamma)
+ &=T(\rho)-\operatorname{Re}\operatorname{Tr}RL(C)
+                 -\operatorname{Re}\operatorname{Tr}SL(B),\\
+D_{\mathrm{fin}}(R\Vert C)
+ &=T(R)-\operatorname{Re}\operatorname{Tr}RL(C),\\
+D_{\mathrm{fin}}(\rho\Vert\widehat\rho)
+ &=T(\rho)-T(R)-\operatorname{Re}\operatorname{Tr}SL(B).
+\end{aligned}
+$$
+
+Subtracting gives
+
+$$
+D_{\mathrm{fin}}(\rho\Vert\gamma)-D_{\mathrm{fin}}(R\Vert C)
+=D_{\mathrm{fin}}(\rho\Vert\widehat\rho).
+$$
+
+C and C tensor B are positive definite. The marginal-kernel proof supplies
+the remaining support condition for rho against the singular recovered state.
+Consequently all three canonical WithTop-real divergences are finite, and
+the safe extended statement is
+
+$$
+D(\rho\Vert\gamma)=D(\rho\Vert\widehat\rho)+D(R\Vert C).
+$$
+
+This justifies real subtraction. Unsupported pairs must retain the infinite
+branch: for orthogonal pure diagonal states the totalized trace-log expression
+is zero but the canonical divergence is top.
+
+Applying the chain to the actual recovered state, whose A-marginal is R,
+gives D(recovered || gamma)=D(R || C). Existing product entropy additivity
+and the same trace expansions also give
+
+$$
+D(\rho\Vert\widehat\rho)=I(A:B)_\rho+D(S\Vert B).
+$$
+
+No simultaneous diagonalization of R and C is used: their cross term is
+∑_(i,l) r_i |⟨u_i,g_l⟩|² log(c_l).
+

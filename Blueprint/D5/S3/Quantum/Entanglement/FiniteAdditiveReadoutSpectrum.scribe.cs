@@ -4,7 +4,6 @@ using F = StrataLint.Scribe.FormulaDsl;
 
 namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Entanglement;
 
-[ScribeSharedSource("Blueprint/D5/S3/Quantum/Entanglement/FiniteAdditiveReadoutBlocks.scribe.cs")]
 internal sealed class FiniteAdditiveReadoutSpectrumDocument : IScribeDocumentDefinition
 {
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
@@ -179,4 +178,87 @@ internal sealed class FiniteAdditiveReadoutSpectrumDocument : IScribeDocumentDef
     }
 
     private static Formula Id(string name) => F.Id(name);
+}
+
+internal static class FiniteReadoutFormula
+{
+    internal static Formula Id(string name) => F.Id(name);
+    internal static Formula C(string name, params Formula[] args)
+    {
+        var parts = name.Split('.');
+        Formula[] dotted = parts.SelectMany((part, index) =>
+            index == 0 ? new Formula[] { OperatorPart(part) } : [F.Dot, OperatorPart(part)]).ToArray();
+        return new Formula.Apply(F.Seq(F.Operatorname, F.Grp(dotted)), [.. args]);
+    }
+    private static Formula OperatorPart(string part) => part.EndsWith('\'')
+        ? F.Seq(Id(part[..^1]), F.Apos)
+        : Id(part);
+    internal static Formula Apply(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
+    internal static Formula Lambda(string name, Formula type, Formula body) =>
+        F.Seq(F.Lambda, F.Sp, Id(name), F.Sp, F.InMacro, F.Sp, type,
+            F.Comma, F.Sp, body);
+    internal static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
+    internal static Formula Lt(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThan, b);
+    internal static Formula And(params Formula[] parts) => parts.Reverse().Aggregate((tail, head) => new Formula.Logic(head, FormulaLogicOperator.And, tail));
+    internal static Formula Or(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Or, b);
+    internal static Formula Imp(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Implies, b);
+    internal static Formula Iff(Formula a, Formula b) => new Formula.Logic(a, FormulaLogicOperator.Iff, b);
+    internal static Formula All(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.ForAll, FormulaIdentifier.Create(name), type, body);
+    internal static Formula Ex(string name, Formula type, Formula body) => new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
+    internal static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
+    internal static Formula Sub(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Subtract, b);
+    internal static Formula Inv(Formula a) => new Formula.Power(a, new Formula.Negate(One));
+    internal static Formula Smul(Formula a, Formula b) => C("SMul.smul", a, b);
+    internal static Formula MatMul(Formula a, Formula b) => Mul(a, b);
+    internal static Formula Adj(Formula a) => C("Matrix.conjTranspose", a);
+    internal static Formula MulVec(Formula a, Formula b) => C("Matrix.mulVec", a, b);
+    internal static Formula Entry(Formula m, Formula a, Formula b) => Apply(m, a, b);
+    internal static Formula Card(Formula t) => C("Fintype.card", t);
+    internal static Formula NatCard(Formula t) => C("Nat.card", t);
+    internal static Formula SumAt(string name, Formula type, Formula body) =>
+        F.Seq(new Formula.Subscript(F.Sum, F.Seq(Id(name), F.Sp, F.InMacro, F.Sp, type)), F.Grp(body));
+    internal static Formula FilterCard(Formula type, string name, Formula condition) =>
+        C("Finset.card", C("Finset.filter", Lambda(name, type, condition),
+            C("Finset.univ", type)));
+
+    internal static Formula G => Id("G");
+    internal static Formula A => Id("A");
+    internal static Formula B => Id("B");
+    internal static Formula Alpha => Id("alpha");
+    internal static Formula Beta => Id("beta");
+    internal static Formula X => Id("x");
+    internal static Formula Qvar => Id("q");
+    internal static Formula One => F.D(1);
+    internal static Formula Zero => F.D(0);
+    internal static Formula Complex => F.Seq(F.Mathbb, F.Grp(Id("C")));
+    internal static Formula Q => C("BlockQuotient", Alpha, Beta);
+    internal static Formula Weight => C("blockWeight", Alpha, Beta);
+    internal static Formula CoefficientMatrix => C("actualCoefficient", Alpha, Beta);
+    internal static Formula ReducedA => C("actualReducedA", Alpha, Beta);
+    internal static Formula ReducedB => C("actualReducedB", Alpha, Beta);
+    internal static Formula LeftMatrix => C("leftVectors", Alpha, Beta);
+    internal static Formula RightMatrix => C("rightVectors", Alpha, Beta);
+    internal static Formula Coeff(Formula a, Formula b) => Entry(CoefficientMatrix, a, b);
+    internal static Formula LeftVectors(Formula a, Formula q) => Entry(LeftMatrix, a, q);
+    internal static Formula RightVectors(Formula b, Formula q) => Entry(RightMatrix, b, q);
+
+    internal static Formula Theorem(Formula body, bool paired)
+    {
+        Formula readouts = All("alpha", C("AddMonoidHom", G, A),
+            All("beta", C("AddMonoidHom", G, B),
+                paired ? Imp(C("Function.Injective",
+                    Lambda("x", G, C("Prod.mk", Apply(Alpha, X), Apply(Beta, X)))), body) : body));
+        Formula instances = paired
+            ? All("fG", C("Fintype", G), All("fA", C("Fintype", A),
+                All("fB", C("Fintype", B), All("dG", C("DecidableEq", G),
+                    All("dA", C("DecidableEq", A),
+                        All("dB", C("DecidableEq", B), readouts))))))
+            : readouts;
+        Formula universe = F.Seq(Id("Type"), F.Star);
+        return All("G", universe, All("A", universe,
+            All("B", universe,
+                All("gG", C("AddCommGroup", G),
+                    All("gA", C("AddCommGroup", A),
+                        All("gB", C("AddCommGroup", B), instances))))));
+    }
 }

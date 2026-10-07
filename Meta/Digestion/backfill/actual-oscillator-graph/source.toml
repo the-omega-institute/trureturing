@@ -1,0 +1,5 @@
+source_id = "actual-oscillator-graph"
+path = "docs/develop/theory/ACTUAL_OSCILLATOR_GRAPH.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

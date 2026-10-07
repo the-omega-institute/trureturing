@@ -1,0 +1,39 @@
+**引理 62.4（自适应全查询链式界）。** 对任意两个教师 $\theta,\eta$，在上述同一算法和共同已揭示参数下，
+
+$$
+D_{\mathrm{KL}}\!\left(\mathbb P_\theta^{\mathcal T}
+ \Vert\mathbb P_\eta^{\mathcal T}\right)
+ =
+\mathbb E_\theta\sum_{t=1}^{\tau}
+ D_{\mathrm{KL}}\!\left(
+ R_a(C_\theta(X_t),\cdot)\Vert
+ R_a(C_\eta(X_t),\cdot)\right)
+ \leq mK_a.
+\tag{62.19}
+$$
+
+证明。相同完整历史下，选种子、选输入、更新内部存储、停止与输出的算法条件核不依赖教师。它们在联合似然比中相消；这不意味着不同教师下选到的输入边缘分布相同。唯一不相消的因素是实际新标签的条件概率。因此联合对数似然比是每次实际行对数比之和。先对当前标签作条件期望，再对历史积分，就得到式（62.19）的等式。
+
+亦可在停止后保持终止标志及输出，用全 $000$ 输入把实验补到 $m$ 次。两教师在这些补齐输入均有 $C=0$，附加行 KL 为零。算法附加的随机输出核也不增加等式中的项。所有通道项严格为正，有限标签似然比可积；种子的一般分布通过相同核积分处理。最后用式（62.17）逐项上界。 $\square$
+
+输入本身属于转录，不能删掉；但它只是过去数据和教师无关随机性的函数或随机核，不含新的教师预言机。这个证明不使用第58节的 IID 记录 KL，也不假定查询位置或长度选择固定。
+
+令 $N=\binom n3$。若算法对每个教师均有错误概率不超过 $\delta$，均匀教师先验下的 Fano 熵界与任意两教师的二元事件检验分别给出
+
+$$
+\begin{aligned}
+mK_a&\geq (1-\delta)\ln N-\ln2,\\
+mK_a&\geq \operatorname{kl}(1-\delta,\delta)
+ \qquad(0<\delta<1/2).
+\end{aligned}
+\tag{62.20}
+$$
+
+这里 $\operatorname{kl}(u,v)=u\ln(u/v)+(1-u)\ln((1-u)/(1-v))$。第一行的完整推导是
+$H(\Theta\mid\mathcal T)\leq\ln2+\delta\ln N$；
+同时 KL 对第二参数的凸性给
+$I(\Theta;\mathcal T)\leq N^{-2}\sum_{\theta,\eta}
+D_{\mathrm{KL}}(\mathbb P_\theta^{\mathcal T}\Vert
+\mathbb P_\eta^{\mathcal T})\leq mK_a$。
+第二行取事件“输出 $\theta$”：在 $\theta$ 下概率至少 $1-\delta$，在另一教师下至多 $\delta$。数据处理及二元 KL 在这两个概率域的单调性给出该界。
+

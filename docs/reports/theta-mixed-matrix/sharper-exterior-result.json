@@ -1,0 +1,73 @@
+{
+  "scope": "Real exterior row envelope and stronger coercivity for the unchanged paper operator; saved interior/leakage reused; no action or grid evaluation, Lean, cofinal, RH or Robin certificate",
+  "input_sha256": {
+    "joint-high-floor-result.json": "8f3baae2dc758332388a72a44117bfbecaa3166e6431d38313ef7cdada2627b0",
+    "strip-root.md": "7a8f554ea66caab1cff72a5e76fb018a65922d1257a9a294742fde0e7d7d2f61",
+    "derivative-bandwidth-result.json": "a00f013d6d9a1151672a71f6a2e295df54a47af396b4eaa308af58145dd1f0e1"
+  },
+  "precision_bits": 192,
+  "bandwidth_N": 64,
+  "base_c": "3/8",
+  "exterior_radius": "3/2",
+  "full_two_direction_row_tail_upper": {
+    "display": "[2.22691305378340530863139153678043990874051568251432868082e-5 +/- 9.51e-63]",
+    "dyadic": [
+      "4580494473448346818199937308827290164638271101739747782423",
+      "-207"
+    ]
+  },
+  "exterior_Gamma_loss_upper": {
+    "display": "[8.65862485896310930969274565120325652913071617490403194420e-23 +/- 4.35e-81]",
+    "dyadic": [
+      "1283328335797120908843199966944723299887641119541115522351",
+      "-263"
+    ]
+  },
+  "exterior_W_floor_lower": {
+    "display": "[0.499977730869462165946827099836042564507815667386662824148 +/- 3.10e-58]",
+    "dyadic": [
+      "6276822164190791582510349378307716746194430691450260959747",
+      "-193"
+    ]
+  },
+  "reused_interior_joint_floor_lower": {
+    "display": "[0.467578921811447701639231239214039027573212233010423441560 +/- 1.06e-58]",
+    "dyadic": [
+      "318217724472679687199911411982260800591",
+      "-129"
+    ]
+  },
+  "global_joint_floor_lower": {
+    "display": "[0.467578921811447701639231239214039027573212233010423441560 +/- 1.06e-58]",
+    "dyadic": [
+      "318217724472679687199911411982260800591",
+      "-129"
+    ]
+  },
+  "reused_leakage_product_upper": {
+    "display": "[0.000931752148101893994755491147267229023813267326999255551451 +/- 2.16e-61]",
+    "dyadic": [
+      "324668238171936040159484956522107994873",
+      "-138"
+    ]
+  },
+  "complete_high_form_floor_lower": {
+    "display": "[0.466647169663345807644475748066771798549398965683424186009 +/- 3.46e-58]",
+    "dyadic": [
+      "162602806691840063806195157978395421907719",
+      "-138"
+    ]
+  },
+  "base_high_gap_lower": {
+    "display": "[0.0916471696633458076444757480667717985493989656834241860087 +/- 4.58e-59]",
+    "dyadic": [
+      "31934377794199693836259308724596428708615",
+      "-138"
+    ]
+  },
+  "exterior_above_saved_interior_checked": true,
+  "positive_high_gap_checked": true,
+  "same_operator_and_supplier_premises_required": true,
+  "Lean_certification": false,
+  "cofinal_RH_and_full_Robin": "Unresolved"
+}

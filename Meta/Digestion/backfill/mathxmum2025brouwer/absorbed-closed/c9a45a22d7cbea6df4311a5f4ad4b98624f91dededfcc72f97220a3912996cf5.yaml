@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c9a45a22d7cbea6df4311a5f4ad4b98624f91dededfcc72f97220a3912996cf5
+  normalized_sha256: sha256:c9a45a22d7cbea6df4311a5f4ad4b98624f91dededfcc72f97220a3912996cf5
+cas_ref: sha256:c9a45a22d7cbea6df4311a5f4ad4b98624f91dededfcc72f97220a3912996cf5
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Scarf/Incidence.internal_door_two_rooms
+    target_statement_id: sha256:715d8fa6eb27eb29151d93e9b1f1dc22cc6adae307e298a852affe17398824fa
+receipts:
+  unresolved_subitems: []

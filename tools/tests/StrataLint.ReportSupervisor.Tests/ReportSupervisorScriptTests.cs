@@ -105,6 +105,86 @@ public sealed class ReportSupervisorScriptTests
         Assert.Matches(@"rss_peak_kb=[0-9]+", observation);
     }
 
+    [Theory]
+    [InlineData(2)]
+    [InlineData(2000)]
+    public void ResourceSamplingWorksWhenRegularFileWritesAreForbidden(int memberCount)
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var supervisor = File.ReadAllText(fixture.Supervisor);
+        var start = supervisor.IndexOf("remember_process_candidate() {", StringComparison.Ordinal);
+        Assert.True(start >= 0);
+        var end = supervisor.IndexOf("signal_recorded_processes() {", start, StringComparison.Ordinal);
+        Assert.True(end > start);
+        // Exercise the production sampler without limiting the supervisor's
+        // intentional state writes. Bash 3.2 writes even small here-strings to
+        // temporary files. The larger list also exceeds modern Bash's pipe
+        // optimization, so the same write failure is exercised on Linux.
+        var harness = """
+            set -euo pipefail
+            CHILD_PID=2147481000
+            STDOUT_RELAY_PID=2147483643
+            STDERR_RELAY_PID=2147483644
+            PROCESS_CANDIDATES_FILE=/dev/null
+            RSS_PEAK_KB=0
+            FD_PEAK=0
+            collect_process_tree() {
+              local i
+              for (( i=0; i<__MEMBER_COUNT__; i++ )); do
+                printf '%s\n' "$((CHILD_PID + i))"
+              done
+            }
+            marker_processes() { printf '%s\n' "$CHILD_PID"; }
+            process_start_identity() {
+              printf 'identity=%s\n' "$1" >&2
+              printf 'start-%s\n' "$1"
+            }
+            ps() { printf '4096\n'; }
+            lsof() { printf 'header\nfd-a\nfd-b\n'; }
+            """ + "\n" + supervisor[start..end] + "\n" + """
+            ulimit -f 0
+            sample_supervised_resources
+            printf 'rss=%s fd=%s\n' "$RSS_PEAK_KB" "$FD_PEAK"
+            """;
+        harness = harness.Replace(
+            "__MEMBER_COUNT__", memberCount.ToString(System.Globalization.CultureInfo.InvariantCulture),
+            StringComparison.Ordinal);
+
+        var result = fixture.RunExternalProcess("/bin/bash", ["-c", harness]);
+
+        Assert.Equal(0, result.ExitCode);
+        Assert.Equal(
+            $"rss={4096 * memberCount} fd={2 * memberCount}\n",
+            Encoding.UTF8.GetString(result.StandardOutput));
+        var stderr = Encoding.UTF8.GetString(result.StandardError);
+        Assert.Equal(
+            string.Concat(Enumerable.Range(2147481000, memberCount).Select(pid => $"identity={pid}\n")),
+            stderr);
+    }
+
+    [Fact]
+    public void ResourceSamplingFailsWhenProcessCandidateRecordingCannotBeWritten()
+    {
+        using var fixture = new ReportSupervisorFixture();
+        var worker = fixture.WriteExecutable("unwritable-candidate-worker.sh", """
+            #!/usr/bin/env bash
+            set -euo pipefail
+            candidates="${TMPDIR%/scratch}/process-candidates"
+            rm "$candidates"
+            mkdir "$candidates"
+            printf 'blocked\n' > "$1"
+            mkfifo "$TMPDIR/hold.fifo"
+            IFS= read -r _ < "$TMPDIR/hold.fifo"
+            """);
+
+        var result = fixture.Run("lean-producer", leanSlot: false, worker);
+
+        Assert.NotEqual(0, result.ExitCode);
+        Assert.Equal("blocked\n", File.ReadAllText(fixture.ScratchRecord));
+        Assert.Contains(
+            "process-candidates", Encoding.UTF8.GetString(result.StandardError), StringComparison.Ordinal);
+    }
+
     [Fact]
     public void OwnerlessSlotIsNeverGuessedStale()
     {

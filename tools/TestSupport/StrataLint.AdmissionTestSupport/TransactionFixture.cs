@@ -316,9 +316,6 @@ internal sealed partial class TransactionFixture
               echo 'STALE_LEAN_REPORT emit refused stale input' >&2
               exit 41
             fi
-            mkdir -p Generated
-            printf '{"truth":{"nodes":[{"repo_path":"D5/S0/Carrier/Probe.lean","state":"closed"}]}}\n' \
-              > Generated/truth-graph.v1.json
             if grep -q '^coverage: true$' Meta/BACKFILL.yaml; then
               printf 'emission: covered\n' > Blueprint/D5/S0/Carrier/Probe.md
             else
@@ -361,6 +358,14 @@ internal sealed partial class TransactionFixture
             exit "$status"
             ;;
           ledger-align)
+            if [[ ${parts[1]:-} == --list-closed ]]; then
+              if [[ ${parts[2]:-} != --candidate-lean-report ]]; then
+                echo 'LEDGER_ALIGN_INVALID synthetic query transport mismatch' >&2
+                exit 97
+              fi
+              printf '["%s"]\n' "${PLAYBOOK_TARGET_MODULE:-D5/S0/Carrier/Probe.lean}"
+              exit 0
+            fi
             if [[ ${parts[1]:-} == --add ]]; then
               if [[ ${parts[2]:-} != "${PLAYBOOK_TARGET_MODULE:-}" \
                   || ${parts[3]:-} != --candidate-lean-report ]]; then
@@ -461,11 +466,14 @@ internal sealed partial class TransactionFixture
                 .. (throughMake
                     ? new[] { "/usr/bin/make", command, $"BASE={baseRevision ?? "HEAD"}", $"GID={gid}" }
                         .Concat(atomId is null ? [] : new[] { $"ATOM_ID={atomId}" })
-                    : new[]
-                        {
-                            "/bin/bash", Path.Combine(Root, ScriptPath), command,
-                            baseRevision ?? (command is "deposit" or "deposit-uncovered" ? "HEAD" : "synthetic-base"),
-                        }
+                    : new[] { "/bin/bash", Path.Combine(Root, ScriptPath), command }
+                        .Concat(command == "cover"
+                            ? []
+                            : new[]
+                            {
+                                baseRevision
+                                    ?? (command is "deposit" or "deposit-uncovered" ? "HEAD" : "synthetic-base"),
+                            })
                         .Concat(atomId is null ? [] : new[] { atomId })
                         .Append(gid)),
             ],
@@ -605,7 +613,6 @@ internal sealed partial class TransactionFixture
                 "/bin/bash",
                 Path.Combine(Root, ScriptPath),
                 "cover-batch",
-                "synthetic-base",
                 atomsFile,
             ],
             Root,

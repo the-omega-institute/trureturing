@@ -30,7 +30,7 @@ internal static partial class FileMapPolicy
     private const string ScribeEmitterPath =
         "tools/StrataLint.Scribe/Emission/ScribeEmitter.cs";
     private const string ScribeProjectPath =
-        "tools/StrataLint.Scribe.Documents/StrataLint.Scribe.Documents.csproj";
+        "tools/StrataLint.Scribe/Scripting/ScribeScriptHost.cs";
     private const string SnapshotDecoderPath =
         "tools/StrataLint.Engine/Snapshot/RepositorySnapshot.cs";
     private const string StatementProjectionFixtureLoaderPath =
@@ -98,11 +98,9 @@ internal static partial class FileMapPolicy
     private static readonly ImmutableHashSet<string> GeneratedActorWords =
         ["reader", "harness-gate", "none"];
 
-    // kind=data 的 verified_by 曾只被「至少有一个真 verifier」检查(InspectDataVerifiers),
-    // 所以一个名字死掉后,只要同条目还留着另一个活的,就永远查不出来:#1116 删掉 emit-check
-    // 目标之后,`Library/*/*.md` 仍写着它,而 LibraryNoteCatalog 还在,于是 `.Any(...)` 放行。
-    // 这里补上逐名检查——每个名字要么是已知的 loader/schema 实现,要么是规则号那种刻意的
-    // 非类型名。规则号形如 SL-017,由 RuleId 的封闭字母表背书,不是自由文本。
+    // kind=data 的 verified_by 必须逐名解析:每个名字要么是已知的 loader/schema
+    // 实现,要么符合 SL-nnn 的三位数字形状;该形状不证明规则与路径相绑定。
+    // 同条目中存在其他有效 verifier 不能豁免悬空名字。
     private static readonly Regex DataVerifierRuleName = new(
         @"^SL-\d{3}$",
         RegexOptions.CultureInvariant);
@@ -112,7 +110,7 @@ internal static partial class FileMapPolicy
         RegexOptions.CultureInvariant);
 
     private static readonly ImmutableHashSet<string> RequiredGitIgnoreLines =
-        [".caller-review-prompt.md", ".echo-review.md", ".sshx-*", "/Generated/echo-residuals/"];
+        [".caller-review-prompt.md", ".echo-review.md", ".sshx-*"];
 
     private static ImmutableHashSet<string> DeclaredTypeNames(
         string repositoryRoot,
@@ -192,6 +190,19 @@ internal static partial class FileMapPolicy
         return findings;
     }
 
+    internal static IEnumerable<string> DocumentPaths(string repositoryRoot)
+    {
+        var manifest = FileMapLoader.LoadRepository(repositoryRoot);
+        foreach (var path in TrackedPaths(repositoryRoot)
+            .Where(path => path.StartsWith("Blueprint/", StringComparison.Ordinal)
+                && path.EndsWith(".scribe.cs", StringComparison.Ordinal)
+                && manifest.Entries.Any(entry => entry.Kind == FileMapKind.Data
+                    && entry.Matches(path)))
+            .Select(path => path[..^".scribe.cs".Length] + ".md")
+            .Order(StringComparer.Ordinal))
+            yield return path;
+    }
+
     internal static IReadOnlyList<FileMapFinding> InspectRepository(
         string repositoryRoot, IEnumerable<string> documentPaths, FileMapInspectionScope? scope = null)
     {
@@ -242,7 +253,6 @@ internal static partial class FileMapPolicy
         return InspectCoverage(manifest, selected)
             .Concat(InspectPatternPopulation(manifest, paths, selectedManifest.Entries))
             .Concat(pathFindings)
-            .Concat(InspectProjectionRegistrations(manifest))
             .Concat(scope is null || scope.Actors ? InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths), repositoryRoot) : [])
             .Concat(InspectDataVerifiers(manifest, availableVerifiers))
             .Concat(InspectDataVerifierNames(manifest, availableVerifiers))
@@ -428,25 +438,6 @@ internal static partial class FileMapPolicy
                 ".gitignore",
                 $"required run-local scaffold ignore is absent: {line}"))
             .ToArray();
-    }
-
-    internal static IReadOnlyList<FileMapFinding> InspectProjectionRegistrations(
-        FileMapManifest manifest)
-    {
-        ArgumentNullException.ThrowIfNull(manifest);
-        const string pattern = "Generated/echo-residuals/*.md";
-        const string representative = "Generated/echo-residuals/synthetic.md";
-        var findings = new List<FileMapFinding>();
-        if (manifest.Match(representative) is not
-            [{ Pattern: pattern, Kind: FileMapKind.Generated, RuntimeDisposition: "run-local" }])
-        {
-            findings.Add(new FileMapFinding(
-                "FILEMAP-PROJECTION-SHARD",
-                representative,
-                $"run-local echo residuals require the literal FILEMAP shard pattern {pattern}"));
-        }
-
-        return findings;
     }
 
     internal static IReadOnlyList<FileMapFinding> InspectCoverage(

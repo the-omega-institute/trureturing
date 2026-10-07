@@ -274,12 +274,12 @@ public sealed class ScribeReleaseCommandTests
     }
 
     private static int Release(TemporaryRoot root, TextWriter? output = null, TextWriter? error = null) =>
-        ScribeCli.Run(typeof(ScribeResourcePack).Assembly, ["resources", "release", "--out", "release"], root.Path, output ?? TextWriter.Null, error ?? TextWriter.Null);
+        ScribeCli.Run(["resources", "release", "--out", "release"], root.Path, output ?? TextWriter.Null, error ?? TextWriter.Null);
 
     private static int Verify(TemporaryRoot root, TextWriter error) =>
         Run(root, ["resources", "verify-release", "--dir", "release"], error);
 
     private static int Run(TemporaryRoot root, string[] args, TextWriter error) =>
-        ScribeCli.Run(typeof(ScribeResourcePack).Assembly, args, root.Path, TextWriter.Null, error);
+        ScribeCli.Run(args, root.Path, TextWriter.Null, error);
 
 }

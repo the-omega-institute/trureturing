@@ -25,31 +25,65 @@ noncomputable def horizon (p e : ℕ) : ℕ :=
   if zeroRank (p ^ e) = zeroRank (p ^ (e - 1)) then zeroRank (p ^ e)
   else zeroRank (p ^ e) - zeroRank (p ^ (e - 1))
 
-theorem sharp_prime_power_gcd_horizon (p e : ℕ) (hp : p.Prime) (he : 2 ≤ e) :
-    (∀ j : ℕ, 0 < zeroRank (p ^ j) ∧ p ^ j ∣ Nat.fib (zeroRank (p ^ j)) ∧
-      ∀ k : ℕ, 0 < k → p ^ j ∣ Nat.fib k → zeroRank (p ^ j) ≤ k) ∧
-    (zeroRank (p ^ e) = zeroRank (p ^ (e - 1)) ∨
-      zeroRank (p ^ e) = p * zeroRank (p ^ (e - 1))) ∧
-    (∀ n z n2 z2 : ℤ,
-      (∀ k : ℕ, 1 ≤ k → k ≤ horizon p e →
-        Nat.gcd (signedObservation n z k).natAbs (p ^ e) =
-          Nat.gcd (signedObservation n2 z2 k).natAbs (p ^ e)) →
-      ∀ k : ℕ, 1 ≤ k →
-        Nat.gcd (signedObservation n z k).natAbs (p ^ e) =
-          Nat.gcd (signedObservation n2 z2 k).natAbs (p ^ e)) ∧
-    (∀ a b a2 b2 : ℕ,
-      (∀ k : ℕ, 1 ≤ k → k ≤ horizon p e →
-        Nat.gcd (sourceObservation a b k) (p ^ e) =
-          Nat.gcd (sourceObservation a2 b2 k) (p ^ e)) →
-      ∀ k : ℕ, 1 ≤ k →
-        Nat.gcd (sourceObservation a b k) (p ^ e) =
-          Nat.gcd (sourceObservation a2 b2 k) (p ^ e)) ∧
-    (∃ a b a2 b2 : ℕ, a < p ^ e ∧ b < p ^ e ∧ a2 < p ^ e ∧ b2 < p ^ e ∧
-      (∀ k : ℕ, 1 ≤ k → k < horizon p e →
-        Nat.gcd (sourceObservation a b k) (p ^ e) =
-          Nat.gcd (sourceObservation a2 b2 k) (p ^ e)) ∧
-      Nat.gcd (sourceObservation a b (horizon p e)) (p ^ e) = p ^ e ∧
-      Nat.gcd (sourceObservation a2 b2 (horizon p e)) (p ^ e) = p ^ (e - 1)) := by
+private theorem rank_lift_data (p e : ℕ) (hp : p.Prime) (he : 2 ≤ e) :
+  let modulus := p ^ e
+  let lower := p ^ (e - 1)
+  let rank := zeroRank lower
+  let scalar : ℤ := Int.fib ((rank : ℤ) - 1)
+  let offDiagonal : ℤ := Int.fib (rank : ℤ)
+  (∀ (m : ℕ) (hm : 0 < m),
+      0 < zeroRank m ∧ m ∣ Nat.fib (zeroRank m) ∧
+        ∀ k : ℕ, 0 < k → m ∣ Nat.fib k → zeroRank m ≤ k) ∧
+    (∀ j : ℕ, 0 < zeroRank (p ^ j) ∧ p ^ j ∣ Nat.fib (zeroRank (p ^ j)) ∧ ∀ k : ℕ, 0 < k → p ^ j ∣ Nat.fib k → zeroRank (p ^ j) ≤ k) ∧
+    (∀ (n z : ℤ) (k : ℕ),
+      signedObservation n z (k + 2) =
+        signedObservation n z k + signedObservation n z (k + 1)) ∧
+    (∀ (n z : ℤ) (s r : ℕ),
+      signedObservation n z (s + r) =
+        Int.fib ((r : ℤ) - 1) * signedObservation n z s +
+          Int.fib (r : ℤ) * signedObservation n z (s + 1)) ∧
+    (0 < rank ∧ lower ∣ Nat.fib rank ∧ ∀ k : ℕ, 0 < k → lower ∣ Nat.fib k → rank ≤ k) ∧
+    (3 ≤ rank) ∧
+    (IsUnit (scalar : ZMod modulus)) ∧
+    (zeroRank modulus = rank ∨ zeroRank modulus = p * rank) ∧
+    (∀ (m : ℕ) (x y : ℤ)
+      (same : ∀ d : ℕ, d ∣ m → ((d : ℤ) ∣ x ↔ (d : ℤ) ∣ y)),
+      Nat.gcd x.natAbs m = Nat.gcd y.natAbs m) ∧
+    (∀ (m : ℕ) (x y : ℤ)
+      (same : (x : ZMod m) = (y : ZMod m)),
+      Nat.gcd x.natAbs m = Nat.gcd y.natAbs m) ∧
+    (∀ (m : ℕ) (x coefficient : ℤ)
+      (unit : IsUnit (coefficient : ZMod m)),
+      Nat.gcd (coefficient * x).natAbs m = Nat.gcd x.natAbs m) ∧
+    (∀ (n z : ℤ) (s : ℕ),
+      Nat.gcd (signedObservation n z (s + p * rank)).natAbs modulus =
+        Nat.gcd (signedObservation n z s).natAbs modulus) ∧
+    (∀ (n z : ℤ) (s : ℕ),
+      Nat.gcd (signedObservation n z (s + rank)).natAbs lower =
+        Nat.gcd (signedObservation n z s).natAbs lower) ∧
+    (∀ (m d : ℕ) (x : ℤ) (divides : d ∣ m),
+      ((d : ℤ) ∣ x ↔ d ∣ Nat.gcd x.natAbs m)) ∧
+    (∀ (x y : ℤ)
+      (lowerSame : Nat.gcd x.natAbs lower = Nat.gcd y.natAbs lower)
+      (topSame : (modulus : ℤ) ∣ x ↔ (modulus : ℤ) ∣ y),
+      Nat.gcd x.natAbs modulus = Nat.gcd y.natAbs modulus) ∧
+    (∀ (n z : ℤ) (s blocks : ℕ),
+      Nat.gcd (signedObservation n z (s + blocks * rank)).natAbs lower =
+        Nat.gcd (signedObservation n z s).natAbs lower) ∧
+    (∀ (n z : ℤ) (s : ℕ),
+      ((p : ℤ) ∣ signedObservation n z s ∧ (p : ℤ) ∣ signedObservation n z (s + 1)) ↔
+        ((p : ℤ) ∣ n ∧ (p : ℤ) ∣ z)) ∧
+    (∀ (n z : ℤ)
+      (nonprimitive : (p : ℤ) ∣ n ∧ (p : ℤ) ∣ z) (s : ℕ),
+      Nat.gcd (signedObservation n z (s + rank)).natAbs modulus =
+        Nat.gcd (signedObservation n z s).natAbs modulus) ∧
+    (modulus = lower * p) ∧
+    (∀ (growth : zeroRank modulus = p * rank) (n z : ℤ)
+      (primitive : ¬ ((p : ℤ) ∣ n ∧ (p : ℤ) ∣ z)) (s : ℕ)
+      (hit : (lower : ℤ) ∣ signedObservation n z s),
+      ((modulus : ℤ) ∣ signedObservation n z (s + (p - 1) * rank) ↔
+        ∀ blocks : ℕ, blocks < p - 1 →
+          ¬ (modulus : ℤ) ∣ signedObservation n z (s + blocks * rank))) := by
   classical
   have primeLarge : 2 ≤ p := hp.two_le
   have ranks (m : ℕ) (hm : 0 < m) :
@@ -444,6 +478,82 @@ theorem sharp_prime_power_gcd_horizon (p e : ℕ) (hp : p.Prime) (he : 2 ≤ e) 
         by_contra different
         exact absent root.val (by omega) rootHit
       simpa [last] using rootHit
+  exact ⟨ranks, powerRanks, recurrence, shift, rankFacts, rankLarge, scalarUnit, rankDichotomy, gcdDivisors, gcdCongruence, gcdScale, periodicGcd, lowerPeriodic, gcdThreshold, recoverTop, lowerIterate, adjacentFlag, nonprimitivePeriodic, modulusFactor, decoder⟩
+
+theorem adjacent_divisibility (p : ℕ) (hp : p.Prime) (n z : ℤ) (s : ℕ) :
+    ((p : ℤ) ∣ signedObservation n z s ∧ (p : ℤ) ∣ signedObservation n z (s + 1)) ↔
+      ((p : ℤ) ∣ n ∧ (p : ℤ) ∣ z) := by
+  have data := rank_lift_data p 2 hp le_rfl
+  exact data.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.1 n z s
+
+theorem parent_hit_decoder (p e : ℕ) (hp : p.Prime) (he : 2 ≤ e)
+    (growth : zeroRank (p ^ e) = p * zeroRank (p ^ (e - 1)))
+    (n z : ℤ) (primitive : ¬ ((p : ℤ) ∣ n ∧ (p : ℤ) ∣ z)) (s : ℕ)
+    (hit : ((p ^ (e - 1) : ℕ) : ℤ) ∣ signedObservation n z s) :
+    (((p ^ e : ℕ) : ℤ) ∣ signedObservation n z (s + (p - 1) * zeroRank (p ^ (e - 1))) ↔
+      ∀ blocks : ℕ, blocks < p - 1 →
+        ¬ ((p ^ e : ℕ) : ℤ) ∣ signedObservation n z (s + blocks * zeroRank (p ^ (e - 1)))) := by
+  have data := rank_lift_data p e hp he
+  exact data.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2 growth n z primitive s hit
+
+theorem sharp_prime_power_gcd_horizon (p e : ℕ) (hp : p.Prime) (he : 2 ≤ e) :
+    (∀ j : ℕ, 0 < zeroRank (p ^ j) ∧ p ^ j ∣ Nat.fib (zeroRank (p ^ j)) ∧
+      ∀ k : ℕ, 0 < k → p ^ j ∣ Nat.fib k → zeroRank (p ^ j) ≤ k) ∧
+    (zeroRank (p ^ e) = zeroRank (p ^ (e - 1)) ∨
+      zeroRank (p ^ e) = p * zeroRank (p ^ (e - 1))) ∧
+    (∀ n z n2 z2 : ℤ,
+      (∀ k : ℕ, 1 ≤ k → k ≤ horizon p e →
+        Nat.gcd (signedObservation n z k).natAbs (p ^ e) =
+          Nat.gcd (signedObservation n2 z2 k).natAbs (p ^ e)) →
+      ∀ k : ℕ, 1 ≤ k →
+        Nat.gcd (signedObservation n z k).natAbs (p ^ e) =
+          Nat.gcd (signedObservation n2 z2 k).natAbs (p ^ e)) ∧
+    (∀ a b a2 b2 : ℕ,
+      (∀ k : ℕ, 1 ≤ k → k ≤ horizon p e →
+        Nat.gcd (sourceObservation a b k) (p ^ e) =
+          Nat.gcd (sourceObservation a2 b2 k) (p ^ e)) →
+      ∀ k : ℕ, 1 ≤ k →
+        Nat.gcd (sourceObservation a b k) (p ^ e) =
+          Nat.gcd (sourceObservation a2 b2 k) (p ^ e)) ∧
+    (∃ a b a2 b2 : ℕ, a < p ^ e ∧ b < p ^ e ∧ a2 < p ^ e ∧ b2 < p ^ e ∧
+      (∀ k : ℕ, 1 ≤ k → k < horizon p e →
+        Nat.gcd (sourceObservation a b k) (p ^ e) =
+          Nat.gcd (sourceObservation a2 b2 k) (p ^ e)) ∧
+      Nat.gcd (sourceObservation a b (horizon p e)) (p ^ e) = p ^ e ∧
+      Nat.gcd (sourceObservation a2 b2 (horizon p e)) (p ^ e) = p ^ (e - 1)) := by
+  classical
+  let modulus := p ^ e
+  let lower := p ^ (e - 1)
+  let rank := zeroRank lower
+  let scalar : ℤ := Int.fib ((rank : ℤ) - 1)
+  let offDiagonal : ℤ := Int.fib (rank : ℤ)
+  have modulusPositive : 0 < modulus := pow_pos hp.pos e
+  have lowerPositive : 0 < lower := pow_pos hp.pos (e - 1)
+  have primeLarge := hp.two_le
+  let : NeZero modulus := ⟨modulusPositive.ne'⟩
+  obtain ⟨ranks, powerRanks, recurrence, shift, rankFacts, rankLarge, scalarUnit, rankDichotomy, gcdDivisors, gcdCongruence, gcdScale, periodicGcd, lowerPeriodic, gcdThreshold, recoverTop, lowerIterate, adjacentFlag, nonprimitivePeriodic, modulusFactor, decoder⟩ := rank_lift_data p e hp he
+  change 0 < rank ∧ lower ∣ Nat.fib rank ∧ (∀ k : ℕ, 0 < k → lower ∣ Nat.fib k → rank ≤ k) at rankFacts
+  change 3 ≤ rank at rankLarge
+  change IsUnit (scalar : ZMod modulus) at scalarUnit
+  change zeroRank modulus = rank ∨ zeroRank modulus = p * rank at rankDichotomy
+  change ∀ (n z : ℤ) (s : ℕ), Nat.gcd (signedObservation n z (s + p * rank)).natAbs modulus =
+        Nat.gcd (signedObservation n z s).natAbs modulus at periodicGcd
+  change ∀ (n z : ℤ) (s : ℕ), Nat.gcd (signedObservation n z (s + rank)).natAbs lower =
+        Nat.gcd (signedObservation n z s).natAbs lower at lowerPeriodic
+  change ∀ (x y : ℤ)
+      (lowerSame : Nat.gcd x.natAbs lower = Nat.gcd y.natAbs lower)
+      (topSame : (modulus : ℤ) ∣ x ↔ (modulus : ℤ) ∣ y), Nat.gcd x.natAbs modulus = Nat.gcd y.natAbs modulus at recoverTop
+  change ∀ (n z : ℤ) (s blocks : ℕ), Nat.gcd (signedObservation n z (s + blocks * rank)).natAbs lower =
+        Nat.gcd (signedObservation n z s).natAbs lower at lowerIterate
+  change ∀ (n z : ℤ)
+      (nonprimitive : (p : ℤ) ∣ n ∧ (p : ℤ) ∣ z) (s : ℕ), Nat.gcd (signedObservation n z (s + rank)).natAbs modulus =
+        Nat.gcd (signedObservation n z s).natAbs modulus at nonprimitivePeriodic
+  change modulus = lower * p at modulusFactor
+  change ∀ (growth : zeroRank modulus = p * rank) (n z : ℤ)
+      (primitive : ¬ ((p : ℤ) ∣ n ∧ (p : ℤ) ∣ z)) (s : ℕ)
+      (hit : (lower : ℤ) ∣ signedObservation n z s), ((modulus : ℤ) ∣ signedObservation n z (s + (p - 1) * rank) ↔
+        ∀ blocks : ℕ, blocks < p - 1 →
+          ¬ (modulus : ℤ) ∣ signedObservation n z (s + blocks * rank)) at decoder
   have lowerFromFull (x y : ℤ) (same : Nat.gcd x.natAbs modulus = Nat.gcd y.natAbs modulus) :
       Nat.gcd x.natAbs lower = Nat.gcd y.natAbs lower := by
     apply gcdDivisors

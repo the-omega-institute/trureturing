@@ -30,6 +30,19 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
                 "Together with positivity, trace preservation gives a normalized marginal.",
                 TraceFormula("partialTraceRight")),
             Describe.Lean(
+                DescribeId.Create("spectral-entropy"),
+                DeclarationHandle.Create(Module + "spectralEntropy"),
+                H("Spectral entropy of a Hermitian matrix"),
+                StatementSource.FromAuthor(SpectralEntropyFormula()),
+                AssessedProvenance.FromLiterature(
+                    LibraryNoteRef.Create("D5/L/Quantum/watrous2018entropicidentities")),
+                Blocks(Paragraph(Text(
+                    "For any Hermitian matrix on a finite carrier, spectralEntropy sums "
+                    + "Real.negMulLog over its eigenvalues. On density matrices this is "
+                    + "von Neumann entropy in nats, including singular states with "
+                    + "the zero-eigenvalue contribution set to zero."))),
+                DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("mutual-information"),
                 DeclarationHandle.Create(Module + "quantumMutualInformation"),
                 H("Mutual information of a joint density state"),
@@ -77,6 +90,28 @@ internal sealed class PartialTraceMutualInformationDocument : IScribeDocumentDef
         Call("vonNeumannEntropy", Call("marginalRight", Rho)), Sp, Plus, Sp,
         Call("vonNeumannEntropy", Call("marginalLeft", Rho)), Sp, Minus, Sp,
         Call("vonNeumannEntropy", Rho)));
+
+    private static Formula SpectralEntropyFormula()
+    {
+        Formula n = F.Id("n"), rho = F.Id("rho"), h = F.Id("h"), i = F.Id("i");
+        Formula matrix = Call("Matrix", n, n, Seq(Mathbb, Grp(F.Id("C"))));
+        Formula hermitian = Seq(Operatorname,
+            Grp(F.Id("Matrix"), Dot, F.Id("IsHermitian")));
+        Formula eigenvalues = Seq(Operatorname,
+            Grp(F.Id("Matrix"), Dot, F.Id("IsHermitian"), Dot, F.Id("eigenvalues")));
+        Formula negMulLog = Seq(Operatorname, Grp(F.Id("Real"), Dot, F.Id("negMulLog")));
+        Formula body = Seq(Call("spectralEntropy", h), Sp, Eq, Sp,
+            Sum, Underscore, Grp(i, Colon, n), Sp,
+            new Formula.Apply(negMulLog, [new Formula.Apply(eigenvalues, [h, i])]));
+        Formula bindH = new Formula.Bind(FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("h"), new Formula.Apply(hermitian, [rho]), body);
+        Formula bindRho = new Formula.Bind(FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("rho"), matrix, bindH);
+        return Disp(new Formula.Bind(FormulaQuantifier.ForAll,
+            FormulaIdentifier.Create("n"), Seq(Operatorname, Grp(F.Id("Type"))),
+            Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp,
+                OpenBracket, Call("DecidableEq", n), CloseBracket, Sp, bindRho)));
+    }
 
     private static Formula ProductEntropyFormula() => Disp(Seq(
         Forall, Sp, Rho, Comma, Sp, SigmaLower, Comma, Sp,

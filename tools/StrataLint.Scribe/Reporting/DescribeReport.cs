@@ -61,30 +61,34 @@ internal sealed class DescribeReport
 
     internal int ProjectionOpenCount => Unprojectable.Length;
 
-    // Two states, not three. "needs-classification" counted nodes whose provenance was unassessed,
-    // and no node can carry that any more: the interface only accepts an assessed provenance, so the
-    // branch was unreachable and the count it read was structurally zero.
+    // The interface requires assessed provenance. Red findings therefore distinguish
+    // invalid inputs from classified ones without a separate unassessed state.
     internal string Status => RedFindings.IsEmpty ? "classified" : "invalid";
 
     internal static DescribeReport Build(
         string repositoryRoot,
         IEnumerable<ScribeDocument> documents,
         StrataLint.Engine.LeanAxiomReport? leanReport = null,
-        bool validateContentGovernance = false)
+        bool validateContentGovernance = false,
+        string? sourcePath = null,
+        DeclarationCatalog? declarationCatalog = null,
+        LibraryNoteCatalogInspection? libraryInspection = null,
+        ProblemCandidateCatalogInspection? problemInspection = null,
+        bool validateSourceFiles = true)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentNullException.ThrowIfNull(documents);
         var material = documents
             .OrderBy(static document => document.Header.Gid.Value, StringComparer.Ordinal)
             .ToImmutableArray();
-        var declarationCatalog = leanReport is null ? null : DeclarationCatalog.Create(leanReport);
-        var libraryInspection = LibraryNoteCatalog.Inspect(repositoryRoot);
+        declarationCatalog ??= leanReport is null ? null : DeclarationCatalog.Create(leanReport);
+        libraryInspection ??= LibraryNoteCatalog.Inspect(repositoryRoot);
         var redFindings = DescribeRepositoryValidator.Validate(
             repositoryRoot,
             material,
             leanReport,
             libraryInspection,
-            declarationCatalog).ToBuilder();
+            declarationCatalog, problemInspection: problemInspection, singleDocument: sourcePath is not null).ToBuilder();
         if (redFindings.Count == 0 && declarationCatalog is not null)
         {
             material = material
@@ -107,7 +111,7 @@ internal sealed class DescribeReport
                 ref formulaContentSlots);
         }
 
-        observations.AddRange(ObserveLeanDocstrings(repositoryRoot));
+        if (sourcePath is null) observations.AddRange(ObserveLeanDocstrings(repositoryRoot));
         var notes = libraryInspection.Notes;
         observations.AddRange(notes
             .Where(static note => note.Doi is not null)
@@ -144,7 +148,7 @@ internal sealed class DescribeReport
                 repositoryRoot,
                 material,
                 stats,
-                libraryInspection));
+                libraryInspection, sourcePath is not null ? [sourcePath] : validateSourceFiles ? null : []));
         }
 
         return new DescribeReport(

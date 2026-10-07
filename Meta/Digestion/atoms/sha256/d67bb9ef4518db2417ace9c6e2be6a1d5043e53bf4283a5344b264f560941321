@@ -1,0 +1,69 @@
+## 297. FIB ATOM 上的条件统计推断、滤波与涨落响应
+
+给定 FIB 合法路径集合 `\Gamma_j`，外加参数 `\theta`、路径权重 `w_\theta(\gamma)` 和观测似然 `L(y\mid\gamma,\theta)`，后验分布为
+
+$$
+\Pi(\gamma,\theta\mid y)
+\propto
+L(y\mid\gamma,\theta)w_\theta(\gamma)\pi(\theta).
+\tag{297.1}
+$$
+
+FIB 只提供 `w_\theta(\gamma)=0` 的非法支撑约束；非零权重、先验和似然均属外加统计结构。
+
+若两个区域共享隐藏参数 `\theta`，严格接缝复合必须保留同一个实际参数：
+
+$$
+K_{U\cup V}=\sum_\theta\pi(\theta)K_U^\theta K_V^\theta.
+\tag{297.2}
+$$
+
+一般不能改写为
+
+$$
+\left(\sum_\theta\pi(\theta)K_U^\theta\right)
+\left(\sum_{\theta'}\pi(\theta')K_V^{\theta'}\right),
+\tag{297.3}
+$$
+
+因为后一式允许两侧使用不同隐藏来源。共同隐藏位同时取 `0` 或 `1` 的模型，真实联合结果只含 `00` 和 `11`；先分别平均再相乘会错误地产生 `01` 与 `10`。
+
+对外加状态核 `K_k(x,x')` 和观测密度 `g_k(y_k\mid x)`，滤波递推为
+
+$$
+p_{k+1}(x')
+\propto
+g_{k+1}(y_{k+1}\mid x')
+\sum_xK_k(x,x')p_k(x).
+\tag{297.4}
+$$
+
+FIB 接缝可以规定求和中的零元和状态拼接，但不能决定 `K_k`、`g_k` 或预测误差的分布。正确模型下，预测误差的鞅性质还需要条件概率实现、可积性和同一历史的时间顺序。
+
+若正向和反向路径测度满足相互绝对连续，定义熵产生
+
+$$
+\Sigma(\gamma)=\log\frac{P[\gamma]}{P^\dagger[\widetilde\gamma]}.
+\tag{297.5}
+$$
+
+则
+
+$$
+\mathbb E_P[e^{-\Sigma}]=1.
+\tag{297.6}
+$$
+
+这个积分涨落关系需要正反路径具有相容支撑、归一化测度和反向映射；FIB 的合法路径集合单独不能保证它。令 `p_\epsilon=w_\epsilon/Z_\epsilon` 为归一化路径概率密度。对可微扰动，若存在支配函数并可交换微分与积分，则
+
+$$
+\left.\frac{d}{d\epsilon}\mathbb E_\epsilon[A]\right|_{0}
+=\operatorname{Cov}_0\left(A,
+\left.\frac{d}{d\epsilon}\log p_\epsilon\right|_0\right).
+\tag{297.7}
+$$
+
+这给出线性响应的统计接口；若使用未归一化的 `w_\epsilon`，必须把 score 换成其中心化形式。扰动方向、时间反演和观测可积性仍属外加条件。
+
+同一 FIB 支撑可以取不同先验、不同似然或不同正反路径权重，得到相同结构读数而不同后验、预测误差和涨落响应。因此统一组合语言不等于统一推断结论。
+

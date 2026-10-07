@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:a3f8e96e4b9d98b0a7a2bcb4fae2922662557238c51b4f608285805766bd0e28
+  normalized_sha256: sha256:a3f8e96e4b9d98b0a7a2bcb4fae2922662557238c51b4f608285805766bd0e28
+cas_ref: sha256:a3f8e96e4b9d98b0a7a2bcb4fae2922662557238c51b4f608285805766bd0e28
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/PhysicalGraphClosure.physical_graph_closure
+    target_statement_id: sha256:7b1986018ab49f380292dfe04b2f062f1e998257252bd364d1d85ef950f57f0b
+receipts:
+  unresolved_subitems: []

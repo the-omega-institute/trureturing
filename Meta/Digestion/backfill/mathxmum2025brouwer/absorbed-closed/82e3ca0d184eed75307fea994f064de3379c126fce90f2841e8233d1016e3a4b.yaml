@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:82e3ca0d184eed75307fea994f064de3379c126fce90f2841e8233d1016e3a4b
+  normalized_sha256: sha256:82e3ca0d184eed75307fea994f064de3379c126fce90f2841e8233d1016e3a4b
+cas_ref: sha256:82e3ca0d184eed75307fea994f064de3379c126fce90f2841e8233d1016e3a4b
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Scarf/ColorfulDoors.doors_of_NCroom
+    target_statement_id: sha256:b9f11d28be281f4887f30eeca2a95502d7d4bc406b771a19be139e1d6bbc5113
+receipts:
+  unresolved_subitems: []

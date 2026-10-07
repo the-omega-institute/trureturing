@@ -1,0 +1,9 @@
+**证明。** 对词长 $n\le C$ 的 $W=\begin{pmatrix}a&b\\c&d\end{pmatrix}$，记 $\delta=d-a$。第三累计矩阵为 $WV^k$。若 $b=0$，相应读数恒定，排除；若 $b>0$，其 $e=b,D=\delta-kb$，而 $\rho=k$，所以
+
+$$
+\mu=|\delta-kb|-kb
+=\max(-\delta,\delta-2kb)
+\le\max(-\delta,\delta-2b)
+\le K_n\le K_C.
+$$
+

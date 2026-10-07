@@ -1,0 +1,12 @@
+bibkey: "teschl2009mathematical"
+authors: "Gerald Teschl"
+year: 2009
+title: "Mathematical Methods in Quantum Mechanics: With Applications to Schrodinger Operators"
+doi: null
+url: "https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf"
+claim: "The maximal L2 domain of a real multiplication operator is exactly the set of vectors whose pointwise product is in L2; the strong derivative domain of its unitary exponential equals that operator domain."
+strata_touched: []
+license: "citation-only"
+triage: "anchor"
+---
+

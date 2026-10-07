@@ -1,0 +1,110 @@
+**假设 35.1（完整实际递归与继承前提）。** 取 $F_0=0,F_1=1,F_{j+1}=F_j+F_{j-1}$、$\alpha=(\sqrt5-1)/2$。本章使用定义 15.1 的同一个实际 Cloitre 序列，其定义、合法域、规定深度和拆分为
+
+$$
+\begin{aligned}
+C(1)&=C(2)=1,\\
+D_N&=\{1,\ldots,N-1\},&
+T_N(x)&=N-C(x),\\
+x_0&=N-1,&
+x_{i+1}&=T_N(x_i),\\
+d_N&=C(N-1),&
+g_N&=x_{d_N},\\
+C(N)&=C(g_N)+C(N-g_N)\qquad(N\ge3).
+\end{aligned}
+$$
+
+这里**完整承继假设 24.1，以及它完整承继的假设 23.1 和假设 21.1**，不是只取本章证明中出现的子集。承继内容包括：实际索引的合法域；$G\le C\le U$、$U$ 的闭块定义、非减性和步长界；全部 Fibonacci 锚值和锚前值；负、正捕获及不变区间；规定深度已经进入同一实际轨道的周期；实际闭块的两子拆分、继承阶数和端点约定；原有共同词长、五窗接缝、单位终端和守恒逆标签资源。全程不假设 $C$ 单调、$C(n)/n\to\alpha$、周期有界或相位独立。
+
+为使这些继承前提的量词和地址明确，所用黄金包络为
+$$
+G(n)=\lfloor\alpha(n+1)\rfloor,
+\qquad
+U(1)=1,
+\qquad
+U(n)=\min\{n-F_{q-2},F_q\}
+\quad(F_q\le n<F_{q+1},\ q\ge3),
+$$
+并且对每个正整数 $n$ 有 $G(n)\le C(n)\le U(n)\le n$，$U$ 非减且 $0\le U(n+1)-U(n)\le1$。锚和锚前值按其合法阶数保留：
+$$
+U(F_q)=C(F_q)=G(F_q)=F_{q-1}\ (q\ge2),
+\qquad
+G(F_q+1)=C(F_q+1)=F_{q-1}+1\ (q\ge3),
+\qquad
+C(F_q-1)=F_{q-1}\ (q\ge5).
+$$
+对每个 $N\ge3$ 和每个 $x_0\in D_N$，全部迭代索引仍在 $D_N$；规定起点 $x_0=N-1$ 的最短前周期 $\mu_N$ 满足 $d_N\ge\mu_N$。对 $q\ge6$、整数 $t\ge0$、$N=F_q+t$，每条轨道最终进入不变区间 $[F_{q-1},F_{q-1}+t]\cap D_N$。捕获区间的整数距离每两步至多缩为原距离的 $2/3$ 向下取整；假设 23.1 的预算 $\mathcal Q(0)=0$、$\mathcal Q(h)=1+\mathcal Q(\lfloor2h/3\rfloor)$（$h\ge1$）及在 $N=F_k$、$k\ge6$ 时的 $\mu_N\le2\mathcal Q(F_{k-2}-1)$ 也完整保留。
+
+对整数 $j\ge6$、$0\le b\le F_{j-1}$、$n=F_{j+1}-b$，每条实际轨道最终进入不变区间 $[F_j-b,F_j]\cap D_n$。其全部周期点满足
+
+$$
+\begin{aligned}
+x&\in[\max(F_{j-1},F_j-b),\min(F_j,F_j+F_{j-3}-b)]\cap\mathbb Z,\\
+z=F_j-x&\in[\max(0,b-F_{j-3}),\min(b,F_{j-2})]\cap\mathbb Z.
+\end{aligned}
+$$
+
+实际选点和两子仍准确为
+
+$$
+g_n=F_j-z,\qquad n-g_n=F_{j-1}-w,\qquad z+w=b,
+\qquad0\le z\le F_{j-2},\quad0\le w\le F_{j-3}.
+$$
+
+父、两子分别属于继承阶数 $j,j-1,j-2$ 的闭块。上端点和下端点均保持继承标签。这些是完整假设 24.1 的实际地址接口；来源的固定带 $-12\le t\le32$ 双种子只保留原范围。原有共同词长 $H$、合法五窗接缝、共享物理行、参数网络、单位终端及守恒逆标签预算均保持原限定；分析性停止不改变实际递归的终端。
+
+在整数 $j\ge8$ 的完整自然闭块上，记
+$$
+Q_j(t)=F_{j-1}-C(F_j-t),\qquad 0\le t\le F_{j-2},
+$$
+并定义
+$$
+L_j=\left\lfloor\frac{2j}{3}\right\rfloor-3,\qquad
+P_9=13,\qquad
+P_j=\left\lfloor\frac{(j-2)^2}{3}\right\rfloor-3j+30\quad(j\ge10),
+$$
+以及
+$$
+Z_j=3j+\left\lfloor\frac{j-1}{3}\right\rfloor-24,\qquad
+M_j=\frac{P_j+234}{4}.
+$$
+
+全部继承且未重新计算的有限基础均为 `ASSUMED-UNVERIFIED`，包括比值区间 $[16384,131071]$、黄金归纳基 $[1,65535]$、规定深度入周期基域 $3\le N\le52$、其余有限初值，以及式 (24.10) 的两条完整初始行
+
+$$
+\begin{aligned}
+(Q_8(t))_{t=0}^{8}&=(0,0,0,1,1,2,3,4,5),\\
+(Q_9(t))_{t=0}^{13}&=(0,0,0,0,1,1,2,2,3,5,6,6,7,8).
+\end{aligned}
+$$
+
+额外来源种子也全部为 `ASSUMED-UNVERIFIED`：十九阶完整 1598 位置的 unit sublevel/shelf；[H.1](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/exact-collars.md#two-higher-cap-levels-and-their-phase-selected-closure) 的二十阶 level-2/shelf 和二十一阶 level-3/shelf 完整块（分别 2585、4182 位置）；first-16 与 first-19 的值生成种子（包括三十阶 binary seed 和三十一阶 erasure 初值）、二十六阶 47-position alphabet 种子、[T.1--T.3](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/recursive-descent.md#arithmetic-support-cones-shrink-the-shared-response-word) 的三十四阶位置 $20..47$ 二十八个额外标量种子，以及继承的所有 kernel、profile、collar、selector、prefix 和其他有限来源种子。以下短右轮廓和 frontier-25 复用同样承继这些状态。来源所述核验不构成本章的独立核验。[C.1--C.3](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level) 的辅助十九、二十阶预算只直接应用已有普遍定理；本章没有新增有限 $C$ 种子，也没有解除任何有限前提。
+
+**来源接口。** 下列均为来源复用。在每个完整自然闭块上，固定版本 $40d10f50aa9c16adf0a1c5021810be9a1b90bceb$ 的 [C.1--C.3](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/recursive-descent.md#a-quadratic-enclosure-for-every-bounded-cap-level) 给出：
+
+1. 零帽规律单独保留为
+   $$
+   Q_j(t)=0\Longleftrightarrow t\le L_j
+   $$
+   （定理 24.3 在 $j\ge8$ 的完整零平台；C.1 的零帽部分使用它），不代入正帽不等式；
+2. 对 $j\ge9$，正帽时
+   $$
+   Q_j(t)>0\Longrightarrow t\le P_jQ_j(t);
+   $$
+3. 对每个 $j\ge11$ 和父索引 $m=F_j-t$，在其规定起点和深度选出的实际两子准确写为
+   $$
+   \begin{aligned}
+   g_m&=F_{j-1}-r,&m-g_m&=F_{j-2}-s,\\
+   0\le r&\le F_{j-3},&0\le s&\le F_{j-4},\\
+   e_1&=Q_{j-1}(r),&e_2&=Q_{j-2}(s),\\
+   t&=r+s,&e=Q_j(t)&=e_1+e_2,\qquad e_1,e_2\in\mathbb Z_{\ge0}.
+   \end{aligned}
+   $$
+   子块阶数是 $j-1,j-2$。当 $t=0$，两子缺口均为零，使用各自闭块上端点；当 $t=F_{j-2}$，两子缺口为 $F_{j-3},F_{j-4}$，使用各自闭块下端点。不将上端点重新归入更高阶块；
+4. 对 $j\ge11$，$P_j-P_{j-1}=L_{j-2}$ 且 $P_j-P_{j-2}\ge L_{j-1}$；对 $j\ge9$，$L_j\le P_j$。
+
+同一固定版本的 [H.1](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/exact-collars.md#two-higher-cap-levels-and-their-phase-selected-closure) 在整个闭块上给出
+$$
+Q_j(t)\le3\Longleftrightarrow t\le Z_j\qquad(j\ge21).
+$$
+这些是已有来源接口的复用；零帽平台、低帽停止和正帽守恒分别承担不同作用。
+

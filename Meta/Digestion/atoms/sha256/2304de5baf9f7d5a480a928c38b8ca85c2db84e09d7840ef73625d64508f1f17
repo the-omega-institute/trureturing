@@ -1,0 +1,38 @@
+## Actual matrices and support
+
+Let A and B be finite complex Hilbert spaces, and let rho be any joint density
+matrix. In formulas write
+
+$$
+R=\operatorname{Tr}_B\rho,\quad S=\operatorname{Tr}_A\rho,\quad
+C=\gamma_A,\quad B=\gamma_B,\quad
+\widehat\rho=R\otimes B,\quad\gamma=C\otimes B.
+$$
+
+Only the reference factors C and B are positive definite density matrices.
+R and rho may be singular, correlated or entangled. The entries of R and S are
+
+$$
+R_{x,z}=\sum_y\rho_{(x,y),(z,y)},\qquad
+S_{y,t}=\sum_x\rho_{(x,y),(x,t)}.
+$$
+
+These are the actual receiving `partialTraceRight` and `partialTraceLeft`.
+The existing canonical/legacy state conversions preserve the underlying
+matrix and its positivity and trace-one proofs. No independent density carrier
+or divergence is introduced. Trace one excludes an empty ambient carrier:
+an empty matrix has trace zero. Dimension one is allowed, without a rank-two
+condition. Zero oscillator modes, by contrast, correspond to a one-dimensional
+Hilbert space, not an empty matrix carrier.
+
+For any finite Hermitian X set
+
+$$
+L(X)=\operatorname{cfc}(\log,X),\qquad
+\chi(t)=\begin{cases}0&t=0,\\1&t\ne0,\end{cases}\qquad
+P_X=\operatorname{cfc}(\chi,X).
+$$
+
+For positive semidefinite X, P_X is the orthogonal support projection. The
+total real logarithm has log(0)=0; it is not an infinite relative-entropy branch.
+

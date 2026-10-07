@@ -7,7 +7,7 @@ namespace StrataLint.Engine;
 
 public sealed class AdmissionCertificate
 {
-    public const int CurrentFormatVersion = 2;
+    public const int CurrentFormatVersion = 3;
 
     private AdmissionCertificate(
         string fingerprint,
@@ -44,6 +44,7 @@ public sealed class AdmissionCertificate
             new[]
                 {
                     $"admission-certificate-v{CurrentFormatVersion}",
+                    "input_scope:admission-inputs",
                     $"canonical:{canonical.Sha256}",
                 }
                 .Concat(rules.ExecutedRules.Select(static item => $"executed:{item.Value}"))
@@ -77,10 +78,7 @@ public partial record AdmissionOutcome
 
         public AdmissionCertificate Certificate { get; }
 
-        // 非阻断的观察项必须随准入一并交出。判词若产出却无人看得见,那是浮账——
-        // CLAUDE.md 第 20 条红线明写「允许 open,不允许浮账」;一个没人看得见的 open
-        // 与没有检测无异。此前 admitted 路径整个丢弃 Observe 判词,在 Observe 罕见时
-        // 不显眼,而理论卷「尚未消化」改判 Observe 后它就成了承重缺口。
+        // Nonblocking observations remain visible in successful admission output.
         public ImmutableArray<Diagnostic> Observations { get; }
     }
 

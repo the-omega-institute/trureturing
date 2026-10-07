@@ -42,10 +42,6 @@ public sealed partial class LeanReportInputScriptTests
         '/', "tools", "StrataLint.Cli", "packages.lock.json");
     private static readonly string ScribeLockPath = string.Join(
         '/', "tools", "StrataLint.Scribe", "packages.lock.json");
-    private static readonly string DocumentsProjectPath = string.Join(
-        '/', "tools", "StrataLint.Scribe.Documents", "StrataLint.Scribe.Documents.csproj");
-    private static readonly string DocumentsLockPath = string.Join(
-        '/', "tools", "StrataLint.Scribe.Documents", "packages.lock.json");
     private static readonly string TruthProjectPath = string.Join(
         '/', "tools", "Trureturing.Truth", "Trureturing.Truth.csproj");
     private static readonly string TruthLockPath = string.Join(
@@ -95,8 +91,7 @@ public sealed partial class LeanReportInputScriptTests
         Assert.Equal(before, fixture.Producer());
     }
 
-    // Retain existing engineering test identities while replacing the removed
-    // discovery mechanism with registered-input failures and declarations.
+    // Report inputs and their failure boundaries come from explicit registrations.
     [Fact]
     public void CompileClosureFailureCannotProduceCollidingValidAddresses()
     {
@@ -250,8 +245,6 @@ public sealed partial class LeanReportInputScriptTests
         Assert.Contains(ScribeSourcePath, paths);
         Assert.Contains(LeanModelsPath, paths);
         Assert.Contains(ScribeProjectPath, paths);
-        Assert.Contains(DocumentsProjectPath, paths);
-        Assert.Contains(DocumentsLockPath, paths);
         Assert.Contains(ScribeContentChecksPath, paths);
         Assert.DoesNotContain("tools/scripts/workflow/judge-content-address.sh", paths);
         Assert.Contains(CachePublishScriptPath, paths);
@@ -460,20 +453,11 @@ public sealed partial class LeanReportInputScriptTests
             Write("Directory.Packages.props", "<Project />\n");
             Write(CliProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
             Write(EngineProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
-            // 文档已迁出 StrataLint.Scribe:Blueprint/**/*.scribe.cs 现在是
-            // StrataLint.Scribe.Documents 的编译项。夹具与生产侧同形,否则
-            // scribe-producer-paths 会漏掉 Blueprint 源,判官缓存键对文档改动失敏。
             Write(ScribeProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
-            Write(
-                DocumentsProjectPath,
-                "<Project Sdk=\"Microsoft.NET.Sdk\"><ItemGroup>"
-                    + "<Compile Include=\"../../Blueprint/**/*.scribe.cs\" />"
-                    + "</ItemGroup></Project>\n");
             Write(TruthProjectPath, "<Project Sdk=\"Microsoft.NET.Sdk\" />\n");
             Write(EngineLockPath, "{}\n");
             Write(CliLockPath, "{}\n");
             Write(ScribeLockPath, "{}\n");
-            Write(DocumentsLockPath, "{}\n");
             Write(TruthLockPath, "{}\n");
             Write("global.json", "{}\n");
             LeanReportRegistrationFixture.Install(repository);

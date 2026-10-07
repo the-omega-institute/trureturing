@@ -5,34 +5,36 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd -P)"
 PROJECT="tools/StrataLint.Cli/StrataLint.Cli.csproj"
 REPORT=".lake/build/stratalint/raw-lean-report.json"
 FROZEN_LEDGER="Golden/Frozen/accepted"
-TRUTH_GRAPH="Generated/truth-graph.v1.json"
 COMMAND="${1:-}"
-BASE="${2:-origin/dev}"
-if [[ "$COMMAND" != deposit-uncovered ]]; then
-  ATOM_ID="${3:-}"
-  GID="${4:-}"
-fi
+# cover and cover-batch read nothing from git, so they take no base.
+case "$COMMAND" in
+  cover|cover-batch)
+    BASE=""
+    ATOM_ID="${2:-}"
+    GID="${3:-}"
+    ;;
+  deposit-uncovered)
+    BASE="${2:-origin/dev}"
+    ;;
+  *)
+    BASE="${2:-origin/dev}"
+    ATOM_ID="${3:-}"
+    GID="${4:-}"
+    ;;
+esac
 COVER_FAILURE_REASON=""
 
 run_cli() {
   dotnet run --project "$PROJECT" --configuration Release -- "$@"
 }
 
-run_digest_status() {
-  run_cli digest-status --base "$BASE"
-}
-
 align_delivery_ledger() {
-  local accepted_modules='[]' closed_modules module
+  local accepted_modules='[]' closed_modules module closed_query_output
   local accepted_files=("$FROZEN_LEDGER"/*.json)
   local align_args=(ledger-align)
 
   if ! command -v jq >/dev/null 2>&1; then
     echo "PLAYBOOK_INVALID jq is required to derive ledger additions" >&2
-    return 2
-  fi
-  if [[ ! -f "$TRUTH_GRAPH" ]]; then
-    echo "PLAYBOOK_INVALID truth graph is missing after emit: $TRUTH_GRAPH" >&2
     return 2
   fi
   if [[ ! -e "${accepted_files[0]}" ]]; then
@@ -49,14 +51,17 @@ align_delivery_ledger() {
     echo "PLAYBOOK_INVALID failed to read accepted module selectors: $accepted_modules" >&2
     return 2
   fi
+  if ! closed_query_output="$(run_cli ledger-align --list-closed --candidate-lean-report "$REPORT")"; then
+    echo "PLAYBOOK_INVALID current Closed module query failed" >&2
+    return 2
+  fi
   if ! closed_modules="$(jq -r --argjson accepted "$accepted_modules" '
-      .truth.nodes[]
-      | select(.state == "closed")
-      | .repo_path as $path
+      .[]
+      | . as $path
       | select(($accepted | index($path)) == null)
       | $path
-    ' "$TRUTH_GRAPH" 2>&1)"; then
-    echo "PLAYBOOK_INVALID failed to derive Closed modules from $TRUTH_GRAPH: $closed_modules" >&2
+    ' <<< "$closed_query_output" 2>&1)"; then
+    echo "PLAYBOOK_INVALID failed to derive Closed modules from current Lean report: $closed_modules" >&2
     return 2
   fi
 
@@ -85,15 +90,9 @@ step() {
   complete_step passed
 }
 
-# 该 atom id 是否真的解析得到一个账目条目。三处都认,因为账目有三种既有形态:
+# 该 atom id 必须解析得到一个账目条目。账目有三种形态:
 # CAS blob、per-atom 的 backfill 分片、以及 Meta/BACKFILL.yaml 单文件。三者皆无即拒。
-#
-# 立条依据 #6676(2026-09-10 实测):require_transaction_arguments 原本**只查字符形状**
-# (`^[a-z0-9-]+$`),不查该 atom 是否存在;而 deposit 分支的次序是
-#   require_transaction_arguments → … → freeze_module_if_needed → cover_row
-# 于是一个凭空杜撰的 id(实例:`ATOM_ID=none`,该串完全满足那个正则)会**先把模块冻掉**,
-# 再在 cover 处失败,留下一个已冻结而无覆盖的模块。冻结不可逆(第 1.3 条),
-# 而不可逆动作排在了唯一能证伪其前提的那一步之前 —— 次序反了(第 7.8 条)。
+# 字符形状合法不代表条目存在;存在性检查必须先于不可逆的冻结动作。
 atom_id_resolves() {
   [[ -e "Meta/Digestion/atoms/sha256/$1" ]] && return 0
   local hit
@@ -106,7 +105,11 @@ atom_id_resolves() {
 
 require_atom_argument() {
   if [[ ! "$ATOM_ID" =~ ^[a-z0-9-]+$ ]]; then
-    echo "usage: playbook-workflows.sh $COMMAND BASE ATOM_ID GID" >&2
+    if [[ "$COMMAND" == cover ]]; then
+      echo "usage: playbook-workflows.sh cover ATOM_ID GID" >&2
+    else
+      echo "usage: playbook-workflows.sh $COMMAND BASE ATOM_ID GID" >&2
+    fi
     return 2
   fi
 
@@ -133,7 +136,7 @@ require_transaction_arguments() {
 require_cover_batch_arguments() {
   local atoms_file="$ATOM_ID"
   if [[ -z "$atoms_file" || -n "$GID" || ! -f "$atoms_file" || ! -r "$atoms_file" ]]; then
-    echo "usage: playbook-workflows.sh cover-batch BASE ATOMS_FILE" >&2
+    echo "usage: playbook-workflows.sh cover-batch ATOMS_FILE" >&2
     return 2
   fi
 
@@ -273,8 +276,7 @@ verify_added_frozen_events_v5() {
 
 cover_atom_or_resume() {
   local output
-  if output="$(run_cli cover-atom --cover-atom "$ATOM_ID" --gid "$GID" \
-      --base "$BASE" 2>&1)"; then
+  if output="$(run_cli cover-atom --cover-atom "$ATOM_ID" --gid "$GID" 2>&1)"; then
     [[ -z "$output" ]] || printf '%s\n' "$output"
     return
   else
@@ -307,26 +309,21 @@ case "$COMMAND" in
   deliver-check)
     make lean-report
     make emit
-    make align-digestion-status BASE="$BASE"
-    run_digest_status
     # Freeze last among all mutating derivations so the proposition snapshot is current.
     verify_added_frozen_events_v5
     align_delivery_ledger
-    run_digest_status
     make gate BASE="$BASE"
     verify_added_frozen_events_v5
     ;;
   deposit)
     require_transaction_arguments
     deposit_module
-    if cover_row; then
-      step emit make emit
-    else
+    cover_row || {
       status=$?
       printf 'PLAYBOOK_DEPOSIT_FROZEN_UNCOVERED atom_id=%s gid=%s reason=%s\n' \
         "$ATOM_ID" "$GID" "$COVER_FAILURE_REASON" >&2
       exit "$status"
-    fi
+    }
     ;;
   deposit-uncovered)
     if [[ "$#" -ne 3 || -n "${ATOM_ID+x}" ]]; then
@@ -342,15 +339,14 @@ case "$COMMAND" in
     require_transaction_arguments
     step lean-report make lean-report
     cover_row
-    step emit make emit
     ;;
   cover-batch)
     require_cover_batch_arguments
     step lean-report make lean-report
-    step cover-batch run_cli cover-batch --atoms "$ATOM_ID" --base "$BASE"
+    step cover-batch run_cli cover-batch --atoms "$ATOM_ID"
     ;;
   *)
-    echo "usage: playbook-workflows.sh deliver-check|deposit|deposit-uncovered|cover|cover-batch [BASE] [ATOM_ID GID|GID|ATOMS_FILE]" >&2
+    echo "usage: playbook-workflows.sh deliver-check [BASE] | deposit BASE ATOM_ID GID | deposit-uncovered BASE GID | cover ATOM_ID GID | cover-batch ATOMS_FILE" >&2
     exit 2
     ;;
 esac

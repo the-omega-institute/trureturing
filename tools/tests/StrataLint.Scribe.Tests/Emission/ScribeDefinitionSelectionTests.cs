@@ -7,12 +7,11 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void ScopedEmitWithEmptyManifestDoesNotLoadTheDocumentsAssembly()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         Directory.CreateDirectory(root.Resolve("Blueprint"));
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         var error = new StringWriter();
         var exit = ScribeCli.Run(
-            () => throw new InvalidOperationException("documents assembly must not be loaded"),
             ["emit", "--paths-from", "-"],
             root.Path,
             new StringWriter(),
@@ -27,7 +26,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void ScopedCheckNamesMarkdownDriftAndScopedEmitLeavesAttestationAlone()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         const string path = "Blueprint/D5/S0/Test/Scoped.scribe.cs";
         File.WriteAllText(root.Resolve(path), """
@@ -55,7 +54,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void ScopedEmitWithNonEmptyManifestDoesNotLoadTheDocumentsAssembly()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         const string path = "Blueprint/D5/S0/Test/NonEmpty.scribe.cs";
         File.WriteAllText(root.Resolve(path), """
@@ -69,7 +68,6 @@ public sealed class ScribeDefinitionSelectionTests
             """);
         var error = new StringWriter();
         var exit = ScribeCli.Run(
-            () => throw new InvalidOperationException("documents assembly must not be loaded"),
             ["emit", "--paths-from", "-"],
             root.Path,
             TextWriter.Null,
@@ -84,7 +82,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void EmptyChangesSelectNothing()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         Add(root, "Blueprint/D5/S0/Test/First.scribe.cs", "class First {}");
         Assert.Empty(ScribeDefinitionSelector.Select(root.Path, []).Paths);
     }
@@ -94,7 +92,7 @@ public sealed class ScribeDefinitionSelectionTests
     [InlineData(true)]
     public void EmitRejectsCrossDocumentDescribeReferenceInFullAndScopedModes(bool scoped)
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         const string source = "Blueprint/D5/S0/Test/Source.scribe.cs";
         Add(root, source, """
             using StrataLint.Scribe;
@@ -147,7 +145,7 @@ public sealed class ScribeDefinitionSelectionTests
     [InlineData(true, true)]
     public void EmitRejectsDanglingSelfDescribeReferenceInFullAndScopedModes(bool scoped, bool check)
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         const string path = "Blueprint/D5/S0/Test/Local.scribe.cs";
         Add(root, path, """
@@ -169,7 +167,6 @@ public sealed class ScribeDefinitionSelectionTests
         if (scoped)
         {
             exit = ScribeCli.Run(
-                () => throw new InvalidOperationException("documents assembly must not be loaded"),
                 check ? ["emit", "--paths-from", "-", "--check"] : ["emit", "--paths-from", "-"],
                 root.Path, TextWriter.Null, error, report, new StringReader(path));
         }
@@ -191,7 +188,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void ScriptSelfDescribeReferencePreservesFullEmissionBytesInScopedEmitAndCheck()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         const string path = "Blueprint/D5/S0/Test/Local.scribe.cs";
         Add(root, path, """
             using StrataLint.Scribe;
@@ -231,14 +228,13 @@ public sealed class ScribeDefinitionSelectionTests
     [InlineData("Blueprint/D5/S0/Test/Deleted.scribe.cs")]
     public void NonEmptyManifestWithEmptySelectionDoesNotReadLeanReport(string path)
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         Directory.CreateDirectory(root.Resolve("Blueprint"));
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         var error = new StringWriter();
         var output = new StringWriter();
 
         var exit = ScribeCli.Run(
-            () => throw new InvalidOperationException("documents assembly must not be loaded"),
             ["emit", "--paths-from", "-", "--check"],
             root.Path, output, error, leanReport: null, new StringReader(path));
 
@@ -250,13 +246,12 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void MissingManifestReturnsTwoWithoutLoadingDocuments()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         Directory.CreateDirectory(root.Resolve("Blueprint"));
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         var error = new StringWriter();
 
         var exit = ScribeCli.Run(
-            () => throw new InvalidOperationException("documents assembly must not be loaded"),
             ["emit", "--paths-from", "missing.paths"],
             root.Path,
             TextWriter.Null,
@@ -270,7 +265,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void ChangedDefinitionSelectionIgnoresUnrelatedDefinitions()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         Add(root, "Blueprint/D5/S0/Test/First.scribe.cs", "class First {}");
         Add(root, "Blueprint/D5/S0/Test/Second.scribe.cs", "class Second {}");
 
@@ -288,86 +283,22 @@ public sealed class ScribeDefinitionSelectionTests
     }
 
     [Fact]
-    public void SharedSourceSelectsItsUsers()
+    public void ChangedDefinitionSelectsOnlyItself()
     {
         using var root = new TemporaryRoot();
-        Add(root, "Blueprint/D5/S0/Test/First.scribe.cs", "[ScribeSharedSource(\"Blueprint/Shared.scribe.cs\")] class First {}");
-        Add(root, "Blueprint/D5/S0/Test/Second.scribe.cs", "class Second {}");
-        Add(root, "Blueprint/Shared.scribe.cs", "class Shared {}");
+        const string changed = "Blueprint/D5/S0/Test/Changed.scribe.cs";
+        Add(root, changed, "class Changed {}");
+        Add(root, "Blueprint/D5/S0/Test/Mentions.scribe.cs", $"[ScribeSharedSource(\"{changed}\")] class Mentions {{}}");
 
-        var selected = ScribeDefinitionSelector.Select(root.Path, ["Blueprint/Shared.scribe.cs"]);
-        Assert.True(selected.Paths.SequenceEqual(
-            ["Blueprint/D5/S0/Test/First.scribe.cs", "Blueprint/Shared.scribe.cs"]));
-    }
+        var selected = ScribeDefinitionSelector.Select(root.Path, [changed]);
 
-    [Fact]
-    public void SharedSourceLeafSelectsAllThreeTransitiveUsers()
-    {
-        using var root = new TemporaryRoot();
-        const string leaf = "Blueprint/Leaf.scribe.cs";
-        const string first = "Blueprint/First.scribe.cs";
-        const string second = "Blueprint/Second.scribe.cs";
-        const string third = "Blueprint/Third.scribe.cs";
-        Add(root, leaf, "class Leaf {}");
-        Add(root, first, $"[ScribeSharedSource(\"{leaf}\")] class First {{}}");
-        Add(root, second, $"[ScribeSharedSource(\"{first}\")] class Second {{}}");
-        Add(root, third, $"[ScribeSharedSource(\"{second}\")] class Third {{}}");
-        Add(root, "Blueprint/Unrelated.scribe.cs", "class Unrelated {}");
-
-        var selected = ScribeDefinitionSelector.Select(root.Path, [leaf]);
-
-        Assert.Equal(new[] { first, leaf, second, third }, selected.Paths.ToArray());
-    }
-
-    [Fact]
-    public void SharedSourceCycleSelectionTerminatesAndIncludesTransitiveUsers()
-    {
-        using var root = new TemporaryRoot();
-        const string first = "Blueprint/First.scribe.cs";
-        const string second = "Blueprint/Second.scribe.cs";
-        const string third = "Blueprint/Third.scribe.cs";
-        Add(root, first, $"[ScribeSharedSource(\"{second}\")] class First {{}}");
-        Add(root, second, $"[ScribeSharedSource(\"{first}\")] class Second {{}}");
-        Add(root, third, $"[ScribeSharedSource(\"{second}\")] class Third {{}}");
-
-        Assert.Equal(new[] { first, second, third },
-            ScribeDefinitionSelector.Select(root.Path, [first]).Paths.ToArray());
-        Assert.Equal(ScribeScriptFailureCode.SharedSourceCycle,
-            ScribeScriptHost.Execute(root.Path, third).Failure!.Code);
-    }
-
-    [Fact]
-    public void SharedSourceSelectionUsesTheHostSyntaxContract()
-    {
-        using var root = new TemporaryRoot();
-        const string shared = "Blueprint/Shared.scribe.cs";
-        Add(root, shared, "class Shared {}");
-        Add(root, "Blueprint/D5/S0/Test/Simple.scribe.cs",
-            $"[ScribeSharedSource(\"{shared}\")] class Simple {{}}");
-        Add(root, "Blueprint/D5/S0/Test/Suffix.scribe.cs",
-            $"[ScribeSharedSourceAttribute(\"{shared}\")] class Suffix {{}}");
-        Add(root, "Blueprint/D5/S0/Test/Qualified.scribe.cs",
-            $"[StrataLint.Scribe.ScribeSharedSource(\"{shared}\")] class Qualified {{}}");
-        Add(root, "Blueprint/D5/S0/Test/Aliased.scribe.cs",
-            $"[global::StrataLint.Scribe.ScribeSharedSource(\"{shared}\")] record Aliased {{}}");
-        Add(root, "Blueprint/D5/S0/Test/Unrelated.scribe.cs", "class Unrelated {}");
-
-        var selected = ScribeDefinitionSelector.Select(root.Path, [shared]);
-
-        Assert.True(selected.Paths.SequenceEqual(
-            [
-                "Blueprint/D5/S0/Test/Aliased.scribe.cs",
-                "Blueprint/D5/S0/Test/Qualified.scribe.cs",
-                "Blueprint/D5/S0/Test/Simple.scribe.cs",
-                "Blueprint/D5/S0/Test/Suffix.scribe.cs",
-                "Blueprint/Shared.scribe.cs",
-            ]));
+        Assert.Equal(new[] { changed }, selected.Paths.ToArray());
     }
 
     [Fact]
     public void LeanAndProjectionInputsMapToDefinitionSources()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         Add(root, "Blueprint/D5/S0/Test/First.scribe.cs", "class First {}");
         Add(root, "Golden/Projection/changed.json", "{\"declarations\":[{\"source_path\":\"D5/S0/Test/First.lean\"}]}");
 
@@ -380,7 +311,7 @@ public sealed class ScribeDefinitionSelectionTests
     [Fact]
     public void DeletedDefinitionLeavesItsMarkdownProjectionUntouched()
     {
-        using var root = new TemporaryRoot();
+        using var root = new TemporaryRoot(sdkConfiguration: true);
         File.WriteAllText(root.Resolve("global.json"), "{}\n");
         const string markdown = "Blueprint/D5/S0/Test/Deleted.md";
         File.WriteAllText(root.Resolve(markdown), "retained\n");

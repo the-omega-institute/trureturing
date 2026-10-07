@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:ba4e260f811a537aaef2c05d92ee237f4c5ebb84bd17185868c57cfdc07e51bd
+  normalized_sha256: sha256:ba4e260f811a537aaef2c05d92ee237f4c5ebb84bd17185868c57cfdc07e51bd
+cas_ref: sha256:ba4e260f811a537aaef2c05d92ee237f4c5ebb84bd17185868c57cfdc07e51bd
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/GraftAffineClosure.result
+    target_statement_id: sha256:211e4ff73740f8149478aa6c6772bce1f698874719b56d689c5724d2efa055a6
+  - gid: D5/S3/Arith/FibonacciAtomic/SelfCalibratingFibonacciBounds.raw_word_fibonacci_bounds
+    target_statement_id: sha256:9126a42b003cda4c77ef052dbda3204c2d4b5267879e4b59a47b967c23d84bbc
+  - gid: D5/S3/Arith/FibonacciAtomic/SelfCalibratingRawWords.raw_word_signed_bound
+    target_statement_id: sha256:e88bb980e8a0ce6dcd221aca035d1df3b0544f8d7043c730352f4c010711ec20
+  - gid: D5/S3/Observer/TraceFibers/FixedFiberPairModulus.result
+    target_statement_id: sha256:7d83c53e9a908526eeb67125c52d1a8ea1ce98afe547aafeb9cc52ba3ef8eb79
+receipts:
+  unresolved_subitems: []
