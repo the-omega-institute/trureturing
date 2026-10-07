@@ -31,7 +31,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.True(result.Success, result.Error + result.Output);
         Assert.Equal(before, File.ReadAllBytes(markdown));
         Assert.DoesNotContain("Blueprint/D5/S0/Carrier/Probe.md", result.Output, StringComparison.Ordinal);
-        Assert.Contains(CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
+        Assert.Contains(GeneratedArtifactInventory.Values.Path, result.Output, StringComparison.Ordinal);
         Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
         Assert.Equal([Gid], world.Entry(First).CoverageGids.ToArray());
         Assert.Equal([OtherGid], world.Entry(Second).CoverageGids.ToArray());
@@ -98,7 +98,7 @@ public sealed partial class CoverBatchCommandTests
         Assert.True(result.Success, result.Error + result.Output);
         Assert.Equal(sequential.LedgerImage(), batch.LedgerImage());
         Assert.Equal(["applied", "applied"], Results(result).Select(item => item.Status).ToArray());
-        Assert.Contains(CanonicalValuesWriter.RelativePath, result.Output, StringComparison.Ordinal);
+        Assert.Contains(GeneratedArtifactInventory.Values.Path, result.Output, StringComparison.Ordinal);
         output.WriteLine("FROZEN_LOADS session_only sequential_catalog={0} sequential_index={1} batch_catalog={2} batch_index={3}",
             sequentialLoads.Catalogs, sequentialLoads.Indexes, batchLoads.Catalogs, batchLoads.Indexes);
         Assert.Equal(1, batchLoads.Catalogs);

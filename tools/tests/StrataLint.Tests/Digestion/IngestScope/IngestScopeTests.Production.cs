@@ -1,3 +1,4 @@
+using StrataLint.Engineering;
 using System.Collections.Immutable;
 using System.Text;
 using StrataLint.Cli;
@@ -28,7 +29,7 @@ public sealed partial class IngestScopeTests
 
         Assert.True(result.Success, result.Error);
         var reads = gateway.ScopedCurrentReads.SelectMany(static scope => scope).ToArray();
-        Assert.DoesNotContain(reads, static path => path == EngineeringProjectRegistry.ManifestPath);
+        Assert.DoesNotContain(reads, static path => path == EngineeringProjectSchema.ManifestPath);
         Assert.DoesNotContain(reads, static path => path.StartsWith("D5/", StringComparison.Ordinal));
         Assert.DoesNotContain(reads, static path => path.Contains("BackfillTarget", StringComparison.Ordinal));
     }
