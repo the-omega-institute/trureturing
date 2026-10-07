@@ -1,0 +1,18 @@
+**定义 2.1（有序来源树与替换）。** 令 $\mathbb T$ 为自由有序二叉树集合：
+
+$$
+t::=\alpha\mid\beta\mid\langle t,t\rangle.
+$$
+
+定义
+
+$$
+\rho(\alpha)=\beta,\qquad \rho(\beta)=\langle\beta,\alpha\rangle,
+$$
+
+$$
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle.
+$$
+
+叶标签、左右顺序和括号都是来源的一部分；除非另行给出商关系，$\langle\alpha,\beta\rangle$ 与 $\langle\beta,\alpha\rangle$ 不相等。
+

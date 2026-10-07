@@ -112,12 +112,9 @@ public static class DocumentGraphAssembler
 
     internal static string CanonicalKey(DocumentEdge edge) => edge switch
     {
-        // The canonical key is BOTH the dedup key and the ordering key (see .DistinctBy/.ThenBy
-        // in Assemble). DescribeId must therefore come AFTER the declaration: putting it first
-        // reorders anchors across declarations, which rewrites every emitted References section
-        // and invalidates the digestion coverage GIDs that point at them. Keeping the explicit
-        // anchor's key byte-identical preserves the previous ordering exactly, while the
-        // "#<describe-id>" suffix still keeps two Describes on one declaration distinct.
+        // Assemble uses the canonical key for both deduplication and ordering. The declaration
+        // precedes DescribeId so anchors group by declaration and retain the coverage GID order.
+        // The "#<describe-id>" suffix distinguishes Describes on the same declaration.
         DocumentEdge.TruthAnchor truth => truth.DescribeId is null
             ? $"truth:{truth.Target.Value}"
             : $"truth:{truth.Target.Value}#{truth.DescribeId.Value}",

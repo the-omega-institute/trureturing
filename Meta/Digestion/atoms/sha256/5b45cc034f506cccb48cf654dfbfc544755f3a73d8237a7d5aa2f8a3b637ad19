@@ -1,0 +1,57 @@
+**推论 31.4（完整固定帽族与增长缺口的统一行数）。** 在假设 31.1 下，固定任意整数 $m\ge0$，对整数 $k\ge9$ 令
+
+$$
+\mathcal V_k(m)=\{v\in\mathbb Z:0\le v\le F_{k-2},\ Q_k(v)\le m\}.
+$$
+
+存在整数 $K_m$，使对全部 $k\ge K_m$ 及全部 $v\in\mathcal V_k(m)$，定理 31.3 适用，实际根及其全部所选后裔在 $R_m$ 内，而 $\mathcal Y_{k,v}\cap R_m=\varnothing$。此外，令 $\nu(k,v)=|\mathcal Y_{k,v}|$，则
+
+$$
+\begin{aligned}
+\liminf_{k\to\infty}\inf_{v\in\mathcal V_k(m)}
+\frac{\theta(k,v)\log k}{k}&\ge\log\varphi,\\
+\liminf_{k\to\infty}\inf_{v\in\mathcal V_k(m)}
+\frac{\nu(k,v)\log k}{k}&\ge\frac{\log\varphi}{2}.
+\end{aligned}
+\tag{31.12}
+$$
+
+每个 $\mathcal V_k(m)$ 都非空，因为 $Q_k(0)=0$；其 $v=0$ 项仍按锚类别处理。这里的下确界包括整个合法继承子水平，不要求其支集连续。
+
+对任意整数缺口族 $(v_k)_{k\ge23}$，$0\le v_k\le F_{k-2}$，若 $\log(v_k+1)=o(k)$，则它最终满足定理 31.3 的窄缺口域，且
+
+$$
+\liminf_{k\to\infty}\frac{\theta(k,v_k)\log k}{k}\ge\log\varphi,
+\qquad
+\liminf_{k\to\infty}\frac{\nu(k,v_k)\log k}{k}\ge\frac{\log\varphi}{2}.
+\tag{31.13}
+$$
+
+若改取任意固定实数 $0\le\eta<1$ 并要求 $0\le v_k\le F_k^\eta$，则式 (31.13) 的两个下界分别改为 $(1-\eta)\log\varphi$ 与 $(1-\eta)\log\varphi/2$。增长缺口结论不要求根具有固定帽资格。
+
+证明。置 $M=\max(1,m)$。式 (31.2) 对全部 $v\in\mathcal V_k(m)$ 同时给 $v\le MP_k$：正亏量时用 $v\le mP_k$，零亏量时用 $v\le L_k\le P_k$。$P_k$ 为二次量、$J$ 与 $F_{k-5}$ 指数增长，故可选 $K_m\ge23$，使以后全部 $k$ 同时满足 $MP_k\le J/2$、$F_{k-5}>m$。非锚根的自然帽亏量是 $Q_k(v)\le m$，锚根由 $\mathcal A$ 纳入 $R_m$；所选后裔留在 $R_m$ 直接使用 M.3，不重复证明闭合。定理 31.3 的右行均大于 $55$、不是锚且自然帽亏量大于 $m$，所以它们都在 $R_m$ 之外。
+
+函数 $(J-v)/(L+(P-1)v+1)$ 随 $v$ 递减，故 $\beta(k,v)$ 在所用区间内递减。用 $v\le MP_k$ 及 Binet 公式，
+
+$$
+\begin{aligned}
+P=P_{k-1}&=k^2/3+O(k),&L&=O(k),\\
+J&=\varphi^{k-4}/\sqrt5+O(\varphi^{-(k-4)}),\\
+\log\!\left(1+\frac{(P-\alpha)(J-v)}{L+(P-1)v+1}\right)
+&\ge k\log\varphi-O_m(\log k),\\
+\log(P/\alpha)&=2\log k+O(1).
+\end{aligned}
+\tag{31.14}
+$$
+
+该估计在完整 $\mathcal V_k(m)$ 上统一成立。将其代入式 (31.8)，便得式 (31.12)。这计数一条实际轨道中的不同物理行，不对不同根的重合行累加。
+
+若 $\log(v_k+1)=o(k)$，则 $v_k/J\to0$，且
+
+$$
+\log\bigl(L+(P-1)v_k+1\bigr)
+\le\log(v_k+1)+O(\log k)=o(k)+O(\log k).
+$$
+
+式 (31.14) 的分子下界遂为 $k\log\varphi-o(k)$，给出式 (31.13)。若 $v_k\le F_k^\eta$、$\eta<1$，仍有 $v_k/J\to0$，而上述对数至多为 $\eta k\log\varphi+O(\log k)$；分子下界为 $(1-\eta)k\log\varphi-O(\log k)$，得到相应系数。它们最终都满足 $v_k\le\lfloor J/2\rfloor$。这些是同一实际序列上的解析后果，不是有限样本或自由轮廓的推广。证毕。
+

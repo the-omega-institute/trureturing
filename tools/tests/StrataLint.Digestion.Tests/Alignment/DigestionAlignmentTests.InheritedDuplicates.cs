@@ -11,7 +11,7 @@ public sealed partial class DigestionAlignmentTests
     // admission must not judge the clause chain of a duplicated parent, whose duplicated
     // child would otherwise be reported as absent from the global inventory.
     [Fact]
-    public void AdmissionDoesNotJudgeClauseChainOfBaselineInheritedDuplicates()
+    public void AdmissionDoesNotJudgeClauseChainOfDuplicates()
     {
         var fixture = SelfContainedClauseChain();
         var ledger = ChainLedger(fixture, fixture.Parent, fixture.Children);
@@ -29,8 +29,6 @@ public sealed partial class DigestionAlignmentTests
             duplicated,
             snapshot,
             DigestionTestSupport.AcceptedLean(Array.Empty<string>()),
-            baselineDocument: duplicated,
-            baselineSnapshot: snapshot,
             changes: RawChangeSet.Create(["docs/source.md"]));
 
         Assert.True(
@@ -40,7 +38,7 @@ public sealed partial class DigestionAlignmentTests
         Assert.Empty(evaluation.Entries);
         Assert.Equal(
             fixture.Children.Select(static child => child.AtomId).Prepend(fixture.Parent.AtomId)
-                .Select(static atomId => $"duplicate atom_id inherited from baseline (not judged): {atomId}")
+                .Select(static atomId => $"duplicate atom_id (not judged): {atomId}")
                 .Order(StringComparer.Ordinal),
             evaluation.Observations
                 .Where(static item => item.StartsWith("duplicate atom_id", StringComparison.Ordinal))

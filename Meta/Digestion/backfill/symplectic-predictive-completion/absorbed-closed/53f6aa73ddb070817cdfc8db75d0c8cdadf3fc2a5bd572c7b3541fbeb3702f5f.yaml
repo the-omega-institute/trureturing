@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:53f6aa73ddb070817cdfc8db75d0c8cdadf3fc2a5bd572c7b3541fbeb3702f5f
+  normalized_sha256: sha256:53f6aa73ddb070817cdfc8db75d0c8cdadf3fc2a5bd572c7b3541fbeb3702f5f
+cas_ref: sha256:53f6aa73ddb070817cdfc8db75d0c8cdadf3fc2a5bd572c7b3541fbeb3702f5f
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/FourierWindowFiniteRank.fourier_window_finite_rank_approximation
+    target_statement_id: sha256:6cdb092de16728334c66a0fdb1c1a44ed300660b84f1d29bdcaebaee24c2fb53
+receipts:
+  unresolved_subitems: []
