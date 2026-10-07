@@ -87,14 +87,17 @@ internal sealed class TreeParityKernelDocument : IScribeDocumentDefinition
 
     private static Formula Parity() => Equal(Call("mod", Hv, D(2)), Call("mod", Mv, D(2)));
 
-    private static Formula ActualFormula() => Equal(Call("R", Dv, Mv, F.Xi),
+    private static Formula Closed(Formula body) => Seq(Forall, Sp, Dv, Comma, Mv, Sp, InMacro, Sp,
+        Mathbb, Grp(F.Id("N")), Comma, Sp, Forall, Sp, F.Xi, Comma, Sp, body);
+
+    private static Formula ActualFormula() => Closed(Equal(Call("R", Dv, Mv, F.Xi),
         Call("ite", And(Relation(Hv, Leq, Mv), Parity()),
             Ratio(Call("choose", Subtract(Add(Ratio(Subtract(Mv, Hv), D(2)), Dv), D(1)), Subtract(Dv, D(1))),
-                Call("choose", Subtract(Add(Mv, Dv), D(1)), Subtract(Dv, D(1)))), D(0)));
+                Call("choose", Subtract(Add(Mv, Dv), D(1)), Subtract(Dv, D(1)))), D(0))));
 
-    private static Formula ReferenceFormula() => Equal(Call("Q", Dv, Mv, F.Xi),
+    private static Formula ReferenceFormula() => Closed(Equal(Call("Q", Dv, Mv, F.Xi),
         Call("ite", Parity(), Ratio(Multiply(Power(F.Nu, Hv),
-            Power(Paren(Subtract(D(1), F.Nu)), Subtract(Dv, Hv))), Index(F.Id("p"), F.Id("e"))), D(0)));
+            Power(Paren(Subtract(D(1), F.Nu)), Subtract(Dv, Hv))), Index(F.Id("p"), F.Id("e"))), D(0))));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
         string prose, DescribeRole role) => Describe.Lean(DescribeId.Create("tree-parity-" + id),
