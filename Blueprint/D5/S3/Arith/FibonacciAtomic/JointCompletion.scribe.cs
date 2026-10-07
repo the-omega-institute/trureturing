@@ -40,9 +40,10 @@ internal sealed class JointCompletionDocument : IScribeDocumentDefinition
                 "Q(k)(L,m) consists of the low prefix P(L,omega) and both residue coordinates "
                 + "of z modulo m+1, for k=(omega,z) in K."),
             Definition("sourceGraph", "Actual finite-source graph",
-                "gamma(b) pairs the actual address b with the two profinite residue families "
+                "For an eventually zero legal address b in D, gamma(b) pairs b with the two profinite residue families "
                 + "of its existing Fibonacci sourceComposition. Its range is the graph Gamma; "
-                + "the two coordinates come from the same finite source."),
+                + "the two coordinates come from the same finite source. Source composition "
+                + "is used only on D, where the sum has finite support."),
             Definition("compatibleObservations", "Bonding conditions",
                 "A joint reading family q is compatible when increasing the prefix length "
                 + "and replacing a modulus by a multiple preserves every lower bit and reduces "
@@ -90,8 +91,8 @@ internal sealed class JointCompletionDocument : IScribeDocumentDefinition
                         + "Compatibility makes these recovered bits legal and makes both "
                         + "residue families profinite integers. This identifies K with the "
                         + "inverse limit in the product subspace topology.")),
-                    Paragraph(Text("For every k, remote vector compensation supplies one finite "
-                        + "source at each stage with its first n bits and both residues modulo "
+                    Paragraph(Text("For every k there exists a sequence of finite sources: "
+                        + "remote vector compensation supplies one at each stage with its first n bits and both residues modulo "
                         + "(n+1)!. Every fixed positive modulus divides all sufficiently large "
                         + "stage moduli, so each fixed residue coordinate is eventually correct. "
                         + "Each fixed bit is also eventually correct. The resulting sources "

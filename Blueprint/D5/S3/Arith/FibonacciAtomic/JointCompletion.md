@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/JointCompletion.sourceGraph`
 
 *Commentary.*
 
-gamma(b) pairs the actual address b with the two profinite residue families of its existing Fibonacci sourceComposition. Its range is the graph Gamma; the two coordinates come from the same finite source.
+For an eventually zero legal address b in D, gamma(b) pairs b with the two profinite residue families of its existing Fibonacci sourceComposition. Its range is the graph Gamma; the two coordinates come from the same finite source. Source composition is used only on D, where the sum has finite support.
 
 **Definition 1.3 (Bonding conditions).**
 
@@ -68,7 +68,7 @@ Q_gamma(i) sends a source b to Q(gamma(b))(i). The pair i(n) is (n,(n+1)!-1), wh
 
 The joint observation map is a uniform embedding into the product of finite reading spaces. Its image is exactly the compatible reading families: the j-th bit is recovered from a prefix of length j+1, and each residue is recovered from the empty-prefix reading. Compatibility makes these recovered bits legal and makes both residue families profinite integers. This identifies K with the inverse limit in the product subspace topology.
 
-For every k, remote vector compensation supplies one finite source at each stage with its first n bits and both residues modulo (n+1)!. Every fixed positive modulus divides all sufficiently large stage moduli, so each fixed residue coordinate is eventually correct. Each fixed bit is also eventually correct. The resulting sources converge to k and prove that the actual graph is dense. Legality and modular compatibility are closed conditions in products of finite discrete spaces. Hence K is compact Hausdorff and complete, and the dense uniform embedding gives its abstract completion structure.
+For every k there exists a sequence of finite sources: remote vector compensation supplies one at each stage with its first n bits and both residues modulo (n+1)!. Every fixed positive modulus divides all sufficiently large stage moduli, so each fixed residue coordinate is eventually correct. Each fixed bit is also eventually correct. The resulting sources converge to k and prove that the actual graph is dense. Legality and modular compatibility are closed conditions in products of finite discrete spaces. Hence K is compact Hausdorff and complete, and the dense uniform embedding gives its abstract completion structure.
 
 ## References
 

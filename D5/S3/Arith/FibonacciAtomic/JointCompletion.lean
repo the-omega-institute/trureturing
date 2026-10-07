@@ -34,7 +34,8 @@ The second index denotes the positive modulus one greater than that index. -/
 def jointObservation (k : K) : ((i : ℕ × ℕ) → X i.1 × (ZMod (i.2 + 1) × ZMod (i.2 + 1))) :=
   fun i => (P i.1 k.1, k.2.1.val i.2, k.2.2.val i.2)
 
-/-- The actual graph of a finite legal source and its Fibonacci composition. -/
+/-- The actual graph of an eventually zero legal source and its finite Fibonacci
+composition. The domain retains the `finiteTail` condition. -/
 def sourceGraph (b : D) : K :=
   (b.val, ProfiniteIntegers.natEmbedding (sourceComposition b.val).1,
     ProfiniteIntegers.natEmbedding (sourceComposition b.val).2)
@@ -98,24 +99,11 @@ private theorem observation_embedding :
         intro m
         exact uniformContinuous_snd.comp
           (uniformContinuous_snd.comp (Pi.uniformContinuous_proj _ (0, m)))
-  have hi : IsUniformInducing (fun k : K =>
+  have hi : IsUniformEmbedding (fun k : K =>
       extract (fun i => ((jointObservation k i).1.val, (jointObservation k i).2))) :=
-    isUniformEmbedding_subtype_val.isUniformInducing.prod
-      (isUniformEmbedding_subtype_val.isUniformInducing.prod
-        isUniformEmbedding_subtype_val.isUniformInducing)
-  refine ⟨IsUniformInducing.of_comp hc he hi, ?_⟩
-  intro a b hab
-  apply Prod.ext
-  · apply Subtype.ext
-    funext j
-    exact congrArg (fun q => (q (j + 1, 0)).1 ⟨j, Nat.lt_succ_self j⟩) hab
-  · apply Prod.ext
-    · apply Subtype.ext
-      funext m
-      exact congrArg (fun q => (q (0, m)).2.1) hab
-    · apply Subtype.ext
-      funext m
-      exact congrArg (fun q => (q (0, m)).2.2) hab
+    isUniformEmbedding_subtype_val.prod
+      (isUniformEmbedding_subtype_val.prod isUniformEmbedding_subtype_val)
+  exact IsUniformEmbedding.of_comp hc he hi
 
 private theorem inverse_limit (q : ((i : ℕ × ℕ) → X i.1 × (ZMod (i.2 + 1) × ZMod (i.2 + 1)))) :
     compatibleObservations q ↔ ∃! k : K, jointObservation k = q := by
@@ -155,6 +143,8 @@ private theorem inverse_limit (q : ((i : ℕ × ℕ) → X i.1 × (ZMod (i.2 + 1
     intro L L' m m' hL hm
     exact ⟨fun _ => rfl, k.2.1.property hm, k.2.2.property hm⟩
 
+/-- Each completion point admits a sequence of actual finite sources that
+matches its factorial-stage readings and converges to that point. -/
 private theorem approximating_sources (k : K) :
     ∃ s : ℕ → D,
       (∀ n, jointObservation (sourceGraph (s n)) (n, (n + 1).factorial - 1) =
