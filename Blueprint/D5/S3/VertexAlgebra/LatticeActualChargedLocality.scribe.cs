@@ -35,36 +35,6 @@ internal sealed class LatticeActualChargedLocalityDocument : IScribeDocumentDefi
                         + "commutator. The exponent is independent of the input vector. This is a sufficient exact "
                         + "stated order; no claim that it is always minimal is needed."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticeactualchargedlocality-rank-zero-actual-locality"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeActualChargedLocality.rank_zero_actual_locality"),
-                H("Rank zero satisfies the same actual law"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("Under D.rank=0 every charge is zero. The actual zero field is the identity and its "
-                        + "commutator vanishes, with the same exponent formula equal to zero."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticeactualchargedlocality-nonnegative-pairing-commutator"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeActualChargedLocality.nonnegative_pairing_commutator"),
-                H("Nonnegative pairing gives commutation"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("If B(alpha,beta)>=0, the stated exponent is zero and the coefficient commutator itself "
-                        + "is zero."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticeactualchargedlocality-diagonal-locality"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeActualChargedLocality.diagonal_locality"),
-                H("Coincident charges retain the actual cocycle parity"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("For every alpha, B(alpha,alpha) is even and the same charged locality law holds at "
-                        + "alpha=beta, with no distinct-charge premise."))),
-                DescribeRole.Theorem),
             Paragraph(Text("Bakalov-Kac, arXiv math/0402315v1, section 4.1, equations (4.12)-(4.16), DOI "
                 + "10.1142/9789812702562_0001, supplies the lattice field, ordered-product, translation and "
                 + "conformal construction. Equation numbers refer to arXiv v1.")),

@@ -76,11 +76,6 @@ theorem epsilon_ordered (D : LatticeData) (α β δ : Charge D) :
   rw [epsilon_add_right, epsilon_add_left]
   ring
 
-/-- Evenness of every lattice norm follows from the actual cocycle identity. -/
-theorem bilinear_self_even (D : LatticeData) (α : Charge D) :
-    Even (bilinear D α α) :=
-  ⟨lowerCocycleExponent D α α, (LatticeTwistedGroundRealization.SignQuotient.integral_cocycle_symmetrization D α α).symm⟩
-
 @[simp] theorem actual_modes (D : LatticeData) (α : Charge D) (m : ℤ) :
     (actualField D α)[[m]] = rawCoeff D α (-m - 1) := by
   rw [actualField, VertexOperator.ncoeff_of_coeff]

@@ -26,8 +26,8 @@ internal sealed class LatticeEnergyGradingDocument : IScribeDocumentDefinition
                 + "actual data or constructed equivalences; the substantive completion consists of the proved "
                 + "positivity, finiteness, decomposition and actual-operator theorems.")),
             Paragraph(Text("Basis, coefficient support, projections and the internal direct sum are constructed for every "
-                + "ordinary D, without hD. hD is needed only for finite-dimensionality, exact finite cardinal "
-                + "dimensions, negative vanishing, and zero-grade vacuum normalization. The entire Carrier(D) is "
+                + "ordinary D, without hD. hD derives finite-dimensionality, "
+                + "negative vanishing, and zero-grade vacuum normalization. The entire Carrier(D) is "
                 + "usually infinite-dimensional when rank is positive; finiteness is asserted for each grade.")),
             Describe.Lean(
                 DescribeId.Create("latticeenergygrading-carriercoeffequiv"),
@@ -99,16 +99,6 @@ internal sealed class LatticeEnergyGradingDocument : IScribeDocumentDefinition
                         + "proves that this basis index type is finite."))),
                 DescribeRole.Definition),
             Describe.Lean(
-                DescribeId.Create("latticeenergygrading-gradebasis-coe"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeBasis_coe"),
-                H("Grade basis is the actual carrier basis"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("For each a:EnergyFiber(D,n), the image of gradeBasis(D,n,a) in Carrier(D) equals "
-                        + "carrierBasis(D,a.val)."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("latticeenergygrading-grade-eq-span"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_eq_span"),
                 H("Grade is the actual energy-basis span"),
@@ -127,26 +117,6 @@ internal sealed class LatticeEnergyGradingDocument : IScribeDocumentDefinition
                     Paragraph(Text("Under hD, grade(D,n) is finite-dimensional over C for every integer n. The proof uses the "
                         + "constructed grade basis and the derived finite full fiber; finite-dimensionality is not a "
                         + "hypothesis."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticeenergygrading-grade-finrank"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_finrank"),
-                H("Exact integer-grade dimension"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("Under hD, finrank_C(grade(D,n))=Nat.card(EnergyFiber(D,n)) for every n:Z, including negative n and "
-                        + "rank zero."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticeenergygrading-grade-finrank-nat"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_finrank_nat"),
-                H("Natural-energy specialization"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("Under hD and N:N, finrank_C(grade(D,(N:Z)))=Nat.card(EnergyFiber(D,(N:Z))). This is a specialization "
-                        + "of the all-integer dimension theorem."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticeenergygrading-grade-negative"),
@@ -257,42 +227,6 @@ internal sealed class LatticeEnergyGradingDocument : IScribeDocumentDefinition
                     Paragraph(Text("gradeProjection(D,n,v) belongs to grade(D,n) for any integer n and actual v."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("latticeenergygrading-gradeprojection-on-grade"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_on_grade"),
-                H("Projection fixes its own grade"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("If v belongs to grade(D,n), gradeProjection(D,n,v)=v."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticeenergygrading-gradeprojection-other-grade"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_other_grade"),
-                H("Projection kills distinct grades"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("If m!=n and v belongs to grade(D,n), gradeProjection(D,m,v)=0."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticeenergygrading-gradeprojection-idempotent"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_idempotent"),
-                H("Projection is idempotent"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("gradeProjection(D,n)*gradeProjection(D,n)=gradeProjection(D,n) as actual linear endomorphisms."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticeenergygrading-gradeprojection-disjoint"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_disjoint"),
-                H("Distinct projections compose to zero"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("For m!=n, gradeProjection(D,m)*gradeProjection(D,n)=0 as actual linear endomorphisms."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("latticeenergygrading-stateenergies"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.stateEnergies"),
                 H("Finite energies of a nonhomogeneous actual state"),
@@ -302,16 +236,6 @@ internal sealed class LatticeEnergyGradingDocument : IScribeDocumentDefinition
                     Paragraph(Text("stateEnergies(D,v) is the finite image under E_D of the support of carrierCoeffEquiv(D,v). No "
                         + "homogeneity or positivity is assumed."))),
                 DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("latticeenergygrading-gradeprojection-outside"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.gradeProjection_outside"),
-                H("Only finitely many projections survive"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("If n is outside stateEnergies(D,v), gradeProjection(D,n,v)=0, for any actual v including mixed "
-                        + "charges and mixed energies."))),
-                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticeenergygrading-sum-gradeprojections"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.sum_gradeProjections"),

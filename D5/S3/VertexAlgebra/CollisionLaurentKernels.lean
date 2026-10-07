@@ -24,6 +24,13 @@ import Mathlib.RingTheory.PowerSeries.Binomial
 import Mathlib.Algebra.Polynomial.Bivariate
 import Mathlib.Algebra.Polynomial.PartialFractions
 
+import Mathlib.Algebra.Vertex.VertexOperator
+import Mathlib.Algebra.Order.PUnit
+import Mathlib.Algebra.Order.Monoid.Prod
+import Mathlib.Algebra.MonoidAlgebra.Basic
+import Mathlib.Tactic.Abel
+import D5.S3.VertexAlgebra.UniformGradedLocalCorrelator
+
 noncomputable section
 namespace D5.S3.VertexAlgebra
 
@@ -405,43 +412,6 @@ lemma polynomialMap_injective (f : E →+* F) : Function.Injective (polynomialMa
 def rationalMap (f : E →+* F) : RatFunc E →+* RatFunc F :=
   IsFractionRing.lift (polynomialMap_injective f)
 
-@[simp] lemma seriesMap_coeff (f : E →+* F) (g : LaurentSeries E) (n : ℤ) :
-    (seriesMap f g).coeff n = f (g.coeff n) := rfl
-
-lemma seriesMap_polynomial (f : E →+* F) (p : Polynomial E) :
-    seriesMap f (algebraMap (Polynomial E) (LaurentSeries E) p) =
-    algebraMap (Polynomial F) (LaurentSeries F) (p.map f) := by
-  ext n
-  rw [seriesMap_coeff]
-  simp only [Polynomial.algebraMap_hahnSeries_apply,
-    PowerSeries.coeff_coe]
-  split_ifs <;> simp [Polynomial.coeff_coe, Polynomial.coeff_map]
-
-/-- The rational expansion square commutes for every rational function,
-including arbitrarily high poles. Both arrows are constructed field maps. -/
-theorem rational_expansion_baseChange (f : E →+* F) (R : RatFunc E) :
-    algebraMap (RatFunc F) (LaurentSeries F) (rationalMap f R) =
-    seriesMap f (algebraMap (RatFunc E) (LaurentSeries E) R) := by
-  have eqmaps :
-      (algebraMap (RatFunc F) (LaurentSeries F)).comp (rationalMap f) =
-      (seriesMap f).comp (algebraMap (RatFunc E) (LaurentSeries E)) := by
-    apply IsFractionRing.ringHom_ext (A := Polynomial E)
-    intro p
-    simp only [RingHom.comp_apply, rationalMap, IsFractionRing.lift_algebraMap,
-      polynomialMap, RingHom.comp_apply]
-    rw [← IsScalarTower.algebraMap_apply (Polynomial F) (RatFunc F) (LaurentSeries F),
-      ← IsScalarTower.algebraMap_apply (Polynomial E) (RatFunc E) (LaurentSeries E)]
-    exact (seriesMap_polynomial f p).symm
-  exact RingHom.congr_fun eqmaps R
-
-/-- Residue in the smaller variable u commutes with expansion of the
-spectator-and-x coefficient field. -/
-theorem rational_residue_baseChange (f : E →+* F) (R : RatFunc E) :
-    (algebraMap (RatFunc F) (LaurentSeries F) (rationalMap f R)).coeff (-1) =
-      f ((algebraMap (RatFunc E) (LaurentSeries E) R).coeff (-1)) := by
-  rw [rational_expansion_baseChange]
-  rfl
-
 end CollisionLaurentKernels.ResidueBaseChange
 end
 
@@ -622,8 +592,20 @@ lemma fused_poly_square (p : Bivariate K) :
   simp only [fusedViaCoefficientField, RingHom.comp_apply, localRational,
     IsFractionRing.lift_algebraMap, localPolynomial, RingHom.comp_apply]
   rw [← IsScalarTower.algebraMap_apply (Polynomial (CoefficientField K))
-    (RatFunc (CoefficientField K)) (LaurentSeries (CoefficientField K)),
-    seriesMap_polynomial]
+    (RatFunc (CoefficientField K)) (LaurentSeries (CoefficientField K))]
+  have mapped : seriesMap (expandX K)
+      (algebraMap (Polynomial (CoefficientField K)) (LaurentSeries (CoefficientField K))
+        (translatedPoly K p)) =
+      algebraMap (Polynomial (LaurentSeries K)) (XZ K)
+        ((translatedPoly K p).map (expandX K)) := by
+    apply HahnSeries.ext
+    funext n
+    change expandX K
+        ((algebraMap (Polynomial (CoefficientField K)) (LaurentSeries (CoefficientField K))
+          (translatedPoly K p)).coeff n) = _
+    simp only [Polynomial.algebraMap_hahnSeries_apply, PowerSeries.coeff_coe]
+    split_ifs <;> simp [Polynomial.coeff_coe, Polynomial.coeff_map]
+  rw [mapped]
   change algebraMap (Polynomial (LaurentSeries K)) (XZ K)
       (((Polynomial.mapRingHom (expandX K)).comp (translatedPoly K)) p) =
     algebraMap (Polynomial (LaurentSeries K)) (XZ K)
@@ -683,15 +665,6 @@ theorem separated_residue_cancel (g h : LaurentSeries K) :
   rw [HahnSeries.C_apply, HahnSeries.coeff_mul_single_zero,
     HahnSeries.C_apply, HahnSeries.coeff_mul_single_zero, mul_comm]
 
-/-- More precise common value, useful for partial fractions. -/
-theorem separated_residue_value (g h : LaurentSeries K) :
-    resZ_ZX K (HahnSeries.C g * outerSeries K h) = HahnSeries.C (g.coeff (-1)) * h := by
-  ext n
-  change ((HahnSeries.C g * outerSeries K h).coeff n).coeff (-1) = _
-  rw [HahnSeries.C_apply, HahnSeries.coeff_single_zero_mul]
-  change (g * HahnSeries.C (h.coeff n)).coeff (-1) = _
-  rw [HahnSeries.C_apply, HahnSeries.coeff_mul_single_zero,
-    HahnSeries.C_apply, HahnSeries.coeff_single_zero_mul]
 
 lemma outerSeries_support_subset (h : LaurentSeries K) :
     (outerSeries K h).support ⊆ h.support := by
@@ -730,3 +703,229 @@ end CollisionLaurentKernels.SeparatedResidue
 end
 
 end D5.S3.VertexAlgebra
+
+/-
+Actual supported field words and finite labelled convolution.
+
+The proof uses the native mathlib Hahn/Laurent and polynomial kernels.
+LaurentSeries: Aaron Anderson, María Inés de Frutos-Fernández, Filippo A. E. Nuccio;
+HahnSeries: Aaron Anderson; partial fractions: Kevin Buzzard, Sidharth Hariharan,
+Aaron Liu. These library sources are released under Apache 2.0.
+Actual HVertexOperator and VertexOperator composition: Scott Carnahan, Apache 2.0.
+The imported normal-product supplier attributes its adaptation to Carnahan's
+vertexAlg revision 4453e34ec390e82a0c789c731ada8f9a6e86bdea (Apache 2.0).
+No actual Monster carrier or fused-state identification is asserted.
+-/
+
+
+noncomputable section
+namespace D5.S3.VertexAlgebra
+
+section
+/- Binding of Carnahan's actual HVertexOperator composition, at arbitrary
+finite rank. Coefficients remain actual products on the fixed suffix vector. -/
+namespace SupportedFieldWords.OrderedWords
+set_option backward.isDefEq.respectTransparency false
+open scoped VertexOperator
+
+def Indices : ℕ → Type
+  | 0 => Unit
+  | n + 1 => ℤ ×ₗ Indices n
+
+instance indicesOrder (n : ℕ) : LinearOrder (Indices n) := by
+  induction n with
+  | zero => exact inferInstanceAs (LinearOrder Unit)
+  | succ n ih => exact inferInstanceAs (LinearOrder (ℤ ×ₗ Indices n))
+
+instance indicesGroup (n : ℕ) : AddCommGroup (Indices n) := by
+  induction n with
+  | zero => exact inferInstanceAs (AddCommGroup Unit)
+  | succ n ih => exact inferInstanceAs (AddCommGroup (ℤ ×ₗ Indices n))
+
+instance indicesOrdered (n : ℕ) : IsOrderedAddMonoid (Indices n) := by
+  induction n with
+  | zero => exact inferInstanceAs (IsOrderedAddMonoid Unit)
+  | succ n ih => exact inferInstanceAs (IsOrderedAddMonoid (ℤ ×ₗ Indices n))
+
+variable {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
+
+def emptyField : HVertexOperator Unit K V V where
+  toFun v := HahnModule.of K (HahnSeries.single () v)
+  map_add' := by intros; ext g; simp
+  map_smul' := by
+    intro a v
+    ext g
+    cases g
+    rw [HahnModule.of_symm_smul]
+    simp
+
+def ordered : (n : ℕ) → (Fin n → VertexOperator K V) → HVertexOperator (Indices n) K V V
+  | 0, _ => emptyField
+  | n + 1, A => HVertexOperator.comp
+      (ordered n (fun i => A i.castSucc)) (A (Fin.last n))
+
+def exponents : (n : ℕ) → (Fin n → ℤ) → Indices n
+  | 0, _ => ()
+  | n + 1, e => toLex (e (Fin.last n), exponents n (fun i => e i.castSucc))
+
+def actualWord : (n : ℕ) → (Fin n → VertexOperator K V) → (Fin n → ℤ) → V → V
+  | 0, _, _, c => c
+  | n + 1, A, e, c => actualWord n (fun i => A i.castSucc) (fun i => e i.castSucc)
+      ((A (Fin.last n) [[-e (Fin.last n) - 1]]) c)
+
+/-- Every finite actual mode word embeds into the chosen ordered supported
+Hahn carrier. Outer/smaller exponents have priority, from the word's right. -/
+theorem ordered_coeff (n : ℕ) (A : Fin n → VertexOperator K V) (e : Fin n → ℤ) (c : V) :
+    HVertexOperator.coeff (ordered n A) (exponents n e) c = actualWord n A e c := by
+  induction n generalizing c with
+  | zero =>
+    change (HahnSeries.single () c).coeff () = c
+    exact HahnSeries.coeff_single_same _ _
+  | succ n ih =>
+    change HVertexOperator.coeff
+      (HVertexOperator.comp (ordered n (fun i => A i.castSucc)) (A (Fin.last n)))
+      (toLex (e (Fin.last n), exponents n (fun i => e i.castSucc))) c = _
+    rw [HVertexOperator.coeff_comp]
+    simp only [LinearMap.comp_apply, VertexOperator.coeff_eq_ncoeff]
+    exact ih _ _ _
+
+/-- A prefix scalar functional and a grade selector compose at the terminal
+coefficient; they do not change the supported input word. -/
+def scalarOrdered (n : ℕ) (A : Fin n → VertexOperator K V) (c : V)
+    (phi : V →ₗ[K] K) : HahnSeries (Indices n) K :=
+  ((HahnModule.of K).symm (ordered n A c)).map phi
+
+theorem scalarOrdered_coeff (n : ℕ) (A : Fin n → VertexOperator K V) (e : Fin n → ℤ)
+    (c : V) (phi : V →ₗ[K] K) :
+    (scalarOrdered n A c phi).coeff (exponents n e) = phi (actualWord n A e c) := by
+  change phi (HVertexOperator.coeff (ordered n A) (exponents n e) c) = _
+  rw [ordered_coeff]
+
+end SupportedFieldWords.OrderedWords
+end
+
+section
+/- Finite-convolution interface adapted from native
+UniformGradedLocalCorrelator.shift/polynomialAction, with arbitrary ordered
+exponent group and scalar field. No cancellation is used on unrestricted
+coefficient distributions. Cancellation occurs only in HahnModule. -/
+namespace SupportedFieldWords.FiniteConvolution
+variable {Γ K V : Type*} [AddCommGroup Γ] [LinearOrder Γ] [IsOrderedAddMonoid Γ]
+  [Field K] [AddCommGroup V] [Module K V]
+
+abbrev Polynomial := AddMonoidAlgebra K Γ
+abbrev Distribution := Γ → V
+
+def shift (b : Γ) : Module.End K (Distribution (Γ := Γ) (V := V)) where
+  toFun F := fun e => F (e-b)
+  map_add' _ _ := rfl
+  map_smul' _ _ := rfl
+
+def shifts : Multiplicative Γ →* Module.End K (Distribution (Γ := Γ) (V := V)) where
+  toFun b := shift b.toAdd
+  map_one' := by ext F e; simp [shift]
+  map_mul' b c := by
+    ext F e
+    change F (e-(b.toAdd+c.toAdd)) = F ((e-b.toAdd)-c.toAdd)
+    congr 1
+    abel
+
+def distributionAction : Polynomial (Γ := Γ) (K := K) →ₐ[K]
+    Module.End K (Distribution (Γ := Γ) (V := V)) :=
+  AddMonoidAlgebra.lift K _ _ shifts
+
+def scalarMonomials : Multiplicative Γ →* HahnSeries Γ K where
+  toFun b := HahnSeries.single b.toAdd 1
+  map_one' := by simp [← HahnSeries.C_apply]
+  map_mul' b c := by simp [HahnSeries.single_mul_single]
+
+def scalarPolynomial : Polynomial (Γ := Γ) (K := K) →ₐ[K] HahnSeries Γ K :=
+  AddMonoidAlgebra.lift K _ _ scalarMonomials
+
+def coefficients (F : HahnModule Γ K V) : Distribution (Γ := Γ) (V := V) :=
+  ((HahnModule.of K).symm F).coeff
+
+lemma scalarPolynomial_single (b : Γ) (a : K) :
+    scalarPolynomial (AddMonoidAlgebra.single b a) = HahnSeries.single b a := by
+  simp only [scalarPolynomial, AddMonoidAlgebra.lift_single, scalarMonomials,
+    MonoidHom.coe_mk, OneHom.coe_mk]
+  ext e
+  simp [HahnSeries.coeff_smul, HahnSeries.coeff_single]
+
+omit [LinearOrder Γ] [IsOrderedAddMonoid Γ] in
+lemma distributionAction_single (b : Γ) (a : K) (F : Distribution (Γ := Γ) (V := V)) (e : Γ) :
+    distributionAction (AddMonoidAlgebra.single b a) F e = a • F (e-b) := by
+  simp [distributionAction, AddMonoidAlgebra.lift_single, shifts, shift]
+
+theorem scalarPolynomial_coeff (Q : Polynomial (Γ := Γ) (K := K)) (e : Γ) :
+    (scalarPolynomial Q).coeff e = Q.coeff e := by
+  classical
+  induction Q using AddMonoidAlgebra.induction_linear with
+  | zero => simp
+  | add P Q hP hQ => simp [hP, hQ]
+  | single b a => simp [scalarPolynomial_single, HahnSeries.coeff_single, Finsupp.single_apply, eq_comm]
+
+end SupportedFieldWords.FiniteConvolution
+end
+
+section
+namespace SupportedFieldWords.OrderedDistribution
+open SupportedFieldWords.OrderedWords SupportedFieldWords.FiniteConvolution
+set_option backward.isDefEq.respectTransparency false
+
+def inverseExponents : (n : ℕ) → Indices n → (Fin n → ℤ)
+  | 0, _ => fun i => Fin.elim0 i
+  | n+1, g => Fin.lastCases (ofLex g).1 (inverseExponents n (ofLex g).2)
+
+lemma inverse_exponents (n : ℕ) (e : Fin n → ℤ) :
+    inverseExponents n (exponents n e) = e := by
+  induction n with
+  | zero => funext i; exact Fin.elim0 i
+  | succ n ih =>
+    simp only [exponents, inverseExponents, ofLex_toLex, ih]
+    funext i
+    refine Fin.lastCases ?_ (fun j => ?_) i <;> simp
+
+lemma exponents_inverse (n : ℕ) (g : Indices n) :
+    exponents n (inverseExponents n g) = g := by
+  induction n with
+  | zero => change () = g; cases g; rfl
+  | succ n ih =>
+    change toLex ((inverseExponents (n+1) g) (Fin.last n),
+      exponents n (fun i => inverseExponents (n+1) g i.castSucc)) = g
+    simp only [inverseExponents, Fin.lastCases_last, Fin.lastCases_castSucc, ih]
+    rfl
+
+lemma exponents_add (n : ℕ) (e f : Fin n → ℤ) :
+    exponents n (e+f) = exponents n e + exponents n f := by
+  induction n with
+  | zero => rfl
+  | succ n ih =>
+    change toLex (e (Fin.last n)+f (Fin.last n),
+      exponents n ((fun i => e i.castSucc)+(fun i => f i.castSucc))) = _
+    rw [ih]
+    rfl
+
+/-- Exact additive reindexing from the native distribution exponent type.
+The last word variable becomes the first/outer lex exponent. -/
+def exponentAddEquiv (n : ℕ) : (Fin n → ℤ) ≃+ Indices n where
+  toFun := exponents n
+  invFun := inverseExponents n
+  left_inv := inverse_exponents n
+  right_inv := exponents_inverse n
+  map_add' := exponents_add n
+
+variable {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
+
+def labelledPolynomial (n : ℕ) :
+    AddMonoidAlgebra K (Fin n → ℤ) →ₐ[K] AddMonoidAlgebra K (Indices n) :=
+  AddMonoidAlgebra.mapDomainAlgHom K K (exponentAddEquiv n).toAddMonoidHom
+
+def transportDistribution (n : ℕ) (F : (Fin n → ℤ) → V) : Indices n → V :=
+  fun g => F ((exponentAddEquiv n).symm g)
+
+end SupportedFieldWords.OrderedDistribution
+end
+
+end D5.S3.VertexAlgebra
+end

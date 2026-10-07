@@ -92,29 +92,6 @@ namespace D5.S3.VertexAlgebra.LatticeActualEdgeCases
 open LatticeGeneratingFieldLocality LatticeAllStateField FieldNormalProduct
 open scoped VertexOperator
 
-theorem actual_zero_locality (D : LatticeData) (A : VertexOperator ℂ (Carrier D)) :
-    FieldNormalProductLocality.commutator (actualField D 0) A = 0 := by
-  rw [actual_zero]
-  funext m n
-  simp only [FieldNormalProductLocality.commutator,identity_modes]
-  split_ifs <;> apply LinearMap.ext <;> intro v <;>
-    simp [LinearMap.sub_apply,Module.End.mul_apply]
-
-theorem rank_zero_charge (D : LatticeData) (hr : D.rank = 0) (α : Charge D) : α = 0 := by
-  funext i
-  have h : i.val < 0 := by simpa [hr] using i.isLt
-  omega
-
-/-- Rank zero needs no positive-rank workaround; the exact exponent is zero. -/
-theorem rank_zero_actual_locality (D : LatticeData) (hr : D.rank = 0)
-    (α β : Charge D) :
-    FieldNormalProductLocality.delta^[(-bilinear D α β).toNat]
-      (FieldNormalProductLocality.commutator (actualField D α) (actualField D β)) = 0 := by
-  rw [rank_zero_charge D hr α,rank_zero_charge D hr β]
-  simp only [bilinear,Pi.zero_apply,zero_mul,Finset.sum_const_zero,
-    neg_zero,Int.toNat_zero,Function.iterate_zero_apply]
-  exact actual_zero_locality D _
-
 end D5.S3.VertexAlgebra.LatticeActualEdgeCases
 
 /- Nonnegative pairing, diagonal and rank-zero consequences of actual locality.
@@ -124,20 +101,6 @@ namespace D5.S3.VertexAlgebra.LatticeActualLocalityCases
 open LatticeGeneratingFieldLocality LatticeActualGeneratorLocality
 open LatticeActualChargedLocality
 noncomputable section
-
-theorem nonnegative_pairing_commutator (D : LatticeData) (α β : Charge D)
-    (h : 0 ≤ bilinear D α β) :
-    FieldNormalProductLocality.commutator (actualField D α) (actualField D β) = 0 := by
-  have hx : (-bilinear D α β).toNat = 0 := by omega
-  have locality := actual_charged_charged_locality D α β
-  rw [hx, Function.iterate_zero_apply] at locality
-  exact locality
-
-theorem diagonal_locality (D : LatticeData) (α : Charge D) :
-    Even (bilinear D α α) ∧
-      FieldNormalProductLocality.delta^[(-bilinear D α α).toNat]
-        (FieldNormalProductLocality.commutator (actualField D α) (actualField D α)) = 0 :=
-  ⟨bilinear_self_even D α, actual_charged_charged_locality D α α⟩
 
 end
 end D5.S3.VertexAlgebra.LatticeActualLocalityCases

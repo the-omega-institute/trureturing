@@ -182,10 +182,6 @@ theorem word_creation (D : LatticeData) (δ : Charge D) (w : List (Index D)) :
         rw [derivative_creativity D x j (by omega), map_zero]
       simp [firstZero, secondZero]
 
-theorem occurrences_multiset (D : LatticeData) (e : Index D →₀ ℕ) :
-    (occurrences D e : Multiset (Index D)) = e.toMultiset :=
-  Multiset.coe_toList _
-
 theorem occurrences_product (D : LatticeData) (e : Index D →₀ ℕ) :
     ((occurrences D e).map (fun x => (X x : Oscillator D))).prod = monomial e 1 := by
   rw [occurrences, Multiset.prod_map_toList]

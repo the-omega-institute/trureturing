@@ -20,21 +20,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_involutive`
 
 Define sigma by polynomial evaluation X_(i,k) to -X_(i,k), fixing each complex constant. Define the complex-linear theta by theta(single(a,p))=single(-a,sigma(p)). This acts on every oscillator index, rather than just on charge. Polynomial induction proves sigma squared is identity; finite-charge linear extension proves theta squared is identity and gives an actual linear equivalence.
 
-**Theorem 1.2 (Exact charge support transport).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_support`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeInvolution.theta_support` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-The coefficient at -a is sigma of the coefficient at a. Injectivity of sigma therefore identifies support(theta(v)) with the image of support(v) under charge negation, with no cancellation or homogeneous-state restriction.
-
-**Theorem 1.3 (The actual vacuum is fixed).**
+**Theorem 1.2 (The actual vacuum is fixed).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_vacuum`
 
@@ -48,23 +34,9 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_vacuum`
 
 The vacuum is single(0,1). Charge negation fixes zero and sigma fixes the constant one.
 
-**Theorem 1.4 (The inverse-section phase cancels on actual ground states).**
+The realized lower-triangular section obeys c(a,a)=B(a,a)/2 and epsilon(a,-a)=(-1)^(B(a,a)/2). The ground formula is theta(single(a,1))=(-1)^(B(a,a)/2) smul (epsilon(a,-a) smul single(-a,1))=single(-a,1). The section-square equation is the released integral_cocycle_square result. Dong-Nagatomo, math/9808088v1, pp. 4-5 and 9, write theta(a)=a inverse times (-1)^q, q=B(a,a)/2. Bakalov-Kac, math/0402315v1, section 4.1, equations (4.18)-(4.20), Proposition 4.1 and Remark 4.1 give the lift and field context. Their positive-definite classification conclusions are outside the present hypotheses.
 
-Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_ground_DongNagatomo`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeInvolution.theta_ground_DongNagatomo` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-Write c(a,b) for the realized lower-triangular cocycle exponent and epsilon_charge(a,b)=(-1)^c(a,b). Simultaneous negation leaves c and B unchanged, so epsilon_charge(-a,-b)=epsilon_charge(a,b); the lift has eta=1. The already accepted public GroundRealization integral_cocycle_square theorem supplies c(a,a)=B(a,a)/2, and is reused rather than registered as an independent new result here. Since c(a,-a)=-c(a,a), the inverse-section factor epsilon_charge(a,-a) equals (-1)^(B(a,a)/2). Its product with the Dong-Nagatomo phase is one. Thus theta(single(a,1)) is the actual ground-state charge flip; the full theta also acts on oscillators.
-
-Bakalov-Kac, math/0402315v1, section 4.1 pp. 8-10, equations (4.18)-(4.20), Proposition 4.1 and Remark 4.1, provide the lift and field context. Dong-Nagatomo, math/9808088v1, pp. 4-5 and 9, write theta(a)=a inverse times (-1)^q, q=B(a,a)/2. The section-square equation, phase cancellation and whole-carrier reflection are distinct facts. Their positive-definite classification conclusions are not asserted for these broader hypotheses.
-
-**Theorem 1.5 (Every actual integer mode commutes with reflection).**
+**Theorem 1.3 (Every actual integer mode commutes with reflection).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.stateField_theta`
 
@@ -82,7 +54,7 @@ The charged proof transports the actual creation series, exponential coefficient
 
 The two contextual sums in a normal-product coefficient have finite support at the indicated actual vector. Theta transports both sums and retains the order of each composition. Induction on ordered oscillator words gives the sign (-1)^word_length. The monomial basis and finite-charge linear extension then give the displayed all-state law. Internal product compatibility is proved from these concrete generators, without assuming the desired result.
 
-**Theorem 1.6 (The actual fixed subtype is a full ungraded vertex algebra).**
+**Theorem 1.4 (The actual fixed subtype is a full ungraded vertex algebra).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.fixed_actualVertexAlgebra`
 
@@ -98,7 +70,7 @@ The fixed submodule is ker(thetaLinear-id). The actual vacuum belongs to it, and
 
 The constructor contains the actual vacuum field, creation at mode -1, creativity at every n>=0, T(vacuum)=0, [T,a_n]=-n a_(n-1), pairwise locality with an order independent of the test vector, and full integer Borcherds. Inclusion identifies each actual mode. Iterated commutator differences transport locality from the already proved ambient actual vertex algebra.
 
-**Theorem 1.7 (Full integer Borcherds and all three finite supports).**
+**Theorem 1.5 (Full integer Borcherds and all three finite supports).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.fixed_borcherds`
 
@@ -114,21 +86,7 @@ For fixed a,b,c and arbitrary p,q,r in Z, put mu(a,n,b)=(fixedY(a))_n b and C(k,
 
 Subtype inclusion preserves each nested summand, reflects zero exactly, and hence identifies the genuine supports. It transports each of the three ambient finite-support proofs and preserves finsums by injectivity. Thus the full equality is inherited without a fixed-algebra compatibility premise or an assumption that divergent sums vanish.
 
-**Theorem 1.8 (The sign splitting is unique).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.fixed_minus_intersection`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeInvolution.fixed_minus_intersection` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-The +1 and -1 eigenspaces intersect only at zero: their two equations imply 2v=0 over C.
-
-**Theorem 1.9 (Actual mode eigenvalues multiply).**
+**Theorem 1.6 (Actual mode eigenvalues multiply).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.mode_eigenvalue_selection`
 
@@ -142,7 +100,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.mode_eigenvalue_selection
 
 For arbitrary complex s,t, the explicit actual equations theta(a)=s a and theta(b)=t b imply theta(a_n b)=(st)(a_n b) for every integer n. In particular (++),(+-),(-+),(--) give signs +,-,-,+. These are state-mode selection laws; no tensor-category fusion or anomaly classification is claimed.
 
-**Theorem 1.10 (At rank zero reflection is identity).**
+**Theorem 1.7 (At rank zero reflection is identity).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_rank_zero`
 
@@ -156,20 +114,6 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.theta_rank_zero`
 
 There are no oscillator variables and only the zero charge when r=0, so theta(v)=v. Square identity therefore does not imply universal exact order two.
 
-**Theorem 1.11 (The rank-zero minus eigenspace is zero).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeInvolution.minusSpace_rank_zero`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeInvolution.minusSpace_rank_zero` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-At r=0, theta(v)=-v together with theta(v)=v gives 2v=0, so the minus submodule is bottom.
-
 The inherited finite residue kernels and divided derivatives retain Scott Carnahan/vertexAlg, revision 4453e34ec390e82a0c789c731ada8f9a6e86bdea, Apache 2.0 source-header attribution. Local normal-product closure and reconstruction use Matsuo-Nagatomo, hep-th/9706118v1, Proposition 1.5.5 p. 11 and Theorem 5.4.1 p. 35, and the pinned mathlib db584cd6d46c92f209a44c0f1c829460d327499d vertex-operator infrastructure with its attribution. The concrete coefficient, word and subtype arguments here are adaptations on this actual carrier.
 
 This result constructs an ungraded fixed vertex algebra. Conformal grading, PCT, positivity, Leech identification, twisted state-fields, intertwiners, holomorphic extension, categorical fusion, Monster identification, string theory and AdS/CFT completion remain outside this theorem. They are not prerequisites for delivery of this closed unit.
@@ -178,14 +122,10 @@ This result constructs an ungraded fixed vertex algebra. Conformal grading, PCT,
 
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.fixed_actualVertexAlgebra`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.fixed_borcherds`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.fixed_minus_intersection`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.minusSpace_rank_zero`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.mode_eigenvalue_selection`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.stateField_theta`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.theta_ground_DongNagatomo`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.theta_involutive`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.theta_rank_zero`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.theta_support`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeInvolution.theta_vacuum`
 - Dependency: [D5/S3/VertexAlgebra/LatticeActualVertexAlgebra](LatticeActualVertexAlgebra.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeTwistedGroundRealization](LatticeTwistedGroundRealization.md)

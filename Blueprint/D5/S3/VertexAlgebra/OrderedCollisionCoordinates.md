@@ -20,21 +20,7 @@ Lean statement: `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.first_coefficie
 
 The first exponent equivalence inserts z immediately before the boundary x. The second uses the full exponent equivalence with z after x. Order embeddings and their split inverses prove the actual coefficient-field squares and supported residue maps.
 
-**Theorem 1.2 (Translate the common rational diagonal before residue).**
-
-Lean statement: `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.weighted_translation`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.weighted_translation` (`✓ std3`). ∎
-
-*Source.* Repository-derived.
-
-*Acknowledgement.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
-
-*Commentary.*
-
-The actual rational substitution z=x+u maps (z-x)^r to u^r for every integer r. All remaining variables remain in their original coefficient field. Injective polynomial and fraction-field maps justify the substitution, including inverse powers.
-
-**Theorem 1.3 (Full remaining expansion commutes with the u-residue).**
+**Theorem 1.2 (Full remaining expansion commutes with the u-residue).**
 
 Lean statement: `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.fused_residue_square`
 
@@ -56,7 +42,6 @@ Matsuo and Nagatomo, hep-th/9706118v1, Proposition 1.5.5 and Theorem 5.4.1 provi
 
 - Truth anchor: `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.first_coefficient_square`
 - Truth anchor: `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.fused_residue_square`
-- Truth anchor: `D5/S3/VertexAlgebra/OrderedCollisionCoordinates.weighted_translation`
 - Dependency: [D5/S3/VertexAlgebra/CollisionLaurentKernels](CollisionLaurentKernels.md)
 - Dependency: [D5/S3/VertexAlgebra/CollisionRationalExpansions](CollisionRationalExpansions.md)
 - Dependency: [D5/S3/VertexAlgebra/LabelledRationalClearing](LabelledRationalClearing.md)

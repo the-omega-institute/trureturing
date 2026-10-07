@@ -20,7 +20,6 @@ No actual Monster carrier or fused-state identification is asserted.
 -/
 
 import D5.S3.VertexAlgebra.OrderedCollisionCoordinates
-import D5.S3.VertexAlgebra.SupportedFieldWords
 import D5.S3.VertexAlgebra.CollisionRationalExpansions
 import Mathlib.Data.List.FinRange
 import Mathlib.Data.Complex.Basic
@@ -29,6 +28,96 @@ import D5.S3.VertexAlgebra.RationalCollision
 import D5.S3.VertexAlgebra.UniformGradedLocalCorrelator
 
 noncomputable section
+noncomputable section
+namespace D5.S3.VertexAlgebra
+section
+/-!
+  Native adapter for the actual graded-local-field words.
+
+  The supplier theorem works with `word` on a labelled list, whereas the
+  Hahn carrier supplied by Carnahan's `HVertexOperator` is indexed by a
+  finite coordinate function.  The lemmas below identify those two objects
+  coefficient by coefficient, including the exact mode convention `-e-1`.
+  No support or expansion equality is assumed: support comes from the
+  `ordered` HVertexOperator itself.
+-/
+namespace SupportedFieldWords.ActualFieldWordAdapter
+open scoped VertexOperator
+
+open SupportedFieldWords.OrderedWords SupportedFieldWords.OrderedDistribution
+open D5.S3.VertexAlgebra
+open D5.S3.VertexAlgebra.UniformGradedLocalCorrelator
+
+set_option backward.isDefEq.respectTransparency false
+
+variable {V : Type*} [AddCommGroup V] [Module ℂ V]
+
+theorem word_append_adapter {N : ℕ} (A : Fin N → VertexOperator ℂ V)
+    (l r : List (Fin N)) (e : Fin N → ℤ) :
+    word A (l ++ r) e = word A l e * word A r e := by
+  induction l with
+  | nil => rw [show word A [] e = 1 by rfl]; simp
+  | cons i l ih => simp [word, ih, mul_assoc]
+
+/- The list word and the finite HVertexOperator word agree for an arbitrary
+   injective or non-injective coordinate map.  Generalising the coordinate
+   map (rather than assuming a permutation) is what makes the induction on
+   `List.ofFn_succ'` exact. -/
+theorem word_ofFn (n N : ℕ)
+    (A : Fin N → VertexOperator ℂ V) (f : Fin n → Fin N)
+    (e : Fin N → ℤ) (c : V) :
+    (word (fun i => A i) (List.ofFn f) e) c =
+      actualWord n (fun i => A (f i)) (fun i => e (f i)) c := by
+  induction n generalizing c with
+  | zero =>
+      simp [List.ofFn_zero, word, actualWord]
+  | succ n ih =>
+      rw [List.ofFn_succ']
+      rw [List.concat_eq_append]
+      rw [word_append_adapter]
+      change
+        (word (fun i => A i) (List.ofFn (fun i : Fin n => f i.castSucc)) e)
+            ((A (f (Fin.last n)) [[-e (f (Fin.last n)) - 1]]) c) = _
+      rw [ih]
+      rfl
+
+/- The actual scalar carrier for a chosen labelled order.  The order is
+   represented by `f : Fin n -> ι`; its Hahn support is inherited from the
+   genuine ordered HVertexOperator, not postulated. -/
+def scalarWordCarrier (n : ℕ) {N : ℕ}
+    (A : Fin N → VertexOperator ℂ V) (f : Fin n → Fin N) (c : V)
+    (phi : V →ₗ[ℂ] ℂ) : HahnSeries (Indices n) ℂ :=
+  scalarOrdered n (fun i => A (f i)) c phi
+
+theorem scalarWordCarrier_coeff (n : ℕ) {N : ℕ}
+    (A : Fin N → VertexOperator ℂ V) (f : Fin n → Fin N)
+    (c : V) (phi : V →ₗ[ℂ] ℂ) (e : Fin N → ℤ) :
+    (scalarWordCarrier n A f c phi).coeff
+        (exponents n (fun i => e (f i))) =
+      phi ((word (fun i => A i) (List.ofFn f) e) c) := by
+  rw [scalarWordCarrier, scalarOrdered_coeff]
+  rw [word_ofFn]
+
+/- Specialisation to the actual D/selector output.  This is the exact
+   coefficient requested by the adapter: lambda(selector.map(actual word)). -/
+theorem scalarWordCarrier_actual_coeff (n : ℕ)
+    (D : GradedLocalFields n V)
+    {d : ℤ} (selector : OutputGradeSelector D.energy d)
+    (f : Fin n → Fin n) (lambda : V →ₗ[ℂ] ℂ) (e : Fin n → ℤ) :
+    (scalarWordCarrier n D.field f D.vacuum
+      (lambda.comp selector.map)).coeff
+        (exponents n (fun i => e (f i))) =
+      lambda (coefficientDistribution D.field D.vacuum selector.map
+        (List.ofFn f) e) := by
+  rw [scalarWordCarrier_coeff]
+  rfl
+
+
+end SupportedFieldWords.ActualFieldWordAdapter
+end
+
+end D5.S3.VertexAlgebra
+
 namespace D5.S3.VertexAlgebra
 
 section
@@ -319,18 +408,6 @@ theorem actual_clearing_ne_zero (k : ℕ) : clearingPolynomial K N k ≠ 0 := by
   rw [hq, map_zero] at he
   exact mul_ne_zero hc hp he.symm
 
-theorem full_clearing_ne_zero (pre post : ℕ) (z : Fin ((pre + 2) + post))
-    (tau : Fin ((pre + 1) + post) ≃ Remaining z) (k : ℕ) :
-    firstPolynomial K pre post z tau (clearingPolynomial K ((pre + 2) + post) k) ≠ 0 ∧
-    fullPolynomial K (pre + 1) post z tau (clearingPolynomial K ((pre + 2) + post) k) ≠ 0 := by
-  constructor
-  · simpa only [map_zero, firstPolynomial] using
-      (polynomialViaEquiv_injective (K := K) (firstExponents pre post z tau)).ne
-        (actual_clearing_ne_zero K z k)
-  · simpa only [map_zero, fullPolynomial] using
-      (polynomialViaEquiv_injective (K := K) (fullExponents (pre + 1) post z tau)).ne
-        (actual_clearing_ne_zero K z k)
-
 end SupportedWordRationalCollision.ClearingNonzero
 end
 
@@ -499,28 +576,6 @@ def secondActualWord (pre post : ℕ) (z : Fin ((pre + 2) + post))
     (selector : OutputGradeSelector D.energy d) (lambda : V →ₗ[ℂ] ℂ) :=
   scalarWordCarrier ((pre + 2) + post) D.field (secondOrder pre post z tau)
     D.vacuum (lambda.comp selector.map)
-
-theorem firstActualWord_coeff (pre post : ℕ) (z : Fin ((pre + 2) + post))
-    (tau : Fin ((pre + 1) + post) ≃ Remaining z)
-    (D : GradedLocalFields ((pre + 2) + post) V) (d : ℤ)
-    (selector : OutputGradeSelector D.energy d) (lambda : V →ₗ[ℂ] ℂ)
-    (e : Fin ((pre + 2) + post) → ℤ) :
-    (firstActualWord pre post z tau D d selector lambda).coeff (firstExponents pre post z tau e) =
-      lambda (coefficientDistribution D.field D.vacuum selector.map
-        (List.ofFn (firstOrder pre post z tau)) e) := by
-  rw [← firstOrder_equiv]
-  exact scalarWordCarrier_actual_coeff _ D selector _ lambda e
-
-theorem secondActualWord_coeff (pre post : ℕ) (z : Fin ((pre + 2) + post))
-    (tau : Fin ((pre + 1) + post) ≃ Remaining z)
-    (D : GradedLocalFields ((pre + 2) + post) V) (d : ℤ)
-    (selector : OutputGradeSelector D.energy d) (lambda : V →ₗ[ℂ] ℂ)
-    (e : Fin ((pre + 2) + post) → ℤ) :
-    (secondActualWord pre post z tau D d selector lambda).coeff (fullExponents (pre + 1) post z tau e) =
-      lambda (coefficientDistribution D.field D.vacuum selector.map
-        (List.ofFn (secondOrder pre post z tau)) e) := by
-  rw [← secondOrder_equiv]
-  exact scalarWordCarrier_actual_coeff _ D selector _ lambda e
 
 /-- The same genuine supplier numerator identifies both actual words, and
 transports the complete supported collision for every integer residue weight.

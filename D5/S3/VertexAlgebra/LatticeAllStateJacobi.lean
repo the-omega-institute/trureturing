@@ -10,7 +10,8 @@ import D5.S3.VertexAlgebra.LatticeAllStateLocality
 import D5.S3.VertexAlgebra.BinomialKernelDelta
 
 /- Copyright (c) 2025 Scott Carnahan. All rights reserved.
-Released under Apache 2.0 license as described in the supplier repository LICENSE.
+Released under Apache 2.0 license; the full terms are in this repository root LICENSE.
+The pinned supplier tree contains no LICENSE or NOTICE file.
 Authors: Scott Carnahan; actual lattice adaptation as documented below. -/
 /- Actual lattice residue closure and all-integer Borcherds identity.
 The Borcherds finite-sum/Pascal proof is adapted from PolynomialFockJacobi

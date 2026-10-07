@@ -20,19 +20,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeActualConformalState.quadratic_state
 
 For all i,j, Y(single(0,X(i,0)X(j,0))) equals normalMinusOne(neutralField(i),neutralField(j)).operator. The actual current state, its minus-one product, and proved normal state-product compatibility give the result independently of occurrence order.
 
-**Theorem 1.2 (Neutral quadratic fields are symmetric).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeActualConformalState.quadraticSummand_symmetric`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeActualConformalState.quadraticSummand_symmetric` (`✓ std3`). ∎
-
-*Citation.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-quadraticSummand(i,j)=quadraticSummand(j,i) follows from the preceding actual state identity and commutativity of oscillator multiplication. No general commutativity of normal products is assumed.
-
-**Theorem 1.3 (The field of the actual omega is the Sugawara field).**
+**Theorem 1.2 (The field of the actual omega is the Sugawara field).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticeActualConformalState.Y_omega`
 
@@ -43,18 +31,6 @@ Lean statement: `D5/S3/VertexAlgebra/LatticeActualConformalState.Y_omega`
 *Commentary.*
 
 Y(omega(D,H))=sugawaraField(D,H) for arbitrary H. Finite double-sum linearity and the actual quadratic identity prove this equality.
-
-**Theorem 1.4 (The actual minus-two mode creates omega).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticeActualConformalState.omega_eq_minus_two_vacuum`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticeActualConformalState.omega_eq_minus_two_vacuum` (`✓ std3`). ∎
-
-*Citation.* Igor B. Frenkel, James Lepowsky, and Arne Meurman (1988). *Vertex Operator Algebras and the Monster*. DOI: [10.1016/S0079-8169(08)X6136-7](https://doi.org/10.1016/S0079-8169(08)X6136-7).
-
-*Commentary.*
-
-omega(D,H)=L_(-2) vacuum, by the same Y identification and actual creation at field mode -1. The equality includes rank zero.
 
 Bakalov-Kac, arXiv math/0402315v1, section 4.1, equations (4.12)-(4.16), DOI 10.1142/9789812702562_0001, supplies the lattice field, ordered-product, translation and conformal construction. Equation numbers refer to arXiv v1.
 
@@ -71,8 +47,6 @@ This is algebraic ungraded vertex-algebra mathematics. Finite graded pieces, pos
 ## References
 
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeActualConformalState.Y_omega`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeActualConformalState.omega_eq_minus_two_vacuum`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticeActualConformalState.quadraticSummand_symmetric`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticeActualConformalState.quadratic_state_field`
 - Dependency: [D5/S3/VertexAlgebra/LatticeActualStateFieldCalculus](LatticeActualStateFieldCalculus.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeSugawaraCurrents](LatticeSugawaraCurrents.md)

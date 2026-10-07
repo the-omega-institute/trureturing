@@ -39,19 +39,6 @@ internal sealed class LatticeInvolutionDocument : IScribeDocumentDefinition
                         + "is identity and gives an actual linear equivalence."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("actual-reflection-support"),
-                DeclarationHandle.Create(Prefix + "theta_support"),
-                H("Exact charge support transport"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Background),
-                Blocks(
-                    Paragraph(Text("The coefficient at -a is sigma of the "
-                        + "coefficient at a. Injectivity of sigma therefore "
-                        + "identifies support(theta(v)) with the image of "
-                        + "support(v) under charge negation, with no cancellation "
-                        + "or homogeneous-state restriction."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("actual-reflection-vacuum"),
                 DeclarationHandle.Create(Prefix + "theta_vacuum"),
                 H("The actual vacuum is fixed"),
@@ -60,36 +47,14 @@ internal sealed class LatticeInvolutionDocument : IScribeDocumentDefinition
                 Blocks(Paragraph(Text("The vacuum is single(0,1). Charge "
                     + "negation fixes zero and sigma fixes the constant one."))),
                 DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("actual-section-inverse-phase"),
-                DeclarationHandle.Create(Prefix + "theta_ground_DongNagatomo"),
-                H("The inverse-section phase cancels on actual ground states"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Background),
-                Blocks(
-                    Paragraph(Text("Write c(a,b) for the realized lower-triangular "
-                        + "cocycle exponent and epsilon_charge(a,b)=(-1)^c(a,b). "
-                        + "Simultaneous negation leaves c and B unchanged, so "
-                        + "epsilon_charge(-a,-b)=epsilon_charge(a,b); the lift "
-                        + "has eta=1. The already accepted public "
-                        + "GroundRealization integral_cocycle_square theorem "
-                        + "supplies c(a,a)=B(a,a)/2, and is reused rather than "
-                        + "registered as an independent new result here. "
-                        + "Since c(a,-a)=-c(a,a), the inverse-section factor "
-                        + "epsilon_charge(a,-a) equals (-1)^(B(a,a)/2). Its "
-                        + "product with the Dong-Nagatomo phase is one. Thus "
-                        + "theta(single(a,1)) is the actual ground-state "
-                        + "charge flip; the full theta also acts on oscillators.")),
-                    Paragraph(Text("Bakalov-Kac, math/0402315v1, section 4.1 "
-                        + "pp. 8-10, equations (4.18)-(4.20), Proposition 4.1 "
-                        + "and Remark 4.1, provide the lift and field context. "
-                        + "Dong-Nagatomo, math/9808088v1, pp. 4-5 and 9, write "
-                        + "theta(a)=a inverse times (-1)^q, q=B(a,a)/2. "
-                        + "The section-square equation, phase cancellation "
-                        + "and whole-carrier reflection are distinct facts. "
-                        + "Their positive-definite classification conclusions "
-                        + "are not asserted for these broader hypotheses."))),
-                DescribeRole.Theorem),
+            Paragraph(Text("The realized lower-triangular section obeys c(a,a)=B(a,a)/2 and "
+                + "epsilon(a,-a)=(-1)^(B(a,a)/2). The ground formula is "
+                + "theta(single(a,1))=(-1)^(B(a,a)/2) smul (epsilon(a,-a) smul single(-a,1))=single(-a,1). "
+                + "The section-square equation is the released integral_cocycle_square result. "
+                + "Dong-Nagatomo, math/9808088v1, pp. 4-5 and 9, write theta(a)=a inverse times (-1)^q, "
+                + "q=B(a,a)/2. Bakalov-Kac, math/0402315v1, section 4.1, equations (4.18)-(4.20), "
+                + "Proposition 4.1 and Remark 4.1 give the lift and field context. Their "
+                + "positive-definite classification conclusions are outside the present hypotheses.")),
             Describe.Lean(
                 DescribeId.Create("actual-all-state-mode-covariance"),
                 DeclarationHandle.Create(Prefix + "stateField_theta"),
@@ -170,15 +135,6 @@ internal sealed class LatticeInvolutionDocument : IScribeDocumentDefinition
                         + "premise or an assumption that divergent sums vanish."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("actual-sign-intersection"),
-                DeclarationHandle.Create(Prefix + "fixed_minus_intersection"),
-                H("The sign splitting is unique"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Background),
-                Blocks(Paragraph(Text("The +1 and -1 eigenspaces intersect "
-                    + "only at zero: their two equations imply 2v=0 over C."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("actual-mode-eigenvalue-selection"),
                 DeclarationHandle.Create(Prefix + "mode_eigenvalue_selection"),
                 H("Actual mode eigenvalues multiply"),
@@ -201,15 +157,6 @@ internal sealed class LatticeInvolutionDocument : IScribeDocumentDefinition
                     + "only the zero charge when r=0, so theta(v)=v. "
                     + "Square identity therefore does not imply universal "
                     + "exact order two."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("actual-rank-zero-minus-space"),
-                DeclarationHandle.Create(Prefix + "minusSpace_rank_zero"),
-                H("The rank-zero minus eigenspace is zero"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(Background),
-                Blocks(Paragraph(Text("At r=0, theta(v)=-v together with "
-                    + "theta(v)=v gives 2v=0, so the minus submodule is bottom."))),
                 DescribeRole.Theorem),
             Paragraph(Text("The inherited finite residue kernels and divided "
                 + "derivatives retain Scott Carnahan/vertexAlg, revision "

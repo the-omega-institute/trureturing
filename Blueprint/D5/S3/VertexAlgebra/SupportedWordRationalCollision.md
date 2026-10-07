@@ -4,9 +4,23 @@
 
 The genuine uniform numerator reconstructs both actual complete words and transports the all-integer collision.
 
+**Theorem 1.1 (The native graded-local distribution is the actual coefficient).**
+
+Lean statement: `D5/S3/VertexAlgebra/SupportedWordRationalCollision.scalarWordCarrier_actual_coeff`
+
+*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/SupportedWordRationalCollision.scalarWordCarrier_actual_coeff` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Atsushi Matsuo; Kiyokazu Nagatomo (1997). *On axioms for a vertex algebra and the locality of quantum fields*. URL: <https://arxiv.org/abs/hep-th/9706118v1>.
+
+*Commentary.*
+
+For complex graded-local fields D and output selector, word_ofFn identifies the list of actual modes with the complete HVertexOperator composition applied to D.vacuum. ScalarWordCarrier at every integer labelled exponent equals lambda of coefficientDistribution D.field D.vacuum selector.map (List.ofFn sigma). The evaluator is lambda composed with selector.map.
+
 Let V be a complex module, D actual GradedLocalFields with energy covariance, creation, vacuum energy zero and a uniform operator locality order. Let the idempotent output selector satisfy both energy-d intertwining laws and fix energy-d vectors. Choose any full nodup original label order, any submodule W containing its selected coefficients, and any linear lambda. These hypotheses are generic graded-local laws, not an unconditional assertion for every VOA.
 
-**Theorem 1.1 (Finite polynomial action is Hahn multiplication).**
+**Theorem 1.2 (Finite polynomial action is Hahn multiplication).**
 
 Lean statement: `D5/S3/VertexAlgebra/SupportedWordRationalCollision.actual_clearing_coeff`
 
@@ -20,7 +34,7 @@ Lean statement: `D5/S3/VertexAlgebra/SupportedWordRationalCollision.actual_clear
 
 The native polynomialAction is the finite e-b convolution, and ordered_mul_coeff proves it equals Hahn multiplication. ActualWord coefficients are the real coefficientDistribution in modes -e-1. Scalarization of the finite vector numerator gives its exact coefficient at every integer exponent, including zero at negative coordinates.
 
-**Theorem 1.2 (Reconstruct every order from the same derived numerator).**
+**Theorem 1.3 (Reconstruct every order from the same derived numerator).**
 
 Lean statement: `D5/S3/VertexAlgebra/SupportedWordRationalCollision.actual_all_order_expansion`
 
@@ -34,7 +48,7 @@ Lean statement: `D5/S3/VertexAlgebra/SupportedWordRationalCollision.actual_all_o
 
 The proof invokes uniform_graded_local_correlator on the original full nodup order and proves that List.ofFn sigma is a permutation for every sigma. The same finite P has total degree d-sum weights+k*number of labelled pairs, all coefficients lie in W, and negative degree forces P=0. OriginalQ_ne_zero and injective ordered polynomial/fraction embeddings allow cancellation in the supported Hahn field. No reconstruction equality or support certificate remains a premise.
 
-**Theorem 1.3 (Both actual words satisfy the complete all-integer collision).**
+**Theorem 1.4 (Both actual words satisfy the complete all-integer collision).**
 
 Lean statement: `D5/S3/VertexAlgebra/SupportedWordRationalCollision.actual_word_collision`
 
@@ -57,9 +71,9 @@ Matsuo and Nagatomo, hep-th/9706118v1, Proposition 1.5.5 and Theorem 5.4.1 provi
 - Truth anchor: `D5/S3/VertexAlgebra/SupportedWordRationalCollision.actual_all_order_expansion`
 - Truth anchor: `D5/S3/VertexAlgebra/SupportedWordRationalCollision.actual_clearing_coeff`
 - Truth anchor: `D5/S3/VertexAlgebra/SupportedWordRationalCollision.actual_word_collision`
+- Truth anchor: `D5/S3/VertexAlgebra/SupportedWordRationalCollision.scalarWordCarrier_actual_coeff`
 - Dependency: [D5/S3/VertexAlgebra/CollisionRationalExpansions](CollisionRationalExpansions.md)
 - Dependency: [D5/S3/VertexAlgebra/LabelledRationalClearing](LabelledRationalClearing.md)
 - Dependency: [D5/S3/VertexAlgebra/OrderedCollisionCoordinates](OrderedCollisionCoordinates.md)
 - Dependency: [D5/S3/VertexAlgebra/RationalCollision](RationalCollision.md)
-- Dependency: [D5/S3/VertexAlgebra/SupportedFieldWords](SupportedFieldWords.md)
 - Dependency: [D5/S3/VertexAlgebra/UniformGradedLocalCorrelator](UniformGradedLocalCorrelator.md)

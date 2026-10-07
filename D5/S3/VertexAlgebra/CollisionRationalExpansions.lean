@@ -20,7 +20,6 @@ No actual Monster carrier or fused-state identification is asserted.
 -/
 
 import D5.S3.VertexAlgebra.CollisionLaurentKernels
-import D5.S3.VertexAlgebra.SupportedFieldWords
 import Mathlib.Tactic.Abel
 
 noncomputable section
@@ -57,10 +56,16 @@ lemma polyZX_C (p : Polynomial K) :
   change polyXZ K (Polynomial.Bivariate.swap (Polynomial.C p)) = _
   rw [Polynomial.Bivariate.swap_C]
   unfold outerSeries
-  rw [seriesMap_polynomial]
-  change algebraMap (Polynomial (LaurentSeries K)) (ZX K)
-    ((p.map Polynomial.C).map (algebraMap (Polynomial K) (LaurentSeries K))) = _
+  apply HahnSeries.ext
+  funext n
+  change ((algebraMap (Polynomial (LaurentSeries K)) (ZX K))
+      ((p.map Polynomial.C).map (algebraMap (Polynomial K) (LaurentSeries K)))).coeff n = _
   rw [Polynomial.map_map, coefficientPoly_C]
+  change ((algebraMap (Polynomial (LaurentSeries K)) (ZX K))
+      (p.map HahnSeries.C)).coeff n = HahnSeries.C
+      ((algebraMap (Polynomial K) (LaurentSeries K) p).coeff n)
+  simp only [Polynomial.algebraMap_hahnSeries_apply, PowerSeries.coeff_coe]
+  split_ifs <;> simp [Polynomial.coeff_coe, Polynomial.coeff_map]
 
 lemma polyFused_C (p : Polynomial K) :
     fusedPoly K (Polynomial.C p) = HahnSeries.C
@@ -377,23 +382,6 @@ variable {V : Type*} [AddCommGroup V] [Module K V]
 labelled coefficient-function target. -/
 def labelledCoefficients (n : ℕ) (F : HahnModule (Indices n) K V) : (Fin n → ℤ) → V :=
   fun e => coefficients F (exponentAddEquiv n e)
-
-lemma labelledCoefficients_injective (n : ℕ) :
-    Function.Injective (labelledCoefficients K (V := V) n) := by
-  intro F G h
-  apply HahnModule.ext
-  funext g
-  have he := congrFun h ((exponentAddEquiv n).symm g)
-  simpa only [labelledCoefficients, coefficients, AddEquiv.apply_symm_apply] using he
-
-/-- Precise original finite-word support obligation; it is a theorem of the
-actual generic field carrier, with no new uniform operator truncation axiom. -/
-theorem actual_word_supported (n : ℕ) (A : Fin n → VertexOperator K V) (c : V) :
-    ∃ F : HahnModule (Indices n) K V,
-      labelledCoefficients K n F = fun e => actualWord n A e c := by
-  refine ⟨ordered n A c, ?_⟩
-  funext e
-  exact ordered_coeff n A e c
 
 end CollisionRationalExpansions.OrderedRationalExpansion
 end

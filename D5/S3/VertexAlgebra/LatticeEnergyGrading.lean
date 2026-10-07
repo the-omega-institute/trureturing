@@ -71,20 +71,6 @@ def gradeBasis (D : LatticeData) (n : ℤ) :
     Module.Basis (EnergyFiber D n) ℂ (grade D n) :=
   Module.Basis.ofRepr (gradeCoeffEquiv D n)
 
-@[simp] theorem gradeBasis_coe (D : LatticeData) (n : ℤ) (a : EnergyFiber D n) :
-    (gradeBasis D n a : Carrier D) = carrierBasis D a.1 := by
-  classical
-  simp only [gradeBasis, Module.Basis.coe_ofRepr, gradeCoeffEquiv,
-    LinearEquiv.symm_trans_apply]
-  rw [LinearEquiv.ofSubmodule'_symm_apply]
-  apply (carrierCoeffEquiv D).injective
-  rw [LinearEquiv.apply_symm_apply]
-  have hrepr : carrierCoeffEquiv D (carrierBasis D a.1) = Finsupp.single a.1 1 :=
-    (carrierBasis D).repr_self a.1
-  rw [hrepr]
-  exact Finsupp.supportedEquivFinsupp_symm_single (M := ℂ) (R := ℂ)
-    {b : Label D | energy D b = n} a (1 : ℂ)
-
 theorem grade_eq_span (D : LatticeData) (n : ℤ) :
     grade D n = Submodule.span ℂ (carrierBasis D '' {a : Label D | energy D a = n}) := by
   ext v
@@ -96,18 +82,6 @@ theorem grade_finiteDimensional (D : LatticeData)
     FiniteDimensional ℂ (grade D n) := by
   haveI := energyFiber_finite D hD n
   exact Module.Finite.of_basis (gradeBasis D n)
-
-theorem grade_finrank (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (n : ℤ) :
-    Module.finrank ℂ (grade D n) = Nat.card (EnergyFiber D n) := by
-  haveI := energyFiber_finite D hD n
-  letI := Fintype.ofFinite (EnergyFiber D n)
-  exact (Module.finrank_eq_card_basis (gradeBasis D n)).trans (Nat.card_eq_fintype_card.symm)
-
-theorem grade_finrank_nat (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (N : ℕ) :
-    Module.finrank ℂ (grade D (N : ℤ)) = Nat.card (EnergyFiber D (N : ℤ)) :=
-  grade_finrank D hD N
 
 theorem grade_negative (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (n : ℤ) (hn : n < 0) :
@@ -198,54 +172,10 @@ theorem gradeProjection_mem (D : LatticeData) (n : ℤ) (v : Carrier D) :
   change carrierCoeffEquiv D (gradeProjection D n v) a = 0
   simpa [ha] using gradeProjection_coeff D n v a
 
-theorem gradeProjection_on_grade (D : LatticeData) (n : ℤ)
-    (v : Carrier D) (hv : v ∈ grade D n) : gradeProjection D n v = v := by
-  classical
-  apply (carrierCoeffEquiv D).injective
-  ext a
-  rw [gradeProjection_coeff]
-  split_ifs with h
-  · rfl
-  · exact ((mem_grade_iff D n v).mp hv a h).symm
-
-theorem gradeProjection_other_grade (D : LatticeData) (m n : ℤ) (hmn : m ≠ n)
-    (v : Carrier D) (hv : v ∈ grade D n) : gradeProjection D m v = 0 := by
-  classical
-  apply (carrierCoeffEquiv D).injective
-  ext a
-  rw [gradeProjection_coeff]
-  split_ifs with ha
-  · exact (mem_grade_iff D n v).mp hv a (by omega)
-  · rfl
-
-theorem gradeProjection_idempotent (D : LatticeData) (n : ℤ) :
-    gradeProjection D n * gradeProjection D n = gradeProjection D n := by
-  apply LinearMap.ext
-  intro v
-  exact gradeProjection_on_grade D n _ (gradeProjection_mem D n v)
-
-theorem gradeProjection_disjoint (D : LatticeData) (m n : ℤ) (hmn : m ≠ n) :
-    gradeProjection D m * gradeProjection D n = 0 := by
-  apply LinearMap.ext
-  intro v
-  exact gradeProjection_other_grade D m n hmn _ (gradeProjection_mem D n v)
-
 /-- The finite set of energies present in an arbitrary actual state. -/
 def stateEnergies (D : LatticeData) (v : Carrier D) : Finset ℤ := by
   classical
   exact (carrierCoeffEquiv D v).support.image (energy D)
-
-theorem gradeProjection_outside (D : LatticeData) (v : Carrier D) (n : ℤ)
-    (hn : n ∉ stateEnergies D v) : gradeProjection D n v = 0 := by
-  classical
-  apply (carrierCoeffEquiv D).injective
-  ext a
-  rw [gradeProjection_coeff]
-  split_ifs with ha
-  · apply Finsupp.notMem_support_iff.mp
-    intro h
-    exact hn (Finset.mem_image.mpr ⟨a,h,ha⟩)
-  · rfl
 
 theorem sum_gradeProjections (D : LatticeData) (v : Carrier D) :
     ∑ n ∈ stateEnergies D v, gradeProjection D n v = v := by
@@ -299,9 +229,7 @@ def carrierEnergyDecomposition (D : LatticeData) :
     Carrier D ≃ₗ[ℂ] (⨁ n : ℤ, grade D n) :=
   (LinearEquiv.ofBijective (DirectSum.coeLinearMap (grade D)) (grades_internal D)).symm
 
-#print axioms gradeBasis_coe
 #print axioms grade_finiteDimensional
-#print axioms grade_finrank
 #print axioms grade_negative
 #print axioms grade_zero
 #print axioms rank_zero_carrier

@@ -89,16 +89,6 @@ theorem mode_commutator (D : LatticeData) (a b : Carrier D) (p q : ℤ) :
   rw [evaluation]
   exact h.symm
 
-theorem zero_mode_commutator (D : LatticeData) (a b : Carrier D) (q : ℤ) :
-    ((Y D a)[[0]]) * ((Y D b)[[q]]) -
-        ((Y D b)[[q]]) * ((Y D a)[[0]]) =
-      ((Y D (mu D a 0 b))[[q]]) := by
-  rw [mode_commutator, finsum_eq_single _ 0]
-  · simp [commutatorTerm, integerBinomial]
-  · intro j different
-    simp [commutatorTerm, integerBinomial,
-      Ring.choose_zero_pos ℤ (Nat.pos_of_ne_zero different)]
-
 theorem one_mode_commutator (D : LatticeData) (a b : Carrier D) (q : ℤ) :
     ((Y D a)[[1]]) * ((Y D b)[[q]]) -
         ((Y D b)[[q]]) * ((Y D a)[[1]]) =

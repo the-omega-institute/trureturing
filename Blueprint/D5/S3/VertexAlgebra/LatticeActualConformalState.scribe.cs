@@ -36,17 +36,6 @@ internal sealed class LatticeActualConformalStateDocument : IScribeDocumentDefin
                         + "independently of occurrence order."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("latticeactualconformalstate-quadraticsummand-symmetric"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeActualConformalState.quadraticSummand_symmetric"),
-                H("Neutral quadratic fields are symmetric"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("quadraticSummand(i,j)=quadraticSummand(j,i) follows from the preceding actual state "
-                        + "identity and commutativity of oscillator multiplication. No general commutativity of "
-                        + "normal products is assumed."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("latticeactualconformalstate-y-omega"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeActualConformalState.Y_omega"),
                 H("The field of the actual omega is the Sugawara field"),
@@ -55,16 +44,6 @@ internal sealed class LatticeActualConformalStateDocument : IScribeDocumentDefin
                 Blocks(
                     Paragraph(Text("Y(omega(D,H))=sugawaraField(D,H) for arbitrary H. Finite double-sum linearity and the "
                         + "actual quadratic identity prove this equality."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticeactualconformalstate-omega-eq-minus-two-vacuum"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeActualConformalState.omega_eq_minus_two_vacuum"),
-                H("The actual minus-two mode creates omega"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("omega(D,H)=L_(-2) vacuum, by the same Y identification and actual creation at field mode "
-                        + "-1. The equality includes rank zero."))),
                 DescribeRole.Theorem),
             Paragraph(Text("Bakalov-Kac, arXiv math/0402315v1, section 4.1, equations (4.12)-(4.16), DOI "
                 + "10.1142/9789812702562_0001, supplies the lattice field, ordered-product, translation and "

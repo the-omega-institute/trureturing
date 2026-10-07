@@ -62,11 +62,6 @@ theorem quadratic_state_field (D : LatticeData) (i j : Fin D.rank) :
     current_state_field, current_state_field]
   rfl
 
-/-- Neutral normal products are symmetric as a consequence of the actual
-state-product theorem and the commutative oscillator polynomial. -/
-theorem quadraticSummand_symmetric (D : LatticeData) (i j : Fin D.rank) :
-    quadraticSummand D i j = quadraticSummand D j i := by
-  rw [← quadratic_state_field, ← quadratic_state_field, mul_comm]
 
 /-- The half-weighted arbitrary-matrix quadratic oscillator polynomial. -/
 def conformalPolynomial (D : LatticeData)
@@ -95,12 +90,6 @@ theorem omega_modes (D : LatticeData)
   rw [Y_omega]
   rfl
 
-/-- The -2 Sugawara mode creates precisely this actual conformal state. -/
-theorem omega_eq_minus_two_vacuum (D : LatticeData)
-    (H : Matrix (Fin D.rank) (Fin D.rank) ℂ) :
-    omega D H = sugawaraMode D H (-2) (vacuum D) := by
-  rw [← omega_modes]
-  exact (stateField_creation D (omega D H)).symm
 
 end
 end D5.S3.VertexAlgebra.LatticeActualConformalState

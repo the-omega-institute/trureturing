@@ -110,32 +110,6 @@ theorem theta_involutive (D : LatticeData) : Function.Involutive (thetaLinear D)
 def theta (D : LatticeData) : Carrier D ≃ₗ[ℂ] Carrier D :=
   LinearEquiv.ofInvolutive (thetaLinear D) (theta_involutive D)
 
-theorem theta_eval (D : LatticeData) (v : Carrier D) (a : Charge D) :
-    theta D v (-a) = sigma D (v a) := by
-  have h : (Finsupp.lapply (-a)).comp (thetaLinear D) =
-      (sigmaLinear D).comp (Finsupp.lapply a) := by
-    apply Finsupp.lhom_ext
-    intro b p
-    simp only [LinearMap.comp_apply, theta_single, Finsupp.lapply_apply,
-      sigmaLinear]
-    by_cases hb : b = a
-    · subst b; simp
-    · have hn : -b ≠ -a := neg_injective.ne hb
-      simp [Finsupp.single_apply, hb, hn, Ne.symm hb, Ne.symm hn]
-  exact LinearMap.congr_fun h v
-
-theorem theta_support (D : LatticeData) (v : Carrier D) :
-    (theta D v).support = v.support.image (fun a => -a) := by
-  classical
-  ext a
-  rw [Finsupp.mem_support_iff, Finset.mem_image]
-  have he := theta_eval D v (-a)
-  simp only [neg_neg] at he
-  rw [he, (sigma_involutive D).injective.ne_iff' (map_zero (sigma D))]
-  constructor
-  · intro h; exact ⟨-a, Finsupp.mem_support_iff.mpr h, neg_neg a⟩
-  · rintro ⟨b, hb, he⟩; subst a; simpa using Finsupp.mem_support_iff.mp hb
-
 @[simp] theorem theta_vacuum (D : LatticeData) : theta D (vacuum D) = vacuum D := by
   simp [theta, vacuum]
 
@@ -381,17 +355,6 @@ theorem sigma_monomial (D : LatticeData) (e : Index D →₀ ℕ) :
   rw [← occurrences_product]
   exact sigma_word_product D (occurrences D e)
 
-theorem occurrences_length (D : LatticeData) (e : Index D →₀ ℕ) :
-    (occurrences D e).length = e.sum (fun _ n => n) := by
-  have h := congrArg Multiset.card (occurrences_multiset D e)
-  rw [Multiset.coe_card, Finsupp.card_toMultiset] at h
-  exact h
-
-theorem sigma_monomial_degree_sign (D : LatticeData) (e : Index D →₀ ℕ) :
-    sigma D (monomial e 1) =
-      ((-1 : ℂ)^(e.sum (fun _ n => n))) • monomial e 1 := by
-  rw [sigma_monomial, occurrences_length]
-
 /-- The actual all-state, all-charge, all-integer-mode automorphism law. -/
 theorem stateField_theta (D : LatticeData) (a b : Carrier D) (n : ℤ) :
     theta D (((Y D a)[[n]]) b) = ((Y D (theta D a))[[n]]) (theta D b) := by
@@ -443,51 +406,11 @@ def minusSpace (D : LatticeData) : Submodule ℂ (Carrier D) := eigenspace D (-1
 
 @[simp] theorem mem_fixedSpace (D : LatticeData) (v : Carrier D) :
     v ∈ fixedSpace D ↔ theta D v = v := by simp [fixedSpace]
-@[simp] theorem mem_minusSpace (D : LatticeData) (v : Carrier D) :
-    v ∈ minusSpace D ↔ theta D v = -v := by simp [minusSpace]
 
 def plusPart (D : LatticeData) (v : Carrier D) : Carrier D :=
   (2 : ℂ)⁻¹ • (v + theta D v)
 def minusPart (D : LatticeData) (v : Carrier D) : Carrier D :=
   (2 : ℂ)⁻¹ • (v - theta D v)
-
-theorem plusPart_mem (D : LatticeData) (v : Carrier D) :
-    plusPart D v ∈ fixedSpace D := by
-  rw [mem_fixedSpace]
-  simp only [plusPart, map_smul, map_add, theta, LinearEquiv.coe_ofInvolutive]
-  rw [theta_involutive D v]
-  rw [add_comm]
-
-theorem minusPart_mem (D : LatticeData) (v : Carrier D) :
-    minusPart D v ∈ minusSpace D := by
-  rw [mem_minusSpace]
-  simp only [minusPart, map_smul, map_sub, theta, LinearEquiv.coe_ofInvolutive]
-  rw [theta_involutive D v]
-  rw [← neg_sub v (thetaLinear D v), smul_neg]
-
-theorem fixed_minus_intersection (D : LatticeData) :
-    fixedSpace D ⊓ minusSpace D = ⊥ := by
-  apply le_antisymm
-  · intro v hv
-    have hp := (mem_fixedSpace D v).mp hv.1
-    have hm := (mem_minusSpace D v).mp hv.2
-    have h : (2 : ℂ) • v = 0 := by
-      rw [two_smul]
-      calc v + v = theta D v + v := by rw [hp]
-           _ = -v + v := by rw [hm]
-           _ = 0 := neg_add_cancel v
-    have hz : v = 0 := (smul_eq_zero.mp h).resolve_left (by norm_num)
-    simpa using hz
-  · exact bot_le
-
-/-- The ±1 sign law includes every integer mode of the actual Y. -/
-theorem mode_sign_selection (D : LatticeData) (s t : ℂ)
-    (_hs : s = 1 ∨ s = -1) (_ht : t = 1 ∨ t = -1)
-    (a b : Carrier D) (ha : a ∈ eigenspace D s) (hb : b ∈ eigenspace D t) (n : ℤ) :
-    ((Y D a)[[n]]) b ∈ eigenspace D (s*t) := by
-  rw [mem_eigenspace]
-  exact mode_eigenvalue_selection D s t a b
-    ((mem_eigenspace D s a).mp ha) ((mem_eigenspace D t b).mp hb) n
 
 theorem theta_rank_zero (D : LatticeData) (hD : D.rank = 0) (v : Carrier D) :
     theta D v = v := by
@@ -504,43 +427,6 @@ theorem theta_rank_zero (D : LatticeData) (hD : D.rank = 0) (v : Carrier D) :
     intro a p
     simp [hs, hc]
   exact LinearMap.congr_fun h v
-
-theorem minusSpace_rank_zero (D : LatticeData) (hD : D.rank = 0) :
-    minusSpace D = ⊥ := by
-  apply le_antisymm
-  · intro v hv
-    have hm := (mem_minusSpace D v).mp hv
-    rw [theta_rank_zero D hD] at hm
-    have h : (2 : ℂ) • v = 0 := by
-      rw [two_smul]
-      calc v + v = -v + v := congrArg (fun u => u + v) hm
-           _ = 0 := neg_add_cancel v
-    simpa using (smul_eq_zero.mp h).resolve_left (by norm_num : (2 : ℂ) ≠ 0)
-  · exact bot_le
-
-/-- The realized section square reuses the accepted integral half-norm theorem. -/
-theorem realized_section_square (D : LatticeData) (a : Charge D) :
-    lowerCocycleExponent D a a = bilinear D a a / 2 := by
-  exact LatticeTwistedGroundRealization.SignQuotient.integral_cocycle_square D a
-
-/-- The inverse-section sign cancels the Dong--Nagatomo phase on actual ground states.
-Here epsilon(a,-a) is its own inverse. This formula concerns this realized section. -/
-theorem theta_ground_DongNagatomo (D : LatticeData) (a : Charge D) :
-    theta D (Finsupp.single a (1 : Oscillator D)) =
-      paritySign (bilinear D a a / 2) •
-        (epsilon D a (-a) • Finsupp.single (-a) (1 : Oscillator D)) := by
-  have hc : lowerCocycleExponent D a (-a) = -lowerCocycleExponent D a a := by
-    simp [lowerCocycleExponent, Finset.sum_neg_distrib, add_comm]
-  have hp : epsilon D a (-a) = paritySign (bilinear D a a / 2) := by
-    rw [epsilon, hc, realized_section_square]
-    simp [paritySign]
-  rw [hp, smul_smul]
-  have hs : paritySign (bilinear D a a / 2) * paritySign (bilinear D a a / 2) = 1 := by
-    unfold paritySign
-    split_ifs <;> norm_num
-  rw [hs, one_smul]
-  simp [theta]
-
 
 /-! ## The restricted actual fixed vertex algebra -/
 
@@ -576,9 +462,6 @@ def fixedMode (D : LatticeData) (a : FixedCarrier D) (n : ℤ) :
   map_add' b c := by apply Subtype.ext; exact map_add _ _ _
   map_smul' s b := by apply Subtype.ext; exact map_smul _ _ _
 
-@[simp] theorem fixedMode_val (D : LatticeData) (a b : FixedCarrier D) (n : ℤ) :
-    (fixedMode D a n b).val = ((Y D a.val)[[n]]) b.val := rfl
-
 /-- Lower truncation is inherited statewise from the actual ambient field. -/
 def fixedField (D : LatticeData) (a : FixedCarrier D) :
     VertexOperator ℂ (FixedCarrier D) :=
@@ -608,8 +491,9 @@ def fixedY (D : LatticeData) :
     simp only [VertexOperator.coeff_eq_ncoeff, map_add, Pi.add_apply,
       LinearMap.add_apply, fixedField_ncoeff]
     apply Subtype.ext
-    simp only [fixedMode_val, Submodule.coe_add, map_add, Pi.add_apply,
-      LinearMap.add_apply]
+    change ((Y D (a.val + b.val))[[-k-1]]) c.val =
+      ((Y D a.val)[[-k-1]]) c.val + ((Y D b.val)[[-k-1]]) c.val
+    simp only [map_add, Pi.add_apply, LinearMap.add_apply]
   map_smul' s a := by
     apply HVertexOperator.coeff_inj
     funext k
@@ -618,8 +502,8 @@ def fixedY (D : LatticeData) :
     simp only [VertexOperator.coeff_eq_ncoeff, map_smul, Pi.smul_apply,
       LinearMap.smul_apply, fixedField_ncoeff]
     apply Subtype.ext
-    simp only [fixedMode_val, Submodule.coe_smul, map_smul, Pi.smul_apply,
-      LinearMap.smul_apply, RingHom.id_apply]
+    change ((Y D (s • a.val))[[-k-1]]) c.val = s • ((Y D a.val)[[-k-1]]) c.val
+    simp only [map_smul, Pi.smul_apply, LinearMap.smul_apply, RingHom.id_apply]
 
 @[simp] theorem fixedY_mode_val (D : LatticeData) (a b : FixedCarrier D) (n : ℤ) :
     (((fixedY D a)[[n]]) b).val = ((Y D a.val)[[n]]) b.val := by

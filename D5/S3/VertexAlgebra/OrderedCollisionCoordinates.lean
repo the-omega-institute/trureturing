@@ -338,12 +338,6 @@ theorem local_diagonal :
   rw [curry_pair_left]
   exact translate_diagonal K z x
 
-/-- Every integer residue weight becomes exactly u^r at the rational level. -/
-theorem weighted_translation (r : ℤ) (R : CommonRational K N) :
-    localRational K z x
-      ((algebraMap _ (CommonRational K N) (pairPolynomial K z x.val)) ^ r * R) =
-      RatFunc.X ^ r * localRational K z x R := by
-  rw [map_mul, map_zpow₀, local_diagonal]
 
 variable (pre post : ℕ) (z : Fin ((pre + 1) + post))
   (x : Remaining z) (tau : Fin (pre + post) ≃ Remaining z)
@@ -359,13 +353,6 @@ def fusedLocalSeries (R : CommonRational K ((pre + 1) + post)) :
 theorem fused_residue_square (R : CommonRational K ((pre + 1) + post)) :
     (fusedLocalSeries K pre post z x tau R).coeff (-1) =
       coefficientHahn K pre post z tau (localResidue K z x R) := rfl
-
-theorem fused_labelled_coeff (R : CommonRational K ((pre + 1) + post))
-    (e : Remaining z → ℤ) :
-    ((fusedLocalSeries K pre post z x tau R).coeff (-1)).coeff
-      (remainingExponents pre post z tau e) =
-      (coefficientHahn K pre post z tau (localResidue K z x R)).coeff
-        (remainingExponents pre post z tau e) := by rw [fused_residue_square]
 
 end OrderedCollisionCoordinates.LocalResidueCurrying
 end

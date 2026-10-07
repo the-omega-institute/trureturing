@@ -28,17 +28,6 @@ internal sealed class OrderedCollisionCoordinatesDocument : IScribeDocumentDefin
                         + "prove the actual coefficient-field squares and supported residue maps."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("orderedcollisioncoordinates-weighted-translation"),
-                DeclarationHandle.Create(Prefix + "weighted_translation"),
-                H("Translate the common rational diagonal before residue"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(LocalityBackground),
-                Blocks(
-                    Paragraph(Text("The actual rational substitution z=x+u maps (z-x)^r to u^r for every integer r. All "
-                        + "remaining variables remain in their original coefficient field. Injective polynomial and "
-                        + "fraction-field maps justify the substitution, including inverse powers."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("orderedcollisioncoordinates-fused-residue-square"),
                 DeclarationHandle.Create(Prefix + "fused_residue_square"),
                 H("Full remaining expansion commutes with the u-residue"),

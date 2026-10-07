@@ -12,6 +12,20 @@ internal sealed class SupportedWordRationalCollisionDocument : IScribeDocumentDe
         "The genuine uniform numerator reconstructs both actual complete words and transports the all-integer collision.",
         H("Actual supported-word rational reconstruction and collision"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("supportedfieldwords-scalarwordcarrier-actual-coeff"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/SupportedWordRationalCollision.scalarWordCarrier_actual_coeff"),
+                H("The native graded-local distribution is the actual coefficient"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/matsuo1997locality")),
+                Blocks(
+                    Paragraph(Text("For complex graded-local fields D and output selector, word_ofFn identifies the list of "
+                        + "actual modes with the complete HVertexOperator composition applied to D.vacuum. "
+                        + "ScalarWordCarrier at every integer labelled exponent equals lambda of "
+                        + "coefficientDistribution D.field D.vacuum selector.map (List.ofFn sigma). The evaluator is "
+                        + "lambda composed with selector.map."))),
+                DescribeRole.Theorem),
+
             Paragraph(Text("Let V be a complex module, D actual GradedLocalFields with energy covariance, creation, "
                 + "vacuum energy zero and a uniform operator locality order. Let the idempotent output selector "
                 + "satisfy both energy-d intertwining laws and fix energy-d vectors. Choose any full nodup "

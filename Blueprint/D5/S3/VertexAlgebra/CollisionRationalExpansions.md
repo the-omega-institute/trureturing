@@ -58,4 +58,3 @@ Matsuo and Nagatomo, hep-th/9706118v1, Proposition 1.5.5 and Theorem 5.4.1 provi
 - Truth anchor: `D5/S3/VertexAlgebra/CollisionRationalExpansions.orderedPolynomialFor_injective`
 - Truth anchor: `D5/S3/VertexAlgebra/CollisionRationalExpansions.pullFiber_mul`
 - Dependency: [D5/S3/VertexAlgebra/CollisionLaurentKernels](CollisionLaurentKernels.md)
-- Dependency: [D5/S3/VertexAlgebra/SupportedFieldWords](SupportedFieldWords.md)

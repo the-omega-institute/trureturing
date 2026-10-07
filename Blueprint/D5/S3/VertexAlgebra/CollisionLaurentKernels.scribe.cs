@@ -12,6 +12,18 @@ internal sealed class CollisionLaurentKernelsDocument : IScribeDocumentDefinitio
         "The two iterated Laurent expansions of a rational expression have a diagonal residue jump over any field.",
         H("All-integer Laurent collision kernels"),
         Blocks(
+            Describe.Lean(
+                DescribeId.Create("supportedfieldwords-ordered-coeff"),
+                DeclarationHandle.Create("D5/S3/VertexAlgebra/CollisionLaurentKernels.ordered_coeff"),
+                H("Coefficients of the complete actual word"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/VertexAlgebra/matsuo1997locality")),
+                Blocks(
+                    Paragraph(Text("The exponent vector records coefficients in the recursively ordered Hahn group. The "
+                        + "coefficient at e is the successive mode action with mode index -e_i-1. Scalar evaluation is "
+                        + "a linear map applied after that action, with the same operator ordering."))),
+                DescribeRole.Theorem),
+
             Paragraph(Text("Let K be any field. The labelled variables are z and x; the two iterated Laurent fields "
                 + "encode the orders z,x and x,z. Rational functions are divided in the common fraction field "
                 + "before either expansion. Integer powers, including inverse powers, are handled by the native "
