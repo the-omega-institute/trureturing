@@ -20,6 +20,8 @@ For every finite X, every f and every H, all simulations have at least |X| + H t
 
 At time H, initialized trajectories give |X| distinct states. For each point without a predecessor, its states at times zero through H minus one are distinct from each other and from the time-H states. Cancelling the earlier permutation iterate would otherwise put a point without a predecessor in the image of a positive iterate of f.
 
+When H is zero, take E = X, the identity permutation, and identity readout and initialization. Only time zero is required, and the state count is exactly |X|.
+
 Choose one predecessor of each image point and extend these selected edges to a permutation q of X. Every q-edge entering an image point is then an f-edge. Subdivide each remaining edge, which enters a missing-image point, by H new states. Read an added state by applying the corresponding positive iterate of f to that edge's source. An initialized trajectory enters an added segment only after a positive number of steps, so it cannot leave that segment within H steps. The construction adds exactly H states per missing-image point.
 
 ## References
