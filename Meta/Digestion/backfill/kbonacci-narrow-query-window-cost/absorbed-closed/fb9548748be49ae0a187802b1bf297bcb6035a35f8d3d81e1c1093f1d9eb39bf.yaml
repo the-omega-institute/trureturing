@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:fb9548748be49ae0a187802b1bf297bcb6035a35f8d3d81e1c1093f1d9eb39bf
+  normalized_sha256: sha256:fb9548748be49ae0a187802b1bf297bcb6035a35f8d3d81e1c1093f1d9eb39bf
+cas_ref: sha256:fb9548748be49ae0a187802b1bf297bcb6035a35f8d3d81e1c1093f1d9eb39bf
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalNarrowCost.original_cost_lower
+    target_statement_id: sha256:0e483948ed9176634a8d83974601091306240a31bff8aea44f92d615a957eb0b
+receipts:
+  unresolved_subitems: []

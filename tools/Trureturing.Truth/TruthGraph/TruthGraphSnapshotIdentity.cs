@@ -11,6 +11,11 @@ public readonly record struct SnapshotDigestEntry(
     ReadOnlyMemory<byte> Content,
     bool IsGeneratedProjection);
 
+public readonly record struct SnapshotContentHashEntry(
+    string Path,
+    ReadOnlyMemory<byte> ContentHash,
+    bool IsGeneratedProjection);
+
 /// Computes the truth-graph snapshot content digest recorded in
 /// <see cref="TruthGraphProvenance.SnapshotContentDigest"/>. The algorithm is self-contained so a
 /// downstream consumer can recompute and verify the digest from its own repository state; deciding
@@ -18,9 +23,17 @@ public readonly record struct SnapshotDigestEntry(
 /// <see cref="SnapshotDigestEntry.IsGeneratedProjection"/>.
 public static class TruthGraphSnapshotIdentity
 {
-    private static readonly byte[] ProjectionMarker = Encoding.UTF8.GetBytes("scribe-generated-projection-v1");
+    private static readonly byte[] ProjectionContentHash = SHA256.HashData(Encoding.UTF8.GetBytes("scribe-generated-projection-v1"));
 
     public static string Compute(IEnumerable<SnapshotDigestEntry> files)
+    {
+        ArgumentNullException.ThrowIfNull(files);
+        return ComputeContentHashes(files.Select(static file => new SnapshotContentHashEntry(
+            file.Path, file.IsGeneratedProjection ? ReadOnlyMemory<byte>.Empty : SHA256.HashData(file.Content.Span),
+            file.IsGeneratedProjection)));
+    }
+
+    public static string ComputeContentHashes(IEnumerable<SnapshotContentHashEntry> files)
     {
         ArgumentNullException.ThrowIfNull(files);
         using var hash = IncrementalHash.CreateHash(HashAlgorithmName.SHA256);
@@ -29,8 +42,10 @@ public static class TruthGraphSnapshotIdentity
         {
             Append(hash, file.Path);
             var contentHash = file.IsGeneratedProjection
-                ? SHA256.HashData(ProjectionMarker)
-                : SHA256.HashData(file.Content.Span);
+                ? ProjectionContentHash
+                : file.ContentHash.Span;
+            if (contentHash.Length != SHA256.HashSizeInBytes)
+                throw new ArgumentException("Snapshot content hashes must be raw SHA256 bytes.", nameof(files));
             Append(hash, contentHash);
         }
 

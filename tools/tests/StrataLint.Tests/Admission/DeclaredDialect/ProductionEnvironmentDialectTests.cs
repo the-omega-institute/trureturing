@@ -47,7 +47,7 @@ public sealed partial class ProductionEnvironmentTests
             new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
             new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty));
 
-        var result = environment.AlignDigestionStatus(["--base", "baseline"]);
+        var result = environment.Ingest(["--source", "fixture-source"]);
 
         Assert.True(result.Success, result.Error);
         // Atomised, not degraded: a fallback here would mean the dialect never resolved.

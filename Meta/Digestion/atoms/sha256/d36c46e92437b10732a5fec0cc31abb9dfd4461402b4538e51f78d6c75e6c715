@@ -1,0 +1,8 @@
+**定理 10.4（义务替换可靠性）。** 若 $\psi\in\mathcal O$ 且
+
+$$
+\Gamma\vdash(\chi_1\land\cdots\land\chi_k)\Longrightarrow\psi,
+$$
+
+则可用 $\chi_1,\ldots,\chi_k$ 替换 $\psi$，保持上述部分证明不变量；当所有义务为空时得到 $\Gamma\vdash\phi$。
+

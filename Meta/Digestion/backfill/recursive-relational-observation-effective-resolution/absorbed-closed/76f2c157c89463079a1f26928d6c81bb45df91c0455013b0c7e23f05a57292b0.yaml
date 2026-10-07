@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:76f2c157c89463079a1f26928d6c81bb45df91c0455013b0c7e23f05a57292b0
+  normalized_sha256: sha256:76f2c157c89463079a1f26928d6c81bb45df91c0455013b0c7e23f05a57292b0
+cas_ref: sha256:76f2c157c89463079a1f26928d6c81bb45df91c0455013b0c7e23f05a57292b0
+coverage_gids:
+  - gid: D5/S3/Arith/AffineNetworks/AffineModularStopping.theorem11_3
+    target_statement_id: sha256:9fe4c4b00da69fd31d1806d2d420dc4a25e7736d1298740ea76cf230f2a91fc6
+receipts:
+  unresolved_subitems: []
