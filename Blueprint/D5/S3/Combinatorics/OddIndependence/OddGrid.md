@@ -10,6 +10,10 @@ Lean statement: `D5/S3/Combinatorics/OddIndependence/OddGrid.result`
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/OddIndependence/OddGrid.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/caro-petrusevski-skrekovski-tuza-grid-three-eighths` (proved) by `D5/S3/Combinatorics/OddIndependence/OddGrid.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"caro-petrusevski-skrekovski-tuza-grid-three-eighths","declaration_gid":"D5/S3/Combinatorics/OddIndependence/OddGrid.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Yair Caro; Mirko Petruševski; Riste Škrekovski; Zsolt Tuza (2025). *The odd independence number of graphs, II: Finite and infinite grids and chessboard graphs*. URL: <https://arxiv.org/abs/2510.01897v1>.
