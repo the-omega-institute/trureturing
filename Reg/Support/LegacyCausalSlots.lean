@@ -1,3 +1,4 @@
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Catalog
 import Reg.Support.LegacyCausalCoordinates
 
@@ -286,4 +287,11 @@ open Reg.Support.LegacyCausalSlots LeanInformationAudit
 
 noncomputable def _root_.Reg.Support.LegacyCausalSlots.enrollment_1 : LeanInformationAudit.Contract.TemplateEnrollment.{2, 0} (@_root_.Reg.Support.LegacyCausalSlots.slotRealization) := {
   name := `Reg.Support.LegacyCausalSlots.slotRealization, version := 1, constructors := #[],
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `backward.isDefEq.respectTransparency.types, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `backward.isDefEq.respectTransparency.types, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  bodyFact := `Reg.Support.LegacyCausalSlots.enrollment_1.bodyFact,
+  coverage := { roots := [
+    { owner := `Reg.Support.LegacyCausalSlots, declaration := `Reg.Support.LegacyCausalSlots.slotRealization, part := .type, path := [], levels := [] },
+    { owner := `Reg.Support.LegacyCausalSlots, declaration := `Reg.Support.LegacyCausalSlots.slotRealization, part := .value, path := [], levels := [] }], facts := [] } }
+
+noncomputable def Reg.Support.LegacyCausalSlots.enrollment_1.bodyFact : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"Reg\",\"Support\",\"LegacyCausalSlots\",\"enrollment_1\"],\"part\":\"type\",\"path\":[\"argument\"],\"levels\":[]}" "{\"declaration\":[\"Reg\",\"Support\",\"LegacyCausalSlots\",\"slotRealization\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"

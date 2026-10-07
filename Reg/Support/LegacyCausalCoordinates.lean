@@ -1,3 +1,4 @@
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Catalog
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -339,4 +340,11 @@ end Reg.Support.LegacyCausalCoordinates
 open Reg.Support.LegacyCausalCoordinates LeanInformationAudit
 noncomputable def _root_.Reg.Support.LegacyCausalCoordinates.enrollment_1 : LeanInformationAudit.Contract.TemplateEnrollment.{2, 0} (@_root_.Reg.Support.LegacyCausalCoordinates.pairRealization) := {
   name := `Reg.Support.LegacyCausalCoordinates.pairRealization, version := 1, constructors := #[],
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  bodyFact := `Reg.Support.LegacyCausalCoordinates.enrollment_1.bodyFact,
+  coverage := { roots := [
+    { owner := `Reg.Support.LegacyCausalCoordinates, declaration := `Reg.Support.LegacyCausalCoordinates.pairRealization, part := .type, path := [], levels := [] },
+    { owner := `Reg.Support.LegacyCausalCoordinates, declaration := `Reg.Support.LegacyCausalCoordinates.pairRealization, part := .value, path := [], levels := [] }], facts := [] } }
+
+noncomputable def Reg.Support.LegacyCausalCoordinates.enrollment_1.bodyFact : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"Reg\",\"Support\",\"LegacyCausalCoordinates\",\"enrollment_1\"],\"part\":\"type\",\"path\":[\"argument\"],\"levels\":[]}" "{\"declaration\":[\"Reg\",\"Support\",\"LegacyCausalCoordinates\",\"pairRealization\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"

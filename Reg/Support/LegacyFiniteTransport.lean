@@ -1,3 +1,4 @@
+import Reg.Support.CompiledNodeTerm
 import LeanInformationAuditInterface.Contract.Catalog
 import Reg.Support.DependentFamily
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
@@ -72,15 +73,36 @@ theorem realization_ext {X : Type} {S : PrimitiveSignature X}
 
 noncomputable def enrollment_1 : LeanInformationAudit.Contract.TemplateEnrollment.{2, 0} (@_root_.D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates.binaryFamilyRealization) := {
   name := `D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates.binaryFamilyRealization, version := 1, constructors := #[],
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  bodyFact := `Reg.Support.LegacyFiniteTransport.enrollment_1.bodyFact,
+  coverage := { roots := [
+    { owner := `D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates, declaration := `D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates.binaryFamilyRealization, part := .type, path := [], levels := [] },
+    { owner := `D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates, declaration := `D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates.binaryFamilyRealization, part := .value, path := [], levels := [] }], facts := [] } }
 
 noncomputable def enrollment_2 : LeanInformationAudit.Contract.TemplateEnrollment.{2, 0} (@_root_.Reg.Support.LegacyFiniteTransport.admitRealization) := {
   name := `Reg.Support.LegacyFiniteTransport.admitRealization, version := 1, constructors := #[],
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  bodyFact := `Reg.Support.LegacyFiniteTransport.enrollment_2.bodyFact,
+  coverage := { roots := [
+    { owner := `Reg.Support.LegacyFiniteTransport, declaration := `Reg.Support.LegacyFiniteTransport.admitRealization, part := .type, path := [], levels := [] },
+    { owner := `Reg.Support.LegacyFiniteTransport, declaration := `Reg.Support.LegacyFiniteTransport.admitRealization, part := .value, path := [], levels := [] }], facts := [] } }
 
 noncomputable def enrollment_3 : LeanInformationAudit.Contract.TemplateEnrollment.{2, 0} (@_root_.Reg.Support.LegacyFiniteTransport.agendaRealization) := {
   name := `Reg.Support.LegacyFiniteTransport.agendaRealization, version := 1, constructors := #[],
-  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }],
+  bodyFact := `Reg.Support.LegacyFiniteTransport.enrollment_3.bodyFact,
+  coverage := { roots := [
+    { owner := `Reg.Support.LegacyFiniteTransport, declaration := `Reg.Support.LegacyFiniteTransport.agendaRealization, part := .type, path := [], levels := [] },
+    { owner := `Reg.Support.LegacyFiniteTransport, declaration := `Reg.Support.LegacyFiniteTransport.agendaRealization, part := .value, path := [], levels := [] }], facts := [] } }
 
 
 end Reg.Support.LegacyFiniteTransport
+
+noncomputable def Reg.Support.LegacyFiniteTransport.enrollment_1.bodyFact : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"Reg\",\"Support\",\"LegacyFiniteTransport\",\"enrollment_1\"],\"part\":\"type\",\"path\":[\"argument\"],\"levels\":[]}" "{\"declaration\":[\"D5\",\"S3\",\"ConceptDynamics\",\"InformationEscape\",\"RegistrationTemplates\",\"binaryFamilyRealization\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.Support.LegacyFiniteTransport.enrollment_3.bodyFact : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"Reg\",\"Support\",\"LegacyFiniteTransport\",\"enrollment_3\"],\"part\":\"type\",\"path\":[\"argument\"],\"levels\":[]}" "{\"declaration\":[\"Reg\",\"Support\",\"LegacyFiniteTransport\",\"agendaRealization\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
+
+noncomputable def Reg.Support.LegacyFiniteTransport.enrollment_2.bodyFact : LeanInformationAudit.Contract.NodeFact :=
+  compiled_exact% "{\"declaration\":[\"Reg\",\"Support\",\"LegacyFiniteTransport\",\"enrollment_2\"],\"part\":\"type\",\"path\":[\"argument\"],\"levels\":[]}" "{\"declaration\":[\"Reg\",\"Support\",\"LegacyFiniteTransport\",\"admitRealization\"],\"part\":\"value\",\"path\":[],\"levels\":[]}"
