@@ -1634,3 +1634,145 @@ constructing a different reconstruction with a uniform remainder at
 the same selected integer, remains necessary. Condition (G9), its full
 infinite tail and the strict core remain unchanged and unproved; RH
 remains unproved.
+
+
+### The discrepancy also survives real conjugate pairing
+
+The modulus restriction (H4) alone does not control a real part. The
+existing [Ford–Zaharescu fixed-phase input](../Weil/fordzaharescu2005zerophases.md),
+Corollary 2, supplies a way to select actual zero phases where the
+real coefficient remains large. This is an application of that
+published theorem and (H1)–(H3), not a new phase-distribution theorem,
+source proof audit or Lean-verified result.
+
+Keep the same fixed $A\ge e^2$, $L=\log A$ and finite fixed family
+$Q$ above. For $s=\sigma+it$ with $0<\sigma<1$, put
+
+$$
+B_A(\sigma,t)=\frac{w(A)A^{\sigma-1}}{t^2}>0.
+$$
+
+Since
+$s(1-s)=t^2+\sigma(1-\sigma)+it(1-2\sigma)$, with
+$0<\sigma(1-\sigma)\le1/4$ and $|1-2\sigma|\le1$, comparison of
+its reciprocal with $t^{-2}$ and the remainder estimate in (H1) give
+
+$$
+\begin{aligned}
+\left|F_A(\sigma+it)-B_A(\sigma,t)e^{itL}\right|
+&\le B_A(\sigma,t)
+ \left(\frac7{3|t|}+\frac1{4t^2}\right)\\
+&\le\frac13B_A(\sigma,t)\qquad(|t|\ge8).
+\end{aligned}
+\tag{H5}
+$$
+
+In particular $\operatorname{Re}F_A(s)\ge B_A/6$ when
+$\cos(tL)\ge1/2$, and $\operatorname{Re}F_A(s)\le-B_A/6$ when
+$\cos(tL)\le-1/2$. The actual real part $\sigma$ is still present
+in $B_A$.
+
+For an actual zero $\rho=\beta+i\gamma$ with $\gamma>0$, define the
+real discrepancy of its conjugate pair by
+
+$$
+\Delta_A(\rho)=2\operatorname{Re}F_A(\rho)
+ -\operatorname{Re}\!\left[Q(\rho)+Q(\overline\rho)\right].
+$$
+
+This definition allows arbitrary complex probe weights; $Q$ need not
+commute with conjugation. The same estimate (H3) applies at both
+ordinates. For
+
+$$
+\Gamma_{\mathrm R}=\max\!\left(8,2H,
+ \left[\frac{768AC}{a_0^2w(A)}\right]^{1/3}\right),
+$$
+
+the elementary exponential bound used above gives
+
+$$
+\left|Q(\rho)+Q(\overline\rho)\right|
+\le\frac{128C}{a_0^2\gamma^5}
+\le\frac{w(A)}{6A\gamma^2}
+\le\frac16B_A(\beta,\gamma)
+\qquad(\gamma\ge\Gamma_{\mathrm R}).
+$$
+
+Consequently, at those actual heights,
+
+$$
+\boxed{
+\begin{aligned}
+\cos(\gamma L)\ge\tfrac12
+&\ \Longrightarrow\quad
+\Delta_A(\rho)\ge\tfrac16B_A(\beta,\gamma)
+                 \ge\frac{w(A)}{6A\gamma^2},\\
+\cos(\gamma L)\le-\tfrac12
+&\ \Longrightarrow\quad
+\Delta_A(\rho)\le-\tfrac16B_A(\beta,\gamma)
+                 \le-\frac{w(A)}{6A\gamma^2}.
+\end{aligned}}
+\tag{H6}
+$$
+
+### Both signs occur on a positive proportion of actual zero pairs
+
+Use the published theorem only with the **fixed** frequency
+$\eta=L/(2\pi)>0$. Take the fixed $C^2(\mathbb T)$ minorants
+
+$$
+f_+(u)=8\bigl(\cos(2\pi u)-\tfrac12\bigr)_+^3,
+\qquad f_-(u)=f_+(u-\tfrac12).
+$$
+
+Here $v_+=\max(v,0)$.
+They lie in $[0,1]$ and have the same mean $c_0$. On
+$|u|\le1/12$ modulo one, $\cos(2\pi u)\ge\sqrt3/2>3/4$, so
+$f_+(u)\ge1/8$ and $c_0\ge1/48$.
+Let $\mathcal N(T)$ count actual nontrivial zeros with
+$0<\gamma\le T$, including every multiplicity. The fixed smooth-test
+sum below ranges over distinct zeros, with $m_\rho$ supplying their
+multiplicities. The expansion already supplied by Ford–Zaharescu, together with the
+classical $\mathcal N(T)\sim T\log T/(2\pi)$, gives
+
+$$
+\frac1{\mathcal N(T)}
+\sum_{0<\gamma_\rho\le T}m_\rho f_\pm(\eta\gamma_\rho)
+\longrightarrow c_0.
+$$
+
+The source's correction is $O_A(T)$ and its error is $o_A(T)$,
+so neither changes this normalized limit. No interval indicator is
+substituted into its $C^2$ theorem.
+
+Let $\mathcal C_+(T)$ count, with multiplicity, the zeros satisfying
+$\Gamma_{\mathrm R}\le\gamma\le T$ and
+$\Delta_A(\rho)\ge B_A(\beta,\gamma)/6$; define
+$\mathcal C_-(T)$ using $\Delta_A(\rho)\le-B_A(\beta,\gamma)/6$.
+The support of $f_\pm$ lies in the corresponding phase region of
+(H6). Removing the finite head below $\Gamma_{\mathrm R}$ does not
+change the normalized limit, hence
+
+$$
+\boxed{
+\liminf_{T\to\infty}\frac{\mathcal C_\pm(T)}{\mathcal N(T)}
+\ge c_0\ge\frac1{48}.}
+\tag{H7}
+$$
+
+Conjugate zeros have the same positive multiplicity, so this also
+prevents the fixed finite family from reproducing every real
+conjugate-pair coefficient. The conclusion is asymptotic for each
+fixed $A$ and probe family; it supplies no effective first qualifying
+height and no uniform transition when $A$ or the family varies with
+$T$.
+
+The original zero contribution has the negative of these real pair
+coefficients. Both signs of the discrepancy therefore remain in the
+original bookkeeping. Counts of phases cannot replace its weights
+$A^{\beta-1}/\gamma^2$ or control their joint signed sum. Neither
+(H6) nor (H7) pays the full Robin remainder, rules out an aggregate
+identity or a paid approximation, or changes the sufficient target
+(G9) at the original selected integer. That bound and RH remain
+unproved.
