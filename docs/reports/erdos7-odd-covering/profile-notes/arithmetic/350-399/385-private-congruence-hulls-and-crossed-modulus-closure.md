@@ -21697,10 +21697,9 @@ g\mid\Gamma_d,\ d\mid\Gamma_g,\ J\ne\varnothing
 
 For comparable \(d,g\), one side of (RH1) can simplify: if \(d\mid g\)
 and \(g\mid\Gamma_d\), then \(d\mid\Gamma_g\) follows from
-\(d\mid g\mid\Gamma_g\), and the old classes are disjoint. This still
-does not force \(J\ne\varnothing\): the definition of \(J_d,J_g\)
-excludes the two exchanged parent labels themselves, so the comparable
-case supplies no descendant credit automatically. The same distinction
+\(d\mid g\mid\Gamma_g\), and the old classes are disjoint. Consequently
+\(K_{d,g}=\varnothing\), and (RH6) forces \(J=\varnothing\).
+The comparable case therefore has no receiving descendants. The same distinction
 is why a one-way hull divisor from DR3--DR4 or PI1--PI6 cannot by itself
 produce the strict descent.
 
@@ -21715,11 +21714,11 @@ The result narrows the remaining whole-cover gap but does not close it.
 Section 174 supplies one-direction hull divisibility for a certified
 subset of \(q^2\) sources; it does not force the reciprocal condition,
 the absence of \(K_{d,g}\), or a descendant in the receiving phase.
-For comparable \(d,g\), the old classes are already disjoint, so (RH4)
-is automatic; the existing DR3--DR4 and PI1--PI6 results can supply one
-direction of (RH1) in their stated concentrated branches. They do not
-supply the reverse hull containment, and EB8 does not align a child phase
-with the particular witnesses \(w_d,w_g\) needed for (RH5).
+For comparable \(d,g\), reverse hull containment and (RH4) are automatic,
+but (RH6) excludes receiving descendants. The existing DR3--DR4 and
+PI1--PI6 inventory does not supply an incomparable reciprocal pair with
+receiving descendants, and EB8 does not align a child phase with the
+particular witnesses \(w_d,w_g\) needed for (RH5).
 Section 175 is deliberately not a whole cover and therefore does not
 refute (RH4)--(RH6). A complete solution still needs a whole-cover
 argument forcing one usable reciprocal pair, or a different construction
@@ -21872,3 +21871,49 @@ odd \(u,v>1\). This contradicts the equal-cardinality modulus-sum bound in
 This consequence is still conditional on finding a reciprocal pair with
 both receiving sets nonempty. It supplies a sharper obstruction inside the
 full-ternary branch, not the missing universal forcing statement.
+
+## 178. Private-encloser descent only requires a fixed-count sum minimum
+
+The private-encloser descent (DR3) has the following stronger hypothesis
+boundary. Let F be any finite distinct odd whole cover, minimal in modulus
+sum among such covers with its SAME number of classes. Minimum class count
+is not required. Choose actual original labels d and M with `d | M`,
+allowing `d=M`. If an odd integer `e>1` satisfies
+
+\[
+e<M,\qquad P_d\subseteq w\bmod e,
+\]
+
+where P_d is the COMPLETE original private region, then
+
+\[
+\boxed{e\in D.}
+\tag{FCD1}
+\]
+
+No divisibility relation between e and d or M is needed beyond the
+displayed private enclosure. In particular e need not already be expressed
+as a divisor of a separately constructed gcd hull.
+
+Suppose e is absent. Replace the M-slot by `w mod e`; if `d!=M`, also move
+the residue of the d-slot to the old residue a_M while retaining its
+modulus d. Every point private to d is covered by the new e-slot. Every
+other point has an old owner n different from d. If `n=M`, the moved
+d-slot covers it because `d | M`; if `n!=M`, its old owner is unchanged.
+When `d=M`, the other owner is automatically retained, so the same argument
+is a single-slot replacement. This reasoning does not need comparable
+original classes to be disjoint.
+
+Since e is absent, the new numerical labels are still distinct. Oddness,
+nonunit moduli and class count are unchanged; the sum decreases by `M-e`.
+This contradicts the stated fixed-count minimum. The argument also covers
+an empty private region; it never selects a private witness. The Lean
+statement is
+`Erdos7.OddDistinctCoveringSystem.private_encloser_below_descendant_is_present`
+in
+[PrivateEncloserDescent](../../../../../../D5/S3/Arith/Covering/PrivateEncloserDescent.lean).
+Its conclusion forces the numerical label e, not its original residue.
+The complete concentration and actual-descendant premises still have to
+be supplied before applying it to a deep hull. This theorem does not
+force a Q-supported deep hull descendant or a reciprocal pair with
+receiving descendants.

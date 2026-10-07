@@ -1263,3 +1263,170 @@ outside SD40--SD42. Nor does this one-root law inherit the query budget
 of a different selected source. Existence of a useful deep hull pair,
 a quantitatively sufficient same-source query debit, and payment of the
 remaining original tail all remain unresolved.
+
+### A fixed mixture supplies all deep private holes before deletion
+
+The fixed-mixture argument of
+[Report530 GD4](../500-549/530-one-supported-law-controls-unused-and-deep-occupied-labels.md)
+applies to SD40--SD42 with the following actual source choices. Keep
+`P={3,5,7,11,13,17,19}` and `Q=P minus {3}`. Fix one finite family of
+distinct odd original moduli and one common finite CRT resolution of
+all its originals. Each chosen deep mixed original
+`m=3^e d`, with `e>=2`, `d>1` and d Q-smooth, is assumed to have a
+COMPLETE private point. Count minimality of a hypothetical whole cover
+supplies that premise. No selected phase or probability below depends
+on the subsequent query.
+All laws have uniform Haar tails beyond the finite coordinate heights;
+outside-P CRT coordinates are extended uniformly before whole-family
+tests. The query norms below include those complete tails.
+
+Let `L_all` contain the Q projections of every actual original c and
+3c, for nonunit Q-smooth c. It has at most two phases per complete
+cofactor. SD1's PA construction supplies one law `nu_all` avoiding
+this library, with complete nonunit query norm at most
+
+\[
+B=B_*=
+\frac{432040125182653876501}{86355045355449035400}.
+\]
+
+Let u be normalized Haar on the complement of ALL actual pure-three
+classes. Their finite total Haar mass is less than `1/2`, so u has
+density at most2 and complete ternary query norm at most1. Consequently
+`rho_0=u tensor nu_all` avoids every pure-three original and every
+actual P-only original of ternary depth zero or one, and
+
+\[
+R_P(\rho_0)\le A_0=1+2B.
+\tag{SD43}
+\]
+
+This law need not give a deep parent hole positive mass: its library
+also includes projected phases from inactive first roots.
+
+For each first root b containing a chosen deep original, instead
+apply PA to its OWN-root library `L_b` of SD40. This library depends
+only on b and the fixed original family. It therefore supplies one
+law `nu_b` usable for ALL chosen deep originals in that root. Take
+one common Q resolution `N_Q` resolving these originals and the low
+libraries; extra digits receive the usual uniform extension. The PA
+survivor lower bound gives every relevant private Q point mass at
+least `1/N_Q` under this same `nu_b`.
+
+Write `a_b=tau(T_b)`, where `T_b` is the pure-surviving part of b, and
+set `rho_b=(tau restricted to T_b)/a_b tensor nu_b`. SD41 gives
+`1/6<a_b<=1/3`. SD42, divided by a_b, yields for every chosen m in b,
+with `R_m=[a_m]_d`,
+
+\[
+\rho_b(R_m\setminus A_m)>\frac1{6N_Q}.
+\tag{SD44}
+\]
+
+This normalized law also avoids ALL actual low P-only originals:
+other-root rows cannot meet its ternary support, and the active rows
+were included in `L_b`.
+
+For the complete ternary query norm of normalized root Haar, the
+depth-one contribution is1 and the remaining absolute cylinder
+maxima sum to at most `sum_(k>=2)3^-k=1/6`. Thus
+`r_b<=1+1/(6a_b)<2`. The product identity, including the unit query in
+each factor, gives
+
+\[
+R_P(\rho_b)=r_b+(1+r_b)R_Q(\nu_b)<2+3B.
+\]
+
+This is the root law's own budget. Indeed every law supported on one
+first root has `r_b>=3/2`; such a bare product could itself satisfy
+`R_P<566/49` only if `R_Q(nu_b)<197/49`. Inserting the upper bound B
+does not certify that condition and does not prove its failure.
+
+For a nonempty choice of deep originals, fix nonnegative root weights
+theta summing to1, positive on every
+chosen root. There are at most three such roots; if pure3 is present
+there are at most two. Set
+
+\[
+\rho_+=(\sum_b\theta_b\rho_b),\qquad
+\rho_\varepsilon=(1-\varepsilon)\rho_0+
+\varepsilon\rho_+,
+\qquad 0<\varepsilon\le1.
+\]
+
+All these components avoid the same actual low originals. Convexity
+of each literal query maximum and then the nonnegative query sum
+give, on this ONE fixed mixed law,
+
+\[
+\begin{aligned}
+R_P(\rho_\varepsilon)&\le1+2B+\varepsilon(1+B),\\
+\rho_\varepsilon(R_m\setminus A_m)&>
+\frac{\varepsilon\theta_b}{6N_Q}
+\quad(m\text{ in root }b).
+\end{aligned}
+\tag{SD45}
+\]
+
+Finite query inventories suffice for convexity; the complete sum
+follows by monotone passage through them. No separate optimizer is
+chosen for a different modulus or phase. If the PA density cap is
+`Lambda=9/min alpha`, rho_0 and rho_b have density at most `2 Lambda`
+and `6 Lambda`, respectively. The same mixture therefore has density
+at most `(2+4 epsilon)Lambda` relative to the common CRT Haar law.
+
+Choose `epsilon=1/20` and uniform weights on the nonempty set of
+chosen roots. Every chosen deep parent hole then has mass greater
+than `1/(360N_Q)`, while
+
+\[
+\begin{aligned}
+R_P(\rho_{1/20})&\le A_\varepsilon=
+\frac{19527101084953238679941}{1727100907108980708000}
+<\frac{566}{49},\\
+K_\varepsilon=566-49A_\varepsilon&=
+\frac{20711160260974385410891}{1727100907108980708000}>0.
+\end{aligned}
+\tag{SD46}
+\]
+
+For one chosen root the hole bound is `1/(120N_Q)`. With no chosen
+deep originals, use rho_0 and make no hole assertion. Neither the
+resolution-dependent lower bound nor convex support restoration
+supplies private-hull membership for a chosen pair.
+
+### The remaining loss must be measured on this mixture
+
+Let D be the union of ALL remaining actual P-only originals, including
+the deep mixed ones, and restrict this SAME rho to `D`'s complement
+to obtain sigma. For every complete nonunit query modulus q write
+`M_q=max_a rho([a]_q)` and
+
+\[
+c_q=\min_a\bigl(M_q-\rho([a]_q)+
+\rho(D\cap[a]_q)\bigr).
+\]
+
+The exact deletion identity of
+[Report571 JB7--JB9](571-joint-residual-laws-retain-conditional-and-query-incidence.md)
+and its weighted form in
+[Report752 JC1--JC4](../750-799/752-joint-deletion-credit-distinguishes-equal-marginal-sources.md)
+then give the sufficient test
+
+\[
+566\delta-49\sum_q t_q<K_\varepsilon,
+\qquad
+\delta\ge\rho_{1/20}(D),\quad 0\le t_q\le c_q.
+\tag{SD47}
+\]
+
+Without certified query credit this requires
+`delta<20711160260974385410891/977539113423683080728000`, approximately
+0.02118704. Support restoration consumes part of the old preliminary
+margin; it does not automatically improve the deletion estimate.
+The actual D mass and all competitive phase intersections remain to
+be bounded. Positive mass in one parent hole is not a lower bound on
+every query credit. In particular SD46 concerns a law avoiding the
+low library, whereas the continuation gate requires sigma to avoid
+ALL actual P-only originals. This distinction remains even when a
+chosen deep original belongs to a supplied private hull.
