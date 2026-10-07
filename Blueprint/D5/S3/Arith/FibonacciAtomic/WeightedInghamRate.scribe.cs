@@ -7,7 +7,7 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic;
 internal sealed class WeightedInghamRateDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Arith/FibonacciAtomic/WeightedInghamRate.";
-    private static Formula Abs(Formula x) => Seq(Vert, x, Vert);
+    private static Formula Abs(Formula x) => Seq(Lvert, Sp, x, Sp, Rvert);
     private static Formula Fib(Formula n) => Call("F", n);
     private static Formula W(Formula n) => Call("W", n);
     private static Formula Phi(Formula x) => Call("Phi", x);

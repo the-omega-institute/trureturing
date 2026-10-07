@@ -32,7 +32,7 @@ For positive x the kernel multiplies x by the integer part of its reciprocal. At
 
 **Theorem 1.3 (A common error bound).**
 
-$$\begin{aligned}\exists C > 0, \exists N0\in\mathbb{N}, \forall n\in\mathbb{N}, N0 \le n \Rightarrow\\\Vert\frac{\operatorname{W}\left(n\right)}{\operatorname{F}\left(n\right)}-\frac{2}{\sqrt{5}}\Vert \le C\cdot phi^{\frac{-n}{2}} \land\\\Vert\sum_{1 \le k \le n}\operatorname{Phi}\left(\frac{\operatorname{F}\left(k\right)}{\operatorname{F}\left(n\right)}\right)-(n-\frac{2}{\sqrt{5}})\Vert \le C\cdot phi^{\frac{-n}{2}}\end{aligned}$$
+$$\begin{aligned}\exists C > 0, \exists N0\in\mathbb{N}, \forall n\in\mathbb{N}, N0 \le n \Rightarrow\\\lvert \frac{\operatorname{W}\left(n\right)}{\operatorname{F}\left(n\right)}-\frac{2}{\sqrt{5}} \rvert \le C\cdot phi^{\frac{-n}{2}} \land\\\lvert \sum_{1 \le k \le n}\operatorname{Phi}\left(\frac{\operatorname{F}\left(k\right)}{\operatorname{F}\left(n\right)}\right)-(n-\frac{2}{\sqrt{5}}) \rvert \le C\cdot phi^{\frac{-n}{2}}\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/WeightedInghamRate.result` (`✓ std3`). ∎
 
