@@ -802,7 +802,7 @@ private theorem lift_weighted_rows {r : I → ℝ} (o : OccupancyFlow (X := X) r
     · simp only [resultRow, hm, if_false]
       rw [mul_div_cancel₀ _ hm]; rfl
 
-private theorem null_row_replace {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
+theorem null_row_replace {Ω : Type*} [MeasurableSpace Ω] (μ : Measure Ω)
     [IsFiniteMeasure μ] (s : Set Ω) (m u v : ℝ) (hm : μ.real s = m)
     (hw : m * u = m * v) : s.indicator (fun _ => u) =ᵐ[μ] s.indicator (fun _ => v) := by
   by_cases hz : m = 0
