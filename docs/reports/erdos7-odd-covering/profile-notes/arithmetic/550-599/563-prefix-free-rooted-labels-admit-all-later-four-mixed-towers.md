@@ -579,6 +579,24 @@ all-height sum and the sharper corrected bound MT2 remain the ordinary
 mathematical argument above. Neither application removes MT1 or proves
 unrestricted Erdős#7.
 
+The finite Q7 source and complete query bound MT11 also have a scoped
+Lean application. For arbitrary finite heights on5,7,11,13,17,19,23 and
+any finite actual cylinder family with injective complete depth vectors
+and nonunit originals, it constructs one probability that gives every
+original probability zero. Under this same probability, every complete
+finite query layout has total at most13463054/5049311, including the unit
+and numerical labels absent from the originals. The law is chosen before
+the query layout. The application uses the eight-coordinate interface
+with a zero-length ternary word and restricts the clique recurrence to
+the other seven coordinates; the empty word contributes no state or
+positive-depth queries. No MT1, source, cap or query-budget assumption
+remains. Existing source, clique and prefix-query results supply this
+application, and its axiom closure is standard. The recurrence value
+5049311/7952175 is a lower-bound certificate, not an asserted exact Haar
+mass. This verifies arbitrary finite carriers separately; it asserts
+neither compatibility across heights nor an infinite-law construction,
+and does not by itself verify a subsequent ternary-leaf conditioning.
+
 The finite nine-coordinate continuation also has a scoped Lean check.
 For an arbitrary alphabet size q>=29, it applies the same old law to
 every positive ninth-depth slice and completes missing old query
