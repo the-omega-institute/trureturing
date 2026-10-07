@@ -1609,3 +1609,84 @@ actual high-zero contribution. The original same-source signed target,
 all-size FIB matrix positivity, and RH remain unproved.
 This is a paper-level application of existing results, without a
 mathematical originality claim, new zero computation, or Lean certification.
+
+
+## Keep the coupled logarithmic exponent in the complete density tail
+
+Retain the same actual zero multisets, source clock $A=\log N$,
+$L=\log A$, verified height $H=3\cdot10^{12}$ and
+$h=\log H$ as in (W1)–(W7). The published density estimate has the
+exact relation
+
+$$
+q(\sigma)=4-a(\sigma),\qquad
+\frac75\le a(\sigma)\le2,\qquad
+2\le q(\sigma)\le\frac{13}5
+\quad(3/4\le\sigma<1).
+$$
+
+Keeping this relation in the already established integral (W3) gives
+a smaller complete high-zero allowance. This is an application of the
+same published density rows and finite-height verification, not a new
+density theorem, a repetition of their proofs or a new zero computation.
+The density and verification inputs remain external premises; no
+mathematical originality or Lean certification is asserted.
+
+### A reciprocal-square bound retaining both exponents
+
+Factor the bracket in the first inequality of (W3) as
+
+$$
+\frac{h^q}{a}
+\left[1+\frac q{ah}+\frac{q(q-1)}{a^2h^2}
+ +\frac{q(q-1)(q-2)}{a^3h^3}\right].
+$$
+
+Since $h>28$, its square bracket is less than
+
+$$
+1+\frac{13}{196}+\frac{104}{38416}
+ +\frac{312}{7529536}<1.07.
+$$
+
+Thus the leading term of the same reflected count integral (W2) is
+at most $4(47)(1.07)H^{-a}h^q/a$, and
+$4(47)(1.07)/(7/5)<144$. Reuse the unchanged logarithmic-error
+integrals in (W3)–(W4). They give
+
+$$
+\boxed{
+F_2(\sigma)<144H^{-a(\sigma)}h^{q(\sigma)}+30000H^{-2}
+=144h^4(Hh)^{-a(\sigma)}+30000H^{-2}.}
+\tag{X1}
+$$
+
+All ordinates above $H$ through infinity are included, with the same
+analytic multiplicities and reflection convention. The equality on
+the right uses the joint identity $q=4-a$, rather than combining
+independently attained exponent endpoints.
+
+Insert (X1) in the existing actual-weight layer integral (W5), with
+$Q_A'(\sigma)\le LA^{\sigma-1/2}$. Then
+
+$$
+\boxed{
+\begin{aligned}
+B_2(A)<{}&2A^{1/4}S_2(H)
+ +144Lh^4\int_{3/4}^1
+    A^{\sigma-1/2}(Hh)^{-a(\sigma)}\,d\sigma\\
+&+30000H^{-2}(\sqrt A-A^{1/4}).
+\end{aligned}}
+\tag{X2}
+$$
+
+The source's coefficient estimate remains precisely (W7), including
+$B_3\le B_2/H$. No response is discarded or counted as an additional
+reserve. Compared with (W6), (X2) retains the logarithmic exponent of
+each real-part layer rather than paying its worst value throughout
+the strip. This changes the allowance, not the actual signed sum.
+
+For fixed $H$, (X2) still has an allowance growing with $A$; its last
+term alone grows like $\sqrt A$. That is not a lower bound on the
+actual response. The complete unbounded same-source Robin condition
+and RH remain unproved.
