@@ -54,7 +54,7 @@ private def separableBound (K : ℕ) : ℝ := sSup (scores K)
 def c (K : ℕ) : ℝ := ((2 : ℝ) ^ (K - 1))⁻¹ * (Nat.choose (K - 1) ((K - 1) / 2) : ℝ)
 def claim : Prop := ∀ K : ℕ, Odd K → 7 ≤ K → IsGreatest (scores K) (1 / 2 * (1 + c K * (K - 1 : ℕ) / (K + 1 : ℕ)))
 private def f (k y : ℝ) : ℝ := (1 - k * y) ^ 2 + 8 * k * y * (1 - y) + (k ^ 2 - k + 1) * (1 - y) ^ 2 / 4 - (k - 1) ^ 2
-private def rotation (n : ℕ) (angle : ℝ) : SpinMatrix n := diagonal fun i => Complex.exp (-I * (angle : ℂ) * (((n : ℝ) / 2 - i.val : ℝ) : ℂ))
+def rotation (n : ℕ) (angle : ℝ) : SpinMatrix n := diagonal fun i => Complex.exp (-I * (angle : ℂ) * (((n : ℝ) / 2 - i.val : ℝ) : ℂ))
 private def totalRotation (K : ℕ) (angle : ℝ) : Matrix (SpinIndex 2 × SpinIndex K) (SpinIndex 2 × SpinIndex K) ℂ := rotation 2 angle ⊗ₖ rotation K angle
 private def totalRotationAverage (K : ℕ) (H : Matrix (SpinIndex 2 × SpinIndex K) (SpinIndex 2 × SpinIndex K) ℂ) : Matrix (SpinIndex 2 × SpinIndex K) (SpinIndex 2 × SpinIndex K) ℂ := (1 / K : ℂ) • ∑ k : Fin K, totalRotation K (theta K k) * H * totalRotation K (-theta K k)
 private def compression (K : ℕ) (a : SpinVector 2) (H : Matrix (SpinIndex 2 × SpinIndex K) (SpinIndex 2 × SpinIndex K) ℂ) : SpinMatrix K := fun i j => ∑ p : SpinIndex 2, ∑ q : SpinIndex 2, star (a p) * H (p, i) (q, j) * a q
