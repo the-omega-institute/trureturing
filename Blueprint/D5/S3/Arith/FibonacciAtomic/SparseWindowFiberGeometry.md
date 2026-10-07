@@ -16,7 +16,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/SparseWindowFiberGeometry.fiber`
 
 A time tuple fibre is the intersection of the window arcs translated back by their retained observation times. The regular domain removes precisely the translated window cuts.
 
-**Theorem 1.2 (Fibres and connected components).**
+**Definition 1.2 (The regular circle domain).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/SparseWindowFiberGeometry.regularDomain`
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/SparseWindowFiberGeometry.regularDomain` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For each width and finite set of observation times, the regular domain is the circle with the images of all translated cut indices removed.
+
+**Theorem 1.3 (Fibres and connected components).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/SparseWindowFiberGeometry.sparse_window_fiber_geometry`
 
@@ -31,6 +43,7 @@ For width at least two and a nonempty finite set of times, every nonempty tuple 
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SparseWindowFiberGeometry.fiber`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/SparseWindowFiberGeometry.regularDomain`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/SparseWindowFiberGeometry.sparse_window_fiber_geometry`
 - Dependency: [D5/S1/Digit/Infinite/SparseWindowMutualDetermination](../../../S1/Digit/Infinite/SparseWindowMutualDetermination.md)
 - Dependency: [D5/S1/Phase/Basic](../../../S1/Phase/Basic.md)
