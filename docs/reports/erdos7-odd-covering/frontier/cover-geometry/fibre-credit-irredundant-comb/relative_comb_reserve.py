@@ -9,6 +9,7 @@ C(3,i,1),C(q,e,1); support k>=2: ternary C(3,i,1) when i>0,
 and C(q,e,min(2k-2+epsilon,q-2)) at every q, epsilon=1[i>0].
 The high-phase extension checks conditional budgets, not arbitrary families.
 The auxiliary-root control reuses the existing clique-polynomial consumer.
+The active-leaf control checks the supplied MT11 consumer and actual inventories.
 """
 from fractions import Fraction as F
 from functools import lru_cache
@@ -231,6 +232,91 @@ def extra_five_guard():
                       'it does not exclude full-profile consumers, separate weights or joint sources.')
 
 
+def active_leaf_bridge(beta, fg7):
+    """Conditional depth-two consumer and actual common-prefix method controls."""
+    require(1 <= beta < F(37,13) < 4, 'leaf cofactor source and positive reserve')
+    reserve = 1-(beta-1)/3
+    bound = 1+(4*beta-1)/reserve
+    require(bound == (1+11*beta)/(4-beta) == F(10209527,448946) < 28,
+            'one-law leaf budget includes the unit exactly once')
+    require(reserve == F(2244730,5049311), 'leaf reserve')
+
+    def inventory(originals, h, cut):
+        rows = []
+        for r in range(3**h):
+            phases, legal = {}, True
+            for row in originals:
+                a, m = row['residue'], row['modulus']
+                n, j = m, 0
+                while n % 3 == 0:
+                    n, j = n//3, j+1
+                active = (a-r) % gcd(m,3**h) == 0
+                period = m*3**h//gcd(m,3**h)
+                require(active == any(x % m == a % m and x % (3**h) == r
+                                      for x in range(period)),
+                        'CRT activity agrees with an actual common integer')
+                if n == 1 and j <= h and active:
+                    legal = False
+                elif n > 1 and j <= cut and active:
+                    phases.setdefault(n,set()).add(a % n)
+            if legal:
+                rows.append(dict(prefix=r,modulus=3**h,
+                                 phases=[dict(cofactor=n,residues=sorted(values))
+                                         for n,values in sorted(phases.items())],
+                                 single_phase=all(len(values) <= 1 for values in phases.values())))
+        return rows
+
+    roots = inventory(fg7,1,2)
+    leaves = inventory(fg7,2,3)
+    require([row['prefix'] for row in roots] == [0,1] and
+            not any(row['single_phase'] for row in roots), 'FG7 fails both root contracts')
+    passed = [row for row in leaves if row['single_phase']]
+    require([row['prefix'] for row in passed] == [4,7], 'FG7 passes exactly two legal leaves')
+    merged = [dict(cofactor=n,residues=[a]) for a,n in ((0,5),(2,25),(7,125),(32,625))]
+    require(all(row['phases'] == merged for row in passed), 'complete numerical cofactor phases')
+
+    actual = [dict(residue=a,modulus=m) for a,m in ((2,3),(0,5),(6,15),(0,7),(1,21))]
+    private = [2,10,6,7,1]
+    require(len({row['modulus'] for row in actual}) == 5 and
+            all(row['modulus'] > 1 and row['modulus'] % 2 for row in actual),
+            'five actual distinct odd nonunit labels')
+    require(all([j for j,row in enumerate(actual) if x % row['modulus'] == row['residue']] == [i]
+                for i,x in enumerate(private)), 'each actual class has a private integer')
+    conflicts = inventory(actual,2,3)
+    require([row['prefix'] for row in conflicts] == [0,1,3,4,6,7] and
+            not any(row['single_phase'] for row in conflicts), 'all six legal leaf conflicts')
+    for row in conflicts:
+        n = 5 if row['prefix'] % 3 == 0 else 7
+        require(dict((item['cofactor'],item['residues']) for item in row['phases'])[n] == [0,1],
+                'conflict occurs already at ternary depth one')
+    support = [x for x in range(105) if x % 3 == 0 and x % 5 == 2 and x % 7 != 0]
+    require(support == [12,27,57,72,87,102] and
+            all(all(x % row['modulus'] != row['residue'] for row in actual) for x in support),
+            'one cheap product source avoids all five originals, including escape12')
+    cheap = F(5,2)*F(9,4)*F(43,36)*prod((F(p,p-1) for p in Q[2:]), start=F(1))
+    require(cheap == F(4152811,442368) < 28, 'complete cheap-source geometric query sum')
+    return dict(cofactor_source='Report563 MT11',beta_upper=str(beta),
+                pure_ternary_query_upper='4',low_null_through_height=3,
+                arbitrary_mixed_from_height=4,reserve_lower=str(reserve),
+                complete_query_upper=str(bound),margin_to_28=str(28-bound),
+                source_threshold_for_28='37/13',
+                fg7_roots=roots,fg7_leaves=leaves,
+                common_prefix_obstruction=dict(
+                    actual_originals=actual,private_witnesses=private,
+                    finite_control_depth=2,legal_leaf_conflicts=conflicts,
+                    product_support_mod105=support,escape_integer=12,
+                    complete_query_norm=str(cheap),
+                    scope='The finite control checks actual leaf intersections. '
+                          'The all-depth argument uses persistent depth-one conflicts, '
+                          'not finite enumeration. The obstruction concerns a single-phase '
+                          'common-prefix supplier, not arbitrary joint survivor laws.'),
+                scope='A selected mod9 leaf avoids actual pure3 and pure9 originals. '
+                      'For each complete nonunit Q cofactor, all active phases at j=0,1,2,3 '
+                      'must agree. Mixed originals at j>=4 and higher pure ternary originals '
+                      'are unrestricted. One fixed source and one final conditioning '
+                      'supply the all-height bound in Report529; this consumer is not a Lean proof.')
+
+
 def run(primes=Q):
     # Each side is a disjoint union of cylinders of depths1,2,3.
     for rank, q in enumerate(primes, 1):
@@ -321,6 +407,7 @@ def run(primes=Q):
                 'height-four stronger query bound')
         require((repaired_bound/2-1)/3 >= 1,
                 'height-one debit does not certify a positive reserve')
+    guard = extra_five_guard()
     return dict(primes=[3,*primes],nonternary_height=3,
                 phase_source='Report529 explicit side-comb formula on the first eight odd primes',
                 pure_Q_count=str(pure_count),Q_period=str(cofactor_period),
@@ -343,9 +430,10 @@ def run(primes=Q):
                     scope='One unblocked ternary root; at most one distinct active Q phase '
                           'per nonunit cofactor through ternary depth two, including depth zero. '
                           'This checks the supplied source bound consumer, not MT11 again.'),
-                extra_five_guard=extra_five_guard(),
+                extra_five_guard=guard,
+                active_leaf_extension=active_leaf_bridge(active_beta,guard['actual_originals']),
                 scope='Exact finite controls for the relative-reserve, low-projection and auxiliary-root strategies; '
-                      'neither obstructs existence of a different supported source with complete B<28. '
+                      'these do not obstruct existence of a different supported source with complete B<28. '
                       'The HP extension budgets require one Q law '
                       'annihilating every low nonpure projection, including ternary-free originals. '
                       'Arbitrary-height constructions are justified in Report529, not by enumeration. '
