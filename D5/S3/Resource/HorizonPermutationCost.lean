@@ -253,7 +253,7 @@ theorem result {X : Type u} [Finite X] (f : X → X) (H : ℕ) :
     | zero =>
       refine ⟨X, inferInstance, Equiv.refl X, id, id, ?_, ?_⟩
       · intro x t
-        have ht0 : t = 0 := Fin.ext (by have := t.isLt; omega)
+        have ht0 : t = 0 := Fin.eq_zero t
         subst t
         rfl
       · simp
