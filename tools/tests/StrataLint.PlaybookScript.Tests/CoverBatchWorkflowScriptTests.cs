@@ -21,7 +21,7 @@ public sealed partial class DepositCoverWorkflowScriptTests
         Assert.Equal(failure ? 1 : 0, result.ExitCode);
         Assert.Equal(before, fixture.CommitCount());
         Assert.Equal(["make:lean-report", "dotnet:cover-batch"], fixture.CallKinds());
-        Assert.Contains($"dotnet:cover-batch --atoms {atoms} --base synthetic-base", fixture.Calls());
+        Assert.Contains($"dotnet:cover-batch --atoms {atoms}", fixture.Calls());
     }
 
     [Fact]

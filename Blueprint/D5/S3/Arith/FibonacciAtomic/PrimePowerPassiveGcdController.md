@@ -64,7 +64,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController.prot
 
 For natural p,e the tree first queries times 1 and 2. The gcd of the two answers is the content label. A label equal to p^e stops. A label p^c with c<e scans times 1 through zeroRank(p), then continues from its first threshold hit with e-c-1 remaining lifts. Every other label stops. These choices depend on p,e and the actual history alone.
 
-**Theorem 1.6 (One bounded tree determines the entire positive future).**
+**Theorem 1.6 (The concrete original tree).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController.protocol_spec`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController.protocol_spec` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural prime p and every natural e>=1, the exact tree protocol(p,e) has at most zeroRank(p)+(e-1)*(p-1)+2 actual queries on every natural pair. For all natural pairs v,w, equal completed histories of that tree imply actualGcd(p^e,k,v)=actualGcd(p^e,k,w) for every positive natural k. The original source and full natural replies are retained, including zero coordinates, saturated content and stagnant rank lifts.
+
+**Theorem 1.7 (One bounded tree determines the entire positive future).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController.result`
 
@@ -86,6 +98,7 @@ Induction on the remaining lifts proves the count and history-fiber future agree
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController.continuation`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController.firstLayer`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController.protocol`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController.protocol_spec`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController.read`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/PrimePowerPassiveGcdController.result`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling](GlobalGcdSampling.md)

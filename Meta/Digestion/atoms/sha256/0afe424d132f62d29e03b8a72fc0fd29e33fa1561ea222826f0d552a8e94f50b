@@ -1,0 +1,22 @@
+## 定义 19.1：候选关系的立即恢复半径
+
+现在令目标集合是有限实数集：
+
+$$
+Z\subseteq\mathbb R.
+$$
+
+对非空候选关系 $B$，定义：
+
+$$
+\operatorname{rad}(B)
+=
+\frac{
+\max\operatorname{pr}_ZB
+-
+\min\operatorname{pr}_ZB
+}{2}.
+$$
+
+这是不再进行实验时，任何输出对所有候选目标的最小最坏误差。
+
