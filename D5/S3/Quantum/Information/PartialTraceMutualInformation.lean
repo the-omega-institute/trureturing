@@ -167,7 +167,7 @@ section SpectralPorts
 open Matrix Polynomial
 variable {n : Type*} [Fintype n] [DecidableEq n]
 
-private noncomputable def spectralEntropy {rho : Matrix n n ℂ} (h : rho.IsHermitian) : ℝ :=
+noncomputable def spectralEntropy {rho : Matrix n n ℂ} (h : rho.IsHermitian) : ℝ :=
   ∑ i, Real.negMulLog (h.eigenvalues i)
 
 private theorem charpoly_conj_unitary {ρ U : Matrix n n ℂ} (hU : star U * U = 1) :

@@ -1962,3 +1962,826 @@ of selected sources. The original same-source condition (G9), with
 its complete signed integral and strict core, remains unproved.
 RH remains unproved. The remaining obstacle includes the signed
 moving finite head; the infinite suffix cannot simply be dropped.
+
+
+## A continuous Gaussian approximation of the complete original zero response
+
+The fixed-family comparison (H3)–(H7) leaves continuous scale mixtures
+and paid approximations available. The following application uses the
+same original coefficient (M1), the already assessed Gaussian coefficient
+of Moriya's Theorem 3.3, and the classical Riemann–von Mangoldt count.
+It supplies a uniform coefficient-error estimate, rather than repeating
+any source proof or claiming an original analytic theorem or Lean
+verification. No nontrivial zero is moved to the critical line.
+
+Fix $A\ge e^2$, $L=\log A$ and $0<a\le1/16$. Retain
+$w(X)=(1+\log X)/\log^2X$. At observation $z=0$ choose, separately
+for each $X\ge A$,
+
+$$
+\alpha_X=\sqrt{a/\log X},\qquad
+G_{X,\alpha_X,0}(s)=\frac{X^s e^{as^2}}s.
+$$
+
+The positive scale measure $w(X)X^{-2}dX$ gives the exact identity
+
+$$
+Q_{A,a}(s):=\int_A^\infty G_{X,\alpha_X,0}(s)
+                      \frac{w(X)}{X^2}\,dX
+=e^{as^2}F_A(s),\qquad 0<\operatorname{Re}s<1.
+\tag{U1}
+$$
+
+For every such $s$, the scale integral is absolutely convergent. The
+width parameter varies with $X$, while the Gaussian coefficient $a$
+is fixed throughout the integral. This realizes the damped coefficient
+exactly; it does not claim exact reconstruction of $F_A$ by a finite
+family of fixed probes.
+
+### A bound valid before taking the infinite scale endpoint
+
+For $R\ge A$ put
+
+$$
+F_{A,R}(s)=\frac1s\int_A^R X^{s-2}w(X)\,dX.
+$$
+
+Since $w$ is positive and decreasing, one integration by parts gives,
+for $\sigma=\operatorname{Re}s<1$ and $s\ne0$,
+
+$$
+|F_{A,R}(s)|\le
+\frac{2w(A)A^{\sigma-1}}{|s||1-s|}.
+\tag{U2}
+$$
+
+Indeed the two endpoint terms and the derivative integral are bounded
+by $A^{\sigma-1}[w(A)+w(R)+\int_A^R|w'(X)|dX]$, which is
+$2A^{\sigma-1}w(A)$. The bound is uniform in $R$. Passing to the
+infinite endpoint gives the same bound for $F_A$. In particular, for
+an actual zero $\rho=\beta+i\gamma$ with $\gamma\ge4$,
+
+$$
+|F_{A,R}(\rho)|,\ |F_A(\rho)|\le\frac{2w(A)}{\gamma^2}.
+$$
+
+This is the same reciprocal-square coefficient control used in the
+existing [Fiori density application](../Analytic/fiori2026shortzerodensity.md),
+now also applied to finite scale intervals. It will justify the
+scale-endpoint passage below; it is not a new zero-density input.
+
+### Pay the discrepancy over all actual zeros
+
+With multiplicities $m_\rho$ retained, uniformly in $A$ and $a$,
+
+$$
+\boxed{
+\sum_{\operatorname{Im}\rho>0}m_\rho
+ |F_A(\rho)-Q_{A,a}(\rho)|
+\ll w(A)\sqrt a\log(2/a).}
+\tag{U3}
+$$
+
+To prove this, set $U=a^{-1/2}\ge4$. For $4\le\gamma\le U$,
+
+$$
+|e^{a\rho^2}-1|
+=\left|a\rho^2\int_0^1e^{ta\rho^2}\,dt\right|
+\le ae^a|\rho|^2\ll a\gamma^2,
+$$
+
+because $0<\beta<1$. The preceding coefficient bound and
+$N(U)\ll U\log(2U)$ give a contribution
+$O(w(A)aU\log(2U))$. For $\gamma>U$ use
+$|e^{a\rho^2}-1|\le1+e^a$ and the classical consequence
+$\sum_{\gamma>U}m_\rho/\gamma^2\ll\log(2U)/U$ of the same
+zero count. Their sum has the size in (U3).
+
+The finite multiset $0<\gamma<4$ is not omitted or assumed empty.
+Directly from the defining integral,
+
+$$
+|F_A(\rho)|\le\frac{w(A)}{|\rho|(1-\beta)},
+$$
+
+so its discrepancy is at most
+$ae^aw(A)\sum_{0<\gamma<4}m_\rho|\rho|/(1-\beta)=O(aw(A))$.
+This fixed zeta-dependent constant is finite and independent of $A,a$;
+it is absorbed into (U3). No finite-height verification is needed for
+this step. All implied constants here are uniform but not numerically
+certified.
+
+Consequently the original conjugate-paired response has allowance
+
+$$
+\sqrt A L\left|2\operatorname{Re}
+ \sum_{\gamma>0}m_\rho(F_A(\rho)-Q_{A,a}(\rho))\right|
+\ll\sqrt{Aa}\log(2/a).
+\tag{U4}
+$$
+
+The admissible choice
+
+$$
+a_A=\frac1{A(\log A)^4}
+$$
+
+makes (U4) $O(1/\log A)$ as $A\to\infty$. This estimate covers the
+complete positive-ordinate multiset and infinite height tail, with
+actual real parts and multiplicities unchanged. It pays unsmoothing
+of the zero response, while giving no signed lower bound for that
+response. Positivity of the scale measure in (U1) is not positivity
+of a sum of complex zero coefficients.
+
+
+## Transport to a centered Gaussian prime integral with the contour paid
+
+The coefficient approximation (U1)–(U4) can be realized on the prime
+side without discarding the pole, the shifted contour, or the original
+trivial-zero correction. Use only Moriya,
+[arXiv:2607.04316v2](https://arxiv.org/abs/2607.04316v2),
+Proposition 2.2, equations (17)–(19), Theorem 3.3, equations (35)–(36),
+and Lemma 3.1. This is an application of those assessed interfaces;
+none of their explicit-formula proofs or RH-dependent localization
+claims is reproved or used.
+
+### Center the pole before the infinite scale integration
+
+For $A\ge e^2$ and $0<a\le1/16$ define
+
+$$
+\Psi_a(X)=\sum_{n\ge1}\Lambda(n)\,
+ \frac12\operatorname{erfc}\!\left(
+ \frac{\log n-\log X}{2\sqrt a}\right).
+\tag{V1}
+$$
+
+In the cited formula take observation $s=0$, right line $c=2$, left
+line $-d=-1/2$, and $\alpha_X^2\log X=a$. The observation is not a
+zero or the pole of $\zeta$. All nontrivial zeros and the pole at $1$
+are crossed; no trivial zero is crossed. The left line avoids all
+zeros and the pole. The source's prime term is $-\Psi_a(X)$, and
+$\zeta'/\zeta(0)=\log(2\pi)$, so its exact formula reads
+
+$$
+\Psi_a(X)-e^aX
+=-\sum_\rho m_\rho\frac{X^\rho e^{a\rho^2}}\rho
+ -\log(2\pi)-R_a(X),
+\tag{V2}
+$$
+
+where
+
+$$
+R_a(X)=\frac1{2\pi i}\int_{\operatorname{Re}z=-1/2}
+ \frac{\zeta'}\zeta(z)\frac{X^z e^{az^2}}z\,dz.
+$$
+
+For each fixed $a>0$ this contour integral and the zero sum in (V2)
+converge absolutely. Define the centered improper integral
+
+$$
+J_a(A)=\lim_{R\to\infty}\int_A^R
+ [\Psi_a(X)-e^aX]\frac{w(X)}{X^2}\,dX.
+\tag{V3}
+$$
+
+The prime and pole terms must be centered before taking this limit.
+Their separate integrals diverge, since $w(X)/X\sim1/(X\log X)$
+and $\Psi_a(X)\sim e^aX$. The latter asymptotic also follows from
+(V2): its Gaussian zero series divided by $X$ tends to zero by
+absolute domination, and the fixed-$a$ contour is $O_a(X^{-1/2})$.
+
+For finite $R$, Gaussian decay allows exchange of the scale integral
+and the zero sum. Its zero coefficients are
+$e^{a\rho^2}F_{A,R}(\rho)$. The bound (U2) and the finite low-zero
+bound dominate them independently of $R$ by a summable multiset.
+Thus dominated convergence passes $R\to\infty$. This uses finite
+scale intervals first; no absolute exchange over the infinite scale
+range is assumed. The constant integrates exactly to
+$\log(2\pi)/(A\log A)$.
+
+For the contour, the scale exchange over $[A,\infty)$ is absolutely
+convergent for each fixed $a>0$, using $X^{-5/2}w(X)$ on the scale
+side and Gaussian decay on the vertical line. Therefore (V3) exists
+and
+
+$$
+J_a(A)=-2\operatorname{Re}\sum_{\gamma>0}m_\rho Q_{A,a}(\rho)
+ -\frac{\log(2\pi)}{A\log A}-C_a(A),
+\tag{V4}
+$$
+
+$$
+C_a(A)=\frac1{2\pi i}\int_{\operatorname{Re}z=-1/2}
+ \frac{\zeta'}\zeta(z)e^{az^2}F_A(z)\,dz.
+$$
+
+Here $F_A$ is defined by the same integral (M1) at $\operatorname{Re}z<1$,
+$z\ne0$. No new analytic continuation assumption is needed.
+
+### Bound the contour after integrating the scale
+
+The infinite-endpoint version of (U2) on $z=-1/2+it$ gives
+
+$$
+|F_A(-1/2+it)|\ll\frac{w(A)A^{-3/2}}{1+t^2}.
+$$
+
+This line has a fixed positive distance from every zero and the pole,
+so the source's Lemma 3.1 gives
+$|\zeta'/\zeta(-1/2+it)|\ll\log^2(3+|t|)$.
+Moreover $|e^{az^2}|\le e^{a/4}$. Taking absolute values after the
+scale integration, rather than before it, therefore gives
+
+$$
+\boxed{|C_a(A)|\ll w(A)A^{-3/2}}
+\quad(A\ge e^2,\ 0<a\le1/16),
+\tag{V5}
+$$
+
+since $\log^2(3+|t|)/(1+t^2)$ is integrable. The implied constant is
+independent of the shrinking width $a$, but is not numerically certified.
+
+The original signed formula already recorded above is
+
+$$
+I_\psi(A)=-2\operatorname{Re}\sum_{\gamma>0}m_\rho F_A(\rho)
+ -\frac{\log(2\pi)}{A\log A}+T_{\rm triv}(A),
+\qquad
+T_{\rm triv}(A)=-\frac12\int_A^\infty
+ \log(1-X^{-2})\frac{w(X)}{X^2}\,dX.
+$$
+
+In particular $0\le T_{\rm triv}(A)\ll w(A)A^{-3}$. Thus the pole
+constant matches exactly, the Gaussian shifted contour is paid by
+(V5), and the original trivial term is retained. Combining (U4)
+and (V5) yields the full prime-side approximation
+
+$$
+\boxed{
+\sqrt A\log A\,|I_\psi(A)-J_a(A)|
+\ll\sqrt{Aa}\log(2/a)+A^{-1}.}
+\tag{V6}
+$$
+
+For $a_A=1/[A(\log A)^4]$ this is
+$O(1/\log A+1/A)\to0$. The bound alone does not assert convergence
+at fixed $A$ as $a\to0$, because its $A^{-1}$ allowance remains.
+
+### The estimate still needed at the selected Robin source
+
+At the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum, retain $A=\log N$ and condition (G9). The
+[existing density restriction](../Analytic/polak2026finiterobinca.md)
+requires $A>10^{36}$ if RH fails and its cited inputs hold. An eventual
+bound of the form
+
+$$
+\sqrt A\log A\,J_{a_A}(A)
+\ge-\mathcal E(\log A)+\eta(A)
+$$
+
+would imply (G9) wherever $\eta(A)$ pays the discrepancy in (V6).
+This is a sufficient condition, not an estimate established here;
+its validity at this selected source remains unproved. Without a
+numerical constant in (V6), no explicit margin or new source threshold
+is certified. Neither positive prime weights nor positive scale
+weights give a lower bound after subtracting the pole main term.
+
+The application closes the full-coefficient approximation and its
+prime-side contour transport, not the signed Robin estimate. It does
+not discard an infinite zero tail, use RH-dependent localization,
+replace real parts by $1/2$, or turn the selected global maximizer into
+the least counterexample. RH remains unproved; all conclusions are
+paper-level applications without Lean certification.
+
+
+## A signed heat-weight application permits a broader Gaussian window
+
+The absolute all-zero discrepancy (U3) pays a narrow Gaussian window.
+The uniform actual-zero phase sum (J1) also controls a signed
+heat-weight discrepancy. The following application combines those
+already assessed inputs, (H5)'s paid coefficient approximation and
+the classical zero count. It does not repeat Landau's formula or
+claim an original phase theorem or Lean verification.
+
+Keep $A\ge e^2$, $L=\log A$, $0<a\le1/16$, and
+$\mathcal J(A)=\log(2A)\log\log(3A)$. All sums run over distinct
+actual zeros $\rho=\beta+i\gamma$ with $\gamma>0$, with each
+multiplicity $m_\rho$ included once. Define
+
+$$
+b_a(u)=\frac{1-e^{-au^2}}{u^2}=\int_0^a e^{-vu^2}\,dv\quad(u>0),
+\qquad b_a(0)=a.
+$$
+
+This is a nonnegative decreasing real function. Its total variation
+and first weighted variation are
+
+$$
+\int_0^\infty(-b_a'(u))\,du=a,\qquad
+\int_0^\infty u(-b_a'(u))\,du
+=\int_0^\infty b_a(u)\,du=\sqrt{\pi a}.
+\tag{W1}
+$$
+
+For the final equality, integrate
+$(1-e^{-au^2})/u^2$ by parts and use the classical Gaussian integral.
+Boundary terms vanish both at zero and at infinity. With
+$U=a^{-1/2}\ge4$, the bounds $b_a(u)\le\min(a,u^{-2})$ also give
+
+$$
+\begin{aligned}
+\int_0^\infty\log(2+u)(-b_a'(u))\,du
+&=a\log2+\int_0^\infty\frac{b_a(u)}{2+u}\,du\\
+&\le a\log(2+U)+a/2\ll a\log(2/a).
+\end{aligned}
+\tag{W2}
+$$
+
+### Apply the existing Landau sum to this variation measure
+
+Use exactly the sum $S_A(u)=\sum_{0<\gamma\le u}m_\rho A^\rho$
+from (J1). Its remainder
+$E_A(u)=S_A(u)+u\Lambda(A)/(2\pi)$ has the bound
+
+$$
+|E_A(u)|\ll A[\mathcal J(A)+\log(2+u)]+Lu
+\qquad(u\ge0).
+$$
+
+For $u\ge8$ this is (J1). For $0\le u<8$ the same weaker envelope
+follows from the fixed finite zero count, $|A^\rho|\le A$ and
+$0\le\Lambda(A)\le L$; no low zero is assumed absent or verified.
+The implied constant remains independent of $A,u$.
+
+Stieltjes partial summation over the entire positive-ordinate multiset
+now yields
+
+$$
+\begin{aligned}
+\sum_{\gamma>0}m_\rho A^\rho b_a(\gamma)
+&=-\int_0^\infty S_A(u)b_a'(u)\,du\\
+&=-\frac{\Lambda(A)\sqrt a}{2\sqrt\pi}
+ +O\!\left(Aa[\mathcal J(A)+\log(2/a)]+L\sqrt a\right).
+\end{aligned}
+\tag{W3}
+$$
+
+At zero $S_A(0)=0$; at infinity the boundary term vanishes by (J1)
+and $b_a(u)\le u^{-2}$. The series is absolutely convergent for
+fixed $A$, by $|A^\rho|\le A$ and the reciprocal-square zero count.
+Equations (W1)–(W2) pay the remainder integral. This applies the
+existing uniform formula to a new weight; it is not a reproof of
+that formula. $\Lambda(A)$ retains its point-supported real-variable
+meaning, and no nonzero main term is assumed at a selected source.
+
+### Pay the coefficient and the actual-real-part phase changes
+
+The first inequality in (H5) gives, uniformly for $\gamma\ge8$,
+
+$$
+F_A(\rho)=\frac{w(A)}A\frac{A^\rho}{\gamma^2}
+ +O\!\left(\frac{w(A)A^{\beta-1}}{\gamma^3}\right).
+$$
+
+After multiplication by $1-e^{-a\gamma^2}$, the total error is
+$O(w(A)a\log^2(2/a))$. Indeed, the classical count gives
+
+$$
+\sum_{\gamma\ge8}m_\rho
+ \frac{\min(a\gamma^2,1)}{\gamma^3}
+\ll a\log^2(2/a),
+$$
+
+by splitting at $U$ and using the existing reciprocal-cube tail
+estimate. The finite multiset $0<\gamma<8$ contributes $O(aw(A))$
+to this comparison, using the pointwise finite-zero bound in (U3).
+Its fixed constants are independent of $A,a$; it is retained even
+when $U<8$.
+
+The Gaussian in (U1) contains the actual square $\rho^2$, not just
+$-\gamma^2$. The additional phase change is explicitly bounded by
+
+$$
+|e^{a\rho^2}-e^{-a\gamma^2}|
+\le ae^a(1+2\gamma)e^{-a\gamma^2},
+$$
+
+since $0<\beta<1$. Applying (U2) and the same zero count gives
+
+$$
+\sum_{\gamma>0}m_\rho|F_A(\rho)|
+ |e^{a\rho^2}-e^{-a\gamma^2}|
+\ll w(A)a\log^2(2/a).
+\tag{W4}
+$$
+
+For large ordinates split at $U$: below it
+$\sum m_\rho/\gamma\ll\log^2(2U)$; above it Gaussian decay and
+the same count give $O(\log(2U))$ for the weighted reciprocal-first
+sum. The finite low multiset again costs $O(aw(A))$. These are
+absolute error estimates for the changes, not critical-line
+replacements of the zeros themselves.
+
+Consequently the full signed coefficient discrepancy obeys
+
+$$
+\boxed{\begin{aligned}
+D_{A,a}&:=\sum_{\gamma>0}m_\rho F_A(\rho)(1-e^{a\rho^2})\\
+&=-\frac{w(A)\Lambda(A)\sqrt a}{2\sqrt\pi A}
+ +O\!\left(w(A)\left[
+ a\bigl(\mathcal J(A)+\log^2(2/a)\bigr)
+ +\frac{L\sqrt a}{A}\right]\right).
+\end{aligned}}
+\tag{W5}
+$$
+
+This is a uniform estimate for a complex signed sum. The actual real
+parts, multiplicities, finite low zeros and infinite height tail have
+not been discarded. Its cancellation comes from (J1), while (W4)
+pays the mismatch between real-ordinate damping and the actual
+Gaussian coefficient. No numerical value for the implied constants
+is asserted.
+
+
+## The broader window retains a vanishing full Robin transport allowance
+
+Use the exact centered prime integral $J_a(A)$ in (V3), the matching
+pole constant in (V4), the uniform contour bound (V5), and the original
+trivial-zero correction already retained there. Subtracting their
+exact formulas gives
+
+$$
+I_\psi(A)-J_a(A)=-2\operatorname{Re}D_{A,a}
+ +T_{\rm triv}(A)+C_a(A).
+$$
+
+Therefore (W5) supplies the complete normalized transport estimate
+
+$$
+\boxed{\begin{aligned}
+\sqrt A L\,[I_\psi(A)-J_a(A)]
+={}&\frac{(1+1/L)\Lambda(A)\sqrt a}{\sqrt\pi\sqrt A}\\
+&+O\!\left(
+ \sqrt A\,a\bigl[\mathcal J(A)+\log^2(2/a)\bigr]
+ +\frac{L\sqrt a}{\sqrt A}+\frac1A\right).
+\end{aligned}}
+\tag{Y1}
+$$
+
+The nonnegative displayed main term is favorable for a lower bound
+on $I_\psi$ in terms of $J_a$. No positive main term is presumed at
+the selected integer, and no effective value for the error constant
+is certified. The pole, contour and trivial-zero contributions are
+those of the full exact formulas, with no further truncation.
+
+### A larger admissible Gaussian width
+
+For $A\ge e^2$ choose
+
+$$
+a_A^\sharp=\frac1{\sqrt A(\log A)^3}\le\frac1{16}.
+$$
+
+Then $\log(2/a_A^\sharp)=L/2+3\log L+\log2=O(L)$ and
+$\mathcal J(A)=O(L\log L)$, so the adverse allowance in (Y1) is
+
+$$
+O\!\left(\frac1L+\frac{\log L}{L^2}
+ +\frac1{A^{3/4}\sqrt L}+\frac1A\right)=O(1/L).
+\tag{Y2}
+$$
+
+The displayed main term is also $O(A^{-3/4}/\sqrt L)$, because
+$\Lambda(A)\le L$. Thus the full normalized absolute discrepancy
+is $O(1/\log A)$ at this larger width as well.
+
+Compared with $a_A=1/[A(\log A)^4]$ in (V6),
+$a_A^\sharp/a_A=\sqrt A\log A\to\infty$. The reciprocal Gaussian
+height scale changes from $\sqrt A(\log A)^2$ to
+$A^{1/4}(\log A)^{3/2}$. This specifies damping of the full response,
+not a cutoff that permits any zero to be omitted.
+
+At the larger width, the earlier generic absolute allowance
+$\sqrt{Aa}\log(2/a)$ grows like $A^{1/4}/\sqrt{\log A}$.
+Equation (Y1) instead uses the existing signed Landau cancellation
+and the paid actual-real-part phase error to obtain (Y2). This compares
+the two guaranteed allowances; it does not claim the earlier bound
+is attained by the actual discrepancy.
+
+### The unchanged selected-source obligation
+
+At the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum, set $A=\log N$ and retain the existing condition
+(G9), its complete infinite integral and strict core. The existing
+restriction $A>10^{36}$ under RH failure and the cited inputs remains
+unchanged. A lower bound
+
+$$
+\sqrt A\log A\,J_{a_A^\sharp}(A)
+\ge-\mathcal E(\log A)+\eta(A)
+$$
+
+would suffice wherever $\eta(A)$ pays the adverse allowance in (Y1).
+Such a signed lower bound is not proved here. The new estimate allows
+a broader Gaussian window with a vanishing transport cost; it does
+not certify that cost numerically at $A>10^{36}$, control the remaining
+signed response, verify a new zero height, or turn the selected global
+maximizer into the least counterexample. All inputs are reused
+paper-level interfaces without Lean certification; RH remains unproved.
+
+## A smaller moving cut from joint density and zero-free support
+
+The complete coefficient (M1) can use a smaller moving height than
+(J6), by combining two existing inputs on the same actual zero
+multiset. This controls the infinite suffix and reduces the height
+of the still-uncontrolled signed head. It does not establish that
+head's sign or the original selected-source Robin condition.
+
+Corollary 1 and Table 1, printed p.2, of
+[Chourasiya–Simonič, arXiv:2507.15184v2](https://arxiv.org/pdf/2507.15184v2)
+also extend the existing count (W1) in the
+[Polak application](../Analytic/polak2026finiterobinca.md)
+to $5/8\le\sigma<1$, with the same larger constants $47,10,168$.
+The additional rows have $B_1\le13.66$, $B_2\le8.290$, $B_3\le147.0$.
+Lemma 2.10, printed p.6, of
+[Johnston–Yang, arXiv:2204.01980v2](https://arxiv.org/pdf/2204.01980v2)
+supplies Ford's zero-free region
+
+$$
+\beta<1-\eta(\gamma),\qquad
+\eta(t)=\frac1{R(\log t)^{2/3}(\log\log t)^{1/3}},
+\quad R=57.54,\quad \gamma\ge3.
+$$
+
+Their analytic proofs and finite verified-height input remain
+external premises. The constant is sufficient for this interface;
+no optimal-constant claim or source proof rerun is needed.
+
+Put $L=\log A$, $\Omega=(L/\log L)^{1/3}$ and
+
+$$
+\kappa=\frac1{28R},\qquad
+T=A^{1/4}e^{-\kappa\Omega},\qquad U=A^{2/7}.
+$$
+
+Work for sufficiently large $A$ so $T\ge H=3\cdot10^{12}$.
+Then $U>T$, $T\to\infty$, and $T/(A^{1/4}L)\to0$.
+No numerical starting clock is certified here.
+Define
+
+$$
+B_2(A;T)=\sum_{\gamma>T}
+ \frac{m_\rho(A^{\beta-1/2}+A^{1/2-\beta})}{\gamma^2}.
+$$
+
+The full coefficient estimate (H5), including its remainder, and
+multiplicity-preserving reflection give
+
+$$
+\sqrt A L\,2\sum_{\gamma>T}m_\rho|F_A(\rho)|
+\le\frac43(1+1/L)B_2(A;T).
+$$
+
+Thus an absolute bound on $B_2$ pays the original signed suffix.
+The original head $\gamma\le T$, pole and trivial-zero terms remain.
+
+Use the existing layer calculation with
+$\sigma_0=5/8$ and $Q_A(\sigma)=A^{\sigma-1/2}+A^{1/2-\sigma}$.
+For the inclusive count and exclusive suffix, the reflected count
+has the endpoint term
+
+$$
+F_2(\sigma;T)=-\frac{2N(\sigma,T)}{T^2}
+ +4\int_T^\infty\frac{N(\sigma,t)}{t^3}\,dt
+\le4\int_T^\infty\frac{N(\sigma,t)}{t^3}\,dt.
+$$
+
+Consequently,
+
+$$
+B_2(A;T)\le Q_A(\sigma_0)S_2(T)
+ +4\int_{\sigma_0}^1Q_A'(\sigma)
+          \int_T^\infty N(\sigma,t)t^{-3}\,dt\,d\sigma,
+\qquad S_2(T)=\sum_{\gamma>T}\frac{m_\rho}{\gamma^2}.
+$$
+
+Tonelli preserves all heights, real parts and multiplicities.
+Write $\epsilon=1-\sigma$. The existing density exponent satisfies
+$d=3\epsilon/(1+\epsilon)\le3\epsilon$, $d\le9/11$ and
+$q=2+d<3$. Uniformly on this range,
+$N(\sigma,t)\ll t^d(\log t)^3$ and
+$Q_A'(\sigma)\le L\sqrt A e^{-\epsilon L}$.
+
+The classical full zero count gives $S_2(T)\ll\log T/T$.
+The base layer therefore costs
+
+$$
+Q_A(\sigma_0)S_2(T)\ll L A^{-1/8}e^{\kappa\Omega}.
+$$
+
+For $T<t\le U$, finite verification and monotonicity of the
+zero-free region jointly imply $N(\sigma,t)=0$ when
+$\sigma\ge1-\eta(U)$. On this same band,
+
+$$
+A^{-\epsilon}t^d\le e^{-\epsilon L/7},\qquad
+\eta(U)\ge\frac1{RL^{2/3}(\log L)^{1/3}},\qquad
+\int_{\eta(U)}^{3/8}e^{-\epsilon L/7}\,d\epsilon
+\le\frac7L e^{-\eta(U)L/7}.
+$$
+
+If $\eta(U)>3/8$ the band is empty. Otherwise these bounds,
+$\log t\le L$ and $\int_T^Ut^{-3}dt\le1/(2T^2)$ give the
+whole finite-band allowance $O(L^3e^{-\Omega/(14R)})$.
+
+For $t>U$, use the density bound without imposing the fixed-$U$
+zero-free restriction. Uniformly for $0\le d\le9/11$,
+$\int_U^\infty t^{d-3}(\log t)^3dt\ll U^{d-2}(\log U)^3$.
+Also $A^{-\epsilon}U^d\le e^{-\epsilon L/7}$, whose layer
+integral cancels the outer factor $L$. The complete infinite band
+therefore costs $O(L^3\sqrt A/U^2)=O(L^3A^{-1/14})$.
+
+Combining the three allowances yields
+
+$$
+\boxed{
+\sqrt A L\left|2\operatorname{Re}
+             \sum_{\gamma>T}m_\rho F_A(\rho)\right|
+\ll L A^{-1/8}e^{\kappa\Omega}
+    +L^3e^{-\Omega/(14R)}+L^3A^{-1/14}\longrightarrow0.}
+$$
+
+The absolute-sum bound above satisfies the same estimate. Every
+implied constant is independent of $A$; no ordinate tail or
+coefficient correction is dropped. The limit follows from
+$\Omega/\log L\to\infty$ and $\Omega/L\to0$.
+Using the old $3/4$ base clip would instead leave
+$O(Le^{\kappa\Omega})$, so it cannot support this vanishing claim.
+
+This is an asymptotic application of established density and
+zero-free results. The same selected integer, its original clock,
+strict core and complete signed target are retained. The actual
+finite head still grows without bound and remains uncontrolled;
+neither a new finite source-clock exclusion nor RH is proved.
+There is no Lean verification of this application.
+
+## Pay coefficient error below the whole-response cut
+
+The full-response suffix estimate above and the existing coefficient
+comparisons (H1), (H5) can be used together at two different heights.
+Keep the same selected source $A=\log N>10^{36}$, every actual zero real
+part and multiplicity, and the original complete coefficient (M1).
+This is a paper-level application of the already cited density and
+zero-free inputs, without a new source theorem, numerical starting
+clock, originality claim or Lean verification.
+
+Put $L=\log A$, $\Omega=(L/\log L)^{1/3}$, $R=57.54$ and
+$\kappa=1/(28R)$ as above. Define
+
+$$
+S=A^{1/6}e^{-\kappa\Omega},\qquad
+T=A^{1/4}e^{-\kappa\Omega},\qquad U=A^{1/5}.
+$$
+
+Work for sufficiently large $A$ with $S\ge H=3\cdot10^{12}$.
+Then $S<U<T$ eventually. The cut $S$ concerns coefficient error;
+$T$ remains the previously paid cut for the full original response.
+Both cuts tend to infinity, so fixed unverified zero heights remain
+in the exact lower head.
+
+For an actual zero $\rho=\beta+i\gamma$ with $\gamma>0$, set
+
+$$
+G_A(\rho)=\frac{w(A)A^{\rho-1}}{\gamma^2},\qquad
+B_3(A,S)=\sum_{\gamma>S}m_\rho
+ \frac{A^{\beta-1/2}+A^{1/2-\beta}}{\gamma^3},
+\qquad w(A)=\frac{1+L}{L^2}.
+$$
+
+Reflection of this same multiplicity-weighted zero multiset gives
+$B_3(A,S)=2\sum_{\gamma>S}m_\rho A^{\beta-1/2}/\gamma^3$.
+The first inequality of (H5) therefore pays the full approximation
+error by
+
+$$
+\sqrt A L\,2\sum_{\gamma>S}m_\rho
+ |F_A(\rho)-G_A(\rho)|
+ \le(1+1/L)\left(\frac73+\frac1{4S}\right)B_3(A,S).
+\tag{RC1}
+$$
+
+The actual weight $A^{\beta-1/2}$ and phase $e^{i\gamma L}$ remain
+in $G_A$. If a transport instead uses
+$P_A(\rho)=w(A)A^{\rho-1}/[\rho(1-\rho)]$, (H1) gives the
+supplementary bound
+
+$$
+\sqrt A L\,2\sum_{\gamma>S}m_\rho
+ |F_A(\rho)-P_A(\rho)|
+ \le\frac{2(L+2)}{L^2}B_3(A,S).
+\tag{RC2}
+$$
+
+This is an alternative coefficient comparison; it is not an additional
+error to add to (RC1).
+
+### The same layer estimate with a reciprocal cube
+
+Reuse the real-part layer identity with $\sigma_0=5/8$ and
+$Q_A(\sigma)=A^{\sigma-1/2}+A^{1/2-\sigma}$. Replacing the
+reciprocal square by a reciprocal cube changes the reflected
+partial-summation formula to
+
+$$
+F_3(\sigma;S)
+ =-\frac{2N(\sigma,S)}{S^3}
+   +6\int_S^\infty N(\sigma,t)t^{-4}\,dt.
+$$
+
+The endpoint term is nonpositive. Dropping it only for an upper bound,
+with the same inclusive head and exclusive suffix convention, gives
+
+$$
+B_3(A,S)\le Q_A(\sigma_0)S_3(S)
+ +6\int_{\sigma_0}^1 Q_A'(\sigma)
+           \int_S^\infty N(\sigma,t)t^{-4}\,dt\,d\sigma,
+\qquad
+S_3(S)=\sum_{\gamma>S}\frac{m_\rho}{\gamma^3}
+ \ll\frac{\log S}{S^2}.
+\tag{RC3}
+$$
+
+The already retained density bound on $5/8\le\sigma<1$ is
+$N(\sigma,t)\le C_0t^{d(\sigma)}(\log t)^3$ for $t\ge H$,
+where, with $\varepsilon=1-\sigma$,
+$d=3\varepsilon/(1+\varepsilon)\le3\varepsilon$ and $d\le9/11$.
+All constants below are independent of $A$ and $\sigma$.
+
+The base layer in (RC3) is
+$O(LA^{-5/24}e^{2\kappa\Omega})$. On $S<t\le U$, use the same
+actual-zero support $N(\sigma,t)=0$ when
+$\sigma\ge1-\eta(U)$. Here
+
+$$
+A^{-\varepsilon}U^d\le e^{-2\varepsilon L/5},\qquad
+\eta(U)\ge\frac{\Omega}{RL},\qquad
+\int_{\eta(U)}^{3/8}e^{-2\varepsilon L/5}\,d\varepsilon
+ \le\frac5{2L}e^{-2\eta(U)L/5},
+$$
+
+when $\eta(U)\le3/8$; otherwise this count band is empty.
+Using $\log t\le L$ and
+$\int_S^Ut^{-4}dt\le1/(3S^3)$, its allowance is
+$O(L^3e^{-41\Omega/(140R)})$.
+
+Above $U$, no fixed-$U$ zero-free support is imposed.
+Since $3-d\ge24/11$, the complete height integral is bounded uniformly
+by $C_1U^{d-3}(\log U)^3$. Integrating
+$e^{-2\varepsilon L/5}$ over $\varepsilon\ge0$ cancels the outer $L$;
+this entire infinite band costs $O(L^3A^{-1/10})$. Thus
+
+$$
+B_3(A,S)\ll
+ LA^{-5/24}e^{2\kappa\Omega}
+ +L^3e^{-41\Omega/(140R)}+L^3A^{-1/10}
+ \longrightarrow0.
+\tag{RC4}
+$$
+
+All three terms vanish because $\Omega/\log L\to\infty$.
+Equations (RC1) and (RC2) pay complete absolute coefficient errors above
+$S$, rather than just at the larger whole-response cut $T$.
+
+### Retain the exact lower head and the oscillatory middle
+
+Let $Z_{\rm orig}(A)=2\operatorname{Re}\sum_{\gamma>0}
+ m_\rho F_A(\rho)$ denote the original paired zero sum, and set
+
+$$
+Z_{\rm split}(A)=2\operatorname{Re}\left[
+ \sum_{0<\gamma\le S}m_\rho F_A(\rho)
+ +\sum_{S<\gamma\le T}m_\rho G_A(\rho)\right].
+$$
+
+Its contribution to $I_\psi$ is $-Z_{\rm orig}$; the approximation
+there uses $-Z_{\rm split}$ with the same sign. All elementary terms
+remain unchanged. Combining (RC1) with the already retained
+complete absolute suffix estimate gives
+
+$$
+\sqrt A L\,|Z_{\rm orig}(A)-Z_{\rm split}(A)|
+ \le(1+1/L)\left(\frac73+\frac1{4S}\right)B_3(A,S)
+ +\sqrt A L\,2\sum_{\gamma>T}m_\rho|F_A(\rho)|
+ \longrightarrow0.
+\tag{RC5}
+$$
+
+This restores every coefficient error and every infinite height.
+It reduces the range requiring exact-coefficient treatment while
+preserving the actual signed oscillatory middle. Its sign, the exact
+lower head, the original full sufficient Robin bound and RH remain
+unproved. This asymptotic reduction does not certify a finite numerical
+clock exclusion or a uniform safe margin.

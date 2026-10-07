@@ -18,12 +18,10 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
             Def("lambda5", "Fifth source parameter", Parameters("lambda5"), "Source Eq. 18; the claim restricts p to the open interval (0,1)."),
             Def("lambda2", "Second source parameter", Parameters("lambda2"), "Source Eq. 18, with lambda1 and lambda4 as defined above."),
             Def("lambda3", "Third source parameter", Parameters("lambda3"), "Source Eq. 18, with the factor 2 in the numerator."),
-            Def("canonicalPurification", "Canonical purification of the maximally mixed state", PurificationFormula(), "For positive d this is the normalized purification of I/d. Physical product order is logical factor first, auxiliary factor second; star conjugates vector entries. Product indices (a,b) are ordered pairs, not tensor products of scalar indices."),
-            Def("sourcePi", "Canonical purification projector", PiFormula(), "The outer product vecMulVec(psi,star(psi)) is the source projector in Eq. 18."),
-            Def("sourceQ", "Source positive matrix", QFormula(), "Literal Eq. 18, with identity on the code space and sourcePi on the same space. Square roots are the real nonnegative square roots, embedded into the complex matrices."),
+            Def("sourceQ", "Source positive matrix", QFormula(), "Literal Eq. 18, with identity on the code space and maxEntangled(Fin(d)) on the same space. Square roots are the real nonnegative square roots, embedded into the complex matrices."),
             Def("sourceD", "Right-factor trace Kraus matrices", DFormula(), "Eq. 19: D_j = I_L tensor bra(j). Its row a and column (b,k) entry is 1 exactly when a=b and j=k. Thus it removes the right factor."),
             Def("sourceB", "Source products", BFormula(), "Eqs. 19–21: B_ij = Q D_i adjoint D_j. The order of the two indices is retained."),
-            Def("sourceE", "Source orthonormal matrices", EFormula(), "Literal Eq. 22, including B_ij adjoint. The ket e_ij is the product-basis vector and psi is canonicalPurification(d)."),
+            Def("sourceE", "Source orthonormal matrices", EFormula(), "Literal Eq. 22, including B_ij adjoint. The ket e_ij is the product-basis vector and psi is maxEntangledVector(Fin(d))."),
             Def("rightTrace", "Actual right partial trace", RightFormula(), "The map is partialTraceRight from the existing library. It acts on every complex input matrix and retains the left factor."),
             Def("sourceNoise", "Source noise on all matrices", NoiseFormula(), "Literal all-matrix Eq. 23. The identity in the first term acts on the code space; the identity in the Kronecker term acts on the auxiliary factor. Neither input nor output is normalized by its trace."),
             Def("sourceC", "Source polar column matrix", CFormula(), "Supplement Eq. S60: chi is an auxiliary vector, and sourceC is Q times the column map I tensor ket(chi)."),
@@ -31,7 +29,7 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
             RepoDef("matrixAction", "Matrix action of a completely positive map", ActionFormula(), "The carrier is CompletelyPositiveMap on the finite CStarMatrix algebras, so complete positivity means positivity at every amplification. FiniteIndex abbreviates an arbitrary finite index type with Fintype and DecidableEq instances. ofMatrix is CStarMatrix.ofMatrix, and ofMatrixInverse is its inverse CStarMatrix.ofMatrix.symm; they transport input and output matrices across that equivalence."),
             Def("TraceNonincreasing", "Trace constraint on every positive input", TNIFormula(), "Eq. 13 permits trace-nonincreasing encoding and decoding. X ranges over every positive semidefinite matrix, and Re extracts the real part of its trace."),
             Def("inputFirstChoi", "Input-first Choi convention", ChoiFormula(), "MatrixMap denotes PhyslibLeaf.MatrixMap, and choiMatrix denotes its choi_matrix. The source's input-first convention is obtained by swapping both product indices of that output-first Choi matrix. The reindexing uses Equiv.prodComm(b,a)."),
-            Def("entanglementFidelity", "Unrenormalized canonical-purification fidelity", FidelityFormula(), "This is the source overlap for tau=I/d: apply the logical channel to the first purification factor and the identity to the reference factor, then take the real overlap. No output trace division is made, including for trace-decreasing competitors."),
+            Def("entanglementFidelity", "Unrenormalized canonical-purification fidelity", FidelityFormula(), "The shared maxEntangledVector(Fin(d)) is the normalized purification of I/d, in logical-factor-first product order, and maxEntangled(Fin(d)) is its rank-one projector. This is the source overlap for tau=I/d: apply the logical channel to the first purification factor and the identity to the reference factor, then take the real overlap. No output trace division is made, including for trace-decreasing competitors."),
             Def("claim", "Full fixed-noise polar-pair dominance assertion", ClaimFormula(), "Li and Jiang, arXiv:2609.00778v1, printed p. 17 after Eq. S64: 'Exact optimality of this pair at fixed p > 0 remains open.' The antecedent is the Eq. S60 polar encoder and the actual right partial trace. The claim quantifies over every natural d >= 2, every real 0 < p < 1, every unit complex auxiliary vector chi, and every completely positive trace-nonincreasing encoder C and decoder D with input-first encoder Choi rank at most one. ofKraus denotes PhyslibLeaf.MatrixMap.of_kraus, and comp composes maps in outer-then-inner order. Competitors are arbitrary members of that class, rather than just the isometric witnesses used to refute it."),
             Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                 H("A feasible qubit pair strictly improves the source polar pair"),
@@ -95,19 +93,9 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
         };
         return WithDP(EqTo(Fn(name,d,p),rhs));
     }
-    private static Formula PurificationFormula()
-    {
-        Formula d=F.Id("d"), a=F.Id("a"), b=F.Id("b");
-        return Disp(All("d",NatType,All("a",FinOf(d),All("b",FinOf(d),EqTo(At(Fn("canonicalPurification",d),Pair(a,b)),Cases(EqTo(a,b),Inv(Fn("sqrt",d)),D(0)))))));
-    }
-    private static Formula PiFormula()
-    {
-        Formula d=F.Id("d"), psi=Fn("canonicalPurification",d);
-        return Disp(All("d",NatType,EqTo(Fn("sourcePi",d),Fn("vecMulVec",psi,Fn("star",psi)))));
-    }
     private static Formula QFormula()
     {
-        Formula d=F.Id("d"),p=F.Id("p"),pi=Fn("sourcePi",d);
+        Formula d=F.Id("d"),p=F.Id("p"),pi=Fn("maxEntangled",FinOf(d));
         return WithDP(EqTo(Fn("sourceQ",d,p),Mul(Fn("sqrt",d),PlusTo(Mul(Fn("sqrt",Fr(Fn("lambda4",d,p),Sub(Sq(d),D(1)))),Sub(D(1),pi)),Mul(Fn("sqrt",Fn("lambda5",d,p)),pi)))));
     }
     private static Formula DFormula()
@@ -124,7 +112,7 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
     {
         Formula d=F.Id("d"),p=F.Id("p"),ij=F.Id("ij"),a=F.Id("a");
         Formula basis=Lam("a",Code(d),Cases(EqTo(a,ij),D(1),D(0)));
-        return WithDP(All("ij",Code(d),EqTo(Fn("sourceE",d,p,ij),Mul(Inv(Fn("sqrt",Fn("lambda4",d,p))),Sub(Fn("vecMulVec",basis,Fn("star",Fn("canonicalPurification",d))),Mul(Fn("sqrt",Fn("lambda5",d,p)),Adj(Fn("sourceB",d,p,ij))))))));
+        return WithDP(All("ij",Code(d),EqTo(Fn("sourceE",d,p,ij),Mul(Inv(Fn("sqrt",Fn("lambda4",d,p))),Sub(Fn("vecMulVec",basis,Fn("star",Fn("maxEntangledVector",FinOf(d)))),Mul(Fn("sqrt",Fn("lambda5",d,p)),Adj(Fn("sourceB",d,p,ij))))))));
     }
     private static Formula RightFormula()
     {
@@ -169,8 +157,8 @@ internal sealed class LiJiangPolarPairOptimalityRefutationDocument : IScribeDocu
     }
     private static Formula FidelityFormula()
     {
-        Formula d=F.Id("d"),f=F.Id("f"),psi=Fn("canonicalPurification",d);
-        Formula output=Fn("kron",f,N("id"),Fn("vecMulVec",psi,Fn("star",psi)));
+        Formula d=F.Id("d"),f=F.Id("f"),psi=Fn("maxEntangledVector",FinOf(d));
+        Formula output=Fn("kron",f,N("id"),Fn("maxEntangled",FinOf(d)));
         return Disp(All("d",NatType,All("f",Map(FinOf(d),FinOf(d)),EqTo(Fn("entanglementFidelity",d,f),Fn("Re",Fn("dotProduct",Fn("star",psi),Fn("mulVec",output,psi)))))));
     }
     private static Formula ClaimFormula()
