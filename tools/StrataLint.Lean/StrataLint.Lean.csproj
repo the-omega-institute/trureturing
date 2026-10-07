@@ -6,6 +6,8 @@
     <AssemblyName>StrataLint.Lean</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../StrataLint.Runtime/StrataLint.Runtime.csproj" />
+
     <ProjectReference Include="../StrataLint.Engine/StrataLint.Engine.csproj" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />
     <AdditionalFiles Include="../Architecture/BannedSymbols.txt" />

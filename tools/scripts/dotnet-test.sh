@@ -33,8 +33,8 @@ for argument in "$@"; do
   fi
 done
 
-# The standalone evidence tool references Engine and validates TRX without
-# compiling Scribe documents. Build it here when the test project does not.
+# The evidence tool uses only registered identities and the shared process runtime.
+# Build it here when the selected test project does not.
 dotnet build "$ROOT/tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj" --configuration Release \
   -p:RestoreLockedMode=true -nr:false -nologo --verbosity quiet
 

@@ -1,15 +1,14 @@
-using StrataLint.FileMap;
 using System.Text;
 using StrataLint.Engine;
 
-namespace StrataLint.Cli;
+namespace StrataLint.FileMap;
 
 internal static class FileMapConformCommand
 {
     internal const string Usage =
         "USAGE: StrataLint filemap-conform [--producer-write-set PRODUCER | --scope PATH]";
 
-    internal static ExplicitCommandResult Run(
+    internal static FileMapCommandResult Run(
         IReadOnlyList<string> arguments,
         string repositoryRoot)
     {
@@ -21,7 +20,7 @@ internal static class FileMapConformCommand
         var scoped = arguments.Count == 2 && arguments[0] == "--scope" && !string.IsNullOrWhiteSpace(arguments[1]);
         if (arguments.Count != 0 && !writeSetQuery && !scoped)
         {
-            return new ExplicitCommandResult(2, string.Empty, Usage + "\n");
+            return new FileMapCommandResult(2, string.Empty, Usage + "\n");
         }
 
         try
@@ -40,11 +39,11 @@ internal static class FileMapConformCommand
                     .Order(StringComparer.Ordinal)
                     .ToArray();
                 return patterns.Length == 0
-                    ? new ExplicitCommandResult(
+                    ? new FileMapCommandResult(
                         2,
                         string.Empty,
                         $"INFRASTRUCTURE_FAILURE filemap-conform: producer {arguments[1]} has no committed write set\n")
-                    : new ExplicitCommandResult(
+                    : new FileMapCommandResult(
                         0,
                         string.Concat(patterns.Select(static pattern => pattern + "\n")),
                         string.Empty);
@@ -57,7 +56,7 @@ internal static class FileMapConformCommand
         }
         catch (Exception exception)
         {
-            return new ExplicitCommandResult(
+            return new FileMapCommandResult(
                 2,
                 string.Empty,
                 $"INFRASTRUCTURE_FAILURE filemap-conform: {exception.Message}\n");
@@ -68,12 +67,12 @@ internal static class FileMapConformCommand
         + System.Text.Json.JsonSerializer.Serialize(new { scope = scope.Paths is null ? "whole-tree" : "delta",
             paths = scope.Paths?.Length, actors = scope.Actors, inventory = scope.Paths is null || scope.Inventory }) + "\n";
 
-    internal static ExplicitCommandResult Render(IReadOnlyList<FileMapFinding> findings)
+    internal static FileMapCommandResult Render(IReadOnlyList<FileMapFinding> findings)
     {
         ArgumentNullException.ThrowIfNull(findings);
         if (findings.Count == 0)
         {
-            return new ExplicitCommandResult(0, string.Empty, string.Empty);
+            return new FileMapCommandResult(0, string.Empty, string.Empty);
         }
 
         var output = new StringBuilder();
@@ -89,6 +88,6 @@ internal static class FileMapConformCommand
             output.Append('\n');
         }
 
-        return new ExplicitCommandResult(1, output.ToString(), string.Empty);
+        return new FileMapCommandResult(1, output.ToString(), string.Empty);
     }
 }

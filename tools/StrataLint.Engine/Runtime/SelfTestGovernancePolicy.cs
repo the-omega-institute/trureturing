@@ -1,3 +1,4 @@
+using StrataLint.Engineering;
 using System.Text.Json;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
@@ -302,9 +303,9 @@ internal static partial class SelfTestGovernancePolicy
                 ? FileMapLoader.LoadRepository(repositoryRoot).Entries.Where(entry => entry.Kind == FileMapKind.Data).ToArray()
                 : [];
             var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
-                .Where(file => file.RelativePath == EngineeringProjectRegistry.ManifestPath
+                .Where(file => file.RelativePath == EngineeringProjectSchema.ManifestPath
                     || !data.Any(entry => entry.Matches(file.RelativePath)))
-                .Where(file => file.RelativePath == EngineeringProjectRegistry.ManifestPath
+                .Where(file => file.RelativePath == EngineeringProjectSchema.ManifestPath
                     || file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal)
                     || file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
                 .Select(file => new EngineeringSource(file.RelativePath, File.ReadAllText(file.FullPath)))

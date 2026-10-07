@@ -18,6 +18,7 @@ public sealed class RetiredLedgerSurfaceTests(
         Assert.Equal(
             [
                 "tools/StrataLint.Cli/StrataLint.Cli.csproj::StrataLint.Cli.Program.Main(string[])",
+                "tools/StrataLint.FileMap/StrataLint.FileMap.csproj::StrataLint.FileMap.FileMapProgram.Main(string[])",
                 "tools/StrataLint.Lean/StrataLint.Lean.csproj::StrataLint.EngineeringScope.LeanProgram.Main(string[])",
                 "tools/StrataLint.Scribe/StrataLint.Scribe.csproj::StrataLint.Scribe.ScribeProgram.Main(string[])",
                 "tools/StrataLint.TestEvidence/StrataLint.TestEvidence.csproj::StrataLint.TestEvidence.Program.Main(string[])",

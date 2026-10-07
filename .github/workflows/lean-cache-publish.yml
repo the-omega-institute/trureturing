@@ -28,7 +28,7 @@ jobs:
       - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
-      - run: make -C tools dotnet
+      - run: make -C tools dotnet DOTNET_PROJECT=tools/StrataLint.Lean/StrataLint.Lean.csproj
       - id: keys
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
       - id: elan

@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using static StrataLint.TestSupport.TestExecutable;
 using System.Text;
 using StrataLint.Engine;

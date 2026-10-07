@@ -1,3 +1,4 @@
+using StrataLint.Engineering;
 using System.Collections.Immutable;
 
 namespace StrataLint.Engine;
@@ -66,7 +67,7 @@ internal static partial class RepositoryRules
     internal static TestProjectTopologySnapshot ReadTrackedProjects(string repositoryRoot)
     {
         var files = GitIndexRepositoryFiles.Enumerate(repositoryRoot)
-            .Where(file => file.RelativePath == EngineeringProjectRegistry.ManifestPath
+            .Where(file => file.RelativePath == EngineeringProjectSchema.ManifestPath
                 || file.RelativePath.EndsWith(".csproj", StringComparison.Ordinal)
                 || file.RelativePath.EndsWith(".cs", StringComparison.Ordinal))
             .Select(file => new EngineeringSource(file.RelativePath, File.ReadAllText(file.FullPath))).ToArray();
@@ -145,17 +146,6 @@ internal static partial class RepositoryRules
     {
         ArgumentNullException.ThrowIfNull(snapshot);
         return BuildDebtGraph(snapshot).Debt;
-    }
-
-    internal static ImmutableArray<string> CalculateOwnerAssemblies(
-        TestProjectTopologySnapshot snapshot)
-    {
-        ArgumentNullException.ThrowIfNull(snapshot);
-        return BuildDebtGraph(snapshot).OwnedTestProjects
-            .Select(static project => project.AssemblyName)
-            .Distinct(StringComparer.OrdinalIgnoreCase)
-            .Order(StringComparer.OrdinalIgnoreCase)
-            .ToImmutableArray();
     }
 
     private static DebtGraph BuildDebtGraph(TestProjectTopologySnapshot snapshot)

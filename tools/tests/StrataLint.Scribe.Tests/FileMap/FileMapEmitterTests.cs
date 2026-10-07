@@ -98,7 +98,7 @@ public sealed class FileMapEmitterTests
             Assert.Equal(0, FileMapEmitter.Emit(root, check: true, output, error));
             Assert.Equal(string.Empty, error.ToString());
 
-            var path = Path.Combine(root, FileMapEmitter.RelativePath);
+            var path = Path.Combine(root, GeneratedArtifactInventory.FileMap.Path);
             TemporaryFileSystem.File.AppendAllText(path, "drift\n", new UTF8Encoding(false, true));
             var drifted = TemporaryFileSystem.File.ReadAllBytes(path);
 

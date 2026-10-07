@@ -106,7 +106,7 @@ public sealed class EmissionTests
             Assert.Empty(error.ToString());
             Assert.True(TemporaryFileSystem.File.Exists(Path.Combine(
                 root,
-                ScribeEmitter.AttestationRelativePath)));
+                GeneratedArtifactInventory.ScribeAttestation.Path)));
             var emissionPath = Path.Combine(root, definition.RelativePath.Value);
             var firstEmission = TemporaryFileSystem.File.ReadAllBytes(emissionPath);
             var citations = LibraryNoteCatalog.Load(root).Citations;
@@ -142,7 +142,7 @@ public sealed class EmissionTests
             Assert.Empty(error.ToString());
 
             TemporaryFileSystem.File.WriteAllBytes(emissionPath, firstEmission);
-            var attestationPath = Path.Combine(root, ScribeEmitter.AttestationRelativePath);
+            var attestationPath = Path.Combine(root, GeneratedArtifactInventory.ScribeAttestation.Path);
             TemporaryFileSystem.File.Delete(attestationPath);
             error.GetStringBuilder().Clear();
 

@@ -7,6 +7,8 @@
     <AssemblyName>StrataLint.RepositoryTopology.Tests</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../../StrataLint.Engineering/StrataLint.Engineering.csproj" />
+    <ProjectReference Include="../../StrataLint.Runtime/StrataLint.Runtime.csproj" />
     <ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" />
     <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
     <ProjectReference Include="../../StrataLint.Lean/StrataLint.Lean.csproj" />

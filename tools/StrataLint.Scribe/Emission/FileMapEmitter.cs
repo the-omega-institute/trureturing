@@ -4,7 +4,6 @@ namespace StrataLint.Scribe;
 
 internal static class FileMapEmitter
 {
-    internal const string RelativePath = "Generated/FILEMAP.md";
 
     internal static int Emit(
         string repositoryRoot,
@@ -26,17 +25,17 @@ internal static class FileMapEmitter
                 throw new InvalidOperationException("FILEMAP projection writer is not byte deterministic.");
             }
 
-            var path = Path.Combine(repositoryRoot, RelativePath);
+            var path = Path.Combine(repositoryRoot, GeneratedArtifactInventory.FileMap.Path);
             var current = File.Exists(path) ? File.ReadAllBytes(path) : [];
             if (current.AsSpan().SequenceEqual(first.AsSpan()))
             {
-                output.WriteLine("checked: " + RelativePath);
+                output.WriteLine("checked: " + GeneratedArtifactInventory.FileMap.Path);
                 return 0;
             }
 
             if (check)
             {
-                error.WriteLine("out of date: " + RelativePath);
+                error.WriteLine("out of date: " + GeneratedArtifactInventory.FileMap.Path);
                 return 1;
             }
 
@@ -44,7 +43,7 @@ internal static class FileMapEmitter
                 ?? throw new InvalidOperationException("FILEMAP projection path has no parent directory.");
             Directory.CreateDirectory(parent);
             File.WriteAllBytes(path, first.AsSpan());
-            output.WriteLine("wrote: " + RelativePath);
+            output.WriteLine("wrote: " + GeneratedArtifactInventory.FileMap.Path);
             return 0;
         }
         catch (Exception exception) when (

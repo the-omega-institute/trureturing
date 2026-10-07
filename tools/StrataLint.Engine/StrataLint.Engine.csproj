@@ -4,6 +4,9 @@
     <AssemblyName>StrataLint.Engine</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../StrataLint.Engineering/StrataLint.Engineering.csproj" />
+    <ProjectReference Include="../StrataLint.Runtime/StrataLint.Runtime.csproj" />
+
     <ProjectReference Include="../Trureturing.Truth/Trureturing.Truth.csproj" />
     <PackageReference Include="Dunet" />
     <PackageReference Include="Microsoft.CodeAnalysis.BannedApiAnalyzers" PrivateAssets="all" />

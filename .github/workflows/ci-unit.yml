@@ -19,6 +19,10 @@ on:
         description: Set up the .NET SDK
         type: boolean
         default: true
+      cache-dependency-path:
+        description: Package locks for the unit's actual build closure
+        type: string
+        default: '**/packages.lock.json'
       lean:
         description: 'Lean preparation: none, toolchain, or build (toolchain plus build seeds)'
         type: string
@@ -63,7 +67,7 @@ jobs:
         with:
           global-json-file: global.json
           cache: true
-          cache-dependency-path: '**/packages.lock.json'
+          cache-dependency-path: ${{ inputs.cache-dependency-path }}
       - id: keys
         if: inputs.lean != 'none'
         env:

@@ -34,10 +34,18 @@
           "Markdig": "[1.3.2, )",
           "Microsoft.CodeAnalysis.CSharp": "[5.0.0, )",
           "Pidgin": "[3.5.1, )",
+          "StrataLint.Engineering": "[1.0.0, )",
+          "StrataLint.Runtime": "[1.0.0, )",
           "Tomlyn": "[2.10.1, )",
           "Trureturing.Truth": "[0.1.0, )",
           "YamlDotNet": "[16.3.0, )"
         }
+      },
+      "stratalint.engineering": {
+        "type": "Project"
+      },
+      "stratalint.runtime": {
+        "type": "Project"
       },
       "trureturing.truth": {
         "type": "Project"

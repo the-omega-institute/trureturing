@@ -1,3 +1,5 @@
+using StrataLint.Engine;
+
 namespace StrataLint.Scribe;
 
 public static class ValuesEmitter
@@ -27,11 +29,11 @@ public static class ValuesEmitter
                 return 0;
             }
 
-            var path = Path.Combine(repositoryRoot, CanonicalValuesWriter.RelativePath);
+            var path = Path.Combine(repositoryRoot, GeneratedArtifactInventory.Values.Path);
             var current = File.Exists(path) ? File.ReadAllBytes(path) : [];
             if (current.AsSpan().SequenceEqual(first))
             {
-                output.WriteLine("checked: " + CanonicalValuesWriter.RelativePath);
+                output.WriteLine("checked: " + GeneratedArtifactInventory.Values.Path);
                 return 0;
             }
 
@@ -39,7 +41,7 @@ public static class ValuesEmitter
                 ?? throw new InvalidOperationException("Values projection path has no parent directory.");
             Directory.CreateDirectory(parent);
             File.WriteAllBytes(path, first);
-            output.WriteLine("wrote: " + CanonicalValuesWriter.RelativePath);
+            output.WriteLine("wrote: " + GeneratedArtifactInventory.Values.Path);
             return 0;
         }
         catch (Exception exception) when (

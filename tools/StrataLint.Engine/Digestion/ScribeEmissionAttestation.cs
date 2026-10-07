@@ -136,7 +136,6 @@ internal sealed class VerifiedScribeEmissions
 
 internal static class ScribeEmissionAttestation
 {
-    internal const string RelativePath = "tools/Generated/scribe-emissions.v1.json";
 
     private const string Schema = "scribe-emission-attestation-v1";
 

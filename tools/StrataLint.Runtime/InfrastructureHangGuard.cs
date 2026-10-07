@@ -1,4 +1,4 @@
-namespace StrataLint.Engine;
+namespace StrataLint.Runtime;
 
 internal static class InfrastructureHangGuard
 {
