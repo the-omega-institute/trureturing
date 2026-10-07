@@ -26,10 +26,10 @@ open ActualTreeReadoutAcquisition (Address)
 def delta (P Q : Source) : ℕ := (alphaLeaves P \ alphaLeaves Q).card
 
 /-- Apply a map to every fixed sibling and insert the tree at the hole. -/
-def fill (g : Source → Source) : OutputContext → Source → Source
+def fillContext (g : Source → Source) : OutputContext → Source → Source
   | .hole, X => X
-  | .left H R, X => .mul ((fill g H) X) (g R)
-  | .right L H, X => .mul (g L) ((fill g H) X)
+  | .left H R, X => .mul ((fillContext g H) X) (g R)
+  | .right L H, X => .mul (g L) ((fillContext g H) X)
 
 /-- Two holes separated at their lowest common ancestor. The Boolean records
 which named hole occurs in its left branch. Fixed siblings remain source trees. -/
@@ -41,12 +41,12 @@ structure TwoHole where
 
 /-- Insert both named holes, applying the same map to all fixed source trees. -/
 def TwoHole.fill (J : TwoHole) (g : Source → Source) (X Y : Source) : Source :=
-  (ActualImageAlphaSeparation.fill g J.outer)
+  (ActualImageAlphaSeparation.fillContext g J.outer)
     (if J.swapped then
-      .mul ((ActualImageAlphaSeparation.fill g J.left) Y)
-        ((ActualImageAlphaSeparation.fill g J.right) X)
-    else .mul ((ActualImageAlphaSeparation.fill g J.left) X)
-      ((ActualImageAlphaSeparation.fill g J.right) Y))
+      .mul ((ActualImageAlphaSeparation.fillContext g J.left) Y)
+        ((ActualImageAlphaSeparation.fillContext g J.right) X)
+    else .mul ((ActualImageAlphaSeparation.fillContext g J.left) X)
+      ((ActualImageAlphaSeparation.fillContext g J.right) Y))
 
 /-- The two named hole addresses. -/
 def TwoHole.addresses (J : TwoHole) : Address × Address :=
@@ -388,33 +388,33 @@ theorem result :
         simp only [forwardCount] at hl
         have hL := hp q hc.1 (by omega); have hR := hr t hc.2 (by omega)
         rw [f_pair, f_pair, n_pair, n_pair]; simp only [forwardCount]; constructor <;> omega
-  have map_one (H : OutputContext) (X : Source) : f ((fill id H) X) = (fill f H) (f X) := by
+  have map_one (H : OutputContext) (X : Source) : f ((fillContext id H) X) = (fillContext f H) (f X) := by
     induction H with
     | hole => rfl
-    | left H R ih => simp only [fill, id_eq, f_pair, ih]
-    | right L H ih => simp only [fill, id_eq, f_pair, ih]
+    | left H R ih => simp only [fillContext, id_eq, f_pair, ih]
+    | right L H ih => simp only [fillContext, id_eq, f_pair, ih]
   have map_two (J : TwoHole) (X Y : Source) :
       f (J.fill id X Y) = J.fill f (f X) (f Y) := by
     cases h : J.swapped <;> simp only [TwoHole.fill, h, Bool.false_eq_true,
       ↓reduceIte, map_one, f_pair]
   have one_data (g : Source → Source) (H : OutputContext) (X Y : Source) :
-      delta ((fill g H) X) ((fill g H) Y) = delta X Y ∧
-      unsharedLeaves ((fill g H) X) ((fill g H) Y) = unsharedLeaves X Y ∧
-      FreeMagma.length ((fill g H) X) + FreeMagma.length Y = FreeMagma.length ((fill g H) Y) + FreeMagma.length X ∧
-      (Nonconflict ((fill g H) X) ((fill g H) Y) ↔ Nonconflict X Y) ∧
-      (composition X = composition Y → composition ((fill g H) X) = composition ((fill g H) Y)) := by
+      delta ((fillContext g H) X) ((fillContext g H) Y) = delta X Y ∧
+      unsharedLeaves ((fillContext g H) X) ((fillContext g H) Y) = unsharedLeaves X Y ∧
+      FreeMagma.length ((fillContext g H) X) + FreeMagma.length Y = FreeMagma.length ((fillContext g H) Y) + FreeMagma.length X ∧
+      (Nonconflict ((fillContext g H) X) ((fillContext g H) Y) ↔ Nonconflict X Y) ∧
+      (composition X = composition Y → composition ((fillContext g H) X) = composition ((fillContext g H) Y)) := by
     have nc_self (Z : Source) : Nonconflict Z Z :=
       (ActualImageSevenLeafSeparation.seven_leaf_separation.2.1 Z Z).2.2.mpr
         (fun _ _ _ ha hb => Option.some.inj (ha.symm.trans hb))
     induction H with
     | hole => exact ⟨rfl, rfl, Nat.add_comm _ _, Iff.rfl, id⟩
     | left H R ih =>
-      simp only [fill, delta_pair, delta_self, nu_pair, nu_self,
+      simp only [fillContext, delta_pair, delta_self, nu_pair, nu_self,
         add_zero, n_pair, nc_pair, nc_self, and_true]
       exact ⟨ih.1, ih.2.1, by omega, ih.2.2.2.1,
         fun he => by simp only [composition, ih.2.2.2.2 he]⟩
     | right L H ih =>
-      simp only [fill, delta_pair, delta_self, nu_pair, nu_self,
+      simp only [fillContext, delta_pair, delta_self, nu_pair, nu_self,
         zero_add, n_pair, nc_pair, nc_self, true_and]
       exact ⟨ih.1, ih.2.1, by omega, ih.2.2.2.1,
         fun he => by simp only [composition, ih.2.2.2.2 he]⟩
@@ -430,25 +430,25 @@ theorem result :
         (one_data g J.outer _ _).1, (one_data g J.outer _ _).2.1,
         (one_data g J.outer _ _).2.2.2.1, delta_pair, nu_pair, nc_pair]
     · exact ⟨by rw [hL.1, hR.1], by rw [hL.2.1, hR.2.1],
-        by have ho := (one_data g J.outer (.mul ((fill g J.left) X) ((fill g J.right) Y))
-            (.mul ((fill g J.left) U) ((fill g J.right) V))).2.2.1
+        by have ho := (one_data g J.outer (.mul ((fillContext g J.left) X) ((fillContext g J.right) Y))
+            (.mul ((fillContext g J.left) U) ((fillContext g J.right) V))).2.2.1
            simp only [n_pair] at ho; omega,
         by rw [hL.2.2.2.1, hR.2.2.2.1]⟩
     · exact ⟨by rw [hL'.1, hR'.1, Nat.add_comm],
         by rw [hL'.2.1, hR'.2.1, Nat.add_comm],
-        by have ho := (one_data g J.outer (.mul ((fill g J.left) Y) ((fill g J.right) X))
-            (.mul ((fill g J.left) V) ((fill g J.right) U))).2.2.1
+        by have ho := (one_data g J.outer (.mul ((fillContext g J.left) Y) ((fillContext g J.right) X))
+            (.mul ((fillContext g J.left) V) ((fillContext g J.right) U))).2.2.1
            simp only [n_pair] at ho; omega,
         by rw [hL'.2.2.2.1, hR'.2.2.2.1, and_comm]⟩
   have path_replace (g : Source → Source) (H : OutputContext) (M X : Source) (u : Address) :
-      replace ((fill g H) M) (H.holeAddress ++ u) X = (fill g H) (replace M u X) := by
+      replace ((fillContext g H) M) (H.holeAddress ++ u) X = (fillContext g H) (replace M u X) := by
     induction H with
     | hole => rfl
-    | left H R ih => simpa only [fill, OutputContext.holeAddress, List.cons_append, replace] using congrArg (fun z => FreeMagma.mul z (g R)) ih
-    | right L H ih => simpa only [fill, OutputContext.holeAddress, List.cons_append, replace] using congrArg (FreeMagma.mul (g L)) ih
+    | left H R ih => simpa only [fillContext, OutputContext.holeAddress, List.cons_append, replace] using congrArg (fun z => FreeMagma.mul z (g R)) ih
+    | right L H ih => simpa only [fillContext, OutputContext.holeAddress, List.cons_append, replace] using congrArg (FreeMagma.mul (g L)) ih
   have literal_two (g : Source → Source) (J : TwoHole) (X Y Z W : Source) :
       replace (replace (J.fill g Z W) J.addresses.1 X) J.addresses.2 Y = J.fill g X Y := by
-    have at_hole (H : OutputContext) (P Q : Source) : replace ((fill g H) P) H.holeAddress Q = (fill g H) Q :=
+    have at_hole (H : OutputContext) (P Q : Source) : replace ((fillContext g H) P) H.holeAddress Q = (fillContext g H) Q :=
       by simpa only [List.append_nil, replace] using path_replace g H P Q []
     cases h : J.swapped <;> simp only [TwoHole.fill, TwoHole.addresses, h,
       Bool.false_eq_true, ↓reduceIte, path_replace, replace, at_hole]
@@ -459,13 +459,13 @@ theorem result :
     · injection he with hS hT; subst U; subst V; simp only [frontier_self, Finset.image_empty, Finset.union_empty]
     · simp only [frontier, if_neg he]
   have frontier_one (H : OutputContext) (S T : Source) :
-      frontier ((fill id H) S) ((fill id H) T) = (frontier S T).image (fun u => H.holeAddress ++ u) := by
+      frontier ((fillContext id H) S) ((fillContext id H) T) = (frontier S T).image (fun u => H.holeAddress ++ u) := by
     induction H with
-    | hole => simp [fill, OutputContext.holeAddress]
-    | left H R ih => simp only [fill, id_eq, OutputContext.holeAddress, frontier_pair,
+    | hole => simp [fillContext, OutputContext.holeAddress]
+    | left H R ih => simp only [fillContext, id_eq, OutputContext.holeAddress, frontier_pair,
         frontier_self, Finset.image_empty, Finset.union_empty, ih,
         Finset.image_image, Function.comp_def, List.cons_append]
-    | right L H ih => simp only [fill, id_eq, OutputContext.holeAddress, frontier_pair,
+    | right L H ih => simp only [fillContext, id_eq, OutputContext.holeAddress, frontier_pair,
         frontier_self, Finset.image_empty, Finset.empty_union, ih,
         Finset.image_image, Function.comp_def, List.cons_append]
   have context_frontier (J : TwoHole) (b c : Bool) (X Y U V : Source) :
@@ -484,7 +484,7 @@ theorem result :
   have one_hole (p q : Source) (hc : Nonconflict (f p) (f q))
       (hk : forwardCount p q = 1) (hl : forwardCount q p = 0) :
       ∃ H : OutputContext, ∃ b : Bool, ∃ X Y : Source,
-        p = (fill id H) (.of b) ∧ q = (fill id H) (.mul X Y) ∧
+        p = (fillContext id H) (.of b) ∧ q = (fillContext id H) (.mul X Y) ∧
           Nonconflict (f (.of b)) (.mul (f X) (f Y)) := by
     induction p generalizing q with
     | of b =>
@@ -500,12 +500,12 @@ theorem result :
         by_cases hL : forwardCount p q = 0
         · have he := zero_same p q hc.1 hL (by omega)
           obtain ⟨H, b, X, Y, h1, h2, h3⟩ := hr t hc.2 (by omega) (by omega)
-          exact ⟨.right p H, b, X, Y, by simp [fill, h1],
-            by simp [fill, he, h2], h3⟩
+          exact ⟨.right p H, b, X, Y, by simp [fillContext, h1],
+            by simp [fillContext, he, h2], h3⟩
         · have he := zero_same r t hc.2 (by omega) (by omega)
           obtain ⟨H, b, X, Y, h1, h2, h3⟩ := hp q hc.1 (by omega) (by omega)
-          exact ⟨.left H r, b, X, Y, by simp [fill, h1],
-            by simp [fill, he, h2], h3⟩
+          exact ⟨.left H r, b, X, Y, by simp [fillContext, h1],
+            by simp [fillContext, he, h2], h3⟩
   have two_holes (p q : Source) (hc : Nonconflict (f p) (f q))
       (hk : forwardCount p q = 1) (hl : forwardCount q p = 1) :
       ∃ J : TwoHole, ∃ b c : Bool, ∃ X Y U V : Source,
@@ -526,38 +526,38 @@ theorem result :
           · have he := zero_same p q hc.1 hkL hlL
             obtain ⟨J, b, c, X, Y, U, V, h1, h2, h3, h4⟩ := hr t hc.2 (by omega) (by omega)
             exact ⟨{ J with outer := .right p J.outer }, b, c, X, Y, U, V,
-              by simpa [TwoHole.fill, fill] using congrArg (FreeMagma.mul p) h1,
-              by simpa [TwoHole.fill, fill, ← he] using congrArg (FreeMagma.mul p) h2,
+              by simpa [TwoHole.fill, fillContext] using congrArg (FreeMagma.mul p) h1,
+              by simpa [TwoHole.fill, fillContext, ← he] using congrArg (FreeMagma.mul p) h2,
               h3, h4⟩
           · obtain ⟨H, c, U, V, h1, h2, h3⟩ :=
               one_hole q p (nc_symm _ _ hc.1) (by omega) hkL
             obtain ⟨K, b, X, Y, h4, h5, h6⟩ := one_hole r t hc.2 (by omega) (by omega)
             exact ⟨⟨.hole, H, K, true⟩, b, c, X, Y, U, V,
-              by simp [TwoHole.fill, fill, h2, h4],
-              by simp [TwoHole.fill, fill, h1, h5], h6, h3⟩
+              by simp [TwoHole.fill, fillContext, h2, h4],
+              by simp [TwoHole.fill, fillContext, h1, h5], h6, h3⟩
         · by_cases hlL : forwardCount q p = 0
           · obtain ⟨H, b, X, Y, h1, h2, h3⟩ := one_hole p q hc.1 (by omega) hlL
             obtain ⟨K, c, U, V, h4, h5, h6⟩ :=
               one_hole t r (nc_symm _ _ hc.2) (by omega) (by omega)
             exact ⟨⟨.hole, H, K, false⟩, b, c, X, Y, U, V,
-              by simp [TwoHole.fill, fill, h1, h5],
-              by simp [TwoHole.fill, fill, h2, h4], h3, h6⟩
+              by simp [TwoHole.fill, fillContext, h1, h5],
+              by simp [TwoHole.fill, fillContext, h2, h4], h3, h6⟩
           · have he := zero_same r t hc.2 (by omega) (by omega)
             obtain ⟨J, b, c, X, Y, U, V, h1, h2, h3, h4⟩ := hp q hc.1 (by omega) (by omega)
             exact ⟨{ J with outer := .left J.outer r }, b, c, X, Y, U, V,
-              by simpa [TwoHole.fill, fill] using congrArg (fun z => FreeMagma.mul z r) h1,
-              by simpa [TwoHole.fill, fill, ← he] using congrArg (fun z => FreeMagma.mul z r) h2,
+              by simpa [TwoHole.fill, fillContext] using congrArg (fun z => FreeMagma.mul z r) h1,
+              by simpa [TwoHole.fill, fillContext, ← he] using congrArg (fun z => FreeMagma.mul z r) h2,
               h3, h4⟩
   have swap_composition (g : Source → Source) (J : TwoHole) (X Y : Source) :
       composition (J.fill g X Y) = composition (J.fill g Y X) := by
     have total (H : OutputContext) (U V : Source) :
-        composition ((fill g H) U) + composition V = composition ((fill g H) V) + composition U := by
+        composition ((fillContext g H) U) + composition V = composition ((fillContext g H) V) + composition U := by
       induction H with
       | hole => exact add_comm _ _
       | left H R ih =>
-        simpa only [fill, composition, add_assoc, add_left_comm, add_comm] using congrArg (fun z => z + composition (g R)) ih
+        simpa only [fillContext, composition, add_assoc, add_left_comm, add_comm] using congrArg (fun z => z + composition (g R)) ih
       | right L H ih =>
-        simpa only [fill, composition, add_assoc, add_left_comm, add_comm] using congrArg (fun z => composition (g L) + z) ih
+        simpa only [fillContext, composition, add_assoc, add_left_comm, add_comm] using congrArg (fun z => composition (g L) + z) ih
     have hL := total J.left X Y; have hR := total J.right X Y
     apply (one_data g J.outer _ _).2.2.2.2
     cases h : J.swapped <;> simp only [TwoHole.fill, h, Bool.false_eq_true, ↓reduceIte] at ⊢

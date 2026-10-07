@@ -19,8 +19,8 @@ internal sealed class ActualImageAlphaSeparationDocument : IScribeDocumentDefini
                 + "Its seven_leaf_separation theorem supplies the exact address semantics and Theorem 30.4. "
                 + "A is pair(E,beta), C is pair(A,E), and E is pair(beta,alpha).")),
             Def("delta", "Directed alpha deficit", "delta(P,Q) is the cardinality of the set difference of the original alpha-leaf address sets. The prose notation μ(P) denotes the cardinality of the original alpha-leaf address set."),
-            Def("fill", "Mapped single-hole filling", "Single-hole contexts reuse ActualLeafHistoryRigidity.OutputContext, including its root-first holeAddress. "
-                + "fill(g,H,X) inserts X and applies g to every complete fixed sibling. The identity retains the preimage, "
+            Def("fillContext", "Mapped single-hole filling", "Single-hole contexts reuse ActualLeafHistoryRigidity.OutputContext, including its root-first holeAddress. "
+                + "fillContext(g,H,X) inserts X and applies g to every complete fixed sibling. The identity retains the preimage, "
                 + "and rho cubed turns all fixed siblings into actual images."),
             Def("TwoHole", "Two source holes", "The outer one-hole context leads to the lowest common ancestor. Its left and right one-hole contexts lead to the two distinct holes. A Boolean records their naming order. "
                 + "TwoHole.fill(J,g,X,Y) inserts the named trees exactly once, retaining the entire outer context and each fixed sibling. "
