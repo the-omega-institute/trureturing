@@ -1,7 +1,7 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation
-   generality: firstGate
+   generality: G
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation
-   mirror-productExpectation: none(waiver:unbounded-symbolic-estimate)
+   mirror-E: none(waiver:unbounded-symbolic-estimate)
    anchors: []
    utility: none
    digest: Independent heterogeneous whole-window laws have a sharp uniform teacher separation. -/

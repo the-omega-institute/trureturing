@@ -1,7 +1,7 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/HeterogeneousHammingSeparation
-   generality: firstGate
+   generality: G
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/HeterogeneousHammingSeparation
-   mirror-productExpectation: none(waiver:unbounded-symbolic-estimate)
+   mirror-E: none(waiver:unbounded-symbolic-estimate)
    anchors: []
    utility: none
    digest: Sharp heterogeneous Hamming separation is strictly below squared separation. -/
