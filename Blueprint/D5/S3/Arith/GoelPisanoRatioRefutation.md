@@ -52,6 +52,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Arith/GoelPisanoRatioRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/goel-2026-pisano-rank-ratio-oq4` (refuted) by `D5/S3/Arith/GoelPisanoRatioRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"goel-2026-pisano-rank-ratio-oq4","declaration_gid":"D5/S3/Arith/GoelPisanoRatioRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Aradhya Goel (2026). *Sophie Germain Primes and the Totient of Fibonacci Numbers*. URL: <https://arxiv.org/abs/2604.17847v3>.

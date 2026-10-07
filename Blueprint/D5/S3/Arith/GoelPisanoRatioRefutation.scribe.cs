@@ -37,13 +37,17 @@ internal sealed class GoelPisanoRatioRefutationDocument : IScribeDocumentDefinit
                 "The value five is odd, but it cannot occur. Set p=2q+1. The prime Fibonacci rank bound and the period bounds first force the quadratic character at p to be negative: a positive character would make zeroRank(p) divide both 2q and q²−1, hence two, whereas p>11 gives zeroRank(p)≥5. "
                 + "A positive character at q would then make zeroRank(p) divide both q−1 and 2(q+1), hence four, the same contradiction. The negative character at q gives q mod 5 equal to two or three and π(q) dividing 2(q+1). Thus five divides neither π(q) nor its exact quotient by zeroRank(p). "
                 + "The argument excludes every multiple of five. It does not assert that all remaining positive odd values occur.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("goel-2026-pisano-rank-ratio-oq4"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create("goel-pisano-" + name.ToLowerInvariant()),
         DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-        provenance, Blocks(Paragraph(Text(prose))), role);
+        provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Nat => new Formula.NamedConstant(FormulaIdentifier.Create("Nat"));
     private static Formula Qualified(string owner, string name) =>
