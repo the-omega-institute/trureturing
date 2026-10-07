@@ -1,6 +1,5 @@
 using StrataLint.Engine;
 using System.Text;
-using StrataLint.Scribe;
 
 namespace StrataLint.FileMap.Tests;
 
