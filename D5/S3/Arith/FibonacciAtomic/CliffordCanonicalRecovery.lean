@@ -224,37 +224,27 @@ theorem result :
     · intro hdiv j
       unfold K
       rw [carry_low, carry_low, low_period d hdiv]
-  have digits (d e n m : ℕ) :
-      n % d = m % d ∧ (n / d : ZMod e) = (m / d : ZMod e) ↔
-        (n : ZMod (d * e)) = (m : ZMod (d * e)) := by
-    rw [ZMod.natCast_eq_natCast_iff', ZMod.natCast_eq_natCast_iff']
-    have hnd := Nat.mod_mul_right_mod n d e
-    have hmd := Nat.mod_mul_right_mod m d e
-    have hne := Nat.mod_mul_right_div_self n d e
-    have hme := Nat.mod_mul_right_div_self m d e
-    constructor
-    · rintro ⟨hl, hh⟩
-      apply Nat.ext_div_mod (n := d)
-      · rw [hne, hme, hh]
-      · rw [hnd, hmd, hl]
-    · intro h
-      constructor
-      · rw [← hnd, ← hmd, h]
-      · rw [← hne, ← hme, h]
   have complete (d e : ℕ) (hd : 1 ≤ d) (he : 1 ≤ e) :
       Factors (L d e) ↔ d * e ∣ 4 := by
+    letI : NeZero d := ⟨by omega⟩
+    letI : NeZero e := ⟨by omega⟩
     rw [criterion, ← modular (d * e), criterion]
+    have coordinates (j : ℕ) :
+        (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.digitJoin d e).symm
+          (residue (d * e) (atomicBlock j)) =
+            (residue d (atomicBlock j), H d e j) := by
+      change (((((atomicBlock j).1 : ZMod (d * e)).val : ZMod d),
+          (((atomicBlock j).2 : ZMod (d * e)).val : ZMod d)),
+        ((((atomicBlock j).1 : ZMod (d * e)).val / d : ZMod e),
+          (((atomicBlock j).2 : ZMod (d * e)).val / d : ZMod e))) = _
+      simp only [residue, H, Prod.mk.injEq, ZMod.val_natCast,
+        ZMod.natCast_eq_natCast_iff', Nat.mod_mul_right_mod,
+        Nat.mod_mul_right_div_self, Nat.mod_mod, and_self]
     have equiv (n m : ℕ) : L d e n = L d e m ↔
         residue (d * e) (atomicBlock n) = residue (d * e) (atomicBlock m) := by
-      simp only [L, low, H, residue, Prod.mk.injEq]
-      constructor
-      · rintro ⟨⟨h1,h2⟩,⟨h3,h4⟩⟩
-        exact ⟨(digits d e _ _).mp ⟨h1,h3⟩,
-          (digits d e _ _).mp ⟨h2,h4⟩⟩
-      · rintro ⟨h1,h2⟩
-        have a := (digits d e _ _).mpr h1
-        have b := (digits d e _ _).mpr h2
-        exact ⟨⟨a.1,b.1⟩,⟨a.2,b.2⟩⟩
+      rw [← (D5.S3.Quantum.Algebra.CarryTransport.FibonacciOutputAlgebra.digitJoin
+        d e).symm.injective.eq_iff, coordinates, coordinates]
+      simp only [L, low, H, residue, Prod.mk.injEq, ZMod.natCast_eq_natCast_iff']
     exact forall_congr' fun j => equiv (j + 6) j
   have high (d e : ℕ) (hd : 1 ≤ d) (he : 1 ≤ e) (hdiv : d ∣ 4) :
       Factors (H d e) ↔ d * e ∣ 4 := by
