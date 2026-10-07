@@ -673,3 +673,321 @@ $-D_{\rm lb}(A)$ requirement; neither signed tail bound has been proved.
 The full integral over $[A,\infty)$ remains in (G9).
 This paper-level improvement does not prove RH, and finite source
 checks and source inspection do not certify its external premises.
+
+## A fixed positive scale mixture cannot remove the functional-equation weight
+
+The signed formula above and the actual-source condition (G9) are
+retained here. Durkan–Hughes–Pearce-Crump, *Generalisations of the
+Landau–Gonek theorem and applications to mean values of zeta*,
+[arXiv:2601.18025v1](https://arxiv.org/abs/2601.18025v1), Theorem 5,
+instead estimates the dyadic sum
+
+$$
+D_T(X)=\sum_{T<\operatorname{Im}\rho\le2T}\chi(\rho)X^\rho,
+\qquad \zeta(s)=\chi(s)\zeta(1-s).
+$$
+
+The sum uses the actual zeros with multiplicity. Its complex,
+zero-dependent weight is part of the theorem; the RH-dependent errors
+cannot be used unconditionally. This application addresses only one
+proposed weight-removal interface. It does not reassess that theorem,
+claim an original transform obstruction, or provide Lean verification.
+
+Fix the same cutoff $A>1$ throughout. The coefficient contributed by
+the original tail to a zero $s$ is
+
+$$
+F_A(s)=\frac1s\int_A^\infty
+u^{s-2}\frac{1+\log u}{\log^2u}\,du,
+\qquad 0<\operatorname{Re}s<1.
+\tag{M1}
+$$
+
+In the signed explicit formula its contribution is $-F_A(\rho)$.
+The pole term and the trivial-zero integral remain those displayed
+above. Integration by parts identifies (M1) with the two corresponding
+terms of that existing formula; no zero tail is truncated here.
+
+### The original coefficient already has a positive Mellin representation
+
+Put $k(u)=(1+\log u)/(u^2\log^2u)$. Since
+
+$$
+\int_v^\infty k(u)\,du=\frac1{v\log v}\qquad(v>1),
+$$
+
+integrating $x^{s-1}$ over $0<x<u$ and changing the order gives
+
+$$
+F_A(s)=\int_0^\infty
+\frac{x^{s-1}}{\max(A,x)\log\max(A,x)}\,dx.
+\tag{M2}
+$$
+
+For real $0<s<1$ this follows by Tonelli. For complex $s$ in the
+same strip, the absolute integral is the finite integral with exponent
+$\operatorname{Re}s$, so Fubini gives the identical formula. Thus
+$F_A(s)=\int x^s\,d\nu_A(x)$ for the positive scale measure
+
+$$
+d\nu_A(x)=\frac{dx}{x\max(A,x)\log\max(A,x)}.
+$$
+
+This representation by itself supplies no one-sided bound for the
+signed zero sum. Applying it directly to $D_T$ would retain the unwanted
+$\chi(\rho)$ factor.
+
+### The reciprocal weight destroys fixed positive scale representability
+
+The classical functional equation, in
+[DLMF 25.4.2](https://dlmf.nist.gov/25.4.E2), has
+
+$$
+\chi(s)=2^s\pi^{s-1}\sin(\pi s/2)\Gamma(1-s).
+$$
+
+Consequently, for real $\sigma\uparrow1$,
+$\chi(\sigma)>0$ and $\chi(\sigma)^{-1}\sim(1-\sigma)/2$.
+For $0<\sigma<1$, $F_A(\sigma)/\chi(\sigma)$ is strictly positive,
+but
+
+$$
+\lim_{\sigma\uparrow1}\frac{F_A(\sigma)}{\chi(\sigma)}=0.
+\tag{M3}
+$$
+
+To verify the endpoint, set $\epsilon=1-\sigma$ and
+$w(u)=(1+\log u)/\log^2u$, which tends to zero. For every $\eta>0$,
+choose $B\ge A$ with $w(u)\le\eta$ for $u\ge B$. The finite-prefix
+contribution to $\epsilon\int_A^\infty u^{-1-\epsilon}w(u)\,du$
+tends to zero, while its tail is at most
+$\eta\epsilon\int_B^\infty u^{-1-\epsilon}du
+=\eta B^{-\epsilon}\le\eta$. This proves (M3), including the
+complete infinite tail and the fixed original cutoff.
+
+Suppose a nonnegative Borel measure $\mu_A$ on $(0,\infty)$ had
+finite real moments throughout $0<\sigma<1$ and satisfied the exact
+all-strip transport identity
+
+$$
+F_A(s)=\chi(s)\int_0^\infty X^s\,\mu_A(dX),
+\qquad 0<\operatorname{Re}s<1.
+\tag{M4}
+$$
+
+It may depend on $A$, but is fixed as $s$ varies. Fatou along any real
+sequence $\sigma\uparrow1$ and (M3) imply
+
+$$
+0\le\int_0^\infty X\,\mu_A(dX)
+\le\liminf_{\sigma\uparrow1}\int_0^\infty X^\sigma\,\mu_A(dX)=0.
+$$
+
+Since $X>0$ everywhere on the scale domain, $\mu_A=0$. This contradicts
+the strict positivity of $F_A(\sigma)/\chi(\sigma)$. Hence no such
+nonnegative measure exists, even without requiring finite total mass
+or a finite first moment in advance. Matching the real interval alone
+already produces the contradiction.
+
+If (M4) held, each finite dyadic actual-zero multiset would obey
+$\sum F_A(\rho)=\int D_T(X)\,\mu_A(dX)$, with its multiplicities
+unchanged. The result rules out this fixed positive, all-strip kernel
+transport before any summation over heights. It does not rule out
+signed or complex measures, interpolation only on the actual zero
+set, height-dependent transforms, or approximation with a separately
+bounded remainder. Those are different interfaces requiring their own
+integrability, uniform error and sign estimates. In particular, an
+all-strip identity is a sufficient universal matching requirement,
+not a necessary condition for every use of the weighted theorem.
+
+No estimate for the original signed $I_\psi(A)$ follows. Condition
+(G9), at the same selected integer and with the full tail, remains
+unproved; RH remains unproved.
+
+## Exact signed scale transport and the cost of its large-scale tail
+
+The preceding positive-measure exclusion leaves signed and complex
+transports open. For the same fixed $A>1$ and original coefficient
+$F_A$ in (M1), a classical cosine–Mellin calculation constructs a real
+signed transport. Its absolute moments also explain why the displayed
+error in Durkan–Hughes–Pearce-Crump's Theorem 5 cannot simply be
+integrated over all scales. This is an application of classical
+transforms and the already assessed theorem, with no originality or
+Lean-verification claim.
+
+### A reciprocal-coordinate cosine transform
+
+Let $h_A(u)=1/[\max(A,u)\log\max(A,u)]$ and put
+
+$$
+v_A(x)=\frac{h_A(1/x)}x=
+\begin{cases}
+1/\log(1/x),&0<x\le1/A,\\
+1/(A\log A\,x),&x\ge1/A.
+\end{cases}
+\tag{S1}
+$$
+
+The two branches agree at $1/A$. Set $v_A(0)=0$.
+The function is locally absolutely continuous, tends to zero at
+infinity, and has the integrable derivative
+
+$$
+v_A'(x)=
+\begin{cases}
+1/[x\log^2(1/x)],&0<x<1/A,\\
+-1/(A\log A\,x^2),&x>1/A,
+\end{cases}
+\qquad \int_0^\infty|v_A'(x)|\,dx=\frac2{\log A}.
+$$
+
+Define the improper cosine transform for $X>0$ by
+
+$$
+g_A(X)=2\int_0^\infty v_A(x)\cos(2\pi Xx)\,dx
+=-\frac1{\pi X}\int_0^\infty v_A'(x)\sin(2\pi Xx)\,dx.
+\tag{S2}
+$$
+
+The first integral converges by Dirichlet on its $1/x$ tail; the
+second is absolutely convergent. Integration by parts gives the
+equality without a boundary term. In particular,
+
+$$
+|g_A(X)|\le\frac2{\pi X\log A}.
+\tag{S3}
+$$
+
+At the other endpoint, splitting the tail at $1/X$ gives
+
+$$
+g_A(X)=\frac2{A\log A}\log(1/X)+O_A(1)
+\qquad(X\downarrow0).
+\tag{S4}
+$$
+
+Indeed, the compact part is bounded. In the tail integral, subtracting
+one from the cosine between $1/A$ and $1/X$ has a bounded integral
+after the substitution $t=Xx$, and the integral from $1/X$ to
+infinity is bounded by Dirichlet. Thus
+$\int_0^\infty X^{\sigma-1}|g_A(X)|\,dX<\infty$ for every
+$0<\sigma<1$.
+
+The standard cosine moment in
+[DLMF 5.9.6](https://dlmf.nist.gov/5.9.E6), followed by integration
+by parts, yields
+
+$$
+\int_0^\infty t^{s-2}\sin t\,dt
+=\frac{\Gamma(s)\cos(\pi s/2)}{1-s}
+\qquad(0<\operatorname{Re}s<1).
+$$
+
+Applying this to the second integral in (S2) is a justified Fubini
+step: its absolute double integral is a finite constant depending on
+$\sigma=\operatorname{Re}s$ times
+$\int_0^\infty|v_A'(x)|x^{1-\sigma}\,dx<\infty$.
+Integration by parts in $x$ then gives
+
+$$
+\begin{aligned}
+\int_0^\infty X^{s-1}g_A(X)\,dX
+&=2(2\pi)^{-s}\Gamma(s)\cos(\pi s/2)
+\int_0^\infty v_A(x)x^{-s}\,dx\\
+&=\frac{F_A(s)}{\chi(s)}.
+\end{aligned}
+\tag{S5}
+$$
+
+Here $x=1/u$ identifies the last integral with (M2), and the
+classical functional equation identifies its prefactor with
+$\chi(1-s)=1/\chi(s)$. Thus $d\mu_A(X)=g_A(X)dX/X$ is a locally
+finite real signed Borel scale measure with finite absolute moments
+throughout the open strip; finite total variation is not required.
+The preceding positive-measure result and the strictly positive real
+moments imply that this density has both signs; no large-$X$
+pointwise asymptotic or sign location is assumed.
+
+For each finite actual dyadic zero multiset, (S5) gives the exact
+coefficient identity
+
+$$
+\sum_{T<\operatorname{Im}\rho\le2T}F_A(\rho)
+=\int_0^\infty D_T(X)\,\mu_A(dX).
+\tag{S6}
+$$
+
+Absolute strip moments justify the finite sum interchange and preserve
+all multiplicities. Summing over infinitely many height blocks is a
+separate interchange or remainder obligation; (S6) alone does not pay it.
+
+### Every absolutely integrable exact transport has a missing higher moment
+
+There is a sharper endpoint than (M3). With $L=\log A$ and
+$\epsilon=1-\sigma\downarrow0$, substituting $u=e^y$ in (M1) gives
+
+$$
+F_A(1-\epsilon)=\frac1{1-\epsilon}
+\int_L^\infty e^{-\epsilon y}\left(\frac1y+\frac1{y^2}\right)dy
+=\log(1/\epsilon)+O_A(1).
+$$
+
+For the $1/y$ integral, split at $1/\epsilon$: replacing the
+exponential by one below that point changes the answer by at most
+one, while the rescaled tail is a fixed convergent integral. The
+$1/y^2$ integral is at most $1/L$. Since
+$\chi(1-\epsilon)^{-1}=\epsilon/2+O(\epsilon^2)$,
+
+$$
+\frac{F_A(1-\epsilon)}{\chi(1-\epsilon)}
+=\frac\epsilon2\log(1/\epsilon)+O_A(\epsilon).
+\tag{S7}
+$$
+
+Suppose any locally finite signed or complex Borel scale measure
+$\mu$, allowing infinite total variation, had finite absolute
+moments at every $0<\sigma<1$, realized the exact all-strip
+identity (M4), and also had a finite absolute moment at $1+\delta$
+for some $\delta>0$. For $\sigma$ in a neighborhood of one,
+$X^\sigma\log X$ is dominated against $|\mu|$ by a fixed
+subunit moment on $0<X<1$ and the $1+\delta$ moment on $X\ge1$.
+Dominated convergence therefore makes $\int X^\sigma\,\mu(dX)$
+differentiable at one, with a finite derivative. Its value there is
+zero by (M3). But (S7) forces its left difference quotient to tend
+to $-\infty$, a contradiction. Hence every such exact transport has
+
+$$
+\boxed{\int_0^\infty X^{1+\delta}\,|\mu|(dX)=\infty
+\quad\text{for every }\delta>0.}
+\tag{S8}
+$$
+
+This includes the constructed real density. Its divergent higher
+moment comes from $X\ge1$, because its absolute subunit moments
+already bound the contribution of $0<X<1$. No explicit asymptotic
+for $g_A$ is needed for this moment obstruction.
+
+### Consequence for the existing error supplier
+
+Theorem 5, printed p.4, equation (2.1), is uniform for $X\ge1$ and
+$T>1$. One term in its displayed absolute-error majorant is
+
+$$
+\frac{(\log T)^2}{\sqrt T}\,X^{1+1/\log T}.
+$$
+
+For every fixed $T>1$, (S8) shows that integrating this term against
+the total variation of any exact all-strip transport is infinite.
+Thus the displayed error majorant cannot, by direct absolute
+integration over $[1,\infty)$, control the complete signed transport
+in (S6). This is a limitation of that guaranteed majorant, not a
+claim that the actual error integral diverges. The source theorem
+also leaves the scale interval $(0,1)$ to a separate argument.
+
+Using a scale truncation requires an independent bound for its
+complement. A cancellation-sensitive integrated remainder, a
+different large-scale error estimate, or matching only on the actual
+zero set could change the conclusion. No such supplier is established
+here. The original infinite $I_\psi(A)$ tail, same selected integer,
+and sufficient condition (G9) remain unchanged and unproved; RH
+remains unproved.
