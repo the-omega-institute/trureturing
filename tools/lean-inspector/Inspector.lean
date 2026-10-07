@@ -228,11 +228,9 @@ def closedNegation (moduleData : String → Option ModuleData)
   if !claim.levelParams.isEmpty || !result.levelParams.isEmpty
       || !closedExpression claim.type || !closedExpression claim.value
       || !closedExpression result.type || !closedExpression result.value then return false
-  let start ← IO.getNumHeartbeats
-  if !(← RawArtifacts.equalTypes find start 0 claim.type (mkSort .zero)) then return false
-  -- The compiler already checked the theorem's proof against result.type.
-  -- The report computes only the relationship between the two compiled types.
-  RawArtifacts.equalTypes find start 0 result.type (mkApp (mkConst ``Not) (mkConst claim.name))
+  -- The kernel checked the proof; SL-031 requires these exact raw types.
+  return claim.type.equal (mkSort .zero) &&
+    result.type.equal (mkApp (mkConst ``Not) (mkConst claim.name))
 
 elab "informationMaterialWriterProgram" : term => do
   let path := (System.FilePath.mk (← getFileName)).parent.getD "." / "materials.py"

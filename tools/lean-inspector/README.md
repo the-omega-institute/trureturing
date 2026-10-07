@@ -275,6 +275,8 @@ Report reuse comes only from the Lake trace and the single semantic version.
 
 `STRATALINT_INSPECTOR_MODULE_WORK` 可指定本次调用的模块工作 JSONL，记录 `discover`、`extract` 和 `assess` 的实际模块工作；H 单独由编译输入投影确定。该观测不参与 trace、复用或准入，Lake 重放的构建日志不代表本次执行。
 
+Utility refutations require the raw claim type `Prop` and the raw result type `Not claim`. The judge compares those compiled types literally; it does not unfold definitions, reduce aliases or use a Reg refutation certificate.
+
 The implementation library contains the production artifact evaluator and its pure
 support modules. Tests and independent analyses live in the downstream Reg host.
 The production report builds no test library. CI explicitly builds the full

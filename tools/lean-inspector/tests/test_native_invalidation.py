@@ -71,8 +71,8 @@ theorem hidden_self : hidden = hidden := rfl
         self.assertEqual(declarations['D5.Token']['axioms'], private_axioms)
         self.assertEqual(declarations['D5.Token.mk']['axioms'], private_axioms)
         self.assertEqual(declarations['D5.hidden_self']['kind'], 'theorem')
-        self.assertTrue(next(r for r in rows if r['module'] == 'Fixture')
-                        ['utility_refutation']['is_closed_negation'])
+        self.assertFalse(next(r for r in rows if r['module'] == 'Fixture')
+                         ['utility_refutation']['is_closed_negation'])
 
         executable = native.state(self.root) / 'producer/bin/reportInspector'
         env = dict(self.env, RAW_JUDGE_TRIPWIRE=str(self.root / 'judge-tripwire'),
@@ -439,11 +439,36 @@ class NativeCompilerOptionsTests:
 
 
 class NativeSemanticConsumerTests:
+    def test_literal_utility_refutation(self):
+        # R53: transport tests do not distinguish raw Not claim
+        # from definitionally equivalent result or claim-type aliases.
+        self.write('External.lean', 'def claim : Prop := False\n')
+        self.write('Fixture.lean', 'import D5.A\nimport External\n'
+                   'theorem result : ¬ claim := fun h => h\n')
+        self.utility()
+        self.build()
+        self.assertTrue(self.report()[0][-1]['utility_refutation']['is_closed_negation'])
+        self.write('Fixture.lean', 'import D5.A\nimport External\n'
+                   'def rejection : Prop := ¬ claim\n'
+                   'theorem result : rejection := fun h => h\n')
+        self.build()
+        self.assertFalse(self.report()[0][-1]['utility_refutation']['is_closed_negation'])
+        self.write('Fixture.lean', 'import D5.A\nimport External\n'
+                   'theorem result : ¬ False := fun h => h\n')
+        self.build()
+        self.assertFalse(self.report()[0][-1]['utility_refutation']['is_closed_negation'])
+        self.write('External.lean', 'abbrev Proposition := Prop\ndef claim : Proposition := False\n')
+        self.write('Fixture.lean', 'import D5.A\nimport External\n'
+                   'theorem result : ¬ claim := fun h => h\n')
+        self.utility()
+        self.build()
+        self.assertFalse(self.report()[0][-1]['utility_refutation']['is_closed_negation'])
+
     def test_native_invalidation(self):
         self.build(targets=['Audit'])
         rows, original_report, original_materials = self.report()
         self.assertEqual(len(rows), 4)
-        self.assertTrue(rows[-1]['utility_refutation']['is_closed_negation'])
+        self.assertFalse(rows[-1]['utility_refutation']['is_closed_negation'])
         self.assertTrue((self.root / '.lake/build/lib/lean/Audit.olean').is_file())
         self.assertTrue(list((self.root / '.lake/build/lib').glob('*Audit*.a')))
         self.assertTrue((self.root / '.lake/build/lib/lean/External.olean').is_file())
@@ -621,8 +646,8 @@ class NativeSemanticConsumerTests:
         self.assertTrue(result['unaffected_origin_preserved'])
 
     def test_private_transitive_definition_invalidates_utility(self):
-        # Public imports hide B's definition body from A and Fixture, while
-        # Inspector's private imports and transparency .all can unfold it.
+        # Nonliteral negations are rejected independently of the definition body;
+        # private dependency changes still invalidate the report input.
         support = 'module\npublic section\nnamespace D5\ndef hidden : Prop := False\n'
         self.write('D5/B.lean', support)
         self.write('D5/A.lean', 'module\npublic import D5.B\npublic def claim : Prop := D5.hidden\n')
@@ -708,7 +733,7 @@ class NativeSemanticConsumerTests:
         self.record_result('comparison', result)
         self.assertFalse(result['public_olean_changed'])
         self.assertTrue(result['private_olean_changed'])
-        self.assertEqual(result['evidence'], {'before': True, 'unchanged': True, 'warm': False, 'clean': False})
+        self.assertEqual(result['evidence'], {'before': False, 'unchanged': False, 'warm': False, 'clean': False})
         self.assertFalse(published_evidence)
         self.assertTrue(result['warm_matches_clean'], json.dumps(result))
         self.assertEqual(changed, {'D5.A', 'D5.B', 'Fixture'})
@@ -741,8 +766,10 @@ class NativeSemanticConsumerTests:
             verify_exit=verify.returncode, verify_stderr=verify.stderr)
         if output := os.environ.get('STRATALINT_DEPENDENCY_PROBE_RESULT'):
             Path(output).write_text(json.dumps(result, indent=2) + '\n')
-        self.assertTrue(before)
-        self.assertFalse(after, 'mutation must change actual Lean-generated semantic evidence')
+        self.assertFalse(before)
+        self.assertFalse(after)
+        activity = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
+        self.assertEqual(sum(row['count'] for row in activity if row['kind'] == 'extract'), 1)
         self.assertEqual(stage.returncode, 0, json.dumps(result))
         self.assertEqual(verify.returncode, 0, json.dumps(result))
 
