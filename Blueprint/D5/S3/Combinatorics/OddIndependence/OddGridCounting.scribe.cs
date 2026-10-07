@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.OddIndependence;
 internal sealed class OddGridCountingDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/OddIndependence/OddGridCounting.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/caro2025oddindependencegrids");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/caro2025oddindependencegrids");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Two layers of zero padding make every occupied position contribute to exactly nine three by three windows.",

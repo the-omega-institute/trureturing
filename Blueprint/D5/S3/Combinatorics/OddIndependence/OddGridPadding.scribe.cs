@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.OddIndependence;
 internal sealed class OddGridPaddingDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/OddIndependence/OddGridPadding.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/caro2025oddindependencegrids");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/caro2025oddindependencegrids");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Translation by two places a finite square-grid set in a zero-padded array and preserves full four-neighbour crosses.",

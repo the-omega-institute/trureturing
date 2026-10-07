@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.OddIndependence;
 internal sealed class OddGridDefsDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/OddIndependence/OddGridDefs.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/caro2025oddindependencegrids");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/caro2025oddindependencegrids");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The square grid and a vanishing density correction express the full-cross question of Caro, Petrusevski, Skrekovski and Tuza.",

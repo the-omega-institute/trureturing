@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.OddIndependence;
 internal sealed class OddGridDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/OddIndependence/OddGrid.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/caro2025oddindependencegrids");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/caro2025oddindependencegrids");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Independent square-grid sets above density three eighths with correction four divided by the side length contain a full four-neighbour cross.",

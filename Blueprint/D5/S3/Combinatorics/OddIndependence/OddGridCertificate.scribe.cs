@@ -5,7 +5,7 @@ namespace StrataLint.Scribe.Blueprint.OddIndependence;
 internal sealed class OddGridCertificateDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/OddIndependence/OddGridCertificate.";
-    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/caro2025oddindependencegrids");
+    private static readonly LibraryNoteRef Source = LibraryNoteRef.Create("D5/L/GraphInvariants/caro2025oddindependencegrids");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Local strip potentials telescope to bound the total occupancy of cross-free independent square-grid windows.",
