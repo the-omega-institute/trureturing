@@ -13,9 +13,6 @@ namespace StrataLint.Cli;
 // kind exclusion remains a producer responsibility (spec section 5), not cover's.
 internal static partial class CoverAtomCommand
 {
-    private const string ImplementationPath =
-        "tools/StrataLint.Cli/Commands/Digestion/CoverAtomCommand.cs";
-
     internal static CommandResult Run(
         string repositoryRoot,
         IRepositoryGateway repository,
@@ -31,7 +28,7 @@ internal static partial class CoverAtomCommand
         {
             var options = ParseArguments(arguments);
             var session = new Session(repositoryRoot, repository, leanReportSource,
-                recordedAtUtc, options.BaselineRevision, options.Gids[0]);
+                recordedAtUtc, options.Gids[0], [options.AtomId]);
             return Apply(session, options, allowAlreadyApplied: false);
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
@@ -48,7 +45,6 @@ internal static partial class CoverAtomCommand
             var current = session.Current;
             var baseline = session.Baseline;
             var document = session.Document;
-            var baselineDocument = session.BaselineDocument;
             var report = session.Report;
             var lean = session.Lean;
 
@@ -187,9 +183,7 @@ internal static partial class CoverAtomCommand
                 frozenStatements: frozenStatements);
             var evaluationChanges = authorityImpact.EvaluationChanges;
             var receiptVerificationChanges = receiptImpact.ReceiptVerificationChanges;
-            var evaluationScope = DigestionEvaluationScopes.ForChanges(
-                authorityChanges,
-                ImplementationPath, EngineeringProjectRegistry.ReadRuleBuildInputs(current));
+            const DigestionEvaluationScope evaluationScope = DigestionEvaluationScope.ChangedSet;
 
             bool ValueChanged(string path)
             {
@@ -248,9 +242,7 @@ internal static partial class CoverAtomCommand
                 plannedDocument,
                 current,
                 lean,
-                baselineDocument,
                 validateProjectedStatus: false,
-                baselineSnapshot: baseline,
                 changes: receiptVerificationChanges,
                 projectedStatusChanges: evaluationChanges,
                 truthStates: truthStates,
@@ -262,15 +254,6 @@ internal static partial class CoverAtomCommand
             {
                 // Initial cover requires the atom to become
                 // deletable Closed with no residual gap.
-                if (!IsClosedDeletable(finalTarget))
-                {
-                    RecordCoverDisposition(
-                        session,
-                        target,
-                        finalTarget,
-                        options.Gids);
-                }
-
                 RequireClosedDeletable(finalTarget);
             }
             else
@@ -284,8 +267,6 @@ internal static partial class CoverAtomCommand
                     document,
                     current,
                     lean,
-                    baselineDocument,
-                    baselineSnapshot: baseline,
                     changes: receiptVerificationChanges,
                     projectedStatusChanges: evaluationChanges,
                     truthStates: truthStates,
@@ -414,43 +395,14 @@ internal static partial class CoverAtomCommand
     private static bool IsClosedDeletable(DigestionEntryEvaluation covered) =>
         covered.Deletable && covered.DerivedStatus.Truth == DigestionTruthState.Closed;
 
-    private static void RecordCoverDisposition(
-        Session session,
-        DigestionLedgerEntry target,
-        DigestionEntryEvaluation outcome,
-        ImmutableArray<string> gids)
-    {
-        var disposition = new DigestionCoverDisposition(
-            outcome.DerivedStatus,
-            gids.Order(StringComparer.Ordinal).ToImmutableArray(),
-            outcome.Gaps
-                .Select(static gap => new DigestionDispositionGap(gap.Code, gap.Detail))
-                .OrderBy(static gap => gap.Code, StringComparer.Ordinal)
-                .ThenBy(static gap => gap.Detail, StringComparer.Ordinal)
-                .ToImmutableArray());
-        var dispositionDocument = ReplaceEntry(
-            session.Document,
-            target.AtomId,
-            target with
-            {
-                Receipts = target.Receipts with { CoverDisposition = disposition },
-            });
-        var dispositionRaw = IngestCommand.ReplaceLedger(session.CurrentRaw, session.Document, dispositionDocument);
-        session.Commit(
-            dispositionRaw,
-            IngestCommand.LedgerUpdates(session.CurrentRaw, dispositionRaw, session.Document, dispositionDocument));
-    }
-
     private sealed record CoverArguments(
         string AtomId,
-        ImmutableArray<string> Gids,
-        string BaselineRevision);
+        ImmutableArray<string> Gids);
 
     private static CoverArguments ParseArguments(IReadOnlyList<string> arguments)
     {
         string? atomId = null;
         var gids = ImmutableArray.CreateBuilder<string>();
-        string? baselineRevision = null;
         for (var index = 0; index < arguments.Count; index += 2)
         {
             if (index + 1 >= arguments.Count)
@@ -466,9 +418,6 @@ internal static partial class CoverAtomCommand
                 case "--gid":
                     gids.Add(arguments[index + 1]);
                     break;
-                case "--base" when baselineRevision is null:
-                    baselineRevision = arguments[index + 1];
-                    break;
                 default:
                     throw Usage();
             }
@@ -477,17 +426,16 @@ internal static partial class CoverAtomCommand
         if (string.IsNullOrWhiteSpace(atomId)
             || gids.Count == 0
             || gids.Any(string.IsNullOrWhiteSpace)
-            || gids.Distinct(StringComparer.Ordinal).Count() != gids.Count
-            || string.IsNullOrWhiteSpace(baselineRevision))
+            || gids.Distinct(StringComparer.Ordinal).Count() != gids.Count)
         {
             throw Usage();
         }
 
-        return new CoverArguments(atomId, gids.ToImmutable(), baselineRevision);
+        return new CoverArguments(atomId, gids.ToImmutable());
     }
 
     private static InvalidOperationException Usage() => new(
-        "USAGE: StrataLint cover-atom --cover-atom ATOM_ID --gid DECL_GID [--gid DECL_GID ...] --base REV");
+        "USAGE: StrataLint cover-atom --cover-atom ATOM_ID --gid DECL_GID [--gid DECL_GID ...]");
 
     private static BackfillInventoryDocument LoadDocument(RepositorySnapshot snapshot) =>
         IngestCommand.LoadDocument(snapshot);

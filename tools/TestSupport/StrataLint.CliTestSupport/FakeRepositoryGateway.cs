@@ -22,12 +22,23 @@ internal sealed class FakeRepositoryGateway(
 
     internal List<string> ReadChangesCalls { get; } = [];
 
+    internal int WholeTreeReadCount { get; private set; }
+
+    internal List<IReadOnlyList<string>> ScopedCurrentReads { get; } = [];
+    internal List<(string Revision, IReadOnlyList<string> Paths)> ScopedRevisionReads { get; } = [];
+    internal List<IReadOnlyList<string>> CurrentPathSearches { get; } = [];
+
     internal int CurrentRevisionResolutionCount { get; private set; }
+    internal int PrepareCount { get; private set; }
 
     public AdmissionTopologyOutcome InspectAdmissionTopology() =>
         throw new InvalidOperationException("topology should not be inspected");
 
-    public PreparedRepository Prepare(string? protectedBase) => new("baseline", changes);
+    public PreparedRepository Prepare(string? protectedBase)
+    {
+        PrepareCount++;
+        return new("baseline", changes);
+    }
 
     public FrozenRevisionIdentity ResolveFrozenRevision(string revision)
     {
@@ -47,6 +58,36 @@ internal sealed class FakeRepositoryGateway(
 
     public RawRepositorySnapshot ReadCurrent()
     {
+        WholeTreeReadCount++;
+        return ReadWholeCurrent();
+    }
+
+    public RawRepositorySnapshot ReadCurrent(IReadOnlyList<string> paths)
+    {
+        ScopedCurrentReads.Add(paths);
+        return Scoped(ReadWholeCurrent(), paths);
+    }
+
+    public IReadOnlyList<string> SearchCurrentPaths(IReadOnlyList<string> paths)
+    {
+        CurrentPathSearches.Add(paths);
+        return Scoped(ReadWholeCurrent(), paths).Entries.Select(static entry => entry.Path).ToArray();
+    }
+
+    public RawRepositorySnapshot ReadRevision(string revision)
+    {
+        WholeTreeReadCount++;
+        return ReadWholeRevision(revision);
+    }
+
+    public RawRepositorySnapshot ReadRevision(string revision, IReadOnlyList<string> paths)
+    {
+        ScopedRevisionReads.Add((revision, paths));
+        return Scoped(ReadWholeRevision(revision), paths);
+    }
+
+    private RawRepositorySnapshot ReadWholeCurrent()
+    {
         ReadCount++;
         ReadCurrentCount++;
         return WithAtomizerData(
@@ -55,7 +96,7 @@ internal sealed class FakeRepositoryGateway(
             ?? throw new InvalidOperationException("current snapshot should not be read"));
     }
 
-    public RawRepositorySnapshot ReadRevision(string revision)
+    private RawRepositorySnapshot ReadWholeRevision(string revision)
     {
         ReadCount++;
         ReadRevisionCalls.Add(revision);
@@ -71,6 +112,11 @@ internal sealed class FakeRepositoryGateway(
         ReadChangesCalls.Add(revision);
         return changesForBase?.Invoke(revision) ?? changes;
     }
+
+    // A path selects itself and, as a directory, everything under it.
+    private static RawRepositorySnapshot Scoped(RawRepositorySnapshot snapshot, IReadOnlyList<string> paths) =>
+        RawRepositorySnapshot.Create(snapshot.Entries.Where(entry => paths.Any(path =>
+            GitRepositoryGateway.MatchesPathSelection(entry.Path, path))));
 
     private static RawRepositorySnapshot WithAtomizerData(RawRepositorySnapshot snapshot) =>
         snapshot.Entries.Any(static entry => entry.Path == TheoryAtomizerDataLoader.DataPath)

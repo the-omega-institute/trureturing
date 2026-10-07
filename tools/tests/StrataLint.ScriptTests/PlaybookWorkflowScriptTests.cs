@@ -11,7 +11,7 @@ public sealed class PlaybookWorkflowScriptTests
     private const string SyntheticBaseSha = "0000000000000000000000000000000000000001";
 
     [Fact]
-    public void DeliverCheckAlignsBeforeReadOnlyChecks()
+    public void DeliverCheckRunsReadOnlyChecksAfterEmission()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new PlaybookFixture();
@@ -23,13 +23,10 @@ public sealed class PlaybookWorkflowScriptTests
             [
                 "make:lean-report",
                 "make:emit",
-                "make:align-digestion-status BASE=synthetic-base",
-                "dotnet:digest-status --base synthetic-base",
                 "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
                 "dotnet:ledger-align --list-closed --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
                 "dotnet:ledger-align --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
-                "dotnet:digest-status --base synthetic-base",
                 $"make:gate BASE=synthetic-base",
                 "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",

@@ -7,6 +7,8 @@ triage: theorem
 motivation_gids:
   - D5/S3/Combinatorics/PatternMatchings/TripleAvoidingMatchings.result
   - D5/S3/Combinatorics/PatternMatchings/P13Correspondence.matchingEquiv
+  - D5/S3/Combinatorics/PatternMatchings/P13Counts.c_triangular
+  - D5/S3/Combinatorics/PatternMatchings/P13Enumeration.result
 ---
 
 # Generating Function of Perfect Matchings Avoiding {123, 132, 213}
@@ -18,7 +20,8 @@ of patterns of length three I: Triples*, arXiv:2609.08562v1, Section 6, Question
 that avoid the set of patterns P1 = {123, 132, 213} and P13 = {132, 213, 321}?" Matching patterns follow Section 4
 and Figure 1: three arcs form an occurrence only when all three left endpoints precede all three right endpoints, and
 the label records the complement of the order of the right endpoints. This dossier settles the P1 clause and records
-an all-size structural scan bridge for P13. The P13 enumeration remains open.
+an all-size structural scan bridge, finite continuation recurrence and exact all-size enumeration for the P13 clause.
+The P13 result concerns the original ordinary matching carrier, including empty and disconnected matchings.
 
 ## Motivation
 
@@ -28,7 +31,24 @@ H(z) = Σ_{k≥0} Cat_k F_{k+3} z^k, equivalently a_0 = 1 and a_{n+1} = a_n + Σ
 
 For P13, `D5/S3/Combinatorics/PatternMatchings/P13Correspondence.matchingEquiv` proves a bijection between the
 actual source avoiders and independently accepted normalized general-rank scans, for every n ≥ 0. This is a
-structural construction supporting the remaining enumeration problem.
+structural construction consumed by the all-size enumeration. The merged modules
+`D5/S3/Combinatorics/PatternMatchings/P13Completions` and `P13Counts` add a finite completion carrier, the
+forced-prefix and first-closure bijections, the triangular recurrence `P13Counts.c_triangular`, and the transfer
+law `P13Counts.actualCount_continuation` for the actual matching counts.
+
+The all-size composition uses the actual catalytic transform of the literal completion series. Its extracted
+boundary at degree two retains $X(1-X)h_0$. The proved actual bulk recurrence discharges the scalar minimality
+premise, and the boundary elimination proves `P13Enumeration.actual_A_eq_G`. Put $\delta=(1-X)^2$,
+$P=\Phi_1$, $R=\Phi_2$, $D=\delta(1-2X-X^2)P-X^3(1+X)R$, and $G=1+X(1-X)^3PD^{-1}$.
+The $\Phi_j$ have the explicit finite coefficient definition in the
+[existing BSS Library note](../Library/PermutationPatterns/biswas2026matchingtriples.md); every inverse is a
+proved formal unit inverse. With $C$ the rational Catalan series, the actual ordinary series is $G(C-1)$ and
+
+$$
+a_0=1,\qquad \forall n\ge1,\quad(a_n:\mathbb Q)=[X^n](1-X)(1+X)^{2n-1}G(X).
+$$
+
+No recurrence, H, Bulk, tail, connectedness or equality-to-G premise remains in the final statement.
 
 ## Gap
 
@@ -76,18 +96,29 @@ scans, and the P13 avoider (1,4),(2,8),(3,7),(5,6). For this last matching the p
 survivors 3 and 2; appending it to their prescribed chronological order would give the wrong order. A separate
 exact finite diagnostic compares the local scan rules, both inverse algorithms and the source convention on every
 matching through n=5. The source 321 crossing (1,4),(2,5),(3,6) is rejected, whereas source 123 nesting
-(1,6),(2,5),(3,4) is accepted. Finite diagnostics do not establish enumeration.
+(1,6),(2,5),(3,4) is accepted. Finite diagnostics do not establish enumeration. The separate all-size Lean proof is
+`D5/S3/Combinatorics/PatternMatchings/P13Enumeration.lean`,
+`D5.S3.Combinatorics.PatternMatchings.P13.result`. It recovers the actual series by lawful zero-constant
+Catalan substitution and consumes the original public Lagrange supplier, which also remains live in
+`NonnestingOneThreeTwoTwo.result`. The coefficient formula is unconditional for every n≥1; the empty
+count is proved separately as one. Local compilation and axiom evidence are reported with the candidate
+seal; required CI for the separate F delivery remains pending. This candidate is not frozen or submitted.
 
 ## Triage
 
 `theorem`; the enumeration statement is the P1 clause of Question 1 of arXiv:2609.08562v1. The P13 structural
-construction is proved independently of the still-open P13 enumeration.
+construction and continuation recurrence are consumed by the exact P13 all-size enumeration.
 
 - Proved (formalized): the generating function of P1-avoiding perfect matchings is (1 − zH)/(1 − z − zH).
-- Computed: the P13 counts 1, 3, 12, 54, 258, 1276, 6449 agree with the paper; their enumeration remains open.
+- Computed: the P13 counts 1, 3, 12, 54, 258, 1276, 6449 agree with the paper.
 - Proved (formalized, structural bridge only): for every n ≥ 0, P13-avoiding actual matchings are in bijection with
   independently accepted normalized general-rank scans, including empty and disconnected cases.
-- Open: the all-n enumeration, completion-series recurrences and generating function of the P13 clause.
+- Proved (formalized, recurrence slice): finite P13 continuation counts admit forced-prefix and first-closure
+  decompositions and the triangular recurrence `P13Counts.c_triangular`; the actual matching carrier satisfies
+  `P13Counts.actualCount_continuation`.
+- Proved (formalized, all-size candidate): the actual P13 series is G(Catalan−1), with empty count one
+  and the displayed coefficient formula for every n≥1. Scientific local proof status does not assert
+  required CI success, official acceptance, worldwide novelty, unique credit or full-Question-1 resolution.
 
 ## ASSUMED-UNVERIFIED
 

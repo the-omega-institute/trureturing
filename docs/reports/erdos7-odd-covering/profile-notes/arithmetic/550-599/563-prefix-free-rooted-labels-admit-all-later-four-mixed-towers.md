@@ -318,3 +318,511 @@ All417 explicit checks pass, and `--output` selects another result path.
 These finite polynomial and rational checks certify the stated constants.
 The source reduction, all-induced positivity argument, avoidance theorem
 and complete-query comparison provide the ordinary general proof.
+
+<a id="mixed-ternary-label-gaps-give-an-eight-prime-source"></a>
+## 8. Mixed ternary label gaps give an eight-prime source
+
+Let P8={3,5,7,11,13,17,19,23}, Q7=P8 minus{3}, and let F be a finite
+family of distinct nonunit P8-smooth numerical moduli, with one fixed
+original residue for every present modulus. Write D for its numerical
+inventory and U for its full actual survivor. Assume
+
+    3n in D => 9n,27n,81n not in D, for every Q7-smooth n>1.   (MT1)
+
+Every pure prime-power original is allowed. So are every3-free mixed
+support and arbitrary higher mixed ternary levels. In particular, a row
+without3n may contain every higher3^j*n, while a row containing3n may
+contain all heights j>=5. No disjointness condition on the original phases
+is imposed.
+
+There is one probability nu supported on U such that
+
+    B_P8(nu):=sum_(d>=1,P8-smooth) max_a nu([a]_d)
+        <=4061891809/185389950<22.                          (MT2)
+
+This B includes the unit label; R elsewhere in this report omits it. It
+also includes labels absent from F and every query height. The law is
+fixed before any query. Haar coordinate laws can equivalently be resolved
+on a finite CRT carrier with independent uniform tails.
+
+The proof reuses the pure-root capacities of
+[Report528 FC708--FC709](../500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md#pure-ternary-holes-require-a-joint-prefix-capacity-boundary),
+PF5--PF9's support aggregation and polynomial, and the relative-avoidance
+estimate in [Hough--Nielsen, Appendix C, Theorem16](https://arxiv.org/html/1703.02133v2).
+The added arithmetic input is the actual-row bound MT4 below. These are
+ordinary applications with exact rational constants, not a new general
+Shearer theorem or an unrestricted Erdős#7 result.
+
+### 8.1. A single pure-survivor reference and its row inventory
+
+For p in P8 let V_p avoid the actual pure-p originals. For q in Q7 use
+lambda_q=H_q(.|V_q). PF2 gives depth-j caps
+
+    k_q(j)=[(q-1)/(q-2)]q^-j, sum_(j>=1)k_q(j)=1/(q-2).
+
+Choose two ternary first roots avoiding the possible actual modulus3
+original; if none is present, choose any two. Each chosen root retains
+Haar mass at least1/3-sum_(j>=2)3^-j=1/6 after all higher pure originals,
+as in FC708. Put probability1/2 on each root's actual pure survivor and
+normalize Haar within it. The resulting law lambda3 satisfies
+
+    k3(1)=1/2, k3(j)=3^(1-j) for j>=2,
+    lambda3([a]_(3^j))<=k3(j), sum_(j>=1)k3(j)=1.           (MT3)
+
+The factor1/2 is part of the root mixture: a root-normalized law alone
+has the larger FC709 bound. Restricting the source to two roots neither
+adds an original class nor changes any original phase. Put
+lambda=lambda3 tensor product_(q in Q7)lambda_q. It already avoids all
+actual pure originals.
+
+For a complete numerical cofactor n>1 define
+
+    s_n=(1/2)1_(3n in D)
+           +sum_(j>=2,3^j*n in D)3^(1-j).
+
+Without3n this is at most1/2. With3n, MT1 gives
+
+    s_n<=1/2+sum_(j>=5)3^(1-j)=1/2+1/54=14/27.             (MT4)
+
+Group actual mixed originals of exact prime support S into their union
+A_S. For |S|>=2, under the SAME lambda,
+
+    lambda(A_S)<=t_S:=product_(p in S)t_p,
+    t3=14/27, t_q=1/(q-2).                                (MT5)
+
+For S containing3, write S={3} union T. The numerical-row calculation is
+
+    lambda(A_S)
+      <=[product_(q in T)(q-1)/(q-2)]
+           sum_(supp(n)=T)s_n/n
+      <=(14/27)product_(q in T)1/(q-2).
+
+Distinct complete original labels supply the first inequality; geometric
+summation bounds their finite inventory without adding actual classes.
+The3-free case is PF2's product geometric sum. Events on disjoint prime
+supports have independent full sigma-algebras under lambda. No such
+independence is asserted for overlapping supports.
+
+MT1 can be replaced by the weaker127 actual-inventory inequalities
+
+    sum_(supp(n)=T)s_n/n
+        <=(14/27)product_(q in T)1/(q-1), empty!=T subset Q7. (MT6)
+
+These finite sums use original numerical labels. They are sufficient
+conditions, not consequences of numerical distinctness alone.
+
+### 8.2. Relative avoidance and every query on the final law
+
+Use PF5's polynomial with singleton weights zero and mixed-support
+weights t_S:
+
+    rho(T)=sum_(M disjoint blocks S subset T, |S|>=2)
+                     (-1)^|M| product_(S in M)t_S.
+
+The exact certificate gives all256 coordinate-subset values and
+
+    min_(T subset P8)rho(T)=rho(P8)=1235933/14313915>0.      (MT7)
+
+Let Z(T)=lambda(no A_S with S subset T). The cited clique-Shearer
+relative-avoidance estimate, using the upper activities MT5, gives
+
+    Z(T)/Z(S)>=rho(T)/rho(S), S subset T.                   (MT8)
+
+Its upper-activity use has the same induction as the cited theorem.
+When adjoining a coordinate to R, subtract the event bounds
+lambda(A_S)Z(R minus S)/Z(R). The induction gives an UPPER bound
+rho(R minus S)/rho(R) on that subtracted ratio, and lambda(A_S)<=t_S;
+PF9 then gives the next polynomial ratio. All denominators are positive
+by MT7. Thus neither an inequality reversal nor a new event realization
+is required.
+
+In particular Z(P8)>0, so define nu=lambda(.|all mixed avoidance). This
+one law avoids every actual original. For a numerical query d, let S_d
+be its prime support and K(d)=product_(p^j exactly dividing d)k_p(j).
+Discarding forbidden events that touch S_d, then using product
+independence and MT8, gives
+
+    max_a nu([a]_d)<=K(d)rho(P8 minus S_d)/rho(P8).          (MT9)
+
+The reference lambda is a product; the final nu generally is not.
+Every query phase is bounded under this same nu. Summing the nonnegative
+terms over all heights yields
+
+    B_P8(nu)<=[sum_(S subset P8)rho(P8 minus S)
+                                 product_(p in S)b_p]/rho(P8),
+    b3=1, b_q=1/(q-2).                                    (MT10)
+
+The actual-original activity t3=14/27 differs from the full-query weight
+b3=1. In particular no query at ternary height2,3 or4 was removed.
+The numerator and initial bound are respectively
+
+    166489454/71569575,
+    B_P8(nu)<=166489454/6179665<27.
+
+At query labels3,5,9,15, the MT9 bounds are respectively
+
+    45443799/12359330, 146430436/92694975,
+    15147933/6179665, 40899294/30898325.
+
+All four exceed1. Replacing just these terms by the elementary probability
+bound1 gives MT2. This correction applies to the already constructed
+survivor law, not to an unrelated raw comparator.
+
+### 8.3. A seven-prime companion and the remaining boundary
+
+MT2 also supplies a restricted nine-prime noncoverage consequence. Keep
+an actual P8 family satisfying MT1, and add any finite set of distinct
+originals q^j*d with one fresh prime q>=29, j>=1 and P8-smooth d>=1.
+All added phases and heights are arbitrary and fixed globally. Under
+nu tensor H_q, their actual union has probability at most
+
+    sum_(j>=1,d P8-smooth)q^-j max_a nu([a]_d)
+        =B_P8(nu)/(q-1)<22/28=11/14.
+
+The old originals are already avoided, so more than3/14 of this SAME
+product source survives all added originals. The finite CRT survivor is
+therefore nonempty. This is the usual first-moment continuation, with
+MT2 as its supplier; it does not cover unrestricted nine-prime families
+whose old P8 inventory violates MT1, or several new primes at once.
+
+For any finite distinct Q7-smooth original family, let W be its full
+survivor. Applying the same calculation on Q7, with event and query
+weights both1/(q-2), gives
+
+    rho(Q7)=5049311/7952175>0,
+    B_Q7(H_Q7(.|W))<=A:=13463054/5049311.                  (MT11)
+
+Here pure-conditioned product Haar, followed by conditioning on all
+remaining mixed avoidance, is precisely Haar conditioned on W. All
+original and query heights remain included.
+
+For an unrestricted P8 family, let V3 avoid its actual pure ternary
+originals and let W avoid all its actual3-free originals. Set
+U0=V3 times W and delta=H(U)/H(U0). The pure ternary query sum including
+the unit is at most2, so MT11 gives, WHEN delta>0,
+
+    B_P8(H(.|U))<=1+(2A-1)/delta.                          (MT12)
+
+The unit query remains exactly1. A uniform reserve delta>=1/6 would
+make this bound less than28, as would the weaker strict threshold
+
+    delta>21876797/136331397.
+
+Both proposed uniform reserve conditions are FALSE.
+[Report529's eight-prime comb](../500-549/529-an-irredundant-comb-separates-fibre-credits-from-supported-query-laws.md#eight-prime-combs-refute-a-uniform-relative-haar-reserve)
+has delta<1/6 at height5 and below the weaker threshold at height6.
+Those are complete actual survivor ratios, and every original has a
+private integer. The same families nevertheless admit another source
+with B_P8<11025/1024. Thus failure of MT12's reserve supplier does not
+refute the existential query target or MT2's restricted theorem.
+The unrestricted support majorant also fails positivity:
+
+    rho(P8;t3=1)=-3364432/7952175<0.
+
+This negative value only rejects that sufficient majorant. It does not
+prove any all-law query obstruction.
+
+There is one necessary pattern for a genuine obstruction. If an actual
+family admitted no supported law with B_P8<28, delete any whole original
+class contained in another retained original. The union and U are
+unchanged. The remaining inventory must contain3n and3^j*n for some
+n>1 and j in{2,3,4}, or MT1--MT2 would supply such a law. These two
+retained classes must have incompatible residues modulo3n; otherwise
+the higher class would be contained in the lower. This is a necessary
+pattern, not a classification or an existence assertion.
+
+### 8.4. Exact arithmetic consumer
+
+The [consumer](../../../frontier/cover-geometry/prefix-free-later-four-shearer/mixed_tower_inventory.py)
+and [exact result](../../../frontier/cover-geometry/prefix-free-later-four-shearer/mixed_tower_inventory.json)
+retain the polynomial tables, distinct event/query weights, four query
+corrections and MT11. The PF9 recurrence is independently compared with
+a signed-partition elementary-symmetric expansion for640 subset values:
+256 for MT1,128 for Q7, and256 for the unrestricted majorant. All384
+coordinate-subset values needed by MT7 and MT11 are checked positive.
+The consumer recomputes the result and rejects stale saved data; it uses
+no assertions disabled by Python optimization.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/prefix-free-later-four-shearer/mixed_tower_inventory.py
+```
+
+All3939 exact checks pass, comprising1054 checks for this section and
+2885 for section9. `--output PATH` generates the result at the chosen
+path. These checks certify finite rational constants; the
+source construction, relative avoidance and all-height summation above
+supply the ordinary mathematical argument. A scoped Lean check also
+verifies14 rational identities and inequalities for the root bound,
+event/query totals, four-query correction and continuation margin, using
+only the standard axioms. It does not formalize the source construction,
+Shearer application or all-height sum. No new Lean proof of that source
+theorem is claimed.
+
+<a id="actual-phase-unions-admit-competing-ternary-rows"></a>
+## 9. Actual phase unions admit competing ternary rows
+
+The MT1 restriction can be replaced by a finite condition on actual
+cofactor phases over ternary prefixes. Keep an arbitrary finite family F
+of distinct nonunit P8-smooth original moduli, with one globally fixed
+residue a_m at each present modulus m. All pure originals, all3-free
+originals and every mixed ternary height at least5 remain unrestricted.
+
+Define the exceptional numerical inventory
+
+    Delta={3^j*n in D : n>1, 3 does not divide n,
+                         j in{2,3,4}, 3n in D}.                (PU1)
+
+Choose once a genuine cofactor prime q(m) dividing n for each
+m=3^j*n in Delta. These choices depend on the original family, not on
+a subsequent query. Use the SAME pure-survivor product reference lambda
+from section8.1. In particular its ternary law is the balanced mixture
+on two permitted first roots, and its nonternary laws condition on the
+complete actual pure-prime survivors.
+
+Let I_m=[a_m]_(3^j). For q in Q7 and a ternary point t put
+
+    S_q(t)={a_m modq : m in Delta, q(m)=q, t in I_m},
+    eta_q=integral |S_q(t)| d lambda3(t).                      (PU2)
+
+Repeated occurrences of the same phase on the same fibre count once.
+Different phases on overlapping fibres remain different members of
+S_q(t). All prefixes, phases and pure-source probabilities are finite
+rational data, so each eta_q is an exact finite quantity.
+
+Use the following fixed thresholds:
+
+| Assigned prime q | tau_q |
+| --- | --- |
+|5|1129026791/10906481736|
+|7|7903187537/45977658372|
+|11|12419294701/38927263500|
+|13|14677348283/37248983352|
+|17|19193455447/35211078432|
+|19|21451509029/34547909724|
+|23|25967616193/33598694052|
+
+The sufficient condition is
+
+    sum_(q in Q7) eta_q/tau_q < 1.                            (PU3)
+
+Under PU3 there is ONE probability mu supported on the complete actual
+survivor U(F) with B_P8(mu)<28. The query sum includes the unit, every
+absent original label and every height. This is an ordinary deduction
+from section8's source and the existing relative-avoidance theorem;
+it is not an unrestricted source theorem or a new general local lemma.
+
+The shared-envelope idea is already present in
+[Report450 section11.2](../450-499/450-weighted-original-depths-and-the-uniform-lift-boundary.md)
+and the actual phase-union accounting of
+[Report719](../700-749/719-actual-phase-unions-and-common-affine-reference-enlarge-the-certified-families.md).
+Here the complete exceptional inventory PU1 and the linear perturbation
+of MT7–MT10 give the displayed eight-prime constants. When Delta is
+empty, PU3 recovers MT1. It can also hold when MT6 fails, as the example
+below shows; no containment of every MT6-certified family is asserted.
+
+### 9.1. Pay every exceptional original by one actual joint event
+
+Remove Delta only temporarily, giving F0. Its inventory satisfies MT1,
+and its pure originals are exactly those of F. Thus section8.1 bounds
+its mixed-support event unions under the unchanged lambda.
+
+For each q define the joint event
+
+    E_q={(t,y) : y_q modq belongs to S_q(t)}.                  (PU4)
+
+Every original m in Delta assigned to q is contained in E_q: its
+ternary prefix activates its own actual residue in S_q, and q divides
+its actual cofactor. The event E_q depends only on coordinates3 and q.
+It need not be a rectangle, and the proof does not assign it a literal
+residue-conflict graph.
+
+Under the one product reference, distinct q-residues at a fixed t are
+disjoint. Consequently
+
+    lambda(E_q)
+      =integral sum_(c in S_q(t))lambda_q([c]_q) d lambda3(t)
+      <=c_q eta_q=:epsilon_q,
+    c_q=(q-1)/[q(q-2)].                                      (PU5)
+
+Group F0's mixed originals by exact prime support as in MT5. Enlarge
+the event with support{3,q} by E_q. Its upper activity becomes
+t3*t_q+epsilon_q; all other support activities remain t_S. These events
+still have the ordinary dependency graph joining overlapping prime
+supports: events on disjoint supports use independent full coordinate
+sigma-algebras. No independence of overlapping supports is used.
+
+Let rho be section8.2's baseline polynomial. The enlarged activity
+polynomial is exactly
+
+    R_epsilon(T)=rho(T)
+       -sum_(q:{3,q} subset T)
+                 epsilon_q rho(T minus{3,q}).                 (PU6)
+
+Two perturbed blocks cannot occur in one disjoint-block collection,
+because both contain3. Thus PU6 has no product of distinct epsilon
+parameters. It describes the activity majorant, without assuming that
+the actual event probabilities attain those upper activities.
+
+MT7 and the positive deletion recurrence give rho(P8)<=rho(T)<=1.
+The threshold table satisfies the exact comparisons
+
+    c_q tau_q<1/28 for every q in Q7.
+
+Hence PU3 implies sum_q epsilon_q<1/28 and, for EVERY coordinate
+subset T,
+
+    R_epsilon(T)>=rho(P8)-sum_q epsilon_q
+       >rho(P8)-1/28=2898887/57255660>0.                       (PU7)
+
+Apply the upper-activity relative-avoidance estimate used in MT8,
+with PU7 supplying all coordinate-subset positivity conditions. It
+follows that avoiding all the enlarged mixed-support unions has
+positive lambda probability. Define the final law once by
+
+    mu=lambda(. | U(F0) intersect intersection_q E_q^c).      (PU8)
+
+It avoids F0 and every exceptional original, so it is supported on
+U(F). The extra E_q exclusions can discard genuine survivors; they
+select a source without changing any original residue or the task.
+
+### 9.2. Transport the complete query sum under that same law
+
+Retain the depth caps k_p(j) from section8.1 and put
+K(d)=product_(p^j exactly dividing d)k_p(j). The same argument as MT9
+gives, for every numerical query d and all its phases,
+
+    q_d(mu)<=K(d)
+          R_epsilon(P8 minus supp(d))/R_epsilon(P8).          (PU9)
+
+Set b3=1 and b_q=1/(q-2), with b_S=product_(p in S)b_p.
+The full-query weight b3 is unchanged; none of the exceptional original
+heights is removed from the query inventory. Summing PU9 over all
+heights and replacing the four bounds at d=3,5,9,15 by the valid
+probability bound1 gives
+
+    B_P8(mu)<=N_epsilon/R_epsilon(P8),                        (PU10)
+
+    N_epsilon=sum_(S subset P8)b_S R_epsilon(P8 minus S)
+       -sum_(d in{3,5,9,15})
+          [K(d)R_epsilon(P8 minus supp(d))-R_epsilon(P8)].     (PU11)
+
+The unit contributes R_epsilon(P8) to the numerator and therefore
+exactly1 to the ratio. Replacing a query upper bound by1 is valid
+whether or not that former bound exceeds1; no such comparison is
+needed for PU10. All infinite sums are nonnegative geometric sums
+of the original full depth caps.
+
+Let C0=4061891809/185389950, the corrected MT2 bound. Expanding the
+finite polynomials in PU6 and PU11 yields the rational identity
+
+    28R_epsilon(P8)-N_epsilon
+      =(28-C0)rho(P8)
+                      [1-sum_q eta_q/tau_q].                 (PU12)
+
+Every factor on the right is positive under PU3; the denominator in
+PU10 is positive by PU7. This proves B_P8(mu)<28.
+Both the avoidance denominator and the complete-query numerator
+change under the SAME added events. The calculation therefore keeps
+more information than conditioning the former law and retaining
+only a scalar lower bound for its surviving mass.
+
+### 9.3. A common cofactor prime can cover competing rows
+
+Suppose one fixed q in{17,19,23} divides every exceptional cofactor.
+Suppose also that all exceptional ternary prefixes lie in one first
+root and satisfy
+
+    I_m intersects I_m' => a_m=a_m' modq.                     (PU13)
+
+Assign every exception to this q. Then |S_q(t)|<=1, and its support
+has lambda3 mass at most1/2. Thus eta_q<=1/2<tau_q. The phase can
+vary between disjoint ternary fibres; PU13 only identifies phases
+whose prefixes overlap.
+
+Use c_q/2 itself as the activity increment upper bound in PU6–PU11.
+This gives the following bounds, without requiring a separate
+monotonicity claim for their ratios:
+
+| Common prime | Complete B_P8 bound |
+| --- | --- |
+|17|64168877249/2348456910<28|
+|19|72359284393/2733458520<28|
+|23|88703129633/3495407100<28|
+
+For q=17 the positive margin is1587916231/2348456910. The added
+restriction can be written y_q modq != f(t) on its active ternary
+prefixes; it remains one joint event, not independently chosen
+conditional laws on query branches.
+
+An actual family beyond MT6 is
+
+    2 mod3, 1 mod51, 136 mod153, 274 mod459, 904 mod1377.       (PU14)
+
+Its cylinders are pairwise disjoint. The three higher competing
+prefixes are1 mod9,4 mod27,13 mod81, all in root1 mod3 and mutually
+disjoint; their mod17 phases are0,2,3. The lower51 original has
+mod17 phase1, and the pure3 original has root2. Thus whole-class
+containment deletion removes none, and PU13 holds with q=17.
+
+At the numerical cofactor17, the MT6 row has s_17=53/54. It fails
+the required singleton-support inequality by the exact amount
+
+    s_17/17-(14/27)/16=53/918-7/216=31/1224>0.                 (PU15)
+
+This example separates the two sufficient tests. It is not claimed
+to be a difficult noncoverage instance or a counterexample to other
+existing source constructions.
+
+### 9.4. The phase-union budget still has an actual obstruction
+
+Consider instead
+
+    2 mod3, 1 mod15, 10 mod45, 112 mod135, 13 mod405.           (PU16)
+
+These cylinders are also pairwise disjoint. Their exceptional cofactors
+are all5, so there is no alternative assignment prime. The pure3
+original fixes the balanced reference on roots0 and1, and there are
+no higher pure ternary originals. The same three exceptional prefixes
+therefore give
+
+    eta_5=1/6+1/18+1/54=13/54,
+    eta_5/tau_5=2625634492/1129026791>1.                       (PU17)
+
+Thus numerical distinctness and irredundancy do not supply PU3 for
+the specified exceptional inventory and fixed balanced reference.
+The obstruction concerns this quantitative criterion. Every original
+in PU16 has ternary root1 or2, so Haar on root0, times free Q7 Haar,
+is a probability supported on the same full survivor, with
+
+    B_P8=(5/2)product_(q in Q7)q/(q-1)
+        =3380195/663552<28.                                  (PU18)
+
+The factor5/2 includes the unit, the deterministic first ternary digit
+and the entire higher ternary tail. Hence failure of PU3 does not
+obstruct the existential source target. A general construction still
+needs a different source or a stronger arithmetic supplier when this
+fixed-reference phase budget fails.
+
+### 9.5. Exact arithmetic and actual-family checks
+
+The same consumer and result linked in section8.4 include the phase-union
+calculation. Its full run passes3939 exact checks in both normal and
+optimized Python execution. The2885 checks for this section include
+an independent support recurrence for all256 coordinate subsets under
+each of the seven single-pair perturbations, and all256 subsets under
+one simultaneous seven-pair perturbation. They compare those values
+with PU6, retain the seven threshold identities in PU12 and check the
+positivity margin in PU7.
+
+The checks also verify all coordinate-subset positivity conditions
+for each17/19/23 corollary, their complete query bounds, PU15 and
+PU17–PU18. For both five-original examples they verify distinct odd
+nonunit numerical labels, the actual ternary prefixes and pairwise
+incompatibility modulo the gcd of each pair of original moduli.
+Thus disjointness is checked on the actual CRT classes, not inferred
+from their support labels.
+
+These are exact finite arithmetic and example checks. The event-envelope
+containment, relative-avoidance application and simultaneous all-height
+query argument are the ordinary proofs in sections9.1–9.2. No new Lean
+verification of the phase-union source theorem is claimed.
