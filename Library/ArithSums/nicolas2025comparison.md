@@ -1351,3 +1351,135 @@ main and actual zero remainder must still be compared together.
 The growing-scale error cost and the original full Robin inequality
 remain unpaid; no bound for $\sqrt A\log A\,I_\psi(A)$ at the selected
 integer or proof of RH follows.
+
+
+## A finite scale band already costs a growing absolute-error allowance
+
+The infinite-moment obstruction (S8) and complement estimates (C5)–(C8)
+leave a different question: can a retained scale cutoff make the printed
+Durkan–Hughes–Pearce-Crump error majorant small enough? For the constructed
+transport, a finite band gives a quantitative obstruction even before
+its large-scale complement is considered. This is a paper-level
+application of (S2) and the already assessed Theorem 5, not a new source
+audit, originality claim or Lean-verified result.
+
+### Locate a positive band of the same signed kernel
+
+Let $A\ge e^8$, $L=\log A$, and write $X=A\xi$ and $k=2\pi\xi$.
+Rescale the two branches of $v_A'$ in (S2), without changing the
+original cutoff. Then
+
+$$
+ALg_A(A\xi)=\frac2k\left[B(k)-LI_L(k)\right],
+\qquad
+B(k)=\int_1^\infty\frac{\sin(kt)}{t^2}\,dt,
+\quad
+I_L(k)=\int_0^1\frac{\sin(kt)}{t(L-\log t)^2}\,dt.
+\tag{R1}
+$$
+
+For $0<k\le1/2$, the sine is nonnegative on $[1,\pi/k]$.
+Its chord bound on $[1,\pi/(2k)]$, followed by an absolute bound
+on the remaining tail, gives
+
+$$
+B(k)\ge\frac{2k}{\pi}\log\frac\pi{2k}-\frac k\pi
+>\frac k4.
+\tag{R2}
+$$
+
+Here $\log(\pi/(2k))\ge\log\pi>1$ and $\pi<4$.
+Also $\sin(kt)\le kt$ on $0<t<1$, so
+$LI_L(k)\le k/L\le k/8$. Thus (R1) gives the uniform, explicit
+positive band
+
+$$
+\boxed{g_A(X)>\frac1{4A\log A}
+\qquad\left(\frac A{8\pi}\le X\le\frac A{4\pi},\ A\ge e^8\right).}
+\tag{R3}
+$$
+
+This does not claim positivity on all scales; (C4)'s complete signed
+first moment is still zero. The band is contained in $[1,R]$ for
+every $R\ge A$. From $d|\mu_A|(X)=|g_A(X)|dX/X$, (R3),
+$\log2>1/2$ and $\pi<4$ imply
+
+$$
+\int_1^R|\mu_A|(dX)>\frac1{8A\log A},\qquad
+\int_1^RX^{1+\delta}|\mu_A|(dX)
+>\frac{(A/32)^\delta}{128\log A}\quad(\delta>0).
+\tag{R4}
+$$
+
+Both lower bounds concern the transport's absolute weights, not an
+actual prime or zero error. No critical-line assumption, zero count
+or finite zero computation is used.
+
+### Balance the two printed height costs at every height
+
+Theorem 5, printed p.4, (2.1), includes the two error shapes
+
+$$
+\sqrt T(\log T)^2,
+\qquad \frac{(\log T)^2}{\sqrt T}X^{1+1/\log T}
+\qquad(T>1,\ X\ge1).
+$$
+
+Their uniform implied constants are not numerically certified here.
+Define the **unit-coefficient majorant allowance**, after the original
+Robin normalization, by
+
+$$
+\mathcal B_A(T,R)=\sqrt A\log A\,(\log T)^2
+\int_1^R\left(\sqrt T+\frac{X^{1+1/\log T}}{\sqrt T}\right)
+|\mu_A|(dX).
+\tag{R5}
+$$
+
+For $h=\log T>0$ and $R\ge A\ge e^8$, (R4) gives
+
+$$
+\mathcal B_A(T,R)>
+ h^2\left[\frac18\sqrt{T/A}
+       +\frac1{128}\sqrt{A/T}(A/32)^{1/h}\right]
+\ge\frac{h^2}{16}\exp\left(\frac{\log(A/32)}{2h}\right).
+\tag{R6}
+$$
+
+For any $c>0$, the minimum of $h^2e^{c/(2h)}$ over $h>0$
+is $e^2c^2/16$, attained at $h=c/4$. Consequently
+
+$$
+\boxed{\mathcal B_A(T,R)>
+\frac{e^2}{256}\,[\log(A/32)]^2
+\quad\text{for every }T>1,\ R\ge A\ge e^8.}
+\tag{R7}
+$$
+
+This is a lower bound on the allowance produced by integrating these
+two positive majorant shapes. It is not a lower bound on
+$|\mathcal E_T|$, on its actual integral, or on a Robin violation.
+The other two printed error shapes can only increase this particular
+absolute allowance. If the two shapes receive any fixed positive
+coefficients $c_1,c_2$, the same argument has (R7)'s right side
+multiplied by $\sqrt{c_1c_2}$. No numerical value for those coefficients
+or effective failure threshold is inferred from big-$O$ notation.
+
+The core reserve $\mathcal E(\log A)$ in (G7) remains bounded as
+$A\to\infty$. In contrast, (R7) grows quadratically in $\log A$
+for every choice of height $T$, including a height depending on $A$.
+Thus this direct absolute-majorant transfer on retained intervals
+$[1,R]$ with $R\ge A$ cannot provide a uniform bounded Robin allowance
+uniformly as the clock tends to infinity. No unbounded sequence of
+selected sources is asserted. Increasing those cutoffs, or improving
+only their omitted complements, does not remove the finite band.
+An actual-remainder bound that improves on these shapes, integration
+that controls the remainder's sign, or a different scale decomposition
+could change this conclusion; none is excluded by (R7).
+
+The result specifies a finite retained-scale obstruction to one
+estimate method. It does not supply the required signed estimate at
+the same selected integer, drop any zero multiplicity or infinite
+height block, or settle RH. The centered arithmetic-main estimates
+(P5)–(P8) remain valid independently; they do not alter the actual
+zero remainder used in (R5).
