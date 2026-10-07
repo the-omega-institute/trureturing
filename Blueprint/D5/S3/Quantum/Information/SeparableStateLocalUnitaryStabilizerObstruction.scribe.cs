@@ -34,15 +34,18 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
             Node("claim", "Qian–Wang's separable-state conjecture", ClaimFormula(),
                 Conjecture + " The existential two-qubit density matrix rho is positive semidefinite with trace one, as expressed by StructuredNegativityCoincidenceRefutation.IsDensity. Its separability is the literal convex-product-ensemble condition. The universal quantifier ranges independently over all pairs of single-qubit unitaries. A two-qubit example proves the source's existential multi-qubit assertion.", DescribeRole.Definition),
             Node("result", "An infinite family proves the conjecture", Disp(Named("claim")),
-                "For every real p,c,s with 0 < p < 1, c > 0, s > 0, c² + s² = 1 and c² ≠ 1/2, put b = (c,s) and rho = p |00⟩⟨00| + (1-p) |bb⟩⟨bb|. This is a density matrix and an explicit convex mixture of product pure states, yet no local-unitary conjugate belongs to STAB. Choose p = 1/2, c = 3/5 and s = 4/5 for the existential conclusion. Every positive-weight vector in any pulled-back stabilizer ensemble lies in span{u,v}, where u = |00⟩ and v = |bb⟩. Its only product rays are u and v; its only maximally entangled ray has coefficients alpha = -beta, namely (v-u)/(sqrt(2)s) after normalization. Stabilizer classification and positivity eliminate that entangled ray from the ensemble, forcing both product rays to occur. Their common local unitary preserves the single-qubit squared overlap c², whereas Pauli eigenprojectors have overlap spectrum {0,1/2,1}. The stated parameter conditions exclude all three values. This argument uses product-vector and maximal-entanglement invariance under local unitaries; the Pauli restriction enters after stabilizer classification.", DescribeRole.Theorem, true)),
+                "For every real p,c,s with 0 < p < 1, c > 0, s > 0, c² + s² = 1 and c² ≠ 1/2, put b = (c,s) and rho = p |00⟩⟨00| + (1-p) |bb⟩⟨bb|. This is a density matrix and an explicit convex mixture of product pure states, yet no local-unitary conjugate belongs to STAB. Choose p = 1/2, c = 3/5 and s = 4/5 for the existential conclusion. Every positive-weight vector in any pulled-back stabilizer ensemble lies in span{u,v}, where u = |00⟩ and v = |bb⟩. Its only product rays are u and v; its only maximally entangled ray has coefficients alpha = -beta, namely (v-u)/(sqrt(2)s) after normalization. Stabilizer classification and positivity eliminate that entangled ray from the ensemble, forcing both product rays to occur. Their common local unitary preserves the single-qubit squared overlap c², whereas Pauli eigenprojectors have overlap spectrum {0,1/2,1}. The stated parameter conditions exclude all three values. This argument uses product-vector and maximal-entanglement invariance under local unitaries; the Pauli restriction enters after stabilizer classification.", DescribeRole.Theorem, true,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("qian-wang-2025-separable-states-stab-local-unitaries"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
-        DescribeRole role, bool derived = false) => Describe.Lean(
+        DescribeRole role, bool derived = false, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
             DescribeId.Create("qw-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula),
             derived ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name)
     {

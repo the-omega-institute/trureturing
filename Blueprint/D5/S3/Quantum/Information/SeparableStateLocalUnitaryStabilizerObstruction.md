@@ -118,6 +118,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/qian-wang-2025-separable-states-stab-local-unitaries` (proved) by `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"qian-wang-2025-separable-states-stab-local-unitaries","declaration_gid":"D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Dongheng Qian; Jing Wang (2025). *Quantum non-local nonstabilizerness*. DOI: [10.1103/PhysRevA.111.052443](https://doi.org/10.1103/PhysRevA.111.052443). URL: <https://arxiv.org/abs/2502.06393v4>.
