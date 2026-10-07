@@ -908,6 +908,87 @@ for the actual integral `B_7` and compatible interpolation/screening;
 the old branch fields do not automatically determine it. That missing
 interface is immaterial to the negative result, which granted `B_7=0`.
 
+## The maximum-weight selector hides the first private-hull reservation
+
+The two-largest-weight choice in SD14 need not preserve the regions
+that a private-hull argument would charge. For the first reservation
+forced by [Report528 FC943](../500-549/528-surviving-fibre-credits-control-arbitrary-phases-at-ternary-height-one.md#private-hull-descendants-reserve-entire-parent-phases),
+the following local conditions force its entire parent cylinder to
+have zero mass under that choice of source.
+
+Fix a nonunit Q-smooth cofactor d. Its actual rows3^e d have at most
+one original at each exponent. Suppose d and3d occur, with distinct
+cofactor phases r0,r1 modulo d, and let b be the first ternary digit
+of the3d original. If an actual pure3 original occurs, suppose its
+digit differs from b. All deeper pure and same-cofactor originals
+have arbitrary phases and finite heights, with at most one per depth.
+Whole coverage and private-hull assumptions are not needed for this
+local statement.
+
+Choose H>=1 resolving those ternary depths. On the finite ternary
+carrier let lambda be uniform, V the actual pure survivor, S=lambda(V),
+and W_r=lambda(V intersect U_(d,r)). These are the actual UNION events
+from SD14. Put
+
+    T_H=sum_(j=2..H)3^(-j)=(1-3^(1-H))/6<1/6.
+
+The exponent-zero row gives W_r0=S. The pure3 cylinder misses the
+b-root; all deeper pure deletions cost at most T_H, so
+
+    S>=2/3-T_H>1/2,
+    W_r1>=lambda(V intersect[b]_3)>=1/3-T_H.
+
+For every r outside{r0,r1}, only exponent-at-least-two rows contribute,
+giving W_r<=T_H. The pure tail and the same-cofactor tail are different
+event families, bounded separately on the same lambda. No independence
+or disjointness of their unions is used. Thus
+
+    W_r1-W_r>=1/3-2T_H=3^(-H)>0,
+    W_r0>W_r.                                          (SD34)
+
+Dividing by the same positive S preserves the rankings. Both dominant
+weights are positive, so the UNIQUE at-most-two-phase set minimizing
+the SD14 residual sum is{r0,r1}. Missing depths only strengthen the
+bounds. Pure3 may be absent; coincident low cofactor phases or a3d
+root deleted by pure3 are outside the stated conditions. The strict
+gap need not stay bounded away from zero as H grows.
+
+The chosen Q source therefore satisfies nu_Q([r1]_d)=0. Consequently
+rho=nu3 times nu_Q gives zero mass to the ENTIRE parent cylinder
+R={all ternary states} times[r1]_d and every subregion of R, including
+its intersection with any query phase. This is stronger than merely
+avoiding the original3d class, which fixes a ternary digit as well.
+
+In the globally count-then-modulus-sum minimal whole cover considered
+by FC943, its explicit crossing and proper-multiple premises supply
+the actual hull descendant3d. Comparable disjointness supplies the
+two local phase conditions above. Hence its forced reservation
+R_(3d) is null under the SD14 maximum-weight source. FC942's geometric
+payment inequality remains valid, but this particular reservation
+has zero demand under that law. This establishes a specific instance
+of FC942's existing zero-source warning; it does not invalidate the
+private-hull theorem.
+
+An arbitrary selector need not choose these phases. A different source,
+or a deeper reservation outside the selected cylinders, may retain
+positive mass, but its full loss and query bounds must be established
+together. No decrease of the actual continuation margin, impossibility
+of another supported law, or covering counterexample follows.
+
+A scoped Lean application verifies the actual finite prefix-union
+ranking, positivity of S, and the exact normalized residual-minimizer
+conclusion, allowing arbitrary missing depths. It also verifies the
+parent nullity for a GIVEN Q law satisfying the selected-support
+contract, and any ternary probability joined to it. The standard axiom
+closure is unchanged. The application reuses prefix counts, finite
+union bounds, geometric estimates and finite selection identities;
+no canonical specialization is added. It proves the strict ordering
+needed by the selector, not the displayed closed-form gap3^(-H).
+The numerical cofactor interpretation and the FC943 whole-cover
+consumer above remain ordinary applications of their stated results;
+this check does not reconstruct the two-phase Q source or formalize
+whole-cover minimality.
+
 ## Verification
 
 The [standard-library producer](../../../frontier/cover-geometry/no-mod3-through2/pa_complete_suffix_debits.py)
