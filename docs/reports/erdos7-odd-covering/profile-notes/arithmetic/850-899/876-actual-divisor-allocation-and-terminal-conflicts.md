@@ -1924,6 +1924,86 @@ the enclosure condition on the reduced ground set. The condition
 locates a concrete missing relation; neither 110 pointwise complete
 colors nor the three-row donor partition supplies it.
 
+## A top-row private region can be tested through one ternary child
+
+Keep the same actual count-minimal whole cover F, with every original
+modulus dividing Q=9*113*W, where W is coprime to three and 113.
+Let i be an actual top-row original of modulus 9*113*m whose literal
+color survives the unit-color exclusion. Choose a remaining root r
+modulo 27 whose residue modulo nine equals the original phase of i.
+
+Every point y of the COMPLETE original private region P_i has a lift x
+with
+
+$$
+x\equiv y\pmod Q,\qquad x\equiv r\pmod {27}.
+$$
+
+To construct it, use CRT for the coprime moduli 27 and 113W, retaining
+y modulo 113W and imposing r modulo 27. The prescribed old word makes
+x and y agree modulo nine, so they agree modulo Q. Membership in every
+original class is unchanged. In particular x is still private to i;
+this is an actual lift of each complete private point, not a chosen
+private witness standing in for the whole region.
+
+Let B be any root cover drawn from i's own literal color. Actual
+private-point projection says no different owner in that color serves
+the stripped trace of x. Therefore every such B must include i, and
+every lifted x belongs to the complete relative deletion hole
+P_i(B,r). If one fixed q-bearing owner j encloses this entire root
+hole in its stripped congruence class, then
+
+$$
+\boxed{P_i\subseteq [a_j]_{n_j/113}.}
+$$
+
+Indeed n_j/113 divides Q, so the enclosure at x transfers back to its
+original y. This implication uses a top-row i and the full-height-two
+period. It does not assert that every arbitrary root-relative hole
+equals an original private region, and it does not extend to a
+lower-row i whose private points can occupy other old words.
+
+Consequently, suppose the proposed source-matroid representation holds
+on this root, on the reduced ground of surviving colors. Take B to be
+a minimal root subcover inside i's color and apply the preceding
+single-encloser-per-color exchange condition. For each surviving color
+c there is ONE actual owner j of that color such that the displayed
+enclosure holds for every point of P_i. Combining its stripped phase
+with i's fixed literal q-phase by CRT gives a residue w_j satisfying
+
+$$
+P_i\subseteq [w_j]_{n_j}.
+$$
+
+Thus the source-matroid hypothesis forces at least 110 distinct actual
+numerical labels to divide this top owner's complete private hull,
+using the existing PH3--PH4 hull criterion. If the literal colors
+differ, w_j is not congruent to j's original phase modulo n_j.
+The original j is not thereby claimed to cover P_i, nor is its
+occupied numerical label freed for a repair.
+
+This reaches the complete-private-region object used by DR3--DR8.
+It still does not supply the source-matroid hypothesis, a missing
+enclosing label, or a descendant in a usable receiving phase. The
+existing crowded-descendant theorem cannot turn already occupied
+labels into a count decrease by itself.
+The selected j may be in row zero or one, with private points in other
+old words. Reverse exchange on this single root therefore does not
+give a reciprocal enclosure of j's complete private region. Even when
+j is also in the top row and a reciprocal enclosure is supplied, a
+two-owner rephasing alone preserves the number and sum of moduli;
+an additional absorbed descendant or another strict improvement is
+still required.
+
+The three scoped Lean applications verify the all-original-membership
+lift, necessity of i in its color's root cover, transfer of every
+private point, and the source-matroid consequence including the final
+full-modulus CRT enclosure. They compile at default budgets with only
+the standard three axioms. They reuse CRT, actual private-point
+projection and the existing matroid exchange application; no canonical
+wrapper or new generic hull theorem is added. The hull-divisibility
+wording additionally reuses the existing PH3--PH4 characterization.
+
 ## Verification and the remaining global obligation
 
 Scoped exact Lean checks cover the actual two-prime incidence
