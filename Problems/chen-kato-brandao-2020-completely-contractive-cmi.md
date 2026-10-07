@@ -44,8 +44,11 @@ records the verbatim conjecture, its complete quantifiers, Tier 1 status,
 literature checks, the refutation route and the fixed Lean conventions.
 The recorded search scope is arXiv v3, MathDB, the follow-up
 arXiv:2608.27171v1 and the repository. MathDB reports zero solutions;
-no settlement was found in that searched scope. The follow-up's assessment
-is search-seat-reported. These checks do not establish exhaustive priority.
+no settlement was found in that searched scope. The follow-up's §7.2
+correlation-decay result assumes a full-rank Choi matrix for each channel;
+it does not settle the scalar whole-space correctable-algebra conjecture.
+This is a paper result, not a Lean result here. These bounded checks do
+not establish exhaustive priority.
 
 ## Route
 
@@ -109,6 +112,21 @@ step applies to this settlement.
   whole-space algebra is scalar. This also supplies an equality case
   against the strict inequality printed as Proposition III.3; that
   proposition is not an additional public Lean theorem here.
+- **Proved on paper — general-family equality (not a Lean result here).**
+  For every $n\ge4$ and $p,q\in(0,1)$, take
+  $\rho_{AC}=q|0,0\rangle\langle0,0|+(1-q)|1,2\rangle\langle1,2|$
+  and any independent finite-dimensional state $\rho_B$. With
+  $h(t)=-t\log t-(1-t)\log(1-t)$, the input entropies are
+  $S(A)=h(q)$ and $S(C)=S(AC)=h(q)$. The two selected preparations
+  have disjoint output supports $\{0,1\}$ and $\{2,3\}$, with
+  conditional weights $(1-p,p)$. The output spectrum therefore has
+  weights $q(1-p),qp,(1-q)(1-p),(1-q)p$, giving
+  $S(C')=S(AC')=h(q)+h(p)$ while $S(A)=h(q)$ is unchanged.
+  Tensoring the independent $B$ adds $S(B)$ to each joint entropy
+  containing $B$, so these terms cancel in both four-term CMIs:
+  $I(A:C|B)=I(A:C'|B)=h(q)>0$. This paper derivation extends the
+  module's $n=4$, $p=q=1/2$, trivial-$B$ instance; the general
+  entropy family is not kernel-certified here.
 - **Computed — general-family examples.** The NumPy script below checks
   $n\in\{4,5,6,7,8\}$,
   $p\in\{0.01,0.1,0.25,0.5,0.73,0.99\}$,
@@ -134,16 +152,31 @@ step applies to this settlement.
   a uniform contraction bound restricted to faithful states.
 - **Computed — support-sensitive recovery mechanism.** The exact SymPy
   script below uses $\sigma=\mathrm{diag}(1/2,0,1/2,0)$,
-  $F=\mathrm{diag}(1,0,-1,0)$ and the recovery map
+  $F=\mathrm{diag}(1,0,-1,0)$ and the Petz recovery map
   $R(X)=\mathrm{diag}(X_{00}+X_{11},0,X_{22}+X_{33},0)$.
   It verifies $R(\mathcal E(\sigma))=\sigma$ and, for
   $Z=R\circ\mathcal E$, $Z^\dagger F=F$ but
   $Z^\dagger(F^2)=I\ne F^2$. Thus this dual fixed space is not closed
-  under multiplication. Bény–Kempf–Kribs, arXiv:0705.1574, Theorem 9,
-  uses the support projection $P$ in
-  $[P K_i^\dagger K_jP,O]=0$; the support cannot be dropped.
+  under multiplication.
   **Open:** formalizing this recovery-map computation and the general
   overlap-graph characterization as separate content.
+- **Proved on paper — failed source step (not a Lean result here).**
+  The argument supporting Proposition III.3 treats the dual fixed
+  space of the Petz recovered map for a singular reference state as a
+  multiplication algebra (`main.tex`, lines 1080–1099, proof of
+  `lem:equalMI`), invoking the appendix's fixed-space claim (`invar`,
+  line 1686). The computed $Z^\dagger F=F$ and
+  $Z^\dagger(F^2)\ne F^2$ above disprove that algebra claim in this
+  case. Bény–Kempf–Kribs, arXiv:0705.1574, Theorem 9, is a paper
+  result using the support projection $P$ in
+  $[P K_i^\dagger K_jP,O]=0$. A correctable algebra on the support
+  $P=\mathrm{diag}(1,0,1,0)$ does not give a correctable observable
+  on the whole input space; the support cannot be dropped.
+- **Proved on paper — follow-up boundary (not a Lean result here).**
+  arXiv:2608.27171v1, §7.2, Propositions 23–24 and the paragraph
+  following Proposition 24, assumes full-rank Choi matrices for its
+  correlation-decay result. This stronger noise hypothesis does not
+  settle the scalar whole-space correctable-algebra conjecture.
 - **Open — nearest surviving multi-step statement.** After $n-1$ steps,
   the diagonal transition kernel has all cyclic displacements with
   positive weights
@@ -154,11 +187,13 @@ step applies to this settlement.
   ancilla-uniform CMI contraction bound. Neither the decomposition nor
   a bound with factor $1-\alpha$ is kernel-certified or numerically
   tested by this delivery.
-- **Open — source consequences.** Proposition III.3's strict inequality
-  fails at the displayed witness. Proposition III.4's implication from
-  Conjecture III.1 to exponential CMI decay supplies no unconditional
-  conclusion once that conjecture is refuted. Exponential decay for
-  every Y-shaped MPDO is not refuted by this witness. Sufficient
+- **Proved on paper — source consequence.** The displayed positive-CMI
+  equality violates Proposition III.3's strict inequality; this is a
+  paper consequence of the module's instance, not an additional Lean
+  theorem here. **Open — MPDO consequences:** Proposition III.4's paper
+  implication from Conjecture III.1 to exponential CMI decay supplies
+  no unconditional conclusion once that conjecture is refuted.
+  Exponential decay for every Y-shaped MPDO is not refuted by this witness. Sufficient
   conditions for that decay, including stronger noise or multi-step
   forgetfulness, remain separate questions. Source results with proofs
   independent of these assertions are outside the refutation's scope.
@@ -276,7 +311,10 @@ print(json.dumps(out,indent=2))
 ## ASSUMED-UNVERIFIED
 
 The recorded literature checks are bounded searches, not an exhaustive
-priority certification. The follow-up assessment is search-seat-reported.
+priority certification. arXiv:2608.27171v1 §7.2 assumes full-rank Choi
+matrices for its correlation-decay paper result and does not settle the
+scalar whole-space correctable-algebra conjecture; it is not a Lean
+result here.
 The numerical tolerances certify only the listed finite grids; they are
 not Lean proofs. The full-rank limiting ratio, overlap-graph theorem,
 multi-step contraction and Y-shaped MPDO extensions remain open here.
