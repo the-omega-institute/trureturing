@@ -6,7 +6,34 @@ namespace StrataLint.Cli;
 internal static partial class IngestCommand
 {
     private static InvalidOperationException SourceUsage(string reason) => new(
-        "USAGE: StrataLint ingest [--source X]...; " + reason);
+        "USAGE: StrataLint ingest --source X [--source X ...]; " + reason);
+
+    private static (RawRepositorySnapshot Raw, RepositorySnapshot Snapshot, BackfillInventoryDocument Document) ReadSelectedSources(
+        IRepositoryGateway repository, ImmutableArray<string> selectors)
+    {
+        var paths = new HashSet<string>(StringComparer.Ordinal) { TheoryAtomizerDataLoader.DataPath };
+        RawRepositorySnapshot? metadata = null;
+        foreach (var selector in selectors)
+        {
+            if (!RepoPath.TryCreate(selector, out _)) throw SourceUsage($"unknown --source selector '{selector}'");
+            if (!selector.Contains('/'))
+            {
+                paths.Add(BackfillInventoryLoader.RootPath + selector + "/source.toml");
+                continue;
+            }
+            metadata ??= repository.ReadCurrent([$":(glob){BackfillInventoryLoader.RootPath}*/source.toml"]);
+            var matches = metadata.Entries.Where(entry => DigestionQuerySelection.MatchesSourcePath(entry, selector)).ToArray();
+            if (matches.Length > 1) throw SourceUsage($"ambiguous --source selector '{selector}'");
+            if (matches.Length == 1) paths.Add(matches[0].Path);
+            else paths.Add(BackfillInventoryLoader.RootPath + DigestionIngestor.DeriveSourceId(selector) + "/source.toml");
+            paths.Add(selector);
+        }
+        var loaded = DigestionQuerySelection.Load(repository.ReadCurrent(paths.Select(DigestionQuerySelection.Literal).ToArray()));
+        if (loaded.Document.RequireDigestionSources().IsEmpty) return loaded;
+        return DigestionQuerySelection.Load(DigestionQuerySelection.Merge(loaded.Raw,
+            repository.ReadCurrent(loaded.Document.RequireDigestionSources()
+                .Select(static source => DigestionQuerySelection.Literal(source.SourcePath)).ToArray())));
+    }
 
     private static (ImmutableHashSet<string>? SourceIds, ImmutableHashSet<string>? RegistrationPaths) ResolveSources(
         BackfillInventoryDocument document,

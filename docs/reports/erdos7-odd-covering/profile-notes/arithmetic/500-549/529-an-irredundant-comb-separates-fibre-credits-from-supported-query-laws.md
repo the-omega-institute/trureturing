@@ -276,3 +276,153 @@ ternary height one. The comb is not asserted to satisfy that premise.
 These are ordinary construction and measure calculations. The negative
 FC value is reused from Report528's existing exact result; no duplicate
 FC consumer or new Lean verification is added.
+
+## Eight-prime combs refute a uniform relative Haar reserve
+
+The same side-comb construction gives actual finite counterexamples to
+
+    H(U) >= (1/6) H(V3 x W),                                   (RR1)
+
+where V3 avoids all actual pure ternary originals, W avoids all actual
+3-free originals, and U avoids the complete actual family. Here H is one
+product Haar probability throughout. The counterexamples remain
+divisor-closed and every original has a private CRT cylinder. They do not
+assume whole-cover cardinality or modulus-sum minimality.
+
+Use the first eight odd primes and put
+
+    Q={5,7,11,13,17,19,23}.
+
+Include every numerical modulus
+
+    m=3^i product_(q in Q)q^e_q >1,
+    0<=i<=H, 0<=e_q<=3,
+
+with EXACTLY the fixed CRT phases of the construction above: pure ternary
+classes use A_i; pure q-classes use side0; mixed singleton classes use T_i
+and side1; a nonternary support of size k>=2 uses
+
+    gamma(q,k,epsilon)=min(2k-2+epsilon,q-2),
+    epsilon=0 for i=0, epsilon=1 for i>0,
+
+and T_i when i>0. The exponent vector uniquely determines its numerical
+modulus, so there are(H+1)4^7-1 distinct odd nonunit originals. These are
+one actual family for each H, with no phase choices depending on the
+subsequent source or query. The private-cylinder proof above still applies:
+the seven increasing q_r satisfy q_r-2>=2r. Thus the example does not rely
+on removable originals.
+
+### Count the full surviving sets on one common period
+
+At q, each side a in{0,...,q-2} is the disjoint union of C(q,e,a) for
+e=1,2,3. On the q^3 window it has exactly q^2+q+1 residues. All sides are
+disjoint, and the terminal all-(q-1) prefix has one residue. Removing the
+pure side0 therefore leaves q^3-q^2-q-1 residues.
+
+Let V_z be the complete nonternary survivor of all i=0 originals, including
+the pure q originals. Let V_w additionally avoid side1 on every coordinate
+and every mixed support with epsilon=1. The exact full-survivor identity is
+
+    U = (union_(i=1..H) T_i) x V_w  disjoint-union  Z_H x V_z,
+    V3 x W = (union_(i=1..H) T_i union Z_H) x V_z.               (RR2)
+
+Thus W=V_z. Both V_z and V_w contain the common terminal cylinder. In the
+common Q-period, the integer counts are
+
+    Q0=product_(q in Q)q^3=51404758182902197698625,
+    N_pure=product_(q in Q)(q^3-q^2-q-1)
+          =22477958755529321140096,
+    N_z=|V_z|=16540311957403355160121,
+    N_w=|V_w|=2569696844461203895339.                            (RR3)
+
+These count complete surviving fibres, not a selected product subset.
+To obtain them without enumerating Q0, retain the side value or terminal
+value on each coordinate. At a support of size k, a forbidden mixed
+rectangle is present precisely when those k sides equal their prescribed
+gamma values. Equivalently the union over all k-supports is the event that
+at least k such side matches occur. The exponent choices have all been
+included: a nonterminal side determines its unique depth e<=3.
+
+Weighted variable elimination now counts the avoidance of those actual
+rectangles. A side has weight q^2+q+1 and a terminal has weight1. A
+partially matched rectangle is discarded when a processed coordinate
+disagrees, and rejects the entire fibre when all its coordinates match.
+Branches with the same remaining rectangles can be combined by adding
+their integer weights. This recurrence preserves the full weighted
+Cartesian count. It does not multiply avoidance probabilities of groups
+sharing coordinates.
+
+In the ternary3^H window, the union of T_i has(3^H-1)/2 residues and
+Z_H has one. Hence the full counts in period L=3^H Q0 are
+
+    u=|U mod L|=((3^H-1)/2)N_w+N_z,
+    m=|(V3 x W) mod L|=((3^H+1)/2)N_z.                        (RR4)
+
+For H=5, the98,303-original family has
+
+    u=327473630137209026496140,
+    m=2017918058803209329534762,
+    6u-m=-53076277979955170557922<0,
+    H(U)/H(V3 x W)
+      =163736815068604513248070/1008959029401604664767381
+      =0.1622829176381065...<1/6.                              (RR5)
+
+For H=6, the114,687-original family has
+
+    u=951909963341281573063517,
+    m=6037213864452224633444165,
+    u/m=0.1576737191548292...
+       <21876797/136331397<1/6.                               (RR6)
+
+The smaller threshold is the sufficient reserve for the comparison
+1+(2A-1)/delta<28 with A=13463054/5049311 from
+[Report563's seven-prime companion](../550-599/563-prefix-free-rooted-labels-admit-all-later-four-mixed-towers.md#mixed-ternary-label-gaps-give-an-eight-prime-source).
+Consequently neither a universal1/6 reserve nor that weaker strict
+threshold is valid for every actual family. This does not establish a
+lower bound on the actual Haar query norm; it refutes the proposed
+uniform reserve used to feed that particular comparison.
+
+### The same families still have an inexpensive complete-query source
+
+The existing product-source repair above extends directly to seven
+nonternary coordinates. At q_r, avoid sides0,...,2r-1 at depths1,2,3,
+and use normalized Haar on the remaining V_(q_r). Its mass is
+
+    H_q(V_(q_r))=1-2r(q_r^-1+q_r^-2+q_r^-3)
+               >1-2r/(q_r-1)>0.
+
+Use normalized Haar on V3 for the ternary factor. Every actual original
+is avoided: for a support of size k, its largest prime has rank r>=k and
+its selected side is at most2k-1<=2r-1. Pure and mixed singleton originals
+are excluded by sides0 and1, and the ternary pure originals by V3.
+
+For this ONE product law nu, every numerical query and every height obeys
+
+    B_(P8)(nu)
+      <2 product_(r=1..7)(1+1/(q_r-1-2r))
+       =(1225/128)(9/8)=11025/1024<28.                        (RR7)
+
+The ternary factor uses H(V3)>1/2 and the complete geometric series;
+each nonternary factor uses the displayed actual mass. Thus the relative
+Haar-reserve failure coexists with a good source on the SAME full
+survivor. It is not a counterexample to the existential source target or
+to unrestricted Erdős#7.
+
+The exact [consumer](../../../frontier/cover-geometry/fibre-credit-irredundant-comb/relative_comb_reserve.py)
+and [results](../../../frontier/cover-geometry/fibre-credit-irredundant-comb/relative_comb_reserve.json)
+reconstruct local side cylinders, count both full nonternary fibres, and
+verify every numerical original label in the finite H=4,5,6 controls.
+The H=4 control remains above1/6. The source and phase definitions,
+not a list of independently selected residues, determine the entire
+family in each case.
+
+```sh
+python3 -I -S -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/fibre-credit-irredundant-comb/relative_comb_reserve.py
+```
+
+A scoped Lean check verifies the finite inventory arithmetic, the common
+fibre-mixture identity, both strict reserve refutations, and the same-family
+product budget. Its six declarations use only the standard axiom set.
+The actual CRT construction and weighted full-fibre enumeration remain
+the ordinary argument and exact consumer; no complete formal measure
+theorem or new canonical wrapper is claimed.

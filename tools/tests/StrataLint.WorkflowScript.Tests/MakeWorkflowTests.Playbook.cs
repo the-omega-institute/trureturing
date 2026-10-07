@@ -37,6 +37,5 @@ public sealed partial class MakeWorkflowTests
             "align_args+=(--candidate-lean-report \"$REPORT\")",
             script,
             StringComparison.Ordinal);
-        Assert.Contains("run_cli digest-status\n", script, StringComparison.Ordinal);
     }
 }

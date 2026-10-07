@@ -70,3 +70,38 @@ $$
 $$
 
 [FIB 理论卷](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md) §233.2 仅使用这两个最终渐近结论，组合经典支撑损失，给出不带权逐剩余类单候选结论的短推导。它不依赖该文的数值阈值来认证一个有限窗口，也不将 $n/\varphi(n)$ 的损失直接当成真实增量源 $b_s(d)/d$ 的损失。原文所列定理已读取；本条不声称独立重验其全部计算或提供 Lean 证明。
+
+## 同一 Robin 来源的有效素数幂修正
+
+同一 v1 原文 Proposition 3.2，印刷页 4，给出无 RH 前提的完整估计
+
+$$
+0\le\psi(t)-\vartheta(t)<1.00007\sqrt t+1.78t^{1/3}
+\qquad(t>0).
+$$
+
+这已经包括全部高次素数幂，不必另外估计每一层。Theorem 5.2 同页的
+$k=0,\eta_0=1,x_0=1$ 一行还给出 $\vartheta(t)<2t$，$t\ge1$。
+两条陈述按原文使用；其底层计算和证明没有独立复验，也没有 Lean 核验。
+
+对 [Polak 的修正项](../Analytic/polak2026finiterobinca.md)
+$C_{\rm pp}(A)$，直接使用该文 §3.1、(3.4) 已有的
+$C_{\rm pp}(A)\le\int_A^\infty(\psi(t)-\vartheta(t))k(t)\,dt$，
+其中 $k(t)=(1+\log t)/(t^2\log^2t)$。对 $A>1$、$0<a<1$，
+一次分部积分给出
+
+$$
+\int_A^\infty t^ak(t)\,dt
+=\frac{A^{a-1}}{(1-a)\log A}
+-\frac a{1-a}\int_A^\infty\frac{t^{a-2}}{\log^2t}\,dt
+<\frac{A^{a-1}}{(1-a)\log A}.
+$$
+
+将既有 Proposition 3.2 代入，得到其消费者所需的纸面应用界
+
+$$
+\sqrt A\log A\,C_{\rm pp}(A)<2.00014+2.67A^{-1/6}.
+$$
+
+此界的用途是 [Nicolas 包络与同一 GA2 来源的有效核心组合](../ArithSums/nicolas2025comparison.md#an-effective-core-bound-at-the-selected-ga2-source)。
+它不控制 $\psi(t)-t$ 的有符号尾项，也不主张一个新的素数定理。
