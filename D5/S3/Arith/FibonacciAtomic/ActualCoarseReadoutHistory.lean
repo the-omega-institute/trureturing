@@ -17,7 +17,7 @@ namespace D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutHistory
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition
 open ActualImageSevenLeafSeparation (leafLabel leafAddresses Nonconflict)
-open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist execute)
+open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist execute execute_transfer)
 
 /-- The leaf labels remain distinct; branch and absent have the same coarse reply. -/
 def kappa : Reply → Option Bool
@@ -118,7 +118,8 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
                     using (List.cons_prefix_cons.mpr ⟨rfl,hs⟩ :
                       (⟨q,leafLabel U q⟩ : Sigma (fun _ : Address => Option Bool)) ::
                         (_ ++ _) <+: _ :: _)
-                · simpa only [List.nil_append, List.cons_append, kappa_hist, List.map_cons, label, equal]
+                · simpa only [List.nil_append, List.cons_append, kappa_hist,
+                    List.map_cons, label, equal]
                     using (List.cons_prefix_cons.mpr ⟨rfl,ht⟩ :
                       (⟨q,leafLabel V q⟩ : Sigma (fun _ : Address => Option Bool)) ::
                         (_ ++ _) <+: _ :: _)
@@ -159,24 +160,8 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
   have truth : ∀ (n : Nat) (a t : Hist (fun _ : Address => Reply)) (W : Source) (b : Bool),
       execute readout π.policy n a W = some (t,b) →
       ∀ r ∈ t, r.2 = readout r.1 W := by
-    intro n
-    induction n with
-    | zero => intro a t W b run; simp [execute] at run
-    | succ n ih =>
-      intro a t W b run
-      cases step : π.policy a with
-      | inr z =>
-        simp only [execute, step, Option.some.injEq, Prod.mk.injEq] at run
-        rcases run with ⟨rfl,rfl⟩
-        simp
-      | inl q =>
-        simp only [execute, step, Option.map_eq_some_iff] at run
-        obtain ⟨⟨t',b'⟩,run,e⟩ := run
-        cases e
-        intro r member
-        rcases List.mem_cons.mp member with rfl | member
-        · rfl
-        · exact ih _ _ _ _ run r member
+    intro n a t W b run r member
+    exact ((execute_transfer readout π.policy n a W t b run).1 r member).symm
   have coarse_truth (W : Source) : ∀ r ∈ κHist (terminal π W).1,
       r.2 = leafLabel W r.1 := by
     intro r member
@@ -233,8 +218,10 @@ theorem shared_history_obstruction (π : Strategy) (observable : CoarseObservabl
     have nonleaf : q ∉ leafAddresses U ∨ q ∉ leafAddresses V := by
       by_contra both
       push Not at both
-      obtain ⟨a,ha⟩ := (ActualImageSevenLeafSeparation.seven_leaf_separation.1 U).2 q |>.mp both.1
-      obtain ⟨b,hb⟩ := (ActualImageSevenLeafSeparation.seven_leaf_separation.1 V).2 q |>.mp both.2
+      obtain ⟨a,ha⟩ := (ActualImageSevenLeafSeparation.seven_leaf_separation.1 U).2 q
+        |>.mp both.1
+      obtain ⟨b,hb⟩ := (ActualImageSevenLeafSeparation.seven_leaf_separation.1 V).2 q
+        |>.mp both.2
       have same :=
         (ActualImageSevenLeafSeparation.seven_leaf_separation.2.1 U V).2.2.mp nc q a b ha hb
       exact distinct (ha.trans (congrArg some same) |>.trans hb.symm)
