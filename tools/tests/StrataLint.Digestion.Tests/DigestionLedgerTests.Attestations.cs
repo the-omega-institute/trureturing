@@ -83,12 +83,11 @@ public sealed partial class DigestionLedgerTests
         ]);
 
         var evaluation = DigestionStatusEvaluator.Evaluate(
-            DigestionEvaluationScope.FullScan,
+            DigestionEvaluationScope.ChangedSet,
             document,
             snapshot,
             AcceptedLean(targetPath),
-            baselineDocument: document,
-            baselineSnapshot: snapshot);
+            changes: RawChangeSet.Create(["notes/unrelated.txt"]));
         var status = Assert.Single(evaluation.Entries);
 
         Assert.DoesNotContain(status.Gaps, static gap => gap.Code == "scribe-definition-mismatch");

@@ -42,7 +42,6 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.WorktreeContract.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.RepositoryTopology.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.LeanCacheScript.Tests")]
-[assembly: InternalsVisibleTo("StrataLint.RepositoryDigestion.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.SourceAtomizer.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.PlaybookScript.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.CoverBatch.Tests")]

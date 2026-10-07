@@ -1,0 +1,8 @@
+## ——可执行补全、单历史取证与递归证明的双不动点结构
+
+> **参考输入与来源边界。** 本卷保留用户在本会话提供的稿件；具体作者、作者类别及模型未独立核实（`ASSUMED-UNVERIFIED`）。纸面证明与有限例算均不构成 Lean kernel 核验；本库数学真源是经核验的 Lean 声明及其公理闭包。文中“本次”“本轮”和读取时的 `dev` 状态属于原稿来源报告，不表示本卷认证了过去执行。本卷不提出新颖性主张。
+>
+> **编号与导航。** 续篇局部编号独立于[原卷](FIB_RELATIONAL_FIBER_CALCULUS.md)补充部分的 13–16，不改动原卷。[续篇一](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION.md)与[续篇二](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md)相互衔接；相关既有来源为[关系延拓几何](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)、[观察者相对时空恢复](OBSERVER_RELATIVE_SPACETIME_CAUSAL_COMPATIBILITY_RECOVERY.md)和[尺度读出与逆许可](FIB_SCALE_READOUT_PERMISSION_GEOMETRY.md)。本卷按 `generic-v1` 作为参考输入摄入；纳入后的正文保持不变，勘误与增补写在文末追加锚之后。
+
+
+
