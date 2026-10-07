@@ -18,7 +18,8 @@ namespace D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutCompletion
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition
 open ActualCoarseReadoutHistory (kappa kappa_hist)
-open ActualJointResponseCostCore (Controller controllerPolicy controllerOutcome verifyController)
+open ActualJointResponseCostCore
+  (Controller controllerPolicy controllerOutcome verifyController phase_foundation)
 open ActualImageSevenLeafSeparation (leafLabel leafAddresses seven_leaf_separation)
 open ActualLeafHistoryRigidity (subtree actual_address_geometry)
 open D5.S3.ConceptDynamics.Experiment.PassivePolicyNormalization (Hist execute)
