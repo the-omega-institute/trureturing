@@ -22,7 +22,34 @@ internal sealed class MersenneDyadicSupportLinesDocument : IScribeDocumentDefini
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Two affine inequalities for the classical dyadic tail cost on every Mersenne real simplex.",
         H("Mersenne Dyadic Cost Support Lines"),
-        Blocks(Describe.Lean(DescribeId.Create("support-lines"),
+        Blocks(
+            Describe.Lean(DescribeId.Create("simplex-data"),
+                DeclarationHandle.Create(Prefix + "simplex_data"), H("Dyadic series bounds"),
+                StatementSource.FromAuthor(SimplexDataFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For any real vector on Fin(2^h-1) summing to one, "
+                    + "each residual lies between zero and 2^h-1. Geometric domination "
+                    + "makes the residual series summable and its cost nonnegative."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("simplex-atom-upper"),
+                DeclarationHandle.Create(Prefix + "simplex_atom_upper"), H("Individual atom bound"),
+                StatementSource.FromAuthor(AtomUpperFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("If every coordinate is at least t and their sum is "
+                    + "one, any single coordinate is at most 1-(m-1)t, where m=2^h-1."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("scaling-floors"),
+                DeclarationHandle.Create(Prefix + "scaling_floors"), H("Vanishing prefix floors"),
+                StatementSource.FromAuthor(ScalingFloorsFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("When every coordinate is nonnegative and M times "
+                    + "each coordinate is below two, all floors before depth h vanish."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("scaling"),
+                DeclarationHandle.Create(Prefix + "scaling"), H("Exact high interval scaling"),
+                StatementSource.FromAuthor(ScalingFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For h>=2, a vector of sum one with all coordinates "
+                    + "at least t>1/M transforms to q(i)=Mp(i)-1, a nonnegative vector "
+                    + "of sum one. Vanishing prefix floors and integer translation of "
+                    + "the remaining floors give L(p)=h+L(q)/M."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("support-lines"),
             DeclarationHandle.Create(Prefix + "mersenne_support_lines"),
             H("Both supporting lines"), StatementSource.FromAuthor(ResultFormula()),
             AssessedProvenance.FromRepo(),
@@ -56,6 +83,61 @@ internal sealed class MersenneDyadicSupportLinesDocument : IScribeDocumentDefini
                 + "They do not assert a sampler optimization, a batch phase transition, "
                 + "an equality classification, or a value at every prescribed minimum atom."))),
             DescribeRole.Theorem))));
+
+    private static Formula SimplexDataFormula()
+    {
+        var h = V("h"); var p = V("p"); var i = V("i"); var d = V("d");
+        var m = Par(Seq(Power(h), Sp, Minus, Sp, D(1)));
+        var indices = Call("Fin", m);
+        var laws = Seq(indices, Sp, To, Sp, Real);
+        var residualBounds = All(d, Nat, And(Seq(D(0), Sp, Le, Sp, Call("R", p, d)),
+            Seq(Call("R", p, d), Sp, Le, Sp, m)));
+        var series = Call("Summable", Seq(d, Colon, Sp, Nat, Sp, Mapsto, Sp,
+            new Formula.Fraction(Call("R", p, d), Power(d))));
+        return Disp(All(h, Nat, All(p, laws, Imp(Equal(IndexedSum(i, indices, Call("p", i)), D(1)),
+            And(residualBounds, And(series, Seq(D(0), Sp, Le, Sp, Call("L", p))))))));
+    }
+
+    private static Formula AtomUpperFormula()
+    {
+        var h = V("h"); var p = V("p"); var i = V("i"); var t = V("t");
+        var m = Par(Seq(Power(h), Sp, Minus, Sp, D(1)));
+        var indices = Call("Fin", m);
+        var laws = Seq(indices, Sp, To, Sp, Real);
+        return Disp(All(h, Nat, All(p, laws, Imp(Equal(IndexedSum(i, indices, Call("p", i)), D(1)),
+            All(t, Real, Imp(All(i, indices, Seq(t, Sp, Le, Sp, Call("p", i))),
+                All(i, indices, Seq(Call("p", i), Sp, Le, Sp, D(1), Sp, Minus, Sp,
+                    Par(Seq(m, Sp, Minus, Sp, D(1))), Sp, t))))))));
+    }
+
+    private static Formula ScalingFloorsFormula()
+    {
+        var h = V("h"); var p = V("p"); var i = V("i"); var d = V("d");
+        var indices = Call("Fin", Par(Seq(Power(h), Sp, Minus, Sp, D(1))));
+        var laws = Seq(indices, Sp, To, Sp, Real);
+        var assumptions = All(i, indices, And(Seq(D(0), Sp, Le, Sp, Call("p", i)),
+            Seq(Power(h), Sp, Call("p", i), Sp, Lt, Sp, D(2))));
+        return Disp(All(h, Nat, All(p, laws, Imp(assumptions, All(i, indices, All(d, Nat,
+            Imp(Seq(d, Sp, Lt, Sp, h), Equal(Call("floor", Seq(Power(d), Sp, Call("p", i))), D(0)))))))));
+    }
+
+    private static Formula ScalingFormula()
+    {
+        var h = V("h"); var p = V("p"); var q = V("q"); var i = V("i"); var t = V("t");
+        var M = Power(h);
+        var indices = Call("Fin", Par(Seq(M, Sp, Minus, Sp, D(1))));
+        var laws = Seq(indices, Sp, To, Sp, Real);
+        var assumptions = And(Equal(IndexedSum(i, indices, Call("p", i)), D(1)),
+            And(All(i, indices, Seq(t, Sp, Le, Sp, Call("p", i))),
+                Seq(new Formula.Fraction(D(1), M), Sp, Lt, Sp, t)));
+        var qDefinition = Equal(q, Seq(i, Colon, Sp, indices, Sp, Mapsto, Sp,
+            M, Sp, Call("p", i), Sp, Minus, Sp, D(1)));
+        var result = And(All(i, indices, Seq(D(0), Sp, Le, Sp, Call("q", i))),
+            And(Equal(IndexedSum(i, indices, Call("q", i)), D(1)),
+                Equal(Call("L", p), Seq(h, Sp, Plus, Sp, new Formula.Fraction(Call("L", q), M)))));
+        return Disp(All(h, Nat, Imp(Seq(D(2), Sp, Le, Sp, h), All(p, laws, All(t, Real,
+            Imp(assumptions, All(q, laws, Imp(qDefinition, result))))))));
+    }
 
     private static Formula ResultFormula()
     {

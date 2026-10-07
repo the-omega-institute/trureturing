@@ -363,14 +363,8 @@ theorem result (h : ℕ) (hh : 2 ≤ h) (p : Fin (2 ^ h - 1) → ℝ)
     rw [Nat.cast_sub (by omega : 1 ≤ h)]
     ring
   have tail_nonneg (P : Fin m → ℝ) (hS : ∑ i, P i = 1) (d : ℕ) :
-      0 ≤ D5.S3.Arith.FibonacciAtomic.DyadicSupportLines.residual P d / (2 : ℝ) ^ d := by
-    have H := Finset.sum_le_sum (s := Finset.univ)
-      (fun i _ => Int.floor_le ((2 : ℝ) ^ d * P i))
-    have S : ∑ i, (2 : ℝ) ^ d * P i = (2 : ℝ) ^ d := by
-      rw [← Finset.mul_sum, hS, mul_one]
-    rw [S] at H
-    simp only [D5.S3.Arith.FibonacciAtomic.DyadicSupportLines.residual, Int.cast_sum]
-    exact div_nonneg (sub_nonneg.mpr H) (by positivity)
+      0 ≤ D5.S3.Arith.FibonacciAtomic.DyadicSupportLines.residual P d / (2 : ℝ) ^ d :=
+    div_nonneg ((MersenneDyadicSupportLines.simplex_data h P hS).1 d).1 (by positivity)
   have zero_point (P : Fin m → ℝ) (hP : ∀ i, 0 ≤ P i) (hS : ∑ i, P i = 1)
       (hzero : cost P = 0) : ∃ j, P = fun i => if i = j then (1 : ℝ) else 0 := by
     have sumP := (D5.S3.Arith.FibonacciAtomic.MersenneDyadicSupportLines.mersenne_support_lines
@@ -475,104 +469,12 @@ theorem result (h : ℕ) (hh : 2 ≤ h) (p : Fin (2 ^ h - 1) → ℝ)
       let Q := fun i => (2 : ℝ) ^ h * P i - 1
       (∀ i, 0 ≤ Q i) ∧ (∑ i, Q i = 1) ∧ cost P = (h : ℝ) + cost Q / (2 : ℝ) ^ h := by
     classical
-    let m := 2 ^ h - 1
-    let M := (2 : ℝ) ^ h
-    let Q := fun i : Fin m => M * P i - 1
-    have hM : 0 < M := by positivity
-    have hm : (m : ℝ) = M - 1 := by
-      dsimp [m, M]
-      rw [Nat.cast_sub (by have := Nat.lt_two_pow_self (n := h); omega)]
-      norm_cast
-    have hm3 : 3 ≤ m := by
-      have H := Nat.pow_le_pow_right (by norm_num : 1 ≤ 2) hh
-      norm_num at H
-      dsimp [m]
-      omega
-    have ppos (i : Fin m) : 0 < P i := lt_trans (by positivity) (hlo i)
-    have qpos (i : Fin m) : 0 ≤ Q i := by
-      have H := (div_lt_iff₀ hM).mp (hlo i)
-      dsimp [Q]
-      linarith only [H]
-    have qsum : ∑ i, Q i = 1 := by
-      have S : ∑ i : Fin m, P i = 1 := hS
-      simp only [Q, Finset.sum_sub_distrib, ← Finset.mul_sum, S, mul_one,
-        Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, hm]
-      ring
-    have upper (i : Fin m) : M * P i < 2 := by
-      obtain ⟨j, hj⟩ := Fintype.exists_ne_of_one_lt_card
-        (by simp; omega : 1 < Fintype.card (Fin m)) i
-      have small (k : Fin m) : (if k = i then P i else 1 / M) ≤ P k := by
-        by_cases hk : k = i
-        · simp [hk]
-        · simpa [hk] using (hlo k).le
-      have strict : (if j = i then P i else 1 / M) < P j := by simpa [hj] using hlo j
-      have H := Finset.sum_lt_sum (s := Finset.univ) (fun k _ => small k)
-        ⟨j, Finset.mem_univ j, strict⟩
-      have baseline : (∑ k : Fin m, if k = i then P i else 1 / M) =
-          P i + ((m : ℝ) - 1) / M := by
-        calc
-          _ = ∑ k : Fin m, (1 / M + if k = i then P i - 1 / M else 0) := by
-            apply Finset.sum_congr rfl
-            intro k _
-            by_cases hk : k = i <;> simp [hk]
-          _ = _ := by
-            simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
-              Fintype.card_fin, nsmul_eq_mul, Finset.sum_ite_eq', Finset.mem_univ, ↓reduceIte]
-            ring
-      rw [baseline, show (∑ k : Fin m, P k) = 1 from hS, hm] at H
-      have E := mul_lt_mul_of_pos_left H hM
-      have id : M * (P i + (M - 1 - 1) / M) = M * P i + (M - 2) := by
-        field_simp <;> ring
-      rw [id, mul_one] at E
-      linarith only [E]
-    have floors (i : Fin m) (d : ℕ) (hd : d < h) : ⌊(2 : ℝ) ^ d * P i⌋ = 0 := by
-      have H := pow_le_pow_right₀ (by norm_num : (1 : ℝ) ≤ 2) (by omega : d + 1 ≤ h)
-      change (2 : ℝ) ^ (d + 1) ≤ M at H
-      rw [pow_succ] at H
-      have E := mul_le_mul_of_nonneg_right H (ppos i).le
-      apply Int.floor_eq_iff.mpr
-      simp only [Int.cast_zero, zero_add]
-      refine ⟨mul_nonneg (by positivity) (ppos i).le, ?_⟩
-      nlinarith only [E, upper i]
-    have shifted (i : Fin m) (d : ℕ) :
-        ⌊(2 : ℝ) ^ (d + h) * P i⌋ = ⌊(2 : ℝ) ^ d * Q i⌋ + (2 : ℤ) ^ d := by
-      have E : (2 : ℝ) ^ (d + h) * P i = (2 : ℝ) ^ d * Q i + (((2 : ℕ) ^ d : ℕ) : ℝ) := by
-        dsimp [Q, M]
-        push_cast
-        rw [pow_add]
-        ring
-      rw [E, Int.floor_add_natCast]
-      norm_cast
-    have after (d : ℕ) : D5.S3.Arith.FibonacciAtomic.DyadicSupportLines.residual P (d + h) /
-        (2 : ℝ) ^ (d + h) =
-        (D5.S3.Arith.FibonacciAtomic.DyadicSupportLines.residual Q d / (2 : ℝ) ^ d) / M := by
-      unfold D5.S3.Arith.FibonacciAtomic.DyadicSupportLines.residual
-      simp_rw [shifted]
-      simp only [
-        Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ, Fintype.card_fin,
-        nsmul_eq_mul, Int.cast_sum, Int.cast_add, Int.cast_mul, Int.cast_natCast, Int.cast_pow, Int.cast_ofNat,
-        pow_add]
-      rw [hm]
-      dsimp [M]
-      ring
-    have before : ∑ d ∈ Finset.range h,
-        D5.S3.Arith.FibonacciAtomic.DyadicSupportLines.residual P d / (2 : ℝ) ^ d = h := by
-      calc
-        _ = ∑ _d ∈ Finset.range h, (1 : ℝ) := by
-          apply Finset.sum_congr rfl
-          intro d hd
-          simp only [D5.S3.Arith.FibonacciAtomic.DyadicSupportLines.residual,
-            floors _ _ (Finset.mem_range.mp hd), Int.cast_zero, Finset.sum_const_zero, sub_zero]
-          exact div_self (by positivity)
-        _ = _ := by simp
-    have summableP :=
-      (D5.S3.Arith.FibonacciAtomic.MersenneDyadicSupportLines.mersenne_support_lines
-        h hh P (fun i => (ppos i).le) hS).1
-    have E := summableP.sum_add_tsum_nat_add h
-    rw [before] at E
-    simp_rw [after] at E
-    rw [tsum_div_const] at E
-    exact ⟨qpos, qsum, E.symm⟩
+    have ne : (Finset.univ : Finset (Fin (2 ^ h - 1))).Nonempty := by
+      have := Nat.lt_two_pow_self (n := h)
+      exact ⟨⟨0, by omega⟩, Finset.mem_univ _⟩
+    exact MersenneDyadicSupportLines.scaling h hh P hS (Finset.univ.inf' ne P)
+      (fun i => Finset.inf'_le _ (Finset.mem_univ i))
+      ((Finset.lt_inf'_iff ne).mpr (fun i _ => hlo i))
   let c := 1 / (m : ℝ)
   let b := (((h : ℝ) + 2) * M - 2)
   let S := fun (r : ℕ) (j : Fin m) (i : Fin m) =>
