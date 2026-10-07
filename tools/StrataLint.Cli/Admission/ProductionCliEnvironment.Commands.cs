@@ -1,5 +1,6 @@
 using System.Text.Json;
 using StrataLint.Engine;
+using StrataLint.FileMap;
 
 namespace StrataLint.Cli;
 
@@ -35,8 +36,11 @@ internal sealed partial class ProductionCliEnvironment
     public ExplicitCommandResult GateAuthority(IReadOnlyList<string> arguments) =>
         GateAuthorityCommand.Run(repositoryRoot, arguments);
 
-    public ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments) =>
-        FileMapConformCommand.Run(arguments, repositoryRoot);
+    public ExplicitCommandResult FileMapConform(IReadOnlyList<string> arguments)
+    {
+        var result = FileMapConformCommand.Run(arguments, repositoryRoot);
+        return new ExplicitCommandResult(result.ExitCode, result.Output, result.Error);
+    }
 
     public ExplicitCommandResult DepositHeaderCheck(IReadOnlyList<string> arguments) =>
         DepositHeaderCheckCommand.Run(repository, leanReportSource, arguments);

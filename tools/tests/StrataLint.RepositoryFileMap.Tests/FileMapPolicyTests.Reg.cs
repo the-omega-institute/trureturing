@@ -1,7 +1,6 @@
 using System.Collections.Immutable;
 using StrataLint.Engine;
 using StrataLint.FileMap;
-using StrataLint.Scribe;
 using System.Text.Json;
 using StrataLint.EngineeringScope;
 
