@@ -24,7 +24,7 @@ open D5.S1.Digit.Infinite.SignedSeriesRange (signedValue signed_series_range v)
 open D5.S1.Digit.Infinite.SignedSeriesFibres
 open D5.S0.Automata.BinaryZeckendorfBlockSkeleton (ReturnBlock)
 
-private theorem shift_add (x : LegalDigits) (a b : ℕ) :
+theorem shift_add (x : LegalDigits) (a b : ℕ) :
     bitShift (bitShift x a) b = bitShift x (a + b) := by
   apply Subtype.ext
   funext j
@@ -70,7 +70,7 @@ private theorem odd_periodic_scalar_injective (d : ℕ) (hd : Odd d)
     exact ⟨x, rfl⟩
   obtain ⟨z, hz, hu⟩ := signed_series_fibres.2.2 _ hb hn
   exact (hu x rfl).trans (hu y hs.symm).symm
-private theorem golden_relations :
+theorem golden_relations :
     0 < t ∧ t < 1 ∧ t ^ 2 = 1 - t ∧ g = 2 * t - 1 ∧ (1 : ℝ) / 2 < t := by
   have ht : 0 < t := inv_pos.mpr Real.goldenRatio_pos
   have ht1 : t < 1 := inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio
