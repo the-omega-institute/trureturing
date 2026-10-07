@@ -19,8 +19,7 @@ def discover (store : RawArtifacts.Store) (target : Name) : IO Discovery.Snapsho
       (store.modules.find? owner).any RawArtifacts.hasTypedInputs))
   let context : Literal.Context := {
     find := (store.constants[·]?), owner := (store.owners[·]?),
-    external := fun name => store.metadata.externs.contains name || store.metadata.implementedBy.contains name,
-    heartbeatStart := ← IO.getNumHeartbeats, heartbeatLimit := 200000000 }
+    external := fun name => store.metadata.externs.contains name || store.metadata.implementedBy.contains name }
   let axioms ← IO.mkRef ({ closure := store.metadata.axioms } : CompiledAxioms.AxiomClosureState)
   Discovery.discoverCompiled (requirements owners) owners context
     (fun owner => return (← store.getModule owner).constants)

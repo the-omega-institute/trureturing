@@ -7,8 +7,6 @@ structure Context where
   find : Name → Option ConstantInfo
   owner : Name → Option Name
   external : Name → Bool
-  heartbeatStart : Nat
-  heartbeatLimit : Nat
 
 /-- Substitute only universe parameter leaves. Unlike Lean's standard helper,
  this preserves max/imax constructor trees without simplification. -/
