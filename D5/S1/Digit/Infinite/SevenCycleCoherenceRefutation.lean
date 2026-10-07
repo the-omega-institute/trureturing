@@ -7,6 +7,7 @@
    digest: Finite future separation asserted as a necessary condition for actual SCC coherence. -/
 
 import D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
+import D5.S1.Digit.Infinite.WindowCylinderPartition
 import D5.S1.Words.ReturnWords.CoherentReturnPathTemplates
 
 set_option autoImplicit false
@@ -392,34 +393,17 @@ open D5.S1.Digit.Infinite.SignedSeriesFibres
 open D5.S1.Digit.Infinite.SignedSeriesRange (signedValue signed_series_range v)
 open private source
   from D5.S1.Digit.Infinite.SevenCycleSeparationRefutation
-open private prependBlock from D5.S1.Digit.Infinite.SignedSeriesFibres
-
 private theorem seam_tail (w : List Block) :
     ∃ N : ℕ, ∀ n, N ≤ n → (prependWord w v).val n ≠ (prependWord w v).val (n + 1) := by
-  induction w with
-  | nil =>
-    refine ⟨0, ?_⟩
-    intro n _
-    simp only [prependWord, v]
-    intro h
-    have h' := Bool.eq_iff_iff.mp h
-    simp only [decide_eq_true_eq] at h'
-    omega
-  | cons c w ih =>
-    obtain ⟨N, hN⟩ := ih
-    cases c with
-    | zero =>
-      refine ⟨N + 1, ?_⟩
-      intro n hn
-      obtain ⟨k, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : n ≠ 0)
-      exact hN k (by omega)
-    | oneZero =>
-      refine ⟨N + 2, ?_⟩
-      intro n hn
-      obtain ⟨k, hk⟩ := Nat.exists_eq_add_of_le (by omega : 2 ≤ n)
-      subst n
-      simpa [prependWord, prependBlock, Nat.add_comm, Nat.add_left_comm, Nat.add_assoc]
-        using hN k (by omega)
+  refine ⟨len w, ?_⟩
+  intro n hn
+  rw [D5.S1.Digit.Infinite.WindowCylinderPartition.prepend_digits,
+    D5.S1.Digit.Infinite.WindowCylinderPartition.prepend_digits,
+    if_neg (by omega), if_neg (by omega)]
+  intro h
+  have h' := Bool.eq_iff_iff.mp h
+  simp only [v, decide_eq_true_eq] at h'
+  omega
 
 private theorem source_not_seam (b : Bool) (j : ℕ) :
     signedValue (bitShift (source b) (3 * j)) ∉ Set.range seam := by
@@ -737,7 +721,7 @@ private theorem inclusion_length
     (S : StronglyConnectedComponent (PV))
     {a z : Component S} (H : Path a z) :
     ((componentInclusion S).mapPath H).length = H.length := by
-  induction H <;> simp_all [Prefunctor.mapPath, Path.length]
+  exact component_inclusion_length S H
 
 private theorem inclusion_output
     (S : StronglyConnectedComponent (PV))
@@ -746,12 +730,7 @@ private theorem inclusion_output
       ((componentInclusion S).mapPath H) =
     output (componentLabel
       (fun {a z : PV} (e : a ⟶ z) => f e.val) S) H := by
-  induction H with
-  | nil => simp [output]
-  | cons H e ih =>
-    simp only [output, Prefunctor.mapPath_cons, Path.weight_cons,
-      FreeMonoid.toList_mul, FreeMonoid.toList_of] at ih ⊢
-    exact congrArg (fun l => l ++ [f e.val]) ih
+  exact component_inclusion_output (fun {a z : PV} (e : a ⟶ z) => f e.val) S H
 
 private theorem output_map {α : Type} (f : Label × Label → α)
     {a z : PV} (H : Path a z) :
