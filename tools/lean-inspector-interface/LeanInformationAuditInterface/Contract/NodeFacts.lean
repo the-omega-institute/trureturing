@@ -1,6 +1,5 @@
 import LeanInformationAuditInterface.Contract.NodeFactsCore
 import LeanInformationAuditInterface.Contract.Catalog
-import LeanInformationAuditInterface.Contract.Registration
 
 namespace LeanInformationAudit.Contract
 open Lean

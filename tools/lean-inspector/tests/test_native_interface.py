@@ -67,7 +67,8 @@ open LeanInformationAudit
 def rootInput : Contract.RootCatalog := { data := {
   rootId := `TypedInputs, expected := #[], source := #[], baseline := #[], companionPrefix := none } }
 def templateInput : Contract.TemplateEnrollment Nat := {
-  name := `Nat, version := 1, constructors := #[], options := #[] }
+  name := `Nat, version := 1, constructors := #[], options := #[],
+  bodyFact := `templateBody, coverage := { roots := [], facts := [] } }
 ''')
         result = self.guarded_command([self.lake, 'env', 'lean', 'TypedInputs.lean'], cwd=package, env=env)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)

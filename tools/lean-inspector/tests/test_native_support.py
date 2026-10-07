@@ -26,7 +26,8 @@ def copy_contract_interface(source, target):
     Indexed mathematical contracts compile against D5 in the Reg Lean tests.
     These fixtures exercise transport and discovery with no mathematical library.
     """
-    shutil.copytree(source, target, ignore=shutil.ignore_patterns('.lake', 'Implementation.lean', 'Registration.lean'))
+    shutil.copytree(source, target, ignore=shutil.ignore_patterns(
+        '.lake', 'Implementation.lean', 'Registration.lean', 'NodeFacts.lean'))
     catalog = target / 'LeanInformationAuditInterface/Contract/Catalog.lean'
     declarations = catalog.read_text().split('/-- Each zero row carries', 1)[0]
     declarations = declarations.replace(
