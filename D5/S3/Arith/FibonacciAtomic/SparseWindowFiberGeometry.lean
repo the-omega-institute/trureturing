@@ -36,25 +36,6 @@ noncomputable def fiber (m : ℕ) (S : Finset ℕ) (p : (t : S) → X m) : Set C
 noncomputable def regularDomain (m : ℕ) (S : Finset ℕ) : Set Circle :=
   (E '' (↑(cuts m S) : Set ℕ))ᶜ
 
-private theorem integer_of_equal_circle {x y : ℝ} (h : (x : Circle) = y) :
-    ∃ k : ℤ, x - y = k := by
-  have hz : ((x - y : ℝ) : Circle) = 0 := by
-    rw [AddCircle.coe_sub, h, sub_self]
-  obtain ⟨k, hk⟩ := (AddCircle.coe_eq_zero_iff (1 : ℝ)).mp hz
-  exact ⟨k, by simpa only [zsmul_eq_mul, mul_one] using hk.symm⟩
-
-private theorem short_lift_offset_eq {l u a b x y v w t : ℝ} {i j : ℤ}
-    (hx : x ∈ Ioo l u) (hy : y ∈ Ioo l u)
-    (hv : v ∈ Ioo a b) (hw : w ∈ Ioo a b)
-    (hlen : u - l + (b - a) ≤ 1)
-    (hi : x + t - v = i) (hj : y + t - w = j) : i = j := by
-  have hsmall : (i : ℝ) - j < 1 ∧ (j : ℝ) - i < 1 := by
-    constructor <;> linarith only [hx.1, hx.2, hy.1, hy.2, hv.1, hv.2,
-      hw.1, hw.2, hlen, hi, hj]
-  have hsmall' : i - j < (1 : ℤ) ∧ j - i < (1 : ℤ) := by
-    exact_mod_cast hsmall
-  omega
-
 private theorem short_family_preconnected {ι : Type*} (lo hi shift : ι → ℝ)
     (anchor : ι) (hlen : ∀ i, hi anchor - lo anchor + (hi i - lo i) ≤ 1) :
     IsPreconnected {z : Circle | ∀ i,
@@ -70,9 +51,17 @@ private theorem short_family_preconnected {ι : Type*} (lo hi shift : ι → ℝ
     intro i
     obtain ⟨xx, hxx, hcx⟩ := hx.2 i
     obtain ⟨yy, hyy, hcy⟩ := hy.2 i
-    obtain ⟨k, hk⟩ := integer_of_equal_circle hcx.symm
-    obtain ⟨j, hj⟩ := integer_of_equal_circle hcy.symm
-    have hkj : k = j := short_lift_offset_eq hx.1 hy.1 hxx hyy (hlen i) hk hj
+    obtain ⟨k, hk'⟩ := circle_integer_offset _ _ hcx.symm
+    obtain ⟨j, hj'⟩ := circle_integer_offset _ _ hcy.symm
+    have hk := hk'.symm
+    have hj := hj'.symm
+    have hkj : k = j := by
+      have hsmall : (k : ℝ) - j < 1 ∧ (j : ℝ) - k < 1 := by
+        constructor <;> linarith only [hx.1.1, hx.1.2, hy.1.1, hy.1.2,
+          hxx.1, hxx.2, hyy.1, hyy.2, hlen i, hk, hj]
+      have hsmall' : k - j < (1 : ℤ) ∧ j - k < (1 : ℤ) := by
+        exact_mod_cast hsmall
+      omega
     subst j
     refine ⟨v + (shift i - shift anchor) - k, ⟨?_, ?_⟩, ?_⟩
     · linarith only [hxx.1, hk, hv.1]
@@ -112,99 +101,10 @@ private theorem short_family_preconnected {ι : Type*} (lo hi shift : ι → ℝ
   exact hconvex.isPreconnected.image _
     ((AddCircle.continuous_mk' (1 : ℝ)).sub continuous_const).continuousOn
 
-private theorem arc_avoids_cuts (m : ℕ) (hm : 1 ≤ m) (p : X m) :
-    Disjoint (A p) (B m) := by
-  apply Set.disjoint_left.mpr
-  rintro z hz ⟨k, hk, rfl⟩
-  obtain ⟨i, j, hi, him, hj, hjm, hei, hej, hC⟩ :=
-    (window_cylinder_partition.2.2 m hm).2.2.2.2.2.1 p
-  have hends := window_cylinder_partition.2.1 k hk.1
-  have hminus : P m (eMinus k) = p := by
-    change eMinus k ∈ C p
-    rw [hC]
-    exact Or.inl (by
-      change D5.S1.Digit.Infinite.MultiplierObstruction.phase (eMinus k) ∈ A p
-      rw [(hends.2 _).mpr (Or.inl rfl)]
-      exact hz)
-  have hplus : P m (ePlus k) = p := by
-    change ePlus k ∈ C p
-    rw [hC]
-    exact Or.inl (by
-      change D5.S1.Digit.Infinite.MultiplierObstruction.phase (ePlus k) ∈ A p
-      rw [(hends.2 _).mpr (Or.inr rfl)]
-      exact hz)
-  exact ((window_cylinder_partition.2.2 m hm).2.2.2.2.2.2 k hk.1).mpr hk.2
-    (hminus.trans hplus.symm)
-
-private theorem arc_cover (m : ℕ) (hm : 1 ≤ m) (z : Circle) (hz : z ∉ B m) :
-    ∃ p : X m, z ∈ A p := by
-  have hab : b = a + 1 := by
-    have halpha : alpha ^ 2 + alpha = 1 := by
-      unfold alpha
-      rw [Real.inv_goldenRatio]
-      nlinarith [Real.goldenConj_sq]
-    dsimp [a, b]
-    linarith
-  have hcover : z ∈ (fun x : ℝ => (x : Circle)) '' Icc a b := by
-    rw [hab, AddCircle.coe_image_Icc_eq]
-    trivial
-  obtain ⟨x, hx, rfl⟩ := hcover
-  have hx' : x ∈ ⋃ p : X m, I p := by
-    rw [(window_cylinder_partition.2.2 m hm).2.2.1]
-    exact hx
-  obtain ⟨p, hp⟩ := Set.mem_iUnion.mp hx'
-  rw [((window_cylinder_partition.2.2 m hm).2.1 p).2.2.2.2.1] at hp
-  refine ⟨p, x, ⟨?_, ?_⟩, rfl⟩
-  · apply lt_of_le_of_ne hp.1
-    intro he
-    apply hz
-    rw [← (window_cylinder_partition.2.2 m hm).2.2.2.2.1]
-    exact ⟨p, Or.inl (congrArg (fun x : ℝ => (x : Circle)) he.symm)⟩
-  · apply lt_of_le_of_ne hp.2
-    intro he
-    apply hz
-    rw [← (window_cylinder_partition.2.2 m hm).2.2.2.2.1]
-    exact ⟨p, Or.inr (congrArg (fun x : ℝ => (x : Circle)) he)⟩
-
-private theorem arc_unique (m : ℕ) (hm : 1 ≤ m) (p q : X m) (z : Circle)
-    (hp : z ∈ A p) (hq : z ∈ A q) : p = q := by
-  have hab : b = a + 1 := by
-    have halpha : alpha ^ 2 + alpha = 1 := by
-      unfold alpha
-      rw [Real.inv_goldenRatio]
-      nlinarith [Real.goldenConj_sq]
-    dsimp [a, b]
-    linarith
-  have hc : z ∈ (fun x : ℝ => (x : Circle)) '' Icc a b := by
-    rw [hab, AddCircle.coe_image_Icc_eq]
-    trivial
-  obtain ⟨r, hr, rfl⟩ := hc
-  obtain ⟨x, hx⟩ := (signed_series_range.1.symm ▸ hr : r ∈ Set.range signedValue)
-  have hphase : D5.S1.Digit.Infinite.MultiplierObstruction.phase x = (r : Circle) :=
-    congrArg (fun x : ℝ => (x : Circle)) hx
-  have hxp : P m x = p := by
-    change x ∈ C p
-    obtain ⟨i, j, hi, him, hj, hjm, hei, hej, hC⟩ :=
-      (window_cylinder_partition.2.2 m hm).2.2.2.2.2.1 p
-    rw [hC]
-    exact Or.inl (by change _ ∈ A p; rwa [hphase])
-  have hxq : P m x = q := by
-    change x ∈ C q
-    obtain ⟨i, j, hi, him, hj, hjm, hei, hej, hC⟩ :=
-      (window_cylinder_partition.2.2 m hm).2.2.2.2.2.1 q
-    rw [hC]
-    exact Or.inl (by change _ ∈ A q; rwa [hphase])
-  exact hxp.symm.trans hxq
-
-private theorem translated_cut (t j : ℕ) :
-    E (t + j) + goldenPhase (t : ℤ) = E j := by
-  simp only [E, goldenPhase, Nat.cast_add, Int.cast_natCast, ← AddCircle.coe_add]
-  congr 1
-  ring
-
 private theorem regular_domain_iff (m : ℕ) (S : Finset ℕ) (z : Circle) :
     z ∈ regularDomain m S ↔ ∀ t : S, z + goldenPhase (t.val : ℤ) ∉ B m := by
   classical
+  simp only [goldenPhase, Int.cast_natCast]
   constructor
   · intro hz t ⟨j, hj, he⟩
     rcases hj with ⟨hj1, hjm⟩
@@ -233,24 +133,7 @@ private theorem isOpen_fiber (m : ℕ) (S : Finset ℕ) (p : (t : S) → X m) :
     simp only [fiber, Set.mem_ofPred_eq, Set.mem_iInter, Set.mem_preimage]]
   apply isOpen_iInter_of_finite
   intro t
-  exact (QuotientAddGroup.isOpenMap_coe _ isOpen_Ioo).preimage
-    (continuous_id.add continuous_const)
-
-private theorem phase_tail_dense (bound : ℕ) :
-    DenseRange (fun n : ℕ => goldenPhase ((n + bound + 1 : ℕ) : ℤ)) := by
-  have hz : DenseRange (fun n : ℤ => n • (Real.goldenRatio : Circle)) :=
-    AddCircle.denseRange_zsmul_coe_iff.mpr (by simpa using Real.goldenRatio_irrational)
-  have hn : DenseRange (fun n : ℕ => n • (Real.goldenRatio : Circle)) :=
-    denseRange_zsmul_iff_nsmul.mp hz
-  let shift := Homeomorph.addRight ((bound + 1) • (Real.goldenRatio : Circle))
-  have hd := shift.surjective.denseRange.comp hn shift.continuous
-  convert hd using 1
-  funext n
-  simp only [goldenPhase, ← AddCircle.coe_nsmul, nsmul_eq_mul,
-    Nat.cast_add, Nat.cast_one]
-  congr 1
-  push_cast
-  ring
+  exact (window_arc_isOpen m (p t)).preimage (continuous_id.add continuous_const)
 
 private theorem circle_complement_components_card (T : Finset Circle) (hT : T.Nonempty) :
     Nat.card (ConnectedComponents ↥((↑T : Set Circle)ᶜ)) = T.card := by
@@ -395,12 +278,9 @@ theorem sparse_window_fiber_geometry (m : ℕ) (hm : 2 ≤ m) (S : Finset ℕ)
     Nat.card (ConnectedComponents (regularDomain m S)) = (cuts m S).card ∧
     Nat.card (Set.range (sigma m S)) = (cuts m S).card := by
   classical
-  have hpos : 0 < alpha := inv_pos.mpr Real.goldenRatio_pos
-  have hlt : alpha < 1 := inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio
-  have halpha : alpha ^ 2 + alpha = 1 := by
-    unfold alpha
-    rw [Real.inv_goldenRatio]
-    nlinarith [Real.goldenConj_sq]
+  have hpos : 0 < alpha := golden_inverse_data.1
+  have hlt : alpha < 1 := golden_inverse_data.2.1
+  have halpha : alpha ^ 2 + alpha = 1 := golden_inverse_data.2.2
   have hhalf : 1 / 2 < alpha := by
     by_contra h
     have hh : alpha ≤ 1 / 2 := le_of_not_gt h
@@ -423,7 +303,8 @@ theorem sparse_window_fiber_geometry (m : ℕ) (hm : 2 ≤ m) (S : Finset ℕ)
     intro z hz
     apply (regular_domain_iff m S z).mpr
     intro t hc
-    exact Set.disjoint_left.mp (arc_avoids_cuts m (by omega) (p t)) (hz t) hc
+    obtain ⟨k, hk, he⟩ := hc
+    exact window_arc_avoids_cut m (by omega) (p t) k hk.1 hk.2 (he.symm ▸ hz t)
   have heq (p : (t : S) → X m) (z : Circle) (hz : z ∈ fiber m S p) :
       fiber m S p = connectedComponentIn (regularDomain m S) z := by
     apply Set.Subset.antisymm
@@ -432,22 +313,20 @@ theorem sparse_window_fiber_geometry (m : ℕ) (hm : 2 ≤ m) (S : Finset ℕ)
       let f : Circle → Circle := fun z => z + goldenPhase (t.val : ℤ)
       let U : Set Circle := f ⁻¹' A (p t)
       let V : Set Circle := ⋃ q : {q : X m // q ≠ p t}, f ⁻¹' A q.val
-      have hU : IsOpen U :=
-        (QuotientAddGroup.isOpenMap_coe _ isOpen_Ioo).preimage
-          (continuous_id.add continuous_const)
+      have hU : IsOpen U := (window_arc_isOpen m (p t)).preimage
+        (continuous_id.add continuous_const)
       have hV : IsOpen V := isOpen_iUnion (fun q =>
-        (QuotientAddGroup.isOpenMap_coe _ isOpen_Ioo).preimage
-          (continuous_id.add continuous_const))
+        (window_arc_isOpen m q.val).preimage (continuous_id.add continuous_const))
       have hdisjoint : Disjoint U V := by
         apply Set.disjoint_left.mpr
         intro x hx hVx
         obtain ⟨q, hq⟩ := Set.mem_iUnion.mp hVx
-        exact q.property (arc_unique m (by omega) q.val (p t) (f x) hq hx)
+        exact q.property (window_arc_unique m (by omega) q.val (p t) (f x) hq hx)
       have hcover : connectedComponentIn (regularDomain m S) z ⊆ U ∪ V := by
         intro x hx
         have hr := (regular_domain_iff m S x).mp
           (connectedComponentIn_subset (regularDomain m S) z hx) t
-        obtain ⟨q, hq⟩ := arc_cover m (by omega) (f x) hr
+        obtain ⟨q, hq⟩ := window_arc_cover m (by omega) (f x) hr
         by_cases he : q = p t
         · apply Or.inl
           change f x ∈ A (p t)
@@ -456,11 +335,6 @@ theorem sparse_window_fiber_geometry (m : ℕ) (hm : 2 ≤ m) (S : Finset ℕ)
       exact IsPreconnected.subset_left_of_subset_union hU hV hdisjoint hcover
         ⟨z, mem_connectedComponentIn (hsubset p hz), hz t⟩
         isPreconnected_connectedComponentIn hw
-  have hE : Function.Injective E := by
-    intro i j hij
-    have he : goldenPhase (-(i : ℤ)) = goldenPhase (-(j : ℤ)) := by
-      simpa only [E, goldenPhase, Int.cast_neg, Int.cast_natCast] using hij
-    exact_mod_cast neg_injective (goldenPhase_injective he)
   have hcuts : (cuts m S).Nonempty := by
     refine ⟨t0 + 1, Finset.mem_biUnion.mpr ⟨t0, ht0, Finset.mem_Icc.mpr ⟨le_rfl, ?_⟩⟩⟩
     have hg : 0 < G m := by
@@ -471,7 +345,7 @@ theorem sparse_window_fiber_geometry (m : ℕ) (hm : 2 ≤ m) (S : Finset ℕ)
       (cuts m S).card := by
     have h := circle_complement_components_card ((cuts m S).image E) (hcuts.image E)
     rw [Finset.coe_image] at h
-    exact h.trans (Finset.card_image_of_injective _ hE)
+    exact h.trans (Finset.card_image_of_injective _ cut_injective)
   have hnatural (n : ℕ) (p : (t : S) → X m) :
       sigma m S n = p ↔ goldenPhase (n : ℤ) ∈ fiber m S p := by
     have hcoord (t : S) : q m (n + t.val) = p t ↔
@@ -490,8 +364,8 @@ theorem sparse_window_fiber_geometry (m : ℕ) (hm : 2 ≤ m) (S : Finset ℕ)
     · rintro ⟨n, rfl⟩
       exact ⟨goldenPhase (n : ℤ), (hnatural n _).mp rfl⟩
     · intro hp
-      obtain ⟨n, hn⟩ := (phase_tail_dense 0).exists_mem_open (isOpen_fiber m S p) hp
-      exact ⟨n + 0 + 1, (hnatural _ p).mpr hn⟩
+      obtain ⟨n, _, hn⟩ := natural_phase_visit (fiber m S p) (isOpen_fiber m S p) hp 0
+      exact ⟨n, (hnatural n p).mpr (by simpa only [goldenPhase, Int.cast_natCast] using hn)⟩
   refine ⟨heq, ?_, ?_, ?_, ?_, hcomponents, ?_⟩
   · intro p q z w hz hw
     constructor
@@ -500,23 +374,23 @@ theorem sparse_window_fiber_geometry (m : ℕ) (hm : 2 ≤ m) (S : Finset ℕ)
         rw [heq p z hz, hsame]
         exact mem_connectedComponentIn (hsubset q hw)
       funext t
-      exact arc_unique m (by omega) (p t) (q t)
+      exact window_arc_unique m (by omega) (p t) (q t)
         (w + goldenPhase (t.val : ℤ)) (hw' t) (hw t)
     · intro hpq
       subst q
       exact (heq p z hz).symm.trans (heq p w hw)
   · intro z hz
     have hc (t : S) : ∃ p : X m, z + goldenPhase (t.val : ℤ) ∈ A p :=
-      arc_cover m (by omega) _ ((regular_domain_iff m S z).mp hz t)
+      window_arc_cover m (by omega) _ ((regular_domain_iff m S z).mp hz t)
     refine ⟨fun t => Classical.choose (hc t), fun t => Classical.choose_spec (hc t), ?_⟩
     intro q hq
     funext t
-    exact arc_unique m (by omega) (q t) (Classical.choose (hc t))
+    exact window_arc_unique m (by omega) (q t) (Classical.choose (hc t))
       (z + goldenPhase (t.val : ℤ)) (hq t) (Classical.choose_spec (hc t))
-  · rw [Set.ncard_image_of_injective _ hE, Set.ncard_coe_finset]
+  · rw [Set.ncard_image_of_injective _ cut_injective, Set.ncard_coe_finset]
   · intro p hp bound
-    obtain ⟨n, hn⟩ := (phase_tail_dense bound).exists_mem_open (isOpen_fiber m S p) hp
-    exact ⟨n + bound + 1, by omega, hn⟩
+    simpa only [goldenPhase, Int.cast_natCast] using
+      natural_phase_visit (fiber m S p) (isOpen_fiber m S p) hp bound
   · let U (p : Set.range (sigma m S)) : Set (regularDomain m S) :=
       Subtype.val ⁻¹' fiber m S p.val
     have hUopen (p : Set.range (sigma m S)) : IsOpen (U p) :=
@@ -528,13 +402,13 @@ theorem sparse_window_fiber_geometry (m : ℕ) (hm : 2 ≤ m) (S : Finset ℕ)
       apply hpq
       apply Subtype.ext
       funext t
-      exact arc_unique m (by omega) (p.val t) (q.val t)
+      exact window_arc_unique m (by omega) (p.val t) (q.val t)
         (z.val + goldenPhase (t.val : ℤ)) (hp t) (hq t)
     have hUcover : ⋃ p : Set.range (sigma m S), U p = univ := by
       apply Set.eq_univ_of_forall
       intro z
       have hc (t : S) : ∃ p : X m, z.val + goldenPhase (t.val : ℤ) ∈ A p :=
-        arc_cover m (by omega) _ ((regular_domain_iff m S z.val).mp z.property t)
+        window_arc_cover m (by omega) _ ((regular_domain_iff m S z.val).mp z.property t)
       let p : (t : S) → X m := fun t => Classical.choose (hc t)
       have hp : z.val ∈ fiber m S p := fun t => Classical.choose_spec (hc t)
       exact Set.mem_iUnion.mpr ⟨⟨p, (hactual p).mpr ⟨z.val, hp⟩⟩, hp⟩

@@ -17,6 +17,14 @@ internal sealed class SparseWindowFiberGeometryDocument : IScribeDocumentDefinit
                     + "translated back by their retained observation times. The regular domain "
                     + "removes precisely the translated window cuts."))), DescribeRole.Definition),
             Describe.Lean(
+                DescribeId.Create("sparse-window-fiber-geometry-regular-domain"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/SparseWindowFiberGeometry.regularDomain"),
+                H("The regular circle domain"), StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For each width and finite set of observation times, "
+                    + "the regular domain is the circle with the images of all translated "
+                    + "cut indices removed."))), DescribeRole.Definition),
+            Describe.Lean(
                 DescribeId.Create("sparse-window-fiber-geometry-components"),
                 DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/SparseWindowFiberGeometry.sparse_window_fiber_geometry"),
                 H("Fibres and connected components"), StatementSource.WithoutFormula(),
