@@ -961,9 +961,31 @@ test is checked against actual common integers. A scoped Lean application
 verifies AP1's distinct odd nonunit inventory, derives activity from
 CRT, proves AP2 for every natural h>=1, and verifies12 escapes, using
 only the standard three axioms. It is an application of existing CRT
-results and adds no frozen wrapper. AL1--AL3's arbitrary-family measure
-construction and infinite sums, and AP3's product-Haar interpretation,
-remain ordinary mathematics; the finite consumer does not certify them
-in Lean. The remaining general problem is to construct one source that
-retains low-row activation correlations with a sufficient complete-query
-bound when no single-phase common prefix exists.
+results and adds no frozen wrapper.
+
+A scoped Lean application also verifies the complete finite selected-leaf
+counterpart of AL1--AL3. Its actual carrier is a ternary word of length
+T>=2 times the seven-coordinate Q carrier, with arbitrary finite Q
+heights. Originals are actual prefix pairs with injective nonzero full
+depth labels. The selected leaf avoids the actual pure3/9 originals;
+among all active nonunit-cofactor originals at j=0,1,2,3, equal complete
+Q depth vectors must have equal complete Q phases. From these inputs the
+application constructs one law null on every original and bounds every
+complete finite query layout by10209527/448946<28. Queries include the
+unit and absent original labels, and are chosen after the law. No source,
+cap, deletion or query-budget premise is assumed.
+
+The construction merges the actual active projections before applying
+the finite Q7 supplier. It completes missing high pure ternary depths
+with auxiliary prefixes, so its ternary law is supported in the actual
+pure survivor but need not be uniform on that whole survivor. Its
+same-product deletion bound is2804581/5049311, leaving reserve at least
+2244730/5049311 before the final conditioning. The complete query bound
+retains the unit exactly. Existing probability, prefix, query-completion
+and conditioning results supply the application; its axiom closure is
+standard and no frozen specialization is added. This check uses explicit
+product-prefix coordinates; it does not verify integer CRT transport,
+padding T<2, infinite-law compatibility, the complete infinite sums or
+AP3's product-Haar interpretation. The remaining general problem is to
+construct one source that retains low-row activation correlations with a
+sufficient complete-query bound when no single-phase common prefix exists.
