@@ -22,12 +22,12 @@ public sealed class DagEmitterTests
             var exit = DagEmitter.Emit(root, dag, Provenance, check: false, output, TextWriter.Null);
 
             Assert.Equal(0, exit);
-            var written = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, DagEmitter.RelativePath));
+            var written = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, GeneratedArtifactInventory.Dag.Path));
             Assert.True(written.AsSpan().SequenceEqual(CanonicalDagWriter.Write(dag).AsSpan()));
-            var truthGraph = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, DagEmitter.TruthGraphRelativePath));
+            var truthGraph = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(root, GeneratedArtifactInventory.TruthGraph.Path));
             Assert.True(truthGraph.AsSpan().SequenceEqual(
                 TruthGraphJsonWriter.Write(TruthGraphModelBuilder.Create(dag, Provenance)).AsSpan()));
-            Assert.Contains(DagEmitter.RelativePath, output.ToString(), StringComparison.Ordinal);
+            Assert.Contains(GeneratedArtifactInventory.Dag.Path, output.ToString(), StringComparison.Ordinal);
         });
     }
 
@@ -41,7 +41,7 @@ public sealed class DagEmitterTests
             var exit = DagEmitter.Emit(root, Build(), Provenance, check: true, TextWriter.Null, error);
 
             Assert.Equal(1, exit);
-            Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, DagEmitter.RelativePath)));
+            Assert.False(TemporaryFileSystem.File.Exists(Path.Combine(root, GeneratedArtifactInventory.Dag.Path)));
             Assert.Contains("out of date", error.ToString(), StringComparison.Ordinal);
         });
     }
@@ -65,7 +65,7 @@ public sealed class DagEmitterTests
     {
         WithRoot(root =>
         {
-            var path = Path.Combine(root, DagEmitter.RelativePath);
+            var path = Path.Combine(root, GeneratedArtifactInventory.Dag.Path);
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path)!);
             var stale = Encoding.UTF8.GetBytes("# Truth DAG\n\nstale\n");
             TemporaryFileSystem.File.WriteAllBytes(path, stale);
@@ -82,7 +82,7 @@ public sealed class DagEmitterTests
     {
         WithRoot(root =>
         {
-            var path = Path.Combine(root, DagEmitter.RelativePath);
+            var path = Path.Combine(root, GeneratedArtifactInventory.Dag.Path);
             TemporaryFileSystem.Directory.CreateDirectory(Path.GetDirectoryName(path)!);
             TemporaryFileSystem.File.WriteAllBytes(path, Encoding.UTF8.GetBytes("stale\n"));
             var dag = Build();
@@ -114,10 +114,10 @@ public sealed class DagEmitterTests
             Assert.Equal(0, DagEmitter.Emit(
                 secondRoot, dag, Provenance, check: false, TextWriter.Null, TextWriter.Null, secondProjection));
 
-            Assert.True(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(firstRoot, DagEmitter.RelativePath)).AsSpan()
-                .SequenceEqual(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(secondRoot, DagEmitter.RelativePath))));
-            Assert.False(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(firstRoot, DagEmitter.TruthGraphRelativePath)).AsSpan()
-                .SequenceEqual(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(secondRoot, DagEmitter.TruthGraphRelativePath))));
+            Assert.True(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(firstRoot, GeneratedArtifactInventory.Dag.Path)).AsSpan()
+                .SequenceEqual(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(secondRoot, GeneratedArtifactInventory.Dag.Path))));
+            Assert.False(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(firstRoot, GeneratedArtifactInventory.TruthGraph.Path)).AsSpan()
+                .SequenceEqual(TemporaryFileSystem.File.ReadAllBytes(Path.Combine(secondRoot, GeneratedArtifactInventory.TruthGraph.Path))));
         }));
     }
 
@@ -129,12 +129,12 @@ public sealed class DagEmitterTests
         // 这两条是清单里与文档集无关的固定工件,故空文档列表足以判它们;
         var inventory = GeneratedArtifactInventory.Create(Array.Empty<string>());
         var artifact = Assert.Single(
-            inventory.Where(static item => item.Path == DagEmitter.RelativePath));
+            inventory.Where(static item => item.Path == GeneratedArtifactInventory.Dag.Path));
 
         Assert.Equal(nameof(DagEmitter), artifact.Producer);
 
         var truthArtifact = Assert.Single(
-            inventory.Where(static item => item.Path == DagEmitter.TruthGraphRelativePath));
+            inventory.Where(static item => item.Path == GeneratedArtifactInventory.TruthGraph.Path));
         Assert.Equal(nameof(DagEmitter), truthArtifact.Producer);
     }
 

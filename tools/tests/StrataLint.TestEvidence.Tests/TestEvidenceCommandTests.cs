@@ -120,6 +120,122 @@ public sealed class TestEvidenceCommandTests
         Assert.DoesNotContain("EXPECTED_DIAGNOSTIC", output.ToString(), StringComparison.Ordinal);
     }
 
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void SingleTargetUsesRegisteredIdentityWithUnrelatedProjectsAndSourcesUnavailable(bool filtered)
+    {
+        using var fixture = new TemporaryDirectory();
+        const string target = "checks/Selected.csproj";
+        WriteRegistration(fixture.Path, EngineeringRegistrationFixture.Manifest(
+            new(target, "Registered.Checks", "cross-cutting-test", ["missing/Selected.cs"],
+                References: ["missing/Dependency.csproj"]),
+            new("missing/Unrelated.csproj", "Unrelated", "test-support", ["missing/Unrelated.cs"])));
+        using var output = new StringWriter();
+        using var error = new StringWriter();
+        Assert.Equal(0, EvidenceProgram.Run(["list-test-owner-assemblies", "--repository", fixture.Path,
+            "--target", Path.Combine(fixture.Path, target), "--filtered", filtered ? "true" : "false"],
+            fixture.Path, output, error));
+        Assert.Equal("Registered.Checks" + Environment.NewLine, output.ToString());
+        Assert.Equal("", error.ToString());
+    }
+
+    [Theory]
+    [InlineData("unknown")]
+    [InlineData("non-test")]
+    [InlineData("outside")]
+    [InlineData("duplicate-path")]
+    [InlineData("duplicate-assembly")]
+    [InlineData("missing-identity")]
+    [InlineData("duplicate-field")]
+    public void TargetIdentitySelectionRejectsInvalidConsumedRegistration(string defect)
+    {
+        using var fixture = new TemporaryDirectory();
+        const string target = "checks/Selected.csproj";
+        var entry = new EngineeringProjectFixture(target, "Registered.Checks", "cross-cutting-test", []);
+        if (defect == "non-test") entry = entry with { Role = "test-support" };
+        var entries = defect switch
+        {
+            "duplicate-path" => new[] { entry, entry },
+            "duplicate-assembly" => new[] { entry, entry with { Path = "checks/Other.csproj", TestPartition = "other", Assembly = "registered.checks" } },
+            _ => new[] { entry },
+        };
+        var manifest = EngineeringRegistrationFixture.Manifest(entries);
+        if (defect == "missing-identity")
+        {
+            var json = System.Text.Json.Nodes.JsonNode.Parse(manifest)!;
+            json["projects"]![0]!.AsObject().Remove("assembly");
+            manifest = json.ToJsonString();
+        }
+        if (defect == "duplicate-field") manifest = manifest.Replace("\"assembly\":", "\"assembly\":\"Other\",\"assembly\":", StringComparison.Ordinal);
+        WriteRegistration(fixture.Path, manifest);
+        var selected = defect == "unknown" ? "checks/Unknown.csproj" : target;
+        var fullTarget = defect == "outside" ? Path.Combine(fixture.Path, "../Outside.csproj") : Path.Combine(fixture.Path, selected);
+        using var output = new StringWriter();
+        using var error = new StringWriter();
+        Assert.Equal(2, EvidenceProgram.Run(["list-test-owner-assemblies", "--repository", fixture.Path,
+            "--target", fullTarget, "--filtered", "false"], fixture.Path, output, error));
+        Assert.StartsWith("ENGINEERING_TEST_PLAN_FAILED ", error.ToString(), StringComparison.Ordinal);
+        Assert.Equal("", output.ToString());
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void SolutionFloorUsesOwnedTestRegistrationsAndPreservesFilteredSemantics(bool filtered)
+    {
+        using var fixture = new TemporaryDirectory();
+        const string owner = "program/Owner.csproj";
+        WriteRegistration(fixture.Path, EngineeringRegistrationFixture.Manifest(
+            new(owner, "Owner", "production", [], OwnedTestAssembly: "Owner.Checks"),
+            new("checks/Owned.csproj", "Owner.Checks", "owned-test", [],
+                Owner: new(owner, "Owner"), References: [owner], TestPartition: "owned"),
+            new("checks/Cross.csproj", "Cross.Checks", "cross-cutting-test", [], TestPartition: "cross")));
+        using var output = new StringWriter();
+        using var error = new StringWriter();
+        Assert.Equal(0, EvidenceProgram.Run(["list-test-owner-assemblies", "--repository", fixture.Path,
+            "--target", Path.Combine(fixture.Path, "tools/StrataLint.sln"), "--filtered", filtered ? "true" : "false"],
+            fixture.Path, output, error));
+        Assert.Equal(filtered ? "" : "Owner.Checks" + Environment.NewLine, output.ToString());
+        Assert.Equal("", error.ToString());
+    }
+
+    [Fact]
+    public void RequiredIdentityCannotBeReplacedByTrxSelfReporting()
+    {
+        using var fixture = new TemporaryDirectory();
+        const string target = "checks/Selected.csproj";
+        WriteRegistration(fixture.Path, EngineeringRegistrationFixture.Manifest(
+            new EngineeringProjectFixture(target, "Registered.Checks", "cross-cutting-test", [])));
+        using var selected = new StringWriter();
+        using var error = new StringWriter();
+        Assert.Equal(0, EvidenceProgram.Run(["list-test-owner-assemblies", "--repository", fixture.Path,
+            "--target", Path.Combine(fixture.Path, target), "--filtered", "false"], fixture.Path, selected, error));
+        PassedTrx().Save(Path.Combine(fixture.Path, "run.trx"));
+        using var verified = new StringWriter();
+        Assert.Equal(2, EvidenceProgram.Run(["verify-trx", "--results-directory", fixture.Path,
+            "--required-assembly", selected.ToString().Trim()], fixture.Path, verified, error));
+        Assert.Contains("required assembly Registered.Checks", error.ToString(), StringComparison.Ordinal);
+        Assert.Equal("", verified.ToString());
+    }
+
+    [Theory]
+    [InlineData(1, "MissingCapability.cs(13,9): error CS7036: missing metaClear", true)]
+    [InlineData(0, "MissingCapability.cs(13,9): error CS7036: missing metaClear", false)]
+    [InlineData(1, "Other.cs(13,9): error CS7036: missing metaClear", false)]
+    [InlineData(1, "MissingCapability.cs(13,9): error CS7036: missing other", false)]
+    [InlineData(1, "MissingCapability.cs(13,9): error CS7036: missing metaClear\nproject: error MSB1009: missing reference", false)]
+    [InlineData(1, "MissingCapability.cs(13,9): error CS7036: missing metaClear\nOther.cs(1,1): error CS7036: missing other", false)]
+    public void CapabilityProofRequiresOnlyItsIntendedDiagnostic(int exit, string output, bool accepted) =>
+        Assert.Equal(accepted, CompilationProof.ValidateCapability(exit, output));
+
+    private static void WriteRegistration(string root, string manifest)
+    {
+        var path = Path.Combine(root, EngineeringRegistrationFixture.Path);
+        Directory.CreateDirectory(Path.GetDirectoryName(path)!);
+        File.WriteAllText(path, manifest);
+    }
+
     private static XDocument PassedTrx() => XDocument.Parse("""
         <TestRun><Results><UnitTestResult testId="one" testName="Fixture.Runs" outcome="Passed" /></Results>
         <TestDefinitions><UnitTest id="one" storage="Fixture.dll"><TestMethod className="Fixture" name="Runs" /></UnitTest></TestDefinitions>

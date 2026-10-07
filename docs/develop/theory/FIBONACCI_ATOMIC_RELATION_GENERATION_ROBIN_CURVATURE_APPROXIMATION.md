@@ -4953,3 +4953,38 @@ $$
 对 $D$ 与 $x$ 可比的临界问题，若同一个固定 $A>0$、有限 $p>1$ 的算术界用于 $x\to\infty$，FD.11 给 $I(D+1)=\Theta_p((\log x)^{1-p})$。因此 FD.14 中这一绝对上界项乘以目标 $\sqrt{x}\log x$ 后为 $\Theta_{A,p}(\sqrt{x}(\log x)^{2-p})$，这条估计无法推出临界误差消失；这不是原有符号尾不消失的断言。固定 $x$ 的尾收敛、权的正导数与临界有符号补偿是不同的数学结论。原 prime panel 与其补集的完整有符号补偿以及 RH 的最终符号仍待证明。
 
 ## 追加锚（本行以下为增补区）
+
+---
+
+## 472. 外部 RH 库接入口：有限 Euler 剥离可逆，统一储备另需证明
+
+OpenAI/math 固定版本 `adc7f1241b42e322a6451854ab7e4b4c146bf78a` 的 `OAI/NumberTheory/DirichletL/EulerFactors.lean` 给出有限带权 Euler 因子的非零和零点运输。普通 ζ 的同类结论已有本库 `PrimeAddress.finite_prime_modification_preserves_global_zero_set` 与 `EulerWindows.finite_euler_window_ne_zero`，应直接复用。本节仅使用这些有限因子性质，不以 OpenAI 的完整 $7/8$ 主链作为已验收供应。
+
+**定义 472.1（有限带权修改）。** 对有限素数集 $S$、复系数 $|a_p|\le1$，令 $E_S(s)=\prod_{p\in S}(1-a_pp^{-s})$，其中 $p^{-s}=\exp(-s\log p)$。
+
+**定理 472.2（有限级定量可逆性）。** 若 $\operatorname{Re}s\ge\sigma>0$，则
+
+$$
+|E_S(s)|\ge\prod_{p\in S}(1-p^{-\sigma})>0,
+\qquad |E_S(s)^{-1}|\le\prod_{p\in S}(1-p^{-\sigma})^{-1}.
+$$
+
+*证明。* 对每个 $p$，有 $|a_pp^{-s}|=|a_p|p^{-\operatorname{Re}s}\le p^{-\sigma}<1$。反三角不等式给 $|1-a_pp^{-s}|\ge1-p^{-\sigma}>0$，再取有限乘积和倒数。空集给两端恰为 $1$。因此同一实际身份 $L_S=E_SL$ 双向保持这个半平面内的零点。
+
+**定理 472.3（有限可逆性不支付增长素数集的统一逆界）。** 固定 $0<\sigma\le1$，令 $S_P=\{p\le P:p\text{ 为素数}\}$。在允许的实际输入 $a_p=1,s=\sigma$ 上，$E_{S_P}(\sigma)\to0$，故其倒数趋于正无穷。
+
+*证明。* 每个因子为正，由 $\log(1-u)\le-u$，
+
+$$
+\log E_{S_P}(\sigma)\le-\sum_{p\le P}p^{-\sigma}\le-\sum_{p\le P}p^{-1}\longrightarrow-\infty.
+$$
+
+最后一步复用素数调和级数发散；Mathlib 原供应为 `not_summable_one_div_on_primes`。对一般复系数，这个比较只说明保证下界趋零，不能推出实际乘积趋零；上述实际输入专门证明了全体允许输入上的统一正下界不存在。
+
+固定 $\sigma>1$ 时，$\sum_p p^{-\sigma}<\infty$，且 $0\le-\log(1-p^{-\sigma})\le p^{-\sigma}/(1-2^{-\sigma})$，所以保证下界的无限乘积有严格正极限。临界开带的有限零点运输与绝对收敛半平面的统一逆界有不同的解析门槛。
+
+这给“等价形态像群”的直觉一个可检验版本：有限非零乘子的乘除可组合、可逆，保存零点；相应范数常数随素数集增长，不能由可逆性自动控制。§470 的商块范数增长与这里的 Euler 逆界缺口指向同一问题：把有限层之间的精确关系提升到无界层，需要支付实际输入上的抵消或统一储备。
+
+Gaussian 的完整 Möbius 调和衰减是 §471 固定 $x$ 变差与端点的候选算术供应；它仍须经过准确的全体／奇数传输和本库核验。固定 $x$ 的收敛也不支付共同临界尺度上的有符号补偿。以上关系未建立 $5040$、Fibonacci 与拓扑例外的数值同构，亦未证明 Robin 最终符号或 RH。
+
+## 追加锚（本行以下为增补区）

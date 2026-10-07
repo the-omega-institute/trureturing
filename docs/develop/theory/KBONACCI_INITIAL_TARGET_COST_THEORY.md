@@ -4879,3 +4879,107 @@ Arbitrary live root-zero mixed-tail siblings, first-zero/common-tail descendants
 
 ## 追加锚（本行以下为增补区）
 
+## 69. Exact binary root-zero fees from the missed physical arc
+
+**定义 69.1（The acquired root-zero archive and its INITIAL rows）。** Retain the matched original reader (1.1)–(1.2), complete jointly attainable histories (1.3), immutable INITIAL record target $f:Q\to Y$, free initial scalar or independent absorbing bottom, endpoint-only observations, actual complete-block fee, and both original alphabets. Assume
+
+$$
+3\le m<k<2m,\qquad T=k+1,\qquad \gcd(m,T)=1,\qquad h=k-m.
+\tag{69.1}
+$$
+
+Thus $P=\mathbb Z/T\mathbb Z$ and $1\le h\le m-2$. Fix one remembered free INITIAL value $v$, actually issue root $1^m$, and condition on successful difference zero. Put $J=P\setminus\{0,m\}$. The INITIAL candidates and their current records are exactly
+
+$$
+(v,-j,s),\quad j\in J,\ 0\le s<h;
+\qquad(v,-j+m,m+s).
+\tag{69.2}
+$$
+
+They share their own complete free-value/root archive. Require $f(v,-j,s)=\lambda(j)$ on these INITIAL rows, with $|\lambda[J]|\le2$, and impose no condition on $f$ elsewhere. This constancy concerns original tails; the current tails in (69.2) need not be common. Let $D_{\rm ad}$ and $D_{\rm child\text{-}pre}$ be the minimum additional worst-branch fees from this archive, the latter requiring one literal suffix for this archive alone, with stopping from its own endpoints. The emitted root costs one separately. Every wait, padding or rejecting complete block is paid; no reset, copy, hidden initial clock, intermediate reading or borrowed sibling observation is allowed. Effective selection requires a finite label partition or decidable label equality; the statements for arbitrary $Y$ are semantic.
+
+**定理 69.2（Every binary table on the entire actual root-zero support）。** With the ordered physical paths $W_t=[tm,(t+1)m]\pmod T$ of Interface 1.4, define
+
+$$
+a=m-h-1,\qquad H=\{m-h,m-h+1,\ldots,m-1\}=J\setminus W_1.
+\tag{69.3}
+$$
+
+For every parameter and binary table in Definition 69.1, under either original alphabet,
+
+$$
+\boxed{D_{\rm ad}=D_{\rm child\text{-}pre}=
+\begin{cases}
+0,&\lambda\text{ constant on }J,\\
+1,&\lambda\text{ nonconstant on }J\text{ and constant on }H,\\
+2,&\lambda\text{ nonconstant on }H.
+\end{cases}}
+\tag{69.4}
+$$
+
+Every correct continuation of a nonconstant table begins its first additional word with zero. The sole one-block obstruction in this binary class is unequal labels on the actual missed arc $H$. The two excluded phases $0,m$ supply physical parity compensation in successive windows.
+
+**证明（joint sources, forced first bit and lower bounds）。** The source witness is the credited (1.3). Explicitly, choose $\ell\equiv0\pmod m$, $\ell\equiv-j\pmod T$, $\ell\ge s+2$, put $d=\bigoplus_{i=\ell-s}^{\ell-1}c_i$, and take $(v\oplus d)0^{\ell-s-1}1^s$. Coprimality supplies such lengths. This one legal complete-block history simultaneously has the desired value, phase and tail; its separated first bit contributes $v\oplus d$, and its terminal run contributes $d$. All its blocks belong to both alphabets since $m<k$. The actual root succeeds exactly for $s<h$ and has charge support $\{0,m\}$ by (1.4). Appending it gives precisely (69.2), with every original tail present at every $j\in J$ and the same root endpoint $v$. Unobserved history lengths provide no extra archive information.
+
+If $\lambda$ is nonconstant, choose two phases with unequal labels and their actual INITIAL tails $s=h-1$. Their current tails are $m+h-1=k-1$. A next first bit one sends both immediately to absorbing bottom, and the completed endpoint and every later archive are identical. Their immutable labels can never be recovered. This excludes every such first word in every correct continuation, including attempted delays or later repairs. Hence the first bit must be zero. It clears all current tails; since the remaining run lengths are at most $m-1<k$, the whole block succeeds for every candidate and its endpoint differences are (1.4).
+
+Now $W_1$ runs from $m$ through $T-1,0$ to $a$, so its absent phases are exactly $H$. Every phase of $H$ therefore has next difference zero under every possible successful first word. A one-block continuation cannot return unequal labels there from the same endpoint archive. This proves the lower bound two when $\lambda|_H$ is nonconstant. A nonconstant table cannot stop at its acquired archive, giving the lower bound one in the remaining nonconstant case. A constant table stops with its unique INITIAL label at additional fee zero.
+
+**证明（complete literal attainments）。** For a nonconstant table write its two labels as $L_0,L_1$ and put $\varepsilon(j)=\mathbf1_{\{\lambda(j)=L_1\}}$. If $\lambda|_H$ is constant, choose $L_0$ to be that common label. Otherwise either orientation is allowed. Set
+
+$$
+A_1=\{j\in J\setminus H:\varepsilon(j)=1\},\qquad
+E_1=A_1\cup\begin{cases}\{0\},&|A_1|\text{ odd},\\\varnothing,&|A_1|\text{ even},\end{cases}
+\qquad B_1=\mathcal B_1(E_1).
+\tag{69.5}
+$$
+
+Every vertex of $E_1$ lies on the full physical $W_1$; its cardinality is even. The leading vertex $m$ has charge zero, while the excluded phase zero, strictly later on this path, compensates parity. Formula (1.5) gives the unique complete $m$-bit word, including every padding bit, and its first bit is zero. Thus it is safe even from current tail $k-1$. On the acquired archive its difference one occurs exactly on $A_1$, all labelled $L_1$, and those sources stop. If $H$ is homogeneous, its label is $L_0$, and every remaining source also has label $L_0$; difference zero stops with $L_0$. Both labels occur on actual histories, so the additional worst fee is exactly one.
+
+If $H$ is nonconstant, the zero-difference child of $B_1$ still contains both labels on $H$. At absolute issued index two set
+
+$$
+A_2=\{j\in H:\varepsilon(j)=1\},\qquad
+E_2=A_2\cup\begin{cases}\{m\},&|A_2|\text{ odd},\\\varnothing,&|A_2|\text{ even},\end{cases}
+\qquad B_2=\mathcal B_2(E_2).
+\tag{69.6}
+$$
+
+The ordered $W_2$ begins at $2m\equiv a\pmod T$. Its initial segment contains $H=\{a+1,\ldots,m-1\}$ and then $m$, all before any wrap. Here $a\ge1$ and $m-a=h+1\le m-1$. Hence all of $E_2$ lies on this path, has even cardinality, and misses its leading vertex $a$. Its inverse is another complete word beginning zero. The excluded phase $m$ now compensates parity; it introduces no candidate into the continuing archive. Every surviving current tail is cleared by this first zero, and every subsequent internal run is shorter than $k$. This checks the actual $B_1\mid B_2$ seam, without assuming a favourable terminal tail for $B_1$.
+
+On the continuing zero child the second difference is one exactly at $A_2$, returning $L_1$. Every other remaining phase has label $L_0$: outside $H$ all $L_1$ phases already stopped after $B_1$, and inside $H$ precisely the $L_0$ phases have second difference zero. Return $L_0$ there. This is one fixed literal suffix $B_1\mid B_2$ with its own endpoint stopping, rather than two independently selected branch words. Both labels in $H$ require and emit both complete blocks. The scalar baseline for each difference is the same source's preceding observed endpoint, so the construction works for either remembered $v$. All words belong to both alphabets and every emitted zero is paid. These attainments and the all-action lower bounds prove (69.4). ∎
+
+**定理 69.3（A fully specified forced-root INITIAL consumer with one GLOBAL stream）。** For any $\lambda:J\to Y$ with $|\lambda[J]|\le2$ under (69.1), choose an extended label set $Y^*\supseteq Y$ containing distinct fresh $R,C\notin Y$ and any independent $L_\bot$. On both free-value fibres define the entire immutable INITIAL target $f^\lambda:Q\to Y^*$ by
+
+$$
+f^\lambda(v,-j,s)=\begin{cases}
+R,&h\le s<k,\\
+C,&0\le s<h,\ j\in\{0,m\},\\
+\lambda(j),&0\le s<h,\ j\in J,
+\end{cases}
+\qquad f^\lambda(\bot)=L_\bot.
+\tag{69.7}
+$$
+
+If $d(\lambda)$ denotes the right side of (69.4), its exact whole-source fees are
+
+$$
+\boxed{C_{\rm ad}(f^\lambda)=C_{\rm pre}(f^\lambda)=1+d(\lambda).}
+\tag{69.8}
+$$
+
+Thus the actual fees are one, two or three in precisely the three cases of (69.4), with the third case possible only when $h\ge2$.
+
+**证明（root forcing and the shared lawful stream）。** Fix either free initial value and a phase $j\in J$. Its actual INITIAL tails zero and $h$ have unequal labels $\lambda(j)$ and fresh $R$, so free stopping is impossible. For any root containing zero, let $b\le m-1$ be its leading run. Both tails survive to that first zero because $h+b\le k-1<k$. They have the same scalar and phase there; the zero merges their whole records. The remaining bits are internally safe since $m<k$, so they acquire identical root endpoint archives. No future action or stopping decision can return their unequal INITIAL labels. This excludes every zero-containing root, with any later depth, separately on both free-value fibres. Hence every correct full controller must issue $1^m$.
+
+That forced root rejects exactly $s\ge h$, all labelled $R$, and stops that branch at fee one. Its successful positive child has $j\in\{0,m\}$ and label $C$, stopping there too. Its successful zero child is exactly Definition 69.1 with the supplied $\lambda$ on both values. Initial bottom returns $L_\bot$ freely. Every full controller therefore pays the root and obeys the local all-action lower bound $d(\lambda)$. For the upper bound use the single GLOBAL stream $1^m$, followed by no suffix when $d=0$, by $B_1$ when $d=1$, or by $B_1\mid B_2$ when $d=2$. These literal words are identical for both free values; each source decodes its own differences and stops as proved above. The nonempty live zero archives contain actual histories paying all required words. Their root seams satisfy $s+m<k$, and the suffix seams were checked in Theorem 69.2. Thus the actual worst emitted fee is $1+d$, proving (69.8) without an arbitrary-sibling maximum assertion.
+
+All three values occur already at $m=4,k=6,T=7,h=2$, where $J=\{1,2,3,5,6\}$ and $H=\{2,3\}$. With distinct $A,B$, a constant $A$ table gives stream $1111$ and fee one. Giving only phase one label $B$ and all others $A$ gives $1111\mid0001$ and fee two. Giving only phase two label $B$ gives $1111\mid0000\mid0110$ and fee three. The last stream pays its uninformative clearing block; the final charge $\{2,4\}$ selects phase two and compensates at the already excluded phase four. These are complete targets (69.7) with their proved minima. An all-one complete-block source history of length at least $k$ separately realizes initial bottom. Every successful record in these consumers has the joint witness used in Theorem 69.2, including the high-tail records used for forcing. ∎
+
+**数学引文 69.4（Reuse, quantified boundary and remaining objective）。** [S1, Definitions 1.2–2.1, Convention 1.3, Lemmas 4.2–4.3 and Note 5.3] supplies the original experiment, joint witnesses, INITIAL first-zero loss and presentation boundary; [S2, Theorem 14.1] supplies the matched coefficient cycle; [S10, Interface 2.1] and [S15, Sections 1–4] supply actual same-word path charges, inversion, strict seams and the separation of child and GLOBAL obligations. These interfaces are credited reuse. Propositions 4.2–4.4 and Theorems 5.1–5.2, with their $r=h+1$, $a=0$, $g=1$ and equal endpoint labels, already give root forcing, the missed-arc one-block criterion and consumer fee two when $\lambda$ is nonconstant on $J$ and constant on $H$. Corollary 5.3 gives consumer fee one when $\lambda$ is constant on $J$. Those clauses are credited specializations, not added content. [S13, Definitions 8.1/8.3 and Theorem 8.4] characterizes one-block completion after an actually recorded zero on a common-tail archive; that arrival hypothesis is not assumed for (69.2). At $h=1$ (69.2) has one current tail, and its one-block clause is already included in the Chapter 5 specialization. Chapters 60–64 require $k\ge2m$; Theorem 65.2 prices common-tail positive children, and Theorem 68.2 prices the unzeroed positive pair. Those three continuation laws do not supply this zero sibling's two-block attainment at $h\ge2$. The added cost connection is the sharp local fee two when $\lambda|_H$ is nonconstant, attained by the simultaneously safe two-window suffix; (69.7)–(69.8) consumes it as exact full fee three on one specified original source, rather than claiming a second independent novelty.
+
+Van den Bos and Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [arXiv:1907.11034v2, Definitions 8–11 and Figure 3](https://arxiv.org/html/1907.11034v2), supplies completed test observations, compatible experiments and irreversible first-action mergers. These mature semantics do not supply the reader's physical compensation or fees. The single-source and parity-query comparisons of Mathematical Citation 7.2 retain their stated boundaries. The conclusions are ordinary deductions on the named suppliers, without an exhaustive literature-absence, priority or Lean/kernel claim.
+
+The conditional law imposes no labels outside the surviving INITIAL rows of (69.2); it does not price arbitrary tail-dependent root-zero tables, tables with more than two labels, arbitrary acquired supports, or shared streams for arbitrary live siblings and different value-fibre tables. Only the extension (69.7) has the proved full fee (69.8). Definition 1.3 and Open Problem 9.1 retain the original objective for every arbitrary attainable immutable INITIAL target and every original $k\ge2,m\ge1$, separately for adaptive and one-GLOBAL-stream preset control; all supplied restricted laws retain their own hypotheses.
+
+## 追加锚（本行以下为增补区）
