@@ -109,10 +109,10 @@ theorem dyadic_transform_explicit_strip_decay (ell : ℝ) (hell : 0 < ell)
         (∏ j ∈ Finset.range k, (1 + (dyadicHalfWidth ell j)⁻¹)) / (1 + ‖z‖) ^ k := by
       calc
         _ ≤ ∏ j ∈ Finset.range k, b j :=
-          Finset.prod_le_prod_of_subset_of_le_one (Finset.range_mono hn)
+          Finset.prod_le_prod_of_subset_of_le_one₀ (Finset.range_mono hn)
             (fun j _ => hb0 j) (fun j _ _ => hb1 j)
         _ ≤ ∏ j ∈ Finset.range k, (1 + (dyadicHalfWidth ell j)⁻¹) / (1 + ‖z‖) :=
-          Finset.prod_le_prod (fun j _ => hb0 j) (fun j _ => hbk j)
+          Finset.prod_le_prod₀ (fun j _ => hb0 j) (fun j _ => hbk j)
         _ = _ := by simp [Finset.prod_div_distrib]
     have he : Real.exp ((∑ j ∈ Finset.range n, dyadicHalfWidth ell j) * |z.im|) ≤
         Real.exp (ell * |z.im| / 2) := by

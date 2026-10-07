@@ -234,7 +234,7 @@ theorem arakelovMulHeight_span_range_comp_algebraMap_rpow {v : Fin k → (ι →
     have hx' : (x i)⁻¹ • x ≠ 0 := by simp [hi, hx]
     have hi' : ((x i)⁻¹ • x) i = 1 := by simp [hi]
     rw [← nativeSource12 x (inv_ne_zero hi), NumberField.arakelovMulHeight, if_neg hx']
-    refine one_le_mul_of_one_le_of_one_le (Finset.one_le_prod fun v _ ↦ ?_)
+    refine one_le_mul_of_one_le_of_one_le (Finset.one_le_prod₀ fun v _ ↦ ?_)
       (one_le_finprod fun v ↦ Finite.le_ciSup_of_le i (by simp [hi']))
     have h1 : (1 : ℝ) ≤ ∑ j, v (((x i)⁻¹ • x) j) ^ 2 :=
       le_trans (le_of_eq (by simp [hi']))

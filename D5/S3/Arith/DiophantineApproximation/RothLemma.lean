@@ -48,7 +48,7 @@ theorem rothProp_succ {m : ℕ} (ih : RothProp K m) : RothProp K (m + 1) := by
   have prod_choose_le_two_pow (μ ν : Fin (m + 2) →₀ ℕ) : (μ.prod fun j k ↦ (ν j).choose k) ≤ 2 ^ (ν.sum fun _ k ↦ k) := by
     classical
     calc (μ.prod fun j k ↦ (ν j).choose k) ≤ ∏ j ∈ μ.support, 2 ^ ν j :=
-          Finset.prod_le_prod (fun _ _ ↦ Nat.zero_le _)
+          Finset.prod_le_prod₀ (fun _ _ ↦ Nat.zero_le _)
             (fun j _ ↦ Nat.choose_le_two_pow (ν j) (μ j))
       _ = 2 ^ ∑ j ∈ μ.support, ν j := Finset.prod_pow_eq_pow_sum _ _ _
       _ ≤ 2 ^ ∑ j ∈ μ.support ∪ ν.support, ν j :=
@@ -251,7 +251,7 @@ theorem rothProp_succ {m : ℕ} (ih : RothProp K m) : RothProp K (m + 1) := by
     have hpowle : (2 : ℝ) ^ P.totalDegree ≤ (2 : ℝ) ^ D := pow_le_pow_right₀ one_le_two hdD
     have hbound := mulHeight_det_le (Matrix.of fun i j ↦ hasseDeriv (ρ i j) P) hP hB hB hsupp
       (fun v _ i j ↦ le_trans (iSup_coeff_hasseDeriv_le v (ρ i j) P)
-        (mul_le_mul_of_nonneg_right hpowle ((Real.iSup_nonneg fun ν ↦ (v).nonneg (MvPolynomial.coeff ν (P))))))
+        (mul_le_mul_of_nonneg_right hpowle ((Real.iSup_nonneg fun ν ↦ (v).nonneg (AddMonoidAlgebra.coeff (P) ν)))))
       (fun v hv i j ↦ iSup_coeff_hasseDeriv_le_of_isNonarchimedean
         (AdmissibleAbsValues.isNonarchimedean v hv) (ρ i j) P)
     have hC : ((n.factorial : ℝ) * ((2 : ℝ) ^ D * (2 : ℝ) ^ D) ^ n)

@@ -83,7 +83,7 @@ private theorem convolution (n : ℕ) (hn : 2 ≤ n) :
 
 /-- The formal reading of L = log H is B H = X H', with H(0) = 1.
 Here L has coefficient a(n)/n for n positive. -/
-theorem log_derivative_identity : B * H = X * derivative ℤ H := by
+theorem log_derivative_identity : B * H = X * PowerSeries.derivative (R := ℤ) H := by
   ext n
   rcases n with _ | n
   · simp [B, H, a_zero]
@@ -112,12 +112,12 @@ theorem coeff_H_rat (n : ℕ) (hn : 2 ≤ n) :
 
 private theorem rational_identity :
     mk (fun n => (a n : ℚ)) * H.map (Int.castRingHom ℚ) =
-      X * derivative ℚ (H.map (Int.castRingHom ℚ)) := by
+      X * PowerSeries.derivative (R := ℚ) (H.map (Int.castRingHom ℚ)) := by
   have hb : B.map (Int.castRingHom ℚ) = mk (fun n => (a n : ℚ)) := by
     ext n
     simp [B]
-  have hd : (derivative ℤ H).map (Int.castRingHom ℚ) =
-      derivative ℚ (H.map (Int.castRingHom ℚ)) := by
+  have hd : (PowerSeries.derivative (R := ℤ) H).map (Int.castRingHom ℚ) =
+      PowerSeries.derivative (R := ℚ) (H.map (Int.castRingHom ℚ)) := by
     ext n
     simp [coeff_derivative]
   have he := congrArg (PowerSeries.map (Int.castRingHom ℚ)) log_derivative_identity
@@ -139,7 +139,7 @@ theorem generating_unique (b : ℕ → ℚ) (h : PowerSeries ℚ)
     (hh0 : coeff 0 h = 1) (hh1 : coeff 1 h = 1)
     (hshape : ∀ n : ℕ, 2 ≤ n → coeff n h =
       (4 * n : ℚ) / (4 * (n : ℚ) ^ 2 - 1) * b n)
-    (heq : mk b * h = X * derivative ℚ h) :
+    (heq : mk b * h = X * PowerSeries.derivative (R := ℚ) h) :
     ∀ n : ℕ, b n = (a n : ℚ) := by
   intro n
   induction n using Nat.strong_induction_on with
@@ -171,7 +171,7 @@ theorem generating_unique (b : ℕ → ℚ) (h : PowerSeries ℚ)
     rw [convolution_split b h hb0 hh0 n (by omega)] at hleft
     rw [convolution_split (fun n => (a n : ℚ)) _
       (by simp [a_zero]) (by simp [H]) n (by omega)] at hright
-    have hx (f : PowerSeries ℚ) : coeff n (X * derivative ℚ f) =
+    have hx (f : PowerSeries ℚ) : coeff n (X * PowerSeries.derivative (R := ℚ) f) =
         coeff n f * (n : ℚ) := by
       obtain ⟨m, rfl⟩ := Nat.exists_eq_succ_of_ne_zero hn0
       simp [coeff_succ_X_mul, coeff_derivative]

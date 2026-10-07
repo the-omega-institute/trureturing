@@ -236,18 +236,18 @@ lemma thread_tv_eq_iSup {B : ℕ → Type u} [∀ l, Finite (B l)]
       measurableTotalVariation (M.map (fun x => fun _ : Fin 1 => x)) (N.map (fun x => fun _ : Fin 1 => x)) =
         measurableTotalVariation M N := by
     let c : A → Fin 1 → A := fun x _ => x
-    have hc : Measurable c := measurable_pi_lambda _ fun _ => measurable_id
+    have hc : Measurable c := Measurable.of_eval fun _ => measurable_id
     have hback : (fun y : Fin 1 → A => y 0) ∘ c = id := rfl
     refine le_antisymm (measurable_total_variation_map_le M N c hc) ?_
     have hb := measurable_total_variation_map_le (M.map c) (N.map c)
       (fun y : Fin 1 → A => y 0) (measurable_pi_apply 0)
     simpa only [Measure.map_map (measurable_pi_apply 0) hc, hback, Measure.map_id] using hb
   let c : Thread B q → Fin 1 → Thread B q := fun x _ => x
-  have hc : Measurable c := measurable_pi_lambda _ fun _ => measurable_id
+  have hc : Measurable c := Measurable.of_eval fun _ => measurable_id
   have hπ (l : ℕ) : Measurable (fun x : Thread B q => x.val l) :=
     (measurable_pi_apply l).comp measurable_subtype_coe
   have hlev (l : ℕ) : Measurable (levelProjection q 1 l) :=
-    measurable_pi_lambda _ fun j => (hπ l).comp (measurable_pi_apply j)
+    Measurable.of_eval fun j => (hπ l).comp (measurable_pi_apply j)
   rw [← single P Q, total_variation_eq_iSup_level q 1]
   congr 1
   funext l
@@ -255,7 +255,7 @@ lemma thread_tv_eq_iSup {B : ℕ → Type u} [∀ l, Finite (B l)]
   have hf : levelProjection q 1 l ∘ c =
       (fun x => fun _ : Fin 1 => x) ∘ (fun x : Thread B q => x.val l) := rfl
   have he : Measurable (fun x : B l => fun _ : Fin 1 => x) :=
-    measurable_pi_lambda _ fun _ => measurable_id
+    Measurable.of_eval fun _ => measurable_id
   rw [hf, ← Measure.map_map he (hπ l), ← Measure.map_map he (hπ l), single]
 
 lemma select_common_radius {W Z U : ℕ → Type u}

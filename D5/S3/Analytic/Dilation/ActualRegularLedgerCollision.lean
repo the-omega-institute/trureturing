@@ -497,15 +497,15 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
         simpa [hrord] using (orderOf_dvd_iff_pow_eq_one).2 hp
       simp [hp, hdiv]
 
-  let log_derivative_mul : derivative ℚ (log ℚ) * (1 + X) = 1 := by
+  let log_derivative_mul : PowerSeries.derivative (R := ℚ) (log ℚ) * (1 + X) = 1 := by
     have h := congrArg (rescale (-1 : ℚ)) (mk_one_mul_one_sub_eq_one ℚ)
-    have he : rescale (-1 : ℚ) (mk 1) = derivative ℚ (log ℚ) := by
+    have he : rescale (-1 : ℚ) (mk 1) = PowerSeries.derivative (R := ℚ) (log ℚ) := by
       ext n
       simp [deriv_log]
     simpa [he] using h
 
   let logOf_derivative_mul (f : PowerSeries ℚ)
-      (hf : constantCoeff f = 1) : derivative ℚ (logOf f) * f = derivative ℚ f := by
+      (hf : constantCoeff f = 1) : PowerSeries.derivative (R := ℚ) (logOf f) * f = PowerSeries.derivative (R := ℚ) f := by
     have hs : HasSubst (f - 1) := .of_constantCoeff_zero (by
       change constantCoeff (f - 1) = 0
       simp [hf])
@@ -513,21 +513,21 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
       rw [← coe_substAlgHom hs]
       exact map_one _
     have h := congrArg (subst (f - 1)) log_derivative_mul
-    have hmul : (derivative ℚ (log ℚ)).subst (f - 1) * f = 1 := by
+    have hmul : (PowerSeries.derivative (R := ℚ) (log ℚ)).subst (f - 1) * f = 1 := by
       simpa only [subst_mul hs, subst_add hs, hone, subst_X hs,
         add_sub_cancel] using h
     rw [logOf_eq, derivative_subst hs]
-    have hder : derivative ℚ (f - 1) = derivative ℚ f := by simp
+    have hder : PowerSeries.derivative (R := ℚ) (f - 1) = PowerSeries.derivative (R := ℚ) f := by simp
     rw [hder]
     calc
-      (derivative ℚ (log ℚ)).subst (f - 1) * derivative ℚ f * f =
-          ((derivative ℚ (log ℚ)).subst (f - 1) * f) * derivative ℚ f := by ring
-      _ = derivative ℚ f := by rw [hmul, one_mul]
+      (PowerSeries.derivative (R := ℚ) (log ℚ)).subst (f - 1) * PowerSeries.derivative (R := ℚ) f * f =
+          ((PowerSeries.derivative (R := ℚ) (log ℚ)).subst (f - 1) * f) * PowerSeries.derivative (R := ℚ) f := by ring
+      _ = PowerSeries.derivative (R := ℚ) f := by rw [hmul, one_mul]
 
   let logOf_mul (f g : PowerSeries ℚ)
       (hf : constantCoeff f = 1) (hg : constantCoeff g = 1) : logOf (f * g) = logOf f + logOf g := by
     have hfg : constantCoeff (f * g) = 1 := by simp [hf, hg]
-    apply derivative.ext
+    apply PowerSeries.derivative (R := .ext)
     · have h1 := logOf_derivative_mul (f * g) hfg
       have h2 := logOf_derivative_mul f hf
       have h3 := logOf_derivative_mul g hg
@@ -537,9 +537,9 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
         simp [hf, hg] at this)
       rw [map_add]
       calc
-        derivative ℚ (logOf (f * g)) * (f * g) = derivative ℚ (f * g) := h1
-        _ = derivative ℚ f * g + f * derivative ℚ g := by rw [Derivation.leibniz]; ring
-        _ = (derivative ℚ (logOf f) + derivative ℚ (logOf g)) * (f * g) := by
+        PowerSeries.derivative (R := ℚ) (logOf (f * g)) * (f * g) = PowerSeries.derivative (R := ℚ) (f * g) := h1
+        _ = PowerSeries.derivative (R := ℚ) f * g + f * PowerSeries.derivative (R := ℚ) g := by rw [Derivation.leibniz]; ring
+        _ = (PowerSeries.derivative (R := ℚ) (logOf f) + PowerSeries.derivative (R := ℚ) (logOf g)) * (f * g) := by
           rw [← h2, ← h3]
           ring
     · simp [constantCoeff_logOf, hf, hg, hfg]

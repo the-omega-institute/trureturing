@@ -151,17 +151,17 @@ theorem finite_box_trace_formula (ρ : ∀ m n, Representation ℚ G (W m n))
         Matrix.sub_apply, Matrix.smul_apply, smul_eq_mul, Matrix.one_apply,
         Polynomial.map_sub, Polynomial.map_mul, Polynomial.map_X, Polynomial.map_C]
       split_ifs <;> simp <;> ring
-    have hJacobi : derivative ℚ (A.charpolyRev : S) = det B * trace U := by
+    have hJacobi : PowerSeries.derivative (R := ℚ) (A.charpolyRev : S) = det B * trace U := by
       have ht := congrArg (fun p : S[X] => p.coeff 1) hTaylor
       rw [← hT, det_mul, show det T = Polynomial.C (det B) from
         (RingHom.map_det Polynomial.C B).symm, Polynomial.coeff_C_mul,
         Matrix.coeff_det_one_add_X_smul_one, Polynomial.taylor_coeff_one] at ht
-      have he : P.derivative.eval (X : S) = derivative ℚ (A.charpolyRev : S) := by
+      have he : P.derivative.eval (X : S) = PowerSeries.derivative (R := ℚ) (A.charpolyRev : S) := by
         dsimp [P]
         rw [Polynomial.derivative_map, Polynomial.eval_map,
           Polynomial.eval₂_C_X_eq_coe, derivative_coe]
       rwa [he] at ht
-    have hLogD : derivative ℚ (log ℚ) * (1 + X) = 1 := by
+    have hLogD : PowerSeries.derivative (R := ℚ) (log ℚ) * (1 + X) = 1 := by
       rw [deriv_log]
       ext n
       rw [mul_add, mul_one, map_add]
@@ -170,14 +170,14 @@ theorem finite_box_trace_formula (ρ : ∀ m n, Representation ℚ G (W m n))
       | succ n =>
         rw [coeff_mk, mul_comm _ X, coeff_succ_X_mul, coeff_mk]
         simp [pow_succ]
-    have hLog : derivative ℚ (logOf (A.charpolyRev : S)) * det B =
-        derivative ℚ (A.charpolyRev : S) := by
+    have hLog : PowerSeries.derivative (R := ℚ) (logOf (A.charpolyRev : S)) * det B =
+        PowerSeries.derivative (R := ℚ) (A.charpolyRev : S) := by
       have hs : HasSubst ((A.charpolyRev : S) - 1) :=
         .of_constantCoeff_zero (by
           change constantCoeff ((A.charpolyRev : S) - 1) = 0
           simp [hc])
       have h := congrArg (subst ((A.charpolyRev : S) - 1)) hLogD
-      have hm : (derivative ℚ (log ℚ)).subst ((A.charpolyRev : S) - 1) *
+      have hm : (PowerSeries.derivative (R := ℚ) (log ℚ)).subst ((A.charpolyRev : S) - 1) *
           (A.charpolyRev : S) = 1 := by
         simpa [subst_mul hs, subst_add hs, subst_X hs,
           ← coe_substAlgHom hs] using h
@@ -185,13 +185,13 @@ theorem finite_box_trace_formula (ρ : ∀ m n, Representation ℚ G (W m n))
       simp only [map_sub, derivative_one, sub_zero]
       rw [← hdet]
       calc
-        _ = ((derivative ℚ (log ℚ)).subst ((A.charpolyRev : S) - 1) *
-            (A.charpolyRev : S)) * derivative ℚ (A.charpolyRev : S) := by ring
+        _ = ((PowerSeries.derivative (R := ℚ) (log ℚ)).subst ((A.charpolyRev : S) - 1) *
+            (A.charpolyRev : S)) * PowerSeries.derivative (R := ℚ) (A.charpolyRev : S) := by ring
         _ = _ := by rw [hm, one_mul]
     have hu : IsUnit (det B) := by
       rw [← hdet, isUnit_iff_constantCoeff, hc]
       exact isUnit_one
-    have hd : derivative ℚ (-logOf (A.charpolyRev : S)) = trace (A.map C * E) := by
+    have hd : PowerSeries.derivative (R := ℚ) (-logOf (A.charpolyRev : S)) = trace (A.map C * E) := by
       apply hu.mul_right_cancel
       rw [map_neg, neg_mul, hLog, hJacobi]
       dsimp [U]
@@ -236,7 +236,7 @@ theorem finite_box_trace_formula (ρ : ∀ m n, Representation ℚ G (W m n))
         coeff c (ε z ^ k))
     simp only [coeff_map, smul_eq_mul, MvPowerSeries.coeff_C_mul]
     rw [← MvPowerSeries.coeff_coeff_finSuccEquiv, map_pow]
-  have hlogD : derivative R (log R) * (1 + X) = 1 := by
+  have hlogD : PowerSeries.derivative (R := R) (log R) * (1 + X) = 1 := by
     rw [deriv_log]
     ext n
     rw [mul_add, mul_one, map_add]
@@ -246,23 +246,23 @@ theorem finite_box_trace_formula (ρ : ∀ m n, Representation ℚ G (W m n))
       rw [coeff_mk, mul_comm _ X, coeff_succ_X_mul, coeff_mk]
       simp [pow_succ, map_pow, map_neg, map_one]
   have hlog_deriv (f : PowerSeries R) (hf : constantCoeff f = 1) :
-      derivative R (logOf f) * f = derivative R f := by
+      PowerSeries.derivative (R := R) (logOf f) * f = PowerSeries.derivative (R := R) f := by
     have hs : HasSubst (f - 1) := .of_constantCoeff_zero (by
       change constantCoeff (f - 1) = 0
       simp [hf])
     have h := congrArg (subst (f - 1)) hlogD
-    have hm : (derivative R (log R)).subst (f - 1) * f = 1 := by
+    have hm : (PowerSeries.derivative (R := R) (log R)).subst (f - 1) * f = 1 := by
       simpa [subst_mul hs, subst_add hs, subst_X hs,
         ← coe_substAlgHom hs] using h
     rw [logOf_eq, derivative_subst hs]
     simp only [map_sub, derivative_one, sub_zero]
     calc
-      _ = ((derivative R (log R)).subst (f - 1) * f) * derivative R f := by ring
+      _ = ((PowerSeries.derivative (R := R) (log R)).subst (f - 1) * f) * PowerSeries.derivative (R := R) f := by ring
       _ = _ := by rw [hm, one_mul]
   have hlog_mul (f h : PowerSeries R) (hf : constantCoeff f = 1)
       (hh : constantCoeff h = 1) : logOf (f * h) = logOf f + logOf h := by
     have hfh : constantCoeff (f * h) = 1 := by simp [hf, hh]
-    apply derivative.ext
+    apply PowerSeries.derivative (R := .ext)
     · have hu : IsUnit (f * h) := by
         rw [isUnit_iff_constantCoeff, hfh]
         exact isUnit_one
@@ -271,9 +271,9 @@ theorem finite_box_trace_formula (ρ : ∀ m n, Representation ℚ G (W m n))
       have h1 := hlog_deriv f hf
       have h2 := hlog_deriv h hh
       calc
-        derivative R (f * h) = derivative R f * h + f * derivative R h := by
+        PowerSeries.derivative (R := R) (f * h) = PowerSeries.derivative (R := R) f * h + f * PowerSeries.derivative (R := R) h := by
           rw [Derivation.leibniz]; ring
-        _ = (derivative R (logOf f) + derivative R (logOf h)) * (f * h) := by
+        _ = (PowerSeries.derivative (R := R) (logOf f) + PowerSeries.derivative (R := R) (logOf h)) * (f * h) := by
           rw [← h1, ← h2]; ring
     · simp [constantCoeff_logOf, hf, hh, hfh]
   have hmonoε (m n : ℕ) : ε (gradeMonomial m n) =

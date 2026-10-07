@@ -256,8 +256,9 @@ def conditionalSourceLaw (q : unitInterval) (root : Bool) : Measure Source :=
     (fun p => (root, (fun i => p.1 (i + 1), fun i => p.2 (i + 1))))
 
 instance (q : unitInterval) (root : Bool) :
-    IsProbabilityMeasure (conditionalSourceLaw q root) :=
-  Measure.isProbabilityMeasure_map (by fun_prop)
+    IsProbabilityMeasure (conditionalSourceLaw q root) := by
+  unfold conditionalSourceLaw
+  infer_instance
 
 /-- Bernoulli root, followed by the two arms at the same fixed parameter. -/
 def sourceLaw (alpha q : unitInterval) : Measure Source :=

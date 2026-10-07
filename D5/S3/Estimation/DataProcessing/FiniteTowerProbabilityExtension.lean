@@ -104,7 +104,7 @@ theorem exists_unique_extension
   have hcoord (l : ℕ) : Measurable (fun y : X => (y 0).val l) :=
     (measurable_pi_apply l).comp (measurable_subtype_coe.comp (measurable_pi_apply 0))
   have hlev (l : ℕ) : Measurable (levelProjection p 1 l) :=
-    measurable_pi_lambda _ fun j =>
+    Measurable.of_eval fun j =>
       (measurable_pi_apply l).comp (measurable_subtype_coe.comp (measurable_pi_apply j))
   have hcoordLaw (l : ℕ) : (ν : Measure X).map (fun y => (y 0).val l) =
       (theta l : Measure _).map (e l) := by
@@ -125,10 +125,10 @@ theorem exists_unique_extension
       exact hh
     exact (ae_map_iff (μ := (ν : Measure X)) (hcoord l).aemeasurable hs).mp hh'
   let D : X → ((l : ℕ) → B l) := fun y l => last l ((y 0).val l)
-  have hD : Measurable D := measurable_pi_lambda _ fun l =>
+  have hD : Measurable D := Measurable.of_eval fun l =>
     (measurable_of_countable (last l)).comp (hcoord l)
   let M : Measure ((l : ℕ) → B l) := (ν : Measure X).map D
-  haveI : IsProbabilityMeasure M := Measure.isProbabilityMeasure_map hD.aemeasurable
+  haveI : IsProbabilityMeasure M := inferInstance
   have hMcoord (l : ℕ) : M.map (fun x => x l) = (theta l : Measure _) := by
     change ((ν : Measure X).map D).map (fun x => x l) = _
     rw [Measure.map_map (measurable_pi_apply l) hD]
@@ -177,14 +177,14 @@ theorem exists_unique_extension
   intro η hη
   apply Subtype.ext
   let c : Thread B q → Fin 1 → Thread B q := fun x _ => x
-  have hc : Measurable c := measurable_pi_lambda _ fun _ => measurable_id
+  have hc : Measurable c := Measurable.of_eval fun _ => measurable_id
   have hlevB (l : ℕ) : Measurable (levelProjection q 1 l) :=
-    measurable_pi_lambda _ fun j =>
+    Measurable.of_eval fun j =>
       (measurable_pi_apply l).comp (measurable_subtype_coe.comp (measurable_pi_apply j))
   have hsame (l : ℕ) : ((η : Measure _).map c).map (levelProjection q 1 l) =
       ((μ : Measure _).map c).map (levelProjection q 1 l) := by
     let cl : B l → Fin 1 → B l := fun x _ => x
-    have hcl : Measurable cl := measurable_pi_lambda _ fun _ => measurable_id
+    have hcl : Measurable cl := Measurable.of_eval fun _ => measurable_id
     have hπ : Measurable (fun x : Thread B q => x.val l) :=
       (measurable_pi_apply l).comp measurable_subtype_coe
     rw [Measure.map_map (hlevB l) hc, Measure.map_map (hlevB l) hc]

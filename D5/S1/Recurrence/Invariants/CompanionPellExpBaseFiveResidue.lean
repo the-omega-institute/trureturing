@@ -90,10 +90,10 @@ theorem result (n : ℕ) :
       have h1 : (1 : PowerSeries ℚ₅).subst exponent = 1 := by
         simpa only [coe_substAlgHom] using (map_one (substAlgHom (R := ℚ₅) hs))
       simpa only [subst_sub hs, h1, map_sub, map_one, sub_eq_zero, f, PowerSeries.constantCoeff] using hz
-    have hD (k : ℕ) : coeff k (derivative ℚ₅ exponent) = (Q (k + 1) : ℚ₅) ^ 2 := by
+    have hD (k : ℕ) : coeff k (PowerSeries.derivative (R := ℚ₅) exponent) = (Q (k + 1) : ℚ₅) ^ 2 := by
       have hk : (k : ℚ₅) + 1 ≠ 0 := by exact_mod_cast Nat.succ_ne_zero k
       simp [coeff_derivative, exponent, hk]
-    have hC : (1 + X) * (1 - 6 * X + X ^ 2) * derivative ℚ₅ exponent =
+    have hC : (1 + X) * (1 - 6 * X + X ^ 2) * PowerSeries.derivative (R := ℚ₅) exponent =
         1 + 4 * X - X ^ 2 := by
       rw [show ((1 + X) * (1 - 6 * X + X ^ 2) : PowerSeries ℚ₅) =
         1 - C 5 * X ^ 1 - C 5 * X ^ 2 + X ^ 3 by simp only [map_ofNat]; ring]
@@ -118,15 +118,15 @@ theorem result (n : ℕ) :
           show k + 1 + 1 + 1 + 1 = k + 4 by omega,
           hp1, hp2, hp3, Nat.cast_add, Nat.cast_mul]
         ring
-    have hdf : derivative ℚ₅ f = f * derivative ℚ₅ exponent := by
+    have hdf : PowerSeries.derivative (R := ℚ₅) f = f * PowerSeries.derivative (R := ℚ₅) exponent := by
       rw [f, derivative_subst hs, derivative_exp]
-    have hode : (1 + X) * (1 - 6 * X + X ^ 2) * derivative ℚ₅ f =
+    have hode : (1 + X) * (1 - 6 * X + X ^ 2) * PowerSeries.derivative (R := ℚ₅) f =
         f * (1 + 4 * X - X ^ 2) := by
       rw [hdf]
       linear_combination f * hC
-    refine ⟨hf0, PowerSeries.derivative.ext ?_ ?_⟩
+    refine ⟨hf0, PowerSeries.derivative (R := .ext) ?_ ?_⟩
     · rw [derivative_one]
-      have hd6 : derivative ℚ₅ (6 : PowerSeries ℚ₅) = 0 := by
+      have hd6 : PowerSeries.derivative (R := ℚ₅) (6 : PowerSeries ℚ₅) = 0 := by
         rw [← map_ofNat C 6, derivative_C]
       simp only [hd6, Derivation.leibniz, derivative_pow, map_add, map_sub, derivative_one,
         derivative_X, smul_eq_mul, Nat.reduceSub]

@@ -76,7 +76,7 @@ theorem exists_feasible_minimum_eq_iSup {B : ℕ → Type u}
               (R : Measure (Fin (n + 1) → Thread B q)) := by
   classical
   let c (l : ℕ) : B l → Fin 1 → B l := fun x _ => x
-  have hc (l : ℕ) : Measurable (c l) := measurable_pi_lambda _ fun _ => measurable_id
+  have hc (l : ℕ) : Measurable (c l) := Measurable.of_eval fun _ => measurable_id
   let U (l : ℕ) : ProbabilityMeasure (Fin 1 → B l) := (μ₀ l).map (hc l).aemeasurable
   have hU (l : ℕ) : (U (l + 1) : Measure (Fin 1 → B (l + 1))).map
       (fun y j => q l (y j)) = (U l : Measure (Fin 1 → B l)) := by
@@ -92,7 +92,7 @@ theorem exists_feasible_minimum_eq_iSup {B : ℕ → Type u}
     have hp : Measurable (fun x : Thread B q => x.val l) :=
       (measurable_pi_apply l).comp measurable_subtype_coe
     have hπ : Measurable (levelProjection q 1 l) :=
-      measurable_pi_lambda _ fun j => hp.comp (measurable_pi_apply j)
+      Measurable.of_eval fun j => hp.comp (measurable_pi_apply j)
     change ((ν : Measure (Fin 1 → Thread B q)).map (fun y => y 0)).map
       (fun x => x.val l) = _
     rw [Measure.map_map hp (measurable_pi_apply 0)]
@@ -108,7 +108,7 @@ theorem exists_feasible_minimum_eq_iSup {B : ℕ → Type u}
   let π := levelProjection q (n + 1)
   let b (l : ℕ) : A (l + 1) → A l := fun y j => q l (y j)
   have hπ (l : ℕ) : Measurable (π l) :=
-    measurable_pi_lambda _ fun j =>
+    Measurable.of_eval fun j =>
       (measurable_pi_apply l).comp (measurable_subtype_coe.comp (measurable_pi_apply j))
   have hp (l : ℕ) : Measurable (fun x : Thread B q => x.val l) :=
     (measurable_pi_apply l).comp measurable_subtype_coe
