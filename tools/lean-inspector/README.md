@@ -197,7 +197,7 @@ C# 消费者检查可解码证据的结构、sidecar 归属及 debt 约束；未
 binding evidence，不能通过声明模板的严格消费者。
 `LeanInformationAuditRegTests` 的生产证据检查要求实际导出的 wire 等于对应 `Compiled*Wire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；当前 wire 只在实际内容改变时同步更新。
 
-登记与模板必须携带 `NodeCoverage`，模板另以 `bodyFact` 绑定实际编译体。内核在 Reg 编译期检查节点类型、证明边界、定义性匹配、相等、等价、逐参数 Bool 反射和完整有限枚举；判官只绑定原始节点及坐标、遍历完整依赖，并执行 E1–E8 等自身规则。`SealCatalogView` 将实际 catalog 与 `SealFacts` 绑定；完整字面行承担计数、轴、状态和分类数据，判官不求值原始函数。共享 Reg 支持库中的泛型事实与内核证明仍是未评定的契约数据，每次使用仍须绑定实际编译坐标并通过完整 coverage 核对。公共类型与 Reg 支持库不携带 evaluator、plan、join、判词或报告收据。生产登记、模板、root 和 seal 路径不使用通用比较器；SL-031 utility 路径单独保留 `RawArtifacts.whnf/equalTypes`。
+登记与模板必须携带 `NodeCoverage`，模板另以 `bodyFact` 绑定实际编译体。内核在 Reg 编译期检查节点类型、证明边界、定义性匹配、相等、等价、逐参数 Bool 反射和完整有限枚举；判官只绑定原始节点及坐标、遍历完整依赖，并执行 E1–E8 等自身规则。`SealCatalogView` 将实际 catalog 与 `SealFacts` 绑定；完整字面行承担计数、轴、状态和分类数据，判官不求值原始函数。共享 Reg 支持库中的泛型事实与内核证明仍是未评定的契约数据，每次使用仍须绑定实际编译坐标并通过完整 coverage 核对。公共类型与 Reg 支持库不携带 evaluator、plan、join、判词或报告收据。生产登记、模板、root 和 seal 路径不使用通用比较器；SL-031 utility 路径逐字核对 claim 类型为 `Prop`、result 类型为 `Not claim`，不展开定义、化简或使用 Reg 证书。
 
 `Reg.Support.CompiledNodeTerm` 的 `compiled_node%` 在 Reg 编译期按字面声明、type/value、路径与宇宙地址，从普通编译器环境读取实际原始节点，并以原 telescope 闭合后交给普通编译器检查。它保留 binder 名、模式、metadata、let 结构与未化简宇宙树。`compiled_head%` 按同一字面地址重建原始节点，只打开路径实际经过的 `body`/`letBody` telescope，调用普通编译器在默认透明度下的 WHNF，再按原 binder 名、模式和 let 绑定闭合为普通 helper 项，不作 eta 化简；节点自身的 lambda 不作为额外 telescope 打开。helper 的类型与所需 `ExactMatch.evidence` 仍由普通 elaboration 和内核检查。`compiled_term%` 从向后引用的字面构造器 DAG 重建闭合普通项，保留名字分量、binder 模式、原始宇宙构造器、let 标志及 metadata 边。普通 helper 的 metadata 注释表为空，原始源坐标保留原注释。它只构造项，不推型、归约、比较或生成证据；helper 类型和所需 `ExactMatch.evidence` 仍由普通 elaboration 和内核检查。`compiled_fact%` 用一个字面地址同时构造原始操作数及现有 `NodeFact`、`NodeCoordinate`；`compiled_exact%` 对两端各用其地址构造现有 `NodeFact.exact` 与 `ExactMatch.evidence`。owner 取自 `Environment` 的实际模块元数据，类型推断与定义性检查交普通 elaboration 和内核执行。适配器没有自有的推断、比较、化简或评定规则；helper 的 WHNF 构造由普通编译器执行，不导入或调用判官实现。owner、路径与 coverage 仍由报告期的完整 `NodeCoordinate` 独立核对；适配器不认证坐标，不产生 plan、join、判词、收据或复用权威。
 
@@ -280,8 +280,8 @@ The production reader uses `RawArtifacts.Store` for every target. It reads compi
 constant tables without creating an Environment, initializing extensions, invoking elaboration, Meta, the type
 checker or the kernel. Contract inputs are decoded from constructor trees and safe constant references in those
 parts. A value that requires evaluation, a missing part, an unknown format or a read failure is a named
-`contract.decode_failed:<owner>:<declaration>:<reason>` or raw-artifact failure; there is no fallback reader. Only SL-031 utility refutations retain
-the bounded `RawArtifacts.whnf/equalTypes` computation over compiled terms. `ArtifactAssessment` constructs target-local registration data;
+`contract.decode_failed:<owner>:<declaration>:<reason>` or raw-artifact failure; there is no fallback reader. SL-031 utility refutations require the raw claim type `Prop` and the raw result type
+`Not claim`; aliases, unfolding, reduction and Reg certificates supply no matching authority. `ArtifactAssessment` constructs target-local registration data;
 `CompiledAssessment` executes template, evidence and binding gates; `CompiledSeal` checks independent snapshots,
 source uniqueness, joins, qualified-name collisions, catalog membership and every position of the literal
 finite tables, then reads compiler-checked row conclusions and computes statistics from those literal rows. Companion constants are immutable report

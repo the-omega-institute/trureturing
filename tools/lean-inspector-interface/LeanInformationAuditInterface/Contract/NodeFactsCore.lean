@@ -79,10 +79,6 @@ structure FinitePartition (T : Type u) (relation : T → T → Prop) where
   classes : ∀ left ∈ rows, ∀ right ∈ rows,
     (left.classId = right.classId ↔ relation left.item right.item)
 
-/-- Utility is a separate contract, with no four-slot escape obligation.
- Both indices must be the exact named compiler constants selected by SL-031. -/
-structure UtilityRefutation (claim : Prop) (result : ¬ claim) where
-
 /-- This excludes a fixed source proposition from the complete varying Law.
  It makes no claim that two true propositions are logically unequal. -/
 structure StatementExclusion {T : Type u} (law : T → Prop) (statement : Prop) where

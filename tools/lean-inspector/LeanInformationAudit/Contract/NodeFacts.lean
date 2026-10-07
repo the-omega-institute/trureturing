@@ -356,23 +356,6 @@ def partition (view : View) (value : Expr) : Except String (Array Nat) := do
       seen := seen.push id
   return ids
 
-/-- The typed indices certify negation, including definitional aliases.
- Names, owner modules, declaration kinds and closedness remain judge rules. -/
-def utility (view : View) (certificate claim result claimOwner resultOwner : Name) : Except String Unit := do
-  let some (.defnInfo info) := view.find certificate | bad "utility_certificate"
-  unless info.safety == .safe do bad "unsafe_definition"
-  let args := info.type.getAppArgs
-  unless info.type.isAppOfArity ``UtilityRefutation 2 &&
-      args[0]!.isConstOf claim && args[1]!.isConstOf result &&
-      args[0]!.constLevels!.isEmpty && args[1]!.constLevels!.isEmpty do bad "utility_indices"
-  discard <| Literal.fields view.find ``UtilityRefutation info.value 0
-  unless view.owner claim == some claimOwner && view.owner result == some resultOwner do
-    bad "utility_owners"
-  let some (.defnInfo c) := view.find claim | bad "utility_claim"
-  let some (.thmInfo r) := view.find result | bad "utility_result"
-  unless c.levelParams.isEmpty && r.levelParams.isEmpty &&
-      #[c.type, c.value, r.type, r.value].all Literal.closed do bad "utility_closed"
-
 def exclusion (view : View) (name : Name) : Except String Unit := do
   let some (.defnInfo info) := view.find name | bad "exclusion_definition"
   unless info.safety == .safe do bad "unsafe_definition"

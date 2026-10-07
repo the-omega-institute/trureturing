@@ -7,7 +7,6 @@ import Reg.Support.DependentFamily
 import Reg.D5.S0.Certificates.SelfInterestConventionDeviationGain
 import Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit
 import Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit
-import Reg.D5.S0.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation
 import Reg.Catalogs.IffRegistrations.SealedCatalog
 import Reg.Support.CompiledNodeTerm
 
@@ -176,11 +175,6 @@ def genericRoot : RootCatalog := { data := {
   baseline := #[]
   companionPrefix := none } }
 
-def falseClaim : Prop := False
-def rejection : Prop := ¬ falseClaim
-theorem aliasedResult : rejection := by intro h; exact h
-def aliasedRefutation : UtilityRefutation falseClaim aliasedResult := {}
-
 private def accept (label : String) (value : Except String α) : IO α := do
   match value with
   | .ok result => IO.println s!"[PASS] {label}"; pure result
@@ -314,20 +308,9 @@ unsafe def check : IO Unit := do
     `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena
     `Reg.Support.LegacyRelations.System.arena
     `Reg.Support.LegacyRelations.System.fromLegacy `Reg.Support.LegacyRelations.System.toLegacy
-  let _ ← accept "utility refutation" <| Contract.NodeFacts.utility view
-    `Reg.D5.S0.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation.refutation
-    `CayleyGrowth.ConsecutiveFourCycleDiameterRefutation.claim
-    `CayleyGrowth.ConsecutiveFourCycleDiameterRefutation.result
-    `D5.S0.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation
-    `D5.S0.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation
-  let _ ← accept "aliased utility refutation" <| Contract.NodeFacts.utility view
-    `LeanInformationAuditRegTests.NodeFacts.aliasedRefutation
-    `LeanInformationAuditRegTests.NodeFacts.falseClaim `LeanInformationAuditRegTests.NodeFacts.aliasedResult
-    `LeanInformationAuditRegTests.NodeFacts `LeanInformationAuditRegTests.NodeFacts
   let allEvidence := #[
     `Reg.D5.S3.Combinatorics.PerfectMatchings.InvolutionOrbitSplit.Reflection.exclusion,
     `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.finiteLiftFacts,
-    `Reg.D5.S0.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation.refutation,
     `Reg.Catalogs.IffRegistrations.SealedCatalog.facts_0]
   for name in allEvidence do
     let axioms ← LeanInformationAudit.CompiledAxioms.collectAxiomsShared view.find closure name
@@ -403,10 +386,5 @@ unsafe def check : IO Unit := do
       else view.find n }
   reject "stale bound operand" "contract.node_binding:operand"
     (Contract.NodeFacts.fact stale `LeanInformationAuditRegTests.NodeFacts.decisionEquality)
-  reject "wrong utility result" "contract.node_binding:utility_indices" <| Contract.NodeFacts.utility view
-    `Reg.D5.S0.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation.refutation
-    `CayleyGrowth.ConsecutiveFourCycleDiameterRefutation.claim ``True.intro
-    `D5.S0.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation
-    `D5.S0.CayleyGrowth.ConsecutiveFourCycleDiameterRefutation
 
 end LeanInformationAuditRegTests.NodeFacts

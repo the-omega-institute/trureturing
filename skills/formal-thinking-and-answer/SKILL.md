@@ -46,6 +46,8 @@ An unfinished registration must not be reported as `declared_validated`; disclos
 
 Helpers in `Reg`, `Interface` and `Impl` create no recursive D5 audit target and retain their existing checks. Reuse with no new Lean declaration creates no audit target. Keep successful Reg audit evidence in the run record; an unfinished audit and its issue must be disclosed even when the final answer is plain prose.
 
+Utility refutations require the claim definition’s compiled type to be literally `Prop` and the result theorem’s compiled type to be literally `Not claim`. Write the result as `theorem result : ¬ claim := …`; definitionally equivalent aliases or expanded conclusions do not pass SL-031. The result is exempt from four-slot escape registration and needs no Reg refutation certificate.
+
 ## Compilation scope
 
 For this skill, a successful build of the Lean modules generated, modified, or reused for the answer and their import dependencies is sufficient; a full-project build is not required. Cover every new `G`, exact `S`, and required specialization or countermodel, including transient exact checks under the admission and retention rule. Let Lake reuse valid cached dependencies and rebuild missing or changed ones.

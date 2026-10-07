@@ -567,7 +567,7 @@ def collect (module : Name) (infos : List (Name × ConstantInfo)) : MetaM Json :
             let some original := env.find? name | throwError "missing constructor {name}"
             visitRoot name "type" original.levelParams [] #[] original.type
         else if inputs.isEmpty then
-          unless #[``NodeFact, ``StatementExclusion, ``UtilityRefutation].contains
+          unless #[``NodeFact, ``StatementExclusion].contains
               (info.type.getAppFn.constName?.getD .anonymous) do
             visitRoot name "type" info.levelParams [] #[] info.type
             visitRoot name "value" info.levelParams [] #[] defn.value

@@ -9,6 +9,8 @@ description: Use when asked to formalize mathematics in this repository, either 
 
 This is a Codex skill package. Install it by copying the `skills/codex-formalize/` directory into `$CODEX_HOME/skills/` (default `~/.codex/skills`), or load it by naming this `SKILL.md` path directly in a dispatcher. This repository copy is the single source of truth; any installed copy is a projection of it.
 
+Utility refutations require the claim definition’s compiled type to be literally `Prop` and the result theorem’s compiled type to be literally `Not claim`. Write the result as `theorem result : ¬ claim := …`; definitionally equivalent aliases or expanded conclusions do not pass SL-031. The result is exempt from four-slot escape registration and needs no Reg refutation certificate.
+
 ## Scope and authority
 
 This file is Codex-specific packaging of repository obligations; it has no authority of its own. `docs/develop/spec/golden-ledger-repo-spec.md` is the sole normative specification; `CLAUDE.md` is the invariant frame governing how work is done; and `agents/CONTEXT.md` is the finite-context map and routing aid, not an authority above the specification. Live harness output is the decisive judge of fact about the current tree. If this file disagrees with any of them, they win and this file is the bug.
