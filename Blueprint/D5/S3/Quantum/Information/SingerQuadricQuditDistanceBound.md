@@ -148,6 +148,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/SingerQuadricQuditDistanceBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kulhandjian-hanzo-2026-flagship-distance-conjecture-25` (proved) by `D5/S3/Quantum/Information/SingerQuadricQuditDistanceBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kulhandjian-hanzo-2026-flagship-distance-conjecture-25","declaration_gid":"D5/S3/Quantum/Information/SingerQuadricQuditDistanceBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* M. Kulhandjian; L. Hanzo (2026). *Singer-Difference-Set Qudit Stabilizer Codes from Non-Degenerate Quadrics in PG(d,q): Construction, Structural Theorems, and Monte-Carlo Performance*. DOI: [10.48550/arXiv.2610.02392](https://doi.org/10.48550/arXiv.2610.02392). URL: <https://arxiv.org/abs/2610.02392v1>.

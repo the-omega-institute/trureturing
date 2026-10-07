@@ -41,7 +41,10 @@ internal sealed class SingerQuadricQuditDistanceBoundDocument : IScribeDocumentD
                 "claim", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "The conjectured distance bound holds", Disp(F.Id("claim")),
                 "Let D and Q be the trace-plane and trace-square supports. Both have size p+1, and D has nonzero difference multiplicities one. A translated reversed indicator s has A*s=1, while MQ*1=1, so (s,s) centralizes the row space. The vector (tauQ,-e_0) is in the ordinary right kernel of H. Its pairing with (s,s) is m_t-delta_t, where m_t counts (t-D) intersect Q and delta_t indicates membership in D. The moment identities sum(m_t)=(p+1)^2 and sum(m_t^2)=(p+1)^2+p^2+p contradict m_t congruent to delta_t modulo p for every t: their forced lower bound exceeds the second moment by p*(p-2)*(p+1)>0. A nonzero pairing excludes stabilizer membership. The support of (s,s) has p+1 positions.",
-                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source))), []));
+                "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kulhandjian-hanzo-2026-flagship-distance-conjecture-25"),
+                    ResolutionKind.Proved))), []));
 
     private static Formula IndicatorFormula(string name, bool doubled)
     {
@@ -94,9 +97,10 @@ internal sealed class SingerQuadricQuditDistanceBoundDocument : IScribeDocumentD
             Implies(Less(F.D(2), P()), All(AlphaValue(), Field(), Implies(Primitive(), logical)))))));
     }
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
-        string declaration, DescribeRole role, AssessedProvenance provenance) =>
+        string declaration, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("kh25-" + id), DeclarationHandle.Create(Prefix + declaration),
-            H(title), StatementSource.FromAuthor(formula), provenance, Commentary(id, prose), role);
+            H(title), StatementSource.FromAuthor(formula), provenance, Commentary(id, prose), role, resolution);
     private static BlockSequence Commentary(string id, string prose)
     {
         if (id == "claim")
