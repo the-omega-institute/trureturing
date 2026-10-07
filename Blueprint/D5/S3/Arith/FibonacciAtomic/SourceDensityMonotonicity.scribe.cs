@@ -62,16 +62,16 @@ internal sealed class SourceDensityMonotonicityDocument : IScribeDocumentDefinit
         var e = V("e"); var a = V("a"); var d = V("d"); var l = V("l");
         var t = V("t"); var j = V("j");
         var half = new Formula.Fraction(D(1), D(2));
-        Formula Inc(Formula x, Formula y) => Sub(
+        Formula Inc(Formula x, Formula y) => Subtract(
             Call("log", Add(Seq(x, t), Seq(y, Par(Add(j, D(1)))))),
             Call("log", Add(Seq(x, t), Seq(y, j))));
         var hypotheses = Both(LtOf(D(0), e), LtOf(D(0), a), LtOf(D(0), d),
             LtOf(D(0), l), EqOf(d, Add(e, a)), EqOf(l, Add(a, d)),
-            EqOf(Pow(Par(Sub(Pow(a, D(2)), Seq(d, e))), D(2)), D(1)),
+            EqOf(new Formula.Power(Par(Subtract(new Formula.Power(a, D(2)), Seq(d, e))), D(2)), D(1)),
             LtOf(D(0), t), LeOf(D(0), j));
-        var bound = new Formula.Fraction(Seq(Neg, Sp, Par(Add(j, half))),
-            Seq(l, a, d, Pow(t, D(2))));
-        var increments = Sub(Add(Seq(a, Inc(a, e)), Seq(d, Inc(d, a))), Seq(l, Inc(l, d)));
+        var bound = new Formula.Fraction(Seq(Minus, Par(Add(j, half))),
+            Seq(l, a, d, new Formula.Power(t, D(2))));
+        var increments = Subtract(Add(Seq(a, Par(Inc(a, e))), Seq(d, Par(Inc(d, a)))), Seq(l, Par(Inc(l, d))));
         return Disp(Seq(Forall, Sp, e, Comma, a, Comma, d, Comma, l, Comma, t, Comma, j,
             Sp, InMacro, Sp, V("R"), Comma, Sp, Par(hypotheses), Sp, Implies, Sp,
             LeOf(bound, increments)));
