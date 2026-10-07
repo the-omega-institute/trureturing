@@ -33,8 +33,10 @@ internal static class TruthReleaseCommand
                 options.ProducerPackageCommit,
                 "producer_package_commit");
             var identity = DagLedgerCommandPreparation.Ask(repository.ResolveCurrentRevision);
+            var contentHashes = new Dictionary<string, ReadOnlyMemory<byte>>(StringComparer.Ordinal);
             var snapshot = Decode(DagLedgerCommandPreparation.Ask(
-                () => repository.ReadRevision(identity.Revision)));
+                () => repository.ReadRevisionProjection(identity.Revision, IsReleaseInput,
+                    (path, hash) => contentHashes.Add(path, hash))));
             var rawLeanReportBytes = ImmutableArray.CreateRange(
                 File.ReadAllBytes(options.CandidateLeanReport));
             var report = RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, snapshot);
@@ -64,7 +66,7 @@ internal static class TruthReleaseCommand
                 truth.Lean,
                 preparation.States);
             var dagMarkdownBytes = CanonicalDagWriter.Write(projection);
-            var truthGraphBytes = AssembleTruthGraph(snapshot, truth, projection, rawLeanReportBytes, suppliedDefinitions);
+            var truthGraphBytes = AssembleTruthGraph(contentHashes, truth, projection, rawLeanReportBytes, suppliedDefinitions);
             var blueprintIndexBytes = BlueprintIndexAssembler.Assemble(snapshot);
             var frozenLedgerHeadBytes = FrozenLedgerHeadAssembler.Assemble(preparation.BaseView);
             var sourceSnapshot = SourceSnapshotAssembler.Assemble(
@@ -118,7 +120,7 @@ internal static class TruthReleaseCommand
     }
 
     private static ImmutableArray<byte> AssembleTruthGraph(
-        RepositorySnapshot snapshot,
+        IReadOnlyDictionary<string, ReadOnlyMemory<byte>> contentHashes,
         TruthContext truth,
         TruthDagProjection projection,
         ImmutableArray<byte> rawLeanReportBytes,
@@ -127,8 +129,8 @@ internal static class TruthReleaseCommand
         var catalog = DeclarationCatalog.Create(truth.Report);
 
         var provenance = new TruthGraphProvenance(
-            SnapshotContentDigest.Compute(
-                snapshot,
+            SnapshotContentDigest.ComputeContentHashes(
+                contentHashes,
                 suppliedDefinitions.Select(static definition => definition.RelativePath.Value)),
             RawLeanReportArtifact.ContentAddress(rawLeanReportBytes.AsSpan()));
         return TruthGraphJsonWriter.Write(
@@ -140,6 +142,10 @@ internal static class TruthReleaseCommand
                 catalog,
                 tolerateAbsentDocuments: true));
     }
+
+    internal static bool IsReleaseInput(string path) =>
+        !path.StartsWith("Meta/Digestion/", StringComparison.Ordinal)
+        && !path.StartsWith("docs/", StringComparison.Ordinal);
 
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch

@@ -70,7 +70,7 @@ public sealed class AdmissionTests
             completed,
             context.MetaEvaluation));
 
-        Assert.Equal(2, CertificateFormatVersion(admitted.Certificate));
+        Assert.Equal(3, CertificateFormatVersion(admitted.Certificate));
         Assert.Equal(completed.ExecutedRules, admitted.Certificate.ExecutedRules);
         var completedSkipped = SkippedRules(completed);
         var certificateSkipped = SkippedRules(admitted.Certificate);
@@ -103,8 +103,8 @@ public sealed class AdmissionTests
         var skippedCertificate = AdmissionCertificate.Create(canonical, skipped);
 
         Assert.NotEqual(executedCertificate.Fingerprint, skippedCertificate.Fingerprint);
-        Assert.Equal(2, CertificateFormatVersion(executedCertificate));
-        Assert.Equal(2, CertificateFormatVersion(skippedCertificate));
+        Assert.Equal(3, CertificateFormatVersion(executedCertificate));
+        Assert.Equal(3, CertificateFormatVersion(skippedCertificate));
     }
 
     [Fact]

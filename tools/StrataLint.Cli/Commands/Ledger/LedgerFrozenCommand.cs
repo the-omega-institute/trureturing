@@ -14,33 +14,26 @@ internal static class LedgerFrozenCommand
         ArgumentNullException.ThrowIfNull(arguments);
         if (arguments.Count != 2
             || !string.Equals(arguments[0], "--target", StringComparison.Ordinal)
-            || !RepoPath.TryCreate(arguments[1], out var target))
+            || !RepoPath.TryCreate(arguments[1], out var target)
+            || !FrozenStatePath.TryFromModulePath(target, out var statePath))
         {
             return new(2, string.Empty, "USAGE: StrataLint ledger-frozen --target D5/.../*.lean\n");
-        }
-
-        var ledgerDirectory = Path.Combine(
-            repositoryRoot,
-            FrozenLedgerChangeClassifier.AcceptedRoot.Replace('/', Path.DirectorySeparatorChar));
-        if (!Directory.Exists(ledgerDirectory))
-        {
-            return Invalid($"frozen ledger is missing: {FrozenLedgerChangeClassifier.AcceptedRoot}");
         }
 
         try
         {
             var decoded = SnapshotDecoder.Decode(repository.ReadCurrent(
-                [FrozenLedgerChangeClassifier.AcceptedRoot, FrozenStatePath.Root.TrimEnd('/')]));
+                [":(literal)" + statePath.Value]));
             if (decoded is SnapshotDecodeOutcome.InfrastructureFailure failure)
             {
                 return Invalid(failure.Message);
             }
 
             var snapshot = ((SnapshotDecodeOutcome.Decoded)decoded).Snapshot;
-            // Keep ledger validation separate from current frozen membership.
-            _ = FrozenLedgerBaseViewReader.Read(snapshot);
-            var frozen = FrozenStateCatalog.Load(snapshot).Records.ContainsKey(target);
-            return new ExplicitCommandResult(frozen ? 0 : 1, string.Empty, string.Empty);
+            if (!snapshot.TryGetFile(statePath.Value, out var file))
+                return new ExplicitCommandResult(1, string.Empty, string.Empty);
+            _ = FrozenStateRecordLoader.Load(file);
+            return new ExplicitCommandResult(0, string.Empty, string.Empty);
         }
         catch (Exception exception)
         {

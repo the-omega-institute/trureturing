@@ -1,11 +1,186 @@
 using System.Text;
+using System.Security.Cryptography;
+using Trureturing.Truth;
 using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
 
+[CollectionDefinition("Repository snapshot allocation", DisableParallelization = true)]
+public sealed class RepositorySnapshotAllocationCollection;
+
+[Collection("Repository snapshot allocation")]
 public sealed class GitRepositoryGatewayRevisionTests
 {
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ProjectionKeepsAllPathsButReadsOnlySelectedBodies(bool historical)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        File.WriteAllText(Path.Combine(repository.Path, "selected.txt"), "selected\n");
+        File.WriteAllBytes(Path.Combine(repository.Path, "unrelated.bin"), new byte[2 * 1024 * 1024]);
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "projection fixture");
+        var gateway = new GitRepositoryGateway(repository.Path);
+        var revision = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
+        var runner = new CountingBlobGitProcessRunner();
+        var recordingGateway = new GitRepositoryGateway(repository.Path, runner, "git");
+        var snapshot = historical
+            ? recordingGateway.ReadRevisionProjection(revision, static path => path == "selected.txt")
+            : gateway.ReadCurrentProjection(static path => path == "selected.txt");
+
+        Assert.Equal(["selected.txt", "unrelated.bin"], snapshot.Entries.Select(static entry => entry.Path).Order(StringComparer.Ordinal));
+        AssertEntry(Assert.Single(snapshot.Entries, static entry => entry.Path == "selected.txt"), "selected.txt", "selected\n");
+        Assert.Empty(Assert.Single(snapshot.Entries, static entry => entry.Path == "unrelated.bin").Bytes);
+        Assert.False(Assert.Single(snapshot.Entries, static entry => entry.Path == "unrelated.bin").ContentWasRead);
+        Assert.True(Assert.Single(snapshot.Entries, static entry => entry.Path == "selected.txt").ContentWasRead);
+        if (historical)
+        {
+            Assert.Equal([TestGit.Run(repository.Path, "rev-parse", revision + ":selected.txt").Trim()], runner.BlobsRead);
+            Assert.True(runner.BlobOutputBytes < 128);
+        }
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ProjectionHashesOriginalBytesWithoutRetainingUnselectedBodies(bool historical)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var files = new Dictionary<string, byte[]>
+        {
+            ["selected.txt"] = Encoding.UTF8.GetBytes("selected\n"),
+            ["empty.bin"] = [],
+            ["duplicate.txt"] = Encoding.UTF8.GetBytes("selected\n"),
+            ["unrelated.bin"] = Enumerable.Repeat((byte)255, 1024 * 1024).ToArray(),
+            ["\U00010000.txt"] = [0, 128, 255],
+            ["\uE000.txt"] = [10],
+        };
+        foreach (var (path, body) in files) File.WriteAllBytes(Path.Combine(repository.Path, path), body);
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "hash projection fixture");
+        var revision = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
+        var gateway = new GitRepositoryGateway(repository.Path);
+        var hashes = new Dictionary<string, byte[]>(StringComparer.Ordinal);
+        void Observe(string path, ReadOnlyMemory<byte> hash) => hashes.Add(path, hash.ToArray());
+        var snapshot = historical
+            ? gateway.ReadRevisionProjection(revision, static path => path == "selected.txt", Observe)
+            : gateway.ReadCurrentProjection(static path => path == "selected.txt", Observe);
+
+        Assert.Equal(files.Count, hashes.Count);
+        foreach (var (path, body) in files) Assert.Equal(SHA256.HashData(body), hashes[path]);
+        Assert.All(snapshot.Entries.Where(static entry => entry.Path != "selected.txt"), static entry => Assert.Empty(entry.Bytes));
+        var old = TruthGraphSnapshotIdentity.Compute(files.Select(pair => new SnapshotDigestEntry(pair.Key, pair.Value, false)));
+        var streamed = TruthGraphSnapshotIdentity.ComputeContentHashes(hashes.Select(pair => new SnapshotContentHashEntry(pair.Key, pair.Value, false)));
+        Assert.Equal(old, streamed);
+    }
+
+    [Fact]
+    public void PrehashedSnapshotIdentityMatchesOriginalFramingAndProjectionMarker()
+    {
+        var files = new[]
+        {
+            new SnapshotDigestEntry("\uE000", new byte[] { 0, 255 }, false),
+            new SnapshotDigestEntry("generated", new byte[] { 123 }, true),
+            new SnapshotDigestEntry("\U00010000", ReadOnlyMemory<byte>.Empty, false),
+        };
+        var hashes = files.Select(file => new SnapshotContentHashEntry(file.Path, SHA256.HashData(file.Content.Span), file.IsGeneratedProjection)).ToArray();
+        Assert.Equal("sha256:d79bdde819e6ca1be2d2431fb5266f05b71c598f76aad7185c1aeda4b8409dc1", TruthGraphSnapshotIdentity.Compute(files));
+        Assert.Equal(TruthGraphSnapshotIdentity.Compute(files), TruthGraphSnapshotIdentity.ComputeContentHashes(hashes));
+        hashes[1] = hashes[1] with { ContentHash = new byte[32] };
+        Assert.Equal(TruthGraphSnapshotIdentity.Compute(files), TruthGraphSnapshotIdentity.ComputeContentHashes(hashes));
+        hashes[0] = hashes[0] with { ContentHash = new byte[32] };
+        Assert.NotEqual(TruthGraphSnapshotIdentity.Compute(files), TruthGraphSnapshotIdentity.ComputeContentHashes(hashes));
+        Assert.NotEqual(TruthGraphSnapshotIdentity.Compute(files), TruthGraphSnapshotIdentity.ComputeContentHashes(hashes.Take(2)));
+        Assert.NotEqual(TruthGraphSnapshotIdentity.Compute(files), TruthGraphSnapshotIdentity.ComputeContentHashes(hashes.Select(file => file with { Path = file.Path + "/renamed" })));
+        Assert.Throws<ArgumentException>(() => TruthGraphSnapshotIdentity.ComputeContentHashes(
+            [new SnapshotContentHashEntry("invalid", new byte[31], false)]));
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void StreamingHashAllocationDoesNotGrowWithAnUnselectedBody(bool historical)
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        var payload = Enumerable.Repeat((byte)'x', 16 * 1024 * 1024).ToArray();
+        File.WriteAllBytes(Path.Combine(repository.Path, "large.txt"), payload);
+        File.WriteAllText(Path.Combine(repository.Path, "selected.txt"), "selected\n");
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "allocation fixture");
+        var gateway = new GitRepositoryGateway(repository.Path);
+        _ = gateway.ReadRevisionProjection("HEAD", static path => path == "selected.txt");
+        ReadOnlyMemory<byte> observed = default;
+        void Observe(string path, ReadOnlyMemory<byte> hash) { if (path == "large.txt") observed = hash; }
+        var before = GC.GetTotalAllocatedBytes(precise: true);
+        var snapshot = historical
+            ? gateway.ReadRevisionProjection("HEAD", static path => path == "selected.txt", Observe)
+            : gateway.ReadCurrentProjection(static path => path == "selected.txt", Observe);
+        var allocated = GC.GetTotalAllocatedBytes(precise: true) - before;
+
+        Assert.Equal(SHA256.HashData(payload), observed.ToArray());
+        Assert.Empty(Assert.Single(snapshot.Entries, static entry => entry.Path == "large.txt").Bytes);
+        Assert.True(allocated < payload.Length / 2, $"Hashing an unselected {payload.Length}-byte body allocated {allocated} bytes.");
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ProjectionFallbackCannotHashAnUnreadPlaceholder(bool historical)
+    {
+        var raw = RawRepositorySnapshot.Create([new RawRepositoryEntry("unread.txt", [], ContentWasRead: false)]);
+        IRepositoryGateway gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, raw);
+        Assert.Throws<InvalidOperationException>(() => historical
+            ? gateway.ReadRevisionProjection("fixture", static _ => false, static (_, _) => { })
+            : gateway.ReadCurrentProjection(static _ => false, static (_, _) => { }));
+    }
+
+    [Theory]
+    [InlineData("wrong-oid")]
+    [InlineData("wrong-type")]
+    [InlineData("wrong-size")]
+    [InlineData("short-body")]
+    [InlineData("missing-newline")]
+    [InlineData("trailing-data")]
+    [InlineData("oversized-header")]
+    public void StreamingRevisionRejectsMalformedBatchFrames(string failure)
+    {
+        using var repository = new TemporaryDirectory();
+        var gateway = new GitRepositoryGateway(repository.Path, new MalformedBatchRunner(failure), "git");
+        Assert.Throws<GitInfrastructureException>(() => gateway.ReadRevisionProjection("fixture", static _ => false, static (_, _) => { }));
+    }
+
+    private sealed class MalformedBatchRunner(string failure) : IGitProcessRunner
+    {
+        public ProcessOutput Run(string fileName, IReadOnlyList<string> arguments, string workingDirectory,
+            TimeSpan timeout, int maximumOutputBytes = GitRepositoryGateway.DefaultGitOutputBytes,
+            ReadOnlyMemory<byte> standardInput = default)
+        {
+            if (arguments[0] == "ls-tree")
+                return new(0, Encoding.UTF8.GetBytes($"100644 blob {FirstOid} 3\tpayload.txt\0"), []);
+            var header = failure switch
+            {
+                "wrong-oid" => SecondOid + " blob 3\n",
+                "wrong-type" => FirstOid + " tree 3\n",
+                "wrong-size" => FirstOid + " blob 4\n",
+                "oversized-header" => new string('x', 257) + "\n",
+                _ => FirstOid + " blob 3\n",
+            };
+            var body = failure switch
+            {
+                "short-body" => "x",
+                "missing-newline" => "xyz!",
+                "trailing-data" => "xyz\nextra",
+                _ => "xyz\n",
+            };
+            return new(0, Encoding.UTF8.GetBytes(header + body), []);
+        }
+    }
+
     [Fact]
     public void CurrentSnapshotOwnsOnePayloadBufferAndSurvivesDiskReplacement()
     {
@@ -499,7 +674,7 @@ public sealed class GitRepositoryGatewayRevisionTests
             new(0, Encoding.UTF8.GetBytes(output), []);
     }
 
-    private sealed class CountingBlobGitProcessRunner : IGitProcessRunner
+    internal sealed class CountingBlobGitProcessRunner : IGitProcessRunner
     {
         private readonly ProductionGitProcessRunner production = new();
         internal List<string> BlobsRead { get; } = [];

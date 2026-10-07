@@ -6,6 +6,10 @@ namespace StrataLint.Tests;
 
 public sealed partial class ReviewRegressionTests
 {
+    private static DeltaRuleContext ActualDelta(RuleFixture fixture) =>
+        fixture.Build(RawChangeSet.Create(fixture.Changes.Concat(fixture.Files.Keys.Union(fixture.Baseline.Keys)
+            .Where(path => fixture.Files.GetValueOrDefault(path) != fixture.Baseline.GetValueOrDefault(path))).Distinct(StringComparer.Ordinal)));
+
     private static ValidatedPolicy AcceptedPolicy(string fileMap)
     {
         var outcome = RepositoryPolicyLoader.Load(
