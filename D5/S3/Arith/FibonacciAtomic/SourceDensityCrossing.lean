@@ -51,6 +51,8 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
         (1 < sourceDensity k t (j + 1) / sourceDensity k t j ↔ τ < (t : ℝ))) ∧
     (∀ t : ℕ, j + 1 ≤ t →
       q k j t = sourceDensity k t (j + 1) / sourceDensity k t j) := by
+  have rising_pos (x : ℝ) (hx : 0 < x) (m : ℕ) : 0 < rising x m :=
+    Finset.prod_pos (fun i _ => by positivity)
   have real :
     0 < c k ∧
     (∀ t : ℝ, (j : ℝ) + 1 ≤ t →
@@ -182,14 +184,12 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
           nlinarith [mul_nonneg hδ.le hj, mul_le_mul_of_nonneg_right hL3 hzpos.le]
         linarith
       exact ⟨ha, hb, sub_pos.mpr hn, by linarith⟩
-    have product_pos (x : ℝ) (hx : 0 < x) (m : ℕ) : 0 < rising x m :=
-      Finset.prod_pos (fun i _ => by positivity)
     have positive (z : ℝ) (hz : (j : ℝ) + 1 / 2 < z) : 0 < q k j z := by
       obtain ⟨ha, hb, hn, ht⟩ := coords z hz
       dsimp [q, H]
       exact div_pos (mul_pos ht
-        (div_pos (mul_pos (product_pos _ (by linarith) _) (product_pos _ (by linarith) _))
-          (mul_pos (by positivity) (product_pos _ hn _)))) (by positivity)
+        (div_pos (mul_pos (rising_pos _ (by linarith) _) (rising_pos _ (by linarith) _))
+          (mul_pos (by positivity) (rising_pos _ hn _)))) (by positivity)
     have analytic : ∀ t : ℝ, (j : ℝ) + 1 ≤ t →
         0 < q k j t ∧
         HasDerivAt (fun z : ℝ => Real.log (q k j z)) (g k j t) t ∧
@@ -238,9 +238,9 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
         apply hd.congr_of_eventuallyEq
         filter_upwards [eventually_gt_nhds hhalf] with z hz
         obtain ⟨ha, hb, hn, hzj⟩ := coords z hz
-        have hp1 := product_pos (a k j z + 1) (by linarith) (E k)
-        have hp2 := product_pos (b k j z + 1) (by linarith) (A k)
-        have hp3 := product_pos (n k j z - 1 / 2) hn (D k)
+        have hp1 := rising_pos (a k j z + 1) (by linarith) (E k)
+        have hp2 := rising_pos (b k j z + 1) (by linarith) (A k)
+        have hp3 := rising_pos (n k j z - 1 / 2) hn (D k)
         dsimp [q, H, f]
         rw [Real.log_div (mul_pos hzj (div_pos (mul_pos hp1 hp2)
           (mul_pos (by positivity) hp3))).ne' (by positivity),
@@ -491,8 +491,8 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
     have Hpos (z : ℝ) (hz : (j : ℝ) + 1 / 2 < z) : 0 < H k j z := by
       obtain ⟨ha, hb, hn, _⟩ := coords z hz
       dsimp [H]
-      exact div_pos (mul_pos (product_pos _ (by linarith) _) (product_pos _ (by linarith) _))
-        (mul_pos (by positivity) (product_pos _ hn _))
+      exact div_pos (mul_pos (rising_pos _ (by linarith) _) (rising_pos _ (by linarith) _))
+        (mul_pos (by positivity) (rising_pos _ hn _))
     have riemann (x : ℝ) (hx : 0 < x) (m : ℕ) :
         (∑ i ∈ Finset.range m, 1 / (x + 1 + i)) ≤ Real.log (x + m) - Real.log x ∧
         Real.log (x + m) - Real.log x ≤ (∑ i ∈ Finset.range m, 1 / (x + i)) := by
@@ -660,7 +660,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
         simpa only [rising, Finset.prod_const, Finset.card_range] using h
       have hnum : rising (a k j t + 1) (E k) * rising (b k j t + 1) (A k) ≤ n k j t ^ D k := by
         rw [hδeq, pow_add]
-        exact mul_le_mul hp1 hp2 (product_pos _ (by linarith) _).le (by positivity)
+        exact mul_le_mul hp1 hp2 (rising_pos _ (by linarith) _).le (by positivity)
       have hden : n k j t ^ D k < (4 : ℝ) ^ D k * rising (n k j t - 1 / 2) (D k) := by
         have h := Finset.prod_lt_prod_of_nonempty
           (s := Finset.range (D k)) (f := fun _ : ℕ => n k j t)
@@ -669,7 +669,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
           (fun i _ => by nlinarith only [hn3, Nat.cast_nonneg (α := ℝ) i])
           ⟨0, Finset.mem_range.mpr hdNat⟩
         simpa only [Finset.prod_mul_distrib, Finset.prod_const, Finset.card_range, rising] using h
-      exact (div_lt_one (mul_pos (by positivity) (product_pos _ hn _))).mpr (hnum.trans_lt hden)
+      exact (div_lt_one (mul_pos (by positivity) (rising_pos _ hn _))).mpr (hnum.trans_lt hden)
     have hcpos : 0 < c k := by dsimp [c]; positivity
     have hc1 : c k < 1 := (Hlower ((j : ℝ) + 1) le_rfl).trans (Hupper _ le_rfl)
     let U : ℝ := j + (j + 1) / c k
@@ -797,8 +797,6 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (j : ℕ) :
         rising_succ, rising_succ, ih, rising_succ, rising_succ, pow_succ]
       push_cast
       ring
-  have rising_pos (x : ℝ) (hx : 0 < x) (m : ℕ) : 0 < rising x m :=
-    Finset.prod_pos (fun i _ => by have := Nat.cast_nonneg (α := ℝ) i; positivity)
   have count_shift (x y e α : ℕ) (hxy : 1 ≤ x + y) :
       (GenealogicalFiberTransport.fiberCount (x, y) : ℝ) /
         (GenealogicalFiberTransport.fiberCount (x + e, y + α) : ℝ) =
