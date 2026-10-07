@@ -1,6 +1,6 @@
-using StrataLint.Engine;
+using StrataLint.Runtime;
 
-namespace StrataLint.Tests;
+namespace StrataLint.Runtime.Tests;
 
 public sealed class TestProcessRunnerClassificationTests
 {

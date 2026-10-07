@@ -1,9 +1,63 @@
+using StrataLint.Runtime;
 using StrataLint.TestSupport;
 
-namespace StrataLint.Engine.Tests;
+namespace StrataLint.Runtime.Tests;
 
 public sealed class BoundedProcessRunnerTests
 {
+    [Fact]
+    public void StartupSeamPreservesArgumentsWorkingDirectoryAndExplicitEnvironment()
+    {
+        var previous = BoundedProcessRunner.StartProcess.Value;
+        System.Diagnostics.ProcessStartInfo? observed = null;
+        try
+        {
+            BoundedProcessRunner.StartProcess.Value = process => { observed = process.StartInfo; return false; };
+            var exception = Assert.Throws<InvalidOperationException>(() => BoundedProcessRunner.Run(
+                "fixture", ["argument with spaces", "$literal"], Path.GetTempPath(),
+                TestBudgets.ZeroDuration, 16, new byte[] { 1 }, new Dictionary<string, string> { ["ONLY"] = "value" }));
+            Assert.Equal("could not start fixture", exception.Message);
+            Assert.NotNull(observed);
+            Assert.Equal(["argument with spaces", "$literal"], observed.ArgumentList);
+            Assert.Equal(Path.GetTempPath(), observed.WorkingDirectory);
+            Assert.Equal("value", Assert.Single(observed.Environment).Value);
+            Assert.False(observed.UseShellExecute);
+            Assert.True(observed.RedirectStandardInput && observed.RedirectStandardOutput && observed.RedirectStandardError);
+        }
+        finally { BoundedProcessRunner.StartProcess.Value = previous; }
+    }
+
+    [Fact]
+    public void CallerCancellationBeforeStartNeverInvokesStartupSeam()
+    {
+        var previous = BoundedProcessRunner.StartProcess.Value;
+        using var cancellation = new CancellationTokenSource();
+        cancellation.Cancel();
+        var started = false;
+        try
+        {
+            BoundedProcessRunner.StartProcess.Value = _ => { started = true; return false; };
+            Assert.Throws<OperationCanceledException>(() => BoundedProcessRunner.Run(
+                "fixture", [], Path.GetTempPath(), TestBudgets.ZeroDuration, 16,
+                cancellationToken: cancellation.Token));
+            Assert.False(started);
+        }
+        finally { BoundedProcessRunner.StartProcess.Value = previous; }
+    }
+
+    [Fact]
+    public void ExpiredBudgetRemainsTimeoutWhileCallerCancellationRemainsCancellation()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        Assert.Throws<TimeoutException>(() => BoundedProcessRunner.Run(
+            "/bin/sh", ["-c", "while :; do :; done"], Path.GetTempPath(), TestBudgets.ZeroDuration, 16));
+        using var cancellation = new CancellationTokenSource();
+        Assert.ThrowsAny<OperationCanceledException>(() => BoundedProcessRunner.RunStreaming<int>(
+            "/bin/sh", ["-c", "while :; do :; done"], Path.GetTempPath(), TestBudgets.ScriptProcessHangGuard, 16,
+            (_, _) => { cancellation.Cancel(); return Task.FromCanceled<int>(cancellation.Token); },
+            cancellationToken: cancellation.Token));
+    }
+
     [Xunit.SkippableTheory]
     [InlineData(false, 16)]
     [InlineData(false, 17)]
