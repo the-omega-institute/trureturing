@@ -871,3 +871,276 @@ The single-source identification contract of Moore's *Gedanken-Experiments on Se
 [H11]: https://raw.githubusercontent.com/leanprover-community/mathlib4/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/Combinatorics/Hall/Finite.lean
 
 ## 追加锚（本行以下为增补区）
+## 15. Protected spectra with several INITIAL tail bands
+
+**定义 15.1（Higher-tour protected INITIAL target）。** Use exactly the original reader, joint actual prior, two free-value fibres, independent initial rejection reading, and paid complete-block fee of Chapter 1. Fix
+
+$$
+Q\ge2,\qquad m\ge3,\qquad 2\le r<m,\qquad
+T=Qm+r,\qquad k=T-1,\qquad g=\gcd(m,r),\qquad P=g\mathbb Z/T\mathbb Z.
+\tag{15.1}
+$$
+
+Choose integers $d,a,J$ with
+
+$$
+1\le d\le Q,\qquad 0\le a<m,\qquad a>0\Longrightarrow d<Q,
+\qquad H=k-dm-a>0,\qquad J\ge0.
+\tag{15.2}
+$$
+
+Choose a set and a label table
+
+$$
+S\subseteq P\cap\bigl(\{1,\ldots,J\}\cup\{Qm+1,\ldots,T-1\}\bigr),
+\qquad \eta:S\longrightarrow Y,
+$$
+$$
+M=|\eta[S]|\ge2,\qquad L=\lceil\log_2 M\rceil,
+\qquad A\in\eta[S],\qquad J+Lr\le m.
+\tag{15.3}
+$$
+
+An interval with upper endpoint smaller than its lower endpoint is empty. Let $D,E,R_1,\ldots,R_d,L_\bot$, and, when $a>0$, $R_\star$, be arbitrary labels in $Y$. All coincidences among these labels and $\eta[S]$ are allowed. Put
+
+$$
+\lambda(j)=
+\begin{cases}
+D,&j=0,\\
+E,&j=m,\\
+\eta(j),&j\in S,\\
+A,&\text{otherwise},
+\end{cases}
+\qquad j\in P.
+\tag{15.4}
+$$
+
+The cases are disjoint: (15.3) implies $J\le m-r<m$, and the other protected interval lies above $Qm$. On both free-value fibres define the entire immutable INITIAL target by
+
+$$
+f(v,-j,s)=
+\begin{cases}
+R_t,&k-tm\le s<k-(t-1)m,\quad 1\le t\le d,\\
+R_\star,&H\le s<k-dm,\quad a>0,\\
+\lambda(j),&0\le s<H,
+\end{cases}
+\qquad f(\bot)=L_\bot.
+\tag{15.5}
+$$
+
+Every triple in this definition has the single actual-history witness (1.3). In particular, all comparisons of different tails below concern jointly realized records, and not a product of separately attainable coordinates. The target is independent of the free value, but that value and its subsequent changes remain part of each source's own archive.
+
+**引理 15.2（All-action staircase and paid protected-calendar lower bound）。** For every target (15.5), every correct controller on either free-value fibre has root $1^m$. Along the archive containing all protected low-tail sources, its first $d$ blocks are $1^m$. If $a>0$, its next block has first zero exactly after $a$ leading ones; if $a=0$, its next block starts zero. In particular,
+
+$$
+C_{\rm ad}(f)\ge LQ+1.
+\tag{15.6}
+$$
+
+These conclusions allow early stopping on homogeneous other archives and all label coincidences in Definition 15.1.
+
+Proof. Fix a free value. After $t<d$ blocks $1^m$, each protected phase has successful difference zero at every preceding endpoint, since the all-one charge support of block $b$ is $\{bm,(b+1)m\}$ for $0\le b<t$, and neither protected interval meets these vertices. All its low-tail sources remain present: $H-1+tm<k$. Their labels include the $M\ge2$ labels of $\eta[S]$, so this common archive cannot stop.
+
+Choose a protected phase $j$ with $\eta(j)\ne R_{t+1}$. This is possible even if $R_{t+1}$ is a protected label. Compare the actual INITIAL tails
+
+$$
+s_{\rm low}=H-1,\qquad s_{\rm band}=k-(t+1)m
+\tag{15.7}
+$$
+
+at this same phase and value. The second lies in band $t+1$, both survive the preceding $t$ all-one blocks, and both have the same acquired archive. Their current tails are $H-1+tm$ and $k-m$. If the next action has a first zero after $b<m$ leading ones, both reach that zero successfully, since $k-m+b\le k-1$. At the zero their entire current records merge. Their distinct INITIAL labels cannot be recovered by any subsequent action. Thus the next block must be $1^m$. This proves the assertion by induction, including its root case, and excludes every competing root or earlier zero on the protected archive without assuming fresh band labels.
+
+When $a>0$, choose a protected phase with $\eta(j)\ne R_\star$ and compare INITIAL tails $H-1$ and $H$. After the $d$ compulsory blocks their current tails are $k-a-1$ and $k-a$. A first zero after $b<a$ ones merges both alive. If $b>a$, or if there is no zero, both reject before the next observed endpoint: their rejection times within that block are unobserved. Only $b=a$ can be correct. When $a=0$, take the protected low sources at INITIAL tail $H-1$. After the $d$ blocks all have tail $k-1$ and at least two different labels; a first bit one would send them to one rejection archive, so the next block starts zero.
+
+For the cost lower bound, select one protected phase for each distinct label and, at each such phase, the actual source at INITIAL tail $H-1$. The selected sources have a common current tail before the first zero. After that zero the tail remains common within each acquired archive under every literal continuation. A rejecting action at a nonconstant selected archive destroys all its remaining labels together and cannot be correct. Successful observations supply at most two children. This remains true under adaptive actions; no observations from different branches are combined.
+
+The actual calendar up to index $LQ$ follows from $Qm=T-r$:
+
+$$
+\begin{aligned}
+W_{\ell Q}&=[-\ell r,m-\ell r]\pmod T,&&1\le\ell\le L,\\
+W_{eQ+b}&=[bm-er,(b+1)m-er],&&0\le e<L,\quad 1\le b<Q.
+\end{aligned}
+\tag{15.8}
+$$
+
+Every main window $W_{\ell Q}$ contains all of $S$: its lower segment reaches at least $J$, and its upper segment starts at $T-\ell r\le Qm$. Every displayed non-main window misses $S$. Indeed, its left endpoint is at least $m-(L-1)r\ge J+r>J$, while its right endpoint is at most $Qm<T$; there is no wrap. The compulsory root also has zero response on $S$. Thus only indices $Q,2Q,\ldots$ can distinguish the selected protected labels. By total fee $LQ$, at most $L-1$ such indices have been emitted. At most $2^{L-1}<M$ distinct-label leaves are available, even with adaptive stopping and any paid waits. This proves (15.6). The induction and capacity argument apply separately on both actual free-value fibres. ∎
+
+## 16. One literal stream attaining the protected-spectrum fee
+
+**构造 16.1（Completed siblings and physical parity compensation）。** Choose an injective label code
+
+$$
+c:\eta[S]\longrightarrow\{0,1\}^L,\qquad c(A)=0^L,
+\qquad F_\ell=\{j\in S:c_\ell(\eta(j))=1\},\quad 1\le\ell\le L.
+\tag{16.1}
+$$
+
+The zero code is reserved for the default label, not for a presumed absent source. All actual low sources outside $S\cup\{0,m\}$ have that label.
+
+The following complete-block stream is fixed in advance and ends at index $LQ$, hence has total length $LQ+1$ blocks. First issue $1^m$ at indices $0,\ldots,d-1$. If $a>0$, at index $d$ issue
+
+$$
+1^a0^{m-a}.
+\tag{16.2}
+$$
+
+All remaining non-main indices are $0^m$, except for the special prescription below. This gives a single stream for both values; stopping and decoding use each source's own observed endpoint differences.
+
+Call $d=1,a=0$ the endpoint-retaining case. In this case replace the non-main block at index $Q-1$ by
+
+$$
+0^{m-1}1.
+\tag{16.3}
+$$
+
+Its full physical charge support is $\{Qm-1,Qm\}$. Both vertices are actual only if they belong to $P$; neither belongs to $S$ or $\{0,m\}$, and every actual low source there has label $A$. A positive response on the root-zero archive therefore returns $A$. This pulse is paid even when it detects no actual source.
+
+At the main indices $\ell Q$, prescribe even full-path supports as follows. Outside the endpoint-retaining case, set
+
+$$
+E_\ell=F_\ell\cup
+\begin{cases}
+\{0\},&|F_\ell|\text{ odd},\\
+\varnothing,&|F_\ell|\text{ even}.
+\end{cases}
+\tag{16.4}
+$$
+
+In the endpoint-retaining case, the first main support instead is
+
+$$
+E_1=F_1\cup\{0\}\cup
+\begin{cases}
+\{Qm\},&|F_1|\text{ even},\\
+\varnothing,&|F_1|\text{ odd}.
+\end{cases}
+\tag{16.5}
+$$
+
+For its later main indices use (16.4). Issue the actual word $\mathcal B_{\ell Q}(E_\ell)$ given by the ordered literal inverse (1.5). The compensation vertex $0$ belongs to every main window, including when $Lr=m$ and it is the final path vertex. The extra vertex $Qm$ in (16.5) is the first vertex of $W_Q$. Equations (15.8) and (15.3) put every $F_\ell$ in its prescribed path. Thus every row is even on the full physical path and has a unique literal inverse; no algebraic span is used as an action.
+
+**定理 16.2（Exact full mixed-tail protected-spectrum law）。** For every parameter, support, and label choice in Definition 15.1, under both original literal alphabets,
+
+$$
+\boxed{\displaystyle C_{\rm ad}(f)=C_{\rm pre}(f)=LQ+1.}
+\tag{16.6}
+$$
+
+Construction 16.1 attains this cost on the entire joint actual INITIAL prior, including the initial rejection record, sparse protected supports, noncoprime phases, arbitrary label coincidences, a full $d=Q,a=0$ staircase, partial staircases, and equality $J+Lr=m$.
+
+Proof. Lemma 15.2 supplies the all-action lower bound, so it remains to prove the stream, its seams, and its immutable leaf labels.
+
+During its first $d$ all-one blocks, precisely the INITIAL tail band $t$ first rejects at index $t-1$, for $1\le t\le d$. Its leaf returns $R_t$, regardless of its preceding values. If $a>0$, precisely the remaining INITIAL tails $H\le s<k-dm$ first reject in (16.2), and their leaf returns $R_\star$. Every low INITIAL tail $s<H$ survives: its tail after the $d$ full-one blocks is at most $k-a-1$, so the $a$ subsequent leading ones, when present, reach at most $k-1$, after which zero clears it. The rest of (16.2) consists of zeros. These are labels of the INITIAL bands; the label $L_\bot$ is returned only from the separate free initial rejection reading.
+
+Let
+
+$$
+B=d+\mathbf1_{\{a>0\}}
+\tag{16.7}
+$$
+
+be the number of prefix blocks that complete this band separation. No successful source is decoded as a low source before these $B$ blocks have been paid. This prevents any unrejected band from borrowing a low label, even when band labels coincide with endpoint or protected labels. After these blocks every remaining source has INITIAL tail $s<H$ and its target depends only on $j$.
+
+Write $\Delta_t$ for its observed successful endpoint difference at block $t$. The root has $\Delta_0=1$ exactly at $j=0,m$. If $d\ge2$, on this root-positive archive block one has $\Delta_1=0$ at $j=0$ and $\Delta_1=1$ at $j=m$, by the all-one support $\{m,2m\}$. If $d=1,a>0$, the same separation holds because (16.2) has support $\{m,m+a\}$. Thus, outside the endpoint-retaining case, the two endpoint sources can return their exact labels $D,E$ once all $B$ band-separating blocks have completed. They have stopped before any main query, since $B\le Q$. The main compensation at $0$ in (16.4) therefore affects no continuing low source on that completed endpoint archive.
+
+Every other positive difference in these prefix blocks, on a root-zero archive, is supported at a multiple of $m$ or at $dm+a$ when $a>0$. None of those phases is protected. Their surviving low sources have label $A$, and can return it after block $B-1$. All protected sources have entirely zero prefix differences. Consequently, in the regular case, the continuing zero-prefix archive consists of all protected sources and some actual default-$A$ sources; the endpoints have already stopped.
+
+In the endpoint-retaining case the only prefix block is the root, and the root-positive archive still contains $j=0,m$. The pulse (16.3) misses those endpoints and all of $S$. Any successful root-zero source with pulse difference one has label $A$ and stops there. In particular, every actual root-zero source at $Qm$ has stopped before the extra parity charge at that vertex in (16.5). At the first main block, (16.5) has response one at $0$ and zero at $m$, which is outside $W_Q$. On their root-positive archive this separates $D$ and $E$ exactly. Those sources now stop, so later compensation at $0$ is harmless on the same acquired archive. No observation from the default-$A$ pulse archive is used to decode an endpoint source or a protected source.
+
+For every continuing root-zero source in either case, the main response at index $\ell Q$ equals $c_\ell(\eta(j))$ when $j\in S$, and zero otherwise. In (16.4), the only charged vertex outside $S$ is an already completed endpoint. In (16.5), the additional charged default vertex has already been screened by the paid pulse. Non-main zero blocks have zero successful difference, and the special pulse misses $S$. Thus after the $L$ main responses the decoder returns the label assigned to that code. The all-zero code returns $A$, both for protected occurrences of $A$ and for every continuing default source. Injectivity separates different protected labels, while repeated occurrences or coincidences with other leaf labels are allowed. These deductions use the chronological archive of the same original source throughout.
+
+It remains to check literal legality at every seam. The all-one prefix has already been checked directly against each INITIAL tail. If $a>0$, its partial block ends at tail zero. If $a=0,d<Q$, the next block starts zero and clears every survivor; in the endpoint-retaining case it is either a zero wait or, at $Q=2$, the pulse (16.3), which also starts zero. The pulse ends at tail one. If $a=0,d=Q$, survivors can still have tail $k-1$ immediately before the first main query. Its left vertex is $Qm$, which is outside $S$ and different from $0$, and (16.4) prescribes zero there; hence its inverse starts zero and safely clears every survivor.
+
+Every regular main word starts zero. For $1\le\ell\le L$ its first vertex $T-\ell r$ is at most $Qm$, above the low protected interval, different from $0$, and not in the upper protected interval. Thus it is uncharged in (16.4). After that first zero a length-$m$ block has no run reaching $k>2m$. In the endpoint-retaining first query its left vertex may be charged by (16.5), but the incoming tail is one and any leading run has length at most $m$; $1+m<k$ makes the seam strictly legal. The other main words start zero. Successive main indices are separated by $Q-1\ge1$ paid zero blocks. Any such wait clears the preceding tail, and any post-zero internal run is shorter than $k$. No additional rejection occurs after the INITIAL bands have been separated.
+
+All issued words have length $m<k$, so all are internally legal and belong to both original alphabets. The seam argument checks their actual concatenation, not just their internal words. Neither sparse actual phase supports nor nonactual compensation possibilities are assumed: the supports above are explicit full-path supports, and any prescribed nonactual pulse charge simply supplies no source. All equality and extreme staircase cases satisfy the same inequalities. The construction never discards a paid zero block or the paid screening pulse. Its last main word is block index $LQ$, giving fee $LQ+1$. The same literal stream works on both values using their own differences, and initial $\bot$ stops freely with $L_\bot$. Hence $C_{\rm pre}\le LQ+1$, which with Lemma 15.2 proves (16.6). ∎
+
+## 17. A sharp three-label boundary beyond the protected guard
+
+**定义 17.1（Width-five boundary INITIAL family）。** For any $Q\ge2$, put
+
+$$
+m=5,\qquad r=2,\qquad T=5Q+2,\qquad k=5Q+1.
+\tag{17.1}
+$$
+
+Here $g=1$ and every phase is actual. Choose pairwise distinct labels $A,B,C$, and arbitrary $D,E,R,L_\bot$; these latter labels may coincide with each other or with $A,B,C$. On both free-value fibres define
+
+$$
+f_5(v,-j,s)=
+\begin{cases}
+R,&s\ge k-5,\\
+B,&s<k-5,\ j=1,\\
+C,&s<k-5,\ j=3,\\
+D,&s<k-5,\ j=0,\\
+E,&s<k-5,\ j=5,\\
+A,&\text{otherwise},
+\end{cases}
+\qquad f_5(\bot)=L_\bot.
+\tag{17.2}
+$$
+
+All low-tail cases range over every $0\le s<k-5$. Their sources and the high-tail comparisons below have the joint witnesses (1.3).
+
+**定理 17.2（Exact symbolic boundary fee for every tour count）。** For every target (17.2), under both original alphabets,
+
+$$
+\boxed{\displaystyle C_{\rm ad}(f_5)=C_{\rm pre}(f_5)=Q+2.}
+\tag{17.3}
+$$
+
+Proof. On a fixed free-value fibre, choose one of the low labels $A,B,C$ different from $R$ and a phase carrying it. Compare INITIAL tails $k-6$ and $k-5$ at that phase. A root first zero after fewer than five ones merges them alive; their labels differ. Thus every correct root is $11111$, which rejects exactly the high band. This excludes every competing parent even with a nonfresh $R$.
+
+Take the three actual low sources at phases $1,3,4$, INITIAL tail $k-6$, and the fixed free value. Their labels are $B,C,A$ and their root differences are all zero. Their current tails after the root are all $k-1$. The next action on this archive must start zero: a first one would reject all three into one archive. Until index $Q$, no block can split them. Indeed for $1\le t<Q$ its window is $[5t,5(t+1)]$ without wrap, and misses all of $1,3,4$. Every successful difference is zero; rejection cannot resolve their three different labels. Once zero clears their tails, these remain common within their acquired archive. At index $Q$ one successful complete-block observation gives at most two children, and a rejecting action would again merge all remaining labels. Therefore a worst fee of $Q+1$ cannot distinguish these three sources. Adaptive choices, homogeneous earlier leaves on other archives, and every paid wait are included in this lower bound. Hence $C_{\rm ad}(f_5)\ge Q+2$.
+
+For attainment use the one common literal stream
+
+$$
+11111\ \mid\ \underbrace{00000\mid\cdots\mid00000}_{Q-1\ \text{paid blocks}}
+\ \mid\ 00100\ \mid\ 11000.
+\tag{17.4}
+$$
+
+The first word rejects exactly INITIAL tails $s\ge k-5$; return $R$ at that leaf. Every low source survives and the first paid zero wait safely clears even current tail $k-1$. All later waits are also paid. At index $Q$ the ordered path and the actual word $00100$ give
+
+$$
+W_Q=[5Q,5Q+1,0,1,2,3],\qquad E_Q=\{0,1\}.
+\tag{17.5}
+$$
+
+At index $Q+1$ the actual word $11000$ gives
+
+$$
+W_{Q+1}=[3,4,5,6,7,8],\qquad E_{Q+1}=\{3,5\}.
+\tag{17.6}
+$$
+
+These are literal charges from (1.4), not arbitrary parity queries. On the successful root-positive archive the only INITIAL phases are $0,5$. The first query has respective differences one and zero, returning $D,E$; these sources stop before the charge at $5$ in the last block. On the root-zero archive a first-query difference one occurs exactly at phase $1$, and returns $B$. Of the remaining sources, a last-query difference one occurs exactly at phase $3$, returning $C$; all others return $A$. The extra last-query charge at $5$ belongs to the already completed endpoint archive and does not supply an additional source to this decoder. Thus every low source returns its immutable INITIAL label, even if another completed label happens to coincide with it.
+
+The zero waits end at tail zero; $00100$ starts and ends zero and is strictly legal. The last block has only two leading ones and ends zero, so it is also strictly legal for $k\ge11$. Each word has length $5<k$ and hence belongs to both original alphabets, and every actual cross-block seam has been checked. The same stream and differences work for either free value, while initial $\bot$ returns its independent label freely. Its fee is $1+(Q-1)+2=Q+2$, proving (17.3). ∎
+
+**命题 17.3（Removing the protected guard changes the exact law）。** The extension of (16.6) to Definition 17.1 obtained by omitting only the guard $J+Lr\le m$ is false for every $Q\ge2$.
+
+Proof. Represent (17.2) in the remaining notation of Definition 15.1 using $d=1,a=0$, $S=\{1,3,4\}$, $J=4$, and
+
+$$
+\eta(1)=B,\qquad\eta(3)=C,\qquad\eta(4)=A.
+\tag{17.7}
+$$
+
+Then $M=3$, $L=2$, $A\in\eta[S]$, and every other requirement of (15.1)–(15.5) holds; only $J+Lr=8>5$ fails. The proposed extension would give $2Q+1$, whereas Theorem 17.2 gives $Q+2<2Q+1$. The missing calendar premise has a precise effect: phase $3$ is the right endpoint of $W_Q$ and the left endpoint of $W_{Q+1}$, so it can be queried again one paid block later. In the guarded proof all protected phases miss every non-main window through the required horizon. That statement is false here. The completed endpoint at phase $5$ supplies the compatible even last charge without contaminating the same continuing $C/A$ archive. This conclusion concerns only the family (17.2); it gives no exact formula for an arbitrary unguarded phase table. ∎
+
+## 18. Source contracts and the unchanged general target
+
+**数学引文 18.1（Exact reuse and the reader-specific deduction）。** Chapters 15–17 reuse Chapter 1's matched coefficient cycle, joint single-history realization, first-zero irreversible merger, ordered even-charge path, and literal inverse. These interfaces are credited there to the pinned [S1], [S2], [S10], and [S15]. The binary leaf-capacity principle is mature decision-tree theory; its reader-specific input is the paid calendar (15.8), not a newly supplied generic Bellman equation.
+
+The supplied repeated-band theorem [S19], integrated as Theorem 3.2, has $k=Qm$, a fully populated first band with its frontier-removal spectrum, and a fresh high label. The forced-prefix families in [S17], including its returning-frontier example, likewise use $k=Qm$ and their particular bands. Neither fixes the calendar $T=Qm+r$, sparse two-sided protected support, several arbitrary nonfresh INITIAL tail bands, and shared physical compensation of Theorem 16.2. Theorem 2.2, credited to [S20], supplies endpoint-return reasoning but assumes its own constant-outside target and endpoint inequality; its exact fee is not transplanted to a protected spectrum. Theorems 5.1–5.2 concern a near-critical two-threshold depth-two table, and Theorem 12.5 concerns a near-critical injective outside table. Their hypotheses and fee origins are retained rather than identified with (15.5).
+
+The pinned declaration [D12], `original_repeated_guardrail_cost` in `RepeatedGuardrailCost.lean`, is also reused only within its actual contract. It requires $g\ge2$, $m=gu$, $T=g(hu+\rho)$ with $\gcd(u,\rho)=1$, $\rho<u$, and at least three phase labels. With $N$ the whole-fibre phase-label count and $R=\lceil\log_2N\rceil-1$, its differing-from-phase-zero labels lie in $1,\ldots,u-R\rho$; the target is independent of every INITIAL tail on one specified free-value fibre. Its exact adaptive fee is $Rh+1$. It does not establish the mixed-tail target (15.5), a coprime case, or one common literal stream on all sibling archives. The ordinary proof here establishes these additional contracts rather than specializing that tail-independent assertion.
+
+For external comparison, the primary versions in Mathematical Citation 7.2 remain the relevant mature background. Van den Bos and Vaandrager, [arXiv:1907.11034v2](https://arxiv.org/html/1907.11034v2), Definition 11 and Figure 3, treat adaptive distinguishing graphs and examples in which an input irreversibly merges initial states. Chistopolskaya and Podolskii, [arXiv:1810.08668v1](https://arxiv.org/html/1810.08668v1), introduction and Section 2.2, allow arbitrary coordinate-subset parity queries and charge tree depth. Such a query is not an available reader action without the actual window, ordered inverse, and seam proved here. The accepted *Efficient State Identification for Finite State Machine-Based Testing* [manuscript](https://eprints.whiterose.ac.uk/id/eprint/230260/1/Ordered_Wset_Accepted.pdf), Definitions 13–15 and 18, combines transfer-free state-identifying coverage, pairwise shortest separating prefixes, nonredundant ordered characterising sets, and transfer length. Those objectives do not equal one unknown INITIAL target's worst-branch complete-block fee. No fee-preserving equivalence, exhaustive absence, or mathematical priority is inferred from these comparisons.
+
+**开放问题 18.2（All widths and arbitrary attainable INITIAL labels）。** Theorem 16.2 provides a higher-tour, repeated-label, multiple-tail symbolic family with an actual optimal common stream; Theorem 17.2 identifies one sharp unguarded boundary and its different exact fee. The general objective of Open Problem 9.1 remains unchanged: determine the exact minimum worst-branch number of actual emitted complete blocks for every arbitrary attainable immutable INITIAL target and all original $k\ge2,m\ge1$. Arbitrary unguarded tables, richer tail partitions beyond (15.5), competing feasible parents outside the proved families, and other narrow or wide calendars remain within that objective. Neither result replaces its quantifiers by a tail-only prior or by a generic decision-tree model. Offline code selection, controller memory, and all paid waits remain separate from one another and from the emitted-block fee.
+
+## 追加锚（本行以下为增补区）

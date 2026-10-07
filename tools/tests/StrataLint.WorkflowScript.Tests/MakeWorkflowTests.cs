@@ -21,8 +21,6 @@ public sealed partial class MakeWorkflowTests
     private const string WarmDonorScriptPath =
         "tools/scripts/worktree/warm-donor.sh";
     private const string IngestScriptPath = "tools/scripts/ingest.sh";
-    private const string EchoResidualSummaryScriptPath =
-        "tools/scripts/report/echo-residual-summary.sh";
     private const string ReportConsumerScriptPath =
         "tools/scripts/report/report-consumer.sh";
     private const string ReportSupervisorScriptPath =
@@ -55,11 +53,8 @@ public sealed partial class MakeWorkflowTests
         "scribe-release-publish",
         "scribe-release-fetch",
         "ingest",
-        "align-digestion-status",
-        "refresh-source-registry",
         "mathlib-reanchor",
-        "echo-residual-summary",
-        "digestion-readiness",
+        "search-atoms",
         "show-atom",
         "atom-context",
         "truth-export",
@@ -69,8 +64,6 @@ public sealed partial class MakeWorkflowTests
         "cover",
         "cover-batch",
         "decompose",
-        "quarantine",
-        "quarantine-clear",
         "settle",
         "settle-clear",
         "worktree",
@@ -112,57 +105,6 @@ public sealed partial class MakeWorkflowTests
     ];
 
     [Fact]
-    public void EchoResidualSummaryRunsMakeAndKeepsDiagnosticsOutOfThePasteableBlock()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        var root = TestRepositoryLayout.FindRoot();
-        using var fixture = new TemporaryDirectory();
-        var reportDirectory = Path.Combine(fixture.Path, "tools", "scripts", "report");
-        var cliDirectory = Path.Combine(fixture.Path, "tools", "StrataLint.Cli");
-        var binDirectory = Path.Combine(fixture.Path, "bin");
-        Directory.CreateDirectory(reportDirectory);
-        Directory.CreateDirectory(cliDirectory);
-        Directory.CreateDirectory(binDirectory);
-        File.Copy(Path.Combine(root, "Makefile"), Path.Combine(fixture.Path, "Makefile"));
-        File.Copy(
-            Path.Combine(root, EchoResidualSummaryScriptPath),
-            Path.Combine(fixture.Path, EchoResidualSummaryScriptPath));
-        File.WriteAllText(
-            Path.Combine(fixture.Path, LeanReportScriptPath),
-            "#!/usr/bin/env bash\nprintf 'lean provenance\\n' >&2\n");
-        File.WriteAllText(
-            Path.Combine(binDirectory, "dotnet"),
-            """
-            #!/usr/bin/env bash
-            [[ "$*" == *"echo-verify --emit" ]] || exit 19
-            printf '%s\n' '<!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->' '# Echo Residual Summary'
-            """);
-        File.SetUnixFileMode(
-            Path.Combine(fixture.Path, LeanReportScriptPath),
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-        File.SetUnixFileMode(
-            Path.Combine(binDirectory, "dotnet"),
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-
-        var result = TestProcessRunner.Run(
-            "/bin/bash",
-            ["-c", "PATH=\"$1:$PATH\" exec make --no-print-directory echo-residual-summary", "echo-make", binDirectory],
-            fixture.Path,
-            BoundedProcessRunner.HangDetectionBudget,
-            64 * 1024);
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Equal(
-            """
-            <!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-            # Echo Residual Summary
-            """ + "\n",
-            System.Text.Encoding.UTF8.GetString(result.StandardOutput));
-        Assert.Equal("lean provenance\n", System.Text.Encoding.UTF8.GetString(result.StandardError));
-    }
-
-    [Fact]
     public void ReportEntrypointsDelegateToTheSingleHostSupervisor()
     {
         var root = TestRepositoryLayout.FindRoot();
@@ -186,7 +128,7 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Fact]
-    public void IngestWrapperSeparatesReportFreeDigestionFromTruthAlignment()
+    public void IngestWrapperKeepsReportFreeDigestionIndependent()
     {
         var makefile = File.ReadAllText(Path.Combine(TestRepositoryLayout.FindRoot(), "Makefile"));
         Assert.Contains("make test  Run lean-report and check-current", makefile, StringComparison.Ordinal);
@@ -198,92 +140,21 @@ public sealed partial class MakeWorkflowTests
         Assert.DoesNotContain("git -C \"$ROOT\" archive", script, StringComparison.Ordinal);
         Assert.DoesNotContain("report_input_state", script, StringComparison.Ordinal);
         Assert.Contains("ingest_args=(ingest)", script, StringComparison.Ordinal);
-        Assert.Contains("align-digestion-status)", script, StringComparison.Ordinal);
-        Assert.Contains(
-            "--role digestion-alignment-consumer --report \"$REPORT\"",
-            script,
-            StringComparison.Ordinal);
+        Assert.DoesNotContain("align-digestion-status", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("digestion-alignment-consumer", script, StringComparison.Ordinal);
         Assert.Contains("mathlib-reanchor)", script, StringComparison.Ordinal);
         Assert.Contains("make -C \"$ROOT\" lean-report", script, StringComparison.Ordinal);
-        Assert.Contains("git -C \"$ROOT\" merge-base HEAD \"$BASE\"", script, StringComparison.Ordinal);
+        Assert.Contains("git -C \"$ROOT\" merge-base HEAD \"$2\"", script, StringComparison.Ordinal);
         Assert.Contains(
             "ledger-reanchor-mathlib --base \"$base_sha\"",
             script,
             StringComparison.Ordinal);
-        Assert.Equal(
-            2,
-            Regex.Matches(script, Regex.Escape("exec \"$CONSUMER\"")).Count);
-    }
-
-    [Fact]
-    public void QuarantineMakeDoorsForwardStrictInputsThroughTheIngestWrapper()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        var root = TestRepositoryLayout.FindRoot();
-        var makefile = File.ReadAllText(Path.Combine(root, "Makefile"));
-        Assert.Equal(
-            $"\t@/bin/bash {IngestScriptPath} quarantine \"$(BASE)\" \"$(REQUEST)\"",
-            Recipe(makefile, "quarantine"));
-        Assert.Equal(
-            $"\t@/bin/bash {IngestScriptPath} quarantine-clear \"$(BASE)\" \"$(ATOM_ID)\"",
-            Recipe(makefile, "quarantine-clear"));
-        using var fixture = new TemporaryDirectory();
-        var scriptPath = Path.Combine(fixture.Path, IngestScriptPath);
-        var projectDirectory = Path.Combine(fixture.Path, "tools", "StrataLint.Cli");
-        var binDirectory = Path.Combine(fixture.Path, "bin");
-        Directory.CreateDirectory(Path.GetDirectoryName(scriptPath)!);
-        Directory.CreateDirectory(projectDirectory);
-        Directory.CreateDirectory(binDirectory);
-        File.Copy(Path.Combine(root, IngestScriptPath), scriptPath);
-        File.SetUnixFileMode(
-            scriptPath,
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-        var dotnetPath = Path.Combine(binDirectory, "dotnet");
-        File.WriteAllText(
-            dotnetPath,
-            "#!/usr/bin/env bash\nprintf '%s\\n' \"$*\"\nexit \"${FAKE_DOTNET_EXIT:-0}\"\n");
-        File.SetUnixFileMode(
-            dotnetPath,
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-
-        ProcessOutput Run(int fakeDotnetExit, params string[] arguments) => TestProcessRunner.Run(
-            "env",
-            [
-                $"PATH={binDirectory}:/usr/bin:/bin",
-                $"FAKE_DOTNET_EXIT={fakeDotnetExit}",
-                "/bin/bash",
-                scriptPath,
-                .. arguments,
-            ],
-            fixture.Path,
-            TestBudgets.ScriptProcessHangGuard,
-            64 * 1024);
-
-        var set = Run(0, "quarantine", "baseline", "request.toml");
-        Assert.Equal(0, set.ExitCode);
-        Assert.Contains(
-            "quarantine-atom --request request.toml",
-            Encoding.UTF8.GetString(set.StandardOutput),
-            StringComparison.Ordinal);
-
-        var clear = Run(0, "quarantine-clear", "baseline", "atom-id");
-        Assert.Equal(0, clear.ExitCode);
-        Assert.Contains(
-            "quarantine-atom --clear atom-id",
-            Encoding.UTF8.GetString(clear.StandardOutput),
-            StringComparison.Ordinal);
-
-        Assert.Equal(23, Run(23, "quarantine", "baseline", "request.toml").ExitCode);
-        Assert.Equal(23, Run(23, "quarantine-clear", "baseline", "atom-id").ExitCode);
-
-        Assert.Equal(2, Run(0, "quarantine").ExitCode);
-        Assert.Equal(2, Run(0, "quarantine", "baseline").ExitCode);
-        Assert.Equal(2, Run(0, "quarantine-clear", "baseline").ExitCode);
+        Assert.DoesNotContain("exec \"$CONSUMER\"", script, StringComparison.Ordinal);
+        Assert.DoesNotContain("--base \"$BASE\"", script, StringComparison.Ordinal);
     }
 
     [Theory]
-    [InlineData("", "ingest")]
+    [InlineData("", "")]
     [InlineData("alpha beta", "ingest --source alpha --source beta")]
     public void IngestWrapperForwardsSourcesWithoutLeanClosureProbe(string sourcePayload, string expected)
     {
@@ -361,7 +232,7 @@ public sealed partial class MakeWorkflowTests
             "/bin/bash",
             [
                 "-c",
-                "PATH=\"$1:$PATH\" XDG_CACHE_HOME=\"$2\" exec \"$3\" ingest HEAD \"$4\"",
+                "PATH=\"$1:$PATH\" XDG_CACHE_HOME=\"$2\" exec \"$3\" ingest \"$4\"",
                 "ingest-wrapper",
                 binDirectory,
                 Path.Combine(fixture.Path, "cache"),
@@ -372,6 +243,14 @@ public sealed partial class MakeWorkflowTests
             BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
+        if (sourcePayload.Length == 0)
+        {
+            var missingSource = RunWrapper();
+            Assert.Equal(2, missingSource.ExitCode);
+            Assert.Empty(missingSource.StandardOutput);
+            Assert.Contains("USAGE:", Encoding.UTF8.GetString(missingSource.StandardError), StringComparison.Ordinal);
+            return;
+        }
         File.AppendAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), "-- closure delta\n");
         var changed = RunWrapper();
         Assert.Equal(0, changed.ExitCode);

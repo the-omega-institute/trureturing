@@ -163,6 +163,34 @@ public sealed class GitRepositoryGatewayRevisionTests
     }
 
     [Fact]
+    public void ScopedRevisionReadsOnlySelectedBlobBytesFromTheImmutableRevision()
+    {
+        using var repository = new TemporaryDirectory();
+        InitializeRepository(repository.Path);
+        const string target = "selected.txt";
+        File.WriteAllText(Path.Combine(repository.Path, target), "committed target\n", new UTF8Encoding(false));
+        File.WriteAllBytes(Path.Combine(repository.Path, "unrelated.bin"), Enumerable.Repeat((byte)7, 1024 * 1024).ToArray());
+        Directory.CreateDirectory(Path.Combine(repository.Path, "Meta"));
+        File.WriteAllText(Path.Combine(repository.Path, "Meta/FILEMAP.toml"), "unneeded policy bytes\n", new UTF8Encoding(false));
+        TestGit.Run(repository.Path, "add", ".");
+        TestGit.Run(repository.Path, "commit", "-m", "scoped revision fixture");
+        var revision = TestGit.Run(repository.Path, "rev-parse", "HEAD").Trim();
+        var targetOid = TestGit.Run(repository.Path, "rev-parse", revision + ":" + target).Trim();
+        File.WriteAllText(Path.Combine(repository.Path, target), "uncommitted replacement\n", new UTF8Encoding(false));
+        File.Delete(Path.Combine(repository.Path, "unrelated.bin"));
+        var runner = new CountingBlobGitProcessRunner();
+        var gateway = new GitRepositoryGateway(repository.Path, runner, "git");
+
+        var snapshot = gateway.ReadRevision(revision, [":(literal)" + target]);
+
+        Assert.Equal([targetOid], runner.BlobsRead);
+        var entry = Assert.Single(snapshot.Entries);
+        AssertEntry(entry, target, "committed target\n");
+        Assert.Equal("git-sha1:" + targetOid, entry.GitBlobOid);
+        Assert.True(runner.BlobOutputBytes < 128, $"selected body read returned {runner.BlobOutputBytes} bytes");
+    }
+
+    [Fact]
     public void ReadCurrentOmitsDeletedTrackedFileAndIncludesRenamedFile()
     {
         using var repository = new TemporaryDirectory();
@@ -469,6 +497,26 @@ public sealed class GitRepositoryGatewayRevisionTests
 
         private static ProcessOutput Output(string output) =>
             new(0, Encoding.UTF8.GetBytes(output), []);
+    }
+
+    private sealed class CountingBlobGitProcessRunner : IGitProcessRunner
+    {
+        private readonly ProductionGitProcessRunner production = new();
+        internal List<string> BlobsRead { get; } = [];
+        internal int BlobOutputBytes { get; private set; }
+
+        public ProcessOutput Run(string fileName, IReadOnlyList<string> arguments, string workingDirectory,
+            TimeSpan timeout, int maximumOutputBytes = GitRepositoryGateway.DefaultGitOutputBytes,
+            ReadOnlyMemory<byte> standardInput = default)
+        {
+            var result = production.Run(fileName, arguments, workingDirectory, timeout, maximumOutputBytes, standardInput);
+            if (arguments.SequenceEqual(new[] { "cat-file", "--batch" }))
+            {
+                BlobsRead.AddRange(Encoding.UTF8.GetString(standardInput.Span).Split('\n', StringSplitOptions.RemoveEmptyEntries));
+                BlobOutputBytes += result.StandardOutput.Length;
+            }
+            return result;
+        }
     }
 
     private sealed class PrepareGitProcessRunner(string diffNameStatus) : IGitProcessRunner

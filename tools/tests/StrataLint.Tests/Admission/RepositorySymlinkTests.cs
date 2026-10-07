@@ -37,6 +37,22 @@ public sealed class RepositorySymlinkTests
         Assert.Equal("../skills", Text(GitRepositorySnapshotReader.ReadRevision(repository.Path, "HEAD"), ".codex/skills"));
     }
 
+    [Fact]
+    public void GatewayScopedReadUsesTheSameSymlinkAuthorityAsTheWholeSnapshot()
+    {
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        AddSkillAliases(repository.Path);
+
+        var scoped = new GitRepositoryGateway(repository.Path)
+            .ReadCurrent(["Meta", ".codex/skills"]);
+
+        Assert.Equal("../skills", Text(scoped, ".codex/skills"));
+        Assert.Contains(scoped.Entries, entry => entry.Path == "skills/example/SKILL.md");
+        Assert.DoesNotContain(scoped.Entries, entry =>
+            entry.Path.StartsWith(".codex/skills/", StringComparison.Ordinal));
+    }
+
     [Theory]
     [InlineData("file", false)]
     [InlineData("file", true)]
@@ -106,6 +122,8 @@ public sealed class RepositorySymlinkTests
         Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadCurrent(
             repository.Path, path => !filtered || path != "skills/vendor"));
         Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadRevision(repository.Path, "HEAD"));
+        Assert.Throws<InvalidOperationException>(() => new GitRepositoryGateway(repository.Path)
+            .ReadRevision("HEAD", [":(literal).codex/skills"]));
     }
 
     [Theory]
@@ -273,10 +291,62 @@ public sealed class RepositorySymlinkTests
             GitRepositorySnapshotReader.ReadCurrent(repository.Path, pathspecs: scope));
     }
 
-    [Fact]
-    public void WorkingTreeReadTakesNamedPathsAndSkipsDotNamesBelowDirectories()
+    [Theory]
+    [InlineData("file")]
+    [InlineData("directory")]
+    public void ScopedRevisionKeepsOutsideReferentsAndItsOwnIncludedPolicy(string kind)
     {
         using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        var (target, member) = kind == "file"
+            ? ("../docs/reference.md", "docs/reference.md")
+            : ("../docs/reference", "docs/reference/page.md");
+        Write(repository.Path, member, "committed reference\n");
+        if (kind == "directory") Write(repository.Path, "docs/reference/deep/page.md", "complete directory\n");
+        Write(repository.Path, "unrelated.txt", "unrelated\n");
+        Declare(repository.Path, ("Meta/reference", target, kind));
+        Link(repository.Path, "Meta/reference", target);
+        const string fragment = "Meta/FILEMAP.reference.toml";
+        var original = File.ReadAllText(Path.Combine(repository.Path, "Meta/FILEMAP.toml"));
+        Write(repository.Path, fragment, "schema_version = 3\n" + original[original.IndexOf("[[files]]", StringComparison.Ordinal)..]);
+        Write(repository.Path, "Meta/FILEMAP.toml", "schema_version = 3\ninclude = [\"FILEMAP.reference.toml\"]\n");
+        Commit(repository.Path);
+        var revision = Git(repository.Path, "rev-parse", "HEAD").Trim();
+        Write(repository.Path, "Meta/FILEMAP.toml", "invalid TOML [\n");
+        File.Delete(Path.Combine(repository.Path, member));
+
+        var read = new GitRepositoryGateway(repository.Path).ReadRevision(revision, [":(literal)Meta/reference"]);
+
+        Assert.Equal(target, Text(read, "Meta/reference"));
+        Assert.Equal("committed reference\n", Text(read, member));
+        Assert.DoesNotContain(read.Entries, entry => entry.Path == "unrelated.txt");
+        Assert.Contains(read.Entries, entry => entry.Path == fragment);
+        if (kind == "directory")
+            Assert.Equal("complete directory\n", Text(read, "docs/reference/deep/page.md"));
+    }
+
+    [Fact]
+    public void ScopedRevisionIgnoresAnUnselectedLinkAndRejectsItWhenSelected()
+    {
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        Write(repository.Path, "selected.txt", "selected\n");
+        Link(repository.Path, "unrelated/invalid", "../absent");
+        Commit(repository.Path);
+        var gateway = new GitRepositoryGateway(repository.Path);
+
+        var read = gateway.ReadRevision("HEAD", [":(literal)selected.txt"]);
+
+        Assert.Equal("selected\n", Text(read, "selected.txt"));
+        Assert.DoesNotContain(read.Entries, entry => entry.Path == "unrelated/invalid");
+        Assert.Throws<InvalidOperationException>(() => gateway.ReadRevision("HEAD", [":(literal)unrelated/invalid"]));
+    }
+
+    [Fact]
+    public void ScopedReadUsesNamedPathspecsAndRetainsSelectedDotFiles()
+    {
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
         Write(repository.Path, "Meta/Digestion/atomizers.toml", "rules\n");
         Write(repository.Path, "Meta/.DS_Store", "finder\n");
         Write(repository.Path, "Reg/Probe.lean", "theorem probe : True := True.intro\n");
@@ -284,14 +354,52 @@ public sealed class RepositorySymlinkTests
         Write(repository.Path, "Reg.lean", "sibling of the Reg directory\n");
         Write(repository.Path, ".editorconfig", "root = true\n");
         Write(repository.Path, "docs/reports/unrelated.json", "{}\n");
+        Commit(repository.Path);
 
-        var read = WorkingTreeReader.Read(repository.Path, ["Meta", "Reg", ".editorconfig", "absent/path"]);
+        var read = GitRepositorySnapshotReader.ReadCurrent(
+            repository.Path,
+            pathspecs: [":(glob)Meta/**", ":(glob)Reg/**", ".editorconfig"]);
+
+        Assert.Contains(read.Entries, entry => entry.Path == ".editorconfig");
+        Assert.Contains(read.Entries, entry => entry.Path == "Meta/Digestion/atomizers.toml");
+        Assert.Contains(read.Entries, entry => entry.Path == "Meta/.DS_Store");
+        Assert.Contains(read.Entries, entry => entry.Path == "Reg/Probe.lean");
+        Assert.Contains(read.Entries, entry => entry.Path == "Reg/.lake/build/Probe.olean");
+        Assert.DoesNotContain(read.Entries, entry => entry.Path == "Reg.lean");
+        Assert.DoesNotContain(read.Entries, entry => entry.Path == "docs/reports/unrelated.json");
+        Assert.Equal("rules\n", Text(read, "Meta/Digestion/atomizers.toml"));
+    }
+
+    [Fact]
+    public void LargeLiteralScopeKeepsSelectedFilesAndValidatesTheirLinkReferents()
+    {
+        if (OperatingSystem.IsWindows()) return;
+        using var repository = new TemporaryDirectory();
+        Initialize(repository.Path);
+        Write(repository.Path, "docs/reference.md", "reference\n");
+        Declare(repository.Path, ("Meta/reference", "../docs/reference.md", "file"));
+        Link(repository.Path, "Meta/reference", "../docs/reference.md");
+        Commit(repository.Path);
+        Write(repository.Path, "D5/untracked.lean", "untracked\n");
+        Link(repository.Path, "outside/invalid", "../missing");
+        var paths = Enumerable.Range(0, 24000)
+            .Select(index => ":(literal)absent/" + index + "/" + new string('a', 100))
+            .ToArray();
+        paths[0] = ":(glob)Meta/*";
+        paths[^1] = "Meta/FILEMAP.toml";
+        string[] scope = [.. paths, "D5/untracked.lean"];
+
+        var read = GitRepositorySnapshotReader.ReadCurrent(repository.Path, pathspecs: scope);
 
         Assert.Equal(
-            [".editorconfig", "Meta/Digestion/atomizers.toml", "Reg/Probe.lean"],
+            ["D5/untracked.lean", "Meta/FILEMAP.toml", "Meta/reference", "docs/reference.md"],
             read.Entries.Select(entry => entry.Path));
-        Assert.Equal("rules\n", Text(read, "Meta/Digestion/atomizers.toml"));
-        Assert.Throws<ArgumentException>(() => WorkingTreeReader.Read(repository.Path, ["../outside"]));
+        Assert.Equal("reference\n", Text(read, "docs/reference.md"));
+        Assert.Equal("untracked\n", Text(read, "D5/untracked.lean"));
+        Assert.Throws<InvalidOperationException>(() => GitRepositorySnapshotReader.ReadCurrent(repository.Path));
+        File.Delete(Path.Combine(repository.Path, "docs/reference.md"));
+        Assert.Throws<InvalidOperationException>(() =>
+            GitRepositorySnapshotReader.ReadCurrent(repository.Path, pathspecs: scope));
     }
 
     [Fact]
@@ -395,6 +503,8 @@ public sealed class RepositorySymlinkTests
         Declare(repository.Path, (path, target, kind), ("next", "plain.md", "file"));
         Link(repository.Path, path, target);
         AssertBothReject(repository.Path);
+        Assert.Throws<InvalidOperationException>(() => new GitRepositoryGateway(repository.Path)
+            .ReadRevision("HEAD", [":(literal)" + path]));
     }
 
     [Fact]

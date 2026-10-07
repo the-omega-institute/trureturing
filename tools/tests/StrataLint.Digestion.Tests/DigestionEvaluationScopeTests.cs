@@ -8,38 +8,6 @@ namespace StrataLint.Digestion.Tests;
 public sealed class DigestionEvaluationScopeTests
 {
     [Fact]
-    public void EmptyChangeSetRetainsWholeTreeDiagnostics()
-    {
-        var scope = DigestionEvaluationScopes.ForChanges(
-            RawChangeSet.Create(Array.Empty<string>()),
-            "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs", RuleFixture.RegisteredBuildInputs);
-
-        Assert.Equal(DigestionEvaluationScope.FullScan, scope);
-    }
-
-    [Fact]
-    public void IngestScopePartialOnlyDeltaTriggersFullScan()
-    {
-        var scope = DigestionEvaluationScopes.ForChanges(
-            RawChangeSet.Create(
-                ["tools/StrataLint.Cli/Commands/Digestion/IngestCommand.Scope.cs"]),
-            "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs", RuleFixture.RegisteredBuildInputs);
-
-        Assert.Equal(DigestionEvaluationScope.FullScan, scope);
-    }
-
-    [Fact]
-    public void NewCallerPartialAutomaticallyEntersImplementationDirectoryClosure()
-    {
-        var scope = DigestionEvaluationScopes.ForChanges(
-            RawChangeSet.Create(
-                ["tools/StrataLint.Cli/Commands/Digestion/IngestCommand.FuturePartial.cs"]),
-            "tools/StrataLint.Cli/Commands/Digestion/IngestCommand.cs", RuleFixture.RegisteredBuildInputs);
-
-        Assert.Equal(DigestionEvaluationScope.FullScan, scope);
-    }
-
-    [Fact]
     public void ChangedSetDoesNotReplayProjectedStatusForAnUnchangedEntry()
     {
         var evaluation = EvaluateMismatchedProjectedStatus(
@@ -68,12 +36,9 @@ public sealed class DigestionEvaluationScopeTests
     {
         var changes = RawChangeSet.Create(
             ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]);
-        var scope = DigestionEvaluationScopes.ForChanges(
-            changes,
-            "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs", RuleFixture.RegisteredBuildInputs);
+        const DigestionEvaluationScope scope = DigestionEvaluationScope.FullScan;
         var evaluation = EvaluateMismatchedProjectedStatus(changes, scope);
 
-        Assert.Equal(DigestionEvaluationScope.FullScan, scope);
         Assert.Contains(
             evaluation.Findings,
             static finding => finding.Contains("handwritten status", StringComparison.Ordinal));
@@ -84,25 +49,20 @@ public sealed class DigestionEvaluationScopeTests
     {
         var changes = RawChangeSet.Create(
             ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]);
-        var scope = DigestionEvaluationScopes.ForChanges(
-            changes,
-            "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs", RuleFixture.RegisteredBuildInputs);
+        const DigestionEvaluationScope scope = DigestionEvaluationScope.FullScan;
         var evaluation = EvaluateMismatchedCoverageReceipt(changes, scope);
 
-        Assert.Equal(DigestionEvaluationScope.FullScan, scope);
         Assert.Contains(
             evaluation.Entries.Single().Gaps,
             static gap => gap.Code == "coverage-target-mismatch");
     }
 
     [Fact]
-    public void ExplicitFullScanStillValidatesCasIntegrity()
+    public void FullScanLeavesCasIntegrityToTheAtomCommand()
     {
         var changes = RawChangeSet.Create(
             ["tools/StrataLint.Engine/Digestion/Evaluation/DigestionStatusEvaluator.cs"]);
-        var scope = DigestionEvaluationScopes.ForChanges(
-            changes,
-            "tools/StrataLint.Cli/Commands/DigestStatusCommand.cs", RuleFixture.RegisteredBuildInputs);
+        const DigestionEvaluationScope scope = DigestionEvaluationScope.FullScan;
         var sourceBytes = Encoding.UTF8.GetBytes("manual full scan CAS\n");
         var atom = Atom("manual/full-scan-cas", sourceBytes);
         var document = Ledger(
@@ -120,8 +80,7 @@ public sealed class DigestionEvaluationScopeTests
             AcceptedLean(Array.Empty<string>()),
             changes: changes);
 
-        Assert.Equal(DigestionEvaluationScope.FullScan, scope);
-        Assert.Contains(
+        Assert.DoesNotContain(
             evaluation.Findings,
             finding => finding.Contains("CAS blob hash mismatch", StringComparison.Ordinal));
     }
@@ -137,7 +96,7 @@ public sealed class DigestionEvaluationScopeTests
             DigestionTruthState.Open,
             includeCoverageGid: false);
         var snapshot = Snapshot(("docs/source.md", sourceBytes), CasFile(atom));
-        var fullScanCas = DigestionCasStore.Evaluate(document, snapshot);
+        var fullScanCas = DigestionCasStore.EvaluateLedgerReferences(document, snapshot);
         var changes = RawChangeSet.Create(["notes/r17-unrelated-scope.txt"]);
 
         var exception = Assert.Throws<ArgumentException>(() =>
@@ -227,7 +186,6 @@ public sealed class DigestionEvaluationScopeTests
             document,
             snapshot,
             AcceptedLean(targetPath),
-            baselineDocument: document,
             changes: changes);
     }
 
