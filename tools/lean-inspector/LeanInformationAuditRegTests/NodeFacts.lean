@@ -43,6 +43,14 @@ def proofCoverage : NodeCoverage where
 
 def truth : Prop := True
 def otherTruth : Prop := ¬ False
+
+def certifiedProof : True := True.intro
+
+def proofAsData : NodeFact := .data True True.intro {
+  owner := `LeanInformationAuditRegTests.NodeFacts
+  declaration := `LeanInformationAuditRegTests.NodeFacts.certifiedProof
+  part := .value
+  path := [] }
 def propositionBridge : NodeFact := .equivalent True (¬ False)
   { owner := `LeanInformationAuditRegTests.NodeFacts,
     declaration := `LeanInformationAuditRegTests.NodeFacts.truth, part := .value, path := [] }
@@ -257,6 +265,20 @@ unsafe def check : IO Unit := do
     `LeanInformationAuditRegTests.NodeFacts.exactTypeFact `LeanInformationAuditRegTests.NodeFacts.exactOtherTypeFact
   let compiledView := RegistrationGates.CompiledView.fromArtifacts store
     `LeanInformationAuditRegTests.NodeFacts
+  let proofData ← IO.ofExcept <| Contract.NodeFacts.fact view
+    `LeanInformationAuditRegTests.NodeFacts.proofAsData
+  let proofSession ← IO.mkRef ({} : RegistrationGates.ProvenanceSession)
+  let proofContext : RegistrationGates.QueryContext := {
+    view := compiledView, session := proofSession
+    heartbeatStart := ← IO.getNumHeartbeats
+    heartbeatLimit := RegistrationGates.provenanceDefEqHeartbeats }
+  let proofName := mkConst `LeanInformationAuditRegTests.NodeFacts.certifiedProof
+  unless !(← (RegistrationGates.typedNodeProof proofName).run proofContext) do
+    throw <| IO.userError "proof.unbound_definition_cut"
+  unless ← (RegistrationGates.typedNodeProof (mkConst ``True.intro)).run
+      { proofContext with nodeFacts := proofData } do
+    throw <| IO.userError "proof.data_at_prop_not_recognized"
+  IO.println "[PASS] proof cuts require compiler theorem kind or bound proof evidence"
   let checkApart := fun (label : String) (facts : Array Contract.NodeFacts.BoundOperand)
       (left right : Expr) (expected : Bool) => do
     let session ← IO.mkRef ({} : RegistrationGates.ProvenanceSession)
@@ -349,6 +371,10 @@ unsafe def check : IO Unit := do
     declaration := `LeanInformationAuditRegTests.NodeFacts.discardedInput, part := .value, path := [] }
   reject "discarded argument retained" "contract.node_binding:closure_unsafe"
     (Contract.NodeFacts.coverage dataTainted #[discardedLocation] discarded.value)
+  reject "external source leaf retained" "contract.node_binding:closure_unsafe"
+    (Contract.NodeFacts.coverage { dataTainted with sourceLeaf := fun n =>
+      n == `LeanInformationAuditRegTests.NodeFacts.dataValue }
+      #[discardedLocation] discarded.value)
   reject "omitted root" "contract.node_binding:coverage_roots"
     (Contract.NodeFacts.coverage view #[] cover.value)
   reject "wrong owner" "contract.node_binding:owner"

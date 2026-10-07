@@ -72,6 +72,8 @@ def coordinate (find : Name → Option ConstantInfo) (e : Expr) : Except String 
 def locate (view : View) (location : NodeCoordinate) : Except String Expr := do
   unless view.owner location.declaration == some location.owner do bad s!"owner:{location.declaration}"
   let some info := view.find location.declaration | bad s!"missing:{location.declaration}"
+  unless !info.isUnsafe && !view.external location.declaration do
+    bad s!"unsafe:{location.declaration}"
   unless info.levelParams.length == location.levels.length do bad "level_parameters"
   let mut node ← match location.part with
     | .type => pure (Literal.instantiateRawLevels info.levelParams location.levels info.type)
@@ -124,7 +126,7 @@ structure BoundOperand where
  The proof fields have already been checked by the Reg compiler. -/
 def fact (view : View) (name : Name) : Except String (Array BoundOperand) := do
   let some (.defnInfo info) := view.find name | bad s!"fact_definition:{name}"
-  unless info.safety == .safe do bad s!"fact_safety:{name}"
+  unless info.safety == .safe && !view.external name do bad s!"fact_safety:{name}"
   if !info.type.isConstOf ``NodeFact then
     let mut type := info.type
     let mut value := info.value
@@ -323,6 +325,8 @@ def coverage (view : View) (expected : Array NodeCoordinate) (payload : Expr)
           for constructor in inductiveInfo.ctors do
             let some ctor := view.find constructor | bad "closure_constructor"
             let some ctorOwner := view.owner constructor | bad "closure_constructor_owner"
+            unless !ctor.isUnsafe && !view.external constructor do
+              bad s!"closure_unsafe:{constructor}"
             pending := pending.push ({
               owner := ctorOwner
               declaration := constructor

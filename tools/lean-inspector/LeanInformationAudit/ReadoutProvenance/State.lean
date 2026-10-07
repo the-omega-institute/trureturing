@@ -889,12 +889,12 @@ def typedNodeProof (e : Expr) : QueryM Bool := do
     unless info.levelParams.length == levels.length do
       throw <| IO.userError "contract.node_binding:proof_levels"
     if info matches .thmInfo _ then return true
-    if info matches .defnInfo _ then
-      let type := Contract.Literal.instantiateRawLevels info.levelParams levels info.type
-      return ← typedNodeProp type
   if let some fact ← matchingFact e then
     if fact.role == .proof then return true
-    if fact.role == .data || fact.role == .type then return false
+    if fact.role == .type then return false
+    -- A data or relation constructor can itself carry a proof. Only the
+    -- compiler-checked universe of its complete type authorizes this cut.
+    if fact.typeSort == some .zero then return true
   return false
 
 /-- Eq and Iff witnesses are used only for mathematical correspondence.

@@ -19,6 +19,21 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
         sealRecord.compiledEvidence && sealRecord.catalog.units.size == 2) do
       throw <| IO.userError "compiled.seal:complete_unit_membership"
     let snapshot ← ArtifactAssessment.discover store root
+    let some (inputOwner, row) := snapshot.registrations[0]?
+      | throw <| IO.userError "compiled.coverage:registration_missing"
+    let coverageFields ← IO.ofExcept <| Contract.Literal.fields (store.constants[·]?)
+      ``Contract.NodeCoverage row.input.coverage 2
+    let omitted := mkApp2 (mkConst ``Contract.NodeCoverage.mk)
+      (mkApp (mkConst ``List.nil [.zero]) (mkConst ``Contract.NodeCoordinate)) coverageFields[1]!
+    let rejectedAction : ArtifactRegistration.M (Array BindingRecord) := do
+      ArtifactRegistration.register inputOwner { row with input := { row.input with coverage := omitted } }
+      ArtifactRegistration.assessJoined root
+    let (rejected, _) ← rejectedAction.run { store, plans := state.plans }
+    unless rejected.size == 1 && rejected.all (fun record => match record.result with
+        | .declaredUnresolved message => (message.splitOn "E7.registration_coverage").length == 2
+        | _ => false) do
+      throw <| IO.userError "compiled.coverage:invalid_root_not_unresolved"
+    IO.println "[PASS] invalid raw coverage produces an unresolved record without admission"
     let some (_, contract) := snapshot.roots.find? (·.2.rootId == root)
       | throw <| IO.userError "compiled.seal:root_missing"
     let entries := ArtifactRegistration.entriesFor state root

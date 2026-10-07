@@ -188,13 +188,21 @@ unsafe def register (owner : Name) (row : Decoder.CompanionInput) : M Unit := do
   let initialView : Contract.NodeFacts.View := {
     find := context.provenance.view.find?
     owner := context.provenance.view.ownerOf
-    external := fun n => RegistrationGates.inProtected context.provenance.view n &&
-      (context.extern n || context.implementedBy n) }
+    external := fun n => context.extern n || context.implementedBy n }
   let leaves ← IO.ofExcept <| sourceLeaves initialView input.entry.theoremName input.coverageRoots
   let view := { initialView with
     sourceLeaf := fun name =>
       leaves.contains name || !RegistrationGates.inProtected context.provenance.view name }
-  discard <| IO.ofExcept <| Contract.NodeFacts.coverage view input.coverageRoots input.coverage
+  let coverageDiagnostic := match Contract.NodeFacts.coverage view input.coverageRoots input.coverage with
+    | .ok _ => none
+    | .error reason =>
+      if reason.startsWith "contract.node_binding:closure_unsafe:" ||
+          reason.startsWith "contract.node_binding:unsafe:" ||
+          reason.startsWith "contract.node_binding:fact_safety:" then
+        some s!"forbidden_dependency:E6.registration_coverage:{reason}"
+      else if reason == "contract.node_binding:coverage_fuel" then
+        some s!"incomplete_closure:E8.registration_coverage:{reason}"
+      else some s!"incomplete_closure:E7.registration_coverage:{reason}"
   let fs ← IO.ofExcept <| Contract.Literal.fields view.find ``Contract.NodeCoverage input.coverage 2
   let factTable ← IO.ofExcept <| Contract.Literal.resolveReferences view.find fs[1]!
   let names ← IO.ofExcept <| Contract.Literal.list "registration.facts" factTable
@@ -218,15 +226,18 @@ unsafe def register (owner : Name) (row : Decoder.CompanionInput) : M Unit := do
   CompiledRegistration.validateBinding ((← get).store.constants[·]?) { input with entry }
   CompiledRegistration.validateCore ((← get).store.constants[·]?) entry
   CompiledRegistration.validateUnique entry (entriesFor (← get) owner)
-  let diagnostic ← if entry.sourceBound then pure none else
+  let finiteDiagnostic ← if entry.sourceBound then pure none else
     CompiledRegistration.validateFinite ((← get).store.constants[·]?) entry input.options
   let type := (← CompiledRegistration.constant ((← get).store.constants[·]?) entry.realizationName).type
   if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization &&
-      diagnostic.isSome then
-    throw <| IO.userError s!"unclassified_form:dtr.forward_bridge_requires_sensitivity:{diagnostic.get!}"
+      finiteDiagnostic.isSome then
+    throw <| IO.userError s!"unclassified_form:dtr.forward_bridge_requires_sensitivity:{finiteDiagnostic.get!}"
+  let diagnostic := coverageDiagnostic.or finiteDiagnostic
   keepDiagnostic entry diagnostic
   modify fun state => { state with entries := state.entries.push entry }
-  occurrence owner { input with entry } row.target canonicalArena
+  let declaration := input.declaration.map fun declaration => {
+    declaration with diagnostic := coverageDiagnostic.or declaration.diagnostic }
+  occurrence owner { input with entry, declaration } row.target canonicalArena
   let state ← get
   let some (_, event) := state.events.back? | throw <| IO.userError "incomplete_closure:registration.event"
   modify fun state => { state with coverageInputs := state.coverageInputs.push (event.key, state.activeFacts) }

@@ -31,26 +31,15 @@ private def checkHeader (path : System.FilePath) : IO Unit := do
         && (header.extract 40 80) == githash.toUTF8 do
       throw <| IO.userError s!"raw.compiler_identity:{path}"
 
-private def isPropCheap (find : Name → Option ConstantInfo) (type : Expr) : Bool := Id.run do
-  let mut type := type
-  while type.isForall do type := type.bindingBody!
-  let .const name .. := type.getAppFn | return false
-  let some info := find name | return false
-  let mut result := info.type
-  for _ in [:type.getAppNumArgs] do
-    unless result.isForall do return false
-    result := result.bindingBody!
-  return result.isProp
-
 /-- Same duplicate-theorem preference as the pinned compiler's private import
-view; different definitions or incompatible duplicates are rejected. -/
-private def subsumes (constants : Std.HashMap Name ConstantInfo)
-    (left right : ConstantInfo) : Bool :=
+view; identical axiom declarations need no proposition classification.
+Different definitions or incompatible duplicates are rejected. -/
+private def subsumes (left right : ConstantInfo) : Bool :=
   left.name == right.name && left.type == right.type && left.levelParams == right.levelParams &&
     match left, right with
     | .thmInfo a, .thmInfo b => a.all == b.all
     | .thmInfo a, .axiomInfo b => a.all == [b.name] && !b.isUnsafe
-    | .axiomInfo a, .axiomInfo b => a.isUnsafe == b.isUnsafe && isPropCheap (constants[·]?) a.type
+    | .axiomInfo a, .axiomInfo b => a.isUnsafe == b.isUnsafe
     | _, _ => false
 
 private unsafe def readOwnParts (name : Name) : IO (ModuleData × Array CompactedRegion) := do
@@ -98,8 +87,8 @@ unsafe def loadModule (name : Name) (store : IO.Ref Store) : IO Unit := do
   let mut constants ← store.modifyGet fun s => (s.constants, { s with constants := {} })
   for info in data.constants do
     if let some previous := constants[info.name]? then
-      if subsumes constants info previous then constants := constants.insert info.name info
-      else unless subsumes constants previous info do
+      if subsumes info previous then constants := constants.insert info.name info
+      else unless subsumes previous info do
         throw <| IO.userError s!"raw.conflicting_constant:{name}:{info.name}"
     else constants := constants.insert info.name info
   store.modify fun s => { s with

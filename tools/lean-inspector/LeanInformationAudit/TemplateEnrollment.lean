@@ -854,8 +854,7 @@ def compileTemplate (rootId enrollmentName name : Name) (constructors : Array Na
   if limit == 0 then fail "incomplete_closure:E8.work"
   let nodeView : Contract.NodeFacts.View := {
     find := env.find?, owner := env.ownerOf,
-    external := fun n => RegistrationGates.inProtected env n &&
-      (context.implementedBy n || context.extern n)
+    external := fun n => context.implementedBy n || context.extern n
     sourceLeaf := fun n => !RegistrationGates.inProtected env n }
   let root := fun (declaration : Name) (part : Contract.NodePart) => do
     let some constant := env.find? declaration | fail "incomplete_closure:E7.coverage_constant"
