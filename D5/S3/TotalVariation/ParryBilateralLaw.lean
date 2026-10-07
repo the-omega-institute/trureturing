@@ -533,7 +533,7 @@ theorem bilateral_parry_law (k : ℕ) (hk : 2 ≤ k) :
   let finiteLaw (n : ℕ) : ProbabilityMeasure (Fin (n + 1) → State k) :=
     ⟨(pLaw n).toMeasure, inferInstance⟩
   let laws (l : ℕ) : ProbabilityMeasure (Fin 1 → B l) :=
-    (finiteLaw (2 * l)).map (measurable_of_countable (fun w _ => w)).aemeasurable
+    (finiteLaw (2 * l)).map (fun w _ => w)
   have laws_compatible (l : ℕ) :
       (laws (l + 1) : Measure (Fin 1 → B (l + 1))).map (fun y j => bond l (y j)) =
         (laws l : Measure (Fin 1 → B l)) := by
@@ -598,7 +598,7 @@ theorem bilateral_parry_law (k : ℕ) (hk : 2 ≤ k) :
     dsimp [t] at *
     omega
   let ν : ProbabilityMeasure (ℤ → State k) :=
-    threadLaw.map (unpack_measurable.comp (measurable_pi_apply 0)).aemeasurable
+    threadLaw.map (fun y => unpack (y 0))
   have ν_center (l : ℕ) :
       (ν : Measure (ℤ → State k)).map (fun x (i : Fin (2 * l + 1)) => x ((i.val : ℤ) - l)) =
         (pLaw (2 * l)).toMeasure := by
@@ -656,7 +656,7 @@ theorem bilateral_parry_law (k : ℕ) (hk : 2 ≤ k) :
       (hρ : ∀ l, (ρ : Measure (ℤ → State k)).map
         (fun x (i : Fin (2 * l + 1)) => x ((i.val : ℤ) - l)) =
         (pLaw (2 * l)).toMeasure) : ρ = ν := by
-    have hu : ρ.map pack_measurable.aemeasurable = threadLaw := by
+    have hu : ρ.map pack = threadLaw := by
       apply unique_thread
       intro l
       change ((ρ : Measure (ℤ → State k)).map pack).map (levelProjection bond 1 l) = _
@@ -706,7 +706,7 @@ theorem bilateral_parry_law (k : ℕ) (hk : 2 ≤ k) :
     intro t
     exact (measurable_of_countable TwistedResetPaths.flip).comp (measurable_pi_apply t)
   have ν_flip : (ν : Measure (ℤ → State k)).map flipPath = ν := by
-    have hu := ν_unique (ν.map flip_measurable.aemeasurable) (fun l => by
+    have hu := ν_unique (ν.map flipPath) (fun l => by
       change ((ν : Measure (ℤ → State k)).map flipPath).map _ = _
       rw [Measure.map_map (by fun_prop) flip_measurable]
       have he : (fun x (i : Fin (2 * l + 1)) => x ((i.val : ℤ) - l)) ∘ flipPath =
@@ -763,7 +763,7 @@ theorem bilateral_parry_law (k : ℕ) (hk : 2 ≤ k) :
   let F (z : Bool × RelationPath k) := (e z).val
   have Fmeas : Measurable F := measurable_subtype_coe.comp e.measurable
   have Fembedding : MeasurableEmbedding F := sub_embedding.comp e.measurableEmbedding
-  let ρ : ProbabilityMeasure (Bool × RelationPath k) := νS.map e.symm.measurable.aemeasurable
+  let ρ : ProbabilityMeasure (Bool × RelationPath k) := νS.map e.symm
   have ρ_map : (ρ : Measure (Bool × RelationPath k)).map F = ν := by
     change ((νS : Measure (ResetPath k)).map e.symm).map F = _
     rw [Measure.map_map Fmeas e.symm.measurable]
@@ -805,7 +805,7 @@ theorem bilateral_parry_law (k : ℕ) (hk : 2 ≤ k) :
     apply Fembedding.map_injective
     rw [Measure.map_map Fmeas Aflip_measurable, Fflip,
       ← Measure.map_map flip_measurable Fmeas, ρ_map, ν_flip]
-  let μ : ProbabilityMeasure (RelationPath k) := ρ.map measurable_snd.aemeasurable
+  let μ : ProbabilityMeasure (RelationPath k) := ρ.map Prod.snd
   let u : Measure Bool := fairAnchor
   have : IsProbabilityMeasure u := inferInstanceAs (IsProbabilityMeasure (PMF.toMeasure _))
   have fair_singleton (A : Set (RelationPath k)) (hA : MeasurableSet A) (b : Bool) :
@@ -895,7 +895,7 @@ theorem bilateral_parry_law (k : ℕ) (hk : 2 ≤ k) :
   let shiftPath (x : ℤ → State k) : ℤ → State k := fun t => x (t + 1)
   have shift_measurable : Measurable shiftPath := by dsimp [shiftPath]; fun_prop
   have ν_shift : (ν : Measure (ℤ → State k)).map shiftPath = ν := by
-    have hu := ν_unique (ν.map shift_measurable.aemeasurable) (fun l => by
+    have hu := ν_unique (ν.map shiftPath) (fun l => by
       change ((ν : Measure (ℤ → State k)).map shiftPath).map _ = _
       rw [Measure.map_map (by fun_prop) shift_measurable]
       have he : (fun x (i : Fin (2 * l + 1)) => x ((i.val : ℤ) - l)) ∘ shiftPath =

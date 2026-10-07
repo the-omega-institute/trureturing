@@ -167,7 +167,7 @@ theorem exact_conditional_preparation_cost {ι : Type*} [Fintype ι] [DecidableE
         (Finset.sum_eq_zero_iff_of_nonneg fun k _ =>
           (htermpsd k).dotProduct_mulVec_nonneg z).mp hquad j (Finset.mem_univ j)
       have htermzero : (K j * ρ * (K j)ᴴ) *ᵥ z = 0 :=
-        ((htermpsd j).dotProduct_mulVec_zero_iff z).mp hquadj
+        ((htermpsd j).dotProduct_mulVec_zero_iff (x := z)).mp hquadj
       have hrankxzero : rankOneDensity x *ᵥ z = 0 := by
         rw [hsandwich (K j) ψ q, Matrix.smul_mulVec] at htermzero
         exact (smul_eq_zero.mp htermzero).resolve_left hqne

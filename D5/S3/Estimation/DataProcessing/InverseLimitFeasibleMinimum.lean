@@ -77,7 +77,7 @@ theorem exists_feasible_minimum_eq_iSup {B : ℕ → Type u}
   classical
   let c (l : ℕ) : B l → Fin 1 → B l := fun x _ => x
   have hc (l : ℕ) : Measurable (c l) := Measurable.of_eval fun _ => measurable_id
-  let U (l : ℕ) : ProbabilityMeasure (Fin 1 → B l) := (μ₀ l).map (hc l).aemeasurable
+  let U (l : ℕ) : ProbabilityMeasure (Fin 1 → B l) := (μ₀ l).map (c l)
   have hU (l : ℕ) : (U (l + 1) : Measure (Fin 1 → B (l + 1))).map
       (fun y j => q l (y j)) = (U l : Measure (Fin 1 → B l)) := by
     change ((μ₀ (l + 1) : Measure (B (l + 1))).map (c (l + 1))).map
@@ -86,7 +86,7 @@ theorem exists_feasible_minimum_eq_iSup {B : ℕ → Type u}
       Measure.map_map (hc l) (measurable_of_countable (q l))]
     rfl
   obtain ⟨ν, hν, _⟩ := exists_unique_probability_extension q hq 1 U hU
-  let μ : ProbabilityMeasure (Thread B q) := ν.map (measurable_pi_apply 0).aemeasurable
+  let μ : ProbabilityMeasure (Thread B q) := ν.map (fun y => y 0)
   have hμ (l : ℕ) : (μ : Measure (Thread B q)).map (fun x => x.val l) =
       (μ₀ l : Measure (B l)) := by
     have hp : Measurable (fun x : Thread B q => x.val l) :=
@@ -113,13 +113,13 @@ theorem exists_feasible_minimum_eq_iSup {B : ℕ → Type u}
   have hp (l : ℕ) : Measurable (fun x : Thread B q => x.val l) :=
     (measurable_pi_apply l).comp measurable_subtype_coe
   have hb (l : ℕ) : Measurable (b l) := measurable_of_countable _
-  let μL (l : ℕ) := μ.map (hp l).aemeasurable
-  let PL L := P.map (hπ L).aemeasurable
+  let μL (l : ℕ) := μ.map (fun x => x.val l)
+  let PL L := P.map (π L)
   let F (l : ℕ) : Set (ProbabilityMeasure (A l)) :=
     {Q | Feasible (g l) (S l) (μL l : Measure (B l)) (Q : Measure _)}
   let f (l : ℕ) (Q : ProbabilityMeasure (A l)) :=
     measurableTotalVariation (PL l : Measure (A l)) (Q : Measure (A l))
-  let p (l : ℕ) (Q : ProbabilityMeasure (A (l + 1))) := Q.map (hb l).aemeasurable
+  let p (l : ℕ) (Q : ProbabilityMeasure (A (l + 1))) := Q.map (b l)
   have hmass {C : Type u} [Finite C] [TopologicalSpace C] [DiscreteTopology C]
       [MeasurableSpace C] [BorelSpace C] (E : Set C) :
       Continuous (fun Q : ProbabilityMeasure C => (Q : Measure C) E) := by
@@ -140,7 +140,7 @@ theorem exists_feasible_minimum_eq_iSup {B : ℕ → Type u}
     have hmc (j : Fin (n + 1)) : IsClosed {Q : ProbabilityMeasure (A l) |
         (Q : Measure (A l)).map (fun y => y j) = (μL l : Measure (B l))} := by
       have hc : IsClosed {Q : ProbabilityMeasure (A l) |
-          Q.map (measurable_pi_apply j).aemeasurable = μL l} :=
+          Q.map (fun y => y j) = μL l} :=
         isClosed_eq (ProbabilityMeasure.continuous_map (continuous_apply j)) continuous_const
       convert hc using 1
       ext Q
@@ -261,7 +261,7 @@ theorem exists_feasible_minimum_eq_iSup {B : ℕ → Type u}
     have hRL := (feasible_iff_all_levels q g hg n S μ R).mp hR
     rw [total_variation_eq_iSup_level q (n + 1)]
     refine iSup_le fun l => ?_
-    let RL : ProbabilityMeasure (A l) := R.map (hπ l).aemeasurable
+    let RL : ProbabilityMeasure (A l) := R.map (π l)
     have hm : RL ∈ F l := hRL l
     have hmin : d l ≤ f l RL := hMin l hm
     exact hmin.trans (le_iSup (fun k =>

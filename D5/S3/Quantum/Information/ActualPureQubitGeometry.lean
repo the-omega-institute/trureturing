@@ -525,7 +525,9 @@ theorem actual_rank_two_parameters : ∀ {m : ℕ}
         ext i; fin_cases i <;> simp [blochLinear,bloch]
       rw [he,map_zero]
     have hzsum : ∑ j,basis.repr (bloch (N j)) 2=0 := by
-      simpa using congrArg (fun z : EuclideanSpace ℝ (Fin 3) => z 2) hvec
+      have h := congrArg (fun z : EuclideanSpace ℝ (Fin 3) => (WithLp.ofLp z) 2) hvec
+      rw [WithLp.ofLp_sum, Finset.sum_apply, WithLp.ofLp_zero, Pi.zero_apply] at h
+      exact h
     dsimp [q]
     rw [← Finset.sum_div, Finset.sum_sub_distrib,ht,hzsum]
     norm_num

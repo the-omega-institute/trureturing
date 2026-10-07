@@ -124,7 +124,7 @@ theorem result (n : ℕ) :
         f * (1 + 4 * X - X ^ 2) := by
       rw [hdf]
       linear_combination f * hC
-    refine ⟨hf0, PowerSeries.derivative (R := .ext) ?_ ?_⟩
+    refine ⟨hf0, PowerSeries.derivative.ext ?_ ?_⟩
     · rw [derivative_one]
       have hd6 : PowerSeries.derivative (R := ℚ₅) (6 : PowerSeries ℚ₅) = 0 := by
         rw [← map_ofNat C 6, derivative_C]

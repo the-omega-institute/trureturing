@@ -9,6 +9,7 @@
 import Mathlib.RingTheory.PowerSeries.Derivative
 import Mathlib.Algebra.BigOperators.ModEq
 import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.FieldSimp
 
 open PowerSeries Finset
 

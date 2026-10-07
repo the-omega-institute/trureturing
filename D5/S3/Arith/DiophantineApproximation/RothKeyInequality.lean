@@ -436,7 +436,7 @@ theorem roth_key_inequality
       intro hzero
       apply hQ0
       ext a
-      simpa only [MvPolynomial.coeff_zero, Pi.zero_apply] using congrFun hzero a
+      simpa only [MvPolynomial.coeff_zero, Pi.zero_apply] using! congrFun hzero a
     rw [MvPolynomial.mulHeight, ← hcoe (AddMonoidAlgebra.coeff Q)]
     change Height.mulHeight (fun a : ι →₀ ℕ ↦ Q.coeff a) =
       Height.mulHeight (fun I : (∀ j, Fin (d j + 1)) ↦ Q.coeff (boxMonomial d I))

@@ -173,7 +173,7 @@ theorem exists_auxiliary_deriv {A : Type*} [Fintype A] {m : ℕ} (tgt : A → Fi
     refine Real.iSup_le (fun n ↦ ?_) hnn
     rw [MvPolynomial.hasseDeriv_coeff, map_mul]
     have hc : v ((μ.prod fun j k ↦ (n j + k).choose k : ℕ) : K) ≤ 1 :=
-      IsNonarchimedean.apply_natCast_le_one hv
+      hv.apply_natCast_le_one (by simp) (map_one v)
     calc v ((μ.prod fun j k ↦ (n j + k).choose k : ℕ) : K) * v (P.coeff (n + μ))
         ≤ 1 * v (P.coeff (n + μ)) := by gcongr
       _ = v (P.coeff (n + μ)) := one_mul _

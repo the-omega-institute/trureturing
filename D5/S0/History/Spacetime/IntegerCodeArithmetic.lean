@@ -36,7 +36,7 @@ def decode_ring_equiv : IntCode ≃+* Int := int_code_equiv.symm.ringEquiv
 /-- The order isomorphism has exactly the same forward and inverse functions as the ring one. -/
 def decode_order_iso : IntCode ≃o Int where
   toEquiv := int_code_equiv.symm
-  map_rel_iff' := Iff.rfl
+  map_rel_iff' := by intros; rfl
 
 /- These universal commuting laws supply the source-required arithmetic/order transport.
 They are bind-only companions of the two representation bridges, not novelty claims. -/
@@ -85,28 +85,34 @@ They are bind-only companions of the two representation bridges, not novelty cla
   map_sub decode_ring_equiv a b
 
 @[simp] theorem encode_le (a b : Int) :
-    int_code_equiv a ≤ int_code_equiv b ↔ a ≤ b :=
-  decode_order_iso.symm.le_iff_le
+    int_code_equiv a ≤ int_code_equiv b ↔ a ≤ b := by
+  change decode_order_iso.symm a ≤ decode_order_iso.symm b ↔ a ≤ b
+  exact decode_order_iso.symm.le_iff_le
 
 @[simp] theorem decode_le (a b : IntCode) :
-    decodeInt a.1 a.2 ≤ decodeInt b.1 b.2 ↔ a ≤ b :=
-  decode_order_iso.le_iff_le
+    decodeInt a.1 a.2 ≤ decodeInt b.1 b.2 ↔ a ≤ b := by
+  change decode_order_iso a ≤ decode_order_iso b ↔ a ≤ b
+  exact decode_order_iso.le_iff_le
 
 @[simp] theorem encode_lt (a b : Int) :
-    int_code_equiv a < int_code_equiv b ↔ a < b :=
-  decode_order_iso.symm.lt_iff_lt
+    int_code_equiv a < int_code_equiv b ↔ a < b := by
+  change decode_order_iso.symm a < decode_order_iso.symm b ↔ a < b
+  exact decode_order_iso.symm.lt_iff_lt
 
 @[simp] theorem decode_lt (a b : IntCode) :
-    decodeInt a.1 a.2 < decodeInt b.1 b.2 ↔ a < b :=
-  decode_order_iso.lt_iff_lt
+    decodeInt a.1 a.2 < decodeInt b.1 b.2 ↔ a < b := by
+  change decode_order_iso a < decode_order_iso b ↔ a < b
+  exact decode_order_iso.lt_iff_lt
 
 @[simp] theorem encode_max (a b : Int) :
-    int_code_equiv (max a b) = max (int_code_equiv a) (int_code_equiv b) :=
-  decode_order_iso.symm.monotone.map_max
+    int_code_equiv (max a b) = max (int_code_equiv a) (int_code_equiv b) := by
+  change decode_order_iso.symm (max a b) = max (decode_order_iso.symm a) (decode_order_iso.symm b)
+  exact decode_order_iso.symm.monotone.map_max
 
 @[simp] theorem decode_max (a b : IntCode) :
-    decodeInt (max a b).1 (max a b).2 = max (decodeInt a.1 a.2) (decodeInt b.1 b.2) :=
-  decode_order_iso.monotone.map_max
+    decodeInt (max a b).1 (max a b).2 = max (decodeInt a.1 a.2) (decodeInt b.1 b.2) := by
+  change decode_order_iso (max a b) = max (decode_order_iso a) (decode_order_iso b)
+  exact decode_order_iso.monotone.map_max
 
 /-- Generic ordered-ring transfer consumes the proved arithmetic and order commuting laws. -/
 instance instIsStrictOrderedRing : IsStrictOrderedRing IntCode :=

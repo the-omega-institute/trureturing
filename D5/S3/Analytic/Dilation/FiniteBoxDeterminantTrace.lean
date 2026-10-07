@@ -244,7 +244,7 @@ theorem finite_box_trace_formula (ρ : ∀ m n, Representation ℚ G (W m n))
     | zero => simp [coeff_zero_eq_constantCoeff_apply]
     | succ n =>
       rw [coeff_mk, mul_comm _ X, coeff_succ_X_mul, coeff_mk]
-      simp [pow_succ, map_pow, map_neg, map_one]
+      simp [pow_succ, map_pow, map_neg, map_one, mul_neg_one]
   have hlog_deriv (f : PowerSeries R) (hf : constantCoeff f = 1) :
       PowerSeries.derivative (R := R) (logOf f) * f = PowerSeries.derivative (R := R) f := by
     have hs : HasSubst (f - 1) := .of_constantCoeff_zero (by
@@ -262,7 +262,7 @@ theorem finite_box_trace_formula (ρ : ∀ m n, Representation ℚ G (W m n))
   have hlog_mul (f h : PowerSeries R) (hf : constantCoeff f = 1)
       (hh : constantCoeff h = 1) : logOf (f * h) = logOf f + logOf h := by
     have hfh : constantCoeff (f * h) = 1 := by simp [hf, hh]
-    apply PowerSeries.derivative (R := .ext)
+    apply PowerSeries.derivative.ext
     · have hu : IsUnit (f * h) := by
         rw [isUnit_iff_constantCoeff, hfh]
         exact isUnit_one

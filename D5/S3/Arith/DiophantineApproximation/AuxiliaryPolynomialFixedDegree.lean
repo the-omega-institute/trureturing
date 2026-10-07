@@ -759,7 +759,8 @@ theorem exists_ne_zero_le_index_logHeight_le_of_pow_le
         · exact Real.iSup_le
             (fun i ↦ (v.apply_nat_le_self (n i)).trans (by exact_mod_cast hn i)) (by positivity)
         · exact Real.iSup_le
-            (fun i ↦ IsNonarchimedean.apply_natCast_le_one (isNonarchimedean v hv)) zero_le_one
+            (fun i ↦ (isNonarchimedean v hv).apply_natCast_le_one (by simp) (map_one v))
+            zero_le_one
       have hPower (α : F) (d : ℕ) : Height.mulHeight (fun k : Fin (d + 1) ↦ α ^ (k : ℕ)) = Height.mulHeight₁ α ^ d := by
         have hx : (fun k : Fin (d + 1) ↦ α ^ (k : ℕ)) ≠ 0 := Function.ne_iff.mpr ⟨0, by simp⟩
         have hy : (![α ^ d, 1] : Fin 2 → F) ≠ 0 := Function.ne_iff.mpr ⟨1, by simp⟩

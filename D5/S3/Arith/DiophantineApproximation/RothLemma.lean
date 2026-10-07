@@ -146,7 +146,8 @@ theorem rothProp_succ {m : ℕ} (ih : RothProp K m) : RothProp K (m + 1) := by
     have hnn : (0 : ℝ) ≤ ⨆ n : Fin (m + 2) →₀ ℕ, v (P.coeff n) := Real.iSup_nonneg fun _ ↦ v.nonneg _
     refine Real.iSup_le (fun n ↦ ?_) hnn
     rw [MvPolynomial.hasseDeriv_coeff, map_mul]
-    have hc : v ((μ.prod fun j k ↦ (n j + k).choose k : ℕ) : K) ≤ 1 := hv.apply_natCast_le_one
+    have hc : v ((μ.prod fun j k ↦ (n j + k).choose k : ℕ) : K) ≤ 1 :=
+      hv.apply_natCast_le_one (by simp) (map_one v)
     calc v ((μ.prod fun j k ↦ (n j + k).choose k : ℕ) : K) * v (P.coeff (n + μ))
         ≤ 1 * v (P.coeff (n + μ)) := by gcongr
       _ = v (P.coeff (n + μ)) := one_mul _

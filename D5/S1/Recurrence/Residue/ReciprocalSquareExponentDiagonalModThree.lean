@@ -302,7 +302,6 @@ theorem a397356_mod_three (n : ℕ) :
     · have := hordered v u z w h h' (by omega); omega
   have hdiv : (a n : ZMod 3) = 0 ↔ (3 : ℤ) ∣ a n := by
     convert ZMod.intCast_zmod_eq_zero_iff_dvd (a n) 3 using 1
-    norm_num
   rw [← hdiv]
   have hcoeff : (a n : ZMod 3) = coeff n (S ^ 2) := by
     simpa only [a, coeff_map, Int.coe_castRingHom] using congrArg (coeff n) hA

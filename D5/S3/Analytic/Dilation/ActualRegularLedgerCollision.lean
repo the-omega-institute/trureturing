@@ -527,7 +527,7 @@ theorem actual_ledger_collision {G : Type} [Group G] [Fintype G] [DecidableEq G]
   let logOf_mul (f g : PowerSeries ℚ)
       (hf : constantCoeff f = 1) (hg : constantCoeff g = 1) : logOf (f * g) = logOf f + logOf g := by
     have hfg : constantCoeff (f * g) = 1 := by simp [hf, hg]
-    apply PowerSeries.derivative (R := .ext)
+    apply PowerSeries.derivative.ext
     · have h1 := logOf_derivative_mul (f * g) hfg
       have h2 := logOf_derivative_mul f hf
       have h3 := logOf_derivative_mul g hg

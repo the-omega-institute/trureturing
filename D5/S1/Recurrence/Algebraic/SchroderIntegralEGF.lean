@@ -148,7 +148,7 @@ private theorem original_iff_cleared (S : PowerSeries ℚ) (hS : constantCoeff S
     simp only [map_add, derivative_one, derivative_primitive, zero_add] at he
     exact (eq_mul_inv_iff_mul_eq hd).mp he
   · intro h
-    refine ⟨hS, PowerSeries.derivative (R := .ext) ?_ ?_⟩
+    refine ⟨hS, PowerSeries.derivative.ext ?_ ?_⟩
     · simpa only [map_add, derivative_one, derivative_primitive, zero_add] using
         (eq_mul_inv_iff_mul_eq hd).mpr h
     · simp [hS, primitive_zero]

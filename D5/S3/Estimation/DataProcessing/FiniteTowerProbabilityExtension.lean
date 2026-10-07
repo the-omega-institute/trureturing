@@ -89,7 +89,7 @@ theorem exists_unique_extension
   clear_value p e last tC mC C
   let k (l : ℕ) : B l → Fin 1 → C l := fun b _ => e l b
   have hk (l : ℕ) : Measurable (k l) := measurable_of_countable (k l)
-  let H (l : ℕ) : ProbabilityMeasure (Fin 1 → C l) := (theta l).map (hk l).aemeasurable
+  let H (l : ℕ) : ProbabilityMeasure (Fin 1 → C l) := (theta l).map (k l)
   have hH (l : ℕ) : (H (l + 1) : Measure (Fin 1 → C (l + 1))).map
       (fun (y : Fin 1 → C (l + 1)) j => p l (y j)) = (H l : Measure (Fin 1 → C l)) := by
     change ((theta (l + 1) : Measure _).map (k (l + 1))).map
