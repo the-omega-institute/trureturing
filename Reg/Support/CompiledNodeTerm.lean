@@ -105,6 +105,39 @@ syntax (name := compiledNodeTerm) "compiled_node% " str : term
   | .ok expression => return expression
   | .error reason => throwError "compiled_node:{reason}:{decoded.declaration}"
 
+private partial def headUnder (remaining : Nat) (parameters : Array Expr)
+    (expression : Expr) : TermElabM Expr := do
+  match remaining with
+  | 0 => do
+    Meta.mkLambdaFVars parameters (← Meta.withTransparency .default <| Meta.whnf expression)
+      (usedOnly := false) (usedLetOnly := false) (etaReduce := false)
+      (generalizeNondepLet := false)
+  | remaining + 1 =>
+    match expression with
+    | .lam binder domain body mode =>
+      Meta.withLocalDecl binder mode domain fun parameter =>
+        headUnder remaining (parameters.push parameter) (body.instantiate1 parameter)
+    | .letE binder domain value body nondependent =>
+      Meta.withLetDecl binder domain value (nondep := nondependent) fun parameter =>
+        headUnder remaining (parameters.push parameter) (body.instantiate1 parameter)
+    | _ => throwError "compiled_head:telescope"
+
+/-- Construct an ordinary helper at compile time from the selected raw node.
+ Only its enclosing coordinate telescope is opened; the resulting term still
+ requires the ordinary declaration type and ExactMatch evidence checks. -/
+syntax (name := compiledHeadTerm) "compiled_head% " str : term
+
+@[term_elab compiledHeadTerm] private def elaborateHead : TermElab := fun stx _ => do
+  let some literal := stx[1].isStrLit? | throwError "compiled_head:literal_required"
+  let location ← match Json.parse literal >>= address with
+    | .ok location => pure location
+    | .error reason => throwError "compiled_head:{reason}"
+  let expression ← match construct (← getEnv) location with
+    | .ok expression => pure expression
+    | .error reason => throwError "compiled_head:{reason}:{location.declaration}"
+  headUnder (location.path.filter (fun edge => edge == "body" || edge == "letBody")).size
+    #[] expression
+
 private partial def nameSyntax : Name → TermElabM (TSyntax `term)
   | .anonymous => `(Lean.Name.anonymous)
   | .str namePrefix component => do
