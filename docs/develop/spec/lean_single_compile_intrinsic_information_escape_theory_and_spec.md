@@ -7584,7 +7584,7 @@ off-diagonal pairs 上的 expected matrix rows 固定为：
 | `snd-flow` | 0 | 4 | 0 | 0 | 4 |
 | catalog total | 4 | 4 | 0 | 0 | 8 |
 
-明确期望 `unique_capture_count=(4,4)`、`exclusive_capture_total=8`、$h(1)=8$。按列序
+数学期望为独有捕获向量 $(4,4)$、独有捕获总量 $8$、$h(1)=8$。按列序
 `1000,0100,0010,0001`，具名行差 `fst-cut - snd-flow` 是 unweighted vector
 `(4,-4,0,0)`；反向差为 `(-4,4,0,0)`。重排 catalog indices 后，按 occurrence name
 对齐的 rows、catalog totals 与这两个 directed deltas 逐项不变。另将 `fst-cut` 的同一

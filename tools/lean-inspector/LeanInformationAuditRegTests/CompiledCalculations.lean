@@ -3,10 +3,6 @@ import LeanInformationAudit.ArtifactAssessment
 namespace LeanInformationAuditRegTests.CompiledCalculations
 open Lean LeanInformationAudit Contract.CompiledExpressions
 
--- The semantic basis is reused from Lean; no new mathematical declaration.
-example (p : Prop) (first second : Decidable p) :
-    @decide p first = @decide p second := decide_eq_decide.mpr Iff.rfl
-
 private def decideSamePropositionDifferentInstances (context : Context) : IO Unit := do
   let proposition := mkConst ``True
   let classical := mkApp (mkConst ``Classical.propDecidable) proposition
