@@ -142,9 +142,6 @@ theorem result : ∃ C : ℝ, 0 < C ∧ ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n 
       rw [e2] at hs
       dsimp only at ih hs hg ⊢
       linarith
-  have fibUpper (t : ℕ) : (Nat.fib t : ℝ) ≤ φ ^ (t + 1) := by
-    have h := Real.goldenRatio_mul_fib_succ_add_fib t
-    nlinarith [Real.goldenRatio_pos, Nat.cast_nonneg (α := ℝ) (Nat.fib (t + 1))]
   refine ⟨4096, by norm_num, 16, ?_⟩
   intro n hn
   let m := (n - 4) / 4
@@ -271,7 +268,8 @@ theorem result : ∃ C : ℝ, 0 < C ∧ ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n 
   let B : ℝ := φ ^ (n - 2 * m + 2)
   have hB : 1 ≤ B := one_le_pow₀ hφ1
   have bounded (i : ℕ) (hi : i ≤ n - 2 * m + 1) : (Nat.fib i : ℝ) ≤ B := by
-    exact (fibUpper i).trans (pow_le_pow_right₀ hφ1 (by omega))
+    exact (D5.S3.Axis.AxisConvergence.fib_le_goldenRatio_pow i).trans
+      (pow_le_pow_right₀ hφ1 (by omega))
   have tBound : T ≤ B := by
     exact tailUpper.trans (bounded (L + 2) (by dsimp [L]; omega))
   have f1 := bounded (n - 2 * m - 1) (by omega)
@@ -290,11 +288,8 @@ theorem result : ∃ C : ℝ, 0 < C ∧ ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n 
     rw [Real.goldenRatio]
     field_simp
     nlinarith
-  have conjBound : |Real.goldenConj ^ n| ≤ 1 := by
-    rw [abs_pow]
-    apply pow_le_one₀ (abs_nonneg _)
-    rw [abs_of_neg Real.goldenConj_neg]
-    linarith [Real.neg_one_lt_goldenConj]
+  have conjBound : |Real.goldenConj| ^ n ≤ 1 :=
+    pow_le_one₀ (abs_nonneg _) D5.S3.Axis.AxisConvergence.goldenConj_abs_lt_one.le
   have residualBound : |(4 * (Nat.fib (n + 1) : ℝ) - 2 * Nat.fib n) / 5 -
       (2 / Real.sqrt 5) * Nat.fib n| ≤ 1 := by
     have heq : (4 * (Nat.fib (n + 1) : ℝ) - 2 * Nat.fib n) / 5 -
@@ -304,7 +299,6 @@ theorem result : ∃ C : ℝ, 0 < C ∧ ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n 
       ring
     rw [heq, Real.fib_succ_sub_goldenRatio_mul_fib, abs_mul]
     norm_num
-    rw [abs_pow] at conjBound
     nlinarith
   have rawBound : |weightedSum n - (2 / Real.sqrt 5) * Nat.fib n| ≤ 5 * B := by
     have ht := abs_sub_le (weightedSum n)
@@ -348,7 +342,7 @@ theorem result : ∃ C : ℝ, 0 < C ∧ ∃ N₀ : ℕ, ∀ n : ℕ, N₀ ≤ n 
       _ = (5 * φ ^ 8) * φ ^ (-(n : ℝ) / 2) := by
         rw [sub_eq_add_neg, Real.rpow_add hφ]
         norm_num only [Real.rpow_ofNat]
-        ring
+        ring_nf
       _ ≤ 4096 * φ ^ (-(n : ℝ) / 2) := by
         apply mul_le_mul_of_nonneg_right _ (Real.rpow_pos_of_pos hφ _).le
         have hp : φ ^ 8 ≤ (2 : ℝ) ^ 8 := pow_le_pow_left₀ hφ.le Real.goldenRatio_lt_two.le 8
