@@ -117,10 +117,10 @@ noncomputable def registration_1.{u} :
         letI := p.groupG
         letI := p.equalG
         exact x * p.g⁻¹ ∈ p.A) (fun e => nomatch e))) Unit Unit := {
-  unitName := `NikolovSegal.SmallTwistedProduct.finite_right_stable_inv ++
-    Lean.Name.str Lean.Name.anonymous
-      "Reg.D5.S3.FiniteGroups.NikolovSegal.FiniteGeneratingGrowth/Reg.D5.S3.FiniteGroups.NikolovSegal.FiniteGeneratingGrowth.arena/[anonymous]" ++
-    `__information_unit,
+  unitName := Lean.Name.str (Lean.Name.str
+    `NikolovSegal.SmallTwistedProduct.finite_right_stable_inv
+    "Reg.D5.S3.FiniteGroups.NikolovSegal.FiniteGeneratingGrowth/Reg.D5.S3.FiniteGroups.NikolovSegal.FiniteGeneratingGrowth.arena/[anonymous]")
+    "__information_unit",
   realizationName := `Reg.D5.S3.FiniteGroups.NikolovSegal.FiniteGeneratingGrowth.registration,
   realizationSource := none,
   generated := false,

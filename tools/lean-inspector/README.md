@@ -30,7 +30,7 @@ universe checks. `Registration.targetName` is absent.
 
 Contract types bind the original mathematical obligations to the target, arena,
 actual realization, primitive bundle and catalog indices. The Reg compiler checks
-variation, slot sensitivity, witness positive/constantTrue negative claims,
+variation, slot sensitivity,
 source-family obligations, seal lowering/triviality, closure membership,
 retained kernel collisions and catalog conclusions. Missing, unknown, absent and
 unsupported evidence remains a compilable submission and retains its diagnostic
@@ -170,7 +170,7 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 接口契约源码登记在现有 `config_inputs`，接口变化使整份收据未命中；Lake 只重编并重评受影响的编译闭包。
 仅登记为 producer、未进入模块或 utility claim 依赖闭包的文件，不会因此使报告失效。
 
-报告复用不含判官语义版本。判官实现或规则改变保持历史报告；新增或改动的登记经编译依赖变化交给当前判官评定。契约接口改动须同次交付迁移全部用法、删除旧路径，受影响的 Reg 自动重编并重评，不做历史兼容。需要重判未改动的历史登记时显式生成不带缓存的完整报告。
+报告复用只依赖编译输入、utility 输入与报告格式标识。判官实现或规则改变保持历史报告；新增或改动的登记经编译依赖变化交给当前判官评定。契约接口改动须同次交付迁移全部用法、删除旧路径，受影响的 Reg 自动重编并重评，不做历史兼容。需要重判未改动的历史登记时显式生成不带缓存的完整报告。
 
 报告格式标识由 [读取器](../scripts/report/lean-report-selection.py) 的 `REPORT_FORMAT` 给出，用于 raw report schema、输入坐标、整份报告收据及所有模块 trace。声明、公理闭包、statement identity 等提取语义或工件格式改变时更新该标识；严格读取器拒读旧格式，全部模块重提取。判官实现字节不进入复用条件；当前选中程序仍须编译成功。
 
