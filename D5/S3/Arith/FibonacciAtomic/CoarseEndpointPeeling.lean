@@ -16,7 +16,7 @@ namespace D5.S3.Arith.FibonacciAtomic.CoarseEndpointPeeling
 
 open GenealogicalFiberTransport (Source)
 open ActualTreeReadoutAcquisition
-open ActualCoarseReadoutHistory (kappa kappa_hist CoarseObservable shared_history_obstruction)
+open ActualCoarseReadoutHistory (kappa kappa_hist shared_history_obstruction)
 open ActualCoarseReadoutCompletion (compileRaw encodeHistory cachedExecute completion_contract)
 open ActualJointResponseCostCore (controllerPolicy)
 open ActualImageSevenLeafSeparation (leafLabel leafAddresses Nonconflict seven_leaf_separation)
@@ -26,6 +26,7 @@ open D5.S3.ConceptDynamics.Experiment.PassiveAdaptiveTranscriptUpperBound
 
 local notation "CH" => Hist (fun _ : Address => Option Bool)
 local notation "RH" => Hist (fun _ : Address => Reply)
+local notation "CoarseObservable" => fun p => Function.FactorsThrough p kappa_hist
 local notation "read" => fun {m : Nat} (F : Fin m → Source) (q : Address) (i : Fin m) =>
   leafLabel (F i) q
 
@@ -231,7 +232,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           rcases run with ⟨rfl,rfl⟩
           have empty : g = [] := List.prefix_nil.mp pre
           subst g
-          have eq := observable h₀ a (by simpa only [List.append_nil] using same)
+          have eq := observable (by simpa only [List.append_nil] using same)
           rw [action,step] at eq
           cases eq
         | inl r =>
@@ -240,7 +241,7 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
           cases eq
           cases g with
           | nil =>
-            have eq := observable h₀ a (by simpa only [List.append_nil] using same)
+            have eq := observable (by simpa only [List.append_nil] using same)
             have rq : r = q := (Sum.inl.inj (step.symm.trans (eq.symm.trans action)))
             subst r
             exact ⟨kappa_hist t',rfl⟩
