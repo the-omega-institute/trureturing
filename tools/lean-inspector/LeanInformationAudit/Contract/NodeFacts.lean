@@ -265,7 +265,10 @@ def coverage (view : View) (expected : Array NodeCoordinate) (payload : Expr)
   unless roots == expected do bad "coverage_roots"
   let names ← (← Literal.list "coverage.facts" (← Literal.resolveReferences view.find fs[1]!)).mapM
     (Literal.name "coverage.fact")
-  unless names.toList.Nodup do bad "duplicate_facts"
+  let mut seenNames : Std.HashSet Name := {}
+  for name in names do
+    if seenNames.contains name then bad "duplicate_facts"
+    seenNames := seenNames.insert name
   let operands := (← names.mapM (fact view)).flatten
   let mut byCoordinate : Std.HashMap NodeCoordinate (Array BoundOperand) := {}
   for operand in operands do
