@@ -1,8 +1,7 @@
 # trureturing 工程优化方案 v1.0
 
 **定位：保持数学与准入语义的规模化工程设计。**  
-**审查快照：** `d0e63dda80290fc39bfc46fe8310b4b47a661e28`，`dev`，2026-09-05。  
-**文档状态：** 规范性草案（Normative Draft）。本 PR 仅新增工程 SPEC，不实施代码改造，不改变数学与准入规则；未运行该仓库全量 Lean 构建。文中新增路径、数据结构和接口均为拟议项，不代表已实现。
+**文档状态：** 工程规则与数学优化边界。生产实现以当前契约类型、编译产物读取路径与严格报告格式为准；数学优化不得改变准入条件。
 
 ## 0. 核心决策
 
@@ -14,15 +13,9 @@
 2. **少重复：** 复用已证明的留一计数恒等式，一次统计所有定理的独有捕获；复用经检查的计数证明，避免再次 `decide` 同一全量命题。
 3. **少复制：** 报告流式处理、内容寻址保存、保持工作树私有写入边界、显式管理缓存与档案生命周期。
 
-首要不变量是：
-
-\[
-\operatorname{Admit}_{\mathrm{optimized}}(S)
-\iff
-\operatorname{Admit}_{\mathrm{reference}}(S)
-\]
-
-其中 S 是同一工具链、相同定义环境、相同注册对象、相同 arena 分组、相同 primitive bundle 的当前快照。数学部分须有 Lean 等价证明；文件、缓存、流程部分须有集成测试与故障注入。不把测试称为形式证明。
+数学真值由 Lean 内核检查的声明与证明承载；准入按现行契约与判官规则执行。
+判官自身测试和对当前编译输入的完整报告评定验证实现，不以旧判官的判词、
+报告或 seal 导出包逐条一致作为验收。文件、缓存与流程检查不冒充形式证明。
 
 ### 0.1 本方案不采用的“优化”
 
@@ -32,7 +25,7 @@
 
 ### 0.2 一次编译的准确合同
 
-冷工作树仍从现有 `make lean` / cache-writer 入口进入，不能先裸跑 Lake 破坏 donor 初始化条件。一个顶层构建调用中，Lake 可以按 DAG 编译多个文件、复用已有产物，Reg 的 `Contract.Seal` 在编译期检查目录计数与结论的数学义务，报告仅消费编译字段。禁止“先外部生成证明源码，再启动第二轮编译完成证明”的新链条。
+冷工作树仍从现有 `make lean` / cache-writer 入口进入，不能先裸跑 Lake 破坏 donor 初始化条件。一个顶层构建调用中，Lake 可以按 DAG 编译多个文件、复用已有产物，Reg 的 `Contract.Seal` 在编译期检查同一目录上非退化性、bundle 非空、逐成员降低逃逸或平凡性及闭包归属、kernel 碰撞与目录结论的数学义务，报告仅消费编译字段。禁止“先外部生成证明源码，再启动第二轮编译完成证明”的新链条。
 
 缓存依赖过往计算，不等于把历史版本引入信息增益的数学定义。性能对照版本与 Git 治理 protected-base 也不等于数学 baseline，三者必须分别命名。
 
@@ -49,9 +42,9 @@
 | `lakefile.lean` / `native.py` | Lake trace 决定编译产物和整份报告复用 | 实现字节不进入报告复用条件 |
 | `materials.py` / `publication.py` | 校验并发布 canonical 报告与材料 | 按实际分配量测量内存 |
 | `CompiledSeal.lean` | 按 `arenaName` 分组、确定顺序、构造当前目录 | arena 是语义边界，不是可以任意改的小批次 |
-| `Contract/Catalog.lean` | SealRow 与 SealCatalog 将计数和结论绑定同一目录 | 数学证据在 Reg 编译期检查 |
+| `Contract/Catalog.lean` | SealRow 承载逐成员结论；SealCatalog 将数学证据绑定同一单位向量目录 | 数学证据在 Reg 编译期检查 |
 | `ExactRate.lean` | 已证明 `escapeNumerator_without_eq` 等式及正增益刻画 | 可直接复用，避免重新枚举每个留一族 |
-| `CompiledSeal.lean` | 编译期检查契约数学义务，报告期核对结构；JSON 为输出 | 保留原子性，增强文件发布与编译产物绑定 |
+| `CompiledSeal.lean` | 消费编译期已检查的 Seal；报告期核对目录身份、arena、成员顺序与完整单位向量 | 保留原子性，增强文件发布与编译产物绑定 |
 | `README.md`、缓存归属文档 | 私有工作树、禁止 symlink 共享 `.lake`、已有 clonefile/donor | 不以移除互斥锁或共享可写目录换性能 |
 | `.github/workflows/ci-current.yml` 与 `ci-unit.yml` | `detect` 作业按 workflow 内的单元白名单决定各单元作业是否命中；current 构建一次报告并随项目 buildDir 缓存运输 | 单独处理可选缓存传输失败；真正检查失败仍阻断 |
 
@@ -70,7 +63,7 @@ Source snapshot + exact toolchain + dependency lock
              /        |        \
        math modules  IE modules  library adapters
              \        |        /
-          typed counts + proof certificates
+          typed mathematical obligations
                     |
           Contract.Seal 数据
           kernel-checked obligations
@@ -134,11 +127,9 @@ T=T_{\rm provision}+T_{\rm build}+T_{\rm seal}
 
 固定工作负载包括：无修改热运行、小叶子证明变更、基础定义变更、同 arena 新成员、删模块、只改叙述、工具链变更、重型外部库、缓存失联、缓存损坏。
 
-**对照口径：** 字节对照指同一候选源码、同一编译产物，由 reference Inspector 与 optimized Inspector 分别生成的 canonical payload。不是要求不同提交、不同 source hash 或合法新增声明的报告仍然相同。producer 身份和性能记录应置于各自来源信封，不混入旧 payload 的字节比较。数学算法对照则针对同一目录与 primitive 输入。
-
-**P0 硬验收：** 在上述相同输入口径下，原始规范报告字段/顺序/字节和准入结果不变；所有已要求检查继续执行或由合法、匹配输入的产物覆盖；不允许以 skipped 充当 passed。
-
-资源数据可指导工程调度，不能输入数学增益或成为新的数学价值阈值。
+**核验口径：** 数学算法按同一目录与 primitive 输入证明其与库内定义的关系。
+生产报告从当前编译产物生成，核对完整模块覆盖和登记绑定；性能读数不参与判词。
+判官实现字节不进入报告复用条件，不另外建立新旧判官或 seal 导出物比较链。
 
 ---
 
@@ -146,7 +137,7 @@ T=T_{\rm provision}+T_{\rm build}+T_{\rm seal}
 
 ### 5.1 输入改为 manifest，而非无限增长的 argv
 
-为 `Inspector.lean` 增加兼容的 `--module-manifest` 入口。清单包含精确 module、source path、source hash；拒绝重复名字、路径逃逸和不存在文件。原 triples 入口保留到迁移结束。
+`Inspector.lean` 使用当前 producer 生成的请求文件与模块输入。输入包含精确 module、source path、source hash；在当前读取路径核对，不保留迁移兼容入口。
 
 清单由当前快照枚举器生成，不从用户选择的子集冒充全局目录。批处理器可以重排工作，但最终集合必须与枚举集合完全相同。
 
@@ -304,31 +295,21 @@ D5/S3/ConceptDynamics/InformationEscape/Counting/
 
 ## 8. 契约证据：共享已检查结果，不重复展开同一大计算
 
-保留原定义作为 reference semantics。新加的辅助计数证明不自动注册为新的 theorem unit；否则会改变待评估目录，已经不属于同输入优化。在 Reg 编译期准备类型化计数对象，并证明其等于 reference counts。报告期只投影已编译的计数与结论。
+`Contract.SealCatalog` 把 arena、size 与 units 绑定为同一 `Catalog.ofVector`。
+nondegenerate、bundleNonempty、rows、collisions 与 conclusion 承载类型化证据，
+enumeration 指定有限状态枚举。`SealRow` 只含 positive 或 zero 结论；zero 同时
+携带平凡性和剩余目录的语义闭包归属证明。目录结论为 redundant 或 irredundant。
+这些义务由 Reg 编译期内核检查；判官不生成计数证书或统计投影。
 
-建议内部结构语义如下（不是已编译 API）：
+库内数学计算可复用已证明的融合计数或分区公式，用于构造上述数学证据。
+辅助计算不自动成为新的 theorem unit，数值与原定义的关系仍须由 Lean 证明。
+不得用 kernel 不检查的 native 结果替换证明。分别测量计算、证明构造、
+内核检查和证明体大小，不把计算快等同于证明检查快。
 
-```text
-CertifiedCounts(catalog):
-  full : Nat
-  unique : Index -> Nat
-  without : Index -> Nat
-  roleBins : Index -> RoleMask -> Nat
-  full_correct
-  unique_correct
-  without_correct
-  roleBins_correct
-```
-
-先证明一次向量/块结果正确，再从小数值的正性及 `unique_correct` 导出原类型的 `__lowers_escape`。保留原声明名与对外命题类型。
-
-全体 `__catalog_irredundant` 由已检查的逐项证明按有限索引构造，不再通过一个新的 `decidableForall` 重新计算所有 `uniqueCaptureCount`。
-
-不得只用 metaprogram 求得 n，再直接构造 `0<n` 而没有 n 与 reference count 的证明。不得用 kernel 不检查的 native 结果替换证明。元程序可以不可信地搜索或建议证书；接受的 proof term 必须能通过普通 kernel 检查。
-
-注意：一个体积小的 `by decide` 可能导致很重的 kernel reduction；一个编译执行很快的计数函数也不意味着其相等证明检查很快。分别测量 evaluation、proof construction、kernel check、proof bytes。
-
-JSON 中方法名必须真实反映执行路线。若 provenance 字段变化，使用旁文件或经过批准的 schema 迁移，不能为了字节对照把新方法伪装成旧方法。
+`CompiledExpressions.sameShape` 对编译器已检查项作有界语义比较，不承诺定义相等。
+其 `Decidable.decide` 分支只比较命题：同一命题的任意判定实例产生命题相等的
+布尔值（Lean 的 `decide_eq_decide`），因此只略过该函数的判定实例参数。
+其它实例或字典不受这条规则影响；不支持的形式保留具名失败。
 
 ---
 
@@ -336,7 +317,7 @@ JSON 中方法名必须真实反映执行路线。若 provenance 字段变化，
 
 `Contract.Seal` 在 Reg 编译期承载完整目录的类型化数学证据；`CompiledSeal.lean` 在报告期核对编译字段，不安装声明或构建环境。报告通过现有 producer 的原子发布边界输出。
 
-增加三个检查：
+当前目录核对包括：
 
 1. 当前 seal 预期处理的 类型化登记 与实际条目完全一致。
 2. 每个目录证书绑定成员集合、确定顺序、arena、primitive 与编译依赖闭包。
@@ -382,7 +363,7 @@ Lean 官方模块系统支持公开/私有作用域与不导入私有证明信�
 
 - 工具链/依赖缓存：固定 compiler 与 package 版本。
 - Lake 模块产物缓存：按真实构建输入复用。
-- Inspector 模块记录缓存：完整输入环境、producer 和 schema 相同才复用。
+- Inspector 模块报告：Lake 按编译输入闭包复用；仅改判官实现或规则保留整份有效报告，不以 producer 程序字节使报告失效。
 - IE 目录/块证书缓存：同一精确目录和语义输入才复用。
 - Scribe 产物缓存：声明投影、Scribe AST、模板/工具版本相同才复用。
 
@@ -560,8 +541,8 @@ C、object、`.olean`、私有模块数据、语言服务器数据不能一概�
 | P0-Observe | 现有资源记录、缓存集成测试 | 固定 workload、阶段账本、真实缺失 olean 测试 | 不变更报告语义/准入 |
 | P0-CacheFailure | CI cache restore 和既有恢复路径 | 分类错误与可信回退测试 | cache 失败不冒充数学失败；坏缓存不被使用 |
 | P1-Counts | `ExactRate` 的使用、Counting 新定理 | fused 算法及 Lean 正确性证明 | reference 全字段相等 |
-| P1-Proofs | `ProofBuilder`、`SealCommand` | 共享计数证书与全体正性组合 | 同名同型、无新增不允许公理、原子发布 |
-| P1-Inspect | Inspector、delta、materials | manifest 输入、分批 worker、流式 writer | 原 canonical 报告字节相同、覆盖完全 |
+| P1-Proofs | Reg 使用的数学库与 `Contract.Seal` | 在编译期构造同一目录的数学义务 | 内核检查、不增加不允许公理 |
+| P1-Inspect | Inspector、delta、materials | 请求输入、分批评定、流式 writer | 当前报告格式、登记绑定正确、覆盖完全 |
 | P2-Partitions | finite label / prefix/suffix / role bins | 高效索引与正确性桥 | 包含标签构造的端到端收益为正 |
 | P2-Modules | 小领域 module 试点 | 接口/实现边界与完整审计路径 | 实测减少导入或重编译，无语义缺口 |
 | P2-Artifacts | 既有发布缓存扩展 | envelope、模块对象存储、恢复与 GC | 冷路径仍可独立产生，历史可恢复 |
@@ -580,14 +561,14 @@ C、object、`.olean`、私有模块数据、语言服务器数据不能一概�
 | `tools/lean-inspector/inspect.sh` | 一次 build 后批次执行；增加只读检查边界；不循环启动 build |
 | `tools/lean-inspector/delta.py` | 保留旧记录复用语义；流式解析与完整失效测试 |
 | `tools/lean-inspector/materials.py` | bounded-memory 编码/归档，不改 statement bytes |
-| `tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Catalog.lean` | 定义 Seal 的计数与结论数学义务 |
+| `tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Catalog.lean` | 定义同一目录上的逐成员结论、闭包归属、kernel 碰撞与目录结论数学义务 |
 | `.../CompiledSeal.lean` | 完整 registry 与 arena 顺序不变；新增快照/目录绑定 |
 | `tools/lean-inspector/native.py` | 候选产物与最终发布分离，失败不发布 |
 | `D5/.../InformationEscape/Counting/` | 新算法、等价、块合成定理；按现有流程配置镜像与 Scribe |
 | `tools/StrataLint.Cli/Commands/Worktrees/` | 租约、缓存 envelope、恢复；不取消私有目录策略 |
 | `tools/StrataLint.Engine/` | 消费确定报告、保持治理规则；不重算数学分数 |
 | `tools/StrataLint.Scribe/` | 读取同一快照投影，按受影响 GID 生成 |
-| `tools/tests/` 与现有 Lean 测试目录 | 字节对照、故障注入、算法等价与真实 Lake 集成 |
+| `tools/tests/` 与现有 Lean 测试目录 | 当前判官规则、故障注入、数学算法正确性与真实 Lake 增量集成 |
 | `.github/workflows/ci.yml` | 仅改变执行与缓存恢复，required verdict 合同保留 |
 | `Makefile` | 仍只路由，不塞逻辑 |
 
@@ -599,11 +580,11 @@ C、object、`.olean`、私有模块数据、语言服务器数据不能一概�
 
 ### 数学放行
 
-相同输入下，完整 registered catalog、各 arena、full/without/unique/role bins、正增益 verdict、公开证书命题全部等价。原本拒绝的重复目录继续拒绝。没有不允许的新公理或隐藏前提。
+完整目录的数学义务由 Lean 内核检查，报告核对当前登记、arena、成员顺序与单位向量。不以旧判官判词一致作为验收，不增加不允许的公理或隐藏前提。
 
 ### 工程放行
 
-原 canonical 记录不变；所有 expected module 均有且仅有一份结果；缓存丢失仍存在可信构建路径；坏缓存不能通过；工作树无互写；发布没有半成品；源码和正式收据历史保持。
+所有 expected module 均有且仅有一份当前格式结果；缓存丢失仍存在可信构建路径；坏缓存不能通过；工作树无互写；发布没有半成品；源码和正式收据历史保持。
 
 ### 性能放行
 
@@ -611,15 +592,15 @@ C、object、`.olean`、私有模块数据、语言服务器数据不能一概�
 
 内存下降但总时间明显恶化的批次策略不能默认全库启用，应调整闭包聚类和并行度。任何优化需要超出当前可用资源时，给出明确 blocked，而不是 fabricated proof 或错误的 zero capture。
 
-### 退回规则
+### 失败边界
 
-分片报告不一致：退回原 Inspector。算法等价或 kernel check 未完成：继续 reference 算法。公开模块迁移丢失审计信息：保持普通导入。缓存服务异常：走原许可重建路径。所有退回均记录原因，不静默改变快照。
+模块覆盖、登记绑定、契约解码或编译产物身份核对失败时具名终止，不发布成功报告。数学证明未通过内核检查时不能交付其结论。缓存缺失由现行 cache-writer 从当前源码重建；不回退旧判官、不双读旧格式、不改变快照换取通过。
 
 ---
 
 ## 23. 审查来源
 
-下列仓库路径均读取自本方案顶部固定提交；路径足以在该快照复核。网络说明使用官方文档，具体特性落地前仍以项目 pin 的真实编译结果为准。
+下列仓库路径给出现行实现与数学定义。网络说明使用官方文档，具体特性以项目 pin 的真实编译结果为准。
 
 [S1] `README.md`、`Makefile`、`lakefile.toml`。
 [S2] `tools/lean-inspector/Inspector.lean`。
@@ -633,8 +614,6 @@ C、object、`.olean`、私有模块数据、语言服务器数据不能一概�
 [S11] Lean 官方《Source Files and Modules》：`https://lean-lang.org/doc/reference/latest/Source-Files-and-Modules/`。
 [S12] Lean 官方《Lake》：`https://lean-lang.org/doc/reference/latest/Build-Tools-and-Distribution/Lake/`。
 [S13] Lean 官方《Validating a Lean Proof》：`https://lean-lang.org/doc/reference/latest/ValidatingProofs/`。
-
-仓库快照入口：`https://github.com/the-omega-institute/trureturing/tree/d0e63dda80290fc39bfc46fe8310b4b47a661e28`。
 
 ## 24. 最终实施顺序
 
