@@ -1168,3 +1168,98 @@ supplies a uniformly useful reservation. The remaining task is to find
 an actual target escaping the ENTIRE common library, quantify its mass,
 and apply the existing all-competitive-phase debit and complementary-tail
 payment on that same source.
+
+### A deep original supplies support on its own root
+
+There is a useful positive statement when the original has ternary
+depth at least two. Let `m=3^e d` be one actual original, with `e>=2`,
+`d>1` and d supported on Q. Assume it has a COMPLETE original private
+integer w: w lies in its class and in no other original class. Whole
+coverage is not required for this support statement.
+
+Put `b=w mod3`. For each nonunit Q-smooth c, select exactly the Q
+phases of every actual original c and every actual original3c whose
+first ternary root is b.
+Call this library L_b. Numerical distinctness gives at most two phases
+per numerical cofactor. No deeper or inactive-root phase is added.
+Let N_Q resolve d and every selected Q cofactor, and let V_b be the
+complete survivor of L_b modulo N_Q. Then
+
+\[
+x_0=w\bmod N_Q\ \in\ V_b\cap[a_m]_d.
+\tag{SD40}
+\]
+
+Indeed, a selected phase containing x_0 would, together with the fixed
+root b when needed, put w in a different actual original. This contradicts
+privacy. The argument uses the same w for all selected constraints.
+It gives no assertion about a different root or a selector that inserts
+extra deeper phases.
+
+Choose finite H resolving m and every actual pure3 original. Let
+`tau_H` be uniform ternary Haar, T_b the pure-surviving part of root b,
+and C_m the original m's ternary prefix. An actual pure3 class at depth1
+cannot occupy b, by privacy of w. At most one pure class occurs at each
+larger depth. Thus
+
+\[
+\tau_H(T_b)\ge \frac13-\sum_{k=2}^{H}3^{-k}>\frac16,
+\qquad \tau_H(C_m)=3^{-e}\le\frac19,
+\]
+
+and consequently
+
+\[
+\tau_H(T_b\setminus C_m)>\frac1{18}.
+\tag{SD41}
+\]
+
+This changes only the ternary tail, keeping root b and the complete Q
+point x_0. The resulting configurations avoid every selected low original,
+every pure3 original, and the original m itself; they remain in its
+mod-d parent. Other deep mixed originals may still cover them.
+
+Apply the existing PA supplier once to L_b, with its original raw
+support bound and total mass at most one. Its normalized law nu_b has
+`nu_b({x_0})>=1/N_Q`. For the UNNORMALIZED root measure
+
+\[
+\eta_b=(\tau_H|_{T_b})\otimes\nu_b
+\]
+
+it follows that
+
+\[
+\eta_b\bigl([a_m]_d\setminus A_m\bigr)
+>\frac1{18N_Q}>0.
+\tag{SD42}
+\]
+
+Here the parent cylinder includes the whole ternary coordinate; the
+product of `T_b minus C_m` with the singleton x_0 already supplies the
+bound. Missing pure depths are permitted. The constant depends on the
+actual finite Q resolution and is not a uniform bound over all original
+heights.
+
+This reuses actual private-point projection and the root-capacity
+calculation of Report528 FC704--FC712; its FC1066--FC1068 already
+separates positive private-head support from a sufficient continuation
+budget. The present application specifies a parent HOLE by leaving the
+deep original while keeping its first root. At depth1 that operation
+cannot stay on the same root, which is precisely the obstruction in
+SD38--SD39.
+
+To use FC942's complementary-label payment, one additionally needs the
+actual parent d and `m in H_d`, including `m | Gamma_d` for the COMPLETE
+d-private region, under FC942's whole-minimal-cover hypotheses. First
+extend eta_b uniformly on the fibres of a common CRT period resolving
+ALL original moduli. This preserves its existing marginal and SD42;
+every complementary original is evaluated on that single extension.
+The smaller period used for SD40--SD42 need not resolve every remaining
+deep mixed or outside-prime original. Positivity in SD42 does not prove
+the required hull membership.
+FC943 automatically supplies3d in its crossing case, whose depth1 is
+outside SD40--SD42. Nor does this one-root law inherit the query budget
+of a different selected source. Existence of a useful deep hull pair,
+a quantitatively sufficient same-source query debit, and payment of the
+remaining original tail all remain unresolved.
