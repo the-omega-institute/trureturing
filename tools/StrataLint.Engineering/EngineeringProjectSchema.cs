@@ -95,3 +95,4 @@ internal static class EngineeringProjectSchema
     private static bool IsProjectPath(string? path) => path is not null && RepositoryPathSyntax.IsValid(path)
         && path.EndsWith(".csproj", StringComparison.Ordinal) && !path.Contains(':') && !path.Contains('*');
 }
+
