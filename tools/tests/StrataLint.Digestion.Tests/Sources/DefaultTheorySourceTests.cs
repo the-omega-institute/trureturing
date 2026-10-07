@@ -16,7 +16,7 @@ public sealed class DefaultTheorySourceTests
     private const string UndeclaredPath = "docs/develop/theory/UNDECLARED_VOLUME.md";
     private const string Markdown = "# 未声明卷\n\n## 定理 1.1\n\n证。\n";
 
-    private static DigestionIngestPlan PlanWith(params (string Path, byte[] Bytes)[] extraFiles)
+    private static ReportFreeDigestionIngestPlan PlanWith(params (string Path, byte[] Bytes)[] extraFiles)
     {
         var declaredBytes = Encoding.UTF8.GetBytes("# 已声明卷\n\n## 定理 9.9\n\n证。\n");
         var declared = GenericAtomizer.Atomize(declaredBytes, TheoryAtomizerRules.None);
@@ -40,7 +40,7 @@ public sealed class DefaultTheorySourceTests
             .Append((capture.RelativePath, capture.Bytes.ToArray()))
             .ToArray();
 
-        return DigestionIngestor.Plan(ledger, DigestionTestSupport.Snapshot(files), ledger);
+        return ReportFreeDigestionIngestor.Plan(ledger, DigestionTestSupport.Snapshot(files));
     }
 
     [Fact]

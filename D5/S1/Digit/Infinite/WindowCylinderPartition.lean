@@ -74,6 +74,27 @@ noncomputable def B (L : ℕ) : Set Circle := E '' Set.Icc 1 (G L)
 noncomputable def actualCuts (L : ℕ) : Set Circle :=
   {z | ∃ p : X L, z = ((ell p : ℝ) : Circle) ∨ z = ((upper p : ℝ) : Circle)}
 
+/-- Prepending a return-block word reads its digits before the shifted legal tail. -/
+theorem prepend_digits (w : List Block) (y : LegalDigits) (j : ℕ) : (prependWord w y).val j = if j < len w then (digitsOf w)[j]?.getD false
+      else y.val (j-len w) := by
+  induction w generalizing j with
+  | nil => simp [prependWord,len,digitsOf,D5.S0.Automata.BinaryZeckendorfBlockSkeleton.expand]
+  | cons b w ih =>
+    cases b with
+    | zero =>
+      cases j with
+      | zero => rfl
+      | succ j =>
+        simpa [prependWord,prependBlock,len,digitsOf, D5.S0.Automata.BinaryZeckendorfBlockSkeleton.expand] using ih j
+    | oneZero =>
+      cases j with
+      | zero => rfl
+      | succ j =>
+        cases j with
+        | zero => rfl
+        | succ j =>
+          simpa [prependWord,prependBlock,len,digitsOf, D5.S0.Automata.BinaryZeckendorfBlockSkeleton.expand, Nat.add_assoc] using ih j
+
 set_option maxHeartbeats 800000 in
 /-- Completed legal windows parametrize closed affine intervals with disjoint interiors.
 Their circle cuts are the indexed negative golden phases, with the positive-side stream
@@ -151,25 +172,6 @@ theorem window_cylinder_partition :
               | zero => simpa [digitsOf, D5.S0.Automata.BinaryZeckendorfBlockSkeleton.expand] using hx1.symm
               | succ j =>
                 simpa [digitsOf, D5.S0.Automata.BinaryZeckendorfBlockSkeleton.expand, shift, Nat.add_assoc] using hdig j (by omega)
-  have prepend_digits (w : List Block) (y : LegalDigits) (j : ℕ) : (prependWord w y).val j = if j < len w then (digitsOf w)[j]?.getD false
-        else y.val (j-len w) := by
-    induction w generalizing j with
-    | nil => simp [prependWord,len,digitsOf,D5.S0.Automata.BinaryZeckendorfBlockSkeleton.expand]
-    | cons b w ih =>
-      cases b with
-      | zero =>
-        cases j with
-        | zero => rfl
-        | succ j =>
-          simpa [prependWord,prependBlock,len,digitsOf, D5.S0.Automata.BinaryZeckendorfBlockSkeleton.expand] using ih j
-      | oneZero =>
-        cases j with
-        | zero => rfl
-        | succ j =>
-          cases j with
-          | zero => rfl
-          | succ j =>
-            simpa [prependWord,prependBlock,len,digitsOf, D5.S0.Automata.BinaryZeckendorfBlockSkeleton.expand, Nat.add_assoc] using ih j
   have geometry (L : ℕ) (hL : 1 ≤ L) (p : X L) : signedValue '' C p = I p ∧ I p = Set.Icc (ell p) (upper p) ∧
       upper p - ell p = alpha ^ d p ∧ 0 < alpha ^ d p ∧ alpha ^ d p < 1 ∧
       len (c p) = d p ∧ S (c p) = Sp p ∧ C p = Set.range (prependWord (c p)) := by

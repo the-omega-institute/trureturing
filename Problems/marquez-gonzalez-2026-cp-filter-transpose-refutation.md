@@ -110,11 +110,12 @@ typed `claim` and `result`.
   qubit strong condition. The source attests it for dimension two; the
   dimension-three counterexample does not refute that restricted statement
   or the published qubit feasibility conclusions.
-- **Open:** Eq. (48), which asks for positive/CP factorization without the
-  two-sided CP-inverse requirement. The strong-condition counterexample
-  supplies no verdict on this weaker condition. The source identifies the
-  weaker condition as sufficient for its higher-dimensional extension;
-  that extension is not disproved by the present settlement.
+- **Refuted in a separate module:** Eq. (48), which asks for positive/CP
+  factorization without the two-sided CP-inverse requirement, also fails at
+  dimension three (`D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation.result`,
+  problem `marquez-gonzalez-2026-positive-filter-transpose-refutation`). The
+  strong-condition counterexample of this module supplies no verdict on the
+  weaker condition by itself.
 - **Open:** strong CP-filter equivalence for the commuting-Choi-block
   class. The present noncommuting-range obstruction does not settle that class.
 - **Open:** strong CP-filter equivalence for other dimension-three channel
@@ -126,7 +127,8 @@ typed `claim` and `result`.
 
 The bounded literature absence and external publication metadata are
 literature evidence, not Lean-kernel conclusions. Source results outside
-Eq. (47), including the qubit theorems and Eq. (48), are not formalized here.
+Eq. (47), including the qubit theorems, are not formalized here; Eq. (48) is
+settled in `PositiveFilterTransposeRefutation`.
 The kernel checks the dimension-three negation and its stated definitions.
 
 Information-escape registration is paused under CLAUDE.md §3.9.

@@ -1,0 +1,24 @@
+### 定义 1.2（整数位权与地址）
+
+定义
+
+$$
+G_j^{(k)}=2^j\quad(0\le j<k),\qquad
+G_j^{(k)}=\sum_{h=1}^kG_{j-h}^{(k)}\quad(j\ge k).
+$$
+
+固定 $k$ 时简记为 $G_j$。令 $\mathcal W_m^{(k)}$ 为长度恰为 $m$、不含 $1^k$ 的二进制词集，$\mathcal W_0^{(k)}=\{\varepsilon\}$，并置 $\mathcal W_*^{(k)}=\bigcup_{m\ge0}\mathcal W_m^{(k)}$。对高位在前的词 $w=b_{m-1}\cdots b_0$，令
+
+$$
+\operatorname{val}_k(w)=\sum_{j=0}^{m-1}b_jG_j,
+\qquad \operatorname{val}_k(\varepsilon)=0.
+$$
+
+采用 [《递归关系观察与有效分辨率》](RECURSIVE_RELATIONAL_OBSERVATION_EFFECTIVE_RESOLUTION.md) 第 1.2 节式 TM.374–TM.384 的归一化与区间双射，记其逆为
+
+$$
+Z_{k,m}:\{0,\ldots,G_m-1\}\longrightarrow\mathcal W_m^{(k)}.
+$$
+
+所用区间归纳在定理 1.3 的证明中重述。这里的 $\operatorname{val}_k$ 计算整数地址，不是原数的解码器，也不是以增长根负幂为权的实数展开。
+

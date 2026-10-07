@@ -1,0 +1,6 @@
+**定理 2.2（结构 Fibonacci 递归）。** 令 $T_n=\rho^n(\alpha)$，则
+
+$$
+T_0=\alpha,\qquad T_1=\beta,\qquad T_{n+2}=\langle T_{n+1},T_n\rangle.
+$$
+

@@ -1,0 +1,55 @@
+这里逐槽实例化 66.11—12 的实际接口，不能仅由其三树、五树矩阵推出全参数断言。写
+
+$$
+E=\langle\beta,\alpha\rangle,\quad A=\langle E,\beta\rangle,\quad
+C=\langle A,E\rangle,\quad B=\langle C,A\rangle,\quad
+T=\langle A,C\rangle,\quad W_1=\langle B,C\rangle,\quad K_T=\langle T,A\rangle.
+$$
+
+令 $\mathcal R_{k+1}$ 是 $k+1$ 个槽的全孔右梳，活动槽根 $\eta_j=\mathtt R^{j-1}\mathtt L$，末槽根 $\mathtt R^k$。$P_0=\mathcal R_{k+1}(C,\ldots,C,K_T)$；$U_j$ 把第 $j$ 活动槽换成 $T$、末槽换成 $B$；$V_j$ 把它们分别换成 $W_1,A$。块 $A,C,B,T,W_1,K_T$ 的完整三步前像依次为
+
+$$
+\alpha,\quad\beta,\quad\langle\beta,\alpha\rangle,\quad
+\langle\alpha,\beta\rangle,\quad
+\langle\langle\beta,\alpha\rangle,\beta\rangle,\quad
+\langle\langle\alpha,\beta\rangle,\alpha\rangle.
+$$
+
+保留外层右梳的全部括号，便得到每棵原型的完整前像。三类前像的组成分别是 $k(0,1)+(2,1)$、$(k-1)(0,1)+(1,1)+(1,1)$、$(k-1)(0,1)+(1,2)+(1,0)$，均为 $(2,k+1)$；母卷第 3 章的三步组成矩阵给像组成 $(2k+4,3k+7)$，所以叶数均为 $n$。异常槽位置及块类型给出恰好 $2k+1$ 棵不同正树。
+
+直接使用 66.11 与 Scale 36.2 的完整带标签块前沿及全部局部交集：活动块 $C,T,W_1$ 两两非冲突，末块 $K_T,B,A$ 两两非冲突。上述 $k+1$ 个槽根前缀不可比，右梳没有槽外字面叶；每个全局叶属于唯一槽。因此两棵原型的任何共享叶都在同一槽内，局部非冲突逐槽提升为整个 $F_k$ 的非冲突。这包括 $j=1,j=k$，并且 $k=1$ 时槽根就是 $\mathtt L,\mathtt R$。
+
+定义实际请求地址
+
+$$
+a_j=\eta_j\mathtt{LLR},\quad b_j=\eta_j\mathtt{RR},\quad
+q_j=\eta_j\mathtt{RLLR},\quad r_j=\eta_j\mathtt{LLLLR}.
+$$
+
+四个相对地址的字面原始响应为
+
+| 活动块 | $\mathtt{LLR}$ | $\mathtt{RR}$ | $\mathtt{RLLR}$ | $\mathtt{LLLLR}$ |
+| --- | --- | --- | --- | --- |
+| $C$ | $\alpha$ | $\alpha$ | 不存在 | 不存在 |
+| $T$ | $\alpha$ | 分支 | $\alpha$ | 不存在 |
+| $W_1$ | 分支 | 分支 | $\alpha$ | $\alpha$ |
+
+表中 $\alpha$ 指实际叶标签；前缀 $\eta_j$ 把该表逐字搬到全局。粗控制器只用 $\alpha,\beta,\nu$；原始控制器立即合并分支／不存在后执行同一路由。
+
+正常扫描槽 $i$：先问 $a_i$，$\nu$ 暂选 $V_i$；$\alpha$ 才问 $b_i$，其 $\nu$ 暂选 $U_i$、$\alpha$ 继续。$\sigma_0$ 按指标递增正常扫描全部槽，全部继续才暂选 $P_0$。$\sigma_{U_j}$ 正常扫描所有其他槽，再问 $a_j$：$\nu$ 暂选 $V_j$，$\alpha$ 才问 $q_j$，其 $\nu$ 暂选 $P_0$、$\alpha$ 暂选 $U_j$。$\sigma_{V_j}$ 扫描所有其他槽，再问 $q_j$：$\nu$ 暂选 $P_0$，$\alpha$ 才问 $r_j$，其 $\nu$ 暂选 $U_j$、$\alpha$ 暂选 $V_j$。其他槽始终按指标递增扫描；所有意外 $\beta$ 转入后备，$k=1$ 时其他槽扫描为空。
+
+每次暂选只启动 66.12 的完整带标签叶认证，全部匹配才接受，任何不匹配转入全局后备。该接口适用于任意有限原型：完整前沿匹配由前沿刚性迫使输入等于原型。后备从自己的空逻辑历史和已知存在的根开始，只请求已知存在的节点；在这种节点上 $\nu$ 必为分支，故两个孩子确实存在。有限遍历恢复实际树并取得叶数 $\ell$，再有限枚举所有至多 $\ell$ 叶的完整带标签前像，比较其三步像。替换不减少叶数，故枚举完整；两个根叶有限拒绝，族外正例及负例也正确有限判定。路由、认证、后备各从自己的初态执行，外层真实缓存仅在再次请求同一已取得地址时供应响应，不预填逻辑历史，不缓存推断前缀或未请求叶。这正是 27.3 与 66.12 的阶段续接合同。
+
+在评价族上，表中路由总选中输入自身；扫描其他槽时每个继续响应都来自该输入的 $C$ 块实际 $\alpha$ 叶。完整认证随后请求其全部 $n$ 片叶，实际付费集 $J_\sigma(P)$ 恰为
+
+$$
+\begin{array}{c|ccc}
+ &P_0&U_j&V_j\\\hline
+\sigma_0&L(P_0)&L(U_j)\cup\{b_j\}&L(V_j)\cup\{a_j\}\\
+\sigma_{U_j}&L(P_0)\cup\{q_j\}&L(U_j)&L(V_j)\cup\{a_j\}\\
+\sigma_{V_j}&L(P_0)\cup\{q_j\}&L(U_j)\cup\{r_j\}&L(V_j)
+\end{array}
+$$
+
+对 $i\ne j$，后两行的另两列仍为 $L(U_i)\cup\{b_i\}$、$L(V_i)\cup\{a_i\}$。每个显示的额外地址由响应表确为该输入的非叶，其余路由请求全是自身 $\alpha$ 叶；不同槽不重合，同槽的四个词也不同。真实同地址缓存使阶段请求集取并，给出所断言的每个费用等式。全域总性由认证与后备接口保证，数值等式只评价 $F_k$。$\square$
+

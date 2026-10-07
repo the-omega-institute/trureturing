@@ -1,0 +1,40 @@
+## 定义 14.1：精确组合与粗接口组合
+
+设：
+
+$$
+R\subseteq X\times Y,
+\qquad
+S\subseteq Y\times Z,
+$$
+
+中间接口只保留：
+
+$$
+\eta:Y\to B.
+$$
+
+精确组合为：
+
+$$
+S\circ R
+=
+\{(x,z):\exists y,\ R(x,y)\land S(y,z)\}.
+$$
+
+粗接口组合为：
+
+$$
+S\star_\eta R
+=
+\left\{
+(x,z):
+\begin{array}{l}
+\exists y,y',\\
+R(x,y),\ \eta(y)=\eta(y'),\ S(y',z)
+\end{array}
+\right\}.
+$$
+
+区别在于：精确组合要求同一个中间见证；粗组合只要求中间见证的读数相同。
+

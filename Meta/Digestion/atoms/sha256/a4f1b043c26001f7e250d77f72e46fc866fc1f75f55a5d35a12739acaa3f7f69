@@ -1,0 +1,31 @@
+### 定义 8.1（计算基 Schmidt 支撑与前缀计数）
+
+固定一个编码
+
+$$
+J|b,r\rangle=\frac1{\sqrt{d_b}}\sum_{j=0}^{d_b-1}
+|x_{b,j}\rangle|y_{b,r,j}\rangle,
+\qquad d_b\ge1,
+\tag{8.1}
+$$
+
+其中 $x_{b,j}$ 是长度 $m_X$、首位为 $b$ 的互异合法词；$y_{b,r,j}$ 是长度 $m_Y$、首位为 $b$ 的合法词，在全部 $(b,r,j)$ 上两两互异。包括推论 6.3 的规范编码，也包括定理 7.2 的贪心分配编码；若需要直接拼接，另要求各项 $x_{b,j}y_{b,r,j}$ 合法。
+
+对 $1\le\ell\le m_X$，令 $A_\ell$ 是前 $\ell$ 个环境 $X$ qubit，$B_\ell$ 是余下 $m_X-\ell$ 个 $X$ qubit 连同全部 $Y$。这是环境张量积的划分，不假定合法词空间在此划分处因子化。对长度 $\ell$ 的词 $u$，定义
+
+$$
+n_{b,u}=\#\{j<d_b:x_{b,j}\text{ 以 }u\text{ 开头}\},\qquad
+q_{b,u}=\frac{n_{b,u}}{d_b},\qquad
+U_{b,\ell}=\{u:n_{b,u}>0\}.
+$$
+
+长度由 $u$ 指明，故 $n_{b,u}$ 不另写 $\ell$ 下标。令
+
+$$
+\tau_{b,\ell}=\sum_{u\in U_{b,\ell}}q_{b,u}|u\rangle\langle u|,
+\qquad a_b(\ell)=H((q_{b,u})_{u\in U_{b,\ell}}).
+\tag{8.2}
+$$
+
+这里 $a_b(\ell)$ 是随划分变化的信息面积，与第 6 节的常数柱权 $a_b$ 区别使用。
+

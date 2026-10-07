@@ -9,6 +9,19 @@ internal sealed class WindowCylinderPartitionDocument : IScribeDocumentDefinitio
         H("The Cylinder Partition of Legal Digit Windows"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("windowcylinderpartition-prepend-digits"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/WindowCylinderPartition.prepend_digits"),
+                H("Digits of a prepended return-block word"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every finite return-block word w, legal tail y and natural index j, "
+                    + "the j-th digit of prependWord w y is the j-th expanded digit of w "
+                    + "when j is less than len w. At every later index it is the digit of y "
+                    + "at j minus len w. This identifies the prefix and tail in each "
+                    + "window cylinder."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("windowcylinderpartition-window-cylinder-partition"),
                 DeclarationHandle.Create("D5/S1/Digit/Infinite/WindowCylinderPartition.window_cylinder_partition"),
                 H("Closed intervals and oriented circle cuts"),

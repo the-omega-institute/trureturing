@@ -73,6 +73,25 @@ def componentLabel {V : Type u} [Quiver.{v} V] {α : Type w}
     (label : EdgeLabel V α) (S : StronglyConnectedComponent V) :
     EdgeLabel (Component S) α := fun e => label e
 
+/-- Component inclusion preserves the length of every internal path. -/
+theorem component_inclusion_length {V : Type u} [Quiver.{v} V]
+    (S : StronglyConnectedComponent V) {a b : Component S}
+    (H : Path a b) : ((componentInclusion S).mapPath H).length = H.length := by
+  induction H with
+  | nil => rfl
+  | cons H e ih => simp only [Prefunctor.mapPath_cons, Path.length_cons, ih]
+/-- Component inclusion preserves path output under the restricted edge labels. -/
+theorem component_inclusion_output {V : Type u} [Quiver.{v} V] {α : Type w}
+    (label : EdgeLabel V α) (S : StronglyConnectedComponent V) {a b : Component S}
+    (H : Path a b) : output label ((componentInclusion S).mapPath H) =
+      output (componentLabel label S) H := by
+  induction H with
+  | nil => simp [output]
+  | cons H e ih =>
+    simp only [Prefunctor.mapPath_cons, output, Path.weight_cons, FreeMonoid.toList_mul,
+      FreeMonoid.toList_of] at ih ⊢
+    rw [ih]; rfl
+
 /-- Cyclicity is witnessed by an actual positive internal return path. -/
 def Cyclic {V : Type u} [Quiver.{v} V] (S : StronglyConnectedComponent V) : Prop :=
   ∃ q : Component S, ∃ C : Path q q, 0 < C.length
@@ -448,20 +467,6 @@ theorem result {V : Type u} [Quiver.{v} V] [Finite V]
       induction H with
       | nil => rw [outnil]; rfl
       | cons H e ih => rw [outcons, List.length_append, ih]; rfl
-    have maplen (S : StronglyConnectedComponent V) {a b : Component S}
-        (H : Path a b) : ((componentInclusion S).mapPath H).length = H.length := by
-      induction H with
-      | nil => rfl
-      | cons H e ih => simp only [Prefunctor.mapPath_cons, Path.length_cons, ih]
-    have mapout (S : StronglyConnectedComponent V) {a b : Component S}
-        (H : Path a b) : output label ((componentInclusion S).mapPath H) =
-          output (componentLabel label S) H := by
-      induction H with
-      | nil => simp [output]
-      | cons H e ih =>
-        simp only [Prefunctor.mapPath_cons, output, Path.weight_cons, FreeMonoid.toList_mul,
-          FreeMonoid.toList_of] at ih ⊢
-        rw [ih]; rfl
     have mapvertices (S : StronglyConnectedComponent V) {a b : Component S}
         (H : Path a b) : ((componentInclusion S).mapPath H).vertices =
           H.vertices.map Subtype.val := by
@@ -516,9 +521,9 @@ theorem result {V : Type u} [Quiver.{v} V] [Finite V]
           (P ≠ [] → Cyclic (sc a)) := by
       let S := sc a
       let J := liftComponentPath S H rfl hab.symm
-      have hJlen : J.val.length = H.length := by rw [← maplen S J.val, J.property]
+      have hJlen : J.val.length = H.length := by rw [← component_inclusion_length S J.val, J.property]
       have hJout : output (componentLabel label S) J.val = output label H := by
-        rw [← mapout S J.val, J.property]
+        rw [← component_inclusion_output label S J.val, J.property]
       by_cases hc : Cyclic S
       · obtain ⟨p, hp, hps, B, θ, hedge⟩ :=
           (coherent_component_phases label S hc).1.mp (hcoherent S hc)
@@ -532,7 +537,7 @@ theorem result {V : Type u} [Quiver.{v} V] [Finite V]
           | @cons y z K e ih =>
             obtain ⟨he, hθ⟩ := hedge e
             have hlength : (output (componentLabel label S) K).length = K.length := by
-              rw [← mapout S K, outlen, maplen]
+              rw [← component_inclusion_output label S K, outlen, component_inclusion_length]
             refine ⟨?_, ?_⟩
             · rw [hθ, ih.1, Path.length_cons, Nat.cast_add, Nat.cast_one, add_assoc]
             · intro i hi

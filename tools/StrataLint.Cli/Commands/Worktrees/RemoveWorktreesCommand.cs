@@ -8,12 +8,14 @@ namespace StrataLint.Cli;
 internal static class RemoveWorktreesCommand
 {
     internal const string Usage =
-        "USAGE: StrataLint worktree remove --names \"NAME [NAME ...]\"\n"
+        "USAGE: StrataLint worktree remove --names \"NAME [NAME ...]\" [--force]\n"
         + "Names are complete final directory names of registered worktrees, matched exactly (Ordinal). "
         + "Separate names with whitespace; directory names containing whitespace are unsupported. "
         + "All names are resolved before any deletion; duplicates are removed once. "
         + "The main checkout and locked worktrees are refused; first run git worktree unlock <path> for a locked tree.\n"
-        + "Removal uses one --force, bypassing unmerged, dirty, age, open PR and process occupancy criteria. "
+        + "Git removal uses one --force, bypassing unmerged, dirty, age, open PR and process occupancy criteria. "
+        + "The optional CLI --force disables the default 300-second removal timeout; inventory remains bounded. "
+        + "It may appear before or after --names and does not override main checkout or lock protection. "
         + "Branch refs are retained. Execution failures are reported and remaining resolved trees are attempted; no rollback.\n"
         + "CLI exits: 0 success; 64 usage; 65 not_found; 66 ambiguous; 67 main_worktree; 68 locked; "
         + "69 inventory unavailable or empty; 74 execution failure. "
@@ -28,10 +30,21 @@ internal static class RemoveWorktreesCommand
         ArgumentNullException.ThrowIfNull(runner);
         if (arguments.Count == 1 && arguments[0] is "--help" or "-h")
             return Complete(0, [], Usage);
-        if (arguments.Count != 2 || arguments[0] != "--names" || string.IsNullOrWhiteSpace(arguments[1]))
+        string? requestedNames = null;
+        var force = false;
+        for (var index = 0; index < arguments.Count; index++)
+        {
+            if (arguments[index] == "--names" && requestedNames is null && index + 1 < arguments.Count)
+                requestedNames = arguments[++index];
+            else if (arguments[index] == "--force" && !force)
+                force = true;
+            else
+                return Complete(64, [], Usage);
+        }
+        if (string.IsNullOrWhiteSpace(requestedNames))
             return Complete(64, [], Usage);
 
-        var names = arguments[1].Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries)
+        var names = requestedNames.Split((char[]?)null, StringSplitOptions.RemoveEmptyEntries)
             .Distinct(StringComparer.Ordinal).ToArray();
         IReadOnlyList<RegisteredWorktree> inventory;
         try
@@ -63,7 +76,7 @@ internal static class RemoveWorktreesCommand
             try
             {
                 var result = runner.Run("git", ["worktree", "remove", "--force", "--", item.Path!],
-                    mainPath, BoundedProcessRunner.HangDetectionBudget);
+                    mainPath, force ? Timeout.InfiniteTimeSpan : BoundedProcessRunner.HangDetectionBudget);
                 if (result.ExitCode == 0)
                 {
                     items[index] = item with { Outcome = "removed" };

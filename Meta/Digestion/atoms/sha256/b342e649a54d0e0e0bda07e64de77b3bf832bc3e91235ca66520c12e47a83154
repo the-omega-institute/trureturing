@@ -1,0 +1,10 @@
+**定理 6.5（最小充分边界）。** 若 $m:X\to M$ 能恢复每个允许上下文的输出，则存在唯一满射
+
+$$
+m(X)\twoheadrightarrow X/{\approx}.
+$$
+
+有限情形下 $|m(X)|\ge|X/{\approx}|$。
+
+**证明。** $m(x)=m(y)$ 时，所有由 $m$ 恢复的上下文输出相同，故 $x\approx y$。定义 $m(x)\mapsto[x]_\approx$ 即得良定义满射。∎
+

@@ -1,4 +1,5 @@
 using System.Collections.Immutable;
+using System.Security.Cryptography;
 using StrataLint.Engine;
 
 namespace StrataLint.Cli;
@@ -25,19 +26,55 @@ internal static partial class IngestCommand
         try
         {
             var options = ParseReportFreeArguments(arguments);
-            var inputs = ReadInputs(
-                repository,
-                options.BaselineRevision,
-                requireBaselineSourceMetadata: true);
-            var (sourceIds, registrationPaths) = ResolveSources(inputs, options.Sources);
+            var (currentRaw, current, document) = ReadSelectedSources(repository, options.Sources);
+            var (sourceIds, registrationPaths) = ResolveSources(document, current, options.Sources);
+            var populated = document.RequireDigestionSources().Where(source => repository.SearchCurrentPaths(
+                    [DigestionQuerySelection.Literal(BackfillInventoryLoader.RootPath + source.SourceId)])
+                .Any(path => DigestionQuerySelection.IsAtomPath(path) && BackfillInventoryLoader.IsCanonicalPath(path)))
+                .Select(static source => source.SourceId).ToHashSet(StringComparer.Ordinal);
+            var wholeSourceIds = document.RequireDigestionSources().Where(source => current.TryGetFile(source.SourcePath, out _))
+                .Select(source => { current.TryGetFile(source.SourcePath, out var file); return DigestionFingerprint.ComputeOpaque(file!.RawBytes.AsSpan()).RawSha256[7..]; })
+                .Distinct(StringComparer.Ordinal).ToArray();
+            var wholeSourceRecords = DigestionQuerySelection.ReadAtoms(repository, wholeSourceIds);
+            (currentRaw, current, document) = DigestionQuerySelection.Load(DigestionQuerySelection.Merge(currentRaw, wholeSourceRecords.Raw));
+            var cache = new Dictionary<(string Id, string Hash), AtomizedTheoryDocument>();
+            var kindCache = new Dictionary<(string Id, string Hash), (AtomizedTheoryDocument Document, Dictionary<string, string> Kinds)>();
+            Func<string, TheoryAtomizer> atomizers = id => (bytes, rules) =>
+            {
+                var key = (id, Convert.ToHexStringLower(SHA256.HashData(bytes)));
+                if (!cache.TryGetValue(key, out var atomized))
+                    cache[key] = atomized = (dependencies.AtomizerResolver ?? (static name => AtomizerRegistry.Require(name).Atomize))(id)(bytes, rules);
+                return atomized;
+            };
+            Func<string, TheoryAtomizerWithContentKinds>? kindAtomizers = dependencies.AtomizerResolver is not null
+                && dependencies.ContentKindAtomizerResolver is null ? null : id => (bytes, rules, contentKinds) =>
+                {
+                    var key = (id, Convert.ToHexStringLower(SHA256.HashData(bytes)));
+                    if (!kindCache.TryGetValue(key, out var cached))
+                    {
+                        var kinds = new Dictionary<string, string>(StringComparer.Ordinal);
+                        var atomized = (dependencies.ContentKindAtomizerResolver ?? (static name => AtomizerRegistry.Require(name).AtomizeWithContentKinds))(id)(bytes, rules, kinds);
+                        kindCache[key] = cached = (atomized, kinds);
+                    }
+                    if (contentKinds is not null)
+                        foreach (var kind in cached.Kinds) contentKinds[kind.Key] = kind.Value;
+                    return cached.Document;
+                };
             var plan = ReportFreeDigestionIngestor.Plan(
-                inputs.CurrentDocument,
-                inputs.Current,
-                inputs.BaselineDocument,
+                document,
+                current,
                 sourceIds,
                 registrationPaths,
-                dependencies.AtomizerResolver,
-                dependencies.ContentKindAtomizerResolver);
+                atomizers,
+                kindAtomizers,
+                populated);
+            var existing = DigestionQuerySelection.ReadAtoms(repository, plan.AddedAtomIds.ToArray());
+            if (!existing.Document.RequireDigestionEntries().IsEmpty)
+            {
+                var loaded = DigestionQuerySelection.Load(DigestionQuerySelection.Merge(currentRaw, existing.Raw));
+                (currentRaw, current, document) = loaded;
+                plan = ReportFreeDigestionIngestor.Plan(document, current, sourceIds, registrationPaths, atomizers, kindAtomizers, populated);
+            }
             if (dependencies.BeforeValidation is not null)
             {
                 plan = dependencies.BeforeValidation(plan)
@@ -47,14 +84,14 @@ internal static partial class IngestCommand
 
             var finalRaw = AddCasObjects(
                 AppendLedger(
-                    inputs.CurrentRaw,
-                    inputs.CurrentDocument,
+                    currentRaw,
+                    document,
                     plan),
                 plan.CasObjects);
             return WriteReportFreeResult(
                 repositoryRoot,
-                inputs.CurrentRaw,
-                inputs.CurrentDocument,
+                currentRaw,
+                document,
                 finalRaw,
                 plan,
                 sourceIds,
@@ -64,61 +101,6 @@ internal static partial class IngestCommand
         {
             return new CommandResult(false, string.Empty, $"INGEST_INVALID {exception.Message}\n");
         }
-    }
-
-    private static CommandResult WriteResult(
-        string repositoryRoot,
-        IngestPreparation prepared,
-        ImmutableArray<LedgerUpdate> ledgerUpdates,
-        BackfillInventoryDocument finalDocument,
-        DigestionLedgerEvaluation evaluation,
-        string backfillObservations)
-    {
-        var changed = ledgerUpdates.Length > 0;
-        var openGenres = finalDocument.RequireDigestionSources()
-            .SelectMany(static source => source.GenreRegistryCheck.UnregisteredGenres.Select(token =>
-                (source.SourceId, Token: token)))
-            .OrderBy(static item => item.SourceId, StringComparer.Ordinal)
-            .ThenBy(static item => item.Token, StringComparer.Ordinal)
-            .ToImmutableArray();
-        var createdCasPaths = WriteCasObjects(repositoryRoot, prepared.Plan.CasObjects);
-        try
-        {
-            ApplyLedgerUpdatesAtomically(repositoryRoot, prepared.CurrentRaw, ledgerUpdates);
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            RollbackCasObjects(createdCasPaths, exception);
-            throw;
-        }
-
-        return new CommandResult(
-            true,
-            $"INGEST stale_acknowledged={prepared.Plan.StaleAcknowledged} "
-            + $"residual_open_added={prepared.Plan.ResidualOpenAdded} "
-            + $"coarse_fallbacks={prepared.Plan.Fallbacks.Length} "
-            + $"open_genres={openGenres.Length} "
-            + $"cas_objects_written={createdCasPaths.Length} "
-            + $"ledger_changed={changed.ToString().ToLowerInvariant()}\n"
-            + string.Concat(openGenres.Select(static item =>
-                $"INGEST_OPEN_GENRE source={item.SourceId} "
-                + $"token={DigestStatusCommand.RenderDetail(item.Token)}\n"))
-            + string.Concat(prepared.Plan.Fallbacks.Select(static fallback =>
-                $"INGEST_FALLBACK source={fallback.SourceId} reason={fallback.Reason}\n"))
-            + string.Concat(prepared.SilentZeroWarnings.Select(static warning =>
-                $"WARNING silent-zero-extraction source={warning.SourceId} "
-                + $"path={warning.SourcePath}\n"))
-            + prepared.CrossVolumeClearanceGaps
-            + backfillObservations
-            + DigestStatusCommand.RenderText(evaluation)
-            + (prepared.Plan.Fallbacks.Length == 0
-                ? string.Empty
-                : $"INGEST_INCOMPLETE {prepared.Plan.Fallbacks.Length} source"
-                    + (prepared.Plan.Fallbacks.Length == 1 ? string.Empty : "s")
-                    + " registered without being atomised: "
-                    + string.Join(", ", prepared.Plan.Fallbacks.Select(static item => item.SourceId))
-                    + "\n"),
-            string.Empty);
     }
 
     private static CommandResult WriteReportFreeResult(
@@ -147,22 +129,17 @@ internal static partial class IngestCommand
             .OrderBy(static item => item.SourceId, StringComparer.Ordinal)
             .ThenBy(static item => item.Token, StringComparer.Ordinal)
             .ToImmutableArray();
-        // The stage barrier runs after validation, outside the commit lock, so a peer can finish here.
         dependencies.BeforeCommit?.Invoke();
-        ImmutableArray<string> createdCasPaths;
-        using (AcquireReportFreeCommitLock(repositoryRoot))
+        RequireUnclaimedAtomIds(repositoryRoot, plan.AddedAtomIds);
+        var createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
+        try
         {
-            RequireUnclaimedAtomIds(repositoryRoot, plan.AddedAtomIds);
-            createdCasPaths = WriteCasObjects(repositoryRoot, plan.CasObjects);
-            try
-            {
-                ApplyLedgerAdditionsAtomically(repositoryRoot, ledgerUpdates, dependencies.CommitLedgerFile);
-            }
-            catch (Exception exception) when (exception is not OutOfMemoryException)
-            {
-                RollbackCasObjects(createdCasPaths, exception);
-                throw;
-            }
+            ApplyLedgerAdditionsAtomically(repositoryRoot, ledgerUpdates, dependencies.CommitLedgerFile);
+        }
+        catch (Exception exception) when (exception is not OutOfMemoryException)
+        {
+            RollbackCasObjects(createdCasPaths, exception);
+            throw;
         }
 
         return new CommandResult(
@@ -175,7 +152,7 @@ internal static partial class IngestCommand
             + $"ledger_changed={(ledgerUpdates.Length > 0).ToString().ToLowerInvariant()}\n"
             + string.Concat(openGenres.Select(static item =>
                 $"INGEST_OPEN_GENRE source={item.SourceId} "
-                + $"token={DigestStatusCommand.RenderDetail(item.Token)}\n"))
+                + $"token={System.Text.Json.JsonSerializer.Serialize(item.Token)}\n"))
             + string.Concat(plan.Fallbacks.Select(static fallback =>
                 $"INGEST_FALLBACK source={fallback.SourceId} reason={fallback.Reason}\n"))
             + (plan.Fallbacks.Length == 0
@@ -190,56 +167,20 @@ internal static partial class IngestCommand
 
     private static ReportFreeOptions ParseReportFreeArguments(IReadOnlyList<string> arguments)
     {
-        if (arguments.Count >= 2
-            && arguments[0] == "--base"
-            && !string.IsNullOrWhiteSpace(arguments[1]))
+        var sources = ImmutableArray.CreateBuilder<string>();
+        for (var index = 0; index < arguments.Count; index += 2)
         {
-            var sources = ImmutableArray.CreateBuilder<string>();
-            for (var index = 2; index < arguments.Count; index += 2)
-            {
-                if (arguments[index] != "--source")
-                    throw SourceUsage($"unexpected argument '{arguments[index]}'");
-                if (index + 1 == arguments.Count)
-                    throw SourceUsage("--source missing value");
-                if (string.IsNullOrWhiteSpace(arguments[index + 1]))
-                    throw SourceUsage($"invalid --source selector '{arguments[index + 1]}'");
-                sources.Add(arguments[index + 1]);
-            }
-            return new ReportFreeOptions(arguments[1], sources.ToImmutable());
+            if (arguments[index] != "--source")
+                throw SourceUsage($"unexpected argument '{arguments[index]}'");
+            if (index + 1 == arguments.Count)
+                throw SourceUsage("--source missing value");
+            if (string.IsNullOrWhiteSpace(arguments[index + 1]))
+                throw SourceUsage($"invalid --source selector '{arguments[index + 1]}'");
+            sources.Add(arguments[index + 1]);
         }
-
-        throw SourceUsage("invalid arguments");
+        if (sources.Count == 0) throw SourceUsage("at least one --source is required");
+        return new ReportFreeOptions(sources.ToImmutable());
     }
 
-    private sealed record ReportFreeOptions(
-        string BaselineRevision,
-        ImmutableArray<string> Sources);
-
-    private sealed record IngestInputs(
-        RawRepositorySnapshot CurrentRaw,
-        RawRepositorySnapshot BaselineRaw,
-        RepositorySnapshot Current,
-        RepositorySnapshot Baseline,
-        BackfillInventoryDocument CurrentDocument,
-        BackfillInventoryDocument BaselineDocument);
-
-    private sealed record IngestPreparation(
-        RawRepositorySnapshot CurrentRaw,
-        RawRepositorySnapshot BaselineRaw,
-        RepositorySnapshot Current,
-        RepositorySnapshot Baseline,
-        BackfillInventoryDocument CurrentDocument,
-        BackfillInventoryDocument BaselineDocument,
-        DigestionIngestPlan Plan,
-        RawChangeSet RepositoryChanges,
-        RawRepositorySnapshot PlannedRaw,
-        RepositorySnapshot PlannedSnapshot,
-        BackfillInventoryDocument PlannedDocument,
-        RawChangeSet PlannedChanges,
-        RawChangeSet PlannedEvaluationChanges,
-        RawChangeSet PlannedReceiptVerificationChanges,
-        RawChangeSet PlannedCasChanges,
-        DigestionEvaluationScope PlannedScope,
-        string CrossVolumeClearanceGaps,
-        ImmutableArray<DigestionLedgerSource> SilentZeroWarnings);
+    private sealed record ReportFreeOptions(ImmutableArray<string> Sources);
 }

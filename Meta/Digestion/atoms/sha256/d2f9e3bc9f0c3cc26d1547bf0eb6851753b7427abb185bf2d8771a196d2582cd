@@ -1,0 +1,35 @@
+## 定义 13.1：抽象、具体化与纤维饱和
+
+固定观察：
+
+$$
+\eta:X\longrightarrow B,
+\qquad B=\eta(X).
+$$
+
+对来源集合 $S\subseteq X$，定义抽象：
+
+$$
+\mathsf A_\eta(S)=\eta(S).
+$$
+
+对读数集合 $U\subseteq B$，定义具体化：
+
+$$
+\mathsf C_\eta(U)=\eta^{-1}(U).
+$$
+
+定义纤维饱和：
+
+$$
+\operatorname{Sat}_\eta(S)
+=
+\mathsf C_\eta\mathsf A_\eta(S)
+=
+\eta^{-1}(\eta(S)).
+$$
+
+其含义是：
+
+> 如果只知道来源落在 $S$ 所产生的某个读数中，那么所有与 $S$ 中某个来源具有相同读数的对象，都必须继续保留为候选。
+

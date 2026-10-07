@@ -8,7 +8,8 @@ namespace StrataLint.Engine;
 public sealed record RawRepositoryEntry(
     string Path,
     ImmutableArray<byte> Bytes,
-    string? GitBlobOid = null)
+    string? GitBlobOid = null,
+    bool ContentWasRead = true)
 {
     public static RawRepositoryEntry FromText(string path, string text) =>
         new(path, ImmutableArray.CreateRange(new UTF8Encoding(false, true).GetBytes(text)));
@@ -49,13 +50,15 @@ public sealed class RepositoryFile
         ImmutableArray<byte> rawBytes,
         string text,
         bool isOpaque = false,
-        string? gitBlobOid = null)
+        string? gitBlobOid = null,
+        bool contentWasRead = true)
     {
         Path = path;
         RawBytes = rawBytes;
         this.text = new(() => text);
         IsOpaque = isOpaque;
         GitBlobOid = gitBlobOid;
+        ContentWasRead = contentWasRead;
         HasBom = text.StartsWith('\uFEFF');
         HasCarriageReturn = text.Contains('\r');
         HasTrailingWhitespace = ContainsTrailingWhitespace(text.AsSpan());
@@ -66,12 +69,14 @@ public sealed class RepositoryFile
         RepoPath path,
         ImmutableArray<byte> rawBytes,
         bool isOpaque,
-        string? gitBlobOid)
+        string? gitBlobOid,
+        bool contentWasRead = true)
     {
         Path = path;
         RawBytes = rawBytes;
         IsOpaque = isOpaque;
         GitBlobOid = gitBlobOid;
+        ContentWasRead = contentWasRead;
         text = new(() => IsOpaque ? string.Empty : StrictUtf8.GetString(RawBytes.AsSpan()));
         var bytes = isOpaque ? ReadOnlySpan<byte>.Empty : rawBytes.AsSpan();
         HasBom = bytes.Length >= 3 && bytes[0] == 0xef && bytes[1] == 0xbb && bytes[2] == 0xbf;
@@ -105,6 +110,8 @@ public sealed class RepositoryFile
     public RepoPath Path { get; }
 
     public ImmutableArray<byte> RawBytes { get; }
+
+    internal bool ContentWasRead { get; }
 
     public string Text => text.Value;
 
@@ -200,7 +207,8 @@ public static class SnapshotDecoder
                     path,
                     entry.Bytes,
                     isOpaque,
-                    entry.GitBlobOid));
+                    entry.GitBlobOid,
+                    entry.ContentWasRead));
             }
 
             return new SnapshotDecodeOutcome.Decoded(RepositorySnapshot.Create(builder.ToImmutable(), raw.PathInventory));

@@ -21697,10 +21697,9 @@ g\mid\Gamma_d,\ d\mid\Gamma_g,\ J\ne\varnothing
 
 For comparable \(d,g\), one side of (RH1) can simplify: if \(d\mid g\)
 and \(g\mid\Gamma_d\), then \(d\mid\Gamma_g\) follows from
-\(d\mid g\mid\Gamma_g\), and the old classes are disjoint. This still
-does not force \(J\ne\varnothing\): the definition of \(J_d,J_g\)
-excludes the two exchanged parent labels themselves, so the comparable
-case supplies no descendant credit automatically. The same distinction
+\(d\mid g\mid\Gamma_g\), and the old classes are disjoint. Consequently
+\(K_{d,g}=\varnothing\), and (RH6) forces \(J=\varnothing\).
+The comparable case therefore has no receiving descendants. The same distinction
 is why a one-way hull divisor from DR3--DR4 or PI1--PI6 cannot by itself
 produce the strict descent.
 
@@ -21715,11 +21714,11 @@ The result narrows the remaining whole-cover gap but does not close it.
 Section 174 supplies one-direction hull divisibility for a certified
 subset of \(q^2\) sources; it does not force the reciprocal condition,
 the absence of \(K_{d,g}\), or a descendant in the receiving phase.
-For comparable \(d,g\), the old classes are already disjoint, so (RH4)
-is automatic; the existing DR3--DR4 and PI1--PI6 results can supply one
-direction of (RH1) in their stated concentrated branches. They do not
-supply the reverse hull containment, and EB8 does not align a child phase
-with the particular witnesses \(w_d,w_g\) needed for (RH5).
+For comparable \(d,g\), reverse hull containment and (RH4) are automatic,
+but (RH6) excludes receiving descendants. The existing DR3--DR4 and
+PI1--PI6 inventory does not supply an incomparable reciprocal pair with
+receiving descendants, and EB8 does not align a child phase with the
+particular witnesses \(w_d,w_g\) needed for (RH5).
 Section 175 is deliberately not a whole cover and therefore does not
 refute (RH4)--(RH6). A complete solution still needs a whole-cover
 argument forcing one usable reciprocal pair, or a different construction
@@ -21872,3 +21871,232 @@ odd \(u,v>1\). This contradicts the equal-cardinality modulus-sum bound in
 This consequence is still conditional on finding a reciprocal pair with
 both receiving sets nonempty. It supplies a sharper obstruction inside the
 full-ternary branch, not the missing universal forcing statement.
+
+## 178. Private-encloser descent only requires a fixed-count sum minimum
+
+The private-encloser descent (DR3) has the following stronger hypothesis
+boundary. Let F be any finite distinct odd whole cover, minimal in modulus
+sum among such covers with its SAME number of classes. Minimum class count
+is not required. Choose actual original labels d and M with `d | M`,
+allowing `d=M`. If an odd integer `e>1` satisfies
+
+\[
+e<M,\qquad P_d\subseteq w\bmod e,
+\]
+
+where P_d is the COMPLETE original private region, then
+
+\[
+\boxed{e\in D.}
+\tag{FCD1}
+\]
+
+No divisibility relation between e and d or M is needed beyond the
+displayed private enclosure. In particular e need not already be expressed
+as a divisor of a separately constructed gcd hull.
+
+Suppose e is absent. Replace the M-slot by `w mod e`; if `d!=M`, also move
+the residue of the d-slot to the old residue a_M while retaining its
+modulus d. Every point private to d is covered by the new e-slot. Every
+other point has an old owner n different from d. If `n=M`, the moved
+d-slot covers it because `d | M`; if `n!=M`, its old owner is unchanged.
+When `d=M`, the other owner is automatically retained, so the same argument
+is a single-slot replacement. This reasoning does not need comparable
+original classes to be disjoint.
+
+Since e is absent, the new numerical labels are still distinct. Oddness,
+nonunit moduli and class count are unchanged; the sum decreases by `M-e`.
+This contradicts the stated fixed-count minimum. The argument also covers
+an empty private region; it never selects a private witness. The Lean
+statement is
+`Erdos7.OddDistinctCoveringSystem.private_encloser_below_descendant_is_present`
+in
+[PrivateEncloserDescent](../../../../../../D5/S3/Arith/Covering/PrivateEncloserDescent.lean).
+Its conclusion forces the numerical label e, not its original residue.
+The complete concentration and actual-descendant premises still have to
+be supplied before applying it to a deep hull. This theorem does not
+force a Q-supported deep hull descendant or a reciprocal pair with
+receiving descendants.
+
+## 179. One parent signature row determines a comparable swap's congruence conjugacy
+
+Work on the complete carrier X=Z/QZ. Every labelled original is A_n=[a_n]_n with n|Q. A permutation sigma is congruence-preserving when x=y modulo e if and only if sigma(x)=sigma(y) modulo e, for every e|Q. This is a permutation of every prime-power residue tree; it need not be affine.
+
+For two labels define the actual phase signature
+
+    C_F(i,j)=gcd(i,j,a_i-a_j).                             (CS1)
+
+The residue difference can be replaced by its absolute value. The p-adic exponent of CS1 is the common-ancestor depth of the two labelled nodes, truncated at their respective depths v_p(i),v_p(j).
+
+### The complete signature classifies these labelled transports
+
+Two families F and F_tilde with the same labelled moduli admit a congruence-preserving sigma with sigma(A_n)=A_tilde_n for every n if and only if
+
+    C_F(i,j)=C_F_tilde(i,j) for every i,j.                 (CS2)
+
+For necessity, a congruence-preserving permutation sends each e-class bijectively to an e-class. For e|gcd(i,j), it preserves whether the e-projections of A_i and A_j coincide. These agreements determine CS1.
+
+For sufficiency, fix one p|Q and mark the original residue-tree nodes at depths v_p(n), together with all their ancestors. Map each marked node to the corresponding target node. Equal pairwise common-ancestor depths make this map well-defined and injective on the marked ancestor closure: two prescribed ancestors coincide exactly when their source nodes have the required common prefix, and the same test holds in the target. It preserves depth and parent maps. At each marked parent, extend its bijection of marked children to a permutation of all p children. Fill each unmarked subtree by any rooted-tree isomorphism. The resulting full p-tree automorphism transports every labelled p-prefix. Taking their product through CRT proves CS2.
+
+This transports every complete ownership cell:
+
+    O_F_tilde(sigma(x))=O_F(x).                           (CS3)
+
+In particular it transports complete private sets, not merely their masses or projections. A nonempty set lies in one e-class if and only if its image does, so its numerical congruence hull is preserved.
+
+### Whole coverage supplies the missing child row
+
+Take the comparable neutral swap from section176: d<g, d|g, g|Gamma_d, private witnesses w_d in P_d and w_g in P_g, and
+
+    B_d=[w_g]_d, B_g=[w_d]_g.
+
+The original comparable classes are disjoint; thus A_d and B_d are distinct d-classes. The complete neutral-swap identities are P'_d=P_g and P'_g=P_d. Then full labelled congruence conjugacy is equivalent to the single parent-row condition
+
+    gcd(d,n,a_d-a_n)=gcd(d,n,w_g-a_n)
+                       for every n distinct from d,g.   (CS4)
+
+Necessity is CS2. For sufficiency, apply CS2 only to labels other than g. It supplies sigma with sigma(A_d)=B_d and sigma(A_n)=A_n for n distinct from d,g. The transported original family sigma(F) still covers X. Every x in P_d lies outside B_d and outside each unchanged original. Whole coverage therefore forces x into sigma(A_g). This image is a complete g-class. It contains w_d, so it equals B_g. Thus the child is forced without a separate child-row premise. This last step uses whole coverage, not merely nonempty private sets or divisor closure.
+
+Consequently CS4 implies
+
+    Gamma_d=Gamma_g.                                     (CS5)
+
+Indeed CS3 gives sigma(P_d)=P'_d=P_g. No oddness or sum-minimality is needed for the forced-child argument; the stated whole-cover, private-witness and disjoint-parent hypotheses carry it. In the EB1 application, the existing neutral-swap result supplies those hypotheses.
+
+There is an explicit prefix form of CS4. For p|d on which a_d and w_g differ modulo p^v_p(d), let j_p be their first differing digit. CS4 says that no unchanged label n with v_p(n)>=j_p has its actual prefix modulo p^j_p in either of those two branches. A shorter prefix cannot distinguish the parents; a prefix in either branch has common-ancestor depth at least j_p with one and exactly j_p-1 with the other; prefixes in neither branch have equal depths with both. This recovers the prime-parent and sibling sufficient conditions in Report362, while exposing the proper-common-factor obstruction for a general composite parent.
+
+### Coordinate transports cannot cross a signature obstruction
+
+For the two labels d,g alone, the swap preserves their mutual signature: w_d=a_d modulo d and w_g=a_g modulo d. CS2 therefore always gives a global congruence-preserving map taking both originals to B_d,B_g, while also transporting every third original. This produces some legal same-palette whole cover.
+
+It produces the specified two-label endpoint, with all third originals fixed, exactly when CS4 holds. If CS4 fails, no finite composition of global prime/digit congruence transports can produce that endpoint, even if third originals move at intermediate stages: their composition is again congruence-preserving and would contradict CS2. A nonconjugate neutral swap therefore requires an actual AP edit outside this coordinate-transport orbit. Existence of a global transport with moving third labels does not supply an endpoint-preserving repair or a strict descent.
+
+CS1--CS5 and the marked-tree extension are ordinary proofs. They do not assert a new compiled classification theorem. The unresolved global implication is whether EB1 forces CS4, or instead converts a failure of CS4 into a usable complete-region descent certificate.
+
+## 180. Partial CRT swaps expose both complete private liabilities
+
+Continue with one actual whole cover and the same comparable swap. Write
+
+    d=product_p p^alpha_p, g=product_p p^beta_p,
+    Delta={p|d:a_d!=a_g modulo p^alpha_p}.
+
+Suppose Delta has at least two elements and choose a nonempty proper subset S of Delta. Define one intermediate d-residue b_S by taking a_g on the p^alpha_p coordinates for p in S and a_d on every other d-coordinate. Define one intermediate g-residue c_S by taking w_d on the p^beta_p coordinates for p in S and a_g on every other g-coordinate. These are fully specified CRT residues, including the extra g-coordinates.
+
+Both intermediate residues reduce modulo d to values different from both a_d and a_g: a prime in S witnesses one difference and a prime in Delta minus S witnesses the other. Hence the two new classes [b_S]_d and [c_S]_g are each disjoint from both A_d and A_g. Change only the two labelled originals to these intermediate classes. The exact uncovered set is
+
+    X minus union(F_intermediate)=P_d union P_g.          (CS6)
+
+Every point private to either old class misses both new classes and every unchanged original. Conversely, a point outside P_d union P_g has an unchanged owner: the old family covers it, and its owner set cannot consist only of d,g because A_d and A_g are disjoint. That unchanged owner remains. This proves both inclusions in CS6.
+
+Thus this two-slot coordinatewise partial swap is illegal whenever both original private sets are nonempty, even though its completed neutral endpoint is legal. Any third-label repair must simultaneously cover both COMPLETE sets under one actual phase assignment. Original unchanged classes cover none of these points; rephasing them incurs their own joint deletion liabilities. Divisor closure supplies numerical labels and does not supply the needed phases. This is an application of the existing exact joint-liability and edit semantics, not another generic repair theorem.
+
+### The complete third-label enclosure required for descent
+
+For the legal completed swap, reuse the exact owner accounting from Report362. Put
+
+    E_-=A_d minus B_g, E_+=B_d minus A_g,
+    G_n={x:O_F(x)={d,n}} intersect E_-,
+    L_n=P_n intersect E_+, R_n=P_n minus L_n
+
+for each unchanged n. Then
+
+    P'_n=R_n disjoint-union G_n.                          (CS7)
+
+On E_- only the parent owner disappears; on E_+ the parent is added. Elsewhere unchanged labels neither gain nor lose private ownership. This proves CS7 for the full set, including empty pieces.
+
+Let M_n=max{M in D:n|M}. A third-label strict descent through section178 requires ONE absent odd nonunit e<M_n and ONE residue r satisfying
+
+    R_n subset [r]_e and G_n subset [r]_e.               (CS8)
+
+Different enclosing phases, equal gain/loss masses, or an enclosure of G_n alone do not meet this obligation. When CS8 holds, the resulting whole cover has the original fixed class count and modulus sum, so it retains sum-minimality and section178 applies directly. Nothing here supplies CS8 universally.
+
+A useful directional filter follows from the SAME complete update. If
+`L_n` is empty, then `P_n` is contained in `P'_n`. Every new encloser
+already encloses `P_n`, and the unchanged numerical threshold `M_n`
+means old FCD1 has already forced its label. Such a third original cannot
+supply a new missing-encloser contradiction. A useful third-label consumer
+therefore requires `L_n` nonempty, together with the complete enclosure in
+CS8; loss alone does not imply concentration.
+
+At a first differing p-prefix, an unchanged original in the old-parent
+branch misses `B_d`, so its loss is empty. An original in the new-parent
+branch misses `A_d`, so its gain is empty. If it chooses opposite branches
+at different primes it misses both parents and its private set is fixed.
+Thus failure of the signature test does not itself identify an original
+whose private hull grows.
+
+The direct transported-parent route is equally precise. Reusing P'_d=P_g and section178 gives
+
+    e|Gamma_g, 1<e<M_d ==> e in D.                       (CS9)
+
+Since old closure already supplies every such e<M_g, and M_g itself is occupied, a genuinely new missing-label contradiction requires
+
+    M_g<e<M_d, e|Gamma_g, e not in D.                    (CS10)
+
+Equivalently, for mu_D(H)=min{e>1:e|H,e not in D}, with the empty minimum interpreted as infinity, the needed supplier is mu_D(Gamma_g)<M_d. Old closure only gives mu_D(Gamma_g)>M_g. A strict threshold gap or unequal hulls supplies no divisor in that interval. CS9 is direct reuse, not a new formalization target.
+
+## 181. An odd divisor-closed noncover separates the local rigidity shortcuts
+
+The following control has complete period Q=1575=3^2*5^2*7 and the nonunit divisor-closed palette
+
+    D={3,5,7,9,15,21,25,35,45,63,105,175}.
+
+It is the union of the nonunit divisor sets of45,63,105,175. Complete private counts and hulls for the actual residue assignments are:
+
+| n | a_n to a'_n | private counts | private hulls |
+|---:|---:|---:|---:|
+|3|0 to0|324 to324|3 to3|
+|5|0 to0|130 to130|5 to5|
+|7|0 to0|75 to75|7 to7|
+|9|2 to2|103 to103|9 to9|
+|15|1 to1|60 to75|15 to15|
+|21|16 to16|42 to27|21 to21|
+|25|4 to4|26 to26|25 to25|
+|35|1 to2|10 to5|105 to315|
+|45|32 to32|25 to25|45 to45|
+|63|17 to17|18 to18|63 to63|
+|105|2 to71|5 to10|315 to105|
+|175|3 to3|4 to4|175 to175|
+
+Neither family covers X. They have the SAME covered subset, with370 uncovered residues and the common uncovered witness8. Every original has a private point, and all comparable originals are disjoint in both states. These facts do not supply global count- or sum-minimality.
+
+Choose d=35, g=105, w_d=71 and w_g=107. Direct complete-region calculation gives
+
+    P_35=[71]_315 disjoint-union [176]_315,
+    P_105=[107]_315,
+    Gamma_35=105, Gamma_105=315.
+
+The prescribed replacements are B_35=[2]_35 and B_105=[71]_105. They exchange the complete private regions. The only third35-descendant is175 with phase3 modulo35, so there is no receiving descendant at either new parent phase.
+
+For an explicit complete ownership calculation, the shells and their original owner sets are
+
+    E_-=[1]_105 disjoint-union [36]_105,
+           O([1]_105)={35,15}, O([36]_105)={35,3},
+    E_+=[37]_105 disjoint-union [72]_105,
+           O([37]_105)={21}, O([72]_105)={3}.
+
+Thus deleting the old parent loses no covered point, while adding the new parent covers no formerly uncovered point. This proves equality of the covered subsets, not only equality of their cardinalities. CS7 specializes to
+
+    P'_15=P_15 disjoint-union [1]_105,
+    P'_21=P_21 minus [37]_105,
+    P'_3=(P_3 minus [72]_105) disjoint-union [36]_105.
+
+The other unchanged private sets are fixed. In particular the prime-private counts and hulls all remain unchanged, although the complete3-private set changes. The label15 signature distinguishes the parents:
+
+    C_F(35,15)=5, C_F'(35,15)=1.
+
+Consequently there is no full labelled congruence conjugacy. Even an arbitrary carrier permutation transporting every labelled set is impossible, since the private count at35 changes.
+
+Here M_35=175 and M_105=105, so the transferred price window is105<e<175. The nonunit divisors of Gamma_105=315 are
+
+    3,5,7,9,15,21,35,45,63,105,315.
+
+None lies in the strict window. All proper nonunit divisors are occupied; the missing encloser315 is too large. More strongly, complete finite enumeration gives, for EVERY original in BOTH states,
+
+    e|Gamma_n, 1<e<M_n ==> e in D.
+
+These are the numerical closure conclusions, not the whole-cover extremality premises used to derive them. Thus oddness, numerical distinctness, divisor closure, nonempty complete private sets, comparable disjointness, exact private exchange, absent receiving descendants, unequal hulls, a strict price gap and all displayed closure conclusions can coexist with failure of CS4 and without CS10 or CS8.
+
+The control excludes deductions from those local conditions alone. It does not refute a rigidity or descent theorem that uses actual whole coverage and its global minimality.
+
+The [finite consumer](../../../frontier/cover-geometry/prime-private-swap-vector/odd_composite_swap_control.py) reuses the existing AP ownership constructor; its [exact data](../../../frontier/cover-geometry/prime-private-swap-vector/odd_composite_swap_control.json) contain the complete private table and both closure tables. Run `python3 -B -O docs/reports/erdos7-odd-covering/frontier/cover-geometry/prime-private-swap-vector/odd_composite_swap_control.py` from the repository root. Checks remain active under `-O`. The finite table uses complete owner sets on every residue. It is independent finite verification of this control, not Lean verification of the general signature classification. The remaining global obligation is an actual implication from EB1 to CS4, or from its failure to the missing divisor CS10 or the simultaneous complete enclosure CS8. Repeating a common-potential inequality or invoking numerical divisor closure supplies none of these implications.

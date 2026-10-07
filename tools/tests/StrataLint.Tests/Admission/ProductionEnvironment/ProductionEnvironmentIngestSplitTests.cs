@@ -7,17 +7,14 @@ namespace StrataLint.Tests;
 
 public sealed partial class ProductionEnvironmentTests
 {
-    private static readonly string[] ReportInputUnchangedArguments =
-        ["--base", "baseline"];
+    private static readonly string[] ReportInputUnchangedArguments = ["--source", "fixture-source"];
 
     [Fact]
-    public void IngestUncoveredOnlyDoesNotLoadLeanOrVerifyScribeAndMatchesAlignedBytes()
+    public void IngestUncoveredOnlyDoesNotLoadLeanOrVerifyScribe()
     {
         var fixture = UncoveredOnlyIngestFixture();
         using var reportFreeRoot = new TemporaryDirectory();
-        using var alignedRoot = new TemporaryDirectory();
         WriteDirectoryLedger(reportFreeRoot.Path, fixture.Files);
-        WriteDirectoryLedger(alignedRoot.Path, fixture.Files);
         var reportSource = new FakeLeanReportSource(report: null);
         var scribeVerifier = new FakeScribeEmissionVerifier(verification: null);
         var reportFree = new ProductionCliEnvironment(
@@ -34,18 +31,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(result.Success, result.Error);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(0, scribeVerifier.CallCount);
-
-        var alignedResult = IngestCommand.Run(
-            alignedRoot.Path,
-            new FakeRepositoryGateway(
-                RawChangeSet.Create([RuleFixture.FixtureDigestionSourcePath]),
-                Snapshot(fixture.Files),
-                Snapshot(fixture.Baseline)),
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty),
-            ["--base", "baseline"]);
-        Assert.True(alignedResult.Success, alignedResult.Error);
-        Assert.Equal(GeneratedIngestImage(alignedRoot), GeneratedIngestImage(reportFreeRoot));
     }
 
     [Fact]
@@ -148,31 +133,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.Contains("skipped_existing=1", result.Output, StringComparison.Ordinal);
         Assert.Equal(0, reportSource.CallCount);
         Assert.Equal(before, GeneratedIngestImage(temporary));
-    }
-
-    [Fact]
-    public void IngestPreservesRemovedExistingReceiptedEntryWithoutRestoringIt()
-    {
-        const string coverageGid = "D5/S0/Carrier/Ring.goldenRing";
-        var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
-        var existingAtomId = ExistingAtomId(fixture);
-        var atomPath = DirectoryAtomPath(existingAtomId, "residual-open");
-        fixture.Baseline[atomPath] = fixture.Baseline[atomPath]
-            .Replace(
-                "coverage_gids: []",
-                $"coverage_gids:\n  - gid: {coverageGid}\n    target_statement_id: null",
-                StringComparison.Ordinal)
-            .Replace(
-                "  unresolved_subitems: []",
-                "  unresolved_subitems:\n    - inherited-open-clause",
-                StringComparison.Ordinal);
-        Assert.True(fixture.Files.Remove(atomPath));
-        var casPath = Assert.Single(fixture.Files.Keys, DigestionCasStore.IsCanonicalPath);
-        Assert.True(fixture.Files.Remove(casPath));
-
-        AssertReportFreeExistingPreservedWithoutTruthOrWrites(
-            fixture,
-            RawChangeSet.Create([atomPath, casPath]));
     }
 
     [Fact]
@@ -527,7 +487,7 @@ public sealed partial class ProductionEnvironmentTests
             reportSource,
             new FakeScribeEmissionVerifier(verification: null));
 
-        var result = environment.Ingest(ReportInputUnchangedArguments);
+        var result = environment.Ingest(["--source", "INVALID"]);
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(0, reportSource.CallCount);

@@ -51,7 +51,7 @@ echo "LEANREPORT_EXIT=$R"
 [ "$R" -eq 0 ] || { echo HALT_LEAN_REPORT; exit 97; }
 for pair in "${COVERS[@]}"; do
   A=${pair%%	*}; G=${pair##*	}
-  make cover BASE=$BASE ATOM_ID=$A GID=$G > "$L/flights/$TAG-cover-${A:17:8}.log" 2>&1; C=$?
+  make cover ATOM_ID=$A GID=$G > "$L/flights/$TAG-cover-${A:17:8}.log" 2>&1; C=$?
   echo "COVER_EXIT=$C atom=${A:17:8}"
   [ "$C" -eq 0 ] || { echo HALT_COVER_RED; exit 93; }
 done

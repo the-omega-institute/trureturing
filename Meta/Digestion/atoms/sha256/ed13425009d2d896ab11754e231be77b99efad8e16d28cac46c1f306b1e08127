@@ -1,0 +1,8 @@
+**证明。** $T_2=\rho(\beta)=\langle\beta,\alpha\rangle$。若递推式在 $n$ 成立，施加保持有序括号的 $\rho$ 得
+
+$$
+T_{n+3}=\rho(T_{n+2})=\langle\rho(T_{n+1}),\rho(T_n)\rangle=\langle T_{n+2},T_{n+1}\rangle.
+$$
+
+归纳完成。∎
+

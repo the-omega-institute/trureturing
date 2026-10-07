@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:6cfe1550c7131b9676d89ca4464d294456b851f0ea5514d4068980b6dffd8faf
+  normalized_sha256: sha256:6cfe1550c7131b9676d89ca4464d294456b851f0ea5514d4068980b6dffd8faf
+cas_ref: sha256:6cfe1550c7131b9676d89ca4464d294456b851f0ea5514d4068980b6dffd8faf
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Latin/LatinHLatinness.literal_h_latinness
+    target_statement_id: sha256:bc8d78ae982a7dadf50094d06ae1f7a9f6a9734474fc5cf2177c88c4b5f93a67
+receipts:
+  unresolved_subitems: []

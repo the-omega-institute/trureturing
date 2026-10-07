@@ -1,0 +1,12 @@
+**定义 5.1（关系见证系统）。** 从 $X$ 到 $Y$ 的见证系统为
+
+$$
+X\xleftarrow{s}W\xrightarrow{t}Y.
+$$
+
+元素 $w\in W$ 可记录路径、实现或证明见证。两个系统 $X\leftarrow W\to Y$ 与 $Y\leftarrow V\to Z$ 的合成为
+
+$$
+W\times_YV=\{(w,v):t(w)=s(v)\}.
+$$
+

@@ -1,0 +1,2 @@
+**证明。** 空上下文给 $\approx\subseteq\ker\eta$。若每个输入对都满足 $\approx$，逐个使用一孔上下文替换，得到任意复合输出仍观察相同，所以 $\approx$ 对所有基本操作封闭。若 $R$ 是同余，结构归纳给出 $xRy\Rightarrow C[x]R C[y]$；再用 $R\subseteq\ker\eta$ 得 $R\subseteq\approx$。∎
+

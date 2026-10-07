@@ -14,7 +14,7 @@ internal static class CoverageCommand
         try
         {
             var json = ParseArguments(arguments);
-            var snapshot = Decode(repository.ReadCurrent());
+            var snapshot = Decode(AdmissionRepositoryInputs.ReadCurrent(repository));
             var policy = LoadPolicy(snapshot);
             var lean = ValidateLean(snapshot, leanReportSource.Load(snapshot));
             var states = LeanTruthStates.Resolve(snapshot, lean);

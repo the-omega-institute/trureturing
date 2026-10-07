@@ -1,0 +1,18 @@
+### 命题 8.3（规范连续地址的前缀区间）
+
+仅对推论 6.3 的连续 $X$ 地址选择，$d_b=D_b$。对任意合法长度 $\ell$ 前缀 $u$，置 $s=s(u)$ 及
+
+$$
+L_u=\operatorname{val}_k(u0^{m_X-\ell}).
+$$
+
+则其精确前缀计数为
+
+$$
+n_{b,u}=\#\left(
+[bG_{m_X-1},bG_{m_X-1}+D_b)
+\cap[L_u,L_u+F_s(m_X-\ell))\cap\mathbb Z
+\right).
+\tag{8.10}
+$$
+

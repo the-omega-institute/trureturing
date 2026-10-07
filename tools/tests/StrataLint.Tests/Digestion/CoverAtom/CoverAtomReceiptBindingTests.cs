@@ -8,7 +8,7 @@ namespace StrataLint.Tests;
 public sealed partial class CoverAtomTests
 {
     [Fact]
-    public void CoverWithoutReceiptInSameDepositDeltaWritesEdgeAndSl016HasNoFinding()
+    public void CoverWithoutReceiptInSameDepositDeltaWritesExactEdge()
     {
         var spec = new CoverSpec
         {
@@ -30,7 +30,7 @@ public sealed partial class CoverAtomTests
             CoverWorld.TimeProvider);
 
         var result = environment.CoverAtom(
-            ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+            ["--cover-atom", spec.AtomId, "--gid", inputs.Gid]);
 
         Assert.True(result.Success, result.Error);
         var afterDocument = BackfillInventoryLoader.LoadRoot(temporary.Path);
@@ -39,34 +39,7 @@ public sealed partial class CoverAtomTests
             candidate => candidate.AtomId == spec.AtomId);
         Assert.Equal([inputs.Gid], entry.CoverageGids.ToArray());
         Assert.Single(entry.Coverage);
-        DirectoryLedgerTestSupport.ReplaceWithProjection(currentFiles, afterDocument);
 
-        var fixture = new RuleFixture();
-        Replace(fixture.Files, currentFiles);
-        Replace(fixture.Baseline, baselineFiles);
-        fixture.Reports.Clear();
-        foreach (var report in inputs.Report.Files)
-        {
-            fixture.Reports.Add(report.Key.Value, report.Value);
-        }
-
-        var changes = currentFiles.Keys
-            .Union(baselineFiles.Keys, StringComparer.Ordinal)
-            .Where(path => !currentFiles.TryGetValue(path, out var current)
-                || !baselineFiles.TryGetValue(path, out var baseline)
-                || !string.Equals(current, baseline, StringComparison.Ordinal))
-            .Select(path => (
-                Path: path,
-                Kind: !baselineFiles.ContainsKey(path)
-                    ? RawChangeKind.Added
-                    : !currentFiles.ContainsKey(path)
-                        ? RawChangeKind.Deleted
-                        : RawChangeKind.Modified));
-        var context = fixture.Build(
-            RawChangeSet.CreateWithKinds(changes),
-            verifiedScribeEmissions: inputs.VerifiedEmissions);
-
-        Assert.Empty(BackfillInventoryRule.EvaluateCandidateDelta(context));
     }
 
     [Fact]
@@ -79,7 +52,7 @@ public sealed partial class CoverAtomTests
 
         var execution = Execute(
             spec,
-            ["--cover-atom", spec.AtomId, "--gid", spec.Gid, "--base", "baseline"]);
+            ["--cover-atom", spec.AtomId, "--gid", spec.Gid]);
 
         Assert.False(execution.Result.Success);
         Assert.Equal(
@@ -114,7 +87,7 @@ public sealed partial class CoverAtomTests
 
         var execution = Execute(
             spec,
-            ["--cover-atom", spec.AtomId, "--gid", spec.Gid, "--base", "baseline"],
+            ["--cover-atom", spec.AtomId, "--gid", spec.Gid],
             currentReport: ambiguousReport);
 
         Assert.False(execution.Result.Success);
@@ -136,7 +109,7 @@ public sealed partial class CoverAtomTests
 
         var execution = Execute(
             spec,
-            ["--cover-atom", spec.AtomId, "--gid", spec.Gid, "--base", "baseline"]);
+            ["--cover-atom", spec.AtomId, "--gid", spec.Gid]);
 
         Assert.False(execution.Result.Success);
         Assert.Contains("current edge GID", execution.Result.Error, StringComparison.Ordinal);
@@ -224,7 +197,7 @@ public sealed partial class CoverAtomTests
             CoverWorld.TimeProvider);
 
         var result = environment.CoverAtom(
-            ["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+            ["--cover-atom", spec.AtomId, "--gid", inputs.Gid]);
 
         Assert.True(result.Success, result.Error);
         var entry = Assert.Single(
@@ -258,7 +231,7 @@ public sealed partial class CoverAtomTests
                 CoverWorld.Raw(current), CoverWorld.Raw(baseline)),
             new FakeLeanReportSource(inputs.Report), verifier, CoverWorld.TimeProvider);
 
-        var result = environment.CoverAtom(["--cover-atom", spec.AtomId, "--gid", inputs.Gid, "--base", "baseline"]);
+        var result = environment.CoverAtom(["--cover-atom", spec.AtomId, "--gid", inputs.Gid]);
 
         Assert.True(result.Success, result.Error);
         Assert.Equal(0, verifier.CallCount);
@@ -269,14 +242,4 @@ public sealed partial class CoverAtomTests
         Assert.Equal(spec.TargetStatementId, Assert.Single(entry.Coverage).TargetStatementId);
     }
 
-    private static void Replace(
-        IDictionary<string, string> target,
-        IReadOnlyDictionary<string, string> source)
-    {
-        target.Clear();
-        foreach (var item in source)
-        {
-            target.Add(item.Key, item.Value);
-        }
-    }
 }

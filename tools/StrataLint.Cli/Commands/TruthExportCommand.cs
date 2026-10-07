@@ -28,7 +28,7 @@ internal static class TruthExportCommand
         {
             var identity = DagLedgerCommandPreparation.Ask(repository.ResolveCurrentRevision);
             var snapshot = Decode(DagLedgerCommandPreparation.Ask(
-                () => repository.ReadRevision(identity.Revision)));
+                () => repository.ReadRevisionProjection(identity.Revision, IsTruthInput)));
             var report = RawLeanReportArtifact.ReadFile(options.CandidateLeanReport, snapshot);
             var preparation = PrepareStrictHistory(repository, snapshot, identity, report);
             if (preparation.Outcome is FrozenLedgerValidationOutcome.Rejected rejected)
@@ -92,6 +92,12 @@ internal static class TruthExportCommand
         var outcome = FrozenLedger.ValidateTrustedHistory(baseView, catalog, requireCompleteCatalog: false);
         return new StrictTruthHistoryPreparation(truth, states, baseView, catalog, outcome);
     }
+
+    internal static bool IsTruthInput(string path) => LeanClosureValidator.IsReportLean(path)
+        || path == RepositoryPathPolicy.AssumptionRegistryPath
+        || FrozenLedgerChangeClassifier.IsAcceptedEventPath(path)
+        || path.StartsWith("Golden/Frozen/state/", StringComparison.Ordinal)
+        || path is "lean-toolchain" or "lakefile.toml" or "lake-manifest.json";
 
     private static ImmutableArray<RepositoryFile> LedgerFiles(RepositorySnapshot snapshot)
     {

@@ -256,7 +256,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
             entry,
             DigestionReceiptAlignment.Seen,
-            baselineEntryPresent: true,
             changes: RawChangeSet.Create([changedPath]),
             isBaseFactAffected: null));
     }
@@ -270,31 +269,20 @@ public sealed partial class ProductionEnvironmentTests
         Assert.False(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
             entry,
             DigestionReceiptAlignment.Seen,
-            baselineEntryPresent: true,
             changes: RawChangeSet.Create([
                 ScribeEmissionAttestation.DefinitionPath(documentGid),
                 ScribeEmissionAttestation.EmissionPath(documentGid)]),
             isBaseFactAffected: null));
     }
 
-    [Theory]
-    [InlineData("stale")]
-    [InlineData("rejected")]
-    public void StatusAuthorityClosureRejectsSourcePathForEachNonSeenAlignment(
-        string alignmentName)
+    [Fact]
+    public void StatusAuthorityClosureRejectsSourcePathForRejectedAlignment()
     {
         var entry = StatusAuthorityClosureEntry();
-        var alignment = alignmentName switch
-        {
-            "stale" => DigestionReceiptAlignment.Stale,
-            "rejected" => DigestionReceiptAlignment.Rejected,
-            _ => throw new ArgumentOutOfRangeException(nameof(alignmentName)),
-        };
 
         Assert.True(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
             entry,
-            alignment,
-            baselineEntryPresent: true,
+            DigestionReceiptAlignment.Rejected,
             changes: RawChangeSet.Create([entry.SourcePath]),
             isBaseFactAffected: null));
     }
@@ -311,18 +299,14 @@ public sealed partial class ProductionEnvironmentTests
         var alignment = new DigestionLedgerAlignment(
             ImmutableDictionary<string, DigestionReceiptAlignment>.Empty,
             ImmutableDictionary<string, DigestionAtom>.Empty,
-            ImmutableDictionary<string, ImmutableHashSet<string>>.Empty,
             ImmutableDictionary<string, GenreRegistryCheck>.Empty,
             [],
             [],
             ImmutableHashSet<string>.Empty,
-            ImmutableHashSet<string>.Empty,
-            [],
             [],
             []);
 
         var changed = DigestionStatusEvaluator.StatusAuthorityChangedAtomIds(
-            document,
             document,
             RawChangeSet.Create([entry.SourcePath]),
             alignment);
@@ -336,7 +320,6 @@ public sealed partial class ProductionEnvironmentTests
         Assert.True(DigestionStatusEvaluator.StatusAuthorityClosureChanged(
             StatusAuthorityClosureEntry(),
             DigestionReceiptAlignment.Seen,
-            baselineEntryPresent: true,
             changes: null,
             isBaseFactAffected: null));
     }
@@ -367,18 +350,14 @@ public sealed partial class ProductionEnvironmentTests
                 KeyValuePair.Create(child.AtomId, DigestionReceiptAlignment.Rejected),
             ]),
             ImmutableDictionary<string, DigestionAtom>.Empty,
-            ImmutableDictionary<string, ImmutableHashSet<string>>.Empty,
             ImmutableDictionary<string, GenreRegistryCheck>.Empty,
             [],
             [],
             ImmutableHashSet<string>.Empty,
-            ImmutableHashSet<string>.Empty,
-            [],
             [],
             []);
 
         var changed = DigestionStatusEvaluator.StatusAuthorityChangedAtomIds(
-            document,
             document,
             RawChangeSet.Create([child.SourcePath]),
             alignment);

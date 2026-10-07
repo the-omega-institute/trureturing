@@ -5,10 +5,6 @@ namespace StrataLint.Engine;
 
 internal static partial class DigestionLedgerAligner
 {
-    private static readonly DigestionStatus StructuralIdentityStatus = new(
-        DigestionMigrationState.Residual,
-        DigestionTruthState.Open);
-
     private static bool GenreRegistryChecksEqual(
         GenreRegistryCheck left,
         GenreRegistryCheck right) =>
@@ -31,67 +27,8 @@ internal static partial class DigestionLedgerAligner
         + string.Join(", ", check.UnregisteredGenres)
         + "]";
 
-    private static bool AtomizerDecisionClosureEqualBaseline(
-        RepositorySnapshot candidateSnapshot,
-        RepositorySnapshot? baselineSnapshot,
-        DigestionLedgerSource candidateSource,
-        DigestionLedgerSource? baselineSource) =>
-        baselineSnapshot is not null
-        && baselineSource is not null
-        && candidateSource.Atomizer == baselineSource.Atomizer
-        && FileBytesEqual(
-            candidateSnapshot,
-            candidateSource.SourcePath,
-            baselineSnapshot,
-            baselineSource.SourcePath)
-        && FileBytesEqual(
-            candidateSnapshot,
-            TheoryAtomizerDataLoader.DataPath,
-            baselineSnapshot,
-            TheoryAtomizerDataLoader.DataPath)
-        && AtomizerImplementationClosureEqualBaseline(candidateSnapshot, baselineSnapshot);
-
-    private static bool AtomizerImplementationClosureEqualBaseline(
-        RepositorySnapshot candidateSnapshot,
-        RepositorySnapshot baselineSnapshot)
-    {
-        var registeredInputs = EngineeringProjectRegistry.ReadRuleBuildInputs(candidateSnapshot);
-        var paths = candidateSnapshot.Files.Keys
-            .Concat(baselineSnapshot.Files.Keys)
-            .Select(static path => path.Value)
-            .Where(path => IsAtomizerImplementationPath(path, registeredInputs))
-            .Distinct(StringComparer.Ordinal);
-        return paths.All(path => FileBytesEqual(
-            candidateSnapshot,
-            path,
-            baselineSnapshot,
-            path));
-    }
-
     internal static bool IsAtomizerImplementationPath(string path, IReadOnlySet<string> registeredInputs) =>
         StrataLintEngineBuildInputs.Contains(path, registeredInputs);
-
-    private static bool FileBytesEqual(
-        RepositorySnapshot candidateSnapshot,
-        string candidatePath,
-        RepositorySnapshot baselineSnapshot,
-        string baselinePath) =>
-        candidateSnapshot.TryGetFile(candidatePath, out var candidate)
-        && baselineSnapshot.TryGetFile(baselinePath, out var baseline)
-        && candidate.RawBytes.AsSpan().SequenceEqual(baseline.RawBytes.AsSpan());
-
-    private static string CanonicalEntry(
-        DigestionLedgerSource source,
-        DigestionLedgerEntry entry)
-    {
-        var admissionEntry = entry with
-        {
-            ProjectedStatus = StructuralIdentityStatus,
-            Coverage = [],
-            Receipts = entry.Receipts with { CoverDisposition = null },
-        };
-        return Convert.ToBase64String(BackfillInventoryWriter.WriteEntry(admissionEntry).AsSpan());
-    }
 
     internal static string? AtomizerIntegrityFailure(
         AtomizedTheoryDocument document,

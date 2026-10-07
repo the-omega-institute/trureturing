@@ -1,0 +1,22 @@
+## 定义 24.1：共同可控的历史集合
+
+固定预算 $n$，定义：
+
+$$
+\mathcal K_n
+=
+\{\varnothing\}
+\cup
+\left\{
+J\subseteq I:
+J\ne\varnothing,\ 
+\bigcup_{i\in J}B_i\in\mathcal W_n
+\right\}.
+$$
+
+$J\in\mathcal K_n$ 表示：
+
+> 忘掉 $J$ 内部的历史区别之后，仍存在一份共同协议，在预算内完成目标。
+
+称 $\mathcal K_n$ 为**预算 $n$ 下的控制相容族**。
+

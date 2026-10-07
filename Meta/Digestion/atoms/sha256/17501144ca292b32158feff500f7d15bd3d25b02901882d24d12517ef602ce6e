@@ -1,0 +1,25 @@
+## 定义 19.3：有限预算下的最优恢复风险
+
+令 $V_n(B)$ 为最多执行 $n$ 次操作时的最小最坏绝对误差。
+
+允许提前停止，则：
+
+$$
+V_0(B)=\operatorname{rad}(B),
+$$
+
+$$
+\boxed{
+V_{n+1}(B)
+=
+\min\left\{
+\operatorname{rad}(B),
+\min_{a\in\operatorname{Adm}(B)}
+\max_{r:B_{a,r}\ne\varnothing}
+V_n(B_{a,r})
+\right\}.
+}
+$$
+
+没有共同合法动作时，内层最小值取 $+\infty$。
+

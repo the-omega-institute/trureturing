@@ -40,7 +40,7 @@ public sealed partial class DigestionLedgerTests
         {
             var document = Document(AtomizerRegistry.NoAtomizerId, [candidate, .. dependencies]);
             return DigestionStatusEvaluator.Evaluate(DigestionEvaluationScope.FullScan, document, snapshot,
-                AcceptedLean(targetPath), baselineDocument: document)
+                AcceptedLean(targetPath))
                 .Entries.Single(item => item.Entry.AtomId == parent.AtomId);
         }
         var openParent = EvaluateParent(parent, children);
@@ -59,27 +59,4 @@ public sealed partial class DigestionLedgerTests
         }
     }
 
-    [Fact]
-    public void IngestAndAlignPreserveNonpropositionalReceipt()
-    {
-        var fixture = AtomContextFixture.Create("## Claim\n\nProse.\n");
-        var entry = Settled(fixture.Ledger.RequireDigestionEntries().Single());
-        fixture = fixture.WithEntries([entry]);
-        var snapshot = Decode(WithCas(fixture));
-        var plan = DigestionIngestor.Plan(fixture.Ledger, snapshot, fixture.Ledger);
-        var preserved = Assert.Single(plan.Document.RequireDigestionEntries());
-        Assert.Equal(BackfillInventoryWriter.WriteAtom(entry).ToArray(), BackfillInventoryWriter.WriteAtom(preserved).ToArray());
-        Assert.Equal(State, StateName(preserved.ProjectedStatus));
-        var aligned = DigestionCoverageTargetAligner.Align(plan.Document, snapshot, AcceptedLean(Array.Empty<string>()),
-            new Dictionary<RepoPath, TruthState>());
-        Assert.Equal(BackfillInventoryWriter.WriteAtom(entry).ToArray(),
-            BackfillInventoryWriter.WriteAtom(Assert.Single(aligned.RequireDigestionEntries())).ToArray());
-        var repeated = fixture.WithEntries([entry, entry with { AtomId = new string('a', 64) }]);
-        Assert.Single(DigestionIngestor.Plan(repeated.Ledger, snapshot, fixture.Ledger).Document.RequireDigestionEntries());
-        var other = Settled(AtomContextFixture.Entry(fixture.Atomized.Claims.Single()),
-            Receipt().Replace(Reason, "Different judgment.", StringComparison.Ordinal)) with { AtomId = new string('a', 64) };
-        var conflict = fixture.WithEntries([entry, other]);
-        Assert.Contains("conflicting nonpropositional", Assert.Throws<FormatException>(() =>
-            DigestionIngestor.Plan(conflict.Ledger, snapshot, fixture.Ledger)).Message, StringComparison.Ordinal);
-    }
 }

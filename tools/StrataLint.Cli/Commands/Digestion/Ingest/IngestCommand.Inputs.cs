@@ -4,38 +4,11 @@ namespace StrataLint.Cli;
 
 internal static partial class IngestCommand
 {
-    private static ValidatedPolicy LoadPolicy(RepositorySnapshot snapshot)
-    {
-        if (!snapshot.TryGetFile("Meta/FILEMAP.toml", out _)
-            || !snapshot.TryGetFile("Meta/domains.yaml", out _))
-        {
-            throw new InvalidOperationException(
-                "ingest requires Meta/FILEMAP.toml and Meta/domains.yaml");
-        }
-
-        return RepositoryPolicyLoader.Load(snapshot) switch
-        {
-            PolicyLoadOutcome.Accepted accepted => accepted.Policy,
-            PolicyLoadOutcome.InfrastructureFailure failure =>
-                throw new InvalidOperationException(failure.Message),
-        };
-    }
-
     private static RepositorySnapshot Decode(RawRepositorySnapshot raw) =>
         SnapshotDecoder.Decode(raw) switch
         {
             SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
             SnapshotDecodeOutcome.InfrastructureFailure failure =>
-                throw new InvalidOperationException(failure.Message),
-        };
-
-    private static AcceptedLeanClosure ValidateLean(
-        RepositorySnapshot snapshot,
-        LeanAxiomReport report) =>
-        LeanClosureValidator.Validate(snapshot, report) switch
-        {
-            LeanValidationOutcome.Accepted accepted => accepted.Capability,
-            LeanValidationOutcome.InfrastructureFailure failure =>
                 throw new InvalidOperationException(failure.Message),
         };
 

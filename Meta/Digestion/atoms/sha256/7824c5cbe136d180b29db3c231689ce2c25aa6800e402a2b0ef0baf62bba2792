@@ -1,0 +1,57 @@
+### 定理 6.2（指定谱的可行性与双页同时最优值）
+
+对指定的 $\sigma_b$，置 $d_b=\operatorname{rank}\sigma_b$。定义 6.1 的合同可行，当且仅当每页满足
+
+$$
+d_b\le c_{X,b},\qquad M_bd_b\le c_{Y,b}.
+\tag{6.2}
+$$
+
+若允许选择 $\sigma_b$，则合同可行当且仅当
+
+$$
+D_b:=\min\left(c_{X,b},\left\lfloor\frac{c_{Y,b}}{M_b}\right\rfloor\right)\ge1
+\qquad(b=0,1).
+\tag{6.3}
+$$
+
+在可行情形，每页的最大辅助熵为 $\log D_b$，两个最大值可以在同一个 $J$ 中同时达到。
+
+**证明。** 固定一页，暂略下标 $b$，把指定态写成
+
+$$
+\sigma=\sum_{j=0}^{d-1}\lambda_j|e_j\rangle\langle e_j|,
+\qquad \lambda_j>0,\qquad \sum_j\lambda_j=1.
+$$
+
+对每个 $r$，式（6.1）的对角矩阵单位说明 $J|b,r\rangle$ 是 $\sigma$ 的纯化。它在 $\ker\sigma$ 方向的分量范数为零，故可写为
+
+$$
+J|b,r\rangle=\sum_{j=0}^{d-1}\sqrt{\lambda_j}\,|e_j\rangle|v_{rj}\rangle,
+\qquad |v_{rj}\rangle\in\mathcal H_{Y,b}.
+\tag{6.4}
+$$
+
+把所有矩阵单位 $|b,r\rangle\langle b,s|$ 代入式（6.1），并逐个比较 $|e_j\rangle\langle e_l|$ 的系数，得到
+
+$$
+\sqrt{\lambda_j\lambda_l}\,\langle v_{sl}|v_{rj}\rangle
+=\delta_{rs}\delta_{jl}\lambda_j,
+\qquad
+\langle v_{sl}|v_{rj}\rangle=\delta_{rs}\delta_{lj}.
+\tag{6.5}
+$$
+
+所以 $Md$ 个 $Y$ 向量两两正交，必须有 $Md\le c_Y$；$d\le c_X$ 则来自 $\sigma$ 的支撑。反之，在对应 $Y$ 页任选 $Md$ 个正交向量，使用指定的谱和特征基按式（6.4）定义编码。式（6.5）给出等距和页内通道恒等式；不同页的 $Y$ 支撑正交，跨页矩阵单位的 $X$ 偏迹为零。两页一起满足整个合同。
+
+这正是 Braunstein–Pati 的 no-hiding 机制在每个页内的应用，参见 *Quantum information cannot be completely hidden in correlations: implications for the black-hole information paradox*, [arXiv:gr-qc/0603046](https://arxiv.org/abs/gr-qc/0603046)，式（2）—（4）。这里用它计算受合法词页容量限制的精确维数，不将一般 no-hiding 结论另作新机制。
+
+由式（6.2），可选秩恰为 $1\le d_b\le D_b$。对任意正谱，用对数的凹性得
+
+$$
+H(\lambda)=\sum_j\lambda_j\log\frac1{\lambda_j}
+\le\log\left(\sum_j\lambda_j\frac1{\lambda_j}\right)=\log d_b.
+$$
+
+在 $d_b=D_b$ 上取均匀谱即达到 $\log D_b$。不同页的选择互不占用对方空间，故可同时达到。证毕。
+

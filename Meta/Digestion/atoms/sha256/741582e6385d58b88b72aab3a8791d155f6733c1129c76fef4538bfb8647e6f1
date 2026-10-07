@@ -1,0 +1,37 @@
+## 定义 16.1：立即完成域
+
+令：
+
+$$
+\mathfrak B
+=
+\mathcal P(Z\times S)\setminus\{\varnothing\}.
+$$
+
+定义：
+
+$$
+\mathcal W_0
+=
+\{B\in\mathfrak B:|\operatorname{pr}_ZB|=1\}.
+$$
+
+这些候选关系已经确定目标，不需要继续实验。
+
+递归定义：
+
+$$
+\mathcal W_{n+1}
+=
+\mathcal W_n
+\cup
+\left\{
+B:
+\begin{array}{l}
+\exists a\text{ 在 }B\text{ 上共同合法},\\
+\forall r,\ B_{a,r}\ne\varnothing
+\Longrightarrow B_{a,r}\in\mathcal W_n
+\end{array}
+\right\}.
+$$
+

@@ -1,0 +1,21 @@
+### 定义 7.1（共同合法支撑与接口计数）
+
+在定义 6.1 的全部合同之外，要求 $J\mathcal H_L$ 的计算基支撑只含满足 $xy\in\mathcal W_{m_X+m_Y}^{(k)}$ 的 $|x\rangle|y\rangle$，即所有非法拼接的振幅对每个逻辑输入都为零。这里不插入重置位。
+
+首位零页的 $y$ 以零开始，故两段各自合法就保证拼接合法。首位一页则固定记
+
+$$
+M=M_1,\qquad c=C_1(k,m_X),\qquad
+x_s=\#\{w\in\mathcal W_{m_X}^{(k)}:w\text{ 以 }1\text{ 开头},\ s(w)=s\},
+\qquad a_s=\sum_{u<s}x_u
+\quad(0\le s<k).
+$$
+
+这里 $s(w)$ 是末尾连续一的长度。为避免混淆，本节的 $a_s$ 是整数行数，不是推论 6.5 的柱权。令 $B_s$ 为首位一的合法长度 $m_Y$ 词中、开头连续一长度严格小于 $k-s$ 的词集，置
+
+$$
+n_s=|B_s|,\qquad B_0\supseteq B_1\supseteq\cdots\supseteq B_{k-1}=\varnothing.
+$$
+
+末态为 $s$ 的 $X$ 词恰能连接 $B_s$ 中的 $Y$ 词。以下同时优化 $\sigma_b$ 的支撑、谱与 $J$，不固定其特征基。
+

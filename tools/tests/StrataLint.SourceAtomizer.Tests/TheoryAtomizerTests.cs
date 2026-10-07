@@ -122,7 +122,7 @@ public sealed class TheoryAtomizerTests
         var console = new BufferedConsole();
 
         var exitCode = CliApplication.Run(
-            ["digest-status", "--formalize-candidates"],
+            ["search-atoms", "--source", sourceId],
             environment,
             console);
 

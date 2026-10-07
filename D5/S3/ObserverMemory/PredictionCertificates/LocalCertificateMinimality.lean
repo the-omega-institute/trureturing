@@ -240,7 +240,7 @@ noncomputable def quotientEquivOfExactKernel {Y C L : Type*}
   rw [← hker]
   exact (Setoid.quotientKerEquivOfSurjective label label_surjective).symm
 
-private theorem run_unit_word {Y : Type*} (tau : Y -> Y)
+theorem run_unit_word {Y : Type*} (tau : Y -> Y)
     (word : List Unit) (y : Y) :
     runWord (fun _ : Unit => tau) word y = (tau^[word.length]) y := by
   induction word generalizing y with

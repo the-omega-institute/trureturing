@@ -92,8 +92,9 @@ public sealed partial class RemoveWorktreesCommandTests
         internal string UnregisteredDirectory(string name) =>
             Directory.CreateDirectory(Path.Combine(directory.Path, name)).FullName;
 
-        internal CommandResult Remove(string names) =>
-            WorktreeCommand.Run(Main, ["remove", "--names", names], Runner);
+        internal CommandResult Remove(string names, bool force = false) =>
+            WorktreeCommand.Run(Main, force ? ["remove", "--names", names, "--force"]
+                : ["remove", "--names", names], Runner);
 
         internal string Git(string root, params string[] arguments) =>
             TestGit.Run(root, arguments);

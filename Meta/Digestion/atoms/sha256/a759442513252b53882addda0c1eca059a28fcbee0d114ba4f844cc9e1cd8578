@@ -1,0 +1,53 @@
+**定义 34.1（小块、根位置与四槽评价族）。** 沿用[定义 30.1、30.6](#30-实际三步像的分歧前沿七叶分离与有限容量)的实际像 $\mathcal I_3$、叶数 $n$、非冲突关系 $\operatorname{NC}$、相容复形 $K,K_\circ$、确定性费用 $D$ 和容量 $\mathsf{Cap}$。来源域仍为全部非空有限自由有序满二叉 $\alpha/\beta$ 树 $\mathcal T$；初始化不给未知输入叶数、高度、组成、正性或候选身份承诺。所有有限左右地址，包括空地址，均可查询同一不变输入；四值报告为 $\mathsf{leaf}_\alpha,\mathsf{leaf}_\beta,\mathsf{branch},\mathsf{absent}$。只计真实缓存后不同的实际请求地址，地址长度、定位与内部计算不收费。
+
+取[式（30.2）、（33.1）](#33-十四叶实际像的非冲突族分类与一次超额锐容量)的 $A,C,B,H,T,S,R,D_0,D_1,\mathcal V,\mathcal Z$，另记
+
+$$
+\begin{gathered}
+G=\langle C,C\rangle,\quad X=\langle C,T\rangle,\quad Y=\langle T,C\rangle,\\
+D_S=\langle A,S\rangle,\quad D_R=\langle A,R\rangle,\quad
+K_B=\langle B,A\rangle,\quad K_T=\langle T,A\rangle,\\
+U_0=\langle A,G\rangle,\quad U_1=\langle G,A\rangle,\quad
+W_0=\langle C,B\rangle,\quad W_1=\langle B,C\rangle,\\
+\mathcal Q=\{\langle S,A\rangle,\langle R,A\rangle,\langle H,H\rangle\},\quad
+\mathcal D=\{D_S,D_R\},\quad \mathcal W_{12}=\mathcal Q\cup\mathcal D,\\
+\mathcal W_{13}=\{U_0,U_1,W_0,W_1,X,Y\},\quad
+\mathcal A_{13}=\{U_1,W_0,W_1,X,Y\},\quad
+\mathcal C_{13}=\{U_0,W_1\}.
+\end{gathered}
+\tag{34.1}
+$$
+
+只为记录根位置，写
+
+$$
+\ell(Z)=\langle A,Z\rangle,\quad r(Z)=\langle Z,A\rangle,\quad
+c_\ell(Z)=\langle C,Z\rangle,\quad c_r(Z)=\langle Z,C\rangle.
+\tag{34.2}
+$$
+
+这些是构造记号，不是原始查询操作。沿用式（33.3）的三槽上下文 $J_{\mathrm R},J_{\mathrm L}$，仅对 $Z\in\{R,G\}$ 记
+
+$$
+\mathcal F_\eta(Z)=\{J_\eta[Z,A,A],J_\eta[A,Z,A],J_\eta[A,A,Z]\}
+\quad(\eta\in\{\mathrm R,\mathrm L\}).
+\tag{34.3}
+$$
+
+固定四槽上下文及实际槽地址
+
+$$
+J[z_1,z_2,z_3,z_4]=\langle\langle z_1,z_2\rangle,\langle z_3,z_4\rangle\rangle,
+\qquad(p_1,p_2,p_3,p_4)=(\mathtt{LL},\mathtt{LR},\mathtt{RL},\mathtt{RR}).
+\tag{34.4}
+$$
+
+令 $P_j$ 在第 $j$ 槽放 $B$、其余三槽放 $A$，$F_{17}=\{P_1,P_2,P_3,P_4\}$；另令
+
+$$
+F_{16}=\{\ell(X),\ell(Y),r(X),r(Y)\},
+\tag{34.5}
+$$
+
+式（34.5）的顺序用于费用向量。这些集合只是费用评价对象，不缩小未知输入域。
+

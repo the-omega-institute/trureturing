@@ -84,6 +84,42 @@ public sealed class UtilityAdmissionObservationTests
             $"kind=bounded-enumeration basis=refutes target=atom:{RuleFixture.FixtureAtomId}");
     }
 
+    [Theory]
+    [InlineData("Meta/Digestion/backfill/fixture-source/partial-open/0000000000000000000000000000000000000000000000000000000000000000.yaml")]
+    [InlineData("Meta/Digestion/backfill/unrelated-source/partial-open/0000000000000000000000000000000000000000000000000000000000000000.yaml")]
+    [InlineData("Meta/Digestion/backfill/unrelated-source/source.toml")]
+    public void AtomUtilityIgnoresMalformedUnrelatedLedgerInput(string unrelatedPath)
+    {
+        var fixture = AtomUtilityFixture(targetStatementId: null);
+        var statementId = CanonicalStatementWriter.DeclarationStatementId(
+            RepoPath.CreateKnown(RuleFixture.RingPath),
+            fixture.Reports[RuleFixture.RingPath].Declarations.Single(static item => item.Name == "refuted_law"));
+        fixture.Files[RuleFixture.FixtureBackfillAtomPath] = fixture.Files[RuleFixture.FixtureBackfillAtomPath]
+            .Replace("target_statement_id: null", "target_statement_id: " + statementId, StringComparison.Ordinal);
+        fixture.Files[unrelatedPath] = "not: canonical\n";
+
+        AssertSoftObservation(
+            EvaluateFirstFreeze(fixture),
+            $"kind=bounded-enumeration basis=refutes target=atom:{RuleFixture.FixtureAtomId}");
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void AtomUtilityRequiresValidTargetSourceMetadata(bool malformed)
+    {
+        var fixture = AtomUtilityFixture(targetStatementId: null);
+        if (malformed)
+            fixture.Files[RuleFixture.FixtureBackfillSourcePath] = "not: canonical\n";
+        else
+            fixture.Files.Remove(RuleFixture.FixtureBackfillSourcePath);
+
+        AssertBlockedObservationPair(
+            EvaluateFirstFreeze(fixture),
+            "UTILITY-INPUT-UNKNOWN",
+            $"kind=bounded-enumeration basis=refutes target=atom:{RuleFixture.FixtureAtomId}");
+    }
+
     [Fact]
     public void ExistingFrozenSixLineHeaderIsOutsideDelta()
     {

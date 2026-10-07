@@ -451,7 +451,6 @@ public sealed class CoverageStatementReceiptTests
             document,
             snapshot,
             AcceptedLean((ModulePath, report)),
-            baselineDocument: document,
             changes: RawChangeSet.Create([changedPath ?? ModulePath]));
     }
 

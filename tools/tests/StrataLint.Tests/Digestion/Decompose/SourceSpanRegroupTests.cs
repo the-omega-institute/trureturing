@@ -51,7 +51,7 @@ public sealed class SourceSpanRegroupTests
         Assert.Empty(finalGroup.Coverage);
         foreach (var old in before.Entries.Where(e => e.Path != DecomposeFixture.PathFor(parent) && e.Path != DecomposeFixture.PathFor(nested)))
             Assert.Equal(old.Bytes.ToArray(), f.Current.Entries.Single(e => e.Path == old.Path).Bytes.ToArray());
-        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, f.Document, DigestionAlignmentMode.Ingest);
+        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Ingest);
         Assert.Empty(alignment.Findings);
         Assert.Contains(parent.AtomId, alignment.VerifiedClausePlanParents);
         Assert.Contains(nested.AtomId, alignment.VerifiedClausePlanParents);

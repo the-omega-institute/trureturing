@@ -104,7 +104,6 @@ public sealed class GenericDialectTests
             DigestionTestSupport.Snapshot(
                 ("docs/source.md", bytes),
                 (TheoryAtomizerDataLoader.DataPath, Encoding.UTF8.GetBytes(data))),
-            ledger,
             DigestionAlignmentMode.Ingest);
     }
 

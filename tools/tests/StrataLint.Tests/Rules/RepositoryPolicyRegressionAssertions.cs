@@ -1,7 +1,6 @@
 using StrataLint.FileMap;
 using System.Collections.Immutable;
 using System.Text;
-using StrataLint.Cli;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -65,10 +64,6 @@ internal static class RepositoryPolicyRegressionAssertions
             EvidenceSelectorsScopesAndDomainsAreConjunctive(kind, coordinate, selector, allowed);
         AssertPolicyIdentityIncludesEveryAuthorityDimension();
         MembershipDoesNotBypassCanonicalCoordinatesAndAmbiguityFailsClosed();
-        FileMapEligibilityChangesRecheckUnchangedSourceMetadata(true, true, false);
-        FileMapEligibilityChangesRecheckUnchangedSourceMetadata(false, true, true);
-        FileMapEligibilityChangesRecheckUnchangedSourceMetadata(false, false, false);
-        IncludedFileMapEligibilityChangeRechecksUnchangedSourceMetadata();
         foreach (var (before, after, marker) in new[]
         {
             ("domains:", "domains: &v", "anchor"),
@@ -296,93 +291,6 @@ internal static class RepositoryPolicyRegressionAssertions
             manifest.ArtifactKinds);
         var ambiguousPolicy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(FileMapCanonicalWriter.Write(ambiguous).AsSpan(), Encoding.UTF8.GetBytes(TestFileMap.Domains))).Policy;
         Assert.Contains("matches=2", RepositoryPathPolicy.Validate(RepoPath.CreateKnown("Evidence/D5/S0/Carrier/Demo.result.json"), ambiguousPolicy)!.Message, StringComparison.Ordinal);
-    }
-
-    private static void FileMapEligibilityChangesRecheckUnchangedSourceMetadata(
-        bool eligible, bool policyChanged, bool rejected)
-    {
-        const string path = "docs/GOVERNANCE.md";
-        var fileMap = eligible ? TestFileMap.Canonical : TestFileMap.Canonical.Replace(
-            "digestion_source = true\n", string.Empty, StringComparison.Ordinal);
-        var policy = PolicyLoadAssert.Accepted(Load(fileMap)).Policy;
-        var current = Snapshot(fileMap);
-        var baseline = Snapshot(TestFileMap.Canonical);
-        var changes = RawChangeSet.Create([policyChanged ? "Meta/FILEMAP.toml" : "README.md"]);
-        var findings = BackfillInventoryRule.EvaluateDocument(
-            new BackfillInventoryValidationContext(current, baseline, policy, null, changes),
-            DigestionTestSupport.Document(AtomizerRegistry.NoAtomizerId, [], sourcePath: path));
-
-        Assert.Equal(eligible, policy.IsDigestionSource(RepoPath.CreateKnown(path)));
-        Assert.False(policy.IsDigestionSource(RepoPath.CreateKnown("README.md")));
-        Assert.Equal(rejected, findings.Any(finding => finding.Message.Contains(
-            "declare digestion_source = true", StringComparison.Ordinal)));
-
-        static RepositorySnapshot Snapshot(string manifest) =>
-            Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(RawRepositorySnapshot.Create(
-            [
-                RawRepositoryEntry.FromText(path, "# Governance\n"),
-                RawRepositoryEntry.FromText("Meta/FILEMAP.toml", manifest),
-            ]))).Snapshot;
-    }
-
-    private static void IncludedFileMapEligibilityChangeRechecksUnchangedSourceMetadata()
-    {
-        const string path = "docs/GOVERNANCE.md";
-        const string fragmentPath = "Meta/FILEMAP.sources.toml";
-        const string registeredEntry = """
-            [[files]]
-            pattern = "docs/GOVERNANCE.md"
-            kind = "program"
-            admission_plane = "judge"
-            produced_by = "none"
-            consumed_by = ["reader"]
-            verified_by = ["repository-policy"]
-            artifact_id = "none"
-            runtime_disposition = "committed-source"
-            digestion_source = true
-            """ + "\n";
-        var root = TestFileMap.Canonical
-            .Replace(
-                "schema_version = 6\n",
-                "schema_version = 6\ninclude = [\"FILEMAP.sources.toml\"]\n",
-                StringComparison.Ordinal)
-            .Replace(registeredEntry, string.Empty, StringComparison.Ordinal);
-        var baseline = Snapshot(root, registeredEntry);
-        var current = Snapshot(
-            root,
-            registeredEntry.Replace("digestion_source = true\n", string.Empty, StringComparison.Ordinal));
-        var policy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(current)).Policy;
-        var baselinePolicy = PolicyLoadAssert.Accepted(RepositoryPolicyLoader.Load(baseline)).Policy;
-        var changes = RawChangeSet.Create([fragmentPath]);
-
-        Assert.True(
-            current.Files[RepoPath.CreateKnown(FileMapLoader.RelativePath)].RawBytes.AsSpan().SequenceEqual(
-                baseline.Files[RepoPath.CreateKnown(FileMapLoader.RelativePath)].RawBytes.AsSpan()));
-        Assert.True(
-            current.Files[RepoPath.CreateKnown(path)].RawBytes.AsSpan().SequenceEqual(
-                baseline.Files[RepoPath.CreateKnown(path)].RawBytes.AsSpan()));
-        Assert.True(baselinePolicy.IsDigestionSource(RepoPath.CreateKnown(path)));
-        Assert.False(policy.IsDigestionSource(RepoPath.CreateKnown(path)));
-        Assert.Contains(
-            BackfillInventoryRule.EvaluateDocument(
-                new BackfillInventoryValidationContext(current, baseline, policy, null, changes),
-                DigestionTestSupport.Document(AtomizerRegistry.NoAtomizerId, [], sourcePath: path)),
-            static finding => finding.Message.Contains(
-                "declare digestion_source = true",
-                StringComparison.Ordinal));
-
-        static RepositorySnapshot Snapshot(string root, string entry)
-        {
-            var fragment = "schema_version = 6\n" + entry;
-            return Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
-                RawRepositorySnapshot.Create(
-                [
-                    RawRepositoryEntry.FromText(path, "# Governance\n"),
-                    RawRepositoryEntry.FromText(FileMapLoader.RelativePath, root),
-                    RawRepositoryEntry.FromText(fragmentPath, fragment),
-                    RawRepositoryEntry.FromText("Meta/domains.yaml", TestFileMap.Domains),
-                ]))).Snapshot;
-        }
     }
 
     private static void DomainVocabularyRetainsStrictYamlValidation(string before, string after, string marker)

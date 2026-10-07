@@ -1,0 +1,39 @@
+**定理 39.6（全部合法起点的闭式盆地律）。** 在约定 39.1 下，对每个整数 $n\ge2$，令 $P_n=T_n^6:D_n\to K_n$，并在 $K_n$ 上令 $\sigma_n=T_n|_{K_n}$，伙伴由 (39.8)--(39.12) 及三个小根给出。$n=2$ 时 $P_2(1)=\sigma_2(1)=1$。对 $n\ge3$ 和每个 $x\in D_n$，定义有效起点
+
+$$
+\widehat x=
+\begin{cases}
+2,&x=1,\\
+x,&x\ge2.
+\end{cases}
+$$
+
+取 $\widehat x$ 的奇偶为 $p$。该奇偶的核非空，写为 $K_p(n)=[L_p,U_p]_p$，单点也这样记；根三的空奇核不会被任何合法有效起点选中。则
+
+$$
+P_n(x)=\min\{U_p,\max\{L_p,\widehat x\}\},\qquad
+P_n^2=P_n,\qquad \sigma_n^2=\operatorname{id}_{K_n}.
+\tag{39.18}
+$$
+
+对每个整数绝对时间 $j\ge5$，
+
+$$
+T_n^j(x)=
+\begin{cases}
+P_n(x),&j\text{ 为偶数},\\
+\sigma_n(P_n(x)),&j\text{ 为奇数}.
+\end{cases}
+\tag{39.19}
+$$
+
+任一周期 $\Gamma\subseteq K_n$ 的全部盆地准确为
+
+$$
+\operatorname{Bas}_n(\Gamma)
+=\{x\in D_n:P_n(x)\in\Gamma\}.
+\tag{39.20}
+$$
+
+这些式子取得的是原起点的偶时刻锚及奇时刻伙伴；不从某个另选着陆点重新计时。
+

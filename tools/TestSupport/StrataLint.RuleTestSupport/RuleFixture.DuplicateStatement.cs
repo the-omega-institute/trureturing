@@ -40,9 +40,6 @@ internal sealed partial class RuleFixture
         }
     }
 
-    // The default fixture's digestion entry covers D5/S0/Carrier/BackfillTarget, so
-    // SL-016 blocks until that module exists. Any fixture judged by the whole active
-    // catalog needs it; the theorist fixture carries its own copy for the same reason.
     internal void AddDigestionCoverageTarget()
     {
         const string gid = "D5/S0/Carrier/BackfillTarget";

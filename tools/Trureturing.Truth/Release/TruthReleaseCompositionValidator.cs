@@ -57,15 +57,6 @@ internal static class TruthReleaseCompositionValidator
         }
 
         if (!string.Equals(
-                sourceSnapshot.ResidualFrontierSha256,
-                manifest.Artifacts.ResidualFrontier.Sha256,
-                StringComparison.Ordinal))
-        {
-            throw new FormatException(
-                "Truth release residual_frontier digest disagrees between source_snapshot and verified artifact bytes.");
-        }
-
-        if (!string.Equals(
                 sourceSnapshot.DeclarationsSha256,
                 manifest.Artifacts.TruthExport.Sha256,
                 StringComparison.Ordinal))

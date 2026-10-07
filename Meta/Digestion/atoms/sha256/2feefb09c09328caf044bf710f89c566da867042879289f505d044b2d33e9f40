@@ -1,0 +1,29 @@
+### 推论 6.3（规范地址实现与原整数码的重编码）
+
+假设 $D_0,D_1\ge1$。令
+
+$$
+\begin{aligned}
+X(b,j)&=Z_{k,m_X}(bG_{m_X-1}+j),\\
+Y(b,r,j)&=Z_{k,m_Y}(bG_{m_Y-1}+rD_b+j),\\
+J|b,r\rangle&=\frac1{\sqrt{D_b}}\sum_{j=0}^{D_b-1}
+|X(b,j)\rangle|Y(b,r,j)\rangle.
+\end{aligned}
+\tag{6.6}
+$$
+
+这给出同时最优的区域编码。它使用同一页标和页内序号数据构造新的物理码，原数语义仍为 $x_{b,r}$。对定理 1.3 在任一可行宽度给出的原编码 $E$，在其承诺码空间上存在重编码等距
+
+$$
+V:\operatorname{span}\{|E(x_{b,r})\rangle\}\longrightarrow J\mathcal H_L,
+\qquad V|E(x_{b,r})\rangle=J|b,r\rangle.
+\tag{6.7}
+$$
+
+这不是将原 $E$ 的首位／尾部划分改名。在式（6.6）的实际 $Y$ 支撑上，若测得词地址 $t$，则
+
+$$
+r=\left\lfloor\frac{t-bG_{m_Y-1}}{D_b}\right\rfloor,
+\qquad j=t-bG_{m_Y-1}-rD_b.
+$$
+

@@ -4,7 +4,23 @@
 
 Square-summable centered Gaussian quadratic series converge in L4 with exact second and fourth moments.
 
-**Theorem 1.1 (Actual infinite sums and their moments).**
+**Theorem 1.1 (Scalar central even moments).**
+
+$$\forall mu \in \mathbb{R},\; \forall sigma \in NNReal,\; \forall n \in \mathbb{N},\; \operatorname{centralMoment}\left(id, 2 \cdot n, \operatorname{gaussianReal}\left(mu, sigma^{2}\right)\right) = sigma^{2 \cdot n} \cdot \operatorname{doubleFactorial}\left({2 \cdot n-1}\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Fourier/Asymptotics/CountableGaussianQuadraticFourthMoment.centralMoment_two_mul` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* David Nualart and Giovanni Peccati (2005). *Central limit theorems for sequences of multiple stochastic integrals*. DOI: [10.1214/009117904000000621](https://doi.org/10.1214/009117904000000621). URL: <https://arxiv.org/pdf/math/0503598v1>.
+
+*Commentary.*
+
+For every real mean mu, nonnegative standard deviation sigma and natural n, the Gaussian central moment of order 2n is sigma^(2n)(2n-1)!!. This includes n=0 and sigma=0. The countable quadratic-series moments and the same-noise centered-square construction use this scalar formula.
+
+The scalar proof is ported from RemyDegenne/brownian-motion, BrownianMotion/Gaussian/Moment.lean, centralMoment_two_mul_gaussianReal, commit 0d5b6eb928e616d3b1f774ad7d233c167d9f42c9, under Apache 2.0.
+
+**Theorem 1.2 (Actual infinite sums and their moments).**
 
 $$\forall Omega \in Type, Sigma \in \operatorname{MeasurableSpace}\left(Omega\right), P \in \operatorname{Measure}\left(Omega, Sigma\right), G \in {\mathbb{N}\to {Omega\to \mathbb{R}}}, a \in {\mathbb{N}\to \mathbb{R}},\; \left(\left(\left(\operatorname{IsProbabilityMeasure}\left(P\right) \land \left(\forall j \in \mathbb{N},\; \operatorname{HasLaw}\left(G(j), \operatorname{gaussianReal}\left(0, 1\right), P\right)\right)\right) \land \operatorname{iIndepFun}\left(G, P\right)\right) \land \operatorname{Summable}\left((j:\mathbb{N}\mapsto a(j)^{2})\right)\right) \Rightarrow \left(\exists hm \in \left(\forall j \in \mathbb{N},\; \operatorname{MemLp}\left((omega:Omega\mapsto a(j) \cdot (G(j)(omega)^{2}-1)), 4, P\right)\right), X \in \operatorname{Lp}\left(\mathbb{R}, 4, P\right),\; \left(\left(\left(\left(\left(\operatorname{HasSum}\left((j:\mathbb{N}\mapsto \operatorname{toLp}\left(hm(j), (omega:Omega\mapsto a(j) \cdot (G(j)(omega)^{2}-1))\right)), X\right) \land \operatorname{MemLp}\left(X, 2, P\right)\right) \land \operatorname{Tendsto}\left((s:\operatorname{Finset}\left(\mathbb{N}\right)\mapsto \operatorname{eLpNorm}\left({(omega:Omega\mapsto \operatorname{finsetSum}\left(s, (j:\mathbb{N}\mapsto (omega:Omega\mapsto a(j) \cdot (G(j)(omega)^{2}-1))(omega))\right))-X}, 2, P\right)), atTop, \operatorname{nhds}\left(0\right)\right)\right) \land \operatorname{Integral}\left(P, (omega:Omega\mapsto X(omega)^{1})\right) = 0\right) \land \operatorname{Integral}\left(P, (omega:Omega\mapsto X(omega)^{2})\right) = 2 \cdot \operatorname{tsum}\left((j:\mathbb{N}\mapsto a(j)^{2})\right)\right) \land \operatorname{Integral}\left(P, (omega:Omega\mapsto X(omega)^{4})\right) = 12 \cdot \operatorname{tsum}\left((j:\mathbb{N}\mapsto a(j)^{2})\right)^{2}+48 \cdot \operatorname{tsum}\left((j:\mathbb{N}\mapsto a(j)^{4})\right)\right) \land \operatorname{Integral}\left(P, (omega:Omega\mapsto X(omega)^{4})\right) \le 15 \cdot \operatorname{Integral}\left(P, (omega:Omega\mapsto X(omega)^{2})\right)^{2}\right)$$
 
@@ -28,4 +44,5 @@ This is a coefficient-series moment calculation using classical Gaussian facts. 
 
 ## References
 
+- Truth anchor: `D5/S3/Fourier/Asymptotics/CountableGaussianQuadraticFourthMoment.centralMoment_two_mul`
 - Truth anchor: `D5/S3/Fourier/Asymptotics/CountableGaussianQuadraticFourthMoment.result`

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:390223fbdaf25169084a196830ce7c30a836d253326cc684047d0b5a0163bccb
+  normalized_sha256: sha256:390223fbdaf25169084a196830ce7c30a836d253326cc684047d0b5a0163bccb
+cas_ref: sha256:390223fbdaf25169084a196830ce7c30a836d253326cc684047d0b5a0163bccb
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/LateLabelStateBound.result
+    target_statement_id: sha256:97d00cfee34827c4df3774085bf3f0f16c428b6694741fca1371ded4b526244a
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,14 @@
+**定理 3.5（观察细化与联合读出）。** 定义 $\eta\preceq\theta$ 当且仅当在实际像 $\theta(X)$ 上存在 $h$ 使 $\eta=h\circ\theta$。则
+
+$$
+\eta\preceq\theta\iff\ker\theta\subseteq\ker\eta.
+$$
+
+联合读出 $(\eta,\theta)$ 是最小共同细化，并满足
+
+$$
+\ker(\eta,\theta)=\ker\eta\cap\ker\theta.
+$$
+
+**证明。** 第一式是定理 3.3 的因子化判据。联合读数相同当且仅当两个分量分别相同；任何同时恢复二者的读出也恢复其配对。∎
+

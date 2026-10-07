@@ -263,10 +263,6 @@ public sealed class DeltaRuleContext
         Policy = policy;
         Lean = lean;
         Changes = changes;
-        BackfillCandidateDeltaSession = new BackfillCandidateDeltaSession(
-            current,
-            baseline,
-            changes);
         RegisteredRuleBuildInputs = EngineeringProjectRegistry.ReadRuleBuildInputs(current);
         RuleImplementationChanged = BaseFactImpact.RuleImplementationChanged(changes, RegisteredRuleBuildInputs);
         MetaEvaluation = metaEvaluation;
@@ -290,10 +286,6 @@ public sealed class DeltaRuleContext
     internal AcceptedLeanClosure Lean { get; }
 
     internal RawChangeSet Changes { get; }
-
-    internal BackfillCandidateDeltaSession BackfillCandidateDeltaSession { get; }
-
-    internal int BackfillCandidateDeltaLoadCount => BackfillCandidateDeltaSession.LoadCount;
 
     internal bool RuleImplementationChanged { get; }
 

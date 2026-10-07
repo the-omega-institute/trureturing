@@ -1,0 +1,10 @@
+**安全压缩采用不变量证明：**
+
+$$
+R\subseteq\ker\eta,
+\qquad
+xRy\Longrightarrow T_a(x)\,R\,T_a(y).
+$$
+
+它说明：已经合并的来源不会在允许的后续操作中暴露出遗漏区别。
+

@@ -213,7 +213,7 @@ internal static partial class RepositoryRules
     // still stays one admission limit wide).
     internal const int DirectoryToleranceLimit = 192;
 
-    // SL-003 capacity exclusions: theory inputs, the Lake manifest, the backfill
+    // SL-003 current/audit capacity exclusions: theory inputs, the Lake manifest, the backfill
     // inventory, atomizer dialect registry, canonical CAS blobs, and generated Blueprint
     // Markdown projections are not artifacts the capacity pressure rule bounds. Machine
     // inventories grow one entry per
@@ -284,6 +284,7 @@ internal static partial class RepositoryRules
     private static ImmutableArray<RuleFinding> Capacity(DeltaRuleContext context)
     {
         var findings = ImmutableArray.CreateBuilder<RuleFinding>();
+        findings.AddRange(TheoryCapacity(context));
         var directories = CapacityPathsByDirectory(context.Current.Files.Keys);
         var baselineDirectories = CapacityPathsByDirectory(context.Baseline.Files.Keys);
 

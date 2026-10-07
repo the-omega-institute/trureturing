@@ -21,9 +21,15 @@ internal static class DepositHeaderCheckCommand
 
         try
         {
-            var prepared = repository.Prepare(protectedBase);
-            var baseline = Decode(repository.ReadRevision(prepared.Revision));
-            var current = Decode(repository.ReadCurrent());
+            var revision = repository.ResolveFrozenRevision(protectedBase!.ToLowerInvariant()).Revision;
+            var targetPath = RepoPath.CreateKnown(target);
+            var statePath = FrozenStatePath.FromModulePath(targetPath);
+            var baseline = Decode(repository.ReadRevision(revision,
+                [DigestionQuerySelection.Literal(target), DigestionQuerySelection.Literal(statePath.Value)]));
+            var currentRaw = repository.ReadCurrent(
+                [":(glob)D5/**/*.lean", ":(glob)Reg/**/*.lean", "Trureturing.lean",
+                    "Meta/FILEMAP.toml", ":(glob)Meta/FILEMAP.*.toml", "Meta/domains.yaml"]);
+            var current = Decode(currentRaw);
             if (!current.TryGetFile(target, out var targetFile))
             {
                 throw new InvalidOperationException($"deposit target does not exist: {target}");
@@ -50,10 +56,15 @@ internal static class DepositHeaderCheckCommand
                     string.Empty);
             }
 
-            var statePath = FrozenStatePath.FromModulePath(targetFile.Path);
             if (!baseline.Files.ContainsKey(statePath))
             {
                 _ = RepositoryRules.TryHeader(targetFile.Text, out var header);
+                if (UtilitySyntax.TryParse(header.Utility, out var utility, out _)
+                    && utility!.BasisTarget is { Kind: UtilityTargetKind.Atom } atom)
+                {
+                    var selected = DigestionQuerySelection.ReadAtom(repository, atom.Value);
+                    current = Decode(DigestionQuerySelection.Merge(currentRaw, selected.Raw));
+                }
                 var validation = UtilityDeclarationValidator.Validate(
                     UtilityValidationPhase.PreDeposit,
                     targetFile.Path,

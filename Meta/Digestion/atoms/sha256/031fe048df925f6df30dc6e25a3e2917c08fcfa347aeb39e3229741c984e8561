@@ -1,0 +1,68 @@
+### 定理 9.4（指定未来读出的精确行为商与距离）
+
+继续固定命题 9.3 的逻辑二维子空间，允许其中的全部密度矩阵。上下文恰为按式（9.3）演化任意 $t\ge0$，随后读取首位的两结果概率律；不包含中途测量或其他控制。令
+
+$$
+z=\rho_{00}-\rho_{11},\qquad y=-2\operatorname{Im}\rho_{01},
+$$
+
+其中矩阵元按 $|0,r\rangle,|1,r\rangle$ 取。则
+
+$$
+\dot z=\Omega y,\qquad \dot y=-\Omega z,\qquad
+p_1(t)=\frac{1-z\cos(\Omega t)-y\sin(\Omega t)}2.
+\tag{9.5}
+$$
+
+对任意两态 $\rho,\widetilde\rho$，其未来概率律的上确界全变差距离精确为
+
+$$
+d_{\rm future}(\rho,\widetilde\rho)
+ :=\sup_{t\ge0}d_{\rm TV}\bigl((1-p_1(t),p_1(t)),
+ (1-\widetilde p_1(t),\widetilde p_1(t))\bigr)
+ =\frac12\sqrt{(z-\widetilde z)^2+(y-\widetilde y)^2}.
+\tag{9.6}
+$$
+
+相应面积期望读出的上确界距离为
+
+$$
+d_{\rm area}(\rho,\widetilde\rho)
+:=\sup_{t\ge0}|\mathcal A_\rho(t)-\mathcal A_{\widetilde\rho}(t)|
+=(\log3)d_{\rm future}(\rho,\widetilde\rho).
+\tag{9.7}
+$$
+
+零距离当且仅当 $(z,y)=(\widetilde z,\widetilde y)$。因此这些上下文的精确行为商是闭单位圆盘 $\{(z,y):z^2+y^2\le1\}$，带二分之一欧氏距离；未来演化在商上闭合为式（9.5）的旋转。
+
+**证明。** 从 $\dot\rho=-i[h,\rho]$ 直接得到式（9.5）的两条微分方程。解线性系统有
+
+$$
+z(t)=z\cos(\Omega t)+y\sin(\Omega t),\qquad
+y(t)=y\cos(\Omega t)-z\sin(\Omega t).
+$$
+
+迹为一给 $p_1(t)=(1-z(t))/2$。对二结果律，按 $d_{\rm TV}(p,q)=\tfrac12\sum_i|p_i-q_i|$ 的约定，全变差就是 $|p_1-\widetilde p_1|$。置 $\Delta z=z-\widetilde z$、$\Delta y=y-\widetilde y$，它等于
+
+$$
+\frac12|\Delta z\cos(\Omega t)+\Delta y\sin(\Omega t)|.
+$$
+
+Cauchy–Schwarz 给出振幅上界 $\tfrac12\sqrt{(\Delta z)^2+(\Delta y)^2}$。由于 $\Omega\ne0$，非负时间遍历全部圆周相位，可以令 $(\cos(\Omega t),\sin(\Omega t))$ 与 $(\Delta z,\Delta y)$ 同向或反向；零向量情形恒为零。因此上界达到，得到式（9.6）。面积期望始终是 $(\log3)p_1$，故式（9.7）随之成立。
+
+量子比特的正性要求 $(2\operatorname{Re}\rho_{01})^2+y^2+z^2\le1$，所以商像在闭圆盘内；反之圆盘内任一点都由
+
+$$
+\rho(z,y)=\frac12
+\begin{pmatrix}
+1+z&-iy\\
+iy&1-z
+\end{pmatrix}
+$$
+
+实现，其特征值为 $(1\pm\sqrt{z^2+y^2})/2$。式（9.6）把零距离恰识别为相同 $(z,y)$；式（9.5）同时说明未来读数及后继坐标都由该对唯一决定。任意能确定全部这些未来律的表示都必须区分不同 $(z,y)$，故必因子化到此行为商。
+
+这也是 [《递归关系观察：上下文几何》](RECURSIVE_RELATIONAL_OBSERVATION_CONTEXT_GEOMETRY.md) 第 1—2 节的最小上下文伪度量在当前编码上的显式求值：取演化上下文增益为一，以两结果律全变差作为基础输出距离。演化相加形成相同的上下文族，式（9.6）的距离在旋转下不变并控制当前读数。任何同样使演化不扩张、当前读数为 $1$-Lipschitz 的伪度量都必须控制每个未来实验，因而至少等于式（9.6）的上确界。这给出该距离的最小性。证毕。
+
+行为商只对应这里声明的上下文：不同的 $2\operatorname{Re}\rho_{01}$ 可以具有同一 $(z,y)$，所以它不是完整态层析；概率律和精确期望是数学输入输出，并不授予从一个未知态单次测量取得精确期望的能力。上述面积、递归划分和行为距离均定义于有限编码及指定更新，不构成物理时空、引力或引力 AdS/CFT 的结论。
+

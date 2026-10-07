@@ -1,0 +1,16 @@
+### 43.13 成熟方法、来源对象与证据范围
+
+原 $H$ 定义、前缀界、替换和准确计数身份复用 [Letouzey–Li–Steiner，*Pointwise Order of Generalized Hofstadter Functions G, H, and Beyond*，arXiv:2410.00529v2](https://arxiv.org/pdf/2410.00529v2)，定位为 §1.1、§1.3、Propositions 2.1–2.4、Theorem 3.1 和 Propositions 4.1–4.3。所用局部证明与这些定义相连；后续排序、频率或图示数值不是定理 43.3 的前提，形式化附件及其导入也不由正文阅读取得内核核验。
+
+[Meek–Van Rees，*The Solution of an Iterated Recurrence*，Fibonacci Quarterly 22(2)，1984，101–104](https://www.fq.math.ca/Scanned/22-2/meek.pdf) 的完整四页已经给出广义 Fibonacci 基下的生成、分解、截断和数值回转算法，并讨论约 $3\log_Z n$ 步。文中为方便使用平移后的递归，不能把它的 $g$ 初始化直接替换成本章的原 $H$。高效数值求值及原生基数取得本身是经典结果；该近似步数不自动计入原五窗取得、三次依赖出现、工作位宽及全部输出费用。
+
+[Letouzey，arXiv:2502.12615v5](https://arxiv.org/pdf/2502.12615v5)，§4 的分解定义、Theorem 4.10 及其规范化论证，在其自身标准 $k$ 分解上给出上右移身份，迭代版本的域为 $1\le q\le k$。[Shallit，*The Narayana Morphism and Related Words*，arXiv:2503.01026v1](https://arxiv.org/pdf/2503.01026v1)，§§2、6 分别讨论原生表示与 $H$ 的截断及末位修正，Remark 31 明确联系 Meek–Van Rees。它们的原生字不等于本章的输入 $W_h(N)$；本章未免费接收这些字。Shallit §2 中省略的归纳证明、Walnut 程序及输出不作为本章独立验证结果，未借用其它节或图示的计算。
+
+作者 [Fast.v，固定提交 dde0281c7a92550806f264112692da9165543942](https://github.com/letouzey/hofstadter_g/blob/dde0281c7a92550806f264112692da9165543942/Fast.v) 给出了原生权重滚动与数值实现的代码先例，包括其 FlexArray 与前缀数组接口。代码正文与其导入的证明范围分别存在；正文阅读不验证导入、编译或运行结果，也不证明表格为空的算法具有原创性。
+
+[Belazzougui–Puglisi–Tabei，*Rank, Select and Access in Grammar-Compressed Strings*，arXiv:1408.3093v2](https://arxiv.org/pdf/1408.3093v2)，§3.5、Theorem 2 从给定语法及存储计数出发，给语法大小 $g$、字母表大小 $\sigma$、展开长度 $n$ 下的 $O(g\sigma\log n)$ 位结构与 $O(\log n)$ 查询。该节的局部计数论证表明前缀计数下降属于成熟方法；其原生操作模型、偏置跳树前置和随机访问结构并不成为本章的已取得数据或局部位费用。
+
+[Duyster–Kociumaka，arXiv:2602.10864v2](https://arxiv.org/pdf/2602.10864v2)，§8.1、Remark 8.3、Lemma 8.4 及局部证明，以给定语法和可常数时间运算的表示幺半群为前提，保存变量聚合及右端前缀和。这里的常数时间幺半群操作和原生机器字条件不能默认为本章的位操作。其一般语法变换、下界和其它版本不由这一局部阅读获得证明范围，也不说明固定 $H$ 实例的最优成本。
+
+五窗 Horner 身份、原高度容量、原 Fibonacci 转换与非相邻唯一性、原生移位、前缀计数下降、逐位算术和高效 $H$ 求值均按既有方法复用，不承担新增数学内容。定理 43.3 的限定内容是完整达到的原数值接口及同时资源会计：从唯一原输入取得数据，构造真实摘要及其停止层，回退已取得摘要，依次取得原三个地址和值，并在原高度输出六行；上述全部在一台机器的一次执行中计入位时间和峰值位空间。不声称新的 $H$ 算法、无表格原创性、速度优越性、最优性、排除可比界，或穷尽世界文献、历史与私人结果。
+

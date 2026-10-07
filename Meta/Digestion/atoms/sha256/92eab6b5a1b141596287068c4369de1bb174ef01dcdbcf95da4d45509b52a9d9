@@ -1,0 +1,11 @@
+- 若普通对在 $B$ 未触及而 $a_j\in P$，置 $a_j=a_j^{\mathrm R}$。若两端都不在 $P$，无需赋值。
+
+没有未触及的第二端点落入 $P$，故这些情形穷尽全部普通坐标。记该前缀的实际响应为
+
+$$
+T_x^b:\Omega_{I\setminus P}\longrightarrow O,
+\qquad T_x^b(s)=F(q_x(b),s).
+$$
+
+关键是一个与变化前缀 $b$ 无关的共同后缀回放。固定 $c,x,z,d$，其中 $z\in S_x$、$d\in\mathcal D_B$，构造 $s=s(c,x,z,d)\in\Omega_{I\setminus P}$ 如下。对 $i\in E$，选择 $\eta_i=y_i$ 使 $\phi_i(x_i,y_i)=z_i$。对其余指定坐标中位于 $P$ 外的每个标签，若在 $B$ 内就取 $c$ 中的值，若在 $B$ 外就取 $d$ 中的值；$B\cap P$ 的指定坐标已经随 $q_x(b)$ 复制，完全不进入这个后缀选择。普通坐标则与上述情形逐一配对：
+

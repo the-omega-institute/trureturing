@@ -1,0 +1,8 @@
+**推论 209.2（有限素数轴修正，纸面推导）。** 在同一有限素数支撑上，
+
+$$
+\sum_{p\mid n}\frac{a_p p^{-a_p}}{(a_p+1)(p+1)}
+\le \sum_{p\mid n}D_{a_p}(1/p)
+\le\sum_{p\mid n}\frac{a_p p^{-(a_p+1)}}{a_p+1}.
+$$
+

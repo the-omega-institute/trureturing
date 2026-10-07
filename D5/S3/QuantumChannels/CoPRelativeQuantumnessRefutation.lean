@@ -71,7 +71,7 @@ def claim : Prop := ∀ (d : ℕ) (ρ σ : Mat d) (ε : ℝ)
   Q (N (reg ε ρ)) (N (reg ε σ)) ≤ Q (reg ε ρ) (reg ε σ) ∧
     0 ≤ Q (N (reg ε ρ)) (N (reg ε σ))
 
-private def pauli (z x : ℝ) : Mat 2 := !![(z : ℂ), (x : ℂ); (x : ℂ), -(z : ℂ)]
+def pauli (z x : ℝ) : Mat 2 := !![(z : ℂ), (x : ℂ); (x : ℂ), -(z : ℂ)]
 
 private def t (n : ℕ) : ℝ := (4^n-1)/(4^n+1)
 

@@ -1,0 +1,121 @@
+{
+  "scope": "Exact rational consumer for the full FIB Robin Abel budget, using existing actual scalar enclosures and original explicit Mertens bounds. Analytic transport is paper-only, not Lean verified. No remaining-frequency signed estimate or RH proof.",
+  "producer_sha256": "3f63f9cca924198f9ce5735a4f11dc4c72419c0fc49872ff9b4f840c6821b04f",
+  "sources": {
+    "ratio": {
+      "name": "robin-kernel-ratio.json",
+      "sha256": "191b0b39859050c910a6456349bcc3d29815b7e94aaa0c496c05ae14f5e63c24"
+    },
+    "diagonal": {
+      "name": "robin-kernel-diagonal.json",
+      "sha256": "29834f084f6b7be486efd5c1516093e4b6c2a12e690c46d01e94e31c472e963d"
+    },
+    "mertens_low": {
+      "url": "https://arxiv.org/html/2408.04143v3#Sx2.Thmtheorem1",
+      "identifier": "arXiv:2408.04143v3, Theorem A.1, (A.5)",
+      "publication_doi": "10.1080/10586458.2025.2483942",
+      "domain": "all real x>1",
+      "constant": "2.91890",
+      "log_power": 2
+    },
+    "mertens_high": {
+      "url": "https://arxiv.org/html/2208.06141v5#S1.Thmtheorem1",
+      "identifier": "arXiv:2208.06141v5, Theorem 1.1, (10)",
+      "version_date": "2026-09-09",
+      "publication_status": "preprint version",
+      "domain": "all real x>=exp(4589.20)",
+      "constant": "33.56",
+      "sqrt_denominator": "5.56"
+    }
+  },
+  "actual_scalar_caps": {
+    "mu0_upper": 62,
+    "A": 4,
+    "D": 5,
+    "q_upper": "2/5"
+  },
+  "qk_coefficient_caps": {
+    "a2": "66",
+    "a1": "212",
+    "a0": "248"
+  },
+  "mertens_constant": {
+    "numerator": "505739868011989729349",
+    "denominator": "390625"
+  },
+  "exp28_taylor_terms": 101,
+  "high_at_threshold_upper": {
+    "numerator": "25498009678056659519000137185916207093809740522352805273115167083927266123944898623734704981014898989236001450859861292233194393792968750000000",
+    "denominator": "25631317383511762204130284700239010786012019101985875185929130483854634171438751740959510058350330104478287441144440184012641633"
+  },
+  "H_main_upper": {
+    "numerator": "64734703105534685356672",
+    "denominator": "703125"
+  },
+  "H_tail_upper": {
+    "numerator": "160000000",
+    "denominator": "9"
+  },
+  "C6_upper": {
+    "numerator": "100000000000000000",
+    "denominator": "1"
+  },
+  "Sp_upper": {
+    "3": {
+      "numerator": "45",
+      "denominator": "16"
+    },
+    "4": {
+      "numerator": "117",
+      "denominator": "32"
+    },
+    "5": {
+      "numerator": "81",
+      "denominator": "16"
+    },
+    "6": {
+      "numerator": "4617",
+      "denominator": "640"
+    }
+  },
+  "Cstar_components_upper": {
+    "Hk_logk": {
+      "numerator": "221625000000000000000",
+      "denominator": "1"
+    },
+    "H1": {
+      "numerator": "2044",
+      "denominator": "5"
+    },
+    "inner_low": {
+      "numerator": "5444718750000000000000",
+      "denominator": "1"
+    },
+    "inner_high": {
+      "numerator": "19863360000000000000000",
+      "denominator": "1"
+    }
+  },
+  "Cstar_bound_upper": {
+    "numerator": "127648518750000000002044",
+    "denominator": "5"
+  },
+  "Cstar_upper": {
+    "numerator": "30000000000000000000000",
+    "denominator": "1"
+  },
+  "epsilon_coefficient": {
+    "numerator": "1",
+    "denominator": "60000000000000000000000"
+  },
+  "schedule": "epsilon_x=epsilon_coefficient/(sqrt(x)*log(x)), x>=exp(1)",
+  "error_bound": "|I_epsilon(x)-I_psi(x)|<=1/(sqrt(x)*log(x)^2)",
+  "not_claimed": [
+    "a sharp numerical constant",
+    "a published-only source chain",
+    "a Lean verification",
+    "a signed bound on I_epsilon",
+    "the missing full-frequency critical budget",
+    "Robin or RH"
+  ]
+}

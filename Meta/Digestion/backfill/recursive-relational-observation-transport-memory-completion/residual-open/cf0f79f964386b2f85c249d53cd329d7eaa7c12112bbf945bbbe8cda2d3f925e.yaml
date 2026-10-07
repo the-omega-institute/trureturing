@@ -2,6 +2,7 @@ fingerprints:
   raw_sha256: sha256:cf0f79f964386b2f85c249d53cd329d7eaa7c12112bbf945bbbe8cda2d3f925e
   normalized_sha256: sha256:cf0f79f964386b2f85c249d53cd329d7eaa7c12112bbf945bbbe8cda2d3f925e
 cas_ref: sha256:cf0f79f964386b2f85c249d53cd329d7eaa7c12112bbf945bbbe8cda2d3f925e
+# Numerical coverage requires the numerical statements; actual-execution and causal-decoder criteria are supporting results.
 coverage_gids: []
 receipts:
   unresolved_subitems: []

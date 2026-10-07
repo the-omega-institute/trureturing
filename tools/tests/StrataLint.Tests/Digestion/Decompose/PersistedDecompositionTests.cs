@@ -39,7 +39,7 @@ public sealed class PersistedDecompositionTests
             $"**Second** B.{newline}");
         Assert.False(AtomizerRegistry.EmitsClausePlans(AtomizerRegistry.GenericId));
 
-        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, f.Document, DigestionAlignmentMode.Ingest);
+        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Ingest);
         Assert.Empty(alignment.Findings);
         Assert.Contains(f.Parent.AtomId, alignment.VerifiedClausePlanParents);
         Assert.Equal(0, f.Writes);
@@ -128,7 +128,7 @@ public sealed class PersistedDecompositionTests
         Assert.Equal(0, f.Writes);
         if (atomizer == AtomizerRegistry.GenericId)
         {
-            var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, f.Document, DigestionAlignmentMode.Ingest);
+            var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Ingest);
             Assert.Empty(alignment.Findings);
             Assert.Contains(parent.AtomId, alignment.VerifiedClausePlanParents);
         }

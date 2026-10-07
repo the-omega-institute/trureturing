@@ -44,6 +44,15 @@ internal sealed class CoherentReturnPathTemplatesDocument : IScribeDocumentDefin
             Def("componentLabel", "Restrict labels to the component",
                 "componentLabel label S evaluates the original label on each actual "
                 + "arrow of the component quiver."),
+            Proof("component_inclusion_length", "Component inclusion preserves path length",
+                "For every vertex type V, arbitrary quiver, strongly connected component S "
+                + "and actual internal path H, the ambient image of H under componentInclusion S "
+                + "has exactly the same length as H. No finiteness assumption is needed."),
+            Proof("component_inclusion_output", "Component inclusion preserves labelled output",
+                "For every vertex type V, arbitrary quiver, symbol type alpha, edge labelling, "
+                + "strongly connected component S and actual internal path H, the output of "
+                + "its ambient image under the original labels is exactly its internal output "
+                + "under componentLabel label S. No finiteness assumption is needed."),
             Def("Cyclic", "Cyclicity uses an actual positive return",
                 "Cyclic S means that there are q in Component S and an actual "
                 + "internal return C : Quiver.Path q q with positive path length. "

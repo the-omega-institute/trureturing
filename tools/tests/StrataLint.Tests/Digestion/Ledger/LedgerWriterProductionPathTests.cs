@@ -33,7 +33,7 @@ public sealed partial class LedgerWriterProductionPathTests
         var environment = Environment(repository, world, world.Document, world.Document);
 
         var result = environment.CoverAtom(
-            ["--cover-atom", inputs.AtomId, "--gid", AlphaGid, "--base", "baseline"]);
+            ["--cover-atom", inputs.AtomId, "--gid", AlphaGid]);
 
         Assert.True(result.Success, result.Error);
         AssertCanonicalGidBytes(ReadAtomBytes(repository, inputs.AtomId));

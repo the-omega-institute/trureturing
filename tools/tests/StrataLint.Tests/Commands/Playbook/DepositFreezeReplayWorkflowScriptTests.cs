@@ -1,5 +1,4 @@
 using static StrataLint.TestSupport.TransactionFixture;
-using System.Text;
 
 namespace StrataLint.Tests;
 
@@ -57,28 +56,30 @@ public sealed class DepositFreezeReplayWorkflowScriptTests
         Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
     }
 
-    // This case returns 2 without invoking ledger-align because the canonical reader
-    // validates every frozen-ledger shard before resolving the target.
     [Fact]
-    public void DepositFailsClosedWhenAnUnrelatedFrozenLedgerShardIsMalformed()
+    public void DepositWithExistingStatePinIgnoresAnUnrelatedMalformedFrozenLedgerShard()
     {
         if (OperatingSystem.IsWindows()) return;
         using var fixture = new TransactionFixture();
         fixture.WriteActiveFreezeForCurrentModule();
         fixture.AddUnrelatedMalformedLedgerShard();
+        var historyBefore = fixture.LedgerState();
+        var pinBefore = fixture.StatePinContents();
 
         var result = fixture.Run("deposit", realCliPath: Path.Combine(Path.GetDirectoryName(typeof(StrataLint.Cli.Program).Assembly.Location)!, "StrataLint"));
 
-        Assert.Equal(2, result.ExitCode);
-        Assert.Contains(
-            "LEDGER_FROZEN_INVALID",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.Ordinal);
-        Assert.DoesNotContain(
-            "module-already-frozen",
-            Encoding.UTF8.GetString(result.StandardError),
-            StringComparison.Ordinal);
-        Assert.DoesNotContain("dotnet:ledger-align", fixture.CallKinds());
+        Assert.True(result.ExitCode == 0, Diagnostics(result));
+        Assert.Equal(historyBefore, fixture.LedgerState());
+        Assert.Equal(pinBefore, fixture.StatePinContents());
+        Assert.Equal(
+            [
+                "make:lean-report", "dotnet:deposit-header-check", "make:emit",
+                "dotnet:ledger-frozen", "dotnet:cover-atom",
+            ],
+            fixture.CallKinds());
+        Assert.Contains("module-already-frozen", Diagnostics(result), StringComparison.Ordinal);
+        Assert.DoesNotContain("LEDGER_FROZEN_INVALID", Diagnostics(result), StringComparison.Ordinal);
+        Assert.Contains("coverage: true", fixture.BackfillContents(), StringComparison.Ordinal);
     }
 
 }

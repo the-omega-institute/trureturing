@@ -5,9 +5,10 @@ year: 2026
 title: "Feasibility Ordering of Entanglement-Source Placement for Qubit Channels"
 doi: 10.48550/arXiv.2609.18803
 url: https://arxiv.org/abs/2609.18803v1
-claim: "Section VI, Eq. (47), asks whether every unital qudit channel is CP-filter equivalent to its channel transpose with CP inverses."
+claim: "Section VI, Eq. (47), asks whether every unital qudit channel is CP-filter equivalent to its channel transpose with CP inverses; Eq. (48) asks the weaker question whether the transpose factors as a positive map after the channel after a completely positive map."
 strata_touched:
   - D5/S3/Quantum/QuantumChannels/CPFilterTransposeRefutation
+  - D5/S3/Quantum/QuantumChannels/PositiveFilterTransposeRefutation
 license: citation-only
 triage: anchor
 ---
@@ -55,9 +56,28 @@ representations; transposing its value on $X^T$ identifies the channel
 transpose. Trace preservation and
 unitality mean preservation of matrix trace and of the identity matrix.
 
+Section VI, Eq. (48) (label `eq:quditquestion` in the v1 TeX source),
+immediately after Eq. (47):
+
+> The weaker question, which is sufficient for the source-placement theorem,
+> asks only whether there exist a positive map $\mathcal{F}$ and a completely
+> positive map $\mathcal{E}$ such that
+> $\Upsilon^T=\mathcal{F}\circ\Upsilon\circ\mathcal{E}$.
+
+> Qubit unital channels satisfy the strong condition. A positive answer to the
+> weak condition for any class of unital qudit channels would, after the same
+> Sinkhorn and regularization steps, extend the midpoint-feasibility theorem
+> to the corresponding class of arbitrary qudit channels. Failure of the strong
+> condition would not by itself preclude such an extension; failure of the weak
+> condition would identify the precise obstruction to this proof strategy.
+
 The strong question fails for a unital qutrit measure-and-prepare channel.
 Its transpose has diagonal range, while its range contains two noncommuting
 trace-one matrices. CP-invertible maps are invertible congruences; such a
 congruence cannot make the entire unital noncommuting range diagonal.
-The weaker positive/CP factorization in Eq. (48) remains open. The qubit
-theorems and the source's feasibility conclusion are unaffected.
+The weak question also fails at dimension three: for the unital
+measure-and-prepare channel with states $\rho_j=(e_je_j^{\mathsf T}+u_ju_j^{\mathsf T})/2$,
+$u_j$ the columns of $\tfrac17\begin{bmatrix}3&-2&6\\6&3&-2\\-2&6&3\end{bmatrix}$,
+no positive $\mathcal F$ and completely positive $\mathcal E$ give
+$\Upsilon^T=\mathcal F\circ\Upsilon\circ\mathcal E$. The qubit theorems and the
+source's feasibility conclusion are unaffected.

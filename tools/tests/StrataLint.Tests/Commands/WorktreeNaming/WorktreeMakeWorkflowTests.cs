@@ -89,6 +89,11 @@ public sealed class WorktreeMakeWorkflowTests
         File.SetUnixFileMode(
             dotnet,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        var python = Path.Combine(binDirectory, "python3");
+        File.WriteAllText(python,
+            "#!/usr/bin/env bash\n[[ \"${2:-}\" == */host-cleanup.py && \"${3:-}\" == check-disk ]] || exit 64\nexit 0\n");
+        File.SetUnixFileMode(python,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         TestGit.Run(fixtureRoot, "init", "--initial-branch=dev");
         return Path.Combine(fixtureRoot, "dotnet-called");
     }

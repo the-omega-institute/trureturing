@@ -148,7 +148,6 @@ public sealed class TheoryAtomizerDataTests
             DigestionTestSupport.Snapshot(
                 ("docs/source.md", bytes),
                 (TheoryAtomizerDataLoader.DataPath, Encoding.UTF8.GetBytes(Minimal))),
-            ledger,
             DigestionAlignmentMode.Ingest);
 
         Assert.Empty(alignment.Findings);

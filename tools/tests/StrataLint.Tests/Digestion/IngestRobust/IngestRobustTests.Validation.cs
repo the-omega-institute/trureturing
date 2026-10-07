@@ -52,7 +52,7 @@ public sealed partial class IngestRobustTests
         });
 
         var result = Environment(fixture, temporary, dependencies: dependencies).Ingest(
-            sourceScoped ? Arguments("alpha") : Arguments());
+            sourceScoped ? Arguments("alpha") : Arguments("alpha", "beta"));
 
         Assert.False(result.Success);
         Assert.Contains($"atom id {atomId} already registered by beta since planning", result.Error,

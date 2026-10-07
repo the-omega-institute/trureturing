@@ -1,0 +1,22 @@
+**定理 35.3（五来源的同一控制器与十八地址锐费用）。** 定义 35.1 的原全有限树合同下，存在一个 $\sigma\in\mathfrak D_3$，使它在五个指定来源上的实际不同付费地址集精确为
+
+$$
+\begin{aligned}
+J_\sigma(P_1)&=L(P_1),\\
+J_\sigma(P_2)&=L(P_2)\cup\{\mathtt{RRLR}\},\\
+J_\sigma(P_3)&=L(P_3)\cup\{\mathtt{RLR}\},\\
+J_\sigma(P_4)&=L(P_4)\cup\{\mathtt{LR}\},\\
+J_\sigma(P_5)&=L(P_5)\cup\{\mathtt{RRLR}\}.
+\end{aligned}
+\tag{35.10}
+$$
+
+每行新列出的非叶地址确实在该行的叶集之外，并且
+
+$$
+\bigl(C_\sigma(P_1),C_\sigma(P_2),C_\sigma(P_3),
+C_\sigma(P_4),C_\sigma(P_5)\bigr)
+=(17,18,18,18,18),\qquad D(F)=18.
+\tag{35.11}
+$$
+

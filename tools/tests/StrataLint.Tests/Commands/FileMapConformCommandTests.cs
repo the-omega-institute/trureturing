@@ -20,7 +20,7 @@ public sealed class FileMapConformCommandTests
         File.WriteAllText(fileMapPath, TestFileMap.Canonical);
         File.WriteAllText(Path.Combine(fixture.Path, "Meta/domains.yaml"), TestFileMap.Domains);
         File.WriteAllText(Path.Combine(fixture.Path, ".gitignore"),
-            ".caller-review-prompt.md\n.echo-review.md\n.sshx-*\n/Generated/echo-residuals/\n");
+            ".caller-review-prompt.md\n.echo-review.md\n.sshx-*\n");
         TestGit.Run(fixture.Path, "init");
         TestGit.Run(fixture.Path, "add", ".");
         var literal = FileMapConformCommand.Run([], fixture.Path);

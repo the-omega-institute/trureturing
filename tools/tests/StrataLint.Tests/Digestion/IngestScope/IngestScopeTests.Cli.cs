@@ -64,26 +64,41 @@ public sealed partial class IngestScopeTests
         var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
         var result = Environment(fixture, temporary).Ingest([.. Arguments(), "--source"]);
         Assert.False(result.Success);
-        Assert.Contains("[--source X]...", result.Error, StringComparison.Ordinal);
+        Assert.Contains("--source X", result.Error, StringComparison.Ordinal);
         Assert.Contains("missing value", result.Error, StringComparison.Ordinal);
         Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
     }
 
     [Fact]
-    public void IngestSourceArguments_OmittedSourceMatchesExistingWholeLedgerBytes()
+    public void IngestSourceArguments_OmittedSourceFailsBeforeReading()
     {
         var fixture = Fixture();
         fixture.Files[BetaPath] += Addition;
         using var unscoped = new TemporaryDirectory();
-        using var scoped = new TemporaryDirectory();
         WriteFixture(unscoped, fixture);
-        WriteFixture(scoped, fixture);
-        var oldVerb = Environment(fixture, unscoped).Ingest(Arguments());
-        var allSources = Environment(fixture, scoped).Ingest(Arguments("beta", "alpha", BetaPath));
-        Assert.True(oldVerb.Success, oldVerb.Error);
-        Assert.True(allSources.Success, allSources.Error);
-        Assert.Equal(DirectoryLedgerTestSupport.RepositoryImage(unscoped),
-            DirectoryLedgerTestSupport.RepositoryImage(scoped));
+        var before = DirectoryLedgerTestSupport.RepositoryImage(unscoped);
+        var gateway = new FakeRepositoryGateway(RawChangeSet.Create([]), Raw(fixture.Files), Raw(fixture.Baseline));
+        var result = IngestCommand.RunReportFree(unscoped.Path, gateway, Arguments());
+        Assert.False(result.Success);
+        Assert.Contains("--source", result.Error, StringComparison.Ordinal);
+        Assert.Equal(0, gateway.ReadCurrentCount);
+        Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(unscoped));
+    }
+
+    [Theory]
+    [InlineData("Meta/Digestion/backfill/unrelated/source.toml")]
+    [InlineData("Meta/Digestion/backfill/beta/residual-open/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa.yaml")]
+    public void IngestIgnoresUnrelatedMalformedRecords(string path)
+    {
+        var fixture = Fixture();
+        fixture.Files[path] = "malformed [";
+        fixture.Files[BetaPath] += Addition;
+        using var temporary = new TemporaryDirectory();
+        WriteFixture(temporary, fixture);
+        var result = Environment(fixture, temporary).Ingest(Arguments("beta"));
+        Assert.True(result.Success, result.Error);
+        var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
+        Assert.Contains(after.Entries, entry => entry.Path == path);
     }
 
     [Fact]
@@ -179,7 +194,7 @@ public sealed partial class IngestScopeTests
         var after = DirectoryLedgerTestSupport.ReadRepository(temporary);
         Assert.Equal(Image(before, SourcePrefix("alpha")), Image(after, SourcePrefix("alpha")));
 
-        foreach (var args in new[] { Arguments("alpha"), Arguments() })
+        foreach (var args in new[] { Arguments("alpha"), Arguments("alpha", "beta") })
         {
             using var preserved = new TemporaryDirectory();
             WriteFixture(preserved, fixture);
@@ -197,7 +212,7 @@ public sealed partial class IngestScopeTests
     [InlineData(null)]
     [InlineData("alpha")]
     [InlineData("beta")]
-    public void IngestScope_UnsortedCoverageFailsClosedWithoutWrites(string? sourceId)
+    public void IngestScope_MalformedMatchingCoverageIsLocal(string? sourceId)
     {
         var document = Ledger();
         var alpha = document.RequireDigestionSources()[0];
@@ -218,10 +233,14 @@ public sealed partial class IngestScopeTests
         var before = DirectoryLedgerTestSupport.RepositoryImage(temporary);
 
         var result = Environment(fixture, temporary).Ingest(
-            sourceId is null ? Arguments() : Arguments(sourceId));
+            sourceId is null ? Arguments("alpha", "beta") : Arguments(sourceId));
 
-        Assert.False(result.Success);
-        Assert.Contains("BACKFILL_COVERAGE_ORDER", result.Error, StringComparison.Ordinal);
+        if (sourceId == "beta") Assert.True(result.Success, result.Error);
+        else
+        {
+            Assert.False(result.Success);
+            Assert.Contains("BACKFILL_COVERAGE_ORDER", result.Error, StringComparison.Ordinal);
+        }
         Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
     }
 }

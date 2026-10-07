@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:f02e650355730f26172fbec9caa35c1e469f6035b6111686fc06bb80c74fc265
+  normalized_sha256: sha256:f02e650355730f26172fbec9caa35c1e469f6035b6111686fc06bb80c74fc265
+cas_ref: sha256:f02e650355730f26172fbec9caa35c1e469f6035b6111686fc06bb80c74fc265
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Experiment/PositiveRankOneSecants.result
+    target_statement_id: sha256:57f711ce6a547fa18b7588b62b08cdf5d97185b7202dbaa4f98a042d41a8753f
+receipts:
+  unresolved_subitems: []

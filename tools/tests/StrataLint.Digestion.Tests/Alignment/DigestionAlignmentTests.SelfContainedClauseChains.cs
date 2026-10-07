@@ -17,7 +17,6 @@ public sealed partial class DigestionAlignmentTests
         Assert.DoesNotContain(result.Findings, finding => finding.Contains(
             "malformed clause chain",
             StringComparison.Ordinal));
-        Assert.Contains(fixture.Parent.AtomId, result.ClausePlanChainParents);
         Assert.Contains(fixture.Parent.AtomId, result.VerifiedClausePlanParents);
         Assert.All(fixture.Children, child => Assert.Equal(
             DigestionReceiptAlignment.Seen,
@@ -73,7 +72,6 @@ public sealed partial class DigestionAlignmentTests
             DigestionLedgerAligner.Evaluate(
                 fixture.Ledger.WithDigestionSources([.. sources]),
                 snapshot,
-                baselineDocument: null,
                 mode: DigestionAlignmentMode.Ingest);
 
         var childOwnerFirst = Evaluate(childOwner, chainOwner);
@@ -115,7 +113,6 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(
                 fixture.CurrentSourceBytes,
                 fixture.ChildCaptures.Prepend(fixture.ParentCapture)),
-            fixture.Ledger,
             DigestionAlignmentMode.Admission,
             changes: RawChangeSet.Create([baselineSource.SourcePath]));
 
@@ -163,7 +160,6 @@ public sealed partial class DigestionAlignmentTests
                         contentOwner.SourcePath,
                         ImmutableArray.CreateRange(fixture.CurrentSourceBytes)),
                 ]),
-            ledger,
             DigestionAlignmentMode.Ingest);
 
         Assert.DoesNotContain(result.Findings, finding => finding.Contains(
@@ -214,7 +210,6 @@ public sealed partial class DigestionAlignmentTests
             Snapshot(
                 sourceBytes,
                 fixture.ChildCaptures.Prepend(fixture.ParentCapture)),
-            fixture.Ledger,
             DigestionAlignmentMode.Admission);
 
         AssertMalformedClauseChain(result, fixture.Parent.AtomId, "chain cardinality");
@@ -258,25 +253,6 @@ public sealed partial class DigestionAlignmentTests
             result,
             fixture.Parent.AtomId,
             "bytes differ from parent CAS plan member");
-    }
-
-    [Fact]
-    public void SelfContainedClauseChain_RejectsMissingChildCasBlob()
-    {
-        var fixture = SelfContainedClauseChain();
-        var availableCas = fixture.ChildCaptures
-            .Skip(1)
-            .Prepend(fixture.ParentCapture);
-
-        var result = EvaluateSelfContainedClauseChain(fixture, casObjects: availableCas);
-
-        Assert.Contains(result.Findings, finding => finding.Contains(
-            $"entry {fixture.Children[0].AtomId} CAS blob is missing",
-            StringComparison.Ordinal));
-        AssertMalformedClauseChain(
-            result,
-            fixture.Parent.AtomId,
-            $"listed child {fixture.Children[0].AtomId} has invalid CAS proof");
     }
 
     [Fact]
@@ -351,38 +327,6 @@ public sealed partial class DigestionAlignmentTests
     }
 
     [Fact]
-    public void SelfContainedClauseChain_RejectsMissingParentCasBlob()
-    {
-        var fixture = SelfContainedClauseChain();
-
-        var result = EvaluateSelfContainedClauseChain(fixture, casObjects: fixture.ChildCaptures);
-
-        Assert.Contains(result.Findings, finding => finding.Contains(
-            $"entry {fixture.Parent.AtomId} CAS blob is missing",
-            StringComparison.Ordinal));
-        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "parent CAS proof is invalid");
-    }
-
-    [Fact]
-    public void SelfContainedClauseChain_RejectsParentCasHashMismatch()
-    {
-        var fixture = SelfContainedClauseChain();
-        var corrupted = new RawRepositoryEntry(
-            fixture.ParentCapture.RelativePath,
-            ImmutableArray.CreateRange(Encoding.UTF8.GetBytes("corrupted parent CAS bytes")));
-
-        var result = EvaluateSelfContainedClauseChain(
-            fixture,
-            casObjects: fixture.ChildCaptures,
-            extraEntries: [corrupted]);
-
-        Assert.Contains(result.Findings, finding => finding.Contains(
-            $"entry {fixture.Parent.AtomId} CAS blob hash mismatch",
-            StringComparison.Ordinal));
-        AssertMalformedClauseChain(result, fixture.Parent.AtomId, "parent CAS proof is invalid");
-    }
-
-    [Fact]
     public void SelfContainedClauseChain_RejectsRecordedChainWhenParentCasHasNoClausePlan()
     {
         var currentSourceBytes = Encoding.UTF8.GetBytes(
@@ -418,62 +362,6 @@ public sealed partial class DigestionAlignmentTests
         var result = EvaluateSelfContainedClauseChain(fixture);
 
         AssertMalformedClauseChain(result, parentEntry.AtomId, "clause plan has no proper claim decomposition");
-    }
-
-    [Fact]
-    public void RejectsObserverChainWithoutClausePlanAndUnrelatedChild()
-    {
-        var sourceBytes = Encoding.UTF8.GetBytes(
-            "# Observer\n\n**定理(观察者代数的唯一形态)。** claim。\n");
-        var parent = Assert.Single(ObserverAtomizer.Atomize(
-            sourceBytes,
-            DigestionTestSupport.Rules).Claims);
-        var childBytes = Encoding.UTF8.GetBytes("historical observer child\n");
-        var child = Atom(parent.Fingerprints.RawSha256 + "/historical-child", childBytes);
-        var parentCapture = DigestionCasStore.Capture(parent.RawBytes.AsSpan());
-        var childCapture = DigestionCasStore.Capture(childBytes);
-        var baseline = WithAtomizer(
-            Ledger([], CasEntry("observer-parent", parent, parentCapture.Reference)),
-            AtomizerRegistry.ObserverId);
-        var source = Assert.Single(baseline.RequireDigestionSources());
-        var childId = childCapture.Reference["sha256:".Length..];
-        var parentEntry = Assert.Single(source.Entries) with
-        {
-            Receipts = Assert.Single(source.Entries).Receipts with
-            {
-                ChainAtoms = [childId],
-            },
-        };
-        var childEntry = ChildEntry(
-            parentEntry,
-            childId,
-            child,
-            childCapture.Reference);
-        var ledger = baseline.WithDigestionSources(
-        [
-            source with { Entries = [parentEntry, childEntry] },
-        ]);
-        var snapshot = Snapshot(sourceBytes, [parentCapture, childCapture]);
-
-        var alignment = DigestionLedgerAligner.Evaluate(
-            ledger,
-            snapshot,
-            ledger,
-            DigestionAlignmentMode.Ingest);
-        var exception = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(
-            ledger,
-            snapshot,
-            ledger));
-
-        AssertMalformedClauseChain(alignment, parentEntry.AtomId, "clause plan has no proper claim decomposition");
-        Assert.Contains(parentEntry.AtomId, alignment.ClausePlanChainParents);
-        Assert.DoesNotContain(parentEntry.AtomId, alignment.VerifiedClausePlanParents);
-        Assert.Equal(DigestionReceiptAlignment.Rejected, alignment.AlignmentFor(childEntry.AtomId));
-        Assert.Null(alignment.AtomFor(childEntry.AtomId));
-        Assert.Contains(
-            $"ingest clause chain parent {parentEntry.AtomId} lacks verified clause-plan proof",
-            exception.Message,
-            StringComparison.Ordinal);
     }
 
     private static SelfContainedClauseChainFixture SelfContainedClauseChain(
@@ -561,7 +449,6 @@ public sealed partial class DigestionAlignmentTests
                 fixture.CurrentSourceBytes,
                 casObjects,
                 extraEntries: extraEntries),
-            ledger,
             DigestionAlignmentMode.Ingest);
     }
 

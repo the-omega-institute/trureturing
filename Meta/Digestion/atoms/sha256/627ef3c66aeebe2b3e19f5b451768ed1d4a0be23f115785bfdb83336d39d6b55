@@ -1,0 +1,13 @@
+**命题 3.3（单步最大性不等于同一边界闭合）。** 当 $d=2$ 时，置
+
+$$
+B=|00\rangle\langle01|+|01\rangle\langle00|.
+$$
+
+则 $B\in\mathcal D_{\mathrm{out}}$，但
+
+$$
+\alpha(B)=|00\rangle\langle10|+|10\rangle\langle00|
+\notin\mathcal D_{\mathrm{out}}.
+$$
+

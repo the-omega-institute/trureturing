@@ -1,0 +1,12 @@
+**定理 72.41（有限首次分裂递推）。** 按 $e=1,\ldots,m$ 向上计算，每个 $r>0$ 的准确值为
+
+$$
+\begin{aligned}
+W_e^x(r)=K_e^x(r)+\min\Bigl(&\{0\}\ \cup\\
+&\Bigl\{2^{-j}\bigl[\rho_j+\tfrac12W_{e-h}^x(2\rho_j-h)
+-K_e^x(\rho_j)\bigr]:\\
+&\hspace{22mm}j\in J_e(r),\quad2\rho_j<e,\quad1\le h\le2\rho_j\Bigr\}\Bigr).
+\end{aligned}
+\tag{72.18}
+$$
+

@@ -9,7 +9,7 @@ public sealed class TruthReleaseSourceSnapshotJsonTests
 {
     private const string ValidSnapshot = """
         {
-          "schema": "source-snapshot.v1",
+          "schema": "source-snapshot.v2",
           "source_repo": "the-omega-institute/trureturing",
           "source_commit": "1111111111111111111111111111111111111111",
           "source_tree": "2222222222222222222222222222222222222222",
@@ -19,7 +19,6 @@ public sealed class TruthReleaseSourceSnapshotJsonTests
           "truth_graph_sha256": "sha256:5555555555555555555555555555555555555555555555555555555555555555",
           "raw_lean_report_sha256": "sha256:6666666666666666666666666666666666666666666666666666666666666666",
           "dag_md_sha256": "sha256:7777777777777777777777777777777777777777777777777777777777777777",
-          "residual_frontier_sha256": "sha256:8888888888888888888888888888888888888888888888888888888888888888",
           "declarations_sha256": "sha256:9999999999999999999999999999999999999999999999999999999999999999",
           "frozen_ledger_head_hash": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
           "frozen_ledger_sequence": 42
@@ -27,7 +26,7 @@ public sealed class TruthReleaseSourceSnapshotJsonTests
         """;
 
     [Fact]
-    public void ReadsTheExactV1SnapshotShape()
+    public void ReadsTheExactV2SnapshotShape()
     {
         var snapshot = SourceSnapshotJsonReader.Read(Encoding.UTF8.GetBytes(ValidSnapshot));
 
@@ -40,7 +39,7 @@ public sealed class TruthReleaseSourceSnapshotJsonTests
     }
 
     [Theory]
-    [InlineData("\"source-snapshot.v1\"", "\"source-snapshot.v2\"")]
+    [InlineData("\"source-snapshot.v2\"", "\"source-snapshot.v1\"")]
     [InlineData("\"source_commit\": \"1111111111111111111111111111111111111111\"", "\"source_commit\": \"not-a-git-id\"")]
     [InlineData("\"truth_graph_sha256\": \"sha256:5555555555555555555555555555555555555555555555555555555555555555\"", "\"truth_graph_sha256\": \"sha256:bad\"")]
     public void RejectsInvalidSchemaAndIdentityFormats(string original, string replacement)
@@ -66,6 +65,18 @@ public sealed class TruthReleaseSourceSnapshotJsonTests
         var json = ValidSnapshot.Replace(
             "\"frozen_ledger_sequence\": 42",
             "\"frozen_ledger_sequence\": 42, \"extra\": true",
+            StringComparison.Ordinal);
+
+        Assert.Throws<FormatException>(() => SourceSnapshotJsonReader.Read(Encoding.UTF8.GetBytes(json)));
+    }
+
+    [Fact]
+    public void RejectsADigestionDigestInTheSourceSnapshotContract()
+    {
+        var json = ValidSnapshot.Replace(
+            "\"frozen_ledger_sequence\": 42",
+            "\"frozen_ledger_sequence\": 42, \"residual_frontier_sha256\": \"sha256:"
+                + new string('8', 64) + "\"",
             StringComparison.Ordinal);
 
         Assert.Throws<FormatException>(() => SourceSnapshotJsonReader.Read(Encoding.UTF8.GetBytes(json)));

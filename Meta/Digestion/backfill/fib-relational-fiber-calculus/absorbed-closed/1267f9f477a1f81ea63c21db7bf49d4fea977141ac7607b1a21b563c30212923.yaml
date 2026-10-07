@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:1267f9f477a1f81ea63c21db7bf49d4fea977141ac7607b1a21b563c30212923
+  normalized_sha256: sha256:1267f9f477a1f81ea63c21db7bf49d4fea977141ac7607b1a21b563c30212923
+cas_ref: sha256:1267f9f477a1f81ea63c21db7bf49d4fea977141ac7607b1a21b563c30212923
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Gluing/LocalLawGluingObstruction.compatible_local_laws_can_lack_global_state
+    target_statement_id: sha256:2d5ddddf2c454a6684e8a949002f226e4218a0fd665bef69cb90e2491539dd61
+  - gid: D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.extend_record_at_neighbor
+    target_statement_id: sha256:aa4630cda695b4453c88a94708d0fc44594be568c545b6f74e44c2daba262ba9
+  - gid: D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.local_row_extends_raw_join
+    target_statement_id: sha256:0d3d552033761e6dd7cc45a2c31a34ecc65b6767dfb18414210ddff4186ab4e4
+  - gid: D5/S3/ConceptDynamics/Gluing/RunningIntersectionRecords.neighbor_overlap
+    target_statement_id: sha256:976cde5042f7a40b8ee2093b03a9b34904a2fe517a85545e56d836352c4f338a
+receipts:
+  unresolved_subitems: []

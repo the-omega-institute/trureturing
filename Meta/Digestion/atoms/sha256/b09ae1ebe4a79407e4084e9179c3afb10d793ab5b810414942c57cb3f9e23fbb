@@ -1,0 +1,28 @@
+## 定理 19.2：立即恢复半径的精确性
+
+$$
+\inf_{\widehat z\in\mathbb R}
+\max_{z\in\operatorname{pr}_ZB}
+|z-\widehat z|
+=
+\operatorname{rad}(B).
+$$
+
+### 19.2 证明
+
+设最小、最大候选分别为 $z_-,z_+$。
+
+任意 $\widehat z$ 至少距离其中一个端点：
+
+$$
+\frac{z_+-z_-}{2}.
+$$
+
+取中点：
+
+$$
+\widehat z=\frac{z_-+z_+}{2},
+$$
+
+便达到该下界。∎
+

@@ -1,0 +1,21 @@
+**定理 16.2（不同前缀分量的全局最小分离）。** 对每个 $h\ge1$，固定合法前缀 $w$ 的响应集合是定理14.11中的闭仿射线段
+
+$$
+C_w=\left\{
+\left(
+\sum_{k=j}^{h-1}\gamma^{k-j}\Delta_{w_k}
++\gamma^{h-j}y
+\right)_{j=0}^{h}
+:y\in I_{s(w)}
+\right\}.
+$$
+
+不同前缀分量的全局最小 $L^\infty$ 距离恰为
+
+$$
+\min_{w\ne v}\ \min_{z\in C_w,\ z'\in C_v}
+\|z-z'\|_\infty=\frac t2.
+$$
+
+常值地址 $\mathrm{null}^{\infty}$ 与 $5^\infty$ 取得此最小值。限制为已知起始 guard 一时同一全局最小值仍成立；这两个地址从两种 guard 都合法。
+

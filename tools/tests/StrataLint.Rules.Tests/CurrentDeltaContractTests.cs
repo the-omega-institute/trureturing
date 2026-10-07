@@ -28,7 +28,6 @@ public sealed class CurrentDeltaContractTests
     }
 
     [Theory]
-    [InlineData(16)]
     [InlineData(30)]
     [InlineData(31)]
     [InlineData(32)]

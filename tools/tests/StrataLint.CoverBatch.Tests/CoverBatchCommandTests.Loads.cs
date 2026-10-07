@@ -21,52 +21,48 @@ public sealed partial class CoverBatchCommandTests
 
         Assert.True(result.Success, result.Error + result.Output);
         WriteLoadCounts("duplicate-multi-gid-batch", loads);
-        Assert.Equal(1, loads.BaselineLoads);
-        Assert.Equal([1, 1, 1], loads.CandidateSnapshotLoads);
+        Assert.Equal([1, 1], loads.CandidateSnapshotLoads);
     }
 
     [Fact]
-    public void FailureDispositionParsesEachLedgerSnapshotOnceIncludingDurabilityRanking()
+    public void ZeroWriteFailureReusesLedgerSnapshotForIndependentCoverage()
     {
         using var world = new BatchWorld(entry => entry.AtomId == First
             ? entry with { Receipts = entry.Receipts with { UnresolvedSubitems = ["remaining clause"] } }
             : entry);
+        var failedPath = world.LedgerPaths().Single(path => path.EndsWith(First + ".yaml", StringComparison.Ordinal));
+        var failedBytes = TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, failedPath));
         LedgerLoadCounter loads;
         CommandResult result;
         using (loads = new LedgerLoadCounter())
             result = world.Run(Row(First, Gid) + Row(Second, Gid));
 
         Assert.Equal(["failed", "applied"], Results(result).Select(item => item.Status).ToArray());
-        Assert.NotNull(world.Entry(First).Receipts.CoverDisposition);
+        Assert.Null(world.Entry(First).Receipts.CoverDisposition);
+        Assert.Equal(failedBytes, TemporaryFileSystem.File.ReadAllBytes(Path.Combine(world.Root, failedPath)));
         Assert.Empty(world.Entry(First).Coverage);
         Assert.Single(world.Entry(Second).Coverage);
-        WriteLoadCounts("disposition-then-independent-batch", loads);
-        Assert.Equal(1, loads.BaselineLoads);
-        // Initial, rejected coverage candidate, committed disposition, independent success.
-        Assert.Equal([1, 1, 1, 1], loads.CandidateSnapshotLoads);
+        WriteLoadCounts("zero-write-failure-then-independent-batch", loads);
+        Assert.Equal([1], loads.CandidateSnapshotLoads);
     }
 
     private void WriteLoadCounts(string scenario, LedgerLoadCounter loads) =>
-        output.WriteLine("LEDGER_LOADS scenario={0} baseline={1} candidate={2} per_snapshot=[{3}]",
-            scenario, loads.BaselineLoads, loads.CandidateSnapshotLoads.Sum(),
+        output.WriteLine("LEDGER_LOADS scenario={0} loads={1} per_snapshot=[{2}]",
+            scenario, loads.CandidateSnapshotLoads.Sum(),
             string.Join(',', loads.CandidateSnapshotLoads));
 
     private sealed class LedgerLoadCounter : IDisposable
     {
-        private readonly Action<RepositorySnapshot, bool>? previous = BackfillInventoryLoader.DocumentLoading.Value;
+        private readonly Action<RepositorySnapshot>? previous = BackfillInventoryLoader.DocumentLoading.Value;
         private readonly List<string> candidateImages = [];
-        internal int BaselineLoads { get; private set; }
         internal int[] CandidateSnapshotLoads => candidateImages.GroupBy(image => image, StringComparer.Ordinal)
             .Select(group => group.Count()).ToArray();
 
-        internal LedgerLoadCounter() => BackfillInventoryLoader.DocumentLoading.Value = (snapshot, baseline) =>
-        {
-            if (baseline) BaselineLoads++;
-            else candidateImages.Add(string.Concat(snapshot.Files
+        internal LedgerLoadCounter() => BackfillInventoryLoader.DocumentLoading.Value = snapshot =>
+            candidateImages.Add(string.Concat(snapshot.Files
                 .Where(pair => BackfillInventoryLoader.IsCanonicalPath(pair.Key.Value))
                 .OrderBy(pair => pair.Key.Value, StringComparer.Ordinal)
                 .Select(pair => pair.Key.Value + "\0" + Convert.ToBase64String(pair.Value.RawBytes.AsSpan()) + "\n")));
-        };
 
         public void Dispose() => BackfillInventoryLoader.DocumentLoading.Value = previous;
     }

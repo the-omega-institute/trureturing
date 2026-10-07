@@ -40,7 +40,7 @@ public sealed class ReconcileChainTests
             Assert.Equal(prior.Bytes.ToArray(), f.Current.Entries.Single(e => e.Path == prior.Path).Bytes.ToArray());
         Assert.All(new[] { Entry(f, Group), Entry(f, Group + Last) }, e =>
             Assert.Equal(new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open), e.ProjectedStatus));
-        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, f.Document, DigestionAlignmentMode.Ingest);
+        var alignment = DigestionLedgerAligner.Evaluate(f.Document, f.Snapshot, DigestionAlignmentMode.Ingest);
         Assert.Empty(alignment.Findings);
         Assert.Contains(Id(Group), alignment.VerifiedClausePlanParents);
         Assert.Contains(f.Parent.AtomId, alignment.VerifiedClausePlanParents);

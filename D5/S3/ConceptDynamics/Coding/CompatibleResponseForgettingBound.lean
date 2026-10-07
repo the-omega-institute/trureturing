@@ -22,7 +22,7 @@ namespace CompatibleCertificate
 variable {n k m : ℕ} {A : CountMat n n} {B : CountMat k k}
   {R : CountMat n k} {S : CountMat k n}
 
-private def squareIncomingLift (c : CompatibleCertificate A B R S m) :
+def squareIncomingLift (c : CompatibleCertificate A B R S m) :
     IncomingLift A (Edge R) where
   project := Edge.source
   onto := (square_graph_essential_and_projections c).2.2.1
@@ -30,7 +30,7 @@ private def squareIncomingLift (c : CompatibleCertificate A B R S m) :
     intro a r
     exact c.incomingLift a r.val r.property.symm
 
-private def squareOutgoingLift (c : CompatibleCertificate A B R S m) :
+def squareOutgoingLift (c : CompatibleCertificate A B R S m) :
     IncomingLift B.transpose (Edge R) where
   project := Edge.target
   onto := (square_graph_essential_and_projections c).2.2.2.1
@@ -94,7 +94,7 @@ private theorem squareIncomingLift_path (c : CompatibleCertificate A B R S m) :
       rw [htail]
       rfl
 
-private theorem squareIncomingLift_forgets_at_lag
+theorem squareIncomingLift_forgets_at_lag
     (c : CompatibleCertificate A B R S m) :
     c.squareIncomingLift.response m = Setoid.ker Edge.source := by
   apply Setoid.ext
@@ -136,7 +136,7 @@ private theorem squareIncomingLift_forgets_at_lag
         simpa [squareIncomingLift] using congrArg some hsame
       · simp [squareIncomingLift, hj]
 
-private theorem squareOutgoingLift_forgets_at_lag
+theorem squareOutgoingLift_forgets_at_lag
     (c : CompatibleCertificate A B R S m) :
     c.squareOutgoingLift.response m = Setoid.ker Edge.target := by
   apply Setoid.ext
@@ -329,7 +329,7 @@ theorem square_row_lift_count (c : CompatibleCertificate A B R S m)
 #print axioms square_column_lift_count
 #print axioms square_row_lift_count
 
-private theorem square_first_column_invariance
+theorem square_first_column_invariance
     (c : CompatibleCertificate A B R S m) {r v : Edge R}
     (h : c.squareIncomingLift.response 1 r v) (s : Edge R) :
     c.squareMatrix ((Fintype.equivFin (Edge R)) s)
@@ -375,7 +375,7 @@ private theorem square_first_column_invariance
           ((Fintype.equivFin (Edge R)) v) :=
             (c.square_column_lift_count v s).symm
 
-private theorem square_first_row_invariance
+theorem square_first_row_invariance
     (c : CompatibleCertificate A B R S m) {r v : Edge R}
     (h : c.squareOutgoingLift.response 1 r v) (s : Edge R) :
     c.squareMatrix ((Fintype.equivFin (Edge R)) r)
@@ -514,7 +514,7 @@ private theorem square_right_zero_fiber_count
           ((Fintype.equivFin (Edge R)) s) :=
             (c.square_row_lift_count r s).symm
 
-private noncomputable def firstLeftClass
+noncomputable def firstLeftClass
     (c : CompatibleCertificate A B R S m)
     [Fintype (Quotient (c.squareIncomingLift.response 1))] :
     Fin (Fintype.card (Edge R)) →
@@ -523,7 +523,7 @@ private noncomputable def firstLeftClass
   exact fun u => (Fintype.equivFin _)
     (Quotient.mk _ ((Fintype.equivFin (Edge R)).symm u))
 
-private noncomputable def firstRightClass
+noncomputable def firstRightClass
     (c : CompatibleCertificate A B R S m)
     [Fintype (Quotient (c.squareOutgoingLift.response 1))] :
     Fin (Fintype.card (Edge R)) →
@@ -532,7 +532,7 @@ private noncomputable def firstRightClass
   exact fun u => (Fintype.equivFin _)
     (Quotient.mk _ ((Fintype.equivFin (Edge R)).symm u))
 
-private noncomputable def firstLeftRep
+noncomputable def firstLeftRep
     (c : CompatibleCertificate A B R S m)
     [Fintype (Quotient (c.squareIncomingLift.response 1))] :
     Fin (Fintype.card (Quotient (c.squareIncomingLift.response 1))) →
@@ -541,7 +541,7 @@ private noncomputable def firstLeftRep
   exact fun f => (Fintype.equivFin (Edge R))
     (Quotient.out ((Fintype.equivFin _).symm f))
 
-private noncomputable def firstRightRep
+noncomputable def firstRightRep
     (c : CompatibleCertificate A B R S m)
     [Fintype (Quotient (c.squareOutgoingLift.response 1))] :
     Fin (Fintype.card (Quotient (c.squareOutgoingLift.response 1))) →
@@ -550,7 +550,7 @@ private noncomputable def firstRightRep
   exact fun f => (Fintype.equivFin (Edge R))
     (Quotient.out ((Fintype.equivFin _).symm f))
 
-private theorem square_left_first_matrix
+theorem square_left_first_matrix
     (c : CompatibleCertificate A B R S m)
     [Fintype (Quotient (c.squareIncomingLift.response 1))]
     (f g : Fin (Fintype.card
@@ -630,7 +630,7 @@ private theorem square_left_first_matrix
         simp only [Matrix.mul_apply, FirstResponseDiamond.columnSelector]
         simp
 
-private theorem square_right_first_matrix
+theorem square_right_first_matrix
     (c : CompatibleCertificate A B R S m)
     [Fintype (Quotient (c.squareOutgoingLift.response 1))]
     (f g : Fin (Fintype.card

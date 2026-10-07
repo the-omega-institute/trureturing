@@ -1,0 +1,8 @@
+**语义合同。** 一个合同为
+
+$$
+\mathfrak C=(\mathrm{Obj},\mathrm{Rel},\mathrm{Op},\mathrm{Obs},\mathrm{Proof},\mathrm{Cost}).
+$$
+
+其中六项分别规定对象类型、关系、允许操作、观察器、证明规则和资源计量。每个定理都相对于声明的合同成立。
+

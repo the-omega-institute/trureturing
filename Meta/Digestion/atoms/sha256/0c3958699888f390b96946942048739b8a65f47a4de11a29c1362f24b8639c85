@@ -1,0 +1,30 @@
+### 42.1 原函数、原记录与共同五窗合同
+
+本章的 $H$ 始终是原始 Hofstadter 数值函数；共同窗口数记为 $h$，与定义 20.1 的共同高度是同一资源。Fibonacci 数 $F_j$ 仍取 $F_0=0$、$F_1=1$、$F_{j+2}=F_{j+1}+F_j$，不与文献中编号为 $F_3$ 的 Hofstadter 函数混同。
+
+[Letouzey–Li–Steiner，*Pointwise Order of Generalized Hofstadter Functions G, H, and Beyond*，arXiv:2410.00529v2](https://arxiv.org/abs/2410.00529v2)，§1.1 给出原函数
+
+$$
+H(0)=0,\qquad
+H(N)=N-H(H(H(N-1)))\quad(N\ge1).
+\tag{42.1}
+$$
+
+对每个原外部参数 $N\ge1$，保留原记录
+
+$$
+\begin{aligned}
+y_0&=N-1,&y_1&=H(y_0),&y_2&=H(y_1),&y_3&=H(y_2),\\
+z&=N-y_3=H(N).
+\end{aligned}
+\tag{42.2}
+$$
+
+这里有且仅有三次原前缀查询出现：$H(y_0)$、$H(y_1)$、$H(y_2)$。相同物理地址具有相同值，查询的出现仍各自保留；初始化、外部参数、历史、三次嵌套深度、停止与互补读出均由式 (42.1)–(42.2) 固定。该文 Proposition 2.1 与 $H(0)=0$ 给 $0\le H(n)\le n$，所以
+
+$$
+0\le y_i\le N-1\quad(0\le i\le3),\qquad
+0\le z\le N.
+\tag{42.3}
+$$
+

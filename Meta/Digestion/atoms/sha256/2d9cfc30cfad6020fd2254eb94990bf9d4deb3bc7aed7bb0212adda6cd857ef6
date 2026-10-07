@@ -1,0 +1,60 @@
+## 定理 14.5：补全算子的最大不变量性质
+
+$\mathsf D_{\mathscr M}(E)$ 是包含于 $E$、且被全部 $\mathscr M$ 操作保持的最大等价关系。
+
+并且：
+
+$$
+\mathsf D_{\mathscr M}(E)\subseteq E,
+$$
+
+$$
+E\subseteq E'
+\Longrightarrow
+\mathsf D_{\mathscr M}(E)
+\subseteq
+\mathsf D_{\mathscr M}(E'),
+$$
+
+$$
+\mathsf D_{\mathscr M}^2(E)
+=
+\mathsf D_{\mathscr M}(E).
+$$
+
+### 14.5 证明
+
+等价关系的逆像与交仍是等价关系。
+
+恒等操作属于 $\mathscr M$，所以补全关系包含于 $E$。
+
+若 $x,y$ 在补全关系中，对任意 $A,T\in\mathscr M$，复合 $TA$ 仍属于 $\mathscr M$，因此：
+
+$$
+T(Ax)\,E\,T(Ay).
+$$
+
+所以 $Ax,Ay$ 仍在补全关系中。
+
+若 $R\subseteq E$ 被全部操作保持，那么：
+
+$$
+xRy\Longrightarrow Tx\,R\,Ty\Longrightarrow Tx\,E\,Ty,
+$$
+
+对所有 $T$ 成立，故 $R\subseteq\mathsf D_{\mathscr M}(E)$。
+
+单调性直接来自交集定义；最大不变量性质再应用一次，得到幂等性。∎
+
+按关系包含顺序看，它是“内算子”；按信息量顺序看，它是补全，因为等价类越小，保留的区别越多。
+
+但必须强调：
+
+**这个算子求出的是安全表示，不是实际取证协议。**
+
+> **部分合同的接口条件。** 14.4–14.5 的总映射不变量性本身不足以给出部分实验合同的精确商；还须使 enabledness（动作合法性）、响应、后继与费用按商下降，如 20.1 所规定。另一种表述是先以可辨识的失败标签显式全化部分动作，并把失败、合法性与费用观察纳入基础关系；不能只保留总状态变换而省略这些接口条件。
+
+
+
+---
+

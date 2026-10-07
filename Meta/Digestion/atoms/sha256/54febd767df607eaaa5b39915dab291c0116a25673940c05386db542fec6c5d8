@@ -1,0 +1,35 @@
+### 推论 6.5（柱权给出的地址分辨率界）
+
+令 $\lambda=\lambda_k\in(1,2)$ 为定理 4.2 的根，置
+
+$$
+a_0=\lambda^{-1},\qquad a_1=\frac{\lambda-1}{\lambda}.
+$$
+
+对 $m\ge1$，有
+
+$$
+a_b\lambda^m\le C_b(k,m)\le a_b\lambda^{m+1}.
+\tag{6.13}
+$$
+
+因此，若
+
+$$
+T_b=a_b\min\left(\lambda^{m_X},\frac{\lambda^{m_Y}}{M_b}\right),
+$$
+
+则
+
+$$
+\lfloor T_b\rfloor\le D_b\le\lfloor\lambda T_b\rfloor.
+\tag{6.14}
+$$
+
+在 $T_b\ge2$ 时特别有
+
+$$
+\log T_b-\log2\le\log D_b\le\log T_b+\log\lambda.
+\tag{6.15}
+$$
+

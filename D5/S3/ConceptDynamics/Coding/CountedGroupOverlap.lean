@@ -12,6 +12,9 @@ import Mathlib.Algebra.MonoidAlgebra.Basic
 import Mathlib.Data.Matrix.Mul
 import Mathlib.Data.Fintype.EquivFin
 import Mathlib.Data.Fintype.BigOperators
+import Mathlib.Data.Fintype.Sort
+import Mathlib.Data.Sigma.Order
+import Mathlib.Data.Prod.Lex
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -33,6 +36,20 @@ structure Edge {n m : ℕ} (M : GroupMat H n m) where
   target : Fin m
   label : H
   number : Fin ((M source target).coeff label)
+
+/-- Full coordinates, used to enumerate every labelled numbered edge. -/
+def edgeCoordinates {n m : ℕ} (M : GroupMat H n m) :
+    Edge M ≃ Σ i : Fin n, Σ j : Fin m, Σ g : H, Fin ((M i j).coeff g) where
+  toFun e := ⟨e.source,e.target,e.label,e.number⟩
+  invFun e := ⟨e.1,e.2.1,e.2.2.1,e.2.2.2⟩
+  left_inv _ := rfl
+  right_inv _ := rfl
+
+noncomputable instance edgeFintype {n m : ℕ} (M : GroupMat H n m) : Fintype (Edge M) :=
+  Fintype.ofEquiv _ (edgeCoordinates M).symm
+
+instance edgeDecidableEq {n m : ℕ} (M : GroupMat H n m) [DecidableEq H] :
+    DecidableEq (Edge M) := (edgeCoordinates M).decidableEq
 
 instance {n m : ℕ} (M : GroupMat H n m) : TopologicalSpace (Edge M) := ⊥
 instance {n m : ℕ} (M : GroupMat H n m) : DiscreteTopology (Edge M) := ⟨rfl⟩
@@ -151,6 +168,48 @@ noncomputable def join (a : Edge U) (b : Edge V) (h : a.target = b.source) :
   change rebuild (totalFiberEquiv.symm recovered) = rebuild ⟨g, a⟩
   rw [recovered_eq]
   simpa [q] using hinv
+
+section Ordered
+variable [LinearOrder H]
+
+/-- The prescribed rank is j, first label, first copy, second copy.
+Empty coefficient fibers contribute no element. -/
+noncomputable def orderedFiberEquiv (i k : Fin n) (g : H) :
+    Fin (((U * V) i k).coeff g) ≃ Fiber U V i k g := by
+  classical
+  let ordered :
+      Lex (Σ j : Fin m, Lex (Σ h : H,
+        Lex (Fin ((U i j).coeff h) × Fin ((V j k).coeff (h⁻¹ * g))))) ≃
+      Fiber U V i k g :=
+    ofLex.trans (Equiv.sigmaCongrRight fun _ =>
+      ofLex.trans (Equiv.sigmaCongrRight fun _ => ofLex))
+  have hc : Fintype.card (Fiber U V i k g) = ((U * V) i k).coeff g := by
+    simpa using (Fintype.card_congr (fiberEquiv U V i k g)).symm
+  exact (Fintype.orderIsoFinOfCardEq _
+    ((Fintype.card_congr ordered).trans hc)).toEquiv.trans ordered
+
+noncomputable def orderedSplit (a : Edge (U * V)) : Edge U × Edge V :=
+  let totalFiberEquiv :
+      (Σ g : H, Fin (((U * V) a.source a.target).coeff g)) ≃
+        (Σ g : H, Fiber U V a.source a.target g) :=
+    Equiv.sigmaCongrRight fun g => orderedFiberEquiv U V a.source a.target g
+  let p := totalFiberEquiv ⟨a.label, a.number⟩
+  (⟨a.source, p.2.1, p.2.2.1, p.2.2.2.1⟩,
+   ⟨p.2.1, a.target, p.2.2.1⁻¹ * p.1, p.2.2.2.2⟩)
+
+noncomputable def orderedJoin (a : Edge U) (b : Edge V) (h : a.target = b.source) :
+    Edge (U * V) :=
+  let totalFiberEquiv :
+      (Σ g : H, Fin (((U * V) a.source b.target).coeff g)) ≃
+        (Σ g : H, Fiber U V a.source b.target g) :=
+    Equiv.sigmaCongrRight fun g => orderedFiberEquiv U V a.source b.target g
+  let p := totalFiberEquiv.symm
+    ⟨a.label * b.label,
+      a.target, a.label, a.number, by simpa using h.symm ▸ b.number⟩
+  ⟨a.source, b.target, p.1, p.2⟩
+
+
+end Ordered
 
 def boundary : Boundary (Edge U) (Edge V) (Fin n) (Fin m) :=
   ⟨Edge.source, Edge.target, Edge.source, Edge.target⟩

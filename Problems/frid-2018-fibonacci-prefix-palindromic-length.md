@@ -2,7 +2,7 @@
 slug: frid-2018-fibonacci-prefix-palindromic-length
 bibkey: frid2018numerationpalindromes
 doi: null
-url: https://www.arxiv.org/abs/1710.11553
+url: https://numeration2018.sciencesconf.org/data/pages/num18_abstracts.pdf
 triage: theorem
 motivation_gids:
   - D5/S1/Words/Palindromes/FridPrefix/FridPrefixPalindromicLength.result

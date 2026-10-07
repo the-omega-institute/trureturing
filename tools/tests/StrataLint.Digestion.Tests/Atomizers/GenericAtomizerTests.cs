@@ -51,7 +51,6 @@ public sealed class GenericAtomizerTests
         var alignment = DigestionLedgerAligner.Evaluate(
             ledger,
             DigestionTestSupport.Snapshot(("docs/source.md", bytes)),
-            ledger,
             DigestionAlignmentMode.Ingest);
 
         Assert.Empty(alignment.Findings);

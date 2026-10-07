@@ -1,0 +1,4 @@
+**定理 6.4（最大安全压缩）。** 当上下文包含全部声明的代数替换，且每个操作均按其类型和合法域解释时，$\approx$ 是包含于 $\ker\eta$ 的最大代数同余关系。任意同余关系 $R\subseteq\ker\eta$ 都满足 $R\subseteq\approx$。
+
+**证明。** 空上下文给 $\approx\subseteq\ker\eta$。若每个输入对都满足 $\approx$，逐个使用一孔上下文替换，得到任意复合输出仍观察相同，所以 $\approx$ 对所有基本操作封闭。若 $R$ 是同余，结构归纳给出 $xRy\Rightarrow C[x]R C[y]$；再用 $R\subseteq\ker\eta$ 得 $R\subseteq\approx$。∎
+

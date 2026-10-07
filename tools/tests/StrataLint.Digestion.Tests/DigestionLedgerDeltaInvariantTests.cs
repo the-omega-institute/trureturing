@@ -8,18 +8,6 @@ namespace StrataLint.Digestion.Tests;
 public sealed partial class DigestionLedgerTests
 {
     [Fact]
-    public void UnchangedCompleteWitnessInPartialDirectoryRetainsPartialLatch()
-    {
-        var evaluation = EvaluateCompleteWitness(
-            DigestionMigrationState.Partial,
-            RawChangeSet.Create(["notes/unrelated.txt"]));
-
-        Assert.Equal(
-            DigestionMigrationState.Partial,
-            Assert.Single(evaluation.Entries).DerivedStatus.Migration);
-    }
-
-    [Fact]
     public void ChildOnlyAbsorptionReleasesCoveredParentPartialLatch()
     {
         const string gid = "D5/S0/Carrier/Probe";
@@ -105,8 +93,6 @@ public sealed partial class DigestionLedgerTests
             candidate,
             snapshot,
             AcceptedLean(targetPath),
-            baselineDocument: baseline,
-            baselineSnapshot: snapshot,
             changes: StatusMoveChanges(childId));
 
         Assert.Equal(
@@ -234,8 +220,6 @@ public sealed partial class DigestionLedgerTests
             candidate,
             snapshot,
             AcceptedLean(targetPath),
-            baselineDocument: baseline,
-            baselineSnapshot: snapshot,
             changes: changes);
     }
 

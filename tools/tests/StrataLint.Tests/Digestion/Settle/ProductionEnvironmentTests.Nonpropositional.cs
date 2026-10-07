@@ -6,7 +6,7 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void IngestAndAlignCommandsPreserveNonpropositionalReceipt()
+    public void IngestPreservesNonpropositionalReceipt()
     {
         var fixture = UncoveredOnlyIngestFixture(addNewAtom: false);
         var document = BackfillInventoryLoader.Load(Decode(Snapshot(fixture.Files)));
@@ -27,10 +27,6 @@ public sealed partial class ProductionEnvironmentTests
         WriteDirectoryLedger(temporary.Path, fixture.Files);
         var raw = Snapshot(fixture.Files);
         var repository = new FakeRepositoryGateway(RawChangeSet.Create([]), raw, raw);
-        var aligned = IngestCommand.Run(temporary.Path, repository,
-            new FakeLeanReportSource(LeanAxiomReport.Create(fixture.Reports)),
-            new FakeScribeEmissionVerifier(VerifiedScribeEmissions.Empty), ["--base", "baseline"]);
-        Assert.True(aligned.Success, aligned.Error);
         var reportSource = new FakeLeanReportSource(null);
         var ingested = new ProductionCliEnvironment(temporary.Path, repository, reportSource,
             new FakeScribeEmissionVerifier(null)).Ingest(ReportInputUnchangedArguments);

@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:dc8bed842a3ed6c6cf1f3db0f057f5476d5c8774337c747d1f1866f656163804
+  normalized_sha256: sha256:dc8bed842a3ed6c6cf1f3db0f057f5476d5c8774337c747d1f1866f656163804
+cas_ref: sha256:dc8bed842a3ed6c6cf1f3db0f057f5476d5c8774337c747d1f1866f656163804
+coverage_gids:
+  - gid: D5/S3/TotalVariation/ParityFiniteTV.parity_finite_tv
+    target_statement_id: sha256:4a46e597c1b915df02782152ed8905cd0dbd0e1dc7efade113dfb767d1067ad8
+receipts:
+  unresolved_subitems: []

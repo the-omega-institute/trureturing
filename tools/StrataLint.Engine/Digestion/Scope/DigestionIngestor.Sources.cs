@@ -59,8 +59,8 @@ internal static partial class DigestionIngestor
     }
 
     /// <summary>
-    /// The file name, lowercased, with every run of non-alphanumerics collapsed to a dash —
-    /// the shape <c>BackfillInventoryRule</c> already requires of a source id.
+    /// Derives a lowercase source id from the file stem, collapsing runs of
+    /// non-alphanumeric characters to a dash.
     /// </summary>
     internal static string DeriveSourceId(string path)
     {

@@ -1,0 +1,273 @@
+**定理 120.1（有限补偿路径生成函数误差界）。** 设 $M,q,T\in\mathbb N$，$1\le q<M$，$0<r<1$，
+
+$$
+c=\frac{rq}{M-q}<1,
+\qquad S\subseteq\operatorname{Fin}M,
+\qquad |S|=q.
+$$
+
+这里 $M-q$ 是正的自然数差，分式取实数值。令 $V=\operatorname{Fin}M\sqcup\operatorname{Fin}M$，$N=2M$，并定义
+
+$$
+\begin{aligned}
+\chi(\operatorname{inl}i)&=1,&\chi(\operatorname{inr}i)&=-1,\\
+b(\operatorname{inl}i)&=
+ \begin{cases}r,&i\in S,\\-c,&i\notin S,\end{cases}
+&b(\operatorname{inr}i)&=0,\\
+P(x,y)&=\frac{1+b(x)\chi(y)}{N}.
+\end{aligned}
+$$
+
+从均匀初态出发的完整历史 $o:\operatorname{Fin}(T+1)\to V$ 的原生路径质量为
+
+$$
+w_T(o)=\frac1N\prod_{t\in\operatorname{Fin}T}
+ P\bigl(o(t.\mathrm{castSucc}),o(t.\mathrm{succ})\bigr).
+$$
+
+取 $k\in\{1,2\}$ 和任意单射 $m:\operatorname{Fin}k\to\operatorname{Fin}M$。标记可以全部在 $S$ 中、全部在其补集中，或分属两者。记 $b_j=b(\operatorname{inl}(m(j)))$，并在同一完整历史上定义出发行计数
+
+$$
+C_j^{\pm}(o)=\#\bigl\{t\in\operatorname{Fin}T:
+ o(t.\mathrm{castSucc})=\operatorname{inl}(m(j)),\
+ \chi(o(t.\mathrm{succ}))=\pm1\bigr\}.
+$$
+
+对任意 $z_j^+,z_j^-\in\mathbb C$，包括零值，以自然数幂的约定 $0^0=1$ 定义实际路径生成函数
+
+$$
+\operatorname{ActualPGF}_T(z)=
+ \sum_{o:\operatorname{Fin}(T+1)\to V}w_T(o)
+ \prod_{j\in\operatorname{Fin}k}
+ (z_j^+)^{C_j^+(o)}(z_j^-)^{C_j^-(o)}.
+$$
+
+实数路径质量和 $b_j,\chi$ 在复数表达式中均取其自然嵌入。置
+
+$$
+\begin{aligned}
+u_j&=\frac{z_j^++z_j^-}{2}-1,&
+v_j&=\frac{z_j^+-z_j^-}{2},\\
+A&=\frac1{2M}\sum_{j\in\operatorname{Fin}k}(u_j+b_jv_j),&
+B&=\frac1{2M}\sum_{j\in\operatorname{Fin}k}(v_j+b_ju_j).
+\end{aligned}
+$$
+
+若实数 $\eta$ 满足
+
+$$
+0\le\eta\le\frac14,
+\qquad |A|\le\eta,
+\qquad |B|\le\eta,
+\qquad T\eta^2\le\frac1{10},
+$$
+
+则
+
+$$
+\left|\operatorname{ActualPGF}_T(z)-\exp(TA)\right|
+ \le20T\eta^2\exp(T\operatorname{Re}A).
+$$
+
+证明。由 $r>0$、$q\ge1$ 和 $M-q>0$ 得 $c>0$，特别地 $c\ge0$。每个 $b(x)$ 严格位于 $(-1,1)$，所以 $P(x,y)>0$。补偿和奇偶的消去关系为
+
+$$
+\sum_{x\in V}b(x)=rq-c(M-q)=0,
+\qquad \sum_{x\in V}\chi(x)b(x)=0,
+\qquad \sum_{x\in V}\chi(x)=0.
+$$
+
+第二个等式成立是因为 $b$ 只在正类上非零。每个转移行的和是 $1$，而每列的和也是 $1$；从均匀初态按行归一化逐次求和，得 $\sum_o w_T(o)=1$。因此这里的生成函数使用上述完整路径概率律。
+
+在 $V$ 上定义稀疏函数 $u_x,v_x$：若 $x=\operatorname{inl}(m(j))$，取 $u_x=u_j,v_x=v_j$；其余 $x$ 取零。单射性保证此定义唯一。对固定历史和每个 $j$，有限乘法与自然数幂的计数恒等式给出
+
+$$
+(z_j^+)^{C_j^+(o)}(z_j^-)^{C_j^-(o)}
+=\prod_{t\in\operatorname{Fin}T}
+ \begin{cases}
+ z_j^+,&o(t.\mathrm{castSucc})=\operatorname{inl}(m(j)),\
+            \chi(o(t.\mathrm{succ}))=1,\\
+ z_j^-,&o(t.\mathrm{castSucc})=\operatorname{inl}(m(j)),\
+            \chi(o(t.\mathrm{succ}))=-1,\\
+ 1,&\text{其余情形}.
+ \end{cases}
+$$
+
+这只是将每个被计数的边各贡献一个因子，未对 $z_j^\pm$ 取逆或取对数。交换标记和边的有限乘积后，每个出发点至多命中一个标记；相应边因子是 $1+u_x+v_x\chi(y)$，因为 $1+u_j+v_j=z_j^+$、$1+u_j-v_j=z_j^-$。于是原生路径质量与全部计数幂的乘积恰为 $N^{-1}\prod_t K(o_t,o_{t+1})$，其中
+
+$$
+\begin{aligned}
+K(x,y)&=P(x,y)(1+u_x+v_x\chi(y))
+       =\frac{\alpha_x+\beta_x\chi(y)}N,\\
+\alpha_x&=1+u_x+b(x)v_x,\\
+\beta_x&=b(x)(1+u_x)+v_x.
+\end{aligned}
+$$
+
+最后一个展开使用 $\chi(y)^2=1$。它保持原出发点 $x$ 与后继点 $y$ 的方向。
+
+对每个 $t\ge0$，令 $p_t(y)$ 是从同一均匀初态出发、长度为 $t$ 且终点为 $y$ 的所有原生历史的计数倾斜质量之和；计数定义中的 $T$ 此时替换为 $t$。由刚证出的边乘积恒等式，
+
+$$
+p_t(y)=\frac1N
+ \sum_{\substack{o:\operatorname{Fin}(t+1)\to V\\o(\operatorname{last}t)=y}}
+ \prod_{s\in\operatorname{Fin}t}K(o_s,o_{s+1}).
+$$
+
+这里下标 $s,s+1$ 分别表示 $s.\mathrm{castSucc},s.\mathrm{succ}$。当 $t=0$ 时，固定终点仅有一条单点历史，空乘积为 $1$，故 $p_0(y)=1/N$。当长度为 $t+1$ 时，固定终点 $y$ 的历史唯一分解为长度为 $t$、终点为某个 $x$ 的前缀及最后一条边 $(x,y)$。前缀的 $t$ 条边与最后一条边互不重叠，所有出发行计数也按此分解相加。因此有限求和给出
+
+$$
+p_{t+1}(y)=\sum_{x\in V}p_t(x)K(x,y).
+$$
+
+这一步是对完整历史求和的前向递推，不需要行计数独立。
+
+写 $Ef=N^{-1}\sum_{x\in V}f(x)$。利用三项补偿消去关系，以及 $u_x,v_x$ 只在互异的正类标记点上非零，得到四个精确平均值
+
+$$
+E\alpha=1+A,
+\qquad E(\chi\alpha)=A,
+\qquad E\beta=B,
+\qquad E(\chi\beta)=B.
+$$
+
+例如 $E\alpha=1+N^{-1}\sum_j(u_j+b_jv_j)$；$E(\chi\alpha)$ 的常数项由 $E\chi=0$ 消去，其余项上的 $\chi$ 均为 $1$。在 $E\beta$ 与 $E(\chi\beta)$ 中，未标记的基项分别是 $Eb=0$ 和 $E(\chi b)=0$，余下均为 $N^{-1}\sum_j(v_j+b_ju_j)$。
+
+从前向递推归纳可得
+
+$$
+\begin{aligned}
+p_t(y)&=\frac{F_t+\chi(y)G_t}{N},
+&F_0&=1,&G_0&=0,\\
+F_{t+1}&=(1+A)F_t+AG_t,
+&G_{t+1}&=BF_t+BG_t.
+\end{aligned}
+$$
+
+确实，将 $p_t$ 的表达式代入前向和式，$\chi(y)$ 的常数项与系数分别为 $N^{-1}(F_tE\alpha+G_tE(\chi\alpha))$ 和 $N^{-1}(F_tE\beta+G_tE(\chi\beta))$。对终点求和即得
+
+$$
+\operatorname{ActualPGF}_T(z)=\sum_y p_T(y)=F_T,
+\qquad G_t=\sum_y\chi(y)p_t(y).
+$$
+
+所以 $G_t$ 是物理终点的奇偶倾斜矩。这里的端点列向量递推矩阵是 $\bigl(\begin{smallmatrix}1+A&A\\B&B\end{smallmatrix}\bigr)$。原式 (68.12) 的 $\bigl(\begin{smallmatrix}1+A&B\\A&B\end{smallmatrix}\bigr)$ 则描述续程：令 $R_0(x)=1$、$R_{t+1}(x)=\sum_yK(x,y)R_t(y)$，其平均 $f_t=ER_t$ 与起点奇偶平均 $g_t=E(\chi R_t)$ 满足 $f_{t+1}=(1+A)f_t+Bg_t$、$g_{t+1}=Af_t+Bg_t$。这是同一历史和的反向求和，故 $f_t=F_t$；$g_t$ 的起点含义与 $G_t$ 的终点含义不同。
+
+令 $h=1+A$。反三角不等式及 $|B|\le\eta\le1/4$ 给出
+
+$$
+|h|\ge1-|A|\ge\frac34,
+\qquad |h|-|B|\ge\frac12.
+$$
+
+因此可以定义 $X_t=F_t/h^t$、$Y_t=G_t/h^t$ 和 $\rho=B/h$，并且 $|\rho|<1$。上述实际端点递推变成
+
+$$
+X_0=1,\quad Y_0=0,
+\qquad X_{t+1}=X_t+\frac AhY_t,
+\qquad Y_{t+1}=\rho(X_t+Y_t).
+$$
+
+将第二式展开，直接归纳得到，对所有 $n\ge0$，
+
+$$
+Y_{n+1}=\rho\sum_{j=0}^{n}\rho^{\,n-j}X_j.
+$$
+
+基例是 $Y_1=\rho X_0$，归纳步是把 $\rho X_{n+1}$ 加到 $\rho Y_{n+1}$ 中，所得幂次正好为 $n+1-j$。置 $S_n=\max_{0\le j\le n}|X_j|$。对 $n\ge1$，用 $Y_n$ 的展开和有限几何级数估计；对 $n=0$，用 $Y_0=0$，统一得到
+
+$$
+|Y_n|\le\frac{|\rho|}{1-|\rho|}S_n
+ =\frac{|B|}{|h|-|B|}S_n.
+$$
+
+令
+
+$$
+\theta=\frac{|AB|}{|h|(|h|-|B|)}.
+$$
+
+分母至少为 $3/8$，所以 $0\le\theta\le(8/3)\eta^2$。由 $X$ 的递推可知
+
+$$
+|X_{n+1}-X_n|\le\theta S_n,
+\qquad S_{n+1}\le(1+\theta)S_n.
+$$
+
+因为 $S_0=1$，归纳得 $S_n\le(1+\theta)^n$。再将 $X_T-X_0$ 的 $T$ 个增量相加，得到
+
+$$
+\begin{aligned}
+|X_T-1|
+&\le\theta\sum_{n=0}^{T-1}(1+\theta)^n\\
+&=(1+\theta)^T-1
+ \le\exp(T\theta)-1.
+\end{aligned}
+$$
+
+中间的等式是逐项相减的有限恒等式，不需要除以 $\theta$；$T=0$ 时和为空。由 $T\eta^2\le1/10$ 得 $T\theta\le4/15$。使用经典指数估计 $|e^w-1|\le2|w|$（$|w|\le1$），在非负实数 $w=T\theta$ 上得到
+
+$$
+|X_T-1|\le2T\theta.
+$$
+
+再使用 $|A|<1$ 时的经典复对数余项估计。取主值对数，置
+
+$$
+\delta=\log(1+A)-A,
+\qquad \kappa=\frac{|A|^2}{2(1-|A|)}.
+$$
+
+在单位圆盘内 $\log(1+A)=\sum_{n\ge1}(-1)^{n+1}A^n/n$，其绝对收敛余项满足
+
+$$
+|\delta|\le\sum_{n\ge2}\frac{|A|^n}{n}
+ \le\frac{|A|^2}{2(1-|A|)}=\kappa
+ \le\frac23\eta^2,
+\qquad T\kappa\le\frac1{15}.
+$$
+
+由于 $h\ne0$，$e^{\log h}=h$，自然数幂与指数相容，故
+
+$$
+h^T=\exp(T\log h)=\exp(TA)\exp(T\delta).
+$$
+
+这里取对数的唯一对象是 $h=1+A$，不是任何倾斜坐标。用 $|e^w|=e^{\operatorname{Re}w}$ 和 $\operatorname{Re}\delta\le|\delta|\le\kappa$ 得
+
+$$
+|h^T|\le\exp(T\operatorname{Re}A+T\kappa).
+$$
+
+再对 $w=T\delta$ 使用同一指数余项估计（其模至多 $1/15$），得到
+
+$$
+|h^T-\exp(TA)|\le2T\kappa\exp(T\operatorname{Re}A).
+$$
+
+最后，$F_T=h^TX_T$，且 $e^{T\kappa}\le e^1<3$。三角不等式给出
+
+$$
+\begin{aligned}
+|\operatorname{ActualPGF}_T(z)-\exp(TA)|
+&\le |h^T|\,|X_T-1|+|h^T-\exp(TA)|\\
+&\le(6T\theta+2T\kappa)\exp(T\operatorname{Re}A)\\
+&\le\frac{52}{3}T\eta^2\exp(T\operatorname{Re}A)\\
+&\le20T\eta^2\exp(T\operatorname{Re}A).
+\end{aligned}
+$$
+
+整个论证只在归一化与反馈估计中除以 $h$、$|h|$ 和 $|h|-|B|$，这些量有统一正下界；对数余项中的 $1-|A|$ 也至少为 $3/4$。没有除以 $A$、$B$、$\eta$ 或任何 $z_j^\pm$。当 $T=0$ 时原生计数全为零且实际生成函数为 $1$；当 $\eta=0$ 时 $A=B=0$；当 $A=0$ 时 $F_t=1$；当 $B=0$ 时 $G_t=0$、$F_t=(1+A)^t$。这些情形均由同一证明覆盖。各估计只用补偿恒等式、标记的单射性和 $|A|,|B|$ 的上界，因此一致于所有允许的支持与信号、背景及混合标记。
+
+前向加权历史求和属于有限状态 Feynman–Kac 方法；一般方法可参见 Pierre Del Moral, *Feynman-Kac Formulae: Genealogical and Interacting Particle Systems with Applications*, Springer, 2004, DOI 10.1007/978-1-4684-9393-1。有限状态前向求和也见 Lawrence R. Rabiner, *A Tutorial on Hidden Markov Models and Selected Applications in Speech Recognition*, Proceedings of the IEEE 77(2), 1989, 257–286, DOI 10.1109/5.18626。这里借用的是加权路径递推的方法；补偿后的四项平均、出发行计数对应及上述有限常数估计是本模型中的推导。几何反馈求和、对数 Taylor 余项和指数余项是经典估计，不另作为新的通用结果。
+
+与式 (68.22) 的关系可精确写成
+
+$$
+TA=\sum_{j\in\operatorname{Fin}k}
+ \bigl(\mu_j^+(z_j^+-1)+\mu_j^-(z_j^--1)\bigr),
+\qquad \mu_j^\pm=\frac{T(1\pm b_j)}{4M}.
+$$
+
+所以比较函数是具有这些均值的 $2k$ 个独立 Poisson 坐标的生成函数，实际路径计数仍来自同一相依历史。要得到原式 (68.22) 的零计数包含在内的相对点质量界，还须将实际生成函数的每个多项式系数与原生计数事件质量逐一对应；在 $T>0$ 的正均值情形，对差函数逐坐标作 Cauchy 系数提取，使用半径 $\max(n_\nu,1)/\mu_\nu$ 并控制积分中的实部指数；然后以精确 Poisson 点质量归一化，核对零计数以及相对 Stirling 因子 $\prod_\nu\sqrt{n_\nu+1}$。还须在原取整序列和整个计数截断窗口上证明这些半径、$A,B$ 及 $T\eta^2$ 有共同界，得到一致于所有大小为 $q$ 的支持及各标记类型的常数，并处理原独立对实验的对应分支。上述有限误差界本身没有给出这些系数、取整与相对归一化估计，也没有推出第 68.23–68.35 式的熵结论或第 119.4 条的结论。
+

@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ba54a60f361c0af5cb0ab96b4801592fce7ed8a991a6d65883fecc13183d98e3
+  normalized_sha256: sha256:ba54a60f361c0af5cb0ab96b4801592fce7ed8a991a6d65883fecc13183d98e3
+cas_ref: sha256:ba54a60f361c0af5cb0ab96b4801592fce7ed8a991a6d65883fecc13183d98e3
+coverage_gids:
+  - gid: D5/S1/Digit/Infinite/SparseWindowMutualDetermination.extra_cut_witness
+    target_statement_id: sha256:37113c99fe8b8beec4bfd728e96cba97a516fc398a8571e75fa2f76c2d31a9ed
+  - gid: D5/S1/Digit/Infinite/SparseWindowMutualDetermination.missing_cut_witness
+    target_statement_id: sha256:6c3dc35718972cc71b62ba59ab25926b0d435a2f0a734ee13878e201dfa00b32
+receipts:
+  unresolved_subitems: []

@@ -1,0 +1,20 @@
+**定理 9.3（四个关系读数的重建）。** 令
+
+$$
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad J=\begin{pmatrix}0&1\\1&0\end{pmatrix},
+$$
+
+并读出 $z_0=\operatorname{tr}(R),z_1=\operatorname{tr}(MR),z_2=\operatorname{tr}(JMR),z_3=\operatorname{tr}(MJMR)$。对
+
+$$
+R=\begin{pmatrix}p&q\\r&s\end{pmatrix}
+$$
+
+有
+
+$$
+R=\begin{pmatrix}z_0+z_1-z_3&z_0+2z_1-z_2-z_3\\z_2-z_0&z_3-z_1\end{pmatrix}.
+$$
+
+**证明。** 展开得到 $z_0=p+s,z_1=q+r+s,z_2=p+r+s,z_3=q+r+2s$，逐项消元即可。∎
+

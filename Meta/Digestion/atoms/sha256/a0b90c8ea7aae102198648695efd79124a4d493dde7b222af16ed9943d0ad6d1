@@ -1,0 +1,14 @@
+## 定理 8.2　自定界性与码长
+
+\(\mathsf F\) 是前缀码，且：
+
+$$
+\boxed{
+\log_\varphi n<L_{\mathsf F}(n)
+\le\log_\varphi n+2.
+}
+\tag{8.1}
+$$
+
+### 证明
+

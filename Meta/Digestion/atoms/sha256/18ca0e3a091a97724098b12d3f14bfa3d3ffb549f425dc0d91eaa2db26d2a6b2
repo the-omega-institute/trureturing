@@ -1,0 +1,16 @@
+## 定义 24.4：最小禁止集合
+
+定义：
+
+$$
+\mathcal H_n
+=
+\left\{
+J\subseteq I:
+J\notin\mathcal K_n,\ 
+\text{每个真子集都属于 }\mathcal K_n
+\right\}.
+$$
+
+这是最小的不可共同控制历史集合。
+

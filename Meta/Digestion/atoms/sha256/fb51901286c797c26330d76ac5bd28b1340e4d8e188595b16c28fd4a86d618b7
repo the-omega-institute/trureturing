@@ -1,0 +1,19 @@
+## 13. 原阶数值读出的合数模数相位忠实性
+
+只取原阶探针 $a=k$，令 $H_k=R[X]/(\Phi_k)$、$x=X\bmod\Phi_k$、$L_k=\operatorname{ord}(x)$。使用既有合法词数值权重
+
+$$
+G_j=2^j\quad(0\le j<k),\qquad
+G_j=\sum_{\ell=1}^{k}G_{j-\ell}\quad(j\ge k),
+\tag{30}
+$$
+
+并定义
+
+$$
+\lambda_k\left(\sum_{j<k}v_jx^j\right)=\sum_{j<k}v_jG_j\pmod d.
+\tag{31}
+$$
+
+它的陪域是 $\mathbb Z/d\mathbb Z$。递推确保 $\lambda_k(x^n)=G_n\bmod d$，因此合法实际词的输出是 $V_k(w)\bmod d$；这里直接复用《KBonacci 自校准边界》命题 9.3 的原阶泛函接口，以及 RRO §1.2.1–1.2.2 的权重和数值任务。没有重新证明合法词和值的双射。
+

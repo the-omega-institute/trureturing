@@ -14,12 +14,9 @@ internal static class AtomContextCommand
         ArgumentNullException.ThrowIfNull(arguments);
         try
         {
-            if (arguments.Count != 2 || arguments[0] != "--atom-id"
-                || !DigestionFingerprint.IsCanonicalSha256("sha256:" + arguments[1]))
-                throw new DigestionAtomContextException(DigestionAtomContextError.ARGUMENTS_INVALID,
-                    "USAGE: StrataLint atom-context --atom-id ATOM_ID");
-            var snapshot = Decode(repository.ReadCurrent());
-            var contexts = DigestionAtomContextProjection.ResolveOccurrences(snapshot, BackfillInventoryLoader.Load(snapshot), arguments[1]);
+            var options = DigestionQueryArguments.Parse(arguments, "atom-context");
+            var (_, snapshot, document) = DigestionQuerySelection.ReadContext(repository, options.AtomId, options.Sources, out var atomized);
+            var contexts = DigestionAtomContextProjection.ResolveOccurrences(snapshot, document, options.AtomId, atomized);
             return new CommandResult(true, Render(contexts), string.Empty);
         }
         catch (DigestionAtomContextException error)
@@ -44,7 +41,7 @@ internal static class AtomContextCommand
         for (var ordinal = 0; ordinal < contexts.Length; ordinal++)
         {
             var context = contexts[ordinal];
-            writer.WriteLine($"OCCURRENCE index={ordinal + 1} stream_index={context.Index}/{context.Count} {NeighborToken("PREVIOUS", context.Previous, context.PreviousBoundaryReason)} {NeighborToken("NEXT", context.Next, context.NextBoundaryReason)}");
+            writer.WriteLine($"OCCURRENCE index={ordinal + 1} {NeighborToken("PREVIOUS", context.Previous, context.PreviousBoundaryReason)} {NeighborToken("NEXT", context.Next, context.NextBoundaryReason)}");
             WriteNeighbor(writer, "CURRENT", context.Current, null);
             if (context.Previous is { } previous) WriteText(writer, "PREVIOUS", previous.RawBytes);
             WriteText(writer, "CURRENT", context.Current.RawBytes);
@@ -62,7 +59,7 @@ internal static class AtomContextCommand
     {
         var writer = new StringWriter(System.Globalization.CultureInfo.InvariantCulture);
         writer.WriteLine($"ATOM_CONTEXT atom_id={context.Target.AtomId} source_id={context.SourceId} "
-            + $"source_path={context.SourcePath} atomizer={context.Atomizer} index={context.Index}/{context.Count}");
+            + $"source_path={context.SourcePath} atomizer={context.Atomizer}");
         WriteNeighbor(writer, "PREVIOUS", context.Previous, context.PreviousBoundaryReason);
         WriteNeighbor(writer, "CURRENT", context.Current, null);
         WriteNeighbor(writer, "NEXT", context.Next, context.NextBoundaryReason);
@@ -89,9 +86,4 @@ internal static class AtomContextCommand
         writer.WriteLine($"END_{label}_TEXT");
     }
 
-    private static RepositorySnapshot Decode(RawRepositorySnapshot raw) => SnapshotDecoder.Decode(raw) switch
-    {
-        SnapshotDecodeOutcome.Decoded decoded => decoded.Snapshot,
-        SnapshotDecodeOutcome.InfrastructureFailure error => throw new InvalidOperationException(error.Message),
-    };
 }

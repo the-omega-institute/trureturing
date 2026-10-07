@@ -133,11 +133,7 @@ public sealed partial class IngestRobustTests
         BackfillInventoryLoader.RootPath + id + "/";
 
     private static string[] Arguments(params string[] selectors) =>
-        [
-            "--base",
-            "baseline",
-            .. selectors.SelectMany(static selector => new[] { "--source", selector }),
-        ];
+        [.. selectors.SelectMany(static selector => new[] { "--source", selector })];
 
     private static ProductionCliEnvironment Environment(
         RuleFixture fixture,
@@ -156,7 +152,6 @@ public sealed partial class IngestRobustTests
 
     private static void WriteFixture(TemporaryDirectory temporary, RuleFixture fixture)
     {
-        Directory.CreateDirectory(Path.Combine(temporary.Path, ".git"));
         foreach (var (path, text) in fixture.Files)
         {
             var fullPath = Path.Combine(temporary.Path, path);

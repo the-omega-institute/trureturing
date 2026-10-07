@@ -22,6 +22,8 @@ internal sealed class PrecessionSpinOneSeparableBoundDocument : IScribeDocumentD
                 "Jy is the Hermitian y component obtained from the raising matrix and its conjugate transpose.", DescribeRole.Definition),
             Node("Jz", "Spin z matrix", JzFormula(),
                 "Jz is diagonal in the standard basis with entries n/2 minus the descending index.", DescribeRole.Definition),
+            Node("rotation", "Spin z rotation", RotationFormula(),
+                "The diagonal spin rotation has phase exp(-I angle (n/2-i.val)) in the descending spin basis.", DescribeRole.Definition),
             Node("total", "Total angular momentum", TotalFormula(),
                 "The total operator is J on the tensor product, J^(1) ⊗ I + I ⊗ J^(K/2), represented by the Kronecker sum.", DescribeRole.Definition),
             Node("theta", "Precession angle", ThetaFormula(),
@@ -131,6 +133,15 @@ internal sealed class PrecessionSpinOneSeparableBoundDocument : IScribeDocumentD
         var n = F.Id("n"); var i = F.Id("i");
         var value = OfReal(Sub(Div(NatCast(n), D(2)), NatCast(Val(i))));
         return Disp(All("n", Nat(), Eq(Call("Jz", n), Call("diagonal", Lambda("i", SpinIndex(n), value)))));
+    }
+
+    private static Formula RotationFormula()
+    {
+        var n = F.Id("n"); var angle = F.Id("angle"); var i = F.Id("i");
+        var spin = ComplexScalar(Parenthesized(Seq(Sub(Div(Parenthesized(Seq(n, Colon, Sp, Real())), D(2)), Parenthesized(Seq(Val(i), Colon, Sp, Real()))), Colon, Sp, Real())));
+        var exponent = Mul(Mul(Seq(Minus, Qualified("Complex", "I")), ComplexScalar(angle)), spin);
+        return Disp(All("n", Nat(), All("angle", Real(), Eq(Call("rotation", n, angle),
+            QualifiedCall("Matrix", "diagonal", Lambda("i", SpinIndex(n), QualifiedCall("Complex", "exp", exponent)))))));
     }
 
     private static Formula TotalFormula()

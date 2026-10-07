@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:34d4fef98f879c5f9db14c742423fc8d1e0d4d1735fe566523bdf31cfc833bbc
+  normalized_sha256: sha256:34d4fef98f879c5f9db14c742423fc8d1e0d4d1735fe566523bdf31cfc833bbc
+cas_ref: sha256:34d4fef98f879c5f9db14c742423fc8d1e0d4d1735fe566523bdf31cfc833bbc
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/ActualHistorySingleHoleRecovery.complete_history_rigidity
+    target_statement_id: sha256:128e71f90364799bb62ef1c8c511d71979c276154822344b16e39a0537e0ec12
+  - gid: D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.seven_leaf_separation
+    target_statement_id: sha256:d9abdedf5e123f4a8cf8ed095ea3cbad95e4943d45ae581fe44fb1f974ebecbf
+  - gid: D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity.actual_address_geometry
+    target_statement_id: sha256:335c09bcbedda30876c8cd32e2ecfb6087fca93340948327ff8285877e106da7
+  - gid: D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.source_foundation
+    target_statement_id: sha256:f7f7bd516092b702be88cd5e0e4c3f18c2a31add11758d1c0870afe461950ce6
+receipts:
+  unresolved_subitems: []

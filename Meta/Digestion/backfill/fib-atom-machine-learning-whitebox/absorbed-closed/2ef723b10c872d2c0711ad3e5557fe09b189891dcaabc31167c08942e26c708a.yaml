@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:2ef723b10c872d2c0711ad3e5557fe09b189891dcaabc31167c08942e26c708a
+  normalized_sha256: sha256:2ef723b10c872d2c0711ad3e5557fe09b189891dcaabc31167c08942e26c708a
+cas_ref: sha256:2ef723b10c872d2c0711ad3e5557fe09b189891dcaabc31167c08942e26c708a
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/FourExitRawParetoSpectrum.result
+    target_statement_id: sha256:37e9c7f67c4f19d89f4b8958df3ee54e9551e60c8b487e0ab1ccdeda95a54c0a
+receipts:
+  unresolved_subitems: []

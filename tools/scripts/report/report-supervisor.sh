@@ -499,7 +499,7 @@ sample_supervised_resources() {
     if [[ -n "$CHILD_PID" ]]; then collect_process_tree "$CHILD_PID"; fi
     marker_processes
   } | sort -un)"
-  record_process_candidates <<< "$members"
+  printf '%s\n' "$members" | record_process_candidates
   while IFS= read -r pid; do
     [[ -n "$pid" \
       && "$pid" != "$STDOUT_RELAY_PID" \
@@ -517,7 +517,7 @@ sample_supervised_resources() {
       fd=0
     fi
     fd_total=$((fd_total + fd))
-  done <<< "$members"
+  done < <(printf '%s\n' "$members")
   if [[ "$rss_total" -gt "$RSS_PEAK_KB" ]]; then RSS_PEAK_KB="$rss_total"; fi
   if [[ "$fd_total" -gt "$FD_PEAK" ]]; then FD_PEAK="$fd_total"; fi
 }

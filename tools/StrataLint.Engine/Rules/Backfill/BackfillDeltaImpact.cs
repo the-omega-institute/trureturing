@@ -159,7 +159,7 @@ internal static class BackfillDeltaImpactResolver
             exception is FormatException or InvalidOperationException)
         {
             // Frozen-state shape and the Lean report have their own admission owners. An
-            // invalid authority has no comparable statement value for SL-016 to propagate.
+            // Invalid authority has no comparable statement value for status propagation.
             return;
         }
 

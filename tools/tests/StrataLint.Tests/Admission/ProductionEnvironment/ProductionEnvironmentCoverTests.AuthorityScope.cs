@@ -7,7 +7,7 @@ namespace StrataLint.Tests;
 public sealed partial class ProductionEnvironmentTests
 {
     [Fact]
-    public void CoverAtomValidatesCurrentCoverageOutsideBaseOwnedFrozenClosure()
+    public void CoverAtomIgnoresUnreferencedInvalidCoverageOutsideFrozenClosure()
     {
         const string siblingModuleGid = "D5/S0/Carrier/CoverSibling";
         const string siblingGid = siblingModuleGid + ".sibling";
@@ -19,9 +19,7 @@ public sealed partial class ProductionEnvironmentTests
                 [siblingGid],
                 []),
         });
-        var inputs = DirectoryInputs(WithSiblingReceiptMismatch(
-            materialized,
-            "coverage-target-mismatch"));
+        var inputs = DirectoryInputs(WithInvalidSiblingCoverage(materialized));
         var withFrozenEvent = WithUnrelatedFrozenAcceptedEvent(inputs);
         inputs = withFrozenEvent.Inputs;
         var frozenEventPath = withFrozenEvent.EventPath;
@@ -36,29 +34,22 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.CoverAtom(CoverArgs(inputs));
 
-        Assert.False(result.Success);
-        Assert.Contains(
-            CoverWorld.UnrelatedAtomId + ":coverage-target-mismatch",
-            result.Error,
-            StringComparison.Ordinal);
-        Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+        Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        AssertUnreferencedAtomBytesUnchanged(temporary.Path, inputs, CoverWorld.UnrelatedAtomId);
     }
 
-    [Theory]
-    [InlineData("coverage-target-mismatch")]
-    [InlineData("scribe-definition-mismatch")]
-    [InlineData("scribe-emission-mismatch")]
-    public void CoverAtomAlwaysValidatesCurrentCoverageButScopesBaselineScribeBacklog(
-        string mismatchCode)
+    [Fact]
+    public void CoverAtomIgnoresByteIdenticalUnreferencedInvalidCoverage()
     {
         var materialized = CoverWorld.Materialize(new CoverSpec
         {
             OtherAtomGid = "D5/S0/Carrier/Probe.sibling",
             ReportDeclarations = ImmutableArray.Create("probe", "sibling"),
         });
-        var inputs = DirectoryInputs(WithReceiptMismatchAtBaseline(
+        var inputs = DirectoryInputs(WithInvalidSiblingCoverageAtBaseline(
             materialized,
-            mismatchCode,
             byteIdenticalBaseline: true));
         using var temporary = new TemporaryDirectory();
         DirectoryLedgerTestSupport.Write(temporary.Path, inputs.Files);
@@ -67,18 +58,10 @@ public sealed partial class ProductionEnvironmentTests
 
         var result = environment.CoverAtom(CoverArgs(inputs));
 
-        if (mismatchCode == "coverage-target-mismatch")
-        {
-            Assert.False(result.Success);
-            Assert.Contains(mismatchCode, result.Error, StringComparison.Ordinal);
-            Assert.Equal(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
-        }
-        else
-        {
-            Assert.True(result.Success, result.Error);
-            Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
-            Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
-        }
+        Assert.True(result.Success, result.Error);
+        Assert.Contains("ledger_changed=true", result.Output, StringComparison.Ordinal);
+        Assert.NotEqual(before, DirectoryLedgerTestSupport.RepositoryImage(temporary));
+        AssertUnreferencedAtomBytesUnchanged(temporary.Path, inputs, CoverWorld.OtherAtomId);
     }
 
     private static (CoverInputs Inputs, string EventPath) WithUnrelatedFrozenAcceptedEvent(

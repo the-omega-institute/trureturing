@@ -32,7 +32,9 @@ public sealed partial class RemoveWorktreesCommandTests
     [Theory]
     [InlineData("--names")]
     [InlineData("--name", "linked")]
-    [InlineData("--names", "linked", "--force")]
+    [InlineData("--force")]
+    [InlineData("--names", "linked", "--force", "--force")]
+    [InlineData("--names", "linked", "--force=1")]
     [InlineData("--names", "linked", "--names", "linked")]
     public void MalformedArgumentsReturnUsage64(params string[] arguments)
     {
@@ -63,11 +65,13 @@ public sealed partial class RemoveWorktreesCommandTests
         Assert.Contains("/two/same", result.Output, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void MainWorktreeReturns67WithoutDeletion()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MainWorktreeReturns67WithoutDeletion(bool force)
     {
         var runner = new InventoryRunner();
-        var result = Remove(runner, "main");
+        var result = Remove(runner, "main", force);
         Assert.Empty(runner.Removals);
         AssertResult(result, 67, 0, 0, 1);
         AssertItem(result, "main", "/fixture/main", "main_worktree");
@@ -81,11 +85,13 @@ public sealed partial class RemoveWorktreesCommandTests
         Assert.Empty(runner.Removals);
     }
 
-    [Fact]
-    public void LockedWorktreeReturns68BeforeDeletingAnything()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void LockedWorktreeReturns68BeforeDeletingAnything(bool force)
     {
         var runner = new InventoryRunner(Entry("/fixture/main"), Entry("/fixture/locked", locked: true));
-        var result = Remove(runner, "locked");
+        var result = Remove(runner, "locked", force);
         AssertResult(result, 68, 0, 0, 1);
         AssertItem(result, "locked", "/fixture/locked", "locked");
         Assert.Contains("git worktree unlock", result.Output, StringComparison.Ordinal);
@@ -118,11 +124,13 @@ public sealed partial class RemoveWorktreesCommandTests
         Assert.Empty(runner.Removals);
     }
 
-    [Fact]
-    public void MixedValidAndInvalidBatchMakesZeroRemovalCalls()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void MixedValidAndInvalidBatchMakesZeroRemovalCalls(bool force)
     {
         var runner = new InventoryRunner();
-        var result = Remove(runner, "linked missing");
+        var result = Remove(runner, "linked missing", force);
         Assert.Empty(runner.Removals);
         AssertResult(result, 65, 0, 0, 2);
         AssertItem(result, "linked", "/fixture/linked", "batch_refused");
@@ -148,8 +156,10 @@ public sealed partial class RemoveWorktreesCommandTests
         Assert.Empty(runner.Removals);
     }
 
-    [Fact]
-    public void ExecutionFailureReturns74AndContinuesWithRemainingResolvedPaths()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void ExecutionFailureReturns74AndContinuesWithRemainingResolvedPaths(bool force)
     {
         const string originalError = "fatal: cannot remove linked\n  original detail\n";
         var runner = new InventoryRunner(Entry("/fixture/main"), Entry("/fixture/linked"), Entry("/fixture/next"))
@@ -157,7 +167,7 @@ public sealed partial class RemoveWorktreesCommandTests
             FailedRemovalPath = "/fixture/linked",
             RemovalError = originalError,
         };
-        var result = Remove(runner, "linked next");
+        var result = Remove(runner, "linked next", force);
         AssertResult(result, 74, 1, 1, 0);
         AssertItem(result, "linked", "/fixture/linked", "failed");
         AssertItem(result, "next", "/fixture/next", "removed");
@@ -188,6 +198,35 @@ public sealed partial class RemoveWorktreesCommandTests
         var remove = Assert.Single(runner.Removals);
         Assert.Equal("/fixture/main", remove.WorkingDirectory);
         Assert.Equal(["worktree", "remove", "--force", "--", "/fixture/linked"], remove.Arguments);
+    }
+
+    [Theory]
+    [InlineData(false, false)]
+    [InlineData(true, false)]
+    [InlineData(true, true)]
+    public void ForceDisablesOnlyDeletionTimeout(bool force, bool forceFirst)
+    {
+        var runner = new InventoryRunner(Entry("/fixture/main"), Entry("/fixture/a"), Entry("/fixture/b"));
+        var arguments = forceFirst ? new[] { "--force", "--names", "a b" }
+            : force ? ["--names", "a b", "--force"] : ["--names", "a b"];
+        AssertResult(Run(runner, arguments), 0, 2, 0, 0);
+        Assert.Equal(TimeSpan.FromSeconds(120), Assert.Single(runner.Invocations, call => !IsRemoval(call)).Timeout);
+        Assert.Equal(2, runner.Removals.Count());
+        Assert.All(runner.Removals, call =>
+        {
+            Assert.Equal(force ? Timeout.InfiniteTimeSpan : TimeSpan.FromSeconds(300), call.Timeout);
+            Assert.Equal(["worktree", "remove", "--force", "--", call.Arguments[^1]], call.Arguments);
+        });
+    }
+
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void FlagShapedNameRemainsLiteral(bool force)
+    {
+        var runner = new InventoryRunner(Entry("/fixture/main"), Entry("/fixture/--force"));
+        AssertResult(Remove(runner, "--force", force), 0, 1, 0, 0);
+        Assert.Equal("/fixture/--force", Assert.Single(runner.Removals).Arguments[^1]);
     }
 
     [Fact]
@@ -250,15 +289,17 @@ public sealed partial class RemoveWorktreesCommandTests
         Assert.True(fixture.BranchExists("unrelated-branch"));
     }
 
-    [Fact]
-    public void DirtyUnmergedNewWorktreeIsRemovedAndItsBranchRefSurvives()
+    [Theory]
+    [InlineData(false)]
+    [InlineData(true)]
+    public void DirtyUnmergedNewWorktreeIsRemovedAndItsBranchRefSurvives(bool force)
     {
         using var fixture = new RemovalFixture();
         var path = fixture.Add("fresh-dirty", "unmerged-branch");
         var branchHead = fixture.CommitAndDirty(path);
         var mainHead = fixture.Git(fixture.Main, "rev-parse", "HEAD").Trim();
         Assert.NotEqual(mainHead, branchHead);
-        AssertResult(fixture.Remove("fresh-dirty"), 0, 1, 0, 0);
+        AssertResult(fixture.Remove("fresh-dirty", force), 0, 1, 0, 0);
         Assert.False(Directory.Exists(path));
         Assert.Equal(branchHead, fixture.Git(fixture.Main, "rev-parse", "refs/heads/unmerged-branch").Trim());
     }
@@ -307,7 +348,7 @@ public sealed partial class RemoveWorktreesCommandTests
     {
         var result = Run(new InventoryRunner(), "--help");
         Assert.True(result.Success, result.Error);
-        foreach (var text in new[] { "--names", "complete", "whitespace", "unmerged", "dirty", "age", "open PR", "process", "git worktree unlock", "0/2", "WORKTREE_REMOVE_RESULT" })
+        foreach (var text in new[] { "--names", "--force", "300", "timeout", "complete", "whitespace", "unmerged", "dirty", "age", "open PR", "process", "git worktree unlock", "0/2", "WORKTREE_REMOVE_RESULT" })
             Assert.Contains(text, result.Output, StringComparison.Ordinal);
         Assert.Contains("StrataLint worktree remove --names", WorktreeCommand.Usage, StringComparison.Ordinal);
     }
@@ -315,7 +356,8 @@ public sealed partial class RemoveWorktreesCommandTests
     private static CommandResult Run(InventoryRunner runner, params string[] arguments) =>
         WorktreeCommand.Run("/fixture/linked", new[] { "remove" }.Concat(arguments).ToArray(), runner);
 
-    private static CommandResult Remove(InventoryRunner runner, string names) => Run(runner, "--names", names);
+    private static CommandResult Remove(InventoryRunner runner, string names, bool force = false) =>
+        Run(runner, force ? ["--names", names, "--force"] : ["--names", names]);
 
     private static void AssertResult(CommandResult result, int exit, int removed, int failed, int refused)
     {

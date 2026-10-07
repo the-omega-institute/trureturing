@@ -70,36 +70,28 @@ public sealed partial class BackfillInventoryLoaderTests
         Assert.Contains(duplicate.Gid, exception.Message, StringComparison.Ordinal);
     }
 
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void CoverageLoaderRejectsNonOrdinalGidOrder(bool baseline)
+    [Fact]
+    public void CoverageLoaderRejectsNonOrdinalGidOrder()
     {
         var atom = CanonicalCoverageAtom("coverage_gids:\n"
             + "  - gid: D5/S0/Carrier/Probe.alpha\n    target_statement_id: null\n"
             + "  - gid: D5/S0/Carrier/Probe.Zeta\n    target_statement_id: null");
         var snapshot = Snapshot(Source("delta-v0.1", "docs/delta.md", "none"), atom);
 
-        var exception = Assert.Throws<FormatException>(() => baseline
-            ? BackfillInventoryLoader.LoadBaseline(snapshot)
-            : BackfillInventoryLoader.Load(snapshot));
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
 
         Assert.Equal(
             $"BACKFILL_COVERAGE_ORDER: entry {FixtureAtomId("theorem/canonical-coverage")} coverage_gids must have unique gids in ordinal order",
             exception.Message);
     }
 
-    [Theory]
-    [InlineData(false)]
-    [InlineData(true)]
-    public void CoverageLoaderAcceptsOrdinalGidOrder(bool baseline)
+    [Fact]
+    public void CoverageLoaderAcceptsOrdinalGidOrder()
     {
         var atom = CanonicalCoverageAtom("coverage_gids:\n" + ExpectedOrderedCoverage("  ").TrimEnd('\n'));
         var snapshot = Snapshot(Source("delta-v0.1", "docs/delta.md", "none"), atom);
 
-        var document = baseline
-            ? BackfillInventoryLoader.LoadBaseline(snapshot)
-            : BackfillInventoryLoader.Load(snapshot);
+        var document = BackfillInventoryLoader.Load(snapshot);
 
         var entry = Assert.Single(document.RequireDigestionEntries());
         Assert.Equal(["D5/S0/Carrier/Probe.Zeta", "D5/S0/Carrier/Probe.alpha"], entry.CoverageGids.ToArray());
@@ -108,11 +100,9 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Theory]
-    [InlineData(false, false)]
-    [InlineData(false, true)]
-    [InlineData(true, false)]
-    [InlineData(true, true)]
-    public void CoverageLoaderRejectsDuplicateGid(bool baseline, bool conflictingTarget)
+    [InlineData(false)]
+    [InlineData(true)]
+    public void CoverageLoaderRejectsDuplicateGid(bool conflictingTarget)
     {
         var target = conflictingTarget ? "sha256:" + new string('a', 64) : "null";
         var atom = CanonicalCoverageAtom("coverage_gids:\n"
@@ -120,9 +110,7 @@ public sealed partial class BackfillInventoryLoaderTests
             + $"  - gid: D5/S0/Carrier/Probe.alpha\n    target_statement_id: {target}");
         var snapshot = Snapshot(Source("delta-v0.1", "docs/delta.md", "none"), atom);
 
-        var exception = Assert.Throws<FormatException>(() => baseline
-            ? BackfillInventoryLoader.LoadBaseline(snapshot)
-            : BackfillInventoryLoader.Load(snapshot));
+        var exception = Assert.Throws<FormatException>(() => BackfillInventoryLoader.Load(snapshot));
 
         Assert.Contains("BACKFILL_COVERAGE_ORDER", exception.Message, StringComparison.Ordinal);
     }
@@ -171,14 +159,12 @@ public sealed partial class BackfillInventoryLoaderTests
     }
 
     [Theory]
-    [InlineData("coverage-key", false)]
-    [InlineData("receipts-coverage", false)]
-    [InlineData("receipts-coverage", true)]
-    [InlineData("source-sha", false)]
-    [InlineData("statement-history", false)]
-    [InlineData("recorded-at", false)]
-    [InlineData("recorded-at", true)]
-    public void DirectoryAtomRejectsEachRetiredCoverageField(string retiredField, bool baseline)
+    [InlineData("coverage-key")]
+    [InlineData("receipts-coverage")]
+    [InlineData("source-sha")]
+    [InlineData("statement-history")]
+    [InlineData("recorded-at")]
+    public void DirectoryAtomRejectsEachRetiredCoverageField(string retiredField)
     {
         var sourceKey = "source_" + "sha256";
         var historyKey = "statement_id_" + "history";
@@ -233,9 +219,7 @@ public sealed partial class BackfillInventoryLoaderTests
             Source("delta-v0.1", "docs/delta.md", "none"),
             atom);
         var exception = Assert.Throws<FormatException>(() =>
-            baseline
-                ? BackfillInventoryLoader.LoadBaseline(snapshot)
-                : BackfillInventoryLoader.Load(snapshot));
+            BackfillInventoryLoader.Load(snapshot));
 
         var expectedMessage = retiredField switch
         {
@@ -245,38 +229,6 @@ public sealed partial class BackfillInventoryLoaderTests
             _ => "source delta-v0.1 entry keys are not canonical",
         };
         Assert.Contains(expectedMessage, exception.Message, StringComparison.Ordinal);
-    }
-
-    [Fact]
-    public void BaselineCanonicalSchemaRejectsRetiredCoverageKey()
-    {
-        var atom = Atom("delta-v0.1", "residual-open", "delta-atom", "theorem/delta");
-        var exception = Assert.Throws<FormatException>(() =>
-            BackfillInventoryLoader.LoadBaseline(Snapshot(
-                Source("delta-v0.1", "docs/delta.md", "none"),
-                (atom.Path, atom.Text + "coverage: []\n"))));
-
-        Assert.Equal("source delta-v0.1 entry keys are not canonical", exception.Message);
-    }
-
-    [Fact]
-    public void BaselineDirectoryProjectsHistoricalChainAtomReferencesToContentIdentity()
-    {
-        var source = Source("delta-v0.1", "docs/delta.md", "none");
-        var parent = Atom("delta-v0.1", "residual-open", "parent", "theorem/parent");
-        var child = Atom("delta-v0.1", "residual-open", "child", "theorem/child");
-        var childText = child.Text.Replace(
-            "  chain_atoms: []\n",
-            "  chain_atoms:\n    - legacy-parent\n",
-            StringComparison.Ordinal);
-        var document = BackfillInventoryLoader.LoadBaseline(Snapshot(
-            source,
-            ($"{BackfillInventoryLoader.RootPath}delta-v0.1/residual-open/legacy-parent.yaml", parent.Text),
-            ($"{BackfillInventoryLoader.RootPath}delta-v0.1/residual-open/legacy-child.yaml", childText)));
-
-        var projectedChild = document.RequireDigestionEntries()
-            .Single(entry => entry.AtomId == FixtureAtomId("theorem/child"));
-        Assert.Equal([FixtureAtomId("theorem/parent")], projectedChild.Receipts.ChainAtoms.ToArray());
     }
 
     [Fact]

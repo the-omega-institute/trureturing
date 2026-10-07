@@ -1,0 +1,6 @@
+**定理 19.1（最低位的整数部公式）。** 对每个 $N\ge0$，
+
+$$
+b_0(N)=1+\lfloor(N+1)\alpha\rfloor-\lfloor(N+2)\alpha\rfloor.
+$$
+

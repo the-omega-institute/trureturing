@@ -1,0 +1,56 @@
+## 定理 13.2：抽象—具体化对应
+
+对任意 $S\subseteq X$、$U\subseteq B$：
+
+$$
+\boxed{
+\mathsf A_\eta(S)\subseteq U
+\iff
+S\subseteq\mathsf C_\eta(U).
+}
+$$
+
+而且：
+
+$$
+S\subseteq\operatorname{Sat}_\eta(S),
+$$
+
+$$
+S\subseteq T
+\Longrightarrow
+\operatorname{Sat}_\eta(S)
+\subseteq
+\operatorname{Sat}_\eta(T),
+$$
+
+$$
+\operatorname{Sat}_\eta^2
+=
+\operatorname{Sat}_\eta.
+$$
+
+### 13.2 证明
+
+第一式两边都等价于：
+
+$$
+\forall x\in S,\quad \eta(x)\in U.
+$$
+
+每个 $x\in S$ 的读数显然属于 $\eta(S)$，得到扩张性。
+
+集合像与逆像都保包含关系，得到单调性。
+
+最后：
+
+$$
+\eta\!\left(\eta^{-1}(\eta(S))\right)=\eta(S),
+$$
+
+因为所有读数都限制在实际像中。再取逆像便得到幂等性。∎
+
+因此，纤维饱和是一个闭包算子。
+
+注意：**它扩大的是候选集合，不是实际发生的事件集合。**
+

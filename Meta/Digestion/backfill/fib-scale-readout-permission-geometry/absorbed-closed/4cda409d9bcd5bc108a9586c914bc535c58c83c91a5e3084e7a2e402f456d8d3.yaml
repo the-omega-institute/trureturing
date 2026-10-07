@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:4cda409d9bcd5bc108a9586c914bc535c58c83c91a5e3084e7a2e402f456d8d3
+  normalized_sha256: sha256:4cda409d9bcd5bc108a9586c914bc535c58c83c91a5e3084e7a2e402f456d8d3
+cas_ref: sha256:4cda409d9bcd5bc108a9586c914bc535c58c83c91a5e3084e7a2e402f456d8d3
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/ActualImageSevenLeafSeparation.seven_leaf_separation
+    target_statement_id: sha256:d9abdedf5e123f4a8cf8ed095ea3cbad95e4943d45ae581fe44fb1f974ebecbf
+  - gid: D5/S3/Arith/FibonacciAtomic/ActualLeafHistoryRigidity.actual_address_geometry
+    target_statement_id: sha256:335c09bcbedda30876c8cd32e2ecfb6087fca93340948327ff8285877e106da7
+  - gid: D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.source_foundation
+    target_statement_id: sha256:f7f7bd516092b702be88cd5e0e4c3f18c2a31add11758d1c0870afe461950ce6
+  - gid: D5/S3/Arith/FibonacciAtomic/GenealogicalFiberTransport.result
+    target_statement_id: sha256:ce5b0657affca07fd388326f2bb3911ee113fe49d2a58deb32d7c350af0391f4
+receipts:
+  unresolved_subitems: []

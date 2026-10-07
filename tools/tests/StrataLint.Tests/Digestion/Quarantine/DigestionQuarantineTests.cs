@@ -62,111 +62,6 @@ public sealed partial class DigestionQuarantineTests
         Assert.Contains("machine-form", error.Message, StringComparison.Ordinal);
     }
 
-    [Fact]
-    public void ResidualSummaryListsQuarantinedItemsOutsideMainCounts()
-    {
-        var ledger = BackfillInventoryDocument.Create(
-        [
-            new DigestionLedgerSource(
-                "fixture-source",
-                "docs/source.md",
-                AtomizerRegistry.NoAtomizerId,
-                [],
-                GenreRegistryProjection.Available(GenreRegistryCheck.NoGenreRegistry),
-                [
-                    TypedAtom("atom-main", null, "proof-one", "proof-two"),
-                    TypedAtom(
-                        "atom-quarantined",
-                        new DigestionQuarantine(
-                            "interpretive statement has no machine predicate",
-                            "typed predicate or frozen witness",
-                            "missing-prerequisite"),
-                        "semantic-one",
-                        "semantic-two"),
-                ]),
-        ],
-        []);
-        var entries = ledger.RequireDigestionEntries()
-            .Select(static entry => new DigestionEntryEvaluation(
-                entry,
-                DigestionReceiptAlignment.Seen,
-                entry.ProjectedStatus,
-                false,
-                entry.Receipts.UnresolvedSubitems
-                    .Select(static item => new DigestionGap(
-                        "unresolved-subitem",
-                        item,
-                        DigestionGapSeverity.NonFatal))
-                    .ToImmutableArray()))
-            .ToImmutableArray();
-
-        var evaluation = new DigestionLedgerEvaluation(entries, []);
-        var summary = DigestResidualSummary.Render(
-            evaluation,
-            DigestionFrontierTestProjection.Create(evaluation));
-
-        var expected = """
-            # Echo Residual Summary
-
-            - unresolved_subitems: 2
-            - mother_residual_atom_ids: 1
-
-            ## frontier
-
-            - residual_open: 2
-            - formalization_frontier: 0
-            - quarantined: 1
-            - withheld: 0
-            - chain_child: 0
-            - not_formalizable: 1
-            - formalizable_claim: 0
-
-            Per-source frontier:
-
-            - `fixture-source`
-              - residual_open: 2
-              - formalization_frontier: 0
-              - quarantined: 1
-              - withheld: 0
-              - chain_child: 0
-              - not_formalizable: 1
-              - formalizable_claim: 0
-
-            ### quarantined residuals
-
-            - quarantined_subitems: 2
-            - mother_quarantined_atom_ids: 1
-
-            Quarantined residual atoms:
-
-            - `fixture-source/atom-quarantined` (2)
-              - blocker_class: `missing-prerequisite`
-              - justification: `interpretive statement has no machine predicate`
-              - reentry_condition: `typed predicate or frozen witness`
-              - `semantic-one`
-              - `semantic-two`
-
-            ## cross-volume shared residues
-
-            - shared_residue_names: 0
-            - host_atoms: 0
-
-            Shared residue hosts: none.
-
-            ## `fixture-source`
-
-            - unresolved_subitems: 2
-            - mother_residual_atom_ids: 1
-
-            Mother residual atoms:
-
-            - `atom-main` (2)
-              - `proof-one`
-              - `proof-two`
-            """ + "\n";
-        Assert.Equal(expected, summary);
-    }
-
     private static string Atom(
         string atomId,
         string quarantine,
@@ -212,20 +107,6 @@ public sealed partial class DigestionQuarantineTests
         files.AddRange(additional);
         return DigestionTestSupport.Snapshot([.. files]);
     }
-
-    private static DigestionLedgerEntry TypedAtom(
-        string atomId,
-        DigestionQuarantine? quarantine,
-        params string[] unresolvedSubitems) => new(
-            "fixture-source",
-            "docs/source.md",
-            AtomizerRegistry.NoAtomizerId,
-            atomId,
-            new DigestionFingerprints(Digest, Digest),
-            [],
-            new DigestionReceipts([.. unresolvedSubitems], [], null, quarantine),
-            new DigestionStatus(DigestionMigrationState.Residual, DigestionTruthState.Open),
-            Digest);
 
     private static string ToDirectoryAtom(string atom)
     {

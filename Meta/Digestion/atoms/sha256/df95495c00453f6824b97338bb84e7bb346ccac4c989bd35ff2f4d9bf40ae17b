@@ -1,0 +1,21 @@
+## 定义 14.4：语义补全算子
+
+固定状态集 $X$，以及包含恒等、对复合封闭的总操作族 $\mathscr M$。
+
+对等价关系 $E\subseteq X\times X$，定义：
+
+$$
+\mathsf D_{\mathscr M}(E)
+=
+\bigcap_{T\in\mathscr M}
+(T\times T)^{-1}(E).
+$$
+
+也就是：
+
+$$
+x\,\mathsf D_{\mathscr M}(E)\,y
+\iff
+\forall T\in\mathscr M,\quad Tx\,E\,Ty.
+$$
+

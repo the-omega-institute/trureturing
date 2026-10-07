@@ -1,0 +1,2 @@
+**证明。** 由 $f=\Theta_X(\operatorname{id}_X)$。自然性给出 $\Theta_P(u)=\Theta_X(\operatorname{id}_X)\circ u=f\circ u$；反向由复合的结合律得到自然变换。∎
+

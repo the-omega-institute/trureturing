@@ -64,7 +64,31 @@ $$\operatorname{LocallyEquivalent}\left(\psi, \phi\right) \Leftrightarrow (\exis
 
 Two N-qubit states are locally equivalent when psi = (U_1 x ... x U_N) phi for single-qubit unitaries U_1, ..., U_N.
 
-**Definition 1.6 (The conjecture).**
+**Definition 1.6 (The amplitude one over the square root of two).**
+
+$$\operatorname{s2} = \frac{\sqrt{2}}{2}$$
+
+*Formalization.* `D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The real number square root of two over two, viewed as a complex number.
+
+**Definition 1.7 (The Hadamard matrix).**
+
+$$\operatorname{hadamard} = \operatorname{s2} \cdot (\mathrm{X} + \mathrm{Z})$$
+
+*Formalization.* `D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The Hadamard matrix H = (X + Z)/sqrt(2), a binary operator with Bloch vector on the bisector of the x and z axes.
+
+**Definition 1.8 (The conjecture).**
 
 $$claim \Leftrightarrow (\forall N \psi, (\operatorname{StabilizedBy}\left(\operatorname{binarySet}, \psi\right)) \Rightarrow \exists \phi, (\operatorname{StabilizedBy}\left(\operatorname{pauliSet}, \phi\right)) \land (\operatorname{LocallyEquivalent}\left(\psi, \phi\right)))$$
 
@@ -76,7 +100,7 @@ $$claim \Leftrightarrow (\forall N \psi, (\operatorname{StabilizedBy}\left(\oper
 
 The conjecture of the paper: for every number N of qubits, every state stabilized by the binary operators and the identity is locally equivalent to a state stabilized by the Pauli set.
 
-**Theorem 1.7 (A six-qubit counterexample).**
+**Theorem 1.9 (A six-qubit counterexample).**
 
 $$\neg claim$$
 
@@ -101,6 +125,8 @@ Let v be the vector with coefficient 1 on the six labels of Hamming weight one, 
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.binaryOp`
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.binarySet`
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.claim`
+- Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.hadamard`
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.pauliSet`
 - Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.result`
+- Truth anchor: `D5/S3/Quantum/Information/BinaryStabilizerLocalInequivalence.s2`
 - Dependency: [D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence](StabilizerPairLocalUnitaryInequivalence.md)

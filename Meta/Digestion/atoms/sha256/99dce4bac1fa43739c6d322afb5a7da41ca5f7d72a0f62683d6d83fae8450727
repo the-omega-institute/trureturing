@@ -1,0 +1,40 @@
+## 定义 26.2：闭环状态
+
+闭环状态为：
+
+$$
+(z,s,k)\in Z\times S\times K.
+$$
+
+若：
+
+$$
+u(k)=a,
+$$
+
+且 $s\in D_a$，则：
+
+$$
+\boxed{
+(z,s,k)
+\longrightarrow
+\bigl(z,T_a(s),v(k,r_a(s))\bigr).
+}
+$$
+
+若：
+
+$$
+u(k)=\operatorname{Halt}(\widehat z),
+$$
+
+则执行结束，正确性要求：
+
+$$
+\widehat z=z.
+$$
+
+注意：第一坐标 $z$ 是证明中的原目标标签，不是控制器的输入。
+
+---
+

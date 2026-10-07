@@ -1,0 +1,44 @@
+### 命题 9.3（同一新码中的相同边缘态与相反面积速度）
+
+固定命题 9.1 的 $J$ 及一个 $0\le r<54$，记逻辑态
+
+$$
+|\psi_\pm\rangle=\frac{|0,r\rangle\pm i|1,r\rangle}{\sqrt2}.
+$$
+
+它们编码后的 $X$、$Y$ 边缘态完全相同，并且在定理 8.2 的每个前缀划分上，两侧边缘态也分别相同。取实数 $\Omega\ne0$，以 $\hbar=1$ 定义
+
+$$
+h=\frac\Omega2\left(|0,r\rangle\langle1,r|+|1,r\rangle\langle0,r|\right),
+\qquad \rho(t)=e^{-ith}\rho(0)e^{ith},
+\tag{9.3}
+$$
+
+其中 $h$ 在其余逻辑方向上为零。编码空间上的实现是 $JhJ^\dagger$，在正交补上为零；此实现一般跨越 $X|Y$。两态的素数页概率及全 $X$ 面积期望为
+
+$$
+p_1^\pm(t)=\frac{1\mp\sin(\Omega t)}2,\qquad
+\mathcal A_\pm(t):=\operatorname{Tr}(\rho_\pm(t)\mathcal L_3)
+=(\log3)p_1^\pm(t),
+$$
+
+$$
+\dot{\mathcal A}_\pm(t)=\mp\frac{\Omega\log3}{2}\cos(\Omega t),
+\qquad \dot{\mathcal A}_\pm(0)=\mp\frac{\Omega\log3}{2}.
+\tag{9.4}
+$$
+
+因此，在这个指定更新下，当前两侧区域态的有序对不足以确定其未来区域态，亦不足以确定面积速度。
+
+**证明。** 两个逻辑密度矩阵的对角页块都为 $\rho_{bb}=\tfrac12|b,r\rangle\langle b,r|$，只在跨页相干上不同。式（6.8）、（8.3）消去跨页块，故全部所列初始边缘态相同。编码等距满足 $(JhJ^\dagger)J=Jh$，因此所给物理算符确实实现同一个逻辑演化；没有据此取得区域局域性。
+
+在这两个基向量的空间上，$h=(\Omega/2)\sigma_x$，所以
+
+$$
+e^{-ith}=\cos(\Omega t/2)I-i\sin(\Omega t/2)\sigma_x.
+$$
+
+作用到 $\psi_\pm$ 并取第二个振幅模平方，得到所列 $p_1^\pm(t)$。用式（9.2）再微分即得式（9.4）。在 $t=0$ 相同的区域态对，经过同一个更新后具有不同页概率，故不可能由该态对唯一决定后继；同读数而速度不同也排除了仅以该读数为状态的自治速度规则。证毕。
+
+这是 [《算术全息 RT》](ARITHMETIC_HOLOGRAPHIC_RT.md) 第 27—28 节、尤其构造 28.4 的面积—相位机制在本双页码中的具体实现，并按 [动态充分边界卷](RECURSIVE_RELATIONAL_OBSERVATION_BOUNDARY_DYNAMICS.md) 定理 2.1 的纤维判据判断闭合。反例针对式（9.3）的更新和当前区域态表示，不是否定任意量子动力学的闭合性。
+

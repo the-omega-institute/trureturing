@@ -1,0 +1,8 @@
+**定义 4.1（探针范畴）。** 固定小范畴 $\mathcal C$。对象表示结构，态射表示保持合同所需结构的映射。对 $X\in\mathcal C$，定义
+
+$$
+h_X(P)=\operatorname{Hom}_{\mathcal C}(P,X),
+$$
+
+并令 $h_X(a)(u)=u\circ a$。这给出 $h_X:\mathcal C^{\mathrm{op}}\to\mathbf{Set}$。
+

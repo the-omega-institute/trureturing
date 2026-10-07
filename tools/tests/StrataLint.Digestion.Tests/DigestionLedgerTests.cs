@@ -23,8 +23,7 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             document,
             snapshot,
-            AcceptedLean(Array.Empty<string>()),
-            baselineDocument: document).Entries);
+            AcceptedLean(Array.Empty<string>())).Entries);
 
         Assert.Equal(DigestionReceiptAlignment.Seen, status.Alignment);
         Assert.DoesNotContain(status.Gaps, static gap => gap.Code == "source-missing");
@@ -52,35 +51,10 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             document,
             snapshot,
-            AcceptedLean(Array.Empty<string>()),
-            baselineDocument: document).Entries);
+            AcceptedLean(Array.Empty<string>())).Entries);
 
         Assert.Equal(DigestionReceiptAlignment.Seen, status.Alignment);
         Assert.DoesNotContain(status.Gaps, static gap => gap.Code == "source-missing");
-    }
-
-    [Fact]
-    public void IngestRejectsACasBackedNoAtomizerBoundaryWithoutItsCasBlob()
-    {
-        var sourceBytes = Encoding.UTF8.GetBytes("manual specification receipt\n");
-        var atom = new DigestionAtom(
-            0,
-            sourceBytes.Length,
-            ImmutableArray.CreateRange(sourceBytes),
-            DigestionFingerprint.Compute(sourceBytes),
-            ImmutableArray<DigestionContext>.Empty);
-        var ledger = Ledger(
-            atom,
-            DigestionMigrationState.Partial,
-            DigestionTruthState.Open,
-            atomizer: AtomizerRegistry.NoAtomizerId);
-
-        var exception = Assert.Throws<FormatException>(() => DigestionIngestor.Plan(
-            ledger,
-            Snapshot(("docs/source.md", sourceBytes)),
-            ledger));
-
-        Assert.Contains("CAS blob is missing", exception.Message, StringComparison.Ordinal);
     }
 
     [Fact]
@@ -99,10 +73,9 @@ public sealed partial class DigestionLedgerTests
             DigestionTruthState.Open,
             atomizer: AtomizerRegistry.NoAtomizerId);
 
-        var first = DigestionIngestor.Plan(
+        var first = ReportFreeDigestionIngestor.Plan(
             ledger,
-            Snapshot(("docs/source.md", sourceBytes), CasFile(atom)),
-            ledger);
+            Snapshot(("docs/source.md", sourceBytes), CasFile(atom)));
         var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
         var migrated = first.Document;
 
@@ -110,12 +83,11 @@ public sealed partial class DigestionLedgerTests
         Assert.Equal(atom.Fingerprints.RawSha256, migratedEntry.CasRef);
         Assert.Empty(first.CasObjects);
 
-        var second = DigestionIngestor.Plan(
+        var second = ReportFreeDigestionIngestor.Plan(
             migrated,
             Snapshot(
                 ("docs/source.md", sourceBytes),
-                CasFile(atom)),
-            ledger);
+                CasFile(atom)));
         var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Empty(second.CasObjects);
@@ -146,12 +118,11 @@ public sealed partial class DigestionLedgerTests
         var baseline = Document(AtomizerRegistry.GenericId, [originalEntry]);
         var originalCapture = DigestionCasStore.Capture(originalAtom.RawBytes.AsSpan());
 
-        var plan = DigestionIngestor.Plan(
+        var plan = ReportFreeDigestionIngestor.Plan(
             baseline,
             Snapshot(
                 ("docs/source.md", changedBytes),
-                (originalCapture.RelativePath, originalCapture.Bytes.ToArray())),
-            baseline);
+                (originalCapture.RelativePath, originalCapture.Bytes.ToArray())));
         var entries = Assert.Single(plan.Document.RequireDigestionSources()).Entries;
         var currentKinds = AtomizerRegistry.ResolveContentKinds(
             AtomizerRegistry.GenericId,
@@ -188,10 +159,9 @@ public sealed partial class DigestionLedgerTests
         var atoms = AtomizerRegistry.Atomize(atomizerId, sourceBytes, DigestionTestSupport.Rules).Claims;
         var ledger = EmptyDocument(atomizerId);
 
-        var first = DigestionIngestor.Plan(
+        var first = ReportFreeDigestionIngestor.Plan(
             ledger,
-            Snapshot(("docs/source.md", sourceBytes)),
-            ledger);
+            Snapshot(("docs/source.md", sourceBytes)));
         var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
         var migrated = first.Document;
         var entries = Assert.Single(first.Document.RequireDigestionSources()).Entries;
@@ -213,10 +183,9 @@ public sealed partial class DigestionLedgerTests
             atom => atom.Fingerprints.RawSha256 == item.Reference
                 && atom.RawBytes.AsSpan().SequenceEqual(item.Bytes.AsSpan())));
 
-        var second = DigestionIngestor.Plan(
+        var second = ReportFreeDigestionIngestor.Plan(
             migrated,
-            Snapshot(sourceBytes, first.CasObjects),
-            ledger);
+            Snapshot(sourceBytes, first.CasObjects));
         var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Equal(0, second.ResidualOpenAdded);
@@ -235,10 +204,9 @@ public sealed partial class DigestionLedgerTests
         var document = StructuralLedger(atom);
         var expected = DirectoryLedgerTestSupport.Image(document);
 
-        var replay = DigestionIngestor.Plan(
+        var replay = ReportFreeDigestionIngestor.Plan(
             document,
-            Snapshot(("docs/source.md", sourceBytes), CasFile(atom)),
-            document);
+            Snapshot(("docs/source.md", sourceBytes), CasFile(atom)));
 
         Assert.Equal(0, replay.ResidualOpenAdded);
         Assert.Empty(replay.CasObjects);
@@ -268,8 +236,7 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             document,
             Snapshot(("docs/source.md", sourceBytes), CasFile(atom)),
-            AcceptedLean(Array.Empty<string>()),
-            baselineDocument: document).Entries);
+            AcceptedLean(Array.Empty<string>())).Entries);
 
         Assert.Contains(status.Gaps, gap =>
             gap.Code == "chain-migration-incomplete" && gap.Detail == "missing-child");
@@ -347,8 +314,7 @@ public sealed partial class DigestionLedgerTests
             DigestionEvaluationScope.FullScan,
             chained,
             snapshot,
-            AcceptedLean(targetPath),
-            baselineDocument: chained);
+            AcceptedLean(targetPath));
 
         Assert.Equal(3, evaluation.Entries.Length);
         Assert.DoesNotContain(
@@ -373,10 +339,9 @@ public sealed partial class DigestionLedgerTests
             sourcePath: sourcePath,
             genreRegistryCheck: GenreRegistryCheck.Collected([]));
 
-        var first = DigestionIngestor.Plan(
+        var first = ReportFreeDigestionIngestor.Plan(
             ledger,
-            Snapshot((sourcePath, sourceBytes)),
-            ledger);
+            Snapshot((sourcePath, sourceBytes)));
         var firstBytes = DirectoryLedgerTestSupport.Image(first.Document);
         var migrated = first.Document;
 
@@ -392,13 +357,12 @@ public sealed partial class DigestionLedgerTests
         Assert.Equal(coarse.Fingerprints.RawSha256, coarse.CasRef);
         Assert.Equal(sourceBytes, captured.Bytes.ToArray());
 
-        var second = DigestionIngestor.Plan(
+        var second = ReportFreeDigestionIngestor.Plan(
             migrated,
             Snapshot(first.CasObjects
                 .Select(static item => (item.RelativePath, item.Bytes.ToArray()))
                 .Prepend((sourcePath, sourceBytes))
-                .ToArray()),
-            ledger);
+                .ToArray()));
         var secondBytes = DirectoryLedgerTestSupport.Image(second.Document);
 
         Assert.Equal(0, second.ResidualOpenAdded);

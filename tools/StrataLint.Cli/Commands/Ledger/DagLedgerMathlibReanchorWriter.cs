@@ -16,7 +16,7 @@ internal static class DagLedgerMathlibReanchorWriter
         {
             var protectedBaseName = ParseArguments(arguments);
             var protectedBase = Decode(DagLedgerCommandPreparation.Ask(
-                () => repository.ReadRevision(protectedBaseName)));
+                () => repository.ReadRevisionProjection(protectedBaseName, TruthExportCommand.IsTruthInput)));
             var truth = DagLedgerCommandPreparation.BuildTruth(repository, leanReportSource);
             var currentLedgerFiles = ReadCurrentLedgerFiles(repositoryRoot);
             var protectedLedgerFiles = protectedBase.Files.Values

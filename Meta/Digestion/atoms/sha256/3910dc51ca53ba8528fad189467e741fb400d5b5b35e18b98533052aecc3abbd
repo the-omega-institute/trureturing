@@ -1,0 +1,10 @@
+**定理 9.1（双数探针的一阶纤维）。** 令 $D=\mathbb R[\varepsilon]/(\varepsilon^2)$。对多项式映射 $F:\mathbb R^d\to\mathbb R^m$，把双数解空间定义的一阶切空间称为代数（Zariski）纤维切空间；则有
+
+$$
+F(p+\varepsilon v)=F(p)+\varepsilon DF_p(v).
+$$
+
+所以方程纤维在 $p$ 的一阶切向量空间是 $\ker DF_p$；这只是无穷小结构，不声称每个方向都可积成实际曲线。
+
+**证明。** 多项式展开中含两个及以上 $\varepsilon$ 的项为零，一次项正是导数作用。∎
+

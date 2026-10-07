@@ -18,24 +18,21 @@ public sealed class DigestionDecompositionPolicyTests
             + $"**Structural verdict**: uncovered global clause.{newline}");
 
         Assert.True(DigestionDecompositionPolicy.IsMultiClause(atom));
-        Assert.True(DigestionDecompositionPolicy.RejectsNewAbsorption(
+        Assert.True(DigestionDecompositionPolicy.RejectsUndecomposedAbsorption(
             atom,
             DigestionMigrationState.Absorbed,
             unresolvedSubitemCount: 0,
-            hasVerifiedChainAtoms: false,
-            baseline: DigestionMigrationState.Partial));
-        Assert.False(DigestionDecompositionPolicy.RejectsNewAbsorption(
+            hasVerifiedChainAtoms: false));
+        Assert.False(DigestionDecompositionPolicy.RejectsUndecomposedAbsorption(
             atom,
             DigestionMigrationState.Absorbed,
             unresolvedSubitemCount: 1,
-            hasVerifiedChainAtoms: false,
-            baseline: DigestionMigrationState.Partial));
-        Assert.False(DigestionDecompositionPolicy.RejectsNewAbsorption(
+            hasVerifiedChainAtoms: false));
+        Assert.False(DigestionDecompositionPolicy.RejectsUndecomposedAbsorption(
             atom,
             DigestionMigrationState.Absorbed,
             unresolvedSubitemCount: 0,
-            hasVerifiedChainAtoms: true,
-            baseline: DigestionMigrationState.Partial));
+            hasVerifiedChainAtoms: true));
     }
 
     [Fact]

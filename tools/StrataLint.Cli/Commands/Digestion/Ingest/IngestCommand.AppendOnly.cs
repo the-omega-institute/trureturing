@@ -5,30 +5,6 @@ namespace StrataLint.Cli;
 
 internal static partial class IngestCommand
 {
-    internal static string ReportFreeCommitLockPath(string gitDirectory) =>
-        Path.Combine(gitDirectory, "stratalint-ingest.lock");
-
-    private static FileStream AcquireReportFreeCommitLock(string repositoryRoot)
-    {
-        var directory = GitWorktreeDirectory.Read(repositoryRoot)
-            ?? throw new InvalidOperationException(
-                "repository root has no .git; report-free ingest requires a git worktree");
-        var path = ReportFreeCommitLockPath(directory);
-        try
-        {
-            // Unix mutual exclusion requires a local filesystem supporting flock and file locking enabled.
-            // Keep the file after release: unlinking it would let peers lock different inodes.
-            return new FileStream(path, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None);
-        }
-        // FileShare.None reports Win32 ERROR_SHARING_VIOLATION or Unix EWOULDBLOCK (Linux/macOS).
-        catch (IOException exception) when (
-            (exception.HResult & 0xffff) == 32 || exception.HResult is 11 or 35)
-        {
-            throw new InvalidOperationException(
-                $"digestion ledger is being written by another ingest ({path})", exception);
-        }
-    }
-
     private static RawRepositorySnapshot AppendLedger(
         RawRepositorySnapshot currentRaw,
         BackfillInventoryDocument currentDocument,

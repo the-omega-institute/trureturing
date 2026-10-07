@@ -1,0 +1,29 @@
+# Primorial Global Laplace Envelope
+
+## Abstract
+
+The literal finite prime Euler ratio has one explicit error envelope on the complete nonnegative Laplace axis.
+
+For every real z>=2 let L=log(z), and take precisely the primes p<=floor(z). Let E_z(s) be the finite product of 1-p^(-s), and F_z(v)=E_z(1+v/L)/E_z(1). The product uses real powers. The denominator is positive, including when the finite product is empty.
+
+The comparison profile is Phi(v)=exp(integral from 0 to 1 of (1-exp(-v*b))/b db). The proof bridges this original integral to the nonsingular primitive of U(v)=integral from 0 to 1 of exp(-v*b) db. The single zero endpoint is retained through equality of the integrands on the open interval. Put D=log(4)+4+Mertens.E1, where the existing frozen Mertens.E1 is the sum over primes of log(p)/(p*(p-1)).
+
+**Theorem 1.1 (Every actual cutoff and every nonnegative Laplace parameter share the same explicit budget).**
+
+Lean statement: `D5/S3/Arith/Robin/PrimorialGlobalLaplaceEnvelope.result`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/Robin/PrimorialGlobalLaplaceEnvelope.result` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every z>=2 and every v>=0, exp(-D*v/L)*Phi(v)<=F_z(v)<=exp(D*v/L)*Phi(v). The same complete parameter axis obeys F_z(v)<=exp(D*v/L+1)*(1+v). There is no upper cutoff on v, and v=0 is included.
+
+The literal cumulative first-Mertens estimate is consumed by Abel summation. For the decreasing logarithmic exponential weight f, the integral error costs at most K*(1-f(z)); its endpoint costs at most K*f(z), so the combined cost is exactly K. The finite Euler logarithmic derivative is calculated from every factor. Replacing p^s-1 by p^s costs the existing summable prime correction uniformly for every v>=0. The resulting derivative error integrates to D*v/L. Exponentiation and the original profile's linear envelope give the stated bounds.
+
+This theorem supplies the finite Euler factor and its full parameter tail for the Robin kernel route. It does not prove the complete actual kernel asymptotic, the sign of the compensated Robin residual, or the Riemann hypothesis.
+
+## References
+
+- Truth anchor: `D5/S3/Arith/Robin/PrimorialGlobalLaplaceEnvelope.result`

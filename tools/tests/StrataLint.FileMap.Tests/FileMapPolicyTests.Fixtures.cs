@@ -15,7 +15,7 @@ public sealed partial class FileMapPolicyTests
     public void MissingReviewScaffoldIgnoreIsRejectedByTheRedFixture()
     {
         var finding = Assert.Single(FileMapPolicy.InspectGitIgnore(
-            ["/Generated/echo-residuals/", ".caller-review-prompt.md", ".echo-review.md"]));
+            [".caller-review-prompt.md", ".echo-review.md"]));
 
         Assert.Equal("FILEMAP-GITIGNORE", finding.Code);
         Assert.Equal(".gitignore", finding.Path);
@@ -26,38 +26,7 @@ public sealed partial class FileMapPolicyTests
     public void CompleteReviewScaffoldIgnoresAreAcceptedByTheGreenFixture()
     {
         Assert.Empty(FileMapPolicy.InspectGitIgnore(
-            ["/Generated/echo-residuals/", ".sshx-*", ".echo-review.md", ".caller-review-prompt.md"]));
-    }
-
-    [Fact]
-    public void BroadEchoResidualFileMapPatternIsRejected()
-    {
-        var manifest = Parse(Entry(
-            "Generated/**/*.md",
-            "generated",
-            "EchoVerifyCommand",
-            "reader",
-            "EchoVerifyCommand"));
-
-        var findings = FileMapPolicy.InspectProjectionRegistrations(manifest);
-
-        Assert.Contains(findings, static finding => finding.Code == "FILEMAP-PROJECTION-SHARD");
-    }
-
-    [Fact]
-    public void LiteralRunLocalEchoResidualPatternIsAccepted()
-    {
-        var manifest = Parse(Entry(
-            "Generated/echo-residuals/*.md",
-            "generated",
-            "EchoVerifyCommand",
-            "reader",
-            "EchoVerifyCommand").Replace(
-                "runtime_disposition = \"committed-source\"",
-                "runtime_disposition = \"run-local\"",
-                StringComparison.Ordinal));
-
-        Assert.Empty(FileMapPolicy.InspectProjectionRegistrations(manifest));
+            [".sshx-*", ".echo-review.md", ".caller-review-prompt.md"]));
     }
 
     [Fact]
@@ -284,7 +253,7 @@ public sealed partial class FileMapPolicyTests
 
     private static PolicyLoadOutcome.Accepted SyntheticPolicy(string? governanceDocument = null)
     {
-        var patterns = new[] { ".codex/skills/**", "Generated/echo-residuals/*.md", "Meta/Digestion/atomizers.toml",
+        var patterns = new[] { ".codex/skills/**", "Meta/Digestion/atomizers.toml",
             "README.md", "docs/develop/spec/*.md", "docs/develop/theory/**", "skills/**" }
             .Append(governanceDocument).OfType<string>().Order(StringComparer.Ordinal);
         var manifest = Parse(patterns.Select(path => Entry(path, "program", "none", "reader", "repository-policy")).ToArray());

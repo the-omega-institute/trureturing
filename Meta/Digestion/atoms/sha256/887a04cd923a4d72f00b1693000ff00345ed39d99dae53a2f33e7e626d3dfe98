@@ -1,0 +1,27 @@
+**定理 39.3（偶根的双奇偶核）。** 偶根 $n=2$ 只有固定点一，$n=4$ 只有 $2\leftrightarrow3$。对每个偶整数 $n\ge6$，令 $s\ge3$ 为满足 $2s\le n<6s$ 的唯一三幂。若 $2s\le n<8s/3$，则
+
+$$
+K_{\rm e}(n)=\{e\},\quad K_{\rm o}(n)=\{o\},\qquad
+e=n-2s/3,\quad o=n-s,\qquad e\leftrightarrow o.
+\tag{39.8}
+$$
+
+若 $8s/3\le n<6s$，置
+
+$$
+L=\max(2s,n-2s),\qquad U=\min(4s,n-2s/3).
+$$
+
+则
+
+$$
+\begin{aligned}
+K_{\rm e}(n)&=[L,U]_{\rm e},\\
+K_{\rm o}(n)&=[n+s-U,n+s-L]_{\rm o},\\
+\sigma_n(z):=T_n(z)&=n+s-z\qquad(z\in K_n).
+\end{aligned}
+\tag{39.9}
+$$
+
+对偶根 $n\ge4$，全部周期恰为 $\{a,\sigma_n(a)\}$，$a\in K_{\rm e}(n)$；每周期恰有一个偶代表，长度恰为二。
+

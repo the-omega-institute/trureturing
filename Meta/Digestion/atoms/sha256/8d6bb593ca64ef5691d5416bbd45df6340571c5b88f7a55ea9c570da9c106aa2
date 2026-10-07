@@ -1,0 +1,8 @@
+**定理 6.1（运算下降判据）。** 给定类型化的 $f:X_1\times\cdots\times X_k\to Y$、观察器 $\eta_i:X_i\to B_i$ 和 $\theta:Y\to C$，并在部分运算时给定纤维饱和的合法域，存在
+
+$$
+\bar f:\prod_i\eta_i(X_i)\to\theta(Y)
+$$
+
+使 $\theta(f(x_1,\ldots,x_k))=\bar f(\eta_1(x_1),\ldots,\eta_k(x_k))$，当且仅当观察输入相同的两组来源具有相同的观察输出。
+

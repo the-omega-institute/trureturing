@@ -1,0 +1,6 @@
+**定义 10.3（带证书的证明状态）。** 固定演绎背景 $\Gamma$、目标 $\phi$ 和核验规则。证明状态为 $q=(\Gamma,\phi,\mathcal O,V,H)$，其中 $\mathcal O$ 是未完成义务，$V$ 是已核验证书，$H$ 是有限依赖图，并持有
+
+$$
+\Gamma\vdash\left(\bigwedge_{\psi\in\mathcal O}\psi\right)\Longrightarrow\phi.
+$$
+

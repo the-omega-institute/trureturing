@@ -1,0 +1,10 @@
+### 40.6 数学来源、坐标区分与未决内容
+
+(40.3)--(40.12) 是有序容量计数、置换和守恒与 floor 增量在实际规范缺陷上的 repo-derived、PAPER 推导。所用有限有序集计数及取整工具是普通数学；本章不将它们的先例认作新的方法发明，也不主张世界新颖性、私人资料穷尽或 kernel 状态。(40.13) 和 (40.14) 分别是本卷 15.3 与原生 M.9 的明确复用。
+
+供应源的 [five-window closure，§7](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/five-window-closure.md#7-fibonacci-profile-renormalization-and-defect-dynamics) 与 [inverse reconstruction，(9.2) 及其证明](https://github.com/the-omega-institute/nested-recurrences/blob/40d10f50aa9c16adf0a1c5021810be9a1b90bceb/cloitre-conway/inverse-reconstruction.md#minimum-defect-cost-of-a-proper-cycle) 使用反射式 $u_{i+1}=t-u_i+e_i$。在其正偏移接口中，$e_i=F_{k-2}+u_i-C(F_{k-1}+u_i)$ 是局部轮廓短缺，而本章的 $E_C(x)=C(x)-G(x)$ 是规范黄金缺陷。两个基线和缺陷方向不同；来源的反射费用及抽象 sharp profiles 不能换名为 (40.10) 或实际 $C$ 的反例。
+
+另有两个独立的来源合同：[KBonacciActualSaturation 的完整正文](https://github.com/the-omega-institute/trureturing/blob/1da3f395bff2193440078b307493b64b5b8b3652/Blueprint/D5/S1/Words/AdmissibleWords/KBonacciActualSaturation.md) 与 [声明及证明](https://github.com/the-omega-institute/trureturing/blob/1da3f395bff2193440078b307493b64b5b8b3652/D5/S1/Words/AdmissibleWords/KBonacciActualSaturation.lean) 研究 $k,a\ge2$ 下禁 $k$ 个连续真位的实际二进制词，在 $\mathbb Z/2\mathbb Z$ 上原单探针多项式商中的接受像及精确长度饱和；[transport-memory，§32](https://github.com/the-omega-institute/trureturing/blob/af03309f7843635e6b2ce53d2b72e55b4eab414a/docs/develop/theory/RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#32-初始同源侧信息的八倍阈值补充容量与操作次序) 研究固定活上限下非空有序原树的 Clifford 窗口、不可逆替换和左右拼接，保留已供应初始同源标签的生产与取得费用。这些结果没有供应原始 $T_n=n-C$ 的周期值或从其标签取得 $S_O$ 的对应；所列合同的饱和、容量与取得结论不用于 (40.10)。其他相关源的有界比对也不构成全部辅助卷、私人库、第三方库或世界文献的完整审计。
+
+本章支付的是每条已给定实际周期的规范质量及均值下界。实际 G.5 后续共同响应与更宽轮廓取得、既有合格域外的盆及着陆、校正同历史相位、真实无界周期长度族、统一外侧缺陷和终端占用、联合块补偿与离散度、实际取得并达到的优化策略、全局 $C(n)/n$ 收敛、自治有限状态闭合及完整跨递归对象／操作／历史／资源对应仍是未决义务。另一递归只有在证明其自己的整数点集、下包络和真实置换对应后才能应用引理 40.3；本章不供应这个跨类型桥梁。完整研究目标保留这些义务。
+

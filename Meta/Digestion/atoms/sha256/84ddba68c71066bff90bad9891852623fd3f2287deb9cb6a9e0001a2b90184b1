@@ -1,0 +1,12 @@
+**定理 2.6（有限语法的无损 FIB 编码）。** 定义
+
+$$
+p(\alpha)=00,\qquad p(\beta)=01,\qquad p(\langle s,t\rangle)=1p(s)p(t),
+$$
+
+并逐位替换 $E(0)=00,E(1)=01$。则 $\operatorname{Code}(t)=E(p(t))$ 单射、可有效解码且不含 $11$。若 $t$ 有 $m$ 个叶子，则
+
+$$
+|\operatorname{Code}(t)|=6m-2.
+$$
+

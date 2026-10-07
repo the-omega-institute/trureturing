@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8e12a80eb3484d4055ca2f969edb8c0b2fb14bb1ac65d754e11f7e64b48cb84c
+  normalized_sha256: sha256:8e12a80eb3484d4055ca2f969edb8c0b2fb14bb1ac65d754e11f7e64b48cb84c
+cas_ref: sha256:8e12a80eb3484d4055ca2f969edb8c0b2fb14bb1ac65d754e11f7e64b48cb84c
+coverage_gids:
+  - gid: D5/S3/Combinatorics/Graph/DirectedForestGluingSigns.directed_forest_gluing_signs
+    target_statement_id: sha256:1bb73ee082298cb71d16f95a1fb89308fb7533a5b2512ac61e69ed0ab267c56a
+receipts:
+  unresolved_subitems: []

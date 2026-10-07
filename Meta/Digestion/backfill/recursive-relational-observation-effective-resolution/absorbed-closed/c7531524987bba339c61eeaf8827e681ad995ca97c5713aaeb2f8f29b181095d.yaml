@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:c7531524987bba339c61eeaf8827e681ad995ca97c5713aaeb2f8f29b181095d
+  normalized_sha256: sha256:c7531524987bba339c61eeaf8827e681ad995ca97c5713aaeb2f8f29b181095d
+cas_ref: sha256:c7531524987bba339c61eeaf8827e681ad995ca97c5713aaeb2f8f29b181095d
+coverage_gids:
+  - gid: D5/S3/Arith/AffineNetworks/SuccessorChainSharpness.successor_chain_sharpness
+    target_statement_id: sha256:275a45b231f7febf0f271ac91b04d0ffcf0a6a007fab31283233aa1cdc6534cd
+receipts:
+  unresolved_subitems: []

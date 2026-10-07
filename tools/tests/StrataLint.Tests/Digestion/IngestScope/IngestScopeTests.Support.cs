@@ -75,8 +75,7 @@ public sealed partial class IngestScopeTests
     private static string SourcePrefix(string id) => BackfillInventoryLoader.RootPath + id + "/";
 
     private static string[] Arguments(params string[] selectors) =>
-        ["--base", "baseline",
-            .. selectors.SelectMany(static selector => new[] { "--source", selector })];
+        [.. selectors.SelectMany(static selector => new[] { "--source", selector })];
 
     private static ProductionCliEnvironment Environment(RuleFixture fixture, TemporaryDirectory temporary,
         RawChangeSet? changes = null,

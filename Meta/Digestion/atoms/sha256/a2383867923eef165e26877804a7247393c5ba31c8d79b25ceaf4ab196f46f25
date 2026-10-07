@@ -1,0 +1,22 @@
+**定义 12.1（FIB 关系纤维系统）。** 一个系统由
+
+$$
+\mathfrak F=(\mathbb T,\rho,\mathcal L,\{\delta_X\},\mathcal C,\{\eta_C\},\mathscr E,\mathscr W,\operatorname{Check},\operatorname{Cost})
+$$
+
+组成，分别记录原子来源、递归、合法名字、语义表示、结构化映射、观察器、上下文、见证、证明核验和成本。
+
+它的三个基本判据是
+
+$$
+\delta_YF=f\delta_X,
+$$
+
+$$
+\ker\eta\subseteq\ker g,
+$$
+
+以及当前等价是否被全部允许上下文保持。
+
+**成果范围。** 表示完成意味着已给出相容名字或极限对象；观察完成意味着当前边界足以恢复指定目标；证明完成意味着目标由有限证书闭合。三者需要额外定理连接，不能自动互换。
+
