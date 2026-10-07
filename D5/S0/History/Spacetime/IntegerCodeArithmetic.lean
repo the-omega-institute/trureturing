@@ -30,6 +30,15 @@ instance instLinearOrder : LinearOrder IntCode := by
   classical
   exact int_code_equiv.symm.linearOrder
 
+/-- The order parents use the decoder transport on the signed-code subtype. -/
+instance instPartialOrder : PartialOrder IntCode := instLinearOrder.toPartialOrder
+
+instance instPreorder : Preorder IntCode := instPartialOrder.toPreorder
+
+instance instLE : LE IntCode := instPreorder.toLE
+
+instance instLT : LT IntCode := instPreorder.toLT
+
 /-- Forward map is `decodeInt`; inverse map is the original `int_code_equiv` encoder. -/
 def decode_ring_equiv : IntCode ≃+* Int := int_code_equiv.symm.ringEquiv
 

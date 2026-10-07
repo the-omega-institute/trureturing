@@ -91,7 +91,7 @@ private theorem qubitTomographyProjector_eq_rankOneDensity
       complex_sqrt_two_inv_mul_self] <;>
     ring_nf <;>
     norm_num only [pow_two, Complex.I_mul_I, complex_sqrt_two_sq,
-      complex_sqrt_two_inv_mul_self]
+      complex_sqrt_two_inv_mul_self, mul_neg]
 
 private theorem rankOneDensity_isNormalized
     (v : Fin 2 -> Complex) (hv : star v ⬝ᵥ v = 1) :
