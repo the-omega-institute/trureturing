@@ -673,3 +673,133 @@ $-D_{\rm lb}(A)$ requirement; neither signed tail bound has been proved.
 The full integral over $[A,\infty)$ remains in (G9).
 This paper-level improvement does not prove RH, and finite source
 checks and source inspection do not certify its external premises.
+
+## A fixed positive scale mixture cannot remove the functional-equation weight
+
+The signed formula above and the actual-source condition (G9) are
+retained here. Durkan–Hughes–Pearce-Crump, *Generalisations of the
+Landau–Gonek theorem and applications to mean values of zeta*,
+[arXiv:2601.18025v1](https://arxiv.org/abs/2601.18025v1), Theorem 5,
+instead estimates the dyadic sum
+
+$$
+D_T(X)=\sum_{T<\operatorname{Im}\rho\le2T}\chi(\rho)X^\rho,
+\qquad \zeta(s)=\chi(s)\zeta(1-s).
+$$
+
+The sum uses the actual zeros with multiplicity. Its complex,
+zero-dependent weight is part of the theorem; the RH-dependent errors
+cannot be used unconditionally. This application addresses only one
+proposed weight-removal interface. It does not reassess that theorem,
+claim an original transform obstruction, or provide Lean verification.
+
+Fix the same cutoff $A>1$ throughout. The coefficient contributed by
+the original tail to a zero $s$ is
+
+$$
+F_A(s)=\frac1s\int_A^\infty
+u^{s-2}\frac{1+\log u}{\log^2u}\,du,
+\qquad 0<\operatorname{Re}s<1.
+\tag{M1}
+$$
+
+In the signed explicit formula its contribution is $-F_A(\rho)$.
+The pole term and the trivial-zero integral remain those displayed
+above. Integration by parts identifies (M1) with the two corresponding
+terms of that existing formula; no zero tail is truncated here.
+
+### The original coefficient already has a positive Mellin representation
+
+Put $k(u)=(1+\log u)/(u^2\log^2u)$. Since
+
+$$
+\int_v^\infty k(u)\,du=\frac1{v\log v}\qquad(v>1),
+$$
+
+integrating $x^{s-1}$ over $0<x<u$ and changing the order gives
+
+$$
+F_A(s)=\int_0^\infty
+\frac{x^{s-1}}{\max(A,x)\log\max(A,x)}\,dx.
+\tag{M2}
+$$
+
+For real $0<s<1$ this follows by Tonelli. For complex $s$ in the
+same strip, the absolute integral is the finite integral with exponent
+$\operatorname{Re}s$, so Fubini gives the identical formula. Thus
+$F_A(s)=\int x^s\,d\nu_A(x)$ for the positive scale measure
+
+$$
+d\nu_A(x)=\frac{dx}{x\max(A,x)\log\max(A,x)}.
+$$
+
+This representation by itself supplies no one-sided bound for the
+signed zero sum. Applying it directly to $D_T$ would retain the unwanted
+$\chi(\rho)$ factor.
+
+### The reciprocal weight destroys fixed positive scale representability
+
+The classical functional equation, in
+[DLMF 25.4.2](https://dlmf.nist.gov/25.4.E2), has
+
+$$
+\chi(s)=2^s\pi^{s-1}\sin(\pi s/2)\Gamma(1-s).
+$$
+
+Consequently, for real $\sigma\uparrow1$,
+$\chi(\sigma)>0$ and $\chi(\sigma)^{-1}\sim(1-\sigma)/2$.
+For $0<\sigma<1$, $F_A(\sigma)/\chi(\sigma)$ is strictly positive,
+but
+
+$$
+\lim_{\sigma\uparrow1}\frac{F_A(\sigma)}{\chi(\sigma)}=0.
+\tag{M3}
+$$
+
+To verify the endpoint, set $\epsilon=1-\sigma$ and
+$w(u)=(1+\log u)/\log^2u$, which tends to zero. For every $\eta>0$,
+choose $B\ge A$ with $w(u)\le\eta$ for $u\ge B$. The finite-prefix
+contribution to $\epsilon\int_A^\infty u^{-1-\epsilon}w(u)\,du$
+tends to zero, while its tail is at most
+$\eta\epsilon\int_B^\infty u^{-1-\epsilon}du
+=\eta B^{-\epsilon}\le\eta$. This proves (M3), including the
+complete infinite tail and the fixed original cutoff.
+
+Suppose a nonnegative Borel measure $\mu_A$ on $(0,\infty)$ had
+finite real moments throughout $0<\sigma<1$ and satisfied the exact
+all-strip transport identity
+
+$$
+F_A(s)=\chi(s)\int_0^\infty X^s\,\mu_A(dX),
+\qquad 0<\operatorname{Re}s<1.
+\tag{M4}
+$$
+
+It may depend on $A$, but is fixed as $s$ varies. Fatou along any real
+sequence $\sigma\uparrow1$ and (M3) imply
+
+$$
+0\le\int_0^\infty X\,\mu_A(dX)
+\le\liminf_{\sigma\uparrow1}\int_0^\infty X^\sigma\,\mu_A(dX)=0.
+$$
+
+Since $X>0$ everywhere on the scale domain, $\mu_A=0$. This contradicts
+the strict positivity of $F_A(\sigma)/\chi(\sigma)$. Hence no such
+nonnegative measure exists, even without requiring finite total mass
+or a finite first moment in advance. Matching the real interval alone
+already produces the contradiction.
+
+If (M4) held, each finite dyadic actual-zero multiset would obey
+$\sum F_A(\rho)=\int D_T(X)\,\mu_A(dX)$, with its multiplicities
+unchanged. The result rules out this fixed positive, all-strip kernel
+transport before any summation over heights. It does not rule out
+signed or complex measures, interpolation only on the actual zero
+set, height-dependent transforms, or approximation with a separately
+bounded remainder. Those are different interfaces requiring their own
+integrability, uniform error and sign estimates. In particular, an
+all-strip identity is a sufficient universal matching requirement,
+not a necessary condition for every use of the weighted theorem.
+
+No estimate for the original signed $I_\psi(A)$ follows. Condition
+(G9), at the same selected integer and with the full tail, remains
+unproved; RH remains unproved.
