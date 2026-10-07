@@ -237,3 +237,88 @@ kernel and the source's stronger parameterwise target are not claimed to
 be equivalent. No identity with Suzuki's Weil form or the same-source
 Robin integral is asserted, and no signed Robin estimate or Lean
 verification is supplied here.
+
+## Reusing the classical logarithmic-derivative criterion at zero parameter
+
+Lagarias, *On a positivity property of the Riemann ξ-function*,
+[Acta Arithmetica 89(3), 217–234](https://doi.org/10.4064/aa-89-3-217-234),
+printed pp.217–219, equations (1.4)–(1.5) and Theorem 1.1, supplies
+
+$$
+\mathrm{RH}\quad\Longleftrightarrow\quad
+\Re\frac{\xi'(s)}{\xi(s)}>0\qquad(\Re s>1/2).
+\tag{W6}
+$$
+
+The source explicitly attributes this known observation to earlier work,
+including Hinkkanen. The function is the entire
+$\xi(s)=\tfrac12s(s-1)\pi^{-s/2}\Gamma(s/2)\zeta(s)$;
+the half-plane condition includes zero exclusion. The unconditional
+positivity on $\Re s>1$ does not supply (W6) on the interior half-strip.
+This classical criterion is reused, not reproved or presented as new
+mathematics.
+
+The actual physical $K_0$ in (W2) has a direct interface to (W6).
+Differentiating (W1) at $\omega=0$ and reusing (W5) gives
+
+$$
+\mathcal B(w,z):=\left.\partial_\omega\mathcal D_\omega(w,z)
+\right|_{\omega=0}
+=\frac{F'(z)\overline{F(w)}-F(z)\overline{F'(w)}}
+{\pi(\overline w-z)}
+=\frac4\pi\int_{\mathbb R^2}K_0(a,b)
+ e^{iza-i\overline w b}\,da\,db.
+\tag{W7}
+$$
+
+The exponential moments used for (W5) justify this endpoint derivative
+and the same cutoff transport. If the actual physical $K_0$ is a positive
+semidefinite kernel on $\mathbb R$, then $\mathcal B$ is positive
+semidefinite on upper-half-plane evaluation sets. No positive-parameter
+coverage is assumed in this implication.
+
+For $y=\Im z>0$ and $F(z)\ne0$, its diagonal is
+
+$$
+\mathcal B(z,z)
+=-\frac{|F(z)|^2}{\pi y}\Im\frac{F'(z)}{F(z)}
+=\frac{|F(z)|^2}{\pi y}
+\Re\frac{\xi'(1/2-iz)}{\xi(1/2-iz)}.
+\tag{W8}
+$$
+
+Here $F'/F=i\,\xi'/\xi(1/2+iz)$, and the functional equation reflects
+$1/2+iz$ to $1/2-iz$, whose real part is $1/2+y$.
+The fixed normalization scalar of $F$ cancels in the logarithmic
+derivative and leaves the positive factor $|F(z)|^2$ intact.
+
+There is no circular zero-free premise in using (W8). If an
+upper-half-plane zero $r$ of $F$ had multiplicity $m\ge1$, the standard
+local logarithmic-derivative pole would give
+
+$$
+\frac{F'(r-i\varepsilon)}{F(r-i\varepsilon)}
+=\frac{im}{\varepsilon}+O(1)
+\qquad(\varepsilon\downarrow0).
+$$
+
+Choose $\varepsilon<\Im r$ small enough that the evaluation point is
+not a zero. Its diagonal in (W8) is then strictly negative, contradicting
+positivity. Real symmetry excludes lower-half-plane zeros. Thus proving
+the full physical $K_0$ positive semidefinite would already imply RH.
+This is a source-specific application of the classical pole/positivity
+criterion; it supplies no new general RH criterion or positivity theorem.
+
+For this sufficient route, the next analytic target is the original
+$\omega=0$ form on its full test space. The stronger all-parameter
+positivity program still has its own parameter-coverage obligation, but
+that obligation is not needed to obtain RH from the zero-parameter target.
+Freedman's Section 5 and Remark 15.6 retain, also at zero, the parity
+comparison $A\ge0$, $-A\le B\le A$ and the indefinite Volterra residual.
+Section 15.7's full trace-space Schur requirement must therefore be
+established for the zero-parameter operators and transported domains;
+its $\omega=0.49$ budget cannot be transferred without an operator
+comparison. Zero-parameter finite matrices and roundoff-level tests
+are not that full-space theorem. No converse to the $K_0$ implication,
+parameter monotonicity, identification with Suzuki's Weil operator,
+signed Robin estimate or Lean verification is supplied.
