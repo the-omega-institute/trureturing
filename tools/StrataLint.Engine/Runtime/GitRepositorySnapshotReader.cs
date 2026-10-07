@@ -2,6 +2,7 @@ using System.Collections.Immutable;
 using System.Runtime.ExceptionServices;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Security.Cryptography;
 
 namespace StrataLint.Engine;
 
@@ -21,6 +22,14 @@ internal static class GitRepositorySnapshotReader
         Func<string, bool>? readContents = null, IReadOnlyList<string>? pathspecs = null)
         => ReadCurrentCore(repositoryRoot, include, null, readContents, pathspecs);
 
+    internal static RawRepositorySnapshot ReadCurrentProjection(string repositoryRoot,
+        Func<string, bool> readContents, Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null)
+    {
+        ArgumentNullException.ThrowIfNull(readContents);
+        return ReadCurrentCore(repositoryRoot, null, null, readContents,
+            observeContentDigest: observeContentDigest);
+    }
+
     // Visit every file while retaining only the bytes needed for the same link
     // validation as a full snapshot. Identity consumers need the complete path
     // inventory, but do not need all file bodies alive at once.
@@ -32,11 +41,12 @@ internal static class GitRepositorySnapshotReader
 
     private static RawRepositorySnapshot ReadCurrentCore(string repositoryRoot, Func<string, bool>? include,
         Action<RawRepositoryEntry>? visit, Func<string, bool>? readContents = null,
-        IReadOnlyList<string>? pathspecs = null)
+        IReadOnlyList<string>? pathspecs = null,
+        Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         var root = Path.GetFullPath(repositoryRoot);
-        var read = Collect(root, include, visit, readContents, pathspecs);
+        var read = Collect(root, include, visit, readContents, pathspecs, observeContentDigest);
         if (pathspecs is not null)
         {
             // A referent that is not itself an enumerated path may lie wholly or partly
@@ -52,7 +62,7 @@ internal static class GitRepositorySnapshotReader
                 .ToArray();
             if (missing.Length > 0)
                 read = Collect(root, include, visit, readContents,
-                    [.. pathspecs, .. missing.Select(static referent => ":(literal)" + referent)]);
+                    [.. pathspecs, .. missing.Select(static referent => ":(literal)" + referent)], observeContentDigest);
         }
 
         FileMapSymlinkPolicy.ValidateSnapshot(read.Entries, read.Links, read.Paths, path =>
@@ -67,7 +77,8 @@ internal static class GitRepositorySnapshotReader
     private static (ImmutableArray<RawRepositoryEntry>.Builder Entries,
         ImmutableArray<RepositoryPathInventoryEntry>.Builder Inventory, HashSet<string> Links, string[] Paths,
         HashSet<string> InspectedDirectories) Collect(string root, Func<string, bool>? include,
-        Action<RawRepositoryEntry>? visit, Func<string, bool>? readContents, IReadOnlyList<string>? pathspecs)
+        Action<RawRepositoryEntry>? visit, Func<string, bool>? readContents, IReadOnlyList<string>? pathspecs,
+        Action<string, ReadOnlyMemory<byte>>? observeContentDigest)
     {
         var scopes = EnumerationScopes(pathspecs).ToArray();
         var tracked = ParseIndex(Git(root, ["ls-files", "--stage", "-z", .. scopes[0]]));
@@ -103,7 +114,7 @@ internal static class GitRepositorySnapshotReader
         {
             visit?.Invoke(entry);
             entries.Add(visit is null || link || FileMapDocuments.IsPolicyPath(entry.Path)
-                ? entry : entry with { Bytes = [] });
+                ? entry : entry with { Bytes = [], ContentWasRead = false });
         }
         for (var offset = 0; offset < paths.Length; offset += ProbeWindowPaths)
         {
@@ -130,6 +141,7 @@ internal static class GitRepositorySnapshotReader
                     FileMapSymlinkPolicy.RequirePlainAncestors(root, path, inspectedDirectories);
                     probe.Included = include is null || include(path);
                     probe.WantsContents = readContents is null || readContents(path) || FileMapDocuments.IsPolicyPath(path);
+                    probe.WantsContentDigest = observeContentDigest is not null;
                 }
                 catch (Exception exception)
                 {
@@ -154,6 +166,7 @@ internal static class GitRepositorySnapshotReader
                     inventory.Add(new(path, indexMode, "symlink", "120000", StrictUtf8.GetString(linkBytes)));
                     if (!probe.Included) continue;
                     links.Add(path);
+                    observeContentDigest?.Invoke(path, SHA256.HashData(linkBytes));
                     Retain(new RawRepositoryEntry(path, ImmutableArray.CreateRange(linkBytes)), link: true);
                     continue;
                 }
@@ -175,9 +188,10 @@ internal static class GitRepositorySnapshotReader
                 inventory.Add(new(path, indexMode, "regular", probe.Executable ? "100755" : "100644", null));
                 if (!probe.Included) continue;
                 probe.BodyFailure?.Throw();
+                if (probe.ContentDigest is { } contentDigest) observeContentDigest?.Invoke(path, contentDigest);
                 // The fresh read buffer has no mutable alias; the snapshot owns it.
                 Retain(new RawRepositoryEntry(path, probe.Body is { } body
-                    ? ImmutableCollectionsMarshal.AsImmutableArray(body) : []));
+                    ? ImmutableCollectionsMarshal.AsImmutableArray(body) : [], ContentWasRead: probe.Body is not null));
             }
         }
 
@@ -220,7 +234,8 @@ internal static class GitRepositorySnapshotReader
         if (batch.Count > 0) yield return ["--", .. batch];
     }
 
-    internal static RawRepositorySnapshot ReadRevision(string repositoryRoot, string revision)
+    internal static RawRepositorySnapshot ReadRevision(string repositoryRoot, string revision,
+        IReadOnlyList<string>? paths = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(repositoryRoot);
         ArgumentException.ThrowIfNullOrWhiteSpace(revision);
@@ -231,12 +246,124 @@ internal static class GitRepositorySnapshotReader
                 root,
                 arguments,
                 maximumOutputBytes,
-                standardInput));
+                standardInput),
+            paths);
+    }
+
+    internal static RawRepositorySnapshot ReadRevisionProjection(string revision,
+        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
+        GitStreamReader<IReadOnlyDictionary<string, GitRepositoryBlob>> runGitStreaming,
+        Func<string, bool> readContents,
+        Action<string, ReadOnlyMemory<byte>>? observeContentDigest = null)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(revision);
+        ArgumentNullException.ThrowIfNull(readContents);
+        var treeResult = runGit(["ls-tree", "-r", "-l", "-z", revision], MaximumGitOutputBytes, default);
+        EnsureSuccess(treeResult);
+        var tree = ParseTree(treeResult.StandardOutput).OrderBy(static entry => entry.Path, StringComparer.Ordinal).ToArray();
+        foreach (var entry in tree)
+            if (!IsSupportedMode(entry.Mode) || entry.ObjectType != "blob" || entry.Size is null)
+                throw new InvalidOperationException($"protected base has non-regular entry {entry.Path} ({entry.Mode} {entry.ObjectType})");
+
+        var retainedPaths = tree.Where(entry => readContents(entry.Path)
+            || entry.Mode == "120000" || FileMapDocuments.IsPolicyPath(entry.Path))
+            .Select(static entry => entry.Path).ToHashSet(StringComparer.Ordinal);
+        var retainedObjects = tree.Where(entry => retainedPaths.Contains(entry.Path))
+            .Select(static entry => entry.ObjectId).ToHashSet(StringComparer.Ordinal);
+        var objects = tree.Where(entry => observeContentDigest is not null || retainedObjects.Contains(entry.ObjectId))
+            .DistinctBy(static entry => entry.ObjectId, StringComparer.Ordinal).ToArray();
+        IReadOnlyDictionary<string, GitRepositoryBlob> blobs = new Dictionary<string, GitRepositoryBlob>(StringComparer.Ordinal);
+        if (objects.Length > 0)
+        {
+            var input = StrictUtf8.GetBytes(string.Concat(objects.Select(static entry => entry.ObjectId + "\n")));
+            var result = runGitStreaming(["cat-file", "--batch"], MaximumGitOutputBytes, input,
+                (stream, cancellation) => ParseBatchStream(objects, retainedObjects,
+                    observeContentDigest is not null, stream, cancellation));
+            EnsureSuccess(new ProcessOutput(result.ExitCode, [], result.StandardError));
+            blobs = result.StandardOutput;
+        }
+
+        var entries = tree.Select(entry => new RawRepositoryEntry(entry.Path,
+            retainedPaths.Contains(entry.Path) ? blobs[entry.ObjectId].Bytes : [],
+            (entry.ObjectId.Length == 40 ? "git-sha1:" : "git-sha256:") + entry.ObjectId,
+            retainedPaths.Contains(entry.Path))).ToArray();
+        var links = tree.Where(static entry => entry.Mode == "120000")
+            .Select(static entry => entry.Path).ToHashSet(StringComparer.Ordinal);
+        FileMapSymlinkPolicy.ValidateSnapshot(entries, links, tree.Select(static entry => entry.Path).ToArray());
+        if (observeContentDigest is not null)
+            foreach (var entry in tree) observeContentDigest(entry.Path, blobs[entry.ObjectId].ContentHash);
+        var inventory = tree.Select(entry => new RepositoryPathInventoryEntry(entry.Path, entry.Mode,
+            links.Contains(entry.Path) ? "symlink" : "regular", entry.Mode,
+            links.Contains(entry.Path) ? StrictUtf8.GetString(blobs[entry.ObjectId].Bytes.AsSpan()) : null)).ToImmutableArray();
+        return RawRepositorySnapshot.Create(entries, inventory);
+    }
+
+    private static async Task<IReadOnlyDictionary<string, GitRepositoryBlob>> ParseBatchStream(
+        IReadOnlyList<GitRepositoryTreeEntry> expected, ISet<string> retain, bool computeHashes,
+        Stream output, CancellationToken cancellation)
+    {
+        var blobs = new Dictionary<string, GitRepositoryBlob>(StringComparer.Ordinal);
+        using var buffered = new BufferedStream(output, 64 * 1024);
+        var single = new byte[1];
+        var buffer = new byte[64 * 1024];
+        foreach (var entry in expected)
+        {
+            var header = new List<byte>(128);
+            while (true)
+            {
+                if (await buffered.ReadAsync(single, cancellation).ConfigureAwait(false) != 1)
+                    throw InvalidBatchOutput(entry.ObjectId);
+                if (single[0] == (byte)'\n') break;
+                if (header.Count >= 256) throw InvalidBatchOutput(entry.ObjectId);
+                header.Add(single[0]);
+            }
+            var fields = StrictUtf8.GetString(CollectionsMarshal.AsSpan(header)).Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            if (fields.Length != 3 || fields[0] != entry.ObjectId || fields[1] != "blob"
+                || !long.TryParse(fields[2], System.Globalization.NumberStyles.None,
+                    System.Globalization.CultureInfo.InvariantCulture, out var size) || size != entry.Size)
+                throw InvalidBatchOutput(entry.ObjectId);
+
+            var bytes = ImmutableArray<byte>.Empty;
+            byte[] contentHash = [];
+            try
+            {
+                if (retain.Contains(entry.ObjectId))
+                {
+                    if (size > int.MaxValue)
+                        throw new InvalidOperationException($"revision file exceeds the supported body size: {entry.Path}");
+                    var body = new byte[(int)size];
+                    await buffered.ReadExactlyAsync(body, cancellation).ConfigureAwait(false);
+                    bytes = ImmutableCollectionsMarshal.AsImmutableArray(body);
+                    if (computeHashes) contentHash = SHA256.HashData(body);
+                }
+                else
+                {
+                    using var hash = computeHashes ? IncrementalHash.CreateHash(HashAlgorithmName.SHA256) : null;
+                    var remaining = size;
+                    while (remaining > 0)
+                    {
+                        var count = (int)Math.Min(remaining, buffer.Length);
+                        await buffered.ReadExactlyAsync(buffer.AsMemory(0, count), cancellation).ConfigureAwait(false);
+                        hash?.AppendData(buffer, 0, count);
+                        remaining -= count;
+                    }
+                    if (hash is not null) contentHash = hash.GetHashAndReset();
+                }
+            }
+            catch (EndOfStreamException) { throw InvalidBatchOutput(entry.ObjectId); }
+            if (await buffered.ReadAsync(single, cancellation).ConfigureAwait(false) != 1 || single[0] != (byte)'\n')
+                throw InvalidBatchOutput(entry.ObjectId);
+            blobs.Add(entry.ObjectId, new GitRepositoryBlob(bytes, contentHash));
+        }
+        if (await buffered.ReadAsync(single, cancellation).ConfigureAwait(false) != 0)
+            throw new InvalidOperationException("git cat-file --batch emitted trailing data");
+        return blobs;
     }
 
     internal static RawRepositorySnapshot ReadRevision(
         string revision,
-        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit)
+        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
+        IReadOnlyList<string>? paths = null)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(revision);
         ArgumentNullException.ThrowIfNull(runGit);
@@ -245,7 +372,39 @@ internal static class GitRepositorySnapshotReader
             MaximumGitOutputBytes,
             default);
         EnsureSuccess(treeResult);
-        var tree = ParseTree(treeResult.StandardOutput).ToArray();
+        var all = ParseTree(treeResult.StandardOutput).ToArray();
+        var tree = paths is null ? all : all.Where(entry =>
+            paths.Any(selection => MatchesRevisionSelection(entry.Path, selection))).ToArray();
+        if (paths is not null && tree.Any(static entry => entry.Mode == "120000"))
+            tree = tree.Concat(all.Where(entry => FileMapDocuments.IsPolicyPath(entry.Path)))
+                .DistinctBy(static entry => entry.Path, StringComparer.Ordinal).ToArray();
+        var blobs = new Dictionary<string, ImmutableArray<byte>>(StringComparer.Ordinal);
+        var entries = ReadRevisionEntries(tree, runGit, blobs).ToList();
+        if (paths is not null)
+        {
+            var retained = tree.Select(static entry => entry.Path).ToHashSet(StringComparer.Ordinal);
+            var links = tree.Where(static entry => entry.Mode == "120000").Select(static entry => entry.Path)
+                .ToHashSet(StringComparer.Ordinal);
+            // Include complete target directories, even when the selection already
+            // retained part of them. Chains are rejected by the same policy below.
+            var referents = entries.Where(entry => links.Contains(entry.Path))
+                .Select(static entry => FileMapSymlinkPolicy.Referent(entry.Path, entry.Bytes.AsSpan()))
+                .OfType<string>().Distinct(StringComparer.Ordinal).ToArray();
+            var extra = all.Where(entry => !retained.Contains(entry.Path) && referents.Any(referent =>
+                entry.Path == referent || entry.Path.StartsWith(referent + "/", StringComparison.Ordinal))).ToArray();
+            entries.AddRange(ReadRevisionEntries(extra, runGit, blobs));
+            tree = [.. tree, .. extra];
+        }
+        FileMapSymlinkPolicy.ValidateSnapshot(entries,
+            tree.Where(static entry => entry.Mode == "120000").Select(entry => entry.Path).ToHashSet(StringComparer.Ordinal),
+            all.Select(static entry => entry.Path).ToArray());
+        return RawRepositorySnapshot.Create(entries);
+    }
+
+    private static RawRepositoryEntry[] ReadRevisionEntries(IReadOnlyList<GitRepositoryTreeEntry> tree,
+        Func<IReadOnlyList<string>, int, ReadOnlyMemory<byte>, ProcessOutput> runGit,
+        IDictionary<string, ImmutableArray<byte>> blobs)
+    {
         foreach (var entry in tree)
         {
             if (!IsSupportedMode(entry.Mode)
@@ -258,30 +417,32 @@ internal static class GitRepositorySnapshotReader
         }
 
         var objects = tree
+            .Where(entry => !blobs.ContainsKey(entry.ObjectId))
             .DistinctBy(static entry => entry.ObjectId, StringComparer.Ordinal)
             .ToArray();
-        if (objects.Length == 0)
+        if (objects.Length > 0)
         {
-            return RawRepositorySnapshot.Create([]);
+            var input = StrictUtf8.GetBytes(
+                string.Concat(objects.Select(static entry => entry.ObjectId + "\n")));
+            var objectResult = runGit(
+                ["cat-file", "--batch"],
+                BatchOutputLimit(objects),
+                input);
+            EnsureSuccess(objectResult);
+            foreach (var (id, bytes) in ParseBatchObjects(objects, objectResult.StandardOutput)) blobs.Add(id, bytes);
         }
-
-        var input = StrictUtf8.GetBytes(
-            string.Concat(objects.Select(static entry => entry.ObjectId + "\n")));
-        var objectResult = runGit(
-            ["cat-file", "--batch"],
-            BatchOutputLimit(objects),
-            input);
-        EnsureSuccess(objectResult);
-        var blobs = ParseBatchObjects(objects, objectResult.StandardOutput);
-        var entries = tree.Select(entry => new RawRepositoryEntry(
+        return tree.Select(entry => new RawRepositoryEntry(
             entry.Path,
             blobs[entry.ObjectId],
             (entry.ObjectId.Length == 40 ? "git-sha1:" : "git-sha256:") + entry.ObjectId)).ToArray();
-        FileMapSymlinkPolicy.ValidateSnapshot(entries,
-            tree.Where(static entry => entry.Mode == "120000").Select(entry => entry.Path).ToHashSet(StringComparer.Ordinal),
-            tree.Select(entry => entry.Path).ToArray());
-        return RawRepositorySnapshot.Create(entries);
     }
+
+    private static bool MatchesRevisionSelection(string path, string selection) =>
+        selection.StartsWith(":(literal)", StringComparison.Ordinal)
+            ? path == selection[10..] || path.StartsWith(selection[10..] + "/", StringComparison.Ordinal)
+            : selection.StartsWith(":(glob)", StringComparison.Ordinal)
+            ? FileMapGlob.CreateForAdmissionPlane(selection[7..]).IsMatch(path)
+            : path == selection || path.StartsWith(selection + "/", StringComparison.Ordinal);
 
     // policy-override (#11124): bounds how many file bodies a visiting reader holds at
     // once; not derived from host capacity. Exit: a measured memory/throughput receipt.
@@ -296,6 +457,7 @@ internal static class GitRepositorySnapshotReader
         internal string FullPath { get; } = fullPath;
         internal bool Included { get; set; }
         internal bool WantsContents { get; set; }
+        internal bool WantsContentDigest { get; set; }
         internal ExceptionDispatchInfo? Failure { get; set; }
         internal ExceptionDispatchInfo? BodyFailure { get; private set; }
         internal string? LinkTarget { get; private set; }
@@ -304,6 +466,7 @@ internal static class GitRepositorySnapshotReader
         internal bool Irregular { get; private set; }
         internal bool Executable { get; private set; }
         internal byte[]? Body { get; private set; }
+        internal byte[]? ContentDigest { get; private set; }
 
         // Same lstat-cached FileInfo sequence as the sequential reader; the body read
         // follows its own lstat so each file is observed once, in one place.
@@ -337,8 +500,20 @@ internal static class GitRepositorySnapshotReader
 
                 Executable = !OperatingSystem.IsWindows() && (info.UnixFileMode
                     & (UnixFileMode.UserExecute | UnixFileMode.GroupExecute | UnixFileMode.OtherExecute)) != 0;
-                if (!Included || !WantsContents) return;
-                try { Body = File.ReadAllBytes(FullPath); }
+                if (!Included || (!WantsContents && !WantsContentDigest)) return;
+                try
+                {
+                    if (WantsContents)
+                    {
+                        Body = File.ReadAllBytes(FullPath);
+                        if (WantsContentDigest) ContentDigest = SHA256.HashData(Body);
+                    }
+                    else
+                    {
+                        using var stream = File.OpenRead(FullPath);
+                        ContentDigest = SHA256.HashData(stream);
+                    }
+                }
                 catch (Exception exception) { BodyFailure = ExceptionDispatchInfo.Capture(exception); }
             }
             catch (Exception exception)
@@ -570,3 +745,9 @@ internal sealed record GitRepositoryTreeEntry(
     string ObjectId,
     string Path,
     long? Size);
+
+internal sealed record GitRepositoryBlob(ImmutableArray<byte> Bytes, ReadOnlyMemory<byte> ContentHash);
+
+internal delegate StreamedProcessOutput<T> GitStreamReader<T>(IReadOnlyList<string> arguments,
+    int maximumErrorBytes, ReadOnlyMemory<byte> standardInput,
+    Func<Stream, CancellationToken, Task<T>> readStandardOutput);

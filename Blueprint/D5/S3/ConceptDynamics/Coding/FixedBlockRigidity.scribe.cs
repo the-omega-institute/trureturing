@@ -79,6 +79,23 @@ internal sealed class FixedBlockRigidityDocument : IScribeDocumentDefinition
         B("k", Id("Nat")), B("hk", Call("NatPositive", Id("k"))),
         B("hpower", Equal(Call("matrixPower", Id("A"), Id("k")), Call("matrixPower", Id("B"), Id("k")))));
 
+    private static Formula WordSupplier(Formula body, params Formula.BoundVariable[] extra) =>
+        All(body, [B("H", Id("Type")), B("group", Call("Group", Id("H"))),
+            B("finiteH", Call("Fintype", Id("H"))), B("n", Id("Nat")),
+            B("A", Call("GroupMat", Id("H"), Id("n"), Id("n"))), B("k", Id("Nat")),
+            B("hk", Call("NatPositive", Id("k"))), .. extra]);
+    private static Formula LiftEndpoint(bool source) => WordSupplier(Equal(
+        Call(source ? "source" : "target", Call("expandedGraph", Id("A")),
+            Call("wordEdge", Call("liftWord", Id("w"), Id("z")),
+                source ? F.D(0) : Call("subtract", Id("k"), F.D(1)))),
+        Call("pair", Call(source ? "wordSource" : "wordTarget", Id("hk"), Id("w")),
+            source ? Id("z") : Call("product", Id("z"), Call("totalLabel", Id("w"))))),
+        B("w", Word(Call("baseGraph", Id("A")))), B("z", Id("H")));
+    private static Formula WordCount => WordSupplier(Equal(
+        Call("FintypeCard", Call("WordFiber", Id("A"), Id("hk"), Id("i"), Id("j"), Id("g"))),
+        Call("coeff", Call("entry", Call("matrixPower", Id("A"), Id("k")), Id("i"), Id("j")), Id("g"))),
+        B("i", Call("Fin", Id("n"))), B("j", Call("Fin", Id("n"))), B("g", Id("H")));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "A fixed disjoint block substitution that also respects unit time is induced by an actual-edge bijection at every position.",
         H("Original18.3: fixed block rigidity"),
@@ -100,5 +117,20 @@ internal sealed class FixedBlockRigidityDocument : IScribeDocumentDefinition
             Describe.Lean(DescribeId.Create("equal-power-ordered-block-attachment"),
                 DeclarationHandle.Create(Prefix + "equalPower_attachment"), H("The actual equal-power construction"),
                 StatementSource.FromAuthor(Disp(AttachmentClause)), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("matrixPower is natural matrix exponentiation, iterate is Function.iterate, and equalPowerFiberCounts denotes the proved fiber_counts_of_equal_power proof at A,B,k. For each positive k with the explicit natural matrix equality A^k=B^k, the actual ordered-label word fibers have equal cardinality. Separate finite choices construct the base word map, and the initial group coordinate uniquely determines its ordered lift. The direct quotient-and-remainder output equals equalPowerHomeomorph at every integer coordinate. Left group action and k-step time commute with this same map, and one-step commutation of this map implies A=B. The premise A^k=B^k remains explicit in equalPower_attachment. Under its essentiality, inertness and equal-augmentation hypotheses, InertGroupBlockConjugacy.original18_1 proves the bridge from the actual dimension-group action through the least positive tau to the rational n*bH(W) cutoff and supplies this premise at every admissible exponent. Its attachment uses the exact equalPowerHomeomorph at that exponent; one-step commutation of a different map does not imply the rigidity conclusion."))), DescribeRole.Theorem))));
+                Blocks(Paragraph(Text("matrixPower is natural matrix exponentiation, iterate is Function.iterate, and equalPowerFiberCounts denotes the proved fiber_counts_of_equal_power proof at A,B,k. For each positive k with the explicit natural matrix equality A^k=B^k, the actual ordered-label word fibers have equal cardinality. Separate finite choices construct the base word map, and the initial group coordinate uniquely determines its ordered lift. The direct quotient-and-remainder output equals equalPowerHomeomorph at every integer coordinate. Left group action and k-step time commute with this same map, and one-step commutation of this map implies A=B. The premise A^k=B^k remains explicit in equalPower_attachment. Under its essentiality, inertness and equal-augmentation hypotheses, InertGroupBlockConjugacy.original18_1 proves the bridge from the actual dimension-group action through the least positive tau to the rational n*bH(W) cutoff and supplies this premise at every admissible exponent. Its attachment uses the exact equalPowerHomeomorph at that exponent; one-step commutation of a different map does not imply the rigidity conclusion."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("ordered-lift-source"),
+                DeclarationHandle.Create(Prefix + "lift_source"), H("Actual initial endpoint"),
+                StatementSource.FromAuthor(Disp(LiftEndpoint(true))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every positive-length base word w and initial group coordinate z, liftWord starts at the actual vertex (wordSource(hk,w),z). This original endpoint supplier is used directly by the twisted-history seam constructor."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("ordered-lift-target"),
+                DeclarationHandle.Create(Prefix + "lift_target"), H("Actual terminal endpoint"),
+                StatementSource.FromAuthor(Disp(LiftEndpoint(false))), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The same liftWord ends at (wordTarget(hk,w),z*totalLabel(w)). Labels multiply in temporal order on the right of z. This original endpoint supplier is used directly by the twisted-history restriction and seam constructor."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("ordered-word-fiber-card"),
+                DeclarationHandle.Create(Prefix + "wordFiber_card"), H("Original finite word count"),
+                StatementSource.FromAuthor(Disp(WordCount)), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("WordFiber A hk i j g contains actual legal base words with the stated source, target and ordered total label, retaining each parallel-edge number. For every positive length k its cardinality is the g coefficient of the (i,j) entry of A^k. FintypeCard is Fintype.card. The actual twisted-history count consumes this original theorem after transporting finiteness through its reconstruction equivalence."))),
+                DescribeRole.Theorem))));
 }

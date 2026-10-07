@@ -13,7 +13,7 @@
 | 生成 Lean 报告 / 发射 Scribe | `make lean-report` / `make emit` |
 | 摄入指定理论源 | `make ingest SOURCE="<source-id 或源文件路径>"` |
 | 查看 atom / 连读上下文 | `make show-atom ATOM_ID=<id>` / `make atom-context ATOM_ID=<id>` |
-| 查看开放 atom 的就绪情况 | `make digestion-readiness` |
+| 搜索指定理论的 atom | `make search-atoms SOURCE=<源ID或理论路径> [TEXT=<关键词>] [STATE=<目录状态>] [LIMIT=<上限>]` |
 | 构建、冻结并覆盖锚点 atom | `make deposit ATOM_ID=<id> GID=<gid>` |
 | 构建并冻结无 atom 的形式化 | `make deposit-uncovered GID=<gid>` |
 | 用既有冻结声明覆盖 atom | `make cover ATOM_ID=<id> GID=<gid>`；批量用 `make cover-batch ATOMS=<TSV文件>` |
@@ -61,7 +61,7 @@ docs/theory(参考输入)──(可选)摄入机器──► Lean(唯一真源)�
   只进不承重,定位在消化账本       kernel 只看代码          治理/验证/发射/守门,自身零内容
 ```
 
-- **Lean**:真值=声明+证明项+axiom 闭包,注释零参与。X_Frontier 的 `TASK D5-Tnnnn` 是冻结门、SL-016 等 fail-closed 消费者读取的治理地址;其余工单散文非数学承重。SL-013 为 deferred `NoFindings`,不执法散文形状。
+- **Lean**:真值=声明+证明项+axiom 闭包,注释零参与。X_Frontier 的 `TASK D5-Tnnnn` 是冻结门与目标处理命令读取的治理地址;其余工单散文非数学承重。SL-013 为 deferred `NoFindings`,不执法散文形状。
 - **C# harness**:程序集只许程序(类型/逻辑/loader/writer);声明性实例住程序目录外(TOML/scribe.cs/Evidence/D5)或测试 fixture(第 4.2 条)。
 - **docs/theory**:理论卷是参考输入；需要进入消化账本时，经 atomizer+消化账本摄入，Lean/C# 对其零知识零定位(TheoryIsolation)。新增理论 PR 可以只提交正文，不以 `make ingest`、atom CAS 或 backfill 作为合并前置；形式化交付也不以理论卷或摄入为前置(第 1.2 条「形式化直接写 Lean 与 Scribe」)；卷与 atoms 不删属建设者纪律。已形式化者不重复形式化,勘误追加散文与新 atom。只增不减的账本是 git,机器只保证数据当下正确,改删历史由 git 查证,无历史单调判官。实现层无既有 CAS blob 删除面;失败回滚只删本次新建且尚未入账的 blob。
 
@@ -89,7 +89,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 ### 2.1 账必须平
 
 **账,必须平(诚实 > 速度)**:异常(意外数值、张力、失败尝试)须由读数检出并入账,或显式标永久案号/`ASSUMED-UNVERIFIED`/`deferred`,不得静默遗漏;“账平”即浮账集为空。产物形式服从第 2.10 条。
-*成熟锚*:复式记账(Pacioli,1494)、no-silent-failure/fail-closed。〔守护:**硬**·SL-019 落账、SL-016 结构化回填;散文异常靠对手官〕
+*成熟锚*:复式记账(Pacioli,1494)、no-silent-failure/fail-closed。〔守护:**硬+软边界**·SL-019 检查非消化结构化输入；消化账目由目标命令按需读取与处理，辅助一致性偏差遵守第 1.2 条；散文异常靠对手官。〕
 
 ### 2.2 机器判对错与不可判 open
 
@@ -337,7 +337,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 4.6 run-local 投影的归宿
 
-**run-local 投影不入 Git 索引**:`Generated/echo-residuals/<source_id>.md` 由 `.gitignore`+FILEMAP 声明为 run-local,按需现算。分片只缩小冲突面,出库才消除该族的合并冲突面;tracked 投影仍属 merge unit。`FILEMAP-RUN-LOCAL-TRACKED` 对任一分片回索引报红,声明是权威,树须服从。
+**run-local 投影不入 Git 索引**:FILEMAP 声明的 run-local 产物按需现算。分片只缩小冲突面,出库才消除该族的合并冲突面;tracked 投影仍属 merge unit。`FILEMAP-RUN-LOCAL-TRACKED` 对声明为 run-local 的产物回索引报红,声明是权威,树须服从。
 
 ### 4.7 生产链、冻结与消化状态
 
@@ -379,7 +379,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 - **冻结态(真值侧,二值)**:`Golden/Frozen/state/<module>.lean.json` 存在 ⟺ 已冻结,这是当前成员身份的唯一判据;**永不解冻**是第 1.3 条冻结律的数学规范。SL-008 判当前态 C1–C5 与当前树一致,pin 改变以 `FROZEN_PIN_CHANGE` Observe 点名;历史由 git 记录,无历史只增判官。
 **旧事件格式边界**:commit `572cd43587f120a379cf83871b68c249be36cd5e` 中 Freeze/schema 5 payload 的 `statement_id`、`declaration_statement_ids`、`descriptor_selector`(Lean 路径)、`prerequisite_frozen_node_ids` 为承重数据,末项是真值 DAG 的边;此历史格式不取代当前 state 成员判据。
 
-- **消化态(账目侧,四值)**:`residual-open`(尚无 GID 覆盖)/ `partial-closed`(子项部分覆盖)/ `absorbed-closed`(覆盖 GID 与 coverage 数据齐备)/ `nonpropositional-inapplicable`(**无需项目覆盖的终结**:非命题,或命题但仅由钉版上游闭合而仓内无 GID;#5770 方向③,#8049 owner 2026-09-15 裁决复用)。第四态**不是**由 atom 字节或 kind 派生的,而是由 `receipts.nonpropositional`(`justification` + 连读的 `previous_atom_id`/`next_atom_id`,边界为 `null`)经 `DigestionStatusEvaluator` 机器派生:收据在而目录不对、目录在而收据缺、或与 coverage / quarantine / cover_disposition 共存,皆 SL-016 红。唯一写者是 `settle-atom`(`make settle` / `make settle-clear`),写前必须以 `make atom-context ATOM_ID=x` 连读前后 atom,writer 复算邻接不等即拒;`--clear` 原路退回 `residual-open`。它对链闭合视同已闭(`chain_atoms` 子项为 Absorbed 或 Nonpropositional 即闭),对 Lean 真值零主张、不计入可形式化分母、`Deletable` 不因它为真。「不新增持久化状态」(#5533 L3)的例外仅限此类;`section/*` 等仍走查询时 `not-formalizable(kind)` 投影。
+- **消化态(账目侧)**：`residual-open` 表示尚无 GID 覆盖，`partial-closed` 表示部分子项覆盖，`absorbed-closed` 表示本项与子链满足覆盖条件，`nonpropositional-inapplicable` 表示无需项目覆盖的终结：非命题，或命题仅由钉版上游闭合而仓内无 GID。第四态由 `receipts.nonpropositional` 的 justification 与真实邻居经目标处理命令派生，不由 atom 字节或 kind 自动判定。唯一写者是 `settle-atom`（`make settle` / `make settle-clear`）；写前以 `make atom-context ATOM_ID=x` 连读前后 atom，writer 复算邻接不等即拒，`--clear` 删除目标收据并退回 `residual-open`。目标 writer 拒绝所处理记录的非法字段共存与坏形；无关账目的目录或收据偏差不触发准入审计。链闭合要求父项自身完成且全部子项为 Absorbed 或 Nonpropositional；该状态对 Lean 真值零主张、不计入可形式化分母、`Deletable` 不因它为真。`section/*` 等仍走查询时 `not-formalizable(kind)` 投影。
 - **bind-only atom 的结算**:全 bind-only 的命题 atom 按第 3.2 条直接走既有覆盖与子句链闭合,到达 `absorbed-closed` 即处理完成;不产生新的 Lean 声明或冻结事件。仅由钉版上游闭合而无项目 GID 者按第 3.2 条以 `settle-atom` 的 justification 收据终结,不手写已完成。
 - **文献已发表、仓内无冻结 GID 覆盖的命题 atom**:能由钉版上游闭合者按第 3.2 条以 `settle-atom` 收据终结;其余留 `residual-open`(无 GID 不满足 `absorbed-closed`)。历史账目可以携带 `receipts.quarantine` 或 `receipts.cover_disposition`，loader 保留其结构并将其作为当前一致性输入；现役流程不再提供独立 quarantine 管理或 cover disposition 重试命令，cover 失败直接返回给 AI 修正后重新调用。
 - **两者不同构,故是两句话**:定理已冻结 **⇏** 其 atom 已 `absorbed-closed`(还差 cover 那一步);atom `absorbed-closed` **⟹** 其 `coverage_gids[].gid` 所指声明已冻结。汇报与 PR 说明里把"冻结了"写成"消化了"(或反之)即第 2.4 条冒领。
@@ -387,7 +387,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 **反面即病(如何自查)**:①手改 `Blueprint/**/*.md` —— 它是 `ScribeEmitter` 的投影,改它即造第二真源(第 4.2 条),正解是改 `.scribe.cs` 后 `make emit`;②手改 `atoms/sha256/*` —— atom 一经产出不可变(第 1.2 条总则「atoms 不删」),勘误走"追加散文 + 追加新 atom";③冻结后原地编辑 `.lean` 想修补 —— 必撞 SL-008,正解是弃分支重做一次 deposit。
 **多驱动者并行不必分配领域**:GID 代数定地址(第 4.2 条);两人重证同命题却不会使机器红,故开工前、开 PR 前各查本仓声明(第 3.1 条)。
 *成熟锚*:构建图的产者唯一性(Bazel 每个输出恰有一个 rule)、数据血缘(data lineage)、事件溯源之"事件是真源、读模型可重建"、工作流状态与领域状态分离(workflow state ≠ domain state)、生成物标明产者。
-〔守护:**硬 + 硬投影 + 软,诚实分栏**·**硬**——路径→kind→producer 由 FILEMAP strict loader 与 `FileMapPolicy` 执法;SL-008 判冻结成员当前态 C1–C5 与当前树一致,pin 变化为 `FROZEN_PIN_CHANGE` Observe,历史归 git;accepted 事件账本的 append-only 守护归属限于第 4.2 条的记录样本;coverage 边的 GID 唯一存在、Closed 与当前 statement identity 由 cover 写前门和 SL-016 判。**硬投影(尚未 lint,记 `open`)**——三类改动形态的面集合可由 changed-path 交集机器判,当前**无此规则**,不得称已执法。**软**——PR 说明三项**不可 lint**,且与第 5.2 条同一个数学:正文在检查后、合并前可编辑,任何 check-time 读取只证明"那一刻有";故**不为它造门**(第 7.10 条),靠对手官评审与第 5.10 条反思。按第 8.5 条,"不可 lint"不构成豁免〕
+〔守护:**硬 + 硬投影 + 软,诚实分栏**·**硬**——路径→kind→producer 由 FILEMAP strict loader 与 `FileMapPolicy` 执法;SL-008 判冻结成员当前态 C1–C5 与当前树一致,pin 变化为 `FROZEN_PIN_CHANGE` Observe,历史归 git;accepted 事件账本的 append-only 守护归属限于第 4.2 条的记录样本;coverage 边的 GID 唯一存在、Closed 与当前 statement identity 由 cover 写前门判；新增形式化的精确 ATOM 覆盖依据由 SL-031 按交付目标检查，不做全账一致性审计。**硬投影(尚未 lint,记 `open`)**——三类改动形态的面集合可由 changed-path 交集机器判,当前**无此规则**,不得称已执法。**软**——PR 说明三项**不可 lint**,且与第 5.2 条同一个数学:正文在检查后、合并前可编辑,任何 check-time 读取只证明"那一刻有";故**不为它造门**(第 7.10 条),靠对手官评审与第 5.10 条反思。按第 8.5 条,"不可 lint"不构成豁免〕
 
 ### 4.8 生长、抽象与容量压力
 
@@ -587,7 +587,7 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 ### 7.9 错误驱动的制度生成
 
 **错误不可穷尽,实际出错即立制。** 新错误首次出现时按四步闭环:①按第 2.1 条检出/入账,只留有用结论(第 2.10 条);②当场定义该类处理规范(第 7.3 条),按需立类,不预建空壳或即兴;③可机器判的清理规则立即化为 lint/门/巡检,经保守扩展入塔;④先 delta-only 约束新增,再按第 6.2 条分批单 PR 补账,D 空后同门自动判全树,不留垫层。
-错误是 harness 的燃料(生于忧患),每类只付一次学费;首次换永久规则,第二次同类即 harness bug,最高优先修器。*成熟锚*:免疫、回归测试、判例法、SRE 行动项、TDD 红先行。〔守护:**元准则+半硬**·SL-019 检异常,SL-016 等 fail-closed 校验案号,SL-013 不产 finding;立制走 SL-022+保守扩展,回归与第 5.10 条避免重犯;同类范围靠对手官,防逐实例过窄或过度门控〕
+错误是 harness 的燃料(生于忧患),每类只付一次学费;首次换永久规则,第二次同类即 harness bug,最高优先修器。*成熟锚*:免疫、回归测试、判例法、SRE 行动项、TDD 红先行。〔守护:**元准则+半硬**·SL-019 检查非消化结构化异常，目标 writer 校验所处理记录，SL-013 不产 finding；立制走 SL-022 与适用的保守扩展义务，回归与第 5.10 条避免重犯；同类范围靠对手官，避免逐实例过窄或过度门控。〕
 
 ### 7.10 有案防御与成本边界
 

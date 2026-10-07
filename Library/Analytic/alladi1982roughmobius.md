@@ -547,3 +547,161 @@ the remaining signed head, establish a practical algorithm, extend a
 finite Robin verification range, or prove RH. The classical ordinary
 Mertens estimate and the semigroup/Rankin mechanism are reused, without
 an originality claim.
+
+## A complete divisor-order remainder inside the finite critical head
+
+Keep the same $L=\log z\ge25$, $z\le x\le2z$,
+$P_z,M_z,J_x^{\eta_z}$ and $R=1024L^2$, $H_z=e^R$ from the
+complete upper row bound above. Put
+
+$$
+K_z=\left\lceil\frac{L}{\log2}\right\rceil+160,
+\qquad \ell=\log x.
+$$
+
+In the actual finite divisor-fiber identity (T7), split the kernel itself:
+
+$$
+\begin{aligned}
+J_x^{\ge K_z}(n)
+&=\sum_{\substack{d\mid P_z\\\omega(d)\ge K_z}}\mu(d)
+\int_{dn}^{d(n+1)}G_{\eta,x}(\log s)s^{-2}\,ds,\\
+J_x^{<K_z}(n)&=J_x^{\eta_z}(n)-J_x^{\ge K_z}(n).
+\end{aligned}
+\tag{D1}
+$$
+
+Every divisor of $P_z$ is square-free, so $\omega(d)$ counts its selected
+primes. The complete remaining finite head has the uniform bound
+
+$$
+\boxed{
+\sqrt x\log x
+\sum_{1\le n<\lceil H_z\rceil}
+|M_z(n)J_x^{\ge K_z}(n)|<2^{-80}.
+}
+\tag{D2}
+$$
+
+This uses the same full $M_z$ in every row. Truncating the kernel's divisor
+order does not replace that prefix by a different sieve. The unit row
+$n=1$ is included in (D2).
+
+### A finite tilted divisor budget
+
+Reuse (T4), $\prod_{p\le z}(1+1/p)<8L$. Finite products give
+
+$$
+D^{(2)}:=\sum_{d\mid P_z}\frac{2^{\omega(d)}}d
+=\prod_{p\le z}(1+2/p)<64L^2.
+\tag{D3}
+$$
+
+Normalize these positive weights only to compute their finite moments.
+The number of selected primes has mean
+$m_2=\sum_{p\le z}2/(p+2)$ and variance at most $m_2$.
+For $0\le t\le1/2$, the elementary bound
+$\log(1+t)\ge t-t^2/2\ge3t/4$ yields
+
+$$
+m_2\le2\sum_{p\le z}1/p
+\le\frac83\log(8L)<L\qquad(L\ge25).
+$$
+
+For the last comparison, $L-(8/3)\log(8L)$ is increasing on this range
+and is positive at $25$, using $\log200<6$.
+The latter follows from $e>5/2$ and $(5/2)^6>200$.
+Consequently the second moment is at most $m_2^2+m_2<2L^2$.
+For each integer $K\ge0$, the complete order tails therefore satisfy
+
+$$
+\begin{aligned}
+\sum_{\substack{d\mid P_z\\\omega(d)\ge K}}\frac1d
+&<64L^2\,2^{-K},\\
+\sum_{\substack{d\mid P_z\\\omega(d)\ge K}}\frac{\omega(d)}d
+&<64L^3\,2^{-K},\\
+\sum_{\substack{d\mid P_z\\\omega(d)\ge K}}\frac{\omega(d)^2}d
+&<128L^4\,2^{-K}.
+\end{aligned}
+\tag{D4}
+$$
+
+Indeed $2^{-\omega(d)}\le2^{-K}$ on these actual divisors; multiply
+this inequality by the positive tilted weights and their moments.
+This is the classical finite Euler-product exponential-moment argument,
+not a probability assumption on the primes or on the Möbius sequence.
+
+### Pay every head row, including rows below the source clock
+
+For a discarded divisor, $d\ge2^{K_z}\ge2^{160}z>x$.
+Thus $dn>x$ for every $n\ge1$, and FIB (429.3) applies over the
+entire discarded fiber even when $n<x$.
+Write $Q=R+1$. In every head row, $n+1\le\lceil H_z\rceil$ and
+$\log(n+1)\le R+1=Q$. If $j=\omega(d)$, then $\log d\le jL$,
+so the nonnegative argument $v=\log(s/x)$ is at most $Q+jL$ on
+$dn\le s\le d(n+1)$. The exact fiber mass gives
+
+$$
+|J_x^{\ge K_z}(n)|
+\le\frac1{\ell n(n+1)}
+\sum_{\substack{d\mid P_z\\\omega(d)\ge K_z}}
+\frac{(Q+jL)^2/2+Q+jL+12}{d}.
+\tag{D5}
+$$
+
+Use $|M_z(n)|\le n$, retaining its unit, and
+$\sum_{1\le n<\lceil H_z\rceil}1/(n+1)\le\log\lceil H_z\rceil\le Q$.
+Equations (D4)–(D5) bound the left side of (D2) by
+
+$$
+\sqrt x\,Q\,64L^2\,2^{-K_z}
+\left[Q^2/2+Q+12+(Q+1)L^2+L^4\right].
+\tag{D6}
+$$
+
+Since $Q\le1025L^2<2^{11}L^2$, the bracket is less than
+$2^{20}L^4$. Also $\sqrt x<2e^{L/2}$, so (D6) is less than
+
+$$
+2^{38-K_z}L^8e^{L/2}
+\le2^{-122}L^8e^{-L/2}<2^{-80}.
+\tag{D7}
+$$
+
+For the final comparison, $L^8e^{-L/2}$ decreases on $L\ge25$;
+at $25$, $25^8<2^{40}$ and $e^{-25/2}<2^{-25/2}$ make (D7)
+less than $2^{-94.5}$. All comparisons are symbolic outward bounds;
+no numerical experiment or optimality of $K_z$ is claimed.
+
+### The complete two-remainder interface at the same selected source
+
+The discarded divisor orders occur only in the finite head. The already
+paid complete upper row tail has all divisor orders, in a disjoint row
+range. Combining their exact decompositions gives
+
+$$
+I_\psi(x)=
+\sum_{1\le n<\lceil H_z\rceil}M_z(n)J_x^{<K_z}(n)
++\mathcal T_z(x)+\mathcal D_z(x),
+$$
+
+$$
+\sqrt x\log x\,|\mathcal T_z(x)+\mathcal D_z(x)|<2^{-79}.
+\tag{D8}
+$$
+
+Here $\mathcal D_z$ is the full signed sum discarded in (D2), and
+$\mathcal T_z$ is the complete row tail in (T12). No lower row,
+prime contribution or transported unit compensation is omitted.
+The original $d=1$ divisor is retained in $J_x^{<K_z}$.
+
+At the same eligible selected Robin source, $x=A=\log N$ and
+$z=P^+(N)$ satisfy the already paid conditions above. Thus a lower bound
+of $-\mathcal E(\log A)+2^{-79}$ for this normalized retained finite sum
+would supply the existing sufficient Robin condition. That lower bound
+remains unproved. The new application pays the complete high-order
+kernel contribution of every remaining head row; it supplies neither
+signs for the retained sum nor a practical algorithm, a new finite Robin
+verification range or RH. The tilted products and moments are classical
+inputs applied to the actual existing kernel, with no originality or
+Lean-certification claim.
