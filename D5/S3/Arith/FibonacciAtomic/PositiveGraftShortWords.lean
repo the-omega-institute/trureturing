@@ -178,11 +178,7 @@ private theorem run_grafts (n : ℕ) (v : ℕ × ℕ) :
   unfold run
   rw [List.foldl_map]
   change (List.replicate n ()).foldl (fun u _ => u + (1, 0)) v = _
-  apply Prod.ext
-  · rw [← List.foldl_hom Prod.fst (g₂ := fun x (_ : Unit) => x + 1) (by intros; rfl)]
-    simp
-  · rw [← List.foldl_hom Prod.snd (g₂ := fun x (_ : Unit) => x + 0) (by intros; rfl)]
-    simp
+  rw [List.foldl_const, List.length_replicate, add_right_iterate_apply]
 
 private theorem word_action (d : ℕ → ℕ) (k : ℕ) (v : ℕ × ℕ) :
     run (1, 0) (blockWord d k) v =
@@ -190,7 +186,7 @@ private theorem word_action (d : ℕ → ℕ) (k : ℕ) (v : ℕ × ℕ) :
   let M : (ℕ × ℕ) →+ (ℕ × ℕ) :=
     { toFun := step
       map_zero' := rfl
-      map_add' := by intro x y; ext <;> simp [step, add_assoc, add_left_comm, add_comm] }
+      map_add' := by intro x y; ext <;> simp [step, add_left_comm, add_comm] }
   induction k generalizing v with
   | zero =>
     simp only [blockWord, run_grafts, Function.iterate_zero, id_eq,
