@@ -1071,3 +1071,341 @@ The exact uniform minimum for mixed $n\ge4$ or homogeneous $n\ge5$ remains open 
 Classical certificate complexity and deterministic decision trees, the Catalan enumeration of ordered binary trees, tries, finite weighted decision-tree recursion and version-space elimination are reused tools. The background references already accompanying the certificate supplier are Nisan, *CREW PRAMs and Decision Trees* (1991), and Buhrman–de Wolf, *Complexity Measures and Decision Tree Complexity: A Survey* (2002). Those general tools do not by themselves supply the literal source-specific tables, the exact competing-tree domain, actual causal acquisition, or the paid-cost/colour-frontier bridge. The results here are repo-derived deductions under the explicit matched contract. There is no exhaustive literature search, novelty or priority claim, and no inference from a search miss. The chapter does not grant an old-source archive, a true candidate index, free actual frontiers, a reset, a new readout or a physical source action to the controller.
 
 ## 57.99 追加锚（本行以下为增补区）
+
+## 58. Native whole-rho renewal: source labels, retained spectral state and finite-clock fidelity
+
+This chapter consumes the same original source and the full interaction realization of §55. It addresses a joint question left by a static spectral description: what changes when an actually accepted native substitution creates new occurrences, what information determines that change, and when can the resulting finite amplitude trajectory preserve a common full spectral state? The positive result is uniform over the original finite sources and their actual irregular domains, on a supplied finite clock. The source/action and amplitude contracts remain distinct.
+
+**Definition 58.1 (the joint renewal contract and its task).** Retain Definition55.1 in full: one immutable INITIAL tree $t$, its original initialization and actual history, the root $o$, actual ordered addresses, accepted index $j$, current source $s=\rho^jt$ and domain $D=\operatorname{Pos}(s)$. No source is replaced, unlabelled or identified with another source. Only whole-rho source actions are considered here. An accepted command installs the literal $\rho s$; an original refusal keeps $s,j,D$ unchanged and supplies no candidate Read. Every actual original Read, command identity, acceptance/refusal and Stop is retained with its original port and charge. A command is not evidence of its execution. Under Process44 the numerical ports are exactly its declared functions; under a fixed-$H$ TM30/57 interface its original whole-candidate guard and literal Clifford Read remain in force. Statements about arbitrarily large $j$ concern uncapped finite prefixes or separately legal capped prefixes. They do not increase a fixed cap, continue a stopped execution or create an event after an infinite prefix.
+
+Keep precisely Definition55.2's counting norm, unit parent–child seams, global-depth potential $\phi(p)=2^{-|p|}$, constants $a,g>0$, common operator $\mathsf H=aL-gM_\phi$ and Dirichlet compressions $\mathsf H_D=I_D^*\mathsf H I_D$. In particular a leaf retains both missing-child Dirichlet terms; its diagonal is $3a-g2^{-|p|}$ off the root, and the root diagonal is $2a-g$. The potential does not restart at a new subtree root. The heat law, field exterior values and normalized amplitude law retain their different meanings in §55.
+
+Supply, in addition, the following amplitude/evolution/clock/preparation contract on this same source/history. At an accepted renewal $D\subset D'$, the transfer preserves every old same-address amplitude and its full counting norm. Between events it obeys $i\partial_\tau f=\mathsf H_Df$ on the currently installed domain. Reads and refusals introduce no amplitude kick under this additional contract. There are finitely many supplied nonnegative clock intervals of total length $S\le T<\infty$, including all declared evolution before Stop; their sum is not inferred from event counts. The actual amplitude trajectory is asserted only on $[0,S]$. Renewal itself takes zero duration in this idealization. A source apparatus implementing old-amplitude preservation, a coherent state, this Hamiltonian, nondisturbing source Reads and zero-duration transfer is not supplied by the original native menu. Its construction, preparation, execution duration and prices remain obligations. A nonzero-duration or disturbing implementation needs its own comparison law.
+
+The interaction task includes the entire complex amplitude in $\ell^2(\mathcal P)$, its full spectral coefficients and relative phases, and any expressly supplied bounded response $C:\ell^2(\mathcal P)\to Y$ with $\|C\|\le1$ or effect $0\le E\le I$. These are mathematical target functions, never renamed original native Read ports. A prepared initial amplitude is a separately supplied state, not a new source-dependent initialization of the original controller. Knowledge of an operator is not preparation or knowledge of its actual state.
+
+**Theorem 58.2 (forced transfer, exact native frontier defect and full modal update).** Let
+
+$$
+\mathcal B(s)=\{p\in D:s|_p=\beta\},\qquad
+D'=D\sqcup\{pL,pR:p\in\mathcal B(s)\}.
+\tag{58.1}
+$$
+
+The domain identity is TM22.2's actual-source identity. The transfer required by Definition58.1 is necessarily zero extension $J:\ell^2(D)\to\ell^2(D')$, even if no linearity of the proposed transfer was assumed. With $P_{\mathcal B}$ the projection onto the old beta-leaf coordinates, the generator defect is exactly
+
+$$
+\begin{aligned}
+\Delta_s&=\mathsf H_{D'}J-J\mathsf H_D,\\
+\Delta_sf&=-a\sum_{p\in\mathcal B(s)}f(p)(e_{pL}+e_{pR}),\\
+\Delta_s^*\Delta_s&=2a^2P_{\mathcal B},\qquad
+\|\Delta_sf\|^2=2a^2\sum_{p\in\mathcal B(s)}|f(p)|^2.
+\end{aligned}
+\tag{58.2}
+$$
+
+Thus every nonzero singular value is $a\sqrt2$, with complex multiplicity $|\mathcal B(s)|$. At the switch the two new amplitudes at each $p$ are zero, and their initial derivatives are both $iaf(p)$. Their exact prediction consumes the actual beta-leaf positions and the old amplitudes at those positions, rather than just a leaf count, kinetic spectrum or root amplitude.
+
+For a complete orthonormal finite eigenbasis $\psi_\mu$ of $\mathsf H_D$, with energies $\lambda_\mu$, and a complete orthonormal basis $\chi_\nu$ of $\mathsf H_{D'}$, with energies $\lambda'_\nu$, set
+
+$$
+\begin{aligned}
+\Gamma_{\nu\mu}&=\langle\chi_\nu,J\psi_\mu\rangle,\qquad
+\Gamma^*\Gamma=I,\\
+c'_\nu&=\sum_\mu\Gamma_{\nu\mu}e^{-i\theta\lambda_\mu}c_\mu,\\
+(\lambda'_\nu-\lambda_\mu)\Gamma_{\nu\mu}
+&=-a\sum_{p\in\mathcal B(s)}\psi_\mu(p)
+ \bigl(\overline{\chi_\nu(pL)}+\overline{\chi_\nu(pR)}\bigr).
+\end{aligned}
+\tag{58.3}
+$$
+
+Here $\theta$ is the supplied old-domain evolution interval and $c_\mu$ are the actual retained old modal coefficients, including phases. This gives the complete next state, including all new exceptional and root-invisible directions. No finite mode is discarded by a cancellation in a scalar resolvent. On the common realization the full state is the channel vector $U(c,(v_p))$ and the complete spectral projection-valued account (55.18a), retaining channel sequences and their relative phases, not an assumed complete basis of square-summable eigenvectors in the essential band. Only the positive fidelity theorem restricts that complete state to a subescape subspace. Degenerate bases may be changed unitarily; the corresponding coefficient change leaves the actual state and this update invariant.
+
+Proof. If $F(f)|_D=f$ and $\|F(f)\|=\|f\|$, orthogonality of old and new coordinates gives $\|F(f)|_{D'\setminus D}\|^2=0$. Hence $F(f)=Jf$ for every $f$. On old coordinates the principal block of $\mathsf H_{D'}$ is exactly $\mathsf H_D$: labels do not alter its diagonal, all old seams persist, and global depths and missing-child terms are inherited. On a new child of an old beta leaf the only nonzero old input is the seam $-af(p)$. TM22.2 makes these new child pairs disjoint, proving (58.2). Multiplying by $-i$ gives the new-child derivative. Taking inner products of the defect equation with every $\chi_\nu$ proves the last line of (58.3); completeness and $J^*J=I$ give $\Gamma^*\Gamma=I$. Expansion of the old evolution and then of $Jf$ gives the coefficient update. Full finite spectral bases exist by self-adjointness; §55.5 supplies their boundary reconstruction, internal-kernel compatibility and full normalization, including exceptional energies. □
+
+The rank $|\mathcal B(s)|$ of the newly born derivative map is a classical linear-rank consequence of (58.2). It counts independent complex amplitude coordinates in this particular task. It is not a finite-bit memory bound, a physical storage formula or an acquisition price. For a tolerance $\eta\ge0$, the exact one-step condition is $\sum_{p\in\mathcal B(s)}|f(p)|^2\le\eta^2/(2a^2)$. Zero instantaneous frontier mass does not imply permanent fidelity: later old-domain evolution can reach the frontier. Complete future prediction uses the retained full state and the time-ordered generators, as in (58.3).
+
+**Proposition 58.3 (scope of the all-state obstruction).** Whenever $\mathcal B(s)\ne\varnothing$, exact intertwining
+$e^{-i\tau\mathsf H_{D'}}J=Je^{-i\tau\mathsf H_D}$ for every $\tau$ is impossible. Moreover put $M=6a+g$. For every such $s$ and $0<\tau\le a/(4M^2)$,
+
+$$
+\bigl\|e^{-i\tau\mathsf H_{D'}}J-Je^{-i\tau\mathsf H_D}\bigr\|
+\ge\frac{a\tau}{\sqrt2}.
+\tag{58.4}
+$$
+
+After at least one accepted whole-rho substitution every nonempty original source has a beta leaf. Therefore this all-state operator obstruction persists uniformly at arbitrarily advanced separately legal versions. The operator comparison concerns an actually accepted next renewal or its separately legal source-indexed mathematical pair; a refusal leaves the installed operator unchanged. It does not assert failure for every particular state or for the subescape finite-clock task below.
+
+Proof. Differentiation at zero would give $\Delta_s=0$, contrary to (58.2). The first-order term has norm $a\sqrt2\tau$. The two exponential remainders together have norm at most $M^2\tau^2e^{M\tau}$. Since $M\ge6a$ and $M\tau\le1/24$, $e^{M\tau}<2$ and the remainder is at most $a\tau/2$. This is less than $a\tau/\sqrt2$, yielding (58.4). Finally the exact source composition update is $(A,B)\mapsto(B,A+B)$, so the new beta count is the old positive leaf count. This uses the original source substitution, not an amplitude sensor. □
+
+**Proposition 58.4 (a native source distinction consumed by the next response).** In the uncapped Process44 numerical contract take the two actual INITIAL sources
+
+$$
+u=\langle\langle\alpha,\alpha\rangle,\langle\beta,\beta\rangle\rangle,
+\qquad
+v=\langle\langle\alpha,\beta\rangle,\langle\alpha,\beta\rangle\rangle.
+\tag{58.5}
+$$
+
+Their old seven-site domains and the entire old addressed operator $\mathsf H_D$ coincide. Both have original $\eta=((2,2),0)$, so Process44.7 gives identical histories for every allowed numerical adaptive protocol with common initialization and matched prepared contexts. In particular the actual finite word
+
+$$
+\operatorname{Read}_\eta[((2,2),0)];\quad
+\rho;\quad\operatorname{Read}_\eta[((2,4),0)];\quad
+\operatorname{Stop}
+\tag{58.6}
+$$
+
+is common. Its two installed domains differ, because the beta frontiers are respectively $\{RL,RR\}$ and $\{LR,RR\}$. At the supplied values $a=1,g=16,z=-16$, write
+$G_o(D;z)=\langle e_o,(\mathsf H_D-zI)^{-1}e_o\rangle$. Then
+
+$$
+\begin{aligned}
+G_o(D(u);-16)=G_o(D(v);-16)&=163/296,\\
+G_o(D(\rho u);-16)&=448087/813700,\\
+G_o(D(\rho v);-16)&=41237/74884,\\
+G_o(D(\rho u);-16)-G_o(D(\rho v);-16)&=1/7616638850.
+\end{aligned}
+\tag{58.7}
+$$
+
+Thus the full old operator and its complete spectral catalogue, together with these genuine numerical records, do not determine this next mathematical response. This does not equate the sources in the wider authenticated-address interface or in a different Clifford port.
+
+Proof. The original cross-product leaf evaluation vanishes on both trees: each root multiplies two zero or two equal-axis child values. The actual compositions agree, and $c\rho=Mc$, $q\rho=Rq$ give both replies in (58.6). Process44.7 already owns the adaptive-history statement; no counterfactual execution is inferred from it. The old shape is the same complete two-level tree, so (55.4) gives the identical addressed matrix for every supplied $a,g$.
+
+At $z=-16$ the resolvent matrix diagonal at depths $0,1,2,3$ is respectively $2,11,15,17$. In the old domain each depth-one Schur pivot is $11-2/15=163/15$, giving $G_o=(2-30/163)^{-1}=163/296$. On a beta depth-two leaf actually split by $\rho$, its pivot becomes $15-2/17=253/17$. The depth-one pivots for $\rho u$ are $163/15$ and $2749/253$, while those for $\rho v$ are both $41237/3795$. Taking the root inverse gives precisely (58.7). These are applications of §55.5's existing elimination on the literal renewed trees, not a new Schur theorem. The uniform lower bound $\mathsf H_D\ge(3-2\sqrt2-16)I>-16I$ makes every inverse legitimate. The displayed difference is also obtained by full rational matrix elimination.
+
+If a new scalar port for this response were expressly authorized with jointly adversarial absolute error $\varepsilon_z$, this one response separates the pair exactly when $2\varepsilon_z<1/7616638850$. At equality the two closed report intervals touch. This is only the distinguishability condition for that added port; it supplies neither that port nor its precision, cost or execution. Original $\operatorname{Read}_\eta$ has acquired neither number in (58.7). □
+
+**Proposition 58.5 (a retained hidden phase becomes interaction-visible on one source).** Use the single INITIAL $t=\langle\beta,\alpha\rangle$, its old domain $D=(o,L,R)$ and the actually renewed domain $D'=(o,L,R,LL,LR)$. With $a=1,g=16$ the two expressly prepared unit states
+
+$$
+h=e_L-e_R,\qquad f_\pm=(e_o\pm h)/\sqrt3
+\tag{58.8}
+$$
+
+have energy $-8$, identical energy weights in the complete old spectral decomposition, and identical old root-amplitude functions for every supplied clock value. They are different relative-phase states. Under the transfer and evolution of Definition58.1, their renewed root probabilities differ; their difference has the expansion
+
+$$
+\begin{aligned}
+\langle e_o,e^{-i\tau\mathsf H_{D'}}Jf_+\rangle
+-\langle e_o,e^{-i\tau\mathsf H_{D'}}Jf_-\rangle
+&=-\frac{2i\tau^3}{3\sqrt3}+O(\tau^4),\\
+\left|\langle e_o,e^{-i\tau\mathsf H_{D'}}Jf_+\rangle\right|^2
+-\left|\langle e_o,e^{-i\tau\mathsf H_{D'}}Jf_-\rangle\right|^2
+&=-\frac{31}{9}\tau^4+O(\tau^6).
+\end{aligned}
+\tag{58.9}
+$$
+
+At $\tau=1/100$ this probability difference is strictly negative. In the original Process44 port both preparations are attached to the same actual source word
+$\operatorname{Read}_\eta[((1,1),k)];\rho;\operatorname{Read}_\eta[((1,2),a_{\rm axis})];\operatorname{Stop}$, with $k=b_{\rm axis}\times a_{\rm axis}$ and $Ra_{\rm axis}=b_{\rm axis}$, $Rk=a_{\rm axis}$. This port does not observe either amplitude state. For a fixed-cap Clifford history one instead retains exactly §55.6's Read/accept/Read/reject/Read/Stop, with $H=3$; its refused second candidate is not installed. A positive supplied interval on $D'$ may be assigned before the next event or Stop. No effect measurement is thereby inserted into either native word.
+
+Proof. The old matrix is
+$\left(\begin{smallmatrix}-14&-1&-1\\-1&-5&0\\-1&0&-5\end{smallmatrix}\right)$.
+Thus $\mathsf H_Dh=-5h$ and the hidden span is orthogonal to the root's invariant symmetric span. The two states have identical visible coefficients and opposite hidden coefficients; the hidden coefficient's modulus is unchanged. Their old root responses and spectral energy weights therefore coincide. Their root coefficients have the same nonzero sign, so they are not global-phase copies. Direct calculation gives $(-14-10)/3=-8$ for both energies.
+
+The renewed matrix is exactly (55.22) with diagonal $(-14,-5,-5,-1,-1)$, including all inherited exterior seams and the common potential. Direct powers of this full matrix give
+
+$$
+\langle e_o,\mathsf H_{D'}^nJh\rangle
+=(0,0,0,-2,50,-880,13680)\quad(0\le n\le6).
+\tag{58.10}
+$$
+
+The classical Taylor/Krylov criterion in Causal Response13.3.2 and13.5.2 applies with generator $-i\mathsf H_{D'}$, input $Jh$ and output $\langle e_o,\cdot\rangle$. Substitution gives the first line of (58.9). Write $A_o=\langle e_o,e^{-i\tau\mathsf H_{D'}}e_o\rangle$ and $A_h=\langle e_o,e^{-i\tau\mathsf H_{D'}}Jh\rangle$. The probability difference is $\frac43\operatorname{Re}(A_o\overline{A_h})$. Here $A_o=1+14i\tau+O(\tau^2)$ and $A_h=-i\tau^3/3+25\tau^4/12+O(\tau^5)$, which gives $-31/9$. Real matrices and real initial vectors make each probability an even function of $\tau$, giving the stated remainder order.
+
+There is a finite exact certificate away from zero. Truncate each normalized amplitude exponential at order eight at $\tau=1/100$, and let $d_8$ be the difference of the two squared truncated root amplitudes. Fraction arithmetic gives
+
+$$
+ d_8=-\frac{20971415346759163700136246832031}
+ {609638400000000000000000000000000000000},\qquad
+ \left|d(1/100)-d_8\right|
+ <\frac{2357947691}{59062500000000000000}.
+\tag{58.11}
+$$
+
+Indeed $\|\mathsf H_{D'}\|\le22$, so each amplitude remainder is at most $r_8=2(22/100)^9/9!$, using $e^{22/100}<2$. An exact root amplitude has modulus at most one; its truncated counterpart has modulus at most $1+r_8$. The two squared-modulus errors together are at most $4r_8+2r_8^2<6r_8$, which is the bound in (58.11). The upper endpoint $d_8+6r_8$ is negative. In decimal notation the certified interval lies between $-3.444\cdot10^{-8}$ and $-3.435\cdot10^{-8}$; the rational inequalities, not rounding, establish separation.
+
+This example shows that the old root-autonomous hidden subspace need not remain hidden under the actual asymmetric renewal. It does not refute a complete retained state: (58.3) uses the distinguishing signed coefficient. A spectral catalogue or even all spectral energy weights lacks that relative phase. The root effect here requires a separately supplied preparation/effect/clock contract and is not an acquired original Read. □
+
+**Theorem 58.6 (uniform localization of the complete common subescape space).** Put
+
+$$
+\epsilon_*=a(3-2\sqrt2),\quad c<\epsilon_*,\quad
+Q_c=\mathbf1_{(-\infty,c]}(\mathsf H),\quad
+ d=\epsilon_*-c,\quad b=(6a+\epsilon_*)/2,\quad
+ r=(6a-\epsilon_*)/2,\quad q=r/(b-c)<1.
+\tag{58.12}
+$$
+
+This is the full spectral projection from (55.18a), including every contrast channel and any coincident or exceptional eigenvalue. For every integer $R\ge0$ and $0\le s\le R$,
+
+$$
+\|(I-P_{B_R})Q_c\|
+\le\min\left\{1,\frac gd\left(q^{R-s+1}+2^{-s-1}\right)\right\}.
+\tag{58.13}
+$$
+
+In particular, with $s=\lfloor R/2\rfloor$, denote the displayed right side by $\ell_R$. Then $\ell_R\to0$. No cutoff-gap assumption is needed for this common projection, even if $c$ itself is an eigenvalue. An empty projection has no unit state to prepare; for $g>3a/4$, choosing $m\le c<\epsilon_*$ guarantees nonemptiness by §55.3–55.4. At $g=16a,c=-a$ this includes, in particular, both depth-one hidden channel ground states of §55.6, since their energies are at most $-a\sqrt3<-a$.
+
+Proof. Write $A=aL$, let $\mathcal K=\operatorname{ran}Q_c$, let $X:\mathcal K\to\ell^2(\mathcal P)$ be inclusion, and put $C=\mathsf H|_{\mathcal K}$. The existing gap and norm bounds give $\epsilon_*I\le A\le6aI$, $\|b-A\|\le r$, $C\le cI$ and $\|(b-C)^{-1}\|\le1/(b-c)$. From the actual potential equation,
+
+$$
+ AX-XC=gM_\phi X,\qquad
+ X=(b-A)X(b-C)^{-1}+gM_\phi X(b-C)^{-1}.
+\tag{58.14}
+$$
+
+The iteration is norm contracting by $q<1$; hence its unique bounded solution is the convergent operator series
+
+$$
+ X=g\sum_{n\ge0}(b-A)^nM_\phi X(b-C)^{-n-1}.
+\tag{58.15}
+$$
+
+This is the ordinary Neumann-series method applied to this two-operator equation, not an assumed resolvent decay theorem. Split $M_\phi=P_{B_s}M_\phi+(I-P_{B_s})M_\phi$. The tail has norm $2^{-s-1}$. The first factor has range in $B_s$, and each multiplication by $b-A$ enlarges support by at most one actual seam. Therefore its terms with $n\le R-s$ vanish after multiplication by $I-P_{B_R}$. Summing the remaining geometric bounds yields
+$gq^{R-s+1}/(b-c-r)=gq^{R-s+1}/d$; summing the potential-tail terms yields $g2^{-s-1}/d$. Since $X$ is isometric and $Q_c=XX^*$, this proves (58.13). The floor choice makes both terms tend to zero. The proof makes no root-visible or radial reduction and uses no finite-domain eigenvalue endpoint convention. □
+
+**Theorem 58.7 (source-composed finite-clock fidelity).** At an actually reached version $j_0$ of any original finite source, put $R=\lfloor j_0/2\rfloor$ and suppose $\ell_R<1$. Supply a common unit state $f\in\operatorname{ran}Q_c$ and expressly prepare on the actual domain $D_0=D_{j_0}(t)$ the unit state
+
+$$
+ f_0=I_{D_0}^*f/\|P_{D_0}f\|.
+\tag{58.16}
+$$
+
+Continue through any finite legal whole-rho history and any supplied clock partition as in Definition58.1, with total duration $S\le T$. Let $u(\tau)$ be its actual amplitude embedded by the same addresses in $\ell^2(\mathcal P)$. Then
+
+$$
+\sup_{0\le\tau\le S}\|u(\tau)-e^{-i\tau\mathsf H}f\|
+\le(\sqrt2+2MT)\ell_R,\qquad M=6a+g.
+\tag{58.17}
+$$
+
+The bound is uniform over all those original sources, actual irregular domains, finite renewal counts and partitions. Both amplitudes have full norm one. It bounds every supplied contraction response by the same number, and every supplied effect probability by twice that number. It does not require projecting the renewed state into a finite spectral window at each switch; such projections would introduce another state law.
+
+Proof. TM23.2 and (55.2) give $B_R\subset D_0$, and actual whole-rho persistence gives $D_0\subset D(\tau)$ throughout. Balls are only contained comparison sets; every generator remains the compression on its actual $D(\tau)$. If $\alpha=\|(I-P_{D_0})f\|\le\ell_R$, then
+
+$$
+\left\|\frac{P_{D_0}f}{\|P_{D_0}f\|}-f\right\|^2
+ =2(1-\sqrt{1-\alpha^2})\le2\alpha^2.
+\tag{58.18}
+$$
+
+Thus (58.16) exists and the initial norm error is at most $\sqrt2\ell_R$.
+
+On the common Hilbert space set $A_D=P_D\mathsf H P_D$. It is bounded self-adjoint, has norm at most $M$, and its unitary flow restricted to the support $D$ is exactly the finite flow. Forced zero extension makes $u$ continuous in this space at every renewal. Put $v(\tau)=e^{-i\tau\mathsf H}f$. The spectral projection commutes with the common flow and generator, so both $v$ and $\mathsf Hv$ lie in $\operatorname{ran}Q_c$. Theorem58.6 gives, on every installed domain,
+
+$$
+\begin{aligned}
+\|(A_D-\mathsf H)v\|
+&\le\|P_D\mathsf H(P_D-I)v\|+\|(P_D-I)\mathsf Hv\|\\
+&\le M\ell_R+\ell_R\|\mathsf Hv\|\le2M\ell_R.
+\end{aligned}
+\tag{58.19}
+$$
+
+Apply the unitary Duhamel bound of Causal Response13.6.2 on each supplied interval, or concatenate those finite propagators in time order. Unitarity carries an earlier error without amplification, and continuity at the switches adds no jump error. Integration of (58.19) over the total interval and (58.18) proves (58.17). This is not a sum of the all-state defects in (58.2), which would grow with the number of switches. Finally $\|C(u-v)\|\le\|u-v\|$, and for unit states $|\langle u,Eu\rangle-\langle v,Ev\rangle|\le2\|u-v\|$. □
+
+Consequently, for every supplied finite $T$ and positive accuracy $\varepsilon$, a finite radius $R$ with $(\sqrt2+2MT)\ell_R<\varepsilon$ suffices, if the source actually reaches an accepted index $j_0\ge2R$ and the preparation in (58.16) is supplied. For a concrete finite instance, take $a=1,g=16,c=-1,T=1$. Then $d>1$, $q<5/7$ because $3-2\sqrt2>1/6$, and $\sqrt2+2MT<46$. At $R=66$,
+
+$$
+ (\sqrt2+2MT)\ell_{66}
+ <736\left((5/7)^{34}+2^{-34}\right)<1/100.
+\tag{58.17a}
+$$
+
+The final inequality is an exact rational inequality. Thus an actually reached $j_0\ge132$ and the expressly supplied preparation suffice for norm error below $1/100$ throughout this clock window, including the hidden channel ground directions. This is an explicit sufficient relation among accepted depth, full-state accuracy and clock length. It supplies neither the number or prices of original Reads needed to authenticate that version nor a physical preparation method. A fixed-$H$ run unable to reach that index gets no additional acceptance permission from the inequality.
+
+**Corollary 58.8 (actually finite spectral preparation and explicit error contracts).** Let $W=[v_-,v_+]\subset(-\infty,c]$ be a compact interval with endpoints in common resolvent gaps; keep $D_0,j_0,R,S,T$ as in Theorem58.7. For any unit finite state $u_0\in\operatorname{ran}Q_{D_0}(W)$, zero extended, put
+$\delta_{D_0}=\|Q_{D_0}(W)-Q(W)\|$, and suppose $\delta_{D_0}<1$. Then $f=Q(W)u_0/\|Q(W)u_0\|$ is a common unit state and the same actual finite continuation satisfies
+
+$$
+ \sup_{0\le\tau\le S}\|u(\tau)-e^{-i\tau\mathsf H}f\|
+ \le\sqrt2\delta_{D_0}+2MT\ell_R.
+\tag{58.20}
+$$
+
+Here $\delta_{D_0}\to0$ along the actual source family of §55.5, including varying original sources with accepted indices tending to infinity. In a further expressly supplied precision model, suppose preparation has unit-state norm error at most $\eta_0$, actual between-event generators are self-adjoint on the same authenticated domains with integrated operator error at most $\eta_H$, actual isometric transfers have errors at most $\eta_k$ relative to $J$ on the states transferred, and clock-interval discrepancies sum to at most $\eta_\tau$. Then the norm budgets in (58.17) or (58.20) gain at most
+
+$$
+ \eta_0+\eta_H+\sum_k\eta_k+M\eta_\tau.
+\tag{58.21}
+$$
+
+The operator-error integral is over the actual intervals; the reference partition in (58.17) or (58.20) has total length at most $T$. This further model explicitly relaxes the ideal amplitude contract. Literal native source actions, authentic domains and original error models are unchanged.
+
+Proof. The projection distance bounds $\|(I-Q(W))u_0\|$ by $\delta_{D_0}$, and the normalization identity (58.18) bounds $\|u_0-f\|$ by $\sqrt2\delta_{D_0}$. Then (58.19) and the same Duhamel argument apply. The projection convergence is the already proved full-state, all-multiplicity theorem55.5, not a new eigenbasis-acquisition theorem. For the additional model, unitarity and isometric transfers propagate errors without norm amplification. Duhamel bounds each generator discrepancy by its operator-error integral, telescoping the finite transfers gives their actual error sum, and $\|e^{-isA_D}-e^{-itA_D}\|\le M|s-t|$ bounds interval-clock discrepancies. If a separately authorized contraction-response readout has error at most $\eta_{\rm read}$ in $Y$, its reported error gains that amount; an effect-probability readout with scalar error at most $\eta_{\rm read}$ has reported error at most twice the state-norm budget plus $\eta_{\rm read}$. These are additional response-error contracts, never the original native Read error model. These estimates require no independent errors, statistical averaging or resampling. □
+
+Exact real source execution, exact amplitudes and exact operator arithmetic in these theorems are mathematical contracts. Finite-bit control descriptions, an implemented actuator, clock calibration, normalization/preparation and readout need actual supplied bounds before (58.21) has numerical content. A wrong source/version or beta mask is not automatically a small operator error. An original Process44 reply error or the $\mathcal D_2$ Read error is not $\eta_0$, $\eta_H$ or a coherent transfer error. Even at a known gap, formal modal coefficients are not an acquired archive or a prepared field state.
+
+**Corollary 58.9 (exact renewal energy and uniform ground-ray fidelity).** Under Definition58.1, every finite trajectory has constant common energy expectation, through all between-event evolution and all accepted renewals:
+
+$$
+ J^*\mathsf H_{D'}J=\mathsf H_D,\qquad
+ \langle u(\tau),\mathsf Hu(\tau)\rangle
+ =\langle u(0),\mathsf Hu(0)\rangle=:E_0.
+\tag{58.21a}
+$$
+
+Assume $m<\epsilon_*$ as in §55.4, let $w$ be its positive unit ground state, and let
+$\gamma=\inf\sigma(\mathsf H|_{w^\perp})-m>0$ be the common ground-state spectral gap. Then every such trajectory, on every finite supplied clock interval $[0,S]$, satisfies
+
+$$
+ \sup_{0\le\tau\le S}\ \inf_{|z|=1}\|u(\tau)-zw\|
+ \le\sqrt{\frac{2(E_0-m)}\gamma}.
+\tag{58.21b}
+$$
+
+Every supplied effect probability therefore differs from that of $w$ by at most $2\sqrt{2(E_0-m)/\gamma}$, independently of $S$ and of the finite number of renewals. In particular, expressly preparing the actual positive finite ground state on $D_{j_0}(t)$ gives $E_0=m_{j_0}(t)$; (55.13) makes this ray/effect bound tend to zero uniformly over all original sources as their separately legal accepted indices tend to infinity. This is an all-finite-clock bound for near-ground rays, not for all subescape states, all states or their full phases.
+
+Proof. The first equality is exactly the old principal-block equality used in Theorem58.2, also the compression energy identity of (55.4). Each unitary finite flow preserves its own energy expectation; zero extension at renewal preserves that expectation by the displayed congruence. Their finite composition proves (58.21a). The common ground eigenvalue is simple and isolated below the essential threshold by §55.3–55.4, so $\gamma>0$. The spectral inequality
+$\mathsf H-mI\ge\gamma(I-|w\rangle\langle w|)$ then gives
+$1-|\langle w,u(\tau)\rangle|^2\le(E_0-m)/\gamma$.
+Choosing the aligning phase and using
+$2(1-|\langle w,u\rangle|)\le2(1-|\langle w,u\rangle|^2)$ proves (58.21b). Effects do not depend on the aligning global phase, and the unit-state effect inequality used in Theorem58.7 gives the stated probability bound. The finite-ground specialization uses §55.4's already proved minimum-value comparison, not another source-learning or ground-state acquisition assertion. □
+
+The norm-preserving and energy-preserving mathematical transfer does not assign zero physical work, preparation cost or implementation duration. In the further precision model of Corollary58.8 energy need not be exactly conserved; this clock-independent conclusion requires either the ideal contract or an additional uniform accumulated energy-error bound. The theorem quantifies over finite histories of arbitrary finite duration, without an event after an infinite prefix or after Stop.
+
+**Proposition 58.10 (the clock restriction is material for the full-phase task).** For $g>3a/4$, fix one original finite source. Let $m_j$ be its finite ground energies and $w_j$ the zero-extended positive normalized finite ground vectors. Let $m,w$ be the common ground pair. Then
+
+$$
+ m_j>m,\qquad m_j\downarrow m,\qquad w_j\to w,
+\qquad \tau_j=\frac\pi{m_j-m}<\infty,
+\qquad
+ \|e^{-i\tau_jm_j}w_j-e^{-i\tau_jm}w\|\longrightarrow2.
+\tag{58.22}
+$$
+
+These are separate finite histories with a supplied holding interval before Stop on their actually reached domains; no renewals during that interval are required. Consequently a uniform unbounded-clock full-amplitude guarantee cannot replace (58.17), even though initial states and energies converge. This discriminator alone does not refute gauge-invariant probability fidelity; Corollary58.9 proves a clock-independent ground-ray/effect bound in precisely that restricted task.
+
+Proof. Theorem55.4 supplies convergence and the simple strictly positive common ground state. Every finite connected compression likewise has a positive simple ground vector by the same absolute-value and connectivity argument; choose the positive phases. If $m_j=m$, its finite-support zero extension would minimize the common form and hence be a multiple of $w$, impossible because $w$ is strictly positive at every address. Thus $m_j>m$. Compactness and uniqueness give $w_j\to w$. At the stated finite time the relative scalar phase is $-1$, so the norm in (58.22) equals $\|w_j+w\|\to2$. A scalar phase cancels from a one-state effect probability, which is why this particular obstruction is scoped to the full complex-amplitude task. It asserts neither failure of every probability task nor a native waiting, phase sensor or limit Read. □
+
+**Definition 58.11 (authentic information consumed and its prices).** Conditional on the known actual addressed old domain, the next domain and the defect consume the beta-leaf mask $\mathcal B(s)$. The whole addressed defect recovers that mask, since $\Delta_s^*\Delta_s/(2a^2)=P_{\mathcal B}$. For one specified state the born derivatives only consume its beta-frontier amplitudes; for the full subsequent interaction task the retained full state, its modal coefficients/phases and the actual time-ordered operators are sufficient as in (58.3). An old autonomous root response law is insufficient by Proposition58.5. A complete retained operator-plus-state record is not contradicted by either example.
+
+In a free ordered binary source, the actual domain together with this mask already determines every current leaf label and all ordered brackets. It is therefore not a newly demonstrated certificate cheaper than full current syntax. For a sequence of renewals the authentic current source and actual accepted action record determine all later masks by the existing source substitution, not by new label telemetry. To bind current reconstruction back to INITIAL also retain the root, absolute epoch and original source/history correspondence. The image-only inverses in `GenealogicalFiberTransport` and `SourceTransportCentralizer` are mathematical decoders, not authorized inverse actions.
+
+The already supplied immutable-source address acquisition of `ActualTreeReadoutAcquisition` may restore a tree from a genuinely acquired, retained, complete authentic address history. Its original query actions, Boolean task, `alpha/beta/branch/absent` replies and distinct-address fees stay unchanged. A syntax-output consumer of that archive can calculate this mask. TM23's paid birth/replay supplier retains its own epoch, navigation and record permissions. Neither supplier acquires the actual amplitude coefficients, prepares a coherent state, reads a resolvent or obtains a physical clock. Old-version answers do not become a free cache for later current versions. Source decoding and state acquisition are different obligations.
+
+Current §57's paid acquisition is already available under Definition57.1's exact public composition/image contract: third-multiple depth $d=3k$, $k\ge1$, nonempty complete ordered sources, exact composition $C=M^d(a,b)$, the original four endpoint replies at depth at most $h$, empty acquired history and source-independent causal initialization. Its substitution depth, composition parameters and Fibonacci matrix are §57's own, distinct from this chapter's spectral distance, kinetic coefficient and norm bound. Correctness and finite termination cover every complete same-composition competitor, including tall negatives; the target is image membership, not an assumed actual candidate identifier. Theorems57.3–57.4 supply complete-colour rigidity and exact depth solvability, Theorem57.7 supplies the threshold-qualified weighted diagnostic/frontier-completion bridge, and Theorem57.10 supplies its exact low-macro-leaf regimes. An actually accepted positive transcript contains a complete colour frontier and hence determines the current ordered labelled source and this beta mask within that competitor domain. Reuse requires an authentic binding of that acquired tree, root and epoch to this trajectory. Distinct requested addresses remain paid, repeats remain actual query actions, and control computation, memory, encoding and physical traversal retain their unpriced status in that contract. Static certificates and paid causal source acquisition are therefore established in their declared scope; they do not supply a coherent amplitude state, hidden relative phases, Hamiltonian actuation, physical transport or a clock.
+
+The resource comparison must therefore keep at least original native commands and actual acceptances/refusals, all actual numerical/address Reads and their fees, source preparation, source/epoch authentication, acquired archive storage, amplitude preparation and retention, operator/actuator calibration, finite clock duration and precision, response implementation and readout precision. The count of amplitude coordinates in (58.2), event count $j$, accuracy bound (58.17) and original source syntax length are different coordinates. No actual matched price vector is supplied here; no cheap acquisition, storage reduction, energy saving, minimax price or physical superiority is inferred.
+
+Nothing in this chapter changes $\mathcal D_2$, its independent arbitrary unbounded initial visible $a$ including zero, its untagged radius7/25 hidden $b$, destructive $\Gamma_d$ law, source-independent causal initialization, exact versus commanded/executed controls, actual Reads, joint adversarial errors, INITIAL target or §56's exact risk and nonattainment. No map from that register to this occurrence-amplitude realization is supplied.
+
+**Definition 58.12 (reused sources, mathematical delta and remaining correspondence).** TM22.2 and TM23.2 own the literal same-address birth/exhaustion identities. Process44.1–44.7 owns the numerical task, shared initialization and equal-history source comparison. The fixed-cap original interface is TM30/57 and the specific literal history is §55.6. The kinetic gap, common potential, all-source domain containment, hidden channel decomposition, exceptional spectral account and gap-window limits are §§55.1–55.6 prerequisites. They are reused with the same counting measure, root, global depth, source, inherited boundary and normalization. The new deduction is their *joint native renewal interaction*: forced norm-preserving transfer, exact label-dependent frontier coupling, complete coefficient transport, finite-clock full-subescape fidelity and energy-based ground-ray preservation, with the consumed native-source and hidden-phase discriminators. Generic rank/fiber theory, a static tree-square identity, kernel arithmetic and syntax decoding are not claimed as that delta.
+
+[FiniteHereditaryPatternRealization.result](../../../D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.lean) supplies the existing static shared-information-leaf realization for $m\ge2$ and a finite inclusion-lower family $K$ of subsets of `Fin m` containing every singleton. In its own notation $T=\operatorname{card}(\mathrm{Column}\ K)\ge1$ and $N=M(K)$, for every bijective column ordering the right-comb, face-column and private-row-padding construction gives injective families $Q_i,P_i$, $P_i=\rho^3Q_i$ in the actual third image, compositions $(T+N,N)$ and $(T+3N,2T+5N)$, total image leaf count $3T+8N$, and unique third preimages. For each index set $S$ with $|S|\ge2$, the set of addresses that are leaves in every indexed $P_i$ and bear both labels among them is nonempty exactly when $S\in K$. The original hole-address/suffix decomposition and disjoint-hole correspondence are retained. Its pattern parameters, information-leaf set and static source family are distinct from the clock bound, spectral projection and generator defect here. We reuse this established hereditary syntax/readout realization with its stated cardinality and singleton hypotheses; it does not supply a Hamiltonian, coherent phases, preparation, an energy law or renewal fidelity.
+
+The classical exponential/Taylor/Krylov and unitary Duhamel tools are the existing [Causal Relational Response §§13.3,13.5–13.6](CAUSAL_RELATIONAL_RESPONSE_GEOMETRY.md). Gerald Teschl's primary [*Mathematical Methods in Quantum Mechanics*, Theorem5.1 and equation(2.87)](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf) supplies self-adjoint unitary evolution and the bounded Neumann-series method, already a source of §55.8. Theorem58.6 proves the particular two-operator support estimate (58.13); it does not attribute that estimate to a general decay citation. Finite Hermitian diagonalization, isometries, geometric series and Cauchy–Schwarz are mature intermediates. No additional Library supplier is needed.
+
+A bounded comparison with the relevant immutable source at `6879f5b00c12ebded0eb5f088e4cafb8bd336de9` retains the neighbouring results in their own scopes. `LateLabelStateBound` concerns lawful three-bit FIB windows, signed scalar extrema and surviving vertices of finite full-path graphs. `TriangularPathNormalization` concerns legal reduced binary root paths, canonical probability columns and dyadic bit cost. [Fiber Calculus Continuation II §33](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION_II.md) concerns the original cyclic binary device, high-bit Read, charged Moore/Advance/Halt state counts and joint memory/read/action bounds, including sharing and loops. [Joint Moment Fibers §§1–8](RECURSIVE_RELATIONAL_OBSERVATION_JOINT_MOMENT_FIBERS.md) concerns one positive leaf-event word, fixed endpoints and area, its supplied planar reference, and its actual joint third-order moment image. None of these source contracts supplies the Hamiltonian transfer, amplitude preparation or a clock used here.
+
+`ActualSpectralSeries.kernel_hasSum_of_eigenbasis` consumes an actual integral-operator factory and a complete supplied eigenbasis; `SameNoiseSecondChaos.secondIntegral_characterization` and `finiteFrequency_sameNoise` preserve their one Gaussian map and original probability law. These are not an occurrence-domain switching sensor or a new resampling permission. `MaximalUnobservableSubspace`, `ObservableKrylovGrowthBound`, `HankelMinimalStateDimension` and `BalancedRealizationTransport`, including their private kernel-descent and coordinate-transport helpers, retain their fixed finite linear realization, input/output, stability and Gramian assumptions. Their classical response structure is compatible with the uses above but does not make the changing addressed Hamiltonians conjugate or supply a switched acquisition protocol. `ExactRealProbeCosts` keeps its exact scalar probe, parameter charges and seed-correctness quantifiers; `OrderedPermutationDefectMass` keeps its finite ordered integer permutation and floor bounds. Neither turns a mathematical spectral quantity into a paid original Read.
+
+The ordinary proofs and exact finite discriminators establish `repo-derived` deductions under the displayed contracts. The bounded repository/source and external literature comparison does not establish global absence or mathematical priority. No fresh Lean/kernel/axiom, repository test, current CI, coverage or physical validation is asserted.
+
+The remaining native correspondence is substantive: exhibit an actually permitted source apparatus implementing an amplitude transfer and between-event Hamiltonian, with matched original actions/records, preparation, clock, errors and prices; bind the authentic source/root/epoch and beta masks using the existing paid acquisition when its exact promises apply, and acquire and retain the consumed hidden coefficients/phases through authorized channels; or prove a different faithful positive interaction bridge. Hypothesis15.1's full rotations, attainable faithful Euclidean displacement, physical field/kinetic/maintenance/precision/record prices and common-environment propagation/task-capacity remain unproved. The unit occurrence geometry is not mesh refinement or an open Euclidean three-dimensional region. Finite-clock full-state preservation is a useful conditional interaction relation on the same original source; it does not by itself settle physical spatial dimension, unbounded time, all-state fidelity or the full why-three-dimensions objective.
+
+## 58.99 追加锚（本行以下为增补区）
