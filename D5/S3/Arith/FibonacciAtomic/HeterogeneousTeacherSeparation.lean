@@ -1,7 +1,7 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation
-   generality: G
+   generality: firstGate
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/HeterogeneousTeacherSeparation
-   mirror-E: none(waiver:unbounded-symbolic-estimate)
+   mirror-productExpectation: none(waiver:unbounded-symbolic-estimate)
    anchors: []
    utility: none
    digest: Independent heterogeneous whole-window laws have a sharp uniform teacher separation. -/
@@ -46,29 +46,30 @@ def extremal (rho : ℝ) : Window → ℝ
   | .low | .ends | .high => rho
 
 /-- Product expectation in the actual heterogeneous input law. -/
-def E {n : ℕ} (μ : Laws n) (f : Input n → ℝ) : ℝ :=
+def productExpectation {n : ℕ} (μ : Laws n) (f : Input n → ℝ) : ℝ :=
   ∑ w : Input n, (∏ i, μ i (w i)) * f w
 
 /-- High endpoint indicator. -/
-def hi (a : Window) : ℝ := if last a then 1 else 0
+def highIndicator (a : Window) : ℝ := if last a then 1 else 0
 
 /-- Low endpoint indicator. -/
-def lo (a : Window) : ℝ := if first a then 1 else 0
+def lowIndicator (a : Window) : ℝ := if first a then 1 else 0
 
 /-- High endpoint marginal in one actual window. -/
-def H {n : ℕ} (μ : Laws n) (i : Fin n) : ℝ := μ i .ends + μ i .high
+def highMarginal {n : ℕ} (μ : Laws n) (i : Fin n) : ℝ := μ i .ends + μ i .high
 
 /-- Low endpoint marginal in one actual window. -/
-def L {n : ℕ} (μ : Laws n) (i : Fin n) : ℝ := μ i .ends + μ i .low
+def lowMarginal {n : ℕ} (μ : Laws n) (i : Fin n) : ℝ := μ i .ends + μ i .low
 
 /-- First priority gate. -/
-def G {n : ℕ} (t : Roles n) (w : Input n) : ℝ := hi (w t.p) * lo (w t.q)
+def firstGate {n : ℕ} (t : Roles n) (w : Input n) : ℝ := highIndicator (w t.p) * lowIndicator (w
+    t.q)
 
 variable {n : ℕ}
 
-private theorem factor {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1)
+private theorem product_expectation_factorization {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1)
     (S : Finset (Fin n)) (f : Fin n → Window → ℝ) :
-    E μ (fun w => ∏ i ∈ S, f i (w i)) = ∏ i ∈ S, ∑ a, μ i a * f i a := by
+    productExpectation μ (fun w => ∏ i ∈ S, f i (w i)) = ∏ i ∈ S, ∑ a, μ i a * f i a := by
   classical
   have h := (Fintype.prod_sum (fun i a => μ i a *
     (if i ∈ S then f i a else 1))).symm
@@ -80,53 +81,59 @@ private theorem factor {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1)
   have hr (i : Fin n) :
       (∑ a, μ i a * (if i ∈ S then f i a else 1)) =
         if i ∈ S then ∑ a, μ i a * f i a else 1 := by
-    by_cases hi : i ∈ S <;> simp [hi, hsum]
-  simpa only [E, hl, hr, Finset.prod_ite_mem, Finset.univ_inter] using h
+    by_cases hmem : i ∈ S <;> simp [hmem, hsum]
+  simpa only [productExpectation, hl, hr, Finset.prod_ite_mem, Finset.univ_inter] using h
 
-theorem two {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1)
+theorem product_expectation_two_positions {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1)
     (p q : Fin n) (hpq : p ≠ q) (f g : Window → ℝ) :
-    E μ (fun w => f (w p) * g (w q)) =
+    productExpectation μ (fun w => f (w p) * g (w q)) =
       (∑ a, μ p a * f a) * (∑ a, μ q a * g a) := by
   classical
   simpa [hpq, Ne.symm hpq] using
-    factor hsum {p, q} (fun i a => if i = p then f a else g a)
+    product_expectation_factorization hsum {p, q} (fun i a => if i = p then f a else g a)
 
-theorem three {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1)
+theorem product_expectation_three_positions {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1)
     (p q r : Fin n) (hpq : p ≠ q) (hpr : p ≠ r) (hqr : q ≠ r)
     (f g h : Window → ℝ) :
-    E μ (fun w => f (w p) * g (w q) * h (w r)) =
+    productExpectation μ (fun w => f (w p) * g (w q) * h (w r)) =
       (∑ a, μ p a * f a) * (∑ a, μ q a * g a) * (∑ a, μ r a * h a) := by
   classical
   simpa [hpq, hpr, hqr, Ne.symm hpq, Ne.symm hpr, Ne.symm hqr, mul_assoc] using
-    factor hsum {p, q, r} (fun i a => if i = p then f a else if i = q then g a else h a)
+    product_expectation_factorization hsum {p, q, r} (fun i a => if i = p then f a else if i = q
+        then g a else h a)
 
-theorem four {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1)
+theorem product_expectation_four_positions {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1)
     (p q r s : Fin n) (hpq : p ≠ q) (hpr : p ≠ r) (hps : p ≠ s)
     (hqr : q ≠ r) (hqs : q ≠ s) (hrs : r ≠ s) (f g h k : Window → ℝ) :
-    E μ (fun w => f (w p) * g (w q) * h (w r) * k (w s)) =
+    productExpectation μ (fun w => f (w p) * g (w q) * h (w r) * k (w s)) =
       (∑ a, μ p a * f a) * (∑ a, μ q a * g a) *
         (∑ a, μ r a * h a) * (∑ a, μ s a * k a) := by
   classical
   simpa [hpq, hpr, hps, hqr, hqs, hrs, Ne.symm hpq, Ne.symm hpr,
     Ne.symm hps, Ne.symm hqr, Ne.symm hqs, Ne.symm hrs, mul_assoc] using
-    factor hsum {p, q, r, s} (fun i a => if i = p then f a else if i = q then g a
+    product_expectation_factorization hsum {p, q, r, s} (fun i a => if i = p then f a else if i =
+        q then g a
       else if i = r then h a else k a)
 
-theorem linear {μ : Laws n} (f g h : Input n → ℝ) (a b c : ℝ) :
-    E μ (fun w => a * f w + b * g w + c * h w) = a * E μ f + b * E μ g + c * E μ h := by
+theorem product_expectation_linear_combination {μ : Laws n} (f g h : Input n → ℝ) (a b c : ℝ) :
+    productExpectation μ (fun w => a * f w + b * g w + c * h w) = a * productExpectation μ f + b *
+        productExpectation μ g + c * productExpectation μ h := by
   classical
-  have scale (d : ℝ) (f : Input n → ℝ) : E μ (fun w => d * f w) = d * E μ f := by
-    dsimp [E]
+  have scale (d : ℝ) (f : Input n → ℝ) : productExpectation μ (fun w => d * f w) = d *
+      productExpectation μ f := by
+    dsimp [productExpectation]
     rw [Finset.mul_sum]
     apply Finset.sum_congr rfl
     intro w _
     ring
   calc
-    _ = E μ (fun w => a * f w) + E μ (fun w => b * g w) +
-        E μ (fun w => c * h w) := by simp [E, mul_add, Finset.sum_add_distrib]
+    _ = productExpectation μ (fun w => a * f w) + productExpectation μ (fun w => b * g w) +
+        productExpectation μ (fun w => c * h w) := by simp [productExpectation, mul_add,
+            Finset.sum_add_distrib]
     _ = _ := by rw [scale, scale, scale]
 
-private theorem corners (b c s t : ℝ) (hbc : b ≤ c) (hs : b ≤ s ∧ s ≤ c)
+private theorem bernoulli_discrepancy_rectangle_lower (b c s t : ℝ) (hbc : b ≤ c) (hs : b ≤ s ∧ s
+    ≤ c)
     (ht : b ≤ t ∧ t ≤ c) (hb : b ≤ 1 / 2) (hbc1 : b + c ≤ 1) :
     2 * b * (1 - b) ≤ s + t - 2 * s * t := by
   classical
@@ -144,113 +151,131 @@ private theorem corners (b c s t : ℝ) (hbc : b ≤ c) (hs : b ≤ s ∧ s ≤ 
       (show 0 ≤ 1 - c - b by linarith)
     nlinarith
 
-theorem univ : (Finset.univ : Finset Window) = {.zero, .low, .middle, .ends, .high} := rfl
-
-theorem high_mean (μ : Laws n) (i : Fin n) : (∑ a, μ i a * hi a) = H μ i := by
+theorem high_indicator_mean (μ : Laws n) (i : Fin n) : (∑ a, μ i a * highIndicator a) =
+    highMarginal μ i := by
   classical
-  simp [univ, hi, last, H]
+  simp [Finset.univ, Fintype.elems, highIndicator, last,
+      highMarginal]
 
-theorem low_mean (μ : Laws n) (i : Fin n) : (∑ a, μ i a * lo a) = L μ i := by
+theorem low_indicator_mean (μ : Laws n) (i : Fin n) : (∑ a, μ i a * lowIndicator a) = lowMarginal
+    μ i := by
   classical
-  simp [univ, lo, first, L, add_comm]
+  simp [Finset.univ, Fintype.elems, lowIndicator, first,
+      lowMarginal, add_comm]
 
-theorem joint_mean (μ : Laws n) (i : Fin n) : (∑ a, μ i a * (lo a * hi a)) = μ i .ends := by
+theorem joint_endpoint_mean (μ : Laws n) (i : Fin n) : (∑ a, μ i a * (lowIndicator a *
+    highIndicator a)) = μ i .ends := by
   classical
-  simp [univ, hi, lo, first, last]
+  simp [Finset.univ, Fintype.elems, highIndicator,
+      lowIndicator, first, last]
 
-theorem binary (a : Window) : (hi a = 0 ∨ hi a = 1) ∧ (lo a = 0 ∨ lo a = 1) := by
+theorem endpoint_indicators_binary (a : Window) : (highIndicator a = 0 ∨ highIndicator a = 1) ∧
+    (lowIndicator a = 0 ∨ lowIndicator a = 1) := by
   classical
-  cases a <;> simp [hi, lo, first, last]
+  cases a <;> simp [highIndicator, lowIndicator, first, last]
 
-theorem gate_binary (a b : Window) : hi a * lo b = 0 ∨ hi a * lo b = 1 := by
+theorem first_gate_binary (a b : Window) : highIndicator a * lowIndicator b = 0 ∨ highIndicator a
+    * lowIndicator b = 1 := by
   classical
-  rcases (binary a).1 with ha | ha <;>
-    rcases (binary b).2 with hb | hb <;> simp [ha, hb]
+  rcases (endpoint_indicators_binary a).1 with ha | ha <;>
+    rcases (endpoint_indicators_binary b).2 with hb | hb <;> simp [ha, hb]
 
-theorem class_formula (t : Roles n) (w : Input n) :
-    classValue t w = G t w + 2 * (1 - G t w) * (hi (w t.q) * lo (w t.r)) := by
+theorem class_value_formula (t : Roles n) (w : Input n) :
+    classValue t w = firstGate t w + 2 * (1 - firstGate t w) * (highIndicator (w t.q) *
+        lowIndicator (w t.r)) := by
   classical
   cases hp : last (w t.p) <;> cases hq : first (w t.q) <;>
     cases hq' : last (w t.q) <;> cases hr' : first (w t.r) <;>
     norm_num [classValue, GarbledPosteriorRootGap.teacher, Matrix.cons_val_two,
-      G, hi, lo, hp, hq, hq', hr']
+      firstGate, highIndicator, lowIndicator, hp, hq, hq', hr']
 
-private theorem gate_point (t u : Roles n) (w : Input n) :
-    (G t w - G u w) ^ 2 ≤ (classValue t w - classValue u w) ^ 2 := by
+private theorem first_gate_sq_le_class_sq (t u : Roles n) (w : Input n) :
+    (firstGate t w - firstGate u w) ^ 2 ≤ (classValue t w - classValue u w) ^ 2 := by
   classical
-  rw [class_formula, class_formula]
-  rcases gate_binary (w t.p) (w t.q) with ht | ht <;>
-    rcases gate_binary (w u.p) (w u.q) with hu | hu <;>
-    rcases gate_binary (w t.q) (w t.r) with hb | hb <;>
-    rcases gate_binary (w u.q) (w u.r) with hc | hc <;>
-    norm_num [G, ht, hu, hb, hc]
+  rw [class_value_formula, class_value_formula]
+  rcases first_gate_binary (w t.p) (w t.q) with ht | ht <;>
+    rcases first_gate_binary (w u.p) (w u.q) with hu | hu <;>
+    rcases first_gate_binary (w t.q) (w t.r) with hb | hb <;>
+    rcases first_gate_binary (w u.q) (w u.r) with hc | hc <;>
+    norm_num [firstGate, ht, hu, hb, hc]
 
-private theorem gate_square (t u : Roles n) (w : Input n) :
-    (G t w - G u w) ^ 2 = G t w + G u w - 2 * (G t w * G u w) := by
+private theorem first_gate_sq_eq_discrepancy (t u : Roles n) (w : Input n) :
+    (firstGate t w - firstGate u w) ^ 2 = firstGate t w + firstGate u w - 2 * (firstGate t w *
+        firstGate u w) := by
   classical
-  rcases gate_binary (w t.p) (w t.q) with ht | ht <;>
-    rcases gate_binary (w u.p) (w u.q) with hu | hu <;> norm_num [G, ht, hu]
+  rcases first_gate_binary (w t.p) (w t.q) with ht | ht <;>
+    rcases first_gate_binary (w u.p) (w u.q) with hu | hu <;> norm_num [firstGate, ht, hu]
 
-private theorem gate_mean {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1) (t : Roles n) :
-    E μ (G t) = H μ t.p * L μ t.q := by
+private theorem first_gate_mean {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1) (t : Roles n) :
+    productExpectation μ (firstGate t) = highMarginal μ t.p * lowMarginal μ t.q := by
   classical
-  change E μ (fun w => hi (w t.p) * lo (w t.q)) = H μ t.p * L μ t.q
-  simpa only [high_mean, low_mean] using two hsum t.p t.q (ne_of_lt t.pq) hi lo
+  change productExpectation μ (fun w => highIndicator (w t.p) * lowIndicator (w t.q)) =
+      highMarginal μ t.p * lowMarginal μ t.q
+  simpa only [high_indicator_mean, low_indicator_mean] using product_expectation_two_positions
+      hsum t.p t.q (ne_of_lt t.pq) highIndicator lowIndicator
 
-private theorem gate_distance {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1) (t u : Roles n) :
-    E μ (fun w => (G t w - G u w) ^ 2) =
-      H μ t.p * L μ t.q + H μ u.p * L μ u.q - 2 * E μ (fun w => G t w * G u w) := by
+private theorem first_gate_sq_expectation {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1) (t u : Roles
+    n) :
+    productExpectation μ (fun w => (firstGate t w - firstGate u w) ^ 2) =
+      highMarginal μ t.p * lowMarginal μ t.q + highMarginal μ u.p * lowMarginal μ u.q - 2 *
+          productExpectation μ (fun w => firstGate t w * firstGate u w) := by
   classical
-  have h := linear (μ := μ) (G t) (G u) (fun w => G t w * G u w) 1 1 (-2)
+  have h := product_expectation_linear_combination (μ := μ) (firstGate t) (firstGate u) (fun w =>
+      firstGate t w * firstGate u w) 1 1 (-2)
   simp only [one_mul] at h
-  rw [gate_mean hsum, gate_mean hsum] at h
+  rw [first_gate_mean hsum, first_gate_mean hsum] at h
   convert h using 1
   · congr 1
     funext w
-    rw [gate_square]
+    rw [first_gate_sq_eq_discrepancy]
     ring
   · ring
 
-private theorem merge_first (a b c : Window) :
-    (hi a * lo b) * (hi a * lo c) = hi a * lo b * lo c := by
+private theorem high_indicator_repeat (a b c : Window) :
+    (highIndicator a * lowIndicator b) * (highIndicator a * lowIndicator c) = highIndicator a *
+        lowIndicator b * lowIndicator c := by
   classical
-  rcases (binary a).1 with h | h <;> simp [h, mul_assoc]
+  rcases (endpoint_indicators_binary a).1 with h | h <;> simp [h, mul_assoc]
 
-private theorem merge_second (a b c : Window) :
-    (hi a * lo c) * (hi b * lo c) = hi a * hi b * lo c := by
+private theorem low_indicator_repeat (a b c : Window) :
+    (highIndicator a * lowIndicator c) * (highIndicator b * lowIndicator c) = highIndicator a *
+        highIndicator b * lowIndicator c := by
   classical
-  rcases (binary c).2 with h | h <;> simp [h, mul_assoc]
+  rcases (endpoint_indicators_binary c).2 with h | h <;> simp [h, mul_assoc]
 
-private theorem same_second {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1)
+private theorem first_gate_same_second_discrepancy {μ : Laws n} (hsum : ∀ i, ∑ a, μ i a = 1)
     (t u : Roles n) (hq : t.q = u.q) (hp : t.p ≠ u.p) :
-    E μ (fun w => (G t w - G u w) ^ 2) =
-      L μ t.q * (H μ t.p + H μ u.p - 2 * H μ t.p * H μ u.p) := by
+    productExpectation μ (fun w => (firstGate t w - firstGate u w) ^ 2) =
+      lowMarginal μ t.q * (highMarginal μ t.p + highMarginal μ u.p - 2 * highMarginal μ t.p *
+          highMarginal μ u.p) := by
   classical
-  have hcross : E μ (fun w => G t w * G u w) =
-      H μ t.p * H μ u.p * L μ t.q := by
-    have heq : (fun w => G t w * G u w) =
-        (fun w => hi (w t.p) * hi (w u.p) * lo (w t.q)) := by
+  have hcross : productExpectation μ (fun w => firstGate t w * firstGate u w) =
+      highMarginal μ t.p * highMarginal μ u.p * lowMarginal μ t.q := by
+    have heq : (fun w => firstGate t w * firstGate u w) =
+        (fun w => highIndicator (w t.p) * highIndicator (w u.p) * lowIndicator (w t.q)) := by
       funext w
-      simp only [G, ← hq]
-      exact merge_second _ _ _
+      simp only [firstGate, ← hq]
+      exact low_indicator_repeat _ _ _
     rw [heq]
-    simpa [high_mean, low_mean] using three hsum t.p u.p t.q hp
-      (ne_of_lt t.pq) (by simpa [hq] using ne_of_lt u.pq) hi hi lo
-  rw [gate_distance hsum, hcross, ← hq]
+    simpa [high_indicator_mean, low_indicator_mean] using product_expectation_three_positions hsum
+        t.p u.p t.q hp
+      (ne_of_lt t.pq) (by simpa [hq] using ne_of_lt u.pq) highIndicator highIndicator lowIndicator
+  rw [first_gate_sq_expectation hsum, hcross, ← hq]
   ring
 
-private theorem same_tail {μ : Laws n} (t u : Roles n) (hq : t.q = u.q) (hr' : t.r = u.r) :
-    distance μ t u = E μ (fun w => (G t w - G u w) ^ 2) := by
+private theorem same_tail_sq_eq_first_gate_sq {μ : Laws n} (t u : Roles n) (hq : t.q = u.q) (hr' :
+    t.r = u.r) :
+    distance μ t u = productExpectation μ (fun w => (firstGate t w - firstGate u w) ^ 2) := by
   classical
   apply Finset.sum_congr rfl
   intro w _
   congr 1
-  rw [class_formula, class_formula, ← hq, ← hr']
-  rcases gate_binary (w t.q) (w t.r) with hb | hb <;> rw [hb] <;> ring
+  rw [class_value_formula, class_value_formula, ← hq, ← hr']
+  rcases first_gate_binary (w t.q) (w t.r) with hb | hb <;> rw [hb] <;> ring
 
-theorem marginal (rho : ℝ) (μ : Laws n) (hμ : Admissible rho μ) (i : Fin n) :
-    (2 * rho ≤ H μ i ∧ H μ i ≤ 1 - 3 * rho) ∧
-    (2 * rho ≤ L μ i ∧ L μ i ≤ 1 - 3 * rho) := by
+theorem endpoint_marginal_bounds (rho : ℝ) (μ : Laws n) (hμ : Admissible rho μ) (i : Fin n) :
+    (2 * rho ≤ highMarginal μ i ∧ highMarginal μ i ≤ 1 - 3 * rho) ∧
+    (2 * rho ≤ lowMarginal μ i ∧ lowMarginal μ i ≤ 1 - 3 * rho) := by
   classical
   have ht := hμ.1 i .ends
   have hz := hμ.1 i .high
@@ -258,34 +283,34 @@ theorem marginal (rho : ℝ) (μ : Laws n) (hμ : Admissible rho μ) (i : Fin n)
   have hu := hμ.1 i .zero
   have hv := hμ.1 i .middle
   have hs := hμ.2 i
-  simp [univ] at hs
-  dsimp [H, L]
+  simp [Finset.univ, Fintype.elems] at hs
+  dsimp [highMarginal, lowMarginal]
   constructor <;> constructor <;> linarith
 
-theorem psi (rho : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (s t : ℝ)
+theorem bernoulli_discrepancy_lower (rho : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) (s t : ℝ)
     (hs : 2 * rho ≤ s ∧ s ≤ 1 - 3 * rho)
     (ht : 2 * rho ≤ t ∧ t ≤ 1 - 3 * rho) :
     4 * rho * (1 - 2 * rho) ≤ s + t - 2 * s * t := by
-  convert corners (2 * rho) (1 - 3 * rho) s t
+  convert bernoulli_discrepancy_rectangle_lower (2 * rho) (1 - 3 * rho) s t
     (by linarith) hs ht (by linarith) (by linarith) using 1 <;> ring
 
 set_option maxHeartbeats 2000000 in
 -- The crossed and disjoint estimates normalize simultaneous mass constraints.
 /-- Distinct first position pairs have first-gate discrepancy at least gamma. -/
-theorem gate_lower (rho : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
+theorem first_gate_discrepancy_lower (rho : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     (μ : Laws n) (hμ : Admissible rho μ) (t u : Roles n)
     (hpairs : t.p ≠ u.p ∨ t.q ≠ u.q) :
-    gamma rho ≤ E μ (fun w => (G t w - G u w) ^ 2) := by
+    gamma rho ≤ productExpectation μ (fun w => (firstGate t w - firstGate u w) ^ 2) := by
   classical
-  have marginal := marginal rho μ hμ
-  have marginal0 (i : Fin n) : 0 ≤ H μ i ∧ 0 ≤ L μ i := by
-    constructor <;> linarith [(marginal i).1.1, (marginal i).2.1]
-  have psi := psi rho hr hr8
+  have endpoint_marginal_bounds := endpoint_marginal_bounds rho μ hμ
+  have marginal0 (i : Fin n) : 0 ≤ highMarginal μ i ∧ 0 ≤ lowMarginal μ i := by
+    constructor <;> linarith [(endpoint_marginal_bounds i).1.1, (endpoint_marginal_bounds i).2.1]
+  have bernoulli_discrepancy_lower := bernoulli_discrepancy_lower rho hr hr8
   have common_bound (a s t : ℝ) (ha : 2 * rho ≤ a)
       (hs : 2 * rho ≤ s ∧ s ≤ 1 - 3 * rho)
       (ht : 2 * rho ≤ t ∧ t ≤ 1 - 3 * rho) :
       gamma rho ≤ a * (s + t - 2 * s * t) := by
-    have hp := psi s t hs ht
+    have hp := bernoulli_discrepancy_lower s t hs ht
     have hp0 : 0 ≤ s + t - 2 * s * t := by
       have h := mul_nonneg hr.le (show 0 ≤ 1 - 2 * rho by linarith)
       linarith
@@ -295,90 +320,101 @@ theorem gate_lower (rho : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
     nlinarith
   by_cases hp : t.p = u.p
   · have hq : t.q ≠ u.q := by rcases hpairs with h | h <;> simp_all
-    have hcross : E μ (fun w => G t w * G u w) =
-        H μ t.p * L μ t.q * L μ u.q := by
-      have heq : (fun w => G t w * G u w) =
-          (fun w => hi (w t.p) * lo (w t.q) * lo (w u.q)) := by
+    have hcross : productExpectation μ (fun w => firstGate t w * firstGate u w) =
+        highMarginal μ t.p * lowMarginal μ t.q * lowMarginal μ u.q := by
+      have heq : (fun w => firstGate t w * firstGate u w) =
+          (fun w => highIndicator (w t.p) * lowIndicator (w t.q) * lowIndicator (w u.q)) := by
         funext w
-        simp only [G, ← hp]
-        exact merge_first _ _ _
+        simp only [firstGate, ← hp]
+        exact high_indicator_repeat _ _ _
       rw [heq]
-      simpa [high_mean, low_mean] using three hμ.2 t.p t.q u.q
-        (ne_of_lt t.pq) (by simpa [hp] using ne_of_lt u.pq) hq hi lo lo
-    have he : E μ (fun w => (G t w - G u w) ^ 2) =
-        H μ t.p * (L μ t.q + L μ u.q - 2 * L μ t.q * L μ u.q) := by
-      rw [gate_distance hμ.2, hcross, ← hp]
+      simpa [high_indicator_mean, low_indicator_mean] using product_expectation_three_positions
+          hμ.2 t.p t.q u.q
+        (ne_of_lt t.pq) (by simpa [hp] using ne_of_lt u.pq) hq highIndicator lowIndicator
+            lowIndicator
+    have he : productExpectation μ (fun w => (firstGate t w - firstGate u w) ^ 2) =
+        highMarginal μ t.p * (lowMarginal μ t.q + lowMarginal μ u.q - 2 * lowMarginal μ t.q *
+            lowMarginal μ u.q) := by
+      rw [first_gate_sq_expectation hμ.2, hcross, ← hp]
       ring
     rw [he]
-    exact (common_bound _ _ _ (marginal t.p).1.1
-      (marginal t.q).2 (marginal u.q).2)
+    exact (common_bound _ _ _ (endpoint_marginal_bounds t.p).1.1
+      (endpoint_marginal_bounds t.q).2 (endpoint_marginal_bounds u.q).2)
   · by_cases hq : t.q = u.q
-    · rw [same_second hμ.2 t u hq hp]
-      exact (common_bound _ _ _ (marginal t.q).2.1
-        (marginal t.p).1 (marginal u.p).1)
+    · rw [first_gate_same_second_discrepancy hμ.2 t u hq hp]
+      exact (common_bound _ _ _ (endpoint_marginal_bounds t.q).2.1
+        (endpoint_marginal_bounds t.p).1 (endpoint_marginal_bounds u.p).1)
     · have cross_bound (v w : Roles n) (hcross : v.q = w.p) :
-          gamma rho ≤ E μ (fun x => (G v x - G w x) ^ 2) := by
+          gamma rho ≤ productExpectation μ (fun x => (firstGate v x - firstGate w x) ^ 2) := by
         have hpr : v.p ≠ w.q := ne_of_lt (lt_trans v.pq (by simpa [hcross] using w.pq))
-        have he : E μ (fun x => G v x * G w x) =
-            H μ v.p * μ v.q .ends * L μ w.q := by
-          have heq : (fun x => G v x * G w x) =
-              (fun x => hi (x v.p) * (lo (x v.q) * hi (x v.q)) * lo (x w.q)) := by
+        have he : productExpectation μ (fun x => firstGate v x * firstGate w x) =
+            highMarginal μ v.p * μ v.q .ends * lowMarginal μ w.q := by
+          have heq : (fun x => firstGate v x * firstGate w x) =
+              (fun x => highIndicator (x v.p) * (lowIndicator (x v.q) * highIndicator (x v.q)) *
+                  lowIndicator (x w.q)) := by
             funext x
-            simp only [G, ← hcross]
+            simp only [firstGate, ← hcross]
             ring
           rw [heq]
-          simpa [high_mean, low_mean, joint_mean] using three hμ.2 v.p v.q w.q
+          simpa [high_indicator_mean, low_indicator_mean, joint_endpoint_mean] using
+              product_expectation_three_positions hμ.2 v.p v.q w.q
             (ne_of_lt v.pq) hpr (by simpa [hcross] using ne_of_lt w.pq)
-            hi (fun a => lo a * hi a) lo
-        rw [gate_distance hμ.2, he, ← hcross]
-        have hpsi := psi (H μ v.p) (L μ w.q) (marginal v.p).1 (marginal w.q).2
-        have hpsi0 : 0 ≤ H μ v.p + L μ w.q - 2 * H μ v.p * L μ w.q := by
+            highIndicator (fun a => lowIndicator a * highIndicator a) lowIndicator
+        rw [first_gate_sq_expectation hμ.2, he, ← hcross]
+        have hpsi := bernoulli_discrepancy_lower (highMarginal μ v.p) (lowMarginal μ w.q)
+            (endpoint_marginal_bounds v.p).1 (endpoint_marginal_bounds w.q).2
+        have hpsi0 : 0 ≤ highMarginal μ v.p + lowMarginal μ w.q - 2 * highMarginal μ v.p *
+            lowMarginal μ w.q := by
           have h := mul_nonneg hr.le (show 0 ≤ 1 - 2 * rho by linarith)
           linarith
         have h1 := mul_le_mul_of_nonneg_left (hμ.1 v.q .low) (marginal0 v.p).1
         have h2 := mul_le_mul_of_nonneg_left (hμ.1 v.q .high) (marginal0 w.q).2
         have h3 := mul_le_mul_of_nonneg_right (hμ.1 v.q .ends) hpsi0
         have h4 := mul_le_mul_of_nonneg_left hpsi hr.le
-        have h5 := mul_le_mul_of_nonneg_left (marginal v.p).1.1 hr.le
-        have h6 := mul_le_mul_of_nonneg_left (marginal w.q).2.1 hr.le
-        dsimp [gamma, H, L] at *
+        have h5 := mul_le_mul_of_nonneg_left (endpoint_marginal_bounds v.p).1.1 hr.le
+        have h6 := mul_le_mul_of_nonneg_left (endpoint_marginal_bounds w.q).2.1 hr.le
+        dsimp [gamma, highMarginal, lowMarginal] at *
         nlinarith
       by_cases hx : t.q = u.p
       · exact (cross_bound t u hx)
       by_cases hy : u.q = t.p
       · have h := cross_bound u t hy
-        have heq : (fun w => (G u w - G t w) ^ 2) =
-            (fun w => (G t w - G u w) ^ 2) := by funext w; ring
+        have heq : (fun w => (firstGate u w - firstGate t w) ^ 2) =
+            (fun w => (firstGate t w - firstGate u w) ^ 2) := by funext w; ring
         rw [heq] at h
         exact h
-      have hcross : E μ (fun w => G t w * G u w) =
-          H μ t.p * L μ t.q * H μ u.p * L μ u.q := by
-        have heq : (fun w => G t w * G u w) =
-            (fun w => hi (w t.p) * lo (w t.q) * hi (w u.p) * lo (w u.q)) := by
+      have hcross : productExpectation μ (fun w => firstGate t w * firstGate u w) =
+          highMarginal μ t.p * lowMarginal μ t.q * highMarginal μ u.p * lowMarginal μ u.q := by
+        have heq : (fun w => firstGate t w * firstGate u w) =
+            (fun w => highIndicator (w t.p) * lowIndicator (w t.q) * highIndicator (w u.p) *
+                lowIndicator (w u.q)) := by
           funext w
-          dsimp [G]
+          dsimp [firstGate]
           ring
         rw [heq]
-        simpa [high_mean, low_mean] using four hμ.2 t.p t.q u.p u.q
-          (ne_of_lt t.pq) hp (Ne.symm hy) hx hq (ne_of_lt u.pq) hi lo hi lo
+        simpa [high_indicator_mean, low_indicator_mean] using product_expectation_four_positions
+            hμ.2 t.p t.q u.p u.q
+          (ne_of_lt t.pq) hp (Ne.symm hy) hx hq (ne_of_lt u.pq) highIndicator lowIndicator
+              highIndicator lowIndicator
       have product_range (i j : Fin n) :
-          4 * rho ^ 2 ≤ H μ i * L μ j ∧ H μ i * L μ j ≤ (1 - 3 * rho) ^ 2 := by
-        have h1 := mul_le_mul (marginal i).1.1 (marginal j).2.1
+          4 * rho ^ 2 ≤ highMarginal μ i * lowMarginal μ j ∧ highMarginal μ i * lowMarginal μ j ≤
+              (1 - 3 * rho) ^ 2 := by
+        have h1 := mul_le_mul (endpoint_marginal_bounds i).1.1 (endpoint_marginal_bounds j).2.1
           (show 0 ≤ 2 * rho by linarith) (marginal0 i).1
-        have h2 := mul_le_mul (marginal i).1.2 (marginal j).2.2
+        have h2 := mul_le_mul (endpoint_marginal_bounds i).1.2 (endpoint_marginal_bounds j).2.2
           (marginal0 j).2 (show 0 ≤ 1 - 3 * rho by linarith)
         constructor <;> nlinarith
       have hr2 : rho ^ 2 ≤ rho / 8 := by
         nlinarith [mul_nonneg hr.le (show 0 ≤ 1 / 8 - rho by linarith)]
       have hbc := mul_nonneg (show 0 ≤ 1 - 5 * rho by linarith)
         (show 0 ≤ 1 - rho by linarith)
-      have hmin := corners (4 * rho ^ 2) ((1 - 3 * rho) ^ 2)
-        (H μ t.p * L μ t.q) (H μ u.p * L μ u.q)
+      have hmin := bernoulli_discrepancy_rectangle_lower (4 * rho ^ 2) ((1 - 3 * rho) ^ 2)
+        (highMarginal μ t.p * lowMarginal μ t.q) (highMarginal μ u.p * lowMarginal μ u.q)
         (by nlinarith [hbc])
         (product_range _ _) (product_range _ _) (by nlinarith) (by nlinarith)
       have htail := mul_nonneg (sq_nonneg rho)
         (show 0 ≤ 2 * rho - 4 * rho ^ 2 by nlinarith)
-      have he := gate_distance hμ.2 t u
+      have he := first_gate_sq_expectation hμ.2 t u
       rw [hcross] at he
       dsimp [gamma]
       nlinarith
@@ -386,7 +422,8 @@ theorem gate_lower (rho : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8)
 set_option maxHeartbeats 2000000 in
 -- The single proof checks every overlap role and the sharpness construction together.
 /-- All admissible heterogeneous laws have the same sharp lower bound, attained by a
-common law and two distinct increasing triples. Positions in Roles start at zero. -/
+common law and product_expectation_two_positions distinct increasing triples. Positions in Roles
+    start at zero. -/
 theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho ≤ 1 / 8) :
     (∀ μ : Laws n, Admissible rho μ → ∀ t u : Roles n, t ≠ u →
       gamma rho ≤ distance μ t u) ∧
@@ -396,17 +433,17 @@ theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho �
   have lower (μ : Laws n) (hμ : Admissible rho μ) (t u : Roles n) (htu : t ≠ u) :
       gamma rho ≤ distance μ t u := by
     have positive (i : Fin n) (a : Window) : 0 ≤ μ i a := hr.le.trans (hμ.1 i a)
-    have marginal := marginal rho μ hμ
-    have marginal0 (i : Fin n) : 0 ≤ H μ i ∧ 0 ≤ L μ i := by
-      constructor <;> linarith [(marginal i).1.1, (marginal i).2.1]
-    have psi := psi rho hr hr8
-    have weighted_le (f g : Input n → ℝ) (hfg : ∀ w, f w ≤ g w) : E μ f ≤ E μ g := by
+    have endpoint_marginal_bounds := endpoint_marginal_bounds rho μ hμ
+    have bernoulli_discrepancy_lower := bernoulli_discrepancy_lower rho hr hr8
+    have weighted_le (f g : Input n → ℝ) (hfg : ∀ w, f w ≤ g w) : productExpectation μ f ≤
+        productExpectation μ g := by
       apply Finset.sum_le_sum
       intro w _
       exact mul_le_mul_of_nonneg_left (hfg w)
         (Finset.prod_nonneg (fun i _ => positive i (w i)))
-    have gate_le : E μ (fun w => (G t w - G u w) ^ 2) ≤ distance μ t u :=
-      weighted_le _ _ (gate_point t u)
+    have gate_le : productExpectation μ (fun w => (firstGate t w - firstGate u w) ^ 2) ≤ distance
+        μ t u :=
+      weighted_le _ _ (first_gate_sq_le_class_sq t u)
     by_cases hp : t.p = u.p
     · by_cases hq : t.q = u.q
       · have hrne : t.r ≠ u.r := by
@@ -417,32 +454,35 @@ theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho �
           simp_all
         let z (a : Window) : ℝ := if a = .high then 1 else 0
         have zmean (i : Fin n) : (∑ a, μ i a * z a) = μ i .high := by
-          simp [univ, z]
+          simp [Finset.univ, Fintype.elems, z]
         have point (w : Input n) :
-            4 * (z (w t.q) * lo (w t.r) + z (w t.q) * lo (w u.r) -
-              2 * (z (w t.q) * lo (w t.r) * lo (w u.r))) ≤
+            4 * (z (w t.q) * lowIndicator (w t.r) + z (w t.q) * lowIndicator (w u.r) -
+              2 * (z (w t.q) * lowIndicator (w t.r) * lowIndicator (w u.r))) ≤
                 (classValue t w - classValue u w) ^ 2 := by
           by_cases hw : w t.q = .high
-          · rw [class_formula, class_formula]
-            simp only [G, ← hp, ← hq, hw]
-            have hhi : hi .high = 1 := rfl
-            have hlo : lo .high = 0 := rfl
+          · rw [class_value_formula, class_value_formula]
+            simp only [firstGate, ← hp, ← hq, hw]
+            have hhi : highIndicator .high = 1 := rfl
+            have hlo : lowIndicator .high = 0 := rfl
             have hz : z .high = 1 := by simp [z]
             simp only [hhi, hlo, hz, mul_zero, zero_mul, sub_zero, zero_add, one_mul]
-            rcases (binary (w t.r)).2 with ha | ha <;>
-              rcases (binary (w u.r)).2 with hb | hb <;> norm_num [ha, hb]
+            rcases (endpoint_indicators_binary (w t.r)).2 with ha | ha <;>
+              rcases (endpoint_indicators_binary (w u.r)).2 with hb | hb <;> norm_num [ha, hb]
           · simp [z, hw, sq_nonneg]
-        have he : E μ (fun w => 4 * (z (w t.q) * lo (w t.r) +
-            z (w t.q) * lo (w u.r) - 2 * (z (w t.q) * lo (w t.r) * lo (w u.r)))) =
-            4 * μ t.q .high * (L μ t.r + L μ u.r - 2 * L μ t.r * L μ u.r) := by
-          have h := linear (μ := μ) (fun w => z (w t.q) * lo (w t.r))
-            (fun w => z (w t.q) * lo (w u.r))
-            (fun w => z (w t.q) * lo (w t.r) * lo (w u.r)) 4 4 (-8)
-          rw [two hμ.2 _ _ (ne_of_lt t.qr),
-            two hμ.2 _ _ (by simpa [hq] using ne_of_lt u.qr),
-            three hμ.2 _ _ _ (ne_of_lt t.qr)
+        have he : productExpectation μ (fun w => 4 * (z (w t.q) * lowIndicator (w t.r) +
+            z (w t.q) * lowIndicator (w u.r) - 2 * (z (w t.q) * lowIndicator (w t.r) *
+                lowIndicator (w u.r)))) =
+            4 * μ t.q .high * (lowMarginal μ t.r + lowMarginal μ u.r - 2 * lowMarginal μ t.r *
+                lowMarginal μ u.r) := by
+          have h := product_expectation_linear_combination (μ := μ) (fun w => z (w t.q) *
+              lowIndicator (w t.r))
+            (fun w => z (w t.q) * lowIndicator (w u.r))
+            (fun w => z (w t.q) * lowIndicator (w t.r) * lowIndicator (w u.r)) 4 4 (-8)
+          rw [product_expectation_two_positions hμ.2 _ _ (ne_of_lt t.qr),
+            product_expectation_two_positions hμ.2 _ _ (by simpa [hq] using ne_of_lt u.qr),
+            product_expectation_three_positions hμ.2 _ _ _ (ne_of_lt t.qr)
               (by simpa [hq] using ne_of_lt u.qr) hrne] at h
-          simp only [zmean, low_mean] at h
+          simp only [zmean, low_indicator_mean] at h
           convert h using 1
           · congr 1
             funext w
@@ -450,17 +490,19 @@ theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho �
           · ring
         have hh := weighted_le _ _ point
         rw [he] at hh
-        have hp := psi (L μ t.r) (L μ u.r) (marginal t.r).2 (marginal u.r).2
-        have hpp : 0 ≤ L μ t.r + L μ u.r - 2 * L μ t.r * L μ u.r := by
+        have hp := bernoulli_discrepancy_lower (lowMarginal μ t.r) (lowMarginal μ u.r)
+            (endpoint_marginal_bounds t.r).2 (endpoint_marginal_bounds u.r).2
+        have hpp : 0 ≤ lowMarginal μ t.r + lowMarginal μ u.r - 2 * lowMarginal μ t.r * lowMarginal
+            μ u.r := by
           have h := mul_nonneg hr.le (show 0 ≤ 1 - 2 * rho by linarith)
           linarith
         have h1 := mul_le_mul_of_nonneg_right (hμ.1 t.q .high) hpp
         have h2 := mul_le_mul_of_nonneg_left hp hr.le
         dsimp [gamma]
-        change _ ≤ E μ (fun w => (classValue t w - classValue u w) ^ 2)
+        change _ ≤ productExpectation μ (fun w => (classValue t w - classValue u w) ^ 2)
         nlinarith
-      · exact (gate_lower rho hr hr8 μ hμ t u (Or.inr hq)).trans gate_le
-    · exact (gate_lower rho hr hr8 μ hμ t u (Or.inl hp)).trans gate_le
+      · exact (first_gate_discrepancy_lower rho hr hr8 μ hμ t u (Or.inr hq)).trans gate_le
+    · exact (first_gate_discrepancy_lower rho hr hr8 μ hμ t u (Or.inl hp)).trans gate_le
   refine ⟨lower, ?_⟩
   let μ : Laws n := fun _ => extremal rho
   have hm : Admissible rho μ := by
@@ -468,7 +510,7 @@ theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho �
     · intro i a
       cases a <;> dsimp [μ, extremal] <;> linarith
     · intro i
-      simp [μ, univ, extremal]
+      simp [μ, Finset.univ, Fintype.elems, extremal]
       ring
   let t : Roles n := ⟨⟨0, by omega⟩, ⟨n - 2, by omega⟩, ⟨n - 1, by omega⟩,
     by change 0 < n - 2; omega, by change n - 2 < n - 1; omega⟩
@@ -479,8 +521,9 @@ theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho �
     have := congrArg Fin.val h
     norm_num [t, u] at this
   refine ⟨hm, t, u, (fun he => hp (congrArg Roles.p he)), ?_⟩
-  rw [same_tail t u rfl rfl, same_second hm.2 t u rfl hp]
-  norm_num [μ, H, L, extremal, gamma]
+  rw [same_tail_sq_eq_first_gate_sq t u rfl rfl, first_gate_same_second_discrepancy hm.2 t u rfl
+      hp]
+  norm_num [μ, highMarginal, lowMarginal, extremal, gamma]
   ring
 
 end D5.S3.Arith.FibonacciAtomic.HeterogeneousTeacherSeparation

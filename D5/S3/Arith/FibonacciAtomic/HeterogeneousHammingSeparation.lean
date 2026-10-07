@@ -1,7 +1,7 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/HeterogeneousHammingSeparation
-   generality: G
+   generality: firstGate
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/HeterogeneousHammingSeparation
-   mirror-E: none(waiver:unbounded-symbolic-estimate)
+   mirror-productExpectation: none(waiver:unbounded-symbolic-estimate)
    anchors: []
    utility: none
    digest: Sharp heterogeneous Hamming separation is strictly below squared separation. -/
@@ -22,7 +22,7 @@ open scoped BigOperators
 
 /-- Actual classification disagreement under the heterogeneous product law. -/
 def hamming {n : ℕ} (μ : Laws n) (t u : Roles n) : ℝ :=
-  E μ (fun w => if classValue t w = classValue u w then 0 else 1)
+  productExpectation μ (fun w => if classValue t w = classValue u w then 0 else 1)
 
 /-- Sharp classification separation over the complete heterogeneous class. -/
 def eta (rho : ℝ) : ℝ := 4 * rho ^ 2 * (1 - 2 * rho) * (1 + 3 * rho)
@@ -57,54 +57,70 @@ theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho �
   dsimp only
   have same_head (μ : Laws n) (hsum : ∀ i, ∑ a, μ i a = 1)
       (t u : Roles n) (hp : t.p = u.p) (hq : t.q = u.q) (hrs : t.r ≠ u.r) :
-      hamming μ t u = (H μ t.q - H μ t.p * μ t.q .ends) *
-        (L μ t.r + L μ u.r - 2 * L μ t.r * L μ u.r) := by
+      hamming μ t u = (highMarginal μ t.q - highMarginal μ t.p * μ t.q .ends) *
+        (lowMarginal μ t.r + lowMarginal μ u.r - 2 * lowMarginal μ t.r * lowMarginal μ u.r) := by
     have hpr := ne_of_lt (lt_trans t.pq t.qr)
     have hps : t.p ≠ u.r := by simpa [hp] using ne_of_lt (lt_trans u.pq u.qr)
     have hqs : t.q ≠ u.r := by simpa [hq] using ne_of_lt u.qr
     have point (w : Input n) :
         (if classValue t w = classValue u w then (0 : ℝ) else 1) =
-          (hi (w t.q) * lo (w t.r) + hi (w t.q) * lo (w u.r) -
-            2 * (hi (w t.q) * lo (w t.r) * lo (w u.r))) -
-          (hi (w t.p) * (lo (w t.q) * hi (w t.q)) * lo (w t.r) +
-            hi (w t.p) * (lo (w t.q) * hi (w t.q)) * lo (w u.r) -
-            2 * (hi (w t.p) * (lo (w t.q) * hi (w t.q)) *
-              lo (w t.r) * lo (w u.r))) := by
-      rw [class_formula, class_formula]
-      simp only [G, ← hp, ← hq]
-      rcases (binary (w t.p)).1 with ha | ha <;>
-        rcases (binary (w t.q)).1 with hb | hb <;>
-        rcases (binary (w t.q)).2 with hc | hc <;>
-        rcases (binary (w t.r)).2 with hd | hd <;>
-        rcases (binary (w u.r)).2 with he | he <;>
+          (highIndicator (w t.q) * lowIndicator (w t.r) + highIndicator (w t.q) * lowIndicator (w
+              u.r) -
+            2 * (highIndicator (w t.q) * lowIndicator (w t.r) * lowIndicator (w u.r))) -
+          (highIndicator (w t.p) * (lowIndicator (w t.q) * highIndicator (w t.q)) * lowIndicator
+              (w t.r) +
+            highIndicator (w t.p) * (lowIndicator (w t.q) * highIndicator (w t.q)) * lowIndicator
+                (w u.r) -
+            2 * (highIndicator (w t.p) * (lowIndicator (w t.q) * highIndicator (w t.q)) *
+              lowIndicator (w t.r) * lowIndicator (w u.r))) := by
+      rw [class_value_formula, class_value_formula]
+      simp only [firstGate, ← hp, ← hq]
+      rcases (endpoint_indicators_binary (w t.p)).1 with ha | ha <;>
+        rcases (endpoint_indicators_binary (w t.q)).1 with hb | hb <;>
+        rcases (endpoint_indicators_binary (w t.q)).2 with hc | hc <;>
+        rcases (endpoint_indicators_binary (w t.r)).2 with hd | hd <;>
+        rcases (endpoint_indicators_binary (w u.r)).2 with he | he <;>
         norm_num [ha, hb, hc, hd, he]
     have split : hamming μ t u =
-        E μ (fun w => hi (w t.q) * lo (w t.r) + hi (w t.q) * lo (w u.r) -
-          2 * (hi (w t.q) * lo (w t.r) * lo (w u.r))) -
-        E μ (fun w => hi (w t.p) * (lo (w t.q) * hi (w t.q)) * lo (w t.r) +
-          hi (w t.p) * (lo (w t.q) * hi (w t.q)) * lo (w u.r) -
-          2 * (hi (w t.p) * (lo (w t.q) * hi (w t.q)) * lo (w t.r) * lo (w u.r))) := by
-      simp only [hamming, E, ← Finset.sum_sub_distrib, ← mul_sub]
+        productExpectation μ (fun w => highIndicator (w t.q) * lowIndicator (w t.r) +
+            highIndicator (w t.q) * lowIndicator (w u.r) -
+          2 * (highIndicator (w t.q) * lowIndicator (w t.r) * lowIndicator (w u.r))) -
+        productExpectation μ (fun w => highIndicator (w t.p) * (lowIndicator (w t.q) *
+            highIndicator (w t.q)) * lowIndicator (w t.r) +
+          highIndicator (w t.p) * (lowIndicator (w t.q) * highIndicator (w t.q)) * lowIndicator (w
+              u.r) -
+          2 * (highIndicator (w t.p) * (lowIndicator (w t.q) * highIndicator (w t.q)) *
+              lowIndicator (w t.r) * lowIndicator (w u.r))) := by
+      simp only [hamming, productExpectation, ← Finset.sum_sub_distrib, ← mul_sub]
       apply Finset.sum_congr rfl
       intro w _
       rw [point]
-    have first := linear (μ := μ) (fun w => hi (w t.q) * lo (w t.r))
-      (fun w => hi (w t.q) * lo (w u.r))
-      (fun w => hi (w t.q) * lo (w t.r) * lo (w u.r)) 1 1 (-2)
-    have second := linear (μ := μ)
-      (fun w => hi (w t.p) * (lo (w t.q) * hi (w t.q)) * lo (w t.r))
-      (fun w => hi (w t.p) * (lo (w t.q) * hi (w t.q)) * lo (w u.r))
-      (fun w => hi (w t.p) * (lo (w t.q) * hi (w t.q)) * lo (w t.r) * lo (w u.r))
+    have first := product_expectation_linear_combination (μ := μ) (fun w => highIndicator (w t.q)
+        * lowIndicator (w t.r))
+      (fun w => highIndicator (w t.q) * lowIndicator (w u.r))
+      (fun w => highIndicator (w t.q) * lowIndicator (w t.r) * lowIndicator (w u.r)) 1 1 (-2)
+    have second := product_expectation_linear_combination (μ := μ)
+      (fun w => highIndicator (w t.p) * (lowIndicator (w t.q) * highIndicator (w t.q)) *
+          lowIndicator (w t.r))
+      (fun w => highIndicator (w t.p) * (lowIndicator (w t.q) * highIndicator (w t.q)) *
+          lowIndicator (w u.r))
+      (fun w => highIndicator (w t.p) * (lowIndicator (w t.q) * highIndicator (w t.q)) *
+          lowIndicator (w t.r) * lowIndicator (w u.r))
       1 1 (-2)
     simp only [one_mul, neg_mul, sub_eq_add_neg] at first second split ⊢
     rw [split, first, second,
-      two hsum _ _ (ne_of_lt t.qr) hi lo, two hsum _ _ hqs hi lo,
-      three hsum _ _ _ (ne_of_lt t.qr) hqs hrs hi lo lo,
-      three hsum _ _ _ (ne_of_lt t.pq) hpr (ne_of_lt t.qr) hi (fun a => lo a * hi a) lo,
-      three hsum _ _ _ (ne_of_lt t.pq) hps hqs hi (fun a => lo a * hi a) lo,
-      four hsum _ _ _ _ (ne_of_lt t.pq) hpr hps (ne_of_lt t.qr) hqs hrs
-        hi (fun a => lo a * hi a) lo lo]
-    simp only [high_mean, low_mean, joint_mean]
+      product_expectation_two_positions hsum _ _ (ne_of_lt t.qr) highIndicator lowIndicator,
+          product_expectation_two_positions hsum _ _ hqs highIndicator lowIndicator,
+      product_expectation_three_positions hsum _ _ _ (ne_of_lt t.qr) hqs hrs highIndicator
+          lowIndicator lowIndicator,
+      product_expectation_three_positions hsum _ _ _ (ne_of_lt t.pq) hpr (ne_of_lt t.qr)
+          highIndicator (fun a => lowIndicator a * highIndicator a) lowIndicator,
+      product_expectation_three_positions hsum _ _ _ (ne_of_lt t.pq) hps hqs highIndicator (fun a
+          => lowIndicator a * highIndicator a) lowIndicator,
+      product_expectation_four_positions hsum _ _ _ _ (ne_of_lt t.pq) hpr hps (ne_of_lt t.qr) hqs
+          hrs
+        highIndicator (fun a => lowIndicator a * highIndicator a) lowIndicator lowIndicator]
+    simp only [high_indicator_mean, low_indicator_mean, joint_endpoint_mean]
     ring
   have gap : eta rho < gamma rho := by
     have hpos : 0 < 4 * rho ^ 2 * (1 - 2 * rho) :=
@@ -114,19 +130,20 @@ theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho �
     nlinarith
   have lower (μ : Laws n) (hμ : Admissible rho μ) (t u : Roles n) (htu : t ≠ u) :
       eta rho ≤ hamming μ t u := by
-    have gate_point (w : Input n) :
-        (G t w - G u w) ^ 2 ≤
+    have first_gate_sq_le_class_sq (w : Input n) :
+        (firstGate t w - firstGate u w) ^ 2 ≤
           (if classValue t w = classValue u w then (0 : ℝ) else 1) := by
-      rw [class_formula, class_formula]
-      rcases gate_binary (w t.p) (w t.q) with ht | ht <;>
-        rcases gate_binary (w u.p) (w u.q) with hu | hu <;>
-        rcases gate_binary (w t.q) (w t.r) with hb | hb <;>
-        rcases gate_binary (w u.q) (w u.r) with hc | hc <;>
-        norm_num [G, ht, hu, hb, hc]
-    have gate_le : E μ (fun w => (G t w - G u w) ^ 2) ≤ hamming μ t u := by
+      rw [class_value_formula, class_value_formula]
+      rcases first_gate_binary (w t.p) (w t.q) with ht | ht <;>
+        rcases first_gate_binary (w u.p) (w u.q) with hu | hu <;>
+        rcases first_gate_binary (w t.q) (w t.r) with hb | hb <;>
+        rcases first_gate_binary (w u.q) (w u.r) with hc | hc <;>
+        norm_num [firstGate, ht, hu, hb, hc]
+    have gate_le : productExpectation μ (fun w => (firstGate t w - firstGate u w) ^ 2) ≤ hamming μ
+        t u := by
       apply Finset.sum_le_sum
       intro w _
-      exact mul_le_mul_of_nonneg_left (gate_point w)
+      exact mul_le_mul_of_nonneg_left (first_gate_sq_le_class_sq w)
         (Finset.prod_nonneg (fun i _ => hr.le.trans (hμ.1 i (w i))))
     by_cases hp : t.p = u.p
     · by_cases hq : t.q = u.q
@@ -137,25 +154,28 @@ theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho �
           cases u
           simp_all
         rw [same_head μ hμ.2 t u hp hq hrs]
-        have hH := (marginal rho μ hμ t.p).1.2
+        have hH := (endpoint_marginal_bounds rho μ hμ t.p).1.2
         have ht := hμ.1 t.q .ends
         have hz := hμ.1 t.q .high
-        have joint_lower : rho * (1 + 3 * rho) ≤ H μ t.q - H μ t.p * μ t.q .ends := by
+        have joint_lower : rho * (1 + 3 * rho) ≤ highMarginal μ t.q - highMarginal μ t.p * μ t.q
+            .ends := by
           have h1 := mul_le_mul_of_nonneg_left hH (hr.le.trans ht)
           have h2 := mul_le_mul_of_nonneg_left ht (show 0 ≤ 3 * rho by linarith)
-          dsimp [H] at h1 ⊢
+          dsimp [highMarginal] at h1 ⊢
           nlinarith
-        have hpsi := psi rho hr hr8 (L μ t.r) (L μ u.r)
-          (marginal rho μ hμ t.r).2 (marginal rho μ hμ u.r).2
+        have hpsi := bernoulli_discrepancy_lower rho hr hr8 (lowMarginal μ t.r) (lowMarginal μ u.r)
+          (endpoint_marginal_bounds rho μ hμ t.r).2 (endpoint_marginal_bounds rho μ hμ u.r).2
         have hpsi0 : 0 ≤ 4 * rho * (1 - 2 * rho) :=
           mul_nonneg (by linarith) (by linarith)
-        have hj0 : 0 ≤ H μ t.q - H μ t.p * μ t.q .ends :=
+        have hj0 : 0 ≤ highMarginal μ t.q - highMarginal μ t.p * μ t.q .ends :=
           (mul_nonneg hr.le (by linarith)).trans joint_lower
         have hh := mul_le_mul joint_lower hpsi hpsi0 hj0
         dsimp [eta]
         nlinarith
-      · exact gap.le.trans ((gate_lower rho hr hr8 μ hμ t u (Or.inr hq)).trans gate_le)
-    · exact gap.le.trans ((gate_lower rho hr hr8 μ hμ t u (Or.inl hp)).trans gate_le)
+      · exact gap.le.trans ((first_gate_discrepancy_lower rho hr hr8 μ hμ t u (Or.inr hq)).trans
+          gate_le)
+    · exact gap.le.trans ((first_gate_discrepancy_lower rho hr hr8 μ hμ t u (Or.inl hp)).trans
+        gate_le)
   let t : Roles n := ⟨⟨0, by omega⟩, ⟨1, by omega⟩, ⟨2, by omega⟩,
     by change (0 : ℕ) < 1; omega, by change (1 : ℕ) < 2; omega⟩
   let u : Roles n := ⟨⟨0, by omega⟩, ⟨1, by omega⟩, ⟨3, by omega⟩,
@@ -167,11 +187,12 @@ theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho �
   have admissible : Admissible rho (attainingLaw n rho) := by
     constructor
     · intro i a
-      by_cases hi : i.val = 0
-      · cases a <;> simp [attainingLaw, hi, tilted] <;> linarith
-      · cases a <;> simp [attainingLaw, hi, extremal] <;> linarith
+      by_cases hzero : i.val = 0
+      · cases a <;> simp [attainingLaw, hzero, tilted] <;> linarith
+      · cases a <;> simp [attainingLaw, hzero, extremal] <;> linarith
     · intro i
-      by_cases hi : i.val = 0 <;> simp [attainingLaw, hi, tilted, extremal, univ] <;> ring
+      by_cases hzero : i.val = 0 <;> simp [attainingLaw, hzero, tilted, extremal, Finset.univ,
+          Fintype.elems] <;> ring
   have attained (μ : Laws n) (hμ : Admissible rho μ)
       (hfirst : ∀ i : Fin n, i.val < 4 → μ i = attainingLaw n rho i) :
       hamming μ t u = eta rho := by
@@ -181,7 +202,7 @@ theorem result (n : ℕ) (hn : 4 ≤ n) (rho : ℝ) (hr : 0 < rho) (hr8 : rho �
     have hq := hfirst t.q (by norm_num [t])
     have hr' := hfirst t.r (by norm_num [t])
     have hs := hfirst u.r (by norm_num [u])
-    simp only [H, L, hp, hq, hr', hs]
+    simp only [highMarginal, lowMarginal, hp, hq, hr', hs]
     norm_num [attainingLaw, t, u, tilted, extremal, eta]
     ring
   exact ⟨lower, ⟨distinct, admissible, attained _ admissible (fun _ _ => rfl), attained⟩, gap⟩
