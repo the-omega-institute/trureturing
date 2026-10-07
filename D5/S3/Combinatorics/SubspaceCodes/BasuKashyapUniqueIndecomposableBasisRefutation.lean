@@ -1,7 +1,7 @@
 /- GID: D5/S3/Combinatorics/SubspaceCodes/BasuKashyapUniqueIndecomposableBasisRefutation
    generality: I
    mirror-B: D5/B/S3/Combinatorics/SubspaceCodes/BasuKashyapUniqueIndecomposableBasisRefutation
-   mirror-E: none(algebraically-proved)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Combinatorics/SubspaceCodes/BasuKashyapUniqueIndecomposableBasisRefutation.claim; result=D5/S3/Combinatorics/SubspaceCodes/BasuKashyapUniqueIndecomposableBasisRefutation.result; claim=D5/S3/Combinatorics/SubspaceCodes/BasuKashyapUniqueIndecomposableBasisRefutation.claim
    digest: A unique indecomposable basis need not imply intersection closure. -/
