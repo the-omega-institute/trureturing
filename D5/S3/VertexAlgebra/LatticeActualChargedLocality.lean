@@ -41,7 +41,7 @@ theorem raw_commutator_kernel (D : LatticeData) (α β : Charge D)
   simp only [rawCommutator, LinearMap.sub_apply, Module.End.mul_apply,
     ]
   rw [actual_ordered_product D α β δ p k l,actual_reverse_ordered_product D α β δ p k l]
-  rw [epsilon_skew D β α, bilinear_symmetric D β α]
+  rw [epsilon_skew D β α, LatticeFiniteNegativeGeneration.bilinear_symmetric D β α]
   change _ = epsilon D α β •
     ((∑ᶠ j : ℕ, contraction (bilinear D α β) j •
       commonKernel D α β (k-bilinear D α β+j) (l-j) (Finsupp.single δ p)) -

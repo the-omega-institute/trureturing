@@ -83,17 +83,6 @@ theorem grade_finiteDimensional (D : LatticeData)
   haveI := energyFiber_finite D hD n
   exact Module.Finite.of_basis (gradeBasis D n)
 
-theorem grade_negative (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (n : ℤ) (hn : n < 0) :
-    grade D n = ⊥ := by
-  apply le_antisymm _ bot_le
-  intro v hv
-  rw [Submodule.mem_bot]
-  apply (carrierCoeffEquiv D).injective
-  ext a
-  have ha : energy D a ≠ n := by have h := energy_nonneg D hD a; omega
-  exact (mem_grade_iff D n v).mp hv a ha
-
 theorem grade_zero (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) :
     grade D 0 = Submodule.span ℂ {vacuum D} := by
@@ -112,14 +101,6 @@ def vacuumGradeEquiv (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) : ℂ ≃ₗ[ℂ] grade D 0 :=
   (LinearEquiv.toSpanNonzeroSingleton ℂ (Carrier D) (vacuum D) (vacuum_nonzero D)).trans
     (LinearEquiv.ofEq _ _ (grade_zero D hD).symm)
-
-theorem energyFiber_negative (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (n : ℤ) (hn : n < 0) :
-    IsEmpty (EnergyFiber D n) := by
-  refine ⟨fun a => ?_⟩
-  have h := energy_nonneg D hD a.1
-  rw [a.2] at h
-  omega
 
 theorem rank_zero_label (D : LatticeData) (hr : D.rank = 0) (a : Label D) :
     a = (0,0) := by
@@ -230,7 +211,6 @@ def carrierEnergyDecomposition (D : LatticeData) :
   (LinearEquiv.ofBijective (DirectSum.coeLinearMap (grade D)) (grades_internal D)).symm
 
 #print axioms grade_finiteDimensional
-#print axioms grade_negative
 #print axioms grade_zero
 #print axioms rank_zero_carrier
 #print axioms sum_gradeProjections

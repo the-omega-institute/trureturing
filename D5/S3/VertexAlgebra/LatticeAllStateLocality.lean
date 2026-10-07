@@ -25,7 +25,7 @@ theorem actual_neutral_neutral_locality (D : LatticeData) (i j : Fin D.rank) :
     delta^[2] (FieldNormalProductLocality.commutator (neutralField D i) (neutralField D j)) = 0 := by
   funext left right
   simp only [Function.iterate_succ_apply', Function.iterate_zero_apply, delta,
-    FieldNormalProductLocality.commutator, LatticeAllStateField.neutral_modes]
+    FieldNormalProductLocality.commutator, LatticeSugawaraCurrents.neutralField_ncoeff]
   simp_rw [LatticeSugawaraCurrents.neutralMode_heisenberg]
   rw [show left+1+1+right = left+right+2 by omega,
     show left+1+(right+1) = left+right+2 by omega,

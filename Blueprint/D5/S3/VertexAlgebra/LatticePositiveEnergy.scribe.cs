@@ -88,16 +88,6 @@ internal sealed class LatticePositiveEnergyDocument : IScribeDocumentDefinition
                     Paragraph(Text("q_D(0)=0 unconditionally for every ordinary D."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("latticepositiveenergy-bilinear-positive"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticePositiveEnergy.bilinear_positive"),
-                H("Real Gram positivity controls integral charges"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("Under hD and alpha!=0, 0<B_D(alpha,alpha) in Z. The real positive-definite quadratic form is "
-                        + "evaluated on the real cast of the integral charge."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("latticepositiveenergy-chargeenergy-nonneg"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticePositiveEnergy.chargeEnergy_nonneg"),
                 H("Derived nonnegative integral charge energy"),
@@ -154,16 +144,6 @@ internal sealed class LatticePositiveEnergyDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromLiterature(Source),
                 Blocks(
                     Paragraph(Text("For every ordinary D, w(d)=0 iff d=0, because every frequency weight is positive."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
-                DescribeId.Create("latticepositiveenergy-energy-nonneg"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticePositiveEnergy.energy_nonneg"),
-                H("Full energy is nonnegative"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("Under hD, E_D(alpha,d)>=0 for every label, by nonnegative charge energy and natural oscillator "
-                        + "weight."))),
                 DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticepositiveenergy-energy-eq-zero-iff"),

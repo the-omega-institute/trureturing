@@ -56,14 +56,6 @@ def sigma (D : LatticeData) : Oscillator D →+* Oscillator D :=
 theorem bilinear_neg_neg (D : LatticeData) (a b : Charge D) :
     bilinear D (-a) (-b) = bilinear D a b := by simp [bilinear]
 
-theorem bilinear_neg_left (D : LatticeData) (a b : Charge D) :
-    bilinear D (-a) b = -bilinear D a b := by
-  simp [bilinear, Finset.sum_neg_distrib]
-
-theorem bilinear_neg_right (D : LatticeData) (a b : Charge D) :
-    bilinear D a (-b) = -bilinear D a b := by
-  simp [bilinear, Finset.sum_neg_distrib]
-
 theorem lowerCocycleExponent_neg_neg (D : LatticeData) (a b : Charge D) :
     lowerCocycleExponent D (-a) (-b) = lowerCocycleExponent D a b := by
   simp [lowerCocycleExponent]
@@ -145,7 +137,7 @@ theorem sigma_creationCoeff (D : LatticeData) (a : Charge D) (t : ℤ) :
 theorem sigma_translationVariable (D : LatticeData) (a : Charge D) (x : Index D) :
     Polynomial.map (sigma D) (translationVariable D a x.1 x.2) =
       -translationVariable D (-a) x.1 x.2 := by
-  simp [translationVariable, bilinear_neg_left, neg_smul,
+  simp [translationVariable, LatticeFiniteNegativeGeneration.bilinear_neg_left, neg_smul,
     Polynomial.map_sub, Polynomial.map_mul, Polynomial.map_pow] <;> ring
 
 theorem translatedPolynomial_sigma (D : LatticeData) (a : Charge D)
@@ -234,7 +226,7 @@ theorem sigma_neutralPolynomialMode (D : LatticeData) (i : Fin D.rank)
   unfold neutralPolynomialMode
   split_ifs with hn hz
   · simp [LinearMap.mulLeft_apply, map_mul]
-  · simp [bilinear_neg_right, neg_smul]
+  · simp [LatticeFiniteNegativeGeneration.bilinear_neg_right, neg_smul]
   · simp only [LinearMap.smul_apply, sigma_smul, LinearMap.sum_apply,
       map_sum]
     change (m : ℂ) • (∑ j : Fin D.rank, (D.G i j : ℂ) •

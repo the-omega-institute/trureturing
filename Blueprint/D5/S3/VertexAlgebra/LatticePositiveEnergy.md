@@ -82,19 +82,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.chargeEnergy_zero`
 
 q_D(0)=0 unconditionally for every ordinary D.
 
-**Theorem 1.7 (Real Gram positivity controls integral charges).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.bilinear_positive`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticePositiveEnergy.bilinear_positive` (`✓ std3`). ∎
-
-*Citation.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
-
-*Commentary.*
-
-Under hD and alpha!=0, 0<B_D(alpha,alpha) in Z. The real positive-definite quadratic form is evaluated on the real cast of the integral charge.
-
-**Theorem 1.8 (Derived nonnegative integral charge energy).**
+**Theorem 1.7 (Derived nonnegative integral charge energy).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.chargeEnergy_nonneg`
 
@@ -106,7 +94,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.chargeEnergy_nonneg`
 
 Under hD, q_D(alpha)>=0 for all charges. The proof handles alpha=0 separately and uses positive square plus exact doubling for nonzero alpha.
 
-**Theorem 1.9 (Only the zero charge has zero energy).**
+**Theorem 1.8 (Only the zero charge has zero energy).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.chargeEnergy_eq_zero_iff`
 
@@ -118,7 +106,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.chargeEnergy_eq_zero_
 
 Under hD, q_D(alpha)=0 iff alpha=0. This conclusion includes arbitrary finite rank and rank zero.
 
-**Definition 1.10 (Frequency-weighted oscillator energy).**
+**Definition 1.9 (Frequency-weighted oscillator energy).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.oscillatorEnergy`
 
@@ -130,7 +118,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.oscillatorEnergy`
 
 w(d)=Finsupp.weight(fun (i,k)=>k+1,d) in N. The polynomial variable (i,k) represents positive frequency k+1.
 
-**Definition 1.11 (Full integral lattice energy).**
+**Definition 1.10 (Full integral lattice energy).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.energy`
 
@@ -142,7 +130,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.energy`
 
 E_D(alpha,d)=q_D(alpha)+(w(d):Z). This grades all charge sectors of the actual carrier.
 
-**Theorem 1.12 (Finite sublevels despite infinite labels).**
+**Theorem 1.11 (Finite sublevels despite infinite labels).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.oscillatorLeFinite`
 
@@ -154,7 +142,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.oscillatorLeFinite`
 
 For every D and N:N, {d:Exponent(D) | w(d)<=N} is finite, without hD. An occupied frequency obeys k+1<=N; every exponent is <=N. Restriction injects this sublevel into (Fin(rank(D)) x Fin(N))->Fin(N+1). N=0 and rank zero are included. No finite Index(D) instance is assumed.
 
-**Theorem 1.13 (Zero oscillator energy is the constant monomial).**
+**Theorem 1.12 (Zero oscillator energy is the constant monomial).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.oscillatorEnergy_eq_zero_iff`
 
@@ -166,19 +154,7 @@ Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.oscillatorEnergy_eq_z
 
 For every ordinary D, w(d)=0 iff d=0, because every frequency weight is positive.
 
-**Theorem 1.14 (Full energy is nonnegative).**
-
-Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.energy_nonneg`
-
-*Proof.* Machine-checked in Lean as `D5/S3/VertexAlgebra/LatticePositiveEnergy.energy_nonneg` (`✓ std3`). ∎
-
-*Citation.* Bojko Bakalov and Victor G. Kac (2004). *Twisted Modules over Lattice Vertex Algebras*. DOI: [10.1142/9789812702562_0001](https://doi.org/10.1142/9789812702562_0001). URL: <https://arxiv.org/abs/math/0402315v1>.
-
-*Commentary.*
-
-Under hD, E_D(alpha,d)>=0 for every label, by nonnegative charge energy and natural oscillator weight.
-
-**Theorem 1.15 (Unique zero-energy label).**
+**Theorem 1.13 (Unique zero-energy label).**
 
 Lean statement: `D5/S3/VertexAlgebra/LatticePositiveEnergy.energy_eq_zero_iff`
 
@@ -204,7 +180,6 @@ This unit supplies the actual lattice carrier with a positive finite energy grad
 
 - Truth anchor: `D5/S3/VertexAlgebra/LatticePositiveEnergy.Exponent`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticePositiveEnergy.Label`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticePositiveEnergy.bilinear_positive`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticePositiveEnergy.chargeEnergy`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticePositiveEnergy.chargeEnergy_cocycle`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticePositiveEnergy.chargeEnergy_eq_zero_iff`
@@ -212,9 +187,9 @@ This unit supplies the actual lattice carrier with a positive finite energy grad
 - Truth anchor: `D5/S3/VertexAlgebra/LatticePositiveEnergy.chargeEnergy_zero`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticePositiveEnergy.energy`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticePositiveEnergy.energy_eq_zero_iff`
-- Truth anchor: `D5/S3/VertexAlgebra/LatticePositiveEnergy.energy_nonneg`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticePositiveEnergy.oscillatorEnergy`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticePositiveEnergy.oscillatorEnergy_eq_zero_iff`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticePositiveEnergy.oscillatorLeFinite`
 - Truth anchor: `D5/S3/VertexAlgebra/LatticePositiveEnergy.two_chargeEnergy`
+- Dependency: [D5/S3/VertexAlgebra/LatticeFiniteNegativeGeneration](LatticeFiniteNegativeGeneration.md)
 - Dependency: [D5/S3/VertexAlgebra/LatticeTwistedGroundRealization](LatticeTwistedGroundRealization.md)

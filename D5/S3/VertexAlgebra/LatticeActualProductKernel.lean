@@ -26,12 +26,6 @@ open FieldNormalProduct MvPolynomial
 open scoped BigOperators VertexOperator
 noncomputable section
 
-theorem bilinear_symmetric (D : LatticeData) (α β : Charge D) :
-    bilinear D α β = bilinear D β α := by
-  rw [← LatticeTwistedGroundRealization.SignQuotient.integral_cocycle_symmetrization D α β,
-    ← LatticeTwistedGroundRealization.SignQuotient.integral_cocycle_symmetrization D β α]
-  exact add_comm _ _
-
 @[simp] theorem bilinear_add_right (D : LatticeData) (α β δ : Charge D) :
     bilinear D α (β + δ) = bilinear D α β + bilinear D α δ := by
   simp [bilinear, mul_add, Finset.sum_add_distrib]

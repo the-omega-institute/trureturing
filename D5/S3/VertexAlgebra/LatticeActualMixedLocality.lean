@@ -25,14 +25,6 @@ open LatticeActualProductKernel LatticeActualOrderedProducts LatticeActualAnnihi
 open scoped BigOperators VertexOperator
 noncomputable section
 
-theorem translated_smul (D : LatticeData) (α : Charge D) (c : ℂ) (p : Oscillator D) :
-    translatedPolynomial D α (c • p) = c • translatedPolynomial D α p := by
-  have h : translatedPolynomial D α (MvPolynomial.C c) =
-      algebraMap ℂ (Polynomial (Oscillator D)) c := by simp [translatedPolynomial]
-  rw [MvPolynomial.smul_eq_C_mul]
-  simp only [translatedPolynomial,map_mul] at h ⊢
-  rw [h,←Algebra.smul_def]
-
 theorem convolution_smul (D : LatticeData) (α : Charge D) (s : ℤ)
     (c : ℂ) (q : Polynomial (Oscillator D)) :
     convolution D α s (c • q) = c • convolution D α s q :=
@@ -50,7 +42,7 @@ theorem positive_sector_raw (D : LatticeData) (i : Fin D.rank) (n : ℕ)
     Int.cast_add,Int.cast_natCast,Int.cast_one]
   change (n+1 : ℂ) • annihilate D i n (convolution D α s (translatedPolynomial D α p)) -
     convolution D α s (translatedPolynomial D α ((n+1 : ℂ) • annihilate D i n p)) = _
-  rw [translated_smul,convolution_smul,annihilation_convolution,
+  rw [LatticeSugawaraConformal.translated_smul,convolution_smul,annihilation_convolution,
     ←annihilation_transport,smul_add,add_sub_cancel_left,smul_smul]
   have h : (n+1 : ℂ) ≠ 0 := by exact_mod_cast Nat.succ_ne_zero n
   rw [←mul_assoc,mul_inv_cancel₀ h,one_mul]
@@ -75,7 +67,7 @@ theorem zero_current_raw (D : LatticeData) (i : Fin D.rank)
   intro δ p
   simp only [LinearMap.sub_apply,Module.End.mul_apply,LatticeSugawaraCurrents.neutralMode_single,raw_single_convolution,
     neutralPolynomialMode,lt_self_iff_false,if_false,if_true,LinearMap.smul_apply,
-    LinearMap.id_apply,map_smul,translated_smul,convolution_smul,←Finsupp.smul_single,
+    LinearMap.id_apply,map_smul,LatticeSugawaraConformal.translated_smul,convolution_smul,←Finsupp.smul_single,
     bilinear_add_right,Int.cast_add]
   module
 
@@ -88,7 +80,7 @@ theorem negative_current_raw (D : LatticeData) (i : Fin D.rank) (n : ℕ)
   change rawCoeff D α k * neutralMode D i (-(n : ℤ)-1) =
     neutralMode D i (-(n : ℤ)-1) * rawCoeff D α k -
       (bilinear D α (unitCharge D i) : ℂ) • rawCoeff D α (k+(n+1 : ℕ)) at h
-  rw [bilinear_symmetric D (unitCharge D i) α]
+  rw [LatticeFiniteNegativeGeneration.bilinear_symmetric D (unitCharge D i) α]
   rw [h]
   abel
 
@@ -113,7 +105,7 @@ theorem neutral_actual_commutator (D : LatticeData) (i : Fin D.rank)
     (α : Charge D) (m n : ℤ) :
     FieldNormalProductLocality.commutator (neutralField D i) (actualField D α) m n =
       (bilinear D (unitCharge D i) α : ℂ) • (actualField D α)[[m+n]] := by
-  simp only [FieldNormalProductLocality.commutator,LatticeAllStateField.neutral_modes,actual_modes]
+  simp only [FieldNormalProductLocality.commutator,LatticeSugawaraCurrents.neutralField_ncoeff,actual_modes]
   rw [neutral_raw_commutator]
   congr 2
   omega

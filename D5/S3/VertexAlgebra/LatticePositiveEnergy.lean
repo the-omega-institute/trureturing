@@ -18,6 +18,7 @@ retypesetting SHA822e39a2ec7bd33ad81193b06b7a66ae89abcec43c4cb7974d4bc513c3fce5b
 §2 p.2. No assertion about Monster realization is made.
 -/
 import D5.S3.VertexAlgebra.LatticeTwistedGroundRealization
+import D5.S3.VertexAlgebra.LatticeFiniteNegativeGeneration
 import Mathlib.LinearAlgebra.Matrix.PosDef
 import Mathlib.Data.Finsupp.Weight
 import Mathlib.Data.Fintype.Pi
@@ -48,30 +49,12 @@ theorem two_chargeEnergy (D : LatticeData) (a : Charge D) :
 @[simp] theorem chargeEnergy_zero (D : LatticeData) : chargeEnergy D 0 = 0 := by
   simp [chargeEnergy, bilinear]
 
-theorem bilinear_positive (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (a : Charge D) (ha : a ≠ 0) :
-    0 < bilinear D a a := by
-  have hr : (fun i => (a i : ℝ)) ≠ 0 := by
-    intro h
-    apply ha
-    ext i
-    have hi : (a i : ℝ) = 0 := congrFun h i
-    exact_mod_cast hi
-  have h := hD.dotProduct_mulVec_pos hr
-  have heq : (bilinear D a a : ℝ) =
-      star (fun i => (a i : ℝ)) ⬝ᵥ ((D.G.map (Int.cast : ℤ → ℝ)) *ᵥ
-        (fun i => (a i : ℝ))) := by
-    simp [bilinear, dotProduct, Matrix.mulVec, Matrix.map_apply,
-      Finset.mul_sum, Int.cast_sum, Int.cast_mul, mul_assoc]
-  rw [← heq] at h
-  exact_mod_cast h
-
 theorem chargeEnergy_nonneg (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (a : Charge D) :
     0 ≤ chargeEnergy D a := by
   by_cases ha : a = 0
   · simp [ha]
-  · have hp := bilinear_positive D hD a ha
+  · have hp := LatticeFiniteNegativeGeneration.norm_positive D hD a ha
     have he := two_chargeEnergy D a
     omega
 
@@ -81,7 +64,7 @@ theorem chargeEnergy_eq_zero_iff (D : LatticeData)
   constructor
   · intro h
     by_contra ha
-    have hp := bilinear_positive D hD a ha
+    have hp := LatticeFiniteNegativeGeneration.norm_positive D hD a ha
     have he := two_chargeEnergy D a
     omega
   · rintro rfl
@@ -130,13 +113,6 @@ theorem oscillatorLeFinite (D : LatticeData) (N : ℕ) :
     simpa using Nat.eq_zero_of_le_zero h
   · rintro rfl
     simp [oscillatorEnergy]
-
-theorem energy_nonneg (D : LatticeData)
-    (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (a : Label D) :
-    0 ≤ energy D a := by
-  have h := chargeEnergy_nonneg D hD a.1
-  dsimp [energy]
-  omega
 
 theorem energy_eq_zero_iff (D : LatticeData)
     (hD : Matrix.PosDef (D.G.map (Int.cast : ℤ → ℝ))) (a : Label D) :

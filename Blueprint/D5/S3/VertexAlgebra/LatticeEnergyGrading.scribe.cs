@@ -27,7 +27,7 @@ internal sealed class LatticeEnergyGradingDocument : IScribeDocumentDefinition
                 + "positivity, finiteness, decomposition and actual-operator theorems.")),
             Paragraph(Text("Basis, coefficient support, projections and the internal direct sum are constructed for every "
                 + "ordinary D, without hD. hD derives finite-dimensionality, "
-                + "negative vanishing, and zero-grade vacuum normalization. The entire Carrier(D) is "
+                + "and zero-grade vacuum normalization. The entire Carrier(D) is "
                 + "usually infinite-dimensional when rank is positive; finiteness is asserted for each grade.")),
             Describe.Lean(
                 DescribeId.Create("latticeenergygrading-carriercoeffequiv"),
@@ -119,16 +119,6 @@ internal sealed class LatticeEnergyGradingDocument : IScribeDocumentDefinition
                         + "hypothesis."))),
                 DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("latticeenergygrading-grade-negative"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_negative"),
-                H("Negative actual grades vanish"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("Under hD and n<0, grade(D,n)=bottom, derived from full energy nonnegativity and exact coefficient "
-                        + "separation."))),
-                DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("latticeenergygrading-grade-zero"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.grade_zero"),
                 H("Zero grade is exactly the actual vacuum line"),
@@ -158,16 +148,6 @@ internal sealed class LatticeEnergyGradingDocument : IScribeDocumentDefinition
                     Paragraph(Text("Under hD, the constructed linear equivalence C ~= grade(D,0) is scalar multiplication of the actual "
                         + "vacuum, transported through grade_zero."))),
                 DescribeRole.Definition),
-            Describe.Lean(
-                DescribeId.Create("latticeenergygrading-energyfiber-negative"),
-                DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.energyFiber_negative"),
-                H("Negative full fibers are empty"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromLiterature(Source),
-                Blocks(
-                    Paragraph(Text("Under hD and n<0, EnergyFiber(D,n) is empty. This assertion concerns every actual charge/exponent "
-                        + "label."))),
-                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("latticeenergygrading-rank-zero-label"),
                 DeclarationHandle.Create("D5/S3/VertexAlgebra/LatticeEnergyGrading.rank_zero_label"),

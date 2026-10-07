@@ -90,7 +90,7 @@ theorem actual_exponential_derivation (D : LatticeData)
     ring
   have h0 : PowerSeries.coeff 0 H = 0 := by
     dsimp only [H]
-    rw [map_sub, series_coeff, LatticeAllStateField.exponential_constant, Derivation.map_one_eq_zero]
+    rw [map_sub, series_coeff, LatticeSugawaraConformal.exponential_constant, Derivation.map_one_eq_zero]
     rw [PowerSeries.coeff_mul]
     simp only [Finset.Nat.antidiagonal_zero,Finset.sum_singleton,series_coeff]
     simp [S,creationSeries]

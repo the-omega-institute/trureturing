@@ -69,17 +69,6 @@ theorem polynomialField_monomial (D : LatticeData) (δ : Charge D)
     polynomialField D δ (monomial e 1) = wordField D δ (occurrences D e) :=
   (basisMonomials (Index D) ℂ).constr_basis ℂ _ e
 
-theorem exponential_constant (D : LatticeData) (δ : Charge D) :
-    PowerSeries.coeff 0 (creationExponential D δ) = 1 := by
-  have hA : PowerSeries.constantCoeff (creationSeries D δ) = 0 := by
-    simp [creationSeries, ← PowerSeries.coeff_zero_eq_constantCoeff_apply]
-  rw [creationExponential, PowerSeries.coeff_subst'
-    (PowerSeries.HasSubst.of_constantCoeff_zero' hA), finsum_eq_single _ 0]
-  · simp [PowerSeries.coeff_exp]
-  · intro n hn
-    rw [PowerSeries.coeff_zero_eq_constantCoeff, map_pow, hA]
-    simp [zero_pow hn]
-
 private theorem actual_vacuum_coeff (D : LatticeData) (δ : Charge D) (m : ℤ) :
     ((actualField D δ)[[m]]) (vacuum D) =
       Finsupp.single δ (creationCoeff D δ (-m - 1)) := by
@@ -93,17 +82,12 @@ private theorem actual_vacuum_coeff (D : LatticeData) (δ : Charge D) (m : ℤ) 
 private theorem actual_ground_creation (D : LatticeData) (δ : Charge D) :
     ((actualField D δ)[[-1]]) (vacuum D) = Finsupp.single δ 1 := by
   rw [actual_vacuum_coeff]
-  simp [creationCoeff, exponential_constant]
+  simp [creationCoeff, LatticeSugawaraConformal.exponential_constant]
 
 private theorem actual_creativity (D : LatticeData) (δ : Charge D) (m : ℤ)
     (hm : 0 ≤ m) : ((actualField D δ)[[m]]) (vacuum D) = 0 := by
   rw [actual_vacuum_coeff]
   simp [creationCoeff, show -m - 1 < 0 by omega]
-
-theorem neutral_modes (D : LatticeData) (i : Fin D.rank) (m : ℤ) :
-    ((neutralField D i)[[m]]) = neutralMode D i m := by
-  rw [neutralField, VertexOperator.ncoeff_of_coeff]
-  rw [show -(-m - 1) - 1 = m by omega]
 
 private theorem neutral_creativity (D : LatticeData) (i : Fin D.rank) (m : ℤ)
     (hm : 0 ≤ m) : neutralMode D i m (vacuum D) = 0 := by
@@ -120,7 +104,7 @@ private theorem derivative_modes (D : LatticeData) (x : Index D) (m : ℤ) :
   intro v
   change Ring.choose (-m - 1 + x.2) x.2 •
     HVertexOperator.coeff (neutralField D x.1) (-m - 1 + x.2) v = _
-  rw [VertexOperator.coeff_eq_ncoeff, neutral_modes]
+  rw [VertexOperator.coeff_eq_ncoeff, LatticeSugawaraCurrents.neutralField_ncoeff]
   rw [show -(-m - 1 + x.2) - 1 = m - x.2 by omega]
   simp only [LinearMap.smul_apply, Int.cast_smul_eq_zsmul]
 
@@ -446,7 +430,7 @@ theorem stateField_current (D : LatticeData) (i : Fin D.rank) :
     Y D (((neutralField D i)[[-1]]) (vacuum D)) = neutralField D i := by
   have hs : ((neutralField D i)[[-1]]) (vacuum D) =
       Finsupp.single (0 : Charge D) (X (i, 0) : Oscillator D) := by
-    rw [neutral_modes]
+    rw [LatticeSugawaraCurrents.neutralField_ncoeff]
     simp [neutralMode, neutralPolynomialMode, vacuum]
   rw [hs, X, stateField_monomial]
   simp only [occurrences, Finsupp.toMultiset_single, one_nsmul,

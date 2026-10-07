@@ -258,7 +258,7 @@ theorem actual_reverse_ordered_product (D : LatticeData) (α β : Charge D)
       epsilon D β α • ∑ᶠ j : ℕ, contraction (bilinear D α β) j •
         commonKernel D α β (k-j) (l-bilinear D α β+j) (Finsupp.single δ p) := by
   rw [actual_ordered_product]
-  simp_rw [bilinear_symmetric D β α, kernel_swap D α β δ p]
+  simp_rw [LatticeFiniteNegativeGeneration.bilinear_symmetric D β α, kernel_swap D α β δ p]
 
 end
 end D5.S3.VertexAlgebra.LatticeActualOrderedProducts
