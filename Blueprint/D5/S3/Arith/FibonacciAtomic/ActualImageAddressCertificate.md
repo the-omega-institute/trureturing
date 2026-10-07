@@ -148,7 +148,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.no_le
 
 *Commentary.*
 
-For every third image t and every address r, a subtree alpha at r followed by a left step is impossible.
+For every third image t and every address r, the left child of r cannot be an alpha leaf.
 
 **Theorem 1.13 (Changing a leaf label).**
 

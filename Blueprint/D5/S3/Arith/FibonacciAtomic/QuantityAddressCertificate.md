@@ -8,9 +8,9 @@ Sources are the existing nonempty finite ordered full binary trees. The native s
 
 **Definition 1.1 (Quantity soundness).**
 
-Lean statement: `D5/S3/Arith/FibonacciAtomic/QuantityAddressCertificate.Sound`
+Lean statement: `D5/S3/Arith/FibonacciAtomic/QuantityAddressCertificate.QuantitySound`
 
-*Formalization.* `D5/S3/Arith/FibonacciAtomic/QuantityAddressCertificate.Sound` (`✓ std3`).
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/QuantityAddressCertificate.QuantitySound` (`✓ std3`).
 
 *Source.* Repository-derived.
 
@@ -40,6 +40,6 @@ The single-alpha case reduces to the unique single-alpha third image. The two mi
 
 ## References
 
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/QuantityAddressCertificate.Sound`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/QuantityAddressCertificate.QuantitySound`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/QuantityAddressCertificate.result`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation](ActualImageAlphaSeparation.md)
