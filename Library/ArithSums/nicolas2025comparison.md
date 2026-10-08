@@ -666,6 +666,44 @@ $$
 $$
 
 The strict core inequality then supplies strict Robin.
+For a zero-response representation, retain the elementary terms from the
+full signed formula above. With $L=\log A$, write
+
+$$
+\begin{aligned}
+R_{\rm elem}(A)
+&=\frac{\log(2\pi)}{AL}
+ +\frac12\int_A^\infty\log(1-x^{-2})k(x)\,dx,\\
+r_A&=\sqrt A L\,R_{\rm elem}(A).
+\end{aligned}
+$$
+
+Thus $R_{\rm elem}=\log(2\pi)/(AL)-T_{\rm triv}$ in the notation
+of (V4)–(V6), and it is $R_{\rm Ak}(1;A)$ in the Akatsuka formula below.
+For $A\ge e^2$, the already used inequality
+$-\log(1-u)\le u/(1-u)$ and $\int_A^\infty k(x)\,dx=1/(AL)$ give
+
+$$
+0<\frac{\log(2\pi)-1/[2(A^2-1)]}{\sqrt A}
+\le r_A\le\frac{\log(2\pi)}{\sqrt A}.
+$$
+
+This is the elementary correction to the nontrivial-zero response,
+not another zero term. In particular, the exact source identity and
+(G9) read
+
+$$
+-\sqrt A L\,I_\psi(A)=\sqrt A L\,Z_{\rm orig}(A)+r_A,
+\qquad
+\sqrt A L\,Z_{\rm orig}(A)+r_A\le\mathcal E(L).
+$$
+
+The second inequality is equivalent to (G9). Although $r_A\to0$, its
+positive sign must be retained in exact budgets. Every subsequent
+approximation to $Z_{\rm orig}$ still requires this correction when
+used to bound the full integral. These are applications of the existing
+explicit formula, not a new signed estimate or Lean verification.
+
 A selected counterexample would instead have to satisfy
 $\sqrt A\log A\,I_\psi(A)<-\mathcal E(\log A)$.
 The new allowance is weaker as a tail requirement than the existing
@@ -3610,11 +3648,11 @@ errors and infinite zero heights are covered. No complex-v
 extension, GSS pointwise remainder or independent GSS endpoint
 allowance is used in this alternative transport.
 
-The contribution to the original $I_\psi$ is still
-$-Z_{\rm orig}$. Its elementary terms and the strict core at the
-same integer remain unchanged. Paying (G9) through this representation
-still requires an estimate for the combined right side of (HR5),
-with its paid discrepancy and the unchanged elementary terms included.
+The nontrivial-zero contribution to the original $I_\psi$ is still
+$-Z_{\rm orig}$. Paying (G9) through (HR5) requires an upper bound for
+its combined right side, plus the positive elementary correction $r_A$
+defined after (G9) and an allowance for the signed discrepancy (HR6).
+The strict core at the same integer remains the one already proved.
 Neither $\mathcal D_{A,u_*}$ nor $\mathcal J_{\rm head}$ is bounded
 here by the required margin. In particular the head subtraction
 does not establish positivity or an estimate for the unverified
@@ -4075,18 +4113,40 @@ on the actual cost and does not rule out a sharper joint estimate.
 It is the same ceiling obtained by merely dropping positive
 prime terms in (HR3); the price constraint has not improved it.
 
-Thus the price minimum supplies $\mathcal D_{A,U}\ge-o(1)$,
-whereas the Robin target, with $I_\psi=-Z_{\rm orig}$, needs
-an upper bound on the complete right side of (PH5).
-The remaining requirement is the joint signed bound
+Thus the price minimum supplies $\mathcal D_{A,U}\ge-o(1)$.
+To apply (G9), retain the elementary correction $r_A>0$ defined there.
+Let $\varepsilon_{\rm PH5}(A)$ be the signed discrepancy in (PH5),
+so $\varepsilon_{\rm PH5}(A)=o(1)$ by (HR6), (PH3) and the fixed-prefix
+allowance. The exact complete response is
+
+$$
+-\sqrt A L\,I_\psi(A)
+=\mathcal J_{\rm head}
+ +(1+1/L)\sqrt A\,a(L)V_{A,U}
+ +r_A+\varepsilon_{\rm PH5}(A).
+$$
+
+Consequently the remaining joint target, equivalent to (G9), is
 
 $$
 \mathcal J_{\rm head}
  +(1+1/L)\sqrt A\,a(L)V_{A,U}
- \le\mathcal E(L)+o(1),
+ +r_A+\varepsilon_{\rm PH5}(A)\le\mathcal E(L).
 $$
 
-with sufficient strict slack for the original core criterion.
+For any proved allowance $\delta(A)\ge|\varepsilon_{\rm PH5}(A)|$,
+a sufficient upper estimate is
+
+$$
+\mathcal J_{\rm head}
+ +(1+1/L)\sqrt A\,a(L)V_{A,U}
+ \le\mathcal E(L)-r_A-\delta(A).
+$$
+
+The absolute allowance is sufficient, not necessary. Its constants
+have not been numerically certified at the selected finite clock.
+A vanishing discrepancy alone does not establish (G9) without enough
+signed slack; the strict core remains the one already proved.
 No such bound, numerical starting clock, unbounded sequence of
 selected sources, or proof of RH is established here. The
 nonnegative quantity is independently constructed; naming it
