@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Seven-site symmetric chains lack early state exclusion iff spectra are multiples. -/
+   digest: No 7-site early state exclusion iff positive eigenvalues are multiples of the least. -/
 
 /-
 proof_shape:
@@ -13,11 +13,14 @@ proof_shape:
   result: content; escape_witness (form 1): the same-delivery intermediate proposition
     D5/S3/Quantum/Dynamics/SymmetricSpectrumEndAmplitude.symmetric_spectrum_reduction (spectrum
     (π/T) (0, ±a, ±b, ±c), first-site amplitude a positive multiple of the cosine sum
-    amplitudeNumerator a b c at the time π τ / T, transfer at the times T/g), on the live path
-    together with the steps of this module: minimality of the transfer time forces
-    gcd(a, b, c) = 1, the divisibility condition on the positive eigenvalues is a = 1, and early
-    state exclusion is a zero of the cosine sum in (0, π). The zero criterion of the cosine sum
-    is the frozen D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros.amplitudeNumerator_zero_iff.
+    amplitudeNumerator a b c at the time π τ / T, transfer at the times T/g) and the frozen
+    D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros.amplitudeNumerator_zero_iff (a zero of the
+    cosine sum in (0, π) iff a ≠ 1), both on the live path. The steps of result itself are:
+    gcd(a, b, c) = 1 from the minimality of the transfer time T (a common divisor g > 1 would
+    give transfer at the time T/g < T); the equivalence of the divisibility condition on the
+    positive eigenvalues with a = 1 (they are π a / T < π b / T < π c / T, and a divides b and c
+    with gcd(a, b, c) = 1 exactly when a = 1); and the translation of early state exclusion
+    into a zero of the cosine sum in (0, π) by t = π τ / T.
 admission_basis: open-problem-resolution (issue #14487; Proved). The source, Library note
   D5/L/GraphInvariants/escobar2025earlystateexclusion, proves the spectra
   {0, ±1, ±2m, ±(2m+1)} (its Theorem 3.2) and {0, ±(2m+1), ±(2m+2), ±(2m+3)} (its Theorem 3.4)
@@ -32,18 +35,23 @@ Direct frozen dependencies:
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_isHermitian
   statement_id sha256:9ef82c6c2002677d2d5ca2cbbbca0f264c96cd4b9b9c894ea79af8bb10c65c8a.
   D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros.amplitudeNumerator
-  statement_id sha256:PENDING.
+  statement_id sha256:fae52ee8cd1ad5bddce5fa09f4e2e1443642529470a5c5478f4d7e16249f196c.
   D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros.amplitudeNumerator_zero_iff
-  statement_id sha256:PENDING.
-  D5/S3/Quantum/Dynamics/SymmetricSpectrumEndAmplitude.symmetric_spectrum_reduction
-  statement_id sha256:PENDING.
+  statement_id sha256:38ffaf347d1d914161094e5e315525838939c04f10068f275386945094f813fd.
+Same-delivery dependency:
+  D5/S3/Quantum/Dynamics/SymmetricSpectrumEndAmplitude.symmetric_spectrum_reduction.
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
 instance: the claim quantifies over all seven-site paths with positive weights, all real
 potentials and all transfer times.
 -/
 
 import D5.S3.Quantum.Dynamics.EndAmplitudeCosineSumZeros
+import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
+import D5.S3.Quantum.Dynamics.RationalWeightPathTransfer
 import D5.S3.Quantum.Dynamics.SymmetricSpectrumEndAmplitude
+import Mathlib.Analysis.Matrix.Spectrum
+import Mathlib.Tactic.Field
+import Mathlib.Tactic.FinCases
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false

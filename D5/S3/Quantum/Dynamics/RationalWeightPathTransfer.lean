@@ -22,9 +22,9 @@ no_transfer_last_first.
 proof_shape: pst_parity_classes: content (sign classes of the weights of pst_spectral_weights at
 time pi, integrality of the spectral differences); consumer: no_transfer_last_first.
 proof_shape: pst_spectral_weights: content (moment identity, phase alignment at an arbitrary
-time); consumer: pst_parity_classes, SymmetricSpectrumEndAmplitude (symmetric_spectrum_weights).
-proof_shape: pst_phase: content (equality case of the unit-vector pairing, at an arbitrary
-time); consumer: pst_spectral_weights, pst_column.
+time, and the phase gamma or -gamma according to the sign of the weight); consumer:
+pst_parity_classes and SymmetricSpectrumEndAmplitude (symmetric_spectrum_weights), both through
+its last conjunct, the phase by the sign of the weight.
 Public helpers; PathMiddleVertexMoments, OddPathRationalWeightTransfer,
 SymmetricSpectrumEndAmplitude and SevenSiteEarlyStateExclusion abbreviate the modules
 D5/S3/Quantum/Dynamics/PathMiddleVertexMoments,
@@ -71,6 +71,8 @@ PathMiddleVertexMoments (propagator_eq_reversal).
 Private helpers:
 proof_shape: no_transfer_last_first: content (escape witnesses as for result); consumer:
 result.
+proof_shape: pst_phase: content (equality case of the unit-vector pairing, at an arbitrary
+time); consumer: pst_spectral_weights, pst_column.
 proof_shape: choose_two_pow_sub_one_odd: content (Frobenius identity in (ZMod 2)[X]);
 consumer: no_transfer_last_first.
 proof_shape: pathHamiltonian_far: bind-only; consumer: pathHamiltonian_transpose,
@@ -296,7 +298,7 @@ private theorem normSq_exp_mul_I (t x : ℝ) :
 
 /-- Perfect state transfer at time `t` from `a` to `b` aligns, eigenvector by eigenvector, the
 phase-rotated `b`-entries with the `a`-entries. -/
-theorem pst_phase {t : ℝ} (a b : V) (hpst : HasPST H t a b) (k : V) :
+private theorem pst_phase {t : ℝ} (a b : V) (hpst : HasPST H t a b) (k : V) :
     Complex.exp ((t : ℂ) * I * hH.eigenvalues k) *
         starRingEnd ℂ ((hH.eigenvectorUnitary : Matrix V V ℂ) b k) =
       NormedSpace.exp (((t : ℂ) * I) • H) a b *
@@ -414,7 +416,8 @@ whose `(a, b)` entries of `H ^ p` vanish for `p < m` and equal `P ≠ 0` for `p 
 eigenvalues `λ` and eigenvector matrix `W`, and put `ρ k = P / ∏_{l ≠ k} (λ k - λ l)`. If `H` has
 perfect state transfer from `a` to `b` at time `t`, with `γ` the `(a, b)` entry of `exp (i t H)`,
 then the eigenvalues are simple, `W a k * conj (W b k) = ρ k`,
-`exp (i t λ k) * ρ k = γ * |W a k|^2` and `|ρ k| = |W a k|^2`. -/
+`exp (i t λ k) * ρ k = γ * |W a k|^2`, `|ρ k| = |W a k|^2`, and `exp (i t λ k)` is `γ` where
+`ρ k > 0` and `-γ` elsewhere. -/
 theorem pst_spectral_weights {t : ℝ} (a b : V) (m : ℕ) (hm : Fintype.card V = m + 1)
     (P : ℝ) (hP : P ≠ 0) (hmom : ∀ p ≤ m, (H ^ p) a b = if p = m then (P : ℂ) else 0)
     (hpst : HasPST H t a b) :
@@ -426,8 +429,12 @@ theorem pst_spectral_weights {t : ℝ} (a b : V) (m : ℕ) (hm : Fintype.card V 
           ((P / ∏ l ∈ univ.erase k, (hH.eigenvalues k - hH.eigenvalues l) : ℝ) : ℂ) =
         NormedSpace.exp (((t : ℂ) * I) • H) a b *
           (Complex.normSq ((hH.eigenvectorUnitary : Matrix V V ℂ) a k) : ℂ)) ∧
-      ∀ k, |P / ∏ l ∈ univ.erase k, (hH.eigenvalues k - hH.eigenvalues l)| =
-        Complex.normSq ((hH.eigenvectorUnitary : Matrix V V ℂ) a k) := by
+      (∀ k, |P / ∏ l ∈ univ.erase k, (hH.eigenvalues k - hH.eigenvalues l)| =
+        Complex.normSq ((hH.eigenvectorUnitary : Matrix V V ℂ) a k)) ∧
+      ∀ k, Complex.exp ((t : ℂ) * I * hH.eigenvalues k) =
+        if 0 < P / ∏ l ∈ univ.erase k, (hH.eigenvalues k - hH.eigenvalues l) then
+          NormedSpace.exp (((t : ℂ) * I) • H) a b
+        else -NormedSpace.exp (((t : ℂ) * I) • H) a b := by
   set W : Matrix V V ℂ := ↑hH.eigenvectorUnitary with hW
   set Λ := hH.eigenvalues with hΛ
   set γ := NormedSpace.exp (((t : ℂ) * I) • H) a b with hγdef
@@ -491,7 +498,19 @@ theorem pst_spectral_weights {t : ℝ} (a b : V) (m : ℕ) (hm : Fintype.card V 
       Complex.norm_real, Real.norm_eq_abs, Real.norm_eq_abs,
       abs_of_nonneg (Complex.normSq_nonneg _)] at h
     exact h
-  exact ⟨hΛinj, hcρ, hEρ, habsρ⟩
+  have hsign : ∀ k, Complex.exp ((t : ℂ) * I * Λ k) = if 0 < ρ k then γ else -γ := by
+    intro k
+    have hρ0 : ρ k ≠ 0 := div_ne_zero hP (hDne k)
+    have h := hEρ k
+    split_ifs with hpos
+    · rw [← habsρ k, abs_of_pos hpos] at h
+      exact mul_right_cancel₀ (ofReal_ne_zero.mpr hρ0) h
+    · rw [← habsρ k, abs_of_neg (lt_of_le_of_ne (not_lt.mp hpos) hρ0)] at h
+      refine mul_right_cancel₀ (ofReal_ne_zero.mpr hρ0) ?_
+      rw [h]
+      push_cast
+      ring
+  exact ⟨hΛinj, hcρ, hEρ, habsρ, hsign⟩
 
 include hH in
 /-- **Spectral parity classes.** Let `H` be Hermitian on `m + 1` sites whose `(a, b)` entries of
@@ -513,15 +532,12 @@ theorem pst_parity_classes (a b : V) (hab : a ≠ b) (m : ℕ) (hm : Fintype.car
   have hγ0 : γ ≠ 0 := fun h => by rw [h, map_zero] at hγ; exact zero_ne_one hγ
   let ρ : V → ℝ := fun k => P / ∏ l ∈ univ.erase k, (Λ k - Λ l)
   let w : V → ℝ := fun k => Complex.normSq (W a k)
-  obtain ⟨hΛinj, hcρ, hEρ, habsρ⟩ :
+  obtain ⟨hΛinj, hcρ, -, habsρ, hsign⟩ :
       Function.Injective Λ ∧ (∀ k, W a k * starRingEnd ℂ (W b k) = (ρ k : ℂ)) ∧
         (∀ k, Complex.exp ((Real.pi : ℂ) * I * Λ k) * (ρ k : ℂ) = γ * (w k : ℂ)) ∧
-        ∀ k, |ρ k| = w k :=
+        (∀ k, |ρ k| = w k) ∧
+        ∀ k, Complex.exp ((Real.pi : ℂ) * I * Λ k) = if 0 < ρ k then γ else -γ :=
     pst_spectral_weights hH a b m hm P hP hmom hpst
-  have hρ0 : ∀ k, ρ k ≠ 0 := by
-    intro k
-    refine div_ne_zero hP (Finset.prod_ne_zero_iff.mpr fun l hl => sub_ne_zero.mpr fun h => ?_)
-    exact Finset.ne_of_mem_erase hl (hΛinj h).symm
   have hw1 : ∑ k, w k = 1 := by
     have h := eigenvector_row_sum hH a a
     rw [if_pos rfl] at h
@@ -547,22 +563,10 @@ theorem pst_parity_classes (a b : V) (hab : a ≠ b) (m : ℕ) (hm : Fintype.car
       simp only [habsρ]
       exact hw1
     linarith
-  have hEA : ∀ k ∈ A, Complex.exp ((Real.pi : ℂ) * I * Λ k) = γ := by
-    intro k hk
-    have hpos : 0 < ρ k := (Finset.mem_filter.mp hk).2
-    have h := hEρ k
-    rw [← habsρ k, abs_of_pos hpos] at h
-    exact mul_right_cancel₀ (ofReal_ne_zero.mpr (hρ0 k)) h
-  have hEB : ∀ k, k ∉ A → Complex.exp ((Real.pi : ℂ) * I * Λ k) = -γ := by
-    intro k hk
-    have hneg : ρ k < 0 := lt_of_le_of_ne
-      (not_lt.mp fun h => hk (Finset.mem_filter.mpr ⟨mem_univ k, h⟩)) (hρ0 k)
-    have h := hEρ k
-    rw [← habsρ k, abs_of_neg hneg] at h
-    refine mul_right_cancel₀ (ofReal_ne_zero.mpr (hρ0 k)) ?_
-    rw [h]
-    push_cast
-    ring
+  have hEA : ∀ k ∈ A, Complex.exp ((Real.pi : ℂ) * I * Λ k) = γ := fun k hk =>
+    (hsign k).trans (if_pos (Finset.mem_filter.mp hk).2)
+  have hEB : ∀ k, k ∉ A → Complex.exp ((Real.pi : ℂ) * I * Λ k) = -γ := fun k hk =>
+    (hsign k).trans (if_neg fun h => hk (Finset.mem_filter.mpr ⟨mem_univ k, h⟩))
   have hAne : A.Nonempty := by
     rw [Finset.nonempty_iff_ne_empty]
     intro h

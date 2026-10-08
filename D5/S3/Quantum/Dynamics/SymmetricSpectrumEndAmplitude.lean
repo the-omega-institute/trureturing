@@ -8,59 +8,59 @@
 
 /-
 proof_shape: symmetric_spectrum_end_amplitude: content; escape_witness: the public conclusion
-itself (form 2; the preregistered fact E3 of issue #14487): for a seven-site path with positive
-weights, real potentials, symmetric spectrum and transfer between its ends at a real time T, the
-eigenvalues are 0, ±x, ±y, ±z with exp(iTx) = -1, exp(iTy) = 1, exp(iTz) = -1, and the first-site
-amplitude is
+itself (form 2), as a proof shape: it is not an instantiation of a frozen or Mathlib statement.
+For a seven-site path with positive weights, real potentials, symmetric spectrum and transfer
+between its ends at a real time T, the eigenvalues are 0, ±x, ±y, ±z with exp(iTx) = -1,
+exp(iTy) = 1, exp(iTz) = -1, and the first-site amplitude is
 P [1/(x²y²z²) + cos(τx)/(x²(y²-x²)(z²-x²)) + cos(τy)/(y²(y²-x²)(z²-y²))
-+ cos(τz)/(z²(z²-x²)(z²-y²))], P the product of the weights.
-It is produced on the live path by the mirror symmetry of the increasing enumeration of a
-symmetric simple spectrum, the seven nodal products and their signs, and the weights and
-phases of D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pst_spectral_weights; no Mathlib or
-frozen declaration states it for an arbitrary such path. consumer: symmetric_spectrum_reduction.
++ cos(τz)/(z²(z²-x²)(z²-y²))], P the product of the weights. The formula is known (see
+admission_basis); the live path derives it from the mirror symmetry of the increasing
+enumeration of a symmetric simple spectrum, the signs of the seven nodal products, and the
+weights and phases of D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pst_spectral_weights.
+consumer: symmetric_spectrum_reduction.
 proof_shape: symmetric_spectrum_reduction: content; escape_witness: the public conclusion itself
-(form 2): the spectrum is (π/T) (0, ±a, ±b, ±c) with a < b < c natural, a and c odd, b even, the
-first-site amplitude is a positive multiple of the cosine sum
+(form 2), as a proof shape: the spectrum is (π/T) (0, ±a, ±b, ±c) with a < b < c natural, a and c
+odd, b even, the first-site amplitude is a positive multiple of the cosine sum
 D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros.amplitudeNumerator a b c at the time π τ / T,
-and every common divisor g of a, b, c gives transfer at the time T/g; produced from the phases
-by the integrality of T x/π, T y/π, T z/π, a rescaling of the amplitude, and the equality of the
-spectral phases at the times T/g and T. consumer:
-D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion.result.
+and every common divisor g of a, b, c gives transfer at the time T/g. These facts are known (see
+admission_basis); the live path derives them from the phases by the integrality of T x/π,
+T y/π, T z/π, a rescaling of the amplitude, and the equality of the spectral phases at the times
+T/g and T. consumer: D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion.result.
 Private helpers:
-proof_shape: symmetric_spectrum_weights: content (escape witnesses as for
-symmetric_spectrum_end_amplitude: spectrum, phases and first-site weights); consumer:
-symmetric_spectrum_end_amplitude.
+proof_shape: symmetric_spectrum_weights: content (as for symmetric_spectrum_end_amplitude:
+spectrum, phases and first-site weights); consumer: symmetric_spectrum_end_amplitude.
 proof_shape: exists_symmetric_enumeration: content (sorting and mirror symmetry of seven distinct
 reals closed under negation); consumer: symmetric_spectrum_weights.
 proof_shape: strictMono_rev_neg: content (uniqueness of the increasing enumeration of a finite
 set); consumer: exists_symmetric_enumeration.
-proof_shape: prod_erase_symmetric: content (evaluation of the seven nodal products); consumer:
-symmetric_spectrum_weights.
-proof_shape: sum_weight_exp_symmetric: content (pairing of the mirror phases into cosines);
-consumer: symmetric_spectrum_end_amplitude.
+proof_shape: prod_erase_symmetric: bind-only (normalisation: evaluation of the seven nodal
+products); consumer: symmetric_spectrum_weights.
+proof_shape: sum_weight_exp_symmetric: bind-only (normalisation: the seven weighted phases are
+paired into cosines by exp_neg_add_exp); consumer: symmetric_spectrum_end_amplitude.
 proof_shape: exp_neg_add_exp: bind-only (Complex.two_cos); consumer: sum_weight_exp_symmetric.
 proof_shape: spectral_exp_apply_self: bind-only (diagonal entry of
 RationalWeightPathTransfer.spectral_exp); consumer: symmetric_spectrum_end_amplitude.
 proof_shape: hasPST_of_phase_eq: bind-only (RationalWeightPathTransfer.spectral_exp at two
 times); consumer: symmetric_spectrum_reduction.
-proof_shape: phase_of_weight: bind-only (cancellation of a nonzero real factor); consumer:
-symmetric_spectrum_weights.
 proof_shape: exists_odd_nat, exists_even_nat: bind-only (a positive integer is a natural number);
 consumer: symmetric_spectrum_reduction.
 proof_shape: exp_div_eq: bind-only (Complex.exp_eq_exp_iff_exists_int); consumer:
 symmetric_spectrum_reduction.
 Private definitions nodal, nodalAbs (the seven nodal products and their absolute values);
 consumer: prod_erase_symmetric, sum_weight_exp_symmetric, symmetric_spectrum_weights.
-admission_basis: escape-witness (the spectral reduction of the seven-site conjecture of Section 4
-of arXiv:2507.18767, issue #14487, Library note
-D5/L/GraphInvariants/escobar2025earlystateexclusion). The amplitude formula is Eq. (2.1) of that
-source, which the source derives for the explicit persymmetric matrix with zero diagonal built
-from a prescribed symmetric spectrum; here it is derived for every seven-site path with positive
-weights, real potentials, symmetric spectrum and transfer between its ends at some time. The
-spacing of the spectrum of a chain with perfect state transfer is Kay's criterion, recalled by
-the source as its Eq. (1.3); the seven-point symmetric form with the parities, the cosine-sum
-form of the amplitude and the transfer at the times T/g are derived here. The conjecture itself
-is settled in D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion.
+admission_basis: escape-witness for the proof shape (the declarations are not instantiations of
+frozen or Mathlib statements); the mathematics is known. The amplitude formula is Eq. (2.1) of
+arXiv:2507.18767 for the explicit seven-site matrix, and for every persymmetric Jacobi matrix
+with symmetric spectrum of any order it is the Proposition 'Amplitude Formulas' of
+arXiv:2606.04353 (Hochstadt's weights); with Kay's criterion, which makes every chain with
+perfect state transfer persymmetric with odd spacing of the spectrum in units of π/T, it covers
+every transferring chain. The reduction to integer spectra of alternating parity with gcd 1,
+first transfer at π and time scaling by a common factor is stated in Section 3 of
+arXiv:2606.04353. Library notes D5/L/GraphInvariants/escobar2025earlystateexclusion and
+D5/L/GraphInvariants/escobar2026spectralfusion. What this module adds is the Lean derivation of
+these facts for seven sites from the hypothesis of transfer at a time T and the symmetry of the
+spectrum, through RationalWeightPathTransfer.pst_spectral_weights. The conjecture itself is
+settled in D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion.
 Direct frozen dependencies:
   D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.hamiltonianPropagator
   statement_id sha256:cda9b54324a60c3d19d82ae43fd312bec7fd42bc7d2748ad663e34115d863ceb.
@@ -78,18 +78,18 @@ Direct frozen dependencies:
   statement_id sha256:c53ecfce15def8b3681bf73a34fabf6b7432c89fc5c24270f1511c455e6d025a.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.exists_int_of_exp_eq_neg_one
   statement_id sha256:e5f0dc0f4cfd995c3ce9f987e1ecd249b8d3fc701986c281115dfd87445d5034.
-  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_pow_apply_ends
-  statement_id sha256:PENDING.
-  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pst_spectral_weights
-  statement_id sha256:PENDING.
   D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros.amplitudeNumerator
-  statement_id sha256:PENDING.
+  statement_id sha256:fae52ee8cd1ad5bddce5fa09f4e2e1443642529470a5c5478f4d7e16249f196c.
+Same-delivery dependency:
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pst_spectral_weights,
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_pow_apply_ends.
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
 instance: every statement quantifies over all positive weights, all real potentials and all
 transfer times of seven-site paths.
 -/
 
 import D5.S3.Quantum.Dynamics.EndAmplitudeCosineSumZeros
+import D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 import D5.S3.Quantum.Dynamics.RationalWeightPathTransfer
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fin.Tuple.Sort
@@ -136,21 +136,6 @@ private theorem hasPST_of_phase_eq {s t : ℝ} (a b : V)
   exact hpst
 
 end Spectral
-
-/-- A phase `E` with `E * ρ = γ * w` and `|ρ| = w` is `γ` for positive `ρ` and `-γ` for negative
-`ρ`. -/
-private theorem phase_of_weight {E γ : ℂ} {ρ w : ℝ} (h : E * (ρ : ℂ) = γ * (w : ℂ))
-    (habs : |ρ| = w) : (0 < ρ → E = γ) ∧ (ρ < 0 → E = -γ) := by
-  constructor
-  · intro hpos
-    rw [← habs, abs_of_pos hpos] at h
-    exact mul_right_cancel₀ (ofReal_ne_zero.mpr hpos.ne') h
-  · intro hneg
-    rw [← habs, abs_of_neg hneg] at h
-    refine mul_right_cancel₀ (ofReal_ne_zero.mpr hneg.ne) ?_
-    rw [h]
-    push_cast
-    ring
 
 /-- A positive real number of the form `2 n + 1` with `n` an integer is an odd natural number. -/
 private theorem exists_odd_nat {θ : ℝ} (hθ : 0 < θ) (h : ∃ n : ℤ, θ = 2 * n + 1) :
@@ -355,11 +340,12 @@ private theorem symmetric_spectrum_weights (hr : ∀ j, 0 < r j)
   have hPpos : 0 < P := Finset.prod_pos fun t _ => hr t
   set γ := NormedSpace.exp (((T : ℂ) * I) • pathHamiltonian r q) 0 (Fin.last 6) with hγ
   let ρ : Fin 7 → ℝ := fun k => P / ∏ l ∈ univ.erase k, (Λ k - Λ l)
-  obtain ⟨hinj, -, hEρ, habsρ⟩ :
+  obtain ⟨hinj, -, -, habsρ, hsign⟩ :
       Function.Injective Λ ∧ (∀ k, W 0 k * starRingEnd ℂ (W (Fin.last 6) k) = (ρ k : ℂ)) ∧
         (∀ k, Complex.exp ((T : ℂ) * I * Λ k) * (ρ k : ℂ) =
           γ * (Complex.normSq (W 0 k) : ℂ)) ∧
-        ∀ k, |ρ k| = Complex.normSq (W 0 k) :=
+        (∀ k, |ρ k| = Complex.normSq (W 0 k)) ∧
+        ∀ k, Complex.exp ((T : ℂ) * I * Λ k) = if 0 < ρ k then γ else -γ :=
     pst_spectral_weights (pathHamiltonian_isHermitian r q) 0 (Fin.last 6) 6
       (Fintype.card_fin _) P hPpos.ne'
       (fun p hp => (pathHamiltonian_pow_apply_ends r q p hp).2) hpst
@@ -386,9 +372,6 @@ private theorem symmetric_spectrum_weights (hr : ∀ j, 0 < r j)
       simp only [hσ]
     change P / ∏ l ∈ univ.erase (σ i), (Λ (σ i) - Λ l) = _
     rw [h1, prod_erase_symmetric]
-  have hph : ∀ k, (0 < ρ k → Complex.exp ((T : ℂ) * I * Λ k) = γ) ∧
-      (ρ k < 0 → Complex.exp ((T : ℂ) * I * Λ k) = -γ) := fun k =>
-    phase_of_weight (hEρ k) (habsρ k)
   have e3 : Λ (σ 3) = 0 := by simpa only [Matrix.cons_val] using hσ 3
   have e4 : Λ (σ 4) = x := by simpa only [Matrix.cons_val] using hσ 4
   have e5 : Λ (σ 5) = y := by simpa only [Matrix.cons_val] using hσ 5
@@ -436,19 +419,19 @@ private theorem symmetric_spectrum_weights (hr : ∀ j, 0 < r j)
     rw [hD 6, n6]
     exact div_pos hPpos hd0
   have hγ1 : γ = -1 := by
-    have h := (hph (σ 3)).2 hρ3
+    have h := (hsign (σ 3)).trans (if_neg (not_lt.mpr hρ3.le))
     rw [e3, Complex.ofReal_zero, mul_zero, Complex.exp_zero] at h
     linear_combination h
   have hEx : Complex.exp ((T : ℂ) * I * x) = -1 := by
-    have h := (hph (σ 4)).1 hρ4
+    have h := (hsign (σ 4)).trans (if_pos hρ4)
     rw [e4, hγ1] at h
     exact h
   have hEy : Complex.exp ((T : ℂ) * I * y) = 1 := by
-    have h := (hph (σ 5)).2 hρ5
+    have h := (hsign (σ 5)).trans (if_neg (not_lt.mpr hρ5.le))
     rw [e5, hγ1, neg_neg] at h
     exact h
   have hEz : Complex.exp ((T : ℂ) * I * z) = -1 := by
-    have h := (hph (σ 6)).1 hρ6
+    have h := (hsign (σ 6)).trans (if_pos hρ6)
     rw [e6, hγ1] at h
     exact h
   have hw0 : |P / nodal x y z 0| = P / nodalAbs x y z 0 := by
