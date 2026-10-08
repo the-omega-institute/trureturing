@@ -8,7 +8,7 @@ internal sealed class TwoDenseDivisorBlockMaximumDocument : IScribeDocumentDefin
 {
     private const string Prefix = "D5/S3/Factorization/TwoDenseDivisorBlockMaximum.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Arith/pol2026a400194");
+        LibraryNoteRef.Create("D5/L/Factorization/pol2026a400194");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The largest two-dense divisor block has ruler-scaled maximum odd count.",
