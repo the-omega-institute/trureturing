@@ -83,6 +83,11 @@ internal sealed class SaturatedActualHistoriesDocument : IScribeDocumentDefiniti
                     Member(V("x"), Call("entrySupport", V("e"))),
                     EqF(Call("entryTime", V("e"), V("x")), V("t")))))),
             ("x", Source), ("t", N));
+        var slot = Seq(ReadsControls, Times, Sp, Call("Fin", V("p")));
+        var pairLaw = All("z", Seq(Grp(slot), Times, Sp, Grp(slot)),
+            Imp(Member(V("z"), positions), And(
+                EqF(Call("fst", Call("fst", V("z"))), Call("fst", Call("snd", V("z")))),
+                Seq(Grp(Call("fst", V("z"))), Neq, Sp, Grp(Call("snd", V("z")))))));
         var packing = All("q", V("Q"), LE(
             Call("occurrenceCount", V("hp"), V("hP"), V("C"), V("I"), h, V("q")),
             Call("div", V("p"), D(2))));
@@ -90,7 +95,7 @@ internal sealed class SaturatedActualHistoriesDocument : IScribeDocumentDefiniti
             Call("SaturatedHistory", V("hp"), V("hP"), V("C"), V("I"), V("D"),
                 Pair(V("root"), V("b")), Call("firstFiber", V("hp"), V("hP"), V("b")),
                 Seq(Open, V("x"), Mapsto, Sp, D(0), Close)));
-        var conclusions = And(counts, global, injective, cover, packing,
+        var conclusions = And(counts, global, injective, cover, pairLaw, packing,
             Imp(EqF(V("P"), D(1)), EqF(positions, Seq(OpenBracket, CloseBracket))));
         var body = Ex("root", ReadsControls, And(
             EqF(Call("val", V("root")), Call("initial", V("C"))), Ex("H", forestType, conclusions)));

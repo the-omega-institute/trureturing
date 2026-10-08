@@ -634,6 +634,17 @@ noncomputable def allReadingPositions {D : Nat}
       (firstFiber hp hP b) (fun _ => 0)) : List (Slot × Slot) :=
   (List.ofFn (fun b => readingPositions hp hP C I (H b))).flatten
 
+private theorem all_position_controls [Finite Q] {D : Nat}
+    {root : {q : Q // ∃ b, C.Used I q b}}
+    (H : ∀ b : Fin p, SaturatedHistory hp hP C I D (root,b)
+      (firstFiber hp hP b) (fun _ => 0)) :
+    ∀ z ∈ allReadingPositions hp hP C I H, z.1.1 = z.2.1 ∧ z.1 ≠ z.2 := by
+  intro z hz
+  obtain ⟨l,hl,hz⟩ := List.mem_flatten.mp hz
+  obtain ⟨b,eq⟩ := List.mem_ofFn.mp hl
+  subst l
+  exact position_controls hp hP C I (H b) z hz
+
 private theorem all_position_slots_nodup [Finite Q] {D : Nat}
     {root : {q : Q // ∃ b, C.Used I q b}}
     (H : ∀ b : Fin p, SaturatedHistory hp hP C I D (root,b)
@@ -679,10 +690,7 @@ private theorem occurrence_bound [Finite Q] {D : Nat}
   let L := A.filter (fun z => z.1.1.val = q)
   let slots := L.flatMap (fun z => [z.1,z.2])
   have controls (z : Slot × Slot) (hz : z ∈ A) : z.1.1 = z.2.1 := by
-    obtain ⟨l,hl,hz⟩ := List.mem_flatten.mp hz
-    obtain ⟨b,eq⟩ := List.mem_ofFn.mp hl
-    subst l
-    exact (position_controls hp hP C I (H b) z hz).1
+    exact (all_position_controls hp hP C I H z hz).1
   have row (s : Slot) (hs : s ∈ slots) : s.1.val = q := by
     obtain ⟨z,hz,hs⟩ := List.mem_flatMap.mp hs
     have zz := List.mem_filter.mp hz
@@ -744,6 +752,7 @@ theorem result [Finite Q] (D : Nat) (power : P = 2 ^ D)
       Function.Injective (((allHistories hp hP C I H).map entrySlot).get) ∧
       (∀ x t, t ∈ readEvents hp hP C I x ↔
         ∃ e ∈ allHistories hp hP C I H, x ∈ entrySupport e ∧ entryTime e x = t) ∧
+      (∀ z ∈ allReadingPositions hp hP C I H, z.1.1 = z.2.1 ∧ z.1 ≠ z.2) ∧
       (∀ q, occurrenceCount hp hP C I H q ≤ p / 2) ∧
       (P = 1 → allReadingPositions hp hP C I H = []) := by
   classical
@@ -769,7 +778,8 @@ theorem result [Finite Q] (D : Nat) (power : P = 2 ^ D)
       ((first_fiber_card hp hP b).trans power)
   let H (b : Fin p) := Classical.choice (histories b)
   refine ⟨G.root, root, H, ?_, ?_, (all_slots_nodup hp hP C I H).injective_get,
-    all_event_iff hp hP C I H, occurrence_bound hp hP C I H, ?_⟩
+    all_event_iff hp hP C I H, all_position_controls hp hP C I H,
+    occurrence_bound hp hP C I H, ?_⟩
   · intro x
     have hx : x ∈ firstFiber hp hP (digit hp hP x) := by simp [firstFiber]
     have count := saturated_read_count hp hP C I (H (digit hp hP x)) x hx
