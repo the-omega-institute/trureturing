@@ -1308,6 +1308,166 @@ The same statement holds with the true pole-free form in both Gram and forcing. 
 
 The added interface is the complete unequal-cutoff mixed estimate (T32)–(T35), consumed by joint positivity and inverse control in (T36)–(T37). Tail coordinates, degree and single-space energy/forcing budgets, mixed nullity/domain passage, Gamma kernel estimates, prime threshold comparisons and finite Gram algebra are reused suppliers. The full old complement and its interaction with this joint family, energy-norm approximation cost, source common-core/physical-norm map and original selected-integer signed Robin estimate remain unpaid. This paper-level joint estimate has no Lean certification, full-old-space or RH conclusion, or mathematical-priority claim.
 
+## Pay the complete physical collar forcing on an infinite exterior
+
+The preceding theta spaces leave arbitrary old directions unestimated. Here the old-to-new pairing is bounded on the **whole physical odd $L^2$ space**, and the existing Fourier-exterior floor supplies a denominator on an infinite old subspace. The retained low-frequency Schur block remains separate.
+
+Reuse the complete compact-test row (O10), the classical disjoint-source/squared-weight mechanism in arXiv v3 under “Ambient cross-$n$ structure” and “Fixed-target gauge and simultaneous source shorting”, especially the corollary “Source-resolved transverse Feshbach bound” (`source-resolved-transverse`), the [weighted Schur criterion](../Fourier/teschl2009mathematical.md#schur-criterion-for-the-local-frequency-kernel), classical Chebyshev bounds, and the [existing infinite-exterior allowance (16)](../Fourier/montgomery1978largesieve.md#a-growth-regime-and-its-limitations). The source's positive normalized pre-short metric is not identified with the full physical old metric. The additional interface below is the complete adjacent physical row, including its shared-boundary Gamma singularity, consumed by that independently supplied exterior denominator. No generic Carleman, prime-weight or Fourier-leakage theorem is reproved.
+
+For an integer $k\ge7$ set
+
+$$
+a=\tfrac12\log k,\quad b=\tfrac12\log(k+1),\quad
+h=b-a\le\frac1{2k},\quad \ell=2a=\log k,
+$$
+
+and put $\mathcal H_a=L^2_{\rm odd}(-a,a)$ and
+$\mathcal K_k=L^2_{\rm odd}((-b,-a)\cup(a,b))$ with the physical Lebesgue norms. Write $R_k:\mathcal H_a\to\mathcal K_k$ for the cross row in (O10), initially on compact smooth old tests, and $b_k(v)=R_k^*v$ for its old forcing. Thus $B_Q(u,v)=\langle R_ku,v\rangle$; no positivity of the whole old form is assumed. For a collar vector outside the form domain, this pairing denotes the bounded cross-row extension established below.
+
+### Retain the reflected integer source slots
+
+On the positive collar the prime row is
+$-\sum_{2\le n\le k}\Lambda(n)n^{-1/2}u(y-\log n)$; the other translation is zero there. Its source slots are
+
+$$
+J_n=(a-\log n,b-\log n)\subset(-a,a),\qquad 2\le n\le k.
+$$
+
+Distinct $J_n$ are disjoint: consecutive logarithmic gaps exceed $2h$. The reflected slots also remain disjoint from them. Indeed $J_n\cap(-J_m)$ could have positive length only if
+$2a<\log(nm)<2b$, or $k<nm<k+1$, which no integer product satisfies. Products $nm=k$ or $k+1$ give only touching endpoints. This verifies the needed reflection interface in the actual thin collar; it does not replace the source metric by a normalized one-cell form.
+
+The two reflected copies and physical odd normalization therefore give, for every complex odd collar vector,
+
+$$
+\boxed{
+\|R_{k,p}^*v\|_2^2=S_k\|v\|_2^2,
+\qquad S_k=\sum_{2\le n\le k}\frac{\Lambda(n)^2}{n}.
+}
+\tag{T38}
+$$
+
+This is the disjoint-source squared-weight mechanism with its physical reflection map checked, not a new principle. The endpoint $n=k$ is retained: its old/new slot has positive length. In contrast, the old self-form has only $n<k$.
+
+Fix a classical Chebyshev constant $B\ge1$ such that
+$\Psi(t)=\sum_{n\le t}\Lambda(n)\le Bt$ for $t\ge1$. Directly reuse partial summation and $\Lambda(n)\le\log k$ to obtain
+
+$$
+S_k\le B\ell(1+\ell),\qquad
+W(k):=\sum_{2\le n<k}\frac{\Lambda(n)}{\sqrt n}\le2B\sqrt k.
+\tag{T39}
+$$
+
+### Pay the Gamma singularity at the common boundary
+
+Use the isometry $u\mapsto\sqrt2\,u|_{(0,a)}$ and its collar counterpart. The negative odd Gamma row on $(0,a)\times(a,b)$ has absolute kernel
+
+$$
+\kappa(y-x)-\kappa(y+x),\qquad
+\kappa(t)=\frac{e^{-t/2}}{1-e^{-2t}}.
+$$
+
+Both reflected terms have been kept. The kernel $\kappa$ is decreasing, so this difference is nonnegative and bounded above by $\kappa(y-x)$. Put $C_\kappa=(1-e^{-2})^{-1}$. For $0<t\le1$, concavity gives $1-e^{-2t}\ge t(1-e^{-2})$; for $t\ge1$ use $te^{-t/2}\le2/e<1$. Hence $\kappa(t)\le C_\kappa/t$ for all $t>0$.
+
+After $s=y-a$ and $r=a-x$, the dominating kernel is $C_\kappa/(s+r)$ on $(0,h)\times(0,a)$. The classical Carleman bound, equivalently the cited weighted Schur criterion with weight $r^{-1/2}$ and its standard scalar integral, gives
+
+$$
+\boxed{\|R_{k,\Gamma}\|=\|R_{k,\Gamma}^*\|
+\le\pi C_\kappa.}
+\tag{T40}
+$$
+
+The bound is independent of $k,h$. The row is not treated as a separated smooth kernel or claimed to have norm $O(\sqrt h)$: its $1/(2(y-x))$ singularity reaches the shared endpoint. Compact-core density gives the bounded $L^2$ cross extension used here, without splitting off a divergent diagonal jump rate.
+
+### Keep the true pole in the same row
+
+Let $s_a=\sinh(y/2)|_{(-a,a)}$ and $t_k=\sinh(y/2)|_{(-b,-a)\cup(a,b)}$. The actual pole row is $-2t_ks_a^*$, and its exact norm is
+
+$$
+\begin{aligned}
+\|R_{k,\mathrm{pole}}\|
+&=2\sqrt{(\sinh a-a)(\sinh b-\sinh a-h)}\\
+&\le e^{h/2}\le e^{1/8}.
+\end{aligned}
+\tag{T41}
+$$
+
+For the inequality use $\sinh a-a\le e^a/2$,
+$\sinh b-\sinh a-h=\int_a^b(\cosh t-1)dt\le he^b$ and $2he^{2a}\le1$. This retains the true coefficient $2$ and both physical norms. Multiplication terms have no old/new cross part. Combining (T38)–(T41) gives the complete all-old forcing allowance
+
+$$
+\boxed{
+\|b_k(v)\|_2\le K(k)\|v\|_2,
+\qquad
+K(k)=\pi C_\kappa+e^{1/8}+\sqrt{B\ell(1+\ell)}
+=O(1+\ell).
+}
+\tag{T42}
+$$
+
+The true pole-free core has the same bound with the $e^{1/8}$ term omitted. These statements cover every complex odd $L^2$ collar vector and every old direction, without a theta-family, derivative or positivity restriction. They are $L^2$ forcing bounds, not yet inverse-energy bounds.
+
+### Consume the existing floor on the whole infinite Fourier exterior
+
+Use the same Fourier/Plancherel identification and actual Weil-form domain bridge as in the cited exterior account. Let $P_{>M}$ be the projection in $\mathcal H_a$ onto the Fourier modes $|m|>M$ on the length-$\ell$ old interval. Oddness is preserved. On the closed-form restriction to this infinite exterior, the already supplied lower allowance is
+
+$$
+\begin{aligned}
+d(k,M)={}&(1-\eta)\left[\log\frac{M}{4\ell}
+-\frac{2\ell}{\pi M}\right]+\eta h_0
+-2W(k)-4\sinh(\ell/2),\\
+\eta={}&\frac4{3\pi^2},\qquad
+h_0=-\gamma-\frac\pi2-3\log2-\log\pi.
+\end{aligned}
+$$
+
+Its conditions include $\pi M/(2\ell)\ge15/4$. Neither the floor nor the restriction's positivity requires RH or positivity of the full old form. The underlying analytic/Fourier/domain identification remains a paper-level bridge; it is not certified merely by citing the existing Lean leakage statement.
+
+Choose
+
+$$
+\beta=\frac{4B+4}{1-\eta},\qquad
+M=\left\lceil e^{\beta\sqrt k}\right\rceil.
+$$
+
+Reuse (T39) and $4\sinh(\ell/2)\le2\sqrt k$. Then
+
+$$
+\begin{aligned}
+d(k,M)&\ge2\sqrt k
+-(1-\eta)\left[\log(4\ell)+\frac{2\ell}{\pi M}\right]
++\eta h_0\\
+&\ge\sqrt k>0
+\qquad\text{for all sufficiently large integers }k.
+\end{aligned}
+\tag{T43}
+$$
+
+The last step needs only the displayed scalar frequency condition and
+$(1-\eta)[\log(4\ell)+2\ell/(\pi M)]-\eta h_0\le\sqrt k$.
+No numerical starting endpoint is certified.
+
+Let $A_{k,>M}$ be the operator of this restricted closed form. The standard positive-form variational identity, now with an independently paid denominator, consumes the **same complete forcing** in (T42):
+
+$$
+\boxed{
+\begin{aligned}
+&\sup_{\substack{0\ne u\in D(Q)\\P_{>M}u=u}}
+\frac{|B_Q(u,v)|^2}{Q(u)}
+=\langle P_{>M}b_k(v),A_{k,>M}^{-1}P_{>M}b_k(v)\rangle\\
+&\qquad\le\frac{K(k)^2}{d(k,M)}\|v\|_2^2
+\le\frac{K(k)^2}{\sqrt k}\|v\|_2^2
+=O\!\left(\frac{(\log k)^2}{\sqrt k}\right)\|v\|_2^2.
+\end{aligned}
+}
+\tag{T44}
+$$
+
+The full true pole-free form and its own forcing obey the same estimate, since removing the negative pole only increases the exterior energy and removes its row term. Each quotient uses its corresponding complete form and row. This covers every coefficient combination in the entire infinite exterior; it is not a sum of finite or rank-one inverse budgets.
+
+The added interface is (T38)–(T42) for the complete physical adjacent forcing, consumed by the reused exterior floor in (T43)–(T44). The disjoint-slot principle, classical Carleman/Schur and prime-weight estimates, Fourier leakage, scalar digamma bound and positive-form inverse algebra are reused. The retained space has dimension of order $\exp(\beta\sqrt k)$: this conservative cutoff is not an efficient certification scheme. Its full retained Schur sign and coupling, and a paid relative-energy identification of the joint theta space (T31) with that retained Fourier space, remain unproved. The theta and exterior debit estimates cannot simply be added as a bound on the whole old inverse.
+
+Applying this physical estimate to the preprint's allocated source debit still requires its common-core, norm and full-form transport identification. The original selected-integer signed Robin estimate, its original coefficients, actual zero real parts, both signs, all heights and multiplicities, elementary correction and strict core are unchanged and unproved. This paper-level interface is neither a Lean result nor an RH proof, and carries no mathematical-priority claim.
+
 ## v2: the claimed induction step
 
 The following induction and fold formulas are those of [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), revised **20 September 2026**, 69 pages. At the arithmetic endpoint $a_k=(\log k)/2$, the source retains the pole term in $A_k=C_k-2|s_k\rangle\langle s_k|$. Lemma 6.27, under the old endpoint's positivity and inverse hypotheses, forms the actual harmonic extension
