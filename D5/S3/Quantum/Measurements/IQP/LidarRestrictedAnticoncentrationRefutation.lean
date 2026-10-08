@@ -346,14 +346,14 @@ lemma gate_entry_norm_le_one (α : ℝ) (b : Bool) : ‖((hadamard * D5.S3.Quant
 private lemma retainedRow_norm_le_one (m : ℕ) (φ : Fin m → ℝ × ℝ) (x : Fin m → Bool × Bool) : ‖retainedRow m φ x‖ ≤ 1 := by
   simp_rw [retained_row_prod]
   rw [norm_prod]
-  apply Finset.prod_le_one (fun _ _ => norm_nonneg _)
+  apply Finset.prod_le_one₀ (fun _ _ => norm_nonneg _)
   intro i _
   rw [norm_mul]
   exact (mul_le_mul (gate_entry_norm_le_one _ _) (gate_entry_norm_le_one _ _) (norm_nonneg _) (by norm_num)).trans_eq (by norm_num)
 private lemma tensor_zero_row_norm_le_one (k : ℕ) (α : Fin k → ℝ) (z : Fin k → Bool) : ‖(tensorOp (fun i => hadamard * D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.rotation 1 (α i)) (fun _ => 0) (fun i => if z i then 1 else 0))‖ ≤ 1 := by
   simp only [tensorOp, Matrix.of_apply]
   rw [norm_prod]
-  exact Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun i _ => gate_entry_norm_le_one _ _)
+  exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun i _ => gate_entry_norm_le_one _ _)
 private def amplitudeBudget (m : ℕ) (qC : (Fin m → Fin 4 → Bool) → Bool) : ℝ := ∑ x : Fin m → Bool × Bool, ∑ z : Fin (4*m) → Bool, ‖reindexedTwinAmplitude m qC (x,z)‖
 private lemma twinProbability_bound (m : ℕ) (qC : (Fin m → Fin 4 → Bool) → Bool) (φ : Fin m → ℝ × ℝ) (α : Fin (4*m) → ℝ) : twinProbability m qC φ α ≤ amplitudeBudget m qC ^ 2 := by
   have hnorm : ‖∑ x : Fin m → Bool × Bool, ∑ z : Fin (4*m) → Bool, reindexedTwinAmplitude m qC (x,z) * retainedRow m φ x * (tensorOp (fun i => hadamard * D5.S3.Quantum.Entanglement.PrecessionSpinOneSeparableBound.rotation 1 (α i)) (fun _ => 0) (fun i => if z i then 1 else 0))‖ ≤ amplitudeBudget m qC := by
@@ -425,7 +425,7 @@ private lemma graphProbability_bound {m : ℕ} (G : Finset ((Fin (6 * m) × Fin 
     intro z
     simp only [measurementRow, tensorOp, Matrix.of_apply, Function.comp_apply]
     rw [norm_prod]
-    exact Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun i _ => gate_entry_norm_le_one (θ i) (z i))
+    exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun i _ => gate_entry_norm_le_one (θ i) (z i))
   have hs : ‖∑ z : (Fin (6 * m) → Bool),graphAmplitude G z * measurementRow (fun _ => false) θ z‖ ≤ graphBudget G := by
     refine (norm_sum_le _ _).trans ?_
     apply Finset.sum_le_sum
@@ -906,7 +906,7 @@ private lemma hadamard_norm_le_one (m : ℕ) (s z : (Fin (6 * m) → Bool)) : �
   unfold tensorOp
   simp only [Matrix.of_apply]
   rw [norm_prod]
-  exact Finset.prod_le_one (fun _ _ => norm_nonneg _) (fun i _ => W_norm_le_one _ _)
+  exact Finset.prod_le_one₀ (fun _ _ => norm_nonneg _) (fun i _ => W_norm_le_one _ _)
 private lemma phase_norm (x : ℝ) : ‖Complex.exp (-Complex.I * (x : ℂ))‖ = 1 := by
   have he : -Complex.I * (x : ℂ) = ((-x : ℝ) : ℂ) * Complex.I := by push_cast; ring
   rw [he,Complex.norm_exp_ofReal_mul_I]

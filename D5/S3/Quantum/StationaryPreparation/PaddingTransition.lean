@@ -76,7 +76,7 @@ def occupationMemoryEquiv (a : Multiset A) (head : A)
   have padding_memory_card {I : Type u} [Fintype I] [DecidableEq I] (H : ℕ) (c : I → ℕ) :
       Fintype.card (PaddingMemory H c) = (H + 1) * (∏ i, (c i + 1)) - H := by
     classical
-    have hp : 1 ≤ ∏ i, (c i + 1) := Finset.one_le_prod fun _ _ => by omega
+    have hp : 1 ≤ ∏ i, (c i + 1) := Finset.one_le_prod₀ fun _ _ => by omega
     have hmul := Nat.mul_le_mul_left (H + 1) hp
     simp only [PaddingMemory, Fintype.card_option, Fintype.card_prod,
       Fintype.card_fin, positive_tail_card]

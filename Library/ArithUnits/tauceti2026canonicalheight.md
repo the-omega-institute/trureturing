@@ -7,7 +7,6 @@ doi: null
 url: https://github.com/TauCetiProject/TauCeti/tree/934db6ae0034643ffe7b5180242f9ec4c00a56ae
 claim: The homogeneous addition-and-subtraction identity yields a convergent quadratic height with uniform comparison; polarization constructs an integer quadratic map, and admissible variable changes transport the elliptic point group.
 strata_touched:
-  - D5/S3/Factorization/Mordell/SymmetricSquareAddition
   - D5/S3/Factorization/Mordell/CanonicalPointHeight
   - D5/S3/Factorization/Mordell/PointVariableChange
   - D5/S3/Factorization/Dedekind/GaloisScalarHeight
@@ -65,15 +64,19 @@ Mathlib's ring-of-integers automorphism, ideal quotient norm, infinite-place
 permutation and absolute-height identities. It uses the complete real and
 complex place multiplicities. It is not attributed as a donor declaration.
 
-The target Mathlib revision is `db584cd6d46c92f209a44c0f1c829460d327499d`.
+The adopted Mathlib revision is `d13f23b723b8a846827a245b89c10fc7d3f11612`.
 Its homogeneous add/sub height estimate, `QuadraticMap.ofPolar`, ideal-norm
-identities and number-field height system are called directly. The selected
-point-coordinate identity, point-height construction and bare-group
-parallelogram construction are absent at that pin. A port is retired when
-an adopted Mathlib pin supplies the same declaration with equal or weaker
-hypotheses and all of its required clauses; consumers then import and apply
-that declaration directly. A change of name or only one of the convergence,
-comparison and exact-law clauses does not satisfy that condition.
+identities and number-field height system are called directly. The
+point-coordinate identity is declared as
+`WeierstrassCurve.Affine.Point.sym2x_add_sub_eq_addSubMap_sym2x` in
+`Mathlib/AlgebraicGeometry/EllipticCurve/Affine/AddSubMap.lean`; its consumers
+import this module directly. The local point-height and bare-group
+parallelogram constructions retain their own declaration owners.
+A port is retired when an adopted Mathlib pin supplies the same declaration
+with equal or weaker hypotheses and all of its required clauses; consumers
+then import and apply that declaration directly. A change of name or only
+one of the convergence, comparison and exact-law clauses does not satisfy
+that condition.
 
 The height is normalized by dividing the doubling limit by two. The
 polar form is twice the Néron–Tate pairing. Northcott finiteness is an

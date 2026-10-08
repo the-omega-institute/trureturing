@@ -59,7 +59,8 @@ theorem reachable_antisymm_of_acyclic
 
 theorem reachable_partial_order
     {V : Type*} {edge : V -> V -> Prop} (acyclic : AcyclicEdge edge) :
-    Reflexive (Reachable edge) ∧ Transitive (Reachable edge) ∧
+    Reflexive (Reachable edge) ∧
+      (∀ ⦃u v w⦄, Reachable edge u v → Reachable edge v w → Reachable edge u w) ∧
       (∀ ⦃u v⦄, Reachable edge u v → Reachable edge v u → u = v) := by
   refine ⟨reachable_refl edge, ?_, ?_⟩
   · intro u v w huv hvw

@@ -182,16 +182,16 @@ theorem result (κ K R : ℝ) (hκ : 0 < κ) (hκ1 : κ ≤ 1)
     have hf1 (j : I) : f j ≤ 1 := by
       have : IsProbabilityMeasure ((gaussianReal 0 1).map
         (fun z => a j * (z ^ 2 - 1) + b j * z)) :=
-        Measure.isProbabilityMeasure_map (by fun_prop)
+        inferInstance
       exact norm_charFun_le_one _
     have hprod : (∏ j, f j) ≤ ∏ j ∈ Core, f j :=
-      prod_le_prod_of_subset_of_le_one (subset_univ Core)
+      prod_le_prod_of_subset_of_le_one₀ (subset_univ Core)
         (fun j _ => norm_nonneg _) (fun j _ _ => hf1 j)
     have hcoreProd : (∏ j ∈ Core, f j) ≤
         (1 + 4 * A * δ * ξ ^ 2) ^ (-(Core.card : ℝ) / 4) := by
       calc
         _ ≤ ∏ _j ∈ Core, (1 + 4 * A * δ * ξ ^ 2) ^ (-(1 / 4 : ℝ)) := by
-          apply prod_le_prod (fun j _ => norm_nonneg _)
+          apply prod_le_prod₀ (fun j _ => norm_nonneg _)
           intro j hj
           exact (hscalarNorm (a j) (b j) ξ).trans
             (Real.rpow_le_rpow_of_nonpos (by positivity)
@@ -229,7 +229,7 @@ theorem result (κ K R : ℝ) (hκ : 0 < κ) (hκ1 : κ ≤ 1)
     clear * - I a b ξ
     haveI (j : I) : IsProbabilityMeasure ((gaussianReal 0 1).map
         (fun z => a j * (z ^ 2 - 1) + b j * z)) :=
-      Measure.isProbabilityMeasure_map (by fun_prop)
+      inferInstance
     have hs := congrFun (charFun_map_sum_pi_eq_prod (fun j : I =>
       (gaussianReal 0 1).map (fun z => a j * (z ^ 2 - 1) + b j * z))) ξ
     rw [← Measure.pi_map_pi (fun _ => by fun_prop), Measure.map_map (by fun_prop) (by fun_prop)] at hs

@@ -62,7 +62,7 @@ run_cmd do
   let row : LeanInformationAudit.SnapshotOccurrence := {
     objectArenaName := root ++ `arena
     theoremName := sourceName
-    statementIdentity := "sha256:0784cf503dfe5b78a65875009000f173bf6ffa84e7614fb47b4041a701fe3e3e"
+    statementIdentity := "sha256:e9a6ec723a1342a9f70bfd100612ee6034cc70ba691635bc2062fba9e45a2504"
     registrationModuleName := root }
   LeanInformationAudit.RootCatalogs.declare {
     rootId := root, expected := #[row], source := #[row], companionPrefix := some root }

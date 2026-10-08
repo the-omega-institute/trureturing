@@ -28,7 +28,7 @@ run_meta do
   let owner := `Reg.D5.S3.Fourier.Asymptotics.TorusSubgroupHaarContinuity
   let source ← IO.FS.readBinFile ((← Repository.root) /
     "D5/S3/Fourier/Asymptotics/TorusSubgroupHaarContinuity.lean")
-  unless Sha256.hex source == "70e70e2d2bea2cbec9c2d3a7b1a13f8a6c91fc12fc70a6d86deae1e725b34b04" do
+  unless Sha256.hex source == "de5d4a51dcb21fafb9e9db5c80f0542f8e9fa63aa9d0c4a4ebf168e37537c612" do
     throwError "Haar original source changed"
   let env ← getEnv
   let #[event] := (TemplateBinding.inventory env).filter (·.key.theoremName == target)

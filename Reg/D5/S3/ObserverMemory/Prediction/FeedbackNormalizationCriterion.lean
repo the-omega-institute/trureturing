@@ -66,7 +66,7 @@ theorem rejected_law : ¬ arena.{u,v}.Law rejected := by
       ULift.{u} Unit, feedbackMass (fun _ _ => (1 : ℝ)) f = 1 := by
     intro f
     simp [feedbackMass]
-  have hfourth := (List.TFAE.out hcase 0 3).mp hfirst
+  have hfourth := (List.TFAE.out hcase 1 4).mp hfirst
   obtain ⟨q, _, _, hfactor⟩ := hfourth
   have impossible := hfactor (fun _ => ⟨()⟩) (fun _ => ⟨()⟩)
   norm_num [rejected, realize] at impossible
