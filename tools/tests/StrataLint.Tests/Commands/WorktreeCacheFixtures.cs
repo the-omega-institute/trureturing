@@ -87,13 +87,7 @@ internal static class WorktreeHookFixture
 
 internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 {
-    private bool copyCompleted;
-
     internal List<WorktreeProcessInvocation> Invocations { get; } = [];
-
-    internal bool FailCopy { get; init; }
-
-    internal bool ThrowCopy { get; init; }
 
     internal string? LakeFileName { get; init; }
 
@@ -121,7 +115,7 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
     internal string? BusyRoot { get; init; }
 
-    internal bool BusyOnlyAfterCopy { get; init; }
+    internal Func<bool>? BusyWhen { get; init; }
 
     /// <summary>
     /// 归档 fetch 的桩输出,调用次数由 ArchiveInvocations 记录。
@@ -156,16 +150,6 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
             return Failure("simulated concurrent worktree");
         }
 
-        if (fileName == "cp" && arguments.FirstOrDefault() == "-pR" && FailCopy)
-        {
-            return Failure("ordinary copy unavailable");
-        }
-
-        if (fileName == "cp" && arguments.FirstOrDefault() == "-pR" && ThrowCopy)
-        {
-            throw new IOException("ordinary copy threw");
-        }
-
         if (fileName == "/bin/bash"
             && arguments.Count >= 2
             && arguments[0].EndsWith("lean-cache-publish.sh", StringComparison.Ordinal)
@@ -181,7 +165,7 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
 
         if (fileName == "lsof")
         {
-            var busy = BusyRoot is not null && (!BusyOnlyAfterCopy || copyCompleted);
+            var busy = BusyRoot is not null && (BusyWhen?.Invoke() ?? true);
             return busy
                 ? new ProcessOutput(0, Encoding.UTF8.GetBytes($"p123\nclean\nfcwd\nn{BusyRoot}\n"), [])
                 : Success();
@@ -244,7 +228,6 @@ internal sealed class RecordingWorktreeProcessRunner : IWorktreeProcessRunner
         {
             AfterWorktreeAdd?.Invoke(arguments[^2]);
         }
-        if (fileName == "cp" && result.ExitCode == 0) copyCompleted = true;
         return result;
     }
 
