@@ -544,7 +544,8 @@ defaultFacets = ["static"]
     def report(self):
         with tempfile.TemporaryDirectory(dir=self.root) as directory:
             report = publication.unpack(self.root / '.lake/build/lean-inspector/report.zip', directory)
-            rows = publication.validate_bundle(report)
+            publication.validate_bundle(report)
+            rows = list(publication.report_rows(report, materials.REPORT_SCHEMA))
             return rows, report.read_bytes(), publication.member(report, '.materials.zip').read_bytes()
     def origins(self):
         with zipfile.ZipFile(self.root / '.lake/build/lean-inspector/report.zip') as archive:
