@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.Linear.PhysicalFixedNoiseInformation
 import Reg.Support.DependentFamily
 import Mathlib.Analysis.InnerProductSpace.PiL2
@@ -99,14 +100,26 @@ def registration : Registration arena.{u,v} (arena.{u,v}.Law actual.{u,v}) where
     · intro e; exact nomatch e
   dependence := dependence_proof
 
-register_information_theorem _root_.D5.S3.Observer.Linear.PhysicalFixedNoiseInformation.physical_fixed_noise_information in arena
-  readout via (realize signature.{u,v} (fun _ _ x => |x|) emptyAnchor)
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Observer.Linear.PhysicalFixedNoiseInformation
-    coordinates := #[0,1,8,9,10,11]
-    readouts := #[{
-      path := #[ "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "body", "body", "body", "fn", "arg" ]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Observer.Linear.PhysicalFixedNoiseInformation.physical_fixed_noise_information.{u_1, u_2}) (type_of% (realize.{max (u_1 + 1) (u_2 + 1), 0, 0, 0, 0} signature.{u_1, u_2} (fun _ _ x => |x|) emptyAnchor.{u_1, u_2})) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Observer") "Linear") "PhysicalFixedNoiseInformation") "physical_fixed_noise_information") "Reg.D5.S3.Observer.Linear.PhysicalFixedNoiseInformation/Reg.D5.S3.Observer.Linear.PhysicalFixedNoiseInformation.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Observer.Linear.PhysicalFixedNoiseInformation.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_2})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2}) ⟨(registration.{u_1, u_2})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{max (u_1 + 1) (u_2 + 1), 0, 0, 0, 0} signature.{u_1, u_2} (fun _ _ x => |x|) emptyAnchor.{u_1, u_2}),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Observer.Linear.PhysicalFixedNoiseInformation, definition := none, coordinates := #[0, 1, 8, 9, 10, 11], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "body", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end Reg.D5.S3.Observer.Linear.PhysicalFixedNoiseInformation

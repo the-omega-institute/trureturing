@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Primes.FibonacciFiveAdicRankBudget
 import Reg.Support.DependentFamily
 
@@ -88,18 +89,6 @@ def registration : Registration arena
       exact padicValNat.prime_pow 2
     omega
 
-register_information_theorem
-  _root_.D5.S3.Arith.Primes.FibonacciFiveAdicRankBudget.fibonacci_five_adic_rank_budget
-  in arena
-  readout via (realize signature (fun _ _ n => padicValNat 5 n)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.Primes.FibonacciFiveAdicRankBudget
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateBinder := 1 }] })
-  escape continues (open)
+
 
 end Reg.D5.S3.Arith.Primes.FibonacciFiveAdicRankBudget

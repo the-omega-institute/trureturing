@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit
 import Reg.Support.DependentFamily
 
@@ -90,19 +91,32 @@ def registration : Registration arena.{u} (arena.{u}.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem finite_detection_survival_limit in arena
-  readout via (realize survivalSignature
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.finite_detection_survival_limit.{u_1}) (type_of% (realize.{0, 0, 0, 0, 0} survivalSignature
     (fun _ p N => (p.2ᴴ) ^ N * p.2 ^ N)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit
-    coordinates := #[0, 3]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body",
-        "fn", "arg", "fn", "fn", "arg", "body"]
-      stateBinder := 6 }] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Measurement") "FiniteDetectionSurvivalLimit") "finite_detection_survival_limit") "Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit/Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1})⟩,
+  objectArena := .source ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} survivalSignature
+    (fun _ p N => (p.2ᴴ) ^ N * p.2 ^ N)
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, definition := none, coordinates := #[0, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "fn", "arg", "body"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms actual_law
 #print axioms rejected_law
@@ -194,20 +208,32 @@ def registration : Registration arena.{u} (arena.{u}.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem dark_block_contraction in arena
-  readout via (realize signature
+noncomputable def registration_2.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.dark_block_contraction.{u_1}) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ p N => (p.2ᴴ) ^ N * p.2 ^ N)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit
-    coordinates := #[0, 3]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body",
-        "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg",
-        "fn", "arg", "body", "arg"]
-      stateBinder := 9 }] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Measurement") "FiniteDetectionSurvivalLimit") "dark_block_contraction") "Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit/Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit.DarkBlock.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1})⟩,
+  objectArena := .source ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ p N => (p.2ᴴ) ^ N * p.2 ^ N)
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Measurement.FiniteDetectionSurvivalLimit, definition := none, coordinates := #[0, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "body", "arg"], stateBinder := 9, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms actual_law
 #print axioms rejected_law
