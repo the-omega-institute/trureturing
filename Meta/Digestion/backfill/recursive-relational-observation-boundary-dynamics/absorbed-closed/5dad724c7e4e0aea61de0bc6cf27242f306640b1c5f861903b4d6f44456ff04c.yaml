@@ -2,7 +2,9 @@ fingerprints:
   raw_sha256: sha256:5dad724c7e4e0aea61de0bc6cf27242f306640b1c5f861903b4d6f44456ff04c
   normalized_sha256: sha256:5dad724c7e4e0aea61de0bc6cf27242f306640b1c5f861903b4d6f44456ff04c
 cas_ref: sha256:5dad724c7e4e0aea61de0bc6cf27242f306640b1c5f861903b4d6f44456ff04c
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Prediction/CausalRepairEnvelopes.result
+    target_statement_id: sha256:10c1c568ee04ff8bff3078a6dcb82dc3b47c33065623efe02ed87ba1a12846d3
 receipts:
   unresolved_subitems: []
   chain_atoms:
