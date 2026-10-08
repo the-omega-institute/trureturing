@@ -25,37 +25,27 @@ set_option backward.isDefEq.respectTransparency false
 noncomputable section
 
 open Set Filter MeasureTheory
-open scoped Topology
+open scoped Topology ContDiff
 open D5.S3.Arith.Robin.MellinWeightedVariation
 open D5.S3.Analytic.Interpolation.ArtificialSourceCellEstimates
 
 namespace D5.S3.Analytic.Interpolation.ArtificialSourceIncrementContract
 
-local notation "c" => (1 / 128 : ℝ)
 local notation "q" => (fun x : ℝ => (x * Real.log x)⁻¹)
-local notation "k" => weight
 
 /-- The perturbed price coordinate. -/
-def coordinate (δ A x : ℝ) : ℝ := x - deriv (bump δ A) x / k x
+def coordinate (δ A x : ℝ) : ℝ := x - deriv (bump δ A) x / weight x
 
 /-- The integer-valued pulse source. -/
 def source (δ A x : ℝ) : ℤ := ⌊coordinate δ A x⌋
 
 /-- Its tail in the same Robin price coordinate. -/
 def tail (δ A x : ℝ) : ℝ :=
-  ∫ v in Ioi x, ((source δ A v : ℝ) - v) * k v
+  ∫ v in Ioi x, ((source δ A v : ℝ) - v) * weight v
 
-local notation "etaOne" => (fun s : ℝ => 2 * s * (1 - s) * (1 - 2 * s))
-local notation "etaTwo" => (fun s : ℝ => 2 - 12 * s + 12 * s ^ 2)
-local notation "kernelSlope" => (fun x : ℝ =>
-  -(2 * (Real.log x) ^ 2 + 3 * Real.log x + 2) / (x ^ 3 * (Real.log x) ^ 3))
-local notation "cellSlope" => (fun δ a x : ℝ =>
-  -(amplitude δ a / width δ a) * etaOne ((x - a) / width δ a))
-local notation "cellSecond" => (fun δ a x : ℝ =>
-  -(amplitude δ a / (width δ a) ^ 2) * etaTwo ((x - a) / width δ a))
 local notation "rightSlope" => (fun δ A x : ℝ =>
-  1 - (cellSecond δ (grid δ A (cellIndex δ A x)) x * k x -
-    cellSlope δ (grid δ A (cellIndex δ A x)) x * kernelSlope x) / (k x) ^ 2)
+  1 - (cellSecond δ (grid δ A (cellIndex δ A x)) x * weight x -
+    cellSlope δ (grid δ A (cellIndex δ A x)) x * kernelSlope x) / (weight x) ^ 2)
 
 private theorem admissible_exists {δ : ℝ} (hδ : 0 < δ) :
     ∃ A₀ : ℝ, ∀ A ≥ A₀, Admissible δ A := by
@@ -96,8 +86,39 @@ private theorem coordinate_continuous {δ A : ℝ} (hA : Admissible δ A) :
   · intro x hx
     have hx1 := (admissible_gt_one hA).trans_le hx
     have hx0 : 0 < x := by linarith
-    have hk : 0 < k x := by unfold weight; positivity [Real.log_pos hx1]
+    have hk : 0 < weight x := by unfold weight; positivity [Real.log_pos hx1]
     exact hk.ne'
+
+private theorem coordinate_cont_diff_on_cell {δ A : ℝ} (hA : Admissible δ A) (j : ℕ) :
+    ContDiffOn ℝ ∞ (coordinate δ A) (Ioo (grid δ A j) (grid δ A (j + 1))) := by
+  let S := Ioo (grid δ A j) (grid δ A (j + 1))
+  have hx1 : ∀ x ∈ S, 1 < x := by
+    intro x hx
+    have hAj : A ≤ grid δ A j := by
+      linarith [grid_bounds hA j, Nat.cast_nonneg (α := ℝ) j]
+    exact ((admissible_gt_one hA).trans_le hAj).trans hx.1
+  have hs : ContDiffOn ℝ ∞ (cellSlope δ (grid δ A j)) S := by
+    unfold cellSlope etaOne
+    fun_prop
+  have hl : ContDiffOn ℝ ∞ Real.log S := by
+    intro x hx
+    exact (Real.contDiffAt_log.2 (ne_of_gt (by linarith [hx1 x hx]))).contDiffWithinAt
+  have hk : ContDiffOn ℝ ∞ weight S := by
+    unfold weight
+    apply (hl.add contDiffOn_const).div ((contDiffOn_id.pow 2).mul (hl.pow 2))
+    intro x hx
+    change x ^ 2 * (Real.log x) ^ 2 ≠ 0
+    exact mul_ne_zero (pow_ne_zero _ (ne_of_gt (by linarith [hx1 x hx])))
+      (pow_ne_zero _ (Real.log_pos (hx1 x hx)).ne')
+  have hkn : ∀ x ∈ S, weight x ≠ 0 := by
+    intro x hx
+    have hx0 : 0 < x := by linarith [hx1 x hx]
+    unfold weight
+    positivity [Real.log_pos (hx1 x hx)]
+  apply (contDiffOn_id.sub (hs.div hk hkn)).congr
+  intro x hx
+  exact congrArg (fun y : ℝ => x - y / weight x)
+    (bump_deriv_on_cell hA j (Ioo_subset_Icc_self hx))
 
 private theorem coordinate_right_deriv {δ A x : ℝ} (hA : Admissible δ A) (hx : A ≤ x) :
     HasDerivWithinAt (coordinate δ A) (rightSlope δ A x) (Ici x) x ∧
@@ -112,13 +133,13 @@ private theorem coordinate_right_deriv {δ A x : ℝ} (hA : Admissible δ A) (hx
   have hxcc : x ∈ Icc a (a + width δ a) := by
     simpa only [grid] using Ico_subset_Icc_self hcell
   have hx0 : 0 < x := by linarith [hcell.1]
-  have hk : 0 < k x := by
+  have hk : 0 < weight x := by
     unfold weight
     positivity [Real.log_pos (ha.trans_le hcell.1)]
   have hd := (hasDerivAt_id x).sub
     ((cell_derivatives hw).2.fun_div (kernel_has_deriv_at (ha.trans_le hcell.1)) hk.ne')
-  change HasDerivAt (fun y : ℝ => y - cellSlope δ a y / k y) (rightSlope δ A x) x at hd
-  have hpoint : coordinate δ A x = x - cellSlope δ a x / k x := by
+  change HasDerivAt (fun y : ℝ => y - cellSlope δ a y / weight y) (rightSlope δ A x) x at hd
+  have hpoint : coordinate δ A x = x - cellSlope δ a x / weight x := by
     rw [coordinate, bump_deriv_on_cell hA j (Ico_subset_Icc_self hcell)]
   have hest := (cell_estimates ha hdata.1 hw hdata.2.2.2 hxcc).2
   rw [hd.deriv] at hest
@@ -129,9 +150,9 @@ private theorem coordinate_right_deriv {δ A x : ℝ} (hA : Admissible δ A) (hx
   · apply hd.hasDerivWithinAt.congr_of_eventuallyEq _ hpoint
     filter_upwards [Icc_mem_nhdsGE_of_mem hcell] with y hy
     rw [coordinate, bump_deriv_on_cell hA j hy]
-  · dsimp only at hest ⊢
+  · dsimp only [c] at hest ⊢
     nlinarith
-  · dsimp only at hest ⊢
+  · dsimp only [c] at hest ⊢
     nlinarith [hdata.2.1]
 
 private theorem coordinate_increment_bound {δ A a b C : ℝ} (hA : Admissible δ A)
@@ -194,6 +215,7 @@ private theorem source_increment {δ A a t : ℝ} (hA : Admissible δ A)
 private theorem coordinate_global_bound {δ A x : ℝ} (hδ : 0 < δ)
     (hA : Admissible δ A) (hx : A ≤ x) :
     |coordinate δ A x - x| ≤ 4 * c * x ^ (3 / 4 : ℝ) * (Real.log x) ^ (δ + 1 / 2) := by
+  have hc : 0 < c := by norm_num [c]
   let j := cellIndex δ A x
   let a := grid δ A j
   have hcell := cell_index_spec hA hx
@@ -212,7 +234,7 @@ private theorem coordinate_global_bound {δ A x : ℝ} (hδ : 0 < δ)
   have hexp : Real.exp (-(Real.log a) ^ (1 / 4 : ℝ) / 2) ≤ 1 :=
     Real.exp_le_one_iff.2 (by linarith)
   calc
-    |coordinate δ A x - x| = |cellSlope δ a x / k x| := by
+    |coordinate δ A x - x| = |cellSlope δ a x / weight x| := by
       rw [coordinate, bump_deriv_on_cell hA j (Ico_subset_Icc_self hcell)]
       dsimp [a]
       rw [sub_sub_cancel_left, abs_neg]
@@ -243,7 +265,7 @@ private theorem coordinate_grid {δ A : ℝ} (hA : Admissible δ A) (j : ℕ) :
     coordinate δ A (grid δ A j) = grid δ A j := by
   rw [coordinate, bump_deriv_on_cell hA j
     ⟨le_rfl, (grid_strictMono hA).monotone (Nat.le_succ j)⟩]
-  simp
+  simp [cellSlope, etaOne]
 
 private theorem source_nonnegative {δ A x : ℝ} (hA : Admissible δ A) (hx : A ≤ x) :
     0 ≤ source δ A x := by
@@ -310,6 +332,7 @@ private theorem source_pnt_bound {δ A : ℝ} (hδ : 0 < δ) (hA : Admissible δ
     (c₀ : ℝ) :
     Asymptotics.IsBigO atTop (fun x => (source δ A x : ℝ) - x)
       (fun x => x * Real.exp (-c₀ * Real.sqrt (Real.log x))) := by
+  have hc : 0 < c := by norm_num [c]
   have hs : Tendsto (fun L : ℝ => Real.sqrt L / L) atTop (𝓝 0) := by
     apply (tendsto_rpow_neg_atTop (by norm_num : (0 : ℝ) < 1 / 2)).congr'
     filter_upwards [eventually_gt_atTop (0 : ℝ)] with L hL
@@ -350,7 +373,7 @@ private theorem source_pnt_bound {δ A : ℝ} (hδ : 0 < δ) (hA : Admissible δ
   nlinarith
 
 private theorem kernel_bound {x : ℝ} (hx : 1 < x) (hL : 1 ≤ Real.log x) :
-    0 < k x ∧ k x ≤ 2 / x ^ 2 := by
+    0 < weight x ∧ weight x ≤ 2 / x ^ 2 := by
   have hx0 : 0 < x := by linarith
   have hL0 : 0 < Real.log x := by linarith
   refine ⟨by unfold weight; positivity, ?_⟩
@@ -362,6 +385,7 @@ private theorem kernel_bound {x : ℝ} (hx : 1 < x) (hL : 1 ≤ Real.log x) :
 
 private theorem bump_deriv_integrable {δ A : ℝ} (hδ : 0 < δ) (hA : Admissible δ A) :
     IntegrableOn (deriv (bump δ A)) (Ici A) := by
+  have hc : 0 < c := by norm_num [c]
   have ho : Asymptotics.IsBigO atTop (deriv (bump δ A))
       (fun x : ℝ => x ^ (-9 / 8 : ℝ)) := by
     apply Asymptotics.IsBigO.of_bound (8 * c)
@@ -369,7 +393,7 @@ private theorem bump_deriv_integrable {δ A : ℝ} (hδ : 0 < δ) (hA : Admissib
     have hx1 := (admissible_gt_one hA).trans_le hx
     have hx0 : 0 < x := by linarith
     have hk := kernel_bound hx1 (hA.1 x hx).1
-    have hcoord : deriv (bump δ A) x = -(coordinate δ A x - x) * k x := by
+    have hcoord : deriv (bump δ A) x = -(coordinate δ A x - x) * weight x := by
       unfold coordinate
       field_simp [hk.1.ne']
       ring
@@ -392,7 +416,7 @@ private theorem bump_deriv_integrable {δ A : ℝ} (hδ : 0 < δ) (hA : Admissib
   exact ((bump_deriv_continuous hA).locallyIntegrableOn measurableSet_Ici).integrableOn_of_isBigO_atTop
     ho (integrableAtFilter_rpow_atTop_iff.2 (by norm_num))
 
-private theorem price_hasDerivAt {x : ℝ} (hx : 1 < x) : HasDerivAt q (-k x) x := by
+private theorem price_hasDerivAt {x : ℝ} (hx : 1 < x) : HasDerivAt q (-weight x) x := by
   have hx0 : 0 < x := by linarith
   have hL : 0 < Real.log x := Real.log_pos hx
   have hd := ((hasDerivAt_id x).mul (Real.hasDerivAt_log hx0.ne')).inv
@@ -414,10 +438,10 @@ private theorem price_tendsto_zero : Tendsto q atTop (𝓝 0) := by
     nlinarith
 
 private theorem kernel_tail {x : ℝ} (hx : 1 < x) :
-    IntegrableOn k (Ioi x) ∧ (∫ y in Ioi x, k y) = q x := by
-  have hd : ∀ y ∈ Ici x, HasDerivAt q (-k y) y :=
+    IntegrableOn weight (Ioi x) ∧ (∫ y in Ioi x, weight y) = q x := by
+  have hd : ∀ y ∈ Ici x, HasDerivAt q (-weight y) y :=
     fun y hy => price_hasDerivAt (hx.trans_le hy)
-  have hn : ∀ y ∈ Ioi x, -k y ≤ 0 := by
+  have hn : ∀ y ∈ Ioi x, -weight y ≤ 0 := by
     intro y hy
     have hy1 := hx.trans hy
     have hy0 : 0 < y := by linarith
@@ -426,7 +450,7 @@ private theorem kernel_tail {x : ℝ} (hx : 1 < x) :
     positivity [Real.log_pos hy1]
   have hi := integrableOn_Ioi_deriv_of_nonpos' hd hn price_tendsto_zero
   have hv := integral_Ioi_of_hasDerivAt_of_tendsto' hd hi price_tendsto_zero
-  have hik : IntegrableOn k (Ioi x) := by
+  have hik : IntegrableOn weight (Ioi x) := by
     convert hi.neg using 1
     ext y
     simp
@@ -455,7 +479,7 @@ private theorem bump_tendsto_zero {δ A : ℝ} (hδ : 0 < δ) (hA : Admissible �
   rwa [heq] at ht
 
 private theorem tail_contract {δ A x : ℝ} (hδ : 0 < δ) (hA : Admissible δ A) (hx : A ≤ x) :
-    IntegrableOn (fun y => ((source δ A y : ℝ) - y) * k y) (Ioi x) ∧
+    IntegrableOn (fun y => ((source δ A y : ℝ) - y) * weight y) (Ioi x) ∧
       bump δ A x - q x ≤ tail δ A x ∧ tail δ A x ≤ bump δ A x := by
   have hx1 := (admissible_gt_one hA).trans_le hx
   have hk := kernel_tail hx1
@@ -464,7 +488,7 @@ private theorem tail_contract {δ A x : ℝ} (hδ : 0 < δ) (hA : Admissible δ 
   have hf := integral_Ioi_of_hasDerivAt_of_tendsto'
     (fun y hy => (bump_has_deriv_at hA (hx.trans hy)).differentiableAt.hasDerivAt)
     hd (bump_tendsto_zero hδ hA)
-  let R : ℝ → ℝ := fun y => ((source δ A y : ℝ) - coordinate δ A y) * k y
+  let R : ℝ → ℝ := fun y => ((source δ A y : ℝ) - coordinate δ A y) * weight y
   have hc := (coordinate_continuous hA).mono
     (Ioi_subset_Ici_self.trans (Ici_subset_Ici.2 hx))
   have hcm : AEStronglyMeasurable (coordinate δ A) (volume.restrict (Ioi x)) :=
@@ -473,12 +497,12 @@ private theorem tail_contract {δ A x : ℝ} (hδ : 0 < δ) (hA : Admissible δ 
       (volume.restrict (Ioi x)) :=
     (((measurable_of_countable (fun n : ℤ => (n : ℝ))).comp Int.measurable_floor).comp_aemeasurable
       (hc.aemeasurable measurableSet_Ioi)).aestronglyMeasurable
-  have hkm : AEStronglyMeasurable k (volume.restrict (Ioi x)) := hk.1.aestronglyMeasurable
-  have hrange : ∀ y ∈ Ioi x, -k y ≤ R y ∧ R y ≤ 0 ∧ |R y| ≤ k y := by
+  have hkm : AEStronglyMeasurable weight (volume.restrict (Ioi x)) := hk.1.aestronglyMeasurable
+  have hrange : ∀ y ∈ Ioi x, -weight y ≤ R y ∧ R y ≤ 0 ∧ |R y| ≤ weight y := by
     intro y hy
     have hy1 := hx1.trans hy
     have hy0 : 0 < y := by linarith
-    have hky : 0 ≤ k y := by unfold weight; positivity [Real.log_pos hy1]
+    have hky : 0 ≤ weight y := by unfold weight; positivity [Real.log_pos hy1]
     have hfloor : -1 ≤ (source δ A y : ℝ) - coordinate δ A y ∧
         (source δ A y : ℝ) - coordinate δ A y ≤ 0 := by
       unfold source
@@ -487,7 +511,7 @@ private theorem tail_contract {δ A x : ℝ} (hδ : 0 < δ) (hA : Admissible δ 
     have hl := mul_le_mul_of_nonneg_right hfloor.1 hky
     have hu := mul_nonpos_of_nonpos_of_nonneg hfloor.2 hky
     refine ⟨by simpa [R] using hl, hu, ?_⟩
-    change |((source δ A y : ℝ) - coordinate δ A y) * k y| ≤ k y
+    change |((source δ A y : ℝ) - coordinate δ A y) * weight y| ≤ weight y
     rw [abs_of_nonpos hu]
     linarith
   have hR : IntegrableOn R (Ioi x) := by
@@ -495,15 +519,15 @@ private theorem tail_contract {δ A x : ℝ} (hδ : 0 < δ) (hA : Admissible δ 
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with y hy
     simpa only [Real.norm_eq_abs, Pi.mul_apply, Pi.sub_apply, R] using (hrange y hy).2.2
   have hid : ∀ y ∈ Ioi x,
-      ((source δ A y : ℝ) - y) * k y = -deriv (bump δ A) y + R y := by
+      ((source δ A y : ℝ) - y) * weight y = -deriv (bump δ A) y + R y := by
     intro y hy
     have hy1 := hx1.trans hy
     have hy0 : 0 < y := by linarith
-    have hky : k y ≠ 0 := by unfold weight; positivity [Real.log_pos hy1]
+    have hky : weight y ≠ 0 := by unfold weight; positivity [Real.log_pos hy1]
     dsimp [R, coordinate]
     field_simp
     ring
-  have hi : IntegrableOn (fun y => ((source δ A y : ℝ) - y) * k y) (Ioi x) :=
+  have hi : IntegrableOn (fun y => ((source δ A y : ℝ) - y) * weight y) (Ioi x) :=
     (hd.neg.add hR).congr_fun (fun y hy => (hid y hy).symm) measurableSet_Ioi
   have heq : tail δ A x = bump δ A x + ∫ y in Ioi x, R y := by
     unfold tail
@@ -540,6 +564,8 @@ theorem result (δ : ℝ) (hδ : 0 < δ) :
       ContDiffOn ℝ 1 (bump δ A) (Ici A) ∧
       ContinuousOn (coordinate δ A) (Ici A) ∧
       StrictMonoOn (coordinate δ A) (Ici A) ∧
+      (∀ j : ℕ, ContDiffOn ℝ ∞ (coordinate δ A)
+        (Ioo (grid δ A j) (grid δ A (j + 1)))) ∧
       MonotoneOn (source δ A) (Ici A) ∧
       (∀ x ≥ A, 0 ≤ source δ A x ∧
         Tendsto (source δ A) (𝓝[≥] x) (pure (source δ A x))) ∧
@@ -556,12 +582,12 @@ theorem result (δ : ℝ) (hδ : 0 < δ) :
       (∀ c₀ > 0, Asymptotics.IsBigO atTop (fun x => (source δ A x : ℝ) - x)
         (fun x => x * Real.exp (-c₀ * Real.sqrt (Real.log x)))) ∧
       (∀ x ≥ A,
-        IntegrableOn (fun y => ((source δ A y : ℝ) - y) * k y) (Ioi x) ∧
+        IntegrableOn (fun y => ((source δ A y : ℝ) - y) * weight y) (Ioi x) ∧
         bump δ A x - q x ≤ tail δ A x ∧ tail δ A x ≤ bump δ A x) := by
   refine ⟨admissible_exists hδ, ?_⟩
   intro A hA
   refine ⟨bump_cont_diff_on hA, coordinate_continuous hA, coordinate_strictMono hA,
-    source_monotone hA, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+    coordinate_cont_diff_on_cell hA, source_monotone hA, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · exact fun x hx => ⟨source_nonnegative hA hx, source_right_limit hA hx⟩
   · intro x hx
     refine ⟨?_, source_between_events hA hx⟩
@@ -572,7 +598,5 @@ theorem result (δ : ℝ) (hδ : 0 < δ) :
   · exact fun x hx => source_global_bound hδ hA hx
   · exact fun c₀ _ => source_pnt_bound hδ hA c₀
   · exact fun x hx => tail_contract hδ hA hx
-
-
 
 end D5.S3.Analytic.Interpolation.ArtificialSourceIncrementContract

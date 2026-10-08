@@ -20,12 +20,18 @@ open Set Filter
 open scoped Topology
 open D5.S3.Arith.Robin.MellinWeightedVariation
 namespace D5.S3.Analytic.Interpolation.ArtificialSourceCellEstimates
-local notation "c" => (1 / 128 : ℝ)
-local notation "k" => weight
-local notation "etaOne" => (fun s : ℝ => 2 * s * (1 - s) * (1 - 2 * s))
-local notation "etaTwo" => (fun s : ℝ => 2 - 12 * s + 12 * s ^ 2)
-local notation "kernelSlope" => (fun x : ℝ =>
-  -(2 * (Real.log x) ^ 2 + 3 * Real.log x + 2) / (x ^ 3 * (Real.log x) ^ 3))
+/-- The fixed scale of the quartic perturbation. -/
+def c : ℝ := 1 / 128
+
+/-- The first derivative polynomial of the quartic bump. -/
+def etaOne (s : ℝ) : ℝ := 2 * s * (1 - s) * (1 - 2 * s)
+
+/-- The second derivative polynomial of the quartic bump. -/
+def etaTwo (s : ℝ) : ℝ := 2 - 12 * s + 12 * s ^ 2
+
+/-- The derivative expression for the Robin weight on the positive logarithmic domain. -/
+def kernelSlope (x : ℝ) : ℝ :=
+  -(2 * (Real.log x) ^ 2 + 3 * Real.log x + 2) / (x ^ 3 * (Real.log x) ^ 3)
 /-- The quartic bump has a double zero at either endpoint. -/
 def eta (s : ℝ) : ℝ := s ^ 2 * (1 - s) ^ 2
 
@@ -40,10 +46,13 @@ def width (δ a : ℝ) : ℝ :=
 /-- The height of the cell's negative bump. -/
 def amplitude (δ a : ℝ) : ℝ := c * (Real.log a) ^ (2 * δ - 1) / Real.sqrt a
 
-local notation "cellSlope" => (fun δ a x : ℝ =>
-  -(amplitude δ a / width δ a) * etaOne ((x - a) / width δ a))
-local notation "cellSecond" => (fun δ a x : ℝ =>
-  -(amplitude δ a / (width δ a) ^ 2) * etaTwo ((x - a) / width δ a))
+/-- The first derivative expression of a cell polynomial. -/
+def cellSlope (δ a x : ℝ) : ℝ :=
+  -(amplitude δ a / width δ a) * etaOne ((x - a) / width δ a)
+
+/-- The second derivative expression of a cell polynomial. -/
+def cellSecond (δ a x : ℝ) : ℝ :=
+  -(amplitude δ a / (width δ a) ^ 2) * etaTwo ((x - a) / width δ a)
 
 /-- Polynomial continuation of the bump in one cell. -/
 def cellBump (δ a x : ℝ) : ℝ :=
@@ -53,10 +62,10 @@ private theorem eta_derivatives (s : ℝ) :
     HasDerivAt eta (etaOne s) s ∧ HasDerivAt etaOne (etaTwo s) s := by
   constructor
   · convert ((hasDerivAt_id s).pow 2).mul
-      (((hasDerivAt_const s 1).sub (hasDerivAt_id s)).pow 2) using 1 <;> first | rfl | (dsimp [eta]; ring)
+      (((hasDerivAt_const s 1).sub (hasDerivAt_id s)).pow 2) using 1 <;> first | rfl | (dsimp [eta, etaOne, etaTwo]; ring)
   · convert ((((hasDerivAt_id s).const_mul 2).mul
       ((hasDerivAt_const s 1).sub (hasDerivAt_id s))).mul
-        ((hasDerivAt_const s 1).sub ((hasDerivAt_id s).const_mul 2))) using 1 <;> first | rfl | (dsimp; ring)
+        ((hasDerivAt_const s 1).sub ((hasDerivAt_id s).const_mul 2))) using 1 <;> first | rfl | (dsimp [etaOne, etaTwo, cellSlope, cellSecond]; ring)
 
 private theorem eta_bounds {s : ℝ} (hs : s ∈ Icc (0 : ℝ) 1) :
     0 ≤ eta s ∧ eta s ≤ 1 / 16 ∧ |etaOne s| ≤ 1 / 2 ∧ |etaTwo s| ≤ 2 := by
@@ -66,19 +75,20 @@ private theorem eta_bounds {s : ℝ} (hs : s ∈ Icc (0 : ℝ) 1) :
   refine ⟨by unfold eta; positivity, ?_, ?_, ?_⟩
   · unfold eta
     nlinarith [sq_nonneg (s * (1 - s) - 1 / 4)]
-  · dsimp only
+  · dsimp only [etaOne, etaTwo, kernelSlope, cellSlope, cellSecond]
     rw [show 2 * s * (1 - s) = 2 * (s * (1 - s)) by ring]
     rw [abs_mul, abs_of_nonneg (by positivity : 0 ≤ 2 * (s * (1 - s)))]
     nlinarith [mul_le_mul_of_nonneg_left hfactor (by positivity : 0 ≤ 2 * (s * (1 - s)))]
-  · exact abs_le.mpr ⟨by nlinarith [sq_nonneg (s - 1 / 2)], by nlinarith⟩
+  · unfold etaTwo
+    exact abs_le.mpr ⟨by nlinarith [sq_nonneg (s - 1 / 2)], by nlinarith⟩
 
 theorem kernel_has_deriv_at {x : ℝ} (hx : 1 < x) :
-    HasDerivAt k (kernelSlope x) x := by
+    HasDerivAt weight (kernelSlope x) x := by
   have hx0 : 0 < x := by linarith
   have hl : 0 < Real.log x := Real.log_pos hx
   have hd := (hasDerivAt_scaleWeight hx0 (by norm_num : (0 : ℝ) < 1)
     (by simpa using hx)).fun_div (hasDerivAt_id x) hx0.ne'
-  have hfun : (fun z : ℝ => scaleWeight z 1 / z) = k := by
+  have hfun : (fun z : ℝ => scaleWeight z 1 / z) = weight := by
     ext z
     rw [scaleWeight_eq]
     by_cases hz : z = 0
@@ -88,12 +98,12 @@ theorem kernel_has_deriv_at {x : ℝ} (hx : 1 < x) :
   rw [hfun] at hd
   convert! hd using 1 <;> first
   | rfl
-  | (unfold scaleDerivative scaleWeight; norm_num; field_simp [hx0.ne', hl.ne'] <;> ring)
+  | (unfold kernelSlope scaleDerivative scaleWeight; norm_num; field_simp [hx0.ne', hl.ne'] <;> ring)
 
 private theorem kernel_cell_bounds {a x : ℝ} (ha : 1 < a) (hLa : 1 ≤ Real.log a)
     (hx : x ∈ Icc a (2 * a)) :
-    0 < k x ∧ (k x)⁻¹ ≤ 8 * a ^ 2 * Real.log a ∧
-      |kernelSlope x| / k x ≤ 7 / a := by
+    0 < weight x ∧ (weight x)⁻¹ ≤ 8 * a ^ 2 * Real.log a ∧
+      |kernelSlope x| / weight x ≤ 7 / a := by
   have ha0 : 0 < a := by linarith
   have hx0 : 0 < x := ha0.trans_le hx.1
   have hL : Real.log a ≤ Real.log x := Real.log_le_log ha0 hx.1
@@ -105,14 +115,14 @@ private theorem kernel_cell_bounds {a x : ℝ} (ha : 1 < a) (hLa : 1 ≤ Real.lo
     have htwo : Real.log (2 : ℝ) ≤ 1 := by
       linarith [Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)]
     linarith
-  have hk : 0 < k x := by unfold weight; positivity
+  have hk : 0 < weight x := by unfold weight; positivity
   refine ⟨hk, ?_, ?_⟩
   · have hsq : x ^ 2 ≤ 4 * a ^ 2 := by nlinarith [hx.2]
     have hnum : (Real.log x) ^ 2 / (Real.log x + 1) ≤ Real.log x := by
       apply (div_le_iff₀ (by positivity : 0 < Real.log x + 1)).2
       nlinarith
     calc
-      (k x)⁻¹ = x ^ 2 * ((Real.log x) ^ 2 / (Real.log x + 1)) := by
+      (weight x)⁻¹ = x ^ 2 * ((Real.log x) ^ 2 / (Real.log x + 1)) := by
         unfold weight
         field_simp
       _ ≤ x ^ 2 * Real.log x := mul_le_mul_of_nonneg_left hnum (sq_nonneg x)
@@ -122,14 +132,14 @@ private theorem kernel_cell_bounds {a x : ℝ} (ha : 1 < a) (hLa : 1 ≤ Real.lo
   · have hnum : 2 * (Real.log x) ^ 2 + 3 * Real.log x + 2 ≤
         7 * Real.log x * (Real.log x + 1) := by nlinarith
     calc
-      |kernelSlope x| / k x =
+      |kernelSlope x| / weight x =
           (2 * (Real.log x) ^ 2 + 3 * Real.log x + 2) /
             (x * Real.log x * (Real.log x + 1)) := by
         rw [abs_of_nonpos (by
-          dsimp only
+          dsimp only [etaOne, etaTwo, kernelSlope, cellSlope, cellSecond]
           exact div_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr (by positivity))
             (by positivity) : kernelSlope x ≤ 0)]
-        unfold weight
+        unfold kernelSlope weight
         field_simp [hx0.ne', hl0.ne', (by positivity : Real.log x + 1 ≠ 0)]
         <;> ring
       _ ≤ (7 * Real.log x * (Real.log x + 1)) /
@@ -154,7 +164,7 @@ private theorem amplitude_exp {δ a : ℝ} (ha : 1 < a) :
   have hL : 0 < Real.log a := Real.log_pos ha
   simp only [amplitude, Real.sqrt_eq_rpow, Real.rpow_def_of_pos ha0,
     Real.rpow_def_of_pos hL, div_eq_mul_inv, mul_assoc, ← Real.exp_neg, ← Real.exp_add]
-  congr 2
+  congr 1
   congr 1
   ring
 
@@ -178,7 +188,7 @@ private theorem amplitude_width_cancellation {δ a : ℝ} (ha : 1 < a) :
     field_simp
   rw [mul_div_assoc c (epsilon a) (a ^ 2 * Real.log a), hcancel]
   simp only [div_eq_mul_inv, mul_assoc, ← Real.exp_neg, ← Real.exp_add]
-  congr 2
+  congr 1
   congr 1
   ring
 
@@ -188,20 +198,21 @@ theorem cell_derivatives {δ a x : ℝ} (hw : 0 < width δ a) :
   have hc := ((hasDerivAt_id x).sub_const a).div_const (width δ a)
   constructor
   · convert ((eta_derivatives ((x - a) / width δ a)).1.comp x hc).const_mul
-      (-amplitude δ a) using 1 <;> first | rfl | (dsimp [cellBump]; ring)
+      (-amplitude δ a) using 1 <;> first | rfl | (dsimp [cellBump, cellSlope]; ring)
   · convert ((eta_derivatives ((x - a) / width δ a)).2.comp x hc).const_mul
-      (-(amplitude δ a / width δ a)) using 1 <;> first | rfl | (dsimp; field_simp <;> ring)
+      (-(amplitude δ a / width δ a)) using 1 <;> first | rfl | (dsimp [etaOne, etaTwo, cellSlope, cellSecond]; field_simp <;> ring)
 
 theorem cell_estimates {δ a x : ℝ} (ha : 1 < a) (hLa : 1 ≤ Real.log a)
     (hw : 0 < width δ a) (hwa : width δ a ≤ a)
     (hx : x ∈ Icc a (a + width δ a)) :
-    |cellSlope δ a x / k x| ≤ 4 * c * epsilon a * width δ a ∧
-      |deriv (fun y : ℝ => y - cellSlope δ a y / k y) x - 1| ≤
+    |cellSlope δ a x / weight x| ≤ 4 * c * epsilon a * width δ a ∧
+      |deriv (fun y : ℝ => y - cellSlope δ a y / weight y) x - 1| ≤
         44 * c * epsilon a := by
   have ha0 : 0 < a := by linarith
   have hL0 : 0 < Real.log a := by linarith
   have heps : 0 < epsilon a := by unfold epsilon; positivity
-  have hα : 0 ≤ amplitude δ a := by unfold amplitude; positivity
+  have hc : 0 < c := by norm_num [c]
+  have hα : 0 ≤ amplitude δ a := by unfold amplitude c; positivity
   have hs : (x - a) / width δ a ∈ Icc (0 : ℝ) 1 := by
     constructor
     · exact div_nonneg (sub_nonneg.mpr hx.1) hw.le
@@ -212,14 +223,14 @@ theorem cell_estimates {δ a x : ℝ} (ha : 1 < a) (hLa : 1 ≤ Real.log a)
   have hx1 : 1 < x := ha.trans_le hx.1
   have hcancel := amplitude_width_cancellation (δ := δ) ha
   have hfirst : |cellSlope δ a x| ≤ amplitude δ a / (2 * width δ a) := by
-    dsimp only
+    dsimp only [etaOne, etaTwo, kernelSlope, cellSlope, cellSecond]
     rw [abs_mul, abs_neg, abs_of_nonneg (div_nonneg hα hw.le)]
     calc
       _ ≤ (amplitude δ a / width δ a) * (1 / 2) :=
         mul_le_mul_of_nonneg_left hη.2.2.1 (div_nonneg hα hw.le)
       _ = _ := by ring
   have hsecond : |cellSecond δ a x| ≤ 2 * amplitude δ a / (width δ a) ^ 2 := by
-    dsimp only
+    dsimp only [etaOne, etaTwo, kernelSlope, cellSlope, cellSecond]
     rw [abs_mul, abs_neg, abs_of_nonneg (div_nonneg hα (sq_nonneg _))]
     calc
       _ ≤ (amplitude δ a / (width δ a) ^ 2) * 2 :=
@@ -229,9 +240,9 @@ theorem cell_estimates {δ a x : ℝ} (ha : 1 < a) (hLa : 1 ≤ Real.log a)
       c * epsilon a := by
     rw [hcancel]
     field_simp
-  have hvalue : |cellSlope δ a x / k x| ≤ 4 * c * epsilon a * width δ a := by
+  have hvalue : |cellSlope δ a x / weight x| ≤ 4 * c * epsilon a * width δ a := by
     calc
-      |cellSlope δ a x / k x| = |cellSlope δ a x| * (k x)⁻¹ := by
+      |cellSlope δ a x / weight x| = |cellSlope δ a x| * (weight x)⁻¹ := by
         rw [abs_div, abs_of_pos hk.1, div_eq_mul_inv]
       _ ≤ (amplitude δ a / (2 * width δ a)) * (8 * a ^ 2 * Real.log a) :=
         mul_le_mul hfirst hk.2.1 (inv_nonneg.mpr hk.1.le) (by positivity)
@@ -241,24 +252,24 @@ theorem cell_estimates {δ a x : ℝ} (ha : 1 < a) (hLa : 1 ≤ Real.log a)
   refine ⟨hvalue, ?_⟩
   have hd := (hasDerivAt_id x).sub
     ((cell_derivatives hw).2.fun_div (kernel_has_deriv_at hx1) hk.1.ne')
-  change HasDerivAt (fun y : ℝ => y - cellSlope δ a y / k y) _ x at hd
+  change HasDerivAt (fun y : ℝ => y - cellSlope δ a y / weight y) _ x at hd
   rw [hd.deriv]
-  have heq : 1 - (cellSecond δ a x * k x - cellSlope δ a x * kernelSlope x) /
-      (k x) ^ 2 - 1 =
-      -(cellSecond δ a x / k x) + (cellSlope δ a x / k x) * (kernelSlope x / k x) := by
+  have heq : 1 - (cellSecond δ a x * weight x - cellSlope δ a x * kernelSlope x) /
+      (weight x) ^ 2 - 1 =
+      -(cellSecond δ a x / weight x) + (cellSlope δ a x / weight x) * (kernelSlope x / weight x) := by
     field_simp
     ring
   rw [heq]
   calc
-    _ ≤ |cellSecond δ a x / k x| +
-        |cellSlope δ a x / k x| * |kernelSlope x / k x| := by
+    _ ≤ |cellSecond δ a x / weight x| +
+        |cellSlope δ a x / weight x| * |kernelSlope x / weight x| := by
       simpa only [abs_neg, abs_mul] using abs_add_le
-        (-(cellSecond δ a x / k x))
-        ((cellSlope δ a x / k x) * (kernelSlope x / k x))
+        (-(cellSecond δ a x / weight x))
+        ((cellSlope δ a x / weight x) * (kernelSlope x / weight x))
     _ ≤ 16 * c * epsilon a + (4 * c * epsilon a * width δ a) * (7 / a) := by
       apply add_le_add
       · calc
-          |cellSecond δ a x / k x| = |cellSecond δ a x| * (k x)⁻¹ := by
+          |cellSecond δ a x / weight x| = |cellSecond δ a x| * (weight x)⁻¹ := by
             rw [abs_div, abs_of_pos hk.1, div_eq_mul_inv]
           _ ≤ (2 * amplitude δ a / (width δ a) ^ 2) * (8 * a ^ 2 * Real.log a) :=
             mul_le_mul hsecond hk.2.1 (inv_nonneg.mpr hk.1.le) (by positivity)
@@ -494,7 +505,7 @@ theorem bump_has_deriv_at {δ A x : ℝ} (hA : Admissible δ A) (hx : A ≤ x) :
   have hleft : HasDerivWithinAt (bump δ A)
       (cellSlope δ (grid δ A j) x) (Iic x) x := by
     rcases eq_or_lt_of_le hcell.1 with heq | hlt
-    · have hzero : cellSlope δ (grid δ A j) x = 0 := by rw [← heq]; simp
+    · have hzero : cellSlope δ (grid δ A j) x = 0 := by rw [← heq]; simp [cellSlope, etaOne]
       rw [hzero]
       by_cases hj : j = 0
       · have hxA : x = A := by simpa [hj, grid] using heq.symm
@@ -512,7 +523,7 @@ theorem bump_has_deriv_at {δ A x : ℝ} (hA : Admissible δ A) (hx : A ≤ x) :
         have hend : x = grid δ A (n + 1) := by simpa [hn] using heq.symm
         have hslope : cellSlope δ (grid δ A n) x = 0 := by
           rw [hend, grid]
-          simp [hwn.ne']
+          simp [cellSlope, etaOne, hwn.ne']
         have hxn : x ∈ Ioc (grid δ A n) (grid δ A (n + 1)) := by
           rw [hend]
           exact ⟨(grid_strictMono hA) (Nat.lt_succ_self n), le_rfl⟩
@@ -537,7 +548,7 @@ theorem bump_deriv_on_cell {δ A x : ℝ} (hA : Admissible δ A) (j : ℕ)
   · rw [cell_index_eq hA j ⟨hx.1, hlt⟩]
   · rw [cell_index_eq hA (j + 1) ⟨le_rfl, (grid_strictMono hA) (Nat.lt_succ_self _)⟩]
     have hw : width δ (grid δ A j) ≠ 0 := by linarith [(hA.1 _ hAj).2.2.1]
-    simp [grid, hw]
+    simp [cellSlope, etaOne, grid, hw]
 
 theorem bump_deriv_continuous {δ A : ℝ} (hA : Admissible δ A) :
     ContinuousOn (deriv (bump δ A)) (Ici A) := by
@@ -587,6 +598,5 @@ theorem bump_cont_diff_on {δ A : ℝ} (hA : Admissible δ A) :
   apply (bump_deriv_continuous hA).congr
   intro x hx
   exact (bump_has_deriv_at hA hx).differentiableAt.derivWithin (uniqueDiffOn_Ici A x hx)
-
 
 end D5.S3.Analytic.Interpolation.ArtificialSourceCellEstimates
