@@ -103,7 +103,9 @@ with $D^C=I/n$ and $Q^C=K-I/n$ (`choi_reindex`), and the shear conjugation of $K
 **Argued, not formalized.**
 
 - *Mechanism.* $C_\Phi$ is a polynomial in the two commuting operators $K_1\otimes I$ and
-  $I\otimes K_2$, each with eigenvalues $n_i$ (multiplicity $1$) and $0$ (multiplicity $n_i^2-1$).
+  $I\otimes K_2$; each single-factor $K_i$ has eigenvalues $n_i$ (multiplicity $1$) and $0$
+  (multiplicity $n_i^2-1$), and tensoring with the identity multiplies these multiplicities by the
+  dimension of the other factor.
   Each eigenvalue of $C_\Phi$ is $\sum_{\alpha,\beta}\lambda_{\alpha\beta}\,c_\alpha^{(1)}c_\beta^{(2)}$ with
   $c_0^{(i)}=1/n_i$ and $c_1^{(i)}\in\{n_i-1/n_i,\,-1/n_i\}$; this is why the values Lemma V.8
   computed in dimensions $2$ and $3$ keep their form.
