@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ecfb78c2633eae52842e250ff3798a2c7a3baa3d364b2729e35110cb786247a0
+  normalized_sha256: sha256:ecfb78c2633eae52842e250ff3798a2c7a3baa3d364b2729e35110cb786247a0
+cas_ref: sha256:ecfb78c2633eae52842e250ff3798a2c7a3baa3d364b2729e35110cb786247a0
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'For every W>0, every k>=2, and arbitrary f:ZMod W->Complex, LinearIsometryEquiv.piLpCongrLeft with Equiv.addRight(-1) supplies the actual cyclic shift f(r+1) and norm preservation. Its powers and the finite orbit sum identify the original marked window for every L>=0, including L>W. EuclideanSpace/PiLp.norm_sq_eq_of_L2, map_sum, Nat.fib_add_two/fib_two_mul_add_one and monotone_nat_of_le_succ supply the W-independent squared bound. The current probe_cyclic proves the full original ZMod counting-norm inequality; its local hshift, hpow and hwindow bridges are compiled, not assumed. No complete usable frozen repository GID was found; no new repository Lean declaration is added. Certificate: LEAN_SKIP_LOCK=1 /bin/bash tools/scripts/worktree/lean-cache-run.sh lake env lean /tmp/f741_settle_22_cyclic.lean; exit_code=0; checked axiom closure is only propext, Classical.choice, Quot.sound. Canonical settle-atom receipt records pinned-mathlib reuse under CLAUDE.md 3.2.'
+    previous_atom_id: 07c7d03d660c08d1ed8143d8c0ae948f87cc6b7773a4ee719ba3f4cc830f2602
+    next_atom_id: bb55d64f5c338881076a28350c6009eae9ae24a3a9a485657c84ab495ff90292
