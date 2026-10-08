@@ -1,5 +1,5 @@
+import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.LegacyRelations.System
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
@@ -18,17 +18,7 @@ import D5.S3.ConceptDynamics.InformationEscapeRealizations.LocalLawGluingObstruc
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.EndStateOmitsPreemptingCause
 import D5.S3.ConceptDynamics.InformationEscape.SystemUnit
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena, theoremName := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application,
-      statementIdentity := "sha256:a3a2c21de13a5366dbb0d8ab39bc747e95b22c7cbeecb7ef39d86092b4c70ab0",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena, theoremName := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application,
-      statementIdentity := "sha256:a3a2c21de13a5366dbb0d8ab39bc747e95b22c7cbeecb7ef39d86092b4c70ab0",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit }]
-  companionPrefix := some `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit }
+
 
 namespace Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit
 
@@ -69,15 +59,30 @@ attribute [local instance]
 local instance systemArenaStateDecidableEq : DecidableEq arena.toArena.State :=
   arena.toArena.stateDecidableEq
 
-register_information_theorem _root_.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application
-  in arena
-  readout via (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize
-    Reg.Support.LegacyRelations.System.signature Reg.Support.LegacyRelations.System.actual.readout Reg.Support.LegacyRelations.System.actual.anchor)
-  realizes Reg.Support.LegacyRelations.System.registration
-  finite via system_self_application_realization
-  variation Reg.Support.LegacyRelations.System.finite_variation sensitivity Reg.Support.LegacyRelations.System.finite_sensitivity
-  escape from source (Reg.Support.LegacyRelations.System.selection)
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application) (type_of% (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{0, 0, 0, 0, 0}
+    Reg.Support.LegacyRelations.System.signature Reg.Support.LegacyRelations.System.actual.readout Reg.Support.LegacyRelations.System.actual.anchor)) (Unit) (Unit) := {
+  unitName := `Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application.__information_unit,
+  realizationName := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.system_self_application_realization,
+  realizationSource := none,
+  generated := false,
+  arena := .law ⟨(arena)⟩,
+  objectArena := .law ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (arena) (D5.S3.ConceptDynamics.InformationEscape.SystemUnit.systemRealization) (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle.{0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.Arena.State.{0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena)) (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.signature.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena) Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.systemArenaStateDecidableEq D5.S3.ConceptDynamics.InformationEscape.SystemUnit.systemRealization) ⟨(system_self_application_realization)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (system_self_application_realization) (@_root_.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.engine_census_self_application))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((@D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle.{0, 0, 0} (D5.S3.ConceptDynamics.InformationEscape.Arena.State.{0} (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.toArena.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena)) (D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena.signature.{0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.SystemUnit.arena) Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit.systemArenaStateDecidableEq D5.S3.ConceptDynamics.InformationEscape.SystemUnit.systemRealization)).Nonempty; decide),
+  readout := some (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{0, 0, 0, 0, 0}
+    Reg.Support.LegacyRelations.System.signature Reg.Support.LegacyRelations.System.actual.readout Reg.Support.LegacyRelations.System.actual.anchor),
+  variation := .evidence ⟨(Reg.Support.LegacyRelations.System.finite_variation)⟩ (by first | exact (Reg.Support.LegacyRelations.System.finite_variation) | exact ⟨_, _, (Reg.Support.LegacyRelations.System.finite_variation)⟩),
+  sensitivity := .evidence ⟨(Reg.Support.LegacyRelations.System.finite_sensitivity)⟩ (by exact (Reg.Support.LegacyRelations.System.finite_sensitivity)),
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit, definition := some { owner := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit, name := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit.SystemStatement, path := #[] }, coordinates := #[], readouts := #[{ path := #["fn", "arg", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := some ⟨_, ⟨(Reg.Support.LegacyRelations.System.registration)⟩⟩,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end
 
 end Reg.D5.S3.ConceptDynamics.InformationEscape.SystemUnit

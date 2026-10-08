@@ -1,3 +1,4 @@
+import Reg.Support.SourceSelection
 import Reg.Support.DependentFamily
 import D5.S3.ConceptDynamics.InformationEscape.SystemUnit
 
@@ -86,7 +87,7 @@ def registration : Registration arena SystemStatement where
   sensitivity := sensitivity
   dependence := dependence
 
-def selection : LeanInformationAudit.SourceSelection :=
+def selection : _root_.Reg.Support.SourceSelection :=
   {
     owner := `D5.S3.ConceptDynamics.InformationEscape.SystemUnit
     definition := some {

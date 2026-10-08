@@ -199,7 +199,7 @@ public sealed class ContentCheckCommandTests
                 break;
             case "invalid-json": fixture.Write("report.json", "{"); break;
             case "noncanonical-json":
-                fixture.Write("report.json", "{ \"modules\": [], \"schema\": \"stratalint-raw-lean-report-v2\" }\n");
+                fixture.Write("report.json", "{ \"modules\": [], \"schema\": \"stratalint-raw-lean-report-v3\" }\n");
                 break;
             case "wrong-schema": fixture.Write("report.json", "{\"modules\":[],\"schema\":\"invalid\"}\n"); break;
             case "stale-source": fixture.Write("D5/S0/Synthetic/CurrentMarkdown.lean", "namespace Changed\n"); break;

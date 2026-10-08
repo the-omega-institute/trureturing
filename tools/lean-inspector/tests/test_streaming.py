@@ -9,6 +9,8 @@ import sys
 import tempfile
 import unittest
 from unittest.mock import patch
+import weakref
+import zipfile
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 import materials
@@ -16,60 +18,34 @@ import publication
 import native
 
 
-def manifest_fixture(root, version=9):
+def manifest_fixture(root):
     path = root / 'lean-report-inputs.json'
     if not path.exists():
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-        path.write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=version,
+        path.write_text(json.dumps(dict(schema_version=1,
             report_modules=paths(), inspector_sources=paths(), config_inputs=paths(),
             producer_scopes={'lean-report': paths('lean-report-inputs.json',
                 'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
     return path
 
 
-def evidence_fixture(manifest):
-    return dict(schema_version=1,
-        compatibility_version=json.loads(manifest.read_text())['report_cache_release_semantic_version'],
-        inventory=[], registered=[], records=[])
+def evidence_fixture():
+    return dict(schema_version=1, inventory=[], registered=[], records=[])
 
 
-class ManifestVersionTests(unittest.TestCase):
-    def test_manifest_only_bump_accepts_nine_and_rejects_eight(self):
+class EvidenceFormatTests(unittest.TestCase):
+    def test_module_evidence_has_no_global_versions(self):
         with tempfile.TemporaryDirectory() as directory:
-            root = Path(directory)
-            manifest = manifest_fixture(root, 9)
-            evidence = evidence_fixture(manifest)
-            self.assertEqual(evidence['compatibility_version'], 9)
-            try:
-                materials.validate_template_evidence(evidence, manifest)
-            except Exception as error:
-                self.fail('[FAIL] manifest_only_bump_accepts_nine: ' + str(error))
-            with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion'):
-                materials.validate_template_evidence(dict(evidence, compatibility_version=8), manifest)
-
-    def test_absent_evidence_version_uses_named_diagnostic(self):
-        with tempfile.TemporaryDirectory() as directory:
-            manifest = manifest_fixture(Path(directory), 9)
-            evidence = evidence_fixture(manifest)
-            del evidence['compatibility_version']
-            with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion',
-                    msg='[FAIL] absent_evidence_version_uses_named_diagnostic'):
-                materials.validate_template_evidence(evidence, manifest)
-
-    def test_malformed_evidence_version_uses_named_diagnostic(self):
-        with tempfile.TemporaryDirectory() as directory:
-            manifest = manifest_fixture(Path(directory), 9)
-            for version in [None, True, '9', 0, -1, 9.0, 9.5]:
-                with self.subTest(version=version):
-                    evidence = dict(evidence_fixture(manifest), compatibility_version=version)
-                    with self.assertRaisesRegex(ValueError, 'DTR-EvidenceVersion',
-                            msg='[FAIL] malformed_evidence_version_uses_named_diagnostic'):
-                        materials.validate_template_evidence(evidence, manifest)
+            manifest = manifest_fixture(Path(directory))
+            evidence = evidence_fixture()
+            materials.validate_template_evidence(evidence)
+            with self.assertRaisesRegex(ValueError, 'unexpected fields'):
+                materials.validate_template_evidence(dict(evidence, compatibility_version=9))
 
     def test_unrelated_malformed_evidence_keeps_structural_diagnostic(self):
         with tempfile.TemporaryDirectory() as directory:
-            manifest = manifest_fixture(Path(directory), 9)
-            valid = evidence_fixture(manifest)
+            manifest = manifest_fixture(Path(directory))
+            valid = evidence_fixture()
             missing_inventory = dict(valid)
             del missing_inventory['inventory']
             for evidence, diagnostic in [(None, 'has unexpected fields'), ([], 'has unexpected fields'),
@@ -78,46 +54,109 @@ class ManifestVersionTests(unittest.TestCase):
                 with self.subTest(evidence=evidence):
                     with self.assertRaisesRegex(ValueError,
                             '^Inspector declared-template evidence ' + diagnostic + '$'):
-                        materials.validate_template_evidence(evidence, manifest)
+                        materials.validate_template_evidence(evidence)
 
-    def test_missing_or_malformed_manifest_version_rejected(self):
-        for text in [None, '{}', '{', '[]', '{"report_cache_release_semantic_version":null}',
-                     '{"report_cache_release_semantic_version":"8"}', '{"report_cache_release_semantic_version":true}',
-                     '{"report_cache_release_semantic_version":0}', '{"report_cache_release_semantic_version":-1}',
-                     '{"report_cache_release_semantic_version":6.5}']:
-            with self.subTest(manifest=text), tempfile.TemporaryDirectory() as directory:
-                root = Path(directory)
-                manifest = manifest_fixture(root)
-                evidence = evidence_fixture(manifest)
-                if text is None:
-                    manifest.unlink()
-                else:
-                    manifest.write_text(text)
-                with self.assertRaisesRegex(ValueError, 'DTR-ManifestVersion',
-                        msg='[FAIL] invalid_manifest_version_rejected'):
-                    materials.validate_template_evidence(evidence, manifest)
-
-    def test_compact_cli_uses_explicit_manifest(self):
+    def test_compact_cli_checks_current_evidence_shape(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            manifest = manifest_fixture(root, 9)
+            manifest = manifest_fixture(root)
             spool = root / 'spool'
             spool.mkdir()
             source, output = root / 'spool.json', root / 'report.json'
             row = dict(module='X', source_path='X.lean', source_sha256='sha256:' + 'a'*64,
-                imports=[], declarations=[], information_templates=evidence_fixture(manifest))
+                imports=[], declarations=[], information_templates=evidence_fixture())
             source.write_text(json.dumps(dict(schema=materials.SPOOL_SCHEMA, modules=[row])))
             result = subprocess.run([sys.executable, materials.__file__, 'compact', str(source),
-                str(spool), str(output), str(manifest)], cwd=spool, capture_output=True)
-            self.assertEqual(result.returncode, 0, '[FAIL] compact_explicit_manifest: ' + result.stderr.decode())
-            rows = publication.validate_rows(output, publication.member(output, '.materials.zip'), manifest=manifest)
-            self.assertEqual(rows[0]['information_templates']['compatibility_version'], 9)
+                str(spool), str(output)], cwd=spool, capture_output=True)
+            self.assertEqual(result.returncode, 0, '[FAIL] compact_current_evidence_shape: ' + result.stderr.decode())
+            self.assertNotIn('compatibility_version', json.loads(output.read_text())['modules'][0]['information_templates'],
+                             '[FAIL] module_wire_has_no_global_version_stamp')
+            rows = publication.validate_rows(output, publication.member(output, '.materials.zip'))
             row['information_templates']['compatibility_version'] = 7
             source.write_text(json.dumps(dict(schema=materials.SPOOL_SCHEMA, modules=[row])))
             result = subprocess.run([sys.executable, materials.__file__, 'compact', str(source),
-                str(spool), str(output), str(manifest)], cwd=spool, capture_output=True)
+                str(spool), str(output)], cwd=spool, capture_output=True)
             self.assertEqual(result.returncode, 1)
-            self.assertIn(b'DTR-EvidenceVersion', result.stderr)
+            self.assertIn(b'unexpected fields', result.stderr)
+
+
+class NativeBatchStateTests(unittest.TestCase):
+    def test_batch_reuses_selection_and_releases_module_validation_state(self):
+        with tempfile.TemporaryDirectory(prefix='native batch ') as directory:
+            root = Path(directory)
+            manifest_fixture(root)
+            loader = root / publication.selection.LOADER
+            loader.parent.mkdir(parents=True)
+            loader.write_text('')
+            state = native.state(root)
+            (state / 'judge-inputs').mkdir(parents=True)
+            requests = []
+            for name in ('D5.A', 'Reg.B', 'Reg.C'):
+                source = root / (name.replace('.', '/') + '.lean')
+                source.parent.mkdir(exist_ok=True)
+                source.write_text('def value : Nat := 1\n')
+                utility = root / (name + '.utility.json')
+                utility.write_text(json.dumps(dict(source_path=source.relative_to(root).as_posix(),
+                    utilities=[], claims=[])))
+                Path(str(utility) + '.sources.json').write_text('[]')
+                projection = dict(schema='stratalint-judge-input-projection-v1', module=name,
+                    inputs=[] if name == 'D5.A' else [dict(owner=name, name=name + '.entry',
+                        type='LeanInformationAudit.Contract.Registration')])
+                (state / 'judge-inputs' / (name + '.json')).write_text(json.dumps(projection))
+                requests.append([str(root), name, str(source), str(utility), '/fixture-inspector',
+                    str(root / (name + '.zip'))])
+            origin = dict(producer_sources_sha256='a' * 64, inspector_executable_sha256='b' * 64)
+
+            def inspect(command, **kwargs):
+                arguments = json.loads(Path(command[-1]).read_text())
+                spool = Path(arguments[arguments.index('--material-spool') + 1])
+                rows = []
+                for index, (name, path, sha) in enumerate(zip(*[iter(arguments[6:])]*3)):
+                    material = str(index) + '.statement'
+                    (spool / material).write_text('Nat')
+                    rows.append(dict(module=name, source_path=path, source_sha256=sha, imports=[],
+                        declarations=[dict(axioms=[], include_in_statement=True, kind='def',
+                            material_file=material, name='value', name_key='ns(n0,5:value)')]))
+                Path(arguments[1]).write_text(json.dumps(dict(schema=materials.SPOOL_SCHEMA, modules=rows)))
+
+            retained, completed_rows, references = [], [], []
+            read_json = publication.read_json
+            class ReportRow(dict):
+                pass
+            def read(data):
+                value = read_json(data)
+                if isinstance(value, dict) and value.get('schema') == materials.SPOOL_SCHEMA:
+                    value['modules'] = [ReportRow(row) for row in value['modules']]
+                    references.extend(weakref.ref(row) for row in value['modules'])
+                return value
+            validate_rows = publication.validate_rows
+            def validate(report, archive, verified_materials=None, **kwargs):
+                completed_rows.append(sum(reference() is not None
+                    for reference in references[:len(retained)]))
+                retained.append(len(verified_materials or {}))
+                return validate_rows(report, archive, verified_materials, **kwargs)
+
+            with patch.object(native.selection, 'Selection', wraps=native.selection.Selection) as selections, \
+                    patch.object(publication, 'production_origin', return_value=origin), \
+                    patch.object(native.subprocess, 'run', side_effect=inspect), \
+                    patch.object(publication, 'read_json', side_effect=read), \
+                    patch.object(publication, 'validate_rows', side_effect=validate):
+                native.produce_batch(requests)
+            self.assertEqual(selections.call_count, 3,
+                '[FAIL] batch_selection_scans_independent_of_module_count')
+            self.assertEqual(retained, [0, 0, 0],
+                '[FAIL] completed_module_validation_state_released')
+            self.assertEqual(completed_rows, [0, 0, 0],
+                '[FAIL] completed_module_report_rows_released')
+            for _, name, _, utility, _, output in requests:
+                with zipfile.ZipFile(output) as archive:
+                    row = json.loads(archive.read(publication.RAW))['modules'][0]
+                    self.assertEqual(row['module'], name)
+                    decl = row['declarations'][0]
+                    self.assertEqual(decl['statement_id'], materials.declaration_statement_id(
+                        row['source_path'], 'def', 'ns(n0,5:value)', 'Nat'))
+                    record = json.loads(archive.read(publication.RAW + '.provenance.json'))
+                    publication.check_origin(record, row)
 
 
 class StreamingTests(unittest.TestCase):
@@ -207,7 +246,7 @@ class StreamingTests(unittest.TestCase):
                 output = directory / 'report.json'
                 with patch.object(materials, 'material_identities', return_value=('sha256:' + 'b' * 64, 'sha256:' + 'c' * 64)):
                     with self.assertRaisesRegex(ValueError, 'reused|collision'):
-                        materials.compact(report, spool, output, manifest_fixture(directory))
+                        materials.compact(report, spool, output)
                 self.assertFalse(output.exists())
 
 
@@ -242,29 +281,28 @@ class PublicationTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             (root / 'spool').mkdir()
-            evidence = evidence_fixture(manifest_fixture(root))
+            evidence = evidence_fixture()
             raw = dict(schema=materials.SPOOL_SCHEMA, modules=[dict(module='X', source_path='X.lean',
                 source_sha256='sha256:' + 'a'*64, imports=[], declarations=[], information_templates=evidence)])
             source, report = root / 'spool.json', root / 'report.json'
             source.write_text(json.dumps(raw))
-            materials.compact(source, root / 'spool', report, manifest_fixture(root))
-            rows = publication.validate_rows(report, publication.member(report, '.materials.zip'), manifest=manifest_fixture(root))
+            materials.compact(source, root / 'spool', report)
+            rows = publication.validate_rows(report, publication.member(report, '.materials.zip'))
             self.assertEqual(rows[0]['information_templates'], evidence)
-            for field, value in [('compatibility_version', 3), ('compatibility_version', 4),
-                                 ('compatibility_version', 5), ('compatibility_version', 7),
+            for field, value in [('compatibility_version', 7),
                                  ('schema_version', True), ('inputs', {}), ('extra', [])]:
                 with self.subTest(field=field):
                     rows[0]['information_templates'] = dict(evidence, **{field: value})
                     report.write_bytes(materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=rows)))
                     with self.assertRaisesRegex(ValueError, 'declared-template evidence'):
-                        publication.validate_rows(report, publication.member(report, '.materials.zip'), manifest=manifest_fixture(root))
+                        publication.validate_rows(report, publication.member(report, '.materials.zip'))
 
     def test_binding_structure_accepts_retained_hashes_without_source_reads(self):
         import zipfile
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=4,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1,
                 report_modules=paths('X.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json',
                     'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
@@ -274,7 +312,7 @@ class PublicationTests(unittest.TestCase):
             source.write_text('def x := 1\n')
             utility = root / 'utility.json'
             utility.write_text(json.dumps(dict(source_path='X.lean', utilities=[])))
-            evidence = evidence_fixture(manifest_fixture(root))
+            evidence = evidence_fixture()
             rows = [dict(module='X', source_path='X.lean', source_sha256='sha256:' + publication.digest(source),
                 imports=[], declarations=[], information_templates=evidence)]
             inputs = publication.selection.Selection(root)
@@ -289,7 +327,8 @@ class PublicationTests(unittest.TestCase):
             coordinates = dict(repository=repository, producer=compatibility,
                 sources='c' * 64, config='d' * 64, input=pair)
             origins = {'X': dict(module='X', report_sha256=publication.digest(report),
-                compatibility_sha256=compatibility, producer_sources_sha256='e' * 64,
+
+                input_projection=dict(schema='stratalint-judge-input-projection-v1', module='X', inputs=[]), producer_sources_sha256='e' * 64,
                 inspector_executable_sha256='f' * 64)}
             publication.write_sidecars(report, coordinates, origins)
             validators = [lambda: native.row_binding(rows, root, 'X', utility),
@@ -323,24 +362,24 @@ class PublicationTests(unittest.TestCase):
                     material_file='0.statement', name='x', name_key='ns(n0,1:x)')])])) )
             report = root / 'report.json'
             archive = publication.member(report, '.materials.zip')
-            materials.compact(source, spool, report, manifest_fixture(root))
+            materials.compact(source, spool, report)
             verified = {}
             with patch.object(materials, 'material_identities', wraps=materials.material_identities) as identities:
-                rows = publication.validate_rows(report, archive, verified, manifest=manifest_fixture(root))
-                publication.validate_rows(report, archive, verified, manifest=manifest_fixture(root))
+                rows = publication.validate_rows(report, archive, verified)
+                publication.validate_rows(report, archive, verified)
                 self.assertEqual(identities.call_count, 1)
                 original = report.read_bytes()
                 rows[0]['declarations'][0]['statement_id'] = 'sha256:' + 'b'*64
                 report.write_bytes(materials.canonical_json(dict(schema=materials.REPORT_SCHEMA, modules=rows)))
                 with self.assertRaisesRegex(ValueError, 'identity mismatch'):
-                    publication.validate_rows(report, archive, verified, manifest=manifest_fixture(root))
+                    publication.validate_rows(report, archive, verified)
                 report.write_bytes(original)
                 with zipfile.ZipFile(archive) as reader:
                     name = reader.namelist()[0]
                 with zipfile.ZipFile(archive, 'w') as writer:
                     writer.writestr(name, b'corrupt actual bytes')
                 with self.assertRaisesRegex(ValueError, 'material address mismatch'):
-                    publication.validate_rows(report, archive, verified, manifest=manifest_fixture(root))
+                    publication.validate_rows(report, archive, verified)
 
     def test_source_membership_and_paths_remain_required_without_byte_revalidation(self):
         with tempfile.TemporaryDirectory() as directory:
@@ -350,7 +389,7 @@ class PublicationTests(unittest.TestCase):
             claim = root / 'Claim.lean'
             claim.write_text('def claim : Prop := False\n')
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1,
                 report_modules=paths('X.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json',
                     'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))
@@ -375,7 +414,7 @@ class PublicationTests(unittest.TestCase):
         for damage in ['material', 'missing', 'duplicate', 'unreferenced', 'nonobject-provenance',
                        'provenance', 'attestation', 'declaration-identity', 'noncanonical',
                        'report-symlink', 'materials-symlink', 'missing-sidecar', 'missing-origin',
-                       'origin-compatibility', 'origin-report', 'origin-executable', 'legacy-provenance',
+                       'origin-projection', 'origin-report', 'origin-executable', 'legacy-provenance',
                        'bad-sha256', 'illegal-mode']:
             with self.subTest(damage=damage), tempfile.TemporaryDirectory() as directory:
                 directory = Path(directory)
@@ -389,15 +428,16 @@ class PublicationTests(unittest.TestCase):
                 source = directory / 'spool.json'
                 source.write_text(json.dumps(raw))
                 report = directory / 'report.json'
-                materials.compact(source, spool, report, manifest_fixture(directory))
+                materials.compact(source, spool, report)
                 helper = Path(publication.__file__).resolve().parent.parent / 'scripts/report/lean-report-input.sh'
                 pair, repository = subprocess.check_output([str(helper), 'coordinates', 'b'*64, 'b'*64, 'c'*64, 'd'*64], text=True).split()
                 coordinates = dict(repository=repository, producer='b'*64, sources='c'*64, config='d'*64, input=pair)
                 origins = {'X': dict(module='X', report_sha256=publication.digest(report),
-                    compatibility_sha256='b'*64, producer_sources_sha256='e'*64, inspector_executable_sha256='f'*64)}
+
+                    input_projection=dict(schema='stratalint-judge-input-projection-v1', module='X', inputs=[]), producer_sources_sha256='e'*64, inspector_executable_sha256='f'*64)}
                 publication.write_sidecars(report, coordinates, origins)
                 live = directory / 'live.json'
-                publication.publish(report, live, coordinates, manifest=manifest_fixture(directory))
+                publication.publish(report, live, coordinates)
                 before = {suffix: publication.member(live, suffix).read_bytes() for suffix in publication.SUFFIXES}
                 if damage in ['material', 'missing', 'duplicate', 'unreferenced']:
                     path = publication.member(report, '.materials.zip')
@@ -415,13 +455,13 @@ class PublicationTests(unittest.TestCase):
                     value = json.loads(publication.member(report, '.provenance.json').read_text())
                     value['producer_sha256'] = 'f'*64
                     publication.member(report, '.provenance.json').write_text(json.dumps(value))
-                elif damage in ['missing-origin', 'origin-compatibility', 'origin-report', 'origin-executable', 'legacy-provenance']:
+                elif damage in ['missing-origin', 'origin-projection', 'origin-report', 'origin-executable', 'legacy-provenance']:
                     path = publication.member(report, '.provenance.json')
                     value = json.loads(path.read_text())
                     if damage == 'missing-origin': value['module_origins'].clear()
                     elif damage == 'legacy-provenance': value['schema'] = 'stratalint-lean-report-provenance-v1'
                     else:
-                        field = {'origin-compatibility': 'compatibility_sha256', 'origin-report': 'report_sha256',
+                        field = {'origin-projection': 'input_projection', 'origin-report': 'report_sha256',
                                  'origin-executable': 'inspector_executable_sha256'}[damage]
                         value['module_origins']['X'][field] = 'bad' if damage == 'origin-executable' else '0' * 64
                     path.write_text(json.dumps(value))
@@ -450,7 +490,7 @@ class PublicationTests(unittest.TestCase):
                     path.rename(regular)
                     path.symlink_to(regular.name)
                 with self.assertRaises((ValueError, TypeError)):
-                    publication.publish(report, live, coordinates, mode='cached', manifest=manifest_fixture(directory))
+                    publication.publish(report, live, coordinates, mode='cached')
                 self.assertEqual(before, {suffix: publication.member(live, suffix).read_bytes() for suffix in publication.SUFFIXES})
 
 
@@ -494,10 +534,15 @@ raise SystemExit(37)
         (self.root / 'lean-toolchain').write_text('fixture-toolchain\n')
         manifest_fixture(self.root)
         native.state(self.root).mkdir(parents=True)
+        (native.state(self.root) / 'judge-inputs').mkdir()
         self.requests = []
         self.triples = []
         self.utilities = []
         for name in ['B', 'A']:
+            (native.state(self.root) / 'judge-inputs' / (name + '.json')).write_text(json.dumps(
+                dict(schema='stratalint-judge-input-projection-v1', module=name,
+                    inputs=[dict(owner=name, name=name + '.entry',
+                                 type='LeanInformationAudit.Contract.Registration')])))
             source = self.root / f'{name}.lean'
             source.write_text(f'-- source {name}\n')
             utility = dict(modulePath=f'{name}.lean', claimModule=f'Claims.{name}',
@@ -520,13 +565,13 @@ raise SystemExit(37)
         self.addCleanup(environment.stop)
 
     def fail_producer(self, module=False):
-        with self.assertRaises(subprocess.CalledProcessError) as failure:
+        with self.assertRaisesRegex(ValueError, 'raw.reader_failed:exit=37') as failure:
             if module:
                 native.module(*self.requests[0])
             else:
                 native.produce_batch(self.requests)
-        self.assertEqual(failure.exception.returncode, 37)
-        self.assertEqual(failure.exception.cmd[0], str(self.executable))
+        self.assertEqual(failure.exception.__cause__.returncode, 37)
+        self.assertEqual(failure.exception.__cause__.cmd[0], str(self.executable))
         received = json.loads(self.seen.read_text())
         # The actual temporary request, utility and spool are gone on failure.
         for path in received['arguments'][1:6:2]:
@@ -591,9 +636,9 @@ raise SystemExit(37)
         with patch.object(native.os, 'replace', side_effect=PermissionError('capture denied')), \
                 patch.object(native.subprocess, 'run', side_effect=failure), \
                 patch('sys.stderr', new_callable=io.StringIO) as stderr:
-            with self.assertRaises(subprocess.CalledProcessError) as raised:
+            with self.assertRaisesRegex(ValueError, 'raw.reader_failed:exit=41') as raised:
                 native.produce_batch(self.requests)
-        self.assertIs(raised.exception, failure)
+        self.assertIs(raised.exception.__cause__, failure)
         self.assertIn('capture denied', stderr.getvalue())
         self.assertEqual(previous, {path: path.read_bytes() for path in self.logs.glob('native-request-*.json')})
         self.assertEqual(list(self.logs.glob('*.tmp')), [])
@@ -635,7 +680,7 @@ raise SystemExit(37)
             cwd=self.logs, env=environment, capture_output=True, text=True, timeout=30)
         self.assertEqual(result.returncode, 1, result.stdout + result.stderr)
         self.assertIn('LEAN_INSPECTOR_FAILED phase=report exit=1', result.stderr)
-        self.assertIn('exit status 37', result.stderr)
+        self.assertIn('raw.reader_failed:exit=37', result.stderr)
         self.assertEqual(report.read_text(), 'previous report')
         phases = [json.loads(line) for line in self.phases.read_text().splitlines()]
         self.assertNotIn('stale', [row['phase'] for row in phases])
@@ -655,7 +700,7 @@ class EntryPointTests(unittest.TestCase):
             (root / loader).parent.mkdir(parents=True)
             (root / loader).write_text(Path(native.selection.__file__).read_text())
             paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1,
+            (root / 'lean-report-inputs.json').write_text(json.dumps(dict(schema_version=1,
                 report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths(),
                 producer_scopes={'lean-report': paths('lean-report-inputs.json', loader), 'scribe-content': paths()})))
             binary = root / 'candidate producer.dll'
@@ -710,7 +755,7 @@ class EntryPointTests(unittest.TestCase):
                     write(name, (repository / name).read_text())
                 write('Trureturing.lean', 'def x : Nat := 1\n')
                 paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-                write('lean-report-inputs.json', json.dumps(dict(schema_version=1, report_cache_release_semantic_version=1,
+                write('lean-report-inputs.json', json.dumps(dict(schema_version=1,
                     report_modules=paths('Trureturing.lean'), inspector_sources=paths(), config_inputs=paths(),
                     producer_scopes={'lean-report': paths('lean-report-inputs.json',
                         'tools/scripts/report/lean-report-selection.py'), 'scribe-content': paths()})))

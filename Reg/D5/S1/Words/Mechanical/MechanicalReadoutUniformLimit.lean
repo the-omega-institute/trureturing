@@ -1,23 +1,11 @@
-import LeanInformationAuditInterface.Syntax
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration
 import Reg.Support.MechanicalDyadicRegistration
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.uniformBoundArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound,
-      statementIdentity := "sha256:ae5c03ecae8ce575308eb4072fd637ff78f2917f57de945667c4772a48a00d3d",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.uniformBoundArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound,
-      statementIdentity := "sha256:ae5c03ecae8ce575308eb4072fd637ff78f2917f57de945667c4772a48a00d3d",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit }]
-  companionPrefix := some `Reg.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit }
+
 
 noncomputable section
 namespace Reg.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit
@@ -67,14 +55,29 @@ theorem uniformSensitivity : FiniteSlotSensitivity uniformBoundArena.toPrimitive
   · intro i
     exact Fin.elim0 i
 
-register_information_theorem
-  _root_.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound
-  in uniformBoundArena
-  readout via (@mechanicalReadoutRealization CompletionOutput (Classical.decEq _)
-    (fun _ : Unit => MechanicalReadoutSources.actualCompletion))
-  primitives completionRealization.toPrimitiveBundle
-  realization uniformBridge
-  variation uniformVariation sensitivity uniformSensitivity
-  escape from (ℝ) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound) (type_of% (@mechanicalReadoutRealization CompletionOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.actualCompletion))) (type_of% (ℝ)) (Unit) := {
+  unitName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound.__information_unit,
+  realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.uniformBridge,
+  realizationSource := none,
+  generated := false,
+  arena := .object ⟨(uniformBoundArena)⟩,
+  objectArena := .object ⟨(uniformBoundArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.uniformBoundArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalRealReadoutRegistration.completionRealization) (completionRealization.toPrimitiveBundle) ⟨(uniformBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (uniformBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit.geometric_readout_uniform_slope_bound))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((completionRealization.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (@mechanicalReadoutRealization CompletionOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.actualCompletion)),
+  variation := .evidence ⟨(uniformVariation)⟩ (by first | exact (uniformVariation) | exact ⟨_, _, (uniformVariation)⟩),
+  sensitivity := .evidence ⟨(uniformSensitivity)⟩ (by exact (uniformSensitivity)),
+  partialSensitivity := none,
+  escapeFrom := some (ℝ),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S1.Words.Mechanical.MechanicalReadoutUniformLimit

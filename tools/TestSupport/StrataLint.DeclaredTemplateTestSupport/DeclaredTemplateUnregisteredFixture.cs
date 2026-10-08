@@ -79,8 +79,7 @@ internal static class DeclaredTemplateUnregisteredFixture
             if (malformed && path == Registration) records.Add(new { key = new { theorem = "Other.unrelated" }, certificate = "malformed" });
             reports[path] = reports[path] with { InformationTemplates = JsonSerializer.SerializeToElement(new
             {
-                schema_version = 1, compatibility_version = ManifestVersion(after),
-                inventory = own ? new[] { InformationTemplateJson.KeyJson(key) } : [],
+                schema_version = 1, inventory = own ? new[] { InformationTemplateJson.KeyJson(key) } : [],
                 registered = own ? new[] { InformationTemplateJson.KeyJson(key) } : [], records,
             }) };
         }
