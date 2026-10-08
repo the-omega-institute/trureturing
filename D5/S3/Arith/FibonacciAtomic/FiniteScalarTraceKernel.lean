@@ -21,6 +21,9 @@ open D5.S1.Dynamics.ProfiniteCharacter (residueProjection)
 open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
 
 local notation "Source" => LegalDigits × (ProfiniteIntegers × ProfiniteIntegers)
+local notation "ρ" => fun (m : ℕ) (p : Source) =>
+  (residueProjection m p.2.1, residueProjection m p.2.2)
+local notation "bits" => fun (p : Source) (j : ℕ) => (p.1.val j).toNat
 
 /-- Delete successive digits using the inverse Fibonacci matrix. -/
 def trajectory {R : Type*} [CommRing R] (U : ℕ → R) (z : R × R) : ℕ → R × R
@@ -49,7 +52,7 @@ private theorem bounded_propagation {R : Type*} [CommRing R]
     have he := hf j hbound
     have ha := hj (by omega)
     have hb := hj' (by omega)
-    linear_combination ha - hb - hc j + hc' j + he
+    linear_combination ha - hb - hc j + hc' j - he
 
 private theorem scalar_recurrence {R : Type*} [CommRing R]
     (U : ℕ → R) (z : R × R) (j : ℕ) :
@@ -71,15 +74,15 @@ private theorem trace_kernel {R : Type*} [CommRing R]
     refine ⟨?_, ?_⟩
     · apply Prod.ext
       · change z'.1 - z.1 = -3 * (U' 0 - U 0)
-        linear_combination 2 * h0 - 3 * h1
+        linear_combination -2 * h0 + 3 * h1
       · change z'.2 - z.2 = 2 * (U' 0 - U 0)
-        linear_combination 2 * h1 - h0
+        linear_combination h0 - 2 * h1
     · intro j hj
       have ha := h j (by omega)
       have hb := h (j + 1) (by omega)
       have hc := h (j + 2) hj
-      linear_combination scalar_recurrence U' z' j - scalar_recurrence U z j +
-        ha - hb - hc
+      linear_combination scalar_recurrence U z j - scalar_recurrence U' z' j -
+        ha + hb + hc
   · rintro ⟨hz, hf⟩
     have hx := congrArg Prod.fst hz
     have hy := congrArg Prod.snd hz
@@ -95,5 +98,99 @@ private theorem trace_kernel {R : Type*} [CommRing R]
       linear_combination -hx - 2 * hy
     · intro j hj
       linear_combination -hf j hj
+
+private theorem source_kernel (m r : ℕ) (hr : 1 ≤ r) (p p' : Source) :
+    scalarTrace m r p = scalarTrace m r p' ↔
+      ρ m p' - ρ m p =
+        (-3 * ((bits p' 0 : ZMod (m + 1)) - bits p 0),
+          2 * ((bits p' 0 : ZMod (m + 1)) - bits p 0)) ∧
+      ∀ j, j + 2 ≤ r →
+        2 * ((bits p' j : ZMod (m + 1)) - bits p j) +
+          ((bits p' (j + 1) : ZMod (m + 1)) - bits p (j + 1)) = 0 := by
+  rw [← trace_kernel (fun j => (bits p j : ZMod (m + 1)))
+    (fun j => (bits p' j : ZMod (m + 1))) (ρ m p) (ρ m p') r hr]
+  constructor
+  · intro h j hj
+    exact congrFun h ⟨j, by omega⟩
+  · intro h
+    exact funext fun j => h j.val (by omega)
+
+private theorem legal_pair_eq (m : ℕ) (hm : 3 ≤ m)
+    (a b a' b' : Bool) (hab : ¬ (a = true ∧ b = true))
+    (hab' : ¬ (a' = true ∧ b' = true))
+    (h : ((2 * a.toNat + b.toNat : ℕ) : ZMod m) =
+      ((2 * a'.toNat + b'.toNat : ℕ) : ZMod m)) : a = a' ∧ b = b' := by
+  have ha : 2 * a.toNat + b.toNat < m := by
+    cases a <;> cases b <;> simp_all <;> omega
+  have hb : 2 * a'.toNat + b'.toNat < m := by
+    cases a' <;> cases b' <;> simp_all <;> omega
+  rw [ZMod.natCast_eq_natCast_iff', Nat.mod_eq_of_lt ha, Nat.mod_eq_of_lt hb] at h
+  cases a <;> cases b <;> cases a' <;> cases b' <;> simp_all
+
+private theorem bit_eq_mod_two (a b : Bool)
+    (h : (a.toNat : ZMod 2) = (b.toNat : ZMod 2)) : a = b := by
+  cases a <;> cases b <;> norm_num at h ⊢
+
+private theorem large_modulus_kernel (m r : ℕ) (hm : 3 ≤ m + 1) (hr : 2 ≤ r)
+    (p p' : Source) :
+    scalarTrace m r p = scalarTrace m r p' ↔
+      (∀ j, j < r → p.1.val j = p'.1.val j) ∧ ρ m p = ρ m p' := by
+  rw [source_kernel m r (by omega)]
+  constructor
+  · rintro ⟨hz, hf⟩
+    have pairs (j : ℕ) (hj : j + 2 ≤ r) :
+        p.1.val j = p'.1.val j ∧ p.1.val (j + 1) = p'.1.val (j + 1) := by
+      apply legal_pair_eq (m + 1) hm _ _ _ _ (p.1.property j) (p'.1.property j)
+      push_cast
+      linear_combination -hf j hj
+    have hbits (j : ℕ) (hj : j < r) : p.1.val j = p'.1.val j := by
+      by_cases h : j + 2 ≤ r
+      · exact (pairs j h).1
+      · have hjpos : 1 ≤ j := by omega
+        have hp := (pairs (j - 1) (by omega)).2
+        simpa [Nat.sub_add_cancel hjpos] using hp
+    refine ⟨hbits, ?_⟩
+    have h0 := hbits 0 (by omega)
+    simp only [h0, sub_self, mul_zero, neg_mul] at hz
+    exact (sub_eq_zero.mp hz).symm
+  · rintro ⟨hb, hz⟩
+    have h0 := hb 0 (by omega)
+    refine ⟨by simp [hz, h0], ?_⟩
+    intro j hj
+    simp [hb j (by omega), hb (j + 1) (by omega)]
+
+private theorem parity_kernel (r : ℕ) (hr : 1 ≤ r) (p p' : Source) :
+    scalarTrace 1 r p = scalarTrace 1 r p' ↔
+      (∀ j, 1 ≤ j → j < r → p.1.val j = p'.1.val j) ∧
+      trajectory (fun j => (bits p j : ZMod 2)) (ρ 1 p) 1 =
+        trajectory (fun j => (bits p' j : ZMod 2)) (ρ 1 p') 1 := by
+  rw [source_kernel 1 r hr]
+  have initial :
+      ρ 1 p' - ρ 1 p =
+        (-3 * ((bits p' 0 : ZMod 2) - bits p 0),
+          2 * ((bits p' 0 : ZMod 2) - bits p 0)) ↔
+      trajectory (fun j => (bits p j : ZMod 2)) (ρ 1 p) 1 =
+        trajectory (fun j => (bits p' j : ZMod 2)) (ρ 1 p') 1 := by
+    simp only [trajectory, Prod.mk.injEq, Prod.fst_sub, Prod.snd_sub]
+    norm_num
+    constructor
+    · rintro ⟨hx, hy⟩
+      constructor <;> linear_combination -hx - hy
+    · rintro ⟨hx, hy⟩
+      constructor
+      · linear_combination -hy
+      · linear_combination -hx - hy
+  rw [initial]
+  constructor
+  · rintro ⟨hz, hf⟩
+    refine ⟨?_, hz⟩
+    intro j hj hbound
+    apply bit_eq_mod_two
+    have he := hf (j - 1) (by omega)
+    simpa [Nat.sub_add_cancel hj, sub_eq_zero] using he.symm
+  · rintro ⟨hb, hz⟩
+    refine ⟨hz, ?_⟩
+    intro j hj
+    norm_num [hb (j + 1) (by omega) (by omega)]
 
 end D5.S3.Arith.FibonacciAtomic.FiniteScalarTraceKernel
