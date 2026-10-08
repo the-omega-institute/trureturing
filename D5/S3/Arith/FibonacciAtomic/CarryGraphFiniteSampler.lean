@@ -6,7 +6,8 @@
    utility: none
    digest: A depth-free carry-slot machine preserves fair-tape labels and charges. -/
 
-import D5.S3.Arith.FibonacciAtomic.CarryGraphCriticalAttainment
+import D5.S3.Arith.FibonacciAtomic.CarryGraphRealization
+import D5.S3.Arith.FibonacciAtomic.OptimalLawStrictSlope
 import Mathlib.Data.Nat.Choose.Basic
 
 set_option autoImplicit false
@@ -15,7 +16,8 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Arith.FibonacciAtomic.CarryGraphFiniteSampler
 
 open scoped BigOperators ENNReal
-open CarryGraphEmbedding CarryGraphCriticalAttainment MeasureTheory
+open CarryGraphEmbedding MeasureTheory
+open OptimalLawStrictSlope (alpha)
 open D5.S0.Tower.DBonacci.TerminalSampling (Tape fairTape)
 
 local notation "S" => (fun m : ℕ => {s : State // IsState m s})
@@ -26,6 +28,13 @@ set_option quotPrecheck false in
 local notation "labels" => (fun (m : ℕ) (s : State) (a : Action) =>
   Finset.sort (CarryGraphRealization.labelSet m ⟨fun _ => s, fun _ => a⟩ 0)
     (fun i j => i ≤ j))
+
+/-- The state and action sequence of a legal stationary table, starting at a
+specified legal carry state. -/
+def policyPath (m : ℕ) (f : P m) (start : S m) : Path :=
+  let step : S m → S m := fun s =>
+    ⟨successor s.val (f s).val, (f s).property.2.2⟩
+  ⟨fun d => (step^[d] start).val, fun d => (f (step^[d] start)).val⟩
 
 /-- An active control stores a legal carry state and a slot strictly below its width. -/
 def Active (m : ℕ) := {x : S m × ℕ // (x.2 : ℤ) < x.1.val.r}
@@ -77,12 +86,115 @@ noncomputable def bill (m : ℕ) (f : P m) (start : Sum (Active m) (Fin m))
   ∑' d : ℕ, if (execute m f start tape d).1.isLeft then 1 else 0
 
 
+/-- On every tape, the bounded control follows the stationary path's scan,
+including its returned label and invoice and every continuing carry slot. -/
+theorem coupling (m : ℕ) (hm : 2 ≤ m) (f : P m) :
+    let o : S m := ⟨root m, by dsimp [IsState, root]; omega⟩
+    let γ := policyPath m f o
+    ∀ tape d, match CarryGraphRealization.scan m γ tape d with
+      | .inl returned => execute m f (initial m hm) tape d = (.inr returned.1, returned.2)
+      | .inr j => ∃ x : Active m,
+          execute m f (initial m hm) tape d = (.inl x, d) ∧
+          x.val.1.val = γ.state d ∧ x.val.2 = j := by
+  classical
+  let o : S m := ⟨root m, by dsimp [IsState, root]; omega⟩
+  let γ := policyPath m f o
+  have hγ : IsRootPath m γ := by
+    refine ⟨rfl, fun d => ⟨(f _).property, ?_⟩⟩
+    exact congrArg Subtype.val (Function.iterate_succ_apply'
+      (fun s : S m => ⟨successor s.val (f s).val, (f s).property.2.2⟩) d o)
+  change ∀ tape d, match CarryGraphRealization.scan m γ tape d with
+      | .inl returned => execute m f (initial m hm) tape d = (.inr returned.1, returned.2)
+      | .inr j => ∃ x : Active m,
+          execute m f (initial m hm) tape d = (.inl x, d) ∧
+          x.val.1.val = γ.state d ∧ x.val.2 = j
+  intro tape d
+  induction d with
+  | zero =>
+    change ∃ x : Active m, (initial m hm, 0) = (.inl x, 0) ∧
+      x.val.1.val = γ.state 0 ∧ x.val.2 = 0
+    exact ⟨⟨(o, 0), by simp [o, root]⟩, rfl, rfl, rfl⟩
+  | succ d ih =>
+    cases hs : CarryGraphRealization.scan m γ tape d with
+    | inl returned =>
+      simp only [hs] at ih
+      simp [CarryGraphRealization.scan, hs, execute, ih]
+    | inr j =>
+      simp only [hs] at ih
+      obtain ⟨x, hx, hcore, hslot⟩ := ih
+      have ha : (f x.val.1).val = γ.action d := by
+        have hstate : x.val.1 =
+            ((fun s : {s : State // IsState m s} =>
+              ⟨successor s.val (f s).val, (f s).property.2.2⟩)^[d] o) :=
+          Subtype.ext hcore
+        exact congrArg (fun s : {s : State // IsState m s} => (f s).val) hstate
+      have labels_eq :
+          Finset.sort (CarryGraphRealization.labelSet m
+            ⟨fun _ => x.val.1.val, fun _ => (f x.val.1).val⟩ 0) (fun i j => i ≤ j) =
+          Finset.sort (CarryGraphRealization.labelSet m γ d) (fun i j => i ≤ j) := by
+        congr 1
+        ext i
+        simp only [CarryGraphRealization.labelSet, hcore, ha]
+      let L := Finset.sort (CarryGraphRealization.labelSet m γ d) (fun i j => i ≤ j)
+      let z := 2 * j + (tape d).toNat
+      have hc : (L.length : ℤ) = ones (γ.state d) (γ.action d) := by
+        change ((Finset.sort (CarryGraphRealization.labelSet m γ d)
+          (fun i j => i ≤ j)).length : ℤ) = _
+        simpa only [Finset.length_sort] using (CarryGraphRealization.tree_layers m γ hγ).1 d
+      have hnext : successor x.val.1.val (f x.val.1).val = γ.state (d + 1) := by
+        rw [ha, hcore]
+        exact (hγ.2 d).2.symm
+      by_cases hz : z < L.length
+      · have he : execute m f (initial m hm) tape (d + 1) = (.inr L[z], d + 1) := by
+          have hz' := hz
+          dsimp only [z, L] at hz'
+          simp only [execute, hx, step, hslot, labels_eq,
+            dif_pos hz']
+          rfl
+        simp only [CarryGraphRealization.scan, hs]
+        change (match (if hz : z < L.length then
+          Sum.inl (L[z], d + 1) else Sum.inr (z - L.length)) with
+          | .inl returned => execute m f (initial m hm) tape (d + 1) =
+              (.inr returned.1, returned.2)
+          | .inr j => ∃ x : Active m,
+              execute m f (initial m hm) tape (d + 1) = (.inl x, d + 1) ∧
+              x.val.1.val = γ.state (d + 1) ∧ x.val.2 = j)
+        rw [dif_pos hz]
+        exact he
+      · have hj : ((z - L.length : ℕ) : ℤ) <
+            (successor x.val.1.val (f x.val.1).val).r := by
+          have H := x.property
+          have Hu : (tape d).toNat ≤ 1 := by cases tape d <;> decide
+          have hn := congrArg State.r (hγ.2 d).2
+          dsimp only [successor] at hn
+          dsimp only [z]
+          rw [hnext]
+          rw [hslot, hcore] at H
+          omega
+        let y : Active m := ⟨(⟨successor x.val.1.val (f x.val.1).val,
+          (f x.val.1).property.2.2⟩, z - L.length), hj⟩
+        have he : execute m f (initial m hm) tape (d + 1) = (.inl y, d + 1) := by
+          have hz' := hz
+          have hj' := hj
+          dsimp only [z, L] at hz' hj'
+          simp only [execute, hx, step, hslot, labels_eq,
+            dif_neg hz', dif_pos hj']
+          rfl
+        simp only [CarryGraphRealization.scan, hs]
+        change (match (if hz : z < L.length then
+          Sum.inl (L[z], d + 1) else Sum.inr (z - L.length)) with
+          | .inl returned => execute m f (initial m hm) tape (d + 1) =
+              (.inr returned.1, returned.2)
+          | .inr j => ∃ x : Active m,
+              execute m f (initial m hm) tape (d + 1) = (.inl x, d + 1) ∧
+              x.val.1.val = γ.state (d + 1) ∧ x.val.2 = j)
+        rw [dif_neg hz]
+        exact ⟨y, he, hnext, rfl⟩
+
 /-- A critical stationary carry table runs as a finite control, preserving every
  tape's labels, first-return invoice, tail events and optimal expected bit cost. -/
 theorem result (m : ℕ) (hm : 2 ≤ m) :
     let o : S m := ⟨root m, by dsimp [IsState, root]; omega⟩
-    (∃ f : P m, 0 < anchorValue (policyPath m f o) ∧
-      pathCost (policyPath m f o) = alpha m * anchorValue (policyPath m f o)) ∧
     ∀ f : P m,
       let γ := policyPath m f o
       let p : Fin m → ℝ := fun i => Real.ofDigits (CarryGraphRealization.labelDigit γ i)
@@ -118,12 +230,8 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
       pathCost γ = DyadicSupportLines.cost p ∧
       DyadicSupportLines.cost p = alpha m * anchorValue γ := by
   classical
-  obtain ⟨V, priced, _, _, hpaths, _, hzero, hcritical⟩ :=
-    CarryGraphCriticalAttainment.result m hm
   let o : S m := ⟨root m, by dsimp [IsState, root]; omega⟩
-  refine ⟨?_, ?_⟩
-  · obtain ⟨ht, _, _, _, _, _, _, hcost, hratio⟩ := hcritical
-    exact ⟨priced (alpha m), ht, hcost.trans hratio⟩
+  dsimp only
   intro f
   let γ := policyPath m f o
   let p : Fin m → ℝ := fun i => Real.ofDigits (CarryGraphRealization.labelDigit γ i)
@@ -143,12 +251,10 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
   let : Nonempty (Fin m) := ⟨⟨0, by omega⟩⟩
   have hp : ∀ i, 0 < p i := hpositive ht
   have hcost_lower : alpha m * anchorValue γ ≤ DyadicSupportLines.cost p := by
-    obtain ⟨δ, hδ, _, _, _, hanchor, hδcost⟩ :=
-      (CarryGraphEmbedding.result m hm).2.2.2 p hp hsum ⟨0, by omega⟩
-        (fun i => by rw [ha]; exact hminimum i)
-    have H := (hpaths (alpha m)).2.2 δ hδ
-    rw [hzero, hanchor, ha, hδcost] at H
-    linarith
+    have H := OptimalLawStrictSlope.alpha_le m p hp hsum ⟨0, by omega⟩
+      (fun i => by rw [ha]; exact hminimum i)
+    rw [ha] at H
+    exact (le_div_iff₀ ht).mp H
   have hratio : DyadicSupportLines.cost p = alpha m * anchorValue γ :=
     le_antisymm (hlower.trans_eq hC) hcost_lower
   have hcost : pathCost γ = DyadicSupportLines.cost p := hC.trans hratio.symm
@@ -199,9 +305,9 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
       have H := Finset.sum_range_id_mul_two (m - 1)
       have hn : m - 1 - 1 + 2 = m := by omega
       have H' : 2 * (∑ r ∈ Finset.range (m - 1), (r + 1)) = m * (m - 1) := by
-        rw [Finset.sum_add_distrib, Finset.sum_const, Finset.card_range]
-        simp only [smul_eq_mul, mul_one]
-        nlinarith [H]
+        simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_range,
+          smul_eq_mul, mul_one]
+        nlinarith [H, hn]
       omega
     refine ⟨Finite.of_injective code injective, ?_⟩
     calc
@@ -218,121 +324,7 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
       | .inl returned => execute m f (initial m hm) tape d = (.inr returned.1, returned.2)
       | .inr j => ∃ x : Active m,
           execute m f (initial m hm) tape d = (.inl x, d) ∧
-          x.val.1.val = γ.state d ∧ x.val.2 = j := by
-    have column (s : State) (a : Action) (ha : Legal m s a) :
-        ((Finset.sort (CarryGraphRealization.labelSet m ⟨fun _ => s, fun _ => a⟩ 0)
-          (fun i j => i ≤ j)).length : ℤ) = ones s a := by
-      classical
-      let lo : ℤ := if a.b = 1 then 0 else s.e - a.h
-      let hi : ℤ := s.e + a.c
-      have bounds : 0 ≤ lo ∧ lo ≤ hi ∧ hi ≤ m := by
-        rcases ha with ⟨hs, ha, hs'⟩
-        rcases hs with ⟨hr0, hr1, he0, he1⟩
-        rcases ha with ha | ha
-        · rcases ha with ⟨hb, hh, hc0, hc1⟩
-          simp only [lo, hi, hb, ite_true]
-          omega
-        · rcases ha with ⟨hb, hh0, hh1, hc0, hc1⟩
-          simp only [lo, hi, hb, Int.zero_ne_one, ite_false]
-          omega
-      have fits : ∀ n ∈ Finset.Ico lo.toNat hi.toNat, n < m := by
-        intro n hn
-        have H := Finset.mem_Ico.mp hn
-        omega
-      have interval : CarryGraphRealization.labelSet m ⟨fun _ => s, fun _ => a⟩ 0 =
-          (Finset.Ico lo.toNat hi.toNat).attachFin fits := by
-        ext i
-        simp only [CarryGraphRealization.labelSet, Finset.mem_filter, Finset.mem_univ,
-          true_and, Finset.mem_attachFin, Finset.mem_Ico]
-        dsimp only [lo, hi] at *
-        split_ifs <;> omega
-      rw [Finset.length_sort, interval, Finset.card_attachFin, Nat.card_Ico]
-      have H : ((hi.toNat - lo.toNat : ℕ) : ℤ) = hi - lo := by omega
-      rw [H]
-      dsimp only [hi, lo, ones]
-      split_ifs <;> ring
-    intro tape d
-    induction d with
-    | zero =>
-      change ∃ x : Active m, (initial m hm, 0) = (.inl x, 0) ∧
-        x.val.1.val = γ.state 0 ∧ x.val.2 = 0
-      exact ⟨⟨(o, 0), by simp [o, root]⟩, rfl, rfl, rfl⟩
-    | succ d ih =>
-      cases hs : CarryGraphRealization.scan m γ tape d with
-      | inl returned =>
-        simp only [hs] at ih
-        simp [CarryGraphRealization.scan, hs, execute, ih, step]
-      | inr j =>
-        simp only [hs] at ih
-        obtain ⟨x, hx, hcore, hslot⟩ := ih
-        have ha : (f x.val.1).val = γ.action d := by
-          have hstate : x.val.1 =
-              ((fun s : {s : State // IsState m s} =>
-                ⟨successor s.val (f s).val, (f s).property.2.2⟩)^[d] o) :=
-            Subtype.ext hcore
-          exact congrArg (fun s : {s : State // IsState m s} => (f s).val) hstate
-        have labels_eq :
-            Finset.sort (CarryGraphRealization.labelSet m
-              ⟨fun _ => x.val.1.val, fun _ => (f x.val.1).val⟩ 0) (fun i j => i ≤ j) =
-            Finset.sort (CarryGraphRealization.labelSet m γ d) (fun i j => i ≤ j) := by
-          congr 1
-          ext i
-          simp only [CarryGraphRealization.labelSet, hcore, ha]
-        let L := Finset.sort (CarryGraphRealization.labelSet m γ d) (fun i j => i ≤ j)
-        let z := 2 * j + (tape d).toNat
-        have hc : (L.length : ℤ) = ones (γ.state d) (γ.action d) := by
-          change ((Finset.sort (CarryGraphRealization.labelSet m γ d)
-            (fun i j => i ≤ j)).length : ℤ) = _
-          rw [← labels_eq, column _ _ (f x.val.1).property, ha, hcore]
-        have hnext : successor x.val.1.val (f x.val.1).val = γ.state (d + 1) := by
-          rw [ha, hcore]
-          exact (hγ.2 d).2.symm
-        by_cases hz : z < L.length
-        · have he : execute m f (initial m hm) tape (d + 1) = (.inr L[z], d + 1) := by
-            have hz' := hz
-            dsimp only [z, L] at hz'
-            simp only [execute, hx, step, hslot, labels_eq,
-              Sum.isLeft_inl, ite_true, dif_pos hz']
-            rfl
-          simp only [CarryGraphRealization.scan, hs]
-          change (match (if hz : z < L.length then
-            Sum.inl (L[z], d + 1) else Sum.inr (z - L.length)) with
-            | .inl returned => execute m f (initial m hm) tape (d + 1) =
-                (.inr returned.1, returned.2)
-            | .inr j => ∃ x : Active m,
-                execute m f (initial m hm) tape (d + 1) = (.inl x, d + 1) ∧
-                x.val.1.val = γ.state (d + 1) ∧ x.val.2 = j)
-          rw [dif_pos hz]
-          exact he
-        · have hj : ((z - L.length : ℕ) : ℤ) <
-              (successor x.val.1.val (f x.val.1).val).r := by
-            have H := x.property
-            have Hu : (tape d).toNat ≤ 1 := by cases tape d <;> decide
-            have hn := congrArg State.r (hγ.2 d).2
-            dsimp only [successor] at hn
-            dsimp only [z]
-            rw [hnext]
-            rw [hslot, hcore] at H
-            omega
-          let y : Active m := ⟨(⟨successor x.val.1.val (f x.val.1).val,
-            (f x.val.1).property.2.2⟩, z - L.length), hj⟩
-          have he : execute m f (initial m hm) tape (d + 1) = (.inl y, d + 1) := by
-            have hz' := hz
-            have hj' := hj
-            dsimp only [z, L] at hz' hj'
-            simp only [execute, hx, step, hslot, labels_eq,
-              Sum.isLeft_inl, ite_true, dif_neg hz', dif_pos hj']
-            rfl
-          simp only [CarryGraphRealization.scan, hs]
-          change (match (if hz : z < L.length then
-            Sum.inl (L[z], d + 1) else Sum.inr (z - L.length)) with
-            | .inl returned => execute m f (initial m hm) tape (d + 1) =
-                (.inr returned.1, returned.2)
-            | .inr j => ∃ x : Active m,
-                execute m f (initial m hm) tape (d + 1) = (.inl x, d + 1) ∧
-                x.val.1.val = γ.state (d + 1) ∧ x.val.2 = j)
-          rw [dif_neg hz]
-          exact ⟨y, he, hnext, rfl⟩
+          x.val.1.val = γ.state d ∧ x.val.2 = j := coupling m hm f
   have observations : ∀ tape,
       sample m f (initial m hm) tape = CarryGraphRealization.sample m γ tape ∧
       bill m f (initial m hm) tape = CarryGraphRealization.bill m γ tape := by

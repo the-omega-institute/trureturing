@@ -41,6 +41,12 @@ internal sealed class CarryGraphFiniteSamplerDocument : IScribeDocumentDefinitio
         return DocumentDefinition.Create(ScribeNode.Create(
             "A stationary carry table needs only a bounded slot control to preserve every fair-tape output and charge.",
             H("Finite Carry-slot Sampling"), Blocks(
+                Def("policyPath", "Stationary state and action orbit", Parameters(All(c, Call("S", m), All(d, Ty("N"),
+                    And(Equal(Call("state", Call("policyPath", m, f, c), d),
+                        Call("iterate", Call("successorBy", f), d, c)),
+                        Equal(Call("action", Call("policyPath", m, f, c), d),
+                            Call("f", Call("iterate", Call("successorBy", f), d, c))))))),
+                    "A legal stationary table determines the successive carry states and actions. The path may begin at any legal state; the sampler uses the root."),
                 Def("Active", "Bounded active controls", All(m, Ty("N"),
                     Equal(active, Seq(OpenBrace, Pair(s, j), Sp, InMacro, Sp,
                         Call("Product", Call("S", m), Ty("N")), Mid, Sp,
@@ -67,13 +73,34 @@ internal sealed class CarryGraphFiniteSamplerDocument : IScribeDocumentDefinitio
                         Seq(new Formula.Subscript(F.Sum, Seq(d, Sp, InMacro, Sp, Ty("N"))),
                             Call("indicator", V("isLeft"), Call("fst", Run(d)))))))),
                     "The sum is nonnegative extended-real. A divergent execution has infinitely many active steps and therefore an infinite bill."),
+                Describe.Lean(DescribeId.Create("coupling"), DeclarationHandle.Create(Prefix + "coupling"),
+                    H("Every tape preserves the carry slot and invoice"),
+                    StatementSource.FromAuthor(Disp(CouplingFormula())), AssessedProvenance.FromRepo(),
+                    Blocks(Paragraph(Text("For any legal stationary table and any tape, a returned scan label and charge equal the controller output and invoice. A continuing scan slot lifts to an active control with the current orbit state and the same slot, while its invoice equals the number of bits read. The relation holds without a positive-anchor or optimality assumption."))),
+                    DescribeRole.Theorem),
                 Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                     H("Finite control attains the critical bit bill"),
                     StatementSource.FromAuthor(Disp(ResultFormula())), AssessedProvenance.FromRepo(),
-                    Blocks(Paragraph(Text("For every m at least two, a critical stationary table with a positive anchor exists. Every stationary table whose positive anchor and path cost satisfy C=alpha(m) times the anchor has a finite slot machine. Its policy path gamma starts at the root, and p is the law obtained from that path's fixed label digits. At every index on every tape, a returned scan label and charge agree with the machine control and invoice; a continuing scan slot agrees with the machine's carry state and slot. Thus their first-return samples and total bills coincide even on exceptional divergent tapes. In the display, core(x) is the stored carry state and slot(x) is its natural slot; treeSample and treeBill denote the existing fixed-label tree sample and bill.")),
+                    Blocks(Paragraph(Text("For every m at least two, every legal stationary table whose positive anchor and path cost satisfy C=alpha(m) times the anchor has a finite slot machine. Its policy path gamma starts at the root, and p is the law obtained from that path's fixed label digits. At every index on every tape, a returned scan label and charge agree with the machine control and invoice; a continuing scan slot agrees with the machine's carry state and slot. Thus their first-return samples and total bills coincide even on exceptional divergent tapes. In the display, core(x) is the stored carry state and slot(x) is its natural slot; treeSample and treeBill denote the existing fixed-label tree sample and bill.")),
                         Paragraph(Text("The active-control bound is m squared times (m-1) divided by two, with m additional absorbing output labels. The output law is rational, strictly positive and normalized, its minimum is the positive anchor, its label probabilities are the digit sums, and its stopping tail is r(d)/2 raised to d. It returns almost surely and every returned invoice equals the total bill. The expected bill equals the policy-path cost, the dyadic cost of p and alpha(m) times the anchor.")),
                         Paragraph(Text("The finite stationary root orbit repeats a state. Equal tail digit streams at two distinct indices, together with the finite-prefix identity for ofDigits, give a rational expression for each probability. The statement gives no minimum-state claim or uniform bound on the number of bits read."))),
                     DescribeRole.Theorem))));
+    }
+
+    private static Formula CouplingFormula()
+    {
+        var m = V("m"); var f = V("f"); var t = V("tape"); var d = V("d");
+        var i = V("i"); var n = V("n"); var j = V("j"); var x = V("x");
+        var g = Call("policyPath", m, f, Call("root", m));
+        var run = Call("execute", m, f, Call("initial", m), t, d);
+        var scan = Call("scan", m, g, t, d);
+        return All(m, Ty("N"), Imp(Leq(D(2), m), All(f, Call("P", m),
+            All(t, V("Tape"), All(d, Ty("N"), And(
+                All(i, Call("Fin", m), All(n, Ty("N"),
+                    Imp(Equal(scan, Call("inl", Pair(i, n))), Equal(run, Pair(Call("inr", i), n))))),
+                All(j, Ty("N"), Imp(Equal(scan, Call("inr", j)), Ex(x, Call("Active", m),
+                    And(Equal(run, Pair(Call("inl", x), d)),
+                        Equal(Call("core", x), Call("state", g, d)), Equal(Call("slot", x), j))))))))));
     }
 
     private static Formula ResultFormula()
@@ -126,13 +153,11 @@ internal sealed class CarryGraphFiniteSamplerDocument : IScribeDocumentDefinitio
             Equal(Call("lintegral", V("fairTape"), Call("bill", m, f, start)), Call("ofReal", cost)),
             Equal(cost, Call("cost", p)), Equal(Call("cost", p), Mul(Call("alpha", m), anchor)));
         var orbit = Call("policyPath", m, f, Call("root", m));
-        var existsCritical = Ex(f, Call("P", m), And(Pos(Call("anchorValue", orbit)),
-            Equal(Call("pathCost", orbit), Mul(Call("alpha", m), Call("anchorValue", orbit)))));
         var everyCritical = All(f, Call("P", m), Ex(g, V("Path"),
             Ex(p, Seq(indices, Sp, To, Sp, Ty("R")), And(
                 Equal(g, orbit),
                 All(i, indices, Equal(Call("p", i), Call("ofDigits", Call("labelDigit", g, i)))),
                 Imp(Pos(anchor), Imp(Equal(cost, Mul(Call("alpha", m), anchor)), clauses))))));
-        return All(m, natural, Imp(Leq(D(2), m), And(existsCritical, everyCritical)));
+        return All(m, natural, Imp(Leq(D(2), m), everyCritical));
     }
 }
