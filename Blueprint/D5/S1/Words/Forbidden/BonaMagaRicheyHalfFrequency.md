@@ -24,6 +24,10 @@ $$\forall w \in \operatorname{List}\left(Bool\right),\; (w \ne []) \Rightarrow (
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Forbidden/BonaMagaRicheyHalfFrequency.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/bona-maga-richey-2026-half-frequency-balanced-borders` (proved) by `D5/S1/Words/Forbidden/BonaMagaRicheyHalfFrequency.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"bona-maga-richey-2026-half-frequency-balanced-borders","declaration_gid":"D5/S1/Words/Forbidden/BonaMagaRicheyHalfFrequency.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Miklós Bóna, Balázs Maga, Jacob Richey (2026). *Letter frequency in shifts of finite type with one forbidden word*. URL: <https://arxiv.org/abs/2606.06655v2>.
