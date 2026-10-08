@@ -10,7 +10,7 @@ namespace StrataLint.Engine;
 
 internal static class RawLeanReportArtifact
 {
-    internal const string Schema = "stratalint-raw-lean-report-v3";
+    internal const string Schema = "stratalint-raw-lean-report-v3probe";
     internal const string DefaultRelativePath = ".lake/build/stratalint/raw-lean-report.json";
     internal static readonly AsyncLocal<Action?> Reading = new();
 

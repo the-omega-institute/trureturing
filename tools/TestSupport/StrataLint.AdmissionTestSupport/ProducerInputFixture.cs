@@ -118,7 +118,7 @@ internal static class ProducerInputFixture
             {
                 module = row.GetProperty("module").GetString(),
                 report_sha256 = Convert.ToHexStringLower(SHA256.HashData(StructuredCanonicalWriter.WriteJson(
-                    JsonSerializer.SerializeToElement(new { schema = "stratalint-raw-lean-report-v3", modules = new[] { row } })).AsSpan())),
+                    JsonSerializer.SerializeToElement(new { schema = "stratalint-raw-lean-report-v3probe", modules = new[] { row } })).AsSpan())),
                 input_projection = new { schema = "stratalint-judge-input-projection-v1",
                     module = row.GetProperty("module").GetString(), inputs = System.Array.Empty<object>() },
                 producer_sources_sha256 = new string('1', 64),
