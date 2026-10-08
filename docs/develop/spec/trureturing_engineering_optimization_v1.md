@@ -319,7 +319,7 @@ Reg 只依赖根数学包与 Interface。判官实现变化不重编 Reg，整�
 
 保留现有 required check 名称、merge-result 输入和 protected-base 治理逻辑。数学 no-baseline 不要求删除 Git 治理基线。
 
-CI 仅恢复 Actions 依赖与项目种子。`lean_actions.py restore` 验证恢复目录；
+CI 的种子恢复步骤调用 `lean_actions.py restore`，从 Actions 缓存材料恢复依赖与项目种子并验证恢复目录；
 不可用或无效种子不取得成功检查的资格。构建与准入检查保留各自失败退出。
 
 `make lean-report` 通过缓存守门入口调用 Lake 的报告 facets。Reg 编译期检查契约数学义务，生产报告读取编译部件并评定结构，发布程序验证报告与材料。编译依赖 trace、utility 输入与报告格式标识决定增量复用；判官实现或规则改动不使报告失效，实现程序字节不进入复用条件。
