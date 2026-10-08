@@ -19,7 +19,8 @@ internal sealed class SixWindowForcingDocument : IScribeDocumentDefinition
                 + "golden ratio. The four interior separation types have ordered labels "
                 + "(3,0), (0,5), (5,2), and (2,25).")),
                 Paragraph(Text(
-                "Below the finite-delay critical radius, the type-one pair forces three "
+                "At or below the finite-delay critical radius, the type-one pair forces "
+                + "three "
                 + "windows (3,3,5) and (0,3,0). Four common colors at type two force a "
                 + "return to type one with the two roles interchanged. Iterating this "
                 + "return forces the six-window words (3,3,5,0,3,0) and (0,3,0,3,3,5) "
