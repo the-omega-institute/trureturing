@@ -1,0 +1,25 @@
+### 推论 21.3：同一个 Montgomery–Taylor 核的实际重叠
+
+固定既有的实偶概率密度和 Fourier 核
+$$
+f_0(s)=\frac{\cos(\sqrt2s)}{\sqrt2\sin(1/\sqrt2)}
+\mathbf1_{[-1/2,1/2]}(s),\qquad
+K_0(t)=\int_{\mathbb R} f_0(s)e^{-2\pi i ts}\,ds.
+$$
+置 $a_0=\sqrt2\pi\cot(1/\sqrt2)$、$c=2\pi^2$。直接积分并合并分式，得到全实轴恒等式
+$$
+(1-ct^2)K_0(t)=\cos(\pi t)-a_0t\sin(\pi t).
+\tag{21.4}
+$$
+这是 [Wang v1 Lemma 3.2](https://arxiv.org/html/2609.24167v1) 的同一核恒等式；来源当前状态和有限引文范围见 [Wang 条目](../../../Library/Weil/wang2026proportions.md)。在 $ct^2=1$ 处，(21.4) 按连续性成立，下面不在这些点除以零。
+
+对 $u,v\ge0$、$h=u+v$，定义
+$$
+Q(h)=\frac1{\max\{1,(2\pi^2h^2-1)^2\}}.
+$$
+则
+$$
+\boxed{K_0(u)^2+K_0(v)^2+K_0(u+v)^2\ge\frac34Q(h).}
+\tag{21.5}
+$$
+

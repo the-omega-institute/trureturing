@@ -1,0 +1,24 @@
+**证明。** 取 $x_1=0,x_2=u,x_3=u+v$，令实矩阵 $V,W$ 的第 $i$ 行为
+$$
+V_i=(\cos\omega x_i,\sin\omega x_i),\qquad
+W_i=(-ax_i\sin\omega x_i,ax_i\cos\omega x_i).
+$$
+三个二维行向量线性相关，所以存在单位向量 $z\in\ker V^{\mathsf T}$。构造
+$$
+B=VV^{\mathsf T}+WV^{\mathsf T}+VW^{\mathsf T}.
+$$
+差角公式给出 $B_{ii}=1$ 及
+$$
+B_{ij}=\cos\omega(x_i-x_j)-a(x_i-x_j)\sin\omega(x_i-x_j)
+=-F_{a,\omega}(x_i-x_j).
+$$
+由于 $V^{\mathsf T}z=0$，有 $z^{\mathsf T}Bz=0$。记 $e=\sum_{i<j}B_{ij}^2$，两次 Cauchy–Schwarz 给
+$$
+1=\left|2\sum_{i<j}B_{ij}z_i z_j\right|
+\le2\sqrt e\left(\sum_{i<j}z_i^2z_j^2\right)^{1/2},
+\qquad
+\sum_{i<j}z_i^2z_j^2
+=\frac{1-\sum_i z_i^4}{2}\le\frac13.
+$$
+故 $e\ge3/4$。函数 $F_{a,\omega}$ 为偶函数，三个差值恰为 $u,v,u+v$，得结论。这里的辅助矩阵 $B$ 不要求半正定。证毕。
+
