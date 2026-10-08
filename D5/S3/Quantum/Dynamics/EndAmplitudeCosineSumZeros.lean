@@ -7,7 +7,59 @@
    digest: The seven-site end amplitude numerator has a zero in (0, pi) exactly when a is not 1. -/
 
 /-
-PLACEHOLDER
+proof_shape: amplitudeNumerator_pos: content; escape_witness: the public conclusion itself (form
+2): for 1 < b < c with b even and c odd, N(1, b, c; t) > 0 on [0, π). On the live path the
+reflection amplitudeNumerator_pi_sub writes N(π - 2θ) = 2 B(θ), the substitution
+k² sin² θ - sin² kθ = (kθ)² (ψ θ - ψ (kθ)), ψ x = (sin x / x)², gives
+B = b² c² ((ψ θ - ψ (bθ)) ((cθ)² - θ²) - (ψ θ - ψ (cθ)) ((bθ)² - θ²)), and the sign is the
+same-delivery theorem D5/S3/Quantum/Dynamics/SincSquareChordSlope.sincSq_chord_lt at
+(θ, bθ, cθ) (preregistered fact E1 of issue #14487, consumed here). With that theorem taken as
+given, the remaining steps are an instantiation and normalisation.
+proof_shape: exists_amplitudeNumerator_neg: content; escape_witness: the public conclusion itself
+(form 2; preregistered fact E2 of issue #14487): for a ≥ 3 odd, a < b < c, b even, c odd,
+gcd(a, b, c) = 1, a time in (0, π) with N < 0. If a ∤ b the time is π - 2πj/a for a residue j
+chosen by the averaging argument of exists_index over Σ_{j<a} sin²(πjm/a) = a/2; if a ∣ b it is
+π - 2πl/c with a l ≡ gcd(a, c) (mod c), and the sign is the estimate dvd_core from
+sin y > y - y³/6 and sin x < x.
+proof_shape: amplitudeNumerator_zero_iff: content; escape_witness (form 1): the two intermediate
+propositions amplitudeNumerator_pos and exists_amplitudeNumerator_neg of this module, both on
+the live path. The step added to them is an instantiation of Mathlib's intermediate value
+theorem (intermediate_value_Ioo') with the continuity of N and N(0) > 0; taken alone, with the
+two propositions as given, that step is bind-only.
+Definition: amplitudeNumerator (public; the cosine sum N(a, b, c; t)).
+Private helpers:
+proof_shape: amplitudeNumerator_pi_sub: bind-only (Real.cos_nat_mul_pi_sub, Real.cos_two_mul
+and ring normalisation); consumer: amplitudeNumerator_pos, exists_neg_of_not_dvd,
+exists_neg_of_dvd.
+proof_shape: amplitudeNumerator_zero_pos: bind-only (evaluation at 0); consumer:
+amplitudeNumerator_zero_iff.
+proof_shape: amplitudeNumerator_abs: bind-only (Real.cos_neg); consumer: exists_neg_of_index.
+proof_shape: exists_neg_of_index: bind-only (evenness in t and interval bookkeeping); consumer:
+exists_neg_of_not_dvd, exists_neg_of_dvd.
+proof_shape: sin_pi_mul_div_ne_zero: bind-only (Real.sin_eq_zero_iff); consumer: exists_index.
+proof_shape: sin_mul_eq_zero: bind-only (Real.sin_eq_zero_iff, Real.sin_int_mul_pi); consumer:
+exists_index.
+proof_shape: sum_sin_sq: bind-only (Real.sin_mul_sum_cos, Real.sin_sq_eq_half_sub); consumer:
+exists_index.
+proof_shape: exists_index: content (averaging over a full period of residues); consumer:
+exists_neg_of_not_dvd.
+proof_shape: exists_neg_of_not_dvd: content (escape witness as for
+exists_amplitudeNumerator_neg, case a ∤ b); consumer: exists_amplitudeNumerator_neg.
+proof_shape: sin_sq_add_nat_mul_pi: bind-only (Real.sin_add_nat_mul_pi); consumer:
+exists_neg_of_dvd.
+proof_shape: sin_sq_mul_lower: content (β² sin² x (1 - (βx)²/3) < sin² (βx) from
+Real.sin_gt_sub_cube and Real.sin_lt); consumer: dvd_core.
+proof_shape: dvd_core: content (the real inequality of the case a ∣ b); consumer:
+exists_neg_of_dvd.
+proof_shape: exists_neg_of_dvd: content (escape witness as for exists_amplitudeNumerator_neg,
+case a ∣ b); consumer: exists_amplitudeNumerator_neg.
+admission_basis: escape-witness (issue #14487: the cosine-sum statement behind the seven-site
+conjecture of arXiv:2507.18767; the source states the conjecture and does not prove it, and this
+module does not state the conjecture itself).
+Direct frozen dependencies: none (pinned Mathlib only). Same-delivery dependency:
+  D5/S3/Quantum/Dynamics/SincSquareChordSlope.sincSq_chord_lt.
+utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
+instance: every statement quantifies over all admissible integer triples and real times.
 -/
 
 import Mathlib.Algebra.BigOperators.Field
