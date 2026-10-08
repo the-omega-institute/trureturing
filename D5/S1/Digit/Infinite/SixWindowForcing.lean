@@ -707,6 +707,11 @@ theorem result (ν : ℝ) (h0 : 0 ≤ ν) (hν : ν < lambda) :
       window x j = L i → window y j = H i →
       r (j + 1) = N i ∧ window x (j + 1) = L (N i) ∧
         window y (j + 1) = H (N i)) ∧
+    (ν ≤ rho → ∀ (x y : LegalDigits) j (r : ℕ → Fin 6),
+      SharedAt ν r x y j 3 → window x j = threeLabel → window y j = nullLabel →
+      r j = 1 ∧ r (j + 1) = 0 ∧ r (j + 2) = 2 ∧
+      window x (j + 1) = threeLabel ∧ window y (j + 1) = threeLabel ∧
+      window x (j + 2) = fiveLabel ∧ window y (j + 2) = nullLabel) ∧
     (ν ≤ rho → ∀ m : ℕ, 1 ≤ m → ∀ (x y : LegalDigits) (r : ℕ → Fin 6),
       SharedAt ν r x y 0 (6 * m) → window x 0 = threeLabel → window y 0 = nullLabel →
       ∀ j < 6 * m, window x j = (blockA[j % 6]?).getD nullLabel ∧
@@ -714,7 +719,7 @@ theorem result (ν : ℝ) (h0 : 0 ≤ ν) (hν : ν < lambda) :
   obtain ⟨_, hglo, _, _, _⟩ := algebra
   have hp : 0 < g := by linarith
   refine ⟨?_, intervals ν h0 hν.le, end_labels ν hν, ordered_pairs ν hν, ?_, ?_, ?_,
-    four_bound ν hν, ?_, six_forcing ν hν⟩
+    four_bound ν hν, ?_, three_forcing ν hν, six_forcing ν hν⟩
   · intro i
     have h := intervals lambda (by dsimp [lambda]; positivity) le_rfl i
     fin_cases i <;> simpa using h
@@ -739,6 +744,5 @@ theorem result (ν : ℝ) (h0 : 0 ≤ ν) (hν : ν < lambda) :
   · intro hρ x y j i r hi hi' hs hl hh
     exact forced_next ν hν hρ x y j i ⟨hi, hi'⟩ r hs hl hh
 
-#print axioms result
 
 end D5.S1.Digit.Infinite.SixWindowForcing
