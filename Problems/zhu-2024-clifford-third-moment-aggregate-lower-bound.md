@@ -100,11 +100,13 @@ Conjecture 2 fails for a normalized two-qudit state at $d=5$.
   clause fails at $d=5$ as well: each non-permutation value is negative.
 - *Every $n\ge2$.* Graph expectations are multiplicative under tensor products and equal $1$ for a
   stabilizer state, so $\Psi\otimes|0\rangle^{\otimes(n-2)}$ has the same values.
-- *Mechanism.* The proven bound $4(D+d)/(D+1)$ is at least $6$ only for one qudit. Numerical
-  minimization finds no violation for one qudit at $d=3,5,7$ or for two qudits at $d=3$, and the
-  minimum of $\kappa(\Psi,\mathscr T_{\rm ns})$ over two qudits at $d=5$ is numerically $-1/6$. Product
-  states do not suffice: their numerical minimum of $\kappa(\Psi,\Sigma(5))$ is about $6.37$. The
-  failure needs entanglement across the two qudits.
+- *Mechanism.* The proven bound $4(D+d)/(D+1)$ is at least $6$ only for one qudit. Entanglement is
+  necessary at $d=5$: for one qudit the six non-permutation values coincide (row-order invariance), say
+  $a(\phi)$, and the bound $8d/(d+1)=20/3$ gives $6+6a(\phi)\ge20/3$, so $a(\phi)\ge1/9$; for a product
+  state $\phi\otimes\chi$ graph expectations multiply, so $\kappa(\phi\otimes\chi,\mathscr T_{\rm ns})=6\,a(\phi)a(\chi)\ge2/27>0$.
+  Numerical minimization found no violation for one qudit at $d=3,5,7$ or for two qudits at $d=3$;
+  the smallest value of $\kappa(\Psi,\mathscr T_{\rm ns})$ it found for two qudits at $d=5$ is $-1/6$,
+  which is not certified as the global minimum.
 
 **Open.** Whether the aggregate lower bounds hold for two qudits at $d=7$ and higher primes, the
 exact minimum of $\kappa(\Psi,\Sigma(d))$ for $n\ge2$, and how the paper's conditional consequences
