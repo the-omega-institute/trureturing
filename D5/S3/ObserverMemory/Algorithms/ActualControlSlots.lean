@@ -152,9 +152,14 @@ noncomputable def terminalCount : Nat :=
 private theorem edge_balance :
     (∑ u, (G.next u).card) = ∑ v, (G.incoming v).card := by
   classical
-  simp only [incoming, Finset.card_eq_sum_ones, Finset.sum_filter]
-  rw [Finset.sum_comm]
-  simp
+  have above (u : Q × Fin p) :
+      Finset.univ.bipartiteAbove (fun u v => v ∈ G.next u) u = G.next u := by
+    ext v
+    simp [Finset.bipartiteAbove]
+  simpa only [above, Finset.bipartiteBelow, incoming] using
+    (Finset.sum_card_bipartiteAbove_eq_sum_card_bipartiteBelow
+      (s := (Finset.univ : Finset (Q × Fin p)))
+      (t := (Finset.univ : Finset (Q × Fin p))) (fun u v => v ∈ G.next u))
 
 private theorem incoming_balance :
     (∑ v, (G.incoming v).card) + p = G.used.card + ∑ q, G.excess q := by
