@@ -1,0 +1,20 @@
+**命题 29.2（实际轮筛的完整 Gram 分解）。** 有
+$$
+G_W(r,s)=G_R(\rho r,\rho s),\qquad
+G_W=JG_RJ^*=qUG_RU^*,\qquad
+\frac{G_W}{W}=U\frac{G_R}{R}U^*.
+\tag{29.6}
+$$
+因而 $G_W$ 在 $\ker U^*$ 上恒零，在 $\operatorname{im}U$ 上与 $qG_R$ 酉等价。它的谱由 $q$ 倍 $G_R$ 的全部 $R$ 个特征值以及另外 $W-R$ 个零组成，重数照计；若 $G_R$ 本身有零特征值，还须保留那些零。
+
+证明。将 $f_W=f_R\circ\rho$ 代入式(29.5)，按纤维求和给分子 $q$ 倍 quotient 分子；分母 $W=qR$ 抵消这个倍数。矩阵 $JG_RJ^*$ 的 $(r,s)$ 元正好为 $G_R(\rho r,\rho s)$。余下公式由 $J=\sqrt q\,U$ 及式(29.4)得到。∎
+
+如果偏移集 $H$ 有限非空，且对每个 $p\mid R$ 满足 $1\le\nu_H(p)<p$，则第16.2节的平方自由轮筛非消失结论使 $G_R$ 正定：循环 Fourier 基中式(29.5)的特征值为 $|\widehat f_R(k)|^2/R>0$。$R=1$ 时素因子条件为空，实际轮筛恒为一，结论同样成立。于是此时
+$$
+\operatorname{rank}G_W=R,\qquad
+\ker G_W=\ker U^*,\qquad
+\dim\ker G_W=W-R.
+\tag{29.7}
+$$
+这里不能删去 $H$ 非空与局部可容许的前提：若 $H$ 为空且 $R>1$，轮筛恒为一，$G_R$ 只有秩一；任意被完全筛空的轮筛也会给更大的零空间。
+
