@@ -1791,6 +1791,360 @@ The added interface is the normalized, degree-uniform remaining-short witness (T
 
 The original selected-integer signed Robin target, all original coefficients and actual zero data, elementary correction and strict core are unchanged and unproved. Source common-core/norm/full-form transport still requires its separate identification. This is a paper-level obstruction to a specific coercivity route, without Lean certification, a numerical endpoint certificate, a proof or refutation of RH, or a mathematical-priority claim.
 
+## Pay the actual forcing on a growing part of the remaining short
+
+The small-energy witness in (T57) does not determine its actual forced debit. The next estimate pays a growing subspace of the **same remaining finite short**, including the change to the collar forcing caused by the elimination of $X=U+E$. It does not establish the sign or inverse budget of the whole remaining block.
+
+Reuse the original recurrence and tail-jet construction (T17)–(T19), complete energy and response calculations (T20), (T24)–(T28), unequal-cutoff correlations (T32)–(T34), full error row (T46)–(T48), joint positive space and debit (T49)–(T51), actual remaining short (T52), and raw normalization (T53)–(T56). Their original theta/nullity, Gamma, prime, pole, Fourier and variational suppliers remain inputs. The added interface is the coefficient-uniform residual forcing quotient on an actual growing-dimensional remaining space. No new general interpolation, shorting or Fourier theorem is asserted.
+
+Keep $k,a,h,M,U,E,W_M,L_M,V_M$ and $C_0$ as above. All statements use the same physical/Fourier/closed-form bridge, and all sufficiently large actual integer endpoints; no fresh-prime branch of (O3) is needed. Put $X=U+E$ and let $D_X(k)=O(a^{-7/4})$ denote the paid complete restricted debit in (T50).
+
+### A sufficient degree threshold leaves more directions than were removed
+
+The convenient condition $r\ge H_d=K_d^{10}$ in (T17) is stronger than the construction and complete energy require. Inspect its original proof with $T=e^{2r}$ and $K_d=e^{C_0(d+1)^2}$. The coefficient and Vandermonde inverse bounds are $O(K_d)$; their perturbation product is $O(K_d^2/T)$. The original profile error is $O(K_d/T)$ and its finite Gram error is $O(K_d^4/T)$. The higher theta terms use $T\ge(d+1)^2$ and the same $T^{-1}$ remainder. Thus $T\ge C_*K_d^{10}$ pays these requirements directly, including the lower profile Gram $c_*K_d^{-1}$ and the relative two-derivative/envelope budget $C_*K_d^3$.
+
+After that construction, the complete energy remainder in the paragraph preceding (T20) is $C_*K_d^6$ times the actual tail mass. The reflected Gamma, same-side prime, opposite-tail prime and true pole terms carry only the already displayed decreasing scalar factors. In particular the opposite-tail factor $r e^{-r}$ is bounded. Therefore sufficient conditions, with fixed constants independent of the degree, are
+
+$$
+\boxed{
+e^{2r}\ge C_*K_d^{10},\qquad
+r\ge C_*K_d^6,\qquad
+|Q(t)-2r\,m(t)|\le C_*K_d^6m(t),\qquad
+Q(t)\ge r\,m(t).
+}
+\tag{T58}
+$$
+
+Here $t=\chi_rg$ is any nonzero compact theta-derivative combination, $e=g-t$, and $m(t)=\|e\|_2^2>0$. Increase the fixed $C_*$ as needed; do not change the original $C_0$ or either previously selected degree schedule. This is a check of the sufficient thresholds in the existing construction, not an application of its stronger displayed hypothesis to parameters that fail that hypothesis.
+
+Let $D=\dim L_M$ as in (T52). The original schedules give $D\le\sqrt{\log a/(10C_0)}$. Choose
+
+$$
+\boxed{
+r_*=a/4,\qquad
+N_*=\left\lfloor\sqrt{\frac{\log a}{9C_0}}\right\rfloor,\qquad
+d_*=N_*-1,\qquad
+K_{d_*}\le a^{1/9}.
+}
+\tag{T59}
+$$
+
+Both conditions in (T58) hold eventually: $e^{2r_*}=e^{a/2}$ exceeds $C_*a^{10/9}$, and $r_*=a/4$ exceeds $C_*a^{2/3}$. Let $T_*$ be the $N_*$-dimensional space of these naturally cut off derivatives, with the same smooth transition at width $\delta_*=e^{-2r_*}$. Its dimension follows either from the lower profile Gram or from the original raw independence and analyticity on the interior where the cutoff equals one. Moreover $N_*-D\to\infty$, because $1/3>1/\sqrt{10}$. All coefficients can depend on the actual endpoint.
+
+### Keep the whole collar row at this smaller radius
+
+The response proof in (T26)–(T27) also works at $r=a/4$. Its lower-cutoff restriction $r\ge a/2$ is not needed for this particular estimate: $g=a-r\ge1$, both thresholds $T_\pm=e^{y\pm r}$ have logarithm at most $Ca$, and
+$\delta T_-^{1/2}\le\delta T_+^{1/2}$ and $T_+^{-1/2}\le T_-^{-1/2}$ for every $r>0$. Their two leading row budgets remain $e^{-g/2}$ and $e^{(a-3r)/2}$. The latter is allowed to grow; the actual collar width is retained before division.
+
+The other translation orientation, singular local Gamma increment and remote reflected Gamma terms use only $r\to\infty$, $g\ge1$ and the paid relative two-derivative envelope. The actual coefficient-$2$ pole is still bounded by $C K_{d_*}^3$ times the same polar moment and collar factor. Thus, with $R_k$ the complete physical cross row from (T38), every $t\in T_*$ satisfies
+
+$$
+\begin{aligned}
+\|R_kt\|_2^2
+&\le C K_{d_*}^6h a^2\delta_*^{-1}m(t)
+ \left(e^{-(a-r_*)}+e^{a-3r_*}\right),\\
+\boxed{
+\frac{|B_Q(t,v)|^2}{Q(t)}
+&\le D_*(a)\|v\|_2^2,\qquad
+D_*(a)\le C a^{5/3}e^{-5a/4}
+}\qquad(v\in\mathcal K_k).
+\end{aligned}
+\tag{T60}
+$$
+
+Use $Q(t)\ge r_*m(t)$ from (T58), $h\le e^{-2a}/2$, and $K_{d_*}^6\le a^{2/3}$ to obtain the second line. The two exponential debit terms before comparison are $e^{-3(a-r_*)}$ and $e^{-(a+r_*)}$. The complete noncompact prime sum is not cut at $n=k$; it enters through the same nullity/tail bridge as before. For collar vectors outside the form domain the mixed expression means its bounded cross-row extension.
+
+### The eliminated space is nearly orthogonal in the actual energy
+
+For the new cutoff and the two old ones, the separation and sum radii are
+$(\Delta_0,\Sigma_0)=(a/4,3a/4)$ and
+$(\Delta_1,\Sigma_1)=(3a/4-\log a,5a/4-\log a)$.
+The narrower-tail condition in (T32) holds. Its mixed profile factor is at most
+$K_{d_*}^3K_{d_i}^3\le a^{1/3+3/40}$. Apply the complete two-center prime and singular Gamma estimates (T33)–(T34), with the actual true pole, to these radii. Dividing by the independently paid energies leaves a bound
+$C a^2e^{-3a/8}\sqrt{Q(t)Q(u)}$ for every $u\in U$; the first center $\Delta_0$ and the pole sum $\Sigma_0$ both fit that allowance. The small-overlap Gamma term is exponentially smaller. This comparison covers all complex coefficient combinations, not only pairs of basis vectors.
+
+The actual old error row for $t$ satisfies $\|Z_*\|_{H^1(-a,a)}\le Ck^3\sqrt{m(t)}$. To see that (T47)'s argument still pays it, replace its old profile budget by $K_{d_*}^3\le a^{1/3}$ and use $\delta_*^{-1}=k^{1/4}$. The finite prime norm, Gamma two-derivative norm, complete $n>k$ tail and pole are still bounded by $Ck^3\sqrt{m(t)}$. Keep the endpoint jump in (T48). Its exterior mixed allowance is consequently $\nu_k=Ck^4/\sqrt M$ as before.
+
+Using the already proved joint lower bound (T49), define
+
+$$
+\boxed{
+\begin{aligned}
+|B_Q(t,x)|&\le\rho_k\sqrt{Q(t)Q(x)}
+ &&(t\in T_*,\ x\in X\cap D(Q)),\\
+\rho_k^2&=
+\frac{(C a^2e^{-3a/8})^2+\nu_k^2}{1-\zeta_k}
+\le C a^4e^{-3a/4}+Ck^8/M
+\longrightarrow0.
+\end{aligned}
+}
+\tag{T61}
+$$
+
+Only $T_*$ and the independently paid $X$ are positive here. No Cauchy--Schwarz inequality on the unproved whole old or remaining form is used.
+
+### Pay the Schur-corrected forcing on its actual fibre
+
+Impose the $D$ linear conditions $P_{\le M}t\perp L_M$ and let
+$Z_*=\{P_{\le M}t:t\in T_*,\ P_{\le M}t\perp L_M\}\subset V_M$.
+The projection is injective on $T_*$: if $P_{\le M}t=0$, then $t\in E\subset X$, and (T61) with $x=t$ contradicts $\rho_k<1$ unless $t=0$. Hence $\dim Z_*\ge N_*-D\to\infty$.
+
+Reuse the positive restricted form inverse on $X$ from (T50). For $t\in T_*$ let $x_t\in X\cap D(Q)$ solve
+$B_Q(x_t,x)=B_Q(t,x)$ for every $x\in X\cap D(Q)$. The paid mixed functional has a Riesz representative in the energy domain of that same positive closed-form restriction. Equation (T61) gives $Q(x_t)\le\rho_k^2Q(t)$.
+For $w=P_{\le M}t\in Z_*$, the exact minimizing lift of its fibre is $t-x_t$, because $t-w\in E\subset X$. Thus the actual remaining energy and residual collar row are
+
+$$
+\boxed{
+\begin{aligned}
+S_M^{\rm rem}(w)&=Q(t)-Q(x_t)
+\ge(1-\rho_k^2)Q(t)>0\quad(w\ne0),\\
+b_k^{\rm rem}(w,v)&=B_Q(t,v)-B_Q(x_t,v),\\
+|b_k^{\rm rem}(w,v)|
+&\le\left(\sqrt{D_*(a)}+\rho_k\sqrt{D_X(k)}\right)
+\sqrt{Q(t)}\,\|v\|_2 .
+\end{aligned}
+}
+\tag{T62}
+$$
+
+The second forcing term cannot be omitted. Its bound uses (T50) on the same actual $x_t$ and collar vector $v$, rather than an uncorrected numerator divided by the shorted denominator.
+Consume the independently proved lower denominator in the first line. The entire growing-dimensional residual Gram, with every coefficient combination, therefore satisfies
+
+$$
+\boxed{
+\sup_{0\ne w\in Z_*}
+\frac{|b_k^{\rm rem}(w,v)|^2}{S_M^{\rm rem}(w)}
+\le
+\frac{\left(\sqrt{D_*(a)}+\rho_k\sqrt{D_X(k)}\right)^2}
+ {1-\rho_k^2}\,\|v\|_2^2
+\le C a^{9/4}e^{-3a/4}\|v\|_2^2.
+}
+\tag{T63}
+$$
+
+The $k^8/M$ term is smaller than the displayed allowance eventually. Positivity on $Z_*$ gives the standard restricted inverse interpretation of this supremum. It is not an estimate of the inverse or sign of the full remaining matrix.
+
+### Small remaining energy and small forced debit coexist on this space
+
+The raw norm and global derivative budgets (T53)–(T54) apply at degree $d_*=N_*-1$. For unit raw coefficients they give
+$\|g\|_2^2\ge c e^{-CN_*}$ and
+$A_*=\exp(CN_*\log(N_*+1))$. Cutting at $r_*=a/4$ loses at most
+$C A_*e^{-c k^{1/4}}$ in $L^2$. The cutoff derivatives cost only powers of $e^{2r_*}$; the same Gaussian tail absorbs them. In particular $\|t''\|_2\le C A_*$ eventually. The zero-trace Fourier tail from (T55) is at most $C(\ell/M)^2A_*$.
+
+Each loss is less than one quarter of the original lower norm, uniformly over the constraint kernel. Therefore
+$\|w\|_2^2\ge c' e^{-C'N_*}$ for unit raw coefficients. The full energy tail estimate (T56), including all infinite prime powers and the true pole, applies to the same natural-width cutoff after its polynomial derivative factors are absorbed. It gives $|Q(t)|\le C A_*^2e^{-c k^{1/4}}$. As $N_*=O(\sqrt{\log\log k})$, (T62) supplies
+
+$$
+\boxed{
+0<S_M^{\rm rem}(w)\le C e^{-c k^{1/4}}\|w\|_2^2
+\qquad(0\ne w\in Z_*),
+\qquad \dim Z_*\longrightarrow\infty.
+}
+\tag{T64}
+$$
+
+Equations (T63) and (T64) concern the same actual remaining subspace and the same corrected forcing. They show that its nearly null metric does not create a large actual forced debit: the restricted debit instead tends to zero. This is stronger than giving separate upper bounds for numerator and denominator; (T62) has independently paid their relative denominator before division.
+
+The true pole-free form admits the same construction with its own positive $X$, minimizing lifts and residual row. It removes only the actual pole contribution and does not identify the two remaining matrices or their minimizing vectors.
+
+The added result is the growing-dimensional actual remaining-short consumer (T59)–(T64), with its paid degree threshold and Schur correction. The previously supplied raw near-null obstruction, theta/nullity/Gram/row estimates and positive short algebra are reused. The whole remaining complement, its interactions outside $Z_*$ and the full old inverse are still unpaid; adding this family does not prove that these spaces exhaust the old form domain or that a repeated elimination converges in the original energy. Source common-core/norm/full-form transport remains a separate identification. The original selected-integer signed Robin target, all coefficients and actual zero data, elementary correction and strict core remain unchanged and unproved. These are paper estimates without Lean certification, a numerical starting certificate, a proof or refutation of RH, or a mathematical-priority claim.
+
+
+## A separated radius mesh pays a larger actual remaining space
+
+The remaining space paid in (T63) comes from one extra cutoff. The following uses a growing number of cutoff radii on the same old interval. Its full mixed Gram and collective Fourier row must be estimated before their debit allowances can be combined. The resulting actual remaining image has dimension of order $a/\sqrt{\log a}$, and its corrected debit still tends to zero.
+
+Reuse (T58)'s sufficient construction thresholds, (T59)'s $T_*$, the complete response calculation (T60), the unequal-width Gamma/prime/pole estimates (T32)–(T34), complete error-row/Fourier-tail bounds (T46)–(T48), exterior floor (T43), actual short (T52), and residual-fibre construction (T62). Classical matrix row-sum and positive-form variational identities are intermediate tools. The added interface is their uniform consumer with a growing number of actual theta cutoffs, followed by the exact remaining quotient.
+
+Keep the original $k,a,h,M,C_0,U,E,X=U+E$ and physical/Fourier/closed-form bridge. Only form-domain vectors enter any expression $Q(x)$. All constants below are independent of the number of radii, selected degrees, endpoint and complex coefficients.
+
+### Choose the mesh while retaining both original families
+
+Put $w_a=8\log a$ and start with the radii $a-\log a-jw_a$ in $[a/4,a-\log a]$. Remove any of these within distance strictly less than $w_a$ of $a/4$ or $a/2$, and adjoin $a/4$ and $a/2$. For all sufficiently large $a$, the top radius $a-\log a$ is retained. Denote this set by $\mathcal R_a$ and its size by $J_a$. Its increasing enumeration is separated by at least $w_a$, and
+
+$$
+J_a\asymp\frac a{\log a}.
+$$
+
+Removing at most a fixed number of grid points does not change this order. Use
+
+$$
+\boxed{
+\begin{aligned}
+N_g&=\left\lfloor\sqrt{\frac{\log a}{30C_0}}\right\rfloor,
+&N_r&=N_g\quad(r\ne a/4),\\
+N_{a/4}&=N_* \text{ from (T59)},&
+G_r&=\operatorname{span}\{\chi_rg_m:0\le m<N_r\},\\
+G_a&=\sum_{r\in\mathcal R_a}G_r.
+\end{aligned}
+}
+\tag{T65}
+$$
+
+The cutoff $\chi_r$ is the original smooth natural-width cutoff at $\delta_r=e^{-2r}$. For regular radii, $K_{N_r-1}^6\le a^{1/5}$; for $r=a/4$, it is at most $a^{2/3}$. Since every $r\ge a/4$, both sufficient conditions in (T58) hold uniformly. For $t_r\in G_r$ let $m_r=\|g_r-t_r\|_2^2$ be its actual tail mass. Then $Q(t_r)\ge r m_r>0$ for $t_r\ne0$.
+
+At $r=a/2$ and $r=a-\log a$, $N_g$ is at least the corresponding original degree count in (T31), because $30<40$ and $\log r\le\log a$. Therefore $U\subset G_a$, and $T_*=G_{a/4}\subset G_a$. The original $C_0$, degrees and coefficients are retained.
+
+### Pay every mesh cross term with one row-sum bound
+
+For $r<s$ in the mesh put $\Delta=s-r$ and $\Sigma=s+r$. The narrower-width condition in (T32) holds since $\Delta\ge w_a\to\infty$. The profile product is at most $a^{2/3}$, using the conservative maximum at the special radius. The complete prime estimate (T33), divided by the independent lower energies, gives the difference-center term $C a^{2/3}e^{-3\Delta/2}$. Its other terms are at most $C a^{2/3}e^{-a/4}$, since $\delta_r\le e^{-a/2}$ and $\Sigma\ge a/2$.
+
+The singular Gamma estimate (T34) retains its small-shift term. Uniformly over this mesh, that term is at most
+$C a^{2/3}e^{4a}e^{-c w_a e^{a/2}/2}$ before harmless energy-normalization factors; it is eventually smaller than $C a^{2/3}e^{-a/4}$. The regular shifted terms and the true coefficient-$2$ pole also fit this latter allowance. Thus all actual reflected orientations, prime centers, discrete endpoints and Gamma terms give
+
+$$
+|B_Q(t_r,t_s)|
+\le\eta_{rs}\sqrt{Q(t_r)Q(t_s)},\qquad
+\eta_{rs}=C a^{2/3}
+\left(e^{-3|r-s|/2}+e^{-a/4}\right).
+$$
+
+Separation bounds the **whole** coefficient-matrix row sum:
+
+$$
+\boxed{
+\begin{aligned}
+\mu_a:=\max_r\sum_{s\ne r}\eta_{rs}
+&\le C a^{2/3}
+\left(\frac{2a^{-12}}{1-a^{-12}}+J_ae^{-a/4}\right)
+\le C'a^{-10}\longrightarrow0,\\
+Q\left(\sum_rt_r\right)
+&\ge(1-\mu_a)\sum_rQ(t_r)
+\ge\frac a4(1-\mu_a)\sum_rm_r .
+\end{aligned}
+}
+\tag{T66}
+$$
+
+Apply $2\sqrt{Q(t_r)Q(t_s)}\le Q(t_r)+Q(t_s)$ to obtain the second line. This proves independence of the actual cutoff spaces as well as positivity of their full joint Gram; no constants fixed in $J_a$ are used. Consequently $\dim G_a=\sum_rN_r$.
+
+### The complete collar forcing is concentrated near the top radius
+
+For every mesh radius the full response proof in (T60) applies with $a/4\le r\le a-\log a$. Its two thresholds and local/remote Gamma split require $r>0$, $a-r\ge1$ and the paid profile budgets. The actual collar width is $h\le e^{-2a}/2$. Thus its independently divided allowance is
+
+$$
+\frac{|B_Q(t_r,v)|^2}{Q(t_r)}
+\le D_r(a)\|v\|_2^2,\qquad
+D_r(a)\le C K_{N_r-1}^6\frac{a^2}{r}
+\left(e^{-3(a-r)}+e^{-(a+r)}\right).
+$$
+
+This retains the full noncompact prime sum, both orientations and the true pole. The special $r=a/4$ term is the exponentially small allowance already paid in (T60).
+For the regular grid,
+$K^6a^2/r\le C a^{6/5}$ and
+
+$$
+\sum_{\text{regular }r}e^{-3(a-r)}
+\le\frac{a^{-3}}{1-a^{-24}}+e^{-3a/2}.
+$$
+
+The added $a/2$ radius contributes the final term. The second exponential contributes at most $J_ae^{-5a/4}$. Therefore
+
+$$
+\boxed{
+\sum_{r\in\mathcal R_a}D_r(a)\le C a^{-9/5},\qquad
+\sup_{0\ne g\in G_a}
+\frac{|B_Q(g,v)|^2}{Q(g)}
+\le\frac{\sum_rD_r(a)}{1-\mu_a}\|v\|_2^2
+=O(a^{-9/5})\|v\|_2^2 .
+}
+\tag{T67}
+$$
+
+The last inequality uses coefficient Cauchy--Schwarz with the already paid joint denominator (T66). It is not a sum of separately optimized inverse values without their cross Gram.
+
+### Pay the growing mesh's collective row against the entire exterior
+
+For each actual error the complete physical old response from (T46) has
+$\|Z_r\|_{H^1(-a,a)}\le Ck^3\sqrt{m_r}$, uniformly over this mesh. The proof in (T61) permits the maximum $K^3\le a^{1/3}$, while $\delta_r^{-1}\le k$, so all finite and infinite prime parts, singular Gamma and actual pole are still paid by that same conservative polynomial. The errors' actual multiplication terms are included.
+
+For the sum row, retain the growing-count cost:
+
+$$
+\left\|\sum_rZ_r\right\|_{H^1}^2
+\le C k^6J_a\sum_rm_r .
+$$
+
+Use the endpoint-jump Fourier estimate (T48), the joint lower energy (T66), and the whole exterior floor $Q(f)\ge\sqrt k\|f\|_2^2$. Set $\sigma_k=Ck^4\sqrt{J_a}/\sqrt M\to0$. Then for $g\in G_a$ and $f\in E\cap D(Q)$,
+
+$$
+|B_Q(g,f)|\le\sigma_k\sqrt{Q(g)Q(f)},\qquad
+Q(g+f)\ge(1-\sigma_k)[Q(g)+Q(f)].
+$$
+
+In particular $G_a\cap E=\{0\}$. Put $H_a^{\rm mesh}=G_a+E$, with its same positive closed-form restriction. The whole infinite-exterior debit (T44) and (T67) now combine:
+
+$$
+\boxed{
+\mathcal D_{\rm mesh}(v):=
+\sup_{\substack{0\ne z\in H_a^{\rm mesh}\cap D(Q)}}
+\frac{|B_Q(z,v)|^2}{Q(z)}
+\le
+\frac{C a^{-9/5}+K(k)^2/d(k,M)}
+ {1-\sigma_k}\|v\|_2^2
+=O(a^{-9/5})\|v\|_2^2 .
+}
+\tag{T68}
+$$
+
+This includes all mesh coefficients and the entire infinite exterior. Its positive restriction is complete: (T66)–(T68) give energy-norm equivalence with the finite direct sum of the cutoff energies and the same closed exterior energy space. No positivity on arbitrary old vectors is inferred.
+
+### Transport that paid space to the actual remaining quotient
+
+Let $P_V$ be physical $L^2$ projection from $W_M$ onto $V_M$ in (T52), and define
+
+$$
+Y_a=P_VP_{\le M}G_a\subset V_M.
+$$
+
+The kernel of this map on $G_a$ is exactly $U$. If $P_{\le M}g\in L_M$, choose the unique $u\in U$ with the same retained projection. Then $g-u\in G_a\cap E=\{0\}$. The reverse inclusion follows from $P_{\le M}U=L_M$. Thus
+
+$$
+\boxed{
+\dim Y_a=\sum_rN_r-D
+\asymp\frac a{\sqrt{\log a}}\longrightarrow\infty .
+}
+\tag{T69}
+$$
+
+For $y=P_VP_{\le M}g$, one has $g-y\in X\cap D(Q)$ after selecting the corresponding $u\in U$ as above and retaining the exterior part. Let $x_g\in X\cap D(Q)$ be the energy Riesz representative with
+$B_Q(x_g,x)=B_Q(g,x)$ for every $x\in X\cap D(Q)$.
+Positivity on the **already paid** $H_a^{\rm mesh}$ gives the energy-orthogonal decomposition
+
+$$
+H_a^{\rm mesh}\cap D(Q)
+=(X\cap D(Q))\mathbin{\oplus_Q}
+\{g-x_g:g\in G_a\}.
+$$
+
+The finite second summand maps isomorphically to $Y_a$ and is the exact minimizing lift of its fibres. Hence $S_M^{\rm rem}>0$ on $Y_a\setminus\{0\}$, and its actual residual collar functional is
+$b_k^{\rm rem}(y,v)=B_Q(g-x_g,v)$, independent of the representative $g$.
+
+Let $\mathcal D_X(v)$ mean the **actual** restricted debit on $X$, not merely its known upper allowance. The standard positive inverse identity, applied to this same-source orthogonal decomposition, gives
+
+$$
+\boxed{
+\begin{aligned}
+\mathcal D_{\rm mesh}(v)
+&=\mathcal D_X(v)
+ +\sup_{0\ne y\in Y_a}
+   \frac{|b_k^{\rm rem}(y,v)|^2}{S_M^{\rm rem}(y)},\\
+0\le\sup_{0\ne y\in Y_a}
+   \frac{|b_k^{\rm rem}(y,v)|^2}{S_M^{\rm rem}(y)}
+&\le C a^{-9/5}\|v\|_2^2 .
+\end{aligned}
+}
+\tag{T70}
+$$
+
+The last bound uses $\mathcal D_X(v)\ge0$ and (T68); it does not subtract an upper bound for $\mathcal D_X$ from another upper bound. All minimizers and quantified energy arguments belong to their positive form restrictions. The actual Schur correction is included throughout.
+
+Since $T_*\subset G_a$, the previously paid nearly null subspace $Z_*$ is contained in $Y_a$, and (T64) remains its $L^2$ energy estimate. No such metric upper estimate is supplied for the other vectors of $Y_a$.
+The true pole-free form has the same estimates with its own positive restrictions, minimizing lifts and residual row.
+
+The added result is the growing-radius, complete joint consumer (T65)–(T70), giving the larger actual residual space and its corrected inverse debit. All theta, complete arithmetic cross/row, Fourier/exterior and variational suppliers are reused. The rest of the retained finite space, its interactions with $Y_a$, full old inverse and energy-norm exhaustion remain unestimated. Source common-core/norm/full-form transport is still separate. The original selected-integer signed Robin target, all coefficients and actual zero data, elementary correction and strict core are unchanged and unproved. These paper estimates have no Lean certification, numerical starting certificate, RH proof or refutation, or mathematical-priority claim.
+
+
 ## v2: the claimed induction step
 
 The following induction and fold formulas are those of [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), revised **20 September 2026**, 69 pages. At the arithmetic endpoint $a_k=(\log k)/2$, the source retains the pole term in $A_k=C_k-2|s_k\rangle\langle s_k|$. Lemma 6.27, under the old endpoint's positivity and inverse hypotheses, forms the actual harmonic extension
