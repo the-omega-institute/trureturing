@@ -1468,6 +1468,167 @@ The added interface is (T38)–(T42) for the complete physical adjacent forcing,
 
 Applying this physical estimate to the preprint's allocated source debit still requires its common-core, norm and full-form transport identification. The original selected-integer signed Robin estimate, its original coefficients, actual zero real parts, both signs, all heights and multiplicities, elementary correction and strict core are unchanged and unproved. This paper-level interface is neither a Lean result nor an RH proof, and carries no mathematical-priority claim.
 
+## Join the theta directions to the entire infinite exterior
+
+The theta debit (T37) and infinite-exterior debit (T44) cannot be added without paying their actual mixed energy. A state-projection approximation is not needed for this particular joint estimate: mixed nullity expresses its forcing through the small original theta error. The following pays that error's complete old response, including its endpoint trace, and consumes it on the whole exterior.
+
+Reuse (T24), (T31)–(T37), the complete tail expression (T5), the [mixed-nullity/domain bridge](lagarias2004li.md#the-full-derivative-family-and-the-remaining-estimate), (T42)–(T44), and the classical $H^1$ Fourier integration-by-parts, trace and Parseval estimates. The weighted even approximation and spectral-projector statements in [the weighted exterior account](lenz2010compactness.md#weighted-fourier-finite-family-interface) have a different physical norm and are not transported here. The additional interface is the complete physical old error response and its mixed bound with the infinite exterior; no generic Fourier approximation or Schur theorem is new.
+
+Keep the same integer $k$, $a=\tfrac12\log k$, $\ell=2a$, both cutoffs $r_i$ and degree schedules from (T31), and the same exterior cutoff
+$M=\lceil e^{\beta\sqrt k}\rceil$ from (T43). Put
+$U=U_0\oplus U_1$ and $E=P_{>M}\mathcal H_a$. Every $u=u_0+u_1\in U$ retains its actual null functions $g_i$, errors $e_i=g_i-u_i$, profiles and masses from (T24); all complex coefficients may depend on the endpoint. The constants below are independent of these coefficients and degrees. Assume the already stated Fourier/Plancherel and closed physical form-domain bridge when using $E$ and its positive restricted operator $A_E$; it does not imply positivity of the complete old form.
+
+### The actual errors have a paid two-derivative norm
+
+Write $K_i=K_{d_i}$, $\delta_i=e^{-2r_i}$ and $M_i=\|e_i\|_2^2$. From the same two profiles in (T24), for $0\le j\le2$,
+
+$$
+\|e_i^{(j)}\|_2\le C K_i^3\delta_i^{-j}\sqrt{M_i},\qquad
+|e_i^{(j)}(y)|\le C B_iK_i^3P_i\delta_i^{-j}
+e^{-c(|y|-r_i)/\delta_i}\quad(|y|\ge r_i).
+\tag{T45}
+$$
+
+The errors and their derivatives vanish inside $(-r_i,r_i)$, with no boundary distribution. This is direct parameter reuse, not a new theta estimate. The paid schedule gives $K_i^3\le a^{3/40}$ and $\delta_i^{-1}\le k$.
+
+### The full tail response is bounded in physical old $H^1$
+
+For the fixed actual tail define its arithmetic response on the whole old interval by
+
+$$
+\begin{aligned}
+Z_i(y)={}&c_\Gamma e_i(y)
++\int_0^\infty\kappa(t)
+ [2e_i(y)-e_i(y+t)-e_i(y-t)]dt\\
+&-\sum_{n\ge2}\frac{\Lambda(n)}{\sqrt n}
+ [e_i(y+\log n)+e_i(y-\log n)]
+-2\sinh(y/2)m_i,\\
+m_i={}&\int_{\mathbb R} e_i(y)\sinh(y/2)dy,
+\qquad -a<y<a.
+\end{aligned}
+\tag{T46}
+$$
+
+Here $c_\Gamma$ and $\kappa$ are exactly (T5). The sum is global: the error is noncompact, so even $n=k$ and all $n>k$ remain present. This row is distinct from the disjoint-support collar row (O10), which has no multiplication term.
+
+The Gamma integral is a convergent $H^1$ Bochner integral. Reuse the translation estimate
+$\|e_i-\tau_t e_i\|_{H^1}\le t\|e_i'\|_{H^1}$ and
+$\int_0^\infty t\kappa(t)dt<\infty$ to bound it by $C\|e_i\|_{H^2}$. This keeps the local singularity in its increment; no divergent diagonal rate is isolated.
+
+For $2\le n\le k$, restrict translated functions only after taking their full $H^1(\mathbb R)$ norm. The reused Chebyshev allowance $\sum_{n\le k}\Lambda(n)/\sqrt n\le2B\sqrt k$ pays this complete finite part by
+$C\sqrt k K_i^3\delta_i^{-1}\sqrt{M_i}$, with both orientations.
+
+For $n>k$ and $|y|\le a$, one has
+$|y\pm\log n|-r_i\ge(a-r_i)+\log(n/k)$.
+The exact profile envelope in (T45), through the first derivative, therefore bounds the remaining $H^1$ norm by
+
+$$
+C\sqrt\ell\,B_iK_i^3P_i\delta_i^{-1}
+e^{-c(a-r_i)/\delta_i}
+\sum_{n>k}\frac{\log n}{\sqrt n}(n/k)^{-c/\delta_i}.
+$$
+
+Once $c/\delta_i\ge2$, the complete discrete sum is at most
+$C\sqrt k(1+\ell)$ by integral comparison, including its endpoint term. Divide by $\sqrt{M_i}=\sqrt2 B_iP_i\sqrt{\delta_i}$; this costs at most
+$C\sqrt\ell K_i^3\delta_i^{-3/2}\sqrt k(1+\ell)$, independently of the degree. The exponentially smaller factor may be discarded in this conservative upper bound; the prime tail itself is not discarded.
+
+The same envelope gives the true polar moment
+$|m_i|\le C B_iK_i^3P_i\delta_i e^{r_i/2}$, while
+$\|\sinh(y/2)\|_{H^1(-a,a)}\le Ce^{a/2}$.
+Its coefficient-$2$ row is consequently at most
+$C K_i^3 e^{(a-r_i)/2}\sqrt{M_i}$. Since $a/2\le r_i<a$, every preceding budget is bounded by a fixed multiple of $k^3\sqrt{M_i}$ at sufficiently large endpoints. Thus the full same tail satisfies
+
+$$
+\boxed{\|Z_i\|_{H^1(-a,a)}\le C k^3\sqrt{M_i}.}
+\tag{T47}
+$$
+
+This is uniform for the complete actual coefficient combination, not only for the basis vectors. It uses no old positivity and no weight change. The pole-free response omits only the displayed true pole and obeys the same bound.
+
+### Mixed nullity exposes a small high-frequency forcing
+
+The existing fixed-parameter outer-cutoff passage applies to every compact smooth old probe, not only a disjoint collar probe: the uncut $g_i$ has zero transform at every actual zero, and its true polar moments vanish. The complete prime/Gamma/pole expression passes by the same original theta-tail and weighted-jet majorants. Hence
+
+$$
+B_Q(u,f)=-\langle Z_0+Z_1,f\rangle
+\quad(f\in C_c^\infty(-a,a),\ f\text{ odd}).
+$$
+
+On the closed physical form realization this also holds for every admitted odd old form vector $f$. Indeed the compact smooth $u$ has its actual operator row in $L^2$; core density and (T47) identify that row with $-Z$, where $Z=Z_0+Z_1$. This is an operator-row extension under the existing form bridge, not an assumption that a zero quadratic value implies mixed nullity.
+
+For this actual $H^1$ row the ordinary Fourier integration-by-parts estimate retains its endpoint jump:
+
+$$
+\begin{aligned}
+\|P_{>M}Z\|_2^2
+&\le C\left[
+\frac{\ell|Z(a)-Z(-a)|^2}{M}
++\frac{\ell^2\|Z'\|_2^2}{M^2}\right]\\
+&\le\frac{C(1+\ell^2)}{M}\|Z\|_{H^1(-a,a)}^2
+\le\frac{Ck^6(1+\ell^2)}{M}(M_0+M_1).
+\end{aligned}
+\tag{T48}
+$$
+
+Traces are not assumed to vanish or match. In the coefficient formula their contribution is
+$(-1)^m[Z(a)-Z(-a)]/(i(2\pi m/\ell)\sqrt\ell)$ up to the irrelevant overall sign; the derivative part uses Parseval. This is a normalized application of the classical trace/Fourier estimate, rather than a new Fourier theorem.
+
+At sufficiently large endpoints (T36) gives
+$Q(u)\ge a(M_0+M_1)/4$, and (T43) gives
+$Q(f)\ge\sqrt k\|f\|_2^2$ on the whole $E$.
+Consume these independent denominators in the exact mixed identity. Increasing a fixed $C_*>0$ if needed, put
+$\zeta_k=C_*k^4/\sqrt M\to0$. Then for every coefficient combination and every exterior form vector,
+
+$$
+\boxed{
+|B_Q(u,f)|\le\zeta_k\sqrt{Q(u)Q(f)},\qquad
+Q(u+f)\ge(1-\zeta_k)[Q(u)+Q(f)].
+}
+\tag{T49}
+$$
+
+The scalar threshold is independent of the degree; no numerical starting endpoint is certified. The proof has used positivity only on $U$ and $E$, separately supplied by (T36) and (T43). In particular $U\cap E=\{0\}$, so this is a genuine joint positive space with all its near-cancelling coefficient combinations controlled. The true pole-free form has its corresponding row identity and the same estimate.
+
+### Pay the full joint inverse and its retained theta short
+
+Let $D_U(k)=[D_0(a)+D_1(a)]/(1-\varepsilon_a)=O(a^{-7/4})$ from (T37), and $D_E(k)=K(k)^2/d(k,M)=O((\log k)^2/\sqrt k)$ from (T44). The two estimates concern the same collar vector $v$. Now (T49), followed by ordinary two-coordinate Cauchy–Schwarz, gives
+
+$$
+\boxed{
+\sup_{\substack{0\ne x\in U+E\\x\in D(Q)}}
+\frac{|B_Q(x,v)|^2}{Q(x)}
+\le\frac{D_U(k)+D_E(k)}{1-\zeta_k}\|v\|_2^2
+=O((\log k)^{-7/4})\|v\|_2^2.
+}
+\tag{T50}
+$$
+
+This covers the entire infinite exterior plus both original theta spaces, not a finite collection of exterior modes. Their inverse budgets can be combined because the actual mixed term has now been paid. The standard positive-form variational identity supplies the complete restricted inverse interpretation.
+
+There is also an exact finite retained consumer. The projection
+$u\mapsto l=P_{\le M}u$ is injective on $U$ because $U\cap E=0$. Finite odd Fourier polynomials belong to $H^1_0(-a,a)$ and hence the admitted physical form domain, so $l$ and $u-l$ are legitimate form vectors.
+For its image define the **actual exterior short**, using the same closed form,
+$Q_{\rm short}(l)=\inf_{f\in E\cap D(Q)}Q(l+f)$.
+Since $l+E=u+E$, completing the already positive exterior square gives
+
+$$
+\boxed{
+\begin{aligned}
+Q_{\rm short}(P_{\le M}u)
+&=Q(u)-\langle P_{>M}Z,A_E^{-1}P_{>M}Z\rangle,\\
+(1-\zeta_k^2)Q(u)
+&\le Q_{\rm short}(P_{\le M}u)\le Q(u).
+\end{aligned}
+}
+\tag{T51}
+$$
+
+Thus the exact high-frequency elimination retains a positive theta image of dimension $(d_0+1)+(d_1+1)$ inside the retained Fourier space. This pays its shorted metric without assuming raw Fourier projection is a small relative-energy perturbation. It does not establish the sign or conditioning of the rest of that finite space.
+
+The added interface is the coefficient-uniform complete old error row (T46)–(T48), consumed by the actual theta/exterior mixed estimate (T49), whole joint inverse (T50) and exterior-shorted retained theta metric (T51). Tail profiles, nullity/domain passage, Fourier trace algebra, positive block inversion and the two prior restricted budgets are reused. The full retained complement and its mixed interaction with this positive theta image remain unpaid; they cannot be inferred from the image dimension or from an independently positive diagonal.
+
+The original selected-integer signed Robin estimate, all its original coefficients, actual zero real parts, both signs, heights and multiplicities, elementary correction and strict core remain unchanged and unproved. Source common-core/norm/full-form transport is still required before consuming this physical result as the preprint's allocated source metric. This is a paper-level mixed interface, without Lean certification, a numerical endpoint certificate, an all-old inverse or RH conclusion, or a mathematical-priority claim.
+
 ## v2: the claimed induction step
 
 The following induction and fold formulas are those of [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), revised **20 September 2026**, 69 pages. At the arithmetic endpoint $a_k=(\log k)/2$, the source retains the pole term in $A_k=C_k-2|s_k\rangle\langle s_k|$. Lemma 6.27, under the old endpoint's positivity and inverse hypotheses, forms the actual harmonic extension
