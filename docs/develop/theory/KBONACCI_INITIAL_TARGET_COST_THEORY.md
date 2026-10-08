@@ -4995,3 +4995,6 @@ The [mixed-tail root-zero companion](KBONACCI_MIXED_TAIL_ROOT_ZERO_CUT_PRICE.md)
 The [three-class root-zero companion](KBONACCI_THREE_CLASS_ROOT_ZERO_COMPATIBILITY_PRICE.md) gives exact additional adaptive/child-preset fees two or three for tail-independent three-label root-zero tables constant on the first missed set, under $3\le m<k\le2m-2$ and every actual gcd. Its distinct-free-value consumer has exact adaptive fee two and one-GLOBAL fee three or four according to the ordered join on the second missed set; literal calendar/seam proofs retain the original all-target objective as unresolved.
 
 ## 追加锚（本行以下为增补区）
+## 72. [Four-label root-zero intersection prices](KBONACCI_FOUR_LABEL_ROOT_ZERO_INTERSECTION_PRICE.md)
+
+## 追加锚（本行以下为增补区）
