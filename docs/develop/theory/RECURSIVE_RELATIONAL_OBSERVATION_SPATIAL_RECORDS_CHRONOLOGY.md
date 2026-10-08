@@ -730,3 +730,243 @@ GoldenFactorParikhMagnusBridge's degree-two recovery concerns consecutive factor
 Sharp source/generic thresholds, the best online acquisition of static supplementary labels, stability for other signature conventions, optimal total resources, wider mutual-recovery conditions and physical space/time reconstruction remain open here. No finite appendix completes the persistent minimal-relational-structure goal.
 
 ## 追加锚（本行以下为增补区）
+
+## 18. Acquired raw-prefix fibers of the original parser
+
+**Hypothesis 18.1 (the acquired boundary and its owner).** Fix any one finite or countable prior $\mu$ of Definition 6.1, including a point mass. Keep its actual common depth, original seed/retry/return grammar, four completed markers, passive third latch and unique original Stop. The observer is initialized before the first paid seed Read and receives only each actual returned letter and the old/new original fields needed for their prescribed writes. The supplied finite fields are the original seed/parser/selector/record controls $C_0$ of Future Response Sufficiency §9, with the actual $Q^+,Z$ writers of Definition 6.1. Their storage, initialization and writes remain paid. Supplementary deterministic exact integer arithmetic, allocation and local work are permitted and charged; each local transaction finishes before the next source action, and all third-completing-letter writes finish before the latch. No fixed transaction latency is assumed.
+
+The selected counts $A,B$ start at zero. Before the third latch an actual $\alpha$ increments $A$ and an actual $\beta$ increments $B$, including partial seed pairs and partial payload parses. They refer to this selected acquired past and hold after its latch. These are newly retained counts when no such selected bank already exists; they are not terminal counts supplied in advance. A live predictive bank that continues through the fourth segment is a separate charged bank. The selected bank and the supplementary data below are held together in the same record. A local recovery query can read that record; a recipient can read it only under explicit augmented delivery, with transmission, receiver storage and output charged as in Hypothesis 7.1. The original bare-snapshot recipient and selected-marker decoder acquire no new inputs automatically.
+
+For the conditional capacity statements the provided past boundary consists exactly of the acquired counts and the finite seed/marker/parser fields described below, together with fields determined by them. Additional native return totals, an archived raw past or any other past-dependent readout are not supplementary side information in those statements. Original readable state and any unbounded original counters still have their own costs; the construction neither uses them as rank storage nor removes them from the source. Providing additional distinctions changes the fiber and its capacity question. There is no reset, source copy, new Stop, test or acceptance oracle, prior resampling, clock, inaccessible-past query or post-Stop Read.
+
+**Definition 18.2 (finite projection and current dictionaries).** Write $v$ for the completed marker prefix, $t=|v|$ and $w=|v|_1$. The finite projection $\kappa$ has the following 47 possible tags:
+
+$$
+s,\ s_\alpha,\ s_\beta;\qquad
+P_{\rho,v},\ Q_{\rho,v}\quad(\rho\in\{0,1\},\ |v|<3);\qquad
+L_{\rho,v}\quad(\rho\in\{0,1\},\ |v|=3).
+\tag{SC.40}
+$$
+
+Here $P$ is the original segment-entry phase $p_{t+1}$, $Q$ its pending-$\beta$ phase, and $L$ records the cut just after third-marker writes and before any fourth Read. This is a projection of the actually available fields, not the complete source configuration space and not a privately retained marker word. Before seed acceptance, the original seed phase gives the first three tags. After acceptance $\rho$ is the actual seed. For $t=0$ the marker prefix is empty; for $t=1$ it is $Z$; for $t=2$ it is $(Z,w-Z)$; for $t=3$ it is recovered by Theorem 6.2's complete table. The original phase supplies $P$ versus $Q$, and the original latch state supplies $L$. Thus every tag is computed from existing written fields, including all-equal triples. Remaining original finite syndromes and selector fields are determined by the same seed, marker prefix and phase and remain charged.
+
+Let $\mathcal P_\kappa(A,B)$ be all legal finite raw prefixes from the initialized original parser ending at this tag with these acquired counts, with no earlier crossing of the third latch. At a latch tag it includes exactly the histories first completing the third marker at their final letter. Its cardinality is $G_\kappa(A,B)$. Negative count arguments give zero. The empty history lies only in $\mathcal P_s(0,0)$, whose size is one. These dictionaries include every return visit to a parser state, rather than just first visits. Every member has positive cylinder mass under every such $\mu$, since every finite raw letter word has positive mass and parsing is deterministic. They are sets of attainable histories for analysis; the observer is not given their literal elements.
+
+**Theorem 18.3 (source-specific counting certificate, including incomplete parses).** Define
+
+$$
+E(a,b)=
+\begin{cases}
+\displaystyle\binom{(a+b)/2}{a/2},&a,b\in2\mathbb N,\\
+0,&\text{otherwise}.
+\end{cases}
+\tag{SC.41}
+$$
+
+Then $G_s(A,B)=E(A,B)$, $G_{s_\alpha}(A,B)=E(A-1,B)$ and $G_{s_\beta}(A,B)=E(A,B-1)$. For $P_{\rho,v}$ or $Q_{\rho,v}$ put $e=0$ or $1$, respectively, and for $L_{\rho,v}$ put $e=0$. Set
+
+$$
+\begin{aligned}
+a&=A-(1+t-w),& b&=B-(1+2w+e),\\
+d&=t+1\quad(t<3),&d&=3\quad(t=3),\\
+\mathcal S(a,b)&=\{j\in\mathbb N:j\le\min(a,b),\ a-j,b-j\in2\mathbb N\}.
+\end{aligned}
+\tag{SC.42}
+$$
+
+An empty feasible set contributes zero, including any negative margin. For both seeds and every admissible marker prefix,
+
+$$
+G_\kappa(A,B)=
+\sum_{j\in\mathcal S(a,b)}
+\binom{(a+b-2j)/2}{(a-j)/2}\binom{j+d-1}{d-1}.
+\tag{SC.43}
+$$
+
+In particular $G_{L_{1,100}}(A,B)=F(A,B)$ of (SC.8), without an acceptance condition. For any nonempty dictionary of acquired length $n=A+B$, $1\le G_\kappa(A,B)\le2^n$.
+
+Proof. At $s$ the word is any ordered string of rejected pairs $X,Y$. Its counts are $(2p,2q)$ and it has $\binom{p+q}{p}$ possibilities, including the empty string. At either pending seed state append its single pending letter. These descriptions include arbitrarily many rejected pairs and all subsequent returns to $s$.
+
+After seed acceptance the unique partial normal form is
+
+$$
+u\,s_\rho\mid
+\left(\prod_{i=1}^{t}(\beta\alpha)^{j_i}c_{v_i}\right)
+(\beta\alpha)^{j_{t+1}}\beta^e\qquad(t<3),
+\tag{SC.44}
+$$
+
+with $u\in\{X,Y\}^{*}$ and nonnegative return counts. At $L$ use the complete form (SC.1), with three return slots and no fourth-segment factor. The original seed/parser table uniquely parses both forms and their pending letters. Conversely each displayed tuple reaches that tag and never previously crosses the latch. Returns in the current segment are included even when the tag was already visited. The accepted pair contributes $(1,1)$, completed markers contribute $(t-w,2w)$, the pending letter contributes $(0,e)$, and $j$ total returns contribute $(j,j)$. Thus the retry counts are $(a-j)/2,(b-j)/2$. Their ordering count is the first binomial in (SC.43), and distributing returns among $d$ slots gives the second. Uniqueness makes this a disjoint exhaustive count, for $j=0$, either absent retry kind and every pending phase as well. At $L_{1,100}$ the margins are $A-3,B-3$ and $d=3$, exactly (SC.6)–(SC.8). The binary length-$n$ ambient set gives $G\le2^n$. $\square$
+
+## 19. One causally updated rank and actual-image recovery
+
+**Definition 19.1 (original edges and rank transaction).** The selected-history edges on (SC.40) are
+
+$$
+\begin{array}{c|cc}
+\text{old tag}&\alpha&\beta\\ \hline
+s&s_\alpha&s_\beta\\
+s_\alpha&s&P_{0,\varepsilon}\\
+s_\beta&P_{1,\varepsilon}&s\\
+P_{\rho,v}&D_{\rho,v0}&Q_{\rho,v}\\
+Q_{\rho,v}&P_{\rho,v}&D_{\rho,v1}
+\end{array}
+\quad
+D_{\rho,vx}=
+\begin{cases}P_{\rho,vx},&|vx|<3,\\L_{\rho,vx},&|vx|=3.
+\end{cases}
+\tag{SC.45}
+$$
+
+There are no outgoing selected-history edges from $L$; the actual source continues with its unchanged fourth segment. Order tags first as $s,s_\alpha,s_\beta$, then payload tags by $(\rho,|v|,v,\text{phase})$ with $0<1$ and $P<Q$, then latch tags by $(\rho,v)$. Order incoming edges to each tag by their source tag and then by $\alpha<\beta$. Every target has at most two incoming edges. An incoming edge includes its old tag, not just its letter: for example $s_\beta\xrightarrow{\alpha}P_{1,\varepsilon}$ and $Q_{1,\varepsilon}\xrightarrow{\alpha}P_{1,\varepsilon}$ are different blocks.
+
+Initialize the sole supplementary rank $r=0$. Suppose the actual returned letter $x$ takes $\kappa$ to $\kappa'$. First acquire the new counts $(A',B')$. If $\delta_\alpha(y)=\mathbf1\{y=\alpha\}$ and $\delta_\beta(y)=\mathbf1\{y=\beta\}$, write
+
+$$
+\begin{aligned}
+O_{\kappa,x}(A',B')&=
+\sum_{(\eta,y)<(\kappa,x)\ \text{incoming to }\kappa'}
+G_\eta(A'-\delta_\alpha(y),B'-\delta_\beta(y)),\\
+r'&=r+O_{\kappa,x}(A',B').
+\end{aligned}
+\tag{SC.46}
+$$
+
+The count calculation uses (SC.41)–(SC.43) and the fixed installed grammar, not a table of the observed past. The old tag, actual letter and post-Read counts suffice. Complete this rank/count transaction and all prescribed original marker writes before the third latch, then hold the same selected rank/count/record bank through every fourth-segment event and original Stop. No $U$ word or persistent return-vector counters are needed for this realization.
+
+**Theorem 19.2 (all-prefix acquired capacity and inverse).** Under Hypothesis 18.1, for every fixed $\mu$ and every legal finite acquired prefix up to and including its first third latch, (SC.46) is adapted to the original acquired filtration and gives a bijection
+
+$$
+\mathcal P_\kappa(A,B)\ \longleftrightarrow\
+\{0,\ldots,G_\kappa(A,B)-1\}.
+\tag{SC.47}
+$$
+
+Its inverse uses only the current tag, acquired counts and rank, and reconstructs the entire actually acquired raw prefix. At $L_{1,100}$ the held supplementary alphabet has exactly $F(A,B)$ values, with $\lceil\log_2F(A,B)\rceil$ fixed-fiber data bits, attaining Theorem 9.3's terminal static minimum causally from the first paid Read. The same statement with $G_{L_{\rho,v}}$ holds for both seeds and all marker triples. It is a supplementary alphabet statement relative to the declared side information, not a minimum for the complete observer.
+
+Proof. Reuse counted-block enumeration and its interval inverse from Cover, *Enumerative Source Encoding*, §I Propositions 1–2 and inverse algorithm, also used in Boundary Dynamics §102.4. Here the concrete block certificates are (SC.41)–(SC.45). Apart from the empty base, delete the last letter of any dictionary member. Its unique original parser path gives one incoming edge and a predecessor in the indicated count dictionary. Conversely appending that edge's letter to any such predecessor gives a member of precisely that block. Two different incoming edges cannot give the same raw word: its parser path and last letter are deterministic. This remains true for shared incoming letters and for return visits to the same state. Thus the predecessor sizes sum to the target size and their ordered intervals partition it, with zero-size blocks skipped.
+
+Induct on $A+B$. The empty dictionary has only rank zero. Each last-edge block inherits its predecessor's contiguous bijective ranks; adding the preceding block sizes gives exactly its target interval. This proves (SC.46)–(SC.47). To invert, select the unique interval containing a valid rank, subtract its offset, remove its letter count and pass to its old tag. Each step decreases $A+B$; it ends at $s,(0,0),0$. Reversing these recovered letters gives the actual word, without consulting any discarded record or source. The acquired-count initialization and deterministic transactions give filtration adaptation; the third transaction uses no future count or letter. Theorem 18.3 identifies the terminal count dictionary with the already supplied $F$, and Theorem 9.3 supplies its matching lower bound, even with all original future $V$.
+
+For other terminal tags the same lower-bound argument applies: every member has the same positive mass $Z_{A,B}$ and the common next source phase is $p_4$. Every complete legal fourth-segment word is positive after each member and has the same ratio (SC.15). The seed and finite marker fields are fixed within the dictionary. Hence the original future cannot separate two equal supplementary labels on that dictionary. This is the original-source instantiation of the existing actual-image and finite-label criteria, not a new generic coding theorem. $\square$
+
+**Theorem 19.3 (prefix sharpness and no larger earlier data alphabet).** Fix a nonempty $\mathcal P_\kappa(A,B)$. Relative to Hypothesis 18.1's provided boundary, any deterministic observer that must recover $H_3$ on every positive finite completion must have at least $G_\kappa(A,B)$ distinct supplementary persistent configurations on this prefix fiber. The rank attains this number. Along every actual history completing at $L_{\rho,v}$ with terminal size $F_v=G_{L_{\rho,v}}(A_3,B_3)$,
+
+$$
+G_{\kappa_j}(A_j,B_j)\le F_v\qquad(0\le j\le A_3+B_3).
+\tag{SC.48}
+$$
+
+Consequently no earlier committed rank on that history needs more than $\lceil\log_2F_v\rceil$ data bits, although final counts and $F_v$ are not available early.
+
+Proof. Every pre-latch tag admits a common finite legal completion: finish a pending seed with an unequal letter if necessary, then complete remaining markers by a fixed choice; in a pending payload phase use a completing $\beta$ or a returning $\alpha$ before that choice. This choice depends only on the tag. All prefixes in one dictionary have the same length and parser/finite-record fields; appending the same completion leaves their raw targets distinct and gives common terminal counts and marker records. If two supplementary configurations were identical, determinism on this common continuation would leave them identical. They could not both reconstruct their different $H_3$, even after the same positive original fourth future. Any other persistent distinction used to avoid this collision is itself supplementary state in this contract. A larger supplied past boundary is a different conditional question.
+
+For (SC.48), appending any actual next letter injects the entire current dictionary into its next dictionary, not merely its realized member. The actual remaining suffix likewise gives an injection into the terminal dictionary. This proves monotonicity and the terminal upper bound without early knowledge of that suffix. The rank bijection supplies sharpness. $\square$
+
+**Theorem 19.4 (the same held boundary as a relational expression).** On all actual third-latch images for every fixed $\mu$, the selected record $(\rho,w,Q^+,Z,A_3,B_3,r_3)$, the actual raw $H_3$, and the parser-labelled precedence/incidence expression of Definition 7.3 determine one another. Recovery uses the same acquired record throughout the unchanged fourth segment and Stop. A materialized raw word, $U,\mathbf J$ or relational graph is an additional charged output, not a silently retained archive.
+
+Proof. The finite marker table determines $v$ and hence the terminal tag. Theorem 19.2 unpacks its raw prefix. Parsing that word supplies the retry order and each actual return incidence; Theorem 7.4 supplies the inverse relational interpretation. Conversely either that interpretation or the raw word determines the original finite fields, counts and each deterministic rank transaction. These maps are inverses on actual images and refer to one history. They do not place the raw rank in the original marker colex decoder's integer input: that decoder, its dictionary and its defaults remain unchanged. The predictive count/law expression is still only a projection of this chronology; its noninjectivity in §§8–10 remains. $\square$
+
+## 20. Retained bits, arithmetic workspace and output on actual paths
+
+**Theorem 20.1 (charged count-only realization).** At an acquired cut of length $n=A+B$, the exact realization can store its rank in $\lceil\log_2G_\kappa(A,B)\rceil$ data bits, with another $O(\log(n+2))$ bits for selected counts and representation/occupancy metadata. The original finite fields, installed program/model and original source storage are separate. On a completed history put $N=A_3+B_3$ and
+
+$$
+H=1+\lceil\log_2(F_v+1)\rceil+\lceil\log_2(N+2)\rceil.
+\tag{SC.49}
+$$
+
+A count-only implementation of (SC.46), including its persistent rank/count mechanism and temporary arithmetic, has $O(H)$ peak added bits through acquisition and a conservative $O((N+1)^3H^2)$ bit-work bound, hence $O((N+1)^5)$ in the worst case. Chronological materialization of its inverse uses an additional $N$ raw-letter positions and the same-order inverse arithmetic bound. These are sufficient bounds, not exact peak-workspace or total-resource minima.
+
+Proof. Binary counts and register-width/occupancy descriptors need logarithmic length metadata. A rank buffer may use the width computed from the current $G_\kappa(A,B)$; its descriptor is a function of the declared tag/count boundary, not another history-bearing code. Computing that width adds at most one such count query per transaction, and the coefficient itself need not remain stored. A zero-rank singleton fiber needs no rank data bit; a variable-width numerical representation still declares its occupancy, and no integer register is treated as constant-size storage. There are only a fixed number of relevant incoming edges. Each queried predecessor coefficient is a block of the current dictionary, so it is at most its current size and by (SC.48) at most $F_v$.
+
+Compute (SC.43) on demand with a fixed number of integer buffers. It has at most $n+1$ summands. For a binomial $\binom mk$, replace $k$ by $\min(k,m-k)$ and compute successively
+
+$$
+b_0=1,\qquad b_i=b_{i-1}(m-k+i)/i\quad(1\le i\le k).
+\tag{SC.50}
+$$
+
+Each division is exact and the sequence is nondecreasing, ending at $\binom mk$. A feasible summand's two binomials are positive and each is at most the complete queried sum. Their product and every partial sum are also bounded by it. An intermediate numerator in (SC.50) is at most that bound times $n+3$, so all buffers have $O(H)$ bits, including multiplication/division scratch and loop indices. For an infeasible query return zero without constructing a binomial. Evaluating a sum costs $O((n+1)^2)$ such arithmetic steps; schoolbook integer multiplication and division give the deliberately coarse $O((n+1)^2H^2)$ bit bound. Summing over $N$ transactions proves the stated bound. Since $G\le2^n$, $H=O(N+1)$ proves the worst-case envelope. No cardinality cache or literal past is retained between transactions.
+
+Inverse interval selection makes the same bounded queries, with decreasing acquired length, and works on charged scratch copies while leaving the held bank intact. It produces raw letters backwards; filling a paid $N$-letter buffer from its end gives chronological output. Materializing occurrence-labelled relations also pays for those labels and incidences. Output copies, receiver copies and transmission are additional resources. All original seed/retry/return Reads, marker/local writes, routing, allocation, installation and Stop remain paid. This bound ends at the selected latch: arbitrarily many fourth-segment returns, a separate live count bank and their original storage/work are not bounded by $N$. $\square$
+
+**Proposition 20.2 (a concrete singleton family).** For every $m\ge0$ the positive history $X^m s_1c_1c_0c_0$ lies in the $100$ slice with $(A,B)=(2m+3,3)$ and $F(A,B)=1$. Its exact acquired rank is zero at every prefix, and the added count-only acquisition workspace is $O(\log(m+2))$ bits. Retaining its literal rejection word instead uses $m$ data bits before metadata and output.
+
+Proof. In (SC.8), $B-3=0$ forces $j=0,q=0,p=m$, giving the sole summand one. Theorem 19.3 bounds every earlier dictionary by one, so every rank and every queried nonzero block count is at most one. In Theorem 20.1 only the count/index widths then grow. This is a source-realized representation saving on a specific family; it does not improve the unrestricted linear worst-case order or price original source storage and chronological output. $\square$
+
+## 21. Fixed labels and uniform finite-length promises
+
+**Theorem 21.1 (causal capped labels attaining the supplied average law).** Fix an integer $D\ge1$ before the first paid Read. Retain a $D$-valued label $z$ initialized to zero, with the same acquired count/finite-field boundary. In (SC.46) replace the rank write by
+
+$$
+z'=\min\{D-1,z+\min(D,O_{\kappa,x}(A',B'))\}.
+\tag{SC.51}
+$$
+
+For every finite acquired prefix, $z=\min(r,D-1)$, without retaining $r$. On every nonempty terminal $100$ count fiber its image has $\min(D,F(A,B))$ values, and its optimal conditional exact reconstruction success, even with all original $V$ and independent decoder randomization, is the already supplied $\min(D,F(A,B))/F(A,B)$. It has zero error on every member of that fiber exactly when $F(A,B)\le D$. Data alone uses $\lceil\log_2D\rceil$ fixed bits. Exact counters, finite fields, installed $D$, metadata, work and output are not included in that number.
+
+Proof. All offsets are nonnegative. Thus clipping commutes with adding an offset, and replacing that offset by its cap at $D$ leaves clipping at $D-1$ unchanged. Induction proves (SC.51). By Theorem 19.2, ranks traverse the whole interval $0,\ldots,F-1$, whose clipped image has $\min(D,F)$ values. Every actual label $z$ is a valid full rank in that fiber; inverse rank $z$ selects one representative from its label class. Theorem 9.3 then gives the conditional success and zero-error criterion for the actual uniform fiber and fixed common prior. This is an acquired realization of that existing probability law, not a change of prior or selection of favorable histories.
+
+The count calculation can itself be capped, with a distinct arithmetic proof. In (SC.50), stop and return $D$ only after an exact division produces $b_i\ge D$; monotonicity proves that the final binomial is at least $D$. Before that crossing $b_{i-1}<D$, so its numerator is less than $D(n+3)$. Do not cap a numerator before dividing it. Cap the positive feasible products and nonnegative sums at $D$; zero terms stay zero. The identities $\min(D,a+b)=\min(D,\min(D,a)+\min(D,b))$ and the corresponding identity for products of nonnegative integers justify these operations. Therefore offsets capped at $D$ are correct using a fixed number of $O(\log(D+1)+\log(n+2))$-bit buffers, with $O((n+1)^2[1+\log(D+1)+\log(n+2)]^2)$ conservative bit work per transaction. This workspace belongs to (SC.51), rather than being inferred from a residue or an exact-count implementation. $D=1$ gives one label and zero data bits, with its non-data costs still present. $\square$
+
+**Theorem 21.2 (sharp promised data alphabet, original continuation outside it).** For a publicly declared integer $L\ge5$, let
+
+$$
+D_L=\max\{G_{L_{\rho,v}}(A,B):\rho\in\{0,1\},\ |v|=3,\ A+B\le L\}.
+\tag{SC.52}
+$$
+
+Zero-size cells may be included. There is a finite supplementary monitor with $D_L$ rank-label values, separately charged bounded count/metadata storage and a validity flag, that recovers exactly every positive third-latch history of length at most $L$, for both seeds and every marker triple. Relative to its declared terminal boundary, $D_L$ is the least single supplementary data alphabet for that promise. On the restricted $R=1,v=100$ promise with $L\ge6$, replace it by the sharp
+
+$$
+D_L^{100}=\max_{A+B\le L}F(A,B).
+\tag{SC.53}
+$$
+
+The source's behavior outside either promise is unchanged. This is neither a uniformly finite exact all-history device nor a bound on the fourth segment or the entire original machine.
+
+Proof. Install (SC.51) with the appropriate maximum as $D$. Keep exact selected counts while their sum is at most $L$. Before any next count write would exceed $L$, set an absorbing overflow/invalid flag and hold the monitor's counts/label instead of claiming an exact out-of-range count. The original control, finite record writers, latch, fourth segment and Stop continue normally on every path, including infinite noncompletion paths. At its actual latch the same monitor bank is held. No promised completion enters overflow; its terminal full rank is less than its dictionary size, which is at most $D$, so its clipped rank equals its exact rank. In fact its earlier prefix dictionaries inject into that same terminal dictionary by (SC.48); no early saturation can lose a promised past. This also holds on the restricted $100$ promise without providing future seed or marker eligibility before acquired. Histories outside that restricted domain make no promised recovery claim.
+
+A maximizing nonempty terminal cell forces at least $D$ labels by Theorem 19.2's exact-recovery lower bound, even with original future side information. Thus the maximum is necessary and attained as a data alphabet. A shared separately supplied validity flag is not a free extra label: it and its storage are charged; folding invalidity into the data alphabet instead may reserve an additional value. Counters/width metadata cost $O(\log(L+2))$ monitor bits, while the installed $L,D$ descriptions and $\lceil\log_2D\rceil$ label storage have their own cost. On the bounded counting portion, Theorem 21.1 gives $O(\log(D+1)+\log(L+2))$ arithmetic workspace and $O((L+1)^3[1+\log(D+1)+\log(L+2)]^2)$ acquisition bit work. Since $D\le2^L$, this is at most $O((L+1)^5)$.
+
+The maxima can be sized by scanning the $O((L+1)^2)$ count cells for the fixed sixteen terminal tags and computing (SC.43). This charges $O(L+1)$ temporary bits and a conservative $O((L+1)^6)$ initialization bit-work bound, as well as the stored maximum. A public length promise is an analysis/observer-allocation condition and supplies no early Stop or source cutoff. A variable-width exact observer of §§19–20 instead continues growing on every finite prefix; Theorem 10.1 still rules out uniformly finite unrestricted exact chronology retention. $\square$
+
+## 22. Actually acquired degree two with its own counting cost
+
+**Hypothesis 22.1 (exact refinement acquisition).** In addition to Hypothesis 18.1, acquire the exact integer $C$ from zero. On an actual $\alpha$ hold $C$; on an actual $\beta$ write $C'=C+A_{\rm old}$. Include seed/retry/return and completing letters, and finish its write before the same third latch. Hold $C$ thereafter with the selected bank. This is the ordered-pair count (SC.7), with $0\le C\le AB$. Its $O(\log(n+2))$-bit count representation, updates and delivery are paid. It is not inferred from counts, a law, approximate moments or a future readout.
+
+**Theorem 22.2 (refined acquired capacity and same-history inverse).** Let $G_\kappa(A,B,C)$ count the actual prefix dictionary with this extra acquired datum. Its empty base is $G_s(0,0,0)=1$, all other empty cells are zero, and invalid arguments give zero. For $A+B>0$ it obeys
+
+$$
+G_\kappa(A,B,C)=
+\sum_{(\eta,\alpha)\text{ incoming to }\kappa}G_\eta(A-1,B,C)
++\sum_{(\eta,\beta)\text{ incoming to }\kappa}G_\eta(A,B-1,C-A).
+\tag{SC.54}
+$$
+
+Use these sizes in (SC.46)'s ordered predecessor blocks, subtracting $A'$ from $C'$ for a $\beta$ predecessor and zero for an $\alpha$ predecessor. For every fixed $\mu$ and every positive finite acquired prefix this initializes, updates and inverts a rank with exactly $G_\kappa(A,B,C)$ possible values. At $L_{1,100}$ the size is the supplied $F(A,B,C)$ of (SC.11), so its supplementary data alphabet and fixed-class $\lceil\log_2F(A,B,C)\rceil$ data bits are causally attained. Its raw/relational inverse and holding refer to the same history and record as in Theorem 19.4.
+
+For a fixed $D$, clipping this refined additive rank by (SC.51) attains $\min(D,F(A,B,C))/F(A,B,C)$ in every nonempty class. The terminal image of this variable-width rank across all acquired $C$ classes at fixed $(A,B)$ has the sharp $\max_C F(A,B,C)$ label values; this does not choose a threshold from those counts before they are acquired. Averaging the fixed-$D$ success over the actual $C$ distribution gives exactly (SC.18). This does not establish an optimal complete machine or a small-workspace refinement.
+
+Proof. Induction on actual letters gives $C=C(h)$: a new beta contributes precisely one pair for each already acquired alpha. Deleting a final beta therefore subtracts the predecessor alpha count $A$, which equals the current $A$; deleting an alpha contributes no new pair. The same unique last-edge partition as in Theorem 19.2 gives (SC.54), including zero/empty cases. Count cardinalities, ordered interval ranks and inverse are thus justified without enumerating a discarded actual past. Appending a common continuation transforms $C$ by $C(hv)=C(h)+A(h)B(v)+C(v)$, the existing ordered-pair concatenation supplier. Hence a refined prefix fiber embeds into one refined terminal fiber, and the pathwise rank-alphabet bound also holds with the refined terminal size. The completed $100$ dictionary is exactly the normal-form dictionary already classified in Theorem 8.3; no new signature convention or higher-order hierarchy is introduced. Clipping and the fixed-prior uniformity/independence of Theorems 9.2–9.3 give the remaining statements, with actual weights $F(A,B,C)/F(A,B)$. $\square$
+
+**Theorem 22.3 (conservative refined workspace and finite promise).** A sufficient exact calculation of (SC.54) uses $O((n+1)^4)$ temporary bits and $O((n+1)^5)$ bit work per query at length $n$. Recomputing the required queries for each Read gives $O((N+1)^6)$ acquisition bit work and $O((N+1)^4)$ peak added arithmetic workspace through a selected length-$N$ past. Committed rank data is still $\lceil\log_2G_\kappa(A,B,C)\rceil$ bits relative to the acquired side information, plus $O(\log(n+2))$ count/metadata bits and the original finite fields. The count-only $O(H)$ workspace guarantee of Theorem 20.1 is not claimed for this construction.
+
+For the full $N\le L$ promise let $D_L^{(2)}$ be the maximum of $G_{L_{\rho,v}}(A,B,C)$ over all terminal tags and $A+B\le L$; for the $100$ promise use $\max_{A+B\le L,C}F(A,B,C)$. These are sharp single supplementary data alphabets, attained by refined clipping and the same separately charged overflow monitor. Outside the promise the original source continues unchanged.
+
+Proof. Evaluate (SC.54) successively by length $j$. In a length layer, $A$ ranges over $0,\ldots,j$, $B=j-A$, and $C$ over $0,\ldots,AB$, for the fixed 47 tags. Thus there are $O((j+1)^3)$ entries. Each uses at most two additions of predecessor cardinalities; each cardinality is at most $2^j$ and needs $O(j+1)$ bits. Two rolling length layers therefore use $O((n+1)^4)$ bits including addressing metadata. Summing the $O((j+1)^4)$ bit work for $j\le n$ gives the conservative $O((n+1)^5)$ query bound. The table stores public cardinalities, not literal histories; it is released before the next source call. A retained cache would have an additional persistent cost. Summing recomputations over the selected Reads proves the acquisition bound. Refined inverse queries obey the same bound, with a separately paid $N$-letter buffer for chronological materialization.
+
+For clipped ranks, nonnegative addition in (SC.54) commutes with capping every table entry at $D$. Two layers then need $O((n+1)^3[1+\log(D+1)+\log(n+2)])$ temporary bits and $O((n+1)^4[1+\log(D+1)+\log(n+2)])$ bit work per query; this charges loop/address widths as well as capped data. It does not inherit the count-only constant-number-of-buffers guarantee. For finite promises $C\le L^2$, so its exact monitored storage is logarithmic in $L+2$. Theorem 21.2's argument with refined dictionaries proves attainment, lower bounds and outside-promise behavior. A single exact length-layer pass through $L$, scanning terminal entries as they are computed, sizes the refined maximum in $O((L+1)^5)$ bit work and $O((L+1)^4)$ temporary bits; installation and storage of the result remain paid. $\square$
+
+## 23. Supplier scope and remaining recovery boundaries
+
+**Definition 23.1 (provenance of the acquired-boundary bridge).** The source-specific certificate (SC.41)–(SC.44), its original raw-letter transactions, pathwise conditional capacity and charged realization are `repo-derived` ordinary mathematics. They connect Definition 11.2's withheld online attainment to the original seed/retry/return and third-latch domain. Generic enumeration is reused from [Cover, *Enumerative Source Encoding*, §I Propositions 1–2 and inverse algorithm](https://isl.stanford.edu/~cover/papers/transIT/0073cove.pdf), [doi:10.1109/TIT.1973.1054929](https://doi.org/10.1109/TIT.1973.1054929), and Boundary Dynamics §§102.4–102.6. Those repository propositions already rank completed-marker fibers and acquire fixed lossy labels; they do not count or retain the discarded raw seed retries and return placements. Their indexing method is an intermediate supplier here, not a new generic theorem. The source grammar, actual common-prior cylinders, supplied finite records and same-history write/hold/delivery contract come from §§6–11, Future Response Sufficiency §§9,15,21, Full E1 Scope Extension §2 and Source Coherence Continuation.
+
+Actual-image injectivity and factorization are supplied by [LosslessEncodingCriterion](../../../D5/S3/ConceptDynamics/Coding/LosslessEncodingCriterion.lean), `lossless_iff_injective_on_image`, [InductiveSufficiency](../../../D5/S3/ConceptDynamics/Refinement/InductiveSufficiency.lean), `inductive_sufficiency_criterion`, and [CausalStateFactorization](../../../D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.lean), `causal_state_factorization`. [FiniteIdentificationOutputCapacity](../../../D5/S3/ConceptDynamics/ExperimentBoundary/FiniteIdentificationOutputCapacity.lean) supplies finite effective-output capacity, with its own finite/nonempty hypotheses; [ConditionalProbabilityProfileMinimality](../../../D5/S3/ObserverMemory/PredictionFactors/ConditionalProbabilityProfileMinimality.lean) assumes finite source states and is not an unbounded-source acquisition theorem. The degree-two convention/concatenation comes from the SignatureOrderedMoment, TruncatedTensorSignature and BinaryParikhStepTwoBridge suppliers already identified in §8. Generic residual/congruence or coding suppliers alone supply no coefficient certificate for these raw-history dictionaries. These citations are source reuse, with no new Lean application or kernel-verification claim and no external originality claim.
+
+**Definition 23.2 (scope of attainment).** Exact variable-width recovery applies to every positive finite acquired prefix and completion under the specified source and record interface; infinite noncompletion has no terminal selected target. Fixed-$D$ conditional average success uses the actual reachable fibers of one common prior, not an arbitrary posterior mixture. Finite promises govern recovery and monitor allocation while preserving all original menus and fourth-segment/Stop behavior outside them. Data-alphabet minima, exact bit encodings/metadata, original state, selected/live banks, local arithmetic, installation, delivery and output are distinct resource coordinates. The supplied construction proves attainment of the conditional supplementary rank alphabet, with its stated sufficient work/space bounds; it does not minimize total resources or assert optimal latency.
+
+Exact semantic future-law recovery remains the predictive supplier's separate statement; arbitrary-prior effective representation, probability materialization and finite-precision stability are separate obligations. Recovering the acquired raw/relational past does not recover hidden depth, the generated full source, metric space, physical time or a global spacetime. Theorem 10.1's unrestricted finite-memory obstruction and the finite-order loss of §§12–17 remain intact. Wider mutual-recovery conditions and persistent minimal-structure research are not settled by this causal-capacity increment.
+
+## 追加锚（本行以下为增补区）
