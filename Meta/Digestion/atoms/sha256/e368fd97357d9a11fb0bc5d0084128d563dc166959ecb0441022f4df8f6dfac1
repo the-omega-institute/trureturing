@@ -1,0 +1,14 @@
+**定义 20.1（同一轮筛的线性移位算子）。** 固定 $H\in\{H_A,H_B\}$ 与平方自由 $W\ge2$，沿用定义 16.1 的非归一化 Fourier 变换。令 $a=a_{H,W}$，$R_{H,W}=\{r:a(r)=1\}$，并定义
+$$
+(\mathcal C_{H,W}v)(r)=\sum_{t\bmod W}a(r-t)v(t),\qquad
+\mathcal G_{H,W}=\mathcal C_{H,W}^*\mathcal C_{H,W}.
+$$
+$\mathcal C_{H,W}$ 的第 $t$ 列为 $T_ta$；$\mathcal G_{H,W}$ 即定理 16.4 的同一全部移位 Gram。对素数 $q\ge5$ 定义
+$$
+\alpha_q=\min_{1\le k<q}\left|1+e_q(k)+e_q(3k)\right|,
+\qquad
+\alpha=\sqrt{\frac{47-14\sqrt7}{27}}.
+\tag{20.1}
+$$
+这里的条件数均为有限维 $\ell^2$ 算子条件数。以下把式 (16.3) 的 Fourier 乘积分解用于这两种指定三胞胎；循环矩阵的 Fourier 对角化及圆周最小值的初等计算作为中间步骤使用，其来源范围见[循环群文献条目](../../../Library/Fourier/keletikolountzakis2006determination.md)。三点相关的非线性逆映射另有自己的误差问题。
+

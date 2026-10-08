@@ -1,0 +1,24 @@
+**数学引文 13.5（等距更新、正性和经典对角）。** 二阶卷定义 110.1、定理 110.2 给
+
+```math
+\Omega_{n+1}=V_n\Omega_nV_n^\dagger,
+\qquad
+\Xi^{(n+1)}_{ha,kb}=K_{a|h}\Xi^{(n)}_{hk}K_{b|k}^\dagger.
+```
+
+推导。输出标签 $`|h,a\rangle`$ 彼此正交，故
+
+```math
+V_n^\dagger V_n=
+\sum_h|h\rangle\langle h|\otimes\sum_aK_{a|h}^\dagger K_{a|h}=I.
+```
+
+所以 $`V_n`$ 是等距；任意正算子共轭后仍正，有限维迹的循环性给迹一。展开各块即得递归。对角块给经典概率
+
+```math
+p(h)=\mathrm{tr}\Xi^{(n)}_{hh},\qquad
+p(ha)=\mathrm{tr}\bigl(K_{a|h}\Xi^{(n)}_{hh}K_{a|h}^\dagger\bigr).
+```
+
+非对角块保存以后实际允许相干实验可读取的交叉关系，不能从 $`p(h)`$ 反解。若一个经典分支为 $`\mathcal J_{a|h}(\varrho)=\sum_\mu K_{a\mu|h}\varrho K_{a\mu|h}^\dagger`$，必须另供含 $`\mu`$ 的共同环境等距或扩展标签；隐藏 $`\mu`$ 并非已经取得的经典档案。给各 $`K`$ 加依赖历史的相位不改变单个经典分支，却会改变交叉块，因此分支通道名称不足以确定递归的相干部分。证毕。
+

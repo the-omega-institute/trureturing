@@ -1,0 +1,18 @@
+**数学引文 8.1（两条对角线、两种合法提升）。** 金字塔关联与原生接续 §五给
+
+```math
+\mathcal P=
+\mathop{\mathrm{conv}}\nolimits\{v_0,v_2,v_{25},v_3\}
+\cup\mathop{\mathrm{conv}}\nolimits\{v_0,v_5,v_{25},v_3\},
+```
+
+对应将 $`\kappa`$ 选为 $`\kappa_+=\min(X,Y)`$。若 $`X\le Y`$，$`p_2=0`$，落在第二个四面体；若 $`Y\le X`$，$`p_5=0`$，落在第一个。另有
+
+```math
+\mathcal P=
+\mathop{\mathrm{conv}}\nolimits\{v_0,v_2,v_5,v_3\}
+\cup\mathop{\mathrm{conv}}\nolimits\{v_2,v_5,v_{25},v_3\},
+```
+
+对应 $`\kappa_- =\max(0,X+Y-r)`$。$`X+Y\le r`$ 时 $`p_{25}=0`$；反之 $`p_0=0`$。三条顶点差向量的行列式绝对值在四个四面体都为一，各体积 $`1/6`$，交叠只是公共三角面。选择剖分即选择纤维端点，不等于观测到真实关联。
+

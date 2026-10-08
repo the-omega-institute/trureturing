@@ -1,0 +1,27 @@
+**定义 16.1（Fourier 约定及有序任务）。** 以下固定平方自由 $W\ge2$、非空有限 $H$，并假设每个 $q\mid W$ 都有 $1\le\nu_H(q)<q$。令 $a=a_{H,W}$，$e_W(t)=\exp(2\pi it/W)$，所有索引均按 $W$ 取模。对复信号 $f$ 取
+$$
+\widehat f(k)=\sum_{r\bmod W}f(r)e_W(-kr),\qquad
+(T_tf)(r)=f(r-t),\qquad
+\langle u,v\rangle=\sum_r\overline{u(r)}v(r).
+$$
+定义二点相关、三点相关及其双谱
+$$
+C_f(s)=\sum_r\overline{f(r)}f(r+s),\qquad
+C_f^{(3)}(s,t)=\sum_r\overline{f(r)}f(r+s)f(r+t),
+$$
+$$
+\mathcal B_f(k,\ell)=\widehat f(k)\widehat f(\ell)
+\overline{\widehat f(k+\ell)}.
+$$
+实值轮筛中可去掉相关定义内的复共轭。对 $s,t$ 分别作 Fourier 变换，三点相关恰变为 $\mathcal B_f$；二点相关变为 $|\widehat f|^2$。有固定整数原点的任务为
+$$
+P_{H,W}(b)=\sum_{1\le r\le b}a_{H,W}(r)\quad(0\le b<W),
+$$
+$$
+A_H(N;W)=\sum_{1\le n\le N}a_{H,W}(n)
+=\left\lfloor\frac NW\right\rfloor\prod_{q\mid W}(q-\nu_H(q))
++P_{H,W}(N\bmod W).
+\tag{16.1}
+$$
+最后一个恒等式按完整周期和最后前缀分解，因而不要求任何素数分布估计。
+

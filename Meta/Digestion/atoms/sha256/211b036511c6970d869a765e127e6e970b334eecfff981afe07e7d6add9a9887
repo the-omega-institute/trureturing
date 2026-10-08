@@ -1,0 +1,7 @@
+**定义 18.1（真实差值核）。** 取实偶、非负的 $\rho\in L^1(\mathbb R)$，$\int\rho=1$，定义
+$$
+K(t)=\int_{\mathbb R}\rho(u)e^{2\pi iut}\,du,\qquad
+G_{ij}=K(x_i-x_j),
+$$
+其中 $x_1,\ldots,x_N$ 为互异实数。该 $G$ 是单位对角实对称 Gram。
+

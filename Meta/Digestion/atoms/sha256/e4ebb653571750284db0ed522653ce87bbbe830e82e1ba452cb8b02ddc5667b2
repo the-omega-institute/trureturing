@@ -1,0 +1,54 @@
+**推论 20.3（素数截断增长时的稳定性成本）。** 对实数 $z\ge3$，令
+$$
+W_z=\prod_{q\le z}q,\qquad r_z=\#\{q:5\le q\le z\}.
+$$
+存在有限正常数
+$$
+C_{\mathrm{loc}}
+=\prod_{q\ge5}\frac{\alpha_q}{\alpha}\in(0,\infty)
+$$
+使得
+$$
+\sigma_{\min}(\mathcal C_{H,W_z})
+=C_{\mathrm{loc}}\alpha^{r_z}(1+o(1)).
+\tag{20.5}
+$$
+更明确地，令 $C_z=\prod_{5\le q\le z}\alpha_q/\alpha$，则
+$$
+0\le\log\frac{C_{\mathrm{loc}}}{C_z}
+\le\frac{7\pi^2}{\alpha^2\lfloor z\rfloor}.
+$$
+因此式 (20.5) 的相对因子可限定在
+$[\exp(-7\pi^2/(\alpha^2\lfloor z\rfloor)),1]$，误差为相对 $O(1/z)$。
+此外，完全不借助素数定理即有
+$$
+\frac{\log\kappa_2(\mathcal C_{H,W_z})}{\log W_z}\longrightarrow1,
+\qquad
+\frac{\log\kappa_2(\mathcal G_{H,W_z})}{\log W_z}\longrightarrow2.
+\tag{20.6}
+$$
+因此两个算子的条件数都随截断无界增长；$\mathcal C$ 的绝对逆范数亦由式 (20.5) 发散。
+
+**证明。** 式 (20.4) 给
+$$
+0\le\log\frac{\alpha_q}{\alpha}
+\le\frac12\log\left(1+\frac{14\pi^2}{\alpha^2q^2}\right)
+\le\frac{7\pi^2}{\alpha^2q^2}.
+$$
+右侧在全部素数上可求和，所以正无穷乘积收敛到有限非零值，得到式 (20.5)。尾部再用
+$\sum_{q>z}q^{-2}\le\sum_{n>\lfloor z\rfloor}n^{-2}\le1/\lfloor z\rfloor$，
+给出所列显式相对误差。又 $0<\alpha<1$，素数无穷性给 $r_z\to\infty$，因而最小奇异值趋零。
+
+令 $\pi(z)$ 仅表示不超过 $z$ 的素数个数。对任意固定 $Q>1$，
+$$
+\log W_z\ge\bigl(\pi(z)-\pi(Q)\bigr)\log Q.
+$$
+先令 $z\to\infty$，再令 $Q\to\infty$，得 $\pi(z)=o(\log W_z)$。局部计数给
+$$
+\log|R_{H,W_z}|
+=\log W_z-\log6+\sum_{5\le q\le z}\log(1-3/q)
+=\log W_z+O(\pi(z)),
+$$
+因为每个 $q\ge5$ 有 $\log(2/5)\le\log(1-3/q)<0$。式 (20.5) 同时给
+$\log\sigma_{\min}=r_z\log\alpha+O(1)=O(\pi(z))$。代入式 (20.3) 即得式 (20.6)。∎
+

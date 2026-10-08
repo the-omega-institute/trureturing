@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-pyramid-determinant-and-native-guard-continuation"
+path = "docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_DETERMINANT_AND_NATIVE_GUARD_CONTINUATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []
