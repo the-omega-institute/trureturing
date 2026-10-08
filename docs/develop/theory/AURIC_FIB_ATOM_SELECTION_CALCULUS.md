@@ -1261,12 +1261,12 @@ R_{\mathrm{empty},3}=q(H^2d_I+d_3).
 ```math
 \boxed{
 (j,I,\text{高位置在左的约定})
-\xrightarrow{\text{位置选择标签}}\mathsf F_j[I]
+\xrightarrow{\sigma_j}\mathsf F_j[I]
 \xrightarrow{\widehat E_j}\mathbb T_{\varnothing}.
 }
 ```
 
-这里标签箭头只是把 $`(j,I)`$ 记为选择项；编译箭头的输入域是 $`I\in\mathcal S`$ 和已给窗口族，不是任意树。该选择项另有占位及组成读出：
+这里 $`\sigma_j`$ 的完整标签为“位置选择标签”；该标签箭头只是把 $`(j,I)`$ 记为选择项；编译箭头的输入域是 $`I\in\mathcal S`$ 和已给窗口族，不是任意树。该选择项另有占位及组成读出：
 
 ```math
 \mathcal S\xrightarrow{v}\{v_I:I\in\mathcal S\}\subset\mathbb R^3
@@ -1298,9 +1298,11 @@ R_{\mathrm{empty},3}=q(H^2d_I+d_3).
 ```math
 \boxed{
 p\xrightarrow{\mathcal M}(U,V,S,T)
-\xrightarrow{\text{定理 8.2 的合法域逆式}}p.
+\xrightarrow{\mathcal M^{-1}}p.
 }
 ```
+
+这里 $`\mathcal M^{-1}`$ 的完整标签为“定理 8.2 的合法域逆式”，定义域是定理 8.2 所列的合法矩域。
 
 两次均值压缩分别增加的遗漏是正方形方向和 FIB 组成方向：
 
@@ -1400,15 +1402,17 @@ s\,h(I)=0,\quad s'=\ell(I);
 ```math
 \boxed{
 \begin{aligned}
-\alpha&\xrightarrow{\text{生成完整轨道}}(T_n)_{n\ge0}
+\alpha&\xrightarrow{\tau}(T_n)_{n\ge0}
 \xrightarrow{\mathrm{win}_j}(A_j,B_j,C_j),\\
 (j,I,\text{编译约定})
-&\xrightarrow{\text{合法位置选择}}\mathsf F_j[I]
+&\xrightarrow{\sigma_j}\mathsf F_j[I]
 \xrightarrow{\widehat E_j}\text{所选有序来源或独立空贡献},\\
 p\in\Delta_4&\xrightarrow{\mathcal M}(U,V,S,T)
-\xrightarrow{\text{已声明的同历史任务}}(\nu_p,\nu_{p,\mathrm{empty},3}).
+\xrightarrow{\mathcal R}(\nu_p,\nu_{p,\mathrm{empty},3}).
 \end{aligned}}
 ```
+
+三行中的符号分别保留以下完整标签：$`\tau`$ 为“生成完整轨道”，按定义 1.1 生成轨道；$`\sigma_j`$ 为“合法位置选择”，沿用定义 12.1 的位置标签映射；$`\mathcal R`$ 为“已声明的同历史任务”，其两分量分别依照第十一节两条已声明动作历史给出回复律。
 
 第一行的窗口族按定义 1.2 从整条轨道取指定索引，不是从一棵任意 $`T_n`$ 逆推出窗口或选择；第二行把该族作为已给来源环境。确定模式的像上反查、均值纤维、精确总体矩、实际经验记录和附加相干权限都保持各自范围。普通证明覆盖声明的数学域，不由有限样本、几何图像或来源引文扩张成未给出的操作能力。
 
