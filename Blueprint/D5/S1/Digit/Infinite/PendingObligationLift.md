@@ -42,3 +42,4 @@ There are length(r)=length(w)+1 observed departure coordinates and the same numb
 - Truth anchor: `D5/S1/Digit/Infinite/PendingObligationLift.result`
 - Dependency: [D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth](ClosedObservationCommonTailWidth.md)
 - Dependency: [D5/S1/Digit/Infinite/FixedTailClosedBudget](FixedTailClosedBudget.md)
+- Dependency: [D5/S1/Digit/Infinite/LateLabelStateBound](LateLabelStateBound.md)
