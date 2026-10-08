@@ -6,11 +6,13 @@
    utility: kind=checker; basis=terminal=gid:D5/S3/Quantum/Dynamics/CycleUniformMixing/CycleTwentyOneNoUniformMixing.result; instance=D5/S3/Quantum/Dynamics/CycleUniformMixing/CycleTwentyOneNoUniformMixing.no_common_nonzero_root
    digest: The cycle on twenty-one vertices has no instantaneous uniform mixing. -/
 /-
-proof_shape: D5.S3.Quantum.Dynamics.CycleUniformMixing.CycleTwentyOneNoUniformMixing.Fourier.no_uniform_mixing_of_no_common_nonzero_root: content; spectral-to-polynomial reduction from the matrix exponential to ten phase equations.
-escape_witness: D5.S3.Quantum.Dynamics.CycleUniformMixing.CycleTwentyOneNoUniformMixing.Fourier.no_uniform_mixing_of_no_common_nonzero_root; used by D5/S3/Quantum/Dynamics/CycleUniformMixing/CycleTwentyOneNoUniformMixing.result.
+proof_shape: D5.S3.Quantum.Dynamics.CycleUniformMixing.CycleTwentyOneNoUniformMixing.Fourier.no_uniform_mixing_of_no_common_nonzero_root: bind-only; consumer=D5/S3/Quantum/Dynamics/CycleUniformMixing/CycleTwentyOneNoUniformMixing.result (via c21_not_uniform).
+proof_shape: D5.S3.Quantum.Dynamics.CycleUniformMixing.CycleTwentyOneNoUniformMixing.clear_eval: content; structural induction over Poly proves that evaluation commutes with clearing Laurent denominators under a multiplicative F.
+escape_witness: D5.S3.Quantum.Dynamics.CycleUniformMixing.CycleTwentyOneNoUniformMixing.clear_eval; live path: result -> c21_not_uniform -> no_common_nonzero_root -> base_zero0 -> clear_eval.
 admission_basis: escape-witness
 Direct frozen dependencies: D5/S3/Combinatorics/NarayanaStrip/CiglerCycleWalkFolding.cycleAdj; declaration statement_id=sha256:e87ed8afe3a2edce2a7564b1579ff1b0704b93202e9018a9b9776f8d21a2dd3a.
-Public theorem proof_shape: content: Fourier.no_uniform_mixing_of_no_common_nonzero_root (escape_witness: CycleTwentyOneNoUniformMixing.Fourier.no_uniform_mixing_of_no_common_nonzero_root); result (escape_witness: CycleTwentyOneNoUniformMixing.Fourier.no_uniform_mixing_of_no_common_nonzero_root).
+Public theorem proof_shape: bind-only: Fourier.no_uniform_mixing_of_no_common_nonzero_root; consumer=D5/S3/Quantum/Dynamics/CycleUniformMixing/CycleTwentyOneNoUniformMixing.result (via c21_not_uniform).
+Public theorem proof_shape: content: result (escape_witness: CycleTwentyOneNoUniformMixing.clear_eval; its live path reaches same-delivery content).
 Information-escape registration is paused under CLAUDE.md §3.9.
 -/
 import D5.S3.Quantum.Dynamics.CycleUniformMixing.OrbitIncidenceChecker
