@@ -264,7 +264,7 @@ public sealed class LeanCacheChunkScriptTests
         Assert.Contains("\"status\":\"failed\"", result.Text, StringComparison.Ordinal);
         Assert.Contains("suffix requires a run ID and attempt", result.Text, StringComparison.Ordinal);
         Assert.False(fixture.HasRelease);
-        Assert.Equal(new[] { "lean-report LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json" }, fixture.BuildRuns);
+        Assert.Equal(new[] { "lean-report LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build LEAN_REPORT=.lake/build/stratalint/raw-lean-report.json" }, fixture.BuildRuns);
     }
 
     [Fact]

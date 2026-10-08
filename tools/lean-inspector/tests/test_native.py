@@ -44,6 +44,9 @@ class NativeRoutingTests(NativeDependencyTestSupport, NativeRegConsumerTests,
                          NativeInterfaceConsumerTests, unittest.TestCase):
     pass
 
+class NativeLocalReportTests(NativeDependencyTestSupport, NativeLocalReportConsumerTests, unittest.TestCase):
+    pass
+
 class NativeReportTests(NativeDependencyTestSupport, NativeReportConsumerTests,
                         NativeRegSupport, unittest.TestCase):
     pass
