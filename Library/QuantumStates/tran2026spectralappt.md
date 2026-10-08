@@ -7,7 +7,7 @@ doi: 10.48550/arXiv.2609.18568
 url: https://arxiv.org/abs/2609.18568v1
 claim: "Theorem A gives a strict qutrit outer purity bound; the remark following it leaves exact maximum APPT purity open."
 strata_touched:
-  - D5/S3/Quantum/Entanglement/AbsolutePPT
+  - D5/S3/Quantum/Entanglement/AbsolutePPT/QutritQuditMaximumPurity
 license: citation-only
 triage: anchor
 ---
