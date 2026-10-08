@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:0f8ccc3e95154354bba519413f6e00a2684e586a0955073f8d62220c2a8dfd9c
   normalized_sha256: sha256:0f8ccc3e95154354bba519413f6e00a2684e586a0955073f8d62220c2a8dfd9c
 cas_ref: sha256:0f8ccc3e95154354bba519413f6e00a2684e586a0955073f8d62220c2a8dfd9c
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Recurrence/Invariants/CloitreActualGlobalConvergence.result
+    target_statement_id: sha256:eac487f333c25271509b46e6ec3b91a468a1da3bdfe8cab525d2378289accb6f
 receipts:
   unresolved_subitems: []
