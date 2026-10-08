@@ -96,7 +96,7 @@ four forms.
   second-row run of the same length, so the form records only how the column strings cluster by their
   bits above that qubit.
 - *Fixed $n$.* A composition with $k$ parts and largest part $a$ occurs on $n$ qubits exactly when
-  $\lceil\log_2k\rceil+\lceil\log_2a\rceil\le n-1$. Exhaustive enumeration agrees for $p\le5$ and
+  $\lceil\log_2k\rceil+\lceil\log_2a\rceil\le n-1$. Exhaustive enumeration agrees for $2\le p\le5$ and
   $n\le7$; for example $p=5$, $n=4$ has 13 forms. Only the bound $n\ge2\lceil\log_2p\rceil+1$
   is formalized.
 - *Composite $p$.* The count of $2\times p$ forms does not use primality. For composite $p$ a $2p$-term
