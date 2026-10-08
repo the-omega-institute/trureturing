@@ -22,37 +22,37 @@ noncomputable section
 open Matrix
 open scoped ComplexOrder
 
-def X₁ : Matrix (Fin 2) (Fin 2) ℝ := !![1, 0; 0, -2]
-def X₂ : Matrix (Fin 2) (Fin 2) ℝ := !![-2, 0; 0, 1]
-def X₃ (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
+def X1 : Matrix (Fin 2) (Fin 2) ℝ := !![1, 0; 0, -2]
+def X2 : Matrix (Fin 2) (Fin 2) ℝ := !![-2, 0; 0, 1]
+def X3 (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
   !![Real.cos θ, Real.sin θ; Real.sin θ, -Real.cos θ]
-def γ : ℝ := 4 / (1 + Real.sqrt 3)
-def β (θ : ℝ) : ℝ :=
+def gamma : ℝ := 4 / (1 + Real.sqrt 3)
+def beta (θ : ℝ) : ℝ :=
   Real.sqrt 3 * Real.sqrt ((6 - 4 * Real.sqrt 3) * Real.sin θ +
     6 * Real.cos θ - 4 * Real.sqrt 3 + 13)
-def C₁ : Matrix (Fin 2) (Fin 2) ℝ :=
+def C1 : Matrix (Fin 2) (Fin 2) ℝ :=
   (1 / Real.sqrt 3 - 1 / 2 : ℝ) • !![1, 1; 1, 1]
-def C₂ (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
+def C2 (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
   (1 / 12 : ℝ) •
-    !![3 * Real.cos θ + 8 * Real.sqrt 3 - 9 - β θ, 3 * Real.sin θ - 2 * Real.sqrt 3 + 3;
-       3 * Real.sin θ - 2 * Real.sqrt 3 + 3, -3 * Real.cos θ + 8 * Real.sqrt 3 - 3 - β θ]
-def C₃ (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
-  -C₁ - C₂ θ + (1 / 2 : ℝ) • X₃ θ + (γ / 2) • 1
-def C₄ (_θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
-  -C₁ + (1 / 3 : ℝ) • X₁ + (1 / 3 : ℝ) • X₂ + (γ / 3) • 1
-def C₅ (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
-  -C₂ θ - (1 / 3 : ℝ) • X₁ + (γ / 3) • 1
-def C₆ (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
-  C₁ + C₂ θ - (1 / 3 : ℝ) • X₂ - (1 / 2 : ℝ) • X₃ θ - (γ / 6) • 1
+    !![3 * Real.cos θ + 8 * Real.sqrt 3 - 9 - beta θ, 3 * Real.sin θ - 2 * Real.sqrt 3 + 3;
+       3 * Real.sin θ - 2 * Real.sqrt 3 + 3, -3 * Real.cos θ + 8 * Real.sqrt 3 - 3 - beta θ]
+def C3 (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
+  -C1 - C2 θ + (1 / 2 : ℝ) • X3 θ + (gamma / 2) • 1
+def C4 (_θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
+  -C1 + (1 / 3 : ℝ) • X1 + (1 / 3 : ℝ) • X2 + (gamma / 3) • 1
+def C5 (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
+  -C2 θ - (1 / 3 : ℝ) • X1 + (gamma / 3) • 1
+def C6 (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
+  C1 + C2 θ - (1 / 3 : ℝ) • X2 - (1 / 2 : ℝ) • X3 θ - (gamma / 6) • 1
 def C (i : Fin 6) (θ : ℝ) : Matrix (Fin 2) (Fin 2) ℝ :=
-  ![C₁, C₂ θ, C₃ θ, C₄ θ, C₅ θ, C₆ θ] i
+  ![C1, C2 θ, C3 θ, C4 θ, C5 θ, C6 θ] i
 
 def claim : Prop := ∀ θ : ℝ, θ ∈ Set.Icc 0 (Real.pi / 2) →
   (∀ i : Fin 6, ((C i θ).map (↑) : Matrix (Fin 2) (Fin 2) ℂ).PosSemidef) ∧
-  C 0 θ - 2 • C 1 θ + C 2 θ + C 3 θ - 2 • C 4 θ + C 5 θ = X₁ ∧
-  C 0 θ + C 1 θ - 2 • C 2 θ + C 3 θ + C 4 θ - 2 • C 5 θ = X₂ ∧
-  C 0 θ + C 1 θ + C 2 θ - C 3 θ - C 4 θ - C 5 θ = X₃ θ ∧
-  ∑ i, C i θ = γ • 1
+  C 0 θ - 2 • C 1 θ + C 2 θ + C 3 θ - 2 • C 4 θ + C 5 θ = X1 ∧
+  C 0 θ + C 1 θ - 2 • C 2 θ + C 3 θ + C 4 θ - 2 • C 5 θ = X2 ∧
+  C 0 θ + C 1 θ + C 2 θ - C 3 θ - C 4 θ - C 5 θ = X3 θ ∧
+  ∑ i, C i θ = gamma • 1
 
 private theorem posSemidef_of_trace_det (u v w : ℝ)
     (ht : 0 < u + w) (hd : 0 ≤ u * w - v ^ 2) :
@@ -84,27 +84,27 @@ private theorem posSemidef_of_trace_det (u v w : ℝ)
     · ring
 
 private theorem affine_eqs (θ : ℝ) :
-    C 0 θ - 2 • C 1 θ + C 2 θ + C 3 θ - 2 • C 4 θ + C 5 θ = X₁ ∧
-    C 0 θ + C 1 θ - 2 • C 2 θ + C 3 θ + C 4 θ - 2 • C 5 θ = X₂ ∧
-    C 0 θ + C 1 θ + C 2 θ - C 3 θ - C 4 θ - C 5 θ = X₃ θ ∧
-    ∑ i, C i θ = γ • 1 := by
+    C 0 θ - 2 • C 1 θ + C 2 θ + C 3 θ - 2 • C 4 θ + C 5 θ = X1 ∧
+    C 0 θ + C 1 θ - 2 • C 2 θ + C 3 θ + C 4 θ - 2 • C 5 θ = X2 ∧
+    C 0 θ + C 1 θ + C 2 θ - C 3 θ - C 4 θ - C 5 θ = X3 θ ∧
+    ∑ i, C i θ = gamma • 1 := by
   simp only [two_smul]
   refine ⟨?_, ?_, ?_, ?_⟩ <;>
     ext i j <;> fin_cases i <;> fin_cases j <;>
-    simp [C, C₃, C₄, C₅, C₆, C₁, C₂, X₁, X₂, X₃, Fin.sum_univ_six,
+    simp [C, C3, C4, C5, C6, C1, C2, X1, X2, X3, Fin.sum_univ_six,
       Matrix.smul_apply, Matrix.add_apply, Matrix.sub_apply, smul_eq_mul] <;> ring
 
 private theorem scalar_bounds (θ : ℝ) (hθ : θ ∈ Set.Icc 0 (Real.pi / 2)) :
-    0 < β θ ∧
-    (β θ) ^ 2 = 9 * (Real.cos θ + 1) ^ 2 +
+    0 < beta θ ∧
+    (beta θ) ^ 2 = 9 * (Real.cos θ + 1) ^ 2 +
       (3 * Real.sin θ - 2 * Real.sqrt 3 + 3) ^ 2 ∧
-    0 < 8 * Real.sqrt 3 - 6 - β θ ∧
+    0 < 8 * Real.sqrt 3 - 6 - beta θ ∧
     0 ≤ (36 * Real.cos θ + 228 - 96 * Real.sqrt 3) -
-      (16 * Real.sqrt 3 - 12) * β θ := by
+      (16 * Real.sqrt 3 - 12) * beta θ := by
   let r := Real.sqrt 3
   let s := Real.sin θ
   let c := Real.cos θ
-  let b := β θ
+  let b := beta θ
   let d := (6 - 4 * r) * s + 6 * c - 4 * r + 13
   have hr2 : r ^ 2 = 3 := Real.sq_sqrt (by norm_num)
   have hr0 : 0 ≤ r := Real.sqrt_nonneg 3
@@ -126,7 +126,7 @@ private theorem scalar_bounds (θ : ℝ) (hθ : θ ∈ Set.Icc 0 (Real.pi / 2)) 
   have hb0 : 0 < b := mul_pos (Real.sqrt_pos.mpr (by norm_num))
     (Real.sqrt_pos.mpr hd0)
   have hb2 : b ^ 2 = 3 * d := by
-    dsimp [b, β, d, r, s, c]
+    dsimp [b, beta, d, r, s, c]
     rw [mul_pow, Real.sq_sqrt (by norm_num), Real.sq_sqrt hd0.le]
   have hupper : 3 * d ≤ 57 - 12 * r := by
     dsimp [d]
@@ -157,35 +157,35 @@ private theorem scalar_bounds (θ : ℝ) (hθ : θ ∈ Set.Icc 0 (Real.pi / 2)) 
   exact ⟨hb0, hrank, htrace, hdet⟩
 
 private theorem matrix_forms (θ : ℝ) :
-    C₁ = !![Real.sqrt 3 / 3 - 1 / 2, Real.sqrt 3 / 3 - 1 / 2;
+    C1 = !![Real.sqrt 3 / 3 - 1 / 2, Real.sqrt 3 / 3 - 1 / 2;
              Real.sqrt 3 / 3 - 1 / 2, Real.sqrt 3 / 3 - 1 / 2] ∧
-    C₂ θ = !![(3 * Real.cos θ + 8 * Real.sqrt 3 - 9 - β θ) / 12,
+    C2 θ = !![(3 * Real.cos θ + 8 * Real.sqrt 3 - 9 - beta θ) / 12,
                 (3 * Real.sin θ - 2 * Real.sqrt 3 + 3) / 12;
               (3 * Real.sin θ - 2 * Real.sqrt 3 + 3) / 12,
-                (-3 * Real.cos θ + 8 * Real.sqrt 3 - 3 - β θ) / 12] ∧
-    C₃ θ = !![(β θ + 3 * (Real.cos θ + 1)) / 12,
+                (-3 * Real.cos θ + 8 * Real.sqrt 3 - 3 - beta θ) / 12] ∧
+    C3 θ = !![(beta θ + 3 * (Real.cos θ + 1)) / 12,
                 (3 * Real.sin θ - 2 * Real.sqrt 3 + 3) / 12;
               (3 * Real.sin θ - 2 * Real.sqrt 3 + 3) / 12,
-                (β θ - 3 * (Real.cos θ + 1)) / 12] ∧
-    C₄ θ = !![Real.sqrt 3 / 3 - 1 / 2, -(Real.sqrt 3 / 3 - 1 / 2);
+                (beta θ - 3 * (Real.cos θ + 1)) / 12] ∧
+    C4 θ = !![Real.sqrt 3 / 3 - 1 / 2, -(Real.sqrt 3 / 3 - 1 / 2);
                -(Real.sqrt 3 / 3 - 1 / 2), Real.sqrt 3 / 3 - 1 / 2] ∧
-    C₅ θ = !![(β θ - 3 * (Real.cos θ + 1)) / 12,
+    C5 θ = !![(beta θ - 3 * (Real.cos θ + 1)) / 12,
                 -(3 * Real.sin θ - 2 * Real.sqrt 3 + 3) / 12;
               -(3 * Real.sin θ - 2 * Real.sqrt 3 + 3) / 12,
-                (β θ + 3 * (Real.cos θ + 1)) / 12] ∧
-    C₆ θ = !![(-3 * Real.cos θ + 8 * Real.sqrt 3 - 3 - β θ) / 12,
+                (beta θ + 3 * (Real.cos θ + 1)) / 12] ∧
+    C6 θ = !![(-3 * Real.cos θ + 8 * Real.sqrt 3 - 3 - beta θ) / 12,
                 -(3 * Real.sin θ - 2 * Real.sqrt 3 + 3) / 12;
               -(3 * Real.sin θ - 2 * Real.sqrt 3 + 3) / 12,
-                (3 * Real.cos θ + 8 * Real.sqrt 3 - 9 - β θ) / 12] := by
+                (3 * Real.cos θ + 8 * Real.sqrt 3 - 9 - beta θ) / 12] := by
   have hr2 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
   have hi : 1 / Real.sqrt 3 = Real.sqrt 3 / 3 := (Real.sqrt_div_self').symm
-  have hg : γ = 2 * Real.sqrt 3 - 2 := by
-    unfold γ
+  have hg : gamma = 2 * Real.sqrt 3 - 2 := by
+    unfold gamma
     apply (div_eq_iff (by positivity : 1 + Real.sqrt 3 ≠ 0)).mpr
     nlinarith
   refine ⟨?_, ?_, ?_, ?_, ?_, ?_⟩ <;>
     ext i j <;> fin_cases i <;> fin_cases j <;>
-    simp [C₁, C₂, C₃, C₄, C₅, C₆, X₁, X₂, X₃, hi, hg, Matrix.smul_apply,
+    simp [C1, C2, C3, C4, C5, C6, X1, X2, X3, hi, hg, Matrix.smul_apply,
       smul_eq_mul] <;> ring
 
 /-- The Appendix A.1 tuple satisfies SDP (37) for every angle in the closed interval. -/
@@ -198,8 +198,8 @@ theorem result : claim := by
   have ha : 0 < Real.sqrt 3 / 3 - 1 / 2 := by
     linarith [D5.S3.Constants.Radicals.SqrtThreeThreshold.three_lt_two_mul_sqrt_three]
   have hd₂ : 0 ≤
-      ((3 * Real.cos θ + 8 * Real.sqrt 3 - 9 - β θ) / 12) *
-        ((-3 * Real.cos θ + 8 * Real.sqrt 3 - 3 - β θ) / 12) -
+      ((3 * Real.cos θ + 8 * Real.sqrt 3 - 9 - beta θ) / 12) *
+        ((-3 * Real.cos θ + 8 * Real.sqrt 3 - 3 - beta θ) / 12) -
       ((3 * Real.sin θ - 2 * Real.sqrt 3 + 3) / 12) ^ 2 := by
     nlinarith only [hr2, hrank, hdet]
   intro i
