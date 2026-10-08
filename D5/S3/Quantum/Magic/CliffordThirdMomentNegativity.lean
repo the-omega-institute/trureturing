@@ -1,0 +1,93 @@
+/- GID: D5/S3/Quantum/Magic/CliffordThirdMomentNegativity
+   generality: G
+   mirror-B: D5/B/S3/Quantum/Magic/CliffordThirdMomentNegativity
+   mirror-E: none(waiver:external-open-problem-resolution)
+   anchors: []
+   utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Magic/CliffordThirdMomentNegativity.claim; result=D5/S3/Quantum/Magic/CliffordThirdMomentNegativity.result; claim=D5/S3/Quantum/Magic/CliffordThirdMomentNegativity.claim
+   digest: A normalized eleven-dimensional state has negative Clifford third-moment expectation. -/
+
+import Mathlib.NumberTheory.Zsqrtd.GaussianInt
+import Mathlib.Analysis.Complex.Order
+import Mathlib.Analysis.Complex.Norm
+import Mathlib.LinearAlgebra.Matrix.ToLin
+import Mathlib.LinearAlgebra.Matrix.Trace
+import Mathlib.LinearAlgebra.FiniteDimensional.Basic
+import Mathlib.Tactic
+
+namespace D5.S3.Quantum.Magic.CliffordThirdMomentNegativity
+
+/-!
+Zhu, Mao and Yi, *Third moments of qudit Clifford orbits and 3-designs based on magic orbits*,
+Conjecture 2, assert the pointwise bound `0 ≤ κ(Ψ,T) ≤ 1` for every odd prime dimension,
+every number of qudits, every normalized state and every stochastic Lagrangian subspace.
+The source convention is `r(T) = ∑ (x;y) ∈ T, |x⟩⟨y|` and `R(T) = r(T)^{⊗n}`.
+The order in `claim` is the complex order: both bounds include that the imaginary part is
+zero, and bound the real part. The counterexample has `d = 11`, `n = 1` and
+`κ = -1196/64000`. The aggregate inequalities in Conjecture 2 are not asserted here.
+-/
+
+open Matrix
+open scoped ComplexOrder
+
+/-- The three defining conditions of a stochastic Lagrangian subspace at `t = 3`. -/
+def IsStochasticLagrangian (d : ℕ)
+    (T : Submodule (ZMod d) ((Fin 3 → ZMod d) × (Fin 3 → ZMod d))) : Prop :=
+  (∀ p ∈ T, ∑ k, p.1 k * p.1 k - ∑ k, p.2 k * p.2 k = 0) ∧
+    Module.finrank (ZMod d) T = 3 ∧ (fun _ => 1, fun _ => 1) ∈ T
+
+/-- The computational-basis matrix of `r(T)^{⊗n}`, regrouped into three copies. -/
+noncomputable def R (d n : ℕ)
+    (T : Submodule (ZMod d) ((Fin 3 → ZMod d) × (Fin 3 → ZMod d))) :
+    Matrix (Fin 3 → Fin n → ZMod d) (Fin 3 → Fin n → ZMod d) ℂ := by
+  classical
+  exact fun X Y => ∏ j, if ((fun k => X k j), (fun k => Y k j)) ∈ T then 1 else 0
+
+/-- The matrix of the third tensor power of the pure-state density operator. -/
+def stateCube {d n : ℕ} (Psi : (Fin n → ZMod d) → ℂ) :
+    Matrix (Fin 3 → Fin n → ZMod d) (Fin 3 → Fin n → ZMod d) ℂ :=
+  fun X Y => ∏ k, Psi (X k) * star (Psi (Y k))
+
+/-- The trace expectation from Eq. (43), with the source bra-ket convention. -/
+noncomputable def kappa (d n : ℕ) [NeZero d] (Psi : (Fin n → ZMod d) → ℂ)
+    (T : Submodule (ZMod d) ((Fin 3 → ZMod d) × (Fin 3 → ZMod d))) : ℂ :=
+  (R d n T * stateCube Psi).trace
+
+/-- The pointwise clause of Conjecture 2, with its full universal quantifiers. -/
+def claim : Prop :=
+  ∀ (d : ℕ) [Fact d.Prime], d ≠ 2 →
+    ∀ (n : ℕ) (Psi : (Fin n → ZMod d) → ℂ), ∑ x, ‖Psi x‖ ^ 2 = 1 →
+      ∀ T, IsStochasticLagrangian d T → 0 ≤ kappa d n Psi T ∧ kappa d n Psi T ≤ 1
+
+private def O : Matrix (Fin 3) (Fin 3) (ZMod 11) := !![7,8,8;8,7,8;8,8,7]
+
+private def graphMap : (Fin 3 → ZMod 11) →ₗ[ZMod 11]
+    ((Fin 3 → ZMod 11) × (Fin 3 → ZMod 11)) :=
+  (Matrix.mulVecLin O).prod LinearMap.id
+
+private def T : Submodule (ZMod 11) ((Fin 3 → ZMod 11) × (Fin 3 → ZMod 11)) :=
+  LinearMap.range graphMap
+
+private theorem mem_T (x y : Fin 3 → ZMod 11) : (x, y) ∈ T ↔ x = O *ᵥ y := by
+  change (∃ z, (O *ᵥ z, z) = (x, y)) ↔ _
+  simp only [Prod.mk.injEq]
+  constructor
+  · rintro ⟨z, hx, rfl⟩
+    exact hx.symm
+  · intro hx
+    exact ⟨y, hx.symm, rfl⟩
+
+private theorem stochastic_T : IsStochasticLagrangian 11 T := by
+  letI : Fact (Nat.Prime 11) := ⟨by decide⟩
+  have hO : Oᵀ * O = 1 := by decide
+  have hOne : O *ᵥ (fun _ => 1) = (fun _ => 1) := by decide
+  refine ⟨?_, ?_, (mem_T _ _).2 hOne.symm⟩
+  · rintro ⟨x, y⟩ hp
+    rw [(mem_T x y).1 hp]
+    change (O *ᵥ y) ⬝ᵥ (O *ᵥ y) - y ⬝ᵥ y = 0
+    rw [← dotProduct_transpose_mulVec O y (O *ᵥ y), mulVec_mulVec, hO, one_mulVec,
+      sub_self]
+  · have hi : Function.Injective graphMap := fun x y h => congrArg Prod.snd h
+    rw [T, LinearMap.finrank_range_of_inj hi]
+    simp
+
+end D5.S3.Quantum.Magic.CliffordThirdMomentNegativity
