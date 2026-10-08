@@ -34,6 +34,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/StatisticalMechanics/LongRangeSwap/LeeReductionInvertibility.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/lee-2026-reduction-operator-invertibility` (proved) by `D5/S3/StatisticalMechanics/LongRangeSwap/LeeReductionInvertibility.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"lee-2026-reduction-operator-invertibility","declaration_gid":"D5/S3/StatisticalMechanics/LongRangeSwap/LeeReductionInvertibility.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Eunghyun Lee (2026). *Integrability of multispecies long-range swap models with species-dependent interpolation*. DOI: [10.1088/1742-5468/ae80b5](https://doi.org/10.1088/1742-5468/ae80b5). URL: <https://arxiv.org/abs/2604.12136v1>.

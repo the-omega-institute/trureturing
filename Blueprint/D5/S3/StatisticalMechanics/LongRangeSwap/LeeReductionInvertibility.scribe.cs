@@ -14,14 +14,18 @@ internal sealed class LeeReductionInvertibilityDocument : IScribeDocumentDefinit
         Blocks(
             Node("a", "Lee's reduction recursion", "A", AFormula(), "Equation (28), source label 1122am331, defines A zero as the identity and the next A by the displayed matrix-inverse recursion. The carrier is Matrix (Fin n to Fin N) (Fin n to Fin N) over the reals; 1 denotes its identity matrix. Implicit sizes N and n are shown explicitly.", literature: true),
             Node("claim", "Lee's invertibility conjecture", "claim", ClaimFormula(), "Remark 3.1, page 18: These results lead us to conjecture that 𝔄_k is invertible for all parameters μ_i ∈ [0,1]. The encoding quantifies over every N at least one, n at least two, one-indexed block start j at least one, and k with j + k + 1 at most n. Species are Fin N; words are Fin n to Fin N; invertibility means IsUnit of the full word-coordinate matrix. The parameters include the endpoints zero and one.", literature: true),
-            Node("result", "Proof of invertibility on the entire parameter cube", "result", Disp(F.Id("claim")), "Positive-weight collision paths reach the absorbing boundary in at most 2 N m steps. The two outgoing masses sum to one on each interior row. The attained-maximum principle forces every zero-boundary harmonic block chain to vanish. Extending a vector backwards through the already invertible pivots and using uniqueness proves the next pivot has zero kernel, hence is a unit. Induction identifies these pivots with the literal reduction recursion. The stochastic walk includes absorbing boundary rows; its restriction to interior rows is substochastic.", DescribeRole.Theorem)), []));
+            Node("result", "Proof of invertibility on the entire parameter cube", "result", Disp(F.Id("claim")), "Positive-weight collision paths reach the absorbing boundary in at most 2 N m steps. The two outgoing masses sum to one on each interior row. The attained-maximum principle forces every zero-boundary harmonic block chain to vanish. Extending a vector backwards through the already invertible pivots and using uniqueness proves the next pivot has zero kernel, hence is a unit. Induction identifies these pivots with the literal reduction recursion. The stochastic walk includes absorbing boundary rows; its restriction to interior rows is substochastic.", DescribeRole.Theorem,
+                resolution: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("lee-2026-reduction-operator-invertibility"),
+                    ResolutionKind.Proved))), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
-        string prose, DescribeRole role = DescribeRole.Definition, bool literature = false) =>
+        string prose, DescribeRole role = DescribeRole.Definition, bool literature = false,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("lee-" + id), DeclarationHandle.Create(Prefix + declaration),
             H(title), StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Blocks(Paragraph(Text(prose))), role);
+            Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Qualified(string owner, string name) => Seq(Named(owner), Dot, Named(name));
