@@ -22,15 +22,12 @@ open AdaptiveMarkerStoppingTails
 
 inductive Task where
   | retained | emitted | raw
-  deriving DecidableEq
 
 inductive Output where
   | zero | mark (root : Bool) | rawMark | reject
-  deriving DecidableEq, Fintype
 
 inductive Mode where
   | active | stopped | root (value : Bool)
-  deriving DecidableEq, Fintype
 
 /-- The root recovered from the acquired marker edge, using its arm parity. -/
 def recoveredRoot (h : State) : Bool :=
@@ -38,19 +35,23 @@ def recoveredRoot (h : State) : Bool :=
   | [] => false
   | j :: actions => decide (sideCount actions j % 2 = 1)
 
-def currentMode (task : Task) (h : State) : Mode :=
-  if h.stopped then
-    if task = .retained then .root (recoveredRoot h) else .stopped
-  else .active
+def currentMode (task : Task) (h : State) : Mode := by
+  classical
+  exact
+    if h.stopped then
+      if task = .retained then .root (recoveredRoot h) else .stopped
+    else .active
 
 /-- A native query reads precisely the next unobserved edge of the chosen arm. -/
-def nativeStep (task : Task) (source : Source) (h : State) (j : Side) : Output × State :=
-  if h.stopped then (.reject, h) else
-    let marked := markerResponse source j (sideCount h.actions j)
-    let next : State := ⟨j :: h.actions, marked :: h.replies, marked⟩
-    (if marked then
-      if task = .raw then .rawMark else .mark (recoveredRoot next)
-    else .zero, next)
+def nativeStep (task : Task) (source : Source) (h : State) (j : Side) : Output × State := by
+  classical
+  exact
+    if h.stopped then (.reject, h) else
+      let marked := markerResponse source j (sideCount h.actions j)
+      let next : State := ⟨j :: h.actions, marked :: h.replies, marked⟩
+      (if marked then
+        if task = .raw then .rawMark else .mark (recoveredRoot next)
+      else .zero, next)
 
 /-- Finite residual tests have access only to new outputs and the current mode. -/
 inductive Test where
@@ -88,11 +89,15 @@ def selectedParity (eta : Bool × Bool) (j : Side) : Bool := if j then eta.2 els
 def flipParity (eta : Bool × Bool) (j : Side) : Bool × Bool :=
   if j then (eta.1, !eta.2) else (!eta.1, eta.2)
 
-def terminalMode (task : Task) (root : Bool) : Mode :=
-  if task = .retained then .root root else .stopped
+def terminalMode (task : Task) (root : Bool) : Mode := by
+  classical
+  exact
+    if task = .retained then .root root else .stopped
 
-def markerOutput (task : Task) (root : Bool) : Output :=
-  if task = .raw then .rawMark else .mark root
+def markerOutput (task : Task) (root : Bool) : Output := by
+  classical
+  exact
+    if task = .raw then .rawMark else .mark root
 
 /-- Root-conditioned zero probability, before averaging the hidden root. -/
 def rootZero (q : unitInterval) (root : Bool) (eta : Bool × Bool) (j : Side) : ℝ :=
@@ -271,7 +276,7 @@ private theorem native_root_test_mass (task : Task) (q : unitInterval) (root : B
 /-- Each mixture component generates both complete arms at one shared parameter. -/
 def sourceMixture {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval)
     (w : Fin m → ℝ) : Measure Source :=
-  ∑ i, ENNReal.ofReal (w i) • sourceLaw alpha (q i)
+  ∑ i, Real.toNNReal (w i) • sourceLaw alpha (q i)
 
 def exceptionalCount {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval) : ℕ := by
   classical
@@ -289,6 +294,7 @@ structure MassModel {m : ℕ} (task : Task) (alpha : unitInterval)
     (q : Fin m → unitInterval) where
   Carrier : Type
   finite : Fintype Carrier
+  finiteOutputs : Fintype Output
   mode : Carrier → Mode
   matrix : Side → Output → Carrier → Carrier → ℝ
 
@@ -298,13 +304,319 @@ def testRow {m : ℕ} {task : Task} {alpha : unitInterval} {q : Fin m → unitIn
   | .read accept => fun c => if accept (R.mode c) then 1 else 0
   | .query j next => fun c =>
       letI := R.finite
+      letI := R.finiteOutputs
       ∑ o, ∑ d, R.matrix j o d c * testRow R (next o) d
   | .inspect next => fun c => testRow R (next (R.mode c)) c
+
+def denominator (alpha q : unitInterval) (eta : Bool × Bool) : ℝ :=
+  (alpha : ℝ) + (1 - (alpha : ℝ)) * (q : ℝ) ^ (eta.1.toNat + eta.2.toNat)
+
+def rootMass (alpha q : unitInterval) (eta : Bool × Bool) (root : Bool) : ℝ :=
+  (if root then (alpha : ℝ)
+   else (1 - (alpha : ℝ)) * (q : ℝ) ^ (eta.1.toNat + eta.2.toNat)) / denominator alpha q eta
+
+def markerRate (alpha q : unitInterval) (eta : Bool × Bool) (j : Side) : ℝ :=
+  (1 - (q : ℝ)) * rootMass alpha q eta (selectedParity eta j)
+
+private theorem denominator_pos (alpha q : unitInterval) (ha : 0 < (alpha : ℝ))
+    (eta : Bool × Bool) : 0 < denominator alpha q eta := by
+  have ha' : 0 ≤ 1 - (alpha : ℝ) := sub_nonneg.mpr alpha.property.2
+  have hq : 0 ≤ (q : ℝ) := q.property.1
+  dsimp [denominator]
+  positivity
+
+private theorem root_mass_sum (alpha q : unitInterval) (ha : 0 < (alpha : ℝ))
+    (eta : Bool × Bool) : rootMass alpha q eta false + rootMass alpha q eta true = 1 := by
+  simp only [rootMass, Bool.false_eq_true, ↓reduceIte]
+  rw [← add_div, add_comm]
+  exact div_self (denominator_pos alpha q ha eta).ne'
+
+private theorem root_lift_zero (alpha q : unitInterval) (ha : 0 < (alpha : ℝ))
+    (eta : Bool × Bool) (j root : Bool) :
+    rootMass alpha q eta root * rootZero q root eta j =
+      (1 - markerRate alpha q eta j) * rootMass alpha q (flipParity eta j) root := by
+  have hd := (denominator_pos alpha q ha eta).ne'
+  have hd' := (denominator_pos alpha q ha (flipParity eta j)).ne'
+  rcases eta with ⟨l, r⟩
+  cases l <;> cases r <;> cases j <;> cases root <;>
+    simp [rootMass, rootZero, markerRate, denominator, selectedParity, flipParity] at hd hd' ⊢ <;>
+    field_simp [hd, hd'] <;> ring
+  all_goals
+    have hn : (q : ℝ) - (q : ℝ) * (alpha : ℝ) + (alpha : ℝ) ≠ 0 := by
+      convert hd' using 1 <;> ring
+    calc
+      (1 : ℝ) = ((q : ℝ) - (q : ℝ) * (alpha : ℝ) + (alpha : ℝ)) *
+          ((q : ℝ) - (q : ℝ) * (alpha : ℝ) + (alpha : ℝ))⁻¹ := (mul_inv_cancel₀ hn).symm
+      _ = _ := by ring
+
+def terminalCount : Task → ℕ
+  | .retained => 2
+  | .emitted | .raw => 1
+
+def terminalIndex (task : Task) (root : Bool) : Fin (terminalCount task) := by
+  classical
+  exact ⟨if task = .retained ∧ root = true then 1 else 0, by
+    cases task <;> cases root <;> simp [terminalCount]⟩
+
+@[reducible] def fullModel {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) : MassModel task alpha q := by
+  classical
+  exact {
+    Carrier := (Fin m × (Bool × Bool)) ⊕ Fin (terminalCount task)
+    finite := inferInstance
+    finiteOutputs := ⟨{.zero, .mark false, .mark true, .rawMark, .reject}, by
+      intro o
+      cases o with
+      | zero => simp
+      | mark root => cases root <;> simp
+      | rawMark => simp
+      | reject => simp⟩
+    mode := fun c => match c with
+      | .inl _ => .active
+      | .inr t => if task = .retained then .root (decide (t.val = 1)) else .stopped
+    matrix := fun j o d c => match c with
+      | .inl ⟨i, eta⟩ =>
+          (if o = .zero then
+            if d = .inl (i, flipParity eta j) then 1 - markerRate alpha (q i) eta j else 0
+           else 0) +
+          (if o = markerOutput task (selectedParity eta j) then
+            if d = .inr (terminalIndex task (selectedParity eta j)) then
+              markerRate alpha (q i) eta j else 0
+           else 0)
+      | .inr t => if o = .reject then if d = .inr t then 1 else 0 else 0 }
+
+private theorem full_terminal_row {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (t : Fin (terminalCount task)) (T : Test) :
+    testRow (fullModel task alpha q) T (.inr t) =
+      if terminalAccept ((fullModel task alpha q).mode (.inr t)) T then 1 else 0 := by
+  classical
+  letI := (fullModel task alpha q).finite
+  letI := (fullModel task alpha q).finiteOutputs
+  induction T with
+  | read accept => rfl
+  | inspect next ih => exact ih ((fullModel task alpha q).mode (.inr t))
+  | query j next ih =>
+      simp [testRow, fullModel, Finset.univ, terminalAccept, ih .reject]
+
+private theorem full_active_row {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (i : Fin m) (eta : Bool × Bool) (j : Side) (next : Output → Test) :
+    testRow (fullModel task alpha q) (.query j next) (.inl (i, eta)) =
+      (1 - markerRate alpha (q i) eta j) *
+        testRow (fullModel task alpha q) (next .zero) (.inl (i, flipParity eta j)) +
+      markerRate alpha (q i) eta j *
+        (if terminalAccept (terminalMode task (selectedParity eta j))
+          (next (markerOutput task (selectedParity eta j))) then 1 else 0) := by
+  classical
+  letI := (fullModel task alpha q).finite
+  letI := (fullModel task alpha q).finiteOutputs
+  have ht : (fullModel task alpha q).mode (.inr (terminalIndex task (selectedParity eta j))) =
+      terminalMode task (selectedParity eta j) := by
+    cases task <;> cases h : selectedParity eta j <;> simp [fullModel, terminalIndex, terminalMode, terminalCount]
+  simp [testRow, fullModel, Finset.univ, Finset.sum_add_distrib, add_mul]
+  rw [full_terminal_row, ht]
+
+private theorem full_row_lift {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (ha : 0 < (alpha : ℝ))
+    (i : Fin m) (eta : Bool × Bool) (T : Test) :
+    testRow (fullModel task alpha q) T (.inl (i, eta)) =
+      rootMass alpha (q i) eta false * rootRow task (q i) false eta T +
+      rootMass alpha (q i) eta true * rootRow task (q i) true eta T := by
+  induction T generalizing eta with
+  | read accept =>
+      cases he : accept .active <;> simp [testRow, fullModel, rootRow, he, root_mass_sum alpha (q i) ha]
+  | inspect next ih => simpa [testRow, fullModel, rootRow] using ih .active eta
+  | query j next ih =>
+      rw [full_active_row, ih .zero (flipParity eta j)]
+      simp only [rootRow]
+      have hf := root_lift_zero alpha (q i) ha eta j false
+      have ht := root_lift_zero alpha (q i) ha eta j true
+      have hm :
+          rootMass alpha (q i) eta false * (1 - rootZero (q i) false eta j) +
+            rootMass alpha (q i) eta true * (1 - rootZero (q i) true eta j) =
+          markerRate alpha (q i) eta j := by
+        cases he : selectedParity eta j <;> simp [rootZero, markerRate, he] <;> ring
+      linear_combination
+        -(rootRow task (q i) false (flipParity eta j) (next .zero)) * hf -
+        (rootRow task (q i) true (flipParity eta j) (next .zero)) * ht -
+        (if terminalAccept (terminalMode task (selectedParity eta j))
+          (next (markerOutput task (selectedParity eta j))) then (1 : ℝ) else 0) * hm
 
 /-- The event is defined by execution on the original source, independently of matrices. -/
 def nativeEvent {Seed : Type} [MeasurableSpace Seed] (policy : Policy Seed)
     (n : ℕ) (h : State) (B : Set Seed) : Set (Seed × Source) :=
   {p | p.1 ∈ B ∧ actualRun policy p.1 p.2 n = h}
+
+private theorem native_active_history_fiber {Seed : Type} [MeasurableSpace Seed]
+    (policy : Policy Seed) (n : ℕ) (actions : List Side) (B : Set Seed) :
+    nativeEvent policy n ⟨actions, List.replicate n false, false⟩ B =
+      {u | u ∈ B ∧ zeroReplay policy u n = actions} ×ˢ
+        {source | prefixNoMarker source actions} := by
+  ext p
+  simp only [nativeEvent, Set.mem_ofPred_eq, Set.mem_prod]
+  have hb := stopped_execution_replay_bridge policy p.1 p.2 n
+  constructor
+  · rintro ⟨hB, hrun⟩
+    have hs : (actualRun policy p.1 p.2 n).stopped = false := by rw [hrun]
+    obtain ⟨ha, hr, hc⟩ := hb.2.2.1 hs
+    have hactions : zeroReplay policy p.1 n = actions := by simpa [hrun] using ha.symm
+    exact ⟨⟨hB, hactions⟩, hactions ▸ (hb.2.1.mp hs)⟩
+  · rintro ⟨⟨hB, ha⟩, hsource⟩
+    have hs : (actualRun policy p.1 p.2 n).stopped = false :=
+      hb.2.1.mpr (ha ▸ hsource)
+    obtain ⟨har, hrr, hcr⟩ := hb.2.2.1 hs
+    refine ⟨hB, ?_⟩
+    cases hrun : actualRun policy p.1 p.2 n
+    simp only [hrun] at har hrr hs
+    simp_all
+
+private theorem source_law_real (alpha q : unitInterval) (S : Set Source) :
+    (sourceLaw alpha q).real S =
+      (alpha : ℝ) * (conditionalSourceLaw q true).real S +
+      (1 - (alpha : ℝ)) * (conditionalSourceLaw q false).real S := by
+  rw [sourceLaw, measureReal_add_apply]
+  simp [unitInterval.coe_symm_eq]
+
+private theorem source_mixture_real {m : ℕ} (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (hw : ∀ i, 0 ≤ w i) (S : Set Source) :
+    (sourceMixture alpha q w).real S = ∑ i, w i * (sourceLaw alpha (q i)).real S := by
+  rw [sourceMixture, measureReal_def, Measure.finsetSum_apply, ENNReal.toReal_sum (by finiteness)]
+  simp [ENNReal.toReal_mul, Real.coe_toNNReal, hw, measureReal_def]
+
+private theorem native_seed_test_mass {m : ℕ} {Seed : Type} [MeasurableSpace Seed]
+    (task : Task) (policy : Policy Seed) (nu : Measure Seed) [IsProbabilityMeasure nu]
+    (n : ℕ) (actions : List Side) (B : Set Seed) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (hw : ∀ i, 0 ≤ w i) (T : Test) :
+    (nu.prod (sourceMixture alpha q w)).real
+      (nativeEvent policy n ⟨actions, List.replicate n false, false⟩ B ∩
+        {p | nativeAccept task p.2 ⟨actions, List.replicate n false, false⟩ T = true}) =
+      nu.real {u | u ∈ B ∧ zeroReplay policy u n = actions} *
+        ∑ i, w i *
+          ((alpha : ℝ) * rootCylinderWeight (q i) true actions *
+            rootRow task (q i) true (parity actions) T +
+          (1 - (alpha : ℝ)) * rootCylinderWeight (q i) false actions *
+            rootRow task (q i) false (parity actions) T) := by
+  letI : IsFiniteMeasure (sourceMixture alpha q w) := by
+    unfold sourceMixture
+    infer_instance
+  rw [native_active_history_fiber]
+  have he :
+      ({u | u ∈ B ∧ zeroReplay policy u n = actions} ×ˢ
+        {source | prefixNoMarker source actions}) ∩
+          {p | nativeAccept task p.2 ⟨actions, List.replicate n false, false⟩ T = true} =
+      {u | u ∈ B ∧ zeroReplay policy u n = actions} ×ˢ
+        ({source | prefixNoMarker source actions} ∩
+          {source | nativeAccept task source ⟨actions, List.replicate n false, false⟩ T = true}) := by
+    ext p
+    simp [and_assoc]
+  rw [he, measureReal_prod_prod, source_mixture_real alpha q w hw]
+  simp only [source_law_real, native_root_test_mass]
+  congr 1
+  apply Finset.sum_congr rfl
+  intro i hi
+  ring
+
+def atomEvidence (alpha q : unitInterval) (actions : List Side) : ℝ :=
+  (alpha : ℝ) * rootCylinderWeight q true actions +
+    (1 - (alpha : ℝ)) * rootCylinderWeight q false actions
+
+def totalEvidence {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval)
+    (w : Fin m → ℝ) (actions : List Side) : ℝ :=
+  ∑ i, w i * atomEvidence alpha (q i) actions
+
+def fullFeature {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (h : State) :
+    (fullModel task alpha q).Carrier → ℝ := by
+  classical
+  exact fun c => match c with
+    | .inl ⟨i, eta⟩ => if h.stopped = false ∧ eta = parity h.actions then
+        w i * atomEvidence alpha (q i) h.actions / totalEvidence alpha q w h.actions else 0
+    | .inr t => if h.stopped = true ∧ t = terminalIndex task (recoveredRoot h) then 1 else 0
+
+private theorem root_cylinder_decomposition (q : unitInterval) (actions : List Side) :
+    rootCylinderWeight q false actions = rootCylinderWeight q true actions *
+      (q : ℝ) ^ ((parity actions).1.toNat + (parity actions).2.toNat) := by
+  have hf := Nat.mod_two_eq_zero_or_one (sideCount actions false)
+  have ht := Nat.mod_two_eq_zero_or_one (sideCount actions true)
+  have he :
+      (sideCount actions false + 1) / 2 + (sideCount actions true + 1) / 2 =
+      sideCount actions false / 2 + sideCount actions true / 2 +
+        ((parity actions).1.toNat + (parity actions).2.toNat) := by
+    rcases hf with hf | hf <;> rcases ht with ht | ht <;>
+      simp [parity, hf, ht] <;> omega
+  simp only [rootCylinderWeight, Bool.false_eq_true, ↓reduceIte]
+  rw [he, pow_add]
+
+private theorem evidence_root_mass (alpha q : unitInterval) (ha : 0 < (alpha : ℝ))
+    (actions : List Side) (root : Bool) :
+    atomEvidence alpha q actions * rootMass alpha q (parity actions) root =
+      (if root then (alpha : ℝ) else 1 - (alpha : ℝ)) * rootCylinderWeight q root actions := by
+  have hd := (denominator_pos alpha q ha (parity actions)).ne'
+  have hfactor : atomEvidence alpha q actions =
+      rootCylinderWeight q true actions * denominator alpha q (parity actions) := by
+    rw [atomEvidence, root_cylinder_decomposition]
+    dsimp [denominator]
+    ring
+  rw [hfactor]
+  unfold rootMass
+  cases root <;> simp only [Bool.false_eq_true, ↓reduceIte]
+  all_goals
+    rw [mul_assoc, mul_comm (denominator alpha q (parity actions)) _, div_mul_cancel₀ _ hd]
+  · rw [root_cylinder_decomposition]
+    ring
+  · ring
+
+private theorem evidence_pos (alpha q : unitInterval) (ha : 0 < (alpha : ℝ))
+    (hq : 0 < (q : ℝ)) (actions : List Side) : 0 < atomEvidence alpha q actions := by
+  have ha' : 0 ≤ 1 - (alpha : ℝ) := sub_nonneg.mpr alpha.property.2
+  dsimp [atomEvidence, rootCylinderWeight]
+  positivity
+
+private theorem total_evidence_pos {m : ℕ} (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
+    (hq : ∀ i, 0 < (q i : ℝ)) (hw : ∀ i, 0 < w i) (hsum : (∑ i, w i) = 1)
+    (actions : List Side) : 0 < totalEvidence alpha q w actions := by
+  have hm : 0 < m := by
+    by_contra hm
+    have hm' : m = 0 := by omega
+    subst m
+    simp at hsum
+  apply Finset.sum_pos'
+  · intro i hi
+    exact le_of_lt (mul_pos (hw i) (evidence_pos alpha (q i) ha (hq i) actions))
+  · exact ⟨⟨0, hm⟩, Finset.mem_univ _,
+      mul_pos (hw ⟨0, hm⟩) (evidence_pos alpha (q ⟨0, hm⟩) ha (hq ⟨0, hm⟩) actions)⟩
+
+private theorem full_feature_readout {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
+    (actions : List Side) (replies : List Bool) (T : Test)
+    (hZ : totalEvidence alpha q w actions ≠ 0) :
+    (letI := (fullModel task alpha q).finite
+     totalEvidence alpha q w actions *
+       ∑ c, fullFeature task alpha q w ⟨actions, replies, false⟩ c *
+         testRow (fullModel task alpha q) T c) =
+      ∑ i, w i *
+        ((alpha : ℝ) * rootCylinderWeight (q i) true actions *
+          rootRow task (q i) true (parity actions) T +
+        (1 - (alpha : ℝ)) * rootCylinderWeight (q i) false actions *
+          rootRow task (q i) false (parity actions) T) := by
+  classical
+  letI := (fullModel task alpha q).finite
+  letI := (fullModel task alpha q).finiteOutputs
+  simp only [fullFeature, Bool.false_eq_true, ↓reduceIte, false_and, true_and, and_true,
+    Fintype.sum_sum_type, zero_mul, Finset.sum_const_zero, add_zero,
+    ite_mul, Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+  rw [Fintype.sum_prod_type, Finset.mul_sum]
+  simp only [ite_mul, Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+  apply Finset.sum_congr rfl
+  intro i hi
+  rw [full_row_lift task alpha q ha]
+  have hf := evidence_root_mass alpha (q i) ha actions false
+  have ht := evidence_root_mass alpha (q i) ha actions true
+  simp only [Bool.false_eq_true, ↓reduceIte] at hf ht
+  field_simp [hZ]
+  linear_combination
+    w i * rootRow task (q i) false (parity actions) T * hf +
+    w i * rootRow task (q i) true (parity actions) T * ht
 
 /-- A candidate feature map must explain all positive-probability original histories. -/
 def FullNativeBridge {m : ℕ} {task : Task} {alpha : unitInterval}
@@ -330,6 +642,7 @@ def Proposition278 : Prop :=
     exceptionalCount alpha q ≤ 1 ∧
       ∀ task : Task, ∃ (R : MassModel task alpha q) (feature : State → R.Carrier → ℝ),
         (letI := R.finite
+         letI := R.finiteOutputs
          Fintype.card R.Carrier = desiredCard task alpha q ∧
            (∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1) ∧
            (∀ j o d c, 0 ≤ R.matrix j o d c)) ∧ FullNativeBridge w R feature
