@@ -410,6 +410,14 @@ theorem hchar (root : Bool) (x : Path) (hx0 : x 0 = root)
     rw [hp, hn, hs]
     cases alternatingBit root i <;> simp
 
+theorem paired_path_support (q : unitInterval) (root : Bool) : ∀ᵐ p ∂(armLaw q root).prod (armLaw q root),
+    (p.1 0 = root ∧ ∀ i, ¬(p.1 i = true ∧ p.1 (i + 1) = true)) ∧
+    (p.2 0 = root ∧ ∀ i, ¬(p.2 i = true ∧ p.2 (i + 1) = true)) := by
+  apply (Measure.ae_prod_iff_ae_ae (by measurability)).mpr
+  filter_upwards [path_support q root] with x hx
+  filter_upwards [path_support q root] with y hy
+  exact ⟨hx, hy⟩
+
 theorem hconditional (q : unitInterval) (left right : ℕ) (root : Bool) :
     conditionalSourceLaw q root (noMarkerCylinder left right) =
       (unitInterval.toNNReal q : ℝ≥0∞) ^
@@ -423,13 +431,7 @@ theorem hconditional (q : unitInterval) (left right : ℕ) (root : Bool) :
       (root, (fun i => p.1 (i + 1), fun i => p.2 (i + 1)))) ⁻¹'
         noMarkerCylinder left right =ᵐ[(armLaw q root).prod (armLaw q root)]
         A left ×ˢ A right := by
-    have hpaths : ∀ᵐ p ∂(armLaw q root).prod (armLaw q root),
-        (p.1 0 = root ∧ ∀ i, ¬(p.1 i = true ∧ p.1 (i + 1) = true)) ∧
-        (p.2 0 = root ∧ ∀ i, ¬(p.2 i = true ∧ p.2 (i + 1) = true)) := by
-      apply (Measure.ae_prod_iff_ae_ae (by measurability)).mpr
-      filter_upwards [path_support q root] with x hx
-      filter_upwards [path_support q root] with y hy
-      exact ⟨hx, hy⟩
+    have hpaths := paired_path_support q root
     filter_upwards [hpaths] with p hp
     have hL := hchar root p.1 hp.1.1 hp.1.2 left
     have hR := hchar root p.2 hp.2.1 hp.2.2 right

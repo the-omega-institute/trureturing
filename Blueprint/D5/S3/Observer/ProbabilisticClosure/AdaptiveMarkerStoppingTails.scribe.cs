@@ -153,6 +153,8 @@ internal sealed class AdaptiveMarkerStoppingTailsDocument : IScribeDocumentDefin
                     "For every pair of natural arm lengths, the all-zero marker cylinder is measurable."),
                 Fact("alternating-characterization", "hchar", "Alternation characterizes no marker",
                     "For every Boolean path starting at a fixed root and forbidding adjacent true bits, absence of adjacent false bits before a finite length is equivalent to the alternating prefix through that length."),
+                Fact("paired-arm-support", "paired_path_support", "Both independent arms satisfy support",
+                    "For every unit-interval parameter and Boolean root, almost every pair under the product arm law consists of two paths starting at that root and forbidding adjacent true bits."),
                 Fact("conditional-cylinder-mass", "hconditional", "Two-arm root-conditioned cylinder mass",
                     "For every unit-interval parameter, Boolean root and two natural arm lengths, the two-arm all-zero marker cylinder has mass equal to the parameter raised to the sum of the root-dependent half-length exponents."))));
     }

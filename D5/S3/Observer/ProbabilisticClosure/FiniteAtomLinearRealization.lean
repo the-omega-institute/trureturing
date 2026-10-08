@@ -10,6 +10,7 @@ import D5.S3.Observer.ProbabilisticClosure.AdaptiveMarkerStoppingTails
 import Mathlib.Tactic.FieldSimp
 import Mathlib.Tactic.LinearCombination
 import Mathlib.Tactic.Positivity
+import Mathlib.Data.Matrix.Mul
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -786,19 +787,186 @@ theorem native_finite_test_realization {m : ℕ} (task : Task) (alpha : unitInte
           rw [native_seed_test_mass task policy nu n actions B alpha q w (fun i => (hw i).le) T,
             hmass, mul_assoc, full_feature_readout task alpha q w ha actions _ T hZ.ne']
 
-/-- The complete finite-atom upper bound includes normalized columns and native tests. -/
-def Proposition278 : Prop :=
-  ∀ (m : ℕ) (alpha : unitInterval) (q : Fin m → unitInterval) (w : Fin m → ℝ),
-    0 < (alpha : ℝ) → (alpha : ℝ) < 1 →
-    (∀ i, 0 < (q i : ℝ) ∧ (q i : ℝ) < 1) → Function.Injective q →
-    (∀ i, 0 < w i) → (∑ i, w i) = 1 →
-    exceptionalCount alpha q ≤ 1 ∧
-      ∀ task : Task, ∃ (R : MassModel task alpha q) (feature : State → R.Carrier → ℝ),
-        (letI := R.finite
-         letI := R.finiteOutputs
-         Fintype.card R.Carrier = desiredCard task alpha q ∧
-           (∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1) ∧
-           (∀ j o d c, 0 ≤ R.matrix j o d c)) ∧ FullNativeBridge w R feature
+/-- Updating the source history agrees with normalized joint matrix transport. -/
+def FeatureUpdates {m : ℕ} {task : Task} {alpha : unitInterval}
+    {q : Fin m → unitInterval} (R : MassModel task alpha q)
+    (feature : State → R.Carrier → ℝ) : Prop :=
+  letI := R.finite
+  ∀ (h : State) (j : Side) (source : Source),
+    let step := nativeStep task source h j
+    let v := Matrix.mulVec (R.matrix j step.1) (feature h)
+    0 < (∑ d, v d) → ∀ d, feature step.2 d = v d / (∑ e, v e)
+
+private theorem atom_evidence_extension (alpha q : unitInterval) (ha : 0 < (alpha : ℝ))
+    (actions : List Side) (j : Side) :
+    atomEvidence alpha q (j :: actions) =
+      atomEvidence alpha q actions * (1 - markerRate alpha q (parity actions) j) := by
+  have hf := evidence_root_mass alpha q ha actions false
+  have ht := evidence_root_mass alpha q ha actions true
+  rw [atomEvidence, root_cylinder_extension, root_cylinder_extension]
+  cases he : selectedParity (parity actions) j
+  · simp only [rootZero, he, markerRate, Bool.false_eq_true, ↓reduceIte]
+    simp only [Bool.false_eq_true, Bool.true_eq_false, ↓reduceIte] at hf ht ⊢
+    simp only [atomEvidence] at hf ⊢
+    linear_combination (1 - (q : ℝ)) * hf
+  · simp only [rootZero, he, markerRate, ↓reduceIte]
+    simp only [Bool.false_eq_true, Bool.true_eq_false, ↓reduceIte] at hf ht ⊢
+    simp only [atomEvidence] at ht ⊢
+    linear_combination (1 - (q : ℝ)) * ht
+
+private theorem full_feature_pairing {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (h : State)
+    (f : (fullModel task alpha q).Carrier → ℝ) :
+    (letI := (fullModel task alpha q).finite
+     ∑ c, fullFeature task alpha q w h c * f c) =
+    if h.stopped then f (.inr (terminalIndex task (recoveredRoot h))) else
+      ∑ i, (w i * atomEvidence alpha (q i) h.actions / totalEvidence alpha q w h.actions) *
+        f (.inl (i,parity h.actions)) := by
+  classical
+  letI := (fullModel task alpha q).finite
+  cases hs : h.stopped
+  · simp only [fullFeature, hs, Bool.false_eq_true, ↓reduceIte, true_and, false_and,
+      Fintype.sum_sum_type, zero_mul, Finset.sum_const_zero, add_zero]
+    rw [Fintype.sum_prod_type]
+    simp only [ite_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+  · simp only [fullFeature, hs, Bool.true_eq_false, ↓reduceIte, true_and, false_and,
+      Fintype.sum_sum_type, zero_mul, one_mul, Finset.sum_const_zero, zero_add,
+      ite_mul, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+
+private theorem full_zero_transport {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
+    (h : State) (hs : h.stopped = false) (j : Side) :
+    (letI := (fullModel task alpha q).finite
+     Matrix.mulVec ((fullModel task alpha q).matrix j .zero) (fullFeature task alpha q w h)) =
+      fun d => match d with
+      | .inl (i,eta) => if eta = parity (j :: h.actions) then
+          w i * atomEvidence alpha (q i) (j :: h.actions) / totalEvidence alpha q w h.actions
+        else 0
+      | .inr _ => 0 := by
+  classical
+  letI := (fullModel task alpha q).finite
+  funext d
+  simp only [Matrix.mulVec, dotProduct]
+  simp_rw [mul_comm _ (fullFeature task alpha q w h _)]
+  rw [full_feature_pairing]
+  simp only [hs, Bool.false_eq_true, ↓reduceIte]
+  cases task <;> cases d with
+  | inl p =>
+      rcases p with ⟨i,eta⟩
+      simp [fullModel, markerOutput, parity_cons, ite_and, mul_ite, eq_comm]
+      split_ifs <;> simp_all [atom_evidence_extension alpha (q i) ha h.actions j] <;> ring
+  | inr t => simp [fullModel, markerOutput]
+
+private theorem full_marker_transport {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (h : State) (hs : h.stopped = false) (j : Side) :
+    (letI := (fullModel task alpha q).finite
+     Matrix.mulVec ((fullModel task alpha q).matrix j (markerOutput task (selectedParity (parity h.actions) j)))
+       (fullFeature task alpha q w h)) =
+      fun d => if d = .inr (terminalIndex task (selectedParity (parity h.actions) j)) then
+        ∑ i, (w i * atomEvidence alpha (q i) h.actions / totalEvidence alpha q w h.actions) *
+          markerRate alpha (q i) (parity h.actions) j else 0 := by
+  classical
+  letI := (fullModel task alpha q).finite
+  funext d
+  simp only [Matrix.mulVec, dotProduct]
+  simp_rw [mul_comm _ (fullFeature task alpha q w h _)]
+  rw [full_feature_pairing]
+  simp only [hs, Bool.false_eq_true, ↓reduceIte]
+  cases task <;> simp [fullModel, markerOutput, mul_ite, Finset.sum_ite_irrel]
+
+private theorem full_reject_transport {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (h : State) (hs : h.stopped = true) (j : Side) :
+    (letI := (fullModel task alpha q).finite
+     Matrix.mulVec ((fullModel task alpha q).matrix j .reject) (fullFeature task alpha q w h)) =
+      fullFeature task alpha q w h := by
+  classical
+  letI := (fullModel task alpha q).finite
+  funext d
+  simp only [Matrix.mulVec, dotProduct]
+  simp_rw [mul_comm _ (fullFeature task alpha q w h _)]
+  rw [full_feature_pairing]
+  simp only [hs, ↓reduceIte]
+  cases d <;> simp [fullFeature,fullModel,hs,eq_comm]
+
+private theorem full_feature_updates {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
+    (hq : ∀ i, 0 < (q i : ℝ)) (hw : ∀ i, 0 < w i) (hsum : (∑ i, w i) = 1) :
+    FeatureUpdates (fullModel task alpha q) (fullFeature task alpha q w) := by
+  classical
+  letI := (fullModel task alpha q).finite
+  intro h j source
+  change (0 < ∑ d, Matrix.mulVec ((fullModel task alpha q).matrix j (nativeStep task source h j).1)
+    (fullFeature task alpha q w h) d) → ∀ d,
+      fullFeature task alpha q w (nativeStep task source h j).2 d =
+        Matrix.mulVec ((fullModel task alpha q).matrix j (nativeStep task source h j).1)
+          (fullFeature task alpha q w h) d /
+        (∑ e, Matrix.mulVec ((fullModel task alpha q).matrix j (nativeStep task source h j).1)
+          (fullFeature task alpha q w h) e)
+  cases hs : h.stopped with
+  | true =>
+      rw [show nativeStep task source h j = (.reject,h) from by simp [nativeStep,hs]]
+      change 0 < _ → ∀ d, fullFeature task alpha q w h d = _
+      rw [full_reject_transport task alpha q w h hs j,
+        (full_feature_probability task alpha q w ha hq hw hsum h).1]
+      simp
+  | false =>
+      cases hm : markerResponse source j (sideCount h.actions j) with
+      | false =>
+          rw [show nativeStep task source h j =
+            (.zero, ⟨j :: h.actions, false :: h.replies, false⟩) from by simp [nativeStep,hs,hm]]
+          change (0 < ∑ d, Matrix.mulVec ((fullModel task alpha q).matrix j .zero)
+              (fullFeature task alpha q w h) d) → ∀ d,
+            fullFeature task alpha q w ⟨j :: h.actions, false :: h.replies, false⟩ d =
+              Matrix.mulVec ((fullModel task alpha q).matrix j .zero) (fullFeature task alpha q w h) d / _
+          rw [full_zero_transport task alpha q w ha h hs j]
+          have hZ := total_evidence_pos alpha q w ha hq hw hsum h.actions
+          have hZ' := total_evidence_pos alpha q w ha hq hw hsum (j :: h.actions)
+          have hmass :
+              (∑ d : (fullModel task alpha q).Carrier,
+                match d with
+                | .inl (i,eta) => if eta = parity (j :: h.actions) then
+                    w i * atomEvidence alpha (q i) (j :: h.actions) / totalEvidence alpha q w h.actions
+                  else 0
+                | .inr _ => 0) =
+              totalEvidence alpha q w (j :: h.actions) / totalEvidence alpha q w h.actions := by
+            rw [Fintype.sum_sum_type, Fintype.sum_prod_type]
+            simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true, Finset.sum_const_zero, add_zero]
+            rw [← Finset.sum_div]
+            rfl
+          rw [hmass]
+          intro hv d
+          cases d with
+          | inl p =>
+              simp only [fullFeature, Bool.false_eq_true, ↓reduceIte, true_and]
+              split_ifs <;> simp_all
+              field_simp [hZ.ne',hZ'.ne']
+          | inr t => simp [fullFeature]
+      | true =>
+          have hr : recoveredRoot ⟨j :: h.actions, true :: h.replies, true⟩ =
+              selectedParity (parity h.actions) j := by simp [recoveredRoot,selected_parity]
+          rw [show nativeStep task source h j =
+            (markerOutput task (selectedParity (parity h.actions) j),
+              ⟨j :: h.actions, true :: h.replies, true⟩) from by simp [nativeStep,hs,hm,markerOutput,← hr]]
+          change 0 < _ → ∀ d, fullFeature task alpha q w ⟨j :: h.actions, true :: h.replies, true⟩ d = _
+          rw [full_marker_transport task alpha q w h hs j]
+          simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+          intro hv d
+          cases d <;> simp [fullFeature,hr,ite_div,div_self hv.ne']
+
+/-- Full finite carriers preserve native tests and normalized output successors. -/
+theorem result {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
+    (hq : ∀ i, 0 < (q i : ℝ)) (hw : ∀ i, 0 < w i) (hsum : (∑ i, w i) = 1) :
+    (letI := (fullModel task alpha q).finite
+     letI := (fullModel task alpha q).finiteOutputs
+     Fintype.card (fullModel task alpha q).Carrier = 4 * m + terminalCount task ∧
+       (∀ j c, ∑ o, ∑ d, (fullModel task alpha q).matrix j o d c = 1) ∧
+       (∀ j o d c, 0 ≤ (fullModel task alpha q).matrix j o d c) ∧
+       FullNativeBridge w (fullModel task alpha q) (fullFeature task alpha q w)) ∧
+      FeatureUpdates (fullModel task alpha q) (fullFeature task alpha q w) :=
+  ⟨native_finite_test_realization task alpha q w ha hq hw hsum,
+    full_feature_updates task alpha q w ha hq hw hsum⟩
+
 
 
 end D5.S3.Observer.ProbabilisticClosure.FiniteAtomLinearRealization

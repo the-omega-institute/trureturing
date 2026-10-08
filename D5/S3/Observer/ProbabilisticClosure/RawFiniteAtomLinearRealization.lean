@@ -8,6 +8,7 @@
 
 import D5.S3.Observer.ProbabilisticClosure.FiniteAtomLinearRealization
 import Mathlib.Logic.Lemmas
+import Mathlib.MeasureTheory.Integral.Prod
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -144,6 +145,99 @@ private theorem raw_pushforward_sum {m : ℕ} (alpha : unitInterval)
   rw [Finset.sum_comm]
   simp
 
+private theorem raw_joint_descends {m : ℕ} (alpha : unitInterval)
+    (q : Fin m → unitInterval) (ha : 0 < (alpha : ℝ)) (j : Side) (o : Output)
+    (d : (rawModel alpha q).Carrier) (c : (fullModel .raw alpha q).Carrier) :
+    (rawModel alpha q).matrix j o d (rawEncode alpha q c) =
+      (letI := (fullModel .raw alpha q).finite
+       ∑ e, if rawEncode alpha q e = d then (fullModel .raw alpha q).matrix j o e c else 0) := by
+  classical
+  letI := (fullModel .raw alpha q).finite
+  have hdelta (e0 : (fullModel .raw alpha q).Carrier) (v : ℝ) :
+      (∑ e, if rawEncode alpha q e = d then if e = e0 then v else 0 else 0) =
+        if rawEncode alpha q e0 = d then v else 0 := by
+    rw [Finset.sum_eq_single e0]
+    · simp
+    · intro e he hne; simp [hne]
+    · simp
+  have hadd (f g : (fullModel .raw alpha q).Carrier → ℝ) :
+      (∑ e, if rawEncode alpha q e = d then f e + g e else 0) =
+        (∑ e, if rawEncode alpha q e = d then f e else 0) +
+          (∑ e, if rawEncode alpha q e = d then g e else 0) := by
+    rw [← Finset.sum_add_distrib]
+    apply Finset.sum_congr rfl
+    intro e he
+    rw [ite_add_ite]
+    simp
+  cases c with
+  | inl p =>
+      rcases p with ⟨i,eta⟩
+      dsimp only [fullModel]
+      simp only [markerOutput, if_pos rfl]
+      rw [hadd]
+      by_cases hz : o = .zero <;> by_cases hm : o = .rawMark <;>
+        simp only [hz,hm,ite_true,ite_false,Finset.sum_const_zero,add_zero,zero_add]
+      all_goals
+        simp only [hdelta]
+        simp [rawModel,rawEncode,raw_canonical_rate alpha (q i) ha,
+          raw_canonical_flip,eq_comm]
+  | inr t =>
+      change (if o = .reject then if d = .inr () then 1 else 0 else 0) =
+        ∑ e, if rawEncode alpha q e = d then
+          (if o = .reject then if e = .inr t then 1 else 0 else 0) else 0
+      by_cases ho : o = .reject <;> simp only [ho,ite_true,ite_false,Finset.sum_const_zero]
+      rw [hdelta]
+      simp [rawEncode,eq_comm]
+
+private theorem raw_transport {m : ℕ} (alpha : unitInterval)
+    (q : Fin m → unitInterval) (ha : 0 < (alpha : ℝ)) (j : Side) (o : Output)
+    (v : (fullModel .raw alpha q).Carrier → ℝ) :
+    (letI := (fullModel .raw alpha q).finite
+     letI := (rawModel alpha q).finite
+     Matrix.mulVec ((rawModel alpha q).matrix j o)
+       (fun d => ∑ c, if rawEncode alpha q c = d then v c else 0)) =
+      (letI := (fullModel .raw alpha q).finite
+       fun d => ∑ e, if rawEncode alpha q e = d then
+         Matrix.mulVec ((fullModel .raw alpha q).matrix j o) v e else 0) := by
+  classical
+  letI := (fullModel .raw alpha q).finite
+  letI := (rawModel alpha q).finite
+  funext d
+  simp only [Matrix.mulVec,dotProduct]
+  simp_rw [Finset.mul_sum,mul_ite,mul_zero]
+  rw [Finset.sum_comm]
+  simp only [Finset.sum_ite_eq',Finset.mem_univ,ite_true]
+  simp_rw [raw_joint_descends alpha q ha,Finset.sum_mul,ite_mul,zero_mul]
+  rw [Finset.sum_comm]
+  simp_rw [Finset.sum_ite_irrel,Finset.sum_const_zero]
+
+private theorem raw_feature_updates {m : ℕ} (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
+    (hq : ∀ i, 0 < (q i : ℝ)) (hw : ∀ i, 0 < w i) (hsum : (∑ i, w i) = 1) :
+    FeatureUpdates (rawModel alpha q) (rawFeature alpha q w) := by
+  classical
+  letI := (fullModel .raw alpha q).finite
+  letI := (rawModel alpha q).finite
+  have hu := (FiniteAtomLinearRealization.result .raw alpha q w ha hq hw hsum).2
+  intro h j source
+  dsimp only
+  rw [rawFeature,raw_transport alpha q ha]
+  have hmass :
+      (∑ d : (rawModel alpha q).Carrier, ∑ e, if rawEncode alpha q e = d then
+        Matrix.mulVec ((fullModel .raw alpha q).matrix j (nativeStep .raw source h j).1)
+          (fullFeature .raw alpha q w h) e else 0) =
+      ∑ e, Matrix.mulVec ((fullModel .raw alpha q).matrix j (nativeStep .raw source h j).1)
+        (fullFeature .raw alpha q w h) e := by
+    rw [Finset.sum_comm]
+    simp
+  rw [hmass]
+  intro hv d
+  have hupdate := hu h j source hv
+  simp only [rawFeature]
+  simp_rw [hupdate]
+  simp_rw [ite_div,zero_div]
+  rw [Finset.sum_div]
+
 private theorem raw_native_bridge {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
     (hq : ∀ i, 0 < (q i : ℝ)) (hw : ∀ i, 0 < w i) (hsum : (∑ i, w i) = 1) :
@@ -236,28 +330,190 @@ private theorem raw_probability {m : ℕ} (alpha : unitInterval)
         split_ifs <;> linarith
     | inr u => dsimp [rawModel]; split_ifs <;> norm_num
 
+/-- A fresh independent random seed samples a measurable family of finite tests. -/
+def RandomNativeBridge {m : ℕ} {task : Task} {alpha : unitInterval}
+    {q : Fin m → unitInterval} (w : Fin m → ℝ) (R : MassModel task alpha q)
+    (feature : State → R.Carrier → ℝ) : Prop :=
+  ∀ (Seed : Type) [MeasurableSpace Seed] (policy : Policy Seed)
+    (nu : Measure Seed) [IsProbabilityMeasure nu] (n : ℕ) (h : State) (B : Set Seed),
+    MeasurableSet B →
+    let law := nu.prod (sourceMixture alpha q w)
+    let E := nativeEvent policy n h B
+    0 < law.real E →
+    ∀ (Fresh : Type) [MeasurableSpace Fresh] (rho : Measure Fresh) [IsProbabilityMeasure rho]
+      (tests : Fresh → Test), Measurable[(inferInstance : MeasurableSpace Fresh), ⊤] tests →
+      MeasurableSet {p : Fresh × (Seed × Source) |
+        p.2 ∈ E ∧ nativeAccept task p.2.2 h (tests p.1) = true} →
+      (letI := R.finite
+       (rho.prod law).real {p | p.2 ∈ E ∧ nativeAccept task p.2.2 h (tests p.1) = true} =
+         law.real E * ∑ c, feature h c * (∫ u, testRow R (tests u) c ∂rho))
+
+private theorem test_row_bounds {m : ℕ} {task : Task} {alpha : unitInterval}
+    {q : Fin m → unitInterval} (R : MassModel task alpha q)
+    (hn : letI := R.finite; letI := R.finiteOutputs; ∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1)
+    (hp : ∀ j o d c, 0 ≤ R.matrix j o d c) (T : Test) (c : R.Carrier) :
+    0 ≤ testRow R T c ∧ testRow R T c ≤ 1 := by
+  classical
+  letI := R.finite
+  letI := R.finiteOutputs
+  induction T generalizing c with
+  | read accept => simp only [testRow]; split_ifs <;> norm_num
+  | inspect next ih => exact ih (R.mode c) c
+  | query j next ih =>
+      constructor
+      · exact Finset.sum_nonneg fun o _ => Finset.sum_nonneg fun d _ =>
+          mul_nonneg (hp j o d c) (ih o d).1
+      · calc
+          testRow R (.query j next) c ≤ ∑ o, ∑ d, R.matrix j o d c :=
+            Finset.sum_le_sum fun o _ => Finset.sum_le_sum fun d _ =>
+              mul_le_of_le_one_right (hp j o d c) (ih o d).2
+          _ = 1 := hn j c
+
+private theorem random_native_bridge {m : ℕ} {task : Task} {alpha : unitInterval}
+    {q : Fin m → unitInterval} {w : Fin m → ℝ} (R : MassModel task alpha q)
+    (feature : State → R.Carrier → ℝ) (hb : FullNativeBridge w R feature)
+    (hn : letI := R.finite; letI := R.finiteOutputs; ∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1)
+    (hp : ∀ j o d c, 0 ≤ R.matrix j o d c) : RandomNativeBridge w R feature := by
+  classical
+  letI := R.finite
+  intro Seed inst policy nu prob n h B hB
+  dsimp only
+  intro hE Fresh instFresh rho probFresh tests htests hmeas
+  letI : IsFiniteMeasure (sourceMixture alpha q w) := by unfold sourceMixture; infer_instance
+  have hr := (hb Seed policy nu n h B hB hE).2.2.2
+  have hi (c : R.Carrier) : Integrable (fun u => testRow R (tests u) c) rho := by
+    have hm : Measurable (fun u => testRow R (tests u) c) :=
+      measurable_from_top.comp htests
+    refine Integrable.of_bound hm.aestronglyMeasurable 1 (Filter.Eventually.of_forall fun u => ?_)
+    have hbound := test_row_bounds R hn hp (tests u) c
+    simpa [Real.norm_eq_abs,abs_of_nonneg hbound.1] using hbound.2
+  rw [measureReal_def, Measure.prod_apply hmeas]
+  rw [← integral_toReal (measurable_measure_prodMk_left hmeas).aemeasurable
+    (Filter.Eventually.of_forall fun _ => measure_lt_top _ _)]
+  change (∫ u, (nu.prod (sourceMixture alpha q w)).real
+    (nativeEvent policy n h B ∩ {p | nativeAccept task p.2 h (tests u) = true}) ∂rho) = _
+  simp_rw [hr]
+  rw [integral_const_mul, integral_finsetSum _ (fun c _ => (hi c).const_mul _)]
+  simp only [integral_const_mul]
+
+private theorem conditional_source_support (q : unitInterval) (root : Bool) :
+    ∀ᵐ source ∂conditionalSourceLaw q root, noAdjacentOnes source := by
+  unfold conditionalSourceLaw
+  apply (ae_map_iff (by fun_prop) (by unfold noAdjacentOnes; measurability)).mpr
+  filter_upwards [paired_path_support q root] with p hp
+  intro j n
+  cases n with
+  | zero =>
+      cases j
+      · simpa [endpoint, arm, hp.1.1] using hp.1.2 0
+      · simpa [endpoint, arm, hp.2.1] using hp.2.2 0
+  | succ n =>
+      cases j
+      · simpa [endpoint, arm] using hp.1.2 (n + 1)
+      · simpa [endpoint, arm] using hp.2.2 (n + 1)
+
+private theorem marker_recovers_root (source : Source) (hn : noAdjacentOnes source)
+    (actions : List Side) (replies : List Bool) (j : Side)
+    (hp : prefixNoMarker source actions)
+    (hm : markerResponse source j (sideCount actions j) = true) :
+    recoveredRoot ⟨j :: actions, true :: replies, true⟩ = source.1 := by
+  have hx : ∀ i, ¬(endpoint source j i = true ∧ endpoint source j (i + 1) = true) := by
+    simpa only [endpoint] using hn j
+  have hz : ∀ i < sideCount actions j,
+      ¬(endpoint source j i = false ∧ endpoint source j (i + 1) = false) := by
+    intro i hi
+    have hi' := hp j i hi
+    simpa only [markerResponse, decide_eq_false_iff_not, endpoint] using hi'
+  have he := (hchar source.1 (endpoint source j) rfl hx (sideCount actions j)).mp hz
+    (sideCount actions j) le_rfl
+  have hm' := of_decide_eq_true hm
+  have hb : alternatingBit source.1 (sideCount actions j) = false := he.symm.trans hm'.1
+  have hmod := Nat.mod_two_eq_zero_or_one (sideCount actions j)
+  change decide (sideCount actions j % 2 = 1) = source.1
+  cases hr : source.1 <;> rcases hmod with hmod | hmod <;>
+    simp [alternatingBit,hr,hmod] at hb ⊢
+
+private theorem stopped_root_recovery {Seed : Type} [MeasurableSpace Seed]
+    (policy : Policy Seed) (seed : Seed) (source : Source) (hn : noAdjacentOnes source)
+    (n : ℕ) : (actualRun policy seed source n).stopped = true →
+      recoveredRoot (actualRun policy seed source n) = source.1 := by
+  induction n with
+  | zero => simp [actualRun]
+  | succ n ih =>
+      cases hs : (actualRun policy seed source n).stopped with
+      | true => simpa [actualRun,hs] using ih hs
+      | false =>
+          have hb := stopped_execution_replay_bridge policy seed source n
+          have hp : prefixNoMarker source (actualRun policy seed source n).actions := by
+            rw [(hb.2.2.1 hs).1]
+            exact hb.2.1.mp hs
+          simp only [actualRun,hs,Bool.false_eq_true,↓reduceIte]
+          intro hm
+          exact marker_recovers_root source hn _ _ _ hp hm
+
+/-- The recovered terminal bit is coupled to the original root on its source law. -/
+def RootCoupling {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval)
+    (w : Fin m → ℝ) : Prop :=
+  ∀ᵐ source ∂sourceMixture alpha q w,
+    ∀ (Seed : Type) [MeasurableSpace Seed] (policy : Policy Seed) (seed : Seed) (n : ℕ),
+      (actualRun policy seed source n).stopped = true →
+        recoveredRoot (actualRun policy seed source n) = source.1
+
+private theorem source_root_coupling {m : ℕ} (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) : RootCoupling alpha q w := by
+  have hn : ∀ᵐ source ∂sourceMixture alpha q w, noAdjacentOnes source := by
+    rw [sourceMixture, ae_finsetSum_measure_iff]
+    intro i hi
+    apply ae_smul_measure
+    rw [sourceLaw, ae_add_measure_iff]
+    exact ⟨ae_smul_measure (conditional_source_support (q i) true) _,
+      ae_smul_measure (conditional_source_support (q i) false) _⟩
+  filter_upwards [hn] with source hs
+  intro Seed inst policy seed n
+  exact stopped_root_recovery policy seed source hs n
+
+/-- The complete finite-atom upper bound includes normalized columns and native tests. -/
+def Proposition278 : Prop :=
+  ∀ (m : ℕ) (alpha : unitInterval) (q : Fin m → unitInterval) (w : Fin m → ℝ),
+    0 < (alpha : ℝ) → (alpha : ℝ) < 1 →
+    (∀ i, 0 < (q i : ℝ) ∧ (q i : ℝ) < 1) → Function.Injective q →
+    (∀ i, 0 < w i) → (∑ i, w i) = 1 →
+    exceptionalCount alpha q ≤ 1 ∧
+      ∀ task : Task, ∃ (R : MassModel task alpha q) (feature : State → R.Carrier → ℝ),
+        (letI := R.finite
+         letI := R.finiteOutputs
+         Fintype.card R.Carrier = desiredCard task alpha q ∧
+           (∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1) ∧
+           (∀ j o d c, 0 ≤ R.matrix j o d c)) ∧ FullNativeBridge w R feature ∧ FeatureUpdates R feature ∧ RandomNativeBridge w R feature
+
+
 /-- Exact finite deterministic native-test dimensions for all three interfaces. -/
-theorem result : Proposition278 := by
+theorem result : Proposition278 ∧
+    (∀ (m : ℕ) (alpha : unitInterval) (q : Fin m → unitInterval) (w : Fin m → ℝ),
+      RootCoupling alpha q w) := by
+  refine ⟨?_, fun _ alpha q w => source_root_coupling alpha q w⟩
   classical
   intro m alpha q w ha ha' hq hi hw hw'
   refine ⟨exceptional_count_le_one alpha q ha' hi, ?_⟩
   intro task
   cases task with
   | retained =>
-      obtain ⟨hc, hn, hp, hb⟩ := native_finite_test_realization .retained alpha q w ha
+      obtain ⟨⟨hc, hn, hp, hb⟩, hu⟩ := FiniteAtomLinearRealization.result .retained alpha q w ha
         (fun i => (hq i).1) hw hw'
       exact ⟨fullModel .retained alpha q, fullFeature .retained alpha q w,
-        ⟨by simpa [desiredCard, terminalCount] using hc, hn, hp⟩, hb⟩
+        ⟨by simpa [desiredCard, terminalCount] using hc, hn, hp⟩, hb, hu, random_native_bridge _ _ hb hn hp⟩
   | emitted =>
-      obtain ⟨hc, hn, hp, hb⟩ := native_finite_test_realization .emitted alpha q w ha
+      obtain ⟨⟨hc, hn, hp, hb⟩, hu⟩ := FiniteAtomLinearRealization.result .emitted alpha q w ha
         (fun i => (hq i).1) hw hw'
       exact ⟨fullModel .emitted alpha q, fullFeature .emitted alpha q w,
-        ⟨by simpa [desiredCard, terminalCount] using hc, hn, hp⟩, hb⟩
+        ⟨by simpa [desiredCard, terminalCount] using hc, hn, hp⟩, hb, hu, random_native_bridge _ _ hb hn hp⟩
   | raw =>
       obtain ⟨hn, hp⟩ := raw_probability alpha q ha
       exact ⟨rawModel alpha q, rawFeature alpha q w,
         ⟨raw_card alpha q, hn, hp⟩,
-        raw_native_bridge alpha q w ha (fun i => (hq i).1) hw hw'⟩
+        raw_native_bridge alpha q w ha (fun i => (hq i).1) hw hw', ?_,
+          random_native_bridge _ _ (raw_native_bridge alpha q w ha (fun i => (hq i).1) hw hw') hn hp⟩
+      exact raw_feature_updates alpha q w ha (fun i => (hq i).1) hw hw'
 
 
 end D5.S3.Observer.ProbabilisticClosure.RawFiniteAtomLinearRealization
