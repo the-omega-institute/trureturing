@@ -7,6 +7,7 @@
    digest: All-history rows have the same joint code optimum as an extreme iid law. -/
 
 import D5.S0.Computability.Coding.HistoryTreeRelabeling
+import D5.S0.History.FinitePrefixAntichainBudget
 
 open scoped BigOperators ENNReal
 
@@ -24,9 +25,8 @@ def Admissible (δ : ℝ) (q : List α → α → ℝ) : Prop :=
 def extremeRow (δ : ℝ) (heavy a : α) : ℝ :=
   δ + if a = heavy then 1 - (Fintype.card α : ℝ) * δ else 0
 
-/-- Choose an actual maximizing letter from the finite nonempty alphabet. -/
-private noncomputable def bestLetter (V : α → ℝ) : α :=
-  Classical.choose (Finset.exists_max_image Finset.univ V Finset.univ_nonempty)
+local notation "bestLetter" => (fun V : α → ℝ =>
+  Classical.choose (Finset.exists_max_image Finset.univ V Finset.univ_nonempty))
 
 private theorem best_letter_max (V : α → ℝ) (a : α) : V a ≤ V (bestLetter V) :=
   (Classical.choose_spec (Finset.exists_max_image Finset.univ V
@@ -206,18 +206,9 @@ theorem finite_joint_bound (δ : ℝ) (hδ : 0 < δ)
         (greedyCode (fun n => priority (extremeRow δ base) (tie n)) b) N := by
   classical
   let K : Set (List α) := {w | w ∈ F ∧ w.length ≤ N}
-  have hK : Legal b K := by
-    refine ⟨fun _ hu _ hv h => hF.1 hu.1 hv.1 h,
-      fun h => hF.2.1 h.1, fun n => ?_⟩
-    apply (Finset.card_le_card ?_).trans (hF.2.2 n)
-    intro w hw
-    obtain ⟨hl, hm⟩ := (mem_level K w n).mp hw
-    exact (mem_level F w n).mpr ⟨hl, hm.1⟩
-  have levels (n : ℕ) (hn : n ≤ N) : level K n = level F n := by
-    ext w
-    rw [mem_level, mem_level]
-    change (w.length = n ∧ w ∈ F ∧ w.length ≤ N) ↔ (w.length = n ∧ w ∈ F)
-    exact ⟨fun h => ⟨h.1, h.2.1⟩, fun h => ⟨h.1, h.2, h.1 ▸ hn⟩⟩
+  have hK : Legal b K := legal_depth_truncation b F hF N
+  have levels (n : ℕ) (hn : n ≤ N) : level K n = level F n :=
+    level_depth_truncation F n N hn
   have truncation : historyTruncatedMass q F N = historyTruncatedMass q K N := by
     apply Finset.sum_congr rfl
     intro n hn
@@ -272,59 +263,33 @@ private theorem mass_limit (m : List α → ℝ) (hm : ∀ w, 0 ≤ m w) (F : Se
   exact (ENNReal.ofReal_sum_of_nonneg
     (fun n _ => Finset.sum_nonneg (fun w _ => hm w))).symm
 
-private theorem prefix_code_value_le_one (q : List α → α → ℝ)
-    (hpos : ∀ h a, 0 ≤ q h a) (hsum : ∀ h, ∑ a, q h a = 1)
-    (F : Set (List α)) (hF : IsPrefixFree F) :
-    ∀ n h, value q (F.indicator (fun _ => 1)) n h ≤ 1 := by
-  classical
-  have zero_subtree : ∀ n h, (∀ w, h ++ w ∉ F) →
-      value q (F.indicator (fun _ => 1)) n h = 0 := by
-    intro n
-    induction n with
-    | zero =>
-      intro h hh
-      simp only [value, Set.indicator_of_notMem (by simpa using hh [] : h ∉ F)]
-    | succ n ih =>
-      intro h hh
-      simp only [value, Set.indicator_of_notMem (by simpa using hh [] : h ∉ F)]
-      have children (a : α) : value q (F.indicator (fun _ => 1)) n (h ++ [a]) = 0 :=
-        ih _ (fun w => by simpa only [List.append_assoc] using hh ([a] ++ w))
-      simp only [children, mul_zero, Finset.sum_const_zero, add_zero]
-  intro n
-  induction n with
-  | zero =>
-    intro h
-    by_cases hh : h ∈ F <;> simp [value, Set.indicator_apply, hh]
-  | succ n ih =>
-    intro h
-    by_cases hh : h ∈ F
-    · have children (a : α) : value q (F.indicator (fun _ => 1)) n (h ++ [a]) = 0 := by
-        apply zero_subtree n
-        intro w hw
-        have hpref : h <+: (h ++ [a]) ++ w := by
-          rw [List.append_assoc]
-          exact List.prefix_append _ _
-        have heq := congrArg List.length (hF hh hw hpref)
-        simp only [List.length_append, List.length_singleton] at heq
-        omega
-      simp only [value, Set.indicator_of_mem hh, children, mul_zero,
-        Finset.sum_const_zero, add_zero, le_refl]
-    · simp only [value, Set.indicator_of_notMem hh, zero_add]
-      calc
-        _ ≤ ∑ a, q h a * 1 := Finset.sum_le_sum
-          (fun a _ => mul_le_mul_of_nonneg_left (ih _) (hpos h a))
-        _ = 1 := by simpa only [mul_one] using hsum h
-
 private theorem history_code_mass_le_one (q : List α → α → ℝ)
     (hpos : ∀ h a, 0 ≤ q h a) (hsum : ∀ h, ∑ a, q h a = 1)
     (F : Set (List α)) (hF : IsPrefixFree F) : historyCodeMass q F ≤ 1 := by
-  rw [historyCodeMass, mass_limit (pathMass q []) (path_mass_nonneg q hpos [])]
+  classical
+  have localBudget (h : List α) (C : Finset α) :
+      ∑ a ∈ C, pathMass q [] (h ++ [a]) ≤ pathMass q [] h := by
+    calc
+      _ = pathMass q [] h * ∑ a ∈ C, q h a := by
+        simp_rw [path_mass_append]
+        simp only [pathMass, mul_one, List.nil_append, ← Finset.mul_sum]
+      _ ≤ pathMass q [] h * ∑ a, q h a :=
+        mul_le_mul_of_nonneg_left
+          (Finset.sum_le_sum_of_subset_of_nonneg (Finset.subset_univ C)
+            (fun a _ _ => hpos h a)) (path_mass_nonneg q hpos [] h)
+      _ = _ := by rw [hsum, mul_one]
+  rw [historyCodeMass, ENNReal.tsum_eq_iSup_sum]
   apply iSup_le
-  intro N
-  have bound : historyTruncatedMass q F N ≤ 1 := by
-    rw [← value_code_mass]
-    exact prefix_code_value_le_one q hpos hsum F hF N []
-  simpa only [historyTruncatedMass, ENNReal.ofReal_one] using ENNReal.ofReal_le_ofReal bound
+  intro S
+  have bound := D5.S0.History.FinitePrefixAntichainBudget.result
+    (pathMass q []) localBudget (S.image Subtype.val) (by
+      rintro u hu v hv hpref
+      obtain ⟨u', _, rfl⟩ := Finset.mem_image.mp hu
+      obtain ⟨v', _, rfl⟩ := Finset.mem_image.mp hv
+      exact hF u'.2 v'.2 hpref)
+  rw [Finset.sum_image (fun _ _ _ _ h => Subtype.val_injective h)] at bound
+  rw [← ENNReal.ofReal_sum_of_nonneg (fun w _ => path_mass_nonneg q hpos [] w.1)]
+  simpa only [pathMass, ENNReal.ofReal_one] using ENNReal.ofReal_le_ofReal bound
 
 private theorem uniform_rows (δ : ℝ) (hcard : (Fintype.card α : ℝ) * δ = 1)
     (q : List α → α → ℝ) (hq : Admissible δ q) (h : List α) (a : α) : q h a = δ := by
@@ -398,13 +363,17 @@ theorem result (δ : ℝ) (hδ : 0 < δ)
   have greatest : IsGreatest J (codeMass p G) := by
     refine ⟨⟨fun _ => p, hadm, G, iid.1, attain.symm⟩, ?_⟩
     rintro x ⟨q, hq, F, hF, rfl⟩
-    rw [historyCodeMass, codeMass,
+    rw [historyCodeMass,
       mass_limit (pathMass q []) (path_mass_nonneg q (fun h a => hδ.le.trans ((hq h).1 a)) []),
-      mass_limit (wordMass p) (fun w => by
-        rw [← path_mass_iid p [] w]
-        exact path_mass_nonneg (fun _ => p) (fun _ a => (hp a).le) [] w)]
+      code_mass_by_level p hp G,
+      ENNReal.tsum_eq_iSup_nat' (Filter.tendsto_add_atTop_nat 1)]
     apply iSup_mono
     intro N
+    rw [← ENNReal.ofReal_sum_of_nonneg (fun n _ => by
+      apply Finset.sum_nonneg
+      intro w _
+      rw [← path_mass_iid p [] w]
+      exact path_mass_nonneg (fun _ => p) (fun _ a => (hp a).le) [] w)]
     exact ENNReal.ofReal_le_ofReal (finite_joint_bound δ hδ hc base b tie q hq F hF N)
   have supEq : sSup J = codeMass p G := greatest.csSup_eq
   have massBound : codeMass p G ≤ 1 := by

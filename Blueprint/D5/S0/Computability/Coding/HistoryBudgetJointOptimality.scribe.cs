@@ -42,7 +42,9 @@ internal sealed class HistoryBudgetJointOptimalityDocument : IScribeDocumentDefi
                         + "for p. The iid greedy maximum therefore bounds every finite history "
                         + "truncation. Suprema of the nonnegative finite sums give the infinite "
                         + "bound. Its actual attainment uses the fixed iid process p and the same G; "
-                        + "the auxiliary finite optimizers need not agree across horizons.")),
+                        + "the auxiliary finite optimizers need not agree across horizons. The root "
+                        + "budget theorem for finite prefix antichains bounds every finite selection "
+                        + "of codewords; the supremum of these sums is at most one.")),
                     Paragraph(Text("The complementary optimum Gamma is one minus sup J, hence one "
                         + "minus S(p,G). At delta = 1/d every admissible row is uniform and p is uniform. "
                         + "Depth zero, empty codes, zero budgets, skipped depths and frontier exhaustion "
@@ -54,7 +56,9 @@ internal sealed class HistoryBudgetJointOptimalityDocument : IScribeDocumentDefi
                         + "and reconstruct every coordinate of the original row."))),
                 DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create(
-            "D5/S0/Computability/Coding/HistoryTreeRelabeling"))]));
+            "D5/S0/Computability/Coding/HistoryTreeRelabeling")),
+            DocumentEdge.Dependency.Create(GidRef.Create(
+                "D5/S0/History/FinitePrefixAntichainBudget"))]));
 
     private static Formula MainFormula()
     {

@@ -101,6 +101,52 @@ theorem mem_level {α : Type*} [Fintype α] [DecidableEq α]
     (F : Set (List α)) (v : List α) (n : ℕ) :
     v ∈ level F n ↔ v.length = n ∧ v ∈ F := by simp [level, mem_words]
 
+/-- Depth truncation retains the original legal-code constraints. -/
+theorem legal_depth_truncation {α : Type*} [Fintype α] [DecidableEq α]
+    (b : ℕ → ℕ) (G : Set (List α)) (glegal : Legal b G) (N : ℕ) :
+    Legal b {v | v ∈ G ∧ v.length ≤ N} := by
+  refine ⟨fun _ hu _ hv huv => glegal.1 hu.1 hv.1 huv,
+    fun h => glegal.2.1 h.1, fun n => ?_⟩
+  apply (Finset.card_le_card ?_).trans (glegal.2.2 n)
+  intro v hv
+  exact (mem_level _ _ _).mpr ⟨((mem_level _ _ _).mp hv).1, ((mem_level _ _ _).mp hv).2.1⟩
+
+/-- Levels within a truncation horizon are the original code levels. -/
+theorem level_depth_truncation {α : Type*} [Fintype α] [DecidableEq α]
+    (G : Set (List α)) (n N : ℕ) (hnN : n ≤ N) :
+    level {v | v ∈ G ∧ v.length ≤ N} n = level G n := by
+  ext v
+  rw [mem_level, mem_level]
+  change (v.length = n ∧ v ∈ G ∧ v.length ≤ N) ↔ (v.length = n ∧ v ∈ G)
+  exact ⟨fun h => ⟨h.1,h.2.1⟩, fun h => ⟨h.1,h.2,by omega⟩⟩
+
+/-- Countable iid code mass grouped by its canonical word levels. -/
+theorem code_mass_by_level {α : Type*} [Fintype α] [DecidableEq α]
+    (p : α → ℝ) (hp : ∀ a, 0 < p a) (F : Set (List α)) : codeMass p F =
+    ∑' n, ENNReal.ofReal (∑ v ∈ level F n, wordMass p v) := by
+  rw [codeMass, ← ENNReal.tsum_fiberwise
+    (fun v : F => ENNReal.ofReal (wordMass p v.1)) (fun v : F => v.1.length)]
+  apply tsum_congr
+  intro n
+  let e : ((fun v : F => v.1.length) ⁻¹' {n}) ≃ ↥(level F n) :=
+    { toFun := fun v => ⟨v.1.1, (mem_level _ _ _).mpr ⟨v.2, v.1.2⟩⟩
+      invFun := fun v => ⟨⟨v.1, ((mem_level _ _ _).mp v.2).2⟩, ((mem_level _ _ _).mp v.2).1⟩
+      left_inv := fun _ => rfl
+      right_inv := fun _ => rfl }
+  calc
+    _ = ∑' v : level F n, ENNReal.ofReal (wordMass p v.1) := e.tsum_eq _
+    _ = ∑ v ∈ level F n, ENNReal.ofReal (wordMass p v) :=
+      Finset.tsum_subtype (level F n) (fun v => ENNReal.ofReal (wordMass p v))
+    _ = ENNReal.ofReal (∑ v ∈ level F n, wordMass p v) := by
+      symm
+      apply ENNReal.ofReal_sum_of_nonneg
+      intro v _
+      apply List.prod_nonneg
+      intro a ha
+      obtain ⟨a,_,rfl⟩ := List.mem_map.mp ha
+      exact (hp a).le
+
+
 /-- A single horizon-independent iid greedy code is legal and maximizes every finite
 truncation and the total countable mass, for arbitrary depth budgets and fixed ties. -/
 theorem depth_budget_iid_greedy_optimality {α : Type*} [Fintype α] [DecidableEq α]
@@ -424,47 +470,15 @@ theorem depth_budget_iid_greedy_optimality {α : Type*} [Fintype α] [DecidableE
       simp [levzero H hH]
     rw [trunc F hF.2.1, trunc G glegal.2.1]
     simpa only [lg] using bound
-  have total_eq (F : Set (List α)) : codeMass p F =
-      ∑' n, ENNReal.ofReal (∑ v ∈ level F n, wordMass p v) := by
-    rw [codeMass, ← ENNReal.tsum_fiberwise
-      (fun v : F => ENNReal.ofReal (wordMass p v.1)) (fun v : F => v.1.length)]
-    apply tsum_congr
-    intro n
-    let e : ((fun v : F => v.1.length) ⁻¹' {n}) ≃ ↥(level F n) :=
-      { toFun := fun v => ⟨v.1.1, (mem_level _ _ _).mpr ⟨v.2, v.1.2⟩⟩
-        invFun := fun v => ⟨⟨v.1, ((mem_level _ _ _).mp v.2).2⟩, ((mem_level _ _ _).mp v.2).1⟩
-        left_inv := fun _ => rfl
-        right_inv := fun _ => rfl }
-    calc
-      _ = ∑' v : level F n, ENNReal.ofReal (wordMass p v.1) := e.tsum_eq _
-      _ = ∑ v ∈ level F n, ENNReal.ofReal (wordMass p v) :=
-        Finset.tsum_subtype (level F n) (fun v => ENNReal.ofReal (wordMass p v))
-      _ = ENNReal.ofReal (∑ v ∈ level F n, wordMass p v) := by
-        symm
-        apply ENNReal.ofReal_sum_of_nonneg
-        intro v _
-        apply List.prod_nonneg
-        intro a ha
-        obtain ⟨a,_,rfl⟩ := List.mem_map.mp ha
-        exact (hp a).le
   refine ⟨glegal, ?_, ?_⟩
   · intro N
     let K : Set (List α) := {v | v ∈ G ∧ v.length ≤ N}
-    have hk : Legal b K := by
-      refine ⟨fun _ hu _ hv huv => glegal.1 hu.1 hv.1 huv,
-        fun h => glegal.2.1 h.1, fun n => ?_⟩
-      apply (Finset.card_le_card ?_).trans (glegal.2.2 n)
-      intro v hv
-      exact (mem_level _ _ _).mpr ⟨((mem_level _ _ _).mp hv).1, ((mem_level _ _ _).mp hv).2.1⟩
+    have hk : Legal b K := legal_depth_truncation b G glegal N
     have htr : truncatedMass p K N = truncatedMass p G N := by
       apply Finset.sum_congr rfl
       intro n hn
       have hnN : n ≤ N := by have := Finset.mem_range.mp hn; omega
-      have heq : level K n = level G n := by
-        ext v
-        rw [mem_level, mem_level]
-        change (v.length = n ∧ v ∈ G ∧ v.length ≤ N) ↔ (v.length = n ∧ v ∈ G)
-        exact ⟨fun h => ⟨h.1,h.2.1⟩, fun h => ⟨h.1,h.2,by omega⟩⟩
+      have heq : level K n = level G n := level_depth_truncation G n N hnN
       rw [heq]
     refine ⟨⟨K,hk,fun v hv => hv.2,htr.symm⟩,?_⟩
     rintro x ⟨F,hF,_,rfl⟩
@@ -472,7 +486,7 @@ theorem depth_budget_iid_greedy_optimality {α : Type*} [Fintype α] [DecidableE
   · refine ⟨⟨G,glegal,rfl⟩,?_⟩
     rintro x ⟨F,hF,rfl⟩
     change codeMass p F ≤ codeMass p G
-    rw [total_eq F, total_eq G, ENNReal.tsum_eq_iSup_nat, ENNReal.tsum_eq_iSup_nat]
+    rw [code_mass_by_level p hp F, code_mass_by_level p hp G, ENNReal.tsum_eq_iSup_nat, ENNReal.tsum_eq_iSup_nat]
     apply iSup_mono
     intro N
     cases N with

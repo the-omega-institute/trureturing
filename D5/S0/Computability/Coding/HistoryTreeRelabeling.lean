@@ -96,6 +96,16 @@ theorem path_mass_relabel (π : List α → Equiv.Perm α) (p : α → ℝ)
   | cons a w ih => simp only [pathMass, relabel, wordMass, List.map_cons,
       List.prod_cons, hq, ih, wordMass]
 
+/-- A path split uses the conditional rows at its actual extended history. -/
+theorem path_mass_append (q : List α → α → ℝ) (h u v : List α) :
+    pathMass q h (u ++ v) = pathMass q h u * pathMass q (h ++ u) v := by
+  induction u generalizing h with
+  | nil => simp only [List.nil_append, List.append_nil, pathMass, one_mul]
+  | cons a u ih =>
+    simp only [List.cons_append, pathMass, ih, mul_assoc]
+    congr 2
+    simp only [List.append_assoc, List.singleton_append]
+
 /-- Constant conditional rows recover the existing iid word mass. -/
 theorem path_mass_iid (p : α → ℝ) (h w : List α) :
     pathMass (fun _ => p) h w = wordMass p w := by
