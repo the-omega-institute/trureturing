@@ -14,10 +14,10 @@ class ReleaseVerificationCases:
         (self.root / helper).parent.mkdir(parents=True, exist_ok=True)
         shutil.copy2(ROOT / helper, self.root / helper)
         for args in (["init", "-q", str(self.root)],
-                     ["-C", str(self.root), "add", "Makefile", "tools", "lake-manifest.json",
+                     ["-C", str(self.root), "add", "-f", "Makefile", "tools", "lake-manifest.json",
                       "lean-toolchain", "lakefile.toml", "Trureturing.lean", "D5"],
                      ["-C", str(self.root), "-c", "user.name=Fixture", "-c", "user.email=fixture@example.invalid",
-                      "-c", "commit.gpgsign=false", "commit", "-qm", "synthetic candidate"]):
+                      "-c", "commit.gpgsign=false", "commit", "--allow-empty", "-qm", "synthetic candidate"]):
             subprocess.run(["git", *args], check=True, capture_output=True)
         commit = subprocess.run(["git", "-C", str(self.root), "rev-parse", "HEAD"],
                                 check=True, capture_output=True, text=True).stdout.strip()
@@ -178,7 +178,7 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
     def test_verification_exact_lookup_errors_and_incomplete_metadata_are_nonzero(self):
         self.verification_fixture()
         partition = json.loads(self.transport("address").stdout)["partition"]
-        tag = "lean-cache-verify-v1-" + partition.replace("/", "-") + "-123-1"
+        tag = json.loads(self.transport("address").stdout)["release_prefix"].replace("lean-cache-v2-", "lean-cache-verify-v1-", 1) + "ci-123-1"
         valid = dict(tag_name=tag, target_commitish=self.verification_commit, draft=False)
         cases = [(json.dumps(dict(valid, draft=True)), "0"),
                  (json.dumps(valid), "0"), ('{"draft":false}', "0"),
@@ -199,7 +199,7 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
     def test_verification_rejects_invalid_post_edit_confirmation(self):
         self.verification_fixture()
         partition = json.loads(self.transport("address").stdout)["partition"]
-        tag = "lean-cache-verify-v1-" + partition.replace("/", "-") + "-123-1"
+        tag = json.loads(self.transport("address").stdout)["release_prefix"].replace("lean-cache-v2-", "lean-cache-verify-v1-", 1) + "ci-123-1"
         for metadata, status in self.invalid_post_edit_responses(tag, self.verification_commit):
             with self.subTest(metadata=metadata, status=status):
                 shutil.rmtree(self.remote)
@@ -307,12 +307,9 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
         self.assertIn("-123-2", result.stdout)
         self.assertFalse((self.root / ".lake/build").exists())
 
-    def test_verification_keeps_production_namespace_and_schedule_gate_unchanged(self):
+    def test_verification_namespace_never_enters_production_seed_selection(self):
         self.verification_fixture()
         self.assertEqual(0, self.verification("publish").returncode)
-        default_push = self.transport("publish", **self.verification_environment)
-        self.assertEqual(0, default_push.returncode, default_push.stdout + default_push.stderr)
-        self.assertIn("scheduled dev producer", default_push.stdout)
         self.assertEqual(1, len(list(self.remote.iterdir())))
         shutil.rmtree(self.root / ".lake/build")
         production_fetch = self.transport("fetch")

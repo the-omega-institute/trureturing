@@ -12,7 +12,7 @@ public sealed class InspectorNativePackagingTests(InspectorCompilerFixture compi
     [Theory]
     [InlineData("test_native.NativePackageTests.test_native_clonefile_seed_reuses_rows_and_keeps_donor_private")]
     [InlineData("test_native.NativePackageTests.test_native_pack_unpack_reuses_complete_rows")]
-    [InlineData("test_native.NativePackageTests.test_release_publisher_legacy_seed_current_pack_restore_and_unchanged")]
+    [InlineData("test_native.NativePackageTests.test_release_publisher_current_pack_restore_and_unchanged")]
     public void PackageConsumersStartWithPrivateColdProjects(string suite) =>
         InspectorNativeTestRunner.Run(compiler, suite);
 
