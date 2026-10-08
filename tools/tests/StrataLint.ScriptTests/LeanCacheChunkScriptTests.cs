@@ -66,7 +66,7 @@ public sealed class LeanCacheChunkScriptTests
         var names = new[] { "lean-build.tgz.part-00", "lean-build.tgz.part-01", "lean-build.tgz.part-02" };
         Assert.Equal([.. names, "manifest.json"], fixture.Assets(fixture.Tag));
         var manifest = fixture.Manifest(fixture.Tag);
-        Assert.Equal("lean-release-seed-v3", manifest["schema"]!.GetValue<string>());
+        Assert.Equal("lean-release-seed-v4", manifest["schema"]!.GetValue<string>());
         Assert.Equal(3, manifest["parts"]!.AsArray().Count);
         for (var i = 0; i < names.Length; i++)
         {
