@@ -39,6 +39,26 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         {
             packages = new[] { new { name = "mathlib", rev = Revision, inputRev = "requested-tag" } },
         }));
+        foreach (var name in new[] { "reuse.py", "publication.py", "materials.py" })
+            ScriptHarnessScratch.CopyScriptInto(
+                Path.Combine(TestRepositoryLayout.FindRoot(), "tools/lean-inspector", name),
+                Path.Combine(repository, "tools/lean-inspector", name));
+        ScriptHarnessScratch.CopyScriptInto(
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/report/lean-report-selection.py"),
+            Path.Combine(repository, "tools/scripts/report/lean-report-selection.py"));
+        Write(Path.Combine(repository, "lean-toolchain"), "leanprover/lean4:v4.33.0\n");
+        Write(Path.Combine(repository, "Trureturing.lean"), "def fixture := 1\n");
+        Write(Path.Combine(repository, "lean-report-inputs.json"), """
+            {"schema_version":1,
+             "report_execution":{"toolchain":"lean-toolchain","tools":["lake","lean"],
+              "platform":["system","machine"],"environment":["LEAN_PATH","LEAN_SRC_PATH","LEAN_SYSROOT","ELAN_TOOLCHAIN","LEAN_OPTS"]},
+             "report_modules":{"include":[{"pattern":"Trureturing.lean","optional":false}],"exclude":[]},
+             "config_inputs":{"include":[{"pattern":"lean-toolchain","optional":false}],"exclude":[]},
+             "inspector_sources":{"include":[],"exclude":[]},
+             "producer_scopes":{"lean-report":{"include":[{"pattern":"lean-report-inputs.json","optional":false},
+              {"pattern":"tools/scripts/report/lean-report-selection.py","optional":false}],"exclude":[]},
+              "scribe-content":{"include":[],"exclude":[]}}}
+            """);
         WriteStub("make",
             """
             printf '%s\n' "$*" >> "$CHUNK_FIXTURE/build-runs"
@@ -54,7 +74,9 @@ internal sealed class LeanCacheChunkFixture : IDisposable
             """exec python3 "$CHUNK_FIXTURE/gh.py" "$@" """);
         var address = Run("address");
         AssertSuccess(address);
-        Partition = JsonNode.Parse(address.Text)!["partition"]!.GetValue<string>();
+        var resolved = JsonNode.Parse(address.Text)!;
+        Partition = resolved["partition"]!.GetValue<string>();
+        CacheKey = resolved["cache_key"]!.AsObject();
         ArchiveBytes = Pack(archive);
         FixtureFile.WriteAllBytes(Path.Combine(temporary.Path, "archive"), ArchiveBytes);
         // Replace only the pack dependency in this child interpreter. Fetch uses
@@ -75,9 +97,10 @@ internal sealed class LeanCacheChunkFixture : IDisposable
     }
 
     internal string Partition { get; }
+    internal JsonObject CacheKey { get; }
     internal byte[] ArchiveBytes { get; }
     internal string Tag => CandidateTag(4242);
-    internal string CandidateTag(int run, string? partition = null) => $"lean-cache-v2-{(partition ?? Partition).Replace('/', '-')}-{run}-1";
+    internal string CandidateTag(int run, string? partition = null) => $"lean-cache-v2-{(partition ?? Partition).Replace('/', '-')}-report-{CacheKey["report_format"]!.GetValue<string>()}-env-{CacheKey["execution_sha256"]!.GetValue<string>()[..12]}-ci-{run}-1";
     internal string? Unpacked => ReadInstalled("build/cache.olean");
     internal string? UnpackedReport => ReadInstalled("build/lean-inspector/report.zip");
     internal string[] DownloadPatterns => ScriptHarnessScratch.ReadRecordedCalls(Path.Combine(temporary.Path, "download-patterns"));
@@ -145,7 +168,8 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         }
         var manifest = new JsonObject
         {
-            ["schema"] = "lean-release-seed-v3", ["partition"] = partition ?? Partition,
+            ["schema"] = "lean-release-seed-v4", ["partition"] = partition ?? Partition,
+            ["cache_key"] = CacheKey.DeepClone(),
             ["producer_commit_sha"] = ProducerSha, ["workflow_run_id"] = tag.Split('-')[^2],
             ["workflow_run_attempt"] = "1", ["archive_sha256"] = Digest(ArchiveBytes),
             ["archive_bytes"] = ArchiveBytes.Length, ["parts"] = parts,
