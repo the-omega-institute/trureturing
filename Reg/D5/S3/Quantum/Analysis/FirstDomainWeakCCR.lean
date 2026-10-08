@@ -1,3 +1,5 @@
+import Reg.Support.SourceSelection
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Analysis.FirstDomainWeakCCR
 import Reg.Support.DependentFamily
 open MeasureTheory Filter Set
@@ -93,7 +95,7 @@ def registration : Registration arena (arena.Law actual) where
       simpa [actual, realize] using (congrFun he nonzeroVector).symm
     exact nonzeroVector_ne (inner_self_eq_zero.mp hz)
 
-def selection : LeanInformationAudit.SourceSelection := {
+def selection : _root_.Reg.Support.SourceSelection := {
   owner := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR
   coordinates := #[]
   readouts := #[
@@ -101,10 +103,27 @@ def selection : LeanInformationAudit.SourceSelection := {
     { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "fn", "fn"], functionOperand := true },
     { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "fn"], functionOperand := true }] }
 
-register_information_theorem first_domain_weak_ccr in arena
-  readout via (realize signature (fun _ _ u v => inner ℂ u v) (fun e => nomatch e))
-  realizes registration
-  escape from source (selection)
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.first_domain_weak_ccr) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ u v => inner.{0, 0} ℂ u v) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Analysis") "FirstDomainWeakCCR") "first_domain_weak_ccr") "Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR/Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ u v => inner.{0, 0} ℂ u v) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Analysis.FirstDomainWeakCCR, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "fn", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }, { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg", "fn", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }, { path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "fn", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.Quantum.Analysis.FirstDomainWeakCCR

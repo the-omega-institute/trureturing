@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.FiniteGroups.NikolovSegal.FiniteGeneratingGrowth
 import Reg.Support.DependentFamily
 import Mathlib.Data.ZMod.Basic
@@ -109,18 +110,52 @@ def registration : Registration arena.{u} statement.{u} where
       exact nomatch e
   dependence := dependence.{u}
 
-register_information_theorem NikolovSegal.SmallTwistedProduct.finite_right_stable_inv in arena
-  readout via (realize signature.{u} (fun _ p x => by
+noncomputable def registration_1 :
+    LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0}
+      (@NikolovSegal.SmallTwistedProduct.finite_right_stable_inv.{u})
+      (type_of% (realize signature.{u} (fun _ p x => by
+        letI := p.groupG
+        letI := p.equalG
+        exact x * p.g⁻¹ ∈ p.A) (fun e => nomatch e))) Unit Unit := {
+  unitName := Lean.Name.str (Lean.Name.str
+    `NikolovSegal.SmallTwistedProduct.finite_right_stable_inv
+    "Reg.D5.S3.FiniteGroups.NikolovSegal.FiniteGeneratingGrowth/Reg.D5.S3.FiniteGroups.NikolovSegal.FiniteGeneratingGrowth.arena/[anonymous]")
+    "__information_unit",
+  realizationName := `Reg.D5.S3.FiniteGroups.NikolovSegal.FiniteGeneratingGrowth.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨arena.{u}⟩,
+  objectArena := .source ⟨arena.{u}⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source arena.{u} ⟨registration.{u}⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize signature.{u} (fun _ p x => by
     letI := p.groupG
     letI := p.equalG
-    exact x * p.g⁻¹ ∈ p.A) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.FiniteGroups.NikolovSegal.FiniteGeneratingGrowth
-    coordinates := #[0,1,2,3,4]
+    exact x * p.g⁻¹ ∈ p.A) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some {
+    owner := `D5.S3.FiniteGroups.NikolovSegal.FiniteGeneratingGrowth,
+    definition := none,
+    coordinates := #[0,1,2,3,4],
     readouts := #[{
-      path := #["body","body","body","body","body","body","body","body"]
-      stateBinder := 6 }] })
-  escape continues (open)
+      path := #["body","body","body","body","body","body","body","body"],
+      stateBinder := 6,
+      functionOperand := false,
+      stateOperand := none,
+      booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true },
+    { name := `internal.cmdlineSnapshots, value := .bool true },
+    { name := `linter.mathlibStandardSet, value := .bool true },
+    { name := `maxSynthPendingDepth, value := .nat 3 },
+    { name := `pp.unicode.fun, value := .bool true },
+    { name := `relaxedAutoImplicit, value := .bool false }] }
 
 end Reg.D5.S3.FiniteGroups.NikolovSegal.FiniteGeneratingGrowth

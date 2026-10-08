@@ -38,7 +38,7 @@ internal sealed class ProductUnitaryChoiSpectrumDocument : IScribeDocumentDefini
                 Seq(OpenBracket, V("i"), Sp, Eq, Sp, V("j"), CloseBracket))),
                 "The vector on the pairs (i, j) of indices in {0, …, n − 1} with entry 1 when i = j and 0 otherwise; the bracket [i = j] denotes this indicator. It is the unnormalized maximally entangled vector Σ_i e_i ⊗ e_i.",
                 DescribeRole.Definition, Repo()),
-            Node("omega_dot_omega", "The squared length of the diagonal pair vector", "omega_dot_omega", Disp(
+            Node("omega-dot-omega", "The squared length of the diagonal pair vector", "omega_dot_omega", Disp(
                 For(V("n"), Seq(Mathbb, Grp(V("N"))),
                     Equal(Call("dotProduct", Call("omega", V("n")), Call("omega", V("n"))), V("n")))),
                 "ω has exactly n entries equal to 1 and the others 0, so ω · ω = n.",
@@ -58,7 +58,7 @@ internal sealed class ProductUnitaryChoiSpectrumDocument : IScribeDocumentDefini
                 Seq(Call("kmat", V("n")), Sp, Minus, Sp, Call("dmat", V("n"))))),
                 "K − I/n: the Choi matrix of compl(n).",
                 DescribeRole.Definition, Repo()),
-            Node("choi_reindex", "The Choi matrix grouped by factor", "choi_reindex", Disp(
+            Node("choi-reindex", "The Choi matrix grouped by factor", "choi_reindex", Disp(
                 For(Seq(N(1), Comma, Sp, N(2)), Seq(Mathbb, Grp(V("N"))),
                     For(Seq(Lam(0, 1), Comma, Sp, Lam(1, 0), Comma, Sp, Lam(1, 1)), Seq(Mathbb, Grp(V("C"))),
                         Equal(

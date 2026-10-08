@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower
 import Reg.Support.DependentFamily
 
@@ -74,18 +75,32 @@ def registration : Registration arena (arena.Law actual) where
         (fun j _ => witnessRoots_spec j) 1]
     norm_num
 
-register_information_theorem golden_cubic_block_kummer_tower_degree in arena
-  readout via (realize signature
-    (fun _ roots J => Module.finrank Base (tower roots J))
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "fn", "arg"]
-      stateBinder := 2 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower.golden_cubic_block_kummer_tower_degree) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ roots J => Module.finrank.{0, 0} Base (tower roots J))
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Factorization") "Galois") "GoldenCubicBlockKummerTower") "golden_cubic_block_kummer_tower_degree") "Reg.D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower/Reg.D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ roots J => Module.finrank.{0, 0} Base (tower roots J))
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Factorization.Galois.GoldenCubicBlockKummerTower, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "fn", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

@@ -1,6 +1,6 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Measurement.EventualClickDoobInstrument
 import Reg.Support.DependentFamily
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
@@ -77,18 +77,7 @@ def arena : Arena where
         (original.trace ≠ 0 → conditioned.trace ≠ 0 ∧
           (conditioned.trace)⁻¹ • conditioned = (original.trace)⁻¹ • original)
 
-run_cmd do
-  let root := `Reg.D5.S3.Quantum.Measurement.EventualClickDoobInstrument
-  let sourceName := `D5.S3.Quantum.Measurement.EventualClickDoobInstrument ++
-    `eventual_click_doob_instrument
-  let identity := captureStatement (← getEnv) sourceName
-  let row : LeanInformationAudit.SnapshotOccurrence := {
-    objectArenaName := root ++ `arena
-    theoremName := sourceName
-    capturedStatement := identity
-    registrationModuleName := root }
-  LeanInformationAudit.RootCatalogs.declare {
-    rootId := root, expected := #[row], source := #[row], companionPrefix := some root }
+
 
 theorem actual_law : arena.Law actual := by
   intro d α ξ β _ _ _ Q L hcomp F hF
@@ -139,17 +128,28 @@ def registration : Registration arena (arena.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem eventual_click_doob_instrument in arena
-  readout via (realize effectSignature (fun _ _ F => F) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Measurement.EventualClickDoobInstrument
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "value", "arg"]
-      stateBinder := 10 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Measurement.EventualClickDoobInstrument.eventual_click_doob_instrument) (type_of% (realize.{0, 0, 0, 0, 0} effectSignature (fun _ _ F => F) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Measurement") "EventualClickDoobInstrument") "eventual_click_doob_instrument") "Reg.D5.S3.Quantum.Measurement.EventualClickDoobInstrument/Reg.D5.S3.Quantum.Measurement.EventualClickDoobInstrument.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Measurement.EventualClickDoobInstrument.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} effectSignature (fun _ _ F => F) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Measurement.EventualClickDoobInstrument, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "value", "arg"], stateBinder := 10, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms actual_law
 #print axioms rejected_law

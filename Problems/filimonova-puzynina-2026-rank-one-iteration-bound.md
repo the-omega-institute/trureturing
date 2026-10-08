@@ -58,9 +58,11 @@ their exact-type importing clients compile under the pinned Lean/Mathlib
 environment; the importing client's axiom closure is only
 `propext`, `Classical.choice`, and `Quot.sound`.
 
-The formal `Proved` resolution binding will be attached after the new source
-module enters the frozen declaration state.  Issue #13429 records the
-preregistration and the complete kernel-checked evidence.
+The source module and its proof dependency closure are registered in the
+Frozen state.  The canonical Scribe description binds the `Proved` resolution
+to `effective_iteration_bound`.  Issue #13429 records the preregistration and
+the complete kernel-checked evidence; issue [#14423](https://github.com/the-omega-institute/trureturing/issues/14423)
+tracks completion of the missing publication records.
 
 ## Triage
 

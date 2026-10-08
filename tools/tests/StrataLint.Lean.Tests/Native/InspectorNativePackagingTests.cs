@@ -6,7 +6,7 @@ public sealed class InspectorNativePackagingTests(InspectorCompilerFixture compi
     [Theory]
     [InlineData("test_native.NativeTests.test_native_compiler_seed_is_private")]
     [InlineData("test_native.NativeTests.test_snapshot_generation_preserves_mathlib_partition")]
-    [InlineData("test_native.NativeTests.test_release_partition_preserves_semantic_and_selection_changes")]
+    [InlineData("test_native.NativeTests.test_release_partition_preserves_selection_changes")]
     public void InspectorArtifactBehavior(string suite) => InspectorNativeTestRunner.Run(compiler, suite);
 
     [Fact]
