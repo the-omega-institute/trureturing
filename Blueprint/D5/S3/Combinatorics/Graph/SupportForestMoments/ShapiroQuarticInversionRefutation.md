@@ -94,6 +94,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SupportForestMoments/ShapiroQuarticInversionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/shapiro-2026-unweighted-fourth-moment-inversion` (refuted) by `D5/S3/Combinatorics/Graph/SupportForestMoments/ShapiroQuarticInversionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"shapiro-2026-unweighted-fourth-moment-inversion","declaration_gid":"D5/S3/Combinatorics/Graph/SupportForestMoments/ShapiroQuarticInversionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Boris Shapiro (2026). *The (n−2,2)-Spectrum of a Graph*. URL: <https://arxiv.org/abs/2605.17501v2>.
