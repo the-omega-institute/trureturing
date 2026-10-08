@@ -11,8 +11,6 @@ namespace StrataLint.Scribe;
 /// what the repository contains.
 public static class DagEmitter
 {
-    public const string RelativePath = "Generated/DAG.md";
-    public const string TruthGraphRelativePath = "Generated/truth-graph.v1.json";
 
     public static int Emit(
         string repositoryRoot,
@@ -37,8 +35,8 @@ public static class DagEmitter
 
             var projections = new[]
             {
-                (Path: RelativePath, Bytes: markdown),
-                (Path: TruthGraphRelativePath, Bytes: json),
+                (Path: GeneratedArtifactInventory.Dag.Path, Bytes: markdown),
+                (Path: GeneratedArtifactInventory.TruthGraph.Path, Bytes: json),
             };
             var stale = projections.Where(projection =>
             {

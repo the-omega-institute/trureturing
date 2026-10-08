@@ -1,3 +1,4 @@
+using StrataLint.Engineering;
 using System.Collections.Immutable;
 using System.IO.Compression;
 using System.Text.Json;
@@ -98,8 +99,8 @@ public sealed class PhysicalParserEvidenceTests
             changes.AddRange([path.Value, registration, pinPath]);
         }
 
-        Source(EngineeringProjectRegistry.ManifestPath);
-        foreach (var input in EngineeringProjectRegistry.Parse(sources[EngineeringProjectRegistry.ManifestPath]).RuleBuildInputs)
+        Source(EngineeringProjectSchema.ManifestPath);
+        foreach (var input in EngineeringProjectRegistry.ValidateManifest(sources[EngineeringProjectSchema.ManifestPath]).RuleBuildInputs)
             Source(input);
         var current = Tree(sources);
         var joined = LeanAxiomReport.Create(files);

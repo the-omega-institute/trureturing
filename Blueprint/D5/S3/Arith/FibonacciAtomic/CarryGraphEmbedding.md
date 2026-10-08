@@ -1,8 +1,8 @@
-# Canonical Embedding in the Original Carry Graph
+# Original Carry Graph and Fixed Tree Layers
 
 ## Abstract
 
-Positive real laws enter the original bounded carry graph with exact minimum-anchor and tail-cost values.
+Bounded carry states and fixed label intervals determine exact continuing and stopping tree layers.
 
 **Definition 1.1 (State coordinates).**
 
@@ -136,21 +136,67 @@ $$(\forall gamma: Path, \operatorname{pathCost}\left(gamma\right) = \sum_{d \in 
 
 The cost is the real infinite sum of normalized residual widths, including the depth-zero term. These whole-column quantities do not charge r separate reads in a machine step. An unsummable series on a raw path has the totalized value zero.
 
-**Theorem 1.12 (Complete canonical embedding).**
+**Definition 1.12 (Fixed labels).**
 
-$$(\forall m: \mathbb{N}, (2 \le m \Rightarrow ((\forall s: State, (\operatorname{IsState}\left(m, s\right) \Rightarrow (\exists a: Action, \operatorname{Legal}\left(m, s, a\right)))) \land (\forall s: State, (\forall a: Action, (\operatorname{r}\left(s\right) = 0 \Rightarrow (\operatorname{Legal}\left(m, s, a\right) \Rightarrow (\operatorname{b}\left(a\right) = 0 \land \operatorname{h}\left(a\right) = 0 \land \operatorname{c}\left(a\right) = 0 \land \operatorname{successor}\left(s, a\right) = s))))) \land (\forall s: State, (\forall a: Action, (\operatorname{e}\left(s\right) = 1 \Rightarrow (\operatorname{Legal}\left(m, s, a\right) \Rightarrow \operatorname{h}\left(a\right) = 0)))) \land (\forall p: \operatorname{Fin}\left(m\right) \to \mathbb{R}, ((\forall i: \operatorname{Fin}\left(m\right), 0 < \operatorname{p}\left(i\right)) \Rightarrow (\sum_{i \in \operatorname{Fin}\left(m\right)}\operatorname{p}\left(i\right) = 1 \Rightarrow (\forall k: \operatorname{Fin}\left(m\right), ((\forall i: \operatorname{Fin}\left(m\right), \operatorname{p}\left(k\right) \le \operatorname{p}\left(i\right)) \Rightarrow (\exists gamma: Path, (\operatorname{IsRootPath}\left(m, gamma\right) \land (\forall d: \mathbb{N}, \operatorname{r}\left(\operatorname{state}\left(gamma, d\right)\right) = \operatorname{R}\left(p, d\right)) \land (\forall d: \mathbb{N}, \operatorname{e}\left(\operatorname{state}\left(gamma, d\right)\right) = \operatorname{card}\left(\{i \in \operatorname{Fin}\left(m\right)\mid\left\lfloor2^{d} \operatorname{p}\left(i\right)\right\rfloor = \left\lfloor2^{d} \operatorname{p}\left(k\right)\right\rfloor\}\right)) \land (\forall d: \mathbb{N}, \operatorname{b}\left(\operatorname{action}\left(gamma, d\right)\right) = \left\lfloor2^{d + 1} \operatorname{p}\left(k\right)\right\rfloor - 2 \left\lfloor2^{d} \operatorname{p}\left(k\right)\right\rfloor) \land \operatorname{anchorValue}\left(gamma\right) = \operatorname{p}\left(k\right) \land \operatorname{pathCost}\left(gamma\right) = \operatorname{L}\left(p\right)))))))))))$$
+$$(\forall m: \mathbb{N}, (\forall gamma: Path, (\forall d: \mathbb{N}, (\forall i: \operatorname{Fin}\left(m\right), i \in \operatorname{labelSet}\left(m, gamma, d\right) \iff ((\operatorname{b}\left(\operatorname{action}\left(gamma, d\right)\right) = 1 \land i < \operatorname{e}\left(\operatorname{state}\left(gamma, d\right)\right) + \operatorname{c}\left(\operatorname{action}\left(gamma, d\right)\right)) \lor (\operatorname{b}\left(\operatorname{action}\left(gamma, d\right)\right) \neq 1 \land \operatorname{e}\left(\operatorname{state}\left(gamma, d\right)\right) - \operatorname{h}\left(\operatorname{action}\left(gamma, d\right)\right) \le i \land i < \operatorname{e}\left(\operatorname{state}\left(gamma, d\right)\right) + \operatorname{c}\left(\operatorname{action}\left(gamma, d\right)\right)))))))$$
 
-*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.result` (`✓ std3`). ∎
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.labelSet` (`✓ std3`).
 
 *Source.* Repository-derived.
 
 *Commentary.*
 
-For every m>=2, each graph state has a legal action. At residual zero the only legal action has b=h=c=0 and leaves the state fixed. At equality-group size one every legal action has h=0.
+Indices are zero-based. On an anchor-one column the selected labels start at zero. On an anchor-zero column they start at e-h and stop before e+c.
 
-Let p be any strictly positive real probability vector, and choose any index k minimizing p. Write n(i,d)=floor(2^d p(i)) and a(i,d)=n(i,d+1)-2n(i,d). The path has r(d)=R(p,d), e(d) equal to the number of indices with n(i,d)=n(k,d), and anchor bit a(k,d). Its anchor value is p(k), hence the smallest probability, and its tail cost is the existing dyadic cost L(p). No rationality, distinctness or computability hypothesis is used.
+**Definition 1.13 (Ordered children).**
 
-Minimum-prefix monotonicity and the zero-or-one digit bounds show that a label with strictly larger old prefix has strictly larger next prefix. Equal-prefix labels taking a different bit therefore leave permanently. When the anchor bit is one, minimum-prefix order forces every equal-prefix label to take one. When it is zero, fewer than e equal-prefix labels depart because the anchor stays. Counting these departures and the larger-prefix one-labels gives exactly the two legal action rows. The floor remainder bounds supply the residual interval, and the canonical binary expansion reconstructs the minimum atom.
+$$(\forall words: \operatorname{List}\left(\operatorname{List}\left(Bool\right)\right), \operatorname{children}\left(words\right) = \operatorname{flatMap}\left((w \mapsto [\operatorname{append}\left(w, [false]\right), \operatorname{append}\left(w, [true]\right)]), words\right))$$
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.children` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Each word contributes first its false child and then its true child, preserving parent order.
+
+**Definition 1.14 (Continuing words).**
+
+$$(\forall m: \mathbb{N}, (\forall gamma: Path, (\forall d: \mathbb{N}, \operatorname{continuing}\left(m, gamma, d + 1\right) = \operatorname{drop}\left(\operatorname{length}\left(\operatorname{sort}\left(\operatorname{labelSet}\left(m, gamma, d\right)\right)\right), \operatorname{children}\left(\operatorname{continuing}\left(m, gamma, d\right)\right)\right))))$$
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.continuing` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Depth zero consists of the empty word. Every later level expands the continuing parents and removes the initial children assigned to labels.
+
+**Definition 1.15 (Labelled stopping words).**
+
+$$(\forall m: \mathbb{N}, (\forall gamma: Path, (\forall d: \mathbb{N}, \operatorname{stopping}\left(m, gamma, d\right) = \operatorname{zip}\left(\operatorname{children}\left(\operatorname{continuing}\left(m, gamma, d\right)\right), \operatorname{sort}\left(\operatorname{labelSet}\left(m, gamma, d\right)\right)\right))))$$
+
+*Formalization.* `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.stopping` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The selected initial children are paired with the increasing output labels. The zip has the shorter of the two input lengths.
+
+**Theorem 1.16 (Exact continuing and stopping layers).**
+
+$$(\forall m: \mathbb{N}, (\forall gamma: Path, (\operatorname{IsRootPath}\left(m, gamma\right) \Rightarrow ((\forall d: \mathbb{N}, \operatorname{length}\left(\operatorname{sort}\left(\operatorname{labelSet}\left(m, gamma, d\right)\right)\right) = \operatorname{ones}\left(\operatorname{state}\left(gamma, d\right), \operatorname{action}\left(gamma, d\right)\right)) \land (\forall d: \mathbb{N}, (\operatorname{length}\left(\operatorname{continuing}\left(m, gamma, d\right)\right) = \operatorname{r}\left(\operatorname{state}\left(gamma, d\right)\right) \land \operatorname{Nodup}\left(\operatorname{continuing}\left(m, gamma, d\right)\right) \land (\forall w: \operatorname{List}\left(Bool\right), (w \in \operatorname{continuing}\left(m, gamma, d\right) \Rightarrow \operatorname{length}\left(w\right) = d)))) \land (\forall d: \mathbb{N}, (\operatorname{map}\left(snd, \operatorname{stopping}\left(m, gamma, d\right)\right) = \operatorname{sort}\left(\operatorname{labelSet}\left(m, gamma, d\right)\right) \land \operatorname{Nodup}\left(\operatorname{stopping}\left(m, gamma, d\right)\right) \land (\forall w: \operatorname{Product}\left(\operatorname{List}\left(Bool\right), \operatorname{Fin}\left(m\right)\right), (w \in \operatorname{stopping}\left(m, gamma, d\right) \Rightarrow \operatorname{length}\left(\operatorname{fst}\left(w\right)\right) = d + 1))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.tree_layers` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural m and legal root path, the number of selected labels is the column's one-label count. At depth d the continuing list has exactly r(d) distinct words, each of length d. The stopping list pairs distinct words of length d+1 with every selected label in increasing order.
+
+The label interval has e+c entries on an anchor-one column and h+c entries on an anchor-zero column. Doubling the continuing parents and removing that interval leaves exactly the successor residual width. Induction also preserves distinctness and word length. The scan and fair-bit law use these exact tree layers.
 
 ## References
 
@@ -161,10 +207,13 @@ Minimum-prefix monotonicity and the zero-or-one digit bounds show that a label w
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.Path`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.State`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.anchorValue`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.children`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.continuing`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.labelSet`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.ones`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.pathCost`
-- Truth anchor: `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.result`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.root`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.stopping`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.successor`
-- Dependency: [D5/S1/Digit/RadixFloorDigit](../../../S1/Digit/RadixFloorDigit.md)
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/CarryGraphEmbedding.tree_layers`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/DyadicSupportLines](DyadicSupportLines.md)

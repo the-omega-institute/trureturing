@@ -37,7 +37,7 @@ domains:
     definition: Kernel-checkable refutation and infeasibility certificates such as LRAT propositional proofs and rational Farkas dual weights.
   Combinatorics:
     stratum: S3
-    definition: Named finite graph families and their invariants, including the hypercube and its extremal subgraph counts.
+    definition: Graph families and their invariants, including the hypercube, extremal subgraph counts, perfect matchings and matching components on arbitrary vertex types.
   CompletionDynamics:
     stratum: S3
     definition: Dynamical structures of observer completion - golden Mobius fixed points, projective jets and first-break orders, and real-completion thread fibers with blow-up coordinates.
@@ -113,6 +113,9 @@ domains:
   GraphInvariants:
     stratum: S3
     definition: Polynomial and simplicial invariants of finite simple graphs, such as chromatic polynomials, independence complexes and their acyclic Morse matchings, and whether these invariants distinguish graphs.
+  Hamming:
+    stratum: S3
+    definition: Mixed-alphabet Hamming graph partitions, coordinate-line cliques, and their maximality and direction-completeness.
   History:
     stratum: S0
     definition: Finite marker and event histories, their append operation, and faithful self-encoding bridges.

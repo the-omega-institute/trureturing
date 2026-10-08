@@ -1,0 +1,684 @@
+{
+  "primes": [
+    3,
+    5,
+    7,
+    11,
+    13,
+    17,
+    19,
+    23
+  ],
+  "nonternary_height": 3,
+  "phase_source": "Report529 explicit side-comb formula on the first eight odd primes",
+  "pure_Q_count": "22477958755529321140096",
+  "Q_period": "51404758182902197698625",
+  "cofactor_label_count": 16384,
+  "Z_fibre": {
+    "count": 16540311957403355160121,
+    "states": 1494,
+    "cache_hits": 2495,
+    "mixed_side_events": 120
+  },
+  "W_fibre": {
+    "count": 2569696844461203895339,
+    "states": 6880,
+    "cache_hits": 18220,
+    "mixed_side_events": 240
+  },
+  "h_z": "16540311957403355160121/22477958755529321140096",
+  "h_w": "233608804041927626849/2043450795957211012736",
+  "limiting_delta": "2569696844461203895339/16540311957403355160121",
+  "cases": [
+    {
+      "H": 4,
+      "original_count": 81919,
+      "period": "4163785412815078013588625",
+      "U_count": "119328185735851510973681",
+      "U0_count": "678152790253537561564961",
+      "six_U_minus_U0": "37816324161571504277125",
+      "delta": "119328185735851510973681/678152790253537561564961",
+      "delta_decimal": 0.1759606204543358,
+      "refutes_one_sixth": false,
+      "below_weaker_threshold": false,
+      "haar_U": "17046883676550215853383/594826487545011144798375",
+      "haar_U0": "678152790253537561564961/4163785412815078013588625"
+    },
+    {
+      "H": 5,
+      "original_count": 98303,
+      "period": "12491356238445234040765875",
+      "U_count": "327473630137209026496140",
+      "U0_count": "2017918058803209329534762",
+      "six_U_minus_U0": "-53076277979955170557922",
+      "delta": "163736815068604513248070/1008959029401604664767381",
+      "delta_decimal": 0.16228291763810654,
+      "refutes_one_sixth": true,
+      "below_weaker_threshold": false,
+      "haar_U": "65494726027441805299228/2498271247689046808153175",
+      "haar_U0": "2017918058803209329534762/12491356238445234040765875"
+    },
+    {
+      "H": 6,
+      "original_count": 114687,
+      "period": "37474068715335702122297625",
+      "U_count": "951909963341281573063517",
+      "U0_count": "6037213864452224633444165",
+      "six_U_minus_U0": "-325754084404535195063063",
+      "delta": "951909963341281573063517/6037213864452224633444165",
+      "delta_decimal": 0.15767371915482928,
+      "refutes_one_sixth": true,
+      "below_weaker_threshold": true,
+      "haar_U": "951909963341281573063517/37474068715335702122297625",
+      "haar_U0": "1207442772890444926688833/7494813743067140424459525"
+    }
+  ],
+  "repaired_query_upper": "11025/1024",
+  "arbitrary_high_phase_extension": [
+    {
+      "low_null_through_height": 2,
+      "arbitrary_mixed_from_height": 3,
+      "beta_upper": "11025/2048",
+      "deletion_upper": "8977/18432",
+      "reserve_lower": "9455/18432",
+      "complete_query_upper": "189473/9455",
+      "beta_threshold_for_28": "31/5",
+      "below_28": true,
+      "margin_to_28": "75267/9455"
+    },
+    {
+      "low_null_through_height": 4,
+      "arbitrary_mixed_from_height": 5,
+      "beta_upper": "11025/2048",
+      "deletion_upper": "8977/165888",
+      "reserve_lower": "156911/165888",
+      "complete_query_upper": "1777073/156911",
+      "beta_threshold_for_28": "85/7",
+      "below_28": true,
+      "margin_to_28": "2616435/156911"
+    }
+  ],
+  "low_projection_obstruction": {
+    "controls": [
+      {
+        "H": 1,
+        "original_count": 9,
+        "private_witnesses": 9,
+        "projected_period": 35,
+        "projected_survivors": 5,
+        "actual_period": 315,
+        "cheap_source_residues": 3
+      },
+      {
+        "H": 2,
+        "original_count": 24,
+        "private_witnesses": 24,
+        "projected_period": 1225,
+        "projected_survivors": 31,
+        "actual_period": 11025,
+        "cheap_source_residues": 105
+      }
+    ],
+    "forced_norm_formula": "H+1",
+    "height_six_original_count": 144,
+    "height_27_original_count": 2349,
+    "cheap_complete_query_norm": "1255501/73728",
+    "cheap_margin_to_28": "808883/73728"
+  },
+  "active_root_extension": {
+    "cofactor_source": "Report563 MT11",
+    "beta_upper": "13463054/5049311",
+    "deletion_upper": "2804581/5049311",
+    "reserve_lower": "2244730/5049311",
+    "complete_query_upper": "37584581/2244730",
+    "source_threshold_for_28": "37/12",
+    "scope": "One unblocked ternary root; at most one distinct active Q phase per nonunit cofactor through ternary depth two, including depth zero. This checks the supplied source bound consumer, not MT11 again."
+  },
+  "extra_five_guard": {
+    "shared_scalar_target": "37/12",
+    "gap_intercept": "35597719/31808700",
+    "gap_slope": "-40762649/15904350",
+    "weight_threshold": "35597719/81525298",
+    "profiles": [
+      {
+        "name": "normalized_haar",
+        "shared_weight": "5/11",
+        "first_depth_cap": "4/11",
+        "higher_depth_density": "20/11",
+        "rho": "489631/883575",
+        "complete_query_upper": "51157586/16157823",
+        "gap_to_target": "-1783509/21543764",
+        "nonempty_supports": 127,
+        "maximum_query_cap": "9088732/16157823",
+        "maximum_label": 5,
+        "clipping_improvement": "0"
+      },
+      {
+        "name": "balanced_roots",
+        "shared_weight": "4/9",
+        "first_depth_cap": "1/3",
+        "higher_depth_density": "20/9",
+        "rho": "2676139/4771305",
+        "complete_query_upper": "41733953/13380695",
+        "gap_to_target": "-5721721/160568340",
+        "nonempty_supports": 127,
+        "maximum_query_cap": "6816549/13380695",
+        "maximum_label": 5,
+        "clipping_improvement": "0"
+      }
+    ],
+    "auxiliary_forbidden": [
+      {
+        "residue": 0,
+        "modulus": 5
+      },
+      {
+        "residue": 1,
+        "modulus": 5
+      },
+      {
+        "residue": 2,
+        "modulus": 25
+      },
+      {
+        "residue": 7,
+        "modulus": 125
+      },
+      {
+        "residue": 32,
+        "modulus": 625
+      }
+    ],
+    "finite_period": 625,
+    "survivor_count": 344,
+    "root_two_counts": [
+      {
+        "modulus": 25,
+        "admissible_prefixes": 4
+      },
+      {
+        "modulus": 125,
+        "admissible_prefixes": 19
+      },
+      {
+        "modulus": 625,
+        "admissible_prefixes": 94
+      }
+    ],
+    "reciprocal_sum": "1119/3572",
+    "root_max_coefficient": "667/1786",
+    "four_layer_lower": "4691/10716",
+    "gap_above_threshold": "485008057/436812546684",
+    "actual_originals": [
+      {
+        "residue": 2,
+        "modulus": 3
+      },
+      {
+        "residue": 0,
+        "modulus": 5
+      },
+      {
+        "residue": 6,
+        "modulus": 15
+      },
+      {
+        "residue": 1,
+        "modulus": 45
+      },
+      {
+        "residue": 2,
+        "modulus": 25
+      },
+      {
+        "residue": 7,
+        "modulus": 125
+      },
+      {
+        "residue": 32,
+        "modulus": 625
+      }
+    ],
+    "unblocked_depth_two_phases": [
+      4,
+      7
+    ],
+    "scope": "The auxiliary support has two forbidden modulus5 phases. The actual originals have distinct moduli. The obstruction excludes only this inherited clique consumer with the same event/query scalar; it does not exclude full-profile consumers, separate weights or joint sources."
+  },
+  "active_leaf_extension": {
+    "cofactor_source": "Report563 MT11",
+    "beta_upper": "13463054/5049311",
+    "pure_ternary_query_upper": "4",
+    "low_null_through_height": 3,
+    "arbitrary_mixed_from_height": 4,
+    "reserve_lower": "2244730/5049311",
+    "complete_query_upper": "10209527/448946",
+    "margin_to_28": "2360961/448946",
+    "source_threshold_for_28": "37/13",
+    "fg7_roots": [
+      {
+        "prefix": 0,
+        "modulus": 3,
+        "phases": [
+          {
+            "cofactor": 5,
+            "residues": [
+              0,
+              1
+            ]
+          },
+          {
+            "cofactor": 25,
+            "residues": [
+              2
+            ]
+          },
+          {
+            "cofactor": 125,
+            "residues": [
+              7
+            ]
+          },
+          {
+            "cofactor": 625,
+            "residues": [
+              32
+            ]
+          }
+        ],
+        "single_phase": false
+      },
+      {
+        "prefix": 1,
+        "modulus": 3,
+        "phases": [
+          {
+            "cofactor": 5,
+            "residues": [
+              0,
+              1
+            ]
+          },
+          {
+            "cofactor": 25,
+            "residues": [
+              2
+            ]
+          },
+          {
+            "cofactor": 125,
+            "residues": [
+              7
+            ]
+          },
+          {
+            "cofactor": 625,
+            "residues": [
+              32
+            ]
+          }
+        ],
+        "single_phase": false
+      }
+    ],
+    "fg7_leaves": [
+      {
+        "prefix": 0,
+        "modulus": 9,
+        "phases": [
+          {
+            "cofactor": 5,
+            "residues": [
+              0,
+              1
+            ]
+          },
+          {
+            "cofactor": 25,
+            "residues": [
+              2
+            ]
+          },
+          {
+            "cofactor": 125,
+            "residues": [
+              7
+            ]
+          },
+          {
+            "cofactor": 625,
+            "residues": [
+              32
+            ]
+          }
+        ],
+        "single_phase": false
+      },
+      {
+        "prefix": 1,
+        "modulus": 9,
+        "phases": [
+          {
+            "cofactor": 5,
+            "residues": [
+              0,
+              1
+            ]
+          },
+          {
+            "cofactor": 25,
+            "residues": [
+              2
+            ]
+          },
+          {
+            "cofactor": 125,
+            "residues": [
+              7
+            ]
+          },
+          {
+            "cofactor": 625,
+            "residues": [
+              32
+            ]
+          }
+        ],
+        "single_phase": false
+      },
+      {
+        "prefix": 3,
+        "modulus": 9,
+        "phases": [
+          {
+            "cofactor": 5,
+            "residues": [
+              0,
+              1
+            ]
+          },
+          {
+            "cofactor": 25,
+            "residues": [
+              2
+            ]
+          },
+          {
+            "cofactor": 125,
+            "residues": [
+              7
+            ]
+          },
+          {
+            "cofactor": 625,
+            "residues": [
+              32
+            ]
+          }
+        ],
+        "single_phase": false
+      },
+      {
+        "prefix": 4,
+        "modulus": 9,
+        "phases": [
+          {
+            "cofactor": 5,
+            "residues": [
+              0
+            ]
+          },
+          {
+            "cofactor": 25,
+            "residues": [
+              2
+            ]
+          },
+          {
+            "cofactor": 125,
+            "residues": [
+              7
+            ]
+          },
+          {
+            "cofactor": 625,
+            "residues": [
+              32
+            ]
+          }
+        ],
+        "single_phase": true
+      },
+      {
+        "prefix": 6,
+        "modulus": 9,
+        "phases": [
+          {
+            "cofactor": 5,
+            "residues": [
+              0,
+              1
+            ]
+          },
+          {
+            "cofactor": 25,
+            "residues": [
+              2
+            ]
+          },
+          {
+            "cofactor": 125,
+            "residues": [
+              7
+            ]
+          },
+          {
+            "cofactor": 625,
+            "residues": [
+              32
+            ]
+          }
+        ],
+        "single_phase": false
+      },
+      {
+        "prefix": 7,
+        "modulus": 9,
+        "phases": [
+          {
+            "cofactor": 5,
+            "residues": [
+              0
+            ]
+          },
+          {
+            "cofactor": 25,
+            "residues": [
+              2
+            ]
+          },
+          {
+            "cofactor": 125,
+            "residues": [
+              7
+            ]
+          },
+          {
+            "cofactor": 625,
+            "residues": [
+              32
+            ]
+          }
+        ],
+        "single_phase": true
+      }
+    ],
+    "common_prefix_obstruction": {
+      "actual_originals": [
+        {
+          "residue": 2,
+          "modulus": 3
+        },
+        {
+          "residue": 0,
+          "modulus": 5
+        },
+        {
+          "residue": 6,
+          "modulus": 15
+        },
+        {
+          "residue": 0,
+          "modulus": 7
+        },
+        {
+          "residue": 1,
+          "modulus": 21
+        }
+      ],
+      "private_witnesses": [
+        2,
+        10,
+        6,
+        7,
+        1
+      ],
+      "finite_control_depth": 2,
+      "legal_leaf_conflicts": [
+        {
+          "prefix": 0,
+          "modulus": 9,
+          "phases": [
+            {
+              "cofactor": 5,
+              "residues": [
+                0,
+                1
+              ]
+            },
+            {
+              "cofactor": 7,
+              "residues": [
+                0
+              ]
+            }
+          ],
+          "single_phase": false
+        },
+        {
+          "prefix": 1,
+          "modulus": 9,
+          "phases": [
+            {
+              "cofactor": 5,
+              "residues": [
+                0
+              ]
+            },
+            {
+              "cofactor": 7,
+              "residues": [
+                0,
+                1
+              ]
+            }
+          ],
+          "single_phase": false
+        },
+        {
+          "prefix": 3,
+          "modulus": 9,
+          "phases": [
+            {
+              "cofactor": 5,
+              "residues": [
+                0,
+                1
+              ]
+            },
+            {
+              "cofactor": 7,
+              "residues": [
+                0
+              ]
+            }
+          ],
+          "single_phase": false
+        },
+        {
+          "prefix": 4,
+          "modulus": 9,
+          "phases": [
+            {
+              "cofactor": 5,
+              "residues": [
+                0
+              ]
+            },
+            {
+              "cofactor": 7,
+              "residues": [
+                0,
+                1
+              ]
+            }
+          ],
+          "single_phase": false
+        },
+        {
+          "prefix": 6,
+          "modulus": 9,
+          "phases": [
+            {
+              "cofactor": 5,
+              "residues": [
+                0,
+                1
+              ]
+            },
+            {
+              "cofactor": 7,
+              "residues": [
+                0
+              ]
+            }
+          ],
+          "single_phase": false
+        },
+        {
+          "prefix": 7,
+          "modulus": 9,
+          "phases": [
+            {
+              "cofactor": 5,
+              "residues": [
+                0
+              ]
+            },
+            {
+              "cofactor": 7,
+              "residues": [
+                0,
+                1
+              ]
+            }
+          ],
+          "single_phase": false
+        }
+      ],
+      "product_support_mod105": [
+        12,
+        27,
+        57,
+        72,
+        87,
+        102
+      ],
+      "escape_integer": 12,
+      "complete_query_norm": "4152811/442368",
+      "scope": "The finite control checks actual leaf intersections. The all-depth argument uses persistent depth-one conflicts, not finite enumeration. The obstruction concerns a single-phase common-prefix supplier, not arbitrary joint survivor laws."
+    },
+    "scope": "A selected mod9 leaf avoids actual pure3 and pure9 originals. For each complete nonunit Q cofactor, all active phases at j=0,1,2,3 must agree. Mixed originals at j>=4 and higher pure ternary originals are unrestricted. One fixed source and one final conditioning supply the all-height bound in Report529; this consumer is not a Lean proof."
+  },
+  "scope": "Exact finite controls for the relative-reserve, low-projection and auxiliary-root strategies; these do not obstruct existence of a different supported source with complete B<28. The HP extension budgets require one Q law annihilating every low nonpure projection, including ternary-free originals. Arbitrary-height constructions are justified in Report529, not by enumeration. No Lean certification claimed by this arithmetic consumer."
+}

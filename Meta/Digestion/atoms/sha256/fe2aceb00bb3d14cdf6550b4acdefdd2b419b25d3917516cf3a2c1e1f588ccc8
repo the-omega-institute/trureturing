@@ -1,0 +1,21 @@
+**推论 35.4（五来源一次超额的首次规模与 $3m+5$ 的失效）。** 在定义 30.6 的原全有限树合同下，
+
+$$
+\boxed{\mathsf{Cap}(17,1)\ge5,\qquad
+\min\{n\in\mathbb N_0:\mathsf{Cap}(n,1)\ge5\}=17.}
+\tag{35.15}
+$$
+
+因此，以下全量词必要性命题为假：
+
+$$
+\begin{gathered}
+\forall n\in\mathbb N_0\ \forall F'\subseteq\mathcal I_3(n),\quad
+\bigl(F'\text{ 有限},\ |F'|\ge2,\ K(F')=K_\circ(F'),\ D(F')\le n+1\bigr)\\
+\Longrightarrow\quad n\ge3|F'|+5.
+\end{gathered}
+\tag{35.16}
+$$
+
+相应的统一公式 $\min\{n\in\mathbb N_0:\mathsf{Cap}(n,1)\ge m\}=3m+5$ 不能对所有整数 $m\ge2$ 同时成立。
+

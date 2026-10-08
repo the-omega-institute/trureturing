@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using StrataLint.Engine;
 using System.Text;
 using System.Text.Json;
@@ -466,11 +467,14 @@ internal sealed partial class TransactionFixture
                 .. (throughMake
                     ? new[] { "/usr/bin/make", command, $"BASE={baseRevision ?? "HEAD"}", $"GID={gid}" }
                         .Concat(atomId is null ? [] : new[] { $"ATOM_ID={atomId}" })
-                    : new[]
-                        {
-                            "/bin/bash", Path.Combine(Root, ScriptPath), command,
-                            baseRevision ?? (command is "deposit" or "deposit-uncovered" ? "HEAD" : "synthetic-base"),
-                        }
+                    : new[] { "/bin/bash", Path.Combine(Root, ScriptPath), command }
+                        .Concat(command == "cover"
+                            ? []
+                            : new[]
+                            {
+                                baseRevision
+                                    ?? (command is "deposit" or "deposit-uncovered" ? "HEAD" : "synthetic-base"),
+                            })
                         .Concat(atomId is null ? [] : new[] { atomId })
                         .Append(gid)),
             ],
@@ -610,7 +614,6 @@ internal sealed partial class TransactionFixture
                 "/bin/bash",
                 Path.Combine(Root, ScriptPath),
                 "cover-batch",
-                "synthetic-base",
                 atomsFile,
             ],
             Root,

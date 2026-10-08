@@ -7,8 +7,6 @@ internal sealed class MaskedTensorWeightedReductionDocument : IScribeDocumentDef
     private const string Prefix = "D5/S3/Combinatorics/Hypermatrix/MaskedTensorWeightedReduction.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Combinatorics/koprowski2026enumeration");
-    private static readonly LibraryNoteRef Koszul =
-        LibraryNoteRef.Create("D5/L/HomologicalAlgebra/berkesch2013tensorcomplexes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual tensor count and the weighted cell sum", H("Actual tensor count and the weighted cell sum"),

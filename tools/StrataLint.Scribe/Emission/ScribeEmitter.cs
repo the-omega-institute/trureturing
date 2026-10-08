@@ -8,7 +8,6 @@ public static class ScribeEmitter
         int ExitCode,
         VerifiedScribeEmissions? Verification);
 
-    internal static string AttestationRelativePath => ScribeEmissionAttestation.RelativePath;
 
     internal static int EmitPaths(
         string repositoryRoot,
@@ -387,7 +386,7 @@ public static class ScribeEmitter
 
         if (!check && writeAttestation)
         {
-            var attestationPath = Path.Combine(repositoryRoot, ScribeEmissionAttestation.RelativePath);
+            var attestationPath = Path.Combine(repositoryRoot, GeneratedArtifactInventory.ScribeAttestation.Path);
             var currentAttestation = File.Exists(attestationPath)
                 ? File.ReadAllBytes(attestationPath)
                 : [];
@@ -397,7 +396,7 @@ public static class ScribeEmitter
                     ?? throw new InvalidOperationException("Scribe attestation path has no parent directory.");
                 Directory.CreateDirectory(parent);
                 File.WriteAllBytes(attestationPath, attestationBytes);
-                output.WriteLine($"wrote: {ScribeEmissionAttestation.RelativePath}");
+                output.WriteLine($"wrote: {GeneratedArtifactInventory.ScribeAttestation.Path}");
             }
         }
 

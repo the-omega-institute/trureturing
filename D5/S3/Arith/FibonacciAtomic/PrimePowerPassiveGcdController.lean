@@ -340,13 +340,13 @@ private theorem paid_first_layer (p e content : ℕ) (hp : p.Prime) (hc : conten
   exact ⟨h.1, fun v w hv hw same => h.2 v w hv hw
     (by intro i hi; omega) (by intro i hi; omega) same⟩
 
-theorem result (p e : ℕ) (hp : p.Prime) (he : 1 ≤ e) :
-    ∃ T : Tree,
-      (∀ v : ℕ × ℕ, (runPassiveProtocol (read p e) T v).length ≤
-        zeroRank p + (e - 1) * (p - 1) + 2) ∧
-      (∀ v w : ℕ × ℕ, runPassiveProtocol (read p e) T v =
-        runPassiveProtocol (read p e) T w → ∀ k : ℕ, 0 < k →
-          actualGcd (p ^ e) k v = actualGcd (p ^ e) k w) := by
+/-- The concrete original tree has the stated paid length and complete-future law. -/
+theorem protocol_spec (p e : ℕ) (hp : p.Prime) (he : 1 ≤ e) :
+    (∀ v : ℕ × ℕ, (runPassiveProtocol (read p e) (protocol p e) v).length ≤
+      zeroRank p + (e - 1) * (p - 1) + 2) ∧
+    (∀ v w : ℕ × ℕ, runPassiveProtocol (read p e) (protocol p e) v =
+      runPassiveProtocol (read p e) (protocol p e) w → ∀ k : ℕ, 0 < k →
+        actualGcd (p ^ e) k v = actualGcd (p ^ e) k w) := by
   classical
   have contentLaw (v : ℕ × ℕ) :
       Nat.gcd (read p e ⟨1, by omega⟩ v) (read p e ⟨2, by omega⟩ v) =
@@ -508,7 +508,7 @@ theorem result (p e : ℕ) (hp : p.Prime) (he : 1 ≤ e) :
     rw [actual_source_value]
     exact dvd_add (dvd_mul_of_dvd_right (dvd_trans dv (Nat.gcd_dvd_left _ _)) _)
       (dvd_mul_of_dvd_right (dvd_trans dv (Nat.gcd_dvd_right _ _)) _)
-  refine ⟨protocol p e, ?_, ?_⟩
+  refine ⟨?_, ?_⟩
   · intro v
     simp only [protocol, runPassiveProtocol, List.length_cons]
     split
@@ -554,6 +554,16 @@ theorem result (p e : ℕ) (hp : p.Prime) (he : 1 ≤ e) :
       exact future _ spec.1 v w (sameContent.trans hw) hw
         (f.2 v w (sameContent.trans hw) hw history) k hk
 
+theorem result (p e : ℕ) (hp : p.Prime) (he : 1 ≤ e) :
+    ∃ T : Tree,
+      (∀ v : ℕ × ℕ, (runPassiveProtocol (read p e) T v).length ≤
+        zeroRank p + (e - 1) * (p - 1) + 2) ∧
+      (∀ v w : ℕ × ℕ, runPassiveProtocol (read p e) T v =
+        runPassiveProtocol (read p e) T w → ∀ k : ℕ, 0 < k →
+          actualGcd (p ^ e) k v = actualGcd (p ^ e) k w) := by
+  exact ⟨protocol p e, protocol_spec p e hp he⟩
+
+#print axioms protocol_spec
 #print axioms result
 
 end D5.S3.Arith.FibonacciAtomic.PrimePowerPassiveGcdController

@@ -11,11 +11,8 @@ internal sealed class CarryGraphEmbeddingDocument : IScribeDocumentDefinition
     private static Formula Par(Formula f) => Seq(Open, f, Close);
     private static Formula Z => Seq(Mathbb, Grp(V("Z")));
     private static Formula N => Seq(Mathbb, Grp(V("N")));
-    private static Formula Real => Seq(Mathbb, Grp(V("R")));
     private static Formula All(Formula x, Formula type, Formula body) =>
         Par(Seq(Forall, Sp, x, Colon, Sp, type, Comma, Sp, body));
-    private static Formula Ex(Formula x, Formula type, Formula body) =>
-        Par(Seq(Exists, Sp, x, Colon, Sp, type, Comma, Sp, body));
     private static Formula And(params Formula[] parts) =>
         Par(Seq(parts.SelectMany((f, i) => i == 0
             ? new[] { f } : new[] { Sp, Land, Sp, f }).ToArray()));
@@ -47,8 +44,8 @@ internal sealed class CarryGraphEmbeddingDocument : IScribeDocumentDefinition
         var rowZero = And(Equal(b, D(0)), Leq(D(0), h), Leq(h, Sub(e, D(1))),
             Leq(D(0), c), Leq(c, Sub(m, e)));
         return DocumentDefinition.Create(ScribeNode.Create(
-            "Positive real laws enter the original bounded carry graph with exact minimum-anchor and tail-cost values.",
-            H("Canonical Embedding in the Original Carry Graph"),
+            "Bounded carry states and fixed label intervals determine exact continuing and stopping tree layers.",
+            H("Original Carry Graph and Fixed Tree Layers"),
             Blocks(
                 Def("State", "State coordinates", Equal(V("State"), Tuple(Z, Z)),
                     "A state has integer fields r and e. The graph bounds are imposed by IsState; raw coordinate pairs need not obey them."),
@@ -87,44 +84,64 @@ internal sealed class CarryGraphEmbeddingDocument : IScribeDocumentDefinition
                 Def("pathCost", "Residual tail cost", All(g, V("Path"), Equal(Call("pathCost", g),
                     Sum(d, N, new Formula.Fraction(Call("r", state), Pow(d))))),
                     "The cost is the real infinite sum of normalized residual widths, including the depth-zero term. These whole-column quantities do not charge r separate reads in a machine step. An unsummable series on a raw path has the totalized value zero."),
-                Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
-                    H("Complete canonical embedding"), StatementSource.FromAuthor(Disp(ResultFormula())),
+                Def("labelSet", "Fixed labels", FixedLabelFormula(),
+                    "Indices are zero-based. On an anchor-one column the selected labels start at zero. On an anchor-zero column they start at e-h and stop before e+c."),
+                Def("children", "Ordered children", ChildrenFormula(),
+                    "Each word contributes first its false child and then its true child, preserving parent order."),
+                Def("continuing", "Continuing words", All(m, N, All(g, V("Path"), All(d, N,
+                    Equal(Call("continuing", m, g, Add(d, D(1))),
+                        Call("drop", Call("length", Call("sort", Call("labelSet", m, g, d))),
+                            Call("children", Call("continuing", m, g, d))))))),
+                    "Depth zero consists of the empty word. Every later level expands the continuing parents and removes the initial children assigned to labels."),
+                Def("stopping", "Labelled stopping words", All(m, N, All(g, V("Path"), All(d, N,
+                    Equal(Call("stopping", m, g, d),
+                        Call("zip", Call("children", Call("continuing", m, g, d)),
+                            Call("sort", Call("labelSet", m, g, d))))))),
+                    "The selected initial children are paired with the increasing output labels. The zip has the shorter of the two input lengths."),
+                Describe.Lean(DescribeId.Create("tree-layers"), DeclarationHandle.Create(Prefix + "tree_layers"),
+                    H("Exact continuing and stopping layers"), StatementSource.FromAuthor(Disp(TreeFormula())),
                     AssessedProvenance.FromRepo(), Blocks(
-                        Paragraph(Text("For every m>=2, each graph state has a legal action. At residual zero the only legal action has b=h=c=0 and leaves the state fixed. At equality-group size one every legal action has h=0.")),
-                        Paragraph(Text("Let p be any strictly positive real probability vector, and choose any index k minimizing p. Write n(i,d)=floor(2^d p(i)) and a(i,d)=n(i,d+1)-2n(i,d). The path has r(d)=R(p,d), e(d) equal to the number of indices with n(i,d)=n(k,d), and anchor bit a(k,d). Its anchor value is p(k), hence the smallest probability, and its tail cost is the existing dyadic cost L(p). No rationality, distinctness or computability hypothesis is used.")),
-                        Paragraph(Text("Minimum-prefix monotonicity and the zero-or-one digit bounds show that a label with strictly larger old prefix has strictly larger next prefix. Equal-prefix labels taking a different bit therefore leave permanently. When the anchor bit is one, minimum-prefix order forces every equal-prefix label to take one. When it is zero, fewer than e equal-prefix labels depart because the anchor stays. Counting these departures and the larger-prefix one-labels gives exactly the two legal action rows. The floor remainder bounds supply the residual interval, and the canonical binary expansion reconstructs the minimum atom."))),
+                        Paragraph(Text("For every natural m and legal root path, the number of selected labels is the column's one-label count. At depth d the continuing list has exactly r(d) distinct words, each of length d. The stopping list pairs distinct words of length d+1 with every selected label in increasing order.")),
+                        Paragraph(Text("The label interval has e+c entries on an anchor-one column and h+c entries on an anchor-zero column. Doubling the continuing parents and removing that interval leaves exactly the successor residual width. Induction also preserves distinctness and word length. The scan and fair-bit law use these exact tree layers."))),
                     DescribeRole.Theorem))));
     }
 
-    private static Formula ResultFormula()
+    private static Formula FixedLabelFormula()
     {
-        var m = V("m"); var s = V("s"); var a = V("a"); var p = V("p");
-        var k = V("k"); var i = V("i"); var d = V("d"); var g = V("gamma");
-        var indices = Call("Fin", m); var state = Call("state", g, d);
-        var action = Call("action", g, d);
-        Formula PrefixAt(Formula index, Formula depth) =>
-            new Formula.Floor(Mul(Pow(depth), Call("p", index)));
-        var available = All(s, V("State"), Imp(Call("IsState", m, s),
-            Ex(a, V("Action"), Call("Legal", m, s, a))));
-        var absorbing = All(s, V("State"), All(a, V("Action"),
-            Imp(Equal(Call("r", s), D(0)), Imp(Call("Legal", m, s, a),
-                And(Equal(Call("b", a), D(0)), Equal(Call("h", a), D(0)),
-                    Equal(Call("c", a), D(0)), Equal(Call("successor", s, a), s))))));
-        var singleton = All(s, V("State"), All(a, V("Action"),
-            Imp(Equal(Call("e", s), D(1)), Imp(Call("Legal", m, s, a), Equal(Call("h", a), D(0))))));
-        var group = Call("card", Seq(OpenBrace, i, Sp, InMacro, Sp, indices, Mid,
-            PrefixAt(i, d), Sp, Eq, Sp, PrefixAt(k, d), CloseBrace));
-        var embedding = All(p, Seq(indices, Sp, To, Sp, Real),
-            Imp(All(i, indices, Seq(D(0), Sp, Lt, Sp, Call("p", i))),
-            Imp(Equal(Sum(i, indices, Call("p", i)), D(1)), All(k, indices,
-            Imp(All(i, indices, Leq(Call("p", k), Call("p", i))), Ex(g, V("Path"),
-                And(Call("IsRootPath", m, g),
-                    All(d, N, Equal(Call("r", state), Call("R", p, d))),
-                    All(d, N, Equal(Call("e", state), group)),
-                    All(d, N, Equal(Call("b", action),
-                        Sub(PrefixAt(k, Add(d, D(1))), Mul(D(2), PrefixAt(k, d))))),
-                    Equal(Call("anchorValue", g), Call("p", k)),
-                    Equal(Call("pathCost", g), Call("L", p)))))))));
-        return All(m, N, Imp(Leq(D(2), m), And(available, absorbing, singleton, embedding)));
+        var m = V("m"); var g = V("gamma"); var d = V("d"); var i = V("i");
+        var e = Call("e", Call("state", g, d));
+        var b = Call("b", Call("action", g, d));
+        var h = Call("h", Call("action", g, d));
+        var c = Call("c", Call("action", g, d));
+        var selected = Par(Seq(
+            And(Equal(b, D(1)), Seq(i, Sp, Lt, Sp, Add(e, c))), Sp, Lor, Sp,
+            And(Seq(b, Sp, Neq, Sp, D(1)), Leq(Sub(e, h), i), Seq(i, Sp, Lt, Sp, Add(e, c)))));
+        return All(m, N, All(g, V("Path"), All(d, N, All(i, Call("Fin", m),
+            Seq(i, Sp, InMacro, Sp, Call("labelSet", m, g, d), Sp, Iff, Sp, selected)))));
+    }
+
+    private static Formula ChildrenFormula()
+    {
+        var words = V("words"); var bits = Call("List", V("Bool"));
+        return All(words, Call("List", bits), Equal(Call("children", words),
+            Call("flatMap", Par(Seq(V("w"), Sp, Mapsto, Sp,
+                Seq(OpenBracket, Call("append", V("w"), Seq(OpenBracket, V("false"), CloseBracket)),
+                    Comma, Sp, Call("append", V("w"), Seq(OpenBracket, V("true"), CloseBracket)), CloseBracket))), words)));
+    }
+
+    private static Formula TreeFormula()
+    {
+        var m = V("m"); var g = V("gamma"); var d = V("d"); var w = V("w");
+        var indices = Call("Fin", m); var bits = Call("List", V("Bool"));
+        var labels = Call("sort", Call("labelSet", m, g, d));
+        var active = Call("continuing", m, g, d); var leaves = Call("stopping", m, g, d);
+        var state = Call("state", g, d); var action = Call("action", g, d);
+        return All(m, N, All(g, V("Path"), Imp(Call("IsRootPath", m, g), And(
+            All(d, N, Equal(Call("length", labels), Call("ones", state, action))),
+            All(d, N, And(Equal(Call("length", active), Call("r", state)), Call("Nodup", active),
+                All(w, bits, Imp(Seq(w, Sp, InMacro, Sp, active), Equal(Call("length", w), d))))),
+            All(d, N, And(Equal(Call("map", V("snd"), leaves), labels), Call("Nodup", leaves),
+                All(w, Call("Product", bits, indices), Imp(Seq(w, Sp, InMacro, Sp, leaves),
+                    Equal(Call("length", Call("fst", w)), Add(d, D(1)))))))))));
     }
 }

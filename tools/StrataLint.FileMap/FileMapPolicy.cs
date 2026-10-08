@@ -1,10 +1,10 @@
+using StrataLint.Engineering;
 using System.Buffers;
 using System.Collections.Immutable;
 using System.Text.RegularExpressions;
 using System.Text.Json;
 using StrataLint.Engine;
 using StrataLint.Configuration;
-using StrataLint.Scribe;
 
 namespace StrataLint.FileMap;
 
@@ -110,7 +110,7 @@ internal static partial class FileMapPolicy
         RegexOptions.CultureInvariant);
 
     private static readonly ImmutableHashSet<string> RequiredGitIgnoreLines =
-        [".caller-review-prompt.md", ".echo-review.md", ".sshx-*", "/Generated/echo-residuals/"];
+        [".caller-review-prompt.md", ".echo-review.md", ".sshx-*"];
 
     private static ImmutableHashSet<string> DeclaredTypeNames(
         string repositoryRoot,
@@ -253,7 +253,6 @@ internal static partial class FileMapPolicy
         return InspectCoverage(manifest, selected)
             .Concat(InspectPatternPopulation(manifest, paths, selectedManifest.Entries))
             .Concat(pathFindings)
-            .Concat(InspectProjectionRegistrations(manifest))
             .Concat(scope is null || scope.Actors ? InspectDeclaredActors(manifest, DeclaredTypeNames(repositoryRoot, paths), repositoryRoot) : [])
             .Concat(InspectDataVerifiers(manifest, availableVerifiers))
             .Concat(InspectDataVerifierNames(manifest, availableVerifiers))
@@ -439,25 +438,6 @@ internal static partial class FileMapPolicy
                 ".gitignore",
                 $"required run-local scaffold ignore is absent: {line}"))
             .ToArray();
-    }
-
-    internal static IReadOnlyList<FileMapFinding> InspectProjectionRegistrations(
-        FileMapManifest manifest)
-    {
-        ArgumentNullException.ThrowIfNull(manifest);
-        const string pattern = "Generated/echo-residuals/*.md";
-        const string representative = "Generated/echo-residuals/synthetic.md";
-        var findings = new List<FileMapFinding>();
-        if (manifest.Match(representative) is not
-            [{ Pattern: pattern, Kind: FileMapKind.Generated, RuntimeDisposition: "run-local" }])
-        {
-            findings.Add(new FileMapFinding(
-                "FILEMAP-PROJECTION-SHARD",
-                representative,
-                $"run-local echo residuals require the literal FILEMAP shard pattern {pattern}"));
-        }
-
-        return findings;
     }
 
     internal static IReadOnlyList<FileMapFinding> InspectCoverage(
@@ -693,7 +673,7 @@ internal static partial class FileMapPolicy
                 && !FileMapDocuments.IsPolicyPath(path)
                 && IsMachineDataPath(path))
             {
-                var content = path == EngineeringProjectRegistry.ManifestPath
+                var content = path == EngineeringProjectSchema.ManifestPath
                     ? EngineeringContentStrings(source).ToArray() : [source];
                 foreach (var generatedPath in content.Any(text => text.AsSpan().ContainsAny(generatedSearch))
                     ? generatedPaths.Where(generated => content.Any(text => text.Contains(generated, StringComparison.Ordinal)))
@@ -730,7 +710,7 @@ internal static partial class FileMapPolicy
     private static IEnumerable<string> EngineeringContentStrings(string source)
     {
         // Validate the canonical project schema before inspecting its content references.
-        _ = EngineeringProjectRegistry.Parse(source);
+        _ = EngineeringProjectRegistry.ValidateManifest(source);
         using var document = JsonDocument.Parse(source);
         return JsonStrings(document.RootElement).ToArray();
     }
