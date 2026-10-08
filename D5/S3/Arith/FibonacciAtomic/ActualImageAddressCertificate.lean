@@ -90,7 +90,8 @@ private theorem leaf_card (t : Source) :
   have he : F = G := FreeMagma.hom_ext (by funext b; cases b <;> rfl)
   exact (congrArg (fun f : Source →ₙ* Multiplicative ℕ => Multiplicative.toAdd (f t)) he).symm
 
-private theorem positive (t : Source) : 0 < (composition t).1 + (composition t).2 := by
+/-- Every complete source has at least one leaf in its composition. -/
+theorem positive (t : Source) : 0 < (composition t).1 + (composition t).2 := by
   rw [← leaf_card t, (ActualImageSevenLeafSeparation.seven_leaf_separation.1 t).1]
   exact FreeMagma.length_pos t
 
