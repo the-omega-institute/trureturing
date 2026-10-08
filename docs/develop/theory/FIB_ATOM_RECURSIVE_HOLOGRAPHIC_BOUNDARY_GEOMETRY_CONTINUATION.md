@@ -4640,3 +4640,349 @@ The finite assignment therefore proves a conditional complete-stratum, all-mode,
 
 ## 67.99 追加锚（本行以下为增补区）
 
+## 68. Sharp square-root depth loss for the actual retained-memory graft form at zero charge
+
+**Definition 68.1 (unchanged source and complete recursive carrier).** Use exactly Definitions64.5 and67.1–67.3, at fixed commissioned $a,g>0$, $\Omega\ge1$, $0<\delta\le1$ and $\nu=0$ throughout each execution. Fix either complete common or complete killed prescription separately.
+Every actual source retains its labels, brackets, order, distinct equal-valued occurrences, immutable INITIAL, original source-independent actor initialization, fixed cap $H$, complete supplied contexts, whole candidates and guards, accepts/refusals, original numerical Read, absorbing Stop and every actually acquired chronological record.
+No refused candidate Read, source substitute, archive, reset, cloning or exact-limit Read is introduced.
+
+Let $D_0,\ldots,D_n$ be the successive actual versions of a finite accepted Left/Right graft prefix. Intervening original Reads and refusals retain their source and records and do not count as grafts; this recurrence does not insert an accepted whole-rho enlargement.
+The occurrence injection $\iota_j$ is $p\mapsto Rp$ for Left and $p\mapsto Lp$ for Right, on both literal occupation sectors, and identity on the reference.
+Each new parent seam, relocated old-root degree and current-root field $\phi(p)=2^{-|p|}$ is used at its actual version. Put
+
+$$
+\begin{aligned}
+X_j&=\mathcal K_{D_j}\otimes\mathcal F_H\otimes\mathcal A,&
+T_j&=A_{D_j}-g\sum_{p\in D_j}\phi(p)m_p,\\
+H_j&=aK_{D_j}-g\sum_{p\in D_j}\phi(p)n_p,&
+\mathbb M_j&=T_j\otimes I+I\otimes\Omega h_{D_j},\\
+\mathcal E_j&=\operatorname{Dom}(A_{D_j}^{1/2}\otimes I)
+ \cap\operatorname{Dom}(I\otimes\mathsf n^{1/2}),&q_j&=q_{D_j}.
+\end{aligned}
+\tag{68.1}
+$$
+
+Here $q_j$ is precisely the form of (67.5) at zero charge, with auxiliary identities. The particle domain is the full Hilbert-valued trace domain of Definition64.5: all atoms, intervals, atom/cable slices, rectangles and both dissected same-cable triangles, exchange symmetry, exterior killing and every ground/collision trace remain.
+On a singleton the nonzero continuum $N=2$ space remains. The reference has its actual $\Omega h_{D_j}$. Both complete Green inverses and their different field matrices remain the separately declared laws; their pair, linear-coupling and compensation coefficients vanish because $\nu=0$, not by deleting a mode.
+There is one complete bank, with every spectator, excitation and unknown correlation.
+
+Write $W_j=W_{D_j}$, $`P_j=W_jW_j^*`$, $Q_j=I-P_j$ and
+$`V_j=W_{j+1}\iota_jW_j^*`$, tensoring all these particle maps with the same bank
+and auxiliary identities. Define
+
+$$
+\begin{aligned}
+Y_n&=\left(\mathcal K_{D_n}\oplus\bigoplus_{j<n}Q_j\mathcal K_{D_j}\right)
+ \otimes\mathcal F_H\otimes\mathcal A,\\
+\boldsymbol q_0&=q_0,\\
+\boldsymbol q_{j+1}[b,z,\mathbf r]
+ &=q_{j+1}[b]+\boldsymbol q_j[V_j^*b+z,\mathbf r]-q_j[V_j^*b],
+ \qquad z\in Q_jX_j.
+\end{aligned}
+\tag{68.2}
+$$
+
+The bank is factored once, not copied for each reserve. No reserve stiffness,
+scalar offset, alternative diagonal or deleted historical cross term is installed.
+The form intersection in (68.2) is part of its definition, not an assumption of
+native accessibility. The proposed cut is $U_j(x,\mathbf r)=(V_jx,Q_jx,\mathbf r)$.
+
+**Lemma 68.2 (full domains and the bounded old-branch cross form).** The maps
+$`P_j,Q_j,V_j,V_j^*`$ preserve their corresponding particle/number form intersections.
+The restricted form $q_j$ on $\mathcal E_j\cap Q_jX_j$ is dense in $Q_jX_j$ and
+closed. For $p\in P_j\mathcal E_j$, $z\in Q_j\mathcal E_j$,
+
+$$
+q_j(p,z)=\langle (Q_j\mathcal R_j\otimes I)W_j^*p,z\rangle,
+\qquad \mathcal R_j=T_jW_j-W_jH_j,\qquad
+|q_j(p,z)|\le r\|p\|\|z\|,
+\tag{68.3}
+$$
+
+where the actual residual of Theorem64.7 at $\nu=0$ is
+
+$$
+\begin{aligned}
+\beta_1&=\sqrt{3\delta/2},&
+\beta_2&=\sqrt{3\delta+9\delta^2/4}+9\sqrt2\,\delta,\\
+s_N&=1-(1+\beta_N^2)^{-1/2},&
+r_N&=18a\delta\mathbf1_{N=2}+2N(6a+g)s_N+N(6a+2g)\beta_N,\\
+r&=\max(r_1,r_2).&&
+\end{aligned}
+\tag{68.4}
+$$
+
+Proof. Theorem64.6 gives $\|A_DW_D\|\le30a$ and $\|A_D^{1/2}W_D\|\le\sqrt{30a}$, including both populations and the zero particle reference.
+By (67.3), the shifted squared form norm $q_j[x]+(2g+1)\|x\|^2$ is equivalent to $\|A_{D_j}^{1/2}x\|^2+\|\mathsf n^{1/2}x\|^2+\|x\|^2$, with tensor identities understood; the lower and upper field coefficients are $\Omega\lambda$ and $6\Omega$.
+Hence $P$ produces actual operator-domain particle vectors and $\|A_D^{1/2}Qx\|\le\|A_D^{1/2}x\|+\sqrt{30a}\|x\|$.
+Both projections commute with every field operator. Since $\lambda\mathsf n\le h_D\le6\mathsf n$, $\lambda=3-2\sqrt2$, the field form domain is common to all versions on this bank. The calibrated outputs of $`V,V^*`$ therefore satisfy the respective full intersections.
+Subtracting those outputs preserves every Hilbert-valued linear trace equality; no $H^1$ cell-corner trace is assumed. The original dense particle forms tensored with finite-number field vectors and auxiliary vectors give density.
+Projecting this dense domain by $Q$ gives $Q\mathcal E=\mathcal E\cap QX$, dense in $QX$. A Cauchy sequence in its shifted form norm converges in $\mathcal E$ and stays in the Hilbert-closed $QX$; thus the restriction is closed.
+Its operator is defined by form representation, not by an assumed self-adjoint operator compression $QAQ$.
+
+For the cross form, $h_j^{1/2}$ commutes with $P_j,Q_j$, so $\langle h_j^{1/2}p,h_j^{1/2}z\rangle=0$. This is orthogonality on the full tensor space for arbitrary correlated inputs, not a vacuum expectation or a moment cutoff.
+The particle operator relation in64.7 and $Q_jW_j=0$ give (68.3); tensoring a bounded operator with identity preserves its norm. One can first use finite-number vectors and then pass in the full form norm.
+The reference residual is zero. On singleton $N=2$, $P_2=0$, $Q_2=I$, so its entire continuum sector is retained. The cancellation is within one old branch only: it neither equates $h_j$ with $h_{j+1}$ nor removes any actual free-field diagonal. $\square$
+
+**Theorem 68.3 (exact expansion, finite closure and universal lower control).**
+For every prefix of Definition68.1 the recursive domain is exactly
+$\mathcal E_n\oplus\bigoplus_{j<n}(\mathcal E_j\cap Q_jX_j)$. The form is dense,
+closed and semibounded there. For $y=(b,z_{n-1},\ldots,z_0)$ define the backward maps
+
+$$
+\begin{aligned}
+I_{j,n}&=\iota_{n-1}\cdots\iota_j,\\
+B_{j,n}&=V_j^*V_{j+1}^*\cdots V_{n-1}^*
+ =W_jI_{j,n}^*W_n^*:X_n\longrightarrow P_jX_j,\qquad p_j=B_{j,n}b.
+\end{aligned}
+\tag{68.5}
+$$
+
+Then
+
+$$
+\begin{aligned}
+\boldsymbol q_n[y]&=q_n[b]+\sum_{j<n}\{q_j[z_j]+2\operatorname{Re}q_j(p_j,z_j)\},\\
+\boldsymbol q_n[y]&\ge-(2g+r\sqrt n)\|y\|^2.
+\end{aligned}
+\tag{68.6}
+$$
+
+The coefficient has no source, cap, context, bank-size, auxiliary-dimension or
+field-moment dependence. The bound itself depends on depth.
+
+Proof. For one cut polarization of (68.2) gives
+$q_1[b]+q_0[z]+2\operatorname{Re}q_0(V_0^*b,z)$ on the stated intersection;
+Lemma68.2 makes the cross form bounded. For induction substitute (68.2).
+Every earlier backward argument annihilates the newest reserve because
+$`V_{k-1}^*Q_k=0`$, while $`W_k^*W_k=I`$ collapses the intervening calibrations.
+This proves (68.5)–(68.6)'s exact expansion with every historical cross term.
+Absence of reserve/reserve terms is this annihilation identity, not a deletion.
+The adjoints have matched old/new types; a forward product acting on $b\in X_n$
+would not. Since $V_j^*b\in\mathcal E_j$, the recursive domain condition on
+$V_j^*b+z$ is equivalent to $z\in\mathcal E_j$, proving the domain equality.
+
+Each $B_{j,n}$ is a contraction. By (68.3) the column
+$`C_nb=(Q_j\mathcal R_jI_{j,n}^*W_n^*b)_{j<n}`$ has norm at most
+$r\sqrt n\|b\|$. The Hermitian off-diagonal block
+$`L_n(b,\mathbf z)=(C_n^*\mathbf z,C_nb)`$ consequently has norm at most $r\sqrt n$.
+The complete diagonal direct-sum form is dense and closed by Lemma68.2 and has
+lower bound $-2g$, since $A_D,h_D\ge0$ and $\sum_p\phi(p)m_p\le2$ on every stratum.
+Its bounded Hermitian perturbation $L_n$ proves closure and semiboundedness,
+including the one-cut base, by bounded form perturbation. Explicitly the cross
+sum is bounded in absolute value by
+$2r\sqrt n\|b\|(\sum_j\|z_j\|^2)^{1/2}\le r\sqrt n\|y\|^2$, proving the lower
+bound. Form representation gives a self-adjoint finite-history generator whose
+unitary group preserves this full form domain by spectral calculus. No analytic
+shift used to prove completeness is an installed energy offset. $\square$
+
+**Proposition 68.4 (all-input cuts, complete decoding and the dynamic boundary).**
+$U_j$ is an isometry on every Hilbert input, preserves the form intersections and
+exactly the shared number-form norm. Its adjoint and exact cut energy are
+
+$$
+\begin{aligned}
+U_j^*(b,z,\mathbf r)&=(V_j^*b+z,\mathbf r),&U_j^*U_j&=I,\\
+\boldsymbol q_{j+1}[U_j(x,\mathbf r)]
+ &=\boldsymbol q_j[x,\mathbf r]+q_{j+1}[V_jx]-q_j[P_jx].
+\end{aligned}
+\tag{68.7}
+$$
+
+With $`\Pi_j=V_jV_j^*`$ the full decoder
+$`(b,z,\mathbf r)\mapsto((V_j^*b+z,\mathbf r),(I-\Pi_j)b)`$ is unitary onto
+$Y_j\oplus(I-\Pi_j)X_{j+1}$, with inverse
+$((x,\mathbf r),c)\mapsto(V_jx+c,Q_jx,\mathbf r)$. The new complement is retained.
+
+Proof. $`V_j^*V_j=P_j`$ and $P_j+Q_j=I$ prove norm equality and the adjoint formula.
+The decoder inverse follows from orthogonality of $\Pi_j$ and its complement.
+Lemma68.2 also applies to $`\Pi_j=W_{j+1}\iota_j\iota_j^*W_{j+1}^*`$, so both decoder
+directions preserve the corresponding form domains. Substitution proves the energy
+identity. Tensor identities prove number-form norm equality even with correlations.
+Composing these maps gives coherent finite cut ingress and image recovery.
+
+This does not make the cut image dynamically invariant. In the legal $H=2$,
+INITIAL $\alpha$, Left$(\alpha)$ cut, take old $W_0e_o$ and the shared vacuum,
+with $0<g<a\lambda$. Its image $v=(W_1e_R,0)$ is in the represented one-cut
+operator domain. Its active derivative is the nonzero purely atomic vector
+$T_1W_1e_R=J_1(aL_{D_1}-g\Phi_{D_1})S_1e_R$, since the discrete matrix is positive.
+In the one-particle space $\operatorname{Ran}J_1\cap\operatorname{Ran}W_1=\{0\}$:
+a harmonic vector with all affine cable components zero has every port value zero.
+Thus this derivative has a component outside $\operatorname{Ran}V_0$. If $M$ is
+the represented one-cut generator, differentiability at zero gives
+
+$$
+\|U_0^*e^{-itM}v\|^2
+=1-t^2\|(I-U_0U_0^*)Mv\|^2+o(t^2)<1
+\quad\text{for sufficiently small nonzero }t.
+\tag{68.8}
+$$
+
+Right uses $e_L$ identically. Nor are old/new field dynamics equal: on the same
+reference branch the bank one-boson vector $(e_L-e_R)/\sqrt2$ has old spectator
+eigenvalue one, new common eigenvalue two and new killed eigenvalue three. The
+old/new full reference outputs differ by norm two at $t=\pi/\Omega$ common or
+$t=\pi/(2\Omega)$ killed. These are the actual matrices (67.2)–(67.3).
+Consequently image left-inversion supplies neither recovery of arbitrary evolved
+vectors by $`U^*`$ alone nor dynamic intertwining. The complete decoder retains the
+complement; no native reverse operation, original Read/Stop adapter or execution
+certificate follows. Proposition66.8's literal active-space retention obstruction
+remains intact. $\square$
+
+**Lemma 68.5 (exact cable Grams and normalized reserves).** In the one-particle
+space of any actual $D$ write $D_{\rm deg}=\operatorname{diag}(d_p)$, $A_{\rm adj}$
+for seam adjacency, $L_D=D_{\rm deg}-A_{\rm adj}$, $E$ for the affine harmonic lift,
+$`\Gamma=E^*E`$ and $S=\Gamma^{-1/2}$. Set $\eta(x)=4x(1-x)$ on every open cable,
+zero at atoms, and $Z(v)=M_\eta Ev$. Then
+
+$$
+\begin{aligned}
+\Gamma&=I+\delta(2D_{\rm deg}+A_{\rm adj})/6,&
+G_\eta=E^*M_\eta E&=\delta(3D_{\rm deg}+2A_{\rm adj})/15,\\
+\|Z(v)\|^2&=\langle v,N_\eta v\rangle,&
+N_\eta&=\delta(16D_{\rm deg}+12A_{\rm adj})/105,\\
+k[Z(v)]&=\langle v,K_\eta v\rangle,&
+K_\eta&=(8/15)(4D_{\rm deg}+A_{\rm adj}).
+\end{aligned}
+\tag{68.9}
+$$
+
+Let $\gamma=1+3\delta/2$. Then $I\le\Gamma\le\gamma I$,
+$(2\delta/15)I\le G_\eta\le\delta I$,
+$(8\delta/105)I\le N_\eta\le(4\delta/5)I$ and $0\le K_\eta\le8I$.
+If $0<g<a\lambda$, put $\mu=a\lambda-g$, $H^{(1)}=aL_D-g\Phi_D$ and, for any
+unit discrete $f$, define
+
+$$
+\theta=H^{(1)}Sf,\qquad v=G_\eta^{-1}\Gamma\theta,\qquad
+z=QZ(v),\qquad w=z/\|z\|.
+\tag{68.10}
+$$
+
+This is a nonzero admissible normalized reserve, with the vacuum-restricted full
+form, equivalently its particle form, satisfying
+
+$$
+q_D(Wf,w)=-\|\theta\|^2/\|z\|\le-k_*,\qquad q_D[w]\le C_{\rm res},\qquad
+k_*=\frac{\mu\sqrt{5\delta}}{15\gamma^{3/2}}>0,\qquad
+C_{\rm res}=6a+\frac{105\gamma a}{\delta}.
+\tag{68.11}
+$$
+
+Proof. For the endpoint basis $(1-x,x)$ the four local matrices, respectively
+unweighted mass, $\eta$-weighted mass, $\eta^2$-weighted mass and bump derivative,
+are
+
+$$
+\begin{pmatrix}1/3&1/6\\1/6&1/3\end{pmatrix},\quad
+\begin{pmatrix}1/5&2/15\\2/15&1/5\end{pmatrix},\quad
+\begin{pmatrix}16/105&4/35\\4/35&16/105\end{pmatrix},\quad
+\begin{pmatrix}32/15&8/15\\8/15&32/15\end{pmatrix}.
+\tag{68.12}
+$$
+
+Integrate the displayed polynomials on $[0,1]$ and sum over actual seams and
+both distinct grounded stubs, with ground endpoint value zero. This gives (68.9).
+The edge inequality $2|u_pu_q|\le|u_p|^2+|u_q|^2$ gives $-D_{\rm deg}\le A_{\rm adj}\le D_{\rm deg}$; also $2I\le D_{\rm deg}\le3I$.
+The asserted bounds follow directly. In particular the weighted Gram is invertible;
+$\Gamma-I$ is the actual continuum Gram. Also $\mu I\le H^{(1)}\le6aI$, hence
+$\|\theta\|\ge\mu/\sqrt\gamma$ and
+$\|v\|\le15\gamma\|\theta\|/(2\delta)$.
+
+The bump has zero atoms and zero endpoint/ground traces, so it is a form vector.
+$`E^*Z=G_\eta v=\Gamma\theta`$ gives $PZ=E\theta$ and
+$z=Z-E\theta$, with atomic coordinates $-\theta$. Therefore $\|z\|\ge\|\theta\|>0$.
+The actual operator identity $T_DWf=J_D\theta$ gives $q_D(Wf,Z)=0$ and
+$q_D(Wf,z)=-\|\theta\|^2$. Harmonic orthogonality to zero-atomic form vectors gives
+$q_D[z]=a k[Z]+\langle\theta,H^{(1)}\theta\rangle$ exactly; no potential or kinetic
+cross term was discarded. The upper norm bound
+$\|z\|\le\|Z\|\le\sqrt{4\delta/5}\|v\|
+\le15\gamma\|\theta\|/\sqrt{5\delta}$ proves the coupling inequality.
+
+For normalized energy a lower norm bound is required. Write $C=(E-J)S$, so
+$`C^*C=I-\Gamma^{-1}\le(1-\gamma^{-1})I`$. Because $Z$ has zero atoms,
+$`\|PZ\|^2=\|C^*Z\|^2\le(1-\gamma^{-1})\|Z\|^2`$. Thus
+$\|z\|^2\ge\gamma^{-1}\|Z\|^2\ge8\delta\|v\|^2/(105\gamma)$.
+Combining this with $k[Z]\le8\|v\|^2$, and separately using
+$\|z\|^2\ge\|\theta\|^2$ for the $H^{(1)}$ term, proves $C_{\rm res}$.
+These two estimates concern the same vector, not separately optimized states.
+An upper bound on $\|z\|$ alone would not prove its Rayleigh-quotient bound.
+For example on the actual two-stub singleton, writing $\gamma_0=1+2\delta/3$,
+this construction has
+$q_D[z]/\|\theta\|^2=(80a/3)\gamma_0^2/\delta^2+2a-g$.
+The proposed unnormalized coefficient $6a+388800a/(\delta\lambda^2)$ is false:
+at $a=1,g=1/10,\delta=10^{-8}$ the exact ratio is $72000000960000003713/270$,
+exceeding $1399680000000006$, an upper bound for that coefficient since
+$\lambda>1/6$. The normalized estimates (68.11) do not use that claim. $\square$
+
+**Theorem 68.6 (joint legal witness and sharp exponent).** Fix the parameters of
+Lemma68.5. For every $n\ge1$ take one run with immutable INITIAL $t_0=\alpha$,
+one fixed cap $H_n=n+1$, and $n$ original Left$(\alpha)$ calls,
+$t_{j+1}=\langle\alpha,t_j\rangle$. Each complete candidate has $j+2$ leaves,
+so the original guard accepts, including final equality. Every context occurrence
+is distinct, $|D_j|=2j+1$, $\iota_j(p)=Rp$, and $f_j=e_{R^j}$ obeys
+$f_{j+1}=\iota_jf_j$. Right$(\alpha)$ uses $Lp,e_{L^j}$; any prescribed direction
+word works with its actual successive prefixes. The policy uses public inputs
+only. Original Reads at checkpoints return $E(t_j)=A^{j+1}$ in the pinned Clifford
+algebra. An extra alpha graft at full cap is refused and retains the old source,
+without candidate Read; a subsequent Read and Stop keep their original meanings.
+No event follows Stop. These services change no $D_j$ in the compared prefix.
+
+For each $j<n$ construct $w_j$ by (68.10) at the actual $D_j,f_j$, using particle maps before tensoring. In the single
+complete bank use its common canonical vacuum $|0_{H_n}\rangle$, and any fixed
+unit auxiliary $\xi$. The joint trial
+
+$$
+\Psi_n=\frac1{\sqrt2}\left(W_nf_n,n^{-1/2}w_{n-1},\ldots,n^{-1/2}w_0\right)
+ \otimes|0_{H_n}\rangle\otimes\xi
+\tag{68.13}
+$$
+
+is normalized and form-admissible, and
+
+$$
+\boldsymbol q_n[\Psi_n]\le C_0-k_*\sqrt n,\qquad C_0=3a+C_{\rm res}/2.
+\tag{68.14}
+$$
+
+Proof. There are finitely many admissible components; the same full-bank vacuum
+belongs to the number domain and is annihilated by every actual common or killed
+$h_{D_j}$. Orthogonality of direct-sum branches makes the squared norm before
+$1/\sqrt2$ exactly two. Equation(68.5) gives $p_j=W_jf_j$ simultaneously for
+this one active input. Its active energy is
+$\langle S_nf_n,H_n^{(1)}S_nf_n\rangle\le6a$. Lemma68.5 bounds the reserve average
+by $C_{\rm res}$ and the complete cross sum by $-2k_*\sqrt n$ before normalization.
+The exact expansion proves (68.14). All reference, two-particle, mixed/cell and
+oscillator sectors remain in the carrier; only this chosen variational vector has
+zero amplitude in unused sectors. No native preparation or reachability follows.
+For fixed parameters in this regime, the infimum over normalized full form inputs
+and separately legal length-$n$ histories is between $-2g-r\sqrt n$ and
+$C_0-k_*\sqrt n$. Thus the worst negative energy grows as $\Theta(\sqrt n)$, with
+no optimal-coefficient claim. In one fixed-$H$ run every nonempty accepted graft
+adds a leaf, so $n\le H-\operatorname{leaves}(\mathrm{INITIAL})$; (68.6) gives a
+finite cap-dependent floor. The unbounded sequence instead varies $H$ between
+separately legal finite runs and refutes a cap/history-uniform constant floor for
+this recurrence in the stated regime. It is not an infinite fixed-cap execution,
+a physical instability certificate or a joint depth/density limit. $\square$
+
+**Definition 68.7 (suppliers, exact scope and undischarged obligations).**
+The source menu and guards are PR57 §57.1/TheoremPR57.T2 in [Transport Memory Completion](RECURSIVE_RELATIONAL_OBSERVATION_TRANSPORT_MEMORY_COMPLETION.md#571-the-unchanged-source-and-the-exact-target). The full stratified domains, harmonic operator relation, residual and one-bank law are the ordinary suppliers64.5–64.7 and67.1–67.3.
+Gerald Teschl, [*Mathematical Methods in Quantum Mechanics*](https://www.mat.univie.ac.at/~gerald/ftp/book-schroe/schroe.pdf), Theorems2.13 and6.24, printed pp71,150, supplies representation of dense closed semibounded Hermitian forms and KLMN for relative form bound below one; the finite block here is bounded and has relative bound zero.
+Bolte–Kerner, [arXiv:1207.5648v1](https://arxiv.org/pdf/1207.5648v1), Definition3.1/Proposition3.2, supplies diagonal-Dirichlet hard-core and closed semibounded metric-graph product forms for bounded measurable boundary maps, with orthogonal $P$ and self-adjoint $L$ on $\ker P$.
+Its Lebesgue product does not supply the atomic/mixed enlargement, $H^2$ regularity or arbitrary $H^1$ corner traces. Those domains remain64.5's.
+Classical isometry, Cauchy–Schwarz and bounded block perturbation are suppliers; the additional deduction is the exact repeated-memory source-qualified rate and jointly normalized legal realization.
+These are ordinary proofs, without fresh Lean/kernel, physical validation, priority, model-diversity or prior-independence claims.
+
+The lower half covers all $a,g>0$ and arbitrary correlated full form inputs; the upper half is restricted to $0<g<a\lambda$. Other upper regimes, optimal coefficients and $\nu>0$ remain unclassified.
+No dimension parameter enters this rate; the conditional planar incidence transports66.9/67.9 remain compatible. A spatial-three bridge still requires the original operation/metric correspondence, isotropic local physical mediator for both complete laws, packing, transverse, exterior, leakage and collision controls.
+Finite admissibility does not acquire an unknown native state, shared field, reference/clock calibration, harmonic/projection control, complement-retaining decoder, cross-block generator or switching right. Continuing original Read/Stop covariance and actual execution remain obligations.
+Actual field/compensation/stiffness installation, every preparation and service duration, calibration and original joint error guarantees still require their supplied execution and price certificates.
+
+Every acquisition hypothesis in66.10/67.11 persists: §57's immutable composition-promised endpoint source, fixed depth caps, source-independent initialization, actual histories, correct finite stopping and distinct-address fees with no old-source archive;
+the separate paid positive-root archive/nonadvancing cut supplier with protected records, aligned actual generation, trusted markers, closed strong ports and priced write/protect/retain/query rights, including every reply-affecting retained influence.
+The full-tail once-sampled actual Read process and all common $\Pi$ hypotheses of63.13 remain separate unchanged suppliers. None grants copying, reset, re-preparation, independent resampling or exact-limit Read.
+The original arbitrary/unbounded/possibly zero actor $a$, untagged radius-$7/25$ $b$, destructive actions and joint history-dependent errors are distinct from the commissioned positive parameters and remain intact.
+The full bank has $2^{H_n}-1$ modes and every reserve retains infinite-dimensional interval/cell spaces. Every construction, control, service, production, storage, hold, retention, maintenance, precision and total lifetime price remains undischarged.
+No energy exponent is a price or dimension law. The sustained until-2027 why-three/source/operation/field/acquisition/resource/DEV-publication objective remains active; this finite result does not complete it.
+
+## 68.99 追加锚（本行以下为增补区）

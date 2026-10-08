@@ -263,6 +263,28 @@ def module(root, name, source, utility_path, executable, output):
         print(f'LEAN_INSPECTOR_EXTRACT module={name} declarations={len(rows[0]["declarations"])}')
 
 
+def produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs):
+    """Keep spooled rows, compacted rows and validation certificates target-local."""
+    name = row['module']
+    row_dir = directory / name
+    row_dir.mkdir()
+    row_spool = row_dir / 'spool'
+    row_spool.mkdir()
+    for decl in row['declarations']:
+        source = materials.regular_spool_file(spool, decl['material_file'])
+        os.replace(source, row_spool / source.name)
+    spool_report = row_dir / 'spool.json'
+    spool_report.write_bytes(materials.canonical_json({'schema': materials.SPOOL_SCHEMA, 'modules': [row]}))
+    report = row_dir / public.RAW
+    materials.compact(spool_report, row_spool, report)
+    public.write_origin(report, name, origin, input_projection(root, name))
+    validate_module(report, root, name, utility_path, template_inputs=template_inputs)
+    output.parent.mkdir(parents=True, exist_ok=True)
+    artifact = row_dir / 'module.zip'
+    public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
+    os.replace(artifact, output)
+
+
 def produce_batch_chunk(requests):
     root = Path(requests[0][0])
     template_inputs = selection.Selection(root)
@@ -294,34 +316,18 @@ def produce_batch_chunk(requests):
         capture = retain_request(root, executable, arguments, utilities, origin)
         with phase('native-inspect', request_capture=capture):
             run_inspector(root, executable, arguments, argument_file)
-        raw = public.read_json((directory / 'spool.json').read_bytes())
-        if [row['module'] for row in raw['modules']] != sorted(bindings):
-            raise ValueError('incomplete native inspection batch')
         declarations = 0
-        for index in range(len(raw['modules'])):
-            row = raw['modules'][index]
-            raw['modules'][index] = None
+        completed = []
+        for row in public.report_rows(directory / 'spool.json', materials.SPOOL_SCHEMA):
+            if len(completed) >= len(bindings) or row['module'] != sorted(bindings)[len(completed)]:
+                raise ValueError('incomplete native inspection batch')
+            completed.append(row['module'])
             declarations += len(row['declarations'])
-            name = row['module']
-            utility_path, output = bindings[name]
-            row_dir = directory / name
-            row_dir.mkdir()
-            row_spool = row_dir / 'spool'
-            row_spool.mkdir()
-            for decl in row['declarations']:
-                source = materials.regular_spool_file(spool, decl['material_file'])
-                os.replace(source, row_spool / source.name)
-            spool_report = row_dir / 'spool.json'
-            spool_report.write_bytes(materials.canonical_json({'schema': materials.SPOOL_SCHEMA, 'modules': [row]}))
-            report = row_dir / public.RAW
-            materials.compact(spool_report, row_spool, report)
-            public.write_origin(report, name, origin, input_projection(root, name))
-            validate_module(report, root, name, utility_path, template_inputs=template_inputs)
-            output.parent.mkdir(parents=True, exist_ok=True)
-            artifact = row_dir / 'module.zip'
-            public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
-            os.replace(artifact, output)
+            utility_path, output = bindings[row['module']]
+            produce_row(row, directory, spool, root, origin, utility_path, output, template_inputs)
             del row
+        if completed != sorted(bindings):
+            raise ValueError('incomplete native inspection batch')
         if list(spool.iterdir()):
             raise ValueError('unreferenced batch materials')
         for name in bindings:
@@ -369,6 +375,38 @@ def batch(request_file):
             raise ValueError('unknown native batch operation')
 
 
+def aggregate_module(name, artifact, report_stream, material_spool, material_offsets):
+    """Consume and destroy one artifact before opening the next target."""
+    # Read members in place; a module artifact is never unpacked to disk.
+    with zipfile.ZipFile(artifact) as bundle:
+        data = {}
+        for member, info in public.bundle_members(bundle, ROW_SUFFIXES).items():
+            with public.open_zip_member(bundle, info) as reader:
+                data[member[len(public.RAW):]] = reader.read()
+        current = public.read_json(data[''])['modules']
+        origin = public.read_json(data['.provenance.json'])
+        if [row['module'] for row in current] != [name]:
+            raise ValueError('native aggregate membership mismatch')
+        public.check_origin(origin, current[0], check_report=False)
+        report_stream.write(materials.canonical_json(current[0])[:-1])
+        declarations = len(current[0]['declarations'])
+        del current
+        # Produced materials matched their content addresses; move their
+        # deflated bytes without decompressing or compressing again.
+        with zipfile.ZipFile(io.BytesIO(data['.materials.zip'])) as archive:
+            for entry in archive.infolist():
+                shape = (entry.CRC, entry.file_size)
+                if entry.filename in material_offsets:
+                    if material_offsets[entry.filename][2:] != shape:
+                        raise ValueError('statement material address collision')
+                    continue
+                data = compressed_member(archive, entry)
+                material_spool.seek(0, os.SEEK_END)
+                material_offsets[entry.filename] = (material_spool.tell(), len(data), *shape)
+                material_spool.write(data)
+    return origin, declarations
+
+
 def aggregate(root, output, *artifacts):
     """Concatenate module artifacts that were validated when produced."""
     root, output = Path(root), Path(output)
@@ -377,40 +415,22 @@ def aggregate(root, output, *artifacts):
         raise ValueError('native aggregate membership mismatch')
     output.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix='.aggregate.', dir=output.parent) as directory, \
-            tempfile.TemporaryFile(dir=output.parent) as material_spool:
+            tempfile.TemporaryFile(dir=output.parent) as material_spool, \
+            (Path(directory) / public.RAW).open('wb') as report_stream:
         directory = Path(directory)
         material_offsets = {}
-        rows = []
+        report = directory / public.RAW
+        report_stream.write(b'{"modules": [')
+        declarations = 0
         origins = {}
         for name, artifact in zip(config['modules'], artifacts):
-            # Read members in place; a module artifact is never unpacked to disk.
-            with zipfile.ZipFile(artifact) as bundle:
-                data = {}
-                for member, info in public.bundle_members(bundle, ROW_SUFFIXES).items():
-                    with public.open_zip_member(bundle, info) as reader:
-                        data[member[len(public.RAW):]] = reader.read()
-                current = public.read_json(data[''])['modules']
-                origin = public.read_json(data['.provenance.json'])
-                if [row['module'] for row in current] != [name]:
-                    raise ValueError('native aggregate membership mismatch')
-                public.check_origin(origin, current[0], check_report=False)
-                origins[name] = origin
-                rows.extend(current)
-                # Produced materials matched their content addresses; move their
-                # deflated bytes without decompressing or compressing again.
-                with zipfile.ZipFile(io.BytesIO(data['.materials.zip'])) as archive:
-                    for entry in archive.infolist():
-                        shape = (entry.CRC, entry.file_size)
-                        if entry.filename in material_offsets:
-                            if material_offsets[entry.filename][2:] != shape:
-                                raise ValueError('statement material address collision')
-                            continue
-                        data = compressed_member(archive, entry)
-                        material_spool.seek(0, os.SEEK_END)
-                        material_offsets[entry.filename] = (material_spool.tell(), len(data), *shape)
-                        material_spool.write(data)
-        report = directory / public.RAW
-        report.write_bytes(materials.canonical_json({'modules': rows, 'schema': materials.REPORT_SCHEMA}))
+            if name != config['modules'][0]:
+                report_stream.write(b', ')
+            origin, count = aggregate_module(name, artifact, report_stream, material_spool, material_offsets)
+            origins[name] = origin
+            declarations += count
+        report_stream.write(b'], "schema": ' + materials.canonical_json(materials.REPORT_SCHEMA)[:-1] + b'}\n')
+        report_stream.close()
         with zipfile.ZipFile(public.member(report, '.materials.zip'), 'w', compression=zipfile.ZIP_DEFLATED,
                              compresslevel=6, allowZip64=True) as archive:
             for name, (offset, size, crc, file_size) in sorted(material_offsets.items()):
@@ -429,7 +449,7 @@ def aggregate(root, output, *artifacts):
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in public.SUFFIXES])
         os.replace(artifact, output)
         activity('aggregate', 1)
-        print(f'LEAN_INSPECTOR_AGGREGATE modules={len(rows)} declarations={sum(len(row["declarations"]) for row in rows)}')
+        print(f'LEAN_INSPECTOR_AGGREGATE modules={len(config["modules"])} declarations={declarations}')
 
 
 def compressed_member(archive, info):

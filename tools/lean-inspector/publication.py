@@ -62,6 +62,87 @@ def read_json(data):
     return json.loads(data, object_pairs_hook=unique_object)
 
 
+def report_rows(report, schema, *, canonical=False):
+    """Consume one module at a time; only the current JSON value is buffered."""
+    expected = hashlib.sha256(b'{"modules": [')
+    count = 0
+    with Path(report).open(encoding='utf-8') as source:
+        buffered = ''
+        decoder = json.JSONDecoder(object_pairs_hook=unique_object)
+
+        def token():
+            nonlocal buffered
+            while True:
+                buffered = buffered.lstrip()
+                if buffered:
+                    result, buffered = buffered[0], buffered[1:]
+                    return result
+                buffered = source.read(materials.BUFFER_BYTES)
+                if not buffered:
+                    return ''
+
+        def value(first):
+            nonlocal buffered
+            if first not in ('{', '"'):
+                raise ValueError('invalid report JSON value')
+            data, buffered = first + buffered, ''
+            while True:
+                try:
+                    _, end = decoder.raw_decode(data)
+                except json.JSONDecodeError as error:
+                    extra = source.read(max(materials.BUFFER_BYTES, len(data)))
+                    if not extra:
+                        raise ValueError('truncated or invalid report JSON value') from error
+                    data += extra
+                else:
+                    buffered = data[end:]
+                    return read_json(data[:end])
+
+        if token() != '{':
+            raise ValueError('invalid raw report schema')
+        fields = set()
+        while True:
+            key = value(token())
+            if key not in ('modules', 'schema') or key in fields or token() != ':':
+                raise ValueError('invalid raw report schema')
+            fields.add(key)
+            if key == 'schema':
+                if value(token()) != schema:
+                    raise ValueError('invalid raw report schema')
+            else:
+                if token() != '[':
+                    raise ValueError('invalid raw report schema')
+                c = token()
+                if c != ']':
+                    while True:
+                        row = value(c)
+                        if not isinstance(row, dict):
+                            raise ValueError('invalid report module')
+                        if count:
+                            expected.update(b', ')
+                        expected.update(materials.canonical_json(row)[:-1])
+                        count += 1
+                        yield row
+                        del row
+                        c = token()
+                        if c == ']':
+                            break
+                        if c != ',':
+                            raise ValueError('invalid report module separator')
+                        c = token()
+            c = token()
+            if c == '}':
+                break
+            if c != ',':
+                raise ValueError('invalid report field separator')
+        if fields != {'modules', 'schema'} or token():
+            raise ValueError('invalid raw report schema')
+    if canonical:
+        expected.update(b'], "schema": ' + materials.canonical_json(schema)[:-1] + b'}\n')
+        if expected.hexdigest() != digest(report):
+            raise ValueError('noncanonical raw report bytes')
+
+
 def member(report, suffix):
     return Path(str(report) + suffix)
 
@@ -170,89 +251,98 @@ def write_sidecars(report, inputs, origins, mode='produced'):
     member(report, '.provenance.json').write_text(json.dumps(provenance, separators=(',', ':')) + '\n', encoding='utf-8')
 
 
-def validate_rows(report, archive_path, verified_materials=None, *, identities=True):
-    """Validate a raw report and its material archive.
-
-    identities=False checks every material against its content address and
-    accepts the recorded statement_id: for a bundle already accepted in this
-    invocation, recomputing the canonical declaration encoding is a replay.
-    """
-    data = Path(report).read_bytes()
-    root = read_json(data)
-    materials.require_keys(root, {'modules', 'schema'}, 'report')
-    if root['schema'] != materials.REPORT_SCHEMA or not isinstance(root['modules'], list):
-        raise ValueError('invalid raw report schema')
-    if data != materials.canonical_json(root):
-        raise ValueError('noncanonical raw report bytes')
-    previous = None
-    paths = set()
+def _validate_row(row, archive, available, verified_materials, identities):
+    """All certificate and declaration references die at this call boundary."""
     references = {}
-    for row in root['modules']:
-        keys = {'module', 'source_path', 'source_sha256', 'imports', 'declarations'}
-        keys.update(key for key in ('information_registration_errors', 'information_templates', 'utility_refutation') if key in row)
-        materials.require_keys(row, keys, 'module')
-        name, path, sha = row['module'], row['source_path'], row['source_sha256']
-        if (not isinstance(name, str) or not name or previous is not None and name <= previous
-                or not isinstance(path, str) or not path or path in paths
-                or not isinstance(sha, str) or not SHA.fullmatch(sha)):
-            raise ValueError('invalid or duplicate module/source binding')
-        previous = name
-        paths.add(path)
-        materials.require_sorted_strings(row['imports'], 'imports')
-        if 'information_registration_errors' in row:
-            materials.require_sorted_strings(row['information_registration_errors'], 'registration errors')
-        if 'information_templates' in row:
-            materials.validate_template_evidence(row['information_templates'])
-        if 'utility_refutation' in row:
-            evidence = materials.require_keys(row['utility_refutation'], {'claim_gid', 'claim_source_path',
-                'claim_source_sha256', 'result_gid', 'is_closed_negation'}, 'utility refutation')
-            if (any(not isinstance(evidence[k], str) or not evidence[k] for k in ('claim_gid', 'claim_source_path', 'result_gid'))
-                    or not isinstance(evidence['claim_source_sha256'], str)
-                    or not SHA.fullmatch(evidence['claim_source_sha256']) or type(evidence['is_closed_negation']) is not bool):
-                raise ValueError('invalid typed refutation')
-        if not isinstance(row['declarations'], list):
-            raise ValueError('invalid declarations')
-        previous_key = None
-        for decl in row['declarations']:
-            materials.require_keys(decl, {'axioms', 'include_in_statement', 'kind', 'name', 'name_key', 'statement_id', 'type_sha256'}, 'declaration')
-            key = decl['name_key']
-            if (not isinstance(key, str) or not key or previous_key is not None and key <= previous_key
-                    or not isinstance(decl['name'], str) or not decl['name'] or decl['kind'] not in KINDS
-                    or type(decl['include_in_statement']) is not bool
-                    or any(not isinstance(decl[k], str) or not SHA.fullmatch(decl[k]) for k in ('statement_id', 'type_sha256'))):
-                raise ValueError('invalid or duplicate declaration')
-            previous_key = key
-            materials.require_sorted_strings(decl['axioms'], 'axioms')
-            references.setdefault('sha256/' + decl['type_sha256'][7:], []).append((row, decl))
+    keys = {'module', 'source_path', 'source_sha256', 'imports', 'declarations'}
+    keys.update(key for key in ('information_registration_errors', 'information_templates', 'utility_refutation') if key in row)
+    materials.require_keys(row, keys, 'module')
+    name, path, sha = row['module'], row['source_path'], row['source_sha256']
+    if (not isinstance(name, str) or not name
+            or not isinstance(path, str) or not path
+            or not isinstance(sha, str) or not SHA.fullmatch(sha)):
+        raise ValueError('invalid or duplicate module/source binding')
+    materials.require_sorted_strings(row['imports'], 'imports')
+    if 'information_registration_errors' in row:
+        materials.require_sorted_strings(row['information_registration_errors'], 'registration errors')
+    if 'information_templates' in row:
+        materials.validate_template_evidence(row['information_templates'])
+    if 'utility_refutation' in row:
+        evidence = materials.require_keys(row['utility_refutation'], {'claim_gid', 'claim_source_path',
+            'claim_source_sha256', 'result_gid', 'is_closed_negation'}, 'utility refutation')
+        if (any(not isinstance(evidence[k], str) or not evidence[k] for k in ('claim_gid', 'claim_source_path', 'result_gid'))
+                or not isinstance(evidence['claim_source_sha256'], str)
+                or not SHA.fullmatch(evidence['claim_source_sha256']) or type(evidence['is_closed_negation']) is not bool):
+            raise ValueError('invalid typed refutation')
+    if not isinstance(row['declarations'], list):
+        raise ValueError('invalid declarations')
+    previous_key = None
+    for decl in row['declarations']:
+        materials.require_keys(decl, {'axioms', 'include_in_statement', 'kind', 'name', 'name_key', 'statement_id', 'type_sha256'}, 'declaration')
+        key = decl['name_key']
+        if (not isinstance(key, str) or not key or previous_key is not None and key <= previous_key
+                or not isinstance(decl['name'], str) or not decl['name'] or decl['kind'] not in KINDS
+                or type(decl['include_in_statement']) is not bool
+                or any(not isinstance(decl[k], str) or not SHA.fullmatch(decl[k]) for k in ('statement_id', 'type_sha256'))):
+            raise ValueError('invalid or duplicate declaration')
+        previous_key = key
+        materials.require_sorted_strings(decl['axioms'], 'axioms')
+        references.setdefault('sha256/' + decl['type_sha256'][7:], []).append((row, decl))
+    if set(references) - available:
+        raise ValueError('duplicate, missing, or unreferenced material')
+    for name in references:
+        info = archive.getinfo(name)
+        if info.is_dir() or stat.S_ISLNK(info.external_attr >> 16):
+            raise ValueError('nonregular material')
+        if info.flag_bits & 1:
+            raise ValueError('encrypted material')
+        for row, decl in references[name]:
+            key = (row['source_path'], decl['kind'], decl['name_key'], decl['type_sha256'])
+            with open_zip_member(archive, info) as source:
+                if not identities:
+                    materials.verify_material(source, decl['type_sha256'])
+                    actual = (decl['type_sha256'], decl['statement_id'])
+                elif verified_materials is not None and key in verified_materials:
+                    # Invocation-local reuse of the expensive canonical
+                    # statement encoding. Always read/CRC-check/hash the
+                    # actual bytes again; an archive address is no proof.
+                    materials.verify_material(source, decl['type_sha256'])
+                    actual = (decl['type_sha256'], verified_materials[key])
+                else:
+                    actual = materials.material_identities(source, row['source_path'], decl['kind'], decl['name_key'])
+            if actual != (decl['type_sha256'], decl['statement_id']):
+                raise ValueError('material or declaration identity mismatch')
+            if identities and verified_materials is not None:
+                verified_materials[key] = actual[1]
+    return set(references)
+
+
+def validated_rows(report, archive_path, verified_materials=None, *, identities=True):
+    """Validate each module and release its certificate and reference map on advance."""
+    previous = None
+    paths, used = set(), set()
     with zipfile.ZipFile(archive_path) as archive:
         names = archive.namelist()
-        if len(names) != len(references) or set(names) != set(references):
+        if len(names) != len(set(names)):
             raise ValueError('duplicate, missing, or unreferenced material')
-        for name in names:
-            info = archive.getinfo(name)
-            if info.is_dir() or stat.S_ISLNK(info.external_attr >> 16):
-                raise ValueError('nonregular material')
-            if info.flag_bits & 1:
-                raise ValueError('encrypted material')
-            for row, decl in references[name]:
-                key = (row['source_path'], decl['kind'], decl['name_key'], decl['type_sha256'])
-                with open_zip_member(archive, info) as source:
-                    if not identities:
-                        materials.verify_material(source, decl['type_sha256'])
-                        actual = (decl['type_sha256'], decl['statement_id'])
-                    elif verified_materials is not None and key in verified_materials:
-                        # Invocation-local reuse of the expensive canonical
-                        # statement encoding. Always read/CRC-check/hash the
-                        # actual bytes again; an archive address is no proof.
-                        materials.verify_material(source, decl['type_sha256'])
-                        actual = (decl['type_sha256'], verified_materials[key])
-                    else:
-                        actual = materials.material_identities(source, row['source_path'], decl['kind'], decl['name_key'])
-                if actual != (decl['type_sha256'], decl['statement_id']):
-                    raise ValueError('material or declaration identity mismatch')
-                if identities and verified_materials is not None:
-                    verified_materials[key] = actual[1]
-    return root['modules']
+        available = set(names)
+        for row in report_rows(report, materials.REPORT_SCHEMA, canonical=True):
+            name, path = row.get('module'), row.get('source_path')
+            if (not isinstance(name, str) or not isinstance(path, str)
+                    or previous is not None and name <= previous or path in paths):
+                raise ValueError('invalid or duplicate module/source binding')
+            previous = name
+            paths.add(path)
+            used.update(_validate_row(row, archive, available, verified_materials, identities))
+            yield row
+            del row
+        if used != available:
+            raise ValueError('duplicate, missing, or unreferenced material')
+
+
+def validate_rows(report, archive_path, verified_materials=None, *, identities=True):
+    """Materialize a module artifact; aggregate consumers use validated_rows."""
+    return list(validated_rows(report, archive_path, verified_materials, identities=identities))
 
 
 class _SourceStructure:
@@ -293,14 +383,33 @@ def validate_template_sources(rows, repository, *, inputs=None):
 
 def verify_inputs(report, repository):
     """Check input membership and origin integrity without source-byte replay."""
-    rows = read_json(Path(report).read_bytes())['modules']
     provenance = read_json(member(report, '.provenance.json').read_bytes())
-    origins = provenance['module_origins']
-    materials.require_keys(origins, {row['module'] for row in rows}, 'aggregate production origins')
-    sources = _SourceStructure(repository)
+    check_aggregate_rows(report_rows(report, materials.REPORT_SCHEMA),
+        provenance['module_origins'], repository)
+
+
+def check_aggregate_rows(rows, origins, repository=None):
+    inputs = selection.Selection(repository) if repository is not None else None
+    modules = inputs.modules() if inputs is not None else None
+    seen = set()
+    previous = None
     for row in rows:
-        check_origin(origins[row['module']], row)
-    sources.validate_sources(rows)
+        name = row['module']
+        if name in seen or name not in origins or previous is not None and name <= previous:
+            raise ValueError('aggregate production origins has unexpected fields')
+        previous = name
+        seen.add(name)
+        check_origin(origins[name], row)
+        if modules is not None:
+            if name not in modules:
+                raise ValueError('report source membership mismatch')
+            if row['source_path'] != modules[name]:
+                raise ValueError('report source binding mismatch')
+            validate_template_sources([row], repository, inputs=inputs)
+        del row
+    materials.require_keys(origins, seen, 'aggregate production origins')
+    if modules is not None and seen != set(modules):
+        raise ValueError('report source membership mismatch')
 
 
 def _require_bundle_files(report):
@@ -346,16 +455,8 @@ def validate_bundle(report, expected=None, repository=None, verified_materials=N
             raise ValueError('stale input/provenance')
     if not check_rows:
         return None
-    rows = validate_rows(report, member(report, '.materials.zip'), verified_materials,
-        identities=identities)
-    origins = provenance['module_origins']
-    materials.require_keys(origins, {row['module'] for row in rows}, 'aggregate production origins')
-    for row in rows:
-        check_origin(origins[row['module']], row)
-    if repository is not None:
-        sources = _SourceStructure(repository)
-        sources.validate_sources(rows)
-    return rows
+    check_aggregate_rows(validated_rows(report, member(report, '.materials.zip'),
+        verified_materials, identities=identities), provenance['module_origins'], repository)
 
 
 def zip_files(destination, paths):
