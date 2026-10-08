@@ -8,7 +8,7 @@ internal sealed class FiniteBandSwitchDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Combinatorics/PerfectMatchings/FiniteBandSwitch.";
     private static readonly LibraryNoteRef Source =
-        LibraryNoteRef.Create("D5/L/Combinatorics/ghanbarisamal2026facial");
+        LibraryNoteRef.Create("D5/L/RibbonEmbeddings/ghanbarisamal2026facial");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The actual switch of two band pairs exchanges good and regular and yields equal expectations under an invariant finite law.",

@@ -14,6 +14,19 @@ triage: anchor
 
 # Facial edge types and the twist operation
 
+## Verified locator
+
+Babak Ghanbari and Robert Šámal, *Facial diagrams and cycle double cover*,
+arXiv:2605.01410v1, submitted 2 May 2026; EUROCOMB'25 extended abstract.
+DOI: 10.48550/arXiv.2605.01410.
+Versioned record: https://arxiv.org/abs/2605.01410v1.
+Primary text: https://arxiv.org/html/2605.01410v1, Section 2 Proposition 2.1,
+Section 3 Lemma 3.1, and Section 3.1 item 8. Those locators support the twist
+properties quoted below; the probability conclusion additionally requires a
+twist-invariant law.
+
+## Source statement
+
 Primary source: https://arxiv.org/html/2605.01410v1.
 This is the EUROCOMB'25 extended abstract submitted to arXiv on 2 May 2026.
 

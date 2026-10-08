@@ -197,6 +197,9 @@ domains:
   Rewriting:
     stratum: S0
     definition: Abstract terminating rewrite relations, confluence, and canonical normal forms.
+  RibbonEmbeddings:
+    stratum: S3
+    definition: Combinatorial ribbon embeddings of finite graphs, facial boundary walks, and local band surgery.
   Scale:
     stratum: S1
     definition: Real embeddings and logarithmic scales of golden integers.
