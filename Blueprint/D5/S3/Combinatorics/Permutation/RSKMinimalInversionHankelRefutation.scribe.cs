@@ -37,7 +37,10 @@ internal sealed class RSKMinimalInversionHankelRefutationDocument : IScribeDocum
                 StatementSource.FromAuthor(F.Disp(new Formula.Not(Id("claim")))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("The symmetric matrix [[0,3,0,1],[3,0,2,0],[0,2,0,3],[1,0,3,0]] has shape [8,8,1,1] and inversion count 43. Insertion adds exactly one cell per letter, so a Hankel matrix of this shape has total weight 18. Its seven anti-diagonal parameters satisfy t₀+2t₁+3t₂+4t₃+3t₄+2t₅+t₆=18. All 2,743 nonnegative weighted tuples are enumerated, with the first parameter split into nineteen cases. Every tuple with the required shape has at least 45 inversions. Natural-valued inversion counts attain a minimum whenever the shape class is nonempty. Every minimizer therefore has at most 43 inversions and cannot be Hankel. This refutes the conjunction; it does not decide whether every minimizer is symmetric. The four-row example leaves the paper's two-row Theorem 4.1 outside the counterexample's range."))),
-                DescribeRole.Theorem)
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("pahuja-2026-hankel-minimal-matrices"),
+                    ResolutionKind.Refuted))
         ), []));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula, string prose) =>

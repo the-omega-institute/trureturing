@@ -120,6 +120,10 @@ $$\neg \mathit{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Permutation/RSKMinimalInversionHankelRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/pahuja-2026-hankel-minimal-matrices` (refuted) by `D5/S3/Combinatorics/Permutation/RSKMinimalInversionHankelRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"pahuja-2026-hankel-minimal-matrices","declaration_gid":"D5/S3/Combinatorics/Permutation/RSKMinimalInversionHankelRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Nimisha Pahuja (2026). *Minimal Inversions in Integer Matrices of Fixed RSK Shape*. URL: <https://arxiv.org/abs/2602.14931v1>.
