@@ -8,6 +8,7 @@ url: https://arxiv.org/abs/2601.02282v1
 claim: "Remark V.2: the eigenvalues of the Choi matrix of a unital, Hermiticity-preserving U(n₁)⊗U(n₂)-equivariant map are the four values of Lemma V.8 with multiplicities 1, n₁²−1, n₂²−1 and (n₁²−1)(n₂²−1); Lemma V.8 states them only for n₁, n₂ ∈ {2, 3}, and the general case is stated as a conjecture."
 strata_touched:
   - D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum
+  - D5/S3/Quantum/QuantumChannels/ProductUnitaryPPTSquared
 license: citation-only
 triage: anchor
 ---
