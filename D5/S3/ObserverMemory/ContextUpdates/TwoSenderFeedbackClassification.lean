@@ -1,5 +1,5 @@
 /- GID: D5/S3/ObserverMemory/ContextUpdates/TwoSenderFeedbackClassification
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/ObserverMemory/ContextUpdates/TwoSenderFeedbackClassification
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
@@ -160,11 +160,14 @@ private theorem branch_affine (P : PType) (D : Z4 → Z4 → Bool → Bool → B
   intro x y hxy hreply
   exact separated P D hD a t i x y ((low_characteristic x y).mp hxy) hreply
 
+private theorem low_add (u v : Z4) : low (u + v) = (low u ^^ low v) := by
+  fin_cases u <;> fin_cases v <;> rfl
+
 private theorem pair_parity (p A B c₂ c₃ r s l : Bool) :
     low ((bit l + 2 * bit (r ^^ c₂ ^^ (A && l))) +
       (bit (l ^^ p) + 2 * bit (s ^^ c₃ ^^ (B && (l ^^ p))))) = p := by
-  cases p <;> cases A <;> cases B <;> cases c₂ <;> cases c₃ <;>
-    cases r <;> cases s <;> cases l <;> decide
+  rw [low_add, low_bits, low_bits]
+  simp
 
 private theorem pair_sum (p A B c₂ c₃ r s l : Bool) :
     (bit l + 2 * bit (r ^^ c₂ ^^ (A && l))) +
@@ -323,9 +326,6 @@ private theorem necessity (P : PType) (D : Z4 → Z4 → Bool → Bool → Bool 
     exact ⟨a, false, false, by simpa only [hb] using (branch_data P D hD a t).2 false false |>.1⟩
   · intro a t r s
     exact ((branch_data P D hD a t).2 r s).1
-
-private theorem low_add (u v : Z4) : low (u + v) = (low u ^^ low v) := by
-  fin_cases u <;> fin_cases v <;> rfl
 
 private theorem source_parity (z : S) :
     low (z.1.2 0 + z.1.2 1) = low (clock z - z.1.1) := by
