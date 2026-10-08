@@ -88,11 +88,29 @@ $$\forall n \in \mathbb{N}, W \in \operatorname{Matrix}\left(\operatorname{Fin}\
 
 Every eigenvalue lies between lo and hi, and each endpoint is attained. Thus these parameters are exactly the smallest and largest eigenvalues, including repeated eigenvalues.
 
-**Theorem 1.8 (The weighted inequality).**
+**Definition 1.8 (Conjecture 1, equation (15)).**
+
+$$claim \Leftrightarrow (\forall n \in \mathbb{N},\; 0 < n \Rightarrow \left(\forall W \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right), lo \in \mathbb{R}, hi \in \mathbb{R},\; \operatorname{Matrix.PosDef}(W) \Rightarrow \left(0 < lo \Rightarrow \left(\operatorname{SpectralExtrema}\left(W, lo, hi\right) \Rightarrow \left(\forall A \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right), B \in \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right),\; \operatorname{weightedSq}\left(\operatorname{commutator}\left(A, B\right), W\right) \le \left(1 + \frac{hi}{lo}\right) \cdot \operatorname{weightedSq}\left(A, W\right) \cdot \operatorname{RHLinalg.frobSq}(B)\right)\right)\right)\right))$$
+
+*Formalization.* `D5/S3/Quantum/Matrix/WeightedBotcherWenzel.claim` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Aina Mayumi; Gen Kimura; Hiromichi Ohno; Dariusz Chruściński (2024). *Böttcher-Wenzel inequality for weighted Frobenius norms and its application to quantum physics*. DOI: [10.1016/j.laa.2024.07.013](https://doi.org/10.1016/j.laa.2024.07.013). URL: <https://arxiv.org/abs/2403.04199v2>.
+
+*Commentary.*
+
+“Conjecture 1. For any matrices A, B ∈ Mₙ(ℂ),” followed by equation (15), “‖[A, B]‖ω ≤ √((λm + λM)/λm) ‖A‖ω ‖B‖” (arXiv:2403.04199v2, page 6). The encoding uses Matrix (Fin n) (Fin n) ℂ for n greater than zero, PosDef for the positive definite weight, and SpectralExtrema for the attained endpoints lo = λm and hi = λM. Squaring the nonnegative norms gives constant 1 + hi/lo. The weighted and ordinary squares are the real trace formulas; commutator means AB minus BA.
+
+**Theorem 1.9 (The weighted inequality).**
 
 $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Matrix/WeightedBotcherWenzel.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/mayumi-kimura-ohno-chruscinski-2024-weighted-bottcher-wenzel-ii` (proved) by `D5/S3/Quantum/Matrix/WeightedBotcherWenzel.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mayumi-kimura-ohno-chruscinski-2024-weighted-bottcher-wenzel-ii","declaration_gid":"D5/S3/Quantum/Matrix/WeightedBotcherWenzel.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
@@ -105,6 +123,7 @@ The projection channel bound and nonnegative commutator gap give a square-comple
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Matrix/WeightedBotcherWenzel.SpectralExtrema`
+- Truth anchor: `D5/S3/Quantum/Matrix/WeightedBotcherWenzel.claim`
 - Truth anchor: `D5/S3/Quantum/Matrix/WeightedBotcherWenzel.projected_trace`
 - Truth anchor: `D5/S3/Quantum/Matrix/WeightedBotcherWenzel.projection_gap`
 - Truth anchor: `D5/S3/Quantum/Matrix/WeightedBotcherWenzel.result`

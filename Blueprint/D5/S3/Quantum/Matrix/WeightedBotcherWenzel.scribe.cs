@@ -32,8 +32,12 @@ internal sealed class WeightedBotcherWenzelDocument : IScribeDocumentDefinition
                 LeqF(Frob(Mul(Comm(a,b),p)),Mul(Add(Add(Frob(a),Mul(Num(2),Frob(Mul(a,p)))),Mul(Num(2),Apply(Qualified("Real","sqrt"),Mul(Frob(Mul(a,p)),Call("gap",a))))),Frob(b))))),
                 "The SVD expresses a contraction as an average of two actual unitaries. A common-radius bound for scalar pencils transfers to the projected adjoint channel, for every projection rank and including zero input matrices."),
             Item("SpectralExtrema","Attained spectral endpoints",All([B("n",N),B("W",Mat(n)),B("lo",R),B("hi",R)],IffF(Call("SpectralExtrema",w,lo,hi),spec)),"Every eigenvalue lies between lo and hi, and each endpoint is attained. Thus these parameters are exactly the smallest and largest eigenvalues, including repeated eigenvalues.",true),
+            Item("claim","Conjecture 1, equation (15)",IffF(F.Id("claim"),Parenthesized(assertion)),
+                "“Conjecture 1. For any matrices A, B ∈ Mₙ(ℂ),” followed by equation (15), “‖[A, B]‖ω ≤ √((λm + λM)/λm) ‖A‖ω ‖B‖” (arXiv:2403.04199v2, page 6). The encoding uses Matrix (Fin n) (Fin n) ℂ for n greater than zero, PosDef for the positive definite weight, and SpectralExtrema for the attained endpoints lo = λm and hi = λM. Squaring the nonnegative norms gives constant 1 + hi/lo. The weighted and ordinary squares are the real trace formulas; commutator means AB minus BA.",true,
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumStates/mayumi2024weightedbw"))),
             Item("result","The weighted inequality",F.Id("claim"),"The projection channel bound and nonnegative commutator gap give a square-completion lower bound for every two-level weight. A spectral convex decomposition transfers the inequality to an arbitrary positive definite weight. This statement is case (ii). Cases (i) and (iv) are separate questions.",false,
-                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumStates/mayumi2024weightedbw"))))));
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumStates/mayumi2024weightedbw")),
+                new OpenProblemResolutionClaim(ProblemSlugRef.Create("mayumi-kimura-ohno-chruscinski-2024-weighted-bottcher-wenzel-ii"), ResolutionKind.Proved)))));
     }
 
     private static Formula Call(string name, params Formula[] args) =>
