@@ -144,6 +144,20 @@ theorem divide (k t : Nat) (ht : t ≤ k) :
   simp only [Nat.zero_add, List.range'_succ, Nat.add_zero, Nat.add_one]
   rw [← List.range_eq_range']
 
+/-- The slot-and-tail comb is the complete right-comb hole table. -/
+theorem comb_holes : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
+    comb n f q = FiniteHereditaryPatternRealization.B_T n (Fin.snoc f q) := by
+  intro n
+  induction n with
+  | zero => intro f q; simp [comb, FiniteHereditaryPatternRealization.B_T, Fin.snoc_zero]
+  | succ n ih =>
+    intro f q
+    rw [comb, FiniteHereditaryPatternRealization.B_T, Fin.snoc_apply_zero, ih]
+    congr 1
+    apply congrArg (FiniteHereditaryPatternRealization.B_T n)
+    funext i
+    cases i using Fin.lastCases <;> simp [← Fin.castSucc_succ]
+
 /-- Literal nested sources and their actual routing reports. -/
 theorem result (k : Nat) (hk : 1 ≤ k) :
     Function.Injective (family k) ∧
@@ -186,18 +200,6 @@ theorem result (k : Nat) (hk : 1 ≤ k) :
   have fold_image : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
       thirdImage (comb n f q) = comb n (fun i => thirdImage (f i)) (thirdImage q) :=
     fun n f q => (comb_foundation n f f q q).1
-  have comb_holes : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
-      comb n f q = FiniteHereditaryPatternRealization.B_T n (Fin.snoc f q) := by
-    intro n
-    induction n with
-    | zero => intro f q; simp [comb, FiniteHereditaryPatternRealization.B_T, Fin.snoc_zero]
-    | succ n ih =>
-      intro f q
-      rw [comb, FiniteHereditaryPatternRealization.B_T, Fin.snoc_apply_zero, ih]
-      congr 1
-      apply congrArg (FiniteHereditaryPatternRealization.B_T n)
-      funext i
-      cases i using Fin.lastCases <;> simp [← Fin.castSucc_succ]
   have fold_comp : ∀ (n : Nat) (f : Fin n → Source) (q : Source),
       composition (comb n f q) = (∑ i, composition (f i)) + composition q := by
     intro n f q

@@ -448,7 +448,7 @@ private theorem completion_bound_normal {n : ℕ} [NeZero n]
     exact star_comm_self' T
   exact (toEuclideanCLM (n := Fin n) (𝕜 := ℂ)).injective hm
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
-private theorem outer_pairing_trace (S : Matrix ι ι ℂ) (u : EuclideanSpace ℂ ι) :
+theorem outer_pairing_trace (S : Matrix ι ι ℂ) (u : EuclideanSpace ℂ ι) :
     ((Matrix.vecMulVec (u).ofLp (star (u).ofLp))*S).trace=⟪u,toEuclideanCLM (𝕜 := ℂ) S u⟫_ℂ := by
   rw [Matrix.trace_mul_comm]
   simp only [mul_vecMulVec,trace_vecMulVec,
