@@ -116,6 +116,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/GraphDensity/BraunsteinGhoshSeveriniStarRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/braunstein-ghosh-severini-2006-star-formation-maximum` (refuted) by `D5/S3/Quantum/Entanglement/GraphDensity/BraunsteinGhoshSeveriniStarRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"braunstein-ghosh-severini-2006-star-formation-maximum","declaration_gid":"D5/S3/Quantum/Entanglement/GraphDensity/BraunsteinGhoshSeveriniStarRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Samuel L. Braunstein; Sibasish Ghosh; Simone Severini (2006). *The Laplacian of a graph as a density matrix: a basic combinatorial approach to separability of mixed states*. DOI: [10.1007/s00026-006-0289-3](https://doi.org/10.1007/s00026-006-0289-3). URL: <https://arxiv.org/abs/quant-ph/0406165v2>.

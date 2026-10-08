@@ -58,7 +58,10 @@ internal sealed class BraunsteinGhoshSeveriniStarRefutationDocument : IScribeDoc
                 StatementSource.FromAuthor(Disp(Seq(Neg, Sp, Seq(Operatorname, Grp(F.Id("claim")))))),
                 AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/QuantumStates/braunstein2006laplaciandensity")),
                 Blocks(Paragraph(Text("Refutation of BGS Conjecture 6.7: the instance k = 32 has 128 vertices with tensor dimensions 2 × 64. The graph is connected and has nonempty edge set, and its formation exceeds the rooted star."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("braunstein-ghosh-severini-2006-star-formation-maximum"),
+                    ResolutionKind.Refuted)))));
 
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Apply(Formula function, params Formula[] arguments) =>
