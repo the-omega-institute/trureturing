@@ -1218,3 +1218,244 @@ of (VH7)–(VH8). The earlier all-clock (VG) interface remains available.
 A proof still must control the same head and corrections against the
 original $\mathcal E(L)$ and retain the strict core, including any
 uncovered finite clock range. No Robin or RH conclusion is supplied.
+
+## One positive heat time pays a further finite signed Robin window
+
+The smaller negative-time head above still needs its signed upper bound.
+A separate finite payment is available from the already retained
+positive-time resolvent (HR1) and exact real-parameter explicit formula.
+This payment uses the actual original zeros throughout. It does not
+require the eventual eligibility threshold of (VH7), transfer original
+zero density to another function, or assume RH above the verified height.
+
+Reuse the complete coefficient remainder (H1), the original positive
+elementary correction after (G9), and the strict core (G6)–(G7) in
+[the Nicolas note](nicolas2025comparison.md). The existing finite payment
+(GL3)–(GL4) already excludes the same selected source through
+$A\le(7/2)10^{46}$. The new interval is
+
+$$
+\frac72\,10^{46}<A\le4\cdot10^{46},\qquad
+L=\log A,\qquad H=3\cdot10^{12},\qquad
+U=\frac7{2\cdot10^{24}}.
+$$
+
+The source is the conditional least integer $N>5040$ attaining the
+global Robin-ratio maximum under a violation, with $A=\log N$.
+It is not the least counterexample. The earlier verified-height and
+complete reciprocal-square inputs are unchanged:
+
+$$
+c_0:=\sum_\rho\frac{m_\rho}{\rho(1-\rho)}<0.05,
+\qquad
+S_2(H):=\sum_{\gamma>H}\frac{m_\rho}{\gamma^2}
+<1.48\cdot10^{-12}.
+\tag{VI1}
+$$
+
+Every zero with $|\gamma|\le H$ is on the critical line under the
+same cited finite-verification premise. All sums below retain actual
+real parts and multiplicities, and include both ordinate signs.
+This is a paper-level application of existing analytic inputs, with
+no new source theorem, zero computation, mathematical-priority claim
+or Lean certification.
+
+### Split the whole rational response at one common time
+
+Put $d_\rho=\rho(1-\rho)$ and write the normalized original response as
+
+$$
+\sqrt A L Z_{\rm orig}(A)
+=(1+1/L)\sum_\rho m_\rho\frac{A^{\rho-1/2}}{d_\rho}
+ +R_A.
+$$
+
+This is the full (H1) coefficient, not a leading-term replacement:
+
+$$
+|R_A|\le\frac{2(L+2)}{L^2}
+ \sum_\rho m_\rho
+ \frac{A^{\beta-1/2}}{|\rho||1-\rho|^2}.
+\tag{VI2}
+$$
+
+The exact existing heat-resolvent identity gives
+
+$$
+\sum_\rho m_\rho\frac{A^{\rho-1/2}}{d_\rho}
+=\sum_\rho m_\rho
+ \frac{A^{\rho-1/2}e^{-Ud_\rho}}{d_\rho}
+ +A^{-1/2}\int_0^U\mathcal H(u,u-L)\,du,
+\qquad
+\mathcal H(u,v)=\sum_\rho m_\rho e^{u\rho^2-v\rho}.
+\tag{VI3}
+$$
+
+Here $\Re d_\rho=\gamma^2+\beta(1-\beta)>0$.
+The absolute integral per occurrence is at most
+$\sqrt A/\gamma^2$, and the full reciprocal-square sum is finite.
+Thus the whole-zero sum and heat integral interchange absolutely.
+There is no height truncation, exceptional zero or value inserted at
+$u=0$. Reflection and conjugation make these complete expressions real.
+
+### Use the signed prime formula before taking an upper bound
+
+Reuse Kamiya–Suzuki, *An asymptotic formula for a sum involving zeros
+of the Riemann zeta-function*, Publications de l'Institut Mathématique
+76(90) (2004), 81–88,
+[Lemma 2.1, printed p.83, and Lemma 3.1, printed p.84](http://elib.mi.sanu.ac.rs/files/journals/publ/96/n090p081.pdf).
+Their exact formula holds for every $u>0$ and real $v$; no fixed-frequency
+asymptotic is used. At $v=u-L$, its pole terms are $A+1$.
+Both prime sums, the $\log\pi$ Gaussian term and the convolution
+$E*\mathcal G_u$ are subtracted nonnegative quantities; the latter lies
+between zero and one. They retain their stated signs when taking the
+following upper bound.
+
+After multiplication by $A^{-1/2}$, the remaining Gamma term is exactly
+
+$$
+J_\Gamma(u,L)=\frac{e^{-u/4}}{2\pi}
+ \int_{\mathbb R}\log|1/4+it/2|\,e^{-ut^2+itL}\,dt.
+$$
+
+In particular, its prefactor is not $A^{-1/2}$: the raw source formula
+contains $e^{u/4-v/2}=\sqrt A e^{-u/4}$.
+An explicit integrable allowance pays this term. For $x\ge0$,
+$\log(1+x)\le\sqrt x$, and hence
+
+$$
+|\log|1/4+it/2||
+\le\log4+\log(1+2|t|)
+<2+\sqrt2\,|t|^{1/2}.
+$$
+
+The ordinary Gaussian integral and Gamma integral, with
+$3<\pi<4$ and $\Gamma(3/4)<2$, give
+
+$$
+|J_\Gamma(u,L)|
+\le\frac23\bigl(u^{-1/2}+u^{-3/4}\bigr),
+\qquad
+\int_0^U|J_\Gamma(u,L)|\,du
+\le\frac43\sqrt U+\frac83U^{1/4}<6\cdot10^{-6}.
+$$
+
+For the last bound, $\sqrt U<2\cdot10^{-12}$ and
+$U^{1/4}<2\cdot10^{-6}$. The elementary bound
+$\Gamma(3/4)<4/3+e^{-1}<2$ follows directly by splitting its
+positive integral at one. Thus the exact source formula, with all
+favorable terms kept in its direction, yields
+
+$$
+\boxed{
+A^{-1/2}\int_0^U\mathcal H(u,u-L)\,du
+\le\sqrt A\,U+\frac U{\sqrt A}+6\cdot10^{-6}.
+}
+\tag{VI4}
+$$
+
+This is a signed upper estimate, not the source-pressure lower bound
+(PH4). No absolute prime-error envelope is required. Integration of
+the upper inequality uses the absolute zero-integrability in (VI3)
+and the displayed Gamma allowance; it does not assume separate
+infinite-time pole integrability or a value at the initial heat time.
+
+### Pay the damped head and the complete coefficient error together
+
+For the verified critical head, the absolute damped rational sum is
+at most $c_0$. Indeed $\Re(1/d_\rho)>0$ for every actual zero,
+so the verified subset's positive reciprocal sum is at most the full
+identity (VI1). For every unverified occurrence,
+$|d_\rho|\ge\gamma^2$, $\Re d_\rho\ge\gamma^2$ and
+$A^{\beta-1/2}\le\sqrt A$. Consequently
+
+$$
+\left|\sum_\rho m_\rho
+ \frac{A^{\rho-1/2}e^{-Ud_\rho}}{d_\rho}\right|
+\le c_0+2\sqrt A\,S_2(H)e^{-UH^2}
+<0.05+0.0148=0.0648.
+\tag{VI5}
+$$
+
+Here $UH^2=63/2$, $\sqrt A\le2\cdot10^{23}$ and
+$e^{63/2}>4\cdot10^{13}$. One exact elementary certificate for the
+exponential is
+
+$$
+e>163/60,\qquad e^{1/2}>79/48,\qquad
+163^{31}\cdot79>
+4\cdot10^{13}\cdot60^{31}\cdot48.
+$$
+
+The first two inequalities follow from positive Taylor partial sums.
+This retains both signs and all infinite heights; it does not assign
+criticality to the unverified tail.
+
+On the same interval $L>100$, since $e<11/4$ and
+$11^{100}<4^{100}10^{44}<4^{100}A$.
+On the verified head $|1-\rho|\ge1/2$, and on the complete high tail
+$|1-\rho|\ge|\gamma|>H$. Applying (VI2) separately on these two
+ranges gives
+
+$$
+|R_A|\le\frac{4(L+2)}{L^2}
+ \left[c_0+\frac{\sqrt A\,S_2(H)}H\right]
+<0.0408\left[0.05+\frac{2(1.48)}{30}\right]
+<0.0061.
+\tag{VI6}
+$$
+
+No remainder below $H$ or above $H$ is omitted, and no correction from
+(RC1) is added to this alternative use of the full (H1) bound.
+
+### Return to the original signed integral and strict core
+
+Keep the exact original identity
+$-\sqrt A L I_\psi(A)=\sqrt A L Z_{\rm orig}(A)+r_A$,
+where $0<r_A\le\log(2\pi)/\sqrt A<3/\sqrt A$.
+The same chosen time satisfies $\sqrt A\,U\le0.7$.
+With $1+1/L<1.01$, (VI2)–(VI6) therefore pay the complete response:
+
+$$
+\boxed{
+-\sqrt A L I_\psi(A)
+<(1.01)(0.0648+0.7+0.000006)
+ +0.0061+10^{-20}<0.779.
+}
+\tag{VI7}
+$$
+
+The $10^{-20}$ allowance covers both the positive $r_A$ and the pole
+term $(1+1/L)U/\sqrt A$ on this actual interval. The other polar, prime,
+trivial and Gamma contributions have already been preserved in the
+exact source formula and its directed upper bound (VI4).
+
+The existing increasing function $\mathcal E(L)$ from (G7) obeys
+$\mathcal E(L)>0.789$ for $L>100$. For example, its value at $100$
+is bounded below using $\sqrt2>1.414$, $\sqrt2<1.415$,
+$\log2<0.7$, $e^{100/6}>2^{16}$ and $e^{50}>2^{50}>10^{15}$;
+the negative exponential terms are respectively below $0.00005$ and
+$0.000001$. Dropping the positive $6.78/L^2$ term still leaves
+$2.828-0.038205-2.00014-0.00005-0.000001>0.789$.
+The strict core (G6) and $\Delta(N)=I_\psi(A)+D^*(A)$ now give
+
+$$
+\boxed{
+\sqrt A L\Delta(N)>0.01,
+\qquad \frac72\,10^{46}<A\le4\cdot10^{46}.
+}
+\tag{VI8}
+$$
+
+Together with the existing (GL4) and its preceding intervals, this
+forces $\log N>4\cdot10^{46}$ for the same hypothetical least global
+maximizer. It is a finite selected-source exclusion with a signed
+normalized margin. It is not a least-counterexample bound or
+all-integer finite Robin verification. The verified height, classical
+core and exact explicit-formula premises remain external inputs.
+
+The fixed time has costs growing with $\sqrt A$ beyond this finite
+window. The original unbounded signed Robin estimate and RH remain
+unproved. This payment neither supplies that uniform estimate nor
+certifies eligibility for the separate eventual smaller negative-time
+cut. No Lean or new numerical experiment is supplied.
