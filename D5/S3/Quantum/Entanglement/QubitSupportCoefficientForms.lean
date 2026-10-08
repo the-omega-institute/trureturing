@@ -150,4 +150,15 @@ theorem formOf_injective (p : ℕ) : Function.Injective (@formOf p) := by
     simpa using hv
   simp_rw [hs]
 
+private theorem index_counts {p : ℕ} (d : Composition p) (j : Fin p) :
+    (Finset.univ.filter fun i : Fin p => d.index i < d.index j).card =
+      d.sizeUpTo (d.index j).val ∧
+    (Finset.univ.filter fun i : Fin p => d.index i ≤ d.index j).card =
+      d.sizeUpTo ((d.index j).val + 1) := by
+  constructor
+  · simp_rw [index_lt_iff]
+    rw [Fin.card_filter_val_lt, min_eq_right (d.sizeUpTo_le _)]
+  · simp_rw [index_le_iff]
+    rw [Fin.card_filter_val_lt, min_eq_right (d.sizeUpTo_le _)]
+
 end D5.S3.Quantum.Entanglement.QubitSupportCoefficientForms
