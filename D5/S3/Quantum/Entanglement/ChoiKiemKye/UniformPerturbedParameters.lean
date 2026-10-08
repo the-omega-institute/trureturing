@@ -7,14 +7,20 @@
    digest: Perturbation stability and the all-large-dimensions construction. -/
 
 /- Judgement form (implementation assessment; each helper retains its own classification).
-   proof_shape: Anchor.largest_root_psd: bind-only; consumer=UniformPerturbedParameters.Anchor.anchor_tail_root_lower.
-   proof_shape: Anchor.D_shift: bind-only; consumer=UniformPerturbedParameters.Anchor.anchor_tail_root_lower.
-   proof_shape: Anchor.perturbed_kernel_stability: content.
-   proof_shape: Anchor.n_ge_17: content.
+   proof_shape: Anchor.largest_root_psd: bind-only; consumer=MaximalBirankEdgeStates.Finite.root_and_kernel_enclosure.
+   proof_shape: Anchor.D_shift: bind-only; consumer=MaximalBirankEdgeStates.Finite.root_and_kernel_enclosure.
+   proof_shape: Anchor.perturbed_kernel_stability: content; consumer=UniformPerturbedParameters.Anchor.n_ge_17; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformParameterAnchor.Anchor.actual_kernel.
+   proof_shape: Anchor.n_ge_17: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.proposition61.
+   proof_shape: Anchor.block_psd_schur: bind-only; consumer=UniformPerturbedParameters.Anchor.anchor17_root_lower.
+   proof_shape: Anchor.anchor17_root_lower: bind-only; consumer=UniformPerturbedParameters.Anchor.anchor_root_lower.
+   proof_shape: Anchor.root_schur_identity: bind-only; consumer=UniformPerturbedParameters.Anchor.actual_energy_coercivity.
+   proof_shape: Anchor.anchor_tail_root_lower: bind-only; consumer=UniformPerturbedParameters.Anchor.anchor_root_lower.
+   proof_shape: Anchor.anchor_root_lower: bind-only; consumer=UniformPerturbedParameters.Anchor.actual_energy_coercivity.
    escape_witness: Anchor.perturbed_kernel_stability, consumed by Anchor.n_ge_17.
    Computational utility: private Anchor.U17_value, k17_value, ell17_value
    and schur17_negative are n=17 numeric reductions carried by public
    Anchor.perturbed_kernel_stability on Anchor.n_ge_17’s live path.
+   Classification totals: 24 content; 37 bind-only.
    admission_basis: escape-witness
    Direct frozen dependencies: none; dependencies are pinned Mathlib and same-delivery modules.
    Information-escape registration is paused under CLAUDE.md §3.9.

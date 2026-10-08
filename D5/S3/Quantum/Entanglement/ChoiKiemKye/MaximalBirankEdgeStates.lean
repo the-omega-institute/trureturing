@@ -7,7 +7,7 @@
    digest: The CKK conjecture for all dimensions n ≥ 3. -/
 
 /- Judgement form (implementation assessment; each helper retains its own classification).
-   proof_shape: Small.certificate_sound: content.
+   proof_shape: Small.certificate_sound: content; consumer=MaximalBirankEdgeStates.Small.case10; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.proposition61.
    proof_shape: Small.valid3: bind-only; consumer=MaximalBirankEdgeStates.Small.case3.
    proof_shape: Small.valid4: bind-only; consumer=MaximalBirankEdgeStates.Small.case4.
    proof_shape: Small.valid5: bind-only; consumer=MaximalBirankEdgeStates.Small.case5.
@@ -22,9 +22,11 @@
    proof_shape: Small.valid14: bind-only; consumer=MaximalBirankEdgeStates.Small.case14.
    proof_shape: Small.valid15: bind-only; consumer=MaximalBirankEdgeStates.Small.case15.
    proof_shape: Small.valid16: bind-only; consumer=MaximalBirankEdgeStates.Small.case16.
-   proof_shape: Full.construction: content; consumer=MaximalBirankEdgeStates.Full.result; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformPerturbedParameters.Anchor.n_ge_17.
-   proof_shape: Full.result: content; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformPerturbedParameters.Anchor.n_ge_17.
-   escape_witness: none.
+   proof_shape: Full.construction: content; consumer=MaximalBirankEdgeStates.Full.result; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.case10.
+   proof_shape: Full.result: content; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Full.construction.
+   proof_shape: Finite.last_nonzero: bind-only; consumer=MaximalBirankEdgeStates.Finite.root_and_kernel_enclosure.
+   escape_witness: Small.certificate_sound, via Finite.kernel_close on its residual-enclosure path.
+   Classification totals: 21 content; 50 bind-only.
    admission_basis: open-problem-resolution (#13859; Proved)
    Direct frozen dependencies:
    D5/S3/Weil/ZetaLinear/Sylvester.hermForm; statement_id=sha256:80fb2c125caa6f180274d058b22d584cf1572b3089380febbc5dfae997f03ebf

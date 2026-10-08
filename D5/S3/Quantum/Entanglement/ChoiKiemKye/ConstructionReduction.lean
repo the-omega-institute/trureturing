@@ -7,18 +7,33 @@
    digest: The Section 6 construction and its triangular reduction. -/
 
 /- Judgement form (implementation assessment; each helper retains its own classification).
-   proof_shape: Draft.triangular_pivot: content.
-   proof_shape: Spectral.det_pencil: bind-only; consumer=UniformParameterAnchor.Uniform.pencil_top_largest.
+   proof_shape: Draft.triangular_pivot: content; consumer=ConstructionReduction.Draft.triangular_minors.
+   proof_shape: Spectral.det_pencil: bind-only; consumer=ConstructionReduction.Spectral.det_pencil_re.
    proof_shape: Spectral.pencil_conjugate: bind-only; consumer=ConstructionReduction.Spectral.largest_root_psd.
-   proof_shape: Spectral.largest_root_psd: bind-only; consumer=UniformPerturbedParameters.Anchor.largest_root_psd.
-   proof_shape: Spectral.det_pencil_re: bind-only; consumer=UniformParameterAnchor.Uniform.simple_root_of_rank.
-   proof_shape: D_hermitian: bind-only; consumer=UniformPerturbedParameters.Anchor.largest_root_psd.
-   proof_shape: D_pencil: bind-only; consumer=UniformPerturbedParameters.Anchor.largest_root_psd.
-   proof_shape: partialTranspose_involutive: bind-only; consumer=ConstructionReduction.proposition61.
-   proof_shape: Path.scaled_dominance_posDef: bind-only; consumer=UniformParameterAnchor.Anchor.interior_posDef.
-   proof_shape: Path.sum_indicator_le: bind-only; consumer=UniformParameterAnchor.Uniform.band_spike_dominance.
-   proof_shape: proposition61: content.
+   proof_shape: Spectral.largest_root_psd: bind-only; consumer=ConstructionReduction.D_largest_simple.
+   proof_shape: Spectral.det_pencil_re: bind-only; consumer=ConstructionReduction.Spectral.simple_root_rank.
+   proof_shape: D_hermitian: bind-only; consumer=ConstructionReduction.D_largest_simple.
+   proof_shape: D_pencil: bind-only; consumer=ConstructionReduction.D_largest_simple.
+   proof_shape: partialTranspose_involutive: bind-only; consumer=ConstructionReduction.edge_from_star.
+   proof_shape: Path.scaled_dominance_posDef: bind-only; consumer=ConstructionReduction.Partition.rho_offdiag_posDef.
+   proof_shape: Path.sum_indicator_le: bind-only; consumer=ConstructionReduction.Partition.rho_offdiag_posDef.
+   proof_shape: proposition61: content; consumer=MaximalBirankEdgeStates.Small.certificate_sound; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Partition.rho_offdiag_posDef.
+   proof_shape: Cycle.lap_complex_kernel: bind-only; consumer=ConstructionReduction.Cycle.lap_complex_range.
+   proof_shape: Cycle.lap_complex_range: bind-only; consumer=ConstructionReduction.Cycle.P_range.
+   proof_shape: Cycle.lap_complex_rank: bind-only; consumer=ConstructionReduction.Cycle.P_rank.
+   proof_shape: Cycle.P_range: bind-only; consumer=ConstructionReduction.Partition.cycleBlock_range.
+   proof_shape: Cycle.P_rank: bind-only; consumer=ConstructionReduction.Partition.cycleBlock_psd_rank.
+   proof_shape: Partition.cycleBlock_range: bind-only; consumer=ConstructionReduction.Partition.rhoGamma_range_core.
+   proof_shape: Partition.rhoGamma_range_core: bind-only; consumer=ConstructionReduction.range_reduction.
+   proof_shape: range_reduction: bind-only; consumer=ConstructionReduction.edge_from_star.
+   proof_shape: Partition.cycleBlock_psd_rank: bind-only; consumer=ConstructionReduction.Partition.rhoGamma_psd_rank.
+   proof_shape: Partition.rhoGamma_psd_rank: bind-only; consumer=ConstructionReduction.Partition.rho_diagonal_D.
+   proof_shape: Partition.rho_diagonal_D: bind-only; consumer=ConstructionReduction.Partition.rho_kernel_lift.
+   proof_shape: Partition.rho_kernel_lift: bind-only; consumer=ConstructionReduction.Partition.rho_range_annihilator.
+   proof_shape: Partition.rho_range_annihilator: bind-only; consumer=ConstructionReduction.edge_from_star.
+   proof_shape: Partition.rho_reindex: bind-only; consumer=ConstructionReduction.Partition.rho_psd_rank.
    escape_witness: Draft.triangular_pivot, on proposition61’s triangular support-classification path.
+   Classification totals: 13 content; 111 bind-only.
    admission_basis: escape-witness
    Direct frozen dependencies:
    D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.partialTransposeB; statement_id=sha256:894491a0350c31f846bcfc59cbb3e13f12eb0801f6a00517db381f0dc0ecc393

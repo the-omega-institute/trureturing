@@ -7,11 +7,12 @@
    digest: Weyl bounds for the sorted eigenvalues of finite Hermitian matrices. -/
 
 /- Judgement form (implementation assessment; each helper retains its own classification).
-   proof_shape: abs_eigenvalue_sub_eigenvalue_le_norm: content.
-   proof_shape: norm_toEuclideanLin_le_of_entry_le: content.
-   proof_shape: abs_eigenvalues0_sub_le_norm: content.
-   proof_shape: abs_eigenvalues0_sub_le_of_entry_le: content.
+   proof_shape: abs_eigenvalue_sub_eigenvalue_le_norm: content; consumer=UniformPerturbedParameters.Anchor.perturbed_kernel_stability; same-delivery-content=D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalue_sub_eigenvalue_le.
+   proof_shape: norm_toEuclideanLin_le_of_entry_le: content; consumer=MaximalBirankEdgeStates.Finite.entry_norm_bound.
+   proof_shape: abs_eigenvalues0_sub_le_norm: content; consumer=HermitianEigenvaluePerturbation.abs_eigenvalues0_sub_le_of_entry_le; same-delivery-content=D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalue_sub_eigenvalue_le_norm.
+   proof_shape: abs_eigenvalues0_sub_le_of_entry_le: content; consumer=UniformParameterAnchor.Uniform.negative_eigenvalue_perturbation; same-delivery-content=D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalues0_sub_le_norm.
    escape_witness: abs_eigenvalues0_sub_le_norm, via the two spectral subspaces and their nonzero intersection.
+   Classification totals: 8 content; 7 bind-only.
    admission_basis: escape-witness
    Direct frozen dependencies: none; dependencies are pinned Mathlib and same-delivery modules.
    Ported proofs: LeanPool (github.com/LeanPool/lean-pool, Apache-2.0,
