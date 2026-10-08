@@ -36,7 +36,7 @@ theorem visible_dynamics_descends_iff_cross_block_zero
       V.orthogonalProjectionOnto.comp T =
         descended.comp V.orthogonalProjectionOnto) ↔
       (V.orthogonalProjectionOnto.comp T).comp Vᗮ.starProjection = 0 := by
-  exact (linear_descent_criterion V T).1.out 0 1
+  exact (linear_descent_criterion V T).1.out 1 2
 
 #print axioms visible_dynamics_descends_iff_cross_block_zero
 

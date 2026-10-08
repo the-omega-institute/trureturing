@@ -333,6 +333,22 @@ Downstream projection tools cannot provide registration verdicts or replace prod
 
 **A17.2 第三方 Lean 成果的两种准入形(v7.16 R3)** 精确命中的第三方 Lean 成果有且仅有两种合法准入形——**依赖**与**移植**;**重证禁止**(CLAUDE.md 第 11 条:重证已库有之定理=制造第二真源,与冒领同罪)。立本条之由:第 11 条有序路径的 ③ 指向「按 spec A17 可准入的第三方 Lean 生态」,而 A17 的三条准入谓词(public source、immutable rev、license compatibility)现役全为 `open`,故 ③ 事实上关闭;若不另立移植形,路径塌缩为 ②→④本地证明,恰是同条所禁之重证。**形式选择由机器判,不由偏好判**:Lake 每个包名只解析一次且 `lean-toolchain` 全局,故任一第三方包与本仓必须同意同一 toolchain 与同一 mathlib rev;比较候选上游的 `lean-toolchain` 及其 `lake-manifest.json` 中 mathlib `rev` 与本仓同名值,**不等即依赖形不可行**,无须再议;相等且 A17 三谓词已落地方可取依赖形;不等则只余移植形或放弃。此判据的实质是:依赖用于**与本仓同步演进的协调点**(mathlib 本身即此,故钉它而不移植它),移植用于**已冻结于某一 rev 的叶子成果**(论文交付物不会为本仓升级)。**移植形的义务**(逐条,机器可判优先):① 许可证随代码保留版权与许可全文,上游若带 NOTICE 链(Apache-2.0 §4 之类)则整链带入;② 入仓后即普通仓内内容,GID route、六行头、SL-001 import 偏序、SL-003 容量一律照常执法,不因「来自上游」豁免;③ 移植声明的 axiom/sorry 闭包不得扩张,须只含标准三条;④ **退役条件必须对本仓自己的钉版可判**,形如「本仓已升级到的某个 mathlib rev 中存在等价声明时删除本移植并改为直接引用」,**禁止**以「上游被 mathlib 接受」为到期条件——该事件不受本仓控制且已有反例(见判例),无可判到期条件的移植即第 6 条所禁之永久兼容层。**判例(读数,2026-08-13)**:`D5-T0019` 三距离——上游 `dkunert/three-gap-theorem-lean`(MIT,单文件 1486 行,sorry-free,无自定义 axiom)钉 `leanprover/lean4:v4.29.1`,本仓钉 `v4.31.0`,依赖形机器判否 ⇒ 取移植形;另 mathlib PR #40037(`feat(NumberTheory): the three-gap (Steinhaus) theorem`,+625 行)于 2026-06-09 以 mathlib AI 投稿规范关闭未合并,故上游收录无确定期,不得作到期条件。`D5-T0018-F` Weil 显式公式——上游 `anthropics/zeta-23-lean`(Apache-2.0)含 sorry-free `Zeta23.WeilEF.EF_lit_zetaZeroConfig`,钉 `v4.33.0-rc2`,依赖形机器判否;其 `Zeta23.WeilEF.Main` 的项目内 import 闭包实测 57 模块、893 KB、18,105 行,而该闭包直接 import 的 89 个 mathlib 模块在本仓钉版 `v4.31.0` 中缺 0 个,故移植形可行;本轮未执行,该事实记于 `D5-T0018-F`。
 
+For A17.2 adopted-pin port retirement, the existing canonical alignment writer
+accepts `ledger-align --candidate-lean-report FILE --base REV
+--retire-upstream-port D5/.../Missing.lean`. Repeat the port selector for each
+missing whole port. It is distinct from A5.6 registration-only relocation.
+The selector asserts the full equivalent adopted-upstream correspondence;
+that content obligation requires compiled original/upstream telescope,
+all-clause, axiom and direct-consumer evidence in the delivery. The writer
+checks a changed adopted mathlib revision and matching protected-base frozen
+ownership, then uses the existing missing-source, state/event, remaining-import,
+retained-descendant, closed-DAG and rollback checks. It does not infer mathematical
+equivalence from a name, hash, missing source or changed pin. Scribe, Library
+and coverage reconciliation retain their existing owners; upstream declarations
+receive no fabricated local GID. Partial ports keep their required local content
+and use ordinary alignment. Publication removes only explicit whole-port owners,
+emits no Revoke or tombstone, and does not broaden registration-only relocation.
+
 **SCRIBE-LATEX-EPOCH 工单块(expand→migrate→contract;初裁 #113,2026-07-19 重申)**:
 - **PR-1 expand(本段)**:提交 `a9a3769` 的初裁基线有 28 个 Blueprint Markdown、仅 3 个定理类文档含 LaTeX 定界符(`Phase/Basic`,`Scale/Embedding`,`Scale/Log`);安装可选 typed `LatexStatement`、轻量校验、MD/PDF 发射与 SL-023 双接受规则,旧缺位只 warn。后续新增定义同受 capability 动态枚举,不得用初裁清单绕过。
 - **PR-2 migrate(历史记录)**:逐一回填当时定理类 Describe 的公式位;该人工对照机制现已由 A17.1 的强制机器溯源谓词取代。初裁 28 文件对应源审计清单如下:
@@ -402,7 +418,7 @@ CI 的独立入口、固定候选、报告、退出及缓存由 A22 定义。`ma
 
 **A22 CI 单元作业与 current/delta 契约**
 
-**入口与选工。** CI 是一个 workflow `ci-current.yml`，PR 与 push 各自触发。每个独立程序或测试项目是其中一个单元作业，作业之间并行，作业内部可串行。`detect` 作业只取提交与目录树（blobless、sparse 仅检出 `tools/scripts/workflow`），经 `ci-entry.sh` 核对候选并列出改动路径，再由 `ci_detect.py` 按同一 workflow 中写明的单元白名单 `CI_UNITS` 一次判定各单元是否命中，输出命中表；不使用 GitHub 事件级 `on.paths` 过滤。单元作业以 `if:` 读取命中表，未命中即跳过，不占用 runner。改动超过 3000 个路径时检测以 exit 2 失败，须拆分变更。唯一 required check 是始终运行的 `required` 作业：`ci_required.py` 要求检测成功、白名单段与其 needs 中的作业一一对应、命中单元成功、未命中单元跳过，否则红；身份、对象或输入异常以 exit 2 失败，不能静默免跑。FILEMAP 管路径归属、custody、准入面、symlink 和 Evidence 格式，不声明 CI 选工。
+**入口与选工。** CI 是一个 workflow `ci-current.yml`，PR 与 push 各自触发。每个独立程序或测试项目是其中一个单元作业，作业之间并行，作业内部可串行。`detect` 作业只取提交与目录树（blobless、sparse 仅检出 `tools/scripts/workflow`），经 `ci-entry.sh` 核对候选并列出改动路径，再由 `ci_detect.py` 按同一 workflow 中写明的单元白名单 `CI_UNITS` 一次判定各单元是否命中，输出命中表；不使用 GitHub 事件级 `on.paths` 过滤。单元作业以 `if:` 读取命中表，未命中即跳过，不占用 runner。检测校验并按白名单匹配完整改动路径列表，不设路径数量截断。唯一 required check 是始终运行的 `required` 作业：`ci_required.py` 要求检测成功、白名单段与其 needs 中的作业一一对应、命中单元成功、未命中单元跳过，否则红；身份、对象或输入异常以 exit 2 失败，不能静默免跑。FILEMAP 管路径归属、custody、准入面、symlink 和 Evidence 格式，不声明 CI 选工。
 
 PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触发 PR head，第一父 `B=M^1` 只作路径比较和 delta 的数据。push 核对 `HEAD=GITHUB_SHA=event.after`，按完整 `event.before→event.after` 端点差异判 hit；初始 push 的全零 before 使用当前树路径。schedule/dispatch 同样核对 HEAD 与 GITHUB_SHA。取得所需固定对象后移除 remote 与 remote refs；固定对象及显式网络 URL 仍可达，不宣称完全网络隔离。只执行候选代码，不 checkout、编译或执行 base 判官。
 

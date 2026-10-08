@@ -95,7 +95,7 @@ private theorem series_binomial (i : ℕ) :
   have heval (k : ℕ) : (preHilbertPoly ℝ i 0).eval (k : ℝ) =
       ((i + k).choose i : ℝ) := by
     simpa [Nat.add_comm] using
-      (preHilbertPoly_eq_choose_sub_add (F := ℝ) i (k := 0) (n := k) (Nat.zero_le k))
+      (preHilbertPoly_eq_choose_add_sub (F := ℝ) i (k := 0) (n := k) (Nat.zero_le (k + i)))
   simp only [series, heval]
   exact PowerSeries.mk_add_choose_mul_one_sub_pow_eq_one ℝ i
 

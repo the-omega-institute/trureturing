@@ -140,8 +140,10 @@ theorem first_domain_weak_ccr (hbar : ℝ) (hhbar : 0 < hbar)
       simpa using hdct
     have hen : Tendsto (fun t => eLpNorm (q t - k) 2 (volume : Measure ℝ))
         (𝓝[≠] (0 : ℝ)) (𝓝 0) := by
-      simp_rw [eLpNorm_eq_lintegral_rpow_enorm_toReal (by norm_num : (2 : ℝ≥0∞) ≠ 0)
-        (by norm_num : (2 : ℝ≥0∞) ≠ ∞)]
+      have heq (t : ℝ) := eLpNorm_eq_lintegral_rpow_enorm_toReal
+        (by norm_num : (2 : ℝ≥0∞) ≠ 0) (by norm_num : (2 : ℝ≥0∞) ≠ ∞)
+        ((hq t).sub hk).aestronglyMeasurable
+      simp_rw [heq]
       simpa using hi.ennrpow_const (1 / (2 : ℝ))
     have ht := (Lp.tendsto_Lp_iff_tendsto_eLpNorm'' q hq k hk).mpr hen
     apply hasDerivAt_iff_tendsto_slope_zero.mpr

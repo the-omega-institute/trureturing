@@ -204,8 +204,8 @@ public sealed class SourceFamilyEvidenceTests
         Assert.Equal("Reg." + quantumOwner,
             quantumRecord["key"]!["registration_module"]!.GetValue<string>());
         var originalBytes = Source(quantumOwner.Replace('.', '/') + ".lean").Bytes.ToArray();
-        Assert.Equal(36217, originalBytes.Length);
-        Assert.Equal("4f45e964a8a60de2e526fa8ecc9d7290e89b061a1a687359917d065453126fb0",
+        Assert.Equal(35786, originalBytes.Length);
+        Assert.Equal("636287da6222c24346d62adfd7968290c3162de12450359b056e5740530729dc",
             Convert.ToHexStringLower(SHA256.HashData(originalBytes)));
         var quantumPath = RepoPath.CreateKnown(quantumOwner.Replace('.', '/') + ".lean");
         var statementId = FrozenContentHash.Compute(FrozenHashDomains.Statement,
