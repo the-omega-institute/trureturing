@@ -191,15 +191,16 @@ private def fullM : List (Finset (Fin 6)) :=
    {0, 2, 3, 5}, {0, 2, 4, 5}, {0, 3, 4, 5}, {1, 2, 3, 4}, {1, 2, 3, 5}, {1, 2, 4, 5},
    {1, 3, 4, 5}, {2, 3, 4, 5}]
 
+lemma tensor_mul : ∀ {n : ℕ} (M N : Fin n → Matrix (Fin 2) (Fin 2) ℂ),
+    tensorOp M * tensorOp N = tensorOp fun i => M i * N i := by
+  intro n M N
+  ext x z
+  simp only [tensorOp, Matrix.mul_apply, Matrix.of_apply]
+  simp_rw [← Finset.prod_mul_distrib]
+  rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
+
 /-- The negative answer to Question 5.4, first part, for both pairs. -/
 theorem result : ¬ claim := by
-  have tensor_mul : ∀ {n : ℕ} (M N : Fin n → Matrix (Fin 2) (Fin 2) ℂ),
-      tensorOp M * tensorOp N = tensorOp fun i => M i * N i := by
-    intro n M N
-    ext x z
-    simp only [tensorOp, Matrix.mul_apply, Matrix.of_apply]
-    simp_rw [← Finset.prod_mul_distrib]
-    rw [Finset.prod_univ_sum, Fintype.piFinset_univ]
   have tensor_one : ∀ {n : ℕ},
       tensorOp (fun _ : Fin n => (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 1 := by
     intro n

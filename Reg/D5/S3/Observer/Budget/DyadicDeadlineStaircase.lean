@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.Budget.DyadicDeadlineStaircase
 import Reg.Support.DependentFamily
 
@@ -67,17 +68,30 @@ def timingRegistration : Registration timingArena (timingArena.Law timingActual)
     refine ⟨(), 0, 1, ?_⟩
     norm_num [timingActual, realize, earliestTime, Nat.bitIndices]
 
-register_information_theorem exceptional_prefix_timing in timingArena
-  readout via (realize timingSignature
-    (fun _ _ d => earliestTime d (2 ^ d - 1)) (fun e => nomatch e))
-  realizes timingRegistration
-  escape from source ({
-    owner := `D5.S3.Observer.Budget.DyadicDeadlineStaircase
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg"]
-      stateBinder := 0 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Observer.Budget.DyadicDeadlineStaircase.exceptional_prefix_timing) (type_of% (realize.{0, 0, 0, 0, 0} timingSignature
+    (fun _ _ d => earliestTime d (2 ^ d - 1)) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Observer") "Budget") "DyadicDeadlineStaircase") "exceptional_prefix_timing") "Reg.D5.S3.Observer.Budget.DyadicDeadlineStaircase/Reg.D5.S3.Observer.Budget.DyadicDeadlineStaircase.timingArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Observer.Budget.DyadicDeadlineStaircase.timingRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(timingArena)⟩,
+  objectArena := .source ⟨(timingArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (timingArena) ⟨(timingRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} timingSignature
+    (fun _ _ d => earliestTime d (2 ^ d - 1)) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Observer.Budget.DyadicDeadlineStaircase, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "fn", "arg", "fn", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms timingRegistration
 

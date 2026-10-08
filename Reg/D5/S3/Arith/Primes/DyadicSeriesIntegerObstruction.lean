@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.Primes.DyadicSeriesIntegerObstruction
 import Reg.Support.DependentFamily
 
@@ -88,20 +89,31 @@ def registration : Registration arena
       (2 : ℂ) ^ (1 + padicValNat 2 (1 : ℕ).factorial) * 1
     norm_num
 
-register_information_theorem
-  dyadic_series_integer_obstruction
-  in arena
-  readout via (realize signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.Primes.DyadicSeriesIntegerObstruction.dyadic_series_integer_obstruction) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ s j => (2 : ℂ) ^ (j + padicValNat 2 j.factorial) * s j)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.Primes.DyadicSeriesIntegerObstruction
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body",
-        "domain", "body", "body", "arg", "body", "arg", "fn", "arg"]
-      stateBinder := 7 }] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "Primes") "DyadicSeriesIntegerObstruction") "dyadic_series_integer_obstruction") "Reg.D5.S3.Arith.Primes.DyadicSeriesIntegerObstruction/Reg.D5.S3.Arith.Primes.DyadicSeriesIntegerObstruction.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.Primes.DyadicSeriesIntegerObstruction.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ s j => (2 : ℂ) ^ (j + padicValNat 2 j.factorial) * s j)
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.Primes.DyadicSeriesIntegerObstruction, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "domain", "body", "body", "arg", "body", "arg", "fn", "arg"], stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.Arith.Primes.DyadicSeriesIntegerObstruction

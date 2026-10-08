@@ -2,7 +2,7 @@
 slug: joshi-rust-2025-thue-morse-infinite-odd-fibers
 bibkey: joshirust2025monochromatic
 doi: 10.1016/j.tcs.2025.115391
-url: https://arxiv.org/html/2501.05830v2#S3.Thmtheorem7
+url: https://arxiv.org/html/2501.05830v2
 triage: theorem
 motivation_gids:
   - D5/S1/Words/ThueMorseMapFirstStart
@@ -15,6 +15,8 @@ motivation_gids:
 Joshi and Rust, arXiv:2501.05830v2, Section 3.2.1, Question 3.7,
 second clause asks: “Are there infinitely many values of n for which
 O_max(n)=∞?” The first and third clauses are outside this target.
+
+Exact question locator: https://arxiv.org/html/2501.05830v2#S3.Thmtheorem7.
 
 The staged claim is that the set of natural lengths n for which the set
 of positive odd differences d satisfying ExactMax(d,n) is infinite is

@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance
 import Reg.Support.DependentFamily
 
@@ -94,19 +95,28 @@ def registration : Registration arena.{u} (arena.Law actual) where
     norm_num [phi] at he
     linarith
 
-register_information_theorem exact_single_peak_log_likelihood_covariances in arena
-  readout via (realize signature.{u} (fun _ _ x => phi x) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "fn", "arg", "body",
-        "arg"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance.exact_single_peak_log_likelihood_covariances.{u_1}) (type_of% (realize.{0, 0, u_1, 0, 0} signature.{u_1} (fun _ _ x => phi x) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Estimation") "TimeArrow") "SinglePeakLogLikelihoodCovariance") "exact_single_peak_log_likelihood_covariances") "Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance/Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1})⟩,
+  objectArena := .source ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, u_1, 0, 0} signature.{u_1} (fun _ _ x => phi x) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Estimation.TimeArrow.SinglePeakLogLikelihoodCovariance, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

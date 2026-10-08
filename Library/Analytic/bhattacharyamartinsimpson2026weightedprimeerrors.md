@@ -126,3 +126,58 @@ realized $D$ against $A+r$ at all required scales. The transform formulas,
 prime-power biases and coordinate correspondence identify that obligation
 but do not pay it. No new general criterion, finite verification range,
 Lean theorem or proof of Robin/RH is asserted by this source application.
+
+## A growing-modulus sign average does not supply the individual zeta bound
+
+Suzuki, *On variants of Chebyshev's conjecture*,
+[arXiv:2411.07436v3](https://arxiv.org/abs/2411.07436v3),
+also studies half-weighted Mangoldt sums. The inspected statements are
+Theorems 1 and 7 on printed pp.2 and 8 of that version; its linked DOI is
+[10.1007/s11139-025-01238-9](https://doi.org/10.1007/s11139-025-01238-9).
+The publisher version and complete source proofs are not independently
+checked here. Reuse the source's criterion rather than reprove it.
+
+Put
+
+$$
+S_\zeta(x)=\sum_{n\le x}\frac{\Lambda(n)}{\sqrt n}\log\frac xn-4\sqrt x.
+$$
+
+Theorem 1 makes RH equivalent to eventual $S_\zeta(x)\le0$ for
+**every** real $x\ge x_0$, and also to
+$S_\zeta(x)/\log x\to-\zeta'(1/2)/\zeta(1/2)$.
+Neither the sign nor this limit is an unconditional conclusion.
+
+For
+
+$$
+S_q(x)=\sum_{\substack{n\le x\\n\equiv1\pmod q}}
+ \frac{\Lambda(n)}{\sqrt n}\log\frac xn-
+ \frac{4\sqrt x}{\varphi(q)},
+$$
+
+Theorem 7, equation (29), supplies unconditionally, with $Q\ge x$,
+
+$$
+\sum_{3\le q\le Q}\varphi(q)S_q(x)
+=4\sqrt x\left[\frac{x}{9}(1+o(1))-Q\right]
+\qquad(x\to\infty).
+$$
+
+This negative aggregate ranges over growing moduli and explicitly
+omits $q=1,2$. It does not assert the sign of $S_\zeta$, or of each
+fixed-modulus summand. In this v3, the paragraph following Theorem 7
+lists constant-$Q$ or weaker-range negativity as questions for further
+study; no effective threshold is supplied here.
+
+At the existing selected Robin source, the real-cutoff comparison would
+use $x=A=\log N$, not $x=N$. Even there the prefix kernel
+$n^{-1/2}\log(A/n)$ differs from the original $I_\psi$ tail and its
+complete zero coefficient. The inspected interfaces have not supplied
+a signed transport to that complete functional with its remainder paid.
+The stated growing-modulus average does not pay the individual
+cross-family bound above or the
+complete same-source head-plus-cost requirement in
+[the existing heat transport](../ArithSums/nicolas2025comparison.md#the-same-source-price-minimum-gives-a-nonnegative-heat-cost).
+The original signed Robin estimate and RH remain unproved; no new
+criterion, original theorem or Lean verification is claimed.

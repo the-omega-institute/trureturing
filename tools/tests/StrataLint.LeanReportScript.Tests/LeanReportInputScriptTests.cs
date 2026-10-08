@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json;
@@ -293,8 +294,8 @@ public sealed partial class LeanReportInputScriptTests
     [Theory]
     [InlineData("repository", "tools/lean-inspector/LeanInformationAudit/Nested/ProofBuilder.lean")]
     [InlineData("repository[cache]", "tools/lean-inspector/LeanInformationAudit/Nested/ProofBuilder.lean")]
-    [InlineData("repository", "tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean")]
-    [InlineData("repository[cache]", "tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean")]
+    [InlineData("repository", "tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean")]
+    [InlineData("repository[cache]", "tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean")]
     public void CompatibleInspectorLibraryEditPreservesReportAddress(string repositoryName, string judgeSource)
     {
         using var fixture = new LeanReportInputFixture(repositoryName);
@@ -470,7 +471,7 @@ public sealed partial class LeanReportInputScriptTests
                 imports = Array.Empty<string>(), declarations = Array.Empty<object>(),
             });
             File.WriteAllBytes(report, StructuredCanonicalWriter.WriteJson(JsonSerializer.SerializeToElement(
-                new { schema = "stratalint-raw-lean-report-v2", modules })).ToArray());
+                new { schema = "stratalint-raw-lean-report-v3", modules })).ToArray());
             var digest = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(report)));
             File.WriteAllText(
                 report + ".sha256",
@@ -497,7 +498,7 @@ public sealed partial class LeanReportInputScriptTests
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries);
             var address = addressParts[0];
             var producer = addressParts[1];
-            WriteFixtureOrigins(report, producer);
+            WriteFixtureOrigins(repository, report);
             var reportSha = Convert.ToHexStringLower(SHA256.HashData(File.ReadAllBytes(report)));
             File.WriteAllText(
                 report + ".input.attestation",

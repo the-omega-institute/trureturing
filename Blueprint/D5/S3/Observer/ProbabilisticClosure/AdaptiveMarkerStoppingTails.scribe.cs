@@ -140,6 +140,27 @@ internal sealed class AdaptiveMarkerStoppingTailsDocument : IScribeDocumentDefin
                             + "finite-prefix masses, and integrates the actual survival "
                             + "event over the original seed law. The formulas hold on the closed unit interval and "
                             + "therefore for the chapter's strictly interior parameters."))),
-                    DescribeRole.Theorem))));
+                    DescribeRole.Theorem),
+                Fact("prefix-extension", "prefix_no_marker_cons", "One-query all-zero extension",
+                    "For every source, finite action history and chosen arm, the extended all-zero prefix holds exactly when the old prefix holds and the next native marker response is false."),
+                Fact("arm-support", "path_support", "Root and forbidden-adjacency support",
+                    "For every unit-interval parameter and Boolean root, almost every arm starts at that root and contains no adjacent pair of true bits."),
+                Fact("alternating-successor", "alternating_bit_succ", "Successive alternating bits",
+                    "For every Boolean root and natural index, the next alternating bit is the Boolean negation of the current bit."),
+                Fact("alternating-arm-mass", "arm_alternating_mass", "Alternating arm cylinder mass",
+                    "For every unit-interval parameter, Boolean root and natural length, the alternating prefix mass is the parameter raised to half the length rounded down for a true root and up for a false root."),
+                Fact("cylinder-measurable", "measurable_set_no_marker_cylinder", "Measurable zero cylinders",
+                    "For every pair of natural arm lengths, the all-zero marker cylinder is measurable."),
+                Fact("alternating-characterization", "no_marker_iff_alternating_prefix", "Alternation characterizes no marker",
+                    "For every Boolean path starting at a fixed root and forbidding adjacent true bits, absence of adjacent false bits before a finite length is equivalent to the alternating prefix through that length."),
+                Fact("paired-arm-support", "paired_path_support", "Both independent arms satisfy support",
+                    "For every unit-interval parameter and Boolean root, almost every pair under the product arm law consists of two paths starting at that root and forbidding adjacent true bits."),
+                Fact("conditional-cylinder-mass", "conditional_no_marker_cylinder_mass", "Two-arm root-conditioned cylinder mass",
+                    "For every unit-interval parameter, Boolean root and two natural arm lengths, the two-arm all-zero marker cylinder has mass equal to the parameter raised to the sum of the root-dependent half-length exponents."))));
     }
+    private static DocumentBlock.Describe Fact(string id, string declaration, string title, string statement) =>
+        Describe.Lean(DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(statement))), DescribeRole.Theorem);
+
 }

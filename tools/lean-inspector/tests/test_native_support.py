@@ -3,6 +3,7 @@ import codecs
 import hashlib
 import io
 import json
+import re
 import math
 import os
 import signal
@@ -18,6 +19,48 @@ import unittest
 from unittest.mock import patch
 import zipfile
 import zlib
+
+def copy_contract_interface(source, target):
+    """Copy the exact core contracts used by the native transport fixtures.
+
+    Indexed mathematical contracts compile against D5 in the Reg Lean tests.
+    These fixtures exercise transport and discovery with no mathematical library.
+    """
+    shutil.copytree(source, target, ignore=shutil.ignore_patterns('.lake', 'Implementation.lean', 'Registration.lean'))
+    catalog = target / 'LeanInformationAuditInterface/Contract/Catalog.lean'
+    declarations = catalog.read_text().split('/-- Each occurrence retains', 1)[0]
+    declarations = declarations.replace(
+        'import LeanInformationAuditInterface.Contract.Implementation',
+        'import LeanInformationAuditInterface.Contract.Core')
+    declarations = re.sub(r'^import D5\..*\n|^open D5\..*\n', '', declarations, flags=re.MULTILINE)
+    catalog.write_text(declarations + 'end LeanInformationAudit.Contract\n')
+    config = target / 'lakefile.toml'
+    config.write_text(re.sub(r'\n\[\[require\]\]\nname = "trureturing"\npath = "../.."\n', '', config.read_text()))
+    manifest = target / 'lake-manifest.json'
+    policy = json.loads(manifest.read_text())
+    policy['packages'] = []
+    manifest.write_text(json.dumps(policy))
+
+
+def transport_inspector(source):
+    """Keep the production reader and writer in dependency-free Lake fixtures.
+
+    Typed transport fixtures use tiny schema surrogates. Their assessment is
+    supplied as empty data here; real mathematical assessment runs in the Reg
+    compiled-discovery and compiled-seal fixtures.
+    """
+    source = source.replace('import LeanInformationAudit.ArtifactAssessment\n', '')
+    start = source.index('  if !statementOnly && inputs.any')
+    end = source.index('  let store ← state.get', start)
+    source = source[:start] + source[end:]
+    start = source.index('      let (current, generatedNames, binding, enrollmentErrors) ←')
+    end = source.index('      let row ← inspectData', start)
+    source = source[:start] + ('      let current := store\n'
+        '      let generatedNames : Array Name := #[]\n'
+        '      let binding := empty\n'
+        '      let enrollmentErrors : Array String := #[]\n') + source[end:]
+    return source
+
 
 try:
     import resource
@@ -123,8 +166,8 @@ defaultFacets = ["static"]
         host = json.loads((ROOT / 'tools/lean-inspector-reg/lake-manifest.json').read_text())
         host['packages'] = [p for p in host['packages'] if p['type'] == 'path'] + [dict(git, inherited=True)]
         self.write('tools/lean-inspector-reg/lake-manifest.json', json.dumps(host))
-        shutil.copytree(ROOT / 'tools/lean-inspector-interface',
-                        self.root / 'tools/lean-inspector-interface', ignore=shutil.ignore_patterns('.lake'))
+        copy_contract_interface(ROOT / 'tools/lean-inspector-interface',
+                                self.root / 'tools/lean-inspector-interface')
         self.write('Fixture.lean', 'import D5.A\ntheorem result : ¬ False := fun h => h\n')
         self.write('D5/A.lean', 'import D5.B\ndef value : Nat := D5.hidden\n')
         self.write('D5/B.lean', 'module\npublic section\nnamespace D5\nprivate def secret : Nat := 1\ndef hidden : Nat := secret\n')
@@ -132,12 +175,22 @@ defaultFacets = ["static"]
         self.write('External.lean', 'import ClaimSupport\ndef claim : Prop := claimSupport\n')
         self.write('ClaimSupport.lean', 'def claimSupport : Prop := False\n')
         self.write('Audit.lean', 'def audit : Nat := 1\n')
-        self.write('LeanInformationAudit/SealCommand.lean', 'def fixtureDriver : Nat := 1\n')
+        self.write('LeanInformationAudit/TemplateEnrollment.lean', 'def fixtureDriver : Nat := 1\n')
+        self.write('LeanInformationAudit/FixturePins.lean', 'def fixturePins : Nat := 1\n')
+        for name in ['SourceAudit', 'Literal', 'InputDiscovery']:
+            self.write('tools/lean-inspector/LeanInformationAudit/Contract/' + name + '.lean',
+                       (ROOT / ('tools/lean-inspector/LeanInformationAudit/Contract/' + name + '.lean')).read_text())
         with (self.root / 'lakefile.toml').open('a') as target:
             target.write('[[lean_lib]]\nname = "External"\n[[lean_lib]]\nname = "ClaimSupport"\n')
-            target.write('[[lean_lib]]\nname = "LeanInformationAudit"\nglobs = ["LeanInformationAudit.+"]\n')
-        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'native_image.c', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh', 'build_work.py']:
+            target.write('[[lean_lib]]\nname = "LeanInformationAudit"\n'
+                'roots = ["LeanInformationAudit.TemplateEnrollment", "LeanInformationAudit.FixturePins", '
+                '"LeanInformationAudit.ContractInputs", "LeanInformationAudit.Support"]\n'
+                'globs = ["LeanInformationAudit.TemplateEnrollment", "LeanInformationAudit.FixturePins", '
+                '"LeanInformationAudit.ContractInputs", "LeanInformationAudit.Support"]\n')
+        for name in ['Inspector.lean', 'lakefile.lean', 'lake-manifest.json', 'native.py', 'publication.py', 'materials.py', 'reuse.py', 'inspect.sh', 'build_work.py']:
             self.copy('tools/lean-inspector/' + name)
+        for name in ['RawArtifacts', 'CompiledMetadata', 'CompiledAxioms']:
+            self.copy('tools/lean-inspector/LeanInformationAudit/' + name + '.lean')
         # The native-report fixtures supply their own tiny driver at the root.
         # Keep the production facets verbatim with a fixture package header;
         # the real D5/Interface/Impl/Reg graph is tested on the full repository.
@@ -146,7 +199,13 @@ defaultFacets = ["static"]
         lakefile.write_text(source[:source.index('package leanInspector where')]
             + 'package leanInspector where\n'
             + '  buildDir := "../../.lake/build/lean-inspector/producer"\n\n'
-            + source[source.index('target nativeImage'):].replace(
+            + '  leanLibDir := "../../lib/lean"\n\n'
+            + 'lean_lib LeanInformationAudit where\n'
+            + '  roots := #[`LeanInformationAudit.RawArtifacts, `LeanInformationAudit.CompiledMetadata, `LeanInformationAudit.CompiledAxioms, `LeanInformationAudit.Contract.SourceAudit, '
+            + '`LeanInformationAudit.Contract.Literal, `LeanInformationAudit.Contract.InputDiscovery]\n'
+            + '  globs := #[.one `LeanInformationAudit.RawArtifacts, .one `LeanInformationAudit.CompiledMetadata, .one `LeanInformationAudit.CompiledAxioms, .one `LeanInformationAudit.Contract.SourceAudit, '
+            + '.one `LeanInformationAudit.Contract.Literal, .one `LeanInformationAudit.Contract.InputDiscovery]\n\n'
+            + source[source.index('lean_exe reportInspector where'):].replace(
                 'lean_exe reportInspector where', '@[default_target]\nlean_exe reportInspector where'))
         self.write('tools/lean-inspector/lake-manifest.json', json.dumps(dict(
             version='1.2.0', packagesDir='.lake/packages', packages=[],
@@ -181,15 +240,17 @@ defaultFacets = ["static"]
         (self.root / 'bin/dotnet').chmod(0o755)
         self.utility()
         paths = lambda *names: dict(include=[dict(pattern=n, optional=False) for n in names], exclude=[])
-        policy = dict(schema_version=1, report_cache_release_semantic_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
-            inspector_sources=paths('tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean'),
-            dependency_sources=paths('External.lean', 'ClaimSupport.lean', 'LeanInformationAudit/SealCommand.lean'),
+        policy = dict(schema_version=1, report_modules=paths('Fixture.lean', 'D5/**/*.lean'),
+            inspector_sources=paths('tools/lean-inspector/Inspector.lean',
+                'tools/lean-inspector/LeanInformationAudit/RawArtifacts.lean', 'tools/lean-inspector/lakefile.lean'),
+            dependency_sources=paths('External.lean', 'ClaimSupport.lean', 'LeanInformationAudit/TemplateEnrollment.lean'),
             config_inputs=paths('lean-toolchain', 'lakefile.toml', 'lake-manifest.json',
                 'Reg/lakefile.toml', 'Reg/lake-manifest.json',
                 'tools/lean-inspector-reg/lakefile.toml', 'tools/lean-inspector-reg/lake-manifest.json'),
             producer_scopes={'lean-report': paths('lean-report-inputs.json', 'tools/scripts/report/lean-report-selection.py',
-                'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/lakefile.lean',
-                'tools/lean-inspector/native.py', 'tools/lean-inspector/native_image.c', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
+                'tools/lean-inspector/Inspector.lean', 'tools/lean-inspector/LeanInformationAudit/RawArtifacts.lean',
+                'tools/lean-inspector/lakefile.lean',
+                'tools/lean-inspector/native.py', 'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
                 'tools/scripts/report/lean-report-input.sh', 'tools/StrataLint.Lean/Lean/LeanUtilityInputCommand.cs'),
                 'scribe-content': dict(include=[], exclude=[])})
         self.write('lean-report-inputs.json', json.dumps(policy))
@@ -448,6 +509,8 @@ defaultFacets = ["static"]
         target = self.root / name
         target.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(ROOT / name, target)
+        if name == "tools/lean-inspector/Inspector.lean":
+            target.write_text(transport_inspector(target.read_text()))
         target.chmod(0o755 if name.endswith('.sh') else 0o644)
     def write(self, name, value):
         target = self.root / name
@@ -481,7 +544,7 @@ defaultFacets = ["static"]
     def report(self):
         with tempfile.TemporaryDirectory(dir=self.root) as directory:
             report = publication.unpack(self.root / '.lake/build/lean-inspector/report.zip', directory)
-            rows = publication.validate_bundle(report, manifest=self.root / 'lean-report-inputs.json')
+            rows = publication.validate_bundle(report)
             return rows, report.read_bytes(), publication.member(report, '.materials.zip').read_bytes()
     def origins(self):
         with zipfile.ZipFile(self.root / '.lake/build/lean-inspector/report.zip') as archive:
@@ -506,28 +569,6 @@ defaultFacets = ["static"]
             'verify', '--repository', str(self.root), '--report', str(self.root / 'public.json')],
             env=self.env, text=True, capture_output=True, timeout=120)
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
-    def check_census_modes(self, rows):
-        module = next(row for row in rows if row['module'] == 'D5.B')
-        hidden = next(decl for decl in module['declarations'] if decl['name'] == 'D5.hidden')
-        secret = next(decl for decl in module['declarations'] if decl['name'].endswith('.secret'))
-        olean = self.root / '.lake/build/lib/lean/D5/B.olean'
-        parts = [str(olean) + suffix for suffix in ['', '.server', '.private']]
-        self.write('dependencies.json', json.dumps([['D5.B', parts]]))
-        self.write('identity.json', json.dumps({'keys': [['D5.B', hidden['name_key']]]}))
-        executable = self.root / '.lake/build/lean-inspector/producer/bin/reportInspector'
-        def inspect(*args):
-            output = subprocess.check_output([str(executable), *args], cwd=self.root, env=self.env, text=True, timeout=120)
-            return [json.loads(line) for line in output.splitlines()]
-        bodies = inspect('--dependencies', 'dependencies.json', '-', 'bodies')
-        hidden_body = next(row for row in bodies if row.get('name') == hidden['name_key'] and row['value'] is not None)
-        self.assertIn(secret['name_key'], hidden_body['value'])
-        names = inspect('--dependencies', 'dependencies.json', '-', 'names')
-        self.assertEqual({r['name'] for r in bodies if 'name' in r}, {r['name'] for r in names if 'name' in r})
-        identities = inspect('--statement-identities', 'dependencies.json', 'identity.json')
-        self.assertTrue(identities)
-        self.assertIn(hidden['statement_id'],
-            {materials.declaration_statement_id(module['source_path'], hidden['kind'], hidden['name_key'], r['statement_material'])
-             for r in identities if r['part'] == 'private'})
 
 
 class NativeSharedTestSupport(NativeTestSupport):
