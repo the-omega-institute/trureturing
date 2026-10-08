@@ -674,14 +674,12 @@ open Filter
 open scoped Topology
 
 set_option maxHeartbeats 2000000 in
-/-- One reset works at all weights. Every fixed nonempty full weak codebook
-forces its exact-denominator coefficient in the full storage liminf, including
-infinite peaks. Startup is derived from the actual first-label competitors. -/
-theorem original_codebook_storage_liminf {Configuration : Type*}
+/-- The actual-source capacity and all-horizon computation for a supplied reset.
+The original existential theorem consumes this organizational helper; its
+source-count premises carry no decoder capacity or storage assumption. -/
+theorem supplied_codebook_storage_liminf {Configuration : Type*}
     (action : Configuration → Op Configuration Color Label) (initialConfiguration : Configuration)
-    (o : Ownership) (b : ℝ) (contract : Contract) (K : ℕ) (hK : 2 ≤ K)
-    (hqb : lam - g ^ 2 * chi ^ K * hSide .high < b)
-    (hbp : b < lam - g ^ 2 * chi ^ K * (aSide .high / (1 - rho * chi ^ K)))
+    (o : Ownership) (b : ℝ) (contract : Contract) (K : ℕ)
     (safety : ∀ a r, OperationRecord o b contract a r → ∀ t,
       Run action (full r) ⟨initialConfiguration,0,[]⟩ t →
       ∀ p (hp : p < t.output.length), t.output[p] = a p)
@@ -695,35 +693,37 @@ theorem original_codebook_storage_liminf {Configuration : Type*}
       ∃ t, Drain action ⟨d,q+1,out++batch⟩ t)
     (encoding : Configuration → List Bool)
     (faithful : Set.InjOn encoding {c | ∃ H,
-      ReachThrough action initialConfiguration (OperationRecord o b contract) H c}) :
-    ∃ R : Return, R.r = 1 ∧ ∀ (sourceModel : Model) (N : ℕ), 0 < N →
-      let a := Nat.card {xs : List Return //
+      ReachThrough action initialConfiguration (OperationRecord o b contract) H c})
+    (R : Return) (sourceModel model : Model) (N : ℕ) (hN : 0 < N)
+    (ha : 1 ≤ Nat.card {xs : List Return //
+      GuardTrace K ((lam-b)/g^2/chi^K) false .high xs (initial .high sourceModel) ∧
+      listWeight xs = N})
+    (emptySupply : ActualPairSupply model o b contract [])
+    (count : ∀ q : ℕ,
+      Nat.card {xs : List Return //
         GuardTrace K ((lam-b)/g^2/chi^K) false .high xs (initial .high sourceModel) ∧
-        listWeight xs = N}
-      1 ≤ a → ∀ model : Model,
-      let L := N+(20+6*R.m)
-      let fullPeak := Peak action initialConfiguration (OperationRecord o b contract) encoding
-      (∀ H B : ℕ, observationOffset model ≤ H → fullPeak H ≤ (B : WithTop ℕ) →
-        (((H-observationOffset model)/L : ℕ) : ℝ)*Real.logb 2 (a : ℝ)-1 ≤ B) ∧
-      ENNReal.ofReal (Real.logb 2 (a : ℝ)/(L : ℝ)) ≤
-        liminf (fun H : ℕ => ENat.toENNReal (fullPeak H)/(H : ENNReal)) atTop := by
+        listWeight xs = N} ^ q ≤
+      Nat.card {xs : List Return // ActualPairSupply model o b contract xs ∧
+        listWeight xs = q*(N+(20+6*R.m))}) :
+    let a := Nat.card {xs : List Return //
+      GuardTrace K ((lam-b)/g^2/chi^K) false .high xs (initial .high sourceModel) ∧
+      listWeight xs = N}
+    let L := N+(20+6*R.m)
+    let fullPeak := Peak action initialConfiguration (OperationRecord o b contract) encoding
+    (∀ H B : ℕ, observationOffset model ≤ H → fullPeak H ≤ (B : WithTop ℕ) →
+      (((H-observationOffset model)/L : ℕ) : ℝ)*Real.logb 2 (a : ℝ)-1 ≤ B) ∧
+    ENNReal.ofReal (Real.logb 2 (a : ℝ)/(L : ℝ)) ≤
+      liminf (fun H : ℕ => ENat.toENNReal (fullPeak H)/(H : ENNReal)) atTop := by
   classical
-  obtain ⟨R,hr,books⟩ := original_equal_weight_codebook o b K hK hqb hbp
-  refine ⟨R,hr,?_⟩
-  intro sourceModel N hN
   dsimp only
   let V := {xs : List Return //
     GuardTrace K ((lam-b)/g^2/chi^K) false .high xs (initial .high sourceModel) ∧
     listWeight xs=N}
   let a := Nat.card V
-  intro ha model
   let L := N+(20+6*R.m)
   let Delta := observationOffset model
   let fullPeak := Peak action initialConfiguration (OperationRecord o b contract) encoding
-  obtain ⟨finite,eps,ep,Lpos,uniform,count⟩ := books sourceModel N hN
-  have emptySupply : ActualPairSupply model o b contract [] := by
-    have hh := uniform model [] (by simp)
-    simpa [resetConcatenation] using hh.2.1 contract
+  have Lpos : 0 < L := by dsimp [L]; omega
   have high := operation_pair_membership model o b contract [] emptySupply .high
   have low := operation_pair_membership model o b contract [] emptySupply .low
   have different : source .high model [] 0 ≠ source .low model [] 0 := by
@@ -740,7 +740,7 @@ theorem original_codebook_storage_liminf {Configuration : Type*}
     obtain ⟨family,cuts,hm,hc,hcut,hinj,hstates,hcap,hfixed,hmono,hvertices⟩ :=
       original_operation_decoder_storage action initialConfiguration model o b contract (q*L)
         processing safety liveness encoding faithful
-    exact (count model contract q).trans (hcap B hp)
+    exact (count q).trans (hcap B hp)
   have lp : (0 : ℝ) < (L : ℝ) := by exact_mod_cast Lpos
   have ap : (0 : ℝ) < (a : ℝ) := by exact_mod_cast (lt_of_lt_of_le Nat.zero_lt_one ha)
   let loga := Real.logb 2 (a : ℝ)
@@ -807,6 +807,57 @@ theorem original_codebook_storage_liminf {Configuration : Type*}
   rw [← conv.liminf_eq]
   exact liminf_le_liminf eventual
 
+set_option maxHeartbeats 2000000 in
+/-- One reset works at all weights. Every fixed nonempty full weak codebook
+forces its exact-denominator coefficient in the full storage liminf, including
+infinite peaks. Startup is derived from the actual first-label competitors. -/
+theorem original_codebook_storage_liminf {Configuration : Type*}
+    (action : Configuration → Op Configuration Color Label) (initialConfiguration : Configuration)
+    (o : Ownership) (b : ℝ) (contract : Contract) (K : ℕ) (hK : 2 ≤ K)
+    (hqb : lam - g ^ 2 * chi ^ K * hSide .high < b)
+    (hbp : b < lam - g ^ 2 * chi ^ K * (aSide .high / (1 - rho * chi ^ K)))
+    (safety : ∀ a r, OperationRecord o b contract a r → ∀ t,
+      Run action (full r) ⟨initialConfiguration,0,[]⟩ t →
+      ∀ p (hp : p < t.output.length), t.output[p] = a p)
+    (liveness : ∀ a r, OperationRecord o b contract a r → OperationFiniteSource a → ∀ p,
+      ∃ t, Run action (full r) ⟨initialConfiguration,0,[]⟩ t ∧ p < t.output.length)
+    (postprocessing : ∀ a r, OperationRecord o b contract a r →
+      ∀ (c d : Configuration) (q : ℕ) (out batch : List Label)
+        (f : Color → Option (Configuration × List Label)),
+      Run action (full r) ⟨initialConfiguration,0,[]⟩ ⟨c,q,out⟩ →
+      action c = .acquire f → f (r q) = some (d,batch) →
+      ∃ t, Drain action ⟨d,q+1,out++batch⟩ t)
+    (encoding : Configuration → List Bool)
+    (faithful : Set.InjOn encoding {c | ∃ H,
+      ReachThrough action initialConfiguration (OperationRecord o b contract) H c}) :
+    ∃ R : Return, R.r = 1 ∧ ∀ (sourceModel : Model) (N : ℕ), 0 < N →
+      let a := Nat.card {xs : List Return //
+        GuardTrace K ((lam-b)/g^2/chi^K) false .high xs (initial .high sourceModel) ∧
+        listWeight xs = N}
+      1 ≤ a → ∀ model : Model,
+      let L := N+(20+6*R.m)
+      let fullPeak := Peak action initialConfiguration (OperationRecord o b contract) encoding
+      (∀ H B : ℕ, observationOffset model ≤ H → fullPeak H ≤ (B : WithTop ℕ) →
+        (((H-observationOffset model)/L : ℕ) : ℝ)*Real.logb 2 (a : ℝ)-1 ≤ B) ∧
+      ENNReal.ofReal (Real.logb 2 (a : ℝ)/(L : ℝ)) ≤
+        liminf (fun H : ℕ => ENat.toENNReal (fullPeak H)/(H : ENNReal)) atTop := by
+  classical
+  obtain ⟨R,hr,books⟩ := original_equal_weight_codebook o b K hK hqb hbp
+  refine ⟨R,hr,?_⟩
+  intro sourceModel N hN
+  dsimp only
+  let V := {xs : List Return //
+    GuardTrace K ((lam-b)/g^2/chi^K) false .high xs (initial .high sourceModel) ∧
+    listWeight xs=N}
+  let a := Nat.card V
+  intro ha model
+  obtain ⟨finite,eps,ep,Lpos,uniform,count⟩ := books sourceModel N hN
+  have emptySupply : ActualPairSupply model o b contract [] := by
+    have hh := uniform model [] (by simp)
+    simpa [resetConcatenation] using hh.2.1 contract
+  exact supplied_codebook_storage_liminf action initialConfiguration o b contract K
+    safety liveness postprocessing encoding faithful R sourceModel model N hN ha
+    emptySupply (count model contract)
 
 
 end D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations

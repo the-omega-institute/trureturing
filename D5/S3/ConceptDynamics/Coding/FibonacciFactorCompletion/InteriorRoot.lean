@@ -469,7 +469,7 @@ private theorem radius_mass_comparison (side : MemorySide) (n K : ℕ) (d x y s 
       ENNReal.toReal_mono ENNReal.ofReal_ne_top rad
   exact (not_lt_of_ge realbound) below
 
-private theorem word_weight_bounds (w : List CuLetter) :
+theorem word_weight_bounds (w : List CuLetter) :
     6*w.length ≤ wordWeight w ∧ wordWeight w ≤ 20*w.length := by
   induction w with
   | nil => simp [wordWeight]

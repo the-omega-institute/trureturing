@@ -98,15 +98,18 @@ internal sealed class ResetCodebookDocument : IScribeDocumentDefinition
         Equal(Weight(I("xs")),I("N")),Lt(Start(I("model")),I("B")),Le(I("B"),I("E"))),And(
             Trace(I("K"),Add(I("d"),Mul(Sub(I("B"),Start(I("model"))),Pow(G,I("N")))),I("xs"),I("E")),
             Lt(A,Exec(I("xs"),I("E"))))),B("K",Nat),B("N",Nat),B("d",Real),B("B",Real),B("model",I("Model")),B("xs",Returns),B("E",Real)));
-    private static Formula FiniteConclusion()
+    private static Formula FiniteJoint()
     {
         var execution=Call("resetConcatenation",I("R"),Call("map",I("val"),I("words")));
-        var finite=All(And(Trace(I("K"),Add(Threshold,Gamma),execution,Start(I("targetModel"))),
+        return All(And(Trace(I("K"),Add(Threshold,Gamma),execution,Start(I("targetModel"))),
             Call("ActualPairSupply",I("targetModel"),I("o"),Sub(I("b"),Epsilon),I("strict"),execution)),
             B("targetModel",I("Model")),B("words",Call("List",Book)));
+    }
+    private static Formula FiniteConclusion()
+    {
         var memory=Ex(And(Le(I("K"),I("n")),Lt(Mul(H,Pow(Rho,I("n"))),Mul(Pow(Chi,Sub(I("K"),D(1))),Gamma))),B("n",Nat));
         var tiles=All(And(CutFacts(W),Ex(Tiled(W,I("omega")),B("omega",Sequences))),B("choices",Fn(Int,Book)));
-        return And(Lt(D(0),Delta),Lt(D(0),Gamma),finite,memory,tiles);
+        return And(Lt(D(0),Delta),Lt(D(0),Gamma),Lt(D(0),Epsilon),FiniteJoint(),memory,tiles);
     }
     private static Formula BilateralConclusion()
     {
@@ -114,11 +117,12 @@ internal sealed class ResetCodebookDocument : IScribeDocumentDefinition
             Mem(I("omega"),Call("LowerMemoryLanguage",I("n"),I("K"),Threshold)),Tiled(W,I("omega")),
             All(Trace(I("K"),Add(Threshold,Gamma),Call("cons",I("R"),Call("val",Ap(I("choices"),I("j")))),
                 State(I("omega"),Cut(W,I("j")))),B("j",Int))),B("omega",Sequences));
-        return And(Lt(D(0),Delta),Lt(D(0),Gamma),Ex(And(Le(I("K"),I("n")),
+        return And(Lt(D(0),Delta),Lt(D(0),Gamma),Lt(D(0),Epsilon),FiniteJoint(),Ex(And(Le(I("K"),I("n")),
             Lt(Mul(H,Pow(Rho,I("n"))),Mul(Pow(Chi,Sub(I("K"),D(1))),Gamma)),
             All(realization,B("choices",Fn(Int,Book)))),B("n",Nat)));
     }
     private static Formula CodebookStatement(bool bilateral) => Disp(All(Imp(Budget,Ex(And(Equal(Call("r",I("R")),D(1)),
+        Lt(Call("max",Call("max",Call("xSide",I("high")),Call("ySide",I("high"))),Threshold),ResetFloor),
         All(Imp(Lt(D(0),I("N")),bilateral?BilateralConclusion():FiniteConclusion()),B("sourceModel",I("Model")),B("N",Nat))),B("R",I("Return")))),
         B("o",I("Ownership")),B("b",Real),B("K",Nat)));
     private static Formula WindowPositions()
@@ -155,5 +159,5 @@ internal sealed class ResetCodebookDocument : IScribeDocumentDefinition
         Node("LowerMemoryLanguage",LowerDefinition(),"The lower graph forbids K+1 consecutive c letters and checks the zero-seed past before the current Kth c transition. Membership retains the original strict inequality and the original high-edge timing.",true),
         Node("uniform_guard_lower_memory",MemoryStatement(),"The bilateral state exceeds its zero-seed n-past by at most h times rho to n. A common state margin larger than that error gives every strict lower-graph guard on the same sequence."),
         Node("choiceWindow",ChoiceDefinition(),"A finite window of indexed choices keeps their order and their actual subtype membership.",true),
-        Node("bilateral_reset_codebook",CodebookStatement(true),"For the full weak equal-weight original codebook, fix delta and gamma first and then choose n at least K with h rho to n less than chi to K-1 times gamma. Every two-sided choice has one bilateral sequence in AuxiliaryLanguage at d plus gamma and in the original lower-memory language at d. Every reset block occurs at its prescribed cut, and its complete return trace on that same sequence has high-start margin gamma. Thus the before-Kth-c state margin is chi to K-1 times delta times g to N. This statement supplies the bilateral construction and margins; the weighted factor-count and factor-rate conclusions require a separate counting argument."))));
+        Node("bilateral_reset_codebook",CodebookStatement(true),"One reset floor exceeds both actual initial states and d. For the full weak equal-weight original codebook, the finite actual supply retains the positive displayed half-minimum error margin. Fix delta and gamma first and then choose n at least K with h rho to n less than chi to K-1 times gamma. Every two-sided choice uses that same reset and has one bilateral sequence in AuxiliaryLanguage at d plus gamma and in the original lower-memory language at d. Every reset block occurs at its prescribed cut, and its complete return trace on that same sequence has high-start margin gamma. Thus the before-Kth-c state margin is chi to K-1 times delta times g to N. The weighted factor-count and factor-rate conclusions follow from the counting argument."))));
 }

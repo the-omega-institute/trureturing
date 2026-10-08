@@ -182,7 +182,10 @@ theorem reset_codebook_construction (o : Ownership) (b : ℝ) (K : ℕ)
     (hK : 2 ≤ K)
     (hqb : lam-g^2*chi^K*hSide .high < b)
     (hbp : b < lam-g^2*chi^K*(aSide .high/(1-rho*chi^K))) :
-    ∃ R : Return, R.r = 1 ∧ ∀ (sourceModel : Model) (N : ℕ), 0 < N →
+    ∃ R : Return, R.r = 1 ∧
+    (max (max (xSide .high) (ySide .high)) ((lam-b)/g^2/chi^K) <
+      hSide .high-rho^R.m*(hSide .high-chi*aSide .high)) ∧
+    ∀ (sourceModel : Model) (N : ℕ), 0 < N →
     let d := (lam-b)/g^2/chi^K
     let B := hSide .high-rho^R.m*(hSide .high-chi*aSide .high)
     let delta := B-initial .high sourceModel
@@ -190,6 +193,7 @@ theorem reset_codebook_construction (o : Ownership) (b : ℝ) (K : ℕ)
     let V := {xs : List Return //
       GuardTrace K d false .high xs (initial .high sourceModel) ∧ listWeight xs=N}
     0 < delta ∧ 0 < gamma ∧
+    0 < min (b-actualAutomaticCost K) (g^2*chi^K*gamma)/2 ∧
     (∀ (targetModel : Model) (words : List V),
       let execution := resetConcatenation R (words.map Subtype.val)
       GuardTrace K (d+gamma) false .high execution (initial .high targetModel) ∧
@@ -205,7 +209,7 @@ theorem reset_codebook_construction (o : Ownership) (b : ℝ) (K : ℕ)
         ω (blockCut W j+(k : ℕ))=(W j)[k]) := by
   obtain ⟨R,hr,hB,hstrict,hweak,htransfer,hweight,hfirst⟩ :=
     actual_reset_first_return o b K hK hqb hbp
-  refine ⟨R,hr,?_⟩
+  refine ⟨R,hr,hB,?_⟩
   intro sourceModel N hN
   dsimp only
   let d := (lam-b)/g^2/chi^K
@@ -228,6 +232,12 @@ theorem reset_codebook_construction (o : Ownership) (b : ℝ) (K : ℕ)
   have gap : 0 < gamma := mul_pos dp (pow_pos gp N)
   have cp : 0 < chi := pow_pos gp 20
   have Hp : 0 < hSide .high := by dsimp [hSide]; linarith
+  let scale := g^2*chi^K
+  let eps := min (b-actualAutomaticCost K) (scale*gamma)/2
+  have sp : 0 < scale := mul_pos (pow_pos gp 2) (pow_pos cp K)
+  have autop : 0 < b-actualAutomaticCost K :=
+    sub_pos.mpr ((actual_automatic_cost_envelope K hK).1.trans hqb)
+  have ep : 0 < eps := div_pos (lt_min autop (mul_pos sp gap)) (by norm_num)
   have appendTrace (as bs : List Return) (z : ℝ) :
       GuardTrace K (d+gamma) false .high (as++bs) z ↔
       GuardTrace K (d+gamma) false .high as z ∧
@@ -250,18 +260,12 @@ theorem reset_codebook_construction (o : Ownership) (b : ℝ) (K : ℕ)
       · intro hk; omega
       · apply ih
         simpa only [execute] using improved.2
-  refine ⟨dp,gap,?_,?_,?_⟩
+  refine ⟨dp,gap,ep,?_,?_,?_⟩
   · intro targetModel words
     let execution := resetConcatenation R (words.map Subtype.val)
     have tr := joint words (initial .high targetModel)
       ((actual_complete_boundary_geometry targetModel []).1 .high 0).1
     refine ⟨tr,?_⟩
-    let scale := g^2*chi^K
-    let eps := min (b-actualAutomaticCost K) (scale*gamma)/2
-    have sp : 0 < scale := mul_pos (pow_pos gp 2) (pow_pos cp K)
-    have autop : 0 < b-actualAutomaticCost K :=
-      sub_pos.mpr ((actual_automatic_cost_envelope K hK).1.trans hqb)
-    have ep : 0 < eps := div_pos (lt_min autop (mul_pos sp gap)) (by norm_num)
     have ea : eps < b-actualAutomaticCost K := by
       have hm := min_le_left (b-actualAutomaticCost K) (scale*gamma)
       change min (b-actualAutomaticCost K) (scale*gamma)/2 < b-actualAutomaticCost K
@@ -446,14 +450,24 @@ theorem bilateral_reset_codebook (o : Ownership) (b : ℝ) (K : ℕ)
     (hK : 2 ≤ K)
     (hqb : lam-g^2*chi^K*hSide .high < b)
     (hbp : b < lam-g^2*chi^K*(aSide .high/(1-rho*chi^K))) :
-    ∃ R : Return, R.r=1 ∧ ∀ (sourceModel : Model) (N : ℕ), 0 < N →
+    ∃ R : Return, R.r=1 ∧
+    (max (max (xSide .high) (ySide .high)) ((lam-b)/g^2/chi^K) <
+      hSide .high-rho^R.m*(hSide .high-chi*aSide .high)) ∧
+    ∀ (sourceModel : Model) (N : ℕ), 0 < N →
     let d := (lam-b)/g^2/chi^K
     let B := hSide .high-rho^R.m*(hSide .high-chi*aSide .high)
     let delta := B-initial .high sourceModel
     let gamma := delta*g^N
     let V := {xs : List Return //
       GuardTrace K d false .high xs (initial .high sourceModel) ∧ listWeight xs=N}
-    0 < delta ∧ 0 < gamma ∧ ∃ n : ℕ, K ≤ n ∧
+    0 < delta ∧ 0 < gamma ∧
+    0 < min (b-actualAutomaticCost K) (g^2*chi^K*gamma)/2 ∧
+    (∀ (targetModel : Model) (words : List V),
+      let execution := resetConcatenation R (words.map Subtype.val)
+      GuardTrace K (d+gamma) false .high execution (initial .high targetModel) ∧
+      ActualPairSupply targetModel o
+        (b-min (b-actualAutomaticCost K) (g^2*chi^K*gamma)/2) .strict execution) ∧
+    ∃ n : ℕ, K ≤ n ∧
       hSide .high*rho^n < chi^(K-1)*gamma ∧
       ∀ choices : ℤ → V,
         let W := fun j => executionWord (R::(choices j).val)
@@ -462,8 +476,8 @@ theorem bilateral_reset_codebook (o : Ownership) (b : ℝ) (K : ℕ)
           (∀ j (k : Fin (W j).length), ω (blockCut W j+(k : ℕ))=(W j)[k]) ∧
           (∀ j, GuardTrace K (d+gamma) false .high (R::(choices j).val)
             (pastState ω (blockCut W j))) := by
-  obtain ⟨R,hr,finite⟩ := reset_codebook_construction o b K hK hqb hbp
-  refine ⟨R,hr,?_⟩
+  obtain ⟨R,hr,hB,finite⟩ := reset_codebook_construction o b K hK hqb hbp
+  refine ⟨R,hr,hB,?_⟩
   intro sourceModel N hN
   dsimp only
   let d := (lam-b)/g^2/chi^K
@@ -472,8 +486,8 @@ theorem bilateral_reset_codebook (o : Ownership) (b : ℝ) (K : ℕ)
   let gamma := delta*g^N
   let V := {xs : List Return //
     GuardTrace K d false .high xs (initial .high sourceModel) ∧ listWeight xs=N}
-  obtain ⟨dp,gp,joint,⟨n,hn,small⟩,tiles⟩ := finite sourceModel N hN
-  refine ⟨dp,gp,n,hn,small,?_⟩
+  obtain ⟨dp,gp,ep,joint,⟨n,hn,small⟩,tiles⟩ := finite sourceModel N hN
+  refine ⟨dp,gp,ep,joint,n,hn,small,?_⟩
   intro choices
   let W := fun j => executionWord (R::(choices j).val)
   have positive (j : ℤ) : 0 < (W j).length := by

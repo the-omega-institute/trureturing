@@ -62,6 +62,7 @@ internal sealed class ResetFactorsDocument : IScribeDocumentDefinition
     private static Formula Start => Call("initial",I("high"),I("sourceModel"));
     private static Formula Delta => Sub(Sub(H,Mul(Pow(I("rho"),Call("m",I("R"))),Sub(H,Mul(I("chi"),A)))),Start);
     private static Formula Gamma => Mul(Delta,Pow(I("g"),I("N")));
+    private static Formula Epsilon => Div(Call("min",Sub(I("b"),Call("actualAutomaticCost",I("K"))),Mul(Scale,Gamma)),D(2));
     private static Formula BlockWeight => Add(Add(I("N"),D(2,0)),Mul(D(6),Call("m",I("R"))));
     private static Formula Trace(Formula d,Formula xs) => Call("GuardTrace",I("K"),d,I("false"),I("high"),xs,Start);
     private static Formula Book => Subtype("xs",Returns,And(Trace(Threshold,I("xs")),Equal(ListWeight(I("xs")),I("N"))));
@@ -119,14 +120,35 @@ internal sealed class ResetFactorsDocument : IScribeDocumentDefinition
                 All(Imp(Mem(w,family),Valid(w)),B("w",Letters))),B("family",Call("Finset",Letters))),
             Le(Pow(Card(Book),I("q")),Count(Lower,FullWeight)));
     }
+    private static Formula FiniteJoint()
+    {
+        var execution=Call("resetConcatenation",I("R"),MapVal(I("words")));
+        return All(And(Call("GuardTrace",I("K"),Add(Threshold,Gamma),I("false"),I("high"),execution,
+            Call("initial",I("high"),I("targetModel"))),
+            Call("ActualPairSupply",I("targetModel"),I("o"),Sub(I("b"),Epsilon),I("strict"),execution)),
+            B("targetModel",I("Model")),B("words",Call("List",Book)));
+    }
+    private static Formula Bilateral()
+    {
+        var w=Lambda("j",Int,Call("executionWord",Call("cons",I("R"),Val(Ap(I("choices"),I("j"))))));
+        var cut=Call("blockCut",w,I("j"));var block=Ap(w,I("j"));
+        var tiles=All(Equal(Ap(I("omega"),Add(cut,IntCast(I("k")))),Call("getElem",block,I("k"))),
+            B("j",Int),B("k",Call("Fin",Len(block))));
+        var guards=All(Call("GuardTrace",I("K"),Add(Threshold,Gamma),I("false"),I("high"),
+            Call("cons",I("R"),Val(Ap(I("choices"),I("j")))),Call("pastState",I("omega"),cut)),B("j",Int));
+        return All(Ex(And(Mem(I("omega"),Call("AuxiliaryLanguage",I("K"),Add(Threshold,Gamma))),
+            Mem(I("omega"),Lower),tiles,guards),B("omega",Sequences)),B("choices",Fn(Int,Book)));
+    }
     private static Formula MainStatement()
     {
         var budget=And(Le(D(2),I("K")),Lt(Sub(I("lam"),Mul(Scale,H)),I("b")),
             Lt(I("b"),Sub(I("lam"),Mul(Scale,Div(A,Sub(D(1),Mul(I("rho"),Pow(I("chi"),I("K")))))))));
         var memory=And(Le(I("K"),I("n")),Lt(Mul(H,Pow(I("rho"),I("n"))),Mul(Pow(I("chi"),Sub(I("K"),D(1))),Gamma)),
-            All(Packet(),B("q",Nat)),Le(Div(Log(MaxOne(Card(Book))),Cast(BlockWeight)),Rate(Lower)));
-        var body=And(Lt(D(0),Delta),Lt(D(0),Gamma),Finite(Book),Ex(memory,B("n",Nat)));
-        return Disp(All(Imp(budget,Ex(And(Equal(Call("r",I("R")),D(1)),All(Imp(Lt(D(0),I("N")),body),
+            Bilateral(),All(Packet(),B("q",Nat)),Le(Div(Log(MaxOne(Card(Book))),Cast(BlockWeight)),Rate(Lower)));
+        var body=And(Lt(D(0),Delta),Lt(D(0),Gamma),Lt(D(0),Epsilon),Finite(Book),FiniteJoint(),Ex(memory,B("n",Nat)));
+        var floor=Sub(H,Mul(Pow(I("rho"),Call("m",I("R"))),Sub(H,Mul(I("chi"),A))));
+        return Disp(All(Imp(budget,Ex(And(Equal(Call("r",I("R")),D(1)),
+            Lt(Call("max",Call("max",Call("xSide",I("high")),Call("ySide",I("high"))),Threshold),floor),All(Imp(Lt(D(0),I("N")),body),
             B("sourceModel",I("Model")),B("N",Nat))),B("R",I("Return")))),B("o",I("Ownership")),B("b",Real),B("K",Nat)));
     }
     private static DocumentBlock Node(string name,Formula formula,string prose,bool definition=false) => Describe.Lean(
@@ -146,5 +168,5 @@ internal sealed class ResetFactorsDocument : IScribeDocumentDefinition
         Node("tiled_window_occurs",TiledStatement(),"The indexed tiling supplies every letter of each consecutive finite block window at its original integer cut. All blocks, including the negative-index past, belong to the same bilateral realization."),
         Node("choice_window_ofFn",ChoiceStatement(),"The recursive finite choice window equals the list of choices at consecutive integer indices a through a+q-1."),
         Node("factor_rate_of_power_count",RateStatement(),"The finite alphabet supplies a uniform bound on the real logarithmic quotients. Counts at all multiples of a positive L give a frequent lower bound and hence the weighted limsup bound. Empty and singleton codebooks have the displayed zero lower bound."),
-        Node("same_reset_factor_cardinality",MainStatement(),"One reset with r=1 is fixed before both original source models and all N>0. For each full weak codebook, delta is the original reset floor minus that model's scalar start, and gamma is delta times g to N. The same finite memory n exceeds K and has zero-seed error below chi to K-1 times gamma. Every q-choice is injected into a dictionary of actual bilateral lower-memory factors at exact weight q times N+20+6m(R). The finite family is precisely the image of this map and has cardinality a to q. Each nonempty finite choice extends on both sides using a chosen codeword and the original ResetCodebook realization; q=0 uses the all-u lower-language sequence, so empty codebooks retain their original conventions. The rate bound is for the actual lower-memory factor language. Identification with the weighted adjacency spectral root remains a separate mathematical obligation."))));
+        Node("same_reset_factor_cardinality",MainStatement(),"One reset with r=1 has floor B above both actual initial states and d, and is fixed before both source models and all N>0. For the full weak codebook, delta=B-D0 and gamma=delta times g to N. Every finite choice has high guard d+gamma and actual strict supply with the positive half-minimum error margin, including the original zero-error futures. The same reset admits every bilateral choice on one sequence with all block guards, in one lower-memory language n chosen after the fixed codebook. Here n is at least K and h rho to n is below chi to K-1 times gamma. For every q, the choice map is injective, its exact-weight image has cardinality a to q, and every image word extends bilaterally in that same lower language. The resulting weighted rate is at least log base two of max(1,a), divided by N+20+6m(R). Positive accumulated-weight cuts recover the choices even when their letter lengths differ. The empty choice q=0 uses the all-u sequence."))));
 }

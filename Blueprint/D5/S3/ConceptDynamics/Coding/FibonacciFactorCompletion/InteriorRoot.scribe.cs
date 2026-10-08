@@ -131,6 +131,11 @@ internal sealed class InteriorRootDocument : IScribeDocumentDefinition
             "A spectral radius below z to six would give a geometric bound with a strictly smaller rate. The actual u-cycle monomials contradict that bound as k grows. Hence every positive z has positive spectral radius."),
         Node("radiusValue",SourceZ(Equal(Value(I("z")),Call("toReal",Radius(I("side"),I("n"),I("z"))))),
             "RadiusValue is the real value of the original complex spectral radius. The actual all-u vertex makes the retained carrier nonempty, and the norm bound proves that the spectral radius is finite.",DescribeRole.Definition),
+        Node("word_weight_bounds",All(And(
+            Le(Mul(D(6),Call("length",I("w"))),Call("wordWeight",I("w"))),
+            Le(Call("wordWeight",I("w")),Mul(D(2,0),Call("length",I("w"))))),
+            B("w",Call("List",I("CuLetter")))),
+            "Every original letter list has total weight between six and twenty times its letter length. The same bounds control both the original spectral scaling and actual word pressure."),
         Node("original_radius_scaling",Source(All(Imp(And(Lt(D(0),I("x")),Le(I("x"),I("y"))),And(
             Le(Mul(Pow(Div(I("y"),I("x")),D(6)),Value(I("x"))),Value(I("y"))),
             Le(Value(I("y")),Mul(Pow(Div(I("y"),I("x")),D(2,0)),Value(I("x")))))),B("x",Real),B("y",Real))),

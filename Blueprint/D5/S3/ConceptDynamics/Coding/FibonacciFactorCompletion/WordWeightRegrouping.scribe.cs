@@ -32,6 +32,9 @@ internal sealed class WordWeightRegroupingDocument : IScribeDocumentDefinition
     private static Formula FactorTerm(Formula x, Formula z) => Mul(Call("toReal",Call("factorCount",x,I("T"))),Power(z,I("T")));
     private static Formula Radius(Formula z) => Call("weightedRadius",I("side"),I("n"),I("K"),I("d"),z);
     private static Formula Rate(Formula x) => Call("weightedFactorRate",x);
+    private static Formula FactorLog(Formula x, Formula t) => Call("divide",
+        Call("logb",D(2),Call("toReal",Call("max",D(1),Call("factorCount",x,t)))),
+        Call("toReal",t));
     private static Formula BinaryZ => Power(D(2),Call("negate",I("s")));
     private static Formula PathMass()
     {
@@ -57,10 +60,10 @@ internal sealed class WordWeightRegroupingDocument : IScribeDocumentDefinition
         return All(Imp(And(Lt(D(0),I("K")),Le(I("K"),I("n"))),Equal(Rate(Language),Call("sInf",set))),
             B("side",I("MemorySide")),B("n",Nat),B("K",Nat),B("d",Real));
     }
-    private static DocumentBlock Node(string name, Formula statement, string prose) => Describe.Lean(
-        DescribeId.Create("fib-word-regrouping-"+name.Replace('_','-')),DeclarationHandle.Create(Prefix+name),
+    private static DocumentBlock Node(string name, Formula statement, string prose, DescribeRole role = DescribeRole.Theorem) => Describe.Lean(
+        DescribeId.Create("fib-word-regrouping-"+name.Replace('_','-').ToLowerInvariant()),DeclarationHandle.Create(Prefix+name),
         H(name.Replace('_',' ')),StatementSource.FromAuthor(statement),AssessedProvenance.FromRepo(),
-        Blocks(Paragraph(Text(prose))),DescribeRole.Theorem);
+        Blocks(Paragraph(Text(prose))),role);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual retained path monomials regroup by original wordWeight, and the original max-one weighted factor rate equals their spectral convergence abscissa.",
         H("Actual word-weight regrouping and rate abscissa"),Blocks(
@@ -77,6 +80,14 @@ internal sealed class WordWeightRegroupingDocument : IScribeDocumentDefinition
             "At each actual weight the existing original sandwich bounds the factor count by the path count, and the path count by two to n times the factor count. Nonnegative comparison therefore transfers convergence in both directions with a constant independent of T."),
         Node("original_factor_series_boundary",Series(Iff(Summable("T",Nat,FactorTerm(Language,I("z"))),Lt(Radius(I("z")),D(1)))),
             "The original factor power series converges exactly when the original weighted adjacency has spectral radius below one. The result follows through the complete actual path regrouping and the existing spectral path-series supplier, without a supplied growth identity."),
+        Node("factorLogRate",All(Equal(Call("factorLogRate",I("X"),I("T")),FactorLog(I("X"),I("T"))),
+            B("X",Call("Set",Fn(I("Int"),I("CuLetter")))),B("T",Nat)),
+            "The logarithmic quotient uses the max-one count at the original total weight. Its real value at weight zero is zero.",DescribeRole.Definition),
+        Node("factor_log_rate_bounds",All(And(
+            All(Le(D(0),Call("factorLogRate",I("X"),I("T"))),B("T",Nat)),
+            Call("IsBoundedUnder",I("le"),I("atTop"),Lam("T",Nat,Call("factorLogRate",I("X"),I("T"))))),
+            B("X",Call("Set",Fn(I("Int"),I("CuLetter"))))),
+            "Every quotient is nonnegative. The finite dictionary bound by three to T plus one bounds the quotients eventually by twice log base two of three, including sparse weights and empty languages."),
         Node("factor_rate_nonneg",All(Le(D(0),Rate(I("X"))),B("X",Call("Set",Fn(I("Int"),I("CuLetter"))))),
             "For every bilateral factor language, the max-one logarithmic rates are nonnegative and bounded above. Their real upper limit is therefore nonnegative, including empty languages and unsupported weights. This bound ensures that rate comparison uses positive convergence exponents."),
         Node("factor_rate_convergence",Convergence(),

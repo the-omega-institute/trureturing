@@ -337,10 +337,10 @@ theorem original_factor_series_boundary (side : MemorySide) (n K : ℕ) (d z : �
 
 open Filter
 
-private noncomputable abbrev factorLogRate (X : Set (ℤ → CuLetter)) (T : ℕ) : ℝ :=
+noncomputable abbrev factorLogRate (X : Set (ℤ → CuLetter)) (T : ℕ) : ℝ :=
   Real.logb 2 ((max 1 (factorCount X T) : ℕ) : ℝ) / (T : ℝ)
 
-private theorem factor_log_rate_bounds (X : Set (ℤ → CuLetter)) :
+theorem factor_log_rate_bounds (X : Set (ℤ → CuLetter)) :
     (∀ T, 0 ≤ factorLogRate X T) ∧
     IsBoundedUnder (· ≤ ·) atTop (factorLogRate X) := by
   have nonneg (T : ℕ) : 0 ≤ factorLogRate X T := by

@@ -138,7 +138,7 @@ internal sealed class OperationsDocument : IScribeDocumentDefinition
         return Disp(All(Imp(BudgetRange(),Ex(And(Equal(Call("r",I("R")),D(1)),books),B("R",I("Return")))),
             B("o",I("Ownership")),B("b",I("Real")),B("K",I("Nat"))));
     }
-    private static Formula OperationPremises()
+    private static Formula OperationPremises(bool includeBudget = true)
     {
         var c=I("Configuration");var nat=I("Nat");var action=I("action");var init=I("initialConfiguration");
         var record=Call("OperationRecord",I("o"),I("b"),I("contract"));
@@ -159,8 +159,8 @@ internal sealed class OperationsDocument : IScribeDocumentDefinition
             B("address",Fn(nat,I("Label"))),B("recordInput",Fn(nat,I("Color"))),B("c",c),B("d",c),B("q",nat),
             B("outword",Call("List",I("Label"))),B("batch",Call("List",I("Label"))),
             B("f",Fn(I("Color"),Call("Option",Call("Product",c,Call("List",I("Label")))))));
-        return And(BudgetRange(),safe,live,post,
-            Call("InjOn",I("encoding"),Call("AllActualReachable",action,init,record)));
+        var faithful=Call("InjOn",I("encoding"),Call("AllActualReachable",action,init,record));
+        return includeBudget ? And(BudgetRange(),safe,live,post,faithful) : And(safe,live,post,faithful);
     }
     private static Formula CompletePeak => Call("PeakFunction",I("action"),I("initialConfiguration"),
         Call("OperationRecord",I("o"),I("b"),I("contract")),I("encoding"));
@@ -169,7 +169,7 @@ internal sealed class OperationsDocument : IScribeDocumentDefinition
         B("Configuration",I("Type")),B("action",Fn(I("Configuration"),Call("Op",I("Configuration"),I("Color"),I("Label")))),
         B("initialConfiguration",I("Configuration")),B("o",I("Ownership")),B("b",I("Real")),B("contract",I("Contract")),
         B("K",I("Nat")),B("encoding",Fn(I("Configuration"),Call("List",I("Bool"))))));
-    private static Formula CodebookStorage()
+    private static Formula CodebookStorageBound()
     {
         var a=Call("NatCard",WeakBook(I("sourceModel"),I("N")));var delta=Call("observationOffset",I("model"));
         var horizon=I("H");var bound=I("B");var loga=Call("logb",D(2),Call("toReal",a));
@@ -177,14 +177,38 @@ internal sealed class OperationsDocument : IScribeDocumentDefinition
         var finite=All(Imp(And(Call("le",delta,horizon),Call("le",Call("apply",CompletePeak,horizon),Call("toWithTop",bound))),
             Call("le",Sub(Mul(floor,loga),D(1)),Call("toReal",bound))),B("H",I("Nat")),B("B",I("Nat")));
         var coefficient=Call("le",Call("ofReal",Call("divide",loga,Call("toReal",BookLength))),PeakRatioLiminf);
+        return And(finite,coefficient);
+    }
+    private static Formula CodebookStorage()
+    {
+        var a=Call("NatCard",WeakBook(I("sourceModel"),I("N")));
         var books=All(Imp(Call("lt",D(0),I("N")),Imp(Call("le",D(1),a),
-            All(And(finite,coefficient),B("model",I("Model"))))),B("sourceModel",I("Model")),B("N",I("Nat")));
+            All(CodebookStorageBound(),B("model",I("Model"))))),B("sourceModel",I("Model")),B("N",I("Nat")));
         return StorageTelescope(Ex(And(Equal(Call("r",I("R")),D(1)),books),B("R",I("Return"))));
+    }
+    private static Formula SuppliedCodebookStorage()
+    {
+        var a=Call("NatCard",WeakBook(I("sourceModel"),I("N")));
+        var count=All(Call("le",Pow(a,I("q")),Call("NatCard",Call("ExactActualPairFamily",
+            I("model"),I("o"),I("b"),I("contract"),Mul(I("q"),BookLength)))),B("q",I("Nat")));
+        var sources=And(Call("lt",D(0),I("N")),Call("le",D(1),a),
+            Call("ActualPairSupply",I("model"),I("o"),I("b"),I("contract"),I("nil")),count);
+        return Disp(All(Imp(And(OperationPremises(false),sources),CodebookStorageBound()),
+            B("Configuration",I("Type")),B("action",Fn(I("Configuration"),Call("Op",I("Configuration"),I("Color"),I("Label")))),
+            B("initialConfiguration",I("Configuration")),B("o",I("Ownership")),B("b",I("Real")),B("contract",I("Contract")),
+            B("K",I("Nat")),B("encoding",Fn(I("Configuration"),Call("List",I("Bool")))),
+            B("R",I("Return")),B("sourceModel",I("Model")),B("model",I("Model")),B("N",I("Nat"))));
     }
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Both actual Fibonacci starts retain the complete-boundary, closed and strict source laws and one finite actual reset map.",
         H("Actual boundaries for Fibonacci completion"),
         Blocks(
+            Describe.Lean(DescribeId.Create("fib-supplied-codebook-storage-liminf"),DeclarationHandle.Create(Prefix+"supplied_codebook_storage_liminf"),
+                H("A supplied reset retains the all-horizon codebook bound"),StatementSource.FromAuthor(SuppliedCodebookStorage()),AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("This organizational helper is consumed by original_codebook_storage_liminf after that theorem chooses its original reset and actual source book. It adds no mathematical content or escape witness. R, sourceModel, target model and exact weight N are supplied parameters. The source premises are the empty-list ActualPairSupply and, for every q, the power of the full weak dictionary cardinal bounded by the cardinal of all actual supplied lists of weight q(N+20+6R.m). They assert actual source membership and count, never decoder capacity, a configuration injection or a storage lower bound. original_operation_decoder_storage derives the capacity on those actual sources; the retained floor, real interpolation, eventual finite/top split and limit computation then give the displayed conjunction.")),
+                    Paragraph(Text("An exact downstream application may use the same supplied FixedCodebook R and its unchanged actual field. Its positive fixed-codebook error converts the strict supply at b-eps to each original contract at b; literal reset concatenation and the existing equal-weight parser derive all-q counts. The original source labels, colors and guards, both templates with offsets 26/52, same-list high/low D sources, first labels 5/0, empty past output and high common future versus the low side's own future retain their meanings. Margins may depend on N. No equality between separately chosen existential resets is required.")),
+                    Paragraph(Text("For the stated original color-record contract, Configuration contains the decoder's actual readable control, phase, persistent and temporary workspace, counters, input/output positions, clocks, timing and readable output-side storage. action follows its actual primitive instructions, retaining every charged intermediate state and actual finite ordered emission. Frame.acquired and Frame.output are proof-only bookkeeping and provide no machine input. Finite-prefix trace correspondence transports all-Omega safety, all-D per-position liveness including L0 padding, and finite processing. This is a source interpretation of the stated contract, without an independent physical-machine universality claim.")),
+                    Paragraph(Text("The original prefix cost is the supremum over all actual reached configurations with acquisition count at most H. Reach inclusion gives monotonicity. Split an original top peak before choosing finite layouts: it remains top at all larger horizons and its ratio liminf is top. Otherwise actual complete binary layouts are faithful on actual reach, with harmless totalization elsewhere. Trace reflection and each reached layout's charged cost bound give operationalPeak(H)<=originalPeak(H) by indexed suprema. No uniform memory, state, support or processing bound and no free checkpoint lower bound are supplied. The necessary coefficient does not assert a uniform eta_b H-C loss or an attaining decoder."))),DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("fib-original-equal-weight-codebook"),DeclarationHandle.Create(Prefix+"original_equal_weight_codebook"),
                 H("Full finite weak codebooks with one reset at every seam"),StatementSource.FromAuthor(EqualWeightCodebook()),AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("WeakCodebook(K,d,sourceModel,N) is the entire subtype of return lists xs with GuardTrace K d false high xs (initial high sourceModel) and listWeight xs=N. The single reset R is chosen before sourceModel and N. Its r is one and C_R=20+6R.m. resetConcatenation(R,[]) is []; resetConcatenation(R,xs::words) is (R::xs) appended to resetConcatenation(R,words). Each chosen word receives this same reset. For every N>0 the full subtype is finite. The positive eps may depend on N and sourceModel, but works for every finite joint choice, every target model and every number of seams. It supplies the actual paired sources at closed budget b-eps and hence all three contracts at b. Their fixed literal tails and zero-error futures are those of ActualPairSupply. The total weight is q(N+C_R).")),

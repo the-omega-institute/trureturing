@@ -17,6 +17,7 @@ open D5.S3.ConceptDynamics.Coding.FibonacciLiteralSource
 open D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Bilateral
 open D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.ResetCodebook
 open D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion.Operations
+open D5.S3.ConceptDynamics.Coding.FibonacciFactorCompletion
 
 def FactorDictionary (X : Set (ℤ → CuLetter)) (T : ℕ) :=
   {w : List CuLetter // (∃ ω ∈ X, Occurs ω w) ∧ wordWeight w = T}
@@ -266,14 +267,30 @@ theorem same_reset_factor_cardinality (o : Ownership) (b : ℝ) (K : ℕ)
     (hK : 2 ≤ K)
     (hqb : lam - g^2*chi^K*hSide .high < b)
     (hbp : b < lam - g^2*chi^K*(aSide .high/(1-rho*chi^K))) :
-    ∃ R : Return, R.r = 1 ∧ ∀ (sourceModel : Model) (N : ℕ), 0 < N →
+    ∃ R : Return, R.r = 1 ∧
+    (max (max (xSide .high) (ySide .high)) ((lam-b)/g^2/chi^K) <
+      hSide .high-rho^R.m*(hSide .high-chi*aSide .high)) ∧
+    ∀ (sourceModel : Model) (N : ℕ), 0 < N →
     let d := (lam-b)/g^2/chi^K
     let delta := hSide .high-rho^R.m*(hSide .high-chi*aSide .high)-initial .high sourceModel
     let V := {xs : List Return //
       GuardTrace K d false .high xs (initial .high sourceModel) ∧ listWeight xs = N}
     let L := N+20+6*R.m
-    0 < delta ∧ 0 < delta*g^N ∧ Finite V ∧
+    0 < delta ∧ 0 < delta*g^N ∧
+    0 < min (b-actualAutomaticCost K) (g^2*chi^K*(delta*g^N))/2 ∧ Finite V ∧
+    (∀ (targetModel : Model) (words : List V),
+      let execution := resetConcatenation R (words.map Subtype.val)
+      GuardTrace K (d+delta*g^N) false .high execution (initial .high targetModel) ∧
+      ActualPairSupply targetModel o
+        (b-min (b-actualAutomaticCost K) (g^2*chi^K*(delta*g^N))/2) .strict execution) ∧
     ∃ n : ℕ, K ≤ n ∧ hSide .high*rho^n < chi^(K-1)*(delta*g^N) ∧
+      (∀ choices : ℤ → V,
+        let W := fun j => executionWord (R::(choices j).val)
+        ∃ ω : ℤ → CuLetter,
+          ω ∈ AuxiliaryLanguage K (d+delta*g^N) ∧ ω ∈ LowerMemoryLanguage n K d ∧
+          (∀ j (k : Fin (W j).length), ω (blockCut W j+(k : ℕ))=(W j)[k]) ∧
+          (∀ j, GuardTrace K (d+delta*g^N) false .high (R::(choices j).val)
+            (pastState ω (blockCut W j)))) ∧
       (∀ q : ℕ,
         let f := fun z : Fin q → V => resetFactor R (List.ofFn (fun i => (z i).val))
         Function.Injective f ∧
@@ -287,8 +304,8 @@ theorem same_reset_factor_cardinality (o : Ownership) (b : ℝ) (K : ℕ)
       Real.logb 2 ((max 1 (Nat.card V) : ℕ) : ℝ)/(L : ℝ) ≤
         weightedFactorRate (LowerMemoryLanguage n K d) := by
   classical
-  obtain ⟨R,hr,codebooks⟩ := bilateral_reset_codebook o b K hK hqb hbp
-  refine ⟨R,hr,?_⟩
+  obtain ⟨R,hr,hB,codebooks⟩ := bilateral_reset_codebook o b K hK hqb hbp
+  refine ⟨R,hr,hB,?_⟩
   intro sourceModel N hN
   dsimp only
   let d := (lam-b)/g^2/chi^K
@@ -296,7 +313,7 @@ theorem same_reset_factor_cardinality (o : Ownership) (b : ℝ) (K : ℕ)
   let V := {xs : List Return //
     GuardTrace K d false .high xs (initial .high sourceModel) ∧ listWeight xs = N}
   let L := N+20+6*R.m
-  obtain ⟨dp,gp,n,hn,small,realize⟩ := codebooks sourceModel N hN
+  obtain ⟨dp,gp,ep,joint,n,hn,small,realize⟩ := codebooks sourceModel N hN
   have finite : Finite V := by
     let f : V → FactorDictionary (AuxiliaryLanguage K d) N := fun xs =>
       ⟨executionWord xs.val, by
@@ -398,7 +415,7 @@ theorem same_reset_factor_cardinality (o : Ownership) (b : ℝ) (K : ℕ)
       intro x y he
       exact injection (congrArg Subtype.val he))
     simpa only [Nat.card_fun,Nat.card_fin,factorCount] using bound
-  refine ⟨dp,gp,finite,n,hn,small,packet,?_⟩
+  refine ⟨dp,gp,ep,finite,joint,n,hn,small,realize,packet,?_⟩
   apply factor_rate_of_power_count _ (Nat.card V) L (by dsimp [L]; omega)
   intro q
   exact (packet q).2.2.2
