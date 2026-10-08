@@ -96,6 +96,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/FockAttenuator/FiniteFockBeamSplitterNonExtremality.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/van-herstraeten-et-al-2025-beam-splitter-state-extremality` (refuted) by `D5/S3/Quantum/QuantumChannels/FockAttenuator/FiniteFockBeamSplitterNonExtremality.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"van-herstraeten-et-al-2025-beam-splitter-state-extremality","declaration_gid":"D5/S3/Quantum/QuantumChannels/FockAttenuator/FiniteFockBeamSplitterNonExtremality.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Zacharie Van Herstraeten; Jack Davis; Nuno C. Dias; João N. Prata; Nicolas J. Cerf; Ulysse Chabaud (2025). *Extreme non-negative Wigner functions*. URL: <https://arxiv.org/abs/2512.14831v3>.
