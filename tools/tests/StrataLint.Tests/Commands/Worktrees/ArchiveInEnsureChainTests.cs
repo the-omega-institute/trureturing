@@ -213,7 +213,7 @@ public sealed partial class LeanCacheEnsureCommandTests
     [Theory]
     [InlineData(false)]
     [InlineData(true)]
-    public void OldWarmMainDonorSeedsLaneWithoutReleaseRefresh(bool copyFallback)
+    public void OldWarmMainDonorNeverCopiesOrRefreshesReleaseAfterCloneFailure(bool cloneFails)
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
@@ -228,15 +228,25 @@ public sealed partial class LeanCacheEnsureCommandTests
             ArchiveReceipt = "LEAN_CACHE_FETCH {\"status\":\"unpacked\",\"mode\":\"partition\"}\n",
         };
 
-        var receipt = ReadReceipt(WorktreeCommand.Run(repository.Path,
+        var result = WorktreeCommand.Run(repository.Path,
             ["ensure-cache", "--path", target], runner,
-            new RecordingDirectoryCloner { FailureReason = copyFallback ? "clone unavailable" : null }));
+            new RecordingDirectoryCloner { FailureReason = cloneFails ? "clone unavailable" : null });
 
         Assert.Equal(0, runner.ArchiveInvocations);
+        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "cp"
+            || Path.GetFileName(call.FileName) == "lake");
+        Assert.True(File.Exists(olean));
+        if (cloneFails)
+        {
+            Assert.False(result.Success);
+            Assert.False(Directory.Exists(Path.Combine(target, ".lake")));
+            Assert.Contains("clonefile failed", result.Error, StringComparison.OrdinalIgnoreCase);
+            return;
+        }
+        var receipt = ReadReceipt(result);
         Assert.Equal("not_attempted", receipt.GetProperty("archive_status").GetString());
         Assert.Equal(LinkedArchiveDisabled, receipt.GetProperty("archive_skip_reason").GetString());
         Assert.Equal("seeded", receipt.GetProperty("status").GetString());
-        Assert.True(File.Exists(olean));
     }
 
     /// <summary>
