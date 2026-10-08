@@ -20,7 +20,7 @@ from typing import BinaryIO, Iterable
 
 
 SPOOL_SCHEMA = "stratalint-lean-inspector-spool-v1"
-REPORT_SCHEMA = "stratalint-raw-lean-report-v3"
+REPORT_SCHEMA = "stratalint-raw-lean-report-v3probe"
 STATEMENT_DOMAIN = b"trureturing:statement:v1\0"
 MATERIAL_FILE = re.compile(r"^[0-9]+\.statement(?:\.gz)?$")
 SUPPLEMENTARY_SCALAR = re.compile(r"[\U00010000-\U0010FFFF]")

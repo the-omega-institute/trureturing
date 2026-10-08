@@ -13,7 +13,7 @@ import sys
 
 MANIFEST = 'lean-report-inputs.json'
 LOADER = 'tools/scripts/report/lean-report-selection.py'
-REPORT_FORMAT = 'stratalint-raw-lean-report-v3'
+REPORT_FORMAT = 'stratalint-raw-lean-report-v3probe'
 SCOPES = ('lean-report', 'scribe-content')
 # The report entry supports this one explicit execution contract. Extending
 # semantic inputs requires a registration/code change, never host discovery.
