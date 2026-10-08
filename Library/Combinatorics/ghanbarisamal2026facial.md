@@ -6,7 +6,8 @@ title: "Facial diagrams and cycle double cover"
 doi: 10.48550/arXiv.2605.01410
 url: https://arxiv.org/abs/2605.01410v1
 claim: "Twisting a regular edge makes it good singular; the facial-diagram analysis describes the reverse change and preservation of the twisted bad singular edge."
-strata_touched: []
+strata_touched:
+  - D5/S3/Combinatorics/PerfectMatchings/FiniteBandSwitch
 license: citation-only
 triage: anchor
 ---
