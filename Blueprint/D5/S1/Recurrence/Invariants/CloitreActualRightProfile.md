@@ -138,7 +138,19 @@ Lean statement: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.actual_fo
 
 For N at least three, every actual iterate X(N,i) lies in D(N), and C(N)=C(g(N))+C(N-g(N)). Both conclusions follow from the immutable finite-prefix construction without Hyp21_1. The conditional profile theorem consumes this shared proof.
 
-**Theorem 1.12 (Every fixed right width).**
+**Theorem 1.12 (Periodicity of the actual selector).**
+
+Lean statement: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.selected_periodic`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.selected_periodic` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Under Hyp21_1, the prescribed-depth point g(N) is periodic for T(N) whenever N is at least three. The depth-entry premise supplies a periodic earlier iterate, and advancing from that iterate to the prescribed depth preserves periodicity.
+
+**Theorem 1.13 (Every fixed right width).**
 
 Lean statement: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.full21_3`
 
@@ -164,5 +176,6 @@ For every function U from natural numbers to natural numbers satisfying Hyp21_1,
 - Truth anchor: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.d`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.full21_3`
 - Truth anchor: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.g`
+- Truth anchor: `D5/S1/Recurrence/Invariants/CloitreActualRightProfile.selected_periodic`
 - Dependency: [D5/S1/Phase/SelfReference/GoldenShellRecurrence](../../Phase/SelfReference/GoldenShellRecurrence.md)
 - Dependency: [D5/S1/Recurrence/GoldenFibDivisibility](../GoldenFibDivisibility.md)
