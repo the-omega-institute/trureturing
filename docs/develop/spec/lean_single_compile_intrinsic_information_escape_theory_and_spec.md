@@ -153,7 +153,7 @@ $$
 }
 $$
 
-即该全称条件要求指定 root 的每个 canonical maximal catalog 中删除任意 occurrence 都使信息逃逸率严格上升。辅助 root 与 analysis view 不替代该证明。Seal 保留完整 peers，`SealRow.conclusion` 对每个成员携带降低逃逸或平凡性证明；零成员另携剩余目录的语义闭包归属证明。冗余目录仍可提供合法 Seal。待首次冻结对象的独立 dual-novelty gate 保持 OPEN、无 required check。
+即该全称条件要求指定 root 的每个 canonical maximal catalog 中删除任意 occurrence 都使信息逃逸率严格上升。辅助 root 与 analysis view 不替代该证明。Seal 保留完整 peers，`SealRow.conclusion` 对每个成员携带降低逃逸或平凡性证明；零成员另携剩余目录的语义闭包归属证明。冗余目录仍可提供合法 Seal。本节的全称正性是数学命题，不构成额外生产准入门。
 
 本规范明确取消以下对象：
 
@@ -743,7 +743,7 @@ $\operatorname{KernelRefines}(j,i)$，则 $U^R_{A,i}=\varnothing$。特别地，
 成立时 $O_{ij}$ 等于较粗 readout 的 capture set。
 
 所有 rate 都以同一个 $|D_A|$ 为分母并使用 exact rational。非等价 arena 的数值只可
-分栏报告，不得求和、平均或排序；经 `CIRPT-IE-022` 证明的 arena transport 才允许声明
+各 arena 的数学结果分别解释，不得求和、平均或排序；经 `CIRPT-IE-022` 证明的 arena transport 才允许声明
 这些数值保持不变。
 
 ### 5.8 捕获重数谱
@@ -1474,23 +1474,13 @@ $$
 \operatorname{CatalogIrredundant}(C_{R_\star,A}).
 $$
 
-第 23.5 节以 universe-correct 的 dependent `PackedCatalog` 和有限
-`DesignatedRootCatalogSuite` 实现这一定义。规范中旧名 `SystemWidePositive` 只允许作为
-同一 one-root proposition 的 abbreviation，并由
-`systemWidePositive_iff_systemCatalogIrredundant` 以 `Iff.rfl` 关联；不得再定义一个遍历
-多个 roots 的替代性质。
+`InformationEscapeHierarchy.LayeredCapture` 的 `DesignatedRootCatalogSuite`
+以 dependent `PackedCatalog` 承载同一 root 下各 arena 的目录；
+`SystemCatalogIrredundant` 是这些目录不可约性的数学合取。
+该数学命题不成为生产报告字段或 seal 的额外前置。
 
-这个 universal conjunction 报告指定 root 是否全正，不作为记录 seal 或 analysis 的前置条件；为假时提供 `¬ SystemCatalogIrredundant` certificate。
-辅助 root（例如 `CausalHierarchyRoot`）只报告其 scope，不能证明指定 root 全正或 discharge first-freeze positivity；§8.7 的独立 gate 保持 OPEN。
-全 trivial catalog 可以成功记录 seal；此成功只证明完整分类，不是 novelty/admission 成功。该契约仅移除 classification 的 global zero-peer veto；添加合法记录可改变 catalog 输入，不能以 trivial certificate 履行 positivity 或规避既有校验。
-
-指定系统 root $R_\star$ 的 import closure 必须包含仓库固定源快照的完整 registration closure；
-其 catalogs 因而在仓库尺度 maximal，项目级 coverage manifest 由该快照的既有枚举器产生，
-且必须与实际 sealed occurrence set 相等（工程优化规范 v1 §9 check 1）。辅助 root 的 catalogs
-只在各自 import closure 内 maximal，artifact 必须写 `seal_scope: import-closure` 并列出导入的
-registration modules，且仍不取得 discharge 或 exemption 权限。辅助 root 若导入冻结的 v4.1
-`InformationRoot`，会继承其十一个 occurrences；这不碰撞，因为 causal occurrences 登记在
-`UnifiedBoolSCM` canonical arena 上。
+生产 seal 的 scope 取其所在 root 的实际 import closure。
+局部 root 的完整成员核对不证明仓库全局覆盖。
 
 ### 8.7 Catalog-relative triviality
 
@@ -1510,7 +1500,7 @@ canonical identity 是 `Arena`／`StructuralArena` declaration。替代表示只
 每个 theorem 的观测集合包含其全部已登记 arenas 与逃逸处；全部 occurrence 均为 trivial
 才能汇总为 trivial。任一固定 catalog 中的 positive occurrence 反驳保留该 occurrence 及
 其 catalog 的观测集合上的全 trivial 汇总，不宣称对任意观测集合选择不变。
-标准 arena 覆盖与 transparent theorem 的完备性政策保持 OPEN；缺少 realization 或
+本节不建立标准 arena 覆盖或 transparent theorem 的完备性；缺少 realization 或
 certificate 不构成 closed reason，也不证明不存在 faithful carrier。
 
 level-0 trivial occurrence 的 `law_*` 按 §6.3 在同一完整 catalog 与冻结 Γ 上计算；
@@ -1519,7 +1509,7 @@ open schema 不预先加入待测 law 的 inclusion 假设，level-1 verdict 不
 
 本判词与 `CLAUDE.md` §3.2 的 `proof_shape` 正交，互不蕴含。content theorem 仍可能在
 catalog 中零 unique capture；bind-only companion 不能仅凭 object-level positive escape
-取得首次冻结资格。delta-first dual novelty gate 的设计与未启用边界见第 39 节 GATE。
+取得首次冻结资格。生产准入由现行 StrataLint 规则执行。
 
 ---
 
@@ -1922,7 +1912,7 @@ $$
 
 这不是评价体系变化，而是当前数学族从不可约变成过完备。
 
-完整合法族重新 seal，旧 theorem 的分类非单调地变为 certified `trivial_in_catalog`，并在 `SealCatalog.conclusion` 携带冗余证明；旧成员仍保留，待首次冻结对象是否获 positive admission 只取决于它自身的 positivity，dual-novelty gate 保持 OPEN、无 required check。
+完整合法族重新 seal，旧 theorem 的分类非单调地变为 certified `trivial_in_catalog`，并在 `SealCatalog.conclusion` 携带冗余证明；旧成员仍保留，待首次冻结对象是否获 positive admission 只取决于它自身的 positivity，该数学分类不构成额外生产准入门。
 
 特别地，若新 peer 的 kernel 严格细化旧 occurrence 的 kernel，则旧 occurrence 的
 leave-one-out capture 必为零。严格 refinement chain 的每个相邻增量可以非空，同时
@@ -4612,28 +4602,6 @@ structure TheoremUnit (arena : Arena) where
 
 不再把自由构造的 `PackedObserver` 作为真源。
 
-兼容旧 API 时可以定义：
-
-```lean
-def PackedObserver.toPrimitiveAtom
-    (axis : PrimitiveAxis)
-    (observer : PackedObserver arena) :
-    PrimitiveAtom arena :=
-  ...
-```
-
-但方向只能是：
-
-```text
-existing readout → certified primitive kernel
-```
-
-不得是：
-
-```text
-arbitrary external score → primitive kernel
-```
-
 ---
 
 ## CIRPT-37　Catalog 计算只消费 theorem kernel
@@ -5019,51 +4987,6 @@ DAG path。
 
 ---
 
-## CIRPT-39　建议模块布局增量
-
-在不复制既有 `Concept`、`jointKernel`、`defectRelation` 和 `blindResidual` 的前提下新增：
-
-```text
-D5/S3/ConceptDynamics/CIRPT/InformationEscape/
-  PrimitiveAxis.lean
-  PrimitiveKernel.lean
-  QuotientCutNormalForm.lean
-  PrimitiveBundle.lean
-  UnifiedResidual.lean
-  FourRoleResidual.lean
-  FourRoleSignature.lean
-  DynamicBehaviorEscape.lean
-  TheoremPrimitiveNormalForm.lean
-  LeaveOneOutPrimitiveResidual.lean
-  CertificateErasure.lean
-  CoreTheorems.lean
-```
-
-现有：
-
-```text
-D5/S3/ConceptDynamics/InformationEscape/
-```
-
-继续承载：
-
-- arena；
-- finite pair counting；
-- exact rational rate；
-- catalog leave-one-out；
-- theorem augmentation；
-- 封印契约使用的目录数学定义与证明。
-
-两层关系是：
-
-```text
-CIRPT primitive semantics
-        ↓ kernel normalization
-InformationEscape finite engine
-```
-
----
-
 ## CIRPT-40　封印契约义务
 
 `Contract.Seal` 指定 root 与 `SealCatalog` 数组。每个 catalog 的 `arena`、`units` 与
@@ -5142,7 +5065,7 @@ readout／anchor 索引，输出首个缺少有效见证的槽位和已检查 su
 
 ---
 
-## CIRPT-43　新增测试矩阵
+## CIRPT-43　数学用例与下游分析检查
 
 ### T-CIRPT-001　CUT constructor
 
@@ -5218,7 +5141,7 @@ readout／anchor 索引，输出首个缺少有效见证的槽位和已检查 su
 
 ### T-CIRPT-019　cross-arena no aggregation
 
-同一次 seal 中存在两个不等价 arena；验证分别输出 typed results，且不存在全局加权总分字段。
+同一次 Seal 可含不同 arena 的 SealCatalog；每个目录携带自身数学证据，报告不生成跨 arena 统计总分。
 
 ### T-CIRPT-020　capture spectrum identities
 
@@ -5228,7 +5151,7 @@ readout／anchor 索引，输出首个缺少有效见证的槽位和已检查 su
 ### T-CIRPT-021　layer-chain transport
 
 经已证明 arena `Equiv` transport 后，每个 layered count/rate 与 unresolved count/rate
-保持；缺少 transport proof 时得到 IE-C023，不以 address coincidence 代替。
+layer-chain 输运需要对应的数学证明；kernel address 相同不提供该证明。
 
 ### T-033　E1 four-node quotient
 
@@ -5276,15 +5199,9 @@ dangling reference 得 IE-C041。
 改变 ASCII layout、node IDs 或 heuristic path 不改变任何 Lean proposition；尝试把这些字段接入
 admission 得 IE-C043。
 
-### T-042　dual-novelty mutation design（OPEN）
-
-固定批准后必须执行的 mutations：missing disposition、stale identity、dead witness、forged
-`proof_shape` label、zero capture、absent structural witness。IE-C045--IE-C047 对应的 5⁗ consumer
-在 owner $\tau$ ruling 前不得宣称 active。
-
 ---
 
-## CIRPT-44　新增完成条件
+## CIRPT-44　数学性质与生产边界
 
 ### AC-CIRPT-001　Primitive completeness
 
@@ -5348,7 +5265,7 @@ positive/negative verdict 均由一般 theorem 加 reflected equalities kernel-c
 
 ### AC-CIRPT-015　Diagnostic address isolation
 
-kernel address coincidence 只以 `diagnostic_only` 输出；没有 theorem 或准入路径消费它。
+生产报告不输出 kernel address coincidence；地址摘要不提供数学对应或准入证据。
 
 ### AC-CIRPT-016　完整封印证据
 
@@ -5372,12 +5289,6 @@ bundle 与 faithful realization；acceptance 由 strict inclusion 和 pair witne
 库内 generated-kernel lattice、strict transitions 和 certified chains 的关系及计数
 须由 Lean 证明。它们不要求生成报告的 nodes、edges、矩阵、重数谱、角色桶或
 certificate-name 数组；生产报告字段只遵守第 30 节。
-
-### AC-CIRPT-021　Dual-novelty governance boundary
-
-disposition、object novelty 与 5⁗ `AdmissionCertificate` 是独立合取；delta-first、
-legacy debt ratchet 与 mutation matrix 按第 39 节 GATE 定义。required check 不激活该 gate，
-IE-C045--IE-C047 不作为 active errors，full-tree switch 不执行；activation 的条件见第 39 节 GATE。
 
 ---
 
@@ -5501,877 +5412,21 @@ $$
 
 ---
 
-## 18. 建议模块布局
+## 18. 数学库与契约地址
 
-```text
-D5/S3/ConceptDynamics/CIRPT/InformationEscape/
-  PrimitiveAxis.lean
-  PrimitiveKernel.lean
-  QuotientCutNormalForm.lean
-  PrimitiveBundle.lean
-  UnifiedResidual.lean
-  FourRoleResidual.lean
-  FourRoleSignature.lean
-  DynamicBehaviorEscape.lean
-  TheoremPrimitiveNormalForm.lean
-  LeaveOneOutPrimitiveResidual.lean
-  CertificateErasure.lean
-  CoreTheorems.lean
+`D5/S3/ConceptDynamics/CIRPT/` 承载 primitive 与 bundle；
+`InformationEscape/` 承载有限 arena、theorem unit、目录、逃逸与留一增益；
+`InformationEscapeHierarchy/` 承载 generated kernel、chain 与 structural 目录；
+`InformationEscapeCounting/` 承载融合计数及对应证明。
 
-D5/S3/ConceptDynamics/InformationEscape/
-  Arena.lean
-  TheoremUnit.lean
-  JointKernel.lean
-  EscapePairs.lean
-  EscapeRate.lean
-  LeaveOneOut.lean
-  SemanticClosure.lean
-  EntropyBridge.lean
-  AugmentedTheorem.lean
-  CoreTheorems.lean
-
-D5/S3/ConceptDynamics/InformationEscapeHierarchy/
-  GeneratedKernel.lean
-  KernelChain.lean
-  HierarchyLaws.lean
-  StructuralArena.lean
-  StructuralCatalog.lean
-
-D5/S3/ConceptDynamics/InformationEscapeCounting/
-  Fused.lean
-  FusedCorrectness.lean
-  Partition.lean
-  PartitionCorrectness.lean
-  RoleHistogram.lean
-  BlockComposition.lean
-
-tools/lean-inspector/LeanInformationAudit/
-  RawArtifacts.lean
-  Contract/Discovery.lean
-  Contract/Decoder.lean
-  ArtifactAssessment.lean
-  ArtifactRegistration.lean
-  CompiledSnapshots.lean
-  CompiledSeal.lean
-
-D5/S3/ConceptDynamics/InformationEscape/SharedInformationRoot.lean
-```
-
-全部五个 hierarchy／structural engine modules 必须落在 GID-legal sibling
-`D5/S3/ConceptDynamics/InformationEscapeHierarchy/`，不得向受容量约束的
-`D5/S3/ConceptDynamics/InformationEscape/` 目录追加。counting-only modules 独立落在 sibling
-`InformationEscapeCounting/`，不采用 nested `InformationEscape/Counting/` 布局。
-`tools/StrataLint.Engine/Coordinates/Gid.cs` 的 `ParseFormalCoordinates` 要求 ordinary formal
-coordinates 至少三段；上述 sibling placement 是布局约束，不由文法深度推出。
-
-`Reg/Catalogs/<目录>/SealedCatalog.lean` 导入所需登记闭包，以一个
-`Contract.RootCatalog` 声明完整 expected 集，以一个 `Contract.Seal` 声明该根的
-目录与已编译数学证据。根身份取所在 Reg 模块，声明源码只依赖内容和接口。
+`Arena` 包含 State、有限枚举实例与可判等实例，非退化性是单独的
+`Arena.Nondegenerate` 命题。SealCatalog 的 nondegenerate 字段承载该证明；
+未封印登记不因此取得额外非退化要求。
+契约源码位于 `tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/`；
+报告评定源码位于 `tools/lean-inspector/LeanInformationAudit/`。
+Reg 的目录与 seal 位于 `Reg/Catalogs/**` 的 RootCatalog／SealedCatalog 保留叶。
 
 ---
-
-## 19. 核心类型
-
-以下接口是规范级草案。实现可调整字段名字，但不得改变数学含义。
-
-### 19.1 Arena
-
-```lean
-universe u v w
-
-namespace D5.S3.ConceptDynamics.InformationEscape
-
-structure Arena where
-  State : Type u
-  stateFintype : Fintype State
-  stateDecidableEq : DecidableEq State
-  stateNontrivial : 2 ≤ @Fintype.card State stateFintype
-```
-
-在使用 arena 时：
-
-```lean
-letI := arena.stateFintype
-letI := arena.stateDecidableEq
-```
-
-### 19.2 DecidableKernel
-
-```lean
-structure DecidableKernel (X : Type u) where
-  relation : X → X → Prop
-  equivalence : Equivalence relation
-  decidableRelation : DecidableRel relation
-```
-
-`DecidableKernel` 是统一计算真源：
-
-```text
-Setoid X + executable relation
-```
-
-所有 CUT、FLOW、ADMIT、ANCHOR primitive 都必须通过证明完备的 constructor 产生该对象。
-
-### 19.3 PrimitiveAxis、PrimitiveAtom 与 PrimitiveBundle
-
-```lean
-inductive PrimitiveAxis
-  | cut
-  | flow
-  | admit
-  | anchor
-  deriving DecidableEq, Repr
-
-structure PrimitiveAtom (arena : Arena) where
-  axis : PrimitiveAxis
-  kernel : DecidableKernel arena.State
-
-structure PrimitiveBundle (arena : Arena) where
-  Index : Type v
-  indexFintype : Fintype Index
-  indexDecidableEq : DecidableEq Index
-  atom : Index → PrimitiveAtom arena
-```
-
-```lean
-def PrimitiveBundle.agrees
-    (bundle : PrimitiveBundle arena)
-    (left right : arena.State) : Prop :=
-  ∀ index, (bundle.atom index).kernel.relation left right
-```
-
-必须有可执行 `agreesB` 及其 reflection theorem。
-
-### 19.4 PackedObserver 兼容适配器
-
-已有 readout 可通过 kernel constructor 接入：
-
-```lean
-structure PackedObserver (arena : Arena) where
-  Output : Type v
-  outputDecidableEq : DecidableEq Output
-  observe : arena.State → Output
-
- def PackedObserver.toPrimitiveAtom
-    (axis : PrimitiveAxis)
-    (observer : PackedObserver arena) : PrimitiveAtom arena :=
-  ...
-```
-
-`PackedObserver` 不再是核心真源，只是 `Concept`／readout 到 primitive kernel 的适配器。
-
-### 19.5 TheoremUnit
-
-```lean
-structure TheoremUnit (arena : Arena) where
-  primitives : PrimitiveBundle arena
-  Statement : Prop
-  proof : Statement
-```
-
-`primitives` 是 theorem unit 的数学组成，不是评分元数据。proof declaration 本身不得自动进入 object-level primitive bundle。
-
-### 19.6 原生语义实现约束
-
-对原生 theorem，要求 statement 直接采用 primitive law：
-
-```lean
-structure PrimitiveLawArena extends Arena where
-  Law : PrimitiveBundle toArena → Prop
-
-structure NativeTheoremUnit (arena : PrimitiveLawArena) where
-  primitives : PrimitiveBundle arena.toArena
-  proof : arena.Law primitives
-```
-
-对 legacy theorem：
-
-```lean
-structure LegacyPrimitiveRealization
-    (arena : PrimitiveLawArena)
-    (statement : Prop)
-    (primitives : PrimitiveBundle arena.toArena) where
-  equivalence : statement ↔ arena.Law primitives
-```
-
-这确保 primitive bundle 与 theorem 的联系仍然是 Lean 数学命题，而非字符串注释。
-
-### 19.7 Catalog
-
-```lean
-structure Catalog (arena : Arena) where
-  Index : Type w
-  indexFintype : Fintype Index
-  indexDecidableEq : DecidableEq Index
-  theoremAt : Index → TheoremUnit arena
-```
-
-这里的 `arena` 必须是 canonical object `Arena`。`PrimitiveLawArena` 只负责陈述某个
-theorem law；它的 `toArena` 必须 definitionally 等于 occurrence 声明的 object arena，
-或先经 CIRPT-IE-022 的显式 transport 归一到它。相同 State carrier 不产生这种身份。
-
-### 19.8 完整索引集
-
-```lean
-def Catalog.fullIndexSet
-    (catalog : Catalog arena) : Finset catalog.Index := by
-  letI := catalog.indexFintype
-  letI := catalog.indexDecidableEq
-  exact Finset.univ
-```
-
-### 19.9 Catalog occurrence、catalog identity 与 layer chain
-
-```lean
-structure CatalogId where
-  name : Name
-  deriving DecidableEq, Repr
-
-inductive CatalogKind
-  | canonicalMaximal
-  | analysisView
-  deriving DecidableEq, Repr
-
-structure CatalogOccurrence (arena : Arena) where
-  rootId : Name
-  catalogId : CatalogId
-  catalogKind : CatalogKind
-  objectArenaName : Name
-  theoremName : Name
-  unitName : Name
-  realizationName : Name
-  unit : TheoremUnit arena
-
-def maximalCatalog
-    (rootId objectArenaName : Name)
-    (occurrences : Array (CatalogOccurrence arena)) : Catalog arena :=
-  ...
-
-structure LayerChain (arena : Arena) where
-  length : Nat
-  kernel : Fin (length + 1) → DecidableKernel arena.State
-  refines : ∀ r : Fin length,
-    (kernel r.succ).relation ≤ (kernel r.castSucc).relation
-```
-
-`maximalCatalog` 的输入恰为一个 root import closure 中 `objectArenaName` 相同的全部
-occurrences；不得选择子集。occurrence key `(objectArenaName, theoremName)` 在该 import
-closure 内唯一；`rootId` 与 `catalogId` 是 membership/projection context，不参与 occurrence
-identity。同一 theorem 只有在不同 canonical arenas 中才可形成多个 occurrences，
-且每次必须有另一个具名、kernel-checked realization 与 catalog-qualified
-unit/certificate。
-`LayerChain` 是同 arena 的 analysis object，不自动产生 theorem occurrence。
-
----
-
-## 20. 核与逃逸 Finset API
-
-### 20.1 对角线外 pair
-
-```lean
-def offDiagonalPairs (arena : Arena) : Finset (arena.State × arena.State) := by
-  letI := arena.stateFintype
-  letI := arena.stateDecidableEq
-  exact Finset.univ.filter fun pair => pair.1 ≠ pair.2
-```
-
-### 20.2 子族不可区分
-
-```lean
-def indistinguishable
-    (catalog : Catalog arena)
-    (selected : Finset catalog.Index)
-    (left right : arena.State) : Prop :=
-  ∀ index, index ∈ selected →
-    (catalog.theoremAt index).primitives.agrees left right
-```
-
-必须提供：
-
-```lean
-instance indistinguishableDecidable ... :
-    Decidable (indistinguishable catalog selected left right)
-```
-
-该实例必须使用：
-
-- `selected` 有限性；
-- 每个 primitive kernel 的 `decidableRelation`；
-- 每个 bundle 的 `agreesB_eq_true_iff`；
-- 不得使用 classical oracle 伪装成可执行计算。
-
-### 20.3 逃逸 pair
-
-```lean
-def escapePairs
-    (catalog : Catalog arena)
-    (selected : Finset catalog.Index) :
-    Finset (arena.State × arena.State) :=
-  (offDiagonalPairs arena).filter fun pair =>
-    indistinguishable catalog selected pair.1 pair.2
-```
-
-### 20.4 留一索引集
-
-```lean
-def without
-    (catalog : Catalog arena)
-    (index : catalog.Index) : Finset catalog.Index := by
-  letI := catalog.indexDecidableEq
-  exact (catalog.fullIndexSet).erase index
-```
-
-### 20.5 独有捕获 pair
-
-可直接定义：
-
-```lean
-def uniqueCapturePairs
-    (catalog : Catalog arena)
-    (index : catalog.Index) :
-    Finset (arena.State × arena.State) :=
-  (escapePairs catalog (without catalog index)).filter fun pair =>
-    ¬(catalog.theoremAt index).primitives.agrees pair.1 pair.2
-```
-
-也必须证明它等于差集：
-
-```lean
-theorem uniqueCapturePairs_eq_sdiff :
-  uniqueCapturePairs catalog index =
-    escapePairs catalog (without catalog index) \
-      escapePairs catalog catalog.fullIndexSet := by
-  ...
-```
-
-### 20.6 Capture set 与 exclusive vector
-
-```lean
-def Catalog.capturePairs (catalog : Catalog arena)
-    (index : catalog.Index) :
-    Finset (arena.State × arena.State) := by
-  letI := arena.stateDecidableEq
-  letI := catalog.indexDecidableEq
-  exact offDiagonalPairs arena \ escapePairs catalog {index}
-
-def Catalog.exclusiveCaptureVector (catalog : Catalog arena) :
-    catalog.Index → Nat :=
-  fun index => catalog.uniqueCaptureCount index
-```
-
-必须证明 `uniqueCapturePairs_eq_capture_sdiff_iUnion`、
-`uniqueCapturePairs_pairwise_disjoint` 与
-`sum_uniqueCaptureCount_le_capturedCount`。
-
-### 20.7 Pairwise capture overlap
-
-```lean
-def Catalog.pairwiseCaptureOverlapPairs (catalog : Catalog arena)
-    (left right : catalog.Index) :
-    Finset (arena.State × arena.State) := by
-  letI := arena.stateDecidableEq
-  exact catalog.capturePairs left ∩ catalog.capturePairs right
-
-def Catalog.pairwiseCaptureOverlapCount (catalog : Catalog arena)
-    (left right : catalog.Index) : Nat :=
-  (catalog.pairwiseCaptureOverlapPairs left right).card
-```
-
-必须证明 symmetry、diagonal、bounds 与 refinement 时等于较粗 capture set；artifact 只
-写 canonical upper triangle，证明仍覆盖整个 symmetric matrix。
-
-### 20.8 Kernel refinement matrix
-
-```lean
-def Catalog.KernelRefines (catalog : Catalog arena)
-    (finer coarser : catalog.Index) : Prop :=
-  ∀ x y,
-    (catalog.theoremAt finer).primitives.agrees x y →
-      (catalog.theoremAt coarser).primitives.agrees x y
-
-def Catalog.KernelEquivalent (catalog : Catalog arena)
-    (left right : catalog.Index) : Prop :=
-  catalog.KernelRefines left right ∧ catalog.KernelRefines right left
-
-instance (catalog : Catalog arena) (i j : catalog.Index) :
-    Decidable (catalog.KernelRefines i j) := by
-  letI := arena.stateFintype
-  letI := arena.stateDecidableEq
-  unfold Catalog.KernelRefines
-  infer_instance
-
-def Catalog.kernelComparison (catalog : Catalog arena)
-    (left right : catalog.Index) : KernelComparison
-
-def Catalog.refinementWitness? (catalog : Catalog arena)
-    (finer coarser : catalog.Index) :
-    Option (arena.State × arena.State)
-```
-
-`kernelComparison` 必须 proof-backed 地穷尽 `equal`、`strictly_finer`、
-`strictly_coarser`、`incomparable`。true cell 持有 inclusion proof；false cell 持有满足
-$K_i(x,y)\land\neg K_j(x,y)$ 的 deterministic witness。只打印 Boolean 不合格。
-
-### 20.9 Role-histogram matrix
-
-```lean
-def Catalog.roleHistogramTotal (catalog : Catalog arena)
-    (signature : Fin 4 → Bool) : Nat := by
-  letI := catalog.indexFintype
-  letI := catalog.indexDecidableEq
-  exact ∑ index, catalog.roleHistogram index signature
-
-def Catalog.roleProfileEq (catalog : Catalog arena)
-    (left right : catalog.Index) : Prop :=
-  ∀ signature, catalog.roleHistogram left signature =
-    catalog.roleHistogram right signature
-
-def Catalog.roleHistogramDifference (catalog : Catalog arena)
-    (left right : catalog.Index) (signature : Fin 4 → Bool) : Int :=
-  catalog.roleHistogram left signature -
-    catalog.roleHistogram right signature
-```
-
-复用 `roleHistogram` 与 `roleHistogram_sum_eq_uniqueCaptureCount`。必须认证每行、
-catalog column total 及 unweighted difference vector；不得生成 role score 或 weight。
-
-### 20.10 Capture-multiplicity spectrum
-
-```lean
-def Catalog.captureMultiplicity (catalog : Catalog arena)
-    (pair : arena.State × arena.State) : Nat := by
-  letI := catalog.indexFintype
-  letI := catalog.indexDecidableEq
-  letI := arena.stateDecidableEq
-  exact ((Finset.univ : Finset catalog.Index).filter fun index =>
-    pair ∈ catalog.capturePairs index).card
-
-def Catalog.captureSpectrum (catalog : Catalog arena) :
-    Fin (@Fintype.card catalog.Index catalog.indexFintype + 1) → Nat :=
-  ...
-```
-
-必须认证 total、$h(0)$、$h(1)$、incidence first moment 与 overlap second moment；这些
-identity 是 reflected measurements 的 kernel-checked consistency laws。
-
-### 20.11 GeneratedKernel lattice 与 KernelChain
-
-finite API 从 `Catalog.indistinguishable` 的 exact relation 构造 node，不复制第二套 kernel：
-
-```lean
-def Catalog.generatedKernelRelation (catalog : Catalog arena)
-    (selected : Finset catalog.Index) : DecidableKernel arena.State :=
-  ...
-
-def Catalog.GeneratedKernel (catalog : Catalog arena) :=
-  Quotient (Catalog.generatedKernelSetoid catalog)
-
-def Catalog.generatedKernel (catalog : Catalog arena)
-    (selected : Finset catalog.Index) : catalog.GeneratedKernel :=
-  ...
-
-def Catalog.GeneratedKernel.KernelRefines
-    (finer coarser : catalog.GeneratedKernel) : Prop :=
-  finer.relation ≤ coarser.relation
-
-def Catalog.GeneratedKernel.relationB
-    (node : catalog.GeneratedKernel)
-    (left right : arena.State) : Bool :=
-  ...
-
-theorem Catalog.GeneratedKernel.relationB_eq_true_iff
-    (node : catalog.GeneratedKernel) (left right : arena.State) :
-    node.relationB left right = true ↔ node.relation left right := by
-  ...
-
-instance Catalog.GeneratedKernel.relationDecidable
-    (node : catalog.GeneratedKernel) : DecidableRel node.relation := by
-  intro left right
-  exact decidable_of_iff (node.relationB left right = true)
-    (node.relationB_eq_true_iff left right)
-
-def Catalog.GeneratorStep (catalog : Catalog arena)
-    (from to : catalog.GeneratedKernel) (added : catalog.Index) : Prop := by
-  letI := catalog.indexDecidableEq
-  exact ∃ selected,
-    catalog.generatedKernel selected = from ∧
-    catalog.generatedKernel (insert added selected) = to ∧
-    to.KernelRefines from
-
-def Catalog.StrictGeneratorStep (catalog : Catalog arena)
-    (from to : catalog.GeneratedKernel) (added : catalog.Index) : Prop :=
-  catalog.GeneratorStep from to added ∧
-    ¬from.KernelRefines to
-
-def Catalog.CollapsedAddition (catalog : Catalog arena)
-    (at : catalog.GeneratedKernel) (added : catalog.Index) : Prop :=
-  catalog.GeneratorStep at at added
-
-def Catalog.GeneratedKernel.escapeAt
-    (node : catalog.GeneratedKernel) :
-    Finset (arena.State × arena.State) := by
-  letI := arena.stateFintype
-  letI := arena.stateDecidableEq
-  letI : DecidableRel node.relation := node.relationDecidable
-  exact (offDiagonalPairs arena).filter fun pair =>
-    node.relation pair.1 pair.2
-
-def Catalog.GeneratedKernel.edgeCapture
-    (from to : catalog.GeneratedKernel) :
-    Finset (arena.State × arena.State) := by
-  letI := arena.stateFintype
-  letI := arena.stateDecidableEq
-  exact from.escapeAt \ to.escapeAt
-```
-
-`generatedKernelSetoid` 的 equivalence 必须逐 relation truth table 证明；Quotient equality
-不能由 representative subset、node key 或 SHA-256 给出。`GeneratorStep` 在 quotient 上的
-良定义性由 IE-042 建立。实现还须给 `GeneratedKernel` 的 finite lattice instance，并证明其
-top/bottom/meet/internal join 与 IE-040--IE-041 相同。
-
-finite `Catalog` 使用以下 schedule／strict-chain API；此定义与 CIRPT-38.2 相同：
-
-```lean
-/-- A full catalog ordering; equality steps are legal and classified. -/
-inductive GeneratorStepClass (catalog : Catalog arena)
-    (from to : catalog.GeneratedKernel) (added : catalog.Index) where
-  | strict (proof : catalog.StrictGeneratorStep from to added)
-  | collapsed
-      (same : from = to)
-      (proof : catalog.CollapsedAddition from added)
-
-structure GeneratorSchedule (catalog : Catalog arena) where
-  length : Nat
-  added : Fin length → catalog.Index
-  added_bijective : Function.Bijective added
-  node : Fin (length + 1) → catalog.GeneratedKernel
-  starts_at_top : node 0 = catalog.generatedKernel ∅
-  ends_at_bottom :
-    node ⟨length, Nat.lt_succ_self length⟩ =
-      catalog.generatedKernel catalog.fullIndexSet
-  classification : ∀ r : Fin length,
-    GeneratorStepClass catalog (node r.castSucc) (node r.succ) (added r)
-
-/-- The stutter-free subsequence; every adjacency is a strict DAG step. -/
-structure StrictKernelChain (catalog : Catalog arena) where
-  length : Nat
-  added : Fin length → catalog.Index
-  node : Fin (length + 1) → catalog.GeneratedKernel
-  step : ∀ r : Fin length,
-    catalog.StrictGeneratorStep (node r.castSucc) (node r.succ) (added r)
-
-def GeneratorSchedule.strictSubsequence
-    (schedule : GeneratorSchedule catalog) : StrictKernelChain catalog :=
-  ...
-
-def GeneratorSchedule.increment
-    (schedule : GeneratorSchedule catalog)
-    (r : Fin schedule.length) :
-    Finset (arena.State × arena.State) :=
-  (schedule.node r.castSucc).edgeCapture (schedule.node r.succ)
-
-def StrictKernelChain.increment
-    (chain : StrictKernelChain catalog) (r : Fin chain.length) :
-    Finset (arena.State × arena.State) :=
-  (chain.node r.castSucc).edgeCapture (chain.node r.succ)
-```
-
-`added_bijective` 使 schedule 恰为 catalog generators 的完整 ordering；`classification` 使每个
-adjacency 自身携 strict `GeneratorStep` 或 `CollapsedAddition` certificate。每个 collapsed step
-的 increment 为空；删除 collapsed steps 后的 `StrictKernelChain` 以 `step` 字段保证每条 adjacency
-都是 strict generator DAG edge，故才是 DAG path／decomposition。finite API 提供 schedule
-increments 的 `Finset`、counts、exact rates，以及 IE-043--IE-049 各自指定的
-schedule／strict-chain certificates。任意 State 的 `StructuralCatalog` 侧不伪造 finite schedule；
-它只提供 Set-level inclusion、disjointness、union 与 pair witnesses。
-
----
-
-## 21. 精确逃逸率 API
-
-### 21.1 分母
-
-```lean
-def escapeDenominator (arena : Arena) : Nat :=
-  (offDiagonalPairs arena).card
-```
-
-必须证明：
-
-```lean
-theorem escapeDenominator_pos (arena : Arena) :
-    0 < escapeDenominator arena := by
-  ...
-```
-
-### 21.2 分子
-
-```lean
-def escapeNumerator
-    (catalog : Catalog arena)
-    (selected : Finset catalog.Index) : Nat :=
-  (escapePairs catalog selected).card
-```
-
-### 21.3 精确有理率
-
-```lean
-def escapeRate
-    (catalog : Catalog arena)
-    (selected : Finset catalog.Index) : ℚ :=
-  (escapeNumerator catalog selected : ℚ) /
-    (escapeDenominator arena : ℚ)
-```
-
-不得使用：
-
-- `Float`；
-- `Double`；
-- 十进制近似作为真源。
-
-### 21.4 独有捕获数
-
-```lean
-def uniqueCaptureCount
-    (catalog : Catalog arena)
-    (index : catalog.Index) : Nat :=
-  (uniqueCapturePairs catalog index).card
-```
-
-### 21.5 增益率
-
-```lean
-def theoremGainRate
-    (catalog : Catalog arena)
-    (index : catalog.Index) : ℚ :=
-  (uniqueCaptureCount catalog index : ℚ) /
-    (escapeDenominator arena : ℚ)
-```
-
-### 21.6 降低逃逸命题
-
-```lean
-def LowersEscape
-    (catalog : Catalog arena)
-    (index : catalog.Index) : Prop :=
-  escapeRate catalog catalog.fullIndexSet <
-    escapeRate catalog (without catalog index)
-```
-
-### 21.7 可执行等价命题
-
-必须证明：
-
-```lean
-theorem lowersEscape_iff_uniqueCaptureCount_pos :
-    LowersEscape catalog index ↔
-      0 < uniqueCaptureCount catalog index := by
-  ...
-```
-
-这是编译硬门使用的核心 theorem。
-
-### 21.8 共享分析与 layered exact rates
-
-```lean
-def Catalog.pairwiseCaptureOverlapRate (catalog : Catalog arena)
-    (left right : catalog.Index) : Rat :=
-  (catalog.pairwiseCaptureOverlapCount left right : Rat) /
-    (escapeDenominator arena : Rat)
-
-def Catalog.roleSignatureRate (catalog : Catalog arena)
-    (index : catalog.Index) (signature : Fin 4 → Bool) : Rat :=
-  (catalog.roleHistogram index signature : Rat) /
-    (escapeDenominator arena : Rat)
-
-def LayerChain.layeredCaptureRate (chain : LayerChain arena)
-    (layer : Fin (chain.length + 1)) : Rat :=
-  (chain.layeredCaptureCount layer : Rat) /
-    (escapeDenominator arena : Rat)
-
-def LayerChain.unresolvedRate (chain : LayerChain arena) : Rat :=
-  (chain.unresolvedCount : Rat) / (escapeDenominator arena : Rat)
-```
-
-所有分子/分母作为 exact objects 同时输出。一个 catalog 中的 rate 共享 $|D_A|$；不同
-且未证明等价的 arenas 不得合成一个 sum/average/ranking。
-
----
-
-## 22. 结构 API
-
-### 22.1 Set 级联合核
-
-```lean
-def jointKernel
-    (catalog : Catalog arena)
-    (selected : Set catalog.Index) :
-    Set (arena.State × arena.State) :=
-  {pair | ∀ index, index ∈ selected →
-    (catalog.theoremAt index).primitives.agrees pair.1 pair.2}
-```
-
-### 22.2 结构降低
-
-```lean
-def StructurallyLowersEscape
-    (catalog : Catalog arena)
-    (index : catalog.Index) : Prop :=
-  jointKernel catalog Set.univ ⊂
-    jointKernel catalog {j | j ≠ index}
-```
-
-### 22.3 结构／有限桥
-
-```lean
-theorem structurallyLowersEscape_iff_lowersEscape :
-    StructurallyLowersEscape catalog index ↔
-      LowersEscape catalog index := by
-  ...
-```
-
-### 22.4 语义闭包
-
-定义 bundle kernel：
-
-```lean
-def PrimitiveBundle.toKernel
-    (bundle : PrimitiveBundle arena) :
-    DecidableKernel arena.State :=
-  ...
-```
-
-然后定义：
-
-```lean
-def semanticClosureWithout
-    (catalog : Catalog arena)
-    (index : catalog.Index) :
-    Set (DecidableKernel arena.State) :=
-  {candidate | ∀ left right,
-    (∀ j, j ≠ index →
-      (catalog.theoremAt j).primitives.agrees left right) →
-    candidate.relation left right}
-```
-
-必须证明：
-
-```lean
-theorem lowersEscape_iff_not_mem_semanticClosureWithout :
-    LowersEscape catalog index ↔
-      (catalog.theoremAt index).primitives.toKernel ∉
-        semanticClosureWithout catalog index := by
-  ...
-```
-
-并证明它是已有 `SemanticClosure`／`strict_kernel_novelty_criterion` 的 kernel-normalized 特化。
-
----
-
-## 23. 增强 theorem API
-
-### 23.1 增强陈述
-
-```lean
-def AugmentedStatement
-    (catalog : Catalog arena)
-    (index : catalog.Index) : Prop :=
-  (catalog.theoremAt index).Statement ∧
-    LowersEscape catalog index
-```
-
-### 23.2 增强证明构造
-
-```lean
-def augmentedProof
-    (catalog : Catalog arena)
-    (index : catalog.Index)
-    (gain : LowersEscape catalog index) :
-    AugmentedStatement catalog index :=
-  ⟨(catalog.theoremAt index).proof, gain⟩
-```
-
-### 23.3 catalog 全正命题
-
-```lean
-def CatalogIrredundant
-    (catalog : Catalog arena) : Prop :=
-  ∀ index, LowersEscape catalog index
-```
-
-该命题只属于 occurrence 所在 catalog。指定 root 的全称不可约性须对其完整 maximal catalogs 证明；analysis view 上的同名性质不向 maximal catalog 传递。Seal 的目录结论字段保存冗余或不可约证明，不要求生成根级伴随定理。
-
-### 23.4 可判定实例
-
-```lean
-instance catalogIrredundantDecidable
-    (catalog : Catalog arena) :
-    Decidable (CatalogIrredundant catalog) := by
-  ...
-```
-
-该实例可基于：
-
-```lean
-∀ index, 0 < uniqueCaptureCount catalog index
-```
-
-的有限决定过程构造。
-
-### 23.5 完整正／负 verdict
-
-```lean
-def Catalog.redundantIndices (catalog : Catalog arena) :
-    Finset catalog.Index := by
-  letI := catalog.indexFintype
-  letI := catalog.indexDecidableEq
-  exact Finset.univ.filter fun index => catalog.uniqueCaptureCount index = 0
-
-def CatalogRedundant (catalog : Catalog arena) : Prop :=
-  ∃ index, catalog.uniqueCaptureCount index = 0
-
-theorem catalogIrredundant_iff_redundantIndices_eq_empty :
-    CatalogIrredundant catalog ↔ catalog.redundantIndices = ∅
-
-theorem catalogRedundant_iff_not_irredundant
-    [Nonempty catalog.Index] :
-    CatalogRedundant catalog ↔ ¬CatalogIrredundant catalog
-
-universe u v w z
-
-/-- One dependent arena/catalog pair; the catalog is definitionally over this arena. -/
-structure PackedCatalog where
-  arena : Arena.{u}
-  catalog : Catalog.{u, v, w} arena
-
-/-- The finite maximal-catalog family owned by one designated sealing root. -/
-structure DesignatedRootCatalogSuite where
-  rootId : Name
-  CatalogIndex : Type z
-  catalogIndexFintype : Fintype CatalogIndex
-  catalogIndexDecidableEq : DecidableEq CatalogIndex
-  maximalCatalog : CatalogIndex → PackedCatalog.{u, v, w}
-
-def SystemCatalogIrredundant
-    (suite : DesignatedRootCatalogSuite) : Prop :=
-  ∀ index, CatalogIrredundant (suite.maximalCatalog index).catalog
-
-/-- 同一指定 root 上的全称正性，不量化其它 roots。 -/
-abbrev SystemWidePositive
-    (suite : DesignatedRootCatalogSuite) : Prop :=
-  SystemCatalogIrredundant suite
-
-theorem systemWidePositive_iff_systemCatalogIrredundant
-    (suite : DesignatedRootCatalogSuite) :
-    SystemWidePositive suite ↔ SystemCatalogIrredundant suite :=
-  Iff.rfl
-```
-
-`DesignatedRootCatalogSuite` 的每个 `PackedCatalog` 同时携带 arena 与恰在该 arena 上的
-catalog；该有限 family 的 membership 来自 `rootId` 的 import closure，并与固定仓库快照的
-既有枚举器 manifest 完全相等，所以这些 catalogs 在仓库尺度 maximal。`SystemWidePositive`
-只是 `SystemCatalogIrredundant` 的显式同义名；不存在另一个量化 plural roots 的性质。
-不得把 auxiliary-root analysis 暗中算作系统。negative verdict 必须含完整
-`redundantIndices` 与证明；不能只报告第一个零成员。
 
 ## 24. theorem 登记语法
 
@@ -6888,27 +5943,6 @@ $$
 
 的有序 pair 定义完全一致。
 
-### 33.4 witness 提取
-
-当 `uniqueCaptureCount > 0` 时，实现应确定性提取字典序最小 witness pair：
-
-```text
-(left, right)
-```
-
-用于报告和 proof term 压缩，但 witness 选择不得影响 count。
-
-### 33.5 内存
-
-禁止为大状态空间同时物化每个 theorem 的完整 $n^2$ pair 集。应优先存储：
-
-- 状态签名；
-- fiber sizes；
-- 每 theorem 的留一 grouping；
-- 至多一个 canonical witness。
-
----
-
 ## 34. Hash 与确定性
 
 ### 34.1 canonical ordering
@@ -6939,12 +5973,11 @@ $$
 
 若 artifact 不稳定但 kernel theorem 相同，数学通过状态不应改变；不过工程测试仍应报告非确定性。
 
-`primitive_kernel_address` 的 serializer/version 也必须固定并写入 artifact。address
-coincidence class 的 ordering 可确定化，但 address equality 永不进入数学或身份决定。
+生产报告不发射 primitive kernel address 或 coincidence class。数学核的相等不由地址摘要决定。
 
 ---
 
-## 35. 测试矩阵
+## 35. 数学用例与结构检查
 
 ### T-001　单一非恒等 CUT primitive
 
@@ -7049,10 +6082,9 @@ primitive readout：`Prod.fst`、`Prod.snd`。
 修改上次 JSON 后重新编译。  
 期望：结果完全不受影响，因为编译不读取 JSON。
 
-### T-016　无历史文件
+### T-016　数学的零历史输入
 
-删除全部旧报告。  
-期望：当前编译仍完整工作。
+当前完整目录的联合核、逃逸与留一增益不取历史报告为数学参数。
 
 ### T-017　零状态／单状态 arena
 
@@ -7133,13 +6165,13 @@ fixture 同时覆盖 `equal`、`strictly_finer`、`strictly_coarser`、`incompar
 
 ### T-028　cross-arena address coincidence
 
-使用 residue/commuting 的相同 kernel address 作为 diagnostic class；期望输出
-`diagnostic_only: true`，且无法由此得到 `Equiv`、semantic transport、refinement、rate
-aggregation 或 admission evidence。尝试消费该地址得 IE-C030。
+kernel address 相同不提供 Equiv、semantic transport、refinement、rate aggregation
+或准入证据。`RegistrationRelations.rejectKernelAddressSemanticUse` 是具名辅助检查；
+生产报告不输出 coincidence class，也不自动扫描报告流调用该辅助函数。
 
 ### T-029　catalog role totals
 
-具名 fixture `RoleTotalsBoolPair` 使用 arena `Bool × Bool` 与两个 occurrences：`fst-cut`
+本数学用例使用 arena `Bool × Bool` 与两个 occurrences：`fst-cut`
 读取 `Prod.fst` 且 axis=`cut`，`snd-flow` 读取 `Prod.snd` 且 axis=`flow`。12 个 ordered
 off-diagonal pairs 上的 expected matrix rows 固定为：
 
@@ -7249,12 +6281,6 @@ redundant set 与 verdict，均在发射前得 IE-C042。
 verdict 不变；让任一 admission code path 读取这些字段得 IE-C043。相同输入重跑的 JSON 与
 ASCII bytes 相同，且 renderer 只消费 certified `is_cover: true` edges。
 
-### T-042　dual-novelty mutation suite（OPEN）
-
-预登记六项：missing disposition、stale identity、dead `escape_witness`、forged
-`proof_shape` label、zero capture、absent structural witness。5⁗ dead/forged consumer 与
-IE-C045--IE-C047 activation 必须等 owner $\tau$ ruling，不冒称 required check 已存在。
-
 ---
 
 ## 36. 与现有仓库数学内核的合并原则
@@ -7324,7 +6350,7 @@ $$
 - leave-one-out；
 - exact rate；
 - four-role signature partition；
-- aggregate compiler command。
+- 编译期契约证据。
 
 对任意 theorem $i$，必须额外证明：
 
@@ -7341,12 +6367,9 @@ $$
 当前 Lean inspector 从编译部件读取声明 kind、类型、常量依赖及公理闭包；
 生产读取与 assessment 使用 `RawArtifacts.Store`，不构建 Environment。
 
-但：
-
-- 数学 rate 必须由 Lean 定义计算；
-- accept/reject 必须由 Lean proof 决定；
-- `.NET` compactor 不得参与；
-- C# duplicate advisory 不再是研究非平凡性的真源。
+数学 rate 与计数结论由库内 Lean 定义和证明承载。
+生产报告执行契约结构评定，.NET compactor 编码和校验声明材料；
+两者均不替代数学证明。
 
 ### 36.5 与工程优化规范 v1 的分工
 
@@ -7357,8 +6380,7 @@ counting modules 必须落在 sibling `D5/S3/ConceptDynamics/InformationEscapeCo
 `tools/StrataLint.Engine/Coordinates/Gid.cs` 的 `ParseFormalCoordinates` 要求 ordinary formal
 coordinates 至少三段，sibling placement 不由文法深度推出。计算结果须有对应的数学证明
 （工程规范 §8）；工程规范 §9／§16 的 import-closure seal 义务保持有效。
-§19 的 $m\le N-1$ 约束逐 maximal catalog 保持，§20 的分包只能改变实施顺序，不能缩小
-registration closure、排除零增益 theorem 或改变一次编译合同。
+数学计数不改变 production seal 的完整 registration closure、单位向量或编译期证据义务。
 
 ---
 
@@ -7379,40 +6401,9 @@ registration closure、排除零增益 theorem 或改变一次编译合同。
 计数与层级数学模块放在 GID 合法的 sibling `InformationEscapeCounting/` 与
 `InformationEscapeHierarchy/`；它们不为生产报告增加分析输出协议。
 
-## 38. 明确删除旧设计
+## 39. 数学与生产约束
 
-实现与文档中必须删除或弃用以下概念：
-
-```text
-AnalysisDomain.target
-ResearchProblem
-ResearchReceipt as semantic root
-parentCatalog
-baselineCatalog
-CatalogSnapshot as next-run input
-previousAccepted
-epoch comparison
-candidate commit
-minimum captured weight
-manual triage value
-cost-adjusted priority
-Shapley allocation
-historical delta gate
-Stage A generated source
-Stage B recompilation
-```
-
-允许保留 `Catalog` 一词，但其含义必须是：
-
-> 当前单次编译中完整 theorem unit 有限族。
-
-不得表示历史快照。
-
----
-
-## 39. 完成定义
-
-工程实现只有同时满足以下条件才算完成。
+以下区分库内数学性质与生产报告约束。
 
 ### AC-001　规范入口
 
@@ -7422,9 +6413,9 @@ Stage B recompilation
 
 Lean 内核检查数学证明；报告实现只读编译数据并核对结构，外部 JSON 不提供数学证明权威。
 
-### AC-003　零历史输入
+### AC-003　数学的零历史输入
 
-删除旧 JSON、旧 cache、旧 snapshot、Git metadata 后，结果不变。
+本规范的联合核、留一增益与 exact rate 只取同一当前数学目录为参数。
 
 ### AC-004　全精确
 
@@ -7446,7 +6437,7 @@ Lean 内核检查数学证明；报告实现只读编译数据并核对结构，
 
 常值、重复、可恢复或 wrapper primitive readout 可具有零独有捕获。
 Seal 保留完整 peers 与每个索引的编译证明；合法冗余目录可提供 redundant 结论。
-这不授予首次冻结的正性资格，独立 dual-novelty gate 保持 OPEN、无 required check。
+这不授予首次冻结的正性资格，独立 该数学分类不构成额外生产准入门。
 
 ### AC-008　次序不变
 
@@ -7536,214 +6527,6 @@ lattice operations、strict steps、collapsed additions 和 chain-independent in
 
 Reg 的 import 闭包不含实现包。接口升级原子迁移全部用法；实现变化不重编登记。
 验证使用当前实现的定向测试与完整报告；不以旧判官判词逐条相同作验收。
-
-### GATE　delta-first dual novelty gate
-
-设计对象只包含 base 无现役 Freeze、candidate HEAD 新增首次 Freeze 的 declarations。对每个
-此类 `statement_id`，未来 gate 必须原子验证以下合取，任一项不蕴含另一项：
-
-$$
-\operatorname{DispositionBound}
-\land
-\operatorname{ObjectNovelty}
-\land
-\operatorname{AdmissionCertificateValid}.
-$$
-
-`DispositionBound` 要求 HEAD identity 的 exactly-one disposition。`ObjectNovelty` 要求
-object-realizable theorem 在 designated system root 的 maximal catalog 恰出现一次，finite
-须有 `LowersEscape`，structural 须有具 pair witness 的 strict inclusion；完整记录所有 zero members，仅待首次冻结对象的 positivity 失败使 gate 原子失败。
-`AdmissionCertificateValid` 独立消费
-`CLAUDE.md` 第 3.2 条的 `proof_shape`、直接 frozen dependencies、`escape_witness` 与
-`admission_basis`；合法 basis 与 bind-only 伴随声明的实际使用条件均以该条为唯一真源，
-本设计不保留独立的枚举或准入例外。
-
-执行次序是 delta-first：先只判 first-freeze delta，再处理 identity-keyed legacy debt set $D$；
-每次必须证明 $D_{head}\subseteq D_{base}$，当 $D=\varnothing$ 时自动切为 full-tree enforcement，
-之后不得重新扩债。mandatory mutations 是 missing disposition、stale identity、dead witness、
-forged label、zero capture 与 absent structural witness。
-
-H4 所称 “base-owned consumer” 在当前 `CLAUDE.md` 的永久 base-judge 禁令下只可解释为
-**protected-base-owned immutable policy/input bytes**；不得 checkout、编译或执行 base code。
-实际 consumer 必须是 candidate-owned judge，读取 SHA-bound protected-base data，并受现有
-judge/content partition 约束。若 owner 对此解释另有裁决，以新的 $\tau$ ruling 更新规范后才可
-实施，不能在 content PR 中自行选择。
-
-此抽象 GATE 不是现役 required check。生产准入采用现行 StrataLint 规则；
-本节的 disposition／object-novelty 合取不构成额外机器门。
-
----
-
-# 第四部　最小 Lean 参考骨架
-
-以下代码是实现骨架，需按仓库实际 universe、namespace 与已存在定义调整。
-
-```lean
-universe u v w
-
-namespace D5.S3.ConceptDynamics.InformationEscape
-
-structure Arena where
-  State : Type u
-  stateFintype : Fintype State
-  stateDecidableEq : DecidableEq State
-  stateNontrivial : 2 ≤ @Fintype.card State stateFintype
-
-inductive PrimitiveAxis
-  | cut
-  | flow
-  | admit
-  | anchor
-  deriving DecidableEq, Repr
-
-structure DecidableKernel (X : Type u) where
-  relation : X → X → Prop
-  equivalence : Equivalence relation
-  decidableRelation : DecidableRel relation
-
-structure PrimitiveAtom (arena : Arena) where
-  axis : PrimitiveAxis
-  kernel : DecidableKernel arena.State
-
-structure PrimitiveBundle (arena : Arena) where
-  Index : Type v
-  indexFintype : Fintype Index
-  indexDecidableEq : DecidableEq Index
-  atom : Index → PrimitiveAtom arena
-
-namespace PrimitiveBundle
-
-variable {arena : Arena}
-
-def agrees (bundle : PrimitiveBundle arena)
-    (left right : arena.State) : Prop :=
-  ∀ index, (bundle.atom index).kernel.relation left right
-
-def agreesB (bundle : PrimitiveBundle arena)
-    (left right : arena.State) : Bool := by
-  letI := bundle.indexFintype
-  letI := bundle.indexDecidableEq
-  exact Finset.fold (fun left right => left && right) true
-    (fun index =>
-      @decide ((bundle.atom index).kernel.relation left right)
-        ((bundle.atom index).kernel.decidableRelation left right)) Finset.univ
-
-theorem agreesB_eq_true_iff
-    (bundle : PrimitiveBundle arena)
-    (left right : arena.State) :
-    bundle.agreesB left right = true ↔
-      bundle.agrees left right := by
-  -- Finset.fold_op_rel_iff_and reflection proof
-  sorry
-
-end PrimitiveBundle
-
-structure TheoremUnit (arena : Arena) where
-  primitives : PrimitiveBundle arena
-  Statement : Prop
-  proof : Statement
-
-structure Catalog (arena : Arena) where
-  Index : Type w
-  indexFintype : Fintype Index
-  indexDecidableEq : DecidableEq Index
-  theoremAt : Index → TheoremUnit arena
-
-namespace Catalog
-
-variable {arena : Arena} (catalog : Catalog arena)
-
-def fullIndexSet : Finset catalog.Index := by
-  letI := catalog.indexFintype
-  letI := catalog.indexDecidableEq
-  exact Finset.univ
-
-def without (index : catalog.Index) : Finset catalog.Index := by
-  letI := catalog.indexDecidableEq
-  exact (fullIndexSet catalog).erase index
-
-def offDiagonalPairs : Finset (arena.State × arena.State) := by
-  letI := arena.stateFintype
-  letI := arena.stateDecidableEq
-  exact Finset.univ.filter fun pair => pair.1 ≠ pair.2
-
-def indistinguishableB
-    (selected : Finset catalog.Index)
-    (left right : arena.State) : Bool :=
-  selected.toList.all fun index =>
-    (catalog.theoremAt index).primitives.agreesB left right
-
-def indistinguishable
-    (selected : Finset catalog.Index)
-    (left right : arena.State) : Prop :=
-  ∀ index, index ∈ selected →
-    (catalog.theoremAt index).primitives.agrees left right
-
-theorem indistinguishableB_eq_true_iff
-    (selected : Finset catalog.Index)
-    (left right : arena.State) :
-    indistinguishableB catalog selected left right = true ↔
-      indistinguishable catalog selected left right := by
-  sorry
-
-def escapePairs
-    (selected : Finset catalog.Index) :
-    Finset (arena.State × arena.State) := by
-  letI := arena.stateFintype
-  letI := arena.stateDecidableEq
-  exact (offDiagonalPairs catalog).filter fun pair =>
-    indistinguishableB catalog selected pair.1 pair.2 = true
-
-def uniqueCapturePairs
-    (index : catalog.Index) :
-    Finset (arena.State × arena.State) := by
-  letI := arena.stateFintype
-  letI := arena.stateDecidableEq
-  exact (escapePairs catalog (without catalog index)).filter fun pair =>
-    (catalog.theoremAt index).primitives.agreesB pair.1 pair.2 = false
-
-def escapeDenominator : Nat :=
-  (offDiagonalPairs catalog).card
-
-def escapeNumerator
-    (selected : Finset catalog.Index) : Nat :=
-  (escapePairs catalog selected).card
-
-def uniqueCaptureCount
-    (index : catalog.Index) : Nat :=
-  (uniqueCapturePairs catalog index).card
-
-def escapeRate
-    (selected : Finset catalog.Index) : ℚ :=
-  (escapeNumerator catalog selected : ℚ) /
-    (escapeDenominator catalog : ℚ)
-
-def theoremGainRate
-    (index : catalog.Index) : ℚ :=
-  (uniqueCaptureCount catalog index : ℚ) /
-    (escapeDenominator catalog : ℚ)
-
-def LowersEscape
-    (index : catalog.Index) : Prop :=
-  escapeRate catalog (fullIndexSet catalog) <
-    escapeRate catalog (without catalog index)
-
-def AugmentedStatement
-    (index : catalog.Index) : Prop :=
-  (catalog.theoremAt index).Statement ∧
-    LowersEscape catalog index
-
-def CatalogIrredundant : Prop :=
-  ∀ index, LowersEscape catalog index
-
-end Catalog
-
-end D5.S3.ConceptDynamics.InformationEscape
-```
-
-生产实现必须证明每个 primitive constructor 的 kernel correctness、`PrimitiveBundle.agreesB` 与结构联合 kernel 的 reflection correctness，以及 `Catalog.indistinguishableB` 与量化版 catalog kernel 的 reflection correctness；Bool 计算结果只有经这些 theorem 传回 Prop 后才能用于最终 kernel certificate。
-
----
 
 # 第五部　最小数学示例
 
@@ -8214,7 +6997,7 @@ alignment device；二者都不声称 OI 与 IC 是同一个 causal ontology。
 
 # 第六部　最终规范句
 
-## 44. 唯一 positive admission 数学判词
+## 44. Positive admission 的数学条件
 
 对当前 root $R$ 的 import closure 与 canonical object arena $A$ 形成的 maximal catalog
 $\mathcal T_{R,A}$，每个 occurrence $i$ 的 positive admission 数学条件是：
@@ -8230,9 +7013,9 @@ $$
 这不是历史增量，而是当前 occurrence 在当前 maximal peers 内部的留一反事实。ordered
 layered capture 是 chain analysis，不替代该准入判词。
 
-## 45. 唯一 positive admission 条件
+## 45. Positive admission 的数学全称式
 
-指定 maximal catalogs 的 positive admission 要求下列全称正性，而完整、非退化且合法的 catalogs 独立完成 level-0 classification seal，目录冗余或不可约的证明由 `SealCatalog.conclusion` 携带；§8.7 的待首次冻结对象 dual-novelty gate 保持 OPEN、无 required check，其 positivity 仅由该对象自身判定。
+本节的 positive admission 是下列全称正性的数学简称，不是生产准入状态。指定 maximal catalogs 的数学条件为而完整、非退化且合法的 catalogs 独立完成 level-0 classification seal，目录冗余或不可约的证明由 `SealCatalog.conclusion` 携带；对象正性与目录可记录性是独立数学条件。
 
 $$
 \boxed{
@@ -8365,7 +7148,7 @@ overlap/refinement、multiplicity spectrum、role totals 与 layer-chain identit
 
 kernel 地址一致不证明关系外延相等、transport、rate 或目录结论。不同 canonical
 arena 的数学结果不能强行聚合为标量。有效冗余目录可提供 Seal，但不获得对象正性。
-首次冻结的独立 dual-novelty gate 仍 OPEN、无 required check。
+该数学正性条件不构成额外生产准入门。
 
 ## 50. Generated-kernel hierarchy 的数学边界
 
@@ -8386,7 +7169,7 @@ strict-inclusion proof 与 pair witness。有限截断没有 transfer theorem �
 
 这些层级数学结果属于 D5 库。Reg 的 Seal 保留编译期数学证据，报告只核对完整
 import 闭包与 exact catalog；不要求 materialize 全部 subsets 或输出层级统计协议。
-object-level novelty 与 `proof_shape` 正交；独立 dual-novelty gate 仍 OPEN、无 required check。
+object-level novelty 与 `proof_shape` 正交；生产准入由现行 StrataLint 规则执行。
 
 
 数学对象是有限 closure lattice，操作关系是可含 shortcuts 的

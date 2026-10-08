@@ -136,9 +136,8 @@ Inspector 的可复用工件由 [Lake facets](lakefile.lean) 管理，均在当�
 归档携带原生 Inspector 可执行文件、模块与汇总工件，以及规范报告、materials、origin 和
 attestation。发布继续使用 mathlib 分区内的 run/attempt 快照及 draft 上传协议；draft
 不能作为可用种子。传输失败不改变已经完成的构建与报告结论。
-旧两段或三段哈希的 `lean-cache-v1` 归档都只作为同 mathlib/平台的增量种子，消费时核对
-manifest 与 tag 的声明地址；不恢复 config/exact/same-toolchain 选择。Lake trace 与
-编译依赖 trace、utility 输入与报告格式标识决定还原后的报告复用；验证器只查结构与工件完整性。
+Lake 编译依赖 trace、utility 输入与报告格式标识决定还原后的报告复用；
+验证器只查结构与工件完整性。
 正常 Lean-cache 负责依赖物化和既有构建归档；
 [ensure](../StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs) 按 donor
 规则播种当前工作树的私有 `.lake`，支持时使用 clonefile，复制后的写入与 donor 隔离。
