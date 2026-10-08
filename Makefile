@@ -146,4 +146,4 @@ gate:
 	dotnet "$$cli" check-delta --protected-base "$$(git rev-parse --verify '$(BASE)^{commit}')" --candidate-lean-report "$(LEAN_REPORT)"
 
 compiled-judge-test:
-	@$(MAKE) lean LEAN_TARGETS="regInspector/LeanInformationAuditRegTests regInspector/compiledJudgeTests leanInspector/reportInspector" && lake -d tools/lean-inspector-reg env .lake/build/lean-inspector/reg/bin/compiledJudgeTests
+	@/bin/bash tools/scripts/compiled-judge-test.sh

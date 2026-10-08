@@ -16,6 +16,22 @@ make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
 和 Python 3。[入口](inspect.sh)负责输入验证、utility 输入工具构建、Lean-cache
 ensure、原生 Lake 报告构建和发布。
 
+The native executables `reportInspector` and `compiledJudgeTests` have no D5,
+Reg or Mathlib modules in their transitive Lean imports. Their static contract
+dependency is the mathematical-dependency-free Core module. Mathematical
+contract heads use fully qualified names; the existing `RawArtifacts` reader
+loads their compiled declarations at runtime. Root `make compiled-judge-test`
+delegates to [the test entrypoint](../scripts/compiled-judge-test.sh), which uses
+`make lean` to build the test library and both executables, then runs the native
+tests. The library's existing directory glob includes
+[Fixtures/CompiledInputs.lean](LeanInformationAuditRegTests/Fixtures/CompiledInputs.lean);
+its imports register the runtime Reg inputs. Lake builds these dependencies and
+the fixture artifacts separately from the executable import graph; dispatchers
+carry no copied Reg module list. The executable checks both compiled program
+import closures and enumerates contract name literals in compiled implementation
+expressions to verify each against the interface artifacts. Missing input
+artifacts, unknown names and malformed structures produce named failures.
+
 Typed contract discovery inspects the five direct compiled Contract heads.
 Entries have safe, closed definition values; the decoder accepts constructor
 trees and safe constant references. Standalone ExpectedDeclaration is rejected
@@ -101,8 +117,8 @@ use `Reg/Catalogs/D5/<D5 relative module path>/RootCatalog.lean` or
 `SealedCatalog.lean`; mirrors retain their registrations at their original
 paths, catalogs import those leaves, and leaves do not import catalogs. Catalog
 root IDs use the catalog module and `registrationModuleName` retains the leaf
-owner. Catalogs and seals are optional analysis groups: report evaluation does
-not require catalog membership, and missing seals remain named absent inputs.
+owner. Ordinary modules require neither catalog nor seal entries; reserved catalog
+leaves enforce the RootCatalog and Seal cardinalities described above.
 
 Reg sources compile to the typed contract heads. Catalogs use RootCatalog
 entries and seals use Seal entries. The report accepts constructor trees and
@@ -128,7 +144,7 @@ Inspector 的可复用工件由 [Lake facets](lakefile.lean) 管理，均在当�
 | `producer/` | 原生编译的 inspector 可执行程序及其构建产物。 |
 | `modules/<Lean.Module>.zip` | 每模块报告、materials 与实际生成来源。 |
 | `report.zip` | 汇总后的完整规范报告 bundle。 |
-| `inputs/`、`inputs.json`、`compatibility` | 从登记输入生成的模块输入、成员集合及兼容标识。 |
+| `inputs/`、`inputs.json`、`report-format` | 当前模块输入、成员及配置坐标、报告格式标识。 |
 
 这些是构建产物，不提交为源码。Lean-cache 发布先经同一 `make lean-report` / `inspect.sh`
 入口完成登记的程序目标、原生报告及完整校验，再打包根 buildDir；不另跑一轮 `lake build`。
@@ -136,9 +152,8 @@ Inspector 的可复用工件由 [Lake facets](lakefile.lean) 管理，均在当�
 归档携带原生 Inspector 可执行文件、模块与汇总工件，以及规范报告、materials、origin 和
 attestation。发布继续使用 mathlib 分区内的 run/attempt 快照及 draft 上传协议；draft
 不能作为可用种子。传输失败不改变已经完成的构建与报告结论。
-旧两段或三段哈希的 `lean-cache-v1` 归档都只作为同 mathlib/平台的增量种子，消费时核对
-manifest 与 tag 的声明地址；不恢复 config/exact/same-toolchain 选择。Lake trace 与
-编译依赖 trace、utility 输入与报告格式标识决定还原后的报告复用；验证器只查结构与工件完整性。
+Lake 编译依赖 trace、utility 输入与报告格式标识决定还原后的报告复用；
+验证器只查结构与工件完整性。
 正常 Lean-cache 负责依赖物化和既有构建归档；
 [ensure](../StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs) 按 donor
 规则播种当前工作树的私有 `.lake`，支持时使用 clonefile，复制后的写入与 donor 隔离。
@@ -212,7 +227,7 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 导出证据和来源 sidecar 不重复存储导入源码的原始摘要。
 外部包依赖由登记的 Lake manifest pin 约束。
 
-兼容身份与实际产地分别记录。[provenance-v4](publication.py) 的
+报告格式身份与实际产地分别记录。[provenance-v4](publication.py) 的
 `producer_sha256`、`repository_inspector_sha256` 承载报告格式标识的哈希；实际生成来源的摘要记在
 `module_origins` 各模块的 `producer_sources_sha256` 和
 `inspector_executable_sha256`，并绑定该模块报告哈希。复用保持原始来源，增量汇总可含
@@ -223,7 +238,7 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 发布和导出报告的 [输入验证](../scripts/report/lean-report-input.sh) 核对来源记录、模块成员与登记路径，
 不重算当前源码、claim 源码或捕获依赖的文件摘要来决定复用。
 提取语义或报告格式改变时更新报告格式标识；判官实现或规则改动保留未改动登记的既有判词。
-兼容 producer 改动不要求旧行的生成指纹等于当前 producer；重新生成的行才记录新指纹。
+判官实现改动不要求旧行的生成指纹等于当前 producer；重新生成的行才记录新指纹。
 仓库输入地址与 provenance 的 `input_address` 由同一输入工具按各自编码计算，
 不能互换，commit ID 与工作树名称不参与这些地址。
 
@@ -241,7 +256,7 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 已用 `make lean-report` 准备好工具和私有 `.lake` 后，可以检查原生报告目标：
 
 ```sh
-tools/scripts/worktree/lean-cache-run.sh lake --no-build build :report
+tools/scripts/worktree/lean-cache-run.sh lake -d tools/lean-inspector-reg --no-build build :report
 ```
 
 该命令经同一 writer 入口运行，只检查原生目标，不发布到 `LEAN_REPORT`。
@@ -257,7 +272,9 @@ material 校验，`include_in_statement=false` 的声明也须有对应材料。
 不安全或穿越 symlink 的路径、模块冲突或无法解析、无效的 utility/claim 输入均不
 通过；不会猜测输入或把错误降为缓存未命中。只声明为 `optional` 的缺项可被接受。
 Lean、audit、工具构建和发布失败也返回非零。阶段失败输出会指出
-`LEAN_INSPECTOR_FAILED phase=… exit=…` 并打印诊断；ensure 成功后，各阶段诊断保存在
+`LEAN_INSPECTOR_FAILED phase=… exit=…` 并打印诊断；阶段被信号中断时输出
+`LEAN_INSPECTOR_INTERRUPTED phase=… exit=…`、该阶段已有输出及原生阶段观察，保留非零退出码。
+ensure 成功后，各阶段诊断保存在
 所选输出文件名后附的 `.logs/` 目录中。修正具名输入或构建错误后，仍使用同一
 `make lean-report` 入口重试。
 
@@ -287,10 +304,11 @@ Report reuse comes from the Lake compiler trace, utility inputs and the report f
 
 Seals retain compiler-checked nondegeneracy, bundle nonemptiness, lowering/triviality and semantic-closure membership, catalog redundancy and kernel-collision obligations. The judge checks that the arena, catalog and complete ordered unit vector match exactly the registrations in the import closure. Seal contracts and reports contain no counts, state partitions, primitive statistics or role buckets.
 
-Utility refutations require the raw claim type `Prop` and the raw result type `Not claim`. The judge compares those compiled types literally; it does not unfold definitions, reduce aliases or use a Reg refutation certificate.
+Utility refutations require the raw claim type `Prop` and the raw result type `Not claim`. The judge compares those compiled types literally, without unfolding or reduction. The utility and DTR exemption use the same selector: the unique included declaration with that final name component in the designated compiled module. Its full name supplies the exemption in every namespace, including no namespace. Other new public theorems remain subject to DTR; an ambiguous selector exempts none.
 
 The implementation library contains the production artifact evaluator and its pure
-support modules. Tests and independent analyses live in the downstream Reg host.
+support modules. Tests and independent analyses live in the downstream host
+`tools/lean-inspector-reg`, which requires both Reg and Impl.
 The production report builds no test library. CI explicitly builds the full
 downstream test library and runs the native compiled judge tests.
 `make compiled-judge-test` builds and runs the native tests against the same
@@ -309,5 +327,5 @@ field only for the exact complete generic Law body. All raw dependencies and
 proper subexpressions retain their identity checks.
 
 Downstream projection tools do not issue registration verdicts. Utility refutations
-compare compiled types by bounded structural computation; Lean checks theorem proof terms during compilation. Unsupported
-comparisons fail by name.
+compare the raw claim type `Prop` and result type `Not claim` literally; Lean checks
+the theorem proof term during compilation. Aliases and expanded negations fail this literal relation.

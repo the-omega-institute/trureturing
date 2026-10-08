@@ -55,18 +55,18 @@ def discoverCompiled (requirements : Array RootStructure.Requirement)
       let info := definition.info
       try
         let head := info.type.getAppFn.constName!
-        if head == ``Contract.Registration then
+        if head == `LeanInformationAudit.Contract.Registration then
           let row ← Decoder.registration context (← axiomsOf info.name) owner info source
           result := { result with registrations := result.registrations.push (owner, row) }
-        else if head == ``Contract.TemplateEnrollment then
+        else if head == `LeanInformationAudit.Contract.TemplateEnrollment then
           let value ← IO.ofExcept <| Decoder.enrollment context.find owner info source
           result := { result with enrollments := result.enrollments.push (owner, value) }
-        else if head == ``Contract.RootCatalog then
+        else if head == `LeanInformationAudit.Contract.RootCatalog then
           let value ← IO.ofExcept <| Decoder.rootCatalog context.find info.value
           result := { result with roots := result.roots.push (owner, value) }
-        else if head == ``Contract.ExpectedDeclaration then
+        else if head == `LeanInformationAudit.Contract.ExpectedDeclaration then
           throw <| IO.userError s!"contract.root_structure:independent_expected_not_allowed:{owner}:{info.name}"
-        else if head == ``Contract.Seal then
+        else if head == `LeanInformationAudit.Contract.Seal then
           let value ← IO.ofExcept <|
             Decoder.readSeal context.find (← axiomsOf info.name) info.name info.value
           result := { result with seals := result.seals.push (owner, value) }
