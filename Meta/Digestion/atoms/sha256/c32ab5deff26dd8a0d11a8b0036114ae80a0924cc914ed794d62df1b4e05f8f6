@@ -1,0 +1,28 @@
+**有限截断计数式的复核。** 该有限式来自 Wang v1 的谱修正；亦见 [Knausgård, arXiv:2610.08965, Lemma 2.1](https://arxiv.org/html/2610.08965v1)。以下复核所需代数，解析能量另由上述 Lamzouri 输入承担。固定上述一个 $\eta$，对任何非空共轭对称有限多重集，令 $f_z(t)=\eta(t)e^{-2\pi izt}$，内积第一变量线性，$(v\otimes w)\xi=\langle\xi,w\rangle v$。令 $P$ 为简单实点的 $f_x\otimes f_x$ 之和。完整反射自伴有限秩算子 $A=\sum_{z\text{ distinct}}m_zf_z\otimes f_{\bar z}$ 满足
+$$
+\operatorname{tr}A=N,\qquad \operatorname{tr}A^2=\mathcal E.
+$$
+记 $r_2$ 为非简单实点的不同点数，$k$ 为不同非实共轭对数。写 $f_z=g_z+ih_z$、$f_{\bar z}=g_z-ih_z$，则每对非实项为 $2m_z(g_z\otimes g_z-h_z\otimes h_z)$。故 $Q=A-P$ 是两个半正定算子之差，正项的秩至多 $r_2+k$；它的正谱部分 $Q_+$ 也有秩至多 $r_2+k$。
+
+令 $p_j,\nu_j$ 分别为 $P,Q_-$ 的递减特征值。经典迹重排给 $\operatorname{tr}(PQ_-)\le\sum_jp_j\nu_j$，而 $\operatorname{tr}(PQ_+)\ge0$。使用 $\lambda^2\ge4\lambda-4$ 于 $Q_+$ 的至多 $r_2+k$ 个正特征值，得到
+$$
+\mathcal E\ge4(N-n)-4(r_2+k)
++\sum_j\bigl((p_j-\nu_j)^2+4\nu_j\bigr).
+$$
+对 $p\ge0$，
+$$
+\min_{\nu\ge0}\bigl((p-\nu)^2+4\nu\bigr)
+=2p-1+\Psi(p)=:\Phi(p),\qquad \Phi(0)=0.
+$$
+$P$ 与原维数简单实点 Gram 的非零谱相同，且 $\Phi(0)=0$，所以
+$\sum_j\Phi(p_j)=n+\operatorname{tr}\Psi(G)$。于是
+$$
+\mathcal E\ge4N-3n-4(r_2+k)+\operatorname{tr}\Psi(G).
+$$
+重数预算 $N-n\ge2r_2+2k$ 给 (21.10) 的有限式。同时，不同点数 $N_d=n+r_2+2k$ 满足
+$$
+N_d\ge\frac32N-\frac12\mathcal E+\frac12\operatorname{tr}\Psi(G).
+\tag{21.11}
+$$
+这里保留 $\Psi(0)=1$ 与原 Gram 维数；跨不同维数转运的是 $\Phi$。本段是已有有限计数法的复核，不主张为新增数学。
+

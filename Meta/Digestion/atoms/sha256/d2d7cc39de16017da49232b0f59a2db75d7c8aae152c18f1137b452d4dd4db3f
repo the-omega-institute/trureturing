@@ -1,0 +1,21 @@
+**数学引文 6.2（指定乘积补全）。** 复用行列式卷 §五的拼接，以及 Wainwright–Jordan 例 2.2 的 separator 因子，定义
+
+```math
+p^\star(x,z,y)=
+\begin{cases}
+p_L(x,z)p_R(y,z)/p_z(z),&p_z(z)>0,\\
+0,&p_z(z)=0.
+\end{cases}
+```
+
+零 separator 下两边所有对应非负项均为零。正 separator 下求和得到 $`p_z(z)`$，故全律归一化并有原边缘。$`r>0`$ 时逐格为
+
+```math
+\begin{aligned}
+p_0^\star&=(r-X)(r-Y)/r,&p_2^\star&=X(r-Y)/r,\\
+p_3^\star&=Z,&p_5^\star&=Y(r-X)/r,&p_{25}^\star&=XY/r.
+\end{aligned}
+```
+
+$`r=0`$ 时直接定义 $`p^\star=\delta_3`$。这也等于上式的连续顶点延拓：四个底面概率均不超过 $`r`$。
+
