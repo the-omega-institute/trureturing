@@ -36,7 +36,10 @@ internal sealed class FaalNonStableDocument : IScribeDocumentDefinition
                 H("A family for every positive connectivity"), StatementSource.FromAuthor(Disp(F.Id("claim"))),
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text("Put a = max(r−2,0), take G = K_a ∨ C₄, and mark the cycle vertex of index 0. Cliques of a join split uniquely into cliques of its two factors. The complete factor contributes (1+x)^a and the marked four-cycle contributes (1+2x)(1+x+xy). Thus C_B = (1+x)^a(1+2x)(1+x+xy), which vanishes at x=i and y=−1+i, both with imaginary part 1. After deletion of fewer than r vertices, a remaining complete-graph vertex connects all survivors; if no such vertex remains, at most one cycle vertex was deleted. The induced four-cycle has no chord, and every clique has size at most a+2 < r+3. Natural subtraction r−2 denotes max(r−2,0). For r=1 and r=2 the family is C₄; the assertion is r-connectedness and makes no exact-connectivity claim."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("teimoori-faal-2026-b-restricted-clique-real-stability"),
+                    ResolutionKind.Proved))), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(

@@ -84,6 +84,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/CliquePolynomial/FaalNonStable.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/teimoori-faal-2026-b-restricted-clique-real-stability` (proved) by `D5/S3/Combinatorics/Graph/CliquePolynomial/FaalNonStable.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"teimoori-faal-2026-b-restricted-clique-real-stability","declaration_gid":"D5/S3/Combinatorics/Graph/CliquePolynomial/FaalNonStable.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* H. Teimoori Faal (2026). *A Bivariate B-Restricted Clique Polynomial: From Local Neighborhoods to Global Expansion*. URL: <https://arxiv.org/abs/2602.24151v1>.
