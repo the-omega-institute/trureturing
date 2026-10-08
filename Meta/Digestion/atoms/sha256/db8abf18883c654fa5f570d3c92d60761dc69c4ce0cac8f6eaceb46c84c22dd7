@@ -1,0 +1,10 @@
+**定义 5.1（乘积补全及闭支撑约定）。** 当 $`r>0`$ 时，以
+
+```math
+\begin{aligned}
+\kappa^\star&=XY/r,&p_3^\star&=Z,\\ p_0^\star&=(r-X)(r-Y)/r,&p_2^\star&=X(r-Y)/r,\\ p_5^\star&=Y(r-X)/r,&p_{25}^\star&=XY/r
+\end{aligned}
+```
+
+定义同均值的独立补全。$`r=0`$ 时单独定义 $`p_3^\star=1`$，其余为零。熵以二为底，使用 $`0\log_2 0=0`$；$`D_2(p\Vert q)=\sum_{p_s>0}p_s\log_2(p_s/q_s)`$，若某 $`p_s>0,q_s=0`$ 则值为无穷。$`h_2`$ 为二元熵，亦连续延拓到零、一。
+

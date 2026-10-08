@@ -1,0 +1,5 @@
+source_id = "auric-fib-atom-pyramid-correlation-and-native-continuation"
+path = "docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md"
+atomizer = "generic-v1"
+genre_registry_check = "no-registry"
+unregistered_genres = []

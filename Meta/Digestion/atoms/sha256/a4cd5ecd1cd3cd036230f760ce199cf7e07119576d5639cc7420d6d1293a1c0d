@@ -1,0 +1,12 @@
+**证明。** 取主块 $G[S]$ 的正交单位特征向量 $v_j$，向 $S$ 外补零。标量凸函数 $\Psi$ 作用于 $G$ 的谱分解给
+$$
+\Psi(v_j^*Gv_j)\le v_j^*\Psi(G)v_j.
+$$
+求和得到 $D_\Psi(G[S])\le\operatorname{tr}(P_S\Psi(G))$。置 $Q=\sum_\alpha w_\alpha P_{S_\alpha}$，式 (17.2) 恰给 $0\le Q\le I$；又 $\Psi(G)\succeq0$，故
+$$
+\sum_\alpha w_\alpha D_\Psi(B_\alpha)
+\le\operatorname{tr}(Q\Psi(G))
+\le\operatorname{tr}\Psi(G).
+$$
+最后一步因为 $\operatorname{tr}(\Psi(G)^{1/2}(I-Q)\Psi(G)^{1/2})\ge0$。式 (17.1) 与可行域的紧性给式 (17.4)；各非空块的权重均不超过一。∎
+
