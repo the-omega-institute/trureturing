@@ -620,7 +620,9 @@ private theorem six_forcing (ν : ℝ) (hν : ν < lambda) (hJ : J < lambda - ν
   intro j hj
   let b := j / 6
   have hb : b < m := by dsimp [b]; omega
-  have he : j = 6 * b + j % 6 := by dsimp [b]; omega
+  have he : j = 6 * b + j % 6 := by
+    dsimp only [b]
+    exact (Nat.mod_add_div j 6).symm.trans (Nat.add_comm _ _)
   obtain ⟨hax, hay⟩ := hstart b hb
   have ht := three_forcing ν hν hδ4 x y (start + 6 * b) r (hsub (6 * b) 3 (by omega)) hax hay
   obtain ⟨hx3, hy3⟩ := hswap (6 * b) (by omega) hax hay
