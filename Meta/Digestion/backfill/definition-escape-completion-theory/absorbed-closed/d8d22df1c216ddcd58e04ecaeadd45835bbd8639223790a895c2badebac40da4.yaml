@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:d8d22df1c216ddcd58e04ecaeadd45835bbd8639223790a895c2badebac40da4
   normalized_sha256: sha256:d8d22df1c216ddcd58e04ecaeadd45835bbd8639223790a895c2badebac40da4
 cas_ref: sha256:d8d22df1c216ddcd58e04ecaeadd45835bbd8639223790a895c2badebac40da4
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/SemanticOverreachLegacyBridge.semantic_overreach_iff_overreach
+    target_statement_id: sha256:bbac50517664f39d7c1e024958c591eb5b177401e2ef68d6f8e71e5165a72740
 receipts:
   unresolved_subitems: []
