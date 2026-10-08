@@ -33,12 +33,12 @@ SealCatalog 的逐成员结论允许 positive 或 zero；zero 携带平凡性与
 | `Makefile` | 已有 `make lean`、`lean-report`、`gate`、发布与取回缓存入口 | 扩展现有入口，不叠加第二套命令体系 |
 | `tools/lean-inspector/Inspector.lean` | 用 `RawArtifacts.Store` 读取编译部件，按模块流式输出报告 | 按实际输入闭包和批次边界测量读取成本 |
 | 同上 | 公理闭包已有 Tarjan SCC 与运行级共享缓存 | 保留；不能将“新增 memoization”当作本轮主要收益 |
-| `lakefile.lean` / `native.py` | Lake trace 决定编译产物和整份报告复用 | 实现字节不进入报告复用条件 |
+| `tools/lean-inspector/lakefile.lean`、`native.py`、`reuse.py` | Lake trace 决定模块报告与汇总工件复用；完整调用另由 `.reuse.json` 核对登记输入与报告五件套 | 实现字节不进入报告复用条件 |
 | `materials.py` / `publication.py` | 校验并发布 canonical 报告与材料 | 按实际分配量测量内存 |
-| `CompiledSeal.lean` | 按 `arenaName` 分组、确定顺序、构造当前目录 | arena 是语义边界，不是可以任意改的小批次 |
+| `CompiledSeal.lean` | 按 `canonicalObjectArenaName` 分组、确定顺序、构造当前目录 | 分组使用解析后的对象舞台身份 |
 | `Contract/Catalog.lean` | SealRow 承载逐成员结论；SealCatalog 将数学证据绑定同一单位向量目录 | 数学证据在 Reg 编译期检查 |
 | `ExactRate.lean` | 已证明 `escapeNumerator_without_eq` 等式及正增益刻画 | 可直接复用，避免重新枚举每个留一族 |
-| `CompiledSeal.lean` | 消费编译期已检查的 Seal；报告期核对目录身份、arena、成员顺序与完整单位向量 | 保留原子性，增强文件发布与编译产物绑定 |
+| `CompiledSeal.lean` | 消费编译期已检查的 Seal；报告期核对目录身份、arena、成员顺序与完整单位向量 | 同一编译契约绑定目录与数学义务 |
 | `README.md`、缓存归属文档 | 私有工作树、禁止 symlink 共享 `.lake`、已有 clonefile/donor | 不以移除互斥锁或共享可写目录换性能 |
 | `.github/workflows/ci-current.yml` 与 `ci-unit.yml` | `detect` 作业按 workflow 内的单元白名单决定各单元作业是否命中；current 构建一次报告并随项目 buildDir 缓存运输 | 单独处理可选缓存传输失败；真正检查失败仍阻断 |
 
@@ -255,7 +255,8 @@ enumeration 指定有限状态枚举。`SealRow` 只含 positive 或 zero 结论
 
 编译部件只覆盖自身 import 闭包，不能仅凭局部闭包就声称“已经看见仓库全部注册项”。项目级覆盖清单必须来自确定的源快照与已有枚举器，并验证完整集合。该清单证明工程覆盖，不冒充“枚举了数学世界所有定理”。
 
-Reg 契约先通过 Lean 编译，文件发行再验证 `.olean` 等构建产物、JSON/材料及 checksum。最终发布服从现有 producer 的原子文件边界；报告期不操作 Lean 环境。
+Reg 契约先通过 Lean 编译，报告生产读取其编译部件并在模块工件写出前校验声明材料。
+发布核对封套和输入坐标，服从现有 producer 的原子文件边界。
 
 模块 ZIP 与聚合 ZIP 在临时目录中构造后用 `os.replace` 发布；批次 pending 文件由 Lake 在成功后 rename，并在 finally 中清理。JSON 输出本身不证明 Lean 编译成功。
 
@@ -297,7 +298,7 @@ Reg 只依赖根数学包与 Interface。判官实现变化不重编 Reg，整�
 
 模块 provenance 保存实际生成者与输入投影；实现变化不回写原生成者。
 新生成模块在生产时验证报告、材料与 utility 绑定；聚合读取已生成的模块工件，
-核对成员与来源结构。发布程序验证完整 bundle。
+核对成员与来源结构。发布程序核对 bundle 封套、输入坐标与文件摘要，不重复逐声明校验。
 摘要与 provenance 是工程证据，不是数学证明。
 
 ### 12.3 失败处理

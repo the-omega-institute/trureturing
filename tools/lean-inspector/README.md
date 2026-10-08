@@ -101,8 +101,8 @@ use `Reg/Catalogs/D5/<D5 relative module path>/RootCatalog.lean` or
 `SealedCatalog.lean`; mirrors retain their registrations at their original
 paths, catalogs import those leaves, and leaves do not import catalogs. Catalog
 root IDs use the catalog module and `registrationModuleName` retains the leaf
-owner. Catalogs and seals are optional analysis groups: report evaluation does
-not require catalog membership, and missing seals remain named absent inputs.
+owner. Ordinary modules require neither catalog nor seal entries; reserved catalog
+leaves enforce the RootCatalog and Seal cardinalities described above.
 
 Reg sources compile to the typed contract heads. Catalogs use RootCatalog
 entries and seals use Seal entries. The report accepts constructor trees and
