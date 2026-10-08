@@ -19,7 +19,6 @@ namespace D5.S3.ObserverMemory.Algorithms.ActualControlSlots
 
 inductive Action where
   | read | wait | halt
-  deriving DecidableEq
 
 /-- The control table has no access to the physical source except through
 its fixed digit row. The output extension is used only on halt controls. -/
