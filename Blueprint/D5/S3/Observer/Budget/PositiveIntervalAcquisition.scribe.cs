@@ -109,7 +109,7 @@ internal sealed class PositiveIntervalAcquisitionDocument : IScribeDocumentDefin
             Grp(Seq(D(2), Sp, Leq, Sp, p, Sp, Land, Sp, D(0), Sp, Lt, Sp, P)),
             Sp, Implies, Sp, Exists, Sp, T, Sp, Colon, Sp, Call("Protocol", h), Comma, Sp,
             Grp(Seq(T, Sp, Eq, Sp, Call("Acquire", P, h, D(0), P, D(0)),
-                Sp, Land, Sp, law, Sp, Land, Sp, behavior, Sp, Land, Sp, attained, Sp, Land, Sp,
+                Sp, Land, Sp, Grp(law), Sp, Land, Sp, Grp(behavior), Sp, Land, Sp, Grp(attained), Sp, Land, Sp,
                 Grp(singleton)))))));
     }
 }

@@ -181,7 +181,8 @@ private theorem wait_segment {p P B : Nat} (hp : 2 ≤ p) (hP : 0 < P)
       have nextbound : (advanced f guard).elapsed.val + (n + 1) ≤ B := by
         simp only [advanced]; omega
       have rest := ih (advanced f guard) (s + 1) nextmode nextcount nextbound
-      convert rest using 1 <;> simp [atRead, advanced, Nat.cast_add, add_assoc]
+      convert rest using 1
+      simp [atRead, advanced, Nat.cast_add, add_assoc]
       constructor
       · ring
       · omega
@@ -199,7 +200,7 @@ private theorem physical_digit {p P : Nat} (hp : 2 ≤ p) (hP : 0 < P)
     (b r E : Nat) (hr : r < P) :
     (digit hp hP ((b * P + r + E : Nat) : ZMod (p * P))).val =
       (b + E / P + (threshold P E r).val) % p := by
-  letI : NeZero (p * P) := ⟨by positivity⟩
+  have : NeZero (p * P) := ⟨by positivity⟩
   change (((b * P + r + E : Nat) : ZMod (p * P)).val / P) = _
   rw [ZMod.val_natCast]
   exact (PositiveIntervalAcquisition.result p P hp hP).choose_spec.2.1 b E r hr |>.1
@@ -301,7 +302,7 @@ private theorem drive {p P B : Nat} (hp : 2 ≤ p) (hP : 0 < P) (b : Fin p)
         obtain ⟨q, tail, halt, output, current⟩ := ih lo m (E + w) hmlo (by omega) hE'
           halves.1 (Or.inr nextalign) nextbudget r hrlo left
         refine ⟨q, ?_, halt, output, ?_⟩
-        · simp only [acquire, if_neg stop, waits, m, w, bit, ite_true, unitWord]
+        · simp only [acquire, if_neg stop, waits, bit, ite_true, unitWord]
           change Follows (table hP) hp hP (source, .stored f)
             (List.replicate w Action.wait ++ Action.read :: unitWord
               (waits (decodedRead p P b.val) (acquire P d lo m (E + w)) (E + w) r)) _
@@ -343,7 +344,7 @@ private theorem drive {p P B : Nat} (hp : 2 ≤ p) (hP : 0 < P) (b : Fin p)
           halves.2 (Or.inl nextalign) nextbudget r (by omega) hrhi
         have bitne : (1 : Fin 2) ≠ 0 := by decide
         refine ⟨q, ?_, halt, output, ?_⟩
-        · simp only [acquire, if_neg stop, waits, m, w, bit, if_neg bitne, unitWord]
+        · simp only [acquire, if_neg stop, waits, bit, if_neg bitne, unitWord]
           change Follows (table hP) hp hP (source, .stored f)
             (List.replicate w Action.wait ++ Action.read :: unitWord
               (waits (decodedRead p P b.val) (acquire P d m hi (E + w)) (E + w) r)) _
@@ -353,5 +354,123 @@ private theorem drive {p P B : Nat} (hp : 2 ≤ p) (hP : 0 < P) (b : Fin p)
           rw [step]
           simpa only [acquire, if_neg stop, execute, m, w, bit, if_neg bitne] using tail
         · simpa only [acquire, if_neg stop, execute, m, w, bit, if_neg bitne] using current
+
+
+private theorem unitWord_counts (ws : List Nat) :
+    (Action.read :: unitWord ws).countP (fun a => match a with | .read => true | _ => false) =
+      1 + ws.length ∧
+    (Action.read :: unitWord ws).countP (fun a => match a with | .wait => true | _ => false) =
+      ws.sum := by
+  induction ws with
+  | nil => simp [unitWord]
+  | cons w ws ih =>
+    simp only [unitWord, List.countP_cons, List.countP_append, List.countP_replicate,
+      List.sum_cons, List.length_cons, Bool.false_eq_true, if_false, if_true,
+      Nat.add_zero, Nat.zero_add] at ih ⊢
+    omega
+
+private theorem initialized {p P : Nat} (hp : 2 ≤ p) (hP : 0 < P)
+    (x : ZMod (p * P)) :
+    let B := Nat.clog 2 P * (P - 1)
+    ∃ q : Control p P B, ∃ ws : List Nat,
+      ws = waits (decodedRead p P (digit hp hP x).val)
+        (acquire P (Nat.clog 2 P) 0 P 0) 0 (x.val % P) ∧
+      Follows (table hP) hp hP (x, .start) (Action.read :: unitWord ws)
+        (currentOutput q, q) ∧
+      (table hP).action q = .halt ∧ (table hP).output q = x ∧
+      currentOutput q = x + (ws.sum : ZMod (p * P)) ∧
+      ws.length ≤ Nat.clog 2 P ∧ ws.sum ≤ B ∧
+      ∀ w ∈ ws, 0 < w ∧ w < P := by
+  dsimp only
+  have : NeZero (p * P) := ⟨by positivity⟩
+  let b := digit hp hP x
+  let r := x.val % P
+  have hr : r < P := Nat.mod_lt _ hP
+  have reconstruct : b.val * P + r = x.val := by
+    change x.val / P * P + x.val % P = x.val
+    simpa only [Nat.mul_comm, Nat.add_comm] using Nat.mod_add_div x.val P
+  have sourceeq : ((b.val * P + r : Nat) : ZMod (p * P)) = x := by
+    rw [reconstruct, ZMod.natCast_zmod_val]
+  obtain ⟨T, tree, port, bounds, attained, singleton⟩ :=
+    PositiveIntervalAcquisition.result p P hp hP
+  subst T
+  have costs := bounds b.val r hr
+  obtain ⟨q, trace, halt, output, current⟩ :=
+    drive (B := Nat.clog 2 P * (P - 1)) hp hP b (Nat.clog 2 P)
+    0 P 0 hP le_rfl (Nat.zero_le _)
+    (by simpa using Nat.le_pow_clog (by decide) P)
+    (Or.inl (by simp)) (by simp) r (Nat.zero_le _) hr
+  let ws := waits (decodedRead p P b.val) (acquire P (Nat.clog 2 P) 0 P 0) 0 r
+  have clock : (execute (decodedRead p P b.val) (acquire P (Nat.clog 2 P) 0 P 0) 0 r).2 =
+      ws.sum := by simpa only [Nat.zero_add] using
+        waits_sum_clock (acquire P (Nat.clog 2 P) 0 P 0) (decodedRead p P b.val) 0 r
+  have trace' : Follows (table hP) hp hP (x, .stored (ready hP b 0 P 0 hP le_rfl
+      (Nat.zero_le _))) (unitWord ws) (currentOutput q, q) := by
+    rw [← current] at trace
+    simpa only [Nat.add_zero, sourceeq] using trace
+  refine ⟨q, ws, rfl, ?_, halt, output.trans sourceeq, ?_, costs.2.2.1, ?_, costs.2.2.2⟩
+  · refine ⟨rfl, ?_⟩
+    change Follows (table hP) hp hP (x, .stored (ready hP b 0 P 0 hP le_rfl
+      (Nat.zero_le _))) (unitWord ws) (currentOutput q, q)
+    exact trace'
+  · rw [current, Nat.cast_add, sourceeq, clock]
+  · simpa only [clock] using costs.2.1
+
+/-- A finite, total stationary controller realizes the shared interval tree.
+Every source action is present in the word, and every changing counter lies
+in the finite control carrier. The attained worst read count is exact. -/
+theorem result (p P : Nat) (hp : 2 ≤ p) (hP : 0 < P) :
+    let H := Nat.clog 2 P
+    let B := H * (P - 1)
+    Finite (Control p P B) ∧
+    (table (p := p) (B := B) hP).action .start = .read ∧
+    (∀ x : ZMod (p * P), ∃ q : Control p P B, ∃ ws : List Nat,
+      Follows (table hP) hp hP (x, .start) (Action.read :: unitWord ws)
+        (currentOutput q, q) ∧
+      (table hP).action q = .halt ∧ (table hP).output q = x ∧
+      currentOutput q = x + (ws.sum : ZMod (p * P)) ∧
+      ws.length ≤ H ∧ ws.sum ≤ B ∧ (∀ w ∈ ws, 0 < w ∧ w < P) ∧
+      (Action.read :: unitWord ws).countP (fun a => match a with | .read => true | _ => false) =
+        1 + ws.length ∧
+      (Action.read :: unitWord ws).countP (fun a => match a with | .wait => true | _ => false) =
+        ws.sum) ∧
+    (∃ x : ZMod (p * P), ∃ q : Control p P B, ∃ ws : List Nat,
+      Follows (table hP) hp hP (x, .start) (Action.read :: unitWord ws)
+        (currentOutput q, q) ∧ (table hP).action q = .halt ∧
+      (Action.read :: unitWord ws).countP (fun a => match a with | .read => true | _ => false) =
+        1 + H) ∧
+    (P = 1 → ∀ x : ZMod (p * P), ∃ q : Control p P B,
+      Follows (table hP) hp hP (x, .start) [Action.read] (x, q) ∧
+      (table hP).action q = .halt ∧ (table hP).output q = x ∧ currentOutput q = x) := by
+  dsimp only
+  refine ⟨control_finite p P _, rfl, ?_, ?_, ?_⟩
+  · intro x
+    obtain ⟨q, ws, _, trace, halt, output, current, reads, steps, positive⟩ := initialized hp hP x
+    exact ⟨q, ws, trace, halt, output, current, reads, steps, positive, unitWord_counts ws⟩
+  · have : NeZero (p * P) := ⟨by positivity⟩
+    let x : ZMod (p * P) := ((P - 1 : Nat) : ZMod (p * P))
+    obtain ⟨q, ws, word, trace, halt, _, _, _, _, _⟩ := initialized hp hP x
+    have xr : x.val % P = P - 1 := by
+      rw [show x.val = P - 1 by
+        dsimp [x]
+        rw [ZMod.val_natCast, Nat.mod_eq_of_lt (by have := Nat.mul_le_mul_right P hp; omega)]]
+      exact Nat.mod_eq_of_lt (by omega)
+    obtain ⟨T, tree, _, _, attained, _⟩ := PositiveIntervalAcquisition.result p P hp hP
+    subst T
+    have length : ws.length = Nat.clog 2 P := by
+      rw [word, xr]
+      exact attained (digit hp hP x).val
+    refine ⟨x, q, ws, trace, halt, ?_⟩
+    rw [(unitWord_counts ws).1, length]
+  · intro singleton x
+    obtain ⟨q, ws, _, trace, halt, output, current, reads, _, _⟩ := initialized hp hP x
+    have empty : ws = [] := by
+      rw [singleton, Nat.clog_one_right] at reads
+      exact List.eq_nil_of_length_eq_zero (by omega)
+    rw [empty] at trace current
+    have current' : currentOutput q = x := by
+      simpa only [List.sum_nil, Nat.cast_zero, add_zero] using current
+    rw [current'] at trace
+    exact ⟨q, by simpa only [unitWord] using trace, halt, output, current'⟩
 
 end D5.S3.Observer.Budget.FinitePositiveIntervalControl
