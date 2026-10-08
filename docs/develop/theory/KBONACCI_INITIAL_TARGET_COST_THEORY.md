@@ -4989,3 +4989,12 @@ The conditional law imposes no labels outside the surviving INITIAL rows of (69.
 The [mixed-tail root-zero companion](KBONACCI_MIXED_TAIL_ROOT_ZERO_CUT_PRICE.md) gives the eligible binary-lower cut prices one, two and three under $3\le m<k\le2m-2$ for every actual gcd, their full INITIAL consumer on one GLOBAL stream, and a symbolic full fee-four family. Constant/no-cut and one-block clauses are credited reuse; the ordinary proofs preserve the original all-target, all-parameter objective as unresolved.
 
 ## 追加锚（本行以下为增补区）
+
+## 71. Three-class root-zero compatibility-price companion
+
+The [three-class root-zero companion](KBONACCI_THREE_CLASS_ROOT_ZERO_COMPATIBILITY_PRICE.md) gives exact additional adaptive/child-preset fees two or three for tail-independent three-label root-zero tables constant on the first missed set, under $3\le m<k\le2m-2$ and every actual gcd. Its distinct-free-value consumer has exact adaptive fee two and one-GLOBAL fee three or four according to the ordered join on the second missed set; literal calendar/seam proofs retain the original all-target objective as unresolved.
+
+## 追加锚（本行以下为增补区）
+## 72. [Four-label root-zero intersection prices](KBONACCI_FOUR_LABEL_ROOT_ZERO_INTERSECTION_PRICE.md)
+
+## 追加锚（本行以下为增补区）
