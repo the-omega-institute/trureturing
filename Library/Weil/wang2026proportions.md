@@ -161,3 +161,61 @@ trace discussed above. No map from this deformation to the original
 complete $I_\psi(A)$ or the required prime-side energies of the FIB
 negative tests has been established. Those signed comparisons remain
 unproved.
+
+
+## Sharp finite blocks and the same-configuration packing bound
+
+The [FIB-ATOM foundational volume, §§15–18](../../docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)
+gives paper derivations of the local divisor-event Gram, the complete three-point energy envelope,
+fractional packing of overlapping principal blocks, and a quantitative approximation condition
+for the actual difference-kernel realization.
+
+The underlying trace methods are classical. Wolkowicz–Styan,
+*Bounds for eigenvalues using traces*, Linear Algebra and its Applications 29 (1980), 471–506,
+give the mean/variance eigenvalue bounds; see the [author-hosted paper](https://www.math.uwaterloo.ca/~hwolkowi/henry/reports/PAPER31.pdf).
+For a three-dimensional unit-diagonal PSD Gram, their upper-bound form
+$\lambda_{\max}\le m+s\sqrt{n-1}$ specializes to
+$\lambda_{\max}\le1+2\sqrt{e/3}$, with $e=\sum_{i<j}|G_{ij}|^2$.
+Applying the displayed clipped function, and retaining the original dimension, yields the sharp envelope
+$$
+\operatorname{tr}\Psi(G)\ge
+F(e)=2e-\left(2\sqrt{e/3}-1\right)_+^2,\qquad 0\le e\le3.
+$$
+Real equicorrelation matrices attain every value on this lower boundary.
+The volume proves the formula directly from the two trace identities.
+
+Hansen–Pedersen, *Jensen's trace inequality in several variables*,
+International Journal of Mathematics 14 (2003), 667–681,
+[Theorem 2, equation (1)](https://arxiv.org/html/math/0303060v1), supplies the relevant convex trace compression.
+For a coordinate projection $P_S$, use the unital pair $P_S,I-P_S$ with matrices $G,I$.
+The complement contributes $\Psi(1)=0$, giving
+$\operatorname{tr}\Psi(G[S])\le\operatorname{tr}(P_S\Psi(G))$.
+This application retains $\Psi(0)=1$; a contraction version requiring $f(0)\le0$ would have the wrong hypothesis.
+Consequently, nonnegative weights satisfying $\sum_{\alpha:i\in S_\alpha}w_\alpha\le1$ give
+$$
+\operatorname{tr}\Psi(G)\ge
+\sum_\alpha w_\alpha\operatorname{tr}\Psi(G[S_\alpha])
+\ge\sum_\alpha w_\alpha F(e_\alpha^*)
+$$
+when the actual three-point energies satisfy $e(G[S_\alpha])\ge e_\alpha^*$.
+Maximizing the last expression is a finite linear program for one fixed Gram.
+These are explicit finite specializations of the cited trace methods.
+
+For Wang's already displayed $e(H)$, one has $e(H)<1/2$, hence $F(e(H))=2e(H)$.
+The larger linear window $e\le3/4$ therefore leaves that numerical input unchanged.
+Any improved asymptotic zero proportion requires a stronger lower bound for the normalized packing value
+of the same actual simple-critical configuration, together with its matching energy estimate.
+
+The modular source also imposes a realization condition. Its $q=3$ Gram is rank two,
+whereas every Gram on distinct real points from a nonzero absolutely continuous Fourier density is strictly positive definite.
+The volume proves a positive approximation cost when a density lower bound and a distinguished-pair separation are fixed,
+and proves that the cost can tend to zero when the separation is removed.
+The arithmetic local model has not supplied those actual-zero approximation certificates.
+
+Finally, the cyclic pair Gram of the two triplet wheels is identical at every modulus.
+All powers of that same matrix remain identical even where arithmetic three-point correlations differ.
+A higher spectral moment therefore requires a proved identification with the intended arithmetic observable.
+The separate cubic-theta comparison is recorded in
+[the fixed-half-plane source note](../Analytic/openai2026quasirh.md).
+
+
