@@ -166,3 +166,306 @@ would require a different supplier. The existing reflected-zero and
 zero-free-region estimates in the Polak note remain separate, stronger
 inputs; they are not repeated or added to this allowance. The complete
 same-source signed target and RH remain unproved.
+
+## A near-Euler contour for the complete negative-heat trace
+
+The absolute primitive allowance (V1) remains insufficient at the
+selected source by (V4). A different interface is available from the
+complete signed zero trace already retained in
+[the Nicolas comparison note](nicolas2025comparison.md#a-joint-small-negative-time-comparison-of-the-complete-signed-trace),
+(NH1), (NH8)–(NH18). The result here improves its joint comparison error;
+it does not supply a signed main-term bound.
+
+Reuse the cited Dobner negative-time convolution and positive Fourier
+kernel, the DLMF digamma sector estimate, Euler products, Cauchy estimates
+and the complete contour balance. These are `literature-attested`
+inputs. The parameter-dependent full-trace estimate below is a
+`repo-derived` paper-level application. Within the inspected existing
+notes and cached primary interfaces, no supplier of this exact joint
+estimate was identified; no exhaustive literature, mathematical-priority,
+numerical-constant or Lean-certification claim is made.
+
+Keep $A\ge e^2$, $L=\log A$, and the complete principal continuation
+
+$$
+\widehat F_A(z)=\frac{A^{z-1}}{zL}+E_1((1-z)L),\qquad
+Z_\epsilon(A)=\sum_{\xi_{-\epsilon}(w)=0}\widehat F_A(w).
+$$
+
+Both ordinate signs and every actual multiplicity are included. At zero
+time this is exactly the original trace. There are absolute constants
+$c>0$ and $C<\infty$ such that
+
+$$
+\boxed{|Z_\epsilon(A)-Z_0(A)|\le
+ C\epsilon A^\eta\eta^{-8},\quad
+ 0<\eta\le\tfrac12,\quad
+ 0<\epsilon\le c\eta^4,\quad \epsilon L\le1.}
+\tag{VE1}
+$$
+
+In particular, choosing $\eta=1/L$ gives
+
+$$
+\boxed{|Z_\epsilon(A)-Z_0(A)|\le C\epsilon L^8,
+ \qquad0<\epsilon\le cL^{-4}.}
+\tag{VE2}
+$$
+
+The constant $c$ may be reduced so that the small-time and
+$\epsilon L\le1$ hypotheses hold in (VE2). The exponent $8$ is a paid
+upper-bound exponent, not an optimality assertion.
+
+### Pay normalization on a half-plane approaching the Euler boundary
+
+Retain $J_\epsilon(s)=s+(\epsilon/4)\operatorname{Log}(s/(2\pi))$,
+$\gamma(s)=s(s-1)\pi^{-s/2}\Gamma(s/2)/2$ and
+$\gamma_{-\epsilon}(s)=\gamma(s)
+\exp((s-J_\epsilon(s))^2/\epsilon)$ from (NH7). Set
+
+$$
+U_\epsilon(s)=\frac{\xi_{-\epsilon}(J_\epsilon(s))}
+ {\gamma_{-\epsilon}(s)},\qquad
+R_s(v)=\frac{\gamma(s+iv)}{\gamma(s)}
+ e^{-iv\operatorname{Log}(s/(2\pi))/2}.
+$$
+
+The exact Gaussian identity (NH8) extends to $\Re s>1$:
+
+$$
+U_\epsilon(s)=\frac1{\sqrt{\pi\epsilon}}\int_{\mathbb R}
+ e^{-v^2/\epsilon}R_s(v)\zeta(s+iv)\,dv.
+\tag{VE3}
+$$
+
+Indeed, both sides are analytic there. The bound below makes the
+integral locally uniformly convergent, and the identity theorem
+extends the already retained equality; no new heat-convolution proof
+is needed.
+
+For $\Re s\ge1+\eta/2$, factor the two polynomial factors out of
+$\gamma$. The imaginary part of the log derivative of $\Gamma(s/2)$
+is uniformly bounded on $\Re(s/2)\ge1/2$, by the same fixed-sector
+DLMF expansion and its compact remainder. Consequently, for an
+absolute $C_0$,
+
+$$
+|R_s(v)|\le C_0\eta^{-1}(1+|v|)^2e^{C_0|v|},\qquad
+|\zeta(s+iv)|\le C_0\eta^{-1}.
+\tag{VE4}
+$$
+
+The possible small denominator $s-1$ is paid by $\eta^{-1}$;
+it is not integrated into an $e^{C|v|/\eta}$ envelope.
+
+Put $G_s(v)=R_s(v)\zeta(s+iv)$. On $|v|\le1$,
+
+$$
+|G_s''(v)|\le C_1\eta^{-3}.
+\tag{VE5}
+$$
+
+There are two complementary reasons. If $|s|>4$, the vertical
+segment stays uniformly away from both $0$ and $1$. The centered
+log-Gamma estimates and their Cauchy derivatives bound
+$R_s,R_s',R_s''$ by an absolute constant. The absolutely convergent
+series bound $\zeta^{(j)}(s+iv)$ by $C_j\eta^{-j-1}$ for
+$j=0,1,2$. If $|s|\le4$, instead use the exact cancellation
+
+$$
+G_s(v)=\frac{\xi_0(s+iv)}{\gamma(s)}
+ e^{-iv\operatorname{Log}(s/(2\pi))/2}.
+$$
+
+The numerator and its first two derivatives are bounded on this
+fixed compact set, whereas $|\gamma(s)|\ge c_1|s-1|\ge c_1\eta/2$.
+This gives $O(\eta^{-1})$ there, hence (VE5). Treating the Gamma
+zero and zeta pole independently on this compact set would not
+justify the stated exponent.
+
+Center the Gaussian before taking absolute values. Its linear moment
+vanishes and its second moment is $\epsilon/2$. On $|v|>1$, (VE4)
+and the affine subtraction at zero pay the full tail by
+$O(\epsilon\eta^{-3})$ for $\epsilon\le1/2$. Thus
+
+$$
+U_\epsilon(s)-\zeta(s)=O(\epsilon\eta^{-3})
+ \quad(\Re s\ge1+\eta/2).
+\tag{VE6}
+$$
+
+Euler inversion gives $|\zeta(s)|\ge1/\zeta(\Re s)\ge c_2\eta$.
+Choosing $c$ sufficiently small in $\epsilon\le c\eta^4$ ensures
+$|U_\epsilon(s)|\ge c_2\eta/2$ on this whole half-plane. This pays
+the zero-free exterior for the deformed function, rather than applying
+an original-zeta zero-free region to different zeros.
+
+### Take logarithmic derivatives with their denominators paid
+
+On $s=b+iy$, $b=1+\eta$, apply Cauchy's estimate to (VE6) on
+radius-$\eta/4$ disks. It gives
+$U_\epsilon'-\zeta'=O(\epsilon\eta^{-4})$.
+The Euler logarithmic derivative satisfies
+
+$$
+\left|\frac{\zeta'}\zeta(b+iy)\right|
+\le\sum_{n\ge2}\frac{\Lambda(n)}{n^b}
+=\frac{-\zeta'(b)}{\zeta(b)}\ll\eta^{-1}.
+$$
+
+Here $\zeta(b)\ge1/\eta$ by integral comparison, and
+$-\zeta'(b)\ll\eta^{-2}$. Use the identity
+
+$$
+\frac{U_\epsilon'}{U_\epsilon}-\frac{\zeta'}\zeta
+=\frac{U_\epsilon'-\zeta'}{U_\epsilon}
+ +\frac{\zeta'}\zeta\frac{\zeta-U_\epsilon}{U_\epsilon}.
+$$
+
+Both terms are $O(\epsilon\eta^{-5})$. The exact normalization has
+log derivative $\gamma'/\gamma+
+\epsilon\operatorname{Log}(s/(2\pi))/(8s)$. Therefore, with
+$H_\epsilon=\xi_{-\epsilon}'/\xi_{-\epsilon}$ and
+$K_\epsilon(s)=H_\epsilon(J_\epsilon(s))J_\epsilon'(s)$,
+
+$$
+K_\epsilon(s)-H_0(s)=O(\epsilon\eta^{-5}),\qquad
+|H_0(s)|\ll\eta^{-1}+\log(|s|+2).
+\tag{VE7}
+$$
+
+All constants are independent of $A,\eta,\epsilon,y$.
+
+### Transport both complete coefficients near their singularities
+
+Reuse the exact derivative (NH15):
+
+$$
+\widehat F_A'(z)=A^{z-1}h_L(z),\qquad
+h_L(z)=\frac1{z(1-z)}-\frac1{Lz^2}.
+$$
+
+Put $r=|b+iy|$, $\kappa=\epsilon L/4\le1/4$ and
+$Q_\epsilon(s)=\widehat F_A(J_\epsilon(s))+
+\widehat F_A(1-J_\epsilon(s))$.
+On the two unshifted lines, the rational brackets and their derivatives
+obey the joint bounds $C\eta^{-2}r^{-2}$ and
+$C\eta^{-3}r^{-3}$. Integrate the derivative to the corresponding
+imaginary infinity, where (NH2) gives zero, and integrate its
+$e^{\pm iLt}$ factor once by parts. Since $L\ge2$, this gives
+
+$$
+|Q_0(s)|\ll A^\eta\eta^{-3}r^{-2}.
+$$
+
+Each ordinate sign uses its own branch; at $y=0$ take the one-sided
+limits. The reflected line has exponential factor $A^{-1-\eta}$,
+which is bounded by $A^\eta$.
+
+After reducing $c$ if needed, every segment from $s$ to
+$J_\epsilon(s)$ stays in $\Re z>1+\eta/2$. Its ordinate retains
+its sign, $|z|\asymp r$, and $|1-z|\ge c_3\eta r$; the reflected
+segment pays these same distances with the roles interchanged.
+The displacement is $O(\epsilon\log(r+2))$, and the right-hand
+exponential factor is at most $CA^\eta r^\kappa$.
+The reflected exponential factor is at most $CA^{-1-\eta}$,
+using $\epsilon L\le1$ when the real displacement is negative.
+Consequently
+
+$$
+\begin{aligned}
+|Q_\epsilon-Q_0|&\ll
+ \epsilon A^\eta\eta^{-2}\log(r+2)r^{\kappa-2},\\
+|Q_\epsilon|&\ll
+ A^\eta\eta^{-3}\log(r+2)r^{\kappa-2}.
+\end{aligned}
+\tag{VE8}
+$$
+
+The cancellation in $\widehat F_A$ is retained; neither coefficient
+is replaced by its leading term.
+
+### Keep the all-height contour, slit and pole corrections
+
+The injectivity, boundary-graph and properness argument in (NH17)
+applies unchanged to the line $\Re s=b$: $\Re s>1$ is enough
+for its positive secant real part. Equation (VE6) now pays its
+entire right-hand exterior. Functional reflection pays the left-hand
+exterior. With $b_\epsilon=J_\epsilon(b)>1$, the exact balance is
+
+$$
+Z_\epsilon(A)=\frac1{2\pi i}\int_{b-i\infty}^{b+i\infty}
+ Q_\epsilon(s)K_\epsilon(s)\,ds
+ +\log\frac{\xi_{-\epsilon}(b_\epsilon)}{\xi_{-\epsilon}(1)}
+ -\frac{H_\epsilon(0)}{AL}.
+\tag{VE9}
+$$
+
+The principal cut jump remains $+2\pi i$ on $x>1$, and the
+coefficient residue at zero remains $1/(AL)$. The real logarithms
+are valid by positivity of the original Fourier kernel. No cut or
+pole term is absorbed into an unspecified main trace.
+
+Reuse the complete deformed zero count, Hadamard logarithmic derivative
+and good-height construction from (NH10), (NH17). At each fixed
+$A,\eta,\epsilon$, the two boundary curves still have real width
+$O(\log T)$, and the complete coefficients have the same
+$T^{\kappa-2}$ bound. Their horizontal ends therefore tend to zero
+with the retained $O_{A,\eta,\epsilon}(T^{\kappa-1}\log^2T)$
+allowance. No new zero trajectories, simplicity hypothesis or finite
+spectrum truncation is introduced. The vertical integrals are
+absolutely convergent by (VE7)–(VE8).
+
+Subtract (VE9) at zero time, on the same line. Equations (VE7)–(VE8)
+give
+
+$$
+\left|\frac1{2\pi i}\int
+ [Q_\epsilon K_\epsilon-Q_0H_0]\,ds\right|
+\ll\epsilon A^\eta\eta^{-8}
+ \int_{\mathbb R}r^{\kappa-2}\log^2(r+2)\,dy
+\ll\epsilon A^\eta\eta^{-8}.
+$$
+
+Here $1<b\le3/2$ and $\kappa\le1/4$, so the last integral has
+an absolute uniform bound. The slit and pole differences are
+$O(\epsilon)$ uniformly in $\eta$: $b\in[1,3/2]$,
+$b_\epsilon-b=O(\epsilon)$, and the positive Fourier values,
+their first real derivatives and their time derivatives have common
+bounds on a fixed real compact interval. These are exactly the
+kernel-moment and denominator inputs already used in (NH18).
+Also $1/(AL)\le1$. This proves (VE1) with all corrections paid;
+$A^{1/L}=e$ gives (VE2).
+
+### A broader common time, without a signed Robin conclusion
+
+Choose one time for the whole spectrum at each clock,
+
+$$
+\epsilon(A)=\min\{(c/2)L^{-4},\ A^{-1/2}L^{-10}\}.
+$$
+
+Then (VE2), with the unchanged positive elementary correction
+$r_A$ from (G9), gives
+
+$$
+\boxed{-\sqrt A L I_\psi(A)
+=\sqrt A L Z_{\epsilon(A)}(A)+r_A+O(L^{-1}).}
+\tag{VE10}
+$$
+
+The implicit constant is absolute. For sufficiently large $A$ the
+second branch is selected, so this comparison allows an asymptotically
+larger common negative time than $A^{-3}$. It never selects a
+different time per zero.
+
+The original conditional least integer attaining the global Robin-ratio
+maximum under a violation remains the source, with
+$A=\log N>(7/2)10^{46}$; it is not replaced by a least counterexample.
+The complete original coefficients, actual real parts, both signs,
+all heights and multiplicities return through (VE1), and $r_A$ and
+the strict core remain required. No numerical $c,C$ or finite-clock
+slack has been certified. The signed upper bound for
+$\sqrt A L Z_{\epsilon(A)}(A)$, the complete Robin target and RH
+remain unproved. The original response and its accepted (NH1)–(NH18)
+supplier are preserved verbatim in the Nicolas note.
