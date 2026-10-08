@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:fd030fee1e7a87eda02db8a3d4ec624ba4a36785df3d870196251a653a2143d8
   normalized_sha256: sha256:fd030fee1e7a87eda02db8a3d4ec624ba4a36785df3d870196251a653a2143d8
 cas_ref: sha256:fd030fee1e7a87eda02db8a3d4ec624ba4a36785df3d870196251a653a2143d8
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/SemanticStrictSubsetWitness.semantic_strict_subset_has_new_only_witness
+    target_statement_id: sha256:6fbc1934e5a776582f13881f62676eb532d230b51e01a538e765148d8b620ef3
 receipts:
   unresolved_subitems: []

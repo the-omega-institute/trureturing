@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:df7a26df41cb0af1b73ee063ad9ec9609df991491ae3c2e1a21d94e1ef2637ef
   normalized_sha256: sha256:df7a26df41cb0af1b73ee063ad9ec9609df991491ae3c2e1a21d94e1ef2637ef
 cas_ref: sha256:df7a26df41cb0af1b73ee063ad9ec9609df991491ae3c2e1a21d94e1ef2637ef
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeRegrade/SemanticSketchTargetLaunderingBridge.semantic_sketch_target_laundering_iff_body_and_timestamp
+    target_statement_id: sha256:6df4db8171baa5d482fee30f2efe7bbeb2992c50cbbc42f775cf2c73081796d2
 receipts:
   unresolved_subitems: []
