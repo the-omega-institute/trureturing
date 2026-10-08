@@ -89,6 +89,29 @@ def alternatingPrefixes (source : Source) (actions : List Side) : Prop :=
   ∀ side i, i < sideCount actions side →
     endpoint source side i ≠ arm source side i
 
+theorem hstep (source : Source) (actions : List Side) (side : Side) :
+    prefixNoMarker source (side :: actions) ↔
+      prefixNoMarker source actions ∧
+        markerResponse source side (sideCount actions side) = false := by
+  constructor
+  · intro h
+    refine ⟨fun s i hi => h s i ?_, h side (sideCount actions side) ?_⟩
+    · dsimp [sideCount] at hi ⊢
+      simp only [List.count_cons]
+      split_ifs <;> omega
+    · simp [sideCount]
+  · rintro ⟨h, hs⟩ s i hi
+    by_cases he : s = side
+    · subst s
+      by_cases hil : i < sideCount actions side
+      · exact h side i hil
+      · have : i = sideCount actions side := by
+          dsimp [sideCount] at hi hil ⊢
+          simp only [List.count_cons_self] at hi
+          omega
+        simpa [this] using hs
+    · exact h s i (by simpa [sideCount, Ne.symm he] using hi)
+
 /-- Causal replay identifies actual survival and the acquired trace; stopped cost is absorbing. -/
 theorem stopped_execution_replay_bridge
     {Seed : Type*} [MeasurableSpace Seed] (policy : Policy Seed) (seed : Seed)
@@ -108,28 +131,6 @@ theorem stopped_execution_replay_bridge
         alternatingPrefixes source (zeroReplay policy seed n))) ∧
     ((actualQueryCount policy seed source n : WithTop ℕ) =
       min (n : WithTop ℕ) (stoppingTime policy seed source)) := by
-  have hstep (actions : List Side) (side : Side) :
-      prefixNoMarker source (side :: actions) ↔
-        prefixNoMarker source actions ∧
-          markerResponse source side (sideCount actions side) = false := by
-    constructor
-    · intro h
-      refine ⟨fun s i hi => h s i ?_, h side (sideCount actions side) ?_⟩
-      · dsimp [sideCount] at hi ⊢
-        simp only [List.count_cons]
-        split_ifs <;> omega
-      · simp [sideCount]
-    · rintro ⟨h, hs⟩ s i hi
-      by_cases he : s = side
-      · subst s
-        by_cases hil : i < sideCount actions side
-        · exact h side i hil
-        · have : i = sideCount actions side := by
-            dsimp [sideCount] at hi hil ⊢
-            simp only [List.count_cons_self] at hi
-            omega
-          simpa [this] using hs
-      · exact h s i (by simpa [sideCount, Ne.symm he] using hi)
   have habs (j : ℕ) (hj : (actualRun policy seed source j).stopped = true) :
       ∀ k, actualRun policy seed source (j + k) = actualRun policy seed source j := by
     intro k
@@ -160,7 +161,7 @@ theorem stopped_execution_replay_bridge
         simp only [actualRun, hp, Bool.false_eq_true, ↓reduceIte, zeroReplay]
         rw [ha, hr]
         constructor
-        · rw [hstep]
+        · rw [hstep source]
           simp [hg]
         · intro h
           refine ⟨rfl, ?_, ?_⟩
@@ -327,16 +328,17 @@ theorem path_support (q : unitInterval) (root : Bool) :
     simpa [frestrictLe] using ae_of_ae_map (by fun_prop) hpair
   filter_upwards [h0, ae_all_iff.mpr hstep] with x hx hxs
   exact ⟨hx, hxs⟩
+theorem hs (root : Bool) (i : ℕ) :
+    alternatingBit root (i + 1) = !(alternatingBit root i) := by
+  rcases Nat.mod_two_eq_zero_or_one i with hi | hi
+  · have hn : (i + 1) % 2 = 1 := by omega
+    simp [alternatingBit, hi, hn]
+  · have hn : (i + 1) % 2 = 0 := by omega
+    simp [alternatingBit, hi, hn]
+
 theorem arm_alternating_mass (q : unitInterval) (root : Bool) (n : ℕ) :
     armLaw q root {x | ∀ i ≤ n, x i = alternatingBit root i} =
       (unitInterval.toNNReal q : ℝ≥0∞) ^ (if root then n / 2 else (n + 1) / 2) := by
-  have hs (root : Bool) (i : ℕ) :
-      alternatingBit root (i + 1) = !(alternatingBit root i) := by
-    rcases Nat.mod_two_eq_zero_or_one i with hi | hi
-    · have hn : (i + 1) % 2 = 1 := by omega
-      simp [alternatingBit, hi, hn]
-    · have hn : (i + 1) % 2 = 0 := by omega
-      simp [alternatingBit, hi, hn]
   have hw (root : Bool) (i : ℕ) :
       transition q (alternatingBit root i) {alternatingBit root (i + 1)} =
         if alternatingBit root i then 1 else (unitInterval.toNNReal q : ℝ≥0∞) := by
@@ -377,6 +379,71 @@ theorem arm_alternating_mass (q : unitInterval) (root : Bool) (n : ℕ) :
   rw [hp] at h
   simpa [armLaw, alternatingBit] using h
 
+theorem hmeas (left right : ℕ) : MeasurableSet (noMarkerCylinder left right) := by
+  unfold noMarkerCylinder markerResponse
+  simp only [Set.ofPred_forall]
+  refine MeasurableSet.iInter fun side => ?_
+  refine MeasurableSet.iInter fun i => ?_
+  cases i <;> cases side <;> simp only [endpoint, arm] <;> measurability
+
+theorem hchar (root : Bool) (x : Path) (hx0 : x 0 = root)
+    (hx : ∀ i, ¬(x i = true ∧ x (i + 1) = true)) (n : ℕ) :
+    (∀ i < n, ¬(x i = false ∧ x (i + 1) = false)) ↔
+      ∀ i ≤ n, x i = alternatingBit root i := by
+  constructor
+  · intro h i hi
+    induction i with
+    | zero => simpa [alternatingBit] using hx0
+    | succ i ih =>
+      have hi' : i < n := by omega
+      have hprev := ih (by omega)
+      rw [hs, ← hprev]
+      have hn := hx i
+      have hm := h i hi'
+      cases ha : x i <;> cases hb : x (i + 1) <;> simp_all
+  · intro h i hi
+    have hp := h i (by omega)
+    have hn := h (i + 1) (by omega)
+    rw [hp, hn, hs]
+    cases alternatingBit root i <;> simp
+
+theorem hconditional (q : unitInterval) (left right : ℕ) (root : Bool) :
+    conditionalSourceLaw q root (noMarkerCylinder left right) =
+      (unitInterval.toNNReal q : ℝ≥0∞) ^
+        ((if root then left / 2 else (left + 1) / 2) +
+          (if root then right / 2 else (right + 1) / 2)) := by
+  classical
+  unfold conditionalSourceLaw
+  rw [Measure.map_apply (by fun_prop) (hmeas left right)]
+  let A (n : ℕ) : Set Path := {x | ∀ i ≤ n, x i = alternatingBit root i}
+  have he : (fun p : Path × Path =>
+      (root, (fun i => p.1 (i + 1), fun i => p.2 (i + 1)))) ⁻¹'
+        noMarkerCylinder left right =ᵐ[(armLaw q root).prod (armLaw q root)]
+        A left ×ˢ A right := by
+    have hpaths : ∀ᵐ p ∂(armLaw q root).prod (armLaw q root),
+        (p.1 0 = root ∧ ∀ i, ¬(p.1 i = true ∧ p.1 (i + 1) = true)) ∧
+        (p.2 0 = root ∧ ∀ i, ¬(p.2 i = true ∧ p.2 (i + 1) = true)) := by
+      apply (Measure.ae_prod_iff_ae_ae (by measurability)).mpr
+      filter_upwards [path_support q root] with x hx
+      filter_upwards [path_support q root] with y hy
+      exact ⟨hx, hy⟩
+    filter_upwards [hpaths] with p hp
+    have hL := hchar root p.1 hp.1.1 hp.1.2 left
+    have hR := hchar root p.2 hp.2.1 hp.2.2 right
+    have hend (side : Bool) (i : ℕ) :
+        endpoint (root, (fun j => p.1 (j + 1), fun j => p.2 (j + 1))) side i =
+          if side then p.2 i else p.1 i := by
+      cases i <;> cases side <;> simp [endpoint, arm, hp.1.1, hp.2.1]
+    apply propext
+    change ((root, (fun i => p.1 (i + 1), fun i => p.2 (i + 1))) ∈
+        noMarkerCylinder left right ↔ p.1 ∈ A left ∧ p.2 ∈ A right)
+    simp only [noMarkerCylinder, Set.mem_ofPred_eq, markerResponse, hend, arm,
+      Bool.forall_bool, Bool.false_eq_true, ↓reduceIte, decide_eq_false_iff_not, A]
+    exact and_congr hL hR
+  rw [measure_congr he, Measure.prod_prod]
+  dsimp [A]
+  rw [arm_alternating_mass, arm_alternating_mass, pow_add]
+
 set_option maxHeartbeats 800000 in
 -- Trajectory support, both cylinder masses, and arbitrary-seed integration elaborate locally.
 /-- Both exact tails use the original independent seed law; no posterior seed law occurs. -/
@@ -400,76 +467,8 @@ theorem adaptive_marker_stopping_tails
         (unitInterval.toNNReal (unitInterval.symm alpha) : ℝ≥0∞) *
           (unitInterval.toNNReal q : ℝ≥0∞) ^ ((left + 1) / 2 + (right + 1) / 2) := by
     classical
-    have hmeas : MeasurableSet (noMarkerCylinder left right) := by
-      unfold noMarkerCylinder markerResponse
-      simp only [Set.ofPred_forall]
-      refine MeasurableSet.iInter fun side => ?_
-      refine MeasurableSet.iInter fun i => ?_
-      cases i <;> cases side <;> simp only [endpoint, arm] <;> measurability
-    have hs (root : Bool) (i : ℕ) :
-        alternatingBit root (i + 1) = !(alternatingBit root i) := by
-      rcases Nat.mod_two_eq_zero_or_one i with hi | hi
-      · have hn : (i + 1) % 2 = 1 := by omega
-        simp [alternatingBit, hi, hn]
-      · have hn : (i + 1) % 2 = 0 := by omega
-        simp [alternatingBit, hi, hn]
-    have hchar (root : Bool) (x : Path) (hx0 : x 0 = root)
-        (hx : ∀ i, ¬(x i = true ∧ x (i + 1) = true)) (n : ℕ) :
-        (∀ i < n, ¬(x i = false ∧ x (i + 1) = false)) ↔
-          ∀ i ≤ n, x i = alternatingBit root i := by
-      constructor
-      · intro h i hi
-        induction i with
-        | zero => simpa [alternatingBit] using hx0
-        | succ i ih =>
-          have hi' : i < n := by omega
-          have hprev := ih (by omega)
-          rw [hs, ← hprev]
-          have hn := hx i
-          have hm := h i hi'
-          cases ha : x i <;> cases hb : x (i + 1) <;> simp_all
-      · intro h i hi
-        have hp := h i (by omega)
-        have hn := h (i + 1) (by omega)
-        rw [hp, hn, hs]
-        cases alternatingBit root i <;> simp
-    have hconditional (root : Bool) :
-        conditionalSourceLaw q root (noMarkerCylinder left right) =
-          (unitInterval.toNNReal q : ℝ≥0∞) ^
-            ((if root then left / 2 else (left + 1) / 2) +
-              (if root then right / 2 else (right + 1) / 2)) := by
-      unfold conditionalSourceLaw
-      rw [Measure.map_apply (by fun_prop) hmeas]
-      let A (n : ℕ) : Set Path := {x | ∀ i ≤ n, x i = alternatingBit root i}
-      have he : (fun p : Path × Path =>
-          (root, (fun i => p.1 (i + 1), fun i => p.2 (i + 1)))) ⁻¹'
-            noMarkerCylinder left right =ᵐ[(armLaw q root).prod (armLaw q root)]
-            A left ×ˢ A right := by
-        have hpaths : ∀ᵐ p ∂(armLaw q root).prod (armLaw q root),
-            (p.1 0 = root ∧ ∀ i, ¬(p.1 i = true ∧ p.1 (i + 1) = true)) ∧
-            (p.2 0 = root ∧ ∀ i, ¬(p.2 i = true ∧ p.2 (i + 1) = true)) := by
-          apply (Measure.ae_prod_iff_ae_ae (by measurability)).mpr
-          filter_upwards [path_support q root] with x hx
-          filter_upwards [path_support q root] with y hy
-          exact ⟨hx, hy⟩
-        filter_upwards [hpaths] with p hp
-        have hL := hchar root p.1 hp.1.1 hp.1.2 left
-        have hR := hchar root p.2 hp.2.1 hp.2.2 right
-        have hend (side : Bool) (i : ℕ) :
-            endpoint (root, (fun j => p.1 (j + 1), fun j => p.2 (j + 1))) side i =
-              if side then p.2 i else p.1 i := by
-          cases i <;> cases side <;> simp [endpoint, arm, hp.1.1, hp.2.1]
-        apply propext
-        change ((root, (fun i => p.1 (i + 1), fun i => p.2 (i + 1))) ∈
-            noMarkerCylinder left right ↔ p.1 ∈ A left ∧ p.2 ∈ A right)
-        simp only [noMarkerCylinder, Set.mem_ofPred_eq, markerResponse, hend, arm,
-          Bool.forall_bool, Bool.false_eq_true, ↓reduceIte, decide_eq_false_iff_not, A]
-        exact and_congr hL hR
-      rw [measure_congr he, Measure.prod_prod]
-      dsimp [A]
-      rw [arm_alternating_mass, arm_alternating_mass, pow_add]
     simp only [sourceLaw, Measure.add_apply, Measure.smul_apply]
-    rw [hconditional true, hconditional false]
+    rw [hconditional q left right true, hconditional q left right false]
     rfl
   have hchoose : Measurable (fun p : Seed × (List Bool × List Bool) =>
       policy.choose p.1 p.2.1 p.2.2) :=
