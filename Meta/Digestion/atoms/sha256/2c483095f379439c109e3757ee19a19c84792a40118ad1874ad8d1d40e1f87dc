@@ -1,0 +1,8 @@
+若另给非负权 $w_i$，将 $B$ 左右乘 $\operatorname{diag}(\sqrt{w_i})$，同一正惯性与迹证明给
+$$
+\sum_{i<j}w_iw_jF_{a,\omega}(x_i-x_j)^2
+\ge\frac{(\sum_iw_i)^2-2\sum_iw_i^2}{4}.
+\tag{21.3}
+$$
+权重全零时两边为零；右侧为负时另可使用平方和非负。
+
