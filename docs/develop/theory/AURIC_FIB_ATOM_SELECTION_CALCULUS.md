@@ -209,9 +209,9 @@ c(C_j)=c(A_j)+c(B_j).}
 因此数量读出确有
 
 ```math
-\operatorname{val}(\mathsf F_j[3])
-=\operatorname{val}(\mathsf F_j[1])
-+\operatorname{val}(\mathsf F_j[2]),
+\mathrm{val}(\mathsf F_j[3])
+=\mathrm{val}(\mathsf F_j[1])
++\mathrm{val}(\mathsf F_j[2]),
 ```
 
 却不能据此写合法模式等式 $`\mathsf F_j[3]=\mathsf F_j[1,2]`$，因为右项不属于 $`\mathcal S`$。用两个来源生成第三个来源，与在同一受限窗口内同时占用两个位置，是不同操作：
@@ -253,7 +253,7 @@ M^2=M+I_2,
 \boxed{
 c_j(I):=\widehat c(\widehat E_j[I])=H^j d_I=M^{3j}d_I,
 \qquad
-\operatorname{val}(\mathsf F_j[I])=qH^j d_I
+\mathrm{val}(\mathsf F_j[I])=qH^j d_I
 =\sum_{i\in I}\mathrm{Fib}_{3j+i+2}.
 }
 ```
@@ -325,7 +325,7 @@ v_3&=(0,1,0),&v_{13}&=(1,1,0).
 
 ```math
 \boxed{
-\mathcal P=\operatorname{conv}\{v_{\varnothing},v_1,v_2,v_3,v_{13}\}
+\mathcal P=\mathrm{conv}\{v_{\varnothing},v_1,v_2,v_3,v_{13}\}
 =\{(X,Y,Z):X,Y,Z\ge0, X+Z\le1, Y+Z\le1\}.
 }
 ```
@@ -334,7 +334,7 @@ v_3&=(0,1,0),&v_{13}&=(1,1,0).
 
 ```math
 \boxed{A(Z)=(1-Z)^2\quad(0\le Z\le1),\qquad
-\operatorname{Vol}(\mathcal P)=\int_0^1(1-Z)^2\,dZ=\frac13.}
+\mathrm{Vol}(\mathcal P)=\int_0^1(1-Z)^2\,dZ=\frac13.}
 ```
 
 证明。五个顶点都满足所列线性不等式，故凸包包含于不等式域。反向，固定 $`Z\lt1`$ 并令 $`r=1-Z`$，则 $`0\le X/r,Y/r\le1`$，且
@@ -719,8 +719,8 @@ V=p_2+p_3+p_{13}.
 证明。逐模式代入表；均值产品在两律上都是 $`UV=1/2`$，且 $`U(U-1)=0`$，无法给出第一律的真实二阶平均。一般也有
 
 ```math
-S=U(U-1)+\operatorname{Var}_p(\xi),\qquad
-T=UV+\operatorname{Cov}_p(\xi,\eta).
+S=U(U-1)+\mathrm{Var}_p(\xi),\qquad
+T=UV+\mathrm{Cov}_p(\xi,\eta).
 ```
 
 故被删除的方差与协方差正可承载关系。∎
@@ -1024,7 +1024,7 @@ p_{\varnothing}+p_2&p_1
 
 ```math
 C_{\mathrm{final}}=\sum_{j=0}^{L-1}H^jd_{I_j},\qquad
-qC_{\mathrm{final}}=\sum_{j=0}^{L-1}\operatorname{val}(\mathsf F_j[I_j]).
+qC_{\mathrm{final}}=\sum_{j=0}^{L-1}\mathrm{val}(\mathsf F_j[I_j]).
 ```
 
 因此一个高到低输入尚未完成时的即时数量，不是预先固定最终高度后各窗口的绝对位置读数。实际空窗口执行 $`C'=HC,s'=0`$，既推进数量尺度又清零接缝，不是恒等或停止。
@@ -1135,7 +1135,7 @@ T=P_p(R=26)+2P_p(A_{\mathrm{odd}},R=\bot).
 **定义 11.6（另一条实际同执行取得路径）。** 从相同初态实际首读 $`I\sim p`$，记录数量 $`Q^{(0)}`$；随后在该同一状态实际输入空窗 $`\mathsf F[\varnothing]`$，记录数量 $`Q^{(3)}`$。上标三表示经过三个组成替换，不是第三位置或第三个观测。若再输入第三位置，记最终回复为 $`R_{\mathrm{empty},3}`$。此路径的动作词为
 
 ```math
-I,\quad\varnothing,quad3.
+I,\quad\varnothing,\quad3.
 ```
 
 空窗对两种接缝都合法，并清零接缝；后续第三位置因此也总合法。这条路径不同于立即继续第三位置的拒绝任务，不能相互替换。
@@ -1253,7 +1253,7 @@ R_{\mathrm{empty},3}=q(H^2d_I+d_3).
 从完整轨道到指定窗口的映射另定义为
 
 ```math
-\operatorname{win}_j((T_n)_{n\ge0})=(T_{3j},T_{3j+1},T_{3j+2})=\mathcal W_j.
+\mathrm{win}_j((T_n)_{n\ge0})=(T_{3j},T_{3j+1},T_{3j+2})=\mathcal W_j.
 ```
 
 选择项的编译链为
@@ -1276,7 +1276,7 @@ R_{\mathrm{empty},3}=q(H^2d_I+d_3).
 ```math
 \widehat c(\widehat E_j[I])=H^jd_I,
 \qquad
-\operatorname{val}(\mathsf F_j[I])=qH^jd_I.
+\mathrm{val}(\mathsf F_j[I])=qH^jd_I.
 ```
 
 **命题 12.2（确定模式的像上反查与一般遗忘）。** 对固定已知 $`j`$，所选代表编译、五点占位编码和五点组成编码都在自己的像上单射，可以反查 $`I`$。这些像上反查不定义任意原始树到位置选择的函数，也不恢复任意来源的叶序或括号。
@@ -1401,7 +1401,7 @@ s\,h(I)=0,\quad s'=\ell(I);
 \boxed{
 \begin{aligned}
 \alpha&\xrightarrow{\text{生成完整轨道}}(T_n)_{n\ge0}
-\xrightarrow{\operatorname{win}_j}(A_j,B_j,C_j),\\
+\xrightarrow{\mathrm{win}_j}(A_j,B_j,C_j),\\
 (j,I,\text{编译约定})
 &\xrightarrow{\text{合法位置选择}}\mathsf F_j[I]
 \xrightarrow{\widehat E_j}\text{所选有序来源或独立空贡献},\\
