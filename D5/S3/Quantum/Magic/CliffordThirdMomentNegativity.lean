@@ -115,4 +115,41 @@ private theorem gaussian_sum :
     (∑ y : Fin 3 → ZMod 11, ∏ k, v (y k) * star (v ((O *ᵥ y) k))) =
       (-1196 : GaussianInt) := by decide
 
+private theorem kappa_T (Psi : (Fin 1 → ZMod 11) → ℂ) :
+    kappa 11 1 Psi T = ∑ y : Fin 3 → ZMod 11,
+      ∏ k, Psi (fun _ => y k) * star (Psi (fun _ => (O *ᵥ y) k)) := by
+  classical
+  let e := Equiv.piCongrRight (fun _ : Fin 3 => Equiv.funUnique (Fin 1) (ZMod 11))
+  simp only [kappa, Matrix.trace, Matrix.diag, Matrix.mul_apply]
+  rw [Finset.sum_comm, ← Equiv.sum_comp e.symm]
+  apply Finset.sum_congr rfl
+  intro y _
+  rw [← Equiv.sum_comp e.symm]
+  simp only [e, R, stateCube, Fin.prod_univ_one, Equiv.piCongrRight, Equiv.funUnique,
+    Equiv.piUnique, Equiv.coe_fn_symm_mk, uniqueElim_const, mem_T]
+  change (∑ x, (if x = O *ᵥ y then 1 else 0) *
+    ∏ k, Psi (fun _ => y k) * star (Psi (fun _ => x k))) = _
+  simp only [ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
+
+private theorem kappa_psi : kappa 11 1 psi T = -1196 / 64000 := by
+  rw [kappa_T]
+  simp only [psi, star_div₀, Complex.star_def, Complex.conj_ofReal, div_mul_div_comm]
+  simp_rw [← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 40)]
+  simp_rw [Finset.prod_div_distrib]
+  simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
+  rw [← Finset.sum_div]
+  simp only [← GaussianInt.toComplex_star, ← GaussianInt.toComplex_mul,
+    ← map_prod, ← map_sum, gaussian_sum]
+  norm_num [GaussianInt.toComplex_def]
+
+/-- The pointwise clause of Conjecture 2 fails for a normalized one-qudit state at `d = 11`. -/
+theorem result : ¬ claim := by
+  letI : Fact (Nat.Prime 11) := ⟨by decide⟩
+  intro h
+  have hnonneg := (h 11 (by decide) 1 psi normalized_psi T stochastic_T).1
+  rw [kappa_psi, Complex.le_def] at hnonneg
+  norm_num at hnonneg
+
+#print axioms result
+
 end D5.S3.Quantum.Magic.CliffordThirdMomentNegativity
