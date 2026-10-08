@@ -141,9 +141,9 @@ private theorem row_step (x : ZMod (p * P)) (i : Fin (P - 1))
           ⟨(b.val + 1) % p, Nat.mod_lt _ (by omega)⟩ := Fin.ext d
       rw [last, deq, row_carry a P ha hd]
       have rest : P - (i.val + 1) = x.val % P := by
-        have bound := Nat.mod_lt x.val hP
-        simp only [waits, if_neg zero] at last
-        omega
+        rw [last]
+        simp only [waits, if_neg zero]
+        exact Nat.sub_sub_self (Nat.mod_lt x.val hP).le
       rw [rest]
       exact congrArg (fun z : ZMod (p * P) => H(z)) label
 
