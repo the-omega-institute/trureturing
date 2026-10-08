@@ -23,7 +23,7 @@ internal sealed class PositiveIntervalAcquisitionDocument : IScribeDocumentDefin
                     + "and one otherwise. Cut(P,n,r) is zero for r<P-(n mod P), and one otherwise. "
                     + "Thus Decoded uses only the physical answer, retained digit, and elapsed count.")),
             Paragraph(Text(
-                "Acquire(P,d,l,u,n) stops at l for a singleton half-open interval [l,u). "
+                "Acquire(P,d,l,u,n) stops at l when the remaining depth d is zero or u<=l+1. "
                     + "Otherwise it splits at m=floor((l+u)/2), waits the strictly positive "
                     + "forward distance to phase P-m, and continues on [l,m) or [m,u). "
                     + "The list Waits records precisely the successive waiting increments "
