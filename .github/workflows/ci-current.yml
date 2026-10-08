@@ -1573,7 +1573,6 @@ jobs:
             # Release contracts execute the report receipt and input readers.
             tools/lean-inspector/reuse.py
             tools/lean-inspector/publication.py
-            tools/lean-inspector/materials.py
             tools/scripts/report/lean-report-selection.py
             tools/tests/StrataLint.ScriptTests/*
             tools/TestSupport/StrataLint.AdmissionTestSupport/*

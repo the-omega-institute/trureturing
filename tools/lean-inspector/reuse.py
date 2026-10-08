@@ -200,7 +200,7 @@ class CacheIncompatible(ValueError):
 
 
 def seed_format(report):
-    """Read the sealed format without comparing current source or program bytes."""
+    """Check the sealed seed without comparing current source or program bytes."""
     try:
         publication._require_bundle_files(report)
         path = publication.member(report, SUFFIX)
@@ -210,7 +210,29 @@ def seed_format(report):
         materials.require_keys(receipt, {'schema', 'completed', 'inputs', 'bundle'}, 'reuse receipt')
         if receipt['schema'] != SCHEMA or receipt['completed'] != COMPLETED:
             raise ValueError('reuse receipt lacks complete entry success')
-        value = receipt['inputs']['report_format']
+        inputs = materials.require_keys(receipt['inputs'],
+            {'eligible', 'report_format', 'files', 'execution'}, 'reuse inputs')
+        if (inputs['eligible'] is not True or not isinstance(inputs['files'], dict)
+                or 'lean-toolchain' not in inputs['files']):
+            raise ValueError('incomplete reuse inputs')
+        for file in inputs['files'].values():
+            materials.require_keys(file, {'sha256', 'mode'}, 'reuse input file')
+            if (not publication.HEX.fullmatch(file['sha256']) or type(file['mode']) is not int
+                    or not 0 <= file['mode'] <= 0o7777):
+                raise ValueError('invalid reuse input file')
+        execution = materials.require_keys(inputs['execution'],
+            {'toolchain', 'tools', 'platform', 'environment'}, 'reuse execution')
+        if (execution['toolchain'] != 'lean-toolchain' or not isinstance(execution['tools'], list)
+                or sorted(execution['tools']) != sorted(publication.selection.REPORT_EXECUTION['tools'])):
+            raise ValueError('incomplete reuse execution')
+        for field in ('platform', 'environment'):
+            values = materials.require_keys(execution[field],
+                set(publication.selection.REPORT_EXECUTION[field]), 'reuse execution ' + field)
+            if any(not isinstance(value, str) for value in values.values()):
+                raise ValueError('invalid reuse execution ' + field)
+        if receipt['bundle'] != bundle_hashes(report):
+            raise ValueError('reuse receipt bundle mismatch')
+        value = inputs['report_format']
         if not isinstance(value, str) or not value:
             raise ValueError('missing report format')
         return dict(report_format=value, compatible=value == publication.selection.REPORT_FORMAT)

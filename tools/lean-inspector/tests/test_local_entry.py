@@ -12,6 +12,14 @@ import test_reuse
 ROOT = test_reuse.ROOT
 import publication
 
+INCOMPLETE_INPUTS = (
+    'eligible', 'files', 'execution', 'files:D5/A.lean:sha256', 'files:D5/A.lean:mode',
+    'execution:toolchain', 'execution:tools', 'execution:platform', 'execution:environment',
+    'execution:platform:system', 'execution:platform:machine',
+    *(f'execution:environment:{name}' for name in test_reuse.EXECUTION['environment']),
+)
+DAMAGED_BUNDLES = ('bundle-empty', 'bundle-member-missing', 'bundle-digest-wrong', 'bundle-bytes-changed')
+
 
 class LocalEntryTests(unittest.TestCase):
     def setUp(self):
@@ -82,6 +90,25 @@ class LocalEntryTests(unittest.TestCase):
             record = json.loads(receipt.read_text())
             record['inputs']['report_format'] = 'incompatible-report-format'
             receipt.write_text(json.dumps(record))
+        elif kind.startswith('inputs-without:'):
+            record = json.loads(receipt.read_text())
+            fields = kind.split(':', 1)[1].split(':')
+            target = record['inputs']
+            for field in fields[:-1]:
+                target = target[field]
+            del target[fields[-1]]
+            receipt.write_text(json.dumps(record))
+        elif kind.startswith('bundle-'):
+            record = json.loads(receipt.read_text())
+            if kind == 'bundle-empty':
+                record['bundle'] = {}
+            elif kind == 'bundle-member-missing':
+                del record['bundle']['.materials.zip']
+            elif kind == 'bundle-digest-wrong':
+                record['bundle']['.materials.zip'] = '0' * 64
+            elif kind == 'bundle-bytes-changed':
+                publication.member(self.seed, '.materials.zip').write_bytes(b'corrupt')
+            receipt.write_text(json.dumps(record))
 
     def restore_seed(self):
         self.script('tools/scripts/worktree/lean-cache-publish.sh',
@@ -121,6 +148,56 @@ class LocalEntryTests(unittest.TestCase):
         shutil.copytree(self.seed.parent, self.restore)
         self.restore_seed()
         self.assert_guarded(self.run_entry())
+
+    def test_incomplete_local_seed_recovers_before_reuse(self):
+        for field in INCOMPLETE_INPUTS:
+            with self.subTest(field=field):
+                self.setUp()
+                self.damage('inputs-without:' + field)
+                self.restore_seed()
+                result = self.run_entry()
+                self.assertEqual(result.returncode, 0,
+                                 '[FAIL] incomplete_local_seed_recovery_must_succeed: '
+                                 + result.stdout + result.stderr)
+                self.assertEqual(len(self.calls), 1, '[FAIL] incomplete_local_seed_must_recover')
+                self.assertTrue(self.calls[0].startswith('fetch '))
+                self.assertIn('complete-entry-reused', result.stdout)
+
+    def test_incomplete_restored_seed_fails_before_lake(self):
+        for field in INCOMPLETE_INPUTS:
+            with self.subTest(field=field):
+                self.setUp()
+                self.damage('inputs-without:' + field)
+                shutil.rmtree(self.restore)
+                shutil.copytree(self.seed.parent, self.restore)
+                self.damage('missing')
+                self.restore_seed()
+                self.assert_guarded(self.run_entry())
+
+    def test_damaged_local_bundle_recovers_before_reuse(self):
+        for kind in DAMAGED_BUNDLES:
+            with self.subTest(kind=kind):
+                self.setUp()
+                self.damage(kind)
+                self.restore_seed()
+                result = self.run_entry()
+                self.assertEqual(result.returncode, 0,
+                                 '[FAIL] damaged_local_bundle_recovery_must_succeed: '
+                                 + result.stdout + result.stderr)
+                self.assertEqual(len(self.calls), 1, '[FAIL] damaged_local_bundle_must_recover')
+                self.assertTrue(self.calls[0].startswith('fetch '))
+                self.assertIn('complete-entry-reused', result.stdout)
+
+    def test_damaged_restored_bundle_fails_before_lake(self):
+        for kind in DAMAGED_BUNDLES:
+            with self.subTest(kind=kind):
+                self.setUp()
+                self.damage(kind)
+                shutil.rmtree(self.restore)
+                shutil.copytree(self.seed.parent, self.restore)
+                self.damage('missing')
+                self.restore_seed()
+                self.assert_guarded(self.run_entry())
 
     def test_fetched_matching_seed_reuses_complete_report(self):
         self.damage('missing')
