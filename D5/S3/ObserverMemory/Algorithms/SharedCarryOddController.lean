@@ -40,14 +40,8 @@ local notation "col" => color a P ha hd
 Zero relative digit is unused and selects the existing zero halt label. -/
 def table : Controller p P Q where
   initial := Root
-  action := fun q => match q with
-    | .inl _ => .read
-    | .inr (.inl (_, false)) => .wait
-    | .inr (.inl (_, true)) => .read
-    | .inr (.inr _) => .halt
-  waitNext := fun q => match q with
-    | .inr (.inl (c, false)) => R(c)
-    | _ => q
+  action := stateAction
+  waitNext := stateWaitNext
   readNext := fun q d => match q with
     | .inl _ =>
         if h : 1 < P then W(col d ⟨0, by omega⟩)
@@ -63,9 +57,7 @@ def table : Controller p P Q where
           (P - (i + 1)) : Nat))
     | .inr (.inl (_, false)) => H(0)
     | .inr (.inr _) => q
-  output := fun q => match q with
-    | .inr (.inr x) => x
-    | _ => 0
+  output := stateOutput
 
 private theorem matching_offsets (b : Fin p) (i : Fin (P - 1)) :
     ((b.val : ZMod p) - (col b i).2).val = 2 * (i.val % a) + 1 ∧

@@ -25,6 +25,28 @@ local notation "W(" c ")" => Sum.inr (Sum.inl (c, false))
 local notation "R(" c ")" => Sum.inr (Sum.inl (c, true))
 local notation "H(" x ")" => Sum.inr (Sum.inr x)
 
+/-- The action of the color-parameterized nominal carrier. -/
+@[reducible] def stateAction {p P : Nat} {Colors : Type} (q : State p P Colors) : Action :=
+  match q with
+    | .inl _ => .read
+    | .inr (.inl (_, false)) => .wait
+    | .inr (.inl (_, true)) => .read
+    | .inr (.inr _) => .halt
+
+/-- Each colored wait has its own colored read as successor. -/
+@[reducible] def stateWaitNext {p P : Nat} {Colors : Type}
+    (q : State p P Colors) : State p P Colors :=
+  match q with
+    | .inr (.inl (c, false)) => R(c)
+    | _ => q
+
+/-- The output extension reads only a terminal control's stored label. -/
+@[reducible] def stateOutput {p P : Nat} {Colors : Type}
+    (q : State p P Colors) : ZMod (p * P) :=
+  match q with
+    | .inr (.inr x) => x
+    | _ => 0
+
 /-- The time index is t-1; the second component is the initial digit's parity. -/
 private def color {p P : Nat} (b : Fin p) (t : Fin (P - 1)) : Fin (P - 1) × Fin 2 :=
   (t, ⟨b.val % 2, Nat.mod_lt _ (by decide)⟩)
@@ -32,14 +54,8 @@ private def color {p P : Nat} (b : Fin p) (t : Fin (P - 1)) : Fin (P - 1) × Fin
 /-- A total table: each row uses only its own color, index, and supplied digit. -/
 def table (p P : Nat) : Controller p P (State p P (Fin (P - 1) × Fin 2)) where
   initial := Root
-  action := fun q => match q with
-    | .inl _ => .read
-    | .inr (.inl (_, false)) => .wait
-    | .inr (.inl (_, true)) => .read
-    | .inr (.inr _) => .halt
-  waitNext := fun q => match q with
-    | .inr (.inl (c, false)) => R(c)
-    | _ => q
+  action := stateAction
+  waitNext := stateWaitNext
   readNext := fun q d => match q with
     | .inl _ =>
         if h : 1 < P then W(color d ⟨0, by omega⟩)
@@ -52,9 +68,7 @@ def table (p P : Nat) : Controller p P (State p P (Fin (P - 1) × Fin 2)) where
           (P - (c.1.val + 1)) : Nat))
     | .inr (.inl (_, false)) => H(0)
     | .inr (.inr _) => q
-  output := fun q => match q with
-    | .inr (.inr x) => x
-    | _ => 0
+  output := stateOutput
 
 /-- The number of waits before the first carry, capped at the last scan. -/
 def waits {p P : Nat} (x : ZMod (p * P)) : Nat :=
