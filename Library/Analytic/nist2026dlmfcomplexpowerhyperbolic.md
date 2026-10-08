@@ -1,5 +1,5 @@
 ---
-bibkey: dlmfcomplexpowerhyperbolic
+bibkey: nist2026dlmfcomplexpowerhyperbolic
 authors: NIST Digital Library of Mathematical Functions
 year: 2026
 title: Logarithms, Powers, and Hyperbolic Functions
@@ -17,14 +17,14 @@ The primary definitions are [DLMF §4.2(i)](https://dlmf.nist.gov/4.2.i),
 [§4.2(iv), equation 4.2.28](https://dlmf.nist.gov/4.2.E28), and
 [§4.28, equations 4.28.1–3](https://dlmf.nist.gov/4.28).
 
-For a selected logarithm value $L$ of a nonzero complex number $z$, the
-corresponding power is $e^{tL}$. DLMF's principal power uses the principal
+For a selected logarithm value $`L`$ of a nonzero complex number $`z`$, the
+corresponding power is $`e^{tL}`$. DLMF's principal power uses the principal
 logarithm and is analytic off the negative real cut; the two boundary values
 on that cut must be distinguished. In particular, for
-$\psi=-\varphi^{-1}$ and $a=\log\varphi$, the lower and upper values are
-$-a-i\pi$ and $-a+i\pi$. They give conjugate powers when $t$ is real,
-and equal powers when $t$ is an integer. These conclusions do not give
-pointwise conjugacy for nonreal $t$.
+$`\psi=-\varphi^{-1}`$ and $`a=\log\varphi`$, the lower and upper values are
+$`-a-i\pi`$ and $`-a+i\pi`$. They give conjugate powers when $`t`$ is real,
+and equal powers when $`t`$ is an integer. These conclusions do not give
+pointwise conjugacy for nonreal $`t`$.
 
 The hyperbolic definitions consumed by the theory volume are
 

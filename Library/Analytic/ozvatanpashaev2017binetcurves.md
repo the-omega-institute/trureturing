@@ -15,7 +15,7 @@ triage: anchor
 
 The primary source is the fixed [arXiv v1 PDF](https://arxiv.org/pdf/1707.09151v1),
 §5.1, printed pages 13–14. It writes
-$\log(-1)=i(2n+1)\pi$ and then selects $n=0$. Its real-parameter curve is
+$`\log(-1)=i(2n+1)\pi`$ and then selects $`n=0`$. Its real-parameter curve is
 
 ```math
 B_+(t)=\frac{e^{at}-e^{-at}e^{i\pi t}}{\varphi+\varphi^{-1}},
@@ -31,7 +31,7 @@ The displayed real and imaginary components on printed page 14 are
 
 Thus the negative-frequency branch used in
 [FIB hyperbolic geometry and phase boundary, §§一、六](../../docs/develop/theory/AURIC_FIB_HYPERBOLIC_GEOMETRY_AND_PHASE_BOUNDARY.md)
-is $\overline{B_+(t)}$ for real $t$. All integer samples agree. The source
+is $`\overline{B_+(t)}`$ for real $`t`$. All integer samples agree. The source
 attests the complex Binet continuation and its branch choice. Its later
 area, curvature, spiral and natural-form comparisons are not consumed.
 The consumer's autonomous embedding, observation fibers and native
