@@ -5835,3 +5835,103 @@ sign, not a new bound on the main response. The unbounded signed Robin
 estimate and RH remain unproved. This is a paper-level application of
 the existing prime bounds and kernel identities, without a mathematical
 priority or Lean-certification claim.
+
+## A further finite clock from the effective cutoff-sign payment
+
+Keep the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum under the Robin-violation hypothesis. The preceding
+application already excludes $A=\log N\le10^{46}$; put $L=\log A$.
+Apply (GK6) on the additional interval
+
+$$
+10^{46}<A\le\frac72\,10^{46},\qquad
+\alpha=\frac75\,10^{23}+\frac12.
+$$
+
+This uses the effective directed comparison, the full original
+coefficient bound (GJ1), Gamma damping (GH1), and the existing complete
+elementary remainder. No primes, arithmetic profiles or zero ordinates
+are newly enumerated.
+
+### Pay the actual global arithmetic error
+
+Dusart's original Theorem 5.2 $k=2$, $\eta_2=3.965$, $x_2=2$ row and
+Proposition 3.2, already used in (GJ4), give for every $t\ge A$
+
+$$
+\frac{|\psi(t)-t|}{t}
+\le\frac{3.965}{\log^2t}+1.00007t^{-1/2}+1.78t^{-2/3}
+<0.001.
+$$
+
+Hence $\eta_0(A)<0.001$. Moreover $L>78$,
+$\sqrt A<1.871\cdot10^{23}$ and $\alpha\ge1.4\cdot10^{23}$.
+The normalized central comparison term in (GK6) is therefore
+
+$$
+[0.52+2\eta_0(A)]\frac{\sqrt A}{\alpha}
+<\frac{0.522(1.871)}{1.4}<0.698.
+\tag{GL1}
+$$
+
+The Gamma tail is explicit: $\alpha/60000>10^{18}$ and
+$e^x>x^3/6$ for $x>0$ imply $e^{\alpha/60000}>10^{53}$.
+Thus $400\sqrt A e^{-\alpha/60000}<8\cdot10^{-28}$.
+The entire elementary contribution is less than $6\cdot10^{-23}$ by
+(GE4). This includes Gamma scales below the unit cutoff.
+
+### Pay every original zero above the verified height
+
+The existing (GJ2) gives, with $H=3\cdot10^{12}$,
+
+$$
+\sqrt A L|Z_\alpha(A)|
+<M_1(\alpha)(1+1/L)
+\left[1.054c_0+2(1.0001)\sqrt A S_2(H)
+ e^{-H^2/[2(\alpha+H)]}\right].
+$$
+
+Here $c_0<0.05$, $S_2(H)<1.48\cdot10^{-12}$ and
+$M_1(\alpha)<1.0001$ are unchanged. For the selected shape,
+$H^2/[2(\alpha+H)]>32$ and $e^{32}>4\cdot10^{13}$;
+the latter follows from $e>8/3$ and
+$8^{32}>4\cdot10^{13}3^{32}$. Both ordinate signs, the actual tail
+real parts and all heights to infinity remain included. The head and
+tail satisfy the exact rational budgets
+
+$$
+(1.0001)(1.02)(1.054)(0.05)<0.054,
+$$
+
+$$
+2(1.0001)^2(1.02)(1.871\cdot10^{23})
+ (1.48\cdot10^{-12})(4\cdot10^{13})^{-1}<0.015.
+\tag{GL2}
+$$
+
+Combining (GK6), (GL1) and (GL2) pays the original full signed response:
+
+$$
+\boxed{-\sqrt A L I_\psi(A)
+<0.054+0.015+0.698+8\cdot10^{-28}+6\cdot10^{-23}
+<0.768.}
+\tag{GL3}
+$$
+
+The same selected source obeys the strict core
+$\sqrt A L D^*(A)>\mathcal E(L)>0.778$ and
+$\Delta(N)=I_\psi(A)+D^*(A)$. Therefore
+
+$$
+\boxed{\sqrt A L\Delta(N)>0.01,
+\qquad10^{46}<A\le\frac72\,10^{46}.}
+\tag{GL4}
+$$
+
+Together with the preceding exclusion, this forces
+$\log N>(7/2)10^{46}$ for the same hypothetical least global maximizer.
+It is a selected-source finite exclusion with a normalized margin,
+not an all-integer finite Robin verification or an unbounded main
+estimate. The full RH objective remains unproved. All classical prime,
+zero-count and verified-height inputs are reused; this paper-level
+application carries no mathematical-priority or Lean-certification claim.
