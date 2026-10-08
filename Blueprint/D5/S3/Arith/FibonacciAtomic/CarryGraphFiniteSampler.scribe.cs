@@ -100,7 +100,7 @@ internal sealed class CarryGraphFiniteSamplerDocument : IScribeDocumentDefinitio
                     Imp(Equal(scan, Call("inl", Pair(i, n))), Equal(run, Pair(Call("inr", i), n))))),
                 All(j, Ty("N"), Imp(Equal(scan, Call("inr", j)), Ex(x, Call("Active", m),
                     And(Equal(run, Pair(Call("inl", x), d)),
-                        Equal(Call("core", x), Call("state", g, d)), Equal(Call("slot", x), j))))))))));
+                        Equal(Call("core", x), Call("state", g, d)), Equal(Call("slot", x), j)))))))))));
     }
 
     private static Formula ResultFormula()
