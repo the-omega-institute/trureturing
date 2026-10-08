@@ -35,7 +35,7 @@ private def finiteArena (find : Name → Option ConstantInfo) (entry : Informati
 private def localName (store : RawArtifacts.Store) (contract : Option RootCatalogContract)
     (root owner : Name) (suffix : String) : Name :=
   let name := owner.str suffix
-  if (store.owners[owner]?).getD root == root then name
+  if (store.owners.find? owner).getD root == root then name
   else match contract.bind (·.companionPrefix) with
     | some companionPrefix => companionPrefix ++ name
     | none => mkPrivateNameCore root (privateToUserName name)
@@ -94,11 +94,11 @@ unsafe def consume (snapshot : Discovery.Snapshot) (owner : Name) (input : SealI
   let state ← get
   let entries := ArtifactRegistration.entriesFor state owner
   let contract := (snapshot.roots.find? (fun row => row.2.rootId == owner)).map Prod.snd
-  IO.ofExcept <| CompiledSnapshots.registry (state.store.constants[·]?) owner contract entries
+  IO.ofExcept <| CompiledSnapshots.registry (state.store.constants.find?) owner contract entries
   if entries.isEmpty then throw <| IO.userError "IE-C001 UnregisteredTheoremUnit: registry is empty"
   for entry in entries do
     CompiledRegistration.validateUnique entry entries true
-    CompiledRegistration.validateCore (state.store.constants[·]?) entry
+    CompiledRegistration.validateCore (state.store.constants.find?) entry
     unless entry.compiledMathematics.any (·.bundleNonempty == .evidence) do
       throw <| IO.userError s!"IE-C013 MissingPrimitiveBundle: {entry.theoremName}"
   discard <| ArtifactRegistration.assessJoined owner input.options
@@ -110,18 +110,18 @@ unsafe def consume (snapshot : Discovery.Snapshot) (owner : Name) (input : SealI
       let contributors := qualifiedNameCollisionEntries (entries ++ qualified) newName target
       let sourceOwner := entries.any (fun entry => (entry.unitName == newName || entry.realizationName == newName) &&
         entry.occurrenceKey == target.occurrenceKey)
-      if contributors.size > 1 || ((state.store.constants[newName]?).isSome && !sourceOwner &&
+      if contributors.size > 1 || ((state.store.constants.find? newName).isSome && !sourceOwner &&
           !(state.generated.contains (newName, owner))) then
         throw <| IO.userError (qualifiedNameCollisionError owner target.effectiveCatalogId newName contributors)
       if oldName != newName then
-        let info ← CompiledRegistration.constant ((← get).store.constants[·]?) oldName
+        let info ← CompiledRegistration.constant ((← get).store.constants.find?) oldName
         ArtifactRegistration.keepCompanion owner newName
           (mkConst oldName (info.levelParams.map Level.param)) false input.options (some info.levelParams)
   let groups := groupEntries qualified |>.qsort (fun left right => left.1.lt right.1)
   unless groups.size == input.catalogs.size do
     throw <| IO.userError s!"IE-C028 AnalysisCertificateMismatch component=reg-catalog-domain expected={groups.size} actual={input.catalogs.size}"
   let mut records := #[]
-  let context := CompiledRegistration.expressionContext ((← get).store.constants[·]?)
+  let context := CompiledRegistration.expressionContext ((← get).store.constants.find?)
     (← IO.getNumHeartbeats) input.options
   for (arena, entries) in groups do
     let sorted := entries.qsort (fun left right => left.theoremName.lt right.theoremName)
@@ -148,7 +148,7 @@ unsafe def consume (snapshot : Discovery.Snapshot) (owner : Name) (input : SealI
       catch error =>
         throw <| IO.userError s!"contract.assessment_failed:{owner}:{matchingInput.source}:{error}"
     let (result, catalogInfo) ← consume
-    if let some existing := (← get).store.constants[catalogName]? then
+    if let some existing := (← get).store.constants.find? catalogName then
       let same ← calculate context (CompiledExpressions.sameShape existing.type catalogInfo.type)
       let some value := existing.value? | throw <| IO.userError s!"IE-C009 ProofConstructionFailed:{catalogName}"
       unless same && (← calculate context (CompiledExpressions.sameShape value (catalogInfo.value?.getD catalogInfo.type))) do

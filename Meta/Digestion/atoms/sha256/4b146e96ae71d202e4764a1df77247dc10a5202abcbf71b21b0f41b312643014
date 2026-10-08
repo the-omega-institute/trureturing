@@ -1,0 +1,19 @@
+**推论 25.3（联合概率恢复的平方根尺度）。** 在相同正均值纤维内取两个原律，记其联合坐标及谱修正为 $\kappa,\kappa'$ 和 $D,D'$。则
+$$
+|\kappa-\kappa'|
+\le\sqrt{\frac{XY}{2}}\,\sqrt{|D-D'|}.
+\tag{25.3}
+$$
+若纤维下端 $\kappa_-$ 严格正，还可得到线性界
+$$
+|\kappa-\kappa'|
+\le\frac{XY}{4\kappa_-}|D-D'|.
+\tag{25.4}
+$$
+
+证明。非负性给 $\kappa+\kappa'\ge|\kappa-\kappa'|$。由
+$$
+|D-D'|=\frac{2}{XY}|\kappa-\kappa'|(\kappa+\kappa')
+$$
+立即得到式 (25.3)。若 $\kappa,\kappa'\ge\kappa_->0$，同一式中的和至少为 $2\kappa_-$，得到式 (25.4)。∎
+
