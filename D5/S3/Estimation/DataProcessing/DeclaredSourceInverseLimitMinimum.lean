@@ -22,7 +22,6 @@ set_option relaxedAutoImplicit false
 
 open MeasureTheory
 open D5.S3.Estimation.DataProcessing.InverseLimitEventTotalVariation
-
 open Set Function TopologicalSpace CategoryTheory
 open D5.S3.Estimation.DataProcessing.InverseLimitProbabilityExtension
 open scoped ENNReal NNReal
@@ -31,7 +30,6 @@ open private measurable_total_variation_map_le from
   D5.S3.Estimation.DataProcessing.MeasurablePostprocessingDefectContraction
 universe u v w
 open Filter
-
 namespace D5.S3.Estimation.DataProcessing.DeclaredSourceInverseLimitMinimum
 
 lemma event_tv_normalization {X : Type u} [MeasurableSpace X] (P Q : ProbabilityMeasure X) :
@@ -122,7 +120,6 @@ lemma event_tv_normalization {X : Type u} [MeasurableSpace X] (P Q : Probability
   · rintro ⟨E, rfl⟩
     refine ⟨⟨E.val, E.property.nullMeasurableSet⟩, ?_⟩
     simp only [Measure.completion_apply, measureReal_def]
-
 
 lemma finite_feasible_pushforward {W Z U : ℕ → Type u}
     [∀ l, Finite (W l)] [∀ l, TopologicalSpace (W l)] [∀ l, DiscreteTopology (W l)]
