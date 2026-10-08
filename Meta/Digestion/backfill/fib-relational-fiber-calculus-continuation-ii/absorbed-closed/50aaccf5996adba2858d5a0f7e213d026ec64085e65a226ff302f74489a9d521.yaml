@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:50aaccf5996adba2858d5a0f7e213d026ec64085e65a226ff302f74489a9d521
   normalized_sha256: sha256:50aaccf5996adba2858d5a0f7e213d026ec64085e65a226ff302f74489a9d521
 cas_ref: sha256:50aaccf5996adba2858d5a0f7e213d026ec64085e65a226ff302f74489a9d521
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Control/CalibrationHistoryCoarsestQuotient.result
+    target_statement_id: sha256:01de7008086302c50d95eddf615257fb41df0794e9416a90206d9f29febd73ea
 receipts:
   unresolved_subitems: []
