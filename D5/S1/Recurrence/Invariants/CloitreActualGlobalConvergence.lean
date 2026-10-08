@@ -130,8 +130,6 @@ private theorem global_upper (U : ℕ → ℕ) (h : Hyp21_1 U) :
     (isBoundedUnder_of_eventually_ge (rb.mono fun _ hn => hn.1)).isCoboundedUnder_le
   have jbd : IsBoundedUnder (· ≤ ·) atTop J :=
     isBoundedUnder_of_eventually_le ((eventually_ge_atTop 3).mono jump_le)
-  have jc : IsCoboundedUnder (· ≤ ·) atTop J :=
-    isCoboundedUnder_le_of_le atTop jump_nonneg
   have knon : 0 ≤ k := le_limsup_of_le jbd (fun a ha =>
     le_of_tendsto tendsto_const_nhds ((ha.and (Eventually.of_forall
       jump_nonneg)).mono fun _ hn => hn.2.trans hn.1))
@@ -160,8 +158,10 @@ private theorem global_upper (U : ℕ → ℕ) (h : Hyp21_1 U) :
       (hut.comp hv.tendsto_atTop)
   obtain ⟨t, ht, hmin⟩ := Hcompact.exists_isMinOn Hne continuous_id.continuousOn
   obtain ⟨u, hu, hut⟩ := ht.exists_seq_tendsto
-  have hur : Tendsto (fun i => R (u i)) atTop (nhds b) := (continuous_fst.tendsto (b, t)).comp hu
-  have hup : Tendsto (fun i => position (u i)) atTop (nhds t) := (continuous_snd.tendsto (b, t)).comp hu
+  have hur : Tendsto (fun i => R (u i)) atTop (nhds b) :=
+    (continuous_fst.tendsto (b, t)).comp hu
+  have hup : Tendsto (fun i => position (u i)) atTop (nhds t) :=
+    (continuous_snd.tendsto (b, t)).comp hu
   let zseq := fun i => ((g (u i) : ℝ) / u i, R (g (u i)), R (u i - g (u i)))
   have zmem : ∀ᶠ i in atTop, zseq i ∈ Set.Icc ((0 : ℝ), (0 : ℝ), (0 : ℝ)) (1, 1, 1) := by
     filter_upwards [hut.eventually (eventually_ge_atTop 8),
@@ -172,14 +172,17 @@ private theorem global_upper (U : ℕ → ℕ) (h : Hyp21_1 U) :
     have gu : (g (u i) : ℝ) ≤ u i := by exact_mod_cast hb.2.2.2.le
     exact ⟨⟨div_nonneg (Nat.cast_nonneg _) un.le, hg.1, hh.1⟩,
       (div_le_one un).mpr gu, hg.2, hh.2⟩
-  obtain ⟨z, hz, v, hv, hzlim⟩ := isCompact_Icc.tendsto_subseq' zmem.frequently
+  obtain ⟨z, _, v, hv, hzlim⟩ := isCompact_Icc.tendsto_subseq' zmem.frequently
   let n := u ∘ v
   have nt : Tendsto n atTop atTop := hut.comp hv.tendsto_atTop
   have nr : Tendsto (fun i => R (n i)) atTop (nhds b) := hur.comp hv.tendsto_atTop
   have np : Tendsto (fun i => position (n i)) atTop (nhds t) := hup.comp hv.tendsto_atTop
-  have wa : Tendsto (fun i => (g (n i) : ℝ) / n i) atTop (nhds z.1) := (continuous_fst.tendsto z).comp hzlim
-  have xr : Tendsto (fun i => R (g (n i))) atTop (nhds z.2.1) := (continuous_fst.tendsto z.2).comp ((continuous_snd.tendsto z).comp hzlim)
-  have yr : Tendsto (fun i => R (n i - g (n i))) atTop (nhds z.2.2) := (continuous_snd.tendsto z.2).comp ((continuous_snd.tendsto z).comp hzlim)
+  have wa : Tendsto (fun i => (g (n i) : ℝ) / n i) atTop (nhds z.1) :=
+    (continuous_fst.tendsto z).comp hzlim
+  have xr : Tendsto (fun i => R (g (n i))) atTop (nhds z.2.1) :=
+    (continuous_fst.tendsto z.2).comp ((continuous_snd.tendsto z).comp hzlim)
+  have yr : Tendsto (fun i => R (n i - g (n i))) atTop (nhds z.2.2) :=
+    (continuous_snd.tendsto z.2).comp ((continuous_snd.tendsto z).comp hzlim)
   have aBounds : (1 / 5 : ℝ) ≤ z.1 ∧ z.1 ≤ 4 / 5 := by
     constructor
     · apply ge_of_tendsto wa
@@ -222,13 +225,12 @@ private theorem global_upper (U : ℕ → ℕ) (h : Hyp21_1 U) :
     have gn : (g (n i) : ℝ) ≠ 0 := by exact_mod_cast (show g (n i) ≠ 0 by omega)
     have hn : ((n i - g (n i) : ℕ) : ℝ) ≠ 0 := by
       exact_mod_cast (show n i - g (n i) ≠ 0 by omega)
-    have split :=  congrArg (fun k : ℕ => (k : ℝ))
+    have split := congrArg (fun k : ℕ => (k : ℝ))
       (actual_foundations.2 (n i) (by omega))
     push_cast at split
     rw [show 1 - (g (n i) : ℝ) / n i = (n i - g (n i) : ℕ) / (n i : ℝ) by
       rw [Nat.cast_sub hb.2.2.2.le]
-      field_simp [un]
-      <;> ring]
+      field_simp [un]]
     rw [div_mul_div_cancel₀' gn, div_mul_div_cancel₀' hn, ← add_div, ← split]
   have xe : z.2.1 = b := by
     have hprod := mul_nonneg (sub_nonneg.mpr (show z.1 ≤ 1 by linarith [aBounds.2]))
@@ -284,7 +286,8 @@ private theorem global_upper (U : ℕ → ℕ) (h : Hyp21_1 U) :
     obtain ⟨hq, hlo, hhi, hs, ht'⟩ := block_facts (n i) hn
     have hb := child_bounds U h (n i) hn
     have hc := h.cyclesInside (Q (n i)) (n i - F (Q (n i))) (g (n i)) hq
-      (by simpa only [Nat.add_sub_of_le hlo, g] using actual_foundations.1 (n i) (d (n i)) (by omega))
+      (by simpa only [Nat.add_sub_of_le hlo, g] using
+        actual_foundations.1 (n i) (d (n i)) (by omega))
       (by simpa [Nat.add_sub_of_le hlo] using selected_periodic U h (n i) (by omega))
     have un : (0 : ℝ) < n i := by exact_mod_cast (show 0 < n i by omega)
     have fn : (0 : ℝ) < F (Q (n i)) := by
@@ -450,8 +453,7 @@ private theorem convergence_implies_jumps (U : ℕ → ℕ) (h : Hyp21_1 U)
   rw [Real.dist_eq, sub_zero, abs_of_nonneg (jump_nonneg n)]
   have simplify : 2 * (δ / (1 - a)) = e / 2 := by
     dsimp only [δ]
-    field_simp [(sub_pos.mpr a1).ne']
-    <;> ring
+    (field_simp [(sub_pos.mpr a1).ne']; ring)
   rw [simplify] at jbound
   linarith
 
