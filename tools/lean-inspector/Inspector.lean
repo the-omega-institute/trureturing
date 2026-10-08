@@ -433,63 +433,97 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
     try IO.FS.removeFile reportOutput catch _ => pure ()
     throw error
 
-private unsafe def produceCompiled (reportOutput materialSpool : System.FilePath)
-    (statementOnly : Bool) (inputs : Array ModuleInput) (utilities : Array UtilityInput) : IO Unit := do
-  let start ← IO.monoNanosNow
-  let state ← IO.mkRef ({} : RawArtifacts.Store)
-  for name in sortedUnique (inputs.map (·.moduleName) ++ utilities.map (·.claimModule)) do
-    RawArtifacts.loadModule name.toName state
-  let initial ← state.get
-  if !statementOnly && inputs.any (fun input =>
-      (initial.modules.find? input.moduleName.toName).any RawArtifacts.hasTypedInputs) then
+-- No target store, assessment, expression cache or report row escapes this frame.
+@[noinline] private unsafe def produceTarget (base : RawArtifacts.Store)
+    (state : IO.Ref RawArtifacts.Store) (statementOnly profiling : Bool)
+    (input : ModuleInput) (utilities : Array UtilityInput)
+    (generated : IO.Ref (Std.HashMap Name String))
+    (seen : IO.Ref (NameMap Name))
+    (writer : MaterialWriter) (out : IO.FS.Handle) (counter : IO.Ref Nat) : IO Unit := do
+  state.set { base with regions := #[] }
+  let target := input.moduleName.toName
+  RawArtifacts.loadModule target state
+  for utility in utilities do RawArtifacts.loadModule utility.claimModule.toName state
+  if !statementOnly && RawArtifacts.hasTypedInputs (← (← state.get).getModule target) then
     RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment state
   let store ← state.get
-  let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
+  RawArtifacts.checkBatchConstants base store seen
   if profiling then
-    (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE raw_read_ns={(← IO.monoNanosNow) - start} raw_modules={store.modules.toList.length} raw_constants={store.constants.size}"
+    let slots := store.moduleOrder.foldl (fun count owner =>
+      if base.modules.contains owner then count else
+        count + ((store.modules.find? owner).map (·.constants.size)).getD 0) 0
+    (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_TARGET_LOADED module={target} target_regions={store.regions.size} target_bytes={store.regions.foldl (fun n r => n + r.size.toNat) 0} target_constant_slots={slots}"
   let cache ← IO.mkRef ({ closure := store.metadata.axioms } : AxiomClosureState)
-  let counter ← IO.mkRef 0
-  let generated ← IO.mkRef ({} : Std.HashMap Name String)
   let empty := if statementOnly then Json.null else Json.mkObj [
     ("schema_version", toJson (1 : Nat)), ("inventory", Json.arr #[]),
     ("registered", Json.arr #[]), ("records", Json.arr #[])]
+  let data ← store.getModule target
+  let (current, generatedNames, binding, enrollmentErrors) ←
+    if !statementOnly && RawArtifacts.hasTypedInputs data then do
+      let start ← IO.monoNanosNow
+      let (assessment, seals) ← try ArtifactAssessment.assess store target catch error =>
+        throw <| IO.userError s!"raw.assessment_failed:{target}:{error}"
+      for (name, _) in assessment.generated do
+        let some info := assessment.store.constants[name]?
+          | throw <| IO.userError s!"incomplete_closure:dtr.generated_missing:{name}"
+        let identity := Sha256.hex (reprStr (info.levelParams, info.type,
+          info.value? (allowOpaque := true), info.isTheorem)).toUTF8
+        if let some previous := (← generated.get)[RawArtifacts.ownName name]? then
+          unless previous == identity do
+            throw <| IO.userError s!"incomplete_closure:dtr.generated_target:{name}"
+        else generated.modify (·.insert (RawArtifacts.ownName name) identity)
+      if profiling then
+        let own := assessment.records.filter (·.occurrence.key.registrationModule == target)
+        let validated := own.filter (fun record => record.result matches .declaredValidated _)
+        let unresolved := own.filter (fun record => record.result matches .declaredUnresolved _)
+        let ownSeals := seals.filter (·.catalog.rootId == target)
+        (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE compiled_assess_ns={(← IO.monoNanosNow) - start} module={target} registrations={own.size} validated={validated.size} unresolved={unresolved.size} undeclared={own.size - validated.size - unresolved.size} seal_catalogs={ownSeals.size} seal_theorems={ownSeals.foldl (fun count sealRecord => count + sealRecord.catalog.units.size) 0}"
+      pure (assessment.store, assessment.generated.filter (·.2 == target) |>.map Prod.fst,
+        ← ArtifactRegistration.targetJson target assessment, assessment.enrollmentErrors)
+    else pure (store, #[], empty, #[])
+  let row ← inspectData data (current.constants[·]?)
+    (closedNegation (fun name => current.modules.find? name.toName)
+      (current.constants[·]?) input)
+    cache writer counter utilities generatedNames binding input
+  let row := { row with
+    informationRegistrationErrors := sortedUnique (row.informationRegistrationErrors ++ enrollmentErrors) }
+  out.putStr (renderModule row)
+  out.flush
+
+private unsafe def produceCompiled (reportOutput materialSpool : System.FilePath)
+    (statementOnly : Bool) (inputs : Array ModuleInput) (utilities : Array UtilityInput) : IO Unit := do
+  let start ← IO.monoNanosNow
+  let targets := inputs.map fun input => (input.moduleName.toName,
+    utilities.filter (·.modulePath == input.sourcePath) |>.map (·.claimModule.toName))
+  let shared ← RawArtifacts.sharedModules targets statementOnly
+  let state ← IO.mkRef ({} : RawArtifacts.Store)
+  for name in sortedUnique (inputs.map (·.moduleName) ++ utilities.map (·.claimModule)) do
+    if shared.contains name.toName then RawArtifacts.loadModule name.toName state
+  for name in shared.toArray.qsort Name.quickLt do RawArtifacts.loadModule name state
+  let base ← state.get
+  let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
+  if profiling then
+    (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE raw_read_ns={(← IO.monoNanosNow) - start} raw_modules={base.modules.toList.length} raw_constants={base.constants.size} shared_regions={base.regions.size} shared_bytes={base.regions.foldl (fun n r => n + r.size.toNat) 0}"
+  let counter ← IO.mkRef 0
+  let generated ← IO.mkRef ({} : Std.HashMap Name String)
+  let seen ← IO.mkRef ({} : NameMap Name)
+  let targetState ← IO.mkRef ({} : RawArtifacts.Store)
   withReportWriter reportOutput materialSpool statementOnly fun writer out => do
     for h : index in [:inputs.size] do
       let input := inputs[index]
-      let target := input.moduleName.toName
-      let data ← store.getModule target
-      let (current, generatedNames, binding, enrollmentErrors) ←
-        if !statementOnly && RawArtifacts.hasTypedInputs data then do
-          let start ← IO.monoNanosNow
-          let (assessment, seals) ← try ArtifactAssessment.assess store target catch error =>
-            throw <| IO.userError s!"raw.assessment_failed:{target}:{error}"
-          for (name, _) in assessment.generated do
-            let some info := assessment.store.constants[name]?
-              | throw <| IO.userError s!"incomplete_closure:dtr.generated_missing:{name}"
-            let identity := Sha256.hex (reprStr (info.levelParams, info.type,
-              info.value? (allowOpaque := true), info.isTheorem)).toUTF8
-            if let some previous := (← generated.get)[name]? then
-              unless previous == identity do
-                throw <| IO.userError s!"incomplete_closure:dtr.generated_target:{name}"
-            else generated.modify (·.insert name identity)
-          if profiling then
-            let own := assessment.records.filter (·.occurrence.key.registrationModule == target)
-            let validated := own.filter (fun record => record.result matches .declaredValidated _)
-            let unresolved := own.filter (fun record => record.result matches .declaredUnresolved _)
-            let ownSeals := seals.filter (·.catalog.rootId == target)
-            (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE compiled_assess_ns={(← IO.monoNanosNow) - start} module={target} registrations={own.size} validated={validated.size} unresolved={unresolved.size} undeclared={own.size - validated.size - unresolved.size} seal_catalogs={ownSeals.size} seal_theorems={ownSeals.foldl (fun count sealRecord => count + sealRecord.catalog.units.size) 0}"
-          pure (assessment.store, assessment.generated.filter (·.2 == target) |>.map Prod.fst,
-            ← ArtifactRegistration.targetJson target assessment, assessment.enrollmentErrors)
-        else pure (store, #[], empty, #[])
-      let row ← inspectData data (current.constants[·]?)
-        (closedNegation (fun name => current.modules.find? name.toName)
-          (current.constants[·]?) input)
-        cache writer counter utilities generatedNames binding input
-      let row := { row with
-        informationRegistrationErrors := sortedUnique (row.informationRegistrationErrors ++ enrollmentErrors) }
+      let selected := utilities.filter (·.modulePath == input.sourcePath)
       if index > 0 then out.putStr ", "
-      out.putStr (renderModule row)
-      out.flush
+      try
+        produceTarget base targetState statementOnly profiling input selected generated seen writer out counter
+      finally
+        RawArtifacts.release targetState
+      if profiling then
+        let released ← targetState.get
+        let resident ← IO.Process.output {
+          cmd := "ps", args := #["-o", "rss=", "-p", toString (← IO.Process.getPID)] }
+        unless resident.exitCode == 0 do
+          throw <| IO.userError "raw.profile_rss_failed"
+        (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_TARGET_RELEASE completed={index + 1} module={input.moduleName} target_constants={released.constants.size} target_modules={released.modules.toList.length} target_regions={released.regions.size} target_metadata={released.metadata.axioms.toList.length} rss_kib={resident.stdout.trimAscii.toString}"
 
 unsafe def main (args : List String) : IO Unit := do
   let args ← match args with

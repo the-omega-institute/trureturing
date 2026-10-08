@@ -13,6 +13,33 @@ import LeanInformationAudit.ArtifactRegistration
 namespace LeanInformationAuditRegTests.CompiledDiscovery
 open Lean LeanInformationAudit
 
+@[noinline] private unsafe def releaseFixture (reader : IO.Ref RawArtifacts.Store) :
+    IO (Array Name × Nat) := do
+  RawArtifacts.loadModule `LeanInformationAudit.Contract.SourceAudit reader
+  let store ← reader.get
+  return (store.moduleOrder.map RawArtifacts.ownName, store.constants.size)
+
+/-- Detached import keys remain usable after explicit release and reload. -/
+unsafe def checkTargetRelease : IO Unit := do
+  let target := `LeanInformationAudit.Contract.SourceAudit
+  let shared ← RawArtifacts.sharedModules #[(target, #[]), (target, #[])] true
+  unless shared.contains target && shared.contains `Init do
+    throw <| IO.userError "[FAIL] CompiledTargetRegionRelease: detached import plan"
+  let reader ← IO.mkRef ({} : RawArtifacts.Store)
+  let (names, count) ← releaseFixture reader
+  unless count > 0 && !names.isEmpty do
+    throw <| IO.userError "[FAIL] CompiledTargetRegionRelease: empty fixture"
+  RawArtifacts.release reader
+  let cleared ← reader.get
+  unless cleared.constants.isEmpty && cleared.modules.isEmpty && cleared.regions.isEmpty
+      && cleared.metadata.axioms.isEmpty && cleared.owners.isEmpty do
+    throw <| IO.userError "[FAIL] CompiledTargetRegionRelease: retained target roots"
+  let (reloaded, newCount) ← releaseFixture reader
+  unless names == reloaded && count == newCount do
+    throw <| IO.userError "[FAIL] CompiledTargetRegionRelease: detached keys or reload changed"
+  RawArtifacts.release reader
+  IO.println "[PASS] CompiledTargetRegionRelease"
+
 /-- Read names from compiled implementation expressions, without maintaining a
 second list of contract constants. Whole name literals are visited once. -/
 private def contractNames (value : Expr) : NameSet := Id.run do
@@ -361,6 +388,7 @@ unsafe def main : IO Unit := do
   Lean.initSearchPath (← Lean.findSysroot)
   let fixturePath ← LeanInformationAudit.Repository.source ".lake/build/lean-inspector/reg/lib/lean"
   Lean.searchPathRef.modify (fixturePath :: ·)
+  LeanInformationAuditRegTests.CompiledDiscovery.checkTargetRelease
   LeanInformationAuditRegTests.CompiledDiscovery.checkProductionReport
   let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
   LeanInformationAuditRegTests.CompiledDiscovery.checkProgramBoundary reader
