@@ -10,7 +10,8 @@ internal static partial class CleanLanesCommand
         RegisteredWorktree item,
         string baseCommit,
         IWorktreeProcessRunner runner,
-        DateTimeOffset now)
+        DateTimeOffset now,
+        LockedLaneObservation? lockedObservation = null)
     {
         string actualHead;
         try
@@ -70,10 +71,81 @@ internal static partial class CleanLanesCommand
             return Refused("unreadable");
         }
 
-        if (refreshed.Locked) return Refused("locked");
+        if (lockedObservation is null)
+        {
+            if (refreshed.Locked) return Refused("locked");
+        }
+        else
+        {
+            if (!refreshed.Locked
+                || !string.Equals(refreshed.LockReason, item.LockReason, StringComparison.Ordinal))
+                return Refused("locked_changed");
+
+            var commonDirectory = Decode(RunGit(
+                repositoryRoot,
+                ["rev-parse", "--git-common-dir"],
+                runner,
+                "could not resolve common Git directory").StandardOutput).Trim();
+            var evidence = TryReadInitializationEvidence(
+                item,
+                Path.GetFullPath(commonDirectory, repositoryRoot));
+            if (evidence is null
+                || !string.Equals(evidence, lockedObservation.EvidenceFingerprint, StringComparison.Ordinal))
+                return Refused("evidence_changed");
+
+            var activity = TryReadIndexLockActivity(
+                item.GitDirectory!,
+                now,
+                out var active);
+            if (activity is null || active
+                || !string.Equals(activity, lockedObservation.ActivityFingerprint, StringComparison.Ordinal))
+                return Refused("activity_changed");
+
+            var history = TryReadHistoryFingerprint(item.GitDirectory!);
+            if (history is null
+                || !string.Equals(history, lockedObservation.HistoryFingerprint, StringComparison.Ordinal))
+                return Refused("history_changed");
+
+            var contentResult = TryReadHeadContentFingerprint(item, runner, out var content);
+            if (contentResult != ContentProbeResult.Verified
+                || !string.Equals(content, lockedObservation.ContentFingerprint, StringComparison.Ordinal))
+                return Refused("content_changed");
+        }
 
         var reason = ReclaimBlockReason(item, baseCommit, runner, now);
-        if (reason is not null) return Refused(reason);
+        if (reason is not null)
+        {
+            return Refused(lockedObservation is null
+                ? reason
+                : reason switch
+                {
+                    "recently_updated" or "age_unverifiable" => "activity_changed",
+                    _ => "eligibility_changed",
+            });
+        }
+
+        if (lockedObservation is not null)
+        {
+            try
+            {
+                RunGit(
+                    repositoryRoot,
+                    ["worktree", "unlock", item.Path],
+                    runner,
+                    "could not unlock stale initialization worktree");
+            }
+            catch (Exception exception) when (exception is not OutOfMemoryException)
+            {
+                return Refused("unlock_failed");
+            }
+
+            var unlocked = ReadWorktrees(repositoryRoot, runner, resolveGitDirectories: false)
+                .SingleOrDefault(candidate => string.Equals(
+                    candidate.Path,
+                    item.Path,
+                    StringComparison.Ordinal));
+            if (unlocked is null || unlocked.Locked) return Refused("locked_changed");
+        }
 
         try
         {

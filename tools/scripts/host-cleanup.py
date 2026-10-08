@@ -235,11 +235,13 @@ def registered_worktrees(repository):
             for field in result.stdout.split(b"\0") if field.startswith(b"worktree ")}
 
 
-def clean_worktrees(repository, base, delete):
+def clean_worktrees(repository, base, delete, active_paths=()):
     arguments = ["/bin/bash", str(repository / "tools/scripts/clean-lanes.sh"),
                  "--base", base, "--lanes-only"]
     if delete:
         arguments.append("--force")
+    for path in sorted({Path(path).resolve() for path in active_paths}):
+        arguments.extend(["--active-path", str(path)])
     return subprocess.run(arguments, cwd=repository, check=False).returncode
 
 
@@ -265,14 +267,15 @@ def run_clean(options):
             raise OSError("artifact root must be a directory: " + str(root))
     roots = {path for path in roots if not any(parent in roots for parent in path.parents)}
     worktrees = registered_worktrees(options.repository)
-    protected = active_paths(codex) | worktrees
+    active = active_paths(codex)
+    protected = active | worktrees
     protections = {"codex": ProtectedPaths(protected), "sshx": ProtectedPaths(protected),
                    "tmp": ProtectedPaths(protected | {codex, sshx})}
     cutoff = time.time() - options.min_age_hours * 3600
     before = shutil.disk_usage(options.repository).free
     counts, skipped = Counter(), Counter()
     apparent_bytes = 0
-    lanes_exit = clean_worktrees(options.repository, options.base, options.delete)
+    lanes_exit = clean_worktrees(options.repository, options.base, options.delete, active)
     seen = set()
     inventory_error = None
     try:

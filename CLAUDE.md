@@ -25,7 +25,7 @@
 | 数学门 / 本地 CI 准入流程 | `make test` / `make gate` |
 | 建 PR | `make pr HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；默认自动合并并等 required CI；`AUTO_MERGE=0` 关闭自动合并；`DRAFT=1` 创建草稿后直接返回；`pr-open` 同义） |
 | 等指定 PR 提交的 CI | `make pr-watch PR=<编号> HEAD_SHA=<40位commit-SHA>` |
-| 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 会删除，含未提交改动） |
+| 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 会删除；未锁定树沿用含未提交改动的旧策略，初始化锁需内容核验） |
 
 常用独立脚本（以下 `bash tools/scripts/agent/…` 均在仓库根运行）：
 
@@ -496,7 +496,7 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 - **同一 session 复用同一树**:开工或恢复会话时先查 `git worktree list --porcelain`,已有该 session 的树就进入复用;后续任务、重试、上下文压缩、恢复及新 PR 均不另建树。切换任务分支前提交当前成果并确认工作树干净,按第 7.4 条校验新分支名后在原树切换;不同 session 各用自己的树。
 - **目录名与分支名分别命名**:session ID 只决定 worktree 目录;分支继续按第 7.4 条 `<creation-namespace>/<kind>/<任务码>` 命名,`KIND`/`NAME` 表达任务分类与任务码,不以 session ID 代替分支命名规则。
 - **主检出只同步与看 dev**:不建分支、不改文件、不 checkout 他支;开工前、合并后、派席前各 `git pull --ff-only origin dev`。它是移动基线,读数/修改/报告在钉住的 worktree 做。
-- **清理或复用树**:`make -C tools clean-lanes` 列出/回收可回收 worktree,以 `make -C tools help` 为准。已注册关联 worktree 满 24 小时无 Git 更新且落后 dev 至少 300 个提交即强制回收,不以未提交改动、PR 合并状态或进程占用为保留条件;主检出、当前树和锁定树保留。更新时间取自身 HEAD reflog 的最大时间戳与 HEAD commit 的 committer 时间戳之最大值,不取源码文件 mtime。删除前重验身份、锁和时间条件。
+- **清理或复用树**:`make -C tools clean-lanes` 列出/回收可回收 worktree,以 `make -C tools help` 为准。未锁定的已注册 worktree 满 24 小时无 Git 更新且落后 dev 至少 300 个提交时沿用既有回收策略;未提交改动、PR 合并状态和进程占用不改变该策略。带有精确 `worktree-init:<32 位小写十六进制>` 锁理由的树只有在初始化 backlink/common-dir 证据、年龄/落后探针、活动探针和 HEAD 内容核验均通过时才可回收;缺失 index 允许可重建的匹配 checkout 片段,新建、修改或额外文件保留。其它锁理由、空理由、近期 index.lock、未知证据和任一活动或内容读数均保留并输出分类原因。主检出、当前树和嵌套受保护树保留。更新时间取自身 HEAD reflog 的最大时间戳与 HEAD commit 的 committer 时间戳之最大值,不取源码文件 mtime。强制删除前重验身份、锁理由、初始化证据、HEAD 内容、历史和活动;仅对仍合格的初始化锁执行一次解锁后删除。
 - **完成链**:push → `make pr [AUTO_MERGE=0]` → 全部 required checks 绿 → 默认自动合 dev(`AUTO_MERGE=0` 时须后续显式合并;`DRAFT=1` 只创建草稿,不自动合并、不等待 CI) → 同步主检出。同一 session 后续工作继续复用原树,不因单个 PR 合并就回收;回收按本条清理规则执行。完成唯一判据为 PR `MERGED`;开 PR/CI 绿/只差合并仍 open,不得报完成。`CLOSED ≠ MERGED`,须复查 dev 实态,既不能当已合也不能当未修。
 *成熟锚*:worktree 隔离、可发布主干、small commits/push early、内容寻址、definition of done。〔守护:**半硬**·地址与 checks 守并行;独立树/提交推送/主检出常驻/merge 完成靠纪律与评审;完成声明须引用 MERGED 与合入 dev SHA〕
 

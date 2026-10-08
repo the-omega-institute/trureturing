@@ -5,6 +5,7 @@ ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd -P)"
 BASE_REF="origin/dev"
 FORCE=0
 LANES_ONLY=0
+ACTIVE_PATHS=()
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
@@ -23,6 +24,11 @@ while [[ $# -gt 0 ]]; do
       LANES_ONLY=1
       shift
       ;;
+    --active-path)
+      [[ $# -ge 2 ]] || { echo "clean-lanes.sh: --active-path requires a value" >&2; exit 2; }
+      ACTIVE_PATHS+=("$2")
+      shift 2
+      ;;
     *)
       echo "clean-lanes.sh: unknown argument '$1'" >&2
       exit 2
@@ -33,6 +39,7 @@ done
 arguments=(clean-lanes --base "$BASE_REF")
 if [[ "$FORCE" == "1" ]]; then arguments+=(--force); fi
 if [[ "$LANES_ONLY" == "1" ]]; then arguments+=(--lanes-only); fi
+for active_path in "${ACTIVE_PATHS[@]}"; do arguments+=(--active-path "$active_path"); done
 
 exec dotnet run \
   --project "$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \

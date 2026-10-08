@@ -6,12 +6,17 @@ using StrataLint.Engine;
 
 namespace StrataLint.Cli;
 
-internal sealed record CleanLanesOptions(string Base, bool Force, bool LanesOnly);
+internal sealed record CleanLanesOptions(
+    string Base,
+    bool Force,
+    bool LanesOnly,
+    IReadOnlySet<string> ActivePaths);
 
 internal static partial class CleanLanesCommand
 {
     internal const string Usage =
-        "USAGE: StrataLint clean-lanes [--base REV] [--force] [--lanes-only]";
+        "USAGE: StrataLint clean-lanes [--base REV] [--force] [--lanes-only] "
+        + "[--active-path PATH ...]";
 
     private const long MinimumReclaimableLaneAgeSeconds = 24L * 60 * 60;
     private const long MinimumBehindCommits = 300;
@@ -63,7 +68,8 @@ internal static partial class CleanLanesCommand
                 inventory,
                 events,
                 runner,
-                now);
+                now,
+                options.ActivePaths);
             if (!options.LanesOnly)
             {
                 // 建树时的回收够不到这两类:判官树的判据(未注册 / 无 .git 的快照)
@@ -143,6 +149,7 @@ internal static partial class CleanLanesCommand
         var baseSeen = false;
         var force = false;
         var lanesOnly = false;
+        var activePaths = new HashSet<string>(StringComparer.Ordinal);
         for (var index = 0; index < arguments.Count; index++)
         {
             switch (arguments[index])
@@ -152,6 +159,15 @@ internal static partial class CleanLanesCommand
                     break;
                 case "--lanes-only" when !lanesOnly:
                     lanesOnly = true;
+                    break;
+                case "--active-path":
+                    if (++index >= arguments.Count || arguments[index].Length == 0)
+                    {
+                        throw new InvalidOperationException(Usage);
+                    }
+
+                    activePaths.Add(Path.TrimEndingDirectorySeparator(
+                        Path.GetFullPath(arguments[index])));
                     break;
                 case "--base" when !baseSeen:
                     if (++index >= arguments.Count || arguments[index].Length == 0)
@@ -167,7 +183,7 @@ internal static partial class CleanLanesCommand
             }
         }
 
-        return new CleanLanesOptions(baseRevision, force, lanesOnly);
+        return new CleanLanesOptions(baseRevision, force, lanesOnly, activePaths);
     }
 
     private static void InspectRegisteredLanes(
@@ -179,7 +195,8 @@ internal static partial class CleanLanesCommand
         IReadOnlyList<RegisteredWorktree> inventory,
         ICollection<CleanLaneEvent> events,
         IWorktreeProcessRunner runner,
-        DateTimeOffset now)
+        DateTimeOffset now,
+        IReadOnlySet<string> activePaths)
     {
         var remainingPaths = inventory.Select(static item => item.Path).ToHashSet(StringComparer.Ordinal);
         foreach (var item in inventory.OrderByDescending(static item => item.Path.Length))
@@ -215,15 +232,49 @@ internal static partial class CleanLanesCommand
                 continue;
             }
 
-            if (item.Locked)
-            {
-                events.Add(BlockedWorktree(item, "locked"));
-                continue;
-            }
-
             if (remainingPaths.Any(path => IsNestedWorktree(item.Path, path)))
             {
                 events.Add(BlockedWorktree(item, "nested_worktree"));
+                continue;
+            }
+
+            if (item.Locked)
+            {
+                var lockedLane = ProbeLockedLane(
+                    item,
+                    baseCommit,
+                    commonGitDirectory,
+                    runner,
+                    now,
+                    activePaths);
+                if (!lockedLane.Eligible)
+                {
+                    events.Add(BlockedWorktree(item, lockedLane.Reason));
+                    continue;
+                }
+
+                if (force)
+                {
+                    var removal = RemoveLane(
+                        repositoryRoot,
+                        item,
+                        baseCommit,
+                        runner,
+                        now,
+                        lockedLane);
+                    events.Add(RemovalEvent(item, removal));
+                    if (removal.Outcome == LaneRemovalOutcome.Removed) remainingPaths.Remove(item.Path);
+                    continue;
+                }
+
+                events.Add(new CleanLaneEvent(
+                    "stale_worktree",
+                    item.Path,
+                    item.Branch,
+                    item.Head,
+                    "would_remove",
+                    "stale_initialization_lock"));
+                remainingPaths.Remove(item.Path);
                 continue;
             }
 

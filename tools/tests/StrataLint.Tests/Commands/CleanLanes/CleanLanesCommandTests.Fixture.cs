@@ -188,8 +188,24 @@ public sealed partial class CleanLanesCommandTests
                 new UTF8Encoding(false));
         }
 
-        internal void LockLane(string path) =>
-            Git(repository.Path, "worktree", "lock", "--reason", "fixture session", path);
+        internal void LockLane(string path, string reason = "fixture session") =>
+            Git(repository.Path, "worktree", "lock", "--reason", reason, path);
+
+        internal string WorktreeGitDirectory(string path) =>
+            Git(path, "rev-parse", "--absolute-git-dir").Trim();
+
+        internal void RemoveWorktreeIndex(string path)
+        {
+            var index = Path.Combine(WorktreeGitDirectory(path), "index");
+            if (File.Exists(index)) File.Delete(index);
+        }
+
+        internal void WriteOldEmptyIndexLock(string path)
+        {
+            var indexLock = Path.Combine(WorktreeGitDirectory(path), "index.lock");
+            File.WriteAllBytes(indexLock, []);
+            File.SetLastWriteTimeUtc(indexLock, now.UtcDateTime.AddDays(-2));
+        }
 
         internal void SwitchToManagedBranch(string branch) =>
             Git(repository.Path, "switch", "-c", branch);
@@ -363,6 +379,18 @@ public sealed partial class CleanLanesCommandTests
             IWorktreeProcessRunner runner,
             params string[] arguments) =>
             RunCore(runner, now, arguments);
+
+        internal CommandResult RunWithActivePath(string activePath, params string[] arguments)
+        {
+            var allArguments = new List<string> { "--base", "dev", "--active-path", activePath };
+            allArguments.AddRange(arguments);
+            return CleanLanesCommand.Run(
+                repository.Path,
+                allArguments,
+                new ProductionWorktreeProcessRunner(),
+                [temp.Path],
+                now);
+        }
 
         internal CommandResult RunWithProductionProbes(
             IWorktreeProcessRunner runner,
