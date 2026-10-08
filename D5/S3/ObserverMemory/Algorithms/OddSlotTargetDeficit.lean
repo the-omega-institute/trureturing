@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Odd digit rows force a deficit in directed slot incidence with unique target ownership. -/
+   digest: Odd digit rows force a deficit in uniquely owned directed slot incidence. -/
 
 import Mathlib.Algebra.BigOperators.Group.Finset.Basic
 import Mathlib.Algebra.Ring.Parity
@@ -46,7 +46,7 @@ noncomputable def missing (q : Q) : Nat :=
   (Finset.univ.filter (fun b : Fin p => (q, b) ∉ G.used)).card
 
 noncomputable def excess (q : Q) : Nat :=
-  ∑ b : Fin p, (G.incoming (q, b)).card - 1
+  ∑ b : Fin p, ((G.incoming (q, b)).card - 1)
 
 noncomputable def singles (q : Q) : Nat :=
   (Finset.univ.filter (fun u => G.target u = q ∧ (G.next u).card = 1)).card
@@ -127,11 +127,11 @@ private theorem target_deficit (hp : Odd p) (q : Q) (hq : q ≠ G.root) :
   have hz : G.missing q = 0 := by omega
   have hh : G.excess q = 0 := by omega
   have hn : G.singles q = 0 := by omega
-  exact hp.not_even (G.zero_deficit_even q hq hz hh hn)
+  exact (Nat.not_even_iff_odd.mpr hp) (G.zero_deficit_even q hq hz hh hn)
 
 /-- Local and summed target deficits use the same incidence graph. Cycles
 and mergers contribute to excess and are not removed by a tree unfolding. -/
-theorem result (hp : Odd p) :
+private theorem summed_deficit (hp : Odd p) :
     (∀ q, q ≠ G.root → 1 ≤ G.missing q + G.excess q + G.singles q) ∧
     Fintype.card Q - 1 ≤
       (∑ q, G.missing q) + (∑ q, G.excess q) + (∑ q, G.singles q) := by
@@ -151,6 +151,153 @@ theorem result (hp : Odd p) :
   simp only [Finset.sum_const, smul_eq_mul, mul_one] at sum_bound
   rw [card] at sum_bound
   simpa only [Finset.sum_add_distrib] using sum_bound.trans extend
+
+noncomputable def terminalCount : Nat :=
+  (G.used.filter (fun u => (G.next u).card = 0)).card
+
+private theorem edge_balance :
+    (∑ u, (G.next u).card) = ∑ v, (G.incoming v).card := by
+  classical
+  simp only [incoming, Finset.card_eq_sum_ones, Finset.sum_filter]
+  rw [Finset.sum_comm]
+  simp
+
+private theorem incoming_balance :
+    (∑ v, (G.incoming v).card) + p = G.used.card + ∑ q, G.excess q := by
+  classical
+  have point (v : Q × Fin p) :
+      (G.incoming v).card + (if v.1 = G.root then 1 else 0) =
+        (if v ∈ G.used then 1 else 0) + ((G.incoming v).card - 1) := by
+    by_cases root : v.1 = G.root
+    · have empty : G.incoming v = ∅ := by
+        apply Finset.eq_empty_iff_forall_notMem.mpr
+        intro u hu
+        have hv := (Finset.mem_filter.mp hu).2
+        have eq : v = (G.root, v.2) := Prod.ext root rfl
+        rw [eq] at hv
+        exact G.root_no_incoming u v.2 hv
+      have used : v ∈ G.used := by
+        have eq : v = (G.root, v.2) := Prod.ext root rfl
+        rw [eq]
+        exact G.root_used _
+      simp [empty, root, used]
+    · by_cases used : v ∈ G.used
+      · obtain ⟨u, hu⟩ := G.nonroot_incoming v used root
+        have pos : 0 < (G.incoming v).card :=
+          Finset.card_pos.mpr ⟨u, by simp [incoming, hu]⟩
+        simp only [root, used, if_false, if_true]
+        omega
+      · have empty : G.incoming v = ∅ := by
+          apply Finset.eq_empty_iff_forall_notMem.mpr
+          intro u hu
+          exact used (G.target_used u v (Finset.mem_filter.mp hu).2)
+        simp [empty, root, used]
+  have total := Finset.sum_congr (s₁ := Finset.univ) (s₂ := Finset.univ)
+    rfl (fun v _ => point v)
+  simp only [Finset.sum_add_distrib] at total
+  have root_sum : (∑ v : Q × Fin p, if v.1 = G.root then 1 else 0) = p := by
+    rw [Fintype.sum_prod_type, Finset.sum_eq_single G.root]
+    · simp
+    · intro q _ hq
+      simp [hq]
+    · intro h
+      exact False.elim (h (Finset.mem_univ _))
+  have used_sum : (∑ v : Q × Fin p, if v ∈ G.used then 1 else 0) = G.used.card := by
+    simp
+  have excess_sum : (∑ v : Q × Fin p, ((G.incoming v).card - 1)) =
+      ∑ q, G.excess q := by
+    rw [Fintype.sum_prod_type]
+    rfl
+  rwa [root_sum, used_sum, excess_sum] at total
+
+private theorem outgoing_balance :
+    (∑ u, (G.next u).card) + (∑ q, G.singles q) + 2 * G.terminalCount =
+      2 * G.used.card := by
+  classical
+  have point (u : Q × Fin p) :
+      (G.next u).card + (if (G.next u).card = 1 then 1 else 0) +
+        2 * (if u ∈ G.used ∧ (G.next u).card = 0 then 1 else 0) =
+      2 * (if u ∈ G.used then 1 else 0) := by
+    have bound := G.at_most_two u
+    by_cases zero : (G.next u).card = 0
+    · by_cases used : u ∈ G.used <;> simp [zero, used]
+    · have used := G.source_used u (Finset.card_pos.mp (Nat.pos_of_ne_zero zero))
+      by_cases one : (G.next u).card = 1
+      · simp [one, used]
+      · have two : (G.next u).card = 2 := by omega
+        simp [two, used]
+  have total := Finset.sum_congr (s₁ := Finset.univ) (s₂ := Finset.univ)
+    rfl (fun u _ => point u)
+  simp only [Finset.sum_add_distrib, ← Finset.mul_sum] at total
+  have singles_sum : (∑ q, G.singles q) =
+      ∑ u : Q × Fin p, if (G.next u).card = 1 then 1 else 0 := by
+    simp only [singles, Finset.card_eq_sum_ones, Finset.sum_filter]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro u _
+    by_cases one : (G.next u).card = 1 <;> simp [one]
+  have terminal_sum : (∑ u : Q × Fin p,
+      if u ∈ G.used ∧ (G.next u).card = 0 then 1 else 0) = G.terminalCount := by
+    unfold terminalCount
+    rw [Finset.card_filter]
+    have filter : (Finset.univ.filter (fun u => u ∈ G.used)) = G.used := by simp
+    rw [← filter, Finset.sum_filter]
+    apply Finset.sum_congr rfl
+    intro u _
+    by_cases hu : u ∈ G.used <;> by_cases hz : (G.next u).card = 0 <;> simp [hu, hz]
+  have used_sum : (∑ u : Q × Fin p, if u ∈ G.used then 1 else 0) = G.used.card := by
+    simp
+  rwa [← singles_sum, terminal_sum, used_sum] at total
+
+private theorem nominal_balance :
+    p * Fintype.card Q = G.used.card + ∑ q, G.missing q := by
+  classical
+  have split := Finset.card_filter_add_card_filter_not
+    (s := (Finset.univ : Finset (Q × Fin p))) (p := fun v => v ∈ G.used)
+  have first : (Finset.univ.filter (fun v => v ∈ G.used)).card = G.used.card := by simp
+  have second : (Finset.univ.filter (fun v => v ∉ G.used)).card = ∑ q, G.missing q := by
+    simp only [Finset.card_eq_sum_ones, Finset.sum_filter, missing, Fintype.sum_prod_type]
+  rw [first, second] at split
+  simpa [Fintype.card_prod, Nat.mul_comm] using split.symm
+
+/-- Exact incidence accounting and the odd-alphabet improvement. The terminal
+count is the actual number of used slots with empty successor set. -/
+theorem result (hp : 2 ≤ p) (P : Nat) (hP : 1 ≤ P)
+    (hterminal : G.terminalCount = p * P) :
+    p * Fintype.card Q + p = 2 * (p * P) +
+      (∑ q, G.excess q) + (∑ q, G.singles q) + (∑ q, G.missing q) ∧
+    2 * P - 1 ≤ Fintype.card Q ∧
+    (Odd p →
+      (∀ q, q ≠ G.root → 1 ≤ G.missing q + G.excess q + G.singles q) ∧
+      Fintype.card Q - 1 ≤
+        (∑ q, G.missing q) + (∑ q, G.excess q) + (∑ q, G.singles q) ∧
+      2 * p * (P - 1) ≤ (p - 1) * (Fintype.card Q - 1)) := by
+  classical
+  have inc := G.incoming_balance
+  have out := G.outgoing_balance
+  have edges := G.edge_balance
+  have nominal := G.nominal_balance
+  rw [hterminal] at out
+  have identity : p * Fintype.card Q + p = 2 * (p * P) +
+      (∑ q, G.excess q) + (∑ q, G.singles q) + (∑ q, G.missing q) := by omega
+  have lower : 2 * P - 1 ≤ Fintype.card Q := by
+    have sub : 2 * P - 1 + 1 = 2 * P := by omega
+    have scaled : p * (2 * P - 1) + p = 2 * (p * P) := by
+      calc
+        p * (2 * P - 1) + p = p * (2 * P - 1 + 1) := by ring
+        _ = p * (2 * P) := congrArg (fun n => p * n) sub
+        _ = 2 * (p * P) := by ring
+    have product : p * (2 * P - 1) ≤ p * Fintype.card Q := by omega
+    exact Nat.le_of_mul_le_mul_left product (by omega)
+  refine ⟨identity, lower, ?_⟩
+  intro odd
+  obtain ⟨local_bound, global_bound⟩ := G.summed_deficit odd
+  refine ⟨local_bound, global_bound, ?_⟩
+  have qr : 1 ≤ Fintype.card Q := Fintype.card_pos_iff.mpr ⟨G.root⟩
+  have subp : p - 1 + 1 = p := by omega
+  have subP : P - 1 + 1 = P := by omega
+  have subq : Fintype.card Q - 1 + 1 = Fintype.card Q := by omega
+  nlinarith
 
 end SlotGraph
 end D5.S3.ObserverMemory.Algorithms.OddSlotTargetDeficit
