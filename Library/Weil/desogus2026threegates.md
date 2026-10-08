@@ -1141,6 +1141,173 @@ The weaker decay in (T30) pays a different, larger spatial reach than the midpoi
 
 The additional interface is the independent-cutoff, same-collar response estimate (T26)–(T28), consumed by the spatial schedule (T29)–(T30). Tail coordinates, degree thresholds, complete energy, mixed nullity and elementary prime comparisons are reused suppliers. This is paper-level work without Lean certification or a mathematical-priority claim.
 
+## Pay the actual cross Gram of both cutoff families
+
+The midpoint and near-endpoint estimates cannot be added on their joint span without a lower bound for its whole Gram. They are different cutoff families, even though their uncut functions belong to the same null derivative family. The following estimates their actual mixed energy and then combines the already paid forcing bounds.
+
+Retain the same actual $k_j,a_j,h_j,E_j$, complete physical odd form $Q$ and true pole-free core. Suppress $j$ and take, for sufficiently large actual $a=a_j$,
+
+$$
+r_0=a/2,\qquad r_1=a-\log a,\qquad
+\Delta=r_1-r_0,\qquad \Sigma=r_1+r_0,\qquad
+\delta_i=e^{-2r_i}.
+$$
+
+Use both accepted degree schedules, without replacing either family by a single line:
+
+$$
+d_i+1=\left\lfloor\sqrt{\frac{\log r_i}{4C}}\right\rfloor,
+\qquad H_{d_i}\le r_i^{1/4},\qquad C=10C_0.
+\tag{T31}
+$$
+
+The corresponding actual spaces are $U_i=U_{j,d_i}^{(r_i)}$. For $u_i\in U_i$, write its uncut null function as $g_i$, its error as $e_i=g_i-u_i$, and its profile as $F_i$. This $g_i$ is a finite derivative combination, not a new source function. Reuse (T24)–(T25): with $P_i=\|F_i\|_2$, $B_i=e^{r_i/2}e^{-\pi e^{2r_i}}$ and $M_i=\|e_i\|_2^2$,
+
+$$
+M_i=2B_i^2\delta_iP_i^2,\qquad
+Q(u_i)\ge r_iM_i,\qquad
+|F_i^{(\ell)}(s)|\le K_{d_i}^3P_i e^{-cs}
+\quad(0\le\ell\le2).
+$$
+
+Put $W=K_{d_0}^3K_{d_1}^3$. The existing degree budget gives
+$W\le(r_0r_1)^{3/40}\le a^{3/20}$. All constants below are independent of the degree, endpoint and complex coefficient vectors. At each fixed parameter pair the mixed nullity and compact outer-cutoff bridge give the exact equality
+$B_Q(u_0,u_1)=B_Q^{\rm tail}(e_0,e_1)$, with the actual zero pairing, heights and multiplicities unchanged. The same core equality retains its true pole correction.
+
+### Unequal-width correlations retain both prime-shift centers
+
+Write the positive tails as
+$f_i(y)=B_iF_i((y-r_i)/\delta_i)$, extended by zero below $r_i$; oddness gives $e_i(y)=f_i(y)-f_i(-y)$. Eventually $\delta_1\le\delta_0/2$. The profile envelopes then bound the complete two-orientation correlation by
+
+$$
+\begin{aligned}
+&|\langle e_0,\tau_t e_1\rangle|
++|\langle e_1,\tau_t e_0\rangle|\\
+&\quad\le C B_0B_1WP_0P_1\delta_1
+\left(e^{-c|t-\Delta|/\delta_0}
++\mathbf1_{\{t\ge\Sigma\}}e^{-c(t-\Sigma)/\delta_0}\right),
+\qquad t\ge0.
+\end{aligned}
+\tag{T32}
+$$
+
+For like-sign tails the two possible centers are $\Delta$ and $-\Delta$. Integrating the narrower profile gives the factor $\delta_1$; the term centered at $-\Delta$ is bounded by the displayed one. For opposite signs the convolution is zero below $\Sigma$. Above it, putting $w=t-\Sigma$ gives the explicit envelope integral
+
+$$
+\int_0^w e^{-cx/\delta_0}e^{-c(w-x)/\delta_1}dx
+\le\frac{2\delta_1}{c}e^{-cw/\delta_0}.
+$$
+
+Thus (T32) covers all reflected pairs and both translations for complex profiles, without a phase or sign assumption.
+
+The elementary threshold comparison in (T26), applied on both sides of $e^b$, supplies for $b\ge1$ and the paid small $\delta_0$
+
+$$
+\sum_{n\ge2}\frac{\log n}{\sqrt n}
+e^{-c|\log n-b|/\delta_0}
+\le C(1+b)(e^{-b/2}+\delta_0e^{b/2}).
+$$
+
+The first term retains the discrete endpoint, including when the local expected count is below one. Apply this at $b=\Delta$ and $b=\Sigma$, use $\Lambda(n)\le\log n$, and normalize by the actual masses. The complete prime part of the mixed energy satisfies
+
+$$
+\boxed{
+\frac{|B_{\rm prime}(e_0,e_1)|}{\sqrt{M_0M_1}}
+\le CWa\left(
+e^{-3\Delta/2}+\delta_0e^{-\Delta/2}
++e^{-\Delta-\Sigma/2}+e^{-\Sigma/2}\right).
+}
+\tag{T33}
+$$
+
+This notation denotes the prime part of the full polarized tail expression; if one mass is zero the equivalent multiplicative inequality is used. No prime power, endpoint or translation orientation is omitted. In particular the discrete shift near $e^\Delta$, rather than the direct tail overlap, supplies the first term in (T33).
+
+### The singular Gamma part and true pole also fit
+
+The direct overlap is exponentially small in $\Delta/\delta_0$, but this alone does not bound the Gamma energy. For its symmetric increment pairing split the shifts at $\Delta/2$. Below that point, expressing both increments as integrals of their first derivatives gives
+
+$$
+|\langle e_0-\tau_te_0,e_1-\tau_te_1\rangle|
+\le C B_0B_1WP_0P_1\delta_0^{-1}
+t^2 e^{-c\Delta/(2\delta_0)}.
+$$
+
+Indeed, wherever a translated $e_1'$ is nonzero, the argument of the corresponding $e_0'$ has absolute value at least $r_0+\Delta/2$. Its supremum is at most
+$B_0K_{d_0}^3P_0\delta_0^{-1}e^{-c\Delta/(2\delta_0)}$, while the full $L^1$ norm of $e_1'$ is at most $CB_1K_{d_1}^3P_1$. The finite scalar integral $\int t^2\kappa(t)dt$ therefore pays the small-shift singularity. No divergent total jump rate is separated out.
+
+For shifts at least $\Delta/2$, use (T32) and $\kappa(t)\le Ce^{-t/2}$. Its translated terms integrate to at most
+$CB_0B_1WP_0P_1\delta_0\delta_1(e^{-\Delta/2}+e^{-\Sigma/2})$. The untranslated overlap and actual $c_\Gamma$ multiplier fit the small-overlap budget. Consequently the complete Gamma pairing obeys
+
+$$
+\begin{aligned}
+\frac{|B_\Gamma(e_0,e_1)|}{\sqrt{M_0M_1}}
+\le CW\bigl[&e^{3r_0+r_1}e^{-c\Delta/(2\delta_0)}\\
+&+\sqrt{\delta_0\delta_1}
+(e^{-\Delta/2}+e^{-\Sigma/2})\bigr].
+\end{aligned}
+\tag{T34}
+$$
+
+The actual pole moments, from the same error profiles, satisfy
+$|\int e_i(y)\sinh(y/2)dy|\le CB_iK_{d_i}^3P_i\delta_i e^{r_i/2}$.
+Their polarized term, with true coefficient $2$, is therefore at most
+$CW e^{-\Sigma/2}\sqrt{M_0M_1}$. The pole-free core removes precisely this actual term and has the same mixed upper budget.
+
+### A coefficient-uniform mixed Gram lower bound
+
+For the actual choices in (T31), $\Delta=a/2-\log a$ and $\Sigma=3a/2-\log a$. The first term in (T34) is at most $e^{-a}$ once $a$ exceeds a fixed threshold independent of the degree: use $\Delta\ge a/4$, $\delta_0=e^{-a}$ and exponential domination. All other Gamma and pole terms, and every term in (T33), can be compared explicitly with
+$a^{3/2}e^{-3a/4}$ after division by $\sqrt{r_0r_1}\ge a/2$. For example the discrete difference-shift term is
+$e^{-3\Delta/2}=a^{3/2}e^{-3a/4}$, whereas the opposite-shift integral term is
+$e^{-\Sigma/2}=a^{1/2}e^{-3a/4}$.
+
+Together with $W\le a^{3/20}$, this gives a fixed $C_*>0$ such that, for all sufficiently large actual endpoints and every coefficient pair,
+
+$$
+\boxed{
+|B_Q(u_0,u_1)|
+\le\varepsilon_a\sqrt{r_0M_0\,r_1M_1},\qquad
+\varepsilon_a=C_*a^2e^{-3a/4}\longrightarrow0.
+}
+\tag{T35}
+$$
+
+The same estimate holds for the true pole-free core. The remaining starting threshold is fixed by scalar constants and $c$, independently of the degrees; no unspecified $d$-dependent threshold is imported. Its numerical value and $C_*$ are not certified numbers.
+
+Choose a sufficiently large endpoint with $\varepsilon_a<1/2$. Write $Q_i=Q(u_i)$. The existing lower energies imply
+$\sqrt{r_0M_0r_1M_1}\le\sqrt{Q_0Q_1}$. Therefore the actual full joint Gram satisfies
+
+$$
+\boxed{
+Q(u_0+u_1)\ge(1-\varepsilon_a)(Q_0+Q_1)
+\ge\tfrac12(r_0M_0+r_1M_1).
+}
+\tag{T36}
+$$
+
+This proves positivity on the whole joint space without assuming positivity on an arbitrary old complement. It also makes the two spaces a direct sum: a zero $u_0+u_1$ forces both actual masses, and hence both coefficient vectors, to vanish. Its dimension is $(d_0+1)+(d_1+1)\asymp\sqrt{\log\log k_j}$. The separate spaces alone would not establish (T36).
+
+### The complete joint inverse is now paid
+
+Let $D_0(a)$ and $D_1(a)$ be the already proved uniform upper allowances in (T22) and (T30) for these two actual spaces; thus
+$D_0(a)=O(a^{5/4}e^{-3a/2})$ and $D_1(a)=O(a^{-7/4})$.
+For the same physical odd collar $v$ and any $u_i\in U_i$, those bounds give
+$|B_Q(u_i,v)|\le\sqrt{D_i(a)}\|v\|_2\sqrt{Q_i}$.
+Ordinary two-coordinate Cauchy--Schwarz, now consumed with the actual joint denominator (T36), gives
+
+$$
+\boxed{
+\sup_{0\ne u\in U_0\oplus U_1}
+\frac{|B_Q(u,v)|^2}{Q(u)}
+\le\frac{D_0(a)+D_1(a)}{1-\varepsilon_a}\|v\|_2^2
+=O(a^{-7/4})\|v\|_2^2.
+}
+\tag{T37}
+$$
+
+The same statement holds with the true pole-free form in both Gram and forcing. The existing finite variational identity identifies this quotient with the whole joint Gram inverse, including coefficients depending on the endpoint and near-cancelling directions across the two cutoffs. The sum in (T37) is justified by the new cross-Gram estimate; it is not obtained by assuming independent optimizers or adding rank-one inverses.
+
+The added interface is the complete unequal-cutoff mixed estimate (T32)–(T35), consumed by joint positivity and inverse control in (T36)–(T37). Tail coordinates, degree and single-space energy/forcing budgets, mixed nullity/domain passage, Gamma kernel estimates, prime threshold comparisons and finite Gram algebra are reused suppliers. The full old complement and its interaction with this joint family, energy-norm approximation cost, source common-core/physical-norm map and original selected-integer signed Robin estimate remain unpaid. This paper-level joint estimate has no Lean certification, full-old-space or RH conclusion, or mathematical-priority claim.
+
 ## v2: the claimed induction step
 
 The following induction and fold formulas are those of [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), revised **20 September 2026**, 69 pages. At the arithmetic endpoint $a_k=(\log k)/2$, the source retains the pole term in $A_k=C_k-2|s_k\rangle\langle s_k|$. Lemma 6.27, under the old endpoint's positivity and inverse hypotheses, forms the actual harmonic extension
