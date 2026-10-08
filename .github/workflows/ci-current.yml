@@ -1635,7 +1635,7 @@ jobs:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}').current
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 180
+    timeout-minutes: 300
     env:
       # This job writes project seeds only on dev/integration pushes.
       # Dependency and elan writes also use the PR's own merge-ref scope.
@@ -1644,19 +1644,34 @@ jobs:
       CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
       SCRIBE: tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll
       # The judge build recipe: the build step runs it and the judge cache key hashes it.
-      JUDGE_BUILD_ARGS: tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo
+      JUDGE_BUILD_ARGS: tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo -p:ProbeTrace=1
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
+      - name: Install the probe tracer
+        run: |
+          set -euo pipefail
+          command -v strace >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq strace; }
+          strace -V | head -1
+          mkdir -p /tmp/probe/trace
+          cat > /tmp/probe/shell.sh <<'PROBE_EOF'
+          #!/bin/bash
+          dir="/tmp/probe/trace/$(date +%s%N)-$$"
+          mkdir -p "$dir"
+          export UseSharedCompilation=false MSBUILDDISABLENODEREUSE=1 DOTNET_CLI_USE_MSBUILD_SERVER=0
+          exec strace -f -ff -qq -y -s 4096 -e trace=%file,getdents64,fchdir -e signal=none -o "$dir/t" bash --noprofile --norc -eo pipefail "$1"
+          PROBE_EOF
+          chmod +x /tmp/probe/shell.sh
       - name: Verify the candidate and list the changed paths
         env:
           CI_HIT_PATHS: '*'
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
+        shell: bash /tmp/probe/shell.sh {0}
         run: bash tools/scripts/workflow/ci-entry.sh
       - id: delta_entry
         name: Check delta inputs
@@ -1681,11 +1696,13 @@ jobs:
             !tools/scripts/agent/openproblem/README.md
             !tools/scripts/agent/openproblem/SCREENED-OUT*.md
             !tools/scripts/agent/prime_slabs/CPU.md
+        shell: bash /tmp/probe/shell.sh {0}
         run: bash tools/scripts/workflow/ci-entry.sh
       - name: Validate the delta entry result
         if: github.event_name == 'pull_request'
         env:
           DELTA_HIT: ${{ steps.delta_entry.outputs.hit }}
+        shell: bash /tmp/probe/shell.sh {0}
         run: case "$DELTA_HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR delta hit output is '$DELTA_HIT'" >&2; exit 2 ;; esac
       # The judge cache key binds the resolved SDK, the build recipe and the
       # paths and blob ids of the tracked judge compile inputs listed in
@@ -1792,6 +1809,7 @@ jobs:
             tools/Trureturing.Truth/.globalconfig
             tools/Trureturing.Truth/Directory.Build.*
             tools/Trureturing.Truth/Directory.Packages.props
+        shell: bash /tmp/probe/shell.sh {0}
         run: |
           sdk="$(dotnet --version)"
           [[ "$sdk" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]] || { echo "unexpected SDK version '$sdk'" >&2; exit 2; }
@@ -1814,6 +1832,7 @@ jobs:
       - id: keys
         env:
           GH_TOKEN: ${{ github.token }}
+        shell: bash /tmp/probe/shell.sh {0}
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
       - id: elan
         if: steps.keys.outputs.elan_key != ''
@@ -1823,6 +1842,7 @@ jobs:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
       - id: toolchain
+        shell: bash /tmp/probe/shell.sh {0}
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: dependency
         if: steps.keys.outputs.dependency_key != ''
@@ -1848,9 +1868,11 @@ jobs:
           PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        shell: bash /tmp/probe/shell.sh {0}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
       - name: Build the judge
         if: steps.judge.outputs.cache-hit != 'true'
+        shell: bash /tmp/probe/shell.sh {0}
         run: dotnet build $JUDGE_BUILD_ARGS
       # The judge outputs are a function of the keyed sources, so they are saved
       # as soon as the build succeeds.
@@ -1868,6 +1890,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_ACCEPT_COLD_BUILD: '1'
+        shell: bash /tmp/probe/shell.sh {0}
         run: |
           producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
           if [[ -n "$producer" ]]; then
@@ -1883,6 +1906,7 @@ jobs:
         env:
           STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
           STRATALINT_REPORT_SUCCEEDED: 'true'
+        shell: bash /tmp/probe/shell.sh {0}
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
       - name: Publish the push project seed
         if: ${{ !cancelled() && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_ready == 'true' }}
@@ -1892,16 +1916,20 @@ jobs:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
       - name: Prepare the Scribe scope
+        shell: bash /tmp/probe/shell.sh {0}
         run: tools/scripts/workflow/scribe-scope-paths.sh "$RUNNER_TEMP/changed-paths" > "$RUNNER_TEMP/scribe-paths"
       - name: Current-tree rules
+        shell: bash /tmp/probe/shell.sh {0}
         run: dotnet "$CLI" check-current --candidate-lean-report "$REPORT" --scribe-paths-from "$RUNNER_TEMP/scribe-paths"
       - name: Scribe content
         if: ${{ !cancelled() }}
         env:
           SCRIBE_PATHS: ${{ runner.temp }}/scribe-paths
+        shell: bash /tmp/probe/shell.sh {0}
         run: tools/scripts/workflow/scribe-content-checks.sh "$REPORT" "$SCRIBE" "$SCRIBE_PATHS"
       - name: Delta rules
         if: ${{ !cancelled() && steps.delta_entry.outputs.hit == 'true' }}
+        shell: bash /tmp/probe/shell.sh {0}
         run: |
           rc=0
           dotnet "$CLI" check-delta --protected-base "$(git rev-parse HEAD^1)" --candidate-lean-report "$REPORT" || rc=$?
@@ -1915,6 +1943,7 @@ jobs:
         env:
           STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
           STRATALINT_CHECK_SUCCEEDED: 'true'
+        shell: bash /tmp/probe/shell.sh {0}
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers dependency
       - if: ${{ success() && steps.snapshot.outcome == 'success' && steps.snapshot.outputs.dependency_ready == 'true' }}
         continue-on-error: true
@@ -1925,6 +1954,7 @@ jobs:
       - name: List toolchains in the elan cache
         if: ${{ success() && env.CACHE_WRITES == 'true' && steps.toolchain.outcome == 'success' }}
         continue-on-error: true
+        shell: bash /tmp/probe/shell.sh {0}
         run: bash tools/scripts/workflow/elan-cache-inventory.sh "$HOME/.elan"
       - if: ${{ success() && env.CACHE_WRITES == 'true' && steps.toolchain.outcome == 'success' && steps.elan.outputs.cache-hit != 'true' }}
         continue-on-error: true
@@ -1933,11 +1963,39 @@ jobs:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
 
+      - name: Probe exclusion mutations
+        if: ${{ !cancelled() && steps.lean_report.outcome == 'success' }}
+        timeout-minutes: 150
+        run: bash .github/probe/mutations.sh
+      - name: Extract the probe trace
+        if: always()
+        env:
+          PROBE_UNIT: current
+        run: |
+          set -euo pipefail
+          python3 .github/probe/strace_extract.py --repository "$GITHUB_WORKSPACE" --traces /tmp/probe/trace --unit "$PROBE_UNIT" --output "/tmp/probe/$PROBE_UNIT.json"
+          git -C "$GITHUB_WORKSPACE" ls-files -z > "/tmp/probe/$PROBE_UNIT.tracked"
+          tar -C /tmp/probe -cf - trace | zstd -T0 -3 -q -o "/tmp/probe/$PROBE_UNIT.trace.tar.zst"
+          ls -la /tmp/probe
+      - name: Upload the probe trace
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: probe-current
+          path: |
+            /tmp/probe/*.json
+            /tmp/probe/*.tracked
+            /tmp/probe/*.trace.tar.zst
+            /tmp/probe/mutations/**
+          retention-days: 5
+          if-no-files-found: error
+
   banned-api-proof:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}')['banned-api-proof']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: banned-api-proof
       command: make -C tools compile-proof PROOF=banned-api-proof
       cache-dependency-path: |
         tools/StrataLint.TestEvidence/packages.lock.json
@@ -1950,6 +2008,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['capability-proof']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: capability-proof
       command: make -C tools compile-proof PROOF=capability-proof
       cache-dependency-path: |
         tools/StrataLint.TestEvidence/packages.lock.json
@@ -1964,6 +2023,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['filemap']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: filemap
       command: make filemap-conform
       cache-dependency-path: |
         tools/StrataLint.FileMap/packages.lock.json
@@ -1978,6 +2038,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['selftest']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: selftest
       command: make -C tools selftest
       cache-dependency-path: |
         tools/StrataLint.Cli/packages.lock.json
@@ -1996,6 +2057,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-architecture']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-architecture
       project: tools/tests/StrataLint.ArchitectureTests/StrataLint.ArchitectureTests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.ArchitectureTests/packages.lock.json
@@ -2020,6 +2082,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cache']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-cache
       project: tools/tests/StrataLint.Cache.Tests/StrataLint.Cache.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.Cache.Tests/packages.lock.json
@@ -2034,6 +2097,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cache-native']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-cache-native
       project: tools/tests/StrataLint.Cache.Native.Tests/StrataLint.Cache.Native.Tests.csproj
       lean: toolchain
       cache-dependency-path: |
@@ -2049,6 +2113,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cache-release']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-cache-release
       project: tools/tests/StrataLint.Cache.Release.Tests/StrataLint.Cache.Release.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.Cache.Release.Tests/packages.lock.json
@@ -2063,6 +2128,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-ci-entry']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-ci-entry
       command: >-
         bash tools/scripts/workflow/ci-entry-test.sh &&
         python3 -m unittest tools/scripts/workflow/test_ci_detect.py tools/scripts/workflow/test_ci_required.py
@@ -2073,6 +2139,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cli']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-cli
       project: tools/tests/StrataLint.Tests/StrataLint.Tests.csproj
       lean: toolchain
       cache-dependency-path: |
@@ -2104,6 +2171,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cli-integration']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-cli-integration
       project: tools/tests/StrataLint.CliIntegration.Tests/StrataLint.CliIntegration.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.CliIntegration.Tests/packages.lock.json
@@ -2131,6 +2199,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-configuration']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-configuration
       project: tools/tests/StrataLint.Configuration.Tests/StrataLint.Configuration.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.Configuration.Tests/packages.lock.json
@@ -2148,6 +2217,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-cover-batch']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-cover-batch
       project: tools/tests/StrataLint.CoverBatch.Tests/StrataLint.CoverBatch.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.CoverBatch.Tests/packages.lock.json
@@ -2176,6 +2246,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-declared-template
       project: tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj
       lean: build
       cache-dependency-path: |
@@ -2198,6 +2269,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-digestion']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-digestion
       project: tools/tests/StrataLint.Digestion.Tests/StrataLint.Digestion.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.Digestion.Tests/packages.lock.json
@@ -2218,6 +2290,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-engine']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-engine
       project: tools/tests/StrataLint.Engine.Tests/StrataLint.Engine.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.Engine.Tests/packages.lock.json
@@ -2235,6 +2308,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-filemap']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-filemap
       project: tools/tests/StrataLint.FileMap.Tests/StrataLint.FileMap.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.FileMap.Tests/packages.lock.json
@@ -2254,6 +2328,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-header-script']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-header-script
       project: tools/tests/StrataLint.HeaderScript.Tests/StrataLint.HeaderScript.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.HeaderScript.Tests/packages.lock.json
@@ -2268,6 +2343,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-instruction-contract']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-instruction-contract
       project: tools/tests/StrataLint.InstructionContract.Tests/StrataLint.InstructionContract.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.InstructionContract.Tests/packages.lock.json
@@ -2283,6 +2359,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-integration-mirror']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-integration-mirror
       command: bash tools/scripts/agent/integration-mirror-test.sh
       dotnet: false
 
@@ -2291,6 +2368,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-lean']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-lean
       project: tools/tests/StrataLint.Lean.Tests/StrataLint.Lean.Tests.csproj
       lean: toolchain
       cache-dependency-path: |
@@ -2309,6 +2387,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-cache-script']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-lean-cache-script
       project: tools/tests/StrataLint.LeanCacheScript.Tests/StrataLint.LeanCacheScript.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.LeanCacheScript.Tests/packages.lock.json
@@ -2326,6 +2405,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-lean-report-script']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-lean-report-script
       project: tools/tests/StrataLint.LeanReportScript.Tests/StrataLint.LeanReportScript.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.LeanReportScript.Tests/packages.lock.json
@@ -2343,6 +2423,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-playbook-script']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-playbook-script
       project: tools/tests/StrataLint.PlaybookScript.Tests/StrataLint.PlaybookScript.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.PlaybookScript.Tests/packages.lock.json
@@ -2360,6 +2441,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-pr-script']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-pr-script
       project: tools/tests/StrataLint.PrScript.Tests/StrataLint.PrScript.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.PrScript.Tests/packages.lock.json
@@ -2376,6 +2458,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-report-supervisor']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-report-supervisor
       project: tools/tests/StrataLint.ReportSupervisor.Tests/StrataLint.ReportSupervisor.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.ReportSupervisor.Tests/packages.lock.json
@@ -2392,6 +2475,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-configuration']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-repository-configuration
       project: tools/tests/StrataLint.RepositoryConfiguration.Tests/StrataLint.RepositoryConfiguration.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.RepositoryConfiguration.Tests/packages.lock.json
@@ -2409,6 +2493,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-contract']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-repository-contract
       project: tools/tests/StrataLint.RepositoryContract.Tests/StrataLint.RepositoryContract.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.RepositoryContract.Tests/packages.lock.json
@@ -2429,6 +2514,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-filemap']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-repository-filemap
       project: tools/tests/StrataLint.RepositoryFileMap.Tests/StrataLint.RepositoryFileMap.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.RepositoryFileMap.Tests/packages.lock.json
@@ -2449,6 +2535,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-repository-topology']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-repository-topology
       project: tools/tests/StrataLint.RepositoryTopology.Tests/StrataLint.RepositoryTopology.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.RepositoryTopology.Tests/packages.lock.json
@@ -2473,6 +2560,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-resource-observation']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-resource-observation
       project: tools/tests/StrataLint.ResourceObservation.Tests/StrataLint.ResourceObservation.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.ResourceObservation.Tests/packages.lock.json
@@ -2489,6 +2577,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-rules']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-rules
       project: tools/tests/StrataLint.Rules.Tests/StrataLint.Rules.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.Rules.Tests/packages.lock.json
@@ -2508,6 +2597,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-scribe']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-scribe
       project: tools/tests/StrataLint.Scribe.Tests/StrataLint.Scribe.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.Scribe.Tests/packages.lock.json
@@ -2525,6 +2615,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-script']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-script
       project: tools/tests/StrataLint.ScriptTests/StrataLint.ScriptTests.csproj
       lean: toolchain
       cache-dependency-path: |
@@ -2550,6 +2641,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-source-atomizer']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-source-atomizer
       project: tools/tests/StrataLint.SourceAtomizer.Tests/StrataLint.SourceAtomizer.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.SourceAtomizer.Tests/packages.lock.json
@@ -2573,6 +2665,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-engineering']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-engineering
       project: tools/tests/StrataLint.Engineering.Tests/StrataLint.Engineering.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.Engineering.Tests/packages.lock.json
@@ -2586,6 +2679,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-runtime']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-runtime
       project: tools/tests/StrataLint.Runtime.Tests/StrataLint.Runtime.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.Runtime.Tests/packages.lock.json
@@ -2600,6 +2694,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-test-evidence']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-test-evidence
       project: tools/tests/StrataLint.TestEvidence.Tests/StrataLint.TestEvidence.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.TestEvidence.Tests/packages.lock.json
@@ -2613,6 +2708,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-truth']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-truth
       project: tools/tests/Trureturing.Truth.Tests/Trureturing.Truth.Tests.csproj
       cache-dependency-path: |
         tools/tests/Trureturing.Truth.Tests/packages.lock.json
@@ -2626,6 +2722,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-truth-release']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-truth-release
       project: tools/tests/StrataLint.TruthRelease.Tests/StrataLint.TruthRelease.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.TruthRelease.Tests/packages.lock.json
@@ -2651,6 +2748,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-workflow-script']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-workflow-script
       project: tools/tests/StrataLint.WorkflowScript.Tests/StrataLint.WorkflowScript.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.WorkflowScript.Tests/packages.lock.json
@@ -2668,6 +2766,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-worktree-contract']
     uses: ./.github/workflows/ci-unit.yml
     with:
+      probe-unit: tests-worktree-contract
       project: tools/tests/StrataLint.WorktreeContract.Tests/StrataLint.WorktreeContract.Tests.csproj
       cache-dependency-path: |
         tools/tests/StrataLint.WorktreeContract.Tests/packages.lock.json

@@ -29,7 +29,10 @@ on:
         default: none
       timeout-minutes:
         type: number
-        default: 30
+        default: 150
+      probe-unit:
+        type: string
+        default: unknown
 
 permissions:
   contents: read
@@ -56,11 +59,26 @@ jobs:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
+      - name: Install the probe tracer
+        run: |
+          set -euo pipefail
+          command -v strace >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq strace; }
+          strace -V | head -1
+          mkdir -p /tmp/probe/trace
+          cat > /tmp/probe/shell.sh <<'PROBE_EOF'
+          #!/bin/bash
+          dir="/tmp/probe/trace/$(date +%s%N)-$$"
+          mkdir -p "$dir"
+          export UseSharedCompilation=false MSBUILDDISABLENODEREUSE=1 DOTNET_CLI_USE_MSBUILD_SERVER=0
+          exec strace -f -ff -qq -y -s 4096 -e trace=%file,getdents64,fchdir -e signal=none -o "$dir/t" bash --noprofile --norc -eo pipefail "$1"
+          PROBE_EOF
+          chmod +x /tmp/probe/shell.sh
       - name: Verify the candidate
         env:
           CI_HIT_PATHS: '*'
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
+        shell: bash /tmp/probe/shell.sh {0}
         run: bash tools/scripts/workflow/ci-entry.sh
       - if: inputs.dotnet
         uses: actions/setup-dotnet@v5
@@ -72,6 +90,7 @@ jobs:
         if: inputs.lean != 'none'
         env:
           GH_TOKEN: ${{ inputs.lean == 'build' && github.token || '' }}
+        shell: bash /tmp/probe/shell.sh {0}
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
       - id: elan
         if: inputs.lean != 'none' && steps.keys.outputs.elan_key != ''
@@ -81,6 +100,7 @@ jobs:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
       - if: inputs.lean != 'none'
+        shell: bash /tmp/probe/shell.sh {0}
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: dependency
         if: inputs.lean == 'build' && steps.keys.outputs.dependency_key != ''
@@ -106,6 +126,7 @@ jobs:
           PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        shell: bash /tmp/probe/shell.sh {0}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
       - name: Run
         env:
@@ -113,9 +134,32 @@ jobs:
           DOTNET_CLI_UI_LANGUAGE: en-US
           PROJECT: ${{ inputs.project }}
           COMMAND: ${{ inputs.command }}
+        shell: bash /tmp/probe/shell.sh {0}
         run: |
           if [[ -n "$PROJECT" ]]; then
             make -C tools test TEST_PROJECT="$PROJECT"
           else
             bash -e -o pipefail -c "$COMMAND"
           fi
+      - name: Extract the probe trace
+        if: always()
+        env:
+          PROBE_UNIT: ${{ inputs.probe-unit }}
+        run: |
+          set -euo pipefail
+          python3 .github/probe/strace_extract.py --repository "$GITHUB_WORKSPACE" --traces /tmp/probe/trace --unit "$PROBE_UNIT" --output "/tmp/probe/$PROBE_UNIT.json"
+          git -C "$GITHUB_WORKSPACE" ls-files -z > "/tmp/probe/$PROBE_UNIT.tracked"
+          tar -C /tmp/probe -cf - trace | zstd -T0 -3 -q -o "/tmp/probe/$PROBE_UNIT.trace.tar.zst"
+          ls -la /tmp/probe
+      - name: Upload the probe trace
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: probe-${{ inputs.probe-unit }}
+          path: |
+            /tmp/probe/*.json
+            /tmp/probe/*.tracked
+            /tmp/probe/*.trace.tar.zst
+            /tmp/probe/mutations/**
+          retention-days: 5
+          if-no-files-found: error
