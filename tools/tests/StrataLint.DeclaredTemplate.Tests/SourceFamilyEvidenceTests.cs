@@ -137,12 +137,12 @@ public sealed class SourceFamilyEvidenceTests
     }
 
     [Fact]
-    public void four_original_compiled_occurrences_pass_strict_import_join()
+    public void all_compiled_occurrences_pass_strict_import_join()
     {
         var wire = CompiledWire();
         var (snapshot, report, selected) = Inputs(wire);
         var evidence = InformationTemplateEvidence.Collect(snapshot, report, selected);
-        Assert.Equal(4, evidence.Inventory.Count);
+        Assert.Equal(12, evidence.Inventory.Count);
         var scope = wire[0]!["records"]![0]!["certificate"]!["source_binding"]!;
         Assert.Equal(13, scope["telescope_size"]!.GetValue<int>());
         Assert.Equal(2, scope["level_count"]!.GetValue<int>());
