@@ -2377,6 +2377,154 @@ Indeed $(1+R(a))e^{R(a)}a^{-1/3}e^{-a/4}\le C a^{-4/3}$; the $M$ term is smaller
 All original coefficients, actual zero real parts, both signs, all heights and multiplicities, the selected global Robin-ratio maximizing integer, elementary correction and strict core are preserved. The original signed Robin estimate and RH remain unproved. Source common-core/norm/full-form transport is still a separate identification. These are paper-level complete-row and remaining-form estimates, without Lean certification, a numerical starting certificate, energy-norm exhaustion, an all-old inverse or a mathematical-priority claim.
 
 
+## A polar-containing partition pays the whole actual tail
+
+The cached primary's named subsection **True-core finite polar-cyclic endpoint criterion** supplies the finite Schur implication. Its partition-tail remark supplies a harmonic half-unit floor and a regular-Gamma allowance, not a positive tail floor after all prime-power translations have been included. Reuse that criterion, the complete physical row (T46), its compact-support bound (T77), classical Dirichlet/Neumann Poincare, Plancherel and Jensen. The consumer below is a complete actual partition-tail estimate with an explicit finite-rank cost and compact-probe recovery over the growing physical interval. It is a paper application, not a new general Schur or Poincare theorem or a mathematical-priority claim.
+
+Use the same actual odd physical space, zero extension, common closed-form bridge and full coefficient-$2$ pole as before. Write $\mathcal Q_a(f)$ for the complete Weil form on $(-a,a)$, and $\mathcal C_a(f)$ for its true polar-free core. In this paragraph $\Pi_a$ is a projection; it is not a quadratic form. Put
+
+$$
+\begin{aligned}
+s_a^{\rm ph}(y)&=\sinh(y/2)\mathbf1_{(-a,a)}(y),\\
+W_a&=\sum_{2\le n<e^{2a}}\frac{\Lambda(n)}{\sqrt n},\\
+c_\Gamma&=\Re\operatorname{digamma}(1/4)-\log\pi
+=-\gamma-\pi/2-3\log2-\log\pi.
+\end{aligned}
+$$
+
+Every prime power below the actual overlap threshold appears in $W_a$. Boundary contact at $n=e^{2a}$ gives a zero-measure overlap, so the strict cutoff is unchanged. The same core relation is
+$\mathcal Q_a(f)=\mathcal C_a(f)-2|\langle s_a^{\rm ph},f\rangle|^2$.
+
+### Cell means force an actual logarithmic archimedean floor
+
+Let $\mathcal P$ be a finite partition of $(-a,a)$ into intervals of length at most $h$. Take an odd $f$ in the actual form domain with $\int_I f=0$ on every cell. Its zero-extended primitive
+$F(y)=\int_{-a}^y f(x)dx$ is zero at every cell endpoint and outside $(-a,a)$. Dirichlet Poincare on each cell, followed by Plancherel, gives
+
+$$
+\|F\|_2^2\le\frac{h^2}{\pi^2}\|f\|_2^2,
+\qquad
+\frac1{2\pi}\int_{\mathbb R}\frac{|\widehat f(t)|^2}{t^2}\,dt
+=\|F\|_2^2.
+\tag{T78}
+$$
+
+The Fourier convention is still $\widehat f(t)=\int e^{-ity}f(y)dy$. The apparent singularity at zero is controlled by that genuine compactly supported primitive; no inverse-frequency estimate is imposed on arbitrary mean-nonzero vectors.
+
+The actual archimedean multiplier, including its scalar and zero-extension boundary interaction, is
+
+$$
+A_\Gamma(t)=c_\Gamma+
+2\int_0^\infty\kappa(u)(1-\cos(tu))du,
+\qquad \kappa(u)=\frac{e^{-u/2}}{1-e^{-2u}}.
+$$
+
+Since $1-e^{-2u}\le2u$, the elementary Laplace integral gives
+$A_\Gamma(t)\ge c_\Gamma+\tfrac12\log(1+4t^2)$.
+This bound concerns the complete archimedean form, not just the singular harmonic difference energy with its endpoint potential removed. For $f\ne0$ normalize the measure $|\widehat f(t)|^2dt/(2\pi\|f\|_2^2)$. Equation (T78) bounds its mean of $(1+4t^2)^{-1}$ by $h^2/(4\pi^2)$. Jensen for the convex function $-\log$ therefore yields
+
+$$
+\boxed{
+\mathfrak a_{\Gamma,a}(f)
+\ge\left[c_\Gamma+\log\frac{2\pi}{h}\right]\|f\|_2^2.
+}
+\tag{T79}
+$$
+
+The extended Jensen inequality also applies when the positive logarithmic moment is infinite; the retained form vectors have the required finite moment. The multiplier description is the same physical/closed-form identification used in the preceding estimates. It neither relies on nor supplies the source's separate Cauchy--Carleman collar correspondence.
+
+### Include the true pole and every prime-power orientation
+
+Fix $\lambda>0$. Define
+
+$$
+ h_a=2\pi\exp(c_\Gamma-2W_a-\lambda),
+ \qquad r_a=\max\{1,\lceil a/h_a\rceil\}.
+$$
+
+Partition each half-interval into $r_a$ equal cells of length $\ell_a=a/r_a\le h_a$, and reflect the partition. Let $\mathcal V_a$ be the odd piecewise-constant cell space together with the **actual** vector $s_a^{\rm ph}$. Let $\Pi_a$ be its physical $L^2$ orthogonal projection and $\Theta_a=I-\Pi_a$. Every vector in its orthogonal complement has zero mean on each cell and is orthogonal to the true pole. Each zero-extension prime translation is a contraction. Consequently the two actual orientations give the lower allowance $-2W_a\|f\|_2^2$, and (T79) gives
+
+$$
+\boxed{
+\mathcal C_a(f)=\mathcal Q_a(f)\ge\lambda\|f\|_2^2
+\quad
+\text{for every }f\in\Theta_a\mathcal H_a\cap D(\mathcal Q_a).
+}
+\tag{T80}
+$$
+
+This is positivity of the whole infinite partition tail, without positivity of the old full form. The pole is zero on this tail because it was included in the actual finite space; it has not been estimated away or assigned another coefficient. No prime phase, zero real part or sign hypothesis is used.
+
+The odd cell space has dimension $r_a$, and the nonconstant pole adds one independent vector. Thus
+
+$$
+\boxed{
+\dim\mathcal V_a=r_a+1
+\le2+\frac a{2\pi}\exp(2W_a+\lambda-c_\Gamma).
+}
+\tag{T81}
+$$
+
+For fixed $\lambda$, the existing unconditional half-weighted Mangoldt asymptotic $W_a\sim2e^a$ gives
+$\log\dim\mathcal V_a\sim4e^a$.
+At the actual arithmetic endpoints $a=\tfrac12\log k$ this is $\log\dim\mathcal V_a\sim4\sqrt k$. The construction pays a finite but rapidly growing rank. This is an upper-cost statement for this construction, not a necessary cost for other methods or an efficiency claim.
+
+### The finite barrier is well defined, but its sign is unpaid
+
+The coarse vectors belong to the actual closed form and operator domains. A finite step function has Fourier decay $O_a(|t|^{-1})$, hence finite logarithmic form norm. Its archimedean row is bounded by a finite sum of $1+|\log|y-b||$ near the finitely many cell and support endpoints $b$; these singularities are locally square integrable. The truncated smooth pole has the same endpoint behavior. The finite prime-power translation row is $L^2$. Inward dilation followed by smooth odd mollification supplies the common compact-core approximation in logarithmic form norm. Thus $C_a\mathcal V_a\subset L^2(-a,a)$ in this realization, where $C_a$ is the operator of the true core. These are domain checks; constants here may depend on the finite partition and are not uniform rank estimates.
+
+The cached source's true-core finite Schur lemma now applies directly with $P=\Pi_a$, $Q=\Theta_a$ and the **paid** $\lambda$. One sufficient remaining finite certificate is
+
+$$
+\boxed{
+\Pi_a C_a\Pi_a
+-2|s_a^{\rm ph}\rangle\langle s_a^{\rm ph}|
+-\lambda^{-1}(\Theta_a C_a\Pi_a)^*(\Theta_a C_a\Pi_a)
+\succeq0.
+}
+\tag{T82}
+$$
+
+All factors belong to the same actual core and the same partition. Its last term is the finite Gram of the complete $L^2$ rows $\Theta_a C_av$; there is no omitted intermediate band, prime-power tail, Gamma trace or pole normalization. The source supplies the implication from (T80) and (T82) to full positivity. Equation (T80) does not establish (T82), and no cofinal family of such finite certificates is supplied. A Lanczos space starting only at the pole need not contain $\mathcal V_a$; its different orthogonal tail cannot be assigned this $\lambda$ without an inclusion or an independent bound. The source's one-link Krylov--Radau criterion is reused only under its own tail hypothesis.
+
+### The entire compact row reaches the actual finite quotient
+
+There is a quantitative consumer before any finite matrix sign is known. For $1\le R<a-1$, take any smooth compact odd $\phi$ supported in $(-R,R)$, including endpoint-dependent tests. Reuse the complete row bound (T77), and write $A_a$ for the full physical operator. The projection $\Theta_a$ lands in the cellwise-zero-mean tail. Neumann Poincare for the cell averages of the **actual row**, followed by (T80), gives
+
+$$
+\begin{aligned}
+\mathcal D_a^{\rm part}(\phi)
+&:=\sup_{0\ne f\in\Theta_a\mathcal H_a\cap D(\mathcal Q_a)}
+\frac{|B_{\mathcal Q_a}(f,\phi)|^2}{\mathcal Q_a(f)}\\
+&\le\lambda^{-1}\|\Theta_a A_a\phi\|_2^2
+\le\frac{\ell_a^2}{\pi^2\lambda}
+\|(A_a\phi)'\|_{L^2(-a,a)}^2\\
+&\le\frac C\lambda(1+R)e^{a+R}h_a^2\|\phi\|_{H^2}^2.
+\end{aligned}
+$$
+
+The extra pole direction in $\mathcal V_a$ can only decrease the $L^2$ projection error from the cell-average space. Its full coupling is retained in $A_a\phi$; both prime orientations and all terms with $\log n\le a+R$ remain in that row. Primes above this compact-support threshold vanish exactly, as in (T73), whereas (T80) retains all possible tail prime powers.
+
+Apply the already used actual positive-tail Riesz/short identity to the exact fibre $b=\Pi_a\phi$, not to an auxiliary fixed matrix. For
+$S_a^{\rm part}(b)=\inf_{f\in\Theta_a\mathcal H_a\cap D(\mathcal Q_a)}\mathcal Q_a(b+f)$,
+
+$$
+\boxed{
+\begin{aligned}
+S_a^{\rm part}(\Pi_a\phi)
+&=\mathcal Q_a(\phi)-\mathcal D_a^{\rm part}(\phi),\\
+0\le\mathcal Q_a(\phi)-S_a^{\rm part}(\Pi_a\phi)
+&\le\frac C\lambda(1+R)e^{a+R}h_a^2\|\phi\|_{H^2}^2,\\
+\|\phi-\Pi_a\phi\|_2
+&\le\frac{h_a}\pi\|\phi'\|_2.
+\end{aligned}
+}
+\tag{T83}
+$$
+
+For fixed $\lambda$, the coefficient of $\|\phi\|_{H^2}^2$ tends to zero even on the growing region $R=a-2$. Its logarithm is at most $-4W_a+2a+O(\log(a+2))$, which tends to $-\infty$ by the same unconditional supplier. These are absolute norm-controlled bounds, not a relative energy estimate or a sign certificate for arbitrary endpoint-dependent tests. A strict negative compact test, if one existed, would remain negative on its exact finite fibre. A zero-energy test need not retain zero energy. The finite problem is a short, rather than just the positive-looking compression with the coupling discarded.
+
+The explicit mesh cost and full-row comparison supply the missing all-prime partition-tail interface to the source criterion. They do not supply its finite matrix sign or the source's full collar transport. All original selected global Robin-ratio maximizer, signed target, coefficients, actual zero real parts, both signs, heights, multiplicities, elementary correction and strict core remain unchanged. RH and the original signed Robin estimate remain unproved. No Lean certification, numerical certificate, whole-old inverse or mathematical-priority claim is made.
+
 ## v2: the claimed induction step
 
 The following induction and fold formulas are those of [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), revised **20 September 2026**, 69 pages. At the arithmetic endpoint $a_k=(\log k)/2$, the source retains the pole term in $A_k=C_k-2|s_k\rangle\langle s_k|$. Lemma 6.27, under the old endpoint's positivity and inverse hypotheses, forms the actual harmonic extension
