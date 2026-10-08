@@ -200,7 +200,7 @@ private theorem kronecker_mul_tensor (A B : (Matrix (Fin 2) (Fin 2) ℂ)) (a b :
 private theorem local_preserves_product (UA UB : Matrix.unitaryGroup (Fin 2) ℂ) {ψ : (Fin 2 × Fin 2 → ℂ)} (h : ProductVector ψ) : ProductVector (localMatrix UA UB *ᵥ ψ) := by
   obtain ⟨a,b,rfl⟩ := h
   exact ⟨(UA : (Matrix (Fin 2) (Fin 2) ℂ))*ᵥ a,(UB : (Matrix (Fin 2) (Fin 2) ℂ))*ᵥ b,kronecker_mul_tensor _ _ _ _⟩
-private theorem marginal_amplitude (ψ : (Fin 2 × Fin 2 → ℂ)) : partialTraceRight (rankOneDensity ψ) = (Matrix.of ∘ Function.curry) ψ * ((Matrix.of ∘ Function.curry) ψ)ᴴ := by
+theorem marginal_amplitude (ψ : (Fin 2 × Fin 2 → ℂ)) : partialTraceRight (rankOneDensity ψ) = (Matrix.of ∘ Function.curry) ψ * ((Matrix.of ∘ Function.curry) ψ)ᴴ := by
   ext i j
   simp [partialTraceRight, rankOneDensity, Matrix.vecMulVec_apply,Function.curry,
     Matrix.mul_apply, Matrix.conjTranspose_apply, Matrix.of_apply, Function.comp_apply, Function.curry]
@@ -389,7 +389,7 @@ private theorem quadratic_projector {n : Type*} [Fintype n] (z ψ : n → ℂ) :
   intro j hj
   simp only [← Complex.star_def, star_star]
   ring
-private theorem ensemble_kernel {n ι : Type*} [Fintype n] [Fintype ι] (ψ : ι → n → ℂ) (w : ι → ℝ) (hw : ∀ i,0 ≤ w i) (z : n → ℂ) (hzero : star z ⬝ᵥ ((∑ i,w i • rankOneDensity (ψ i)) *ᵥ z)=0) : ∀ i,0 < w i → star z ⬝ᵥ ψ i = 0 := by
+theorem ensemble_kernel {n ι : Type*} [Fintype n] [Fintype ι] (ψ : ι → n → ℂ) (w : ι → ℝ) (hw : ∀ i,0 ≤ w i) (z : n → ℂ) (hzero : star z ⬝ᵥ ((∑ i,w i • rankOneDensity (ψ i)) *ᵥ z)=0) : ∀ i,0 < w i → star z ⬝ᵥ ψ i = 0 := by
   have he : ∑ i,w i*Complex.normSq (star z ⬝ᵥ ψ i)=0 := by
     have hC : ((∑ i,w i*Complex.normSq (star z ⬝ᵥ ψ i) : ℝ) : ℂ)=0 := by
       push_cast
