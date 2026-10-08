@@ -174,7 +174,7 @@ private theorem row_step (x : ZMod (p * P)) (t : Nat) (ht : t < waits x) :
       rw [dig, previous]
       have remaining : P - waits x = x.val % P := by
         simp only [waits, if_neg zero]
-        omega
+        exact Nat.sub_sub_self remainder.le
       simp only [last, remaining]
       exact congrArg (fun z : ZMod (p * P) => H(z)) original
 
