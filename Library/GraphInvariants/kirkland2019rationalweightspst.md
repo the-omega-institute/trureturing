@@ -52,6 +52,16 @@ cases of Proposition `prop:rat`. The odd sizes not of the form $2^k + 1$ and
 not congruent to $3$ or $5$ modulo $8$, and the even sizes $n \ge 6$, are not
 settled by the source or this module.
 
+Two steps of that proof are recorded by the source as known. Section 2 of the
+source cites Kay for the fact that a symmetric tridiagonal Hamiltonian with
+perfect state transfer between its end vertices is persymmetric, and recalls
+that after a common shift the eigenvalues are then integers that alternate
+between even and odd. The module states the first for an arbitrary unitary
+commuting with the path Hamiltonian, and derives from the second the identity
+$P\sum_{i\in A} 1/\prod_{j\ne i}(z_i - z_j) = 1/2$ for the spectral class $A$
+of a Hermitian matrix; the 2-adic valuation of that sum is the module's own
+step.
+
 ## Verified locator
 
 - DOI: https://doi.org/10.1080/03081087.2018.1442810
