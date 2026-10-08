@@ -5241,3 +5241,271 @@ $F_A$, actual zero multiset, complete elementary contributions and
 unbounded Robin/RH goal remain unchanged; no compact spectral
 truncation or RH inference follows from additive exponential type.
 This is a paper-level comparison, not a Lean-verified result.
+
+## Joint short-interval cancellation in the Gamma comparison
+
+The allowance in (GP6) discards the cancellation between the two sides
+of the original cutoff. The uniform short-interval input already
+recorded in the [Guth–Maynard note](../Analytic/guthmaynard2024largevalues.md),
+Corollary 1.3 of [arXiv:2405.20552v2](https://arxiv.org/abs/2405.20552v2),
+supplies a two-sided comparison with a smaller admissible Gamma shape.
+The global PNT input is the Fiori–Jaskari theorem quoted above. These
+source theorems, the absolute centering in (GP4)–(GP5), and the full
+combined remainder (GR1) are reused. The following is a paper-level
+application, without mathematical-priority or Lean-verification claims.
+
+Retain $A\to\infty$, $L=\log A$, $D(t)=\psi(t)-t$, $h_A,w_c,J_\alpha$
+and the Gamma law from (GP1)–(GP5). Define
+
+$$
+\begin{aligned}
+\eta_0(A)&=\sup_{t\ge A}\frac{|D(t)|}{t},\\
+\eta_{\rm si}(A)&=
+\sup_{\substack{A/2\le u<v\le3A/2\\v-u\ge A^{2/3}}}
+\frac{|D(v)-D(u)|}{v-u}.
+\end{aligned}
+\tag{GS1}
+$$
+
+There are absolute constants $K,c>0$ such that, for all sufficiently
+large $A$ and every noninteger $\alpha\ge4$,
+
+$$
+\boxed{\begin{aligned}
+\sqrt A L|J_1(A)-J_\alpha(A)|\le K\bigg\{&
+\frac{\sqrt A}{\alpha}
+ [\eta_0(A)+\eta_{\rm si}(A)+A^{-1/30}]\\
+&+\sqrt{A\alpha}\,A^{-9/10}
+ +\sqrt A e^{-c\alpha}\bigg\}.
+\end{aligned}}
+\tag{GS2}
+$$
+
+The starting value and constants are not numerically certified. This
+is an asymptotic comparison, not an additional finite Robin clock.
+
+### The local prime input and its uniform range
+
+The retained global PNT theorem gives, for some fixed $c_0>0$,
+
+$$
+\eta_0(A)\ll
+\exp\left[-c_0\frac{L^{3/5}}{(\log L)^{1/5}}\right].
+\tag{GS3}
+$$
+
+Use Guth–Maynard Corollary 1.3 with the fixed parameter $\epsilon=1/20$.
+For $u\in[A/2,3A/2]$ and $A^{2/3}\le h\le A^{9/10}$, its required
+range $u^{37/60}\le h\le u^{0.99}$ holds uniformly for sufficiently
+large $A$. Multiplying the prime count by $\log u$ introduces an error
+$O(h^2/(A L))$ from the variation of $\log p$. Thus
+
+$$
+\vartheta(u+h)-\vartheta(u)
+=h+O\bigl(h[L e^{-L^{1/4}}+A^{-1/10}]\bigr).
+$$
+
+Here $(\log u)^{1/4}=L^{1/4}+O(L^{-3/4})$ uniformly. If
+$A^{9/10}<h\le A$, with $u+h\le3A/2$, partition into equal pieces of lengths between
+$A^{9/10}/2$ and $A^{9/10}$ and add the same estimates. The classical
+Chebyshev bound and prime-power identity give
+$\psi(t)-\vartheta(t)=O(\sqrt t)$; paying this at the two endpoints,
+with $h\ge A^{2/3}$, proves
+
+$$
+\boxed{\eta_{\rm si}(A)\ll
+ L e^{-L^{1/4}}+A^{-1/10}+A^{-1/6}.}
+\tag{GS4}
+$$
+
+This uses the uniform corollary, not the separate almost-all theorem.
+It neither assumes a short-interval relative error from global PNT
+nor substitutes $\pi$ or $\vartheta$ for $\psi$ without paying prime
+powers.
+
+### Remove only the exactly centered linear dilation
+
+Choose the following endpoint convention and retain it in the prime
+sum:
+
+$$
+a_A(t)=
+\begin{cases}
+-1/(AL),&0<t\le A,\\
+1/(t\log^2t),&t>A.
+\end{cases}
+\qquad
+B_c(t)=w_c(t)-h_A(t)-(c-1)a_A(t).
+\tag{GS5}
+$$
+
+Both $a_A$ and $w_c-h_A$ are absolutely integrable against $dt$ and
+$d\psi(t)$; for the latter use (GP4). Moreover
+$\int_0^\infty a_A(t)\,dt=-1/L+1/L=0$ and
+$\int_0^\infty(w_c-h_A)\,dt=0$. The absolute $d\psi+dt$ norm of
+$a_A$ is $O(1/L)$ by Chebyshev and partial summation. Consequently
+(GP5), Fubini, and $\mathbb E(C-1)=0$ give the unchanged arithmetic
+difference
+
+$$
+\boxed{J_1-J_\alpha
+ =\mathbb E\int_0^\infty B_C(t)\,dD(t).}
+\tag{GS6}
+$$
+
+No divergent pole and prime quantities are separated in this identity.
+
+For $1/2\le c\le3/2$, put $e=c-1$ and split $B_c=b_c+v_c$, where
+
+$$
+b_c(t)=
+\begin{cases}
+e^2/(cAL),&0<t\le A,\\[2pt]
+\displaystyle\frac1{t(\log t-\log c)}-
+ \frac1{t\log t}-\frac e{t\log^2t},&t>A.
+\end{cases}
+\tag{GS7}
+$$
+
+This regular part agrees with $B_c$ outside the interval between $A$
+and $cA$. Taylor's theorem in $c$, uniformly on $[1/2,3/2]$, gives
+
+$$
+|b_c(t)|\ll\frac{e^2}{t\log^2t},\qquad
+|b_c'(t)|\ll\frac{e^2}{t^2\log^2t}\qquad(t>A).
+$$
+
+Partial summation on $(A,\infty)$, together with the constant part on
+$(0,A]$, therefore yields
+
+$$
+\left|\int_0^\infty b_c(t)\,dD(t)\right|
+\ll\eta_0(A)e^2/L.
+\tag{GS8}
+$$
+
+In particular, the boundary contribution is paid using $D(A)$; the
+change of formula at $A$ has not been ignored.
+
+The local residual $v_c$ is zero outside the closed interval with
+endpoints $A,cA$. Inside that interval its nonzero formula is
+
+$$
+\begin{cases}
+\displaystyle\frac1{cAL}-\frac1{t\log(t/c)},&c>1,\ A<t<cA,\\[4pt]
+\displaystyle\frac1{t\log(t/c)}-\frac1{cAL},&c<1,\ cA<t<A.
+\end{cases}
+$$
+
+The actual endpoint values are those of $B_c-b_c$ in (GS5)–(GS7).
+The first derivative of $1/[t\log(t/c)]$ is $O(1/(A^2L))$ in this
+interval. Including the possible jump at $A$ gives
+
+$$
+\|v_c\|_\infty+\operatorname{Var}(v_c)
+\ll |e|/(AL).
+\tag{GS9}
+$$
+
+### Pay the shrinking cutoff interval, including its atoms
+
+Set $H_0=A^{2/3}$, $H_1=A^{7/10}$ and $h=A|e|$. For
+$h\ge H_1$, (GS1) bounds $|D(t)-D(A)|$ by
+$\eta_{\rm si}(A)h$ whenever $|t-A|\ge H_0$. For smaller distances,
+monotonicity of $\psi$ and (GS4) applied to
+$[A-H_0,A+H_0]$ give the bound $O(H_0)$. Since
+$H_0/H_1=A^{-1/30}$, it follows uniformly on the support of $v_c$ that
+
+$$
+|D(t)-D(A)|\ll
+[\eta_{\rm si}(A)+A^{-1/30}]h.
+$$
+
+The same bound holds for one-sided limits after paying a possible
+endpoint prime-power atom of size at most $\log(2A)=O(\log A)$,
+absorbed in $H_0$. Integration of a bounded-variation function against
+these increments, using (GS9), gives
+
+$$
+\left|\int v_c(t)\,dD(t)\right|
+\ll [\eta_{\rm si}(A)+A^{-1/30}]e^2/L
+\qquad(H_1\le h\le A/2).
+\tag{GS10}
+$$
+
+For $h<H_1$, the support lies in $[A-H_1,A+H_1]$. Its total
+$d\psi+dt$ mass is $O(H_1)$ by (GS4), with the endpoint atom included.
+Therefore
+$|\int v_c\,dD|\ll |e|H_1/(AL)$. The maximum of the Gamma density
+is $O(\sqrt\alpha)$ uniformly for $\alpha\ge4$, by the standard
+Stirling bound at its mode. Hence
+
+$$
+\begin{aligned}
+\mathbb E[|C-1|\mathbf1_{\{|C-1|<H_1/A\}}]
+ &\ll\sqrt\alpha(H_1/A)^2,\\
+\sqrt A L\,
+\mathbb E\left[\left|\int v_C\,dD\right|
+                  \mathbf1_{\{|C-1|<H_1/A\}}\right]
+ &\ll\sqrt{A\alpha}\,A^{-9/10}.
+\end{aligned}
+\tag{GS11}
+$$
+
+For the remaining event $C\notin[1/2,3/2]$, (GP4) and the absolute
+norm of $a_A$ give
+$|\int B_c\,dD|\ll(1+c+c^{-1})/L$ for every $c>0$.
+The Gamma moment-generating function and Chernoff's inequality give
+$\Pr(C\notin[1/2,3/2])\le2e^{-c_1\alpha}$ for an absolute
+$c_1>0$. The second moment of $1+C+C^{-1}$ is bounded uniformly for
+$\alpha\ge4$, using
+$\mathbb EC^2=1+1/\alpha$ and
+$\mathbb EC^{-2}=\alpha^2/[(\alpha-1)(\alpha-2)]$.
+Cauchy–Schwarz thus pays the entire event by
+$O(\sqrt A e^{-c_1\alpha/2})$ after normalization. In particular no
+scales with $cA<1$ have been discarded.
+
+Finally average (GS8) and (GS10), use
+$\mathbb E(C-1)^2=1/\alpha$, and add (GS11) and this Gamma tail.
+This proves (GS2) uniformly over its stated shapes.
+
+### A smaller shape family with vanishing full comparison error
+
+Fix $0<b_-\le b_+<\infty$, and take any noninteger shape satisfying
+
+$$
+b_-a_*(A)\le\alpha\le b_+a_*(A),
+\qquad a_*(A)=\sqrt A\,e^{-L^{1/4}/2}.
+\tag{GS12}
+$$
+
+For $b_-=1/2$ and $b_+=2$, for example,
+$\alpha=\lfloor a_*(A)\rfloor+1/2$ is lawful eventually.
+The first term of (GS2), using (GS3)–(GS4), is
+$O_{b_-,b_+}(L e^{-L^{1/4}/2})$. The small-interval term is
+$O_{b_-,b_+}(A^{-3/20}e^{-L^{1/4}/4})$, and the Gamma tail is smaller.
+Reusing the complete elementary remainder in (GR1) gives
+
+$$
+\boxed{-\sqrt A L I_\psi(A)
+ =\sqrt A L Z_\alpha(A)
+  +O_{b_-,b_+}(L e^{-L^{1/4}/2}) .}
+\tag{GS13}
+$$
+
+Every zero in $Z_\alpha$ still has its actual real part,
+multiplicity and height, and the coefficient remains
+$H_\alpha(\rho)F_A(\rho)$. No main spectral response has been bounded.
+In (GS12) the old allowance $\sqrt A/\alpha$ diverges, whereas the
+joint arithmetic comparison tends to zero. This is the gained
+transport regime; it supplies neither a sign nor a finite numerical
+threshold for the remaining main response.
+
+At the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum, this estimate uses $A=\log N$ without changing
+the selected source, the strict core, or the existing conclusion
+$A>10^{45}$. The asymptotic starting point in (GS2) has not been
+numerically compared with this finite exclusion. A full signed upper
+bound for $Z_\alpha(A)$ with enough strict slack remains required.
+Robin's criterion and RH remain
+unproved by these applications.
