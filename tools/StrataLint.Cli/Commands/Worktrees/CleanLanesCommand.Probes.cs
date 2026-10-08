@@ -81,10 +81,10 @@ internal static partial class CleanLanesCommand
         if (contentResult == ContentProbeResult.Changed)
             return LockedLaneObservation.Retained("locked_content");
 
-        var history = TryReadHistoryFingerprint(item.GitDirectory!);
+        var history = TryReadHistoryFingerprint(item, commonGitDirectory);
         if (history is null)
             return LockedLaneObservation.Retained("locked_evidence");
-        var retainedHistory = ProbeRetainedHistory(repositoryRoot, item, baseCommit, runner);
+        var retainedHistory = ProbeRetainedHistory(repositoryRoot, item, baseCommit, commonGitDirectory, runner);
         if (retainedHistory != ContentProbeResult.Verified)
             return LockedLaneObservation.Retained(retainedHistory == ContentProbeResult.Changed
                 ? "locked_history" : "locked_evidence");
@@ -178,20 +178,8 @@ internal static partial class CleanLanesCommand
         }
     }
 
-    private static string? TryReadHistoryFingerprint(string gitDirectory)
-    {
-        try
-        {
-            var path = Path.Combine(gitDirectory, "logs", "HEAD");
-            return File.Exists(path)
-                ? Convert.ToHexString(SHA256.HashData(File.ReadAllBytes(path)))
-                : null;
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            return null;
-        }
-    }
+    private static string? TryReadHistoryFingerprint(RegisteredWorktree item, string commonDirectory) =>
+        TryReadRecoveryHistory(item, commonDirectory, out var fingerprint, out _) ? fingerprint : null;
 
     private static ContentProbeResult TryReadHeadContentFingerprint(
         RegisteredWorktree item,

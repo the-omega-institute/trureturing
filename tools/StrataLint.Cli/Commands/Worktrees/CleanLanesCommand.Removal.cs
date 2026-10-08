@@ -110,46 +110,34 @@ internal static partial class CleanLanesCommand
         {
             try
             {
-                RunGit(
-                    repositoryRoot,
-                    ["worktree", "unlock", item.Path],
-                    runner,
-                    "could not unlock stale initialization worktree");
-            }
-            catch (Exception exception) when (exception is not OutOfMemoryException)
-            {
-                return RelockRetainedLane(repositoryRoot, item, Refused("unlock_failed"), runner);
-            }
-
-            try
-            {
                 var inventory = ReadWorktrees(repositoryRoot, runner);
-                var unlocked = inventory.SingleOrDefault(candidate => string.Equals(
+                var retained = inventory.SingleOrDefault(candidate => string.Equals(
                     candidate.Path, item.Path, StringComparison.Ordinal));
                 string? changed = null;
-                if (unlocked is null || unlocked.Locked) changed = "locked_changed";
-                else if (unlocked.Head != item.Head || unlocked.Branch != item.Branch
-                    || unlocked.GitDirectory != item.GitDirectory) changed = "identity_changed";
-                else if (PathsEqual(unlocked.Path, repositoryRoot)
-                    || PathsEqual(unlocked.GitDirectory!, ResolveGitDirectory(repositoryRoot, runner))
-                    || PathsEqual(unlocked.GitDirectory!, ResolveCommonGitDirectory(repositoryRoot, runner)))
+                if (retained is null || !retained.Locked || retained.LockReason != item.LockReason)
+                    changed = "locked_changed";
+                else if (retained.Head != item.Head || retained.Branch != item.Branch
+                    || retained.GitDirectory != item.GitDirectory) changed = "identity_changed";
+                else if (PathsEqual(retained.Path, repositoryRoot)
+                    || PathsEqual(retained.GitDirectory!, ResolveGitDirectory(repositoryRoot, runner))
+                    || PathsEqual(retained.GitDirectory!, ResolveCommonGitDirectory(repositoryRoot, runner)))
                     changed = "protected_changed";
                 else if (inventory.Any(candidate => IsNestedWorktree(item.Path, candidate.Path)))
                     changed = "nested_worktree";
                 else
                 {
-                    changed = LockedEvidenceBlockReason(repositoryRoot, unlocked, baseCommit,
+                    changed = LockedEvidenceBlockReason(repositoryRoot, retained, baseCommit,
                         ResolveCommonGitDirectory(repositoryRoot, runner), lockedObservation,
                         runner, now, activePaths!, readHostActivity!);
-                    changed ??= ReclaimBlockReason(unlocked, baseCommit, runner, now) is null
+                    changed ??= ReclaimBlockReason(retained, baseCommit, runner, now) is null
                         ? null : "eligibility_changed";
                 }
                 if (changed is not null)
-                    return RelockRetainedLane(repositoryRoot, item, Refused(changed), runner);
+                    return Refused(changed);
             }
             catch (Exception exception) when (exception is not OutOfMemoryException)
             {
-                return RelockRetainedLane(repositoryRoot, item, Refused("unreadable"), runner);
+                return Refused("unreadable");
             }
         }
 
@@ -157,16 +145,16 @@ internal static partial class CleanLanesCommand
         {
             RunGit(
                 repositoryRoot,
-                ["worktree", "remove", "--force", "--", item.Path],
+                lockedObservation is null
+                    ? ["worktree", "remove", "--force", "--", item.Path]
+                    : ["worktree", "remove", "--force", "--force", "--", item.Path],
                 runner,
                 "could not remove stale worktree");
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
-            var failed = new LaneRemovalResult(LaneRemovalOutcome.WorktreeRemoveFailed,
+            return new LaneRemovalResult(LaneRemovalOutcome.WorktreeRemoveFailed,
                 "worktree_remove_failed_state_indeterminate");
-            return lockedObservation is null ? failed
-                : RelockRetainedLane(repositoryRoot, item, failed, runner);
         }
 
         try
@@ -195,45 +183,19 @@ internal static partial class CleanLanesCommand
         IReadOnlySet<string> activePaths,
         Func<IReadOnlySet<string>?> readHostActivity)
     {
-        if (item.Locked && FileState(Path.Combine(item.GitDirectory!, "locked")) != observation.LockFingerprint)
+        if (!item.Locked || FileState(Path.Combine(item.GitDirectory!, "locked")) != observation.LockFingerprint)
             return "locked_changed";
         var evidence = TryReadInitializationEvidence(item, commonDirectory);
         if (evidence is null || evidence != observation.EvidenceFingerprint) return "evidence_changed";
         var activity = TryReadIndexLockActivity(item.GitDirectory!, now, out var active);
         if (activity is null || active || activity != observation.ActivityFingerprint) return "activity_changed";
-        var history = TryReadHistoryFingerprint(item.GitDirectory!);
+        var history = TryReadHistoryFingerprint(item, commonDirectory);
         if (history is null || history != observation.HistoryFingerprint
-            || ProbeRetainedHistory(repositoryRoot, item, baseCommit, runner) != ContentProbeResult.Verified)
+            || ProbeRetainedHistory(repositoryRoot, item, baseCommit, commonDirectory, runner) != ContentProbeResult.Verified)
             return "history_changed";
         if (TryReadHeadContentFingerprint(item, runner, out var content) != ContentProbeResult.Verified
             || content != observation.ContentFingerprint) return "content_changed";
         return HostActivityBlockReason(item, activePaths, readHostActivity);
-    }
-
-    private static LaneRemovalResult RelockRetainedLane(
-        string repositoryRoot,
-        RegisteredWorktree item,
-        LaneRemovalResult result,
-        IWorktreeProcessRunner runner)
-    {
-        try
-        {
-            var retained = ReadWorktrees(repositoryRoot, runner).SingleOrDefault(candidate =>
-                candidate.Path == item.Path);
-            if (retained is not null && !retained.Locked)
-            {
-                if (retained.GitDirectory != item.GitDirectory)
-                    throw new InvalidOperationException("worktree identity changed");
-                RunGit(repositoryRoot,
-                    ["worktree", "lock", "--reason", item.LockReason!, item.Path], runner,
-                    "could not restore initialization lock");
-            }
-            return result;
-        }
-        catch (Exception exception) when (exception is not OutOfMemoryException)
-        {
-            return new(LaneRemovalOutcome.WorktreeRemoveFailed, "worktree_relock_failed_state_indeterminate");
-        }
     }
 
     private static LaneRemovalResult Refused(string reason) =>

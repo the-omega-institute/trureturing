@@ -143,6 +143,65 @@ public sealed partial class CleanLanesCommandTests
         Assert.False(Directory.Exists(lane), result.Output);
     }
 
+    [Fact]
+    public void ReusedBranchReflogHistorySurvivesWithCleanPrivateHeadHistory()
+    {
+        using var fixture = new CleanLanesFixture();
+        const string branch = "harness/inherited-recovery";
+        var lane = fixture.AddLandedLane(branch);
+        var retained = fixture.Head(lane);
+        File.AppendAllText(Path.Combine(lane, "README.md"), "unique prior session\n");
+        CleanLanesFixture.Git(lane, "add", "README.md");
+        CleanLanesFixture.Git(lane, "commit", "-m", "prior recovery");
+        var unique = fixture.Head(lane);
+        CleanLanesFixture.Git(lane, "reset", "--hard", retained);
+        CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "worktree", "remove", lane);
+        CleanLanesFixture.Git(fixture.RepositoryWorkingDirectory, "worktree", "add", lane, branch);
+        var privateLog = Path.Combine(fixture.WorktreeGitDirectory(lane), "logs", "HEAD");
+        Assert.DoesNotContain(unique, File.ReadAllText(privateLog));
+        var branchLog = CleanLanesFixture.Git(lane, "rev-parse", "--path-format=absolute",
+            "--git-path", "logs/refs/heads/" + branch).Trim();
+        var before = File.ReadAllBytes(branchLog);
+        Assert.Contains(unique, File.ReadAllText(branchLog));
+        AssertLockedContentRetained(fixture, lane, "locked_history");
+        Assert.Equal(before, File.ReadAllBytes(branchLog));
+        Assert.True(fixture.BranchExists(branch));
+    }
+
+    [Theory]
+    [InlineData("ORIG_HEAD", "locked_history")]
+    [InlineData("refs/worktree/recovery", "locked_history")]
+    [InlineData("logs/refs/worktree/recovery", "locked_evidence")]
+    [InlineData("operation-state", "locked_evidence")]
+    [InlineData("COMMIT_EDITMSG", "locked_evidence")]
+    public void AdditionalPrivateRecoveryStateIsRetained(string relativePath, string reason)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddLandedLane("harness/private-recovery");
+        var recovery = Path.Combine(fixture.WorktreeGitDirectory(lane), relativePath);
+        Directory.CreateDirectory(Path.GetDirectoryName(recovery)!);
+        var unique = CleanLanesFixture.Git(lane, "commit-tree", "HEAD^{tree}", "-p", "HEAD",
+            "-m", "private recovery").Trim();
+        File.WriteAllText(recovery, unique + "\n");
+        AssertLockedContentRetained(fixture, lane, reason);
+        Assert.Equal(unique + "\n", File.ReadAllText(recovery));
+    }
+
+    [Theory]
+    [InlineData("ORIG_HEAD")]
+    [InlineData("refs/worktree/recovery")]
+    public void RetainedPrivateRecoveryHandlesPermitLockedReclamation(string reference)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddLandedLane("harness/retained-private-recovery");
+        CleanLanesFixture.Git(lane, "update-ref", "--create-reflog", reference, "HEAD");
+        fixture.LockLane(lane, InitializationLock);
+        var result = fixture.Run("--force", "--lanes-only");
+        Assert.True(result.Success, result.Error);
+        Assert.False(Directory.Exists(lane), result.Output);
+        Assert.False(fixture.BranchExists("harness/retained-private-recovery"));
+    }
+
     private static void AssertLockedContentRetained(CleanLanesFixture fixture, string lane, string reason)
     {
         fixture.LockLane(lane, InitializationLock);
