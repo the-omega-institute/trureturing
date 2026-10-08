@@ -509,7 +509,7 @@ $$
 
 ## 15. 多实际深度的取得域与第四段相位
 
-本节至 §20 保持 §9 的 $m=2,d=1,\ell=2,n=4$、付费提种器、载荷解析器、全标记树写入、第三次写前锁存和原 Stop，仅在各命题明确声明的范围内改变运行前安装的共同深度先验。一次运行在第一笔 Read 前抽取一个 $K$，前奏与全部载荷都使用这个 $K$；给定 $K=k\ge1$，每笔合法 Read 新鲜独立，$r_k=F_{k+1}/F_{k+3}$。不重抽深度，不供应身份、时钟、档案、重置、增长、额外随机性或运行时模型查询。
+本节至 §20 保持 §9 的 $m=2,d=1,\ell=2,n=4$、付费提种器、载荷解析器、全标记树写入、第三次记录写入完成后才锁存 $B,Q^+,Z$ 的次序和原 Stop，仅在各命题明确声明的范围内改变运行前安装的共同深度先验。一次运行在第一笔 Read 前抽取一个 $K$，前奏与全部载荷都使用这个 $K$；给定 $K=k\ge1$，每笔合法 Read 新鲜独立，$r_k=F_{k+1}/F_{k+3}$。不重抽深度，不供应身份、时钟、档案、重置、增长、额外随机性或运行时模型查询。
 
 参照过滤仍是 §9 的 $\mathcal F_j$：只有已经实际取得的字母及确定性派生事件。$\mathcal H_3$ 仍指种子已取得、第三标记已锁存、第四段尚无 Read 的正质量有限历史；数学索引 $j,T_3$ 不作为可读时钟。计数 $(A,B)$ 从零逐笔更新，包括每次拒绝与返回圈，原有限保持字段 $C_0$ 照常更新。对任一有限或可数深度概率先验 $\mu$，实际有限历史 $h$ 的后验是
 
@@ -836,7 +836,7 @@ $$
 
 统一终局 TV、完整残余转录 TV 和实际加权平均风险须分开：§16 是终局 TV 为零而残余 TV 严格正的实际见证；定理19.1只算终局律的统一极小极大值；推论20.1在同一来源下给平均风险趋零，同时统一底保持。把残余律推到终局边缘会收缩 TV，因此定理19.1也给相应有限配置残余预测任务一个下界，但没有证明其尖锐值或匹配上界。这里没有随机记忆、原始尾词最优、状态数最优或总资源最优结论。
 
-本附录的供应对应为：Boundary Dynamics §§97.1–97.2、100.1–100.2 给出固定同一深度的停止柱律、原付费拒绝及只在汇总后成立的种子独立性，§105.1 给原后缀和 Stop 接口；Full E1 Scope Extension §§2–4 给全标记树写入、写前锁存、保持与六行已接受过去解码；本卷 §§9–14 给取得过滤、原相位、两深度反演、完整有限配置类与有限保持方式。§14 所列 [FiniteOrbitPeriodBound](../../../D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.lean) 的 `finite_orbit_and_readout_eventually_periodic` 供应周期步骤；[CausalStateFactorization](../../../D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.lean) 与 [ConditionalProbabilityProfileMinimality](../../../D5/S3/ObserverMemory/PredictionFactors/ConditionalProbabilityProfileMinimality.lean) 供应已有一般律纤维因子化视角，不决定本附录的实际先验似然像。读取源码不等于编译本应用，有限类型的通用最小性结论也未直接移入无界历史域。
+本附录的供应对应为：Boundary Dynamics §§97.1–97.2、100.1–100.2 给出固定同一深度的停止柱律、原付费拒绝及只在汇总后成立的种子独立性，§105.1 给原后缀和 Stop 接口；Full E1 Scope Extension §§2–4 给全标记树写入、第三次记录写入完成后才锁存 $B,Q^+,Z$ 的次序、保持与六行已接受过去解码；本卷 §§9–14 给取得过滤、原相位、两深度反演、完整有限配置类与有限保持方式。§14 所列 [FiniteOrbitPeriodBound](../../../D5/S3/ObserverMemory/Prediction/FiniteOrbitPeriodBound.lean) 的 `finite_orbit_and_readout_eventually_periodic` 供应周期步骤；[CausalStateFactorization](../../../D5/S3/ObserverMemory/PredictionFactors/CausalStateFactorization.lean) 与 [ConditionalProbabilityProfileMinimality](../../../D5/S3/ObserverMemory/PredictionFactors/ConditionalProbabilityProfileMinimality.lean) 供应已有一般律纤维因子化视角，不决定本附录的实际先验似然像。读取源码不等于编译本应用，有限类型的通用最小性结论也未直接移入无界历史域。
 
 文献表态为 `repo-derived`：上述实际历史碰撞、两相位矩阵、代数先验计数反演及可数端点集中是依赖既有来源合同的普通数学综合推导。精确可证伪证书包括 §16 的共同 $261/518$、严格正下一 Read 差、§17 的两个非零行列式和 §19 的统一几何率；有限检查不替代各节的无限域证明。没有文献原创性、当前 Lean 核验或冻结声明。原选定过去结果不改判；一般多深度先验的标量分类（包括几何先验 $\mu(k)=2^{-k}$ 的单射问题）、其他阶段的最粗表示、擦除顺序恢复及更广的空间、时间、边界、记忆相互恢复仍未由此完成。没有物理定律、全局 completion 或持久研究目标完成的主张。
 
