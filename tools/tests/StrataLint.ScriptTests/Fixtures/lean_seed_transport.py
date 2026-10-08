@@ -9,7 +9,7 @@ import shutil
 import subprocess
 import tarfile
 
-from lean_seed_support import OTHER, PUBLISH, REV, PartitionFixture, digest, write
+from lean_seed_support import OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, write
 
 
 class ReleaseTransportCases(PartitionFixture):
@@ -38,6 +38,23 @@ exit "${FAKE_BUILD_EXIT:-0}"
         # dependencies in the fixture repository.
         for name in ("lean-cache-publish.sh", "cache_material.py", "lean_cache.py", "lean_cache_release.py"):
             shutil.copy2(PUBLISH.with_name(name), helper_dir / name)
+        inspector = self.root / "tools/lean-inspector"
+        inspector.mkdir(parents=True)
+        for name in ("reuse.py", "publication.py", "materials.py"):
+            shutil.copy2(ROOT / "tools/lean-inspector" / name, inspector / name)
+        report_scripts = self.root / "tools/scripts/report"
+        report_scripts.mkdir(parents=True)
+        for name in ("lean-report-selection.py", "lean-report-input.sh"):
+            shutil.copy2(ROOT / "tools/scripts/report" / name, report_scripts / name)
+        paths = lambda *names: dict(include=[dict(pattern=name, optional=False) for name in names], exclude=[])
+        write(self.root / "lean-report-inputs.json", json.dumps(dict(schema_version=1,
+            report_execution=dict(toolchain="lean-toolchain", tools=["lake", "lean"],
+                platform=["system", "machine"],
+                environment=["LEAN_PATH", "LEAN_SRC_PATH", "LEAN_SYSROOT", "ELAN_TOOLCHAIN", "LEAN_OPTS"]),
+            report_modules=paths("Trureturing.lean", "D5/A.lean"), inspector_sources=paths(),
+            config_inputs=paths("lean-toolchain", "lakefile.toml", "lake-manifest.json"),
+            producer_scopes={"lean-report": paths("lean-report-inputs.json", "tools/scripts/report/lean-report-selection.py"),
+                             "scribe-content": paths()})))
         self.publisher = helper_dir / "lean-cache-publish.sh"
         self.publisher.chmod(0o755)
         for path in self.bin.iterdir():
@@ -680,7 +697,7 @@ pathlib.Path.open, tarfile.copyfileobj = open_path, copy
 
     def test_post_edit_confirmation_is_required_before_publication_success(self):
         partition = json.loads(self.transport("address").stdout)["partition"]
-        tag = "lean-cache-v2-" + partition.replace("/", "-") + "-123-1"
+        tag = json.loads(self.transport("address").stdout)["release_prefix"] + "ci-123-1"
         for metadata, status in self.invalid_post_edit_responses(tag, "d" * 40):
             with self.subTest(metadata=metadata, status=status):
                 shutil.rmtree(self.remote)

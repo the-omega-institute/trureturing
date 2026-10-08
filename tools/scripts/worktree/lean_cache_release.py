@@ -2,7 +2,6 @@
 from __future__ import annotations
 
 import argparse
-import base64
 import contextlib
 import datetime
 import hashlib
@@ -18,12 +17,15 @@ import tempfile
 import time
 from urllib.parse import quote
 
-from lean_cache import manifest_mathlib, normalized_platform, partition_path, seed_partitions
+from lean_cache import SHARED_SEED_PLATFORMS, normalized_platform, partition_path, seed_partitions
 from cache_material import sha
+
+# Use the report entry's declared format and execution capture, never program hashes.
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parents[2] / "lean-inspector"))
+import reuse as report_reuse
 
 ASSET = "lean-build.tgz"
 MANIFEST = "manifest.json"
-LEGACY_MANIFEST = "manifest.txt"
 REPO = os.environ.get("STRATALINT_CACHE_REPO", "the-omega-institute/trureturing")
 # Issue #6194, run 34119746844: Release assets must be strictly below 2 GiB.
 # Keep dev's 1.5 GiB headroom and two-digit, at-most-100-part inventory.
@@ -129,9 +131,30 @@ def existing_release(tag, deadline):
     return metadata
 
 
-def prefix(partition, verification=False):
+def partition_prefix(partition, verification=False):
     namespace = "lean-cache-verify-v1-" if verification else "lean-cache-v2-"
     return namespace + partition.replace("/", "-") + "-"
+
+
+def release_key(root, captured=None):
+    """Project the report receipt's explicit execution onto the seed platform family."""
+    captured = report_reuse.capture(root) if captured is None else captured
+    if not captured['eligible']:
+        raise ValueError("Release key requires registered execution: " + captured['reason'])
+    execution = captured['execution']
+    system, machine = normalized_platform(execution['platform']['system'], execution['platform']['machine'])
+    platform_name = system + "-" + machine
+    family = next((group for group in SHARED_SEED_PLATFORMS if platform_name in group), (platform_name,))
+    projection = dict(toolchain=captured['files'][execution['toolchain']]['sha256'],
+        tools=sorted(execution['tools']), platform="+".join(sorted(family)),
+        environment=execution['environment'])
+    digest = hashlib.sha256(json.dumps(projection, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    return dict(report_format=report_reuse.publication.selection.REPORT_FORMAT, execution_sha256=digest)
+
+
+def prefix(partition, cache_key, verification=False):
+    return (partition_prefix(partition, verification) + "report-" + cache_key['report_format']
+            + "-env-" + cache_key['execution_sha256'][:12] + "-")
 
 
 def validate_source_ref(repo, source_ref, source_commit, api):
@@ -238,7 +261,7 @@ def prune(partition, tag, deadline):
                 or not isinstance(item.get("isDraft"), bool) for item in releases):
             raise ValueError("snapshot cleanup metadata is malformed; pruned nothing")
         snapshots = sorted((item for item in releases if item.get("isDraft") is False
-            and item.get("tagName", "").startswith(prefix(partition))),
+            and item.get("tagName", "").startswith(partition_prefix(partition))),
             key=lambda item: item["createdAt"], reverse=True)
         # Preserve the existing five-snapshot retention window, now per partition.
         for old in snapshots[5:]:
@@ -297,7 +320,8 @@ def publish(root, partition, verification=None):
         if not re.fullmatch(r"[0-9a-f]{40}", commit) or not all(
                 re.fullmatch(r"[0-9]+", value) for value in (run, attempt)):
             raise ValueError("snapshot publication requires commit, run ID and attempt attribution")
-        tag = prefix(partition, verification is not None) + run + "-" + attempt
+        cache_key = release_key(root)
+        tag = prefix(partition, cache_key, verification is not None) + "ci-" + run + "-" + attempt
         identity = {"producer_commit_sha": commit, "workflow_run_id": run, "workflow_run_attempt": attempt}
         existing = existing_release(tag, deadline)
         if existing is not None:
@@ -307,7 +331,7 @@ def publish(root, partition, verification=None):
                 raise ValueError(f"verification release {tag} already exists; refusing to replace it")
             with tempfile.TemporaryDirectory(prefix="lean-release-confirm-") as temporary:
                 snapshot_manifest(partition, tag, pathlib.Path(temporary), deadline,
-                                  expected=identity, metadata=existing)
+                                  expected=identity, metadata=existing, cache_key=cache_key)
             receipt("publish", "exists", tag=tag, release_target=existing.get("target_commitish"), **identity)
             return 0
         with tempfile.TemporaryDirectory(prefix="lean-release-") as temporary:
@@ -321,7 +345,7 @@ def publish(root, partition, verification=None):
                     with tarfile.open(stage / ASSET, "w:gz", compresslevel=1,
                                       fileobj=ArchiveOutput(output, deadline)) as archive:
                         archive.add(root / ".lake/build", arcname="build")
-            metadata = {"schema": "lean-release-seed-v3", "partition": partition,
+            metadata = {"schema": "lean-release-seed-v4", "partition": partition, "cache_key": cache_key,
                 "producer_commit_sha": commit, "workflow_run_id": run, "workflow_run_attempt": attempt,
                 "archive_sha256": archive_sha(stage / ASSET, deadline), "archive_bytes": (stage / ASSET).stat().st_size,
                 "parts": archive_parts(stage, deadline)}
@@ -343,7 +367,7 @@ def publish(root, partition, verification=None):
                 target, downloaded = stage / "verified-target", stage / "downloaded"
                 target.mkdir()
                 downloaded.mkdir()
-                restore_snapshot(target, partition, tag, downloaded, deadline, metadata)
+                restore_snapshot(target, partition, tag, downloaded, deadline, metadata, cache_key=cache_key)
                 pruned, prune_error = 0, None
             else:
                 current = existing_release(tag, deadline)
@@ -351,7 +375,7 @@ def publish(root, partition, verification=None):
                     raise ValueError(f"new snapshot {tag} is not readable as published; pruned nothing")
                 confirmed = stage / "confirmed"
                 confirmed.mkdir()
-                snapshot_manifest(partition, tag, confirmed, deadline, expected=metadata, metadata=current)
+                snapshot_manifest(partition, tag, confirmed, deadline, expected=metadata, metadata=current, cache_key=cache_key)
                 pruned, prune_error = prune(partition, tag, deadline)
             receipt("publish", "published", tag=tag, pruned=pruned, prune_error=prune_error, **metadata)
     except ImportError as error:
@@ -363,85 +387,13 @@ def publish(root, partition, verification=None):
     return 0
 
 
-def legacy_tag(tag):
-    return re.fullmatch(r"lean-cache-v1-[A-Za-z0-9._-]+-[0-9a-f]{16}-[0-9a-f]{16}", tag) is not None
-
-
-def legacy_manifest(path, metadata, partition, tag, deadline):
-    """Adapt attributed cache data; never execute or use its source as a judge baseline."""
-    fields = {}
-    for line in path.read_text(encoding="utf-8").splitlines():
-        key, separator, value = line.partition("=")
-        if not separator or not key or key in fields:
-            raise ValueError("invalid legacy manifest field")
-        fields[key] = value
-    # Legacy address fields bind the transferred manifest to its published tag.
-    # They never select compatibility: only resolved mathlib and platform do.
-    hashes = [fields.get(key, "") for key in ("config_sha256", "sources_sha256")]
-    if "build_snapshot_sha256" in fields:
-        hashes.append(fields["build_snapshot_sha256"])
-    if any(not re.fullmatch(r"[0-9a-f]{64}", value) for value in hashes):
-        raise ValueError("invalid legacy snapshot address")
-    toolchain = fields.get("toolchain", "")
-    slug = re.sub(r"[^A-Za-z0-9]", "-", toolchain)
-    expected_tag = "lean-cache-v1-" + slug + "-" + "-".join(value[:16] for value in hashes)
-    if not toolchain or tag != expected_tag:
-        raise ValueError("legacy snapshot addresses do not match release tag")
-    commit, run = fields.get("producer_commit_sha", ""), fields.get("workflow_run_id", "")
-    if (fields.get("tag") != tag or not re.fullmatch(r"[0-9a-f]{40}", commit)
-            or not re.fullmatch(r"[1-9][0-9]*", run) or metadata.get("target_commitish") != commit
-            or not isinstance(metadata.get("published_at"), str) or not metadata["published_at"]
-            or fields.get("asset") != ASSET):
-        raise ValueError("legacy snapshot source attribution mismatch")
-    system, machine = normalized_platform(fields.get("os", ""), fields.get("arch", ""))
-    if partition.split("/", 1)[1] != system + "-" + machine:
-        raise ValueError("legacy snapshot platform mismatch")
-    count = fields.get("parts", "1")
-    if not re.fullmatch(r"[1-9][0-9]*", count) or not 1 <= int(count) <= 100:
-        raise ValueError("invalid legacy archive parts inventory")
-    count = int(count)
-    assets = {asset["name"]: asset for asset in metadata["assets"]}
-    manifest = {"producer_commit_sha": commit, "workflow_run_id": run,
-        "archive_sha256": fields.get("archive_sha256", ""), "archive_bytes": int(fields.get("archive_bytes", "0")),
-        "parts": [{"name": ASSET if count == 1 else f"{ASSET}.part-{index:02d}",
-            "sha256": fields.get("archive_sha256" if count == 1 else f"part_sha256_{index}", ""),
-            "bytes": assets.get(ASSET if count == 1 else f"{ASSET}.part-{index:02d}", {}).get("size")}
-            for index in range(count)]}
-    # Historical unchunked assets used GitHub's strict <2 GiB limit (e.g.
-    # Release 383820945: 2,114,121,660 bytes); new/multipart writes keep 1.5 GiB.
-    declared_parts(manifest, 2147483647 if count == 1 else CHUNK_BYTES)
-    # Only legacy lacks a resolved mathlib field. These two requests establish
-    # cache provenance, not candidate/base semantics or another cache selector.
-    record = json.loads(gh(deadline, "api", f"repos/{REPO}/actions/runs/{run}"))
-    if (not isinstance(record, dict) or type(record.get("id")) is not int or record["id"] != int(run)
-            or record.get("event") != "schedule" or record.get("head_branch") != "dev"
-            or record.get("head_sha") != commit or record.get("path") != ".github/workflows/lean-cache-publish.yml"
-            or record.get("status") != "completed" or record.get("conclusion") != "success"
-            or not isinstance(record.get("repository"), dict) or record["repository"].get("full_name") != REPO):
-        raise ValueError("legacy snapshot has no matching successful scheduled dev producer")
-    source = json.loads(gh(deadline, "api", f"repos/{REPO}/contents/lake-manifest.json?ref={commit}"))
-    if (not isinstance(source, dict) or source.get("type") != "file" or source.get("path") != "lake-manifest.json"
-            or source.get("encoding") != "base64" or not isinstance(source.get("content"), str)):
-        raise ValueError("legacy producer lake-manifest is unavailable")
-    content = base64.b64decode("".join(source["content"].split()), validate=True)
-    blob = hashlib.sha1(b"blob " + str(len(content)).encode() + b"\0" + content).hexdigest()
-    if source.get("sha") != blob or type(source.get("size")) is not int or source["size"] != len(content):
-        raise ValueError("legacy producer lake-manifest blob mismatch")
-    if manifest_mathlib(json.loads(content)) + "/" + system + "-" + machine != partition:
-        raise ValueError("legacy snapshot mathlib partition mismatch")
-    # Legacy recorded the run but not its producing attempt. Do not invent one
-    # from the API's latest rerun, and do not emit a synthetic v3 publication.
-    return manifest
-
-
-def snapshot_manifest(partition, tag, stage, deadline, expected=None, verification=False, metadata=None):
+def snapshot_manifest(partition, tag, stage, deadline, expected=None, verification=False, metadata=None, *, cache_key):
     """Validate the small manifest and inventory before confirming or restoring a snapshot."""
     if metadata is None:
         metadata = json.loads(gh(deadline, "api", f"repos/{REPO}/releases/tags/{tag}"))
     if not isinstance(metadata, dict) or metadata.get("draft") is not False or metadata.get("tag_name") != tag:
         raise ValueError("snapshot is not published")
-    legacy = not verification and legacy_tag(tag)
-    manifest_name = LEGACY_MANIFEST if legacy else MANIFEST
+    manifest_name = MANIFEST
     assets = metadata.get("assets", [])
     if (not isinstance(assets, list) or any(not isinstance(asset, dict)
             or not isinstance(asset.get("name"), str) for asset in assets)
@@ -452,36 +404,35 @@ def snapshot_manifest(partition, tag, stage, deadline, expected=None, verificati
        "--pattern", manifest_name)
     if recorded.get(manifest_name) != "sha256:" + sha(stage / manifest_name):
         raise ValueError("transferred asset digest mismatch")
-    manifest = (legacy_manifest(stage / manifest_name, metadata, partition, tag, deadline) if legacy
-                else json.loads((stage / manifest_name).read_text()))
+    manifest = report_reuse.publication.read_json((stage / manifest_name).read_bytes())
     if not isinstance(manifest, dict):
         raise ValueError("snapshot manifest must be an object")
     commit, run, attempt = (manifest.get(field, "") for field in
         ("producer_commit_sha", "workflow_run_id", "workflow_run_attempt"))
-    if not legacy and (manifest.get("schema") != "lean-release-seed-v3" or manifest.get("partition") != partition
+    if (manifest.get("schema") != "lean-release-seed-v4" or manifest.get("partition") != partition
+            or manifest.get("cache_key") != cache_key
             or not isinstance(commit, str) or not re.fullmatch(r"[0-9a-f]{40}", commit)
             or not all(isinstance(value, str) and re.fullmatch(r"[0-9]+", value) for value in (run, attempt))
-            or tag != prefix(partition, verification) + run + "-" + attempt):
+            or tag != prefix(partition, cache_key, verification) + "ci-" + run + "-" + attempt):
         raise ValueError("snapshot partition or source attribution mismatch")
     if expected is not None and any(manifest.get(key) != value for key, value in expected.items()):
         raise ValueError("snapshot does not match this exact publication")
-    parts = manifest["parts"] if legacy else declared_parts(manifest)
+    parts = declared_parts(manifest)
     if sorted(recorded) != sorted([manifest_name, *[part["name"] for part in parts]]):
         raise ValueError("snapshot asset set is incomplete")
-    if not legacy:
-        assets_by_name = {asset["name"]: asset for asset in assets}
-        for part in parts:
-            asset = assets_by_name[part["name"]]
-            if asset.get("digest") != "sha256:" + part["sha256"]:
-                raise ValueError("transferred asset digest mismatch")
-            if type(asset.get("size")) is not int or asset["size"] != part["bytes"]:
-                raise ValueError("transferred asset size mismatch")
-    return metadata, manifest, parts, legacy
+    assets_by_name = {asset["name"]: asset for asset in assets}
+    for part in parts:
+        asset = assets_by_name[part["name"]]
+        if asset.get("digest") != "sha256:" + part["sha256"]:
+            raise ValueError("transferred asset digest mismatch")
+        if type(asset.get("size")) is not int or asset["size"] != part["bytes"]:
+            raise ValueError("transferred asset size mismatch")
+    return metadata, manifest, parts
 
 
-def restore_snapshot(root, partition, tag, stage, deadline, verification=None, refresh_stale=False):
-    metadata, manifest, parts, legacy = snapshot_manifest(partition, tag, stage, deadline,
-        expected=verification, verification=verification is not None)
+def restore_snapshot(root, partition, tag, stage, deadline, verification=None, refresh_stale=False, *, cache_key):
+    metadata, manifest, parts = snapshot_manifest(partition, tag, stage, deadline,
+        expected=verification, verification=verification is not None, cache_key=cache_key)
     assets = metadata["assets"]
     commit, run = manifest["producer_commit_sha"], manifest["workflow_run_id"]
     gh(deadline, "release", "download", tag, "--repo", REPO, "--dir", str(stage),
@@ -510,14 +461,10 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
         paths = {}
         for member in members:
             path = pathlib.PurePosixPath(member.name)
-            if (path.is_absolute() or ".." in path.parts or (not path.parts and not (legacy and member.isdir()))
-                    or (not legacy and path.parts[0] != "build")
+            if (path.is_absolute() or ".." in path.parts or not path.parts
+                    or path.parts[0] != "build"
                     or not (member.isfile() or member.isdir())):
                 raise ValueError("archive contains an invalid cache member")
-            if legacy:
-                path = pathlib.PurePosixPath("build") / path
-                member.name = str(path)
-                member.pax_headers.pop("path", None)
             if path in paths:
                 raise ValueError("archive contains an invalid cache member: duplicate path")
             paths[path] = member
@@ -574,11 +521,12 @@ def restore_snapshot(root, partition, tag, stage, deadline, verification=None, r
 
 
 def fetch_verification(root, partition, identity):
-    tag = prefix(partition, True) + identity["workflow_run_id"] + "-" + identity["workflow_run_attempt"]
+    cache_key = release_key(root)
+    tag = prefix(partition, cache_key, True) + "ci-" + identity["workflow_run_id"] + "-" + identity["workflow_run_attempt"]
     try:
         deadline = operation_deadline()
         with cache_guard(root), tempfile.TemporaryDirectory(prefix="lean-fetch-verify-") as temporary:
-            restore_snapshot(root, partition, tag, pathlib.Path(temporary), deadline, identity)
+            restore_snapshot(root, partition, tag, pathlib.Path(temporary), deadline, identity, cache_key=cache_key)
         return 0
     except (OSError, EOFError, ImportError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
         receipt("fetch", "miss", mode="verification", reason=str(error), resolved=tag, partition=partition)
@@ -601,19 +549,21 @@ def fetch(root, partition, writer_owned=False, refresh_stale=False):
 def fetch_locked(root, partition, deadline, refresh_stale=False):
     reason = "no published snapshot in this partition"
     compatible = [partition] + [other for other in seed_partitions(root) if other != partition]
+    cache_key = release_key(root)
     try:
         releases = json.loads(gh(deadline, "release", "list", "--repo", REPO, "--limit", "100",
             "--json", "tagName,createdAt,isDraft"))
         for release in sorted(releases, key=lambda item: item["createdAt"], reverse=True):
             tag = release.get("tagName", "")
-            source = partition if legacy_tag(tag) else next(
-                (candidate for candidate in compatible if tag.startswith(prefix(candidate))), None)
+            source = next((candidate for candidate in compatible
+                if tag.startswith(prefix(candidate, cache_key))
+                and re.fullmatch(r"ci-[1-9][0-9]*-[1-9][0-9]*", tag[len(prefix(candidate, cache_key)):])), None)
             if release.get("isDraft") is not False or source is None:
                 continue
             remaining(deadline)
             try:
                 with tempfile.TemporaryDirectory(prefix="lean-fetch-") as temporary:
-                    restore_snapshot(root, source, tag, pathlib.Path(temporary), deadline, refresh_stale=refresh_stale)
+                    restore_snapshot(root, source, tag, pathlib.Path(temporary), deadline, refresh_stale=refresh_stale, cache_key=cache_key)
                 return 0
             except (OSError, EOFError, ValueError, KeyError, TypeError, subprocess.SubprocessError, tarfile.TarError) as error:
                 reason = str(error)
@@ -650,7 +600,9 @@ def main():
             verification = verification_identity(args.repository, args.source_ref, args.source_commit, operation_deadline())
         partition = partition_path(args.repository)
         if args.command == "address":
-            print(json.dumps({"partition": partition, "release_prefix": prefix(partition), "asset": ASSET}))
+            cache_key = release_key(args.repository)
+            print(json.dumps({"partition": partition, "cache_key": cache_key,
+                              "release_prefix": prefix(partition, cache_key), "asset": ASSET}))
             return 0
         if args.command == "fetch":
             if verification is not None:

@@ -178,7 +178,7 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
     def test_verification_exact_lookup_errors_and_incomplete_metadata_are_nonzero(self):
         self.verification_fixture()
         partition = json.loads(self.transport("address").stdout)["partition"]
-        tag = "lean-cache-verify-v1-" + partition.replace("/", "-") + "-123-1"
+        tag = json.loads(self.transport("address").stdout)["release_prefix"].replace("lean-cache-v2-", "lean-cache-verify-v1-", 1) + "ci-123-1"
         valid = dict(tag_name=tag, target_commitish=self.verification_commit, draft=False)
         cases = [(json.dumps(dict(valid, draft=True)), "0"),
                  (json.dumps(valid), "0"), ('{"draft":false}', "0"),
@@ -199,7 +199,7 @@ os.execv({real_git}, [{real_git}, *sys.argv[1:]])
     def test_verification_rejects_invalid_post_edit_confirmation(self):
         self.verification_fixture()
         partition = json.loads(self.transport("address").stdout)["partition"]
-        tag = "lean-cache-verify-v1-" + partition.replace("/", "-") + "-123-1"
+        tag = json.loads(self.transport("address").stdout)["release_prefix"].replace("lean-cache-v2-", "lean-cache-verify-v1-", 1) + "ci-123-1"
         for metadata, status in self.invalid_post_edit_responses(tag, self.verification_commit):
             with self.subTest(metadata=metadata, status=status):
                 shutil.rmtree(self.remote)
