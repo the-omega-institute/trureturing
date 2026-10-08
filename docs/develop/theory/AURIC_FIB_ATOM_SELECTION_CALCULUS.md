@@ -2,19 +2,21 @@
 
 金字塔的两条基本关系、递归接缝与完整读出
 
-**约定 0.1（位置标签与论域）。** 选择项标记在 FIB 生成链上选取哪些位置。全卷使用 $`\mathsf F_j[I]`$，其中 $`j\in\mathbb N`$ 是窗口尺度，$`I`$ 是合法位置集合；零层简写为 $`\mathsf F[I]`$。标准 Fibonacci 数另写作 $`\mathrm{Fib}_n`$，不与选择项混用。旧标签仅保留如下对应：
+**约定 0.1（位置标签与论域）。** 选择项标记在 FIB 生成链上选取哪些位置。全卷使用 $`\mathsf{\text{𝖥}}_j[I]`$，其中 $`j\in\mathbb{\text{ℕ}}`$ 是窗口尺度，$`I`$ 是合法位置集合；零层简写为 $`\mathsf{\text{𝖥}}[I]`$。标准 Fibonacci 数另写作 $`\mathrm{Fib}_n`$，不与选择项混用。旧标签仅保留如下对应：
+
+<table><tbody><tr><td>
 
 ```math
-\boxed{
-[null]=\mathsf F[\varnothing],\qquad
-[2]=\mathsf F[1],\qquad
-[3]=\mathsf F[2],\qquad
-[25]=\mathsf F[1,3],\qquad
-[5]=\mathsf F[3].
-}
+[null]=\mathsf{\text{𝖥}}[\varnothing],\qquad
+[2]=\mathsf{\text{𝖥}}[1],\qquad
+[3]=\mathsf{\text{𝖥}}[2],\qquad
+[25]=\mathsf{\text{𝖥}}[1,3],\qquad
+[5]=\mathsf{\text{𝖥}}[3].
 ```
 
-这里 $`\mathsf F[1]`$ 选择当前窗口的第一位置，零层数量是二；它不是通常的 $`\mathrm{Fib}_1=1`$。括号内的 $`1,3`$ 表示集合 $`\{1,3\}`$，不表示十进制数十三。旧标签 $`[25]`$ 的零层数量是七，不是二十五。树来源、受限选择、组成坐标、概率律和已取得记录分别声明，不能因标签相同而互换。
+</td></tr></tbody></table>
+
+这里 $`\mathsf{\text{𝖥}}[1]`$ 选择当前窗口的第一位置，零层数量是二；它不是通常的 $`\mathrm{Fib}_1=1`$。括号内的 $`1,3`$ 表示集合 $`\{1,3\}`$，不表示十进制数十三。旧标签 $`[25]`$ 的零层数量是七，不是二十五。树来源、受限选择、组成坐标、概率律和已取得记录分别声明，不能因标签相同而互换。
 
 **数学引文 0.2（固定来源与归属）。** 前五项正文取共同修订 [b8737c08f592e4df700978f25fb046d5a458f3c8](https://github.com/the-omega-institute/trureturing/tree/b8737c08f592e4df700978f25fb046d5a458f3c8)；末项只使用修订 [671ed2dcaf09d2f97799de233fc38e896911c248](https://github.com/the-omega-institute/trureturing/tree/671ed2dcaf09d2f97799de233fc38e896911c248) 的具名条款。简称在本卷保持固定。
 
@@ -34,7 +36,7 @@
 **定义 1.1（原始 FIB 来源）。** 原始来源的载体是自由有序二叉树：
 
 ```math
-\mathbb T::=\alpha\mid\beta\mid\langle\mathbb T,\mathbb T\rangle.
+\mathbb{\text{𝕋}}::=\alpha\mid\beta\mid\langle\mathbb{\text{𝕋}},\mathbb{\text{𝕋}}\rangle.
 ```
 
 叶标签、左右顺序及全部括号都是来源的一部分。替换由以下完整规则唯一递归定义：
@@ -48,9 +50,16 @@
 令 $`T_n=\rho^n(\alpha)`$。关系卷定理 1.2 的结构递归在这里为
 
 ```math
-T_0=\alpha,\qquad T_1=\beta=\rho(\alpha),\qquad
-\boxed{T_{n+2}=\langle T_{n+1},T_n\rangle}\quad(n\ge0).
+T_0=\alpha,\qquad T_1=\beta=\rho(\alpha),
 ```
+
+<table><tbody><tr><td>
+
+```math
+T_{n+2}=\langle T_{n+1},T_n\rangle\quad(n\ge0).
+```
+
+</td></tr></tbody></table>
 
 证明。零层等式是替换对 $`\beta`$ 的规则；对等式施加保持有序配对的 $`\rho`$，得到下一层等式，归纳即成。特别地，
 
@@ -63,33 +72,49 @@ T_3=\langle\langle\beta,\alpha\rangle,\beta\rangle.
 
 **定义 1.2（当前窗口的三个位置）。** 对每个非负整数 $`j`$，窗口的低、中、高三个位置对应
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{
 A_j=T_{3j},\qquad B_j=T_{3j+1},\qquad C_j=T_{3j+2},
 \qquad C_j=\langle B_j,A_j\rangle.
-}
 ```
+
+</td></tr></tbody></table>
 
 合法选择集合为三位置路径的独立集：
 
 ```math
-\mathcal S=\{I\subseteq\{1,2,3\}:I\text{ 不含相邻位置}\}.
+\mathcal{\text{𝒮}}=\{I\subseteq\{1,2,3\}:I\text{ 不含相邻位置}\}.
 ```
 
-选择项 $`\mathsf F_j[I]`$ 是附有尺度和来源位置的模式，不自动指定任意组合的执行次序。选择关系与生成关系分别为
+选择项 $`\mathsf{\text{𝖥}}_j[I]`$ 是附有尺度和来源位置的模式，不自动指定任意组合的执行次序。选择关系与生成关系分别为
+
+<table><tbody><tr><td>
 
 ```math
-\boxed{\text{选择关系：第一、第三位置能够共同出现；}}
-\qquad
-\boxed{\text{生成关系：第三位置由第二、第一位置有序组合生成。}}
+\text{选择关系：第一、第三位置能够共同出现；}
 ```
+
+</td></tr></tbody></table>
+
+<table><tbody><tr><td>
+
+```math
+\text{生成关系：第三位置由第二、第一位置有序组合生成。}
+```
+
+</td></tr></tbody></table>
 
 **定理 1.3（局部合法选择的穷尽）。** 对定义 1.2，恰有
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{\mathcal S=
-\{\varnothing,\{1\},\{2\},\{3\},\{1,3\}\}.}
+\mathcal{\text{𝒮}}=
+\{\varnothing,\{1\},\{2\},\{3\},\{1,3\}\}.
 ```
+
+</td></tr></tbody></table>
 
 证明。不选得到空集，单选有三个集合。双选中 $`\{1,2\}`$ 和 $`\{2,3\}`$ 含相邻位置，只有 $`\{1,3\}`$ 合法；三位置全选也含相邻位置。所有子集已分完，故恰有五项。∎
 
@@ -106,10 +131,10 @@ E_j[1,3]&=\langle C_j,A_j\rangle.
 \end{aligned}
 ```
 
-这是 $`\mathcal S\setminus\{\varnothing\}\to\mathbb T`$ 的前向编译。另加一个空窗口贡献符号 $`\varepsilon_{\mathrm w}\notin\mathbb T`$，令
+这是 $`\mathcal{\text{𝒮}}\setminus\{\varnothing\}\to\mathbb{\text{𝕋}}`$ 的前向编译。另加一个空窗口贡献符号 $`\varepsilon_{\mathrm w}\notin\mathbb{\text{𝕋}}`$，令
 
 ```math
-\mathbb T_{\varnothing}=\mathbb T\sqcup\{\varepsilon_{\mathrm w}\},\qquad
+\mathbb{\text{𝕋}}_{\varnothing}=\mathbb{\text{𝕋}}\sqcup\{\varepsilon_{\mathrm w}\},\qquad
 \widehat E_j[\varnothing]=\varepsilon_{\mathrm w},\qquad
 \widehat E_j[I]=E_j[I]\quad(I\ne\varnothing).
 ```
@@ -128,24 +153,28 @@ c(\langle s,t\rangle)=c(s)+c(t),\qquad q=(2,3).
 
 | 选择项 | 第 $`j`$ 窗口的代表 | 固定基组成 $`d_I`$ | 零层数量 $`qd_I`$ |
 | --- | --- | --- | ---: |
-| $`\mathsf F_j[\varnothing]`$ | $`\varepsilon_{\mathrm w}`$ | $`(0,0)^{\mathsf T}`$ | $`0`$ |
-| $`\mathsf F_j[1]`$ | $`A_j`$ | $`(1,0)^{\mathsf T}`$ | $`2`$ |
-| $`\mathsf F_j[2]`$ | $`B_j`$ | $`(0,1)^{\mathsf T}`$ | $`3`$ |
-| $`\mathsf F_j[3]`$ | $`C_j=\langle B_j,A_j\rangle`$ | $`(1,1)^{\mathsf T}`$ | $`5`$ |
-| $`\mathsf F_j[1,3]`$ | $`\langle C_j,A_j\rangle`$ | $`(2,1)^{\mathsf T}`$ | $`7`$ |
+| $`\mathsf{\text{𝖥}}_j[\varnothing]`$ | $`\varepsilon_{\mathrm w}`$ | $`(0,0)^{\mathsf{\text{𝖳}}}`$ | $`0`$ |
+| $`\mathsf{\text{𝖥}}_j[1]`$ | $`A_j`$ | $`(1,0)^{\mathsf{\text{𝖳}}}`$ | $`2`$ |
+| $`\mathsf{\text{𝖥}}_j[2]`$ | $`B_j`$ | $`(0,1)^{\mathsf{\text{𝖳}}}`$ | $`3`$ |
+| $`\mathsf{\text{𝖥}}_j[3]`$ | $`C_j=\langle B_j,A_j\rangle`$ | $`(1,1)^{\mathsf{\text{𝖳}}}`$ | $`5`$ |
+| $`\mathsf{\text{𝖥}}_j[1,3]`$ | $`\langle C_j,A_j\rangle`$ | $`(2,1)^{\mathsf{\text{𝖳}}}`$ | $`7`$ |
 
 该表的第三列固定在零层基架；它不是任意 $`j`$ 的实际两类叶数。第四节给出它到实际尺度组成的运输。
 
 **命题 2.3（联合选择不是下一个 FIB 项）。** 在零层有
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{E_0[1,3]=\langle T_2,T_0\rangle,\qquad
-T_3=\langle T_2,T_1\rangle,\qquad E_0[1,3]\ne T_3.}
+E_0[1,3]=\langle T_2,T_0\rangle,\qquad
+T_3=\langle T_2,T_1\rangle,\qquad E_0[1,3]\ne T_3.
 ```
+
+</td></tr></tbody></table>
 
 两者数量分别为七和八。
 
-证明。右子树分别为 $`\alpha`$ 和 $`\beta`$，自由树的叶标签不同，故来源不同。组成分别为 $`(2,1)^{\mathsf T}`$ 和 $`(1,2)^{\mathsf T}`$，施加 $`q`$ 给七、八。∎
+证明。右子树分别为 $`\alpha`$ 和 $`\beta`$，自由树的叶标签不同，故来源不同。组成分别为 $`(2,1)^{\mathsf{\text{𝖳}}}`$ 和 $`(1,2)^{\mathsf{\text{𝖳}}}`$，施加 $`q`$ 给七、八。∎
 
 **命题 2.4（集合顺序不供应来源顺序）。** 虽然 $`\{1,3\}=\{3,1\}`$，但
 
@@ -175,50 +204,66 @@ U_{\langle s,t\rangle}=U_sU_t.
 
 ## 三、选择合并与来源生成是两种组合
 
-**定义 3.1（合法选择的部分合并）。** 在固定同一窗口 $`j`$ 中，若 $`I,J\in\mathcal S`$ 满足
+**定义 3.1（合法选择的部分合并）。** 在固定同一窗口 $`j`$ 中，若 $`I,J\in\mathcal{\text{𝒮}}`$ 满足
 
 ```math
-I\cap J=\varnothing,\qquad I\cup J\in\mathcal S,
+I\cap J=\varnothing,\qquad I\cup J\in\mathcal{\text{𝒮}},
 ```
 
 定义
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{\mathsf F_j[I]\boxplus\mathsf F_j[J]
-=\mathsf F_j[I\cup J].}
+\mathsf{\text{𝖥}}_j[I]\boxplus\mathsf{\text{𝖥}}_j[J]
+=\mathsf{\text{𝖥}}_j[I\cup J].
 ```
+
+</td></tr></tbody></table>
 
 其余输入对不定义。空选择是该部分运算的单位；重复占同一位置和新增相邻占位均不在定义域。该运算描述位置联合，不是原始有序树配对。
 
 **命题 3.2（合法联合与生成的区别）。** 对每个 $`j\ge0`$，
 
-```math
-\boxed{\mathsf F_j[1]\boxplus\mathsf F_j[3]
-=\mathsf F_j[1,3],}
-```
-
-而 $`\mathsf F_j[1]\boxplus\mathsf F_j[2]`$ 不定义。同时原始来源层有
+<table><tbody><tr><td>
 
 ```math
-\boxed{C_j=\langle B_j,A_j\rangle,\qquad
-c(C_j)=c(A_j)+c(B_j).}
+\mathsf{\text{𝖥}}_j[1]\boxplus\mathsf{\text{𝖥}}_j[3]
+=\mathsf{\text{𝖥}}_j[1,3],
 ```
+
+</td></tr></tbody></table>
+
+而 $`\mathsf{\text{𝖥}}_j[1]\boxplus\mathsf{\text{𝖥}}_j[2]`$ 不定义。同时原始来源层有
+
+<table><tbody><tr><td>
+
+```math
+C_j=\langle B_j,A_j\rangle,\qquad
+c(C_j)=c(A_j)+c(B_j).
+```
+
+</td></tr></tbody></table>
 
 证明。集合 $`\{1,3\}`$ 不含相邻位置，集合 $`\{1,2\}`$ 含相邻位置；分别代入部分合并定义即得。来源等式则来自生成递归，其组成等式由组成映射的加法规则给出。它没有进行同窗位置的占位测试。∎
 
 因此数量读出确有
 
 ```math
-\mathrm{val}(\mathsf F_j[3])
-=\mathrm{val}(\mathsf F_j[1])
-+\mathrm{val}(\mathsf F_j[2]),
+\mathrm{val}(\mathsf{\text{𝖥}}_j[3])
+=\mathrm{val}(\mathsf{\text{𝖥}}_j[1])
++\mathrm{val}(\mathsf{\text{𝖥}}_j[2]),
 ```
 
-却不能据此写合法模式等式 $`\mathsf F_j[3]=\mathsf F_j[1,2]`$，因为右项不属于 $`\mathcal S`$。用两个来源生成第三个来源，与在同一受限窗口内同时占用两个位置，是不同操作：
+却不能据此写合法模式等式 $`\mathsf{\text{𝖥}}_j[3]=\mathsf{\text{𝖥}}_j[1,2]`$，因为右项不属于 $`\mathcal{\text{𝒮}}`$。用两个来源生成第三个来源，与在同一受限窗口内同时占用两个位置，是不同操作：
+
+<table><tbody><tr><td>
 
 ```math
-\boxed{\text{生成等式不等于同时占位许可。}}
+\text{生成等式不等于同时占位许可。}
 ```
+
+</td></tr></tbody></table>
 
 编译 $`E_j`$ 同样不是把交换的部分并集无条件送到任意有序配对的同态。例如 $`1\boxplus3=3\boxplus1`$，而定义 2.1 只选定 $`\langle C_j,A_j\rangle`$，不把它与交换后的来源认同。位置标签使这项被数值相等掩盖的区别持续可见。
 
@@ -247,46 +292,53 @@ M^2=M+I_2,
 
 组成式可对两叶及二叉节点作结构归纳；数量式以二、三为初值，用 $`M^2=M+I_2`$ 得 Fibonacci 递推。这是来源与数量的桥，未把来源商成交换的数。
 
-**定理 4.2（同一模板的全尺度运输）。** 对每个 $`j\in\mathbb N`$ 和 $`I\in\mathcal S`$，实际组成及数量为
+**定理 4.2（同一模板的全尺度运输）。** 对每个 $`j\in\mathbb{\text{ℕ}}`$ 和 $`I\in\mathcal{\text{𝒮}}`$，实际组成及数量为
+
+<table><tbody><tr><td>
 
 ```math
-\boxed{
 c_j(I):=\widehat c(\widehat E_j[I])=H^j d_I=M^{3j}d_I,
 \qquad
-\mathrm{val}(\mathsf F_j[I])=qH^j d_I
+\mathrm{val}(\mathsf{\text{𝖥}}_j[I])=qH^j d_I
 =\sum_{i\in I}\mathrm{Fib}_{3j+i+2}.
-}
 ```
+
+</td></tr></tbody></table>
 
 对于非空选择，还满足
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{\rho^3(E_j[I])=E_{j+1}[I].}
+\rho^3(E_j[I])=E_{j+1}[I].
 ```
+
+</td></tr></tbody></table>
 
 证明。$`\rho^3(T_n)=T_{n+3}`$，且替换保持有序配对，所以每个单选代表及联合代表都同时后移三步，所选集合不变。组成运输由 $`c\rho=Mc`$ 迭代而来；对空贡献另外用零向量，$`H^j0=0`$，没有对空符号施加原始树替换。各单选项的数量为 $`\mathrm{Fib}_{3j+i+2}`$，联合代表的组成相加给求和式。∎
 
 **命题 4.3（前三窗口的五数量）。** 按空、第一、第二、第三、联合端点的次序，数量为
 
-```math
-\begin{array}{c|ccccc}
-j&\varnothing&1&2&3&1,3\\ \hline
-0&0&2&3&5&7\\
-1&0&8&13&21&29\\
-2&0&34&55&89&123
-\end{array}
-```
+| $`j`$ | $`\varnothing`$ | $`1`$ | $`2`$ | $`3`$ | $`1,3`$ |
+| --- | --- | --- | --- | --- | --- |
+| $`0`$ | $`0`$ | $`2`$ | $`3`$ | $`5`$ | $`7`$ |
+| $`1`$ | $`0`$ | $`8`$ | $`13`$ | $`21`$ | $`29`$ |
+| $`2`$ | $`0`$ | $`34`$ | $`55`$ | $`89`$ | $`123`$ |
 
 证明。逐行使用定理 4.2。第一、第二、第三单选分别取 $`\mathrm{Fib}_{3j+3},\mathrm{Fib}_{3j+4},\mathrm{Fib}_{3j+5}`$；末列是第一与第三之和，得到七、二十九、一百二十三。∎
 
-同一个选择形状并非始终同一个数量。例如第一位置在 $`j=1`$ 的实际组成是 $`c(T_3)=(1,2)^{\mathsf T}`$，固定基坐标却一直是 $`d_1=(1,0)^{\mathsf T}`$。第五至九节的组成坐标 $`\xi,\eta`$ 及其矩都使用这个固定基架，或等价地使用已知窗口中的相对组成；若读的是实际叶数，则先按 $`H^j`$ 运输解释。
+同一个选择形状并非始终同一个数量。例如第一位置在 $`j=1`$ 的实际组成是 $`c(T_3)=(1,2)^{\mathsf{\text{𝖳}}}`$，固定基坐标却一直是 $`d_1=(1,0)^{\mathsf{\text{𝖳}}}`$。第五至九节的组成坐标 $`\xi,\eta`$ 及其矩都使用这个固定基架，或等价地使用已知窗口中的相对组成；若读的是实际叶数，则先按 $`H^j`$ 运输解释。
 
 **命题 4.4（单替换越过窗口边界）。** 对所有 $`j\ge0`$，单次替换依次给
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{A_j\xrightarrow{\rho}B_j
-\xrightarrow{\rho}C_j\xrightarrow{\rho}A_{j+1}.}
+A_j\xrightarrow{\rho}B_j
+\xrightarrow{\rho}C_j\xrightarrow{\rho}A_{j+1}.
 ```
+
+</td></tr></tbody></table>
 
 最后一项不是 $`A_j`$。
 
@@ -296,12 +348,12 @@ j&\varnothing&1&2&3&1,3\\ \hline
 
 ## 五、正方形选择关系与 FIB 生成关系
 
-**定义 5.1（低—高—中的占位坐标）。** 对 $`I\in\mathcal S`$，置
+**定义 5.1（低—高—中的占位坐标）。** 对 $`I\in\mathcal{\text{𝒮}}`$，置
 
 ```math
-x(I)=\mathbf1_{\{1\in I\}},\qquad
-y(I)=\mathbf1_{\{3\in I\}},\qquad
-z(I)=\mathbf1_{\{2\in I\}}.
+x(I)=\mathbf{\text{𝟏}}_{\{1\in I\}},\qquad
+y(I)=\mathbf{\text{𝟏}}_{\{3\in I\}},\qquad
+z(I)=\mathbf{\text{𝟏}}_{\{2\in I\}}.
 ```
 
 因此 $`x,z,y`$ 是低到高的印刷位串，而占位向量使用 $`(x,y,z)`$ 次序，满足
@@ -319,23 +371,29 @@ v_3&=(0,1,0),&v_{13}&=(1,1,0).
 \end{aligned}
 ```
 
-四棱锥顶点是 $`\mathsf F[2]`$，即旧标签 $`[3]`$；第三位置 $`\mathsf F[3]`$ 在底面上。
+四棱锥顶点是 $`\mathsf{\text{𝖥}}[2]`$，即旧标签 $`[3]`$；第三位置 $`\mathsf{\text{𝖥}}[3]`$ 在底面上。
 
 **定理 5.2（选择层的四棱锥与坐标体积）。** 采用该占位基架的标准欧氏内积及坐标 Lebesgue 测度，
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{
-\mathcal P=\mathrm{conv}\{v_{\varnothing},v_1,v_2,v_3,v_{13}\}
+\mathcal{\text{𝒫}}=\mathrm{conv}\{v_{\varnothing},v_1,v_2,v_3,v_{13}\}
 =\{(X,Y,Z):X,Y,Z\ge0, X+Z\le1, Y+Z\le1\}.
-}
 ```
+
+</td></tr></tbody></table>
 
 高度 $`Z`$ 截面的面积及总体积为
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{A(Z)=(1-Z)^2\quad(0\le Z\le1),\qquad
-\mathrm{Vol}(\mathcal P)=\int_0^1(1-Z)^2\,dZ=\frac13.}
+A(Z)=(1-Z)^2\quad(0\le Z\le1),\qquad
+\mathrm{Vol}(\mathcal{\text{𝒫}})=\int_0^1(1-Z)^2\,dZ=\frac13.
 ```
+
+</td></tr></tbody></table>
 
 证明。五个顶点都满足所列线性不等式，故凸包包含于不等式域。反向，固定 $`Z\lt1`$ 并令 $`r=1-Z`$，则 $`0\le X/r,Y/r\le1`$，且
 
@@ -349,30 +407,42 @@ v_3&=(0,1,0),&v_{13}&=(1,1,0).
 
 **命题 5.3（两条不同的混合关系）。** 选择层的底面正方形满足
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{v_{\varnothing}+v_{13}=v_1+v_3.}
+v_{\varnothing}+v_{13}=v_1+v_3.
 ```
+
+</td></tr></tbody></table>
 
 把位置贡献展开为固定基组成，定义
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{\xi=x+y,\qquad \eta=y+z,\qquad d_I=(\xi(I),\eta(I))^{\mathsf T}.}
+\xi=x+y,\qquad \eta=y+z,\qquad d_I=(\xi(I),\eta(I))^{\mathsf{\text{𝖳}}}.
 ```
+
+</td></tr></tbody></table>
 
 其五点为
 
 ```math
 \begin{aligned}
-d_{\varnothing}&=(0,0)^{\mathsf T},&d_1&=(1,0)^{\mathsf T},&d_2&=(0,1)^{\mathsf T},\\
-d_3&=(1,1)^{\mathsf T},&d_{13}&=(2,1)^{\mathsf T},
+d_{\varnothing}&=(0,0)^{\mathsf{\text{𝖳}}},&d_1&=(1,0)^{\mathsf{\text{𝖳}}},&d_2&=(0,1)^{\mathsf{\text{𝖳}}},\\
+d_3&=(1,1)^{\mathsf{\text{𝖳}}},&d_{13}&=(2,1)^{\mathsf{\text{𝖳}}},
 \end{aligned}
 ```
 
 另满足生成组成关系
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{d_{\varnothing}+d_3=d_1+d_2.}
+d_{\varnothing}+d_3=d_1+d_2.
 ```
+
+</td></tr></tbody></table>
 
 证明。第一式逐坐标相加；两条底面对角线的中点相同。第二式用 $`d_3=d_1+d_2`$，它来自 $`c(C_0)=c(B_0)+c(A_0)`$。第一式在占位三空间成立，第二式只在组成投影后成立，因为 $`v_{\varnothing}+v_3\ne v_1+v_2`$。∎
 
@@ -384,34 +454,34 @@ d_3&=(1,1)^{\mathsf T},&d_{13}&=(2,1)^{\mathsf T},
 
 ```math
 p=(p_{\varnothing},p_1,p_2,p_3,p_{13})\in\Delta_4,
-\qquad p_I\ge0,\quad \sum_{I\in\mathcal S}p_I=1.
+\qquad p_I\ge0,\quad \sum_{I\in\mathcal{\text{𝒮}}}p_I=1.
 ```
 
 占位均值及固定基组成均值为
 
 ```math
 \begin{aligned}
-X&=\mathbb E_p[x]=p_1+p_{13},&
-Y&=\mathbb E_p[y]=p_3+p_{13},&
-Z&=\mathbb E_p[z]=p_2,\\
-U&=\mathbb E_p[\xi]=X+Y,&
-V&=\mathbb E_p[\eta]=Y+Z.
+X&=\mathbb{\text{𝔼}}_p[x]=p_1+p_{13},&
+Y&=\mathbb{\text{𝔼}}_p[y]=p_3+p_{13},&
+Z&=\mathbb{\text{𝔼}}_p[z]=p_2,\\
+U&=\mathbb{\text{𝔼}}_p[\xi]=X+Y,&
+V&=\mathbb{\text{𝔼}}_p[\eta]=Y+Z.
 \end{aligned}
 ```
 
 于是映射为
 
 ```math
-\Delta_4\xrightarrow{\pi_{\mathrm{occ}}}\mathcal P
-\xrightarrow{L}\mathcal D,
+\Delta_4\xrightarrow{\pi_{\mathrm{occ}}}\mathcal{\text{𝒫}}
+\xrightarrow{L}\mathcal{\text{𝒟}},
 \qquad
 L=\begin{pmatrix}1&1&0\\0&1&1\end{pmatrix},
-\qquad L(X,Y,Z)^{\mathsf T}=(U,V)^{\mathsf T}.
+\qquad L(X,Y,Z)^{\mathsf{\text{𝖳}}}=(U,V)^{\mathsf{\text{𝖳}}}.
 ```
 
-实际尺度组成均值另外是 $`H^j(U,V)^{\mathsf T}`$。
+实际尺度组成均值另外是 $`H^j(U,V)^{\mathsf{\text{𝖳}}}`$。
 
-**定理 6.2（占位投影的全部纤维）。** 给 $`(X,Y,Z)\in\mathcal P`$，令 $`r=1-Z`$。其全部相容律恰为
+**定理 6.2（占位投影的全部纤维）。** 给 $`(X,Y,Z)\in\mathcal{\text{𝒫}}`$，令 $`r=1-Z`$。其全部相容律恰为
 
 ```math
 \begin{aligned}
@@ -421,9 +491,13 @@ p_3&=Y-\kappa,\qquad p_{13}=\kappa,
 \end{aligned}
 ```
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{\max(0,X+Y-r)\le\kappa\le\min(X,Y).}
+\max(0,X+Y-r)\le\kappa\le\min(X,Y).
 ```
+
+</td></tr></tbody></table>
 
 这条纤维的长度为
 
@@ -437,18 +511,26 @@ w_\kappa=\min\{X,Y,r-X,r-Y\}.
 
 这里复用基础卷数学引文 4.2 的闭纤维，只按位置重标概率。归一化超平面内两同占位律的差恰沿
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{g_{\square}=(1,-1,0,-1,1).}
+g_{\square}=(1,-1,0,-1,1).
 ```
+
+</td></tr></tbody></table>
 
 **定理 6.3（组成像是梯形）。** 全部固定基平均组成的像为
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{\mathcal D=
-\{(U,V):0\le V\le1,\quad 0\le U\le1+V\}.}
+\mathcal{\text{𝒟}}=
+\{(U,V):0\le V\le1,\quad 0\le U\le1+V\}.
 ```
 
-其极端顶点依次可写为 $`(0,0),(1,0),(2,1),(0,1)`$。选择 $`\mathsf F[3]`$ 的组成 $`(1,1)`$ 在上边内部，不是额外极端顶点。尺度 $`j`$ 的实际平均组成像是 $`H^j\mathcal D`$，与固定基梯形线性等价。
+</td></tr></tbody></table>
+
+其极端顶点依次可写为 $`(0,0),(1,0),(2,1),(0,1)`$。选择 $`\mathsf{\text{𝖥}}[3]`$ 的组成 $`(1,1)`$ 在上边内部，不是额外极端顶点。尺度 $`j`$ 的实际平均组成像是 $`H^j\mathcal{\text{𝒟}}`$，与固定基梯形线性等价。
 
 证明。$`V=p_2+p_3+p_{13}\le1`$，$`U,V\ge0`$，且
 
@@ -466,30 +548,41 @@ U-V=p_1+p_{13}-p_2\le1.
 
 四系数非负且和一，所列顶点均为实际模式组成。所需拆分存在，因为两个区间之和为 $`[0,1+V]`$。点 $`(1,1)`$ 是上边两端的中点。∎
 
-**定理 6.4（组成投影的全部纤维及维数下降）。** 对任意 $`(U,V)\in\mathcal D`$，令 $`Y=y_0`$、$`p_{13}=\kappa`$。全部相容概率恰为
+**定理 6.4（组成投影的全部纤维及维数下降）。** 对任意 $`(U,V)\in\mathcal{\text{𝒟}}`$，令 $`Y=y_0`$、$`p_{13}=\kappa`$。全部相容概率恰为
+
+<table><tbody><tr><td>
 
 ```math
-\boxed{
 \begin{aligned}
 p_{\varnothing}&=1-U-V+y_0+\kappa,\\
 p_1&=U-y_0-\kappa,\\
 p_2&=V-y_0,\\
 p_3&=y_0-\kappa,\\
 p_{13}&=\kappa,
-\end{aligned}}
+\end{aligned}
 ```
+
+</td></tr></tbody></table>
 
 其完整合法范围为
 
-```math
-\boxed{\max\left(0,\frac{U+V-1}{2}\right)
-\le y_0\le\min(U,V),}
-```
+<table><tbody><tr><td>
 
 ```math
-\boxed{\max(0,U+V-y_0-1)
-\le\kappa\le\min(U-y_0,y_0).}
+\max\left(0,\frac{U+V-1}{2}\right)
+\le y_0\le\min(U,V),
 ```
+
+</td></tr></tbody></table>
+
+<table><tbody><tr><td>
+
+```math
+\max(0,U+V-y_0-1)
+\le\kappa\le\min(U-y_0,y_0).
+```
+
+</td></tr></tbody></table>
 
 梯形内部的纤维为二维；上边 $`V=1,\ 0\lt U\lt2`$ 的纤维为一维；其余三条边以及四个顶点的纤维为单点。
 
@@ -512,64 +605,80 @@ U/2\le y_0\le\min(U,1).
 
 对 $`0\lt U\lt2`$ 这是非退化线段，两个端点 $`U=0,2`$ 则唯一。其余边直接由非负概率给
 
-```math
-\begin{array}{c|c}
-\text{边界}&(p_{\varnothing},p_1,p_2,p_3,p_{13})\\ \hline
-V=0&(1-U,U,0,0,0)\\
-U=0&(1-V,0,V,0,0)\\
-U=1+V&(0,1-V,0,0,V)
-\end{array}
-```
+| 边界 | $`(p_{\varnothing},p_1,p_2,p_3,p_{13})`$ |
+| --- | --- |
+| $`V=0`$ | $`(1-U,U,0,0,0)`$ |
+| $`U=0`$ | $`(1-V,0,V,0,0)`$ |
+| $`U=1+V`$ | $`(0,1-V,0,0,V)`$ |
 
 故均为单点，四角也包含在这些公式内。∎
 
 该闭纤维沿用双曲卷定理 7.5；本卷固定概率顺序后，两条独立不可见方向为
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{g_{\square}=(1,-1,0,-1,1),\qquad
-g_{\mathrm{fib}}=(1,-1,-1,1,0).}
+g_{\square}=(1,-1,0,-1,1),\qquad
+g_{\mathrm{fib}}=(1,-1,-1,1,0).
 ```
+
+</td></tr></tbody></table>
 
 归一化、$`U`$、$`V`$ 的约束矩阵在空、第一、第二模式三列上已秩三，故其核恰为二维；上述两个向量独立，遂穷尽线性核。参数增量是 $`\delta y_0\,g_{\mathrm{fib}}+\delta\kappa\,g_{\square}`$，非负性再把它截成上述闭纤维。全维关系为
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{\text{完整概率体：四自由参数}
+\text{完整概率体：四自由参数}
 \longrightarrow\text{占位金字塔：三均值}
-\longrightarrow\text{组成梯形：两均值}.}
+\longrightarrow\text{组成梯形：两均值}.
 ```
+
+</td></tr></tbody></table>
 
 它说明读出逐步合并来源分配，不意味着物理空间维数消失；“恰好两项关联参数”指完整仿射核和一般内部纤维，退化边界的实际自由度按本定理下降。
 
 ## 七、任意目标读出：组成与两种关系的分解
 
-**定义 7.1（目标的两项关系系数）。** 对任意有限实函数 $`f:\mathcal S\to\mathbb R`$，将其五值按本卷顺序写为 $`f_{\varnothing},f_1,f_2,f_3,f_{13}`$，定义
+**定义 7.1（目标的两项关系系数）。** 对任意有限实函数 $`f:\mathcal{\text{𝒮}}\to\mathbb{\text{ℝ}}`$，将其五值按本卷顺序写为 $`f_{\varnothing},f_1,f_2,f_3,f_{13}`$，定义
+
+<table><tbody><tr><td>
 
 ```math
-\boxed{\Gamma_f=f_{\varnothing}+f_3-f_1-f_2,\qquad
-\Lambda_f=f_{\varnothing}+f_{13}-f_1-f_3.}
+\Gamma_f=f_{\varnothing}+f_3-f_1-f_2,\qquad
+\Lambda_f=f_{\varnothing}+f_{13}-f_1-f_3.
 ```
+
+</td></tr></tbody></table>
 
 $`\Gamma_f`$ 检查目标是否区分生成组成关系的两侧，$`\Lambda_f`$ 检查它是否区分正方形两条对角线。函数指的是该五模式域上的读出；对完整回复分布，须分别使用每个回复事件的指示函数。
 
 **定理 7.2（全部平均目标的精确展开）。** 对每个 $`p\in\Delta_4`$，
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{
 \begin{aligned}
-\mathbb E_p[f]
+\mathbb{\text{𝔼}}_p[f]
 ={}&f_{\varnothing}
 +(f_1-f_{\varnothing})U
 +(f_2-f_{\varnothing})V\\
 &+\Gamma_fY+\Lambda_f\kappa,
 \qquad \kappa=p_{13}.
-\end{aligned}}
+\end{aligned}
 ```
+
+</td></tr></tbody></table>
 
 存在一个仅以 $`U,V`$ 为输入、对全部归一化五模式律正确的平均目标读出，当且仅当
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{\Gamma_f=\Lambda_f=0.}
+\Gamma_f=\Lambda_f=0.
 ```
+
+</td></tr></tbody></table>
 
 证明。把定理 6.4 的五概率代入 $`\sum_Ip_If_I`$ 并逐项整理，得到展开式。若两系数为零，右边显然仅依赖 $`U,V`$。
 
@@ -590,7 +699,7 @@ $`\Gamma_f`$ 检查目标是否区分生成组成关系的两侧，$`\Lambda_f`$
 这是基础卷 §七的目标差分接到双曲卷组成纤维后的分解。它让应保存的关系逐目标判断，而非只凭图形维数判断。按占位均值展开的同一等式为
 
 ```math
-\mathbb E_p[f]=f_{\varnothing}
+\mathbb{\text{𝔼}}_p[f]=f_{\varnothing}
 +(f_1-f_{\varnothing})X
 +(f_3-f_{\varnothing})Y
 +(f_2-f_{\varnothing})Z+\Lambda_f\kappa.
@@ -612,48 +721,58 @@ $`\Gamma_f`$ 检查目标是否区分生成组成关系的两侧，$`\Lambda_f`$
 
 ## 八、二阶组成读数恢复全部五模式概率
 
-**定义 8.1（同一模式上的二阶组成边界）。** 在固定基架上，除 $`U=\mathbb E_p[\xi]`$、$`V=\mathbb E_p[\eta]`$ 外，保留
+**定义 8.1（同一模式上的二阶组成边界）。** 在固定基架上，除 $`U=\mathbb{\text{𝔼}}_p[\xi]`$、$`V=\mathbb{\text{𝔼}}_p[\eta]`$ 外，保留
+
+<table><tbody><tr><td>
 
 ```math
-\boxed{S=\mathbb E_p[\xi(\xi-1)],\qquad
-T=\mathbb E_p[\xi\eta].}
+S=\mathbb{\text{𝔼}}_p[\xi(\xi-1)],\qquad
+T=\mathbb{\text{𝔼}}_p[\xi\eta].
 ```
+
+</td></tr></tbody></table>
 
 这里 $`S,T`$ 是矩的符号，$`T_n`$ 才是来源树；两乘积中的分量来自同一次模式实现。五个确定模式的完整评价为
 
 | 模式 | $`(\xi,\eta)`$ | $`\xi(\xi-1)`$ | $`\xi\eta`$ |
 | --- | --- | ---: | ---: |
-| $`\mathsf F[\varnothing]`$ | $`(0,0)`$ | $`0`$ | $`0`$ |
-| $`\mathsf F[1]`$ | $`(1,0)`$ | $`0`$ | $`0`$ |
-| $`\mathsf F[2]`$ | $`(0,1)`$ | $`0`$ | $`0`$ |
-| $`\mathsf F[3]`$ | $`(1,1)`$ | $`0`$ | $`1`$ |
-| $`\mathsf F[1,3]`$ | $`(2,1)`$ | $`2`$ | $`2`$ |
+| $`\mathsf{\text{𝖥}}[\varnothing]`$ | $`(0,0)`$ | $`0`$ | $`0`$ |
+| $`\mathsf{\text{𝖥}}[1]`$ | $`(1,0)`$ | $`0`$ | $`0`$ |
+| $`\mathsf{\text{𝖥}}[2]`$ | $`(0,1)`$ | $`0`$ | $`0`$ |
+| $`\mathsf{\text{𝖥}}[3]`$ | $`(1,1)`$ | $`0`$ | $`1`$ |
+| $`\mathsf{\text{𝖥}}[1,3]`$ | $`(2,1)`$ | $`2`$ | $`2`$ |
 
 确定模式到组成点仍是单射；歧义发生在只取平均以后，不是该五点表已经合并模式。
 
 **定理 8.2（四项读数的完整概率反演）。** 对任意归一化五模式律，
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{
 \begin{aligned}
 p_{13}&=\frac S2,\\
 p_3&=T-S,\\
 p_2&=V-T+\frac S2,\\
 p_1&=U-T,\\
 p_{\varnothing}&=1-U-V+T.
-\end{aligned}}
+\end{aligned}
 ```
+
+</td></tr></tbody></table>
 
 反向，实四元组 $`(U,V,S,T)`$ 来自合法五模式律，当且仅当
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{
 \begin{gathered}
 S\ge0,\qquad T-S\ge0,\\
 V-T+\frac S2\ge0,\qquad U-T\ge0,\\
 1-U-V+T\ge0.
-\end{gathered}}
+\end{gathered}
 ```
+
+</td></tr></tbody></table>
 
 这些约束包含全部退化边界；五个反解概率自动相加为一。
 
@@ -677,26 +796,28 @@ V=p_2+p_3+p_{13}.
 
 因此 $`1,\xi,\eta,\xi(\xi-1),\xi\eta`$ 是全部五模式实函数的一组基；任意平均目标也可写为
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{
-\mathbb E_p[f]=f_{\varnothing}
+\mathbb{\text{𝔼}}_p[f]=f_{\varnothing}
 +(f_1-f_{\varnothing})U
 +(f_2-f_{\varnothing})V
 +\Gamma_fT+\frac{\Lambda_f-\Gamma_f}{2}S.
-}
 ```
+
+</td></tr></tbody></table>
 
 证明。$`x^2=x,y^2=y,z^2=z,xz=yz=0`$，展开两个乘积即得点态恒等式。五函数按五模式评价的矩阵是
 
 ```math
-\mathcal E=
+\mathcal{\text{ℰ}}=
 \begin{pmatrix}
 1&0&0&0&0\\
 1&1&0&0&0\\
 1&0&1&0&0\\
 1&1&1&0&1\\
 1&2&1&2&2
-\end{pmatrix},\qquad \det\mathcal E=-2\ne0.
+\end{pmatrix},\qquad \det\mathcal{\text{ℰ}}=-2\ne0.
 ```
 
 故评价基满秩。平均目标式也可直接把 $`Y=T-S/2,\kappa=S/2`$ 代入定理 7.2。∎
@@ -727,41 +848,48 @@ T=UV+\mathrm{Cov}_p(\xi,\eta).
 
 **定义 8.5（生成多项式）。** 定义有限支撑的概率生成函数
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{\mathcal G_p(s,t)=p_{\varnothing}+p_1s+p_2t+p_3st+p_{13}s^2t.}
+\mathcal{\text{𝒢}}_p(s,t)=p_{\varnothing}+p_1s+p_2t+p_3st+p_{13}s^2t.
 ```
+
+</td></tr></tbody></table>
 
 这里 $`s,t`$ 是形式变量，不是第十节的接缝位。
 
 **命题 8.6（二阶导数恢复全部系数）。** 有
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{
 \begin{aligned}
-\mathcal G_p(1,1)&=1,\\
-\partial_s\mathcal G_p(1,1)&=U,\\
-\partial_t\mathcal G_p(1,1)&=V,\\
-\partial_s^2\mathcal G_p(1,1)&=S,\\
-\partial_s\partial_t\mathcal G_p(1,1)&=T.
-\end{aligned}}
+\mathcal{\text{𝒢}}_p(1,1)&=1,\\
+\partial_s\mathcal{\text{𝒢}}_p(1,1)&=U,\\
+\partial_t\mathcal{\text{𝒢}}_p(1,1)&=V,\\
+\partial_s^2\mathcal{\text{𝒢}}_p(1,1)&=S,\\
+\partial_s\partial_t\mathcal{\text{𝒢}}_p(1,1)&=T.
+\end{aligned}
 ```
+
+</td></tr></tbody></table>
 
 证明。对五个单项式逐项求导，在 $`(1,1)`$ 评价，依次得到归一化、一阶指数、第二阶阶乘指数及共同指数。定理 8.2 遂恢复全部系数。这里只用有限多项式代数，没有无限级数交换问题。∎
 
-**命题 8.7（已知尺度上的二阶运输）。** 令随机固定基组成 $`D=(\xi,\eta)^{\mathsf T}`$，实际尺度组成为 $`D_j=H^jD`$。其一阶均值与原始二阶矩矩阵满足
+**命题 8.7（已知尺度上的二阶运输）。** 令随机固定基组成 $`D=(\xi,\eta)^{\mathsf{\text{𝖳}}}`$，实际尺度组成为 $`D_j=H^jD`$。其一阶均值与原始二阶矩矩阵满足
 
 ```math
 \bar D_j=H^j\begin{pmatrix}U\\V\end{pmatrix},\qquad
-R=\mathbb E_p[DD^{\mathsf T}]
+R=\mathbb{\text{𝔼}}_p[DD^{\mathsf{\text{𝖳}}}]
 =\begin{pmatrix}U+S&T\\T&V\end{pmatrix},\qquad
-R_j=H^jR(H^j)^{\mathsf T}.
+R_j=H^jR(H^j)^{\mathsf{\text{𝖳}}}.
 ```
 
 若已知尺度 $`j`$ 并取得这些实际一、二阶矩，则可先用
 
 ```math
 \begin{pmatrix}U\\V\end{pmatrix}=H^{-j}\bar D_j,
-\qquad R=H^{-j}R_j(H^{-j})^{\mathsf T},
+\qquad R=H^{-j}R_j(H^{-j})^{\mathsf{\text{𝖳}}},
 \qquad S=R_{11}-U,\quad T=R_{12}
 ```
 
@@ -775,10 +903,10 @@ R_j=H^jR(H^j)^{\mathsf T}.
 
 ```math
 \begin{aligned}
-\xi&=\mathbf1_{\{Q=2\}}+\mathbf1_{\{Q=5\}}+2\mathbf1_{\{Q=7\}},\\
-\eta&=\mathbf1_{\{Q\text{ 为奇数}\}},\\
-\xi(\xi-1)&=2\mathbf1_{\{Q=7\}},\\
-\xi\eta&=\mathbf1_{\{Q=5\}}+2\mathbf1_{\{Q=7\}}.
+\xi&=\mathbf{\text{𝟏}}_{\{Q=2\}}+\mathbf{\text{𝟏}}_{\{Q=5\}}+2\mathbf{\text{𝟏}}_{\{Q=7\}},\\
+\eta&=\mathbf{\text{𝟏}}_{\{Q\text{ 为奇数}\}},\\
+\xi(\xi-1)&=2\mathbf{\text{𝟏}}_{\{Q=7\}},\\
+\xi\eta&=\mathbf{\text{𝟏}}_{\{Q=5\}}+2\mathbf{\text{𝟏}}_{\{Q=7\}}.
 \end{aligned}
 ```
 
@@ -793,7 +921,7 @@ R_j=H^jR(H^j)^{\mathsf T}.
 **定义 9.1（同一律的尺度响应）。** 对固定同一 $`p\in\Delta_4`$，定义
 
 ```math
-m_n(p)=\mathbb E_p[qM^nD]
+m_n(p)=\mathbb{\text{𝔼}}_p[qM^nD]
 =qM^n\begin{pmatrix}U\\V\end{pmatrix}\qquad(n\ge0).
 ```
 
@@ -801,10 +929,14 @@ m_n(p)=\mathbb E_p[qM^nD]
 
 **定理 9.2（整条均值序列的精确信息）。** 对任意两份合法律 $`p,p'`$，
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{(m_n(p))_{n\ge0}=(m_n(p'))_{n\ge0}
-\iff (U(p),V(p))=(U(p'),V(p')).}
+(m_n(p))_{n\ge0}=(m_n(p'))_{n\ge0}
+\iff (U(p),V(p))=(U(p'),V(p')).
 ```
+
+</td></tr></tbody></table>
 
 其中
 
@@ -812,9 +944,16 @@ m_n(p)=\mathbb E_p[qM^nD]
 m_0=2U+3V,\qquad m_1=3U+5V,
 ```
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{U=5m_0-3m_1,\qquad V=-3m_0+2m_1,}
-\qquad m_{n+2}=m_{n+1}+m_n.
+U=5m_0-3m_1,\qquad V=-3m_0+2m_1,
+```
+
+</td></tr></tbody></table>
+
+```math
+m_{n+2}=m_{n+1}+m_n.
 ```
 
 证明。两初值的矩阵为
@@ -846,14 +985,14 @@ P_-=\frac{\phi I_2-M}{\phi-\psi},
 ```
 
 ```math
-\mathcal U(t)=\phi^tP_++e^{i\pi t}|\psi|^tP_-
-\quad(t\in\mathbb R),\qquad
-\bar f_p(t)=\mathbb E_p[q\mathcal U(t)D].
+\mathcal{\text{𝒰}}(t)=\phi^tP_++e^{i\pi t}|\psi|^tP_-
+\quad(t\in\mathbb{\text{ℝ}}),\qquad
+\bar f_p(t)=\mathbb{\text{𝔼}}_p[q\mathcal{\text{𝒰}}(t)D].
 ```
 
 整条 $`\bar f_p`$ 只依赖 $`U,V`$，且整条曲线相等仍当且仅当两个组成均值相等。
 
-证明。有限期望与固定线性映射交换，得 $`\bar f_p(t)=q\mathcal U(t)(U,V)^{\mathsf T}`$；整数 $`n`$ 时 $`\mathcal U(n)=M^n`$，曲线包含定理 9.2 的前两读数，故反向也成立。∎
+证明。有限期望与固定线性映射交换，得 $`\bar f_p(t)=q\mathcal{\text{𝒰}}(t)(U,V)^{\mathsf{\text{𝖳}}}`$；整数 $`n`$ 时 $`\mathcal{\text{𝒰}}(n)=M^n`$，曲线包含定理 9.2 的前两读数，故反向也成立。∎
 
 这只指声明的完整分支和完整曲线；只保留某时刻的实投影还可丢失更多信息，双曲卷定理 7.3–7.4 已给具体范围。非整数表示时间不是原生读者的新动作。第二阶、乘积、次序或联合事件读口可补回它们实际读取的关系，反复读取一种一阶响应则不能。第十一节改用确实声明的原生数量动作来构成取得桥，不把连续表示当作免费仪器。
 
@@ -862,29 +1001,33 @@ P_-=\frac{\phi I_2-M}{\phi-\psi},
 **定义 10.1（原生高到低守卫）。** 本节固定关系卷定义 7.1 的 HIGH-to-LOW 读向：窗口从高向低输入，窗口内部三位仍按低、中、高印刷。定义
 
 ```math
-\ell(I)=\mathbf1_{\{1\in I\}}=x(I),\qquad
-h(I)=\mathbf1_{\{3\in I\}}=y(I).
+\ell(I)=\mathbf{\text{𝟏}}_{\{1\in I\}}=x(I),\qquad
+h(I)=\mathbf{\text{𝟏}}_{\{3\in I\}}=y(I).
 ```
 
 旧接缝 $`s\in\{0,1\}`$ 是此前较高窗口的最低位是否占用。当前输入合法当且仅当
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{s\,h(I)=0,\qquad \text{合法后 }s'=\ell(I).}
+s\,h(I)=0,\qquad \text{合法后 }s'=\ell(I).
 ```
+
+</td></tr></tbody></table>
 
 非法输入进入独立吸收结果 $`\bot`$。五模式表为
 
 | 输入模式 | 印刷三位：低、中、高 | 允许的旧接缝 | 新接缝 |
 | --- | --- | --- | ---: |
-| $`\mathsf F[\varnothing]`$ | $`000`$ | $`0,1`$ | $`0`$ |
-| $`\mathsf F[1]`$ | $`100`$ | $`0,1`$ | $`1`$ |
-| $`\mathsf F[2]`$ | $`010`$ | $`0,1`$ | $`0`$ |
-| $`\mathsf F[3]`$ | $`001`$ | $`0`$ | $`0`$ |
-| $`\mathsf F[1,3]`$ | $`101`$ | $`0`$ | $`1`$ |
+| $`\mathsf{\text{𝖥}}[\varnothing]`$ | $`000`$ | $`0,1`$ | $`0`$ |
+| $`\mathsf{\text{𝖥}}[1]`$ | $`100`$ | $`0,1`$ | $`1`$ |
+| $`\mathsf{\text{𝖥}}[2]`$ | $`010`$ | $`0,1`$ | $`0`$ |
+| $`\mathsf{\text{𝖥}}[3]`$ | $`001`$ | $`0`$ | $`0`$ |
+| $`\mathsf{\text{𝖥}}[1,3]`$ | $`101`$ | $`0`$ | $`1`$ |
 
 **定理 10.2（两个活接缝状态的充分性与可区分性）。** 对上述合法性任务，任意合法前缀的全部后缀许可只依赖它的接缝位。两个活状态 $`s=0,1`$ 不能再合并；独立错误结果另行保留。
 
-证明。窗口内已按 $`\mathcal S`$ 检查；唯一跨界相邻对是旧最低位和新最高位，故下一步许可只需 $`s`$。合法后新最低位成为唯一新接缝，归纳覆盖任意有限后缀。两活状态都可从初始零接缝达到：空窗留下零，第一位置留下一个一。后缀 $`\mathsf F[3]`$ 在零状态合法，在一状态非法，所以它们的后缀语言不同。∎
+证明。窗口内已按 $`\mathcal{\text{𝒮}}`$ 检查；唯一跨界相邻对是旧最低位和新最高位，故下一步许可只需 $`s`$。合法后新最低位成为唯一新接缝，归纳覆盖任意有限后缀。两活状态都可从初始零接缝达到：空窗留下零，第一位置留下一个一。后缀 $`\mathsf{\text{𝖥}}[3]`$ 在零状态合法，在一状态非法，所以它们的后缀语言不同。∎
 
 五种模式、三维占位均值和一个接缝位回答不同问题。定理 10.2 只最小化合法后缀语言的活边界；数量预测还要保留组成状态，随机来源的未来分布还要保留实际联合或条件律。它不声称任意历史只需一个位，也不把吸收错误隐藏进合法零状态。
 
@@ -905,15 +1048,18 @@ B(t)=\begin{pmatrix}1&t\\1&0\end{pmatrix}.
 
 **命题 10.4（双扫描核与环内行列式）。** 在交换半环上的活动权恒等式为
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{
 K_{\mathrm{HL}}(a,b,c)
 =B(c)B(b)B(a)
 =\begin{pmatrix}
 1+b+c&a(1+c)\\
 1+b&a
-\end{pmatrix}.}
+\end{pmatrix}.
 ```
+
+</td></tr></tbody></table>
 
 辅助低到高扫描是另一个接口：
 
@@ -928,9 +1074,13 @@ K_{\mathrm{LH}}(a,b,c)
 
 如果系数载体是交换环，才另外有
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{\det K_{\mathrm{HL}}=\det K_{\mathrm{LH}}=-abc.}
+\det K_{\mathrm{HL}}=\det K_{\mathrm{LH}}=-abc.
 ```
+
+</td></tr></tbody></table>
 
 证明。高到低实际位置顺序为三、二、一，连续转移按行向量从左向右乘 $`B(c),B(b),B(a)`$，中间指标是同一个真实位。直接相乘给矩阵。也可从模式表枚举：输入零输出零有空、第二、第三项，权和 $`1+b+c`$；输入零输出一有第一和端点联合，权和 $`a+ac`$；输入一输出零只余空与第二项，输出一只余第一项，给第二行。辅助低到高则交换输入和输出所贴的端点角色，逐位乘法给另一式。交换环中 $`\det B(t)=-t`$，或者直接展开两个二阶行列式，都给 $`-abc`$。∎
 
@@ -942,7 +1092,7 @@ K_{\mathrm{LH}}(a,b,c)
 W=\lambda(s_0)\mu(s_L)
 \prod_{k=1}^L
 a_k^{x(I_k)}b_k^{z(I_k)}c_k^{y(I_k)}
-\prod_{k=1}^L\mathbf1_{\{s_{k-1}h(I_k)=0\}},
+\prod_{k=1}^L\mathbf{\text{𝟏}}_{\{s_{k-1}h(I_k)=0\}},
 \qquad s_k=\ell(I_k).
 ```
 
@@ -951,11 +1101,11 @@ a_k^{x(I_k)}b_k^{z(I_k)}c_k^{y(I_k)}
 **命题 10.6（动态规划的合法域）。** 全路径权之和为
 
 ```math
-\mathscr Z=\lambda^{\mathsf T}
+\mathscr{\text{𝒵}}=\lambda^{\mathsf{\text{𝖳}}}
 K_{\mathrm{HL},1}\cdots K_{\mathrm{HL},L}\mu.
 ```
 
-对非负实权且 $`\mathscr Z\gt0`$，$`W/\mathscr Z`$ 才给这份已声明路径族的概率律。
+对非负实权且 $`\mathscr{\text{𝒵}}\gt0`$，$`W/\mathscr{\text{𝒵}}`$ 才给这份已声明路径族的概率律。
 
 证明。每条实际合法词唯一确定所有中间接缝；相邻核的输出和输入使用同一个位，局部模式唯一拼成该词。有限分配律把矩阵积展开为恰好这些路径权，不漏项、不交叉拼入不可能的联合实现。非负性及正总权给归一化概率。∎
 
@@ -970,10 +1120,14 @@ a_L=(1,0)A^L\begin{pmatrix}1\\1\end{pmatrix}.
 
 则对每个 $`L\ge0`$，
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{a_L=\mathrm{Fib}_{3L+2},\qquad
-a_{L+2}=4a_{L+1}+a_L,\qquad a_0=1,\quad a_1=5.}
+a_L=\mathrm{Fib}_{3L+2},\qquad
+a_{L+2}=4a_{L+1}+a_L,\qquad a_0=1,\quad a_1=5.
 ```
+
+</td></tr></tbody></table>
 
 证明。$`B(1)`$ 枚举一个位的无相邻一守卫，$`A=B(1)^3`$ 枚举一个三位窗口。长度 $`n`$、初接缝零、末端自由的二进制位词数 $`b_n`$ 有 $`b_0=1,b_1=2`$；从首位零或一分支得 $`b_{n+2}=b_{n+1}+b_n`$，故 $`b_n=\mathrm{Fib}_{n+2}`$。取 $`n=3L`$ 即第一式。直接相乘得到
 
@@ -1010,34 +1164,38 @@ p_{\varnothing}+p_2&p_1
 **定义 11.1（实际高到低数量读者）。** 直接使用关系卷定义 7.1 的整数读者。状态载体为
 
 ```math
-\mathcal X=(\{0,1\}\times\mathbb N^2)\sqcup\{\bot\},
+\mathcal{\text{𝒳}}=(\{0,1\}\times\mathbb{\text{ℕ}}^2)\sqcup\{\bot\},
 \qquad (s,C)_{\mathrm{init}}=(0,0).
 ```
 
-在活态输入 $`I\in\mathcal S`$，若 $`s\,h(I)=0`$，则
+在活态输入 $`I\in\mathcal{\text{𝒮}}`$，若 $`s\,h(I)=0`$，则
+
+<table><tbody><tr><td>
 
 ```math
-\boxed{C'=HC+d_I,\qquad s'=\ell(I),\qquad Q'=qC'.}
+C'=HC+d_I,\qquad s'=\ell(I),\qquad Q'=qC'.
 ```
+
+</td></tr></tbody></table>
 
 否则进入吸收态 $`\bot`$；该态继续输入仍回复 $`\bot`$，与合法数量零不同。所有有限合法前缀即时回复，允许高端空填充，单位位为零，没有额外 End 动作。局部编译贡献始终是固定基 $`d_I`$；旧组成乘 $`H`$ 负责 Horner 尺度运输。按关系卷定理 7.2，低到高固定位置词 $`I_0,\ldots,I_{L-1}`$ 的逆序原生输入给
 
 ```math
 C_{\mathrm{final}}=\sum_{j=0}^{L-1}H^jd_{I_j},\qquad
-qC_{\mathrm{final}}=\sum_{j=0}^{L-1}\mathrm{val}(\mathsf F_j[I_j]).
+qC_{\mathrm{final}}=\sum_{j=0}^{L-1}\mathrm{val}(\mathsf{\text{𝖥}}_j[I_j]).
 ```
 
 因此一个高到低输入尚未完成时的即时数量，不是预先固定最终高度后各窗口的绝对位置读数。实际空窗口执行 $`C'=HC,s'=0`$，既推进数量尺度又清零接缝，不是恒等或停止。
 
-**命题 11.2（立即继续第三位置的实际表）。** 从初态输入一个 $`I\sim p`$ 后，在同一状态立即输入固定 $`\mathsf F[3]`$，即旧标签 $`[5]`$，得到下表。其中 $`A_{\mathrm{odd}}`$ 是首次精确数量为奇数的事件。
+**命题 11.2（立即继续第三位置的实际表）。** 从初态输入一个 $`I\sim p`$ 后，在同一状态立即输入固定 $`\mathsf{\text{𝖥}}[3]`$，即旧标签 $`[5]`$，得到下表。其中 $`A_{\mathrm{odd}}`$ 是首次精确数量为奇数的事件。
 
-| 首次模式 | 首次数量 $`Q`$ | $`\mathbf1_{A_{\mathrm{odd}}}`$ | 首次后接缝 | 立即继续 $`\mathsf F[3]`$ 的回复 $`R`$ |
+| 首次模式 | 首次数量 $`Q`$ | $`\mathbf{\text{𝟏}}_{A_{\mathrm{odd}}}`$ | 首次后接缝 | 立即继续 $`\mathsf{\text{𝖥}}[3]`$ 的回复 $`R`$ |
 | --- | ---: | ---: | ---: | --- |
-| $`\mathsf F[\varnothing]`$ | $`0`$ | $`0`$ | $`0`$ | $`5`$ |
-| $`\mathsf F[1]`$ | $`2`$ | $`0`$ | $`1`$ | $`\bot`$ |
-| $`\mathsf F[2]`$ | $`3`$ | $`1`$ | $`0`$ | $`18`$ |
-| $`\mathsf F[3]`$ | $`5`$ | $`1`$ | $`0`$ | $`26`$ |
-| $`\mathsf F[1,3]`$ | $`7`$ | $`1`$ | $`1`$ | $`\bot`$ |
+| $`\mathsf{\text{𝖥}}[\varnothing]`$ | $`0`$ | $`0`$ | $`0`$ | $`5`$ |
+| $`\mathsf{\text{𝖥}}[1]`$ | $`2`$ | $`0`$ | $`1`$ | $`\bot`$ |
+| $`\mathsf{\text{𝖥}}[2]`$ | $`3`$ | $`1`$ | $`0`$ | $`18`$ |
+| $`\mathsf{\text{𝖥}}[3]`$ | $`5`$ | $`1`$ | $`0`$ | $`26`$ |
+| $`\mathsf{\text{𝖥}}[1,3]`$ | $`7`$ | $`1`$ | $`1`$ | $`\bot`$ |
 
 证明。首次输入全部合法，留下 $`C=d_I,s=\ell(I)`$。下一固定输入的最高位是一，第一与联合模式留下的一接缝使其拒绝。三条合法分支分别给
 
@@ -1068,10 +1226,14 @@ q(Hd_3+d_3)&=21+5=26.
 
 故全部同源组成尺度均值也相同，然而立即继续回复律为
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{\nu_A=\frac12\delta_5+\frac12\delta_{\bot},\qquad
-\nu_B=\frac12\delta_{\bot}+\frac12\delta_{26}.}
+\nu_A=\frac12\delta_5+\frac12\delta_{\bot},\qquad
+\nu_B=\frac12\delta_{\bot}+\frac12\delta_{26}.
 ```
+
+</td></tr></tbody></table>
 
 因此不存在仅从金字塔三均值正确给出该完整原生回复分布的规则。
 
@@ -1081,15 +1243,18 @@ q(Hd_3+d_3)&=21+5=26.
 
 **定理 11.4（四矩恢复后的完整原生消费者）。** 给同一初始化来源律的精确固定基矩 $`U,V,S,T`$，命题 11.2 的回复律按 $`(5,18,26,\bot)`$ 次序恰为
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{
 \begin{aligned}
 \nu_p(5)&=1-U-V+T,\\
 \nu_p(18)&=V-T+\frac S2,\\
 \nu_p(26)&=T-S,\\
 \nu_p(\bot)&=U-T+\frac S2.
-\end{aligned}}
+\end{aligned}
 ```
+
+</td></tr></tbody></table>
 
 它非负且总和一；在整个合法矩域包括退化边界都成立。
 
@@ -1099,21 +1264,28 @@ q(Hd_3+d_3)&=21+5=26.
 
 **定理 11.5（实际奇偶记录下的条件回复与联合事件）。** 在命题 11.2 的同一历史中保留 $`A_{\mathrm{odd}}=\{Q\text{ 为奇数}\}`$，则
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{P_p(A_{\mathrm{odd}})=V,\qquad
-P_p(A_{\mathrm{odd}},R=\bot)=\frac S2.}
+P_p(A_{\mathrm{odd}})=V,\qquad
+P_p(A_{\mathrm{odd}},R=\bot)=\frac S2.
 ```
+
+</td></tr></tbody></table>
 
 当且仅当 $`V\gt0`$ 才定义该事件的条件回复律，其非零候选回复为
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{
 \begin{aligned}
 P_p(R=18\mid A_{\mathrm{odd}})&=\frac{V-T+S/2}{V},\\
 P_p(R=26\mid A_{\mathrm{odd}})&=\frac{T-S}{V},\\
 P_p(R=\bot\mid A_{\mathrm{odd}})&=\frac{S}{2V}.
-\end{aligned}}
+\end{aligned}
 ```
+
+</td></tr></tbody></table>
 
 证明。奇数记录只在第二、第三和联合模式上出现，概率为 $`p_2+p_3+p_{13}=V`$。记录为奇数且下一步拒绝只发生于联合模式，所以其事件指示函数逐点为 $`xy`$，概率为 $`p_{13}=S/2`$。条件事件质量正时将三支绝对质量除以 $`V`$；其和是 $`V`$，因此条件律归一化。$`V=0`$ 时事件不发生，不补出条件分布。∎
 
@@ -1132,7 +1304,7 @@ T=P_p(R=26)+2P_p(A_{\mathrm{odd}},R=\bot).
 
 精确档案律可用这些式子供矩；有限档案给对应经验矩。它们不表示各反事实动作已经全部执行，也不意味着把一个样本变成精确未知律。
 
-**定义 11.6（另一条实际同执行取得路径）。** 从相同初态实际首读 $`I\sim p`$，记录数量 $`Q^{(0)}`$；随后在该同一状态实际输入空窗 $`\mathsf F[\varnothing]`$，记录数量 $`Q^{(3)}`$。上标三表示经过三个组成替换，不是第三位置或第三个观测。若再输入第三位置，记最终回复为 $`R_{\mathrm{empty},3}`$。此路径的动作词为
+**定义 11.6（另一条实际同执行取得路径）。** 从相同初态实际首读 $`I\sim p`$，记录数量 $`Q^{(0)}`$；随后在该同一状态实际输入空窗 $`\mathsf{\text{𝖥}}[\varnothing]`$，记录数量 $`Q^{(3)}`$。上标三表示经过三个组成替换，不是第三位置或第三个观测。若再输入第三位置，记最终回复为 $`R_{\mathrm{empty},3}`$。此路径的动作词为
 
 ```math
 I,\quad\varnothing,\quad3.
@@ -1149,45 +1321,53 @@ Q^{(0)}=2\xi+3\eta,\qquad Q^{(3)}=8\xi+13\eta.
 令
 
 ```math
-\mathfrak a=\mathbb E_p[Q^{(0)}],\qquad
-\mathfrak b=\mathbb E_p[Q^{(3)}],
+\mathfrak{\text{𝔞}}=\mathbb{\text{𝔼}}_p[Q^{(0)}],\qquad
+\mathfrak{\text{𝔟}}=\mathbb{\text{𝔼}}_p[Q^{(3)}],
 ```
 
 则
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{U=\frac{13\mathfrak a-3\mathfrak b}{2},\qquad
-V=\mathfrak b-4\mathfrak a.}
+U=\frac{13\mathfrak{\text{𝔞}}-3\mathfrak{\text{𝔟}}}{2},\qquad
+V=\mathfrak{\text{𝔟}}-4\mathfrak{\text{𝔞}}.
 ```
+
+</td></tr></tbody></table>
 
 再令
 
 ```math
-h_0=\mathbb E_p[(Q^{(0)})^2]-4U-9V,\qquad
-h_3=\mathbb E_p[(Q^{(3)})^2]-64U-169V,
+h_0=\mathbb{\text{𝔼}}_p[(Q^{(0)})^2]-4U-9V,\qquad
+h_3=\mathbb{\text{𝔼}}_p[(Q^{(3)})^2]-64U-169V,
 ```
 
 便有
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{S=\frac{13h_0}{4}-\frac{3h_3}{16},\qquad
-T=-h_0+\frac{h_3}{16}.}
+S=\frac{13h_0}{4}-\frac{3h_3}{16},\qquad
+T=-h_0+\frac{h_3}{16}.
 ```
+
+</td></tr></tbody></table>
 
 证明。首读组成为 $`D=d_I`$，实际空窗后为 $`HD`$，且 $`qH=(8,13)`$，给点态两数量式。均值矩阵
 
 ```math
-\begin{pmatrix}\mathfrak a\\\mathfrak b\end{pmatrix}
+\begin{pmatrix}\mathfrak{\text{𝔞}}\\\mathfrak{\text{𝔟}}\end{pmatrix}
 =\begin{pmatrix}2&3\\8&13\end{pmatrix}
 \begin{pmatrix}U\\V\end{pmatrix}
 ```
 
-的行列式为二，反解得到第一组公式。展开同样本平方，并用 $`\mathbb E[\xi^2]=U+S,\mathbb E[\eta^2]=V`$，得到
+的行列式为二，反解得到第一组公式。展开同样本平方，并用 $`\mathbb{\text{𝔼}}[\xi^2]=U+S,\mathbb{\text{𝔼}}[\eta^2]=V`$，得到
 
 ```math
 \begin{aligned}
-\mathbb E_p[(Q^{(0)})^2]&=4U+9V+4S+12T,\\
-\mathbb E_p[(Q^{(3)})^2]&=64U+169V+64S+208T,
+\mathbb{\text{𝔼}}_p[(Q^{(0)})^2]&=4U+9V+4S+12T,\\
+\mathbb{\text{𝔼}}_p[(Q^{(3)})^2]&=64U+169V+64S+208T,
 \end{aligned}
 ```
 
@@ -1212,11 +1392,11 @@ R_{\mathrm{empty},3}=q(H^2d_I+d_3).
 
 | 首次模式 | $`Q^{(0)}`$ | 空窗后 $`Q^{(3)}`$ | 最终 $`R_{\mathrm{empty},3}`$ | 回复质量 |
 | --- | ---: | ---: | ---: | --- |
-| $`\mathsf F[\varnothing]`$ | $`0`$ | $`0`$ | $`5`$ | $`1-U-V+T`$ |
-| $`\mathsf F[1]`$ | $`2`$ | $`8`$ | $`39`$ | $`U-T`$ |
-| $`\mathsf F[2]`$ | $`3`$ | $`13`$ | $`60`$ | $`V-T+S/2`$ |
-| $`\mathsf F[3]`$ | $`5`$ | $`21`$ | $`94`$ | $`T-S`$ |
-| $`\mathsf F[1,3]`$ | $`7`$ | $`29`$ | $`128`$ | $`S/2`$ |
+| $`\mathsf{\text{𝖥}}[\varnothing]`$ | $`0`$ | $`0`$ | $`5`$ | $`1-U-V+T`$ |
+| $`\mathsf{\text{𝖥}}[1]`$ | $`2`$ | $`8`$ | $`39`$ | $`U-T`$ |
+| $`\mathsf{\text{𝖥}}[2]`$ | $`3`$ | $`13`$ | $`60`$ | $`V-T+S/2`$ |
+| $`\mathsf{\text{𝖥}}[3]`$ | $`5`$ | $`21`$ | $`94`$ | $`T-S`$ |
+| $`\mathsf{\text{𝖥}}[1,3]`$ | $`7`$ | $`29`$ | $`128`$ | $`S/2`$ |
 
 定义 11.6 的精确数量统计，经定理 11.7 和 8.2，因而唯一给出该路径的完整回复律。
 
@@ -1235,10 +1415,10 @@ R_{\mathrm{empty},3}=q(H^2d_I+d_3).
 
 ```math
 \begin{aligned}
-\mathbb E_{\mu_A}[(Q^{(0)})^2]&=49/2,&
-\mathbb E_{\mu_B}[(Q^{(0)})^2]&=29/2,\\
-\mathbb E_{\mu_A}[(Q^{(3)})^2]&=841/2,&
-\mathbb E_{\mu_B}[(Q^{(3)})^2]&=505/2.
+\mathbb{\text{𝔼}}_{\mu_A}[(Q^{(0)})^2]&=49/2,&
+\mathbb{\text{𝔼}}_{\mu_B}[(Q^{(0)})^2]&=29/2,\\
+\mathbb{\text{𝔼}}_{\mu_A}[(Q^{(3)})^2]&=841/2,&
+\mathbb{\text{𝔼}}_{\mu_B}[(Q^{(3)})^2]&=505/2.
 \end{aligned}
 ```
 
@@ -1248,35 +1428,37 @@ R_{\mathrm{empty},3}=q(H^2d_I+d_3).
 
 ## 十二、统一结构：每条箭头的来源、域与任务
 
-**定义 12.1（选择到来源的有域关系链）。** 固定定义 2.1 的编译约定，并把窗口族记为 $`\mathcal W_j=(A_j,B_j,C_j)`$。输入先给定尺度和选择，编译才给出所选来源。
+**定义 12.1（选择到来源的有域关系链）。** 固定定义 2.1 的编译约定，并把窗口族记为 $`\mathcal{\text{𝒲}}_j=(A_j,B_j,C_j)`$。输入先给定尺度和选择，编译才给出所选来源。
 
 从完整轨道到指定窗口的映射另定义为
 
 ```math
-\mathrm{win}_j((T_n)_{n\ge0})=(T_{3j},T_{3j+1},T_{3j+2})=\mathcal W_j.
+\mathrm{win}_j((T_n)_{n\ge0})=(T_{3j},T_{3j+1},T_{3j+2})=\mathcal{\text{𝒲}}_j.
 ```
 
 选择项的编译链为
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{
 (j,I,\text{高位置在左的约定})
-\xrightarrow{\sigma_j}\mathsf F_j[I]
-\xrightarrow{\widehat E_j}\mathbb T_{\varnothing}.
-}
+\xrightarrow{\sigma_j}\mathsf{\text{𝖥}}_j[I]
+\xrightarrow{\widehat E_j}\mathbb{\text{𝕋}}_{\varnothing}.
 ```
 
-这里 $`\sigma_j`$ 的完整标签为“位置选择标签”；该标签箭头只是把 $`(j,I)`$ 记为选择项；编译箭头的输入域是 $`I\in\mathcal S`$ 和已给窗口族，不是任意树。该选择项另有占位及组成读出：
+</td></tr></tbody></table>
+
+这里 $`\sigma_j`$ 的完整标签为“位置选择标签”；该标签箭头只是把 $`(j,I)`$ 记为选择项；编译箭头的输入域是 $`I\in\mathcal{\text{𝒮}}`$ 和已给窗口族，不是任意树。该选择项另有占位及组成读出：
 
 ```math
-\mathcal S\xrightarrow{v}\{v_I:I\in\mathcal S\}\subset\mathbb R^3
-\xrightarrow{L}\{d_I:I\in\mathcal S\}\subset\mathbb R^2,
+\mathcal{\text{𝒮}}\xrightarrow{v}\{v_I:I\in\mathcal{\text{𝒮}}\}\subset\mathbb{\text{ℝ}}^3
+\xrightarrow{L}\{d_I:I\in\mathcal{\text{𝒮}}\}\subset\mathbb{\text{ℝ}}^2,
 ```
 
 ```math
 \widehat c(\widehat E_j[I])=H^jd_I,
 \qquad
-\mathrm{val}(\mathsf F_j[I])=qH^jd_I.
+\mathrm{val}(\mathsf{\text{𝖥}}_j[I])=qH^jd_I.
 ```
 
 **命题 12.2（确定模式的像上反查与一般遗忘）。** 对固定已知 $`j`$，所选代表编译、五点占位编码和五点组成编码都在自己的像上单射，可以反查 $`I`$。这些像上反查不定义任意原始树到位置选择的函数，也不恢复任意来源的叶序或括号。
@@ -1287,34 +1469,46 @@ R_{\mathrm{empty},3}=q(H^2d_I+d_3).
 
 **命题 12.3（统计关系链和任务下降）。** 对归一化经典单窗律，完整的摘要链与恢复链为
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{
 (p_{\varnothing},p_1,p_2,p_3,p_{13})
 \xrightarrow{\pi_{\mathrm{occ}}}(X,Y,Z)
 \xrightarrow{L}(U,V),
-}
 ```
+
+</td></tr></tbody></table>
+
+<table><tbody><tr><td>
 
 ```math
-\boxed{
-p\xrightarrow{\mathcal M}(U,V,S,T)
-\xrightarrow{\mathcal M^{-1}}p.
-}
+p\xrightarrow{\mathcal{\text{ℳ}}}(U,V,S,T)
+\xrightarrow{\mathcal{\text{ℳ}}^{-1}}p.
 ```
 
-这里 $`\mathcal M^{-1}`$ 的完整标签为“定理 8.2 的合法域逆式”，定义域是定理 8.2 所列的合法矩域。
+</td></tr></tbody></table>
+
+这里 $`\mathcal{\text{ℳ}}^{-1}`$ 的完整标签为“定理 8.2 的合法域逆式”，定义域是定理 8.2 所列的合法矩域。
 
 两次均值压缩分别增加的遗漏是正方形方向和 FIB 组成方向：
 
-```math
-\boxed{\text{正方形关系：}\quad
-\varnothing+13\longleftrightarrow1+3,}
-```
+<table><tbody><tr><td>
 
 ```math
-\boxed{\text{FIB 组成关系：}\quad
-\varnothing+3\longleftrightarrow1+2.}
+\text{正方形关系：}\quad
+\varnothing+13\longleftrightarrow1+3,
 ```
+
+</td></tr></tbody></table>
+
+<table><tbody><tr><td>
+
+```math
+\text{FIB 组成关系：}\quad
+\varnothing+3\longleftrightarrow1+2.
+```
+
+</td></tr></tbody></table>
 
 此处加法表示等权来源混合或线性响应比较，不许可在一个窗口占用非法相邻集合。四矩对同一初始化单窗律的两项声明任务给出
 
@@ -1347,19 +1541,19 @@ P_\theta(0,1)=P_\theta(1,0)=1/2-\theta,
 
 在 $`\theta=1/2`$ 和零的两律中，终值支撑分别为 $`\{0,16\}`$、$`\{3,13\}`$，空窗后支撑分别为 $`\{0,68\}`$、$`\{13,55\}`$，完整分布不同。
 
-证明。边缘中 $`P(A=1)=P(B=1)=1/2`$，且两种模式都不占低端或高端，所以所有路径合法、接缝恒零。组成在两步后为 $`H(0,A)^{\mathsf T}+(0,B)^{\mathsf T}`$，施加 $`q`$ 给首式，实际空窗再乘 $`H`$ 给第二式。两个参数端点分别只含同值对和异值对，得到所列支撑，故不同。∎
+证明。边缘中 $`P(A=1)=P(B=1)=1/2`$，且两种模式都不占低端或高端，所以所有路径合法、接缝恒零。组成在两步后为 $`H(0,A)^{\mathsf{\text{𝖳}}}+(0,B)^{\mathsf{\text{𝖳}}}`$，施加 $`q`$ 给首式，实际空窗再乘 $`H`$ 给第二式。两个参数端点分别只含同值对和异值对，得到所列支撑，故不同。∎
 
 该反例的终值均值都为八，空窗后均值都为三十四；完整律不足并不否定这些特定均值任务的充分性。第十节的因子化合同或真实条件核可以补足相应任务所需的共同关系，不能从相同边缘和同名接缝自动得到。四矩补回单窗经典概率，没有把所有历史合并成一个局部模式。
 
 **命题 12.5（附加相干来源的共同环境边界）。** 经典模式概率的恢复不决定相干历史中的非对角关系，也不决定以后重新接入的环境。按二阶卷命题 110.4，系统和环境均为量子位，初态为 $`\varrho\otimes|0\rangle\langle0|`$，以系统控制、环境为目标的同一个 CNOT 记为 $`W`$。一次作用后忽略环境，系统通道为
 
 ```math
-\mathcal D_Z(\varrho)=\frac{\varrho+P_z\varrho P_z}{2}.
+\mathcal{\text{𝒟}}_Z(\varrho)=\frac{\varrho+P_z\varrho P_z}{2}.
 ```
 
-第二次使用同一个环境恢复原联合态；两次各用新环境则仍给 $`\mathcal D_Z(\varrho)`$。
+第二次使用同一个环境恢复原联合态；两次各用新环境则仍给 $`\mathcal{\text{𝒟}}_Z(\varrho)`$。
 
-证明。$`W|j,0\rangle=|j,j\rangle`$，首次联合态为 $`\sum_{j,k}\varrho_{jk}|j,j\rangle\langle k,k|`$；环境迹消去不同指标的项，给去相位。共同环境下 $`W^2=I`$，故第二次恢复原态。新环境下两次约化复合为 $`\mathcal D_Z^2=\mathcal D_Z`$；例如系统初态 $`|+\rangle`$ 时，两结论不同。∎
+证明。$`W|j,0\rangle=|j,j\rangle`$，首次联合态为 $`\sum_{j,k}\varrho_{jk}|j,j\rangle\langle k,k|`$；环境迹消去不同指标的项，给去相位。共同环境下 $`W^2=I`$，故第二次恢复原态。新环境下两次约化复合为 $`\mathcal{\text{𝒟}}_Z^2=\mathcal{\text{𝒟}}_Z`$；例如系统初态 $`|+\rangle`$ 时，两结论不同。∎
 
 此例只用具名实现和允许再次作用的环境，不能据单窗概率或三维占位图推得物理相干实验。第二节的次序表示、共同相位参照、受控比较及本命题的环境权限各有自己的来源合同；恢复 $`p`$ 不恢复这些未声明的接口。
 
@@ -1367,27 +1561,45 @@ P_\theta(0,1)=P_\theta(1,0)=1/2-\theta,
 
 **定理 13.1（选择项演算的任务分层综合）。** 在完整有序 FIB 替换、非负窗口尺度、所选编译约定、归一化经典单窗律及第十一节初始化原生读者的合同内，以下三个问题分别有明确答案：
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{\text{怎样生成来源？}}
-\qquad
+\text{怎样生成来源？}
+```
+
+</td></tr></tbody></table>
+
+```math
 \rho(\alpha)=\beta,\quad
 \rho(\beta)=\langle\beta,\alpha\rangle,\quad
 \rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle;
 ```
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{\text{怎样合法选择与接续？}}
-\qquad
-I\in\mathcal S=\{\varnothing,\{1\},\{2\},\{3\},\{1,3\}\},\quad
+\text{怎样合法选择与接续？}
+```
+
+</td></tr></tbody></table>
+
+```math
+I\in\mathcal{\text{𝒮}}=\{\varnothing,\{1\},\{2\},\{3\},\{1,3\}\},\quad
 s\,h(I)=0,\quad s'=\ell(I);
 ```
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{\text{怎样保留仍被读出消费的关系？}}
-\qquad
+\text{怎样保留仍被读出消费的关系？}
+```
+
+</td></tr></tbody></table>
+
+```math
 \left(
-\mathbb E_p[\xi],\mathbb E_p[\eta],
-\mathbb E_p[\xi(\xi-1)],\mathbb E_p[\xi\eta]
+\mathbb{\text{𝔼}}_p[\xi],\mathbb{\text{𝔼}}_p[\eta],
+\mathbb{\text{𝔼}}_p[\xi(\xi-1)],\mathbb{\text{𝔼}}_p[\xi\eta]
 \right)\longleftrightarrow p.
 ```
 
@@ -1399,20 +1611,23 @@ s\,h(I)=0,\quad s'=\ell(I);
 
 最终关系链应连同选择参数书写：
 
+<table><tbody><tr><td>
+
 ```math
-\boxed{
 \begin{aligned}
 \alpha&\xrightarrow{\tau}(T_n)_{n\ge0}
 \xrightarrow{\mathrm{win}_j}(A_j,B_j,C_j),\\
 (j,I,\text{编译约定})
-&\xrightarrow{\sigma_j}\mathsf F_j[I]
+&\xrightarrow{\sigma_j}\mathsf{\text{𝖥}}_j[I]
 \xrightarrow{\widehat E_j}\text{所选有序来源或独立空贡献},\\
-p\in\Delta_4&\xrightarrow{\mathcal M}(U,V,S,T)
-\xrightarrow{\mathcal R}(\nu_p,\nu_{p,\mathrm{empty},3}).
-\end{aligned}}
+p\in\Delta_4&\xrightarrow{\mathcal{\text{ℳ}}}(U,V,S,T)
+\xrightarrow{\mathcal{\text{ℛ}}}(\nu_p,\nu_{p,\mathrm{empty},3}).
+\end{aligned}
 ```
 
-三行中的符号分别保留以下完整标签：$`\tau`$ 为“生成完整轨道”，按定义 1.1 生成轨道；$`\sigma_j`$ 为“合法位置选择”，沿用定义 12.1 的位置标签映射；$`\mathcal R`$ 为“已声明的同历史任务”，其两分量分别依照第十一节两条已声明动作历史给出回复律。
+</td></tr></tbody></table>
+
+三行中的符号分别保留以下完整标签：$`\tau`$ 为“生成完整轨道”，按定义 1.1 生成轨道；$`\sigma_j`$ 为“合法位置选择”，沿用定义 12.1 的位置标签映射；$`\mathcal{\text{ℛ}}`$ 为“已声明的同历史任务”，其两分量分别依照第十一节两条已声明动作历史给出回复律。
 
 第一行的窗口族按定义 1.2 从整条轨道取指定索引，不是从一棵任意 $`T_n`$ 逆推出窗口或选择；第二行把该族作为已给来源环境。确定模式的像上反查、均值纤维、精确总体矩、实际经验记录和附加相干权限都保持各自范围。普通证明覆盖声明的数学域，不由有限样本、几何图像或来源引文扩张成未给出的操作能力。
 
