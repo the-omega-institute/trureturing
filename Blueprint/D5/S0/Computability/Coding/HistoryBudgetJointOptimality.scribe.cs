@@ -93,7 +93,7 @@ internal sealed class HistoryBudgetJointOptimalityDocument : IScribeDocumentDefi
             Open, Forall, Sp, a, Comma, Sp, D(0), Sp, Le, Sp, weight, Close,
             Sp, Land, Sp, Sum, Underscore, a, Sp, weight, Sp, Eq, Sp, D(1),
             Sp, Land, Sp, Open, Forall, Sp, a, Comma, Sp, Call("q", h, a), Sp, Eq, Sp,
-            Sum, Underscore, heavy, Sp, Open, heavyWeight, Close, Sp,
+            Sum, Underscore, Grp(heavy), Sp, Open, heavyWeight, Close, Sp,
             Call("extremeRow", delta, heavy, a), Close, Close);
         Formula uniform = F.Seq(Open, delta, Sp, Eq, Sp, D(1), Slash, d,
             Sp, Rightarrow, Sp, Open, Forall, Sp, a, Comma, Sp,
