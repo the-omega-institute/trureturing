@@ -19,11 +19,13 @@ open D5.S3.Arith.FibonacciAtomic.GraftAffineClosure (step quantity)
 open D5.S1.Dynamics (ProfiniteIntegers)
 open D5.S1.Dynamics.ProfiniteCharacter (residueProjection)
 open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
+open scoped CharTwo
 
 local notation "Source" => LegalDigits × (ProfiniteIntegers × ProfiniteIntegers)
 local notation "ρ" => fun (m : ℕ) (p : Source) =>
-  (residueProjection m p.2.1, residueProjection m p.2.2)
-local notation "bits" => fun (p : Source) (j : ℕ) => (p.1.val j).toNat
+  (residueProjection m (Prod.fst (Prod.snd p)),
+    residueProjection m (Prod.snd (Prod.snd p)))
+local notation "bits" => fun (p : Source) (j : ℕ) => Bool.toNat (Subtype.val (Prod.fst p) j)
 
 /-- Delete successive digits using the inverse Fibonacci matrix. -/
 def trajectory {R : Type*} [CommRing R] (U : ℕ → R) (z : R × R) : ℕ → R × R
@@ -129,7 +131,7 @@ private theorem legal_pair_eq (m : ℕ) (hm : 3 ≤ m)
 
 private theorem bit_eq_mod_two (a b : Bool)
     (h : (a.toNat : ZMod 2) = (b.toNat : ZMod 2)) : a = b := by
-  cases a <;> cases b <;> norm_num at h ⊢
+  cases a <;> cases b <;> simp_all
 
 private theorem large_modulus_kernel (m r : ℕ) (hm : 3 ≤ m + 1) (hr : 2 ≤ r)
     (p p' : Source) :
@@ -151,11 +153,11 @@ private theorem large_modulus_kernel (m r : ℕ) (hm : 3 ≤ m + 1) (hr : 2 ≤ 
         simpa [Nat.sub_add_cancel hjpos] using hp
     refine ⟨hbits, ?_⟩
     have h0 := hbits 0 (by omega)
-    simp only [h0, sub_self, mul_zero, neg_mul] at hz
+    simp only [h0, sub_self, mul_zero] at hz
     exact (sub_eq_zero.mp hz).symm
   · rintro ⟨hb, hz⟩
     have h0 := hb 0 (by omega)
-    refine ⟨by simp [hz, h0], ?_⟩
+    refine ⟨by apply Prod.ext <;> simp [hz, h0], ?_⟩
     intro j hj
     simp [hb j (by omega), hb (j + 1) (by omega)]
 
@@ -171,11 +173,14 @@ private theorem parity_kernel (r : ℕ) (hr : 1 ≤ r) (p p' : Source) :
           2 * ((bits p' 0 : ZMod 2) - bits p 0)) ↔
       trajectory (fun j => (bits p j : ZMod 2)) (ρ 1 p) 1 =
         trajectory (fun j => (bits p' j : ZMod 2)) (ρ 1 p') 1 := by
-    simp only [trajectory, Prod.mk.injEq, Prod.fst_sub, Prod.snd_sub]
-    norm_num
+    simp only [trajectory, Prod.ext_iff, Prod.fst_sub, Prod.snd_sub]
+    simp only [CharTwo.two_eq_zero, CharTwo.neg_eq,
+      show (3 : ZMod 2) = 1 by decide, one_mul, zero_mul]
     constructor
     · rintro ⟨hx, hy⟩
-      constructor <;> linear_combination -hx - hy
+      constructor
+      · linear_combination hx - hy
+      · linear_combination -hx
     · rintro ⟨hx, hy⟩
       constructor
       · linear_combination -hy
@@ -187,10 +192,86 @@ private theorem parity_kernel (r : ℕ) (hr : 1 ≤ r) (p p' : Source) :
     intro j hj hbound
     apply bit_eq_mod_two
     have he := hf (j - 1) (by omega)
-    simpa [Nat.sub_add_cancel hj, sub_eq_zero] using he.symm
+    have he' : (bits p' j : ZMod 2) - bits p j = 0 := by
+      simpa only [CharTwo.two_eq_zero, zero_mul, zero_add,
+        Nat.sub_add_cancel hj] using he
+    exact (sub_eq_zero.mp he').symm
   · rintro ⟨hb, hz⟩
     refine ⟨hz, ?_⟩
     intro j hj
-    norm_num [hb (j + 1) (by omega) (by omega)]
+    simp [hb (j + 1) (by omega) (by omega)]
+
+/-- The complete finite kernel, its boundary cases, and exact short-horizon data. -/
+theorem result :
+    (∀ (m r : ℕ), 1 ≤ r → ∀ p p' : Source,
+      scalarTrace m r p = scalarTrace m r p' ↔
+        ρ m p' - ρ m p =
+          (-3 * ((bits p' 0 : ZMod (m + 1)) - bits p 0),
+            2 * ((bits p' 0 : ZMod (m + 1)) - bits p 0)) ∧
+        ∀ j, j + 2 ≤ r →
+          2 * ((bits p' j : ZMod (m + 1)) - bits p j) +
+            ((bits p' (j + 1) : ZMod (m + 1)) - bits p (j + 1)) = 0) ∧
+    (∀ (m : ℕ) (p p' : Source),
+      scalarTrace m 0 p = scalarTrace m 0 p' ↔ quantity (ρ m p) = quantity (ρ m p')) ∧
+    (∀ (r : ℕ) (p p' : Source), scalarTrace 0 r p = scalarTrace 0 r p') ∧
+    (∀ (m : ℕ) (p : Source),
+      ρ m p =
+        (2 * scalarTrace m 1 p 0 - 3 * (scalarTrace m 1 p 1 + bits p 0),
+          -scalarTrace m 1 p 0 + 2 * (scalarTrace m 1 p 1 + bits p 0))) ∧
+    (∀ (m r : ℕ), 3 ≤ m + 1 → 2 ≤ r → ∀ p p' : Source,
+      scalarTrace m r p = scalarTrace m r p' ↔
+        (∀ j, j < r → p.1.val j = p'.1.val j) ∧ ρ m p = ρ m p') ∧
+    (∀ (r : ℕ), 1 ≤ r → ∀ p p' : Source,
+      scalarTrace 1 r p = scalarTrace 1 r p' ↔
+        (∀ j, 1 ≤ j → j < r → p.1.val j = p'.1.val j) ∧
+        trajectory (fun j => (bits p j : ZMod 2)) (ρ 1 p) 1 =
+          trajectory (fun j => (bits p' j : ZMod 2)) (ρ 1 p') 1) ∧
+    (∀ p : Source,
+      trajectory (fun j => (bits p j : ZMod 2)) (ρ 1 p) 1 =
+        (scalarTrace 1 1 p 0 - scalarTrace 1 1 p 1, scalarTrace 1 1 p 1)) ∧
+    (∀ (r : ℕ), 1 ≤ r → ∀ p p' : Source,
+      scalarTrace 1 r p = scalarTrace 1 r p' →
+        ρ 1 p' - ρ 1 p = ((bits p' 0 : ZMod 2) - bits p 0, 0)) ∧
+    (∀ (r : ℕ), 1 ≤ r → ∀ p p' : Source,
+      ρ 1 p = ρ 1 p' → scalarTrace 1 r p = scalarTrace 1 r p' →
+        p.1.val 0 = p'.1.val 0) ∧
+    (∀ (m r : ℕ) (p p' : Source),
+      p.1 = p'.1 → ρ m p = ρ m p' → scalarTrace m r p = scalarTrace m r p') := by
+  refine ⟨source_kernel, ?_, ?_, ?_, large_modulus_kernel, parity_kernel, ?_, ?_, ?_, ?_⟩
+  · intro m p p'
+    constructor
+    · exact fun h => congrFun h 0
+    · intro h
+      funext j
+      have hj : j.val = 0 := by omega
+      simpa [scalarTrace, hj, trajectory] using h
+  · intro r p p'
+    letI : Subsingleton (ZMod (0 + 1)) := (ZMod.subsingleton_iff.mpr rfl)
+    funext j
+    exact Subsingleton.elim _ _
+  · intro m p
+    apply Prod.ext <;> simp only [scalarTrace, trajectory, quantity, Fin.val_zero,
+      Fin.val_one] <;> ring
+  · intro p
+    apply Prod.ext <;> simp only [scalarTrace, trajectory, quantity, Fin.val_zero,
+      Fin.val_one] <;> simp only [CharTwo.two_eq_zero, CharTwo.neg_eq,
+        show (3 : ZMod 2) = 1 by decide, zero_mul, one_mul, sub_zero, zero_add] <;> ring
+  · intro r hr p p' h
+    have hz := ((source_kernel 1 r hr p p').mp h).1
+    simpa only [CharTwo.two_eq_zero, CharTwo.neg_eq,
+      show (3 : ZMod 2) = 1 by decide, zero_mul, one_mul] using hz
+  · intro r hr p p' hz h
+    have hv := ((source_kernel 1 r hr p p').mp h).1
+    have hx := congrArg Prod.fst hv
+    rw [hz, sub_self] at hx
+    simp only [CharTwo.neg_eq, show (3 : ZMod 2) = 1 by decide, one_mul] at hx
+    apply bit_eq_mod_two
+    exact (sub_eq_zero.mp hx.symm).symm
+  · intro m r p p' hbits hz
+    unfold scalarTrace
+    dsimp only at hz
+    rw [hbits, hz]
 
 end D5.S3.Arith.FibonacciAtomic.FiniteScalarTraceKernel
+
+#print axioms D5.S3.Arith.FibonacciAtomic.FiniteScalarTraceKernel.result
