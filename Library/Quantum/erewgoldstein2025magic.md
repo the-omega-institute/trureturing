@@ -4,6 +4,7 @@ authors: Muhammad Erew and Moshe Goldstein
 year: 2025
 title: 'Extremizing Measures of Magic on Pure States by Clifford-stabilizer States'
 doi: 10.48550/arXiv.2512.19657
+url: https://arxiv.org/abs/2512.19657v2
 claim: The ququint state and Wigner convention are taken from the paper; the constrained direction analysis is left open there. Conjecture 1 asserts that every SIC-POVM fiducial state is a Clifford-stabilizer state (uniquely stabilized by a subgroup of the finite eigenphase-extended Clifford group).
 strata_touched:
   - D5/S3/Quantum/Magic/QuquintWignerCriticalGeometry
@@ -16,7 +17,7 @@ triage: anchor
 
 ## Verified locator
 
-DOI 10.48550/arXiv.2512.19657, https://arxiv.org/abs/2512.19657 and
+DOI 10.48550/arXiv.2512.19657, https://arxiv.org/abs/2512.19657v2 and
 https://arxiv.org/html/2512.19657v2. Appendix E, equation (E.3a), gives
 the state (1,1,zeta^3,1,zeta^2)/sqrt(5). Equation (2.16) gives the
 phase-point convention after renaming the paper's (p,q) to (q,p).

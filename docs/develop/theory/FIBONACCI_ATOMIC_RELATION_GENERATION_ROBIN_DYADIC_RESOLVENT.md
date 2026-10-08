@@ -1672,3 +1672,139 @@ $\sqrt2<3/2$、$\sqrt x\ge2$ 给 $4\sqrt{2x}+1<(13/2)\sqrt x$；$x\ge4$ 给 $\lo
 这一较粗估计的作用是保留实际储备掩码的区间选择自由。仅在 $(y,2y]$ 比较上述 Chebyshev 常数时，主项差不足；扩大到 $(y,4y]$ 后留下 $2y\log2$，能够支付明确的误差预算。实际掩码允许这个较宽区间，故不必把二倍区间计数作为唯一入口。它不改善 §486 的全部 Robin 物理尺度结果，也没有控制完整的有符号 $I_\psi$，没有由正储备推出 RH。
 
 ## 追加锚（本行以下为增补区）
+
+## 488. 奇数半常数裕量与二幂补齐的准确成本
+
+本节从实际素数 $2$ 的几何前缀比较两种整数裕量。奇数半常数形式的文献入口是 Washington–Yang，*The Robin inequality for odd integers*，[arXiv:2008.04787](https://arxiv.org/abs/2008.04787)。近期 [odd Robin 有限核心](https://github.com/n0zer0d4y/simple-zeros-hilbert-robin-epstein/blob/f0c55f48e0710ea7f52b4eff2fa1dd7f9f1b2d92/lean/SimpleZerosHilbertRobinEpstein/OddRobin/OddRobinCore.lean) 给出实际约数和的范围剪枝；这里复用约数和乘法性与既有二幂补齐结构，推导其完整对数裕量之间的成本。没有以有限剪枝代替全整数域比较。
+
+设 $m\ge3$ 为奇数，$E=\log m>1$，$L=\log2$。定义
+
+$$
+\Delta_{\rm odd}(m)=\gamma-\log2+\log\log E-\log\frac{\sigma(m)}m,
+$$
+
+$$
+\Delta(n)=\gamma+\log\log\log n-\log\frac{\sigma(n)}n.
+$$
+
+第一式为正恰是 $\sigma(m)<(e^\gamma/2)m\log\log m$；第二式为正恰是普通 Robin 不等式。所有取对数的量均为正。
+
+**命题 488.1（二幂纤维上的准确裕量差）。** 对每个整数 $a\ge0$，令 $n_a=2^am$、$E_a=E+aL$，则
+
+$$
+\boxed{\Delta(n_a)=\Delta_{\rm odd}(m)+C_a(E),}
+$$
+
+$$
+C_a(E)=-\log(1-2^{-(a+1)})+
+\log\frac{\log(E+aL)}{\log E}>0.
+\tag{488.1}
+$$
+
+**证明。** $m$ 为奇数，约数和乘法性与素数幂的几何和给
+
+$$
+\frac{\sigma(2^am)}{2^am}
+=(2-2^{-a})\frac{\sigma(m)}m
+=2(1-2^{-(a+1)})\frac{\sigma(m)}m.
+$$
+
+对两边取对数，并用 $\log n_a=E+aL$，得到完整身份。第一项严格正；第二项非负，在 $a=0$ 时为零。$\square$
+
+所以奇数半常数不等式在某个 $m$ 成立时，该 $m$ 的全部二幂补齐都满足普通 Robin 不等式。反向比较必须扣除 $C_a(E)$；在固定 $m$ 上令 $a\to\infty$，第二项反而趋于无穷，不能借一个零成本极限恢复奇数裕量。
+
+**命题 488.2（依尺度选取整数层的显式成本）。** 对每个 $E\ge4$，取
+
+$$
+a(E)=\left\lceil\frac{\log(E\log E)}L\right\rceil,
+\qquad b(E)=a(E)L.
+$$
+
+则 $a(E)\ge1$、$E\le E+b(E)<2E$，并有
+
+$$
+\boxed{0<C_{a(E)}(E)<\frac{5}{2E}.}
+\tag{488.2}
+$$
+
+**证明。** 取整的实际整数层给
+
+$$
+E\log E\le2^{a(E)}<2E\log E,
+\qquad
+0\le b(E)<\log E+\log\log E+L.
+$$
+
+记 $q=2^{-(a(E)+1)}$。$0<q\le1/(2E\log E)<1/2$，而 $\log(1+t)\le t$ 给
+
+$$
+-\log(1-q)=\log\left(1+\frac q{1-q}\right)
+\le\frac q{1-q}\le2q\le\frac1{E\log E}.
+$$
+
+另一次对数比较给
+
+$$
+\begin{aligned}
+\log\frac{\log(E+b)}{\log E}
+&=\log\left(1+\frac{\log(1+b/E)}{\log E}\right)\\
+&\le\frac{\log(1+b/E)}{\log E}
+\le\frac b{E\log E}.
+\end{aligned}
+$$
+
+因 $\log\log E\le\log E-1$ 及 $\log E\ge2L$，有
+
+$$
+C_{a(E)}(E)
+\le\frac{1+b(E)}{E\log E}
+<\frac{2\log E+L}{E\log E}
+\le\frac5{2E}.
+$$
+
+最后，$E-2\log E$ 在 $E\ge4$ 上递增，且在 $4$ 为正；故 $2\log E\le E$。结合 $L<1$ 得 $b(E)<2\log E-1+L<E$，证明实际尺度范围。$\square$
+
+这里完整的补齐成本是 $O(1/E)$。它除以平方根预算 $1/(\sqrt E\log E)$ 后趋于零，因为 $\log E/\sqrt E\to0$。这种比较不要求素数分布前提。
+
+**命题 488.3（平方根储备支付整个二幂补齐成本）。** 使用 §487 的同一实际储备下界。对奇数 $m$ 满足 $E=\log m\ge2^{28}$，取命题 488.2 的整数层，并记 $n=2^{a(E)}m$、$E'=\log n$。则
+
+$$
+\boxed{R(E')-C_{a(E)}(E)>
+\frac1{270\sqrt E\log E}-\frac5{2E}>0.}
+\tag{488.3}
+$$
+
+**证明。** $E\le E'<2E$ 且 $E'\ge2^{28}>2^{23}$，所以 §487 给
+
+$$
+R(E')>\frac1{120\sqrt{E'}\log E'}
+>\frac1{270\sqrt E\log E}.
+$$
+
+最后一步用 $\sqrt2<3/2$ 和 $\log(2E)\le(3/2)\log E$。函数 $\log E/\sqrt E$ 在此区间递减；在左端点，$L<3/4$ 给
+
+$$
+675\log(2^{28})=18900L<14175<16384=\sqrt{2^{28}}.
+$$
+
+因此全部 $E\ge2^{28}$ 都有 $675\log E<\sqrt E$，恰等价于
+
+$$
+\frac5{2E}<\frac1{270\sqrt E\log E}.
+$$
+
+再用命题 488.2，并保留每个严格号，得到结论。$\square$
+
+把此成本接回 §§477、479、481 的同一物理身份，得到
+
+$$
+\boxed{\Delta_{\rm odd}(m)=I_\psi(E')+
+\bigl[R(E')-C_{a(E)}(E)\bigr]+d_{E'}(n),\qquad d_{E'}(n)\ge0.}
+\tag{488.4}
+$$
+
+正储备在扣除整个整数补齐成本后仍然严格正；完整有符号积分则位于实际新尺度 $E'$。普通与奇数半常数形式因而共享同一个尚需控制的临界有符号对象。这里没有推出 $I_\psi$ 的下界，也没有由两种正成本证明任一全称判据。
+
+这个联系来自素数 $2$ 的准确局部几何因子及整数层选择。二幂补齐把一个奇核送到其实际整数纤维，裕量差包含两个明确的非零成本；因此它提供可计算的比较，而不提供保持裕量的群作用。§485 中 Fibonacci 混合素分量的平方根尺度仍来自其自身二次倒数权重；此处补齐成本的较小尺度不能等同于其有符号配对。普通门槛 $5040$ 与奇数半常数门槛也没有由这些身份建立数值对应。
+
+## 追加锚（本行以下为增补区）
