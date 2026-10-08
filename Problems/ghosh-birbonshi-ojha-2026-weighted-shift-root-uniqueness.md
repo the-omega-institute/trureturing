@@ -118,6 +118,47 @@ for the exact preregistered external question; no escape witness is asserted.
 The module has computational_content.kind=none. It is an exact theorem
 for all admissible real parameters, rather than bounded enumeration,
 a checker, a numerical reduction or a certified finite instance.
+
+### What the settlement shows
+
+**PROVED — exact scalar scope.** The existing checked result
+`D5/S3/Analytic/GhoshWeightedShiftRootUniqueness.result` proves that for
+every real $s,t>0$ and $0<q<1$ the full polynomial above has exactly one
+real zero in $(1/3,1)$. This answers Section 2, Open question 1
+affirmatively, including parameters outside the source's Case 1
+$s,t\in(q,1/q)$ and without requiring $s=t$. The Case 1 restriction is
+therefore unnecessary for this scalar interval-root assertion.
+
+**PROVED — local downward crossing.** In the proof of that same result,
+the positive certificate $J(z,c)$ and the derivative identity in
+[Route](#route) force $g'(z)<0$ at every zero in $(1/3,1)$.
+The decisive mechanism is strict downward crossing at zeros: the
+differential fence between two alleged zeros conflicts with the positive
+sign just to the left of the later zero. Endpoint signs supply existence.
+This is a root-local derivative estimate; global monotonicity on the
+interval is not asserted. These are steps of the existing proof, not
+additional delivered theorems.
+
+**OPEN — extensions and sharpness.** Relaxing $s>0$ or $t>0$ to allow
+zero or negative parameters, allowing $q=0$, $q=1$ or $q$ outside $(0,1)$,
+and the sharpness of the interval endpoints remain unverified here.
+Other real or complex roots, roots outside $(1/3,1)$, and neighbouring
+polynomial or parameter-dependence questions are also OPEN. The checked
+result does not settle these extensions or prove endpoint optimality.
+
+**OPEN — optimization and operator bridge.** The source's Section 2
+relates roots of $g$ to critical points of its lower-bound function $f$;
+the scalar result supplies the previously unresolved uniqueness in
+$(1/3,1)$ for unrestricted admissible parameters. A formal bridge from
+this fact to the supremum of $f$ on $(0,1)$ and to a lower bound for the
+operator numerical radius remains unformalized and OPEN, including the
+source's separate exclusion of roots below $1/3$. No optimality of that
+bound is proved here. Section 3's entire function $F_T$, its least
+positive root, and its identification with the exact numerical radius
+are separate unformalized operator conclusions and remain OPEN here.
+No further extension or neighbouring result is claimed from this
+settlement.
+
 ## ASSUMED-UNVERIFIED
 
 The predecessor full text remains unread, and the literature absence
