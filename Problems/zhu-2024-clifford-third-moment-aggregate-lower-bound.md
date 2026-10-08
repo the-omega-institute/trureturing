@@ -76,13 +76,14 @@ preregistered in issue #14561 before any Lean. `theorem`; resolution `refuted`.
 
 | declaration | proof_shape | escape_witness | admission_basis |
 | --- | --- | --- | --- |
-| result | bind-only | none | open-problem-resolution |
+| result | content | group_five, integer_sum | open-problem-resolution |
 
-The private declarations (the graph collapse for $n$ qudits, the row-order invariance, the
-twelve-element description of $O_3(5)$, the normalized state, the integer slices of the
-$15625$-term sum and the resulting values of $\kappa$) are each used on the proof of `result`.
-All are bind-only: instantiation, reindexing and kernel-evaluated arithmetic. The settlement is
-admitted as an external open-problem resolution.
+Content declarations, each on the live proof of `result`: `group_five` (the twelve-element description
+of $O_3(5)$, from a kernel classification of the stochastic rows), `normalized_psi`, the integer slices
+and `integer_sum` (the $15625$-term value $-2577430$), `kappa_base` and `kappa_iso`. Bind-only
+declarations, also on that proof: `graphSubspace_injective`, `stochasticOrthogonal_five_iff`, the graph
+collapse `kappa_graph`, the row-order invariance `kappa_rows` and `kappa_identity` (reindexing,
+instantiation and normalization). The settlement is admitted as an external open-problem resolution.
 
 Utility is `kind=certified-instance; basis=refutes` (the claim and its refutation). There is no
 digestion atom.
