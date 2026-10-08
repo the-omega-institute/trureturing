@@ -19,8 +19,8 @@ path with an odd number of edges, and a nodal extraction over the class A from t
 between the first vertex and the two middle ones; no Mathlib or frozen declaration states it.
 consumer: middle_edge_moments.
 proof_shape: middle_edge_moments: content; escape_witness: the public conclusion itself (form 2; the
-integrality part of the preregistered witness on the middle-edge moments): ρ times the moment of H ^
-p at the vector e_a + e_b is the integer [X^k] ((X^p * P_B) mod P_A), by the weight formula and the
+integrality part of the preregistered witness on the middle-edge moments): ρ times the moment of H^p
+at the vector e_a + e_b is the integer [X^k] ((X^p * P_B) mod P_A), by the weight formula and the
 Lagrange coefficient formula over the class A. consumer:
 D5/S3/Quantum/Dynamics/EvenPathRationalWeightTransfer (private step no_phase_one_transfer).
 proof_shape: middle_edge_gram: bind-only (the Gram identity S 0 * S 2 - S 1 ^ 2 = 4 * r' ^ 2 of the
