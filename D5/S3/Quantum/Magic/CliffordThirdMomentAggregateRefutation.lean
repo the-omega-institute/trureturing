@@ -503,9 +503,11 @@ private theorem kappa_iso : kappaIso 5 2 psi = 140241723 / 24017978 := by
       (∑ Q ∈ orbit O, kappa 5 2 psi (graphSubspace Q)) =
         6 * kappa 5 2 psi (graphSubspace O) := by
     rw [orbit, Finset.sum_image]
-    · simp_rw [kappa_rows]
-      simp only [Finset.sum_const, Finset.card_univ, Fintype.card_perm, Fintype.card_fin]
-      norm_num
+    · trans ∑ _e : Equiv.Perm (Fin 3), kappa 5 2 psi (graphSubspace O)
+      · exact Finset.sum_congr rfl (fun e _ => kappa_rows O psi e)
+      · rw [Finset.sum_const, Finset.card_univ, Fintype.card_perm, Fintype.card_fin]
+        change (6 : ℕ) • kappa 5 2 psi (graphSubspace O) = _
+        exact nsmul_eq_mul _ _
     · intro e _ f _ heq
       apply Equiv.ext
       intro i
