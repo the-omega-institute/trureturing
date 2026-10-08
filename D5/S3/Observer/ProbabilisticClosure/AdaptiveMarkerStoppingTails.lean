@@ -291,6 +291,92 @@ def lambda {Seed : Type*} [MeasurableSpace Seed] (policy : Policy Seed)
   seedLaw.real {u | sideCount (zeroReplay policy u (2 * m)) false % 2 = 1 ∧
     sideCount (zeroReplay policy u (2 * m)) true % 2 = 1}
 
+theorem path_support (q : unitInterval) (root : Bool) :
+    ∀ᵐ x ∂armLaw q root, x 0 = root ∧ ∀ i, ¬(x i = true ∧ x (i + 1) = true) := by
+  have h0mass : armLaw q root {x | x 0 = root} = 1 := by
+    have h := TrajectoryLaws.MarkovPrefixMass.markov_chain_law_map_prefix_apply_singleton
+      (Measure.dirac root) (transition q) 0 (fun _ => root)
+    rw [Measure.map_apply (by fun_prop) (measurableSet_singleton _)] at h
+    have he : (fun (x : Path) (i : Fin 1) => x i.val) ⁻¹' {fun _ => root} =
+        {x | x 0 = root} := by
+      ext x
+      simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_ofPred_eq, funext_iff]
+      exact ⟨fun h => h 0, fun h i => by simpa using h⟩
+    rw [he] at h
+    simpa [armLaw] using h
+  have h0 : ∀ᵐ x ∂armLaw q root, x 0 = root := by
+    exact (ae_iff_measure_eq (by measurability)).mpr (by simpa using h0mass)
+  have hstep (i : ℕ) : ∀ᵐ x ∂armLaw q root,
+      ¬(x i = true ∧ x (i + 1) = true) := by
+    let κ : (n : ℕ) → Kernel (↥(Finset.Iic n) → Bool) Bool :=
+      fun n => (transition q).comap
+        (fun u => u ⟨n, Finset.mem_Iic.mpr le_rfl⟩) (measurable_pi_apply _)
+    have hpair : ∀ᵐ p ∂((armLaw q root).map (frestrictLe i) ⊗ₘ κ i),
+        ¬(p.1 ⟨i, Finset.mem_Iic.mpr le_rfl⟩ = true ∧ p.2 = true) := by
+      apply Measure.ae_compProd_of_ae_ae (by measurability)
+      filter_upwards [] with u
+      dsimp [κ]
+      cases hb : u ⟨i, Finset.mem_Iic.mpr le_rfl⟩
+      · exact Filter.Eventually.of_forall (by simp)
+      · simp only [transition, Kernel.boolKernel_apply, ↓reduceIte]
+        simp
+    have he : (armLaw q root).map (frestrictLe i) ⊗ₘ κ i =
+        (armLaw q root).map (fun x => (frestrictLe i x, x (i + 1))) :=
+      Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
+    rw [he] at hpair
+    simpa [frestrictLe] using ae_of_ae_map (by fun_prop) hpair
+  filter_upwards [h0, ae_all_iff.mpr hstep] with x hx hxs
+  exact ⟨hx, hxs⟩
+theorem arm_alternating_mass (q : unitInterval) (root : Bool) (n : ℕ) :
+    armLaw q root {x | ∀ i ≤ n, x i = alternatingBit root i} =
+      (unitInterval.toNNReal q : ℝ≥0∞) ^ (if root then n / 2 else (n + 1) / 2) := by
+  have hs (root : Bool) (i : ℕ) :
+      alternatingBit root (i + 1) = !(alternatingBit root i) := by
+    rcases Nat.mod_two_eq_zero_or_one i with hi | hi
+    · have hn : (i + 1) % 2 = 1 := by omega
+      simp [alternatingBit, hi, hn]
+    · have hn : (i + 1) % 2 = 0 := by omega
+      simp [alternatingBit, hi, hn]
+  have hw (root : Bool) (i : ℕ) :
+      transition q (alternatingBit root i) {alternatingBit root (i + 1)} =
+        if alternatingBit root i then 1 else (unitInterval.toNNReal q : ℝ≥0∞) := by
+    rw [hs]
+    cases hb : alternatingBit root i <;>
+      simp [transition, Kernel.boolKernel_apply]
+  have hp : ∀ n,
+      (∏ i : Fin n, transition q (alternatingBit root i.val)
+        {alternatingBit root (i.val + 1)}) =
+        (unitInterval.toNNReal q : ℝ≥0∞) ^ (if root then n / 2 else (n + 1) / 2) := by
+    intro j
+    induction j with
+    | zero => simp
+    | succ j ih =>
+      rw [Fin.prod_univ_castSucc]
+      simp only [Fin.val_castSucc, Fin.val_last]
+      rw [ih, hw]
+      rcases Nat.mod_two_eq_zero_or_one j with hj | hj <;> cases root
+      · have he : (j + 1 + 1) / 2 = (j + 1) / 2 + 1 := by omega
+        simp [alternatingBit, hj, he, pow_succ]
+      · have he : (j + 1) / 2 = j / 2 := by omega
+        simp [alternatingBit, hj, he]
+      · have he : (j + 1 + 1) / 2 = (j + 1) / 2 := by omega
+        simp [alternatingBit, hj, he]
+      · have he : (j + 1) / 2 = j / 2 + 1 := by omega
+        simp [alternatingBit, hj, he, pow_succ]
+  have h := TrajectoryLaws.MarkovPrefixMass.markov_chain_law_map_prefix_apply_singleton
+    (Measure.dirac root) (transition q) n (fun i => alternatingBit root i.val)
+  rw [Measure.map_apply (by fun_prop) (measurableSet_singleton _)] at h
+  have he : (fun (x : Path) (i : Fin (n + 1)) => x i.val) ⁻¹'
+      {fun i : Fin (n + 1) => alternatingBit root i.val} =
+      {x | ∀ i ≤ n, x i = alternatingBit root i} := by
+    ext x
+    simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_ofPred_eq, funext_iff]
+    exact ⟨fun h i hi => h ⟨i, by omega⟩, fun h i => h i.val (by omega)⟩
+  rw [he] at h
+  simp only [Fin.val_castSucc, Fin.val_succ] at h
+  rw [hp] at h
+  simpa [armLaw, alternatingBit] using h
+
 set_option maxHeartbeats 800000 in
 -- Trajectory support, both cylinder masses, and arbitrary-seed integration elaborate locally.
 /-- Both exact tails use the original independent seed law; no posterior seed law occurs. -/
@@ -307,91 +393,6 @@ theorem adaptive_marker_stopping_tails
             (q : ℝ) ^ (m - 1)) ∧
     (∀ m : ℕ, 0 ≤ lambda policy seedLaw m ∧ lambda policy seedLaw m ≤ 1) := by
   classical
-  have path_support (q : unitInterval) (root : Bool) :
-      ∀ᵐ x ∂armLaw q root, x 0 = root ∧ ∀ i, ¬(x i = true ∧ x (i + 1) = true) := by
-    have h0mass : armLaw q root {x | x 0 = root} = 1 := by
-      have h := TrajectoryLaws.MarkovPrefixMass.markov_chain_law_map_prefix_apply_singleton
-        (Measure.dirac root) (transition q) 0 (fun _ => root)
-      rw [Measure.map_apply (by fun_prop) (measurableSet_singleton _)] at h
-      have he : (fun (x : Path) (i : Fin 1) => x i.val) ⁻¹' {fun _ => root} =
-          {x | x 0 = root} := by
-        ext x
-        simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_ofPred_eq, funext_iff]
-        exact ⟨fun h => h 0, fun h i => by simpa using h⟩
-      rw [he] at h
-      simpa [armLaw] using h
-    have h0 : ∀ᵐ x ∂armLaw q root, x 0 = root := by
-      exact (ae_iff_measure_eq (by measurability)).mpr (by simpa using h0mass)
-    have hstep (i : ℕ) : ∀ᵐ x ∂armLaw q root,
-        ¬(x i = true ∧ x (i + 1) = true) := by
-      let κ : (n : ℕ) → Kernel (↥(Finset.Iic n) → Bool) Bool :=
-        fun n => (transition q).comap
-          (fun u => u ⟨n, Finset.mem_Iic.mpr le_rfl⟩) (measurable_pi_apply _)
-      have hpair : ∀ᵐ p ∂((armLaw q root).map (frestrictLe i) ⊗ₘ κ i),
-          ¬(p.1 ⟨i, Finset.mem_Iic.mpr le_rfl⟩ = true ∧ p.2 = true) := by
-        apply Measure.ae_compProd_of_ae_ae (by measurability)
-        filter_upwards [] with u
-        dsimp [κ]
-        cases hb : u ⟨i, Finset.mem_Iic.mpr le_rfl⟩
-        · exact Filter.Eventually.of_forall (by simp)
-        · simp only [transition, Kernel.boolKernel_apply, ↓reduceIte]
-          simp
-      have he : (armLaw q root).map (frestrictLe i) ⊗ₘ κ i =
-          (armLaw q root).map (fun x => (frestrictLe i x, x (i + 1))) :=
-        Kernel.map_frestrictLe_trajMeasure_compProd_eq_map_trajMeasure
-      rw [he] at hpair
-      simpa [frestrictLe] using ae_of_ae_map (by fun_prop) hpair
-    filter_upwards [h0, ae_all_iff.mpr hstep] with x hx hxs
-    exact ⟨hx, hxs⟩
-  have arm_alternating_mass (q : unitInterval) (root : Bool) (n : ℕ) :
-      armLaw q root {x | ∀ i ≤ n, x i = alternatingBit root i} =
-        (unitInterval.toNNReal q : ℝ≥0∞) ^ (if root then n / 2 else (n + 1) / 2) := by
-    have hs (root : Bool) (i : ℕ) :
-        alternatingBit root (i + 1) = !(alternatingBit root i) := by
-      rcases Nat.mod_two_eq_zero_or_one i with hi | hi
-      · have hn : (i + 1) % 2 = 1 := by omega
-        simp [alternatingBit, hi, hn]
-      · have hn : (i + 1) % 2 = 0 := by omega
-        simp [alternatingBit, hi, hn]
-    have hw (root : Bool) (i : ℕ) :
-        transition q (alternatingBit root i) {alternatingBit root (i + 1)} =
-          if alternatingBit root i then 1 else (unitInterval.toNNReal q : ℝ≥0∞) := by
-      rw [hs]
-      cases hb : alternatingBit root i <;>
-        simp [transition, Kernel.boolKernel_apply]
-    have hp : ∀ n,
-        (∏ i : Fin n, transition q (alternatingBit root i.val)
-          {alternatingBit root (i.val + 1)}) =
-          (unitInterval.toNNReal q : ℝ≥0∞) ^ (if root then n / 2 else (n + 1) / 2) := by
-      intro j
-      induction j with
-      | zero => simp
-      | succ j ih =>
-        rw [Fin.prod_univ_castSucc]
-        simp only [Fin.val_castSucc, Fin.val_last]
-        rw [ih, hw]
-        rcases Nat.mod_two_eq_zero_or_one j with hj | hj <;> cases root
-        · have he : (j + 1 + 1) / 2 = (j + 1) / 2 + 1 := by omega
-          simp [alternatingBit, hj, he, pow_succ]
-        · have he : (j + 1) / 2 = j / 2 := by omega
-          simp [alternatingBit, hj, he]
-        · have he : (j + 1 + 1) / 2 = (j + 1) / 2 := by omega
-          simp [alternatingBit, hj, he]
-        · have he : (j + 1) / 2 = j / 2 + 1 := by omega
-          simp [alternatingBit, hj, he, pow_succ]
-    have h := TrajectoryLaws.MarkovPrefixMass.markov_chain_law_map_prefix_apply_singleton
-      (Measure.dirac root) (transition q) n (fun i => alternatingBit root i.val)
-    rw [Measure.map_apply (by fun_prop) (measurableSet_singleton _)] at h
-    have he : (fun (x : Path) (i : Fin (n + 1)) => x i.val) ⁻¹'
-        {fun i : Fin (n + 1) => alternatingBit root i.val} =
-        {x | ∀ i ≤ n, x i = alternatingBit root i} := by
-      ext x
-      simp only [Set.mem_preimage, Set.mem_singleton_iff, Set.mem_ofPred_eq, funext_iff]
-      exact ⟨fun h i hi => h ⟨i, by omega⟩, fun h i => h i.val (by omega)⟩
-    rw [he] at h
-    simp only [Fin.val_castSucc, Fin.val_succ] at h
-    rw [hp] at h
-    simpa [armLaw, alternatingBit] using h
   have source_cylinder_mass (alpha q : unitInterval) (left right : ℕ) :
       sourceLaw alpha q (noMarkerCylinder left right) =
         (unitInterval.toNNReal alpha : ℝ≥0∞) *
