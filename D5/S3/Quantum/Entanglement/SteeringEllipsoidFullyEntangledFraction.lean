@@ -1,5 +1,5 @@
 /- GID: D5/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/SteeringEllipsoidFullyEntangledFraction
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
@@ -78,7 +78,6 @@ Utility: none. The module proves a universal inequality and a tightness statemen
 every t in [0, 1]; the explicit family tight t is the existential witness of the second
 clause for every parameter, not a finite certificate, enumeration, checker or numeric
 reduction.
-Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
 import D5.S3.Quantum.FiniteDimensional
