@@ -149,12 +149,9 @@ private theorem next_event {x : Source} {t : Nat} {u : Slot}
   have waits (i : Nat) (ti : t < i) (ik : i < k) :
       C.action (C.run hp hP x i).2 = .wait := by
     have notread : C.action (C.run hp hP x i).2 ≠ .read := by
-      intro read
-      have hi : i ∈ A := by
-        simp only [A, laterReads, Finset.mem_filter, Finset.mem_range]
-        exact ⟨by omega, ti, read⟩
-      have le := minimum i hi
-      omega
+      have absent : i ∉ A := Finset.notMem_of_lt_min ik (Finset.coe_min' ne).symm
+      simpa only [A, laterReads, Finset.mem_filter, Finset.mem_range,
+        show i < I.length x by omega, ti, true_and] using absent
     cases ha : C.action (C.run hp hP x i).2 with
     | wait => rfl
     | read => exact False.elim (notread ha)
@@ -296,16 +293,14 @@ private theorem tree_exists [Finite Q] {n : Nat} {u : Slot} {S : Finset Source}
     exact ⟨.fork different disjoint left right parent ln rn⟩
 
 /-- Saturation of the physical original-input support produces a complete
-actual binary expansion; global slot paths have precisely its height and labels. -/
+actual binary expansion with the original support and event times. -/
 private theorem saturated_support [Finite Q] {n : Nat} {u : Slot} {S : Finset Source}
     {a : Source → Nat} (realized : ∀ x ∈ S, C.Occurs I x (a x) u)
     (budget : ∀ x ∈ S, (laterReads hp hP C I x (a x)).card ≤ n)
     (full : S.card = 2 ^ n) :
-    Nonempty (SaturatedHistory hp hP C I n u S a) ∧
-      (∀ k x, TerminatesIn hp hP C I k u x ↔ k = n ∧ x ∈ S) := by
+    Nonempty (SaturatedHistory hp hP C I n u S a) := by
   obtain ⟨tree⟩ := tree_exists hp hP C I realized budget
-  obtain ⟨H⟩ := saturated_tree hp hP C I tree full
-  exact ⟨⟨H⟩, (SaturatedSlotUnfolding.result hp hP C I H H).1⟩
+  exact saturated_tree hp hP C I tree full
 
 private theorem later_read_step {x : Source} {t k : Nat} {u v : Slot}
     (_ht : C.Occurs I x t u) (hk : C.Occurs I x k v) (tk : t < k)
@@ -368,12 +363,9 @@ private theorem first_read_count (x : Source) :
     (readEvents hp hP C I x).card = (laterReads hp hP C I x 0).card + 1 := by
   classical
   have positive : 0 < I.length x := by
-    by_contra bad
-    have zero : I.length x = 0 := by omega
-    have halt := I.halt x
-    simp only [zero, Controller.run, Function.iterate_zero, id_eq] at halt
-    rw [I.first_read] at halt
-    cases halt
+    apply Nat.pos_of_ne_zero
+    intro zero
+    simpa [Controller.run, zero, I.first_read] using I.halt x
   have split : readEvents hp hP C I x = insert 0 (laterReads hp hP C I x 0) := by
     ext t
     simp only [readEvents, laterReads, Finset.mem_filter, Finset.mem_range, Finset.mem_insert]
@@ -477,7 +469,10 @@ private theorem entry_lists_disjoint [Finite Q] {n k : Nat} {u v : Slot}
   have same := (SaturatedSlotUnfolding.result hp hP C I (entryTree e) (entryTree f)).2.2
     (es.trans fs.symm)
   obtain ⟨x, hx⟩ := (history_data hp hP C I (entryTree e)).2.1
-  have hy : x ∈ entrySupport f := same.2 ▸ hx
+  have hy : x ∈ entrySupport f := by
+    change x ∈ f.2.2.1
+    rw [← same.2]
+    exact hx
   exact Finset.disjoint_left.mp separate ((entry_support hp hP C I H e he).2 hx)
     ((entry_support hp hP C I K f hf).2 hy)
 
@@ -532,14 +527,14 @@ private theorem entry_event_cover {n : Nat} {u : Slot} {S : Finset Source}
         rw [read] at clash
         cases clash
       obtain ⟨e, he, xe, time⟩ := ihl x hs t child_before ht
-      exact ⟨e, by simp [historyEntries, he], xe, time⟩
+      exact ⟨e, List.mem_cons_of_mem _ (List.mem_append_left _ he), xe, time⟩
     · have child_before : c x ≤ t := by
         by_contra bad
         have clash := (rn x hr).2 t strict (by omega)
         rw [read] at clash
         cases clash
       obtain ⟨e, he, xe, time⟩ := ihr x hr t child_before ht
-      exact ⟨e, by simp [historyEntries, he], xe, time⟩
+      exact ⟨e, List.mem_cons_of_mem _ (List.mem_append_right _ he), xe, time⟩
 
 /-- All actual nonempty histories in the first-read forest, with original
 supports and physical event times retained in each entry. -/
@@ -604,7 +599,7 @@ private theorem position_slots_perm {n : Nat} {u : Slot} {S : Finset Source}
     let L := (readingPositions hp hP C I left).flatMap (fun z => [z.1,z.2])
     let R := (readingPositions hp hP C I right).flatMap (fun z => [z.1,z.2])
     have shuffle : (v :: w :: (L ++ R)).Perm ((v :: L) ++ (w :: R)) := by
-      simpa only [List.singleton_append, List.cons_append, List.append_assoc] using
+      simpa only [List.singleton_append, List.cons_append, List.append_assoc, List.nil_append] using
         ((List.perm_append_comm (l₁ := [w]) (l₂ := L)).append_right R).cons v
     exact (shuffle.trans (ihl.append ihr)).cons u
 
@@ -644,7 +639,8 @@ private theorem all_position_slots_nodup [Finite Q] {D : Nat}
     (H : ∀ b : Fin p, SaturatedHistory hp hP C I D (root,b)
       (firstFiber hp hP b) (fun _ => 0)) :
     ((allReadingPositions hp hP C I H).flatMap (fun z => [z.1,z.2])).Nodup := by
-  rw [allReadingPositions, List.flatMap_flatten, List.map_ofFn]
+  rw [allReadingPositions, ← List.flatMap_id, List.flatMap_assoc,
+    List.flatMap_def, List.map_ofFn]
   apply List.nodup_flatten.mpr
   constructor
   · intro l hl
@@ -691,18 +687,19 @@ private theorem occurrence_bound [Finite Q] {D : Nat}
     obtain ⟨z,hz,hs⟩ := List.mem_flatMap.mp hs
     have zz := List.mem_filter.mp hz
     have eq := controls z zz.1
-    simp only [List.mem_cons, List.mem_singleton] at hs
+    simp only [List.mem_cons, List.not_mem_nil, or_false] at hs
     rcases hs with rfl | rfl
-    · exact zz.2
-    · exact (congrArg Subtype.val eq).symm.trans zz.2
+    · exact of_decide_eq_true zz.2
+    · exact (congrArg Subtype.val eq).symm.trans (of_decide_eq_true zz.2)
+  have sub : L.Sublist A := List.filter_sublist
   have nodup : slots.Nodup := (all_position_slots_nodup hp hP C I H).sublist
-    ((List.filter_sublist).flatMap (fun z => [z.1,z.2]))
+    (sub.flatMap (fun z => [z.1,z.2]))
   have digits : (slots.map (fun s => s.2)).Nodup := nodup.map_on (by
     intro s hs t ht eq
     exact Prod.ext (Subtype.ext ((row s hs).trans (row t ht).symm)) eq)
   have bound := digits.length_le_card
   have length : slots.length = 2 * L.length := by
-    simp [slots, List.length_flatMap, List.sum_map_const, Nat.mul_comm]
+    simp [slots, List.length_flatMap, Nat.mul_comm]
   simp only [List.length_map, Fintype.card_fin] at bound
   change L.length ≤ p / 2
   omega
@@ -710,10 +707,11 @@ private theorem occurrence_bound [Finite Q] {D : Nat}
 private theorem no_zero_positions {root : {q : Q // ∃ b, C.Used I q b}}
     (H : ∀ b : Fin p, SaturatedHistory hp hP C I 0 (root,b)
       (firstFiber hp hP b) (fun _ => 0)) : allReadingPositions hp hP C I H = [] := by
-  have empty (b : Fin p) : readingPositions hp hP C I (H b) = [] := by
-    cases H b
+  have zero (u : Slot) (S : Finset Source) (a : Source → Nat)
+      (K : SaturatedHistory hp hP C I 0 u S a) : readingPositions hp hP C I K = [] := by
+    cases K
     rfl
-  simp [allReadingPositions, empty]
+  simp [allReadingPositions, zero]
 
 private theorem all_event_iff {D : Nat}
     {root : {q : Q // ∃ b, C.Used I q b}}
@@ -726,6 +724,8 @@ private theorem all_event_iff {D : Nat}
   · exact all_event_cover hp hP C I H x t
   · rintro ⟨e,he,hx,time⟩
     have actual := (history_data hp hP C I (entryTree e)).2.2 x hx
+    change C.Occurs I x (e.2.2.2.1 x) e.2.1 at actual
+    change e.2.2.2.1 x = t at time
     rw [time] at actual
     obtain ⟨b,y,k,hy,hq,read,hb⟩ := (entrySlot e).1.property
     simp only [readEvents, Finset.mem_filter, Finset.mem_range]
@@ -752,12 +752,9 @@ theorem result [Finite Q] (D : Nat) (power : P = 2 ^ D)
   have realized (b : Fin p) : ∀ x ∈ firstFiber hp hP b, C.Occurs I x 0 (G.root,b) := by
     intro x hx
     have positive : 0 < I.length x := by
-      by_contra bad
-      have zero : I.length x = 0 := by omega
-      have halt := I.halt x
-      simp only [zero, Controller.run, Function.iterate_zero, id_eq] at halt
-      rw [I.first_read] at halt
-      cases halt
+      apply Nat.pos_of_ne_zero
+      intro zero
+      simpa [Controller.run, zero, I.first_read] using I.halt x
     refine ⟨positive, ?_, ?_⟩
     · simpa only [Controller.run, Function.iterate_zero, id_eq] using root.symm
     · simpa only [Controller.run, Function.iterate_zero, id_eq] using
@@ -768,8 +765,8 @@ theorem result [Finite Q] (D : Nat) (power : P = 2 ^ D)
     omega
   have histories (b : Fin p) : Nonempty (SaturatedHistory hp hP C I D (G.root,b)
       (firstFiber hp hP b) (fun _ => 0)) :=
-    (saturated_support hp hP C I (realized b) (fun x _ => budget x)
-      ((first_fiber_card hp hP b).trans power)).1
+    saturated_support hp hP C I (realized b) (fun x _ => budget x)
+      ((first_fiber_card hp hP b).trans power)
   let H (b : Fin p) := Classical.choice (histories b)
   refine ⟨G.root, root, H, ?_, ?_, (all_slots_nodup hp hP C I H).injective_get,
     all_event_iff hp hP C I H, occurrence_bound hp hP C I H, ?_⟩
@@ -780,7 +777,6 @@ theorem result [Finite Q] (D : Nat) (power : P = 2 ^ D)
   · intro b k x
     have bound := (SaturatedSlotUnfolding.result hp hP C I (H b) (H b)).1 k x
     simpa only [firstFiber, Finset.mem_filter, Finset.mem_univ, true_and] using bound
-
   · intro unit
     have zero : D = 0 := by
       have one : 2 ^ D = 1 := power.symm.trans unit

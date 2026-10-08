@@ -30,6 +30,21 @@ internal sealed class SaturatedSlotUnfoldingDocument : IScribeDocumentDefinition
                 + "a slot that terminates in n. A global path may initially combine edges "
                 + "witnessed on different inputs. The theorem identifies all such terminal "
                 + "paths with the input support of the complete actual history.")),
+            Describe.Lean(DescribeId.Create("actual-read-step"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/Algorithms/SaturatedSlotUnfolding.occurrence_advance"),
+                H("A physical read follows its fixed digit row"),
+                StatementSource.FromAuthor(Disp(AdvanceStatement())), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("An actual reading occurrence at slot u makes the next control "
+                    + "equal the fixed row successor of that slot. The source coordinate is unchanged."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("saturated-history-data"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/Algorithms/SaturatedSlotUnfolding.history_data"),
+                H("Original supports and actual event times"),
+                StatementSource.FromAuthor(Disp(DataStatement())), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The disjoint equal-height children give two to the remaining "
+                    + "height original inputs. The support is nonempty, and every supported input "
+                    + "actually occurs at the recorded time and slot."))),
+                DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("saturated-slot-unfolding"),
                 DeclarationHandle.Create("D5/S3/ObserverMemory/Algorithms/SaturatedSlotUnfolding.result"),
                 H("Global terminal support and uniqueness at a slot"),
@@ -46,6 +61,33 @@ internal sealed class SaturatedSlotUnfoldingDocument : IScribeDocumentDefinition
                     + "them from a controller's worst-case read bound."))),
                 DescribeRole.Theorem))));
 
+    private static Formula AdvanceStatement()
+    {
+        var body = Imp(Call("Occurs", V("C"), V("I"), V("x"), V("t"), V("u")),
+            EqF(Call("snd", Call("run", V("C"), V("hp"), V("hP"), V("x"),
+                    Seq(V("t"), Plus, D(1)))),
+                Call("readNext", V("C"), Call("val", Call("fst", V("u"))), Call("snd", V("u")))));
+        return Context(Bind(body, ("x", Source), ("t", N), ("u", Slot)));
+    }
+    private static Formula DataStatement()
+    {
+        var body = Imp(Call("Nonempty", History(V("j"), V("u"), V("S"), V("a"))),
+            And(EqF(Call("card", V("S")), Seq(D(2), Caret, Grp(V("j")))), Call("Nonempty", V("S")),
+                All("x", Source, Imp(Member(V("x"), V("S")),
+                    Call("Occurs", V("C"), V("I"), V("x"), Call("a", V("x")), V("u"))))));
+        return Context(Bind(body, ("j", N), ("u", Slot), ("S", Call("Finset", Source)),
+            ("a", Seq(Source, To, Sp, N))));
+    }
+    private static Formula Context(Formula body) => Bind(body,
+        ("p", N), ("P", N), ("Q", V("Type")), ("hp", Seq(D(2), Le, Sp, V("p"))),
+        ("hP", Seq(D(0), Lt, V("P"))), ("C", Call("Controller", V("p"), V("P"), V("Q"))),
+        ("I", Call("Correct", V("C"), V("hp"), V("hP"))));
+    private static Formula Bind(Formula b, params (string Name, Formula Type)[] binders)
+    {
+        for (var i = binders.Length - 1; i >= 0; i--) b = All(binders[i].Name, binders[i].Type, b);
+        return b;
+    }
+
     private static Formula Statement()
     {
         var j = V("j"); var k = V("k");
@@ -54,7 +96,7 @@ internal sealed class SaturatedSlotUnfoldingDocument : IScribeDocumentDefinition
         var path = All("n", N, All("x", Source,
             Seq(Grp(Call("TerminatesIn", V("hp"), V("hP"), V("C"), V("I"),
                     V("n"), u, V("x"))), Iff, Grp(And(EqF(V("n"), j), Member(V("x"), s))))));
-        var body = And(path, EqF(Call("card", s), Seq(D(2), Sup(j))),
+        var body = And(path, EqF(Call("card", s), Seq(D(2), Caret, Grp(j))),
             Imp(EqF(u, v), And(EqF(j, k), EqF(s, t))));
         var certificates = Imp(Call("Nonempty", History(j, u, s, V("a"))),
             Imp(Call("Nonempty", History(k, v, t, V("b"))), body));
@@ -81,11 +123,14 @@ internal sealed class SaturatedSlotUnfoldingDocument : IScribeDocumentDefinition
     private static Formula EqF(Formula a, Formula b) => Seq(Grp(a), Eq, Grp(b));
     private static Formula Member(Formula a, Formula b) => Seq(a, InMacro, Sp, b);
     private static Formula All(string n, Formula t, Formula b) =>
-        Seq(Forall, Sp, V(n), Colon, t, Comma, b);
+        Seq(Forall, Sp, V(n), Colon, t, Comma, Grp(b));
     private static Formula Ex(string n, Formula t, Formula b) =>
-        Seq(Exists, Sp, V(n), Colon, t, Comma, b);
-    private static Formula Imp(Formula a, Formula b) => Seq(Grp(a), To, Sp, Grp(b));
-    private static Formula And(params Formula[] xs) => Join(Seq(Sp, Wedge, Sp), xs);
+        Seq(Exists, Sp, V(n), Colon, t, Comma, Grp(b));
+    private static Formula Imp(Formula a, Formula b) => Seq(Grp(a), Implies, Sp, Grp(b));
+    private static Formula Join(Formula separator, Formula[] args) =>
+        Seq([.. args.SelectMany((x, i) => i == 0
+            ? new[] { x } : new[] { separator, x })]);
+    private static Formula And(params Formula[] xs) => Join(Land, [.. xs.Select(x => Grp(x))]);
     private static Formula Call(string n, params Formula[] xs) => Seq(
-        Operatorname(n), Sp, Open, Join(Comma, xs), Close);
+        Operatorname, Sp, Grp(V(n)), Open, Join(Comma, xs), Close);
 }

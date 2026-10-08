@@ -67,7 +67,7 @@ internal sealed class SaturatedActualHistoriesDocument : IScribeDocumentDefiniti
     {
         var h = V("H");
         var histories = Call("allHistories", V("hp"), V("hP"), V("C"), V("I"), h);
-        var slots = Call("map", Operatorname("entrySlot"), histories);
+        var slots = Call("map", Seq(Operatorname, Sp, Grp(V("entrySlot"))), histories);
         var positions = Call("allReadingPositions", V("hp"), V("hP"), V("C"), V("I"), h);
         var counts = All("x", Source, EqF(Call("card", Reads(V("x"))), Add(V("D"), D(1))));
         var global = Bind(Seq(Grp(Call("TerminatesIn", V("hp"), V("hP"), V("C"), V("I"),
@@ -86,15 +86,16 @@ internal sealed class SaturatedActualHistoriesDocument : IScribeDocumentDefiniti
         var packing = All("q", V("Q"), LE(
             Call("occurrenceCount", V("hp"), V("hP"), V("C"), V("I"), h, V("q")),
             Call("div", V("p"), D(2))));
+        var forestType = All("b", Call("Fin", V("p")),
+            Call("SaturatedHistory", V("hp"), V("hP"), V("C"), V("I"), V("D"),
+                Pair(V("root"), V("b")), Call("firstFiber", V("hp"), V("hP"), V("b")),
+                Seq(Open, V("x"), Mapsto, Sp, D(0), Close)));
+        var conclusions = And(counts, global, injective, cover, packing,
+            Imp(EqF(V("P"), D(1)), EqF(positions, Seq(OpenBracket, CloseBracket))));
         var body = Ex("root", ReadsControls, And(
-            EqF(Call("val", V("root")), Call("initial", V("C"))),
-            Ex("H", All("b", Call("Fin", V("p")),
-                Call("SaturatedHistory", V("hp"), V("hP"), V("C"), V("I"), V("D"),
-                    Pair(V("root"), V("b")), Call("firstFiber", V("hp"), V("hP"), V("b")), D(0))),
-                And(counts, global, injective, cover, packing,
-                    Imp(EqF(V("P"), D(1)), EqF(positions, Seq(OpenBracket, CloseBracket))))))));
+            EqF(Call("val", V("root")), Call("initial", V("C"))), Ex("H", forestType, conclusions)));
         var bound = All("x", Source, LE(Call("card", Reads(V("x"))), Add(V("D"), D(1))));
-        body = Imp(EqF(V("P"), Seq(D(2), Sup(V("D")))), Imp(bound, body));
+        body = Imp(EqF(V("P"), Seq(D(2), Caret, Grp(V("D")))), Imp(bound, body));
         body = All("D", N, body);
         body = Seq(OpenBracket, Call("Finite", V("Q")), CloseBracket, Grp(body));
         return Bind(body, ("p", N), ("P", N), ("Q", V("Type")),
@@ -118,9 +119,12 @@ internal sealed class SaturatedActualHistoriesDocument : IScribeDocumentDefiniti
     private static Formula LE(Formula a, Formula b) => Seq(Grp(a), Le, Sp, Grp(b));
     private static Formula Member(Formula a, Formula b) => Seq(a, InMacro, Sp, b);
     private static Formula Add(Formula a, Formula b) => Seq(Grp(a), Plus, Grp(b));
-    private static Formula All(string n, Formula t, Formula b) => Seq(Forall, Sp, V(n), Colon, t, Comma, b);
-    private static Formula Ex(string n, Formula t, Formula b) => Seq(Exists, Sp, V(n), Colon, t, Comma, b);
-    private static Formula Imp(Formula a, Formula b) => Seq(Grp(a), To, Sp, Grp(b));
-    private static Formula And(params Formula[] xs) => Join(Seq(Sp, Wedge, Sp), xs);
-    private static Formula Call(string n, params Formula[] xs) => Seq(Operatorname(n), Sp, Open, Join(Comma, xs), Close);
+    private static Formula All(string n, Formula t, Formula b) => Seq(Forall, Sp, V(n), Colon, t, Comma, Grp(b));
+    private static Formula Ex(string n, Formula t, Formula b) => Seq(Exists, Sp, V(n), Colon, t, Comma, Grp(b));
+    private static Formula Imp(Formula a, Formula b) => Seq(Grp(a), Implies, Sp, Grp(b));
+    private static Formula Join(Formula separator, Formula[] args) =>
+        Seq([.. args.SelectMany((x, i) => i == 0
+            ? new[] { x } : new[] { separator, x })]);
+    private static Formula And(params Formula[] xs) => Join(Land, [.. xs.Select(x => Grp(x))]);
+    private static Formula Call(string n, params Formula[] xs) => Seq(Operatorname, Sp, Grp(V(n)), Open, Join(Comma, xs), Close);
 }
