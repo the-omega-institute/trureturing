@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:da56c416f95fb4e22200e8c8eba6b1c14a1bb6473f9f44d25ffd5e998ce5083e
+  normalized_sha256: sha256:da56c416f95fb4e22200e8c8eba6b1c14a1bb6473f9f44d25ffd5e998ce5083e
+cas_ref: sha256:da56c416f95fb4e22200e8c8eba6b1c14a1bb6473f9f44d25ffd5e998ce5083e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: All propositional clauses are bind-only by coordinate normalization in pinned mathlib db584cd6d46c92f209a44c0f1c829460d327499d. In the mode order (null,2,3,5,25), q=p+t*(1,-1,0,-1,1) preserves p_2+p_25, p_5+p_25 and p_3; q_25 differs from p_25 exactly when t is nonzero. The full converse for identical observations is certified from the four row/column equalities. Suppliers are Pi.add_apply, Pi.sub_apply, Pi.smul_apply, Matrix.cons_val_one/two/three/four, add/sub cancellation and real ring/linear normalization; all atomic row/column and normalization equalities are given premises. No frozen project GID is needed on this algebra-only clause live path. The preceding sharp feasible-interval clause is covered separately by FiniteEventCouplingSharpBounds.event_coupling_target_feasible_iff; this child is settled under CLAUDE.md 3.2 without assigning that unrelated feasibility dependency.
+    previous_atom_id: 2f21660263c928cbb3501b20b749bb6c3ec9455ec54deea4df921e3c749c1c4e
+    next_atom_id: abcb15f5f7465985208c882e8c2210f30b92eaf0dcf83a1ca22d1676662a9fed
