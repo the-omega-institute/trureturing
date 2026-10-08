@@ -251,7 +251,7 @@ def write_sidecars(report, inputs, origins, mode='produced'):
     member(report, '.provenance.json').write_text(json.dumps(provenance, separators=(',', ':')) + '\n', encoding='utf-8')
 
 
-def _validate_row(row, archive, verified_materials, identities):
+def _validate_row(row, archive, available, verified_materials, identities):
     """All certificate and declaration references die at this call boundary."""
     references = {}
     keys = {'module', 'source_path', 'source_sha256', 'imports', 'declarations'}
@@ -288,7 +288,7 @@ def _validate_row(row, archive, verified_materials, identities):
         previous_key = key
         materials.require_sorted_strings(decl['axioms'], 'axioms')
         references.setdefault('sha256/' + decl['type_sha256'][7:], []).append((row, decl))
-    if set(references) - set(archive.namelist()):
+    if set(references) - available:
         raise ValueError('duplicate, missing, or unreferenced material')
     for name in references:
         info = archive.getinfo(name)
@@ -333,7 +333,7 @@ def validated_rows(report, archive_path, verified_materials=None, *, identities=
                 raise ValueError('invalid or duplicate module/source binding')
             previous = name
             paths.add(path)
-            used.update(_validate_row(row, archive, verified_materials, identities))
+            used.update(_validate_row(row, archive, available, verified_materials, identities))
             yield row
             del row
         if used != available:
