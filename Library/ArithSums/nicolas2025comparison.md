@@ -4893,3 +4893,152 @@ The full elementary and trivial contributions are paid through
 $\overline R_\alpha$; the left side is the original complete integral.
 No signed main estimate or unbounded source-clock conclusion follows
 from (GE5) alone.
+
+
+## A larger finite clock from the verified-height Gamma response
+
+The explicit directed inequality (GE5) can be paired with a uniform
+Gamma modulus estimate. It bounds the original signed integral on a
+larger finite interval, while keeping the same conditional least integer
+$N>5040$ attaining the global Robin-ratio maximum. This is not a reduction
+to the least counterexample or an all-integer finite Robin verification.
+No arithmetic profiles or zero ordinates are newly enumerated.
+
+### Uniform damping with the actual real parts retained
+
+Use the classical product
+[NIST DLMF 5.8.3](https://dlmf.nist.gov/5.8.E3), for $x>0$:
+
+$$
+\left|\frac{\Gamma(x+it)}{\Gamma(x)}\right|
+=\prod_{k=0}^\infty
+ \left(1+\frac{t^2}{(x+k)^2}\right)^{-1/2}.
+$$
+
+The summand $\log(1+t^2/(x+u)^2)$ is positive and decreasing in $u$.
+Using $\log(1+v)\ge v/(1+v)$ in its integral gives
+
+$$
+\sum_{k=0}^\infty\log\left(1+\frac{t^2}{(x+k)^2}\right)
+\ge |t|\arctan(|t|/x)
+\ge\frac{t^2}{x+|t|}.
+$$
+
+The last inequality uses $\arctan v\ge v/(1+v)$ for $v\ge0$.
+For $0<\beta<1$, the already used Gamma law has
+$\mathbb E C^{\beta-1}\le(\mathbb EC^{-1})^{1-\beta}\le M_1(\alpha)$
+by Hölder. Set $x=\alpha+\beta-1\le\alpha$ in the product. It follows that
+
+$$
+\boxed{|H_\alpha(\beta+it)|
+\le M_1(\alpha)
+ \exp\left(-\frac{t^2}{2(\alpha+|t|)}\right).}
+\tag{GH1}
+$$
+
+This is uniform over the whole actual critical strip. Criticality is
+used only on the already verified head below $H$.
+
+Passing to the infinite endpoint in the existing (U2) gives
+
+$$
+\sqrt A L|F_A(\rho)|
+\le2(1+1/L)\frac{A^{\beta-1/2}}{|\rho||1-\rho|}.
+\tag{GH2}
+$$
+
+The function $t^2/[2(\alpha+t)]$ increases for $t>0$.
+Split the complete $Z_\alpha$ at the verified height $H$.
+Use the positive $c_0$ identity on the critical head, and (GH1), (GH2),
+$\beta<1$, and $2S_2(H)$ on every remaining zero. This gives
+
+$$
+\sqrt A L|Z_\alpha(A)|
+\le2M_1(\alpha)(1+1/L)
+ \left[c_0+2\sqrt A\,S_2(H)
+   \exp\left(-\frac{H^2}{2(\alpha+H)}\right)\right].
+\tag{GH3}
+$$
+
+Every height beyond $H$ is included to infinity. Replacing the actual
+$A^{\beta-1/2}$ by $\sqrt A$ in this upper bound does not assume RH
+outside the verified head.
+
+### Pay the constants at the same selected source
+
+Take the exact noninteger shape and clock range
+
+$$
+\alpha=10^{23}+\frac12,\qquad
+10^{36}<A\le10^{45},\qquad L=\log A.
+$$
+
+Then $L>78$, $\sqrt A<3.2\cdot10^{22}$,
+$M_1(\alpha)<1.0001$, and
+
+$$
+\frac{H^2}{2(\alpha+H)}>40,\qquad e^{40}>10^{17}.
+$$
+
+The latter follows from $e>8/3$ and
+$8^{40}>10^{17}3^{40}$.
+The two contributions in (GH3) are bounded by the rational inequalities
+
+$$
+2(1.0001)(1.02)(0.05)<0.103,
+$$
+
+$$
+4(1.0001)(1.02)(3.2\cdot10^{22})
+ (1.48\cdot10^{-12})10^{-17}<0.000003.
+\tag{GH4}
+$$
+
+For the prime-comparison allowance, reuse Dusart's
+[Theorem 5.2, $k=0$, and Proposition 3.2](../Weil/dusart2010estimates.md):
+$\vartheta(A)<2A$ and
+$\psi(A)-\vartheta(A)<1.00007\sqrt A+1.78A^{1/3}$.
+On this range they give $\psi(A)<2.01A$. Therefore
+
+$$
+\frac{\psi(A)}{(\alpha-1)\sqrt A}
+<\frac{2.01(3.2\cdot10^{22})}{0.9999\cdot10^{23}}<0.644,
+\qquad
+\frac{5M_1(\alpha)}{\sqrt A}<6\cdot10^{-18}.
+\tag{GH5}
+$$
+
+Combining (GE5) and (GH3)–(GH5) pays the full original signed integral:
+
+$$
+\boxed{-\sqrt A L I_\psi(A)
+<0.103+0.000003+0.644+6\cdot10^{-18}<\frac34
+\qquad(10^{36}<A\le10^{45}).}
+\tag{GH6}
+$$
+
+The same selected source still satisfies
+$\Delta(N)=I_\psi(A)+D^*(A)$ and the strict core (G6).
+The already proved bound
+[(X5) in the Polak application](../Analytic/polak2026finiterobinca.md#pay-the-full-signed-margin-with-the-same-strict-core)
+gives $\mathcal E(L)>0.778$ for every $L\ge78$.
+Thus at this actual source and clock,
+
+$$
+\boxed{\sqrt A L\Delta(N)>0.778-0.75=0.028
+\qquad(10^{36}<A\le10^{45}).}
+\tag{GH7}
+$$
+
+The existing restriction $A>10^{36}$ and (GH7) therefore force
+$\log N>10^{45}$ for the same hypothetical least global maximizer.
+This conclusion is specific to that selected source; it does not assert
+strict Robin for every integer below $\exp(10^{45})$.
+
+This application reuses the published finite-height verification,
+zero-count and prime estimates, the classical Gamma product, and the
+existing core and directed-transport results. It makes no mathematical
+priority claim and has no Lean certification. The fixed shape and verified
+height give no uniform bound as $A\to\infty$: the comparison and high-zero
+allowances in (GE5), (GH3) still grow with $\sqrt A$.
+The full unbounded signed Robin target and RH remain unproved.
