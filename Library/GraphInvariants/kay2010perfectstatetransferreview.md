@@ -5,7 +5,7 @@ year: 2010
 title: "A Review of Perfect State Transfer and its Application as a Constructive Tool"
 doi: 10.1142/S0219749910006514
 url: https://arxiv.org/abs/0903.4274v3
-claim: "Lemma 6 (subsection Transfer Rate): for eigenvalues fulfilling the perfect state transfer condition, the rate M/2t_0 is perfectly achieved for an integer M if and only if the sums R_k of (-1)^n/B'(lambda_n) over the residue classes of (t_0/pi)(lambda_n - lambda_1) modulo M, k = 0, ..., M - 1, are all equal. The review conjectures that this condition cannot be fulfilled for any M > 2 and proves it for M > N/2."
+claim: "Lemma 6 (subsection Transfer Rate): for eigenvalues fulfilling the perfect state transfer condition, the rate M/2t_0 is perfectly achieved for an integer M if and only if the sums R_k of (-1)^n/B'(lambda_n) over the residue classes of (t_0/pi)(lambda_n - lambda_1) modulo M, k = 0, ..., M - 1, are all equal. The review conjectures that this condition cannot be fulfilled for any M > 2 and states that it has a proof for M > N/2."
 strata_touched:
   - D5/S3/Quantum/Dynamics/KayTransferRateRefutation
 license: citation-only
