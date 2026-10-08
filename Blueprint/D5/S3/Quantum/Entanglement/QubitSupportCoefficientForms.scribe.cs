@@ -143,6 +143,8 @@ internal sealed class QubitSupportCoefficientFormsDocument : IScribeDocumentDefi
     private static Formula Bound() => Add(Times(D(2), Call("clog", D(2), p)), D(1));
     private static Formula Positive(Formula body) => Hyp("hp", Le(D(1), p), body);
     private static Formula OverConfig(Formula body) => All("n", N, All("p", N, All("c", ConfigType(), body)));
+    private static Formula CompositionMap() => Seq(LambdaLower, Sp, d, Sp, Colon, Sp,
+        Call("Composition", p), Comma, Sp, Call("formOf", d));
 
     private static Formula BasisFormula() => Disp(All("n", N, Eq(Basis(n), FinOf(Pow(D(2), n)))));
     private static Formula SupportFormula()
@@ -178,14 +180,14 @@ internal sealed class QubitSupportCoefficientFormsDocument : IScribeDocumentDefi
         All("r", FinOf(D(2)), All("j", FinOf(p), Eq(Value(Call("formOf", d, r, j)),
             Add(Value(j), SizeUpTo(d, Add(Index(d, j), Value(r))))))))));
     private static Formula InjectiveFormula() => Disp(All("p", N,
-        Call("Injective", Call("formOf", p))));
+        Call("Injective", CompositionMap())));
     private static Formula NecessityFormula() => Disp(OverConfig(Some("d", Call("Composition", p),
         Eq(Call("form", c), Call("formOf", d)))));
     private static Formula RealizationFormula() => Disp(All("p", N,
         Positive(All("d", Call("Composition", p), All("n", N, Hyp("hn", Le(Bound(), n),
             Some("c", ConfigType(), Eq(Call("form", c), Call("formOf", d)))))))));
     private static Formula RangeFormula() => Disp(All("p", N, Positive(
-        Eq(Call("forms", p), Call("range", Call("formOf", p))))));
+        Eq(Call("forms", p), Call("range", CompositionMap())))));
     private static Formula ResultFormula() => Disp(All("p", N, Positive(And(
         Eq(Call("ncard", Call("forms", p)), Pow(D(2), Sub(p, D(1)))),
         All("n", N, Hyp("hn", Le(Bound(), n), Eq(Call("formsAt", n, p), Call("forms", p))))))));
