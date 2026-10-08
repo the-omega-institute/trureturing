@@ -36,9 +36,9 @@ Lambda is the original seed measure of the event that zeroReplay at depth twice 
 
 **Theorem 1.3 (One-query all-zero extension).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hstep`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.prefix_no_marker_cons`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hstep` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.prefix_no_marker_cons` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -60,9 +60,9 @@ For every unit-interval parameter and Boolean root, almost every arm starts at t
 
 **Theorem 1.5 (Successive alternating bits).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hs`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.alternating_bit_succ`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hs` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.alternating_bit_succ` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -84,9 +84,9 @@ For every unit-interval parameter, Boolean root and natural length, the alternat
 
 **Theorem 1.7 (Measurable zero cylinders).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hmeas`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.measurable_set_no_marker_cylinder`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hmeas` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.measurable_set_no_marker_cylinder` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -96,9 +96,9 @@ For every pair of natural arm lengths, the all-zero marker cylinder is measurabl
 
 **Theorem 1.8 (Alternation characterizes no marker).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hchar`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.no_marker_iff_alternating_prefix`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hchar` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.no_marker_iff_alternating_prefix` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -120,9 +120,9 @@ For every unit-interval parameter and Boolean root, almost every pair under the 
 
 **Theorem 1.10 (Two-arm root-conditioned cylinder mass).**
 
-Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hconditional`
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.conditional_no_marker_cylinder_mass`
 
-*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hconditional` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.conditional_no_marker_cylinder_mass` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -133,13 +133,13 @@ For every unit-interval parameter, Boolean root and two natural arm lengths, the
 ## References
 
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.adaptive_marker_stopping_tails`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.alternating_bit_succ`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.arm_alternating_mass`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hchar`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hconditional`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hmeas`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hs`
-- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hstep`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.conditional_no_marker_cylinder_mass`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.measurable_set_no_marker_cylinder`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.no_marker_iff_alternating_prefix`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.paired_path_support`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.path_support`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.prefix_no_marker_cons`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.stopped_execution_replay_bridge`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkovPrefixMass](TrajectoryLaws/MarkovPrefixMass.md)
