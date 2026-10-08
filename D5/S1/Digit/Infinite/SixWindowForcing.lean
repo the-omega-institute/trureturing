@@ -67,13 +67,9 @@ private theorem root (x : LegalDigits) (j : ℕ) :
       (if (window x j).val 1 then t - 1 else if (window x j).val 0 then
         (if (window x j).val 2 then 1 + t else 2 * t) else
         (if (window x j).val 2 then t else g)) := by
-  obtain ⟨_, hrange, hrec, _, _, _, _, _, hroot⟩ := closed_observation_graph_realization
-  have hw : window (bitShift x (3 * j)) 0 = window x j := by
-    simp [window, D5.S1.Digit.Infinite.OddColorThreeSource.shift_add]
-  rw [← hw, ← hroot]
-  dsimp only
-  rw [(hrec (bitShift x (3 * j))).1]
-  exact ⟨_, (hrange _).subset ⟨_, (hrec _).2.1, rfl⟩, rfl⟩
+  simpa only [window, Nat.mul_zero,
+    D5.S1.Digit.Infinite.OddColorThreeSource.shift_add, Nat.add_zero] using
+    D5.S1.Digit.Infinite.OddColorThreeSource.root_bounds (bitShift x (3 * j))
 
 private theorem observation_bounds (ν : ℝ) (i : Fin 6) (z : ℝ)
     (hz : z ∈ observation ν i) :

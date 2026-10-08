@@ -85,7 +85,7 @@ theorem golden_relations :
   · nlinarith
 
 /-- Membership in the root image supplied by the frozen realization theorem. -/
-private theorem root_bounds (x : LegalDigits) :
+theorem root_bounds (x : LegalDigits) :
     kappa x ∈ Set.Icc
       (if (window x 0).val 1 then -1 else if (window x 0).val 0 then
         (if (window x 0).val 2 then 2 * t else t) else
