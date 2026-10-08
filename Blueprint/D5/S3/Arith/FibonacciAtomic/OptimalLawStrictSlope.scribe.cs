@@ -78,12 +78,6 @@ internal sealed class OptimalLawStrictSlopeDocument : IScribeDocumentDefinition
                     H("Attainment in the full real domain"), StatementSource.FromAuthor(Disp(attainment)),
                     AssessedProvenance.FromRepo(), Blocks(
                         Paragraph(Text("The uniform law supplies a finite comparison ratio. Since every multi-label law costs at least one, any smaller ratio has its least coordinate bounded away from zero. After relabeling this coordinate to a fixed index, optimization takes place on a nonempty compact subset of the real simplex. Lower semicontinuity supplies a minimum there, and laws outside it have larger ratio.")))),
-                Describe.Lean(DescribeId.Create("single-cost"),
-                    DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLawStrictSlope.single_cost"),
-                    H("The one-label law"),
-                    StatementSource.FromAuthor(Disp(Equal(Call("cost", Call("ConstantOne", D(1))), D(0)))),
-                    AssessedProvenance.FromRepo(), Blocks(
-                        Paragraph(Text("ConstantOne(1) is the function on Fin 1 with value one. Every scaled coordinate is an integer, so every floor residual and the total cost vanish.")))),
                 Describe.Lean(DescribeId.Create("result"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLawStrictSlope.result"),
                     H("Strict growth with the number of labels"),
