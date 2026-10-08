@@ -119,7 +119,7 @@ class NativeBatchStateTests(unittest.TestCase):
                             material_file=material, name='value', name_key='ns(n0,5:value)')]))
                 Path(arguments[1]).write_text(json.dumps(dict(schema=materials.SPOOL_SCHEMA, modules=rows)))
 
-            retained, completed_rows, references = [], [], []
+            retained, completed_rows, references, decode_alive = [], [], [], []
             read_json = publication.read_json
             class ReportRow(dict):
                 pass
@@ -127,6 +127,7 @@ class NativeBatchStateTests(unittest.TestCase):
                 value = read_json(data)
                 if (isinstance(value, dict) and 'module' in value
                         and any('material_file' in d for d in value.get('declarations', []))):
+                    decode_alive.append(sum(reference() is not None for reference in references))
                     value = ReportRow(value)
                     references.append(weakref.ref(value))
                 return value
@@ -150,6 +151,8 @@ class NativeBatchStateTests(unittest.TestCase):
             self.assertEqual(len(references), 3, '[FAIL] all_produced_rows_observed')
             self.assertEqual(completed_rows, [0, 0, 0],
                 '[FAIL] completed_module_report_rows_released')
+            self.assertEqual(decode_alive, [0, 0, 0],
+                '[FAIL] previous_module_report_row_released_before_next_decode')
             for _, name, _, utility, _, output in requests:
                 with zipfile.ZipFile(output) as archive:
                     row = json.loads(archive.read(publication.RAW))['modules'][0]
