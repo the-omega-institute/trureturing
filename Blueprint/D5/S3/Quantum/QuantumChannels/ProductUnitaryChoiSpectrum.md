@@ -6,7 +6,7 @@ For all positive n₁ and n₂, the Choi matrix of the unital map that acts on t
 
 **Definition 1.1 (The trace-to-identity map).**
 
-$$\operatorname{depol}\left(n\right)(X) = \frac{\operatorname{tr}\left(X\right)}{n} I$$
+$$\forall n: \mathbb{N}, \forall X: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right), \operatorname{depol}\left(n\right)(X) = \frac{\operatorname{tr}\left(X\right)}{\operatorname{cast}\left(n\right)} I$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.depol` (`✓ std3`).
 
@@ -14,11 +14,11 @@ $$\operatorname{depol}\left(n\right)(X) = \frac{\operatorname{tr}\left(X\right)}
 
 *Commentary.*
 
-On n × n complex matrices, D(X) = tr(X) I/n. Its image is the multiples of the identity, and D is the identity there, so D is the projection onto the trivial component of the conjugation action of the unitary group.
+On n × n complex matrices, D(X) = tr(X) I/n; cast denotes the inclusion of the natural numbers in ℂ. Its image is the multiples of the identity, and D is the identity there, so D is the projection onto the trivial component of the conjugation action of the unitary group.
 
 **Definition 1.2 (The complementary projection).**
 
-$$\operatorname{compl}\left(n\right)(X) = X - \operatorname{depol}\left(n\right)(X)$$
+$$\forall n: \mathbb{N}, \forall X: \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right), \operatorname{compl}\left(n\right)(X) = X - \operatorname{depol}\left(n\right)(X)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.compl` (`✓ std3`).
 
@@ -30,7 +30,7 @@ Q(X) = X − D(X), the projection onto the trace-zero matrices.
 
 **Definition 1.3 (The unital product-unitary-equivariant map).**
 
-$$\operatorname{phi}\left(n_1, n_2, \lambda_{01}, \lambda_{10}, \lambda_{11}\right) = \operatorname{kron}\left(\operatorname{depol}\left(n_1\right), \operatorname{depol}\left(n_2\right)\right) + \lambda_{01} \operatorname{kron}\left(\operatorname{depol}\left(n_1\right), \operatorname{compl}\left(n_2\right)\right) + \lambda_{10} \operatorname{kron}\left(\operatorname{compl}\left(n_1\right), \operatorname{depol}\left(n_2\right)\right) + \lambda_{11} \operatorname{kron}\left(\operatorname{compl}\left(n_1\right), \operatorname{compl}\left(n_2\right)\right)$$
+$$\forall n_1, n_2: \mathbb{N}, \forall \lambda_{01}, \lambda_{10}, \lambda_{11}: \mathbb{C}, \operatorname{phi}\left(n_1, n_2, \lambda_{01}, \lambda_{10}, \lambda_{11}\right) = \operatorname{kron}\left(\operatorname{depol}\left(n_1\right), \operatorname{depol}\left(n_2\right)\right) + \lambda_{01} \operatorname{kron}\left(\operatorname{depol}\left(n_1\right), \operatorname{compl}\left(n_2\right)\right) + \lambda_{10} \operatorname{kron}\left(\operatorname{compl}\left(n_1\right), \operatorname{depol}\left(n_2\right)\right) + \lambda_{11} \operatorname{kron}\left(\operatorname{compl}\left(n_1\right), \operatorname{compl}\left(n_2\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.phi` (`✓ std3`).
 
@@ -42,7 +42,7 @@ The map Φ on n₁n₂ × n₁n₂ complex matrices with weight 1 on D ⊗ D and
 
 **Definition 1.4 (The diagonal pair vector).**
 
-$$\operatorname{omega}\left(n\right)(i, j) = [i = j]$$
+$$\forall n: \mathbb{N}, \forall i, j: \operatorname{Fin}\left(n\right), \operatorname{omega}\left(n\right)(i, j) = [i = j]$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.omega` (`✓ std3`).
 
@@ -56,7 +56,7 @@ The vector on the pairs (i, j) of indices in {0, …, n − 1} with entry 1 when
 
 **Theorem 1.5 (The squared length of the diagonal pair vector).**
 
-$$\forall n: \mathbb{N}, \operatorname{dotProduct}\left(\operatorname{omega}\left(n\right), \operatorname{omega}\left(n\right)\right) = n$$
+$$\forall n: \mathbb{N}, \operatorname{dotProduct}\left(\operatorname{omega}\left(n\right), \operatorname{omega}\left(n\right)\right) = \operatorname{cast}\left(n\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.omega_dot_omega` (`✓ std3`). ∎
 
@@ -66,11 +66,11 @@ $$\forall n: \mathbb{N}, \operatorname{dotProduct}\left(\operatorname{omega}\lef
 
 *Commentary.*
 
-ω has exactly n entries equal to 1 and the others 0, so ω · ω = n.
+ω has exactly n entries equal to 1 and the others 0, so ω · ω = n as a complex number.
 
 **Definition 1.6 (The Choi matrix of the identity map).**
 
-$$\operatorname{kmat}\left(n\right) = \operatorname{vecMulVec}\left(\operatorname{omega}\left(n\right), \operatorname{omega}\left(n\right)\right)$$
+$$\forall n: \mathbb{N}, \operatorname{kmat}\left(n\right) = \operatorname{vecMulVec}\left(\operatorname{omega}\left(n\right), \operatorname{omega}\left(n\right)\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.kmat` (`✓ std3`).
 
@@ -84,7 +84,7 @@ K = ωωᵀ, the matrix on pairs with entry ω(x)ω(y) at (x, y); it is the Choi
 
 **Definition 1.7 (The Choi matrix of the trace-to-identity map).**
 
-$$\operatorname{dmat}\left(n\right) = \frac{1}{n} I$$
+$$\forall n: \mathbb{N}, \operatorname{dmat}\left(n\right) = \frac{1}{\operatorname{cast}\left(n\right)} I$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.dmat` (`✓ std3`).
 
@@ -98,7 +98,7 @@ I/n on pairs of indices: the Choi matrix of depol(n).
 
 **Definition 1.8 (The Choi matrix of the complementary projection).**
 
-$$\operatorname{qmat}\left(n\right) = \operatorname{kmat}\left(n\right) - \operatorname{dmat}\left(n\right)$$
+$$\forall n: \mathbb{N}, \operatorname{qmat}\left(n\right) = \operatorname{kmat}\left(n\right) - \operatorname{dmat}\left(n\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.qmat` (`✓ std3`).
 
@@ -124,7 +124,7 @@ The Choi matrix C_Φ = Σ_{p,q} E_pq ⊗ Φ(E_pq) is indexed by pairs ((p₁, p�
 
 **Definition 1.10 (The conjectured Choi spectrum).**
 
-$$claim \Leftrightarrow (\forall n_1, n_2: \mathbb{N}, 1 \leq n_1, 1 \leq n_2 \Rightarrow \forall \lambda_{01}, \lambda_{10}, \lambda_{11}: \mathbb{C}, \operatorname{charpoly}\left(\sum_{p,q} \operatorname{kron}\left(\operatorname{single}\left(p, q, 1\right), \operatorname{phi}\left(n_1, n_2, \lambda_{01}, \lambda_{10}, \lambda_{11}\right)(\operatorname{single}\left(p, q, 1\right))\right)\right) = (X - \frac{1 + (n_2^{2}-1)\lambda_{01} + (n_1^{2}-1)\lambda_{10} + (n_1^{2}-1)(n_2^{2}-1)\lambda_{11}}{n_1 n_2}) (X - \frac{1 + (n_2^{2}-1)\lambda_{01} - \lambda_{10} - (n_2^{2}-1)\lambda_{11}}{n_1 n_2})^{n_1^{2}-1} (X - \frac{1 - \lambda_{01} + (n_1^{2}-1)\lambda_{10} - (n_1^{2}-1)\lambda_{11}}{n_1 n_2})^{n_2^{2}-1} (X - \frac{1 - \lambda_{01} - \lambda_{10} + \lambda_{11}}{n_1 n_2})^{(n_1^{2}-1)(n_2^{2}-1)})$$
+$$claim \Leftrightarrow (\forall n_1, n_2: \mathbb{N}, 1 \leq n_1, 1 \leq n_2 \Rightarrow \forall \lambda_{01}, \lambda_{10}, \lambda_{11}: \mathbb{C}, \operatorname{charpoly}\left(\sum_{p,q} \operatorname{kron}\left(\operatorname{single}\left(p, q, 1\right), \operatorname{phi}\left(n_1, n_2, \lambda_{01}, \lambda_{10}, \lambda_{11}\right)(\operatorname{single}\left(p, q, 1\right))\right)\right) = (X - \frac{1 + (\operatorname{cast}\left(n_2\right)^{2}-1)\lambda_{01} + (\operatorname{cast}\left(n_1\right)^{2}-1)\lambda_{10} + (\operatorname{cast}\left(n_1\right)^{2}-1)(\operatorname{cast}\left(n_2\right)^{2}-1)\lambda_{11}}{\operatorname{cast}\left(n_1\right) \operatorname{cast}\left(n_2\right)}) (X - \frac{1 + (\operatorname{cast}\left(n_2\right)^{2}-1)\lambda_{01} - \lambda_{10} - (\operatorname{cast}\left(n_2\right)^{2}-1)\lambda_{11}}{\operatorname{cast}\left(n_1\right) \operatorname{cast}\left(n_2\right)})^{n_1^{2}-1} (X - \frac{1 - \lambda_{01} + (\operatorname{cast}\left(n_1\right)^{2}-1)\lambda_{10} - (\operatorname{cast}\left(n_1\right)^{2}-1)\lambda_{11}}{\operatorname{cast}\left(n_1\right) \operatorname{cast}\left(n_2\right)})^{n_2^{2}-1} (X - \frac{1 - \lambda_{01} - \lambda_{10} + \lambda_{11}}{\operatorname{cast}\left(n_1\right) \operatorname{cast}\left(n_2\right)})^{(n_1^{2}-1)(n_2^{2}-1)})$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.claim` (`✓ std3`).
 
@@ -132,13 +132,17 @@ $$claim \Leftrightarrow (\forall n_1, n_2: \mathbb{N}, 1 \leq n_1, 1 \leq n_2 \R
 
 *Commentary.*
 
-The conjecture of Remark V.2 of arXiv:2601.02282v1: for every n₁ and n₂, the eigenvalues of the Choi matrix C_Φ = Σ_{p,q} E_pq ⊗ Φ(E_pq) are the four values of Lemma V.8, with multiplicities 1, n₁² − 1, n₂² − 1 and (n₁² − 1)(n₂² − 1). The characteristic polynomial records the eigenvalues with their algebraic multiplicities; when two of the four values coincide their multiplicities add. The source states the formulas for n₁, n₂ ∈ {2, 3} and real weights; here n₁, n₂ ≥ 1 and the weights are complex.
+The conjecture of Remark V.2 of arXiv:2601.02282v1: for every n₁ and n₂, the eigenvalues of the Choi matrix C_Φ = Σ_{p,q} E_pq ⊗ Φ(E_pq) are the four values of Lemma V.8, with multiplicities 1, n₁² − 1, n₂² − 1 and (n₁² − 1)(n₂² − 1). The characteristic polynomial records the eigenvalues with their algebraic multiplicities; when two of the four values coincide their multiplicities add. The source states the formulas for n₁, n₂ ∈ {2, 3} and real weights; here n₁, n₂ ≥ 1 and the weights are complex. In the four roots the dimensions are cast to ℂ; the multiplicity exponents n₁² − 1, n₂² − 1 and (n₁² − 1)(n₂² − 1) are natural numbers.
 
 **Theorem 1.11 (The Choi spectrum in every dimension).**
 
 $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.result` (`✓ std3`). ∎
+
+*Resolves.* `Problems/garcia-velo-2026-product-unitary-choi-spectrum` (proved) by `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"garcia-velo-2026-product-unitary-choi-spectrum","declaration_gid":"D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.result","resolution_kind":"proved"} -->
 
 *Source.* Repository-derived.
 
