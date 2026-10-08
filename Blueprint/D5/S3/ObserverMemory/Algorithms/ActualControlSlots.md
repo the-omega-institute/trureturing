@@ -8,7 +8,7 @@ For p at least two and positive P, the source is ZMod(pP), and its digit is floo
 
 Correct supplies a finite stop time for every original source, fixed terminal decoding of that original source, and no earlier halt. The initial action is a read, a positive wait separates reads, and the final action is a read. Used(q,b) means an actual read at q with digit b. Waiting(q) means an actual wait at q. Terminal(q,b) adds that the fixed digit-row successor halts. Write R for the subtype of controls with at least one used digit.
 
-For p=3 and P>1, StationaryUnitControl.Controller has the same operational table: its wait instruction supplies action and waitNext, its read row supplies action and readNext, and its halt label supplies action and output. Inactive function entries may be filled arbitrarily. The digit functions agree, and this step equals that model's total absorbing next function. The present model also admits P=1 and arbitrary alphabet sizes.
+StationaryUnitControl treats p=3 and P>1. The present model additionally admits P=1 and arbitrary p at least two. A correspondence between the two models is not formalized here.
 
 Occurs(x,t,u) means t is before the stop on original input x, the control is the control of slot u, and the physical digit is its digit. Edge(u,v) means two such occurrences on the same original input at times i<j, with every intermediate action a wait. Edges count distinct slot pairs, including repeated pairs only once. Reading-control revisits and mergers are unrestricted.
 
