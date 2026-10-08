@@ -94,6 +94,68 @@ private theorem affine_eqs (θ : ℝ) :
     simp [C, C₃, C₄, C₅, C₆, C₁, C₂, X₁, X₂, X₃, Fin.sum_univ_six, Matrix.smul_apply, Matrix.add_apply, Matrix.sub_apply,
       Matrix.neg_apply, smul_eq_mul, Matrix.one_apply] <;> ring
 
+private theorem scalar_bounds (θ : ℝ) (hθ : θ ∈ Set.Icc 0 (Real.pi / 2)) :
+    0 < β θ ∧
+    (β θ) ^ 2 = 9 * (Real.cos θ + 1) ^ 2 +
+      (3 * Real.sin θ - 2 * Real.sqrt 3 + 3) ^ 2 ∧
+    0 < 8 * Real.sqrt 3 - 6 - β θ ∧
+    0 ≤ (36 * Real.cos θ + 228 - 96 * Real.sqrt 3) -
+      (16 * Real.sqrt 3 - 12) * β θ := by
+  let r := Real.sqrt 3
+  let s := Real.sin θ
+  let c := Real.cos θ
+  let b := β θ
+  let d := (6 - 4 * r) * s + 6 * c - 4 * r + 13
+  have hr2 : r ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  have hr0 : 0 ≤ r := Real.sqrt_nonneg 3
+  have hrlo : 3 / 2 < r := by
+    have h := D5.S3.Constants.Radicals.SqrtThreeThreshold.three_lt_two_mul_sqrt_three
+    dsimp [r]
+    linarith
+  have hrhi : r < 7 / 4 := (Real.sqrt_lt' (by norm_num)).mpr (by norm_num)
+  have hs0 : 0 ≤ s := Real.sin_nonneg_of_nonneg_of_le_pi hθ.1
+    (by linarith [hθ.2, Real.pi_pos])
+  have hc0 : 0 ≤ c := Real.cos_nonneg_of_mem_Icc
+    ⟨by linarith [hθ.1, Real.pi_pos], hθ.2⟩
+  have hs1 : s ≤ 1 := Real.sin_le_one θ
+  have hc1 : c ≤ 1 := Real.cos_le_one θ
+  have hsc : s ^ 2 + c ^ 2 = 1 := Real.sin_sq_add_cos_sq θ
+  have hd0 : 0 < d := by
+    dsimp [d]
+    nlinarith [mul_nonneg (by linarith : 0 ≤ 4 * r - 6) (sub_nonneg.mpr hs1)]
+  have hb0 : 0 < b := mul_pos (Real.sqrt_pos.mpr (by norm_num))
+    (Real.sqrt_pos.mpr hd0)
+  have hb2 : b ^ 2 = 3 * d := by
+    dsimp [b, β, d, r, s, c]
+    rw [mul_pow, Real.sq_sqrt (by norm_num), Real.sq_sqrt hd0.le]
+  have hupper : 3 * d ≤ 57 - 12 * r := by
+    dsimp [d]
+    nlinarith [mul_nonneg (by linarith : 0 ≤ 4 * r - 6) hs0]
+  have htrace : 0 < 8 * r - 6 - b := by
+    have hsq : b ^ 2 < (8 * r - 6) ^ 2 := by nlinarith
+    nlinarith
+  have hrank : b ^ 2 = 9 * (c + 1) ^ 2 + (3 * s - 2 * r + 3) ^ 2 := by
+    dsimp [d] at hb2
+    linear_combination hb2 - 4 * hr2 - 9 * hsc
+  let A := 36 * c + 228 - 96 * r
+  let B := 16 * r - 12
+  have hA : 0 < A := by dsimp [A]; linarith
+  have hB : 0 < B := by dsimp [B]; linarith
+  have hk : 0 < 219 - 124 * r := by
+    have h : r < 219 / 124 := (Real.sqrt_lt' (by norm_num)).mpr (by norm_num)
+    linarith
+  have hid : A ^ 2 - B ^ 2 * b ^ 2 = 144 * (1 - s) * (219 + 9 * s - 124 * r) := by
+    dsimp [A, B, d] at *
+    linear_combination (-256 * r ^ 2 + 384 * r - 144) * hb2 +
+      (-4608 * c + 3072 * r * s + 3072 * r - 9216 * s - 5376) * hr2 + 1296 * hsc
+  have hsq : 0 ≤ A ^ 2 - B ^ 2 * b ^ 2 := by
+    rw [hid]
+    exact mul_nonneg (mul_nonneg (by norm_num) (sub_nonneg.mpr hs1)) (by linarith)
+  have hdet : 0 ≤ A - B * b := by
+    have hBb : 0 ≤ B * b := mul_nonneg hB.le hb0.le
+    nlinarith only [hsq, hA, hBb]
+  exact ⟨hb0, hrank, htrace, hdet⟩
+
 end
 
 end D5.S3.Quantum.Measurement.FreeSpectrahedronFeasibilityWitness
