@@ -333,7 +333,7 @@ public sealed class InformationTemplateEvidenceTests
     [Theory]
     [InlineData("legacy", true)]
     [InlineData("forward", true)]
-    [InlineData("witness", true)]
+    [InlineData("witness", false)]
     [InlineData("unknown", false)]
     public void strict_bridge_vocabulary(string kind, bool accepted)
     {
