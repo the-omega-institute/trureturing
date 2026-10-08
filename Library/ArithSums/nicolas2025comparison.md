@@ -5935,3 +5935,666 @@ not an all-integer finite Robin verification or an unbounded main
 estimate. The full RH objective remains unproved. All classical prime,
 zero-count and verified-height inputs are reused; this paper-level
 application carries no mathematical-priority or Lean-certification claim.
+
+## Absolute full-weight cost at a fixed negative heat time
+
+Keep the same conditional least global Robin-ratio maximizer $N$, the
+arithmetic clock $A=\log N>(7/2)10^{46}$, and $L=\log A$. The result
+below also holds for every fixed $A>1$. It concerns a particular
+absolute transport through negatively deformed zeros; it supplies no
+upper bound for the original signed response $-\sqrt A L I_\psi(A)$.
+
+The inputs are Alexander Dobner, *A proof of Newman's conjecture for
+the extended Selberg class*, [Acta Arithmetica 201 (2021), 29–62](https://doi.org/10.4064/aa200603-23-7), inspected in
+[arXiv:2005.05142v2](https://arxiv.org/html/2005.05142v2), Theorems 4–5,
+Lemma 3 and §3.1, and the NIST DLMF
+[principal exponential integral](https://dlmf.nist.gov/6.2#E1) and
+[sector asymptotic expansion](https://dlmf.nist.gov/8.20#E2).
+These published results are reused as `literature-attested` inputs.
+The combined full-weight convergence restriction is a `repo-derived`
+paper-level source application; no
+mathematical-priority or Lean-certification claim is made.
+
+### Continue the complete coefficient, keeping its cancellation
+
+For $0<\Re s<1$, put $v=\log u$ in the unchanged coefficient (M1).
+The DLMF principal $E_1$ definition and one integration by parts give
+
+$$
+\begin{aligned}
+F_A(s)
+&=\frac1s\int_L^\infty e^{(s-1)v}
+                 \left(\frac1v+\frac1{v^2}\right)\,dv\\
+&=\frac{A^{s-1}}{sL}+E_1((1-s)L).
+\end{aligned}
+\tag{NH1}
+$$
+
+Thus the right side defines the natural principal continuation
+$\widehat F_A$ on $\mathbb C\setminus(\{0\}\cup[1,\infty))$.
+Continuation defines these individual terms beyond the integral's
+half-plane of convergence; it does not itself establish a spectral
+transport identity.
+
+Let $s=x+iy$, $y\to+\infty$, with $|x|\le B\log y$ for a fixed $B$.
+Then $z=(1-s)L$ lies, eventually, in $|\arg z|\le3\pi/4$.
+DLMF (8.20.2), with its parameter $p=1$, supplies uniformly there
+
+$$
+E_1(z)=e^{-z}\left(z^{-1}-z^{-2}+O(|z|^{-3})\right).
+$$
+
+Substitution into the **full** (NH1) yields
+
+$$
+\begin{aligned}
+\widehat F_A(s)
+&=A^{s-1}\left(
+ \frac1{Ls(1-s)}-\frac1{L^2(1-s)^2}+O_{A,B}(y^{-3})\right)\\
+&=\frac{1+L}{L^2}\frac{A^{s-1}}{y^2}
+       \left(1+O_{A,B}\!\left(\frac{\log y}{y}\right)\right).
+\end{aligned}
+\tag{NH2}
+$$
+
+The terms $1/(sL)$ and $1/((1-s)L)$ cancel at order $y^{-1}$.
+The $-z^{-2}$ term supplies the additional $1/L^2$ in the nonzero
+leading coefficient. Neither part of the original weight has been
+discarded. All asymptotics here fix $A$ before taking the height limit.
+
+### Obtain enough distinct actual zeros from the source's shifts
+
+Fix one $\epsilon>0$ throughout and use Dobner's heat parameter
+$t=-\epsilon$. In the Riemann specialization his equations (11)–(12)
+give
+
+$$
+D_\epsilon(s)=\sum_{n\ge1}
+ e^{-\epsilon\log^2 n/4}n^{-s},\qquad
+J_\epsilon(s)=s+\frac\epsilon4\operatorname{Log}\frac{s}{2\pi}.
+\tag{NH3}
+$$
+
+The completion has the normalization
+$\xi_t((1+iz)/2)=8H_t(z)$, with the same heat time $t$.
+These are deformed $\xi_{-\epsilon}$ zeros, not original zeta zeros.
+
+Dobner's Lemma 3 supplies a zero of $D_\epsilon$. His §3.1 proof,
+using Theorems 4–5, supplies actual zeros of
+$\xi_{-\epsilon}(J_\epsilon(s))$ in sufficiently high translates
+of one fixed zero-isolating circle of radius $r$. The same shift
+sequence satisfies
+
+$$
+\liminf_{m\to\infty}(\tau_{m+1}-\tau_m)>0,
+\qquad \limsup_{m\to\infty}\frac{\tau_m}{m}<\infty.
+$$
+
+In particular $\tau_m\asymp_\epsilon m$. Choose $d>0$ such that
+the consecutive gaps are eventually at least $d$, and retain every
+$q$-th shift, where $qd>2r+\epsilon\pi/4$. On the upper half-plane,
+$J_\epsilon$ adds an imaginary offset in $(0,\epsilon\pi/4)$.
+Consequently the images of the retained circles have disjoint height
+intervals. Choosing one actual zero in each produces **distinct**
+zeros $w_m$ of the same $\xi_{-\epsilon}$ with
+
+$$
+\Im w_m\asymp_\epsilon m,\qquad
+\Re w_m=\frac\epsilon4\log(\Im w_m)+O_\epsilon(1).
+\tag{NH4}
+$$
+
+This uses the source's shift-density information, not merely the
+existence of infinitely many zeros. The selected preimages stay in
+one fixed bounded real strip, and $\Im J_\epsilon(s)=\Im s+O_\epsilon(1)$,
+which proves the real-part statement in (NH4).
+
+### A necessary absolute-budget condition, including equality
+
+Write $\kappa=\epsilon L/4$. Equations (NH2) and (NH4) imply, for
+all sufficiently large $m$,
+
+$$
+|\widehat F_A(w_m)|\asymp_{A,\epsilon}m^{\kappa-2}.
+\tag{NH5}
+$$
+
+The constants are positive because $(1+L)/L^2>0$ and
+$A^{\Re w_m-1}\asymp_{A,\epsilon}(\Im w_m)^\kappa$.
+Hence, counting the actual deformed zeros with multiplicities,
+
+$$
+\boxed{
+\epsilon\log A\ge4
+\quad\Longrightarrow\quad
+\sum_{\substack{\xi_{-\epsilon}(w)=0\\\Im w>0}}
+ |\widehat F_A(w)|=\infty.}
+\tag{NH6}
+$$
+
+At equality the selected subseries dominates the harmonic series;
+for larger $\epsilon L$ it dominates a divergent power series.
+Thus $\epsilon\log A<4$ is a **necessary** condition for this
+principal-continued, complete-weight, absolute full-spectrum
+transport. For $\epsilon\log A<4$, (NH5) makes this particular
+selected subseries converge, but establishes no convergence or
+uniform bound for the rest of the deformed spectrum.
+
+The conclusion is about absolute cost at one fixed negative heat
+time. It proves neither signed divergence nor a failure of Robin or
+RH, and does not exclude transports that retain cancellation or use
+additional comparison terms. Such a route still needs an all-height
+identity and a paid signed error returning to the original zeros,
+their real parts and multiplicities, the original elementary
+correction and the strict core at the same $N$. No changing heat time
+per zero, finite-spectrum truncation or unproved positive-time
+certificate is used to discharge that obligation.
+
+## The subcritical full-spectrum absolute boundary
+
+The necessary condition (NH6) has a converse for every fixed $A>1$
+and fixed $\epsilon>0$. The additional step is a uniform right-half-plane
+comparison, not a use of Dobner's Theorem 4 outside its stated
+$|\Re s|\le C(\Im s)^{1/4}$ range. Reuse his exact negative-heat
+convolution (9), the Riemann completion, and the already retained
+(NH1)–(NH6). The [DLMF digamma expansion (5.11.2)](https://dlmf.nist.gov/5.11#E2)
+is used in its fixed sector $|\arg z|\le\pi/2$.
+These are `literature-attested` inputs; the uniform comparison and
+combined convergence boundary below are `repo-derived` paper-level
+applications, with no mathematical-priority or Lean-certification claim.
+
+### A uniform comparison on the entire right half-plane
+
+Write
+
+$$
+\gamma(s)=\tfrac12s(s-1)\pi^{-s/2}\Gamma(s/2),\qquad
+c=\epsilon/4,\qquad
+J_\epsilon(s)=s+c\operatorname{Log}(s/(2\pi)),
+$$
+
+$$
+\gamma_{-\epsilon}(s)=\gamma(s)
+ \exp((s-J_\epsilon(s))^2/\epsilon).
+$$
+
+For fixed $\epsilon>0$, the comparison is
+
+$$
+\boxed{\frac{\xi_{-\epsilon}(J_\epsilon(s))}
+ {\gamma_{-\epsilon}(s)}
+ =D_\epsilon(s)+O_\epsilon(|s|^{-1}),
+ \qquad \Re s\ge2,\quad |s|\longrightarrow\infty.}
+\tag{NH7}
+$$
+
+Uniformity includes arbitrarily large $\Re s$, both ordinate signs,
+and the real axis. It is not uniform in $\epsilon$ as $\epsilon\to0$.
+
+Here is the required interface proof. The DLMF expansion gives uniformly
+in this half-plane
+
+$$
+\frac{\gamma'}{\gamma}(s)
+=\frac1s+\frac1{s-1}-\frac12\log\pi
+ +\frac12\frac{\Gamma'}{\Gamma}(s/2)
+=\frac12\operatorname{Log}(s/(2\pi))+O(|s|^{-1}).
+$$
+
+Its imaginary part is bounded on the whole half-plane: the principal
+argument is bounded, and the remaining bounded part is covered by
+continuity on a compact set. Consequently, for an absolute $M$ and
+all real $v$,
+
+$$
+\left|\frac{\gamma(s+iv)}{\gamma(s)}\right|\le e^{M|v|}.
+$$
+
+Set
+
+$$
+R_s(v)=\frac{\gamma(s+iv)}{\gamma(s)}
+ \exp\!\left(-\frac{iv}{2}\operatorname{Log}(s/(2\pi))\right),
+\qquad r=|s|.
+$$
+
+Then $|R_s(v)|\le e^{(M+\pi/4)|v|}$ for all $v$. Integrating the
+logarithmic derivative along the vertical segment, for
+$|v|\le r^{1/4}$ and large $r$, gives
+
+$$
+|R_s(v)-1|\ll\frac{|v|+v^2}{r}.
+$$
+
+Indeed, $|s+iu|\ge r/2$ on that segment and
+$|\operatorname{Log}(s+iu)-\operatorname{Log}s|\le2|u|/r$.
+The integrated exponent is $O((|v|+v^2)/r)=o(1)$ uniformly on this
+range. No bounded-real-part Stirling estimate is used at an unbounded
+real part.
+
+In Dobner's (9), shift the vertical contour to $\Re z=\Re s$ and
+write $z=s+iv$. For each fixed $s$ this is a finite contour shift;
+the Gaussian and the usual vertical decay kill the horizontal ends.
+After division by $\gamma_{-\epsilon}(s)$ the exact identity is
+
+$$
+\frac{\xi_{-\epsilon}(J_\epsilon(s))}{\gamma_{-\epsilon}(s)}
+=\frac1{\sqrt{\pi\epsilon}}\int_{\mathbb R}
+ e^{-v^2/\epsilon}R_s(v)\zeta(s+iv)\,dv.
+\tag{NH8}
+$$
+
+Replacing $R_s$ by $1$ gives exactly $D_\epsilon(s)$ by the Gaussian
+Fourier integral and the absolutely convergent Dirichlet series.
+On $\Re s\ge2$, $|\zeta(s+iv)|\le\zeta(2)$. The local difference
+therefore has integral $O_\epsilon(r^{-1})$. On $|v|>r^{1/4}$ the
+uniform exponential bound for $R_s$ gives
+$O_\epsilon(\exp(-r^{1/2}/(2\epsilon)))=o_\epsilon(r^{-1})$.
+This proves (NH7), without estimating every Dirichlet term separately.
+
+### Every sufficiently high zero lies in a logarithmic region
+
+On $\Re s\ge2$,
+$|D_\epsilon(s)-1|\le\zeta(2)-1<1$.
+The completion $\gamma_{-\epsilon}$ is nonzero there, so (NH7) shows
+that $\xi_{-\epsilon}(J_\epsilon(s))\ne0$ for all sufficiently large
+$|s|$ in this entire half-plane.
+
+To cover the rightmost region, let $w$ have sufficiently large modulus
+and satisfy
+$\Re w\ge c\log(|w|/(2\pi))+3$.
+Put $s_0=w-c\operatorname{Log}(w/(2\pi))$.
+On $|s-s_0|=1/2$ one has $\Re s\ge5/2$ and
+
+$$
+J_\epsilon(s)-w=(s-s_0)
+ +c[\operatorname{Log}(s/(2\pi))-
+       \operatorname{Log}(w/(2\pi))].
+$$
+
+The second term is $O_\epsilon(\log|w|/|w|)<1/2$.
+The logarithms and the intervening segments stay in the right
+half-plane. Rouché's theorem gives a preimage $s$ inside the circle;
+it satisfies $\Re s\ge2$ and $|s|\asymp|w|$.
+Thus there is no such zero $w$. Apply the same argument to $1-w$ using
+$\xi_{-\epsilon}(1-w)=\xi_{-\epsilon}(w)$.
+Together these bounds imply, for every zero of sufficiently large
+modulus,
+$|\Re w|\le c\log|w|+O_\epsilon(1)$.
+This forces $|\Im w|\to\infty$ with $|w|$ and then gives
+
+$$
+\boxed{1-c\log y-O_\epsilon(1)
+ \le\Re w\le c\log y+O_\epsilon(1),
+ \qquad y=\Im w\longrightarrow+\infty.}
+\tag{NH9}
+$$
+
+All actual zeros are covered; this is not the lower-density subsequence
+in (NH4). To replace $|w|$ by $y$, note that the bound on $|\Re w|$
+precludes $|\Re w|\ge|\Im w|$ at arbitrarily large modulus, and hence
+$|w|\le\sqrt2\,|\Im w|$ eventually.
+
+### Count the whole spectrum and use the complete original coefficient
+
+The original Fourier kernel $\Phi$ in Dobner's (2) is positive for
+$u\ge0$: each summand has the positive factor
+$2\pi n^2e^{4u}-3$. Evenness gives positivity on the whole real line.
+For $|s-1/2|\le R$, its exact Fourier representation implies
+
+$$
+|\xi_{-\epsilon}(s)|
+\le\int_{\mathbb R}\Phi(u)e^{2R|u|}\,du
+\le2\xi_0(1/2+R),
+\qquad \xi_{-\epsilon}(1/2)>0.
+$$
+
+Classical real Stirling growth gives a logarithm
+$O(R\log(R+2))$ for the upper bound. Jensen's zero-count theorem,
+applied at $1/2$ with radii $R$ and $2R$, therefore gives
+$O_\epsilon(R\log(R+2))$ zeros in the disk, counted with multiplicities.
+Together with (NH9), this gives the complete height count
+
+$$
+N_\epsilon(T)=\#\{w:\xi_{-\epsilon}(w)=0,\ 0<\Im w\le T\}
+\ll_\epsilon T\log(T+2).
+\tag{NH10}
+$$
+
+The bounded-height exceptions are finite by (NH9) and analyticity.
+This step reuses the standard Jensen theorem, not an original-zeta
+zero count applied to a different function.
+
+Fix $A>1$ as well, write $L=\log A$ and $\kappa=\epsilon L/4$.
+The retained complete-weight asymptotic (NH2), with (NH9), now gives
+for every sufficiently high actual zero
+
+$$
+|\widehat F_A(w)|\ll_{A,\epsilon} (\Im w)^{\kappa-2}.
+$$
+
+For $\kappa<1$, the mass in a dyadic height band is at most
+$O_{A,\epsilon}(j2^{j(\kappa-1)})$ by (NH10), and these bounds sum.
+Thus the converse to (NH6) is
+
+$$
+\boxed{\sum_{\substack{\xi_{-\epsilon}(w)=0\\\Im w>0}}
+ |\widehat F_A(w)|<\infty
+ \quad\Longleftrightarrow\quad \epsilon\log A<4,
+ \qquad A>1,\quad\epsilon>0.}
+\tag{NH11}
+$$
+
+Every zero has its actual real part and multiplicity, and all positive
+heights are retained. (NH6) supplies divergence at and above the
+boundary; (NH7)–(NH10) supply full-spectrum convergence below it.
+The tail below the boundary is
+$O_{A,\epsilon}(T^{\kappa-1}\log(T+2))$ as $T\to\infty$,
+with fixed parameters. No uniform allowance as $\epsilon\to0$ or
+$\epsilon\log A\to4$ is asserted.
+
+This determines the absolute convergence domain of the particular
+continued complete-weight deformation. It provides no numerical
+Robin budget, signed transport identity, or comparison error returning
+to the original zero multiset. The same selected integer $N$,
+$A=\log N>(7/2)10^{46}$, the original $F_A$, positive elementary
+correction and strict core remain in the unproved target (G9).
+In particular, absolute convergence of the deformed trace does not
+prove its signed upper bound or RH.
+
+## A joint small-negative-time comparison of the complete signed trace
+
+The fixed-parameter convergence in (NH11) can be supplemented with a
+quantitative comparison to the original trace. Reuse (NH8), its global
+vertical ratio bound, the principal continuation (NH1), and the
+all-spectrum count and convergence (NH9)–(NH11). The new interface is
+uniform in the arithmetic clock and in small negative heat time; no
+individual zero trajectories or zero-gap bounds are required.
+
+Write $H_\epsilon=\xi_{-\epsilon}'/\xi_{-\epsilon}$, with $H_0$ for
+the original completion. Define the full real trace
+
+$$
+Z_\epsilon(A)=\sum_{\xi_{-\epsilon}(w)=0}\widehat F_A(w).
+$$
+
+All zeros here are nonreal: positivity of the original Fourier kernel
+makes $\xi_{-\epsilon}(x)>0$ for every real $x$. The trace includes both
+ordinate signs and every multiplicity. At $\epsilon=0$ it is precisely
+$Z_{\rm orig}(A)$ from (G9). The branch continuation is used for deformed
+zeros with real part beyond $1$; their coefficients are not replaced
+by convergent original integrals there.
+
+There are absolute constants $\epsilon_0>0$ and $C<\infty$ such that
+
+$$
+\boxed{|Z_\epsilon(A)-Z_{\rm orig}(A)|\le C\epsilon A^2,
+\quad A\ge e^2,\quad 0<\epsilon\le\epsilon_0,
+\quad \epsilon\log A\le1.}
+\tag{NH12}
+$$
+
+This is a `repo-derived` paper-level application of the retained
+convolution and spectral interfaces, together with the standard Cauchy,
+Hadamard and argument-principle theorems. It does not assert mathematical
+priority, Lean certification, a numerical value of $C$ or
+$\epsilon_0$, or a signed Robin upper bound.
+
+### Center the small-time error before taking a logarithmic derivative
+
+Keep $J_\epsilon,\gamma_{-\epsilon},R_s$ from (NH7)–(NH8), and set
+
+$$
+U_\epsilon(s)=
+ \frac{\xi_{-\epsilon}(J_\epsilon(s))}{\gamma_{-\epsilon}(s)}.
+$$
+
+For $\Re s\ge2$, (NH8) gives the exact Gaussian average of
+$R_s(v)\zeta(s+iv)$. The retained log-Gamma estimates imply that the
+first two $v$ derivatives of this product are bounded uniformly for
+$|v|\le1$ and $\Re s\ge2$. To see the needed uniformity, use
+
+$$
+\partial_v\log R_s(v)
+=i\left[\frac{\gamma'}\gamma(s+iv)
+ -\tfrac12\operatorname{Log}(s/(2\pi))\right].
+$$
+
+The bracket and its $v$ derivative are bounded there. The DLMF
+sector estimate supplies the large-$|s|$ bound, Cauchy's derivative
+estimate supplies its derivative, and the remaining compact region
+has no Gamma pole or zero. The series for $\zeta,\zeta',\zeta''$ are
+uniformly absolutely convergent in $\Re s\ge2$.
+
+Taylor-expand the product at $v=0$ and subtract its linear term.
+The centered Gaussian integrates that linear term to zero, while its
+second moment is $\epsilon/2$. On $|v|>1$, the retained
+$e^{(M+\pi/4)|v|}$ envelope pays the whole tail by $O(\epsilon)$ for
+$0<\epsilon\le1/2$, including the subtracted affine term. Hence
+
+$$
+U_\epsilon(s)=\zeta(s)+O(\epsilon)
+\quad(\Re s\ge2),
+\tag{NH13}
+$$
+
+with an absolute constant. This improves the parameter dependence
+needed here; (NH7)'s fixed-$\epsilon$ height estimate is not assigned
+a uniform constant without proof.
+
+Since $|\zeta(s)|\ge2-\zeta(2)>0$, choose an absolute
+$\epsilon_0\le1/2$ small enough that $U_\epsilon$ is bounded away
+from zero on the entire half-plane. On $\Re s=3$, Cauchy's estimate
+on radius-$1/2$ disks also gives $U_\epsilon'-\zeta'=O(\epsilon)$.
+The denominators are now paid, so
+$U_\epsilon'/U_\epsilon-\zeta'/\zeta=O(\epsilon)$.
+
+The exact normalization obeys
+
+$$
+\frac{\gamma_{-\epsilon}'}{\gamma_{-\epsilon}}(s)
+=\frac{\gamma'}\gamma(s)
+ +\frac\epsilon8\frac{\operatorname{Log}(s/(2\pi))}{s}.
+$$
+
+Consequently, on the whole line $\Re s=3$,
+
+$$
+K_\epsilon(s):=H_\epsilon(J_\epsilon(s))J_\epsilon'(s)
+=H_0(s)+O(\epsilon),
+\qquad |H_0(s)|\ll\log(|s|+2).
+\tag{NH14}
+$$
+
+Both bounds have absolute constants. No function-value estimate is
+substituted for a logarithmic-derivative estimate without this step.
+
+### Transport the complete coefficient on these curves
+
+Differentiating the exact (NH1), including its exponential-integral
+part, gives
+
+$$
+\widehat F_A'(z)=A^{z-1}
+ \left[\frac1{z(1-z)}-\frac1{Lz^2}\right],\qquad L=\log A.
+\tag{NH15}
+$$
+
+This derivative is single-valued away from $0,1$; the original weight
+itself still has its branch cut. Put $s=3+iy$, $r=|s|$,
+$\kappa=\epsilon L/4\le1/4$, and
+
+$$
+Q_\epsilon(s)=\widehat F_A(J_\epsilon(s))
+             +\widehat F_A(1-J_\epsilon(s)).
+$$
+
+On the segments from $s$ to $J_\epsilon(s)$ and their reflections,
+$|z|,|1-z|\asymp r$. They remain respectively in the right and left
+half-planes, and the first segment has the same ordinate sign at both
+ends. Its real part is at most $3+(\epsilon/4)\max(\log(r/(2\pi)),0)$.
+For bounded $r$, any analogous reflected increase is bounded by
+$\epsilon L\le1$. Thus (NH15) gives
+
+$$
+|Q_\epsilon(s)-Q_0(s)|
+ \ll\epsilon A^2\log(r+2)r^{\kappa-2}.
+$$
+
+One also has $|Q_0(s)|\ll A^2r^{-2}$ uniformly for $A\ge e^2$.
+This full-coefficient bound can be obtained from (NH15) without losing
+its cancellation: integrate from $3+iy$ to the corresponding imaginary
+infinity, where (NH2) gives zero, and integrate $e^{iLt}$ once by
+parts. The rational bracket is $O((1+t^2)^{-1})$ and its derivative
+is $O((1+|t|^3)^{-1})$; $L\ge2$ pays the integration factor.
+Use the same calculation on $-2-iy$, whose exponential factor is
+$A^{-3}$. Each ordinate sign is treated on its own branch; at $y=0$
+take the one-sided limits. It follows that
+
+$$
+\begin{aligned}
+|Q_0(s)|&\ll A^2r^{-2},\\
+|Q_\epsilon(s)|&\ll A^2\log(r+2)r^{\kappa-2},\\
+|Q_\epsilon(s)-Q_0(s)|
+ &\ll\epsilon A^2\log(r+2)r^{\kappa-2}.
+\end{aligned}
+\tag{NH16}
+$$
+
+No leading-term replacement of $\widehat F_A$ is used.
+
+### The whole trace has an exact contour, cut and pole balance
+
+Let $\Gamma_\epsilon$ be $J_\epsilon(3+i\mathbb R)$, oriented upward,
+and put $b_\epsilon=J_\epsilon(3)$. The curve and its reflection enclose
+all zeros. For completeness, $J_\epsilon$ is injective on $\Re s>2$:
+the real part of
+
+$$
+\frac{J_\epsilon(s_1)-J_\epsilon(s_2)}{s_1-s_2}
+=1+\frac\epsilon4\int_0^1
+ \frac{dt}{s_2+t(s_1-s_2)}
+$$
+
+is positive. Its boundary line maps to a graph, since
+$\Im J_\epsilon(b+iy)=y+(\epsilon/4)\arctan(y/b)$ is strictly
+increasing and onto. Properness at infinity then identifies the
+half-plane image with the region to the right of that graph.
+By (NH13) there are no zeros in this image. The reflected exterior
+is zero-free by the functional equation. In particular all zeros lie
+between $\Gamma_\epsilon$ and $1-\Gamma_\epsilon$.
+
+Use the argument principle in this intervening region, slit along
+$[1,b_\epsilon]$ and with the pole at $0$ accounted for. The already
+cited [DLMF (6.2.4)](https://dlmf.nist.gov/6.2#E4),
+$E_1(z)=\operatorname{Ein}(z)-\operatorname{Log}z-\gamma$, shows
+
+$$
+\widehat F_A(x+i0)-\widehat F_A(x-i0)=2\pi i\quad(x>1),
+\qquad \operatorname{Res}_{z=0}\widehat F_A(z)=\frac1{AL}.
+$$
+
+The upper side of the slit is traversed from $1$ to $b_\epsilon$;
+its contribution is therefore
+$\log(\xi_{-\epsilon}(b_\epsilon)/\xi_{-\epsilon}(1))$.
+The logarithms here are real logarithms of positive values.
+The circle at the logarithmic branch point $1$ tends to zero.
+Reflection changes $H_\epsilon(1-z)$ to $-H_\epsilon(z)$,
+so the two exterior curves combine into the exact balance
+
+$$
+\boxed{
+Z_\epsilon(A)=\frac1{2\pi i}
+ \int_{3-i\infty}^{3+i\infty}Q_\epsilon(s)K_\epsilon(s)\,ds
+ +\log\frac{\xi_{-\epsilon}(b_\epsilon)}{\xi_{-\epsilon}(1)}
+ -\frac{H_\epsilon(0)}{AL}.}
+\tag{NH17}
+$$
+
+The two integral halves use the corresponding principal boundary
+values at the real crossing; the integral is absolutely convergent
+by (NH14)–(NH16). Both ordinate signs and all multiplicities remain.
+At $\epsilon=0$ this is the identical contour balance for
+$Z_{\rm orig}$, not a different kernel or another maximizing integer.
+
+The infinite-contour limit also needs its horizontal ends paid.
+The retained Fourier growth and a positive lower bound at $1/2$
+give the (NH10) disk/height counts uniformly for
+$0\le\epsilon\le\epsilon_0$; the lower bound may use
+$\xi_{-\epsilon_0}(1/2)>0$. In each large dyadic interval choose
+heights whose unit neighborhoods contain $O(\log T)$ zeros and whose
+distance from every zero ordinate is at least $c/\log T$.
+These heights exist by averaging the complete count and removing
+intervals of that radius with sufficiently small $c$.
+
+The standard genus-one Hadamard logarithmic derivative is
+
+$$
+H_\epsilon(z)=B_\epsilon+
+ \sum_w\left(\frac1{z-w}+\frac1w\right).
+$$
+
+Its finite part at these heights is $O(T\log T)$: only
+$O(\log T)$ zeros have ordinate distance below $1$, their reciprocals
+cost $O(\log^2T)$, and the other $O(T\log T)$ terms have distance
+at least $1$. The $1/w$ terms cost $O(\log^2T)$, and the
+$|w|>4T$ tail costs $O(\log T)$ by the complete count.
+Here $|z|\asymp T$ on the horizontal ends, and the endpoints' real
+width is $O(\log T)$. The complete-coefficient estimate (NH2) therefore
+pays these ends by $O_{A,\epsilon}(T^{\kappa-1}\log^2T)\to0$.
+The Hadamard theorem is used for the deformed entire function itself;
+no original-zeta count or simple-zero assumption is imported.
+This justifies (NH17) over the full spectrum, including collisions.
+
+### Pay the signed trace difference on the same arithmetic clock
+
+Subtract (NH17) at zero heat time. Equations (NH14)–(NH16) give
+
+$$
+\left|\frac1{2\pi i}\int
+ [Q_\epsilon K_\epsilon-Q_0H_0],ds\right|
+\ll\epsilon A^2\int_{\mathbb R}
+ |3+iy|^{\kappa-2}\log^2(|3+iy|+2)\,dy
+\ll\epsilon A^2,
+$$
+
+uniformly for $\kappa\le1/4$. The exact slit and pole differences
+are $O(\epsilon)$ as well. Indeed, $b_\epsilon-3=O(\epsilon)$,
+and the Fourier representation has uniformly bounded $x$ and
+$\epsilon$ derivatives on the fixed real compact set $0\le x\le3$,
+$0\le\epsilon\le\epsilon_0$. Positivity bounds its denominators away
+from zero there. The required moments are finite by the original
+super-exponential kernel decay. Hence the real logarithm difference
+and $H_\epsilon(0)-H_0(0)$ are $O(\epsilon)$; $1/(AL)\le1$.
+This proves (NH12), with every contour correction retained.
+
+For one common heat time at each $A$, choose
+
+$$
+\epsilon(A)=\min(\epsilon_0/2,A^{-3}).
+$$
+
+It satisfies all the preceding hypotheses for $A\ge e^2$. Using the
+unchanged positive elementary term $r_A$ from (G9), (NH12) gives
+
+$$
+\boxed{-\sqrt A L I_\psi(A)
+=\sqrt A L Z_{\epsilon(A)}(A)+r_A
+ +O\!\left(LA^{-1/2}\right).}
+\tag{NH18}
+$$
+
+The implicit constant is independent of $A$. The same selected
+$N$ and $A=\log N>(7/2)10^{46}$ remain the source, and the original
+zero real parts, multiplicities and infinite height range are paid
+through the complete comparison. The time depends on the one
+arithmetic clock, never on individual zeros. No uniform fixed negative
+time is used as $A\to\infty$.
+
+The comparison provides no upper bound for the signed main trace
+$\sqrt A L Z_{\epsilon(A)}(A)$. In particular its absolute convergence
+and its zero-free exterior do not establish the Robin budget
+$\mathcal E(L)$. The constants have not been numerically certified
+against the selected finite clock, so an $o(1)$ comparison alone is
+not an exact finite Robin certificate. The original strict core and
+positive $r_A$ still require enough signed slack. RH remains unproved.
