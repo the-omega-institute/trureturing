@@ -10,13 +10,13 @@ namespace StrataLint.Tests;
 public sealed class UtilityRefutationProducerTests
 {
     [Theory]
-    [InlineData("expanded", "ChangedContent")]
-    [InlineData("expanded", "PreDeposit")]
-    [InlineData("expanded", "FirstFreeze")]
-    [InlineData("companion", "ChangedContent")]
-    [InlineData("companion", "PreDeposit")]
-    [InlineData("companion", "FirstFreeze")]
-    public void RealLeanAcceptsIrreducibleClaimRefutationsInEveryPhase(string result, string phase)
+    [InlineData("expanded", "ChangedContent", false)]
+    [InlineData("expanded", "PreDeposit", false)]
+    [InlineData("expanded", "FirstFreeze", false)]
+    [InlineData("companion", "ChangedContent", true)]
+    [InlineData("companion", "PreDeposit", true)]
+    [InlineData("companion", "FirstFreeze", true)]
+    public void RealLeanChecksLiteralIrreducibleClaimRefutationsInEveryPhase(string result, string phase, bool valid)
     {
         using var temporary = new TemporaryDirectory();
         var root = temporary.Path;
@@ -43,12 +43,12 @@ public sealed class UtilityRefutationProducerTests
         Directory.CreateDirectory(Path.Combine(root, "D5", "S0", "Carrier"));
         File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "lean-toolchain"), Path.Combine(root, "lean-toolchain"));
         File.WriteAllText(Path.Combine(root, "lakefile.toml"),
-            "name = \"refutation_fixture\"\ndefaultTargets = [\"D5\"]\n[[lean_lib]]\nname = \"D5\"\nglobs = [\"D5.+\"]\n");
+            "name = \"refutation_fixture\"\ndefaultTargets = [\"D5\", \"LeanInformationAudit\"]\n[[lean_lib]]\nname = \"D5\"\nglobs = [\"D5.+\"]\n");
         File.WriteAllText(Path.Combine(root, path), source);
+        var inspector = PrepareStatementInspector(root);
         RequireSuccess(TestProcessRunner.Run("lake", ["build"], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
 
-        var inspector = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector", "Inspector.lean");
         var compactor = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector", "materials.py");
         var inputs = Path.Combine(root, "utility.json");
         var output = Path.Combine(root, "report.json");
@@ -61,7 +61,7 @@ public sealed class UtilityRefutationProducerTests
             "--output", output + ".spool", "--material-spool", output + ".materials",
             "--utility-input", inputs, module, path, sourceHash], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
-        RequireSuccess(TestProcessRunner.Run("python3", [compactor, "compact", output + ".spool", output + ".materials", output, manifest], root,
+        RequireSuccess(TestProcessRunner.Run("python3", [compactor, "compact", output + ".spool", output + ".materials", output], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
         var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
             RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(path, source)]))).Snapshot;
@@ -69,8 +69,9 @@ public sealed class UtilityRefutationProducerTests
         var validation = UtilityDeclarationValidator.Validate(Enum.Parse<UtilityValidationPhase>(phase),
             RepoPath.CreateKnown(path), utility, snapshot, () => report);
 
-        Assert.True(validation.IsAccepted, $"{result}/{phase}: {validation.Failure} {validation.Detail}");
-        Assert.True(report.Files[RepoPath.CreateKnown(path)].Refutation!.IsClosedNegation);
+        Assert.Equal(valid, validation.IsAccepted);
+        if (!valid) Assert.Equal(UtilityValidationFailure.RefutationInvalid, validation.Failure);
+        Assert.Equal(valid, report.Files[RepoPath.CreateKnown(path)].Refutation!.IsClosedNegation);
     }
 
     [Fact]
@@ -110,13 +111,13 @@ public sealed class UtilityRefutationProducerTests
             """ + "\n";
         File.Copy(Path.Combine(TestRepositoryLayout.FindRoot(), "lean-toolchain"), Path.Combine(root, "lean-toolchain"));
         File.WriteAllText(Path.Combine(root, "lakefile.toml"),
-            "name = \"refutation_fixture\"\ndefaultTargets = [\"D5\"]\n[[lean_lib]]\nname = \"D5\"\nglobs = [\"D5.+\"]\n");
+            "name = \"refutation_fixture\"\ndefaultTargets = [\"D5\", \"LeanInformationAudit\"]\n[[lean_lib]]\nname = \"D5\"\nglobs = [\"D5.+\"]\n");
         File.WriteAllText(Path.Combine(root, path), declarations);
         File.WriteAllText(Path.Combine(root, externalPath), externalSource);
+        var inspector = PrepareStatementInspector(root);
         RequireSuccess(TestProcessRunner.Run("lake", ["build"], root,
             TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
 
-        var inspector = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector", "Inspector.lean");
         var compactor = Path.Combine(TestRepositoryLayout.FindRoot(), "tools", "lean-inspector", "materials.py");
         var inputs = Path.Combine(root, "utility.json");
         var output = Path.Combine(root, "report.json");
@@ -126,7 +127,7 @@ public sealed class UtilityRefutationProducerTests
             ("witness", "proposed_law", false), ("conditional", "proposed_law", false),
             ("not_a_theorem", "proposed_law", false), ("direct", "other_claim", false),
             ("direct", "parameterized_claim", false), ("general", "proposed_law", false),
-            ("direct", "external_law", true),
+            ("direct", "external_law", false),
         })
         {
             var claimModule = claim == "external_law" ? "D5.S0.Carrier.Law" : "D5.S0.Carrier.Probe";
@@ -152,7 +153,7 @@ public sealed class UtilityRefutationProducerTests
                 "D5.S0.Carrier.Law", externalPath,
                 "sha256:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(externalSource)))], root,
                 TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
-            RequireSuccess(TestProcessRunner.Run("python3", [compactor, "compact", output + ".spool", output + ".materials", output, manifest], root,
+            RequireSuccess(TestProcessRunner.Run("python3", [compactor, "compact", output + ".spool", output + ".materials", output], root,
                 TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
             var snapshot = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(
                 RawRepositorySnapshot.Create([RawRepositoryEntry.FromText(path, source),
@@ -174,14 +175,39 @@ public sealed class UtilityRefutationProducerTests
                     "sha256:" + Convert.ToHexStringLower(SHA256.HashData(Encoding.UTF8.GetBytes(source)))], root,
                     TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
                 RequireSuccess(TestProcessRunner.Run("python3", [compactor, "compact", output + ".subset.spool", output + ".subset.materials",
-                    output + ".subset", manifest], root,
+                    output + ".subset"], root,
                     TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
                 using var subset = JsonDocument.Parse(FixtureFile.ReadAllBytes(output + ".subset"));
                 var modules = subset.RootElement.GetProperty("modules");
                 Assert.Equal(1, modules.GetArrayLength());
-                Assert.True(modules[0].GetProperty("utility_refutation").GetProperty("is_closed_negation").GetBoolean());
+                Assert.False(modules[0].GetProperty("utility_refutation").GetProperty("is_closed_negation").GetBoolean());
             }
         }
+    }
+
+    internal static string PrepareStatementInspector(string root)
+    {
+        var repository = TestRepositoryLayout.FindRoot();
+        var producer = Path.Combine(repository, "tools", "lean-inspector");
+        foreach (var module in new[] { "RawArtifacts", "CompiledMetadata", "CompiledAxioms", "Contract/SourceAudit" })
+        {
+            var path = Path.Combine("LeanInformationAudit", module + ".lean");
+            var destination = Path.Combine(root, path);
+            Directory.CreateDirectory(Path.GetDirectoryName(destination)!);
+            File.Copy(Path.Combine(producer, path), destination);
+        }
+        File.AppendAllText(Path.Combine(root, "lakefile.toml"),
+            "[[lean_lib]]\nname = \"LeanInformationAudit\"\nglobs = [\"LeanInformationAudit.+\"]\n");
+        File.Copy(Path.Combine(producer, "materials.py"), Path.Combine(root, "materials.py"));
+        RequireSuccess(TestProcessRunner.Run("python3", ["-c", """
+            import sys
+            from pathlib import Path
+            producer, root = map(Path, sys.argv[1:])
+            sys.path.insert(0, str(producer / 'tests'))
+            from test_native_support import transport_inspector
+            (root / 'Inspector.lean').write_text(transport_inspector((producer / 'Inspector.lean').read_text()))
+            """, producer, root], root, TestBudgets.LeanProcessHangGuard, 8 * 1024 * 1024));
+        return Path.Combine(root, "Inspector.lean");
     }
 
     private static void RequireSuccess(ProcessOutput result)

@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon
 import Reg.Support.DependentFamily
 
@@ -76,21 +77,32 @@ def registration : Registration arena (arena.Law actual) where
     change Nat.gcd 0 (2 ^ 2) ≠ Nat.gcd 1 (2 ^ 2)
     norm_num
 
-register_information_theorem sharp_prime_power_gcd_horizon in arena
-  readout via (realize signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.sharp_prime_power_gcd_horizon) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun _ parameters value => Nat.gcd value (parameters.1 ^ parameters.2))
-    (fun anchor => nomatch anchor))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "body",
-        "arg", "arg", "arg", "arg",
-        "arg", "body", "arg", "body", "arg", "body", "arg", "body",
-        "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg"]
-      stateOperand := some #["fn", "arg"] }] })
-  escape continues (open)
+    (fun anchor => nomatch anchor))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "FibonacciAtomic") "PrimePowerGcdHorizon") "sharp_prime_power_gcd_horizon") "Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon/Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ parameters value => Nat.gcd value (parameters.1 ^ parameters.2))
+    (fun anchor => nomatch anchor)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.PrimePowerGcdHorizon, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "body", "arg", "body", "arg", "body", "arg", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

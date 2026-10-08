@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S1.Recurrence.BoerdijkCoxeterGeneratingFunctions
 import Reg.Support.DependentFamily
 
@@ -131,16 +132,28 @@ def registration : Registration arena
       Finset.sum_const_zero] at edge
     norm_num at edge
 
-register_information_theorem _root_.D5.S1.Recurrence.BoerdijkCoxeterGeneratingFunctions.result in arena
-  readout via (realize signature (fun _ _ n => vertex n) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S1.Recurrence.BoerdijkCoxeterGeneratingFunctions
-    coordinates := #[]
-    readouts := #[{
-      path := #["fn", "arg", "body", "arg", "fn", "arg", "fn", "arg", "fn", "arg"]
-      stateBinder := 0 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S1.Recurrence.BoerdijkCoxeterGeneratingFunctions.result) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ n => vertex n) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S1") "Recurrence") "BoerdijkCoxeterGeneratingFunctions") "result") "Reg.D5.S1.Recurrence.BoerdijkCoxeterGeneratingFunctions/Reg.D5.S1.Recurrence.BoerdijkCoxeterGeneratingFunctions.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S1.Recurrence.BoerdijkCoxeterGeneratingFunctions.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ n => vertex n) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S1.Recurrence.BoerdijkCoxeterGeneratingFunctions, definition := none, coordinates := #[], readouts := #[{ path := #["fn", "arg", "body", "arg", "fn", "arg", "fn", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

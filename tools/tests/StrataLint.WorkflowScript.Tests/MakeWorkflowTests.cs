@@ -75,8 +75,7 @@ public sealed partial class MakeWorkflowTests
         "pr-open",
         "pr-watch",
         "gate",
-        "census",
-        "census-derivational",
+        "compiled-judge-test",
     ];
 
     private static readonly string[] ToolsTargets =
@@ -103,8 +102,6 @@ public sealed partial class MakeWorkflowTests
         "prime-slab-cpu",
         "prime-slab-cpu-test",
         "prime-slab-cpu-mutation-test",
-        "census-test",
-        "census-frontier-performance",
     ];
 
     [Fact]
