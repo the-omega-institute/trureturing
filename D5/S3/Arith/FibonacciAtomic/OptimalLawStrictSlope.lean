@@ -55,7 +55,7 @@ theorem law_data (m : ℕ) (p : Fin m → ℝ) (hs : ∑ i, p i = 1) :
 theorem cost_ge_one (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
     (hp : ∀ i, 0 < p i) (hs : ∑ i, p i = 1) : 1 ≤ cost p := by
   classical
-  haveI : Nontrivial (Fin m) := Fin.nontrivial_iff_two_le.mpr hm
+  have : Nontrivial (Fin m) := Fin.nontrivial_iff_two_le.mpr hm
   have floors (i : Fin m) : ⌊p i⌋ = 0 := by
     apply Int.floor_eq_zero_iff.mpr
     refine ⟨(hp i).le, ?_⟩
@@ -101,7 +101,7 @@ theorem alpha_ge_labels (m : ℕ) (hm : 2 ≤ m) : (m : ℝ) ≤ alpha m := by
 
 /-- On positive normalized real laws, the dyadic cost-to-coordinate ratio is
 lower semicontinuous, including at terminating binary coordinates. -/
-theorem ratio_lowerSemicontinuous (m : ℕ) (k : Fin m) :
+theorem ratio_lower_semicontinuous (m : ℕ) (k : Fin m) :
     LowerSemicontinuousOn (fun p : Fin m → ℝ => cost p / p k)
       {p | (∀ i, 0 < p i) ∧ (∑ i, p i) = 1} := by
   classical
@@ -171,16 +171,16 @@ theorem attained (m : ℕ) (hm : 2 ≤ m) :
   have closed : IsClosed {p : Fin m → ℝ | (∑ i, p i) = 1 ∧ ∀ i, p k ≤ p i} :=
     (isClosed_eq (continuous_finsetSum _ (fun i _ => continuous_apply i)) continuous_const).inter
       (by
-        convert (isClosed_iInter fun i : Fin m => isClosed_le
+        change IsClosed {p : Fin m → ℝ | ∀ i, p k ≤ p i}
+        rw [Set.ofPred_forall]
+        exact isClosed_iInter fun i : Fin m => isClosed_le
           (continuous_apply k : Continuous (fun p : Fin m → ℝ => p k))
-          (continuous_apply i : Continuous (fun p : Fin m → ℝ => p i))) using 1
-        ext p
-        simp)
+          (continuous_apply i : Continuous (fun p : Fin m → ℝ => p i)))
   have compact : IsCompact K := isCompact_Icc.inter_right closed
   have uK : u ∈ K := ⟨⟨fun _ => au, fun _ => uone⟩, usum, fun _ => le_rfl⟩
   have positive (p : Fin m → ℝ) (hp : p ∈ K) : ∀ i, 0 < p i :=
     fun i => apos.trans_le (hp.1.1 i)
-  obtain ⟨p, hp, hmin⟩ := (ratio_lowerSemicontinuous m k).mono
+  obtain ⟨p, hp, hmin⟩ := (ratio_lower_semicontinuous m k).mono
     (show K ⊆ {p | (∀ i, 0 < p i) ∧ (∑ i, p i) = 1} from
       fun p hp => ⟨positive p hp, hp.2.1⟩) |>.exists_isMinOn ⟨u, uK⟩ compact
   have below (q : Fin m → ℝ) (j : Fin m) (hq : ∀ i, 0 < q i)
