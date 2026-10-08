@@ -4,7 +4,7 @@
 
 The minimum ratio of dyadic sampling cost to least atom mass grows strictly with the label count.
 
-Simplex(m,p) means that p is a real vector indexed by Fin m with sum one; PositiveLaw adds strict positivity of every coordinate. LeastIndex(p,k) means p(k) is at most every coordinate. R(p,d) is 2^d minus the sum of the integer floors of 2^d p(i), and L(p) is the sum of R(p,d)/2^d over all natural depths. These definitions include terminating binary coordinates and all real probability laws.
+Simplex(m,p) means that p is a real vector indexed by Fin m with sum one; PositiveLaw adds strict positivity of every coordinate. PositiveSimplex(m) is the set of vectors satisfying PositiveLaw(m,p). LeastIndex(p,k) means p(k) is at most every coordinate. R(p,d) is 2^d minus the sum of the integer floors of 2^d p(i), and L(p) is the sum of R(p,d)/2^d over all natural depths. These definitions include terminating binary coordinates and all real probability laws.
 
 **Theorem 1.1 (Normalized floor tails).**
 

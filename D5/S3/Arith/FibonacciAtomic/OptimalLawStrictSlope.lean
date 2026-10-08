@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/OptimalLawStrictSlope
-   generality: I
+   generality: G
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/OptimalLawStrictSlope
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
