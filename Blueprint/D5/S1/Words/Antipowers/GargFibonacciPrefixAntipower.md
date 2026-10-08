@@ -82,6 +82,10 @@ $$\operatorname{claim}\left(\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S1/Words/Antipowers/GargFibonacciPrefixAntipower.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/garg-2019-fibonacci-prefix-antipowers` (proved) by `D5/S1/Words/Antipowers/GargFibonacciPrefixAntipower.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"garg-2019-fibonacci-prefix-antipowers","declaration_gid":"D5/S1/Words/Antipowers/GargFibonacciPrefixAntipower.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Swapnil Garg (2021). *Antipowers in Uniform Morphic Words and the Fibonacci Word*. DOI: [10.46298/dmtcs.7134](https://doi.org/10.46298/dmtcs.7134). URL: <https://arxiv.org/abs/1907.10816v4>.

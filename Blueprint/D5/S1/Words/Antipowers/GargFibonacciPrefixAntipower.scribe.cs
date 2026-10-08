@@ -49,17 +49,21 @@ internal sealed class GargFibonacciPrefixAntipowerDocument : IScribeDocumentDefi
                     + "contradicting the cylinder ranks. The n=3 case has one block; n=6 is "
                     + "checked directly within the proof. The remaining even Fibonacci numbers "
                     + "satisfy the strict residual bounds of the general sample-grid theorem.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("garg-2019-fibonacci-prefix-antipowers"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string declaration,
-        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance) => Describe.Lean(
+        Formula formula, string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
         DescribeId.Create(id), DeclarationHandle.Create(Prefix + declaration), H(title),
         StatementSource.FromAuthor(formula), provenance,
         declaration == "S" || declaration == "fibW"
             ? Blocks(WordQuotation(), Paragraph(Text(prose)))
             : declaration == "blockLength"
                 ? Blocks(SourceQuotation(), Paragraph(Text(prose)))
-                : Blocks(Paragraph(Text(prose))), role);
+                : Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static DocumentBlock WordQuotation() => Paragraph(
         Text("Source definition (§3, printed page 5), verbatim: “We prove that the Fibonacci word "),
