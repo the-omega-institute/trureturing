@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
-   utility: kind=none
+   utility: none
    digest: The Appendix A.1 tuple of arXiv:2512.17706 is feasible on the full interval. -/
 
 import D5.S3.Constants.Radicals.SqrtThreeThreshold
@@ -153,7 +153,7 @@ private theorem scalar_bounds (θ : ℝ) (hθ : θ ∈ Set.Icc 0 (Real.pi / 2)) 
     exact mul_nonneg (mul_nonneg (by norm_num) (sub_nonneg.mpr hs1)) (by linarith)
   have hdet : 0 ≤ A - B * b := by
     have hBb : 0 ≤ B * b := mul_nonneg hB.le hb0.le
-    nlinarith only [hsq, hA, hBb]
+    exact sub_nonneg.mpr ((sq_le_sq₀ hBb hA.le).mp (by nlinarith only [hsq]))
   exact ⟨hb0, hrank, htrace, hdet⟩
 
 private theorem matrix_forms (θ : ℝ) :
@@ -178,10 +178,7 @@ private theorem matrix_forms (θ : ℝ) :
               -(3 * Real.sin θ - 2 * Real.sqrt 3 + 3) / 12,
                 (3 * Real.cos θ + 8 * Real.sqrt 3 - 9 - β θ) / 12] := by
   have hr2 : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
-  have hr0 : 0 < Real.sqrt 3 := Real.sqrt_pos.mpr (by norm_num)
-  have hi : 1 / Real.sqrt 3 = Real.sqrt 3 / 3 := by
-    apply (div_eq_iff hr0.ne').mpr
-    nlinarith
+  have hi : 1 / Real.sqrt 3 = Real.sqrt 3 / 3 := (Real.sqrt_div_self').symm
   have hg : γ = 2 * Real.sqrt 3 - 2 := by
     unfold γ
     apply (div_eq_iff (by positivity : 1 + Real.sqrt 3 ≠ 0)).mpr
