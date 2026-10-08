@@ -20,9 +20,12 @@ For every k>=2, 2<=m<k, gcd(m,k+1)=1 and 1<=j<=k, the INITIAL phase index j rece
 
 One attaining selector and its endpoint trees witness this same budget. Initial rejection stops freely with the bottom label and an empty archive. Every legal INITIAL tail returns the INITIAL singleton label, and every recorded endpoint is some value. At each strict archive prefix the selector issues its recorded complete word; on the complete archive it stops with that INITIAL label. For every actual initial history the raw execution, tree result and charged archive length agree.
 
-Literal root and repair words provide the near cases. Remote targets use paid zero blocks, a pulse and a final word; empty waits and zero final padding are included. The lower bound combines absorbing rejection, even one-block charge and indistinguishability before paid arrival.
+Literal root and repair words provide the near cases. Remote targets use paid zero blocks, a pulse and a final word; empty waits and zero final padding are included. Actual initial histories are realized in the original scanner, and every raw feasible selector induces an endpoint tree.
+
+The universal endpoint-tree obstruction in `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/CoprimeSingletonLower` combines absorbing rejection, even one-block charge and indistinguishability before paid arrival. The same literal marker equations also govern the attaining root, repair and pulse words.
 
 ## References
 
 - Truth anchor: `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/CoprimeSingletonCost.coprime_nonzero_singleton_cost`
-- Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalNarrowCost](OriginalNarrowCost.md)
+- Dependency: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/CoprimeSingletonLower](CoprimeSingletonLower.md)
+- Narrative reference: [D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/CoprimeSingletonLower](CoprimeSingletonLower.md)

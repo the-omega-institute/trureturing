@@ -155,8 +155,13 @@ internal sealed class CoprimeSingletonCostDocument : IScribeDocumentDefinition
                 Paragraph(Text(
                     "Literal root and repair words provide the near cases. Remote targets use "
                     + "paid zero blocks, a pulse and a final word; empty waits and zero final "
-                    + "padding are included. The lower bound combines absorbing rejection, "
-                    + "even one-block charge and indistinguishability before paid arrival."))),
+                    + "padding are included. Actual initial histories are realized in the original "
+                    + "scanner, and every raw feasible selector induces an endpoint tree.")),
+                Paragraph(Text("The universal endpoint-tree obstruction in "),
+                    Ref("D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/CoprimeSingletonLower"),
+                    Text(" combines absorbing rejection, even one-block charge and "
+                        + "indistinguishability before paid arrival. The same literal marker "
+                        + "equations also govern the attaining root, repair and pulse words."))),
             DescribeRole.Theorem))));
     }
 }
