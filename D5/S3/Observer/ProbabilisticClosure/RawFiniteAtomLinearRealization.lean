@@ -356,6 +356,74 @@ private theorem raw_probability {m : ℕ} (alpha : unitInterval)
         split_ifs <;> linarith
     | inr u => dsimp [rawModel]; split_ifs <;> norm_num
 
+/-- Original next-output mass is the total mass of the corresponding matrix column. -/
+def OutputMassBridge {m : ℕ} {task : Task} {alpha : unitInterval}
+    {q : Fin m → unitInterval} (w : Fin m → ℝ) (R : MassModel task alpha q)
+    (feature : State → R.Carrier → ℝ) : Prop :=
+  ∀ (Seed : Type) [MeasurableSpace Seed] (policy : Policy Seed)
+    (nu : Measure Seed) [IsProbabilityMeasure nu] (n : ℕ) (h : State) (B : Set Seed),
+    MeasurableSet B →
+    let law := nu.prod (sourceMixture alpha q w)
+    let E := nativeEvent policy n h B
+    0 < law.real E → ∀ (j : Side) (o : Output),
+      (letI := R.finite
+       law.real (E ∩ {p | (nativeStep task p.2 h j).1 = o}) =
+         law.real E * ∑ d, Matrix.mulVec (R.matrix j o) (feature h) d)
+
+private theorem native_output_mass_bridge {m : ℕ} {task : Task} {alpha : unitInterval}
+    {q : Fin m → unitInterval} {w : Fin m → ℝ} (R : MassModel task alpha q)
+    (feature : State → R.Carrier → ℝ) (hb : FullNativeBridge w R feature) :
+    OutputMassBridge w R feature := by
+  classical
+  letI := R.finite
+  letI := R.finiteOutputs
+  intro Seed inst policy nu prob n h B hB
+  dsimp only
+  intro hE j o
+  let T : Test := .query j fun o' => .read fun _ => decide (o' = o)
+  have hr := (hb Seed policy nu n h B hB hE).2.2.2 T
+  have he : nativeEvent policy n h B ∩ {p | nativeAccept task p.2 h T = true} =
+      nativeEvent policy n h B ∩ {p | (nativeStep task p.2 h j).1 = o} := by
+    ext p
+    simp [T,nativeAccept]
+  rw [he] at hr
+  rw [hr]
+  congr 1
+  simp only [T,testRow]
+  simp [mul_ite,Finset.sum_ite_irrel]
+  simp_rw [Finset.mul_sum]
+  rw [Finset.sum_comm]
+  apply Finset.sum_congr rfl
+  intro d hd
+  simp [Matrix.mulVec,dotProduct,mul_comm]
+
+/-- Scaling the next feature by its actual event mass gives unnormalized transport. -/
+def UnnormalizedBridge {m : ℕ} {task : Task} {alpha : unitInterval}
+    {q : Fin m → unitInterval} (w : Fin m → ℝ) (R : MassModel task alpha q)
+    (feature : State → R.Carrier → ℝ) : Prop :=
+  ∀ (Seed : Type) [MeasurableSpace Seed] (policy : Policy Seed)
+    (nu : Measure Seed) [IsProbabilityMeasure nu] (n : ℕ) (h : State) (B : Set Seed),
+    MeasurableSet B →
+    let law := nu.prod (sourceMixture alpha q w)
+    let E := nativeEvent policy n h B
+    0 < law.real E → ∀ (j : Side) (source : Source),
+      (letI := R.finite
+       let step := nativeStep task source h j
+       let v := Matrix.mulVec (R.matrix j step.1) (feature h)
+       0 < (∑ d, v d) → ∀ d,
+         law.real (E ∩ {p | (nativeStep task p.2 h j).1 = step.1}) * feature step.2 d =
+           law.real E * v d)
+
+private theorem native_unnormalized_bridge {m : ℕ} {task : Task} {alpha : unitInterval}
+    {q : Fin m → unitInterval} {w : Fin m → ℝ} (R : MassModel task alpha q)
+    (feature : State → R.Carrier → ℝ) (hm : OutputMassBridge w R feature)
+    (hu : FeatureUpdates R feature) : UnnormalizedBridge w R feature := by
+  intro Seed inst policy nu prob n h B hB
+  dsimp only
+  intro hE j source hv d
+  rw [hm Seed policy nu n h B hB hE j _, hu h j source hv d]
+  field_simp [hv.ne']
+
 /-- A fresh independent random seed samples a measurable family of finite tests. -/
 def RandomNativeBridge {m : ℕ} {task : Task} {alpha : unitInterval}
     {q : Fin m → unitInterval} (w : Fin m → ℝ) (R : MassModel task alpha q)
@@ -518,7 +586,8 @@ def Proposition278 : Prop :=
          letI := R.finiteOutputs
          Fintype.card R.Carrier = desiredCard task alpha q ∧
            (∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1) ∧
-           (∀ j o d c, 0 ≤ R.matrix j o d c)) ∧ FullNativeBridge w R feature ∧ FeatureUpdates R feature ∧ RandomNativeBridge w R feature
+           (∀ j o d c, 0 ≤ R.matrix j o d c)) ∧ FullNativeBridge w R feature ∧ FeatureUpdates R feature ∧ RandomNativeBridge w R feature ∧
+          OutputMassBridge w R feature ∧ UnnormalizedBridge w R feature
 
 
 /-- Exact finite native-test dimensions for all three interfaces. -/
@@ -535,19 +604,26 @@ theorem result : Proposition278 ∧
       obtain ⟨⟨hc, hn, hp, hb⟩, hu⟩ := FiniteAtomLinearRealization.result .retained alpha q w ha
         (fun i => (hq i).1) hw hw'
       exact ⟨fullModel .retained alpha q, fullFeature .retained alpha q w,
-        ⟨by simpa [desiredCard, terminalCount] using hc, hn, hp⟩, hb, hu, random_native_bridge _ _ hb hn hp⟩
+        ⟨by simpa [desiredCard, terminalCount] using hc, hn, hp⟩, hb, hu, random_native_bridge _ _ hb hn hp,
+        native_output_mass_bridge _ _ hb,
+        native_unnormalized_bridge _ _ (native_output_mass_bridge _ _ hb) hu⟩
   | emitted =>
       obtain ⟨⟨hc, hn, hp, hb⟩, hu⟩ := FiniteAtomLinearRealization.result .emitted alpha q w ha
         (fun i => (hq i).1) hw hw'
       exact ⟨fullModel .emitted alpha q, fullFeature .emitted alpha q w,
-        ⟨by simpa [desiredCard, terminalCount] using hc, hn, hp⟩, hb, hu, random_native_bridge _ _ hb hn hp⟩
+        ⟨by simpa [desiredCard, terminalCount] using hc, hn, hp⟩, hb, hu, random_native_bridge _ _ hb hn hp,
+        native_output_mass_bridge _ _ hb,
+        native_unnormalized_bridge _ _ (native_output_mass_bridge _ _ hb) hu⟩
   | raw =>
       obtain ⟨hn, hp⟩ := raw_probability alpha q ha
       have hb := raw_native_bridge alpha q w ha (fun i => (hq i).1) hw hw'
       exact ⟨rawModel alpha q, rawFeature alpha q w,
         ⟨raw_card alpha q, hn, hp⟩, hb,
         raw_feature_updates alpha q w ha (fun i => (hq i).1) hw hw',
-        random_native_bridge (rawModel alpha q) (rawFeature alpha q w) hb hn hp⟩
+        random_native_bridge (rawModel alpha q) (rawFeature alpha q w) hb hn hp,
+        native_output_mass_bridge _ _ hb,
+        native_unnormalized_bridge _ _ (native_output_mass_bridge _ _ hb)
+          (raw_feature_updates alpha q w ha (fun i => (hq i).1) hw hw')⟩
 
 
 
