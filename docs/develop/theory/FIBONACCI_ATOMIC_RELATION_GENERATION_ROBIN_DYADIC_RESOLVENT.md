@@ -192,3 +192,866 @@ Fibonacci 递归与五分类的启发应落实为这些可检查的传输与误�
 5040 的有限关卡本身仍不能代替无限部分的符号证明。
 
 ## 追加锚（本行以下为增补区）
+
+## 475. 支付有符号锚点后，整个原远尾已达到共同临界尺度
+
+**符号约定。** 沿用 §474 的实际原配对、二倍权函数与奇数调和二阶率。
+本节估计原远尾及其有符号锚点，不以 RH 为假设。
+
+### 475.1 同一个全局算术常数支付锚点和变差
+
+仍用实际奇数调和和 $H_o$、物理积分 $P_x$ 与二倍权
+
+$$
+b_x(s)=s\bigl(P_x(s)-P_x(2s)\bigr).
+$$
+
+对自然截断原和定义
+
+$$
+T_x(D)=\lim_{M\to\infty}
+\sum_{\substack{D<n\le M\\n\text{ 奇}}}\frac{\mu(n)}n b_x(n).
+$$
+
+此极限的存在由完整自然尾合同保证；绝对可和的是 signed variation 级数。
+沿用已支付的全局奇数调和二阶率，选 $A>0$ 与自然数 $D_0$，使
+所有 $n\ge D_0$ 满足 $|H_o(n)|\le A/(\log n)^2$。
+它们先于参数 $x$ 和自然截断 $D$ 选定。
+
+**命题 475.1（实际锚点与完整远尾）。** 可以选择这样的 $A,D_0$，使对所有
+$x>1$、$\log x\ge1$、$x\le D$、$D_0\le D$ 及 $e^x\le D+1$，记
+$r=\log(D+1)$，有
+
+$$
+\begin{aligned}
+|b_x(D+1)|&\le r(2\log r+13),\\
+|b_x(D+1)H_o(D)|&\le\frac{A(8\log x+52)}x,\\
+|T_x(D)|&\le\frac{A(10\log x+96)}x.
+\end{aligned}
+$$
+
+证明中完整保留二倍物理分拆的 $1/2$ 和实际高余项。其低原函数与高余项预算给出
+第一式。由 $D+1\le2D$ 及 $\log D\ge1$，有 $r\le2\log D$，故
+
+$$
+|H_o(D)|\le\frac{4A}{r^2},\qquad
+|b_x(D+1)H_o(D)|\le\frac{4A(2\log r+13)}r.
+$$
+
+对于 $c\ge1$ 和 $1\le x\le r$，已证明
+
+$$
+\frac{\log r+c}{r}\le\frac{\log x+c}{x}.
+$$
+
+取 $c=13/2$ 支付锚点。另一方面，原中心化预算在同一截止下给出
+
+$$
+|T_x(D)+b_x(D+1)H_o(D)|\le\frac{2A(\log x+22)}x.
+$$
+
+将两个实际预算相加得到第三式。这一步控制整个远尾，无需改变 $b_x$，
+也没有把有符号锚点删掉或预设它有利于 Robin 不等式。
+
+### 475.2 真实整数截止上的共同临界极限
+
+取与上述 $D_0$ 相同的自然截止
+
+$$
+D(x)=\max\bigl(D_0,\lceil e^x\rceil\bigr).
+$$
+
+**命题 475.2（整个远尾的临界极限）。** 对这同一选择，有
+
+$$
+\sqrt x\log x\,|T_x(D(x))|\longrightarrow0
+\qquad(x\to+\infty).
+$$
+
+证明保留真实自然数上取整；$e^x\le D(x)$ 及 $x\le e^x$ 支付截止前提。
+当 $x$ 足够大时，命题 475.1 给出
+
+$$
+0\le\sqrt x\log x\,|T_x(D(x))|
+\le A\frac{10(\log x)^2+96\log x}{\sqrt x}\longrightarrow0.
+$$
+
+这里同时趋向无穷的是参数 $x$ 和截止 $D(x)$；上述同一截止的显式上界给出对角极限。
+
+### 475.3 剥离形态传递同一信息，截止把困难移入有限首部
+
+二倍剥离把完整 Möbius 调和和的二阶对数率传给实际奇数和，保留有限递归余项；
+Abel 变换再把同一个率传给原权函数的变差和有符号端点。
+远截止使这些预算适合 $\sqrt x\log x$ 归一化，因而无需先假定平方根级 Möbius 抵消。
+这些是同一算术信息经过不同变换后的可核查关系，具体支持“等价形态之间有关联”的直觉。
+
+但较远截止同时扩大了原有限首部。精确分拆仍是
+
+$$
+\lim_{M\to\infty}\sum_{\substack{1\le n\le M\\n\text{ 奇}}}
+\frac{\mu(n)}n b_x(n)
+=\sum_{\substack{1\le n\le D(x)\\n\text{ 奇}}}\frac{\mu(n)}n b_x(n)+T_x(D(x)).
+$$
+
+完整有限首部与原正储备的单向比较尚未证明；若改用 clipped 首部，还须支付同一
+$D(x)$ 上的 diagonal collar，而固定 $x$ 的 collar 极限不自动完成这项义务。
+5040 的有限反例关卡与 Fibonacci 递归的结构启发，应继续落实为实际算术桥及完整余项，
+不能从数值重合推出首部符号。最终 Robin 不等式与 RH 仍未证明。
+
+## 追加锚（本行以下为增补区）
+
+## 476. 同一远截止也支付了真实奇数窗口的 clipping 边界
+
+**符号约定。** 沿用 §475 的实际原远尾与自然截止。
+本节的统一增长预算与有符号裁剪边界估计使用同一个自然阈值。
+
+### 476.1 增长阈值必须先于全部参数选择
+
+记实际低原函数与完整高余项之和为 $G_\ell(r)=L_\ell(r)+E(r)$，
+沿用原变差预算中的实际 $\operatorname{majorant}(\ell,r)$。
+对全部 $1\le\ell\le r$，有
+
+$$
+|G_\ell(r)|\le r(\log r+7),\qquad
+|\operatorname{majorant}(\ell,r)|\le\log r+11.
+$$
+
+由 $(\log r+11)/r^{1/4}\to0$，可以选择一个与 $\ell,x$ 无关的 $R_0\ge1$，
+使对全部 $\ell\ge1$ 和 $r\ge\max(R_0,\ell)$，有
+
+$$
+|G_\ell(r)|\le r^{5/4},\qquad
+|\operatorname{majorant}(\ell,r)|\le r^{1/4}.
+$$
+
+第二式也给出旧完整 collar 合同需要的较粗 $r^{5/4}$ 预算。
+这里共享的是先选定的 $R_0$；不能分别给每个固定 $x$ 找一个阈值，再据此宣称统一估计。
+
+### 476.2 实际 floor 窗口与临界归一化
+
+对原物理积分 $P_x$ 定义完整有符号 collar
+
+$$
+C_x(N)=\sum_{\substack{1\le m\le N\\m\text{ 奇}\\\lfloor N/2\rfloor<m}}
+\mu(m)\bigl(P_x(2m)-P_x(N+1)\bigr).
+$$
+
+完整有限配对恒等式已保留
+
+$$
+\operatorname{clippedCutoff}_x(N)-\operatorname{naturalCutoff}_x(0,N)=C_x(N).
+$$
+
+**命题 476.1（共同截止上的实际边界）。** 可以选择同一实际奇数调和率的
+$A>0,D_0\in\mathbb N$，使对 $D(x)=\max(D_0,\lceil e^x\rceil)$，当 $x$ 足够大时，
+
+$$
+|C_x(D(x))|
+\le4A\bigl(2+4\cdot2^{5/4}\bigr)x^{-3/4}.
+$$
+
+因而
+
+$$
+\begin{aligned}
+\sqrt x\log x\,|C_x(D(x))|&\longrightarrow0,\\
+\sqrt x\log x\,
+|\operatorname{clippedCutoff}_x(D(x))-
+  \operatorname{naturalCutoff}_x(0,D(x))|&\longrightarrow0.
+\end{aligned}
+$$
+
+证明使用原完整 collar 合同的 $p=2,q=5/4$。取 $N=D(x)$、$k=\lfloor N/2\rfloor$，
+整数除法给出 $N\le2k+1$；当 $N\ge8$ 时，$N\le k^2$，所以
+
+$$
+x\le\log N\le2\log k.
+$$
+
+再由 $\log x\le x/2$、$x\ge2R_0$ 及固定 $D_0$，得到实际窗口前提
+$D_0<k$、$x\le k$ 和 $\max(R_0,\log x)\le\log k$。
+因此原奇数和、两个真实端点以及整个 $\lfloor N/2\rfloor<m\le N$ 窗口均进入预算，
+并得到 $(\log N)^{-3/4}\le x^{-3/4}$。乘临界因子后，上界为常数倍
+$\log x/x^{1/4}$，它趋于零。
+
+### 476.3 任意固定阈值接口保证可以共用原远尾的见证
+
+对每个固定自然数 $D_*$，同样的两个临界极限成立，截止均为
+$\max(D_*,\lceil e^x\rceil)$。理由是任意两个固定阈值的 max 截止最终都等于
+$\lceil e^x\rceil$；这是保留实际取整后的 eventual equality。
+
+于是可以直接采用 §475 原远尾定理选出的 $D_0$。没有把两个独立存在式的隐藏见证
+假定成相等，也没有用 fixed-$x$ 收敛替代 diagonal 极限。
+整个原远尾与真实 clipping 边界现在都在同一临界尺度上趋零。
+扩大后的有限首部与原正储备的单向比较，以及该标量与实际整数 Robin margin 的完整连接，
+仍须证明；这两个消失的误差项本身不推出 RH。
+
+## 追加锚（本行以下为增补区）
+
+## 477. 原有限首部的锚点把平滑修正压缩为两个实际矩
+
+**符号约定。** 沿用 §§85、87、424、475、476 的实际素数层、无附加整数约束的压力、阶乘核与有限配对。
+
+### 477.1 实际素数层共享收益坐标，价格切线带有两个不同修正
+
+对素数 $p$ 和正层号 $j$，定义实际插入收益与价格
+
+$$
+\beta(p,j)=\log\left(1+\frac1{p+p^2+\cdots+p^j}\right),\qquad
+\theta(p,j)=\frac{\beta(p,j)}{\log p}.
+$$
+
+对于 $n=\prod_p p^{a_p}\ge1$，全部指数层的质量与收益分别为
+
+$$
+E(n)=\sum_p\sum_{j=1}^{a_p}\log p=\log n,\qquad
+W(n)=\sum_p\sum_{j=1}^{a_p}\beta(p,j)=\log\frac{\sigma(n)}n.
+$$
+
+这些已有关系由素因数分解与逐素数层的望远镜恒等式给出；求和只有有限支撑。
+
+沿用 §85 的压力 $M(\lambda)=\max_{n\ge1}(W(n)-\lambda E(n))$，其中 $\lambda>0$。
+对 $u,x>1$，定义 $h(u)=\gamma+\log\log u$、$\lambda_x=1/(x\log x)$，并记
+
+$$
+\begin{aligned}
+\Delta(x)&=h(x)-\lambda_xx-M(\lambda_x),\\
+d_x(n)&=M(\lambda_x)-\bigl(W(n)-\lambda_xE(n)\bigr),\\
+B_h(E,x)&=h(x)+\lambda_x(E-x)-h(E).
+\end{aligned}
+$$
+
+对于 $E(n)>1$，原余量恒等式在同一坐标下写为
+
+$$
+h(E(n))-W(n)=\Delta(x)+d_x(n)-B_h(E(n),x),\qquad d_x(n),B_h(E(n),x)\ge0.
+$$
+
+**证明。** 代入上述定义后，压力、价格项与 $h(x)$ 相消，得到等式。
+最大值的定义给出 $d_x(n)\ge0$；由
+$h'(x)=\lambda_x$ 与 $h''(x)=-(1+\log x)/(x^2(\log x)^2)<0$，凹函数的切线不等式给出
+$B_h(E(n),x)\ge0$。取 $x=E(n)=\log n$ 时，$B_h(E(n),x)=0$。
+$d_x(n)=0$ 则要求 $n$ 在同一价格 $\lambda_x$ 下达到压力的最大值。
+这复用原余量的精确三项修正及 §87 的压力定义。$\square$
+
+### 477.2 保留 N+1 锚点的有限重构
+
+**定义。** 使用同一个阶乘核
+$\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y$，其中 $y>0$。对 $N\ge1$，记
+
+$$
+\begin{aligned}
+H_N&=\sum_{m=1}^N\frac{\mu(m)}m,&
+L_N&=\sum_{m=1}^N\frac{\mu(m)\log m}m,&
+M_N&=\sum_{m=1}^N\mu(m),\\
+h_N&=H_N-\frac{M_N}{N+1},&
+\ell_N&=L_N-\frac{M_N\log(N+1)}{N+1},\\
+C_N(t)&=\sum_{m=1}^N\mu(m)\eta(t/m)-M_N\eta(t/(N+1)).
+\end{aligned}
+$$
+
+**命题 477.1（双锚定矩的有限重构）。** 对全部 $0<t\le N+1$，有
+
+$$
+C_N(t)=\psi(t)-t(\log t-1)h_N+t\ell_N.
+$$
+
+**证明。** 这里 $\psi(t)=\sum_{1\le r\le\lfloor t\rfloor}\Lambda(r)$ 是实际 Chebyshev 函数。
+复用有限 Dirichlet 卷积 $\mu*\log=\Lambda$，有
+
+$$
+\begin{aligned}
+\psi(t)
+&=\sum_{1\le r\le\lfloor t\rfloor}\sum_{m\mid r}\mu(m)\log(r/m)\\
+&=\sum_{1\le m\le\lfloor t\rfloor}\mu(m)
+  \sum_{1\le k\le\lfloor t/m\rfloor}\log k
+=\sum_{1\le m\le\lfloor t\rfloor}\mu(m)\log(\lfloor t/m\rfloor!).
+\end{aligned}
+$$
+
+当 $t\le N+1$ 时，可将其截在 $N$：$m>t$ 时只有 $\log(0!)=0$，
+可能遗漏的端点 $m=t=N+1$ 也只有 $\log(1!)=0$。
+锚点 $t/(N+1)\le1$ 的阶乘对数同样为零。展开原 $\eta$，得到
+
+$$
+\begin{aligned}
+\sum_{m=1}^N\mu(m)\eta(t/m)
+ &=\psi(t)-t(\log t-1)H_N+tL_N,\\
+-M_N\eta(t/(N+1))
+ &=\frac{M_Nt}{N+1}\bigl(\log t-\log(N+1)-1\bigr).
+\end{aligned}
+$$
+
+相加即得结论，包含 $t=N+1$。$\square$
+
+**定义与等价矩表示。** 在逆尺度坐标 $a>0$ 上定义有限有符号测度
+
+$$
+\nu_N=\sum_{m=1}^N\mu(m)\delta_{1/m}-M_N\delta_{1/(N+1)}.
+$$
+
+由点质量的定义，直接得到
+
+$$
+\int d\nu_N=0,\qquad
+\int a\,d\nu_N=h_N,\qquad
+\int a\log a\,d\nu_N=-\ell_N,
+\qquad C_N(t)=\int\eta(ta)\,d\nu_N(a).
+$$
+
+缩放后的平滑核为 $-ta\log(ta)+ta$，其积分正是
+$-t(\log t-1)h_N+t\ell_N$。因此平滑修正处于 $t$ 与 $t\log t$ 的线性包络中。
+总质量为零不使两个加权矩为零；两个 $N+1$ 锚定修正均保留在上式中。
+
+### 477.3 两个矩的完整修正具有显式原函数
+
+**定义。** 沿用实际物理权 $w(t)=(1+\log t)/(t^2(\log t)^2)$。
+对 $u>0$，定义
+
+$$
+F_N(u)=(1+\ell_N)\left(\log u-\frac1u\right)
+-h_N\left(u+\frac1u\right).
+$$
+
+**命题 477.2（完整平滑修正的积分）。** 对 $1<x\le N+1$，有
+
+$$
+\int_x^{N+1}t\bigl[1-(\log t-1)h_N+\ell_N\bigr]w(t)\,dt
+=F_N(\log(N+1))-F_N(\log x).
+$$
+
+**证明。** 直接求导给出
+
+$$
+F_N'(u)=\frac{1+u}{u^2}\bigl[1+\ell_N-(u-1)h_N\bigr].
+$$
+
+链式法则于是给出
+$\frac d{dt}F_N(\log t)=t[1-(\log t-1)h_N+\ell_N]w(t)$，其中 $t>1$。
+在 $[x,N+1]$ 上应用微积分基本定理即得结论。$\square$
+
+**假设（完整无穷配对的身份）。** 若要将上述有限配对用于整个无穷物理积分，
+须另有相应积分与极限的存在性，以及身份
+
+$$
+\lim_{N\to\infty}H_N=0,\qquad
+\lim_{N\to\infty}L_N=-1,\qquad
+\lim_{N\to\infty}\int_x^\infty C_N(t)w(t)\,dt
+=\int_x^\infty(\psi(t)-t)w(t)\,dt.
+$$
+
+有限重构在物理分拆中仍保留 $t>N+1$ 的积分补区。
+本节的有限恒等式及原函数未以两个矩替代这个补区，也未假定完整首部相对于 §87 正储备的符号。
+
+### 477.4 两个锚定矩是同一平滑核缩放作用的矩阵坐标
+
+**定义。** 记 $S(t)=t\log t-t$，其中 $t>0$，并固定函数空间
+$V=\operatorname{span}_{\mathbb R}\{t\log t,t\}$。
+使用经典正缩放作用 $f(t)\mapsto f(at)$，其中 $a>0$。在函数值列向量
+$\mathbf v(t)=(t\log t,t)^{\mathsf T}$ 上，记
+
+$$
+R(a)=\begin{pmatrix}a&a\log a\\0&a\end{pmatrix},\qquad
+J=\begin{pmatrix}0&1\\0&0\end{pmatrix}.
+$$
+
+**命题 477.3（原平滑核的缩放矩表示）。** $S$ 的全部正缩放的线性包络恰为 $V$，
+且实际锚定测度满足
+
+$$
+\mathbf v(at)=R(a)\mathbf v(t),\qquad
+R(a)R(b)=R(ab),\qquad R(1)=I,
+$$
+
+$$
+\int R(a)\,d\nu_N(a)
+=\begin{pmatrix}h_N&-\ell_N\\0&h_N\end{pmatrix},\qquad
+\int S(at)\,d\nu_N(a)=t\log t\,h_N-t(h_N+\ell_N).
+$$
+
+因此对 $0<t\le N+1$，命题 477.1 等价地写成
+
+$$
+C_N(t)=\psi(t)-t\log t\,h_N+t(h_N+\ell_N).
+$$
+
+若另有 $h_N\to0$ 与 $\ell_N\to-1$，则平均矩阵趋向 $J$，
+对每个固定 $t>0$ 有 $C_N(t)\to\psi(t)-t$。
+
+**证明。** 由 $\log(at)=\log a+\log t$，有
+$S(at)=aS(t)+a\log a\,t$，所以缩放包络包含于 $V$。
+若 $c\,t\log t+d\,t=0$ 对全部 $t>0$ 成立，取 $t=1$ 得 $d=0$，再取 $t=e$ 得 $c=0$。
+此外 $S(et)/e-S(t)=t$，故两种独立模式均在缩放包络内，维数恰为二。
+
+函数值的矩阵恒等式直接来自对数乘法公式；同一公式给出矩阵乘法关系。
+$\det R(a)=a^2>0$，所以 $R(a)^{-1}=R(1/a)$。
+对实际 $\nu_N$ 逐项积分，并使用 $\int a\,d\nu_N=h_N$ 与
+$\int a\log a\,d\nu_N=-\ell_N$，得到平均矩阵。
+左乘行向量 $(1,-1)$ 再作用于 $\mathbf v(t)$，即得 $S$ 的积分式。
+最后使用命题 477.1；固定 $t$ 时最终有 $t\le N+1$，所以两个矩的假设极限给出所示极限。
+这一步仅是逐点极限，未交换无穷积分。$\square$
+
+**矩阵不变量。** 对 $a=e^u$，有经典表示
+$R(e^u)=e^u(I+uJ)$，其中 $J^2=0$。
+Fibonacci 递推矩阵 $Q=\begin{pmatrix}1&1\\1&0\end{pmatrix}$ 的行列式为 $-1$，
+而 $R(a)$ 的行列式为 $a^2>0$；相似变换保留行列式，故两者不相似。
+等价地，$Q$ 的特征判别式为 $5$，$R(a)$ 的特征判别式为 $0$。
+上式给出了原平滑核的具体缩放作用；它没有给出这个作用与 Fibonacci 递推的同构。
+
+## 追加锚（本行以下为增补区）
+
+## 478. 锚定 Mellin 一阶资料与递归的两种效应
+
+### 478.1. 两个矩来自同一个有限变换
+
+沿用第 477 节的实际有限量，令 $N\ge1$，
+
+$$
+\begin{aligned}
+M_N&=\sum_{m=1}^N\mu(m),&
+H_N&=\sum_{m=1}^N\frac{\mu(m)}m,&
+L_N&=\sum_{m=1}^N\frac{\mu(m)\log m}m,\\
+h_N&=H_N-\frac{M_N}{N+1},&
+\ell_N&=L_N-\frac{M_N\log(N+1)}{N+1}.
+\end{aligned}
+$$
+
+在正尺度上取同一锚定有符号测度
+
+$$
+\nu_N=\sum_{m=1}^N\mu(m)\delta_{1/m}-M_N\delta_{1/(N+1)},
+\qquad
+\Phi_N(s)=\int a^s\,d\nu_N(a).
+$$
+
+这里 $a^s=\exp(s\log a)$，故有限和 $\Phi_N$ 对复变量 $s$ 是整函数。
+实数限制与通常实幂一致。
+
+**命题 478.1（实际锚定变换的三个读数）。**
+
+$$
+\Phi_N(0)=0,\qquad \Phi_N(1)=h_N,\qquad \Phi_N'(1)=-\ell_N.
+$$
+
+证明。第一式是 $M_N-M_N=0$。第二式直接代入 $s=1$。
+逐项求导得到
+
+$$
+\Phi_N'(s)=-\sum_{m=1}^N\mu(m)\log m\,m^{-s}
+ +M_N\log(N+1)(N+1)^{-s},
+$$
+
+于是第三式成立。总质量消去是 $s=0$ 的读数，而阶乘平滑项使用 $s=1$
+的值与导数；前一读数本身不约束后两个读数。
+
+令 $J=\begin{pmatrix}0&1\\0&0\end{pmatrix}$。第 477 节的尺度表示满足
+
+$$
+R(a)=a(I+\log a\,J)=a^{I+J},\qquad J^2=0,
+$$
+
+从而
+
+$$
+\int R(a)\,d\nu_N(a)=\Phi_N(1)I+\Phi_N'(1)J
+ =h_NI-\ell_NJ.
+$$
+
+这就是解析函数在二阶 Jordan 块上的一阶函数演算。
+两个实际算术矩是同一 Mellin 变换在 $1$ 的一阶资料。
+
+### 478.2. 尺度群、有限卷积与截断族的边界
+
+对正尺度上的任意有限支撑有符号离散测度 $\nu$，定义
+
+$$
+(T_\nu f)(t)=\int f(at)\,d\nu(a),\qquad
+\Phi_\nu(s)=\int a^s\,d\nu(a).
+$$
+
+**命题 478.2（有限递归的准确乘法）。** 若 $\omega$ 也是有限支撑有符号离散测度，且 $\nu\star_\times\omega$
+是有限乘法卷积，即将 $\nu\otimes\omega$ 经 $(a,b)\mapsto ab$ 推前，则
+
+$$
+T_\nu T_\omega=T_{\nu\star_\times\omega},\qquad
+\Phi_{\nu\star_\times\omega}(s)=\Phi_\nu(s)\Phi_\omega(s).
+$$
+
+在 $V=\operatorname{span}\{t\log t,t\}$ 上，若
+$\mathcal J(\Phi)=\Phi(1)I+\Phi'(1)J$，则
+
+$$
+\mathcal J(\Phi\Psi)=\mathcal J(\Phi)\mathcal J(\Psi).
+$$
+
+证明。所有积分都是有限和，双重求和与 $(ab)^s=a^sb^s$ 给出前两式。
+后一式由乘积求导法则和 $J^2=0$ 给出。
+
+特别地，实际锚定测度的两次作用在 $V$ 上对应
+
+$$
+(h_NI-\ell_NJ)(h_MI-\ell_MJ)
+=h_Nh_MI-(h_N\ell_M+\ell_Nh_M)J.
+$$
+
+正尺度本身组成群，因为 $R(a)R(b)=R(ab)$ 且 $R(a)$ 可逆。
+有符号平均却可能不可逆；实际极限矩阵 $J$ 就是一个例子。
+有限乘法卷积还会产生 $1/(mn)$ 等新支点，因而 $\nu_N\star_\times\nu_M$
+一般不属于原来单一自然截断的 $\nu_K$ 族。
+递归具有准确的卷积乘法，但不能据此任意替换自然截断、端点或锚。
+
+### 478.3. 极点归一化支付平滑主项
+
+在 $\operatorname{Re}s>1$，实际 Möbius Dirichlet 级数绝对收敛并满足
+
+$$
+\sum_{m\ge1}\mu(m)m^{-s}=\frac1{\zeta(s)}.
+$$
+
+由 $|M_N|\le N$，锚的绝对值不超过 $N/(N+1)^{\operatorname{Re}s}$，趋于零。
+因此 $\Phi_N$ 在这个半平面逐点趋于实际倒数 zeta。
+这一步没有把收敛域扩展到边界 $s=1$。
+
+实际 zeta 在 $1$ 的留数为一。其局部形式是
+
+$$
+\zeta(s)=\frac1{s-1}+g(s),\qquad
+Z(s)=\frac{s-1}{1+(s-1)g(s)},
+$$
+
+其中 $g$ 在 $1$ 附近解析，$Z$ 是倒数的全纯延拓，满足
+$Z(1)=0$、$Z'(1)=1$。这里延拓的值不依赖在极点处为原函数指定的总化取值。
+
+若实际算术边界极限 $h_N\to0$、$\ell_N\to-1$ 已独立建立，则
+
+$$
+h_NI-\ell_NJ\longrightarrow J.
+$$
+
+对 $S(t)=t\log t-t$，这给出 $T_{\nu_N}S(t)\to t$。
+因此原有限阶乘重构
+
+$$
+\sum_{m=1}^N\mu(m)\eta(t/m)-M_N\eta(t/(N+1))
+=\psi(t)-t(\log t-1)h_N+t\ell_N,
+\qquad 0<t\le N+1,
+$$
+
+在每个固定 $t>0$ 趋于 $\psi(t)-t$。
+全物理积分的识别还使用完整有符号块的 $L^1$ 可求和性及几乎处处识别；
+有限重构与局部 Mellin 资料本身没有支付这个积分交换。
+
+### 478.4. 递归消去平滑模式，同时提高其它奇点的阶
+
+**命题 478.4（有限二次作用的平滑消去）。**
+若 $h_N\to0$ 且 $\ell_N\to-1$，则对每个固定 $f\in V$，
+
+$$
+T_{\nu_N}T_{\nu_N}f(t)\longrightarrow0.
+$$
+
+证明。有限二次作用的矩阵为 $h_N^2I-2h_N\ell_NJ$，其两个系数均趋于零。
+例如
+
+$$
+T_{\nu_N}^2S(t)=h_N^2S(t)-2h_N\ell_Nt.
+$$
+
+这个有限结论只涉及固定平滑空间 $V$。
+若改看未锚定 Möbius 算子在绝对收敛半平面的 $r$ 次 Dirichlet 卷积，
+其乘子是 $Z(s)^r=\zeta(s)^{-r}$。
+它在 $s=1$ 有 $r$ 阶零，因而 $r\ge2$ 时在 $1$ 的值和一阶导数都消去。
+与此同时，若实际 zeta 在 $\rho\ne1$ 有 $q$ 阶零，写成
+$\zeta(s)=(s-\rho)^q u(s)$ 且 $u(\rho)\ne0$，则
+
+$$
+Z(s)^r=(s-\rho)^{-rq}u(s)^{-r}
+$$
+
+在 $\rho$ 有 $rq$ 阶极点。
+所以改善极点 $1$ 所对应的平滑主项消去，并不自动改善其它零点附近的解析控制。
+有限锚定算子的临界尺度界仍须保留其实际积分核、截断和所有端点。
+
+素数原子也记录了同一递归：令 $\mu^{\star r}$ 是 $r$ 次 Dirichlet 卷积，则
+
+$$
+\sum_{k\ge0}\mu^{\star r}(p^k)z^k=(1-z)^r,\qquad
+\mu^{\star r}(p^k)=
+\begin{cases}(-1)^k\binom rk,&0\le k\le r,\\0,&k>r.\end{cases}
+$$
+
+证明。素数幂上的原 Möbius 系数为 $(1,-1,0,\ldots)$，
+有限卷积就是相应多项式相乘，最后使用二项式定理。
+这是卷积次数产生的二项式递归；它没有给出 Fibonacci 权重、五分类或 $5040$
+与 zeta 零点之间的新恒等式。
+
+本节使用通常的 Mellin 变换、有限乘法卷积与 Jordan 函数演算。
+Möbius Dirichlet 级数与卷积乘积的标准供应分别是 Mathlib 的
+`ArithmeticFunction.LSeries_zeta_mul_Lseries_moebius`、
+`ArithmeticFunction.LSeries_zeta_eq_riemannZeta` 和 `LSeries_convolution'`；
+实际留数由 `riemannZeta_residue_one` 表达。
+全物理积分与整数 Robin margin 的有限素数幂连接，以及完整有限首部的单向符号，
+仍是后续需要支付的数学结论。
+
+## 追加锚（本行以下为增补区）
+
+## 479. 有符号阶乘配对、素数幂边界与同一个物理积分
+
+### 479.1. 原积分核与完整块级数
+
+取 $x>1$，沿用实际阶乘余项与原权重
+
+$$
+\eta(u)=\log(\lfloor u\rfloor!)-u\log u+u,
+\qquad
+w(t)=\frac{1+\log t}{t^2(\log t)^2},
+\qquad
+P_x(s)=\int_x^\infty\eta(t/s)w(t)\,dt.
+$$
+
+令 $M_m=\sum_{a=1}^m\mu(a)$、$\psi(t)=\sum_{n\le t}\Lambda(n)$，并记
+
+$$
+B_m(t)=M_m\bigl[\eta(t/m)-\eta(t/(m+1))\bigr]w(t),
+\qquad
+I_\psi(x)=\int_x^\infty(\psi(t)-t)w(t)\,dt.
+$$
+
+**命题 479.1（完整物理配对）。** 对每个 $x>1$，
+$(\psi(t)-t)w(t)$ 在 $(x,\infty)$ 可积，而且
+
+$$
+\sum_{m=1}^\infty M_m\bigl[P_x(m)-P_x(m+1)\bigr]=I_\psi(x).
+$$
+
+证明。完整块预算给出
+
+$$
+\sum_{m=1}^\infty\int_x^\infty |B_m(t)|\,dt<\infty.
+$$
+
+因此 $\sum_m B_m$ 在 $L^1(x,\infty)$ 收敛，且几乎处处有与之相容的点态级数和。
+有限 Abel 配对及第 477 节的精确阶乘重构给出
+
+$$
+\sum_{m=1}^N B_m(t)
+=\bigl[\psi(t)-t(\log t-1)h_N+t\ell_N\bigr]w(t),
+\qquad 0<t\le N+1.
+$$
+
+对每个固定 $t>0$，实际算术极限 $h_N\to0$、$\ell_N\to-1$
+识别点态极限为 $(\psi(t)-t)w(t)$。
+由 $L^1$ 极限的几乎处处识别及完整范数积分可求和性，可交换整个块级数与积分。
+第一物理项 $m=1$ 的可积性独立成立，后续项也完整保留。
+逐块积分便得到所述等式。
+
+这个证明支付的是配对块的绝对积分预算，未把未配对的 Möbius 原子级数宣告为绝对收敛。
+原有限自然首部与有符号尾项的共同极限，因而具有实际值 $I_\psi(x)$。
+在原全局阈值、$\log x\ge1$ 及 $x\le D$ 条件下，第 475 节的完整自然分解满足
+
+$$
+\operatorname{naturalCutoff}_x(0,D)+\operatorname{tail}_x(D)=I_\psi(x).
+$$
+
+这里尾项仍含原有符号锚，等式没有给有限首部任何单向符号。
+
+### 479.2. 素数幂公式的全部端点
+
+定义
+
+$$
+P_0(x)=\sum_{1\le n\le x}\frac{\Lambda(n)}{n\log n}
+=\sum_{\substack{p\ {\rm prime},\ k\ge1\\p^k\le x}}\frac1{kp^k},
+\qquad x>1.
+$$
+
+第一式的 $n=1$ 项约定为零，与 $\Lambda(1)=0$ 一致。
+第二式是完整有限素数幂重排，包含 $p^k=x$ 的边界项；
+指数范围可取 $1\le k\le\lfloor\log x/\log2\rfloor$。
+
+取实际 Euler 常数 $\gamma$，定义
+
+$$
+\Phi(x)=\gamma+\log\log x-P_0(x)
+ +\frac{\psi(x)-x}{x\log x}.
+$$
+
+**命题 479.2（有限窗与无限边界的同一公式）。** 对全部 $1<x\le y$，
+
+$$
+\int_{(x,y]}(\psi(t)-t)w(t)\,dt=\Phi(x)-\Phi(y),
+\qquad
+\Phi(x)=I_\psi(x).
+$$
+
+证明。对 $v(t)=1/(t\log t)$ 使用完整有限 Abel 求和，因 $v'(t)=-w(t)$，得到
+
+$$
+P_0(y)-P_0(x)
+=\frac{\psi(y)}{y\log y}-\frac{\psi(x)}{x\log x}
+ +\int_{(x,y]}\psi(t)w(t)\,dt.
+$$
+
+平滑主项的原函数为 $\log\log t-1/\log t$，即
+
+$$
+\int_{(x,y]}t w(t)\,dt
+=\left[\log\log t-\frac1{\log t}\right]_x^y.
+$$
+
+两式相减即得有限窗恒等式，包括 $x=y$ 及两端的完整素数幂约定。
+原 Mertens 误差 $P_0(y)-\log\log y-\gamma$ 趋于零。
+实际线性 Chebyshev 界 $0\le\psi(y)\le Cy$ 给出
+
+$$
+\left|\frac{\psi(y)-y}{y\log y}\right|\le\frac{C+1}{\log y}\longrightarrow0.
+$$
+
+故 $\Phi(y)\to0$。命题 479.1 的实际可积性允许完整有限物理窗趋于
+$(x,\infty)$ 的积分，得到第二式。
+这个上端点估计不要求额外的有效素数定理。
+
+### 479.3. 原子跳跃在值中抵消，在斜率中保留
+
+若 $q=p^k$ 是素数幂，则 $P_0$ 在 $q$ 的跳跃为 $1/(kq)$，
+$\psi$ 的跳跃为 $\log p$。它们在 $\Phi$ 中贡献
+
+$$
+-\frac1{kq}+\frac{\log p}{q\log q}=0.
+$$
+
+因此实际素数幂阈值不会使 $\Phi$ 的值跳跃。
+完整积分表示还说明 $\Phi$ 在 $(1,\infty)$ 连续。
+在不含素数幂的开区间内，$\psi$ 为常数且
+
+$$
+\Phi'(t)=(t-\psi(t))w(t).
+$$
+
+素数原子仍改变这个斜率。连续性没有给出 $\Phi$ 的符号；
+局部一个区间的斜率也没有支付整个无限有符号累积。
+
+结合第 475、476 节，完整尾项与对角 collar 的临界零极限现在可解释为同一
+实际 $I_\psi(x)=\Phi(x)$ 的完整自然截断余项及两种截断之间的差。
+完整整数 Robin margin 还含原离散储备、实际压力亏损与切线凹性修正。
+它们与有限首部的单向比较仍需独立证明；本节的积分恒等式没有推出最终 Robin 不等式或 RH。
+
+本节的有限 Abel 与素数幂重排使用实际 von Mangoldt 与 Chebyshev 对象。
+Mertens 误差和 Euler 常数归一化沿用原 Mertens 供应；
+锚定算术常数沿用 David Sanftenberg 的完整 Euler 修正与实际 harmonic 估计。
+
+## 追加锚（本行以下为增补区）
+
+## 480. 实际价格迭代的整除质量间隔与两种下降成本
+
+### 480.1. 嵌套最优者的质量间隔
+
+沿用第 98、112 节的完整正整数压力与严格正层最优整数 $n_x$，记
+
+$$
+E(n)=\log n,\quad W(n)=\log\frac{\sigma(n)}n,\quad
+h(x)=\gamma+\log\log x,\quad \lambda_x=\frac1{x\log x},
+$$
+
+$$
+M(\lambda)=\max_{n\ge1}\{W(n)-\lambda E(n)\},\quad
+\Delta(x)=h(x)-\lambda_xx-M(\lambda_x),\quad F(x)=\log n_x.
+$$
+
+这里并列的零收益层全部省略。
+若 $1<s<t$，严格活跃层集从 $s$ 到 $t$ 只增不减，故逐素数指数不减，得到
+
+$$
+n_s\mid n_t.
+$$
+
+若两整数不同，整除商为整数 $r\ge2$，因此
+
+$$
+\log n_t-\log n_s=\log r\ge\log2.
+$$
+
+这是实际嵌套层集的算术间隔。任意两个不同整数的对数并没有这个间隔，
+例如 $\log(N+1)-\log N\to0$。
+
+取一个已经证明对 $F$ 不变的区间 $[a,b]\subset(1,\infty)$，
+从 $x_0\in[a,b]$ 开始递归 $x_{j+1}=F(x_j)$。
+第 112 节已给出方向单调性及有限停机。
+从 $j=1$ 起，每个状态都是实际最优整数的对数，故每次非恒定更新满足
+
+$$
+|x_{j+1}-x_j|\ge\log2.
+$$
+
+若第一次固定的指标为 $K\ge1$，单调望远镜求和给出
+
+$$
+(K-1)\log2\le|x_K-x_1|\le b-a,
+\qquad
+\boxed{K\le1+\left\lfloor\frac{b-a}{\log2}\right\rfloor.}
+$$
+
+同一个估计也直接排除无穷多次非恒定更新，而无需枚举整个激活层集。
+任意实数初值到 $x_1$ 的第一步未计入质量间隔；
+也没有断言第一个最优整数与提供该初值的任意整数之间存在整除关系。
+
+### 480.2. 每一步保留切线成本与新价格亏损
+
+对 $x,y>1$，定义
+
+$$
+B_h(y,x)=h(x)+\lambda_x(y-x)-h(y),\qquad
+d_y(n)=M(\lambda_y)-[W(n)-\lambda_yE(n)].
+$$
+
+它们分别非负。把既有完整裕量身份用于 $y=F(x)>1$，旧价格下的最优性给出
+
+$$
+\boxed{\Delta(x)-\Delta(F(x))=B_h(F(x),x)+d_{F(x)}(n_x).}
+$$
+
+证明。旧尺度处
+$\Delta(x)=h(x)+\lambda_x(F(x)-x)-W(n_x)$；
+新尺度处
+$\Delta(F(x))=h(F(x))-W(n_x)-d_{F(x)}(n_x)$。
+两式相减。这是同一完整压力的切线主导更新；两个成本都保留在准确端点之间。
+
+令 $w(t)=(1+\log t)/(t^2\log^2t)$。因为
+
+$$
+w'(t)=-\frac1{t^3}\left(\frac2{\log t}+\frac3{\log^2t}
++\frac2{\log^3t}\right)<0,
+$$
+
+对 $x,y\in[a,b]$，切线差的二阶积分余项给出
+
+$$
+B_h(y,x)\ge\frac{w(b)}2(y-x)^2.
+$$
+
+当 $y\ge x$ 时余项为 $\int_x^y(y-t)w(t)\,dt$；
+当 $y\le x$ 时为 $\int_y^x(t-y)w(t)\,dt$。
+逐点用 $w(t)\ge w(b)$ 即得两种方向的同一个估计。
+
+因此从第一个整数对数状态开始，每次非恒定更新至少消耗
+$c_b=w(b)(\log2)^2/2$ 的实际裕量。
+对首次固定指标 $K\ge1$，完整求和为
+
+$$
+\Delta(x_1)-\Delta(x_K)
+=\sum_{j=1}^{K-1}\bigl[B_h(x_{j+1},x_j)+d_{x_{j+1}}(n_{x_j})\bigr]
+\ge(K-1)c_b.
+$$
+
+若另有同一区间的下界 $\Delta\ge L$，便得到
+$(K-1)c_b\le\Delta(x_1)-L$。
+这个成本估计没有给出正的 $L$。
+
+### 480.3. 已有停机结论与仍需支付的符号
+
+第 112 节的有限轨道、严格下降终点及并列绕越结论保持各自的原假设。
+这里补充的是实际整除所强制的质量间隔，以及准确下降身份中的成本下界。
+区间不变性、$n>5040$ 的边界、并列层与终端 Robin 裕量的符号仍须按原对象核对。
+向较低裕量递归搜索的有限停机不推出这些裕量为正，也不提供无限整数域的共同覆盖。
+
+## 追加锚（本行以下为增补区）
