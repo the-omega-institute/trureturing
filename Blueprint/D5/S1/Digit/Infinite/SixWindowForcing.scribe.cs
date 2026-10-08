@@ -42,15 +42,18 @@ internal sealed class SixWindowForcingDocument : IScribeDocumentDefinition
                 + "colors and a common next label require delta <= J, where "
                 + "J=2g^4/(5(1+g^3)).")),
                 Paragraph(Text(
-                "When delta exceeds the corresponding necessary bound, types two, "
-                + "three, and four force the next ordered pair of type one, one, and "
+                "When delta exceeds the corresponding necessary bound, type two "
+                + "with four common colors, and types three and four with three "
+                + "common colors, force the next ordered pair of type one, one, and "
                 + "two respectively. If delta > g^4/5, a type-one pair with three "
                 + "common colors forces colors (1,0,2) and windows (3,3,5) and "
                 + "(0,3,0). If delta > J and delta > g^4/5, iterating the type-two "
                 + "return forces the six-window words (3,3,5,0,3,0) and "
-                + "(0,3,0,3,3,5) from any starting position, for every positive "
+                + "(0,3,0,3,3,5) from any starting position whose ordered labels "
+                + "are (3,0), for every positive "
                 + "number m of repetitions using exactly 6m common colors. The "
-                + "last propagation uses only the last observed color.")),
+                + "propagation uses no colors beyond position 6m-1 relative to "
+                + "the starting position.")),
                 Paragraph(Text(
                 "For nu <= rho=(239g-44)/380, all four strict budget inequalities "
                 + "hold. Thus the conclusions also apply throughout the original "

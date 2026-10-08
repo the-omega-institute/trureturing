@@ -7,10 +7,10 @@
    digest: Local separation and arbitrary-length six-window forcing for actual paired sources. -/
 
 import D5.S1.Digit.Infinite.CriticalPrefixSeparation
+import D5.S1.Digit.Infinite.OddColorThreeSource
 import Mathlib.Tactic.FinCases
 
 set_option autoImplicit false
-set_option maxHeartbeats 2400000
 
 namespace D5.S1.Digit.Infinite.SixWindowForcing
 
@@ -73,9 +73,7 @@ private theorem root (x : LegalDigits) (j : ℕ) :
       (if (window x j).val 1 then t - 1 else if (window x j).val 0 then
         (if (window x j).val 2 then 1 + t else 2 * t) else
         (if (window x j).val 2 then t else g)) := by
-  have hw : window (bitShift x (3 * j)) 0 = window x j := by
-    simp only [window, Nat.mul_zero,
-      D5.S1.Digit.Infinite.OddColorThreeSource.shift_add, Nat.add_zero]
+  have hw := D5.S1.Digit.Infinite.ClosedObservationCommonTailWidth.window_shift x j
   have hb := D5.S1.Digit.Infinite.OddColorThreeSource.root_bounds (bitShift x (3 * j))
   rw [hw] at hb
   exact hb
@@ -88,8 +86,7 @@ private theorem observation_bounds (ν : ℝ) (i : Fin 6) (z : ℝ)
 private theorem allow (ν : ℝ) (hν : ν < lambda) (x : LegalDigits)
     (j : ℕ) (i : Fin 6) (hx : X x j ∈ observation ν i) :
     window x j = L i ∨ window x j = H i := by
-  simpa only [window, Nat.mul_zero,
-    D5.S1.Digit.Infinite.OddColorThreeSource.shift_add, Nat.add_zero] using
+  simpa only [D5.S1.Digit.Infinite.ClosedObservationCommonTailWidth.window_shift] using
     D5.S1.Digit.Infinite.OddColorThreeSource.color_labels ν hν i
       (bitShift x (3 * j)) hx
 
