@@ -1,0 +1,19 @@
+fingerprints:
+  raw_sha256: sha256:8a8cfb080ea2240e3665625005c4f6713e497de3d56388555777adeb432c0fbe
+  normalized_sha256: sha256:8a8cfb080ea2240e3665625005c4f6713e497de3d56388555777adeb432c0fbe
+cas_ref: sha256:8a8cfb080ea2240e3665625005c4f6713e497de3d56388555777adeb432c0fbe
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/ArtificialSourceCellEstimates.admissible_gt_one
+    target_statement_id: sha256:59db78cf07647cd8662c7449d07683b13a20ab676356b062bb16c444bd7ebb7a
+  - gid: D5/S3/Analytic/Interpolation/ArtificialSourceCellEstimates.bump_deriv_on_cell
+    target_statement_id: sha256:dc4f7f72a4a1447079719d1b71890f885d3fe9b3a6224f9f7591dbd2513050e4
+  - gid: D5/S3/Analytic/Interpolation/ArtificialSourceCellEstimates.bump_on_cell
+    target_statement_id: sha256:2c1f46ac5767dd3f65884bd5cff7e3addd0e0229ced86928e63ba35031a89095
+  - gid: D5/S3/Analytic/Interpolation/ArtificialSourceCellEstimates.grid_bounds
+    target_statement_id: sha256:e5fbe525610d90cef335ba2ee82c2ce5a9dc07768e5f3195ecb9bf84c10f3e87
+  - gid: D5/S3/Analytic/Interpolation/ArtificialSourceCellEstimates.grid_strictMono
+    target_statement_id: sha256:40ed5e111e739bd470b46a62610454dfb3b10edfd2a1b2633e52ba0fcff73271
+  - gid: D5/S3/Analytic/Interpolation/ArtificialSourceIncrementContract.result
+    target_statement_id: sha256:ac05a3bce68602885dc36f850b3875d3f6ff31072b9c2b0ed2b693b8f02f6b99
+receipts:
+  unresolved_subitems: []
