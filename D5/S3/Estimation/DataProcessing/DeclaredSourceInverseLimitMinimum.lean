@@ -22,7 +22,6 @@ set_option relaxedAutoImplicit false
 
 open MeasureTheory
 open D5.S3.Estimation.DataProcessing.InverseLimitEventTotalVariation
-
 open Set Function TopologicalSpace CategoryTheory
 open D5.S3.Estimation.DataProcessing.InverseLimitProbabilityExtension
 open scoped ENNReal NNReal
@@ -31,7 +30,6 @@ open private measurable_total_variation_map_le from
   D5.S3.Estimation.DataProcessing.MeasurablePostprocessingDefectContraction
 universe u v w
 open Filter
-
 namespace D5.S3.Estimation.DataProcessing.DeclaredSourceInverseLimitMinimum
 
 lemma event_tv_normalization {X : Type u} [MeasurableSpace X] (P Q : ProbabilityMeasure X) :
@@ -123,7 +121,6 @@ lemma event_tv_normalization {X : Type u} [MeasurableSpace X] (P Q : Probability
     refine ⟨⟨E.val, E.property.nullMeasurableSet⟩, ?_⟩
     simp only [Measure.completion_apply, measureReal_def]
 
-
 lemma finite_feasible_pushforward {W Z U : ℕ → Type u}
     [∀ l, Finite (W l)] [∀ l, TopologicalSpace (W l)] [∀ l, DiscreteTopology (W l)]
     [∀ l, MeasurableSpace (W l)] [∀ l, BorelSpace (W l)]
@@ -145,7 +142,7 @@ lemma finite_feasible_pushforward {W Z U : ℕ → Type u}
       (θ : Measure (W (l + 1))).map (source (l + 1)) =
         ((ρ : Measure (Thread W α)).map (fun x => x.val (l + 1))).map (source (l + 1)) ∧
       (θ : Measure (W (l + 1))) (A (l + 1)) = 1) :
-    let θ : ProbabilityMeasure (W l) := θ.map (measurable_of_countable (α l)).aemeasurable
+    let θ : ProbabilityMeasure (W l) := θ.map (α l)
     (θ : Measure (W l)).map (label l) = (Q l : Measure (Z l)) ∧
       (θ : Measure (W l)).map (source l) =
         ((ρ : Measure (Thread W α)).map (fun x => x.val l)).map (source l) ∧
@@ -200,7 +197,7 @@ lemma finite_feasible_minimum {W : Type u} {Z : Type u} {U : Type u}
       lintegral_indicator_const (Set.toFinite E).measurableSet, one_mul] using hv
   have hlabel : IsClosed {θ : ProbabilityMeasure W | (θ : Measure W).map label = (Q : Measure Z)} := by
     have hc : IsClosed {θ : ProbabilityMeasure W |
-      θ.map (continuous_of_discreteTopology (f := label)).measurable.aemeasurable = Q} :=
+      θ.map label = Q} :=
       isClosed_eq (ProbabilityMeasure.continuous_map (continuous_of_discreteTopology (f := label))) continuous_const
     convert hc using 1
     ext θ
@@ -208,8 +205,8 @@ lemma finite_feasible_minimum {W : Type u} {Z : Type u} {U : Type u}
   have hsource : IsClosed {θ : ProbabilityMeasure W |
       (θ : Measure W).map source = (ρ : Measure W).map source} := by
     have hc : IsClosed {θ : ProbabilityMeasure W |
-      θ.map (continuous_of_discreteTopology (f := source)).measurable.aemeasurable =
-        ρ.map (continuous_of_discreteTopology (f := source)).measurable.aemeasurable} :=
+      θ.map source =
+        ρ.map source} :=
       isClosed_eq (ProbabilityMeasure.continuous_map (continuous_of_discreteTopology (f := source))) continuous_const
     convert hc using 1
     ext θ
@@ -236,18 +233,18 @@ lemma thread_tv_eq_iSup {B : ℕ → Type u} [∀ l, Finite (B l)]
       measurableTotalVariation (M.map (fun x => fun _ : Fin 1 => x)) (N.map (fun x => fun _ : Fin 1 => x)) =
         measurableTotalVariation M N := by
     let c : A → Fin 1 → A := fun x _ => x
-    have hc : Measurable c := measurable_pi_lambda _ fun _ => measurable_id
+    have hc : Measurable c := Measurable.of_eval fun _ => measurable_id
     have hback : (fun y : Fin 1 → A => y 0) ∘ c = id := rfl
     refine le_antisymm (measurable_total_variation_map_le M N c hc) ?_
     have hb := measurable_total_variation_map_le (M.map c) (N.map c)
       (fun y : Fin 1 → A => y 0) (measurable_pi_apply 0)
     simpa only [Measure.map_map (measurable_pi_apply 0) hc, hback, Measure.map_id] using hb
   let c : Thread B q → Fin 1 → Thread B q := fun x _ => x
-  have hc : Measurable c := measurable_pi_lambda _ fun _ => measurable_id
+  have hc : Measurable c := Measurable.of_eval fun _ => measurable_id
   have hπ (l : ℕ) : Measurable (fun x : Thread B q => x.val l) :=
     (measurable_pi_apply l).comp measurable_subtype_coe
   have hlev (l : ℕ) : Measurable (levelProjection q 1 l) :=
-    measurable_pi_lambda _ fun j => (hπ l).comp (measurable_pi_apply j)
+    Measurable.of_eval fun j => (hπ l).comp (measurable_pi_apply j)
   rw [← single P Q, total_variation_eq_iSup_level q 1]
   congr 1
   funext l
@@ -255,7 +252,7 @@ lemma thread_tv_eq_iSup {B : ℕ → Type u} [∀ l, Finite (B l)]
   have hf : levelProjection q 1 l ∘ c =
       (fun x => fun _ : Fin 1 => x) ∘ (fun x : Thread B q => x.val l) := rfl
   have he : Measurable (fun x : B l => fun _ : Fin 1 => x) :=
-    measurable_pi_lambda _ fun _ => measurable_id
+    Measurable.of_eval fun _ => measurable_id
   rw [hf, ← Measure.map_map he (hπ l), ← Measure.map_map he (hπ l), single]
 
 lemma select_common_radius {W Z U : ℕ → Type u}
@@ -311,7 +308,7 @@ lemma select_common_radius {W Z U : ℕ → Type u}
       ext θ
       exact ⟨fun h => Subtype.ext h, fun h => congrArg ProbabilityMeasure.toMeasure h⟩
     let R : ProbabilityMeasure (U l) :=
-      (ρ.map (hπ₀ l).aemeasurable).map (measurable_of_countable (source l)).aemeasurable
+      (ρ.map (fun x => x.val l)).map (source l)
     have hs : IsClosed {θ : ProbabilityMeasure (W l) | (θ : Measure (W l)).map (source l) = (R : Measure (U l))} := by
       have hc := isClosed_eq (ProbabilityMeasure.continuous_map (continuous_of_discreteTopology (f := source l)))
         (continuous_const (y := R))
@@ -320,10 +317,10 @@ lemma select_common_radius {W Z U : ℕ → Type u}
       exact ⟨fun h => Subtype.ext h, fun h => congrArg ProbabilityMeasure.toMeasure h⟩
     exact hl.inter (hs.inter (isClosed_eq (hmass (A l)) continuous_const))
   have hpres (l : ℕ) (θ : ProbabilityMeasure (W (l + 1))) (ht : θ ∈ F (l + 1)) :
-      θ.map (continuous_of_discreteTopology (f := α l)).measurable.aemeasurable ∈ F l :=
+      θ.map (α l) ∈ F l :=
     finite_feasible_pushforward α β γ label source hlabel hsource Q hQ A hA ρ l θ ht
   let p (l : ℕ) (Q : ProbabilityMeasure (W (l + 1))) :=
-    Q.map (continuous_of_discreteTopology (f := α l)).measurable.aemeasurable
+    Q.map (α l)
   let f (l : ℕ) (Q : ProbabilityMeasure (W l)) :=
     measurableTotalVariation ((ρ : Measure (Thread W α)).map (fun x => x.val l)) (Q : Measure (W l))
   have hπ (l : ℕ) : Measurable (fun x : Thread W α => x.val l) :=
@@ -395,9 +392,11 @@ lemma feasible_mixture {W : Type u} {Z : Type u} {U : Type u}
   dsimp only
   refine ⟨⟨?_⟩, ?_, ?_, ?_⟩
   · simp only [Measure.add_apply, Measure.smul_apply, measure_univ, smul_eq_mul, mul_one, hsum]
-  · rw [Measure.map_add _ _ hl, Measure.map_smul, Measure.map_smul, hθ.1, hη.1,
+  · rw [Measure.map_add _ _ hl, Measure.map_smul _ hl.aemeasurable,
+      Measure.map_smul _ hl.aemeasurable, hθ.1, hη.1,
       ← add_smul, hsum, one_smul]
-  · rw [Measure.map_add _ _ hs, Measure.map_smul, Measure.map_smul, hθ.2.1, hη.2.1,
+  · rw [Measure.map_add _ _ hs, Measure.map_smul _ hs.aemeasurable,
+      Measure.map_smul _ hs.aemeasurable, hθ.2.1, hη.2.1,
       ← add_smul, hsum, one_smul]
   · simp only [Measure.add_apply, Measure.smul_apply, hθ.2.2, hη.2.2, smul_eq_mul, mul_one, hsum]
 set_option maxHeartbeats 8000000 in
@@ -528,7 +527,7 @@ theorem exists_minimum_eq_iSup {W Z U : ℕ → Type u}
     have hπ (l : ℕ) : Continuous (fun x : Thread W α => x.val l) :=
       (continuous_apply l).comp continuous_subtype_val
     let π (l : ℕ) (θ : ProbabilityMeasure (Thread W α)) : ProbabilityMeasure (W l) :=
-      θ.map (hπ l).measurable.aemeasurable
+      θ.map (fun x => x.val l)
     let F (l : ℕ) : Set (ProbabilityMeasure (W l)) := {θ |
       (θ : Measure (W l)).map (label l) = (Q l : Measure (Z l)) ∧
       (θ : Measure (W l)).map (source l) =
@@ -550,7 +549,7 @@ theorem exists_minimum_eq_iSup {W Z U : ℕ → Type u}
         ext θ
         exact ⟨fun h => Subtype.ext h, fun h => congrArg ProbabilityMeasure.toMeasure h⟩
       let R : ProbabilityMeasure (U l) :=
-        (π l ρ).map (measurable_of_countable (source l)).aemeasurable
+        (π l ρ).map (source l)
       have hs : IsClosed {θ : ProbabilityMeasure (W l) |
           (θ : Measure (W l)).map (source l) = (R : Measure (U l))} := by
         have hh := isClosed_eq
@@ -675,7 +674,7 @@ theorem exists_minimum_eq_iSup {W Z U : ℕ → Type u}
   have hpU (l : ℕ) : Measurable (fun x : Thread U γ => x.val l) :=
     (measurable_pi_apply l).comp measurable_subtype_coe
   let π (l : ℕ) (θ : ProbabilityMeasure (Thread W α)) : ProbabilityMeasure (W l) :=
-    θ.map (hπ l).aemeasurable
+    θ.map (fun x => x.val l)
   let F (l : ℕ) : Set (ProbabilityMeasure (W l)) := {θ |
     (θ : Measure (W l)).map (label l) = (Q l : Measure (Z l)) ∧
     (θ : Measure (W l)).map (source l) =
@@ -726,7 +725,7 @@ theorem exists_minimum_eq_iSup {W Z U : ℕ → Type u}
           rw [Measure.map_map (hpZ l) hf, lf l,
             ← Measure.map_map (measurable_of_countable (label l)) (hπ l)]
           exact (hθ l).1
-        exact congrArg ProbabilityMeasure.toMeasure (hQu (θ.map hf.aemeasurable) hm)
+        exact congrArg ProbabilityMeasure.toMeasure (hQu (θ.map f) hm)
       · have hm : ∀ l, ((θ : Measure (Thread W α)).map g).map (fun x : Thread U γ => x.val l) =
             ((ρ : Measure (Thread W α)).map g).map (fun x : Thread U γ => x.val l) := by
           intro l
@@ -735,7 +734,7 @@ theorem exists_minimum_eq_iSup {W Z U : ℕ → Type u}
             ← Measure.map_map (measurable_of_countable (source l)) (hπ l)]
           exact (hθ l).2.1
         exact congrArg ProbabilityMeasure.toMeasure
-          (hUnique γ (θ.map hg.aemeasurable) (ρ.map hg.aemeasurable) hm)
+          (hUnique γ (θ.map g) (ρ.map g) hm)
   have hProjectCost (l : ℕ) (θ : ProbabilityMeasure (Thread W α)) :
       cost l (π l θ) ≤ completedCost θ := by
     exact ENNReal.toReal_mono (hTVFinite ρ θ)
@@ -779,7 +778,7 @@ theorem exists_minimum_eq_iSup {W Z U : ℕ → Type u}
     have hh := ENNReal.toReal_mono (by simp : (1 : ℝ≥0∞) ≠ ⊤) (hTVBound (π l ρ) (M l))
     simpa only [ENNReal.toReal_one, d, cost, costE, π, ProbabilityMeasure.toMeasure_map] using hh
   let p (l : ℕ) (θ : ProbabilityMeasure (W (l + 1))) : ProbabilityMeasure (W l) :=
-    θ.map (measurable_of_countable (α l)).aemeasurable
+    θ.map (α l)
   have hPres (l : ℕ) (θ : ProbabilityMeasure (W (l + 1))) (ht : θ ∈ F (l + 1)) : p l θ ∈ F l :=
     finite_feasible_pushforward α β γ label source hlabel hsource Q hQ A hA ρ l θ ht
   have hContract (l : ℕ) (θ : ProbabilityMeasure (W (l + 1))) :
@@ -960,7 +959,7 @@ theorem exists_minimum_eq_iSup {W Z U : ℕ → Type u}
     let M : Measure (Thread W α) := ENNReal.ofReal t • (θ.val : Measure (Thread W α)) +
       (1 - ENNReal.ofReal t) • (η.val : Measure (Thread W α))
     obtain ⟨hprob, hlabelM, hsourceM, hlegalM⟩ :=
-      feasible_mixture f g hf hg Qinf (ρ.map hg.aemeasurable)
+      feasible_mixture f g hf hg Qinf (ρ.map g)
         (⋂ l, (fun x : Thread W α => x.val l) ⁻¹' A l)
         θ.val η.val θ.property η.property (ENNReal.ofReal t) ha
     let ζ : L := ⟨⟨M, hprob⟩, hlabelM, hsourceM, hlegalM⟩
@@ -971,7 +970,8 @@ theorem exists_minimum_eq_iSup {W Z U : ℕ → Type u}
       simp only [hProjection, hsub]
       change M.map (fun x => x.val l) = _
       unfold M
-      rw [Measure.map_add _ _ (hπ l), Measure.map_smul, Measure.map_smul]
+      rw [Measure.map_add _ _ (hπ l), Measure.map_smul _ (hπ l).aemeasurable,
+        Measure.map_smul _ (hπ l).aemeasurable]
   have hAffineInverse (a b c : H) (t : ℝ) (ht0 : 0 ≤ t) (ht1 : t ≤ 1)
       (hmix : ∀ l, (c.val l : Measure (W l)) = ENNReal.ofReal t • (a.val l : Measure (W l)) +
         ENNReal.ofReal (1 - t) • (b.val l : Measure (W l))) :

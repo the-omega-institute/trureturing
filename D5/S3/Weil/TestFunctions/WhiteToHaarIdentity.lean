@@ -208,7 +208,8 @@ private theorem jacobianDensity_cayley_pushforward (a : Real) (ha : 0 < a) :
   have quotientPushforward := (AddCircle.measurePreserving_mk (2 * Real.pi) 0).map_eq
   simp only [zero_add] at quotientPushforward
   rw [quotientPushforward]
-  rw [AddCircle.volume_eq_smul_haarAddCircle, Measure.map_smul]
+  rw [AddCircle.volume_eq_smul_haarAddCircle,
+    Measure.map_smul _ AddCircle.homeomorphCircle'.continuous.measurable.aemeasurable]
   rfl
 
 private theorem withDensity_mono_measure
@@ -296,12 +297,15 @@ private theorem normalizedLebesgueSpectrum_compactification
     rw [← ENNReal.ofReal_mul (by positivity : 0 ≤ (1 / (2 * a) : Real))]
     congr 1
     field_simp [ha.ne']
+  have hm : Measurable (cayleyCircle a ha.ne') :=
+    (cayleyCircle_measurableEmbedding a ha).measurable
   rw [resolventCompactification, normalizedLebesgueSpectrum]
   change Measure.map (cayleyCircle a ha.ne')
     ((whiteScale • volume).withDensity resolventDensity) = _
   rw [MeasureTheory.withDensity_smul_measure, densityScaling,
-    MeasureTheory.withDensity_smul resolventScale (by fun_prop), Measure.map_smul,
-    Measure.map_smul, jacobianDensity_cayley_pushforward a ha]
+    MeasureTheory.withDensity_smul resolventScale (by fun_prop),
+    Measure.map_smul _ hm.aemeasurable, Measure.map_smul _ hm.aemeasurable,
+    jacobianDensity_cayley_pushforward a ha]
   rw [smul_smul, smul_smul]
   congr 1
   simp only [whiteScale, resolventScale]
@@ -315,8 +319,22 @@ private theorem resolventCompactification_smul
     (a : Real) (ha : a ≠ 0) (coefficient : ENNReal) (nu : Measure Real) :
     resolventCompactification a ha (coefficient • nu) =
       coefficient • resolventCompactification a ha nu := by
+  have hm : Measurable (cayleyCircle a ha) := by
+    apply Continuous.measurable
+    apply Continuous.subtype_mk
+    change Continuous (fun xi : Real =>
+      (starRingEnd Complex) ((xi : Complex) - Complex.I * a) /
+        ((xi : Complex) - Complex.I * a))
+    apply Continuous.div (by fun_prop) (by fun_prop)
+    intro xi hz
+    apply ha
+    have him := congrArg Complex.im hz
+    simp only [Complex.sub_im, Complex.ofReal_im, Complex.mul_im, Complex.I_re,
+      mul_zero, Complex.I_im, Complex.ofReal_re, one_mul,
+      zero_sub, Complex.zero_im] at him
+    linarith
   simp only [resolventCompactification, MeasureTheory.withDensity_smul_measure,
-    Measure.map_smul]
+    Measure.map_smul _ hm.aemeasurable]
 
 /-- Resolvent-weighted Cayley compactification sends normalized white spectrum to normalized
 circle Haar spectrum, preserves arbitrary white intensities with the exact scale factor, reflects

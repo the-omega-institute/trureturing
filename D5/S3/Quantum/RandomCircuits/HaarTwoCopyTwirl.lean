@@ -399,7 +399,7 @@ private instance haar_rightInvariant : Measure.IsMulRightInvariant (Measure.haar
   constructor
   intro g
   have : IsProbabilityMeasure ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).map (fun x => x * g)) :=
-    Measure.isProbabilityMeasure_map (by fun_prop)
+    inferInstance
   have : ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).map (fun x => x * g)).IsHaarMeasure := by
     apply Measure.isHaarMeasure_of_isCompact_nonempty_interior _ Set.univ isCompact_univ
     · simp
@@ -409,8 +409,9 @@ private instance haar_rightInvariant : Measure.IsMulRightInvariant (Measure.haar
 
 private instance haar_invInvariant : Measure.IsInvInvariant (Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))) := by
   constructor
-  have : IsProbabilityMeasure ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).inv) :=
-    Measure.isProbabilityMeasure_map (by fun_prop)
+  have : IsProbabilityMeasure ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).inv) := by
+    unfold Measure.inv
+    infer_instance
   have : ((Measure.haarMeasure (⊤ : PositiveCompacts (Matrix.unitaryGroup n ℂ))).inv).IsHaarMeasure := by
     apply Measure.isHaarMeasure_of_isCompact_nonempty_interior _ Set.univ isCompact_univ
     · simp
