@@ -71,11 +71,6 @@ theorem window_shift (x : LegalDigits) (j : ℕ) : window (bitShift x (3 * j)) 0
 theorem original_t_shift (x : LegalDigits) (j : ℕ) : originalT (bitShift x (3 * j)) = bitShift x (3 * (j + 1)) := by
   rw [originalT, hshift]; congr 1 <;> omega
 
-theorem finite_tail_shift (x : LegalDigits) (M : ℕ) (hx : finiteTail x) :
-    finiteTail (bitShift x M) := by
-  obtain ⟨N, hN⟩ := hx
-  exact ⟨N, fun j hj => hN (j + M) (by omega)⟩
-
 theorem finite_tail_unshift (x : LegalDigits) (n : ℕ) (hx : finiteTail (bitShift x n)) :
     finiteTail x := by
   obtain ⟨N, hN⟩ := hx
@@ -212,6 +207,10 @@ theorem complete_closed_graph_common_tail_width :
     apply Subtype.ext
     funext j
     simp [bitShift, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
+  have hfiniteShift (x : LegalDigits) (M : ℕ) (hx : finiteTail x) :
+      finiteTail (bitShift x M) := by
+    obtain ⟨N, hN⟩ := hx
+    exact ⟨N, fun j hj => hN (j + M) (by omega)⟩
   have hlabels (l : Label) : l = nullLabel ∨ l = threeLabel ∨ l = twoLabel ∨
       l = fiveLabel ∨ l = twoFiveLabel := by
     have hn0 := l.property 0 (by decide)
@@ -852,12 +851,12 @@ theorem complete_closed_graph_common_tail_width :
       (by simp [lawful, outgoing, nullLabel]) htau
     have hnu : ¬ finiteTail u := by
       intro h
-      have hh := hfiniteIntegral (originalT u) (finite_tail_shift u 3 h)
+      have hh := hfiniteIntegral (originalT u) (hfiniteShift u 3 h)
       rw [hu.2.2] at hh
       exact hnot hh
     have hnv : ¬ finiteTail v := by
       intro h
-      have hh := hfiniteIntegral (originalT v) (finite_tail_shift v 3 h)
+      have hh := hfiniteIntegral (originalT v) (hfiniteShift v 3 h)
       rw [hv.2.2] at hh
       exact hnot hh
     refine ⟨tau, u, v, htau, hvtau, hnot, hu.2.1, hv.2.1, hu.2.2, hv.2.2,

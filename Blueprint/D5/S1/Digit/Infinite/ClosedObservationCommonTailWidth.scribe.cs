@@ -9,14 +9,6 @@ internal sealed class ClosedObservationCommonTailWidthDocument : IScribeDocument
         H("Complete closed graph common-tail width"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("closedobservationcommontailwidth-finite-tail-shift"),
-                DeclarationHandle.Create("D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.finite_tail_shift"),
-                H("Finite tails after deletion"),
-                StatementSource.WithoutFormula(),
-                AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text(
-                    "Every exact bit shift of an eventually-zero actual address is eventually zero."))), DescribeRole.Theorem),
-            Describe.Lean(
                 DescribeId.Create("closedobservationcommontailwidth-finite-tail-unshift"),
                 DeclarationHandle.Create("D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.finite_tail_unshift"),
                 H("Finite tails before deletion"),

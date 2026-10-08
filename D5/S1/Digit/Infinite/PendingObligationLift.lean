@@ -8,6 +8,7 @@
 
 import D5.S1.Digit.Infinite.ClosedObservationCommonTailWidth
 import D5.S1.Digit.Infinite.FixedTailClosedBudget
+import D5.S1.Digit.Infinite.LateLabelStateBound
 
 set_option autoImplicit false
 
@@ -212,7 +213,7 @@ theorem result :
   have hfinite : finiteTail x ↔ finiteTail y := by
     constructor
     · intro h
-      simpa only [hxy] using finite_tail_shift x (3 * (w.length + 1)) h
+      simpa only [hxy] using D5.S1.Digit.Infinite.LateLabelStateBound.finite_shift x (3 * (w.length + 1)) h
     · intro h
       exact finite_tail_unshift x (3 * (w.length + 1)) (hxy.symm ▸ h)
   refine ⟨x, hx, hxy, by simpa only [hxz] using hprefix.1, hfinite, ?_⟩
