@@ -178,14 +178,14 @@ private theorem raw_joint_descends {m : ℕ} (alpha : unitInterval)
       by_cases hz : o = .zero <;> by_cases hm : o = .rawMark <;>
         simp only [hz,hm,ite_true,ite_false,Finset.sum_const_zero,add_zero,zero_add]
       all_goals
-        simp only [hdelta]
+        try simp only [hdelta]
         simp [rawModel,rawEncode,raw_canonical_rate alpha (q i) ha,
-          raw_canonical_flip,eq_comm]
+          raw_canonical_flip,eq_comm,hz,hm]
   | inr t =>
       change (if o = .reject then if d = .inr () then 1 else 0 else 0) =
         ∑ e, if rawEncode alpha q e = d then
           (if o = .reject then if e = .inr t then 1 else 0 else 0) else 0
-      by_cases ho : o = .reject <;> simp only [ho,ite_true,ite_false,Finset.sum_const_zero]
+      by_cases ho : o = .reject <;> simp only [ho,ite_true,ite_false,ite_self,Finset.sum_const_zero]
       rw [hdelta]
       simp [rawEncode,eq_comm]
 
@@ -203,13 +203,26 @@ private theorem raw_transport {m : ℕ} (alpha : unitInterval)
   letI := (fullModel .raw alpha q).finite
   letI := (rawModel alpha q).finite
   funext d
-  simp only [Matrix.mulVec,dotProduct]
-  simp_rw [Finset.mul_sum,mul_ite,mul_zero]
-  rw [Finset.sum_comm]
-  simp only [Finset.sum_ite_eq',Finset.mem_univ,ite_true]
-  simp_rw [raw_joint_descends alpha q ha,Finset.sum_mul,ite_mul,zero_mul]
-  rw [Finset.sum_comm]
-  simp_rw [Finset.sum_ite_irrel,Finset.sum_const_zero]
+  calc
+    Matrix.mulVec ((rawModel alpha q).matrix j o)
+        (fun d => ∑ c, if rawEncode alpha q c = d then v c else 0) d =
+        ∑ c, v c * (rawModel alpha q).matrix j o d (rawEncode alpha q c) := by
+      change (∑ c, (rawModel alpha q).matrix j o d c *
+        (∑ e, if rawEncode alpha q e = c then v e else 0)) = _
+      simp_rw [mul_comm ((rawModel alpha q).matrix j o d _)]
+      exact raw_pushforward_sum alpha q v (fun c => (rawModel alpha q).matrix j o d c)
+    _ = ∑ c, v c * (∑ e, if rawEncode alpha q e = d then
+        (fullModel .raw alpha q).matrix j o e c else 0) := by
+      apply Finset.sum_congr rfl
+      intro c hc
+      rw [raw_joint_descends alpha q ha]
+    _ = ∑ e, if rawEncode alpha q e = d then
+        Matrix.mulVec ((fullModel .raw alpha q).matrix j o) v e else 0 := by
+      simp_rw [Finset.mul_sum,mul_ite,mul_zero]
+      rw [Finset.sum_comm]
+      apply Finset.sum_congr rfl
+      intro e he
+      by_cases hd : rawEncode alpha q e = d <;> simp [hd,Matrix.mulVec,dotProduct,mul_comm]
 
 private theorem raw_feature_updates {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
@@ -221,7 +234,15 @@ private theorem raw_feature_updates {m : ℕ} (alpha : unitInterval)
   have hu := (FiniteAtomLinearRealization.result .raw alpha q w ha hq hw hsum).2
   intro h j source
   dsimp only
-  rw [rawFeature,raw_transport alpha q ha]
+  change (0 < ∑ d, Matrix.mulVec ((rawModel alpha q).matrix j (nativeStep .raw source h j).1)
+    (rawFeature alpha q w h) d) → ∀ d, rawFeature alpha q w (nativeStep .raw source h j).2 d = _
+  have hvect : Matrix.mulVec ((rawModel alpha q).matrix j (nativeStep .raw source h j).1)
+      (rawFeature alpha q w h) =
+      fun d => ∑ e, if rawEncode alpha q e = d then
+        Matrix.mulVec ((fullModel .raw alpha q).matrix j (nativeStep .raw source h j).1)
+          (fullFeature .raw alpha q w h) e else 0 :=
+    raw_transport alpha q ha j _ (fullFeature .raw alpha q w h)
+  rw [hvect]
   have hmass :
       (∑ d : (rawModel alpha q).Carrier, ∑ e, if rawEncode alpha q e = d then
         Matrix.mulVec ((fullModel .raw alpha q).matrix j (nativeStep .raw source h j).1)
@@ -233,10 +254,15 @@ private theorem raw_feature_updates {m : ℕ} (alpha : unitInterval)
   rw [hmass]
   intro hv d
   have hupdate := hu h j source hv
-  simp only [rawFeature]
-  simp_rw [hupdate]
-  simp_rw [ite_div,zero_div]
+  change (∑ e : (fullModel .raw alpha q).Carrier,
+      if rawEncode alpha q e = d then
+        fullFeature .raw alpha q w (nativeStep .raw source h j).2 e else 0) = _
   rw [Finset.sum_div]
+  apply Finset.sum_congr rfl
+  intro e he
+  by_cases hd : rawEncode alpha q e = d
+  · rw [if_pos hd, if_pos hd, hupdate e]
+  · rw [if_neg hd, if_neg hd, zero_div]
 
 private theorem raw_native_bridge {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
@@ -383,7 +409,7 @@ private theorem random_native_bridge {m : ℕ} {task : Task} {alpha : unitInterv
   have hr := (hb Seed policy nu n h B hB hE).2.2.2
   have hi (c : R.Carrier) : Integrable (fun u => testRow R (tests u) c) rho := by
     have hm : Measurable (fun u => testRow R (tests u) c) :=
-      measurable_from_top.comp htests
+      (measurable_from_top (f := fun T : Test => testRow R T c)).comp htests
     refine Integrable.of_bound hm.aestronglyMeasurable 1 (Filter.Eventually.of_forall fun u => ?_)
     have hbound := test_row_bounds R hn hp (tests u) c
     simpa [Real.norm_eq_abs,abs_of_nonneg hbound.1] using hbound.2
@@ -399,7 +425,12 @@ private theorem random_native_bridge {m : ℕ} {task : Task} {alpha : unitInterv
 private theorem conditional_source_support (q : unitInterval) (root : Bool) :
     ∀ᵐ source ∂conditionalSourceLaw q root, noAdjacentOnes source := by
   unfold conditionalSourceLaw
-  apply (ae_map_iff (by fun_prop) (by unfold noAdjacentOnes; measurability)).mpr
+  have hmeas : MeasurableSet {s : Source | noAdjacentOnes s} := by
+    unfold noAdjacentOnes
+    simp only [Set.ofPred_forall]
+    refine MeasurableSet.iInter fun j => MeasurableSet.iInter fun n => ?_
+    cases n <;> cases j <;> simp only [endpoint,arm] <;> measurability
+  apply (ae_map_iff (by fun_prop) hmeas).mpr
   filter_upwards [paired_path_support q root] with p hp
   intro j n
   cases n with
@@ -423,7 +454,8 @@ private theorem marker_recovers_root (source : Source) (hn : noAdjacentOnes sour
       ¬(endpoint source j i = false ∧ endpoint source j (i + 1) = false) := by
     intro i hi
     have hi' := hp j i hi
-    simpa only [markerResponse, decide_eq_false_iff_not, endpoint] using hi'
+    change ¬(endpoint source j i = false ∧ arm source j i = false)
+    exact of_decide_eq_false hi'
   have he := (hchar source.1 (endpoint source j) rfl hx (sideCount actions j)).mp hz
     (sideCount actions j) le_rfl
   have hm' := of_decide_eq_true hm
@@ -449,7 +481,9 @@ private theorem stopped_root_recovery {Seed : Type} [MeasurableSpace Seed]
             exact hb.2.1.mp hs
           simp only [actualRun,hs,Bool.false_eq_true,↓reduceIte]
           intro hm
-          exact marker_recovers_root source hn _ _ _ hp hm
+          exact marker_recovers_root source hn (actualRun policy seed source n).actions
+            (actualRun policy seed source n).replies (policy.choose seed
+              (actualRun policy seed source n).actions (actualRun policy seed source n).replies) hp hm
 
 /-- The recovered terminal bit is coupled to the original root on its source law. -/
 def RootCoupling {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval)
@@ -464,10 +498,10 @@ private theorem source_root_coupling {m : ℕ} (alpha : unitInterval)
   have hn : ∀ᵐ source ∂sourceMixture alpha q w, noAdjacentOnes source := by
     rw [sourceMixture, ae_finsetSum_measure_iff]
     intro i hi
-    apply ae_smul_measure
+    apply Measure.ae_smul_measure
     rw [sourceLaw, ae_add_measure_iff]
-    exact ⟨ae_smul_measure (conditional_source_support (q i) true) _,
-      ae_smul_measure (conditional_source_support (q i) false) _⟩
+    exact ⟨Measure.ae_smul_measure (conditional_source_support (q i) true) _,
+      Measure.ae_smul_measure (conditional_source_support (q i) false) _⟩
   filter_upwards [hn] with source hs
   intro Seed inst policy seed n
   exact stopped_root_recovery policy seed source hs n
@@ -509,11 +543,11 @@ theorem result : Proposition278 ∧
         ⟨by simpa [desiredCard, terminalCount] using hc, hn, hp⟩, hb, hu, random_native_bridge _ _ hb hn hp⟩
   | raw =>
       obtain ⟨hn, hp⟩ := raw_probability alpha q ha
+      have hb := raw_native_bridge alpha q w ha (fun i => (hq i).1) hw hw'
       exact ⟨rawModel alpha q, rawFeature alpha q w,
-        ⟨raw_card alpha q, hn, hp⟩,
-        raw_native_bridge alpha q w ha (fun i => (hq i).1) hw hw', ?_,
-          random_native_bridge _ _ (raw_native_bridge alpha q w ha (fun i => (hq i).1) hw hw') hn hp⟩
-      exact raw_feature_updates alpha q w ha (fun i => (hq i).1) hw hw'
+        ⟨raw_card alpha q, hn, hp⟩, hb,
+        raw_feature_updates alpha q w ha (fun i => (hq i).1) hw hw',
+        random_native_bridge (rawModel alpha q) (rawFeature alpha q w) hb hn hp⟩
 
 
 end D5.S3.Observer.ProbabilisticClosure.RawFiniteAtomLinearRealization
