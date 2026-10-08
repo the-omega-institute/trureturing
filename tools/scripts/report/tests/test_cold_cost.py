@@ -349,6 +349,50 @@ int main(int argc, char **argv) {
             with self.assertRaisesRegex(ValueError, "genuine labeled"):
                 cost.native_binding(self.root, dict(os.environ))
 
+    def test_native_entry_accepts_publishable_label_only_for_exact_full_merge_sha(self):
+        head = "0123456789abcdef0123456789abcdef01234567"
+        base, pr_head, tree = "b" * 40, "c" * 40, "d" * 40
+        event_path = self.root / "event.json"
+        event = {"action": "labeled", "label": {"name": "cold-cost-" + head},
+                 "pull_request": {"head": {"sha": pr_head}}}
+        event_path.write_text(json.dumps(event))
+        self.assertLessEqual(len(event["label"]["name"]), 50)
+        env = {"GITHUB_ACTIONS": "true", "GITHUB_EVENT_NAME": "pull_request",
+               "GITHUB_SHA": head, "GITHUB_EVENT_PATH": str(event_path)}
+        (self.root / "lean-toolchain").write_text("leanprover/lean4:v4.34.1\n")
+        for relative in ("lake-manifest.json", "Reg/lake-manifest.json",
+                         "tools/lean-inspector/lake-manifest.json", "tools/lean-inspector-interface/lake-manifest.json",
+                         "tools/lean-inspector-reg/lake-manifest.json"):
+            path = self.root / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(json.dumps({"packages": [{"name": "mathlib",
+                                                      "rev": "d13f23b723b8a846827a245b89c10fc7d3f11612"}]}))
+        git_results = {("rev-parse", "HEAD"): head.encode(), ("show", "-s", "--format=%P", "HEAD"): f"{base} {pr_head}".encode(),
+                       ("status", "--porcelain", "--untracked-files=all"): b"", ("rev-parse", "HEAD^{tree}"): tree.encode()}
+        read_text = Path.read_text
+
+        def fixture_text(path, *args, **kwargs):
+            if path == Path("/etc/os-release"):
+                return 'ID=ubuntu\nVERSION_ID="24.04"\n'
+            return read_text(path, *args, **kwargs)
+
+        with patch.object(cost, "git", side_effect=lambda root, *args: git_results[args]), \
+                patch.object(cost, "input_binding", return_value={"git_blob_listing_sha256": cost.SEALED_INPUTS_SHA256}) as inputs, \
+                patch.object(cost.platform, "system", return_value="Linux"), \
+                patch.object(cost.platform, "machine", return_value="aarch64"), \
+                patch.object(Path, "read_text", autospec=True, side_effect=fixture_text):
+            binding = cost.native_binding(self.root, env)
+            self.assertEqual((binding["head"], binding["protected_base"], binding["pr_head"]), (head, base, pr_head))
+            inputs.assert_called_once_with(self.root)
+            inputs.reset_mock()
+            for label in ("cold-cost-" + head[:-1], "cold-cost-" + head[:-1] + "8", "cold-cost-reviewed-" + head):
+                with self.subTest(label=label):
+                    event["label"]["name"] = label
+                    event_path.write_text(json.dumps(event))
+                    with self.assertRaisesRegex(ValueError, "genuine labeled"):
+                        cost.native_binding(self.root, env)
+                    inputs.assert_not_called()
+
     @unittest.skipUnless(os.environ.get("COLD_COST_TEST_LEAN"), "requires explicitly supplied pinned test compiler")
     def test_actual_pinned_compiler_spawn_keeps_toolchain_and_olean_bytes(self):
         # Independent core fixture, not a repository build or report acceptance.

@@ -275,7 +275,7 @@ def native_binding(root, env):
     parents = git(root, "show", "-s", "--format=%P", "HEAD").decode().split()
     if (env.get("GITHUB_ACTIONS") != "true" or env.get("GITHUB_EVENT_NAME") != "pull_request"
             or event.get("action") != "labeled" or head != env.get("GITHUB_SHA")
-            or event.get("label", {}).get("name") != "cold-cost-reviewed-" + head
+            or event.get("label", {}).get("name") != "cold-cost-" + head
             or len(parents) != 2 or parents[1] != event["pull_request"]["head"]["sha"]):
         raise ValueError("requires genuine labeled PR merge candidate matching the reviewed merge SHA")
     if git(root, "status", "--porcelain", "--untracked-files=all"):

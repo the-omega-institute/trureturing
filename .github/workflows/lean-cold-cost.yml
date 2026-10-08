@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   diagnostic:
-    if: github.event.label.name == format('cold-cost-reviewed-{0}', github.sha)
+    if: github.event.label.name == format('cold-cost-{0}', github.sha)
     runs-on: ubuntu-24.04-arm
     timeout-minutes: 180
     env:
