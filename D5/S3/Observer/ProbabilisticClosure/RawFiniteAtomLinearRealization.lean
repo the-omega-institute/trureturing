@@ -13,6 +13,8 @@ set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
 namespace D5.S3.Observer.ProbabilisticClosure.RawFiniteAtomLinearRealization
+universe u v
+
 open MeasureTheory ProbabilityTheory
 open scoped ENNReal BigOperators
 open AdaptiveMarkerStoppingTails FiniteAtomLinearRealization
@@ -223,7 +225,7 @@ theorem raw_feature_updates {m : ℕ} (alpha : unitInterval)
   classical
 
 
-  have hu := (FiniteAtomLinearRealization.result .raw alpha q w ha hq hw hsum).2
+  have hu := full_feature_updates .raw alpha q w ha hq hw hsum
   intro h j source
   dsimp only
   change (0 < ∑ d, Matrix.mulVec ((rawModel alpha q).matrix j (nativeStep .raw source h j).1)
@@ -259,7 +261,7 @@ theorem raw_feature_updates {m : ℕ} (alpha : unitInterval)
 theorem raw_native_bridge {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
     (hq : ∀ i, 0 < (q i : ℝ)) (hw : ∀ i, 0 < w i) (hsum : (∑ i, w i) = 1) :
-    FullNativeBridge w (rawModel alpha q) (rawFeature alpha q w) := by
+    FullNativeBridge.{u} w (rawModel alpha q) (rawFeature alpha q w) := by
   classical
 
 
@@ -322,6 +324,19 @@ private theorem exceptional_count_le_one {m : ℕ} (alpha : unitInterval)
   apply Subtype.ext
   have hn : 1 - (alpha : ℝ) ≠ 0 := by linarith
   exact (mul_left_cancel₀ hn (hi.symm.trans hj))
+private theorem exceptional_count_eq_zero_of_half_le {m : ℕ} (alpha : unitInterval)
+    (q : Fin m → unitInterval) (ha : (alpha : ℝ) < 1)
+    (hq : ∀ i, (q i : ℝ) < 1) (hhalf : (1 / 2 : ℝ) ≤ (alpha : ℝ)) :
+    exceptionalCount alpha q = 0 := by
+  classical
+  apply Finset.card_eq_zero.mpr
+  apply Finset.eq_empty_iff_forall_notMem.mpr
+  intro i hi
+  simp only [Finset.mem_filter, Finset.mem_univ, true_and] at hi
+  have hlt : (1 - (alpha : ℝ)) * (q i : ℝ) < 1 - (alpha : ℝ) :=
+    mul_lt_of_lt_one_right (by linarith) (hq i)
+  linarith
+
 theorem raw_probability {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (ha : 0 < (alpha : ℝ)) :
     ((∀ j c, ∑ o, ∑ d, (rawModel alpha q).matrix j o d c = 1) ∧
@@ -349,7 +364,7 @@ theorem raw_probability {m : ℕ} (alpha : unitInterval)
 def OutputMassBridge {m : ℕ} {task : Task} {alpha : unitInterval}
     {q : Fin m → unitInterval} (w : Fin m → ℝ) (R : MassModel task alpha q)
     (feature : State → R.Carrier → ℝ) : Prop :=
-  ∀ (Seed : Type*) [MeasurableSpace Seed] (policy : Policy Seed)
+  ∀ (Seed : Type u) [MeasurableSpace Seed] (policy : Policy Seed)
     (nu : Measure Seed) [IsProbabilityMeasure nu] (n : ℕ) (h : State) (B : Set Seed),
     MeasurableSet B →
     let law := nu.prod (sourceMixture alpha q w)
@@ -360,8 +375,8 @@ def OutputMassBridge {m : ℕ} {task : Task} {alpha : unitInterval}
 
 private theorem native_output_mass_bridge {m : ℕ} {task : Task} {alpha : unitInterval}
     {q : Fin m → unitInterval} {w : Fin m → ℝ} (R : MassModel task alpha q)
-    (feature : State → R.Carrier → ℝ) (hb : FullNativeBridge w R feature) :
-    OutputMassBridge w R feature := by
+    (feature : State → R.Carrier → ℝ) (hb : FullNativeBridge.{u} w R feature) :
+    OutputMassBridge.{u} w R feature := by
   classical
 
 
@@ -390,7 +405,7 @@ This is not the next-history mass under the original randomized policy. -/
 def UnnormalizedBridge {m : ℕ} {task : Task} {alpha : unitInterval}
     {q : Fin m → unitInterval} (w : Fin m → ℝ) (R : MassModel task alpha q)
     (feature : State → R.Carrier → ℝ) : Prop :=
-  ∀ (Seed : Type*) [MeasurableSpace Seed] (policy : Policy Seed)
+  ∀ (Seed : Type u) [MeasurableSpace Seed] (policy : Policy Seed)
     (nu : Measure Seed) [IsProbabilityMeasure nu] (n : ℕ) (h : State) (B : Set Seed),
     MeasurableSet B →
     let law := nu.prod (sourceMixture alpha q w)
@@ -404,8 +419,8 @@ def UnnormalizedBridge {m : ℕ} {task : Task} {alpha : unitInterval}
 
 private theorem native_unnormalized_bridge {m : ℕ} {task : Task} {alpha : unitInterval}
     {q : Fin m → unitInterval} {w : Fin m → ℝ} (R : MassModel task alpha q)
-    (feature : State → R.Carrier → ℝ) (hm : OutputMassBridge w R feature)
-    (hu : FeatureUpdates R feature) : UnnormalizedBridge w R feature := by
+    (feature : State → R.Carrier → ℝ) (hm : OutputMassBridge.{u} w R feature)
+    (hu : FeatureUpdates R feature) : UnnormalizedBridge.{u} w R feature := by
   intro Seed inst policy nu prob n h B hB
   dsimp only
   intro hE j source hv d
@@ -416,13 +431,13 @@ private theorem native_unnormalized_bridge {m : ℕ} {task : Task} {alpha : unit
 def RandomNativeBridge {m : ℕ} {task : Task} {alpha : unitInterval}
     {q : Fin m → unitInterval} (w : Fin m → ℝ) (R : MassModel task alpha q)
     (feature : State → R.Carrier → ℝ) : Prop :=
-  ∀ (Seed : Type*) [MeasurableSpace Seed] (policy : Policy Seed)
+  ∀ (Seed : Type u) [MeasurableSpace Seed] (policy : Policy Seed)
     (nu : Measure Seed) [IsProbabilityMeasure nu] (n : ℕ) (h : State) (B : Set Seed),
     MeasurableSet B →
     let law := nu.prod (sourceMixture alpha q w)
     let E := nativeEvent policy n h B
     0 < law.real E →
-    ∀ (Fresh : Type*) [MeasurableSpace Fresh] (rho : Measure Fresh) [IsProbabilityMeasure rho]
+    ∀ (Fresh : Type v) [MeasurableSpace Fresh] (rho : Measure Fresh) [IsProbabilityMeasure rho]
       (tests : Fresh → Test), Measurable[(inferInstance : MeasurableSpace Fresh), ⊤] tests →
       MeasurableSet {p : Fresh × (Seed × Source) |
         p.2 ∈ E ∧ nativeAccept task p.2.2 h (tests p.1) = true} →
@@ -431,7 +446,7 @@ def RandomNativeBridge {m : ℕ} {task : Task} {alpha : unitInterval}
 
 private theorem test_row_bounds {m : ℕ} {task : Task} {alpha : unitInterval}
     {q : Fin m → unitInterval} (R : MassModel task alpha q)
-    (hn : letI := R.finite; letI := R.finiteOutputs; ∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1)
+    (hn : ∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1)
     (hp : ∀ j o d c, 0 ≤ R.matrix j o d c) (T : Test) (c : R.Carrier) :
     0 ≤ testRow R T c ∧ testRow R T c ≤ 1 := by
   classical
@@ -452,9 +467,9 @@ private theorem test_row_bounds {m : ℕ} {task : Task} {alpha : unitInterval}
 
 private theorem random_native_bridge {m : ℕ} {task : Task} {alpha : unitInterval}
     {q : Fin m → unitInterval} {w : Fin m → ℝ} (R : MassModel task alpha q)
-    (feature : State → R.Carrier → ℝ) (hb : FullNativeBridge w R feature)
-    (hn : letI := R.finite; letI := R.finiteOutputs; ∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1)
-    (hp : ∀ j o d c, 0 ≤ R.matrix j o d c) : RandomNativeBridge w R feature := by
+    (feature : State → R.Carrier → ℝ) (hb : FullNativeBridge.{u} w R feature)
+    (hn : ∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1)
+    (hp : ∀ j o d c, 0 ≤ R.matrix j o d c) : RandomNativeBridge.{u, v} w R feature := by
   classical
 
   intro Seed inst policy nu prob n h B hB
@@ -544,12 +559,12 @@ private theorem stopped_root_recovery {Seed : Type*} [MeasurableSpace Seed]
 def RootCoupling {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval)
     (w : Fin m → ℝ) : Prop :=
   ∀ᵐ source ∂sourceMixture alpha q w,
-    ∀ (Seed : Type*) [MeasurableSpace Seed] (policy : Policy Seed) (seed : Seed) (n : ℕ),
+    ∀ (Seed : Type u) [MeasurableSpace Seed] (policy : Policy Seed) (seed : Seed) (n : ℕ),
       (actualRun policy seed source n).stopped = true →
         recoveredRoot (actualRun policy seed source n) = source.1
 
 private theorem source_root_coupling {m : ℕ} (alpha : unitInterval)
-    (q : Fin m → unitInterval) (w : Fin m → ℝ) : RootCoupling alpha q w := by
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) : RootCoupling.{u} alpha q w := by
   have hn : ∀ᵐ source ∂sourceMixture alpha q w, noAdjacentOnes source := by
     rw [sourceMixture, ae_finsetSum_measure_iff]
     intro i hi
@@ -568,21 +583,23 @@ def FiniteAtomUpperBounds : Prop :=
     (∀ i, 0 < (q i : ℝ) ∧ (q i : ℝ) < 1) → Function.Injective q →
     (∀ i, 0 < w i) → (∑ i, w i) = 1 →
     exceptionalCount alpha q ≤ 1 ∧
+      ((1 / 2 : ℝ) ≤ (alpha : ℝ) → exceptionalCount alpha q = 0) ∧
       ∀ task : Task, ∃ (R : MassModel task alpha q) (feature : State → R.Carrier → ℝ),
         (Fintype.card R.Carrier = desiredCard task alpha q ∧
            (∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1) ∧
-           (∀ j o d c, 0 ≤ R.matrix j o d c)) ∧ FullNativeBridge w R feature ∧ FeatureUpdates R feature ∧ RandomNativeBridge w R feature ∧
-          OutputMassBridge w R feature ∧ UnnormalizedBridge w R feature
+           (∀ j o d c, 0 ≤ R.matrix j o d c)) ∧ FullNativeBridge.{u} w R feature ∧ FeatureUpdates R feature ∧ RandomNativeBridge.{u, v} w R feature ∧
+          OutputMassBridge.{u} w R feature ∧ UnnormalizedBridge.{u} w R feature
 
 
 /-- Finite native-test linear dimension upper bounds for all three interfaces. -/
-theorem result : FiniteAtomUpperBounds ∧
+theorem result : FiniteAtomUpperBounds.{u, v} ∧
     (∀ (m : ℕ) (alpha : unitInterval) (q : Fin m → unitInterval) (w : Fin m → ℝ),
-      RootCoupling alpha q w) := by
+      RootCoupling.{u} alpha q w) := by
   refine ⟨?_, fun _ alpha q w => source_root_coupling alpha q w⟩
   classical
   intro m alpha q w ha ha' hq hi hw hw'
-  refine ⟨exceptional_count_le_one alpha q ha' hi, ?_⟩
+  refine ⟨exceptional_count_le_one alpha q ha' hi,
+    exceptional_count_eq_zero_of_half_le alpha q ha' (fun i => (hq i).2), ?_⟩
   intro task
   cases task with
   | retained =>

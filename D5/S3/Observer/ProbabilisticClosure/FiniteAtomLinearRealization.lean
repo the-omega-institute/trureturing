@@ -19,10 +19,13 @@ noncomputable section
 
 namespace D5.S3.Observer.ProbabilisticClosure.FiniteAtomLinearRealization
 
+universe u
+
 open MeasureTheory ProbabilityTheory
 open scoped ENNReal BigOperators
 open AdaptiveMarkerStoppingTails
 
+set_option backward.isDefEq.respectTransparency false in
 inductive Task where
   | retained | emitted | raw
   deriving DecidableEq, Fintype
@@ -302,6 +305,8 @@ structure MassModel {m : ℕ} (task : Task) (alpha : unitInterval)
   [finite : Fintype Carrier]
   mode : Carrier → Mode
   matrix : Side → Output → Carrier → Carrier → ℝ
+
+attribute [instance] MassModel.finite
 
 /-- Backward evaluation of a test gives its fixed linear readout row. -/
 def testRow {m : ℕ} {task : Task} {alpha : unitInterval} {q : Fin m → unitInterval}
@@ -637,7 +642,7 @@ private theorem full_feature_readout {m : ℕ} (task : Task) (alpha : unitInterv
 def FullNativeBridge {m : ℕ} {task : Task} {alpha : unitInterval}
     {q : Fin m → unitInterval} (w : Fin m → ℝ) (R : MassModel task alpha q)
     (feature : State → R.Carrier → ℝ) : Prop :=
-  ∀ (Seed : Type*) [MeasurableSpace Seed] (policy : Policy Seed)
+  ∀ (Seed : Type u) [MeasurableSpace Seed] (policy : Policy Seed)
     (nu : Measure Seed) [IsProbabilityMeasure nu] (n : ℕ) (h : State) (B : Set Seed),
     MeasurableSet B →
     let law := nu.prod (sourceMixture alpha q w)
@@ -740,7 +745,7 @@ theorem native_finite_test_realization {m : ℕ} (task : Task) (alpha : unitInte
     (Fintype.card (fullModel task alpha q).Carrier = 4 * m + terminalCount task ∧
        (∀ j c, ∑ o, ∑ d, (fullModel task alpha q).matrix j o d c = 1) ∧
        (∀ j o d c, 0 ≤ (fullModel task alpha q).matrix j o d c) ∧
-       FullNativeBridge w (fullModel task alpha q) (fullFeature task alpha q w)) := by
+       FullNativeBridge.{u} w (fullModel task alpha q) (fullFeature task alpha q w)) := by
   classical
   obtain ⟨hcard, hcol, hpos⟩ := full_model_probability task alpha q ha
   refine ⟨hcard, hcol, hpos, ?_⟩
@@ -941,7 +946,7 @@ theorem result {m : ℕ} (task : Task) (alpha : unitInterval)
     (Fintype.card (fullModel task alpha q).Carrier = 4 * m + terminalCount task ∧
        (∀ j c, ∑ o, ∑ d, (fullModel task alpha q).matrix j o d c = 1) ∧
        (∀ j o d c, 0 ≤ (fullModel task alpha q).matrix j o d c) ∧
-       FullNativeBridge w (fullModel task alpha q) (fullFeature task alpha q w)) ∧
+       FullNativeBridge.{u} w (fullModel task alpha q) (fullFeature task alpha q w)) ∧
       FeatureUpdates (fullModel task alpha q) (fullFeature task alpha q w) :=
   ⟨native_finite_test_realization task alpha q w ha hq hw hsum,
     full_feature_updates task alpha q w ha hq hw hsum⟩
