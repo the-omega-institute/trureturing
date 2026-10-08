@@ -6,7 +6,7 @@ For all n₁, n₂ ≥ 2 and real λ₀₁, λ₁₀, λ₁₁, if the unital ma
 
 **Definition 1.1 (The Choi matrix).**
 
-$$\operatorname{choi}\left(\psi\right) = \sum_{p,q} \operatorname{kron}\left(\operatorname{single}\left(p, q, 1\right), \psi(\operatorname{single}\left(p, q, 1\right))\right)$$
+$$\forall \psi: \operatorname{MatrixMap}\left(\iota, \iota, \mathbb{C}\right), \operatorname{choi}\left(\psi\right) = \sum_{p,q} \operatorname{kron}\left(\operatorname{single}\left(p, q, 1\right), \psi(\operatorname{single}\left(p, q, 1\right))\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/ProductUnitaryPPTSquared.choi` (`✓ std3`).
 
@@ -16,11 +16,11 @@ $$\operatorname{choi}\left(\psi\right) = \sum_{p,q} \operatorname{kron}\left(\op
 
 *Commentary.*
 
-For a linear map ψ on square matrices indexed by a finite type, choi(ψ) = Σ_{p,q} E_pq ⊗ ψ(E_pq), a matrix indexed by pairs (input index, output index); kron is the Kronecker product of matrices and single(p, q, 1) is the matrix unit E_pq.
+For a linear map ψ on square complex matrices indexed by a finite type ι, choi(ψ) = Σ_{p,q} E_pq ⊗ ψ(E_pq), a matrix indexed by pairs (input index, output index); kron is the Kronecker product of matrices and single(p, q, 1) is the matrix unit E_pq.
 
 **Definition 1.2 (Flattening the two tensor factors).**
 
-$$\operatorname{flat}\left(n_1, n_2\right) = \operatorname{prodCongr}\left(finProdFinEquiv, finProdFinEquiv\right)$$
+$$\forall n_1, n_2: \mathbb{N}, \operatorname{flat}\left(n_1, n_2\right) = \operatorname{prodCongr}\left(finProdFinEquiv, finProdFinEquiv\right)$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/ProductUnitaryPPTSquared.flat` (`✓ std3`).
 
@@ -34,7 +34,7 @@ The equivalence that flattens the input pair (p₁, p₂) and the output pair (r
 
 **Definition 1.3 (PPT² for unital product-unitary-equivariant maps).**
 
-$$claim \Leftrightarrow (\forall n_1, n_2: \mathbb{N}, 2 \leq n_1, 2 \leq n_2 \Rightarrow \forall \lambda_{01}, \lambda_{10}, \lambda_{11}: \mathbb{R}, \operatorname{PosSemidef}\left(\operatorname{choi}\left(\operatorname{phi}\left(n_1, n_2, \lambda_{01}, \lambda_{10}, \lambda_{11}\right)\right)\right) \Rightarrow \operatorname{PosSemidef}\left(\operatorname{partialTranspose}\left(\operatorname{choi}\left(\operatorname{phi}\left(n_1, n_2, \lambda_{01}, \lambda_{10}, \lambda_{11}\right)\right)\right)\right) \Rightarrow \operatorname{separableCone}\left(\operatorname{reindex}\left(\operatorname{flat}\left(n_1, n_2\right), \operatorname{flat}\left(n_1, n_2\right), \operatorname{choi}\left((\operatorname{phi}\left(n_1, n_2, \lambda_{01}, \lambda_{10}, \lambda_{11}\right) \circ \operatorname{phi}\left(n_1, n_2, \lambda_{01}, \lambda_{10}, \lambda_{11}\right))\right)\right)\right))$$
+$$claim \Leftrightarrow (\forall n_1, n_2: \mathbb{N}, 2 \leq n_1, 2 \leq n_2 \Rightarrow \forall \lambda_{01}, \lambda_{10}, \lambda_{11}: \mathbb{R}, \operatorname{PosSemidef}\left(\operatorname{choi}\left(\operatorname{phi}\left(n_1, n_2, \operatorname{cast}\left(\lambda_{01}\right), \operatorname{cast}\left(\lambda_{10}\right), \operatorname{cast}\left(\lambda_{11}\right)\right)\right)\right) \Rightarrow \operatorname{PosSemidef}\left(\operatorname{partialTranspose}\left(\operatorname{choi}\left(\operatorname{phi}\left(n_1, n_2, \operatorname{cast}\left(\lambda_{01}\right), \operatorname{cast}\left(\lambda_{10}\right), \operatorname{cast}\left(\lambda_{11}\right)\right)\right)\right)\right) \Rightarrow \operatorname{separableCone}\left(\operatorname{reindex}\left(\operatorname{flat}\left(n_1, n_2\right), \operatorname{flat}\left(n_1, n_2\right), \operatorname{choi}\left((\operatorname{phi}\left(n_1, n_2, \operatorname{cast}\left(\lambda_{01}\right), \operatorname{cast}\left(\lambda_{10}\right), \operatorname{cast}\left(\lambda_{11}\right)\right) \circ \operatorname{phi}\left(n_1, n_2, \operatorname{cast}\left(\lambda_{01}\right), \operatorname{cast}\left(\lambda_{10}\right), \operatorname{cast}\left(\lambda_{11}\right)\right))\right)\right)\right))$$
 
 *Formalization.* `D5/S3/Quantum/QuantumChannels/ProductUnitaryPPTSquared.claim` (`✓ std3`).
 
@@ -44,7 +44,7 @@ $$claim \Leftrightarrow (\forall n_1, n_2: \mathbb{N}, 2 \leq n_1, 2 \leq n_2 \R
 
 *Commentary.*
 
-Here phi(n₁, n₂, λ₀₁, λ₁₀, λ₁₁) = D₁ ⊗ D₂ + λ₀₁ D₁ ⊗ Q₂ + λ₁₀ Q₁ ⊗ D₂ + λ₁₁ Q₁ ⊗ Q₂ is the unital map of D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum, with D(X) = tr(X) I/n and Q = id − D; for n₁, n₂ ≥ 2 these are exactly the unital, Hermiticity-preserving maps commuting with conjugation by U ⊗ V. partialTranspose transposes the output indices: (partialTranspose M)((p, r), (q, s)) = M((p, s), (q, r)). The two hypotheses say that Φ is completely positive and completely copositive (Φ is PPT). separableCone is the frozen cone of finite sums of Kronecker products A ⊗ B of positive semidefinite matrices, so the conclusion says that Φ ∘ Φ is entanglement breaking. The composition is needed: when n₁ ≠ n₂ there are PPT maps in this family that are not entanglement breaking.
+Here cast is the inclusion of ℝ in ℂ, and phi(n₁, n₂, λ₀₁, λ₁₀, λ₁₁) = D₁ ⊗ D₂ + λ₀₁ D₁ ⊗ Q₂ + λ₁₀ Q₁ ⊗ D₂ + λ₁₁ Q₁ ⊗ Q₂ is the unital map of D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum, with D(X) = tr(X) I/n and Q = id − D; for n₁, n₂ ≥ 2 these are exactly the unital, Hermiticity-preserving maps commuting with conjugation by U ⊗ V. partialTranspose transposes the output indices: (partialTranspose M)((p, r), (q, s)) = M((p, s), (q, r)). The two hypotheses say that Φ is completely positive and completely copositive (Φ is PPT). separableCone is the frozen cone of finite sums of Kronecker products A ⊗ B of positive semidefinite matrices, so the conclusion says that Φ ∘ Φ is entanglement breaking. The composition is needed: when n₁ ≠ n₂ there are PPT maps in this family that are not entanglement breaking.
 
 **Theorem 1.4 (PPT² in every dimension).**
 
