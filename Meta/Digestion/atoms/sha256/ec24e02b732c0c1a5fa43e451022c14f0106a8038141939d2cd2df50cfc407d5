@@ -1,0 +1,11 @@
+**命题 11.4（两个概率核的同一全局协方差）。** 两个读向核均满足
+
+```math
+d:=\det K_{{\rm high},p}=\det K_{{\rm low},p}
+=XY-\kappa=-\mathop{\mathrm{Cov}}\nolimits_p(x,y)=-\Delta-Z\kappa.
+```
+
+证明。高读行列式为 $`(1-X)(X-\kappa)-X(1-X-Y+\kappa)=XY-\kappa`$；低读交换 $`X,Y`$ 得同式。再用 $`\Delta=(1-Z)\kappa-XY`$。∎
+
+例如均匀五模式的 $`\Delta=0`$，但 $`d=-1/25`$。底面条件协方差与整个律的协方差是两种量。同一律及读向合同固定后才能比较，不能把活动权核的 $`-abc`$ 与归一化概率核的行列式混为一项。
+

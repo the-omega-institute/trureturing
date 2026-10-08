@@ -1,0 +1,31 @@
+### 数学引文 21.6：实际有限计数与匹配解析输入
+
+令 $N=N(T)$ 为 $0<\Im\rho\le T$ 内全部非平凡零点按重数计数，$n=N_0^s(T)$ 为其中简单临界线零点数。采用 [Lamzouri v2 §3](https://arxiv.org/html/2609.02882v2) 的实偶平滑族
+$$
+f_\varepsilon=\frac{\psi_\varepsilon^2f_0}{A_\varepsilon}
+=\eta_\varepsilon^2,
+\qquad A_\varepsilon=\int\psi_\varepsilon^2f_0,
+\qquad\eta_\varepsilon\in C_c^\infty((-1/2,1/2)),
+$$
+其中 $\int f_\varepsilon=1$、$f_\varepsilon\to f_0$ 于 $L^1\cap L^2$，$K_\varepsilon=\widehat f_\varepsilon$。对同一实际多重集
+$$
+Z_T=\left\{\frac{i(\rho-1/2)\log T}{2\pi}:0<\Im\rho\le T\right\},
+$$
+取恰由其简单实点组成的原维数 Gram $G_\varepsilon$，以及完整能量
+$$
+\mathcal E_\varepsilon=\sum_{z,s\in Z_T}K_\varepsilon(z-s)^2.
+$$
+能量采用复数平方；其总和为非负实数。已有有限计数式及匹配解析输入为
+$$
+n\ge2N-\mathcal E_\varepsilon+\operatorname{tr}\Psi(G_\varepsilon),
+\qquad
+\frac{\mathcal E_\varepsilon}{N}=C_\varepsilon+o_\varepsilon(1),
+\qquad
+C_\varepsilon\longrightarrow2-C_0,
+\tag{21.10}
+$$
+$$
+C_0=\frac32-\frac1{\sqrt2}\cot(1/\sqrt2).
+$$
+归一化点列包含于长度 $B_T=T\log T/(2\pi)=N+o(N)$ 的区间。Lamzouri 的去权论证是实际解析输入的一部分，不可直接从加权配对公式删除权重。以下保留先 $T\to\infty$、再 $\varepsilon\to0$ 的顺序。
+
