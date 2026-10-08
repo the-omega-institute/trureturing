@@ -9,21 +9,23 @@
 /-
 proof_shape: symmetric_spectrum_end_amplitude: content; escape_witness: the public conclusion
 itself (form 2; the preregistered fact E3 of issue #14487): for a seven-site path with positive
-weights, symmetric spectrum and transfer between its ends at a real time T, the eigenvalues are
-0, ±x, ±y, ±z with exp(iTx) = -1, exp(iTy) = 1, exp(iTz) = -1, and the first-site amplitude is
+weights, real potentials, symmetric spectrum and transfer between its ends at a real time T, the
+eigenvalues are 0, ±x, ±y, ±z with exp(iTx) = -1, exp(iTy) = 1, exp(iTz) = -1, and the first-site
+amplitude is
 P [1/(x²y²z²) + cos(τx)/(x²(y²-x²)(z²-x²)) + cos(τy)/(y²(y²-x²)(z²-y²))
-+ cos(τz)/(z²(z²-x²)(z²-y²))].
++ cos(τz)/(z²(z²-x²)(z²-y²))], P the product of the weights.
 It is produced on the live path by the mirror symmetry of the increasing enumeration of a
 symmetric simple spectrum, the seven nodal products and their signs, and the weights and
 phases of D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pst_spectral_weights; no Mathlib or
-frozen declaration states it. consumer: symmetric_spectrum_reduction.
+frozen declaration states it for an arbitrary such path. consumer: symmetric_spectrum_reduction.
 proof_shape: symmetric_spectrum_reduction: content; escape_witness: the public conclusion itself
 (form 2): the spectrum is (π/T) (0, ±a, ±b, ±c) with a < b < c natural, a and c odd, b even, the
-first-site amplitude is a positive multiple of the cosine sum in a, b, c, and every common
-divisor g of a, b, c gives transfer at the time T/g; produced from the phases by the integrality
-of T x/π, T y/π, T z/π, a rescaling of the amplitude, and the equality of the spectral phases at
-the times T/g and T. consumer:
-D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion (claim_of_amplitudeNumerator_zero_iff).
+first-site amplitude is a positive multiple of the cosine sum
+D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros.amplitudeNumerator a b c at the time π τ / T,
+and every common divisor g of a, b, c gives transfer at the time T/g; produced from the phases
+by the integrality of T x/π, T y/π, T z/π, a rescaling of the amplitude, and the equality of the
+spectral phases at the times T/g and T. consumer:
+D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion.result.
 Private helpers:
 proof_shape: symmetric_spectrum_weights: content (escape witnesses as for
 symmetric_spectrum_end_amplitude: spectrum, phases and first-site weights); consumer:
@@ -37,9 +39,6 @@ symmetric_spectrum_weights.
 proof_shape: sum_weight_exp_symmetric: content (pairing of the mirror phases into cosines);
 consumer: symmetric_spectrum_end_amplitude.
 proof_shape: exp_neg_add_exp: bind-only (Complex.two_cos); consumer: sum_weight_exp_symmetric.
-proof_shape: pathHamiltonian_pow_apply_zero_last: bind-only (transpose of
-RationalWeightPathTransfer.pathHamiltonian_pow_apply_column); consumer:
-symmetric_spectrum_weights.
 proof_shape: spectral_exp_apply_self: bind-only (diagonal entry of
 RationalWeightPathTransfer.spectral_exp); consumer: symmetric_spectrum_end_amplitude.
 proof_shape: hasPST_of_phase_eq: bind-only (RationalWeightPathTransfer.spectral_exp at two
@@ -50,11 +49,18 @@ proof_shape: exists_odd_nat, exists_even_nat: bind-only (a positive integer is a
 consumer: symmetric_spectrum_reduction.
 proof_shape: exp_div_eq: bind-only (Complex.exp_eq_exp_iff_exists_int); consumer:
 symmetric_spectrum_reduction.
-proof_shape: nodal, nodalAbs: definitions; consumer: prod_erase_symmetric,
-sum_weight_exp_symmetric, symmetric_spectrum_weights.
-admission_basis: escape-witness (the spectral reduction of the Escobar–Garcia seven-site
-conjecture of arXiv:2507.18767, issue #14487; the conjecture itself is settled in
-D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion).
+Private definitions nodal, nodalAbs (the seven nodal products and their absolute values);
+consumer: prod_erase_symmetric, sum_weight_exp_symmetric, symmetric_spectrum_weights.
+admission_basis: escape-witness (the spectral reduction of the seven-site conjecture of Section 4
+of arXiv:2507.18767, issue #14487, Library note
+D5/L/GraphInvariants/escobar2025earlystateexclusion). The amplitude formula is Eq. (2.1) of that
+source, which the source derives for the explicit persymmetric matrix with zero diagonal built
+from a prescribed symmetric spectrum; here it is derived for every seven-site path with positive
+weights, real potentials, symmetric spectrum and transfer between its ends at some time. The
+spacing of the spectrum of a chain with perfect state transfer is Kay's criterion, recalled by
+the source as its Eq. (1.3); the seven-point symmetric form with the parities, the cosine-sum
+form of the amplitude and the transfer at the times T/g are derived here. The conjecture itself
+is settled in D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion.
 Direct frozen dependencies:
   D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.hamiltonianPropagator
   statement_id sha256:cda9b54324a60c3d19d82ae43fd312bec7fd42bc7d2748ad663e34115d863ceb.
@@ -64,26 +70,26 @@ Direct frozen dependencies:
   statement_id sha256:757dd0796ec75540b7989b0cc8ff7b30e16f838075ebdaf9dafec9866abcd80e.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.hamiltonianPropagator_neg
   statement_id sha256:5965bdf5e9583b3548e15db5890602825b2142c2be7b5125a36b6586891c2045.
-  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_transpose
-  statement_id sha256:6f605b6c72a712566fde18c5c7b05e5facf4368fdfc76d91c7e873a3bdac528b.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_isHermitian
   statement_id sha256:9ef82c6c2002677d2d5ca2cbbbca0f264c96cd4b9b9c894ea79af8bb10c65c8a.
-  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_pow_apply_column
-  statement_id sha256:c50a132afc123692c13936889ad692366e6fb904fc589bc86bbf43f70e60e980.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.spectral_exp
   statement_id sha256:6d70a85b3878e56c8305508bbcad20a585f5e754d4479bd5c7bbe65bab3ec540.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.exists_int_of_exp_eq_one
   statement_id sha256:c53ecfce15def8b3681bf73a34fabf6b7432c89fc5c24270f1511c455e6d025a.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.exists_int_of_exp_eq_neg_one
   statement_id sha256:e5f0dc0f4cfd995c3ce9f987e1ecd249b8d3fc701986c281115dfd87445d5034.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_pow_apply_ends
+  statement_id sha256:PENDING.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pst_spectral_weights
-  (public declaration added to that module with this module; its statement_id is assigned by
-  the Lean report).
+  statement_id sha256:PENDING.
+  D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros.amplitudeNumerator
+  statement_id sha256:PENDING.
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
 instance: every statement quantifies over all positive weights, all real potentials and all
 transfer times of seven-site paths.
 -/
 
+import D5.S3.Quantum.Dynamics.EndAmplitudeCosineSumZeros
 import D5.S3.Quantum.Dynamics.RationalWeightPathTransfer
 import Mathlib.Algebra.BigOperators.Fin
 import Mathlib.Data.Fin.Tuple.Sort
@@ -100,22 +106,7 @@ namespace D5.S3.Quantum.Dynamics.SymmetricSpectrumEndAmplitude
 open Matrix Finset Complex
 open D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 open D5.S3.Quantum.Dynamics.RationalWeightPathTransfer
-
-/-- The entries of the powers of the path Hamiltonian between the first and the last vertex
-vanish below the power `m` and equal the product of the weights at the power `m`. -/
-private theorem pathHamiltonian_pow_apply_zero_last {m : ℕ} (r : Fin m → ℝ)
-    (q : Fin (m + 1) → ℝ) (p : ℕ) (hp : p ≤ m) :
-    (pathHamiltonian r q ^ p) 0 (Fin.last m) = if p = m then ((∏ t, r t : ℝ) : ℂ) else 0 := by
-  have hT : (pathHamiltonian r q ^ p)ᵀ = pathHamiltonian r q ^ p := by
-    rw [transpose_pow, pathHamiltonian_transpose]
-  rw [← hT, transpose_apply]
-  split_ifs with hpm
-  · rw [hpm, (pathHamiltonian_pow_apply_column r q 0 m (Fin.last m)).2 (by simp)]
-    push_cast
-    rw [Finset.prod_range]
-    refine Finset.prod_congr rfl fun t _ => ?_
-    simp
-  · exact (pathHamiltonian_pow_apply_column r q 0 p (Fin.last m)).1 (Or.inl (by simp; omega))
+open D5.S3.Quantum.Dynamics.EndAmplitudeCosineSumZeros
 
 section Spectral
 
@@ -371,7 +362,7 @@ private theorem symmetric_spectrum_weights (hr : ∀ j, 0 < r j)
         ∀ k, |ρ k| = Complex.normSq (W 0 k) :=
     pst_spectral_weights (pathHamiltonian_isHermitian r q) 0 (Fin.last 6) 6
       (Fintype.card_fin _) P hPpos.ne'
-      (fun p hp => pathHamiltonian_pow_apply_zero_last r q p hp) hpst
+      (fun p hp => (pathHamiltonian_pow_apply_ends r q p hp).2) hpst
   obtain ⟨σ, x, y, z, hx, hxy, hyz, hσ⟩ := exists_symmetric_enumeration Λ hinj hsym
   have hy : 0 < y := hx.trans hxy
   have hz : 0 < z := hy.trans hyz
@@ -523,8 +514,8 @@ sites with positive weights, arbitrary real potentials and a spectrum closed und
 perfect state transfer between its ends at a time `T > 0`. Then there are natural numbers
 `0 < a < b < c`, with `a` and `c` odd and `b` even, such that the eigenvalues are
 `(π / T) (-c, -b, -a, 0, a, b, c)`, the first-site amplitude at the time `τ` is a positive
-constant times
-`(b²-a²)(c²-a²)(c²-b²) + b²c²(c²-b²) cos(a t) + a²c²(c²-a²) cos(b t) + a²b²(b²-a²) cos(c t)` at
+constant times the cosine sum `amplitudeNumerator a b c t`, that is
+`(b²-a²)(c²-a²)(c²-b²) + b²c²(c²-b²) cos(a t) + a²c²(c²-a²) cos(b t) + a²b²(b²-a²) cos(c t)`, at
 `t = π τ / T`, and the chain has perfect state transfer between its ends at the time `T / g`
 for every common divisor `g` of `a`, `b`, `c`. -/
 theorem symmetric_spectrum_reduction (hr : ∀ j, 0 < r j)
@@ -536,14 +527,7 @@ theorem symmetric_spectrum_reduction (hr : ∀ j, 0 < r j)
       (∀ i, (pathHamiltonian_isHermitian r q).eigenvalues (σ i) =
         Real.pi / T * ![-(c : ℝ), -(b : ℝ), -(a : ℝ), 0, (a : ℝ), (b : ℝ), (c : ℝ)] i) ∧
       (∀ τ : ℝ, hamiltonianPropagator (pathHamiltonian r q) τ 0 0 =
-        ((κ * (((b : ℝ) ^ 2 - (a : ℝ) ^ 2) * ((c : ℝ) ^ 2 - (a : ℝ) ^ 2) *
-            ((c : ℝ) ^ 2 - (b : ℝ) ^ 2)
-          + (b : ℝ) ^ 2 * (c : ℝ) ^ 2 * ((c : ℝ) ^ 2 - (b : ℝ) ^ 2) *
-            Real.cos (a * (Real.pi * τ / T))
-          + (a : ℝ) ^ 2 * (c : ℝ) ^ 2 * ((c : ℝ) ^ 2 - (a : ℝ) ^ 2) *
-            Real.cos (b * (Real.pi * τ / T))
-          + (a : ℝ) ^ 2 * (b : ℝ) ^ 2 * ((b : ℝ) ^ 2 - (a : ℝ) ^ 2) *
-            Real.cos (c * (Real.pi * τ / T))) : ℝ) : ℂ)) ∧
+        ((κ * amplitudeNumerator a b c (Real.pi * τ / T) : ℝ) : ℂ)) ∧
       ∀ g : ℕ, g ∣ a → g ∣ b → g ∣ c →
         HasPST (pathHamiltonian r q) (T / g) 0 (Fin.last 6) := by
   obtain ⟨σ, x, y, z, hx, hxy, hyz, hσ, hEx, hEy, hEz, hamp⟩ :=
@@ -653,6 +637,7 @@ theorem symmetric_spectrum_reduction (hr : ∀ j, 0 < r j)
     by exact_mod_cast hBC, hκ, hS, fun τ => ?_, fun g hga hgb hgc => ?_⟩
   · rw [hamp τ]
     congr 1
+    unfold amplitudeNumerator
     have cx : τ * x = (a : ℝ) * (Real.pi * τ / T) := by
       rw [hx']
       ring

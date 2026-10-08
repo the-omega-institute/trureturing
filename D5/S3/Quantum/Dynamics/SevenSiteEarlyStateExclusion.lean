@@ -10,18 +10,18 @@
 proof_shape:
   claim: definition (the conjecture of Section 4 of arXiv:2507.18767 in the conventions of
     issue #14487)
-  claim_of_amplitudeNumerator_zero_iff: content; escape_witness:
+  result: content; escape_witness (form 1): the same-delivery intermediate proposition
     D5/S3/Quantum/Dynamics/SymmetricSpectrumEndAmplitude.symmetric_spectrum_reduction (spectrum
-    (π/T) (0, ±a, ±b, ±c), first-site amplitude a positive multiple of the cosine sum, transfer at
-    the times T/g), on the live path together with the new steps of this module: minimality of
-    the transfer time forces gcd(a, b, c) = 1, the divisibility condition on the positive
-    eigenvalues is a = 1, and early state exclusion is a zero of the cosine sum in (0, π). The
-    zero criterion of the cosine sum (a zero in (0, π) iff a ≠ 1) is a hypothesis of this
-    declaration.
-  amplitudeNumerator: private definition (the cosine sum); consumer:
-    claim_of_amplitudeNumerator_zero_iff.
-admission_basis: open-problem-resolution (issue #14487; Proved), for claim and the declaration
-  that discharges the hypothesis of claim_of_amplitudeNumerator_zero_iff.
+    (π/T) (0, ±a, ±b, ±c), first-site amplitude a positive multiple of the cosine sum
+    amplitudeNumerator a b c at the time π τ / T, transfer at the times T/g), on the live path
+    together with the steps of this module: minimality of the transfer time forces
+    gcd(a, b, c) = 1, the divisibility condition on the positive eigenvalues is a = 1, and early
+    state exclusion is a zero of the cosine sum in (0, π). The zero criterion of the cosine sum
+    is the frozen D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros.amplitudeNumerator_zero_iff.
+admission_basis: open-problem-resolution (issue #14487; Proved). The source, Library note
+  D5/L/GraphInvariants/escobar2025earlystateexclusion, proves the spectra
+  {0, ±1, ±2m, ±(2m+1)} (its Theorem 3.2) and {0, ±(2m+1), ±(2m+2), ±(2m+3)} (its Theorem 3.4)
+  and states the general case as a conjecture.
 Direct frozen dependencies:
   D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.hamiltonianPropagator
   statement_id sha256:cda9b54324a60c3d19d82ae43fd312bec7fd42bc7d2748ad663e34115d863ceb.
@@ -31,13 +31,18 @@ Direct frozen dependencies:
   statement_id sha256:757dd0796ec75540b7989b0cc8ff7b30e16f838075ebdaf9dafec9866abcd80e.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_isHermitian
   statement_id sha256:9ef82c6c2002677d2d5ca2cbbbca0f264c96cd4b9b9c894ea79af8bb10c65c8a.
+  D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros.amplitudeNumerator
+  statement_id sha256:PENDING.
+  D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros.amplitudeNumerator_zero_iff
+  statement_id sha256:PENDING.
   D5/S3/Quantum/Dynamics/SymmetricSpectrumEndAmplitude.symmetric_spectrum_reduction
-  (delivered with this module; its statement_id is assigned by the Lean report).
+  statement_id sha256:PENDING.
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
 instance: the claim quantifies over all seven-site paths with positive weights, all real
 potentials and all transfer times.
 -/
 
+import D5.S3.Quantum.Dynamics.EndAmplitudeCosineSumZeros
 import D5.S3.Quantum.Dynamics.SymmetricSpectrumEndAmplitude
 
 set_option autoImplicit false
@@ -50,22 +55,16 @@ namespace D5.S3.Quantum.Dynamics.SevenSiteEarlyStateExclusion
 open Matrix Finset Complex
 open D5.S3.Quantum.Dynamics.ProjectionProbabilityFlow
 open D5.S3.Quantum.Dynamics.RationalWeightPathTransfer
+open D5.S3.Quantum.Dynamics.EndAmplitudeCosineSumZeros
 open D5.S3.Quantum.Dynamics.SymmetricSpectrumEndAmplitude
 
-/-- The cosine sum
-`(b²-a²)(c²-a²)(c²-b²) + b²c²(c²-b²) cos(a t) + a²c²(c²-a²) cos(b t) + a²b²(b²-a²) cos(c t)`. -/
-private def amplitudeNumerator (a b c : ℕ) (t : ℝ) : ℝ :=
-  ((b : ℝ) ^ 2 - (a : ℝ) ^ 2) * ((c : ℝ) ^ 2 - (a : ℝ) ^ 2) * ((c : ℝ) ^ 2 - (b : ℝ) ^ 2)
-    + (b : ℝ) ^ 2 * (c : ℝ) ^ 2 * ((c : ℝ) ^ 2 - (b : ℝ) ^ 2) * Real.cos (a * t)
-    + (a : ℝ) ^ 2 * (c : ℝ) ^ 2 * ((c : ℝ) ^ 2 - (a : ℝ) ^ 2) * Real.cos (b * t)
-    + (a : ℝ) ^ 2 * (b : ℝ) ^ 2 * ((b : ℝ) ^ 2 - (a : ℝ) ^ 2) * Real.cos (c * t)
-
-/-- **The Escobar–Garcia conjecture** (arXiv:2507.18767, Section 4). Let `J` be the Hamiltonian
-of a path on seven sites with positive weights `r` and real potentials `q` whose spectrum is
-closed under negation, and let `T > 0` be a time at which `J` has perfect state transfer between
-its end sites, with no such transfer at any time in `(0, T)`. Then the first-site amplitude
-`(exp (-i τ J))_{0,0}` has no zero `τ ∈ (0, T)` if and only if every positive eigenvalue of `J`
-is an integer multiple of the smallest positive eigenvalue. -/
+/-- **The seven-site conjecture of Escobar, Garcia and Minenkova** (arXiv:2507.18767,
+Section 4). Let `J` be the Hamiltonian of a path on seven sites with positive weights `r` and
+real potentials `q` whose spectrum is closed under negation, and let `T > 0` be a time at which
+`J` has perfect state transfer between its end sites, with no such transfer at any time in
+`(0, T)`. Then the first-site amplitude `(exp (-i τ J))_{0,0}` has no zero `τ ∈ (0, T)` if and
+only if every positive eigenvalue of `J` is an integer multiple of the smallest positive
+eigenvalue. -/
 def claim : Prop :=
   ∀ (r : Fin 6 → ℝ) (q : Fin 7 → ℝ) (T : ℝ), (∀ j, 0 < r j) →
     (∀ k, ∃ l, (pathHamiltonian_isHermitian r q).eigenvalues l =
@@ -81,19 +80,17 @@ def claim : Prop :=
           (pathHamiltonian_isHermitian r q).eigenvalues k =
             n * (pathHamiltonian_isHermitian r q).eigenvalues k₀)
 
-/-- The conjecture follows from the zero criterion of the cosine sum: for `a < b < c` with `a`,
-`c` odd, `b` even and `gcd(a, b, c) = 1`, the cosine sum has a zero in `(0, π)` if and only if
-`a ≠ 1`. -/
-theorem claim_of_amplitudeNumerator_zero_iff
-    (hzero : ∀ a b c : ℕ, Odd a → Even b → Odd c → a < b → b < c →
-      Nat.gcd (Nat.gcd a b) c = 1 →
-        ((∃ t : ℝ, 0 < t ∧ t < Real.pi ∧ amplitudeNumerator a b c t = 0) ↔ a ≠ 1)) :
-    claim := by
+/-- **The seven-site conjecture holds.** A seven-site chain with positive couplings, real
+potentials and symmetric spectrum whose earliest perfect state transfer between its ends occurs
+at the time `T` has spectrum `(π / T) (0, ±a, ±b, ±c)` with `a < b < c`, `a`, `c` odd, `b` even
+and `gcd(a, b, c) = 1`; its first-site amplitude is a positive multiple of the cosine sum
+`amplitudeNumerator a b c` at the time `π τ / T`, which has a zero in `(0, π)` if and only if
+`a ≠ 1`, and `a = 1` says that every positive eigenvalue is an integer multiple of the smallest
+one. -/
+theorem result : claim := by
   intro r q T hr hsym hT hpst hmin
   obtain ⟨a, b, c, σ, κ, ha, hb, hc, ha0, hab, hbc, hκ, hS, hA, hG⟩ :=
     symmetric_spectrum_reduction r q hr hsym hT hpst
-  have hA' : ∀ τ : ℝ, hamiltonianPropagator (pathHamiltonian r q) τ 0 0 =
-      ((κ * amplitudeNumerator a b c (Real.pi * τ / T) : ℝ) : ℂ) := hA
   have hu : 0 < Real.pi / T := div_pos Real.pi_pos hT
   have hAr : (0 : ℝ) < a := by exact_mod_cast ha0
   have hABr : (a : ℝ) < b := by exact_mod_cast hab
@@ -119,7 +116,7 @@ theorem claim_of_amplitudeNumerator_zero_iff
       refine ⟨Real.pi * τ / T, div_pos (mul_pos Real.pi_pos hτ0) hT, ?_, ?_⟩
       · rw [div_lt_iff₀ hT]
         exact mul_lt_mul_of_pos_left hτT Real.pi_pos
-      · rw [hA' τ] at hτ
+      · rw [hA τ] at hτ
         exact (mul_eq_zero.mp (Complex.ofReal_eq_zero.mp hτ)).resolve_left hκ.ne'
     · rintro ⟨t, ht0, htπ, ht⟩
       refine ⟨T * t / Real.pi, div_pos (mul_pos hT ht0) Real.pi_pos, ?_, ?_⟩
@@ -129,7 +126,7 @@ theorem claim_of_amplitudeNumerator_zero_iff
           have hTne : T ≠ 0 := hT.ne'
           have hpine : Real.pi ≠ 0 := Real.pi_ne_zero
           field
-        rw [hA', harg, ht, mul_zero, Complex.ofReal_zero]
+        rw [hA, harg, ht, mul_zero, Complex.ofReal_zero]
   -- the positive eigenvalues
   have e4 : (pathHamiltonian_isHermitian r q).eigenvalues (σ 4) = Real.pi / T * a := by
     simpa only [Matrix.cons_val] using hS 4
@@ -234,7 +231,7 @@ theorem claim_of_amplitudeNumerator_zero_iff
         · exact ⟨1, by rw [h, ha1]; push_cast; ring⟩
         · exact ⟨b, by rw [h]; push_cast; ring⟩
         · exact ⟨c, by rw [h]; push_cast; ring⟩
-  exact (not_congr (hESE.trans (hzero a b c ha hb hc hab hbc hgcd))).trans
+  exact (not_congr (hESE.trans (amplitudeNumerator_zero_iff a b c ha hb hc hab hbc hgcd))).trans
     (not_not.trans hdiv.symm)
 
 end D5.S3.Quantum.Dynamics.SevenSiteEarlyStateExclusion

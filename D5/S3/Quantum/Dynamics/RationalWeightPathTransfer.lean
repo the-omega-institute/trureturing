@@ -34,9 +34,12 @@ D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion:
 proof_shape: mul_prod_sub_eq_of_moments: content (nodal polynomial evaluated against the
 moments); consumer: pst_spectral_weights, PathMiddleVertexMoments.middle_vertex_weights.
 proof_shape: pathHamiltonian_pow_apply_column: content (induction on the power); consumer:
-no_transfer_last_first, PathMiddleVertexMoments.middle_vertex_weights,
-OddPathRationalWeightTransfer.middle_moment_gram_det, SymmetricSpectrumEndAmplitude
-(pathHamiltonian_pow_apply_zero_last).
+pathHamiltonian_pow_apply_ends, PathMiddleVertexMoments.middle_vertex_weights,
+OddPathRationalWeightTransfer.middle_moment_gram_det.
+proof_shape: pathHamiltonian_pow_apply_ends: bind-only (the entries of
+pathHamiltonian_pow_apply_column in the first column at the last vertex, and their transposes
+by pathHamiltonian_transpose); consumer: no_transfer_last_first, SymmetricSpectrumEndAmplitude
+(symmetric_spectrum_weights).
 proof_shape: prod_eq_sq_of_rev: content (mirror pairing of a product); consumer:
 no_transfer_last_first, PathMiddleVertexMoments.middle_vertex_weights.
 proof_shape: hamiltonianPropagator_neg: bind-only; consumer: pst_phase, pst_spectral_weights,
@@ -44,8 +47,8 @@ pst_parity_classes, no_transfer_last_first, result, PathMiddleVertexMoments
 (propagator_eq_reversal), OddPathRationalWeightTransfer (propagator_shift, result),
 SymmetricSpectrumEndAmplitude (hasPST_of_phase_eq, symmetric_spectrum_end_amplitude).
 proof_shape: pathHamiltonian_transpose: bind-only; consumer: pathHamiltonian_isHermitian,
-result, OddPathRationalWeightTransfer (middle_moment_gram_det, result),
-SymmetricSpectrumEndAmplitude (pathHamiltonian_pow_apply_zero_last).
+pathHamiltonian_pow_apply_ends, result, OddPathRationalWeightTransfer (middle_moment_gram_det,
+result).
 proof_shape: pathHamiltonian_isHermitian: bind-only; consumer: no_transfer_last_first,
 PathMiddleVertexMoments (propagator_eq_reversal, middle_vertex_moments),
 SymmetricSpectrumEndAmplitude (symmetric_spectrum_weights, symmetric_spectrum_end_amplitude,
@@ -65,8 +68,6 @@ proof_shape: pst_column: bind-only; consumer: no_transfer_last_first,
 PathMiddleVertexMoments (propagator_eq_reversal).
 proof_shape: propagator_star_mul_self: bind-only; consumer: no_transfer_last_first,
 PathMiddleVertexMoments (propagator_eq_reversal).
-proof_shape: eigenvector_row_sum: bind-only; consumer: pst_phase, pst_parity_classes,
-pst_column.
 Private helpers:
 proof_shape: no_transfer_last_first: content (escape witnesses as for result); consumer:
 result.
@@ -78,6 +79,8 @@ proof_shape: pathHamiltonian_up: bind-only; consumer: pathHamiltonian_transpose,
 reversal_columns.
 proof_shape: pathHamiltonian_down: bind-only; consumer: pathHamiltonian_transpose,
 pathHamiltonian_pow_apply_column, reversal_columns.
+proof_shape: eigenvector_row_sum: bind-only; consumer: pst_phase, pst_parity_classes,
+pst_column.
 proof_shape: normSq_exp_mul_I: bind-only; consumer: pst_phase.
 admission_basis: escape-witness (partial progress on the rational weights conjecture of
 arXiv:1708.03283, research line #14293; the sizes other than 2^k + 1 are not settled by the
@@ -220,6 +223,27 @@ theorem pathHamiltonian_pow_apply_column (v : Fin (m + 1)) (p : ℕ) :
           rw [pathHamiltonian_far r q i l (by omega) (by omega) (by omega), zero_mul]
       · simp
 
+/-- **End-to-end moments.** The entries of `H ^ p` between the first and the last vertex of the
+path on `m + 1` vertices, in either order, vanish for `p < m` and equal the product of all edge
+weights for `p = m`. -/
+theorem pathHamiltonian_pow_apply_ends (p : ℕ) (hp : p ≤ m) :
+    (pathHamiltonian r q ^ p) (Fin.last m) 0 = (if p = m then ((∏ t, r t : ℝ) : ℂ) else 0) ∧
+      (pathHamiltonian r q ^ p) 0 (Fin.last m) = if p = m then ((∏ t, r t : ℝ) : ℂ) else 0 := by
+  have h : (pathHamiltonian r q ^ p) (Fin.last m) 0 =
+      if p = m then ((∏ t, r t : ℝ) : ℂ) else 0 := by
+    split_ifs with hpm
+    · rw [hpm, (pathHamiltonian_pow_apply_column r q 0 m (Fin.last m)).2 (by simp)]
+      push_cast
+      rw [Finset.prod_range]
+      refine Finset.prod_congr rfl fun t _ => ?_
+      simp
+    · exact (pathHamiltonian_pow_apply_column r q 0 p (Fin.last m)).1 (Or.inl (by simp; omega))
+  have hT : (pathHamiltonian r q ^ p)ᵀ = pathHamiltonian r q ^ p := by
+    rw [transpose_pow, pathHamiltonian_transpose]
+  refine ⟨h, ?_⟩
+  rw [← hT, transpose_apply]
+  exact h
+
 end Path
 
 section Spectral
@@ -258,7 +282,7 @@ theorem spectral_exp (s : ℂ) :
   rw [hs, Matrix.exp_conj _ _ Unitary.isUnit_coe, Matrix.exp_diagonal, hWinv, hexp]
 
 /-- The rows of the eigenvector matrix are orthonormal. -/
-theorem eigenvector_row_sum (a b : V) :
+private theorem eigenvector_row_sum (a b : V) :
     ∑ k, (hH.eigenvectorUnitary : Matrix V V ℂ) a k *
       starRingEnd ℂ ((hH.eigenvectorUnitary : Matrix V V ℂ) b k) = if a = b then 1 else 0 := by
   have h := congrFun (congrFun (Unitary.coe_mul_star_self hH.eigenvectorUnitary) a) b
@@ -862,15 +886,8 @@ private theorem no_transfer_last_first {m K : ℕ} (hK : 1 ≤ K) (hm : 2 ^ K = 
   intro hpst
   set P : ℝ := ∏ t, r t with hP
   have hPpos : 0 < P := Finset.prod_pos fun t _ => hpos t
-  have hmom : ∀ p ≤ m, (H ^ p) (Fin.last m) 0 = if p = m then (P : ℂ) else 0 := by
-    intro p hp
-    split_ifs with hpm
-    · rw [hpm, (pathHamiltonian_pow_apply_column r q 0 m (Fin.last m)).2 (by simp), hP]
-      push_cast
-      rw [Finset.prod_range]
-      refine Finset.prod_congr rfl fun t _ => ?_
-      simp
-    · exact (pathHamiltonian_pow_apply_column r q 0 p (Fin.last m)).1 (Or.inl (by simp; omega))
+  have hmom : ∀ p ≤ m, (H ^ p) (Fin.last m) 0 = if p = m then (P : ℂ) else 0 := fun p hp =>
+    (pathHamiltonian_pow_apply_ends r q p hp).1
   have hlast : Fin.last m ≠ 0 := fun h => by
     have := congrArg Fin.val h
     simp at this
