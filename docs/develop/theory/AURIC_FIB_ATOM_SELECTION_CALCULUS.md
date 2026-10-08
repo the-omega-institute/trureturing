@@ -985,7 +985,7 @@ P_-=\frac{\phi I_2-M}{\phi-\psi},
 ```
 
 ```math
-\mathcal{\text{𝒰}}(t)=\phi^tP_++e^{i\pi t}|\psi|^tP_-
+\mathcal{\text{𝒰}}(t)=\phi^tP_++e^{-i\pi t}|\psi|^tP_-
 \quad(t\in\mathbb{\text{ℝ}}),\qquad
 \bar f_p(t)=\mathbb{\text{𝔼}}_p[q\mathcal{\text{𝒰}}(t)D].
 ```
