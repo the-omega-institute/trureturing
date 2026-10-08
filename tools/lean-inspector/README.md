@@ -16,6 +16,17 @@ make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
 和 Python 3。[入口](inspect.sh)负责输入验证、utility 输入工具构建、Lean-cache
 ensure、原生 Lake 报告构建和发布。
 
+The native executables `reportInspector` and `compiledJudgeTests` have no D5,
+Reg or Mathlib modules in their transitive Lean imports. Their static contract
+dependency is the mathematical-dependency-free Core module. Mathematical
+contract heads use fully qualified names; the existing `RawArtifacts` reader
+loads their compiled declarations at runtime. `make compiled-judge-test` builds
+the fixture library and required Reg modules as Lean artifacts separately, then
+runs the executable against those artifacts. It checks both compiled program
+import closures and enumerates contract name literals in compiled implementation
+expressions to verify each against the interface artifacts. Missing input
+artifacts, unknown names and malformed structures produce named failures.
+
 Typed contract discovery inspects the five direct compiled Contract heads.
 Entries have safe, closed definition values; the decoder accepts constructor
 trees and safe constant references. Standalone ExpectedDeclaration is rejected
