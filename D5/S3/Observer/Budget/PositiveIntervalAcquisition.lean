@@ -56,7 +56,7 @@ private theorem waitTo_spec {P now t : Nat} (hP : 0 < P) (ht : t < P)
       Nat.add_mod_left, Nat.mod_eq_of_lt ht]
 
 
-private theorem interval_wait {P lo hi now : Nat} (hlo : lo < hi)
+theorem interval_wait {P lo hi now : Nat} (hlo : lo < hi)
     (hhi : hi ≤ P) (hlive : lo + 1 < hi)
     (halign : now % P = (P - lo) % P ∨ now % P = (P - hi) % P) :
     let m := (lo + hi) / 2
@@ -199,6 +199,7 @@ recover the low residue, and all waiting increments are strictly positive.
 The rightmost original residue attains the logarithmic query budget. -/
 theorem result (p P : Nat) (hp : 2 ≤ p) (hP : 0 < P) :
     ∃ T : Protocol (Nat.clog 2 P),
+      T = acquire P (Nat.clog 2 P) 0 P 0 ∧
       (∀ b now r, r < P →
         ((b * P + r + now) % (p * P)) / P =
           (b + now / P + (threshold P now r).val) % p ∧
@@ -210,7 +211,7 @@ theorem result (p P : Nat) (hp : 2 ≤ p) (hP : 0 < P) :
         ∀ w ∈ waits (decodedRead p P b) T 0 r, 0 < w ∧ w < P) ∧
       (∀ b, (waits (decodedRead p P b) T 0 (P - 1)).length = Nat.clog 2 P) ∧
       (P = 1 → T = .stop 0) := by
-  refine ⟨acquire P (Nat.clog 2 P) 0 P 0, readout_law hp hP, ?_, ?_, ?_⟩
+  refine ⟨acquire P (Nat.clog 2 P) 0 P 0, rfl, readout_law hp hP, ?_, ?_, ?_⟩
   · intro b r hr
     have facts := acquire_spec (fun now r hr => (readout_law hp hP b now r hr).2)
       (Nat.clog 2 P) 0 P 0 hP le_rfl (by simpa using Nat.le_pow_clog (by decide) P)

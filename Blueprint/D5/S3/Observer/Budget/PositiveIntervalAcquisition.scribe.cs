@@ -32,6 +32,18 @@ internal sealed class PositiveIntervalAcquisitionDocument : IScribeDocumentDefin
                     + "(bP+r+n_final) mod pP. This tree description counts subsequent reads; "
                     + "the initial read acquiring b contributes one further read.")),
             Describe.Lean(
+                DescribeId.Create("interval-positive-phase"),
+                DeclarationHandle.Create("D5/S3/Observer/Budget/PositiveIntervalAcquisition.interval_wait"),
+                H("Endpoint alignment gives a strictly positive midpoint wait"),
+                StatementSource.FromAuthor(IntervalStatement()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For l<u<=P and l+1<u, put m=floor((l+u)/2). If n modulo P "
+                        + "equals (P-l) modulo P or (P-u) modulo P, then m is strictly "
+                        + "between the endpoints. The positive forward distance w to P-m "
+                        + "satisfies 0<w<P and (n+w) modulo P equals P-m."))),
+                DescribeRole.Lemma),
+            Describe.Lean(
                 DescribeId.Create("positive-interval-acquisition"),
                 DeclarationHandle.Create("D5/S3/Observer/Budget/PositiveIntervalAcquisition.result"),
                 H("Shared interval tree, physical digit law, costs, and attained depth"),
@@ -52,6 +64,22 @@ internal sealed class PositiveIntervalAcquisitionDocument : IScribeDocumentDefin
 
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
 
+    private static Formula IntervalStatement()
+    {
+        Formula P = F.Id("P"), l = F.Id("l"), u = F.Id("u"), n = F.Id("n"),
+            m = Call("div", Seq(l, Plus, u), D(2));
+        Formula w = Call("waitTo", P, n, Seq(P, Minus, m));
+        Formula phase = Call("mod", n, P);
+        Formula assumptions = Seq(l, Lt, u, Land, u, Leq, P, Land,
+            l, Plus, D(1), Lt, u, Land,
+            Grp(Seq(phase, Eq, Call("mod", Seq(P, Minus, l), P), Lor,
+                phase, Eq, Call("mod", Seq(P, Minus, u), P))));
+        Formula conclusion = Seq(l, Lt, m, Land, m, Lt, u, Land, D(0), Lt, w,
+            Land, w, Lt, P, Land, Call("mod", Seq(n, Plus, w), P), Eq, P, Minus, m);
+        return Disp(All(P, N(), All(l, N(), All(u, N(), All(n, N(),
+            Seq(Grp(assumptions), Implies, Grp(conclusion)))))));
+    }
+
     private static Formula Statement()
     {
         Formula p = F.Id("p"), P = F.Id("P"), T = F.Id("T"), b = F.Id("b"),
@@ -65,7 +93,7 @@ internal sealed class PositiveIntervalAcquisitionDocument : IScribeDocumentDefin
                 Sp, Eq, Sp, Call("mod", Seq(b, Plus, Call("div", n, P), Plus,
                     Call("Cut", P, n, r)), p), Sp, Land, Sp,
                 Call("Decoded", p, P, b, n, r), Sp, Eq, Sp, Call("Cut", P, n, r)))))));
-        Formula waits = All(w, N(), Seq(w, Sp, In, Sp, path, Sp, Implies, Sp,
+        Formula waits = All(w, N(), Seq(w, Sp, InMacro, Sp, path, Sp, Implies, Sp,
             Grp(Seq(D(0), Sp, Lt, Sp, w, Sp, Land, Sp, w, Sp, Lt, Sp, P))));
         Formula behavior = All(b, N(), All(r, N(), Seq(r, Sp, Lt, Sp, P, Sp, Implies, Sp,
             Grp(Seq(Call("Answer", read, T, D(0), r), Sp, Eq, Sp, r, Sp, Land, Sp,
@@ -80,7 +108,8 @@ internal sealed class PositiveIntervalAcquisitionDocument : IScribeDocumentDefin
         return Disp(All(p, N(), All(P, N(), Seq(
             Grp(Seq(D(2), Sp, Leq, Sp, p, Sp, Land, Sp, D(0), Sp, Lt, Sp, P)),
             Sp, Implies, Sp, Exists, Sp, T, Sp, Colon, Sp, Call("Protocol", h), Comma, Sp,
-            Grp(Seq(law, Sp, Land, Sp, behavior, Sp, Land, Sp, attained, Sp, Land, Sp,
+            Grp(Seq(T, Sp, Eq, Sp, Call("Acquire", P, h, D(0), P, D(0)),
+                Sp, Land, Sp, law, Sp, Land, Sp, behavior, Sp, Land, Sp, attained, Sp, Land, Sp,
                 Grp(singleton)))))));
     }
 }
