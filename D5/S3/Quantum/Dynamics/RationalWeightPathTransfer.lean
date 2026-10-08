@@ -63,7 +63,6 @@ Direct frozen dependencies:
   D5/S3/Quantum/Dynamics/ParityNodeDividedDifference is first frozen in the same delivery.
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or
 certified instance: the claim quantifies over every k >= 1 and all real weights and potentials.
-Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
 import D5.S3.Quantum.Dynamics.ParityNodeDividedDifference

@@ -23,7 +23,6 @@ admission_basis: escape-witness
 Direct frozen dependencies: none (pinned Mathlib only).
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
 instance: every statement quantifies over arbitrary finite node families.
-Information-escape registration is paused under CLAUDE.md section 3.9.
 -/
 
 import Mathlib.Algebra.BigOperators.Field
