@@ -1,0 +1,14 @@
+fingerprints:
+  raw_sha256: sha256:532d2d6e30ad7f51133f0d35c13bb343787f03766f06dc0aa4dbad9df134a59e
+  normalized_sha256: sha256:532d2d6e30ad7f51133f0d35c13bb343787f03766f06dc0aa4dbad9df134a59e
+cas_ref: sha256:532d2d6e30ad7f51133f0d35c13bb343787f03766f06dc0aa4dbad9df134a59e
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'All weighted, squared, injectivity and difference/actual-image inverse clauses are bind-only as prescreened. For arbitrary normed real/complex E and norm-preserving linear T, with k>=2, Finset.sum_range_add, map_sum, pow_add, norm_sub_le, monotone_nat_of_le_succ, Nat.fib_add_two, Nat.fib_two_mul_add_one and the two-term squared Cauchy-Schwarz identity supply the complete same-operator relation after the explicit n=k-2 index substitution. Linearity supplies the same map on v-w. Temporary complete_22_2 includes the four full universally quantified clauses; no inverse shift, completeness, inner product, finite dimension or surjectivity is assumed. No complete usable frozen repository GID was found; no new repository Lean declaration is added. Certificate: LEAN_SKIP_LOCK=1 /bin/bash tools/scripts/worktree/lean-cache-run.sh lake env lean /tmp/f741_settle_22.lean; exit_code=0; checked axiom closure is only propext, Classical.choice, Quot.sound. Canonical settle-atom receipt records pinned-mathlib reuse under CLAUDE.md 3.2.'
+    previous_atom_id: 4db33c60d0b8fb12a1c325979be2d1625c389a106376438198cba0e9a199c1e1
+    next_atom_id: 07c7d03d660c08d1ed8143d8c0ae948f87cc6b7773a4ee719ba3f4cc830f2602
+  chain_atoms:
+    - fb71520a37b03944784042f5b88bca6cc16a1d1e7a00abfe0f4302129e4ad9fb
+    - dbc14bff4b4f30bd20763a4bf5f47ec4e60fe27a0137a7c933678b24e5d21157
