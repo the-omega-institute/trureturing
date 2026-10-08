@@ -1629,6 +1629,168 @@ The added interface is the coefficient-uniform complete old error row (T46)–(T
 
 The original selected-integer signed Robin estimate, all its original coefficients, actual zero real parts, both signs, heights and multiplicities, elementary correction and strict core remain unchanged and unproved. Source common-core/norm/full-form transport is still required before consuming this physical result as the preprint's allocated source metric. This is a paper-level mixed interface, without Lean certification, a numerical endpoint certificate, an all-old inverse or RH conclusion, or a mathematical-priority claim.
 
+## The remaining finite short still has nearly null directions
+
+The positive space in (T49) includes both growing theta families and the entire infinite exterior. Removing it does **not** leave a uniformly polynomially coercive finite block. The following concerns the actual remaining Schur form after both eliminations, not the raw old/source metric already tested in (O8)–(O9). Its additional requirement is a normalized witness surviving a growing number of removed theta directions.
+
+Reuse the original null functions $g_m$ from (T9), the original theta-series recurrence in (T17), the polynomial $L^2$ interpolation bound used in (T19), the full weighted-jet/nullity passage (T4)–(T5), and the exact positive joint/exterior shorts (T49)–(T51). Classical Plancherel, derivative Fourier tails, finite-dimensional kernels and variational shorting are inputs, not new general theorems. The [fixed-window full-form source](liu2026tailcompensation.md) does not supply a cofinal polynomial gap on the different block considered here.
+
+Keep the same actual $k,a,\ell,M,U,E$ as above and put
+
+$$
+W_M=P_{\le M}\mathcal H_a,\qquad
+L_M=P_{\le M}U,\qquad
+V_M=W_M\cap L_M^\perp.
+$$
+
+Orthogonality here uses the physical $L^2$ norm. Under the same physical/Fourier/closed-form bridge, the exact exterior short $S_M$ is defined on $W_M$. Its restriction to $L_M$ is positive by (T51). Thus the **remaining** finite form is the legitimate second short
+
+$$
+\begin{aligned}
+S_M(l)&=\inf_{h\in E\cap D(Q)}Q(l+h),\\
+S_M^{\rm rem}(w)
+&=\inf_{l\in L_M}S_M(w+l)
+=\inf_{\substack{u\in U\\h\in E\cap D(Q)}}Q(w+u+h),
+\qquad w\in V_M.
+\end{aligned}
+\tag{T52}
+$$
+
+The last equality uses $P_{\le M}U=L_M$ and the same fibres as (T51). Only the eliminated blocks are required positive; the remaining form is not presumed nonnegative. Let
+$D=\dim L_M=(d_0+1)+(d_1+1)=O(\sqrt{\log\log k})$.
+
+### Pay raw null-family normalization at growing degree
+
+For $\mathbf c=(c_0,\ldots,c_D)$ put
+$G_{\mathbf c}=\sum_{m=0}^D c_mg_m$ and
+$p_{\mathbf c}(x)=\sum_{m=0}^Dc_mx^m$.
+The reused Fourier identity gives
+
+$$
+\widehat G_{\mathbf c}(t)
+=(it)((it)^2-1/4)\xi(1/2+it)\,p_{\mathbf c}(-t^2).
+$$
+
+Fix a sufficiently small $\epsilon>0$. The known $\xi(1/2)>0$ and continuity make the prefactor's modulus uniformly positive on $[\epsilon,2\epsilon]$. Plancherel and the already used polynomial interpolation inequality, rescaled to the fixed interval $[-4\epsilon^2,-\epsilon^2]$, therefore supply constants $c_g,C_g>0$, independent of the degree, such that
+
+$$
+\boxed{\|G_{\mathbf c}\|_2^2
+\ge c_g e^{-C_g(D+1)}|\mathbf c|^2.}
+\tag{T53}
+$$
+
+This is a raw global $L^2$ bound, not a conditioning claim for the original energy. No endpoint-dependent tail-jet inverse is used here.
+
+The same original derivative recurrence also pays a global upper budget
+$A_D=\exp(C_g'(D+1)\log(D+2))$ after increasing a fixed $C_g'$:
+
+$$
+\|G_{\mathbf c}\|_{H^2(\mathbb R)}\le A_D|\mathbf c|,
+\qquad
+|G_{\mathbf c}^{(j)}(y)|\le A_D|\mathbf c|e^{-c_0e^{2|y|}}
+\quad(0\le j\le2).
+\tag{T54}
+$$
+
+For clarity about uniformity, each original $n$-th theta term on $y\ge0$ has the form
+$e^{y/2}P(n^2e^{2y})e^{-\pi n^2e^{2y}}$.
+At most $2D+5$ derivatives and the polynomial coefficient bound in (T17) give coefficient size $\exp(O((D+1)\log(D+2)))$ and degree $O(D+1)$.
+Absorb its polynomial into half the same exponential; use
+$n^2e^{2y}\ge(n^2+e^{2y})/2$ and sum the remaining Gaussian in $n$. A further fixed fraction pays $e^{y/2}$ and integration. Odd reflection controls the other half-line. This derives (T54) from the normally convergent original series, with no unspecified fixed-order constants.
+
+### A compact witness survives all the removed directions
+
+Fix one smooth even $\chi$, equal to one on $[-1,1]$ and zero outside $(-2,2)$, and set
+
+$$
+R=a/4,\qquad t_{\mathbf c}(y)=\chi(y/R)G_{\mathbf c}(y),
+\qquad e_{\mathbf c}=G_{\mathbf c}-t_{\mathbf c}.
+$$
+
+The compact test $t_{\mathbf c}$ is supported inside $(-a/2,a/2)$, hence is a genuine old vector. Choose a physical orthonormal basis $l_1,\ldots,l_D$ of $L_M$. The $D$ complex linear conditions
+
+$$
+\langle P_{\le M}t_{\mathbf c},l_j\rangle=0,
+\qquad 1\le j\le D,
+$$
+
+on $D+1$ coefficients have a nonzero solution; scale it so $|\mathbf c|=1$. The coefficients may depend on every actual endpoint and on the removed space. Put $t=t_{\mathbf c}$ and $w=P_{\le M}t\in V_M$.
+
+The original tails (T54) pay
+$\|e_{\mathbf c}\|_2\le C A_De^{-c_1e^{2R}}$.
+Meanwhile $\|t''\|_2\le C A_D$ for $R\ge1$.
+Since $t$ vanishes near both old endpoints, ordinary derivative Parseval gives
+
+$$
+\|P_{>M}t\|_2
+\le\left(\frac{\ell}{2\pi(M+1)}\right)^2\|t''\|_2.
+$$
+
+There is no endpoint-trace assumption on a general row here: this particular compact test has zero traces. At the actual $D=O(\sqrt{\log\log k})$ and $M=\lceil e^{\beta\sqrt k}\rceil$, each loss is smaller than one quarter of the lower norm in (T53). Consequently, uniformly over the selected constraint solution,
+
+$$
+\boxed{\|w\|_2^2\ge c_2e^{-C_2(D+1)}>0}
+\tag{T55}
+$$
+
+for all sufficiently large actual endpoints. This pays the growing-codimension normalization rather than assuming the raw derivative Gram is stable.
+
+### The complete arithmetic energy remains small
+
+At each finite parameter pair, $G_{\mathbf c}$ has the original mixed nullity and zero polar moments. The same fixed-parameter outer-cutoff passage yields
+$Q(t)=Q^{\rm tail}(e_{\mathbf c})$, with all actual zero real parts, both signs, heights and multiplicities retained. No infinite-degree limit is interchanged with the explicit formula.
+
+The differentiated cutoff tails and (T54) give
+$\|e_{\mathbf c}\|_{H^2}+\int|e_{\mathbf c}(y)|e^{|y|/2}dy
+\le C A_De^{-c_3e^{2R}}$.
+The Gamma increment bound and finite $\int t\kappa(t)dt$ pay the singular part by the squared $H^1$ tail norm. The true coefficient-$2$ pole uses the displayed exponential moment.
+
+The full noncompact prime sum is also retained. Whenever both error factors contribute, put
+$S=e^{2|y|}+e^{2|y-\log n|}$.
+Then $S\ge2e^{2R}$, $S\ge2n$ and $S\ge e^{2|y|}$. Splitting its exponential into three fixed parts in the actual product envelope gives
+
+$$
+\sum_{n\ge2}\frac{\Lambda(n)}{\sqrt n}
+|\langle e_{\mathbf c},\tau_{\log n}e_{\mathbf c}\rangle|
+\le C A_D^2 e^{-c_4e^{2R}}
+\sum_{n\ge2}\frac{\log n}{\sqrt n}e^{-c_4 n}
+\le C A_D^2 e^{-c_4e^{2R}}.
+$$
+
+No $n\ge k$ term is dropped. These estimates include all terms of (T5), so, decreasing a fixed $c_5>0$ if necessary,
+
+$$
+\boxed{|Q(t)|\le C A_D^2e^{-c_5e^{2R}}
+=C A_D^2e^{-c_5 k^{1/4}}.}
+\tag{T56}
+$$
+
+The true pole-free form satisfies the same absolute estimate with its own complete expression and removed pole. No sign of either compact energy is inferred.
+
+### A polynomial floor fails on the actual remaining short
+
+Let $v_k=w/\|w\|_2$ and use the same normalization for $t$.
+Since $t-w\in E\cap D(Q)$, it is an admissible competitor in (T52), with the theta coordinate zero. Thus
+
+$$
+\begin{aligned}
+S_M^{\rm rem}(v_k)
+&\le\frac{Q(t)}{\|w\|_2^2}\\
+&\le C\exp\bigl(C_3(D+1)\log(D+2)-c_5k^{1/4}\bigr)
+\le C_*e^{-c_*k^{1/4}},\qquad \|v_k\|_2=1,
+\end{aligned}
+\tag{T57}
+$$
+
+for all sufficiently large actual integers $k$, with fixed positive constants and no certified numerical start. In particular, for any fixed $q>0$ and $c>0$, the uniform lower bound
+$S_M^{\rm rem}\succeq ck^{-q}I$ cannot hold on this remaining finite space at every sufficiently large endpoint. If the remaining matrix is positive definite, its inverse norm is correspondingly at least $C_*^{-1}e^{c_*k^{1/4}}$. This conditional statement concerns its operator norm only.
+
+The argument applies separately to the true pole-free form: use its own positive $U+E$ elimination and the corresponding constraints and row. It does not assert that one vector is an eigenvector for both remaining matrices.
+
+The added interface is the normalized, degree-uniform remaining-short witness (T53)–(T57), which survives the actual growing theta removal and the complete exterior elimination. The fixed raw-source obstruction (O8)–(O9), original nullity and theta recurrences, polynomial Gram inequality, Fourier derivative tail and variational algebra are reused. A small remaining energy is not a negative test, an RH counterexample, or a lower bound on the actual collar inverse debit. The actual forcing can be correspondingly small or correlated. This Schur debit route still needs control of the actual forcing against the nearly null directions; that comparison is unpaid. In particular the complete physical $L^2$ forcing norm cannot be turned into a polynomial inverse budget by a presumed polynomial floor on this remainder.
+
+The original selected-integer signed Robin target, all original coefficients and actual zero data, elementary correction and strict core are unchanged and unproved. Source common-core/norm/full-form transport still requires its separate identification. This is a paper-level obstruction to a specific coercivity route, without Lean certification, a numerical endpoint certificate, a proof or refutation of RH, or a mathematical-priority claim.
+
 ## v2: the claimed induction step
 
 The following induction and fold formulas are those of [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), revised **20 September 2026**, 69 pages. At the arithmetic endpoint $a_k=(\log k)/2$, the source retains the pole term in $A_k=C_k-2|s_k\rangle\langle s_k|$. Lemma 6.27, under the old endpoint's positivity and inverse hypotheses, forms the actual harmonic extension
