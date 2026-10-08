@@ -21,12 +21,12 @@ class ReleaseTransportCases(PartitionFixture):
         self.remote.mkdir()
         write(self.root / ".lake/build/lib/lean/D5/A.olean", "locally-produced-olean")
         write(self.root / ".lake/build/stratalint/raw-lean-report.json",
-              '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}\n')
+              '{"modules":[],"schema":"stratalint-raw-lean-report-v3"}\n')
         write(self.bin / "make", '''#!/bin/sh
 printf "%s\\n" "$*" >> "$FAKE_BUILD_LOG"
 if [ "$1" = "lean-report" ] && [ "${FAKE_BUILD_EXIT:-0}" = "0" ]; then
     mkdir -p .lake/build/stratalint
-    printf '%s\\n' '{"modules":[],"schema":"stratalint-raw-lean-report-v2"}' > .lake/report-fixture-$$
+    printf '%s\\n' '{"modules":[],"schema":"stratalint-raw-lean-report-v3"}' > .lake/report-fixture-$$
     mv .lake/report-fixture-$$ .lake/build/stratalint/raw-lean-report.json
 fi
 exit "${FAKE_BUILD_EXIT:-0}"

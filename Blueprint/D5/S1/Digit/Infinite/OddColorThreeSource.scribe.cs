@@ -1,0 +1,68 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S1.Digit.Infinite;
+
+internal sealed class OddColorThreeSourceDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Odd color words and actual periodic sources.",
+        H("Odd color words and actual periodic sources"),
+        Blocks(Describe.Lean(
+            DescribeId.Create("oddcolorthreesource-root-bounds"),
+            DeclarationHandle.Create("D5/S1/Digit/Infinite/OddColorThreeSource.root_bounds"),
+            H("Actual root intervals"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(
+                "Every actual legal source lies in the closed root interval of its "
+                + "first three-bit label. The intervals for labels 3, 0, 5, 2, and 25 "
+                + "are respectively [-1,t-1], [t-1,g], [g,t], [t,2t], and "
+                + "[2t,1+t]."))),
+            DescribeRole.Lemma),
+        Describe.Lean(
+            DescribeId.Create("oddcolorthreesource-color-labels"),
+            DeclarationHandle.Create("D5/S1/Digit/Infinite/OddColorThreeSource.color_labels"),
+            H("Fixed allowed label pairs"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(
+                "For every beta strictly below lambda, a legal source in closed color "
+                + "c has one of its two fixed allowed labels. In color order 0 through "
+                + "5, these pairs are (3,0), (3,0), (0,5), (5,2), (2,25), and "
+                + "(2,25). The branch intervals exclude all other labels."))),
+            DescribeRole.Lemma),
+        Describe.Lean(
+            DescribeId.Create("oddcolorthreesource-result"),
+            DeclarationHandle.Create("D5/S1/Digit/Infinite/OddColorThreeSource.result"),
+            H("At most two sources for an odd color word"),
+            StatementSource.WithoutFormula(),
+            AssessedProvenance.FromRepo(),
+            Blocks(
+                Paragraph(Text(
+                    "Let beta be strictly below lambda and let m be a positive odd integer. "
+                    + "For every word of m original closed colors, the set of actual legal addresses "
+                    + "that return after every m three-bit windows and have the prescribed closed color at "
+                    + "every time has extended cardinality at most two. The coordinates are the "
+                    + "literal kappa values after each three-bit deletion. Precisely, the period "
+                    + "condition says that digit n + 3m equals digit n for every n; this is "
+                    + "equivalent to repeating the legal three-bit windows every m steps. "
+                    + "The color condition holds at every nonnegative time j, using color j modulo m.")),
+                Paragraph(Text(
+                    "An address with an odd bit period cannot have a finite return-block prefix "
+                    + "followed by the nonconstant alternating endpoint tail. The signed-series "
+                    + "fiber classification therefore makes its scalar encoding unique. "
+                    + "Periodicity also makes deletion injective among these addresses, so three "
+                    + "distinct sources would have three distinct scalar values at every time.")),
+                Paragraph(Text(
+                    "Each closed color permits at most two adjacent root branches. "
+                    + "Below the critical budget, "
+                    + "the color width is strictly smaller than the translation difference. Thus "
+                    + "the two root groups retain their order after inverse iteration, including "
+                    + "closed endpoints, while every single branch reverses the order within its group.")),
+                Paragraph(Text(
+                    "For three distinct values, either all three belong to one root group or one "
+                    + "group contains two values and the other contains one. Both cases reverse "
+                    + "sorting parity. The exclusive-or of the three strict pair comparisons "
+                    + "records this parity. It changes at every step, has period two, and changes "
+                    + "over m steps because m is odd. Each periodic address returns coordinatewise "
+                    + "after m steps, forcing the same parity and giving a contradiction."))),
+            DescribeRole.Theorem))));
+}

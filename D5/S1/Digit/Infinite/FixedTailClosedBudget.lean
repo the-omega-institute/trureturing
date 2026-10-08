@@ -240,7 +240,7 @@ private def wordObserved (c : ℝ) : List Label → List (Fin 6) → ℝ → Pro
   | l :: w, i :: r, x => wordScalar (l :: w) x ∈ observation c i ∧ wordObserved c w r x
   | _, _, _ => False
 
-private def addressPrefix : List Label → LegalDigits → LegalDigits → Prop
+def addressPrefix : List Label → LegalDigits → LegalDigits → Prop
   | [], x, y => x = y
   | l :: w, x, y => window x 0 = l ∧ addressPrefix w (originalT x) y
 
@@ -310,7 +310,7 @@ private theorem prefix_scalar (w : List Label) (x y : LegalDigits)
     rw [(closed_observation_graph_realization.2.2.1 x).1, hl, ih _ hw]
     rfl
 
-private theorem source_path_realization {s s' : Bool} {w : List Label}
+theorem source_path_realization {s s' : Bool} {w : List Label}
     (h : SourcePath s w s') (y : LegalDigits) (hy : stateAddress s' y) :
     ∃ x : LegalDigits, stateAddress s x ∧ addressPrefix w x y := by
   induction h with

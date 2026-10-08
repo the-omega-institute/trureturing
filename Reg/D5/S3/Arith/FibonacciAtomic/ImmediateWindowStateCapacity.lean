@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity
 import Reg.Support.DependentFamily
 
@@ -62,15 +63,27 @@ def registration : Registration arena (arena.Law actual) where
     refine ⟨(), (2 : ℕ), (3 : ℕ), ?_⟩
     norm_num [actual, realize, capacity]
 
-register_information_theorem result in arena
-  readout via (realize signature (fun _ _ m => capacity m) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "arg", "fn", "arg", "arg"]
-      stateBinder := 0 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity.result) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ m => capacity m) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "FibonacciAtomic") "ImmediateWindowStateCapacity") "result") "Reg.D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity/Reg.D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ m => capacity m) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "arg", "fn", "arg", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.Arith.FibonacciAtomic.ImmediateWindowStateCapacity

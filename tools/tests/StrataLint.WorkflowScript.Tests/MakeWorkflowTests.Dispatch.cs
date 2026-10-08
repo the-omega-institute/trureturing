@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using static StrataLint.TestSupport.TestExecutable;
 using System.Text.RegularExpressions;
 using System.Text;
@@ -135,10 +136,6 @@ public sealed partial class MakeWorkflowTests
                 recipe,
                 StringComparison.Ordinal);
         }
-        Assert.Contains(
-            EchoResidualSummaryScriptPath,
-            Recipe(makefile, "echo-residual-summary"),
-            StringComparison.Ordinal);
         var gateRecipe = string.Join('\n', RecipeLines(makefile, "gate"));
         Assert.Contains("check-current", gateRecipe, StringComparison.Ordinal);
         Assert.Contains("check-delta", gateRecipe, StringComparison.Ordinal);
@@ -160,7 +157,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(PrOpenScriptPath, Recipe(makefile, "pr-open"), StringComparison.Ordinal);
         Assert.Contains("--head \"$(HEAD)\"", Recipe(makefile, "pr-open"), StringComparison.Ordinal);
         Assert.DoesNotContain("pr-update", makefile, StringComparison.Ordinal);
-        foreach (var removed in ToolsTargets.Except(["help", "test"], StringComparer.Ordinal))
+        foreach (var removed in ToolsTargets.Except(["help", "test", "filemap-conform"], StringComparer.Ordinal))
         {
             Assert.DoesNotContain($"\n{removed}:", "\n" + makefile, StringComparison.Ordinal);
         }

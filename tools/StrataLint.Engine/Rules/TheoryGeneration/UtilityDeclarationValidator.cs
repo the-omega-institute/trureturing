@@ -126,14 +126,25 @@ internal static class UtilityDeclarationValidator
             }
         }
 
-        BackfillInventoryDocument? backfill = null;
         DigestionLedgerEntry? atomTarget = null;
         var softTarget = declaration.BasisTarget;
         if (softTarget is { Kind: UtilityTargetKind.Atom or UtilityTargetKind.Task })
         {
+            var atomSnapshot = softTarget.Kind is UtilityTargetKind.Atom
+                ? SelectAtomTarget(snapshot, softTarget.Value)
+                : null;
+            if (atomSnapshot is not null && atomSnapshot.Files.IsEmpty)
+                return Failure(declaration, UtilityValidationFailure.TargetDangling,
+                    $"target={TargetDisplay(softTarget)}");
+            BackfillInventoryDocument? backfill = null;
             try
             {
-                backfill = BackfillInventoryLoader.Load(snapshot);
+                if (softTarget.Kind is UtilityTargetKind.Atom)
+                    backfill = BackfillInventoryLoader.LoadForDigestion(atomSnapshot!);
+                else if (!BackfillInventoryLoader.DeriveTickets(snapshot).Any(ticket =>
+                             string.Equals(ticket.CaseId, softTarget.Value, StringComparison.Ordinal)))
+                    return Failure(declaration, UtilityValidationFailure.TargetDangling,
+                        $"target={TargetDisplay(softTarget)}");
             }
             catch (FormatException)
             {
@@ -145,7 +156,7 @@ internal static class UtilityDeclarationValidator
 
             if (softTarget.Kind is UtilityTargetKind.Atom)
             {
-                var matches = backfill.RequireDigestionEntries()
+                var matches = backfill!.RequireDigestionEntries()
                     .Where(entry => string.Equals(
                         entry.AtomId,
                         softTarget.Value,
@@ -167,16 +178,6 @@ internal static class UtilityDeclarationValidator
                             UtilityValidationFailure.InputUnknown,
                             $"reason=ambiguous-atom-target:{softTarget.Value}");
                 }
-            }
-            else if (!backfill.RequireTickets().Any(ticket => string.Equals(
-                         ticket.CaseId,
-                         softTarget.Value,
-                         StringComparison.Ordinal)))
-            {
-                return Failure(
-                    declaration,
-                    UtilityValidationFailure.TargetDangling,
-                    $"target={TargetDisplay(softTarget)}");
             }
         }
 
@@ -232,6 +233,24 @@ internal static class UtilityDeclarationValidator
         }
 
         return Accepted(declaration);
+    }
+
+    private static RepositorySnapshot SelectAtomTarget(RepositorySnapshot snapshot, string atomId)
+    {
+        var atomFiles = snapshot.Files
+            .Where(pair => BackfillInventoryLoader.IsCanonicalPath(pair.Key.Value)
+                && pair.Key.Value.EndsWith("/" + atomId + ".yaml", StringComparison.Ordinal))
+            .ToImmutableDictionary();
+        var selected = atomFiles.ToBuilder();
+        foreach (var atomPath in atomFiles.Keys)
+        {
+            var sourceEnd = atomPath.Value.IndexOf('/', BackfillInventoryLoader.RootPath.Length);
+            var metadataPath = RepoPath.CreateKnown(atomPath.Value[..(sourceEnd + 1)] + "source.toml");
+            if (snapshot.Files.TryGetValue(metadataPath, out var metadata))
+                selected[metadataPath] = metadata;
+        }
+
+        return RepositorySnapshot.Create(selected.ToImmutable());
     }
 
     private static UtilityValidationResult Accepted(UtilityDeclaration declaration) =>
@@ -316,7 +335,7 @@ internal static class UtilityDeclarationValidator
         }
     }
 
-    private static bool TryResolveDeclaration(
+    internal static bool TryResolveDeclaration(
         Gid gid,
         LeanFileReport report,
         out LeanDeclaration? declaration)

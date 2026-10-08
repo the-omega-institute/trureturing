@@ -8,12 +8,10 @@ ALLOW_LOW_DISK ?= 0
 WORKTREE_DEST = $(if $(DEST),$(DEST),../trureturing-$(NAME))
 LEAN_REPORT ?= .lake/build/stratalint/raw-lean-report.json
 export LEAN_SKIP_LOCK ?= 0
-CENSUS_OUT ?= build/census/$(shell date -u +%Y%m%dT%H%M%S)
-CENSUS_PREFIX ?= D5
-.PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report build emit dag filemap scribe-release scribe-release-publish scribe-release-fetch ingest mathlib-reanchor echo-residual-summary digestion-readiness show-atom atom-context truth-export deliver-check deposit deposit-uncovered cover cover-batch decompose settle settle-clear worktree worktree-clean worktree-remove pr pr-open pr-watch gate census census-derivational
+.PHONY: help test lean-cache-ensure lean-cache-to-github-without-mathlib lean-cache-from-github-without-mathlib warm-donor lean lean-report build emit dag filemap filemap-conform scribe-release scribe-release-publish scribe-release-fetch ingest mathlib-reanchor search-atoms show-atom atom-context truth-export deliver-check deposit deposit-uncovered cover cover-batch decompose settle settle-clear worktree worktree-clean worktree-remove pr pr-open pr-watch gate compiled-judge-test
 
 help:
-	@printf '%s\n' 'make pr HEAD=branch MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]  Open a PR; auto-merge defaults on; drafts return without merging or watching CI' 'make pr-open HEAD=branch MESSAGE=file  Same options as make pr' 'make pr-watch PR=number HEAD_SHA=sha  Wait for required CI on the exact commit' 'make lean [LEAN_TARGETS="..."] [LEAN_SKIP_LOCK=1]  Build Lean; set LEAN_SKIP_LOCK=1 to skip the shared build lock' 'make test  Run lean-report and check-current' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR] [ALLOW_LOW_DISK=1]  Initialize a worktree; refuse below 5% available disk unless explicitly overridden' 'make gate [BASE=origin/dev]  Run independent CI-equivalent commands' 'make lean-report  Produce the canonical raw Lean report' 'make emit [BASE=origin/dev] [PATHS=FILE]  Emit changed Scribe projections and values' 'make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG' 'make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml' 'make scribe-release  Rebuild and verify local Scribe release assets' 'make scribe-release-publish TARGET=COMMIT [PREFIX=scribe-resources]  Publish or verify the exact Scribe resource release' 'make scribe-release-fetch DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch and verify the exact Scribe resource pack' 'make worktree-remove NAMES="DIR [DIR ...]" [FORCE=1]  Remove named worktrees; explicit FORCE=1 disables the 300-second removal timeout'
+	@printf '%s\n' 'make pr HEAD=branch MESSAGE=file [AUTO_MERGE=0] [DRAFT=1]  Open a PR; auto-merge defaults on; drafts return without merging or watching CI' 'make pr-open HEAD=branch MESSAGE=file  Same options as make pr' 'make pr-watch PR=number HEAD_SHA=sha  Wait for required CI on the exact commit' 'make lean [LEAN_TARGETS="..."] [LEAN_SKIP_LOCK=1]  Build Lean; set LEAN_SKIP_LOCK=1 to skip the shared build lock' 'make test  Run lean-report and check-current' 'make worktree KIND=x NAME=y [BASE=origin/dev] [DEST=DIR] [ALLOW_LOW_DISK=1]  Initialize a worktree; refuse below 5% available disk unless explicitly overridden' 'make gate [BASE=origin/dev]  Run independent CI-equivalent commands' 'make lean-report  Produce the canonical raw Lean report' 'make emit [BASE=origin/dev] [PATHS=FILE]  Emit changed Scribe projections and values' 'make dag DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch a published full Scribe pack and render the DAG' 'make filemap  Render FILEMAP on demand from Meta/FILEMAP.toml' 'make filemap-conform [FILEMAP_SCOPE=path | FILEMAP_PRODUCER=name]  Build and run standalone conformance' 'make scribe-release  Rebuild and verify local Scribe release assets' 'make scribe-release-publish TARGET=COMMIT [PREFIX=scribe-resources]  Publish or verify the exact Scribe resource release' 'make scribe-release-fetch DIGEST=HEX64 [PREFIX=scribe-resources]  Fetch and verify the exact Scribe resource pack' 'make worktree-remove NAMES="DIR [DIR ...]" [FORCE=1]  Remove named worktrees; explicit FORCE=1 disables the 300-second removal timeout'
 
 test:
 	@set -e; paths="$$(mktemp)"; trap 'rm -f "$$paths"' EXIT; git diff --name-only -z "$(BASE)" -- > "$$paths"; git ls-files --others --exclude-standard -z >> "$$paths"; make lean-report; dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -nologo; dotnet tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll check-current --candidate-lean-report "$(LEAN_REPORT)" --scribe-paths-from "$$paths"
@@ -59,6 +57,9 @@ dag:
 filemap:
 	@dotnet run --project tools/StrataLint.Scribe/StrataLint.Scribe.csproj --configuration Release -- filemap
 
+filemap-conform:
+	@$(MAKE) -C tools filemap-conform
+
 scribe-release:
 	@/bin/bash tools/scripts/scribe-release.sh
 
@@ -78,11 +79,8 @@ ingest:
 mathlib-reanchor:
 	@/bin/bash tools/scripts/ingest.sh mathlib-reanchor "$(BASE)"
 
-echo-residual-summary:
-	@/bin/bash tools/scripts/report/echo-residual-summary.sh
-
-digestion-readiness:
-	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- digest-status --readiness
+search-atoms:
+	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- search-atoms --source "$(SOURCE)" $(if $(TEXT),--text "$(TEXT)",) $(if $(STATE),--state "$(STATE)",) $(if $(LIMIT),--limit "$(LIMIT)",)
 
 show-atom:
 	@test -x tools/StrataLint.Cli/bin/Release/net10.0/StrataLint || dotnet build tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release >/dev/null; dotnet run --no-build --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- show-atom --atom-id "$(ATOM_ID)" $(if $(SOURCE),--source "$(SOURCE)",)
@@ -93,12 +91,6 @@ atom-context:
 truth-export:
 	@dotnet run --project tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -- truth-export --out "$(OUT)" --candidate-lean-report "$(LEAN_REPORT)"
 
-
-census:
-	@python3 tools/lean-inspector/Census/pipeline.py --output "$(CENSUS_OUT)" --lean-report "$(LEAN_REPORT)" --prefix "$(CENSUS_PREFIX)"
-
-census-derivational:
-	@python3 tools/lean-inspector/Census/Structure/derivational.py --directory "$(CENSUS_OUT)"
 
 deliver-check:
 	@/bin/bash tools/scripts/workflow/playbook-workflows.sh deliver-check "$(BASE)"
@@ -155,3 +147,6 @@ gate:
 	bash tools/scripts/workflow/scribe-content-checks.sh "$(LEAN_REPORT)" tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll "$$paths"; \
 	dotnet "$$cli" filemap-conform; \
 	dotnet "$$cli" check-delta --protected-base "$$(git rev-parse --verify '$(BASE)^{commit}')" --candidate-lean-report "$(LEAN_REPORT)"
+
+compiled-judge-test:
+	@/bin/bash tools/scripts/compiled-judge-test.sh

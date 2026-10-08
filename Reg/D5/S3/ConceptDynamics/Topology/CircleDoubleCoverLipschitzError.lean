@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError
 import Reg.Support.DependentFamily
 
@@ -112,35 +113,67 @@ def sharpRegistration : Registration sharpArena
       exact nomatch i
   dependence := actual_dependence
 
-register_information_theorem lower_bound in lowerArena
-  readout via (realize signature
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lower_bound) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun (_ : Unit) (_ : ℝ≥0)
-      (s : AddCircle (2 * Real.pi) → AddCircle (2 * Real.pi)) =>
-      (∫ x : AddCircle (2 * Real.pi), circle_error s x ∂AddCircle.haarAddCircle : ℝ))
-    (fun e => nomatch e))
-  realizes lowerRegistration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "arg"]
-      stateBinder := 1 }] })
-  escape continues (open)
+      (s : AddCircle.{0} (2 * Real.pi) → AddCircle.{0} (2 * Real.pi)) =>
+      (∫ x : AddCircle.{0} (2 * Real.pi), circle_error s x ∂AddCircle.haarAddCircle : ℝ))
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Topology") "CircleDoubleCoverLipschitzError") "lower_bound") "Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError/Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.lowerRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(lowerArena)⟩,
+  objectArena := .source ⟨(lowerArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (lowerArena) ⟨(lowerRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun (_ : Unit) (_ : ℝ≥0)
+      (s : AddCircle.{0} (2 * Real.pi) → AddCircle.{0} (2 * Real.pi)) =>
+      (∫ x : AddCircle.{0} (2 * Real.pi), circle_error s x ∂AddCircle.haarAddCircle : ℝ))
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "arg"], stateBinder := 1, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
 
-register_information_theorem sharpness in sharpArena
-  readout via (realize signature
+
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpness) (type_of% (realize.{0, 0, 0, 0, 0} signature
     (fun (_ : Unit) (_ : ℝ≥0)
-      (s : AddCircle (2 * Real.pi) → AddCircle (2 * Real.pi)) =>
-      (∫ x : AddCircle (2 * Real.pi), circle_error s x ∂AddCircle.haarAddCircle : ℝ))
-    (fun e => nomatch e))
-  realizes sharpRegistration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "arg", "body", "arg", "fn", "arg"]
-      stateBinder := 2 }] })
-  escape continues (open)
+      (s : AddCircle.{0} (2 * Real.pi) → AddCircle.{0} (2 * Real.pi)) =>
+      (∫ x : AddCircle.{0} (2 * Real.pi), circle_error s x ∂AddCircle.haarAddCircle : ℝ))
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Topology") "CircleDoubleCoverLipschitzError") "sharpness") "Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError/Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError.sharpRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(sharpArena)⟩,
+  objectArena := .source ⟨(sharpArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (sharpArena) ⟨(sharpRegistration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun (_ : Unit) (_ : ℝ≥0)
+      (s : AddCircle.{0} (2 * Real.pi) → AddCircle.{0} (2 * Real.pi)) =>
+      (∫ x : AddCircle.{0} (2 * Real.pi), circle_error s x ∂AddCircle.haarAddCircle : ℝ))
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Topology.CircleDoubleCoverLipschitzError, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "arg", "body", "arg", "fn", "arg"], stateBinder := 2, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms lowerRegistration
 #print axioms sharpRegistration

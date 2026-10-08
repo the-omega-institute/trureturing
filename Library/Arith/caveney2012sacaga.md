@@ -277,3 +277,169 @@ unbounded tangent family and a forward signed surplus. For full Robin,
 any proposed selection also has to cover the relevant potentially
 nonpositive minima; an arbitrary infinite GA1 or safe-source family does
 not supply that coverage.
+
+## A proposed oscillation-geometry supplier loses its shrinking margin
+
+Thomas Schwabhäuser, *Preventing Exceptions to Robins InEquality*,
+[arXiv:1308.3678v3](https://arxiv.org/pdf/1308.3678v3), is a proposed
+CA-multiplier argument using the Alaoglu–Erdős conjecture. The inspected
+PDF has 23 pages and SHA-256
+`050c4444d706c1d6dd89ed3d227f57a196fececaade4d3b0648c7e8de8e062db`.
+The scope here is §4.3: equation (4.1), Fact 4.21, Lemma 4.22,
+Proposition 4.25 and its use in Corollaries 4.27 and 4.31, printed
+pp.13–16. This is a paper-level assessment of these statements, without
+a complete proof audit or Lean verification. The elementary exponential
+limit used below is reused, not claimed as new oscillation theory.
+
+For fixed $b>0$ and $0<\delta<1$, retain the source's function
+
+$$
+g(\mu,\nu)=\frac{\mu}{\nu}
+ \frac{1+\delta e^{-b\mu}}{1-\delta e^{-b\nu}},\qquad
+\epsilon_{\mu,\nu}
+ =\log\frac{1+\delta e^{-b\mu}}{1-\delta e^{-b\nu}}.
+$$
+
+For a fixed angle $0<\phi<\pi/2$, both coordinates of
+$(\mu,\nu)=(r\cos\phi,r\sin\phi)$ tend to infinity. Thus
+
+$$
+\epsilon_{r\cos\phi,r\sin\phi}\longrightarrow0,
+\qquad
+ g(r\cos\phi,r\sin\phi)\longrightarrow\cot\phi.
+$$
+
+Fact 4.21 and Lemma 4.22 instead use the positive limiting constant
+$\epsilon_\infty=\log((1+\delta)/(1-\delta))$ and the resulting
+$e^{\epsilon_\infty}\cot\phi$. That constant is not the limit of the
+printed function. In particular, there is no positive limiting angular
+margin separating its contour from the diagonal.
+
+### An increasing arithmetic progression tests the actual auxiliary claim
+
+The source defines $\mathcal M=\{(\mu,\nu):\nu>\mu, g(\mu,\nu)>1\}$.
+Its Proposition 4.25 claims that an increasing real sequence with
+$\arctan(a_{n+1}/a_n)\to\pi/4$ has an adjacent pair in $\mathcal M$.
+For $a>0$ and $h>0$, the denominator above is positive and its exact
+crossing condition is
+
+$$
+g(a,a+h)>1
+\iff
+h<\delta\bigl(ae^{-ba}+(a+h)e^{-b(a+h)}\bigr).
+$$
+
+Choose $C\ge1/b$ large enough that $2\delta t e^{-bt}<1$ for every
+$t\ge C$, and put $a_n=C+n$. Such a $C$ exists because
+$t e^{-bt}\to0$. The function $t e^{-bt}$ is decreasing on $t\ge1/b$.
+Consequently every adjacent pair has $h=1$ and
+
+$$
+\delta\bigl(a_ne^{-ba_n}+(a_n+1)e^{-b(a_n+1)}\bigr)
+ \le 2\delta a_ne^{-ba_n}<1.
+$$
+
+Therefore $g(a_n,a_{n+1})<1$ for every $n$, while the sequence is
+strictly increasing and $\arctan(a_{n+1}/a_n)\to\pi/4$.
+This directly contradicts the stated Proposition 4.25. Relative spacing
+converging to one does not by itself beat the exponentially shrinking
+margin. The same crossing condition excludes distinct integer pairs
+with $\mu\ge C$, since then $h\ge1$; hence Corollary 4.27's claimed
+infinitely many consecutive-prime pairs in $\mathcal M$ also fails in
+this parameter range.
+
+This assessment does not exclude close pairs of actual CA logarithmic
+clocks, whose additive gaps may tend to zero. It shows that Proposition
+4.25 does not supply their required quantitative comparison. Corollary
+4.31 uses that proposition in its proposed source-selection step; its
+printed derivation cannot therefore be imported as the needed
+same-source gain. The Alaoglu–Erdős conjecture, alternative proofs,
+and the actual selected Robin source are not settled by this auxiliary
+counterexample. The original full signed-tail target and RH remain
+unproved; no new general criterion or certified theorem is claimed.
+
+## Relaxed forward records and the unfilled Robin step
+
+Nazardonyavi and Yakubovich's later note,
+*Delicacy of the Riemann hypothesis and certain subsequences of
+superabundant numbers*,
+[arXiv:1306.3434v2](https://arxiv.org/abs/1306.3434v2), is distinct from
+the earlier `1211.2147v3` source used for XA above. Definition 1.3 and
+Lemma 1.4, printed pp.2–3, use the same actual pair of integers $m<n$:
+
+$$
+\frac{Z(n)}{Z(m)}>
+1+\frac{\log(n/m)}{\log n\,\log\log m},
+\qquad Z(j)=\frac{\sigma(j)}j.
+$$
+
+Lemma 1.4 gives such a successor for a member $m$ of the source's $X'$;
+Theorem 1.5 states that $X'$ is infinite without an RH premise. Definition
+1.6, printed p.4, uses the stronger relaxed threshold
+
+$$
+\frac{Z(n)}{Z(m)}>
+1+\frac{2\log(n/m)}{(\log n+\log m)\log\log m}
+$$
+
+to define $X''$. The displayed Theorem 1.5 concerns $X'$, not $X''$;
+the latter's reported finite counts are not adopted as an infinitude
+or a uniform jump estimate. The printed definitions say to find the
+next integer and do not explicitly specify least successors. No
+canonical-selection or arbitrary-branch SA assertion is used here.
+
+The exact normalization shows what these rules guarantee. Put
+
+$$
+\ell=\log\log m>0,\qquad r=\frac{\log n}{\log m}>1,
+\qquad G(j)=\frac{Z(j)}{\log\log j}.
+$$
+
+An actual Robin-ratio improvement needs
+$Z(n)/Z(m)>1+\log r/\ell$. The two published relaxed rules instead use
+
+$$
+\phi_1(r)=1-r^{-1},\qquad
+\phi_2(r)=\frac{2(r-1)}{r+1},
+\qquad \phi_1(r)<\phi_2(r)<\log r.
+$$
+
+For either rule, on the same pair $m,n$, the exact readout is
+
+$$
+\frac{Z(n)}{Z(m)}>1+\frac{\phi_j(r)}\ell
+\iff
+\frac{G(n)}{G(m)}>
+1-\frac{\log r-\phi_j(r)}{\ell+\log r}.
+$$
+
+The allowed loss is positive. With $h=\log r\downarrow0$, its two
+numerators are respectively
+
+$$
+h-1+e^{-h}=\frac{h^2}{2}+O(h^3),\qquad
+h-2\tanh(h/2)=\frac{h^3}{12}+O(h^5).
+$$
+
+These are normalizations of the published rules and standard elementary
+expansions, not a new record theorem or analytic prime-error estimate.
+They distinguish an available forward increase of $Z$ from an increase
+of the normalized Robin quotient.
+
+In particular, retain the same conditional least global maximizer $N$
+from the earlier reduction. If an actual forward pair starts at $m=N$
+and meets either rule, its lower bound for $G(n)/G(N)$ is below one and
+is compatible with the known global upper bound $G(n)/G(N)\le1$.
+This supplies no improving multiple or contradiction to GA2. No new
+membership or successor-selection theorem at $N$ is asserted.
+
+A usable recursive estimate still requires control of the actual
+logarithmic jumps and their accumulated loss along one realized path,
+or another jointly signed bound. The statements inspected here supply
+no such uniform jump control and no bound for the complete original
+$I_\psi(\log N)$. The earlier XA criterion and the later relaxed
+infinitude statement are reused without reconstructing their proofs.
+The same selected integer, actual zero real parts and multiplicities,
+all heights, explicit-formula terms and strict Robin core remain
+unchanged. RH remains unproved; this source application is not Lean
+verified and claims no mathematical originality.

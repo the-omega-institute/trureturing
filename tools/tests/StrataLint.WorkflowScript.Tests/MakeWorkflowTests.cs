@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using System.Text;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
@@ -21,8 +22,6 @@ public sealed partial class MakeWorkflowTests
     private const string WarmDonorScriptPath =
         "tools/scripts/worktree/warm-donor.sh";
     private const string IngestScriptPath = "tools/scripts/ingest.sh";
-    private const string EchoResidualSummaryScriptPath =
-        "tools/scripts/report/echo-residual-summary.sh";
     private const string ReportConsumerScriptPath =
         "tools/scripts/report/report-consumer.sh";
     private const string ReportSupervisorScriptPath =
@@ -51,13 +50,13 @@ public sealed partial class MakeWorkflowTests
         "emit",
         "dag",
         "filemap",
+        "filemap-conform",
         "scribe-release",
         "scribe-release-publish",
         "scribe-release-fetch",
         "ingest",
         "mathlib-reanchor",
-        "echo-residual-summary",
-        "digestion-readiness",
+        "search-atoms",
         "show-atom",
         "atom-context",
         "truth-export",
@@ -76,8 +75,7 @@ public sealed partial class MakeWorkflowTests
         "pr-open",
         "pr-watch",
         "gate",
-        "census",
-        "census-derivational",
+        "compiled-judge-test",
     ];
 
     private static readonly string[] ToolsTargets =
@@ -89,6 +87,7 @@ public sealed partial class MakeWorkflowTests
         "test",
         "selftest",
         "compile-proof",
+        "filemap-conform",
         "capacity-audit",
         "update-renderer-contract",
         "clean-lanes",
@@ -103,60 +102,7 @@ public sealed partial class MakeWorkflowTests
         "prime-slab-cpu",
         "prime-slab-cpu-test",
         "prime-slab-cpu-mutation-test",
-        "census-test",
-        "census-frontier-performance",
     ];
-
-    [Fact]
-    public void EchoResidualSummaryRunsMakeAndKeepsDiagnosticsOutOfThePasteableBlock()
-    {
-        if (OperatingSystem.IsWindows()) return;
-
-        var root = TestRepositoryLayout.FindRoot();
-        using var fixture = new TemporaryDirectory();
-        var reportDirectory = Path.Combine(fixture.Path, "tools", "scripts", "report");
-        var cliDirectory = Path.Combine(fixture.Path, "tools", "StrataLint.Cli");
-        var binDirectory = Path.Combine(fixture.Path, "bin");
-        Directory.CreateDirectory(reportDirectory);
-        Directory.CreateDirectory(cliDirectory);
-        Directory.CreateDirectory(binDirectory);
-        File.Copy(Path.Combine(root, "Makefile"), Path.Combine(fixture.Path, "Makefile"));
-        File.Copy(
-            Path.Combine(root, EchoResidualSummaryScriptPath),
-            Path.Combine(fixture.Path, EchoResidualSummaryScriptPath));
-        File.WriteAllText(
-            Path.Combine(fixture.Path, LeanReportScriptPath),
-            "#!/usr/bin/env bash\nprintf 'lean provenance\\n' >&2\n");
-        File.WriteAllText(
-            Path.Combine(binDirectory, "dotnet"),
-            """
-            #!/usr/bin/env bash
-            [[ "$*" == *"echo-verify --emit" ]] || exit 19
-            printf '%s\n' '<!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->' '# Echo Residual Summary'
-            """);
-        File.SetUnixFileMode(
-            Path.Combine(fixture.Path, LeanReportScriptPath),
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-        File.SetUnixFileMode(
-            Path.Combine(binDirectory, "dotnet"),
-            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
-
-        var result = TestProcessRunner.Run(
-            "/bin/bash",
-            ["-c", "PATH=\"$1:$PATH\" exec make --no-print-directory echo-residual-summary", "echo-make", binDirectory],
-            fixture.Path,
-            BoundedProcessRunner.HangDetectionBudget,
-            64 * 1024);
-
-        Assert.Equal(0, result.ExitCode);
-        Assert.Equal(
-            """
-            <!-- echo-residual-summary:v3 residual=sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa -->
-            # Echo Residual Summary
-            """ + "\n",
-            System.Text.Encoding.UTF8.GetString(result.StandardOutput));
-        Assert.Equal("lean provenance\n", System.Text.Encoding.UTF8.GetString(result.StandardError));
-    }
 
     [Fact]
     public void ReportEntrypointsDelegateToTheSingleHostSupervisor()
@@ -208,7 +154,7 @@ public sealed partial class MakeWorkflowTests
     }
 
     [Theory]
-    [InlineData("", "ingest")]
+    [InlineData("", "")]
     [InlineData("alpha beta", "ingest --source alpha --source beta")]
     public void IngestWrapperForwardsSourcesWithoutLeanClosureProbe(string sourcePayload, string expected)
     {
@@ -297,6 +243,14 @@ public sealed partial class MakeWorkflowTests
             BoundedProcessRunner.HangDetectionBudget,
             64 * 1024);
 
+        if (sourcePayload.Length == 0)
+        {
+            var missingSource = RunWrapper();
+            Assert.Equal(2, missingSource.ExitCode);
+            Assert.Empty(missingSource.StandardOutput);
+            Assert.Contains("USAGE:", Encoding.UTF8.GetString(missingSource.StandardError), StringComparison.Ordinal);
+            return;
+        }
         File.AppendAllText(Path.Combine(fixture.Path, "D5", "Probe.lean"), "-- closure delta\n");
         var changed = RunWrapper();
         Assert.Equal(0, changed.ExitCode);

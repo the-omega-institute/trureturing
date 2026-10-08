@@ -35,26 +35,6 @@ public sealed class CliOutcomeTests
     }
 
     [Theory]
-    [InlineData(0, "ECHO_VERIFY_OK\n", "")]
-    [InlineData(2, "", "ECHO_VERIFY_INFRASTRUCTURE report unavailable\n")]
-    public void EchoVerifyPreservesProducerAndInfrastructureExitCodes(
-        int expectedExit,
-        string output,
-        string error)
-    {
-        var console = new BufferedConsole();
-        var environment = new StubCliEnvironment(
-            Admitted(),
-            echoVerify: new ExplicitCommandResult(expectedExit, output, error));
-
-        var exitCode = CliApplication.Run(["echo-verify", "--emit"], environment, console);
-
-        Assert.Equal(expectedExit, exitCode);
-        Assert.Equal(output, console.Output);
-        Assert.Equal(error, console.Error);
-    }
-
-    [Theory]
     [InlineData(0)]
     [InlineData(1)]
     [InlineData(2)]
@@ -82,7 +62,6 @@ public sealed class CliOutcomeTests
     [InlineData("check-delta", 255)]
     [InlineData("check-delta", 256)]
     [InlineData("check-current", 3)]
-    [InlineData("echo-verify", 3)]
     public void ExplicitCommandsRejectInvalidExitCodesBeforeWritingResult(string command, int invalidExit)
     {
         var console = new BufferedConsole();
@@ -90,7 +69,7 @@ public sealed class CliOutcomeTests
         AdmissionOutcome unused = new AdmissionOutcome.InfrastructureFailure("unused check outcome");
         var environment = new StubCliEnvironment(
             unused,
-            echoVerify: result, checkCurrent: result, checkDelta: result);
+            checkCurrent: result, checkDelta: result);
 
         var exitCode = CliApplication.Run([command], environment, console);
 
@@ -99,22 +78,18 @@ public sealed class CliOutcomeTests
         Assert.Equal("INFRASTRUCTURE_FAILURE output: explicit command returned an invalid exit code\n", console.Error);
     }
 
-    // 判词产出却不可见即浮账(CLAUDE.md 第 20 条红线:允许 open,不允许浮账)。
-    // admitted 路径此前把 Observe 判词全部丢掉——Observe 罕见时不显眼,而理论卷
-    // 「尚未消化」改判 Observe 后,它就成了承重缺口:一个没人看得见的 open,与没有
-    // 检测无异。本测试钉住「准入仍为 0,但观察项照样打印」。
     [Fact]
     public void AdmittedOutputCarriesNonBlockingObservationsInsteadOfDroppingThem()
     {
         var console = new BufferedConsole();
         var admitted = Assert.IsType<AdmissionOutcome.Admitted>(Admitted());
         var observation = new Diagnostic(
-            RuleId.CreateKnown(16),
-            "Backfill inventory",
+            RuleId.CreateKnown(29),
+            "Admission plane mix",
             DisplaySeverity.Warning,
             AdmissionEffect.Observe,
-            "Meta/BACKFILL.yaml",
-            "theory document 'docs/develop/theory/PROBE.md' has no digestion source: run make ingest");
+            "Meta/FILEMAP.toml",
+            "ADMISSION-PLANE-MIXED: candidate changes judge and content inputs");
         var environment = new StubCliEnvironment(
             new AdmissionOutcome.Admitted(admitted.Certificate, [observation]));
 
@@ -123,10 +98,8 @@ public sealed class CliOutcomeTests
         // 不阻断:退出码仍是 0。
         Assert.Equal(0, exitCode);
         Assert.Contains("ADMITTED", console.Output, StringComparison.Ordinal);
-        // 但看得见:判词与其补救命令都在输出里。
         Assert.Contains("OBSERVED", console.Output, StringComparison.Ordinal);
-        Assert.Contains("has no digestion source", console.Output, StringComparison.Ordinal);
-        Assert.Contains("run make ingest", console.Output, StringComparison.Ordinal);
+        Assert.Contains("ADMISSION-PLANE-MIXED", console.Output, StringComparison.Ordinal);
     }
 
     private static AdmissionOutcome Outcome(string fixture) => fixture switch

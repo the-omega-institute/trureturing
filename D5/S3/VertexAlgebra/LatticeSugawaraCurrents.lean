@@ -345,7 +345,7 @@ theorem normalSummand_finite (D : LatticeData) (i j : Fin D.rank)
     Function.HasFiniteSupport (fun k : ℤ => normalSummand D i j k (m-k) v) :=
   (Set.finite_Icc _ _).subset (normalSummand_support_interval D i j m v)
 
-private theorem neutralField_ncoeff (D : LatticeData) (i : Fin D.rank) (k : ℤ) :
+theorem neutralField_ncoeff (D : LatticeData) (i : Fin D.rank) (k : ℤ) :
     (neutralField D i)[[k]] = neutralMode D i k := by
   rw [neutralField, VertexOperator.ncoeff_of_coeff]
   rw [show -(-k-1)-1 = k by omega]

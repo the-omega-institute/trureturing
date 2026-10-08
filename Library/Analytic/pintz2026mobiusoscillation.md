@@ -353,3 +353,122 @@ remaining Robin obligation is a sufficiently strong joint lower bound
 at the same $A$, including $\Delta_A$ and $C_{\rm floor}(A)$.
 No such bound, new prime estimate, originality claim or RH proof is
 provided by this classical moment application.
+
+## A literal probabilistic Möbius supplier fails actual-source checks
+
+Maxie Dion Schmidt, *Picking up the partial sums of the Möbius function
+problem with probabilistic number theory*,
+[arXiv:2604.23517v1](https://arxiv.org/pdf/2604.23517v1), submitted
+26 April 2026, supplies probabilistic hypotheses alongside identities for
+auxiliary arithmetic functions. The inspected PDF has 10 pages and SHA-256
+`1dfc27758a5c7459f86cc68437b2ebbb4ed8335b8620dd6c91ce9709a720ea57`.
+Assertion 1.10, printed p.4, Remarks 1.11–1.12 on p.5, and Theorem 2.2,
+equations (8a)–(8b), on p.6 are the scope of this paper assessment.
+This is neither a complete proof audit nor a Lean result. The identities
+and elementary arithmetic facts below are reused, not claimed as new
+Möbius theory or a new RH criterion.
+
+### The all-order independence statement includes a forbidden fiber
+
+Let $U_x$ be uniform on $\{1,\ldots,\lfloor x\rfloor\}$, $x\ge2$,
+and keep the source's $\Omega(n)$, which counts prime factors with
+multiplicity. Its literal (IH-A) asserts independence of squarefreeness
+and the events $\Omega(U_x)=k$ throughout the stated range $k\le x$.
+The fixed choice $k=1$ is included. Every integer with $\Omega(n)=1$
+is prime, and every prime is squarefree. The conditional event is
+nonempty for every $x\ge2$. Hence, exactly,
+
+$$
+\Pr\{\mu(U_x)^2=1\mid\Omega(U_x)=1\}=1.
+$$
+
+The unconditional squarefree probability instead tends to
+$6/\pi^2<1$, as stated in the source's (IH-C). Thus (IH-A) fails even
+as an asymptotic equality in that literal full range. A central-range
+asymptotic independence statement with a different quantified range is
+not refuted by this fixed-order check. It would need its own theorem
+and weighted error control before supplying the actual arithmetic sum.
+
+### The actual indexed sums must retain their shared sign
+
+The source's (8a) defines, for $1\le n\le x$,
+
+$$
+\widehat Q_{1,n}(x)=\sum_{j\le x}\lambda(nj)\mu(j)^2.
+$$
+
+Complete multiplicativity of $\lambda$ and
+$\lambda(j)\mu(j)^2=\mu(j)$ give the exact same-source identity
+
+$$
+\widehat Q_{1,n}(x)=\lambda(n)M(x),\qquad
+\widehat Q_{1,1}(x)=M(x),\quad
+\widehat Q_{1,2}(x)=-M(x).
+$$
+
+The displayed (8b) assigns both indexed sums the same nonzero asymptotic
+
+$$
+a(x)=\frac{6x}{\pi^2}
+\frac{(-1)^{\lfloor\log\log x\rfloor}}{2\sqrt{2\pi\log\log x}}.
+$$
+
+For the actual sums, their two ratios to $a(x)$ add to zero identically;
+they therefore cannot both tend to one. This tests (8b) as a prediction
+about the actual arithmetic objects. Because the source's stated
+independence premises already fail, it is not a refutation of a logical
+implication from those inconsistent premises. Restoring the missing
+$\lambda(n)$ factor would remove this particular sign conflict; the source's cited Walfisz bound already gives $M(x)/a(x)\to 0$, excluding
+the asserted asymptotic for the actual $M(x)$.
+
+The [existing FIB finite-source identity](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION_ROBIN_PRIME_PREFIX.md),
+§455.6, retains the same actual odd Möbius prefix, its exact boundary
+and complete remaining source tail. Neither a randomized surrogate nor
+the literal claims tested here replace those quantities. This source
+does not obtain an unconditional signed estimate from the quoted hypotheses
+or (8b) for
+$T_A I_\psi(A)$ at the selected Robin source $A=\log N$. The original
+unbounded signed target and RH remain unproved; no new Mertens bound,
+mathematical originality or Lean certification is claimed.
+
+
+## An explicit reverse interface and its shifted-numerator budget
+
+The related [Johnston–Trudgian preprint, arXiv:2511.09978v4](https://arxiv.org/pdf/2511.09978v4), *A round of Pintz to celebrate oscillations in sums*, makes a Landau–Pintz arithmetic-to-zero interface explicit. Theorem 1, printed pp.3–4, starts with a polynomial-growth arithmetic function $a(x)$, its Mellin quotient $F/G$, stated half-plane analyticity and growth bounds, and a simple zero $\rho_0=\beta_0+i\gamma_0$ of $G$ with $F(\rho_0)\ne0$. It gives an unsigned average lower bound. A zero-free conclusion additionally needs an upper bound for that same average; the existing GA2 comparisons have not supplied that input for the selected Robin source.
+
+Its $M(x)$ application uses $F(s)=s-1$ and $G(s)=s(s-1)\zeta(s)$, equations (21)–(22), printed p.8. The two large-$Y$ zero-exclusion examples on pp.11–12 assume hypothetical pointwise Mertens upper bounds. Equation (36) instead gives an average lower bound; its numerical constant is not adopted here. The source says its cited actual bound through $10^{16}$ gives only a simple-zero exclusion above real part $0.99$ and below height $5$, which does not extend the already used verification through $3\cdot10^{12}$. These are source statements, not newly certified computations. Theorem 1's simplicity condition is retained; the alternative recalled in equation (37), printed p.12, is a different published Pintz bound. It states $Y^{-1}\int_0^Y|M(x)|\,dx>Y^{\beta_0}/|\gamma_0|^5$ for $\beta_0>1/2$ and $Y\ge|\gamma_0|^5$, without a simplicity assumption.
+
+There is also a precise numerator-shift obligation before using the displayed numerical error. Equation (5), printed p.4, assumes
+
+$$
+|F(\sigma+it)|\le c_F e^\sigma\max(1,|t|^{B_F}).
+$$
+
+In equation (13), printed p.5, the contour numerator is instead
+$F(\beta_0-c_0+i(t+\gamma_0))$. Its following displayed majorant uses
+$c_Fe^{\beta_0-c_0}\max(1,|t|^{B_F})$, omitting the height shift. Both forms occur in the official v4 TeX. For the source's own $F(s)=s-1$, $c_F=\sqrt2$, $B_F=1$, take its quoted first zero with $\beta_0=1/2$, $\gamma_0=14.1347\ldots$, and $c_0=1/10$. At $t=0$,
+
+$$
+|F(2/5+i\gamma_0)|\ge\gamma_0>14,
+\qquad \sqrt2 e^{2/5}<4.
+$$
+
+Thus that pointwise substitution does not follow from the stated growth bound. This tests the numerator majorant, rather than refuting the complete integral estimate, Theorem 1, or the paper's numerical examples.
+
+A sufficient local substitute keeps the shifted factor. The same elementary inequality used for $G$ in equation (17), printed p.6, gives
+
+$$
+\max(1,|t+\gamma_0|^{B_F})
+\le(1+|\gamma_0|)^{B_F}\max(1,|t|^{B_F}).
+$$
+
+For this absolute numerator estimate, the source's $\mathcal E(y)$ can therefore be replaced by
+
+$$
+\mathcal E_{\mathrm{shift}}(y)
+=(1+|\gamma_0|)^{B_F}\mathcal E(y).
+$$
+
+In its Mertens example the extra factor is $1+|\gamma_0|$. This pays only the displayed shift step; the rest of the theorem and its numerical consequences are not independently certified here. The unshifted error is not adopted without another valid justification.
+
+The original target remains the same conditional least global Robin maximizer $N>5040$, with $A=\log N>10^{36}$, all actual zero real parts and multiplicities, the complete infinite tail and strict core. Neither this unsigned-average interface nor the local shift correction supplies its complete signed $I_\psi(A)$ lower bound. The five-window additive FIB labels are not substituted for an arithmetic average certificate. No new source proof, general theorem, numerical zero-height improvement, Lean verification or RH proof is claimed.

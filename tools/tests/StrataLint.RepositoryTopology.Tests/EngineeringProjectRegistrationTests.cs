@@ -1,3 +1,5 @@
+using StrataLint.Engineering;
+using StrataLint.Runtime;
 using System.Text;
 using StrataLint.Engine;
 using StrataLint.EngineeringScope;
@@ -35,7 +37,7 @@ public sealed class EngineeringProjectRegistrationTests
         // Empty Content is deliberately unused; snapshot decoding and declared-link
         // validation remain the responsibility of the snapshot reader's own tests.
         var sources = paths.Select(path => new EngineeringSource(path,
-            path == EngineeringProjectRegistry.ManifestPath
+            path == EngineeringProjectSchema.ManifestPath
                 ? utf8.GetString(File.ReadAllBytes(Path.Combine(root, path))) : string.Empty)).ToArray();
         var registry = EngineeringProjectRegistry.Read(sources);
         foreach (var project in registry.Projects)

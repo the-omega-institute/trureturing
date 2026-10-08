@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using static StrataLint.TestSupport.TransactionFixture;
 using System.Text;
 using System.Text.Json;
@@ -23,12 +24,10 @@ public sealed class PlaybookWorkflowScriptTests
             [
                 "make:lean-report",
                 "make:emit",
-                "dotnet:digest-status",
                 "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
                 "dotnet:ledger-align --list-closed --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
                 "dotnet:ledger-align --candidate-lean-report .lake/build/stratalint/raw-lean-report.json",
-                "dotnet:digest-status",
                 $"make:gate BASE=synthetic-base",
                 "git:diff --diff-filter=A --name-only -z synthetic-base...HEAD -- Golden/Frozen/accepted/*.json",
                 "git:ls-files --others --exclude-standard -z -- Golden/Frozen/accepted/*.json",
