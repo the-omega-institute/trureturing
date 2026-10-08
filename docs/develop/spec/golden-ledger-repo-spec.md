@@ -24,7 +24,8 @@
 | C 编年层 | `Chronicle/` | 评注/判词/史;**按时间索引,历史归 git** |
 | L 摄入端口 | `Library/` | 文献进 |
 | P 产出端口 | `Papers/` | 论文出 |
-| Meta | `Meta/` | harness 本体(Lint/split/papergen/sweep/词表) |
+| Meta | `Meta/` | FILEMAP、领域及消化等声明性数据 |
+| tools | `tools/` | harness 程序、验证器与测试 |
 | agents | `agents/` | 八官宪章与上下文包 |
 
 **镜像律**:B/E 不拥有自己的分类学——借用 F 层地址(未形式化者借其*未来*地址);一个数学单元 = 一个地址 × 至多三平面。
@@ -521,31 +522,19 @@ recipe(A11)→ `Meta/papergen`(决定论):拉 Blueprint 散文 + **语法生成�
 
 ---
 
-# 第七部:CI 矩阵与度量
+# 第七部:CI 作业与结果
 
-| 作业 | 触发 | 内容 |
-|---|---|---|
-| build | 每 PR | lake build 全库 |
-| lint | 每 PR | 所有 active StrataLint 规则 + 每个案号延后项 |
-| evidence-fast / full | 每 PR / nightly | 受影响脚本 / 全量+实验队列 |
-| blueprint | 每合并 | 蓝图编译+依赖网页(理论之可视 DAG) |
-| papers-dry | 每合并 | 全 recipe 干跑(论文永远可装配) |
-| sweep / audit-queue | weekly / daily | 文献周扫 / 复审队列 |
-
-**度量(公式)**:sorry 燃尽 |X_F|(t);回声不符率=打回/回声;对手捕获率=翻案/复审;实验三出口比 obs:ref:neg;triage 通量=周入边数;**首页永久计数器:Hearts.lean 未动,第 N 次构建。**
+`ci-current.yml` 的 `detect` 按文件内 `CI_UNITS` 判定命中单元。
+current、FILEMAP、selftest、编译反证与各测试项目分别运行；
+`required` 合取实际命中单元的成功与未命中单元的跳过。
+current 生产一份 Lean 报告供 check-current、Scribe 与适用的 PR check-delta 消费。
+作业、缓存和退出契约见 A22；本节不维护第二份作业清单。
 
 ---
 
 # 第八部:治理
 
 元层自改(Lint 规则/词表/宪章/本卷)由 SL-022 保护面判定 + 候选自带判官执行的 admission + 编年记录收口;**分类器不分类自己,塔止于治理(Gödel 条款)**。许可:本仓自产 Lean 代码 Apache-2.0;第三方依赖按其上游许可承接且须与本仓分发相容,依赖代码不复制进本仓形成第二真源;文本 CC-BY-4.0,数据 CC0。发布:版辑 tag E<n>+Zenodo;年度火灾演习(全新环境重建+重装配一篇冻结论文,记录入 C 层)。防命理墙与可证伪七条居 docs/CONTRIBUTING.md,全员(含智能体)宪法级适用。
-
----
-
-# 第九部:引导与里程碑
-
-**M0(第一日)**:① lakefile+mathlib 钉版;② S0 四文件当日全证;③ Hearts 精确命题草案按四态语义处理(D5-T0001),机器判词允许后另轮立碑;④ Meta:StrataLint + domains.yaml 现役;split 工具随首次真实容量压力生长(D5-T0004,C# StrataLint 子命令形态),papergen 随首份全可解析 recipe 生长(D5-T0005,同为 C# 形态),本轮立永久工单,不建空壳;⑤ agents 全套(CONTEXT≤2K+八宪章+两模板);⑥ queries.yaml 首批;⑦ 十四常数不落手填中间态,仅接受机器 producer attestation;producer/晋升产物延后 D5-T0003;⑧ Blueprint 骨架;D5-P001 立永久工单(依赖 S3@M3,成稿@M5);⑨ CI:lint+build 真实作业绿(required-check 配置按四态语义记 D5-T0007);⑩ tag E0+旧卷归档按机器判词执行。
-**M1** S1 全证(Zeck 加法闭合为首障)→ **M2** S2+解压定理 → **M3** S3 恰值群+mod5 → **M4** X_A 化数值链(c₁ 条件定理立)→ **M5** blueprint 上线+D5-P001 出稿 → **M∞** Frontier 蚕食;G 层上收 metallic-core。
 
 ---
 
