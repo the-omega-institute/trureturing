@@ -1,0 +1,42 @@
+**推导 10.9（单窗关联与任务边界）。**
+
+以下含 $1/r$ 的残差式限于 $r>0$；$r=0$ 时使用唯一顶点及零误差。
+
+现在可以把这个五模式金字塔收束成四个基础关系：
+
+```math
+\boxed{
+xz=yz=0
+}
+```
+
+规定顶点怎样排斥底面。
+
+```math
+\boxed{
+Q=
+\begin{pmatrix}
+r-X-Y+\kappa&Y-\kappa\\
+X-\kappa&\kappa
+\end{pmatrix}
+}
+```
+
+说明两张三角边界拼成正方形后，还缺哪一个量。
+
+```math
+\boxed{
+\Delta=r\kappa-XY
+}
+```
+
+把遗漏的联合关系压成一个行列式。
+
+```math
+\boxed{
+\mathbb E[f]-\widehat f=\frac{J_f\Delta}{r}
+}
+```
+
+说明这项遗漏怎样影响实际目标。
+
