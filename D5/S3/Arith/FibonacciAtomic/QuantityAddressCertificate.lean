@@ -22,23 +22,32 @@ local notation "m(" t ")" => GraftAffineClosure.quantity (composition t)
 local notation "B(" t ")" => Finset.filter (fun u => readout u t = Reply.beta) (leafAddresses t)
 
 /-- Exact scalar quantity is the only promise on the complete competitor tree. -/
-def QuantitySound (d : ℕ) (V : Source) (h : ℕ) (Q : Finset Address) : Prop :=
-  Within h Q ∧ ∀ U : Source, m(U) = m(V) →
+def QuantitySound (f g d : ℕ) (V : Source) (h : ℕ) (Q : Finset Address) : Prop :=
+  Within h Q ∧ ∀ U : Source, f * (composition U).1 + g * (composition U).2 =
+      f * (composition V).1 + g * (composition V).2 →
     (∀ u ∈ Q, readout u U = readout u V) → U ∈ ActualImage d
 
 /-- Every branch has a beta descendant, recursively through the tree. -/
-private def BetaCovered : Source → Prop
+def BetaCovered : Source → Prop
   | .of _ => True
   | .mul s t => BetaCovered s ∧ BetaCovered t ∧ ∃ u : Address, readout u (.mul s t) = .beta
 
-private theorem mass_pair (s t : Source) : m(.mul s t) = m(s) + m(t) := by
-  simp only [GraftAffineClosure.quantity, composition, Prod.fst_add, Prod.snd_add]
+theorem mass_pair (f g : ℕ) (s t : Source) :
+    f * (composition (.mul s t)).1 + g * (composition (.mul s t)).2 =
+      (f * (composition s).1 + g * (composition s).2) +
+      (f * (composition t).1 + g * (composition t).2) := by
+  simp only [composition, Prod.fst_add, Prod.snd_add]
   ring
 
-private theorem mass_min (t : Source) : 2 ≤ m(t) ∧ (m(t) = 2 ↔ t = .of true) ∧
-    (m(t) = 3 ↔ t = .of false) := by
+theorem mass_min (f g : ℕ) (hf : 0 < f) (hfg : f < g) (hgf : g < 2 * f)
+    (t : Source) :
+    f ≤ f * (composition t).1 + g * (composition t).2 ∧
+    (f * (composition t).1 + g * (composition t).2 = f ↔ t = .of true) ∧
+    (f * (composition t).1 + g * (composition t).2 = g ↔ t = .of false) := by
   induction t with
-  | of b => cases b <;> simp [GraftAffineClosure.quantity, composition] <;> decide
+  | of b => cases b <;>
+    simp [composition, show (FreeMagma.of false : Source) ≠ .of true by decide,
+      show (FreeMagma.of true : Source) ≠ .of false by decide] <;> omega
   | mul s t hs ht =>
     rw [mass_pair]
     refine ⟨by omega, ?_, ?_⟩ <;> constructor
@@ -48,7 +57,7 @@ private theorem mass_min (t : Source) : 2 ≤ m(t) ∧ (m(t) = 2 ↔ t = .of tru
     · omega
     · cases h
 
-private theorem beta_structure (t : Source) :
+theorem beta_structure (t : Source) :
     BetaCovered (substitution (substitution t)) ∧
     ∃ u : Address, readout u (substitution (substitution t)) = .beta := by
   induction t with
@@ -60,7 +69,7 @@ private theorem beta_structure (t : Source) :
     obtain ⟨hd, v, hv⟩ := ht
     exact ⟨⟨hc, hd, false :: u, hu⟩, false :: u, hu⟩
 
-private theorem beta_spec (t : Source) (u : Address) :
+theorem beta_spec (t : Source) (u : Address) :
     u ∈ B(t) ↔ readout u t = .beta := by
   classical
   constructor
@@ -70,12 +79,19 @@ private theorem beta_spec (t : Source) (u : Address) :
     exact ((ActualImageSevenLeafSeparation.seven_leaf_separation.1 t).2 u).mpr
       ⟨false, by simp [ActualImageSevenLeafSeparation.leafLabel, h]⟩
 
-private theorem beta_recovery (V U : Source) (hc : BetaCovered V)
+theorem beta_recovery (f g : ℕ) (hf : 0 < f) (hfg : f < g) (hgf : g < 2 * f)
+    (V U : Source) (hc : BetaCovered V)
     (hm : ∀ u : Address, readout u V = .beta → readout u U = .beta) :
-    m(V) ≤ m(U) ∧ (m(U) = m(V) → U = V) := by
+    f * (composition V).1 + g * (composition V).2 ≤
+      f * (composition U).1 + g * (composition U).2 ∧
+    (f * (composition U).1 + g * (composition U).2 =
+      f * (composition V).1 + g * (composition V).2 → U = V) := by
   induction V generalizing U with
   | of b => cases b with
-    | true => exact ⟨(mass_min U).1, fun h => (mass_min U).2.1.mp h⟩
+    | true =>
+      simpa only [composition, mul_one, mul_zero, add_zero] using
+        ⟨(mass_min f g hf hfg hgf U).1,
+          fun h => (mass_min f g hf hfg hgf U).2.1.mp h⟩
     | false =>
       have hr := hm [] rfl
       have he : U = .of false := by
@@ -100,9 +116,10 @@ private theorem beta_recovery (V U : Source) (hc : BetaCovered V)
       rw [mass_pair, mass_pair] at he
       exact congrArg₂ FreeMagma.mul (hse (by omega)) (hte (by omega))
 
-private theorem beta_sound (k : ℕ) (hk : 1 ≤ k) (V : Source)
+theorem beta_sound (f g : ℕ) (hf : 0 < f) (hfg : f < g) (hgf : g < 2 * f)
+    (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (hV : V ∈ ActualImage (3 * k)) (h : ℕ) (hh : height V ≤ h) :
-    QuantitySound (3 * k) V h B(V) := by
+    QuantitySound f g (3 * k) V h B(V) := by
   obtain ⟨T, hT⟩ := hV
   let S := substitution^[3 * k - 2] T
   have he : V = substitution (substitution S) := by
@@ -114,17 +131,19 @@ private theorem beta_sound (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (Finset.mem_filter.mp hu).1).trans hh, ?_⟩
   intro U hm ho
   have hc : BetaCovered V := he ▸ (beta_structure S).1
-  have hUV := (beta_recovery V U hc (fun u hu =>
+  have hUV := (beta_recovery f g hf hfg hgf V U hc (fun u hu =>
     (ho u ((beta_spec V u).mpr hu)).trans hu)).2 hm
   exact hUV ▸ ⟨T, hT⟩
 
 
-private theorem leaf_expand (t : Source) (s : Address)
+theorem leaf_expand (t : Source) (s : Address)
     (hs : subtree s t = some (.of false)) :
     subtree (s ++ [false]) (replace t s (.mul (.of true) (.of true))) = some (.of true) ∧
     composition (replace t s (.mul (.of true) (.of true))) + (0, 1) = composition t + (2, 0) ∧
     (∀ u : Address, u ≠ s → u ≠ s ++ [false] → u ≠ s ++ [true] →
-      readout u (replace t s (.mul (.of true) (.of true))) = readout u t) := by
+      readout u (replace t s (.mul (.of true) (.of true))) = readout u t) ∧
+    (∀ z : Address, subtree (s ++ z) (replace t s (.mul (.of true) (.of true))) =
+      subtree z (.mul (.of true) (.of true))) := by
   have hc : composition (replace t s (.mul (.of true) (.of true))) + (0, 1) =
       composition t + (2, 0) := by
     obtain ⟨J, haddr, hplug, _⟩ :=
@@ -135,8 +154,9 @@ private theorem leaf_expand (t : Source) (s : Address)
         ActualImageAlphaSeparation.path_replace J (.of false) (.mul (.of true) (.of true)) []
     rw [he, ← hplug]
     exact ActualImageAlphaSeparation.context_composition J (.mul (.of true) (.of true)) (.of false)
-  have local_support : subtree (s ++ [false]) (replace t s (.mul (.of true) (.of true))) =
-      some (.of true) ∧
+  have local_support :
+      (∀ z : Address, subtree (s ++ z) (replace t s (.mul (.of true) (.of true))) =
+        subtree z (.mul (.of true) (.of true))) ∧
       (∀ u : Address, u ≠ s → u ≠ s ++ [false] → u ≠ s ++ [true] →
         readout u (replace t s (.mul (.of true) (.of true))) = readout u t) := by
     clear hc
@@ -144,7 +164,7 @@ private theorem leaf_expand (t : Source) (s : Address)
     | nil =>
       have he : t = .of false := Option.some.inj (by simpa only [subtree] using hs)
       subst t
-      refine ⟨rfl, ?_⟩
+      refine ⟨fun _ => rfl, ?_⟩
       intro u h hL hR
       cases u with
       | nil => exact (h rfl).elim
@@ -158,7 +178,7 @@ private theorem leaf_expand (t : Source) (s : Address)
       | mul v w => cases b with
         | false =>
           obtain ⟨hl, ho⟩ := ih v hs
-          refine ⟨hl, ?_⟩
+          refine ⟨fun z => hl z, ?_⟩
           intro u h hL hR
           cases u with
           | nil => rfl
@@ -170,7 +190,7 @@ private theorem leaf_expand (t : Source) (s : Address)
                 (fun he => hR (congrArg (List.cons false) he))
         | true =>
           obtain ⟨hl, ho⟩ := ih w hs
-          refine ⟨hl, ?_⟩
+          refine ⟨fun z => hl z, ?_⟩
           intro u h hL hR
           cases u with
           | nil => rfl
@@ -180,7 +200,7 @@ private theorem leaf_expand (t : Source) (s : Address)
               exact ho u (fun he => h (congrArg (List.cons true) he))
                 (fun he => hL (congrArg (List.cons true) he))
                 (fun he => hR (congrArg (List.cons true) he))
-  exact ⟨local_support.1, hc, local_support.2⟩
+  exact ⟨local_support.1 [false], hc, local_support.2, local_support.1⟩
 
 private theorem joint_surgery (V : Source) (x y : Address)
     (hx : readout x V = .beta) (hy : readout y V = .beta) (hxy : x ≠ y) :
@@ -192,7 +212,7 @@ private theorem joint_surgery (V : Source) (x y : Address)
   obtain ⟨_, hc, ho⟩ := ActualImageAddressCertificate.leaf_change V x false true (leaf_sub V x false hx)
   have hyT : readout y T = .beta := (ho y hxy.symm).trans hy
   let W := replace T y (.mul (.of true) (.of true))
-  obtain ⟨hl, hd, hp⟩ := leaf_expand T y (leaf_sub T y false hyT)
+  obtain ⟨hl, hd, hp, _⟩ := leaf_expand T y (leaf_sub T y false hyT)
   refine ⟨W, ?_, ?_, ?_⟩
   · have ha := congrArg Prod.fst hc
     have hb := congrArg Prod.snd hc
@@ -226,9 +246,9 @@ private theorem immediate_block (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (fun he => hL (he ▸ hu)) (fun he => hR (he ▸ hu))
 
 
-private theorem dichotomy (k : ℕ) (hk : 1 ≤ k) (V : Source)
+theorem dichotomy (f g : ℕ) (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (hV : V ∈ ActualImage (3 * k)) (h : ℕ) (Q : Finset Address)
-    (hs : QuantitySound (3 * k) V h Q) : alphaLeaves V ⊆ Q ∨ B(V) ⊆ Q := by
+    (hs : QuantitySound f g (3 * k) V h Q) : alphaLeaves V ⊆ Q ∨ B(V) ⊆ Q := by
   classical
   by_contra hn
   obtain ⟨ha, hb⟩ := not_or.mp hn
@@ -248,14 +268,14 @@ private theorem dichotomy (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (leaf_sub W₁ t false ht₁)
   have hc : composition W = composition V :=
     ActualImageAddressCertificate.exchange_composition V s t hc₁ hc₂
-  have hw := hs.2 W (congrArg GraftAffineClosure.quantity hc) (by
+  have hw := hs.2 W (congrArg (fun c : ℕ × ℕ => f * c.1 + g * c.2) hc) (by
     intro u hu
     exact (ho₂ u (fun he => htQ (he ▸ hu))).trans
       (ho₁ u (fun he => hsQ (he ▸ hu))))
   exact ActualImageAddressCertificate.exchange_conflict V W₁ W s t r hst hsr hr htV
     h₁s h₂t ho₁ ho₂ (ActualImageAddressCertificate.image_positive (d := 3 * k) (by omega) W hw)
 
-private theorem alpha_beta_disjoint (V : Source) : Disjoint (alphaLeaves V) B(V) := by
+theorem alpha_beta_disjoint (V : Source) : Disjoint (alphaLeaves V) B(V) := by
   classical
   apply Finset.disjoint_left.mpr
   intro u ha hb
@@ -263,12 +283,50 @@ private theorem alpha_beta_disjoint (V : Source) : Disjoint (alphaLeaves V) B(V)
   rw [(beta_spec V u).mp hb] at he
   cases he
 
-private theorem child_absent (V : Source) (y : Address) (hy : y ∈ B(V)) (b : Bool) :
+theorem child_absent (V : Source) (y : Address) (hy : y ∈ B(V)) (b : Bool) :
     readout (y ++ [b]) V = .absent := by
   have he := ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.1
     V y false ((beta_spec V y).mp hy)
   rw [ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.2.2.2.2.1 y [b] V, he]
   rfl
+
+theorem blocked_children_bound (V : Source) (Q R : Finset Address)
+    (hR : R ⊆ B(V)) (hbase : alphaLeaves V ∪ (B(V) ∩ Q) ⊆ Q)
+    (block : ∀ y ∈ R, y ++ [false] ∈ Q ∨ y ++ [true] ∈ Q) :
+    (alphaLeaves V ∪ (B(V) ∩ Q)).card + R.card ≤ Q.card := by
+  classical
+  let f : Address → Address := fun y => y ++ [if y ++ [false] ∈ Q then false else true]
+  let C := R.image f
+  have hinj : Function.Injective f := by
+    intro y z he
+    have hd := congrArg List.dropLast he
+    simpa only [f, List.dropLast_concat] using hd
+  have hCcard : C.card = R.card := Finset.card_image_of_injective R hinj
+  have hC : C ⊆ Q := by
+    intro u hu
+    obtain ⟨y, hy, rfl⟩ := Finset.mem_image.mp hu
+    dsimp only [f]
+    by_cases hl : y ++ [false] ∈ Q
+    · simpa only [if_pos hl] using hl
+    · simpa only [if_neg hl] using (block y hy).resolve_left hl
+  have hsep : Disjoint (alphaLeaves V ∪ (B(V) ∩ Q)) C := by
+    apply Finset.disjoint_left.mpr
+    intro u hu hv
+    obtain ⟨y, hy, rfl⟩ := Finset.mem_image.mp hv
+    have hzero := child_absent V y (hR hy)
+      (if y ++ [false] ∈ Q then false else true)
+    rcases Finset.mem_union.mp hu with hu | hu
+    · have he := (Finset.mem_filter.mp hu).2
+      rw [hzero] at he
+      cases he
+    · have he := (beta_spec V _).mp (Finset.mem_inter.mp hu).1
+      rw [hzero] at he
+      cases he
+  have hle := Finset.card_le_card (Finset.union_subset hbase hC)
+  rw [Finset.card_union_of_disjoint hsep, hCcard] at hle
+  exact hle
+
+local notation "QuantitySound" => QuantitySound 2 3
 
 private theorem alpha_branch_bound (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (h : ℕ) (Q : Finset Address) (hs : QuantitySound (3 * k) V h Q) (ha : alphaLeaves V ⊆ Q) :
@@ -289,35 +347,8 @@ private theorem alpha_branch_bound (k : ℕ) (hk : 1 ≤ k) (V : Source)
       obtain ⟨x, hx, hxy⟩ := Finset.exists_mem_ne hr y
       exact immediate_block k hk V Q hs.2 x y (Finset.mem_sdiff.mp hx).1
         (Finset.mem_sdiff.mp hy).1 hxy (Finset.mem_sdiff.mp hx).2 (Finset.mem_sdiff.mp hy).2
-    let f : Address → Address := fun y => y ++ [if y ++ [false] ∈ Q then false else true]
-    let C := R.image f
-    have hinj : Function.Injective f := by
-      intro y z he
-      have hd := congrArg List.dropLast he
-      simpa only [f, List.dropLast_concat] using hd
-    have hCcard : C.card = R.card := Finset.card_image_of_injective R hinj
-    have hC : C ⊆ Q := by
-      intro u hu
-      obtain ⟨y, hy, rfl⟩ := Finset.mem_image.mp hu
-      dsimp only [f]
-      by_cases hl : y ++ [false] ∈ Q
-      · simpa only [if_pos hl] using hl
-      · simpa only [if_neg hl] using (block y hy).resolve_left hl
-    have hsep : Disjoint (alphaLeaves V ∪ (B(V) ∩ Q)) C := by
-      apply Finset.disjoint_left.mpr
-      intro u hu hv
-      obtain ⟨y, hy, rfl⟩ := Finset.mem_image.mp hv
-      have hzero := child_absent V y (Finset.mem_sdiff.mp hy).1
-        (if y ++ [false] ∈ Q then false else true)
-      rcases Finset.mem_union.mp hu with hu | hu
-      · have he := (Finset.mem_filter.mp hu).2
-        rw [hzero] at he
-        cases he
-      · have he := (beta_spec V _).mp (Finset.mem_inter.mp hu).1
-        rw [hzero] at he
-        cases he
-    have hle := Finset.card_le_card (Finset.union_subset hbase hC)
-    rw [Finset.card_union_of_disjoint hsep, hbcard, hCcard] at hle
+    have hle := blocked_children_bound V Q R Finset.sdiff_subset hbase block
+    rw [hbcard] at hle
     omega
   refine ⟨?_, hlarge⟩
   by_cases hr : 2 ≤ R.card
@@ -384,11 +415,12 @@ private theorem small_sound (Q : Finset Address)
         have hx : x = .of false := root_leaf x false hL
         have hy : y = .of true := root_leaf y true hR
         subst x; subst y
-        rw [mass_pair, mass_pair] at hmass
-        have ht : t = .of false := (mass_min t).2.2.mp (by change 3 + 2 + m(t) = 8 at hmass; omega)
+        dsimp only [GraftAffineClosure.quantity] at hmass
+        rw [mass_pair 2 3, mass_pair 2 3] at hmass
+        have ht : t = .of false := (mass_min 2 3 (by decide) (by decide) (by decide) t).2.2.mp (by change m(t) = 3; change 3 + 2 + m(t) = 8 at hmass; omega)
         subst t
         rfl
-  · have hp := beta_recovery (substitution^[3] (.of true)) U
+  · have hp := beta_recovery 2 3 (by decide) (by decide) (by decide) (substitution^[3] (.of true)) U
       (beta_structure (.of false)).1 (by
         intro u hu
         have he : u = [false, false] ∨ u = [true] := by
@@ -412,8 +444,9 @@ private theorem small_sound (Q : Finset Address)
       | mul x y =>
         have hy : y = .of true := root_leaf y true hL
         subst y
-        rw [mass_pair, mass_pair] at hmass
-        have hx : x = .of false := (mass_min x).2.2.mp (by change m(x) + 2 + 3 = 8 at hmass; omega)
+        dsimp only [GraftAffineClosure.quantity] at hmass
+        rw [mass_pair 2 3, mass_pair 2 3] at hmass
+        have hx : x = .of false := (mass_min 2 3 (by decide) (by decide) (by decide) x).2.2.mp (by change m(x) = 3; change m(x) + 2 + 3 = 8 at hmass; omega)
         subst x
         rfl
 
@@ -439,7 +472,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
   classical
   have ha := image_alpha k hk V hV
   have lower (Q : Finset Address) (hs : QuantitySound (3 * k) V h Q) : B(V).card ≤ Q.card := by
-    rcases dichotomy k hk V hV h Q hs with hA | hB
+    rcases dichotomy 2 3 k hk V hV h Q hs with hA | hB
     · have hb := (alpha_branch_bound k hk V h Q hs hA).1
       omega
     · exact Finset.card_le_card hB
@@ -450,12 +483,12 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
     intro U hc ho
     exact hs.2 U (congrArg GraftAffineClosure.quantity hc) ho
   · intro hh hlarge
-    refine ⟨beta_sound k hk V hV h hh, ?_⟩
+    refine ⟨beta_sound 2 3 (by decide) (by decide) (by decide) k hk V hV h hh, ?_⟩
     intro Q hs
     refine ⟨lower Q hs, ?_⟩
     constructor
     · intro hc
-      rcases dichotomy k hk V hV h Q hs with hA | hB
+      rcases dichotomy 2 3 k hk V hV h Q hs with hA | hB
       · have hb := (alpha_branch_bound k hk V h Q hs hA).1
         omega
       · exact (Finset.eq_of_subset_of_card_le hB (by omega)).symm
@@ -471,7 +504,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
       constructor
       · intro hc
         have hQL : Q ⊆ leafAddresses V := by
-          rcases dichotomy k hk V hV h Q hs with hA | hB
+          rcases dichotomy 2 3 k hk V hV h Q hs with hA | hB
           · have hbound := alpha_branch_bound k hk V h Q hs hA
             have hr : (B(V) \ Q).card < 2 := by
               by_contra hn
