@@ -291,14 +291,9 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
       · apply Subtype.ext
         have he' : x.val.1.val.e = y.val.1.val.e := by omega
         have hr' : x.val.1.val.r = y.val.1.val.r := by omega
-        exact (show ∀ u v : State, u.r = v.r → u.e = v.e → u = v by
-          intro u v hr he
-          cases u
-          cases v
-          dsimp only at hr he
-          cases hr
-          cases he
-          rfl) _ _ hr' he'
+        change State.mk x.val.1.val.r x.val.1.val.e =
+          State.mk y.val.1.val.r y.val.1.val.e
+        exact congrArg₂ State.mk hr' he'
       · exact hj
     have sum : (∑ r : Fin (m - 1), (r.val + 1)) = m * (m - 1) / 2 := by
       rw [Fin.sum_univ_eq_sum_range (fun r => r + 1)]
@@ -382,14 +377,8 @@ theorem result (m : ℕ) (hm : 2 ≤ m) :
       have hr : s.val.r = t.val.r := congrArg (fun p => p.1.val) h
       have he : s.val.e = t.val.e := congrArg (fun p => p.2.val) h
       apply Subtype.ext
-      exact (show ∀ u v : State, u.r = v.r → u.e = v.e → u = v by
-        intro u v hr he
-        cases u
-        cases v
-        dsimp only at hr he
-        cases hr
-        cases he
-        rfl) _ _ hr he
+      change State.mk s.val.r s.val.e = State.mk t.val.r t.val.e
+      exact congrArg₂ State.mk hr he
     let : Finite {s : State // IsState m s} := Finite.of_injective code inj
     have collision : ∃ a b : ℕ, a < b ∧ next^[a] o = next^[b] o := by
       obtain ⟨a, b, hne, he⟩ := Finite.exists_ne_map_eq_of_infinite (fun d : ℕ => next^[d] o)
