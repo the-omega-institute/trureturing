@@ -2718,3 +2718,203 @@ $n=0$ 指两个位置而非单点；这时两个端点都等于 $1/(1+a_0)$，�
 命题 37.1 的新内容是同一递推中任意早期坐标经过无界多次增添位置后仍保持其相邻系数公式，属于仓内推导。行等式、有序正性和逆核联系在这里复用；本节不主张文献原创性。完整的物理操作、共同局部实现、参考系统和最优误差仍分别需要第 34—36 节原来的条件及论证。
 
 ## 追加锚（本行以下为增补区）
+
+## 38. 最优粗化信道的唯一性与单测试稳健认证
+
+**定义 38.1（编码后信道与共同测试）。** 沿用第 36.1 节的有限谱模型，令扇区集合为非空有限集 $S$，$N=|S|$，目标向量为 $T_s=J_d|s\rangle$，目标信道为 $\mathcal T(X)=J_dXJ_d^*$。残余平方根谱及其核仍记为 $v_s$、$K_{st}=\langle v_t,v_s\rangle$。允许的物理操作仍是两侧局部 CPTP 映射的乘积或有限共享经典随机混合，无通信、后选择或额外共享纠缠。其编码后信道记为 $\mathcal F=\Phi\circ\mathcal J_\lambda$，不要求任何基扇区输出正确。定义
+
+$$
+q=\min_{p\in\Delta_S}p^{\mathsf T}Kp,
+\qquad \delta_*=2(1-q),
+\qquad \mathcal F_K(X)=J_d(K\circ X)J_d^*.
+$$
+
+对任一最小点 $p$，取同一个参考输入和理想输出
+
+$$
+|\Omega_p\rangle=\sum_s\sqrt{p_s}|s\rangle_R|s\rangle_L,
+\qquad |\Theta_p\rangle=\sum_s\sqrt{p_s}|s\rangle_RT_s,
+$$
+
+并记二元投影测试的成功概率为
+
+$$
+f_p(\mathcal F)=\langle\Theta_p|
+(\operatorname{id}_R\otimes\mathcal F)
+(|\Omega_p\rangle\langle\Omega_p|)|\Theta_p\rangle.
+$$
+
+本节钻石范数均不含二分之一。第 36.1 节给出 $f_p(\mathcal F)\le q$ 及共同最优误差 $\delta_*$；下面研究哪些信道能够达到等号，以及接近等号迫使什么。
+
+**定理 38.2（满支撑测试暴露唯一编码后信道，repo-derived）。** 设 $p$ 为上述二次型的任意最小点，$A=\{s:p_s>0\}$。若 $\|\mathcal F-\mathcal T\|_\diamond=\delta_*$，则
+
+$$
+\mathcal F(|s\rangle\langle t|)=K_{st}|T_s\rangle\langle T_t|
+\qquad(s,t\in A).
+$$
+
+在任一有限乘积混合分解 $\mathcal F=\sum_z w_z\mathcal F_z$ 中，每个 $w_z>0$ 的分量也满足这个矩阵单位等式。若存在满支撑最小点，则在允许类内
+
+$$
+f_p(\mathcal F)=q
+\quad\Longleftrightarrow\quad
+\mathcal F=\mathcal F_K
+\quad\Longleftrightarrow\quad
+\|\mathcal F-\mathcal T\|_\diamond=\delta_*.
+$$
+
+因此 $\mathcal F_K$ 是允许编码后信道凸集的暴露点。这里只断言源编码后的作用唯一，不断言物理局部信道、Kraus 表示、环境等距或编码算符空间之外的作用唯一。满支撑最小点只须存在，不须是唯一最小点。
+
+**证明。** 对每个乘积分量取局部 Stinespring 等距，记第 $s$ 编码基向量的扩张输出为 $\Xi_{zs}$，并置
+
+$$
+\zeta_{zs}=(\langle T_s|\otimes I)\Xi_{zs},\qquad
+C^z_{st}=\langle\zeta_{zt},\zeta_{zs}\rangle,\qquad
+D^z_{st}=K_{st}-\operatorname{Re}C^z_{st}.
+$$
+
+第 36.1 节的投影环境 Ky Fan 界给出 $|C^z_{st}|\le K_{st}$，故所有 $D^z_{st}\ge0$。沿同一个参考测试展开，得到
+
+$$
+f_p(\mathcal F)=\sum_{z,s,t}w_zp_sp_t\operatorname{Re}C^z_{st},
+\qquad q-f_p(\mathcal F)=\sum_{z,s,t}w_zp_sp_tD^z_{st}.
+$$
+
+二元测试给出 $\|\mathcal F-\mathcal T\|_\diamond\ge2(1-f_p(\mathcal F))$。达到最优值因而迫使 $f_p(\mathcal F)=q$。非负和为零，故 $w_z>0$ 且 $s,t\in A$ 时 $D^z_{st}=0$。对角项给出 $\|\zeta_{zs}\|^2=1$；$\Xi_{zs}$ 本来是单位向量，正交投影的勾股等式遂给出
+
+$$
+\Xi_{zs}=T_s\otimes\zeta_{zs}.
+$$
+
+非对角项满足 $\operatorname{Re}C^z_{st}=K_{st}$ 及 $|C^z_{st}|\le K_{st}$，所以 $C^z_{st}=K_{st}$，包括 $K_{st}=0$ 的情形。对 $|\Xi_{zs}\rangle\langle\Xi_{zt}|$ 作环境偏迹即得矩阵单位等式。此推导只用测试等号，故满支撑时 $f_p=q$ 已迫使整个编码后信道为 $\mathcal F_K$。反向由共同达到构造与其范数公式成立。证毕。
+
+**推论 38.3（平坦整数秩的最优性强迫精确基输出，repo-derived）。** 对第 34 节的正整数残余秩 $m_s$，每个最优允许编码后信道都严格等于
+
+$$
+X\longmapsto J_d\left(
+\bigl(e^{-|\log m_s-\log m_t|/2}\bigr)_{st}\circ X
+\right)J_d^*.
+$$
+
+特别地，精确输出每个基扇区的目标纯态是最优性的结论，无须作为竞争操作的前提。任意共享经典混合的正权重乘积分量具有同一个编码后作用。
+
+**证明。** 合并相同的 $\log m_s$，在不同的有序值上使用第 34.1 节的严格正平衡概率，再将每个组的质量正地分配给该组所有原标签。核只依赖组标签，所以这仍是最小点，且在原集合上满支撑。只有一个不同秩时，任意满支撑概率都最小。应用定理 38.2。证毕。
+
+**定理 38.4（测试亏缺的平方根认证，repo-derived）。** 固定满支撑最小点 $p$，令 $a=\min_s p_s>0$、$\eta=q-f_p(\mathcal F)\ge0$。则
+
+$$
+\boxed{\quad
+\|\mathcal F-\mathcal F_K\|_\diamond
+\le\min\left\{2,\frac{2+\sqrt{2N}}a\sqrt\eta\right\}.
+\quad}
+$$
+
+若仅已知 $\|\mathcal F-\mathcal T\|_\diamond\le\delta_*+\epsilon$，其中 $\epsilon\ge0$，则 $\eta\le\epsilon/2$，从而
+
+$$
+\|\mathcal F-\mathcal F_K\|_\diamond
+\le\min\left\{2,\frac{\sqrt2+\sqrt N}a\sqrt\epsilon\right\}.
+$$
+
+此外，第 $s$ 个基输出的目标失败概率 $l_s$ 满足
+
+$$
+\sum_s p_s^2l_s\le\eta,\qquad
+l_s\le\frac{\eta}{p_s^2}.
+$$
+
+任一正权重分量的对应失败概率满足 $l_{zs}\le\eta/(w_zp_s^2)$。结论依赖指定局部操作类和已知模型；这不是对未知全局操作的设备无关认证。
+
+**证明。** 令 $C=\sum_z w_zC^z$、$D_{st}=K_{st}-\operatorname{Re}C_{st}$。上一定理的恒等式给出
+
+$$
+D_{st}\ge0,\qquad
+\sum_{s,t}p_sp_tD_{st}=\eta,\qquad |C_{st}|\le K_{st}.
+$$
+
+对角项就是 $D_{ss}=1-\langle T_s|\mathcal F(|s\rangle\langle s|)|T_s\rangle=l_s$。取非负和的对角子和得 $\sum_sp_s^2l_s\le\eta$，所以 $\sum_s l_s\le\eta/a^2$。对分量不先求和即得 $w_zp_s^2l_{zs}\le\eta$。
+
+将各分量扩张输出放入带正交标记的环境直和，得到编码后信道的一个等距 $V$，以及
+
+$$
+\zeta_s=\bigoplus_z\sqrt{w_z}\zeta_{zs},
+\qquad W|s\rangle=T_s\otimes\zeta_s.
+$$
+
+目标向量正交，且 $\|\zeta_s\|\le1$，故 $\|W\|\le1$。$V-W$ 第 $s$ 列的范数平方为 $l_s$，于是
+
+$$
+\|V-W\|^2\le\sum_s l_s\le\eta/a^2.
+$$
+
+记 $W$ 给出的完全正、迹不增映射为 $\mathcal F_C(X)=J_d(C\circ X)J_d^*$。展开 $VXV^*-WXW^*$ 为两项并使用迹范数的理想性质，得到
+
+$$
+\|\mathcal F-\mathcal F_C\|_\diamond
+\le(\|V\|+\|W\|)\|V-W\|
+\le 2\sqrt\eta/a.
+$$
+
+这里偏迹对任意算子的迹范数收缩可直接由对偶性核对：对任意酉 $U$，$|\operatorname{Tr}(U\operatorname{Tr}_E Y)|=|\operatorname{Tr}((U\otimes I_E)Y)|\le\|Y\|_1$。同一论证保留任意参考因子，不把迹不增的 $W$ 映射冒作信道。
+
+另一方面，$|C_{st}|\le K_{st}\le1$ 给出
+
+$$
+|C_{st}-K_{st}|^2\le2K_{st}D_{st}\le2D_{st}.
+$$
+
+置 $H=D_{\sqrt p}(C-K)D_{\sqrt p}$，其 Hilbert–Schmidt 范数满足 $\|H\|_{\rm HS}^2\le2\eta$，故 $\|H\|_1\le\sqrt{2N\eta}$。任一归一化纯参考输入可写成 $\sum_s|s\rangle|u_s\rangle$。定义 $B|s\rangle=T_s\otimes u_s/\sqrt{p_s}$；其列因 $T_s$ 正交而正交，所以 $\|B\|^2\le1/a$。这两个 Schur 映射在该输入上的输出差是 $BHB^*$，因而其迹范数不超过 $\sqrt{2N\eta}/a$。
+
+混合密度输入由凸性处理。为覆盖钻石范数中的任意算子，先将 Hermitian 输入作正负谱分解；再对任意 $X$ 添加一个参考二能级系统，使用 Hermitian 块矩阵 $\frac12\left(\begin{smallmatrix}0&X\\X^*&0\end{smallmatrix}\right)$。它的迹范数为 $\|X\|_1$；保 Hermitian 映射后的同形块矩阵具有对应输出的迹范数。这说明上述密度输入界也适用于 $\mathcal F_C-\mathcal F_K$，即使 $\mathcal F_C$ 未必保迹。三角不等式给出所列常数，两个信道的距离另有上界二。最后二元测试界给 $2(1-f_p)\le2(1-q)+\epsilon$，故 $\eta\le\epsilon/2$。证毕。
+
+**命题 38.5（固定两扇区模型中的最优指数，repo-derived）。** 即使固定两个不同的平坦残余秩，定理 38.4 中的平方根指数也不能统一改为任何大于 $1/2$ 的指数。
+
+**证明。** 此时 $K=\left(\begin{smallmatrix}1&k\\k&1\end{smallmatrix}\right)$，$0<k<1$，$\delta_*=1-k$。共同拆分后，在一侧输出旗标施加相位酉 $\operatorname{diag}(1,e^{i\theta})$，得到允许的乘积操作，其编码后信道 $\mathcal F_\theta$ 的非对角系数为 $ke^{i\theta}$，相位符号不影响以下量。
+
+两个标签上，对角为零、非对角系数为 $b$ 的保 Hermitian Schur 差，其不除二钻石范数是 $|b|$：纯参考输入的输出差是非对角块矩阵，迹范数为 $2|b|\sqrt{p_1p_2}\le|b|$，等质量达到。因此
+
+$$
+\delta_\theta=\|\mathcal F_\theta-\mathcal T\|_\diamond
+=|1-ke^{i\theta}|,
+\qquad d_\theta=\|\mathcal F_\theta-\mathcal F_K\|_\diamond
+=k|e^{i\theta}-1|.
+$$
+
+令 $\epsilon_\theta=\delta_\theta-(1-k)$，直接平方得到
+
+$$
+d_\theta^2=k\bigl(2(1-k)\epsilon_\theta+\epsilon_\theta^2\bigr).
+$$
+
+故 $\theta\to0$ 时 $d_\theta/\sqrt{\epsilon_\theta}\to\sqrt{2k(1-k)}>0$。对等质量测试，$q=(1+k)/2$ 且 $\eta_\theta=k(1-\cos\theta)/2$，更有精确等式 $d_\theta=2\sqrt{k\eta_\theta}$。两种认证参数都不允许更大的统一指数；这不声称定理 38.4 的常数最优。证毕。
+
+**命题 38.6（无满支撑最小点时的非唯一最优信道，repo-derived）。** 第 36.1 节的允许模型中存在三个扇区、每个目标秩为一的实例，具有两个不同的最优编码后信道。
+
+**证明。** 取排序的平方根谱
+
+$$
+v_1=(1,0),\quad v_2=(1/\sqrt2,1/\sqrt2),\quad
+v_3=(\cos(\pi/8),\sin(\pi/8)).
+$$
+
+令 $k=1/\sqrt2$、$c=\cos(\pi/8)$、$q=(1+k)/2=c^2$。于是
+
+$$
+K=\begin{pmatrix}1&k&c\\k&1&c\\c&c&1\end{pmatrix},
+\qquad p=(1/2,1/2,0),\qquad Kp=(q,q,c)^{\mathsf T}.
+$$
+
+$K\succeq0$ 且 $c>q$，所以单纯形最优性条件证明 $p$ 最小、值为 $q$。对任一概率 $x$，二次型展开中的线性项为 $2(c-q)x_3$，余项非负，因此任何最小点必须有 $x_3=0$；余下两标签二次型的唯一最小点是等质量。故不存在满支撑最小点。
+
+共同拆分给出 $\mathcal F_K$。再在一侧对第三输出旗标施加退相干，使第三标签与前两者的相干乘以 $c$，前两者间相干不变。这是一个 CPTP Schur 映射：其核是两个相同单位向量和另一个与它们重叠为 $c$ 的单位向量之 Gram 矩阵。所得乘积协议的核为
+
+$$
+C=\begin{pmatrix}1&k&q\\k&1&q\\q&q&1\end{pmatrix},
+\qquad Cp=q\mathbf1.
+$$
+
+$C$ 是两个正半定核的 Schur 乘积，正半定且对角为一，所有元素属于 $[0,1]$。对任一概率 $x$，$x^{\mathsf T}Cx=q+(x-p)^{\mathsf T}C(x-p)\ge q$。第 36.1 节的 Schur 范数推导适用于此核，故 $\|\mathcal F_C-\mathcal T\|_\diamond=2(1-q)$。然而 $C_{13}=q<c=K_{13}$，所以两个编码后信道不同。它们在活跃标签 $\{1,2\}$ 上完全相同，保留定理 38.2 的精确范围。证毕。
+
+**来源与适用范围。** 本节复用第 36.1 节的全操作最优值、共同拆分及投影环境界，以及第 34.1 节的正平衡概率；这些前置不作为新增结果。新增的等号分类、完整编码后信道的测试认证、指数最优性和满支撑边界属于本仓推导。Stinespring 表示、完全有界迹范数和一般通道优化的对偶条件属于已有量子信息理论；比较文献为 Watrous, *The Theory of Quantum Information* (2018)，以及 Coutts–Girard–Watrous, *Certifying optimality for convex quantum channel optimization problems*, Quantum 5, 448 (2021), [arXiv:1810.13295](https://arxiv.org/abs/1810.13295)。后者的全信道最优性条件不替代本节局部乘积混合类的投影环境界。本节不分类局部信道在未使用物理输入上的自由度，不包括通信、共享纠缠或任意全局操作，也不建立连续 CFT 与引力 RT 的实现字典。
+
+## 追加锚（本行以下为增补区）
