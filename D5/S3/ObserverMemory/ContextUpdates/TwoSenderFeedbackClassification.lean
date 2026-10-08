@@ -215,7 +215,7 @@ private theorem branch_data (P : PType) (D : Z4 → Z4 → Bool → Bool → Boo
         rw [ha, ht, hu, hv] at hz
         change D a t b (P.reply 0 u t b) (P.reply 1 v t b) = target z at hz
         rwa [hr, hs] at hz
-      _ = a + (u + v) := by simp [target, Fin.sum_univ_two, ha, hu, hv, add_assoc]
+      _ = a + (u + v) := by simp [target, Fin.sum_univ_two, ha, hu, hv]
       _ = a + bit p + 2 * bit (r ^^ s ^^ c₂ ^^ c₃ ^^ (B && p) ^^
           ((A ^^ B ^^ true ^^ p) && l)) := by
         rw [show u + v = _ from pair_sum p A B c₂ c₃ r s l]
@@ -231,5 +231,177 @@ private theorem branch_data (P : PType) (D : Z4 → Z4 → Bool → Bool → Boo
   intro r s
   have h := two_realizations r s false
   simpa using h
+
+private theorem query_form (P : PType) (D : Z4 → Z4 → Bool → Bool → Bool → Z4)
+    (hD : Correct P D) (a t : Z4) :
+    P.query a t = (low (t - a) ^^ P.query t t) := by
+  have same_branch (a a' : Z4) (hb : P.query a t = P.query a' t) :
+      low (t - a) = low (t - a') := by
+    have h := (branch_data P D hD a t).1
+    have h' := (branch_data P D hD a' t).1
+    rw [hb] at h
+    exact Bool.xor_right_inj.mp (h.symm.trans h')
+  have hzero : low (t - t) = false := by simp [low]
+  have hone : low (t - (t - 1)) = true := by
+    rw [sub_sub_cancel]; rfl
+  have hne : P.query t t ≠ P.query (t - 1) t := by
+    intro h
+    have hh := same_branch t (t - 1) h
+    rw [hzero, hone] at hh
+    exact Bool.false_ne_true hh
+  have hnot := Bool.eq_not_of_ne (Ne.symm hne)
+  rcases Bool.eq_or_eq_not (P.query a t) (P.query t t) with h | h
+  · have hp := (same_branch a t h).trans hzero
+    rw [h, hp]
+    simp
+  · have hq : P.query a t = P.query (t - 1) t := h.trans hnot.symm
+    have hp := (same_branch a (t - 1) hq).trans hone
+    rw [h, hp]
+    simp
+
+private theorem query_surjective (P : PType) (c : Z4 → Bool)
+    (hq : ∀ a t, P.query a t = (low (t - a) ^^ c t)) (t : Z4) (b : Bool) :
+    ∃ a, P.query a t = b ∧ low (t - a) = (b ^^ c t) := by
+  let a : Z4 := t - bit (b ^^ c t)
+  have hp : low (t - a) = (b ^^ c t) := by
+    dsimp only [a]
+    rw [sub_sub_cancel]
+    cases (b ^^ c t) <;> rfl
+  refine ⟨a, ?_, hp⟩
+  rw [hq, hp]
+  simp
+
+private theorem necessity (P : PType) (D : Z4 → Z4 → Bool → Bool → Bool → Z4)
+    (hD : Correct P D) :
+    ∃ c : Z4 → Bool, ∃ A B c₂ c₃ : Z4 → Bool → Bool,
+      NormalForm P D c A B c₂ c₃ ∧
+      (∀ t b, ∃ a r s, Actual P a t b r s) ∧
+      (∀ a t r s, Actual P a t (P.query a t) r s) := by
+  let c : Z4 → Bool := fun t => P.query t t
+  let A : Z4 → Bool → Bool := fun t p =>
+    P.reply 0 0 t (p ^^ c t) ^^ P.reply 0 1 t (p ^^ c t)
+  let B : Z4 → Bool → Bool := fun t p =>
+    P.reply 1 0 t (p ^^ c t) ^^ P.reply 1 1 t (p ^^ c t)
+  let c₂ : Z4 → Bool → Bool := fun t p => P.reply 0 0 t (p ^^ c t)
+  let c₃ : Z4 → Bool → Bool := fun t p => P.reply 1 0 t (p ^^ c t)
+  have hq : ∀ a t, P.query a t = (low (t - a) ^^ c t) := query_form P D hD
+  have hcoeff : ∀ t p, (A t p ^^ B t p) = (true ^^ p) := by
+    intro t p
+    obtain ⟨a, hb, hp⟩ := query_surjective P c hq t (p ^^ c t)
+    have h := (branch_data P D hD a t).1
+    rw [hb, hp] at h
+    simpa [A, B] using h
+  have hr : ∀ t b u,
+      P.reply 0 u t b = (high u ^^ (A t (b ^^ c t) && low u) ^^ c₂ t (b ^^ c t)) := by
+    intro t b u
+    obtain ⟨a, hb, _⟩ := query_surjective P c hq t b
+    have h := branch_affine P D hD a t 0 u
+    rw [hb] at h
+    simpa [A, c₂] using h
+  have hs : ∀ t b v,
+      P.reply 1 v t b = (high v ^^ (B t (b ^^ c t) && low v) ^^ c₃ t (b ^^ c t)) := by
+    intro t b v
+    obtain ⟨a, hb, _⟩ := query_surjective P c hq t b
+    have h := branch_affine P D hD a t 1 v
+    rw [hb] at h
+    simpa [B, c₃] using h
+  have hd : ∀ a t b r s, Actual P a t b r s →
+      D a t b r s = a + bit (b ^^ c t) +
+        2 * bit (r ^^ s ^^ c₂ t (b ^^ c t) ^^ c₃ t (b ^^ c t) ^^
+          (B t (b ^^ c t) && (b ^^ c t))) := by
+    intro a t b r s hb
+    obtain ⟨z, _, _, hqb, _, _⟩ := hb
+    have hp : low (t - a) = (b ^^ c t) := by
+      have h := (hq a t).symm.trans hqb
+      simpa using congrArg (fun x => x ^^ c t) h
+    have h := (branch_data P D hD a t).2 r s |>.2
+    rw [hqb, hp] at h
+    simpa [B, c₂, c₃] using h
+  refine ⟨c, A, B, c₂, c₃, ⟨hq, hcoeff, hr, hs, hd⟩, ?_, ?_⟩
+  · intro t b
+    obtain ⟨a, hb, _⟩ := query_surjective P c hq t b
+    exact ⟨a, false, false, by simpa only [hb] using (branch_data P D hD a t).2 false false |>.1⟩
+  · intro a t r s
+    exact ((branch_data P D hD a t).2 r s).1
+
+private theorem low_add (u v : Z4) : low (u + v) = (low u ^^ low v) := by
+  fin_cases u <;> fin_cases v <;> rfl
+
+private theorem source_parity (z : S) :
+    low (z.1.2 0 + z.1.2 1) = low (clock z - z.1.1) := by
+  apply (low_characteristic _ _).mpr
+  have hh : χ (z.2 : Z4) = 0 := z.2.property
+  simp only [clock, target, Fin.sum_univ_two, map_add, map_sub, hh]
+  abel
+
+private theorem sum_kernel (u v : Z4) (A B c₂ c₃ : Bool)
+    (hc : (A ^^ B) = (true ^^ low (u + v))) :
+    u + v = bit (low (u + v)) +
+      2 * bit ((high u ^^ (A && low u) ^^ c₂) ^^ (high v ^^ (B && low v) ^^ c₃) ^^
+        c₂ ^^ c₃ ^^ (B && low (u + v))) := by
+  let p := low (u + v)
+  let r := high u ^^ (A && low u) ^^ c₂
+  let s := high v ^^ (B && low v) ^^ c₃
+  have hvlow : (low u ^^ p) = low v := by simp [p, low_add]
+  have hu : bit (low u) + 2 * bit (r ^^ c₂ ^^ (A && low u)) = u := by
+    simpa [r] using bit_decomposition u
+  have hv : bit (low u ^^ p) + 2 * bit (s ^^ c₃ ^^ (B && (low u ^^ p))) = v := by
+    rw [hvlow]
+    simpa [s] using bit_decomposition v
+  have h := pair_sum p A B c₂ c₃ r s (low u)
+  rw [hu, hv] at h
+  have hcancel : (A ^^ B ^^ true ^^ p) = false := by
+    change (A ^^ B ^^ true ^^ low (u + v)) = false
+    rw [hc]
+    cases low (u + v) <;> rfl
+  rw [hcancel] at h
+  simpa only [Bool.false_and, Bool.xor_false] using h
+
+private theorem sufficiency (P : PType) (D : Z4 → Z4 → Bool → Bool → Bool → Z4)
+    (c : Z4 → Bool) (A B c₂ c₃ : Z4 → Bool → Bool)
+    (hn : NormalForm P D c A B c₂ c₃) : Correct P D := by
+  rcases hn with ⟨hq, hc, hr, hs, hd⟩
+  intro z
+  let w := sourceEquiv z
+  let a := w.1.1
+  let t := clock w
+  let u := w.1.2 0
+  let v := w.1.2 1
+  let b := P.query a t
+  let r := P.reply 0 u t b
+  let s := P.reply 1 v t b
+  have ha : Actual P a t b r s := ⟨w, rfl, rfl, rfl, rfl, rfl⟩
+  have hp : (b ^^ c t) = low (u + v) := by
+    dsimp only [b]
+    rw [hq]
+    simpa [a, t, u, v] using (source_parity w).symm
+  have h := hd a t b r s ha
+  rw [hp] at h
+  have hr' : r = (high u ^^ (A t (low (u + v)) && low u) ^^ c₂ t (low (u + v))) := by
+    simpa only [hp] using hr t b u
+  have hs' : s = (high v ^^ (B t (low (u + v)) && low v) ^^ c₃ t (low (u + v))) := by
+    simpa only [hp] using hs t b v
+  change D a t b r s = target w
+  calc
+    D a t b r s = a + bit (low (u + v)) +
+        2 * bit (r ^^ s ^^ c₂ t (low (u + v)) ^^ c₃ t (low (u + v)) ^^
+          (B t (low (u + v)) && low (u + v))) := h
+    _ = a + (u + v) := by
+      rw [hr', hs', add_assoc,
+        ← sum_kernel u v (A t (low (u + v))) (B t (low (u + v)))
+          (c₂ t (low (u + v))) (c₃ t (low (u + v))) (hc t (low (u + v)))]
+    _ = target w := by simp [target, a, u, v, Fin.sum_univ_two]
+
+/-- Complete classification, including both broadcast labels and all four reply pairs. -/
+theorem result (P : PType) (D : Z4 → Z4 → Bool → Bool → Bool → Z4) :
+    Correct P D ↔
+      ∃ c : Z4 → Bool, ∃ A B c₂ c₃ : Z4 → Bool → Bool,
+        NormalForm P D c A B c₂ c₃ ∧
+        (∀ t b, ∃ a r s, Actual P a t b r s) ∧
+        (∀ a t r s, Actual P a t (P.query a t) r s) := by
+  constructor
+  · exact necessity P D
+  · rintro ⟨c, A, B, c₂, c₃, hn, _, _⟩
+    exact sufficiency P D c A B c₂ c₃ hn
 
 end D5.S3.ObserverMemory.ContextUpdates.TwoSenderFeedbackClassification
