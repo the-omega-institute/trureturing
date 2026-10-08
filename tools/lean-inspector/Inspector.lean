@@ -440,7 +440,7 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
     (generated : IO.Ref (Std.HashMap Name String))
     (seen : IO.Ref (NameMap Name))
     (writer : MaterialWriter) (out : IO.FS.Handle) (counter : IO.Ref Nat) : IO Unit := do
-  state.set { base with regions := #[] }
+  state.set base.fork
   let target := input.moduleName.toName
   RawArtifacts.loadModule target state
   for utility in utilities do RawArtifacts.loadModule utility.claimModule.toName state
@@ -464,7 +464,7 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
       let (assessment, seals) ← try ArtifactAssessment.assess store target catch error =>
         throw <| IO.userError s!"raw.assessment_failed:{target}:{error}"
       for (name, _) in assessment.generated do
-        let some info := assessment.store.constants[name]?
+        let some info := assessment.store.constants.find? name
           | throw <| IO.userError s!"incomplete_closure:dtr.generated_missing:{name}"
         let identity := Sha256.hex (reprStr (info.levelParams, info.type,
           info.value? (allowOpaque := true), info.isTheorem)).toUTF8
@@ -481,9 +481,9 @@ private def withReportWriter (reportOutput materialSpool : System.FilePath)
       pure (assessment.store, assessment.generated.filter (·.2 == target) |>.map Prod.fst,
         ← ArtifactRegistration.targetJson target assessment, assessment.enrollmentErrors)
     else pure (store, #[], empty, #[])
-  let row ← inspectData data (current.constants[·]?)
+  let row ← inspectData data (current.constants.find?)
     (closedNegation (fun name => current.modules.find? name.toName)
-      (current.constants[·]?) input)
+      (current.constants.find?) input)
     cache writer counter utilities generatedNames binding input
   let row := { row with
     informationRegistrationErrors := sortedUnique (row.informationRegistrationErrors ++ enrollmentErrors) }
@@ -503,7 +503,7 @@ private unsafe def produceCompiled (reportOutput materialSpool : System.FilePath
   let base ← state.get
   let profiling := (← IO.getEnv "STRATALINT_INSPECTOR_PROFILE") == some "1"
   if profiling then
-    (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE raw_read_ns={(← IO.monoNanosNow) - start} raw_modules={base.modules.toList.length} raw_constants={base.constants.size} shared_regions={base.regions.size} shared_bytes={base.regions.foldl (fun n r => n + r.size.toNat) 0}"
+    (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_PROFILE raw_read_ns={(← IO.monoNanosNow) - start} raw_modules={base.modules.toList.length} raw_constants={RawArtifacts.mapSize base.constants} shared_regions={base.regions.size} shared_bytes={base.regions.foldl (fun n r => n + r.size.toNat) 0}"
   let counter ← IO.mkRef 0
   let generated ← IO.mkRef ({} : Std.HashMap Name String)
   let seen ← IO.mkRef ({} : NameMap Name)
@@ -523,7 +523,7 @@ private unsafe def produceCompiled (reportOutput materialSpool : System.FilePath
           cmd := "ps", args := #["-o", "rss=", "-p", toString (← IO.Process.getPID)] }
         unless resident.exitCode == 0 do
           throw <| IO.userError "raw.profile_rss_failed"
-        (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_TARGET_RELEASE completed={index + 1} module={input.moduleName} target_constants={released.constants.size} target_modules={released.modules.toList.length} target_regions={released.regions.size} target_metadata={released.metadata.axioms.toList.length} rss_kib={resident.stdout.trimAscii.toString}"
+        (← IO.getStderr).putStrLn s!"LEAN_INSPECTOR_TARGET_RELEASE completed={index + 1} module={input.moduleName} target_constants={RawArtifacts.mapSize released.constants} target_modules={released.modules.toList.length} target_regions={released.regions.size} target_metadata={released.metadata.axioms.toList.length} rss_kib={resident.stdout.trimAscii.toString}"
 
 unsafe def main (args : List String) : IO Unit := do
   let args ← match args with

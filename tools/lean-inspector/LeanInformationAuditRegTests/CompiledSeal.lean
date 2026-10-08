@@ -12,7 +12,7 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
     RawArtifacts.loadModule root reader
     RawArtifacts.loadModule `LeanInformationAudit.TemplateEnrollment reader
     let store ← reader.get
-    let context := CompiledRegistration.expressionContext (store.constants[·]?) (← IO.getNumHeartbeats) {}
+    let context := CompiledRegistration.expressionContext (store.constants.find?) (← IO.getNumHeartbeats) {}
     let transport (left right : Expr) : Expr := mkAppN (mkConst ``Eq.rec [1, 1]) #[
       mkSort 1, left, mkLambda `type .default (mkSort 1)
         (mkLambda `proof .default (mkApp3 (mkConst ``Eq [1]) (mkSort 1) left (.bvar 0))
@@ -34,7 +34,7 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
       | throw <| IO.userError "compiled.seal:root_missing"
     let entries := ArtifactRegistration.entriesFor state root
     let missing := { contract with expected := contract.expected.extract 1 contract.expected.size }
-    let result := CompiledSnapshots.registry (state.store.constants[·]?) root (some missing) entries
+    let result := CompiledSnapshots.registry (state.store.constants.find?) root (some missing) entries
     unless (match result with
         | .error reason => (reason.splitOn "component=member-set").length == 2
         | .ok _ => false) do
@@ -42,7 +42,7 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
     let some first := contract.source[0]?
       | throw <| IO.userError "compiled.seal:source_missing"
     let baseline := { contract with baseline := #[{ first with registrationModuleName := `otherContributor }] }
-    let result := CompiledSnapshots.registry (state.store.constants[·]?) root (some baseline) entries
+    let result := CompiledSnapshots.registry (state.store.constants.find?) root (some baseline) entries
     unless (match result with
         | .error reason => (reason.splitOn "component=frozen-baseline-contributor-modules").length == 2
         | .ok _ => false) do
@@ -53,8 +53,8 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
       | throw <| IO.userError "compiled.seal:input_missing"
     let some firstCatalog := input.catalogs[0]?
       | throw <| IO.userError "compiled.seal:catalog_missing"
-    let raw ← Contract.Decoder.referencedValue (state.store.constants[·]?) firstCatalog.value
-    let fields ← Contract.Decoder.fields (state.store.constants[·]?) `LeanInformationAudit.Contract.SealCatalog raw 11
+    let raw ← Contract.Decoder.referencedValue (state.store.constants.find?) firstCatalog.value
+    let fields ← Contract.Decoder.fields (state.store.constants.find?) `LeanInformationAudit.Contract.SealCatalog raw 11
     let duplicate := mkLambda `index .default (mkApp (mkConst ``Fin) fields[3]!)
       (mkApp fields[4]! (CompiledSeal.indexValue 0 2))
     let arguments := raw.getAppArgs
