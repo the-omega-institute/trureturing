@@ -7,6 +7,7 @@
    digest: Native finite tests descend through the exceptional parity quotient. -/
 
 import D5.S3.Observer.ProbabilisticClosure.FiniteAtomLinearRealization
+import Mathlib.Logic.Lemmas
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -43,9 +44,11 @@ private theorem raw_canonical_rate (alpha q : unitInterval) (ha : 0 < (alpha : �
   unfold rawCanonical at hc ⊢
   split_ifs with he
   · have hb : (alpha : ℝ) = (1 - (alpha : ℝ)) * (q : ℝ) := he
+    have hb2 := congrArg (fun x : ℝ => x ^ 2) hb
+    simp only [if_pos he] at hc
     cases l <;> cases r <;> cases j <;>
       simp [markerRate, rootMass, denominator, selectedParity] at hd hc ⊢ <;>
-      field_simp [hd,hc] <;> nlinarith [hb]
+      field_simp [hd,hc] <;> (apply Or.inl; nlinarith [hb, hb2])
   · rfl
 
 @[reducible] def rawModel {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval) :
@@ -208,51 +211,6 @@ private theorem exceptional_count_le_one {m : ℕ} (alpha : unitInterval)
   apply Subtype.ext
   have hn : 1 - (alpha : ℝ) ≠ 0 := by linarith
   exact (mul_left_cancel₀ hn (hi.symm.trans hj))
-def rawSection {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval) :
-    (rawModel alpha q).Carrier → (fullModel .raw alpha q).Carrier
-  | .inl p => .inl p.val
-  | .inr _ => .inr ⟨0, by simp [terminalCount]⟩
-
-private theorem raw_matrix_pushforward {m : ℕ} (alpha : unitInterval)
-    (q : Fin m → unitInterval) (j : Side) (o : Output)
-    (d c : (rawModel alpha q).Carrier) :
-    (rawModel alpha q).matrix j o d c =
-      (letI := (fullModel .raw alpha q).finite
-       ∑ e, if rawEncode alpha q e = d then
-         (fullModel .raw alpha q).matrix j o e (rawSection alpha q c) else 0) := by
-  classical
-  letI := (fullModel .raw alpha q).finite
-  cases c with
-  | inl p =>
-      change _ = ∑ e, if rawEncode alpha q e = d then
-        ((if o = .zero then
-          if e = .inl (p.val.1, flipParity p.val.2 j) then
-            1 - markerRate alpha (q p.val.1) p.val.2 j else 0 else 0) +
-         (if o = .rawMark then
-          if e = .inr (terminalIndex .raw (selectedParity p.val.2 j)) then
-            markerRate alpha (q p.val.1) p.val.2 j else 0 else 0)) else 0
-      simp_rw [ite_add]
-      rw [Finset.sum_add_distrib]
-      by_cases hz : o = .zero <;> by_cases hm : o = .rawMark <;>
-        simp only [hz, hm, ite_true, ite_false, Finset.sum_const_zero, add_zero, zero_add]
-      all_goals
-        simp_rw [ite_comm (rawEncode alpha q _ = d) (_ = _)]
-        simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
-        simp [rawModel, rawEncode, p.property, eq_comm]
-  | inr u =>
-      change _ = ∑ e, if rawEncode alpha q e = d then
-        (if o = .reject then
-          if e = .inr (⟨0, by simp [terminalCount]⟩ : Fin (terminalCount .raw)) then 1 else 0
-         else 0) else 0
-      by_cases ho : o = .reject
-      · simp only [ho, ite_true]
-        simp_rw [ite_comm (rawEncode alpha q _ = d) (_ = _)]
-        simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
-        cases u
-        simp [rawModel, rawEncode, ho, eq_comm]
-      · simp only [ho, ite_false, Finset.sum_const_zero]
-        simp [rawModel, ho]
-
 private theorem raw_probability {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (ha : 0 < (alpha : ℝ)) :
     (letI := (rawModel alpha q).finite
@@ -260,29 +218,23 @@ private theorem raw_probability {m : ℕ} (alpha : unitInterval)
      (∀ j c, ∑ o, ∑ d, (rawModel alpha q).matrix j o d c = 1) ∧
        ∀ j o d c, 0 ≤ (rawModel alpha q).matrix j o d c) := by
   classical
-  letI := (fullModel .raw alpha q).finite
-  letI := (fullModel .raw alpha q).finiteOutputs
   letI := (rawModel alpha q).finite
-  obtain ⟨hc, hn, hp⟩ := full_model_probability .raw alpha q ha
+  letI := (rawModel alpha q).finiteOutputs
+  have hp := (full_model_probability .raw alpha q ha).2.2
   constructor
   · intro j c
-    change (∑ o, ∑ d, (rawModel alpha q).matrix j o d c) = 1
-    simp_rw [raw_matrix_pushforward]
-    have he (o : Output) :
-        (∑ d, ∑ e, if rawEncode alpha q e = d then
-          (fullModel .raw alpha q).matrix j o e (rawSection alpha q c) else 0) =
-        ∑ e, (fullModel .raw alpha q).matrix j o e (rawSection alpha q c) := by
-      rw [Finset.sum_comm]
-      simp
-    simp_rw [he]
-    exact hn j (rawSection alpha q c)
+    cases c with
+    | inl p => simp [rawModel, Finset.univ, Fintype.complete, Finset.sum_add_distrib]
+    | inr u => simp [rawModel, Finset.univ, Fintype.complete]
   · intro j o d c
-    rw [raw_matrix_pushforward]
-    apply Finset.sum_nonneg
-    intro e he
-    split_ifs
-    · exact hp j o e (rawSection alpha q c)
-    · exact le_rfl
+    cases c with
+    | inl p =>
+        have hz := hp j .zero (.inl (p.val.1, flipParity p.val.2 j)) (.inl p.val)
+        have hm := hp j .rawMark (.inr (terminalIndex .raw (selectedParity p.val.2 j))) (.inl p.val)
+        simp [fullModel, markerOutput] at hz hm
+        dsimp [rawModel]
+        split_ifs <;> linarith
+    | inr u => dsimp [rawModel]; split_ifs <;> norm_num
 
 /-- Exact finite deterministic native-test dimensions for all three interfaces. -/
 theorem result : Proposition278 := by
