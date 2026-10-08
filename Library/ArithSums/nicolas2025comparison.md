@@ -666,6 +666,44 @@ $$
 $$
 
 The strict core inequality then supplies strict Robin.
+For a zero-response representation, retain the elementary terms from the
+full signed formula above. With $L=\log A$, write
+
+$$
+\begin{aligned}
+R_{\rm elem}(A)
+&=\frac{\log(2\pi)}{AL}
+ +\frac12\int_A^\infty\log(1-x^{-2})k(x)\,dx,\\
+r_A&=\sqrt A L\,R_{\rm elem}(A).
+\end{aligned}
+$$
+
+Thus $R_{\rm elem}=\log(2\pi)/(AL)-T_{\rm triv}$ in the notation
+of (V4)–(V6), and it is $R_{\rm Ak}(1;A)$ in the Akatsuka formula below.
+For $A\ge e^2$, the already used inequality
+$-\log(1-u)\le u/(1-u)$ and $\int_A^\infty k(x)\,dx=1/(AL)$ give
+
+$$
+0<\frac{\log(2\pi)-1/[2(A^2-1)]}{\sqrt A}
+\le r_A\le\frac{\log(2\pi)}{\sqrt A}.
+$$
+
+This is the elementary correction to the nontrivial-zero response,
+not another zero term. In particular, the exact source identity and
+(G9) read
+
+$$
+-\sqrt A L\,I_\psi(A)=\sqrt A L\,Z_{\rm orig}(A)+r_A,
+\qquad
+\sqrt A L\,Z_{\rm orig}(A)+r_A\le\mathcal E(L).
+$$
+
+The second inequality is equivalent to (G9). Although $r_A\to0$, its
+positive sign must be retained in exact budgets. Every subsequent
+approximation to $Z_{\rm orig}$ still requires this correction when
+used to bound the full integral. These are applications of the existing
+explicit formula, not a new signed estimate or Lean verification.
+
 A selected counterexample would instead have to satisfy
 $\sqrt A\log A\,I_\psi(A)<-\mathcal E(\log A)$.
 The new allowance is weaker as a tail requirement than the existing
@@ -3610,11 +3648,11 @@ errors and infinite zero heights are covered. No complex-v
 extension, GSS pointwise remainder or independent GSS endpoint
 allowance is used in this alternative transport.
 
-The contribution to the original $I_\psi$ is still
-$-Z_{\rm orig}$. Its elementary terms and the strict core at the
-same integer remain unchanged. Paying (G9) through this representation
-still requires an estimate for the combined right side of (HR5),
-with its paid discrepancy and the unchanged elementary terms included.
+The nontrivial-zero contribution to the original $I_\psi$ is still
+$-Z_{\rm orig}$. Paying (G9) through (HR5) requires an upper bound for
+its combined right side, plus the positive elementary correction $r_A$
+defined after (G9) and an allowance for the signed discrepancy (HR6).
+The strict core at the same integer remains the one already proved.
 Neither $\mathcal D_{A,u_*}$ nor $\mathcal J_{\rm head}$ is bounded
 here by the required margin. In particular the head subtraction
 does not establish positivity or an estimate for the unverified
@@ -4075,18 +4113,40 @@ on the actual cost and does not rule out a sharper joint estimate.
 It is the same ceiling obtained by merely dropping positive
 prime terms in (HR3); the price constraint has not improved it.
 
-Thus the price minimum supplies $\mathcal D_{A,U}\ge-o(1)$,
-whereas the Robin target, with $I_\psi=-Z_{\rm orig}$, needs
-an upper bound on the complete right side of (PH5).
-The remaining requirement is the joint signed bound
+Thus the price minimum supplies $\mathcal D_{A,U}\ge-o(1)$.
+To apply (G9), retain the elementary correction $r_A>0$ defined there.
+Let $\varepsilon_{\rm PH5}(A)$ be the signed discrepancy in (PH5),
+so $\varepsilon_{\rm PH5}(A)=o(1)$ by (HR6), (PH3) and the fixed-prefix
+allowance. The exact complete response is
+
+$$
+-\sqrt A L\,I_\psi(A)
+=\mathcal J_{\rm head}
+ +(1+1/L)\sqrt A\,a(L)V_{A,U}
+ +r_A+\varepsilon_{\rm PH5}(A).
+$$
+
+Consequently the remaining joint target, equivalent to (G9), is
 
 $$
 \mathcal J_{\rm head}
  +(1+1/L)\sqrt A\,a(L)V_{A,U}
- \le\mathcal E(L)+o(1),
+ +r_A+\varepsilon_{\rm PH5}(A)\le\mathcal E(L).
 $$
 
-with sufficient strict slack for the original core criterion.
+For any proved allowance $\delta(A)\ge|\varepsilon_{\rm PH5}(A)|$,
+a sufficient upper estimate is
+
+$$
+\mathcal J_{\rm head}
+ +(1+1/L)\sqrt A\,a(L)V_{A,U}
+ \le\mathcal E(L)-r_A-\delta(A).
+$$
+
+The absolute allowance is sufficient, not necessary. Its constants
+have not been numerically certified at the selected finite clock.
+A vanishing discrepancy alone does not establish (G9) without enough
+signed slack; the strict core remains the one already proved.
 No such bound, numerical starting clock, unbounded sequence of
 selected sources, or proof of RH is established here. The
 nonnegative quantity is independently constructed; naming it
@@ -4726,3 +4786,259 @@ The signed upper estimate on $Z_\alpha(A)$ is not established here.
 At the same conditional least global Robin maximizer $N>5040$,
 $A=\log N>10^{36}$, the original strict core, complete infinite
 response and target remain unchanged. Neither (G9) nor RH is proved.
+
+
+## An explicit one-sided bound for the combined Gamma remainder
+
+For finite source clocks, the absolute constant in (GR1) need not be
+assigned an unproved numerical value. The following upper bound instead
+uses the existing finite-height verification and zero-count constants in
+[(F3) of the Polak application](../Analytic/polak2026finiterobinca.md#reusing-the-complete-residual-envelope),
+together with (U2), (GR5) and (GR7). These inputs are reused without a new
+zero computation or reconstruction of their source proofs.
+
+Put $H=3\cdot10^{12}$, and let every zero sum retain the full actual
+nontrivial-zero multiset, with multiplicities. Write
+
+$$
+c_0=2+\gamma-\log(4\pi)<0.05,\qquad
+S_2(H)=\sum_{\Im\rho>H}\frac{m_\rho}{(\Im\rho)^2}
+ <1.48\cdot10^{-12}.
+$$
+
+The same sources supply criticality up to $H$ and the classical identity
+$\sum_\rho m_\rho/[\rho(1-\rho)]=c_0$.
+For $\rho=\beta+i\gamma$ in the critical strip,
+
+$$
+\Re\frac1{\rho(1-\rho)}
+=\frac{\gamma^2+\beta(1-\beta)}{|\rho(1-\rho)|^2}>0.
+$$
+
+On the verified head the denominator is the positive real number
+$\gamma^2+1/4$. On the remaining zeros,
+$|\rho||1-\rho|\ge\gamma^2$.
+Consequently the complete absolute weight obeys
+
+$$
+\mathcal C_\zeta:=\sum_\rho
+ \frac{m_\rho}{|\rho||1-\rho|}
+\le c_0+2S_2(H)<0.051.
+\tag{GE1}
+$$
+
+The factor two accounts for the two ordinate signs, not an additional
+independently chosen zero population.
+
+Keep $A\ge e^2$ and $L=\log A$. For the same deterministic dilation
+$r_c(A)=J_c(A)-Z_c(A)$ in (GR5)–(GR7), one has the uniform upper bound
+
+$$
+\boxed{r_c(A)<\frac5{cAL}\qquad(c>0).}
+\tag{GE2}
+$$
+
+If $cA\ge1$, (GR7) immediately gives
+$r_c(A)\le\log(2\pi)/(cAL)<2/(cAL)$, since its logarithmic integral
+is nonpositive. This includes the integrable endpoint $cA=1$.
+
+If $cA<1$, put $B=1/c>A$ and $d=\log(B/A)>0$.
+Since $\psi(cu)-cu=-cu$ on $A<u<B$, (GR5) gives exactly
+
+$$
+r_c(A)=\log(1+d/L)+\frac1L-\frac1{L+d}
+ +r_c(B)-\sum_\rho m_\rho c^{\rho-1}F_{A,B}(\rho).
+\tag{GE3}
+$$
+
+The initial elementary term is at most $2/(cAL)$, as already computed
+in the proof of (GR8). At $cB=1$, (GR7) gives
+$r_c(B)<2/\log B\le2/(cAL)$.
+The finite-endpoint bound (U2), (GE1) and
+$(cA)^{\beta-1}\le(cA)^{-1}$ give
+
+$$
+\left|\sum_\rho m_\rho c^{\rho-1}F_{A,B}(\rho)\right|
+\le\frac{2(1+1/L)\mathcal C_\zeta}{cAL}
+\le\frac{3\mathcal C_\zeta}{cAL}<\frac{0.153}{cAL}.
+$$
+
+Thus (GE2) also holds below the unit cutoff. In particular, no classical
+explicit formula has been extended to $cu<1$ and no small Gamma scales
+have been discarded.
+
+For the same noninteger shapes $\alpha\ge4$ as in (GR1), averaging (GE2)
+by (GR5) and the existing inverse-first Gamma moment yields
+
+$$
+\overline R_\alpha(A)
+\le\frac{5M_1(\alpha)}{AL},\qquad
+M_1(\alpha)=\frac\alpha{\alpha-1}.
+\tag{GE4}
+$$
+
+This is an explicit upper bound, not an absolute bound or a replacement
+for the sharper asymptotic assertion (GR1). With the original full
+prime-integral comparison (GP1), it gives the finite inequality
+
+$$
+\boxed{\sqrt A L[-I_\psi(A)]
+\le\sqrt A L Z_\alpha(A)
+ +\frac{\psi(A)}{(\alpha-1)\sqrt A}
+ +\frac{5M_1(\alpha)}{\sqrt A}.}
+\tag{GE5}
+$$
+
+The full elementary and trivial contributions are paid through
+$\overline R_\alpha$; the left side is the original complete integral.
+No signed main estimate or unbounded source-clock conclusion follows
+from (GE5) alone.
+
+
+## A larger finite clock from the verified-height Gamma response
+
+The explicit directed inequality (GE5) can be paired with a uniform
+Gamma modulus estimate. It bounds the original signed integral on a
+larger finite interval, while keeping the same conditional least integer
+$N>5040$ attaining the global Robin-ratio maximum. This is not a reduction
+to the least counterexample or an all-integer finite Robin verification.
+No arithmetic profiles or zero ordinates are newly enumerated.
+
+### Uniform damping with the actual real parts retained
+
+Use the classical product
+[NIST DLMF 5.8.3](https://dlmf.nist.gov/5.8.E3), for $x>0$:
+
+$$
+\left|\frac{\Gamma(x+it)}{\Gamma(x)}\right|
+=\prod_{k=0}^\infty
+ \left(1+\frac{t^2}{(x+k)^2}\right)^{-1/2}.
+$$
+
+The summand $\log(1+t^2/(x+u)^2)$ is positive and decreasing in $u$.
+Using $\log(1+v)\ge v/(1+v)$ in its integral gives
+
+$$
+\sum_{k=0}^\infty\log\left(1+\frac{t^2}{(x+k)^2}\right)
+\ge |t|\arctan(|t|/x)
+\ge\frac{t^2}{x+|t|}.
+$$
+
+The last inequality uses $\arctan v\ge v/(1+v)$ for $v\ge0$.
+For $0<\beta<1$, the already used Gamma law has
+$\mathbb E C^{\beta-1}\le(\mathbb EC^{-1})^{1-\beta}\le M_1(\alpha)$
+by Hölder. Set $x=\alpha+\beta-1\le\alpha$ in the product. It follows that
+
+$$
+\boxed{|H_\alpha(\beta+it)|
+\le M_1(\alpha)
+ \exp\left(-\frac{t^2}{2(\alpha+|t|)}\right).}
+\tag{GH1}
+$$
+
+This is uniform over the whole actual critical strip. Criticality is
+used only on the already verified head below $H$.
+
+Passing to the infinite endpoint in the existing (U2) gives
+
+$$
+\sqrt A L|F_A(\rho)|
+\le2(1+1/L)\frac{A^{\beta-1/2}}{|\rho||1-\rho|}.
+\tag{GH2}
+$$
+
+The function $t^2/[2(\alpha+t)]$ increases for $t>0$.
+Split the complete $Z_\alpha$ at the verified height $H$.
+Use the positive $c_0$ identity on the critical head, and (GH1), (GH2),
+$\beta<1$, and $2S_2(H)$ on every remaining zero. This gives
+
+$$
+\sqrt A L|Z_\alpha(A)|
+\le2M_1(\alpha)(1+1/L)
+ \left[c_0+2\sqrt A\,S_2(H)
+   \exp\left(-\frac{H^2}{2(\alpha+H)}\right)\right].
+\tag{GH3}
+$$
+
+Every height beyond $H$ is included to infinity. Replacing the actual
+$A^{\beta-1/2}$ by $\sqrt A$ in this upper bound does not assume RH
+outside the verified head.
+
+### Pay the constants at the same selected source
+
+Take the exact noninteger shape and clock range
+
+$$
+\alpha=10^{23}+\frac12,\qquad
+10^{36}<A\le10^{45},\qquad L=\log A.
+$$
+
+Then $L>78$, $\sqrt A<3.2\cdot10^{22}$,
+$M_1(\alpha)<1.0001$, and
+
+$$
+\frac{H^2}{2(\alpha+H)}>40,\qquad e^{40}>10^{17}.
+$$
+
+The latter follows from $e>8/3$ and
+$8^{40}>10^{17}3^{40}$.
+The two contributions in (GH3) are bounded by the rational inequalities
+
+$$
+2(1.0001)(1.02)(0.05)<0.103,
+$$
+
+$$
+4(1.0001)(1.02)(3.2\cdot10^{22})
+ (1.48\cdot10^{-12})10^{-17}<0.000003.
+\tag{GH4}
+$$
+
+For the prime-comparison allowance, reuse Dusart's
+[Theorem 5.2, $k=0$, and Proposition 3.2](../Weil/dusart2010estimates.md):
+$\vartheta(A)<2A$ and
+$\psi(A)-\vartheta(A)<1.00007\sqrt A+1.78A^{1/3}$.
+On this range they give $\psi(A)<2.01A$. Therefore
+
+$$
+\frac{\psi(A)}{(\alpha-1)\sqrt A}
+<\frac{2.01(3.2\cdot10^{22})}{0.9999\cdot10^{23}}<0.644,
+\qquad
+\frac{5M_1(\alpha)}{\sqrt A}<6\cdot10^{-18}.
+\tag{GH5}
+$$
+
+Combining (GE5) and (GH3)–(GH5) pays the full original signed integral:
+
+$$
+\boxed{-\sqrt A L I_\psi(A)
+<0.103+0.000003+0.644+6\cdot10^{-18}<\frac34
+\qquad(10^{36}<A\le10^{45}).}
+\tag{GH6}
+$$
+
+The same selected source still satisfies
+$\Delta(N)=I_\psi(A)+D^*(A)$ and the strict core (G6).
+The already proved bound
+[(X5) in the Polak application](../Analytic/polak2026finiterobinca.md#pay-the-full-signed-margin-with-the-same-strict-core)
+gives $\mathcal E(L)>0.778$ for every $L\ge78$.
+Thus at this actual source and clock,
+
+$$
+\boxed{\sqrt A L\Delta(N)>0.778-0.75=0.028
+\qquad(10^{36}<A\le10^{45}).}
+\tag{GH7}
+$$
+
+The existing restriction $A>10^{36}$ and (GH7) therefore force
+$\log N>10^{45}$ for the same hypothetical least global maximizer.
+This conclusion is specific to that selected source; it does not assert
+strict Robin for every integer below $\exp(10^{45})$.
+
+This application reuses the published finite-height verification,
+zero-count and prime estimates, the classical Gamma product, and the
+existing core and directed-transport results. It makes no mathematical
+priority claim and has no Lean certification. The fixed shape and verified
+height give no uniform bound as $A\to\infty$: the comparison and high-zero
+allowances in (GE5), (GH3) still grow with $\sqrt A$.
+The full unbounded signed Robin target and RH remain unproved.
