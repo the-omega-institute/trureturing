@@ -9,47 +9,63 @@
 /-
 proof_shape: result: content; escape_witness:
 D5/S3/Quantum/Dynamics/ParityNodeDividedDifference.evenOdd_dividedDifference_twoAdicUnit (the
-preregistered 2-adic unit lemma, first frozen in the same delivery), together with
-pst_parity_classes (integer spectral classes with
-P * Σ_{i ∈ A} 1 / ∏_{j ≠ i} (z i - z j) = 1 / 2) and persymmetric_weights (mirror symmetry of
-the weights); all three lie on the live path, through the private step
-no_transfer_last_first, to the valuation contradiction 2 v_2(Q) = -1.
-proof_shape: persymmetric_weights: content (column induction for a unitary commuting with
-the path Hamiltonian); consumer: no_transfer_last_first.
+preregistered 2-adic unit lemma), together with pst_parity_classes (integer spectral classes
+with P * Σ_{i ∈ A} 1 / ∏_{j ≠ i} (z i - z j) = 1 / 2) and reversal_columns (reversal form of
+the transfer unitary, whose second component persymmetric_weights is the mirror symmetry of the
+weights); all three lie on the live path, through the private step no_transfer_last_first, to
+the valuation contradiction 2 v_2(Q) = -1.
+proof_shape: reversal_columns: content (column induction for a unitary commuting with the path
+Hamiltonian); consumer: persymmetric_weights and
+D5/S3/Quantum/Dynamics/PathMiddleVertexMoments (private step propagator_eq_reversal).
+proof_shape: persymmetric_weights: bind-only (second component of reversal_columns); consumer:
+no_transfer_last_first.
 proof_shape: pst_parity_classes: content (moment identity, phase alignment, sign classes);
 consumer: no_transfer_last_first.
+Public helpers; PathMiddleVertexMoments and OddPathRationalWeightTransfer abbreviate the modules
+D5/S3/Quantum/Dynamics/PathMiddleVertexMoments and
+D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer:
+proof_shape: mul_prod_sub_eq_of_moments: content (nodal polynomial evaluated against the
+moments); consumer: pst_parity_classes, PathMiddleVertexMoments.middle_vertex_weights.
+proof_shape: pathHamiltonian_pow_apply_column: content (induction on the power); consumer:
+no_transfer_last_first, PathMiddleVertexMoments.middle_vertex_weights,
+OddPathRationalWeightTransfer.middle_moment_gram_det.
+proof_shape: prod_eq_sq_of_rev: content (mirror pairing of a product); consumer:
+no_transfer_last_first, PathMiddleVertexMoments.middle_vertex_weights.
+proof_shape: hamiltonianPropagator_neg: bind-only; consumer: pst_phase, pst_parity_classes,
+no_transfer_last_first, result, PathMiddleVertexMoments (propagator_eq_reversal),
+OddPathRationalWeightTransfer (propagator_shift, result).
+proof_shape: pathHamiltonian_transpose: bind-only; consumer: pathHamiltonian_isHermitian,
+result, OddPathRationalWeightTransfer (middle_moment_gram_det, result).
+proof_shape: pathHamiltonian_isHermitian: bind-only; consumer: no_transfer_last_first,
+PathMiddleVertexMoments (propagator_eq_reversal, middle_vertex_moments).
+proof_shape: spectral_pow_apply: bind-only; consumer: pst_parity_classes,
+PathMiddleVertexMoments (middle_vertex_weights, middle_vertex_moments).
+proof_shape: spectral_exp: bind-only; consumer: pst_phase, pst_column,
+PathMiddleVertexMoments (eigenvector_rev, sum_phase_eq_trace).
+proof_shape: exists_int_of_exp_eq_one: bind-only; consumer: exists_int_of_exp_eq_neg_one,
+pst_parity_classes, PathMiddleVertexMoments.middle_vertex_weights.
+proof_shape: exists_int_of_exp_eq_neg_one: bind-only; consumer: pst_parity_classes,
+PathMiddleVertexMoments.middle_vertex_weights.
+proof_shape: pst_column: bind-only; consumer: no_transfer_last_first,
+PathMiddleVertexMoments (propagator_eq_reversal).
+proof_shape: propagator_star_mul_self: bind-only; consumer: no_transfer_last_first,
+PathMiddleVertexMoments (propagator_eq_reversal).
 Private helpers:
 proof_shape: no_transfer_last_first: content (escape witnesses as for result); consumer:
 result.
 proof_shape: pst_phase: content (equality case of the unit-vector pairing); consumer:
 pst_parity_classes, pst_column.
-proof_shape: pathHamiltonian_pow_apply_zero: content (induction on the power); consumer:
-no_transfer_last_first.
 proof_shape: choose_two_pow_sub_one_odd: content (Frobenius identity in (ZMod 2)[X]);
 consumer: no_transfer_last_first.
-proof_shape: prod_eq_sq_of_rev: content (mirror pairing of a product); consumer:
-no_transfer_last_first.
-proof_shape: hamiltonianPropagator_neg: bind-only; consumer: pst_phase, pst_parity_classes,
-no_transfer_last_first, result.
 proof_shape: pathHamiltonian_far: bind-only; consumer: pathHamiltonian_transpose,
-pathHamiltonian_pow_apply_zero, persymmetric_weights.
+pathHamiltonian_pow_apply_column, reversal_columns.
 proof_shape: pathHamiltonian_up: bind-only; consumer: pathHamiltonian_transpose,
-persymmetric_weights.
+reversal_columns.
 proof_shape: pathHamiltonian_down: bind-only; consumer: pathHamiltonian_transpose,
-pathHamiltonian_pow_apply_zero, persymmetric_weights.
-proof_shape: pathHamiltonian_transpose: bind-only; consumer: pathHamiltonian_isHermitian,
-result.
-proof_shape: pathHamiltonian_isHermitian: bind-only; consumer: no_transfer_last_first.
-proof_shape: spectral_pow_apply: bind-only; consumer: pst_parity_classes.
-proof_shape: spectral_exp: bind-only; consumer: pst_phase, pst_column.
+pathHamiltonian_pow_apply_column, reversal_columns.
 proof_shape: eigenvector_row_sum: bind-only; consumer: pst_phase, pst_parity_classes,
 pst_column.
 proof_shape: normSq_exp_pi_mul_I: bind-only; consumer: pst_phase.
-proof_shape: exists_int_of_exp_eq_one: bind-only; consumer: exists_int_of_exp_eq_neg_one,
-pst_parity_classes.
-proof_shape: exists_int_of_exp_eq_neg_one: bind-only; consumer: pst_parity_classes.
-proof_shape: pst_column: bind-only; consumer: no_transfer_last_first.
-proof_shape: propagator_star_mul_self: bind-only; consumer: no_transfer_last_first.
 admission_basis: escape-witness (partial progress on the rational weights conjecture of
 arXiv:1708.03283, research line #14293; the sizes other than 2^k + 1 are not settled by the
 source's proposition or by this module).
@@ -59,8 +75,9 @@ Direct frozen dependencies:
   D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.hamiltonianGenerator
   statement_id sha256:4c0ebd78b0aa0a551d6207706ae2d39b87a3d18687dc8dcb29e00bd4e58a735a.
   (module pin sha256:63542644e2162329887997e930a818684048961f5b1728a2394256c633e8e084 in
-  Golden/Frozen/state.) The imported module
-  D5/S3/Quantum/Dynamics/ParityNodeDividedDifference is first frozen in the same delivery.
+  Golden/Frozen/state.)
+  D5/S3/Quantum/Dynamics/ParityNodeDividedDifference.evenOdd_dividedDifference_twoAdicUnit
+  statement_id sha256:d9f99e39b10db5978f5d3f2ed162aff7c7d97af3f4381b1950ab467b7dbf5cf0.
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or
 certified instance: the claim quantifies over every k >= 1 and all real weights and potentials.
 -/

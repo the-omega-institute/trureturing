@@ -12,12 +12,15 @@ conclusion itself (form 2): the partial divided difference over the even nodes i
 unit, produced by a truncated 2-adic geometric expansion of the odd-node factors, integrality
 of divided differences of monomials, and a mod-2 coefficient computation; no Mathlib or frozen
 declaration states it.
+Public helper:
+proof_shape: sum_eval_div_nodal_eq_coeff: content (Lagrange.coeff_eq_sum applied to the
+remainder of an integer polynomial modulo the integer nodal polynomial); consumer:
+evenOdd_dividedDifference_twoAdicUnit and
+D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.middle_vertex_moments.
 Private helpers:
 proof_shape: coeff_geomSum_pow: bind-only; consumer: evenOdd_dividedDifference_twoAdicUnit.
 proof_shape: exists_prod_one_sub_mul: content (finite induction); consumer:
 evenOdd_dividedDifference_twoAdicUnit.
-proof_shape: sum_pow_div_nodal_eq_coeff: content (Lagrange.coeff_eq_sum applied to a remainder
-modulo the integer nodal polynomial); consumer: evenOdd_dividedDifference_twoAdicUnit.
 proof_shape: norm_odd_int: bind-only; consumer: evenOdd_dividedDifference_twoAdicUnit.
 admission_basis: escape-witness
 Direct frozen dependencies: none (pinned Mathlib only).

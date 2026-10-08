@@ -6,6 +6,67 @@
    utility: none
    digest: Rational positive weights forbid end-to-end transfer at time pi on every odd path. -/
 
+/-
+proof_shape: result: content; escape_witness: the public conclusion itself (the preregistered
+odd-path theorem of research line #14293), produced on the live path, through the private steps
+no_phase_one_transfer and no_transfer_last_first, by middle_moment_gram_det (the integer Hankel
+determinant of the middle-vertex moments is 2^j times a rational square),
+D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.middle_vertex_moments (these moments are integers
+congruent to C(m, a + b) modulo 2) and exists_odd_hankel_size (an odd j with that determinant
+odd), ending in the valuation contradiction 0 = j + 2 v_2(Q).
+proof_shape: middle_moment_gram_det: content; escape_witness: the public conclusion itself (form
+2; the preregistered Gram determinant identity):
+det [(H ^ (a + b)) c c]_{a, b ≤ j} = 2^j * (∏_{a ≤ j} ∏_{t < a} r (m + t))^2, from the
+factorisation L * diag(1, 2, ..., 2) * L^T with L the lower triangular matrix of the entries
+(H ^ a) (m + d) c; no Mathlib or frozen declaration states it. consumer: no_phase_one_transfer.
+Private helpers:
+proof_shape: no_phase_one_transfer: content (escape witnesses as for result); consumer:
+no_transfer_last_first.
+proof_shape: no_transfer_last_first: content (escape witnesses as for result; the transfer
+phase is removed by a shift of the potentials); consumer: result.
+proof_shape: exists_odd_hankel_size: content (choice of the size by the parity of m); consumer:
+no_phase_one_transfer.
+proof_shape: det_choose_antitriangular: content (anti-triangular Hankel matrix modulo 2);
+consumer: exists_odd_hankel_size.
+proof_shape: det_choose_two_pow: content (permutation-matrix form of the Hankel matrix modulo
+2); consumer: exists_odd_hankel_size.
+proof_shape: choose_two_pow_mul_odd: content (Frobenius identity and expansion in (ZMod 2)[X]);
+consumer: det_choose_two_pow.
+proof_shape: pow_rev: content (induction on the power); consumer: middle_moment_gram_det.
+proof_shape: det_ne_zero_of_submatrix: bind-only; consumer: det_choose_antitriangular,
+det_choose_two_pow.
+proof_shape: pathHamiltonian_shift: bind-only; consumer: propagator_shift.
+proof_shape: propagator_shift: bind-only; consumer: no_transfer_last_first.
+proof_shape: exists_phase: bind-only; consumer: no_transfer_last_first.
+admission_basis: escape-witness (research line #14293, partial progress on the rational weights
+conjecture of arXiv:1708.03283: the conjecture is settled for every odd number of vertices; it
+remains open for every even number of vertices n >= 6).
+Direct frozen dependencies:
+  D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.hamiltonianPropagator
+  statement_id sha256:cda9b54324a60c3d19d82ae43fd312bec7fd42bc7d2748ad663e34115d863ceb.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian
+  statement_id sha256:2a698170a16b6888380fcc8f26eb4e7fe06d99129518c7579da37d4ef440257a.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.HasPST
+  statement_id sha256:757dd0796ec75540b7989b0cc8ff7b30e16f838075ebdaf9dafec9866abcd80e.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.hamiltonianPropagator_neg
+  statement_id sha256:da8dbba3289b5b062201fbfd2fbbd7c20cb092e36332ca39429a937e653cffca.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_transpose
+  statement_id sha256:3badeec0aff6a10a492af789ef0007bc74673f00a3a7a78f4791c31dd34c821d.
+  (statement ids of the Freeze event
+  sha256:a60a5637c9d171b1aa468c38da66538115aa0b7823715bbbd9e58587cb780226 for the module
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer and of the Freeze event
+  sha256:890d665ee397056086d1f0182c51fc425f698af5b1aed0a36f13e2fd5b2b9f54 for the module
+  D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow; hamiltonianPropagator_neg and
+  pathHamiltonian_transpose are recorded there as private declarations and are public in the
+  present source.)
+  Without a Freeze event:
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_pow_apply_column,
+  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.middle_vertex_moments and
+  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.reversal_symmetric.
+utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
+instance: the claim quantifies over every m >= 1 and all real weights and potentials.
+-/
+
 import D5.S3.Quantum.Dynamics.PathMiddleVertexMoments
 import Mathlib.Algebra.Polynomial.Expand
 import Mathlib.LinearAlgebra.Matrix.Block
@@ -54,7 +115,6 @@ theorem middle_moment_gram_det
     (Matrix.of fun a b : Fin (j + 1) => (pathHamiltonian r q ^ ((a : ℕ) + b)) c c).det =
       2 ^ j * (∏ a : Fin (j + 1), ∏ t : Fin a,
         (r ⟨m + t, by have := a.isLt; have := t.isLt; omega⟩ : ℂ)) ^ 2 := by
-  classical
   have hcrev : c.rev = c := Fin.ext (by rw [Fin.val_rev, hc]; omega)
   have hT : ∀ (a : ℕ) (i : Fin (2 * m + 1)),
       (pathHamiltonian r q ^ a) c i = (pathHamiltonian r q ^ a) i c := by

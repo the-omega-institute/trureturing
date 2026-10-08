@@ -4,7 +4,73 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Middle-vertex spectral weights and integer moments of odd paths with end transfer at time pi. -/
+   digest: Middle-vertex weights and integer moments of odd paths with end transfer at time pi. -/
+
+/-
+proof_shape: middle_vertex_weights: content; escape_witness: the public conclusion itself (form
+2; the preregistered middle-vertex weight formula of research line #14293): on the even spectral
+class A, of m + 1 integer eigenvalues, the squared modulus of the eigenvector at the middle vertex
+is ∏_{l ∉ A} (z k - z l) / ∏_{l ∈ A, l ≠ k} (z k - z l). It is produced by the sign classes of
+the eigenvectors under the reversal, the trace count #A = m + 1, and two nodal extractions from
+the moments between the first vertex and the last and middle ones; no Mathlib or frozen
+declaration states it. consumer: middle_vertex_moments.
+proof_shape: middle_vertex_moments: content; escape_witness: the public conclusion itself (form
+2; the preregistered integer-moment parity theorem): the moments (H ^ p) c c at the middle
+vertex are the integers [X^m] ((X^p * P_B) mod P_A), congruent to C(m, p) modulo 2, by the
+Lagrange coefficient formula over the class A and the reduction of the nodal polynomials to
+X^(m+1) and (X + 1)^m in (ZMod 2)[X]. consumer:
+D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer (private step no_phase_one_transfer).
+proof_shape: reversal_symmetric: bind-only (entrywise reading of the commutation of the
+Hamiltonian with the reversal form of the propagator given by
+D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.reversal_columns); consumer:
+D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer (private step no_phase_one_transfer, as the
+hypothesis of middle_moment_gram_det).
+Private helpers:
+proof_shape: eigenvector_rev: bind-only; consumer: middle_vertex_weights.
+proof_shape: sum_phase_eq_trace: bind-only; consumer: middle_vertex_weights.
+proof_shape: propagator_eq_reversal: bind-only; consumer: reversal_symmetric,
+middle_vertex_weights.
+admission_basis: escape-witness (research line #14293, partial progress on the rational weights
+conjecture of arXiv:1708.03283: together with
+D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer the conjecture is settled for every odd
+number of vertices; it remains open for every even number of vertices n >= 6).
+Direct frozen dependencies:
+  D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.hamiltonianPropagator
+  statement_id sha256:cda9b54324a60c3d19d82ae43fd312bec7fd42bc7d2748ad663e34115d863ceb.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian
+  statement_id sha256:2a698170a16b6888380fcc8f26eb4e7fe06d99129518c7579da37d4ef440257a.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.HasPST
+  statement_id sha256:757dd0796ec75540b7989b0cc8ff7b30e16f838075ebdaf9dafec9866abcd80e.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.hamiltonianPropagator_neg
+  statement_id sha256:da8dbba3289b5b062201fbfd2fbbd7c20cb092e36332ca39429a937e653cffca.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_isHermitian
+  statement_id sha256:755bd6b7f287f1c2db4b69ff7180d3a28df65cd848b5650641594b8a3fef7195.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.spectral_pow_apply
+  statement_id sha256:09249d0c938a2b12488df9f2e39de2d3082706016dad8e6e51bfda11594300ad.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.spectral_exp
+  statement_id sha256:3e16b248dd122a54a985897b8b1c864134c9a4202fa1e8b72375fa331ccb0025.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.exists_int_of_exp_eq_one
+  statement_id sha256:a641d776813aab202f943e68cf676b0c39d315528a3e281ef99f7ec954149696.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.exists_int_of_exp_eq_neg_one
+  statement_id sha256:28c73025e98c6a65c928b1ba8479530ebe76c149cb532dd0b37ba420080193ae.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pst_column
+  statement_id sha256:297250ae843997131559b777397296e4a906edbf7e016c834828a276476f7027.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.propagator_star_mul_self
+  statement_id sha256:291ba961210b68cf2b42da1a752f3727b9881bc1ecafb5176c73f81b5f327da3.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.prod_eq_sq_of_rev
+  statement_id sha256:a9933e2f666d4682cf6aa3ec73e446281823cb609903573832c6d1b6c17db3a2.
+  (statement ids of the Freeze event
+  sha256:a60a5637c9d171b1aa468c38da66538115aa0b7823715bbbd9e58587cb780226 for the module
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer and of the Freeze event
+  sha256:890d665ee397056086d1f0182c51fc425f698af5b1aed0a36f13e2fd5b2b9f54 for the module
+  D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow; the theorems from hamiltonianPropagator_neg
+  on are recorded there as private declarations and are public in the present source.)
+  Without a Freeze event: D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.reversal_columns,
+  mul_prod_sub_eq_of_moments and pathHamiltonian_pow_apply_column, and
+  D5/S3/Quantum/Dynamics/ParityNodeDividedDifference.sum_eval_div_nodal_eq_coeff.
+utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
+instance: every statement quantifies over all m, all positive weights and all real potentials.
+-/
 
 import D5.S3.Quantum.Dynamics.RationalWeightPathTransfer
 import Mathlib.Algebra.CharP.Two
@@ -300,7 +366,6 @@ theorem middle_vertex_moments (hr : ∀ t, 0 < r t)
     (c : Fin (2 * m + 1)) (hc : (c : ℕ) = m) :
     ∃ μ : ℕ → ℤ, (∀ p, (pathHamiltonian r q ^ p) c c = (μ p : ℂ)) ∧
       ∀ p, ((μ p : ℤ) : ZMod 2) = ((m.choose p : ℕ) : ZMod 2) := by
-  classical
   have hH := pathHamiltonian_isHermitian r q
   obtain ⟨z, A, hzinj, hcard, hzA, hzB, hzΛ, hWc, hw⟩ := middle_vertex_weights r q hH hr hU c hc
   set PA : ℤ[X] := ∏ l ∈ A, (X - C (z l)) with hPA
