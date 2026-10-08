@@ -50,7 +50,7 @@ Lean statement: `D5/S3/ConceptDynamics/Control/CalibrationHistoryCoarsestQuotien
 
 *Commentary.*
 
-For any history type, control system, goal, and fixed merger of nonempty history sets into control states, an equivalence relation is feasible at horizon n if every one of its classes admits a strategy at that horizon. In the calibration model the merger constructs the live cell. The quotient cardinality counts used history labels. The order S <= R means every S-equivalent pair is R-equivalent, so R is coarser.
+For any history type, control system, goal, and fixed merger of nonempty history sets into control states, an equivalence relation is feasible at horizon n if every one of its classes admits a strategy at that horizon. In the calibration model the merger constructs the live cell. The quotient cardinality counts initial history labels, rather than all states of a running controller. The order S <= R means every S-equivalent pair is R-equivalent, so R is coarser.
 
 **Lemma 1.5 (A bad successor is enough to defeat any bounded strategy).**
 

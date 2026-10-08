@@ -109,10 +109,10 @@ private theorem dead_no_strategy (n : ℕ) :
 private theorem live_no_zero (histories : {s : Set (Fin 3) // s.Nonempty}) :
     ¬ BoundedReachStrategy calibrationSystem goal 0 (.live histories) := by
   intro strategy
-  cases strategy with
-  | now atGoal =>
-      obtain ⟨bit, equal⟩ := atGoal
-      cases equal
+  have atGoal :=
+    (finite_horizon_reachability calibrationSystem goal 0 (.live histories)).mpr strategy
+  obtain ⟨bit, equal⟩ := atGoal
+  cases equal
 
 private theorem full_no_strategy (n : ℕ) :
     ¬ BoundedReachStrategy calibrationSystem goal n
@@ -160,14 +160,32 @@ private theorem partitions_feasible (n : ℕ) (positive : 1 ≤ n) :
       constructor
       · intro i
         fin_cases i
-        · exact avoiding_one_step _ 2 (by simp) n
-        · exact avoiding_one_step _ 2 (by simp) n
-        · exact avoiding_one_step _ 0 (by simp) n
+        · convert pairs_one_step 0 1 n using 1
+          congr 2
+          ext j
+          fin_cases j <;> simp
+        · convert pairs_one_step 0 1 n using 1
+          congr 2
+          ext j
+          fin_cases j <;> simp
+        · convert pairs_one_step 2 2 n using 1
+          congr 2
+          ext j
+          fin_cases j <;> simp
       · intro i
         fin_cases i
-        · exact avoiding_one_step _ 1 (by simp) n
-        · exact avoiding_one_step _ 0 (by simp) n
-        · exact avoiding_one_step _ 1 (by simp) n
+        · convert pairs_one_step 0 2 n using 1
+          congr 2
+          ext j
+          fin_cases j <;> simp
+        · convert pairs_one_step 1 1 n using 1
+          congr 2
+          ext j
+          fin_cases j <;> simp
+        · convert pairs_one_step 0 2 n using 1
+          congr 2
+          ext j
+          fin_cases j <;> simp
 
 private theorem partition_card : Nat.card (Quotient P12) = 2 := by
   have inverse : Function.RightInverse

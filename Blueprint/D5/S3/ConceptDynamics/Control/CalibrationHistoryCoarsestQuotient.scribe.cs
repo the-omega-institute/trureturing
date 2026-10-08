@@ -61,7 +61,8 @@ internal sealed class CalibrationHistoryCoarsestQuotientDocument : IScribeDocume
                         + "history sets into control states, an equivalence relation is feasible "
                         + "at horizon n if every one of its classes admits a strategy at that horizon. "
                         + "In the calibration model the merger constructs the live cell. "
-                        + "The quotient cardinality counts used history labels. The order S <= R "
+                        + "The quotient cardinality counts initial history labels, rather than "
+                        + "all states of a running controller. The order S <= R "
                         + "means every S-equivalent pair is R-equivalent, so R is coarser."))),
                 DescribeRole.Definition),
             Describe.Lean(
