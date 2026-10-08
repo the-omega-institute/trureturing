@@ -269,9 +269,12 @@ private theorem mixed_sound (f g : ℕ) (hf : 0 < f) (hfg : f < g)
     have hmatch : ∀ u ∈ alphaLeaves V, readout u U = .alpha := by
       intro u hu
       exact (ho u (Finset.mem_union_left C hu)).trans (Finset.mem_filter.mp hu).2
-    have hrecovery := ActualImageAddressCertificate.alpha_recovery V U
-      (ActualImageAddressCertificate.image_structure k hk V hV).1 hmatch
-    have ha := hrecovery.2.1
+    have hAU : alphaLeaves V ⊆ alphaLeaves U := by
+      intro u hu
+      exact (ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2 U u).mpr
+        (hmatch u hu)
+    have ha := Finset.card_le_card hAU
+    rw [ActualImageAddressCertificate.alpha_card, ActualImageAddressCertificate.alpha_card] at ha
     have hCU : C ⊆ B(U) := by
       intro u hu
       exact (beta_spec U u).mpr
@@ -295,7 +298,10 @@ private theorem mixed_sound (f g : ℕ) (hf : 0 < f) (hfg : f < g)
         rw [hbb] at hm
         nlinarith
       · omega
-    exact (hrecovery.2.2 he) ▸ hV
+    have hSound := ((ActualImageAddressCertificate.rigidity k hk V hV).1 h hh
+      (alphaLeaves V) (fun u hu => ((ActualImageAddressCertificate.leaf_data V).1 u
+        (Finset.mem_filter.mp hu).1).trans hh)).mpr rfl
+    exact hSound.1.2 U he (fun u hu => ho u (Finset.mem_union_left C hu))
 
 set_option maxHeartbeats 2000000 in -- Batch construction and sharp cardinality equality cases.
 /-- Exact minimum size and all minimizers at every known scalar stage. -/

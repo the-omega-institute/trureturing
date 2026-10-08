@@ -288,65 +288,6 @@ private theorem swap_local (V : Source) (r : Address)
             exact ho u (fun he => hL (congrArg (List.cons true) he))
               (fun he => hR (congrArg (List.cons true) he))
 
-theorem alpha_recovery (V U : Source) (hc : AlphaCovered V)
-    (hm : ∀ u ∈ alphaLeaves V, readout u U = .alpha) :
-    (composition V).1 + (composition V).2 ≤ (composition U).1 + (composition U).2 ∧
-    (composition V).1 ≤ (composition U).1 ∧
-    (composition U = composition V → U = V) := by
-  induction V generalizing U with
-  | of b =>
-    cases b with
-    | false =>
-      refine ⟨by have hp := positive U; change 1 ≤ _; omega, by simp [composition], ?_⟩
-      intro he
-      cases U with
-      | of c => cases c <;> simp_all [composition]
-      | mul s t =>
-        have hp := positive s
-        have hq := positive t
-        have htotal := congrArg (fun p : ℕ × ℕ => p.1 + p.2) he
-        simp only [composition, Prod.fst_add, Prod.snd_add] at htotal
-        omega
-    | true =>
-      have hu := hm [] (by simp [alpha_mul, alpha_of])
-      have he : U = .of true := by
-        cases U with
-        | of c => cases c <;> simp_all [readout]
-        | mul s t => simp [readout] at hu
-      subst U
-      exact ⟨le_rfl, le_rfl, fun _ => rfl⟩
-  | mul s t hs ht =>
-    rcases hc with ⟨hcs, hct, u, hu⟩
-    cases U with
-    | of b =>
-      have ho := hm u hu
-      cases u with
-      | nil => simp [alpha_mul, alpha_of] at hu
-      | cons c u => simp [readout] at ho
-    | mul x y =>
-      have hms : ∀ u ∈ alphaLeaves s, readout u x = .alpha := by
-        intro u hu
-        exact hm (false :: u) (by rw [FreeMagma.mul_eq, alpha_mul]; exact Finset.mem_union_left _ (Finset.mem_image.mpr ⟨u, hu, rfl⟩))
-      have hmt : ∀ u ∈ alphaLeaves t, readout u y = .alpha := by
-        intro u hu
-        exact hm (true :: u) (by rw [FreeMagma.mul_eq, alpha_mul]; exact Finset.mem_union_right _ (Finset.mem_image.mpr ⟨u, hu, rfl⟩))
-      obtain ⟨hls, has, hes⟩ := hs x hcs hms
-      obtain ⟨hlt, hat, het⟩ := ht y hct hmt
-      refine ⟨?_, ?_, ?_⟩
-      · simp only [composition, Prod.fst_add, Prod.snd_add]
-        omega
-      · simp only [composition, Prod.fst_add]
-        omega
-      · intro he
-        have ha := congrArg Prod.fst he
-        have hb := congrArg Prod.snd he
-        simp only [composition, Prod.fst_add, Prod.snd_add] at ha hb
-        have hx : composition x = composition s := by
-          apply Prod.ext <;> omega
-        have hy : composition y = composition t := by
-          apply Prod.ext <;> omega
-        exact congrArg₂ FreeMagma.mul (hes hx) (het hy)
-
 set_option maxHeartbeats 2000000 in -- Combined reconstruction and swap-counting proof.
 /-- Exact positive certificate cardinality for d = 3k, k at least one.
 The same-composition competitor domain is all complete ordered source trees. -/
@@ -362,6 +303,64 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
     ActualLeafHistoryRigidity.actual_address_geometry.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2.2 t u
   have alpha_depth (t : Source) (u : Address) (hu : u ∈ alphaLeaves t) :
       u.length ≤ height t := (leaf_data t).1 u (Finset.mem_filter.mp hu).1
+  have upper (V U : Source) (hc : AlphaCovered V)
+      (hm : ∀ u ∈ alphaLeaves V, readout u U = .alpha) :
+      (composition V).1 + (composition V).2 ≤ (composition U).1 + (composition U).2 ∧
+      (composition V).1 ≤ (composition U).1 ∧
+      (composition U = composition V → U = V) := by
+    induction V generalizing U with
+    | of b =>
+      cases b with
+      | false =>
+        refine ⟨by have hp := positive U; change 1 ≤ _; omega, by simp [composition], ?_⟩
+        intro he
+        cases U with
+        | of c => cases c <;> simp_all [composition]
+        | mul s t =>
+          have hp := positive s
+          have hq := positive t
+          have htotal := congrArg (fun p : ℕ × ℕ => p.1 + p.2) he
+          simp only [composition, Prod.fst_add, Prod.snd_add] at htotal
+          omega
+      | true =>
+        have hu := hm [] (by simp [alpha_mul, alpha_of])
+        have he : U = .of true := by
+          cases U with
+          | of c => cases c <;> simp_all [readout]
+          | mul s t => simp [readout] at hu
+        subst U
+        exact ⟨le_rfl, le_rfl, fun _ => rfl⟩
+    | mul s t hs ht =>
+      rcases hc with ⟨hcs, hct, u, hu⟩
+      cases U with
+      | of b =>
+        have ho := hm u hu
+        cases u with
+        | nil => simp [alpha_mul, alpha_of] at hu
+        | cons c u => simp [readout] at ho
+      | mul x y =>
+        have hms : ∀ u ∈ alphaLeaves s, readout u x = .alpha := by
+          intro u hu
+          exact hm (false :: u) (by rw [FreeMagma.mul_eq, alpha_mul]; exact Finset.mem_union_left _ (Finset.mem_image.mpr ⟨u, hu, rfl⟩))
+        have hmt : ∀ u ∈ alphaLeaves t, readout u y = .alpha := by
+          intro u hu
+          exact hm (true :: u) (by rw [FreeMagma.mul_eq, alpha_mul]; exact Finset.mem_union_right _ (Finset.mem_image.mpr ⟨u, hu, rfl⟩))
+        obtain ⟨hls, has, hes⟩ := hs x hcs hms
+        obtain ⟨hlt, hat, het⟩ := ht y hct hmt
+        refine ⟨?_, ?_, ?_⟩
+        · simp only [composition, Prod.fst_add, Prod.snd_add]
+          omega
+        · simp only [composition, Prod.fst_add]
+          omega
+        · intro he
+          have ha := congrArg Prod.fst he
+          have hb := congrArg Prod.snd he
+          simp only [composition, Prod.fst_add, Prod.snd_add] at ha hb
+          have hx : composition x = composition s := by
+            apply Prod.ext <;> omega
+          have hy : composition y = composition t := by
+            apply Prod.ext <;> omega
+          exact congrArg₂ FreeMagma.mul (hes hx) (het hy)
   have endpoint_parent (r s : Address) (b c : Bool)
       (he : r ++ [b] = s ++ [c]) : r = s := by
     have hr := congrArg List.reverse he
@@ -422,7 +421,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
     · intro u hu
       exact (alpha_depth V u hu).trans hlarge
     · intro U hc hm
-      have hu : U = V := (alpha_recovery V U hcovered (fun u hu =>
+      have hu : U = V := (upper V U hcovered (fun u hu =>
         (hm u hu).trans ((alpha_spec V u).mp hu))).2.2 hc
       exact hu ▸ original
   · intro Q hQ

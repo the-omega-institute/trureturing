@@ -35,8 +35,9 @@ internal sealed class StageScalarAddressCertificateDocument : IScribeDocumentDef
                         + "Here n0(U)=2*a(U)+3*b(U) and n1(U)=8*a(U)+13*b(U); cut(x,y)=max(0,x-y).")),
                     Paragraph(Text("Matching all beta endpoints fixes the branch skeleton. Positive weights f<g<2f make alpha "
                         + "the unique minimum-weight replacement of each remaining alpha slot, so the scalar equality reconstructs V. "
-                        + "Matching all alpha endpoints and t beta endpoints also reconstructs V: consecutive Fibonacci weights are coprime, "
-                        + "and the remaining possible beta deficit is smaller than f, forcing that deficit to vanish.")),
+                        + "Matching all alpha endpoints and t beta endpoints recovers the exact composition: consecutive Fibonacci weights are coprime, "
+                        + "and the remaining possible beta deficit is smaller than f, forcing that deficit to vanish. "
+                        + "The existing composition certificate then gives actual image membership.")),
                     Paragraph(Text("If both an alpha and a beta endpoint are omitted, the existing composition-preserving exchange "
                         + "produces an image-negative tree matching all queries. Hence soundness requires all alpha or all beta endpoints. "
                         + "Put p=F(3L+2), q=F(3L+1), so f=p+q and g=2p+q, with p,q positive. "
