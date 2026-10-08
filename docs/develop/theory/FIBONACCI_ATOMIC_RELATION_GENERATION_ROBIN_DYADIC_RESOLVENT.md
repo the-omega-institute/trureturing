@@ -1585,3 +1585,90 @@ $$
 这里与 $5040$ 的回接有明确的量词和尺度变换：$5040>2^{12}$ 把全部所需整数送入储备估计的有效实区间。估计也适用于一些较小整数，所以没有解释 $5040$ 为何恰是最后的 Robin 例外。它不把该阶乘截点与 Fibonacci 原子指标或拓扑染色例外等同；§485 所述与混合素分量的共同机制仍是二次倒数核乘以素数密度，而完整符号必须另行控制。
 
 ## 追加锚（本行以下为增补区）
+
+## 487. 放宽素数区间可直接使用既有 Chebyshev 上下界
+
+§485–486 的二倍区间计数给出更好的起点与常数。另一条路线可只使用经典 Chebyshev 上下界：把区间扩大到 $(y,4y]$，仍保持它在实际储备的指数一掩码内，从而得到同一平方根量级。
+
+记 $L=\log2$、$\vartheta(z)=\sum_{p\le z}\log p$。直接复用经典估计
+
+$$
+\begin{aligned}
+\vartheta(z)&\le z\log4 &&(z\ge0),\\
+\vartheta(z)&\ge(z-1)L-\log(z+2)-2\sqrt z\log z &&(z\ge1).
+\end{aligned}
+$$
+
+这些实端点估计分别是 Mathlib 的 `Chebyshev.theta_le_log4_mul_x` 与 `Chebyshev.theta_ge'` 所陈述的现有结果；其素数求和与端点使用同一通常的 $\vartheta$。此处不重证这两条经典定理。
+
+**定理 487.1（全部实数 $y\ge4096$ 的四倍区间计数）。** 有
+
+$$
+\#\{p\text{ 素数}:y<p\le4y\}>\frac{y}{3\log y}.
+$$
+
+**证明。** §486 的导数比较给 $L>2/3$。函数 $k(z)=(z-z^{-1})/2-\log z$ 满足 $k(1)=0$ 与 $k'(z)=(z-1)^2/(2z^2)>0$，故 $L<3/4$。
+
+在 $4y$ 使用下界、在 $y$ 使用上界，得到
+
+$$
+\vartheta(4y)-\vartheta(y)
+\ge2Ly-[L+\log(4y+2)]-4\sqrt y\log(4y).
+$$
+
+令 $g(y)=\log(4y)/\sqrt y$。当 $y\ge4096=2^{12}$ 时，$\log(4y)\ge14L>2$，故
+
+$$
+g'(y)=\frac{1-\tfrac12\log(4y)}{y^{3/2}}<0.
+$$
+
+因此
+
+$$
+4\sqrt y\log(4y)=4yg(y)
+\le\frac78Ly<\frac{21}{32}y<\frac34y.
+$$
+
+对 $u>0$，$\log u=2\log\sqrt u\le2\sqrt u-2$。又 $y\ge1$ 给 $\sqrt{4y+2}\le2\sqrt y+1/2$，所以
+
+$$
+L+\log(4y+2)\le4\sqrt y+L-1<4\sqrt y\le\frac y{16}.
+$$
+
+合并即得
+
+$$
+\vartheta(4y)-\vartheta(y)
+>\left(\frac43-\frac34-\frac1{16}\right)y
+=\frac{25}{48}y>\frac y2.
+$$
+
+两端素数和的准确相消给 $\vartheta(4y)-\vartheta(y)=\sum_{y<p\le4y}\log p$。各项不超过正数 $\log(4y)$，故区间计数严格大于 $y/[2\log(4y)]$。$y\ge16$ 还给 $\log(4y)\le(3/2)\log y$，从而得到所需计数。$\square$
+
+**推论 487.2（从既有 Chebyshev 估计得到的实际平方根储备）。** 对每个实数 $x\ge2^{23}$，
+
+$$
+\boxed{
+R(x)>\frac1{12(4\sqrt{2x}+1)\log(2x)}
+>\frac1{120\sqrt x\log x}.}
+$$
+
+**证明。** 令 $y=\sqrt{2x}\ge4096$，则 $x=y^2/2$。对 $y<p\le4y$ 的每个素数，$p^2>2x$；又 $y\ge9$ 给 $y^2-8y-2\ge y-2>0$，所以 $p+1\le4y+1\le x$。这些素数全在 §87.4 的实际指数一掩码内，§209.1 的逐项下界给
+
+$$
+\frac1p-\log(1+1/p)\ge\frac1{2p(p+1)}
+\ge\frac1{8y(4y+1)}.
+$$
+
+在同一区间应用定理 487.1，保留其他储备项的非负性，得到
+
+$$
+R(x)>\frac{y}{3\log y}\frac1{8y(4y+1)}
+=\frac1{12(4\sqrt{2x}+1)\log(2x)}.
+$$
+
+$\sqrt2<3/2$、$\sqrt x\ge2$ 给 $4\sqrt{2x}+1<(13/2)\sqrt x$；$x\ge4$ 给 $\log(2x)\le(3/2)\log x$。正分母因此严格小于 $117\sqrt x\log x<120\sqrt x\log x$，证明第二个界。$\square$
+
+这一较粗估计的作用是保留实际储备掩码的区间选择自由。仅在 $(y,2y]$ 比较上述 Chebyshev 常数时，主项差不足；扩大到 $(y,4y]$ 后留下 $2y\log2$，能够支付明确的误差预算。实际掩码允许这个较宽区间，故不必把二倍区间计数作为唯一入口。它不改善 §486 的全部 Robin 物理尺度结果，也没有控制完整的有符号 $I_\psi$，没有由正储备推出 RH。
+
+## 追加锚（本行以下为增补区）
