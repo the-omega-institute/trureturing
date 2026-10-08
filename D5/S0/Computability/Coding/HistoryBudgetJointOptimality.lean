@@ -17,51 +17,55 @@ namespace D5.S0.Computability.Coding.HistoryBudgetJointOptimality
 
 open DepthBudgetIidGreedyOptimality HistoryTreeRelabeling PrefixFreeCode
 
-variable {α : Type*} [Fintype α] [DecidableEq α] [Nonempty α]
+variable {α : Type*}
 
 /-- Every finite history has an independently allowed normalized row. -/
-def Admissible (δ : ℝ) (q : List α → α → ℝ) : Prop :=
+def Admissible [Fintype α] (δ : ℝ) (q : List α → α → ℝ) : Prop :=
   ∀ h, (∀ a, δ ≤ q h a) ∧ ∑ a, q h a = 1
 
 /-- Put all row mass above the lower bounds on one letter. -/
-def extremeRow (δ : ℝ) (heavy a : α) : ℝ :=
+def extremeRow [Fintype α] [DecidableEq α] (δ : ℝ) (heavy a : α) : ℝ :=
   δ + if a = heavy then 1 - (Fintype.card α : ℝ) * δ else 0
 
 local notation "bestLetter" => (fun V : α → ℝ =>
   Classical.choose (Finset.exists_max_image Finset.univ V Finset.univ_nonempty))
 
-private theorem best_letter_max (V : α → ℝ) (a : α) : V a ≤ V (bestLetter V) :=
+private theorem best_letter_max [Fintype α] [Nonempty α]
+    (V : α → ℝ) (a : α) : V a ≤ V (bestLetter V) :=
   (Classical.choose_spec (Finset.exists_max_image Finset.univ V
     Finset.univ_nonempty)).2 a (Finset.mem_univ a)
 
 /-- Sum all rewards encountered through a fixed number of continuation edges. -/
-noncomputable def value (q : List α → α → ℝ) (z : List α → ℝ) : ℕ → List α → ℝ
+noncomputable def value [Fintype α] (q : List α → α → ℝ) (z : List α → ℝ) : ℕ → List α → ℝ
   | 0, h => z h
   | n + 1, h => z h + ∑ a, q h a * value q z n (h ++ [a])
 
 /-- Backward optimization independently chooses one extreme row at each node. -/
-noncomputable def envelope (δ : ℝ) (z : List α → ℝ) : ℕ → List α → ℝ
+noncomputable def envelope [Fintype α] [DecidableEq α] [Nonempty α]
+    (δ : ℝ) (z : List α → ℝ) : ℕ → List α → ℝ
   | 0, h => z h
   | n + 1, h => z h + ∑ a,
       extremeRow δ (bestLetter (fun c => envelope δ z n (h ++ [c]))) a *
         envelope δ z n (h ++ [a])
 
 /-- A single process on all histories implements the finite backward choices. -/
-noncomputable def optimizingProcess (δ : ℝ) (z : List α → ℝ) (N : ℕ)
+noncomputable def optimizingProcess [Fintype α] [DecidableEq α] [Nonempty α]
+    (δ : ℝ) (z : List α → ℝ) (N : ℕ)
     (h : List α) (a : α) : ℝ :=
   extremeRow δ (bestLetter (fun c => envelope δ z (N - h.length - 1) (h ++ [c]))) a
 
-private theorem extreme_row_sum (δ : ℝ) (heavy : α) :
+private theorem extreme_row_sum [Fintype α] [DecidableEq α] (δ : ℝ) (heavy : α) :
     ∑ a, extremeRow δ heavy a = 1 := by
   classical
   simp [extremeRow, Finset.sum_add_distrib]
 
-private theorem extreme_row_lower (δ : ℝ) (hc : (Fintype.card α : ℝ) * δ ≤ 1)
+private theorem extreme_row_lower [Fintype α] [DecidableEq α]
+    (δ : ℝ) (hc : (Fintype.card α : ℝ) * δ ≤ 1)
     (heavy a : α) : δ ≤ extremeRow δ heavy a := by
   unfold extremeRow
   split_ifs <;> linarith
 
-private theorem row_bound (δ : ℝ) (q V : α → ℝ)
+private theorem row_bound [Fintype α] [DecidableEq α] [Nonempty α] (δ : ℝ) (q V : α → ℝ)
     (hq : ∀ a, δ ≤ q a) (hsum : ∑ a, q a = 1) :
     ∑ a, q a * V a ≤ ∑ a, extremeRow δ (bestLetter V) a * V a := by
   classical
@@ -87,7 +91,7 @@ private theorem row_bound (δ : ℝ) (q V : α → ℝ)
   exact add_le_add le_rfl (bound.trans_eq residual)
 
 /-- Every history process is dominated at all horizons by the backward envelope. -/
-theorem value_le_envelope (δ : ℝ) (hδ : 0 ≤ δ)
+theorem value_le_envelope [Fintype α] [DecidableEq α] [Nonempty α] (δ : ℝ) (hδ : 0 ≤ δ)
     (q : List α → α → ℝ) (hq : Admissible δ q) (z : List α → ℝ) :
     ∀ n h, value q z n h ≤ envelope δ z n h := by
   intro n
@@ -105,7 +109,7 @@ theorem value_le_envelope (δ : ℝ) (hδ : 0 ≤ δ)
       (fun a => envelope δ z k (h ++ [a])) (hq h).1 (hq h).2))
 
 /-- The finite choices attain the envelope simultaneously on the same tree. -/
-theorem optimizing_process_attains (δ : ℝ)
+theorem optimizing_process_attains [Fintype α] [DecidableEq α] [Nonempty α] (δ : ℝ)
     (hc : (Fintype.card α : ℝ) * δ ≤ 1) (z : List α → ℝ) (N : ℕ) :
     Admissible δ (optimizingProcess δ z N) ∧
     ∀ n h, h.length + n = N →
@@ -125,7 +129,8 @@ theorem optimizing_process_attains (δ : ℝ)
     simp only [optimizingProcess, remaining]
 
 /-- The optimizing rows are transported to one extreme iid vector by tree swaps. -/
-theorem optimizing_process_relabel (δ : ℝ) (z : List α → ℝ) (N : ℕ) (base : α) :
+private theorem optimizing_process_relabel [Fintype α] [DecidableEq α] [Nonempty α]
+    (δ : ℝ) (z : List α → ℝ) (N : ℕ) (base : α) :
     ∃ π : List α → Equiv.Perm α,
       ∀ h a, optimizingProcess δ z N h a = extremeRow δ base (π h a) := by
   classical
@@ -142,7 +147,7 @@ theorem optimizing_process_relabel (δ : ℝ) (z : List α → ℝ) (N : ℕ) (b
   simp only [optimizingProcess, extremeRow, he, heavy]
 
 /-- Partition a word level by its first letter. -/
-private theorem word_sum_succ (f : List α → ℝ) (n : ℕ) :
+private theorem word_sum_succ [Fintype α] [DecidableEq α] (f : List α → ℝ) (n : ℕ) :
     (∑ w ∈ words (n + 1), f w) = ∑ a, ∑ w ∈ words n, f (a :: w) := by
   classical
   symm
@@ -162,7 +167,7 @@ private theorem word_sum_succ (f : List α → ℝ) (n : ℕ) :
   · intro _ _; rfl
 
 /-- The recursive value equals its sums over all actual finite paths. -/
-theorem value_path_sum (q : List α → α → ℝ) (z : List α → ℝ) :
+theorem value_path_sum [Fintype α] [DecidableEq α] (q : List α → α → ℝ) (z : List α → ℝ) :
     ∀ n h, value q z n h =
       ∑ k ∈ Finset.range (n + 1), ∑ w ∈ words k, pathMass q h w * z (h ++ w) := by
   classical
@@ -189,7 +194,8 @@ theorem value_path_sum (q : List α → α → ℝ) (z : List α → ℝ) :
     simp only [pathMass, mul_assoc, List.append_assoc, List.singleton_append]
 
 /-- Indicator rewards recover exactly the canonical truncated code mass. -/
-private theorem value_code_mass (q : List α → α → ℝ) (F : Set (List α)) (N : ℕ) :
+private theorem value_code_mass [Fintype α] [DecidableEq α]
+    (q : List α → α → ℝ) (F : Set (List α)) (N : ℕ) :
     value q (F.indicator (fun _ => 1)) N [] = historyTruncatedMass q F N := by
   classical
   rw [value_path_sum, historyTruncatedMass]
@@ -198,7 +204,7 @@ private theorem value_code_mass (q : List α → α → ℝ) (F : Set (List α))
   simp [level, Finset.sum_filter, Set.indicator_apply]
 
 /-- Finite-horizon mass is bounded by the frozen iid greedy maximum. -/
-theorem finite_joint_bound (δ : ℝ) (hδ : 0 < δ)
+theorem finite_joint_bound [Fintype α] [DecidableEq α] [Nonempty α] (δ : ℝ) (hδ : 0 < δ)
     (hc : (Fintype.card α : ℝ) * δ ≤ 1) (base : α)
     (b : ℕ → ℕ) (tie : ℕ → LinearOrder (List α))
     (q : List α → α → ℝ) (hq : Admissible δ q)
@@ -242,30 +248,17 @@ private theorem path_mass_nonneg (q : List α → α → ℝ)
   | cons a w ih => exact mul_nonneg (hq h a) (ih _)
 
 /-- Nonnegative masses are the supremum of their canonical finite truncations. -/
-private theorem mass_limit (m : List α → ℝ) (hm : ∀ w, 0 ≤ m w) (F : Set (List α)) :
+private theorem mass_limit [Fintype α] [DecidableEq α]
+    (m : List α → ℝ) (hm : ∀ w, 0 ≤ m w) (F : Set (List α)) :
     (∑' w : F, ENNReal.ofReal (m w.1)) =
       ⨆ N, ENNReal.ofReal (∑ n ∈ Finset.range (N + 1), ∑ w ∈ level F n, m w) := by
-  classical
-  have grouped : (∑' w : F, ENNReal.ofReal (m w.1)) =
-      ∑' n, ∑ w ∈ level F n, ENNReal.ofReal (m w) := by
-    rw [← ENNReal.tsum_fiberwise (fun w : F => ENNReal.ofReal (m w.1))
-      (fun w : F => w.1.length)]
-    apply tsum_congr
-    intro n
-    let e : {w : F // w.1.length = n} ≃ ↥(level F n) :=
-      (Equiv.subtypeSubtypeEquivSubtypeInter (fun w => w ∈ F) (fun w => w.length = n)).trans
-        (Equiv.subtypeEquivRight (fun w => and_comm.trans (mem_level F w n).symm))
-    calc
-      _ = ∑' w : level F n, ENNReal.ofReal (m w.1) := e.tsum_eq _
-      _ = _ := Finset.tsum_subtype (level F n) (fun w => ENNReal.ofReal (m w))
-  rw [grouped, ENNReal.tsum_eq_iSup_nat' (Filter.tendsto_add_atTop_nat 1)]
+  rw [mass_by_level m hm F, ENNReal.tsum_eq_iSup_nat' (Filter.tendsto_add_atTop_nat 1)]
   apply iSup_congr
   intro N
-  simp_rw [← ENNReal.ofReal_sum_of_nonneg (fun w _ => hm w)]
   exact (ENNReal.ofReal_sum_of_nonneg
     (fun n _ => Finset.sum_nonneg (fun w _ => hm w))).symm
 
-private theorem history_code_mass_le_one (q : List α → α → ℝ)
+private theorem history_code_mass_le_one [Fintype α] (q : List α → α → ℝ)
     (hpos : ∀ h a, 0 ≤ q h a) (hsum : ∀ h, ∑ a, q h a = 1)
     (F : Set (List α)) (hF : IsPrefixFree F) : historyCodeMass q F ≤ 1 := by
   classical
@@ -293,7 +286,7 @@ private theorem history_code_mass_le_one (q : List α → α → ℝ)
   rw [← ENNReal.ofReal_sum_of_nonneg (fun w _ => path_mass_nonneg q hpos [] w.1)]
   simpa only [pathMass, ENNReal.ofReal_one] using ENNReal.ofReal_le_ofReal bound
 
-private theorem uniform_rows (δ : ℝ) (hcard : (Fintype.card α : ℝ) * δ = 1)
+private theorem uniform_rows [Fintype α] (δ : ℝ) (hcard : (Fintype.card α : ℝ) * δ = 1)
     (q : List α → α → ℝ) (hq : Admissible δ q) (h : List α) (a : α) : q h a = δ := by
   have hsum : ∑ c, (q h c - δ) = 0 := by
     rw [Finset.sum_sub_distrib, (hq h).2]
@@ -303,7 +296,7 @@ private theorem uniform_rows (δ : ℝ) (hcard : (Fintype.card α : ℝ) * δ = 
       (Finset.mem_univ a)
   exact sub_eq_zero.mp hz
 
-private theorem row_mixture (δ : ℝ) (q : α → ℝ)
+private theorem row_mixture [Fintype α] [DecidableEq α] (δ : ℝ) (q : α → ℝ)
     (hq : ∀ a, δ ≤ q a) (hsum : ∑ a, q a = 1)
     (hstrict : (Fintype.card α : ℝ) * δ < 1) :
     let c := 1 - (Fintype.card α : ℝ) * δ
@@ -328,7 +321,7 @@ private theorem row_mixture (δ : ℝ) (q : α → ℝ)
 
 /-- All finite bounds, the infinite joint maximum, its complement and actual iid
 attainment use the same frozen greedy code. The uniform endpoint includes all histories. -/
-theorem result (δ : ℝ) (hδ : 0 < δ)
+theorem result [Fintype α] [DecidableEq α] [Nonempty α] (δ : ℝ) (hδ : 0 < δ)
     (hcard : 2 ≤ Fintype.card α) (hc : (Fintype.card α : ℝ) * δ ≤ 1)
     (base : α) (b : ℕ → ℕ) (tie : ℕ → LinearOrder (List α)) :
     let p := extremeRow δ base

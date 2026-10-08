@@ -123,7 +123,7 @@ noncomputable def historyTruncatedMass [Fintype α] [DecidableEq α]
 noncomputable def historyCodeMass (q : List α → α → ℝ) (F : Set (List α)) : ℝ≥0∞ :=
   ∑' w : F, ENNReal.ofReal (pathMass q [] w.1)
 
-/-- Canonical levels are transported bijectively, including their cardinalities. -/
+/-- A relabeled code level is exactly the image of the original code level. -/
 theorem level_relabel [Fintype α] [DecidableEq α]
     (π : List α → Equiv.Perm α) (F : Set (List α)) (n : ℕ) :
     level (relabel π [] '' F) n = (level F n).image (relabel π []) := by

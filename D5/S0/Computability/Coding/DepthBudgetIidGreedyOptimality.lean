@@ -120,12 +120,13 @@ theorem level_depth_truncation {α : Type*} [Fintype α] [DecidableEq α]
   change (v.length = n ∧ v ∈ G ∧ v.length ≤ N) ↔ (v.length = n ∧ v ∈ G)
   exact ⟨fun h => ⟨h.1,h.2.1⟩, fun h => ⟨h.1,h.2,by omega⟩⟩
 
-/-- Countable iid code mass grouped by its canonical word levels. -/
-theorem code_mass_by_level {α : Type*} [Fintype α] [DecidableEq α]
-    (p : α → ℝ) (hp : ∀ a, 0 < p a) (F : Set (List α)) : codeMass p F =
-    ∑' n, ENNReal.ofReal (∑ v ∈ level F n, wordMass p v) := by
-  rw [codeMass, ← ENNReal.tsum_fiberwise
-    (fun v : F => ENNReal.ofReal (wordMass p v.1)) (fun v : F => v.1.length)]
+/-- Countable nonnegative word mass grouped by its canonical word levels. -/
+theorem mass_by_level {α : Type*} [Fintype α] [DecidableEq α]
+    (m : List α → ℝ) (hm : ∀ v, 0 ≤ m v) (F : Set (List α)) :
+    (∑' v : F, ENNReal.ofReal (m v.1)) =
+      ∑' n, ENNReal.ofReal (∑ v ∈ level F n, m v) := by
+  rw [← ENNReal.tsum_fiberwise
+    (fun v : F => ENNReal.ofReal (m v.1)) (fun v : F => v.1.length)]
   apply tsum_congr
   intro n
   let e : ((fun v : F => v.1.length) ⁻¹' {n}) ≃ ↥(level F n) :=
@@ -134,18 +135,22 @@ theorem code_mass_by_level {α : Type*} [Fintype α] [DecidableEq α]
       left_inv := fun _ => rfl
       right_inv := fun _ => rfl }
   calc
-    _ = ∑' v : level F n, ENNReal.ofReal (wordMass p v.1) := e.tsum_eq _
-    _ = ∑ v ∈ level F n, ENNReal.ofReal (wordMass p v) :=
-      Finset.tsum_subtype (level F n) (fun v => ENNReal.ofReal (wordMass p v))
-    _ = ENNReal.ofReal (∑ v ∈ level F n, wordMass p v) := by
-      symm
-      apply ENNReal.ofReal_sum_of_nonneg
-      intro v _
-      apply List.prod_nonneg
-      intro a ha
-      obtain ⟨a,_,rfl⟩ := List.mem_map.mp ha
-      exact (hp a).le
+    _ = ∑' v : level F n, ENNReal.ofReal (m v.1) := e.tsum_eq _
+    _ = ∑ v ∈ level F n, ENNReal.ofReal (m v) :=
+      Finset.tsum_subtype (level F n) (fun v => ENNReal.ofReal (m v))
+    _ = ENNReal.ofReal (∑ v ∈ level F n, m v) :=
+      (ENNReal.ofReal_sum_of_nonneg (fun v _ => hm v)).symm
 
+/-- Countable iid code mass grouped by its canonical word levels. -/
+theorem code_mass_by_level {α : Type*} [Fintype α] [DecidableEq α]
+    (p : α → ℝ) (hp : ∀ a, 0 < p a) (F : Set (List α)) : codeMass p F =
+    ∑' n, ENNReal.ofReal (∑ v ∈ level F n, wordMass p v) := by
+  apply mass_by_level (wordMass p) _ F
+  intro v
+  apply List.prod_nonneg
+  intro a ha
+  obtain ⟨a, _, rfl⟩ := List.mem_map.mp ha
+  exact (hp a).le
 
 /-- A single horizon-independent iid greedy code is legal and maximizes every finite
 truncation and the total countable mass, for arbitrary depth budgets and fixed ties. -/
