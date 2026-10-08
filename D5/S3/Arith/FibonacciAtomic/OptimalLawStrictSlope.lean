@@ -6,7 +6,9 @@
    utility: none
    digest: The full real minimum-mass slope strictly increases with the number of labels. -/
 
-import D5.S3.Arith.FibonacciAtomic.CarryGraphCriticalAttainment
+import D5.S3.Arith.FibonacciAtomic.DyadicSupportLines
+import Mathlib.Topology.Semicontinuity.Basic
+import Mathlib.Topology.Order.Compact
 import Mathlib.Algebra.BigOperators.Fin
 
 set_option autoImplicit false
@@ -15,49 +17,215 @@ set_option relaxedAutoImplicit false
 namespace D5.S3.Arith.FibonacciAtomic.OptimalLawStrictSlope
 
 open scoped BigOperators
-open CarryGraphEmbedding
-open CarryGraphCriticalAttainment (alpha)
+open Filter Topology
 open DyadicSupportLines (cost)
+
+/-- The infimum ranges over all strictly positive normalized real laws and every
+index at which the least mass is attained. -/
+noncomputable def alpha (m : ℕ) : ℝ :=
+  sInf {y : ℝ | ∃ (p : Fin m → ℝ) (k : Fin m),
+    (∀ i, 0 < p i) ∧ (∑ i, p i) = 1 ∧ (∀ i, p k ≤ p i) ∧
+      y = cost p / p k}
+
+/-- The normalized floor residuals are nonnegative, bounded, and summable. -/
+theorem law_data (m : ℕ) (p : Fin m → ℝ) (hs : ∑ i, p i = 1) :
+    (∀ d, 0 ≤ DyadicSupportLines.residual p d ∧
+      DyadicSupportLines.residual p d ≤ m) ∧
+    Summable (fun d => DyadicSupportLines.residual p d / (2 : ℝ) ^ d) ∧ 0 ≤ cost p := by
+  have bounds (d : ℕ) : 0 ≤ DyadicSupportLines.residual p d ∧
+      DyadicSupportLines.residual p d ≤ m := by
+    have lo := Finset.sum_le_sum (s := Finset.univ)
+      (fun i _ => Int.floor_le ((2 : ℝ) ^ d * p i))
+    have hi := Finset.sum_le_sum (s := Finset.univ)
+      (fun i _ => (Int.lt_floor_add_one ((2 : ℝ) ^ d * p i)).le)
+    simp only [← Finset.mul_sum, hs, mul_one, Finset.sum_add_distrib,
+      Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul] at lo hi
+    simp only [DyadicSupportLines.residual, Int.cast_sum]
+    constructor <;> linarith
+  have nn (d : ℕ) : 0 ≤ DyadicSupportLines.residual p d / (2 : ℝ) ^ d :=
+    div_nonneg (bounds d).1 (by positivity)
+  have sm : Summable (fun d => DyadicSupportLines.residual p d / (2 : ℝ) ^ d) :=
+    Summable.of_nonneg_of_le nn
+      (fun d => div_le_div_of_nonneg_right (bounds d).2 (by positivity)) (by
+        simpa [div_pow, div_eq_mul_inv] using
+          (summable_geometric_of_abs_lt_one (r := (1 / 2 : ℝ)) (by norm_num)).mul_left (m : ℝ))
+  exact ⟨bounds, sm, tsum_nonneg nn⟩
+
+/-- Every strictly positive normalized law with at least two labels costs at least one bit. -/
+theorem cost_ge_one (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ)
+    (hp : ∀ i, 0 < p i) (hs : ∑ i, p i = 1) : 1 ≤ cost p := by
+  classical
+  haveI : Nontrivial (Fin m) := Fin.nontrivial_iff_two_le.mpr hm
+  have floors (i : Fin m) : ⌊p i⌋ = 0 := by
+    apply Int.floor_eq_zero_iff.mpr
+    refine ⟨(hp i).le, ?_⟩
+    obtain ⟨j, hj⟩ := exists_ne i
+    have h := Finset.add_le_sum (s := Finset.univ) (fun a _ => (hp a).le)
+      (by simp : i ∈ Finset.univ) (by simp : j ∈ Finset.univ) (Ne.symm hj)
+    rw [hs] at h
+    linarith [hp j]
+  have data := law_data m p hs
+  have h := data.2.1.sum_le_tsum ({0} : Finset ℕ)
+    (fun d _ => div_nonneg (data.1 d).1 (by positivity))
+  simpa [cost, DyadicSupportLines.residual, floors] using h
+
+/-- Each admissible law bounds the full real infimum from above. -/
+theorem alpha_le (m : ℕ) (p : Fin m → ℝ) (hp : ∀ i, 0 < p i)
+    (hs : ∑ i, p i = 1) (k : Fin m) (hk : ∀ i, p k ≤ p i) :
+    alpha m ≤ cost p / p k := by
+  apply csInf_le (show BddBelow {y : ℝ | ∃ (q : Fin m → ℝ) (j : Fin m),
+    (∀ i, 0 < q i) ∧ (∑ i, q i) = 1 ∧ (∀ i, q j ≤ q i) ∧ y = cost q / q j} from ?_)
+    ⟨p, k, hp, hs, hk, rfl⟩
+  refine ⟨0, ?_⟩
+  rintro y ⟨q, j, hq, hsum, hj, rfl⟩
+  exact div_nonneg (law_data m q hsum).2.2 (hq j).le
+
+/-- The label count is a lower bound for the optimal ratio on every positive
+multi-label real simplex. -/
+theorem alpha_ge_labels (m : ℕ) (hm : 2 ≤ m) : (m : ℝ) ≤ alpha m := by
+  have hmpos : (0 : ℝ) < m := by exact_mod_cast (show 0 < m by omega)
+  let u : Fin m → ℝ := fun _ => 1 / m
+  let k : Fin m := ⟨0, by omega⟩
+  have upos : ∀ i, 0 < u i := fun _ => one_div_pos.mpr hmpos
+  have usum : ∑ i, u i = 1 := by
+    simp only [u, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    exact mul_one_div_cancel hmpos.ne'
+  apply le_csInf (show ({y : ℝ | ∃ (p : Fin m → ℝ) (j : Fin m),
+    (∀ i, 0 < p i) ∧ (∑ i, p i) = 1 ∧ (∀ i, p j ≤ p i) ∧
+      y = cost p / p j}).Nonempty from
+    ⟨cost u / u k, u, k, upos, usum, fun _ => le_rfl, rfl⟩)
+  rintro y ⟨p, j, hp, hs, hj, rfl⟩
+  have h := Finset.sum_le_sum (s := Finset.univ) (fun i _ => hj i)
+  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, hs] at h
+  exact (le_div_iff₀ (hp j)).mpr (by nlinarith [cost_ge_one m hm p hp hs])
+
+/-- On positive normalized real laws, the dyadic cost-to-coordinate ratio is
+lower semicontinuous, including at terminating binary coordinates. -/
+theorem ratio_lowerSemicontinuous (m : ℕ) (k : Fin m) :
+    LowerSemicontinuousOn (fun p : Fin m → ℝ => cost p / p k)
+      {p | (∀ i, 0 < p i) ∧ (∑ i, p i) = 1} := by
+  classical
+  intro p hp y hy
+  have sm := (law_data m p hp.2).2.1
+  have limit : Filter.Tendsto
+      (fun n : ℕ => (∑ d ∈ Finset.range n, DyadicSupportLines.residual p d / (2 : ℝ) ^ d) / p k)
+      Filter.atTop (nhds (cost p / p k)) := by
+    exact sm.hasSum.tendsto_sum_nat.div_const (p k)
+  obtain ⟨n, hs⟩ := (limit.eventually (Ioi_mem_nhds hy)).exists
+  let s := Finset.range n
+  let c := ∑ d ∈ s, DyadicSupportLines.residual p d / (2 : ℝ) ^ d
+  have floor_event : ∀ᶠ q : Fin m → ℝ in nhds p, ∀ d ∈ s, ∀ i,
+      ⌊(2 : ℝ) ^ d * q i⌋ ≤ ⌊(2 : ℝ) ^ d * p i⌋ := by
+    rw [Filter.eventually_all_finset]
+    intro d hd
+    rw [Filter.eventually_all]
+    intro i
+    have h := ((continuous_const.mul (continuous_apply i)).tendsto p).eventually
+      (Iio_mem_nhds (Int.lt_floor_add_one ((2 : ℝ) ^ d * p i)))
+    filter_upwards [h] with q hq
+    exact Int.lt_add_one_iff.mp (Int.floor_lt.mpr (by simpa using hq))
+  have cont : ContinuousAt (fun q : Fin m → ℝ => c / q k) p :=
+    continuousAt_const.div (continuous_apply k).continuousAt (ne_of_gt (hp.1 k))
+  have ev := cont.tendsto.eventually (Ioi_mem_nhds hs)
+  filter_upwards [floor_event.filter_mono nhdsWithin_le_nhds,
+    ev.filter_mono nhdsWithin_le_nhds, self_mem_nhdsWithin] with q hf hq hmem
+  have lower : c ≤ ∑ d ∈ s, DyadicSupportLines.residual q d / (2 : ℝ) ^ d := by
+    apply Finset.sum_le_sum
+    intro d hd
+    apply div_le_div_of_nonneg_right _ (by positivity)
+    simp only [DyadicSupportLines.residual, Int.cast_sum]
+    apply sub_le_sub_left
+    exact Finset.sum_le_sum fun i _ => Int.cast_le.mpr (hf d hd i)
+  have data := law_data m q hmem.2
+  exact hq.trans_le ((div_le_div_of_nonneg_right lower (hmem.1 k).le).trans
+    (div_le_div_of_nonneg_right (data.2.1.sum_le_tsum s
+      (fun d _ => div_nonneg (data.1 d).1 (by positivity))) (hmem.1 k).le))
+
+/-- The full positive real optimization domain has an attaining law, without any
+rationality, computability, or depth restriction. -/
+theorem attained (m : ℕ) (hm : 2 ≤ m) :
+    ∃ (p : Fin m → ℝ) (k : Fin m),
+      (∀ i, 0 < p i) ∧ (∑ i, p i) = 1 ∧ (∀ i, p k ≤ p i) ∧
+        cost p / p k = alpha m := by
+  classical
+  let k : Fin m := ⟨0, by omega⟩
+  let u : Fin m → ℝ := fun _ => 1 / m
+  have hmpos : (0 : ℝ) < m := by exact_mod_cast (show 0 < m by omega)
+  have upos : ∀ i, 0 < u i := fun _ => one_div_pos.mpr hmpos
+  have usum : ∑ i, u i = 1 := by
+    simp only [u, Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul]
+    exact mul_one_div_cancel hmpos.ne'
+  let R := cost u / u k
+  have Rpos : 0 < R := div_pos (lt_of_lt_of_le zero_lt_one (cost_ge_one m hm u upos usum)) (upos k)
+  let a := 1 / (R + 1)
+  have apos : 0 < a := one_div_pos.mpr (by linarith)
+  have au : a ≤ u k := by
+    apply (div_le_iff₀ (by linarith : 0 < R + 1)).mpr
+    have r := (div_eq_iff (ne_of_gt (upos k))).mp (show R = cost u / u k from rfl)
+    nlinarith [cost_ge_one m hm u upos usum, upos k]
+  have uone : u k ≤ 1 := by
+    dsimp [u]
+    exact (div_le_one hmpos).mpr (by exact_mod_cast (show 1 ≤ m by omega))
+  let K : Set (Fin m → ℝ) := Set.Icc (fun _ => a) (fun _ => 1) ∩
+    {p | (∑ i, p i) = 1 ∧ ∀ i, p k ≤ p i}
+  have closed : IsClosed {p : Fin m → ℝ | (∑ i, p i) = 1 ∧ ∀ i, p k ≤ p i} :=
+    (isClosed_eq (continuous_finsetSum _ (fun i _ => continuous_apply i)) continuous_const).inter
+      (by
+        convert (isClosed_iInter fun i : Fin m => isClosed_le
+          (continuous_apply k : Continuous (fun p : Fin m → ℝ => p k))
+          (continuous_apply i : Continuous (fun p : Fin m → ℝ => p i))) using 1
+        ext p
+        simp)
+  have compact : IsCompact K := isCompact_Icc.inter_right closed
+  have uK : u ∈ K := ⟨⟨fun _ => au, fun _ => uone⟩, usum, fun _ => le_rfl⟩
+  have positive (p : Fin m → ℝ) (hp : p ∈ K) : ∀ i, 0 < p i :=
+    fun i => apos.trans_le (hp.1.1 i)
+  obtain ⟨p, hp, hmin⟩ := (ratio_lowerSemicontinuous m k).mono
+    (show K ⊆ {p | (∀ i, 0 < p i) ∧ (∑ i, p i) = 1} from
+      fun p hp => ⟨positive p hp, hp.2.1⟩) |>.exists_isMinOn ⟨u, uK⟩ compact
+  have below (q : Fin m → ℝ) (j : Fin m) (hq : ∀ i, 0 < q i)
+      (hs : ∑ i, q i = 1) (hj : ∀ i, q j ≤ q i) : cost p / p k ≤ cost q / q j := by
+    by_cases ha : a ≤ q j
+    · let e := Equiv.swap k j
+      let v : Fin m → ℝ := fun i => q (e i)
+      have vk : v k = q j := by simp [v, e]
+      have vs : ∑ i, v i = 1 := (Equiv.sum_comp e q).trans hs
+      have vlo : ∀ i, a ≤ v i := fun i => ha.trans (hj (e i))
+      have vhi : ∀ i, v i ≤ 1 := by
+        intro i
+        have h := Finset.single_le_sum (s := Finset.univ) (fun l _ => (hq (e l)).le)
+          (Finset.mem_univ i)
+        change v i ≤ ∑ l, v l at h
+        exact h.trans_eq vs
+      have vc : cost v = cost q := by
+        unfold cost
+        congr 1
+        funext d
+        simp only [DyadicSupportLines.residual, v]
+        rw [Equiv.sum_comp e (fun i => ⌊(2 : ℝ) ^ d * q i⌋)]
+      have vK : v ∈ K := ⟨⟨vlo, vhi⟩, vs, fun i => by rw [vk]; exact hj (e i)⟩
+      have h : cost p / p k ≤ cost v / v k := hmin vK
+      simpa only [vc, vk] using h
+    · have small : q j < a := lt_of_not_ge ha
+      have H : R + 1 < cost q / q j := by
+        apply (lt_div_iff₀ (hq j)).mpr
+        have hsmall := (lt_div_iff₀ (by linarith : 0 < R + 1)).mp small
+        nlinarith [cost_ge_one m hm q hq hs]
+      exact (hmin uK).trans (by change R ≤ cost q / q j; linarith)
+  refine ⟨p, k, positive p hp, hp.2.1, hp.2.2, le_antisymm ?_ ?_⟩
+  · apply le_csInf (show ({y : ℝ | ∃ (q : Fin m → ℝ) (j : Fin m),
+      (∀ i, 0 < q i) ∧ (∑ i, q i) = 1 ∧ (∀ i, q j ≤ q i) ∧
+        y = cost q / q j}).Nonempty from
+      ⟨cost u / u k, u, k, upos, usum, fun _ => le_rfl, rfl⟩)
+    rintro y ⟨q, j, hq, hs, hj, rfl⟩
+    exact below q j hq hs hj
+  · exact alpha_le m p (positive p hp) hp.2.1 k hp.2.2
 
 /-- The full real optimal ratio has its single- and two-label endpoint values,
 and strictly increases at every subsequent label count. -/
 theorem result : alpha 1 = 0 ∧ alpha 2 = 2 ∧
     ∀ m : ℕ, 3 ≤ m → alpha (m - 1) < alpha m := by
   classical
-  have law_data (n : ℕ) (hn : 2 ≤ n) (p : Fin n → ℝ)
-      (hp : ∀ i, 0 < p i) (hs : ∑ i, p i = 1) (k : Fin n)
-      (hk : ∀ i, p k ≤ p i) :
-      (∀ d, 0 ≤ DyadicSupportLines.residual p d) ∧
-      Summable (fun d => DyadicSupportLines.residual p d / (2 : ℝ) ^ d) ∧ 1 ≤ cost p := by
-    obtain ⟨γ, hγ, hr, _, _, _, _⟩ := (CarryGraphEmbedding.result n hn).2.2.2 p hp hs k hk
-    have bounds (d : ℕ) : 0 ≤ DyadicSupportLines.residual p d ∧
-        DyadicSupportLines.residual p d ≤ n := by
-      have H := (hγ.2 d).1.1
-      dsimp [IsState] at H
-      rw [← hr d]
-      exact ⟨by exact_mod_cast H.1, by exact_mod_cast (show (γ.state d).r ≤ n by omega)⟩
-    have nonneg (d : ℕ) : 0 ≤ DyadicSupportLines.residual p d / (2 : ℝ) ^ d :=
-      div_nonneg (bounds d).1 (by positivity)
-    have summable : Summable (fun d => DyadicSupportLines.residual p d / (2 : ℝ) ^ d) := by
-      apply Summable.of_nonneg_of_le nonneg
-        (fun d => div_le_div_of_nonneg_right (bounds d).2 (by positivity))
-      simpa [div_pow, div_eq_mul_inv] using
-        (summable_geometric_of_abs_lt_one (r := (1 / 2 : ℝ)) (by norm_num)).mul_left (n : ℝ)
-    refine ⟨fun d => (bounds d).1, summable, ?_⟩
-    have H := summable.sum_le_tsum ({0} : Finset ℕ) (fun d _ => nonneg d)
-    have root_residual : DyadicSupportLines.residual p 0 = 1 := by
-      rw [← hr 0, hγ.1]
-      norm_num [root]
-    simpa [Finset.sum_singleton, root_residual, cost] using H
-  have alpha_le (n : ℕ) (hn : 2 ≤ n) (p : Fin n → ℝ)
-      (hp : ∀ i, 0 < p i) (hs : ∑ i, p i = 1) (k : Fin n)
-      (hk : ∀ i, p k ≤ p i) : alpha n ≤ cost p / p k := by
-    apply csInf_le (show BddBelow {y : ℝ | ∃ (q : Fin n → ℝ) (j : Fin n),
-      (∀ i, 0 < q i) ∧ (∑ i, q i) = 1 ∧ (∀ i, q j ≤ q i) ∧ y = cost q / q j} from ?_)
-      ⟨p, k, hp, hs, hk, rfl⟩
-    refine ⟨0, ?_⟩
-    rintro y ⟨q, j, hq, hsum, hj, rfl⟩
-    exact div_nonneg (by linarith [(law_data n hn q hq hsum j hj).2.2]) (hq j).le
   have single_cost : cost (fun _ : Fin 1 => (1 : ℝ)) = 0 := by
     have zeros (d : ℕ) :
         DyadicSupportLines.residual (fun _ : Fin 1 => (1 : ℝ)) d / (2 : ℝ) ^ d = 0 := by
@@ -93,23 +261,12 @@ theorem result : alpha 1 = 0 ∧ alpha 2 = 2 ∧
     simp
   have two : alpha 2 = 2 := by
     apply le_antisymm
-    · have H := alpha_le 2 (by omega) (fun _ => 1 / 2) (by norm_num)
+    · have H := alpha_le 2 (fun _ => 1 / 2) (by norm_num)
         (by norm_num) 0 (by simp)
       rw [uniform_cost] at H
       norm_num at H
       exact H
-    · refine le_csInf (show ({y : ℝ | ∃ (p : Fin 2 → ℝ) (k : Fin 2),
-        (∀ i, 0 < p i) ∧ (∑ i, p i) = 1 ∧ (∀ i, p k ≤ p i) ∧ y = cost p / p k}).Nonempty from
-        ⟨2, fun _ => 1 / 2, 0, by norm_num, by norm_num, by simp,
-          by simp only [uniform_cost]; norm_num⟩) ?_
-      rintro y ⟨p, k, hp, hs, hk, rfl⟩
-      have H := Finset.sum_le_sum (s := (Finset.univ : Finset (Fin 2))) (fun i _ => hk i)
-      have half : p k ≤ 1 / 2 := by
-        simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, hs] at H
-        norm_num only [Nat.cast_ofNat] at H
-        linarith
-      apply (le_div_iff₀ (hp k)).mpr
-      linarith [(law_data 2 (by omega) p hp hs k hk).2.2]
+    · exact_mod_cast alpha_ge_labels 2 (by omega)
   refine ⟨one, two, ?_⟩
   intro m hm
   obtain ⟨n, rfl⟩ : ∃ n, m = n + 1 := ⟨m - 1, by omega⟩
@@ -117,31 +274,14 @@ theorem result : alpha 1 = 0 ∧ alpha 2 = 2 ∧
   simp only [Nat.add_sub_cancel]
   have : Nonempty (Fin n) := ⟨⟨0, by omega⟩⟩
   have : Nonempty (Fin (n + 1)) := ⟨⟨0, by omega⟩⟩
-  obtain ⟨V, f, H⟩ := CarryGraphCriticalAttainment.result (n + 1) (by omega)
-  rcases H with ⟨_, _, _, _, _, H⟩
-  dsimp only at H
-  let γ := CarryGraphCriticalAttainment.policyPath (n + 1) (f (alpha (n + 1)))
-    ⟨root (n + 1), by dsimp [IsState, root]; omega⟩
-  let p : Fin (n + 1) → ℝ := fun i => Real.ofDigits (CarryGraphRealization.labelDigit γ i)
-  rcases H with ⟨ht, hp, hs, hmin, _, _, _, _, hcost⟩
-  change (∀ i, 0 < p i) at hp
-  change ∑ i, p i = 1 at hs
-  change sInf (Set.range p) = anchorValue γ at hmin
-  change cost p = alpha (n + 1) * anchorValue γ at hcost
-  obtain ⟨k, hk0⟩ := (Set.range_nonempty p).csInf_mem (Set.finite_range p)
-  have hk : ∀ i, p k ≤ p i := by
-    intro i
-    rw [hk0]
-    exact csInf_le (Set.finite_range p).bddBelow ⟨i, rfl⟩
-  have optimum : cost p / p k = alpha (n + 1) := by
-    rw [hk0, hmin, hcost, mul_div_cancel_right₀ _ (ne_of_gt ht)]
+  obtain ⟨p, k, hp, hs, hk, optimum⟩ := attained (n + 1) (by omega)
   have psmall : p k < 1 := by
     have H := Finset.sum_le_sum (s := Finset.univ) (fun i _ => hk i)
     simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, hs] at H
     norm_num only [Nat.cast_add, Nat.cast_one] at H
     have N : (3 : ℝ) ≤ n + 1 := by exact_mod_cast hm
     nlinarith [hp k]
-  have pd := law_data (n + 1) (by omega) p hp hs k hk
+  have pd := law_data (n + 1) p hs
   have merged (l : Fin n) :
       let q : Fin n → ℝ := fun i => p (k.succAbove i) + if i = l then p k else 0
       (∀ i, 0 < q i) ∧ (∑ i, q i) = 1 ∧
@@ -208,7 +348,7 @@ theorem result : alpha 1 = 0 ∧ alpha 2 = 2 ∧
     rcases merged l with ⟨hq, hsum, hlow, hres, heq⟩
     obtain ⟨j, _, hj⟩ := Finset.exists_min_image Finset.univ q Finset.univ_nonempty
     have hj' : ∀ i, q j ≤ q i := fun i => hj i (Finset.mem_univ i)
-    have qd := law_data n hn q hq hsum j hj'
+    have qd := law_data n q hsum
     have crossing : ∃ d : ℕ, 1 ≤ (2 : ℝ) ^ d * p k := by
       obtain ⟨d, hd⟩ := pow_unbounded_of_one_lt (1 / p k) (by norm_num : (1 : ℝ) < 2)
       exact ⟨d, (div_lt_iff₀ (hp k)).mp hd |>.le⟩
@@ -243,16 +383,16 @@ theorem result : alpha 1 = 0 ∧ alpha 2 = 2 ∧
         (div_lt_div_of_pos_right strict_residual (by positivity)) pd.2.1
     have ratio : cost q / q j < cost p / p k := by
       have H : cost q / q j ≤ cost q / p k :=
-        div_le_div_of_nonneg_left (by linarith [qd.2.2]) (hp k) (hlow j)
+        div_le_div_of_nonneg_left (by linarith [cost_ge_one n hn q hq hsum]) (hp k) (hlow j)
       exact H.trans_lt (div_lt_div_of_pos_right strict_cost (hp k))
     rw [← optimum]
-    exact (alpha_le n hn q hq hsum j hj').trans_lt ratio
+    exact (alpha_le n q hq hsum j hj').trans_lt ratio
   · let l : Fin n := ⟨0, by omega⟩
     let q : Fin n → ℝ := fun i => p (k.succAbove i) + if i = l then p k else 0
     rcases merged l with ⟨hq, hsum, hlow, hres, _⟩
     obtain ⟨j, _, hj⟩ := Finset.exists_min_image Finset.univ q Finset.univ_nonempty
     have hj' : ∀ i, q j ≤ q i := fun i => hj i (Finset.mem_univ i)
-    have qd := law_data n hn q hq hsum j hj'
+    have qd := law_data n q hsum
     have strict_minimum : p k < q j := by
       have H : p k < p (k.succAbove j) :=
         lt_of_le_of_ne (hk (k.succAbove j)) (fun h => tied ⟨j, h.symm⟩)
@@ -263,8 +403,9 @@ theorem result : alpha 1 = 0 ∧ alpha 2 = 2 ∧
     have ratio : cost q / q j < cost p / p k := by
       calc
         _ ≤ cost p / q j := div_le_div_of_nonneg_right cost_le (hq j).le
-        _ < cost p / p k := div_lt_div_of_pos_left (by linarith [pd.2.2]) (hp k) strict_minimum
+        _ < cost p / p k := div_lt_div_of_pos_left
+          (by linarith [cost_ge_one (n + 1) (by omega) p hp hs]) (hp k) strict_minimum
     rw [← optimum]
-    exact (alpha_le n hn q hq hsum j hj').trans_lt ratio
+    exact (alpha_le n q hq hsum j hj').trans_lt ratio
 
 end D5.S3.Arith.FibonacciAtomic.OptimalLawStrictSlope
