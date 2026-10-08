@@ -216,7 +216,7 @@ private theorem logarithm_derivative_coeff (D : LatticeData) (α : Charge D)
   rw [Nat.cast_add, Nat.cast_one,
     mul_inv_cancel₀ (by exact_mod_cast Nat.succ_ne_zero n), one_smul]
 
-private theorem exponential_constant (D : LatticeData) (α : Charge D) :
+theorem exponential_constant (D : LatticeData) (α : Charge D) :
     PowerSeries.coeff 0 (creationExponential D α) = 1 := by
   have hA : PowerSeries.constantCoeff (creationSeries D α) = 0 := by
     simp [creationSeries, ← PowerSeries.coeff_zero_eq_constantCoeff_apply]
@@ -353,7 +353,7 @@ private theorem translated_X (D : LatticeData) (α : Charge D) (x : Index D) :
     translatedPolynomial D α (X x) = translationVariable D α x.1 x.2 := by
   simp [translatedPolynomial]
 
-private theorem translated_smul (D : LatticeData) (α : Charge D) (c : ℂ)
+theorem translated_smul (D : LatticeData) (α : Charge D) (c : ℂ)
     (p : Oscillator D) :
     translatedPolynomial D α (c • p) = c • translatedPolynomial D α p := by
   have h : translatedPolynomial D α (C c) =

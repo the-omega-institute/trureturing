@@ -9,7 +9,6 @@ namespace StrataLint.Scribe;
 
 public static class CanonicalValuesWriter
 {
-    public const string RelativePath = RepositoryPathPolicy.ValuesProjectionPath;
     public const string InputPath = "D5/X_Frontier/ValuesProducer.lean";
     public const string ScribeLockPath =
         "tools/StrataLint.Scribe/packages.lock.json";

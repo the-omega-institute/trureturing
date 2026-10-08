@@ -7,6 +7,8 @@
     <AssemblyName>StrataLint.DeclaredTemplate.Tests</AssemblyName>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="../../StrataLint.Engineering/StrataLint.Engineering.csproj" />
+    <ProjectReference Include="../../StrataLint.Runtime/StrataLint.Runtime.csproj" />
     <ProjectReference Include="../../StrataLint.Engine/StrataLint.Engine.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.DeclaredTemplateTestSupport/StrataLint.DeclaredTemplateTestSupport.csproj" />
     <ProjectReference Include="../../TestSupport/StrataLint.RuleTestSupport/StrataLint.RuleTestSupport.csproj" />

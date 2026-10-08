@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:d85c483a50e2faff51ed627bbddd07163e1be5431e37ef885056378cc95ce1e5
+  normalized_sha256: sha256:d85c483a50e2faff51ed627bbddd07163e1be5431e37ef885056378cc95ce1e5
+cas_ref: sha256:d85c483a50e2faff51ed627bbddd07163e1be5431e37ef885056378cc95ce1e5
+coverage_gids:
+  - gid: D5/S1/Digit/RadixFloorDigit.radix_floor_digit_bounds_and_decomposition
+    target_statement_id: sha256:1765dc389d434778934059638f5aef9e3f97c361f293a875d7a98cf7c94b1776
+  - gid: D5/S3/Arith/FibonacciAtomic/CarryGraphRealization.result
+    target_statement_id: sha256:7ec05c8c5cbf7f6e20beb09e8708509082ab2a36a530dca2ec21ec9a09ee7489
+  - gid: D5/S3/Observer/DynamicProgramming/DiscountedBellmanContraction.discounted_bellman_contraction_and_unique_fixed_point
+    target_statement_id: sha256:bdeb0855263ec1de1f534a0f0f9441c9064e73668a001c187550b08cfe4498e5
+  - gid: D5/S3/Observer/DynamicProgramming/StationaryPolicyOptimality.discounted_loss_bellman_operator_apply
+    target_statement_id: sha256:d1f1dc87fc24925527cc73481680fef8bc0e57fd7fcec3187a39c2573439875c
+receipts:
+  unresolved_subitems: []

@@ -430,3 +430,45 @@ or (8b) for
 $T_A I_\psi(A)$ at the selected Robin source $A=\log N$. The original
 unbounded signed target and RH remain unproved; no new Mertens bound,
 mathematical originality or Lean certification is claimed.
+
+
+## An explicit reverse interface and its shifted-numerator budget
+
+The related [Johnston–Trudgian preprint, arXiv:2511.09978v4](https://arxiv.org/pdf/2511.09978v4), *A round of Pintz to celebrate oscillations in sums*, makes a Landau–Pintz arithmetic-to-zero interface explicit. Theorem 1, printed pp.3–4, starts with a polynomial-growth arithmetic function $a(x)$, its Mellin quotient $F/G$, stated half-plane analyticity and growth bounds, and a simple zero $\rho_0=\beta_0+i\gamma_0$ of $G$ with $F(\rho_0)\ne0$. It gives an unsigned average lower bound. A zero-free conclusion additionally needs an upper bound for that same average; the existing GA2 comparisons have not supplied that input for the selected Robin source.
+
+Its $M(x)$ application uses $F(s)=s-1$ and $G(s)=s(s-1)\zeta(s)$, equations (21)–(22), printed p.8. The two large-$Y$ zero-exclusion examples on pp.11–12 assume hypothetical pointwise Mertens upper bounds. Equation (36) instead gives an average lower bound; its numerical constant is not adopted here. The source says its cited actual bound through $10^{16}$ gives only a simple-zero exclusion above real part $0.99$ and below height $5$, which does not extend the already used verification through $3\cdot10^{12}$. These are source statements, not newly certified computations. Theorem 1's simplicity condition is retained; the alternative recalled in equation (37), printed p.12, is a different published Pintz bound. It states $Y^{-1}\int_0^Y|M(x)|\,dx>Y^{\beta_0}/|\gamma_0|^5$ for $\beta_0>1/2$ and $Y\ge|\gamma_0|^5$, without a simplicity assumption.
+
+There is also a precise numerator-shift obligation before using the displayed numerical error. Equation (5), printed p.4, assumes
+
+$$
+|F(\sigma+it)|\le c_F e^\sigma\max(1,|t|^{B_F}).
+$$
+
+In equation (13), printed p.5, the contour numerator is instead
+$F(\beta_0-c_0+i(t+\gamma_0))$. Its following displayed majorant uses
+$c_Fe^{\beta_0-c_0}\max(1,|t|^{B_F})$, omitting the height shift. Both forms occur in the official v4 TeX. For the source's own $F(s)=s-1$, $c_F=\sqrt2$, $B_F=1$, take its quoted first zero with $\beta_0=1/2$, $\gamma_0=14.1347\ldots$, and $c_0=1/10$. At $t=0$,
+
+$$
+|F(2/5+i\gamma_0)|\ge\gamma_0>14,
+\qquad \sqrt2 e^{2/5}<4.
+$$
+
+Thus that pointwise substitution does not follow from the stated growth bound. This tests the numerator majorant, rather than refuting the complete integral estimate, Theorem 1, or the paper's numerical examples.
+
+A sufficient local substitute keeps the shifted factor. The same elementary inequality used for $G$ in equation (17), printed p.6, gives
+
+$$
+\max(1,|t+\gamma_0|^{B_F})
+\le(1+|\gamma_0|)^{B_F}\max(1,|t|^{B_F}).
+$$
+
+For this absolute numerator estimate, the source's $\mathcal E(y)$ can therefore be replaced by
+
+$$
+\mathcal E_{\mathrm{shift}}(y)
+=(1+|\gamma_0|)^{B_F}\mathcal E(y).
+$$
+
+In its Mertens example the extra factor is $1+|\gamma_0|$. This pays only the displayed shift step; the rest of the theorem and its numerical consequences are not independently certified here. The unshifted error is not adopted without another valid justification.
+
+The original target remains the same conditional least global Robin maximizer $N>5040$, with $A=\log N>10^{36}$, all actual zero real parts and multiplicities, the complete infinite tail and strict core. Neither this unsigned-average interface nor the local shift correction supplies its complete signed $I_\psi(A)$ lower bound. The five-window additive FIB labels are not substituted for an arithmetic average certificate. No new source proof, general theorem, numerical zero-height improvement, Lean verification or RH proof is claimed.
