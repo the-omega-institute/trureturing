@@ -68,7 +68,7 @@ $$
 
 下标按模 $L$ 理解,故最左的因子是 $T(d_j)$。其中 $\alpha_j,\beta_j,\gamma_j,\delta_j\in\mathbb R[\lambda,t]$,且 $\det M_j=1$。
 
-**引理 3.2（连分式行列式与单值矩阵的迹）。** 设 $R$ 是交换环,$x_1,\dots,x_n\in R$。记 $K_n(x_1,\dots,x_n)$ 为对角元 $x_1,\dots,x_n$、次对角元全为 $-1$ 的 $n\times n$ 三对角矩阵的行列式,并约定空序列的 $K_0=1$、长度为 $-1$ 的 $K_{-1}=0$。则:
+**事实 3.2（连分式行列式与单值矩阵的迹）。** 设 $R$ 是交换环,$x_1,\dots,x_n\in R$。记 $K_n(x_1,\dots,x_n)$ 为对角元 $x_1,\dots,x_n$、次对角元全为 $-1$ 的 $n\times n$ 三对角矩阵的行列式,并约定空序列的 $K_0=1$、长度为 $-1$ 的 $K_{-1}=0$。则:
 
 1. 对 $n\ge1$,
 
@@ -104,7 +104,7 @@ $$
 
 最后,$H_t-\lambda I$ 的对角元是 $d_i$、循环相邻位置是 $-1$。删去站点 $j$ 后,按 $j+1,\dots,j+L-1$ 的顺序排列剩余站点(同时置换行列不改变行列式),$H_t^{(j)}-\lambda I$ 是对角元 $d_{j+1},\dots,d_{j+L-1}$ 的三对角矩阵,故 $q_j=(-1)^{L-1}K_{L-1}(d_{j+1},\dots,d_{j+L-1})$。另一方面 $M_j=T(d_j)\,N$,$N=T(d_{j+L-1})\cdots T(d_{j+1})$,而 $T(d_j)$ 的第二行是 $(1,0)$,故 $\gamma_j=N_{11}=K_{L-1}(d_{j+1},\dots,d_{j+L-1})$,由 (1)。同理按 $j+1,\dots,j+L$ 的循环顺序排列全部站点,(2) 给出 $\det(H_t-\lambda I)=\operatorname{tr}M_j-2$,即 $(-1)^Lp=\alpha_j+\delta_j-2$。∎
 
-**注 3.3（先例）。** 引理 3.2 (1) 是连分式行列式(continuant)的标准递推;(2) 与 $p$ 的表达式是周期 Jacobi 算子 Floquet 判别式的有限圈形式。两者都是已知结果,写出证明只为本卷自足;出处见第 9 章。
+**注 3.3（先例）。** 事实 3.2 (1) 是连分式行列式(continuant)的标准递推;(2) 与 $p$ 的表达式是周期 Jacobi 算子 Floquet 判别式的有限圈形式。两者都是已知结果,写出证明只为本卷自足;出处见第 9 章。
 
 **引理 3.4（任意域上的节点步）。** 设 $K$ 是域,$H\in K^{n\times n}$ 对称,$n\ge2$,$j$ 是下标,$\lambda_0\in K$。则存在 $z\in K^n\setminus\{0\}$ 使 $Hz=\lambda_0z$ 且 $z_j=0$,当且仅当 $\lambda_0$ 同时是 $\det(\lambda I-H)$ 与 $\det(\lambda I-H^{(j)})$ 的根。
 
@@ -132,9 +132,9 @@ $$
 
 (2) 取 $\mathbb R(t)$ 的代数闭包 $F$ 与 $\pi$ 在 $F$ 中的一个根 $`\lambda_*`$。$\pi$ 是 $`\lambda_*`$ 在 $\mathbb R(t)$ 上的极小多项式,故对 $f\in\mathbb R(t)[\lambda]$ 有 $`\pi\mid f\iff f(\lambda_*)=0`$。把 $H_t$ 看作 $F$ 上的对称矩阵,其特征多项式与 $j$ 处主子式多项式分别是 $p$ 与 $q_j$。由引理 3.4($K=F$),$`p(\lambda_*)=q_j(\lambda_*)=0`$ 当且仅当 (a) 对 $`(\lambda_*,t)`$ 成立;由 (1),这当且仅当 $`\gamma_j(\lambda_*,t)=0`$ 且 $`\alpha_j(\lambda_*,t)=1`$。两端各自等价于 $\pi$ 的整除条件。于是 $g_j=\gcd(p,q_j)$ 与 $\gcd(\gamma_j,\alpha_j-1)$ 的首一不可约因子相同,其中一个次数为正当且仅当另一个次数为正;由母卷定理 3.2 的 (1),前者次数为正就是持续节点分支。
 
-(3) 由引理 3.2 (1),$\gamma_j=K_{L-1}(d_{j+1},\dots,d_{j+L-1})$ 的 $\lambda$-首项是 $(-\lambda)^{L-1}$,$\alpha_j=K_L(d_{j+1},\dots,d_{j+L})$ 的 $\lambda$-首项是 $(-\lambda)^L$;两者首项系数都是 $\pm1$。故在域 $\mathbb R(t)$ 上,$\operatorname{Res}_\lambda(\gamma_j,\alpha_j-1)=0$ 当且仅当两者有正次数公因子,由 (2) 当且仅当 $j$ 处有持续节点分支。母卷推论 3.3 说 $v$ 坏当且仅当某个站点有持续节点分支。∎
+(3) 由事实 3.2 (1),$\gamma_j=K_{L-1}(d_{j+1},\dots,d_{j+L-1})$ 的 $\lambda$-首项是 $(-\lambda)^{L-1}$,$\alpha_j=K_L(d_{j+1},\dots,d_{j+L})$ 的 $\lambda$-首项是 $(-\lambda)^L$;两者首项系数都是 $\pm1$。故在域 $\mathbb R(t)$ 上,$\operatorname{Res}_\lambda(\gamma_j,\alpha_j-1)=0$ 当且仅当两者有正次数公因子,由 (2) 当且仅当 $j$ 处有持续节点分支。母卷推论 3.3 说 $v$ 坏当且仅当某个站点有持续节点分支。∎
 
-**注 3.7（模 $\gamma_j$ 的平方关系）。** 由引理 3.2 与 $\det M_j=1$,
+**注 3.7（模 $\gamma_j$ 的平方关系）。** 由事实 3.2 与 $\det M_j=1$,
 
 $$
 (-1)^L\alpha_j\,p=\alpha_j(\alpha_j+\delta_j-2)=\alpha_j^2+1+\beta_j\gamma_j-2\alpha_j=(\alpha_j-1)^2+\beta_j\gamma_j .
@@ -144,7 +144,7 @@ $$
 
 ## 4. 单点缺陷原理
 
-**引理 4.1（Chebyshev 幂公式）。** 设 $R$ 是交换环,$B\in R^{2\times2}$,$\det B=1$,$x=\operatorname{tr}B$。则对一切 $n\ge0$,
+**事实 4.1（Chebyshev 幂公式）。** 设 $R$ 是交换环,$B\in R^{2\times2}$,$\det B=1$,$x=\operatorname{tr}B$。则对一切 $n\ge0$,
 
 $$
 B^n=S_{n-1}(x)\,B-S_{n-2}(x)\,I,\qquad\text{特别地}\qquad B^m-I=S_{m-1}(x)\,B-\bigl(S_{m-2}(x)+1\bigr)I .
@@ -181,7 +181,7 @@ $$
 
 特别地,$w$ 在 $q$ 处有持续节点分支,$w$ 是坏势。
 
-**证明。** (1) 由引理 3.2 (1),$B_u$ 的 $(1,1)$ 元是 $K_r(d(u_0),\dots,d(u_{r-1}))$,其 $\lambda$-首项是各对角元之积的首项 $(-\lambda)^r$;$(2,2)$ 元是 $-K_{r-2}(\cdots)$,$\lambda$-次数至多 $r-2$。所以 $\sigma_u$ 的 $\lambda$-次数为 $r$、首项系数为 $(-1)^r$,与 $t$ 无关。$\Psi_m$ 首一且次数 $\lfloor(m-1)/2\rfloor\ge1$($m\ge3$),合成后得 (1)。
+**证明。** (1) 由事实 3.2 (1),$B_u$ 的 $(1,1)$ 元是 $K_r(d(u_0),\dots,d(u_{r-1}))$,其 $\lambda$-首项是各对角元之积的首项 $(-\lambda)^r$;$(2,2)$ 元是 $-K_{r-2}(\cdots)$,$\lambda$-次数至多 $r-2$。所以 $\sigma_u$ 的 $\lambda$-次数为 $r$、首项系数为 $(-1)^r$,与 $t$ 无关。$\Psi_m$ 首一且次数 $\lfloor(m-1)/2\rfloor\ge1$($m\ge3$),合成后得 (1)。
 
 *一般域上的步骤。* 设 $K$ 是含 $\mathbb R$ 的代数闭域,$(\lambda_0,t_0)\in K^2$ 满足 $\Psi_m(\sigma_u(\lambda_0,t_0))=0$。考虑 $\mathbb Z$ 上的递推
 
@@ -205,9 +205,9 @@ $$
 
 **证明。** $w$ 与 $\tilde u$ 只在站点 $q$ 处可能不同,应用定理 4.3。∎
 
-**注 4.5（解释与先例）。** 当 $w=\tilde u$ 时,定理 4.3 的一般域上的步骤说的是:Bloch 相位 $2\pi k/m$($0<k<m/2$)处周期算子的本征空间是二维的,这是周期 Jacobi 算子 Floquet 理论的熟知事实(第 9 章)。在本征值的二维本征空间里总有在给定站点 $q$ 为零的向量,而在 $q$ 为零的本征向量不受 $q$ 处势值的影响,这一点也是初等的。定理 4.3 的内容在于把二者合在一起:缺陷破坏了周期势的平移对称与(一般情形下的)反射对称,却留下一条对一切耦合 $t$ 都存在、并由 $\Psi_m(\sigma_u)$ 显式给出的节点分支。由定理 3.6,在 $q$ 处这表现为 $M_q$ 在 $\Psi_m(\sigma_u)$ 的根上是上三角单位矩阵;引理 4.1 把周期部分的单值写成 $B^m-I=S_{m-1}(\sigma_u)B-(S_{m-2}(\sigma_u)+1)I$,命题 4.2 (1) 说明 $\Psi_m(\sigma_u)$ 恰是使两个系数同时为零的因子。
+**注 4.5（解释与先例）。** 当 $w=\tilde u$ 时,定理 4.3 的一般域上的步骤说的是:Bloch 相位 $2\pi k/m$($0<k<m/2$)处周期算子的本征空间是二维的,这是周期 Jacobi 算子 Floquet 理论的熟知事实(第 9 章)。在本征值的二维本征空间里总有在给定站点 $q$ 为零的向量,而在 $q$ 为零的本征向量不受 $q$ 处势值的影响,这一点也是初等的。定理 4.3 的内容在于把二者合在一起:缺陷($w_q\ne\tilde u_q$)破坏了周期势的全部平移对称,而反射对称只保留 $\tilde u$ 的那些固定 $q$ 的反射。理由:若 $\pi\in D_L$ 保持 $w$,则两个 $r$-周期势 $\tilde u$ 与 $\tilde u\circ\pi$ 都在 $\{q,\pi^{-1}(q)\}$ 以外与 $w$ 相同,而二者若在某站点不同,就在该站点模 $r$ 剩余类的全部 $m\ge3$ 个站点上不同,故 $\tilde u\circ\pi=\tilde u$,再由 $w_q\ne\tilde u_q$ 得 $\pi(q)=q$,非单位的旋转没有不动点;反之 $\tilde u$ 的固定 $q$ 的对称显然保持 $w$。所以缺陷站点是 $\tilde u$ 某个反射对称的不动点时该反射保留,命题 8.3 即是此例;否则 $w$ 没有非平凡二面体对称,族 $U_{r,m}$ 即是此例(定理 6.2 (1) 给出更强的交换子平凡)。无论哪种情形,缺陷都留下一条对一切耦合 $t$ 都存在、并由 $\Psi_m(\sigma_u)$ 显式给出的节点分支。由定理 3.6,在 $q$ 处这表现为 $M_q$ 在 $\Psi_m(\sigma_u)$ 的根上是上三角单位矩阵;事实 4.1 把周期部分的单值写成 $B^m-I=S_{m-1}(\sigma_u)B-(S_{m-2}(\sigma_u)+1)I$,命题 4.2 (1) 说明 $\Psi_m(\sigma_u)$ 恰是使两个系数同时为零的因子。
 
-**定理 4.6（同余站点上的多点缺陷）。** 设 $r\ge1$,$m\ge3$,$L=rm$,$u\in\mathbb R^r$,$\tilde u$ 如定理 4.3。取整数 $0<j<m/2$,令 $c=2\cos(2\pi j/m)$,$g=\gcd(m,2j)$,$e=m/g$,站点集
+**定理 4.6（同余站点上的多点缺陷）。** 设 $r\ge1$,$m\ge3$,$L=rm$,$u\in\mathbb R^r$,$\tilde u$ 如定理 4.3。取整数 $0<\nu<m/2$(Bloch 指标,不同于站点指标 $j$),令 $c=2\cos(2\pi\nu/m)$,$g=\gcd(m,2\nu)$,$e=m/g$,站点集
 
 $$
 Q=\{\,q+k\,e\,r\bmod L:\ k\in\mathbb Z\,\}\subset\mathbb Z/L\mathbb Z,\qquad |Q|=g .
@@ -218,17 +218,17 @@ $$
 1. 对每个实数 $t_0$ 与 $\sigma_u(\cdot,t_0)-c$ 的每个复根 $\lambda_0$,$\lambda_0$ 是实数,$H^w_{t_0}$ 有本征值 $\lambda_0$ 的实本征向量 $z$,它在 $Q$ 的每个站点处为零,并且对一切 $k\ge1$ 满足 $z_{q+kr}=S_{k-1}(c)\,z_{q+r}$;
 2. $\sigma_u-c$ 在 $\mathbb R(t)[\lambda]$ 中的每个首一不可约因子,对每个 $q'\in Q$ 都整除 $w$ 在 $q'$ 处的节点因子 $g_{q'}$。
 
-特别地,$w$ 在 $Q$ 的每个站点处都有持续节点分支。$g=1$ 时 $Q=\{q\}$;$m$ 为偶数且 $j=1$ 时 $Q=\{q,\,q+L/2\}$。
+特别地,$w$ 在 $Q$ 的每个站点处都有持续节点分支。$g=1$ 时 $Q=\{q\}$;$m$ 为偶数且 $\nu=1$ 时 $Q=\{q,\,q+L/2\}$。
 
-**证明。** 由 $0<2j<m$ 得 $m\nmid2j$,故 $e\ge2$;$Q$ 是 $\mathbb Z/L\mathbb Z$ 中以 $er$ 为步长的陪集,$er\mid L$,元素个数为 $L/(er)=g$。
+**证明。** 由 $0<2\nu<m$ 得 $m\nmid2\nu$,故 $e\ge2$;$Q$ 是 $\mathbb Z/L\mathbb Z$ 中以 $er$ 为步长的陪集,$er\mid L$,元素个数为 $L/(er)=g$。
 
-设 $K$ 是含 $\mathbb R$ 的代数闭域,$(\lambda_0,t_0)\in K^2$ 满足 $\sigma_u(\lambda_0,t_0)=c$。令 $\theta=2\pi j/m$,则 $\Psi_m(c)=0$,与定理 4.3 证明中的一般域步骤相同,递推 $\tilde d_iz_i-z_{i-1}-z_{i+1}=0$ 的解空间是二维的,且每个解都是 $L$-周期的。取 $z_q=0$、$z_{q+1}=1$ 的解 $z$。令 $B'=T(\tilde d_{q+r-1})\cdots T(\tilde d_q)$,则 $Z_{q+r}=B'Z_q$ 且 $Z_{q+kr}=B'^kZ_q$。$B'$ 的因子是 $B_u$ 的因子的一个循环轮换,故 $B'$ 与 $B_u(\lambda_0,t_0)$ 相似,$\operatorname{tr}B'=c$,$\det B'=1$。由引理 4.1,
+设 $K$ 是含 $\mathbb R$ 的代数闭域,$(\lambda_0,t_0)\in K^2$ 满足 $\sigma_u(\lambda_0,t_0)=c$。令 $\theta=2\pi\nu/m$,则 $\Psi_m(c)=0$,与定理 4.3 证明中的一般域步骤相同,递推 $\tilde d_iz_i-z_{i-1}-z_{i+1}=0$ 的解空间是二维的,且每个解都是 $L$-周期的。取 $z_q=0$、$z_{q+1}=1$ 的解 $z$。令 $B'=T(\tilde d_{q+r-1})\cdots T(\tilde d_q)$,则 $Z_{q+r}=B'Z_q$ 且 $Z_{q+kr}=B'^kZ_q$。$B'$ 的因子是 $B_u$ 的因子的一个循环轮换,故 $B'$ 与 $B_u(\lambda_0,t_0)$ 相似,$\operatorname{tr}B'=c$,$\det B'=1$。由事实 4.1,
 
 $$
 Z_{q+kr}=S_{k-1}(c)\,B'Z_q-S_{k-2}(c)\,Z_q,
 $$
 
-取第一个坐标并用 $z_q=0$ 得 $z_{q+kr}=S_{k-1}(c)\,z_{q+r}$。而 $S_{k-1}(c)\sin\theta=\sin(k\theta)$,$\sin\theta\ne0$;当 $k=en$($n\in\mathbb Z_{\ge0}$)时 $k\theta=(m/g)\,n\cdot2\pi j/m=\pi\cdot(2j/g)\cdot n\in\pi\mathbb Z$,因为 $g\mid2j$。所以 $z$ 在 $q+n\,e\,r$($n\in\mathbb Z_{\ge0}$)处为零,由 $L$-周期性在整个 $Q$ 上为零。于是
+取第一个坐标并用 $z_q=0$ 得 $z_{q+kr}=S_{k-1}(c)\,z_{q+r}$。而 $S_{k-1}(c)\sin\theta=\sin(k\theta)$,$\sin\theta\ne0$;当 $k=en$($n\in\mathbb Z_{\ge0}$)时 $k\theta=(m/g)\,n\cdot2\pi\nu/m=\pi\cdot(2\nu/g)\cdot n\in\pi\mathbb Z$,因为 $g\mid2\nu$。所以 $z$ 在 $q+n\,e\,r$($n\in\mathbb Z_{\ge0}$)处为零,由 $L$-周期性在整个 $Q$ 上为零。于是
 
 $$
 H^w_{t_0}z=H^{\tilde u}_{t_0}z+t_0\sum_{q'\in Q}(w_{q'}-\tilde u_{q'})\,z_{q'}\,e_{q'}=\lambda_0z .
@@ -238,13 +238,13 @@ $$
 
 (2) 设 $\pi$ 是 $\sigma_u-c$ 的首一不可约因子,$`\lambda_*`$ 是它在 $\mathbb R(t)$ 的代数闭包 $F$ 中的根。以 $K=F$、$`(\lambda_*,t)`$ 应用上面的步骤,得 $H^w_t$ 在 $F$ 上的本征向量在每个 $q'\in Q$ 处为零;由引理 3.4,$`p_w(\lambda_*)=q_{w,q'}(\lambda_*)=0`$,故 $\pi\mid g_{q'}$。∎
 
-**注 4.7（多点缺陷的范围）。** 定理 4.3 对应于同时使用 $\Psi_m$ 的全部根、只在一个站点 $q$ 改动的情形;定理 4.6 对 $\Psi_m$ 的单个根放宽到 $\gcd(m,2j)$ 个同余站点。两者都要求改动的站点落在周期势某个节点本征向量的零点集中。母卷例 4.1 的势不在定理 4.3 与 4.6 的范围内(命题 8.4)。
+**注 4.7（多点缺陷的范围）。** 定理 4.3 对应于同时使用 $\Psi_m$ 的全部根、只在一个站点 $q$ 改动的情形;定理 4.6 对 $\Psi_m$ 的单个根放宽到 $\gcd(m,2\nu)$ 个同余站点。两者都要求改动的站点落在周期势某个节点本征向量的零点集中。母卷例 4.1 的势不在定理 4.3 与 4.6 的范围内(命题 8.4)。
 
-**引理 4.8（带内块迹的根都是单根）。** 设 $u\in\mathbb R^r$,$r\ge1$,$t_0\in\mathbb R$,$c=2\cos\theta$,$0<\theta<\pi$。则 $\sigma_u(\cdot,t_0)-c$ 的 $r$ 个复根都是实的单根。
+**事实 4.8（带内块迹的根都是单根）。** 设 $u\in\mathbb R^r$,$r\ge1$,$t_0\in\mathbb R$,$c=2\cos\theta$,$0<\theta<\pi$。则 $\sigma_u(\cdot,t_0)-c$ 的 $r$ 个复根都是实的单根。
 
 **证明。** 记 $\delta_i=2+t_0u_i$。$r=1$ 时 $\sigma_u=\delta_0-\lambda$,结论显然。$r=2$ 时 $\sigma_u-c=(\delta_0-\lambda)(\delta_1-\lambda)-2-c$,其判别式 $(\delta_0-\delta_1)^2+4(2+c)>0$,两根实且不同。
 
-设 $r\ge3$。令 $H_\theta$ 为 $r\times r$ 复矩阵:对角元 $\delta_0,\dots,\delta_{r-1}$,$(i,i+1)$ 与 $(i+1,i)$ 位($0\le i\le r-2$)为 $-1$,角元 $(r-1,0)$ 位为 $-e^{i\theta}$、$(0,r-1)$ 位为 $-e^{-i\theta}$,其余为 $0$。$H_\theta$ 是 Hermite 矩阵。按引理 3.2 (2) 证明中的 Leibniz 展开计算 $\det(H_\theta-\lambda I)$:只由不动点与相邻对换组成的置换给出与那里相同的 $K_r-K_{r-2}$(对换 $(r-1\ 0)$ 的两个角元之积是 $e^{i\theta}e^{-i\theta}=1$);向前旋转的项是 $(-1)^{r-1}\cdot(-1)^{r-1}(-e^{i\theta})=-e^{i\theta}$,向后旋转的项是 $-e^{-i\theta}$。故
+设 $r\ge3$。令 $H_\theta$ 为 $r\times r$ 复矩阵:对角元 $\delta_0,\dots,\delta_{r-1}$,$(i,i+1)$ 与 $(i+1,i)$ 位($0\le i\le r-2$)为 $-1$,角元 $(r-1,0)$ 位为 $-e^{i\theta}$、$(0,r-1)$ 位为 $-e^{-i\theta}$,其余为 $0$。$H_\theta$ 是 Hermite 矩阵。按事实 3.2 (2) 证明中的 Leibniz 展开计算 $\det(H_\theta-\lambda I)$:只由不动点与相邻对换组成的置换给出与那里相同的 $K_r-K_{r-2}$(对换 $(r-1\ 0)$ 的两个角元之积是 $e^{i\theta}e^{-i\theta}=1$);向前旋转的项是 $(-1)^{r-1}\cdot(-1)^{r-1}(-e^{i\theta})=-e^{i\theta}$,向后旋转的项是 $-e^{-i\theta}$。故
 
 $$
 \det(H_\theta-\lambda I)=\sigma_u(\lambda,t_0)-2\cos\theta ,
@@ -254,7 +254,7 @@ $$
 
 **命题 4.9（$\Psi_m(\sigma_u)$ 无平方因子并整除节点因子）。** 在定理 4.3 的条件下,$\Psi_m(\sigma_u)$ 在 $\mathbb R(t)[\lambda]$ 中无平方因子,并且 $(-1)^{r\lfloor(m-1)/2\rfloor}\Psi_m(\sigma_u)$(关于 $\lambda$ 首一)在 $\mathbb R[t][\lambda]$ 中整除 $w$ 在 $q$ 处的节点因子 $g_q$。
 
-**证明。** 记 $N=r\lfloor(m-1)/2\rfloor$,$F=\Psi_m(\sigma_u)$;由定理 4.3 (1),$(-1)^NF$ 是 $\mathbb R[t][\lambda]$ 中关于 $\lambda$ 首一的多项式。取 $t_0=0$。$F(\cdot,0)=\prod_{0<k<m/2}(\sigma_u(\cdot,0)-2\cos(2\pi k/m))$;由引理 4.8,每个因子只有单根;不同 $k$ 的因子没有公共根,因为在公共根处 $\sigma_u$ 会取两个不同的值。故 $F(\cdot,0)$ 无重根。若 $h^2\mid F$,$h\in\mathbb R(t)[\lambda]$ 首一不可约,则 $h$ 与余因子都在 $\mathbb R[t][\lambda]$ 中($\mathbb R[t]$ 整闭,母卷定理 3.2 证明中的同一论证),代入 $t=0$ 后 $h(\cdot,0)$ 首一、次数为正,其平方整除 $F(\cdot,0)$,矛盾。所以 $F$ 的首一不可约因子两两不同;由定理 4.3 (3) 每个都整除 $g_q$,$\mathbb R(t)[\lambda]$ 是唯一分解整环,故 $(-1)^NF\mid g_q$;两者首一且系数在 $\mathbb R[t]$ 中,商也在 $\mathbb R[t][\lambda]$ 中。∎
+**证明。** 记 $N=r\lfloor(m-1)/2\rfloor$,$F=\Psi_m(\sigma_u)$;由定理 4.3 (1),$(-1)^NF$ 是 $\mathbb R[t][\lambda]$ 中关于 $\lambda$ 首一的多项式。取 $t_0=0$。$F(\cdot,0)=\prod_{0<k<m/2}(\sigma_u(\cdot,0)-2\cos(2\pi k/m))$;由事实 4.8,每个因子只有单根;不同 $k$ 的因子没有公共根,因为在公共根处 $\sigma_u$ 会取两个不同的值。故 $F(\cdot,0)$ 无重根。若 $h^2\mid F$,$h\in\mathbb R(t)[\lambda]$ 首一不可约,则 $h$ 与余因子都在 $\mathbb R[t][\lambda]$ 中($\mathbb R[t]$ 整闭,母卷定理 3.2 证明中的同一论证),代入 $t=0$ 后 $h(\cdot,0)$ 首一、次数为正,其平方整除 $F(\cdot,0)$,矛盾。所以 $F$ 的首一不可约因子两两不同;由定理 4.3 (3) 每个都整除 $g_q$,$\mathbb R(t)[\lambda]$ 是唯一分解整环,故 $(-1)^NF\mid g_q$;两者首一且系数在 $\mathbb R[t]$ 中,商也在 $\mathbb R[t][\lambda]$ 中。∎
 
 ## 5. 共享交换子的游程判据
 
@@ -384,7 +384,7 @@ $$
 
 这给出所述恒等式。固定实数 $t$,$\sigma_3(\cdot,t)$ 是 $\lambda$ 的三次实多项式(首项系数 $-1$),有实根;在该根处 $(H_t-\lambda I)z=0$,而 $z_3=1$,故 $z$ 是在站点 $4$ 与 $10$ 处为零的实本征向量。由母卷约定 2.4 与母卷推论 3.3 证明的第一段,势是坏势;共享交换子平凡由定理 6.2 (1)。∎
 
-**注 6.8（与定理 4.3、4.6 的一致性）。** 命题 6.7 是定理 4.6 在 $(r,m,j)=(3,4,1)$ 时的显式形式:$\Psi_4(\sigma_3)=\sigma_3$,$\gcd(4,2)=2$,$Q=\{10,4\}$。按定理 4.6,还可以在站点 $4$ 处任意改动势值而保留这条节点分支。
+**注 6.8（与定理 4.3、4.6 的一致性）。** 命题 6.7 是定理 4.6 在 $(r,m,\nu)=(3,4,1)$ 时的显式形式:$\Psi_4(\sigma_3)=\sigma_3$,$\gcd(4,2)=2$,$Q=\{10,4\}$。按定理 4.6,还可以在站点 $4$ 处任意改动势值而保留这条节点分支。
 
 **命题 6.9（块迹的 Chebyshev 闭式）。** 对 $r\ge1$,块 $-+^{r-1}=(-1,1,\dots,1)\in\{-1,1\}^r$ 的块迹是
 
@@ -394,7 +394,7 @@ $$
 
 因此对 $r,m\ge3$,多项式 $\Psi_m\bigl(bS_{r-1}(a)-2S_{r-2}(a)\bigr)$ 的每个首一不可约因子都整除 $U_{r,m}$ 在 $q_{r,m}$ 处的节点因子。例如 $\sigma_3=b(a^2-1)-2a$,$\sigma_4=b(a^3-2a)-2(a^2-1)$。
 
-**证明。** 由约定 2.3,该块的转移矩阵是 $T(a)^{r-1}T(b)$。$T(a)$ 的行列式为 $1$、迹为 $a$,由引理 4.1,$T(a)^{r-1}=S_{r-2}(a)T(a)-S_{r-3}(a)I$(对 $r\ge1$ 成立,$r=1$ 时右边为 $0\cdot T(a)+I$)。又 $\operatorname{tr}T(b)=b$,$\operatorname{tr}(T(a)T(b))=ab-2$。于是
+**证明。** 由约定 2.3,该块的转移矩阵是 $T(a)^{r-1}T(b)$。$T(a)$ 的行列式为 $1$、迹为 $a$,由事实 4.1,$T(a)^{r-1}=S_{r-2}(a)T(a)-S_{r-3}(a)I$(对 $r\ge1$ 成立,$r=1$ 时右边为 $0\cdot T(a)+I$)。又 $\operatorname{tr}T(b)=b$,$\operatorname{tr}(T(a)T(b))=ab-2$。于是
 
 $$
 \sigma_{-+^{r-1}}=S_{r-2}(a)(ab-2)-S_{r-3}(a)\,b=b\bigl(aS_{r-2}(a)-S_{r-3}(a)\bigr)-2S_{r-2}(a)=bS_{r-1}(a)-2S_{r-2}(a),
@@ -418,7 +418,7 @@ $$
 
 **命题 7.4（长度 6、10、14 无此类坏势）。** 对 $L\in\{6,10,14\}$,$C_L$ 上每个二面体稳定子平凡的 $\pm1$ 势都是好势。因此在这三个长度上,不存在与 $\Delta_L$ 不共享非平凡对称的坏 $\pm1$ 势。本命题依赖第 10 章的有限精确核验。
 
-**证明。** 第 10 章的代码对 $L\in\{6,10,14\}$ 枚举 $\{-1,1\}^L$,在 $D_L$ 作用与变号生成的群的每个轨道中取一个代表,只保留 $D_L$-轨道长为 $2L$(即稳定子平凡)的代表,并对每个这样的代表 $v$ 与每个站点 $j$,在正整数 $t_0\le29$ 中找到一个,使 $p(\cdot,t_0)$ 与 $q_j(\cdot,t_0)$ 在 $\mathbb Q[\lambda]$ 中的 Euclid 算法终止于非零常数。$p$ 与 $q_j$ 用引理 3.2 的公式 $p=(-1)^L(\operatorname{tr}M_j-2)$、$q_j=(-1)^{L-1}K_{L-1}(d_{j+1},\dots,d_{j+L-1})$ 以有理数精确计算;$\mathbb Q[\lambda]$ 中互素蕴含 $\mathbb R[\lambda]$ 中互素。代码断言每个代表都找到了证书。由引理 7.1,这些代表都是好势,并且同一轨道中的势也是好势,稳定子也平凡。
+**证明。** 第 10 章的代码对 $L\in\{6,10,14\}$ 枚举 $\{-1,1\}^L$,在 $D_L$ 作用与变号生成的群的每个轨道中取一个代表,只保留 $D_L$-轨道长为 $2L$(即稳定子平凡)的代表,并对每个这样的代表 $v$ 与每个站点 $j$,在正整数 $t_0\le29$ 中找到一个,使 $p(\cdot,t_0)$ 与 $q_j(\cdot,t_0)$ 在 $\mathbb Q[\lambda]$ 中的 Euclid 算法终止于非零常数。代码实际检查的是更强的条件:对每个代表,按 $t_0=1,2,\dots$ 的顺序取第一个对全部站点 $j$ 同时满足上述条件的 $t_0$,它蕴含逐站点的条件;对 $L\in\{6,10,14\}$ 的每个代表,第一个尝试值 $t_0=1$ 即满足。$p$ 与 $q_j$ 用事实 3.2 的公式 $p=(-1)^L(\operatorname{tr}M_j-2)$、$q_j=(-1)^{L-1}K_{L-1}(d_{j+1},\dots,d_{j+L-1})$ 以有理数精确计算;$\mathbb Q[\lambda]$ 中互素蕴含 $\mathbb R[\lambda]$ 中互素。代码断言每个代表都找到了证书。由引理 7.1,这些代表都是好势,并且同一轨道中的势也是好势,稳定子也平凡。
 
 若 $v$ 是坏势且与 $\Delta_L$ 不共享非平凡对称,则 $v$ 的二面体稳定子平凡:否则稳定子中非单位元的置换矩阵 $\Pi$ 满足 $\Pi\ne I$,$\Pi\ne-I$,且与 $A_L$、$V$ 可交换,是非平凡共享对称。于是 $v$ 落在某个已证为好势的轨道中,矛盾。∎
 
@@ -456,7 +456,7 @@ $$
 \lambda^2-4\lambda+2-t^2=ab-2=\operatorname{tr}\bigl(T(b)T(a)\bigr)=\Psi_4(\sigma_{+-}).
 $$
 
-**证明。** 若 $v_8=u^{m-1}u^{\sharp}$ 且 $8=rm$、$m\ge3$,则 $r\in\{1,2\}$,由命题 8.2 $v_8$ 有非平凡二面体对称,与命题 5.5 的交换子平凡矛盾。再看定理 4.6 的形式:$8=rm$、$m\ge3$ 同样迫使 $r\in\{1,2\}$,周期势只有常数 $\pm1$ 与 $\pm(+-)^4$ 四个;$v_8$ 与它们取值不同的站点集分别是 $\{4,6,7\}$($+1$)、$\{0,1,2,3,5\}$($-1$)、$\{1,3,4,5,6\}$($+-+-+-+-$)、$\{0,2,7\}$($-+-+-+-+$)。定理 4.6 的 $Q$ 是步长 $er$ 的陪集,$|Q|=\gcd(m,2j)$:$r=2$ 时 $m=4$、$j=1$,$Q$ 有 $2$ 个元素;$r=1$ 时 $m=8$,$j\in\{1,2,3\}$,$Q$ 有 $2$、$4$、$2$ 个元素,步长分别为 $4$、$2$、$4$。五元集放不进至多四元的 $Q$;三元集 $\{4,6,7\}$ 与 $\{0,2,7\}$ 同时含奇偶站点,放不进步长为偶数的陪集。故 $v_8$ 不是这种修改。等式部分:$\operatorname{tr}(T(x)T(y))=xy-2$,$ab=(2-\lambda)^2-t^2$,故 $ab-2=\lambda^2-4\lambda+2-t^2$,这正是母卷例 4.1 的 $g$;而 $\Psi_4(x)=x$。母卷例 4.1 证明了 $g$ 整除 $p$ 与 $q_1$,故 $g\mid g_1$;本命题不断言 $g=g_1$。∎
+**证明。** 若 $v_8=u^{m-1}u^{\sharp}$ 且 $8=rm$、$m\ge3$,则 $r\in\{1,2\}$,由命题 8.2 $v_8$ 有非平凡二面体对称,与命题 5.5 的交换子平凡矛盾。再看定理 4.6 的形式:$8=rm$、$m\ge3$ 同样迫使 $r\in\{1,2\}$。定理 4.6 中的块 $u\in\mathbb R^r$ 是实块,但 $v_8$ 在 $Q$ 以外与 $\tilde u$ 相同;$Q$ 的元素彼此相差 $er$ 的倍数,落在同一个模 $r$ 剩余类中,且 $|Q|=g=m/e\le m/2$(定理 4.6 的证明给出 $e\ge2$),而每个模 $r$ 剩余类有 $m$ 个站点,所以每个模 $r$ 剩余类都有 $Q$ 以外的站点 $i$,在那里 $u_{i\bmod r}=\tilde u_i=(v_8)_i\in\{\pm1\}$。故 $u\in\{-1,1\}^r$,周期势只有常数 $\pm1$ 与 $\pm(+-)^4$ 四个;$v_8$ 与它们取值不同的站点集分别是 $\{4,6,7\}$($+1$)、$\{0,1,2,3,5\}$($-1$)、$\{1,3,4,5,6\}$($+-+-+-+-$)、$\{0,2,7\}$($-+-+-+-+$)。定理 4.6 的 $Q$ 是步长 $er$ 的陪集,$|Q|=\gcd(m,2\nu)$:$r=2$ 时 $m=4$、$\nu=1$,$Q$ 有 $2$ 个元素;$r=1$ 时 $m=8$,$\nu\in\{1,2,3\}$,$Q$ 有 $2$、$4$、$2$ 个元素,步长分别为 $4$、$2$、$4$。五元集放不进至多四元的 $Q$;三元集 $\{4,6,7\}$ 与 $\{0,2,7\}$ 同时含奇偶站点,放不进步长为偶数的陪集。故 $v_8$ 不是这种修改。等式部分:$\operatorname{tr}(T(x)T(y))=xy-2$,$ab=(2-\lambda)^2-t^2$,故 $ab-2=\lambda^2-4\lambda+2-t^2$,这正是母卷例 4.1 的 $g$;而 $\Psi_4(x)=x$。母卷例 4.1 证明了 $g$ 整除 $p$ 与 $q_1$,故 $g\mid g_1$;本命题不断言 $g=g_1$。∎
 
 **开放问题 8.5（长度 $2p$）。** 对素数 $p\ge11$,$C_{2p}$ 上是否存在与 $\Delta_{2p}$ 不共享非平凡对称的坏 $\pm1$ 势?本卷的构造到不了这些长度:推论 4.4 需要 $L=rm$ 且 $m\ge3$;在 $L=2p$ 时只能 $r\in\{1,2\}$,由命题 8.2 得到的都是对称势;$r=p$、$m=2$ 时 $\Psi_2=1$,定理 4.3 不给出节点分支。定理 7.6 对 $p\le7$ 给出否定回答,但它依赖逐个长度的有限证书,不提供对一般 $p$ 的论证。缺的是一个对 $L=2p$ 的结构性障碍,例如把 Lindblad 与 Guerrero 对素数长度的单位根论证推广到 $2p$ 次单位根。
 
@@ -472,16 +472,17 @@ $$
 | --- | --- |
 | O. Lindblad, E. Guerrero, *Simple Eigenvalues and Non-vanishing Eigenvectors of the Anderson Model*, arXiv:2512.00278v1,§1(算子与定义 1.1、定理 1.3 之后的逆问题)、命题 2.3、引理 3.2、命题 4.1 | `literature-attested`:算子 $H_t=\Delta+tV$、好势与坏势的定义与二分(经母卷推论 3.3 使用)、逆问题的提法,以及命题 4.1:$d=1$ 且 $L$ 为素数时,势(对实值势陈述)是坏势当且仅当它关于某个顶点反射对称;后者用于定理 7.6 的素数长度部分。核对 v1 的 HTML 全文:该文不讨论合数长度,不使用转移矩阵或单点缺陷,也未给出无对称坏势。 |
 | 母卷 `docs/develop/theory/CYCLE_ANDERSON_PERSISTENT_NODAL_BRANCHES.md`:约定 2.1–2.5、定理 3.2、推论 3.3、例 4.1、定义 4.2、引理 4.3、定理 4.4、4.6 | 本仓既有卷,作为输入引用,不在本卷重新表态;其各条的文献表态见母卷第 8 章。 |
-| G. Teschl, *Jacobi Operators and Completely Integrable Nonlinear Lattices*, Math. Surveys Monogr. 72, AMS 2000,第 7 章(周期 Jacobi 算子、Floquet 判别式、Bloch 解) | `literature-attested`:引理 3.2 (2) 与 $p=(-1)^L(\operatorname{tr}M_j-2)$ 是 Floquet 判别式的有限圈形式;注 4.5 所说周期算子在 Bloch 相位 $2\pi k/m$($0<k<m/2$)处的二重简并;引理 4.8 是「Floquet 判别式在带内的根都是单根」的有限形式。式号定位未核;本卷对引理 3.2 写出了完整证明,不依赖该书。 |
-| R. L. Graham, D. E. Knuth, O. Patashnik, *Concrete Mathematics*, 2nd ed., Addison-Wesley 1994,§6.7(continuants) | `literature-attested`:引理 3.2 (1) 的连分式行列式递推与 $2\times2$ 矩阵积表示。 |
-| J. C. Mason, D. C. Handscomb, *Chebyshev Polynomials*, Chapman & Hall/CRC 2003,第 1 章 | `literature-attested`:$S_n(2\cos\theta)\sin\theta=\sin((n+1)\theta)$(第二类 Chebyshev 多项式的变量缩放),用于命题 4.2 与约定 2.4;引理 4.1 的幂公式是 Cayley–Hamilton 定理的标准推论,小节定位未核。 |
+| G. Teschl, *Jacobi Operators and Completely Integrable Nonlinear Lattices*, Math. Surveys Monogr. 72, AMS 2000,第 7 章(周期 Jacobi 算子、Floquet 判别式、Bloch 解) | `literature-attested`:事实 3.2 (2) 与 $p=(-1)^L(\operatorname{tr}M_j-2)$ 是 Floquet 判别式的有限圈形式;注 4.5 所说周期算子在 Bloch 相位 $2\pi k/m$($0<k<m/2$)处的二重简并;事实 4.8 是「Floquet 判别式在带内的根都是单根」的有限形式。式号定位未核;本卷对事实 3.2 写出了完整证明,不依赖该书。 |
+| R. L. Graham, D. E. Knuth, O. Patashnik, *Concrete Mathematics*, 2nd ed., Addison-Wesley 1994,§6.7(continuants) | `literature-attested`:事实 3.2 (1) 的连分式行列式递推与 $2\times2$ 矩阵积表示。 |
+| J. C. Mason, D. C. Handscomb, *Chebyshev Polynomials*, Chapman & Hall/CRC 2003,第 1 章 | `literature-attested`:$S_n(2\cos\theta)\sin\theta=\sin((n+1)\theta)$(第二类 Chebyshev 多项式的变量缩放),用于命题 4.2 与约定 2.4;事实 4.1 的幂公式是 Cayley–Hamilton 定理的标准推论,小节定位未核。 |
 | A. E. Brouwer, W. H. Haemers, *Spectra of Graphs*, Springer 2012,§1.4(路的谱) | `literature-attested`:路 $J_\ell$ 的谱为 $2\cos(\pi k/(\ell+1))$,即引理 5.2 的第一句;小节定位未核。引理 5.2 的互素判据是本卷的初等推论。 |
 | S. Lang, *Algebra*, rev. 3rd ed., Springer 2002,第 IV 章 §2(Gauss 引理)与 §8(结式) | `literature-attested`:Gauss 引理与首一多项式结式的取值交换性,用于命题 4.2 (1)、定理 6.5、引理 7.1。 |
-| — | `literature-attested`:引理 3.2、注 3.3、引理 4.1、引理 4.8。 |
-| — | `repo-derived`:定义 3.1、引理 3.4(母卷节点步在任意域上的形式)、定理 3.6、注 3.5、注 3.7、命题 4.2、推论 4.4、注 4.5、注 4.7、命题 4.9、引理 5.1、引理 5.2、引理 5.3、定理 5.4、命题 5.5、注 5.6、定义 6.1、引理 6.3、定理 6.5、注 6.6、命题 6.7、注 6.8、命题 6.9、引理 7.1、命题 7.2、命题 7.3、命题 7.5、命题 8.1–8.4。 |
-| — | `suspected-novel`:定理 4.3(单点缺陷原理)、定理 4.6(同余站点上的多点缺陷)、定理 6.2(族 $U_{r,m}$)、定理 6.4(既非素数也非素数两倍的长度)、命题 7.4、定理 7.6。检索范围:arXiv:2512.00278v1 的 HTML 全文;母卷第 8 章所列检索;以「bad potential」「Anderson model」「cycle」「symmetry」「converse」「composite length」组合的网络检索;latent symmetry 与 cospectral vertices 文献,包括 D. Smith, B. Webb, *Hidden symmetries in real and theoretical networks*, Physica A 514 (2019) 855–867(arXiv:1803.02328)、M. Röntgen 等, *Latent symmetry induced degeneracies*(arXiv:2011.13404)、M. Kempton, J. Sinkovic, D. Smith, B. Webb, *Characterizing cospectral vertices via isospectral reduction*, Linear Algebra Appl. 594 (2020) 226–248(仅核到书目信息)。这些文献讨论固定矩阵的隐藏对称与本征向量分量的消失,检索范围内未见对单参数族 $\Delta+tV$ 的持续节点分支、周期势单点缺陷或合数长度逆问题的处理。这不确立检索范围之外的优先权。 |
+| S. Roy, *A spectral viewpoint on the single defect tight-binding chain*, arXiv:2607.29467 | `literature-attested`(同类结果):均匀最近邻紧束缚链上单个在位缺陷的「暗子空间」,即在缺陷站点振幅为零、因而不受缺陷影响的本征态。定理 4.3 在 $r=1$(常数块、单点缺陷)时的特例是同一机制在圈上的形式:本征值 $2+tu_0-2\cos(2\pi k/m)$ 的、在缺陷站点为零的本征向量与缺陷强度 $w_q$ 无关;本卷只把它作为中间步骤与先例。只核对到摘要:该文对链陈述,圈上的对应与「对任意缺陷强度」的逐字陈述未核全文。 |
+| — | `literature-attested`:事实 3.2、注 3.3、事实 4.1、事实 4.8。这三条事实是已知结果,只作后文证明的中间步骤,不作为本卷新增的定理;写出证明只为自足。 |
+| — | `repo-derived`:定义 3.1、引理 3.4(母卷节点步在任意域上的形式)、定理 3.6、注 3.5、注 3.7、命题 4.2、推论 4.4、注 4.5、注 4.7、命题 4.9、引理 5.1、引理 5.2(其首句路的谱是 `literature-attested` 的中间步骤,见 Brouwer–Haemers 行;互素判据为本卷推论)、引理 5.3、定理 5.4、命题 5.5、注 5.6、定义 6.1、引理 6.3、定理 6.5、注 6.6、命题 6.7、注 6.8、命题 6.9、引理 7.1、命题 7.2、命题 7.3、命题 7.5、命题 8.1–8.4。 |
+| — | `suspected-novel`:定理 4.3(单点缺陷原理;承重部分是一般实块 $u\in\mathbb R^r$、一切耦合 $t$,以及 $\Psi_m(\sigma_u)$ 的每个首一不可约因子整除节点因子,与命题 4.9 合起来即无平方因子的 $\pm\Psi_m(\sigma_u)$ 整除节点因子;$r=1$ 特例是 Roy 行所列的 `literature-attested` 中间步骤)、定理 4.6(同余站点上的多点缺陷)、定理 6.2(族 $U_{r,m}$)、定理 6.4(既非素数也非素数两倍的长度)、命题 7.4、定理 7.6。检索范围:arXiv:2512.00278v1 的 HTML 全文;母卷第 8 章所列检索;以「bad potential」「Anderson model」「cycle」「symmetry」「converse」「composite length」组合的网络检索;latent symmetry 与 cospectral vertices 文献,包括 D. Smith, B. Webb, *Hidden symmetries in real and theoretical networks*, Physica A 514 (2019) 855–867(arXiv:1803.02328)、M. Röntgen 等, *Latent symmetry induced degeneracies*, Phys. Rev. Lett. 126 (2021) 180601(arXiv:2011.13404)、M. Kempton, J. Sinkovic, D. Smith, B. Webb, *Characterizing cospectral vertices via isospectral reduction*, Linear Algebra Appl. 594 (2020) 226–248(仅核到书目信息)。这些文献讨论固定矩阵的隐藏对称与本征向量分量的消失,检索范围内未见对单参数族 $\Delta+tV$ 的持续节点分支、周期势单点缺陷或合数长度逆问题的处理。这不确立检索范围之外的优先权。 |
 
-**核验边界。** 第 10 章的代码是本卷唯一的代码块,输入固定,只做两件事:(i) 对 $L\in\{4,6,10,14\}$,枚举 $\{-1,1\}^L$ 在二面体作用与变号下的轨道代表,对稳定子平凡的每个代表与每个站点,在正整数 $t_0\le29$ 中寻找使 $p(\cdot,t_0)$ 与 $q_j(\cdot,t_0)$ 在 $\mathbb Q[\lambda]$ 中互素的证书,并断言全部找到;它打印各长度的轨道总数与稳定子平凡的轨道数,读数为 $L=4$:$4$ 与 $0$;$L=6$:$8$ 与 $1$;$L=10$:$44$ 与 $18$;$L=14$:$362$ 与 $261$。(ii) 对 $3\le r\le8$、$3\le m\le12$,在 $t=1/3$ 处计算 $U_{r,m}$ 的 $p$ 与 $q_{q_{r,m}}$ 的最大公因式次数,断言等于 $r\lfloor(m-1)/2\rfloor$;同时断言 $\Psi_m(\sigma_r(\cdot,1/3))$ 与其导数互素,这一项只是命题 4.9 在 $t=1/3$ 处的一致性核对,不被任何证明使用。全部算术用 Python 标准库的有理数,末行打印哨兵 `ALL_FINITE_CHECKS_PASSED`。
+**核验边界。** 第 10 章的代码是本卷唯一的代码块,输入固定,只做两件事:(i) 对 $L\in\{4,6,10,14\}$,枚举 $\{-1,1\}^L$ 在二面体作用与变号下的轨道代表,对稳定子平凡的每个代表,在正整数 $t_0\le29$ 中寻找一个对全部站点 $j$ 同时使 $p(\cdot,t_0)$ 与 $q_j(\cdot,t_0)$ 在 $\mathbb Q[\lambda]$ 中互素的证书(比命题 7.4 证明所需的逐站点证书更强,并蕴含后者),并断言全部找到;对 $L\in\{6,10,14\}$ 的每个代表,第一个尝试值 $t_0=1$ 即是证书,所用的 $t_0$ 不在打印输出中;它打印各长度的轨道总数与稳定子平凡的轨道数,读数为 $L=4$:$4$ 与 $0$;$L=6$:$8$ 与 $1$;$L=10$:$44$ 与 $18$;$L=14$:$362$ 与 $261$。(ii) 对 $3\le r\le8$、$3\le m\le12$,在 $t=1/3$ 处计算 $U_{r,m}$ 的 $p$ 与 $q_{q_{r,m}}$ 的最大公因式次数,断言等于 $r\lfloor(m-1)/2\rfloor$;同时断言 $\Psi_m(\sigma_r(\cdot,1/3))$ 与其导数互素,这一项只是命题 4.9 在 $t=1/3$ 处的一致性核对,不被任何证明使用。全部算术用 Python 标准库的有理数,末行打印哨兵 `ALL_FINITE_CHECKS_PASSED`。
 
 依赖该代码的命题恰为:命题 7.4、命题 7.5、定理 7.6 中 $L\in\{6,10,14\}$ 的部分、命题 8.1 中好势的部分。第 3–6 章(含命题 6.7 的逐站点核对)与命题 7.2、7.3 不依赖任何计算。代码不覆盖:$L\ge22$ 的长度(特别是 $L=2p$,$p\ge11$);$r\ge9$ 或 $m\ge13$ 时 $U_{r,m}$ 节点因子的精确形。有限运行不证明任何关于一般 $L$ 或一般 $m$ 的全称命题。
 
