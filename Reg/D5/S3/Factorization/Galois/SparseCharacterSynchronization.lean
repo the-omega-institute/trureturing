@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Factorization.Galois.SparseCharacterSynchronization
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Field.ZMod
@@ -103,20 +104,36 @@ def registration : Registration arena.{u,v}
       simpa [edgeDifference, x] using he
     exact zero_ne_one hbad
 
-register_information_theorem edge_difference_kernel_eq_constants_iff in arena
-  readout via (realize signature.{u,v}
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Factorization.Galois.SparseCharacterSynchronization.edge_difference_kernel_eq_constants_iff.{u, v}) (type_of% (realize.{max (u + 1) (v + 1), max u v, 0, max u v, 0} signature.{u, v}
     (fun (_ : Unit) (p : signature.Params) (f : signature.State p) => by
-      letI : AddCommGroup p.2.2.1 := p.2.2.2
+      letI : AddCommGroup.{v} p.2.2.1 := p.2.2.2
       exact f.ker)
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Factorization.Galois.SparseCharacterSynchronization
-    coordinates := #[0, 1, 2, 3]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Factorization") "Galois") "SparseCharacterSynchronization") "edge_difference_kernel_eq_constants_iff") "Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization/Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Factorization.Galois.SparseCharacterSynchronization.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u, v})⟩,
+  objectArena := .source ⟨(arena.{u, v})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u, v}) ⟨(registration.{u, v})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{max (u + 1) (v + 1), max u v, 0, max u v, 0} signature.{u, v}
+    (fun (_ : Unit) (p : signature.Params) (f : signature.State p) => by
+      letI : AddCommGroup.{v} p.2.2.1 := p.2.2.2
+      exact f.ker)
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Factorization.Galois.SparseCharacterSynchronization, definition := none, coordinates := #[0, 1, 2, 3], readouts := #[{ path := #["body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

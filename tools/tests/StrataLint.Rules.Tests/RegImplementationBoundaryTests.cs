@@ -10,8 +10,8 @@ public sealed class RegImplementationBoundaryTests
 {
     private const string Lakefile = "Reg/lakefile.toml";
     private const string Source = "Reg/Source.lean";
-    private const string Judge = "LeanInformationAudit.Syntax";
-    private const string OtherJudge = "LeanInformationAudit.SealCommand";
+    private const string Judge = "LeanInformationAudit.ArtifactRegistration";
+    private const string OtherJudge = "LeanInformationAudit.CompiledSeal";
     private const string Config = """
         name = "reg"
         defaultTargets = ["Reg"]
@@ -107,8 +107,8 @@ public sealed class RegImplementationBoundaryTests
     public void SmallerDebtCannotIntroduceReplacement()
     {
         var baseline = Files((Source, $"import {Judge}\nimport {OtherJudge}\n"));
-        AssertBlock(Evaluate(baseline, Files((Source, "import LeanInformationAudit.Registry\n"))),
-            Source, "LeanInformationAudit.Registry");
+        AssertBlock(Evaluate(baseline, Files((Source, "import LeanInformationAudit.ArtifactAssessment\n"))),
+            Source, "LeanInformationAudit.ArtifactAssessment");
     }
 
     [Fact]
@@ -134,9 +134,9 @@ public sealed class RegImplementationBoundaryTests
     [Fact]
     public void InterfaceMathlibAndD5DependenciesPass()
     {
-        var head = Files((Source, "import D5.S0.Carrier.Source\nimport Mathlib\nimport LeanInformationAuditInterface.Syntax\n"),
+        var head = Files((Source, "import D5.S0.Carrier.Source\nimport Mathlib\nimport LeanInformationAuditInterface.Contract.Core\n"),
             ("D5/S0/Carrier/Source.lean", "import Mathlib\n"),
-            ("tools/lean-inspector-interface/LeanInformationAuditInterface/Syntax.lean", "import Lean\n"));
+            ("tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean", "import Lean\n"));
         AssertNoBlock(Evaluate(Files(), head));
     }
 
