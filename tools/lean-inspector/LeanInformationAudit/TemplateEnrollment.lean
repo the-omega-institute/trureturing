@@ -71,24 +71,21 @@ unsafe def Context.fromArtifacts (store : RawArtifacts.Store) (mainModule : Name
     (options : Options) (registeredTheorems : NameSet) : IO Context := do
   discard <| store.getModule `LeanInformationAudit.TemplateEnrollment
   let expressionContext : Contract.CompiledExpressions.Context := {
-    find := (store.constants[·]?), heartbeatStart := (← IO.getNumHeartbeats)
+    find := (store.constants.find?), heartbeatStart := (← IO.getNumHeartbeats)
     heartbeatLimit := 100000 * 1000 }
   let fingerprint := fun (info : ConstantInfo) (value : Expr) => do
     let (erased, work) ← Contract.CompiledExpressions.eraseProofs expressionContext value
     return (← IO.ofExcept <| compactRawIdentity info.levelParams erased (524288 - work)).1
   let mut pins := #[]
   for name in standardDictionaryNames do
-    if let some info := store.constants[name]? then
-      let some owner := store.owners[name]?
+    if let some info := store.constants.find? name then
+      let some owner := store.owners.find? name
         | throw <| IO.userError s!"raw.missing_dictionary_owner:{name}"
       let typeIdentity ← fingerprint info info.type
       let bodyIdentity ← fingerprint info (info.value?.getD info.type)
       pins := pins.push {
         identity := { name, owner, typeIdentity, bodyIdentity }
         levelCount := info.levelParams.length : PrimitivePin }
-  let mut moduleIndices : Std.HashMap Name Nat := {}
-  for index in [:store.moduleOrder.size] do
-    moduleIndices := moduleIndices.insert store.moduleOrder[index]! index
   let session ← IO.mkRef ({} : RegistrationGates.ProvenanceSession)
   let axioms ← IO.mkRef ({ closure := store.metadata.axioms } : CompiledAxioms.AxiomClosureState)
   let configured := maxHeartbeats.get options
@@ -100,14 +97,14 @@ unsafe def Context.fromArtifacts (store : RawArtifacts.Store) (mainModule : Name
       session, options, heartbeatStart := (← IO.getNumHeartbeats), heartbeatLimit := capped * 1000
       trace := fun message => do
         if profiling then (← IO.getStderr).putStrLn message }
-    moduleIndex? := (moduleIndices[·]?)
+    moduleIndex? := (store.moduleIndices[·]?)
     moduleImports? := fun name => (store.modules.find? name).map (·.imports.map (·.module))
     pins
     recursive := store.metadata.recursive.contains
     registeredTheorems
     implementedBy := fun name => (store.metadata.implementedBy.find? name).isSome
     extern := store.metadata.externs.contains
-    collectAxioms := CompiledAxioms.collectAxiomsShared (store.constants[·]?) axioms }
+    collectAxioms := CompiledAxioms.collectAxiomsShared (store.constants.find?) axioms }
 
 private def fail [Monad m] [MonadLiftT IO m] (reason : String) : m α :=
   liftM (m := IO) (throw (IO.userError reason) : IO α)
