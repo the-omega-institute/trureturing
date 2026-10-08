@@ -1,0 +1,26 @@
+### 29.2. 同一轮筛 Gram 的零空间有明确来源
+
+在计数内积中，$J$ 的伴随是实际纤维和
+$$
+(J^*v)(a)=\sum_{\rho r=a}v(r).
+$$
+由等纤维大小，$J^*J=qI$。因此
+$$
+U=\frac{J}{\sqrt q},\qquad
+(U^*v)(a)=\frac1{\sqrt q}\sum_{\rho r=a}v(r)
+$$
+是等距嵌入与其伴随，并给正交分解
+$$
+\mathbb C^{\mathbb Z/W\mathbb Z}
+=\operatorname{im}U\ \mathbin{\perp}\ \ker U^*,\qquad
+\dim\ker U^*=W-R.
+\tag{29.4}
+$$
+第一部分恰为每个纤维上取常值的信号；第二部分恰为每个纤维上的和为零的信号。正交投影 $UU^*$ 在每个纤维上取平均。移位保持这两部分，所以任意带标签窗口也保持它们。
+
+取第27节同一实际轮筛 $f_M$，并用其全部原移位构造 Gram
+$$
+G_M(r,s)=\frac1M\sum_{u\in\mathbb Z/M\mathbb Z}
+\overline{f_M(u+r)}f_M(u+s),\qquad M=R,W.
+\tag{29.5}
+$$
