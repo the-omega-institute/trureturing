@@ -70,8 +70,9 @@ internal sealed class FinitePositiveIntervalControlDocument : IScribeDocumentDef
     private static Formula Statement()
     {
         Formula p = F.Id("p"), P = F.Id("P"), x = F.Id("x"), q = F.Id("q"),
-            w = F.Id("w"), v = F.Id("v"), Q = F.Id("Q"), C = F.Id("C");
+            w = F.Id("w"), v = F.Id("v");
         Formula h = Call("clog", D(2), P), B = Seq(h, Times, Grp(Seq(P, Minus, D(1))));
+        Formula Q = Call("Control", p, P, B), C = Call("table", p, P, B);
         Formula X = Call("ZMod", Seq(p, Times, P));
         Formula word = Call("Cons", F.Id("R"), Call("Unit", w));
         Formula sum = Call("sum", w), len = Call("length", w);
