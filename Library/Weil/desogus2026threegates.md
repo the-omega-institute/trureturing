@@ -2525,6 +2525,336 @@ For fixed $\lambda$, the coefficient of $\|\phi\|_{H^2}^2$ tends to zero even on
 
 The explicit mesh cost and full-row comparison supply the missing all-prime partition-tail interface to the source criterion. They do not supply its finite matrix sign or the source's full collar transport. All original selected global Robin-ratio maximizer, signed target, coefficients, actual zero real parts, both signs, heights, multiplicities, elementary correction and strict core remain unchanged. RH and the original signed Robin estimate remain unproved. No Lean certification, numerical certificate, whole-old inverse or mathematical-priority claim is made.
 
+## Pay the whole coarse-to-tail row, including the almost aligned pole
+
+The complete positive tail in (T80) does not bound the finite coupling Gram in (T82). The compact-probe row estimate (T83) also does not apply directly to every coarse vector: a step function's row has logarithmic endpoint singularities and need not be $H^1$. The following pays the **whole** polar-containing coarse space in its actual $L^2$ norm. Reuse the same physical realization, multiplier, zero extension, domains and exact positive-tail short. Classical Fourier series Parseval, continuous Plancherel, translation moments and the source's finite Schur implication are inputs. The consumer is a width-uniform actual Gamma coupling, followed by the complete arithmetic finite-short comparison; neither a general Fourier alias theorem nor a new Schur criterion is claimed.
+
+Let $P_a^0$ denote the odd cell-average projection used in (T80), with actual equal cell width $\ell=\ell_a\le h_a<1$. Let $P_\ell$ denote cell averaging on the whole lattice of intervals $[j\ell,(j+1)\ell)$, $j\in\mathbb Z$. The physical endpoints $\pm a$ are lattice endpoints. Continue to use $\Pi_a$ for the projection onto $\mathcal V_a$, and $\Theta_a=I-\Pi_a$. Write $\Gamma$ for the whole-line archimedean operator with multiplier $A_\Gamma(t)$ from (T79); the physical row is its restriction after zero extension. Its scalar and the entire regular Gamma part are retained.
+
+### The large scalar Gamma row cancels in the cell tail
+
+Split the actual kernel as
+
+$$
+\kappa(u)=\frac{e^{-u/2}}{2u}+b(u),
+\qquad b(u)\ge0,\qquad \int_0^\infty b(u)du<\infty.
+$$
+
+The nonnegativity uses $1-e^{-2u}\le2u$. At zero $b(u)=1/2+O(u)$, and at infinity it decays exponentially. Thus
+
+$$
+A_\Gamma(t)=c_\Gamma+L(t)+B(t),
+\qquad L(t)=\tfrac12\log(1+4t^2),
+\qquad |B(t)|\le4\|b\|_1.
+$$
+
+For a finitely supported cell-constant function
+$p(y)=\ell^{-1/2}\sum_j d_j\mathbf1_{[j\ell,(j+1)\ell)}(y)$,
+put $D(\theta)=\sum_jd_je^{-ij\theta}$ and
+
+$$
+c_m(\theta)=\int_0^1e^{-i(\theta+2\pi m)v}dv,
+\qquad -\pi\le\theta\le\pi.
+$$
+
+Its exact Fourier values at the common aliases are
+$\widehat p((\theta+2\pi m)/\ell)=\sqrt\ell\,D(\theta)c_m(\theta)$.
+Fourier series Parseval of $e^{-i\theta v}$ on $(0,1)$ gives
+$\sum_m|c_m(\theta)|^2=1$.
+Cell averaging is the orthogonal projection onto the line with components $c_m(\theta)$ in each such Fourier fibre. Hence the squared row norm of $(I-P_\ell)L(D)p$ is the integral of $|D(\theta)|^2$ times the variance of the real numbers
+$L_m=L((\theta+2\pi m)/\ell)$ under the weights $|c_m|^2$, with the common measure $d\theta/(2\pi)$.
+
+For $m\ne0$ and $0<|\theta|\le\pi$,
+
+$$
+|c_m(\theta)|^2\le\frac{\theta^2}{\pi^2m^2},
+\qquad
+0\le L_m-L_0
+\le C+\log(1+|m|)+\log^+(1/|\theta|),
+$$
+
+uniformly for $0<\ell\le1$. Indeed
+$\pi|m|\le|\theta+2\pi m|\le3\pi|m|$ and
+$L_m-L_0=\tfrac12\log[(\ell^2+4(\theta+2\pi m)^2)/(\ell^2+4\theta^2)]$.
+Bounding the variance by the second moment centered at $L_0$ gives a uniform constant: the sum of $\log^2(1+|m|)/m^2$ is finite and
+$\theta^2[\log^+(1/|\theta|)]^2$ is bounded. At $\theta=0$ all noncentral weights vanish, so the same statement holds. The term $\log(1/\ell)$ cancels in these differences; a full row bound before this cancellation would lose uniformity.
+
+The scalar $c_\Gamma$ has no cell-tail component, and the bounded multiplier $B$ supplies only a fixed allowance. Therefore a fixed finite $G_0$, independent of $a$, $\ell$, the cell count and the coefficients, satisfies
+
+$$
+\boxed{
+\|(I-P_\ell)\Gamma p\|_{L^2(\mathbb R)}
+\le G_0\|p\|_2,
+\qquad
+\|\Theta_a(\Gamma p)|_{(-a,a)}\|_2\le G_0\|p\|_2.
+}
+\tag{T84}
+$$
+
+The second estimate follows because the restriction of $P_\ell\Gamma p$ is an odd physical cell-constant vector, killed by $\Theta_a$. It includes the physical endpoint jumps rather than discarding them. The finite step functions are in the operator domain by the same logarithmic Fourier decay used in (T82).
+
+### Orthogonalize the actual pole before estimating it
+
+The actual pole is almost cell-constant as $\ell$ decreases. Bounds on arbitrary coefficients in the raw basis $(\text{cell constants},s_a^{\rm ph})$ would not pay that conditioning. Instead use its exact orthogonal remainder
+
+$$
+ w_a=s_a^{\rm ph}-P_a^0s_a^{\rm ph}.
+$$
+
+It is nonzero, is odd, has zero integral on each cell, and lies in $\mathcal V_a$. Each $u\in\mathcal V_a$ has the unique orthogonal splitting
+$u=p+zw_a$ with $p=P_a^0u$, and
+$\|u\|_2^2=\|p\|_2^2+|z|^2\|w_a\|_2^2$.
+
+On every cell the derivative of $s(y)=\sinh(y/2)$ is $s'(y)=\tfrac12\cosh(y/2)>0$, with ratio of maximum to minimum at most $e^{\ell/2}$. The variance identity
+$\int_I|s-s_I|^2=(2\ell)^{-1}\iint_{I^2}|s(y)-s(x)|^2dxdy$
+therefore gives fixed constants $c,C>0$ such that
+
+$$
+ c\ell^2\|s'\|_{L^2(-a,a)}^2
+\le\|w_a\|_2^2
+\le C\ell^2\|s'\|_{L^2(-a,a)}^2.
+$$
+
+Let $J_b$ be every jump of the zero-extended $w_a$, including those at $\pm a$. Interior jumps are differences of neighboring cell averages of $s$. The endpoint deviations have the same cellwise derivative allowance. Summing these estimates gives
+
+$$
+\ell\sum_b|J_b|^2
++\ell^2\|(w_a)'_{\rm pw}\|_2^2
+\le C\|w_a\|_2^2.
+$$
+
+For $0<t<\ell$, a path of length $t$ meets at most one lattice jump. The integrated derivative part has squared norm at most $t^2\|(w_a)'_{\rm pw}\|^2$, and the integrated jump part at most $t\sum_b|J_b|^2$. Larger shifts use the usual $4\|w_a\|^2$ bound. Together with the genuine primitive estimate (T78), this supplies
+
+$$
+\boxed{
+\begin{aligned}
+\|\tau_t w_a-w_a\|_2^2
+&\le C\min(t/\ell,1)\|w_a\|_2^2,\qquad t>0,\\
+\frac1{2\pi}\int\frac{|\widehat w_a(t)|^2}{(\ell t)^2}dt
+&\le\pi^{-2}\|w_a\|_2^2,\\
+\frac1{2\pi}\int|\ell t|^{1/2}|\widehat w_a(t)|^2dt
+&\le C\|w_a\|_2^2.
+\end{aligned}
+}
+\tag{T85}
+$$
+
+For the last line use the classical translation-moment identity: integrating
+$\|\tau_t w-w\|^2$ against $t^{-3/2}dt$ is a fixed positive multiple of its Fourier $|t|^{1/2}$ moment. The short-shift bound makes that integral $O(\ell^{-1/2}\|w\|^2)$. No smoothness across a jump, endpoint-free approximation or constant uniform in an unnormalized polar coefficient is assumed.
+
+### The pole remainder also has a width-uniform Gamma row
+
+For $0<\ell\le1$ and $\eta\ne0$,
+
+$$
+\left|\tfrac12\log(\ell^2+4\eta^2)\right|^2
+\le C\left[
+\mathbf1_{\{|\eta|\le1\}}|\eta|^{-2}
++\mathbf1_{\{|\eta|>1\}}(1+|\eta|^{1/2})\right].
+$$
+
+Apply this with $\eta=\ell t$, and use (T85), the multiplier split and Plancherel. It gives
+$\|[\Gamma-\log(1/\ell)I]w_a\|_2\le G_1\|w_a\|_2$ on the whole line, for a fixed $G_1$.
+Since $\Theta_aw_a=0$, restriction and projection remove the subtracted scalar exactly. Combining this with (T84) on the **orthogonal** splitting of $u$ gives a fixed $G_*$ such that
+
+$$
+\boxed{
+\|\Theta_a(\Gamma u)|_{(-a,a)}\|_2
+\le G_*\|u\|_2
+\quad\text{for every }u\in\mathcal V_a.
+}
+\tag{T86}
+$$
+
+All constants are independent of the endpoint, the width, the finite rank and the choice of $\lambda$ in (T80). This is a uniform row estimate, not positivity of the Gamma-minus-prime core. The scalar cancellation has been paid separately for both actual orthogonal components, including the near-alignment of the original pole and cell constants.
+
+### The complete finite coupling is now paid in $L^2$
+
+The actual core row retains every $n<e^{2a}$ and both zero-extension prime translations. Reuse their full norm allowance $2W_a$. The rank-one pole has zero tail component because $\Theta_as_a^{\rm ph}=0$. Thus the same coupling for the true core and full form satisfies
+
+$$
+\boxed{
+\|K_au\|_2\le(G_*+2W_a)\|u\|_2,
+\qquad
+K_a=\Theta_a C_a\Pi_a,
+\qquad
+K_a^*K_a\preceq(G_*+2W_a)^2\Pi_a.
+}
+\tag{T87}
+$$
+
+This bound concerns one complete row with its common physical projection. It uses a conservative triangle allowance for the prime terms; it neither independently adjusts their phases nor claims a cancellation between them. It loses their possible favorable common-source interference, but omits none of them. The true coefficient-$2$ pole remains in the finite diagonal below.
+
+Let $H_a$ be the positive operator associated with the closed form restriction to the actual tail $\Theta_a\mathcal H_a$, using (T80), and let
+$D_a=\Pi_a C_a\Pi_a-2|s_a^{\rm ph}\rangle\langle s_a^{\rm ph}|$
+be the full finite compression. Reuse the exact positive-tail Schur identity, with $S_a^{\rm part}$ the actual finite short from (T83). Equations (T80) and (T87) supply the full finite-operator comparison
+
+$$
+\boxed{
+\begin{aligned}
+S_a^{\rm part}&=D_a-K_a^*H_a^{-1}K_a,\\
+0\preceq D_a-S_a^{\rm part}
+&\preceq\delta_a\Pi_a,
+\qquad
+\delta_a=\frac{(G_*+2W_a)^2}{\lambda}.
+\end{aligned}
+}
+\tag{T88}
+$$
+
+The inverse is the positive operator of this tail restriction, not an inverse of an unproved positive full old operator. The Gram is the one defined by the complete $L^2$ rows, as in (T82). Unlike the compact-only $H^2$ allowance (T83), (T88) covers **every** vector in the actual finite space with its $L^2$ norm, including arbitrary coefficients and the normalized orthogonal polar remainder. No finite diagonal or short sign has been assumed.
+
+### Moving the tail floor pays a smaller error at an explicit rank cost
+
+The width-uniform proof allows $\lambda$ to grow with the endpoint. Take
+
+$$
+\lambda_a=(1+a)(1+W_a)^2,
+\qquad
+h_a=2\pi e^{c_\Gamma-2W_a-\lambda_a}
+$$
+
+and use the same reflected partition and actual pole. For a fixed $C_*$ independent of all parameters,
+
+$$
+\boxed{
+0\preceq D_a-S_a^{\rm part}
+\preceq\frac{C_*}{1+a}\Pi_a,
+\qquad
+\log\dim\mathcal V_a\sim4a e^{2a}.
+}
+\tag{T89}
+$$
+
+The rank statement follows from (T81) and the same unconditional $W_a\sim2e^a$. At $a=\tfrac12\log k$ its logarithm is asymptotic to $2k\log k$. This is a larger construction than the fixed-$\lambda$ partition with log rank $\sim4\sqrt k$; the increased resolution pays the uniformly smaller **whole-coarse** coupling debit. It is not an efficient finite certificate, a necessary lower cost for RH, or a sign bound. A large rank by itself proves no exhaustion.
+
+There is a direct consumer for the remaining sign obligation. Suppose on an unbounded cofinal family of these actual endpoints one could establish
+
+$$
+ D_a\succeq-\epsilon_a\Pi_a,
+ \qquad \epsilon_a\ge0,
+ \qquad \epsilon_a\longrightarrow0.
+\tag{T90}
+$$
+
+Then (T88)–(T89) give
+$S_a^{\rm part}\succeq-(\epsilon_a+C_* /(1+a))\Pi_a$.
+Completing the same positive tail square implies
+$\mathcal Q_a(f)\ge-(\epsilon_a+C_* /(1+a))\|f\|_2^2$
+for every admitted full vector at those endpoints, since $\|\Pi_af\|\le\|f\|$. Every fixed compact odd test is eventually admitted, with its full energy unchanged by zero extension. Letting the endpoint tend to infinity would therefore give its nonnegative complete Weil energy. The source's restricted odd criterion and exact support closure are separate existing suppliers for the final RH implication under the stated realization bridge.
+
+Thus an asymptotically nonnegative full finite **compression**, allowing small negative finite eigenvalues, is a sufficient input once this complete vanishing coupling debit is paid. It is not necessary to certify a fixed positive gap or exact nonnegative finite barrier at every finite endpoint. No bound (T90) has been established here. The unsigned coupling estimate does not imply it, and a failed conservative finite barrier would not refute the complete form.
+
+The actual finite compression must still retain its complete prime translations, Gamma potential and coefficient-$2$ pole on the common coarse space. Its cofinal negative-eigenvalue control, the source's full collar correspondence, the original selected-maximizer signed Robin estimate and RH remain unproved. All original coefficients, actual zero real parts, both signs, all heights and multiplicities, elementary correction and strict core are preserved. These are conditional paper-level actual-row and finite-short estimates, without Lean, numerical certification, a full old inverse or a mathematical-priority claim.
+
+## An offcritical zero forces exponential descent of the actual compression
+
+Reuse the compact odd zero-isolation argument in the primary's proof of its restricted Weil criterion, together with the same complete zero-side identity and physical realization used above. The extra estimate here concerns the physical $L^2$ normalization of those witnesses and their transfer to the **actual** finite compression (T88)–(T89). It keeps every actual zero, both ordinate signs and all multiplicities. It does not establish a lower bound for that compression or adopt the source's full RH argument.
+
+### Normalize the isolating bump with a contracting convolution norm
+
+Suppose one actual centered zero is $z_0=\rho_0-1/2=\delta+i\gamma$, $\delta>0$. There are no real nontrivial zeta zeros, so $\gamma\ne0$. Choose a real even nonnegative $\eta\in C_c^\infty(-r_0,r_0)$, $\int\eta=1$, whose bilateral Laplace transform $E(z)=\int\eta(x)e^{zx}dx$ has $d=|E(z_0)|>0$. A sufficiently narrow unit bump supplies this nonvanishing.
+
+For fixed sufficiently large $b$ put
+
+$$
+\begin{aligned}
+\eta_b(x)&=\tfrac12[\eta(x-b)+\eta(x+b)],\\
+R_b&=|E(z_0)\cosh(bz_0)|,\qquad
+\psi_b=\eta_b/R_b,\qquad r=b+r_0.
+\end{aligned}
+$$
+
+Since $|\cosh(bz_0)|^2=\sinh^2(b\delta)+\cos^2(b\gamma)$, one has
+
+$$
+\boxed{
+|\Psi_b(z_0)|=1,\qquad
+q_b:=\|\psi_b\|_1=R_b^{-1}<1,\qquad
+\kappa_b:=\frac{2\log R_b}{r}\longrightarrow2\delta
+\quad(b\to\infty).
+}
+\tag{T91}
+$$
+
+The limit uses $\log R_b=\delta b+\log(d/2)+o(1)$; it requires no choice of an ordinate phase or a largest zero real part.
+
+Write $\Psi_b$ for the bilateral Laplace transform of $\psi_b$. For this one fixed bump, reuse the source's fixed height cut, even zero-killing polynomial $P$, and real even polynomials $U_M(z)=u_M+v_Mz^2$ with uniformly bounded coefficients. Its real odd compact tests have transforms
+
+$$
+F_M(z)=zP(z)U_M(z)\Psi_b(z)^M,\qquad F_M(z_0)=1.
+$$
+
+The coefficient bound follows from the fixed invertible real-linear map $(u,v)\mapsto u+vz_0^2$, since $\Im(z_0^2)=2\delta\gamma\ne0$. The existing isolation step includes all other zeros: the polynomial removes the finite head, and a fixed rapid-decay majorant times $q_{\rm tail}^{2(M-M_0)}$, $q_{\rm tail}<1$, pays the whole infinite-height remainder. Thus $\mathcal Q(f_M)\le-2m_{\rho_0}$ for sufficiently large $M$.
+
+Put the fixed-order differential operator corresponding to $zPU_M$ on just one convolution factor. Its $L^2$ norm has an $M$-independent bound, because the bump and polynomial are fixed and the two coefficients of $U_M$ are bounded. Young's inequality then gives fixed $C_b<\infty$ with
+
+$$
+\boxed{
+\operatorname{supp}f_M\subset[-Mr,Mr],\qquad
+\|f_M\|_2\le C_bq_b^{M-1},\qquad
+\mathcal Q(f_M)\le-2m_{\rho_0}<0.
+}
+\tag{T92}
+$$
+
+No estimate for a growing derivative order is used. Constants and the starting index may depend on the chosen zero, bump and fixed height cut; uniformity over zero heights is not asserted. The same test has a fixed negative zero response while its physical norm decreases geometrically.
+
+### Transfer the witness to the same full finite matrix
+
+Let $m_a^{\rm odd}$ denote the infimum of $\mathcal Q_a(f)/\|f\|_2^2$ over nonzero admitted real odd tests; no existence of an extremizing vector is needed. Fix $0<\kappa<2\delta$ and choose $b$ with $\kappa_b>\kappa$. At an endpoint $a$, take $M=\lfloor a/r\rfloor-1$, so that the corresponding test is strictly inside the admitted interval. Equation (T92) gives its physical Rayleigh quotient at most $-c_\kappa e^{\kappa a}$ for every sufficiently large endpoint.
+
+Let $u=\Pi_af_M$. It is nonzero, because a vector wholly in the actual positive tail cannot have negative energy. Exact tail completion gives $S_a^{\rm part}(u)\le\mathcal Q(f_M)$, and $\|u\|_2\le\|f_M\|_2$. Dividing the negative energy by the smaller norm strengthens the inequality. The whole-finite comparison (T89), with its original pole and common metric, therefore yields
+
+$$
+\boxed{
+\lambda_{\min}(D_a)
+\le-c_\kappa e^{\kappa a}+\frac{C_*}{1+a}
+\le-\tfrac12c_\kappa e^{\kappa a}
+\quad\text{for all sufficiently large }a.
+}
+\tag{T93}
+$$
+
+The full infinite-height contribution was paid before this projection. No shifted metric, replacement zero spectrum or whole-old inverse appears in this transfer.
+
+Consequently an actual lower allowance on an unbounded cofinal sequence,
+
+$$
+\boxed{
+D_{a_j}\succeq-M_j\Pi_{a_j},\qquad M_j\ge0,\qquad
+\frac{\log(1+M_j)}{a_j}\longrightarrow0,
+}
+\tag{T94}
+$$
+
+would exclude every offcritical zero. This sufficient input allows growing negative finite eigenvalues; it need not tend to zero as in (T90). More generally a logarithmic allowance rate at most $\nu$ would exclude zeros with $\Re\rho>1/2+\nu/2$, and reflection gives the corresponding left bound. With the arithmetic clock $k=e^{2a}$, an offcritical displacement $\delta$ forces descent at least $k^\eta$ for every $0<\eta<\delta$; (T94) asks for a $k^{o(1)}$ negative allowance. Selecting a cofinal FIB schedule supplies none of this actual joint estimate.
+
+### The available conservative allowance still has rate one
+
+The existing whole Gamma floor, complete prime norm bound and true pole give
+
+$$
+\begin{aligned}
+\|s_a^{\rm ph}\|_2^2&=\sinh a-a,\\
+D_a&\succeq
+[c_\Gamma-2W_a-2(\sinh a-a)]\Pi_a.
+\end{aligned}
+$$
+
+Using the already-retained unconditional $W_a\sim2e^a$, the corresponding nonnegative lower allowance satisfies
+
+$$
+\boxed{
+M_a^{\rm raw}:=2W_a+2(\sinh a-a)+|c_\Gamma|
+\sim5e^a,\qquad
+\frac{\log(1+M_a^{\rm raw})}{a}\longrightarrow1.
+}
+\tag{T95}
+$$
+
+It cannot contradict the forced rate $\kappa<2\delta<1$. The vanishing coupling debit pays the finite-short transfer but does not change this finite diagonal allowance. A joint arithmetic estimate reaching (T94), the source's independent full-form correspondence, and the original selected-maximizer signed Robin budget remain unproved. The witness rate and actual-matrix transfer are conditional paper deductions, without mathematical-priority or Lean-certification claims; the sufficient growth interface is not an achieved lower estimate.
+
 ## v2: the claimed induction step
 
 The following induction and fold formulas are those of [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), revised **20 September 2026**, 69 pages. At the arithmetic endpoint $a_k=(\log k)/2$, the source retains the pole term in $A_k=C_k-2|s_k\rangle\langle s_k|$. Lemma 6.27, under the old endpoint's positivity and inverse hypotheses, forms the actual harmonic extension
