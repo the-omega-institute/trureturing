@@ -2350,7 +2350,7 @@ Gocht、McBride、McCreesh、Nordstrom、Prosser、Trimble，*Certifying Solvers
 
 ### 40.1 定义与假设
 
-沿用 [openai2026maximum](../../../Library/Quantum/openai2026maximum.md) 的固定种子块与固定补空间标架。以下只使用其 `completion.tex` 的精确块恒等式，不以全局计算结论作为假设。
+沿用 [openai2026maximum](../../../Library/QuantumBounds/openai2026maximum.md) 的固定种子块与固定补空间标架。以下只使用其 `completion.tex` 的精确块恒等式，不以全局计算结论作为假设。
 
 令六阶去相位复 Hadamard 矩阵为
 
