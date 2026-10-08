@@ -152,7 +152,7 @@ Y+Z\le1.
 ```math
 \mathcal P
 =
-\operatorname{conv}
+\mathrm{conv}
 \{v_0,v_2,v_5,v_{25},v_3\}.
 ```
 
@@ -361,7 +361,7 @@ w=\min\{X,Y,r-X,r-Y\}.
 **推导 4.3（条件协方差与单份线性读出的障碍）。** 当 $r>0$，条件化底面得到
 
 ```math
-\operatorname{Cov}(x,y\mid z=0)
+\mathrm{Cov}(x,y\mid z=0)
 =\frac{\kappa}{r}-\frac{XY}{r^2}
 =\frac{\Delta}{r^2}.
 ```
@@ -570,7 +570,7 @@ X=Y=\frac25,\qquad Z=\frac15,
 **推导 6.3（一般律与边界）。** 对任意 $r>0$ 的五模式律，
 
 ```math
-\operatorname{Cov}(x,y)=\kappa-XY
+\mathrm{Cov}(x,y)=\kappa-XY
 =\frac{\Delta+XYZ}{r}.
 ```
 
