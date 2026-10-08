@@ -1,0 +1,37 @@
+**数学引文 13.2（组成的复群及实自治提升）。** 双曲卷定义 4.3、5.1–5.3 固定
+
+```math
+R_f=(2M-I)/\sqrt5,\quad P_\pm=(I\pm R_f)/2,\quad
+\mathcal U(t)=e^{at}P_++e^{(-a-i\pi)t}P_-.
+```
+
+有 $`\mathcal U(s+t)=\mathcal U(s)\mathcal U(t)`$、$`\mathcal U(n)=M^n`$。一个整二维输入的三维实自治提升，取正交谱基 $`v_+,v_-`$，写 $`c=c_+v_++c_-v_-`$，嵌入 $`\mathsf Ec=(c_+,c_-,0)`$，流为
+
+```math
+\mathcal T_3(t)(u,v,w)=
+\left(e^{at}u,e^{-at}[v\cos\pi t-w\sin\pi t],
+e^{-at}[v\sin\pi t+w\cos\pi t]\right).
+```
+
+读口 $`\mathsf L(u,v,w)=uv_++(v-iw)v_-`$ 满足
+
+```math
+\mathsf L\mathcal T_3(t)\mathsf E=\mathcal U(t),\qquad
+\mathcal T_3(n)\mathsf E=\mathsf EM^n.
+```
+
+两种表示都完整保留其声明的组成输入；三维最小性只在固定实线性单射、同一实自治线性群交织全部二维输入的合同内成立。二维实群若一步为 $`M`$，则 $`M=T(1/2)^2`$ 与 $`\det M=-1`$ 矛盾。三维构造增加的是表示方向，不是物理轴。
+
+实部投影 $`\mathcal A(t)=\Re\mathcal U(t)`$ 却一般不闭合：
+
+```math
+\mathcal A(t)=e^{at}P_++e^{-at}\cos(\pi t)P_-,
+```
+
+```math
+\mathcal A(s+t)-\mathcal A(s)\mathcal A(t)
+=-e^{-a(s+t)}\sin(\pi s)\sin(\pi t)P_-.
+```
+
+半整数时的负谱信息可在后来返回。全实域的秩下降不能冒充两棵整数树的碰撞：双曲卷推导 5.5 证明其在精确有理组成上仍单射。该卷定理 7.3–7.4 给同一五模式实概率均值的碰撞及已有原生空窗继续见证，直接保留该限定。
+

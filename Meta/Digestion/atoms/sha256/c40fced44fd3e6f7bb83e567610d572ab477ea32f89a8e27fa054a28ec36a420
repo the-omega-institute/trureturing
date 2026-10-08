@@ -1,0 +1,28 @@
+**数学引文 9.2（路径均值的必要充分条件及 Markov 补全）。** 可实现均值恰满足
+
+```math
+0\le u_i\le1,\qquad u_i+u_{i+1}\le1\quad(1\le i\lt N).
+```
+
+等价地
+
+```math
+\mathrm{conv}\{b\in\{0,1\}^N:b_ib_{i+1}=0\}
+=\{u\in[0,1]^N:u_i+u_{i+1}\le1\}.
+```
+
+证明性推导。必要性来自每个合法来源上的 $`b_i+b_{i+1}\le1`$。充分性对 $`N=1`$ 用 Bernoulli 律。对 $`N\ge2`$，为每条边定义同行列边缘相容的表
+
+```math
+\Pi_i=\begin{pmatrix}1-u_i-u_{i+1}&u_{i+1}\\u_i&0\end{pmatrix},
+\qquad \pi_i=(1-u_i,u_i).
+```
+
+其行边缘为 $`\pi_i`$，列边缘为 $`\pi_{i+1}`$。在 $`\pi_i(a)>0`$ 的行定义 $`P_i(a,b)=\Pi_i(a,b)/\pi_i(a)`$；在零边缘行定义 $`P_i(a,0)=1,P_i(a,1)=0`$。从 $`\pi_1`$ 起，以这些转移构造
+
+```math
+\Pr(b_1,\ldots,b_N)=\pi_1(b_1)\prod_{i=1}^{N-1}P_i(b_i,b_{i+1}).
+```
+
+逐行归一化保证总质量一。归纳给每位边缘 $`\pi_i`$ 和每条边表 $`\Pi_i`$；零边缘行从不被正概率访问，任意退化 $`u_i=0`$ 或 $`1`$ 均已涵盖。$`11`$ 格概率零，所以来源合法。所有均值因此来自同一构造律。这是 [Wainwright–Jordan 文献注](../../../Library/Estimation/wainwrightjordan2008graphical.md) §2.5.2、Proposition 2.1 的路径具体构造，亦是 fence 链多面体实例。$`N=3`$ 时坐标 $`(u_1,u_2,u_3)=(X,Z,Y)`$ 就是本卷金字塔。证毕。
+
