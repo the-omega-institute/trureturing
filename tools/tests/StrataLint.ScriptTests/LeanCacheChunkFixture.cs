@@ -39,33 +39,26 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         {
             packages = new[] { new { name = "mathlib", rev = Revision, inputRev = "requested-tag" } },
         }));
-        foreach (var name in new[] { "reuse.py", "publication.py", "materials.py" })
-            ScriptHarnessScratch.CopyScriptInto(
-                Path.Combine(TestRepositoryLayout.FindRoot(), "tools/lean-inspector", name),
-                Path.Combine(repository, "tools/lean-inspector", name));
-        ScriptHarnessScratch.CopyScriptInto(
-            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/report/lean-report-selection.py"),
-            Path.Combine(repository, "tools/scripts/report/lean-report-selection.py"));
         Write(Path.Combine(repository, "lean-toolchain"), "leanprover/lean4:v4.33.0\n");
         Write(Path.Combine(repository, "Trureturing.lean"), "def fixture := 1\n");
-        Write(Path.Combine(repository, "lean-report-inputs.json"), """
-            {"schema_version":1,
-             "report_execution":{"toolchain":"lean-toolchain","tools":["lake","lean"],
-              "platform":["system","machine"],"environment":["LEAN_PATH","LEAN_SRC_PATH","LEAN_SYSROOT","ELAN_TOOLCHAIN","LEAN_OPTS"]},
-             "report_modules":{"include":[{"pattern":"Trureturing.lean","optional":false}],"exclude":[]},
-             "config_inputs":{"include":[{"pattern":"lean-toolchain","optional":false}],"exclude":[]},
-             "inspector_sources":{"include":[],"exclude":[]},
-             "producer_scopes":{"lean-report":{"include":[{"pattern":"lean-report-inputs.json","optional":false},
-              {"pattern":"tools/scripts/report/lean-report-selection.py","optional":false}],"exclude":[]},
-              "scribe-content":{"include":[],"exclude":[]}}}
+        var reportSetup = TestProcessRunner.Run("python3", ["-B",
+            Path.Combine(TestRepositoryLayout.FindRoot(), "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py"),
+            "prepare-release-report", repository], repository, TestBudgets.WorkflowProcessHangGuard, 256 * 1024);
+        Assert.Equal(0, reportSetup.ExitCode);
+        // Content eligibility is tested with real Git by the Python contracts;
+        // this fixture isolates multipart transport from those dependencies.
+        WriteStub("git", """
+            case "$*" in
+              *rev-parse*) printf '%s\n' '0123456789abcdef0123456789abcdef01234567' ;;
+              *status*|*check-ref-format*) exit 0 ;;
+              *) exit 89 ;;
+            esac
             """);
         WriteStub("make",
             """
             printf '%s\n' "$*" >> "$CHUNK_FIXTURE/build-runs"
             if [ "$1" = "lean-report" ] && [ "$FAKE_BUILD_EXIT" = "0" ]; then
-                mkdir -p .lake/build/stratalint
-                printf '%s\n' '{"modules":[],"schema":"stratalint-raw-lean-report-v3"}' > .lake/report-fixture-$$
-                mv .lake/report-fixture-$$ .lake/build/stratalint/raw-lean-report.json
+                python3 -B "$FAKE_REPORT_FACTORY" write-release-report "$PWD"
             fi
             exit "$FAKE_BUILD_EXIT"
             """);
@@ -169,7 +162,7 @@ internal sealed class LeanCacheChunkFixture : IDisposable
         var manifest = new JsonObject
         {
             ["schema"] = "lean-release-seed-v4", ["partition"] = partition ?? Partition,
-            ["cache_key"] = CacheKey.DeepClone(),
+            ["cache_key"] = CacheKey.DeepClone(), ["publication_id"] = $"ci-{tag.Split('-')[^2]}-1",
             ["producer_commit_sha"] = ProducerSha, ["workflow_run_id"] = tag.Split('-')[^2],
             ["workflow_run_attempt"] = "1", ["archive_sha256"] = Digest(ArchiveBytes),
             ["archive_bytes"] = ArchiveBytes.Length, ["parts"] = parts,
@@ -224,10 +217,11 @@ internal sealed class LeanCacheChunkFixture : IDisposable
             $"HOME={temporary.Path}", $"PYTHONPATH={bin}", $"CHUNK_FIXTURE={temporary.Path}",
             "STRATALINT_CACHE_REPO=fixture/cache", "STRATALINT_ACTIONS_CACHE_SEEDED=",
             $"GITHUB_SHA={commit}", $"GITHUB_RUN_ID={run}", "GITHUB_RUN_ATTEMPT=1",
-            "CI=true", "GITHUB_ACTIONS=true", "GITHUB_EVENT_NAME=schedule",
+            "CI=true", $"GITHUB_ACTIONS={(verb == "fetch" ? "false" : "true")}", "GITHUB_EVENT_NAME=schedule",
             "GITHUB_REF=refs/heads/dev", "GITHUB_REF_NAME=dev", "LC_ALL=C.UTF-8",
             $"FAKE_FAIL={failure}", $"FAKE_BUILD_EXIT={buildExit}",
             $"FAKE_DEFAULT_RELEASE_TARGET={DefaultReleaseTarget}",
+            $"FAKE_REPORT_FACTORY={Path.Combine(TestRepositoryLayout.FindRoot(), "tools/tests/StrataLint.ScriptTests/Fixtures/lean_seed_support.py")}",
         };
         if (chunkEnvironment is not null) arguments.Add($"STRATALINT_CACHE_TEST_CHUNK_BYTES={chunkEnvironment}");
         arguments.AddRange(["/bin/bash", script, verb, "--repository", repository]);
@@ -287,6 +281,12 @@ internal sealed class LeanCacheChunkFixture : IDisposable
                      "digest": "sha256:" + hashlib.sha256(p.read_bytes()).hexdigest()}
                     for p in directory.iterdir() if p.name != "release.json"]
         if args[0] == "api":
+            if args[1].endswith("/branches/dev"):
+                print(json.dumps({"name":"dev", "protected":True, "commit":{"sha":"0123456789abcdef0123456789abcdef01234567"}}))
+                sys.exit(0)
+            if "/compare/" in args[1]:
+                print(json.dumps({"status":"identical", "merge_base_commit":{"sha":"0123456789abcdef0123456789abcdef01234567"}}))
+                sys.exit(0)
             assert args[1].startswith("repos/fixture/cache/releases/tags/")
             directory = root / "releases" / args[1].split("/")[-1]
             if not directory.exists():
