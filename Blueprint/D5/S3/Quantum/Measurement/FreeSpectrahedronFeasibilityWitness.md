@@ -10,7 +10,7 @@ $$(X_{1}: \operatorname{Matrix}(\operatorname{Fin}(2), \operatorname{Fin}(2), \m
 
 *Formalization.* `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.X1` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* A. Bluhm, E. Evert, I. Klep, V. Magron, I. Nechita (2025). *Inclusion constants for free spectrahedra with applications to quantum incompatibility*. DOI: [10.48550/arXiv.2512.17706](https://doi.org/10.48550/arXiv.2512.17706). URL: <https://arxiv.org/abs/2512.17706v1>.
 
 *Commentary.*
 
@@ -22,7 +22,7 @@ $$(X_{2}: \operatorname{Matrix}(\operatorname{Fin}(2), \operatorname{Fin}(2), \m
 
 *Formalization.* `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.X2` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* A. Bluhm, E. Evert, I. Klep, V. Magron, I. Nechita (2025). *Inclusion constants for free spectrahedra with applications to quantum incompatibility*. DOI: [10.48550/arXiv.2512.17706](https://doi.org/10.48550/arXiv.2512.17706). URL: <https://arxiv.org/abs/2512.17706v1>.
 
 *Commentary.*
 
@@ -34,7 +34,7 @@ $$\forall (\theta: \mathbb{R}), (X_{3}(\theta): \operatorname{Matrix}(\operatorn
 
 *Formalization.* `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.X3` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* A. Bluhm, E. Evert, I. Klep, V. Magron, I. Nechita (2025). *Inclusion constants for free spectrahedra with applications to quantum incompatibility*. DOI: [10.48550/arXiv.2512.17706](https://doi.org/10.48550/arXiv.2512.17706). URL: <https://arxiv.org/abs/2512.17706v1>.
 
 *Commentary.*
 
@@ -46,7 +46,7 @@ $$(\gamma: \mathbb{R}) = \frac{4}{1+\sqrt{3}}$$
 
 *Formalization.* `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.gamma` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* A. Bluhm, E. Evert, I. Klep, V. Magron, I. Nechita (2025). *Inclusion constants for free spectrahedra with applications to quantum incompatibility*. DOI: [10.48550/arXiv.2512.17706](https://doi.org/10.48550/arXiv.2512.17706). URL: <https://arxiv.org/abs/2512.17706v1>.
 
 *Commentary.*
 
@@ -58,7 +58,7 @@ $$\forall (\theta: \mathbb{R}), (\beta(\theta): \mathbb{R}) = \sqrt{3} \sqrt{(6-
 
 *Formalization.* `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.beta` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* A. Bluhm, E. Evert, I. Klep, V. Magron, I. Nechita (2025). *Inclusion constants for free spectrahedra with applications to quantum incompatibility*. DOI: [10.48550/arXiv.2512.17706](https://doi.org/10.48550/arXiv.2512.17706). URL: <https://arxiv.org/abs/2512.17706v1>.
 
 *Commentary.*
 
@@ -70,7 +70,7 @@ $$(C_{1}: \operatorname{Matrix}(\operatorname{Fin}(2), \operatorname{Fin}(2), \m
 
 *Formalization.* `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.C1` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* A. Bluhm, E. Evert, I. Klep, V. Magron, I. Nechita (2025). *Inclusion constants for free spectrahedra with applications to quantum incompatibility*. DOI: [10.48550/arXiv.2512.17706](https://doi.org/10.48550/arXiv.2512.17706). URL: <https://arxiv.org/abs/2512.17706v1>.
 
 *Commentary.*
 
@@ -82,7 +82,7 @@ $$\forall (\theta: \mathbb{R}), (C_{2}(\theta): \operatorname{Matrix}(\operatorn
 
 *Formalization.* `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.C2` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* A. Bluhm, E. Evert, I. Klep, V. Magron, I. Nechita (2025). *Inclusion constants for free spectrahedra with applications to quantum incompatibility*. DOI: [10.48550/arXiv.2512.17706](https://doi.org/10.48550/arXiv.2512.17706). URL: <https://arxiv.org/abs/2512.17706v1>.
 
 *Commentary.*
 
@@ -94,7 +94,7 @@ $$\forall (\theta: \mathbb{R}), (C_{3}(\theta): \operatorname{Matrix}(\operatorn
 
 *Formalization.* `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.C3` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* A. Bluhm, E. Evert, I. Klep, V. Magron, I. Nechita (2025). *Inclusion constants for free spectrahedra with applications to quantum incompatibility*. DOI: [10.48550/arXiv.2512.17706](https://doi.org/10.48550/arXiv.2512.17706). URL: <https://arxiv.org/abs/2512.17706v1>.
 
 *Commentary.*
 
@@ -106,7 +106,7 @@ $$\forall (\theta: \mathbb{R}), (C_{4}(\theta): \operatorname{Matrix}(\operatorn
 
 *Formalization.* `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.C4` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* A. Bluhm, E. Evert, I. Klep, V. Magron, I. Nechita (2025). *Inclusion constants for free spectrahedra with applications to quantum incompatibility*. DOI: [10.48550/arXiv.2512.17706](https://doi.org/10.48550/arXiv.2512.17706). URL: <https://arxiv.org/abs/2512.17706v1>.
 
 *Commentary.*
 
@@ -118,7 +118,7 @@ $$\forall (\theta: \mathbb{R}), (C_{5}(\theta): \operatorname{Matrix}(\operatorn
 
 *Formalization.* `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.C5` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* A. Bluhm, E. Evert, I. Klep, V. Magron, I. Nechita (2025). *Inclusion constants for free spectrahedra with applications to quantum incompatibility*. DOI: [10.48550/arXiv.2512.17706](https://doi.org/10.48550/arXiv.2512.17706). URL: <https://arxiv.org/abs/2512.17706v1>.
 
 *Commentary.*
 
@@ -130,7 +130,7 @@ $$\forall (\theta: \mathbb{R}), (C_{6}(\theta): \operatorname{Matrix}(\operatorn
 
 *Formalization.* `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.C6` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* A. Bluhm, E. Evert, I. Klep, V. Magron, I. Nechita (2025). *Inclusion constants for free spectrahedra with applications to quantum incompatibility*. DOI: [10.48550/arXiv.2512.17706](https://doi.org/10.48550/arXiv.2512.17706). URL: <https://arxiv.org/abs/2512.17706v1>.
 
 *Commentary.*
 
@@ -154,7 +154,7 @@ $$(claim: Prop) := \forall (\theta: \mathbb{R}), \theta \in \operatorname{Icc}(0
 
 *Formalization.* `D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.claim` (`✓ std3`).
 
-*Source.* Repository-derived.
+*Citation.* A. Bluhm, E. Evert, I. Klep, V. Magron, I. Nechita (2025). *Inclusion constants for free spectrahedra with applications to quantum incompatibility*. DOI: [10.48550/arXiv.2512.17706](https://doi.org/10.48550/arXiv.2512.17706). URL: <https://arxiv.org/abs/2512.17706v1>.
 
 *Commentary.*
 

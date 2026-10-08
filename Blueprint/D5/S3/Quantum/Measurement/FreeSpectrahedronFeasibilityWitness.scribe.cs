@@ -7,6 +7,8 @@ namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Measurement;
 internal sealed class FreeSpectrahedronFeasibilityWitnessDocument : IScribeDocumentDefinition
 {
     private const string Prefix = "D5/S3/Quantum/Measurement/FreeSpectrahedronFeasibilityWitness.";
+    private static readonly LibraryNoteRef Source =
+        LibraryNoteRef.Create("D5/L/QuantumBounds/bluhm2025inclusion");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The six real symmetric matrices of Appendix A.1 are positive semidefinite over the "
@@ -14,52 +16,64 @@ internal sealed class FreeSpectrahedronFeasibilityWitnessDocument : IScribeDocum
         H("The Appendix A.1 feasible tuple"),
         Blocks(
             Node("xone", "X₁", "The first real matrix is diagonal with entries 1 and -2.",
-                "X1", Eqn(Typed(X(1), Matrices(Reals())), Mat(D(1), D(0), D(0), Seq(Minus, D(2))))),
+                "X1", AssessedProvenance.FromLiterature(Source),
+                Eqn(Typed(X(1), Matrices(Reals())), Mat(D(1), D(0), D(0), Seq(Minus, D(2))))),
             Node("xtwo", "X₂", "The second real matrix is diagonal with entries -2 and 1.",
-                "X2", Eqn(Typed(X(2), Matrices(Reals())), Mat(Seq(Minus, D(2)), D(0), D(0), D(1)))),
+                "X2", AssessedProvenance.FromLiterature(Source),
+                Eqn(Typed(X(2), Matrices(Reals())), Mat(Seq(Minus, D(2)), D(0), D(0), D(1)))),
             Node("xthree", "X₃", "For a real angle, the third matrix has cosine on the "
                 + "first diagonal entry, negative cosine on the second, and sine off the diagonal.",
-                "X3", Angle(Eqn(Typed(XAngle(), Matrices(Reals())),
+                "X3", AssessedProvenance.FromLiterature(Source),
+                Angle(Eqn(Typed(XAngle(), Matrices(Reals())),
                     Mat(Cosine(), Sine(), Sine(), Seq(Minus, Cosine()))))),
             Node("gamma", "The normalization constant", "The real scalar gamma normalizes "
                 + "the sum of the six matrices.",
-                "gamma", Eqn(Typed(GammaLower, Reals()), Fr(D(4), Seq(D(1), Plus, RootThree())))),
+                "gamma", AssessedProvenance.FromLiterature(Source),
+                Eqn(Typed(GammaLower, Reals()), Fr(D(4), Seq(D(1), Plus, RootThree())))),
             Node("beta", "The radical", "The principal real square roots define beta for "
                 + "every real angle.",
-                "beta", Angle(Eqn(Typed(BetaAngle(), Reals()),
+                "beta", AssessedProvenance.FromLiterature(Source),
+                Angle(Eqn(Typed(BetaAngle(), Reals()),
                     Seq(RootThree(), Sp, Sqrt, Grp(Radicand()))))),
             Node("cone", "C₁", "The first matrix is a positive scalar multiple of the "
                 + "all-ones matrix.",
-                "C1", Eqn(Typed(Ci(1), Matrices(Reals())), Scale(Seq(Open, Fr(D(1), RootThree()), Minus,
+                "C1", AssessedProvenance.FromLiterature(Source),
+                Eqn(Typed(Ci(1), Matrices(Reals())), Scale(Seq(Open, Fr(D(1), RootThree()), Minus,
                     Fr(D(1), D(2)), Close), Mat(D(1), D(1), D(1), D(1))))),
             Node("ctwo", "C₂", "The second real symmetric matrix depends on the sine, "
                 + "cosine and radical of the angle.",
-                "C2", Angle(Eqn(Typed(Ci(2), Matrices(Reals())), Scale(Fr(D(1), D(1, 2)), Mat(
+                "C2", AssessedProvenance.FromLiterature(Source),
+                Angle(Eqn(Typed(Ci(2), Matrices(Reals())), Scale(Fr(D(1), D(1, 2)), Mat(
                     Seq(D(3), Sp, Cosine(), Plus, D(8), Sp, RootThree(), Minus, D(9), Minus, BetaAngle()),
                     OffDiagonal(), OffDiagonal(),
                     Seq(Minus, D(3), Sp, Cosine(), Plus, D(8), Sp, RootThree(), Minus, D(3), Minus, BetaAngle())))))),
             Node("cthree", "C₃", "The third matrix is an affine combination of the first "
                 + "two matrices, X₃ and the normalization constant.",
-                "C3", Angle(Eqn(Typed(Ci(3), Matrices(Reals())), Seq(Minus, Ci(1), Minus, Ci(2), Plus,
+                "C3", AssessedProvenance.FromLiterature(Source),
+                Angle(Eqn(Typed(Ci(3), Matrices(Reals())), Seq(Minus, Ci(1), Minus, Ci(2), Plus,
                     Scale(Fr(D(1), D(2)), XAngle()), Plus, Scale(Fr(GammaLower, D(2)), Identity()))))),
             Node("cfour", "C₄", "The fourth matrix is an affine combination of C₁, X₁, "
                 + "X₂ and the normalization constant. Its value "
                 + "is independent of the real angle.",
-                "C4", Angle(Eqn(Typed(Ci(4), Matrices(Reals())), Seq(Minus, Ci(1),
+                "C4", AssessedProvenance.FromLiterature(Source),
+                Angle(Eqn(Typed(Ci(4), Matrices(Reals())), Seq(Minus, Ci(1),
                     Plus, Scale(Fr(D(1), D(3)), X(1)),
                     Plus, Scale(Fr(D(1), D(3)), X(2)), Plus, Scale(Fr(GammaLower, D(3)), Identity()))))),
             Node("cfive", "C₅", "The fifth matrix is an affine combination of C₂, X₁ and gamma.",
-                "C5", Angle(Eqn(Typed(Ci(5), Matrices(Reals())), Seq(Minus, Ci(2),
+                "C5", AssessedProvenance.FromLiterature(Source),
+                Angle(Eqn(Typed(Ci(5), Matrices(Reals())), Seq(Minus, Ci(2),
                     Minus, Scale(Fr(D(1), D(3)), X(1)),
                     Plus, Scale(Fr(GammaLower, D(3)), Identity()))))),
             Node("csix", "C₆", "The sixth matrix is an affine combination of C₁, C₂, "
                 + "X₂, X₃ and gamma.",
-                "C6", Angle(Eqn(Typed(Ci(6), Matrices(Reals())), Seq(Ci(1), Plus, Ci(2),
+                "C6", AssessedProvenance.FromLiterature(Source),
+                Angle(Eqn(Typed(Ci(6), Matrices(Reals())), Seq(Ci(1), Plus, Ci(2),
                     Minus, Scale(Fr(D(1), D(3)), X(2)),
                     Minus, Scale(Fr(D(1), D(2)), XAngle()), Minus, Scale(Fr(GammaLower, D(6)), Identity()))))),
             Node("family", "The indexed family", "The indices 0 through 5 correspond "
                 + "in order to C₁ through C₆. Every value is a real 2 by 2 matrix.",
-                "C", All(F.Id("i"), Fin(6), Angle(Eqn(Typed(CAt(F.Id("i")), Matrices(Reals())), Seq(
+                "C", AssessedProvenance.FromRepo(),
+                All(F.Id("i"), Fin(6), Angle(Eqn(Typed(CAt(F.Id("i")), Matrices(Reals())), Seq(
                     Open, Ci(1), Comma, Sp, Ci(2), Comma, Sp, Ci(3), Comma, Sp,
                     Ci(4), Comma, Sp, Ci(5), Comma, Sp, Ci(6), Close, Underscore, Grp(F.Id("i"))))))),
             Node("claim", "Appendix A.1 feasibility", "Feasibility for every angle in "
@@ -68,7 +82,8 @@ internal sealed class FreeSpectrahedronFeasibilityWitnessDocument : IScribeDocum
                 + "affine equations. The map uses the standard real-to-complex inclusion; "
                 + "the identity is the real 2 by 2 identity matrix. Positive semidefiniteness "
                 + "requires nonnegative determinants.",
-                "claim", Seq(Typed(F.Id("claim"), F.Id("Prop")), Sp, Colon, Eq, Sp, ClaimBody())),
+                "claim", AssessedProvenance.FromLiterature(Source),
+                Seq(Typed(F.Id("claim"), F.Id("Prop")), Sp, Colon, Eq, Sp, ClaimBody())),
             Describe.Lean(
                 DescribeId.Create("appendix-feasibility-result"),
                 DeclarationHandle.Create(Prefix + "result"),
@@ -90,10 +105,10 @@ internal sealed class FreeSpectrahedronFeasibilityWitnessDocument : IScribeDocum
         []));
 
     private static DocumentBlock Node(string id, string title, string prose,
-        string declaration, Formula formula) => Describe.Lean(
+        string declaration, AssessedProvenance provenance, Formula formula) => Describe.Lean(
             DescribeId.Create("appendix-feasibility-" + id),
             DeclarationHandle.Create(Prefix + declaration), H(title),
-            StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
+            StatementSource.FromAuthor(Disp(formula)), provenance,
             Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
 
     private static Formula Reals() => Seq(Mathbb, Grp(F.Id("R")));
