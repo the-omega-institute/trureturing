@@ -83,7 +83,7 @@ def claim : Prop :=
 variable {d : ℕ}
 
 /-- The off-diagonal part of `Ω`: `(1 - i)/2` above the diagonal and `(1 + i)/2` below it. -/
-private noncomputable def cross (d : ℕ) : Matrix (Fin d) (Fin d) ℂ :=
+noncomputable def cross (d : ℕ) : Matrix (Fin d) (Fin d) ℂ :=
   of fun p q => if p = q then 0 else if p < q then (1 - I) / 2 else (1 + I) / 2
 
 /-- The two cross projectors of a pair `j < k`, added. -/
@@ -130,6 +130,144 @@ private def idxEquiv : Fin d × Fin d ≃ Idx d where
     · simp [h]
     · dsimp only at h
       simp [not_lt.mpr h.le, h]
+
+/-- Projectors are covariant under a change of basis. -/
+theorem proj_eq : ∀ (V : Matrix (Fin d) (Fin d) ℂ) (α : Idx d),
+    proj V α = V * proj 1 α * Vᴴ := by
+  intro V α
+  simp only [proj, one_mulVec, star_mulVec, ← vecMulVec_mul, mul_vecMulVec, Matrix.mul_smul,
+    Matrix.smul_mul]
+/-- The frame is covariant under a change of basis. -/
+theorem frame_eq : ∀ V : Matrix (Fin d) (Fin d) ℂ, frame V = V * frame 1 * Vᴴ := by
+  intro V
+  simp only [frame, proj_eq V, Finset.mul_sum, Finset.sum_mul]
+/-- The standard-basis frame is positive definite. -/
+theorem posDef_one : (frame (1 : Matrix (Fin d) (Fin d) ℂ)).PosDef := by
+  have hsum : ∑ j, proj (1 : Matrix (Fin d) (Fin d) ℂ) (.inl j) = 1 := by
+    ext p q
+    simp [Matrix.sum_apply, proj, vecMulVec_apply, vec, weight, one_apply]
+  have hpsd : ∀ α : Idx d, (proj 1 α).PosSemidef := by
+    intro α
+    simp only [proj, one_mulVec]
+    refine (posSemidef_vecMulVec_self_star _).smul ?_
+    rcases α with j | x | x <;> simp [weight]
+  rw [frame, Fintype.sum_sum_type, hsum]
+  exact PosDef.one.add_posSemidef (posSemidef_sum _ fun _ _ => hpsd _)
+
+/-- Gram entries reduce to a standard-basis trace with the inverse frame. -/
+theorem gram_eq (U : unitaryGroup (Fin d) ℂ) : ∀ α β,
+    gram (U : Matrix (Fin d) (Fin d) ℂ) α β =
+      (proj 1 α * (frame 1)⁻¹ * proj 1 β * (frame 1)⁻¹).trace := by
+  set W : Matrix (Fin d) (Fin d) ℂ := (U : Matrix (Fin d) (Fin d) ℂ)
+  have hVU : Wᴴ * W = 1 := UnitaryGroup.star_mul_self U
+  have hUV : W * Wᴴ = 1 := mem_unitaryGroup_iff.mp U.2
+  have posDef_W : (frame W).PosDef := by
+    rw [frame_eq]
+    refine posDef_one.mul_mul_conjTranspose_same ?_
+    intro v w h
+    have := congrArg (fun x => x ᵥ* Wᴴ) h
+    simpa [vecMul_vecMul, hUV] using this
+  have conj_mul_conj : ∀ {X Y : Matrix (Fin d) (Fin d) ℂ},
+      W * X * Wᴴ * (W * Y * Wᴴ) = W * (X * Y) * Wᴴ := by
+    intro X Y
+    calc W * X * Wᴴ * (W * Y * Wᴴ) = W * X * (Wᴴ * W) * Y * Wᴴ := by simp only [Matrix.mul_assoc]
+      _ = W * (X * Y) * Wᴴ := by rw [hVU, Matrix.mul_one]; simp only [Matrix.mul_assoc]
+  have trace_conj : ∀ X : Matrix (Fin d) (Fin d) ℂ, (W * X * Wᴴ).trace = X.trace := by
+    intro X
+    rw [Matrix.mul_assoc, trace_mul_comm, Matrix.mul_assoc, hVU, Matrix.mul_one]
+  set Ω := frame (1 : Matrix (Fin d) (Fin d) ℂ) with hΩ
+  have hu : IsUnit Ω.det := (isUnit_iff_isUnit_det _).mp posDef_one.isUnit
+  have h1 : Ω⁻¹ * Ω = 1 := nonsing_inv_mul _ hu
+  have hS : CFC.sqrt (frame W)⁻¹ * CFC.sqrt (frame W)⁻¹ = (frame W)⁻¹ :=
+    CFC.sqrt_mul_sqrt_self _ posDef_W.inv.posSemidef.nonneg
+  have hinv : (frame W)⁻¹ = W * Ω⁻¹ * Wᴴ := by
+    refine inv_eq_left_inv ?_
+    rw [frame_eq W, conj_mul_conj, h1, Matrix.mul_one, hUV]
+  intro α β
+  simp only [gram, mic, of_apply]
+  set S := CFC.sqrt (frame W)⁻¹
+  have hcyc : (S * proj W α * S * (S * proj W β * S)).trace =
+      (proj W α * (S * S) * proj W β * (S * S)).trace := by
+    rw [show S * proj W α * S * (S * proj W β * S) = S * (proj W α * S * (S * proj W β * S)) by
+      simp only [Matrix.mul_assoc], trace_mul_comm]
+    simp only [Matrix.mul_assoc]
+  rw [hcyc, hS, hinv, proj_eq W α, proj_eq W β, conj_mul_conj, conj_mul_conj, conj_mul_conj,
+    trace_conj]
+
+/-- The standard-basis frame has diagonal d and constant triangular entries. -/
+theorem frame_one : frame (1 : Matrix (Fin d) (Fin d) ℂ) = (d : ℂ) • 1 + cross d := by
+  have proj_one_apply : ∀ (α : Idx d) (p q : Fin d),
+      proj 1 α p q = weight α * vec α p * star (vec α q) := by
+    intro α p q
+    simp [proj, vecMulVec_apply, mul_assoc]
+  have sum_pair : ∀ g : Fin d → Fin d → ℂ,
+      ∑ x : Pair d, g x.1.1 x.1.2 = ∑ j, ∑ k, if j < k then g j k else 0 := by
+    intro g
+    rw [← Finset.sum_subtype (Finset.univ.filter fun x : Fin d × Fin d => x.1 < x.2)
+      (by simp) (fun x => g x.1 x.2), Finset.sum_filter, Fintype.sum_prod_type]
+  have proj_pair : ∀ x : Pair d,
+      proj 1 (.inr (.inl x)) + proj 1 (.inr (.inr x)) = pairMat x.1.1 x.1.2 := by
+    intro x
+    ext p q
+    simp only [Matrix.add_apply, proj_one_apply, vec, weight, pairMat, of_apply, Pi.add_apply,
+      Pi.single_apply, Complex.star_def]
+    by_cases hpj : p = x.1.1 <;> by_cases hpk : p = x.1.2 <;> by_cases hqj : q = x.1.1 <;>
+      by_cases hqk : q = x.1.2 <;> simp_all <;> ring_nf <;> simp [Complex.ext_iff] <;> norm_num
+  have frame_one_eq : frame (1 : Matrix (Fin d) (Fin d) ℂ) =
+      ∑ j, proj 1 (.inl j) + ∑ x : Pair d, pairMat x.1.1 x.1.2 := by
+    simp only [frame, Fintype.sum_sum_type, ← proj_pair, Finset.sum_add_distrib]
+  have count_eq : ∀ p : Fin d, (∑ k : Fin d, if p < k then (1 : ℂ) else 0) +
+      (∑ k : Fin d, if k < p then (1 : ℂ) else 0) + 1 = d := by
+    intro p
+    have h1 : (1 : ℂ) = ∑ k : Fin d, if k = p then 1 else 0 := by simp
+    rw [h1, ← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
+    have h : ∀ k : Fin d, ((if p < k then (1 : ℂ) else 0) + (if k < p then 1 else 0) +
+        if k = p then 1 else 0) = 1 := by
+      intro k
+      rcases lt_trichotomy k p with h | rfl | h
+      · simp [h, h.ne, not_lt_of_gt h]
+      · simp
+      · simp [h, h.ne', not_lt_of_gt h]
+    simp [h]
+  ext p q
+  rw [frame_one_eq, Matrix.add_apply, Matrix.sum_apply, Matrix.sum_apply,
+    sum_pair (fun j k => pairMat j k p q)]
+  simp only [proj_one_apply, vec, weight, Pi.single_apply, pairMat, of_apply, cross,
+    Matrix.add_apply, Matrix.smul_apply, Complex.star_def]
+  rcases lt_trichotomy p q with hpq | rfl | hpq
+  · have hs : ∀ j k : Fin d, (if j < k then (((if p = j ∧ q = j then (1 : ℂ) else 0) +
+        if p = k ∧ q = k then 1 else 0) + if p = j ∧ q = k then (1 - I) / 2 else 0) +
+          if p = k ∧ q = j then (1 + I) / 2 else 0 else 0) =
+          if p = j then (if q = k then (1 - I) / 2 else 0) else 0 := by
+      intro j k
+      simp only [Fin.ext_iff, Fin.lt_def] at hpq ⊢
+      split_ifs <;> first | (exfalso; omega) | ring
+    simp only [hs]
+    rw [Finset.sum_comm]
+    simp [Finset.sum_ite_eq, hpq.ne, hpq, one_apply]
+  · have hs : ∀ j k : Fin d, (if j < k then (((if p = j ∧ p = j then (1 : ℂ) else 0) +
+        if p = k ∧ p = k then 1 else 0) + if p = j ∧ p = k then (1 - I) / 2 else 0) +
+          if p = k ∧ p = j then (1 + I) / 2 else 0 else 0) =
+          (if p = j then (if j < k then 1 else 0) else 0) +
+            (if p = k then (if j < k then 1 else 0) else 0) := by
+      intro j k
+      simp only [Fin.ext_iff, Fin.lt_def]
+      split_ifs <;> first | (exfalso; omega) | ring
+    simp only [hs, Finset.sum_add_distrib]
+    rw [Finset.sum_comm (f := fun j k => if p = j then (if j < k then (1 : ℂ) else 0) else 0)]
+    simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true]
+    have hc := count_eq p
+    simp [one_apply] at hc ⊢
+    linear_combination hc
+  · have hs : ∀ j k : Fin d, (if j < k then (((if p = j ∧ q = j then (1 : ℂ) else 0) +
+        if p = k ∧ q = k then 1 else 0) + if p = j ∧ q = k then (1 - I) / 2 else 0) +
+          if p = k ∧ q = j then (1 + I) / 2 else 0 else 0) =
+          if p = k then (if q = j then (1 + I) / 2 else 0) else 0 := by
+      intro j k
+      simp only [Fin.ext_iff, Fin.lt_def] at hpq ⊢
+      split_ifs <;> first | (exfalso; omega) | ring
+    simp only [hs]
+    simp [Finset.sum_ite_eq, hpq.ne', one_apply, not_lt.mpr hpq.le]
 
 /-- The Gram matrix of every orthocross MIC has right inverse `M_{βγ} = tr(D_β Ω D_γ Ω)`. -/
 private theorem gram_mul_invGram (U : unitaryGroup (Fin d) ℂ) :
@@ -244,63 +382,10 @@ private theorem gram_mul_invGram (U : unitaryGroup (Fin d) ℂ) :
           · simp [hx]
     · exact both.1
     · exact both.2
-  have proj_eq : ∀ (V : Matrix (Fin d) (Fin d) ℂ) (α : Idx d),
-      proj V α = V * proj 1 α * Vᴴ := by
-    intro V α
-    simp only [proj, one_mulVec, star_mulVec, ← vecMulVec_mul, mul_vecMulVec, Matrix.mul_smul,
-      Matrix.smul_mul]
-  have frame_eq : ∀ V : Matrix (Fin d) (Fin d) ℂ, frame V = V * frame 1 * Vᴴ := by
-    intro V
-    simp only [frame, proj_eq V, Finset.mul_sum, Finset.sum_mul]
-  have posDef_one : (frame (1 : Matrix (Fin d) (Fin d) ℂ)).PosDef := by
-    have hsum : ∑ j, proj (1 : Matrix (Fin d) (Fin d) ℂ) (.inl j) = 1 := by
-      ext p q
-      simp [Matrix.sum_apply, proj, vecMulVec_apply, vec, weight, one_apply]
-    have hpsd : ∀ α : Idx d, (proj 1 α).PosSemidef := by
-      intro α
-      simp only [proj, one_mulVec]
-      refine (posSemidef_vecMulVec_self_star _).smul ?_
-      rcases α with j | x | x <;> simp [weight]
-    rw [frame, Fintype.sum_sum_type, hsum]
-    exact PosDef.one.add_posSemidef (posSemidef_sum _ fun _ _ => hpsd _)
-  set W : Matrix (Fin d) (Fin d) ℂ := (U : Matrix (Fin d) (Fin d) ℂ)
-  have hVU : Wᴴ * W = 1 := UnitaryGroup.star_mul_self U
-  have hUV : W * Wᴴ = 1 := mem_unitaryGroup_iff.mp U.2
-  have posDef_W : (frame W).PosDef := by
-    rw [frame_eq]
-    refine posDef_one.mul_mul_conjTranspose_same ?_
-    intro v w h
-    have := congrArg (fun x => x ᵥ* Wᴴ) h
-    simpa [vecMul_vecMul, hUV] using this
-  have conj_mul_conj : ∀ {X Y : Matrix (Fin d) (Fin d) ℂ},
-      W * X * Wᴴ * (W * Y * Wᴴ) = W * (X * Y) * Wᴴ := by
-    intro X Y
-    calc W * X * Wᴴ * (W * Y * Wᴴ) = W * X * (Wᴴ * W) * Y * Wᴴ := by simp only [Matrix.mul_assoc]
-      _ = W * (X * Y) * Wᴴ := by rw [hVU, Matrix.mul_one]; simp only [Matrix.mul_assoc]
-  have trace_conj : ∀ X : Matrix (Fin d) (Fin d) ℂ, (W * X * Wᴴ).trace = X.trace := by
-    intro X
-    rw [Matrix.mul_assoc, trace_mul_comm, Matrix.mul_assoc, hVU, Matrix.mul_one]
   set Ω := frame (1 : Matrix (Fin d) (Fin d) ℂ) with hΩ
   have hu : IsUnit Ω.det := (isUnit_iff_isUnit_det _).mp posDef_one.isUnit
   have h1 : Ω⁻¹ * Ω = 1 := nonsing_inv_mul _ hu
   have h2 : Ω * Ω⁻¹ = 1 := mul_nonsing_inv _ hu
-  -- `G_{αβ} = tr(Π_α Ω⁻¹ Π_β Ω⁻¹)` for the standard basis.
-  have gram_eq : ∀ α β, gram W α β = (proj 1 α * Ω⁻¹ * proj 1 β * Ω⁻¹).trace := by
-    have hS : CFC.sqrt (frame W)⁻¹ * CFC.sqrt (frame W)⁻¹ = (frame W)⁻¹ :=
-      CFC.sqrt_mul_sqrt_self _ posDef_W.inv.posSemidef.nonneg
-    have hinv : (frame W)⁻¹ = W * Ω⁻¹ * Wᴴ := by
-      refine inv_eq_left_inv ?_
-      rw [frame_eq W, conj_mul_conj, h1, Matrix.mul_one, hUV]
-    intro α β
-    simp only [gram, mic, of_apply]
-    set S := CFC.sqrt (frame W)⁻¹
-    have hcyc : (S * proj W α * S * (S * proj W β * S)).trace =
-        (proj W α * (S * S) * proj W β * (S * S)).trace := by
-      rw [show S * proj W α * S * (S * proj W β * S) = S * (proj W α * S * (S * proj W β * S)) by
-        simp only [Matrix.mul_assoc], trace_mul_comm]
-      simp only [Matrix.mul_assoc]
-    rw [hcyc, hS, hinv, proj_eq W α, proj_eq W β, conj_mul_conj, conj_mul_conj, conj_mul_conj,
-      trace_conj]
   have trace_sum_smul_mul : ∀ (c : Idx d → ℂ) (A : Idx d → Matrix (Fin d) (Fin d) ℂ)
       (B : Matrix (Fin d) (Fin d) ℂ),
       ((∑ β, c β • A β) * B).trace = ∑ β, c β * (A β * B).trace := by
@@ -354,7 +439,7 @@ private theorem gram_mul_invGram (U : unitaryGroup (Fin d) ℂ) :
       trace_mul_comm, duality]
   ext α γ
   rw [mul_apply, one_apply]
-  simp only [gram_eq, invGram, of_apply]
+  simp only [gram_eq U, invGram, of_apply]
   rw [entry]
   by_cases h : α = γ
   · subst h; simp
@@ -364,79 +449,6 @@ private theorem gram_mul_invGram (U : unitaryGroup (Fin d) ℂ) :
 private theorem four_zmat (α : Idx d) (p q : Fin d) :
     ∃ a b : ℤ, 4 * zmat α p q = (1 + I) * (a + b * I) := by
   -- The closed form of `Ω` for the standard basis: `d` on the diagonal, `cross` off it.
-  have frame_one : frame (1 : Matrix (Fin d) (Fin d) ℂ) = (d : ℂ) • 1 + cross d := by
-    have proj_one_apply : ∀ (α : Idx d) (p q : Fin d),
-        proj 1 α p q = weight α * vec α p * star (vec α q) := by
-      intro α p q
-      simp [proj, vecMulVec_apply, mul_assoc]
-    have sum_pair : ∀ g : Fin d → Fin d → ℂ,
-        ∑ x : Pair d, g x.1.1 x.1.2 = ∑ j, ∑ k, if j < k then g j k else 0 := by
-      intro g
-      rw [← Finset.sum_subtype (Finset.univ.filter fun x : Fin d × Fin d => x.1 < x.2)
-        (by simp) (fun x => g x.1 x.2), Finset.sum_filter, Fintype.sum_prod_type]
-    have proj_pair : ∀ x : Pair d,
-        proj 1 (.inr (.inl x)) + proj 1 (.inr (.inr x)) = pairMat x.1.1 x.1.2 := by
-      intro x
-      ext p q
-      simp only [Matrix.add_apply, proj_one_apply, vec, weight, pairMat, of_apply, Pi.add_apply,
-        Pi.single_apply, Complex.star_def]
-      by_cases hpj : p = x.1.1 <;> by_cases hpk : p = x.1.2 <;> by_cases hqj : q = x.1.1 <;>
-        by_cases hqk : q = x.1.2 <;> simp_all <;> ring_nf <;> simp [Complex.ext_iff] <;> norm_num
-    have frame_one_eq : frame (1 : Matrix (Fin d) (Fin d) ℂ) =
-        ∑ j, proj 1 (.inl j) + ∑ x : Pair d, pairMat x.1.1 x.1.2 := by
-      simp only [frame, Fintype.sum_sum_type, ← proj_pair, Finset.sum_add_distrib]
-    have count_eq : ∀ p : Fin d, (∑ k : Fin d, if p < k then (1 : ℂ) else 0) +
-        (∑ k : Fin d, if k < p then (1 : ℂ) else 0) + 1 = d := by
-      intro p
-      have h1 : (1 : ℂ) = ∑ k : Fin d, if k = p then 1 else 0 := by simp
-      rw [h1, ← Finset.sum_add_distrib, ← Finset.sum_add_distrib]
-      have h : ∀ k : Fin d, ((if p < k then (1 : ℂ) else 0) + (if k < p then 1 else 0) +
-          if k = p then 1 else 0) = 1 := by
-        intro k
-        rcases lt_trichotomy k p with h | rfl | h
-        · simp [h, h.ne, not_lt_of_gt h]
-        · simp
-        · simp [h, h.ne', not_lt_of_gt h]
-      simp [h]
-    ext p q
-    rw [frame_one_eq, Matrix.add_apply, Matrix.sum_apply, Matrix.sum_apply,
-      sum_pair (fun j k => pairMat j k p q)]
-    simp only [proj_one_apply, vec, weight, Pi.single_apply, pairMat, of_apply, cross,
-      Matrix.add_apply, Matrix.smul_apply, Complex.star_def]
-    rcases lt_trichotomy p q with hpq | rfl | hpq
-    · have hs : ∀ j k : Fin d, (if j < k then (((if p = j ∧ q = j then (1 : ℂ) else 0) +
-          if p = k ∧ q = k then 1 else 0) + if p = j ∧ q = k then (1 - I) / 2 else 0) +
-            if p = k ∧ q = j then (1 + I) / 2 else 0 else 0) =
-            if p = j then (if q = k then (1 - I) / 2 else 0) else 0 := by
-        intro j k
-        simp only [Fin.ext_iff, Fin.lt_def] at hpq ⊢
-        split_ifs <;> first | (exfalso; omega) | ring
-      simp only [hs]
-      rw [Finset.sum_comm]
-      simp [Finset.sum_ite_eq, hpq.ne, hpq, one_apply]
-    · have hs : ∀ j k : Fin d, (if j < k then (((if p = j ∧ p = j then (1 : ℂ) else 0) +
-          if p = k ∧ p = k then 1 else 0) + if p = j ∧ p = k then (1 - I) / 2 else 0) +
-            if p = k ∧ p = j then (1 + I) / 2 else 0 else 0) =
-            (if p = j then (if j < k then 1 else 0) else 0) +
-              (if p = k then (if j < k then 1 else 0) else 0) := by
-        intro j k
-        simp only [Fin.ext_iff, Fin.lt_def]
-        split_ifs <;> first | (exfalso; omega) | ring
-      simp only [hs, Finset.sum_add_distrib]
-      rw [Finset.sum_comm (f := fun j k => if p = j then (if j < k then (1 : ℂ) else 0) else 0)]
-      simp only [Finset.sum_ite_eq, Finset.mem_univ, if_true]
-      have hc := count_eq p
-      simp [one_apply] at hc ⊢
-      linear_combination hc
-    · have hs : ∀ j k : Fin d, (if j < k then (((if p = j ∧ q = j then (1 : ℂ) else 0) +
-          if p = k ∧ q = k then 1 else 0) + if p = j ∧ q = k then (1 - I) / 2 else 0) +
-            if p = k ∧ q = j then (1 + I) / 2 else 0 else 0) =
-            if p = k then (if q = j then (1 + I) / 2 else 0) else 0 := by
-        intro j k
-        simp only [Fin.ext_iff, Fin.lt_def] at hpq ⊢
-        split_ifs <;> first | (exfalso; omega) | ring
-      simp only [hs]
-      simp [Finset.sum_ite_eq, hpq.ne', one_apply, not_lt.mpr hpq.le]
   have mem_GI : ∀ {z : ℂ}, z ∈ GaussianInt.toComplex.range ↔ ∃ a b : ℤ, z = a + b * I := by
     intro z
     constructor
@@ -643,5 +655,11 @@ theorem result : claim := by
     apply Complex.ext
     · simp; linarith
     · simp
+
+#print axioms proj_eq
+#print axioms frame_eq
+#print axioms posDef_one
+#print axioms gram_eq
+#print axioms frame_one
 
 end D5.S3.Quantum.Measurement.OrthocrossGramHalfInteger

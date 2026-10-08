@@ -5,10 +5,11 @@ year: 2020
 title: "The Varieties of Minimal Tomographically Complete Measurements"
 doi: 10.1142/S0219749920400055
 url: https://arxiv.org/abs/1812.08762v5
-claim: "For an orthonormal basis of C^d, the orthocross MIC has elements E_alpha = Omega^(-1/2) Pi_alpha Omega^(-1/2), where Pi_alpha are the d^2 projectors onto |j>, (|j> + |k>)/sqrt(2) and (|j> + i|k>)/sqrt(2) (j < k) and Omega is their sum; its Gram matrix is G_ij = tr(E_i E_j); the authors conjecture that for any orthocross MIC the entries of G^(-1) are integers or half-integers; Conjecture 1: A rank-1 MIC in dimension 3 can have no more than 7 pairs of orthogonal elements."
+claim: "For an orthonormal basis of C^d, the orthocross MIC has elements E_alpha = Omega^(-1/2) Pi_alpha Omega^(-1/2), where Pi_alpha are the d^2 projectors onto |j>, (|j> + |k>)/sqrt(2) and (|j> + i|k>)/sqrt(2) (j < k) and Omega is their sum; its Gram matrix is G_ij = tr(E_i E_j); the authors conjecture that for any orthocross MIC the entries of G^(-1) are integers or half-integers; Conjecture 1: A rank-1 MIC in dimension 3 can have no more than 7 pairs of orthogonal elements; Conjecture 2: the entries in G for orthocross MICs can become arbitrarily small with increasing d, but no two elements of an orthocross MIC can be exactly orthogonal."
 strata_touched:
   - D5/S3/Quantum/Measurement/OrthocrossGramHalfInteger
   - D5/S3/Quantum/Measurement/QutritRankOneMicOrthogonalPairs
+  - D5/S3/Quantum/Measurement/OrthocrossNonorthogonality
 license: citation-only
 triage: anchor
 ---
@@ -74,3 +75,18 @@ has unequal traces and refutes this literal statement. It does not certify a
 refutation restricted to unbiased MICs. The source locator is
 https://arxiv.org/abs/1812.08762v5, `mic_facts.tex`, Conjecture 1 and the
 preceding example (`7orthopairs`).
+
+## Orthocross Conjecture 2
+
+The same subsection of `mic_facts.tex` (v5), between the sentence on numerical motivation quoted
+above and the half-integrality conjecture, states:
+
+> \begin{conjecture}
+> The entries in $G$ for orthocross MICs can become arbitrarily small with increasing $d$, but no two
+> elements of an orthocross MIC can be exactly orthogonal.
+> \end{conjecture}
+
+The paper also computes the frame operator: "The elements along the diagonal are all equal to $d$,
+the elements above the diagonal are all equal to $\frac{1}{2}(1-i)$, and the rest are
+$\frac{1}{2}(1+i)$", with eigenvalues
+$\lambda_m = d + \frac{1}{2}\left(\cot \frac{\pi(4m+1)}{4d} - 1 \right)$, $m = 0,\ldots,d-1$.

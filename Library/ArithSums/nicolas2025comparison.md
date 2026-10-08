@@ -4199,3 +4199,106 @@ Theorems B.4–B.5 supply limiting examples for $k_{\rm T}>1/2$: general Dirichl
 For the direct prime-counting series $D(s)=-\zeta'(s)/\zeta(s)$, $\lambda_j=j$, $a_j=\Lambda(j)$ and $\alpha_{\rm T}=m=1$. Each actual zeta zero in the proposed half-plane is an additional pole, so the single-pole hypothesis must be verified for all heights. A finite zero subtraction supplies no such verification for the remaining zeros. Applying Theorem B to a resulting remainder also requires a proved nonnegative-coefficient representation and the stipulated uniform growth bounds; none is supplied by this source application.
 
 The same conditional least integer $N>5040$ attaining the global Robin-ratio maximum remains fixed, with $A=\log N>10^{36}$ and $L=\log A$. The original complete $\sqrt A\,L\,I_\psi(A)$ lower allowance, or equivalently the full zero-plus-remainder upper allowance above, has not been obtained from these hypotheses. The actual zero real parts and multiplicities, every height, all remaining explicit terms and the strict core remain present. The published theorem and examples are reused without reconstructing their proofs; this applicability check supplies neither a new prime-error estimate nor a Robin/RH proof.
+
+## A bounded-shape Gamma mixture retains an original coefficient remainder
+
+Balanzario, Cárdenas Romero and Chacón Serna,
+*A smooth version of Landau's explicit formula*,
+[arXiv:2311.04347v1](https://arxiv.org/abs/2311.04347v1),
+Theorem 1, supplies the Gamma density
+
+$$
+w_{\alpha,\lambda}(x)
+=\frac{x^{\alpha-1}e^{-x/\lambda}}{\lambda^\alpha\Gamma(\alpha)},
+\qquad
+G_{\alpha,\lambda}(s)
+=\lambda^{s-1}\frac{\Gamma(\alpha+s-1)}{\Gamma(\alpha)}.
+$$
+
+For $\alpha,\lambda>0$, $\alpha\notin\mathbb N$ and
+$\mu=\alpha\lambda$, the stated formula is
+
+$$
+\sum_{n\ge1}\Lambda(n)w_{\alpha,\lambda}(n)
+=1-\sum_\rho m_\rho G_{\alpha,\lambda}(\rho)-R(\mu,\alpha).
+$$
+
+This statement has no RH premise. The source defines $R$ by two separate
+series involving falling factorials and $\zeta'/\zeta$; those terms
+remain present, with no assumed sign or uniform budget. Its Theorem 2,
+which gives a finite-ordinate formula near a natural-number center
+$\mu$, assumes RH and fixes its window parameters. That truncated
+formula is not an unconditional supplier at $A=\log N$.
+
+The existing algebraic lower bound (H2) also specifies a restriction on
+exact replacement by these Gamma coefficients. Fix $A\ge e^2$ and a
+finite $B>0$. Let $\nu_A$ be a locally finite signed or complex measure on
+
+$$
+\{(\alpha,\lambda):0<\alpha\le B,
+\ \alpha\notin\mathbb N,\ \lambda>0\}
+$$
+
+which is fixed as the zero height varies, and assume only the critical-line
+absolute moment
+
+$$
+M_A=\int\lambda^{-1/2}\,d|\nu_A|(\alpha,\lambda)<\infty.
+$$
+
+This does not require finite total mass or moments at the endpoints of
+the critical strip. Set
+
+$$
+Q_A(1/2+it)=\int G_{\alpha,\lambda}(1/2+it)
+                         \,d\nu_A(\alpha,\lambda),\qquad t\ne0.
+$$
+
+The standard vertical-line Stirling formula,
+[DLMF 5.11.9](https://dlmf.nist.gov/5.11.E9), is uniform for bounded real
+arguments. Here $\alpha-1/2\in[-1/2,B-1/2]$ and
+$1/\Gamma(\alpha)$ is bounded for $0<\alpha\le B$. Consequently,
+for a constant $C_B$ and sufficiently large $|t|$,
+
+$$
+|Q_A(1/2+it)|
+\le C_BM_A|t|^{B-1}e^{-\pi|t|/2}.
+$$
+
+In contrast, (H2) on this same line gives, for $|t|\ge4$,
+
+$$
+|F_A(1/2+it)|
+\ge\frac{2w(A)}{3\sqrt A(t^2+1/4)},
+\qquad w(A)=\frac{1+\log A}{(\log A)^2}.
+$$
+
+Exponential decay is eventually smaller than this algebraic bound.
+Hence there is a threshold depending on $A,B,M_A$ such that
+
+$$
+|F_A(1/2+it)-Q_A(1/2+it)|
+\ge\frac{w(A)}{3\sqrt A(t^2+1/4)}
+$$
+
+above that threshold. There are unconditionally infinitely many actual
+critical-line zeros, as recalled in
+[DLMF §25.10(i)](https://dlmf.nist.gov/25.10.i).
+Thus the mismatch occurs at actual zeros of arbitrarily large height;
+it is not merely an off-spectrum difference on the whole strip. Their
+positive multiplicities do not remove the coefficient difference.
+
+This applies even to infinitely many scales and to complex mixture
+weights under the stated absolute moment. It reuses (H2), uniform
+Stirling and the classical critical-line zero theorem; no new version
+of those results or mathematical originality is claimed. Shapes and
+weights may depend on $A$, but their bound is fixed at each such $A$.
+The conclusion concerns exact coefficient matching at every actual zero.
+It does not give a sign for a paired residual or exclude equality of an
+aggregate signed sum, unbounded shape support, nonabsolute constructions,
+or approximation on a finite height range with a paid remainder.
+In particular the original suffix above $T$ is already paid independently;
+this restriction does not invalidate that transport or prohibit a useful
+approximation of its lower head. The complete same-selected-source signed
+Robin estimate and RH remain unproved. This application is not Lean
+verified.

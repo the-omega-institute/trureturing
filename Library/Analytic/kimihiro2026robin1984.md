@@ -160,3 +160,54 @@ does not relicense mathematical papers or third-party dependencies.
 This note distributes no transplanted upstream proof code. Any later source
 port must retain the applicable licence, original notices, immutable source
 pin and description of modifications.
+
+## Local prime-event proof closure and price connection
+
+A later strict local check compiled the unchanged three-module closure
+`Robin1984.Helpers.Event`, `Robin1984.Finite.CutoffIndex` and
+`Robin1984.ColossallyAbundant.EventGainFormula` on the same repository
+Lean v4.33.0 and Mathlib pin, with `--trust=0` and
+`debug.skipKernelTC=false`. Each source compilation and the exact price
+compatibility check exited 0. The complete receipt is
+`robin1984-event-compatibility-20261008/receipt.json`.
+The two actual supplier proofs
+`FiniteSupport.simplifiedLayerGain_le_of_base_le` and
+`event_gain_eq_caSimplifiedLayerGain` print only `propext`,
+`Classical.choice` and `Quot.sound`.
+
+The fixed positive layer j has the exact gain
+
+$$
+ g_j(q)=\log\left(1+\frac{q-1}{q(q^j-1)}\right),\qquad q>1.
+$$
+
+The substantive upstream proof rewrites its rational term as the inverse of
+`sum_(i<j) q^(i+1)`, then proves that g_j decreases with the real base q.
+Its event bridge identifies this formula with the actual prime-exponent
+insertion gain. A transient compiled check identifies the independently
+defined event price `e.threshold` with the existing local
+`goldenLayerMarginal e.p e.j`. This is a genuine coordinate match to the
+prime-price route; no renamed D5 price wrapper was retained.
+
+The next actual integer packet source, `CAProfile.lean`, has a five-module
+own-source closure with no PNT fork or certificate imports. It proves that
+actual prime-layer packet mass and gain equal `log n` and
+`log(sigma(n)/n)`. A subsequent strict local check compiled the unchanged
+five-module CAProfile closure and the additional `RobinLogMargin.lean` on
+this same local pin. The already accepted Definitions and Event oleans were
+reused; all four new upstream-source compilations and the axiom check exited 0.
+The full receipt is
+`robin1984-actual-packet-compatibility-20261008/receipt.json`.
+The proved CA existence theorem, actual packet log-mass and log-abundancy
+identities, and literal Robin margin equivalence each print only the standard
+three axioms. This establishes local compatibility of the actual integer
+packet and margin suppliers, with no renamed D5 wrapper retained.
+`CAReduction.lean` has an 88-module own-source closure, including 59
+certificate modules, and is not a three-module consequence. The full
+149-module RH equivalence remains unported.
+
+Consuming the compatible gain monotonicity in a new price-tail proof,
+connecting the actual integral reserve/head/tail to the literal integer
+Robin margin, and proving its strict signed inequality remain separate
+mathematical tasks. The small accepted supplier supplies none of those
+unproved conclusions by itself.
