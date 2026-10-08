@@ -8,7 +8,7 @@ internal sealed class CloitreActualGlobalConvergenceDocument : IScribeDocumentDe
         "D5/S1/Recurrence/Invariants/CloitreActualGlobalConvergence.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Golden convergence of the actual Cloitre sequence is equivalent to vanishing positive selected jumps.",
+        "Under the complete Hyp21_1, golden convergence of the actual Cloitre sequence is equivalent to vanishing positive selected jumps.",
         H("Actual Cloitre Global Convergence"),
         Blocks(
             Describe.Lean(

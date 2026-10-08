@@ -2,7 +2,7 @@
 
 ## Abstract
 
-Golden convergence of the actual Cloitre sequence is equivalent to vanishing positive selected jumps.
+Under the complete Hyp21_1, golden convergence of the actual Cloitre sequence is equivalent to vanishing positive selected jumps.
 
 **Definition 1.1 (Half-open Fibonacci block position).**
 
