@@ -457,14 +457,18 @@ $$
 
 ## 8. 缺陷、四组合与下一条理论路径
 
-本卷的核心关系是
+本卷的核心关系如下。前两条在 C 的任一闭不可约常返类 $X_0$ 上表述；H 按定理5.1的证明限制在该类，$c_r$ 是引理4.2给出的共同有限节点上的混合权重列。
 
 $$
-\text{同更新完整生成}
-\ \Longrightarrow\ Hc_r=a_rc_r,
-\qquad
-\text{实际常返且悬置发射正}
-\ \Longrightarrow\ \text{每常返类一个纯参数},
+\begin{gathered}
+\substack{\text{同更新完整生成}\\
+Q_x\in\mathcal N_p\quad(\forall x\in X_0)}
+\ \Longrightarrow\ Hc_r=a_rc_r,\\
+\substack{\text{同更新完整生成，实际闭不可约常返类 }X_0\\
+Q_x\in\mathcal N_p\quad(\forall x\in X_0)\\
+v_y>0\quad(\forall y:\exists x\in X_0,\ B(x,y)>0)}
+\ \Longrightarrow\ \exists r\in\mathcal R:\ Q_x=P_{p,r}\quad(\forall x\in X_0),
+\end{gathered}
 $$
 $$
 \text{双 conf 端点等号}
