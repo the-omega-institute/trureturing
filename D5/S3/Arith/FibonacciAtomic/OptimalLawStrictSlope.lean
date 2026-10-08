@@ -221,18 +221,20 @@ theorem attained (m : ℕ) (hm : 2 ≤ m) :
     exact below q j hq hs hj
   · exact alpha_le m p (positive p hp) hp.2.1 k hp.2.2
 
+/-- The one-label probability law needs no random bits. -/
+theorem single_cost : cost (fun _ : Fin 1 => (1 : ℝ)) = 0 := by
+  have zeros (d : ℕ) :
+      DyadicSupportLines.residual (fun _ : Fin 1 => (1 : ℝ)) d / (2 : ℝ) ^ d = 0 := by
+    have integer_pow : ⌊(2 : ℝ) ^ d⌋ = (2 : ℤ) ^ d := by
+      exact_mod_cast (Int.floor_intCast ((2 : ℤ) ^ d))
+    simp [DyadicSupportLines.residual, integer_pow]
+  simp [cost, zeros]
+
 /-- The full real optimal ratio has its single- and two-label endpoint values,
 and strictly increases at every subsequent label count. -/
 theorem result : alpha 1 = 0 ∧ alpha 2 = 2 ∧
     ∀ m : ℕ, 3 ≤ m → alpha (m - 1) < alpha m := by
   classical
-  have single_cost : cost (fun _ : Fin 1 => (1 : ℝ)) = 0 := by
-    have zeros (d : ℕ) :
-        DyadicSupportLines.residual (fun _ : Fin 1 => (1 : ℝ)) d / (2 : ℝ) ^ d = 0 := by
-      have integer_pow : ⌊(2 : ℝ) ^ d⌋ = (2 : ℤ) ^ d := by
-        exact_mod_cast (Int.floor_intCast ((2 : ℤ) ^ d))
-      simp [DyadicSupportLines.residual, integer_pow]
-    simp [cost, zeros]
   have one : alpha 1 = 0 := by
     have ratios : {y : ℝ | ∃ (p : Fin 1 → ℝ) (k : Fin 1),
       (∀ i, 0 < p i) ∧ (∑ i, p i) = 1 ∧ (∀ i, p k ≤ p i) ∧ y = cost p / p k} = {0} := by

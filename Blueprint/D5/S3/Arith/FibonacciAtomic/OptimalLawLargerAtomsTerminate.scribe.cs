@@ -30,9 +30,27 @@ internal sealed class OptimalLawLargerAtomsTerminateDocument : IScribeDocumentDe
                 new Formula.Fraction(n, new Formula.Power(D(2), d)))))));
         var statement = All(m, Ty("N"), All(p, Seq(indices, Sp, To, Sp, Ty("R")),
             Imp(hypotheses, conclusion)));
+        var q = F.Id("q"); var depth = F.Id("d");
+        var delta = new Formula.Fraction(D(1), new Formula.Power(D(2), depth));
+        var changed = F.Id("P");
+        var transferHypotheses = Call("TransferData", Seq(m, Comma, F.Id("n"), Comma,
+            p, Comma, F.Id("I"), Comma, F.Id("enum"), Comma, q, Comma, j, Comma, depth));
+        var transferStatement = Seq(Forall, Sp, m, Comma, Sp, F.Id("n"), Comma, Sp,
+            p, Comma, Sp, F.Id("I"), Comma, Sp, F.Id("enum"), Comma, Sp,
+            q, Comma, Sp, j, Comma, Sp, depth, Comma, Sp,
+            Imp(transferHypotheses, And(
+                Equal(Seq(new Formula.Subscript(F.Sum, Seq(i, Sp, InMacro, Sp, indices)), Call("P", i)), D(1)),
+                Seq(Call("cost", changed), Sp, Le, Sp, Call("cost", p), Sp, Plus, Sp,
+                    delta, Sp, Cdot, Sp, Call("cost", q)))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "Every atom above the minimum in an optimal real probability law is a terminating binary rational.",
             H("Terminating Larger Atoms of Optimal Laws"), Blocks(
+                Describe.Lean(DescribeId.Create("transfer"),
+                    DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLawLargerAtomsTerminate.transfer"),
+                    H("A dyadic mass transfer"), StatementSource.FromAuthor(Disp(transferStatement)),
+                    AssessedProvenance.FromRepo(), Blocks(
+                        Paragraph(Text("TransferData means that p is a real vector on Fin m with sum one; I is a finite set of recipient labels; enum is an equivalence from I to Fin n; q is a nonnegative real vector on Fin n with sum one; j is outside I; and d is a natural depth. For every h<d, the integer floor of 2^h times p(j)-2^(-d) equals the floor of 2^h p(j). Set delta=2^(-d), set R(i)=q(enum(i)) on I and zero elsewhere, and set P(i)=p(i)+delta*R(i)-delta when i=j, with no subtraction otherwise.")),
+                        Paragraph(Text("The transferred law has total mass one. Its floor-tail cost is at most the original cost plus delta times the recipient cost. The shallow part uses the preserved donor floors and nonnegative recipient changes; the tail uses the floor-of-sum inequality and summability of normalized floor tails.")))),
                 Describe.Lean(DescribeId.Create("result"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLawLargerAtomsTerminate.result"),
                     H("Larger atoms terminate"), StatementSource.FromAuthor(Disp(statement)),
