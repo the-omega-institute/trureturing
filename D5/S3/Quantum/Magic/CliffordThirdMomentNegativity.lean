@@ -77,7 +77,7 @@ private theorem mem_T (x y : Fin 3 → ZMod 11) : (x, y) ∈ T ↔ x = O *ᵥ y 
     exact ⟨y, hx.symm, rfl⟩
 
 private theorem stochastic_T : IsStochasticLagrangian 11 T := by
-  letI : Fact (Nat.Prime 11) := ⟨by decide⟩
+  let : Fact (Nat.Prime 11) := ⟨by decide⟩
   have hO : Oᵀ * O = 1 := by decide
   have hOne : O *ᵥ (fun _ => 1) = (fun _ => 1) := by decide
   refine ⟨?_, ?_, (mem_T _ _).2 hOne.symm⟩
@@ -86,7 +86,8 @@ private theorem stochastic_T : IsStochasticLagrangian 11 T := by
     change (O *ᵥ y) ⬝ᵥ (O *ᵥ y) - y ⬝ᵥ y = 0
     rw [← dotProduct_transpose_mulVec O y (O *ᵥ y), mulVec_mulVec, hO, one_mulVec,
       sub_self]
-  · have hi : Function.Injective graphMap := fun x y h => congrArg Prod.snd h
+  · have hi : Function.Injective graphMap :=
+      (show Function.LeftInverse Prod.snd graphMap from fun _ => rfl).injective
     rw [T, LinearMap.finrank_range_of_inj hi]
     simp
 
@@ -110,6 +111,7 @@ private theorem normalized_psi : ∑ x, ‖psi x‖ ^ 2 = 1 := by
   norm_num
 
 set_option maxHeartbeats 4000000 in
+-- The decision procedure evaluates all 1331 Gaussian-integer summands.
 set_option maxRecDepth 100000 in
 private theorem gaussian_sum :
     (∑ y : Fin 3 → ZMod 11, ∏ k, v (y k) * star (v ((O *ᵥ y) k))) =
@@ -126,7 +128,7 @@ private theorem kappa_T (Psi : (Fin 1 → ZMod 11) → ℂ) :
   intro y _
   rw [← Equiv.sum_comp e.symm]
   simp only [e, R, stateCube, Fin.prod_univ_one, Equiv.piCongrRight, Equiv.funUnique,
-    Equiv.piUnique, Equiv.coe_fn_symm_mk, uniqueElim_const, mem_T]
+    Equiv.piUnique, Equiv.coe_fn_symm_mk, mem_T]
   change (∑ x, (if x = O *ᵥ y then 1 else 0) *
     ∏ k, Psi (fun _ => y k) * star (Psi (fun _ => x k))) = _
   simp only [ite_mul, one_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, if_true]
@@ -144,7 +146,7 @@ private theorem kappa_psi : kappa 11 1 psi T = -1196 / 64000 := by
 
 /-- The pointwise clause of Conjecture 2 fails for a normalized one-qudit state at `d = 11`. -/
 theorem result : ¬ claim := by
-  letI : Fact (Nat.Prime 11) := ⟨by decide⟩
+  let : Fact (Nat.Prime 11) := ⟨by decide⟩
   intro h
   have hnonneg := (h 11 (by decide) 1 psi normalized_psi T stochastic_T).1
   rw [kappa_psi, Complex.le_def] at hnonneg
