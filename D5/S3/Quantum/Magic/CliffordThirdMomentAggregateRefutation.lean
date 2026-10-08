@@ -7,6 +7,7 @@
    digest: A normalized two-qudit state in dimension five has aggregate isotropic third moment below six. -/
 
 import D5.S3.Quantum.Magic.CliffordThirdMomentNegativity
+import Mathlib.Logic.Equiv.Fin.Basic
 
 namespace D5.S3.Quantum.Magic.CliffordThirdMomentAggregateRefutation
 
@@ -151,5 +152,347 @@ private theorem kappa_identity {d n : ℕ} [NeZero d]
     rw [← Complex.ofReal_sum, hn]
     rfl
   simp only [hs, Finset.prod_const_one]
+
+private def v (a b : ZMod 5) : ℤ :=
+  !![8,-5,0,4,5;0,3,6,4,-4;-2,-5,-3,0,3;-3,0,5,-8,-6;5,-4,2,-5,0]
+    ⟨a.val, ZMod.val_lt a⟩ ⟨b.val, ZMod.val_lt b⟩
+
+private noncomputable def psi (x : Fin 2 → ZMod 5) : ℂ :=
+  (v (x 0) (x 1) : ℂ) / (Real.sqrt 458 : ℂ)
+
+private theorem normalized_psi : ∑ x, ‖psi x‖ ^ 2 = 1 := by
+  classical
+  have norm_v : (∑ x : Fin 2 → ZMod 5, v (x 0) (x 1) ^ 2) = 458 := by decide +kernel
+  simp_rw [psi, norm_div, div_pow, Complex.norm_real, Real.norm_eq_abs, sq_abs,
+    Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 458), Complex.sq_norm, Complex.normSq_intCast,
+    ← sq, ← Int.cast_pow]
+  rw [← Finset.sum_div, ← Int.cast_sum, norm_v]
+  norm_num
+
+private def partialValues (a : Fin 3 → ZMod 5) : ℤ :=
+  ![
+    ![
+      ![808690, -213484, -303836, -120628, -82740],
+      ![-213484, -53548, 95997, -66231, 190248],
+      ![-303836, 95997, -12492, -5950, 80635],
+      ![-120628, -66231, -5950, -277202, -111406],
+      ![-82740, 190248, 80635, -111406, -134442]],
+    ![
+      ![-213484, -53548, 95997, -66231, 190248],
+      ![-53548, 166169, -82740, 14755, -277202],
+      ![95997, -82740, -72653, 72353, 2165],
+      ![-66231, 14755, 72353, -303836, 124689],
+      ![190248, -277202, 2165, 124689, -12492]],
+    ![
+      ![-303836, 95997, -12492, -5950, 80635],
+      ![95997, -82740, -72653, 72353, 2165],
+      ![-12492, -72653, 41501, -53548, -120628],
+      ![-5950, 72353, -53548, -134442, 128535],
+      ![80635, 2165, -120628, 128535, 14755]],
+    ![
+      ![-120628, -66231, -5950, -277202, -111406],
+      ![-66231, 14755, 72353, -303836, 124689],
+      ![-5950, 72353, -53548, -134442, 128535],
+      ![-277202, -303836, -134442, 787610, -72653],
+      ![-111406, 124689, 128535, -72653, -213484]],
+    ![
+      ![-82740, 190248, 80635, -111406, -134442],
+      ![190248, -277202, 2165, 124689, -12492],
+      ![80635, 2165, -120628, 128535, 14755],
+      ![-111406, 124689, 128535, -72653, -213484],
+      ![-134442, -12492, 14755, -213484, 90010]]]
+    ⟨(a 0).val, ZMod.val_lt (a 0)⟩
+    ⟨(a 1).val, ZMod.val_lt (a 1)⟩
+    ⟨(a 2).val, ZMod.val_lt (a 2)⟩
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_00 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![0,0,c] k) (b k) * v ((base *ᵥ ![0,0,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![0,0,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_01 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![0,1,c] k) (b k) * v ((base *ᵥ ![0,1,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![0,1,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_02 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![0,2,c] k) (b k) * v ((base *ᵥ ![0,2,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![0,2,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_03 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![0,3,c] k) (b k) * v ((base *ᵥ ![0,3,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![0,3,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_04 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![0,4,c] k) (b k) * v ((base *ᵥ ![0,4,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![0,4,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_10 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![1,0,c] k) (b k) * v ((base *ᵥ ![1,0,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![1,0,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_11 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![1,1,c] k) (b k) * v ((base *ᵥ ![1,1,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![1,1,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_12 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![1,2,c] k) (b k) * v ((base *ᵥ ![1,2,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![1,2,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_13 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![1,3,c] k) (b k) * v ((base *ᵥ ![1,3,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![1,3,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_14 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![1,4,c] k) (b k) * v ((base *ᵥ ![1,4,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![1,4,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_20 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![2,0,c] k) (b k) * v ((base *ᵥ ![2,0,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![2,0,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_21 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![2,1,c] k) (b k) * v ((base *ᵥ ![2,1,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![2,1,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_22 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![2,2,c] k) (b k) * v ((base *ᵥ ![2,2,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![2,2,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_23 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![2,3,c] k) (b k) * v ((base *ᵥ ![2,3,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![2,3,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_24 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![2,4,c] k) (b k) * v ((base *ᵥ ![2,4,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![2,4,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_30 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![3,0,c] k) (b k) * v ((base *ᵥ ![3,0,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![3,0,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_31 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![3,1,c] k) (b k) * v ((base *ᵥ ![3,1,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![3,1,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_32 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![3,2,c] k) (b k) * v ((base *ᵥ ![3,2,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![3,2,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_33 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![3,3,c] k) (b k) * v ((base *ᵥ ![3,3,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![3,3,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_34 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![3,4,c] k) (b k) * v ((base *ᵥ ![3,4,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![3,4,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_40 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![4,0,c] k) (b k) * v ((base *ᵥ ![4,0,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![4,0,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_41 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![4,1,c] k) (b k) * v ((base *ᵥ ![4,1,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![4,1,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_42 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![4,2,c] k) (b k) * v ((base *ᵥ ![4,2,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![4,2,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_43 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![4,3,c] k) (b k) * v ((base *ᵥ ![4,3,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![4,3,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_slice_44 : ∀ c : Fin 5,
+    (∑ b : Fin 3 → ZMod 5, ∏ k,
+      v (![4,4,c] k) (b k) * v ((base *ᵥ ![4,4,c]) k) ((base *ᵥ b) k)) =
+      partialValues ![4,4,c] := by
+  simp only [Fin.forall_fin_succ, Fin.forall_fin_zero]
+  repeat' apply And.intro
+  all_goals decide +kernel
+
+set_option maxRecDepth 100000 in
+private theorem integer_sum :
+    (∑ a : Fin 3 → ZMod 5, ∑ b : Fin 3 → ZMod 5,
+      ∏ k, v (a k) (b k) * v ((base *ᵥ a) k) ((base *ᵥ b) k)) = -2577430 := by
+  have inner : ∀ a : Fin 3 → ZMod 5,
+      (∑ b : Fin 3 → ZMod 5,
+        ∏ k, v (a k) (b k) * v ((base *ᵥ a) k) ((base *ᵥ b) k)) = partialValues a := by
+    simp only [Fin.forall_fin_succ_pi, Fin.forall_fin_zero_pi]
+    change ∀ i j l : Fin 5,
+      (∑ b : Fin 3 → ZMod 5, ∏ k,
+        v (![i,j,l] k) (b k) * v ((base *ᵥ ![i,j,l]) k) ((base *ᵥ b) k)) =
+        partialValues ![i,j,l]
+    intro i j
+    fin_cases i <;> fin_cases j
+    · exact integer_slice_00
+    · exact integer_slice_01
+    · exact integer_slice_02
+    · exact integer_slice_03
+    · exact integer_slice_04
+    · exact integer_slice_10
+    · exact integer_slice_11
+    · exact integer_slice_12
+    · exact integer_slice_13
+    · exact integer_slice_14
+    · exact integer_slice_20
+    · exact integer_slice_21
+    · exact integer_slice_22
+    · exact integer_slice_23
+    · exact integer_slice_24
+    · exact integer_slice_30
+    · exact integer_slice_31
+    · exact integer_slice_32
+    · exact integer_slice_33
+    · exact integer_slice_34
+    · exact integer_slice_40
+    · exact integer_slice_41
+    · exact integer_slice_42
+    · exact integer_slice_43
+    · exact integer_slice_44
+
+  rw [show (∑ a : Fin 3 → ZMod 5, ∑ b : Fin 3 → ZMod 5,
+      ∏ k, v (a k) (b k) * v ((base *ᵥ a) k) ((base *ᵥ b) k)) =
+      ∑ a, partialValues a from Finset.sum_congr rfl (fun a _ => inner a)]
+  decide +kernel
+
+private theorem kappa_base : kappa 5 2 psi (graphSubspace base) = -2577430 / 458 ^ 3 := by
+  classical
+  rw [kappa_graph]
+  simp only [psi, star_div₀, Complex.star_def, Complex.conj_ofReal,
+    map_intCast, div_mul_div_comm]
+  simp_rw [← Complex.ofReal_mul, Real.mul_self_sqrt (by norm_num : (0 : ℝ) ≤ 458)]
+  simp_rw [Finset.prod_div_distrib]
+  simp only [Finset.prod_const, Finset.card_univ, Fintype.card_fin]
+  rw [← Finset.sum_div]
+  simp only [← Int.cast_mul, ← Int.cast_prod, ← Int.cast_sum]
+  have compute : (∑ Y : Fin 3 → Fin 2 → ZMod 5,
+      ∏ k, v (Y k 0) (Y k 1) * v (action base Y k 0) (action base Y k 1)) =
+      (-2577430 : ℤ) := by
+    let e := (Equiv.piComm (fun _ : Fin 3 => fun _ : Fin 2 => ZMod 5)).trans
+      (finTwoArrowEquiv (Fin 3 → ZMod 5))
+    rw [← Equiv.sum_comp e.symm, Fintype.sum_prod_type]
+    exact integer_sum
+  rw [compute]
+  norm_num
 
 end D5.S3.Quantum.Magic.CliffordThirdMomentAggregateRefutation
