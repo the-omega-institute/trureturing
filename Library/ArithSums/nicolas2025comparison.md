@@ -4540,3 +4540,189 @@ $H_\alpha(\rho)F_A(\rho)$ with the original $F_A(\rho)$ still require
 control. All actual zeros, multiplicities, heights, original pole and
 trivial terms, and the strict core remain present. The complete signed
 Robin estimate and RH remain unproved.
+
+
+## A directed prime-weight comparison for the complete Gamma response
+
+The combined-remainder estimate (GR1) can be paired with a one-sided
+arithmetic comparison. This `repo-derived` application uses the same
+canonical measure (M2), nonnegative von Mangoldt weights, the standard
+unconditional Chebyshev bound, and the Gamma law already used in
+(GR4)–(GR5). It does not replace the original coefficient by a pointwise
+approximation or claim mathematical originality or Lean verification.
+
+Keep $A\ge e^2$, $L=\log A$ and noninteger $\alpha\ge4$. Let $C$ have
+Gamma shape $\alpha$ and rate $\alpha$, and put
+
+$$
+h_A(t)=\frac1{\max(A,t)\log\max(A,t)},\qquad
+w_c(t)=\frac1c h_A(t/c),\qquad
+\Delta_\alpha(t)=\mathbb E w_C(t)-h_A(t).
+$$
+
+The resulting complete signed comparison is
+
+$$
+\boxed{
+-I_\psi(A)\le J_\alpha(A)
+ +\frac{\psi(A)}{(\alpha-1)A\log A}.}
+\tag{GP1}
+$$
+
+Here $J_\alpha$ is the centered prime response in (GR4), not the
+uncentered integral of its pole or prime terms. No source extremality
+assumption is needed for (GP1); it therefore applies at the same
+selected Robin integer without changing that integer.
+
+### A global tangent majorant on the infinite prime tail
+
+Fix $t\ge A$ and write $s=t/A\ge1$, $v=\log t$. As a function of the
+dilation $c>0$, the transported prime weight is
+
+$$
+f_t(c)=w_c(t)=
+\begin{cases}
+ [t(v-\log c)]^{-1},&0<c\le s,\\
+ (A L c)^{-1},&c\ge s.
+\end{cases}
+$$
+
+On $0<c<s$,
+
+$$
+f_t''(c)=\frac{2-(v-\log c)}
+ {t c^2(v-\log c)^3}\le0,
+$$
+
+because $v-\log c\ge L\ge2$. Thus its tangent at $c=1$ majorizes
+the first branch:
+
+$$
+f_t(c)\le \frac1{tv}+\frac{c-1}{tv^2}\qquad(0<c\le s).
+$$
+
+The same affine function is increasing and majorizes $f_t(s)$. The
+second branch decreases for $c\ge s$, so this is a global majorant,
+even though $f_t$ is not globally concave. At $s=1$ use the left
+tangent and the same argument. Since $\mathbb EC=1$, averaging gives
+
+$$
+\Delta_\alpha(t)\le0\qquad(t\ge A).
+\tag{GP2}
+$$
+
+For $0<t<A$, $h_A(t)=1/(A L)$ and $h_A(t/c)\le1/(A L)$.
+The existing inverse-first Gamma moment therefore gives
+
+$$
+\Delta_\alpha(t)\le
+ \frac{\mathbb EC^{-1}-1}{A L}
+ =\frac1{(\alpha-1)A L}.
+\tag{GP3}
+$$
+
+### Centering and absolute convergence of the full prime difference
+
+The pole and prime integrals are not subtracted as separate infinite
+quantities. First fix $c>0$ and set $T=A\max(1,c)$. Reuse a fixed
+unconditional bound $\psi(x)\le Bx$. Below $T$, the absolute
+prime-weight difference is bounded by
+
+$$
+\sum_{n\le T}\Lambda(n)|w_c(n)-h_A(n)|
+\le\frac{B}{L}(1+c^{-1})\max(1,c).
+$$
+
+For $n>T$ both weights use their logarithmic branch, and
+
+$$
+|w_c(n)-h_A(n)|
+ =\frac{|\log c|}{n\log n\,\log(n/c)}
+ \le\frac{|\log c|(1+|\log c|/L)}{n\log^2n}.
+$$
+
+Partial summation with the same Chebyshev bound gives
+$\sum_{n>T}\Lambda(n)/(n\log^2n)\le2B/L$. Since
+$|\log c|+(\log c)^2\ll c+c^{-1}$, these estimates yield an absolute
+constant $B_1$ such that
+
+$$
+\sum_{n\ge2}\Lambda(n)|w_c(n)-h_A(n)|
+ \le\frac{B_1}{L}(c+c^{-1}).
+\tag{GP4}
+$$
+
+The analogous Lebesgue integral is also absolutely convergent.
+Changing variables in finite integrals shows
+
+$$
+\int_0^\infty(w_c(t)-h_A(t))\,dt=0:
+$$
+
+for sufficiently large $R$, the difference of integrals up to $R$
+is $\log\log(R/c)-\log\log R$, which tends to zero. Integration by
+parts against $D(t)=\psi(t)-t$, using (GR3) at infinity and $D(t)=-t$
+below one, therefore gives
+
+$$
+J_1(A)-J_c(A)
+ =\sum_{n\ge2}\Lambda(n)[w_c(n)-h_A(n)],
+\qquad J_1(A)=-I_\psi(A).
+$$
+
+The $J_c$ here is the deterministic dilation in (GR5); $J_1$ is its
+value at dilation one, not a Gamma response with shape one. All
+boundary terms vanish. Equation (GP4), $\mathbb EC=1$ and
+$\mathbb EC^{-1}<\infty$ justify averaging and termwise summation.
+Reusing (GR5) yields the absolutely convergent identity
+
+$$
+-I_\psi(A)-J_\alpha(A)
+ =\sum_{n\ge2}\Lambda(n)\Delta_\alpha(n).
+\tag{GP5}
+$$
+
+Apply (GP2) to the entire infinite tail, (GP3) to the finite lower
+part, and $\Lambda(n)\ge0$ to prove (GP1). An atom at $n=A$ has the
+nonpositive sign in (GP2); using $\psi(A)$ in the upper allowance
+remains valid.
+
+### Pay the remainder and retain the original signed target
+
+Define the complete real zero response
+
+$$
+Z_\alpha(A)=\sum_\rho m_\rho H_\alpha(\rho)F_A(\rho),
+\qquad
+H_\alpha(s)=\frac{\Gamma(\alpha+s-1)}
+ {\Gamma(\alpha)\alpha^{s-1}}.
+$$
+
+Its absolute convergence and reality under conjugate pairing follow
+from the existing fixed-shape argument in (GR4). No zero real part,
+multiplicity or height is changed. Since
+$J_\alpha=Z_\alpha+\overline R_\alpha$, (GR1) and (GP1) give
+
+$$
+\boxed{\begin{aligned}
+\sqrt A L[-I_\psi(A)]\le{}&\sqrt A L Z_\alpha(A)
+ +\frac{\psi(A)}{(\alpha-1)\sqrt A}\\
+&+\frac{\log(2\pi)}{\sqrt A}\frac\alpha{\alpha-1}
+ +\frac{K M_3(\alpha)}{A^{5/2}}.
+\end{aligned}}
+\tag{GP6}
+$$
+
+This is a directed bound for the original full response, with a paid
+finite prime budget and the complete combined remainder. It is not an
+absolute coefficient approximation, a bound on the sum of coefficient
+moduli, or a deletion of the original explicit-formula terms.
+
+For shapes with $\alpha(A)/\sqrt A\to\infty$, the added allowance in
+(GP6) tends to zero by the existing PNT bound. This gives a sufficient
+transfer from a full signed Gamma-response upper estimate to (G9),
+provided the estimate has enough slack to pay the displayed allowance.
+The signed upper estimate on $Z_\alpha(A)$ is not established here.
+At the same conditional least global Robin maximizer $N>5040$,
+$A=\log N>10^{36}$, the original strict core, complete infinite
+response and target remain unchanged. Neither (G9) nor RH is proved.
