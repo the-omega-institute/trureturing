@@ -8,7 +8,7 @@ Let p>=2 and P>0 be natural numbers, H=clog(2,P), and B=H(P-1). Protocol(H) is t
 
 The physical digit at elapsed count n is floor(((bP+r+n) mod pP)/P). Decoded(p,P,b,n,r) is zero when this digit equals (b+floor(n/P)) mod p, and one otherwise. Cut(P,n,r) is zero for r<P-(n mod P), and one otherwise. Thus Decoded uses only the physical answer, retained digit, and elapsed count.
 
-Acquire(P,d,l,u,n) stops at l for a singleton half-open interval [l,u). Otherwise it splits at m=floor((l+u)/2), waits the strictly positive forward distance to phase P-m, and continues on [l,m) or [m,u). The list Waits records precisely the successive waiting increments on an execution. T=Acquire(P,H,0,P,0) is independent of b. Recovery of r also recovers bP+r and the final current residue (bP+r+n_final) mod pP. This tree description counts subsequent reads; the initial read acquiring b contributes one further read.
+Acquire(P,d,l,u,n) stops at l when the remaining depth d is zero or u<=l+1. Otherwise it splits at m=floor((l+u)/2), waits the strictly positive forward distance to phase P-m, and continues on [l,m) or [m,u). The list Waits records precisely the successive waiting increments on an execution. T=Acquire(P,H,0,P,0) is independent of b. Recovery of r also recovers bP+r and the final current residue (bP+r+n_final) mod pP. This tree description counts subsequent reads; the initial read acquiring b contributes one further read.
 
 **Lemma 1.1 (Endpoint alignment gives a strictly positive midpoint wait).**
 
