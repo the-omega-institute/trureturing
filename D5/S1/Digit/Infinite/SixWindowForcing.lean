@@ -34,16 +34,22 @@ noncomputable def J : ℝ := 2 * g ^ 4 / (5 * (1 + g ^ 3))
 def blockA : List Label := [threeLabel, threeLabel, fiveLabel, nullLabel, threeLabel, nullLabel]
 def blockB : List Label := [nullLabel, threeLabel, nullLabel, threeLabel, threeLabel, fiveLabel]
 
-set_option quotPrecheck false
-local notation "X" => (fun (x : LegalDigits) (j : ℕ) => kappa (bitShift x (3 * j)))
-local notation "L" => (fun i : Fin 6 => if i.val ≤ 1 then threeLabel else
-  if i.val = 2 then nullLabel else if i.val = 3 then fiveLabel else twoLabel)
-local notation "H" => (fun i : Fin 6 => if i.val ≤ 1 then nullLabel else
-  if i.val = 2 then fiveLabel else if i.val = 3 then twoLabel else twoFiveLabel)
-local notation "N" => (fun i : Fin 6 => if i.val ≤ 1 then (0 : Fin 6) else
-  if i.val ≤ 3 then 1 else 2)
-local notation "C" => (fun i : Fin 6 => if i.val ≤ 1 then threeLabel else
-  if i.val ≤ 3 then nullLabel else fiveLabel)
+/-- The actual coordinate after deleting j three-bit windows. -/
+@[simp] noncomputable def sample (x : LegalDigits) (j : ℕ) : ℝ := kappa (bitShift x (3 * j))
+
+/-- The common next color associated to each ordered separation type. -/
+@[simp] def nextColor (i : Fin 6) : Fin 6 :=
+  if i.val ≤ 1 then 0 else if i.val ≤ 3 then 1 else 2
+
+/-- The only possible common next label for each ordered separation type. -/
+@[simp] def commonNextLabel (i : Fin 6) : Label :=
+  if i.val ≤ 1 then threeLabel else if i.val ≤ 3 then nullLabel else fiveLabel
+
+local notation "X" => sample
+local notation "L" => D5.S1.Digit.Infinite.OddColorThreeSource.lowLabel
+local notation "H" => D5.S1.Digit.Infinite.OddColorThreeSource.highLabel
+local notation "N" => nextColor
+local notation "C" => commonNextLabel
 
 private theorem algebra : g ^ 2 + 4 * g = 1 ∧ (4 / 17 : ℝ) < g ∧
     g < 17 / 72 ∧ t = (1 + g) / 2 ∧ t ^ 2 = (1 - g) / 2 := by
@@ -67,9 +73,12 @@ private theorem root (x : LegalDigits) (j : ℕ) :
       (if (window x j).val 1 then t - 1 else if (window x j).val 0 then
         (if (window x j).val 2 then 1 + t else 2 * t) else
         (if (window x j).val 2 then t else g)) := by
-  simpa only [window, Nat.mul_zero,
-    D5.S1.Digit.Infinite.OddColorThreeSource.shift_add, Nat.add_zero] using
-    D5.S1.Digit.Infinite.OddColorThreeSource.root_bounds (bitShift x (3 * j))
+  have hw : window (bitShift x (3 * j)) 0 = window x j := by
+    simp only [window, Nat.mul_zero,
+      D5.S1.Digit.Infinite.OddColorThreeSource.shift_add, Nat.add_zero]
+  have hb := D5.S1.Digit.Infinite.OddColorThreeSource.root_bounds (bitShift x (3 * j))
+  rw [hw] at hb
+  exact hb
 
 private theorem observation_bounds (ν : ℝ) (i : Fin 6) (z : ℝ)
     (hz : z ∈ observation ν i) :
@@ -79,26 +88,10 @@ private theorem observation_bounds (ν : ℝ) (i : Fin 6) (z : ℝ)
 private theorem allow (ν : ℝ) (hν : ν < lambda) (x : LegalDigits)
     (j : ℕ) (i : Fin 6) (hx : X x j ∈ observation ν i) :
     window x j = L i ∨ window x j = H i := by
-  classical
-  obtain ⟨hg2, hglo, hghi, ht, ht2⟩ := algebra
-  have hr := root x j
-  obtain ⟨hlo, hhi⟩ := observation_bounds ν i _ hx
-  generalize window x j = l at hr ⊢
-  have hn0 := l.property 0 (by decide)
-  have hn1 := l.property 1 (by decide)
-  cases h0 : l.val 0 <;> cases h1 : l.val 1 <;> cases h2 : l.val 2
-  all_goals simp [h0, h1, h2] at hn0 hn1
-  all_goals fin_cases i
-  all_goals first
-    | (left; apply Subtype.ext; funext k; fin_cases k <;>
-        simp [nullLabel, threeLabel, twoLabel, fiveLabel, twoFiveLabel, h0, h1, h2]; done)
-    | (right; apply Subtype.ext; funext k; fin_cases k <;>
-        simp [nullLabel, threeLabel, twoLabel, fiveLabel, twoFiveLabel, h0, h1, h2]; done)
-    | skip
-  all_goals
-    simp [cellLower, cellUpper, cuts, lambda, ht2, ht] at hlo hhi hν
-    simp [h0, h1, h2, ht] at hr
-    nlinarith only [hg2, hglo, hghi, hlo, hhi, hν, hr.1, hr.2]
+  simpa only [window, Nat.mul_zero,
+    D5.S1.Digit.Infinite.OddColorThreeSource.shift_add, Nat.add_zero] using
+    D5.S1.Digit.Infinite.OddColorThreeSource.color_labels ν hν i
+      (bitShift x (3 * j)) hx
 
 
 /-- Both coordinates of one pair of actual sources share the indicated finite color word. -/
@@ -195,8 +188,12 @@ private theorem common_next (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
   all_goals exfalso; linarith only [hr.2, hsx, hglo, hghi]
 
 
-local notation "Z" => (fun i : Fin 6 => if i.val ≤ 1 then 2 * t / 5 else
-  if i.val = 2 then 1 + 4 * t / 5 else if i.val = 3 then t / 5 else 3 * t / 5)
+/-- The two-step center associated to an ordered separation type. -/
+@[simp] noncomputable def secondCenter (i : Fin 6) : ℝ :=
+  if i.val ≤ 1 then 2 * t / 5 else if i.val = 2 then 1 + 4 * t / 5 else
+    if i.val = 3 then t / 5 else 3 * t / 5
+
+local notation "Z" => secondCenter
 
 private theorem second_bounds (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
     (j : ℕ) (i : Fin 6) (hi : 1 ≤ i.val ∧ i.val ≤ 4)
@@ -217,6 +214,7 @@ private theorem second_bounds (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
   rw [hc] at hra
   rw [hd] at hrb
   simp only [show j + 1 + 1 = j + 2 by omega] at hra hrb
+  simp only [sample] at ha hb ⊢
   constructor <;> nlinarith only [ha, hb, hra, hrb, hcenter2]
 
 private theorem third_color (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
@@ -345,9 +343,11 @@ private theorem four_bound (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
   have hw2 := congrArg (fun z : ℝ => g ^ 2 * z) hw
   have ha3 : lambda - ν ≤ g ^ 3 * (w - X x (j + 3)) := by
     simp only [show j + 2 + 1 = j + 3 by omega] at hra
+    simp only [sample]
     nlinarith only [ha, hra, hw2]
   have hb3 : lambda - ν ≤ g ^ 3 * (X y (j + 3) - w) := by
     simp only [show j + 2 + 1 = j + 3 by omega] at hrb
+    simp only [sample]
     nlinarith only [hb, hrb, hw2]
   have hp3 : 0 < g ^ 3 := pow_pos hp _
   have hδ : 0 < lambda - ν := sub_pos.mpr hν
@@ -371,6 +371,7 @@ private theorem four_bound (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
     unfold J
     field_simp [show 1 + g ^ 3 ≠ 0 by positivity]
   have hclear : (lambda - ν) * (1 + g ^ 3) ≤ J * (1 + g ^ 3) := by
+    simp only [sample] at hb3
     unfold lambda at hb3 ⊢
     nlinarith only [hb3, hm, hwclear3, hJ]
   exact (mul_le_mul_iff_of_pos_right (by positivity : 0 < 1 + g ^ 3)).mp hclear
@@ -491,8 +492,9 @@ private theorem high_next (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
     twoFiveLabel, ht, ht2] at hr hs
   all_goals exfalso; nlinarith only [hq, hr.2, hs, hglo, hghi]
 
-private theorem forced_next (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
+private theorem forced_next (ν : ℝ) (hν : ν < lambda)
     (x y : LegalDigits) (j : ℕ) (i : Fin 6) (hi : 2 ≤ i.val ∧ i.val ≤ 4)
+    (hb : (if i.val = 2 then J else if i.val = 3 then max K31 K32 else K4) < lambda - ν)
     (r : ℕ → Fin 6) (hs : SharedAt ν r x y j (if i.val = 2 then 4 else 3))
     (hl : window x j = L i) (hh : window y j = H i) :
     r (j + 1) = N i ∧ window x (j + 1) = L (N i) ∧
@@ -508,21 +510,21 @@ private theorem forced_next (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
   have hhy := high_next ν hν x y j i hi h0x h0y hl hh h1y
   have hne : window x (j + 1) ≠ window y (j + 1) := by
     intro he
-    have hb := budget_clearance ν hρ
     fin_cases i <;> simp at hi
-    all_goals simp at hs hl hh
-    · exact (not_le_of_gt (hb.2.1.trans hb.2.2.2))
+    all_goals simp at hs hl hh hb
+    · exact (not_le_of_gt hb)
         (four_bound ν hν x y j r hs hc hl hh he)
-    · exact (not_le_of_gt (hb.1.trans hb.2.2.2))
+    · exact (not_le_of_gt (max_lt hb.1 hb.2))
         ((three_bound ν hν x y j r hs 3 (Or.inl rfl) hc hl hh he).1 rfl)
-    · exact (not_le_of_gt hb.2.2.2)
+    · exact (not_le_of_gt hb)
         ((three_bound ν hν x y j r hs 4 (Or.inr rfl) hc hl hh he).2 rfl)
   refine ⟨hn, ?_, hhy⟩
   rcases allow ν hν x (j + 1) (N i) h1x with h | h
   · exact h
   · exact False.elim (hne (h.trans hhy.symm))
 
-private theorem three_forcing (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
+private theorem three_forcing (ν : ℝ) (hν : ν < lambda)
+    (hδ4 : g ^ 4 / 5 < lambda - ν)
     (x y : LegalDigits) (j : ℕ) (r : ℕ → Fin 6) (hs : SharedAt ν r x y j 3)
     (hl : window x j = threeLabel) (hh : window y j = nullLabel) :
     r j = 1 ∧ r (j + 1) = 0 ∧ r (j + 2) = 2 ∧
@@ -546,8 +548,6 @@ private theorem three_forcing (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
   obtain ⟨hq, hglo, hghi, ht, ht2⟩ := algebra
   have hp : 0 < g ^ 2 := sq_pos_of_pos (by linarith)
   have hδ := sub_pos.mpr hν
-  have hδ4 : g ^ 4 / 5 < lambda - ν :=
-    (budget_clearance ν hρ).2.2.1.trans (budget_clearance ν hρ).2.2.2
   have hz : 2 * t / 5 - g = g ^ 2 / 5 := by rw [ht]; nlinarith only [hq]
   have hz2 := congrArg (fun z : ℝ => g ^ 2 * z) hz
   have hxg : g < X x (j + 2) := by
@@ -578,28 +578,29 @@ private theorem three_forcing (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
       exact False.elim (not_le_of_gt hyg hr.1)
   exact ⟨hc, hn, hn2, hx1, hy1, hxl, hyl⟩
 
-private theorem six_forcing (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
-    (m : ℕ) (hm : 1 ≤ m) (x y : LegalDigits) (r : ℕ → Fin 6)
-    (hs : SharedAt ν r x y 0 (6 * m))
-    (hl : window x 0 = threeLabel) (hh : window y 0 = nullLabel) :
+private theorem six_forcing (ν : ℝ) (hν : ν < lambda) (hJ : J < lambda - ν)
+    (hδ4 : g ^ 4 / 5 < lambda - ν)
+    (start m : ℕ) (hm : 1 ≤ m) (x y : LegalDigits) (r : ℕ → Fin 6)
+    (hs : SharedAt ν r x y start (6 * m))
+    (hl : window x start = threeLabel) (hh : window y start = nullLabel) :
     ∀ j < 6 * m,
-      window x j = (blockA[j % 6]?).getD nullLabel ∧
-      window y j = (blockB[j % 6]?).getD nullLabel := by
-  have hsub (a n : ℕ) (han : a + n ≤ 6 * m) : SharedAt ν r x y a n := by
+      window x (start + j) = (blockA[j % 6]?).getD nullLabel ∧
+      window y (start + j) = (blockB[j % 6]?).getD nullLabel := by
+  have hsub (a n : ℕ) (han : a + n ≤ 6 * m) : SharedAt ν r x y (start + a) n := by
     intro k hk
-    simpa only [Nat.zero_add] using hs (a + k) (by omega)
+    simpa only [Nat.add_assoc] using hs (a + k) (by omega)
   have hswap (a : ℕ) (ha : a + 6 ≤ 6 * m)
-      (hax : window x a = threeLabel) (hay : window y a = nullLabel) :
-      window x (a + 3) = nullLabel ∧ window y (a + 3) = threeLabel := by
-    have ht := three_forcing ν hν hρ x y a r (hsub a 3 (by omega)) hax hay
-    have hrev : SharedAt ν r y x (a + 2) 4 := by
+      (hax : window x (start + a) = threeLabel) (hay : window y (start + a) = nullLabel) :
+      window x (start + a + 3) = nullLabel ∧ window y (start + a + 3) = threeLabel := by
+    have ht := three_forcing ν hν hδ4 x y (start + a) r (hsub a 3 (by omega)) hax hay
+    have hrev : SharedAt ν r y x (start + a + 2) 4 := by
       intro k hk
-      exact ((hsub (a + 2) 4 (by omega)) k hk).symm
-    have hf := forced_next ν hν hρ y x (a + 2) 2 (by decide) r hrev ht.2.2.2.2.2.2
+      simpa only [Nat.add_assoc] using ((hsub (a + 2) 4 (by omega)) k hk).symm
+    have hf := forced_next ν hν y x (start + a + 2) 2 (by decide) (by simpa using hJ) r hrev ht.2.2.2.2.2.2
       ht.2.2.2.2.2.1
     simpa [Nat.add_assoc] using And.intro hf.2.2 hf.2.1
   have hstart : ∀ b, b < m →
-      window x (6 * b) = threeLabel ∧ window y (6 * b) = nullLabel := by
+      window x (start + 6 * b) = threeLabel ∧ window y (start + 6 * b) = nullLabel := by
     intro b
     induction b with
     | zero => intro _; simpa using And.intro hl hh
@@ -607,12 +608,12 @@ private theorem six_forcing (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
       intro hb
       obtain ⟨hax, hay⟩ := ih (by omega)
       obtain ⟨hx3, hy3⟩ := hswap (6 * b) (by omega) hax hay
-      have hrev : SharedAt ν r y x (6 * b + 3) 3 := by
+      have hrev : SharedAt ν r y x (start + 6 * b + 3) 3 := by
         intro k hk
-        exact ((hsub (6 * b + 3) 3 (by omega)) k hk).symm
-      have ht := three_forcing ν hν hρ y x (6 * b + 3) r hrev hy3 hx3
-      have hf := forced_next ν hν hρ x y (6 * b + 5) 2 (by decide) r
-        (hsub (6 * b + 5) 4 (by omega))
+        simpa only [Nat.add_assoc] using ((hsub (6 * b + 3) 3 (by omega)) k hk).symm
+      have ht := three_forcing ν hν hδ4 y x (start + 6 * b + 3) r hrev hy3 hx3
+      have hf := forced_next ν hν x y (start + 6 * b + 5) 2 (by decide) (by simpa using hJ) r
+        (by simpa [Nat.add_assoc] using hsub (6 * b + 5) 4 (by omega))
         (by simpa [Nat.add_assoc] using ht.2.2.2.2.2.2)
         (by simpa [Nat.add_assoc] using ht.2.2.2.2.2.1)
       simpa [Nat.mul_succ, Nat.add_assoc] using And.intro hf.2.1 hf.2.2
@@ -621,12 +622,12 @@ private theorem six_forcing (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
   have hb : b < m := by dsimp [b]; omega
   have he : j = 6 * b + j % 6 := by dsimp [b]; omega
   obtain ⟨hax, hay⟩ := hstart b hb
-  have ht := three_forcing ν hν hρ x y (6 * b) r (hsub (6 * b) 3 (by omega)) hax hay
+  have ht := three_forcing ν hν hδ4 x y (start + 6 * b) r (hsub (6 * b) 3 (by omega)) hax hay
   obtain ⟨hx3, hy3⟩ := hswap (6 * b) (by omega) hax hay
-  have hrev : SharedAt ν r y x (6 * b + 3) 3 := by
+  have hrev : SharedAt ν r y x (start + 6 * b + 3) 3 := by
     intro k hk
-    exact ((hsub (6 * b + 3) 3 (by omega)) k hk).symm
-  have ht' := three_forcing ν hν hρ y x (6 * b + 3) r hrev hy3 hx3
+    simpa only [Nat.add_assoc] using ((hsub (6 * b + 3) 3 (by omega)) k hk).symm
+  have ht' := three_forcing ν hν hδ4 y x (start + 6 * b + 3) r hrev hy3 hx3
   have hr : j % 6 = 0 ∨ j % 6 = 1 ∨ j % 6 = 2 ∨
       j % 6 = 3 ∨ j % 6 = 4 ∨ j % 6 = 5 := by omega
   rcases hr with hr | hr | hr | hr | hr | hr
@@ -639,10 +640,17 @@ private theorem six_forcing (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
   · simpa [Nat.add_assoc] using And.intro ht'.2.2.2.2.2.2 ht'.2.2.2.2.2.1
 
 
-local notation "B" => (![(-1 : ℝ), -6 * t ^ 2 / 5, g - 2 * t ^ 2 / 5,
-  t - 3 * t ^ 2 / 5, 2 * t - 4 * t ^ 2 / 5, 2 * t] : Fin 6 → ℝ)
-local notation "U" => (![-t ^ 2, g - t ^ 2 / 5, t - 2 * t ^ 2 / 5,
-  2 * t - 3 * t ^ 2 / 5, 2 * t + t ^ 2 / 5, 1 + t] : Fin 6 → ℝ)
+/-- Lower endpoints of the six critical closed expansions. -/
+@[simp] noncomputable def closedLower : Fin 6 → ℝ :=
+  ![-1, -6 * t ^ 2 / 5, g - 2 * t ^ 2 / 5, t - 3 * t ^ 2 / 5,
+    2 * t - 4 * t ^ 2 / 5, 2 * t]
+/-- Upper endpoints of the six critical closed expansions. -/
+@[simp] noncomputable def closedUpper : Fin 6 → ℝ :=
+  ![-t ^ 2, g - t ^ 2 / 5, t - 2 * t ^ 2 / 5, 2 * t - 3 * t ^ 2 / 5,
+    2 * t + t ^ 2 / 5, 1 + t]
+
+local notation "B" => closedLower
+local notation "U" => closedUpper
 
 private theorem intervals (ν : ℝ) (h0 : 0 ≤ ν) (hν : ν ≤ lambda) (i : Fin 6) :
     observation ν i = Set.Icc
@@ -667,8 +675,8 @@ private theorem intervals (ν : ℝ) (h0 : 0 ≤ ν) (hν : ν ≤ lambda) (i : 
     all_goals ring
   exact congrArg₂ Set.Icc hlo hhi
 
-/-- Closed expansions, ordered local separation, the three- and four-color bounds,
-and six-window forcing for every positive number of repetitions. -/
+/-- Closed expansions, ordered local separation, budget-dependent local forcing,
+and six-window forcing at any starting position and any positive length. -/
 theorem result (ν : ℝ) (h0 : 0 ≤ ν) (hν : ν < lambda) :
     (∀ i : Fin 6, observation lambda i = Set.Icc (B i) (U i)) ∧
     (∀ i : Fin 6, observation ν i = Set.Icc
@@ -682,12 +690,16 @@ theorem result (ν : ℝ) (h0 : 0 ≤ ν) (hν : ν < lambda) :
       window x j ≠ window y j → (1 ≤ i.val ∧ i.val ≤ 4) ∧
         ((window x j = L i ∧ window y j = H i) ∨
           (window x j = H i ∧ window y j = L i))) ∧
+    (∀ (x y : LegalDigits) j (i : Fin 6),
+      1 ≤ i.val → i.val ≤ 4 →
+      X x j ∈ observation ν i → X y j ∈ observation ν i →
+      window x j = L i → window y j = H i →
+      X x (j + 1) ≤ (-1 + i.val * (1 + t) / 5) - (lambda - ν) / g ∧
+      (-1 + i.val * (1 + t) / 5) + (lambda - ν) / g ≤ X y (j + 1)) ∧
     (∀ (x y : LegalDigits) j (r : ℕ → Fin 6) (i : Fin 6),
       1 ≤ i.val → i.val ≤ 4 → SharedAt ν r x y j 2 →
       window x j = L i → window y j = H i →
       r j = i ∧ r (j + 1) = N i ∧
-      X x (j + 1) ≤ (-1 + i.val * (1 + t) / 5) - (lambda - ν) / g ∧
-      (-1 + i.val * (1 + t) / 5) + (lambda - ν) / g ≤ X y (j + 1) ∧
       (window x (j + 1) = window y (j + 1) → window x (j + 1) = C i)) ∧
     (∀ (x y : LegalDigits) j (r : ℕ → Fin 6), SharedAt ν r x y j 3 →
       r j = 3 → window x j = fiveLabel → window y j = twoLabel →
@@ -698,27 +710,41 @@ theorem result (ν : ℝ) (h0 : 0 ≤ ν) (hν : ν < lambda) :
     (∀ (x y : LegalDigits) j (r : ℕ → Fin 6), SharedAt ν r x y j 4 →
       r j = 2 → window x j = nullLabel → window y j = fiveLabel →
       window x (j + 1) = window y (j + 1) → lambda - ν ≤ J) ∧
-    (ν ≤ rho → ∀ (x y : LegalDigits) j (i : Fin 6) (r : ℕ → Fin 6),
-      2 ≤ i.val → i.val ≤ 4 → SharedAt ν r x y j (if i.val = 2 then 4 else 3) →
+    (∀ (x y : LegalDigits) j (i : Fin 6) (r : ℕ → Fin 6),
+      2 ≤ i.val → i.val ≤ 4 →
+      (if i.val = 2 then J else if i.val = 3 then max K31 K32 else K4) < lambda - ν →
+      SharedAt ν r x y j (if i.val = 2 then 4 else 3) →
       window x j = L i → window y j = H i →
       r (j + 1) = N i ∧ window x (j + 1) = L (N i) ∧
         window y (j + 1) = H (N i)) ∧
-    (ν ≤ rho → ∀ (x y : LegalDigits) j (r : ℕ → Fin 6),
+    (g ^ 4 / 5 < lambda - ν → ∀ (x y : LegalDigits) j (r : ℕ → Fin 6),
       SharedAt ν r x y j 3 → window x j = threeLabel → window y j = nullLabel →
       r j = 1 ∧ r (j + 1) = 0 ∧ r (j + 2) = 2 ∧
       window x (j + 1) = threeLabel ∧ window y (j + 1) = threeLabel ∧
       window x (j + 2) = fiveLabel ∧ window y (j + 2) = nullLabel) ∧
-    (ν ≤ rho → ∀ m : ℕ, 1 ≤ m → ∀ (x y : LegalDigits) (r : ℕ → Fin 6),
-      SharedAt ν r x y 0 (6 * m) → window x 0 = threeLabel → window y 0 = nullLabel →
-      ∀ j < 6 * m, window x j = (blockA[j % 6]?).getD nullLabel ∧
-        window y j = (blockB[j % 6]?).getD nullLabel) := by
+    (J < lambda - ν → g ^ 4 / 5 < lambda - ν →
+      ∀ start m : ℕ, 1 ≤ m → ∀ (x y : LegalDigits) (r : ℕ → Fin 6),
+      SharedAt ν r x y start (6 * m) →
+      window x start = threeLabel → window y start = nullLabel →
+      ∀ j < 6 * m, window x (start + j) = (blockA[j % 6]?).getD nullLabel ∧
+        window y (start + j) = (blockB[j % 6]?).getD nullLabel) ∧
+    (ν ≤ rho → max K31 K32 < lambda - ν ∧ J < lambda - ν ∧
+      g ^ 4 / 5 < lambda - ν ∧ K4 < lambda - ν) ∧
+    K4 = 2 * g ^ 3 / (5 * (1 + g ^ 2)) := by
   obtain ⟨_, hglo, _, _, _⟩ := algebra
   have hp : 0 < g := by linarith
-  refine ⟨?_, intervals ν h0 hν.le, end_labels ν hν, ordered_pairs ν hν, ?_, ?_, ?_,
-    four_bound ν hν, ?_, three_forcing ν hν, six_forcing ν hν⟩
+  refine ⟨?_, intervals ν h0 hν.le, end_labels ν hν, ordered_pairs ν hν, ?_, ?_, ?_, ?_,
+    four_bound ν hν, ?_, three_forcing ν hν, six_forcing ν hν, ?_, ?_⟩
   · intro i
     have h := intervals lambda (by dsimp [lambda]; positivity) le_rfl i
     fin_cases i <;> simpa using h
+  · intro x y j i hi hi' hx hy hl hh
+    obtain ⟨ha, hb⟩ := split_bounds ν hν x y j i ⟨hi, hi'⟩ hx hy hl hh
+    constructor
+    · have h := (div_le_iff₀' hp).2 ha
+      linarith only [h]
+    · have h := (div_le_iff₀' hp).2 hb
+      linarith only [h]
   · intro x y j r i hi hi' hs hl hh
     obtain ⟨h0x, h0y⟩ := hs 0 (by omega)
     simp only [Nat.add_zero] at h0x h0y
@@ -727,18 +753,17 @@ theorem result (ν : ℝ) (h0 : 0 ≤ ν) (hν : ν < lambda) :
     obtain ⟨h1x, h1y⟩ := hs 1 (by omega)
     have hn := next_color ν hν x y j i (r (j + 1)) ⟨hi, hi'⟩ h0x h0y hl hh h1x h1y
     rw [hn] at h1x h1y
-    obtain ⟨ha, hb⟩ := split_bounds ν hν x y j i ⟨hi, hi'⟩ h0x h0y hl hh
-    refine ⟨hc, hn, ?_, ?_, common_next ν hν x y j i ⟨hi, hi'⟩ h0x h0y hl hh h1x h1y⟩
-    · have h := (div_le_iff₀' hp).2 ha
-      linarith only [h]
-    · have h := (div_le_iff₀' hp).2 hb
-      linarith only [h]
+    exact ⟨hc, hn, common_next ν hν x y j i ⟨hi, hi'⟩ h0x h0y hl hh h1x h1y⟩
   · intro x y j r hs hc hl hh he
     exact (three_bound ν hν x y j r hs 3 (Or.inl rfl) hc hl hh he).1 rfl
   · intro x y j r hs hc hl hh he
     exact (three_bound ν hν x y j r hs 4 (Or.inr rfl) hc hl hh he).2 rfl
-  · intro hρ x y j i r hi hi' hs hl hh
-    exact forced_next ν hν hρ x y j i ⟨hi, hi'⟩ r hs hl hh
-
+  · intro x y j i r hi hi' hb hs hl hh
+    exact forced_next ν hν x y j i ⟨hi, hi'⟩ hb r hs hl hh
+  · intro hρ
+    obtain ⟨ha, hb, hc, hd⟩ := budget_clearance ν hρ
+    exact ⟨ha.trans hd, hb.trans hd, hc.trans hd, hd⟩
+  · apply (eq_div_iff (by positivity : 5 * (1 + g ^ 2) ≠ 0)).2
+    nlinarith only [clearance_constants.2.2]
 
 end D5.S1.Digit.Infinite.SixWindowForcing
