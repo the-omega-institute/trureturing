@@ -6437,7 +6437,7 @@ Lean 内核检查数学证明；报告实现只读编译数据并核对结构，
 
 常值、重复、可恢复或 wrapper primitive readout 可具有零独有捕获。
 Seal 保留完整 peers 与每个索引的编译证明；合法冗余目录可提供 redundant 结论。
-该目录分类不提供对象的正性证明，也不构成额外生产准入门。
+生产判官核对目录身份、舞台与完整单位向量，不另设首次冻结正性准入门。
 
 ### AC-008　次序不变
 
@@ -7017,8 +7017,8 @@ layered capture 是 chain analysis，不替代该准入判词。
 
 本节的 positive admission 是下列全称正性的数学简称。
 `SealCatalog.conclusion` 携带目录冗余或不可约的证明；各 `SealRow.conclusion`
-分别携带 positive 或 zero 证明。生产判官消费这两类目录结论与逐行证明，
-不把下列全称正性设为额外准入门。
+分别携带 positive 或 zero 证明，均由 Reg 编译期内核检查。
+生产判官核对目录身份、舞台与完整单位向量，不把下列全称正性设为额外准入门。
 
 $$
 \boxed{
