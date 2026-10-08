@@ -95,7 +95,7 @@ internal sealed class FiniteScalarTraceKernelDocument : IScribeDocumentDefinitio
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Finite scalar deletion histories have an exact congruence kernel and recover different source data at modulus two and at larger moduli.",
         H("Finite Scalar Trace Kernels"), Blocks(
-            Paragraph(Text("K is the product of LegalDigits with two profinite integers. LegalDigits "
+            Paragraph(Text("N denotes the natural numbers. K is the product of LegalDigits with two profinite integers. LegalDigits "
                 + "consists of one-sided Boolean streams with no adjacent ones. U(p,j) is the "
                 + "natural value zero or one of digit j, and omega(p) is the entire address. "
                 + "For each positive modulus h, rho(h,p) projects both initial profinite "
@@ -114,7 +114,7 @@ internal sealed class FiniteScalarTraceKernelDocument : IScribeDocumentDefinitio
                 + "modulo h, and T(h,r,p) is the function on Fin(r+1) with values c(h,p,j). "
                 + "Thus time zero is included and the horizon r records r+1 readings. "
                 + "Only the initial residue and the digits used by the recurrence enter this "
-                + "trace. The last clause of the theorem states this dependence explicitly."),
+                + "trace. The theorem states this dependence explicitly."),
             Describe.Lean(DescribeId.Create("finite-scalar-trace-kernel-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Exact kernels and short horizons"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(),
