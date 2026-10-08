@@ -50,15 +50,17 @@ def transport_inspector(source):
     compiled-discovery and compiled-seal fixtures.
     """
     source = source.replace('import LeanInformationAudit.ArtifactAssessment\n', '')
-    start = source.index('  if !statementOnly && inputs.any')
+    start = source.index('  if !statementOnly && RawArtifacts.hasTypedInputs')
     end = source.index('  let store ← state.get', start)
     source = source[:start] + source[end:]
-    start = source.index('      let (current, generatedNames, binding, enrollmentErrors) ←')
-    end = source.index('      let row ← inspectData', start)
-    source = source[:start] + ('      let current := store\n'
-        '      let generatedNames : Array Name := #[]\n'
-        '      let binding := empty\n'
-        '      let enrollmentErrors : Array String := #[]\n') + source[end:]
+    start = source.index('  let (current, generatedNames, binding, enrollmentErrors) ←')
+    end = source.index('  let row ← inspectData', start)
+    source = source[:start] + ('  let current := store\n'
+        '  let generatedNames : Array Name := #[]\n'
+        '  let binding := empty\n'
+        '  let enrollmentErrors : Array String := #[]\n') + source[end:]
+    source = source.replace('RawArtifacts.sharedModules targets statementOnly',
+        'RawArtifacts.sharedModules targets true')
     return source
 
 

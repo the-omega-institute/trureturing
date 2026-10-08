@@ -7,7 +7,7 @@ open Lean
 namespace LeanInformationAudit.RawArtifacts
 
 /-- The pinned compiler's private declaration view, without an Environment or
-extension state. Regions remain live for the lifetime of the reader process. -/
+extension state. Each store owns only the regions loaded into that store. -/
 structure Store where
   modules : NameMap ModuleData := {}
   constants : Std.HashMap Name ConstantInfo := {}
@@ -84,6 +84,70 @@ cannot select the compiled-only route by supplying an empty projection. -/
 def hasTypedInputs (data : ModuleData) : Bool :=
   data.constants.any Contract.SourceAudit.isInput
 
+/-- Cross-target keys must not borrow strings or parents from an olean region. -/
+def ownName : Name → Name
+  | .anonymous => .anonymous
+  | .str parent text => .str (ownName parent) (String.ofList text.toList)
+  | .num parent index => .num (ownName parent) ((toString index).toNat!)
+
+@[noinline] private unsafe def importFact (name : Name) :
+    IO (Array Name × Bool × Array CompactedRegion) := do
+  let (data, regions) ← readOwn name
+  let imports := data.imports.foldl (fun names item => names.push (ownName item.module)) #[]
+  return (imports, hasTypedInputs data, regions)
+
+-- mkModuleData preserves env.header at every olean level. Dependency planning
+-- therefore needs only the base part, without touching imported constant tables.
+@[noinline] private unsafe def importHeader (name : Name) :
+    IO (Array Name × Array CompactedRegion) := do
+  let path ← try findOLean name catch error =>
+    throw <| IO.userError s!"raw.missing_olean:{name}:{error}"
+  checkHeader path
+  let (data, region) ← readModuleData path
+  let imports := data.imports.foldl (fun names item => names.push (ownName item.module)) #[]
+  return (imports, #[region])
+
+/-- Only detached import names and input flags survive this planning pass.
+The shared set is fixed before assessment and is closed under imports. -/
+unsafe def sharedModules (targets : Array (Name × Array Name)) (statementOnly : Bool) :
+    IO NameSet := do
+  if targets.size ≤ 1 then return {}
+  let facts ← IO.mkRef ({} : NameMap (Array Name × Bool))
+  for (target, _) in targets do
+    let (imports, typed, regions) ← importFact target
+    for region in regions.reverse do region.free
+    facts.modify (·.insert target (imports, typed))
+  let rec visit (name : Name) (seen : NameSet) : IO NameSet := do
+    if seen.contains name then return seen
+    let fact ← match (← facts.get).find? name with
+      | some fact => pure fact
+      | none => do
+        let (imports, regions) ← importHeader name
+        for region in regions.reverse do region.free
+        facts.modify (·.insert name (imports, false))
+        pure (imports, false)
+    let mut seen := seen.insert name
+    for dependency in fact.1 do seen ← visit dependency seen
+    return seen
+  let mut counts : NameMap Nat := {}
+  for (target, claims) in targets do
+    let mut seen ← visit target {}
+    for claim in claims do seen ← visit claim seen
+    if !statementOnly && ((← facts.get).find? target).any (·.2) then
+      seen ← visit `LeanInformationAudit.TemplateEnrollment seen
+    for name in seen.toArray do counts := counts.insert name ((counts.find? name).getD 0 + 1)
+  return counts.foldl (fun shared name count =>
+    if count > 1 then shared.insert name else shared) {}
+
+/-- Empty the last owning root before the caller frees any mapped contents.
+The noinline return boundary also destroys the store's metadata and maps. -/
+@[noinline] def takeRegions (store : IO.Ref Store) : IO (Array CompactedRegion) :=
+  store.modifyGet fun current => (current.regions, {})
+
+unsafe def release (store : IO.Ref Store) : IO Unit := do
+  let regions ← takeRegions store
+  for region in regions.reverse do region.free
+
 unsafe def loadModule (name : Name) (store : IO.Ref Store) : IO Unit := do
   let state ← store.get
   if state.modules.contains name then return
@@ -107,6 +171,29 @@ unsafe def loadModule (name : Name) (store : IO.Ref Store) : IO Unit := do
     moduleOrder := s.moduleOrder.push name
     metadata := CompiledMetadata.readModule s.metadata data
     active := s.active.erase name }
+
+@[noinline] private unsafe def comparePrevious (owner : Name) (info : ConstantInfo)
+    (constants : Std.HashMap Name ConstantInfo) : IO (Bool × Array CompactedRegion) := do
+  let (data, regions) ← readOwn owner
+  let compatible := (data.constants.find? (·.name == info.name)).any fun previous =>
+    subsumes constants info previous || subsumes constants previous info
+  return (compatible, regions)
+
+/-- Preserve the union reader's duplicate checks without retaining old terms.
+Only detached declaration/owner names survive; a collision rereads its owner. -/
+unsafe def checkBatchConstants (base store : Store) (seen : IO.Ref (NameMap Name)) : IO Unit := do
+  for owner in store.moduleOrder do
+    if base.modules.contains owner then continue
+    let some data := store.modules.find? owner
+      | throw <| IO.userError s!"raw.missing_module:{owner}"
+    for info in data.constants do
+      if let some previous := (← seen.get).find? info.name then
+        if previous != owner then
+          let (compatible, regions) ← comparePrevious previous info store.constants
+          for region in regions.reverse do region.free
+          unless compatible do
+            throw <| IO.userError s!"raw.conflicting_constant:{owner}:{info.name}"
+      else seen.modify (·.insert (ownName info.name) (ownName owner))
 
 def Store.getModule (store : Store) (name : Name) : IO ModuleData := do
   let some data := store.modules.find? name
