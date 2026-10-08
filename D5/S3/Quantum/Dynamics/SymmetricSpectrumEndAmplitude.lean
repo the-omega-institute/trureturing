@@ -256,6 +256,7 @@ private def nodalAbs (x y z : ℝ) : Fin 7 → ℝ :=
     2 * y ^ 2 * (y ^ 2 - x ^ 2) * (z ^ 2 - y ^ 2),
     2 * z ^ 2 * (z ^ 2 - x ^ 2) * (z ^ 2 - y ^ 2)]
 
+/-- Evaluation of the nodal products of the seven points `(-z, -y, -x, 0, x, y, z)`. -/
 private theorem prod_erase_symmetric (x y z : ℝ) (i : Fin 7) :
     ∏ j ∈ univ.erase i, (![-z, -y, -x, 0, x, y, z] i - ![-z, -y, -x, 0, x, y, z] j) =
       nodal x y z i := by

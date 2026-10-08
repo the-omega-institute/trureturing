@@ -22,34 +22,45 @@ no_transfer_last_first.
 proof_shape: pst_parity_classes: content (sign classes of the weights of pst_spectral_weights at
 time pi, integrality of the spectral differences); consumer: no_transfer_last_first.
 proof_shape: pst_spectral_weights: content (moment identity, phase alignment at an arbitrary
-time); consumer: pst_parity_classes.
+time); consumer: pst_parity_classes, SymmetricSpectrumEndAmplitude (symmetric_spectrum_weights).
 proof_shape: pst_phase: content (equality case of the unit-vector pairing, at an arbitrary
 time); consumer: pst_spectral_weights, pst_column.
-Public helpers; PathMiddleVertexMoments and OddPathRationalWeightTransfer abbreviate the modules
-D5/S3/Quantum/Dynamics/PathMiddleVertexMoments and
-D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer:
+Public helpers; PathMiddleVertexMoments, OddPathRationalWeightTransfer,
+SymmetricSpectrumEndAmplitude and SevenSiteEarlyStateExclusion abbreviate the modules
+D5/S3/Quantum/Dynamics/PathMiddleVertexMoments,
+D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer,
+D5/S3/Quantum/Dynamics/SymmetricSpectrumEndAmplitude and
+D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion:
 proof_shape: mul_prod_sub_eq_of_moments: content (nodal polynomial evaluated against the
 moments); consumer: pst_spectral_weights, PathMiddleVertexMoments.middle_vertex_weights.
 proof_shape: pathHamiltonian_pow_apply_column: content (induction on the power); consumer:
 no_transfer_last_first, PathMiddleVertexMoments.middle_vertex_weights,
-OddPathRationalWeightTransfer.middle_moment_gram_det.
+OddPathRationalWeightTransfer.middle_moment_gram_det, SymmetricSpectrumEndAmplitude
+(pathHamiltonian_pow_apply_zero_last).
 proof_shape: prod_eq_sq_of_rev: content (mirror pairing of a product); consumer:
 no_transfer_last_first, PathMiddleVertexMoments.middle_vertex_weights.
 proof_shape: hamiltonianPropagator_neg: bind-only; consumer: pst_phase, pst_spectral_weights,
 pst_parity_classes, no_transfer_last_first, result, PathMiddleVertexMoments
-(propagator_eq_reversal), OddPathRationalWeightTransfer (propagator_shift, result).
+(propagator_eq_reversal), OddPathRationalWeightTransfer (propagator_shift, result),
+SymmetricSpectrumEndAmplitude (hasPST_of_phase_eq, symmetric_spectrum_end_amplitude).
 proof_shape: pathHamiltonian_transpose: bind-only; consumer: pathHamiltonian_isHermitian,
-result, OddPathRationalWeightTransfer (middle_moment_gram_det, result).
+result, OddPathRationalWeightTransfer (middle_moment_gram_det, result),
+SymmetricSpectrumEndAmplitude (pathHamiltonian_pow_apply_zero_last).
 proof_shape: pathHamiltonian_isHermitian: bind-only; consumer: no_transfer_last_first,
-PathMiddleVertexMoments (propagator_eq_reversal, middle_vertex_moments).
+PathMiddleVertexMoments (propagator_eq_reversal, middle_vertex_moments),
+SymmetricSpectrumEndAmplitude (symmetric_spectrum_weights, symmetric_spectrum_end_amplitude,
+symmetric_spectrum_reduction), SevenSiteEarlyStateExclusion (claim).
 proof_shape: spectral_pow_apply: bind-only; consumer: pst_spectral_weights,
 PathMiddleVertexMoments (middle_vertex_weights, middle_vertex_moments).
 proof_shape: spectral_exp: bind-only; consumer: pst_phase, pst_column,
-PathMiddleVertexMoments (eigenvector_rev, sum_phase_eq_trace).
+PathMiddleVertexMoments (eigenvector_rev, sum_phase_eq_trace), SymmetricSpectrumEndAmplitude
+(spectral_exp_apply_self, hasPST_of_phase_eq).
 proof_shape: exists_int_of_exp_eq_one: bind-only; consumer: exists_int_of_exp_eq_neg_one,
-pst_parity_classes, PathMiddleVertexMoments.middle_vertex_weights.
+pst_parity_classes, PathMiddleVertexMoments.middle_vertex_weights,
+SymmetricSpectrumEndAmplitude.symmetric_spectrum_reduction.
 proof_shape: exists_int_of_exp_eq_neg_one: bind-only; consumer: pst_parity_classes,
-PathMiddleVertexMoments.middle_vertex_weights.
+PathMiddleVertexMoments.middle_vertex_weights,
+SymmetricSpectrumEndAmplitude.symmetric_spectrum_reduction.
 proof_shape: pst_column: bind-only; consumer: no_transfer_last_first,
 PathMiddleVertexMoments (propagator_eq_reversal).
 proof_shape: propagator_star_mul_self: bind-only; consumer: no_transfer_last_first,
