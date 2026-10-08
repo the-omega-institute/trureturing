@@ -4,7 +4,7 @@ authors: Ian George and Eric Chitambar
 year: 2024
 title: Reexamination of quantum state transformations with zero communication
 doi: 10.1103/PhysRevA.109.062418
-url: null
+url: https://doi.org/10.1103/PhysRevA.109.062418
 claim: Optimal bipartite pure-state conversion fidelity under local operations and shared randomness reduces to an auxiliary Schmidt-spectrum optimization; flat-target distillation uses descending block sums.
 strata_touched: []
 license: citation-only
