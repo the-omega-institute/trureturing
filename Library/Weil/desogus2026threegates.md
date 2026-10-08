@@ -178,6 +178,275 @@ Therefore the scalar $\mathfrak B_k I$ is not equal to, or a lower bound for, th
 
 The new interface is the complete prime-free odd collar comparison (C1)–(C5), with (C6) specifying its normalization. The one-cell floor, basic compression benchmark, Schur kernel estimate and exact pole restriction are reused. The global signed obligation remains the old/source inverse debit on the same harmonic vector; no positive aligned reference contribution is supplied by this diagonal bound, and no Robin or RH conclusion follows alone. The source's finite MASTER margin must not be transported through (C5) without a paid common-source identification and a compatible all-scale tail.
 
+## A pole-free odd null family tests the raw old/source metric
+
+The following calculation concerns the complete compact-test Weil form and its actual pole-free odd core. It tests a proposed identification of a raw old-block variational short with a uniformly positive one-cell source metric. It does not identify the source's allocated common-cut component with that raw short, and does not assert that the source's full induction is refuted.
+
+Reuse the theta transform, all-order weighted derivative tails, compact weighted-two-jet bridge and multiplicity-weighted zero summability already recorded in [the localization note](frankliebseiringer2006hardy.md#the-exact-auxiliary-line-does-not-replace-the-discarded-residual). The published xi null-vector mechanism and the existing [critical derivative family](lagarias2004li.md#the-full-derivative-family-and-the-remaining-estimate) are not new results here. The additional interface is their quantitative comparison with a moving *actual prime-power collar source slot*, retaining the odd sector and annihilating the true pole.
+
+### An odd test family that also annihilates the pole
+
+Let $\Phi$ be the original positive even theta kernel, with
+
+$$
+\widehat\Phi(z)=\xi(1/2+iz),\qquad
+\widehat f(z)=\int_{\mathbb R}f(y)e^{-izy}\,dy.
+$$
+
+Define the real odd rapidly decaying function
+
+$$
+g(y)=\Phi'''(y)-\frac14\Phi'(y).
+$$
+
+Tilted integration by parts, justified by the retained all-order theta tails, gives
+
+$$
+\int_{\mathbb R}g(y)e^{zy}\,dy
+=-z(z^2-1/4)\xi(1/2+z).
+\tag{O1}
+$$
+
+In particular this transform vanishes at every actual centered zero, with no assumption on its real part, and at both pole arguments $z=\pm1/2$. Thus
+
+$$
+\int_{\mathbb R}g(y)\sinh(y/2)\,dy=0.
+\tag{O2}
+$$
+
+The function $g$ is nonzero: its real Fourier transform is $(it)((it)^2-1/4)\xi(1/2+it)$, which is nonzero for sufficiently small nonzero $t$ because $\xi(1/2)>0$. It follows by oddness and continuity that there is a positive point at which $g$ is nonzero. Fix a dyadic rational $M>1$ such that
+
+$$
+y_0=\frac12\log M>0,\qquad g(y_0)\ne0.
+$$
+
+Such an $M$ exists because dyadic rationals are dense in $(1,\infty)$ and the nonzero set is open. This choice requires no prime-distribution estimate.
+
+### Use a real fresh prime-power branch at arbitrarily large endpoints
+
+Write $M=p/2^d$ with positive integers $p,d$, allowing $d=0$. For sufficiently large integers $j$, put
+
+$$
+n_j=2^j,\qquad k_j=M n_j^2+1,\qquad
+a_j=\frac12\log k_j,\quad b_j=\frac12\log(k_j+1),\quad h_j=b_j-a_j.
+$$
+
+For $j\ge d$, $k_j$ is an integer, $M n_j$ is an integer, and $n_j\nmid k_j$. Thus $n_j$ is an active fresh prime power in the source's arithmetic routing, with $\Lambda(n_j)=\log2$. Its actual translated positive physical collar source slot is
+
+$$
+J_j=(a_j-\log n_j,\ b_j-\log n_j)
+\Subset(-a_j,a_j).
+\tag{O3}
+$$
+
+Both endpoints tend to $y_0$, and $k_jh_j\to1/2$. Its reflected partner is $-J_j$, disjoint from $J_j$ for sufficiently large $j$.
+
+These are literal prime-translation source intervals. They are also contained in the source's full arithmetic slot: at endpoint $Y=k_j+1$, the exact Mellin coordinate is $t=e^{y+b_j}$, so
+
+$$
+\left[\frac{k_j}{n_j},\frac{k_j+1}{n_j}\right)
+\quad\longleftrightarrow\quad
+[a_j-h_j-\log n_j,\ b_j-\log n_j).
+\tag{O4}
+$$
+
+The parent index is $m_j=\lfloor k_j/n_j\rfloor=M n_j$ and the non-divisorial residue is exactly $1$. The Mellin substitution preserves $dy=dt/t$, so a source-slot unitary preserves the norm used below. No abstract interval is substituted for this branch.
+
+### The complete old-core energy is smaller than every power of the slot width
+
+Fix a real even $\chi\in C_c^\infty(-1,1)$, equal to one on $[-1/2,1/2]$, and set
+
+$$
+u_j(y)=\chi(y/a_j)g(y).
+$$
+
+This is an actual real odd compact smooth test in the old physical support $(-a_j,a_j)$, and agrees with $g$ on $J_j\cup(-J_j)$ for all sufficiently large $j$. The reused weighted derivative tails, with the cutoff starting at $|y|=a_j/2$, give
+
+$$
+\epsilon_j:=\int e^{|y|/2}
+\bigl(|u_j-g|+|(u_j-g)''|\bigr)dy
+=O_R(k_j^{-R})\qquad\text{for every }R>0.
+\tag{O5}
+$$
+
+Indeed $e^{2|y|}\ge e^{a_j}=\sqrt{k_j}$ on the error support; any polynomial factor from the fixed derivatives and the cutoff is absorbed by the original $e^{-c\sqrt{k_j}}$ tail. The constants may depend on $R$, $M$, $g$ and the fixed cutoff, but not on $j$.
+
+Use the complete compact Weil explicit formula with
+
+$$
+z_\rho=\Im\rho-i(\Re\rho-1/2),\qquad
+Q(u_j)=\sum_\rho m_\rho\widehat u_j(z_\rho)
+\overline{\widehat u_j(\overline{z_\rho})}.
+$$
+
+Both limiting factors vanish by (O1), including the reflected zero $1-\overline\rho$. The weighted-two-jet estimate gives
+
+$$
+|\widehat{u_j-g}(t+iw)|\le\frac{2\epsilon_j}{1+t^2},
+\qquad |w|\le1/2.
+$$
+
+Consequently the already supplied finite sum $S_4=\sum_\rho m_\rho(1+(\Im\rho)^2)^{-2}$ yields $|Q(u_j)|\le4S_4\epsilon_j^2$. The paired factors have not been replaced by modulus squares off the critical line.
+
+Write the true polar-free old form, on this same compact core, as
+
+$$
+C_{a_j}[u_j]=Q(u_j)+2\left|\int u_j(y)\sinh(y/2)dy\right|^2.
+$$
+
+Equation (O2) and $|\sinh(y/2)|\le e^{|y|/2}/2$ bound the added term by $\epsilon_j^2/2$. Therefore
+
+$$
+|Q(u_j)|+|C_{a_j}[u_j]|
+=O_R(k_j^{-R})\qquad\text{for every }R>0.
+\tag{O6}
+$$
+
+Only compact tests are evaluated by the arithmetic form. No new form on noncompact functions, RH assumption or sign of $Q(u_j)$ is asserted. If the source-defined $A_{a,-}$ and $C_a$ are identified with these complete Weil forms on their common core, the same estimate applies to those operators; that identification retains its independent obligation.
+
+In contrast, their actual slot data have polynomially sized mass:
+
+$$
+\ell_j:=\|\mathbf1_{J_j\cup(-J_j)}u_j\|_2^2,
+\qquad k_j\ell_j\longrightarrow |g(y_0)|^2>0.
+\tag{O7}
+$$
+
+Thus neither the complete odd old form nor its true polar-free core admits, for any fixed $c>0$, the bound
+
+$$
+q_{a_j}[v]\ge c\|\mathbf1_{J_j\cup(-J_j)}v\|_2^2
+\quad\text{for every old compact odd test }v
+\tag{O8}
+$$
+
+at all sufficiently large $j$. Taking $v=u_j$ gives the failure directly, independently of whether $q_{a_j}$ is positive.
+
+### A raw common-source short must retain these nearly null directions
+
+Whenever the actual old form $q_{a_j}$ has a positive closed realization and the variational short under consideration, let $S_j=-S_j\subset(-a_j,a_j)$ be either this reflected slot pair or a reflection-symmetric union of actual old source slots containing it. Work on $\mathcal H_j=L^2_{\mathrm{odd}}(S_j,dy)$, with the inherited $L^2$ norm, and define
+
+$$
+q_j^{\mathrm{short}}[r]
+=\inf\{q_{a_j}[v]:v\in D(q_{a_j}),\ v\text{ odd},\ \mathbf1_{S_j}v=r\}.
+$$
+
+Assume the valid closed short on this data space when invoking its associated operator or inverse. Reflection symmetry makes the support restriction an orthogonal projection within the odd old space. Put $r_j=\mathbf1_{S_j}u_j\in\mathcal H_j$. By this definition and (O6)–(O7),
+
+$$
+0\le\operatorname{Short}_{S_j}q_{a_j}[r_j]
+\le q_{a_j}[u_j],\qquad
+\frac{\operatorname{Short}_{S_j}q_{a_j}[r_j]}{\|r_j\|_2^2}
+=O_R(k_j^{-R})\quad\text{for every }R>0.
+\tag{O9}
+$$
+
+This holds on any cofinal subsequence satisfying the stated positivity/shorting conditions, for the full odd form or the pole-free core. If the associated exact short operator on $\mathcal H_j$ is additionally strictly positive with a bounded inverse, the usual positive-operator Cauchy--Schwarz inequality makes that inverse norm grow faster than every fixed power of $k_j$ along the subsequence. It supplies no lower bound for the actual debit $B_{A,k}^*A_k^{-1}B_{A,k}$, since that forcing need not lie in the normalized $r_j$ direction.
+
+The one-cell source model and its CMC/ground lower bounds remain valid in their declared realization. Equations (O8)–(O9) exclude identifying them with a uniformly coercive lower bound for this *whole raw actual old/source short* by source-slot unitaries alone. A valid full-form allocation may instead separate an archimedean component, retain compensating arithmetic/pole/target terms, or estimate the actual forcing after a justified treatment of the critical family. Such an allocation must be proved on the same object; the known one-cell floor cannot be imported as a raw old inverse bound. This is a specific realization boundary, not a refutation of the source's allocated-component claim or of its full induction.
+
+The all-scale signed Robin estimate remains unproved. The application supplies a quantitative test for the missing raw metric correspondence and explains why an actual directional inverse estimate, including the nearly null family, is still required. Classical nullity, theta tails, zero summability and variational shorting are reused; the moving prime-power slot comparison (O3)–(O9) is the additional paper-level interface, without a new Lean certification or mathematical-priority claim.
+
+## Complete collar response versus one actual prime branch
+
+Retain the actual odd family, integer endpoints and compact cutoffs from (O1)–(O9). This calculation gives the full old-to-new response of that family, uniformly against every $L^2$ odd collar probe. It complements the raw source-metric boundary; it does not estimate the old inverse debit on arbitrary forcing.
+
+Reuse the [complete mixed Weil pairing and compact-domain bridge](lagarias2004li.md#mixed-nullity-needs-a-domain-bridge), the [general two-pole and prime formula](frankliebseiringer2006hardy.md#ordinary-windows-require-both-poles), and the classical multiplicity-weighted inverse-square zero mass recorded in [the resolvent supplier](broadbent2026mertens.md#an-upper-budget-in-the-actual-logarithmic-gamma-energy). No mixed-nullity or zero-summability theorem is reproved. The even theta-weighted commutator bounds in [the exterior account](lenz2010compactness.md) are not assigned to the physical odd metric without a map.
+
+Write
+
+$$
+E_j=(-b_j,-a_j)\cup(a_j,b_j),\qquad
+\alpha_j=\sqrt{2h_j}\,e^{b_j/2},\qquad
+S_2=\sum_\rho\frac{m_\rho}{1+(\Im\rho)^2}<\infty,
+\qquad m_j=\int u_j(y)\sinh(y/2)dy.
+$$
+
+All zeros in $S_2$ are actual nontrivial zeros, with both ordinate signs and every multiplicity. Put $B_Q$ for the full compact Weil pairing, linear in the first argument. For a compact smooth odd $v$ supported in $E_j$, the disjoint supports eliminate multiplication terms. The same general explicit formula gives the physical response $Y_j^Q$ by
+
+$$
+\begin{aligned}
+Y_j^Q(y)={}&-\int_{-a_j}^{a_j}\kappa(|y-z|)u_j(z)\,dz
+-2\sinh(y/2)m_j\\
+&-\sum_{2\le n\le k_j}\frac{\Lambda(n)}{\sqrt n}
+\bigl(u_j(y+\log n)+u_j(y-\log n)\bigr),\qquad y\in E_j,\\
+B_Q(u_j,v)={}&\langle Y_j^Q,v\rangle_{L^2(E_j)},
+\qquad \kappa(t)=\frac{e^{-t/2}}{1-e^{-2t}}.
+\end{aligned}
+\tag{O10}
+$$
+
+The theta cutoff has compact support strictly inside the old interval, so this Gamma cross integral is nonsingular. Every prime-power translation that can reach this collar is retained; translations with $n\ge k_j+1$ have no old/new overlap. The true negative odd pole has its coefficient $2$. Formula (O10) refers to the actual compact Weil form. Identifying the source-defined $B_{A,k_j}^*u_j$ with it still requires the source's complete common-core identification.
+
+### A bound uniform over all collar coefficients
+
+For $|w|\le1/2$, Cauchy--Schwarz on the actual collar gives
+
+$$
+|\widehat v(t+iw)|\le e^{b_j/2}\|v\|_1
+\le\alpha_j\|v\|_2.
+$$
+
+The complete paired spectral formula is
+
+$$
+B_Q(u_j,v)=\sum_\rho m_\rho\widehat u_j(z_\rho)
+\overline{\widehat v(\overline{z_\rho})},
+\qquad z_\rho=\Im\rho-i(\Re\rho-1/2).
+$$
+
+Equation (O1) makes the limiting old factor zero at every $z_\rho$; (O5) bounds its actual error by $2\epsilon_j/(1+(\Im\rho)^2)$. The probe bound therefore pays the complete sum by $2S_2\alpha_j\epsilon_j\|v\|_2$. No bound on the probe's derivatives is required. Density of the smooth odd collar core and Riesz representation give
+
+$$
+\boxed{\|Y_j^Q\|_2\le2S_2\alpha_j\epsilon_j.}
+\tag{O11}
+$$
+
+For the true pole-free core, its response is $Y_j^C=Y_j^Q+2m_j\sinh(y/2)|_{E_j}$. Using $|m_j|\le\epsilon_j/2$ from (O2) and $\|\sinh(y/2)\|_{L^2(E_j)}\le\alpha_j/2$ gives
+
+$$
+\boxed{\|Y_j^C\|_2\le(2S_2+1/2)\alpha_j\epsilon_j.}
+$$
+
+Since $\alpha_j\asymp k_j^{-1/4}$ and $\epsilon_j=O_R(k_j^{-R})$ for every $R>0$, both complete response norms are smaller than every fixed power of $k_j^{-1}$. This is a uniform $L^2$ collar estimate on the stated old family, not merely convergence for one fixed smooth probe. It uses the same actual zero real parts and paired factors; no critical-line or simple-zero assumption is made.
+
+### The selected prime-power response alone is polynomially sized
+
+Keep the literal contribution of $n_j=2^j$ in (O10):
+
+$$
+P_j(y)=-\frac{\log2}{\sqrt{n_j}}
+\bigl(u_j(y+\log n_j)+u_j(y-\log n_j)\bigr).
+$$
+
+On the positive collar only $u_j(y-\log n_j)$ is present, and on the negative collar only its odd reflected partner is present. The source slots are exactly $J_j$ and $-J_j$ from (O3); the two translations preserve Lebesgue measure. Therefore
+
+$$
+\|P_j\|_2^2=\frac{(\log2)^2}{n_j}\ell_j,
+\qquad
+k_j^{3/2}\|P_j\|_2^2
+\longrightarrow (\log2)^2\sqrt M\,|g(y_0)|^2>0.
+\tag{O12}
+$$
+
+The selected response is thus of order $k_j^{-3/4}$ in norm. It is not a hypothetical edge or a prime sample: $n_j$ is the fresh branch with parent $Mn_j$ and residue one, at the same integer endpoint used in (O3)–(O9).
+
+Let $R_j^Q$ consist of the Gamma and true pole terms in (O10), together with all the displayed prime-power terms except $n_j$. This is an independently specified sum of the actual remaining terms. Equations (O10)–(O12) give
+
+$$
+Y_j^Q=P_j+R_j^Q,\qquad
+\frac{\|P_j+R_j^Q\|_2}{\|P_j\|_2}\longrightarrow0.
+\tag{O13}
+$$
+
+Thus the remaining actual response cancels the polynomially sized selected prime response in relative $L^2$ norm on these collars. The same statement holds for the pole-free core with its actual pole-removal term included in $R_j^C$. Independent absolute estimates for these components would miss this joint relation. The cancellation is quantitative and on one actual source; it does not follow from independently achievable component bounds or from replacing a signed response by its norm.
+
+### The inverse budget remains a separate estimate
+
+Equations (O9) and (O11) show that a nearly null raw source metric and a small complete collar response can coexist, even though a single real prime branch remains polynomially large. They do not show that $B_{A,k}^*A_k^{-1}B_{A,k}$ is small. In particular, an upper bound on the coupling numerator and an upper bound on the old energy do not bound their quotient; a matching directed estimate and control of all other old directions remain required. No whole-form positivity, Robin main upper bound or RH conclusion is inferred.
+
+The additional interface is the complete physical collar norm (O11) and its same-source comparison with the isolated actual prime branch (O12)–(O13). Classical mixed nullity, support Cauchy--Schwarz, Riesz representation, zero summability and the accepted moving-slot construction are reused. This is a paper-level application, without Lean certification or a mathematical-priority claim.
+
 ## v2: the claimed induction step
 
 The following induction and fold formulas are those of [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), revised **20 September 2026**, 69 pages. At the arithmetic endpoint $a_k=(\log k)/2$, the source retains the pole term in $A_k=C_k-2|s_k\rangle\langle s_k|$. Lemma 6.27, under the old endpoint's positivity and inverse hypotheses, forms the actual harmonic extension
