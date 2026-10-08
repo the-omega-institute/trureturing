@@ -20,16 +20,16 @@ proof_shape: slopeNumeratorDeriv_pos: content (the derivative of the numerator
 n z = z²/2 cos z - 5z/2 sin z + 4 - 4 cos z is positive on (0, π]); consumer: slopeNumerator_pos.
 proof_shape: slopeNumerator_pos: content (n > 0 on (0, 2π]: monotonicity on (0, π], Jordan's
 inequality and sign bookkeeping on (π, 2π]); consumer: slopeRatio_strictMonoOn.
-proof_shape: hasDerivAt_slopeRatio: content (derivative computation q' u = n (2u) / u⁵);
-consumer: slopeRatio_strictMonoOn.
+proof_shape: hasDerivAt_slopeRatio: bind-only (Mathlib derivative rules and normalisation:
+q' u = n (2u) / u⁵); consumer: slopeRatio_strictMonoOn.
 proof_shape: slopeRatio_strictMonoOn: content (q u = ψ' u / u is strictly increasing on (0, π]);
 consumer: tangent_pos.
-proof_shape: hasDerivAt_sincSq: content (derivative computation ψ' u = u q u); consumer:
-tangent_pos, sincSq_chord_lt.
+proof_shape: hasDerivAt_sincSq: bind-only (Mathlib derivative rules and normalisation:
+ψ' u = u q u); consumer: tangent_pos, sincSq_chord_lt.
 proof_shape: tangent_pos: content (the tangent inequality
 ψ θ - ψ u + q u (u² - θ²) / 2 > 0 for 0 < θ < u, θ ≤ π/2); consumer: sincSq_chord_lt.
 Definition: slopeRatio (private; q u = (u sin 2u - 1 + cos 2u) / u⁴); consumer:
-slopeRatio_strictMonoOn, tangent_pos, sincSq_chord_lt.
+hasDerivAt_slopeRatio, slopeRatio_strictMonoOn, hasDerivAt_sincSq, tangent_pos, sincSq_chord_lt.
 admission_basis: escape-witness
 Direct frozen dependencies: none (pinned Mathlib only).
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
@@ -111,8 +111,7 @@ private theorem slopeNumerator_pos {z : ℝ} (hz : 0 < z) (hz2π : z ≤ 2 * π)
     have hZ : 0 ≤ (w + π) ^ 2 / 2 - 4 := by nlinarith [mul_pos hw0 pi_pos, mul_self_nonneg w]
     rw [cos_add_pi, sin_add_pi]
     rcases le_or_gt w (π / 2) with hw2 | hw2
-    · have hc0 : 0 ≤ cos w := cos_nonneg_of_mem_Icc ⟨by linarith, hw2⟩
-      have hs : 2 * w ≤ π * sin w := by
+    · have hs : 2 * w ≤ π * sin w := by
         have h := mul_le_sin hw0.le hw2
         rw [div_mul_eq_mul_div, div_le_iff₀ pi_pos] at h
         linarith
@@ -122,11 +121,11 @@ private theorem slopeNumerator_pos {z : ℝ} (hz : 0 < z) (hz2π : z ≤ 2 * π)
       have h3 : 0 ≤ w * (π / 2 - w) := mul_nonneg hw0.le (by linarith)
       have h4 : 0 ≤ w * (4 - π) := mul_nonneg hw0.le (by linarith [pi_lt_four])
       have h5 : π * π < 16 := by nlinarith [pi_pos, pi_lt_four]
-      nlinarith [h1, h2, h3, h4, h5, hs]
+      linarith [h1, h2, h3, h4, h5, hs]
     · have hc0 : cos w ≤ 0 := cos_nonpos_of_pi_div_two_le_of_le hw2.le (by linarith [pi_pos])
       have h1 : 0 ≤ ((w + π) ^ 2 / 2 - 4) * (-cos w) := mul_nonneg hZ (by linarith)
       have h2 : 0 ≤ (w + π) * sin w := mul_nonneg (by linarith [pi_pos]) hs0
-      nlinarith [h1, h2]
+      linarith [h1, h2]
 
 /-- The ratio `q u = ψ' u / u` for `ψ u = (sin u / u) ^ 2`. -/
 private def slopeRatio (u : ℝ) : ℝ := (u * sin (2 * u) - 1 + cos (2 * u)) / u ^ 4
