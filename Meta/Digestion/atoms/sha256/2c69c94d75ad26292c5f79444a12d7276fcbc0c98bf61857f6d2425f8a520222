@@ -1,0 +1,21 @@
+**定理 17.3（保留重复使用成本的分数装填）。** 给定同一个 $G$ 的任意有限族非空主块 $B_\alpha=G[S_\alpha]$。若
+$$
+w_\alpha\ge0,\qquad
+\sum_{\alpha:\,i\in S_\alpha}w_\alpha\le1\quad(1\le i\le N),
+\tag{17.2}
+$$
+则
+$$
+D_\Psi(G)\ge\sum_\alpha w_\alpha D_\Psi(B_\alpha).
+\tag{17.3}
+$$
+若各块均为三阶且实际能量满足 $e(B_\alpha)\ge e_\alpha^*\in[0,3]$，则
+$$
+D_\Psi(G)\ge
+\max_{\substack{w_\alpha\ge0\\
+\sum_{\alpha:i\in S_\alpha}w_\alpha\le1}}
+\sum_\alpha w_\alpha F(e_\alpha^*).
+\tag{17.4}
+$$
+此有限线性规划包含每个不交块选取作为可行点；若 $L\ge1$ 且每个索引至多属于 $L$ 个块，统一权重 $1/L$ 可行。
+

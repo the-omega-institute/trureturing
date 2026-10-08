@@ -1,0 +1,20 @@
+**命题 11.9（同源的距离和对数损失）。** 在 $`r>0`$ 下，令 $`\delta=\Delta/r`$，则
+
+```math
+\mathop{\mathrm{TV}}\nolimits(\nu_p,\nu_{p^\star})=|\delta|,
+\qquad
+\mathop{\mathrm{TV}}\nolimits(\nu_{p,A},\nu_{p^\star,A})=|\delta|/m\quad(m>0).
+```
+
+完整档案对 $`(A,R)`$ 的五项概率恰为 $`p`$ 的重排，所以第九节的熵差和 KL 正是这份实际档案任务的额外对数预测损失。更具体，当 $`0<m<1`$，
+
+```math
+D_2(p\Vert p^\star)
+=mD_2(\nu_{p,A}\Vert\nu_{p^\star,A})
++(1-m)D_2(\nu_{p,\neg A}\Vert\nu_{p^\star,\neg A}).
+```
+
+其中 $`\neg A`$ 下回复 $`5,\bot`$ 的概率为 $`p_0/(1-m),p_2/(1-m)`$。因而 $`mD_2(\nu_{p,A}\Vert\nu_{p^\star,A})\le H(p^\star)-H(p)`$。
+
+证明。无条件回复差只在 $`5,26`$ 两项为 $`\delta,-\delta`$；条件回复差只在 $`26,\bot`$ 为 $`-\delta/m,\delta/m`$，给 TV。KL 按 $`A`$ 分组，两律记录质量同为 $`m`$，概率比中的组质量消去，得链式式子。$`m=0`$ 或一时只保留实际正质量组，零组不给条件律；顶点时全部差为零。∎
+

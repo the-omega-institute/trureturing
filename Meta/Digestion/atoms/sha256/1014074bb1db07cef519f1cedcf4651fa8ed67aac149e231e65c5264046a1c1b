@@ -1,0 +1,15 @@
+**定义 13.4（有限阶段共同相干历史）。** 对非空有限历史集 $`H_n`$，取正交基 $`|h\rangle`$，保留系统及以后可能重新接入的实际环境、控制和记忆作为同一块载体。写
+
+```math
+\Omega_n=\sum_{h,k\in H_n}|h\rangle\langle k|\otimes\Xi^{(n)}_{hk}\ge0,
+\qquad \mathrm{tr}\Omega_n=1,\qquad
+\Xi^{(n)}_{kh}=(\Xi^{(n)}_{hk})^\dagger.
+```
+
+每个历史有有限下一标签集。另供确定了跨历史相位和共同输出载体的线性算子 $`K_{a|h}`$，满足每个 $`h`$ 的完备性
+
+```math
+\sum_a K_{a|h}^\dagger K_{a|h}=I,
+\qquad V_n=\sum_{h,a}|h,a\rangle\langle h|\otimes K_{a|h}.
+```
+

@@ -1,0 +1,60 @@
+**推导 8.2（占位镜像及行列式符号）。** 前卷第十节的底面仿射对称在本坐标中给出以下具体重标记。
+
+有：
+
+```math
+\boxed{
+C_x^2=C_y^2=I,
+\qquad
+C_xC_y=C_yC_x.
+}
+```
+
+对平均坐标：
+
+```math
+C_x:(X,Y,Z)\mapsto(r-X,Y,Z),
+```
+
+```math
+C_y:(X,Y,Z)\mapsto(X,r-Y,Z).
+```
+
+而关联差满足：
+
+```math
+\boxed{
+C_x:\Delta\mapsto-\Delta,
+\qquad
+C_y:\Delta\mapsto-\Delta.
+}
+```
+
+两次取反则保持 $\Delta$。
+
+证明。
+
+前两项由代入立即得到。
+
+在 $C_x$ 下：
+
+```math
+\kappa'=\mathbb E[(1-z-x)y]
+=\mathbb E[y-xy]
+=Y-\kappa,
+```
+
+其中使用了 $zy=0$。
+
+因此：
+
+```math
+\Delta'
+=
+r(Y-\kappa)-(r-X)Y
+=
+-\Delta.
+```
+
+另一项同理。证毕。
+

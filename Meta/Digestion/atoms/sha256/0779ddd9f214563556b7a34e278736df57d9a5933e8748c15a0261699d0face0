@@ -1,0 +1,15 @@
+**定义 9.2（支撑和对数惯例）。** 熵以二为底：
+
+```math
+H(p)=-\sum_s p_s\log_2p_s,\qquad
+h_2(t)=-t\log_2t-(1-t)\log_2(1-t).
+```
+
+约定 $`0\log_2 0=0`$。有限律的现代相对熵定义为
+
+```math
+D_2(p\Vert q)=\sum_{s:p_s>0}p_s\log_2(p_s/q_s),
+```
+
+若存在 $`p_s>0=q_s`$，取 $`+\infty`$。有限值要求 $`\mathop{\mathrm{supp}}\nolimits p\subseteq\mathop{\mathrm{supp}}\nolimits q`$。Shannon 重印本 §6 支持熵及链式分解；其 §7 的 “relative entropy” 是同字母表的归一化熵比，不用于现代 KL 定义。此处后者采用 Wainwright–Jordan 式 (5.9)。
+
