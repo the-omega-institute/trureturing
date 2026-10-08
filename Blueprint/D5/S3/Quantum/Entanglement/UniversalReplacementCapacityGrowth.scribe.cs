@@ -14,6 +14,14 @@ internal sealed class UniversalReplacementCapacityGrowthDocument : IScribeDocume
         H("Universal Replacement Capacity Growth"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("pure-trace"),
+                DeclarationHandle.Create(Module + "pure_trace"),
+                H("Trace of a rank-one matrix"),
+                StatementSource.FromAuthor(PureTraceFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("The rank-one matrix of a finite complex vector has trace equal to its squared Euclidean norm."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("universal-replacement"),
                 DeclarationHandle.Create(Module + "UniversalReplacement"),
                 H("Universal single-step replacement"),
@@ -114,6 +122,19 @@ internal sealed class UniversalReplacementCapacityGrowthDocument : IScribeDocume
             Seq(Call("UniversalReplacement", w, F.Id("tau")), Sp, Colon, Eq, Sp,
                 Parenthesized(allInputs), Dot),
         ]));
+    }
+
+    private static Formula PureTraceFormula()
+    {
+        Formula a = F.Id("A"), x = F.Id("x");
+        Formula coords = Call("ofLp", x);
+        Formula outer = Call("vecMulVec", coords, Call("star", coords));
+        return Disp(Seq(
+            Forall, Sp, Bound(a, F.Id("Type")), Comma, Sp,
+            OpenBracket, Call("Fintype", a), CloseBracket, Comma, Sp,
+            Forall, Sp, Bound(x, Call("EuclideanSpace", ComplexNumbers(), a)), Comma, Sp,
+            new Formula.Relation(Call("trace", outer), FormulaRelationOperator.Equal,
+                new Formula.Power(Call("ofReal", new Formula.Norm(x)), D(2)))));
     }
 
     private static Formula CapacityFormula()

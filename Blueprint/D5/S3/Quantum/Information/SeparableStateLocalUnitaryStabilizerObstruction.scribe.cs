@@ -33,6 +33,13 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
                 "Appendix F, PDF p. 8, preceding equation (F1), verbatim: “A separable state is defined as the convex hull of pure product states [1]:” The real convex hull allows every finite ensemble of normalized product-state projectors.", DescribeRole.Definition),
             Node("claim", "Qian–Wang's separable-state conjecture", ClaimFormula(),
                 Conjecture + " The existential two-qubit density matrix rho is positive semidefinite with trace one, as expressed by StructuredNegativityCoincidenceRefutation.IsDensity. Its separability is the literal convex-product-ensemble condition. The universal quantifier ranges independently over all pairs of single-qubit unitaries. A two-qubit example proves the source's existential multi-qubit assertion.", DescribeRole.Definition),
+            Node("marginal_amplitude", "The reduced projector is an amplitude Gram matrix",
+                Disp(All("psi", Vector, EqTo(Call("partialTraceRight", RankOne(F.Id("psi"))),
+                    Mul(Call("Matrix.of", Call("Function.curry", F.Id("psi"))),
+                        Call("conjTranspose", Call("Matrix.of", Call("Function.curry", F.Id("psi")))))))),
+                "For a two-qubit vector, curry arranges its amplitudes into a two-by-two matrix. Tracing the right subsystem of its rank-one projector gives that matrix times its adjoint.", DescribeRole.Theorem, true),
+            Node("ensemble_kernel", "Zero quadratic form constrains every positive-weight vector", EnsembleKernelFormula(),
+                "Let psi be a finite family of complex vectors with nonnegative real weights w. If the quadratic form of their weighted rank-one projector sum vanishes at z, then every positive-weight vector is orthogonal to z. Positivity of the weighted squared overlaps prevents cancellation.", DescribeRole.Theorem, true),
             Node("result", "An infinite family proves the conjecture", Disp(Named("claim")),
                 "For every real p,c,s with 0 < p < 1, c > 0, s > 0, c² + s² = 1 and c² ≠ 1/2, put b = (c,s) and rho = p |00⟩⟨00| + (1-p) |bb⟩⟨bb|. This is a density matrix and an explicit convex mixture of product pure states, yet no local-unitary conjugate belongs to STAB. Choose p = 1/2, c = 3/5 and s = 4/5 for the existential conclusion. Every positive-weight vector in any pulled-back stabilizer ensemble lies in span{u,v}, where u = |00⟩ and v = |bb⟩. Its only product rays are u and v; its only maximally entangled ray has coefficients alpha = -beta, namely (v-u)/(sqrt(2)s) after normalization. Stabilizer classification and positivity eliminate that entangled ray from the ensemble, forcing both product rays to occur. Their common local unitary preserves the single-qubit squared overlap c², whereas Pauli eigenprojectors have overlap spectrum {0,1/2,1}. The stated parameter conditions exclude all three values. This argument uses product-vector and maximal-entanglement invariance under local unitaries; the Pauli restriction enters after stabilizer classification.", DescribeRole.Theorem, true,
                 new OpenProblemResolutionClaim(
@@ -42,7 +49,7 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
         DescribeRole role, bool derived = false, OpenProblemResolutionClaim? resolution = null) => Describe.Lean(
-            DescribeId.Create("qw-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name), H(title),
+            DescribeId.Create("qw-" + name.ToLowerInvariant().Replace('_', '-')), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula),
             derived ? AssessedProvenance.FromRepo(Source) : AssessedProvenance.FromLiterature(Source),
             Blocks(Paragraph(Text(prose))), role, resolution);
@@ -144,6 +151,21 @@ internal sealed class SeparableStateLocalUnitaryStabilizerObstructionDocument : 
     {
         Formula rho = F.Id("rho");
         return Disp(All("rho", Mat, IffTo(Call("Separable", rho), InTo(rho, Call("convexHull", Reals, Named("ProductPureProjectors"))))));
+    }
+    private static Formula EnsembleKernelFormula()
+    {
+        Formula n = F.Id("n"), index = F.Id("iota"), psi = F.Id("psi"), w = F.Id("w"), z = F.Id("z"), i = F.Id("i");
+        Formula family = Seq(Sum, Underscore, Grp(i, InMacro, Sp, index), Sp,
+            Parenthesized(Seq(Call("w", i), Cdot, Sp, RankOne(Call("psi", i)))));
+        Formula dot(Formula x) => Call("dotProduct", Call("star", z), x);
+        Formula assumptions = And(All("i", index, Seq(D(0), Le, Sp, Call("w", i))),
+            EqTo(dot(Call("Matrix.mulVec", family, z)), D(0)));
+        Formula conclusion = All("i", index, Seq(D(0), Lt, Call("w", i), Longrightarrow, Sp,
+            EqTo(dot(Call("psi", i)), D(0))));
+        return Disp(All("n", Named("Type"), All("iota", Named("Type"),
+            Seq(OpenBracket, Call("Fintype", n), CloseBracket, Sp, OpenBracket, Call("Fintype", index), CloseBracket, Sp,
+                All("psi", Arrow(index, Arrow(n, Complexes)), All("w", Arrow(index, Reals),
+                    All("z", Arrow(n, Complexes), Seq(assumptions, Longrightarrow, Sp, conclusion))))))));
     }
     private static Formula ClaimFormula()
     {
