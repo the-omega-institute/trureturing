@@ -22,12 +22,7 @@ internal sealed class HistoryTreeRelabelingDocument : IScribeDocumentDefinition
                 DescribeId.Create("history-tree-relabeling"),
                 DeclarationHandle.Create("D5/S0/Computability/Coding/HistoryTreeRelabeling.result"),
                 H("Transport of codes, budgets and mass"),
-                StatementSource.FromAuthor(Disp(F.Seq(
-                    Forall, Sp, F.Id("pi,p,q,b,F"), Comma, Sp,
-                    F.Id("q(h,a)=p(pi(h)(a))"), Sp, Land, Sp, F.Id("Legal(b,F)"),
-                    Sp, Rightarrow, Sp, F.Id("Legal(b,phi(F))"), Sp, Land, Sp,
-                    F.Id("T(q,F,N)=T(p,phi(F),N)"), Sp, Land, Sp,
-                    F.Id("S(q,F)=S(p,phi(F))")))),
+                StatementSource.FromAuthor(MainFormula()),
                 AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("The level sets are bijective images, so their cardinalities and "
                     + "finite sums are preserved. Reindexing the nonnegative countable sum by the same "
@@ -36,4 +31,22 @@ internal sealed class HistoryTreeRelabelingDocument : IScribeDocumentDefinition
                 DescribeRole.Theorem)),
         [DocumentEdge.Dependency.Create(GidRef.Create(
             "D5/S0/Computability/Coding/DepthBudgetIidGreedyOptimality"))]));
+
+    private static Formula MainFormula()
+    {
+        Formula pi = F.Id("pi"), p = F.Id("p"), q = F.Id("q"), b = F.Id("b");
+        Formula code = F.Id("F"), h = F.Id("h"), a = F.Id("a"), n = F.Id("N");
+        Formula image = Call("phi", code);
+        Formula rows = F.Seq(Open, Forall, Sp, h, Comma, Sp, a, Comma, Sp,
+            Call("q", h, a), Sp, Eq, Sp, Call("p", Call("pi", h, a)), Close);
+        Formula finite = F.Seq(Open, Forall, Sp, n, Comma, Sp,
+            Call("T", q, code, n), Sp, Eq, Sp, Call("T", p, image, n), Close);
+        return Disp(F.Seq(Forall, Sp, pi, Comma, Sp, p, Comma, Sp, q, Comma, Sp,
+            b, Comma, Sp, code, Comma, Sp, rows, Sp, Land, Sp, Call("Legal", b, code),
+            Sp, Rightarrow, Sp, Call("Legal", b, image), Sp, Land, Sp, finite,
+            Sp, Land, Sp, Call("S", q, code), Sp, Eq, Sp, Call("S", p, image), Dot));
+    }
+
+    private static Formula Call(string name, params Formula[] arguments) =>
+        new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. arguments]);
 }

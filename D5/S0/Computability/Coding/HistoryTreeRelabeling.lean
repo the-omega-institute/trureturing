@@ -45,19 +45,18 @@ theorem decode_relabel (π : List α → Equiv.Perm α) (h w : List α) :
   | nil => rfl
   | cons a w ih => simp only [relabel, decode, Equiv.symm_apply_apply, ih]
 
-/-- Every relabeled continuation has its recursively decoded preimage. -/
-theorem relabel_decode (π : List α → Equiv.Perm α) (h w : List α) :
-    relabel π h (decode π h w) = w := by
-  induction w generalizing h with
-  | nil => rfl
-  | cons a w ih => simp only [decode, relabel, Equiv.apply_symm_apply, ih]
-
 /-- A family of local permutations defines a bijection of the whole word tree. -/
 def treeEquiv (π : List α → Equiv.Perm α) : List α ≃ List α where
   toFun := relabel π []
   invFun := decode π []
   left_inv := decode_relabel π []
-  right_inv := relabel_decode π []
+  right_inv := by
+    intro w
+    have inverse (h w : List α) : relabel π h (decode π h w) = w := by
+      induction w generalizing h with
+      | nil => rfl
+      | cons a w ih => simp only [decode, relabel, Equiv.apply_symm_apply, ih]
+    exact inverse [] w
 
 /-- Relabeling an appended continuation consults the history before relabeling. -/
 theorem relabel_append (π : List α → Equiv.Perm α) (h u v : List α) :
@@ -156,7 +155,7 @@ theorem result [Fintype α] [DecidableEq α]
     apply Finset.sum_congr rfl
     intro w _
     exact path_mass_relabel π p q hq [] w
-  · let e : F ≃ (relabel π [] '' F) := Equiv.Set.image (relabel π []) F inj
+  · let e : F ≃ (relabel π [] '' F) := Equiv.image (treeEquiv π) F
     change (∑' w : F, ENNReal.ofReal (pathMass q [] w.1)) =
       ∑' w : (relabel π [] '' F), ENNReal.ofReal (wordMass p w.1)
     rw [← e.tsum_eq]

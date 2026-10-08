@@ -155,12 +155,8 @@ private theorem word_sum_succ (f : List α → ℝ) (n : ℕ) :
     exact Prod.ext ha hw
   · intro w hw
     have hl := (mem_words _ _).mp hw
-    cases w with
-    | nil => simp at hl
-    | cons a w =>
-      refine ⟨(a,w), Finset.mem_product.mpr ⟨Finset.mem_univ _, ?_⟩, rfl⟩
-      apply (mem_words _ _).mpr
-      simpa only [List.length_cons, Nat.add_right_cancel_iff] using hl
+    obtain ⟨a, v, he, hv⟩ := List.length_eq_succ_iff.mp hl
+    refine ⟨(a,v), Finset.mem_product.mpr ⟨Finset.mem_univ _, (mem_words v n).mpr hv⟩, he⟩
   · intro _ _; rfl
 
 /-- The recursive value equals its sums over all actual finite paths. -/
@@ -246,4 +242,187 @@ theorem finite_joint_bound (δ : ℝ) (hδ : 0 < δ)
     _ = truncatedMass (extremeRow δ base) (relabel π [] '' K) N := htransport N
     _ ≤ _ := (iid.2.1 N).2 ⟨relabel π [] '' K, himage, imageDepth, rfl⟩
 
+private theorem path_mass_nonneg (q : List α → α → ℝ)
+    (hq : ∀ h a, 0 ≤ q h a) (h w : List α) : 0 ≤ pathMass q h w := by
+  induction w generalizing h with
+  | nil => exact zero_le_one
+  | cons a w ih => exact mul_nonneg (hq h a) (ih _)
+
+/-- Nonnegative masses are the supremum of their canonical finite truncations. -/
+private theorem mass_limit (m : List α → ℝ) (hm : ∀ w, 0 ≤ m w) (F : Set (List α)) :
+    (∑' w : F, ENNReal.ofReal (m w.1)) =
+      ⨆ N, ENNReal.ofReal (∑ n ∈ Finset.range (N + 1), ∑ w ∈ level F n, m w) := by
+  classical
+  have grouped : (∑' w : F, ENNReal.ofReal (m w.1)) =
+      ∑' n, ∑ w ∈ level F n, ENNReal.ofReal (m w) := by
+    rw [← ENNReal.tsum_fiberwise (fun w : F => ENNReal.ofReal (m w.1))
+      (fun w : F => w.1.length)]
+    apply tsum_congr
+    intro n
+    let e : {w : F // w.1.length = n} ≃ ↥(level F n) :=
+      (Equiv.subtypeSubtypeEquivSubtypeInter (fun w => w ∈ F) (fun w => w.length = n)).trans
+        (Equiv.subtypeEquivRight (fun w => and_comm.trans (mem_level F w n).symm))
+    calc
+      _ = ∑' w : level F n, ENNReal.ofReal (m w.1) := e.tsum_eq _
+      _ = _ := Finset.tsum_subtype (level F n) (fun w => ENNReal.ofReal (m w))
+  rw [grouped, ENNReal.tsum_eq_iSup_nat' (Filter.tendsto_add_atTop_nat 1)]
+  apply iSup_congr
+  intro N
+  simp_rw [← ENNReal.ofReal_sum_of_nonneg (fun w _ => hm w)]
+  exact (ENNReal.ofReal_sum_of_nonneg
+    (fun n _ => Finset.sum_nonneg (fun w _ => hm w))).symm
+
+private theorem prefix_code_value_le_one (q : List α → α → ℝ)
+    (hpos : ∀ h a, 0 ≤ q h a) (hsum : ∀ h, ∑ a, q h a = 1)
+    (F : Set (List α)) (hF : IsPrefixFree F) :
+    ∀ n h, value q (F.indicator (fun _ => 1)) n h ≤ 1 := by
+  classical
+  have zero_subtree : ∀ n h, (∀ w, h ++ w ∉ F) →
+      value q (F.indicator (fun _ => 1)) n h = 0 := by
+    intro n
+    induction n with
+    | zero =>
+      intro h hh
+      simp only [value, Set.indicator_of_notMem (by simpa using hh [] : h ∉ F)]
+    | succ n ih =>
+      intro h hh
+      simp only [value, Set.indicator_of_notMem (by simpa using hh [] : h ∉ F)]
+      have children (a : α) : value q (F.indicator (fun _ => 1)) n (h ++ [a]) = 0 :=
+        ih _ (fun w => by simpa only [List.append_assoc] using hh ([a] ++ w))
+      simp only [children, mul_zero, Finset.sum_const_zero, add_zero]
+  intro n
+  induction n with
+  | zero =>
+    intro h
+    by_cases hh : h ∈ F <;> simp [value, Set.indicator_apply, hh]
+  | succ n ih =>
+    intro h
+    by_cases hh : h ∈ F
+    · have children (a : α) : value q (F.indicator (fun _ => 1)) n (h ++ [a]) = 0 := by
+        apply zero_subtree n
+        intro w hw
+        have hpref : h <+: (h ++ [a]) ++ w := by
+          rw [List.append_assoc]
+          exact List.prefix_append _ _
+        have heq := congrArg List.length (hF hh hw hpref)
+        simp only [List.length_append, List.length_singleton] at heq
+        omega
+      simp only [value, Set.indicator_of_mem hh, children, mul_zero,
+        Finset.sum_const_zero, add_zero, le_refl]
+    · simp only [value, Set.indicator_of_notMem hh, zero_add]
+      calc
+        _ ≤ ∑ a, q h a * 1 := Finset.sum_le_sum
+          (fun a _ => mul_le_mul_of_nonneg_left (ih _) (hpos h a))
+        _ = 1 := by simpa only [mul_one] using hsum h
+
+private theorem history_code_mass_le_one (q : List α → α → ℝ)
+    (hpos : ∀ h a, 0 ≤ q h a) (hsum : ∀ h, ∑ a, q h a = 1)
+    (F : Set (List α)) (hF : IsPrefixFree F) : historyCodeMass q F ≤ 1 := by
+  rw [historyCodeMass, mass_limit (pathMass q []) (path_mass_nonneg q hpos [])]
+  apply iSup_le
+  intro N
+  have bound : historyTruncatedMass q F N ≤ 1 := by
+    rw [← value_code_mass]
+    exact prefix_code_value_le_one q hpos hsum F hF N []
+  simpa only [historyTruncatedMass, ENNReal.ofReal_one] using ENNReal.ofReal_le_ofReal bound
+
+private theorem uniform_rows (δ : ℝ) (hcard : (Fintype.card α : ℝ) * δ = 1)
+    (q : List α → α → ℝ) (hq : Admissible δ q) (h : List α) (a : α) : q h a = δ := by
+  have hsum : ∑ c, (q h c - δ) = 0 := by
+    rw [Finset.sum_sub_distrib, (hq h).2]
+    simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul, hcard, sub_self]
+  have hz := (Finset.sum_eq_zero_iff_of_nonneg
+    (fun c (_ : c ∈ Finset.univ) => sub_nonneg.mpr ((hq h).1 c))).mp hsum a
+      (Finset.mem_univ a)
+  exact sub_eq_zero.mp hz
+
+private theorem row_mixture (δ : ℝ) (q : α → ℝ)
+    (hq : ∀ a, δ ≤ q a) (hsum : ∑ a, q a = 1)
+    (hstrict : (Fintype.card α : ℝ) * δ < 1) :
+    let c := 1 - (Fintype.card α : ℝ) * δ
+    (∀ a, 0 ≤ (q a - δ) / c) ∧
+    (∑ a, (q a - δ) / c) = 1 ∧
+    ∀ a, q a = ∑ heavy, ((q heavy - δ) / c) * extremeRow δ heavy a := by
+  classical
+  let c := 1 - (Fintype.card α : ℝ) * δ
+  have hcpos : 0 < c := sub_pos.mpr hstrict
+  have weightSum : (∑ a, (q a - δ) / c) = 1 := by
+    rw [← Finset.sum_div, Finset.sum_sub_distrib, hsum]
+    simp only [Finset.sum_const, Finset.card_univ, nsmul_eq_mul]
+    exact div_self hcpos.ne'
+  refine ⟨fun a => div_nonneg (sub_nonneg.mpr (hq a)) hcpos.le, weightSum, ?_⟩
+  intro a
+  have mix : (∑ heavy, ((q heavy - δ) / c) * extremeRow δ heavy a) =
+      δ + ((q a - δ) / c) * c := by
+    simp [extremeRow, mul_add, Finset.sum_add_distrib, ← Finset.sum_mul,
+      mul_ite, weightSum, c]
+  rw [mix, div_mul_cancel₀ _ hcpos.ne']
+  ring
+
+/-- All finite bounds, the infinite joint maximum, its complement and actual iid
+attainment use the same frozen greedy code. The uniform endpoint includes all histories. -/
+theorem result (δ : ℝ) (hδ : 0 < δ)
+    (hcard : 2 ≤ Fintype.card α) (hc : (Fintype.card α : ℝ) * δ ≤ 1)
+    (base : α) (b : ℕ → ℕ) (tie : ℕ → LinearOrder (List α)) :
+    let p := extremeRow δ base
+    let G := greedyCode (fun n => priority p (tie n)) b
+    let J := {x : ℝ≥0∞ | ∃ q : List α → α → ℝ, Admissible δ q ∧
+      ∃ F : Set (List α), Legal b F ∧ x = historyCodeMass q F}
+    Legal b G ∧ Admissible δ (fun _ => p) ∧
+    (∀ q : List α → α → ℝ, Admissible δ q → ∀ F : Set (List α), Legal b F → ∀ N,
+      historyTruncatedMass q F N ≤ truncatedMass p G N) ∧
+    IsGreatest J (codeMass p G) ∧ sSup J = codeMass p G ∧ codeMass p G ≤ 1 ∧
+    (1 - sSup J : ℝ≥0∞) = 1 - codeMass p G ∧
+    (1 - (sSup J).toReal : ℝ) = 1 - (codeMass p G).toReal ∧
+    historyCodeMass (fun _ => p) G = codeMass p G ∧
+    (δ < 1 / (Fintype.card α : ℝ) →
+      ∀ q : List α → α → ℝ, Admissible δ q → ∀ h,
+        let c := 1 - (Fintype.card α : ℝ) * δ
+        (∀ a, 0 ≤ (q h a - δ) / c) ∧ (∑ a, (q h a - δ) / c) = 1 ∧
+        ∀ a, q h a = ∑ heavy, ((q h heavy - δ) / c) * extremeRow δ heavy a) ∧
+    (δ = 1 / (Fintype.card α : ℝ) →
+      (∀ a, p a = δ) ∧ ∀ q : List α → α → ℝ, Admissible δ q → ∀ h a, q h a = δ) := by
+  classical
+  let p := extremeRow δ base
+  let G := greedyCode (fun n => priority p (tie n)) b
+  let J := {x : ℝ≥0∞ | ∃ q : List α → α → ℝ, Admissible δ q ∧
+      ∃ F : Set (List α), Legal b F ∧ x = historyCodeMass q F}
+  have hp : ∀ a, 0 < p a := fun a => hδ.trans_le (extreme_row_lower δ hc base a)
+  have hadm : Admissible δ (fun _ : List α => p) :=
+    fun _ => ⟨extreme_row_lower δ hc base, extreme_row_sum δ base⟩
+  have iid := depth_budget_iid_greedy_optimality p hp (extreme_row_sum δ base) b tie
+  have attain : historyCodeMass (fun _ : List α => p) G = codeMass p G := by
+    apply tsum_congr
+    intro w
+    exact congrArg ENNReal.ofReal (path_mass_iid p [] w.1)
+  have greatest : IsGreatest J (codeMass p G) := by
+    refine ⟨⟨fun _ => p, hadm, G, iid.1, attain.symm⟩, ?_⟩
+    rintro x ⟨q, hq, F, hF, rfl⟩
+    rw [historyCodeMass, codeMass,
+      mass_limit (pathMass q []) (path_mass_nonneg q (fun h a => hδ.le.trans ((hq h).1 a)) []),
+      mass_limit (wordMass p) (fun w => by
+        rw [← path_mass_iid p [] w]
+        exact path_mass_nonneg (fun _ => p) (fun _ a => (hp a).le) [] w)]
+    apply iSup_mono
+    intro N
+    exact ENNReal.ofReal_le_ofReal (finite_joint_bound δ hδ hc base b tie q hq F hF N)
+  have supEq : sSup J = codeMass p G := greatest.csSup_eq
+  have massBound : codeMass p G ≤ 1 := by
+    rw [← attain]
+    exact history_code_mass_le_one (fun _ => p) (fun _ a => (hp a).le)
+      (fun _ => extreme_row_sum δ base) G iid.1.1
+  refine ⟨iid.1, hadm, fun q hq F hF N => finite_joint_bound δ hδ hc base b tie q hq F hF N,
+    greatest, supEq, massBound, by rw [supEq], by rw [supEq], attain, ?_, ?_⟩
+  · intro hstrict q hq h
+    apply row_mixture δ (q h) (hq h).1 (hq h).2
+    have hn : 0 < (Fintype.card α : ℝ) := by exact_mod_cast (show 0 < Fintype.card α by omega)
+    have ht := (lt_div_iff₀ hn).mp hstrict
+    simpa only [mul_comm] using ht
+  · intro huni
+    have hn : (Fintype.card α : ℝ) ≠ 0 := by
+      have : 0 < Fintype.card α := by omega
+      exact_mod_cast this.ne'
+    have hunit : (Fintype.card α : ℝ) * δ = 1 := by rw [huni]; field_simp
+    refine ⟨fun a => ?_, fun q hq h a => uniform_rows δ hunit q hq h a⟩
+    simp only [extremeRow, hunit, sub_self, ite_self, add_zero]
 end D5.S0.Computability.Coding.HistoryBudgetJointOptimality
