@@ -4,26 +4,93 @@ from test_reuse import EXECUTION
 
 
 class NativeReportConsumerTests:
+    def test_reg_dependency_closure_reassessment(self):
+        # Typed Reg leaf and interface inputs select their compiler dependency closure.
+        # Tiny typed transport inputs exercise production discovery, facets and publication;
+        # mathematical assessment belongs to the compiled Reg judge tests.
+        self.reg_package()
+        core = self.root / 'tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Core.lean'
+        original = core.read_text()
+        contract = '\nnamespace LeanInformationAudit.Contract\nstructure Registration where\n  value : Nat\nend LeanInformationAudit.Contract\n'
+        core.write_text(original + contract)
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['config_inputs']['include'].append(dict(
+            pattern='tools/lean-inspector-interface/**/*.lean', optional=False))
+        self.write('lean-report-inputs.json', json.dumps(policy))
+        self.write('Reg/Leaf.lean', 'import LeanInformationAuditInterface.Contract.Core\n'
+            'def Reg.Leaf.entry : LeanInformationAudit.Contract.Registration := { value := 1 }\n')
+        self.write('Reg/Parent.lean', 'import Reg.Leaf\n'
+            'def Reg.Parent.entry : LeanInformationAudit.Contract.Registration := { value := Reg.Leaf.entry.value + 1 }\n')
+        self.write('Reg/Unrelated.lean', 'def Reg.Unrelated.value : Nat := 1\n')
+        work = self.root / 'module-work.jsonl'
+        self.env['STRATALINT_INSPECTOR_MODULE_WORK'] = str(work)
+        output = self.root / '.lake/build/stratalint/raw-lean-report.json'
+
+        def entry(phase):
+            work.write_text('')
+            before = self.stamps()
+            oleans = {path: (path.stat().st_mtime_ns, publication.digest(path))
+                      for path in (self.root / '.lake/build/reg').rglob('*.olean')}
+            result = self.guarded_command(['make', 'lean-report'], env=self.env)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+            records = [json.loads(line) for line in work.read_text().splitlines()]
+            data = dict(exit_code=result.returncode, modules=len(self.stamps()),
+                extracted=sorted(row['module'] for row in records if row['operation'] == 'extract'),
+                assessed=sorted(row['module'] for row in records if row['operation'] == 'assess'),
+                reg_recompiled=sorted(path.relative_to(self.root).as_posix() for path in oleans
+                    if (path.stat().st_mtime_ns, publication.digest(path)) != oleans[path]),
+                report_changed=sorted(name for name, stamp in self.stamps().items()
+                    if name not in before or stamp != before[name]),
+                whole_report_reused='LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0' in result.stdout)
+            self.record_result(phase, data, [work])
+            return data
+
+        initial = entry('initial')
+        self.assertEqual(initial['assessed'], ['Reg.Leaf', 'Reg.Parent'])
+        driver = self.root / 'LeanInformationAudit/TemplateEnrollment.lean'
+        driver.write_text('def fixtureDriver : Nat := 2\n')
+        warm = entry('implementation')
+        self.assertEqual(warm['extracted'], [])
+        self.assertEqual(warm['assessed'], [])
+        self.assertEqual(warm['reg_recompiled'], [])
+        self.assertTrue(warm['whole_report_reused'])
+        leaf = self.root / 'Reg/Leaf.lean'
+        leaf.write_text(leaf.read_text().replace('value := 1', 'value := 2'))
+        changed = entry('leaf')
+        self.assertEqual(changed['extracted'], ['Reg.Leaf', 'Reg.Parent'])
+        self.assertEqual(changed['assessed'], ['Reg.Leaf', 'Reg.Parent'])
+        core.write_text(original + contract.replace('value : Nat', 'value : Int'))
+        changed = entry('interface')
+        self.assertEqual(changed['extracted'], ['Reg.Leaf', 'Reg.Parent'])
+        self.assertEqual(changed['assessed'], ['Reg.Leaf', 'Reg.Parent'])
+        self.assertEqual(len(changed['reg_recompiled']), 2)
+
     def test_impl_resource_preserves_production_reg_on_warm_report(self):
         # Use the default program targets of a direct report call, the package
         # target declarations, report entry and Lake compiler. Only the
         # mathematical inputs are tiny.
-        implementations = ('RegistrationGates', 'Registry', 'ProofBuilder')
+        implementations = ('CompiledAssessment', 'ArtifactAssessment')
         targets = ['leanInspector/LeanInformationAudit', 'leanInspector/reportInspector',
-                   'leanInspectorInterface/LeanInformationAuditInterface', 'reg/Reg',
-                   'regInspector/LeanInformationAuditRegTests']
+                   'leanInspectorInterface/LeanInformationAuditInterface', 'reg/Reg']
         self.reg_package()
         self.build()  # Restore the native fixture's private compiler stage.
         root_config = self.root / 'lakefile.toml'
-        root_config.write_text(root_config.read_text().replace(
-            '[[lean_lib]]\nname = "LeanInformationAudit"\nglobs = ["LeanInformationAudit.+"]\n', ''))
-        registry = 'LeanInformationAudit/SealCommand.lean'
+        source = root_config.read_text()
+        start = source.index('[[lean_lib]]\nname = "LeanInformationAudit"\n')
+        stop = source.find('[[', start + 2)
+        root_config.write_text(source[:start] + (source[stop:] if stop != -1 else ''))
+        registry = 'LeanInformationAudit/TemplateEnrollment.lean'
         registry_owner = 'tools/lean-inspector/' + registry
-        (self.root / registry_owner).parent.mkdir(parents=True, exist_ok=True)
-        (self.root / registry).rename(self.root / registry_owner)
-        with (self.root / 'tools/lean-inspector/lakefile.lean').open('a') as stream:
-            stream.write('\nlean_lib LeanInformationAudit where\n'
-                         '  globs := #[.submodules `LeanInformationAudit]\n')
+        for module in [registry]:
+            owner = self.root / 'tools/lean-inspector' / module
+            owner.parent.mkdir(parents=True, exist_ok=True)
+            (self.root / module).rename(owner)
+        inspector_config = self.root / 'tools/lean-inspector/lakefile.lean'
+        source = inspector_config.read_text()
+        start = source.index('lean_lib LeanInformationAudit where\n')
+        stop = source.index('lean_exe reportInspector where', start)
+        inspector_config.write_text(source[:start] + 'lean_lib LeanInformationAudit where\n'
+            '  globs := #[.submodules `LeanInformationAudit]\n\n' + source[stop:])
         def implementation(name, body):
             return (f'namespace LeanInformationAudit.{name}\n'
                     f'def fixtureValue (input : Nat) : Nat := {body}\n'
@@ -31,12 +98,12 @@ class NativeReportConsumerTests:
         for name in implementations:
             self.write(f'tools/lean-inspector/LeanInformationAudit/{name}.lean',
                        implementation(name, 'input + 1'))
-        # ProofBuilder is an actual import of the fixture's report driver, so
-        # its body edit exercises the SealCommand closure as well as defaults.
+        # CompiledAssessment is an actual import of the fixture's report driver, so
+        # its body edit exercises the TemplateEnrollment closure as well as defaults.
         driver = self.root / registry_owner
-        driver.write_text('import LeanInformationAudit.Registry\n'
-                          'import LeanInformationAudit.ProofBuilder\n' + driver.read_text())
-        self.write('Reg/ProductionOnly.lean', 'import LeanInformationAuditInterface.Records\n'
+        driver.write_text('import LeanInformationAudit.ArtifactAssessment\n'
+                          'import LeanInformationAudit.CompiledAssessment\n' + driver.read_text())
+        self.write('Reg/ProductionOnly.lean', 'import LeanInformationAuditInterface.Contract.Core\n'
                    'import D5.A\ndef productionValue : Nat := value\n')
         # Required.lean deliberately imports no production Reg module.
         policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
@@ -95,13 +162,13 @@ class NativeReportConsumerTests:
 
         # A malformed registered implementation still blocks the program build;
         # cached report data cannot conceal that failed obligation.
-        self.write('tools/lean-inspector/LeanInformationAudit/RegistrationGates.lean',
-                   implementation('RegistrationGates', 'true'))
+        self.write('tools/lean-inspector/LeanInformationAudit/ArtifactAssessment.lean',
+                   implementation('ArtifactAssessment', 'true'))
         self.assertFalse(reuse.probe(self.root, output)['needs_lake'])
         failed = entry('production-consumer-failure')
         self.assertNotEqual(failed.returncode, 0, '[FAIL] production_consumer_failure_must_block_reuse')
         errors = (logs / 'programs.stdout.log').read_text() + (logs / 'programs.stderr.log').read_text()
-        self.assertIn('LeanInformationAudit/RegistrationGates.lean', errors)
+        self.assertIn('LeanInformationAudit/ArtifactAssessment.lean', errors)
         self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stdout + failed.stderr)
         self.assertFalse(publication.member(output, '.reuse.json').exists())
         self.assertEqual(expected, output.read_bytes())

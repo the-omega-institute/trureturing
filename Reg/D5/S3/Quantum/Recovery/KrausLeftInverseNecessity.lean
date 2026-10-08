@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Recovery.KrausLeftInverseNecessity
 import Reg.Support.DependentFamily
 
@@ -70,17 +71,28 @@ def registration : Registration arena.{u,v} (arena.Law actual) where
     have he := congrArg (fun F : s → Matrix d d ℂ => F j i i) h
     norm_num [actual, realize, signature] at he
 
-register_information_theorem identity_kraus_scalar in arena
-  readout via (realize signature.{u,v} (fun _ _ X => X) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Recovery.KrausLeftInverseNecessity
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg",
-        "fn", "arg", "fn", "fn", "fn"]
-      stateBinder := 5 }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1, u_3} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.identity_kraus_scalar.{u_1, u_3}) (type_of% (realize.{max (u_1 + 1) (u_3 + 1), max u_1 u_3, 0, max u_1 u_3, 0} signature.{u_1, u_3} (fun _ _ X => X) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "KrausLeftInverseNecessity") "identity_kraus_scalar") "Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity/Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Scalar.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_3})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_3})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_3}) ⟨(registration.{u_1, u_3})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{max (u_1 + 1) (u_3 + 1), max u_1 u_3, 0, max u_1 u_3, 0} signature.{u_1, u_3} (fun _ _ X => X) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Recovery.KrausLeftInverseNecessity, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg", "fn", "fn", "fn"], stateBinder := 5, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 #print axioms registration
 end Scalar
 
@@ -143,17 +155,28 @@ def registration : Registration arena.{u,v} (arena.Law actual) where
     have he := congrArg (fun M : Matrix a a ℂ => M i i) h
     norm_num [actual, realize, signature] at he
 
-register_information_theorem identity_kraus_commute in arena
-  readout via (realize signature.{u} (fun _ _ X => X) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Recovery.KrausLeftInverseNecessity
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg",
-        "fn", "arg"]
-      stateBinder := 8 }] })
-  escape continues (open)
+noncomputable def registration_2.{u_1, u_3} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.identity_kraus_commute.{u_1, u_3}) (type_of% (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ X => X) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "KrausLeftInverseNecessity") "identity_kraus_commute") "Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity/Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Commute.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_3})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_3})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_3}) ⟨(registration.{u_1, u_3})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{u_1 + 1, u_1, 0, u_1, 0} signature.{u_1} (fun _ _ X => X) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Recovery.KrausLeftInverseNecessity, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "fn", "arg"], stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 #print axioms registration
 end Commute
 
@@ -244,18 +267,28 @@ def registration : Registration arena.{u,v,w,z} (arena.Law actual) where
     have he := congrArg (fun E : s → Matrix n d ℂ => E k j i) h
     norm_num [actual, realize, signature] at he
 
-register_information_theorem left_inverse_error_products in arena
-  readout via (realize signature.{u,v,w} (fun _ _ X => X) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Quantum.Recovery.KrausLeftInverseNecessity
-    coordinates := #[0, 1, 2]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn",
-        "arg", "arg", "fn"]
-      stateBinder := 10 }] })
-  escape continues (open)
+noncomputable def registration_3.{u_1, u_2, u_3, u_4} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.left_inverse_error_products.{u_1, u_2, u_3, u_4}) (type_of% (realize.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1), max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0} signature.{u_1, u_2, u_3} (fun _ _ X => X) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Quantum") "Recovery") "KrausLeftInverseNecessity") "left_inverse_error_products") "Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity/Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Quantum.Recovery.KrausLeftInverseNecessity.Products.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_2, u_3, u_4})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2, u_3, u_4})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2, u_3, u_4}) ⟨(registration.{u_1, u_2, u_3, u_4})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{max (max (u_1 + 1) (u_2 + 1)) (u_3 + 1), max (max u_1 u_2) u_3, 0, max (max u_1 u_2) u_3, 0} signature.{u_1, u_2, u_3} (fun _ _ X => X) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Quantum.Recovery.KrausLeftInverseNecessity, definition := none, coordinates := #[0, 1, 2], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "arg", "fn"], stateBinder := 10, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 #print axioms registration
 end Products
 
