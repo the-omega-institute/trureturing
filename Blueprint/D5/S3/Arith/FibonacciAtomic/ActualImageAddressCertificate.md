@@ -102,7 +102,115 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.right
 
 The zero comb is beta. The successor comb pairs alpha on the left with the preceding comb on the right, giving m alpha side leaves and one terminal beta at m right steps.
 
-**Theorem 1.9 (Alpha addresses of a pair).**
+**Theorem 1.9 (Third-image inclusion).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.image_positive`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.image_positive` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural d at least three and every U in I(d), U is a third substitution image.
+
+**Theorem 1.10 (Alpha cardinality).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.alpha_card`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.alpha_card` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every complete source t, the cardinality of alphaLeaves(t) equals the alpha component of composition(t).
+
+**Theorem 1.11 (Leaf depth and beta cardinality).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.leaf_data`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.leaf_data` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every source t, all its leaf addresses have length at most height(t), and its beta-filtered leaf set has cardinality equal to the beta composition component.
+
+**Theorem 1.12 (Left alpha obstruction).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.no_left_alpha`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.no_left_alpha` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every third image t and every address r, the left child of r cannot be an alpha leaf.
+
+**Theorem 1.13 (Changing a leaf label).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.leaf_change`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.leaf_change` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Replacing the leaf b at address s by c retains a leaf c there, adds composition(c) while removing composition(b), and preserves every readout away from s.
+
+**Theorem 1.14 (Image alpha structure).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.image_structure`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.image_structure` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every k at least one and every U in I(3k), U is AlphaCovered and each alpha address is the right child of a terminal pair(beta,alpha).
+
+**Theorem 1.15 (Strict beta surplus).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.beta_surplus`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.beta_surplus` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every k at least one and every V in I(3k), the beta composition count is strictly larger than its alpha count.
+
+**Theorem 1.16 (Exchange composition).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.exchange_composition`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.exchange_composition` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every source V and two addresses s,t, the two leaf-change composition equations for alpha to beta at s and beta to alpha at t imply that the resulting composition equals composition(V).
+
+**Theorem 1.17 (Exchange obstruction).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.exchange_conflict`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.exchange_conflict` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let V,Wone,W be sources, s and t distinct addresses and s the right child of r. Suppose the subtree at r in V is pair(beta,alpha), t has beta reply in V, s is beta in Wone, t is alpha in W, Wone matches V away from s, and W matches Wone away from t. Then W cannot be a third image.
+
+**Theorem 1.18 (Alpha addresses of a pair).**
 
 $$\forall s \in Source, (\forall t \in Source, (\operatorname{alphaLeaves}\left(\operatorname{pair}\left(s, t\right)\right) = \operatorname{union}\left(\operatorname{prefixLeft}\left(\operatorname{alphaLeaves}\left(s\right)\right), \operatorname{prefixRight}\left(\operatorname{alphaLeaves}\left(t\right)\right)\right)))$$
 
@@ -114,7 +222,7 @@ $$\forall s \in Source, (\forall t \in Source, (\operatorname{alphaLeaves}\left(
 
 The alpha address set of pair(s,t) is the union of the left-prefixed alpha addresses of s and the right-prefixed alpha addresses of t. The two prefixes are disjoint.
 
-**Theorem 1.10 (Sharp cardinality and depth).**
+**Theorem 1.19 (Sharp cardinality and depth).**
 
 $$\forall k \in Nat, ((1 \leq k) \implies (\forall V \in Source, ((V \in \operatorname{I}\left(3 \cdot k\right)) \implies (\forall h \in Nat, (((h < \operatorname{D}\left(V\right)) \implies (\neg\exists R \in \operatorname{Finset}\left(Address\right), (\operatorname{S}\left(3 \cdot k, V, h, R\right)))) \land ((\operatorname{D}\left(V\right) \leq h) \implies (\exists R \in \operatorname{Finset}\left(Address\right), ((\operatorname{S}\left(3 \cdot k, V, h, R\right)) \land (\operatorname{card}\left(R\right) = \operatorname{a}\left(V\right))))) \land (\forall Q \in \operatorname{Finset}\left(Address\right), ((\operatorname{S}\left(3 \cdot k, V, h, Q\right)) \implies (\operatorname{a}\left(V\right) \leq \operatorname{card}\left(Q\right)))))))))$$
 
@@ -132,7 +240,7 @@ Each alpha leaf is the right endpoint of a terminal pair (beta,alpha). Swapping 
 
 Certificate complexity and lower bounds from disjoint sensitive blocks are classical, as in Nisan's CREW PRAMs and Decision Trees (1991) and Buhrman and de Wolf's Complexity Measures and Decision Tree Complexity: A Survey (2002). The exact cardinality for these actual substitution images with fixed composition is the tree-specific conclusion.
 
-**Theorem 1.11 (Unique optimal certificates and the complete leaf frontier).**
+**Theorem 1.20 (Unique optimal certificates and the complete leaf frontier).**
 
 $$\forall k \in Nat, ((1 \leq k) \implies (\forall V \in Source, ((V \in \operatorname{I}\left(3 \cdot k\right)) \implies ((\forall h \in Nat, ((\operatorname{D}\left(V\right) \leq h) \implies (\forall Q \in \operatorname{Finset}\left(Address\right), ((\operatorname{W}\left(h, Q\right)) \implies (((\operatorname{S}\left(3 \cdot k, V, h, Q\right)) \land (\operatorname{card}\left(Q\right) = \operatorname{a}\left(V\right))) \Leftrightarrow (Q = \operatorname{A}\left(V\right))))))) \land (\forall h \in Nat, (\forall Q \in \operatorname{Finset}\left(Address\right), ((\operatorname{W}\left(h, Q\right)) \implies ((\operatorname{U}\left(3 \cdot k, V, Q\right)) \Leftrightarrow (\operatorname{L}\left(V\right) \subseteq Q))))) \land (\forall h \in Nat, ((h < \operatorname{D}\left(V\right)) \implies (\neg\exists R \in \operatorname{Finset}\left(Address\right), ((\operatorname{W}\left(h, R\right)) \land (\operatorname{U}\left(3 \cdot k, V, R\right)))))) \land (\forall h \in Nat, ((\operatorname{D}\left(V\right) \leq h) \implies ((\operatorname{W}\left(h, \operatorname{L}\left(V\right)\right)) \land (\operatorname{U}\left(3 \cdot k, V, \operatorname{L}\left(V\right)\right)) \land (\operatorname{card}\left(\operatorname{L}\left(V\right)\right) = \operatorname{n}\left(V\right)) \land (\forall Q \in \operatorname{Finset}\left(Address\right), ((\operatorname{W}\left(h, Q\right)) \implies ((\operatorname{U}\left(3 \cdot k, V, Q\right)) \implies ((\operatorname{n}\left(V\right) \leq \operatorname{card}\left(Q\right)) \land ((\operatorname{card}\left(Q\right) = \operatorname{n}\left(V\right)) \Leftrightarrow (Q = \operatorname{L}\left(V\right))))))))))))))$$
 
@@ -150,7 +258,7 @@ Without a composition promise, omitting any leaf permits the frozen flip operati
 
 The shallow-window obstruction follows from the fixed-composition certificate theorem. At or above that depth, all n(V) leaves are available, and the complete-leaf condition gives both the lower bound and uniqueness. The exact uniqueness and complete-leaf equivalence are specific to these substitution images; general decision-tree certificate complexity supplies neighboring background.
 
-**Theorem 1.12 (Sharp leaf budget above a height).**
+**Theorem 1.21 (Sharp leaf budget above a height).**
 
 $$\forall k \in Nat, ((1 \leq k) \implies (\forall h \in Nat, (((\operatorname{D}\left(\operatorname{A}\left(3 \cdot k\right)\right) = 3 \cdot k - 1) \land (\operatorname{D}\left(\operatorname{B}\left(3 \cdot k\right)\right) = 3 \cdot k) \land (\operatorname{c}\left(\operatorname{A}\left(3 \cdot k\right)\right) = (\operatorname{F}\left(3 \cdot k - 1\right), \operatorname{F}\left(3 \cdot k\right))) \land (\operatorname{c}\left(\operatorname{B}\left(3 \cdot k\right)\right) = (\operatorname{F}\left(3 \cdot k\right), \operatorname{F}\left(3 \cdot k + 1\right))) \land (\operatorname{n}\left(\operatorname{A}\left(3 \cdot k\right)\right) = \operatorname{F}\left(3 \cdot k + 1\right)) \land (\operatorname{n}\left(\operatorname{B}\left(3 \cdot k\right)\right) = \operatorname{F}\left(3 \cdot k + 2\right)) \land (\operatorname{F}\left(3 \cdot k + 2\right) = \operatorname{F}\left(3 \cdot k + 1\right) + \operatorname{F}\left(3 \cdot k\right)) \land (\operatorname{F}\left(3 \cdot k + 2\right) < 2 \cdot \operatorname{F}\left(3 \cdot k + 1\right))) \land (\forall X \in Source, ((X \in \operatorname{I}\left(3 \cdot k\right)) \implies ((h < \operatorname{D}\left(X\right)) \implies (\operatorname{C}\left(3 \cdot k, h\right) \leq \operatorname{n}\left(X\right))))) \land (\operatorname{V}\left(3 \cdot k, h\right) \in \operatorname{I}\left(3 \cdot k\right)) \land (h < \operatorname{D}\left(\operatorname{V}\left(3 \cdot k, h\right)\right)) \land (\operatorname{sub}\left(\operatorname{V}\left(3 \cdot k, h\right), \operatorname{r}\left(3 \cdot k, h\right)\right) = \operatorname{some}\left(J\right)) \land (\neg (\operatorname{W}\left(3 \cdot k, h\right) \in \operatorname{I}\left(3 \cdot k\right))) \land (\operatorname{c}\left(\operatorname{W}\left(3 \cdot k, h\right)\right) = \operatorname{c}\left(\operatorname{V}\left(3 \cdot k, h\right)\right)) \land (\forall u \in Address, ((\operatorname{length}\left(u\right) \leq h) \implies (\operatorname{readout}\left(u, \operatorname{W}\left(3 \cdot k, h\right)\right) = \operatorname{readout}\left(u, \operatorname{V}\left(3 \cdot k, h\right)\right)))) \land (\operatorname{n}\left(\operatorname{V}\left(3 \cdot k, h\right)\right) = \operatorname{C}\left(3 \cdot k, h\right)) \land ((3 \cdot k - 1 \leq h) \implies ((\operatorname{c}\left(\operatorname{V}\left(3 \cdot k, h\right)\right) = (\operatorname{F}\left(3 \cdot k - 1\right) \cdot \operatorname{m}\left(3 \cdot k, h\right) + \operatorname{F}\left(3 \cdot k\right), \operatorname{F}\left(3 \cdot k\right) \cdot \operatorname{m}\left(3 \cdot k, h\right) + \operatorname{F}\left(3 \cdot k + 1\right))) \land (\operatorname{sub}\left(\operatorname{V}\left(3 \cdot k, h\right), \operatorname{R}\left(\operatorname{m}\left(3 \cdot k, h\right)\right)\right) = \operatorname{some}\left(\operatorname{B}\left(3 \cdot k\right)\right)))))))$$
 
@@ -175,9 +283,18 @@ Swapping the specified terminal pair preserves exact composition and changes onl
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Sound`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.UnSound`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.Within`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.alpha_card`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.alpha_mul`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.beta_surplus`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.exchange_composition`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.exchange_conflict`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.height`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.heightFrontier`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.image_positive`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.image_structure`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.leaf_change`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.leaf_data`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.no_left_alpha`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.replace`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.result`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualImageAddressCertificate.rightComb`
