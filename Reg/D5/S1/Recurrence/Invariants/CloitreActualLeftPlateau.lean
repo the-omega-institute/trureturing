@@ -7,7 +7,6 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily
 
 namespace Reg.D5.S1.Recurrence.Invariants.CloitreActualLeftPlateau
 
-local notation "F" => Nat.fib
 noncomputable section
 
 abbrev signature : Signature where
@@ -27,48 +26,48 @@ def rejected : Realization signature :=
   realize signature (fun _ _ _ => 1) (fun e => nomatch e)
 
 def sourceStatement : Prop := ∀ U : ℕ → ℕ, Hyp24_1 U →
-    (∀ m t : ℕ, 8 ≤ m → t ≤ F (m - 2) →
-      C (F m - t) ≤ F (m - 1) ∧
+    (∀ m t : ℕ, 8 ≤ m → t ≤ Nat.fib (m - 2) →
+      C (Nat.fib m - t) ≤ Nat.fib (m - 1) ∧
       (heightDeficit m t = 0 ↔ t ≤ platformWidth m) ∧
       (platformWidth m < t → 1 ≤ heightDeficit m t ∧
         heightDeficit m t ≤ max 1 (t - platformWidth m - 1))) ∧
     (∀ W m : ℕ, max 8 ((3 * W + 10) / 2) ≤ m →
-      ∀ t : ℕ, t ≤ W → C (F m - t) = F (m - 1)) ∧
-    (∀ j b : ℕ, 9 ≤ j → b ≤ F (j - 1) →
-      let N := F (j + 1) - b
-      let z := F j - g N
-      let w := F (j - 1) - (N - g N)
-      g N = F j - z ∧ N - g N = F (j - 1) - w ∧ z + w = b ∧
-      z ≤ F (j - 2) ∧ w ≤ F (j - 3) ∧
+      ∀ t : ℕ, t ≤ W → C (Nat.fib m - t) = Nat.fib (m - 1)) ∧
+    (∀ j b : ℕ, 9 ≤ j → b ≤ Nat.fib (j - 1) →
+      let N := Nat.fib (j + 1) - b
+      let z := Nat.fib j - g N
+      let w := Nat.fib (j - 1) - (N - g N)
+      g N = Nat.fib j - z ∧ N - g N = Nat.fib (j - 1) - w ∧ z + w = b ∧
+      z ≤ Nat.fib (j - 2) ∧ w ≤ Nat.fib (j - 3) ∧
       (heightDeficit (j + 1) b = 0 ↔
         (b ≤ platformWidth j ∧ z = b ∧ w = 0) ∨
-        (b = platformWidth j + 1 ∧ Odd (F j) ∧ z = platformWidth j ∧ w = 1))) ∧
+        (b = platformWidth j + 1 ∧ Odd (Nat.fib j) ∧ z = platformWidth j ∧ w = 1))) ∧
     (∀ j : ℕ, 9 ≤ j →
-      let N := F (j + 1) - (platformWidth j + 1)
-      Function.minimalPeriod (T N) (g N) = 2 ∧ d N = F j - 1 ∧
-      g N = if Odd (F j) then F j - platformWidth j else F j - platformWidth j - 1)
+      let N := Nat.fib (j + 1) - (platformWidth j + 1)
+      Function.minimalPeriod (T N) (g N) = 2 ∧ d N = Nat.fib j - 1 ∧
+      g N = if Odd (Nat.fib j) then Nat.fib j - platformWidth j else Nat.fib j - platformWidth j - 1)
 
 def familyStatement (q : ℕ → ℕ → ℕ) : Prop := ∀ U : ℕ → ℕ, Hyp24_1 U →
-    (∀ m t : ℕ, 8 ≤ m → t ≤ F (m - 2) →
-      C (F m - t) ≤ F (m - 1) ∧
+    (∀ m t : ℕ, 8 ≤ m → t ≤ Nat.fib (m - 2) →
+      C (Nat.fib m - t) ≤ Nat.fib (m - 1) ∧
       (q m t = 0 ↔ t ≤ platformWidth m) ∧
       (platformWidth m < t → 1 ≤ q m t ∧
         q m t ≤ max 1 (t - platformWidth m - 1))) ∧
     (∀ W m : ℕ, max 8 ((3 * W + 10) / 2) ≤ m →
-      ∀ t : ℕ, t ≤ W → C (F m - t) = F (m - 1)) ∧
-    (∀ j b : ℕ, 9 ≤ j → b ≤ F (j - 1) →
-      let N := F (j + 1) - b
-      let z := F j - g N
-      let w := F (j - 1) - (N - g N)
-      g N = F j - z ∧ N - g N = F (j - 1) - w ∧ z + w = b ∧
-      z ≤ F (j - 2) ∧ w ≤ F (j - 3) ∧
+      ∀ t : ℕ, t ≤ W → C (Nat.fib m - t) = Nat.fib (m - 1)) ∧
+    (∀ j b : ℕ, 9 ≤ j → b ≤ Nat.fib (j - 1) →
+      let N := Nat.fib (j + 1) - b
+      let z := Nat.fib j - g N
+      let w := Nat.fib (j - 1) - (N - g N)
+      g N = Nat.fib j - z ∧ N - g N = Nat.fib (j - 1) - w ∧ z + w = b ∧
+      z ≤ Nat.fib (j - 2) ∧ w ≤ Nat.fib (j - 3) ∧
       (q (j + 1) b = 0 ↔
         (b ≤ platformWidth j ∧ z = b ∧ w = 0) ∨
-        (b = platformWidth j + 1 ∧ Odd (F j) ∧ z = platformWidth j ∧ w = 1))) ∧
+        (b = platformWidth j + 1 ∧ Odd (Nat.fib j) ∧ z = platformWidth j ∧ w = 1))) ∧
     (∀ j : ℕ, 9 ≤ j →
-      let N := F (j + 1) - (platformWidth j + 1)
-      Function.minimalPeriod (T N) (g N) = 2 ∧ d N = F j - 1 ∧
-      g N = if Odd (F j) then F j - platformWidth j else F j - platformWidth j - 1)
+      let N := Nat.fib (j + 1) - (platformWidth j + 1)
+      Function.minimalPeriod (T N) (g N) = 2 ∧ d N = Nat.fib j - 1 ∧
+      g N = if Odd (Nat.fib j) then Nat.fib j - platformWidth j else Nat.fib j - platformWidth j - 1)
 
 def arena : Arena where
   signature := signature

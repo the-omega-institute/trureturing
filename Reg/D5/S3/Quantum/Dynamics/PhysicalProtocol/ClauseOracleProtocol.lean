@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Quantum.Dynamics.PhysicalProtocol.ClauseOracleProtocol
 import Reg.Support.BoundedRunSpace
 
@@ -67,13 +68,31 @@ def sensitivity : FiniteSlotSensitivity arena := by
 def dependence : ∃ b b' : Bool, symbols.readout () b ≠ symbols.readout () b' :=
   ⟨false,true,by change false ≠ true; decide⟩
 
-register_information_theorem _root_.PredictiveThermodynamic.one_query_run in arena
-  readout via (@cutRealization Bool Bool instDecidableEqBool (fun b => b))
-  primitives symbols.toPrimitiveBundle
-  realization inline (symbols) := by
+private theorem _root_.PredictiveThermodynamic.one_query_run.__primitive_realization : D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.{0, 0, 0} Reg.D5.S0.Computability.ClauseOracleProtocol.arena (∀ (w : List.{0} Bool), @Exists.{1} (List.{0} PredictiveThermodynamic.ResponseSymbol) fun (r : List.{0} PredictiveThermodynamic.ResponseSymbol) => And (PredictiveThermodynamic.queryReply (PredictiveThermodynamic.preparedQuery w) r) (And (@LE.le.{0} Nat instLENat (@List.length.{0} PredictiveThermodynamic.ResponseSymbol r) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))) (@HPow.hPow.{0, 0, 0} Nat Nat Nat (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@List.length.{0} Bool w) (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))) (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))) (@List.length.{0} Bool w)) (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5))))) (And (@Eq.{1} Nat (Lax51Proofs.RamToTM.msbValue (PredictiveThermodynamic.totalPostOutput r)) (@PredictiveThermodynamic.Physical.satisfyingCount (@Sigma.fst.{0, 0} Nat (fun (n : Nat) => PredictiveThermodynamic.UnaryFormula n) (PredictiveThermodynamic.preparedFormula w)) (@Sigma.snd.{0, 0} Nat (fun (n : Nat) => PredictiveThermodynamic.UnaryFormula n) (PredictiveThermodynamic.preparedFormula w)))) (And (@Exists.{1} Nat fun (t : Nat) => And (@LE.le.{0} Nat instLENat t (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@HAdd.hAdd.{0, 0, 0} Nat Nat Nat (@instHAdd.{0} Nat instAddNat) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@OfNat.ofNat.{0} Nat (nat_lit 16) (instOfNatNat (nat_lit 16))) (@HPow.hPow.{0, 0, 0} Nat Nat Nat (@instHPow.{0, 0} Nat Nat (@NPow.toPow.{0} Nat (@Monoid.toNPow.{0} Nat Nat.instMonoid))) (@List.length.{0} Bool w) (@OfNat.ofNat.{0} Nat (nat_lit 2) (instOfNatNat (nat_lit 2))))) (@HMul.hMul.{0, 0, 0} Nat Nat Nat (@instHMul.{0} Nat instMulNat) (@OfNat.ofNat.{0} Nat (nat_lit 50) (instOfNatNat (nat_lit 50))) (@List.length.{0} Bool w))) (@OfNat.ofNat.{0} Nat (nat_lit 71) (instOfNatNat (nat_lit 71))))) (PredictiveThermodynamic.ProtocolRun (PredictiveThermodynamic.ProtocolCfg.pre (Turing.initList PredictiveThermodynamic.preMachine w)) (PredictiveThermodynamic.ProtocolCfg.halt (Turing.haltList PredictiveThermodynamic.postMachine (PredictiveThermodynamic.binaryWord (PredictiveThermodynamic.totalPostOutput r)))) t (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1))))) (∀ (output : Turing.FinTM2.Cfg PredictiveThermodynamic.postMachine) (t asks : Nat), PredictiveThermodynamic.ProtocolRun (PredictiveThermodynamic.ProtocolCfg.pre (Turing.initList PredictiveThermodynamic.preMachine w)) (PredictiveThermodynamic.ProtocolCfg.halt output) t asks → @Eq.{1} Nat asks (@OfNat.ofNat.{0} Nat (nat_lit 1) (instOfNatNat (nat_lit 1)))))))) Reg.D5.S0.Computability.ClauseOracleProtocol.symbols := by
     constructor
     exact ⟨fun _ => sourceLaw, fun _ => one_query_run⟩
-  variation variation sensitivity sensitivity
-  escape from (Bool) escape continues (open)
+
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.PredictiveThermodynamic.one_query_run) (type_of% (@cutRealization Bool Bool instDecidableEqBool (fun b => b))) (type_of% (Bool)) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Quantum") "Dynamics") "PhysicalProtocol") "ClauseOracleProtocol") 0) "PredictiveThermodynamic") "one_query_run") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Quantum") "Dynamics") "PhysicalProtocol") "ClauseOracleProtocol") 0) "PredictiveThermodynamic") "one_query_run") "__primitive_realization"),
+  realizationSource := none,
+  generated := false,
+  arena := .law ⟨(arena)⟩,
+  objectArena := .law ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (arena) ((symbols)) (symbols.toPrimitiveBundle) ⟨(PredictiveThermodynamic.one_query_run.__primitive_realization)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (PredictiveThermodynamic.one_query_run.__primitive_realization) (@_root_.PredictiveThermodynamic.one_query_run))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((symbols.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (@cutRealization Bool Bool instDecidableEqBool (fun b => b)),
+  variation := .evidence ⟨(variation)⟩ (by first | exact (variation) | exact ⟨_, _, (variation)⟩),
+  sensitivity := .evidence ⟨(sensitivity)⟩ (by exact (sensitivity)),
+  partialSensitivity := none,
+  escapeFrom := some (Bool),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S0.Computability.ClauseOracleProtocol

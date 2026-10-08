@@ -7,7 +7,7 @@ doi: 10.1080/09500340008244048
 url: https://arxiv.org/abs/quant-ph/9807077v2
 claim: "Theorem 2 obtains selective local monotonicity of a convex-roof quantity from concavity of its marginal function."
 strata_touched:
-  - D5/S3/Quantum/Entanglement/GraphDensity
+  - D5/S3/Quantum/Entanglement/GraphDensity/FormationBounds
 license: citation-only
 triage: anchor
 ---

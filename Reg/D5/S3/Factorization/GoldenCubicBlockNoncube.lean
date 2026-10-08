@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Factorization.GoldenCubicBlockNoncube
 import Reg.Support.DependentFamily
 
@@ -62,19 +63,30 @@ def registration : Registration arena (arena.Law actual) where
       simpa [h3] using (golden_cubic_lucas_block 1 (by decide)).2.2.2.2.2
     norm_num [h3, h9]
 
-register_information_theorem
-  _root_.D5.S3.Factorization.GoldenCubicBlockNoncube.golden_cubic_block_not_cube
-  in arena
-  readout via (realize signature
-    (fun _ _ j => goldenLucas (3 ^ j) ^ 2 + 3) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Factorization.GoldenCubicBlockNoncube
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "arg", "arg", "body", "arg"]
-      stateBinder := 0 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Factorization.GoldenCubicBlockNoncube.golden_cubic_block_not_cube) (type_of% (realize.{0, 0, 0, 0, 0} signature
+    (fun _ _ j => goldenLucas (3 ^ j) ^ 2 + 3) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Factorization") "GoldenCubicBlockNoncube") "golden_cubic_block_not_cube") "Reg.D5.S3.Factorization.GoldenCubicBlockNoncube/Reg.D5.S3.Factorization.GoldenCubicBlockNoncube.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Factorization.GoldenCubicBlockNoncube.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature
+    (fun _ _ j => goldenLucas (3 ^ j) ^ 2 + 3) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Factorization.GoldenCubicBlockNoncube, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "arg", "arg", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

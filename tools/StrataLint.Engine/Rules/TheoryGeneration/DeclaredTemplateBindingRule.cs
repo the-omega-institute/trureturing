@@ -43,8 +43,7 @@ internal sealed record InformationTemplateUniverse(
 
 internal static class DeclaredTemplateBindingRule
 {
-    // τ=0 owner ruling (2026-09-20): every DTR finding is an observation. The
-    // obligation collects registration state as warnings and never blocks admission.
+    // Every DTR finding observes registration state without blocking admission.
     internal static bool IsAffectedBy(DeltaRuleContext context) =>
         InformationTemplateSelection.ChangedProducers(context).Any();
 
@@ -65,8 +64,10 @@ internal static class DeclaredTemplateBindingRule
             var currentNames = LeanDeclarationSourceNames.Read(context.Current.Files[path].Text);
             var baseNames = context.Baseline.Files.TryGetValue(path, out var baseline)
                 ? LeanDeclarationSourceNames.Read(baseline.Text) : ImmutableDictionary<string, string>.Empty;
+            var refutationResult = RefutationResult(path, context.Current.Files[path].Text, module);
             var newTheorems = module.Declarations
                 .Where(declaration => IsPublicTheorem(declaration, currentNames)
+                    && declaration.Name != refutationResult
                     && !(baseNames.TryGetValue(declaration.Name, out var kind) && kind is "theorem" or "lemma"))
                 .Select(declaration => declaration.Name).Distinct().Order(StringComparer.Ordinal);
             foreach (var theorem in newTheorems)
@@ -103,6 +104,19 @@ internal static class DeclaredTemplateBindingRule
         }
     }
 
+    private static string? RefutationResult(RepoPath path, string source, LeanFileReport module)
+    {
+        if (!RepositoryRules.TryHeader(source, out var header)
+            || !UtilitySyntax.TryParse(header.Utility, out var utility, out _)
+            || utility is not { BasisKind: UtilityBasisKind.Refutes, Result: { } result }
+            || result.ToTarget() is not Target.Formal target || target.Path != path)
+            return null;
+        // SL-031 independently checks the utility relation. This exemption names
+        // just its result; it does not exempt the module's other public theorems.
+        return UtilityDeclarationValidator.TryResolveDeclaration(result, module, out var declaration)
+            ? declaration!.Name : null;
+    }
+
     private static RuleFinding Finding(RepoPath path, InformationTemplateOccurrence occurrence)
     {
         var key = InformationTemplateJson.KeyJson(occurrence.Key).GetRawText();
@@ -125,8 +139,6 @@ internal static class DeclaredTemplateBindingRule
     {
         // Inspector preserves the kernel name: private declarations start with
         // _private.; include_in_statement excludes internal-detail theorems.
-        // Its separate --statement-identities stream's olean part is not a
-        // visibility field in the admission report.
         if (declaration.Kind != "theorem" || !declaration.IncludeInStatement
             || declaration.Name.StartsWith("_private.", StringComparison.Ordinal)) return false;
         // Only theorems the module's source spells out are authored. Everything the
