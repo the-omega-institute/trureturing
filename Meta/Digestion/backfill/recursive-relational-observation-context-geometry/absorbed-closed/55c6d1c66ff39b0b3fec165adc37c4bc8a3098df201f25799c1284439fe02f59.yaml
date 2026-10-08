@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:55c6d1c66ff39b0b3fec165adc37c4bc8a3098df201f25799c1284439fe02f59
   normalized_sha256: sha256:55c6d1c66ff39b0b3fec165adc37c4bc8a3098df201f25799c1284439fe02f59
 cas_ref: sha256:55c6d1c66ff39b0b3fec165adc37c4bc8a3098df201f25799c1284439fe02f59
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/Algorithms/StationaryWeightedHistoryOverlap.necessary_inequality
+    target_statement_id: sha256:48d664db2203427d9d9a58583520f8c3ce6a12ab5bf8635a72fdfe00d3f3cd96
 receipts:
   unresolved_subitems: []
