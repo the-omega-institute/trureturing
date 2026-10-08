@@ -698,3 +698,523 @@ No bound for the signed main trace in (VE10) or the actual
 $D_a$ lower allowance is obtained. The constants and asymptotic
 starting clocks have not been numerically certified; RH remains
 unproved.
+
+## A uniform shrinking-time cutoff for the complete signed trace
+
+The fixed-parameter tail after (NH11) in
+[the Nicolas note](nicolas2025comparison.md#the-subcritical-full-spectrum-absolute-boundary)
+does not state a bound uniform as the clock and heat time change together.
+The following supplies that interface using the already paid near-Euler
+exterior in (VE6). The complete coefficient, heat convolution, positive
+Fourier kernel, Jensen theorem, contour balance and original response
+comparison are reused; none is reconstructed as a new source theorem.
+This is a `repo-derived` paper-level parameter application, without an
+exhaustive literature, mathematical-priority, numerical-constant or Lean
+claim.
+
+Keep exactly the complete principal continuation $\widehat F_A$ and
+actual multiset of $\xi_{-\epsilon}$ zeros used in (VE1)–(VE10).
+Assume
+
+$$
+A\ge e^2,\qquad L=\log A,\qquad 0<\eta\le\tfrac12,
+\qquad 0<\epsilon\le c\eta^4,\qquad \epsilon L\le1,
+\qquad \kappa=\epsilon L/4.
+$$
+
+Use the absolute $c$ from (VE1), chosen small enough that
+$\epsilon\le1/2$ throughout this domain. There is an absolute $C<\infty$
+such that, for every $T\ge2$,
+
+$$
+\boxed{
+\sum_{\substack{\xi_{-\epsilon}(w)=0\\|\Im w|>T}}
+ |\widehat F_A(w)|
+\le \frac{C A^\eta}{L}
+ T^{\kappa-1}\log(T+2).
+}
+\tag{VG1}
+$$
+
+The sum includes both ordinate signs, every actual real part and every
+multiplicity. Its constant is independent of $A,\eta,\epsilon,T$.
+This strengthens the parameter scope of the fixed-parameter tail;
+it gives no sign to the retained head.
+
+### The existing exterior confines every height uniformly
+
+Put $b=1+\eta$ and write the right boundary from (VE9) as
+$J_\epsilon(b+iu)$. Its ordinate and real part are
+
+$$
+y=u+\frac\epsilon4\arctan(u/b),\qquad
+x=b+\frac\epsilon4\log\frac{\sqrt{b^2+u^2}}{2\pi}.
+$$
+
+The ordinate is strictly increasing and has the sign of $u$, so
+$|u|\le|y|$. The zero-free exterior and reflected boundary already
+proved for (VE9) enclose **all** zeros, including bounded heights.
+As $1<b\le3/2$, their actual coordinates $w=\beta+iy$ obey
+
+$$
+\boxed{
+-\eta-\frac\epsilon4\log(|y|+2)
+\le\beta\le
+1+\eta+\frac\epsilon4\log(|y|+2).
+}
+\tag{VG2}
+$$
+
+No asymptotic exceptional set or new zero trajectory is used.
+The weaker denominator-free upper envelope follows from
+$\sqrt{b^2+u^2}/(2\pi)\le|y|+2$; functional reflection gives the lower
+one. In particular $A^{\beta-1}\le A^\eta(|y|+2)^\kappa$.
+
+The positive-kernel Jensen argument of (NH10) also has a common center
+lower bound on this small-time interval:
+
+$$
+\xi_{-\epsilon}(1/2)\ge\xi_{-1/2}(1/2)>0,
+\qquad
+\max_{|s-1/2|\le R}|\xi_{-\epsilon}(s)|
+\le2\xi_0(1/2+R).
+$$
+
+These are inequalities for the deformed function itself. Real Stirling
+growth and Jensen at radii $R$ and $2R$ therefore give a disk count
+$C R\log(R+2)$ with an absolute constant. By (VG2), for $T\ge2$ and
+$|y|\le T$,
+
+$$
+|\beta-1/2|\le1+\tfrac18\log(T+2)\le T.
+$$
+
+Thus these zeros lie in $|w-1/2|<2T$, and the complete count satisfies
+
+$$
+\boxed{
+\#\{w:\xi_{-\epsilon}(w)=0,\ |\Im w|\le T\}
+\le C T\log(T+2),\qquad T\ge2.
+}
+\tag{VG3}
+$$
+
+Multiplicity is retained in both Jensen and this count. No original-zeta
+zero-count theorem has been assigned to different zeros.
+
+### Keep the cancellation in the complete coefficient
+
+Reuse (NH15), with
+
+$$
+\widehat F_A'(z)=A^{z-1}h_L(z),\qquad
+h_L(z)=\frac1{z(1-z)}-\frac1{Lz^2}.
+$$
+
+For every real $\beta$, $t\ge2$ and $L\ge2$,
+
+$$
+|h_L(\beta+it)|\le\frac{1+1/L}{t^2},\qquad
+|h_L'(\beta+it)|\le\frac{2(1+1/L)}{t^3}.
+$$
+
+On either fixed ordinate sign, the complete coefficient tends to zero
+at the corresponding imaginary infinity by (NH2). Integrate the exact
+derivative along that vertical ray and integrate its $e^{\pm iLt}$
+factor once by parts. Its endpoint and derivative integral give
+
+$$
+|\widehat F_A(\beta+iy)|
+\le\frac{A^{\beta-1}}L
+\left[\frac{1+1/L}{|y|^2}
+ +\int_{|y|}^\infty\frac{2(1+1/L)}{t^3}\,dt\right]
+\le\frac{3A^{\beta-1}}{L|y|^2},\qquad |y|\ge2.
+$$
+
+This bound is uniform in $\beta$ and $L$. The two principal branches
+are kept separately; the positive-height ray crosses no cut, and
+conjugation supplies the same bound at negative height. Neither the
+$A^{z-1}/(zL)$ term nor $E_1((1-z)L)$ is estimated alone.
+
+Combine this bound with (VG2)–(VG3) on the dyadic bands
+$2^jT<|y|\le2^{j+1}T$. Since $0<\kappa\le1/4$, their entire absolute
+mass is at most
+
+$$
+\frac{C A^\eta}{L}
+\sum_{j\ge0}(2^jT)^{\kappa-1}\log(2^{j+1}T+2)
+\le\frac{C A^\eta}{L}T^{\kappa-1}\log(T+2).
+$$
+
+The geometric sums, including their $j$ factors, have common bounds
+because $2^{\kappa-1}\le2^{-3/4}<1$. This proves (VG1) over all omitted
+heights, rather than on a selected subsequence.
+
+### One common time now gives a finite signed head
+
+Use the **same** time already chosen for the full spectrum in (VE10):
+
+$$
+\epsilon(A)=\min\{(c/2)L^{-4},\ A^{-1/2}L^{-10}\},
+\qquad \eta=1/L,\qquad T(A)=\sqrt A\,L^3.
+$$
+
+Here $A^\eta=e$. Moreover $\epsilon(A)\le e^{-L/2}L^{-10}$,
+$\log T=L/2+3\log L$, and $\log L\le L$ for $L\ge2$ give
+$\kappa\log T\le(7/8)e^{-L/2}L^{-8}<1$.
+Also $\log(T+2)\le4L$. Hence (VG1) yields the joint bound
+
+$$
+\boxed{
+\sqrt A L
+\sum_{\substack{\xi_{-\epsilon(A)}(w)=0\\|\Im w|>T(A)}}
+ |\widehat F_A(w)|\le C L^{-2}.
+}
+\tag{VG4}
+$$
+
+It holds throughout the stated parameter domain with an absolute
+constant, without asserting that the second time branch is selected at
+one numerical clock. Define the finite, real signed head
+
+$$
+Z^{\rm head}_{\epsilon(A)}(A)=
+\sum_{\substack{\xi_{-\epsilon(A)}(w)=0\\|\Im w|\le T(A)}}
+ \widehat F_A(w).
+$$
+
+Positivity of the original Fourier kernel excludes real zeros at this
+negative time. The head is real by conjugation; its complete multiplicity
+count is at most $C\sqrt A L^4$ by (VG3). Finiteness is not a claim of a
+practical algorithm, computed zeros or certified numerical constants.
+
+The exact signed tail has absolute normalized bound (VG4). Combining
+it with the unchanged complete comparison (VE10) gives
+
+$$
+\boxed{
+-\sqrt A L I_\psi(A)
+=\sqrt A L Z^{\rm head}_{\epsilon(A)}(A)+r_A+\rho_A,
+\qquad |\rho_A|\le C_1L^{-1}+C_2L^{-2}.
+}
+\tag{VG5}
+$$
+
+The $L^{-1}$ term is the existing whole-trace transport allowance; the
+$L^{-2}$ term pays the entire omitted deformed spectrum. The original
+positive elementary correction $r_A$ is still present. The principal
+cut and pole compensation remain paid by the reused (VE9)–(VE10);
+no additional correction is silently discarded by the head cutoff.
+
+For the same conditional least integer attaining the global Robin-ratio
+maximum under a violation, $A=\log N>(7/2)10^{46}$, this supplies a finite
+head with a joint tail allowance. Its **signed upper bound** remains
+unproved. To reach the original sufficient target one still needs to
+control the head together with $r_A$ and $\rho_A$ against
+$\mathcal E(L)$; the strict core remains required. An asymptotic tail
+allowance is not a numerical finite-clock certificate or a uniform
+positive margin. The original real parts, both signs, all heights and
+multiplicities return through the complete response comparison.
+No RH conclusion or superiority to the already retained original-zero
+cutoffs is asserted.
+
+## Original density can be transported to a smaller negative-heat head
+
+The common-time head in (VG5) need not retain the full height
+$\sqrt A L^3$. The additional interface below transports the existing
+original-zero density and zero-free tail to the actual negative-heat
+zeros on a growing finite band. No density theorem is assumed for a
+different function, and no simple-zero trajectory is used.
+
+Reuse [Lagarias, arXiv:math/0404394v4](https://arxiv.org/pdf/math/0404394v4),
+Theorem 2.1(4), printed p.7, and Lemma 6.1, equation (6.8), printed p.27.
+The former gives the usual counting formula with an $O(\log T)$
+remainder, hence $O(\log(y+3))$ original zeros in a fixed-length height
+interval, with multiplicities. The latter supplies the local
+logarithmic-derivative expansion in a fixed strip. Its Riemann
+specialization is used at heights at least $10$, away from the zeta
+pole and trivial zeros. The Gamma logarithmic derivative, vertical
+Stirling bounds, fixed-strip polynomial zeta growth, exact negative-time
+Gaussian convolution, Rouché theorem, and the complete (VE)–(VG)
+interfaces are also reused. The cached original Lagarias text and the
+already inspected Dobner convolution are the source inputs; their
+proofs are not reconstructed or independently certified here.
+
+This is a `repo-derived` paper-level joint transport application. No
+exhaustive literature, mathematical-priority, Lean, computed-zero or
+numerical finite-clock claim is made.
+
+### Relative heat control away from the original zero multiset
+
+Write $\xi=\xi_0$, and let $\mathcal Z_0$ be its actual zero multiset.
+There are absolute $c,C>0$ with the following property. For $Y\ge10$,
+put $q=\log(Y+10)$. Assume
+
+$$
+-1\le\Re s\le2,\qquad 10\le\Im s\le Y,\qquad
+\operatorname{dist}(s,\mathcal Z_0)\ge\delta,
+$$
+
+$$
+e^{-q}\le\delta\le1/10,
+\qquad 0<\epsilon\le c\delta^2/q^2.
+$$
+
+Then the actual, unshifted heat functions satisfy
+
+$$
+\boxed{
+\left|\frac{\xi_{-\epsilon}(s)}{\xi(s)}-1\right|
+\le C\epsilon q^2/\delta^2.
+}
+\tag{VH1}
+$$
+
+The denominator is paid below; an absolute function-value error is
+not substituted for this relative estimate.
+
+Put $y=\Im s$. The cited local formula and the Gamma factor give
+$|\xi'/\xi|\le Cq/\delta$ on the radius-$\delta/2$ neighborhood of
+$s$; on radius-$\delta/4$ disks there Cauchy gives
+$|(\xi'/\xi)'|\le Cq/\delta^2$, with harmless changes to these radii.
+More explicitly, at a point $s+iu$, $|u|\le\delta/2$, the
+radius-$\delta/4$ disk stays at distance at least $\delta/4$ from every
+zero and in the fixed wider strip of Lemma 6.1. The local count is
+$O(q)$, and the remaining Gamma and local-formula terms are $O(q)$.
+Consequently, for $G(v)=\xi(s+iv)/\xi(s)$ and $|v|\le\delta/2$,
+
+$$
+|G(v)-1-iv(\xi'/\xi)(s)|
+\le Cq^2\delta^{-2}v^2 e^{Cq|v|/\delta}.
+\tag{VH2}
+$$
+
+To pay the whole Gaussian tail, remove the original local factors
+
+$$
+P_y(z)=\prod_{\substack{\rho\in\mathcal Z_0\\|\Im\rho-y|<2}}(z-\rho),
+\qquad g_y(z)=\xi(z)/P_y(z).
+$$
+
+Repeated factors retain multiplicities. Their number is at most $Cq$.
+In $-1\le\Re z\le2$, $|\Im z-y|\le1/2$, the source local formula,
+with the extra factors of ordinate distance at least one bounded
+separately, gives $g_y'/g_y=O(q)$. This function is analytic and
+nonzero throughout the indicated rectangle. Compare its modulus along
+the horizontal segment from $2+iy$ to $s$. Every numerator local factor
+at $s$ has modulus at least $\delta$, and every factor at $2+iy$ has
+modulus at most $3$. Thus
+
+$$
+|\xi(s)|\ge|\xi(2+iy)|\exp[-Cq\log(3/\delta)].
+$$
+
+The Euler inverse bound at $\Re s=2$ and vertical Stirling supply a
+uniform lower bound for $|\xi(2+iy)|$. Fixed-strip polynomial zeta
+growth and vertical Stirling supply a uniform upper bound for
+$|\xi(\sigma+i(y+v))|$; compact heights include the removable Gamma
+singularities of the completed function. As
+$\log(3/\delta)\le q+\log3$, these bounds combine, for every real $v$,
+to give fixed absolute $B,C$ with
+
+$$
+|G(v)|\le C e^{Cq^2}(1+|v|)^B e^{\pi|v|/4}.
+\tag{VH3}
+$$
+
+The existing exact vertical Gaussian identity is
+
+$$
+\frac{\xi_{-\epsilon}(s)}{\xi(s)}
+=\frac1{\sqrt{\pi\epsilon}}\int_{\mathbb R}
+ e^{-v^2/\epsilon}G(v)\,dv.
+$$
+
+Subtract $1+iv(\xi'/\xi)(s)$ before estimating: its Gaussian average
+is exactly one. On $|v|\le\delta/2$, (VH2) and square completion give
+$C\epsilon q^2/\delta^2$, since $\epsilon q^2/\delta^2\le c$.
+On the complement, (VH3) gives
+
+$$
+C\exp[Cq^2-\delta^2/(8\epsilon)].
+$$
+
+The polynomial and $e^{\pi|v|/4}$ factors are integrated against the
+remaining half-Gaussian, with a common bound for $\epsilon\le1/2$.
+Choose $c$ small enough to absorb $Cq^2$ into half the negative exponent.
+Then $e^{-\delta^2/(16\epsilon)}\le16\epsilon/\delta^2$ pays this
+part. The subtracted affine tail has the same bound using
+$|\xi'/\xi(s)|\le Cq/\delta$. This proves (VH1) with constants
+independent of $Y,s,\delta,\epsilon$.
+
+### Small clusters transport multiplicities without separation assumptions
+
+Return to $L=\log A$ and the same common $\epsilon(A)$ from (VE10).
+Set
+
+$$
+U=\sqrt A L^3,\qquad h=L^{-2},\qquad
+Y=U+2,\qquad q=\log(Y+10),\qquad \delta=\frac h{Kq},
+$$
+
+where the fixed absolute $K$ is larger than a suitable multiple of the
+original local-count constant. For sufficiently large $A$, the domain
+conditions of (VH1) hold and
+
+$$
+\epsilon(A)q^2/\delta^2
+=K^2\epsilon(A)q^4h^{-2}
+\le C A^{-1/2}L^{-2}\longrightarrow0.
+\tag{VH4}
+$$
+
+Here $q\asymp L$, $\delta\asymp L^{-3}$ and $\delta\ge e^{-q}$
+eventually. No particular numerical starting clock is certified.
+
+Take the union of radius-$r$ disks about every distinct original zero,
+with one common $\delta\le r\le2\delta$. Repeated zeros are single
+centers but retain their multiplicities in counting. Choose $r$ to
+avoid tangencies and multiple boundary intersections for the finite
+collection of disks in the working band. The relevant union components
+are finite and have diameter at most $h$.
+
+Here is the bound that prevents a long chain. For a component meeting
+an interior point of the working band, a chain of neighboring centers
+has successive distances at most $4\delta$. Before a chain could leave
+the unit neighborhood of its first center, its centers have ordinates
+in one fixed-length interval, containing at most $Cq$ original zeros.
+It cannot travel a unit distance because $4\delta Cq<1/2$ for large
+$A$. It therefore stays in that neighborhood. Its complete center count
+is at most $Cq$, and its disk-union diameter is at most
+$4\delta(Cq+1)\le h$, by the fixed choice of $K$.
+Thus no unproved minimum spacing or simplicity is needed. Components
+meeting the working band remain at least $10$ in height and below $Y$;
+there is no artificial truncation boundary through a cluster.
+
+At the boundary of each such component, distance from every original
+zero is at least $r\ge\delta$. Equation (VH1), with (VH4), makes
+$|\xi_{-\epsilon(A)}-\xi|<|\xi|$ on that complete boundary.
+Rouché, or the argument principle for the finite disk union including
+any hole boundaries, gives the same total zero multiplicity inside.
+Outside all these disks, (VH1) excludes deformed zeros in the working
+band. Hence the original and deformed multisets in each component
+can be matched, with
+
+$$
+\boxed{|w-\rho|\le h=L^{-2}.}
+\tag{VH5}
+$$
+
+This is a multiplicity-preserving matching inside small clusters,
+not an assertion of simple trajectories or an inherited global density
+law. Conjugation supplies the lower-height version. The matching need
+not itself be used as a numerical algorithm.
+
+### Reuse the original weighted tail in the correct direction
+
+The existing smaller-cut calculation in
+[the Nicolas note](nicolas2025comparison.md#a-smaller-moving-cut-from-joint-density-and-zero-free-support)
+uses the actual original spectrum, Chourasiya–Simonič's inclusive
+density estimate and Johnston–Yang's stated zero-free region. Reuse
+that already paid calculation, including its weighted intermediate
+quantity, rather than re-proving the density theorem or reassigning it
+to deformed zeros. With
+
+$$
+R=57.54,\qquad \Omega=(L/\log L)^{1/3},\qquad
+\kappa_*=(28R)^{-1},\qquad T_0=A^{1/4}e^{-\kappa_*\Omega},
+$$
+
+it supplies, for sufficiently large $A$,
+
+$$
+B_2(A;T_0):=
+\sum_{\substack{\rho=\beta+i\gamma\in\mathcal Z_0\\\gamma>T_0}}
+\frac{A^{\beta-1/2}+A^{1/2-\beta}}{\gamma^2}
+\le C b(A),
+$$
+
+$$
+b(A)=L A^{-1/8}e^{\kappa_*\Omega}
+ +L^3e^{-\Omega/(14R)}+L^3A^{-1/14}.
+\tag{VH6}
+$$
+
+This is the positive weighted-zero upper bound produced by the existing
+layer calculation, not a reverse inference from its signed-response
+upper bound. Reflection and conjugation preserve every multiplicity.
+
+Put $S(A)=2T_0$. Work at sufficiently large $A$ that
+$S>12$, $U>S$ and $h<1$. The working band for (VH5) is
+$S<|\Im w|\le U$. By (VG2), its deformed real parts are in $[-1,2]$.
+Every relevant cluster stays in the high fixed strip and away from the
+outer height limits needed for (VH1). The matching assigns every such
+$w$ to a distinct original zero occurrence with
+$|\Im\rho|>T_0$, since $S-h>T_0$. The factor two in $S$ pays the
+lower-cut boundary without assuming a zero-free cutoff ordinate.
+
+Use the complete-coefficient bound proved for (VG1), not a leading-term
+replacement. For each matched occurrence,
+
+$$
+\sqrt A L|\widehat F_A(w)|
+\le\frac{3A^{\Re w-1/2}}{|\Im w|^2}
+\le\frac{12 A^h A^{\Re\rho-1/2}}{|\Im\rho|^2}.
+$$
+
+Here $|\Im w|\ge|\Im\rho|-h\ge|\Im\rho|/2$. The matching is injective
+on the retained occurrences. For the complete original multiset,
+reflection followed by conjugation identifies the sum of
+$A^{\beta-1/2}/\gamma^2$ over both signs with $B_2(A;T_0)$.
+Since $A^h=e^{1/L}$, the whole matched middle costs at most
+$C b(A)$. Beyond $U$, the unchanged (VG4) costs $CL^{-2}$.
+Consequently the **entire** deformed suffix obeys
+
+$$
+\boxed{
+\sqrt A L
+\sum_{\substack{\xi_{-\epsilon(A)}(w)=0\\|\Im w|>S(A)}}
+ |\widehat F_A(w)|
+\le C b(A)+CL^{-2}=O(L^{-2}),
+\quad S(A)=2A^{1/4}e^{-\Omega/(28R)}.
+}
+\tag{VH7}
+$$
+
+For the last equality, $\Omega/\log L\to\infty$ and $\Omega/L\to0$
+give $b(A)=o(L^{-2})$. All constants are independent of $A$; the bound
+is eventual, with no certified numerical threshold. The actual common
+time is unchanged and is not chosen separately for a zero or a cluster.
+
+### The reduced head still needs its signed bound
+
+Let $Z^{\rm small}_{\epsilon(A)}(A)$ be the same complete finite signed
+zero sum as in (VG5), with inclusive height $S(A)$ in place of $U$.
+It is real by conjugation. The unchanged uniform count (VG3) gives
+$O(A^{1/4}L e^{-\Omega/(28R)})$ zero occurrences in this head.
+Combining the complete suffix bound with (VE10) yields
+
+$$
+\boxed{
+-\sqrt A L I_\psi(A)
+=\sqrt A L Z^{\rm small}_{\epsilon(A)}(A)+r_A+\widetilde\rho_A,
+\qquad
+|\widetilde\rho_A|\le C_1L^{-1}+C_2b(A)+C_3L^{-2}.
+}
+\tag{VH8}
+$$
+
+The elementary correction remains the positive original $r_A$.
+The original complete coefficients, actual real parts, both signs,
+all heights and multiplicities, and the already paid cut and pole
+compensation return through (VE10). The smaller head pays no new
+signed main upper bound.
+
+The original source is still the conditional least integer attaining
+the global Robin-ratio maximum under a violation, with
+$A=\log N>(7/2)10^{46}$. That standing lower clock alone is not a
+certificate that this source exceeds the unspecified eventual threshold
+of (VH7)–(VH8). The earlier all-clock (VG) interface remains available.
+A proof still must control the same head and corrections against the
+original $\mathcal E(L)$ and retain the strict core, including any
+uncovered finite clock range. No Robin or RH conclusion is supplied.
