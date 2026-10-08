@@ -135,9 +135,7 @@ private theorem avoiding_one_step
   refine .step experiment ?_
   intro next attained
   obtain ⟨i, member, bit, equal⟩ := attained
-  have different : i ≠ experiment := by
-    intro same
-    exact avoids (same ▸ member)
+  have different : i ≠ experiment := ne_of_mem_of_not_mem member avoids
   simp only [response, if_neg different, postResponse] at equal
   exact .now ⟨bit, equal⟩
 
@@ -189,11 +187,9 @@ private theorem feasible_card_lower (n : ℕ) (encoding : Setoid (Fin 3))
     Fintype.card_le_one_iff_subsingleton.mp (by
       simpa only [Nat.card_eq_fintype_card] using
         Nat.le_of_lt_succ (Nat.lt_of_not_ge small))
-  have fullClass : {j | encoding 0 j} = (Set.univ : Set (Fin 3)) := by
-    apply Set.eq_univ_of_forall
-    intro j
-    exact Quotient.exact (subsingleton.elim (Quotient.mk encoding 0)
-      (Quotient.mk encoding j))
+  have fullClass : {j | encoding 0 j} = (Set.univ : Set (Fin 3)) :=
+    Set.eq_univ_of_forall
+      (Setoid.eq_top_iff.mp (Quotient.subsingleton_iff.mp subsingleton) 0)
   exact full_no_strategy n (by simpa only [fullClass] using feasible 0)
 
 private theorem no_coarsest (n : ℕ) (positive : 1 ≤ n) :
@@ -244,7 +240,7 @@ theorem result :
     ¬ claim := by
   refine ⟨?_, ?_, full_no_strategy, ?_, ?_, refutation⟩
   · intro i
-    have same : ({i, i} : Set (Fin 3)) = {i} := by simp
+    have same : ({i, i} : Set (Fin 3)) = {i} := Set.insert_eq_of_mem rfl
     have reach := pairs_one_step i i 0
     simp only [same] at reach
     exact ⟨reach, live_no_zero _⟩
