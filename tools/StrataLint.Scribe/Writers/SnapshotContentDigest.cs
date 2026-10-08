@@ -5,7 +5,7 @@ namespace StrataLint.Scribe;
 
 /// Adapts an Engine <see cref="RepositorySnapshot"/> to the package-owned
 /// <see cref="TruthGraphSnapshotIdentity"/> digest. Knowing which repository paths are generated
-/// projections is Scribe's responsibility (it owns <see cref="GeneratedArtifactInventory"/>); the
+/// projections uses Engine's <see cref="GeneratedArtifactInventory"/> identity contract; the
 /// digest bytes are produced by Trureturing.Truth so downstream consumers can verify them.
 public static class SnapshotContentDigest
 {

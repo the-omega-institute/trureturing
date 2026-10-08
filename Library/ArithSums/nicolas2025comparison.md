@@ -666,6 +666,44 @@ $$
 $$
 
 The strict core inequality then supplies strict Robin.
+For a zero-response representation, retain the elementary terms from the
+full signed formula above. With $L=\log A$, write
+
+$$
+\begin{aligned}
+R_{\rm elem}(A)
+&=\frac{\log(2\pi)}{AL}
+ +\frac12\int_A^\infty\log(1-x^{-2})k(x)\,dx,\\
+r_A&=\sqrt A L\,R_{\rm elem}(A).
+\end{aligned}
+$$
+
+Thus $R_{\rm elem}=\log(2\pi)/(AL)-T_{\rm triv}$ in the notation
+of (V4)–(V6), and it is $R_{\rm Ak}(1;A)$ in the Akatsuka formula below.
+For $A\ge e^2$, the already used inequality
+$-\log(1-u)\le u/(1-u)$ and $\int_A^\infty k(x)\,dx=1/(AL)$ give
+
+$$
+0<\frac{\log(2\pi)-1/[2(A^2-1)]}{\sqrt A}
+\le r_A\le\frac{\log(2\pi)}{\sqrt A}.
+$$
+
+This is the elementary correction to the nontrivial-zero response,
+not another zero term. In particular, the exact source identity and
+(G9) read
+
+$$
+-\sqrt A L\,I_\psi(A)=\sqrt A L\,Z_{\rm orig}(A)+r_A,
+\qquad
+\sqrt A L\,Z_{\rm orig}(A)+r_A\le\mathcal E(L).
+$$
+
+The second inequality is equivalent to (G9). Although $r_A\to0$, its
+positive sign must be retained in exact budgets. Every subsequent
+approximation to $Z_{\rm orig}$ still requires this correction when
+used to bound the full integral. These are applications of the existing
+explicit formula, not a new signed estimate or Lean verification.
+
 A selected counterexample would instead have to satisfy
 $\sqrt A\log A\,I_\psi(A)<-\mathcal E(\log A)$.
 The new allowance is weaker as a tail requirement than the existing
@@ -3170,6 +3208,212 @@ supplied here. The original full signed Robin condition and RH remain
 unproved, with all coefficients, real parts, multiplicities and
 height ranges unchanged.
 
+### A shrinking strip improvement alone leaves the first-band allowance large
+
+Retain the kernel and complete frequency range of (LM1)–(LM8).
+Grant, only for this comparison, a strengthened source endpoint
+majorant in which $e^{|\tau|/(2V)}$ is replaced by
+$e^{(1/2-\delta(V))|\tau|/V}$, where $\delta(V)\ge0$ and
+$\delta(V)\to0$. No such strengthened GSS estimate is inferred merely
+from a zero-free region. Define $\mathcal B_{V,\delta}$ by this
+replacement in the same unit-coefficient absolute allowance
+$\mathcal B^{\rm GSS}_V$.
+
+Since the retained range has $|\tau|\le K_V=20VL$, direct comparison
+of the existing positive integrals gives
+
+$$
+\mathcal B_{V,\delta}(A)
+\ge e^{-20\delta(V)L}\mathcal B^{\rm GSS}_V(A)
+\ge e^{-20\delta(V)L}\frac{\sqrt A(\log V)^2}{6V^2}.
+$$
+
+On the first band, $V=S=A^{1/6}e^{-\kappa\Omega}$ and eventually
+$W=2S\le T$, the already retained $\log S\ge L/7$ therefore yields
+
+$$
+\mathcal B_{S,\delta}(A)
+\ge\frac{L^2}{294}
+ \exp\!\left(\frac L6+2\kappa\Omega-20\delta(S)L\right)
+\longrightarrow\infty.
+$$
+
+Here $S\to\infty$, $\delta(S)\to0$ and $\Omega=o(L)$.
+For example, the existing gap $\delta(V)=\eta(2V)$ from the
+Vinogradov–Korobov input above has these properties. Thus even granting
+this exponential improvement, while retaining the other endpoint
+prefactors, cannot make the same independently absolute allowance
+uniformly bounded on all middle bands. Any fixed positive source
+coefficient preserves the conclusion.
+
+This is a direct application of (LM8), not a new norm, density or
+zero-free theorem. The lower bound concerns only the defined
+allowance; it is not a lower bound for the actual remainder, a Robin
+violation or a failure at a certified numerical clock. Additional
+prefactor savings, joint signed cancellation, other kernels or a
+favorable combined head/main bound retain their roles. The original
+complete signed estimate and RH remain unproved.
+
+### Actual zero jumps obstruct a uniform inverse-height prefactor
+
+The classical jump principle gives a further application boundary for
+the retained source interface. Reuse GSS Theorem 2, printed p.3 of
+[arXiv:2505.14228v1](https://arxiv.org/pdf/2505.14228v1), and its
+Riemann–von Mangoldt inputs (3)–(4), printed p.2. No source proof is
+repeated. This evaluates a proposed strengthening of that particular
+interface; it is not a mathematical originality claim or an improved
+Robin estimate.
+
+With the source's half-open convention, write
+
+$$
+I(V,v,\tau)=\sum_{V\le\gamma<v}m_\rho r_\rho^{-i\tau},
+\qquad r_\rho=\gamma+i(1/2-\beta),
+$$
+
+and retain its complete high-frequency main term
+
+$$
+P(V,v,\tau)=
+\frac{e^{i(\tau+\pi/4)}\tau^{1/2-i\tau}}{\sqrt{2\pi}}
+\sum_{e^{\tau/v}\le n\le e^{\tau/V}}
+\frac{\Lambda(n)(\log n)^{i\tau}}{n^{1/2}\log n}.
+$$
+
+Here sums over $\rho$ list distinct zeros and attach their actual
+multiplicities $m_\rho$. Suppose one attempted to strengthen only the
+first printed error shape by a factor $V^{-1}$, leaving the main term
+and second shape unchanged:
+
+$$
+|I(V,v,\tau)-P(V,v,\tau)|
+\le C\left[
+ V^{-1}e^{\tau/(2V)}
+ \left((\log V)^2+(\tau/V)^2\log V\right)
+ +\frac{\tau^{3/2}}{V}e^{\tau/(2V)-\tau/v}
+\right].
+\tag{JP1}
+$$
+
+The proposed $C$ is fixed and uniform in $v,\tau$ on the same
+comparable-height source range, including
+$21V/20<v<6V/5$ and the frequencies used below. Such a uniform
+strengthening cannot hold, unconditionally and even under RH.
+
+For every sufficiently large $V$, the cited count gives an actual
+zero ordinate $\Gamma\in(21V/20,23V/20)$. Choose
+
+$$
+\frac74V\log V<\tau<\frac74V\log V+V
+$$
+
+outside the finitely many values $\Gamma\log n$ in this interval.
+Then $P(V,v,\tau)$ is locally constant as $v$ crosses $\Gamma$:
+its lower cutoff crosses no integer there, and its upper cutoff and
+coefficients are independent of $v$. The frequency lies in the
+printed fixed $O(V\log V)$ regime. For $S\le V\le T$ it also lies
+below the retained $K_V=20VL$ eventually, using the existing scale
+relations, without changing that frequency range.
+
+By contrast, the two one-sided values of $I$ differ by the exact atom
+
+$$
+J_\Gamma(\tau)=\sum_{\Im\rho=\Gamma}
+ m_\rho\bigl(\Gamma+i(1/2-\beta)\bigr)^{-i\tau}.
+$$
+
+The actual functional-equation reflection
+$\rho\mapsto1-\overline\rho$ preserves this ordinate and
+multiplicity and sends $r_\rho$ to $\overline r_\rho$.
+For a reflected noncritical pair, with the usual logarithm in the
+right half-plane, its contribution is
+
+$$
+m_\rho(r^{-i\tau}+\overline r^{-i\tau})
+=2m_\rho\cosh(\tau\arg r)\,e^{-i\tau\log|r|}.
+$$
+
+A critical-line zero is counted once, with its original
+multiplicity and phase $e^{-i\tau\log\Gamma}$. Since
+$|1/2-\beta|<1/2$, every reflected pair has phase displacement
+from this central phase at most
+
+$$
+0\le\tau\log(|r|/\Gamma)
+\le\frac{\tau}{8\Gamma^2}
+=O(\log V/V).
+$$
+
+Choose $k\in\{0,1,2,3\}$ so that the central phase after
+multiplication by $i^k$ is within $\pi/4$ of the positive real axis.
+Eventually every pair and critical-line contribution is within
+$\pi/3$, and $2\cosh(\tau\arg r)\ge2$. Therefore
+
+$$
+\operatorname{Re}\bigl(i^kJ_\Gamma(\tau)\bigr)
+\ge\frac12\sum_{\Im\rho=\Gamma}m_\rho\ge\frac12.
+\tag{JP2}
+$$
+
+The four phases here are output observation directions. This
+projection does not assert a new intertwining between the FIB
+operators $M,J,C=MJ$ and the actual zeta spectrum.
+
+For $v$ on either side sufficiently close to $\Gamma$, take
+$v\le6V/5$. The two proposed majorants in (JP1) satisfy
+
+$$
+V^{-1}e^{\tau/(2V)}
+ \left((\log V)^2+(\tau/V)^2\log V\right)
+=O\!\left(V^{-1/8}(\log V)^3\right),
+$$
+
+$$
+\frac{\tau^{3/2}}V e^{\tau/(2V)-\tau/v}
+=O\!\left(V^{-1/12}(\log V)^{3/2}\right).
+$$
+
+Both tend to zero, uniformly in this neighborhood. A locally
+constant main and two vanishing one-sided residuals cannot produce
+the nonvanishing jump (JP2). More explicitly, one of the actual
+one-sided residual magnitudes is at least $|J_\Gamma|/2\ge1/4$.
+This contradicts (JP1) for any fixed $C$. The conclusion also rules
+out a still smaller first shape obtained by combining this factor
+$V^{-1}$ with a nonnegative exponential reduction $\delta(V)$.
+
+The preceding allowance comparison separately shows why this
+restricted prefactor question matters. If its first shape alone
+were multiplied by $V^{-p}$, with fixed $p\ge0$ and
+$\delta(V)\to0$, its defined first-band allowance would have the
+lower bound
+
+$$
+S^{-p}\mathcal B_{S,\delta}(A)
+\ge\frac{L^2}{294}
+ \exp\!\left(
+ \frac{1-p}{6}L+(2+p)\kappa\Omega-20\delta(S)L
+ \right).
+\tag{JP3}
+$$
+
+For every fixed $p<1$ this diverges. Thus a uniform pure
+inverse-height-power repair of the first shape cannot supply the
+required bounded independent allowance: powers below one retain
+this allowance floor, while powers at least one encounter the
+actual-jump obstruction. This is not a sufficiency equivalence;
+the unchanged second shape and all other terms still matter.
+
+The lower bound $1/4$ concerns the actual pointwise residual near
+the chosen zero jumps, not its signed Mellin integral or its
+height-weighted integral. Restricted parameter ranges, smoothing,
+explicit atomic main terms, joint signed cancellation and other
+kernels can escape this particular model. Keep the exact endpoint
+atoms in (LM5), the actual real parts and multiplicities, the
+original rational coefficient, the low head and all heights. The
+complete signed Robin estimate and RH remain unproved. These
+application calculations are paper-level and have no Lean
+verification or certified numerical starting clock.
+
 ### Scope of the Gaussian single-zero-sum formula
 
 Kamiya–Suzuki, *An asymptotic formula for a sum involving zeros of
@@ -3220,6 +3464,338 @@ error contribution, or the exact low head in (LM5). They are reused
 within their stated scope, without excluding a future weighted
 application or establishing the original Robin bound or RH.
 
+### A real-parameter heat integral transports the rational high response
+
+The exact real-parameter formula of Kamiya–Suzuki, Lemma 2.1, can
+also be used with a different kernel. Keep the original selected
+integer, $A,L,S$ and complete coefficient $F_A$. Reuse (RC2)–(RC4),
+the reciprocal-square zero count and the printed Gaussian formula;
+their source proofs are not repeated. This application pays a
+transport error, not the sign of the resulting prime expression.
+It makes no mathematical originality or Lean-verification claim.
+
+Put
+
+$$
+u_*=\frac{L}{S^2},\qquad
+\mathcal H(u,v)=\sum_\rho m_\rho e^{u\rho^2-v\rho},\qquad
+\mathcal H_{\le S}(u,v)=
+ \sum_{|\operatorname{Im}\rho|\le S}m_\rho e^{u\rho^2-v\rho}.
+$$
+
+These sums list distinct nontrivial zeros, with their actual
+multiplicities. Both conjugate signs of the ordinate are included.
+The head includes every zero at the cut. Work eventually with
+$L\ge2$, $S\ge H$ and $u_*\le1/16$; no numerical starting clock is
+certified. The head below $S$ includes unverified heights above $H$
+and is retained exactly.
+
+For an actual $\rho=\beta+i\gamma$,
+$\operatorname{Re}[\rho(1-\rho)]=\gamma^2+\beta(1-\beta)>0$.
+Consequently the elementary scalar resolvent identity gives
+
+$$
+\frac{A^{\rho-1/2}}{\rho(1-\rho)}
+=A^{-1/2}\int_0^\infty
+ e^{u\rho^2-(u-L)\rho}\,du.
+\tag{HR1}
+$$
+
+The Gaussian parameter $v=u-L$ is real throughout. No continuation
+of the printed lemma to complex $v$ is needed. Its fixed-parameter
+asymptotic theorem is not used in this moving range.
+
+For $|\gamma|>S$, the modulus of the normalized integrand in
+(HR1) is at most $\sqrt A e^{-u\gamma^2}$. Thus summation and
+integration are absolutely interchangeable, since
+$\sum_{\gamma>S}m_\rho/\gamma^2\ll\log S/S$. The entire discarded
+heat-time suffix, still summing every zero height, has allowance
+
+$$
+\begin{aligned}
+A^{-1/2}\int_{u_*}^\infty
+ \sum_{|\gamma|>S}m_\rho
+  |e^{u\rho^2-(u-L)\rho}|\,du
+&\le2\sqrt A\,e^{-u_*S^2}
+ \sum_{\gamma>S}\frac{m_\rho}{\gamma^2}\\
+&\ll A^{-1/2}\frac{\log S}{S}\longrightarrow0.
+\end{aligned}
+\tag{HR2}
+$$
+
+Here $e^{-u_*S^2}=A^{-1}$. This truncates heat time, not the zero
+height range. In particular every zero above the previously paid
+whole-response cut $T$ is included before this bound is applied.
+
+Write
+
+$$
+\mathcal G_u(t)=\frac{e^{-t^2/(4u)}}{\sqrt{4\pi u}},
+\qquad
+\mathcal D_{A,u_*}=A^{-1/2}\int_0^{u_*}
+ \left[A-\sum_{n\ge2}\Lambda(n)
+       \mathcal G_u(\log n-L+u)\right]du.
+\tag{HR3}
+$$
+
+The pole is centered at the same arithmetic clock as the primes.
+Indeed the continuous background is exactly
+
+$$
+\int_0^\infty\mathcal G_u(\log x-L+u)\,dx=A.
+$$
+
+Retain this difference as a combined signed expression; its
+definition gives no estimate for its sign or size. The integrated
+prime terms are not replaced by an average over other clocks.
+
+At $v=u-L$, the two pole terms in the literal source formula are
+$A+1$. Its first prime sum is precisely the one in (HR3). Its
+remaining terms contribute a vanishing allowance after multiplying
+by $A^{-1/2}$ and integrating over $0<u<u_*$. To see this using
+only the printed interfaces, its logarithmic archimedean term becomes
+
+$$
+\frac{e^{-u/4}}{2\pi}\int_{\mathbb R}
+ \log|1/4+it/2|\,e^{-ut^2+itL}\,dt.
+$$
+
+Since $|\log|1/4+it/2||\ll\log(2+|t|)$, its complete absolute
+integral over heat time is
+
+$$
+O\!\left(\int_0^{u_*}u^{-1/2}\log(2/u)\,du\right)
+=O\!\left(\sqrt{u_*}\log(2/u_*)\right)
+\longrightarrow0.
+$$
+
+The source's Lemma 3.1 gives
+$0\le(E*\mathcal G_u)(u-L)\le1$. Its convolution term and the
+constant pole $1$ together cost at most $2A^{-1/2}u_*$.
+The $\log\pi$ term and the second prime sum have allowance
+
+$$
+O\!\left(A^{-1/2}\sqrt{u_*}
+           e^{-L^2/(16u_*)}\right).
+$$
+
+For the second sum this follows from $L-u\ge L/2$ and
+$(L-u)/(2u)\ge1$:
+
+$$
+\sum_{n\ge2}\frac{\Lambda(n)}n
+ e^{-(u-L-\log n)^2/(4u)}
+\le e^{-L^2/(16u)}
+     \sum_{n\ge2}\frac{\log n}{n^2},
+$$
+
+where the last series is finite. All these terms retain the signs
+and coefficients of Lemma 2.1; only their absolute propagation
+is bounded. Because $S=A^{1/6}e^{-\kappa\Omega}$,
+$\sqrt{u_*}\log(2/u_*)=O(L^{3/2}/S)\to0$.
+
+No endpoint value at $u=0$ is substituted. For each fixed $A$,
+the Gaussian zero sum is integrable on this finite heat interval:
+the reciprocal-square count controls its high part, and its head is
+finite. All other source terms just bounded are integrable there.
+The nonnegative first prime sum is consequently integrable by the
+exact source identity; Tonelli then permits its prime summation and
+heat integral to be interchanged. This includes the case where $A$
+is exactly a prime power, without importing fixed-resonance
+asymptotics. Integrating the two pole terms separately to infinite
+heat time would diverge and is not used.
+
+Define the exact combined head
+
+$$
+\mathcal J_{\rm head}(A)=
+ \sqrt A L\,2\operatorname{Re}
+      \sum_{0<\gamma\le S}m_\rho F_A(\rho)
+ -(1+1/L)A^{-1/2}\int_0^{u_*}
+      \mathcal H_{\le S}(u,u-L)\,du.
+\tag{HR4}
+$$
+
+The finite subtraction belongs to the same zero multiset and
+clock; it is not an independently optimized head allowance.
+Combining (HR1)–(HR4) with the single coefficient comparison (RC2)
+gives the complete original response
+
+$$
+\boxed{
+\sqrt A L\,Z_{\rm orig}(A)
+=\mathcal J_{\rm head}(A)
+ +(1+1/L)\mathcal D_{A,u_*}+o(1).}
+\tag{HR5}
+$$
+
+More precisely, the absolute discrepancy is at most
+
+$$
+\frac{2(L+2)}{L^2}B_3(A,S)
+ +O\!\left(
+ A^{-1/2}\frac{\log S}{S}
+ +\sqrt{u_*}\log(2/u_*)
+ +A^{-1/2}u_*
+ +A^{-1/2}\sqrt{u_*}e^{-L^2/(16u_*)}
+ \right),
+\tag{HR6}
+$$
+
+which tends to zero by the already retained (RC4). All actual real
+parts, conjugate and reflected multiplicities, original coefficient
+errors and infinite zero heights are covered. No complex-v
+extension, GSS pointwise remainder or independent GSS endpoint
+allowance is used in this alternative transport.
+
+The nontrivial-zero contribution to the original $I_\psi$ is still
+$-Z_{\rm orig}$. Paying (G9) through (HR5) requires an upper bound for
+its combined right side, plus the positive elementary correction $r_A$
+defined after (G9) and an allowance for the signed discrepancy (HR6).
+The strict core at the same integer remains the one already proved.
+Neither $\mathcal D_{A,u_*}$ nor $\mathcal J_{\rm head}$ is bounded
+here by the required margin. In particular the head subtraction
+does not establish positivity or an estimate for the unverified
+head. The full original Robin bound and RH remain unproved.
+
+### The heat prime response has a paid finite arithmetic window
+
+The positive kernel in (HR3) permits an unconditional localization
+of its prime sum. This uses only $\Lambda(n)\le\log n$, the
+Gaussian bound below and the same $A,L,S,u_*$. It is an application
+estimate for this profile, not a new prime-distribution theorem,
+an originality claim or a Lean-verified result.
+
+For $0<U\le1/16$ and $d\in\mathbb R$, put
+
+$$
+K_U(d)=\int_0^U\mathcal G_u(d+u)\,du.
+$$
+
+Expanding the square inside the Gaussian gives
+
+$$
+0\le K_U(d)
+=e^{-d/2}\int_0^U
+ \frac{e^{-d^2/(4u)-u/4}}{\sqrt{4\pi u}}\,du
+\le\sqrt{U/\pi}\,e^{-d/2}e^{-d^2/(4U)}.
+\tag{HR7}
+$$
+
+For $A\ge e^2$, $L=\log A$ and any $D>0$, split the last
+Gaussian exponent into two equal parts. On $|d|>D$ one part is
+at most $e^{-D^2/(8U)}$. Consequently
+
+$$
+\sum_{|\log(n/A)|>D}\Lambda(n)K_U(\log(n/A))
+\ll\sqrt U\,e^{-D^2/(8U)}\sum_{n\ge2}f_{A,U}(n),
+$$
+
+where
+
+$$
+f_{A,U}(x)=\log x\,(A/x)^{1/2}
+ \exp\!\left[-\frac{(\log x-L)^2}{8U}\right],\qquad x\ge1.
+$$
+
+This nonnegative function vanishes at $1$ and at infinity and
+has just one maximum. Indeed, for $t=\log x>0$, its logarithmic
+derivative with respect to $t$ is
+$1/t-1/2-(t-L)/(4U)$, which is strictly decreasing from positive
+infinity to negative infinity. The elementary unimodal
+sum–integral comparison therefore gives
+
+$$
+\sum_{n\ge2}f_{A,U}(n)
+\le\int_1^\infty f_{A,U}(x)\,dx
+    +2\sup_{x\ge1}f_{A,U}(x).
+$$
+
+Write $d=\log x-L$. Completing the square first with
+$e^{-d/2}$ and then with $e^{d/2}$ gives, uniformly in the stated
+parameters,
+
+$$
+\sup_{x\ge1}f_{A,U}(x)
+\le e^{U/2}(L+2U+2\sqrt U)\ll L+1,
+$$
+
+$$
+\begin{aligned}
+\int_1^\infty f_{A,U}(x)\,dx
+&\le A e^{U/2}\int_{\mathbb R}
+ (L+|d|)e^{-(d-2U)^2/(8U)}\,dd\\
+&\ll A\sqrt U(L+1).
+\end{aligned}
+$$
+
+These comparisons account for the integer grid as well as the
+continuous background. Combining them with (HR7) proves the
+complete positive arithmetic tail bound
+
+$$
+\boxed{
+\sum_{|\log(n/A)|>D}\Lambda(n)K_U(\log(n/A))
+\ll (L+1)(AU+\sqrt U)e^{-D^2/(8U)}.}
+\tag{HR8}
+$$
+
+No prime powers outside the displayed window are dropped before
+this bound is applied, and no prime-counting asymptotic or average
+over $A$ is assumed.
+
+Now use the same $U=u_*=L/S^2$ as (HR1)–(HR6), and take
+
+$$
+D_*=4\sqrt{u_*L}=\frac{4L}{S},\qquad
+\mathcal W_A=\{n\ge2:Ae^{-D_*}\le n\le Ae^{D_*}\}.
+$$
+
+Keep both endpoints in this finite window. Define
+
+$$
+\mathcal D^{\rm loc}_{A,u_*}
+=A^{-1/2}\left[
+ Au_*-\sum_{n\in\mathcal W_A}\Lambda(n)
+       K_{u_*}(\log(n/A))\right].
+$$
+
+Since $e^{-D_*^2/(8u_*)}=A^{-2}$, (HR8) yields
+
+$$
+0\le\mathcal D^{\rm loc}_{A,u_*}-\mathcal D_{A,u_*}
+\ll(L+1)\left(\sqrt A\,u_*+
+ \frac{\sqrt{u_*}}{\sqrt A}\right)A^{-2}
+\longrightarrow0.
+\tag{HR9}
+$$
+
+The direction is relevant to Robin: removing the outside positive
+prime terms increases $\mathcal D$, hence gives an upper estimate
+for its contribution to $Z_{\rm orig}$ and a lower estimate for
+the corresponding contribution $-Z_{\rm orig}$ to $I_\psi$.
+The separate bound in (HR9) also pays the absolute discrepancy.
+Together with (HR5)–(HR6), it gives
+
+$$
+\sqrt A L\,Z_{\rm orig}(A)
+=\mathcal J_{\rm head}(A)
+ +(1+1/L)\mathcal D^{\rm loc}_{A,u_*}+o(1),
+\tag{HR10}
+$$
+
+with no discarded zero heights or unpaid arithmetic tail.
+
+The relative log window $D_*=4L/S$ tends to zero. Its continuous
+arithmetic width is asymptotic to $8AL/S$; this is a window at
+$A=\log N$, not a window at the original integer $N$. The weighted
+prime-power sum within it is still not estimated by the required
+signed margin. Nor is the exact unknown head in (HR4) paid by
+localization. The original selected-source joint estimate, strict
+core, all actual real parts and multiplicities remain unchanged,
+and RH remains unproved. All limits are eventual, with no
+certified numerical starting clock.
+
 ## Whole multiplicative sums do not control prescribed prime blocks
 
 Granville–Lamzouri, *Large values of exponential sums with
@@ -3267,3 +3843,2095 @@ The same selected integer, complete rational coefficient, actual zero
 real parts and multiplicities, exact low head and all remaining height
 ranges therefore retain their roles in (LM5) and (G9). The required
 joint signed estimate and RH remain unproved.
+
+
+### The same-source price minimum gives a nonnegative heat cost
+
+The existing unrestricted price pressure and selected-source contact
+can be transported into the real heat kernel (HR7). This application
+identifies the direction and scale of the resulting constraint. It
+reuses the pressure, derivative and limit in the
+[FIB theory volume, §98](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md),
+the actual tangent optimum (G1), and (HR1)–(HR10). It does not
+reprove those results or the
+[packet and cone theorems](../Analytic/mantovanelli2026primeworkload.md).
+No mathematical originality or Lean verification is claimed.
+
+Keep the same conditional least global Robin-ratio maximizer $N>5040$,
+$A=\log N$, $L=\log A$ and $U=L/S^2$. Write
+
+$$
+g(x)=\frac1{x\log x},\qquad
+q(x)=-g'(x)=\frac{\log x+1}{x^2(\log x)^2},
+$$
+
+$$
+\mathcal B(\epsilon)=\max_{m\ge1}
+ \{\log Z(m)-\epsilon\log m\},\qquad
+\mathcal P(x)=\gamma+\log\log x-g(x)x-\mathcal B(g(x)).
+$$
+
+Here $\mathcal P$ is the existing $\mathfrak D$, and $q$ is its
+positive derivative weight, not the price. Let
+$a_C(x)=\log C_x$ for an unrestricted optimum at price $g(x)$;
+ties may use either consistent prefix convention. Local finiteness
+of activation events and the existing pressure derivative give
+
+$$
+\mathcal P'(x)=q(x)[x-a_C(x)]\quad\hbox{almost everywhere},
+\qquad \mathcal P(x)\longrightarrow0.
+$$
+
+The selected $N$ attains the optimum at $g(A)$, so
+$\mathcal P(A)=\gamma+\log\log A-\log Z(N)$.
+Choose a fixed $x_0>1$ such that every optimum for $x\ge x_0$
+exceeds $5040$; it suffices that the first thirteen $2$-layers
+are strictly active. The actual global Robin maximum and the
+concavity tangent for $b(t)=\gamma+\log\log t$ imply
+
+$$
+0\le\mathcal P(x)-\mathcal P(A)\le c_A(x)
+\quad(x\ge x_0),\qquad
+c_A(x)=\log\log x-\log\log A+g(x)(A-x).
+\tag{PH1}
+$$
+
+For the lower inequality use the Robin comparison at this same
+$C_x$ and $b(a_C)\le b(x)+g(x)(a_C-x)$.
+For the upper inequality insert the same $N$ as a competitor in
+$\mathcal B(g(x))$. Concavity gives $c_A(x)\ge0$ for all $x>1$.
+The global comparison does not cover optima at most $5040$;
+their fixed interval is paid below, not included in (PH1).
+
+#### A positive kernel row with the correct atom
+
+Put $\ell=\log x$, $d=\log(x/A)$ and
+$a(\ell)=\ell^2/(\ell+1)$. The integrated Gaussian obeys, in
+the distributional sense on the $d$-line,
+
+$$
+K_U''(d)+K_U'(d)=\mathcal G_U(d+U)-\delta_0(d).
+$$
+
+Indeed, this is the heat equation integrated over $0<u<U$;
+the initial Gaussian is a unit atom. Its one-sided derivatives are
+
+$$
+K_U'(d)=
+\begin{cases}
+ \tfrac12e^{-d}\operatorname{erfc}((-d+U)/(2\sqrt U)),&d<0,\\
+ -\tfrac12e^{-d}\operatorname{erfc}((d-U)/(2\sqrt U)),&d>0.
+\end{cases}
+$$
+
+Thus the derivative jumps by $-1$ at $0$. Define
+
+$$
+h(x)=x\,a(\ell)K_U'(d),\qquad
+r(x)=a(\ell)\mathcal G_U(d+U)+a'(\ell)K_U'(d).
+$$
+
+Using one-sided values at $A$ gives the exact row identity
+
+$$
+dh=r(x)\,dx-Aa(L)\delta_A,
+\qquad
+\pi_{A,U}(dx)=\frac{r(x)}{Aa(L)}\,dx.
+\tag{PH2}
+$$
+
+The atom has coefficient $Aa(L)$, including the Jacobian
+$\delta_0(\log(x/A))=A\delta_A(x)$.
+For $d<0$ every term in $r$ is nonnegative. For $d>0$ put
+$t=(d-U)/(2\sqrt U)\ge-1/8$, using $U\le1/16$. Then
+
+$$
+\frac{-K_U'(d)}{\mathcal G_U(d+U)}
+ =\sqrt{\pi U}\,e^{t^2}\operatorname{erfc}(t)
+ \le5\sqrt U.
+$$
+
+For $t\ge0$ use $e^{t^2}\operatorname{erfc}(t)\le1$;
+for $-1/8\le t<0$ use $\operatorname{erfc}(t)\le2$ and
+$e^{t^2}\le e^{1/64}$. Since $x>A$, $L\ge2$ and
+
+$$
+\frac{a(\ell)}{a'(\ell)}
+ =\frac{\ell(\ell+1)}{\ell+2}\ge\frac32
+ >5\sqrt U,
+$$
+
+we again have $r\ge0$. Moreover $h(1+)=h(\infty)=0$;
+the Gaussian decay controls the latter endpoint. Integrating
+(PH2) therefore gives $\int_1^\infty r(x)\,dx=Aa(L)$.
+Consequently $\pi_{A,U}$ is an actual nonnegative probability
+measure on $(1,\infty)$, formed from the same $A$ and kernel.
+It is not an average over independently selected extremal integers.
+
+#### The arithmetic correction vanishes at the paid heat scale
+
+Write $\Delta(x)=\psi(x)-a_C(x)$, so
+
+$$
+\psi(x)-x=-\frac{\mathcal P'(x)}{q(x)}+\Delta(x).
+$$
+
+Only a crude uniform activation estimate is needed here.
+The first active prime layer differs from the cutoff $p\le x$
+only for $x-1<p\le x$: use
+$1/(p+1)<\log(1+1/p)<1/p$ in the activation rule.
+Every active higher layer satisfies $p^j\log p<x\log x$,
+so there are $O(\log x)$ layers and all their primes lie below
+$\sqrt{x\log x/\log2}$. With the elementary
+$\vartheta(t)\le t\log t$, the higher layers of $a_C$ and
+$\psi$ give the uniform bound
+
+$$
+|\Delta(x)|\ll\sqrt x\,[\log(2x)]^{5/2}\qquad(x>1).
+$$
+
+This estimate follows from activation, not from imposing GA1
+on every intervening CA prefix. In particular it uses neither
+a new source-selector theorem nor a square-root PNT error.
+For $d\ne0$, differentiating the integral defining $K_U$ and
+taking absolute values gives the almost-everywhere estimate
+
+$$
+e^{d/2}|K_U'(d)|
+\le\int_0^U
+ \left(\frac{|d|}{2u}+\frac12\right)
+ \mathcal G_u(d)e^{-u/4}\,du.
+$$
+
+Gaussian moments and $0<U\le1/16$ therefore imply
+
+$$
+\int_{\mathbb R}e^{d/2}(1+|d|)^{5/2}|K_U'(d)|\,dd
+ \ll\sqrt U.
+$$
+
+At $d=0$ use the one-sided jump in (PH2); differentiation under
+the integral there does not supply either one-sided derivative.
+
+After $x=Ae^d$, the complete arithmetic correction satisfies
+
+$$
+A^{-1/2}\left|\int_1^\infty\Delta(x)
+ \frac{K_U'(\log(x/A))}{x}\,dx\right|
+\ll(L+1)^{5/2}\sqrt U
+=O(L^3/S)\longrightarrow0.
+\tag{PH3}
+$$
+
+All actual prime powers are present in this comparison. No
+fixed-beta or zero-height simplification is made.
+
+#### Exact direction and the remaining upper requirement
+
+Stieltjes integration by parts in (HR3), including the interval
+$0<x\le1$, yields
+
+$$
+\mathcal D_{A,U}=A^{-1/2}
+ \left[\int_0^1K_U(\log(x/A))\,dx-K_U(-L)
+ +\int_1^\infty(\psi(x)-x)
+   \frac{K_U'(\log(x/A))}{x}\,dx\right].
+$$
+
+The first two terms have allowance
+$O(\sqrt U e^{-L^2/(4U)})$ by (HR7).
+For the pressure term, $1/(xq(x))=xa(\ell)$, so
+integration by parts with (PH2) gives
+
+$$
+-A^{-1/2}\int_1^\infty\mathcal P'(x)h(x)\,dx
+=\sqrt A\,a(L)\left[\int\mathcal P(x)\,\pi_{A,U}(dx)
+ -\mathcal P(A)\right].
+$$
+
+There are no pressure atoms at activation events: the existing
+pressure is continuous and locally absolutely continuous.
+Near $1$, $\mathcal B(g(x))=0$ and
+$\mathcal P(x)=\gamma+\log\ell-1/\ell$, while
+$a(\ell)=O(\ell^2)$ and $a'(\ell)=O(\ell)$.
+These facts justify the lower boundary and integrability.
+At infinity reuse $\mathcal P(x)\to0$ and Gaussian decay.
+
+Set the independently nonnegative cost
+
+$$
+V_{A,U}=\int_{x_0}^\infty
+ [\mathcal P(x)-\mathcal P(A)]\,\pi_{A,U}(dx)\ge0.
+$$
+
+The omitted fixed interval $1<x<x_0$ costs at most
+$O_{x_0}(U^{-1/2}e^{-(L-\log x_0)^2/(4U)})=o(1)$
+after multiplying by $\sqrt A a(L)$. To obtain this bound,
+use the preceding integrability at $1$, boundedness of
+$\mathcal P(A)$ from its existing limit, and the negative-$d$
+derivative formula. No small-prefix Robin comparison is used.
+Together with (PH3), this proves the specific transport
+
+$$
+\boxed{\mathcal D_{A,U}=\sqrt A\,a(L)V_{A,U}+o(1).}
+\tag{PH4}
+$$
+
+Combining with (HR5)–(HR10) retains the exact same-source head:
+
+$$
+\boxed{\sqrt A L Z_{\rm orig}
+ =\mathcal J_{\rm head}
+  +(1+1/L)\sqrt A\,a(L)V_{A,U}+o(1).}
+\tag{PH5}
+$$
+
+All actual zero real parts, multiplicities and heights remain
+as specified in those equations. In particular the unknown
+head above the verified height is not paid by (PH4).
+
+The existing support gap in (PH1) does give an upper allowance,
+but not one of Robin strength. Since $c_A(A)=0$ and
+$c_A'(x)=q(x)(x-A)$, (PH2) and integration by parts give
+
+$$
+\begin{aligned}
+0\le\sqrt A\,a(L)V_{A,U}
+&\le\sqrt A\,a(L)\int_1^\infty c_A(x)\,\pi_{A,U}(dx)\\
+&=A^{-1/2}\left[\int_1^\infty K_U(\log(x/A))\,dx
+ -(A-1)K_U(-L)\right]\\
+&\le\sqrt A\,U
+=L A^{1/6}e^{2\kappa\Omega}.
+\end{aligned}
+\tag{PH6}
+$$
+
+The final normalization uses the already fixed
+$S=A^{1/6}e^{-\kappa\Omega}$.
+The displayed allowance diverges. This is not a lower bound
+on the actual cost and does not rule out a sharper joint estimate.
+It is the same ceiling obtained by merely dropping positive
+prime terms in (HR3); the price constraint has not improved it.
+
+Thus the price minimum supplies $\mathcal D_{A,U}\ge-o(1)$.
+To apply (G9), retain the elementary correction $r_A>0$ defined there.
+Let $\varepsilon_{\rm PH5}(A)$ be the signed discrepancy in (PH5),
+so $\varepsilon_{\rm PH5}(A)=o(1)$ by (HR6), (PH3) and the fixed-prefix
+allowance. The exact complete response is
+
+$$
+-\sqrt A L\,I_\psi(A)
+=\mathcal J_{\rm head}
+ +(1+1/L)\sqrt A\,a(L)V_{A,U}
+ +r_A+\varepsilon_{\rm PH5}(A).
+$$
+
+Consequently the remaining joint target, equivalent to (G9), is
+
+$$
+\mathcal J_{\rm head}
+ +(1+1/L)\sqrt A\,a(L)V_{A,U}
+ +r_A+\varepsilon_{\rm PH5}(A)\le\mathcal E(L).
+$$
+
+For any proved allowance $\delta(A)\ge|\varepsilon_{\rm PH5}(A)|$,
+a sufficient upper estimate is
+
+$$
+\mathcal J_{\rm head}
+ +(1+1/L)\sqrt A\,a(L)V_{A,U}
+ \le\mathcal E(L)-r_A-\delta(A).
+$$
+
+The absolute allowance is sufficient, not necessary. Its constants
+have not been numerically certified at the selected finite clock.
+A vanishing discrepancy alone does not establish (G9) without enough
+signed slack; the strict core remains the one already proved.
+No such bound, numerical starting clock, unbounded sequence of
+selected sources, or proof of RH is established here. The
+nonnegative quantity is independently constructed; naming it
+does not prove that its size fits the available Robin budget.
+
+## An unconditional primary source already contains the full response coefficient
+
+Akatsuka, *Maximal order for divisor functions and zeros of the Riemann
+zeta-function*, [arXiv:2411.19259v1](https://arxiv.org/abs/2411.19259v1),
+Proposition 4.4, printed p.15, supplies an unconditional explicit formula
+at divisor-weight exponent $1$. Write $\nu$ for the paper's $\kappa$;
+this exponent is distinct from the moving-cut constant used above.
+This application reuses that proposition and the project's existing
+finite-tail identity; it does not reprove the explicit formula or claim
+new mathematical content. The selected source statements, exponential
+integral convention and parameter correspondence were inspected, not
+the complete source proofs or a Lean implementation.
+
+Let $P(X)=\sum_{2\le n\le X}\Lambda(n)/(n\log n)$, using the
+prime-power cutoff rather than the full Euler-product logarithm.
+Equations (4.9) and (4.11) give
+
+$$
+P(X)-\frac{\psi(X)-X}{X\log X}
+=\log\log X+\gamma+Z_{\rm Ak}(1;X)+R_{\rm Ak}(1;X),
+$$
+
+where
+
+$$
+Z_{\rm Ak}(1;X)=-\sum_\rho\left[
+ \operatorname{Ei}((\rho-1)\log X)
+ -\frac{X^{\rho-1}}{\rho\log X}\right],
+$$
+
+$$
+R_{\rm Ak}(1;X)=\frac{\zeta'(0)}{\zeta(0)X\log X}
+-\sum_{k\ge1}\left[
+ \frac{X^{-2k-1}}{2k\log X}
+ +\operatorname{Ei}(-(1+2k)\log X)\right].
+$$
+
+The zeros retain their actual complex values and multiplicities.
+The exponential integral defined immediately before Proposition 4.4
+uses the cut $[0,\infty)$ and the horizontal integral from left infinity.
+That convention matters: adding a lateral $i\pi$ constant would change
+the individual coefficient and its absolute-convergence statement.
+
+For the existing $A=\log N$, $L=\log A$, write (M1) in the source's
+convention:
+
+$$
+F_A(s)=\frac{A^{s-1}}{sL}-\operatorname{Ei}((s-1)L),
+\qquad 0<\Re s<1.
+$$
+
+This is the defining integral in the source's convention: the endpoint
+term at infinity vanishes in this strip. Thus
+$Z_{\rm Ak}(1;A)=Z_{\rm orig}$ with the **complete** $F_A$,
+without replacing it by a leading asymptotic term or moving zeros onto
+the critical line. Substitution into the existing finite-tail identity
+retains the other explicit terms as well:
+
+$$
+I_\psi(A)=-Z_{\rm Ak}(1;A)-R_{\rm Ak}(1;A).
+$$
+
+The source's maximal-order Theorem 1 concerns fixed
+$\nu\in[1/2,1)$; its boundedness condition is equivalent to the stated
+zero-free half-plane, not an unconditional upper estimate. Definition
+2.1 optimizes $\sigma_\nu(n)/n^{\nu(1+\varepsilon)}$, so its
+half-power extremum is not identified with the selected ordinary Robin
+extremum. Lemma 4.5 gives $O_\nu$ bounds only for $0<\nu<1$;
+it supplies neither a uniform limit as $\nu\to1$ nor the missing signed
+bound at exponent $1$. The formula above is an available primary
+representation of the original response. The required same-source
+upper bound on $Z_{\rm Ak}(1;A)+R_{\rm Ak}(1;A)$, equivalently the
+original lower bound on $I_\psi(A)$, remains unproved, as do the strict
+Robin margin and RH.
+
+## Quantitative Tauberian hypotheses for the complete response
+
+Pierce, Turnage-Butterbaugh and Zaman, *A guide to Tauberian theorems for arithmetic applications*, [arXiv:2504.16233v4](https://arxiv.org/html/2504.16233v4), §2.3, Hypothesis B and Theorem B, give a quantitative result for a general Dirichlet series $D(s)=\sum_j a_j\lambda_j^{-s}$ with nonnegative coefficients. Write their parameters as $\alpha_{\rm T}>0$, $0<\delta_{\rm T}<\alpha_{\rm T}$, $k_{\rm T}>0$ and $m\ge1$ for the quoted positive-growth version, to distinguish them from the FIB atoms and the moving-cut parameter. Hypothesis B permits $k_{\rm T}=0$ as well. Its assumptions require analytic continuation throughout $\Re s\ge\alpha_{\rm T}-\delta_{\rm T}$ except for the pole of order $m$ at the single real point $\alpha_{\rm T}$, the strip bound
+
+$$
+|(s-\alpha_{\rm T})^mD(s)|\le M_1\exp(|s|^{M_2}),\qquad
+\alpha_{\rm T}-\delta_{\rm T}\le\Re s\le\alpha_{\rm T},
+$$
+
+and, on the left boundary, a uniform bound
+
+$$
+|D(s)|\le C(1+|\Im s|)^{k_{\rm T}}
+ (\log(3+|\Im s|))^{m-1}.
+$$
+
+Under these hypotheses, for $X\ge2$,
+
+$$
+\sum_{\lambda_j\le X}a_j
+=\operatorname*{Res}_{s=\alpha_{\rm T}}\frac{D(s)X^s}{s}
++O\!\left(X^{\alpha_{\rm T}-\delta_{\rm T}/(k_{\rm T}+1)}
+ (\log X)^{m-1}\right).
+$$
+
+The implied constant depends on $\alpha_{\rm T},\delta_{\rm T},k_{\rm T},m,C,D(\alpha_{\rm T}+\delta_{\rm T})$, and is independent of $M_1,M_2$. Remark 9.3.1 gives the $k_{\rm T}=0$ version with remainder $O(X^{\alpha_{\rm T}-\delta_{\rm T}}(\log X)^m)$. The parameters are fixed; applying the result to a changing family requires controlling this dependence. In particular, the stated saving is $\delta_{\rm T}/(k_{\rm T}+1)$, rather than a saving of $\delta_{\rm T}$ from analytic continuation alone.
+
+Theorems B.4–B.5 supply limiting examples for $k_{\rm T}>1/2$: general Dirichlet series satisfying Hypothesis B can have a remainder of size $\Omega(X^{\alpha_{\rm T}-\delta_{\rm T}/(k_{\rm T}+1/2)}(\log X)^{m-1})$, including examples with $0\le a_j\le1$. These examples do not identify the exact optimum between the two displayed exponents. The B.4 construction can use integer frequencies when $(k_{\rm T}+1/2)/\delta_{\rm T}$ is a positive integer. The B.5 bounded-coefficient construction uses general real frequencies without giving this integer-frequency guarantee. Neither result asserts a counterexample for the Riemann zeta function or the selected Robin integer.
+
+For the direct prime-counting series $D(s)=-\zeta'(s)/\zeta(s)$, $\lambda_j=j$, $a_j=\Lambda(j)$ and $\alpha_{\rm T}=m=1$. Each actual zeta zero in the proposed half-plane is an additional pole, so the single-pole hypothesis must be verified for all heights. A finite zero subtraction supplies no such verification for the remaining zeros. Applying Theorem B to a resulting remainder also requires a proved nonnegative-coefficient representation and the stipulated uniform growth bounds; none is supplied by this source application.
+
+The same conditional least integer $N>5040$ attaining the global Robin-ratio maximum remains fixed, with $A=\log N>10^{36}$ and $L=\log A$. The original complete $\sqrt A\,L\,I_\psi(A)$ lower allowance, or equivalently the full zero-plus-remainder upper allowance above, has not been obtained from these hypotheses. The actual zero real parts and multiplicities, every height, all remaining explicit terms and the strict core remain present. The published theorem and examples are reused without reconstructing their proofs; this applicability check supplies neither a new prime-error estimate nor a Robin/RH proof.
+
+## A bounded-shape Gamma mixture retains an original coefficient remainder
+
+Balanzario, Cárdenas Romero and Chacón Serna,
+*A smooth version of Landau's explicit formula*,
+[arXiv:2311.04347v1](https://arxiv.org/abs/2311.04347v1),
+Theorem 1, supplies the Gamma density
+
+$$
+w_{\alpha,\lambda}(x)
+=\frac{x^{\alpha-1}e^{-x/\lambda}}{\lambda^\alpha\Gamma(\alpha)},
+\qquad
+G_{\alpha,\lambda}(s)
+=\lambda^{s-1}\frac{\Gamma(\alpha+s-1)}{\Gamma(\alpha)}.
+$$
+
+For $\alpha,\lambda>0$, $\alpha\notin\mathbb N$ and
+$\mu=\alpha\lambda$, the stated formula is
+
+$$
+\sum_{n\ge1}\Lambda(n)w_{\alpha,\lambda}(n)
+=1-\sum_\rho m_\rho G_{\alpha,\lambda}(\rho)-R(\mu,\alpha).
+$$
+
+This statement has no RH premise. The source defines $R$ by two separate
+series involving falling factorials and $\zeta'/\zeta$; those terms
+remain present, with no assumed sign or uniform budget. Its Theorem 2,
+which gives a finite-ordinate formula near a natural-number center
+$\mu$, assumes RH and fixes its window parameters. That truncated
+formula is not an unconditional supplier at $A=\log N$.
+
+The existing algebraic lower bound (H2) also specifies a restriction on
+exact replacement by these Gamma coefficients. Fix $A\ge e^2$ and a
+finite $B>0$. Let $\nu_A$ be a locally finite signed or complex measure on
+
+$$
+\{(\alpha,\lambda):0<\alpha\le B,
+\ \alpha\notin\mathbb N,\ \lambda>0\}
+$$
+
+which is fixed as the zero height varies, and assume only the critical-line
+absolute moment
+
+$$
+M_A=\int\lambda^{-1/2}\,d|\nu_A|(\alpha,\lambda)<\infty.
+$$
+
+This does not require finite total mass or moments at the endpoints of
+the critical strip. Set
+
+$$
+Q_A(1/2+it)=\int G_{\alpha,\lambda}(1/2+it)
+                         \,d\nu_A(\alpha,\lambda),\qquad t\ne0.
+$$
+
+The standard vertical-line Stirling formula,
+[DLMF 5.11.9](https://dlmf.nist.gov/5.11.E9), is uniform for bounded real
+arguments. Here $\alpha-1/2\in[-1/2,B-1/2]$ and
+$1/\Gamma(\alpha)$ is bounded for $0<\alpha\le B$. Consequently,
+for a constant $C_B$ and sufficiently large $|t|$,
+
+$$
+|Q_A(1/2+it)|
+\le C_BM_A|t|^{B-1}e^{-\pi|t|/2}.
+$$
+
+In contrast, (H2) on this same line gives, for $|t|\ge4$,
+
+$$
+|F_A(1/2+it)|
+\ge\frac{2w(A)}{3\sqrt A(t^2+1/4)},
+\qquad w(A)=\frac{1+\log A}{(\log A)^2}.
+$$
+
+Exponential decay is eventually smaller than this algebraic bound.
+Hence there is a threshold depending on $A,B,M_A$ such that
+
+$$
+|F_A(1/2+it)-Q_A(1/2+it)|
+\ge\frac{w(A)}{3\sqrt A(t^2+1/4)}
+$$
+
+above that threshold. There are unconditionally infinitely many actual
+critical-line zeros, as recalled in
+[DLMF §25.10(i)](https://dlmf.nist.gov/25.10.i).
+Thus the mismatch occurs at actual zeros of arbitrarily large height;
+it is not merely an off-spectrum difference on the whole strip. Their
+positive multiplicities do not remove the coefficient difference.
+
+This applies even to infinitely many scales and to complex mixture
+weights under the stated absolute moment. It reuses (H2), uniform
+Stirling and the classical critical-line zero theorem; no new version
+of those results or mathematical originality is claimed. Shapes and
+weights may depend on $A$, but their bound is fixed at each such $A$.
+The conclusion concerns exact coefficient matching at every actual zero.
+It does not give a sign for a paired residual or exclude equality of an
+aggregate signed sum, unbounded shape support, nonabsolute constructions,
+or approximation on a finite height range with a paid remainder.
+In particular the original suffix above $T$ is already paid independently;
+this restriction does not invalidate that transport or prohibit a useful
+approximation of its lower head. The complete same-selected-source signed
+Robin estimate and RH remain unproved. This application is not Lean
+verified.
+
+
+## Uniform control of the combined Gamma remainder
+
+The two remainder series in Balanzario, Cárdenas Romero and Chacón
+Serna, [arXiv:2311.04347v1](https://arxiv.org/abs/2311.04347v1),
+Theorem 1, need not be integrated separately. Their combined remainder
+has a uniform bound under the existing canonical scale measure. The
+following is a `repo-derived` paper-level application of that theorem, the classical
+explicit formula displayed as equation (1) in the same source, the
+existing coefficient estimate (H5), and unconditional PNT bounds. It
+does not reconstruct those source proofs or claim mathematical
+originality or Lean verification.
+
+Let $A\ge e^2$, $L=\log A$, and retain (M2):
+
+$$
+h_A(\mu)=\frac1{\max(A,\mu)\log\max(A,\mu)},\qquad
+k(u)=\frac{1+\log u}{u^2\log^2u}.
+$$
+
+For noninteger $\alpha\ge4$, write the source's prime response as
+
+$$
+P_\alpha(\mu)=\sum_{n\ge1}\Lambda(n)
+ \frac{(\alpha/\mu)^\alpha n^{\alpha-1}e^{-\alpha n/\mu}}
+      {\Gamma(\alpha)}
+=1-\sum_\rho m_\rho G_{\alpha,\mu/\alpha}(\rho)
+ -R(\mu,\alpha).
+$$
+
+The sum indexes distinct zero locations, and $m_\rho$ carries their
+actual multiplicities. No zero is moved to the critical line. Define
+
+$$
+\overline R_\alpha(A)
+ =\int_0^\infty h_A(\mu)R(\mu,\alpha)\,d\mu,
+\qquad
+M_3(\alpha)=\frac{\alpha^3}
+ {(\alpha-1)(\alpha-2)(\alpha-3)}.
+$$
+
+This integral exists absolutely for each such $\alpha$. There is an
+absolute constant $K$, independent of both $A$ and $\alpha$, for which
+
+$$
+\boxed{
+\left|\overline R_\alpha(A)
+ -\frac{\log(2\pi)}{A\log A}\frac{\alpha}{\alpha-1}\right|
+ \le\frac{K M_3(\alpha)}{A^3\log A}.}
+\tag{GR1}
+$$
+
+Since $M_3(\alpha)\le32/3$ and $\alpha/(\alpha-1)\le4/3$,
+this is uniform even when the noninteger shape grows with $A$ or
+approaches an integer. In particular,
+
+$$
+\sqrt A\log A\,\overline R_\alpha(A)
+ =\frac{\log(2\pi)}{\sqrt A}\frac{\alpha}{\alpha-1}
+  +O(A^{-5/2})\longrightarrow0
+\tag{GR2}
+$$
+
+uniformly over the stated shapes. The constant is not numerically
+certified; no finite starting clock follows.
+
+### Convergence and the dilation representation
+
+Put $D(x)=\psi(x)-x$. Reuse an unconditional PNT bound in the global
+form
+
+$$
+|D(x)|\le C_\psi\frac{x}{\log^2(2+x)}\qquad(x>0).
+\tag{GR3}
+$$
+
+An absolute $C_\psi$ exists by PNT with a fixed logarithmic saving,
+with the bounded initial interval absorbed into the constant. This is
+not a square-root prime-error estimate. Integration by parts against
+the fixed-shape Gamma density, splitting its argument at $\sqrt\mu$,
+gives $P_\alpha(\mu)-1=O_\alpha((\log\mu)^{-2})$ at infinity.
+At zero, $P_\alpha(\mu)=O_\alpha(\mu^{-\alpha}e^{-\alpha/\mu})$.
+Consequently $h_A(1-P_\alpha)$ is absolutely integrable. These
+convergence constants may depend on the fixed shape; they are not used
+as the uniform constants in (GR1).
+
+For fixed $\alpha$, vertical-line Stirling gives exponential decay of
+the Gamma coefficient. Moreover (M2) implies, for $0<\beta<1$,
+
+$$
+F_A(\beta)\le\frac{A^{\beta-1}}L
+ \left(\frac1\beta+\frac1{1-\beta}\right).
+$$
+
+The already cited zero-free region and its reflection bound the two
+reciprocal endpoint distances by powers of logarithms of the ordinate.
+Together with the classical zero count this makes
+
+$$
+\sum_\rho m_\rho\int_0^\infty h_A(\mu)
+ |G_{\alpha,\mu/\alpha}(\rho)|\,d\mu<\infty.
+$$
+
+The source identity therefore proves absolute convergence of the
+combined $\overline R_\alpha(A)$, without integrating either printed
+remainder series term by term. It also justifies
+
+$$
+\overline R_\alpha(A)
+ =J_\alpha(A)-\sum_\rho m_\rho H_\alpha(\rho)F_A(\rho),
+\quad
+J_\alpha(A)=\int_0^\infty h_A(\mu)(1-P_\alpha(\mu))\,d\mu,
+\tag{GR4}
+$$
+
+where the existing coefficient identity is
+$H_\alpha(s)=\Gamma(\alpha+s-1)/[\Gamma(\alpha)\alpha^{s-1}]$.
+The constant pole and the prime response have been kept together.
+
+Let $C>0$ have Gamma shape $\alpha$ and rate $\alpha$, so its mean is
+one. The source primitive and its negative moments are
+
+$$
+U_\alpha(\mu)=\mathbb E\frac{\psi(C\mu)}C,
+\qquad U_\alpha'(\mu)=P_\alpha(\mu),
+\qquad
+\mathbb E C^{-1}=\frac{\alpha}{\alpha-1},
+\quad \mathbb E C^{-3}=M_3(\alpha).
+$$
+
+The derivative follows by differentiating the Gamma integral for each
+prime-power jump. Thus integration by parts gives
+
+$$
+J_\alpha(A)=\mathbb E J_C(A),\qquad
+J_c(A)=-\frac1c\int_A^\infty D(cu)k(u)\,du.
+\tag{GR5}
+$$
+
+Here the exchange is an absolute one. For $u\ge A$, (GR3) and the
+split $C\ge u^{-1/2}$ or $C<u^{-1/2}$ give
+
+$$
+\mathbb E\frac{|D(Cu)|}C
+ \le C_\psi u\left[\frac4{\log^2u}
+       +\frac{M_3(\alpha)u^{-3/2}}{(\log2)^2}\right].
+$$
+
+Multiplication by $k(u)$ is integrable. The same bound pays the
+integration-by-parts boundary at infinity; the boundary at zero
+vanishes by $|D(x)|\ll x$. No separate infinite-mass integral of the
+pole term has been taken.
+
+### A bound valid on both sides of the unit cutoff
+
+For each $c>0$, define the absolutely convergent zero sum and its
+arithmetic remainder
+
+$$
+Z_c(A)=\sum_\rho m_\rho c^{\rho-1}F_A(\rho),\qquad
+r_c(A)=J_c(A)-Z_c(A).
+$$
+
+The existing (H5) and $\sum_\rho m_\rho/\gamma^2<\infty$ give
+
+$$
+|Z_c(A)|\le\sum_\rho m_\rho |c^{\rho-1}F_A(\rho)|
+ \le\frac{C_0}L\max\{1,(cA)^{-1}\}.
+\tag{GR6}
+$$
+
+If $cA\ge1$, applying the classical explicit formula to (GR5) gives
+
+$$
+r_c(A)=\frac{\log(2\pi)}{cA L}
+ +\frac12\int_{cA}^\infty\log(1-x^{-2})
+ \frac{1+\log(x/c)}{x^2\log^2(x/c)}\,dx.
+\tag{GR7}
+$$
+
+Take finite scale endpoints first and use the existing finite-endpoint
+bound (U2), then dominated convergence for the zero coefficients. The
+prime-power half-value convention changes no integral.
+At $cA=1$ the logarithmic singularity is integrable. For $1\le cA\le2$,
+use
+
+$$
+\int_1^\infty\frac{-\log(1-x^{-2})}{x^2}\,dx
+ =2-2\log2<1.
+$$
+
+For $cA\ge2$, use $-\log(1-x^{-2})\le4/(3x^2)$.
+Since $\log(x/c)\ge L$, both ranges give
+
+$$
+\left|r_c(A)-\frac{\log(2\pi)}{cA L}\right|
+ \le\frac{K_1}{(cA)^3L}\qquad(cA\ge1).
+\tag{GR8}
+$$
+
+For $cA<1$, do not extend the explicit formula below one. There
+$D(x)=-x$. Substitution $x=cu$ in (GR5) and direct integration over
+$[cA,1]$ give, with $d=-\log(cA)>0$,
+
+$$
+\int_{cA}^1\frac{1+\log(x/c)}{x\log^2(x/c)}\,dx
+ =\log(1+d/L)+\frac1L-\frac1{L+d}
+ \le\frac{d+1}L\le\frac2{cA L}.
+$$
+
+On $x\ge1$, (GR3) bounds the remaining absolute integral by
+
+$$
+\frac{C_1}L\int_1^\infty\frac{dx}{x\log^2(2+x)}
+ \le\frac{C_2}L.
+$$
+
+Together with (GR6), this yields
+$|r_c(A)|\le C_3/(cA L)$. Because $(cA)^{-1}\le(cA)^{-3}$ in this
+range, (GR8), with a larger absolute constant, holds for every $c>0$.
+This pays the entire small-scale contribution, including $cA<1$.
+
+Finally, $\mathbb E C^{\rho-1}=H_\alpha(\rho)$.
+Equation (GR6) and $\mathbb E C^{-1}<\infty$ justify averaging the
+complete zero series. Equations (GR4)–(GR5) therefore give
+$\overline R_\alpha(A)=\mathbb E r_C(A)$. Average (GR8) and use the
+exact inverse-third moment to obtain (GR1).
+
+The result bounds the combined source remainder, not its individual
+series. It adds no Gamma coefficient approximation or replacement for
+the existing complete Gaussian transport. At the same conditional
+least global Robin maximizer $N>5040$, $A=\log N>10^{36}$, the full
+centered prime response and any signed comparison of
+$H_\alpha(\rho)F_A(\rho)$ with the original $F_A(\rho)$ still require
+control. All actual zeros, multiplicities, heights, original pole and
+trivial terms, and the strict core remain present. The complete signed
+Robin estimate and RH remain unproved.
+
+
+## A directed prime-weight comparison for the complete Gamma response
+
+The combined-remainder estimate (GR1) can be paired with a one-sided
+arithmetic comparison. This `repo-derived` application uses the same
+canonical measure (M2), nonnegative von Mangoldt weights, the standard
+unconditional Chebyshev bound, and the Gamma law already used in
+(GR4)–(GR5). It does not replace the original coefficient by a pointwise
+approximation or claim mathematical originality or Lean verification.
+
+Keep $A\ge e^2$, $L=\log A$ and noninteger $\alpha\ge4$. Let $C$ have
+Gamma shape $\alpha$ and rate $\alpha$, and put
+
+$$
+h_A(t)=\frac1{\max(A,t)\log\max(A,t)},\qquad
+w_c(t)=\frac1c h_A(t/c),\qquad
+\Delta_\alpha(t)=\mathbb E w_C(t)-h_A(t).
+$$
+
+The resulting complete signed comparison is
+
+$$
+\boxed{
+-I_\psi(A)\le J_\alpha(A)
+ +\frac{\psi(A)}{(\alpha-1)A\log A}.}
+\tag{GP1}
+$$
+
+Here $J_\alpha$ is the centered prime response in (GR4), not the
+uncentered integral of its pole or prime terms. No source extremality
+assumption is needed for (GP1); it therefore applies at the same
+selected Robin integer without changing that integer.
+
+### A global tangent majorant on the infinite prime tail
+
+Fix $t\ge A$ and write $s=t/A\ge1$, $v=\log t$. As a function of the
+dilation $c>0$, the transported prime weight is
+
+$$
+f_t(c)=w_c(t)=
+\begin{cases}
+ [t(v-\log c)]^{-1},&0<c\le s,\\
+ (A L c)^{-1},&c\ge s.
+\end{cases}
+$$
+
+On $0<c<s$,
+
+$$
+f_t''(c)=\frac{2-(v-\log c)}
+ {t c^2(v-\log c)^3}\le0,
+$$
+
+because $v-\log c\ge L\ge2$. Thus its tangent at $c=1$ majorizes
+the first branch:
+
+$$
+f_t(c)\le \frac1{tv}+\frac{c-1}{tv^2}\qquad(0<c\le s).
+$$
+
+The same affine function is increasing and majorizes $f_t(s)$. The
+second branch decreases for $c\ge s$, so this is a global majorant,
+even though $f_t$ is not globally concave. At $s=1$ use the left
+tangent and the same argument. Since $\mathbb EC=1$, averaging gives
+
+$$
+\Delta_\alpha(t)\le0\qquad(t\ge A).
+\tag{GP2}
+$$
+
+For $0<t<A$, $h_A(t)=1/(A L)$ and $h_A(t/c)\le1/(A L)$.
+The existing inverse-first Gamma moment therefore gives
+
+$$
+\Delta_\alpha(t)\le
+ \frac{\mathbb EC^{-1}-1}{A L}
+ =\frac1{(\alpha-1)A L}.
+\tag{GP3}
+$$
+
+### Centering and absolute convergence of the full prime difference
+
+The pole and prime integrals are not subtracted as separate infinite
+quantities. First fix $c>0$ and set $T=A\max(1,c)$. Reuse a fixed
+unconditional bound $\psi(x)\le Bx$. Below $T$, the absolute
+prime-weight difference is bounded by
+
+$$
+\sum_{n\le T}\Lambda(n)|w_c(n)-h_A(n)|
+\le\frac{B}{L}(1+c^{-1})\max(1,c).
+$$
+
+For $n>T$ both weights use their logarithmic branch, and
+
+$$
+|w_c(n)-h_A(n)|
+ =\frac{|\log c|}{n\log n\,\log(n/c)}
+ \le\frac{|\log c|(1+|\log c|/L)}{n\log^2n}.
+$$
+
+Partial summation with the same Chebyshev bound gives
+$\sum_{n>T}\Lambda(n)/(n\log^2n)\le2B/L$. Since
+$|\log c|+(\log c)^2\ll c+c^{-1}$, these estimates yield an absolute
+constant $B_1$ such that
+
+$$
+\sum_{n\ge2}\Lambda(n)|w_c(n)-h_A(n)|
+ \le\frac{B_1}{L}(c+c^{-1}).
+\tag{GP4}
+$$
+
+The analogous Lebesgue integral is also absolutely convergent.
+Changing variables in finite integrals shows
+
+$$
+\int_0^\infty(w_c(t)-h_A(t))\,dt=0:
+$$
+
+for sufficiently large $R$, the difference of integrals up to $R$
+is $\log\log(R/c)-\log\log R$, which tends to zero. Integration by
+parts against $D(t)=\psi(t)-t$, using (GR3) at infinity and $D(t)=-t$
+below one, therefore gives
+
+$$
+J_1(A)-J_c(A)
+ =\sum_{n\ge2}\Lambda(n)[w_c(n)-h_A(n)],
+\qquad J_1(A)=-I_\psi(A).
+$$
+
+The $J_c$ here is the deterministic dilation in (GR5); $J_1$ is its
+value at dilation one, not a Gamma response with shape one. All
+boundary terms vanish. Equation (GP4), $\mathbb EC=1$ and
+$\mathbb EC^{-1}<\infty$ justify averaging and termwise summation.
+Reusing (GR5) yields the absolutely convergent identity
+
+$$
+-I_\psi(A)-J_\alpha(A)
+ =\sum_{n\ge2}\Lambda(n)\Delta_\alpha(n).
+\tag{GP5}
+$$
+
+Apply (GP2) to the entire infinite tail, (GP3) to the finite lower
+part, and $\Lambda(n)\ge0$ to prove (GP1). An atom at $n=A$ has the
+nonpositive sign in (GP2); using $\psi(A)$ in the upper allowance
+remains valid.
+
+### Pay the remainder and retain the original signed target
+
+Define the complete real zero response
+
+$$
+Z_\alpha(A)=\sum_\rho m_\rho H_\alpha(\rho)F_A(\rho),
+\qquad
+H_\alpha(s)=\frac{\Gamma(\alpha+s-1)}
+ {\Gamma(\alpha)\alpha^{s-1}}.
+$$
+
+Its absolute convergence and reality under conjugate pairing follow
+from the existing fixed-shape argument in (GR4). No zero real part,
+multiplicity or height is changed. Since
+$J_\alpha=Z_\alpha+\overline R_\alpha$, (GR1) and (GP1) give
+
+$$
+\boxed{\begin{aligned}
+\sqrt A L[-I_\psi(A)]\le{}&\sqrt A L Z_\alpha(A)
+ +\frac{\psi(A)}{(\alpha-1)\sqrt A}\\
+&+\frac{\log(2\pi)}{\sqrt A}\frac\alpha{\alpha-1}
+ +\frac{K M_3(\alpha)}{A^{5/2}}.
+\end{aligned}}
+\tag{GP6}
+$$
+
+This is a directed bound for the original full response, with a paid
+finite prime budget and the complete combined remainder. It is not an
+absolute coefficient approximation, a bound on the sum of coefficient
+moduli, or a deletion of the original explicit-formula terms.
+
+For shapes with $\alpha(A)/\sqrt A\to\infty$, the added allowance in
+(GP6) tends to zero by the existing PNT bound. This gives a sufficient
+transfer from a full signed Gamma-response upper estimate to (G9),
+provided the estimate has enough slack to pay the displayed allowance.
+The signed upper estimate on $Z_\alpha(A)$ is not established here.
+At the same conditional least global Robin maximizer $N>5040$,
+$A=\log N>10^{36}$, the original strict core, complete infinite
+response and target remain unchanged. Neither (G9) nor RH is proved.
+
+
+## An explicit one-sided bound for the combined Gamma remainder
+
+For finite source clocks, the absolute constant in (GR1) need not be
+assigned an unproved numerical value. The following upper bound instead
+uses the existing finite-height verification and zero-count constants in
+[(F3) of the Polak application](../Analytic/polak2026finiterobinca.md#reusing-the-complete-residual-envelope),
+together with (U2), (GR5) and (GR7). These inputs are reused without a new
+zero computation or reconstruction of their source proofs.
+
+Put $H=3\cdot10^{12}$, and let every zero sum retain the full actual
+nontrivial-zero multiset, with multiplicities. Write
+
+$$
+c_0=2+\gamma-\log(4\pi)<0.05,\qquad
+S_2(H)=\sum_{\Im\rho>H}\frac{m_\rho}{(\Im\rho)^2}
+ <1.48\cdot10^{-12}.
+$$
+
+The same sources supply criticality up to $H$ and the classical identity
+$\sum_\rho m_\rho/[\rho(1-\rho)]=c_0$.
+For $\rho=\beta+i\gamma$ in the critical strip,
+
+$$
+\Re\frac1{\rho(1-\rho)}
+=\frac{\gamma^2+\beta(1-\beta)}{|\rho(1-\rho)|^2}>0.
+$$
+
+On the verified head the denominator is the positive real number
+$\gamma^2+1/4$. On the remaining zeros,
+$|\rho||1-\rho|\ge\gamma^2$.
+Consequently the complete absolute weight obeys
+
+$$
+\mathcal C_\zeta:=\sum_\rho
+ \frac{m_\rho}{|\rho||1-\rho|}
+\le c_0+2S_2(H)<0.051.
+\tag{GE1}
+$$
+
+The factor two accounts for the two ordinate signs, not an additional
+independently chosen zero population.
+
+Keep $A\ge e^2$ and $L=\log A$. For the same deterministic dilation
+$r_c(A)=J_c(A)-Z_c(A)$ in (GR5)–(GR7), one has the uniform upper bound
+
+$$
+\boxed{r_c(A)<\frac5{cAL}\qquad(c>0).}
+\tag{GE2}
+$$
+
+If $cA\ge1$, (GR7) immediately gives
+$r_c(A)\le\log(2\pi)/(cAL)<2/(cAL)$, since its logarithmic integral
+is nonpositive. This includes the integrable endpoint $cA=1$.
+
+If $cA<1$, put $B=1/c>A$ and $d=\log(B/A)>0$.
+Since $\psi(cu)-cu=-cu$ on $A<u<B$, (GR5) gives exactly
+
+$$
+r_c(A)=\log(1+d/L)+\frac1L-\frac1{L+d}
+ +r_c(B)-\sum_\rho m_\rho c^{\rho-1}F_{A,B}(\rho).
+\tag{GE3}
+$$
+
+The initial elementary term is at most $2/(cAL)$, as already computed
+in the proof of (GR8). At $cB=1$, (GR7) gives
+$r_c(B)<2/\log B\le2/(cAL)$.
+The finite-endpoint bound (U2), (GE1) and
+$(cA)^{\beta-1}\le(cA)^{-1}$ give
+
+$$
+\left|\sum_\rho m_\rho c^{\rho-1}F_{A,B}(\rho)\right|
+\le\frac{2(1+1/L)\mathcal C_\zeta}{cAL}
+\le\frac{3\mathcal C_\zeta}{cAL}<\frac{0.153}{cAL}.
+$$
+
+Thus (GE2) also holds below the unit cutoff. In particular, no classical
+explicit formula has been extended to $cu<1$ and no small Gamma scales
+have been discarded.
+
+For the same noninteger shapes $\alpha\ge4$ as in (GR1), averaging (GE2)
+by (GR5) and the existing inverse-first Gamma moment yields
+
+$$
+\overline R_\alpha(A)
+\le\frac{5M_1(\alpha)}{AL},\qquad
+M_1(\alpha)=\frac\alpha{\alpha-1}.
+\tag{GE4}
+$$
+
+This is an explicit upper bound, not an absolute bound or a replacement
+for the sharper asymptotic assertion (GR1). With the original full
+prime-integral comparison (GP1), it gives the finite inequality
+
+$$
+\boxed{\sqrt A L[-I_\psi(A)]
+\le\sqrt A L Z_\alpha(A)
+ +\frac{\psi(A)}{(\alpha-1)\sqrt A}
+ +\frac{5M_1(\alpha)}{\sqrt A}.}
+\tag{GE5}
+$$
+
+The full elementary and trivial contributions are paid through
+$\overline R_\alpha$; the left side is the original complete integral.
+No signed main estimate or unbounded source-clock conclusion follows
+from (GE5) alone.
+
+
+## A larger finite clock from the verified-height Gamma response
+
+The explicit directed inequality (GE5) can be paired with a uniform
+Gamma modulus estimate. It bounds the original signed integral on a
+larger finite interval, while keeping the same conditional least integer
+$N>5040$ attaining the global Robin-ratio maximum. This is not a reduction
+to the least counterexample or an all-integer finite Robin verification.
+No arithmetic profiles or zero ordinates are newly enumerated.
+
+### Uniform damping with the actual real parts retained
+
+Use the classical product
+[NIST DLMF 5.8.3](https://dlmf.nist.gov/5.8.E3), for $x>0$:
+
+$$
+\left|\frac{\Gamma(x+it)}{\Gamma(x)}\right|
+=\prod_{k=0}^\infty
+ \left(1+\frac{t^2}{(x+k)^2}\right)^{-1/2}.
+$$
+
+The summand $\log(1+t^2/(x+u)^2)$ is positive and decreasing in $u$.
+Using $\log(1+v)\ge v/(1+v)$ in its integral gives
+
+$$
+\sum_{k=0}^\infty\log\left(1+\frac{t^2}{(x+k)^2}\right)
+\ge |t|\arctan(|t|/x)
+\ge\frac{t^2}{x+|t|}.
+$$
+
+The last inequality uses $\arctan v\ge v/(1+v)$ for $v\ge0$.
+For $0<\beta<1$, the already used Gamma law has
+$\mathbb E C^{\beta-1}\le(\mathbb EC^{-1})^{1-\beta}\le M_1(\alpha)$
+by Hölder. Set $x=\alpha+\beta-1\le\alpha$ in the product. It follows that
+
+$$
+\boxed{|H_\alpha(\beta+it)|
+\le M_1(\alpha)
+ \exp\left(-\frac{t^2}{2(\alpha+|t|)}\right).}
+\tag{GH1}
+$$
+
+This is uniform over the whole actual critical strip. Criticality is
+used only on the already verified head below $H$.
+
+Passing to the infinite endpoint in the existing (U2) gives
+
+$$
+\sqrt A L|F_A(\rho)|
+\le2(1+1/L)\frac{A^{\beta-1/2}}{|\rho||1-\rho|}.
+\tag{GH2}
+$$
+
+The function $t^2/[2(\alpha+t)]$ increases for $t>0$.
+Split the complete $Z_\alpha$ at the verified height $H$.
+Use the positive $c_0$ identity on the critical head, and (GH1), (GH2),
+$\beta<1$, and $2S_2(H)$ on every remaining zero. This gives
+
+$$
+\sqrt A L|Z_\alpha(A)|
+\le2M_1(\alpha)(1+1/L)
+ \left[c_0+2\sqrt A\,S_2(H)
+   \exp\left(-\frac{H^2}{2(\alpha+H)}\right)\right].
+\tag{GH3}
+$$
+
+Every height beyond $H$ is included to infinity. Replacing the actual
+$A^{\beta-1/2}$ by $\sqrt A$ in this upper bound does not assume RH
+outside the verified head.
+
+### Pay the constants at the same selected source
+
+Take the exact noninteger shape and clock range
+
+$$
+\alpha=10^{23}+\frac12,\qquad
+10^{36}<A\le10^{45},\qquad L=\log A.
+$$
+
+Then $L>78$, $\sqrt A<3.2\cdot10^{22}$,
+$M_1(\alpha)<1.0001$, and
+
+$$
+\frac{H^2}{2(\alpha+H)}>40,\qquad e^{40}>10^{17}.
+$$
+
+The latter follows from $e>8/3$ and
+$8^{40}>10^{17}3^{40}$.
+The two contributions in (GH3) are bounded by the rational inequalities
+
+$$
+2(1.0001)(1.02)(0.05)<0.103,
+$$
+
+$$
+4(1.0001)(1.02)(3.2\cdot10^{22})
+ (1.48\cdot10^{-12})10^{-17}<0.000003.
+\tag{GH4}
+$$
+
+For the prime-comparison allowance, reuse Dusart's
+[Theorem 5.2, $k=0$, and Proposition 3.2](../Weil/dusart2010estimates.md):
+$\vartheta(A)<2A$ and
+$\psi(A)-\vartheta(A)<1.00007\sqrt A+1.78A^{1/3}$.
+On this range they give $\psi(A)<2.01A$. Therefore
+
+$$
+\frac{\psi(A)}{(\alpha-1)\sqrt A}
+<\frac{2.01(3.2\cdot10^{22})}{0.9999\cdot10^{23}}<0.644,
+\qquad
+\frac{5M_1(\alpha)}{\sqrt A}<6\cdot10^{-18}.
+\tag{GH5}
+$$
+
+Combining (GE5) and (GH3)–(GH5) pays the full original signed integral:
+
+$$
+\boxed{-\sqrt A L I_\psi(A)
+<0.103+0.000003+0.644+6\cdot10^{-18}<\frac34
+\qquad(10^{36}<A\le10^{45}).}
+\tag{GH6}
+$$
+
+The same selected source still satisfies
+$\Delta(N)=I_\psi(A)+D^*(A)$ and the strict core (G6).
+The already proved bound
+[(X5) in the Polak application](../Analytic/polak2026finiterobinca.md#pay-the-full-signed-margin-with-the-same-strict-core)
+gives $\mathcal E(L)>0.778$ for every $L\ge78$.
+Thus at this actual source and clock,
+
+$$
+\boxed{\sqrt A L\Delta(N)>0.778-0.75=0.028
+\qquad(10^{36}<A\le10^{45}).}
+\tag{GH7}
+$$
+
+The existing restriction $A>10^{36}$ and (GH7) therefore force
+$\log N>10^{45}$ for the same hypothetical least global maximizer.
+This conclusion is specific to that selected source; it does not assert
+strict Robin for every integer below $\exp(10^{45})$.
+
+This application reuses the published finite-height verification,
+zero-count and prime estimates, the classical Gamma product, and the
+existing core and directed-transport results. It makes no mathematical
+priority claim and has no Lean certification. The fixed shape and verified
+height give no uniform bound as $A\to\infty$: the comparison and high-zero
+allowances in (GE5), (GH3) still grow with $\sqrt A$.
+The full unbounded signed Robin target and RH remain unproved.
+
+
+## A one-sided entire envelope retaining the original cutoff
+
+The original prime weight has a derivative jump at its cutoff. A signed
+mixture of published power-function extremals gives entire lower and
+upper envelopes with an exact error while retaining that cutoff. Use
+the power-function corollary in Carneiro, Littmann and Vaaler,
+[arXiv:1008.4969v2](https://arxiv.org/abs/1008.4969v2), Part III,
+“Extremal Functions for $|x|^\sigma$”, can instead be applied before
+mixing the actual second-derivative measure. This is a paper-level
+application of that published corollary and elementary signed-measure
+integration, with no mathematical priority or Lean-verification claim.
+
+Retain $A\ge e^2$, $L=\log A$, and the original weight and derivative
+
+$$
+H_A(x)=\frac1{\max(A,|x|)\log\max(A,|x|)},\qquad
+k(t)=\frac{1+\log t}{t^2\log^2t},\qquad
+\kappa_A=k(A).
+$$
+
+The distributional second derivative is the signed measure
+
+$$
+\mu_A=\mu_A^+-\mu_A^-,\qquad
+\mu_A^+(du)=-k'(|u|)\mathbf1_{\{|u|>A\}}\,du,
+\qquad
+\mu_A^-=\kappa_A(\delta_{-A}+\delta_A).
+\tag{CE1}
+$$
+
+Here $k'<0$. Both parts have mass $2\kappa_A$, and
+$\int(1+|u|)\,d|\mu_A|(u)<\infty$. The negative cutoff atoms have
+not been dropped. Direct integration gives the absolutely convergent
+potential representation
+
+$$
+\boxed{H_A(x)=\frac12\int_{\mathbb R}|x-u|\,d\mu_A(u).}
+\tag{CE2}
+$$
+
+For example, differentiation off $\pm A$ gives the original derivative;
+the value at zero is
+$-A\kappa_A+\int_A^\infty u[-k'(u)]\,du=1/(AL)$.
+These facts and continuity identify the potential with $H_A$.
+
+Use the source corollary at $\sigma=1$, where its normalization is
+$\gamma(-1)=-2\pi$ and $\gamma(2)=1/\pi$. Reversing the inequalities
+when dividing by $-2\pi$, and then rescaling, provides even real entire
+functions $P_\delta,Q_\delta$ of exponential type at most $2\pi\delta$
+for every $\delta>0$, satisfying
+
+$$
+P_\delta(x)\le |x|\le Q_\delta(x),\qquad
+\int_{\mathbb R}(|x|-P_\delta(x))\,dx=\frac1{6\delta^2},\qquad
+\int_{\mathbb R}(Q_\delta(x)-|x|)\,dx=\frac1{12\delta^2}.
+\tag{CE3}
+$$
+
+This reuses the source result rather than reconstructing its proof.
+The two nonnegative errors sum to the integrable entire function
+$Q_\delta-P_\delta$. The standard real-line bound for an integrable
+entire function of finite exponential type makes that difference
+bounded; hence both power extremals are $O_\delta(1+|x|)$ on the real
+line. The usual polynomial-growth version of the Paley–Wiener bound
+then gives $O_{K,\delta}(1+|u|)$ for their translates $z-u$, uniformly
+for $z$ in a fixed compact subset $K$ of the complex plane. This bound
+and the first moment in (CE1) justify locally uniform integration below,
+including differentiation on compact subsets.
+
+Define
+
+$$
+\begin{aligned}
+\ell_{A,\delta}(z)
+ &=\frac12\left[\int P_\delta(z-u)\,d\mu_A^+(u)
+                  -\int Q_\delta(z-u)\,d\mu_A^-(u)\right],\\
+u_{A,\delta}(z)
+ &=\frac12\left[\int Q_\delta(z-u)\,d\mu_A^+(u)
+                  -\int P_\delta(z-u)\,d\mu_A^-(u)\right].
+\end{aligned}
+\tag{CE4}
+$$
+
+They are even real entire functions of exponential type at most
+$2\pi\delta$, and the signs in (CE4) give
+
+$$
+\boxed{\ell_{A,\delta}(x)\le H_A(x)\le u_{A,\delta}(x)
+\qquad(x\in\mathbb R).}
+\tag{CE5}
+$$
+
+Tonelli applies to the nonnegative differences from (CE2). Using the
+actual two masses in (CE1), rather than treating the signed measure as
+positive, gives the exact errors
+
+$$
+\int_{\mathbb R}(H_A-\ell_{A,\delta})\,dx
+=\int_{\mathbb R}(u_{A,\delta}-H_A)\,dx
+=\frac{\kappa_A}{4\delta^2}.
+\tag{CE6}
+$$
+
+Evenness therefore yields
+
+$$
+\boxed{\int_0^\infty(H_A-\ell_{A,\delta})\,dt
+       =\frac{\kappa_A}{8\delta^2}.}
+\tag{CE7}
+$$
+
+These are explicit envelopes for the unchanged cutoff weight. They do
+not assert extremality for $H_A$, arithmetic sampling convergence, a
+compact zero-height cutoff, or a sign estimate on the original complete
+zero response. Fourier support on the additive real variable is not
+spectral truncation at the actual complex zeta zeros.
+
+### A finite centered prime comparison
+
+The lower envelope (CE5) gives a finite arithmetic consumer without
+assuming that an unweighted $L^1$ error controls an infinite
+von-Mangoldt weighted sum. Keep $R\ge A\ge e^2$, $V=\log R$,
+$D(t)=\psi(t)-t$, and the existing unconditional constant $C_\psi$ in
+(GR3). Define the finite centered response
+
+$$
+\mathcal J_{A,\delta}(R)
+=\int_0^R\ell_{A,\delta}(t)\,dt
+ -\sum_{2\le n\le R}\Lambda(n)\ell_{A,\delta}(n).
+\tag{CP1}
+$$
+
+Both terms are finite. No separately divergent pole or prime integral
+has been taken. Set $e=H_A-\ell_{A,\delta}\ge0$. For this same $R$,
+nonnegative von Mangoldt weights and (CE7) give
+
+$$
+\begin{aligned}
+\int_0^R H_A(t)\,dt-\sum_{2\le n\le R}\Lambda(n)H_A(n)
+&=\mathcal J_{A,\delta}(R)+\int_0^R e(t)\,dt
+                -\sum_{2\le n\le R}\Lambda(n)e(n)\\
+&\le\mathcal J_{A,\delta}(R)+\frac{\kappa_A}{8\delta^2}.
+\end{aligned}
+\tag{CP2}
+$$
+
+An atom at $n=A$ satisfies the same pointwise order. No zero real part,
+multiplicity, or height is altered in the original response.
+
+Partial summation, with the right endpoint included in $\psi(R)$,
+keeps the full original integral:
+
+$$
+-I_\psi(A)
+=\left[\int_0^R H_A(t)\,dt
+       -\sum_{2\le n\le R}\Lambda(n)H_A(n)\right]
+ +D(R)H_A(R)-\int_R^\infty D(t)k(t)\,dt.
+\tag{CP3}
+$$
+
+The existing (GR3) implies $|D(t)|\le C_\psi t/\log^2t$ for $t>1$.
+Its boundary allowance is $C_\psi/V^3$, and direct integration pays
+all of the remaining tail by
+
+$$
+\int_R^\infty |D(t)|k(t)\,dt
+\le C_\psi\left(\frac1{2V^2}+\frac1{3V^3}\right).
+$$
+
+Consequently the finite directed upper bound is
+
+$$
+\boxed{\begin{aligned}
+-\sqrt A L I_\psi(A)\le{}&\sqrt A L\mathcal J_{A,\delta}(R)
+ +\frac{1+L}{8A^{3/2}L\delta^2}\\
+&+C_\psi\sqrt A L
+   \left(\frac1{2V^2}+\frac4{3V^3}\right).
+\end{aligned}}
+\tag{CP4}
+$$
+
+This pays the approximation and the entire omitted arithmetic tail for
+any displayed parameters. It neither requires nor proves convergence
+of an infinite prime sample of the envelope error. For instance,
+$\delta=1$ and $R=\exp(A^{1/4}\log A)$ make both displayed added
+allowances tend to zero as $A\to\infty$; this is asymptotic, since
+$C_\psi$ has not been numerically certified. It gives no starting clock
+and no claim that evaluating this finite prime sum is inexpensive.
+
+At the unchanged conditional least global Robin-ratio maximizing
+integer, a sufficiently strong upper estimate on the actual
+$\mathcal J_{A,\delta}(R)$ would still be needed to pay the strict
+core after (CP4). No such main estimate is supplied. The original
+$F_A$, actual zero multiset, complete elementary contributions and
+unbounded Robin/RH goal remain unchanged; no compact spectral
+truncation or RH inference follows from additive exponential type.
+This is a paper-level comparison, not a Lean-verified result.
+
+## Joint short-interval cancellation in the Gamma comparison
+
+The allowance in (GP6) discards the cancellation between the two sides
+of the original cutoff. The uniform short-interval input already
+recorded in the [Guth–Maynard note](../Analytic/guthmaynard2024largevalues.md),
+Corollary 1.3 of [arXiv:2405.20552v2](https://arxiv.org/abs/2405.20552v2),
+supplies a two-sided comparison with a smaller admissible Gamma shape.
+The global PNT input is the Fiori–Jaskari theorem quoted above. These
+source theorems, the absolute centering in (GP4)–(GP5), and the full
+combined remainder (GR1) are reused. The following is a paper-level
+application, without mathematical-priority or Lean-verification claims.
+
+Retain $A\to\infty$, $L=\log A$, $D(t)=\psi(t)-t$, $h_A,w_c,J_\alpha$
+and the Gamma law from (GP1)–(GP5). Define
+
+$$
+\begin{aligned}
+\eta_0(A)&=\sup_{t\ge A}\frac{|D(t)|}{t},\\
+\eta_{\rm si}(A)&=
+\sup_{\substack{A/2\le u<v\le3A/2\\v-u\ge A^{2/3}}}
+\frac{|D(v)-D(u)|}{v-u}.
+\end{aligned}
+\tag{GS1}
+$$
+
+There are absolute constants $K,c>0$ such that, for all sufficiently
+large $A$ and every noninteger $\alpha\ge4$,
+
+$$
+\boxed{\begin{aligned}
+\sqrt A L|J_1(A)-J_\alpha(A)|\le K\bigg\{&
+\frac{\sqrt A}{\alpha}
+ [\eta_0(A)+\eta_{\rm si}(A)+A^{-1/30}]\\
+&+\sqrt{A\alpha}\,A^{-9/10}
+ +\sqrt A e^{-c\alpha}\bigg\}.
+\end{aligned}}
+\tag{GS2}
+$$
+
+The starting value and constants are not numerically certified. This
+is an asymptotic comparison, not an additional finite Robin clock.
+
+### The local prime input and its uniform range
+
+The retained global PNT theorem gives, for some fixed $c_0>0$,
+
+$$
+\eta_0(A)\ll
+\exp\left[-c_0\frac{L^{3/5}}{(\log L)^{1/5}}\right].
+\tag{GS3}
+$$
+
+Use Guth–Maynard Corollary 1.3 with the fixed parameter $\epsilon=1/20$.
+For $u\in[A/2,3A/2]$ and $A^{2/3}\le h\le A^{9/10}$, its required
+range $u^{37/60}\le h\le u^{0.99}$ holds uniformly for sufficiently
+large $A$. Multiplying the prime count by $\log u$ introduces an error
+$O(h^2/(A L))$ from the variation of $\log p$. Thus
+
+$$
+\vartheta(u+h)-\vartheta(u)
+=h+O\bigl(h[L e^{-L^{1/4}}+A^{-1/10}]\bigr).
+$$
+
+Here $(\log u)^{1/4}=L^{1/4}+O(L^{-3/4})$ uniformly. If
+$A^{9/10}<h\le A$, with $u+h\le3A/2$, partition into equal pieces of lengths between
+$A^{9/10}/2$ and $A^{9/10}$ and add the same estimates. The classical
+Chebyshev bound and prime-power identity give
+$\psi(t)-\vartheta(t)=O(\sqrt t)$; paying this at the two endpoints,
+with $h\ge A^{2/3}$, proves
+
+$$
+\boxed{\eta_{\rm si}(A)\ll
+ L e^{-L^{1/4}}+A^{-1/10}+A^{-1/6}.}
+\tag{GS4}
+$$
+
+This uses the uniform corollary, not the separate almost-all theorem.
+It neither assumes a short-interval relative error from global PNT
+nor substitutes $\pi$ or $\vartheta$ for $\psi$ without paying prime
+powers.
+
+### Remove only the exactly centered linear dilation
+
+Choose the following endpoint convention and retain it in the prime
+sum:
+
+$$
+a_A(t)=
+\begin{cases}
+-1/(AL),&0<t\le A,\\
+1/(t\log^2t),&t>A.
+\end{cases}
+\qquad
+B_c(t)=w_c(t)-h_A(t)-(c-1)a_A(t).
+\tag{GS5}
+$$
+
+Both $a_A$ and $w_c-h_A$ are absolutely integrable against $dt$ and
+$d\psi(t)$; for the latter use (GP4). Moreover
+$\int_0^\infty a_A(t)\,dt=-1/L+1/L=0$ and
+$\int_0^\infty(w_c-h_A)\,dt=0$. The absolute $d\psi+dt$ norm of
+$a_A$ is $O(1/L)$ by Chebyshev and partial summation. Consequently
+(GP5), Fubini, and $\mathbb E(C-1)=0$ give the unchanged arithmetic
+difference
+
+$$
+\boxed{J_1-J_\alpha
+ =\mathbb E\int_0^\infty B_C(t)\,dD(t).}
+\tag{GS6}
+$$
+
+No divergent pole and prime quantities are separated in this identity.
+
+For $1/2\le c\le3/2$, put $e=c-1$ and split $B_c=b_c+v_c$, where
+
+$$
+b_c(t)=
+\begin{cases}
+e^2/(cAL),&0<t\le A,\\[2pt]
+\displaystyle\frac1{t(\log t-\log c)}-
+ \frac1{t\log t}-\frac e{t\log^2t},&t>A.
+\end{cases}
+\tag{GS7}
+$$
+
+This regular part agrees with $B_c$ outside the interval between $A$
+and $cA$. Taylor's theorem in $c$, uniformly on $[1/2,3/2]$, gives
+
+$$
+|b_c(t)|\ll\frac{e^2}{t\log^2t},\qquad
+|b_c'(t)|\ll\frac{e^2}{t^2\log^2t}\qquad(t>A).
+$$
+
+Partial summation on $(A,\infty)$, together with the constant part on
+$(0,A]$, therefore yields
+
+$$
+\left|\int_0^\infty b_c(t)\,dD(t)\right|
+\ll\eta_0(A)e^2/L.
+\tag{GS8}
+$$
+
+In particular, the boundary contribution is paid using $D(A)$; the
+change of formula at $A$ has not been ignored.
+
+The local residual $v_c$ is zero outside the closed interval with
+endpoints $A,cA$. Inside that interval its nonzero formula is
+
+$$
+\begin{cases}
+\displaystyle\frac1{cAL}-\frac1{t\log(t/c)},&c>1,\ A<t<cA,\\[4pt]
+\displaystyle\frac1{t\log(t/c)}-\frac1{cAL},&c<1,\ cA<t<A.
+\end{cases}
+$$
+
+The actual endpoint values are those of $B_c-b_c$ in (GS5)–(GS7).
+The first derivative of $1/[t\log(t/c)]$ is $O(1/(A^2L))$ in this
+interval. Including the possible jump at $A$ gives
+
+$$
+\|v_c\|_\infty+\operatorname{Var}(v_c)
+\ll |e|/(AL).
+\tag{GS9}
+$$
+
+### Pay the shrinking cutoff interval, including its atoms
+
+Set $H_0=A^{2/3}$, $H_1=A^{7/10}$ and $h=A|e|$. For
+$h\ge H_1$, (GS1) bounds $|D(t)-D(A)|$ by
+$\eta_{\rm si}(A)h$ whenever $|t-A|\ge H_0$. For smaller distances,
+monotonicity of $\psi$ and (GS4) applied to
+$[A-H_0,A+H_0]$ give the bound $O(H_0)$. Since
+$H_0/H_1=A^{-1/30}$, it follows uniformly on the support of $v_c$ that
+
+$$
+|D(t)-D(A)|\ll
+[\eta_{\rm si}(A)+A^{-1/30}]h.
+$$
+
+The same bound holds for one-sided limits after paying a possible
+endpoint prime-power atom of size at most $\log(2A)=O(\log A)$,
+absorbed in $H_0$. Integration of a bounded-variation function against
+these increments, using (GS9), gives
+
+$$
+\left|\int v_c(t)\,dD(t)\right|
+\ll [\eta_{\rm si}(A)+A^{-1/30}]e^2/L
+\qquad(H_1\le h\le A/2).
+\tag{GS10}
+$$
+
+For $h<H_1$, the support lies in $[A-H_1,A+H_1]$. Its total
+$d\psi+dt$ mass is $O(H_1)$ by (GS4), with the endpoint atom included.
+Therefore
+$|\int v_c\,dD|\ll |e|H_1/(AL)$. The maximum of the Gamma density
+is $O(\sqrt\alpha)$ uniformly for $\alpha\ge4$, by the standard
+Stirling bound at its mode. Hence
+
+$$
+\begin{aligned}
+\mathbb E[|C-1|\mathbf1_{\{|C-1|<H_1/A\}}]
+ &\ll\sqrt\alpha(H_1/A)^2,\\
+\sqrt A L\,
+\mathbb E\left[\left|\int v_C\,dD\right|
+                  \mathbf1_{\{|C-1|<H_1/A\}}\right]
+ &\ll\sqrt{A\alpha}\,A^{-9/10}.
+\end{aligned}
+\tag{GS11}
+$$
+
+For the remaining event $C\notin[1/2,3/2]$, (GP4) and the absolute
+norm of $a_A$ give
+$|\int B_c\,dD|\ll(1+c+c^{-1})/L$ for every $c>0$.
+The Gamma moment-generating function and Chernoff's inequality give
+$\Pr(C\notin[1/2,3/2])\le2e^{-c_1\alpha}$ for an absolute
+$c_1>0$. The second moment of $1+C+C^{-1}$ is bounded uniformly for
+$\alpha\ge4$, using
+$\mathbb EC^2=1+1/\alpha$ and
+$\mathbb EC^{-2}=\alpha^2/[(\alpha-1)(\alpha-2)]$.
+Cauchy–Schwarz thus pays the entire event by
+$O(\sqrt A e^{-c_1\alpha/2})$ after normalization. In particular no
+scales with $cA<1$ have been discarded.
+
+Finally average (GS8) and (GS10), use
+$\mathbb E(C-1)^2=1/\alpha$, and add (GS11) and this Gamma tail.
+This proves (GS2) uniformly over its stated shapes.
+
+### A smaller shape family with vanishing full comparison error
+
+Fix $0<b_-\le b_+<\infty$, and take any noninteger shape satisfying
+
+$$
+b_-a_*(A)\le\alpha\le b_+a_*(A),
+\qquad a_*(A)=\sqrt A\,e^{-L^{1/4}/2}.
+\tag{GS12}
+$$
+
+For $b_-=1/2$ and $b_+=2$, for example,
+$\alpha=\lfloor a_*(A)\rfloor+1/2$ is lawful eventually.
+The first term of (GS2), using (GS3)–(GS4), is
+$O_{b_-,b_+}(L e^{-L^{1/4}/2})$. The small-interval term is
+$O_{b_-,b_+}(A^{-3/20}e^{-L^{1/4}/4})$, and the Gamma tail is smaller.
+Reusing the complete elementary remainder in (GR1) gives
+
+$$
+\boxed{-\sqrt A L I_\psi(A)
+ =\sqrt A L Z_\alpha(A)
+  +O_{b_-,b_+}(L e^{-L^{1/4}/2}) .}
+\tag{GS13}
+$$
+
+Every zero in $Z_\alpha$ still has its actual real part,
+multiplicity and height, and the coefficient remains
+$H_\alpha(\rho)F_A(\rho)$. No main spectral response has been bounded.
+In (GS12) the old allowance $\sqrt A/\alpha$ diverges, whereas the
+joint arithmetic comparison tends to zero. This is the gained
+transport regime; it supplies neither a sign nor a finite numerical
+threshold for the remaining main response.
+
+At the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum, this estimate uses $A=\log N$ without changing
+the selected source, the strict core, or the existing conclusion
+$A>10^{45}$. The asymptotic starting point in (GS2) has not been
+numerically compared with this finite exclusion. A full signed upper
+bound for $Z_\alpha(A)$ with enough strict slack remains required.
+Robin's criterion and RH remain
+unproved by these applications.
+
+## Reusing the coefficient remainder on a larger finite clock
+
+Keep the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum under the Robin-violation hypothesis. The preceding
+finite-clock application already gives $A=\log N>10^{45}$; put
+$L=\log A$. The following application uses the existing coefficient
+remainder (H1), directed comparison (GE5), Gamma damping (GH1), verified
+height and complete zero-count bound. It does not construct a new
+smoothing transform or repeat their proofs.
+
+### Use the full coefficient remainder separately on the two height ranges
+
+The existing (H1) and its numerator estimate give, throughout the actual
+critical strip $0<\beta<1$,
+
+$$
+\sqrt A L|F_A(\beta+it)|
+\le(1+1/L)\frac{A^{\beta-1/2}}{|\beta+it||1-\beta-it|}
+\left(1+\frac{2(L+2)}{L(L+1)|1-\beta-it|}\right).
+\tag{GJ1}
+$$
+
+This retains the complete original coefficient, including its remainder;
+it sharpens the coarser factor two in (GH2) by direct use of the already
+available estimate. No zero coefficient is replaced by only its leading
+term. For $L>78$, the verified critical head has
+$|1-\rho|\ge1/2$, so its parenthesized factor is less than $1.054$:
+
+$$
+\frac{4(L+2)}{L(L+1)}
+<\frac{4\cdot80}{78\cdot79}<0.054.
+$$
+
+For the actual unverified tail $|t|>H=3\cdot10^{12}$,
+$|1-\rho|\ge|t|>H$ instead bounds that factor by $1.0001$.
+Criticality is used only on the verified head. The original real parts
+and the complete infinite multiset of tail zeros are retained.
+
+Using the same positive $c_0$ identity, both ordinate signs and (GH1),
+(GJ1) gives the finite bound
+
+$$
+\sqrt A L|Z_\alpha(A)|
+<M_1(\alpha)(1+1/L)
+\left[1.054c_0+2(1.0001)\sqrt A S_2(H)
+ \exp\left(-\frac{H^2}{2(\alpha+H)}\right)\right].
+\tag{GJ2}
+$$
+
+Here $M_1(\alpha)=\alpha/(\alpha-1)$, $c_0<0.05$ and
+$S_2(H)<1.48\cdot10^{-12}$ are the same previously paid quantities.
+In particular, this argument does not need a new verified height or a
+new zero enumeration.
+
+### Pay the complete response on the added interval
+
+Take the exact noninteger shape and additional interval
+
+$$
+\alpha=\frac{29}{20}10^{23}+\frac12,
+\qquad 10^{45}<A\le10^{46}.
+$$
+
+Then $L>78$, $\sqrt A\le10^{23}$,
+$M_1(\alpha)<1.0001$, and
+
+$$
+\frac{H^2}{2(\alpha+H)}>31,
+\qquad e^{31}>10^{13}.
+$$
+
+For the exponential inequality, $e>8/3$ and
+$8^{31}>10^{13}3^{31}$ suffice. The head and complete tail in (GJ2)
+therefore obey the exact rational budgets
+
+$$
+(1.0001)(1.02)(1.054)(0.05)<0.054,
+$$
+
+$$
+2(1.0001)^2(1.02)(10^{23})
+ (1.48\cdot10^{-12})10^{-13}<0.031.
+\tag{GJ3}
+$$
+
+For the arithmetic comparison term, reuse
+[Dusart's Theorem 5.2 and Proposition 3.2](../Weil/dusart2010estimates.md).
+The original v1 theorem's $k=2$, $\eta_2=3.965$, $x_2=2$ row and the
+complete prime-power correction give
+
+$$
+\frac{\psi(A)}A
+<1+\frac{3.965}{L^2}+1.00007A^{-1/2}+1.78A^{-2/3}
+<1.001.
+$$
+
+The final inequality follows from $3.965/78^2<0.0007$ and
+$1.00007\cdot10^{-22}+1.78\cdot10^{-30}<0.0003$.
+The source row applies throughout the added interval; no asymptotic
+starting threshold is substituted for its explicit $x_2=2$.
+Since $\alpha-1>1.4499\cdot10^{23}$, the two remaining terms of (GE5)
+satisfy
+
+$$
+\frac{\psi(A)}{(\alpha-1)\sqrt A}
+<\frac{1.001}{1.4499}<0.691,
+\qquad
+\frac{5M_1(\alpha)}{\sqrt A}<6\cdot10^{-22}.
+\tag{GJ4}
+$$
+
+Combining (GE5) with (GJ2)–(GJ4) pays the original full signed response:
+
+$$
+\boxed{-\sqrt A L I_\psi(A)
+<0.054+0.031+0.691+6\cdot10^{-22}<0.777,
+\qquad 10^{45}<A\le10^{46}.}
+\tag{GJ5}
+$$
+
+All elementary and trivial contributions, including Gamma scales below
+the unit cutoff, are retained through the already proved (GE5).
+The strict core for this same selected source still gives
+$\sqrt A L D^*(A)>\mathcal E(L)>0.778$. Hence
+
+$$
+\boxed{\sqrt A L\Delta(N)>0.001,
+\qquad 10^{45}<A\le10^{46}.}
+\tag{GJ6}
+$$
+
+Together with the preceding $A>10^{45}$ restriction, this forces
+$\log N>10^{46}$ for the same hypothetical least global maximizer.
+It is a paper-level enlargement of the excluded selected-source window,
+with no new classical theorem, priority claim, Lean certification or
+all-integer finite Robin verification. The fixed verified height and
+shape still provide no uniform main bound as $A\to\infty$; the complete
+unbounded signed Robin target and RH remain unproved.
+
+## An effective directed Gamma comparison retaining the cutoff sign
+
+Retain the original $h_A,w_c,J_1,J_\alpha,D=\psi-\mathrm{id}$ and
+the endpoint convention in (GS5). Reuse the absolutely convergent
+centering (GP4)–(GP5), (GS6), and the decomposition (GS7)–(GS9).
+The following explicit upper comparison preserves the sign of the local
+residual against the actual nonnegative prime-power measure. No new
+short-interval theorem or smoothing transform is required.
+
+For $A\ge e^{78}$, $L=\log A$, and every noninteger $\alpha\ge4$, put
+$\eta_0(A)=\sup_{t\ge A}|\psi(t)-t|/t$ as in (GS1). Then
+
+$$
+\boxed{\sqrt A L[J_1(A)-J_\alpha(A)]
+\le [0.52+2\eta_0(A)]\frac{\sqrt A}{\alpha}
+ +400\sqrt A\,e^{-\alpha/60000}.}
+\tag{GK1}
+$$
+
+This is a directed inequality. The absolute asymptotic comparison
+(GS2) retains its stated scope; (GK1) supplies explicit constants without
+assigning a numerical starting point to that asymptotic result.
+
+### Pay the regular part using only the global error
+
+Fix $99/100\le c\le101/100$ and write $e=c-1$. For $t>A$, put
+$v=\log t$ and $u(c,t)=1/[t(v-\log c)]$. Its derivatives are
+
+$$
+\partial_c^2u=
+\frac{2-(v-\log c)}{t c^2(v-\log c)^3},\qquad
+\partial_t\partial_c^2u=
+\frac{(v-\log c)^2-6}{t^2c^2(v-\log c)^4}.
+$$
+
+Throughout the segment joining $1$ to $c$, one has
+$v-\log c\ge v-1/100\ge(999/1000)v$ and $c\ge99/100$.
+Taylor's formula and
+$[(99/100)^2(999/1000)^2]^{-1}<1.024$ therefore give
+
+$$
+|b_c(t)|\le\frac{0.512e^2}{t\log^2t},\qquad
+|b_c'(t)|\le\frac{0.512e^2}{t^2\log^2t}\quad(t>A).
+\tag{GK2}
+$$
+
+On $(0,A]$, the same existing regular part equals
+$e^2/(cAL)$. Partial summation against $D$, including its actual value
+at $A$ and the change of formula there, gives
+
+$$
+\int b_c\,dD=
+\left[\frac{e^2}{cAL}-b_c(A+)\right]D(A)
+ -\int_A^\infty D(t)b_c'(t)\,dt.
+$$
+
+The upper boundary vanishes by the global PNT input already used in
+(GS3). Applying (GK2), $|D(t)|\le\eta_0(A)t$ for all $t\ge A$, and
+$\int_A^\infty dt/(t\log^2t)=1/L$ yields
+
+$$
+\left|\int b_c\,dD\right|
+\le\frac{\eta_0(A)e^2}{L}
+ \left[\frac{100}{99}+0.512+\frac{0.512}{L}\right]
+ \le\frac{2\eta_0(A)e^2}{L}.
+\tag{GK3}
+$$
+
+This uses a bound on the regular part against the global error; no
+short-interval bound has been inferred from global PNT.
+
+### Retain the negative local residual, including the endpoint atoms
+
+The actual local residual $v_c=B_c-b_c$ from (GS5)–(GS7) is
+nonpositive. For $c>1$ its formula on $A<t<cA$ is
+$1/(cAL)-1/[t\log(t/c)]$, and $v_c(A)=v_c(cA)=0$.
+For $c<1$ its formula on $cA<t\le A$ is
+$1/[t\log(t/c)]-1/(cAL)$, with $v_c(cA)=0$.
+It is zero elsewhere. Since $1/[t\log(t/c)]$ decreases with $t$ on
+these intervals, both displayed formulas are nonpositive. These values
+also fix the sign at a possible prime-power atom at $A$ or $cA$.
+
+Consequently the actual measure $d\psi\ge0$ gives
+
+$$
+\int v_c\,dD=\int v_c\,d\psi-\int v_c\,dt
+\le-\int v_c\,dt.
+$$
+
+On the entire interval with endpoints $A,cA$,
+$t\ge(99/100)A$ and $\log(t/c)\ge L-1/100$. Thus
+
+$$
+\left|\frac{d}{dt}\frac1{t\log(t/c)}\right|
+\le\frac{1.034}{A^2L}.
+$$
+
+Indeed, the ratio to $1/(A^2L)$ is at most
+$[(99/100)^2]^{-1}[L/(L-1/100)][1+1/(L-1/100)]<1.034$
+for $L\ge78$. The local residual vanishes at $cA$, so integrating
+the resulting triangular upper bound gives
+
+$$
+\boxed{\int v_c\,dD
+\le\frac{1.034(A|e|)^2}{2A^2L}
+ \le\frac{0.52e^2}{L}.}
+\tag{GK4}
+$$
+
+An atom contributes to the nonpositive prime term; it is not replaced
+by a Lebesgue density or discarded with an unknown sign.
+
+### Pay all Gamma scales outside the narrow interval
+
+An explicit global bound needed only for this tail follows directly
+from the existing Dusart Theorem 5.2 $k=0$ row and Proposition 3.2:
+$\psi(t)\le4t$ for $t>0$. For $t<2$, $\psi(t)=0$; for $t\ge2$ use
+$\vartheta(t)<2t$ and
+$1.00007t^{-1/2}+1.78t^{-2/3}<2$.
+Applying the already established (GP4) estimates with this constant
+gives, for every $c>0$,
+
+$$
+\int|w_c-h_A|\,d\psi\le\frac{16(c+c^{-1})}{L},\qquad
+\int|w_c-h_A|\,dt\le\frac{4(c+c^{-1})}{L}.
+$$
+
+For clarity, below $A\max(1,c)$ the corresponding bound with
+$\psi(t)\le Bt$ is $2B(c+c^{-1})/L$. Above that point it is also
+$2B(c+c^{-1})/L$: use the logarithmic difference and
+$|\log c|+\tfrac12(\log c)^2\le c+c^{-1}$, since $L\ge2$.
+This is a numerical use of the existing all-scale convergence argument.
+The affine derivative in (GS5) satisfies
+$\int|a_A|\,(d\psi+dt)\le14/L$ by the same partial summation.
+Since $|c-1|\le c+c^{-1}$, these estimates pay the complete centered
+kernel, with room in the constant:
+
+$$
+\left|\int B_c\,dD\right|
+\le\frac{100(c+c^{-1})}{L}\qquad(c>0).
+\tag{GK5}
+$$
+
+This includes every scale with $cA<1$. Only absolutely convergent
+differences are integrated, as in (GP4)–(GP5).
+
+Let $C$ have the same mean-one Gamma law with shape and rate $\alpha$.
+Use its existing moment-generating function and Chernoff bound with
+$\delta=1/100$. The two exponents satisfy
+$\delta-\log(1+\delta)\ge\delta^2/[2(1+\delta)]>1/30000$ and
+$-\delta-\log(1-\delta)\ge\delta^2/2>1/30000$. Therefore
+
+$$
+\Pr(C\notin[99/100,101/100])\le2e^{-\alpha/30000},\qquad
+\mathbb E(C+C^{-1})^2
+\le\frac54+2+\frac83<6.
+$$
+
+Cauchy–Schwarz and (GK5) bound the normalized contribution from that
+whole event by $400\sqrt A e^{-\alpha/60000}$. On its complement,
+(GK3)–(GK4) apply. Averaging with
+$\mathbb E(C-1)^2=1/\alpha$ proves (GK1) using the globally centered
+identity (GS6). No conditional mean-one assertion has been used.
+
+### Preserve the complete original zero response
+
+Reusing $J_1=-I_\psi$, $J_\alpha=Z_\alpha+\overline R_\alpha$ and
+the full elementary upper bound (GE4) gives
+
+$$
+\boxed{\begin{aligned}
+-\sqrt A L I_\psi(A)\le{}&\sqrt A L Z_\alpha(A)
+ +[0.52+2\eta_0(A)]\frac{\sqrt A}{\alpha}\\
+&+400\sqrt A e^{-\alpha/60000}
+ +\frac{5M_1(\alpha)}{\sqrt A}.
+\end{aligned}}
+\tag{GK6}
+$$
+
+Here $Z_\alpha$ retains the original $H_\alpha(\rho)F_A(\rho)$,
+every actual real part, multiplicity and height. The improvement is an
+effective directed arithmetic payment obtained from the retained local
+sign, not a new bound on the main response. The unbounded signed Robin
+estimate and RH remain unproved. This is a paper-level application of
+the existing prime bounds and kernel identities, without a mathematical
+priority or Lean-certification claim.
+
+## A further finite clock from the effective cutoff-sign payment
+
+Keep the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum under the Robin-violation hypothesis. The preceding
+application already excludes $A=\log N\le10^{46}$; put $L=\log A$.
+Apply (GK6) on the additional interval
+
+$$
+10^{46}<A\le\frac72\,10^{46},\qquad
+\alpha=\frac75\,10^{23}+\frac12.
+$$
+
+This uses the effective directed comparison, the full original
+coefficient bound (GJ1), Gamma damping (GH1), and the existing complete
+elementary remainder. No primes, arithmetic profiles or zero ordinates
+are newly enumerated.
+
+### Pay the actual global arithmetic error
+
+Dusart's original Theorem 5.2 $k=2$, $\eta_2=3.965$, $x_2=2$ row and
+Proposition 3.2, already used in (GJ4), give for every $t\ge A$
+
+$$
+\frac{|\psi(t)-t|}{t}
+\le\frac{3.965}{\log^2t}+1.00007t^{-1/2}+1.78t^{-2/3}
+<0.001.
+$$
+
+Hence $\eta_0(A)<0.001$. Moreover $L>78$,
+$\sqrt A<1.871\cdot10^{23}$ and $\alpha\ge1.4\cdot10^{23}$.
+The normalized central comparison term in (GK6) is therefore
+
+$$
+[0.52+2\eta_0(A)]\frac{\sqrt A}{\alpha}
+<\frac{0.522(1.871)}{1.4}<0.698.
+\tag{GL1}
+$$
+
+The Gamma tail is explicit: $\alpha/60000>10^{18}$ and
+$e^x>x^3/6$ for $x>0$ imply $e^{\alpha/60000}>10^{53}$.
+Thus $400\sqrt A e^{-\alpha/60000}<8\cdot10^{-28}$.
+The entire elementary contribution is less than $6\cdot10^{-23}$ by
+(GE4). This includes Gamma scales below the unit cutoff.
+
+### Pay every original zero above the verified height
+
+The existing (GJ2) gives, with $H=3\cdot10^{12}$,
+
+$$
+\sqrt A L|Z_\alpha(A)|
+<M_1(\alpha)(1+1/L)
+\left[1.054c_0+2(1.0001)\sqrt A S_2(H)
+ e^{-H^2/[2(\alpha+H)]}\right].
+$$
+
+Here $c_0<0.05$, $S_2(H)<1.48\cdot10^{-12}$ and
+$M_1(\alpha)<1.0001$ are unchanged. For the selected shape,
+$H^2/[2(\alpha+H)]>32$ and $e^{32}>4\cdot10^{13}$;
+the latter follows from $e>8/3$ and
+$8^{32}>4\cdot10^{13}3^{32}$. Both ordinate signs, the actual tail
+real parts and all heights to infinity remain included. The head and
+tail satisfy the exact rational budgets
+
+$$
+(1.0001)(1.02)(1.054)(0.05)<0.054,
+$$
+
+$$
+2(1.0001)^2(1.02)(1.871\cdot10^{23})
+ (1.48\cdot10^{-12})(4\cdot10^{13})^{-1}<0.015.
+\tag{GL2}
+$$
+
+Combining (GK6), (GL1) and (GL2) pays the original full signed response:
+
+$$
+\boxed{-\sqrt A L I_\psi(A)
+<0.054+0.015+0.698+8\cdot10^{-28}+6\cdot10^{-23}
+<0.768.}
+\tag{GL3}
+$$
+
+The same selected source obeys the strict core
+$\sqrt A L D^*(A)>\mathcal E(L)>0.778$ and
+$\Delta(N)=I_\psi(A)+D^*(A)$. Therefore
+
+$$
+\boxed{\sqrt A L\Delta(N)>0.01,
+\qquad10^{46}<A\le\frac72\,10^{46}.}
+\tag{GL4}
+$$
+
+Together with the preceding exclusion, this forces
+$\log N>(7/2)10^{46}$ for the same hypothetical least global maximizer.
+It is a selected-source finite exclusion with a normalized margin,
+not an all-integer finite Robin verification or an unbounded main
+estimate. The full RH objective remains unproved. All classical prime,
+zero-count and verified-height inputs are reused; this paper-level
+application carries no mathematical-priority or Lean-certification claim.

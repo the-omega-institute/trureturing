@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using System.Text;
 using System.Text.RegularExpressions;
 using StrataLint.Engine;
@@ -49,6 +50,7 @@ public sealed partial class MakeWorkflowTests
         "emit",
         "dag",
         "filemap",
+        "filemap-conform",
         "scribe-release",
         "scribe-release-publish",
         "scribe-release-fetch",
@@ -86,6 +88,7 @@ public sealed partial class MakeWorkflowTests
         "test",
         "selftest",
         "compile-proof",
+        "filemap-conform",
         "capacity-audit",
         "update-renderer-contract",
         "clean-lanes",
