@@ -52,7 +52,7 @@ result).
 proof_shape: pathHamiltonian_isHermitian: bind-only; consumer: no_transfer_last_first,
 PathMiddleVertexMoments (propagator_eq_reversal, middle_vertex_moments),
 SymmetricSpectrumEndAmplitude (symmetric_spectrum_weights, symmetric_spectrum_end_amplitude,
-symmetric_spectrum_reduction), SevenSiteEarlyStateExclusion (claim).
+symmetric_spectrum_reduction), SevenSiteEarlyStateExclusion (claim, result).
 proof_shape: spectral_pow_apply: bind-only; consumer: pst_spectral_weights,
 PathMiddleVertexMoments (middle_vertex_weights, middle_vertex_moments).
 proof_shape: spectral_exp: bind-only; consumer: pst_phase, pst_column,
