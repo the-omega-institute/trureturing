@@ -27,9 +27,9 @@ local notation "Slot" => {q : Q // ∃ b, C.Used I q b} × Fin p
 read times. Branches use the same original input at their parent and child;
 intermediate actions are actual waits. No runtime clock is added to Q. -/
 inductive SaturatedHistory : Nat → Slot → Finset Source → (Source → Nat) → Type where
-  | leaf (u : Slot) (x : Source) (t : Nat)
-      (occurs : C.Occurs I x t u) (last : t + 1 = I.length x) :
-      SaturatedHistory 0 u {x} (fun _ => t)
+  | leaf {a : Source → Nat} (u : Slot) (x : Source)
+      (occurs : C.Occurs I x (a x) u) (last : a x + 1 = I.length x) :
+      SaturatedHistory 0 u {x} a
   | fork {j : Nat} {u v w : Slot} {S T : Finset Source} {a b c : Source → Nat}
       (different : v ≠ w) (separate : Disjoint S T)
       (left : SaturatedHistory j v S b) (right : SaturatedHistory j w T c)
@@ -47,7 +47,7 @@ def TerminatesIn : Nat → Slot → Source → Prop
       C.output (C.readNext u.1.val u.2) = x
   | n + 1, u, x => ∃ v, C.Edge I u v ∧ TerminatesIn n v x
 
-private theorem occurrence_advance {x : Source} {t : Nat} {u : Slot}
+theorem occurrence_advance {x : Source} {t : Nat} {u : Slot}
     (h : C.Occurs I x t u) :
     (C.run hp hP x (t + 1)).2 = C.readNext u.1.val u.2 := by
   obtain ⟨d, y, k, hk, hq, hr, hd⟩ := u.1.property
@@ -65,11 +65,11 @@ private theorem terminal_no_edge {u v : Slot}
   have live := I.live x (i + 1) (by omega)
   exact live (advance ▸ halt)
 
-private theorem history_data {j : Nat} {u : Slot} {S : Finset Source}
+theorem history_data {j : Nat} {u : Slot} {S : Finset Source}
     {a : Source → Nat} (H : SaturatedHistory hp hP C I j u S a) :
     S.card = 2 ^ j ∧ S.Nonempty ∧ ∀ x ∈ S, C.Occurs I x (a x) u := by
   induction H with
-  | leaf u x t occurs last =>
+  | leaf u x occurs last =>
     exact ⟨by simp, by simp, by simpa using occurs⟩
   | @fork j u v w S T a b c different separate left right parent ln rn ihl ihr =>
     refine ⟨?_, ?_, parent⟩
@@ -101,7 +101,7 @@ private theorem unfolding_support [Finite Q] {j : Nat} {u : Slot} {S : Finset So
     {a : Source → Nat} (H : SaturatedHistory hp hP C I j u S a) :
     ∀ n x, TerminatesIn hp hP C I n u x ↔ n = j ∧ x ∈ S := by
   induction H with
-  | leaf u x t occurs last =>
+  | leaf u x occurs last =>
     have advance := occurrence_advance hp hP C I occurs
     have halt : C.action (C.readNext u.1.val u.2) = .halt := by
       rw [← advance, last]
