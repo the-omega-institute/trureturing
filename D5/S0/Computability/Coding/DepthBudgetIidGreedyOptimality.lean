@@ -90,6 +90,17 @@ noncomputable def truncatedMass {α : Type*} [Fintype α] [DecidableEq α]
 noncomputable def codeMass {α : Type*} (p : α → ℝ) (F : Set (List α)) : ℝ≥0∞ :=
   ∑' v : F, ENNReal.ofReal (wordMass p v.1)
 
+/-- Membership in the canonical finite set of all words at a depth. -/
+theorem mem_words {α : Type*} [Fintype α] [DecidableEq α]
+    (v : List α) (n : ℕ) : v ∈ words n ↔ v.length = n := by
+  simp only [words, Finset.mem_image, Finset.mem_univ, true_and]
+  exact ⟨fun ⟨u,h⟩ => h ▸ u.2, fun h => ⟨⟨v,h⟩,rfl⟩⟩
+
+/-- A canonical code level consists precisely of its words at that depth. -/
+theorem mem_level {α : Type*} [Fintype α] [DecidableEq α]
+    (F : Set (List α)) (v : List α) (n : ℕ) :
+    v ∈ level F n ↔ v.length = n ∧ v ∈ F := by simp [level, mem_words]
+
 /-- A single horizon-independent iid greedy code is legal and maximizes every finite
 truncation and the total countable mass, for arbitrary depth budgets and fixed ties. -/
 theorem depth_budget_iid_greedy_optimality {α : Type*} [Fintype α] [DecidableEq α]
@@ -261,11 +272,6 @@ theorem depth_budget_iid_greedy_optimality {α : Type*} [Fintype α] [DecidableE
   let o := fun n => priority p (tie n)
   let G := greedyCode o b
   change Legal b G ∧ _
-  have mw (v : List α) (n : ℕ) : v ∈ words n ↔ v.length = n := by
-    simp only [words, Finset.mem_image, Finset.mem_univ, true_and]
-    exact ⟨fun ⟨u,h⟩ => h ▸ u.2, fun h => ⟨⟨v,h⟩,rfl⟩⟩
-  have ml (F : Set (List α)) (v : List α) (n : ℕ) :
-      v ∈ level F n ↔ v.length = n ∧ v ∈ F := by simp [level, mw]
   have me (S : Finset (List α)) (v : List α) :
       v ∈ expand S ↔ ∃ u ∈ S, ∃ a, u ++ [a] = v := by
     simp [expand, Finset.mem_image, Prod.exists]
@@ -324,7 +330,7 @@ theorem depth_budget_iid_greedy_optimality {α : Type*} [Fintype α] [DecidableE
     · intro h; exact ⟨v.length,h⟩
   have lg (n : ℕ) : level G n = selected o b n := by
     ext v
-    rw [ml]
+    rw [mem_level]
     constructor
     · rintro ⟨hl,hv⟩; simpa [hl] using (gl v).mp hv
     · intro hv; exact ⟨sl n v hv, ⟨n,hv⟩⟩
@@ -359,7 +365,7 @@ theorem depth_budget_iid_greedy_optimality {α : Type*} [Fintype α] [DecidableE
     let R : ℕ → Finset (List α) := fun n =>
       (words n).filter (fun v => ∀ u ∈ F, ¬u <+: v)
     have mr (v : List α) (n : ℕ) : v ∈ R n ↔
-        v.length = n ∧ ∀ u ∈ F, ¬u <+: v := by simp [R, mw]
+        v.length = n ∧ ∀ u ∈ F, ¬u <+: v := by simp [R, mem_words]
     have split (v : List α) (n : ℕ) (hv : v.length = n+1) :
         ∃ a, v.take n ++ [a] = v := by
       obtain ⟨a,ha⟩ := List.length_eq_one_iff.mp (show (v.drop n).length = 1 by simp [hv])
@@ -375,7 +381,7 @@ theorem depth_budget_iid_greedy_optimality {α : Type*} [Fintype α] [DecidableE
         exact hF.2.1 (hup.eq_of_length_le (by simp) ▸ hu)
     have rc : ∀ n, R (n+1) = expand (R n) \ level F (n+1) := by
       intro n; ext v
-      rw [mr, Finset.mem_sdiff, me, ml]
+      rw [mr, Finset.mem_sdiff, me, mem_level]
       constructor
       · rintro ⟨hlen,havoid⟩
         obtain ⟨a,ha⟩ := split v n hlen
@@ -397,7 +403,7 @@ theorem depth_budget_iid_greedy_optimality {α : Type*} [Fintype α] [DecidableE
           (List.prefix_append _ _) (by rw [hwlen]; exact hlt))
     have cs : ∀ n, level F (n+1) ⊆ expand (R n) := by
       intro n v hv
-      obtain ⟨hlen,hvF⟩ := (ml _ _ _).mp hv
+      obtain ⟨hlen,hvF⟩ := (mem_level _ _ _).mp hv
       obtain ⟨a,ha⟩ := split v n hlen
       apply (me _ _).mpr
       refine ⟨v.take n,(mr _ _).mpr ⟨by simp [hlen],?_⟩,a,ha⟩
@@ -410,7 +416,7 @@ theorem depth_budget_iid_greedy_optimality {α : Type*} [Fintype α] [DecidableE
     have levzero (H : Set (List α)) (hH : [] ∉ H) : level H 0 = ∅ := by
       apply Finset.eq_empty_iff_forall_notMem.mpr
       intro v hv
-      obtain ⟨hl,hm⟩ := (ml _ _ _).mp hv
+      obtain ⟨hl,hm⟩ := (mem_level _ _ _).mp hv
       exact hH ((List.length_eq_zero_iff.mp hl) ▸ hm)
     have trunc (H : Set (List α)) (hH : [] ∉ H) : truncatedMass p H N =
         ∑ n ∈ Finset.range N, ∑ v ∈ level H (n+1), wordMass p v := by
@@ -425,8 +431,8 @@ theorem depth_budget_iid_greedy_optimality {α : Type*} [Fintype α] [DecidableE
     apply tsum_congr
     intro n
     let e : ((fun v : F => v.1.length) ⁻¹' {n}) ≃ ↥(level F n) :=
-      { toFun := fun v => ⟨v.1.1, (ml _ _ _).mpr ⟨v.2, v.1.2⟩⟩
-        invFun := fun v => ⟨⟨v.1, ((ml _ _ _).mp v.2).2⟩, ((ml _ _ _).mp v.2).1⟩
+      { toFun := fun v => ⟨v.1.1, (mem_level _ _ _).mpr ⟨v.2, v.1.2⟩⟩
+        invFun := fun v => ⟨⟨v.1, ((mem_level _ _ _).mp v.2).2⟩, ((mem_level _ _ _).mp v.2).1⟩
         left_inv := fun _ => rfl
         right_inv := fun _ => rfl }
     calc
@@ -449,14 +455,14 @@ theorem depth_budget_iid_greedy_optimality {α : Type*} [Fintype α] [DecidableE
         fun h => glegal.2.1 h.1, fun n => ?_⟩
       apply (Finset.card_le_card ?_).trans (glegal.2.2 n)
       intro v hv
-      exact (ml _ _ _).mpr ⟨((ml _ _ _).mp hv).1, ((ml _ _ _).mp hv).2.1⟩
+      exact (mem_level _ _ _).mpr ⟨((mem_level _ _ _).mp hv).1, ((mem_level _ _ _).mp hv).2.1⟩
     have htr : truncatedMass p K N = truncatedMass p G N := by
       apply Finset.sum_congr rfl
       intro n hn
       have hnN : n ≤ N := by have := Finset.mem_range.mp hn; omega
       have heq : level K n = level G n := by
         ext v
-        rw [ml, ml]
+        rw [mem_level, mem_level]
         change (v.length = n ∧ v ∈ G ∧ v.length ≤ N) ↔ (v.length = n ∧ v ∈ G)
         exact ⟨fun h => ⟨h.1,h.2.1⟩, fun h => ⟨h.1,h.2,by omega⟩⟩
       rw [heq]

@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: History-indexed permutations transport prefix codes, depth budgets and path masses. -/
+   digest: History-indexed permutations transport prefix codes, budgets and path masses. -/
 
 import D5.S0.Computability.Coding.DepthBudgetIidGreedyOptimality
 
@@ -119,20 +119,13 @@ theorem level_relabel [Fintype α] [DecidableEq α]
     (π : List α → Equiv.Perm α) (F : Set (List α)) (n : ℕ) :
     level (relabel π [] '' F) n = (level F n).image (relabel π []) := by
   classical
-  have membership (H : Set (List α)) (w : List α) :
-      w ∈ level H n ↔ w.length = n ∧ w ∈ H := by
-    simp only [level, words, Finset.mem_filter, Finset.mem_image, Finset.mem_univ,
-      true_and]
-    constructor
-    · rintro ⟨⟨v, rfl⟩, hw⟩; exact ⟨v.2, hw⟩
-    · rintro ⟨hl, hw⟩; exact ⟨⟨⟨w, hl⟩, rfl⟩, hw⟩
   ext w
-  rw [membership, Finset.mem_image]
+  rw [mem_level, Finset.mem_image]
   constructor
   · rintro ⟨hl, v, hv, rfl⟩
-    exact ⟨v, (membership F v).mpr ⟨(relabel_length π [] v) ▸ hl, hv⟩, rfl⟩
+    exact ⟨v, (mem_level F v n).mpr ⟨(relabel_length π [] v) ▸ hl, hv⟩, rfl⟩
   · rintro ⟨v, hv, rfl⟩
-    obtain ⟨hl, hm⟩ := (membership F v).mp hv
+    obtain ⟨hl, hm⟩ := (mem_level F v n).mp hv
     exact ⟨(relabel_length π [] v).trans hl, v, hm, rfl⟩
 
 /-- The same tree bijection transports a legal code and every finite mass. -/
