@@ -452,7 +452,7 @@ public sealed partial class CleanLanesCommandTests
         private void AddWorktree(string branch, string path) =>
             Git(repository.Path, "worktree", "add", "-b", branch, path, "dev");
 
-        private static string Git(string root, params string[] arguments) =>
+        internal static string Git(string root, params string[] arguments) =>
             TestGit.Run(root, arguments);
     }
 

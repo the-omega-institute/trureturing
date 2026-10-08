@@ -49,6 +49,7 @@ internal static partial class CleanLanesCommand
         {
             var root = Path.GetFullPath(repositoryRoot);
             var options = ParseArguments(arguments);
+            Func<IReadOnlySet<string>?> readHostActivity = () => TryReadHostActivity(root, runner);
             var baseCommit = ResolveCommit(root, options.Base, runner);
             var commonGitDirectory = ResolveCommonGitDirectory(root, runner);
             var currentGitDirectory = ResolveGitDirectory(root, runner);
@@ -69,7 +70,8 @@ internal static partial class CleanLanesCommand
                 events,
                 runner,
                 now,
-                options.ActivePaths);
+                options.ActivePaths,
+                readHostActivity);
             if (!options.LanesOnly)
             {
                 // 建树时的回收够不到这两类:判官树的判据(未注册 / 无 .git 的快照)
@@ -196,7 +198,8 @@ internal static partial class CleanLanesCommand
         ICollection<CleanLaneEvent> events,
         IWorktreeProcessRunner runner,
         DateTimeOffset now,
-        IReadOnlySet<string> activePaths)
+        IReadOnlySet<string> activePaths,
+        Func<IReadOnlySet<string>?> readHostActivity)
     {
         var remainingPaths = inventory.Select(static item => item.Path).ToHashSet(StringComparer.Ordinal);
         foreach (var item in inventory.OrderByDescending(static item => item.Path.Length))
@@ -241,12 +244,14 @@ internal static partial class CleanLanesCommand
             if (item.Locked)
             {
                 var lockedLane = ProbeLockedLane(
+                    repositoryRoot,
                     item,
                     baseCommit,
                     commonGitDirectory,
                     runner,
                     now,
-                    activePaths);
+                    activePaths,
+                    readHostActivity);
                 if (!lockedLane.Eligible)
                 {
                     events.Add(BlockedWorktree(item, lockedLane.Reason));
@@ -261,7 +266,9 @@ internal static partial class CleanLanesCommand
                         baseCommit,
                         runner,
                         now,
-                        lockedLane);
+                        lockedLane,
+                        activePaths,
+                        readHostActivity);
                     events.Add(RemovalEvent(item, removal));
                     if (removal.Outcome == LaneRemovalOutcome.Removed) remainingPaths.Remove(item.Path);
                     continue;

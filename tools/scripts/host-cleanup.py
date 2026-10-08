@@ -312,6 +312,7 @@ def main(arguments=None):
     disk = commands.add_parser("check-disk", help="reject worktree creation below 5%% available disk space")
     disk.add_argument("--path", type=Path, action="append", required=True)
     disk.add_argument("--allow-low-disk", action="store_true")
+    commands.add_parser("active-paths", help="read current host activity for locked worktree reclamation")
     clean = commands.add_parser("clean", help="preview inactive owned artifacts; --delete executes")
     clean.add_argument("--repository", type=Path, default=REPOSITORY)
     clean.add_argument("--base", default="origin/dev")
@@ -325,6 +326,10 @@ def main(arguments=None):
     clean.add_argument("--verbose", action="store_true", help="list individual paths, including kept artifacts")
     options = parser.parse_args(arguments)
     try:
+        if options.command == "active-paths":
+            codex = Path(os.environ.get("CODEX_HOME") or Path.home() / ".codex")
+            print(json.dumps(sorted(str(path) for path in active_paths(codex))))
+            return 0
         if options.command == "check-disk":
             for report in check_disk(options.path, options.allow_low_disk):
                 emit("worktree_disk", **report)

@@ -14,10 +14,11 @@ internal static partial class CleanLanesCommand
         string? ContentFingerprint,
         string? HistoryFingerprint,
         string? EvidenceFingerprint,
-        string? ActivityFingerprint)
+        string? ActivityFingerprint,
+        string? LockFingerprint)
     {
         internal static LockedLaneObservation Retained(string reason) =>
-            new(false, reason, null, null, null, null);
+            new(false, reason, null, null, null, null, null);
     }
 
     private enum ContentProbeResult
@@ -30,12 +31,14 @@ internal static partial class CleanLanesCommand
     private static readonly UTF8Encoding StrictContentUtf8 = new(false, true);
 
     private static LockedLaneObservation ProbeLockedLane(
+        string repositoryRoot,
         RegisteredWorktree item,
         string baseCommit,
         string commonGitDirectory,
         IWorktreeProcessRunner runner,
         DateTimeOffset now,
-        IReadOnlySet<string> activePaths)
+        IReadOnlySet<string> activePaths,
+        Func<IReadOnlySet<string>?> readHostActivity)
     {
         if (item.LockReason is null or { Length: 0 })
             return LockedLaneObservation.Retained("locked_unknown");
@@ -47,12 +50,9 @@ internal static partial class CleanLanesCommand
                 : LockedLaneObservation.Retained("locked_intentional");
         }
 
-        if (activePaths.Any(path =>
-                string.Equals(path, item.Path, StringComparison.Ordinal)
-                || path.StartsWith(
-                    Path.TrimEndingDirectorySeparator(item.Path) + Path.DirectorySeparatorChar,
-                    StringComparison.Ordinal)))
-            return LockedLaneObservation.Retained("locked_activity");
+        var hostActivity = HostActivityBlockReason(item, activePaths, readHostActivity);
+        if (hostActivity is not null)
+            return LockedLaneObservation.Retained(hostActivity);
 
         var evidence = TryReadInitializationEvidence(item, commonGitDirectory);
         if (evidence is null)
@@ -84,6 +84,10 @@ internal static partial class CleanLanesCommand
         var history = TryReadHistoryFingerprint(item.GitDirectory!);
         if (history is null)
             return LockedLaneObservation.Retained("locked_evidence");
+        var retainedHistory = ProbeRetainedHistory(repositoryRoot, item, baseCommit, runner);
+        if (retainedHistory != ContentProbeResult.Verified)
+            return LockedLaneObservation.Retained(retainedHistory == ContentProbeResult.Changed
+                ? "locked_history" : "locked_evidence");
 
         return new LockedLaneObservation(
             true,
@@ -91,7 +95,8 @@ internal static partial class CleanLanesCommand
             content,
             history,
             evidence,
-            activity);
+            activity,
+            FileState(Path.Combine(item.GitDirectory!, "locked")));
     }
 
     private static bool IsInitializationLock(string reason) =>
@@ -119,7 +124,10 @@ internal static partial class CleanLanesCommand
             var locked = ReadSingleLine(Path.Combine(item.GitDirectory, "locked"));
             var commondir = ReadSingleLine(Path.Combine(item.GitDirectory, "commondir"));
             var metadataHead = ReadSingleLine(Path.Combine(item.GitDirectory, "HEAD"));
-            if (!string.Equals(locked, item.LockReason, StringComparison.Ordinal)
+            if ((item.Locked
+                    ? !string.Equals(locked, item.LockReason, StringComparison.Ordinal)
+                    : File.Exists(Path.Combine(item.GitDirectory, "locked")))
+                || Directory.Exists(Path.Combine(item.GitDirectory, "locked"))
                 || commondir is null
                 || metadataHead is null)
                 return null;
@@ -131,7 +139,7 @@ internal static partial class CleanLanesCommand
                 return null;
 
             var state = new StringBuilder();
-            foreach (var name in new[] { "locked", "gitdir", "commondir", "HEAD", "index" })
+            foreach (var name in new[] { "gitdir", "commondir", "HEAD", "index" })
             {
                 var path = Path.Combine(item.GitDirectory, name);
                 state.Append(name).Append('=').Append(FileState(path)).Append('\n');
@@ -222,6 +230,25 @@ internal static partial class CleanLanesCommand
             var indexPath = Path.Combine(item.GitDirectory!, "index");
             if (Directory.Exists(indexPath)) return ContentProbeResult.Unknown;
             var indexPresent = File.Exists(indexPath);
+            if (indexPresent)
+            {
+                var staged = Decode(RunGit(item.Path, ["ls-files", "--stage", "-z"], runner,
+                    "could not read staged content").StandardOutput);
+                var indexedPaths = new HashSet<string>(StringComparer.Ordinal);
+                foreach (var record in staged.Split('\0', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    var tab = record.IndexOf('\t');
+                    if (tab < 0) return ContentProbeResult.Unknown;
+                    var fields = record[..tab].Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                    if (fields.Length != 3) return ContentProbeResult.Unknown;
+                    var path = record[(tab + 1)..];
+                    if (fields[2] != "0" || !indexedPaths.Add(path)
+                        || !expected.TryGetValue(path, out var entry)
+                        || fields[0] != entry.Mode || fields[1] != entry.ObjectId)
+                        return ContentProbeResult.Changed;
+                }
+                if (indexedPaths.Count != expected.Count) return ContentProbeResult.Changed;
+            }
             if (actual is null || (indexPresent && actual.Count != expected.Count)
                 || actual.Keys.Any(path => !expected.ContainsKey(path)))
                 return ContentProbeResult.Changed;

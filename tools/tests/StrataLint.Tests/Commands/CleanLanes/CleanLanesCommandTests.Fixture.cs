@@ -387,7 +387,7 @@ public sealed partial class CleanLanesCommandTests
             return CleanLanesCommand.Run(
                 repository.Path,
                 allArguments,
-                new ProductionWorktreeProcessRunner(),
+                CreateRunner(),
                 [temp.Path],
                 now);
         }
@@ -411,7 +411,10 @@ public sealed partial class CleanLanesCommandTests
             ProcessScript? script = null) =>
             new(
                 inner,
-                script ?? (static (_, _, _) => null));
+                (fileName, arguments, workingDirectory) =>
+                    script?.Invoke(fileName, arguments, workingDirectory)
+                    ?? (fileName == "python3" && arguments.LastOrDefault() == "active-paths"
+                        ? new ProcessOutput(0, Encoding.UTF8.GetBytes("[]"), []) : null));
 
         private CommandResult RunCore(
             IWorktreeProcessRunner runner,

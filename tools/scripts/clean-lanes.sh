@@ -39,7 +39,7 @@ done
 arguments=(clean-lanes --base "$BASE_REF")
 if [[ "$FORCE" == "1" ]]; then arguments+=(--force); fi
 if [[ "$LANES_ONLY" == "1" ]]; then arguments+=(--lanes-only); fi
-for active_path in "${ACTIVE_PATHS[@]}"; do arguments+=(--active-path "$active_path"); done
+for active_path in ${ACTIVE_PATHS[@]+"${ACTIVE_PATHS[@]}"}; do arguments+=(--active-path "$active_path"); done
 
 exec dotnet run \
   --project "$ROOT/tools/StrataLint.Cli/StrataLint.Cli.csproj" \

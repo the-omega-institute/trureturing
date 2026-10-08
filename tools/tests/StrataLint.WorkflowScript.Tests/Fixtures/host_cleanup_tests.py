@@ -245,6 +245,50 @@ class HostCleanupTests(unittest.TestCase):
         self.assertEqual(0, result.returncode)
         self.assertIn("5% available disk space", result.stdout)
 
+    def test_canonical_bash_wrapper_handles_empty_and_nonempty_active_arguments(self):
+        workspace = tempfile.TemporaryDirectory(prefix="clean-lanes-wrapper-")
+        self.addCleanup(workspace.cleanup)
+        repository = Path(workspace.name) / "checkout"
+        scripts = repository / "tools/scripts"
+        scripts.mkdir(parents=True)
+        shutil.copy(SCRIPT.parents[1] / "Makefile", repository / "tools/Makefile")
+        shutil.copy(SCRIPT.with_name("clean-lanes.sh"), scripts / "clean-lanes.sh")
+        bin_dir = self.root / "wrapper bin"
+        bin_dir.mkdir()
+        dotnet = bin_dir / "dotnet"
+        dotnet.write_text("#!" + sys.executable + "\nimport json,sys\nprint(json.dumps(sys.argv[1:]))\n")
+        dotnet.chmod(0o700)
+        env = dict(os.environ, PATH=str(bin_dir) + os.pathsep + os.environ["PATH"])
+        for force in (False, True):
+            result = subprocess.run(
+                ["make", "--no-print-directory", "-C", str(repository / "tools"),
+                 "clean-lanes", "BASE=HEAD", "FORCE=" + str(int(force))],
+                env=env, capture_output=True, text=True)
+            self.assertEqual(0, result.returncode, result.stderr)
+            args = json.loads(result.stdout)
+            self.assertEqual(["clean-lanes", "--base", "HEAD"] + (["--force"] if force else []),
+                             args[args.index("--") + 1:])
+        paths = [str(self.root / "active path"), str(self.root / "literal $(touch sentinel) `touch other`")]
+        result = subprocess.run(
+            ["/bin/bash", str(scripts / "clean-lanes.sh"), "--base", "HEAD", "--lanes-only",
+             "--active-path", paths[0], "--active-path", paths[1]],
+            cwd=repository, env=env, capture_output=True, text=True)
+        self.assertEqual(0, result.returncode, result.stderr)
+        args = json.loads(result.stdout)
+        self.assertEqual(["clean-lanes", "--base", "HEAD", "--lanes-only", "--active-path", paths[0],
+                          "--active-path", paths[1]], args[args.index("--") + 1:])
+        self.assertFalse((repository / "sentinel").exists())
+        self.assertFalse((repository / "other").exists())
+
+    def test_activity_command_reuses_sampler_and_fails_closed(self):
+        output = io.StringIO()
+        with patch.object(cleanup, "active_paths", return_value={self.root}), contextlib.redirect_stdout(output):
+            self.assertEqual(0, cleanup.main(["active-paths"]))
+        self.assertEqual([str(self.root)], json.loads(output.getvalue()))
+        with patch.object(cleanup, "active_paths", side_effect=OSError("activity unavailable")), \
+             contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
+            self.assertEqual(1, cleanup.main(["active-paths"]))
+
     def test_inventory_failure_reports_already_removed_artifacts(self):
         artifact = self.old_file(self.root / "tmp" / "old-output")
         options = cleanup.argparse.Namespace(
