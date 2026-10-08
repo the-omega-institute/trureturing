@@ -146,4 +146,7 @@ gate:
 	dotnet "$$cli" check-delta --protected-base "$$(git rev-parse --verify '$(BASE)^{commit}')" --candidate-lean-report "$(LEAN_REPORT)"
 
 compiled-judge-test:
-	@$(MAKE) lean LEAN_TARGETS="regInspector/LeanInformationAuditRegTests regInspector/compiledJudgeTests leanInspector/reportInspector" && lake -d tools/lean-inspector-reg env .lake/build/lean-inspector/reg/bin/compiledJudgeTests
+	@$(MAKE) lean LEAN_TARGETS="regInspector/LeanInformationAuditRegTests regInspector/compiledJudgeTests leanInspector/reportInspector \
+		Reg.Catalogs.IffRegistrations Reg.Catalogs.PointwiseDisequalityRegistrations.SealedCatalog \
+		Reg.Catalogs.SharedInformationRoot.SealedCatalog Reg.D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit" && \
+		lake -d tools/lean-inspector-reg env .lake/build/lean-inspector/reg/bin/compiledJudgeTests

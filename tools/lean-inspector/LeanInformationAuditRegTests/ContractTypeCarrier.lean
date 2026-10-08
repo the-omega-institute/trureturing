@@ -1,9 +1,7 @@
 import LeanInformationAuditRegTests.CompiledFixtureReader
-import LeanInformationAuditRegTests.ContractGuards
-import LeanInformationAuditRegTests.ContractTypeCarrierFixture
 
 namespace LeanInformationAuditRegTests.ContractTypeCarrier
-open Lean Meta Elab Command LeanInformationAudit.Contract
+open Lean LeanInformationAudit.Contract
 private def checkTest (label : String) (ok : Bool) : IO Unit :=
   unless ok do throw <| IO.userError s!"compiled.fixture:{label}"
 
