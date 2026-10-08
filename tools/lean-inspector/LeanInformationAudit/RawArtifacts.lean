@@ -117,8 +117,11 @@ unsafe def sharedModules (targets : Array (Name × Array Name)) (statementOnly :
     let (imports, typed, regions) ← importFact target
     for region in regions.reverse do region.free
     facts.modify (·.insert target (imports, typed))
-  let rec visit (name : Name) (seen : NameSet) : IO NameSet := do
-    if seen.contains name then return seen
+  let visits ← IO.mkRef ({} : NameMap (Nat × Bool))
+  let rec visit (target : Nat) (name : Name) : IO Unit := do
+    let previous := (← visits.get).find? name
+    if previous.any (fun item => item.1 == target || item.2) then return
+    visits.modify (·.insert name (target, previous.isSome))
     let fact ← match (← facts.get).find? name with
       | some fact => pure fact
       | none => do
@@ -126,18 +129,15 @@ unsafe def sharedModules (targets : Array (Name × Array Name)) (statementOnly :
         for region in regions.reverse do region.free
         facts.modify (·.insert name (imports, false))
         pure (imports, false)
-    let mut seen := seen.insert name
-    for dependency in fact.1 do seen ← visit dependency seen
-    return seen
-  let mut counts : NameMap Nat := {}
-  for (target, claims) in targets do
-    let mut seen ← visit target {}
-    for claim in claims do seen ← visit claim seen
+    for dependency in fact.1 do visit target dependency
+  for index in [:targets.size] do
+    let (target, claims) := targets[index]!
+    visit index target
+    for claim in claims do visit index claim
     if !statementOnly && ((← facts.get).find? target).any (·.2) then
-      seen ← visit `LeanInformationAudit.TemplateEnrollment seen
-    for name in seen.toArray do counts := counts.insert name ((counts.find? name).getD 0 + 1)
-  return counts.foldl (fun shared name count =>
-    if count > 1 then shared.insert name else shared) {}
+      visit index `LeanInformationAudit.TemplateEnrollment
+  return (← visits.get).foldl (fun shared name item =>
+    if item.2 then shared.insert name else shared) {}
 
 /-- Empty the last owning root before the caller frees any mapped contents.
 The noinline return boundary also destroys the store's metadata and maps. -/
@@ -184,6 +184,7 @@ Only detached declaration/owner names survive; a collision rereads its owner. -/
 unsafe def checkBatchConstants (base store : Store) (seen : IO.Ref (NameMap Name)) : IO Unit := do
   for owner in store.moduleOrder do
     if base.modules.contains owner then continue
+    let ownedOwner := ownName owner
     let some data := store.modules.find? owner
       | throw <| IO.userError s!"raw.missing_module:{owner}"
     for info in data.constants do
@@ -193,7 +194,7 @@ unsafe def checkBatchConstants (base store : Store) (seen : IO.Ref (NameMap Name
           for region in regions.reverse do region.free
           unless compatible do
             throw <| IO.userError s!"raw.conflicting_constant:{owner}:{info.name}"
-      else seen.modify (·.insert (ownName info.name) (ownName owner))
+      else seen.modify (·.insert (ownName info.name) ownedOwner)
 
 def Store.getModule (store : Store) (name : Name) : IO ModuleData := do
   let some data := store.modules.find? name
