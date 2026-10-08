@@ -67,14 +67,15 @@ abbrev Operator (n : ℕ) := Matrix ((Fin n → Fin 2)) ((Fin n → Fin 2)) ℂ
 def Phase (c : ℂ) : Prop := c = 1 ∨ c = -1 ∨ c = Complex.I ∨ c = -Complex.I
 private def letterProduct : Pauli → Pauli → Pauli | .I, q => q | p, .I => p | .X, .X => .I | .Y, .Y => .I | .Z, .Z => .I | .X, .Y => .Z | .Y, .X => .Z | .X, .Z => .Y | .Z, .X => .Y | .Y, .Z => .X | .Z, .Y => .X
 private def letterPhase : Pauli → Pauli → ℂ | .X, .Y => Complex.I | .Y, .Z => Complex.I | .Z, .X => Complex.I | .Y, .X => -Complex.I | .Z, .Y => -Complex.I | .X, .Z => -Complex.I | _, _ => 1
-private def wordUnit {n : ℕ} (w : (Fin n → Pauli)) : (Operator n)ˣ := by
-  have tensor_one {n : ℕ} : tensorOp (fun _ : Fin n => (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 1 := by classical
-    ext x y; simp only [tensorOp, Matrix.of_apply, Matrix.one_apply, Fintype.prod_boole, ← funext_iff]
+lemma tensor_one {n : ℕ} : tensorOp (fun _ : Fin n => (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 1 := by classical
+  ext x y; simp only [tensorOp, Matrix.of_apply, Matrix.one_apply, Fintype.prod_boole, ← funext_iff]
+def wordUnit {n : ℕ} (w : (Fin n → Pauli)) : (Operator n)ˣ := by
   have tensor_mul {n : ℕ} (M N : Fin n → Matrix (Fin 2) (Fin 2) ℂ) : tensorOp M * tensorOp N = tensorOp fun i => M i * N i := (by classical
     ext x z; simp only [tensorOp, Matrix.mul_apply, Matrix.of_apply]; simp_rw [← Finset.prod_mul_distrib]; rw [Finset.prod_univ_sum, Fintype.piFinset_univ])
   have pauli_sq (p : Pauli) : pauliMatrix p * pauliMatrix p = 1 := (by cases p <;> ext i j <;> fin_cases i <;> fin_cases j <;> simp [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two])
   have word_sq {n : ℕ} (w : (Fin n → Pauli)) : wordOp w * wordOp w = 1 := (by unfold wordOp; rw [tensor_mul]; simp_rw [pauli_sq]; exact tensor_one)
   exact ⟨wordOp w, wordOp w, word_sq w, word_sq w⟩
+lemma word_one {n : ℕ} : wordOp (fun _ : Fin n => Pauli.I) = 1 := tensor_one
 def pauliGroup (n : ℕ) : Subgroup (Operator n)ˣ := by
   have tensor_one {n : ℕ} : tensorOp (fun _ : Fin n => (1 : Matrix (Fin 2) (Fin 2) ℂ)) = 1 := by classical
     ext x y; simp only [tensorOp, Matrix.of_apply, Matrix.one_apply, Fintype.prod_boole, ← funext_iff]
@@ -87,7 +88,6 @@ def pauliGroup (n : ℕ) : Subgroup (Operator n)ˣ := by
   have tensor_smul {n : ℕ} (c : Fin n → ℂ) (M : Fin n → Matrix (Fin 2) (Fin 2) ℂ) : tensorOp (fun i => c i • M i) = (∏ i, c i) • tensorOp M := (by ext x y; simp [tensorOp, Finset.prod_mul_distrib])
   have letter_phase (p q : Pauli) : Phase (letterPhase p q) := (by cases p <;> cases q <;> simp [letterPhase, Phase])
   have letter_mul (p q : Pauli) : pauliMatrix p * pauliMatrix q = letterPhase p q • pauliMatrix (letterProduct p q) := (by cases p <;> cases q <;> ext i j <;> fin_cases i <;> fin_cases j <;> simp [letterPhase, letterProduct, pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two])
-  have word_one {n : ℕ} : wordOp (fun _ : Fin n => Pauli.I) = 1 := tensor_one
   have word_mul {n : ℕ} (v w : (Fin n → Pauli)) : wordOp v * wordOp w = (∏ i, letterPhase (v i) (w i)) • wordOp (fun i => letterProduct (v i) (w i)) := (by unfold wordOp; rw [tensor_mul]; simp_rw [letter_mul]; exact tensor_smul _ _)
   exact {
     carrier := {u | ∃ c : ℂ, Phase c ∧ ∃ w : (Fin n → Pauli), (u : Operator n) = c • wordOp w}
@@ -106,13 +106,13 @@ structure StabilizerGroup (n : ℕ) where
   excludes_neg_identity : (-1 : (Operator n)ˣ) ∉ subgroup
   maximal : ∀ T : Subgroup (Operator n)ˣ, T ≤ pauliGroup n →
     (∀ u ∈ T, ∀ v ∈ T, u*v = v*u) → (-1 : (Operator n)ˣ) ∉ T → subgroup ≤ T → T = subgroup
-private lemma word_expansion {n : ℕ} (A : Operator n) : A = ∑ w : (Fin n → Pauli), (((2 : ℂ)^n)⁻¹ * Matrix.trace (wordOp w * A)) • wordOp w := by
+lemma tensor_trace {n : ℕ} (M : Fin n → Matrix (Fin 2) (Fin 2) ℂ) : Matrix.trace (tensorOp M) = ∏ i, Matrix.trace (M i) := (by classical
+  simp only [Matrix.trace, Matrix.diag, tensorOp, Matrix.of_apply]; rw [Finset.prod_univ_sum, Fintype.piFinset_univ])
+lemma pauli_trace_pair (p q : Pauli) : Matrix.trace (pauliMatrix p * pauliMatrix q) = if p = q then 2 else 0 := (by cases p <;> cases q <;> simp [pauliMatrix, qubitX, qubitZ, Matrix.trace, Matrix.diag, Matrix.mul_apply, Fin.sum_univ_two] <;> norm_num)
+lemma word_expansion {n : ℕ} (A : Operator n) : A = ∑ w : (Fin n → Pauli), (((2 : ℂ)^n)⁻¹ * Matrix.trace (wordOp w * A)) • wordOp w := by
   have word_trace_pair {n : ℕ} (v w : (Fin n → Pauli)) : Matrix.trace (wordOp v * wordOp w) = if v = w then (2 : ℂ)^n else 0 := by
     have tensor_mul {n : ℕ} (M N : Fin n → Matrix (Fin 2) (Fin 2) ℂ) : tensorOp M * tensorOp N = tensorOp fun i => M i * N i := (by classical
       ext x z; simp only [tensorOp, Matrix.mul_apply, Matrix.of_apply]; simp_rw [← Finset.prod_mul_distrib]; rw [Finset.prod_univ_sum, Fintype.piFinset_univ])
-    have tensor_trace {n : ℕ} (M : Fin n → Matrix (Fin 2) (Fin 2) ℂ) : Matrix.trace (tensorOp M) = ∏ i, Matrix.trace (M i) := (by classical
-      simp only [Matrix.trace, Matrix.diag, tensorOp, Matrix.of_apply]; rw [Finset.prod_univ_sum, Fintype.piFinset_univ])
-    have pauli_trace_pair (p q : Pauli) : Matrix.trace (pauliMatrix p * pauliMatrix q) = if p = q then 2 else 0 := (by cases p <;> cases q <;> simp [pauliMatrix, qubitX, qubitZ, Matrix.trace, Matrix.diag, Matrix.mul_apply, Fin.sum_univ_two] <;> norm_num)
     classical
     unfold wordOp; rw [tensor_mul, tensor_trace]; simp_rw [pauli_trace_pair]
     simp only [Fintype.prod_ite_zero, ← funext_iff, Finset.prod_const, Finset.card_univ, Fintype.card_fin]
@@ -216,6 +216,8 @@ private lemma maximal_word {n : ℕ} (S : StabilizerGroup n) (w : (Fin n → Pau
   exact hn.1 (he ▸ htt)
 private def groupSpan {n : ℕ} (S : StabilizerGroup n) : Submodule ℂ (Operator n) := Submodule.span ℂ ((fun u : (Operator n)ˣ => (u : Operator n)) '' (S.subgroup : Set _))
 def CommonEigenvector {n : ℕ} (S : StabilizerGroup n) (v : State n) : Prop := ∀ u ∈ S.subgroup, ∃ eigen : ℂ, Matrix.mulVec (u : Operator n) v = eigen • v
+lemma pauli_hermitian (p : Pauli) : (pauliMatrix p).conjTranspose = pauliMatrix p := (by cases p <;> ext i j <;> fin_cases i <;> fin_cases j <;> simp [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply])
+lemma word_hermitian {n : ℕ} (w : (Fin n → Pauli)) : (wordOp w).conjTranspose = wordOp w := (by ext x y; simp only [wordOp, tensorOp, Matrix.of_apply, Matrix.conjTranspose_apply, star_prod]; apply Finset.prod_congr rfl; intro i _; exact congrFun (congrFun (pauli_hermitian (w i)) (x i)) (y i))
 private lemma projector_in_group_span {n : ℕ} (S : StabilizerGroup n) (v : State n) (hv : v ≠ 0) (he : CommonEigenvector S v) : rankOneDensity v ∈ groupSpan S := by
   have word_comm_or_anti {n : ℕ} (v w : (Fin n → Pauli)) : wordOp v * wordOp w = wordOp w * wordOp v ∨ wordOp v * wordOp w = -(wordOp w * wordOp v) := by
     have tensor_mul {n : ℕ} (M N : Fin n → Matrix (Fin 2) (Fin 2) ℂ) : tensorOp M * tensorOp N = tensorOp fun i => M i * N i := (by
@@ -259,9 +261,7 @@ private lemma projector_in_group_span {n : ℕ} (S : StabilizerGroup n) (v : Sta
       classical
       ext x z; simp only [tensorOp, Matrix.mul_apply, Matrix.of_apply]; simp_rw [← Finset.prod_mul_distrib]; rw [Finset.prod_univ_sum, Fintype.piFinset_univ])
     have pauli_sq (p : Pauli) : pauliMatrix p * pauliMatrix p = 1 := (by cases p <;> ext i j <;> fin_cases i <;> fin_cases j <;> simp [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two])
-    have pauli_hermitian (p : Pauli) : (pauliMatrix p).conjTranspose = pauliMatrix p := (by cases p <;> ext i j <;> fin_cases i <;> fin_cases j <;> simp [pauliMatrix, qubitX, qubitZ, Matrix.mul_apply, Fin.sum_univ_two, Matrix.conjTranspose_apply])
     have word_sq {n : ℕ} (w : (Fin n → Pauli)) : wordOp w * wordOp w = 1 := (by unfold wordOp; rw [tensor_mul]; simp_rw [pauli_sq]; exact tensor_one)
-    have word_hermitian {n : ℕ} (w : (Fin n → Pauli)) : (wordOp w).conjTranspose = wordOp w := (by ext x y; simp only [wordOp, tensorOp, Matrix.of_apply, Matrix.conjTranspose_apply, star_prod]; apply Finset.prod_congr rfl; intro i _; exact congrFun (congrFun (pauli_hermitian (w i)) (x i)) (y i))
     have stabilizer_involution {n : ℕ} (S : StabilizerGroup n) {u : (Operator n)ˣ} (hu : u ∈ S.subgroup) : u*u = 1 := (by obtain ⟨c, hc, w, hw⟩ := S.pauli hu; obtain h | h := stabilizer_real_phase S hu hc hw; all_goals apply Units.ext; simp [hw, h, word_sq])
     have stabilizer_hermitian {n : ℕ} (S : StabilizerGroup n) {u : (Operator n)ˣ} (hu : u ∈ S.subgroup) : (u : Operator n).conjTranspose = (u : Operator n) := (by obtain ⟨c, hc, w, hw⟩ := S.pauli hu; obtain h | h := stabilizer_real_phase S hu hc hw; all_goals simp [hw, h, word_hermitian])
     classical

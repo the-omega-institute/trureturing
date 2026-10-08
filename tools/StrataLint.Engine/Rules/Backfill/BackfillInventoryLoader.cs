@@ -80,8 +80,7 @@ internal sealed partial class BackfillInventoryDocument
         string sourceId,
         string sourcePath,
         string atomizer,
-        object? rawEntry,
-        bool projectBaselineReferences = false)
+        object? rawEntry)
     {
         var entry = Mapping(rawEntry, $"source {sourceId} entries must be mappings");
 
@@ -96,11 +95,6 @@ internal sealed partial class BackfillInventoryDocument
         var parsedFingerprints = new DigestionFingerprints(
             Scalar(fingerprints, "raw_sha256", $"entry {atomId} raw_sha256"),
             Scalar(fingerprints, "normalized_sha256", $"entry {atomId} normalized_sha256"));
-        if (projectBaselineReferences && DigestionFingerprint.IsCanonicalSha256(parsedFingerprints.RawSha256))
-        {
-            atomId = parsedFingerprints.RawSha256["sha256:".Length..];
-        }
-
         var coverage = ParseCoverage(
             atomId,
             List(entry, "coverage_gids", $"entry {atomId} coverage_gids must be a list"));
@@ -416,7 +410,7 @@ internal sealed partial class BackfillInventoryDocument
 
 internal static partial class BackfillInventoryLoader
 {
-    internal static readonly AsyncLocal<Action<RepositorySnapshot, bool>?> DocumentLoading = new();
+    internal static readonly AsyncLocal<Action<RepositorySnapshot>?> DocumentLoading = new();
 
     private const string LegacyStorageMessage =
         "legacy digestion ledger is unsupported; migrate to directory storage";
@@ -444,66 +438,12 @@ internal static partial class BackfillInventoryLoader
                 || (state[0] == "nonpropositional" && state[1] == "inapplicable"));
     }
 
-    internal static bool IsInputPath(string path) =>
-        path.StartsWith(RootPath, StringComparison.Ordinal)
-        || string.Equals(path, RelativePath, StringComparison.Ordinal)
-        || IsD5LeanPath(path);
-
-    internal static RepositorySnapshot ProjectInputSnapshot(RepositorySnapshot snapshot)
-    {
-        ArgumentNullException.ThrowIfNull(snapshot);
-        return RepositorySnapshot.Create(snapshot.Files
-            .Where(static pair => IsInputPath(pair.Key.Value))
-            .ToImmutableDictionary());
-    }
-
     internal static BackfillInventoryDocument Load(RepositorySnapshot snapshot) =>
         LoadSnapshot(snapshot, LoadCandidateDirectorySnapshot);
 
-    internal static BackfillInventoryDocument Load(
-        RepositorySnapshot snapshot,
-        DigestionEvaluationScope scope,
-        RawChangeSet changes)
-    {
-        ArgumentNullException.ThrowIfNull(changes);
-        var canonicalEncodingChanges = DigestionEvaluationScopes.ResolveChanges(scope, changes);
-        return LoadSnapshot(
-            snapshot,
-            candidate => LoadCandidateDirectorySnapshot(candidate, canonicalEncodingChanges));
-    }
-
-    internal static BackfillInventoryDocument LoadBaseline(RepositorySnapshot snapshot) =>
-        LoadSnapshot(snapshot, LoadBaselineDirectorySnapshot);
-
-    internal static BackfillInventoryDocument LoadCandidateDelta(
-        RepositorySnapshot candidate,
-        RepositorySnapshot baseline,
-        RawChangeSet changes)
-    {
-        ArgumentNullException.ThrowIfNull(candidate);
-        ArgumentNullException.ThrowIfNull(baseline);
-        ArgumentNullException.ThrowIfNull(changes);
-
-        var changed = changes.Paths
-            .Select(static path => path.Value)
-            .ToHashSet(StringComparer.Ordinal);
-        var files = ProjectInputSnapshot(candidate).Files.ToBuilder();
-
-        // Candidate-side parsing is authoritative only for the declared delta. For every
-        // unchanged backfill record still present in the candidate, feed the trusted baseline
-        // bytes to the strict loader. Candidate deletions are absent from the candidate ledger.
-        // This keeps historical projection quirks out of the candidate comparison while
-        // retaining the current tree for all query inputs (Lean, targets, and source files).
-        foreach (var (path, file) in baseline.Files
-                     .Where(static pair => IsCanonicalPath(pair.Key.Value))
-                     .Where(pair => candidate.TryGetFile(pair.Key.Value, out _))
-                     .Where(pair => !changed.Contains(pair.Key.Value)))
-        {
-            files[path] = file;
-        }
-
-        return Load(RepositorySnapshot.Create(files.ToImmutable()));
-    }
+    // Ledger consumers do not need the D5-wide TASK index.
+    internal static BackfillInventoryDocument LoadForDigestion(RepositorySnapshot snapshot) =>
+        LoadSnapshot(snapshot, static current => LoadCandidateDirectorySnapshot(current, deriveTickets: false));
 
     private static BackfillInventoryDocument LoadSnapshot(
         RepositorySnapshot snapshot,
@@ -592,30 +532,22 @@ internal static partial class BackfillInventoryLoader
 
     private static BackfillInventoryDocument LoadCandidateDirectorySnapshot(
         RepositorySnapshot snapshot) =>
-        LoadDirectorySnapshot(
-            snapshot,
-            static (text, path) => ParseCandidateSourceMetadata(text, path));
+        LoadCandidateDirectorySnapshot(snapshot, deriveTickets: true);
 
     private static BackfillInventoryDocument LoadCandidateDirectorySnapshot(
         RepositorySnapshot snapshot,
-        RawChangeSet? canonicalEncodingChanges) =>
+        bool deriveTickets) =>
         LoadDirectorySnapshot(
             snapshot,
-            (text, path) => ParseCandidateSourceMetadata(text, path, canonicalEncodingChanges));
-
-    private static BackfillInventoryDocument LoadBaselineDirectorySnapshot(
-        RepositorySnapshot snapshot) =>
-        LoadDirectorySnapshot(
-            snapshot,
-            ParseBaselineSourceMetadata,
-            projectBaselineReferences: true);
+            ParseCandidateSourceMetadata,
+            deriveTickets);
 
     private static BackfillInventoryDocument LoadDirectorySnapshot(
         RepositorySnapshot snapshot,
         Func<string, string, ParsedSourceMetadata> parseSourceMetadata,
-        bool projectBaselineReferences = false)
+        bool deriveTickets)
     {
-        DocumentLoading.Value?.Invoke(snapshot, projectBaselineReferences);
+        DocumentLoading.Value?.Invoke(snapshot);
         var metadata = snapshot.Files
             .Where(static pair => pair.Key.Value.StartsWith(RootPath, StringComparison.Ordinal)
                 && pair.Key.Value.EndsWith("/source.toml", StringComparison.Ordinal))
@@ -627,7 +559,6 @@ internal static partial class BackfillInventoryLoader
         }
 
         var sources = ImmutableArray.CreateBuilder<DigestionLedgerSource>();
-        var baselineAtomIds = new Dictionary<string, string>(StringComparer.Ordinal);
         foreach (var (metadataPath, metadataFile) in metadata)
         {
             var sourceRoot = metadataPath.Value[..^"source.toml".Length];
@@ -669,21 +600,7 @@ internal static partial class BackfillInventoryLoader
                     sourceId,
                     fields["path"].Single(),
                     fields["atomizer"].Single(),
-                    entry,
-                    projectBaselineReferences);
-                if (projectBaselineReferences)
-                {
-                    // Reference projection may be unambiguous even when historical buckets
-                    // repeat an atom. Keep every record below for candidate validation.
-                    if (!baselineAtomIds.TryAdd(atomId, parsedEntry.AtomId)
-                        && baselineAtomIds[atomId] != parsedEntry.AtomId)
-                    {
-                        throw new FormatException(
-                            $"ambiguous baseline atom reference: {atomId} maps to "
-                            + $"{baselineAtomIds[atomId]} and {parsedEntry.AtomId}");
-                    }
-                }
-
+                    entry);
                 entries.Add(parsedEntry);
             }
 
@@ -711,12 +628,9 @@ internal static partial class BackfillInventoryLoader
             }
         }
 
-        var loadedSources = sources.ToImmutable();
         return BackfillInventoryDocument.Create(
-            projectBaselineReferences
-                ? ProjectBaselineReferences(loadedSources, baselineAtomIds)
-                : loadedSources,
-            DeriveTickets(snapshot));
+            sources.ToImmutable(),
+            deriveTickets ? DeriveTickets(snapshot) : []);
     }
 
     internal static ImmutableArray<BackfillTicketReference> DeriveTickets(

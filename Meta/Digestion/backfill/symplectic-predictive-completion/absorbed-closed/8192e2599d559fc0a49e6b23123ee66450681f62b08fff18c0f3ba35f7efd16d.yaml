@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:8192e2599d559fc0a49e6b23123ee66450681f62b08fff18c0f3ba35f7efd16d
+  normalized_sha256: sha256:8192e2599d559fc0a49e6b23123ee66450681f62b08fff18c0f3ba35f7efd16d
+cas_ref: sha256:8192e2599d559fc0a49e6b23123ee66450681f62b08fff18c0f3ba35f7efd16d
+coverage_gids:
+  - gid: D5/S3/Quantum/Analysis/TightStateVectorSeries.positive_functional_vector_series_of_finite_rank_tightness
+    target_statement_id: sha256:13cdb60b739ac7fc456ac74e8ae43cf86aa01d06542a5104ea0fe3c2376f667f
+receipts:
+  unresolved_subitems: []

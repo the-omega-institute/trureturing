@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using static StrataLint.TestSupport.TestExecutable;
 using System.Text.RegularExpressions;
 using System.Text;
@@ -118,10 +119,6 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains("scribe-release-publish: export TARGET ?=", makefile, StringComparison.Ordinal);
         Assert.Contains("scribe-release-fetch: export DIGEST ?=", makefile, StringComparison.Ordinal);
         Assert.Contains(IngestScriptPath, Recipe(makefile, "ingest"), StringComparison.Ordinal);
-        Assert.Contains(
-            IngestScriptPath + " align-digestion-status",
-            Recipe(makefile, "align-digestion-status"),
-            StringComparison.Ordinal);
         Assert.Equal(
             $"\t@/bin/bash {IngestScriptPath} mathlib-reanchor \"$(BASE)\"",
             Recipe(makefile, "mathlib-reanchor"));
@@ -139,10 +136,6 @@ public sealed partial class MakeWorkflowTests
                 recipe,
                 StringComparison.Ordinal);
         }
-        Assert.Contains(
-            EchoResidualSummaryScriptPath,
-            Recipe(makefile, "echo-residual-summary"),
-            StringComparison.Ordinal);
         var gateRecipe = string.Join('\n', RecipeLines(makefile, "gate"));
         Assert.Contains("check-current", gateRecipe, StringComparison.Ordinal);
         Assert.Contains("check-delta", gateRecipe, StringComparison.Ordinal);
@@ -164,7 +157,7 @@ public sealed partial class MakeWorkflowTests
         Assert.Contains(PrOpenScriptPath, Recipe(makefile, "pr-open"), StringComparison.Ordinal);
         Assert.Contains("--head \"$(HEAD)\"", Recipe(makefile, "pr-open"), StringComparison.Ordinal);
         Assert.DoesNotContain("pr-update", makefile, StringComparison.Ordinal);
-        foreach (var removed in ToolsTargets.Except(["help", "test"], StringComparer.Ordinal))
+        foreach (var removed in ToolsTargets.Except(["help", "test", "filemap-conform"], StringComparer.Ordinal))
         {
             Assert.DoesNotContain($"\n{removed}:", "\n" + makefile, StringComparison.Ordinal);
         }

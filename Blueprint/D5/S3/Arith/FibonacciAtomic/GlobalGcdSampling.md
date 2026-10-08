@@ -78,7 +78,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.actual_quantity_s
 
 For all natural Q,k and natural pairs v, quantity(step^k(Q v_1,Q v_2)) equals Q times quantity(step^k(v)).
 
-**Theorem 1.7 (Threshold transport along the rank).**
+**Theorem 1.7 (Positive prime-power entry ranks).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.rank_facts`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.rank_facts` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural prime p and natural e>=1, zeroRank(p^e)>=3, p^e divides F(zeroRank(p^e)), and for every natural k, p^e divides F(k) exactly when zeroRank(p^e) divides k.
+
+**Theorem 1.8 (Threshold transport along the rank).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.phase_transport`
 
@@ -90,7 +102,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.phase_transport`
 
 For prime p, d>=1, natural s,t and integer x, equality of s and t modulo zeroRank(p^d) makes p^d dividing y(s+1,x) equivalent to p^d dividing y(t+1,x).
 
-**Theorem 1.8 (The threshold class of a unit parent hit).**
+**Theorem 1.9 (The threshold class of a unit parent hit).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.phase_from_unit`
 
@@ -102,7 +114,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.phase_from_unit`
 
 For prime p, d>=1, natural t,k and integer x, assume the first coordinate of step^t(x) is a unit modulo p^d and y(t+1,x) vanishes there. Then p^d divides y(k+1,x) exactly when k and t agree modulo zeroRank(p^d).
 
-**Definition 1.9 (Positive-time signed observation).**
+**Definition 1.10 (Positive-time signed observation).**
 
 $$\forall k:\mathbb{N}, (\forall x:\mathbb{Z}\times\mathbb{Z}, (\operatorname{y}\left(k, x\right) = (\operatorname{F}\left(k-1\right)) (x_{1})+(\operatorname{F}\left(k\right)) (x_{2})))$$
 
@@ -114,7 +126,7 @@ $$\forall k:\mathbb{N}, (\forall x:\mathbb{Z}\times\mathbb{Z}, (\operatorname{y}
 
 Subtraction on the natural index is truncated. Only positive indices are used by the theorem.
 
-**Definition 1.10 (Prime-local primitive state).**
+**Definition 1.11 (Prime-local primitive state).**
 
 $$\forall p:\mathbb{N}, (\forall x:\mathbb{Z}\times\mathbb{Z}, ((\operatorname{Primitive}\left(p, x\right)) \Leftrightarrow ((\neg(p \mid x_{1})) \lor (\neg(p \mid x_{2})))))$$
 
@@ -126,7 +138,7 @@ $$\forall p:\mathbb{N}, (\forall x:\mathbb{Z}\times\mathbb{Z}, ((\operatorname{P
 
 At least one signed coordinate is not divisible by p; integer coprimality of the coordinates is not required.
 
-**Definition 1.11 (Complete signed gcd answer).**
+**Definition 1.12 (Complete signed gcd answer).**
 
 $$\forall H:\mathbb{N}, (\forall k:\mathbb{N}, (\forall x:\mathbb{Z}\times\mathbb{Z}, (\operatorname{g}\left(H, k, x\right) = \operatorname{gcd}\left(\operatorname{natAbs}\left(\operatorname{y}\left(k, x\right)\right), H\right))))$$
 
@@ -138,7 +150,7 @@ $$\forall H:\mathbb{N}, (\forall k:\mathbb{N}, (\forall x:\mathbb{Z}\times\mathb
 
 The answer includes the zero signed observation and uses its natural absolute value.
 
-**Definition 1.12 (Actual forward-source gcd answer).**
+**Definition 1.13 (Actual forward-source gcd answer).**
 
 $$\forall H:\mathbb{N}, (\forall k:\mathbb{N}, (\forall v:\mathbb{N} \times \mathbb{N}, (\operatorname{gActual}\left(H, k, v\right) = \operatorname{gcd}\left(\operatorname{quantity}\left(\operatorname{stepIterate}\left(k, v\right)\right), H\right))))$$
 
@@ -150,7 +162,7 @@ $$\forall H:\mathbb{N}, (\forall k:\mathbb{N}, (\forall v:\mathbb{N} \times \mat
 
 The imported step is (a,b) maps to (b,a+b), quantity is 2a+3b, and stepIterate(k,v) is k forward steps. Thus this is the actual qM^k source observation, not an independently chosen list of residues.
 
-**Definition 1.13 (Unknown capped common content).**
+**Definition 1.14 (Unknown capped common content).**
 
 $$\forall p:\mathbb{N}, (\forall e:\mathbb{N}, (\forall x:\mathbb{Z}\times\mathbb{Z}, (\operatorname{content}\left(p, e, x\right) = \operatorname{gcd}\left(\operatorname{gcd}\left(\operatorname{natAbs}\left(x_{1}\right), \operatorname{natAbs}\left(x_{2}\right)\right), (p)^{e}\right))))$$
 
@@ -162,7 +174,7 @@ $$\forall p:\mathbb{N}, (\forall e:\mathbb{N}, (\forall x:\mathbb{Z}\times\mathb
 
 The natural capped common divisor includes the zero pair. minGcdTable(P,S,x) denotes the minimum of g(P,k,x) over k in the nonempty S.
 
-**Definition 1.14 (Actual affine root base).**
+**Definition 1.15 (Actual affine root base).**
 
 $$\forall p:\mathbb{N}, (\forall e:\mathbb{N}, (\forall t:\mathbb{N}, (\forall x:\mathbb{Z}\times\mathbb{Z}, (\operatorname{A}\left(p, e, t, x\right) = (\operatorname{natCast}\left(\operatorname{F}\left(\operatorname{r}\left((p)^{e-1}\right)-1\right), \operatorname{ZMod}\left(p\right)\right)) (\operatorname{intCast}\left(\operatorname{ediv}\left(\operatorname{y}\left(t+1, x\right), (p)^{e-1}\right), \operatorname{ZMod}\left(p\right)\right))))))$$
 
@@ -174,7 +186,7 @@ $$\forall p:\mathbb{N}, (\forall e:\mathbb{N}, (\forall t:\mathbb{N}, (\forall x
 
 The signed quotient is taken before coercion to ZMod(p).
 
-**Definition 1.15 (Actual affine root slope).**
+**Definition 1.16 (Actual affine root slope).**
 
 $$\forall p:\mathbb{N}, (\forall e:\mathbb{N}, (\forall t:\mathbb{N}, (\forall x:\mathbb{Z}\times\mathbb{Z}, (\operatorname{B}\left(p, e, t, x\right) = (\operatorname{natCast}\left(\operatorname{ndiv}\left(\operatorname{F}\left(\operatorname{r}\left((p)^{e-1}\right)\right), (p)^{e-1}\right), \operatorname{ZMod}\left(p\right)\right)) (\operatorname{intCast}\left(\operatorname{y}\left(t+2, x\right), \operatorname{ZMod}\left(p\right)\right))))))$$
 
@@ -186,7 +198,7 @@ $$\forall p:\mathbb{N}, (\forall e:\mathbb{N}, (\forall t:\mathbb{N}, (\forall x
 
 The Fibonacci quotient is natural division before coercion to ZMod(p).
 
-**Definition 1.16 (Queried children in a shifted parent phase).**
+**Definition 1.17 (Queried children in a shifted parent phase).**
 
 $$\forall p:\mathbb{N}, (\forall e:\mathbb{N}, (\forall t:\mathbb{N}, (\forall S:\operatorname{Finset}\left(\mathbb{N}\right), (\forall a:\operatorname{ZMod}\left(p\right), ((a \in \operatorname{queryChildren}\left(p, e, t, S\right)) \Leftrightarrow ((\exists j:\mathbb{N}, ((j < p) \land (a = \operatorname{natCast}\left(j\right)))) \land (\exists k:\mathbb{N}, ((k \in S) \land (\operatorname{mod}\left(k-1, \operatorname{r}\left((p)^{e}\right)\right) = \operatorname{mod}\left(t+(\operatorname{val}\left(a\right)) (\operatorname{r}\left((p)^{e-1}\right)), \operatorname{r}\left((p)^{e}\right)\right))))))))))$$
 
@@ -198,7 +210,7 @@ $$\forall p:\mathbb{N}, (\forall e:\mathbb{N}, (\forall t:\mathbb{N}, (\forall S
 
 A child belongs exactly when some positive-table query has its top residue. The finite image of range(p) supplies all residues for p>0; repeated visits count once. The child formula uses k-1 at the terminal rank.
 
-**Definition 1.17 (Actual terminal phase coverage).**
+**Definition 1.18 (Actual terminal phase coverage).**
 
 $$\forall p:\mathbb{N}, (\forall e:\mathbb{N}, (\forall S:\operatorname{Finset}\left(\mathbb{N}\right), ((\operatorname{D}\left(p, e, S\right)) \Leftrightarrow (\operatorname{if}\left(e = 1, \operatorname{if}\left(\operatorname{r}\left(p\right) = p+1, \operatorname{r}\left(p\right)-1, \operatorname{r}\left(p\right)\right) \le \operatorname{card}\left(\operatorname{image}\left(k \mapsto \operatorname{mod}\left(k, \operatorname{r}\left(p\right)\right), S\right)\right), \operatorname{if}\left(\operatorname{r}\left((p)^{e}\right) = \operatorname{r}\left((p)^{e-1}\right), \forall t:\mathbb{N}, ((t < \operatorname{r}\left((p)^{e}\right)) \implies (\exists k:\mathbb{N}, ((k \in S) \land (\operatorname{mod}\left(k-1, \operatorname{r}\left((p)^{e}\right)\right) = t)))), \forall t:\mathbb{N}, ((t < \operatorname{r}\left((p)^{e-1}\right)) \implies (p-1 \le \operatorname{card}\left(\operatorname{queryChildren}\left(p, e, t, S\right)\right)))\right)\right)))))$$
 
@@ -210,7 +222,7 @@ $$\forall p:\mathbb{N}, (\forall e:\mathbb{N}, (\forall S:\operatorname{Finset}\
 
 At the first layer, the full-orbit case allows one missing phase, whereas the optional-hit case requires every phase. At a higher stagnant layer every phase is required. At a growth layer each parent requires at least p-1 distinct children. These are conditions on actual phase images, not on the number of query times.
 
-**Definition 1.18 (Same-table positive-future identification).**
+**Definition 1.19 (Same-table positive-future identification).**
 
 $$\forall A:Type, (\forall read:\mathbb{N} \to A \to \mathbb{N}, (\forall S:\operatorname{Finset}\left(\mathbb{N}\right), ((\operatorname{Identifies}\left(read, S\right)) \Leftrightarrow (\forall x:A, (\forall y:A, ((\forall k:\mathbb{N}, ((k \in S) \implies (read\left(k, x\right) = read\left(k, y\right)))) \implies (\forall k:\mathbb{N}, ((0 < k) \implies (read\left(k, x\right) = read\left(k, y\right))))))))))$$
 
@@ -222,7 +234,7 @@ $$\forall A:Type, (\forall read:\mathbb{N} \to A \to \mathbb{N}, (\forall S:\ope
 
 The source type A is a Type, read maps N times A to N, and S is a finite set of natural times. The implication compares the same two fixed sources at every queried time and every positive future time.
 
-**Definition 1.19 (Domain-restricted positive-future identification).**
+**Definition 1.20 (Domain-restricted positive-future identification).**
 
 $$\forall A:Type, (\forall domain:A \to Prop, (\forall read:\mathbb{N} \to A \to \mathbb{N}, (\forall S:\operatorname{Finset}\left(\mathbb{N}\right), ((\operatorname{IdentifiesOn}\left(domain, read, S\right)) \Leftrightarrow (\forall x:A, (\forall y:A, (((domain\left(x\right)) \land (domain\left(y\right))) \implies ((\forall k:\mathbb{N}, ((k \in S) \implies (read\left(k, x\right) = read\left(k, y\right)))) \implies (\forall k:\mathbb{N}, ((0 < k) \implies (read\left(k, x\right) = read\left(k, y\right))))))))))))$$
 
@@ -234,7 +246,7 @@ $$\forall A:Type, (\forall domain:A \to Prop, (\forall read:\mathbb{N} \to A \to
 
 Both sources satisfy the same domain predicate; table and future still concern the same fixed pair.
 
-**Theorem 1.20 (Affine child decoding and complete-answer collisions).**
+**Theorem 1.21 (Affine child decoding and complete-answer collisions).**
 
 $$(\forall p:\mathbb{N}, ((\operatorname{Prime}\left(p\right)) \implies (((\forall e:\mathbb{N}, ((1 \le e) \implies (\forall S:\operatorname{Finset}\left(\mathbb{N}\right), ((\forall k:\mathbb{N}, ((k \in S) \implies (0 < k))) \implies ((\neg(\operatorname{D}\left(p, e, S\right))) \implies (\exists x:\mathbb{Z}\times\mathbb{Z}, (\exists y:\mathbb{Z}\times\mathbb{Z}, ((\operatorname{Primitive}\left(p, x\right)) \land ((\operatorname{Primitive}\left(p, y\right)) \land ((\forall k:\mathbb{N}, ((k \in S) \implies (\operatorname{g}\left((p)^{e}, k, x\right) = \operatorname{g}\left((p)^{e}, k, y\right)))) \land (\forall Q:\mathbb{N}, ((0 < Q) \implies (\exists v:\mathbb{N} \times \mathbb{N}, (\exists w:\mathbb{N} \times \mathbb{N}, (((v_{1} < (Q) ((p)^{e})) \land (v_{2} < (Q) ((p)^{e}))) \land (((w_{1} < (Q) ((p)^{e})) \land (w_{2} < (Q) ((p)^{e}))) \land (((\neg(p \mid Q)) \implies (((\neg(p \mid v_{1})) \lor (\neg(p \mid v_{2}))) \land ((\neg(p \mid w_{1})) \lor (\neg(p \mid w_{2}))))) \land ((\forall k:\mathbb{N}, ((0 < k) \implies ((\operatorname{gActual}\left((Q) ((p)^{e}), k, v\right) = (Q) (\operatorname{g}\left((p)^{e}, k, x\right))) \land (\operatorname{gActual}\left((Q) ((p)^{e}), k, w\right) = (Q) (\operatorname{g}\left((p)^{e}, k, y\right)))))) \land ((\forall k:\mathbb{N}, ((k \in S) \implies (\operatorname{gActual}\left((Q) ((p)^{e}), k, v\right) = \operatorname{gActual}\left((Q) ((p)^{e}), k, w\right)))) \land (\forall B:\mathbb{N}, (\exists k:\mathbb{N}, ((B < k) \land ((0 < k) \land ((\neg(k \in S)) \land ((\operatorname{g}\left((p)^{e}, k, x\right) = (p)^{e}) \land ((\operatorname{g}\left((p)^{e}, k, y\right) = (p)^{e-1}) \land ((\operatorname{gActual}\left((Q) ((p)^{e}), k, v\right) = (Q) ((p)^{e})) \land (\operatorname{gActual}\left((Q) ((p)^{e}), k, w\right) = (Q) ((p)^{e-1}))))))))))))))))))))))))))))) \land ((\forall e:\mathbb{N}, ((1 \le e) \implies (\forall S:\operatorname{Finset}\left(\mathbb{N}\right), ((\operatorname{Nonempty}\left(S\right)) \implies ((\forall k:\mathbb{N}, ((k \in S) \implies (0 < k))) \implies ((\exists s:\mathbb{N}, (\exists t:\mathbb{N}, ((s \in S) \land ((t \in S) \land (\neg(\operatorname{mod}\left(s, \operatorname{r}\left(p\right)\right) = \operatorname{mod}\left(t, \operatorname{r}\left(p\right)\right))))))) \implies (\forall x:\mathbb{Z}\times\mathbb{Z}, (\operatorname{minGcdTable}\left((p)^{e}, S, x\right) = \operatorname{content}\left(p, e, x\right))))))))) \land ((\forall e:\mathbb{N}, ((2 \le e) \implies (\forall S:\operatorname{Finset}\left(\mathbb{N}\right), ((\operatorname{D}\left(p, e, S\right)) \implies (\forall j:\mathbb{N}, (((1 \le j) \land (j < e)) \implies (\forall a:\operatorname{ZMod}\left(\operatorname{r}\left((p)^{j}\right)\right), (\forall b:\operatorname{ZMod}\left(\operatorname{r}\left((p)^{j}\right)\right), (\exists k:\mathbb{N}, ((k \in S) \land (\operatorname{castZMod}\left(\operatorname{r}\left((p)^{j}\right), k-1\right)+a = b))))))))))) \land ((\forall e:\mathbb{N}, ((1 \le e) \implies (\forall S:\operatorname{Finset}\left(\mathbb{N}\right), ((\forall k:\mathbb{N}, ((k \in S) \implies (0 < k))) \implies (((\operatorname{D}\left(p, e, S\right)) \Leftrightarrow ((\operatorname{D}\left(p, e, S\right)) \land (\forall j:\mathbb{N}, (((1 \le j) \land (j < e)) \implies (\operatorname{D}\left(p, j, S\right)))))) \land (((\operatorname{D}\left(p, e, S\right)) \Leftrightarrow (\forall x:\mathbb{Z}\times\mathbb{Z}, (\forall y:\mathbb{Z}\times\mathbb{Z}, (((\operatorname{Primitive}\left(p, x\right)) \land (\operatorname{Primitive}\left(p, y\right))) \implies ((\forall k:\mathbb{N}, ((k \in S) \implies (\operatorname{g}\left((p)^{e}, k, x\right) = \operatorname{g}\left((p)^{e}, k, y\right)))) \implies (\forall k:\mathbb{N}, ((0 < k) \implies (\operatorname{g}\left((p)^{e}, k, x\right) = \operatorname{g}\left((p)^{e}, k, y\right))))))))) \land (((\operatorname{D}\left(p, e, S\right)) \Leftrightarrow (\operatorname{Identifies}\left(\operatorname{gcdValue}\left((p)^{e}\right), S\right))) \land (((\operatorname{D}\left(p, e, S\right)) \Leftrightarrow (\operatorname{Identifies}\left(\operatorname{actualGcd}\left((p)^{e}\right), S\right))) \land ((\operatorname{D}\left(p, e, S\right)) \Leftrightarrow (\forall v:\mathbb{N} \times \mathbb{N}, (\forall w:\mathbb{N} \times \mathbb{N}, ((((\neg(p \mid v_{1})) \lor (\neg(p \mid v_{2}))) \land ((\neg(p \mid w_{1})) \lor (\neg(p \mid w_{2})))) \implies ((\forall k:\mathbb{N}, ((k \in S) \implies (\operatorname{gActual}\left((p)^{e}, k, v\right) = \operatorname{gActual}\left((p)^{e}, k, w\right)))) \implies (\forall k:\mathbb{N}, ((0 < k) \implies (\operatorname{gActual}\left((p)^{e}, k, v\right) = \operatorname{gActual}\left((p)^{e}, k, w\right))))))))))))))))) \land ((\forall e:\mathbb{N}, ((1 \le e) \implies (\forall S:\operatorname{Finset}\left(\mathbb{N}\right), (((\forall k:\mathbb{N}, ((k \in S) \implies (0 < k))) \land (\neg(\operatorname{D}\left(p, e, S\right)))) \implies (\forall H:\mathbb{N}, (((0 < H) \land (((p)^{e} \mid H) \land (\neg((p)^{e+1} \mid H)))) \implies ((\neg(p \mid \operatorname{div}\left(H, (p)^{e}\right))) \land (\exists v:\mathbb{N} \times \mathbb{N}, (\exists w:\mathbb{N} \times \mathbb{N}, ((v_{1} < H) \land ((v_{2} < H) \land ((w_{1} < H) \land ((w_{2} < H) \land ((\forall k:\mathbb{N}, ((k \in S) \implies (\operatorname{gActual}\left(H, k, v\right) = \operatorname{gActual}\left(H, k, w\right)))) \land (\forall B:\mathbb{N}, (\exists k:\mathbb{N}, ((B < k) \land ((0 < k) \land ((\neg(k \in S)) \land ((\operatorname{gActual}\left(H, k, v\right) = H) \land (\operatorname{gActual}\left(H, k, w\right) = \operatorname{div}\left(H, p\right)))))))))))))))))))))) \land (\forall e:\mathbb{N}, ((1 \le e) \implies (\forall S:\operatorname{Finset}\left(\mathbb{N}\right), (((\forall k:\mathbb{N}, ((k \in S) \implies (0 < k))) \land (\operatorname{D}\left(p, e, S\right))) \implies ((\operatorname{Nonempty}\left(S\right)) \land ((\exists s:\mathbb{N}, (\exists t:\mathbb{N}, ((s \in S) \land ((t \in S) \land (\neg(\operatorname{mod}\left(s, \operatorname{r}\left(p\right)\right) = \operatorname{mod}\left(t, \operatorname{r}\left(p\right)\right))))))) \land (\forall x:\mathbb{Z}\times\mathbb{Z}, (\operatorname{minGcdTable}\left((p)^{e}, S, x\right) = \operatorname{content}\left(p, e, x\right)))))))))))))) \land (\forall e:\mathbb{N}, ((2 \le e) \implies (\forall t:\mathbb{N}, (\forall x:\mathbb{Z}\times\mathbb{Z}, (((p)^{e-1} \mid \operatorname{y}\left(t+1, x\right)) \implies (\forall j:\mathbb{N}, (((p)^{e} \mid \operatorname{y}\left(t+1+(j) (\operatorname{r}\left((p)^{e-1}\right)), x\right)) \Leftrightarrow (\operatorname{A}\left(p, e, t, x\right)+(\operatorname{natCast}\left(j, \operatorname{ZMod}\left(p\right)\right)) (\operatorname{B}\left(p, e, t, x\right)) = 0))))))))))) \land ((\forall H:\mathbb{N}, ((0 < H) \implies (\forall S:\operatorname{Finset}\left(\mathbb{N}\right), ((\forall k:\mathbb{N}, ((k \in S) \implies (0 < k))) \implies ((\operatorname{Identifies}\left(\operatorname{actualGcd}\left(H\right), S\right)) \Leftrightarrow (\forall p:\mathbb{N}, ((\operatorname{Prime}\left(p\right)) \implies (\forall e:\mathbb{N}, (((1 \le e) \land (((p)^{e} \mid H) \land (\neg((p)^{e+1} \mid H)))) \implies (\operatorname{D}\left(p, e, S\right))))))))))) \land ((\forall k:\mathbb{N}, (\forall v:\mathbb{N} \times \mathbb{N}, (\operatorname{gActual}\left(1, k, v\right) = 1))) \land (\forall p:\mathbb{N}, ((\operatorname{Prime}\left(p\right)) \implies (\forall e:\mathbb{N}, ((1 \le e) \implies (\forall S:\operatorname{Finset}\left(\mathbb{N}\right), (((\forall k:\mathbb{N}, ((k \in S) \implies (0 < k))) \land (\operatorname{D}\left(p, e, S\right))) \implies ((\operatorname{Nonempty}\left(S\right)) \land (\forall v:\mathbb{N} \times \mathbb{N}, (\operatorname{minActualGcdTable}\left((p)^{e}, S, v\right) = \operatorname{gcd}\left(\operatorname{gcd}\left(v_{1}, v_{2}\right), (p)^{e}\right))))))))))))$$
 
@@ -264,6 +276,7 @@ For every finite positive query table failing D, two fixed primitive signed stat
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.phase_from_unit`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.phase_transport`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.queryChildren`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.rank_facts`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.rootBase`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.rootSlope`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/GlobalGcdSampling.signedValue`
