@@ -20,9 +20,14 @@ The native executables `reportInspector` and `compiledJudgeTests` have no D5,
 Reg or Mathlib modules in their transitive Lean imports. Their static contract
 dependency is the mathematical-dependency-free Core module. Mathematical
 contract heads use fully qualified names; the existing `RawArtifacts` reader
-loads their compiled declarations at runtime. `make compiled-judge-test` builds
-the fixture library and required Reg modules as Lean artifacts separately, then
-runs the executable against those artifacts. It checks both compiled program
+loads their compiled declarations at runtime. Root `make compiled-judge-test`
+delegates to [the test entrypoint](../scripts/compiled-judge-test.sh), which uses
+`make lean` to build the test library and both executables, then runs the native
+tests. The library's existing directory glob includes
+[Fixtures/CompiledInputs.lean](LeanInformationAuditRegTests/Fixtures/CompiledInputs.lean);
+its imports register the runtime Reg inputs. Lake builds these dependencies and
+the fixture artifacts separately from the executable import graph; dispatchers
+carry no copied Reg module list. The executable checks both compiled program
 import closures and enumerates contract name literals in compiled implementation
 expressions to verify each against the interface artifacts. Missing input
 artifacts, unknown names and malformed structures produce named failures.
