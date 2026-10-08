@@ -460,7 +460,7 @@ private theorem log_norm_artinDirichletSeries_one_le
             intro χ 𝔞
             classical
             rw [galoisCharacterOnIdeal, norm_prod]
-            refine Finset.prod_le_one (fun i _ ↦ norm_nonneg _) (fun 𝔭 _ ↦ ?_)
+            refine Finset.prod_le_one₀ (fun i _ ↦ norm_nonneg _) (fun 𝔭 _ ↦ ?_)
             rw [norm_pow]
             by_cases h : UnramifiedIn K L 𝔭
             · have hnorm : ‖(χ (frobeniusClass K L 𝔭).out : ℂ)‖ = 1 :=

@@ -125,7 +125,7 @@ private theorem card_divisors_mul_factorization_le_of_odd
     have hrest :
         (∏ q ∈ n.primeFactors.erase p, (n.factorization q + 1)) ≤
           ∏ q ∈ n.primeFactors.erase p, q ^ n.factorization q := by
-      apply Finset.prod_le_prod
+      apply Finset.prod_le_prod₀
       · simp
       · intro q hq
         have hqMem : q ∈ n.primeFactors := Finset.mem_of_mem_erase hq

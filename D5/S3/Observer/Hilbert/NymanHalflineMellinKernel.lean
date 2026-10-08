@@ -195,8 +195,8 @@ theorem halflineKernel_norm_sq (rho : ℂ) (hb : 1 / 2 < rho.re) (h1 : rho ≠ 1
     rw [hx]
     exact kernel_energy_pointwise rho x
   rw [integral_congr_ae heq, integral_add
-    ((memLp_two_iff_integrable_sq_norm (left_memLp rho hb).1).1 (left_memLp rho hb))
-    ((memLp_two_iff_integrable_sq_norm (right_memLp rho).1).1 (right_memLp rho)),
+    ((memLp_two_iff_integrable_sq_norm (left_memLp rho hb).aestronglyMeasurable).1 (left_memLp rho hb))
+    ((memLp_two_iff_integrable_sq_norm (right_memLp rho).aestronglyMeasurable).1 (right_memLp rho)),
     left_energy rho hb, right_energy rho]
 
 /-- The dual isometry preserves the exact kernel energy. -/

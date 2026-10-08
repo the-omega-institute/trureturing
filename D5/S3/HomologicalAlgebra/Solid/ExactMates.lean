@@ -6,7 +6,7 @@
    utility: none
    digest: Unbounded solid derived construction with exact protected objects and all quasi-isomorphisms. -/
 
-import D5.S3.HomologicalAlgebra.Solid.ExactFunctorNatTrans
+import Mathlib.Algebra.Homology.DerivedCategory.ExactFunctor
 import Mathlib.CategoryTheory.Localization.Adjunction
 
 /-!
@@ -22,11 +22,7 @@ open CategoryTheory Limits
 
 namespace CWSolid
 
-/- The private supplier below is a source extraction of the already compiled
-`CWSolid.mapHomologicalComplexAdjunction`, without its unrelated import closure.
-Source: src/CWSolid/ComplexAdjunction.lean
-SHA256: c0cf541e28268062ecdef3aee078dd4e9c75674dd68aa72a9ec7f61b9158f425.
-The accepted source and its public interface are unchanged. -/
+/-- The degreewise adjunction uses Mathlib's zero-preserving composition comparison. -/
 private def exactMatesComplexAdjunction
     {C D : Type*} [Category* C] [Category* D]
     [HasZeroMorphisms C] [HasZeroMorphisms D]
@@ -35,18 +31,18 @@ private def exactMatesComplexAdjunction
     F.mapHomologicalComplex c ⊣ G.mapHomologicalComplex c where
   unit := (Functor.mapHomologicalComplexIdIso C c).inv ≫
     adj.unit.mapHomologicalComplex c ≫
-    (Functor.mapHomologicalComplexCompIsoZero (Iso.refl (F ⋙ G)) c).inv
-  counit := (Functor.mapHomologicalComplexCompIsoZero (Iso.refl (G ⋙ F)) c).hom ≫
+    (Functor.mapHomologicalComplexCompIso (Iso.refl (F ⋙ G)) c).inv
+  counit := (Functor.mapHomologicalComplexCompIso (Iso.refl (G ⋙ F)) c).hom ≫
     adj.counit.mapHomologicalComplex c ≫
     (Functor.mapHomologicalComplexIdIso D c).hom
   left_triangle_components K := by
     ext i
-    simpa [Functor.mapHomologicalComplexIdIso, Functor.mapHomologicalComplexCompIsoZero,
+    simpa [Functor.mapHomologicalComplexIdIso, Functor.mapHomologicalComplexCompIso,
       NatIso.mapHomologicalComplex, HomologicalComplex.Hom.isoOfComponents,
       Functor.mapHomologicalComplex] using adj.left_triangle_components (K.X i)
   right_triangle_components K := by
     ext i
-    simpa [Functor.mapHomologicalComplexIdIso, Functor.mapHomologicalComplexCompIsoZero,
+    simpa [Functor.mapHomologicalComplexIdIso, Functor.mapHomologicalComplexCompIso,
       NatIso.mapHomologicalComplex, HomologicalComplex.Hom.isoOfComponents,
       Functor.mapHomologicalComplex] using adj.right_triangle_components (K.X i)
 
@@ -121,7 +117,7 @@ theorem exactAdjunctionDerived_unit_mate (adj : F ⊣ G)
           (b.mapHomologicalComplex (.up ℤ)).app ((F.mapHomologicalComplex (.up ℤ)).obj K) := by
     ext n
     simpa [exactMatesComplexAdjunction, Functor.mapHomologicalComplexIdIso,
-      Functor.mapHomologicalComplexCompIsoZero, NatIso.mapHomologicalComplex, HomologicalComplex.Hom.isoOfComponents,
+      Functor.mapHomologicalComplexCompIso, NatIso.mapHomologicalComplex, HomologicalComplex.Hom.isoOfComponents,
       Functor.mapHomologicalComplex] using h (K.X n)
   have ha : G.mapDerivedCategory.map (F.mapDerivedCategoryFactors.inv.app K) ≫
       G.mapDerivedCategory.map (a.mapDerivedCategory.app (DerivedCategory.Q.obj K)) =
