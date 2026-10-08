@@ -13,7 +13,8 @@ internal static partial class CleanLanesCommand
         DateTimeOffset now,
         LockedLaneObservation? lockedObservation = null,
         IReadOnlySet<string>? activePaths = null,
-        Func<IReadOnlySet<string>?>? readHostActivity = null)
+        Func<IReadOnlySet<string>?>? readHostActivity = null,
+        Action<RegisteredWorktree>? protectObservedWorktree = null)
     {
         string actualHead;
         try
@@ -43,6 +44,11 @@ internal static partial class CleanLanesCommand
             return Refused("unreadable");
         }
 
+        protectObservedWorktree?.Invoke(item with
+        {
+            Head = actualHead,
+            Branch = actualBranch.Length == 0 ? null : actualBranch,
+        });
         if (!string.Equals(actualHead, item.Head, StringComparison.Ordinal)
             || !string.Equals(actualBranch, item.Branch ?? string.Empty, StringComparison.Ordinal))
         {
@@ -53,6 +59,7 @@ internal static partial class CleanLanesCommand
         try
         {
             var inventory = ReadWorktrees(repositoryRoot, runner, resolveGitDirectories: false);
+            foreach (var observed in inventory) protectObservedWorktree?.Invoke(observed);
             if (inventory.Any(candidate => IsNestedWorktree(item.Path, candidate.Path)))
                 return Refused("nested_worktree");
             refreshed = inventory.SingleOrDefault(candidate => string.Equals(
@@ -111,6 +118,7 @@ internal static partial class CleanLanesCommand
             try
             {
                 var inventory = ReadWorktrees(repositoryRoot, runner);
+                foreach (var observed in inventory) protectObservedWorktree?.Invoke(observed);
                 var retained = inventory.SingleOrDefault(candidate => string.Equals(
                     candidate.Path, item.Path, StringComparison.Ordinal));
                 string? changed = null;

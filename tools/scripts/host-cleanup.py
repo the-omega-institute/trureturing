@@ -179,12 +179,34 @@ def active_paths(codex):
             try:
                 if process.stat().st_uid != os.getuid():
                     continue
-                for link in [process / "cwd", *list((process / "fd").iterdir())]:
-                    target = os.readlink(link).removesuffix(" (deleted)")
-                    if target.startswith("/"):
-                        protected.add(Path(target).resolve())
             except (FileNotFoundError, ProcessLookupError):
                 continue
+            try:
+                descriptors = list((process / "fd").iterdir())
+            except (FileNotFoundError, ProcessLookupError) as error:
+                try:
+                    process.stat()
+                except (FileNotFoundError, ProcessLookupError):
+                    continue
+                raise OSError("cannot inspect live process descriptors: " + str(process)) from error
+            cwd = process / "cwd"
+            missing_cwd = None
+            for link in [cwd, *descriptors]:
+                try:
+                    target = os.readlink(link).removesuffix(" (deleted)")
+                except (FileNotFoundError, ProcessLookupError) as error:
+                    # Closing one handle must not hide the remaining handles.
+                    if link == cwd:
+                        missing_cwd = error
+                    continue
+                if target.startswith("/"):
+                    protected.add(Path(target).resolve())
+            if missing_cwd is not None:
+                try:
+                    process.stat()
+                except (FileNotFoundError, ProcessLookupError):
+                    continue
+                raise OSError("cannot inspect live process cwd: " + str(process)) from missing_cwd
     elif sys.platform == "darwin":
         result = subprocess.run(["lsof", "-nP", "-a", "-u", str(os.getuid()), "-Fn"],
                                 capture_output=True, text=True, timeout=120)

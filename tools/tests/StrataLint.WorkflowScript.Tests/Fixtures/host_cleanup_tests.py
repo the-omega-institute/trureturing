@@ -289,6 +289,96 @@ class HostCleanupTests(unittest.TestCase):
              contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
             self.assertEqual(1, cleanup.main(["active-paths"]))
 
+    def test_linux_disappearing_links_preserve_observable_siblings(self):
+        process = self.root / "proc/123"
+        descriptors = process / "fd"
+        descriptors.mkdir(parents=True)
+        (process / "cwd").symlink_to(self.root)
+        target = self.old_file(self.root / "checkout/reader.txt")
+        links = [descriptors / str(index) for index in range(3)]
+        for link in links:
+            link.symlink_to(target if link == links[-1] else self.root)
+        iterdir, readlink = Path.iterdir, os.readlink
+        def inventory(path):
+            if path == Path("/proc"):
+                return iter([process])
+            if path == descriptors:
+                return iter(links)
+            return iterdir(path)
+        for position in (0, 1):
+            for error in (FileNotFoundError, ProcessLookupError):
+                with self.subTest(position=position, error=error.__name__):
+                    observed = []
+                    def interrupted(link):
+                        observed.append(link)
+                        if link == links[position]:
+                            raise error("handle disappeared")
+                        return readlink(link)
+                    with patch.object(cleanup.sys, "platform", "linux"), \
+                         patch.object(Path, "iterdir", inventory), \
+                         patch.object(cleanup.os, "readlink", interrupted), \
+                         patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "", "")):
+                        self.assertIn(target.resolve(), cleanup.active_paths(self.root / "codex"))
+                    self.assertIn(links[-1], observed)
+
+    def test_linux_unverifiable_live_process_observation_fails_closed(self):
+        process = self.root / "proc/123"
+        descriptors = process / "fd"
+        descriptors.mkdir(parents=True)
+        iterdir = Path.iterdir
+        for boundary in ("cwd", "fd"):
+            with self.subTest(boundary=boundary):
+                def inventory(path):
+                    if path == Path("/proc"):
+                        return iter([process])
+                    if path == descriptors and boundary == "fd":
+                        raise FileNotFoundError("descriptor inventory disappeared")
+                    return iterdir(path)
+                with patch.object(cleanup.sys, "platform", "linux"), \
+                     patch.object(Path, "iterdir", inventory), \
+                     contextlib.redirect_stdout(io.StringIO()) as output, \
+                     contextlib.redirect_stderr(io.StringIO()):
+                    self.assertEqual(1, cleanup.main(["active-paths"]))
+                self.assertEqual("", output.getvalue())
+
+    def test_linux_exited_process_does_not_hide_other_process_activity(self):
+        exited = self.root / "proc/122"
+        live = self.root / "proc/123"
+        (exited / "fd").mkdir(parents=True)
+        (exited / "cwd").symlink_to(self.root)
+        (live / "fd").mkdir(parents=True)
+        (live / "cwd").symlink_to(self.root)
+        target = self.old_file(self.root / "checkout/reader.txt")
+        (live / "fd/1").symlink_to(target)
+        iterdir, path_stat, readlink = Path.iterdir, Path.stat, os.readlink
+        for boundary in ("stat", "fd", "cwd"):
+            with self.subTest(boundary=boundary):
+                gone = boundary == "stat"
+                def process_stat(path, *args, **kwargs):
+                    if path == exited and gone:
+                        raise FileNotFoundError("process exited")
+                    return path_stat(path, *args, **kwargs)
+                def inventory(path):
+                    nonlocal gone
+                    if path == Path("/proc"):
+                        return iter([exited, live])
+                    if path == exited / "fd" and boundary == "fd":
+                        gone = True
+                        raise ProcessLookupError("process exited during descriptor inventory")
+                    return iterdir(path)
+                def link(path):
+                    nonlocal gone
+                    if path == exited / "cwd" and boundary == "cwd":
+                        gone = True
+                        raise FileNotFoundError("process exited during cwd observation")
+                    return readlink(path)
+                with patch.object(cleanup.sys, "platform", "linux"), \
+                     patch.object(Path, "iterdir", inventory), \
+                     patch.object(Path, "stat", process_stat), \
+                     patch.object(cleanup.os, "readlink", link), \
+                     patch.object(cleanup.subprocess, "run", return_value=subprocess.CompletedProcess([], 0, "", "")):
+                    self.assertIn(target.resolve(), cleanup.active_paths(self.root / "codex"))
+
     def test_inventory_failure_reports_already_removed_artifacts(self):
         artifact = self.old_file(self.root / "tmp" / "old-output")
         options = cleanup.argparse.Namespace(

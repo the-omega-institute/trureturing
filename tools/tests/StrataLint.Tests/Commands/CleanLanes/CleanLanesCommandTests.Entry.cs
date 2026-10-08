@@ -52,6 +52,7 @@ public sealed partial class CleanLanesCommandTests
                             + shlex.quote(real_dotnet)+' '+shlex.quote(str(cli))+' "$@" --lanes-only\n')
             shim.chmod(0o700)
             env['PATH'] = str(bin_dir)+os.pathsep+env['PATH']
+            env['CODEX_HOME'] = str(store/'codex')
             def command(force=False):
                 return ['make', '--no-print-directory', '-C', str(repo/'tools'),
                                       'clean-lanes', 'BASE=dev', 'FORCE='+str(int(force))]
@@ -82,7 +83,8 @@ public sealed partial class CleanLanesCommandTests
             sampler.rename(scripts/'fixture-host-cleanup.py')
             # Supply complete or partial observations to the existing sampler command;
             # make, Bash argument forwarding, JSON decoding and cleanup stay real.
-            sampler.write_text("import importlib.util, json, pathlib, sys\n"
+            sampler.write_text("import importlib.util, json, os, pathlib, subprocess, sys\n"
+                "from unittest.mock import patch\n"
                 "root=pathlib.Path(__file__).parent\n"
                 "spec=importlib.util.spec_from_file_location('fixture_host',root/'fixture-host-cleanup.py')\n"
                 "module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)\n"
@@ -91,10 +93,75 @@ public sealed partial class CleanLanesCommandTests
                 "    observed={pathlib.Path(p) for p in state['paths']}\n"
                 "    if not state['complete']: raise OSError('incomplete controlled activity evidence')\n"
                 "    return observed\n"
-                "module.active_paths=activity\n"
+                "state=json.loads((root/'activity.json').read_text())\n"
+                "if state.get('kind') == 'linux':\n"
+                "    module.sys.platform='linux'\n"
+                "    process=root/'proc'/str(state['pid']); descriptors=process/'fd'\n"
+                "    iterdir, readlink=pathlib.Path.iterdir, os.readlink\n"
+                "    def inventory(path):\n"
+                "        if path == pathlib.Path('/proc'): return iter([process])\n"
+                "        if path == descriptors:\n"
+                "            if state['boundary']=='fd': raise FileNotFoundError('descriptor directory unavailable')\n"
+                "            return iter([descriptors/str(i) for i in range(3)])\n"
+                "        return iterdir(path)\n"
+                "    def link(path):\n"
+                "        if ((state['boundary']=='descriptor' and path==descriptors/str(state['position']))\n"
+                "            or (state['boundary']=='cwd' and path==process/'cwd')):\n"
+                "            error=FileNotFoundError if state['error']=='missing' else ProcessLookupError\n"
+                "            raise error('observation disappeared')\n"
+                "        return readlink(path)\n"
+                "    ps=subprocess.CompletedProcess([],0,str(os.getuid())+' generic-reader\\n','')\n"
+                "    patch.object(pathlib.Path,'iterdir',inventory).start()\n"
+                "    patch.object(module.os,'readlink',link).start()\n"
+                "    patch.object(module.subprocess,'run',return_value=ps).start()\n"
+                "else: module.active_paths=activity\n"
                 "sys.exit(module.main())\n")
             def activity(paths=(), complete=True):
                 (scripts/'activity.json').write_text(json.dumps(dict(paths=list(map(str,paths)),complete=complete)))
+
+            # Keep a native checkout handle open with cwd/argv outside the lane.
+            # Only /proc and ps observations are simulated; the sampler, make,
+            # Bash, CLI, native Git consumer and actual reader remain real.
+            reader = subprocess.Popen([sys.executable, '-c',
+                'import os,sys; handle=open(os.environ["ENTRY_READER_FILE"]); '
+                'print("ready",flush=True); sys.stdin.read()'], cwd=repo,
+                env=dict(env, ENTRY_READER_FILE=str(lane/'README.md')),
+                stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+            try:
+                assert reader.stdout.readline().strip() == 'ready'
+                process = scripts/'proc'/str(reader.pid)
+                (process/'fd').mkdir(parents=True)
+                (process/'cwd').symlink_to(repo)
+                for i in range(3):
+                    (process/'fd'/str(i)).symlink_to(lane/'README.md' if i==2 else repo/'README.md')
+                for boundary, position, error in [('descriptor',p,e) for p in (0,1)
+                                                    for e in ('missing','exited')] + [('cwd',0,'missing'),('fd',0,'missing')]:
+                    (scripts/'activity.json').write_text(json.dumps(dict(kind='linux',pid=reader.pid,
+                        boundary=boundary,position=position,error=error)))
+                    sample = subprocess.run([sys.executable,str(sampler),'active-paths'],
+                        cwd=repo,env=env,capture_output=True,text=True)
+                    expected = 'locked_activity' if boundary=='descriptor' else 'locked_activity_unknown'
+                    observations = [(force,clean(force)) for force in (False,True)]
+                    print(json.dumps(dict(linux_observations='simulated',boundary=boundary,
+                        position=position,error=error,sampler_exit=sample.returncode,
+                        target_observed=sample.returncode==0 and str(lane/'README.md') in json.loads(sample.stdout),
+                        consumer_actions=[row['action'] for _,row in observations],
+                        consumer_reasons=[row['reason'] for _,row in observations],
+                        worktree_exists=lane.exists(),native_reader_alive=reader.poll() is None)),flush=True)
+                    if boundary=='descriptor':
+                        assert sample.returncode==0 and str(lane/'README.md') in json.loads(sample.stdout), sample
+                    else:
+                        assert sample.returncode!=0 and not sample.stdout, sample
+                    for force,row in observations:
+                        assert row['action']=='skipped' and row['reason']==expected, row
+                        assert lane.exists() and reader.poll() is None
+                        assert 'locked '+lock in git('worktree','list','--porcelain')
+                    print(json.dumps(dict(linux_observations='simulated',boundary=boundary,
+                        position=position,error=error,sampler_exit=sample.returncode,
+                        consumer_reason=expected,preview_retained=True,force_retained=True,
+                        native_reader_alive=reader.poll() is None)))
+            finally:
+                reader.communicate('')
             activity([lane])
             for force in (False, True):
                 row = clean(force)

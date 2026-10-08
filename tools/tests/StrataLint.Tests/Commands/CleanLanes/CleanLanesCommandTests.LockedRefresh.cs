@@ -151,4 +151,63 @@ public sealed partial class CleanLanesCommandTests
         Assert.DoesNotContain(runner.Invocations, call => call.Arguments.Take(2).SequenceEqual(["worktree", "unlock"])
             || call.Arguments.Take(2).SequenceEqual(["worktree", "lock"]));
     }
+
+    [Theory]
+    [InlineData("branch-read")]
+    [InlineData("first-inventory")]
+    [InlineData("final-inventory")]
+    public void FullCleanupRetainsManagedBranchObservedDuringLockedRefusal(string boundary)
+    {
+        using var fixture = new CleanLanesFixture();
+        var lane = fixture.AddLandedLane("harness/full-locked-refresh");
+        fixture.LockLane(lane, InitializationLock);
+        const string replacement = "lane/governance/resumed";
+        const string orphan = "harness/full-orphan-control";
+        fixture.AddOrphan(orphan, merged: true);
+        var inventories = 0;
+        var switched = false;
+        string? registered = null;
+        var runner = fixture.CreateRunner((file, args, cwd) =>
+        {
+            if (file != "git") return null;
+            var inventory = args.SequenceEqual(["worktree", "list", "--porcelain", "-z"]);
+            if (inventory) inventories++;
+            if (!switched && (boundary == "branch-read" && cwd == lane
+                    && args.SequenceEqual(["branch", "--show-current"])
+                || inventory && inventories == (boundary == "first-inventory" ? 2 : 3)
+                    && boundary != "branch-read"))
+            {
+                CleanLanesFixture.Git(lane, "switch", "-c", replacement);
+                if (inventory)
+                    registered = CleanLanesFixture.Git(
+                        fixture.AddAttachedTempDirectory("trureturing-fresh-registration"),
+                        "rev-parse", "--show-toplevel").Trim();
+                switched = true;
+            }
+            return null;
+        });
+        var result = fixture.RunWithRaw(runner, "--force");
+        Assert.True(switched);
+        Assert.True(result.Success, result.Error);
+        Assert.Equal(boundary == "final-inventory" ? "identity_changed" : "unreadable",
+            ReasonFor(result.Output, lane));
+        Assert.True(Directory.Exists(lane));
+        Assert.True(fixture.WorktreeRegistered(lane));
+        Assert.True(fixture.BranchExists(replacement));
+        Assert.Equal(replacement, CleanLanesFixture.Git(lane, "branch", "--show-current").Trim());
+        Assert.Equal(InitializationLock,
+            File.ReadAllText(Path.Combine(fixture.WorktreeGitDirectory(lane), "locked")).Trim());
+        Assert.DoesNotContain(runner.Invocations, call => call.Arguments.Take(2).SequenceEqual(["worktree", "remove"])
+            || call.Arguments.Contains($"refs/heads/{replacement}"));
+        Assert.False(fixture.BranchExists(orphan));
+        if (registered is not null)
+        {
+            Assert.True(Directory.Exists(registered));
+            Assert.True(fixture.WorktreeRegistered(registered));
+            Assert.DoesNotContain(ReadItems(result.Output), item => ItemMatches(item, registered, "removed",
+                "unregistered_same_repository"));
+        }
+        AssertItemProperty(ReadItems(result.Output), "branch", orphan, "action", "removed");
+        Console.WriteLine($"full cleanup: boundary={boundary} branch/worktree/lock retained; orphan control removed");
+    }
 }

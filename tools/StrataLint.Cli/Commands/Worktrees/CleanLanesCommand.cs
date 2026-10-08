@@ -59,6 +59,12 @@ internal static partial class CleanLanesCommand
                 .Where(static item => item.Branch is not null)
                 .Select(static item => item.Branch!)
                 .ToHashSet(StringComparer.Ordinal);
+            var protectedInventory = inventory.ToList();
+            void ProtectObservedWorktree(RegisteredWorktree observed)
+            {
+                if (observed.Branch is not null) activeBranches.Add(observed.Branch);
+                protectedInventory.Add(observed);
+            }
 
             InspectRegisteredLanes(
                 root,
@@ -71,7 +77,8 @@ internal static partial class CleanLanesCommand
                 runner,
                 now,
                 options.ActivePaths,
-                readHostActivity);
+                readHostActivity,
+                ProtectObservedWorktree);
             if (!options.LanesOnly)
             {
                 // 建树时的回收够不到这两类:判官树的判据(未注册 / 无 .git 的快照)
@@ -88,7 +95,7 @@ internal static partial class CleanLanesCommand
                     root,
                     commonGitDirectory,
                     options.Force,
-                    inventory,
+                    protectedInventory,
                     tempRoots,
                     events,
                     runner);
@@ -199,7 +206,8 @@ internal static partial class CleanLanesCommand
         IWorktreeProcessRunner runner,
         DateTimeOffset now,
         IReadOnlySet<string> activePaths,
-        Func<IReadOnlySet<string>?> readHostActivity)
+        Func<IReadOnlySet<string>?> readHostActivity,
+        Action<RegisteredWorktree> protectObservedWorktree)
     {
         var remainingPaths = inventory.Select(static item => item.Path).ToHashSet(StringComparer.Ordinal);
         foreach (var item in inventory.OrderByDescending(static item => item.Path.Length))
@@ -268,7 +276,8 @@ internal static partial class CleanLanesCommand
                         now,
                         lockedLane,
                         activePaths,
-                        readHostActivity);
+                        readHostActivity,
+                        protectObservedWorktree);
                     events.Add(RemovalEvent(item, removal));
                     if (removal.Outcome == LaneRemovalOutcome.Removed) remainingPaths.Remove(item.Path);
                     continue;
@@ -386,12 +395,10 @@ internal static partial class CleanLanesCommand
         IWorktreeProcessRunner runner)
     {
         var registeredPaths = inventory.Select(static item => item.Path).ToHashSet(StringComparer.Ordinal);
-        var registeredByGitDirectory = inventory
+        var registeredGitDirectories = inventory
             .Where(static item => item.GitDirectory is not null)
-            .ToDictionary(
-                static item => item.GitDirectory!,
-                static item => item,
-                StringComparer.Ordinal);
+            .Select(static item => item.GitDirectory!)
+            .ToHashSet(StringComparer.Ordinal);
         foreach (var path in tempRoots
             .Where(Directory.Exists)
             .Select(ResolveDirectoryPath)
@@ -424,9 +431,9 @@ internal static partial class CleanLanesCommand
 
             var scannedGitDirectory = TryResolveGitDirectory(path, runner);
             if (scannedGitDirectory is not null
-                && registeredByGitDirectory.TryGetValue(scannedGitDirectory, out _))
+                && registeredGitDirectories.Contains(scannedGitDirectory))
             {
-                // Every registered worktree was already evaluated using the inactivity policy.
+                // Freshly observed registrations also stay under the lane policy.
                 continue;
             }
 
