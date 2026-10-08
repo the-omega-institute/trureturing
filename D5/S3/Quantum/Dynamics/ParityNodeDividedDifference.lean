@@ -64,19 +64,19 @@ private theorem exists_prod_one_sub_mul {ι R : Type*} [CommRing R] (t : R) (s :
     obtain ⟨c, hc⟩ := ih
     exact ⟨f a + c - t * f a * c, by rw [prod_insert ha, hc]; ring⟩
 
-/-- The divided difference of `x ^ i` over integer nodes is the coefficient of degree
-`#A - 1` of the remainder of `X ^ i` modulo the monic nodal polynomial; in particular it is an
-integer. -/
-private theorem sum_pow_div_nodal_eq_coeff {ι K : Type*} [DecidableEq ι] [Field K] [CharZero K]
-    (μ : ι → ℤ) (A : Finset ι) (hμ : Set.InjOn μ A) (i : ℕ) :
-    ∑ k ∈ A, ((μ k : K) ^ i / ∏ l ∈ A.erase k, ((μ k : K) - μ l)) =
-      ((((X : ℤ[X]) ^ i %ₘ ∏ l ∈ A, (X - C (μ l))).coeff (A.card - 1) : ℤ) : K) := by
+/-- The divided difference of an integer polynomial `f` over integer nodes is the coefficient
+of degree `#A - 1` of the remainder of `f` modulo the monic nodal polynomial; in particular it is
+an integer. -/
+theorem sum_eval_div_nodal_eq_coeff {ι K : Type*} [DecidableEq ι] [Field K] [CharZero K]
+    (μ : ι → ℤ) (A : Finset ι) (hμ : Set.InjOn μ A) (f : ℤ[X]) :
+    ∑ k ∈ A, (((f.eval (μ k) : ℤ) : K) / ∏ l ∈ A.erase k, ((μ k : K) - μ l)) =
+      (((f %ₘ ∏ l ∈ A, (X - C (μ l))).coeff (A.card - 1) : ℤ) : K) := by
   set Ω : ℤ[X] := ∏ l ∈ A, (X - C (μ l)) with hΩdef
   have hΩ : Ω.Monic := monic_prod_of_monic _ _ fun l _ => monic_X_sub_C _
   have hinj : Set.InjOn (fun k => (μ k : K)) A := fun a ha b hb h =>
     hμ ha hb (Int.cast_injective h)
-  have hdeg : (((X : ℤ[X]) ^ i %ₘ Ω).map (Int.castRingHom K)).degree < A.card := by
-    calc _ ≤ ((X : ℤ[X]) ^ i %ₘ Ω).degree := degree_map_le
+  have hdeg : ((f %ₘ Ω).map (Int.castRingHom K)).degree < A.card := by
+    calc _ ≤ (f %ₘ Ω).degree := degree_map_le
       _ < Ω.degree := degree_modByMonic_lt _ hΩ
       _ = A.card := by
         rw [degree_eq_natDegree hΩ.ne_zero,
@@ -90,11 +90,11 @@ private theorem sum_pow_div_nodal_eq_coeff {ι K : Type*} [DecidableEq ι] [Fiel
   have hev : eval (μ k) Ω = 0 := by
     rw [hΩdef, eval_prod]
     exact Finset.prod_eq_zero hk (by simp)
-  have hrem := congrArg (eval (μ k)) (modByMonic_add_div ((X : ℤ[X]) ^ i) Ω)
-  rw [eval_add, eval_mul, hev, zero_mul, add_zero, eval_pow, eval_X] at hrem
-  have hcast := eval_intCast_map (Int.castRingHom K) ((X : ℤ[X]) ^ i %ₘ Ω) (μ k)
+  have hrem := congrArg (eval (μ k)) (modByMonic_add_div f Ω)
+  rw [eval_add, eval_mul, hev, zero_mul, add_zero] at hrem
+  have hcast := eval_intCast_map (Int.castRingHom K) (f %ₘ Ω) (μ k)
   simp only [Int.cast_id, eq_intCast] at hcast
-  simp only [hcast, hrem, Int.cast_pow]
+  simp only [hcast, hrem]
 
 /-- Odd integers have norm one in `ℤ_[2]`. -/
 private theorem norm_odd_int (n : ℤ) (hn : Odd n) : ‖(n : ℤ_[2])‖ = 1 := by
@@ -216,7 +216,10 @@ theorem evenOdd_dividedDifference_twoAdicUnit {ι : Type*} [Fintype ι] [Decidab
   set Ω : ℤ[X] := ∏ l ∈ A, (X - C (μ l)) with hΩ
   let m : ℕ → ℤ := fun i => ((X : ℤ[X]) ^ i %ₘ Ω).coeff (α - 1)
   have hm : ∀ i, ∑ k ∈ A, ((μ k : ℚ_[2]) ^ i / ∏ l ∈ A.erase k, ((μ k : ℚ_[2]) - μ l)) =
-      (m i : ℚ_[2]) := fun i => sum_pow_div_nodal_eq_coeff μ A hμinj i
+      (m i : ℚ_[2]) := fun i => by
+    have h := sum_eval_div_nodal_eq_coeff (K := ℚ_[2]) μ A hμinj (X ^ i)
+    simp only [eval_pow, eval_X, Int.cast_pow] at h
+    exact h
   have hmlow : ∀ i < α, m i = if i = α - 1 then 1 else 0 := by
     intro i hi
     have hΩm : Ω.Monic := monic_prod_of_monic _ _ fun l _ => monic_X_sub_C _

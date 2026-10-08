@@ -100,7 +100,7 @@ def HasPST {V : Type*} [Fintype V] [DecidableEq V] (H : Matrix V V ℂ) (t : ℝ
 
 /-- The repository propagator `exp (-i s H)` at `s = -t` is the matrix exponential
 `exp ((t * i) • H)`. -/
-private theorem hamiltonianPropagator_neg {V : Type*} [Fintype V] [DecidableEq V]
+theorem hamiltonianPropagator_neg {V : Type*} [Fintype V] [DecidableEq V]
     (H : Matrix V V ℂ) (t : ℝ) :
     hamiltonianPropagator H (-t) = NormedSpace.exp (((t : ℂ) * I) • H) := by
   unfold hamiltonianPropagator hamiltonianGenerator
@@ -133,7 +133,7 @@ private theorem pathHamiltonian_down (i j : Fin (m + 1)) (t : Fin m) (hj : (j : 
   congr 2
   exact Fin.ext hj
 
-private theorem pathHamiltonian_transpose : (pathHamiltonian r q)ᵀ = pathHamiltonian r q := by
+theorem pathHamiltonian_transpose : (pathHamiltonian r q)ᵀ = pathHamiltonian r q := by
   ext i j
   rw [transpose_apply]
   by_cases h1 : i = j
@@ -147,7 +147,7 @@ private theorem pathHamiltonian_transpose : (pathHamiltonian r q)ᵀ = pathHamil
   have h1' : (i : ℕ) ≠ j := fun h => h1 (Fin.ext h)
   rw [pathHamiltonian_far r q i j h1' h2 h3, pathHamiltonian_far r q j i (Ne.symm h1') h3 h2]
 
-private theorem pathHamiltonian_isHermitian : (pathHamiltonian r q).IsHermitian := by
+theorem pathHamiltonian_isHermitian : (pathHamiltonian r q).IsHermitian := by
   have hreal : (pathHamiltonian r q).map star = pathHamiltonian r q := by
     ext i j
     simp only [map_apply, pathHamiltonian, of_apply]
@@ -155,18 +155,19 @@ private theorem pathHamiltonian_isHermitian : (pathHamiltonian r q).IsHermitian 
   change (pathHamiltonian r q)ᴴ = pathHamiltonian r q
   rw [conjTranspose, pathHamiltonian_transpose, hreal]
 
-/-- The column of `H ^ p` at the first vertex vanishes beyond distance `p`, and at distance `p`
-it is the product of the first `p` edge weights. -/
-private theorem pathHamiltonian_pow_apply_zero (p : ℕ) :
-    ∀ i : Fin (m + 1), (p < (i : ℕ) → (pathHamiltonian r q ^ p) i 0 = 0) ∧
-      ((i : ℕ) = p → (pathHamiltonian r q ^ p) i 0 =
-        ∏ t ∈ range p, (if h : t < m then (r ⟨t, h⟩ : ℂ) else 0)) := by
+/-- The column of `H ^ p` at the vertex `v` vanishes beyond distance `p` from `v`, and at the
+vertex `v + p` it is the product of the `p` edge weights between `v` and `v + p`. -/
+theorem pathHamiltonian_pow_apply_column (v : Fin (m + 1)) (p : ℕ) :
+    ∀ i : Fin (m + 1),
+      ((v : ℕ) + p < i ∨ (i : ℕ) + p < v → (pathHamiltonian r q ^ p) i v = 0) ∧
+        ((i : ℕ) = v + p → (pathHamiltonian r q ^ p) i v =
+          ∏ t ∈ range p, (if h : (v : ℕ) + t < m then (r ⟨v + t, h⟩ : ℂ) else 0)) := by
   induction p with
   | zero =>
     intro i
     refine ⟨fun h => ?_, fun h => ?_⟩
-    · rw [pow_zero, one_apply_ne (fun h' => by rw [h'] at h; simp at h)]
-    · have : i = 0 := Fin.ext h
+    · rw [pow_zero, one_apply_ne (fun h' => by rw [h'] at h; omega)]
+    · have : i = v := Fin.ext h
       subst this
       simp
   | succ p ih =>
@@ -174,18 +175,18 @@ private theorem pathHamiltonian_pow_apply_zero (p : ℕ) :
     refine ⟨fun h => ?_, fun h => ?_⟩
     · rw [pow_succ', mul_apply]
       refine Finset.sum_eq_zero fun l _ => ?_
-      by_cases hl : p < (l : ℕ)
+      by_cases hl : (v : ℕ) + p < l ∨ (l : ℕ) + p < v
       · rw [(ih l).1 hl, mul_zero]
       · rw [pathHamiltonian_far r q i l (by omega) (by omega) (by omega), zero_mul]
-    · have hp : p < m := by have := i.isLt; omega
-      rw [pow_succ', mul_apply, Finset.sum_eq_single ⟨p, by omega⟩]
-      · rw [(ih ⟨p, by omega⟩).2 rfl, prod_range_succ, dif_pos hp,
-          pathHamiltonian_down r q i ⟨p, by omega⟩ ⟨p, hp⟩ rfl h]
+    · have hp : (v : ℕ) + p < m := by have := i.isLt; omega
+      rw [pow_succ', mul_apply, Finset.sum_eq_single ⟨v + p, by omega⟩]
+      · rw [(ih ⟨v + p, by omega⟩).2 rfl, prod_range_succ, dif_pos hp,
+          pathHamiltonian_down r q i ⟨v + p, by omega⟩ ⟨v + p, hp⟩ rfl h]
         ring
       · intro l _ hl
-        by_cases hlp : p < (l : ℕ)
+        by_cases hlp : (v : ℕ) + p < l ∨ (l : ℕ) + p < v
         · rw [(ih l).1 hlp, mul_zero]
-        · have hlp' : (l : ℕ) ≠ p := fun h' => hl (Fin.ext h')
+        · have hlp' : (l : ℕ) ≠ v + p := fun h' => hl (Fin.ext h')
           rw [pathHamiltonian_far r q i l (by omega) (by omega) (by omega), zero_mul]
       · simp
 
@@ -196,7 +197,7 @@ section Spectral
 variable {V : Type*} [Fintype V] [DecidableEq V] {H : Matrix V V ℂ} (hH : H.IsHermitian)
 
 /-- Entries of the powers of a Hermitian matrix in its orthonormal eigenbasis. -/
-private theorem spectral_pow_apply (p : ℕ) (a b : V) :
+theorem spectral_pow_apply (p : ℕ) (a b : V) :
     (H ^ p) a b = ∑ k, (hH.eigenvectorUnitary : Matrix V V ℂ) a k *
       ((hH.eigenvalues k : ℂ) ^ p *
         starRingEnd ℂ ((hH.eigenvectorUnitary : Matrix V V ℂ) b k)) := by
@@ -210,7 +211,7 @@ private theorem spectral_pow_apply (p : ℕ) (a b : V) :
   simp only [mul_diagonal, star_apply, mul_assoc, Complex.star_def]
 
 /-- The propagator `exp (s • H)` of a Hermitian matrix in its orthonormal eigenbasis. -/
-private theorem spectral_exp (s : ℂ) :
+theorem spectral_exp (s : ℂ) :
     NormedSpace.exp (s • H) = (hH.eigenvectorUnitary : Matrix V V ℂ) *
       diagonal (fun k => Complex.exp (s * hH.eigenvalues k)) *
         star (hH.eigenvectorUnitary : Matrix V V ℂ) := by
@@ -293,11 +294,48 @@ private theorem pst_phase (a b : V) (hpst : HasPST H Real.pi a b) (k : V) :
 
 end Spectral
 
+/-- **Nodal extraction from moments.** If the moments `Σ_{j ∈ S} c j * x j ^ p` of a family
+indexed by a finite set `S` of `n + 1` points vanish for `p < n` and equal `P` for `p = n`, then
+`c k * ∏_{l ∈ S, l ≠ k} (x k - x l) = P` for every `k ∈ S`. -/
+theorem mul_prod_sub_eq_of_moments {ι : Type*} [DecidableEq ι] (S : Finset ι) (c x : ι → ℂ)
+    (n : ℕ) (hS : S.card = n + 1) (P : ℂ)
+    (hmom : ∀ p ≤ n, ∑ j ∈ S, c j * x j ^ p = if p = n then P else 0) (k : ι) (hk : k ∈ S) :
+    c k * ∏ l ∈ S.erase k, (x k - x l) = P := by
+  set f : ℂ[X] := ∏ l ∈ S.erase k, (X - C (x l)) with hf
+  have hfm : f.Monic := monic_prod_of_monic _ _ fun l _ => monic_X_sub_C _
+  have hfdeg : f.natDegree = n := by
+    rw [hf, natDegree_prod_of_monic _ _ fun l _ => monic_X_sub_C _,
+      Finset.sum_congr rfl fun l _ => natDegree_X_sub_C _]
+    simp [Finset.card_erase_of_mem hk, hS]
+  have hsum : ∑ j ∈ S, c j * f.eval (x j) = P := by
+    have h1 : ∀ j, c j * f.eval (x j) = ∑ p ∈ range (n + 1), f.coeff p * (c j * x j ^ p) := by
+      intro j
+      rw [eval_eq_sum_range' (by omega : f.natDegree < n + 1), Finset.mul_sum]
+      exact Finset.sum_congr rfl fun p _ => by ring
+    simp_rw [h1]
+    rw [Finset.sum_comm]
+    simp_rw [← Finset.mul_sum]
+    have h2 : ∀ p ∈ range (n + 1), f.coeff p * ∑ j ∈ S, c j * x j ^ p =
+        if p = n then f.coeff p * P else 0 := by
+      intro p hp
+      rw [hmom p (by have := Finset.mem_range.mp hp; omega)]
+      split_ifs <;> simp
+    rw [Finset.sum_congr rfl h2, Finset.sum_ite_eq', if_pos (Finset.mem_range.mpr (by omega)),
+      show f.coeff n = 1 by rw [← hfdeg]; exact hfm.coeff_natDegree, one_mul]
+  have hsingle : ∑ j ∈ S, c j * f.eval (x j) = c k * ∏ l ∈ S.erase k, (x k - x l) := by
+    rw [Finset.sum_eq_single_of_mem k hk]
+    · rw [hf, eval_prod]
+      simp only [eval_sub, eval_X, eval_C]
+    · intro j hj hjk
+      rw [hf, eval_prod, Finset.prod_eq_zero (Finset.mem_erase.mpr ⟨hjk, hj⟩) (by simp),
+        mul_zero]
+  rw [← hsingle, hsum]
+
 section Classes
 
 variable {V : Type*} [Fintype V] [DecidableEq V] {H : Matrix V V ℂ} (hH : H.IsHermitian)
 
-private theorem exists_int_of_exp_eq_one {θ : ℝ} (h : Complex.exp ((Real.pi : ℂ) * I * θ) = 1) :
+theorem exists_int_of_exp_eq_one {θ : ℝ} (h : Complex.exp ((Real.pi : ℂ) * I * θ) = 1) :
     ∃ n : ℤ, θ = 2 * n := by
   obtain ⟨n, hn⟩ := Complex.exp_eq_one_iff.mp h
   refine ⟨n, ?_⟩
@@ -306,7 +344,7 @@ private theorem exists_int_of_exp_eq_one {θ : ℝ} (h : Complex.exp ((Real.pi :
   have h2 : (θ : ℂ) = 2 * n := mul_left_cancel₀ hpi (by rw [hn]; ring)
   exact_mod_cast h2
 
-private theorem exists_int_of_exp_eq_neg_one {θ : ℝ} (h : Complex.exp ((Real.pi : ℂ) * I * θ) = -1) :
+theorem exists_int_of_exp_eq_neg_one {θ : ℝ} (h : Complex.exp ((Real.pi : ℂ) * I * θ) = -1) :
     ∃ n : ℤ, θ = 2 * n + 1 := by
   have h1 : Complex.exp ((Real.pi : ℂ) * I * ((θ - 1 : ℝ) : ℂ)) = 1 := by
     rw [show (Real.pi : ℂ) * I * ((θ - 1 : ℝ) : ℂ) = (Real.pi : ℂ) * I * θ - Real.pi * I by
@@ -343,39 +381,9 @@ theorem pst_parity_classes (a b : V) (hab : a ≠ b) (m : ℕ) (hm : Fintype.car
     refine Finset.sum_congr rfl fun k _ => ?_
     simp only [c]
     ring
-  have hcD : ∀ k, c k * ∏ l ∈ univ.erase k, ((Λ k : ℂ) - Λ l) = P := by
-    intro k
-    set f : ℂ[X] := ∏ l ∈ univ.erase k, (X - C (Λ l : ℂ)) with hf
-    have hfm : f.Monic := monic_prod_of_monic _ _ fun l _ => monic_X_sub_C _
-    have hfdeg : f.natDegree = m := by
-      rw [hf, natDegree_prod_of_monic _ _ fun l _ => monic_X_sub_C _,
-        Finset.sum_congr rfl fun l _ => natDegree_X_sub_C _]
-      simp [Finset.card_erase_of_mem (mem_univ k), hm]
-    have hsum : ∑ j, c j * f.eval (Λ j : ℂ) = P := by
-      have h1 : ∀ j, c j * f.eval (Λ j : ℂ) =
-          ∑ p ∈ range (m + 1), f.coeff p * (c j * (Λ j : ℂ) ^ p) := by
-        intro j
-        rw [eval_eq_sum_range' (by omega : f.natDegree < m + 1), Finset.mul_sum]
-        exact Finset.sum_congr rfl fun p _ => by ring
-      simp_rw [h1]
-      rw [Finset.sum_comm]
-      simp_rw [← Finset.mul_sum]
-      have h2 : ∀ p ∈ range (m + 1), f.coeff p * ∑ j, c j * (Λ j : ℂ) ^ p =
-          if p = m then f.coeff p * P else 0 := by
-        intro p hp
-        rw [hmomc p (by have := Finset.mem_range.mp hp; omega)]
-        split_ifs <;> simp
-      rw [Finset.sum_congr rfl h2, Finset.sum_ite_eq', if_pos (Finset.mem_range.mpr (by omega)),
-        show f.coeff m = 1 by rw [← hfdeg]; exact hfm.coeff_natDegree, one_mul]
-    have hsingle : ∑ j, c j * f.eval (Λ j : ℂ) = c k * ∏ l ∈ univ.erase k, ((Λ k : ℂ) - Λ l) := by
-      rw [Finset.sum_eq_single k]
-      · rw [hf, eval_prod]
-        simp only [eval_sub, eval_X, eval_C]
-      · intro j _ hj
-        rw [hf, eval_prod, Finset.prod_eq_zero (Finset.mem_erase.mpr ⟨hj, mem_univ j⟩) (by simp),
-          mul_zero]
-      · simp
-    rw [← hsingle, hsum]
+  have hcD : ∀ k, c k * ∏ l ∈ univ.erase k, ((Λ k : ℂ) - Λ l) = P := fun k =>
+    mul_prod_sub_eq_of_moments univ c (fun l => (Λ l : ℂ)) m (by rw [Finset.card_univ, hm]) P
+      (fun p hp => hmomc p hp) k (mem_univ k)
   have hDcast : ∀ k, ∏ l ∈ univ.erase k, ((Λ k : ℂ) - Λ l) =
       ((∏ l ∈ univ.erase k, (Λ k - Λ l) : ℝ) : ℂ) := by
     intro k
@@ -510,7 +518,7 @@ theorem pst_parity_classes (a b : V) (hab : a ≠ b) (m : ℕ) (hm : Fintype.car
 include hH in
 /-- After perfect state transfer from `a` to `b` at time `π`, the `b`-th column of the
 propagator is a multiple of the `a`-th basis vector. -/
-private theorem pst_column (a b : V) (hpst : HasPST H Real.pi a b) (x : V) :
+theorem pst_column (a b : V) (hpst : HasPST H Real.pi a b) (x : V) :
     NormedSpace.exp (((Real.pi : ℂ) * I) • H) x b =
       if x = a then NormedSpace.exp (((Real.pi : ℂ) * I) • H) a b else 0 := by
   set γ := NormedSpace.exp (((Real.pi : ℂ) * I) • H) a b with hγdef
@@ -530,7 +538,7 @@ private theorem pst_column (a b : V) (hpst : HasPST H Real.pi a b) (x : V) :
 
 include hH in
 /-- The propagator at time `π` is unitary. -/
-private theorem propagator_star_mul_self :
+theorem propagator_star_mul_self :
     star (NormedSpace.exp (((Real.pi : ℂ) * I) • H)) *
       NormedSpace.exp (((Real.pi : ℂ) * I) • H) = 1 := by
   have hs : star (((Real.pi : ℂ) * I) • H) = -(((Real.pi : ℂ) * I) • H) := by
@@ -546,13 +554,14 @@ section Persymmetry
 
 variable {m : ℕ} (r : Fin m → ℝ) (q : Fin (m + 1) → ℝ)
 
-/-- **Mirror symmetry of the weights.** If a unitary matrix commuting with the path Hamiltonian
-sends the first basis vector to a unimodular multiple of the last one, then the edge weights are
-mirror symmetric. -/
-theorem persymmetric_weights (hr : ∀ t, 0 < r t) (U : Matrix (Fin (m + 1)) (Fin (m + 1)) ℂ)
+/-- **Reversal form of the transfer unitary.** If a unitary matrix commuting with the path
+Hamiltonian sends the first basis vector to a unimodular multiple `γ` of the last one, then it
+sends every basis vector to `γ` times its mirror image, and the edge weights are mirror
+symmetric. -/
+theorem reversal_columns (hr : ∀ t, 0 < r t) (U : Matrix (Fin (m + 1)) (Fin (m + 1)) ℂ)
     (hU : star U * U = 1) (hcomm : U * pathHamiltonian r q = pathHamiltonian r q * U) (γ : ℂ)
     (hγ : Complex.normSq γ = 1) (hcol : ∀ x, U x 0 = if x = Fin.last m then γ else 0) :
-    ∀ t : Fin m, r t = r t.rev := by
+    (∀ i x : Fin (m + 1), U x i = if x = i.rev then γ else 0) ∧ ∀ t : Fin m, r t = r t.rev := by
   have hγ0 : γ ≠ 0 := fun h => by rw [h, map_zero] at hγ; exact zero_ne_one hγ
   have hUcol : ∀ i j : Fin (m + 1),
       ∑ x, starRingEnd ℂ (U x i) * U x j = if i = j then 1 else 0 := by
@@ -716,7 +725,17 @@ theorem persymmetric_weights (hr : ∀ t, 0 < r t) (U : Matrix (Fin (m + 1)) (Fi
         · have ht' : t = et := Fin.ext (by simp [het]; omega)
           rw [ht']
           exact he
-  exact fun t => (key m le_rfl).2 t t.isLt
+  exact ⟨fun i x => (key m le_rfl).1 i (Nat.lt_succ_iff.mp i.isLt) x,
+    fun t => (key m le_rfl).2 t t.isLt⟩
+
+/-- **Mirror symmetry of the weights.** If a unitary matrix commuting with the path Hamiltonian
+sends the first basis vector to a unimodular multiple of the last one, then the edge weights are
+mirror symmetric. -/
+theorem persymmetric_weights (hr : ∀ t, 0 < r t) (U : Matrix (Fin (m + 1)) (Fin (m + 1)) ℂ)
+    (hU : star U * U = 1) (hcomm : U * pathHamiltonian r q = pathHamiltonian r q * U) (γ : ℂ)
+    (hγ : Complex.normSq γ = 1) (hcol : ∀ x, U x 0 = if x = Fin.last m then γ else 0) :
+    ∀ t : Fin m, r t = r t.rev :=
+  (reversal_columns r q hr U hU hcomm γ hγ hcol).2
 
 end Persymmetry
 
@@ -736,7 +755,7 @@ private theorem choose_two_pow_sub_one_odd (K j : ℕ) (hj : j < 2 ^ K) : Odd ((
   exact (ZMod.natCast_eq_one_iff_odd).mp hc
 
 /-- A product over `Fin (h + h)` of a mirror-symmetric family is a square. -/
-private theorem prod_eq_sq_of_rev {R : Type*} [CommMonoid R] {n h : ℕ} (hn : n = h + h)
+theorem prod_eq_sq_of_rev {R : Type*} [CommMonoid R] {n h : ℕ} (hn : n = h + h)
     (f : Fin n → R) (hf : ∀ t, f t = f t.rev) :
     ∏ t, f t = (∏ i : Fin h, f (Fin.cast hn.symm (Fin.castAdd h i))) ^ 2 := by
   subst hn
@@ -778,12 +797,12 @@ private theorem no_transfer_last_first {m K : ℕ} (hK : 1 ≤ K) (hm : 2 ^ K = 
   have hmom : ∀ p ≤ m, (H ^ p) (Fin.last m) 0 = if p = m then (P : ℂ) else 0 := by
     intro p hp
     split_ifs with hpm
-    · rw [hpm, (pathHamiltonian_pow_apply_zero r q m (Fin.last m)).2 (by simp), hP]
+    · rw [hpm, (pathHamiltonian_pow_apply_column r q 0 m (Fin.last m)).2 (by simp), hP]
       push_cast
       rw [Finset.prod_range]
       refine Finset.prod_congr rfl fun t _ => ?_
       simp
-    · exact (pathHamiltonian_pow_apply_zero r q p (Fin.last m)).1 (by simp; omega)
+    · exact (pathHamiltonian_pow_apply_column r q 0 p (Fin.last m)).1 (Or.inl (by simp; omega))
   have hlast : Fin.last m ≠ 0 := fun h => by
     have := congrArg Fin.val h
     simp at this
