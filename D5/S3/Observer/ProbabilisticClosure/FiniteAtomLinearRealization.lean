@@ -650,14 +650,14 @@ private theorem full_feature_probability {m : ℕ} (task : Task) (alpha : unitIn
   classical
   have hZ := total_evidence_pos alpha q w ha hq hw hsum h.actions
   constructor
-  · cases hs : h.stopped
-    · simp only [fullFeature, hs, Bool.false_eq_true, ↓reduceIte, true_and, false_and,
-        Fintype.sum_sum_type, Finset.sum_const_zero, add_zero]
-      rw [Fintype.sum_prod_type]
-      simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+  · have hpair := full_feature_pairing task alpha q w h (fun _ => 1)
+    simp only [mul_one] at hpair
+    rw [hpair]
+    cases hs : h.stopped
+    · simp only [hs, Bool.false_eq_true, ↓reduceIte]
       rw [← Finset.sum_div]
       exact div_self hZ.ne'
-    · simp [fullFeature, hs, Fintype.sum_sum_type]
+    · simp [hs]
   · intro c
     cases c with
     | inl p =>

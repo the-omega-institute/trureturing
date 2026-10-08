@@ -231,8 +231,9 @@ theorem raw_feature_updates {m : ℕ} (alpha : unitInterval)
           (fullFeature .raw alpha q w h) e else 0) =
       ∑ e, Matrix.mulVec ((fullModel .raw alpha q).matrix j (nativeStep .raw source h j).1)
         (fullFeature .raw alpha q w h) e := by
-    rw [Finset.sum_comm]
-    simp
+    simpa using raw_pushforward_sum alpha q
+      (Matrix.mulVec ((fullModel .raw alpha q).matrix j (nativeStep .raw source h j).1)
+        (fullFeature .raw alpha q w h)) (fun _ => 1)
   rw [hmass]
   intro hv d
   have hupdate := hu h j source hv
