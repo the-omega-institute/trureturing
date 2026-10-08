@@ -89,12 +89,13 @@ Floating-point `G⁻¹` for `d = 1, …, 7` and exact values of `M` for
 The canonical source is
 `D5/S3/Quantum/Measurement/OrthocrossGramHalfInteger.lean`. Its public
 declarations are `vec`, `weight`, `proj`, `frame`, `mic`, `gram`, `claim` and
-`result`. The frozen module state has statement identity
-`sha256:512c99b26c0f5a157c35a2d3aa36ed9ec3c4386fb5a547d462a091adb943a19b`.
+`result`, together with `cross` and the basis-covariance lemmas `proj_eq`, `frame_eq`, `posDef_one`,
+`gram_eq` and `frame_one` that `D5/S3/Quantum/Measurement/OrthocrossNonorthogonality` reuses. The frozen module state has statement identity
+`sha256:1d54bc2dc7e464548d33c0baaba9cfdb099414b525348a813f7d6d65a99b4aa3`.
 The result declaration has statement identity
 `sha256:29df7724633883a3e6f8bf6de9fd00488330da5fe1366c3eb8641bd248b0552e`.
 The Freeze event is
-`sha256:39db00032b4f5e7b6f1907563015deaca9a4b3733d4d0569dcb668a8c93a225b`
+`sha256:5ffeb9a36ac6534935003bc70cb8e9bc0ab12173f5f19a1e4b7f75b6e9362d03`
 and has no project-level frozen prerequisites. The proof uses only the
 standard axioms `propext`, `Classical.choice` and `Quot.sound`; no `sorry`,
 `native_decide`, or new axiom.

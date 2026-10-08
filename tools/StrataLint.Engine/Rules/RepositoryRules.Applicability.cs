@@ -29,7 +29,8 @@ internal static partial class RepositoryRules
         LeanClosureValidator.IsReportLean(artifact.Path.Value);
 
     private static bool CapacityScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
-        !artifact.Path.Value.StartsWith("docs/develop/", StringComparison.Ordinal)
+        IsTheoryDocument(artifact.Path.Value)
+        || !artifact.Path.Value.StartsWith("docs/develop/", StringComparison.Ordinal)
         && artifact.Path.Value != "lake-manifest.json"
         && artifact.Path.Value != BackfillInventoryLoader.RelativePath;
 
@@ -68,10 +69,8 @@ internal static partial class RepositoryRules
         || artifact.Path.Value.EndsWith(".csproj", StringComparison.Ordinal)
         || artifact.Path.Value.EndsWith("packages.lock.json", StringComparison.Ordinal);
 
-    private static bool AllArtifacts(RepositoryFile artifact, RuleApplicabilityContext context) => true;
-
-    private static bool BackfillScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
-        BackfillInventoryLoader.IsCanonicalPath(artifact.Path.Value);
+    private static bool AllArtifacts(RepositoryFile artifact, RuleApplicabilityContext context) =>
+        !DigestionOpaquePathPolicy.IsAuxiliaryData(artifact.Path);
 
     private static bool LiteratureScoped(RepositoryFile artifact, RuleApplicabilityContext context) =>
         artifact.Path.Value == "Library/queries.yaml";
@@ -89,10 +88,11 @@ internal static partial class RepositoryRules
     private static bool StructuredOrChronicle(
         RepositoryFile artifact,
         RuleApplicabilityContext context) =>
-        artifact.Path.Value.EndsWith(".json", StringComparison.Ordinal)
+        !DigestionOpaquePathPolicy.IsAuxiliaryData(artifact.Path)
+        && (artifact.Path.Value.EndsWith(".json", StringComparison.Ordinal)
         || artifact.Path.Value.EndsWith(".yaml", StringComparison.Ordinal)
         || artifact.Path.Value.EndsWith(".yml", StringComparison.Ordinal)
-        || artifact.Path.Value.StartsWith("Chronicle/", StringComparison.Ordinal);
+        || artifact.Path.Value.StartsWith("Chronicle/", StringComparison.Ordinal));
 
     private static bool InstantiationScoped(
         RepositoryFile artifact,

@@ -1,0 +1,26 @@
+## 定义 21.1：带证书的 FIB 协议实现
+
+给定有限实验合同、目标和初始候选关系 $B_0$。
+
+一个带证书的 FIB 协议实现包括：
+
+$$
+\left(
+q,\,
+\mathcal P,\,
+\operatorname{rank},\,
+\operatorname{Code},\,
+\operatorname{Interpreter}
+\right).
+$$
+
+其中：
+
+- $q$ 是带有合法性、响应与更新交换证书的精确商；
+- $\mathcal P$ 是商候选关系上的协议；
+- $\operatorname{rank}$ 在全部非终止分支上严格下降；
+- $\operatorname{Code}$ 无损编码控制状态、动作和证书；
+- 解释器忠实执行所声明的实际动作，而不增加额外观察通道。
+
+有限代码长度、语义动作次数、解释器微步骤和物理费用是不同计量，不能自动等同。
+

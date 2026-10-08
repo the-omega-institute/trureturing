@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using StrataLint.TestSupport;
 
 namespace StrataLint.Engine.Tests;

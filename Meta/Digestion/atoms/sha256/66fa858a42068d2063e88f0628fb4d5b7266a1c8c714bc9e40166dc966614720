@@ -1,0 +1,8 @@
+**定义 3.1（FIB 表示空间）。** 一个表示空间为
+
+$$
+\mathbf X=(X,D_X,\delta_X),\qquad \delta_X:D_X\twoheadrightarrow X.
+$$
+
+关系 $p\equiv_Xq$ 定义为 $\delta_X(p)=\delta_X(q)$；$\delta_X^{-1}(x)$ 称为对象 $x$ 的表示纤维。
+

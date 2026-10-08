@@ -1,0 +1,6 @@
+## 续篇二的背景文献与证明边界
+
+Rupak Majumdar、Necmiye Ozay、Anne-Kathrin Schmuck，*On Abstraction-Based Controller Design With Output Feedback*，[arXiv:2002.02687v1](https://arxiv.org/abs/2002.02687v1)。Gunther Reissig、Alexander Weber、Matthias Rungger，*Feedback Refinement Relations for the Synthesis of Symbolic Controllers*，[arXiv:1503.03715v3](https://arxiv.org/abs/1503.03715v3)，DOI [10.1109/TAC.2016.2593947](https://doi.org/10.1109/TAC.2016.2593947)。指定版本页面的作者、题名与摘要已核实；两文仅作为输出反馈实现与反馈精化的背景，不替代本卷的共同合法性、有限树桥梁、超图例子或四状态下界证明。抽象解释与未核实的 OUP 背景范围见[续篇一](FIB_RELATIONAL_FIBER_CALCULUS_CONTINUATION.md#续篇一的来源与证明边界)。
+
+本卷给出用户稿的普通数学论证及指定有限表格的例算，不声明研究原创或 Lean kernel 核验。历史执行报告、纸面下界、有限运行和物理实现分别承担各自的范围。
+
