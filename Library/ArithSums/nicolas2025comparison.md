@@ -5509,3 +5509,429 @@ numerically compared with this finite exclusion. A full signed upper
 bound for $Z_\alpha(A)$ with enough strict slack remains required.
 Robin's criterion and RH remain
 unproved by these applications.
+
+## Reusing the coefficient remainder on a larger finite clock
+
+Keep the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum under the Robin-violation hypothesis. The preceding
+finite-clock application already gives $A=\log N>10^{45}$; put
+$L=\log A$. The following application uses the existing coefficient
+remainder (H1), directed comparison (GE5), Gamma damping (GH1), verified
+height and complete zero-count bound. It does not construct a new
+smoothing transform or repeat their proofs.
+
+### Use the full coefficient remainder separately on the two height ranges
+
+The existing (H1) and its numerator estimate give, throughout the actual
+critical strip $0<\beta<1$,
+
+$$
+\sqrt A L|F_A(\beta+it)|
+\le(1+1/L)\frac{A^{\beta-1/2}}{|\beta+it||1-\beta-it|}
+\left(1+\frac{2(L+2)}{L(L+1)|1-\beta-it|}\right).
+\tag{GJ1}
+$$
+
+This retains the complete original coefficient, including its remainder;
+it sharpens the coarser factor two in (GH2) by direct use of the already
+available estimate. No zero coefficient is replaced by only its leading
+term. For $L>78$, the verified critical head has
+$|1-\rho|\ge1/2$, so its parenthesized factor is less than $1.054$:
+
+$$
+\frac{4(L+2)}{L(L+1)}
+<\frac{4\cdot80}{78\cdot79}<0.054.
+$$
+
+For the actual unverified tail $|t|>H=3\cdot10^{12}$,
+$|1-\rho|\ge|t|>H$ instead bounds that factor by $1.0001$.
+Criticality is used only on the verified head. The original real parts
+and the complete infinite multiset of tail zeros are retained.
+
+Using the same positive $c_0$ identity, both ordinate signs and (GH1),
+(GJ1) gives the finite bound
+
+$$
+\sqrt A L|Z_\alpha(A)|
+<M_1(\alpha)(1+1/L)
+\left[1.054c_0+2(1.0001)\sqrt A S_2(H)
+ \exp\left(-\frac{H^2}{2(\alpha+H)}\right)\right].
+\tag{GJ2}
+$$
+
+Here $M_1(\alpha)=\alpha/(\alpha-1)$, $c_0<0.05$ and
+$S_2(H)<1.48\cdot10^{-12}$ are the same previously paid quantities.
+In particular, this argument does not need a new verified height or a
+new zero enumeration.
+
+### Pay the complete response on the added interval
+
+Take the exact noninteger shape and additional interval
+
+$$
+\alpha=\frac{29}{20}10^{23}+\frac12,
+\qquad 10^{45}<A\le10^{46}.
+$$
+
+Then $L>78$, $\sqrt A\le10^{23}$,
+$M_1(\alpha)<1.0001$, and
+
+$$
+\frac{H^2}{2(\alpha+H)}>31,
+\qquad e^{31}>10^{13}.
+$$
+
+For the exponential inequality, $e>8/3$ and
+$8^{31}>10^{13}3^{31}$ suffice. The head and complete tail in (GJ2)
+therefore obey the exact rational budgets
+
+$$
+(1.0001)(1.02)(1.054)(0.05)<0.054,
+$$
+
+$$
+2(1.0001)^2(1.02)(10^{23})
+ (1.48\cdot10^{-12})10^{-13}<0.031.
+\tag{GJ3}
+$$
+
+For the arithmetic comparison term, reuse
+[Dusart's Theorem 5.2 and Proposition 3.2](../Weil/dusart2010estimates.md).
+The original v1 theorem's $k=2$, $\eta_2=3.965$, $x_2=2$ row and the
+complete prime-power correction give
+
+$$
+\frac{\psi(A)}A
+<1+\frac{3.965}{L^2}+1.00007A^{-1/2}+1.78A^{-2/3}
+<1.001.
+$$
+
+The final inequality follows from $3.965/78^2<0.0007$ and
+$1.00007\cdot10^{-22}+1.78\cdot10^{-30}<0.0003$.
+The source row applies throughout the added interval; no asymptotic
+starting threshold is substituted for its explicit $x_2=2$.
+Since $\alpha-1>1.4499\cdot10^{23}$, the two remaining terms of (GE5)
+satisfy
+
+$$
+\frac{\psi(A)}{(\alpha-1)\sqrt A}
+<\frac{1.001}{1.4499}<0.691,
+\qquad
+\frac{5M_1(\alpha)}{\sqrt A}<6\cdot10^{-22}.
+\tag{GJ4}
+$$
+
+Combining (GE5) with (GJ2)–(GJ4) pays the original full signed response:
+
+$$
+\boxed{-\sqrt A L I_\psi(A)
+<0.054+0.031+0.691+6\cdot10^{-22}<0.777,
+\qquad 10^{45}<A\le10^{46}.}
+\tag{GJ5}
+$$
+
+All elementary and trivial contributions, including Gamma scales below
+the unit cutoff, are retained through the already proved (GE5).
+The strict core for this same selected source still gives
+$\sqrt A L D^*(A)>\mathcal E(L)>0.778$. Hence
+
+$$
+\boxed{\sqrt A L\Delta(N)>0.001,
+\qquad 10^{45}<A\le10^{46}.}
+\tag{GJ6}
+$$
+
+Together with the preceding $A>10^{45}$ restriction, this forces
+$\log N>10^{46}$ for the same hypothetical least global maximizer.
+It is a paper-level enlargement of the excluded selected-source window,
+with no new classical theorem, priority claim, Lean certification or
+all-integer finite Robin verification. The fixed verified height and
+shape still provide no uniform main bound as $A\to\infty$; the complete
+unbounded signed Robin target and RH remain unproved.
+
+## An effective directed Gamma comparison retaining the cutoff sign
+
+Retain the original $h_A,w_c,J_1,J_\alpha,D=\psi-\mathrm{id}$ and
+the endpoint convention in (GS5). Reuse the absolutely convergent
+centering (GP4)–(GP5), (GS6), and the decomposition (GS7)–(GS9).
+The following explicit upper comparison preserves the sign of the local
+residual against the actual nonnegative prime-power measure. No new
+short-interval theorem or smoothing transform is required.
+
+For $A\ge e^{78}$, $L=\log A$, and every noninteger $\alpha\ge4$, put
+$\eta_0(A)=\sup_{t\ge A}|\psi(t)-t|/t$ as in (GS1). Then
+
+$$
+\boxed{\sqrt A L[J_1(A)-J_\alpha(A)]
+\le [0.52+2\eta_0(A)]\frac{\sqrt A}{\alpha}
+ +400\sqrt A\,e^{-\alpha/60000}.}
+\tag{GK1}
+$$
+
+This is a directed inequality. The absolute asymptotic comparison
+(GS2) retains its stated scope; (GK1) supplies explicit constants without
+assigning a numerical starting point to that asymptotic result.
+
+### Pay the regular part using only the global error
+
+Fix $99/100\le c\le101/100$ and write $e=c-1$. For $t>A$, put
+$v=\log t$ and $u(c,t)=1/[t(v-\log c)]$. Its derivatives are
+
+$$
+\partial_c^2u=
+\frac{2-(v-\log c)}{t c^2(v-\log c)^3},\qquad
+\partial_t\partial_c^2u=
+\frac{(v-\log c)^2-6}{t^2c^2(v-\log c)^4}.
+$$
+
+Throughout the segment joining $1$ to $c$, one has
+$v-\log c\ge v-1/100\ge(999/1000)v$ and $c\ge99/100$.
+Taylor's formula and
+$[(99/100)^2(999/1000)^2]^{-1}<1.024$ therefore give
+
+$$
+|b_c(t)|\le\frac{0.512e^2}{t\log^2t},\qquad
+|b_c'(t)|\le\frac{0.512e^2}{t^2\log^2t}\quad(t>A).
+\tag{GK2}
+$$
+
+On $(0,A]$, the same existing regular part equals
+$e^2/(cAL)$. Partial summation against $D$, including its actual value
+at $A$ and the change of formula there, gives
+
+$$
+\int b_c\,dD=
+\left[\frac{e^2}{cAL}-b_c(A+)\right]D(A)
+ -\int_A^\infty D(t)b_c'(t)\,dt.
+$$
+
+The upper boundary vanishes by the global PNT input already used in
+(GS3). Applying (GK2), $|D(t)|\le\eta_0(A)t$ for all $t\ge A$, and
+$\int_A^\infty dt/(t\log^2t)=1/L$ yields
+
+$$
+\left|\int b_c\,dD\right|
+\le\frac{\eta_0(A)e^2}{L}
+ \left[\frac{100}{99}+0.512+\frac{0.512}{L}\right]
+ \le\frac{2\eta_0(A)e^2}{L}.
+\tag{GK3}
+$$
+
+This uses a bound on the regular part against the global error; no
+short-interval bound has been inferred from global PNT.
+
+### Retain the negative local residual, including the endpoint atoms
+
+The actual local residual $v_c=B_c-b_c$ from (GS5)–(GS7) is
+nonpositive. For $c>1$ its formula on $A<t<cA$ is
+$1/(cAL)-1/[t\log(t/c)]$, and $v_c(A)=v_c(cA)=0$.
+For $c<1$ its formula on $cA<t\le A$ is
+$1/[t\log(t/c)]-1/(cAL)$, with $v_c(cA)=0$.
+It is zero elsewhere. Since $1/[t\log(t/c)]$ decreases with $t$ on
+these intervals, both displayed formulas are nonpositive. These values
+also fix the sign at a possible prime-power atom at $A$ or $cA$.
+
+Consequently the actual measure $d\psi\ge0$ gives
+
+$$
+\int v_c\,dD=\int v_c\,d\psi-\int v_c\,dt
+\le-\int v_c\,dt.
+$$
+
+On the entire interval with endpoints $A,cA$,
+$t\ge(99/100)A$ and $\log(t/c)\ge L-1/100$. Thus
+
+$$
+\left|\frac{d}{dt}\frac1{t\log(t/c)}\right|
+\le\frac{1.034}{A^2L}.
+$$
+
+Indeed, the ratio to $1/(A^2L)$ is at most
+$[(99/100)^2]^{-1}[L/(L-1/100)][1+1/(L-1/100)]<1.034$
+for $L\ge78$. The local residual vanishes at $cA$, so integrating
+the resulting triangular upper bound gives
+
+$$
+\boxed{\int v_c\,dD
+\le\frac{1.034(A|e|)^2}{2A^2L}
+ \le\frac{0.52e^2}{L}.}
+\tag{GK4}
+$$
+
+An atom contributes to the nonpositive prime term; it is not replaced
+by a Lebesgue density or discarded with an unknown sign.
+
+### Pay all Gamma scales outside the narrow interval
+
+An explicit global bound needed only for this tail follows directly
+from the existing Dusart Theorem 5.2 $k=0$ row and Proposition 3.2:
+$\psi(t)\le4t$ for $t>0$. For $t<2$, $\psi(t)=0$; for $t\ge2$ use
+$\vartheta(t)<2t$ and
+$1.00007t^{-1/2}+1.78t^{-2/3}<2$.
+Applying the already established (GP4) estimates with this constant
+gives, for every $c>0$,
+
+$$
+\int|w_c-h_A|\,d\psi\le\frac{16(c+c^{-1})}{L},\qquad
+\int|w_c-h_A|\,dt\le\frac{4(c+c^{-1})}{L}.
+$$
+
+For clarity, below $A\max(1,c)$ the corresponding bound with
+$\psi(t)\le Bt$ is $2B(c+c^{-1})/L$. Above that point it is also
+$2B(c+c^{-1})/L$: use the logarithmic difference and
+$|\log c|+\tfrac12(\log c)^2\le c+c^{-1}$, since $L\ge2$.
+This is a numerical use of the existing all-scale convergence argument.
+The affine derivative in (GS5) satisfies
+$\int|a_A|\,(d\psi+dt)\le14/L$ by the same partial summation.
+Since $|c-1|\le c+c^{-1}$, these estimates pay the complete centered
+kernel, with room in the constant:
+
+$$
+\left|\int B_c\,dD\right|
+\le\frac{100(c+c^{-1})}{L}\qquad(c>0).
+\tag{GK5}
+$$
+
+This includes every scale with $cA<1$. Only absolutely convergent
+differences are integrated, as in (GP4)–(GP5).
+
+Let $C$ have the same mean-one Gamma law with shape and rate $\alpha$.
+Use its existing moment-generating function and Chernoff bound with
+$\delta=1/100$. The two exponents satisfy
+$\delta-\log(1+\delta)\ge\delta^2/[2(1+\delta)]>1/30000$ and
+$-\delta-\log(1-\delta)\ge\delta^2/2>1/30000$. Therefore
+
+$$
+\Pr(C\notin[99/100,101/100])\le2e^{-\alpha/30000},\qquad
+\mathbb E(C+C^{-1})^2
+\le\frac54+2+\frac83<6.
+$$
+
+Cauchy–Schwarz and (GK5) bound the normalized contribution from that
+whole event by $400\sqrt A e^{-\alpha/60000}$. On its complement,
+(GK3)–(GK4) apply. Averaging with
+$\mathbb E(C-1)^2=1/\alpha$ proves (GK1) using the globally centered
+identity (GS6). No conditional mean-one assertion has been used.
+
+### Preserve the complete original zero response
+
+Reusing $J_1=-I_\psi$, $J_\alpha=Z_\alpha+\overline R_\alpha$ and
+the full elementary upper bound (GE4) gives
+
+$$
+\boxed{\begin{aligned}
+-\sqrt A L I_\psi(A)\le{}&\sqrt A L Z_\alpha(A)
+ +[0.52+2\eta_0(A)]\frac{\sqrt A}{\alpha}\\
+&+400\sqrt A e^{-\alpha/60000}
+ +\frac{5M_1(\alpha)}{\sqrt A}.
+\end{aligned}}
+\tag{GK6}
+$$
+
+Here $Z_\alpha$ retains the original $H_\alpha(\rho)F_A(\rho)$,
+every actual real part, multiplicity and height. The improvement is an
+effective directed arithmetic payment obtained from the retained local
+sign, not a new bound on the main response. The unbounded signed Robin
+estimate and RH remain unproved. This is a paper-level application of
+the existing prime bounds and kernel identities, without a mathematical
+priority or Lean-certification claim.
+
+## A further finite clock from the effective cutoff-sign payment
+
+Keep the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum under the Robin-violation hypothesis. The preceding
+application already excludes $A=\log N\le10^{46}$; put $L=\log A$.
+Apply (GK6) on the additional interval
+
+$$
+10^{46}<A\le\frac72\,10^{46},\qquad
+\alpha=\frac75\,10^{23}+\frac12.
+$$
+
+This uses the effective directed comparison, the full original
+coefficient bound (GJ1), Gamma damping (GH1), and the existing complete
+elementary remainder. No primes, arithmetic profiles or zero ordinates
+are newly enumerated.
+
+### Pay the actual global arithmetic error
+
+Dusart's original Theorem 5.2 $k=2$, $\eta_2=3.965$, $x_2=2$ row and
+Proposition 3.2, already used in (GJ4), give for every $t\ge A$
+
+$$
+\frac{|\psi(t)-t|}{t}
+\le\frac{3.965}{\log^2t}+1.00007t^{-1/2}+1.78t^{-2/3}
+<0.001.
+$$
+
+Hence $\eta_0(A)<0.001$. Moreover $L>78$,
+$\sqrt A<1.871\cdot10^{23}$ and $\alpha\ge1.4\cdot10^{23}$.
+The normalized central comparison term in (GK6) is therefore
+
+$$
+[0.52+2\eta_0(A)]\frac{\sqrt A}{\alpha}
+<\frac{0.522(1.871)}{1.4}<0.698.
+\tag{GL1}
+$$
+
+The Gamma tail is explicit: $\alpha/60000>10^{18}$ and
+$e^x>x^3/6$ for $x>0$ imply $e^{\alpha/60000}>10^{53}$.
+Thus $400\sqrt A e^{-\alpha/60000}<8\cdot10^{-28}$.
+The entire elementary contribution is less than $6\cdot10^{-23}$ by
+(GE4). This includes Gamma scales below the unit cutoff.
+
+### Pay every original zero above the verified height
+
+The existing (GJ2) gives, with $H=3\cdot10^{12}$,
+
+$$
+\sqrt A L|Z_\alpha(A)|
+<M_1(\alpha)(1+1/L)
+\left[1.054c_0+2(1.0001)\sqrt A S_2(H)
+ e^{-H^2/[2(\alpha+H)]}\right].
+$$
+
+Here $c_0<0.05$, $S_2(H)<1.48\cdot10^{-12}$ and
+$M_1(\alpha)<1.0001$ are unchanged. For the selected shape,
+$H^2/[2(\alpha+H)]>32$ and $e^{32}>4\cdot10^{13}$;
+the latter follows from $e>8/3$ and
+$8^{32}>4\cdot10^{13}3^{32}$. Both ordinate signs, the actual tail
+real parts and all heights to infinity remain included. The head and
+tail satisfy the exact rational budgets
+
+$$
+(1.0001)(1.02)(1.054)(0.05)<0.054,
+$$
+
+$$
+2(1.0001)^2(1.02)(1.871\cdot10^{23})
+ (1.48\cdot10^{-12})(4\cdot10^{13})^{-1}<0.015.
+\tag{GL2}
+$$
+
+Combining (GK6), (GL1) and (GL2) pays the original full signed response:
+
+$$
+\boxed{-\sqrt A L I_\psi(A)
+<0.054+0.015+0.698+8\cdot10^{-28}+6\cdot10^{-23}
+<0.768.}
+\tag{GL3}
+$$
+
+The same selected source obeys the strict core
+$\sqrt A L D^*(A)>\mathcal E(L)>0.778$ and
+$\Delta(N)=I_\psi(A)+D^*(A)$. Therefore
+
+$$
+\boxed{\sqrt A L\Delta(N)>0.01,
+\qquad10^{46}<A\le\frac72\,10^{46}.}
+\tag{GL4}
+$$
+
+Together with the preceding exclusion, this forces
+$\log N>(7/2)10^{46}$ for the same hypothetical least global maximizer.
+It is a selected-source finite exclusion with a normalized margin,
+not an all-integer finite Robin verification or an unbounded main
+estimate. The full RH objective remains unproved. All classical prime,
+zero-count and verified-height inputs are reused; this paper-level
+application carries no mathematical-priority or Lean-certification claim.
