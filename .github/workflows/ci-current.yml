@@ -4,7 +4,7 @@ name: CI
 # the unit patterns written below which units the change hits; every unit is a
 # job that runs only when hit, and `required` is the one required check: it is
 # green when detection succeeded and every unit ran exactly when hit and passed.
-# A change of more than 3000 paths fails detection and must be split.
+# Detection validates and routes the complete changed-path list without a path-count cutoff.
 
 on:
   pull_request:
