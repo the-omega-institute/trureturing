@@ -182,8 +182,9 @@ unsafe def loadModule (name : Name) (store : IO.Ref Store) : IO Unit := do
 /-- Preserve the union reader's duplicate checks without retaining old terms.
 Only detached declaration/owner names survive; a collision rereads its owner. -/
 unsafe def checkBatchConstants (base store : Store) (seen : IO.Ref (NameMap Name)) : IO Unit := do
-  for owner in store.moduleOrder do
-    if base.modules.contains owner then continue
+  -- Target loading appends to the fixed base's module order.
+  for index in [base.moduleOrder.size:store.moduleOrder.size] do
+    let owner := store.moduleOrder[index]!
     let ownedOwner := ownName owner
     let some data := store.modules.find? owner
       | throw <| IO.userError s!"raw.missing_module:{owner}"
