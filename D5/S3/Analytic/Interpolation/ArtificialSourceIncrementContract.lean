@@ -6,9 +6,13 @@
    utility: none
    digest: Quartic cell perturbations of the Robin price coordinate generate positive integer pulse sources. -/
 
-import D5.S3.Arith.Robin.MellinWeightedVariation
+import D5.S3.Analytic.Interpolation.ArtificialSourceCellEstimates
 import D5.S1.Words.Mechanical.FloorFractShift
-import Mathlib.Analysis.Calculus.ContDiff.Basic
+import Mathlib.Analysis.Calculus.ContDiff.Deriv
+import Mathlib.Topology.Algebra.Order.Floor
+import Mathlib.MeasureTheory.Function.Floor
+import Mathlib.MeasureTheory.Integral.Asymptotics
+import Mathlib.Analysis.SpecialFunctions.ImproperIntegrals
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
 import Mathlib.MeasureTheory.Integral.IntegralEqImproper
 import Mathlib.Tactic
@@ -23,26 +27,13 @@ noncomputable section
 open Set Filter MeasureTheory
 open scoped Topology
 open D5.S3.Arith.Robin.MellinWeightedVariation
+open D5.S3.Analytic.Interpolation.ArtificialSourceCellEstimates
 
 namespace D5.S3.Analytic.Interpolation.ArtificialSourceIncrementContract
 
 local notation "c" => (1 / 128 : ℝ)
 local notation "q" => (fun x : ℝ => (x * Real.log x)⁻¹)
 local notation "k" => weight
-
-/-- The quartic bump has a double zero at either endpoint. -/
-def eta (s : ℝ) : ℝ := s ^ 2 * (1 - s) ^ 2
-
-/-- The local increment budget. -/
-def epsilon (a : ℝ) : ℝ := Real.log a * Real.exp (-(Real.log a) ^ (1 / 4 : ℝ))
-
-/-- The cell width for a fixed positive logarithmic excess. -/
-def width (δ a : ℝ) : ℝ :=
-  a ^ (3 / 4 : ℝ) * Real.exp ((Real.log a) ^ (1 / 4 : ℝ) / 2) /
-    Real.sqrt (Real.log a) * (Real.log a) ^ δ
-
-/-- The height of the cell's negative bump. -/
-def amplitude (δ a : ℝ) : ℝ := c * (Real.log a) ^ (2 * δ - 1) / Real.sqrt a
 
 /-- Conditions on the start of the half-line. -/
 def Admissible (δ A : ℝ) : Prop :=
@@ -57,10 +48,6 @@ def grid (δ A : ℝ) : ℕ → ℝ
 /-- The last grid point not exceeding x, with a finite search bound. -/
 def cellIndex (δ A x : ℝ) : ℕ :=
   Nat.findGreatest (fun j => grid δ A j ≤ x) ⌊x - A⌋₊
-
-/-- Polynomial continuation of the bump in one cell. -/
-def cellBump (δ a x : ℝ) : ℝ :=
-  -amplitude δ a * eta ((x - a) / width δ a)
 
 /-- The assembled negative bump, extended by zero below the initial point. -/
 def bump (δ A x : ℝ) : ℝ :=
@@ -151,296 +138,6 @@ local notation "cellSecond" => (fun δ a x : ℝ =>
 local notation "rightSlope" => (fun δ A x : ℝ =>
   1 - (cellSecond δ (grid δ A (cellIndex δ A x)) x * k x -
     cellSlope δ (grid δ A (cellIndex δ A x)) x * kernelSlope x) / (k x) ^ 2)
-
-private theorem eta_derivatives (s : ℝ) :
-    HasDerivAt eta (etaOne s) s ∧ HasDerivAt etaOne (etaTwo s) s := by
-  constructor
-  · convert ((hasDerivAt_id s).pow 2).mul
-      (((hasDerivAt_const s 1).sub (hasDerivAt_id s)).pow 2) using 1 <;> first | rfl | (dsimp [eta]; ring)
-  · convert ((((hasDerivAt_id s).const_mul 2).mul
-      ((hasDerivAt_const s 1).sub (hasDerivAt_id s))).mul
-        ((hasDerivAt_const s 1).sub ((hasDerivAt_id s).const_mul 2))) using 1 <;> first | rfl | (dsimp; ring)
-
-private theorem eta_bounds {s : ℝ} (hs : s ∈ Icc (0 : ℝ) 1) :
-    0 ≤ eta s ∧ eta s ≤ 1 / 16 ∧ |etaOne s| ≤ 1 / 2 ∧ |etaTwo s| ≤ 2 := by
-  have hp : 0 ≤ s * (1 - s) := mul_nonneg hs.1 (by linarith [hs.2])
-  have hpq : s * (1 - s) ≤ 1 / 4 := by nlinarith [sq_nonneg (s - 1 / 2)]
-  have hfactor : |1 - 2 * s| ≤ 1 := abs_le.mpr ⟨by linarith [hs.2], by linarith [hs.1]⟩
-  refine ⟨by unfold eta; positivity, ?_, ?_, ?_⟩
-  · unfold eta
-    nlinarith [sq_nonneg (s * (1 - s) - 1 / 4)]
-  · dsimp only
-    rw [show 2 * s * (1 - s) = 2 * (s * (1 - s)) by ring]
-    rw [abs_mul, abs_of_nonneg (by positivity : 0 ≤ 2 * (s * (1 - s)))]
-    nlinarith [mul_le_mul_of_nonneg_left hfactor (by positivity : 0 ≤ 2 * (s * (1 - s)))]
-  · exact abs_le.mpr ⟨by nlinarith [sq_nonneg (s - 1 / 2)], by nlinarith⟩
-
-private theorem kernel_hasDerivAt {x : ℝ} (hx : 1 < x) :
-    HasDerivAt k (kernelSlope x) x := by
-  have hx0 : 0 < x := by linarith
-  have hl : 0 < Real.log x := Real.log_pos hx
-  have hd := (hasDerivAt_scaleWeight hx0 (by norm_num : (0 : ℝ) < 1)
-    (by simpa using hx)).fun_div (hasDerivAt_id x) hx0.ne'
-  have hfun : (fun z : ℝ => scaleWeight z 1 / z) = k := by
-    ext z
-    rw [scaleWeight_eq]
-    by_cases hz : z = 0
-    · simp [hz, weight]
-    · simp [hz]
-  dsimp only [id] at hd
-  rw [hfun] at hd
-  convert! hd using 1 <;> first
-  | rfl
-  | (unfold scaleDerivative scaleWeight; norm_num; field_simp [hx0.ne', hl.ne'] <;> ring)
-
-private theorem kernel_cell_bounds {a x : ℝ} (ha : 1 < a) (hLa : 1 ≤ Real.log a)
-    (hx : x ∈ Icc a (2 * a)) :
-    0 < k x ∧ (k x)⁻¹ ≤ 8 * a ^ 2 * Real.log a ∧
-      |kernelSlope x| / k x ≤ 7 / a := by
-  have ha0 : 0 < a := by linarith
-  have hx0 : 0 < x := ha0.trans_le hx.1
-  have hL : Real.log a ≤ Real.log x := Real.log_le_log ha0 hx.1
-  have hLx : 1 ≤ Real.log x := hLa.trans hL
-  have hl0 : 0 < Real.log x := by linarith
-  have hupper : Real.log x ≤ 2 * Real.log a := by
-    have h := Real.log_le_log hx0 hx.2
-    rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) ha0.ne'] at h
-    have htwo : Real.log (2 : ℝ) ≤ 1 := by linarith [Real.log_two_lt_d9]
-    linarith
-  have hk : 0 < k x := by unfold weight; positivity
-  refine ⟨hk, ?_, ?_⟩
-  · have hsq : x ^ 2 ≤ 4 * a ^ 2 := by nlinarith [hx.2]
-    have hnum : (Real.log x) ^ 2 / (Real.log x + 1) ≤ Real.log x := by
-      apply (div_le_iff₀ (by positivity : 0 < Real.log x + 1)).2
-      nlinarith
-    calc
-      (k x)⁻¹ = x ^ 2 * ((Real.log x) ^ 2 / (Real.log x + 1)) := by
-        unfold weight
-        field_simp
-      _ ≤ x ^ 2 * Real.log x := mul_le_mul_of_nonneg_left hnum (sq_nonneg x)
-      _ ≤ (4 * a ^ 2) * (2 * Real.log a) :=
-        mul_le_mul hsq hupper hl0.le (by positivity)
-      _ = _ := by ring
-  · have hnum : 2 * (Real.log x) ^ 2 + 3 * Real.log x + 2 ≤
-        7 * Real.log x * (Real.log x + 1) := by nlinarith
-    calc
-      |kernelSlope x| / k x =
-          (2 * (Real.log x) ^ 2 + 3 * Real.log x + 2) /
-            (x * Real.log x * (Real.log x + 1)) := by
-        rw [abs_of_nonpos (by
-          dsimp only
-          exact div_nonpos_of_nonpos_of_nonneg (neg_nonpos.mpr (by positivity))
-            (by positivity) : kernelSlope x ≤ 0)]
-        unfold weight
-        field_simp [hx0.ne', hl0.ne', (by positivity : Real.log x + 1 ≠ 0)]
-        <;> ring
-      _ ≤ (7 * Real.log x * (Real.log x + 1)) /
-          (x * Real.log x * (Real.log x + 1)) :=
-        div_le_div_of_nonneg_right hnum (by positivity)
-      _ = 7 / x := by field_simp
-      _ ≤ 7 / a := div_le_div_of_nonneg_left (by norm_num) ha0 hx.1
-
-private theorem width_exp {δ a : ℝ} (ha : 1 < a) :
-    width δ a = Real.exp ((3 / 4 : ℝ) * Real.log a +
-      (Real.log a) ^ (1 / 4 : ℝ) / 2 + (δ - 1 / 2) * Real.log (Real.log a)) := by
-  have ha0 : 0 < a := by linarith
-  have hL : 0 < Real.log a := Real.log_pos ha
-  simp only [width, Real.sqrt_eq_rpow, Real.rpow_def_of_pos ha0,
-    Real.rpow_def_of_pos hL, div_eq_mul_inv, ← Real.exp_neg, ← Real.exp_add]
-  congr 1
-  ring
-
-private theorem amplitude_exp {δ a : ℝ} (ha : 1 < a) :
-    amplitude δ a = c * Real.exp ((2 * δ - 1) * Real.log (Real.log a) - Real.log a / 2) := by
-  have ha0 : 0 < a := by linarith
-  have hL : 0 < Real.log a := Real.log_pos ha
-  simp only [amplitude, Real.sqrt_eq_rpow, Real.rpow_def_of_pos ha0,
-    Real.rpow_def_of_pos hL, div_eq_mul_inv, mul_assoc, ← Real.exp_neg, ← Real.exp_add]
-  congr 2
-  congr 1
-  ring
-
-private theorem amplitude_width_cancellation {δ a : ℝ} (ha : 1 < a) :
-    amplitude δ a / (width δ a) ^ 2 = c * epsilon a / (a ^ 2 * Real.log a) := by
-  have ha0 : 0 < a := by linarith
-  have hL : 0 < Real.log a := Real.log_pos ha
-  rw [width_exp ha, amplitude_exp ha]
-  have hexp : (Real.exp ((3 / 4 : ℝ) * Real.log a +
-      (Real.log a) ^ (1 / 4 : ℝ) / 2 + (δ - 1 / 2) * Real.log (Real.log a))) ^ 2 =
-      Real.exp (2 * ((3 / 4 : ℝ) * Real.log a +
-      (Real.log a) ^ (1 / 4 : ℝ) / 2 + (δ - 1 / 2) * Real.log (Real.log a))) := by
-    rw [pow_two, ← Real.exp_add]
-    congr 1
-    ring
-  rw [hexp]
-  have hcancel : epsilon a / (a ^ 2 * Real.log a) =
-      Real.exp (-(Real.log a) ^ (1 / 4 : ℝ) - 2 * Real.log a) := by
-    rw [epsilon, Real.exp_sub, show (2 : ℝ) * Real.log a = (2 : ℕ) * Real.log a by norm_num,
-      Real.exp_nat_mul, Real.exp_log ha0]
-    field_simp
-  rw [mul_div_assoc c (epsilon a) (a ^ 2 * Real.log a), hcancel]
-  simp only [div_eq_mul_inv, mul_assoc, ← Real.exp_neg, ← Real.exp_add]
-  congr 2
-  congr 1
-  ring
-
-private theorem cell_derivatives {δ a x : ℝ} (hw : 0 < width δ a) :
-    HasDerivAt (cellBump δ a) (cellSlope δ a x) x ∧
-      HasDerivAt (cellSlope δ a) (cellSecond δ a x) x := by
-  have hc := ((hasDerivAt_id x).sub_const a).div_const (width δ a)
-  constructor
-  · convert ((eta_derivatives ((x - a) / width δ a)).1.comp x hc).const_mul
-      (-amplitude δ a) using 1 <;> first | rfl | (dsimp [cellBump]; ring)
-  · convert ((eta_derivatives ((x - a) / width δ a)).2.comp x hc).const_mul
-      (-(amplitude δ a / width δ a)) using 1 <;> first | rfl | (dsimp; field_simp <;> ring)
-
-private theorem cell_estimates {δ a x : ℝ} (ha : 1 < a) (hLa : 1 ≤ Real.log a)
-    (hw : 0 < width δ a) (hwa : width δ a ≤ a)
-    (hx : x ∈ Icc a (a + width δ a)) :
-    |cellSlope δ a x / k x| ≤ 4 * c * epsilon a * width δ a ∧
-      |deriv (fun y : ℝ => y - cellSlope δ a y / k y) x - 1| ≤
-        44 * c * epsilon a := by
-  have ha0 : 0 < a := by linarith
-  have hL0 : 0 < Real.log a := by linarith
-  have heps : 0 < epsilon a := by unfold epsilon; positivity
-  have hα : 0 ≤ amplitude δ a := by unfold amplitude; positivity
-  have hs : (x - a) / width δ a ∈ Icc (0 : ℝ) 1 := by
-    constructor
-    · exact div_nonneg (sub_nonneg.mpr hx.1) hw.le
-    · apply (div_le_iff₀ hw).2
-      linarith [hx.2]
-  have hη := eta_bounds hs
-  have hk := kernel_cell_bounds ha hLa ⟨hx.1, by linarith [hx.2]⟩
-  have hx1 : 1 < x := ha.trans_le hx.1
-  have hcancel := amplitude_width_cancellation (δ := δ) ha
-  have hfirst : |cellSlope δ a x| ≤ amplitude δ a / (2 * width δ a) := by
-    dsimp only
-    rw [abs_mul, abs_neg, abs_of_nonneg (div_nonneg hα hw.le)]
-    calc
-      _ ≤ (amplitude δ a / width δ a) * (1 / 2) :=
-        mul_le_mul_of_nonneg_left hη.2.2.1 (div_nonneg hα hw.le)
-      _ = _ := by ring
-  have hsecond : |cellSecond δ a x| ≤ 2 * amplitude δ a / (width δ a) ^ 2 := by
-    dsimp only
-    rw [abs_mul, abs_neg, abs_of_nonneg (div_nonneg hα (sq_nonneg _))]
-    calc
-      _ ≤ (amplitude δ a / (width δ a) ^ 2) * 2 :=
-        mul_le_mul_of_nonneg_left hη.2.2.2 (div_nonneg hα (sq_nonneg _))
-      _ = _ := by ring
-  have hbase : (amplitude δ a / (width δ a) ^ 2) * (a ^ 2 * Real.log a) =
-      c * epsilon a := by
-    rw [hcancel]
-    field_simp
-  have hvalue : |cellSlope δ a x / k x| ≤ 4 * c * epsilon a * width δ a := by
-    calc
-      |cellSlope δ a x / k x| = |cellSlope δ a x| * (k x)⁻¹ := by
-        rw [abs_div, abs_of_pos hk.1, div_eq_mul_inv]
-      _ ≤ (amplitude δ a / (2 * width δ a)) * (8 * a ^ 2 * Real.log a) :=
-        mul_le_mul hfirst hk.2.1 (inv_nonneg.mpr hk.1.le) (by positivity)
-      _ = 4 * ((amplitude δ a / (width δ a) ^ 2) * (a ^ 2 * Real.log a)) *
-          width δ a := by field_simp; ring
-      _ = _ := by rw [hbase]; ring
-  refine ⟨hvalue, ?_⟩
-  have hd := (hasDerivAt_id x).sub
-    ((cell_derivatives hw).2.fun_div (kernel_hasDerivAt hx1) hk.1.ne')
-  change HasDerivAt (fun y : ℝ => y - cellSlope δ a y / k y) _ x at hd
-  rw [hd.deriv]
-  have heq : 1 - (cellSecond δ a x * k x - cellSlope δ a x * kernelSlope x) /
-      (k x) ^ 2 - 1 =
-      -(cellSecond δ a x / k x) + (cellSlope δ a x / k x) * (kernelSlope x / k x) := by
-    field_simp
-    ring
-  rw [heq]
-  calc
-    _ ≤ |cellSecond δ a x / k x| +
-        |cellSlope δ a x / k x| * |kernelSlope x / k x| := by
-      simpa only [abs_neg, abs_mul] using abs_add_le
-        (-(cellSecond δ a x / k x))
-        ((cellSlope δ a x / k x) * (kernelSlope x / k x))
-    _ ≤ 16 * c * epsilon a + (4 * c * epsilon a * width δ a) * (7 / a) := by
-      apply add_le_add
-      · calc
-          |cellSecond δ a x / k x| = |cellSecond δ a x| * (k x)⁻¹ := by
-            rw [abs_div, abs_of_pos hk.1, div_eq_mul_inv]
-          _ ≤ (2 * amplitude δ a / (width δ a) ^ 2) * (8 * a ^ 2 * Real.log a) :=
-            mul_le_mul hsecond hk.2.1 (inv_nonneg.mpr hk.1.le) (by positivity)
-          _ = 16 * ((amplitude δ a / (width δ a) ^ 2) * (a ^ 2 * Real.log a)) := by
-            ring
-          _ = _ := by rw [hbase]; ring
-      · apply mul_le_mul hvalue
-          (by simpa only [abs_div, abs_of_pos hk.1] using hk.2.2)
-          (abs_nonneg _) (by positivity)
-    _ ≤ 44 * c * epsilon a := by
-      have hwa' : width δ a / a ≤ 1 := (div_le_one ha0).2 hwa
-      have heq' : (4 * c * epsilon a * width δ a) * (7 / a) =
-          28 * c * epsilon a * (width δ a / a) := by ring
-      rw [heq']
-      nlinarith [mul_le_mul_of_nonneg_left hwa'
-        (by positivity : 0 ≤ 28 * c * epsilon a)]
-
-private theorem epsilon_hasDerivAt {a : ℝ} (ha : 1 < a) :
-    HasDerivAt epsilon (Real.exp (-(Real.log a) ^ (1 / 4 : ℝ)) / a *
-      (1 - (Real.log a) ^ (1 / 4 : ℝ) / 4)) a := by
-  have ha0 : 0 < a := by linarith
-  have hL : 0 < Real.log a := Real.log_pos ha
-  have hlog := Real.hasDerivAt_log ha0.ne'
-  have hu := (Real.hasDerivAt_rpow_const (p := (1 / 4 : ℝ))
-    (Or.inl hL.ne')).comp a hlog
-  have hp : Real.log a * (Real.log a) ^ ((1 / 4 : ℝ) - 1) =
-      (Real.log a) ^ (1 / 4 : ℝ) := by
-    conv_lhs => lhs; rw [← Real.rpow_one (Real.log a)]
-    rw [← Real.rpow_add hL]
-    congr 1
-    ring
-  convert! hlog.mul (hu.neg.exp) using 1 <;> first
-  | rfl
-  | (dsimp [epsilon]; field_simp; nlinarith [hp])
-
-private theorem epsilon_tendsto_zero : Tendsto epsilon atTop (𝓝 0) := by
-  have hu := (tendsto_rpow_atTop (by norm_num : (0 : ℝ) < 1 / 4)).comp
-    Real.tendsto_log_atTop
-  have ht := (tendsto_rpow_mul_exp_neg_mul_atTop_nhds_zero 4 1
-    (by norm_num)).comp hu
-  apply ht.congr'
-  filter_upwards [eventually_gt_atTop (1 : ℝ)] with a ha
-  have hL : 0 < Real.log a := Real.log_pos ha
-  dsimp [epsilon]
-  rw [← Real.rpow_mul hL.le]
-  norm_num
-
-private theorem width_eventually_bounds {δ : ℝ} (hδ : 0 < δ) :
-    ∀ᶠ a : ℝ in atTop, 1 ≤ Real.log a ∧ 1 ≤ width δ a ∧ width δ a ≤ a := by
-  have hu : Tendsto (fun L : ℝ => L ^ (1 / 4 : ℝ) / L) atTop (𝓝 0) := by
-    apply (tendsto_rpow_neg_atTop (by norm_num : (0 : ℝ) < 3 / 4)).congr'
-    filter_upwards [eventually_gt_atTop (0 : ℝ)] with L hL
-    rw [show -(3 / 4 : ℝ) = 1 / 4 - 1 by ring, Real.rpow_sub hL, Real.rpow_one]
-  have hlog : Tendsto (fun L : ℝ => Real.log L / L) atTop (𝓝 0) := by
-    simpa using Real.tendsto_pow_log_div_mul_add_atTop 1 0 1 one_ne_zero
-  have hsmall : Tendsto (fun L : ℝ =>
-      L ^ (1 / 4 : ℝ) / L / 2 + (δ - 1 / 2) * (Real.log L / L)) atTop (𝓝 0) := by
-    simpa using (hu.div_const 2).add (hlog.const_mul (δ - 1 / 2))
-  have hev := (hsmall.comp Real.tendsto_log_atTop).eventually
-    (gt_mem_nhds (by norm_num : (0 : ℝ) < 1 / 4))
-  filter_upwards [hev, Real.tendsto_log_atTop.eventually (eventually_ge_atTop (1 : ℝ)),
-    eventually_gt_atTop (1 : ℝ)] with a hsmall hL ha
-  have hL0 : 0 < Real.log a := by linarith
-  have hlogL : 0 ≤ Real.log (Real.log a) := Real.log_nonneg hL
-  have hlogL' : Real.log (Real.log a) ≤ Real.log a - 1 :=
-    Real.log_le_sub_one_of_pos hL0
-  have hu0 : 0 ≤ (Real.log a) ^ (1 / 4 : ℝ) := Real.rpow_nonneg hL0.le _
-  refine ⟨hL, ?_, ?_⟩
-  · rw [width_exp ha, Real.one_le_exp_iff]
-    nlinarith [mul_nonneg hδ.le hlogL]
-  · rw [width_exp ha]
-    apply (Real.exp_le_exp.mpr ?_).trans_eq (Real.exp_log (by linarith : 0 < a))
-    have heq : (Real.log a) ^ (1 / 4 : ℝ) / Real.log a / 2 +
-        (δ - 1 / 2) * (Real.log (Real.log a) / Real.log a) =
-        ((Real.log a) ^ (1 / 4 : ℝ) / 2 +
-          (δ - 1 / 2) * Real.log (Real.log a)) / Real.log a := by ring
-    dsimp only [Function.comp_def] at hsmall
-    rw [heq] at hsmall
-    have h := (div_lt_iff₀ hL0).1 hsmall
-    linarith
 
 private theorem admissible_exists {δ : ℝ} (hδ : 0 < δ) :
     ∃ A₀ : ℝ, ∀ A ≥ A₀, Admissible δ A := by
@@ -581,52 +278,10 @@ private theorem coordinate_continuous {δ A : ℝ} (hA : Admissible δ A) :
   · intro x hx
     exact (kernel_hasDerivAt ((admissible_gt_one hA).trans_le hx)).continuousAt.continuousWithinAt
   · intro x hx
-    unfold weight
-    exact (by positivity [Real.log_pos ((admissible_gt_one hA).trans_le hx)] :
-      (Real.log x + 1) / (x ^ 2 * (Real.log x) ^ 2) ≠ 0)
-
-private theorem epsilon_cell_comparison {a x : ℝ} (ha : 1 < a)
-    (hLa : 1 ≤ Real.log a) (hx : x ∈ Icc a (2 * a)) : epsilon a ≤ 2 * epsilon x := by
-  have ha0 : 0 < a := by linarith
-  have hx0 : 0 < x := ha0.trans_le hx.1
-  have hlog := Real.log_le_log ha0 hx.1
-  have hL0 : 0 < Real.log a := by linarith
-  have hroot : (Real.log x) ^ (1 / 4 : ℝ) - (Real.log a) ^ (1 / 4 : ℝ) ≤
-      Real.log x - Real.log a := by
-    have hd : ∀ L ∈ Icc (Real.log a) (Real.log x),
-        HasDerivWithinAt (fun z : ℝ => z ^ (1 / 4 : ℝ))
-          ((1 / 4 : ℝ) * L ^ ((1 / 4 : ℝ) - 1)) (Icc (Real.log a) (Real.log x)) L := by
-      intro L hL
-      exact (Real.hasDerivAt_rpow_const (Or.inl (ne_of_gt (hL0.trans_le hL.1)))).hasDerivWithinAt
-    have hb : ∀ L ∈ Ico (Real.log a) (Real.log x),
-        ‖(1 / 4 : ℝ) * L ^ ((1 / 4 : ℝ) - 1)‖ ≤ 1 := by
-      intro L hL
-      have hL1 : 1 ≤ L := hLa.trans hL.1
-      have hr := Real.rpow_le_one_of_one_le_of_nonpos hL1
-        (by norm_num : (1 / 4 : ℝ) - 1 ≤ 0)
-      rw [Real.norm_eq_abs, abs_of_nonneg (by positivity)]
-      linarith
-    have hm := norm_image_sub_le_of_norm_deriv_le_segment' hd hb (Real.log x)
-      (right_mem_Icc.2 hlog)
-    exact (le_abs_self _).trans (by simpa only [Real.norm_eq_abs, one_mul] using hm)
-  have hlogdiff : Real.log x - Real.log a ≤ Real.log (2 : ℝ) := by
-    have h := Real.log_le_log hx0 hx.2
-    rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) ha0.ne'] at h
-    linarith
-  have hfactor : Real.exp ((Real.log x) ^ (1 / 4 : ℝ) -
-      (Real.log a) ^ (1 / 4 : ℝ)) ≤ 2 := by
-    calc
-      _ ≤ Real.exp (Real.log (2 : ℝ)) := Real.exp_le_exp.mpr (hroot.trans hlogdiff)
-      _ = _ := Real.exp_log (by norm_num)
-  calc
-    epsilon a = Real.log a * Real.exp ((Real.log x) ^ (1 / 4 : ℝ) -
-        (Real.log a) ^ (1 / 4 : ℝ)) * Real.exp (-(Real.log x) ^ (1 / 4 : ℝ)) := by
-      simp only [epsilon, mul_assoc, ← Real.exp_add]
-      congr 2
-      ring
-    _ ≤ Real.log x * 2 * Real.exp (-(Real.log x) ^ (1 / 4 : ℝ)) := by
-      gcongr
-    _ = 2 * epsilon x := by unfold epsilon; ring
+    have hx1 := (admissible_gt_one hA).trans_le hx
+    have hx0 : 0 < x := by linarith
+    have hk : 0 < k x := by unfold weight; positivity [Real.log_pos hx1]
+    exact hk.ne'
 
 private theorem coordinate_right_deriv {δ A x : ℝ} (hA : Admissible δ A) (hx : A ≤ x) :
     HasDerivWithinAt (coordinate δ A) (rightSlope δ A x) (Ici x) x ∧
@@ -640,6 +295,7 @@ private theorem coordinate_right_deriv {δ A x : ℝ} (hA : Admissible δ A) (hx
   have hw : 0 < width δ a := by linarith [hdata.2.2.1]
   have hxcc : x ∈ Icc a (a + width δ a) := by
     simpa only [grid] using Ico_subset_Icc_self hcell
+  have hx0 : 0 < x := by linarith [hcell.1]
   have hk : 0 < k x := by
     unfold weight
     positivity [Real.log_pos (ha.trans_le hcell.1)]
@@ -678,7 +334,7 @@ private theorem coordinate_increment_bound {δ A a b C : ℝ} (hA : Admissible �
     (right_mem_Icc.2 hab)
   have heq : coordinate δ A b - b - (coordinate δ A a - a) =
       coordinate δ A b - coordinate δ A a - (b - a) := by ring
-  simpa only [Real.norm_eq_abs, heq] using h
+  simpa only [Real.norm_eq_abs, Pi.sub_apply, id_eq, heq] using h
 
 private theorem coordinate_increment {δ A a t : ℝ} (hA : Admissible δ A)
     (ha : A ≤ a) (ht : 0 ≤ t) :
@@ -719,4 +375,383 @@ private theorem source_increment {δ A a t : ℝ} (hA : Admissible δ A)
   rw [heq]
   exact (abs_add_le _ _).trans (by dsimp [u, v] at *; linarith)
 
+private theorem coordinate_global_bound {δ A x : ℝ} (hδ : 0 < δ)
+    (hA : Admissible δ A) (hx : A ≤ x) :
+    |coordinate δ A x - x| ≤ 4 * c * x ^ (3 / 4 : ℝ) * (Real.log x) ^ (δ + 1 / 2) := by
+  let j := cellIndex δ A x
+  let a := grid δ A j
+  have hcell := cellIndex_spec hA hx
+  have hAa : A ≤ a := by linarith [grid_bounds hA j, Nat.cast_nonneg (α := ℝ) j]
+  have ha : 1 < a := (admissible_gt_one hA).trans_le hAa
+  have hdata := hA.1 a hAa
+  have hw : 0 < width δ a := by linarith [hdata.2.2.1]
+  have hxcell : x ∈ Icc a (a + width δ a) := by
+    simpa only [grid] using Ico_subset_Icc_self hcell
+  have hest := (cell_estimates ha hdata.1 hw hdata.2.2.2 hxcell).1
+  have hlog : Real.log a ≤ Real.log x := Real.log_le_log (by linarith) hcell.1
+  have hLa0 : 0 ≤ Real.log a := le_of_lt (Real.log_pos ha)
+  have hx0 : 0 ≤ x := le_trans (by linarith : (0 : ℝ) ≤ a) hcell.1
+  have hLx0 : 0 ≤ Real.log x := hLa0.trans hlog
+  have hu : 0 ≤ (Real.log a) ^ (1 / 4 : ℝ) := Real.rpow_nonneg hLa0 _
+  have hexp : Real.exp (-(Real.log a) ^ (1 / 4 : ℝ) / 2) ≤ 1 :=
+    Real.exp_le_one_iff.2 (by linarith)
+  calc
+    |coordinate δ A x - x| = |cellSlope δ a x / k x| := by
+      rw [coordinate, bump_deriv_on_cell hA j (Ico_subset_Icc_self hcell)]
+      dsimp [a]
+      rw [sub_sub_cancel_left, abs_neg]
+    _ ≤ 4 * c * epsilon a * width δ a := hest
+    _ = 4 * c * (a ^ (3 / 4 : ℝ) *
+        Real.exp (-(Real.log a) ^ (1 / 4 : ℝ) / 2) * (Real.log a) ^ (δ + 1 / 2)) := by
+      rw [mul_assoc (4 * c), epsilon_width_identity ha]
+    _ ≤ 4 * c * x ^ (3 / 4 : ℝ) * (Real.log x) ^ (δ + 1 / 2) := by
+      calc
+        _ ≤ 4 * c * (x ^ (3 / 4 : ℝ) * 1 * (Real.log x) ^ (δ + 1 / 2)) := by
+          gcongr <;> first | positivity | exact hcell.1 | exact hLa0 | linarith
+        _ = _ := by ring
+
+private theorem source_global_bound {δ A x : ℝ} (hδ : 0 < δ)
+    (hA : Admissible δ A) (hx : A ≤ x) :
+    |(source δ A x : ℝ) - x| ≤
+      4 * c * x ^ (3 / 4 : ℝ) * (Real.log x) ^ (δ + 1 / 2) + 1 := by
+  have hround : |(source δ A x : ℝ) - coordinate δ A x| ≤ 1 := by
+    unfold source
+    exact abs_le.2 ⟨by linarith [Int.lt_floor_add_one (coordinate δ A x)],
+      by linarith [Int.floor_le (coordinate δ A x)]⟩
+  have heq : (source δ A x : ℝ) - x =
+      ((source δ A x : ℝ) - coordinate δ A x) + (coordinate δ A x - x) := by ring
+  rw [heq]
+  exact (abs_add_le _ _).trans (by linarith [coordinate_global_bound hδ hA hx])
+
+private theorem bump_contDiffOn {δ A : ℝ} (hA : Admissible δ A) :
+    ContDiffOn ℝ 1 (bump δ A) (Ici A) := by
+  apply (contDiffOn_one_iff_derivWithin (uniqueDiffOn_Ici A)).2
+  refine ⟨fun x hx => (bump_hasDerivAt hA hx).differentiableAt.differentiableWithinAt, ?_⟩
+  apply (bump_deriv_continuous hA).congr
+  intro x hx
+  exact (bump_hasDerivAt hA hx).differentiableAt.derivWithin (uniqueDiffOn_Ici A x hx)
+
+private theorem coordinate_grid {δ A : ℝ} (hA : Admissible δ A) (j : ℕ) :
+    coordinate δ A (grid δ A j) = grid δ A j := by
+  rw [coordinate, bump_deriv_on_cell hA j
+    ⟨le_rfl, (grid_strictMono hA).monotone (Nat.le_succ j)⟩]
+  simp
+
+private theorem source_nonnegative {δ A x : ℝ} (hA : Admissible δ A) (hx : A ≤ x) :
+    0 ≤ source δ A x := by
+  apply Int.floor_nonneg.2
+  have hmono := (coordinate_strictMono hA).monotoneOn (show A ∈ Ici A from self_mem_Ici) hx hx
+  have hstart : coordinate δ A A = A := by simpa [grid] using coordinate_grid hA 0
+  rw [hstart] at hmono
+  linarith [admissible_gt_one hA]
+
+private theorem source_monotone {δ A : ℝ} (hA : Admissible δ A) :
+    MonotoneOn (source δ A) (Ici A) := by
+  intro x hx y hy hxy
+  exact Int.floor_mono ((coordinate_strictMono hA).monotoneOn hx hy hxy)
+
+private theorem source_right_limit {δ A x : ℝ} (hA : Admissible δ A) (hx : A ≤ x) :
+    Tendsto (source δ A) (𝓝[≥] x) (pure (source δ A x)) := by
+  apply (tendsto_floor_right_pure_floor (coordinate δ A x)).comp
+  apply tendsto_nhdsWithin_iff.2
+  refine ⟨((coordinate_continuous hA) x hx).mono (Ici_subset_Ici.mpr hx), ?_⟩
+  filter_upwards [self_mem_nhdsWithin] with y hy
+  exact (coordinate_strictMono hA).monotoneOn hx (hx.trans hy) hy
+
+private theorem source_left_limit {δ A x : ℝ} (hA : Admissible δ A) (hx : A < x)
+    (n : ℤ) (hn : coordinate δ A x = n) :
+    Tendsto (source δ A) (𝓝[<] x) (pure (n - 1)) := by
+  apply (tendsto_floor_left_pure_sub_one n).comp
+  apply tendsto_nhdsWithin_iff.2
+  refine ⟨?_, ?_⟩
+  · rw [← hn]
+    exact ((coordinate_continuous hA) x hx.le).mono_of_mem_nhdsWithin
+      (mem_nhdsWithin_of_mem_nhds (Ici_mem_nhds hx))
+  · filter_upwards [mem_nhdsWithin_of_mem_nhds (Ioi_mem_nhds hx), self_mem_nhdsWithin] with y hy hxy
+    rw [← hn]
+    exact (coordinate_strictMono hA) hy.le hx.le hxy
+
+private theorem source_events_finite {δ A a b : ℝ} (hA : Admissible δ A)
+    (ha : A ≤ a) :
+    {x ∈ Icc a b | ∃ n : ℤ, coordinate δ A x = n}.Finite := by
+  let E := {x ∈ Icc a b | ∃ n : ℤ, coordinate δ A x = n}
+  have himage : source δ A '' E ⊆ Icc (source δ A a) (source δ A b) := by
+    rintro n ⟨x, hx, rfl⟩
+    exact ⟨source_monotone hA ha (ha.trans hx.1.1) hx.1.1,
+      source_monotone hA (ha.trans hx.1.1) (ha.trans (hx.1.1.trans hx.1.2)) hx.1.2⟩
+  apply ((Set.finite_Icc _ _).subset himage).of_finite_image
+  intro x hx y hy heq
+  obtain ⟨m, hm⟩ := hx.2
+  obtain ⟨n, hn⟩ := hy.2
+  have hmn : m = n := by simpa only [source, hm, hn, Int.floor_intCast] using heq
+  apply (coordinate_strictMono hA).injOn (ha.trans hx.1.1) (ha.trans hy.1.1)
+  rw [hm, hn, hmn]
+
+private theorem logarithm_power_bound (r : ℝ) :
+    ∀ᶠ x : ℝ in atTop, (Real.log x) ^ r ≤ x ^ (1 / 8 : ℝ) := by
+  have h := (isLittleO_log_rpow_rpow_atTop r
+    (by norm_num : (0 : ℝ) < 1 / 8)).bound (by norm_num : (0 : ℝ) < 1)
+  filter_upwards [h, eventually_gt_atTop (1 : ℝ)] with x hx hx1
+  have hx0 : 0 ≤ x := by linarith
+  simpa only [one_mul, Real.norm_eq_abs, abs_of_nonneg (Real.rpow_nonneg hx0 _),
+    abs_of_nonneg (Real.rpow_nonneg (Real.log_pos hx1).le _)] using hx
+
+private theorem source_pnt_bound {δ A : ℝ} (hδ : 0 < δ) (hA : Admissible δ A)
+    (c₀ : ℝ) :
+    Asymptotics.IsBigO atTop (fun x => (source δ A x : ℝ) - x)
+      (fun x => x * Real.exp (-c₀ * Real.sqrt (Real.log x))) := by
+  have hs : Tendsto (fun L : ℝ => Real.sqrt L / L) atTop (𝓝 0) := by
+    apply (tendsto_rpow_neg_atTop (by norm_num : (0 : ℝ) < 1 / 2)).congr'
+    filter_upwards [eventually_gt_atTop (0 : ℝ)] with L hL
+    rw [Real.sqrt_eq_rpow, show -(1 / 2 : ℝ) = 1 / 2 - 1 by ring,
+      Real.rpow_sub hL, Real.rpow_one]
+  have hs₀ : Tendsto (fun L : ℝ => c₀ * (Real.sqrt L / L)) atTop (𝓝 0) := by
+    simpa using hs.const_mul c₀
+  have hsmall := (hs₀.comp Real.tendsto_log_atTop).eventually
+    (gt_mem_nhds (by norm_num : (0 : ℝ) < 1 / 8))
+  apply Asymptotics.IsBigO.of_bound (4 * c + 1)
+  filter_upwards [hsmall, logarithm_power_bound (δ + 1 / 2),
+    eventually_ge_atTop A, eventually_gt_atTop (1 : ℝ)] with x hsmall hlog hx hx1
+  have hx0 : 0 < x := by linarith
+  have hL : 0 < Real.log x := Real.log_pos hx1
+  have hsmall' : c₀ * Real.sqrt (Real.log x) ≤ Real.log x / 8 := by
+    dsimp only [Function.comp_def] at hsmall
+    have heq : c₀ * (Real.sqrt (Real.log x) / Real.log x) =
+        (c₀ * Real.sqrt (Real.log x)) / Real.log x := by ring
+    rw [heq] at hsmall
+    linarith [(div_lt_iff₀ hL).1 hsmall]
+  have hmajor : x ^ (7 / 8 : ℝ) ≤ x * Real.exp (-c₀ * Real.sqrt (Real.log x)) := by
+    calc
+      x ^ (7 / 8 : ℝ) = x * Real.exp (-Real.log x / 8) := by
+        rw [Real.rpow_def_of_pos hx0]
+        conv_rhs => lhs; rw [← Real.exp_log hx0]
+        rw [← Real.exp_add]
+        congr 1
+        ring
+      _ ≤ _ := mul_le_mul_of_nonneg_left (Real.exp_le_exp.2 (by linarith)) hx0.le
+  have hp : x ^ (3 / 4 : ℝ) * (Real.log x) ^ (δ + 1 / 2) ≤ x ^ (7 / 8 : ℝ) := by
+    calc
+      _ ≤ x ^ (3 / 4 : ℝ) * x ^ (1 / 8 : ℝ) :=
+        mul_le_mul_of_nonneg_left hlog (Real.rpow_nonneg hx0.le _)
+      _ = _ := by rw [← Real.rpow_add hx0]; norm_num
+  have hone : 1 ≤ x ^ (7 / 8 : ℝ) := Real.one_le_rpow hx1.le (by norm_num)
+  have hbound := source_global_bound hδ hA hx
+  rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_pos (mul_pos hx0 (Real.exp_pos _))]
+  nlinarith
+
+private theorem kernel_bound {x : ℝ} (hx : 1 < x) (hL : 1 ≤ Real.log x) :
+    0 < k x ∧ k x ≤ 2 / x ^ 2 := by
+  have hx0 : 0 < x := by linarith
+  have hL0 : 0 < Real.log x := by linarith
+  refine ⟨by unfold weight; positivity, ?_⟩
+  unfold weight
+  apply (div_le_div_iff₀ (by positivity : 0 < x ^ 2 * (Real.log x) ^ 2)
+    (by positivity : 0 < x ^ 2)).2
+  nlinarith [mul_nonneg (sq_nonneg x)
+    (show 0 ≤ 2 * (Real.log x) ^ 2 - (Real.log x + 1) by nlinarith)]
+
+private theorem bump_deriv_integrable {δ A : ℝ} (hδ : 0 < δ) (hA : Admissible δ A) :
+    IntegrableOn (deriv (bump δ A)) (Ici A) := by
+  have ho : Asymptotics.IsBigO atTop (deriv (bump δ A))
+      (fun x : ℝ => x ^ (-9 / 8 : ℝ)) := by
+    apply Asymptotics.IsBigO.of_bound (8 * c)
+    filter_upwards [logarithm_power_bound (δ + 1 / 2), eventually_ge_atTop A] with x hlog hx
+    have hx1 := (admissible_gt_one hA).trans_le hx
+    have hx0 : 0 < x := by linarith
+    have hk := kernel_bound hx1 (hA.1 x hx).1
+    have hcoord : deriv (bump δ A) x = -(coordinate δ A x - x) * k x := by
+      unfold coordinate
+      field_simp [hk.1.ne']
+      ring
+    rw [Real.norm_eq_abs, Real.norm_eq_abs, abs_of_pos (Real.rpow_pos_of_pos hx0 _),
+      hcoord, abs_mul, abs_neg, abs_of_pos hk.1]
+    have hp : x ^ (3 / 4 : ℝ) * x ^ (1 / 8 : ℝ) * (2 / x ^ 2) =
+        2 * x ^ (-9 / 8 : ℝ) := by
+      have hinv : (x ^ 2)⁻¹ = x ^ (-2 : ℝ) := by
+        rw [Real.rpow_neg hx0.le, Real.rpow_two]
+      simp only [div_eq_mul_inv]
+      rw [hinv]
+      calc
+        _ = 2 * ((x ^ (3 / 4 : ℝ) * x ^ (1 / 8 : ℝ)) * x ^ (-2 : ℝ)) := by ring
+        _ = _ := by rw [← Real.rpow_add hx0, ← Real.rpow_add hx0]; norm_num
+    calc
+      _ ≤ (4 * c * x ^ (3 / 4 : ℝ) * (Real.log x) ^ (δ + 1 / 2)) * (2 / x ^ 2) :=
+        mul_le_mul (coordinate_global_bound hδ hA hx) hk.2 hk.1.le (by positivity [Real.log_pos hx1])
+      _ ≤ (4 * c * x ^ (3 / 4 : ℝ) * x ^ (1 / 8 : ℝ)) * (2 / x ^ 2) := by gcongr
+      _ = _ := by linear_combination 4 * c * hp
+  exact ((bump_deriv_continuous hA).locallyIntegrableOn measurableSet_Ici).integrableOn_of_isBigO_atTop
+    ho (integrableAtFilter_rpow_atTop_iff.2 (by norm_num))
+
+private theorem price_hasDerivAt {x : ℝ} (hx : 1 < x) : HasDerivAt q (-k x) x := by
+  have hx0 : 0 < x := by linarith
+  have hL : 0 < Real.log x := Real.log_pos hx
+  have hd := ((hasDerivAt_id x).mul (Real.hasDerivAt_log hx0.ne')).inv
+    (mul_ne_zero hx0.ne' hL.ne')
+  convert! hd using 1 <;> first
+  | rfl
+  | (unfold weight; field_simp; ring)
+
+private theorem price_tendsto_zero : Tendsto q atTop (𝓝 0) := by
+  apply squeeze_zero' _ _ tendsto_inv_atTop_zero
+  · filter_upwards [eventually_gt_atTop (1 : ℝ)] with x hx
+    exact inv_nonneg.mpr (mul_nonneg (by linarith) (Real.log_pos hx).le)
+  · filter_upwards [eventually_gt_atTop (1 : ℝ),
+      Real.tendsto_log_atTop.eventually (eventually_ge_atTop (1 : ℝ))] with x hx hL
+    apply inv_anti₀ (by linarith : (0 : ℝ) < x)
+    nlinarith
+
+private theorem kernel_tail {x : ℝ} (hx : 1 < x) :
+    IntegrableOn k (Ioi x) ∧ (∫ y in Ioi x, k y) = q x := by
+  have hd : ∀ y ∈ Ici x, HasDerivAt q (-k y) y :=
+    fun y hy => price_hasDerivAt (hx.trans_le hy)
+  have hn : ∀ y ∈ Ioi x, -k y ≤ 0 := by
+    intro y hy
+    have hy1 := hx.trans hy
+    have hy0 : 0 < y := by linarith
+    unfold weight
+    positivity [Real.log_pos hy1]
+  have hi := integrableOn_Ioi_deriv_of_nonpos' hd hn price_tendsto_zero
+  have hv := integral_Ioi_of_hasDerivAt_of_tendsto' hd hi price_tendsto_zero
+  refine ⟨by simpa only [neg_neg] using hi.neg, ?_⟩
+  rw [integral_neg] at hv
+  linarith
+
+private theorem bump_tendsto_zero {δ A : ℝ} (hδ : 0 < δ) (hA : Admissible δ A) :
+    Tendsto (bump δ A) atTop (𝓝 0) := by
+  have hi := (bump_deriv_integrable hδ hA).mono_set Ioi_subset_Ici_self
+  have ht := tendsto_limUnder_of_hasDerivAt_of_integrableOn_Ioi
+    (fun x hx => (bump_hasDerivAt hA hx.le).differentiableAt.hasDerivAt) hi
+  have hg : Tendsto (grid δ A) atTop atTop :=
+    tendsto_atTop_mono (grid_bounds hA)
+      (tendsto_atTop_add_const_left atTop A tendsto_natCast_atTop_atTop)
+  have hzero : (bump δ A ∘ grid δ A) = fun _ => (0 : ℝ) := by
+    funext j
+    rw [Function.comp_def, bump_on_cell hA j
+      ⟨le_rfl, (grid_strictMono hA).monotone (Nat.le_succ j)⟩]
+    simp [cellBump, eta]
+  have heq : limUnder atTop (bump δ A) = 0 := by
+    apply tendsto_nhds_unique (ht.comp hg)
+    rw [hzero]
+    exact tendsto_const_nhds
+  rwa [heq] at ht
+
+private theorem tail_contract {δ A x : ℝ} (hδ : 0 < δ) (hA : Admissible δ A) (hx : A ≤ x) :
+    IntegrableOn (fun y => ((source δ A y : ℝ) - y) * k y) (Ioi x) ∧
+      bump δ A x - q x ≤ tail δ A x ∧ tail δ A x ≤ bump δ A x := by
+  have hx1 := (admissible_gt_one hA).trans_le hx
+  have hk := kernel_tail hx1
+  have hd := (bump_deriv_integrable hδ hA).mono_set
+    (Ioi_subset_Ici_self.trans (Ici_subset_Ici.2 hx))
+  have hf := integral_Ioi_of_hasDerivAt_of_tendsto'
+    (fun y hy => (bump_hasDerivAt hA (hx.trans hy)).differentiableAt.hasDerivAt)
+    hd (bump_tendsto_zero hδ hA)
+  let R : ℝ → ℝ := fun y => ((source δ A y : ℝ) - coordinate δ A y) * k y
+  have hc := (coordinate_continuous hA).mono
+    (Ioi_subset_Ici_self.trans (Ici_subset_Ici.2 hx))
+  have hcm : AEStronglyMeasurable (coordinate δ A) (volume.restrict (Ioi x)) :=
+    hc.aestronglyMeasurable measurableSet_Ioi
+  have hsm : AEStronglyMeasurable (fun y => (source δ A y : ℝ))
+      (volume.restrict (Ioi x)) :=
+    (((measurable_of_countable (fun n : ℤ => (n : ℝ))).comp Int.measurable_floor).comp_aemeasurable
+      (hc.aemeasurable measurableSet_Ioi)).aestronglyMeasurable
+  have hkm : AEStronglyMeasurable k (volume.restrict (Ioi x)) := hk.1.aestronglyMeasurable
+  have hrange : ∀ y ∈ Ioi x, -k y ≤ R y ∧ R y ≤ 0 ∧ |R y| ≤ k y := by
+    intro y hy
+    have hy1 := hx1.trans hy
+    have hy0 : 0 < y := by linarith
+    have hky : 0 ≤ k y := by unfold weight; positivity [Real.log_pos hy1]
+    have hfloor : -1 ≤ (source δ A y : ℝ) - coordinate δ A y ∧
+        (source δ A y : ℝ) - coordinate δ A y ≤ 0 := by
+      unfold source
+      constructor <;> linarith [Int.floor_le (coordinate δ A y),
+        Int.lt_floor_add_one (coordinate δ A y)]
+    have hl := mul_le_mul_of_nonneg_right hfloor.1 hky
+    have hu := mul_nonpos_of_nonpos_of_nonneg hfloor.2 hky
+    refine ⟨by simpa [R] using hl, hu, ?_⟩
+    change |((source δ A y : ℝ) - coordinate δ A y) * k y| ≤ k y
+    rw [abs_of_nonpos hu]
+    linarith
+  have hR : IntegrableOn R (Ioi x) := by
+    apply hk.1.mono' ((hsm.sub hcm).mul hkm)
+    filter_upwards [ae_restrict_mem measurableSet_Ioi] with y hy
+    simpa only [Real.norm_eq_abs] using (hrange y hy).2.2
+  have hid : ∀ y ∈ Ioi x,
+      ((source δ A y : ℝ) - y) * k y = -deriv (bump δ A) y + R y := by
+    intro y hy
+    have hy1 := hx1.trans hy
+    have hy0 : 0 < y := by linarith
+    have hky : k y ≠ 0 := by unfold weight; positivity [Real.log_pos hy1]
+    dsimp [R, coordinate]
+    field_simp
+    ring
+  have hi : IntegrableOn (fun y => ((source δ A y : ℝ) - y) * k y) (Ioi x) :=
+    (hd.neg.add hR).congr_fun (fun y hy => (hid y hy).symm) measurableSet_Ioi
+  have heq : tail δ A x = bump δ A x + ∫ y in Ioi x, R y := by
+    unfold tail
+    rw [setIntegral_congr_fun measurableSet_Ioi hid, integral_add hd.neg hR, integral_neg]
+    linarith
+  have hlo := setIntegral_mono_on hk.1.neg hR measurableSet_Ioi (fun y hy => (hrange y hy).1)
+  have hhi := setIntegral_mono_on hR (integrable_zero _ _ _) measurableSet_Ioi
+    (fun y hy => (hrange y hy).2.1)
+  rw [integral_neg, hk.2] at hlo
+  simp only [integral_zero] at hhi
+  exact ⟨hi, by linarith, by linarith⟩
+
+private theorem source_between_events {δ A x : ℝ} (hA : Admissible δ A)
+    (hx : A < x) (hn : ¬ ∃ n : ℤ, coordinate δ A x = n) :
+    ∀ᶠ y in 𝓝 x, source δ A y = source δ A x := by
+  have hc : ContinuousAt (coordinate δ A) x :=
+    ((coordinate_continuous hA) x hx.le).continuousAt (Ici_mem_nhds hx)
+  have hlo : (source δ A x : ℝ) < coordinate δ A x := by
+    refine lt_of_le_of_ne (Int.floor_le _) ?_
+    intro heq
+    exact hn ⟨source δ A x, heq.symm⟩
+  have hev := hc.eventually (Ioo_mem_nhds hlo (Int.lt_floor_add_one _))
+  filter_upwards [hev] with y hy
+  exact Int.floor_eq_iff.2 ⟨hy.1.le, hy.2⟩
+
+/-- The adaptive source satisfies the regularity, increment, asymptotic and tail contracts. -/
+theorem result (δ : ℝ) (hδ : 0 < δ) :
+    (∃ A₀ : ℝ, ∀ A ≥ A₀, Admissible δ A) ∧
+    ∀ A : ℝ, Admissible δ A →
+      ContDiffOn ℝ 1 (bump δ A) (Ici A) ∧
+      ContinuousOn (coordinate δ A) (Ici A) ∧
+      StrictMonoOn (coordinate δ A) (Ici A) ∧
+      MonotoneOn (source δ A) (Ici A) ∧
+      (∀ x ≥ A, 0 ≤ source δ A x ∧
+        Tendsto (source δ A) (𝓝[≥] x) (pure (source δ A x))) ∧
+      (∀ x > A, (∀ n : ℤ, coordinate δ A x = n →
+        source δ A x = n ∧ Tendsto (source δ A) (𝓝[<] x) (pure (n - 1))) ∧
+        ((¬ ∃ n : ℤ, coordinate δ A x = n) →
+          ∀ᶠ y in 𝓝 x, source δ A y = source δ A x)) ∧
+      (∀ a ≥ A, ∀ b : ℝ,
+        {x ∈ Icc a b | ∃ n : ℤ, coordinate δ A x = n}.Finite) ∧
+      (∀ a ≥ A, ∀ t ≥ 0,
+        |(source δ A (a + t) : ℝ) - (source δ A a : ℝ) - t| ≤ epsilon a * t + 1) ∧
+      (∀ x ≥ A, |(source δ A x : ℝ) - x| ≤
+        4 * c * x ^ (3 / 4 : ℝ) * (Real.log x) ^ (δ + 1 / 2) + 1) ∧
+      (∀ c₀ > 0, Asymptotics.IsBigO atTop (fun x => (source δ A x : ℝ) - x)
+        (fun x => x * Real.exp (-c₀ * Real.sqrt (Real.log x)))) ∧
+      (∀ x ≥ A,
+        IntegrableOn (fun y => ((source δ A y : ℝ) - y) * k y) (Ioi x) ∧
+        bump δ A x - q x ≤ tail δ A x ∧ tail δ A x ≤ bump δ A x) := by
+  refine ⟨admissible_exists hδ, ?_⟩
+  intro A hA
+  refine ⟨bump_contDiffOn hA, coordinate_continuous hA, coordinate_strictMono hA,
+    source_monotone hA, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
+  · exact fun x hx => ⟨source_nonnegative hA hx, source_right_limit hA hx⟩
+  · intro x hx
+    refine ⟨?_, source_between_events hA hx⟩
+    intro n hn
+    exact ⟨by simp [source, hn], source_left_limit hA hx n hn⟩
+  · exact fun a ha b => source_events_finite hA ha
+  · exact fun a ha t ht => source_increment hA ha ht
+  · exact fun x hx => source_global_bound hδ hA hx
+  · exact fun c₀ _ => source_pnt_bound hδ hA c₀
+  · exact fun x hx => tail_contract hδ hA hx
+
 end D5.S3.Analytic.Interpolation.ArtificialSourceIncrementContract
+
+
+
+
