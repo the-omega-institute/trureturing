@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:535e9e27ab47008e086c22184e585321ca5c6baa7d5ac57a1097e28ce06e37aa
   normalized_sha256: sha256:535e9e27ab47008e086c22184e585321ca5c6baa7d5ac57a1097e28ce06e37aa
 cas_ref: sha256:535e9e27ab47008e086c22184e585321ca5c6baa7d5ac57a1097e28ce06e37aa
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/Interpolation/ArtificialSourceIncrementContract.result
+    target_statement_id: sha256:ac05a3bce68602885dc36f850b3875d3f6ff31072b9c2b0ed2b693b8f02f6b99
 receipts:
   unresolved_subitems: []
