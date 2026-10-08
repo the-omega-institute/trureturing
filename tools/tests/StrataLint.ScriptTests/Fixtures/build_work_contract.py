@@ -14,7 +14,7 @@ REPO = Path(__file__).resolve().parents[4]
 
 
 class BuildWorkContracts(unittest.TestCase):
-    def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False):
+    def invoke(self, reused=True, targets=True, output="Build completed successfully (1 jobs).\n", failure=0, stale_logs=False, native_work=False, missing_phase_log=False, recorder_failure=False, interrupted=False):
         temp = tempfile.TemporaryDirectory(prefix="build-work-contract-")
         self.addCleanup(temp.cleanup)
         root = Path(temp.name)
@@ -38,6 +38,13 @@ class BuildWorkContracts(unittest.TestCase):
         script("tools/scripts/worktree/lean-cache-ensure.sh", "#!/bin/bash\nexit 0\n")
         script("tools/scripts/worktree/lean-cache-run.sh",
                "#!/bin/bash\ncat <<'LOG'\n" + output + "LOG\nexit " + str(failure) + "\n")
+        if interrupted:
+            script("tools/scripts/worktree/lean-cache-run.sh",
+                   "#!/bin/bash\n" +
+                   "printf '%s\\n' 'partial Lake output'\n" +
+                   "printf '%s\\n' 'partial Lake error' >&2\n" +
+                   "printf '%s\\n' '{\"phase\":\"native-inspect\",\"boundary\":\"start\",\"monotonic_ms\":1}' >> \"$STRATALINT_INSPECTOR_PHASES\"\n" +
+                   "kill -TERM \"$PPID\"\nexit 143\n")
         lake = script("fake-lake", "#!/bin/bash\nexit 0\n")
         producer = root / "producer.dll"
         producer.touch()
@@ -263,6 +270,15 @@ class BuildWorkContracts(unittest.TestCase):
         result, fact, _ = self.invoke(reused=False, targets=False, failure=23)
         self.assertEqual(23, result.returncode, result.stderr)
         self.assertFalse(fact.exists())
+
+    def test_interrupted_report_exposes_existing_phase_evidence_and_preserves_failure(self):
+        result, fact, _ = self.invoke(reused=False, targets=False, interrupted=True)
+        self.assertEqual(143, result.returncode, result.stderr)
+        self.assertFalse(fact.exists())
+        self.assertIn("LEAN_INSPECTOR_INTERRUPTED phase=report exit=143", result.stderr)
+        self.assertIn("partial Lake output", result.stderr)
+        self.assertIn("partial Lake error", result.stderr)
+        self.assertIn('"phase":"native-inspect","boundary":"start"', result.stderr)
 
 
 if __name__ == "__main__":

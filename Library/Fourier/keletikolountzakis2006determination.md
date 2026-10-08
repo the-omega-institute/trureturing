@@ -46,3 +46,13 @@ CRT 将 $a_H$ 分解为这些局部示性函数的张量积，因此其全部 Fo
 二点自相关只保留 $|\widehat f|^2$，不能区分反射造成的相位变化。三点相关在全 Fourier 支撑下恢复线性相位以外的信息，但任何阶的平移不变相关仍不能区分同一平移轨道中的绝对位置。例如模 $30$ 的 $\{11,17\}$ 与 $\{7,13\}$ 互为平移，故提高相关阶数不能决定其相对于固定整数区间的放置。
 
 保留已知原点标记的交叉相关或有序区间读数属于另一个恢复问题。相关 wheel 推论、显式分离及带标记 Fibonacci 窗口接口见[主卷第十六节](../../docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md)。这里的完备性不提供真实素数三胞胎渐近式，也不提供从有限模统计到整数区间素数相关的误差控制。
+
+## 指定三胞胎轮筛的定量后续及初等先例
+
+主卷第二十节将同一 CRT Fourier 分解用于 $H=\{0,2,6\}$ 和 $\{0,4,6\}$，计算全部移位卷积算子的最小奇异值与条件数。循环卷积的 Fourier 对角化、奇异值等于乘子模长，以及局部极值的三角函数计算均作为既有方法或初等中间步骤使用；这里不将它们列为新的基础理论。
+
+其中 $|1+z+z^3|^2$ 在单位圆上的最小值
+$(47-14\sqrt7)/27$，对应三次多项式
+$1-4c+4c^2+8c^3$ 的最小值。相同的多项式和临界点已出现在 Everyday Prep 的 [Original Problem 382: Centroid of a doubling orbit and maximum triangle area](https://everydayprep.jp/international-baccalaureate-ib-en/ib-mathematics-aa-hl-english/ib-aa-hl-g01-en/ib-aa-hl-doubling-orbit-centroid-area-0382-en/) 的三点重心距离计算中。该初等先例只供应圆周极值，并不声称其讨论了素数筛轮。
+
+本仓在这些中间事实上的具体推导是：局部最小模 $\alpha_q$ 在 CRT 上可同时实现，故全轮最小奇异值恰为 $\prod_{q\mid W,\ q\ge5}\alpha_q$；估计 $\alpha_q^2=\alpha^2+O(q^{-2})$ 使修正乘积收敛，再由初等素数无穷性得到素数乘积模长下 $\log\kappa_2/\log W\to1$。该条件数属于有标签的线性卷积算子；它不等于三点相关逆问题的条件数，也不等于固定 Fibonacci 长度的两组窗口和映射的条件数。

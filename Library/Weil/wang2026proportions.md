@@ -219,3 +219,251 @@ The separate cubic-theta comparison is recorded in
 [the fixed-half-plane source note](../Analytic/openai2026quasirh.md).
 
 
+## 本仓对原三点证书的解析推论
+
+This derivation retains Wang's original kernel and supplies an explicit lower bound for the normalized packing value discussed above. Convex compression, consecutive-point averaging, and shifted-block counting are existing methods; the calculation below specializes them to Wang's displayed three-point certificate. It is not a claim of a new general method or of the best current zero proportion. The stronger multi-point consumer in §19 of the [main volume](../../docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) uses a different profile and matching certificate.
+
+The imported analytic and kernel premises are Proposition 2.1 and Lemmas 3.2 and 4.1 of [Biao Wang, arXiv:2609.24167v1](https://arxiv.org/html/2609.24167v1). Consecutive-point, frame, and shifted-block methods also appear in the [ainta manuscript](https://github.com/ainta/zeta-simple-zeros/blob/main/paper/riemann.tex) and the [later refined deduction](https://github.com/trmdy/zeta-simple-zeros-673137/blob/1610b97/docs/refined-deduction.md). These sources supply the provenance of the averaging mechanism; the closed-form envelope and arithmetic evaluation below specialize it to Wang's displayed certificate.
+
+### 1. Source premises and notation
+
+Put
+$$
+ a=(\sqrt5-2)^2=9-4\sqrt5,\qquad b=2\pi^2,\qquad
+ e(h)=\frac{a}{(1+bh^2)^2}.
+$$
+Wang's real even probability density and Fourier kernel are
+$$
+ f_0(t)=\frac{\cos(\sqrt2t)}{\sqrt2\sin(1/\sqrt2)}
+            \mathbf1_{[-1/2,1/2]}(t),\qquad K_0=\widehat f_0.
+$$
+Its three-point certificate states, for $u,v\ge0$,
+$$
+ K_0(u)^2+K_0(v)^2+K_0(u+v)^2\ge e(u+v).       \tag{1}
+$$
+Define $D(G)=\operatorname{tr}\Psi(G)$, with
+$$
+ \Psi(t)=(t-1)^2\quad(0\le t\le2),\qquad
+ \Psi(t)=2t-3\quad(t\ge2).
+$$
+For a unit-diagonal $3\times3$ Gram block of off-diagonal energy at least $e_*\le a<1/2$, the finite spectral inequality gives $D(G)\ge2e_*$.
+
+The smooth densities $f_\delta=\eta_\delta^2$ supplied by Wang, with $\eta_\delta$ real and even, satisfy
+$$
+ f_\delta\ge0,\quad\int f_\delta=1,\quad
+ \eta_\delta\in C^\infty_c(-1/2,1/2),\quad
+ r_\delta=\|f_\delta-f_0\|_1\longrightarrow0.
+$$
+For their Fourier kernels $K_\delta$,
+$$
+ |K_\delta-K_0|\le r_\delta,\qquad |K_\delta|,|K_0|\le1
+ \quad\hbox{on }\mathbb R.                     \tag{2}
+$$
+
+### 2. The exact lower convex envelope
+
+Let
+$$
+ s_*=\sqrt{\frac{\sqrt{17}-3}{2}},\qquad
+ h_*=\frac{s_*}{\sqrt b}
+     =\sqrt{\frac{\sqrt{17}-3}{4\pi^2}}
+     =0.168667121383325\ldots .
+$$
+The greatest convex minorant of $e$ on $[0,\infty)$ is
+$$
+ g(h)=
+ \begin{cases}
+ a+e'(h_*)h,&0\le h\le h_*,\\
+ e(h),&h\ge h_*.
+ \end{cases}                                  \tag{3}
+$$
+It is nonnegative and decreasing.
+
+To prove this, scale $t=\sqrt b\,h$ and set $f(t)=(1+t^2)^{-2}$. Then
+$$
+ f''(t)=\frac{4(5t^2-1)}{(1+t^2)^4}.
+$$
+The tangent condition $f(s)-1=sf'(s)$, after division by the nonzero factor $s^2$, becomes
+$$
+ s^4+3s^2-2=0,
+$$
+whose positive solution is $s_*$. Define
+$$
+ M(t)=\frac{1-f(t)}t
+     =\frac{t(2+t^2)}{(1+t^2)^2}.
+$$
+For $t>0$,
+$$
+ M'(t)=\frac{2-3t^2-t^4}{(1+t^2)^3},
+$$
+so $M$ has its unique maximum at $s_*$. Hence the line through $(0,1)$ tangent to $f$ at $s_*$ lies below $f$ everywhere. The line joins $f$ with matching first derivative in a region where $f''\ge0$, proving convexity. Any other convex minorant is bounded above, on $[0,s_*]$, by the chord connecting its endpoint values, which in turn is bounded above by this line; on $[s_*,\infty)$, it is bounded above by $f$. This proves maximality.
+
+### 3. Exact finite span estimate
+
+Let $x_1<\cdots<x_n$, $n\ge3$, lie in an interval of length at most $L$, and let $G_0=(K_0(x_i-x_j))_{i,j}$. Put $M=n-2$. For the $M$ consecutive triple spans
+$$
+ h_i=x_{i+2}-x_i,
+$$
+one has
+$$
+ \sum_{i=1}^M h_i
+ =(x_n-x_1)+(x_{n-1}-x_2)\le2L.                \tag{4}
+$$
+Each point belongs to at most three such blocks. Convex compression, applied with weight $1/3$, together with (1), therefore gives
+$$
+ D(G_0)\ge\frac23\sum_{i=1}^M e(h_i)
+         \ge\frac23M\,g\!\left(\frac1M\sum_i h_i\right)
+         \ge\boxed{\frac23M\,g\!\left(\frac{2L}{M}\right)}. \tag{5}
+$$
+The middle step is Jensen's inequality for $g$; the last uses that $g$ is decreasing. For $n\le2$ retain the trivial bound $D\ge0$; do not evaluate the displayed quotient.
+
+The same argument applies to the smooth kernel with a uniform error. Equation (2) implies that the sum of the three squared off-diagonal entries changes by at most $6r_\delta$. Thus each smooth triple has
+$$
+ D(G_\delta[\{i,i+1,i+2\}])
+ \ge 2(e(h_i)-6r_\delta)_+
+ \ge 2e(h_i)-12r_\delta.
+$$
+Consequently,
+$$
+ \boxed{\displaystyle
+ D(G_\delta)\ge
+ \frac23M\,g\!\left(\frac{2L}{M}\right)-4Mr_\delta.} \tag{6}
+$$
+This estimate is uniform over all real point configurations, including arbitrarily large triple spans. It is therefore legitimate to fix $\delta$, take the zero-height limit, and only afterwards send $\delta\to0$.
+
+### 4. The actual zero-counting consumer
+
+Write
+$$
+ C_0=\frac32-\frac1{\sqrt2}\cot\frac1{\sqrt2}
+     =0.672500703679411645734379790803\ldots .
+$$
+For the actual multiset
+$$
+ \mathcal Z_T=
+ \left\{ i(\rho-\tfrac12)\frac{\log T}{2\pi}:
+                   0<\Im\rho\le T\right\},
+$$
+let $N=N(T)$, $n=N^s_0(T)$, and $d=N_d(T)$. Its simple real points occupy an interval of length at most
+$$
+ L_T=\frac{T\log T}{2\pi}=N+o(N).
+$$
+For each fixed smooth source kernel the imported inequalities are
+$$
+ n\ge2N-\mathcal E_\delta+D(G_\delta),\qquad
+ d\ge\frac32N-\frac12\mathcal E_\delta+\frac12D(G_\delta),
+$$
+and
+$$
+ \limsup_{T\to\infty}\mathcal E_\delta/N\le C_\delta,\qquad
+ C_\delta\longrightarrow2-C_0.
+$$
+The squared energy $\mathcal E_\delta$ is the source's full complex-multiset energy. It is not the Frobenius energy of the simple-real-point Gram.
+
+The baseline follows by discarding $D\ge0$; it ensures $\liminf n/N\ge C_0>0$. Along any subsequence with $n/N\to r>0$, $M/N\to r$ and
+$$
+ \frac{2L_T}{M}\longrightarrow\frac2r\ge2>h_*.
+$$
+Therefore (3) and (6), after $T\to\infty$, then $\delta\to0$, give the pressure
+$$
+ \Phi(r)=\frac{2a}{3}\frac{r^5}{(r^2+8\pi^2)^2}. \tag{7}
+$$
+For $r=\liminf n/N$, the finite counting inequality yields
+$$
+ r\ge C_0+\Phi(r).                              \tag{8}
+$$
+There is exactly one $r_*\in(C_0,1)$ satisfying equality. Indeed,
+$$
+ \Phi'(r)=\frac{2a}{3}
+ \frac{r^4(r^2+40\pi^2)}{(r^2+8\pi^2)^3}>0
+$$
+and $\Phi'(r)\le10a/3<1$, so $r-\Phi(r)$ is strictly increasing. Also $C_0<3/4$, $a<1/16$, and $\Phi(1)<1/24$, which ensure a sign change before one. Thus
+$$
+ \liminf\frac{N_0^s(T)}{N(T)}\ge r_*,
+$$
+$$
+ r_*=0.6725015140968083192010988474865\ldots,
+\qquad
+ r_*-C_0=8.104173966734667190566832213\ldots\times10^{-7}. \tag{9}
+$$
+For the distinct-zero bound, apply its own finite inequality along a subsequence realizing its lower limit. Every accumulation point of $n/N$ is at least $r_*$; monotonicity of $\Phi$ then gives
+$$
+ \liminf\frac{N_d(T)}{N(T)}
+ \ge\frac{1+C_0+\Phi(r_*)}{2}
+ =\frac{1+r_*}{2}
+ =0.8362507570484041596005494237433\ldots .       \tag{10}
+$$
+One must not replace this argument by an unsupported finite relation between the distinct count and the actual simple count.
+
+### 5. A strict rational improvement requiring no decimal root
+
+The following elementary bounds are sufficient:
+$$
+ C_0>\frac{84}{125},\qquad a>\frac1{18},\qquad
+ \pi<\frac{22}{7}.
+$$
+For the first, write $x=1/\sqrt2$,
+$$
+ C=\cos x,\qquad S=\frac{\sin x}{x}.
+$$
+Alternating-series estimates give
+$$
+ C\le\frac{73}{96},\qquad
+ S\ge1-\frac1{12}+\frac1{480}-\frac1{40320},
+$$
+and
+$$
+ \frac{207}{250}
+ \left(1-\frac1{12}+\frac1{480}-\frac1{40320}\right)
+ -\frac{73}{96}=\frac{967}{3360000}>0.
+$$
+Thus $C/S<207/250$ and $C_0=3/2-C/S>84/125$. For $a>1/18$, use $\sqrt5<161/72$, since $161^2-5\cdot72^2=1$.
+
+Since $\Phi$ is increasing in $r$ and $a$, and decreasing in $\pi$,
+$$
+ \Phi(C_0)>
+ \frac{(84/125)^5}
+      {27((84/125)^2+8(22/7)^2)^2}
+ =\frac{1452729852}{1807717071735125}
+ >\frac8{10^7}.                               \tag{11}
+$$
+The exact difference in the last inequality is
+$$
+ \frac{65561946119}{18077170717351250000}>0.
+$$
+In particular, under the source premises,
+$$
+ \liminf N_0^s(T)/N(T)>C_0+8\cdot10^{-7}.
+$$
+This is an explicit improvement of Wang v1's particular fixed-cell consumer, not a new best bound after the later multi-point developments.
+
+### 6. General span-envelope statement
+
+For one fixed Gram kernel, fix integers $m\ge2$ and $n\ge m$. Suppose every consecutive $m$-point block of span $h$ has $D\ge J_m(h)$, where $J_m\ge0$ is decreasing. If $\varphi_m$ is any nonnegative, decreasing, convex minorant of $J_m$, then
+$$
+ D(G)\ge\frac{n-m+1}{m}
+ \varphi_m\!\left(\frac{(m-1)L}{n-m+1}\right).   \tag{12}
+$$
+The proof is the same: weight each consecutive block by $1/m$, and note that the sum of their spans is at most $(m-1)L$. For $n<m$, retain $D\ge0$ without evaluating the displayed quotient.
+
+When the same analytic source has baseline $C$, this yields the pressure
+$$
+ P_m(r)=\frac rm\varphi_m((m-1)/r),\qquad P_m(0)=0,
+$$
+and $r\ge C+P_m(r)$, subject to the same approximation requirements. Nonnegativity and monotonic decrease of $\varphi_m$ imply that $P_m$ is nondecreasing.
+
+For the following comparison only, take $\varphi_m$ to be the greatest convex minorant of $J_m$. It weakly dominates every standard fixed-cell pigeonhole guarantee using that same local certificate. For each $H>0$, the function
+$$
+ h\longmapsto J_m(H)(1-h/H)_+
+$$
+is a decreasing convex minorant of $J_m(h)$. Hence
+$$
+ \varphi_m(h)\ge\sup_{H>0}J_m(H)(1-h/H)_+.
+$$
+After multiplication by $r/m$ and substitution $h=(m-1)/r$, this is precisely the comparison with
+$$
+ \frac{J_m(H)}m\left(r-\frac{m-1}{H}\right)_+.
+$$
+This comparison concerns the standard guarantee obtained from the number of cells. It does not assert dominance over a cell argument supplied with additional information about the actual distribution of points.
+
+All these averaging identities are structural tools. Better current multi-point certificates, coupling their pressure correctly, and verifying the actual analytic interface are separate tasks. None of these proportion estimates proves RH.
