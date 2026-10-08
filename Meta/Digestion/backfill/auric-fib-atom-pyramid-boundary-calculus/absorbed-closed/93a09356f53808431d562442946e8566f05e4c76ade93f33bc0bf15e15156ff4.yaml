@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:93a09356f53808431d562442946e8566f05e4c76ade93f33bc0bf15e15156ff4
   normalized_sha256: sha256:93a09356f53808431d562442946e8566f05e4c76ade93f33bc0bf15e15156ff4
 cas_ref: sha256:93a09356f53808431d562442946e8566f05e4c76ade93f33bc0bf15e15156ff4
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S1/Words/AdmissibleWords/PathStableSetPolytope.convexHull_vertices
+    target_statement_id: sha256:2cd2f105ea8e9dc6e074ee30b988f37e934c103ab2be14eb738bb7b706320d1e
 receipts:
   unresolved_subitems: []
