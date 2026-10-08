@@ -42,27 +42,31 @@ Direct frozen dependencies:
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.HasPST
   statement_id sha256:757dd0796ec75540b7989b0cc8ff7b30e16f838075ebdaf9dafec9866abcd80e.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.hamiltonianPropagator_neg
-  statement_id sha256:da8dbba3289b5b062201fbfd2fbbd7c20cb092e36332ca39429a937e653cffca.
+  statement_id sha256:5965bdf5e9583b3548e15db5890602825b2142c2be7b5125a36b6586891c2045.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_isHermitian
-  statement_id sha256:755bd6b7f287f1c2db4b69ff7180d3a28df65cd848b5650641594b8a3fef7195.
+  statement_id sha256:9ef82c6c2002677d2d5ca2cbbbca0f264c96cd4b9b9c894ea79af8bb10c65c8a.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.spectral_pow_apply
-  statement_id sha256:09249d0c938a2b12488df9f2e39de2d3082706016dad8e6e51bfda11594300ad.
+  statement_id sha256:bc267ee8eeb16ff3b700510e62512f2a1aeb87b304d7dfa6dcd66409ae1144d7.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.spectral_exp
-  statement_id sha256:3e16b248dd122a54a985897b8b1c864134c9a4202fa1e8b72375fa331ccb0025.
+  statement_id sha256:6d70a85b3878e56c8305508bbcad20a585f5e754d4479bd5c7bbe65bab3ec540.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.exists_int_of_exp_eq_one
-  statement_id sha256:a641d776813aab202f943e68cf676b0c39d315528a3e281ef99f7ec954149696.
+  statement_id sha256:c53ecfce15def8b3681bf73a34fabf6b7432c89fc5c24270f1511c455e6d025a.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.exists_int_of_exp_eq_neg_one
-  statement_id sha256:28c73025e98c6a65c928b1ba8479530ebe76c149cb532dd0b37ba420080193ae.
+  statement_id sha256:e5f0dc0f4cfd995c3ce9f987e1ecd249b8d3fc701986c281115dfd87445d5034.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pst_column
-  statement_id sha256:297250ae843997131559b777397296e4a906edbf7e016c834828a276476f7027.
+  statement_id sha256:f0d6a6cc62d21a993b0bbabceb73a61dba896dbe1008d25b1e85d6b7c5a7b504.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.propagator_star_mul_self
-  statement_id sha256:291ba961210b68cf2b42da1a752f3727b9881bc1ecafb5176c73f81b5f327da3.
+  statement_id sha256:206bf99333c0ec6c88d1c79fbe7bc29da2384b53e3453cc76e410c12a16111b9.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.prod_eq_sq_of_rev
-  statement_id sha256:a9933e2f666d4682cf6aa3ec73e446281823cb609903573832c6d1b6c17db3a2.
+  statement_id sha256:d04d190c835f6b795ac49dbe9b3816f27479dd678df1c421eca52fa99ccfc404.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.reversal_columns
+  statement_id sha256:11ea5cadd06c196ccdd118fb29cccc8f14319580d54c00ac1b304f1e41d14df2.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.mul_prod_sub_eq_of_moments
+  statement_id sha256:ed8a52c9d0c42c524e25b41cea86b79c9c99940c454f28b51528bba26bc369e9.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_pow_apply_column
+  statement_id sha256:c50a132afc123692c13936889ad692366e6fb904fc589bc86bbf43f70e60e980.
   D5/S3/Quantum/Dynamics/ParityNodeDividedDifference.sum_eval_div_nodal_eq_coeff
+  statement_id sha256:1299d2cac32c96924333faa7cf62248f785306485913813ee846eef3f944d175.
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
 instance: every statement quantifies over all m, all positive weights and all real potentials.
 -/

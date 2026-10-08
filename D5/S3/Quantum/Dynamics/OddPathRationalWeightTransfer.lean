@@ -50,12 +50,15 @@ Direct frozen dependencies:
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.HasPST
   statement_id sha256:757dd0796ec75540b7989b0cc8ff7b30e16f838075ebdaf9dafec9866abcd80e.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.hamiltonianPropagator_neg
-  statement_id sha256:da8dbba3289b5b062201fbfd2fbbd7c20cb092e36332ca39429a937e653cffca.
+  statement_id sha256:5965bdf5e9583b3548e15db5890602825b2142c2be7b5125a36b6586891c2045.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_transpose
-  statement_id sha256:3badeec0aff6a10a492af789ef0007bc74673f00a3a7a78f4791c31dd34c821d.
+  statement_id sha256:6f605b6c72a712566fde18c5c7b05e5facf4368fdfc76d91c7e873a3bdac528b.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_pow_apply_column
+  statement_id sha256:c50a132afc123692c13936889ad692366e6fb904fc589bc86bbf43f70e60e980.
   D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.middle_vertex_moments
+  statement_id sha256:11dc6b0cb7ee73c17f5f5a9162f481ab4d06a06e66fad459c16dfa8a8b4df676.
   D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.reversal_symmetric
+  statement_id sha256:4bc82efe78b44bb7fdfc91cc5771a3b7bdd61ccf61e1ed61c9728c74195f5fef.
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
 instance: the claim quantifies over every m >= 1 and all real weights and potentials.
 -/
