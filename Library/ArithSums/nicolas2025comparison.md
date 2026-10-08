@@ -5935,3 +5935,157 @@ not an all-integer finite Robin verification or an unbounded main
 estimate. The full RH objective remains unproved. All classical prime,
 zero-count and verified-height inputs are reused; this paper-level
 application carries no mathematical-priority or Lean-certification claim.
+
+## Absolute full-weight cost at a fixed negative heat time
+
+Keep the same conditional least global Robin-ratio maximizer $N$, the
+arithmetic clock $A=\log N>(7/2)10^{46}$, and $L=\log A$. The result
+below also holds for every fixed $A>1$. It concerns a particular
+absolute transport through negatively deformed zeros; it supplies no
+upper bound for the original signed response $-\sqrt A L I_\psi(A)$.
+
+The inputs are Alexander Dobner, *A proof of Newman's conjecture for
+the extended Selberg class*, [Acta Arithmetica 201 (2021), 29–62](https://doi.org/10.4064/aa200603-23-7), inspected in
+[arXiv:2005.05142v2](https://arxiv.org/html/2005.05142v2), Theorems 4–5,
+Lemma 3 and §3.1, and the NIST DLMF
+[principal exponential integral](https://dlmf.nist.gov/6.2#E1) and
+[sector asymptotic expansion](https://dlmf.nist.gov/8.20#E2).
+These published results are reused as `literature-attested` inputs.
+The combined full-weight convergence restriction is a `repo-derived`
+paper-level source application; no
+mathematical-priority or Lean-certification claim is made.
+
+### Continue the complete coefficient, keeping its cancellation
+
+For $0<\Re s<1$, put $v=\log u$ in the unchanged coefficient (M1).
+The DLMF principal $E_1$ definition and one integration by parts give
+
+$$
+\begin{aligned}
+F_A(s)
+&=\frac1s\int_L^\infty e^{(s-1)v}
+                 \left(\frac1v+\frac1{v^2}\right)\,dv\\
+&=\frac{A^{s-1}}{sL}+E_1((1-s)L).
+\end{aligned}
+\tag{NH1}
+$$
+
+Thus the right side defines the natural principal continuation
+$\widehat F_A$ on $\mathbb C\setminus(\{0\}\cup[1,\infty))$.
+Continuation defines these individual terms beyond the integral's
+half-plane of convergence; it does not itself establish a spectral
+transport identity.
+
+Let $s=x+iy$, $y\to+\infty$, with $|x|\le B\log y$ for a fixed $B$.
+Then $z=(1-s)L$ lies, eventually, in $|\arg z|\le3\pi/4$.
+DLMF (8.20.2), with its parameter $p=1$, supplies uniformly there
+
+$$
+E_1(z)=e^{-z}\left(z^{-1}-z^{-2}+O(|z|^{-3})\right).
+$$
+
+Substitution into the **full** (NH1) yields
+
+$$
+\begin{aligned}
+\widehat F_A(s)
+&=A^{s-1}\left(
+ \frac1{Ls(1-s)}-\frac1{L^2(1-s)^2}+O_{A,B}(y^{-3})\right)\\
+&=\frac{1+L}{L^2}\frac{A^{s-1}}{y^2}
+       \left(1+O_{A,B}\!\left(\frac{\log y}{y}\right)\right).
+\end{aligned}
+\tag{NH2}
+$$
+
+The terms $1/(sL)$ and $1/((1-s)L)$ cancel at order $y^{-1}$.
+The $-z^{-2}$ term supplies the additional $1/L^2$ in the nonzero
+leading coefficient. Neither part of the original weight has been
+discarded. All asymptotics here fix $A$ before taking the height limit.
+
+### Obtain enough distinct actual zeros from the source's shifts
+
+Fix one $\epsilon>0$ throughout and use Dobner's heat parameter
+$t=-\epsilon$. In the Riemann specialization his equations (11)–(12)
+give
+
+$$
+D_\epsilon(s)=\sum_{n\ge1}
+ e^{-\epsilon\log^2 n/4}n^{-s},\qquad
+J_\epsilon(s)=s+\frac\epsilon4\operatorname{Log}\frac{s}{2\pi}.
+\tag{NH3}
+$$
+
+The completion has the normalization
+$\xi_t((1+iz)/2)=8H_t(z)$, with the same heat time $t$.
+These are deformed $\xi_{-\epsilon}$ zeros, not original zeta zeros.
+
+Dobner's Lemma 3 supplies a zero of $D_\epsilon$. His §3.1 proof,
+using Theorems 4–5, supplies actual zeros of
+$\xi_{-\epsilon}(J_\epsilon(s))$ in sufficiently high translates
+of one fixed zero-isolating circle of radius $r$. The same shift
+sequence satisfies
+
+$$
+\liminf_{m\to\infty}(\tau_{m+1}-\tau_m)>0,
+\qquad \limsup_{m\to\infty}\frac{\tau_m}{m}<\infty.
+$$
+
+In particular $\tau_m\asymp_\epsilon m$. Choose $d>0$ such that
+the consecutive gaps are eventually at least $d$, and retain every
+$q$-th shift, where $qd>2r+\epsilon\pi/4$. On the upper half-plane,
+$J_\epsilon$ adds an imaginary offset in $(0,\epsilon\pi/4)$.
+Consequently the images of the retained circles have disjoint height
+intervals. Choosing one actual zero in each produces **distinct**
+zeros $w_m$ of the same $\xi_{-\epsilon}$ with
+
+$$
+\Im w_m\asymp_\epsilon m,\qquad
+\Re w_m=\frac\epsilon4\log(\Im w_m)+O_\epsilon(1).
+\tag{NH4}
+$$
+
+This uses the source's shift-density information, not merely the
+existence of infinitely many zeros. The selected preimages stay in
+one fixed bounded real strip, and $\Im J_\epsilon(s)=\Im s+O_\epsilon(1)$,
+which proves the real-part statement in (NH4).
+
+### A necessary absolute-budget condition, including equality
+
+Write $\kappa=\epsilon L/4$. Equations (NH2) and (NH4) imply, for
+all sufficiently large $m$,
+
+$$
+|\widehat F_A(w_m)|\asymp_{A,\epsilon}m^{\kappa-2}.
+\tag{NH5}
+$$
+
+The constants are positive because $(1+L)/L^2>0$ and
+$A^{\Re w_m-1}\asymp_{A,\epsilon}(\Im w_m)^\kappa$.
+Hence, counting the actual deformed zeros with multiplicities,
+
+$$
+\boxed{
+\epsilon\log A\ge4
+\quad\Longrightarrow\quad
+\sum_{\substack{\xi_{-\epsilon}(w)=0\\\Im w>0}}
+ |\widehat F_A(w)|=\infty.}
+\tag{NH6}
+$$
+
+At equality the selected subseries dominates the harmonic series;
+for larger $\epsilon L$ it dominates a divergent power series.
+Thus $\epsilon\log A<4$ is a **necessary** condition for this
+principal-continued, complete-weight, absolute full-spectrum
+transport. For $\epsilon\log A<4$, (NH5) makes this particular
+selected subseries converge, but establishes no convergence or
+uniform bound for the rest of the deformed spectrum.
+
+The conclusion is about absolute cost at one fixed negative heat
+time. It proves neither signed divergence nor a failure of Robin or
+RH, and does not exclude transports that retain cancellation or use
+additional comparison terms. Such a route still needs an all-height
+identity and a paid signed error returning to the original zeros,
+their real parts and multiplicities, the original elementary
+correction and the strict core at the same $N$. No changing heat time
+per zero, finite-spectrum truncation or unproved positive-time
+certificate is used to discharge that obligation.
