@@ -107,23 +107,26 @@ private theorem exact_targets (Q : ℝ → Fin 6) (b : ℝ) (hb : 0 ≤ b)
 
 private theorem chain_pieces {q : ℕ} {R b : ℝ} {r : List (Fin 6)}
     {vs : List (Vertex q R)} {w : List Label} (hp : ClosedPath b r vs w) :
+    vs.length = w.length + 1 ∧
     ∀ (x : LegalDigits), addressChain x vs w → ∀ (fallback : Vertex q R)
       (j : ℕ), j ≤ w.length →
       kappa (bitShift x (3 * j)) ∈ piece ((vs[j]?).getD fallback) := by
   induction hp with
   | point i v hi =>
+    refine ⟨rfl, ?_⟩
     intro x hx fallback j hj
     have hj0 : j = 0 := by simpa using hj
     subst j
     simpa [bitShift] using hx.2
   | step i r v u vs l w hi he hp ih =>
+    refine ⟨by simpa only [List.length_cons] using congrArg Nat.succ ih.1, ?_⟩
     intro x hx fallback j hj
     change stateAddress v.val.1 x ∧ kappa x ∈ piece v ∧ window x 0 = l ∧
       addressChain (originalT x) (u :: vs) w at hx
     cases j with
     | zero => simpa [bitShift] using hx.2.1
     | succ j =>
-      have hh := ih (originalT x) hx.2.2.2 fallback j (by simpa using hj)
+      have hh := ih.2 (originalT x) hx.2.2.2 fallback j (by simpa using hj)
       have heq : 3 + 3 * j = 3 * (j + 1) := by omega
       simpa only [originalT, hshift, heq, List.getElem?_cons_succ] using hh
 
@@ -157,6 +160,7 @@ theorem result :
       ∃ x : LegalDigits, addressChain x vs w ∧
         bitShift x (3 * (w.length + 1)) = y ∧
         window (bitShift x (3 * w.length)) 0 = l ∧
+        (finiteTail x ↔ finiteTail y) ∧
         (kappa y ∉ pending (fun j => inverseBranch (window x j))
           (fun j => piece ((vs[j]?).getD u))
           (fun j => stateInterval ((vs[j]?).getD u).val.1)
@@ -186,14 +190,11 @@ theorem result :
   have hxy : bitShift x (3 * (w.length + 1)) = y := by
     rw [show 3 * (w.length + 1) = 3 * w.length + 3 by omega, ← hshift,
       hxz, ← originalT, hprefix.2]
-  have hlen : vs.length = w.length + 1 := by
-    induction hp with
-    | point => rfl
-    | step _ _ _ _ _ _ _ _ _ _ ih => simp only [List.length_cons]; omega
+  have hlen := (chain_pieces hp).1
   have htrace (j : ℕ) (hj : j ≤ w.length + 1) :
       kappa (bitShift x (3 * j)) ∈ piece ((vs[j]?).getD u) := by
     by_cases hjw : j ≤ w.length
-    · exact chain_pieces hp x hx u j hjw
+    · exact (chain_pieces hp).2 x hx u j hjw
     · have hjn : j = w.length + 1 := by omega
       subst j
       rw [List.getElem?_eq_none (l := vs) (i := w.length + 1) hlen.le]
@@ -208,7 +209,13 @@ theorem result :
     have hjr : j < r.length := by rw [← hread.1]; exact hj
     simpa only [List.get_eq_getElem, List.getElem?_eq_getElem hjr, Option.getD_some]
       using (hread.2 x hx).2 ⟨j, hjr⟩
-  refine ⟨x, hx, hxy, by simpa only [hxz] using hprefix.1, ?_⟩
+  have hfinite : finiteTail x ↔ finiteTail y := by
+    constructor
+    · intro h
+      simpa only [hxy] using finite_tail_shift x (3 * (w.length + 1)) h
+    · intro h
+      exact finite_tail_unshift x (3 * (w.length + 1)) (hxy.symm ▸ h)
+  refine ⟨x, hx, hxy, by simpa only [hxz] using hprefix.1, hfinite, ?_⟩
   simpa only [hxy] using exact_targets Q b hb x (fun j => (r[j]?).getD 0)
     (fun j => piece ((vs[j]?).getD u))
     (fun j => stateInterval ((vs[j]?).getD u).val.1) (w.length + 1)

@@ -26,7 +26,6 @@ open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.ClosedObservationGraphRealization (hshift)
 open scoped Topology
 
-
 theorem hpath_read {q : ℕ} {R : ℝ} (b0 : ℝ) (r : List (Fin 6))
     (vs : List (Vertex q R)) (w : List Label) (hp : ClosedPath b0 r vs w) :
     w.length + 1 = r.length ∧ ∀ x : LegalDigits, addressChain x vs w →
@@ -71,6 +70,19 @@ theorem window_shift (x : LegalDigits) (j : ℕ) : window (bitShift x (3 * j)) 0
 
 theorem original_t_shift (x : LegalDigits) (j : ℕ) : originalT (bitShift x (3 * j)) = bitShift x (3 * (j + 1)) := by
   rw [originalT, hshift]; congr 1 <;> omega
+
+theorem finite_tail_shift (x : LegalDigits) (M : ℕ) (hx : finiteTail x) :
+    finiteTail (bitShift x M) := by
+  obtain ⟨N, hN⟩ := hx
+  exact ⟨N, fun j hj => hN (j + M) (by omega)⟩
+
+theorem finite_tail_unshift (x : LegalDigits) (n : ℕ) (hx : finiteTail (bitShift x n)) :
+    finiteTail x := by
+  obtain ⟨N, hN⟩ := hx
+  refine ⟨N + n, ?_⟩
+  intro j hj
+  have hh := hN (j - n) (by omega)
+  simpa [bitShift, Nat.sub_add_cancel (by omega : n ≤ j)] using hh
 
 set_option maxHeartbeats 1600000 in
 /-- The complete graph and actual common-tail relation have a strict width bound
@@ -200,10 +212,6 @@ theorem complete_closed_graph_common_tail_width :
     apply Subtype.ext
     funext j
     simp [bitShift, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
-  have hfiniteShift (x : LegalDigits) (M : ℕ) (hx : finiteTail x) :
-      finiteTail (bitShift x M) := by
-    obtain ⟨N, hN⟩ := hx
-    exact ⟨N, fun j hj => hN (j + M) (by omega)⟩
   have hlabels (l : Label) : l = nullLabel ∨ l = threeLabel ∨ l = twoLabel ∨
       l = fiveLabel ∨ l = twoFiveLabel := by
     have hn0 := l.property 0 (by decide)
@@ -635,13 +643,6 @@ theorem complete_closed_graph_common_tail_width :
         (v :: vs).getLast? = some vw.1 ∧ ClosedPath b0 r (v :: vs) vw.2 from
         by simpa [histories, hr] using hvw)
       exact (hpath_read b0 r _ vw.2 hp).1
-  have hfiniteUnshift (x : LegalDigits) (n : ℕ) (hx : finiteTail (bitShift x n)) :
-      finiteTail x := by
-    obtain ⟨N, hN⟩ := hx
-    refine ⟨N + n, ?_⟩
-    intro j hj
-    have hh := hN (j - n) (by omega)
-    simpa [bitShift, Nat.sub_add_cancel (by omega : n ≤ j)] using hh
   have hfiniteExtremes (x : LegalDigits) (hx : finiteTail x) :
       kappa x ≠ -1 ∧ kappa x ≠ 1 + t := by
     obtain ⟨N, hN⟩ := hx
@@ -756,7 +757,7 @@ theorem complete_closed_graph_common_tail_width :
         apply Subtype.ext; funext j; simp [bitShift]
       simp only [Fin.val_zero, Nat.mul_zero] at h0
       rw [hs0 x, hs0 y, hrec x, hrec y, ← hxy] at h0
-      have hw := hsingleCritical (originalT x) (hfiniteUnshift _ _ hf') (r 0)
+      have hw := hsingleCritical (originalT x) (finite_tail_unshift _ _ hf') (r 0)
         (window x 0) (window y 0) hxr hyr h0.1 h0.2
       apply Subtype.ext; funext j
       by_cases hj : j < 3
@@ -851,12 +852,12 @@ theorem complete_closed_graph_common_tail_width :
       (by simp [lawful, outgoing, nullLabel]) htau
     have hnu : ¬ finiteTail u := by
       intro h
-      have hh := hfiniteIntegral (originalT u) (hfiniteShift u 3 h)
+      have hh := hfiniteIntegral (originalT u) (finite_tail_shift u 3 h)
       rw [hu.2.2] at hh
       exact hnot hh
     have hnv : ¬ finiteTail v := by
       intro h
-      have hh := hfiniteIntegral (originalT v) (hfiniteShift v 3 h)
+      have hh := hfiniteIntegral (originalT v) (finite_tail_shift v 3 h)
       rw [hv.2.2] at hh
       exact hnot hh
     refine ⟨tau, u, v, htau, hvtau, hnot, hu.2.1, hv.2.1, hu.2.2, hv.2.2,
