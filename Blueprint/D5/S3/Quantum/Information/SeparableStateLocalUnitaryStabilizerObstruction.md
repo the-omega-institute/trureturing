@@ -112,7 +112,35 @@ $$(\operatorname{claim}) \Leftrightarrow (\exists rho \in \operatorname{Matrix}\
 
 Appendix F, PDF p. 8, verbatim: “However, we are unaware of any proof guaranteeing that every separable multi-qubit state can be transformed into a state belonging to STAB using only local unitary transformations, and we conjecture that this is not the case.” The existential two-qubit density matrix rho is positive semidefinite with trace one, as expressed by StructuredNegativityCoincidenceRefutation.IsDensity. Its separability is the literal convex-product-ensemble condition. The universal quantifier ranges independently over all pairs of single-qubit unitaries. A two-qubit example proves the source's existential multi-qubit assertion.
 
-**Theorem 1.10 (An infinite family proves the conjecture).**
+**Theorem 1.10 (The reduced projector is an amplitude Gram matrix).**
+
+$$\forall psi \in (\operatorname{Fin}\left(2\right) \times \operatorname{Fin}\left(2\right)) \to \mathbb{C},\; \operatorname{partialTraceRight}\left(\operatorname{rankOneDensity}\left(psi\right)\right) = \operatorname{Matrix.of}\left(\operatorname{Function.curry}\left(psi\right)\right) \cdot \operatorname{conjTranspose}\left(\operatorname{Matrix.of}\left(\operatorname{Function.curry}\left(psi\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.marginal_amplitude` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Dongheng Qian; Jing Wang (2025). *Quantum non-local nonstabilizerness*. DOI: [10.1103/PhysRevA.111.052443](https://doi.org/10.1103/PhysRevA.111.052443). URL: <https://arxiv.org/abs/2502.06393v4>.
+
+*Commentary.*
+
+For a two-qubit vector, curry arranges its amplitudes into a two-by-two matrix. Tracing the right subsystem of its rank-one projector gives that matrix times its adjoint.
+
+**Theorem 1.11 (Zero quadratic form constrains every positive-weight vector).**
+
+$$\forall n \in \operatorname{Type},\; \forall iota \in \operatorname{Type},\; [\operatorname{Fintype}\left(n\right)] [\operatorname{Fintype}\left(iota\right)] \forall psi \in iota \to \left(n \to \mathbb{C}\right),\; \forall w \in iota \to \mathbb{R},\; \forall z \in n \to \mathbb{C},\; (\forall i \in iota,\; 0\le \operatorname{w}\left(i\right)) \land (\operatorname{dotProduct}\left(\operatorname{star}\left(z\right), \operatorname{Matrix.mulVec}\left(\sum_{i\in iota} (\operatorname{w}\left(i\right)\cdot \operatorname{rankOneDensity}\left(\operatorname{psi}\left(i\right)\right)), z\right)\right) = 0)\longrightarrow \forall i \in iota,\; 0<\operatorname{w}\left(i\right)\longrightarrow \operatorname{dotProduct}\left(\operatorname{star}\left(z\right), \operatorname{psi}\left(i\right)\right) = 0$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.ensemble_kernel` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Dongheng Qian; Jing Wang (2025). *Quantum non-local nonstabilizerness*. DOI: [10.1103/PhysRevA.111.052443](https://doi.org/10.1103/PhysRevA.111.052443). URL: <https://arxiv.org/abs/2502.06393v4>.
+
+*Commentary.*
+
+Let psi be a finite family of complex vectors with nonnegative real weights w. If the quadratic form of their weighted rank-one projector sum vanishes at z, then every positive-weight vector is orthogonal to z. Positivity of the weighted squared overlaps prevents cancellation.
+
+**Theorem 1.12 (An infinite family proves the conjecture).**
 
 $$\operatorname{claim}$$
 
@@ -138,8 +166,10 @@ For every real p,c,s with 0 < p < 1, c > 0, s > 0, c² + s² = 1 and c² ≠ 1/2
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.STAB`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.Separable`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.claim`
+- Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.ensemble_kernel`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.localAction`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.localMatrix`
+- Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.marginal_amplitude`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.result`
 - Truth anchor: `D5/S3/Quantum/Information/SeparableStateLocalUnitaryStabilizerObstruction.unitVector`
 - Dependency: [D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation](../Entanglement/StructuredNegativityCoincidenceRefutation.md)

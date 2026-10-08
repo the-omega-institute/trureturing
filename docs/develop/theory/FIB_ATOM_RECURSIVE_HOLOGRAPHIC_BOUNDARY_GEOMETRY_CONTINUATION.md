@@ -2675,3 +2675,1348 @@ All infinite quantifiers describe common mathematical operators and families of 
 The constants, core size, binding criterion and spectral windows are for each fixed finite $N$. They give neither uniform population/refinement/thermodynamic/continuum control nor a vanishing moving-boundary Green norm, and they do not overturn §62.5's growing-population killed-renewal defect. Full subthreshold eigenspaces are preserved only in certified windows below $B_N$ with common-gap endpoints; (63.29) preserves near-groundspace distance under the supplied ideal law, not global all-energy dynamics or full-phase rho intertwining. Authentic spectral acquisition, operation-/metric-/field-/kinetic-preserving physical transport, calibrated time and matched maintenance/precision/storage prices remain unproved. Local direction dimension, ordered syntax, graph growth/degree, Hilbert dimension and physical cost stay distinct. These ordinary conditional results advance stable native structure on the commissioned carrier; they do not settle Euclidean spatial dimension three or the whole why-three objective.
 
 ## 63.99 追加锚（本行以下为增补区）
+
+## 64. Same-source Green channels and the retained one/two-occupation response
+
+**Definition 64.1 (the joint source witness and the two pair laws).** Use the actual INITIAL
+$t=\langle\beta,\alpha\rangle$ and the fixed-cap history of Proposition55.6:
+\[
+\operatorname{Read}[BA];\quad \rho[\mathrm{accept}];\quad
+\operatorname{Read}[A+B];\quad \rho[\mathrm{refuse}];\quad
+\operatorname{Read}[A+B];\quad \operatorname{Stop}.
+\]
+The leaf counts are $2,3,5$; the second candidate is refused and supplies no candidate
+Read. The accepted current domain is, in the ordered basis
+\[
+D=(o,L,R,LL,LR),
+\]
+the same five-site domain of §§55,60,62, with the same source version, labels, reference,
+clock and retained original records. In particular, no source state, event, or later Read is
+created by the calculations below.
+
+The ten unordered H3 pair targets are retained together. The common field law of
+(62.3) gives
+\[
+\begin{array}{c|cccccccccc}
+\{p,q\}&oL&oR&oLL&oLR&LR&L\,LL&L\,LR&R\,LL&R\,LR&LL\,LR\\ \hline
+G^{\rm c}(p,q)&
+1/2&1/2&1/4&1/4&1/4&3/8&3/8&1/8&1/8&3/16
+\end{array}
+\]
+and direct inversion of the actual $L_D$ gives
+\[
+\begin{array}{c|cccccccccc}
+\{p,q\}&oL&oR&oLL&oLR&LR&L\,LL&L\,LR&R\,LL&R\,LR&LL\,LR\\ \hline
+G^{\rm k}_D(p,q)&
+9/26&7/26&3/26&3/26&3/26&5/26&5/26&1/26&1/26&5/78 .
+\end{array}
+\]
+Here $G^{\rm c}(p,q)=\langle e_p,L^{-1}e_q\rangle$ is the one common field restricted
+to $D$, whereas $G_D^{\rm k}(p,q)=\langle e_p,L_D^{-1}e_q\rangle$ is the separately
+solved killed pair law. Both use the same $\phi(p)=2^{-|p|}$ in the one-body term. The
+common field is not replaced by $\phi_D^0$, and neither pair table changes the original
+source or its history.
+
+**Lemma 64.2 (a three-channel one-calibration metric floor).** Let $x,y,o$ be three
+distinct points in an injectively metrized space, and suppose one positive calibration
+$\kappa$ is used for all three pair readings,
+\[
+\widehat G(p,q)=\frac{\kappa}{d(\iota p,\iota q)}.
+\]
+If $w,u,v>0$, $w=G(o,o)$, $G(o,x)=wu$, $G(o,y)=wv$, and $G(x,y)=wuv$ with
+$u+v<1$, then the maximum relative error on these three readings obeys
+\[
+\max_{pq\in\{ox,oy,xy\}}
+\frac{|\widehat G(p,q)-G(p,q)|}{G(p,q)}
+\ \ge\ \frac{1-u-v}{1+u+v}.                                      \tag{64.1}
+\]
+If the error is measured in the Green units themselves, then
+\[
+\max_{pq}|\widehat G(p,q)-G(p,q)|
+\ \ge\delta(A,B,C),\qquad
+\delta(A,B,C)=\frac{2(A+B-C)-\sqrt{4(A+B-C)^2-12(AB-C(A+B))}}{6},
+\tag{64.2}
+\]
+where $A=G(o,x)$, $B=G(o,y)$, and $C=G(x,y)$.
+
+Proof. Put $r_{pq}=\kappa/\widehat G(p,q)$. The metric triangle inequality is
+$r_{xy}\le r_{ox}+r_{oy}$. For $\epsilon\ge1$ the claimed lower bound is immediate. Under a relative error $0\le\epsilon<1$, the most favorable
+choice for this inequality has $\widehat G(x,y)=(1+\epsilon)wuv$ and
+$\widehat G(o,x),\widehat G(o,y)$ equal to $(1-\epsilon)wu,(1-\epsilon)wv$.
+Therefore
+\[
+\frac1{(1+\epsilon)uv}\le\frac1{(1-\epsilon)u}
++\frac1{(1-\epsilon)v},
+\]
+which is equivalent to (64.1). For an additive error at most $\delta$, the favorable
+endpoints are $x_1=A-\delta$, $x_2=B-\delta$, $x_3=C+\delta$; positivity holds at the
+smaller root below. The reciprocal triangle inequality is
+$x_3\ge x_1x_2/(x_1+x_2)$. Equality gives
+\[
+3\delta^2-2(A+B-C)\delta+\bigl(AB-C(A+B)\bigr)=0,
+\]
+and the smaller root is (64.2). No choice of the common $\kappa$ or of the three
+distances can evade this argument. $\square$
+
+**Theorem 64.3 (the actual H3 joint defect).** For the common table choose
+$(x,y)=(LL,R)$. Then $(w,u,v)=(1,1/4,1/2)$, and (64.1) gives
+\[
+\epsilon_{\rm c}\ge\frac17,\qquad
+\delta_{\rm c}\ge\frac{5-\sqrt{19}}{24}.
+\tag{64.3}
+\]
+For the killed table the same source triple has
+$(w,u,v)=(21/26,1/7,1/3)$, and therefore
+\[
+\epsilon_{\rm k}\ge\frac{11}{31},\qquad
+\delta_{\rm k}\ge\frac{9-4\sqrt3}{78}.
+\tag{64.4}
+\]
+The three entries $(o,LL),(o,R),(LL,R)$ are one joint defect: they are not three
+independently fitted sector marginals. The other seven entries in Definition64.1 remain
+part of the same source-qualified target.
+
+Proof. In the common case $(A,B,C)=(1/4,1/2,1/8)$, and in the killed case
+$(A,B,C)=(3/26,7/26,1/26)$. Substitution in (64.2) gives (64.3) and (64.4);
+the relative forms follow from (64.1). The source, calibration and pair law are held
+fixed across all three channels. $\square$
+
+**Theorem 64.4 (the defect survives a consistent one/two-occupation operator law).**
+Let $h_D=aL_D-gM_{\phi|D}$ and let $P_{D,2}$ be the hard-core symmetric projection
+inside the two-fold symmetric tensor of $\ell^2(D)$. For one common calibration
+$\widehat G$ on all ten pairs, define
+\[
+\widehat H_{D,1}=B,\qquad
+\widehat H_{D,2}=P_{D,2}\,d\Gamma(B)\,P_{D,2}
+-\nu\sum_{\{p,q\}}\widehat G(p,q)n_pn_q,
+\]
+where $B$ is any Hermitian one-body law and $\nu\ge0$ is the same coefficient used
+in the source operator. For either $\diamond\in\{\mathrm c,\mathrm k\}$, put
+\[
+H^\diamond_{D,1}=h_D,\qquad
+H^\diamond_{D,2}=P_{D,2}\,d\Gamma(h_D)\,P_{D,2}
+-\nu\sum_{\{p,q\}}G_D^\diamond(p,q)n_pn_q .
+\]
+The compression keeps the diagonal $\sum_{p\in S}d_p$ and hence every inherited
+collision and exterior-killing contribution of (62.2). With
+\[
+E_1=\|B-h_D\|,\qquad E_2^\diamond=
+\|\widehat H_{D,2}-H^\diamond_{D,2}\|,
+\]
+one has
+\[
+E_2^\diamond+2E_1\ \ge\
+\nu\max_{\{p,q\}\subset D}|\widehat G(p,q)-G_D^\diamond(p,q)|
+\ \ge\ \nu\delta_\diamond .                              \tag{64.5}
+\]
+Consequently a same-$L_D$ installation has $E_1=0$ and $E_2^\diamond\ge\nu\delta_\diamond$
+for both pair prescriptions. At $N=1$ the pair multiplier vanishes, so the two
+prescriptions have exactly the same one-occupation operator $h_D$.
+
+Proof. On a pair basis vector $e_{\{p,q\}}$, the diagonal pair difference is
+$-\nu(\widehat G(p,q)-G_D^\diamond(p,q))$. The norm of the hard-core compression of
+$d\Gamma(B-h_D)$ is at most $2E_1$. Taking the largest diagonal entry and applying the
+triangle inequality gives the first inequality. The second is Theorem64.3. This argument
+uses the full ten-pair diagonal and the same $B,\widehat G$ in both sectors; fitting a
+different one-body or pair calibration in the two sectors would not be the stated
+operator law. $\square$
+
+**Definition 64.5 (one producer measure and its actual collision domain).**
+For every authentic nonempty finite $D$, let $X_D$ have one unit cable for each
+inherited seam and two distinct unit grounded stubs at each current leaf. The
+outer stub ends have zero trace and no atomic mass. Every actual port has atomic
+mass one; every open cable has the same mass density $0<\delta\le1$. Thus
+\[
+\mu_\delta=\sum_{p\in D}\delta_p+\delta\sum_{e\in\mathcal E_D}dx_e,
+\qquad \mathcal K_{D,1}=L^2(X_D,\mu_\delta).
+\tag{64.6}
+\]
+Here $\delta_p$ is a Dirac measure, distinct from the cable density $\delta$.
+Stub incidence plus actual seam incidence is exactly $d_p$, including $d_o=2$.
+Neither degrees nor source operators are recalibrated with $\delta$.
+If $d=|D|$, the full binary source has $d-1$ internal seams and $d+1$
+grounded stubs, hence $2d$ unit cables. The retained one-position measure has
+total mass $d+2d\delta$. Before exchange restriction, the two-position account
+has $d(d-1)$ atomic coordinates, $4d^2$ atom/cable slices and $4d^2$
+cable/cable cells, with norm weights $1,\delta,\delta^2$. Each of the $2d$
+same-cable cells is dissected, not removed. Thus its total measure is
+$d(d-1)+4d^2\delta+4d^2\delta^2$. These are storage measures and stratum
+counts, not physical masses, finite mode counts or a price formula; every
+interval and cell retains its entire infinite-dimensional function space.
+
+For two identical particles take the symmetric part of
+$L^2((X_D\times X_D)\setminus\Delta,\mu_\delta\otimes\mu_\delta)$, where
+$\Delta=\{(x,x):x\in X_D\}$ is the actual same-position set. In particular the
+positive-mass atomic states $(p,p)$ are absent. Keep all atom/cable and cable/cable
+strata. A same-cable square is dissected into $x<y$ and $x>y$; both collision
+traces are zero. Different-cable rectangles are retained, including cables incident
+at the same port. Write this Hilbert space as $\mathcal K_{D,2}^{\rm hc}$.
+It is a genuine two-position space on $X_D$, with exchange symmetry and no ordering
+sign. It is not a graph whose vertices are occupation labels.
+
+The form domain $\mathcal Q_{D,1}$ consists of cable $H^1$ functions with endpoint
+traces equal to the corresponding atomic port values, and zero grounded traces.
+The domain $\mathcal Q_{D,2}$ consists of symmetric, piecewise $H^1$ functions on
+all rectangles and dissected triangles, and $H^1$ functions on all atom/cable
+slices, with the following trace equalities. A rectangle's boundary at a port
+is the corresponding atom/cable slice; that slice's endpoint is the corresponding
+atomic pair value. Set the missing atomic value $(p,p)$ to zero in these endpoint
+conditions. Grounded ends give zero traces in either coordinate. Both traces on
+each same-cable diagonal are zero. These requirements also cover collision at a
+shared vertex approached along different incident cables: the incident slices end
+at the same zero atomic collision value. No pointwise trace of an arbitrary
+rectangle $H^1$ function at its corner is assumed.
+
+Let $k_{\delta,1}(F)=\sum_e\int|F'_e|^2$. For $N=2$, using ordered coordinates
+before restriction to the symmetric space, put
+\[
+\begin{split}
+k_{\delta,2}(F)={}&
+\sum_{e\in\mathcal E_D,\ q\in D}\int|\partial_xF(e,x;q)|^2dx
++\sum_{p\in D,\ e\in\mathcal E_D}\int|\partial_yF(p;e,y)|^2dy\\
+&+\delta\sum_{e,f\in\mathcal E_D}\int_{e\times f}
+ (|\partial_xF|^2+|\partial_yF|^2)dxdy .
+\end{split}                                                    \tag{64.7}
+\]
+For $e=f$ the last integral is over both triangles. The corresponding norm has
+weights $1,\delta,\delta^2$ on atomic pairs, slices and cells respectively. Formula
+(64.7) is the sum of the same one-coordinate cable derivative forms integrated
+against the other coordinate's measure. Hard-core conditions change its domain,
+not its kinetic coefficient. This conditional producer choice replaces the
+unrestricted $\operatorname{Sym}^2d\Gamma(T)$ domain; it is not a new native control.
+
+Let $A_{\delta,D,N}$ be the operator associated with $a k_{\delta,N}$ on this domain.
+Define $\phi_A$ to equal $\phi(p)$ at port $p$ and zero on open cables. Use the bounded
+real multiplication operators
+\[
+\begin{aligned}
+U^\diamond_{D,1}(x)&=-g\phi_A(x),\\
+U^\diamond_{D,2}(x,y)&=-g(\phi_A(x)+\phi_A(y))
+-\nu\mathbf1_{x=p,y=q\in D,\ p\ne q}G_D^\diamond(p,q),\\
+\mathcal T^\diamond_{\delta,D,N}&=A_{\delta,D,N}+U^\diamond_{D,N}.
+\end{aligned}                                                    \tag{64.8}
+\]
+The pair multiplier has the same value on $(p,q)$ and $(q,p)$ and is zero on other
+strata. The one-body potential is additive even on mixed strata. All ten actual
+coefficients of Definition64.1 are used, including $G^{\rm c}(LL,LR)=3/16$.
+This explicitly declared atomic interaction is a mathematical supplier choice;
+a physical field-mediated force or its switching mechanism is not inferred.
+
+**Lemma 64.5a (closed forms and invariant literal hard-core statistics).**
+The forms in (64.7) are densely defined, nonnegative and closed. Operators (64.8)
+are self-adjoint and semibounded. For $N=2$ their full unitary evolution preserves
+$\mathcal K_{D,2}^{\rm hc}$ and its form domain $\mathcal Q_{D,2}$. Thus any
+admissible finite-energy input has zero atomic double occupation and zero
+same-cable collision trace throughout evolution, for every finite clock value.
+
+Proof. For fixed $\delta>0$, the sum of the weighted norm and derivative norm is
+an equivalent direct-sum $H^1$ norm on the finitely many intervals, rectangles
+and triangles, with their atomic coordinates. Endpoint, boundary and diagonal
+trace maps are continuous into their respective finite-dimensional or $L^2$
+trace spaces. All stipulated equalities therefore define a closed subspace.
+For density, first approximate a cell function by a smooth function supported
+away from every boundary, including the diagonal. For prescribed atomic data,
+use linear endpoint bumps of width $h<1/2$ on each incident cable. Lift a pair
+value by the products of its two endpoint bumps. On a same-cable square use
+$u(p,q)[\theta_p(x)\theta_q(y)+\theta_q(x)\theta_p(y)]$; the two endpoint supports
+are disjoint, so its collision trace is zero. Slice traces match these products,
+with zero at collision and ground corners. Their additional slice and cell
+masses tend to zero as $h\to0$, while each positive-width function has finite
+energy. To approximate a slice independently, take its desired function compactly
+supported away from its endpoints, then extend it into each incident cell by an
+endpoint bump in the other coordinate. Choose the bump width smaller than the
+slice's distance from its endpoints; this also avoids the same-cable diagonal.
+The additional cell mass tends to zero. There are finitely many strata, so these
+three constructions approximate arbitrary Hilbert data. Exchange averaging
+preserves the conditions and proves density in the symmetric space. Bounded real $U$ is a bounded self-adjoint perturbation of
+the represented operator, with unchanged form domain and lower bound
+$-M_N$, where
+\[
+M_N=Ng+\binom N2\nu/\lambda,\qquad N=1,2.
+\]
+Here $G_D^\diamond(p,q)\le\lambda^{-1}$ is the supplied same-source bound (62.4).
+The positive form of $\mathcal T+M_N+1$ has domain $\mathcal Q_{D,N}$ and obeys
+\[
+a k_{\delta,N}(F)+\|F\|^2
+\le \| (\mathcal T+M_N+1)^{1/2}F\|^2
+\le a k_{\delta,N}(F)+(2M_N+1)\|F\|^2.
+\]
+Its spectral calculus commutes with the full unitary evolution and preserves
+this square-root norm, proving form-domain invariance even though multiplication
+by the atomic potential need not itself preserve the trace equalities.
+Atomic collision coordinates
+are absent in that space and continuum collision traces vanish in that domain.
+This is invariance of the actual producer state, without deleting any evolved
+output or applying a clean-state projection. $\square$
+
+**Lemma 64.5b (the source diagonal, a uniform fast-state bound and a trial lift).**
+Let $R_N$ restrict a producer vector to its atomic distinct-port coordinates,
+identified with $\mathscr H_{D,N}$; let $J_N=R_N^*$ be the atomic injection. For
+$N=2$ the ordered atomic values are
+$u(p,q)=f(\{p,q\})/\sqrt2$ for $p\ne q$, and $u(p,p)=0$.
+Then $\sum_{p,q}|u(p,q)|^2=\|f\|^2$. Write $K_{D,1}=L_D$ and take $K_{D,2}$
+literally from (62.2). For every form vector,
+\[
+k_{\delta,N}(F)\ge\langle R_NF,K_{D,N}R_NF\rangle,
+\qquad
+R_NZ=0\ \Longrightarrow\ \|Z\|^2\le9\delta k_{\delta,N}(Z).
+\tag{64.9}
+\]
+There is a linear symmetric form-domain lift $I_N$ with $R_NI_N=I$ such that
+\[
+\begin{aligned}
+k_{\delta,1}(I_1f)&=\langle f,L_Df\rangle,
+&\|I_1f-J_1f\|^2&\le\tfrac32\delta\|f\|^2,\\
+0\le k_{\delta,2}(I_2f)-\langle f,K_{D,2}f\rangle&\le18\delta\|f\|^2,
+&\|I_2f-J_2f\|^2&\le(3\delta+\tfrac94\delta^2)\|f\|^2.
+\end{aligned}                                                    \tag{64.10}
+\]
+All constants are independent of the finite source, cap, boundary and installed $D$.
+
+Proof. An interval with endpoint values $v,w$ has derivative energy at least
+$|v-w|^2$. Apply this to every slice, using zero at grounded ends and at an
+occupied endpoint. The resulting sum is exactly the symmetric compression of
+$L_D\otimes I+I\otimes L_D$: the hopping coefficient is $-1$ on every allowed
+move, while the diagonal is $d_p+d_q$. A blocked hop has a zero collision
+endpoint and contributes its killing energy; it does not disappear with the hop.
+Grounded stubs similarly retain every exterior contribution. This proves the
+first inequality, including the normalization factors. For $N=1$ the same
+argument gives the original $L_D$.
+
+For $R_NZ=0$, each slice has zero endpoints, so
+$\int|Z|^2\le\int|Z'|^2$ by the fundamental theorem of calculus and
+Cauchy--Schwarz. A same-cable function with zero traces on both diagonals glues
+to an $H^1$ function on the square; no derivative delta mass is introduced.
+On any square, choose its first cable's endpoint $v_e$, and use
+\[
+\int_{e\times f}|Z|^2\le
+2\int_f|Z(v_e,y)|^2dy+2\int_{e\times f}|\partial_x Z|^2dxdy.
+\]
+The boundary term is zero if $v_e$ is grounded. Otherwise a port is chosen at
+most three times, since its total incidence is at most three. Summing with mass
+$\delta^2$, and adding all slice masses $\delta$, bounds the norm by
+$(\delta+6\delta^2)$ times the slice derivative energy plus $2\delta$ times the
+cell part of (64.7). This is at most $9\delta k_{\delta,2}(Z)$ for $\delta\le1$.
+The one-particle bound is smaller. This proof counts every slice and cell, rather
+than assuming that the continuum modes have been removed.
+
+For the trial lift, interpolate every one-particle cable linearly. For two
+particles interpolate each atom/cable slice linearly from its atomic endpoints.
+On distinct-cable rectangles use bilinear interpolation of the four atomic corner
+values, treating ground and collision corners as zero. On a same-cable square
+with distinct port endpoints $p,q$, use
+\[
+(I_2f)_{ee}(x,y)=u(p,q)|x-y| .
+\]
+On a stub's same-cable square this is zero. The slice boundary values match,
+both collision traces vanish, and the lift is symmetric. It has the exact source
+slice energy just proved. For a rectangle with corners $v_{ij}$, convexity gives
+$\int|I_2f|^2\le\tfrac14\sum_{ij}|v_{ij}|^2$ and
+$\int|\nabla I_2f|^2\le2\sum_{ij}|v_{ij}|^2$. On a same-cable square the respective
+integrals are $|u(p,q)|^2/6$ and $2|u(p,q)|^2$, obeying the same upper bounds.
+A given ordered atomic corner occurs at most $d_pd_q\le9$ times. Each coordinate's
+slice norm is at most $\tfrac12\sum_{p,q}d_p|u(p,q)|^2\le\tfrac32\|f\|^2$.
+Summing these exact integrals proves both two-particle bounds. For one particle
+integration gives $I_1^*I_1=I+\delta(D_D/3+A_D/6)$, whose continuum Gram norm is
+at most $3/2$. $\square$
+
+**Theorem 64.6 (admissible harmonic calibration and the missing operator relation).**
+For each $N=1,2$ and $f\in\mathscr H_{D,N}$, let $E_Nf$ minimize $k_{\delta,N}$
+over all form vectors with $R_NF=f$. Put
+\[
+\begin{aligned}
+\langle f,B_Nh\rangle&=k_{\delta,N}(E_Nf,E_Nh),\\
+F_N&=E_N^*E_N=I+(E_N-J_N)^*(E_N-J_N),\\
+S_N&=F_N^{-1/2},\qquad W_N=E_NS_N,\\
+\beta_1&=\sqrt{3\delta/2},\qquad
+\beta_2=\sqrt{3\delta+9\delta^2/4}+9\sqrt2\,\delta.
+\end{aligned}                                                    \tag{64.11}
+\]
+These are supplied preparation/identification maps defined by the same measure
+and form rule, with no fit of a separate kinetic scale, potential, pair coefficient
+or clock in either sector. They are independent of $g,\nu$ and the pair choice.
+They satisfy
+\[
+\begin{gathered}
+R_NE_N=I,\qquad W_N^*W_N=I,\qquad
+\|E_N-J_N\|\le\beta_N,\\
+B_1=L_D,\qquad 0\le B_2-K_{D,2}\le18\delta I,\qquad
+A_{\delta,D,N}E_N=J_NaB_N.
+\end{gathered}
+\]
+In particular $W_Nf$ lies in the actual operator domain of (64.8), has full norm
+$\|f\|$, and is an admissible finite-energy hard-core preparation. Its calibration
+mixes distinct-port data only; it cannot produce an atomic collision. Its kinetic
+preparation energy has the uniform bound
+\[
+a k_{\delta,N}(W_Nf)\le a(6N+18\delta\mathbf1_{N=2})\|f\|^2,
+\]
+since $\|K_{D,N}\|\le6N$ and $\|S_N\|\le1$.
+
+Proof. On the closed form subspace $Z_N=\ker R_N$, (64.9) makes $k$ an equivalent
+complete form norm. Solve
+$k(z,v)=-k(I_Nf,v)$ for $v\in Z_N$ by the Hilbert-space representation theorem,
+and set $E_Nf=I_Nf+z$. This gives existence, uniqueness, linearity and
+$k(E_Nf,Z_N)=0$, as well as the minimum. Exchange symmetry is retained in this
+construction. Comparing the minimum with the first inequality in (64.9) and with
+(64.10) proves the two matrix bounds for $B_N$. In particular
+\[
+k_{\delta,2}(E_2f-I_2f)
+=k_{\delta,2}(I_2f)-k_{\delta,2}(E_2f)\le18\delta\|f\|^2.
+\]
+This difference has zero atomic values. The fast-state bound (64.9) therefore gives
+$\|E_2f-I_2f\|\le9\sqrt2\,\delta\|f\|$. Combine it with the trial norm in (64.10)
+to obtain $\beta_2$. For one particle the linear lift already annihilates $Z_1$
+in the kinetic form, so $E_1=I_1$ and $\beta_1$ follows. Orthogonality of atomic and
+continuum strata gives the formula for $F_N$; thus $S_N$ exists and $W_N$ is an
+isometry into the whole retained space.
+
+Every form test $v$ decomposes as $E_NR_Nv+(v-E_NR_Nv)$, with its second term in
+$Z_N$. Hence
+\[
+a k_{\delta,N}(E_Nf,v)=\langle aB_Nf,R_Nv\rangle
+=\langle J_NaB_Nf,v\rangle .
+\]
+The defining operator criterion for a closed form proves the displayed operator
+identity and puts $E_Nf$, and therefore $W_Nf$, in $\operatorname{Dom}(A)$.
+The bounded potential does not change that operator domain. This is the needed
+input/domain/operator relation, proved on the untruncated continuum. Merely
+imposing a named barrier or interpolating a collision-free trial would not prove
+this relation: the trial $I_2$ need not itself satisfy the operator criterion.
+$\square$
+
+**Theorem 64.7 (homogeneous full retained-state finite-horizon correspondence).**
+For every authentic finite installed $D$, both prescriptions, $N=1,2$, and every
+$f\in\mathscr H_{D,N}$, define
+\[
+\begin{aligned}
+C_N&=6aN+M_N,\qquad s_N=1-(1+\beta_N^2)^{-1/2},\\
+r_N&=18a\delta\mathbf1_{N=2}+2C_Ns_N+\beta_N(C_N+M_N).
+\end{aligned}
+\]
+For every declared $T<\infty$ and every $|\tau|\le T$,
+\[
+\left\|e^{-i\tau\mathcal T^\diamond_{\delta,D,N}}W_Nf
+-W_Ne^{-i\tau H^\diamond_{D,N}}f\right\|
+\le |\tau|r_N\|f\|\le Tr_N\|f\| .                    \tag{64.12}
+\]
+This norm includes every atomic, mixed and continuum component and every phase.
+An initial admissible component $z\in\mathcal Q_{D,N}$ with $\|z\|\le\eta$ adds
+at most $\eta$, without any orthogonality assumption or reset. For fixed
+$a,g,\nu,T$ the bound tends to zero with $\delta$, uniformly over all finite
+installed $D$ and both fixed populations. It is not uniform over unbounded
+population or unbounded horizon. Decreasing $\delta$ changes storage mass at
+fixed unit seam lengths; no mesh, thermodynamic or physical-mass limit is supplied.
+
+Proof. Write $V_N=H^\diamond_{D,N}-aK_{D,N}$. The multiplier in (64.8) satisfies
+$U J_N=J_NV_N$, $\|U\|,\|V_N\|\le M_N$, and
+$\|H^\diamond_{D,N}\|\le C_N$. Set $Q_N=E_N-J_N$ and
+$D_N=a(B_N-K_{D,N})$. The exact operator identity of Theorem64.6 gives
+\[
+\mathcal T W_N-W_NH
+=J_N[H,S_N]+J_ND_NS_N+UQ_NS_N-Q_NS_NH .
+\]
+Since $\|S_N\|\le1$, $\|S_N-I\|\le s_N$ and
+$\|D_N\|\le18a\delta\mathbf1_{N=2}$, its norm is at most $r_N$.
+For the entire finite target space $W_Nf\in\operatorname{Dom}(\mathcal T)$, so
+integrating the exact derivative of
+$e^{-i(\tau-s)\mathcal T}W_Ne^{-isH}f$ is justified. Unitarity gives (64.12),
+including its factor $\|f\|$. An initial $z$ contributes exactly its preserved
+norm bound. The constants use only total incidence at most three and the common
+Green bound, not the number or shape of sites. $\square$
+
+There is one density choice for the whole joint approximation, without a
+sector-specific fit. For $0<\delta\le1$, $\beta_N\le16\sqrt\delta$ and
+$s_N\le\beta_N^2/2\le128\delta$. Put
+\[
+M=2g+\nu/\lambda,\qquad C=12a+M,\qquad
+R=18a+256C+16(C+M).
+\]
+Then $r_N\le R\sqrt\delta$ for both $N=1,2$ and both pair prescriptions,
+on every authentic finite $D$. For a declared $T>0$ and absolute unit-input
+tolerance $\varepsilon>0$, any single
+$0<\delta\le\min\{1,(\varepsilon/(TR))^2\}$ gives error at most
+$\varepsilon\|f\|$ throughout the horizon. At $T=0$ every declared density
+works. This is a common mathematical storage/preparation choice, not a native
+density control or a finite-price preparation procedure.
+
+For a singleton $D=\{o\}$ both grounded stubs remain and $B_1=[2]$.
+The target $\mathscr H_{D,2}$ is the zero space, so $E_2,W_2$ are its unique zero
+maps and (64.12) holds for its zero input. The full two-position cable space still
+exists and all its modes are retained; an auxiliary initial state there is covered
+by its $\eta$ budget. No unit two-port preparation is commissioned when $|D|<2$.
+This treats the degenerate finite domain without excluding that source. Zero
+$\nu$, zero comparison time, identical-domain alpha-to-beta versions and every
+finite source boundary are included. The strictly positive commissioned $a$ is
+independent of the original actor's arbitrary unbounded parameter, including zero.
+
+A supplied zero-generator reference branch may be adjoined by direct sum, using
+$0\oplus\mathcal T$, $0\oplus H$ and $I\oplus W_N$; tensoring supplied retained
+registers with identity gives the same bound. This keeps relative reference phase
+and the same comparison clock, with no phase quotient. Unknown joint reference
+preparation remains a separate permission. The joint object retains all original
+classical records. Unused address-bank modes and the $c,u,v$ and supplied clock/
+reference registers remain explicit full auxiliary factors with their stipulated
+identity holds; (64.12) also holds for target inputs entangled with those factors.
+The active target is transported through $W_N$, without preparing a second copy.
+Their construction,
+preparation, storage, hold and any error budgets are additional resources; (64.12)
+does not supply them or replace §62's actual digital circuit by a cable device.
+
+**Proposition 64.8 (source discriminators and the retained mathematical boundary).**
+The finite form account is source qualified. Its one-coordinate lift gives exactly
+$L_D$, so §55's hidden vector and §60's mirrored-source operator distinction
+remain full-vector target identities. Its slice form is the literal symmetric
+$K_{D,2}$, including the six-move sign and trace discriminator (62.34); no
+fermionic or determinantal replacement is made. Either full pair multiplier is
+$V_N$ on the same atomic data. A shared inverse-distance replacement is therefore
+still subject to (64.5), independently of the vanishing cable-density error.
+
+The unrestricted symmetric generator fails on the same adjacent input:
+\[
+(I-P_{D,2})d\Gamma(h_D)e_{\{o,L\}}
+=-\sqrt2a(e_{o,o}+e_{L,L}),\qquad\text{norm }2a.
+\]
+Those positive-mass output states are absent in the producer domain of Definition64.5,
+and the admitted $W_2e_{\{o,L\}}$ has zero collision traces at preparation and
+throughout its actual evolution by Lemma64.5a. In particular for the actual H3
+source, $a=g=1$, $\nu=0$, $\delta=10^{-8}$, $T=10^{-2}$, the elementary bounds
+$\beta_2<1/5000$, $s_2\le\beta_2^2/2$ give
+\[
+Tr_2<\frac1{100}
+ \left(\frac{18}{10^8}+\frac{14}{5000^2}+\frac{16}{5000}\right)
+<\frac1{30000}.
+\]
+For input norm 100 this bound is multiplied by 100. This tests the identical
+finite-clock source counterexample against the repaired construction, in its
+whole retained norm. The bound rests on the analytic operator proof, not a
+finite cable-mode simulation. Atomic double occupation is exactly zero, rather
+than a discarded component of this error budget.
+
+For an already commissioned target contraction $C$, its mathematical transport
+is $CW_N^*$ on the whole producer space. Its norm is at most one and
+\[
+\|CW_N^*e^{-i\tau\mathcal T}W_Nf-Ce^{-i\tau H}f\|
+\le |\tau|r_N\|f\|,
+\]
+by $W_N^*W_N=I$ and (64.12). An already commissioned target effect
+$0\le F\le I$ transports to $W_NFW_N^*$; for unit inputs its probability
+error is at most $2|\tau|r_N$. Thus the hidden-vector, mirrored-source and
+relative-phase target tests of §§55,58,60 and the literal-statistics test of §62
+can be checked on their supplied known inputs during an actual installed idle
+interval. The full-state theorem still accounts for all components outside the
+calibrated range. These target maps neither add an original numerical Read nor
+supply physical measurement, acquisition, or a transfer between cable spaces.
+
+The common pair field is the supplied static restriction of $L^{-1}$.
+Both installed amplitude targets use $L_D$ and the same common $\phi$.
+No common exterior amplitude-memory target is inferred from the common static
+pair table. A separately commissioned common exterior dynamic response would
+need its full retained exterior state and further calibration.
+
+The mathematical producer must supply the forms, all atomic and cable masses,
+the correlated harmonic preparations $W_Nf$, and the full retained evolution.
+Preparing $W_2f$ is not obtained by tensoring independently prepared $W_1$ modes.
+The variational construction proves an admissible state and its correspondence;
+it is not a finite-price native preparation algorithm or acquisition of unknown
+coefficients. The domain conditions and atomic interaction are conditional
+realization choices within this contract, with no claim that native or physical
+rights implement them. Replacing grounded stubs at a renewal changes these
+continuum domains: (64.12) is a uniform theorem on each installed idle interval,
+not an unproved full-state switch between cable spaces. A physical switching,
+renewal transfer or nonidentity hold needs its own supplied law and error/price.
+
+Unpaid obligations remain: an operation- and metric-preserving displacement map,
+isotropy and a physical three-dimensional local realization; field-mediated force
+and its actual implementation; switching, renewal, acquisition and unknown-state
+ingress; same-reference preparation and calibrated physical time; finite precision,
+all auxiliary modes/masses, storage, retention, production, maintenance and total
+price. The original $\mathcal D_2$ independent arbitrary unbounded $a$ including
+zero, untagged radius-$7/25$ $b$, destructive actions, joint adversarial/history-dependent
+errors, source-independent initialization and actual INITIAL/Read/refusal/Stop
+remain unchanged. The conditional $\Pi$ and paid promised-family acquisition
+retain all their existing hypotheses and rights. No source copy, reset,
+independent resampling, exact limit Read or new native geometric/quantum control
+is inferred. Nothing here selects spatial dimension three, supplies a physical
+realization, validates a kernel or completes the broader goal.
+
+**Definition 64.9 (exact suppliers and ordinary-proof scope).**
+The exact source suppliers are §§55.1–55.6 for the actual source, $L_D$, common
+field and grounded boundary; §§58,60 for source/record/clock ownership and the
+complete retained target; §§62.1–62.4 for literal symmetric statistics and both
+pair laws; and legacy §52.7 for the distinct Euclidean point-source contract.
+Chapter63's already completed binding/escape/spectral results are inherited;
+none is claimed as another accomplishment here.
+
+Bolte--Kerner, [*Quantum graphs with two-particle contact interactions*,
+arXiv:1207.5648v1, Definition3.1 and Proposition3.2](https://arxiv.org/pdf/1207.5648v1),
+supplies the mature diagonal-Dirichlet hard-core form method on a finite compact
+metric graph with Lebesgue edge-product measure. Its boundary maps $P,L$ are
+bounded and measurable, $P$ is an orthogonal projection, and $L$ is self-adjoint
+on $\ker P$; contact and vertex blocks are separated. Hard-core contact chooses
+$P_{\rm contact}=I$, $L_{\rm contact}=0$. Its delta-type Lipschitz strength is a
+different case. Proposition3.2 supplies closed semibounded forms, not automatic
+$H^2$ operator regularity; that further identification in Proposition3.3 requires
+additional regularity. It supplies neither atomic port masses, the mixed-stratum
+gluing nor this calibrated small-density limit and preparation. Lemmas64.5a–64.5b
+and Theorems64.6–64.7 prove those missing relations directly; no supplier theorem
+is applied outside its conditions. Closed-form representation, Hilbert-space
+orthogonal minimization and unitary Duhamel are classical intermediates. No
+additional Library note is needed.
+
+Equations (64.1)–(64.5) are ordinary metric/finite-matrix deductions with the full
+ten-pair target. Equations (64.6)–(64.12) are a new conditional stratified particle
+form, its admissible joint calibration and whole-state operator estimate.
+Exact finite checks of source coefficients, slice matrices, collision-free trial
+integrals and the stated bounds support the displayed finite identities; they
+cannot replace the continuum closedness, minimization or evolution proofs.
+These are ordinary repo-derived mathematics, without literature-priority,
+fresh Lean/kernel, current CI or physical evidence claims.
+
+## 64.99 追加锚（本行以下为增补区）
+
+## 65. Authentic all-pair obstruction to a homogeneous hyperbolic point-Green law
+
+**Definition 65.1 (separately commissioned sources and their actual history).**
+Keep the free nonempty ordered source algebra of [Continuation Definition1.1](FIB_RELATIONAL_CONTINUATION_GEOMETRY.md),
+the whole substitution (55.1), and the fixed-cap TM30/PR57 contract used in
+Definitions55.1 and60.1. Define a family of original sources by
+
+$$
+T_0=\beta,\qquad T_{h+1}=\langle T_h,T_h\rangle,\qquad
+B_h=\operatorname{Pos}(T_h)=\{p\in\{L,R\}^*:|p|\le h\}.
+\tag{65.1}
+$$
+
+The two subtrees in this mathematical definition have distinct ordered occurrences.
+Each $T_h$ is a separately supplied INITIAL source, as in Proposition62.5;
+(65.1) is not a source-copy operation on a running unknown tree. INITIAL,
+labels, brackets, left/right order, the root and all addressed occurrences belong
+to the full source. The domain $B_h$ is its actual initial domain, rather than a
+ball substituted for an irregular source domain.
+
+For $h\ge3$, fix the public cap $H=2^{h+1}$ before execution. The source-independent
+command word $\operatorname{Read};\rho;\operatorname{Read};\rho;
+\operatorname{Read};\operatorname{Stop}$ has the actual record
+
+$$
+\operatorname{Read}[B^{2^h}];\quad\rho[\mathrm{accept}];\quad
+\operatorname{Read}[(BA)^{2^h}];\quad\rho[\mathrm{reject}];\quad
+\operatorname{Read}[(BA)^{2^h}];\quad\operatorname{Stop}.
+\tag{65.2}
+$$
+
+Here $A=E(\alpha)$ and $B=E(\beta)$ are the original Clifford readings,
+not spatial coordinates or Green coefficients. Their source relations are
+$A^2=1$, $B^2=-1$ and $AB+BA=1$. The initial, first-candidate and
+second-candidate leaf counts are $2^h$, $2^{h+1}$ and $3\cdot2^h$.
+Equality with the cap is accepted. The rejected candidate produces no candidate
+Read, and the following Read is of the unchanged accepted current source.
+The accepted domain is $B_{h+1}$, but its depth-$(h+1)$ child labels are
+$\beta,\alpha$ at each former beta leaf: this successor is not the separately
+commissioned all-beta INITIAL $T_{h+1}$.
+
+In particular $h=3$, $H=16$ gives eight beta leaves and fifteen initial sites.
+Writing $S=BA$, the identity $S^2=S+1$ gives $S^8=13+21S$, whereas $B^8=1$.
+Thus (65.2) becomes
+
+$$
+\operatorname{Read}[1];\quad\rho[\mathrm{accept}];\quad
+\operatorname{Read}[13+21BA];\quad\rho[\mathrm{reject}];\quad
+\operatorname{Read}[13+21BA];\quad\operatorname{Stop}.
+\tag{65.3}
+$$
+
+The installed site counts are $15,31,31$; the refused candidate has twenty-four
+leaves. In TM30's literal field order the immutable original target is
+$q_{16}(T_3)=(1,(0,8),1,13+21BA)$. It is not the boundary of the stopped current
+source. These statements follow from the actual ordered leaf substitution and
+the complete candidate guard, not from the unlabelled domain alone. For example,
+the all-alpha depth-three INITIAL has the same domain $B_3$ and initial Read
+$A^8=1$, but its first two candidates have eight and sixteen leaves and are both
+accepted. Its readings in the same command word are $1,1,13+21BA$, and its
+INITIAL boundary has tag two. An equality of initial geometric domains therefore
+does not authenticate the source or its history.
+
+All original source services and charges remain attached. At $H=16$, PR57's
+source packet has $2H-1=31$ slots and sixty-two ingress bits; the separately
+supplied §62 address bank has $K=2^H-1=65535$ address qubits and $K+4=65539$
+total qubits. These different counts retain their original meanings. A Green
+coefficient is no additional public Read, and the geometric calculations below
+provide no source acquisition, free preparation, cap increase or event after Stop.
+The full original menu also retains each named, actually supplied nonempty
+Left/Right whole-context request, with its complete candidate guard and actual
+response. The witness (65.2) simply chooses whole substitution. An accepted graft
+keeps Definition60.1's distinct occurrence injection and ends its commissioned
+whole-rho comparison; it is not silently treated as same-address renewal.
+
+**Definition 65.2 (the complete response target and the point-field model).**
+Use the unit-conductance, counting-measure rooted occurrence operator $L$ and
+its authentic Dirichlet compression $L_D$ from Definitions55.1–55.2. Retain,
+separately, the common and killed pair prescriptions of (62.2):
+
+$$
+G_D^{\rm c}(p,q)=\langle e_p,L^{-1}e_q\rangle,\qquad
+G_D^{\rm k}(p,q)=\langle e_p,L_D^{-1}e_q\rangle,
+\qquad p,q\in D.
+\tag{65.4}
+$$
+
+Neither prescription changes the common one-body field $\phi(p)=2^{-|p|}$.
+The inherited root diagonal is two, every other diagonal is three, and every
+actual seam has entry $-1$. Missing-child and collision contributions are
+retained as in (62.2). There is no added parent seam at the root.
+
+The representation under consideration assigns finite points $x_p$ in the
+complete homogeneous hyperbolic space $\mathbb H^3_\ell$ of curvature
+$-\ell^{-2}$ and uses
+
+$$
+\widehat G_D(p,q)=
+\frac{\kappa}{\exp(2d_{\mathbb H^3_\ell}(x_p,x_q)/\ell)-1},
+\qquad \kappa>0,\quad\ell>0,\quad p\ne q.
+\tag{65.5}
+$$
+
+There is one calibration $\kappa$ for the entire table. Both $\kappa$ and $\ell$,
+and the whole configuration, may be independently refitted for each source or
+installed version. Pair-specific calibration, alteration of prescribed entries
+or removal of actual pairs is outside (65.5). At $D=B_3$ the target comprises
+all $\binom{15}{2}=105$ unordered off-diagonal pairs, for either choice in (65.4).
+Restrictions to eight or five terminal sites below are necessary witnesses for
+that full target, not new target domains.
+
+The unscreened, decaying, volume-normalized Laplace–Beltrami point fundamental
+solution in this complete homogeneous space is the special case
+$\kappa=(2\pi\ell)^{-1}$. Cohl–Kalnins,
+[arXiv:1201.4406v1, Theorem3.1, its dimension-three evaluation and Proposition4.1](https://arxiv.org/pdf/1201.4406v1),
+supplies this law with precisely those source, operator and exterior conditions.
+Indeed the area of a geodesic sphere is $4\pi\ell^2\sinh^2 r$,
+$r=d/\ell$; unit flux and decay give
+$(4\pi\ell)^{-1}\int_r^\infty\sinh^{-2}u\,du
+=(4\pi\ell)^{-1}(\coth r-1)$, which equals (65.5) at that normalization.
+Allowing arbitrary positive $\kappa$ enlarges the admissible family, so an
+obstruction for (65.5) also obstructs the unit-source subfamily.
+
+Exact positive responses would fix the normalized distances and their candidate
+Lorentz Gram matrix by
+
+$$
+r_{pq}=\frac12\log\left(1+\frac{\kappa}{G_D^\diamond(p,q)}\right),
+\qquad C_{pp}=1,\qquad C_{pq}=\cosh r_{pq}\quad(p\ne q),
+\qquad \diamond\in\{\mathrm c,\mathrm k\}.
+\tag{65.6}
+$$
+
+Thus $\ell$ does not change the normalized dimension test. The diagonal one
+in $C$ is hyperboloid normalization. It is not a fitted value of the finite
+original $G_D^\diamond(p,p)$: a point-field self-response in (65.5) is singular.
+Coincident modeled sites have infinite off-diagonal response and cannot give
+a finite-error fit to the positive finite original coefficients.
+
+**Theorem 65.3 (rooted coefficients on the authentic complete domains).**
+For terminal addresses $|p|=|q|=h\ge1$, $p\ne q$, put
+$k=|p\wedge q|<h$. The two responses are
+
+$$
+g^{\rm c}_{h,k}=\frac{2\cdot4^k+1}{3\cdot4^h},\qquad
+g^{\rm k}_{h,k}=F_k,
+\tag{65.7}
+$$
+
+where, for the killed domain $B_h$,
+
+$$
+A_d=2^{h-d+1}-1\quad(0\le d\le h),\qquad
+F_k=\frac1{2^{h+1}A_0}
++\sum_{r=1}^k\frac1{A_{r-1}A_r}.
+\tag{65.8}
+$$
+
+More generally, for arbitrary $p,q\in B_h$, including the diagonal, with
+$d=|p|$, $e=|q|$ and $k=|p\wedge q|$,
+
+$$
+G_{B_h}^{\rm k}(p,q)=A_dA_eF_k.
+\tag{65.9}
+$$
+
+Each terminal response in (65.7) is strictly positive and strictly increasing
+with $k$. At depth three the complete twenty-eight-pair terminal restriction is
+
+| Common-prefix depth $k$ | Number of unordered terminal pairs | $g^{\rm c}_{3,k}$ | $g^{\rm k}_{3,k}$ |
+| --- | ---: | ---: | ---: |
+| $0$ | $16$ | $1/64$ | $1/240$ |
+| $1$ | $8$ | $3/64$ | $23/1680$ |
+| $2$ | $4$ | $11/64$ | $103/1680$ |
+
+Proof. The common coefficient is the direct terminal restriction of the already
+supplied exact identity (62.3), retaining both its tree-distance term and its
+rooted image term. For the killed coefficient, expose the rooted triangular
+factorization used in (62.19)–(62.21). Set
+
+$$
+s_0=\frac{2^{h+1}}{A_0},\qquad
+s_d=\frac{A_{d-1}}{A_d}\quad(1\le d\le h).
+$$
+
+For real site coordinates $x$, expansion gives
+
+$$
+x^\mathsf TL_{B_h}x
+=s_0x_o^2+\sum_{v\in B_h\setminus\{o\}}
+s_{|v|}\left(x_v-\frac{x_{v^-}}{s_{|v|}}\right)^2.
+\tag{65.10}
+$$
+
+Every cross term is $-2x_vx_{v^-}$. At an internal nonroot site of depth $d$,
+the diagonal is $s_d+2/s_{d+1}=3$, because
+$A_{d-1}=2A_d+1$ and $A_d=2A_{d+1}+1$. At a leaf it is $s_h=3$.
+At the root it is $s_0+2/s_1=2$. For $h=0$ the empty sum leaves
+$s_0=2$ and $L_{B_0}=[2]$, so the same formula includes the singleton without
+an artificial root edge.
+
+Write $x_v=A_{|v|}w_v$. Equation (65.10) then has root coefficient
+$2^{h+1}A_0$ on $w_o^2$ and coefficient $A_{r-1}A_r$ on each
+$(w_v-w_{v^-})^2$ at depth $r$. The map from $w$ to its root and edge
+differences is triangular and invertible. Its inverse expresses $w_p$ as the
+sum of those differences along the root-to-$p$ path. Inverting the diagonal
+quadratic form therefore gives a matrix entry equal to the sum of reciprocal
+coefficients on the shared path, namely $F_{|p\wedge q|}$.
+Multiplying by $A_dA_e$ proves (65.9). This is finite algebra on the actual
+occurrence operator; no random innovations, resampled source or extra seam
+is supplied by the factorization. Since $A_h=1$, (65.7) follows. Positivity
+and strict increase follow from the positive summands in (65.8). Substituting
+$h=3$ gives the displayed table, and counting the ordered binary clusters gives
+its pair multiplicities. $\square$
+
+**Theorem 65.4 (all-calibration terminal inertia and exact distance dimension).**
+For either prescription, every finite $h\ge1$ and every $\kappa>0$, the matrix
+in (65.6) on the $n=2^h$ terminal sites has inertia
+
+$$
+(n_+,n_-,n_0)=(1,n-1,0).
+\tag{65.11}
+$$
+
+Every restriction to $m\ge1$ distinct terminals has inertia $(1,m-1,0)$.
+Consequently its exact normalized hyperbolic distance dimension is $m-1$:
+the distances can be realized on a common future hyperboloid sheet in
+$\mathbb H^{m-1}$, and cannot be realized in a smaller hyperbolic dimension.
+For $m=1$ this means the singleton. In particular any five terminals obstruct
+$\mathbb H^3$, whereas every restriction to at most four terminals can be
+realized in $\mathbb H^3$. This cardinality statement concerns terminal
+restrictions, not arbitrary sets of internal and terminal sites.
+
+Proof. Fix one prescription and write $g_k=g^\diamond_{h,k}$. Define
+
+$$
+f(z)=\cosh\left(\tfrac12\log(1+z)\right)-1,
+\qquad a_k=f(\kappa/g_k).
+$$
+
+Theorem65.3 and strict monotonicity of $f$ on $z>0$ give
+$a_0>a_1>\cdots>a_{h-1}>0$. Let $J$ be the all-ones matrix on the
+terminals. For $1\le r\le h-1$, let $Q_r$ have entry one when two
+addresses have the same first $r$ letters and zero otherwise. It is the sum
+of outer products of the depth-$r$ cluster indicators, hence is positive
+semidefinite. The exact matrix identity is
+
+$$
+C=(1+a_0)J
+-\sum_{r=1}^{h-1}(a_{r-1}-a_r)Q_r-a_{h-1}I.
+\tag{65.12}
+$$
+
+For a distinct pair with common-prefix depth $k$, the sum telescopes to
+$1+a_k$; on the diagonal it gives one. Thus, on the zero-sum subspace,
+
+$$
+\begin{aligned}
+\sum_i z_i=0\quad\Longrightarrow\quad
+z^\mathsf TCz
+&=-a_{h-1}\|z\|_2^2\\
+&\quad-\sum_{r=1}^{h-1}(a_{r-1}-a_r)
+\sum_{|u|=r}\left(\sum_{p\text{ below }u}z_p\right)^2
+\le-a_{h-1}\|z\|_2^2.
+\end{aligned}
+\tag{65.13}
+$$
+
+The variational characterization of inertia supplies at least $n-1$
+strictly negative eigenvalues. Since $\operatorname{tr}C=n>0$, the remaining
+eigenvalue is positive and none is zero. Restrict (65.12) to any terminal
+subset: its restricted cluster matrices are still positive semidefinite,
+and the same argument applies on its $(m-1)$-dimensional zero-sum subspace.
+The trace there is $m$, proving the restricted assertion.
+
+For the dimension conclusion, use the classical Lorentz Gram recognition in
+Keller-Ressel–Nargang,
+[arXiv:1903.08977v2, LemmaA.1 and its proof](https://arxiv.org/pdf/1903.08977v2).
+In the sign convention here, points $v_i$ on the unit future hyperboloid have
+$C_{ij}=v_i^\mathsf T\operatorname{diag}(1,-I_d)v_j=\cosh r_{ij}$.
+Such a Gram matrix has at most one positive and at most $d$ negative
+eigenvalues. Conversely a real symmetric matrix with diagonal one, all
+off-diagonal entries greater than one and inertia $(1,m-1,0)$ has a real
+factorization in that Lorentz space. Each factored row has Lorentz norm one.
+Any two rows have positive Lorentz product, so their timelike sheets agree;
+a common sign puts all rows on the future sheet. Their geodesic distances
+are exactly $\operatorname{arcosh}C_{ij}$, without altering any prescribed entry.
+The negative index forces $d\ge m-1$, and the factorization attains equality.
+Embedding this hyperboloid as a totally geodesic subspace gives the assertion
+for at most four terminals. $\square$
+
+The hierarchical step has mature precedents. The matrix $C-J$, with zero
+diagonal and off-diagonal entries $a_{|p\wedge q|}$, is an ultrametric distance
+matrix: longer shared prefixes give smaller distances, and in every triple
+the largest distance occurs at least twice. Faver et al.,
+[arXiv:1201.6669v5, Theorem5.1 and Corollaries5.3–5.5](https://arxiv.org/pdf/1201.6669v5),
+supplies strict $p$-negative type for ultrametrics for every $p\ge0$.
+The cluster-indicator method is also present in Gorman–Lladser,
+[arXiv:2208.09927v1, Definitions1.1–1.2 and equations1.1–1.3](https://arxiv.org/pdf/2208.09927v1),
+for strict ultrametric covariance matrices. Equation (65.13) supplies the
+explicit margin needed here; it does not infer fixed hyperbolic dimension from
+a Hilbert embedding or add the covariance representation's auxiliary root edge
+to the occurrence graph.
+
+**Proposition 65.5 (the authentic class obstruction with sourcewise refitting).**
+For each separate prescription $\diamond\in\{\mathrm c,\mathrm k\}$, the
+INITIAL $T_3$ of (65.3) has no exact realization (65.5) of all its actual pairs,
+for every $\kappa>0$ and $\ell>0$. Hence both assertions
+
+$$
+\begin{aligned}
+&\exists\kappa,\ell>0\quad
+\forall\text{ authentic }D\quad\exists(x_p)_{p\in D}\quad
+\forall p\ne q\in D\quad \widehat G_D(p,q)=G_D^\diamond(p,q),\\
+&\forall\text{ authentic }D\quad
+\exists\kappa_D,\ell_D>0\quad\exists(x_p)_{p\in D}\quad
+\forall p\ne q\in D\quad \widehat G_D(p,q)=G_D^\diamond(p,q)
+\end{aligned}
+\tag{65.14}
+$$
+
+are false. The admissible $D$ in these quantifiers are actual installed domains
+or separately commissioned original finite sources and legal finite versions,
+with the full source/history contract of Definition65.1. Even a fresh whole-table
+fit for every such source does not remove the obstruction. More generally,
+under the same radial transformation (65.6), no fixed finite hyperbolic dimension
+realizes this all-beta source class at every depth.
+
+Proof. Every full-domain representation restricts to its eight depth-three
+terminals. Theorem65.4 gives seven negative eigenvalues there, whereas a Gram
+matrix of $\mathbb H^3$ has at most three. Already the five actual terminals
+
+$$
+\mathcal S_5=\{LLL,LLR,LRL,RLL,RRL\}\subset B_3
+\tag{65.15}
+$$
+
+give inertia $(1,4,0)$. Their ten pairs are a principal restriction of the
+original 105-pair target. This contradiction holds for every positive calibration,
+and normalized distances make the radius irrelevant to it. Definition65.1
+provides this actual source and legal record, so it refutes each universal
+assertion in (65.14). For any fixed $d<\infty$, choose a separately commissioned
+$T_h$ with $2^h-1>d$ and apply the same negative-index argument. $\square$
+
+The terminal table does have an exact distance realization in
+$\mathbb H^{2^h-1}$, by Theorem65.4. This is only a statement about those
+terminal distances under (65.6). No full-$B_h$ distance realization in that
+dimension is established, and (65.5) is the dimension-three Laplace Green law:
+its use as a response-to-distance transform does not make it a Laplace Green
+field in dimension $2^h-1$. Edge completion cannot evade (65.14), because all
+pairs are already prescribed. In Putinar–Vishwakarma,
+[arXiv:2609.10403v1, TheoremsA, B and D, Proposition2.7 and §7.1](https://arxiv.org/pdf/2609.10403v1),
+anchored positive-semidefinite rank recognition controls dimension, chordal
+completion requires compatible specified clique data, and tree product completion
+chooses unspecified pairs while preserving supplied edges. None authorizes
+changing this complete table or dropping its fixed dimension requirement.
+Likewise the opposite-sign characterization in Tabaghi–Dokmanić,
+[arXiv:2005.08672v2, Propositions1–2, §3.1 and AppendixA](https://arxiv.org/pdf/2005.08672v2),
+retains both rank constraints: the positive and negative semidefinite parts have
+ranks at most $d$ and one, with diagonal $-1$ and entries at most $-1$.
+Relaxing rank or projecting a matrix can change prescribed distances and is not
+an exact fit of (65.4).
+
+**Theorem 65.6 (strictly positive relative-response floors uniform in calibration).**
+For an authentic domain with at least two sites, define the full-table relative
+error of (65.5) by
+
+$$
+E_D^\diamond=\max_{\{p,q\}\subset D}
+\left|\frac{\widehat G_D(p,q)}{G_D^\diamond(p,q)}-1\right|.
+\tag{65.16}
+$$
+
+Coincident modeled sites give $E_D^\diamond=+\infty$. On $D=B_3$, every
+positive $\kappa,\ell$ and every finite configuration in $\mathbb H^3_\ell$
+satisfy both the eight-terminal bounds
+
+$$
+E_{B_3}^{\rm c}\ge\varepsilon_{{\rm c},8}
+:=1-\sqrt{\frac{847}{848}}>0,\qquad
+E_{B_3}^{\rm k}\ge\varepsilon_{{\rm k},8}
+:=1-\sqrt{\frac{10609}{10616}}>0,
+\tag{65.17}
+$$
+
+and the stronger five-terminal bounds
+
+$$
+E_{B_3}^{\rm c}\ge\varepsilon_{{\rm c},5}
+:=1-\sqrt{\frac{484}{485}}>\frac1{970},\qquad
+E_{B_3}^{\rm k}\ge\varepsilon_{{\rm k},5}
+:=1-\sqrt{\frac{42436}{42485}}>\frac{49}{84970}.
+\tag{65.18}
+$$
+
+The respective restriction errors on the eight terminals or on $\mathcal S_5$
+already obey the displayed bound. These are certified uniform lower bounds,
+not identified optimal minimax errors.
+
+Proof. For the function $f$ in Theorem65.4, put $u=\sqrt{1+z}>1$.
+Then $f(z)=(u-1)^2/(2u)$ and
+
+$$
+\frac{zf'(z)}{f(z)}
+=\frac{(1+(1+z)^{-1/2})^2}{2}\le2\qquad(z>0).
+\tag{65.19}
+$$
+
+Integrating this logarithmic derivative gives, for $t\ge1$,
+$f(tz)\le t^2f(z)$. If $g_{\min}$ and $g_{\max}$ are the smallest and
+largest coefficients on the complete terminal table, set
+$a_{\max}=f(\kappa/g_{\min})$ and
+$a_{\min}=f(\kappa/g_{\max})$. Thus
+
+$$
+\frac{a_{\min}}{a_{\max}}
+\ge\left(\frac{g_{\min}}{g_{\max}}\right)^2.
+\tag{65.20}
+$$
+
+This controls the relative negative margin even when $\kappa$ tends to zero
+or to infinity; a fixed-parameter rank argument alone would not give this
+uniform response bound.
+
+Consider a restriction to $m\ge5$ terminals. Let $E$ be its relative-response
+error. For $E\ge1$ all the claimed bounds hold. If $E<1$, every pair satisfies
+$(1-E)g\le\widehat g\le(1+E)g$. Applying (65.19) to
+$f(\kappa/\widehat g)$ and $f(\kappa/g)$ yields
+
+$$
+\left|f(\kappa/\widehat g)-f(\kappa/g)\right|
+\le a_{\max}\bigl[(1-E)^{-2}-1\bigr].
+\tag{65.21}
+$$
+
+For the lower endpoint use
+$f(\kappa/\widehat g)\ge(1+E)^{-2}f(\kappa/g)$ and
+$1-(1+E)^{-2}\le(1-E)^{-2}-1$; the upper endpoint uses
+$(1-E)^{-2}$. The modeled Gram $\widehat C$ and the prescribed $C$ have
+the same diagonal one. The symmetric row-sum bound therefore gives
+
+$$
+\|\widehat C-C\|_{\rm op}
+\le(m-1)a_{\max}\bigl[(1-E)^{-2}-1\bigr].
+\tag{65.22}
+$$
+
+If the right side were smaller than $a_{\min}$, (65.13) would make
+$\widehat C$ strictly negative on the $(m-1)$-dimensional zero-sum subspace.
+The classical variational perturbation argument is immediate here:
+$z^\mathsf T\widehat Cz\le
+[-a_{\min}+\|\widehat C-C\|_{\rm op}]\|z\|^2$ on that subspace.
+Since a hyperbolic-three Gram has at most three negative eigenvalues, this is
+impossible. Equations (65.20)–(65.22) consequently imply
+
+$$
+E\ge1-\left[1+\frac{(g_{\min}/g_{\max})^2}{m-1}\right]^{-1/2}.
+\tag{65.23}
+$$
+
+The depth-three ratios are $1/11$ and $7/103$. With $m=8$, (65.23) gives
+(65.17); with $m=5$ and the actual subset (65.15), it gives (65.18).
+That subset includes a sibling pair and a pair separated at the root, so both
+terminal extremes are retained. Its negative margin follows from the same
+restricted cluster identity, without fitting only five chosen response entries.
+The bounds apply to all its ten pairs and hence to the full 105 pairs.
+Finally $1-\sqrt{1-x}=x/(1+\sqrt{1-x})>x/2$ for $0<x<1$
+proves the rational strict lower bounds in (65.18). $\square$
+
+**Theorem 65.7 (lawful all-source refinement and buffered killed targets).**
+Let $t$ be any original nonempty finite source and let
+$D_j(t)=\operatorname{Pos}(\rho^jt)$ retain the actual irregular domain,
+root and history interpretation of Definition55.1. For every actually reached
+version, or every separately legal finite prefix, with $j\ge6$, the common
+full-table target has
+
+$$
+E_{D_j(t)}^{\rm c}\ge\varepsilon_{{\rm c},5}
+\ge\varepsilon_{{\rm c},8}.
+\tag{65.24}
+$$
+
+Set $\lambda=3-2\sqrt2$, $\varrho=1-\lambda/3$ and, for an integer $R\ge3$,
+
+$$
+\eta_R=\frac{64\varrho^{R-2}}{\lambda}.
+\tag{65.25}
+$$
+
+For every such separately legal $j\ge2R$, the killed full-table target obeys
+
+$$
+E_{D_j(t)}^{\rm k}\ge
+\max\{0,\varepsilon_{{\rm c},5}-\eta_R\}.
+\tag{65.26}
+$$
+
+In particular the finite choice $R=241$, $j\ge482$, certifies, uniformly
+over all original finite $t$ and all sourcewise refits,
+
+$$
+E_{D_j(t)}^{\rm k}\ge\tfrac12\varepsilon_{{\rm c},8}>0.
+\tag{65.27}
+$$
+
+These quantifiers permit arbitrary varying finite $t$ with separately legal
+indices; they do not permit an increase of a running cap, installation of a
+refused candidate, an event after Stop or an event after an infinite prefix.
+
+Proof. Equation (55.2) gives $B_3\subset D_j(t)$ for $j\ge6$.
+The common coefficients on its eight terminals are exactly the unchanged
+common table of Theorem65.3. Restriction and Theorem65.6 prove (65.24).
+For $j\ge2R$ one has $B_R\subset D_j(t)$. Every depth-three address then
+has an occurrence-metric buffer of radius $R-3$ contained in that actual
+domain. Lemma63.6, applied with this buffer, gives on the terminal pairs
+
+$$
+0\le G^{\rm c}(p,q)-G_{D_j(t)}^{\rm k}(p,q)
+\le\frac{\varrho^{R-2}}\lambda,
+\qquad
+0\le1-\frac{G_{D_j(t)}^{\rm k}(p,q)}{G^{\rm c}(p,q)}\le\eta_R,
+\tag{65.28}
+$$
+
+since their common minimum is $1/64$. If a modeled response has relative
+killed error $e_{pq}$ and
+$d_{pq}=1-G_{D_j(t)}^{\rm k}(p,q)/G^{\rm c}(p,q)$, then
+
+$$
+\frac{\widehat G(p,q)}{G^{\rm c}(p,q)}-1
+=(1-d_{pq})e_{pq}-d_{pq}.
+$$
+
+Positivity and killed domination give $0\le d_{pq}<1$, and hence its absolute
+value is at most $|e_{pq}|+\eta_R$. Apply the common five-terminal bound to
+the same modeled responses on $\mathcal S_5$. Their maximum killed error
+is at least $\varepsilon_{{\rm c},5}-\eta_R$, proving (65.26).
+This comparison uses one actual table and one configuration throughout, rather
+than combining independently attainable fits.
+
+For the stated finite threshold, the rational inequalities
+
+$$
+\sqrt2<\frac{99}{70},\qquad
+\lambda>\frac6{35},\qquad\varrho<\frac{33}{35},\qquad
+64\frac{35}{6}\left(\frac{33}{35}\right)^{239}
+\le\frac1{3392}<\frac{\varepsilon_{{\rm c},8}}2
+\tag{65.29}
+$$
+
+give $\eta_{241}<\varepsilon_{{\rm c},8}/2$. The power inequality is an
+exact rational certificate, equivalently
+$3392\cdot64\cdot35\cdot33^{239}\le6\cdot35^{239}$.
+The last strict inequality follows from
+$\varepsilon_{{\rm c},8}>1/1696$. Equations (65.26) and
+$\varepsilon_{{\rm c},5}>\varepsilon_{{\rm c},8}$ imply (65.27).
+$\square$
+
+At each finite prefix the cap must cover that source's actual candidate leaf
+counts; no assertion here supplies its bank, preparation or price for free.
+The domain remains $D_j(t)$, not $B_R$. Under actual accepted renewal, the
+common old-pair values retain (62.7), whereas the killed values undergo the
+authentic mask-dependent Schur update (62.8). At a refusal or Read the installed
+source and operator version do not change. A static obstruction with arbitrary
+sourcewise refitting is already a necessary failure for any stronger demand
+of one persistent geometric assignment through those versions; this implication
+does not establish a retained-state switching law.
+
+**Theorem 65.8 (necessary consequence for the same full one/two-occupation law).**
+Fix the actual INITIAL $D=B_3$ of Definition65.1 and one prescription.
+Retain the full source-qualified Hilbert spaces $\mathscr H_{D,1}$ and
+$\mathscr H_{D,2}$ of (62.1), with their counting-measure norms and literal
+hard-core symmetric statistics. Let
+
+$$
+\begin{aligned}
+h_D&=aL_D-gM_{\phi|D},\\
+H_{D,1}^\diamond&=h_D,\\
+H_{D,2}^\diamond&=P_{D,2}\,d\Gamma(h_D)\,P_{D,2}
+-\nu\sum_{\{p,q\}\subset D}G_D^\diamond(p,q)n_pn_q.
+\end{aligned}
+\tag{65.30}
+$$
+
+The two-occupation space has dimension 105. The compression retains the
+diagonal $d_p+d_q$, including inherited exterior and blocked-collision killing;
+it is not a Laplacian of only allowed moves or a fermionic exterior power.
+Here $a,g>0$ and $\nu\ge0$ are the commissioned parameters of §62,
+independent of the original $\mathcal D_2$ actor variable.
+
+For any one Hermitian one-body law $B_D$ used consistently in both sectors,
+and any whole-table point law (65.5) with finite distinct points, define
+
+$$
+\begin{aligned}
+\widehat H_{D,1}&=B_D,\\
+\widehat H_{D,2}&=P_{D,2}\,d\Gamma(B_D)\,P_{D,2}
+-\nu\sum_{\{p,q\}\subset D}\widehat G_D(p,q)n_pn_q,\\
+E_1&=\|B_D-h_D\|_{\rm op},\qquad
+E_2^\diamond=\|\widehat H_{D,2}-H_{D,2}^\diamond\|_{\rm op}.
+\end{aligned}
+\tag{65.31}
+$$
+
+Put
+
+$$
+\delta_{{\rm c},65}=\frac{\varepsilon_{{\rm c},5}}{64},\qquad
+\delta_{{\rm k},65}=\frac{\varepsilon_{{\rm k},5}}{240}.
+$$
+
+Then the necessary joint bound is
+
+$$
+E_2^\diamond+2E_1
+\ge\nu\max_{\{p,q\}\subset D}
+|\widehat G_D(p,q)-G_D^\diamond(p,q)|
+\ge\nu\delta_{\diamond,65}.
+\tag{65.32}
+$$
+
+In particular, preserving the original one-body and kinetic terms gives $E_1=0$
+and, for $\nu>0$, a strictly positive full two-occupation generator-norm floor
+$E_2^\diamond\ge\nu\delta_{\diamond,65}$. At $N=1$ the pair multiplier
+vanishes for both prescriptions, and at $\nu=0$ this obstruction yields no
+positive joint generator floor.
+
+Proof. On $\mathscr H_{D,2}$ the pair difference is diagonal. Its entry at the
+actual occupation $\{p,q\}$ is
+$-\nu(\widehat G_D(p,q)-G_D^\diamond(p,q))$, so its operator norm is
+$\nu$ times the maximum absolute coefficient error on all 105 pairs. The
+hard-core compression of $d\Gamma(B_D-h_D)$ has norm at most $2E_1$.
+The triangle inequality proves the first inequality in (65.32), precisely as
+the same-sector argument in Theorem64.4. This consumes that operator principle;
+the new bound is supplied by the distinct hyperbolic class obstruction.
+
+The five-terminal restriction has maximum relative error at least
+$\varepsilon_{\diamond,5}$. On that restriction its smallest common coefficient
+is $1/64$ and its smallest killed coefficient is $1/240$. Consequently the
+maximum absolute error there is at least $\delta_{\diamond,65}$, and the
+maximum on the full domain is no smaller. An actual pair attaining that finite
+maximum gives the diagonal occupation witness. No alternative one-body fit
+can cancel it in the two-occupation sector without entering the same $E_1$
+budget. $\square$
+
+This is a necessary condition on a law that transports the same complete
+$N=1$ and $N=2$ generators, with the supplied source, reference and clock.
+It does not replace that task by a static configuration or one-body task.
+No finite-time propagator, state, acquired probability, measurement or clock
+error lower bound follows merely from (65.32). Such a bound needs its own
+common input, time, reference, observation and spectral argument; Duhamel's
+usual generator-norm upper estimate cannot be reversed for this purpose.
+Neither independent sector fits nor a quotient by global phase is part of
+the unchanged full joint target.
+
+**Definition 65.9 (supplier scopes and the remaining full correspondence).**
+The source and history suppliers are Continuation Definition1.1, TM30's
+fixed-cap boundary and guard, PR57's authentic processor, and §§55.1–55.2,
+58 and60. The response and literal-statistics suppliers are (62.2)–(62.4);
+the rooted factorization is (62.19)–(62.21), actual renewal is (62.7)–(62.8),
+and the buffered coefficient comparison is Lemma63.6. The conditional
+stratified producer, its common preparation and complete finite-horizon
+retained-state correspondence remain exactly Definitions64.5 and
+Theorems64.6–64.7. The pair obstruction here does not alter that producer's
+explicit atomic interaction. Chapter64's conditional results retain that scope.
+Chapter63's binding, cluster escape and spectral retention are likewise
+inherited in their stated scope.
+
+The all-beta depth-three source at cap sixteen and the terminal subset
+$\mathcal S_5$ differ from Chapter64's cap-three source and its five-site domain
+$\{o,L,R,LL,LR\}$. The term “H3 source” for the latter cap is distinct from
+the ambient space $\mathbb H^3_\ell$. Prior finite five-site fits retain their
+original finite targets and conditions. An obstruction to a class containing
+$T_3$ does not deny a fit of a different finite table, and the inverse-distance
+law in (64.1) is not the hyperbolic point law (65.5).
+
+Cohl–Kalnins supplies only the complete homogeneous Laplace–Beltrami point
+problem with its stated volume normalization and decay. Keller-Ressel–Nargang
+and Tabaghi–Dokmanić supply finite Lorentz/rank recognition with exact prescribed
+entries and normalization. Faver et al. and Gorman–Lladser supply the mature
+ultrametric and cluster methods in the scopes identified after Theorem65.4.
+Putinar–Vishwakarma supplies recognition and compatible completion, not freedom
+to complete already specified all-pair values at an imposed lower dimension.
+The row-sum and variational perturbation steps in Theorem65.6 are classical
+matrix estimates. The rooted source coefficients, all-parameter application,
+response floors and lawful-source joint consequences here are repo-derived
+ordinary mathematical deductions from these suppliers. They carry no claim of
+global novelty, fresh kernel validation or physical verification. Finite exact
+instances can corroborate coefficients and inertia identities; the all-depth,
+all-calibration and all-source assertions depend on the displayed ordinary
+proofs, not an extrapolation from those instances. Optimal minimax response
+error, full-domain higher-dimensional distance realization and a corresponding
+higher-dimensional Green field are not established.
+
+The obstruction applies to the entire specified homogeneous unscreened
+point-field model class (65.5). It excludes neither physical three-space nor
+inhomogeneous media, screening, different operators, finite boundary problems,
+extended sources or other realization contracts. It selects no physical
+dimension. The distinct Euclidean point-source and localization contract in
+[legacy §52.7](FIB_ATOM_RECURSIVE_HOLOGRAPHIC_BOUNDARY_GEOMETRY.md#527-reuse-exact-scope-and-the-missing-native-connection)
+retains its own domain, isotropic second-order operator, far-field and form
+assumptions; no transfer of that classification is asserted by equal site degree,
+direction count or terminal embedding dimension.
+
+The unchanged full joint problem retains actual INITIAL acquisition and every
+original numerical response, all ordered operations and legal histories, every
+cap guard, refusal and Stop. It retains the complete $N=1/N=2$ amplitudes and
+phases, kinetic law and propagators, the common one-body field, separate pair
+prescriptions, exterior and collision terms, all auxiliary and retained state,
+authentic renewal and switching, reference coherence, the same clock and the
+full norm without discarding components. A field-mediated interaction, an
+operation- and metric-preserving displacement map, isotropy and local physical
+realization remain unproved bridges. Finite unknown-state ingress, preparation,
+measurement, precision and time calibration, together with construction,
+control, service, production, storage, retention, maintenance and total resource
+price, remain independent obligations. No unlimited horizon, unlimited population
+or finite total-price conclusion is supplied by (65.24)–(65.32).
+
+In particular the original $\mathcal D_2$ source keeps independent arbitrary
+unbounded $a$, including zero, untagged radius-$7/25$ $b$, destructive actions,
+joint adversarial and history-dependent errors, source-independent initialization
+and its original INITIAL/Read/Stop task. The positive commissioned kinetic $a$
+in (65.30) is another variable. The existing common $\Pi$ bridge, consumed in
+Definition63.13, keeps its full-vector, spanning, common-zero, whole quadratic
+distance/positive-semidefinite Gram, at least two independent directions,
+alternating bilinear exact-area/Jacobi, actual orthonormal-probe, finite binary
+calibration and hidden-kernel-preserving generator hypotheses. It supplies no
+new spatial/operator transport here. Section57 retains its separate
+composition-promised immutable endpoint-query contract, with all its original
+depth caps, common source-independent initialization, actual retained
+query/reply histories, correct finite stopping on every same-composition
+positive and negative source, and distinct-address fees; Definition57.12 grants
+no old-source archive. The separate [paid promised-family archive/cut acquisition
+contract, Atomic Generation Acquisition §12](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md#12-不可逆根后的被动切口阶梯容量与原生关系呈现),
+consumed in Definition63.13, retains its paid positive-root archive, exact
+nonadvancing cut port, finite stopping/decoding, protected written records after
+refusal/closure, aligned actual generation, trusted markers, no unrecorded source
+change, actual write/protect/retain/query rights, closed strong ports and inclusion
+of every reply-affecting retained source influence in the service price. These
+acquisition contracts and the common $\Pi$ bridge supply no source copy, reset,
+independent resampling, exact limit Read or new native geometric or quantum
+control. The necessary exclusion of (65.5) and its generator consequence
+leave these full operational and physical obligations intact.
+
+## 65.99 追加锚（本行以下为增补区）
