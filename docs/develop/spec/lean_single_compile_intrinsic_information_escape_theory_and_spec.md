@@ -1912,7 +1912,7 @@ $$
 
 这不是评价体系变化，而是当前数学族从不可约变成过完备。
 
-完整合法族重新 seal，旧 theorem 的分类非单调地变为 certified `trivial_in_catalog`，并在 `SealCatalog.conclusion` 携带冗余证明；旧成员仍保留，待首次冻结对象是否获 positive admission 只取决于它自身的 positivity，该数学分类不构成额外生产准入门。
+完整合法族重新构造 Seal，旧 theorem 在扩大的目录内可成为平凡成员，冗余证明由 `SealCatalog.conclusion` 携带。旧成员仍保留；报告核对不另设首次冻结正性准入门。
 
 特别地，若新 peer 的 kernel 严格细化旧 occurrence 的 kernel，则旧 occurrence 的
 leave-one-out capture 必为零。严格 refinement chain 的每个相邻增量可以非空，同时
@@ -5506,10 +5506,9 @@ realization 与 companions 必须 catalog-qualified；这些 qualified names 的
 fail-closed。允许一个 theorem 的 primitive bundle 内含多个角色 primitive；不允许同一
 occurrence 在多个可选 bundle 之间选择。
 
-同一 root import closure、同 canonical arena 的全部 occurrences 必须同时进入一个 maximal catalog。
-sub-catalog 可额外声明为 `analysis_view`，但不能取代 maximal grouping 或 discharge
-positivity；试图通过 namespace/catalog/cloned-arena 或 auxiliary-root indirection 拆开
-designated root 中的 peers 触发 IE-C024。
+同一 root import closure、同 canonical arena 的全部 occurrences 按一个目录 ID 分组。
+`validateMaximalCatalog` 要求至少一个 canonicalMaximal 成员；缺失时发 IE-C026。
+该组出现多个目录 ID 时发 IE-C024。核对范围是当前 root 的实际 import 闭包。
 
 ---
 
@@ -6146,9 +6145,8 @@ canonical arena，则稳定发 IE-C002。
 
 ### T-025　same canonical arena split
 
-尝试把同一 root import closure 的 same-arena members 分散到不同 registration modules、
-namespace、wrapper、cloned arena 或 singleton analysis views，以替代唯一 maximal catalog；
-期望 IE-C024。
+同一 root import closure 中解析为同一 canonical arena 的 occurrences 使用不同目录 ID，
+期望 IE-C024。仅改变 registration module 或 namespace 不改变这条核对的分组键。
 
 ### T-026　import-closure root scope
 
@@ -6459,9 +6457,8 @@ arena，所有 companions catalog-qualified。
 
 ### AC-012　Canonical maximal grouping
 
-designated root import closure 中同一 canonical object `Arena` 的全部 occurrences 进入一个
-仓库尺度 maximal catalog；不存在 namespace/auxiliary-root/catalog/cloned-arena/
-positive-elsewhere exemption。
+designated root import closure 中同一 canonical object `Arena` 的全部 occurrences
+使用一个目录 ID，且至少有一个 canonicalMaximal 成员。该闭包不代表仓库全局覆盖。
 
 ### AC-013　库内分析证明
 
