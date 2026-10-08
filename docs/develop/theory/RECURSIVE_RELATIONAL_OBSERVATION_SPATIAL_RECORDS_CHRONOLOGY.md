@@ -482,3 +482,251 @@ The applicable mature intermediate statements have these attributions: Cover, *E
 The new connection is the complete stopped-source fiber and degree-two classification, its actually acquired relational inverse and common-prior future independence, and the consequent chronology retention separation. Source reads and ordinary proofs do not constitute new Lean compilation, kernel certification, ingestion or coverage. No external priority claim, tensor hierarchy, physical interpretation, persistent-goal completion or optimum over total acquisition resources follows.
 
 ## 追加锚（本行以下为增补区）
+
+## 12. The whole graded ordered-letter readout on the actual source
+
+**Definition 12.1 (domain, interface and readout).** Keep the source, fixed finite or countable prior $\mu$, acquired filtration and third latch of Definition 6.1. Every statement in §§12–17 concerns the same $\mathcal H_3(\mu)$, including both actual seeds, all eight marker triples, every finite paid seed retry and every finite return placement, unless a slice is explicitly named. The parameters remain $m=2,d=1,\ell=2,n=4$; the symbol $k$ below denotes a readout cutoff, not the hidden depth $K$. All original Read/Stop permissions remain those of Future Response Sufficiency §9. In particular no reset, source copy, address query, prior resampling, clock, test oracle or post-Stop Read is supplied.
+
+For a raw word $h=h_1\cdots h_N$ and a fixed-letter pattern $v=v_1\cdots v_j$, define
+
+$$
+c_v(h)=\#\{1\le i_1<\cdots<i_j\le N:h_{i_1}\cdots h_{i_j}=v\},\qquad
+c_{\varepsilon}(h)=1,\qquad
+G_k(h)=(c_v(h):|v|\le k),\quad
+G_{\infty}(h)=(c_v(h):v\in\{\alpha,\beta\}^{*}).
+\tag{SC.24}
+$$
+
+Every binary pattern is included, not only chosen moments or the degree-$k$ part. Positions are distinct and strictly increasing, but need not be contiguous. These are multiplicity-bearing scattered-subword counts: neither contiguous-factor counts, presence-only subword data, parser-context labels nor relations on individually indexed occurrences. Degree counts aggregated tuples of raw letters; it is not a lower bound on relational arity. Definition 7.3 already gives a sufficient binary precedence relation with paid occurrence identities and growing storage.
+
+Use the existing Magnus polynomial in the free associative integer algebra:
+
+$$
+\mathcal P(h)=\prod_{i=1}^{N}(1+x_{h_i}),\qquad
+[x_v]\mathcal P(h)=c_v(h),\qquad
+\mathcal P(hh')=\mathcal P(h)\mathcal P(h').
+\tag{SC.25}
+$$
+
+The product/coefficient identification is the reused `magnusPolynomial_coeff_scatteredCount` of [MagnusWordCoefficients](../../../D5/S1/Words/Complexity/PositivePairs/Coefficients/MagnusWordCoefficients.lean); concatenation follows in the same source order. The coefficients are exact integers. For a finite $h$, degrees above $N$ vanish, although there is no uniform degree or finite configuration bound over the actual domain.
+
+**Definition 12.2 (signature conventions and their precise correspondence).** At degree two the coefficients are $c_{\alpha\alpha}=\binom A2$, $c_{\beta\beta}=\binom B2$, $c_{\alpha\beta}=C$, $c_{\beta\alpha}=AB-C$. They are not the doubled Chen coordinates (SC.12): that convention has diagonals $A^2,B^2$ and mixed entries $2C,2(AB-C)$. Counts plus either convention determine the other, by the reused diagonal/ordered-pair identity of SignatureOrderedMoment.
+
+If a whole exponential convention is desired, explicitly choose the formal rational series $\mathcal E(h)=\prod_i\exp(x_{h_i})$. In the degree filtration, substitution $x_a\mapsto\exp(x_a)-1$ carries $\mathcal P(h)$ to $\mathcal E(h)$, and substitution $x_a\mapsto\log(1+x_a)$ is its inverse. Both have identity linear part, so they descend to inverse maps at every finite cutoff. Equivalently, the coefficient of a pattern $v$ in $\mathcal E(h)$ is the sum over decompositions of $v$ into nonempty constant-letter blocks, with contribution $c_{a_1\cdots a_s}(h)/(\ell_1!\cdots\ell_s!)$ for block letters $a_i$ and lengths $\ell_i$. The all-singleton decomposition contributes $c_v(h)$; all others use shorter patterns. This triangular conversion proves equality of the complete cutoff fibers for these two explicitly chosen characteristic-zero conventions. It does not equate their coordinates or supply finite-precision conditioning for the conversion.
+
+Only the degree-two tensor implementation is attributed to the existing chronology modules; their source does not supply a completed all-order tensor construction. An arbitrary scalar, ring or matrix representation can collapse the free coefficients, even at all orders. No injectivity of such a shadow, full physical path signature or analytic convergence claim is used here. The exact single-degree deck of ExactDeckCore is equivalent to $G_k$ at a supplied common length $N\ge k$; when $k>N$ that degree alone is zero and cannot replace (SC.24).
+
+## 13. An order-faithful embedding through paid seed retries
+
+**Theorem 13.1 (all binary orders embed in one legal third-latch slice).** For every fixed $\mu$ of Definition 6.1, define $\delta(0)=\alpha\alpha$, $\delta(1)=\beta\beta$ and
+
+$$
+\iota(u)=\delta(u)\,\tau,\qquad
+\tau=\beta\alpha\mid\beta\beta\alpha\alpha,
+\qquad u\in\{0,1\}^{*}.
+\tag{SC.26}
+$$
+
+This is an injection into the actual $R=1$, marker-$100$, zero-return slice, with the same $w=1,Q^+=(ac,bc),Z=1$ and original bare/control fields. For every $k\ge1$ and all $u,v$,
+
+$$
+G_k(\iota(u))=G_k(\iota(v))
+\quad\Longleftrightarrow\quad G_k(u)=G_k(v),
+\tag{SC.27}
+$$
+
+where the right side uses the same scattered-count convention on letters $0,1$. For distinct $u,v$, their first separating degree is also preserved. The from-zero raw counts are
+
+$$
+A(\iota(u))=2|u|_0+3,\qquad
+B(\iota(u))=2|u|_1+3,\qquad N(\iota(u))=2|u|+6.
+\tag{SC.28}
+$$
+
+Proof. Every doubled input letter is an equal pair rejected by the actual seed extractor. The next pair $\beta\alpha$ first accepts seed 1; $\beta\beta$, $\alpha$, $\alpha$ then complete exactly the three markers $100$, without returns. Theorem 6.3 therefore supplies positivity, unique parsing and injection, for every such prior, rather than an instruction to force an execution. Its count formula gives (SC.28). The vertical stroke in (SC.26) is a parser-derived delimiter, not an added source event.
+
+The Magnus polynomial of $\delta(u)$ is obtained by substitution $x_0\mapsto2x_\alpha+x_\alpha^2$, $x_1\mapsto2x_\beta+x_\beta^2$. If $\mathcal P(u)-\mathcal P(v)$ first has a nonzero homogeneous component in degree $r$, the corresponding substituted component is $2^r$ times that component with renamed letters. It remains nonzero over $\mathbb Z$, and all lower components remain zero. Multiplication on the right by $\mathcal P(\tau)$ leaves this first component unchanged because its constant term is 1. A first separating degree exists for distinct finite words: different lengths are separated in degree one, and at a common length the top word coefficient separates them. These reused coefficient facts prove both directions of (SC.27) and the stronger first-degree assertion. This ordinary calculation is the general literal-doubling mechanism also present in LiteralPowerSubstitution's private coefficient supplier; its public endpoint for `positivePairWords` has a narrower telescope and is not invoked as a theorem about an unrelated recursion. $\square$
+
+**Theorem 13.2 (actual-prior future transfer and refined-fiber coding).** Any nonempty subset $\mathcal A$ of a fixed $\mathcal F_{A,B}$ has uniform conditional past and is independent of the entire original $V$ of Definition 9.1. In particular this applies to every $G_k$ class in that complete fiber and to every same-count family in the image of $\iota$. Each literal member has mass $Z_{A,B}>0$ from (SC.14); every legal unfinished cylinder or complete future $v\mathrm{Stop}_e$ has conditional mass $Z_{A+a_v,B+b_v}/Z_{A,B}$ from (SC.15), with the original deterministic events and no added past report.
+
+For $F=|\mathcal A|$ and any deterministic supplementary past label $f$ with at most $D\ge1$ values, the best conditional exact success using that label, any supplied past fields constant on $\mathcal A$, all $V$ and independent decoder randomization is $|f[\mathcal A]|/F$. Optimizing the static assignment gives $\min(D,F)/F$. Zero-error recovery on every positive compatible past/future pair requires and suffices for an injective label; its least static alphabet is $F$ and its fixed-width data requirement is $\lceil\log_2 F\rceil$ bits.
+
+Proof. Restrict (SC.16) to the finite past event $\mathcal A$ and normalize by $|\mathcal A|Z_{A,B}$. The future row remains the actual posterior $\nu_{A,B}$ under the same installed $\mu$, not a selected mixture. The argument of Theorem 9.3 then applies unchanged to this finite conditional dictionary. Every complete legal future is positive for every member; it cannot distinguish two equal labels. A representative per label class attains the success bound, and finite dictionary indexing attains the static injective alphabet. No online acquisition of that index is asserted. These are source restrictions of the existing future-independence and finite-coding suppliers, not new generic coding theorems. $\square$
+
+## 14. Strict escape at every cutoff and residual retained chronology
+
+**Theorem 14.1 (every order fails and its successor genuinely refines it).** Let $\theta(0)=01$, $\theta(1)=10$. For every fixed $\mu$ and every $k\ge1$, set $u_k=\theta^k(0)$, $v_k=\theta^k(1)$ and $h_k^+=\iota(u_k)$, $h_k^-=\iota(v_k)$. These are distinct positive same-source third-latch histories with the common records of Theorem 13.1, identical $G_k$ and full original future law, but
+
+$$
+\begin{aligned}
+A(h_k^{\pm})=B(h_k^{\pm})&=2^k+3,\qquad N(h_k^{\pm})=2^{k+1}+6,\\
+c_{\alpha\beta^k}(h_k^+)-c_{\alpha\beta^k}(h_k^-)
+&=2^{\,2+k(k-1)/2}>0.
+\end{aligned}
+\tag{SC.29}
+$$
+
+For every $t\ge1$, independently choosing $u_k$ or $v_k$ in $t$ consecutive blocks and applying $\iota$ gives $2^t$ distinct histories in one $G_k$ class, with
+
+$$
+A=B=t2^k+3,\qquad N=t2^{k+1}+6,
+\tag{SC.30}
+$$
+
+the same seed/marker/count boundary and full future law. Relative to those supplied data this family needs at least $t$ supplementary bits for zero error, and the optimized static $D$-label success is $\min(D,2^t)/2^t$ even with all $V$.
+
+Proof. Reuse Ochsenschläger's word theorem as given with its coefficient proof in Lejeune–Leroy–Rigo, *Computing the $k$-binomial complexity of the Thue–Morse word*, [arXiv:1812.07330v1, Lemma 30](https://arxiv.org/pdf/1812.07330v1): $u_k,v_k$ agree through $k$, first differ at $k+1$, and their $01^k$ count difference is $2^{(k-1)(k-2)/2}$. Theorem 13.1 multiplies this leading coefficient by $2^{k+1}$ and leaves it unchanged under the common suffix, yielding (SC.29). Both input words have $2^{k-1}$ copies of each letter. Thus (SC.28) gives the stated counts, and Theorem 13.2 gives their actual future law.
+
+Truncated multiplication in (SC.25), equivalently the literature's concatenation congruence, makes all block choices equal through $k$. Their fixed block length $2^k$ and $u_k\ne v_k$ make all choices distinct; the embedding preserves them. The same counts give (SC.30), and Theorem 13.2 supplies the label bound. This uses the Thue–Morse recursion $(u,v)\mapsto(uv,vu)$, not the indexed positive-pair recursion $(u,v,a)\mapsto(uav,vau)$. The existing degree-two family is its $k=2$ case; the retained conclusion here is the all-cutoff transfer and strict next-order escape on the original acquisition domain. $\square$
+
+For example, $u_3=01101001$, $v_3=10010110$. Their actual images have $(A,B,N)=(11,11,22)$, agree through degree three, and differ at $\alpha\beta^3$ by 32. This description names eight paid equal-pair retries in each history; it grants no word-writing action to the source.
+
+**Theorem 14.2 (linear residual on complete actual fibers, including a growing-order regime).** For every $m\ge0$, $k\ge1$ and every fixed $\mu$, put $N=4m+6$, $A=B=2m+3$, and define
+
+$$
+\begin{aligned}
+Q_k(N)&=\prod_{j=2}^{\min(k,N)}
+       \left(1+\binom Nj\right)^{2^j-2},\\
+C_k&=\sum_{j=2}^{k}j(2^j-2)
+     =(k-1)2^{k+1}-k(k+1)+2.
+\end{aligned}
+\tag{SC.31}
+$$
+
+An empty product is 1. Some complete $G_k$ class within $\mathcal F_{A,B}$ has size at least $\lceil\binom{2m}{m}/Q_k(N)\rceil$. Its necessary supplementary zero-error bits, even with all $V$, are at least
+
+$$
+\max\left\{0,\left\lceil
+\log_2\binom{2m}{m}-\log_2 Q_k(N)
+\right\rceil\right\}
+\ge
+\max\left\{0,\left\lceil
+2m-\log_2(2m+1)-C_k\log_2(N+1)
+\right\rceil\right\}.
+\tag{SC.32}
+$$
+
+For each fixed $k$ this is $N/2-O_k(\log(N+2))$. More generally, along $N=4m+6\to\infty$, every integer schedule $k(N)\ge1$ satisfying
+
+$$
+k(N)2^{k(N)}\log(N+1)=o(N)
+\tag{SC.33}
+$$
+
+still leaves $(1/2-o(1))N$ supplementary bits on some actual class. An unbounded cutoff alone is therefore not a sufficiency condition. These are worst-case conditional distinguishable-configuration bounds, not per-history description lengths or minima of total observer resources.
+
+Proof. Theorem 10.1 supplies at least $\binom{2m}{m}$ actual zero-return retry orders in this count fiber. At fixed counts, degree one and the two pure-letter coordinates in every degree are fixed. Each other degree-$j$ coefficient is an integer between 0 and $\binom Nj$, so there are at most $Q_k(N)$ possible profiles. This is a product upper bound; it assumes neither independent coordinates nor joint attainability of their separate maxima. Pigeonhole on the complete actual fiber gives the displayed class, and Theorem 13.2 supplies its static supplement requirement.
+
+The central-binomial inequality of Theorem 10.1 gives $\log_2\binom{2m}{m}\ge2m-\log_2(2m+1)$. Also $1+\binom Nj\le(N+1)^j$, hence $\log_2Q_k(N)\le C_k\log_2(N+1)$. The finite sum in (SC.31) gives $C_k\le(k-1)2^{k+1}\le2k2^k$, which proves both the fixed-order and (SC.33) conclusions. Hypothesis 7.1 still supplies the held chronology representation (SC.20); a fixed small coefficient table has logarithmic held size but leaves this linear residual. The polynomial profile-counting mechanism is already literature-attested in Lejeune–Rigo–Rosenfeld, [*On the binomial equivalence classes of finite words*, arXiv:2001.11732v1, §4 Proposition 12](https://arxiv.org/pdf/2001.11732v1); only its explicit actual-fiber retention consequence is used here. $\square$
+
+## 15. Complete recovery, finite length and threshold transfer
+
+**Theorem 15.1 (actual-image completeness and finite-length sufficiency).** For every fixed $\mu$ and all $h,g\in\mathcal H_3(\mu)$, $G_\infty(h)=G_\infty(g)$ if and only if $h=g$. Under Hypothesis 7.1's acquisition and specified delivery, the full readout, raw selected word, held record (SC.3), and parser-labelled precedence/incidence expression of Definition 7.3 determine one another on their actual images. Counts and the fixed-prior continuation law are projections; their reverse chronological recovery fails even after any one fixed $G_k$ and the full original $V$ are added.
+
+For each individual $h$, the cutoff $\min(A(h),B(h))+1$ identifies its word among all compatible actual histories. For every public integer length bound $L\ge5$, one sufficient cutoff for the entire actual domain $N\le L$ is
+
+$$
+q(L)=\min\left\{
+\lfloor L/2\rfloor+1,
+\left\lfloor\frac{16}{7}\sqrt L\right\rfloor+5
+\right\}.
+\tag{SC.34}
+$$
+
+This is a semantic sufficient order, not a sharp threshold or an online resource optimum. The cap $L$ is a recovery promise, not a new stopping rule.
+
+Proof. Reuse the generic finite-word coefficient inverse: degree one gives $N=A+B$, and degree $N$ has the unique nonzero word coefficient $c_h(h)=1$. Thus the whole readout recovers $h$; evaluation of (SC.25) gives the converse. Theorems 6.3, 7.2 and 7.4 supply the actual parser, held-record and relational inverses. Counts and the original control give the future law under the installed prior. Theorem 14.1 supplies actual noninjective fibers for every fixed cutoff, with identical future rows; no semantic law port is needed for this obstruction.
+
+The smaller elementary inverse is the right-bounded-block reconstruction supplier of Fleischmann–Lejeune–Manea–Nowotka–Rigo, [*Reconstructing Words from Right-Bounded-Block Words*, arXiv:2001.11218v2, §3 equation (2), Theorems 19 and 21](https://arxiv.org/pdf/2001.11218v2). To specify its arguments here, choose the minority raw letter $a$, let $b$ be the other letter, and let $p=|h|_a$. Write $h=b^{g_0}a b^{g_1}a\cdots a b^{g_p}$. Its supplied counts satisfy
+
+$$
+t_i:=c_{a^i b}(h)=\sum_{j=i}^{p}\binom ji g_j,
+\qquad
+g_p=t_p,\quad
+g_i=t_i-\sum_{j=i+1}^{p}\binom ji g_j
+\quad(0\le i<p).
+\tag{SC.35}
+$$
+
+Every used pattern has degree at most $p+1$; degree-one counts select $a$ and $p$. This known triangular inverse reconstructs the runs, including $p=0$ and empty runs. The two-sided alternative $c_{a^i b a^{p-i}}=g_i$ uses the same order because it selects all $p$ occurrences of $a$. These are explicit supplier substitutions, not new generic word-reconstruction theorems. Applying the inverse to the actual raw word and then the original parser yields all records without extra source access. It gives the first bound in (SC.34).
+
+For the stronger large-length cutoff, use the Krasikov–Roditty scattered-multiset reconstruction bound $\lfloor16\sqrt n/7\rfloor+5$, as stated in the introduction and §3 of that reconstruction supplier, with original attribution [*On a Reconstruction Problem for Sequences*, JCTA 77, 344–348, doi:10.1006/jcta.1997.2732](https://doi.org/10.1006/jcta.1997.2732). Its convention is multiplicities of scattered subwords at a common known length, not contiguous factors or presence alone. If this bound exceeds $n$, the full degree-$n$ word already suffices. Otherwise ExactDeckCore's `exactKDeck_eq_iff_cutoffMagnus_eq_of_common_length`, with its hypothesis $k\le n$, transports the supplied exact-deck uniqueness to the whole cutoff. Degree one fixes $n$, so the bound at $L$ serves all smaller $n$ as well. Taking the smaller of these two sufficient orders proves (SC.34). The square-root theorem is a literature supplier, not newly proved or Lean-verified content here. $\square$
+
+**Theorem 15.2 (source/generic threshold relation and necessary growth).** Let $b(n)$ be the least integer cutoff at least 1 separating all binary words of length at most $n$ under (SC.24). Let $r_\mu(L)$ be the least cutoff at least 1 separating the actual histories of length at most $L$ when the already acquired tuple $(R,w,Q^+,Z,A,B)$ is also supplied. For every $L\ge8$,
+
+$$
+b\!\left(\left\lfloor\frac{L-6}{2}\right\rfloor\right)
+\le r_\mu(L)\le b(L)\le q(L).
+\tag{SC.36}
+$$
+
+Neither the full legal future nor its semantic law lowers $r_\mu(L)$ for zero error on all positive compatible histories. In particular, for $L\ge10$,
+
+$$
+\lfloor\log_2(L-6)\rfloor\le r_\mu(L),
+\tag{SC.37}
+$$
+
+and every integer schedule sufficient on every bounded actual domain must tend to infinity with $L$. The least-order growth and sharp source threshold remain open here; (SC.37) is an explicit obstruction, not an optimal generic lower bound.
+
+Proof. The complete cutoff suffices, so both minima exist; Theorem 15.1 gives $b(L)\le q(L)$. Restricting the generic inverse to actual words gives $r_\mu(L)\le b(L)$. For $n=\lfloor(L-6)/2\rfloor$, all $\iota(u)$ with $|u|\le n$ lie in the actual length-$L$ domain. If two such input words have equal $G_k$, they have equal counts because $k\ge1$; their images therefore have equal supplied tuples and, by Theorem 13.1, equal $G_k$. Any cutoff sufficient on the source separates them and hence separates the entire generic length-$n$ domain. This proves the lower transfer in (SC.36).
+
+For any collision of the supplied tuple and $G_k$ on the larger actual domain, the same raw-count likelihood calculation as Theorem 9.2 gives the same actual posterior and future row at the common $p_4$ phase, irrespective of which common seed/marker tuple it has. Every complete future is positive for both; a realized future or its common law cannot repair their collision. Conversely an injective past tuple needs no future. This proves the threshold statement with future supplied. For (SC.37), put $s=\lfloor\log_2(L-6)\rfloor\ge2$ and $k=s-1$ in Theorem 14.1: its length $2^s+6$ is at most $L$, so an order-$k$ decoder fails and the minimum is at least $s$. This also proves divergence, while (SC.33) identifies a regime in which growing order still leaves linear residual. No claim of cutoff independence from the prior is needed for these inequalities. $\square$
+
+## 16. From-zero acquisition, same-record holding and precision
+
+**Hypothesis 16.1 (the supplementary writer and receiver contract).** A coefficient observer, if used, is installed and initialized before the first paid seed Read: $c_\varepsilon=1$ and every other installed coefficient is zero. On an actual returned letter $a$ before the selected latch, it performs
+
+$$
+c_v(ha)=c_v(h)+\mathbf1\{\operatorname{last}(v)=a\}\,c_{v^-}(h),
+\qquad 1\le |v|\le k,
+\tag{SC.38}
+$$
+
+where $v^-$ deletes the last letter and every right side is an old value. Descending-degree updates implement this rule without treating the current Read as multiple positions. The writer includes every rejected/accepted seed letter, return, partial parse and completing letter. The third-marker completing Read updates this table and all prescribed marker fields before the latch. Afterwards every fourth-segment event and the unique original Stop hold this same selected-past record. Counts used for its reconstruction refer to that same past, not to later active totals.
+
+The owner is the actual raw-letter recipient with access to the original phase/control. Installation, addressing, local storage, writes, counter arithmetic, growth, holding and workspace are explicitly supplied and paid. A receiver receives the augmented table or another sufficient record only under an explicit delivery contract, with transmission and output storage charged, as in Hypothesis 7.1. The old bare-snapshot recipient gains no new fields or archive access. The original selected-marker decoder remains unchanged; raw-past reconstruction is the separate local target already declared in §9.
+
+**Theorem 16.2 (finite promise and unrestricted finite completion).** Under Hypothesis 16.1, (SC.38) acquires the correct installed cutoff on every finite prefix up to the third latch while the required exact widths are supplied and no overflow occurs, and holds it thereafter. For a public promise $N\le L$, installing $k=q(L)$ from zero suffices for exact reconstruction on that domain. A sufficient dense coefficient data allocation is
+
+$$
+B_{\rm dense}(L,k)=\sum_{j=1}^{\min(k,L)}
+2^j\left\lceil\log_2\!\left(1+\binom Lj\right)\right\rceil
+\tag{SC.39}
+$$
+
+bits, plus charged control, length/overflow metadata, coordinate addressing, installation, arithmetic workspace and output. Identically zero higher levels may be omitted. For fixed $k$ the data allocation is $O_k(\log(L+2))$; it has the fixed-order recovery failure of Theorem 14.1. With $k=q(L)$ it is finite and at most $(L+1)(2^{k+1}-2)$. Installing every degree through $L$ is another sufficient choice of $O((L+1)2^L)$ data bits, not a necessary observer design.
+
+A finite length monitor may enter an explicit overflow state on the first Read beyond $L$, then hold invalid selected-past data while the original execution continues. It must detect exceeding the promise before a counter's out-of-range write; saturation or wraparound cannot be advertised as exact. This introduces no earlier Stop or truncation permission. Recovery is guaranteed only on nonoverflow histories in the declared domain. Universal service on all finite completions instead needs unbounded possible retained configurations, while each completed finite history can use finite storage.
+
+Proof. The reused scattered-subword recurrence splits occurrences into those avoiding the new last position and those using it exactly once. Induction from the initialized empty prefix gives (SC.38); write-before-latch and subsequent holding give the selected-past invariant. On $N\le L$, each degree-$j$ counter stays in $[0,\binom Lj]$, yielding (SC.39); $\binom Lj\le2^L$ yields the displayed envelope. Theorem 15.1 supplies the inverse, rather than interpreting finite memory as an extra measurement port. The length monitor has only the required finite initialized count/overflow states and changes the observer's validity claim, not the source menu.
+
+For unrestricted finite prefixes one can maintain a paid from-zero length counter and all degrees through its current acquired length $n$. Before the next update, degree $n+1$ has old value zero, so installing that level and then using all retained old lower levels preserves the invariant. All counter growth and allocation are charged; the number and widths of coordinates grow, with no uniform finite bound. More economically, reuse Hypothesis 7.1's from-zero $U,J_1,J_2,J_3$ and finite seed/marker fields. Its $|U|+O(\log(N+2))\le N/2+O(\log(N+2))$ held data reconstruct $h$ and permit local computation of any requested finite cutoff, or a streamed factored representation of its polynomial. That computation uses the already held same-history data, not a new source/archive query; materializing a coefficient table or a raw output pays its own space and work. Theorem 10.1 forbids a uniformly finite exact chronology record over all positive completions. Infinite noncompletion paths have no finite third-latch target in this claim. $\square$
+
+**Proposition 16.3 (late installation cannot recover erased prefix data).** Fix $k\ge1$. If the complete retained observer state after a prelude factors only through $G_k$ and the common original finite control, raising its cutoff later does not recover every omitted earlier higher coefficient or the raw past. This applies even when all subsequent original input and $V$ are supplied. It does not apply to a state that has also held a sufficient $U/J$ record or other lossless earlier information.
+
+Proof. Use the two rejected-pair prefixes $\delta(u_k)$ and $\delta(v_k)$ from Theorem 14.1, before either has accepted a seed. They share $G_k$, counts and the actual seed-waiting control; no marker has been completed. Yet their degree-$(k+1)$ coefficients differ. The stipulated observer states coincide there. Give both the same positive legal suffix $\tau$ and then any common positive complete fourth-segment future. Deterministic updates from identical states on identical later inputs stay identical, but the required earlier coefficient and selected raw history remain different by Theorem 13.1. Independent later randomization likewise cannot produce zero-error recovery of both. Thus an upgrade needs higher prefix contributions already represented, for example by a sufficient held record, or a from-zero scheme maintaining all needed levels. No replay source is present to supply them retrospectively. $\square$
+
+**Definition 16.4 (precision, prediction and cost boundaries).** The default contract is exact discrete coefficients with nonoverflowing integer widths. On a specified finite domain, correctly ranged coordinate estimates with absolute error strictly below $1/2$ can be rounded to these integer counts; the same supplied coordinate set, exact metadata and delivery are still required. The growing dynamic range and number of counters cost bits. Perfect precision does not repair a fixed-cutoff collision. No uniform normalized-moment tolerance, bounded-width real-register implementation or stability of arbitrary represented/exponential conversions follows.
+
+Semantic recovery of a continuation law, actual online acquisition of its count/control boundary, numerical stability of law inversion, exact past recovery, and prediction of a future realization are different targets. Future Response Sufficiency §§21–26 retains its own prior/support and effective-representation conditions for the first three; the present inverse neither requires counts to be recovered from every prior's law nor identifies the actual hidden $K$. All original Reads, including retries, returns and the entire fourth segment, remain paid. Original Stop, initialization, program/model installation, routing/control, coefficient writes, buffer growth, holding, arithmetic, temporary workspace, decoding, output and any added receiver delivery are separate costs. A factored polynomial, variable integer or locally reconstructed output is not a constant-size register. None of these held-data bounds proves an optimum in time, energy, peak workspace, online updating or total resources.
+
+## 17. Supplier scope and the remaining recovery boundary
+
+**Definition 17.1 (reuse and actual-source contribution).** The ordinary `repo-derived` contribution is the order-faithful embedding into the actual paid third-latch language, its every-cutoff strict escape and common-prior full-future transfer, the complete refined-fiber retained-loss bounds and the actual-image finite-length/acquisition bridge. Generic scattered coefficients, Thue–Morse collisions, polynomial profile counting, finite coding and word reconstruction remain reused intermediate tools. These source reads and ordinary proofs are not new Lean applications, builds, kernel/axiom certification, ingestion or coverage, and make no external originality claim.
+
+The actual source and acquired-record suppliers are §§6–11, Boundary Dynamics §§97,100,102,105,114, Future Response Sufficiency §§9,15,21–26, Full E1 Scope Extension §2 and Source Coherence Continuation. They fix the common depth, original stopping grammar, parser-produced identities, from-zero counts, actual posterior, write-before-latch and specified holding/delivery. The normal form, rather than a shared letter name or a generic word theorem alone, is what admits the witness histories.
+
+The generic formal suppliers are MagnusWordCoefficients's coefficient identity, PositivePairFiltration's indexed recursion/cutoff cancellation, LiteralPowerSubstitution's first-degree scaling, ExactDeckCore's common-length $k\le N$ bridge, and FullLyndonRecovery's existing reconstruction of all shorter coefficients from Lyndon coordinates. PositivePairExactDeckAsymptotics already supplies fixed-order generic deck-image growth; its constants and global image exponents are not assumed uniform in a growing cutoff or attained on a specified source fiber. The explicit range product (SC.31) avoids that extra assumption. Joint Moment Fibers §§3,5 already supplies prefix-count and positive-pair mechanisms. The degree-two convention comes from SignatureOrderedMoment/TruncatedTensorSignature, while PrimeGoldenChronologyFiberSeparation needs a nonzero represented commutator and does not supply a universal inverse. The primary word suppliers used with precise statements are Lejeune–Leroy–Rigo Lemma 30, Lejeune–Rigo–Rosenfeld Proposition 12, and Fleischmann–Lejeune–Manea–Nowotka–Rigo's bounded-block inverse and explicit report of the Krasikov–Roditty bound cited above. The original Krasikov–Roditty publication is attributed via its DOI; its square-root statement is used as reported in the cited reconstruction paper.
+
+**Definition 17.2 (pyramid, golden-language and original alphabet boundaries).** [Atom-Pyramid Boundary Calculus](AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md) §§12.1–12.3 permits task-relative response-kernel replacement only under an actual strict-seam source bijection, correct factor-once accounting and the declared external menu. Equal kernels need not recover internal sources. Here the analogous useful distinction is already explicit: equal original future rows do not restore a discarded actual past. No new seam theorem, tree source or Fibonacci capacity formula is transferred to this stochastic history domain.
+
+That supplier's native $\alpha,\beta$ are ordered-tree leaves, with $\rho(\alpha)=\beta$, $\rho(\beta)=\langle\beta,\alpha\rangle$; its five window modes and no11 paths are not the original fresh raw Read replies. [ActualTreeReadoutAcquisition](../../../D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition.lean), `readout`, allows finite-address queries with alpha/beta/branch/absent answers and charges its own distinct-address menu. It supplies no such action here. Its tree bracketing and substitution depth, the pyramid's window-read order, acquired length and physical duration have the separate domains of §12.5. The witness morphism $\theta$ and expansion $\delta$ describe attainable words; they are not operations offered to the running source.
+
+GoldenFactorParikhMagnusBridge's degree-two recovery concerns consecutive factors of the declared golden word, with the original language restriction. The unrestricted paid retry grammar contains every binary retry word and arbitrarily long equal-letter runs, so that restricted rigidity does not invalidate Theorem 14.1 or apply as a source inverse here. AURIC History Records Time Arrow §§185,190 already studies finite area/address-moment blindness; those moments are not the entire fixed-letter scattered-count readout. Its generic recursion and loss principles are reused background, not a duplicate assertion of the present same-paid-history transfer.
+
+**Definition 17.3 (mutual recovery and open extensions).** On the declared actual images, complete chronology, the acquired augmented record and its parser-labelled incidence/precedence expression recover one another; the complete graded fixed-letter readout is another expression of that same information. Finite truncations are projections with actual residual fibers. Increasing aggregate order is necessary within this particular readout architecture across unbounded histories; it is not necessary to raise the arity of occurrence-aware relations, and it does not make a dense hierarchy mandatory memory. The count/law boundary can remain predictively sufficient while chronologically incomplete. Supplied locality and order mean the discrete scopes and precedence of §11.1, without a physical metric or clock.
+
+Sharp source/generic thresholds, the best online acquisition of static supplementary labels, stability for other signature conventions, optimal total resources, wider mutual-recovery conditions and physical space/time reconstruction remain open here. No finite appendix completes the persistent minimal-relational-structure goal.
+
+## 追加锚（本行以下为增补区）
