@@ -40,7 +40,7 @@ internal sealed class FiniteScalarTraceKernelDocument : IScribeDocumentDefinitio
     private static Formula ZOne(Formula p) => Call("z", Num(2), p, Num(1));
     private static Formula Reading(Formula m, Formula p, Formula j) => Call("c", m, p, j);
     private static Formula Sources(Formula body) => All("p", K, All("s", K, body));
-    private static Formula Prefix(bool shifted) => All("j", N,
+    private static Formula PrefixData(bool shifted) => All("j", N,
         Imp(shifted ? And(Le(Num(1), J), LtOf(J, R)) : LtOf(J, R),
             EqOf(U(P, J), U(Q, J))));
 
@@ -50,7 +50,7 @@ internal sealed class FiniteScalarTraceKernelDocument : IScribeDocumentDefinitio
         var kernel = All("m", N, All("r", N, Imp(Le(Num(1), R), Sources(
             IffOf(TraceEq(modulus, R), And(
                 EqOf(SubOf(Z(modulus, Q), Z(modulus, P)),
-                    Pair(MulOf(Num(-3), D(Num(0))), MulOf(Num(2), D(Num(0))))),
+                    Pair(MulOf(new Formula.Negate(Num(3)), D(Num(0))), MulOf(Num(2), D(Num(0))))),
                 All("j", N, Imp(Le(AddOf(J, Num(2)), R),
                     EqOf(AddOf(MulOf(Num(2), D(J)), D(AddOf(J, Num(1)))), Num(0))))))))));
         var zero = All("m", N, Sources(IffOf(TraceEq(modulus, Num(0)),
@@ -63,9 +63,9 @@ internal sealed class FiniteScalarTraceKernelDocument : IScribeDocumentDefinitio
                 MulOf(Num(2), AddOf(Reading(modulus, P, Num(1)), U(P, Num(0)))))))));
         var large = All("m", N, All("r", N,
             Imp(And(Le(Num(3), modulus), Le(Num(2), R)), Sources(
-                IffOf(TraceEq(modulus, R), And(Prefix(false), EqOf(Z(modulus, P), Z(modulus, Q))))))));
+                IffOf(TraceEq(modulus, R), And(PrefixData(false), EqOf(Z(modulus, P), Z(modulus, Q))))))));
         var parity = All("r", N, Imp(Le(Num(1), R), Sources(
-            IffOf(TraceEq(Num(2), R), And(Prefix(true), EqOf(ZOne(P), ZOne(Q)))))));
+            IffOf(TraceEq(Num(2), R), And(PrefixData(true), EqOf(ZOne(P), ZOne(Q)))))));
         var shifted = All("p", K, EqOf(ZOne(P), Pair(
             SubOf(Reading(Num(2), P, Num(0)), Reading(Num(2), P, Num(1))),
             Reading(Num(2), P, Num(1)))));
@@ -133,5 +133,5 @@ internal sealed class FiniteScalarTraceKernelDocument : IScribeDocumentDefinitio
                         + "z(1)=(c(0)-c(1),c(1)). Changing the first digit requires the displayed "
                         + "initial-vector compensation; equal fixed initial residues force "
                         + "the first digits to agree. No clause recovers digit r."))),
-                DescribeRole.Theorem)))));
+                DescribeRole.Theorem))));
 }

@@ -15,7 +15,7 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.FibonacciAtomic.FiniteScalarTraceKernel
 
-open D5.S3.Arith.FibonacciAtomic.GraftAffineClosure (step quantity)
+open D5.S3.Arith.FibonacciAtomic.GraftAffineClosure (quantity)
 open D5.S1.Dynamics (ProfiniteIntegers)
 open D5.S1.Dynamics.ProfiniteCharacter (residueProjection)
 open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
@@ -246,16 +246,16 @@ theorem result :
       have hj : j.val = 0 := by omega
       simpa [scalarTrace, hj, trajectory] using h
   · intro r p p'
-    letI : Subsingleton (ZMod (0 + 1)) := (ZMod.subsingleton_iff.mpr rfl)
+    haveI : Subsingleton (ZMod (0 + 1)) := ZMod.subsingleton_iff.mpr rfl
     funext j
     exact Subsingleton.elim _ _
   · intro m p
-    apply Prod.ext <;> simp only [scalarTrace, trajectory, quantity, Fin.val_zero,
-      Fin.val_one] <;> ring
+    apply Prod.ext <;> simp only [scalarTrace, trajectory, quantity] <;> ring
   · intro p
-    apply Prod.ext <;> simp only [scalarTrace, trajectory, quantity, Fin.val_zero,
-      Fin.val_one] <;> simp only [CharTwo.two_eq_zero, CharTwo.neg_eq,
-        show (3 : ZMod 2) = 1 by decide, zero_mul, one_mul, sub_zero, zero_add] <;> ring
+    apply Prod.ext <;> simp only [scalarTrace, trajectory, quantity] <;>
+      simp only [CharTwo.two_eq_zero, show (3 : ZMod 2) = 1 by decide,
+        zero_mul, one_mul, zero_add]
+    all_goals ring
   · intro r hr p p' h
     have hz := ((source_kernel 1 r hr p p').mp h).1
     simpa only [CharTwo.two_eq_zero, CharTwo.neg_eq,
@@ -273,5 +273,3 @@ theorem result :
     rw [hbits, hz]
 
 end D5.S3.Arith.FibonacciAtomic.FiniteScalarTraceKernel
-
-#print axioms D5.S3.Arith.FibonacciAtomic.FiniteScalarTraceKernel.result
