@@ -16,12 +16,12 @@ internal sealed class ProductUnitaryPPTSquaredDocument : IScribeDocumentDefiniti
         H("PPT channels with product-unitary symmetry become entanglement breaking after one composition"),
         Blocks(
             Node("choi", "The Choi matrix", "choi", Disp(
-                For(Psi, Call("MatrixMap", Iota, Iota, Cx()), Equal(
+                ForIota(For(Psi, Call("MatrixMap", Iota, Iota, Cx()), Equal(
                     Call("choi", Psi),
                     Seq(F.Sum, Underscore, Grp(V("p"), Comma, V("q")), Sp,
                         Call("kron", Call("single", V("p"), V("q"), D(1)),
-                            Seq(Psi, Parenthesized(Call("single", V("p"), V("q"), D(1))))))))),
-                "For a linear map ψ on square complex matrices indexed by a finite type ι, choi(ψ) = Σ_{p,q} E_pq ⊗ ψ(E_pq), a matrix indexed by pairs (input index, output index); kron is the Kronecker product of matrices and single(p, q, 1) is the matrix unit E_pq.",
+                            Seq(Psi, Parenthesized(Call("single", V("p"), V("q"), D(1)))))))))),
+                "For a finite type ι with decidable equality and a linear map ψ on square complex matrices indexed by ι, choi(ψ) = Σ_{p,q} E_pq ⊗ ψ(E_pq), a matrix indexed by pairs (input index, output index); kron is the Kronecker product of matrices and single(p, q, 1) is the matrix unit E_pq.",
                 DescribeRole.Definition, Repo()),
             Node("flat", "Flattening the two tensor factors", "flat", Disp(
                 For(Seq(N(1), Comma, Sp, N(2)), Nat(), Equal(
@@ -29,6 +29,18 @@ internal sealed class ProductUnitaryPPTSquaredDocument : IScribeDocumentDefiniti
                     Call("prodCongr", V("finProdFinEquiv"), V("finProdFinEquiv"))))),
                 "The equivalence that flattens the input pair (p₁, p₂) and the output pair (r₁, r₂) separately by Mathlib's finProdFinEquiv from Fin n₁ × Fin n₂ to Fin (n₁n₂). It turns a matrix indexed by ((p₁, p₂), (r₁, r₂)) into a matrix on Fin (n₁n₂) × Fin (n₁n₂) with the input factor first, the index type of separableCone.",
                 DescribeRole.Definition, Repo()),
+            Node("phi-comp", "Composition multiplies the weights", "phi_comp", Disp(
+                For(Seq(N(1), Comma, Sp, N(2)), Nat(),
+                    Imp(Seq(D(1), Sp, Leq, Sp, N(1)), Imp(Seq(D(1), Sp, Leq, Sp, N(2)),
+                        For(Seq(V("a"), Comma, Sp, V("b"), Comma, Sp, V("c"), Comma, Sp,
+                                Pr("a"), Comma, Sp, Pr("b"), Comma, Sp, Pr("c")), Cx(),
+                            Equal(
+                                Seq(Call("phi", N(1), N(2), V("a"), V("b"), V("c")), Sp, Circ, Sp,
+                                    Call("phi", N(1), N(2), Pr("a"), Pr("b"), Pr("c"))),
+                                Call("phi", N(1), N(2), Seq(V("a"), Sp, Pr("a")), Seq(V("b"), Sp, Pr("b")),
+                                    Seq(V("c"), Sp, Pr("c"))))))))),
+                "D and Q are complementary idempotents on each factor (D ∘ D = D, D ∘ Q = Q ∘ D = 0, Q ∘ Q = Q), and the tensor product of maps is multiplicative on Kronecker products, so composing two maps of the family multiplies their weights. In particular Φ ∘ Φ has the weights λ₀₁², λ₁₀² and λ₁₁².",
+                DescribeRole.Theorem, Repo()),
             Node("claim", "PPT² for unital product-unitary-equivariant maps", "claim", Disp(IffOf(V("claim"), Parenthesized(
                 For(Seq(N(1), Comma, Sp, N(2)), Nat(),
                     Imp(Seq(D(2), Sp, Leq, Sp, N(1), Comma, Sp, D(2), Sp, Leq, Sp, N(2)),
@@ -57,10 +69,15 @@ internal sealed class ProductUnitaryPPTSquaredDocument : IScribeDocumentDefiniti
     private static Formula Lam(byte a, byte b) => Seq(LambdaLower, Underscore, Grp(D(a, b)));
     private static Formula PhiOf() =>
         Call("phi", N(1), N(2), Cast(Lam(0, 1)), Cast(Lam(1, 0)), Cast(Lam(1, 1)));
+    private static Formula ForIota(Formula body) =>
+        Seq(Forall, Sp, Parenthesized(Seq(Iota, Colon, Sp, V("Type"))), Sp,
+            OpenBracket, Call("Fintype", Iota), CloseBracket, Sp,
+            OpenBracket, Call("DecidableEq", Iota), CloseBracket, Comma, Sp, body);
     private static Formula Nat() => Seq(Mathbb, Grp(V("N")));
     private static Formula Cx() => Seq(Mathbb, Grp(V("C")));
     private static Formula Cast(Formula value) => Call("cast", value);
     private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
+    private static Formula Pr(string name) => Seq(V(name), Apos);
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
     private static Formula For(Formula name, Formula type, Formula body) =>

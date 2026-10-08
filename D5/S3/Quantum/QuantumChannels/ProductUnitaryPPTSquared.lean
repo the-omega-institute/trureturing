@@ -14,7 +14,9 @@
    nonnegativity of the four separable coefficients of Φ ∘ Φ from the eight PPT inequalities).
    Definitions have proof_shape: not-applicable; escape_witness: null:
    chi; ex; pv; term; sOne; sZero; zeta; rootv; regroup; choi; grp; qf; kv; i0; i1; flat; claim.
-   Every other theorem is private and consumed on the proof path of result:
+   phi_comp (public; the map identity of the preregistered statement) has proof_shape:
+   bind-only and is consumed by result. Every other theorem is private and consumed on the
+   proof path of result:
    prod_I_single -> term_eq; sum_I_pow, term_eq, divides_iff -> char_sum;
    char_sum -> term_sum_apply; term_sum_apply, diag_sum_apply -> sOne_eq;
    zeta_prim -> conj_zeta_mul, sum_conj_rootv; conj_zeta_mul -> conj_rootv_mul_self, sum_conj_rootv;
@@ -27,7 +29,7 @@
    map_apply_expand -> kron_kronecker; compl_apply, depol_depol -> depol_compl, compl_depol,
      compl_compl; kron_kronecker -> phi_kronecker;
    phi_kronecker, depol_depol, depol_compl, compl_depol, compl_compl -> phi_phi_kronecker;
-   phi_phi_kronecker -> choi_comp;
+   phi_phi_kronecker -> phi_comp;
    qf_add, qf_smul, qf_kron -> qf_four; star_omega -> qf_dmat_omega, qf_kmat_omega;
    qf_sub, qf_kmat_omega, qf_dmat_omega -> qf_qmat_omega;
    qf_single -> qf_dmat_e, qf_qmat_e, qf_ptd_s, qf_ptq_s; qf_diff -> qf_ptd_a, qf_ptq_a;
@@ -35,7 +37,7 @@
    qf_four, nonneg_of_qf, qf_dmat_omega, qf_qmat_omega, qf_dmat_e, qf_qmat_e -> cp_ineqs;
    pt_choi_reindex, qf_four, nonneg_of_qf, qf_ptd_s, qf_ptq_s, qf_ptd_a, qf_ptq_a -> pt_ineqs;
    dmat_eq_s, qmat_eq_s -> decomp;
-   cp_ineqs, pt_ineqs, coeffs_nonneg, choi_comp, flat_eq, decomp, reindex_add', reindex_smul',
+   cp_ineqs, pt_ineqs, coeffs_nonneg, phi_comp, flat_eq, decomp, reindex_add', reindex_smul',
      sep_regroup, sep_sZero, sep_sOne -> result.
    Direct frozen dependencies (GID; statement_id): D5/S3/Resource/CompositeCones.separableCone,
    D5/S3/Resource/EntanglementWitness.separableCone_zero, .separableCone_add, .separableCone_smul,
@@ -455,16 +457,20 @@ def choi {ι : Type*} [Fintype ι] [DecidableEq ι] (Ψ : MatrixMap ι ι ℂ) :
     Matrix (ι × ι) (ι × ι) ℂ :=
   ∑ p : ι, ∑ q : ι, Matrix.single p q (1 : ℂ) ⊗ₖ Ψ (Matrix.single p q 1)
 
-private theorem choi_comp {n₁ n₂ : ℕ} (hn₁ : 1 ≤ n₁) (hn₂ : 1 ≤ n₂) (a b c a' b' c' : ℂ) :
-    choi (phi n₁ n₂ a b c ∘ₗ phi n₁ n₂ a' b' c') = choi (phi n₁ n₂ (a * a') (b * b') (c * c')) := by
-  unfold choi
+/-- Composition multiplies the three weights: in particular `Φ ∘ Φ` has the squared weights. -/
+theorem phi_comp {n₁ n₂ : ℕ} (hn₁ : 1 ≤ n₁) (hn₂ : 1 ≤ n₂) (a b c a' b' c' : ℂ) :
+    phi n₁ n₂ a b c ∘ₗ phi n₁ n₂ a' b' c' = phi n₁ n₂ (a * a') (b * b') (c * c') := by
+  apply LinearMap.ext
+  intro X
+  rw [Matrix.matrix_eq_sum_single X]
+  simp only [map_sum]
   refine Finset.sum_congr rfl fun p _ => Finset.sum_congr rfl fun q _ => ?_
   obtain ⟨p₁, p₂⟩ := p
   obtain ⟨q₁, q₂⟩ := q
-  have hs : Matrix.single (p₁, p₂) (q₁, q₂) (1 : ℂ) =
-      Matrix.single p₁ q₁ (1 : ℂ) ⊗ₖ Matrix.single p₂ q₂ (1 : ℂ) := by
-    rw [Matrix.single_kronecker_single, mul_one]
-  rw [LinearMap.comp_apply, hs, phi_phi_kronecker hn₁ hn₂]
+  have hs : Matrix.single (p₁, p₂) (q₁, q₂) (X (p₁, p₂) (q₁, q₂)) =
+      X (p₁, p₂) (q₁, q₂) • (Matrix.single p₁ q₁ (1 : ℂ) ⊗ₖ Matrix.single p₂ q₂ (1 : ℂ)) := by
+    rw [Matrix.single_kronecker_single, mul_one, Matrix.smul_single, smul_eq_mul, mul_one]
+  rw [hs, map_smul, map_smul, LinearMap.comp_apply, phi_phi_kronecker hn₁ hn₂]
 
 /-- The grouping `((p₁, p₂), (r₁, r₂)) ↦ ((p₁, r₁), (p₂, r₂))`. -/
 private abbrev grp (n₁ n₂ : ℕ) :=
@@ -886,7 +892,7 @@ theorem result : claim := by
   have r₂ : (2 : ℝ) ≤ n₂ := by exact_mod_cast hn₂
   obtain ⟨t₀₀, t₀₁, t₁₀, t₁₁⟩ := coeffs_nonneg r₁ r₂ hPP hPQ hQP hQQ hSS hSA hAS hAA
   have hc : 0 ≤ ((n₁ * (n₁ + 1) * (n₂ * (n₂ + 1)) : ℝ))⁻¹ := by positivity
-  rw [choi_comp (by omega) (by omega), flat_eq, choi, choi_reindex, decomp (by omega) (by omega)]
+  rw [phi_comp (by omega) (by omega), flat_eq, choi, choi_reindex, decomp (by omega) (by omega)]
   simp only [reindex_add', reindex_smul', Complex.coe_smul]
   refine separableCone_add (separableCone_add (separableCone_add ?_ ?_) ?_) ?_
   · exact separableCone_smul (mul_nonneg hc t₀₀) (sep_regroup (sep_sZero (by omega)) (sep_sZero (by omega)))
