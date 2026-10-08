@@ -18,7 +18,7 @@ open ActualTreeReadoutAcquisition (Address Reply readout Positive)
 open ActualImageSevenLeafSeparation (leafAddresses)
 open ActualLeafHistoryRigidity (alphaLeaves subtree)
 open ActualImageAddressCertificate (ActualImage Within height replace)
-open QuantityAddressCertificate (QuantitySound beta_spec child_absent alpha_beta_disjoint)
+open QuantityAddressCertificate (ScalarSound beta_spec child_absent alpha_beta_disjoint)
 local notation "B(" t ")" => Finset.filter (fun u => readout u t = Reply.beta) (leafAddresses t)
 set_option quotPrecheck false
 local notation "leaf_sub" =>
@@ -168,7 +168,7 @@ private theorem batch_surgery (V : Source) (X Y : Finset Address)
 private theorem uniform_block (f g p q : ℕ) (hp : 0 < p)
     (hf : f = p + q) (hg : g = 2 * p + q)
     (k : ℕ) (hk : 1 ≤ k) (V : Source) (h : ℕ) (Q : Finset Address)
-    (hs : QuantitySound f g (3 * k) V h Q) (hr : f ≤ (B(V) \ Q).card) :
+    (hs : ScalarSound f g (3 * k) V h Q) (hr : f ≤ (B(V) \ Q).card) :
     ((B(V) \ Q).filter
       (fun y => ¬ (y ++ [false] ∈ Q ∨ y ++ [true] ∈ Q))).card < p := by
   classical
@@ -211,7 +211,7 @@ private theorem uniform_block (f g p q : ℕ) (hp : 0 < p)
 private theorem alpha_bound (f g p q : ℕ) (hp : 0 < p) (hq : 0 < q)
     (hf : f = p + q) (hg : g = 2 * p + q)
     (k : ℕ) (hk : 1 ≤ k) (V : Source) (h : ℕ) (Q : Finset Address)
-    (hs : QuantitySound f g (3 * k) V h Q) (hA : alphaLeaves V ⊆ Q) :
+    (hs : ScalarSound f g (3 * k) V h Q) (hA : alphaLeaves V ⊆ Q) :
     (alphaLeaves V).card + (B(V).card + 1 - f) ≤ Q.card ∧
     (Q.card = (alphaLeaves V).card + (B(V).card + 1 - f) →
       Q = alphaLeaves V ∪ (B(V) ∩ Q) ∧ (B(V) ∩ Q).card = B(V).card + 1 - f) := by
@@ -257,7 +257,7 @@ private theorem mixed_sound (f g : ℕ) (hf : 0 < f) (hfg : f < g)
     (hcop : Nat.Coprime f g) (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (hV : V ∈ ActualImage (3 * k)) (h : ℕ) (hh : height V ≤ h)
     (C : Finset Address) (hC : C ⊆ B(V)) (hcard : C.card = B(V).card + 1 - f) :
-    QuantitySound f g (3 * k) V h (alphaLeaves V ∪ C) := by
+    ScalarSound f g (3 * k) V h (alphaLeaves V ∪ C) := by
   classical
   refine ⟨?_, ?_⟩
   · intro u hu
@@ -306,15 +306,35 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (L : ℕ) (V : Source)
     let t := B(V).card + 1 - f
     let M := min B(V).card ((alphaLeaves V).card + t)
     1 ≤ (alphaLeaves V).card ∧ (alphaLeaves V).card < B(V).card ∧
-    (h < height V → ¬ ∃ Q : Finset Address, QuantitySound f g (3 * k) V h Q) ∧
+    (h < height V → ¬ ∃ Q : Finset Address, ScalarSound f g (3 * k) V h Q) ∧
     (height V ≤ h →
-      (∀ Q : Finset Address, QuantitySound f g (3 * k) V h Q → M ≤ Q.card) ∧
+      (∀ Q : Finset Address, ScalarSound f g (3 * k) V h Q → M ≤ Q.card) ∧
       (∀ Q : Finset Address,
-        (QuantitySound f g (3 * k) V h Q ∧ Q.card = M) ↔
+        (ScalarSound f g (3 * k) V h Q ∧ Q.card = M) ↔
           (Q = B(V) ∧ B(V).card = M) ∨
           ∃ C : Finset Address, C ⊆ B(V) ∧ C.card = t ∧
             Q = alphaLeaves V ∪ C ∧ (alphaLeaves V).card + t = M) ∧
-      ∃ Q : Finset Address, QuantitySound f g (3 * k) V h Q ∧ Q.card = M) := by
+      ∃ Q : Finset Address, ScalarSound f g (3 * k) V h Q ∧ Q.card = M) ∧
+    ((f ≤ (alphaLeaves V).card → M = B(V).card) ∧
+      (f = (alphaLeaves V).card + 1 → M = B(V).card) ∧
+      ((alphaLeaves V).card + 1 < f → f ≤ B(V).card →
+        M = (alphaLeaves V).card + B(V).card + 1 - f) ∧
+      (B(V).card < f → M = (alphaLeaves V).card)) ∧
+    (∀ L' : ℕ, L ≤ L' →
+      min B(V).card ((alphaLeaves V).card + (B(V).card + 1 - Nat.fib (3 * L' + 3))) ≤ M) ∧
+    (∃ L₀ : ℕ, ∀ L' : ℕ, L₀ ≤ L' →
+      min B(V).card ((alphaLeaves V).card + (B(V).card + 1 - Nat.fib (3 * L' + 3))) =
+        (alphaLeaves V).card) ∧
+    (¬ (∀ U W : Source,
+        2 * (composition U).1 + 3 * (composition U).2 =
+          2 * (composition W).1 + 3 * (composition W).2 →
+        8 * (composition U).1 + 13 * (composition U).2 =
+          8 * (composition W).1 + 13 * (composition W).2)) ∧
+    (¬ (∀ U W : Source,
+        8 * (composition U).1 + 13 * (composition U).2 =
+          8 * (composition W).1 + 13 * (composition W).2 →
+        2 * (composition U).1 + 3 * (composition U).2 =
+          2 * (composition W).1 + 3 * (composition W).2)) := by
   classical
   dsimp only
   let f := Nat.fib (3 * L + 3)
@@ -338,27 +358,26 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (L : ℕ) (V : Source)
     omega
   have hf0 : 0 < f := by omega
   have hfg : f < g := by omega
-  have hgf : g < 2 * f := by omega
   have hcop : Nat.Coprime f g := Nat.fib_coprime_fib_succ (3 * L + 3)
   have ha := (QuantityAddressCertificate.result k hk V hV h).1
   have hab : (alphaLeaves V).card < B(V).card := by
     rw [ActualImageAddressCertificate.alpha_card, (ActualImageAddressCertificate.leaf_data V).2]
     exact ActualImageAddressCertificate.beta_surplus k hk V hV
-  refine ⟨ha, hab, ?_, ?_⟩
+  refine ⟨ha, hab, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · intro hh ⟨Q, hs⟩
     apply (ActualImageAddressCertificate.result k hk V hV h).1 hh
     refine ⟨Q, hs.1, ?_⟩
     intro U hc ho
     exact hs.2 U (congrArg (fun c : ℕ × ℕ => f * c.1 + g * c.2) hc) ho
   · intro hh
-    have hB := QuantityAddressCertificate.beta_sound f g hf0 hfg hgf k hk V hV h hh
-    have lower (Q : Finset Address) (hs : QuantitySound f g (3 * k) V h Q) : M ≤ Q.card := by
+    have hB := QuantityAddressCertificate.beta_sound f g hf0 hfg k hk V hV h hh
+    have lower (Q : Finset Address) (hs : ScalarSound f g (3 * k) V h Q) : M ≤ Q.card := by
       rcases QuantityAddressCertificate.dichotomy f g k hk V hV h Q hs with hA | hB
       · exact (Nat.min_le_right _ _).trans
           (alpha_bound f g p q hp hq hf hg k hk V h Q hs hA).1
       · exact (Nat.min_le_left _ _).trans (Finset.card_le_card hB)
     have choices (Q : Finset Address) :
-        (QuantitySound f g (3 * k) V h Q ∧ Q.card = M) ↔
+        (ScalarSound f g (3 * k) V h Q ∧ Q.card = M) ↔
           (Q = B(V) ∧ B(V).card = M) ∨
           ∃ C : Finset Address, C ⊆ B(V) ∧ C.card = t ∧
             Q = alphaLeaves V ∪ C ∧ (alphaLeaves V).card + t = M := by
@@ -392,22 +411,31 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (L : ℕ) (V : Source)
       have hchoice : (alphaLeaves V).card + t = M := (Nat.min_eq_right (by omega)).symm
       exact ⟨alphaLeaves V ∪ C, (choices _).mpr (Or.inr ⟨C, hC, hCcard, rfl, hchoice⟩)⟩
 
-run_cmd do
-  let env ← Lean.getEnv
-  for n in [``result, ``child_ne_leaf, ``relabel_many, ``expand_many, ``batch_surgery,
-      ``uniform_block, ``alpha_bound, ``mixed_sound,
-      ``QuantityAddressCertificate.mass_pair, ``QuantityAddressCertificate.mass_min,
-      ``QuantityAddressCertificate.beta_structure, ``QuantityAddressCertificate.beta_spec,
-      ``QuantityAddressCertificate.beta_recovery, ``QuantityAddressCertificate.beta_sound,
-      ``QuantityAddressCertificate.leaf_expand, ``QuantityAddressCertificate.dichotomy,
-      ``QuantityAddressCertificate.alpha_beta_disjoint, ``QuantityAddressCertificate.child_absent,
-      ``QuantityAddressCertificate.blocked_children_bound, ``QuantityAddressCertificate.result,
-      ``ActualImageAddressCertificate.alpha_recovery, ``ActualImageAddressCertificate.result] do
-    if let some (.thmInfo ti) := env.find? n then
-      let cs := ti.value.getUsedConstants.filter fun c =>
-        c.toString.startsWith "D5.S3.Arith.FibonacciAtomic" || c.toString.startsWith "_private.D5"
-      Lean.logInfo m!"CONSUMPTION {n}: {cs}"
+  · constructor
+    · intro hh; omega
+    · refine ⟨?_, ?_, ?_⟩
+      · intro hh; omega
+      · intro hh hb; omega
+      · intro hh; omega
+  · intro L' hLL'
+    have hmono := Nat.fib_mono (show 3 * L + 3 ≤ 3 * L' + 3 by omega)
+    omega
+  · refine ⟨B(V).card + 1, ?_⟩
+    intro L' hL'
+    have hbound := Nat.le_fib_self (n := 3 * L' + 3) (by omega)
+    omega
+  · intro hn
+    obtain ⟨U⟩ := (GenealogicalFiberTransport.result.1 3 0 (by omega)).2.2.1
+    obtain ⟨W⟩ := (GenealogicalFiberTransport.result.1 0 2 (by omega)).2.2.1
+    have he := hn U.val W.val (by rw [U.property, W.property]; decide)
+    rw [U.property, W.property] at he
+    norm_num at he
+  · intro hn
+    obtain ⟨U⟩ := (GenealogicalFiberTransport.result.1 13 0 (by omega)).2.2.1
+    obtain ⟨W⟩ := (GenealogicalFiberTransport.result.1 0 8 (by omega)).2.2.1
+    have he := hn U.val W.val (by rw [U.property, W.property]; decide)
+    rw [U.property, W.property] at he
+    norm_num at he
 
-#print axioms result
 
 end D5.S3.Arith.FibonacciAtomic.StageScalarAddressCertificate

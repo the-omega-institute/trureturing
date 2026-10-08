@@ -22,10 +22,14 @@ local notation "m(" t ")" => GraftAffineClosure.quantity (composition t)
 local notation "B(" t ")" => Finset.filter (fun u => readout u t = Reply.beta) (leafAddresses t)
 
 /-- Exact scalar quantity is the only promise on the complete competitor tree. -/
-def QuantitySound (f g d : ℕ) (V : Source) (h : ℕ) (Q : Finset Address) : Prop :=
+def ScalarSound (f g d : ℕ) (V : Source) (h : ℕ) (Q : Finset Address) : Prop :=
   Within h Q ∧ ∀ U : Source, f * (composition U).1 + g * (composition U).2 =
       f * (composition V).1 + g * (composition V).2 →
     (∀ u ∈ Q, readout u U = readout u V) → U ∈ ActualImage d
+
+/-- Quantity soundness is the original weight pair applied to scalar soundness. -/
+def QuantitySound (d : ℕ) (V : Source) (h : ℕ) (Q : Finset Address) : Prop :=
+  ScalarSound 2 3 d V h Q
 
 /-- Every branch has a beta descendant, recursively through the tree. -/
 def BetaCovered : Source → Prop
@@ -39,23 +43,25 @@ theorem mass_pair (f g : ℕ) (s t : Source) :
   simp only [composition, Prod.fst_add, Prod.snd_add]
   ring
 
-theorem mass_min (f g : ℕ) (hf : 0 < f) (hfg : f < g) (hgf : g < 2 * f)
+theorem mass_min (f g : ℕ) (hf : 0 < f) (hfg : f < g)
     (t : Source) :
     f ≤ f * (composition t).1 + g * (composition t).2 ∧
     (f * (composition t).1 + g * (composition t).2 = f ↔ t = .of true) ∧
-    (f * (composition t).1 + g * (composition t).2 = g ↔ t = .of false) := by
+    (g < 2 * f → (f * (composition t).1 + g * (composition t).2 = g ↔ t = .of false)) := by
   induction t with
   | of b => cases b <;>
     simp [composition, show (FreeMagma.of false : Source) ≠ .of true by decide,
       show (FreeMagma.of true : Source) ≠ .of false by decide] <;> omega
   | mul s t hs ht =>
     rw [mass_pair]
-    refine ⟨by omega, ?_, ?_⟩ <;> constructor
-    all_goals intro h
-    · omega
-    · cases h
-    · omega
-    · cases h
+    refine ⟨by omega, ?_, ?_⟩
+    · constructor
+      · intro h; omega
+      · intro h; cases h
+    · intro hgf
+      constructor
+      · intro h; omega
+      · intro h; cases h
 
 theorem beta_structure (t : Source) :
     BetaCovered (substitution (substitution t)) ∧
@@ -79,7 +85,7 @@ theorem beta_spec (t : Source) (u : Address) :
     exact ((ActualImageSevenLeafSeparation.seven_leaf_separation.1 t).2 u).mpr
       ⟨false, by simp [ActualImageSevenLeafSeparation.leafLabel, h]⟩
 
-theorem beta_recovery (f g : ℕ) (hf : 0 < f) (hfg : f < g) (hgf : g < 2 * f)
+theorem beta_recovery (f g : ℕ) (hf : 0 < f) (hfg : f < g)
     (V U : Source) (hc : BetaCovered V)
     (hm : ∀ u : Address, readout u V = .beta → readout u U = .beta) :
     f * (composition V).1 + g * (composition V).2 ≤
@@ -90,8 +96,8 @@ theorem beta_recovery (f g : ℕ) (hf : 0 < f) (hfg : f < g) (hgf : g < 2 * f)
   | of b => cases b with
     | true =>
       simpa only [composition, mul_one, mul_zero, add_zero] using
-        ⟨(mass_min f g hf hfg hgf U).1,
-          fun h => (mass_min f g hf hfg hgf U).2.1.mp h⟩
+        ⟨(mass_min f g hf hfg U).1,
+          fun h => (mass_min f g hf hfg U).2.1.mp h⟩
     | false =>
       have hr := hm [] rfl
       have he : U = .of false := by
@@ -116,10 +122,10 @@ theorem beta_recovery (f g : ℕ) (hf : 0 < f) (hfg : f < g) (hgf : g < 2 * f)
       rw [mass_pair, mass_pair] at he
       exact congrArg₂ FreeMagma.mul (hse (by omega)) (hte (by omega))
 
-theorem beta_sound (f g : ℕ) (hf : 0 < f) (hfg : f < g) (hgf : g < 2 * f)
+theorem beta_sound (f g : ℕ) (hf : 0 < f) (hfg : f < g)
     (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (hV : V ∈ ActualImage (3 * k)) (h : ℕ) (hh : height V ≤ h) :
-    QuantitySound f g (3 * k) V h B(V) := by
+    ScalarSound f g (3 * k) V h B(V) := by
   obtain ⟨T, hT⟩ := hV
   let S := substitution^[3 * k - 2] T
   have he : V = substitution (substitution S) := by
@@ -131,7 +137,7 @@ theorem beta_sound (f g : ℕ) (hf : 0 < f) (hfg : f < g) (hgf : g < 2 * f)
     (Finset.mem_filter.mp hu).1).trans hh, ?_⟩
   intro U hm ho
   have hc : BetaCovered V := he ▸ (beta_structure S).1
-  have hUV := (beta_recovery f g hf hfg hgf V U hc (fun u hu =>
+  have hUV := (beta_recovery f g hf hfg V U hc (fun u hu =>
     (ho u ((beta_spec V u).mpr hu)).trans hu)).2 hm
   exact hUV ▸ ⟨T, hT⟩
 
@@ -248,7 +254,7 @@ private theorem immediate_block (k : ℕ) (hk : 1 ≤ k) (V : Source)
 
 theorem dichotomy (f g : ℕ) (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (hV : V ∈ ActualImage (3 * k)) (h : ℕ) (Q : Finset Address)
-    (hs : QuantitySound f g (3 * k) V h Q) : alphaLeaves V ⊆ Q ∨ B(V) ⊆ Q := by
+    (hs : ScalarSound f g (3 * k) V h Q) : alphaLeaves V ⊆ Q ∨ B(V) ⊆ Q := by
   classical
   by_contra hn
   obtain ⟨ha, hb⟩ := not_or.mp hn
@@ -325,8 +331,6 @@ theorem blocked_children_bound (V : Source) (Q R : Finset Address)
   have hle := Finset.card_le_card (Finset.union_subset hbase hC)
   rw [Finset.card_union_of_disjoint hsep, hCcard] at hle
   exact hle
-
-local notation "QuantitySound" => QuantitySound 2 3
 
 private theorem alpha_branch_bound (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (h : ℕ) (Q : Finset Address) (hs : QuantitySound (3 * k) V h Q) (ha : alphaLeaves V ⊆ Q) :
@@ -417,10 +421,10 @@ private theorem small_sound (Q : Finset Address)
         subst x; subst y
         dsimp only [GraftAffineClosure.quantity] at hmass
         rw [mass_pair 2 3, mass_pair 2 3] at hmass
-        have ht : t = .of false := (mass_min 2 3 (by decide) (by decide) (by decide) t).2.2.mp (by change m(t) = 3; change 3 + 2 + m(t) = 8 at hmass; omega)
+        have ht : t = .of false := ((mass_min 2 3 (by decide) (by decide) t).2.2 (by decide)).mp (by change m(t) = 3; change 3 + 2 + m(t) = 8 at hmass; omega)
         subst t
         rfl
-  · have hp := beta_recovery 2 3 (by decide) (by decide) (by decide) (substitution^[3] (.of true)) U
+  · have hp := beta_recovery 2 3 (by decide) (by decide) (substitution^[3] (.of true)) U
       (beta_structure (.of false)).1 (by
         intro u hu
         have he : u = [false, false] ∨ u = [true] := by
@@ -446,7 +450,7 @@ private theorem small_sound (Q : Finset Address)
         subst y
         dsimp only [GraftAffineClosure.quantity] at hmass
         rw [mass_pair 2 3, mass_pair 2 3] at hmass
-        have hx : x = .of false := (mass_min 2 3 (by decide) (by decide) (by decide) x).2.2.mp (by change m(x) = 3; change m(x) + 2 + 3 = 8 at hmass; omega)
+        have hx : x = .of false := ((mass_min 2 3 (by decide) (by decide) x).2.2 (by decide)).mp (by change m(x) = 3; change m(x) + 2 + 3 = 8 at hmass; omega)
         subst x
         rfl
 
@@ -483,7 +487,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
     intro U hc ho
     exact hs.2 U (congrArg GraftAffineClosure.quantity hc) ho
   · intro hh hlarge
-    refine ⟨beta_sound 2 3 (by decide) (by decide) (by decide) k hk V hV h hh, ?_⟩
+    refine ⟨beta_sound 2 3 (by decide) (by decide) k hk V hV h hh, ?_⟩
     intro Q hs
     refine ⟨lower Q hs, ?_⟩
     constructor

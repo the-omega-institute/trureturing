@@ -17,7 +17,7 @@ internal sealed class StageScalarAddressCertificateDocument : IScribeDocumentDef
                 + "a(V) and b(V) are their cardinalities. D(V) is maximum leaf depth, with root depth zero. "
                 + "For natural L, f(L)=F(3L+3) and g(L)=F(3L+4), with F(0)=0 and F(1)=1. "
                 + "Write t(V,L)=max(0,b(V)+1-f(L)) and M(V,L)=min(b(V),a(V)+t(V,L)). "
-                + "S(f,g,d,V,h,Q) is QuantityAddressCertificate.QuantitySound: all queries in the finite set Q have depth at most h, "
+                + "S(f,g,d,V,h,Q) is QuantityAddressCertificate.ScalarSound: all queries in the finite set Q have depth at most h, "
                 + "and every complete U with f*a(U)+g*b(U)=f*a(V)+g*b(V) and matching raw replies on Q belongs to I(d). "
                 + "The scalar and replies refer to the same original tree. Competitor shape, composition, leaf count and height are unrestricted. "
                 + "Queries may include roots, branches or absent addresses and need not be closed under prefixes.")),
@@ -28,7 +28,11 @@ internal sealed class StageScalarAddressCertificateDocument : IScribeDocumentDef
                         + "b(V)>a(V)>=1. Below D(V) there is no sound query set. At or above D(V), every sound set has at least M(V,L) queries, "
                         + "some sound set has exactly that many, and the displayed equivalence lists all such sets. "
                         + "They are B(V), when b(V)=M(V,L), and A(V) union C, where C is a subset of B(V) with cardinality t(V,L), "
-                        + "when a(V)+t(V,L)=M(V,L). Thus a minimum set contains only original leaf addresses.")),
+                        + "when a(V)+t(V,L)=M(V,L). Thus a minimum set contains only original leaf addresses. "
+                        + "The four price intervals are f<=a, f=a+1, a+1<f<=b and b<f, giving respectively b, b, a+b+1-f and a. "
+                        + "For fixed V and h>=D(V), the price is nonincreasing in L and equals a at all sufficiently large stages. "
+                        + "The two global scalar equivalence kernels at stages zero and one do not contain each other. "
+                        + "Here n0(U)=2*a(U)+3*b(U) and n1(U)=8*a(U)+13*b(U); cut(x,y)=max(0,x-y).")),
                     Paragraph(Text("Matching all beta endpoints fixes the branch skeleton. Positive weights f<g<2f make alpha "
                         + "the unique minimum-weight replacement of each remaining alpha slot, so the scalar equality reconstructs V. "
                         + "Matching all alpha endpoints and t beta endpoints also reconstructs V: consecutive Fibonacci weights are coprime, "
@@ -45,7 +49,10 @@ internal sealed class StageScalarAddressCertificateDocument : IScribeDocumentDef
                         + "contradicting soundness. Therefore fewer than p omitted slots are unblocked. Distinct blocked slots consume distinct "
                         + "queried child addresses outside the original leaves. This gives a strict excess over a(V)+t(V,L). "
                         + "When fewer than f beta endpoints are omitted, the elementary cardinality bound is a(V)+t(V,L), "
-                        + "with equality precisely for the stated alpha-plus-beta subsets."))), DescribeRole.Theorem))));
+                        + "with equality precisely for the stated alpha-plus-beta subsets. "
+                        + "Fibonacci monotonicity gives price monotonicity, and the unbounded Fibonacci lower bound eventually makes t zero. "
+                        + "Actual trees of compositions (3,0) and (0,2) agree under n0 but disagree under n1. "
+                        + "Actual trees of compositions (13,0) and (0,8) agree under n1 but disagree under n0."))), DescribeRole.Theorem))));
 
     private static Formula V(string s) => F.Id(s);
     private static Formula Par(Formula f) => Seq(Open, f, Close);
@@ -73,10 +80,22 @@ internal sealed class StageScalarAddressCertificateDocument : IScribeDocumentDef
             All("Q",sets,Imp(S(q),LeOf(m,Call("card",q)))),
             All("Q",sets,Seq(Par(And(S(q),EqOf(Call("card",q),m))),Sp,Leftrightarrow,Sp,Par(choice))),
             ExistsIn("Q",sets,And(S(q),EqOf(Call("card",q),m)))));
+        Formula f=Call("f",l), lp=V("Lprime"), l0=V("Lzero"), u=V("U"), w=V("W");
+        Formula cases=And(Imp(LeOf(f,a),EqOf(m,b)),
+            Imp(EqOf(f,Seq(a,Sp,Plus,Sp,D(1))),EqOf(m,b)),
+            Imp(Seq(a,Sp,Plus,Sp,D(1),Sp,Lt,Sp,f),Imp(LeOf(f,b),
+                EqOf(m,Call("cut",Seq(a,Sp,Plus,Sp,b,Sp,Plus,Sp,D(1)),f)))),
+            Imp(Seq(b,Sp,Lt,Sp,f),EqOf(m,a)));
+        Formula monotone=All("Lprime",V("Nat"),Imp(LeOf(l,lp),LeOf(Call("M",v,lp),m)));
+        Formula eventual=ExistsIn("Lzero",V("Nat"),All("Lprime",V("Nat"),
+            Imp(LeOf(l0,lp),EqOf(Call("M",v,lp),a))));
+        Formula Noninclusion(string first, string second) => Seq(Neg,Sp,
+            Par(All("U",V("Source"),All("W",V("Source"),
+                Imp(EqOf(Call(first,u),Call(first,w)),EqOf(Call(second,u),Call(second,w)))))));
         return Disp(All("k",V("Nat"),Imp(LeOf(D(1),k),All("L",V("Nat"),All("V",V("Source"),
             Imp(Seq(v,Sp,InMacro,Sp,Call("I",d)),All("h",V("Nat"),And(
                 LeOf(D(1),a),Seq(a,Sp,Lt,Sp,b),
                 Imp(Seq(h,Sp,Lt,Sp,Call("D",v)),Seq(Neg,Sp,ExistsIn("Q",sets,S(q)))),
-                frontier))))))));
+                frontier,cases,monotone,eventual,Noninclusion("n0","n1"),Noninclusion("n1","n0")))))))));
     }
 }
