@@ -1894,7 +1894,20 @@ jobs:
       - name: Prepare the Scribe scope
         run: tools/scripts/workflow/scribe-scope-paths.sh "$RUNNER_TEMP/changed-paths" > "$RUNNER_TEMP/scribe-paths"
       - name: Current-tree rules
-        run: dotnet "$CLI" check-current --candidate-lean-report "$REPORT" --scribe-paths-from "$RUNNER_TEMP/scribe-paths"
+        env:
+          DOTNET_GCHeapHardLimit: "0x2C0000000"
+        run: |
+          nproc; free -m; ls -la "$REPORT"* || true
+          dotnet "$CLI" check-current --candidate-lean-report "$REPORT" --scribe-paths-from "$RUNNER_TEMP/scribe-paths" &
+          pid=$!
+          while kill -0 "$pid" 2>/dev/null; do
+            grep -E 'VmHWM|VmRSS' "/proc/$pid/status" > "$RUNNER_TEMP/check-current-memory" 2>/dev/null || true
+            free -m | sed -n 2p > "$RUNNER_TEMP/host-memory" || true
+            sleep 1
+          done
+          rc=0; wait "$pid" || rc=$?
+          echo "PROBE check-current exit=$rc"; cat "$RUNNER_TEMP/check-current-memory" "$RUNNER_TEMP/host-memory" || true
+          exit "$rc"
       - name: Scribe content
         if: ${{ !cancelled() }}
         env:
