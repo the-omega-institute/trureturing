@@ -2345,3 +2345,190 @@ Gocht、McBride、McCreesh、Nordstrom、Prosser、Trimble，*Certifying Solvers
 本次实际完成的是先前幅度 Lean/Scribe 的远端交付、六十标签图及颜色的精确重建、二次 refutation 的逐系数核验，以及将有限 hNoPartner 消去的 Lean/Scribe 源码。没有运行 Lean/lake、Scribe emitter 或 transitive axiom report，所以 `decide +kernel` 仍是待实际 elaboration 的证明脚本，不是已执行的 kernel verdict。
 
 完整解析覆盖和区间表达式可靠性仍需内核桥接；新参数区间的覆盖也仍未完成。颜色标签没有被证明与全部真实共同无偏投影一一对应；只能在显式的解析覆盖与 overlap 包含前提下使用。
+
+## 40. 去相位结构给出的固定种子统一迹缺陷改进
+
+### 40.1 定义与假设
+
+沿用 [openai2026maximum](../../../Library/Quantum/openai2026maximum.md) 的固定种子块与固定补空间标架。以下只使用其 `completion.tex` 的精确块恒等式，不以全局计算结论作为假设。
+
+令六阶去相位复 Hadamard 矩阵为
+
+```math
+H'=\begin{pmatrix}E'&B'\\C'&D'\end{pmatrix},\qquad
+H'^*H'=H'H'^*=6I,\qquad
+E'=\begin{pmatrix}1&1\\1&a'\end{pmatrix}.
+```
+
+种子中心的单位模块为
+
+```math
+E_0=\begin{pmatrix}1&1\\1&a_0\end{pmatrix},\quad
+B_0=\begin{pmatrix}1&1&1&1\\b_0&b_1&b_2&b_3\end{pmatrix},\quad
+C_0=(\mathbf1\ c_0).
+```
+
+不假设种子中心存在 Hadamard 补全。设 `B_0,C_0` 均秩二，固定列正交标架 `K_B,K_C`，其像分别为 `ker B_0`、`ker C_0^*`。记
+
+```math
+Y=K_C^*D'K_B,\quad S=\mathbf1^*c_0,\quad v=|S|<4,\quad
+\Delta=16-v^2.
+```
+
+九个种子相位的弧度位移属于闭球 `||s||≤R`，`R≥0`。记各块弦位移范数为
+
+```math
+e=\|E'-E_0\|_F,\quad b=\|B'-B_0\|_F,\quad c=\|C'-C_0\|_F.
+```
+
+单位圆弦长不超过弧长，故 `e²+b²+c²≤R²`。此处标量 `c` 与种子列 `c_0` 不同。
+
+定义实对称矩阵及其最大特征值
+
+```math
+K(v)=\begin{pmatrix}
+1+\dfrac2{4-v}&\dfrac{\sqrt6}{4-v}\\[3pt]
+\dfrac{\sqrt6}{4-v}&\dfrac{24}{16-v^2}
+\end{pmatrix},\qquad
+\lambda(v)=\frac{K_{11}+K_{22}+
+\sqrt{(K_{11}-K_{22})^2+4K_{12}^2}}2.
+```
+
+### 40.2 命题：秩一坐标扰动的迹界
+
+在 40.1 的假设下，有
+
+```math
+0\le q_{\rm act}:=\operatorname{tr}(6I-Y^*Y)
+\le \lambda(v)(b^2+c^2)\le\lambda(v)R^2.
+```
+
+证明。去相位固定第一行与第一列，因此存在行向量 `d_b` 与列向量 `d_c` 使
+
+```math
+B'-B_0=e_2d_b,\qquad C'-C_0=d_ce_2^*,\qquad e_2=(0,1)^T.
+```
+
+置 `r=d_bK_B`、`t=d_c^*D'K_B`、`u=E'^*e_2=(1,overline(a'))^T`。列正交关系给出
+
+```math
+C_0^*D'K_B=-ur-e_2t.
+```
+
+令 `M=C_0^*C_0`。由
+
+```math
+M^{-1}=\Delta^{-1}\begin{pmatrix}4&-S\\-\overline S&4\end{pmatrix},\qquad
+P_C=C_0M^{-1}C_0^*,
+```
+
+以及文献的精确压缩缺陷恒等式，得到
+
+```math
+6I-Y^*Y=K_B^*B'^*B'K_B+K_B^*D'^*P_CD'K_B\succeq0,
+```
+
+```math
+q_{\rm act}=\|r\|^2+
+\operatorname{tr}\big((ur+e_2t)^*M^{-1}(ur+e_2t)\big).
+```
+
+令
+
+```math
+\kappa=\frac{8-2\Re(S\overline{a'})}{\Delta},\qquad
+\eta=\frac4\Delta,\qquad
+\gamma=\frac{4a'-S}{\Delta}.
+```
+
+展开上式为
+
+```math
+q_{\rm act}=(1+\kappa)\|r\|^2+\eta\|t\|^2
++2\Re\big(\gamma\operatorname{tr}(r^*t)\big).
+```
+
+利用 `|a'|=1`，有 `κ≤2/(4−v)`、`|γ|≤1/(4−v)`。又由 `B'^*B'+D'^*D'=6I` 得 `||D'||op≤√6`，故 `||r||≤b`、`||t||≤√6 c`。Cauchy–Schwarz 与 Rayleigh 商界遂给出
+
+```math
+q_{\rm act}\le
+\left(1+\frac2{4-v}\right)b^2+
+\frac{24}{\Delta}c^2+\frac{2\sqrt6}{4-v}bc
+=\begin{pmatrix}b&c\end{pmatrix}K(v)\binom bc
+\le\lambda(v)(b^2+c^2).
+```
+
+### 40.3 命题：对原统一界的严格改进
+
+定义
+
+```math
+A_* =\min(2,\|E_0\|_{\rm op}+R),\qquad
+Q_{\rm src}=R^2\left(1+\frac{A_*^2+6}{4-v}\right),\qquad
+Q_{\rm new}=R^2\lambda(v).
+```
+
+若 `R>0`，则 `Q_new<Q_src`；若 `R=0`，二者均为零。
+
+证明。直接计算
+
+```math
+\det K(v)=\frac{30}{16-v^2}>0,\qquad
+\operatorname{tr}K(v)=1+\frac2{4-v}+\frac{24}{(4-v)(4+v)}.
+```
+
+因 `K11>0`，矩阵 `K(v)` 正定，故 `λ(v)<tr K(v)`。同时
+
+```math
+\operatorname{tr}K(v)\le1+\frac8{4-v}
+\le1+\frac{A_*^2+6}{4-v},
+```
+
+其中末步使用 `||E_0||op=√(2+|1+a_0|)≥√2`，所以 `A_*≥√2`。乘以 `R²` 即得结论。
+
+### 40.4 推论：同一极分解的更小统一半径
+
+若 `Q_new<6`，则 `Y` 的酉极因子 `V` 满足
+
+```math
+\|Y-\sqrt6 V\|_F\le
+\frac{Q_{\rm new}}{\sqrt6+\sqrt{6-Q_{\rm new}}}.
+```
+
+证明。缺陷矩阵的特征值 `ℓ_1,ℓ_2` 非负，且和不超过 `Q_new<6`。故 `Y` 可逆，其奇异值为 `√(6−ℓ_j)`。逐项有
+
+```math
+\sqrt6-\sqrt{6-\ell_j}
+=\frac{\ell_j}{\sqrt6+\sqrt{6-\ell_j}}
+\le\frac{\ell_j}{\sqrt6+\sqrt{6-Q_{\rm new}}}.
+```
+
+平方求和并用 `√(ℓ_1²+ℓ_2²)≤ℓ_1+ℓ_2`。这一步复用文献的极分解估计；40.2 改进的是统一迹上界，不是固定实际迹缺陷时的极分解公式。
+
+### 40.5 推论：伴随方向与可行种子约束
+
+40.2 还可用 `v_B=|Σb_j|` 代替 `v`；因此可取两个方向所得界的较小者。若 `R<1`，任意可行种子进一步满足
+
+```math
+q_{\rm act}\le R^2\lambda(2+2R).
+```
+
+证明。对 `H'^*` 取交换后的标架 `K_{B,adj}=K_C`、`K_{C,adj}=K_B`，其压缩块恰为 `Y^*`，新的 `C_0` 为 `B_0^*`。列和模为 `|Σoverline(b_j)|=v_B`，而 `tr(Y^*Y)=tr(YY^*)`。
+
+另一方面，可行补全满足 `1+a'+Σc'_j=0`，所以
+
+```math
+v=\left|\sum c_{0j}\right|
+\le |1+a'|+\left|\sum(c_{0j}-c'_j)\right|
+\le2+2c\le2+2R<4.
+```
+
+`b` 方向同理。矩阵 `K(v)` 的元素在 `[0,4)` 上均非减且非负，其最大特征值由非负向量的 Rayleigh 商取得，故 `λ(v)` 非减。应用 40.2 得结论。超过 `2+2R` 的种子和模本身即排除可行补全；此推论不为秩亏的不可行种子构造标架。
+
+### 40.6 推论：既有必要条件的单调加强
+
+在文献的同一固定种子、同一酉参数单元下，将原极分解半径换成 40.4 的较小上界，会减小或保持块位移界 `z` 与线性余项界 `E_r`。因此以这些精确实数界形成的范数排除与方向排除不丢失原先成立的证书。
+
+证明。原式中 `z` 对极分解半径 `p` 非减；`e_off` 对 `z` 非减；`E_r` 对 `e_off,p` 非减。范数必要条件的右侧为 `z²`。方向必要条件中 `E_r` 与 `z²` 的系数分别为范数和非负负部权重，故其右侧亦非减。极因子 `V` 由同一个 `Y` 唯一决定，更换统一界不改变参数单元归属。
+
+这些精确算术下必要条件的加强，本身不认证舍入实现，也不建立全部种子与参数单元的完整覆盖。
