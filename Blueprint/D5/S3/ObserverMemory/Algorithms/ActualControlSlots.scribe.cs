@@ -107,7 +107,7 @@ internal sealed class ActualControlSlotsDocument : IScribeDocumentDefinition
     private static Formula Reads => Set("q", V("Q"), Ex("b", Call("Fin", V("p")),
         Call("Used", V("C"), V("I"), V("q"), V("b"))));
     private static Formula Set(string s, Formula type, Formula predicate) =>
-        Seq(OpenBrace, V(s), Colon, type, Vert, Sp, predicate, CloseBrace);
+        Seq(OpenBrace, V(s), Colon, type, Mid, Sp, predicate, CloseBrace);
     private static Formula Pair(Formula a, Formula b) => Seq(Open, a, Comma, b, Close);
     private static Formula Member(Formula a, Formula b) => Seq(a, InMacro, Sp, b);
     private static Formula Mul(Formula a, Formula b) => Seq(Grp(a), Times, Sp, Grp(b));

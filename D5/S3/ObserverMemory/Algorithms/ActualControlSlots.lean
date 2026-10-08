@@ -155,7 +155,7 @@ private theorem terminal_label {q : Q} {b : Fin p} (h : C.Terminal I q b)
   exact ⟨by simpa [← control, eq] using I.output x, eq⟩
 
 /-- The final actual read defines a slot, including executions with no waits. -/
-noncomputable def finalSlot (x : ZMod (p * P)) : Q × Fin p :=
+private noncomputable def finalSlot (x : ZMod (p * P)) : Q × Fin p :=
   ((C.run hp hP x (I.length x - 1)).2,
     digit hp hP (C.run hp hP x (I.length x - 1)).1)
 
