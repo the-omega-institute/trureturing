@@ -1,0 +1,48 @@
+**定理 28.1（实际光滑平方表示的同源逼近）。** 对每个 $j\in\mathbb N$，令
+$$
+\delta_j=\frac1{j+3},\qquad
+r_j=\frac12-\delta_j,\qquad
+R_j=\frac12-\frac{\delta_j}{2}.
+\tag{28.1}
+$$
+存在实偶光滑截止 $\psi_j$，满足
+$$
+0\le\psi_j\le1,\qquad
+\psi_j(t)=1\quad(|t|\le r_j),\qquad
+\psi_j(t)=0\quad(|t|\ge R_j).
+\tag{28.2}
+$$
+取同一实际质量与平方表示
+$$
+A_j=\int\psi_j^2f_0,\qquad
+f_j=\frac{\psi_j^2f_0}{A_j},\qquad
+\eta_j=\frac{\psi_j\sqrt{f_0}}{\sqrt{A_j}},\qquad
+\eta_0=\sqrt{f_0}.
+$$
+则 $0<A_j\le1$，$\eta_j$ 实、偶、非负且属于 $C_c^\infty((-1/2,1/2))$，并且
+$$
+\eta_j^2=f_j,\qquad \int\eta_j^2=1,
+\qquad 0\le1-A_j\le2B\delta_j,
+\tag{28.3}
+$$
+$$
+d_j:=\|f_j-f_0\|_1\le2(1-A_j)\le4B\delta_j,
+\qquad \|\eta_j-\eta_0\|_2^2\le d_j.
+\tag{28.4}
+$$
+因此 $A_j\to1$、$f_j\to f_0$ 于 $L^1(\mathbb R)$，且 $\eta_j\to\eta_0$ 于 $L^2(\mathbb R)$。
+
+证明。式(28.1)给 $0<r_j<R_j<1/2$，包括 $j=0$。选取以零为中心、内半径 $r_j$ 与外半径 $R_j$ 的通常实偶光滑 bump 函数，得到式(28.2)。其构造是标准 bump 函数供应；本节的结论是该供应在实际 Montgomery–Taylor 密度中的归一化、误差预算与消费。
+
+$\psi_j$ 在零的邻域恒一，而原密度严格正，故 $A_j>0$；$\psi_j^2\le1$ 与原质量一给 $A_j\le1$。在 $(-1/2,1/2)$ 内，原连续密度的平方根光滑。在两个边界的邻域，$\psi_j$ 恒零，所以 $\eta_j$ 恒零；不能从有端点跳跃的 $\sqrt{f_0}$ 直接推断光滑性。局部论证给所述 $C_c^\infty$ 性，偶性、非负性及平方与质量恒等式逐点得到。
+
+质量缺损的被积函数 $(1-\psi_j^2)f_0$ 非负，在 $[-r_j,r_j]$ 上为零，在两侧各长 $\delta_j$ 的区间中至多为 $B$，故式(28.3)成立。令 $g_j=\psi_j^2f_0$。因为 $0\le g_j\le f_0$ 且 $A_j\le1$，有 $g_j\le f_j$，从而
+$$
+|f_j-f_0|\le(f_j-g_j)+(f_0-g_j).
+$$
+积分后两项各为 $1-A_j$，得到式(28.4)的 $L^1$ 预算。对任意非负 $a,b$，分解平方差给
+$$
+(\sqrt a-\sqrt b)^2\le|a-b|.
+$$
+非负性使 $\eta_j=\sqrt{f_j}$，故逐点应用并积分，得到 $L^2$ 平方误差预算。$\delta_j\to0$，全部收敛随之成立。∎
+
