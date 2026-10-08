@@ -163,9 +163,9 @@ worker 输出可用内部模块分片。最终 writer 以模块名、声明名�
 \text{emitted modules}=\text{expected modules}
 \]
 
-且每个模块恰好一次；不存在重复、遗漏、旧 source hash。序列化格式保持 canonical v2，内部存储变化不自动升级公开协议。
+且每个模块恰好一次；不存在重复、遗漏、旧 source hash。公开报告使用 `stratalint-raw-lean-report-v3`；严格读取器只接受该格式。提取语义或公开格式改变须更新格式标识并全部重提取。
 
-`delta.py` 中旧报告复用改为模块偏移索引与流式复制，避免整份 bytes、Unicode text、JSON DOM、raw substring 多重驻留。输出材料归档也使用流式读取；归档路径、时间戳和排序保持现有规范。
+`lakefile.lean` 的模块报告 facet 按编译依赖 trace、utility 输入与报告格式标识复用模块 ZIP，聚合 facet 合并这些工件。`reuse.py` 校验完整调用收据与报告五件套，`publication.py` 发布报告和材料；判官程序字节不进入报告复用条件。
 
 ### 5.5 不能承诺任意小内存
 
@@ -559,7 +559,7 @@ C、object、`.olean`、私有模块数据、语言服务器数据不能一概�
 |---|---|
 | `tools/lean-inspector/Inspector.lean` | 保留 SCC；增加 manifest、逐模块写出和批次消费 |
 | `tools/lean-inspector/inspect.sh` | 一次 build 后批次执行；增加只读检查边界；不循环启动 build |
-| `tools/lean-inspector/delta.py` | 保留旧记录复用语义；流式解析与完整失效测试 |
+| `tools/lean-inspector/lakefile.lean`、`reuse.py` | 按模块 trace 复用工件，校验整份报告复用收据 |
 | `tools/lean-inspector/materials.py` | bounded-memory 编码/归档，不改 statement bytes |
 | `tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Catalog.lean` | 定义同一目录上的逐成员结论、闭包归属、kernel 碰撞与目录结论数学义务 |
 | `.../CompiledSeal.lean` | 完整 registry 与 arena 顺序不变；新增快照/目录绑定 |
@@ -604,7 +604,7 @@ C、object、`.olean`、私有模块数据、语言服务器数据不能一概�
 
 [S1] `README.md`、`Makefile`、`lakefile.toml`。
 [S2] `tools/lean-inspector/Inspector.lean`。
-[S3] `tools/lean-inspector/inspect.sh`、`delta.py`。
+[S3] `tools/lean-inspector/inspect.sh`、`lakefile.lean`、`reuse.py`、`publication.py`。
 [S4] `tools/lean-inspector/LeanInformationAudit/CompiledSeal.lean`。
 [S5] `tools/lean-inspector-interface/LeanInformationAuditInterface/Contract/Catalog.lean`。
 [S6] `tools/lean-inspector/LeanInformationAudit/CompiledSeal.lean`。
