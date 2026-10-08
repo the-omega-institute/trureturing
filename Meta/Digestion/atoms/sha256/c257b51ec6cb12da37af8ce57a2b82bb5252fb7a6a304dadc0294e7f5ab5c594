@@ -1,0 +1,59 @@
+**定理 20.2（局部精确最小值及全轮乘积）。** 对定义 20.1 的每个 $H,W$，
+$$
+\sigma_{\min}(\mathcal C_{H,W})
+=\prod_{\substack{q\mid W\\q\ge5}}\alpha_q,\qquad
+\sigma_{\max}(\mathcal C_{H,W})=|R_{H,W}|,
+\tag{20.2}
+$$
+空积为一。因此
+$$
+\kappa_2(\mathcal C_{H,W})
+=\frac{\prod_{q\mid W}(q-\nu_H(q))}
+       {\prod_{q\mid W,\ q\ge5}\alpha_q},
+\qquad
+\kappa_2(\mathcal G_{H,W})
+=\kappa_2(\mathcal C_{H,W})^2.
+\tag{20.3}
+$$
+两种 $H$ 的这些数逐项相同。局部常数满足
+$$
+\alpha^2\le\alpha_q^2
+\le\alpha^2+\frac{14\pi^2}{q^2},\qquad
+\alpha_5=\frac{\sqrt5-1}{2},\qquad
+\alpha_7=\sqrt2.
+\tag{20.4}
+$$
+特别是 $\alpha>0$，式 (20.2) 给出定理 16.2 在这两种三胞胎上的定量下界。
+
+**证明。** 在素数 $2,3$ 上，合法集合均为单点，其所有 Fourier 系数的模均为一。对 $q\ge5$，$H_A$ 的禁点为 $0,-2,-6$，所以在非零频率 $k$ 上
+$$
+\widehat{\mathbf1_{R_{H_A,q}}}(k)
+=-\bigl(1+e_q(2k)+e_q(6k)\bigr).
+$$
+乘二置换 $\mathbb F_q^\times$，故这些模的最小值恰为 $\alpha_q$。$H_B$ 与 $H_A$ 由定理 16.4 的反射相联，模长相同。零频率为 $q-3$；每个非零系数作为 $q-3$ 个不同单位根之和，其模严格小于 $q-3$，因为 $q-3\ge2$ 且非零素数频率下不同点的相位不同。于是零频率给最大值，$\alpha_q$ 给包含零频率在内的最小值。
+
+令 $P(z)=1+z+z^3$，$c=\cos\theta$。直接展开得
+$$
+|P(e^{i\theta})|^2
+=3+2\cos\theta+2\cos2\theta+2\cos3\theta
+=1-4c+4c^2+8c^3.
+$$
+后三次式的导数为 $4(6c^2+2c-1)$，内临界点为
+$c_\pm=(-1\pm\sqrt7)/6$。$c_-$ 为局部最大点，$c_+$ 为局部最小点；在端点 $-1,1$ 的值分别为 $1,9$，在 $c_+$ 的值为
+$(47-14\sqrt7)/27\in(0,1)$。因此整个单位圆上的最小模恰为 $\alpha$。
+
+记 $F(\theta)=|P(e^{i\theta})|^2$，$\theta_*=\arccos c_+$。有
+$|F''(\theta)|\le2(1+4+9)=28$，且 $F'(\theta_*)=0$。取最近的 $q$ 次单位根角 $\theta_q$，使 $|\theta_q-\theta_*|\le\pi/q$；因 $0<c_+<1/2$，有 $\pi/3<\theta_*<\pi/2$，故 $q\ge5$ 时该根非平凡。Taylor 余项界给
+$$
+\alpha_q^2\le F(\theta_q)\le F(\theta_*)+14\pi^2/q^2,
+$$
+得到式 (20.4) 的双边界。模五合法集合为 $\{1,2\}$，其非零 Fourier 模为 $|1+e_5(k)|$，最小值为 $2\cos(2\pi/5)=(\sqrt5-1)/2$；最后的等式由五次单位根方程消去 $\cos(4\pi/5)$ 得到。模七时
+$$
+|1+e_7(k)+e_7(3k)|^2
+=3+\sum_{j=1}^{6}e_7(jk)=2
+\quad(k\ne0),
+$$
+因为 $\{0,1,3\}$ 的六个有序非零差恰为模七的全部非零类。
+
+单位化离散 Fourier 变换将 $\mathcal C_{H,W}$ 对角化，特征值为 $\widehat a(k)$，所以奇异值为 $|\widehat a(k)|$。式 (16.3) 中的局部频率 $kc_q\bmod q$，随 $k\bmod W$ 遍历全部局部频率的笛卡尔积。各因子独立取最小值或最大值，给式 (20.2)；式 (20.3) 再由 $\mathcal G=\mathcal C^*\mathcal C$ 得到。∎
+

@@ -1,0 +1,51 @@
+### 数学引文 19.2：缩放压力与精确窗口计数
+
+设 $x_1<\cdots<x_n$，$n\ge m$，$G=(K(x_i-x_j))_{i,j=1}^n$，$L=x_n-x_1$。在 (19.1) 下，
+$$
+ \boxed{\operatorname{tr}\Psi(G)\ge
+ \frac{n-m+1}{m}R-\frac{\eta pq(m-q)}{m}L.}
+ \tag{19.4}
+$$
+这里每个连续 $m$ 点主块都以权 $1/m$ 使用。边界损失为 $R(m-1)/m$，无需点列平稳、随机或等距。
+
+**证明。** 先说明已有有限维包络的全区间适用性。对任意 $m$ 阶单位对角正半定矩阵 $U$，令 $E=\sum_i(\lambda_i(U)-1)^2$，$D=\operatorname{tr}\Psi(U)$。写 $z_i=\lambda_i-1$、$y_i=(z_i-1)_+$、$t=\|y\|_2$、$s=\|y\|_1$，并令 $P=I-\mathbf1\mathbf1^*/m$。由 $\sum_i z_i=0$，当 $t>0$ 时
+$$
+ t^2+s=\langle z,Py\rangle
+ \le\sqrt E\sqrt{t^2-s^2/m}
+ \le t\sqrt{(m-1)E/m}.
+$$
+因为 $s\ge t$，故 $t\le\sqrt{(m-1)E/m}-1$；若 $E\le m/(m-1)$ 则只能有 $t=0$。由 $D=E-t^2$ 得到已有包络 $D\ge\Phi_m(E)$。它是单调凹函数且 $\Phi_m(0)=0$，从而
+$$
+ \Phi_m(E)\ge\eta\min(E,A),\qquad
+ E+P_B\ge A,\ P_B\ge0
+ \ \Longrightarrow\ D+\eta P_B\ge R.
+ \tag{19.5}
+$$
+也可由第二分支的
+$\frac{d}{dE}(\Phi_m(E)/E)=(1-\sqrt{(m-1)E/m})/E^2\le0$
+直接核验此弦下界。
+
+在只给出 $E+P_B\ge A$、$P_B\ge0$ 的抽象接口上，此压力系数已最优：取 $U=I_m$、$E=D=0$、$P_B=A$，任何要求 $D+\beta P_B\ge R$ 对全部这类输入成立的系数均须满足 $\beta\ge R/A=\eta$。
+
+对连续 $m$ 点主块 $B$，定义
+$$
+ P_B=p\sum_{\substack{i:\{x_i,\ldots,x_{i+q}\}\subset B}}
+ (x_{i+q}-x_i),\qquad
+ E_B=2\sum_{\substack{i<j\\x_i,x_j\in B}}|K(x_j-x_i)|^2.
+ \tag{19.6}
+$$
+将 (19.1) 在块内的 $m-q$ 个局部窗口上相加。任意一对指标距离为 $r$ 的点收到的总权不超过 $\sum_i a_{i,i+r}\le2$，于是
+$E_B+P_B\ge\varepsilon(m-q)=A$。故 (19.5) 给出 $D_B+\eta P_B\ge R$。
+
+全部连续 $m$ 点主块按起点模 $m$ 分为 $m$ 组，每组内互不重叠。谱迹的凸 pinching 不等式与 $\Psi\ge0$ 给出
+$$
+ \operatorname{tr}\Psi(G)\ge\frac1m\sum_B D_B.
+$$
+每个连续 $q+1$ 点窗口至多包含在 $m-q$ 个主块中，且每个基本间隙至多被 $q$ 个短窗口覆盖，所以
+$$
+ \sum_B P_B
+ \le p(m-q)\sum_{i=1}^{n-q}(x_{i+q}-x_i)
+ \le pq(m-q)L.
+$$
+共有 $n-m+1$ 个主块，代回即得 (19.4)。证毕。
+

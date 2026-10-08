@@ -1,0 +1,15 @@
+**定义 3.1（一份模式律及目标）。** 给 $p=(p_0,p_2,p_5,p_{25},p_3)$，各项非负且和为一，置
+
+$$
+X=p_2+p_{25},\qquad Y=p_5+p_{25},\qquad Z=p_3,
+\qquad\kappa=p_{25}=\mathbb E_p(xy).
+$$
+
+对任意实函数 $f:\Sigma\to\mathbb R$，用 $f_s=f(v_s)$，定义
+
+$$
+J_f=f_{25}-f_2-f_5+f_0.
+$$
+
+这是 [二阶关系完成 §39](AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md#39-五函数基与交叉响应) 的 $C_{25}[f]$，只换用本卷记号。
+

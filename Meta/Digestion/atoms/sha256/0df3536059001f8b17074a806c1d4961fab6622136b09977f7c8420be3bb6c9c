@@ -1,0 +1,27 @@
+**数学引文 6.4（体格点、内格点与边界格点）。** 对整数 $`m\ge0`$，
+
+```math
+\begin{aligned}
+L_{\mathcal P}(m)&=|m\mathcal P\cap\mathbb Z^3|
+=\frac{(m+1)(m+2)(2m+3)}6\\ &=\binom{m+4}{4}-\binom{m+2}{4},\qquad
+\sum_{m\ge0}L_{\mathcal P}(m)t^m=\frac{1+t}{(1-t)^4}.
+\end{aligned}
+```
+
+这里 $`\binom n4=0`$ 当 $`0\le n\lt4`$。对 $`m\ge1`$，
+
+```math
+L_{\mathcal P}^{\circ}(m)=\frac{(m-1)(m-2)(2m-3)}6,
+\qquad |\partial(m\mathcal P)\cap\mathbb Z^3|=3m^2+2.
+```
+
+推导。整数高度 $`W`$ 的截面有 $`(m-W+1)^2`$ 个格点，$`W=0,\ldots,m`$，求和得第一式。任何这样的格点 $`(U,V,W)`$ 令 $`r_m=m-W`$，选择整数
+
+```math
+\max(0,U+V-r_m)\le n_{25}\le\min(U,V)
+```
+
+便得到总数 $`m`$ 的五模式计数，所以所有格点均有累计编码。五元弱组合有 $`\binom{m+4}{4}`$ 种，唯一规范形排除 $`n_0,n_{25}\ge1`$ 的 $`\binom{m+2}{4}`$ 种，得第二式。形式级数中用 $`(1-t^2)/(1-t)^5`$ 即得生成函数。
+
+内部格点要求 $`W,U,V>0`$，$`U+W\lt m,V+W\lt m`$。对 $`1\le W\le m-2`$ 有 $`(m-W-1)^2`$ 个，求和给内格点式；$`m=1,2`$ 的空和和公式均为零。外部总数减内部总数给 $`3m^2+2`$。当 $`m=0`$ 时退化为一个点，不使用三维体的边界公式。这些是 [Stanley 文献注](../../../Library/Words/stanley1986posetpolytopes.md) Theorem 4.1 的具体格点实例及基础卷已有累计推导。三次体增长和二次边界增长不构成任意内部数据的可逆编码；本式计算依赖指定生成规律。证毕。
+

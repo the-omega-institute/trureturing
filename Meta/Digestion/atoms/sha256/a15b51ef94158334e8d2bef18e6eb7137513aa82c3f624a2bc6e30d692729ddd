@@ -1,0 +1,18 @@
+**定义 7.2（声明因子化的单位置核与窗口核）。** 在交换半环 $`(R,\oplus,\otimes,0,1)`$ 中，对一个位置的活动权 $`t`$，行是输入占位，列是新占位，置
+
+```math
+B(t)=\begin{pmatrix}1&t\\1&0\end{pmatrix}.
+```
+
+合法零位权一，合法一位权 $`t`$，冲突权零。低、中、高位置权依次为 $`a,b,c`$；五模式权依次为 $`1,a,b,c,ac`$。其两个核为
+
+```math
+\begin{aligned}
+K_{\rm low}(a,b,c)&=B(a)B(b)B(c)
+=\begin{pmatrix}1+a+b&c(1+a)\\1+b&c\end{pmatrix},\\ K_{\rm high}(a,b,c)&=B(c)B(b)B(a)
+=\begin{pmatrix}1+c+b&a(1+c)\\1+b&a\end{pmatrix}.
+\end{aligned}
+```
+
+式中的 $`+`$ 和相乘分别解释为半环运算。核只计合法路径，独立错误输出属于前一定义的确定读者。任意相关律并不天然具有这些局部乘积权。
+
