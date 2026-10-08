@@ -10,6 +10,7 @@ import D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion
 import Mathlib.Data.Fin.Tuple.Basic
 import Mathlib.Data.Finset.Max
 import Mathlib.Data.Fintype.Powerset
+import Mathlib.Analysis.Convex.Segment
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -194,13 +195,10 @@ private theorem common_causal_envelopes (T : ℕ) (A Y : Fin T → Type*)
           simp only [Fin.tail_cons, tail_actions]
           exact (hmass a z (tailStrategy f z)).2
         rw [hbase]
-        by_cases hd : dl a = 0
-        · have hlz : l = 0 := le_antisymm (hd ▸ hdl a) hl0
-          simp [hd, hlz]
-        · exact div_mul_cancel₀ l hd
+        exact div_mul_cancel_of_imp fun hd => le_antisymm (hd ▸ hdl a) hl0
       exact ⟨hu.trans hfu.symm, hl.trans hfl.symm⟩
 
-/-- Maximum event-mass discrepancy over every deterministic causal strategy and every output event. -/
+/-- Maximum event-mass discrepancy over all deterministic causal strategies and output events. -/
 def feedbackDistance {T : ℕ} {A Y : Fin T → Type*}
     [∀ t, Fintype (A t)] [∀ t, Nonempty (A t)] [∀ t, Fintype (Y t)]
     (P Q : (∀ t, Y t) → (∀ t, A t) → ℝ) : ℝ := by
@@ -291,15 +289,10 @@ theorem result (T : ℕ) (hT : 1 ≤ T) (A Y : Fin T → Type*)
       _ ≤ feedbackDefect P := le_feedback_defect P fl
   obtain ⟨θ, hθ0, hθ1, hθmass⟩ :
       ∃ θ : ℝ, 0 ≤ θ ∧ θ ≤ 1 ∧ l + θ * (u - l) = 1 := by
-    by_cases heq : u = l
-    · refine ⟨0, le_rfl, zero_le_one, ?_⟩
-      have hl : l = 1 := le_antisymm hl1 (heq ▸ hu1)
-      simp [hl]
-    · have hpos : 0 < u - l := sub_pos.mpr (lt_of_le_of_ne hlu (Ne.symm heq))
-      refine ⟨(1 - l) / (u - l), div_nonneg (sub_nonneg.mpr hl1) hpos.le,
-        (div_le_one₀ hpos).mpr (by linarith), ?_⟩
-      rw [div_mul_cancel₀ _ (ne_of_gt hpos)]
-      ring
+    obtain ⟨α, β, hα, hβ, hsum, hvalue⟩ :=
+      (Convex.mem_Icc hlu).mp (show (1 : ℝ) ∈ Set.Icc l u from ⟨hl1, hu1⟩)
+    refine ⟨β, hβ, by linarith, ?_⟩
+    nlinarith
   let Q (y : ∀ t, Y t) (a : ∀ t, A t) := L y a + θ * (U y a - L y a)
   have hQbounds (y : ∀ t, Y t) (a : ∀ t, A t) :
       L y a ≤ Q y a ∧ Q y a ≤ U y a := by

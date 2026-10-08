@@ -107,7 +107,7 @@ internal sealed class CausalRepairEnvelopesDocument : IScribeDocumentDefinition
         var act = Call("feedbackActions", V("f"), V("y"));
         var diff = Rel(Value(V("P"), V("y"), act), Minus, Value(V("Q"), V("y"), act));
         var eventSum = Sum(Seq(Typed(V("y"), Word("Y")), Comma, Sp,
-            V("y"), Sp, InMacro, Sp, V("E")), diff);
+            V("y"), Sp, InMacro, Sp, V("E")), Par(diff));
         var maximum = Seq(Max, Sp, Underscore,
             Grp(Seq(Typed(V("f"), Strategy), Comma, Sp, Typed(V("E"), Call("Set", Word("Y"))))),
             Sp, Abs(eventSum));
