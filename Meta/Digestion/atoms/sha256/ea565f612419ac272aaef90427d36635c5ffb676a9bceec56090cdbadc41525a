@@ -1,0 +1,38 @@
+**推导 4.2（行列式坐标与对角再分配）。** 以下代数恒等式把已有纤维参数接到条件独立的经典交叉乘积判据。
+
+```math
+\boxed{
+\Delta=r\kappa-XY.
+}
+```
+
+若沿上一节的对角方向移动 $t$，则：
+
+```math
+\boxed{
+\Delta\longmapsto\Delta+rt.
+}
+```
+
+证明。
+
+展开：
+
+```math
+\begin{aligned}
+\Delta
+&=(r-X-Y+\kappa)\kappa-(X-\kappa)(Y-\kappa)\\
+&=r\kappa-XY.
+\end{aligned}
+```
+
+再把 $\kappa$ 换成 $\kappa+t$，即得第二式。证毕。
+
+因此，当 $r>0$：
+
+```math
+\boxed{
+\kappa=\frac{XY+\Delta}{r}.
+}
+```
+

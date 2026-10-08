@@ -1,0 +1,18 @@
+**定义 1.1（自由有序树、来源项与数列项）。** 树由两个叶子 $`\alpha,\beta`$ 和有序配对 $`\langle s,t\rangle`$ 生成；没有空树叶子。替换定义为
+
+```math
+\rho(\alpha)=\beta,\qquad
+\rho(\beta)=\langle\beta,\alpha\rangle,\qquad
+\rho(\langle s,t\rangle)=\langle\rho(s),\rho(t)\rangle.
+```
+
+令 $`T_n=\rho^n(\alpha)`$，$`n\ge0`$。另令普通整数数列 $`F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n`$。组成与数量读出为
+
+```math
+c(\alpha)=\binom10,\quad c(\beta)=\binom01,\quad
+c(\langle s,t\rangle)=c(s)+c(t),\quad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\quad q=(2,3).
+```
+
+树、组成向量、整数是三种对象；$`\mathbf0_{\rm win}`$ 只表示空窗口的零贡献，定义其组成贡献为 $`(0,0)`$，不把它加入树语法。
+

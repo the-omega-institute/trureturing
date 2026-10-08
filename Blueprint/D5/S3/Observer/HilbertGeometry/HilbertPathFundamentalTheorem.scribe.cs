@@ -44,15 +44,52 @@ internal sealed class HilbertPathFundamentalTheoremDocument : IScribeDocumentDef
                     + "separation give pointwise reconstruction; differentiation of that Bochner "
                     + "primitive identifies the velocity with the actual derivative.")),
                     Paragraph(Text(
-                    "This is the analytic prerequisite for qdo-v1 theorem 36.26 and the named "
-                    + "consumer absolutely_continuous_subspace_action_minimum_unique. The extended "
+                    "This is the analytic prerequisite for the named consumer "
+                    + "absolutely_continuous_subspace_action_minimum_unique. The extended "
                     + "quadratic action, lower bound, affine attainment and pointwise uniqueness "
                     + "remain downstream. Absolute continuity alone does not imply finite "
-                    + "quadratic energy. The private countable-basis helpers are a minimal "
+                    + "quadratic energy. The countable-basis helpers are a minimal "
                     + "Apache-2.0 source port from Kitware's immutable revision "
                     + "ef157afc71c3866cb608111ef61462516330ef56; their license and notice trail "
                     + "are retained in the Lean source."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("hilbert-countable-orthonormal-set"),
+                DeclarationHandle.Create(Prefix + "countable_of_orthonormal"),
+                H("Countability of orthonormal families"),
+                StatementSource.FromAuthor(CountableOrthonormalFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For arbitrary universe levels u and v, every orthonormal subset s of a "
+                    + "separable inner-product space E over a real or complex scalar type K is "
+                    + "countable. Completeness is not required. SubtypeVal(s) denotes the inclusion "
+                    + "of s into E, and SetCountable(s) denotes countability of the set s. "
+                    + "Distinct vectors in s have distance equal to the square root of two; "
+                    + "separability forces such a separated set to be countable.")),
+                    Paragraph(Text(
+                    "The countability argument is a minimal Apache-2.0 source port from Kitware's "
+                    + "immutable revision ef157afc71c3866cb608111ef61462516330ef56. The license "
+                    + "and notice trail are retained in the Lean source."))),
                 DescribeRole.Theorem))));
+
+    private static Formula CountableOrthonormalFormula()
+    {
+        Formula scalar = F.Id("K");
+        Formula space = F.Id("E");
+        Formula subset = F.Id("s");
+        return Disp(Seq(
+            Forall, Sp, scalar, Colon, Sp, Operatorname, Grp(F.Id("Type")), Underscore, Grp(F.Id("u")), Comma, Sp,
+            OpenBracket, Call("RCLike", scalar), CloseBracket, Comma,
+            RowBreak, Grp(),
+            Forall, Sp, space, Colon, Sp, Operatorname, Grp(F.Id("Type")), Underscore, Grp(F.Id("v")), Comma, Sp,
+            OpenBracket, Call("NormedAddCommGroup", space), CloseBracket, Comma, Sp,
+            OpenBracket, Call("InnerProductSpace", scalar, space), CloseBracket, Comma, Sp,
+            OpenBracket, Call("SeparableSpace", space), CloseBracket, Comma,
+            RowBreak, Grp(),
+            Forall, Sp, subset, Colon, Sp, Call("Set", space), Comma, Sp,
+            Call("Orthonormal", scalar, Call("SubtypeVal", subset)), Sp, Implies, Sp,
+            Call("SetCountable", subset), Dot));
+    }
 
     private static Formula DerivativeFormula()
     {

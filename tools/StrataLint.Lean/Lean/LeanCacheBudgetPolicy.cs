@@ -21,10 +21,10 @@ internal static class LeanCacheBudgetPolicy
     /// 含干净的 dev 树本身)一律红,不只是触碰 D5 的(https://github.com/the-omega-institute/trureturing/issues/4120)。
     /// 本次是对该到期的**重新收口**,不是「改大让它绿」:型别不变、论证重走、读数更新、复审线重算。
     ///
-    /// **域**:`LeanCacheProvisioner` 的三个具名消费点 —— `LeanCommandBudget`(承重,
-    /// `worktree with-cache-writer` 包裹的任意 Lake 命令)、`DirectoryCopyBudget`
-    /// (`cp -R` 回退,实测 0 次发生)、`DependencyFetchBudget`(`lake exe cache get`,
-    /// 走到 3 次且差两个数量级)。后两者的继承依据与到期条件写在各自的访问器上。
+    /// **域**:`LeanCacheProvisioner` 的两个具名消费点 —— `LeanCommandBudget`(承重,
+    /// `worktree with-cache-writer` 包裹的任意 Lake 命令)、`DependencyFetchBudget`
+    /// (`lake exe cache get`,走到 3 次且差两个数量级)。依赖供给的继承依据与到期条件
+    /// 写在该访问器上。
     ///
     /// **正读数**:正常路径 —— ensure 播种 clonefile **13 秒**;prefix 归档补编
     /// **1m18s**(重编 19/1513 模块);CI 热态报告生产 **12m46s**。

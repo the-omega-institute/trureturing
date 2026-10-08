@@ -33,20 +33,25 @@ class NativeReleaseSupport:
         self.reg_package()
         for name in ('lean-cache-publish.sh', 'lean_cache_release.py'):
             self.copy('tools/scripts/worktree/' + name)
+        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
+        policy['report_execution'] = json.loads((ROOT / 'lean-report-inputs.json').read_text())['report_execution']
+        self.write('lean-report-inputs.json', json.dumps(policy))
         self.env['STRATALINT_LEAN_BUILD_TARGETS'] = json.dumps(
             ['leanInspector/reportInspector', 'trureturing/Audit'])
-        self.env.update(STRATALINT_CACHE_REPO='fixture/cache', GITHUB_SHA='a' * 40,
+        self.env.update(STRATALINT_CACHE_REPO='fixture/cache', GITHUB_ACTIONS='true',
             GITHUB_RUN_ID='4242', GITHUB_RUN_ATTEMPT='1', GITHUB_EVENT_NAME='schedule',
             GITHUB_REF='refs/heads/dev', STRATALINT_ACTIONS_CACHE_SEEDED='',
             RELEASE_FIXTURE=str(self.root / 'releases'), LEAN_REPORT=str(self.root / 'unexpected.json'),
             STRATALINT_LEAN_INPUT_MEMO_ROOT=str(self.root / 'input-memo'),
             STRATALINT_SUPERVISOR_ROOT=str(self.root / 'supervisor'))
         self.write('bin/gh', '''#!/usr/bin/env python3
-import base64, hashlib, json, os, shutil, sys
+import hashlib, json, os, shutil, sys
 from pathlib import Path
 root = Path(os.environ['RELEASE_FIXTURE'])
 root.mkdir(exist_ok=True)
 a = sys.argv[1:]
+with (root.parent / 'gh-calls.jsonl').open('a') as log:
+    log.write(json.dumps(a) + '\\n')
 def metadata(directory):
     return json.loads((directory / 'release.json').read_text())
 if a[:2] == ['release', 'list']:
@@ -84,23 +89,27 @@ elif a[0] == 'api' and '/releases/tags/' in a[1]:
         digest='sha256:' + hashlib.sha256(p.read_bytes()).hexdigest())
         for p in directory.iterdir() if p.name != 'release.json']
     print(json.dumps(record))
-elif a[0] == 'api' and '/actions/runs/' in a[1]:
-    print(json.dumps(dict(id=4242, event='schedule', head_branch='dev',
-        head_sha=os.environ['GITHUB_SHA'], path='.github/workflows/lean-cache-publish.yml',
-        status='completed', conclusion='success', repository=dict(full_name='fixture/cache'))))
-elif a[0] == 'api' and '/contents/lake-manifest.json?ref=' in a[1]:
-    content = (root.parent / 'lake-manifest.json').read_bytes()
-    print(json.dumps(dict(type='file', path='lake-manifest.json', encoding='base64',
-        content=base64.b64encode(content).decode(), size=len(content),
-        sha=hashlib.sha1(b'blob ' + str(len(content)).encode() + b'\\0' + content).hexdigest())))
+elif a[0] == 'api' and a[1] == 'repos/fixture/cache/branches/dev':
+    print(json.dumps(dict(name='dev', protected=True, commit=dict(sha=os.environ['GITHUB_SHA']))))
+elif a[0] == 'api' and a[1] == 'repos/fixture/cache/compare/' + os.environ['GITHUB_SHA'] + '...' + os.environ['GITHUB_SHA']:
+    print(json.dumps(dict(status='identical', merge_base_commit=dict(sha=os.environ['GITHUB_SHA']))))
 else:
     raise SystemExit('unexpected transport call: ' + repr(a))
 ''')
         (self.root / 'bin/gh').chmod(0o755)
+        self.write('.gitignore', '.lake/\nbuild/\n__pycache__/\nfixture-mathlib/\nactivity.jsonl\nutility-calls\n'
+            'tmp/\ninput-memo/\nsupervisor/\nreleases/\ngh-calls.jsonl\n')
+        for args in (['add', '.'], ['-c', 'user.name=Fixture', '-c', 'user.email=fixture@example.invalid',
+                '-c', 'commit.gpgsign=false', 'commit', '-qm', 'native Release source']):
+            result = self.guarded_command(['git', *args], env=self.env)
+            self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.env['GITHUB_SHA'] = subprocess.check_output(['git', 'rev-parse', 'HEAD'],
+            cwd=self.root, env=self.env, text=True).strip()
 
     def release_run(self, verb, success=True):
         result = self.guarded_command(['/bin/bash', str(self.root / 'tools/scripts/worktree/lean-cache-publish.sh'),
-            verb, '--repository', str(self.root)], cwd=self.root.parent, env=self.env)
+            verb, '--repository', str(self.root)], cwd=self.root.parent,
+            env=dict(self.env, GITHUB_ACTIONS='false') if verb == 'fetch' else self.env)
         self.assertEqual(result.returncode == 0, success, result.stdout + result.stderr)
         return result
 
@@ -256,13 +265,28 @@ class NativePackageConsumerTests(NativeReleaseSupport):
             self.write('lean-report-inputs.json', manifest)
             result = subprocess.run(['make', 'lean-report'], cwd=clone, env=self.env,
                 text=True, capture_output=True, timeout=120)
+            if sys.platform != 'darwin':
+                self.assertNotEqual(result.returncode, 0, result.stdout + result.stderr)
+                receipt = json.loads(next(line.removeprefix('LEAN_CACHE ')
+                    for line in (result.stdout + result.stderr).splitlines()
+                    if line.startswith('LEAN_CACHE ')))
+                self.assertEqual(receipt['status'], 'failed')
+                self.assertEqual(receipt['method'], 'none')
+                self.assertEqual(Path(receipt['donor']).resolve(), donor.resolve())
+                self.assertIn('clonefile(2) requires macOS', receipt['reason'])
+                self.assertEqual(receipt['clonefile_attempts'], 0)
+                self.assertFalse((clone / '.lake').exists())
+                self.assertEqual(list(clone.glob('.lake.stage-*')), [])
+                self.assertEqual(donor_bytes, {p.relative_to(donor): publication.digest(p)
+                    for p in (donor / '.lake').rglob('*') if p.is_file()})
+                return
             self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
             output = clone / '.lake/build/stratalint/raw-lean-report.json'
             logs = Path(str(output) + '.logs')
             receipt = json.loads(next(line.removeprefix('LEAN_CACHE ')
                 for line in (logs / 'ensure.stdout.log').read_text().splitlines() if line.startswith('LEAN_CACHE ')))
             self.assertEqual(receipt['status'], 'seeded')
-            self.assertEqual(receipt['method'], 'clonefile' if sys.platform == 'darwin' else 'copy')
+            self.assertEqual(receipt['method'], 'clonefile')
             self.assertEqual(Path(receipt['donor']).resolve(), donor.resolve())
             self.assertEqual(receipt['project_olean_state'], 'warm')
             self.assertFalse((clone / '.lake').is_symlink())
@@ -292,7 +316,7 @@ class NativePackageConsumerTests(NativeReleaseSupport):
             self.assertEqual(donor_bytes, {p.relative_to(donor): publication.digest(p)
                 for p in (donor / '.lake').rglob('*') if p.is_file()})
 
-    def test_release_publisher_legacy_seed_current_pack_restore_and_unchanged(self):
+    def test_release_publisher_current_pack_restore_and_unchanged(self):
         self.release_fixture()
         self.run_lake('build')
         address = json.loads(self.release_run('address').stdout)
@@ -300,9 +324,9 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         slug = ''.join(c if c.isascii() and c.isalnum() else '-' for c in toolchain)
         legacy = 'lean-cache-v1-' + slug + '-' + 'b' * 16 + '-' + 'c' * 16
         directory = self.root / 'releases' / legacy
-        directory.mkdir()
+        directory.mkdir(parents=True)
         archive = directory / 'lean-build.tgz'
-        self.run_lake('pack', str(archive))
+        archive.write_bytes(b'obsolete snapshot must never be downloaded')
         system, machine = address['partition'].split('/')[1].split('-', 1)
         (directory / 'manifest.txt').write_text(''.join(f'{k}={v}\n' for k, v in dict(
             tag=legacy, toolchain=toolchain, os=system, arch=machine, asset='lean-build.tgz',
@@ -311,12 +335,18 @@ class NativePackageConsumerTests(NativeReleaseSupport):
             producer_commit_sha=self.env['GITHUB_SHA'], workflow_run_id='4242').items()))
         (directory / 'release.json').write_text(json.dumps(dict(tag_name=legacy, draft=False,
             target_commitish=self.env['GITHUB_SHA'], published_at='fixture')))
+        # Old names omit the current report/execution key and cannot seed builds.
         shutil.rmtree(self.root / '.lake/build')
-        restored = self.release_run('fetch')
-        self.assertIn('"resolved":"' + legacy + '"', restored.stdout)
-        self.assertFalse((self.root / '.lake/build/lean-inspector/report.zip').exists())
+        self.assertFalse((self.root / '.lake/build').exists())
+        missed = self.release_run('fetch', success=False)
+        self.assertIn('"status":"miss"', missed.stdout)
+        self.assertFalse((self.root / '.lake/build').exists())
+        self.assertEqual([['release', 'list', '--repo', 'fixture/cache', '--limit', '100',
+            '--json', 'tagName,createdAt,isDraft']],
+            [json.loads(line) for line in (self.root / 'gh-calls.jsonl').read_text().splitlines()])
         first = self.guarded_command(['make', 'lean-cache-to-github-without-mathlib'], env=self.env)
-        self.assertEqual(first.returncode, 0, first.stdout + first.stderr)
+        self.assertEqual(first.returncode, 0, first.stdout + first.stderr
+            + subprocess.check_output(['git', 'status', '--porcelain'], cwd=self.root, env=self.env, text=True))
         self.assertIn('"status":"published"', first.stdout)
         self.assertIn('LEAN_INSPECTOR_WORK extracted_modules=4 aggregates=1', first.stdout)
         self.assertFalse((self.root / 'unexpected.json').exists(), 'publisher fixes its canonical output')
@@ -324,9 +354,11 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         expected = {suffix: publication.member(output, suffix).read_bytes() for suffix in publication.SUFFIXES}
         publication.validate_bundle(output, publication.coordinates(self.root), self.root)
         stamps, origins = self.stamps(), self.origins()
-        tag = address['release_prefix'] + '4242-1'
+        tag = address['release_prefix'] + 'ci-4242-1'
         manifest = json.loads((self.root / 'releases' / tag / 'manifest.json').read_text())
         self.assertEqual(address['partition'], manifest['partition'])
+        self.assertEqual(address['cache_key'], manifest['cache_key'])
+        self.assertEqual('ci-4242-1', manifest['publication_id'])
         release = json.loads((self.root / 'releases' / tag / 'release.json').read_text())
         self.assertEqual('main', release['target_commitish'])
         self.assertEqual(self.env['GITHUB_SHA'], manifest['producer_commit_sha'])
@@ -360,7 +392,9 @@ class NativePackageConsumerTests(NativeReleaseSupport):
         # Even an already published run cannot bypass registered program builds.
         self.write('Audit.lean', 'this is not valid Lean\n')
         failed = self.release_run('publish', success=False)
-        self.assertIn('LEAN_INSPECTOR_FAILED phase=report', failed.stderr)
+        self.assertIn('LEAN_INSPECTOR_FAILED phase=programs', failed.stderr)
+        self.assertIn('error: Audit.lean:', failed.stderr)
+        self.assertFalse(publication.member(output, '.reuse.json').exists())
         self.assertNotIn('LEAN_CACHE_PUBLISH ', failed.stdout)
         self.assertEqual(releases, {p.name for p in (self.root / 'releases').iterdir()})
         self.write('Audit.lean', 'def audit : Nat := 1\n')

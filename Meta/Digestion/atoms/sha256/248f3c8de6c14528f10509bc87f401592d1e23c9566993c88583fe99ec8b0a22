@@ -1,0 +1,79 @@
+**推导 10.1（当前律与指定乘积插值的残差）。** 使用二阶关系完成 §39 的五函数基，比较真实律与第五节明确选定的补全。
+
+采用推导 5.1 的底面独立补全，得到：
+
+```math
+\begin{aligned}
+\widehat f(X,Y,Z)
+={}&
+\frac{(r-X)(r-Y)}r f_0
++\frac{X(r-Y)}r f_2\\
+&+\frac{Y(r-X)}r f_5
++\frac{XY}r f_{25}
++Zf_3.
+\end{aligned}
+```
+
+在顶点 $Z=1$，按连续延拓取 $\widehat f=f_3$。
+
+任意真实分布的响应满足：
+
+```math
+\boxed{
+\mathbb E[f]-\widehat f
+=
+J_f\left(\kappa-\frac{XY}{r}\right)
+=
+\frac{J_f\Delta}{r},
+\qquad r>0.
+}
+```
+
+证明。
+
+由五个概率的反解：
+
+```math
+\begin{aligned}
+\mathbb E[f]
+={}&f_0+(f_2-f_0)X+(f_5-f_0)Y\\
+&+(f_3-f_0)Z+J_f\kappa.
+\end{aligned}
+```
+
+而乘积补全只把最后的 $\kappa$ 换成 $XY/r$。相减即得。证毕。
+
+于是，当前真实律的响应与所选乘积补全相等的充分且必要条件是：
+
+```math
+\boxed{J_f\Delta=0}
+```
+
+——只针对当前分布与当前目标的点态相等；这不是在全部同坐标来源之间识别目标的判据。
+
+这有两种不同原因：
+
+```math
+\boxed{
+J_f=0:
+\text{目标根本不读取那项联合区别};
+}
+```
+
+```math
+\boxed{
+\Delta=0:
+\text{来源恰好满足所用的乘积补全}.
+}
+```
+
+由推导 9.1 还得到：
+
+```math
+\boxed{
+|\mathbb E[f]-\widehat f|
+\le
+\frac{|J_f|}{4}(1-Z).
+}
+```
+

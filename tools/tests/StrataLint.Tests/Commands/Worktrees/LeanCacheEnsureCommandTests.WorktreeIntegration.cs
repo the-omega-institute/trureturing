@@ -116,27 +116,29 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void MainDonorBecomingBusyAfterStagingFailsClosedWithoutPublishingTheCopy()
+    public void MainDonorBecomingBusyAfterStagingFailsClosedWithoutPublishingTheClone()
     {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
-        WriteCache(repository.Path, "copy raced cache\n");
+        WriteCache(repository.Path, "clone raced cache\n");
         _ = WriteProjectOlean(repository.Path, "WarmMain");
-        var target = AddWorktree(repository.Path, "post-copy-busy");
+        var target = AddWorktree(repository.Path, "post-clone-busy");
+        var cloneCompleted = false;
         var runner = new RecordingWorktreeProcessRunner
         {
             BusyRoot = repository.Path,
-            BusyOnlyAfterCopy = true,
+            BusyWhen = () => cloneCompleted,
         };
 
         var result = WorktreeCommand.Run(
             repository.Path,
             ["ensure-cache", "--path", target],
             runner,
-            new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
+            new RecordingDirectoryCloner { AfterClone = (_, _) => cloneCompleted = true });
 
         Assert.False(result.Success);
+        Assert.Contains("busy", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.False(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
         Assert.False(File.Exists(Path.Combine(target, ".lake", "build", "cache.bin")));
         Assert.Empty(Directory.EnumerateDirectories(target, ".lake.stage-*"));
@@ -144,14 +146,14 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void MainDonorStampChangingAfterStagingFailsClosedWithoutPublishingTheCopy()
+    public void MainDonorStampChangingAfterStagingFailsClosedWithoutPublishingTheClone()
     {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
         InitializeRepository(repository.Path);
-        WriteCache(repository.Path, "copy raced stamp\n");
+        WriteCache(repository.Path, "clone raced stamp\n");
         _ = WriteProjectOlean(repository.Path, "WarmMain");
-        var target = AddWorktree(repository.Path, "post-copy-stamp-change");
+        var target = AddWorktree(repository.Path, "post-clone-stamp-change");
         var cloner = new RecordingDirectoryCloner
         {
             AfterClone = static (source, _) => File.Delete(LeanCacheStamp.PathFor(source)),
@@ -222,10 +224,14 @@ public sealed partial class LeanCacheEnsureCommandTests
             cloner,
             Cleanup);
 
-        Assert.True(result.Success, result.Error);
-        Assert.Empty(result.Error);
+        Assert.False(result.Success);
+        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "cp"
+            || Path.GetFileName(call.FileName) == "lake");
+        Assert.False(Directory.Exists(Path.Combine(target, ".lake")));
+        Assert.Empty(Directory.EnumerateDirectories(target, ".lake.stage-*"));
         Assert.Equal(2, cleanupCalls);
-        using var receipt = ParseReceipt(result.Output);
+        using var receipt = ParseReceipt(result.Error);
+        Assert.Equal("failed", receipt.RootElement.GetProperty("status").GetString());
         Assert.Equal(
             "injected clone retry cleanup failure",
             receipt.RootElement.GetProperty("clonefile_cleanup_error").GetString());

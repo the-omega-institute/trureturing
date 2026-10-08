@@ -12,31 +12,18 @@ structure CompiledView where
   isInstance : Name → Bool
   ownerOf : Name → Option Name
   mainModule : Name
-  protectedModules : Std.HashMap Name Bool
+  protectedModules : Std.TreeMap Name Bool Name.quickCmp
   constantsIdentity : USize
   isExporting : Bool := false
 
-/-- Classify the compiler's dependency-first module inventory. Missing metadata
-cannot justify an external leaf. -/
-def compiledModuleClasses (modules : Array Name)
-    (moduleData : Name → Option ModuleData) : Std.HashMap Name Bool := Id.run do
-  let mut classes : Std.HashMap Name Bool := {}
-  for name in modules do
-    let inherited := match moduleData name with
-      | none => true
-      | some data => data.imports.any (fun item => classes[item.module]?.getD true)
-    classes := classes.insert name
-      (name.getRoot == `D5 || name.getRoot == `LeanInformationAudit || inherited)
-  return classes
-
 def CompiledView.fromArtifacts (store : RawArtifacts.Store) (mainModule : Name) : CompiledView := {
-  find? := (store.constants[·]?)
+  find? := (store.constants.find?)
   getProjectionFnInfo? := store.metadata.projections.find?
   isClass := store.metadata.classes.contains
   isInstance := store.metadata.instances.contains
-  ownerOf := (store.owners[·]?)
+  ownerOf := (store.owners.find?)
   mainModule
-  protectedModules := compiledModuleClasses store.moduleOrder store.modules.find?
+  protectedModules := store.protectedModules
   constantsIdentity := unsafe ptrAddrUnsafe store.constants }
 
 end LeanInformationAudit.RegistrationGates
