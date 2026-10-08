@@ -33,7 +33,7 @@ def ScalarSound (f g d : ℕ) (V : Source) (h : ℕ) (Q : Finset Address) : Prop
     (∀ u ∈ Q, readout u U = readout u V) → U ∈ ActualImage d
 
 /-- Every branch has a beta descendant, recursively through the tree. -/
-def BetaCovered : Source → Prop
+private def BetaCovered : Source → Prop
   | .of _ => True
   | .mul s t => BetaCovered s ∧ BetaCovered t ∧ ∃ u : Address, readout u (.mul s t) = .beta
 
@@ -72,7 +72,7 @@ private theorem mass_min (t : Source) : 2 ≤ m(t) ∧ (m(t) = 2 ↔ t = .of tru
   have h := weighted_mass_min 2 3 (by decide) (by decide) t
   exact ⟨h.1, h.2.1, h.2.2 (by decide)⟩
 
-theorem beta_structure (t : Source) :
+private theorem beta_structure (t : Source) :
     BetaCovered (substitution (substitution t)) ∧
     ∃ u : Address, readout u (substitution (substitution t)) = .beta := by
   induction t with

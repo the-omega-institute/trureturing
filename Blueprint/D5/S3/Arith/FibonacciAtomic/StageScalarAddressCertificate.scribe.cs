@@ -33,7 +33,7 @@ internal sealed class StageScalarAddressCertificateDocument : IScribeDocumentDef
                         + "For fixed V and h>=D(V), the price is nonincreasing in L and equals a at all sufficiently large stages. "
                         + "The two global scalar equivalence kernels at stages zero and one do not contain each other. "
                         + "Here n0(U)=2*a(U)+3*b(U) and n1(U)=8*a(U)+13*b(U); cut(x,y)=max(0,x-y).")),
-                    Paragraph(Text("Matching all beta endpoints fixes the branch skeleton. Positive weights f<g<2f make alpha "
+                    Paragraph(Text("Matching all beta endpoints fixes the branch skeleton. Positive weights 0<f<g make alpha "
                         + "the unique minimum-weight replacement of each remaining alpha slot, so the scalar equality reconstructs V. "
                         + "Matching all alpha endpoints and t beta endpoints recovers the exact composition: consecutive Fibonacci weights are coprime, "
                         + "and the remaining possible beta deficit is smaller than f, forcing that deficit to vanish. "
