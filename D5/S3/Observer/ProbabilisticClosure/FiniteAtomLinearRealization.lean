@@ -318,7 +318,7 @@ def rootMass (alpha q : unitInterval) (eta : Bool × Bool) (root : Bool) : ℝ :
 def markerRate (alpha q : unitInterval) (eta : Bool × Bool) (j : Side) : ℝ :=
   (1 - (q : ℝ)) * rootMass alpha q eta (selectedParity eta j)
 
-private theorem denominator_pos (alpha q : unitInterval) (ha : 0 < (alpha : ℝ))
+theorem denominator_pos (alpha q : unitInterval) (ha : 0 < (alpha : ℝ))
     (eta : Bool × Bool) : 0 < denominator alpha q eta := by
   have ha' : 0 ≤ 1 - (alpha : ℝ) := sub_nonneg.mpr alpha.property.2
   have hq : 0 ≤ (q : ℝ) := q.property.1
@@ -385,7 +385,7 @@ def terminalIndex (task : Task) (root : Bool) : Fin (terminalCount task) := by
            else 0)
       | .inr t => if o = .reject then if d = .inr t then 1 else 0 else 0 }
 
-private theorem full_terminal_row {m : ℕ} (task : Task) (alpha : unitInterval)
+theorem full_terminal_row {m : ℕ} (task : Task) (alpha : unitInterval)
     (q : Fin m → unitInterval) (t : Fin (terminalCount task)) (T : Test) :
     testRow (fullModel task alpha q) T (.inr t) =
       if terminalAccept ((fullModel task alpha q).mode (.inr t)) T then 1 else 0 := by
@@ -399,7 +399,7 @@ private theorem full_terminal_row {m : ℕ} (task : Task) (alpha : unitInterval)
       simp [testRow, fullModel, Finset.univ, Fintype.complete, terminalAccept, ih .reject]
       split_ifs <;> simp_all
 
-private theorem full_active_row {m : ℕ} (task : Task) (alpha : unitInterval)
+theorem full_active_row {m : ℕ} (task : Task) (alpha : unitInterval)
     (q : Fin m → unitInterval) (i : Fin m) (eta : Bool × Bool) (j : Side) (next : Output → Test) :
     testRow (fullModel task alpha q) (.query j next) (.inl (i, eta)) =
       (1 - markerRate alpha (q i) eta j) *
@@ -682,7 +682,7 @@ private theorem full_stopped_readout {m : ℕ} (task : Task) (alpha : unitInterv
     Finset.sum_ite_eq', Finset.mem_univ, ite_true]
   rw [full_terminal_row, ht]
 
-private theorem full_model_probability {m : ℕ} (task : Task) (alpha : unitInterval)
+theorem full_model_probability {m : ℕ} (task : Task) (alpha : unitInterval)
     (q : Fin m → unitInterval) (ha : 0 < (alpha : ℝ)) :
     (letI := (fullModel task alpha q).finite
      letI := (fullModel task alpha q).finiteOutputs
