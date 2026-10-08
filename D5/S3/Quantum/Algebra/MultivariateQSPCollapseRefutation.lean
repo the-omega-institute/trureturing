@@ -39,18 +39,18 @@ def signalStep (g : Fin 3 → MvPolynomial (Fin 2) ℂ) :
 
 /-- The first j processing steps, numbered from A_1; stages past m are constant. -/
 def stage {m : ℕ} (A : Fin m → specialUnitaryGroup (Fin 3) ℂ)
-    (g : Fin 3 → MvPolynomial (Fin 2) ℂ) : ℕ → Fin 3 → MvPolynomial (Fin 2) ℂ
-  | 0 => g
-  | j + 1 => if hj : j < m then
-      fun i => ∑ l, C ((A ⟨j, hj⟩).val i l) * signalStep (stage A g j) l
-    else stage A g j
+    (g : Fin 3 → MvPolynomial (Fin 2) ℂ) : ℕ → Fin 3 → MvPolynomial (Fin 2) ℂ :=
+  Nat.rec (motive := fun _ => Fin 3 → MvPolynomial (Fin 2) ℂ) g
+    (fun j previous => if hj : j < m then
+      fun i => ∑ l, C ((A ⟨j, hj⟩).val i l) * signalStep previous l
+    else previous)
 
 private def transferPrefix {m : ℕ} (A : Fin m → specialUnitaryGroup (Fin 3) ℂ)
-    (a b : ℂ) : ℕ → Matrix (Fin 3) (Fin 3) ℂ
-  | 0 => 1
-  | j + 1 => if hj : j < m then
-      (A ⟨j, hj⟩).val * diagonal ![1, a, b] * transferPrefix A a b j
-    else transferPrefix A a b j
+    (a b : ℂ) : ℕ → Matrix (Fin 3) (Fin 3) ℂ :=
+  Nat.rec (motive := fun _ => Matrix (Fin 3) (Fin 3) ℂ) 1
+    (fun j previous => if hj : j < m then
+      (A ⟨j, hj⟩).val * diagonal ![1, a, b] * previous
+    else previous)
 
 /-- The evaluated product A_m W ... A_1 W. -/
 def transfer {m : ℕ} (A : Fin m → specialUnitaryGroup (Fin 3) ℂ)
@@ -104,15 +104,28 @@ private theorem initial_normalized (a b : ℂ) (ha : ‖a‖ = 1) (_hb : ‖b‖
 
 private theorem stages : stage protocol initial 1 = middle ∧
     stage protocol initial 2 = finalState := by
-  constructor <;> funext i <;> fin_cases i <;>
-    simp [stage, protocol, cycleOne, cycleTwo, signalStep, initial, middle, finalState,
+  have hfirst : stage protocol initial 1 = middle := by
+    change (fun i => ∑ l, C ((protocol 0).val i l) * signalStep initial l) = middle
+    funext i
+    fin_cases i <;>
+      simp [protocol, cycleOne, cycleTwo, signalStep, initial, middle,
+        Fin.sum_univ_succ] <;> ring
+  refine ⟨hfirst, ?_⟩
+  change (fun i => ∑ l, C ((protocol 1).val i l) *
+    signalStep (stage protocol initial 1) l) = finalState
+  rw [hfirst]
+  funext i
+  fin_cases i <;>
+    simp [protocol, cycleOne, cycleTwo, signalStep, middle, finalState,
       Fin.sum_univ_succ] <;> ring
 
 private theorem transfer_diagonal (a b : ℂ) :
     transfer protocol a b = diagonal ![a, a * b, b] := by
+  change (protocol 1).val * diagonal ![1, a, b] *
+    ((protocol 0).val * diagonal ![1, a, b] * 1) = diagonal ![a, a * b, b]
   ext i j
   fin_cases i <;> fin_cases j <;>
-    simp [transfer, transferPrefix, protocol, cycleOne, cycleTwo, Matrix.mul_apply,
+    simp [protocol, cycleOne, cycleTwo, Matrix.mul_apply,
       Fin.sum_univ_succ, diagonal_apply, Matrix.vecMul, dotProduct] <;> ring
 
 private theorem coefficient_span {n : ℕ} (d : Fin n → (Fin 2 →₀ ℕ))
