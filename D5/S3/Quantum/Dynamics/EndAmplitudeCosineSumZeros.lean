@@ -4,17 +4,18 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: The seven-site end amplitude numerator has a zero in (0, pi) exactly when a is not 1. -/
+   digest: For odd a < even b < odd c, gcd 1, the end numerator vanishes in (0, pi) iff a > 1. -/
 
 /-
-proof_shape: amplitudeNumerator_pos: content; escape_witness: the public conclusion itself (form
-2): for 1 < b < c with b even and c odd, N(1, b, c; t) > 0 on [0, π). On the live path the
-reflection amplitudeNumerator_pi_sub writes N(π - 2θ) = 2 B(θ), the substitution
-k² sin² θ - sin² kθ = (kθ)² (ψ θ - ψ (kθ)), ψ x = (sin x / x)², gives
-B = b² c² ((ψ θ - ψ (bθ)) ((cθ)² - θ²) - (ψ θ - ψ (cθ)) ((bθ)² - θ²)), and the sign is the
-same-delivery theorem D5/S3/Quantum/Dynamics/SincSquareChordSlope.sincSq_chord_lt at
-(θ, bθ, cθ) (preregistered fact E1 of issue #14487, consumed here). With that theorem taken as
-given, the remaining steps are an instantiation and normalisation.
+proof_shape: amplitudeNumerator_pos: content; escape_witness (form 1): the same-delivery
+intermediate proposition D5/S3/Quantum/Dynamics/SincSquareChordSlope.sincSq_chord_lt
+(preregistered fact E1 of issue #14487), on the live path: for 1 < b < c with b even and c odd,
+N(1, b, c; t) > 0 on [0, π). The reflection amplitudeNumerator_pi_sub writes
+N(π - 2θ) = 2 B(θ), the substitution k² sin² θ - sin² kθ = (kθ)² (ψ θ - ψ (kθ)),
+ψ x = (sin x / x)², gives
+B = b² c² ((ψ θ - ψ (bθ)) ((cθ)² - θ²) - (ψ θ - ψ (cθ)) ((bθ)² - θ²)), and the sign is that
+proposition at (θ, bθ, cθ). With it taken as given, the remaining steps are an instantiation and
+normalisation.
 proof_shape: exists_amplitudeNumerator_neg: content; escape_witness: the public conclusion itself
 (form 2; preregistered fact E2 of issue #14487): for a ≥ 3 odd, a < b < c, b even, c odd,
 gcd(a, b, c) = 1, a time in (0, π) with N < 0. If a ∤ b the time is π - 2πj/a for a residue j
@@ -48,14 +49,18 @@ exists_amplitudeNumerator_neg, case a ∤ b); consumer: exists_amplitudeNumerato
 proof_shape: sin_sq_add_nat_mul_pi: bind-only (Real.sin_add_nat_mul_pi); consumer:
 exists_neg_of_dvd.
 proof_shape: sin_sq_mul_lower: content (β² sin² x (1 - (βx)²/3) < sin² (βx) from
-Real.sin_gt_sub_cube and Real.sin_lt); consumer: dvd_core.
+Real.sin_gt_sub_cube and Real.sin_sq_le_sq); consumer: dvd_core.
 proof_shape: dvd_core: content (the real inequality of the case a ∣ b); consumer:
 exists_neg_of_dvd.
 proof_shape: exists_neg_of_dvd: content (escape witness as for exists_amplitudeNumerator_neg,
 case a ∣ b); consumer: exists_amplitudeNumerator_neg.
 admission_basis: escape-witness (issue #14487: the cosine-sum statement behind the seven-site
-conjecture of arXiv:2507.18767; the source states the conjecture and does not prove it, and this
-module does not state the conjecture itself).
+conjecture of arXiv:2507.18767, Library note D5/L/GraphInvariants/escobar2025earlystateexclusion).
+The definition amplitudeNumerator is the bracket of Eq. (2.1) of that source at natural
+frequencies. The source proves the triples (1, 2m, 2m + 1) (its Theorem 3.2: no zero in (0, π))
+and (2m + 1, 2m + 2, 2m + 3) (its Theorem 3.4: exactly 2m zeros) and states the general case as a
+conjecture; the statements for all admissible triples are derived here, and this module does not
+state the conjecture itself.
 Direct frozen dependencies: none (pinned Mathlib only). Same-delivery dependency:
   D5/S3/Quantum/Dynamics/SincSquareChordSlope.sincSq_chord_lt.
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
@@ -275,9 +280,9 @@ private theorem exists_neg_of_not_dvd {a b c : ℕ} (ha : Odd a) (hb : Even b) (
 private theorem sin_sq_add_nat_mul_pi (x : ℝ) (n : ℕ) : sin (x + n * π) ^ 2 = sin x ^ 2 := by
   rcases neg_one_pow_eq_or ℝ n with h | h <;> rw [sin_add_nat_mul_pi, h] <;> ring
 
-/-- For `0 < x < π` and `0 < β x < 4 / 3`, with `y = β x`:
+/-- For `0 < x` and `0 < β x < 4 / 3`, with `y = β x`:
 `β² sin² x (1 - y² / 3) < sin² y`. -/
-private theorem sin_sq_mul_lower {Bt x : ℝ} (hBt : 0 < Bt) (hx0 : 0 < x) (hxπ : x < π)
+private theorem sin_sq_mul_lower {Bt x : ℝ} (hBt : 0 < Bt) (hx0 : 0 < x)
     (hy : Bt * x < 4 / 3) :
     Bt ^ 2 * sin x ^ 2 * (1 - (Bt * x) ^ 2 / 3) < sin (Bt * x) ^ 2 := by
   obtain ⟨y, hyd⟩ : ∃ y : ℝ, Bt * x = y := ⟨_, rfl⟩
@@ -286,11 +291,9 @@ private theorem sin_sq_mul_lower {Bt x : ℝ} (hBt : 0 < Bt) (hx0 : 0 < x) (hxπ
   have hyy : y ^ 2 < 16 / 9 := by
     have h := mul_lt_mul'' hy hy hy0.le hy0.le
     linarith
-  have hs0 : 0 < sin x := sin_pos_of_pos_of_lt_pi hx0 hxπ
-  have hsx : sin x ^ 2 ≤ x ^ 2 := pow_le_pow_left₀ hs0.le (sin_lt hx0).le 2
   have hy2 : Bt ^ 2 * sin x ^ 2 ≤ y ^ 2 := by
     rw [← hyd, mul_pow]
-    exact mul_le_mul_of_nonneg_left hsx (sq_nonneg Bt)
+    exact mul_le_mul_of_nonneg_left sin_sq_le_sq (sq_nonneg Bt)
   have h13 : 0 < 1 - y ^ 2 / 3 := by linarith
   have hS1 : 0 < y - y ^ 3 / 6 := by
     have h := mul_pos hy0 (by linarith : (0 : ℝ) < 1 - y ^ 2 / 6)
@@ -325,10 +328,7 @@ private theorem dvd_core {A Bt C D x : ℝ} (hA : 0 < A) (hBt : 2 ≤ Bt) (hD : 
       exact mul_lt_mul_of_pos_left h2 pi_pos
     exact lt_of_mul_lt_mul_left h3 hC.le
   have hy43 : Bt * x < 4 / 3 := by linarith [pi_lt_four]
-  have hxπ : x < π := by
-    have h := mul_le_mul_of_nonneg_right hBt hx0.le
-    linarith [pi_pos]
-  have hsin := sin_sq_mul_lower hBt0 hx0 hxπ hy43
+  have hsin := sin_sq_mul_lower hBt0 hx0 hy43
   have hK : 0 < C ^ 2 - A ^ 2 := by
     have h := mul_pos (sub_pos.2 hAC) (add_pos hC hA)
     linarith
