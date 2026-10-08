@@ -1,0 +1,15 @@
+**数学引文 4.3（行列式与条件关联）。** 令
+
+```math
+Q=\begin{pmatrix}p_0&p_5\\p_2&p_{25}\end{pmatrix},\qquad
+\Delta=\det Q=r\kappa-XY.
+```
+
+有 $`|\Delta|\le r^2/4`$。当 $`r>0`$ 时，
+
+```math
+\mathrm{Cov}(x,y\mid z=0)=\frac{\Delta}{r^2}.
+```
+
+推导。展开行列式即得等式。底面四项总和 $`r`$，两条对角乘积各至多 $`r^2/4`$，均非负，故它们之差的绝对值至多该界。条件期望为 $`X/r,Y/r,\kappa/r`$，相减给协方差。顶点 $`r=0`$ 时 $`X=Y=\kappa=\Delta=0`$，条件事件质量零，不定义该条件协方差。证毕。
+

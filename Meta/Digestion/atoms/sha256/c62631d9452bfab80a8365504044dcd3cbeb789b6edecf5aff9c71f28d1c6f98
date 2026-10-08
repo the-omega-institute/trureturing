@@ -1,0 +1,31 @@
+**推论 20.3（素数截断增长时的稳定性成本）。** 对实数 $z\ge3$，令
+$$
+W_z=\prod_{q\le z}q,\qquad r_z=\#\{q:5\le q\le z\}.
+$$
+存在有限正常数
+$$
+C_{\mathrm{loc}}
+=\prod_{q\ge5}\frac{\alpha_q}{\alpha}\in(0,\infty)
+$$
+使得
+$$
+\sigma_{\min}(\mathcal C_{H,W_z})
+=C_{\mathrm{loc}}\alpha^{r_z}(1+o(1)).
+\tag{20.5}
+$$
+更明确地，令 $C_z=\prod_{5\le q\le z}\alpha_q/\alpha$，则
+$$
+0\le\log\frac{C_{\mathrm{loc}}}{C_z}
+\le\frac{7\pi^2}{\alpha^2\lfloor z\rfloor}.
+$$
+因此式 (20.5) 的相对因子可限定在
+$[\exp(-7\pi^2/(\alpha^2\lfloor z\rfloor)),1]$，误差为相对 $O(1/z)$。
+此外，完全不借助素数定理即有
+$$
+\frac{\log\kappa_2(\mathcal C_{H,W_z})}{\log W_z}\longrightarrow1,
+\qquad
+\frac{\log\kappa_2(\mathcal G_{H,W_z})}{\log W_z}\longrightarrow2.
+\tag{20.6}
+$$
+因此两个算子的条件数都随截断无界增长；$\mathcal C$ 的绝对逆范数亦由式 (20.5) 发散。
+

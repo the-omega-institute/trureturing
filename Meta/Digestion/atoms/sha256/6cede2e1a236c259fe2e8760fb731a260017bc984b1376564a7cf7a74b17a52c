@@ -1,0 +1,2 @@
+**数学引文 7.6（线性边界的经典来源范围）。** arXiv:1711.05994 的作者为 Borja Balle、Prakash Panangaden、Doina Precup，题名为 [*Singular Value Automata and Approximate Minimization*](https://arxiv.org/abs/1711.05994)。其 [全文 Theorem 2.1](https://arxiv.org/html/1711.05994#S2.Thmtheorem1) 陈述：对实数单输出函数 $`f:\Sigma^*\to\mathbb R`$，Hankel 矩阵有限秩等价于有限加权自动机表示，且秩等于最小线性表示维数。原生卷 §六已给所需联合输出版本的代数适配。本卷两接缝递推由 7.4 直接证明，不用 SVD 截断、近似误差定理或其额外解析假设，也不从实数线性维数推断物理内存或未知响应的取得成本。
+

@@ -1,0 +1,6 @@
+**数学引文 0.2（局部输入与来源桥）。** 固定来源快照 [`b2eaf40c54f1ce2e83095172ecee407b72e8c196`](https://github.com/the-omega-institute/trureturing/tree/b2eaf40c54f1ce2e83095172ecee407b72e8c196)：[关系延拓几何 §§7.1–7.3](https://github.com/the-omega-institute/trureturing/blob/b2eaf40c54f1ce2e83095172ecee407b72e8c196/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)供应原生读者、有限词反向对应与两数量行为边界；[接缝、循环与算术边界重建 §§二–四](https://github.com/the-omega-institute/trureturing/blob/b2eaf40c54f1ce2e83095172ecee407b72e8c196/docs/develop/theory/AURIC_FIB_SEAMS_CYCLES_ARITHMETIC_BOUNDARY_RECONSTRUCTION.md)供应有向占位核和严格共享切口；[二阶关系完成 §§39、53、112](https://github.com/the-omega-institute/trureturing/blob/b2eaf40c54f1ce2e83095172ecee407b72e8c196/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)供应五函数展开、概率反解与经典混合的表示边界。第二项正文所引的 `78d2f7c` 是其更早供应来源，不改变这里消费该正文的固定版本。
+
+[局部选择几何 §§二–三、九](FIB_ATOM_LOCAL_CHOICE_GEOMETRY.md)已有单窗纤维与指定探针后守卫任务；[多边形、约数体与关联边界 §§一–二](AURIC_FIB_DIVISOR_POLYGON_ASSOCIATION_BOUNDARY_GEOMETRY.md)已有保任务纤维与几何边界消元；[稳定关系边界与三维闭合 §§四、七、十](AURIC_FIB_STABLE_RELATION_BOUNDARY_THREE_DIMENSIONAL_CLOSURE.md)已有度量、原生代表与同源接缝。以下完整计算是这些输入在第八节同一历史任务中的展开，不另将已有公式计作发现。新增的来源回接关系是命题 8.7–8.10：局部三角律各自唯一，真实共享接缝仍可留下影响原生终值和继续回复分布的联合参数；同一个参数对数量期望却可无影响。
+
+## 一、从两个排斥关系得到方底棱锥
+

@@ -1,0 +1,2 @@
+**数学引文 3.3（明确的链多面体对应）。** 取三元素偏序 $`P=\{\ell,h,m\}`$，仅有 $`m\lt\ell,m\lt h`$，两端不可比。链多面体的坐标对应为 $`u_\ell=X,u_h=Y,u_m=Z`$；两条极大链恰给 $`X+Z\le1,Y+Z\le1`$。五个反链为空集、$`\{\ell\},\{h\},\{\ell,h\},\{m\}`$，其指示向量恰为五顶点。这是 Stanley 的经典框架之具体实例，见 [既有文献注](../../../Library/Words/stanley1986posetpolytopes.md) 与 [原文](https://math.mit.edu/~rstan/pubs/pubfiles/66.pdf) Definition 2.1、Theorem 2.2。取对偶偏序也给相同链和反链，但本文固定前述方向。逻辑决定可选组合，欧氏度量决定体积和面积；链多面体对应没有供应原生树的连续移动。
+
