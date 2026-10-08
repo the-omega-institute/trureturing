@@ -1,0 +1,15 @@
+**定义 13.1（实际具名来源的 Pauli 实现）。** 使用《二阶关系完成》定义 101.1、106.1 的固定原语，在 $`\mathbb C^2`$ 上取
+
+```math
+X_P=\begin{pmatrix}0&1\\1&0\end{pmatrix},\quad
+Y_P=\begin{pmatrix}0&-i\\i&0\end{pmatrix},\quad
+Z_P=\begin{pmatrix}1&0\\0&-1\end{pmatrix},
+```
+
+```math
+A=-iX_P,\qquad B=-iY_P,\qquad C=BA=iZ_P,
+\qquad U_\alpha=A,\ U_\beta=B,\ U_{\langle s,t\rangle}=U_sU_t.
+```
+
+右因子先作用于态。所有相位及环境条件以具名卷 §§101–112 为来源。空选择的表示单位 $`I`$ 仅是附加实现的空贡献，不把原生 $`[null]`$ 仿射推进当作恒等操作。
+

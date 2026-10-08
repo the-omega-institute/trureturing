@@ -1,0 +1,28 @@
+**数学引文 10.1（合法域上的端点取反）。** 复用行列式卷 §八，定义
+
+```math
+C_x(x,y,z)=(1-z-x,y,z),\qquad
+C_y(x,y,z)=(x,1-z-y,z).
+```
+
+在底面翻转对应端点，在顶点保持两端零，故它们是合法五模式的置换，满足
+
+```math
+C_x^2=C_y^2=I,\qquad C_xC_y=C_yC_x.
+```
+
+均值变换分别为
+
+```math
+C_x:(X,Y,Z)\mapsto(r-X,Y,Z),\qquad
+C_y:(X,Y,Z)\mapsto(X,r-Y,Z).
+```
+
+$`C_x`$ 后的共同占位 $`\kappa'=\mathbb E[(1-z-x)y]=Y-\kappa`$，于是
+
+```math
+\Delta'=r(Y-\kappa)-(r-X)Y=-\Delta.
+```
+
+$`C_y`$ 同理反号；端点交换 $`x\leftrightarrow y`$ 保持 $`\kappa,\Delta`$，将两种扫描核的端点角色互换。
+
