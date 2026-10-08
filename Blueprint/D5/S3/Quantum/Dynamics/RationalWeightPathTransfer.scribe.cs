@@ -20,8 +20,11 @@ internal sealed class RationalWeightPathTransferDocument : IScribeDocumentDefini
             Node("transfer", "Perfect state transfer", TransferFormula(),
                 "Perfect state transfer from vertex a to vertex b at time t means |e_a^T exp(i t H) e_b|^2 = 1, where exp is the matrix exponential and normSq is the squared modulus of a complex number. The formal statement writes exp(i t H) as the repository propagator hamiltonianPropagator H s = exp(-i s H) at s = -t.",
                 "HasPST", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("reversal", "Reversal form of a unitary sending the first vertex to the last", ReversalFormula(),
+                "Let U be unitary, commute with the path Hamiltonian H, and send the first basis vector to gamma times the last one, with |gamma| = 1. By induction on j, U e_j = gamma e_(m - j) and r t = r (m - 1 - t) for t < j. Indeed r_j U e_(j+1) = U(H e_j - q_j e_j - r_(j-1) e_(j-1)) = gamma (H e_(m-j) - q_j e_(m-j) - r_(j-1) e_(m-j+1)); by the induction hypothesis only the components at m - j - 1 and m - j remain, orthogonality of the columns j and j + 1 of U removes the second one, and the unit norm of column j + 1 together with the positivity of the weights gives r j = r (m - 1 - j). Here rev i is the mirror vertex m - i of the vertex i, rev t is the mirror index m - 1 - t of the edge t, and last(m) is the vertex m. The source records the underlying fact as known, citing Kay: a symmetric tridiagonal Hamiltonian with perfect state transfer between its end vertices is persymmetric. The statement here is its form for an arbitrary unitary commuting with the path Hamiltonian: every column of U is gamma times a basis vector, and the edge weights are mirror symmetric.",
+                "reversal_columns", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("mirror", "Transfer from the first vertex forces mirror-symmetric weights", MirrorFormula(),
-                "Let U be unitary, commute with the path Hamiltonian H, and send the first basis vector to gamma times the last one, with |gamma| = 1. By induction on j, U e_j = gamma e_(m - j) and r t = r (m - 1 - t) for t < j. Indeed r_j U e_(j+1) = U(H e_j - q_j e_j - r_(j-1) e_(j-1)) = gamma (H e_(m-j) - q_j e_(m-j) - r_(j-1) e_(m-j+1)); by the induction hypothesis only the components at m - j - 1 and m - j remain, orthogonality of the columns j and j + 1 of U removes the second one, and the unit norm of column j + 1 together with the positivity of the weights gives r j = r (m - 1 - j). Here rev t is the mirror index m - 1 - t of the edge t, and last(m) is the vertex m. The source records the underlying fact as known, citing Kay: a symmetric tridiagonal Hamiltonian with perfect state transfer between its end vertices is persymmetric. The statement here is its form for an arbitrary unitary commuting with the path Hamiltonian, restricted to the edge weights.",
+                "This is the second conclusion of the reversal form of a unitary sending the first vertex to the last: if U is unitary, commutes with the path Hamiltonian and sends the first basis vector to gamma times the last one, with |gamma| = 1, then r t = r (m - 1 - t) for every edge t. Here rev t is the mirror index m - 1 - t of the edge t, and last(m) is the vertex m. The source records the underlying fact as known, citing Kay: a symmetric tridiagonal Hamiltonian with perfect state transfer between its end vertices is persymmetric. The statement here is its form for an arbitrary unitary commuting with the path Hamiltonian, restricted to the edge weights.",
                 "persymmetric_weights", DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)),
             Node("classes", "Spectral parity classes of a transfer at time pi", ClassesFormula(),
                 "Let c k = W a k conj(W b k) for the orthonormal eigenvectors W of H with eigenvalues lambda k. The hypotheses on the powers of H give sum_k c k lambda_k^p = 0 for p < m and = P for p = m; evaluating sum_k c k f(lambda k) on the monic polynomial f = prod_{l != k} (X - lambda l) gives c k prod_{l != k} (lambda k - lambda l) = P, so the eigenvalues are distinct and every c k is a nonzero real number. Transfer at time pi forces exp(i pi lambda_k) conj(W b k) = gamma conj(W a k) with gamma = exp(i pi H)(a, b), since the sum of the squared moduli of their differences vanishes. Hence |c k| = |W a k|^2, whose sum is 1, while sum_k c k = 0. The class A of indices with c k > 0 has sum_{k in A} c k = 1/2, and exp(i pi lambda_k) equals gamma on A and -gamma off A. Shifting the eigenvalues by an eigenvalue of the class A gives integers z, even on A and odd off A, with lambda k - lambda l = z k - z l. The source records as known that, after a common shift, the eigenvalues of a path with perfect state transfer at time pi between its end vertices are integers that alternate between even and odd. The identity P sum_{i in A} 1 / prod_{j != i} (z i - z j) = 1/2, stated for a general Hermitian matrix with the given moment data, is derived here.",
@@ -111,7 +114,7 @@ internal sealed class RationalWeightPathTransferDocument : IScribeDocumentDefini
             All("H", Call("Matrix", v, v, Complexes()), All("t", Reals(), All("a", v, All("b", v, body))))))));
     }
 
-    private static Formula MirrorFormula()
+    private static Formula UnitaryFormula(Formula conclusion)
     {
         Formula m = F.Id("m"), r = F.Id("r"), q = F.Id("q"), u = F.Id("U"), g = F.Id("gamma"),
             t = F.Id("t"), x = F.Id("x");
@@ -122,12 +125,28 @@ internal sealed class RationalWeightPathTransferDocument : IScribeDocumentDefini
         Formula commute = Equal(Smul(u, h), Smul(h, u));
         Formula column = All("x", vertices, Equal(Entry(u, x, D(0)),
             IfThenElse(Equal(x, Call("last", m)), g, D(0))));
-        Formula conclusion = All("t", FinOf(m), Equal(App(r, t), App(r, Call("rev", t))));
         Formula body = Implies(Parenthesized(positive), All("U", Call("Matrix", vertices, vertices, Complexes()),
             Implies(unitary, Implies(commute, All("gamma", Complexes(),
                 Implies(Equal(Call("normSq", g), D(1)), Implies(Parenthesized(column), conclusion)))))));
         return Disp(All("m", Naturals(), All("r", Arrow(FinOf(m), Reals()),
             All("q", Arrow(vertices, Reals()), body))));
+    }
+
+    private static Formula MirrorWeights()
+    {
+        Formula m = F.Id("m"), r = F.Id("r"), t = F.Id("t");
+        return All("t", FinOf(m), Equal(App(r, t), App(r, Call("rev", t))));
+    }
+
+    private static Formula MirrorFormula() => UnitaryFormula(MirrorWeights());
+
+    private static Formula ReversalFormula()
+    {
+        Formula m = F.Id("m"), u = F.Id("U"), g = F.Id("gamma"), i = F.Id("i"), x = F.Id("x");
+        Formula vertices = FinOf(Add(m, D(1)));
+        Formula columns = All("i", vertices, All("x", vertices, Equal(Entry(u, x, i),
+            IfThenElse(Equal(x, Call("rev", i)), g, D(0)))));
+        return UnitaryFormula(And(Parenthesized(columns), Parenthesized(MirrorWeights())));
     }
 
     private static Formula NodalSum(Formula z, Formula a)
