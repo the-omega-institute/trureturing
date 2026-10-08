@@ -16,13 +16,106 @@ make lean-report LEAN_REPORT=.lake/build/stratalint/custom-report.json
 和 Python 3。[入口](inspect.sh)负责输入验证、utility 输入工具构建、Lean-cache
 ensure、原生 Lake 报告构建和发布。
 
+Typed contract discovery inspects the five direct compiled Contract heads.
+Entries have safe, closed definition values; the decoder accepts constructor
+trees and safe constant references. Standalone ExpectedDeclaration is rejected
+by the root structure rule. Rigid universe checks apply to the compiled terms.
+
+`Contract.Ref` stores only `value`. The decoder reads its compiled constant head
+by stripping Expr metadata and following application functions. Lambda, let,
+projection, open and unknown-constant payloads receive a field-role diagnostic;
+the decoder never reduces them. Registration target identity comes from the
+target constant in the contract type, with theorem, closure, arity and rigid
+universe checks. `Registration.targetName` is absent.
+
+Contract types bind the original mathematical obligations to the target, arena,
+actual realization, primitive bundle and catalog indices. The Reg compiler checks
+variation, slot sensitivity,
+source-family obligations, seal lowering/triviality, closure membership,
+retained kernel collisions and catalog conclusions. Missing, unknown, absent and
+unsupported evidence remains a compilable submission and retains its diagnostic
+path. The report consumes these fields and reconstructs raw ownership, enrollment,
+source scope, catalog membership, ordering and joins. Checked plans, joins,
+assessments, verdicts and report receipts are never importable authority.
+
+The bounded `CompiledExpressions.sameShape` comparator uses supported semantic
+equalities on compiler-checked terms; it is not a definitional-equality test.
+For two `Decidable.decide` applications it compares the propositions and omits
+only their decision-instance arguments: any instances for the same proposition
+give propositionally equal Boolean results (`decide_eq_decide` in Lean).
+Other instance and dictionary arguments remain subject to ordinary comparison.
+`CompiledCalculations` tests the same-proposition/different-instance case,
+different propositions and distinct `ToString` dictionaries.
+
+Finite seal catalogs carry nondegeneracy and bundle nonemptiness for their exact
+arena and unit vector. Unsealed finite registrations retain their existing scope;
+they do not acquire a nondegeneracy requirement. Checked readout sensitivity
+already implies nontriviality of every readout output: the law flip forces two
+different readout functions at that slot, hence two different output values.
+These consequences have no duplicate Registration fields.
+
+Raw statement, arena and bundle correspondences use literal `ExactMatch.evidence`
+constructors whose expected and actual type indices are identical. They retain
+the original definitional correspondence; propositional equality, equality
+transport and computed tokens do not supply literal matching evidence. Unknown,
+absent and unsupported constructors keep arbitrary actual indices representable.
+
+The production judge discovers typed declarations in compiler inventories. It decodes
+constructor trees and constant references, independently of source syntax,
+modifiers, suffixes, options, notation or metaprogramming commands. A value
+requiring computation fails by name as `contract.decode_failed:<owner>:<declaration>:<reason>`,
+including the field-specific `contract.literal` diagnostic. Missing compiled declarations and
+unknown constructor layouts fail without a fallback.
+
+Reg's transitive dependency closure excludes the judge implementation through
+`REG-IMPLEMENTATION`. Its entries and mathematical fields are checked by the
+compiler. Source text does not supply a second writing gate.
+
+Reg module kinds come from the `Reg/Catalogs/**` subtree: its exact
+`RootCatalog.lean` leaf is a catalog and `SealedCatalog.lean` is a sealed catalog.
+Every other file is ordinary, including D5 mirrors with either reserved leaf
+name. The loaded Reg import closure and canonical source paths construct these
+obligations before entry discovery, without an instance table. Every required
+source must exist; omitting a loaded Reg module from discovery receives
+`contract.root_structure:required_module_missing`.
+
+Ordinary modules contain no RootCatalog or Seal; catalog modules contain exactly
+one RootCatalog and no Seal; sealed catalogs contain exactly one of each. Root
+IDs equal their owning module. Missing, extra, duplicate entries and wrong root
+IDs receive `contract.root_structure:*` failures. Expected/source/baseline arrays
+and contributor identities retain the existing snapshot checks. Typed catalog and seal
+entries belong in reserved leaves within Reg/Catalogs; D5 registration mirrors
+retain their original addresses.
+
+Typed expected occurrences come only from RootCatalog. An entry of type
+`ExpectedDeclaration` always receives
+`contract.root_structure:independent_expected_not_allowed`.
+Its decoder and snapshot output are absent; there is no independent-expected
+fallback.
+
+The production report reads the compiler inventory and the compiled contract
+values directly. Typed discovery uses the contract type heads and compiler
+owner facts; source commands, declaration modifiers, suffixes, notation and
+other source spelling do not participate. Catalogs and seals from D5 mirrors
+use `Reg/Catalogs/D5/<D5 relative module path>/RootCatalog.lean` or
+`SealedCatalog.lean`; mirrors retain their registrations at their original
+paths, catalogs import those leaves, and leaves do not import catalogs. Catalog
+root IDs use the catalog module and `registrationModuleName` retains the leaf
+owner. Catalogs and seals are optional analysis groups: report evaluation does
+not require catalog membership, and missing seals remain named absent inputs.
+
+Reg sources compile to the typed contract heads. Catalogs use RootCatalog
+entries and seals use Seal entries. The report accepts constructor trees and
+safe constant references from the compiled values; values requiring evaluation
+fail by name and have no fallback.
+
 [CI](../../.github/workflows/ci-current.yml) 和本地数学门通过 `make lean-report`
 调用同一个 `inspect.sh`。入口可独立构建 utility 输入工具,也可接收显式的
 `STRATALINT_LEAN_PRODUCER_DLL`。生成的报告交给 check-current/check-delta;
 这些检查器不生成报告。离线 truth/export 与 bundle 验证工具保留,不提供
 自动选择 CI 来源或发布资格的链路。
 
-输出采用 `stratalint-raw-lean-report-v2`，同一文件名后附
+输出采用 `stratalint-raw-lean-report-v3`，同一文件名后附
 `.sha256`、`.input.attestation`、`.provenance.json`、`.materials.zip`。
 传递报告给消费者时须保留整组文件；statement materials 与报告一起校验。
 成功输出 `RAW_LEAN_REPORT path=… sha256=…`。
@@ -45,7 +138,7 @@ attestation。发布继续使用 mathlib 分区内的 run/attempt 快照及 draf
 不能作为可用种子。传输失败不改变已经完成的构建与报告结论。
 旧两段或三段哈希的 `lean-cache-v1` 归档都只作为同 mathlib/平台的增量种子，消费时核对
 manifest 与 tag 的声明地址；不恢复 config/exact/same-toolchain 选择。Lake trace 与
-`report_cache_release_semantic_version` 决定还原后的报告复用；验证器只查结构与工件完整性。
+编译依赖 trace、utility 输入与报告格式标识决定还原后的报告复用；验证器只查结构与工件完整性。
 正常 Lean-cache 负责依赖物化和既有构建归档；
 [ensure](../StrataLint.Lean/Lean/LeanCacheEnsureCommand.cs) 按 donor
 规则播种当前工作树的私有 `.lake`，支持时使用 clonefile，复制后的写入与 donor 隔离。
@@ -57,15 +150,15 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 `lake-manifest.json` 中 mathlib 的 resolved revision 与 OS/架构，不证明项目工件已齐全或报告仍有效。
 缺失或损坏的 stamp 不等于 pin 已变；ensure 按现有规则补齐或原地重产。
 缺 stamp、项目 olean 为冷且 `.lake/build` 不存在时，也可走 donor 的 missing-build 播种路径。
-报告是否可复用由 Lake trace 和 `report_cache_release_semantic_version` 决定。正常入口在 ensure 前不创建
+报告是否可复用由编译依赖 trace、utility 输入与报告格式标识决定。正常入口在 ensure 前不创建
 默认输出或日志目录，以保留新工作树的 donor 播种条件。
 
 程序编译义务由 `inspect.sh` 的默认目标选择；直接调用可用排序后的 JSON 列表通过
 `STRATALINT_LEAN_BUILD_TARGETS` 覆盖。报告、materials 与这些构建产物随项目
 `.lake/build` 缓存运输，不另建报告缓存。
-正常入口校验可选 `.reuse.json`：报告语义版本号、登记的报告模块与配置输入及其 mode、显式工具/环境/平台与上轮成功调用
+正常入口校验可选 `.reuse.json`：报告格式标识、登记的报告模块与配置输入及其 mode、显式工具/环境/平台与上轮成功调用
 一致，并且报告五件套与收据逐字节相符、信封和输入坐标仍为当前时，复用报告数据。选中的程序目标仍须通过 Lake 增量编译；未选程序目标的命中不恢复 Lean 重缓存。
-缺失、损坏或不匹配时，同一次 Lake 调用构建 `:report` 和选中的程序目标。生产程序（含 Lean Inspector/audit、C#、脚本、构建属性）的字节不进入该收据，其兼容性只由 `report_cache_release_semantic_version` 表达；实际构建或检查失败仍失败，缓存命中不能代替判词。未提供覆盖值的直接调用使用 Inspector 默认程序目标。
+缺失、损坏或不匹配时，同一次 Lake 调用构建 `:report` 和选中的程序目标。生产程序（含 Lean Inspector/audit、C#、脚本、构建属性）的字节不进入该收据，判官实现或规则变化保留有效历史报告；实际构建或检查失败仍失败，缓存命中不能代替判词。未提供覆盖值的直接调用使用 Inspector 默认程序目标。
 `:report` 只构建登记报告模块及实际依赖，不隐式追加包的默认目标；选中的程序目标在报告命中与未命中时均须执行。
 程序构建义务独立于模块报告失效；只影响这些构建义务、未改变报告依赖的编辑，不会因此重提取无关模块报告。实际缺失或失效的模块
 提取会合批以共享加载工作，失效选择仍由 Lake 决定。输出
@@ -83,37 +176,34 @@ donor 只供播种，后续编译、报告写入和损坏恢复均发生在当�
 大小写敏感的仓库相对 POSIX 路径，按 `include`（`pattern`、`optional`）及 `exclude`
 选择，报告模块必须能在 Lake workspace 中解析。`dependency_sources` 与 `report_modules`
 共同给出允许捕获的本地 Lean 源码范围；它是登记清单，不是另一套失效规划器。
+接口契约源码登记在现有 `config_inputs`，接口变化使整份收据未命中；Lake 只重编并重评受影响的编译闭包。
 仅登记为 producer、未进入模块或 utility claim 依赖闭包的文件，不会因此使报告失效。
 
-清单中的单一正整数 `report_cache_release_semantic_version` 是开发者维护的报告语义兼容版本，
-其值以清单为准，与清单格式的 `schema_version` 分开。
+报告复用只依赖编译输入、utility 输入与报告格式标识。判官实现或规则改变保持历史报告；新增或改动的登记经编译依赖变化交给当前判官评定。契约接口改动须同次交付迁移全部用法、删除旧路径，受影响的 Reg 自动重编并重评，不做历史兼容。需要重判未改动的历史登记时显式生成不带缓存的完整报告。
 
-兼容的生成器重构、性能优化保持 `report_cache_release_semantic_version` 不变：在报告输入、配置及
-版本均未变时，仅 producer 源码或可执行文件字节变化不会强制重提取有效模块报告，
-进入原生生产或选中 inspector 程序目标时，当前 inspector 仍须编译成功。改变报告含义或接受语义时必须增加此版本，例如改变
-声明选择、statement identity 计算或 utility 证据含义；即使 JSON schema 完全相同
-也须 bump。例如从 `3` 增加到 `4` 会使全部模块报告及汇总失效，即使最终 report 和
-materials 的内容字节相同。版本是明确的兼容承诺，不是机器自动判定源码编辑是否兼容。
+报告格式标识由 [读取器](../scripts/report/lean-report-selection.py) 的 `REPORT_FORMAT` 给出，用于 raw report schema、输入坐标、整份报告收据及所有模块 trace。声明、公理闭包、statement identity 等提取语义或工件格式改变时更新该标识；严格读取器拒读旧格式，全部模块重提取。判官实现字节不进入复用条件；当前选中程序仍须编译成功。
 
 [原生依赖](lakefile.lean)按以下输入决定报告工作：
-逐模块工件 trace 只取模块及 utility claim 的编译闭包与语义版本；固定 judge 驱动和 inspector 程序仅等待构建成功，不额外混入其 trace 或源码绑定。
+逐模块工件 trace 只取模块及 utility claim 的编译闭包、utility 输入与报告格式标识；inspector 程序仅等待构建成功，不额外混入其 trace 或源码绑定。
 enrollment plan 不保存源文件字节摘要；plan identity 与模板 assessment 消费编译信息，导入源码的纯注释编辑不改变它们。
 
 | 输入变化 | 失效范围 |
 | --- | --- |
-| `report_cache_release_semantic_version` 增加 | 所有模块报告及汇总。 |
+| 报告格式标识改变 | 全部模块报告重提取并重建汇总；旧格式严格拒读。 |
 | 模块源文件、编译工件或传递 import 工件变化 | Lake 依赖 trace 对应的模块报告；模块自身源码逐字节追踪，导入模块只按编译工件追踪，注释不改变编译工件时复用导入者。 |
 | 模块 utility 记录变化 | 对应模块报告；声明的 claim 源码、编译工件及其传递依赖同样参与，即使 claim 不在 result 的 import 闭包内。 |
 | 登记的 `config_inputs` 文件字节变化 | 通过 Lake 影响实际编译依赖；整体配置身份只影响聚合。 |
 | 登记的模块成员集合变化 | 汇总按当前集合重建，新成员执行所需报告工作，保留仍有效的模块工件。 |
-| 固定 Registry 驱动及其传递编译工件变化，语义版本不变 | 仅自身或 utility claim 的编译闭包实际导入该模块的报告失效；其他报告复用，驱动仍须构建成功。 |
+| 判官实现或规则变化 | 全部有效报告复用；Reg 零重编，选中程序仍须构建成功。 |
 
 `information_templates` 分区携带 occurrence inventory 和 BindingRecord，
-其 `compatibility_version` 等于 manifest 的缓存发布版本；复用验证检查结构，不重算当前源码摘要。
-C# 消费者另行检查完整证据语义、sidecar 归属及 debt 约束。固定驱动属于 judge，
+其闭合字段为 `schema_version`、`inventory`、`registered`、`records`，不写全局版本；复用验证检查结构，不重算当前源码摘要。
+C# 消费者检查可解码证据的结构、sidecar 归属及 debt 约束；未决记录保留具名诊断。
 没有模板模块的隐式导入。独立编码测试使用显式 `--statements-only`，其结果不含
 binding evidence，不能通过声明模板的严格消费者。
-`InlineRealization.lean` 编译时要求实际导出的 inline provenance wire 等于它 import 的 `InlineProvenanceWire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；bump `report_cache_release_semantic_version` 时同步更新其中的 `compatibility_version`。
+`LeanInformationAuditRegTests` 的生产证据检查要求实际导出的 wire 等于对应 `Compiled*Wire.canonical`，C# 测试读取同一字面量验证消费契约；该字面量是 Lean 源，由 Lake 的 import 追踪；当前 wire 只在实际内容改变时同步更新。
+
+H 由目标自身编译常量的精确契约类型头与 owner 判定，包含 Registration、TemplateEnrollment、RootCatalog、Seal；只 import 登记的汇总模块不在 H。小型类型/owner/名字投影由 Lake 直接调用独立的 `inputDiscovery` 程序产生；它只读取目标的 olean parts，复用相同类型与字面定义检查。投影只以编译闭包追踪，不持久化评定权威。origin 保留实际生成来源和输入投影；聚合与整份收据核对当前报告格式，旧格式拒读。程序字节永不进入数据工件复用条件。
 
 Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖；编译工件 trace
 包含 inspector 私有导入所需的传递依赖。捕获结果写入模块输入旁的 `.sources.json`，
@@ -122,8 +212,8 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 导出证据和来源 sidecar 不重复存储导入源码的原始摘要。
 外部包依赖由登记的 Lake manifest pin 约束。
 
-兼容身份与实际产地分别记录。[provenance-v2](publication.py) 的
-`producer_sha256`、`repository_inspector_sha256` 承载语义兼容标识；实际生成来源的摘要记在
+兼容身份与实际产地分别记录。[provenance-v4](publication.py) 的
+`producer_sha256`、`repository_inspector_sha256` 承载报告格式标识的哈希；实际生成来源的摘要记在
 `module_origins` 各模块的 `producer_sources_sha256` 和
 `inspector_executable_sha256`，并绑定该模块报告哈希。复用保持原始来源，增量汇总可含
 多个真实来源；`mode=cached` 或 `produced` 描述本次发布工作，不把旧报告改称当前
@@ -132,7 +222,7 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 导出的 bundle 以 `module_origins.report_sha256` 检查来源记录与报告行的完整性。
 发布和导出报告的 [输入验证](../scripts/report/lean-report-input.sh) 核对来源记录、模块成员与登记路径，
 不重算当前源码、claim 源码或捕获依赖的文件摘要来决定复用。
-inspector 不兼容改动手动 bump `report_cache_release_semantic_version`。
+提取语义或报告格式改变时更新报告格式标识；判官实现或规则改动保留未改动登记的既有判词。
 兼容 producer 改动不要求旧行的生成指纹等于当前 producer；重新生成的行才记录新指纹。
 仓库输入地址与 provenance 的 `input_address` 由同一输入工具按各自编码计算，
 不能互换，commit ID 与工作树名称不参与这些地址。
@@ -146,7 +236,7 @@ inspector 不兼容改动手动 bump `report_cache_release_semantic_version`。
 | 工件状态 | `--no-build` 结果 |
 | --- | --- |
 | 所需构建目标已就绪，报告工件 trace 有效 | 直接复用，零提取、零汇总。 |
-| 工件缺失且无法由 Lake 恢复，或输入/语义版本/编译产物变化需要重建 | 非零退出，报告目标需要重建。 |
+| 工件缺失且无法由 Lake 恢复，或输入/报告格式/编译产物变化需要重建 | 非零退出，报告目标需要重建。 |
 
 已用 `make lean-report` 准备好工具和私有 `.lake` 后，可以检查原生报告目标：
 
@@ -170,3 +260,54 @@ Lean、audit、工具构建和发布失败也返回非零。阶段失败输出�
 `LEAN_INSPECTOR_FAILED phase=… exit=…` 并打印诊断；ensure 成功后，各阶段诊断保存在
 所选输出文件名后附的 `.logs/` 目录中。修正具名输入或构建错误后，仍使用同一
 `make lean-report` 入口重试。
+
+The interface consists of typed contract structures, inductives and sort-valued index families. Every Reg
+entry has a contract type and mathematical fields checked by the Reg compiler. The report reads those compiled
+fields and emits structural input evidence; it does not construct or recheck proofs. Runtime DTOs live in Impl;
+no recorder or registration command runs during Reg compilation. Implementation edits rebuild no Reg modules;
+report reuse depends on compiler inputs, utility inputs and the report format. Interface
+edits atomically migrate every use, remove the old path and rebuild/reassess affected Reg compiler closures. Historical compatibility is not
+supported. Existing representation upgrades preserving mathematical evidence and registration semantics are
+outside the registration pause.
+
+The production reader uses `RawArtifacts.Store` for every target. It reads compiler module parts and imported
+constant tables without creating an Environment, initializing extensions, invoking elaboration, Meta, the type
+checker or the kernel. Contract inputs are decoded from constructor trees and safe constant references in those
+parts. A value that requires evaluation, a missing part, an unknown format or a read failure is a named
+`contract.decode_failed:<owner>:<declaration>:<reason>` or raw-artifact failure; there is no fallback reader. Utility relationships compare
+the raw types `Prop` and `Not claim` literally, without unfolding or reduction. `ArtifactAssessment` constructs target-local registration data;
+`CompiledAssessment` executes template, evidence and binding gates; `CompiledSeal` checks independent snapshots,
+source uniqueness, joins, qualified-name collisions, catalog membership and every finite vector element. Mathematical seal obligations are
+checked during Reg compilation; the report computes no seal statistics. Companion constants are immutable report
+views, never installed declarations. Computing compiled expression shapes and finite projections does not decode
+an otherwise computed top-level contract input. Raw terms never execute code or acquire kernel authority.
+Report reuse comes from the Lake compiler trace, utility inputs and the report format identifier.
+
+`STRATALINT_INSPECTOR_MODULE_WORK` 可指定本次调用的模块工作 JSONL，记录 `discover`、`extract` 和 `assess` 的实际模块工作；H 单独由编译输入投影确定。该观测不参与 trace、复用或准入，Lake 重放的构建日志不代表本次执行。
+
+Seals retain compiler-checked nondegeneracy, bundle nonemptiness, lowering/triviality and semantic-closure membership, catalog redundancy and kernel-collision obligations. The judge checks that the arena, catalog and complete ordered unit vector match exactly the registrations in the import closure. Seal contracts and reports contain no counts, state partitions, primitive statistics or role buckets.
+
+Utility refutations require the raw claim type `Prop` and the raw result type `Not claim`. The judge compares those compiled types literally; it does not unfold definitions, reduce aliases or use a Reg refutation certificate.
+
+The implementation library contains the production artifact evaluator and its pure
+support modules. Tests and independent analyses live in the downstream Reg host.
+The production report builds no test library. CI explicitly builds the full
+downstream test library and runs the native compiled judge tests.
+`make compiled-judge-test` builds and runs the native tests against the same
+artifact evaluator used by production, including constructor discovery, source
+reconstruction, negative dependencies and catalog/seal checks. Fixed work and
+depth limits remain effective on shared expression calculations. Calculation
+memos retain the immutable compiled table and lexical context; cached results
+retain their checked depth.
+Equality transports retain their bound-variable context. Distinct rigid term
+types are compared before mathematical data values are reduced.
+A data recursor blocked on a neutral local is compared without computing a
+closed opponent; proof irrelevance and structure eta remain outside this rejection rule.
+
+Source identity checks reuse the compiler-checked `Registration.variation`
+field only for the exact complete generic Law body. All raw dependencies and
+proper subexpressions retain their identity checks.
+
+Downstream projection tools do not issue registration verdicts. Utility refutations
+compare compiled types by bounded structural computation; Lean checks theorem proof terms during compilation. Unsupported
+comparisons fail by name.

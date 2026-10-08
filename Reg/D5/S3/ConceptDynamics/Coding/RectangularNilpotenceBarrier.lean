@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Ring.ULift
@@ -65,17 +66,28 @@ def chainZeroRegistration : Registration chainZeroArena (chainZeroArena.Law chai
     change (0 : Nat) ≠ 1
     exact Nat.zero_ne_one
 
-register_information_theorem chain_zero_power in chainZeroArena
-  readout via (realize chainZeroSignature (fun _ L j => j + L) (fun e => nomatch e))
-  realizes chainZeroRegistration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
-    coordinates := #[6]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "fn", "arg", "arg"]
-      stateBinder := 8 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_zero_power.{u}) (type_of% (realize.{0, 0, 0, 0, 0} chainZeroSignature (fun _ L j => j + L) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "RectangularNilpotenceBarrier") "chain_zero_power") "Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier/Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainZeroRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(chainZeroArena.{u})⟩,
+  objectArena := .source ⟨(chainZeroArena.{u})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (chainZeroArena.{u}) ⟨(chainZeroRegistration.{u})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} chainZeroSignature (fun _ L j => j + L) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, definition := none, coordinates := #[6], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms chainZeroRegistration
 
@@ -139,17 +151,28 @@ def chainDepthRegistration : Registration chainDepthArena (chainDepthArena.Law c
     change (0 : Nat) ≠ 1
     exact Nat.zero_ne_one
 
-register_information_theorem chain_depth_barrier in chainDepthArena
-  readout via (realize chainDepthSignature (fun _ _ a => a) (fun e => nomatch e))
-  realizes chainDepthRegistration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "fn", "arg", "fn", "arg"]
-      stateBinder := 6 }] })
-  escape continues (open)
+noncomputable def registration_2 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_depth_barrier.{u}) (type_of% (realize.{0, 0, 0, 0, 0} chainDepthSignature (fun _ _ a => a) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "RectangularNilpotenceBarrier") "chain_depth_barrier") "Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier/Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainDepthRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(chainDepthArena.{u})⟩,
+  objectArena := .source ⟨(chainDepthArena.{u})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (chainDepthArena.{u}) ⟨(chainDepthRegistration.{u})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} chainDepthSignature (fun _ _ a => a) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 abbrev chainReverseSignature : Signature where
   Params := Nat
@@ -205,17 +228,28 @@ def chainReverseRegistration : Registration chainReverseArena (chainReverseArena
     change (0 : Nat) ≠ 1
     exact Nat.zero_ne_one
 
-register_information_theorem chain_zero_power_reverse in chainReverseArena
-  readout via (realize chainReverseSignature (fun _ L j => j + L) (fun e => nomatch e))
-  realizes chainReverseRegistration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
-    coordinates := #[6]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "fn", "arg", "arg"]
-      stateBinder := 8 }] })
-  escape continues (open)
+noncomputable def registration_3 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chain_zero_power_reverse.{u}) (type_of% (realize.{0, 0, 0, 0, 0} chainReverseSignature (fun _ L j => j + L) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "RectangularNilpotenceBarrier") "chain_zero_power_reverse") "Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier/Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.chainReverseRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(chainReverseArena.{u})⟩,
+  objectArena := .source ⟨(chainReverseArena.{u})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (chainReverseArena.{u}) ⟨(chainReverseRegistration.{u})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} chainReverseSignature (fun _ L j => j + L) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, definition := none, coordinates := #[6], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 8, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 abbrev rectangularSignature : Signature where
   Params := Unit
@@ -270,16 +304,28 @@ def rectangularRegistration : Registration rectangularArena (rectangularArena.La
     change (1 : Nat) ≠ 2
     decide
 
-register_information_theorem rectangular_exchange_power in rectangularArena
-  readout via (realize rectangularSignature (fun _ _ j => j + 1) (fun e => nomatch e))
-  realizes rectangularRegistration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"]
-      stateBinder := 6 }] })
-  escape continues (open)
+noncomputable def registration_4 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangular_exchange_power.{u}) (type_of% (realize.{0, 0, 0, 0, 0} rectangularSignature (fun _ _ j => j + 1) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "RectangularNilpotenceBarrier") "rectangular_exchange_power") "Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier/Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.rectangularRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(rectangularArena.{u})⟩,
+  objectArena := .source ⟨(rectangularArena.{u})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (rectangularArena.{u}) ⟨(rectangularRegistration.{u})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} rectangularSignature (fun _ _ j => j + 1) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "arg"], stateBinder := 6, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 abbrev mapSignature : Signature where
   Params := Unit
@@ -361,16 +407,27 @@ def mapRegistration : Registration mapArena (mapArena.Law mapActual) where
     change (0 : Nat) ≠ 1
     exact Nat.zero_ne_one
 
-register_information_theorem map_exchange_chain in mapArena
-  readout via (realize mapSignature (fun _ _ L => L) (fun e => nomatch e))
-  realizes mapRegistration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "arg"]
-      stateBinder := 7 }] })
-  escape continues (open)
+noncomputable def registration_5 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.map_exchange_chain.{u, v}) (type_of% (realize.{0, 0, 0, 0, 0} mapSignature (fun _ _ L => L) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "RectangularNilpotenceBarrier") "map_exchange_chain") "Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier/Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapArena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier.mapRegistration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(mapArena.{u, v})⟩,
+  objectArena := .source ⟨(mapArena.{u, v})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (mapArena.{u, v}) ⟨(mapRegistration.{u, v})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} mapSignature (fun _ _ L => L) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg"], stateBinder := 7, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier

@@ -11,6 +11,32 @@ namespace StrataLint.DeclaredTemplate.Tests;
 
 public sealed class DeclaredTemplateUnregisteredTests
 {
+    private static string RefutationHeader(string result = "D5/S0/Carrier/Target.target0",
+        string basis = "refutes=task:D5-T0001") =>
+        "/- GID: D5/S0/Carrier/Target\n   generality: G\n   mirror-B: none\n"
+        + "   mirror-E: none\n   anchors: []\n   utility: kind=checker; basis=" + basis
+        + "; result=" + result + "; claim=D5/S0/Carrier/Claim.claim\n   digest: fixture -/\n";
+
+    [Fact]
+    public void utility_refutation_result_is_exempt_without_registration() =>
+        Empty(Build(source: RefutationHeader() + Source));
+
+    [Fact]
+    public void utility_refutation_exempts_only_its_result()
+    {
+        var findings = Findings(Build(source: RefutationHeader() + TwoTheoremSource, declarations:
+            [new(Theorem, "theorem", "True", []), new(Theorem + "_second", "theorem", "True", [])]));
+        Assert.Equal("DTR-Unregistered D5.S0.Carrier.Target/" + Theorem + "_second",
+            Assert.Single(findings).Message);
+    }
+
+    [Theory]
+    [InlineData("D5/S0/Carrier/Other.target0", "refutes=task:D5-T0001")]
+    [InlineData("D5/S0/Carrier/Target.target0", "consumer=D5/S0/Carrier/Claim.claim")]
+    [InlineData("invalid", "refutes=task:D5-T0001")]
+    public void utility_foreign_nonrefuting_or_malformed_result_does_not_exempt(string result, string basis) =>
+        Observes(Build(source: RefutationHeader(result, basis) + Source));
+
     [Fact]
     public void new_public_theorem_without_registration_blocks() => Observes(Build());
 

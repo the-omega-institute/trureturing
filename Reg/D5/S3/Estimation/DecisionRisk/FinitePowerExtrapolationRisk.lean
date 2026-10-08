@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Estimation.DecisionRisk.FinitePowerExtrapolationRisk
 import Reg.Support.DependentFamily
 
@@ -67,17 +68,28 @@ def registration : Registration arena (arena.Law actual) where
     have hp : 0 < minimaxRisk 1 1 1 := lt_of_lt_of_le (by norm_num) hl
     exact (ne_of_gt hp).symm
 
-register_information_theorem finite_power_extrapolation_risk in arena
-  readout via (realize signature (fun _ p η => minimaxRisk p.1 p.2 η) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Estimation.DecisionRisk.FinitePowerExtrapolationRisk
-    coordinates := #[0, 1]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body",
-        "fn", "arg", "fn", "arg", "arg"]
-      stateBinder := 4 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Estimation.DecisionRisk.FinitePowerExtrapolationRisk.finite_power_extrapolation_risk) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p η => minimaxRisk p.1 p.2 η) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Estimation") "DecisionRisk") "FinitePowerExtrapolationRisk") "finite_power_extrapolation_risk") "Reg.D5.S3.Estimation.DecisionRisk.FinitePowerExtrapolationRisk/Reg.D5.S3.Estimation.DecisionRisk.FinitePowerExtrapolationRisk.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Estimation.DecisionRisk.FinitePowerExtrapolationRisk.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p η => minimaxRisk p.1 p.2 η) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Estimation.DecisionRisk.FinitePowerExtrapolationRisk, definition := none, coordinates := #[0, 1], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

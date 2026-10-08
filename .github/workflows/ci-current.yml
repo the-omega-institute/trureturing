@@ -99,14 +99,12 @@ jobs:
             tools/lean-inspector/*.json
             tools/lean-inspector/*.mjs
             tools/lean-inspector/*/*.sh
-            tools/lean-inspector/Census/*
             tools/lean-inspector/LeanInformationAudit/*.py
             tools/lean-inspector/LeanInformationAuditAnalysis/*
             tools/lean-inspector/inspect.sh
             tools/lean-inspector/lakefile.lean
             tools/lean-inspector/materials.py
             tools/lean-inspector/native.py
-            tools/lean-inspector/native_image.c
             tools/lean-inspector/publication.py
             tools/lean-inspector/reuse.py
             tools/scripts/*.c
@@ -975,7 +973,12 @@ jobs:
           else
             unset STRATALINT_LEAN_PRODUCER_DLL
           fi
+          make compiled-judge-test
           make lean-report
+      - name: Verify production source binding artifacts
+        env:
+          FOURIER_BRIDGE_SOURCE_ARTIFACTS: ${{ github.workspace }}/.lake/build/lean-inspector/modules
+        run: make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj TEST_FILTER="FullyQualifiedName~FourierBridgeSourceEvidenceTests"
       - id: project_snapshot_push
         name: Prepare the project seed
         if: ${{ !cancelled() && env.CACHE_WRITES == 'true' && steps.lean_report.outcome == 'success' }}
@@ -1136,7 +1139,7 @@ jobs:
     if: fromJSON(needs.detect.outputs.hits || '{}')['tests-declared-template']
     uses: ./.github/workflows/ci-unit.yml
     with:
-      project: tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj
+      command: make -C tools test TEST_PROJECT=tools/tests/StrataLint.DeclaredTemplate.Tests/StrataLint.DeclaredTemplate.Tests.csproj TEST_FILTER="FullyQualifiedName!~FourierBridgeSourceEvidenceTests"
       lean: build
 
   tests-digestion:

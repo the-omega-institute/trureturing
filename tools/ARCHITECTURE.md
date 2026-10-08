@@ -42,10 +42,9 @@ reference. TRX validation requires successful executed tests, the selected owner
 assemblies, and no infrastructure hang guard skips. Its owned tests run as their
 own CI unit.
 
-Report compatibility is the explicit `report_cache_release_semantic_version` in the registered
-`lean-report-inputs.json`. Native Lake facets own report reuse and always require
-the default Lean/audit targets and current inspector build. Lake traces and the explicit
-cache release version decide reuse; validators check structure and artifact integrity
+The report format identifier governs strict artifact acceptance. Native Lake facets own report reuse
+and require selected Lean/audit targets and the current inspector build. Compiler traces, utility
+inputs and the report format decide reuse; validators check structure and artifact integrity
 without comparing stored source digests with current repository bytes. Reused rows retain their actual producer
 origins. Native report artifacts travel with `.lake/build` in the project snapshot;
 there is no separate report cache or preparation shortcut. Remote seed compatibility
