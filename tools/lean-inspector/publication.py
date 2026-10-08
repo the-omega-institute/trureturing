@@ -67,38 +67,36 @@ def report_rows(report, schema, *, canonical=False):
     expected = hashlib.sha256(b'{"modules": [')
     count = 0
     with Path(report).open(encoding='utf-8') as source:
-        def char():
-            return source.read(1)
+        buffered = ''
+        decoder = json.JSONDecoder(object_pairs_hook=unique_object)
 
         def token():
-            value = char()
-            while value and value.isspace():
-                value = char()
-            return value
+            nonlocal buffered
+            while True:
+                buffered = buffered.lstrip()
+                if buffered:
+                    result, buffered = buffered[0], buffered[1:]
+                    return result
+                buffered = source.read(materials.BUFFER_BYTES)
+                if not buffered:
+                    return ''
 
         def value(first):
+            nonlocal buffered
             if first not in ('{', '"'):
                 raise ValueError('invalid report JSON value')
-            parts, depth, quoted, escaped = [first], int(first == '{'), first == '"', False
-            while depth or quoted:
-                c = char()
-                if not c:
-                    raise ValueError('truncated report JSON value')
-                parts.append(c)
-                if quoted:
-                    if escaped:
-                        escaped = False
-                    elif c == '\\':
-                        escaped = True
-                    elif c == '"':
-                        quoted = False
-                elif c == '"':
-                    quoted = True
-                elif c in '{[':
-                    depth += 1
-                elif c in '}]':
-                    depth -= 1
-            return read_json(''.join(parts))
+            data, buffered = first + buffered, ''
+            while True:
+                try:
+                    _, end = decoder.raw_decode(data)
+                except json.JSONDecodeError as error:
+                    extra = source.read(max(materials.BUFFER_BYTES, len(data)))
+                    if not extra:
+                        raise ValueError('truncated or invalid report JSON value') from error
+                    data += extra
+                else:
+                    buffered = data[end:]
+                    return read_json(data[:end])
 
         if token() != '{':
             raise ValueError('invalid raw report schema')
