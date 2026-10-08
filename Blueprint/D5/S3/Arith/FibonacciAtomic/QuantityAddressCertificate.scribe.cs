@@ -18,11 +18,20 @@ internal sealed class QuantityAddressCertificateDocument : IScribeDocumentDefini
                 + "I(d) is the range of rho iterated d times. D(V) is maximum leaf depth, with root depth zero. "
                 + "Addresses and all four raw replies reuse ActualTreeReadoutAcquisition. LL, LR and R denote "
                 + "the Boolean lists [false,false], [false,true] and [true]. Pairset(x,y) denotes their unordered two-element set.")),
+            Describe.Lean(DescribeId.Create("scalar-address-sound"), DeclarationHandle.Create(Prefix + "ScalarSound"),
+                H("Scalar soundness"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("S(f,g,d,V,h,Q), for arbitrary natural weights f and g, means that every address in the finite set Q has length at most h, "
+                        + "and every complete source U with f*a(U)+g*b(U)=f*a(V)+g*b(V) and matching raw replies at all addresses in Q lies in I(d). "
+                        + "Competitors have only this exact scalar promise; their composition, number of leaves, shape and height are unrestricted. "
+                        + "In the theorem below S(d,V,h,Q) denotes S(2,3,d,V,h,Q). "
+                        + "For positive weights f<g, every nonempty subtree has weight at least f, "
+                        + "with equality only for alpha. When g<2f, weight g occurs only for beta. "
+                        + "When every branch of V has a beta descendant, matching all beta endpoints gives a weighted lower bound; "
+                        + "equality forces the complete tree U to equal V."))),
+                DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("quantity-address-sound"), DeclarationHandle.Create(Prefix + "QuantitySound"),
                 H("Quantity soundness"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("S(d,V,h,Q) means that every address in the finite set Q has length at most h, "
-                        + "and every complete source U with m(U)=m(V) and matching raw replies at all addresses in Q lies in I(d). "
-                        + "Competitors have only this exact scalar promise; their composition, number of leaves, shape and height are unrestricted."))),
+                    Paragraph(Text("S(d,V,h,Q) means that every address in the finite set Q has length at most h, and every complete source U with m(U)=m(V) and matching raw replies at all addresses in Q lies in I(d). Competitors have only this exact scalar promise; their composition, number of leaves, shape and height are unrestricted."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("quantity-address-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("Sharp frontier and all minimum sets"), StatementSource.FromAuthor(ResultFormula()),
