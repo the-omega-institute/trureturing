@@ -101,7 +101,8 @@ private theorem kernel_cell_bounds {a x : ℝ} (ha : 1 < a) (hLa : 1 ≤ Real.lo
   have hupper : Real.log x ≤ 2 * Real.log a := by
     have h := Real.log_le_log hx0 hx.2
     rw [Real.log_mul (by norm_num : (2 : ℝ) ≠ 0) ha0.ne'] at h
-    have htwo : Real.log (2 : ℝ) ≤ 1 := by linarith [Real.log_two_lt_d9]
+    have htwo : Real.log (2 : ℝ) ≤ 1 := by
+      linarith [Real.log_le_sub_one_of_pos (by norm_num : (0 : ℝ) < 2)]
     linarith
   have hk : 0 < k x := by unfold weight; positivity
   refine ⟨hk, ?_, ?_⟩

@@ -469,6 +469,8 @@ private theorem source_left_limit {δ A x : ℝ} (hA : Admissible δ A) (hx : A 
       (mem_nhdsWithin_of_mem_nhds (Ici_mem_nhds hx))
   · filter_upwards [mem_nhdsWithin_of_mem_nhds (Ioi_mem_nhds hx), self_mem_nhdsWithin] with y hy hxy
     rw [← hn]
+    change A < y at hy
+    change y < x at hxy
     exact (coordinate_strictMono hA) hy.le hx.le hxy
 
 private theorem source_events_finite {δ A a b : ℝ} (hA : Admissible δ A)
@@ -587,9 +589,12 @@ private theorem price_hasDerivAt {x : ℝ} (hx : 1 < x) : HasDerivAt q (-k x) x 
   have hL : 0 < Real.log x := Real.log_pos hx
   have hd := ((hasDerivAt_id x).mul (Real.hasDerivAt_log hx0.ne')).inv
     (mul_ne_zero hx0.ne' hL.ne')
-  convert! hd using 1 <;> first
+  have hfun : (id * Real.log)⁻¹ = q := by ext y; rfl
+  rw [hfun] at hd
+  simp only [Pi.mul_apply, id_eq, one_mul] at hd
+  convert hd using 1 <;> first
   | rfl
-  | (unfold weight; field_simp; ring)
+  | (unfold weight; field_simp [hx0.ne', hL.ne'] <;> ring)
 
 private theorem price_tendsto_zero : Tendsto q atTop (𝓝 0) := by
   apply squeeze_zero' _ _ tendsto_inv_atTop_zero
@@ -608,11 +613,16 @@ private theorem kernel_tail {x : ℝ} (hx : 1 < x) :
     intro y hy
     have hy1 := hx.trans hy
     have hy0 : 0 < y := by linarith
+    apply neg_nonpos.mpr
     unfold weight
     positivity [Real.log_pos hy1]
   have hi := integrableOn_Ioi_deriv_of_nonpos' hd hn price_tendsto_zero
   have hv := integral_Ioi_of_hasDerivAt_of_tendsto' hd hi price_tendsto_zero
-  refine ⟨by simpa only [neg_neg] using hi.neg, ?_⟩
+  have hik : IntegrableOn k (Ioi x) := by
+    convert hi.neg using 1
+    ext y
+    simp
+  refine ⟨hik, ?_⟩
   rw [integral_neg] at hv
   linarith
 
@@ -626,7 +636,8 @@ private theorem bump_tendsto_zero {δ A : ℝ} (hδ : 0 < δ) (hA : Admissible �
       (tendsto_atTop_add_const_left atTop A tendsto_natCast_atTop_atTop)
   have hzero : (bump δ A ∘ grid δ A) = fun _ => (0 : ℝ) := by
     funext j
-    rw [Function.comp_def, bump_on_cell hA j
+    change bump δ A (grid δ A j) = 0
+    rw [bump_on_cell hA j
       ⟨le_rfl, (grid_strictMono hA).monotone (Nat.le_succ j)⟩]
     simp [cellBump, eta]
   have heq : limUnder atTop (bump δ A) = 0 := by
@@ -674,7 +685,7 @@ private theorem tail_contract {δ A x : ℝ} (hδ : 0 < δ) (hA : Admissible δ 
   have hR : IntegrableOn R (Ioi x) := by
     apply hk.1.mono' ((hsm.sub hcm).mul hkm)
     filter_upwards [ae_restrict_mem measurableSet_Ioi] with y hy
-    simpa only [Real.norm_eq_abs] using (hrange y hy).2.2
+    simpa only [Real.norm_eq_abs, Pi.mul_apply, Pi.sub_apply, R] using (hrange y hy).2.2
   have hid : ∀ y ∈ Ioi x,
       ((source δ A y : ℝ) - y) * k y = -deriv (bump δ A) y + R y := by
     intro y hy
@@ -688,13 +699,17 @@ private theorem tail_contract {δ A x : ℝ} (hδ : 0 < δ) (hA : Admissible δ 
     (hd.neg.add hR).congr_fun (fun y hy => (hid y hy).symm) measurableSet_Ioi
   have heq : tail δ A x = bump δ A x + ∫ y in Ioi x, R y := by
     unfold tail
-    rw [setIntegral_congr_fun measurableSet_Ioi hid, integral_add hd.neg hR, integral_neg]
+    rw [setIntegral_congr_fun measurableSet_Ioi hid]
+    have hsum : (∫ y in Ioi x, -deriv (bump δ A) y + R y) =
+        -(∫ y in Ioi x, deriv (bump δ A) y) + ∫ y in Ioi x, R y := by
+      simpa only [Pi.add_apply, Pi.neg_apply, integral_neg] using integral_add hd.neg hR
+    rw [hsum]
     linarith
   have hlo := setIntegral_mono_on hk.1.neg hR measurableSet_Ioi (fun y hy => (hrange y hy).1)
   have hhi := setIntegral_mono_on hR (integrable_zero _ _ _) measurableSet_Ioi
     (fun y hy => (hrange y hy).2.1)
-  rw [integral_neg, hk.2] at hlo
-  simp only [integral_zero] at hhi
+  simp only [Pi.neg_apply, integral_neg, hk.2] at hlo
+  simp only [Pi.zero_apply, integral_zero] at hhi
   exact ⟨hi, by linarith, by linarith⟩
 
 private theorem source_between_events {δ A x : ℝ} (hA : Admissible δ A)
@@ -750,8 +765,5 @@ theorem result (δ : ℝ) (hδ : 0 < δ) :
   · exact fun c₀ _ => source_pnt_bound hδ hA c₀
   · exact fun x hx => tail_contract hδ hA hx
 
+
 end D5.S3.Analytic.Interpolation.ArtificialSourceIncrementContract
-
-
-
-
