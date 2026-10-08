@@ -61,13 +61,28 @@ def compiler(args):
         shutil.copyfile(setup, folder / "setup.json")
     actual = [real, "--profile"] + args
     start = {"kind": "compiler-start", **stamp(), "wrapper_pid": os.getpid(),
+             "wrapper_role": "compiler-observer-wrapper", "compiler_role": "real-compiler",
+             "terminal_accounting": "pending; absent compiler-end means censored status and resources",
              "cwd": os.getcwd(), "original_argv": args, "actual_argv": actual,
              "sources": [{"path": str(p), "sha256": sha(p)} for p in sources],
              "profiling": "Lean --profile, default 100ms individual threshold; exclusive component times"}
     child = subprocess.Popen(actual, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                              env=dict(os.environ, COLD_COST_INTERNAL="1"))
-    start["compiler_pid"] = child.pid
     start["spawn_return_monotonic_ns"] = time.monotonic_ns()
+    received = []
+
+    def forward(sig, _frame):
+        received.append(sig)
+        try:
+            # wait4 is the sole status owner; Popen.send_signal polls/reaps.
+            if child.returncode is None:
+                os.kill(child.pid, sig)
+        except ProcessLookupError:
+            pass
+
+    for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
+        signal.signal(sig, forward)
+    start["compiler_pid"] = child.pid
     if sys.platform == "linux":
         try:
             start["compiler_start_ticks"] = proc_row(Path("/proc") / str(child.pid))["start_ticks"]
@@ -102,20 +117,10 @@ def compiler(args):
               threading.Thread(target=relay, args=(child.stderr, sys.stderr.buffer, "stderr.log"))]
     for relay_thread in relays:
         relay_thread.start()
-    received = []
-
-    def forward(sig, _frame):
-        received.append(sig)
-        try:
-            child.send_signal(sig)
-        except ProcessLookupError:
-            pass
-
-    for sig in (signal.SIGTERM, signal.SIGINT, signal.SIGHUP):
-        signal.signal(sig, forward)
     _, status, usage = os.wait4(child.pid, 0)
     child.returncode = os.waitstatus_to_exitcode(status)
     append(events, {"kind": "compiler-end", **stamp(), "compiler_pid": child.pid,
+                    "terminal_accounting": "collected",
                     "wait_status": status, "returncode": child.returncode,
                     "received_signals": received, "rusage_scope": "kernel wait4 child accounting; includes threads and may include waited descendants",
                     "user_cpu_seconds": usage.ru_utime, "system_cpu_seconds": usage.ru_stime,
@@ -129,7 +134,8 @@ def compiler(args):
         write_json(folder / "observer-errors.json", errors)
     if child.returncode < 0:
         sig = -child.returncode
-        signal.signal(sig, signal.SIG_DFL)
+        if sig not in (signal.SIGKILL, signal.SIGSTOP):
+            signal.signal(sig, signal.SIG_DFL)
         os.kill(os.getpid(), sig)
     return child.returncode
 
@@ -157,7 +163,7 @@ def proc_row(path):
     return row
 
 
-def sample(root_pid, proc=Path("/proc"), cgroup_root=Path("/sys/fs/cgroup")):
+def sample(root_pid, proc=Path("/proc"), cgroup_root=Path("/sys/fs/cgroup"), real_lean=None):
     started_ns = time.monotonic_ns()
     rows = {}
     for path in proc.iterdir():
@@ -172,6 +178,25 @@ def sample(root_pid, proc=Path("/proc"), cgroup_root=Path("/sys/fs/cgroup")):
         if more <= members:
             break
         members |= more
+    wrapper_argv = [str(Path(__file__).resolve()), "compiler"]
+    sampler_pid = os.getpid()
+    wrappers = {pid for pid, row in rows.items() if row["argv"][1:3] == wrapper_argv}
+    processes = []
+    for pid in sorted(members):
+        if pid not in rows:
+            continue
+        row = rows[pid]
+        if pid == sampler_pid:
+            role = "python-stage-sampler"
+        elif pid in wrappers:
+            role = "compiler-observer-wrapper"
+        elif real_lean and row["argv"][:1] == [real_lean] and row["ppid"] in wrappers:
+            role = "real-compiler"
+        elif pid == root_pid:
+            role = "command-root"
+        else:
+            role = "unclassified-command-descendant"
+        processes.append({**row, "role": role})
     kernel = {}
     for name in ("stat", "meminfo", "vmstat", "loadavg", "pressure/cpu", "pressure/memory", "pressure/io"):
         try:
@@ -192,12 +217,16 @@ def sample(root_pid, proc=Path("/proc"), cgroup_root=Path("/sys/fs/cgroup")):
                 cg[name] = None
     except (OSError, StopIteration):
         cg = None
-    return {"kind": "sample", **stamp(), "scope": "sampled command descendants; Python observer excluded; canonical shell sampler included",
+    return {"kind": "sample", **stamp(),
+            "scope": "sampled command root and descendants; includes compiler observer wrappers and canonical shell sampler activity",
+            "python_sampler": {"pid": sampler_pid, "role": "python-stage-sampler",
+                               "in_processes": sampler_pid in members and sampler_pid in rows},
+            "role_basis": "current argv and parent; other descendants, including unidentified shell samplers, remain unclassified",
             "collection_start_monotonic_ns": started_ns, "collection_elapsed_ns": time.monotonic_ns() - started_ns,
             "clock_ticks_per_second": os.sysconf("SC_CLK_TCK"), "page_bytes": os.sysconf("SC_PAGE_SIZE"),
-            "processes": [rows[pid] for pid in sorted(members) if pid in rows],
-            "kernel_scope": "host cumulative counters/pressure", "kernel": kernel,
-            "cgroup_scope": "command cgroup (may include other job processes)", "cgroup": cg}
+            "processes": processes,
+            "kernel_scope": "host cumulative counters/pressure, including observer activity", "kernel": kernel,
+            "cgroup_scope": "command cgroup (may include Python observer and other job processes)", "cgroup": cg}
 
 
 def observe_command(command, cwd, output, name, env, interval=2.0, canonical_resources=False):
@@ -213,7 +242,7 @@ def observe_command(command, cwd, output, name, env, interval=2.0, canonical_res
                         "actual_command": actual, "pid": child.pid, **begin})
         while child.poll() is None:
             try:
-                append(output / "samples.jsonl", {"stage": name, **sample(child.pid)})
+                append(output / "samples.jsonl", {"stage": name, **sample(child.pid, real_lean=env.get("COLD_COST_REAL_LEAN"))})
             except Exception as error:
                 append(output / "observer-errors.jsonl", {"stage": name, **stamp(), "error": repr(error)})
             try:
@@ -284,51 +313,96 @@ def run(root, output):
     env = dict(os.environ)
     binding = native_binding(root, env)
     output.mkdir(parents=True, exist_ok=False)
-    write_json(output / "source.json", binding)
-    real = Path(subprocess.check_output(["elan", "which", "lean"], cwd=root).decode().strip()).resolve()
-    version = subprocess.check_output([str(real), "--version"]).decode().strip()
-    if "version 4.34.1" not in version:
-        raise ValueError(f"wrong actual compiler: {version}")
-    write_json(output / "compiler.json", {"real_binary": str(real), "sha256": sha(real), "version": version,
-               "githash": subprocess.check_output([str(real), "--githash"]).decode().strip(),
-               "observation_delta": ["LD_PRELOAD process-launch observer; compiler paths unchanged", "Lean --profile"],
-               "admission": "all canonical checks and budgets unchanged; observations are not control inputs"})
-    library = build_spawn_observer(output)
-    env.update(COLD_COST_OUTPUT=str(output), COLD_COST_REAL_LEAN=str(real), LD_PRELOAD=str(library),
-               COLD_COST_PROGRAM=str(Path(__file__).resolve()), COLD_COST_PYTHON=sys.executable,
-               STRATALINT_ACCEPT_COLD_BUILD="1", STRATALINT_CACHE_WRITES="false")
-    env["STRATALINT_LEAN_REPORT_LOG_DIR"] = str(output / "report-phases")
-    rc = 0
+    rc = None
+    stage = "observer-setup"
+    stages = []
+    complete = False
+    inputs_unchanged = None
+    canonical_failure = None
+    observer_failure = None
+
+    def result():
+        return {**stamp(), "canonical_returncode": rc if observer_failure is None else None,
+                "canonical_chain_complete": complete, "canonical_stages": stages,
+                "canonical_failure": canonical_failure, "observer_failure": observer_failure,
+                "diagnostic_only": True, "native_acceptance_or_integration_units": False,
+                "inputs_unchanged": inputs_unchanged}
+
     try:
+        write_json(output / "source.json", binding)
+        real = Path(subprocess.check_output(["elan", "which", "lean"], cwd=root).decode().strip()).resolve()
+        version = subprocess.check_output([str(real), "--version"]).decode().strip()
+        if "version 4.34.1" not in version:
+            raise ValueError(f"wrong actual compiler: {version}")
+        write_json(output / "compiler.json", {"real_binary": str(real), "sha256": sha(real), "version": version,
+                   "githash": subprocess.check_output([str(real), "--githash"]).decode().strip(),
+                   "observation_delta": ["LD_PRELOAD process-launch observer; compiler paths unchanged", "Lean --profile"],
+                   "admission": "all canonical checks and budgets unchanged; observations are not control inputs"})
+        library = build_spawn_observer(output)
+        env.update(COLD_COST_OUTPUT=str(output), COLD_COST_REAL_LEAN=str(real), LD_PRELOAD=str(library),
+                   COLD_COST_PROGRAM=str(Path(__file__).resolve()), COLD_COST_PYTHON=sys.executable,
+                   STRATALINT_ACCEPT_COLD_BUILD="1", STRATALINT_CACHE_WRITES="false")
+        env["STRATALINT_LEAN_REPORT_LOG_DIR"] = str(output / "report-phases")
         # Same producer/compiled-judge/full-report chain as the current native job.
-        rc = observe_command(["make", "-C", "tools", "dotnet", "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"], root, output, "judge-build", env, canonical_resources=True)
+        stage = "judge-build"
+        rc = observe_command(["make", "-C", "tools", "dotnet", "DOTNET_PROJECT=tools/StrataLint.Cli/StrataLint.Cli.csproj"], root, output, stage, env, canonical_resources=True)
+        stages.append({"stage": stage, "returncode": rc})
         if rc == 0:
-            producer = subprocess.check_output(["bash", "tools/scripts/workflow/judge-lean-producer.sh",
-                        str(root / "tools/StrataLint.Cli/bin/Release/net10.0")], cwd=root, env=env).decode().strip()
+            stage, rc = "judge-lean-producer", None
+            try:
+                producer = subprocess.check_output(["bash", "tools/scripts/workflow/judge-lean-producer.sh",
+                            str(root / "tools/StrataLint.Cli/bin/Release/net10.0")], cwd=root, env=env).decode().strip()
+            except subprocess.CalledProcessError as error:
+                rc = error.returncode
+                stages.append({"stage": stage, "returncode": rc})
+                canonical_failure = {"stage": stage, "returncode": rc, "error": repr(error)}
+                raise
+            stages.append({"stage": stage, "returncode": 0})
             if producer:
                 env["STRATALINT_LEAN_PRODUCER_DLL"] = producer
-            rc = observe_command(["make", "compiled-judge-test"], root, output, "compiled-judge-test", env, canonical_resources=True)
+            stage, rc = "compiled-judge-test", None
+            rc = observe_command(["make", "compiled-judge-test"], root, output, stage, env, canonical_resources=True)
+            stages.append({"stage": stage, "returncode": rc})
         if rc == 0:
-            rc = observe_command(["make", "lean-report"], root, output, "full-lean-report", env, canonical_resources=True)
-        if input_binding(root) != binding["inputs"]:
-            raise ValueError("canonical invocation changed preserved source inputs")
-        return rc if rc >= 0 else 128 - rc
+            stage, rc = "full-lean-report", None
+            rc = observe_command(["make", "lean-report"], root, output, stage, env, canonical_resources=True)
+            stages.append({"stage": stage, "returncode": rc})
+            complete = True
+        if rc != 0:
+            canonical_failure = {"stage": stage, "returncode": rc}
+    except BaseException as error:
+        if canonical_failure is None:
+            rc = None
+            observer_failure = {"stage": stage, "error": repr(error)}
+        raise
     finally:
-        write_json(output / "result.json", {**stamp(), "canonical_returncode": rc,
-                   "diagnostic_only": True, "native_acceptance_or_integration_units": False,
-                   "inputs_unchanged": input_binding(root) == binding["inputs"]})
-        # Preserve genuine producer origins and receipts; copy bytes, never synthesize.
-        report = ".lake/build/stratalint/raw-lean-report.json"
-        for relative in tuple(report + suffix for suffix in ("", ".sha256", ".input.attestation", ".provenance.json", ".materials.zip", ".reuse.json")) + (
-                         ".lake/build/lean-inspector/inputs.json", "build/lean-cache/build-work.json"):
-            path = root / relative
-            if path.is_file():
-                target = output / "canonical" / relative
-                target.parent.mkdir(parents=True, exist_ok=True)
-                shutil.copyfile(path, target)
-        inventory = [{"path": str(p.relative_to(output)), "sha256": sha(p), "bytes": p.stat().st_size}
-                     for p in sorted(output.rglob("*")) if p.is_file()]
-        write_json(output / "inventory.json", inventory)
+        try:
+            stage = "artifact-collection"
+            # Preserve genuine producer origins and receipts; copy bytes, never synthesize.
+            report = ".lake/build/stratalint/raw-lean-report.json"
+            for relative in tuple(report + suffix for suffix in ("", ".sha256", ".input.attestation", ".provenance.json", ".materials.zip", ".reuse.json")) + (
+                             ".lake/build/lean-inspector/inputs.json", "build/lean-cache/build-work.json"):
+                path = root / relative
+                if path.is_file():
+                    target = output / "canonical" / relative
+                    target.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copyfile(path, target)
+            inputs_unchanged = input_binding(root) == binding["inputs"]
+            if not inputs_unchanged:
+                raise ValueError("canonical invocation changed preserved source inputs")
+            observer_logs = [p for p in [output / "observer-errors.jsonl", *output.glob("compilers/*/observer-errors.json")]
+                             if p.is_file()]
+            if observer_logs:
+                raise ValueError("observer errors recorded: " + ", ".join(str(p.relative_to(output)) for p in observer_logs))
+            write_json(output / "result.json", result())
+            inventory = [{"path": str(p.relative_to(output)), "sha256": sha(p), "bytes": p.stat().st_size}
+                         for p in sorted(output.rglob("*")) if p.is_file()]
+            write_json(output / "inventory.json", inventory)
+        except BaseException as error:
+            observer_failure = {"stage": stage, "error": repr(error), "prior_observer_failure": observer_failure}
+            write_json(output / "result.json", result())
+            raise
+    return rc if rc >= 0 else 128 - rc
 
 
 def main():

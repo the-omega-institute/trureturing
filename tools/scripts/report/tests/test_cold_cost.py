@@ -3,13 +3,14 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import select
 import signal
 import subprocess
 import sys
 import tempfile
 import time
 import unittest
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 PROGRAM = Path(__file__).resolve().parents[1] / "cold_cost.py"
 SPEC = importlib.util.spec_from_file_location("cold_cost", PROGRAM)
@@ -55,10 +56,83 @@ class ColdCostTests(unittest.TestCase):
         self.assertEqual((folders[0] / "stderr.log").read_bytes(), result.stderr)
 
     def test_compiler_preserves_signal_failure(self):
-        result, _ = self.compiler('import os,signal\nos.kill(os.getpid(),signal.SIGTERM)\n')
-        self.assertEqual(result.returncode, -signal.SIGTERM)
-        end = next((self.output / "compilers").glob("*/events.jsonl")).read_text().splitlines()[-1]
-        self.assertEqual(json.loads(end)["returncode"], -signal.SIGTERM)
+        for sig in (signal.SIGTERM, signal.SIGKILL):
+            with self.subTest(signal=sig):
+                before = set((self.output / "compilers").glob("*/events.jsonl"))
+                result, _ = self.compiler(f'import os\nos.kill(os.getpid(),{int(sig)})\n')
+                self.assertEqual(result.returncode, -sig, result.stderr.decode())
+                events, = set((self.output / "compilers").glob("*/events.jsonl")) - before
+                end = json.loads(events.read_text().splitlines()[-1])
+                self.assertEqual(end["returncode"], -sig)
+                self.assertEqual(os.waitstatus_to_exitcode(end["wait_status"]), -sig)
+                self.assertGreater(end["maxrss"], 0)
+                self.assertFalse((events.parent / "observer-errors.json").exists())
+
+    def test_forwarding_keeps_waitable_child_status_owned_by_wait4(self):
+        source = self.root / "Ready.lean"
+        source.write_text("example : True := True.intro\n")
+        child = Mock(pid=12345, returncode=None)
+        child.stdout = tempfile.TemporaryFile()
+        child.stderr = tempfile.TemporaryFile()
+        handlers = {}
+
+        def competing_reap(_sig):
+            child.returncode = 7
+
+        child.send_signal.side_effect = competing_reap
+
+        def terminal_wait(pid, flags):
+            self.assertEqual((pid, flags), (child.pid, 0))
+            # A termination handler runs while the already-exited child is
+            # waitable, before wait4 has consumed its status and accounting.
+            handlers[signal.SIGTERM](signal.SIGTERM, None)
+            if child.returncode is not None:
+                raise ChildProcessError("forwarding consumed the terminal status")
+            usage = Mock(ru_utime=.25, ru_stime=.125, ru_maxrss=4096,
+                         ru_minflt=10, ru_majflt=0, ru_nvcsw=2, ru_nivcsw=1)
+            return pid, 7 << 8, usage
+
+        with patch.dict(os.environ, COLD_COST_OUTPUT=str(self.output), COLD_COST_REAL_LEAN="/fixture/lean"), \
+                patch.object(cost.subprocess, "Popen", return_value=child), \
+                patch.object(cost.signal, "signal", side_effect=lambda sig, fn: handlers.update({sig: fn})), \
+                patch.object(cost.os, "kill") as kill, patch.object(cost.os, "wait4", side_effect=terminal_wait):
+            self.assertEqual(cost.compiler([str(source)]), 7)
+        kill.assert_called_once_with(child.pid, signal.SIGTERM)
+        child.send_signal.assert_not_called()
+        end = json.loads(next((self.output / "compilers").glob("*/events.jsonl")).read_text().splitlines()[-1])
+        self.assertEqual(end["returncode"], 7)
+        self.assertEqual(end["wait_status"], 7 << 8)
+        self.assertEqual(end["user_cpu_seconds"], .25)
+        self.assertEqual(end["received_signals"], [signal.SIGTERM])
+
+    def test_live_forwarded_termination_preserves_signal_and_accounting(self):
+        fake = self.root / "waiting-lean"
+        fake.write_text("#!" + sys.executable + '\nimport time\nprint("ready", flush=True)\ntime.sleep(30)\n')
+        fake.chmod(0o755)
+        source = self.root / "Waiting.lean"
+        source.write_text("example : True := True.intro\n")
+        env = dict(os.environ, COLD_COST_OUTPUT=str(self.output), COLD_COST_REAL_LEAN=str(fake))
+        child = subprocess.Popen([sys.executable, str(PROGRAM), "compiler", str(source)], env=env,
+                                 stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        try:
+            self.assertTrue(select.select([child.stdout], [], [], 10)[0], "compiler did not become ready")
+            self.assertEqual(child.stdout.readline(), b"ready\n")
+            child.send_signal(signal.SIGTERM)
+            stdout, stderr = child.communicate(timeout=10)
+            self.assertEqual(child.returncode, -signal.SIGTERM, stderr.decode())
+            self.assertEqual(stdout, b"")
+            self.assertEqual(stderr, b"")
+            events = next((self.output / "compilers").glob("*/events.jsonl"))
+            end = json.loads(events.read_text().splitlines()[-1])
+            self.assertEqual(end["received_signals"], [signal.SIGTERM])
+            self.assertEqual(end["returncode"], -signal.SIGTERM)
+            self.assertEqual(os.waitstatus_to_exitcode(end["wait_status"]), -signal.SIGTERM)
+            self.assertGreater(end["maxrss"], 0)
+            self.assertEqual((events.parent / "stdout.log").read_bytes(), b"ready\n")
+        finally:
+            if child.poll() is None:
+                child.kill()
+            child.communicate(timeout=35)
 
     def test_noncompile_query_executes_without_profiler(self):
         result, _ = self.compiler('import sys\nprint(sys.argv[1:])\n', ["--version"])
@@ -80,26 +154,141 @@ class ColdCostTests(unittest.TestCase):
     def test_linux_sample_types_scopes_and_descendant_selection(self):
         proc = self.root / "proc"
         proc.mkdir()
-        for pid, parent in ((10, 1), (11, 10), (12, 11), (13, 1)):
+        for pid, parent, argv in (
+                (10, 1, ["bash", "-c", "canonical resource wrapper"]),
+                (11, 10, [sys.executable, str(PROGRAM), "compiler", "Sample.lean"]),
+                (12, 11, ["/fixture/lean", "--profile", "Sample.lean"]),
+                (13, 1, ["unrelated"]),
+                (14, 10, ["bash", "-c", "canonical resource wrapper"])):
             folder = proc / str(pid)
             folder.mkdir()
             fields = ["S", str(parent)] + ["0"] * 22
             fields[11], fields[12], fields[19], fields[21] = "123", "456", "900", "42"
             (folder / "stat").write_text(f"{pid} (a tricky ) name) " + " ".join(fields))
-            (folder / "cmdline").write_bytes(b"lean\0Sample.lean\0")
+            (folder / "cmdline").write_bytes(("\0".join(argv) + "\0").encode())
             (folder / "cgroup").write_text("0::/job\n")
         cg = self.root / "cgroup" / "job"
         cg.mkdir(parents=True)
         (cg / "cpu.stat").write_text("usage_usec 1234\n")
         (cg / "memory.events").write_text("oom_kill 2\n")
-        row = cost.sample(10, proc, self.root / "cgroup")
-        self.assertEqual([p["pid"] for p in row["processes"]], [10, 11, 12])
+        row = cost.sample(10, proc, self.root / "cgroup", real_lean="/fixture/lean")
+        self.assertEqual([p["pid"] for p in row["processes"]], [10, 11, 12, 14])
+        self.assertEqual([p["role"] for p in row["processes"]],
+                         ["command-root", "compiler-observer-wrapper", "real-compiler", "unclassified-command-descendant"])
+        self.assertEqual(row["python_sampler"]["pid"], os.getpid())
+        self.assertFalse(row["python_sampler"]["in_processes"])
+        self.assertIn("includes compiler observer wrappers", row["scope"])
+        self.assertIn("canonical shell sampler", row["scope"])
+        self.assertIn("observer", row["cgroup_scope"])
+        self.assertIn("observer", row["kernel_scope"])
         self.assertEqual(row["processes"][0]["start_ticks"], 900)
         self.assertEqual(row["processes"][0]["user_ticks"], 123)
         self.assertEqual(row["cgroup"]["cpu.stat"], "usage_usec 1234\n")
         self.assertEqual(row["cgroup"]["memory.events"], "oom_kill 2\n")
         self.assertIsNone(row["kernel"]["pressure/cpu"])
         self.assertIn("sampled", row["scope"])
+
+    def run_fixture(self, stage_returns, producer_error=None, binding_error=None):
+        output = self.root / "run-observations"
+        real = (self.root / "lean").resolve()
+        real.write_bytes(b"private compiler identity fixture")
+        inputs = {"private-fixture": "unchanged"}
+
+        def checked_output(command, **_kwargs):
+            if command == ["elan", "which", "lean"]:
+                return str(real).encode()
+            if command == [str(real), "--version"]:
+                return b"Lean (version 4.34.1)"
+            if command == [str(real), "--githash"]:
+                return b"fixture-githash"
+            if command[1] == "tools/scripts/workflow/judge-lean-producer.sh":
+                if producer_error:
+                    raise producer_error
+                return b"/fixture/producer.dll\n"
+            raise AssertionError(command)
+
+        with patch.object(cost, "native_binding", return_value={"inputs": inputs}), \
+                patch.object(cost, "input_binding", side_effect=binding_error, return_value=inputs), \
+                patch.object(cost, "build_spawn_observer", return_value=output / "fixture.so"), \
+                patch.object(cost.subprocess, "check_output", side_effect=checked_output), \
+                patch.object(cost, "observe_command", side_effect=stage_returns) as observe:
+            error = None
+            rc = None
+            try:
+                rc = cost.run(self.root, output)
+            except Exception as caught:
+                error = caught
+        return rc, error, json.loads((output / "result.json").read_text()), observe
+
+    def test_producer_failure_receipt_keeps_raw_failure_and_incomplete_chain(self):
+        failure = subprocess.CalledProcessError(17, ["private-producer"], output=b"failure")
+        rc, error, result, observe = self.run_fixture([0], producer_error=failure)
+        self.assertIsNone(rc)
+        self.assertIs(error, failure)
+        self.assertEqual(result["canonical_returncode"], 17)
+        self.assertFalse(result["canonical_chain_complete"])
+        self.assertEqual(result["canonical_failure"]["stage"], "judge-lean-producer")
+        self.assertIsNone(result["observer_failure"])
+        self.assertEqual(observe.call_count, 1)
+
+    def test_observer_exception_receipt_has_unknown_canonical_result(self):
+        failure = OSError("private observer launch failure")
+        rc, error, result, observe = self.run_fixture([0, failure])
+        self.assertIsNone(rc)
+        self.assertIs(error, failure)
+        self.assertIsNone(result["canonical_returncode"])
+        self.assertFalse(result["canonical_chain_complete"])
+        self.assertIsNone(result["canonical_failure"])
+        self.assertEqual(result["observer_failure"]["stage"], "compiled-judge-test")
+        self.assertEqual(observe.call_count, 2)
+
+    def test_canonical_signal_failure_receipt_skips_later_stages(self):
+        rc, error, result, observe = self.run_fixture([-signal.SIGKILL])
+        self.assertIsNone(error)
+        self.assertEqual(rc, 128 + signal.SIGKILL)
+        self.assertEqual(result["canonical_returncode"], -signal.SIGKILL)
+        self.assertFalse(result["canonical_chain_complete"])
+        self.assertEqual(result["canonical_failure"]["stage"], "judge-build")
+        self.assertIsNone(result["observer_failure"])
+        self.assertEqual(observe.call_count, 1)
+
+    def test_success_receipt_requires_complete_chain_and_preserved_inputs(self):
+        rc, error, result, observe = self.run_fixture([0, 0, 0])
+        self.assertIsNone(error)
+        self.assertEqual(rc, 0)
+        self.assertEqual(result["canonical_returncode"], 0)
+        self.assertTrue(result["canonical_chain_complete"])
+        self.assertTrue(result["inputs_unchanged"])
+        self.assertIsNone(result["canonical_failure"])
+        self.assertIsNone(result["observer_failure"])
+        self.assertEqual(observe.call_count, 3)
+
+    def test_final_input_observer_exception_does_not_leave_success_receipt(self):
+        rc, error, result, _ = self.run_fixture([0, 0, 0], binding_error=OSError("private input read failure"))
+        self.assertIsNone(rc)
+        self.assertIsInstance(error, OSError)
+        self.assertIsNone(result["canonical_returncode"])
+        self.assertIsNone(result["inputs_unchanged"])
+        self.assertEqual(result["observer_failure"]["stage"], "artifact-collection")
+
+    def test_recorded_sampler_failure_fails_diagnostic_after_successful_commands(self):
+        observe_command = cost.observe_command
+
+        def observe(_command, cwd, output, name, _env, **_kwargs):
+            # Exercise the existing sampler-error path with a real command;
+            # canonical project commands remain private fixtures.
+            with patch.object(cost, "sample", side_effect=OSError("private sample failure")):
+                return observe_command([sys.executable, "-c", "import time; time.sleep(.05)"],
+                                       cwd, output, name, dict(os.environ), interval=.01)
+
+        rc, error, result, _ = self.run_fixture(observe)
+        self.assertIsNone(rc)
+        self.assertIsInstance(error, ValueError)
+        self.assertIsNone(result["canonical_returncode"])
+        self.assertTrue(result["canonical_chain_complete"])
+        self.assertTrue(all(row["returncode"] == 0 for row in result["canonical_stages"]))
+        self.assertIsNone(result["canonical_failure"])
+        self.assertIn("observer errors recorded", result["observer_failure"]["error"])
 
     def spawn_driver(self, linked=True):
         driver = self.root / "driver.c"
