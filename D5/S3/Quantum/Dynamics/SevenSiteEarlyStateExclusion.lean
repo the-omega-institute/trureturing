@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion
    generality: G
    mirror-B: D5/B/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion
-   mirror-E: none(waiver:external-open-problem-resolution)
+   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
    digest: Seven-site symmetric chains lack early state exclusion iff spectra are multiples. -/
