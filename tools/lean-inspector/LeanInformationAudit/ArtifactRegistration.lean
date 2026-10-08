@@ -31,14 +31,14 @@ private unsafe def enrollmentContext (owner : Name) (options : Options) : M Comp
 
 private def expressionContext (options : Options) : M CompiledExpressions.Context := do
   let state ← get
-  return CompiledRegistration.expressionContext (state.store.constants[·]?) (← IO.getNumHeartbeats) options
+  return CompiledRegistration.expressionContext (state.store.constants.find?) (← IO.getNumHeartbeats) options
 
 /-- Keep each alias's exact compiler term, inferred shape and target owner as
 report data. This does not create or verify a mathematical declaration. -/
 def keepCompanion (owner name : Name) (value : Expr) (isTheorem : Bool)
     (options : Options) (parameters : Option (List Name) := none) : M Unit := do
   let state ← get
-  let info ← CompiledRegistration.companion (state.store.constants[·]?)
+  let info ← CompiledRegistration.companion (state.store.constants.find?)
     (← expressionContext options) name value isTheorem parameters
   if state.generated.any (·.1 == name) then
     unless state.generated.contains (name, owner) do
@@ -54,7 +54,7 @@ def prepareCompanions (owner : Name) (row : Decoder.CompanionInput) : M Unit := 
   let entry := row.input.entry
   let options := row.input.options
   if entry.sourceBound then
-    let record ← CompiledRegistration.constant ((← get).store.constants[·]?) entry.realizationName
+    let record ← CompiledRegistration.constant ((← get).store.constants.find?) entry.realizationName
     keepCompanion owner entry.unitName
       (mkConst entry.realizationName (record.levelParams.map Level.param)) false options
       (some record.levelParams)
@@ -70,7 +70,7 @@ private def keepDiagnostic (entry : InformationRegistryEntry) (diagnostic : Opti
   let info : ConstantInfo := .defnInfo {
     name, levelParams := [], type := mkConst ``String, value := mkStrLit (diagnostic.getD ""),
     hints := .abbrev, safety := .safe, all := [name] }
-  if let some previous := (← get).store.constants[name]? then
+  if let some previous := (← get).store.constants.find? name then
     unless previous.type.equal info.type && previous.value? == info.value? &&
         (← get).generated.contains (name, entry.registrationModuleName) do
       throw <| IO.userError s!"registration diagnostic binding mismatch:{name}"
@@ -103,12 +103,12 @@ unsafe def enroll (owner : Name) (input : TemplateEnrollmentInput) : M Unit := d
 private unsafe def occurrence (owner : Name) (input : RegistrationInput) : M Unit := do
   let state ← get
   let entry := input.entry
-  let info ← CompiledRegistration.constant (state.store.constants[·]?) entry.theoremName
+  let info ← CompiledRegistration.constant (state.store.constants.find?) entry.theoremName
   let sourceRecord := input.declaration.bind (·.sourceRecord)
   let identity := (if entry.sourceBound || sourceRecord.isSome then compactRawIdentity else rawStatementIdentity)
     info.levelParams info.type
   let statementIdentity := match identity with | .ok (identity, _) => identity | .error _ => ""
-  let arenaInfo ← CompiledRegistration.constant (state.store.constants[·]?) entry.arenaName
+  let arenaInfo ← CompiledRegistration.constant (state.store.constants.find?) entry.arenaName
   let (arenaType, _) ← CompiledExpressions.run (← expressionContext input.options)
     (CompiledExpressions.head arenaInfo.type)
   let objectDomain := arenaType.isConstOf `D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
@@ -125,7 +125,7 @@ private unsafe def occurrence (owner : Name) (input : RegistrationInput) : M Uni
     compiledMathematics := entry.compiledMathematics }
   let claim ← input.declaration.mapM fun declaration => do
     let arena ← if entry.sourceBound || declaration.sourceRecord.isSome then pure declaration.arena else
-      IO.ofExcept <| resolveCanonicalArenaName (state.store.constants[·]?) declaration.arena
+      IO.ofExcept <| resolveCanonicalArenaName (state.store.constants.find?) declaration.arena
     unless declaration.theoremName == entry.theoremName && arena == entry.canonicalObjectArenaName do
       throw <| IO.userError "unclassified_form:dtr.inline_occurrence"
     let (descriptor, diagnostic) ← try
@@ -139,9 +139,9 @@ private unsafe def occurrence (owner : Name) (input : RegistrationInput) : M Uni
       resolutionDiagnostic := diagnostic, escapeInput := declaration.escapeInput, owner : TemplateBindingClaim }
   -- Owner, statement and companions come directly from this target's compiled
   -- snapshot, rather than from replayed extension events or caller certificates.
-  unless (state.store.owners[entry.unitName]?) == some owner &&
+  unless (state.store.owners.find? entry.unitName) == some owner &&
       moduleReachable (importsOf state.store) owner
-        ((state.store.owners[event.realizationName]?).getD .anonymous) do
+        ((state.store.owners.find? event.realizationName).getD .anonymous) do
     throw <| IO.userError "incomplete_closure:dtr.event_unit_owner"
   modify fun state => { state with
     events := state.events.push (owner, event)
@@ -153,13 +153,13 @@ unsafe def register (owner : Name) (row : Decoder.CompanionInput) : M Unit := do
       input.viaDescriptor.isNone do
     throw <| IO.userError "incomplete_closure:dtr.input_owner"
   prepareCompanions owner row
-  let entry ← CompiledRegistration.prepare ((← get).store.constants[·]?) owner input.entry
-  CompiledRegistration.validateBinding ((← get).store.constants[·]?) { input with entry }
-  CompiledRegistration.validateCore ((← get).store.constants[·]?) entry
+  let entry ← CompiledRegistration.prepare ((← get).store.constants.find?) owner input.entry
+  CompiledRegistration.validateBinding ((← get).store.constants.find?) { input with entry }
+  CompiledRegistration.validateCore ((← get).store.constants.find?) entry
   CompiledRegistration.validateUnique entry (entriesFor (← get) owner)
   let diagnostic ← if entry.sourceBound then pure none else
-    CompiledRegistration.validateFinite ((← get).store.constants[·]?) entry input.options
-  let type := (← CompiledRegistration.constant ((← get).store.constants[·]?) entry.realizationName).type
+    CompiledRegistration.validateFinite ((← get).store.constants.find?) entry input.options
+  let type := (← CompiledRegistration.constant ((← get).store.constants.find?) entry.realizationName).type
   if type.isAppOf `D5.S3.ConceptDynamics.InformationEscape.EscapeRecord.EscapePrimitiveRealization &&
       diagnostic.isSome then
     throw <| IO.userError s!"unclassified_form:dtr.forward_bridge_requires_sensitivity:{diagnostic.get!}"
@@ -182,7 +182,7 @@ unsafe def assessJoined (root : Name) (options : Options := {}) : M (Array Bindi
 unsafe def prepareSnapshot (snapshot : Discovery.Snapshot) : M Unit := do
   for (_, catalog) in snapshot.roots do
     for row in catalog.expected ++ catalog.source ++ catalog.baseline do
-      discard <| IO.ofExcept <| resolveCanonicalArenaName ((← get).store.constants[·]?) row.objectArenaName
+      discard <| IO.ofExcept <| resolveCanonicalArenaName ((← get).store.constants.find?) row.objectArenaName
   for (owner, enrollment) in snapshot.enrollments do enroll owner enrollment
   for (owner, registration) in snapshot.registrations do register owner registration
 
