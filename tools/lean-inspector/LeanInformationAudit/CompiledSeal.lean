@@ -61,7 +61,7 @@ private def mismatch (root catalog : Name) (component : String) : IO α :=
 
 private def consumeCatalog (context : CompiledExpressions.Context) (record : CatalogRecord)
     (expectedArena : Expr) (input : CompiledSealCatalog) : IO (SealArenaRecord × ConstantInfo) := do
-  let fs ← Decoder.fields context.find ``Contract.SealCatalog input.value 11
+  let fs ← Decoder.fields context.find `LeanInformationAudit.Contract.SealCatalog input.value 11
   let size ← Decoder.liftLiteral (Literal.nat "seal.size" fs[3]!)
   unless size == record.units.size && input.arenaName == record.arenaName &&
       input.catalogId == record.catalogId do mismatch record.rootId record.catalogId "reg-membership"
@@ -78,7 +78,7 @@ private def consumeCatalog (context : CompiledExpressions.Context) (record : Cat
   let raw ← Decoder.referencedValue context.find input.value
   let levels := raw.getAppFn.constLevels!
   unless levels.length == 2 do throw <| IO.userError "contract.cannot_decode:seal.levels"
-  let catalog := mkAppN (mkConst ``D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector levels)
+  let catalog := mkAppN (mkConst `D5.S3.ConceptDynamics.InformationEscape.Catalog.ofVector levels)
     #[fs[2]!, mkNatLit size, fs[4]!]
   let catalogType ← calculate context (CompiledExpressions.typeShape catalog)
   let catalogInfo : ConstantInfo := .defnInfo {
