@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Under Hyp21_1, positive selected jumps bound the actual Cloitre limsup and characterize convergence. -/
+   digest: Under Hyp21_1, positive jumps bound Cloitre limsup and characterize convergence. -/
 
 import D5.S1.Recurrence.Invariants.CloitreActualRightProfile
 import Mathlib.Analysis.SpecificLimits.Fibonacci
