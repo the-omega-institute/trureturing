@@ -349,24 +349,27 @@ theorem result : alpha 1 = 0 ∧ alpha 2 = 2 ∧
     obtain ⟨j, _, hj⟩ := Finset.exists_min_image Finset.univ q Finset.univ_nonempty
     have hj' : ∀ i, q j ≤ q i := fun i => hj i (Finset.mem_univ i)
     have qd := law_data n q hsum
-    have crossing : ∃ d : ℕ, 1 ≤ (2 : ℝ) ^ d * p k := by
-      obtain ⟨d, hd⟩ := pow_unbounded_of_one_lt (1 / p k) (by norm_num : (1 : ℝ) < 2)
-      exact ⟨d, (div_lt_iff₀ (hp k)).mp hd |>.le⟩
-    let d := Nat.find crossing
-    have hd : 1 ≤ (2 : ℝ) ^ d * p k := Nat.find_spec crossing
-    have dpos : 0 < d := by
+    obtain ⟨z, hz⟩ := exists_mem_Ioc_zpow (one_div_pos.mpr (hp k))
+      (by norm_num : (1 : ℝ) < 2)
+    have znonneg : 0 ≤ z := by
       by_contra H
-      have dz : d = 0 := by omega
-      rw [dz, pow_zero, one_mul] at hd
-      linarith
-    obtain ⟨e, de⟩ : ∃ e, d = e + 1 := ⟨d - 1, by omega⟩
+      have bound : (2 : ℝ) ^ (z + 1) ≤ 1 :=
+        zpow_le_one_of_nonpos₀ (by norm_num) (by omega)
+      have inverse_gt : 1 < 1 / p k := (lt_div_iff₀ (hp k)).mpr (by simpa using psmall)
+      linarith [hz.2.trans bound]
+    let e := z.toNat
+    have ze : (e : ℤ) = z := Int.toNat_of_nonneg znonneg
     have he : (2 : ℝ) ^ e * p k < 1 :=
-      lt_of_not_ge (Nat.find_min crossing (by dsimp [d] at *; omega))
+      (lt_div_iff₀ (hp k)).mp (by simpa only [← ze, zpow_natCast] using hz.1)
+    have hd : 1 ≤ (2 : ℝ) ^ (e + 1) * p k := by
+      apply (div_le_iff₀ (hp k)).mp
+      have exponent : z + 1 = ((e + 1 : ℕ) : ℤ) := by rw [← ze]; omega
+      simpa only [exponent, zpow_natCast] using hz.2
     have floor_zero : ⌊(2 : ℝ) ^ e * p k⌋ = 0 :=
       Int.floor_eq_zero_iff.mpr ⟨mul_nonneg (by positivity) (hp k).le, he⟩
     have carry : (1 : ℤ) ≤ ⌊(2 : ℝ) ^ e * (p k + p (k.succAbove l))⌋ := by
       rw [Int.le_floor]
-      rw [de, pow_succ] at hd
+      rw [pow_succ] at hd
       rw [hl]
       norm_num only [Int.cast_one]
       nlinarith
