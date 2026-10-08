@@ -90,7 +90,7 @@ identities. There is no digestion atom.
 **Proved by `result`:** the Appendix A.1 tuple is feasible for every $\theta\in[0,\pi/2]$, so a
 single closed formula replaces the two-piece construction of Theorem 5.6.
 
-**Computed, not formalized.**
+**Argued or computed, not formalized.**
 
 - *Mechanism.* $\beta$ is chosen so that $C_3$ and $C_5$ are rank one for every $\theta$
   ($\beta^2=9(c+1)^2+(3s-2r+3)^2$): the tuple stays on the boundary of the positive cone in those
@@ -98,11 +98,15 @@ single closed formula replaces the two-piece construction of Theorem 5.6.
 - *Where it is tight.* $\det C_2=0$ exactly when $\sin\theta=1$ (the factor $1-s$), so the tuple is
   on the boundary of the feasible set at $\theta=\pi/2$; elsewhere in $[0,\pi/2)$ $C_2$ and $C_6$
   are positive definite.
-- *How far the formula extends.* For $s<0$ the factor $219+9s-124\sqrt3$ changes sign at
-  $\sin\theta=(124\sqrt3-219)/9\approx-0.4695$. A grid of $72\,001$ angles on $[-\pi,\pi]$ (floating
-  point, smallest eigenvalue of each $C_i$) finds the tuple feasible exactly on the arc
-  $\sin\theta\ge(124\sqrt3-219)/9$, that is $\theta\in[-0.1556\pi,\,\pi]$ together with
-  $[-\pi,-0.8444\pi]$; the radicand of $\beta$ stays positive on the whole circle.
+- *How far the formula extends* (argued, not formalized). Positivity of $C_1,C_3,C_4,C_5$, the
+  identity of the Route and the positivity of $A$, $B$ and $\operatorname{tr}C_2$ hold for every
+  real $\theta$: the radicand of $\beta$ has minimum $13-4\sqrt3-\sqrt{120-48\sqrt3}>0$ over
+  $\theta$, because $(13-4\sqrt3)^2-(120-48\sqrt3)=97-56\sqrt3>0$ ($97^2=9409>9408=3\cdot56^2$);
+  $A\ge192-96\sqrt3>0$; and $\beta^2\le3(13-4\sqrt3+\sqrt{120-48\sqrt3})<(8\sqrt3-6)^2$. Hence
+  the tuple is feasible exactly when $\det C_2\ge0$, that is when
+  $(1-\sin\theta)(219+9\sin\theta-124\sqrt3)\ge0$, i.e. $\sin\theta\ge(124\sqrt3-219)/9\approx-0.4695$.
+  A floating-point classification of $72\,001$ angles in $[-\pi,\pi]$ (smallest eigenvalue of each
+  $C_i$, tolerance $10^{-12}$) agrees with this arc.
 
 **Open.** The source's conjectures on the optimal constant for larger simplices plus an interval
 (`conj:kSimplexPlusLineOptimum`) and on four-line incompatibility ($s_\mathbb C(2,4)=2/\sqrt{13}$,
