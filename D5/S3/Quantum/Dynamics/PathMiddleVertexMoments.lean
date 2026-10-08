@@ -59,15 +59,10 @@ Direct frozen dependencies:
   statement_id sha256:291ba961210b68cf2b42da1a752f3727b9881bc1ecafb5176c73f81b5f327da3.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.prod_eq_sq_of_rev
   statement_id sha256:a9933e2f666d4682cf6aa3ec73e446281823cb609903573832c6d1b6c17db3a2.
-  (statement ids of the Freeze event
-  sha256:a60a5637c9d171b1aa468c38da66538115aa0b7823715bbbd9e58587cb780226 for the module
-  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer and of the Freeze event
-  sha256:890d665ee397056086d1f0182c51fc425f698af5b1aed0a36f13e2fd5b2b9f54 for the module
-  D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow; the theorems from hamiltonianPropagator_neg
-  on are recorded there as private declarations and are public in the present source.)
-  Without a Freeze event: D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.reversal_columns,
-  mul_prod_sub_eq_of_moments and pathHamiltonian_pow_apply_column, and
-  D5/S3/Quantum/Dynamics/ParityNodeDividedDifference.sum_eval_div_nodal_eq_coeff.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.reversal_columns
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.mul_prod_sub_eq_of_moments
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_pow_apply_column
+  D5/S3/Quantum/Dynamics/ParityNodeDividedDifference.sum_eval_div_nodal_eq_coeff
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
 instance: every statement quantifies over all m, all positive weights and all real potentials.
 -/

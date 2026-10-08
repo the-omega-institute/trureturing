@@ -32,7 +32,8 @@ proof_shape: det_choose_two_pow: content (permutation-matrix form of the Hankel 
 2); consumer: exists_odd_hankel_size.
 proof_shape: choose_two_pow_mul_odd: content (Frobenius identity and expansion in (ZMod 2)[X]);
 consumer: det_choose_two_pow.
-proof_shape: pow_rev: content (induction on the power); consumer: middle_moment_gram_det.
+proof_shape: pow_rev: bind-only (map_pow for Matrix.reindexAlgEquiv); consumer:
+middle_moment_gram_det.
 proof_shape: det_ne_zero_of_submatrix: bind-only; consumer: det_choose_antitriangular,
 det_choose_two_pow.
 proof_shape: pathHamiltonian_shift: bind-only; consumer: propagator_shift.
@@ -52,17 +53,9 @@ Direct frozen dependencies:
   statement_id sha256:da8dbba3289b5b062201fbfd2fbbd7c20cb092e36332ca39429a937e653cffca.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_transpose
   statement_id sha256:3badeec0aff6a10a492af789ef0007bc74673f00a3a7a78f4791c31dd34c821d.
-  (statement ids of the Freeze event
-  sha256:a60a5637c9d171b1aa468c38da66538115aa0b7823715bbbd9e58587cb780226 for the module
-  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer and of the Freeze event
-  sha256:890d665ee397056086d1f0182c51fc425f698af5b1aed0a36f13e2fd5b2b9f54 for the module
-  D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow; hamiltonianPropagator_neg and
-  pathHamiltonian_transpose are recorded there as private declarations and are public in the
-  present source.)
-  Without a Freeze event:
-  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_pow_apply_column,
-  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.middle_vertex_moments and
-  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.reversal_symmetric.
+  D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.pathHamiltonian_pow_apply_column
+  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.middle_vertex_moments
+  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.reversal_symmetric
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
 instance: the claim quantifies over every m >= 1 and all real weights and potentials.
 -/
@@ -90,18 +83,12 @@ section Gram
 private theorem pow_rev {n : ℕ} (M : Matrix (Fin n) (Fin n) ℂ)
     (hsym : ∀ x y, M x.rev y.rev = M x y) (a : ℕ) :
     ∀ x y, (M ^ a) x.rev y.rev = (M ^ a) x y := by
-  induction a with
-  | zero =>
-    intro x y
-    simp [Matrix.one_apply, Fin.rev_inj]
-  | succ a ih =>
-    intro x y
-    rw [pow_succ, mul_apply, mul_apply]
-    refine Fintype.sum_equiv Fin.revPerm _ _ fun l => ?_
-    have h1 := ih x l.rev
-    have h2 := hsym l.rev y
-    rw [Fin.rev_rev] at h1 h2
-    rw [Fin.revPerm_apply, h1, h2]
+  have hM : Matrix.reindexAlgEquiv ℂ ℂ Fin.revPerm M = M := by
+    ext x y; simpa [Matrix.coe_reindexAlgEquiv] using hsym x y
+  intro x y
+  have h := congrFun (congrFun (map_pow (Matrix.reindexAlgEquiv ℂ ℂ Fin.revPerm) M a) x) y
+  rw [hM] at h
+  simpa [Matrix.coe_reindexAlgEquiv] using h
 
 variable {m : ℕ} (r : Fin (2 * m) → ℝ) (q : Fin (2 * m + 1) → ℝ)
 
