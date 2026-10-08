@@ -57,7 +57,7 @@ def table (p P : Nat) : Controller p P (State p P (Fin (P - 1) × Fin 2)) where
     | _ => 0
 
 /-- The number of waits before the first carry, capped at the last scan. -/
-private def waits {p P : Nat} (x : ZMod (p * P)) : Nat :=
+def waits {p P : Nat} (x : ZMod (p * P)) : Nat :=
   if x.val % P = 0 then P - 1 else P - x.val % P
 
 section Execution
@@ -65,13 +65,13 @@ section Execution
 variable {p P : Nat} (hp : 2 ≤ p) (hP : 0 < P) (he : Even p)
 
 include hP in
-private theorem waits_bounds (x : ZMod (p * P)) :
+theorem waits_bounds (x : ZMod (p * P)) :
     waits x < P ∧ (1 < P → 0 < waits x) := by
   have remainder := Nat.mod_lt x.val hP
   unfold waits
   split_ifs <;> omega
 
-private theorem digit_shift (x : ZMod (p * P)) (t : Nat) (ht : t < P) :
+theorem digit_shift (x : ZMod (p * P)) (t : Nat) (ht : t < P) :
     (digit hp hP (x + (t : ZMod (p * P)))).val =
       (x.val / P + if P ≤ x.val % P + t then 1 else 0) % p := by
   let : NeZero (p * P) := ⟨by positivity⟩
@@ -91,7 +91,7 @@ private theorem carry_parity (b : Fin p) :
   have opposite := Nat.mod_two_add_succ_mod_two b.val
   omega
 
-private theorem carry_predecessor (b : Fin p) :
+theorem carry_predecessor (b : Fin p) :
     (if (b.val + 1) % p = 0 then p - 1 else (b.val + 1) % p - 1) = b.val := by
   by_cases wrap : b.val + 1 = p
   · simp only [wrap, Nat.mod_self, ite_true]
@@ -100,7 +100,7 @@ private theorem carry_predecessor (b : Fin p) :
     rw [Nat.mod_eq_of_lt small, if_neg (by omega)]
     omega
 
-private theorem before_digit (x : ZMod (p * P)) (t : Nat) (ht : t < waits x) :
+theorem before_digit (x : ZMod (p * P)) (t : Nat) (ht : t < waits x) :
     digit hp hP (x + (t : ZMod (p * P))) = digit hp hP x := by
   have small : t < P := lt_trans ht (waits_bounds hP x).1
   have no_carry : x.val % P + t < P := by
@@ -111,7 +111,7 @@ private theorem before_digit (x : ZMod (p * P)) (t : Nat) (ht : t < waits x) :
   rw [digit_shift hp hP x t small, if_neg (by omega), Nat.add_zero]
   exact Nat.mod_eq_of_lt (digit hp hP x).isLt
 
-private theorem final_digit (x : ZMod (p * P)) (hn : x.val % P ≠ 0) :
+theorem final_digit (x : ZMod (p * P)) (hn : x.val % P ≠ 0) :
     (digit hp hP (x + (waits x : ZMod (p * P)))).val =
       ((digit hp hP x).val + 1) % p := by
   have at_carry : P ≤ x.val % P + waits x := by
@@ -121,7 +121,7 @@ private theorem final_digit (x : ZMod (p * P)) (hn : x.val % P ≠ 0) :
   rw [digit_shift hp hP x (waits x) (waits_bounds hP x).1, if_pos at_carry]
   rfl
 
-private theorem zero_digit (x : ZMod (p * P)) (hz : x.val % P = 0) :
+theorem zero_digit (x : ZMod (p * P)) (hz : x.val % P = 0) :
     digit hp hP (x + (waits x : ZMod (p * P))) = digit hp hP x := by
   apply Fin.ext
   have small := (waits_bounds hP x).1
