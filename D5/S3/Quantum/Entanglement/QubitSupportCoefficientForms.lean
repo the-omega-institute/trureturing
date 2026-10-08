@@ -150,17 +150,6 @@ theorem formOf_injective (p : ℕ) : Function.Injective (@formOf p) := by
     simpa using hv
   simp_rw [hs]
 
-private theorem index_counts {p : ℕ} (d : Composition p) (j : Fin p) :
-    (Finset.univ.filter fun i : Fin p => d.index i < d.index j).card =
-      d.sizeUpTo (d.index j).val ∧
-    (Finset.univ.filter fun i : Fin p => d.index i ≤ d.index j).card =
-      d.sizeUpTo ((d.index j).val + 1) := by
-  constructor
-  · simp_rw [index_lt_iff]
-    rw [Fin.card_filter_val_lt, min_eq_right (d.sizeUpTo_le _)]
-  · simp_rw [index_le_iff]
-    rw [Fin.card_filter_val_lt, min_eq_right (d.sizeUpTo_le _)]
-
 private theorem disjoint_add_eq_or {n a b : ℕ}
     (ha : a < 2 ^ n) (hb : b < 2 ^ n)
     (h : ∀ i, a.testBit i = false ∨ b.testBit i = false) :
@@ -224,29 +213,22 @@ private theorem occupied_prefix {n p : ℕ} (c : Config n p) (q : Fin n)
   rw [occupied_or, Nat.or_div_two_pow, Nat.div_eq_of_lt (row_bound c q hmax r)]
   simp
 
-private theorem occupied_q_zero {n p : ℕ} (c : Config n p) (q : Fin n)
-    (hq : q ∈ c.P) (hmax : ∀ i ∈ c.P, i ≤ q) (j : Fin p) :
-    (occupied c 0 j).testBit q.val = false := by
-  rw [occupied_or, Nat.testBit_lor]
-  have hs := c.sigma_supported j q (by simpa)
-  simp [c.first_zero q hq hmax, hs]
-
-private theorem occupied_q_one {n p : ℕ} (c : Config n p) (q : Fin n)
-    (hq : q ∈ c.P) (hmax : ∀ i ∈ c.P, i ≤ q) (j : Fin p) :
-    (occupied c 1 j).testBit q.val = true := by
-  rw [occupied_or, Nat.testBit_lor]
-  have hs := c.sigma_supported j q (by simpa)
-  have hy := c.y_bits q
-  simp [hq, c.first_zero q hq hmax] at hy
-  simp [hy, hs]
-
 private theorem occupied_same_prefix {n p : ℕ} (c : Config n p) (q : Fin n)
     (hq : q ∈ c.P) (hmax : ∀ i ∈ c.P, i ≤ q) (i j : Fin p)
     (h : (c.sigma i).val / 2 ^ (q.val + 1) =
       (c.sigma j).val / 2 ^ (q.val + 1)) :
     occupied c 0 i < occupied c 1 j := by
-  apply Nat.lt_of_testBit q.val (occupied_q_zero c q hq hmax i)
-    (occupied_q_one c q hq hmax j)
+  have hz : (occupied c 0 i).testBit q.val = false := by
+    rw [occupied_or, Nat.testBit_lor]
+    have hs := c.sigma_supported i q (by simpa)
+    simp [c.first_zero q hq hmax, hs]
+  have ho : (occupied c 1 j).testBit q.val = true := by
+    rw [occupied_or, Nat.testBit_lor]
+    have hs := c.sigma_supported j q (by simpa)
+    have hy := c.y_bits q
+    simp [hq, c.first_zero q hq hmax] at hy
+    simp [hy, hs]
+  apply Nat.lt_of_testBit q.val hz ho
   intro k hk
   have hd : occupied c 0 i / 2 ^ (q.val + 1) =
       occupied c 1 j / 2 ^ (q.val + 1) := by
@@ -254,11 +236,6 @@ private theorem occupied_same_prefix {n p : ℕ} (c : Config n p) (q : Fin n)
   have hb := congrArg (fun x : ℕ => x.testBit (k - (q.val + 1))) hd
   have hk' : k - (q.val + 1) + (q.val + 1) = k := Nat.sub_add_cancel (by omega)
   simpa only [Nat.testBit_div_two_pow, hk'] using hb
-
-private theorem occupied_same_row_lt {n p : ℕ} (c : Config n p) (r : Fin 2)
-    (i j : Fin p) : occupied c r i < occupied c r j ↔ i < j := by
-  simp only [occupied, Nat.add_lt_add_iff_left]
-  exact c.increasing.lt_iff_lt
 
 private theorem prefix_monotone {n p : ℕ} (c : Config n p) (q : Fin n) :
     Monotone (fun j : Fin p => (c.sigma j).val / 2 ^ (q.val + 1)) := by
@@ -301,6 +278,10 @@ private theorem form_zero_val {n p : ℕ} (c : Config n p) (q : Fin n)
         (c.sigma i).val / 2 ^ (q.val + 1) <
         (c.sigma j).val / 2 ^ (q.val + 1)).card := by
   classical
+  have hsame (r : Fin 2) (i j : Fin p) :
+      occupied c r i < occupied c r j ↔ i < j := by
+    simp only [occupied, Nat.add_lt_add_iff_left]
+    exact c.increasing.lt_iff_lt
   let S0 := Finset.univ.filter fun i : Fin p => i < j
   let S1 := Finset.univ.filter fun i : Fin p =>
     (c.sigma i).val / 2 ^ (q.val + 1) < (c.sigma j).val / 2 ^ (q.val + 1)
@@ -317,7 +298,7 @@ private theorem form_zero_val {n p : ℕ} (c : Config n p) (q : Fin n)
       occupied c z.1 z.2 < occupied c 0 j) =
       (({0} : Finset (Fin 2)) ×ˢ S0) ∪ (({1} : Finset (Fin 2)) ×ˢ S1) := by
     ext ⟨r, i⟩
-    fin_cases r <;> simp [S0, S1, occupied_same_row_lt,
+    fin_cases r <;> simp [S0, S1, hsame,
       occupied_cross_one_zero c q hq hmax]
   change (Finset.univ.filter fun z : Fin 2 × Fin p =>
     occupied c z.1 z.2 < occupied c 0 j).card = _
@@ -331,6 +312,10 @@ private theorem form_one_val {n p : ℕ} (c : Config n p) (q : Fin n)
         (c.sigma i).val / 2 ^ (q.val + 1) ≤
         (c.sigma j).val / 2 ^ (q.val + 1)).card := by
   classical
+  have hsame (r : Fin 2) (i j : Fin p) :
+      occupied c r i < occupied c r j ↔ i < j := by
+    simp only [occupied, Nat.add_lt_add_iff_left]
+    exact c.increasing.lt_iff_lt
   let S0 := Finset.univ.filter fun i : Fin p =>
     (c.sigma i).val / 2 ^ (q.val + 1) ≤ (c.sigma j).val / 2 ^ (q.val + 1)
   let S1 := Finset.univ.filter fun i : Fin p => i < j
@@ -347,7 +332,7 @@ private theorem form_one_val {n p : ℕ} (c : Config n p) (q : Fin n)
       occupied c z.1 z.2 < occupied c 1 j) =
       (({0} : Finset (Fin 2)) ×ˢ S0) ∪ (({1} : Finset (Fin 2)) ×ˢ S1) := by
     ext ⟨r, i⟩
-    fin_cases r <;> simp [S0, S1, occupied_same_row_lt,
+    fin_cases r <;> simp [S0, S1, hsame,
       occupied_cross_zero_one c q hq hmax]
   change (Finset.univ.filter fun z : Fin 2 × Fin p =>
     occupied c z.1 z.2 < occupied c 1 j).card = _
@@ -742,6 +727,16 @@ private theorem realization_data {p n : ℕ} (hp : 1 ≤ p) (d : Composition p)
 theorem realization {p : ℕ} (hp : 1 ≤ p) (d : Composition p) (n : ℕ)
     (hn : 2 * Nat.clog 2 p + 1 ≤ n) : ∃ c : Config n p, form c = formOf d := by
   classical
+  have counts (j : Fin p) :
+      (Finset.univ.filter fun i : Fin p => d.index i < d.index j).card =
+        d.sizeUpTo (d.index j).val ∧
+      (Finset.univ.filter fun i : Fin p => d.index i ≤ d.index j).card =
+        d.sizeUpTo ((d.index j).val + 1) := by
+    constructor
+    · simp_rw [index_lt_iff]
+      rw [Fin.card_filter_val_lt, min_eq_right (d.sizeUpTo_le _)]
+    · simp_rw [index_le_iff]
+      rw [Fin.card_filter_val_lt, min_eq_right (d.sizeUpTo_le _)]
   obtain ⟨c, q, t, hqt, hP, hx, hy, hs, hoff, hprefix⟩ := realization_data hp d hn
   let qf : Fin n := ⟨q + t, hqt⟩
   have hq : qf ∈ c.P := (hP qf).mpr (Or.inr rfl)
@@ -757,11 +752,11 @@ theorem realization {p : ℕ} (hp : 1 ≤ p) (d : Composition p) (n : ℕ)
   · change (form c 0 j).val = j.val + d.sizeUpTo ((d.index j).val + 0)
     rw [form_zero_val c qf hq hmax]
     simp only [qf, hprefix, add_zero]
-    exact congrArg (j.val + ·) (index_counts d j).1
+    exact congrArg (j.val + ·) (counts j).1
   · change (form c 1 j).val = j.val + d.sizeUpTo ((d.index j).val + 1)
     rw [form_one_val c qf hq hmax]
     simp only [qf, hprefix]
-    exact congrArg (j.val + ·) (index_counts d j).2
+    exact congrArg (j.val + ·) (counts j).2
 
 
 /-- The forms are exactly the distinct images of compositions. -/
