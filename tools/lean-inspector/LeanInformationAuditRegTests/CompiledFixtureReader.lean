@@ -11,7 +11,7 @@ unsafe def discover (reader : IO.Ref RawArtifacts.Store) (requirements : Array C
   let store ← reader.get
   let start ← IO.getNumHeartbeats
   let context : Contract.CompiledExpressions.Context := {
-    find := (store.constants[·]?), heartbeatStart := start, heartbeatLimit := Lean.Core.getMaxHeartbeats ({} : Options) }
+    find := (store.constants.find?), heartbeatStart := start, heartbeatLimit := Lean.Core.getMaxHeartbeats ({} : Options) }
   let closures ← IO.mkRef ({ closure := store.metadata.axioms } : CompiledAxioms.AxiomClosureState)
   Contract.Discovery.discoverCompiled requirements owners context
     (fun owner => return (← store.getModule owner).constants)
