@@ -35,24 +35,6 @@ local notation "c" => (1 / 128 : ℝ)
 local notation "q" => (fun x : ℝ => (x * Real.log x)⁻¹)
 local notation "k" => weight
 
-/-- Conditions on the start of the half-line. -/
-def Admissible (δ A : ℝ) : Prop :=
-  (∀ a ∈ Ici A, 1 ≤ Real.log a ∧ epsilon a ≤ 1 ∧ 1 ≤ width δ a ∧ width δ a ≤ a) ∧
-    AntitoneOn epsilon (Ici A)
-
-/-- Consecutive cells in the adaptive grid. -/
-def grid (δ A : ℝ) : ℕ → ℝ
-  | 0 => A
-  | j + 1 => grid δ A j + width δ (grid δ A j)
-
-/-- The last grid point not exceeding x, with a finite search bound. -/
-def cellIndex (δ A x : ℝ) : ℕ :=
-  Nat.findGreatest (fun j => grid δ A j ≤ x) ⌊x - A⌋₊
-
-/-- The assembled negative bump, extended by zero below the initial point. -/
-def bump (δ A x : ℝ) : ℝ :=
-  if A ≤ x then cellBump δ (grid δ A (cellIndex δ A x)) x else 0
-
 /-- The perturbed price coordinate. -/
 def coordinate (δ A x : ℝ) : ℝ := x - deriv (bump δ A) x / k x
 
@@ -62,70 +44,6 @@ def source (δ A x : ℝ) : ℤ := ⌊coordinate δ A x⌋
 /-- Its tail in the same Robin price coordinate. -/
 def tail (δ A x : ℝ) : ℝ :=
   ∫ v in Ioi x, ((source δ A v : ℝ) - v) * k v
-
-private theorem admissible_gt_one {δ A : ℝ} (hA : Admissible δ A) : 1 < A := by
-  by_contra h
-  have := (hA.1 1 (le_of_not_gt h)).1
-  norm_num at this
-
-private theorem grid_bounds {δ A : ℝ} (hA : Admissible δ A) (j : ℕ) :
-    A + (j : ℝ) ≤ grid δ A j := by
-  induction j with
-  | zero => simp [grid]
-  | succ j ih =>
-    have hAj : A ≤ grid δ A j := by linarith [Nat.cast_nonneg (α := ℝ) j]
-    have hw := (hA.1 _ hAj).2.2.1
-    simp only [grid, Nat.cast_add, Nat.cast_one]
-    linarith
-
-private theorem grid_strictMono {δ A : ℝ} (hA : Admissible δ A) :
-    StrictMono (grid δ A) := by
-  apply strictMono_nat_of_lt_succ
-  intro j
-  have hAj : A ≤ grid δ A j := by
-    linarith [grid_bounds hA j, Nat.cast_nonneg (α := ℝ) j]
-  have hw := (hA.1 _ hAj).2.2.1
-  simp only [grid]
-  linarith
-
-private theorem grid_index_bound {δ A x : ℝ} (hA : Admissible δ A)
-    {j : ℕ} (hj : grid δ A j ≤ x) : j ≤ ⌊x - A⌋₊ := by
-  have hg := grid_bounds hA j
-  have hAx : A ≤ x := by linarith [Nat.cast_nonneg (α := ℝ) j]
-  apply (Nat.le_floor_iff (sub_nonneg.mpr hAx)).2
-  linarith
-
-private theorem cellIndex_spec {δ A x : ℝ} (hA : Admissible δ A) (hx : A ≤ x) :
-    x ∈ Ico (grid δ A (cellIndex δ A x)) (grid δ A (cellIndex δ A x + 1)) := by
-  constructor
-  · exact Nat.findGreatest_spec (P := fun j => grid δ A j ≤ x)
-      (m := 0) (Nat.zero_le _) (by simpa [grid] using hx)
-  · by_contra h
-    have hle := le_of_not_gt h
-    exact Nat.findGreatest_is_greatest (Nat.lt_succ_self _)
-      (grid_index_bound hA hle) hle
-
-private theorem cellIndex_eq {δ A x : ℝ} (hA : Admissible δ A) (j : ℕ)
-    (hx : x ∈ Ico (grid δ A j) (grid δ A (j + 1))) : cellIndex δ A x = j := by
-  apply Nat.findGreatest_eq_iff.2
-  refine ⟨grid_index_bound hA hx.1, fun _ => hx.1, ?_⟩
-  intro n hjn hn hnx
-  have hgn := (grid_strictMono hA).monotone (Nat.succ_le_iff.2 hjn)
-  exact (not_le.mpr hx.2) (hgn.trans hnx)
-
-private theorem bump_on_cell {δ A x : ℝ} (hA : Admissible δ A) (j : ℕ)
-    (hx : x ∈ Icc (grid δ A j) (grid δ A (j + 1))) :
-    bump δ A x = cellBump δ (grid δ A j) x := by
-  have hAj : A ≤ grid δ A j := by
-    linarith [grid_bounds hA j, Nat.cast_nonneg (α := ℝ) j]
-  rw [bump, if_pos (hAj.trans hx.1)]
-  rcases lt_or_eq_of_le hx.2 with hlt | rfl
-  · rw [cellIndex_eq hA j ⟨hx.1, hlt⟩]
-  · have hstep := (grid_strictMono hA) (Nat.lt_succ_self (j + 1))
-    rw [cellIndex_eq hA (j + 1) ⟨le_rfl, hstep⟩]
-    have hw := (hA.1 _ hAj).2.2.1
-    have hw0 : width δ (grid δ A j) ≠ 0 := by linarith
-    simp [cellBump, eta, grid, hw0]
 
 local notation "etaOne" => (fun s : ℝ => 2 * s * (1 - s) * (1 - 2 * s))
 local notation "etaTwo" => (fun s : ℝ => 2 - 12 * s + 12 * s ^ 2)
@@ -161,122 +79,20 @@ private theorem admissible_exists {δ : ℝ} (hδ : 0 < δ) :
     (hdata a ha).2.2.2.1, (hdata a ha).2.2.2.2.1⟩, ?_⟩
   apply antitoneOn_of_hasDerivWithinAt_nonpos (convex_Ici A)
   · intro a ha
-    exact (epsilon_hasDerivAt (hdata a ha).1).continuousAt.continuousWithinAt
+    exact (epsilon_has_deriv_at (hdata a ha).1).continuousAt.continuousWithinAt
   · intro a ha
-    exact (epsilon_hasDerivAt (hdata a (interior_subset ha)).1).hasDerivWithinAt
+    exact (epsilon_has_deriv_at (hdata a (interior_subset ha)).1).hasDerivWithinAt
   · intro a ha
     apply mul_nonpos_of_nonneg_of_nonpos
     · exact div_nonneg (Real.exp_pos _).le (by linarith [(hdata a (interior_subset ha)).1])
     · linarith [(hdata a (interior_subset ha)).2.2.2.2.2]
-
-private theorem bump_hasDerivAt {δ A x : ℝ} (hA : Admissible δ A) (hx : A ≤ x) :
-    HasDerivAt (bump δ A) (cellSlope δ (grid δ A (cellIndex δ A x)) x) x := by
-  let j := cellIndex δ A x
-  have hcell : x ∈ Ico (grid δ A j) (grid δ A (j + 1)) := cellIndex_spec hA hx
-  have hAj : A ≤ grid δ A j := by
-    linarith [grid_bounds hA j, Nat.cast_nonneg (α := ℝ) j]
-  have hw : 0 < width δ (grid δ A j) := by linarith [(hA.1 _ hAj).2.2.1]
-  have hpoint := bump_on_cell hA j (Ico_subset_Icc_self hcell)
-  have hright : HasDerivWithinAt (bump δ A)
-      (cellSlope δ (grid δ A j) x) (Ici x) x := by
-    apply ((cell_derivatives hw).1.hasDerivWithinAt).congr_of_eventuallyEq _ hpoint
-    filter_upwards [Icc_mem_nhdsGE_of_mem hcell] with y hy
-    exact bump_on_cell hA j hy
-  have hleft : HasDerivWithinAt (bump δ A)
-      (cellSlope δ (grid δ A j) x) (Iic x) x := by
-    rcases eq_or_lt_of_le hcell.1 with heq | hlt
-    · have hzero : cellSlope δ (grid δ A j) x = 0 := by rw [← heq]; simp
-      rw [hzero]
-      by_cases hj : j = 0
-      · have hxA : x = A := by simpa [hj, grid] using heq.symm
-        rw [hxA]
-        apply (hasDerivAt_const A (0 : ℝ)).hasDerivWithinAt.congr_of_eventuallyEq
-        · filter_upwards [self_mem_nhdsWithin] with y hy
-          rcases lt_or_eq_of_le (show y ≤ A from hy) with hlt | rfl
-          · simp [bump, not_le.mpr hlt]
-          · simpa [hj, hxA, grid, cellBump, eta] using hpoint
-        · simpa [hj, hxA, grid, cellBump, eta] using hpoint
-      · obtain ⟨n, hn⟩ := Nat.exists_eq_succ_of_ne_zero hj
-        have hAn : A ≤ grid δ A n := by
-          linarith [grid_bounds hA n, Nat.cast_nonneg (α := ℝ) n]
-        have hwn : 0 < width δ (grid δ A n) := by linarith [(hA.1 _ hAn).2.2.1]
-        have hend : x = grid δ A (n + 1) := by simpa [hn] using heq.symm
-        have hslope : cellSlope δ (grid δ A n) x = 0 := by
-          rw [hend, grid]
-          simp [hwn.ne']
-        have hxn : x ∈ Ioc (grid δ A n) (grid δ A (n + 1)) := by
-          rw [hend]
-          exact ⟨(grid_strictMono hA) (Nat.lt_succ_self n), le_rfl⟩
-        apply (((cell_derivatives hwn).1.congr_deriv hslope).hasDerivWithinAt).congr_of_eventuallyEq
-          _ (bump_on_cell hA n (Ioc_subset_Icc_self hxn))
-        filter_upwards [Icc_mem_nhdsLE_of_mem hxn] with y hy
-        exact bump_on_cell hA n hy
-    · apply ((cell_derivatives hw).1.hasDerivWithinAt).congr_of_eventuallyEq _ hpoint
-      filter_upwards [Icc_mem_nhdsLE_of_mem ⟨hlt, hcell.2.le⟩] with y hy
-      exact bump_on_cell hA j hy
-  have hd := hright.union hleft
-  rw [Ici_union_Iic] at hd
-  exact hd.hasDerivAt (by simp)
-
-private theorem bump_deriv_on_cell {δ A x : ℝ} (hA : Admissible δ A) (j : ℕ)
-    (hx : x ∈ Icc (grid δ A j) (grid δ A (j + 1))) :
-    deriv (bump δ A) x = cellSlope δ (grid δ A j) x := by
-  have hAj : A ≤ grid δ A j := by
-    linarith [grid_bounds hA j, Nat.cast_nonneg (α := ℝ) j]
-  rw [(bump_hasDerivAt hA (hAj.trans hx.1)).deriv]
-  rcases lt_or_eq_of_le hx.2 with hlt | rfl
-  · rw [cellIndex_eq hA j ⟨hx.1, hlt⟩]
-  · rw [cellIndex_eq hA (j + 1) ⟨le_rfl, (grid_strictMono hA) (Nat.lt_succ_self _)⟩]
-    have hw : width δ (grid δ A j) ≠ 0 := by linarith [(hA.1 _ hAj).2.2.1]
-    simp [grid, hw]
-
-private theorem bump_deriv_continuous {δ A : ℝ} (hA : Admissible δ A) :
-    ContinuousOn (deriv (bump δ A)) (Ici A) := by
-  intro x hx
-  let j := cellIndex δ A x
-  have hcell : x ∈ Ico (grid δ A j) (grid δ A (j + 1)) := cellIndex_spec hA hx
-  have hAj : A ≤ grid δ A j := by
-    linarith [grid_bounds hA j, Nat.cast_nonneg (α := ℝ) j]
-  have hw : 0 < width δ (grid δ A j) := by linarith [(hA.1 _ hAj).2.2.1]
-  have hright : ContinuousWithinAt (deriv (bump δ A)) (Ici x) x := by
-    apply ((cell_derivatives hw).2.continuousAt.continuousWithinAt).congr_of_eventuallyEq
-      _ (bump_deriv_on_cell hA j (Ico_subset_Icc_self hcell))
-    filter_upwards [Icc_mem_nhdsGE_of_mem hcell] with y hy
-    exact bump_deriv_on_cell hA j hy
-  by_cases hxA : x = A
-  · simpa only [hxA] using hright
-  have hleft : ContinuousWithinAt (deriv (bump δ A)) (Iic x) x := by
-    rcases eq_or_lt_of_le hcell.1 with heq | hlt
-    · have hj : j ≠ 0 := by
-        intro hj
-        apply hxA
-        simpa [hj, grid] using heq.symm
-      obtain ⟨n, hn⟩ := Nat.exists_eq_succ_of_ne_zero hj
-      have hAn : A ≤ grid δ A n := by
-        linarith [grid_bounds hA n, Nat.cast_nonneg (α := ℝ) n]
-      have hwn : 0 < width δ (grid δ A n) := by linarith [(hA.1 _ hAn).2.2.1]
-      have hxn : x ∈ Ioc (grid δ A n) (grid δ A (n + 1)) := by
-        have hend : x = grid δ A (n + 1) := by simpa [hn] using heq.symm
-        rw [hend]
-        exact ⟨(grid_strictMono hA) (Nat.lt_succ_self n), le_rfl⟩
-      apply ((cell_derivatives hwn).2.continuousAt.continuousWithinAt).congr_of_eventuallyEq
-        _ (bump_deriv_on_cell hA n (Ioc_subset_Icc_self hxn))
-      filter_upwards [Icc_mem_nhdsLE_of_mem hxn] with y hy
-      exact bump_deriv_on_cell hA n hy
-    · apply ((cell_derivatives hw).2.continuousAt.continuousWithinAt).congr_of_eventuallyEq
-        _ (bump_deriv_on_cell hA j (Ico_subset_Icc_self hcell))
-      filter_upwards [Icc_mem_nhdsLE_of_mem ⟨hlt, hcell.2.le⟩] with y hy
-      exact bump_deriv_on_cell hA j hy
-  have hc := hright.union hleft
-  rw [Ici_union_Iic] at hc
-  exact (hc.continuousAt (by simp)).continuousWithinAt
 
 private theorem coordinate_continuous {δ A : ℝ} (hA : Admissible δ A) :
     ContinuousOn (coordinate δ A) (Ici A) := by
   apply continuousOn_id.sub
   apply (bump_deriv_continuous hA).div
   · intro x hx
-    exact (kernel_hasDerivAt ((admissible_gt_one hA).trans_le hx)).continuousAt.continuousWithinAt
+    exact (kernel_has_deriv_at ((admissible_gt_one hA).trans_le hx)).continuousAt.continuousWithinAt
   · intro x hx
     have hx1 := (admissible_gt_one hA).trans_le hx
     have hx0 : 0 < x := by linarith
@@ -288,7 +104,7 @@ private theorem coordinate_right_deriv {δ A x : ℝ} (hA : Admissible δ A) (hx
       |rightSlope δ A x - 1| ≤ epsilon x ∧ |rightSlope δ A x - 1| ≤ 1 / 2 := by
   let j := cellIndex δ A x
   let a := grid δ A j
-  have hcell : x ∈ Ico a (grid δ A (j + 1)) := cellIndex_spec hA hx
+  have hcell : x ∈ Ico a (grid δ A (j + 1)) := cell_index_spec hA hx
   have hAa : A ≤ a := by linarith [grid_bounds hA j, Nat.cast_nonneg (α := ℝ) j]
   have ha : 1 < a := (admissible_gt_one hA).trans_le hAa
   have hdata := hA.1 a hAa
@@ -300,7 +116,7 @@ private theorem coordinate_right_deriv {δ A x : ℝ} (hA : Admissible δ A) (hx
     unfold weight
     positivity [Real.log_pos (ha.trans_le hcell.1)]
   have hd := (hasDerivAt_id x).sub
-    ((cell_derivatives hw).2.fun_div (kernel_hasDerivAt (ha.trans_le hcell.1)) hk.ne')
+    ((cell_derivatives hw).2.fun_div (kernel_has_deriv_at (ha.trans_le hcell.1)) hk.ne')
   change HasDerivAt (fun y : ℝ => y - cellSlope δ a y / k y) (rightSlope δ A x) x at hd
   have hpoint : coordinate δ A x = x - cellSlope δ a x / k x := by
     rw [coordinate, bump_deriv_on_cell hA j (Ico_subset_Icc_self hcell)]
@@ -380,7 +196,7 @@ private theorem coordinate_global_bound {δ A x : ℝ} (hδ : 0 < δ)
     |coordinate δ A x - x| ≤ 4 * c * x ^ (3 / 4 : ℝ) * (Real.log x) ^ (δ + 1 / 2) := by
   let j := cellIndex δ A x
   let a := grid δ A j
-  have hcell := cellIndex_spec hA hx
+  have hcell := cell_index_spec hA hx
   have hAa : A ≤ a := by linarith [grid_bounds hA j, Nat.cast_nonneg (α := ℝ) j]
   have ha : 1 < a := (admissible_gt_one hA).trans_le hAa
   have hdata := hA.1 a hAa
@@ -422,14 +238,6 @@ private theorem source_global_bound {δ A x : ℝ} (hδ : 0 < δ)
       ((source δ A x : ℝ) - coordinate δ A x) + (coordinate δ A x - x) := by ring
   rw [heq]
   exact (abs_add_le _ _).trans (by linarith [coordinate_global_bound hδ hA hx])
-
-private theorem bump_contDiffOn {δ A : ℝ} (hA : Admissible δ A) :
-    ContDiffOn ℝ 1 (bump δ A) (Ici A) := by
-  apply (contDiffOn_one_iff_derivWithin (uniqueDiffOn_Ici A)).2
-  refine ⟨fun x hx => (bump_hasDerivAt hA hx).differentiableAt.differentiableWithinAt, ?_⟩
-  apply (bump_deriv_continuous hA).congr
-  intro x hx
-  exact (bump_hasDerivAt hA hx).differentiableAt.derivWithin (uniqueDiffOn_Ici A x hx)
 
 private theorem coordinate_grid {δ A : ℝ} (hA : Admissible δ A) (j : ℕ) :
     coordinate δ A (grid δ A j) = grid δ A j := by
@@ -630,7 +438,7 @@ private theorem bump_tendsto_zero {δ A : ℝ} (hδ : 0 < δ) (hA : Admissible �
     Tendsto (bump δ A) atTop (𝓝 0) := by
   have hi := (bump_deriv_integrable hδ hA).mono_set Ioi_subset_Ici_self
   have ht := tendsto_limUnder_of_hasDerivAt_of_integrableOn_Ioi
-    (fun x hx => (bump_hasDerivAt hA hx.le).differentiableAt.hasDerivAt) hi
+    (fun x hx => (bump_has_deriv_at hA hx.le).differentiableAt.hasDerivAt) hi
   have hg : Tendsto (grid δ A) atTop atTop :=
     tendsto_atTop_mono (grid_bounds hA)
       (tendsto_atTop_add_const_left atTop A tendsto_natCast_atTop_atTop)
@@ -654,7 +462,7 @@ private theorem tail_contract {δ A x : ℝ} (hδ : 0 < δ) (hA : Admissible δ 
   have hd := (bump_deriv_integrable hδ hA).mono_set
     (Ioi_subset_Ici_self.trans (Ici_subset_Ici.2 hx))
   have hf := integral_Ioi_of_hasDerivAt_of_tendsto'
-    (fun y hy => (bump_hasDerivAt hA (hx.trans hy)).differentiableAt.hasDerivAt)
+    (fun y hy => (bump_has_deriv_at hA (hx.trans hy)).differentiableAt.hasDerivAt)
     hd (bump_tendsto_zero hδ hA)
   let R : ℝ → ℝ := fun y => ((source δ A y : ℝ) - coordinate δ A y) * k y
   have hc := (coordinate_continuous hA).mono
@@ -752,7 +560,7 @@ theorem result (δ : ℝ) (hδ : 0 < δ) :
         bump δ A x - q x ≤ tail δ A x ∧ tail δ A x ≤ bump δ A x) := by
   refine ⟨admissible_exists hδ, ?_⟩
   intro A hA
-  refine ⟨bump_contDiffOn hA, coordinate_continuous hA, coordinate_strictMono hA,
+  refine ⟨bump_cont_diff_on hA, coordinate_continuous hA, coordinate_strictMono hA,
     source_monotone hA, ?_, ?_, ?_, ?_, ?_, ?_, ?_⟩
   · exact fun x hx => ⟨source_nonnegative hA hx, source_right_limit hA hx⟩
   · intro x hx
@@ -764,6 +572,7 @@ theorem result (δ : ℝ) (hδ : 0 < δ) :
   · exact fun x hx => source_global_bound hδ hA hx
   · exact fun c₀ _ => source_pnt_bound hδ hA c₀
   · exact fun x hx => tail_contract hδ hA hx
+
 
 
 end D5.S3.Analytic.Interpolation.ArtificialSourceIncrementContract

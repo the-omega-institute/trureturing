@@ -4,10 +4,11 @@
    mirror-E: none(waiver:analytic-inequality)
    anchors: []
    utility: none
-   digest: Quartic cell bumps obey uniform Robin-coordinate derivative bounds. -/
+   digest: Adaptive quartic bumps have continuous derivatives and uniform Robin-coordinate bounds. -/
 
 import D5.S3.Arith.Robin.MellinWeightedVariation
 import Mathlib.Analysis.SpecialFunctions.Pow.Asymptotics
+import Mathlib.Analysis.Calculus.ContDiff.Deriv
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -71,7 +72,7 @@ private theorem eta_bounds {s : ℝ} (hs : s ∈ Icc (0 : ℝ) 1) :
     nlinarith [mul_le_mul_of_nonneg_left hfactor (by positivity : 0 ≤ 2 * (s * (1 - s)))]
   · exact abs_le.mpr ⟨by nlinarith [sq_nonneg (s - 1 / 2)], by nlinarith⟩
 
-theorem kernel_hasDerivAt {x : ℝ} (hx : 1 < x) :
+theorem kernel_has_deriv_at {x : ℝ} (hx : 1 < x) :
     HasDerivAt k (kernelSlope x) x := by
   have hx0 : 0 < x := by linarith
   have hl : 0 < Real.log x := Real.log_pos hx
@@ -239,7 +240,7 @@ theorem cell_estimates {δ a x : ℝ} (ha : 1 < a) (hLa : 1 ≤ Real.log a)
       _ = _ := by rw [hbase]; ring
   refine ⟨hvalue, ?_⟩
   have hd := (hasDerivAt_id x).sub
-    ((cell_derivatives hw).2.fun_div (kernel_hasDerivAt hx1) hk.1.ne')
+    ((cell_derivatives hw).2.fun_div (kernel_has_deriv_at hx1) hk.1.ne')
   change HasDerivAt (fun y : ℝ => y - cellSlope δ a y / k y) _ x at hd
   rw [hd.deriv]
   have heq : 1 - (cellSecond δ a x * k x - cellSlope δ a x * kernelSlope x) /
@@ -275,7 +276,7 @@ theorem cell_estimates {δ a x : ℝ} (ha : 1 < a) (hLa : 1 ≤ Real.log a)
       nlinarith [mul_le_mul_of_nonneg_left hwa'
         (by positivity : 0 ≤ 28 * c * epsilon a)]
 
-theorem epsilon_hasDerivAt {a : ℝ} (ha : 1 < a) :
+theorem epsilon_has_deriv_at {a : ℝ} (ha : 1 < a) :
     HasDerivAt epsilon (Real.exp (-(Real.log a) ^ (1 / 4 : ℝ)) / a *
       (1 - (Real.log a) ^ (1 / 4 : ℝ) / 4)) a := by
   have ha0 : 0 < a := by linarith
@@ -394,5 +395,198 @@ theorem epsilon_width_identity {δ a : ℝ} (ha : 1 < a) :
   simp only [← Real.exp_add]
   congr 1
   ring
+
+/-- Conditions on the start of the half-line. -/
+def Admissible (δ A : ℝ) : Prop :=
+  (∀ a ∈ Ici A, 1 ≤ Real.log a ∧ epsilon a ≤ 1 ∧ 1 ≤ width δ a ∧ width δ a ≤ a) ∧
+    AntitoneOn epsilon (Ici A)
+
+/-- Consecutive cells in the adaptive grid. -/
+def grid (δ A : ℝ) : ℕ → ℝ
+  | 0 => A
+  | j + 1 => grid δ A j + width δ (grid δ A j)
+
+/-- The last grid point not exceeding x, with a finite search bound. -/
+def cellIndex (δ A x : ℝ) : ℕ :=
+  Nat.findGreatest (fun j => grid δ A j ≤ x) ⌊x - A⌋₊
+
+/-- The assembled negative bump, extended by zero below the initial point. -/
+def bump (δ A x : ℝ) : ℝ :=
+  if A ≤ x then cellBump δ (grid δ A (cellIndex δ A x)) x else 0
+
+theorem admissible_gt_one {δ A : ℝ} (hA : Admissible δ A) : 1 < A := by
+  by_contra h
+  have := (hA.1 1 (le_of_not_gt h)).1
+  norm_num at this
+
+theorem grid_bounds {δ A : ℝ} (hA : Admissible δ A) (j : ℕ) :
+    A + (j : ℝ) ≤ grid δ A j := by
+  induction j with
+  | zero => simp [grid]
+  | succ j ih =>
+    have hAj : A ≤ grid δ A j := by linarith [Nat.cast_nonneg (α := ℝ) j]
+    have hw := (hA.1 _ hAj).2.2.1
+    simp only [grid, Nat.cast_add, Nat.cast_one]
+    linarith
+
+theorem grid_strictMono {δ A : ℝ} (hA : Admissible δ A) :
+    StrictMono (grid δ A) := by
+  apply strictMono_nat_of_lt_succ
+  intro j
+  have hAj : A ≤ grid δ A j := by
+    linarith [grid_bounds hA j, Nat.cast_nonneg (α := ℝ) j]
+  have hw := (hA.1 _ hAj).2.2.1
+  simp only [grid]
+  linarith
+
+private theorem grid_index_bound {δ A x : ℝ} (hA : Admissible δ A)
+    {j : ℕ} (hj : grid δ A j ≤ x) : j ≤ ⌊x - A⌋₊ := by
+  have hg := grid_bounds hA j
+  have hAx : A ≤ x := by linarith [Nat.cast_nonneg (α := ℝ) j]
+  apply (Nat.le_floor_iff (sub_nonneg.mpr hAx)).2
+  linarith
+
+theorem cell_index_spec {δ A x : ℝ} (hA : Admissible δ A) (hx : A ≤ x) :
+    x ∈ Ico (grid δ A (cellIndex δ A x)) (grid δ A (cellIndex δ A x + 1)) := by
+  constructor
+  · exact Nat.findGreatest_spec (P := fun j => grid δ A j ≤ x)
+      (m := 0) (Nat.zero_le _) (by simpa [grid] using hx)
+  · by_contra h
+    have hle := le_of_not_gt h
+    exact Nat.findGreatest_is_greatest (Nat.lt_succ_self _)
+      (grid_index_bound hA hle) hle
+
+private theorem cell_index_eq {δ A x : ℝ} (hA : Admissible δ A) (j : ℕ)
+    (hx : x ∈ Ico (grid δ A j) (grid δ A (j + 1))) : cellIndex δ A x = j := by
+  apply Nat.findGreatest_eq_iff.2
+  refine ⟨grid_index_bound hA hx.1, fun _ => hx.1, ?_⟩
+  intro n hjn hn hnx
+  have hgn := (grid_strictMono hA).monotone (Nat.succ_le_iff.2 hjn)
+  exact (not_le.mpr hx.2) (hgn.trans hnx)
+
+theorem bump_on_cell {δ A x : ℝ} (hA : Admissible δ A) (j : ℕ)
+    (hx : x ∈ Icc (grid δ A j) (grid δ A (j + 1))) :
+    bump δ A x = cellBump δ (grid δ A j) x := by
+  have hAj : A ≤ grid δ A j := by
+    linarith [grid_bounds hA j, Nat.cast_nonneg (α := ℝ) j]
+  rw [bump, if_pos (hAj.trans hx.1)]
+  rcases lt_or_eq_of_le hx.2 with hlt | rfl
+  · rw [cell_index_eq hA j ⟨hx.1, hlt⟩]
+  · have hstep := (grid_strictMono hA) (Nat.lt_succ_self (j + 1))
+    rw [cell_index_eq hA (j + 1) ⟨le_rfl, hstep⟩]
+    have hw := (hA.1 _ hAj).2.2.1
+    have hw0 : width δ (grid δ A j) ≠ 0 := by linarith
+    simp [cellBump, eta, grid, hw0]
+
+theorem bump_has_deriv_at {δ A x : ℝ} (hA : Admissible δ A) (hx : A ≤ x) :
+    HasDerivAt (bump δ A) (cellSlope δ (grid δ A (cellIndex δ A x)) x) x := by
+  let j := cellIndex δ A x
+  have hcell : x ∈ Ico (grid δ A j) (grid δ A (j + 1)) := cell_index_spec hA hx
+  have hAj : A ≤ grid δ A j := by
+    linarith [grid_bounds hA j, Nat.cast_nonneg (α := ℝ) j]
+  have hw : 0 < width δ (grid δ A j) := by linarith [(hA.1 _ hAj).2.2.1]
+  have hpoint := bump_on_cell hA j (Ico_subset_Icc_self hcell)
+  have hright : HasDerivWithinAt (bump δ A)
+      (cellSlope δ (grid δ A j) x) (Ici x) x := by
+    apply ((cell_derivatives hw).1.hasDerivWithinAt).congr_of_eventuallyEq _ hpoint
+    filter_upwards [Icc_mem_nhdsGE_of_mem hcell] with y hy
+    exact bump_on_cell hA j hy
+  have hleft : HasDerivWithinAt (bump δ A)
+      (cellSlope δ (grid δ A j) x) (Iic x) x := by
+    rcases eq_or_lt_of_le hcell.1 with heq | hlt
+    · have hzero : cellSlope δ (grid δ A j) x = 0 := by rw [← heq]; simp
+      rw [hzero]
+      by_cases hj : j = 0
+      · have hxA : x = A := by simpa [hj, grid] using heq.symm
+        rw [hxA]
+        apply (hasDerivAt_const A (0 : ℝ)).hasDerivWithinAt.congr_of_eventuallyEq
+        · filter_upwards [self_mem_nhdsWithin] with y hy
+          rcases lt_or_eq_of_le (show y ≤ A from hy) with hlt | rfl
+          · simp [bump, not_le.mpr hlt]
+          · simpa [hj, hxA, grid, cellBump, eta] using hpoint
+        · simpa [hj, hxA, grid, cellBump, eta] using hpoint
+      · obtain ⟨n, hn⟩ := Nat.exists_eq_succ_of_ne_zero hj
+        have hAn : A ≤ grid δ A n := by
+          linarith [grid_bounds hA n, Nat.cast_nonneg (α := ℝ) n]
+        have hwn : 0 < width δ (grid δ A n) := by linarith [(hA.1 _ hAn).2.2.1]
+        have hend : x = grid δ A (n + 1) := by simpa [hn] using heq.symm
+        have hslope : cellSlope δ (grid δ A n) x = 0 := by
+          rw [hend, grid]
+          simp [hwn.ne']
+        have hxn : x ∈ Ioc (grid δ A n) (grid δ A (n + 1)) := by
+          rw [hend]
+          exact ⟨(grid_strictMono hA) (Nat.lt_succ_self n), le_rfl⟩
+        apply (((cell_derivatives hwn).1.congr_deriv hslope).hasDerivWithinAt).congr_of_eventuallyEq
+          _ (bump_on_cell hA n (Ioc_subset_Icc_self hxn))
+        filter_upwards [Icc_mem_nhdsLE_of_mem hxn] with y hy
+        exact bump_on_cell hA n hy
+    · apply ((cell_derivatives hw).1.hasDerivWithinAt).congr_of_eventuallyEq _ hpoint
+      filter_upwards [Icc_mem_nhdsLE_of_mem ⟨hlt, hcell.2.le⟩] with y hy
+      exact bump_on_cell hA j hy
+  have hd := hright.union hleft
+  rw [Ici_union_Iic] at hd
+  exact hd.hasDerivAt (by simp)
+
+theorem bump_deriv_on_cell {δ A x : ℝ} (hA : Admissible δ A) (j : ℕ)
+    (hx : x ∈ Icc (grid δ A j) (grid δ A (j + 1))) :
+    deriv (bump δ A) x = cellSlope δ (grid δ A j) x := by
+  have hAj : A ≤ grid δ A j := by
+    linarith [grid_bounds hA j, Nat.cast_nonneg (α := ℝ) j]
+  rw [(bump_has_deriv_at hA (hAj.trans hx.1)).deriv]
+  rcases lt_or_eq_of_le hx.2 with hlt | rfl
+  · rw [cell_index_eq hA j ⟨hx.1, hlt⟩]
+  · rw [cell_index_eq hA (j + 1) ⟨le_rfl, (grid_strictMono hA) (Nat.lt_succ_self _)⟩]
+    have hw : width δ (grid δ A j) ≠ 0 := by linarith [(hA.1 _ hAj).2.2.1]
+    simp [grid, hw]
+
+theorem bump_deriv_continuous {δ A : ℝ} (hA : Admissible δ A) :
+    ContinuousOn (deriv (bump δ A)) (Ici A) := by
+  intro x hx
+  let j := cellIndex δ A x
+  have hcell : x ∈ Ico (grid δ A j) (grid δ A (j + 1)) := cell_index_spec hA hx
+  have hAj : A ≤ grid δ A j := by
+    linarith [grid_bounds hA j, Nat.cast_nonneg (α := ℝ) j]
+  have hw : 0 < width δ (grid δ A j) := by linarith [(hA.1 _ hAj).2.2.1]
+  have hright : ContinuousWithinAt (deriv (bump δ A)) (Ici x) x := by
+    apply ((cell_derivatives hw).2.continuousAt.continuousWithinAt).congr_of_eventuallyEq
+      _ (bump_deriv_on_cell hA j (Ico_subset_Icc_self hcell))
+    filter_upwards [Icc_mem_nhdsGE_of_mem hcell] with y hy
+    exact bump_deriv_on_cell hA j hy
+  by_cases hxA : x = A
+  · simpa only [hxA] using hright
+  have hleft : ContinuousWithinAt (deriv (bump δ A)) (Iic x) x := by
+    rcases eq_or_lt_of_le hcell.1 with heq | hlt
+    · have hj : j ≠ 0 := by
+        intro hj
+        apply hxA
+        simpa [hj, grid] using heq.symm
+      obtain ⟨n, hn⟩ := Nat.exists_eq_succ_of_ne_zero hj
+      have hAn : A ≤ grid δ A n := by
+        linarith [grid_bounds hA n, Nat.cast_nonneg (α := ℝ) n]
+      have hwn : 0 < width δ (grid δ A n) := by linarith [(hA.1 _ hAn).2.2.1]
+      have hxn : x ∈ Ioc (grid δ A n) (grid δ A (n + 1)) := by
+        have hend : x = grid δ A (n + 1) := by simpa [hn] using heq.symm
+        rw [hend]
+        exact ⟨(grid_strictMono hA) (Nat.lt_succ_self n), le_rfl⟩
+      apply ((cell_derivatives hwn).2.continuousAt.continuousWithinAt).congr_of_eventuallyEq
+        _ (bump_deriv_on_cell hA n (Ioc_subset_Icc_self hxn))
+      filter_upwards [Icc_mem_nhdsLE_of_mem hxn] with y hy
+      exact bump_deriv_on_cell hA n hy
+    · apply ((cell_derivatives hw).2.continuousAt.continuousWithinAt).congr_of_eventuallyEq
+        _ (bump_deriv_on_cell hA j (Ico_subset_Icc_self hcell))
+      filter_upwards [Icc_mem_nhdsLE_of_mem ⟨hlt, hcell.2.le⟩] with y hy
+      exact bump_deriv_on_cell hA j hy
+  have hc := hright.union hleft
+  rw [Ici_union_Iic] at hc
+  exact (hc.continuousAt (by simp)).continuousWithinAt
+
+theorem bump_cont_diff_on {δ A : ℝ} (hA : Admissible δ A) :
+    ContDiffOn ℝ 1 (bump δ A) (Ici A) := by
+  apply (contDiffOn_one_iff_derivWithin (uniqueDiffOn_Ici A)).2
+  refine ⟨fun x hx => (bump_has_deriv_at hA hx).differentiableAt.differentiableWithinAt, ?_⟩
+  apply (bump_deriv_continuous hA).congr
+  intro x hx
+  exact (bump_has_deriv_at hA hx).differentiableAt.derivWithin (uniqueDiffOn_Ici A x hx)
+
 
 end D5.S3.Analytic.Interpolation.ArtificialSourceCellEstimates
