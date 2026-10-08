@@ -98,10 +98,12 @@ only if $a \neq 1$. The triples $(1, 2m, 2m + 1)$ of Theorem 3.2 and
 $(2m + 1, 2m + 2, 2m + 3)$ of Theorem 3.4 are special cases; the count of
 exactly $2m$ zeros in Theorem 3.4 is not treated in that module.
 
-The module `D5/S3/Quantum/Dynamics/SymmetricSpectrumEndAmplitude` derives
+The module `D5/S3/Quantum/Dynamics/SymmetricSpectrumEndAmplitude` formalises
 Eq. (2.1) for every seven-site chain with positive couplings, real potentials,
 symmetric spectrum and transfer at some time $T$, with the spectrum
-$\tfrac{\pi}{T}\{0, \pm a, \pm b, \pm c\}$, $a$ and $c$ odd, $b$ even. The
+$\tfrac{\pi}{T}\{0, \pm a, \pm b, \pm c\}$, $a$ and $c$ odd, $b$ even; that
+generality is known from Kay's criterion, which the source recalls as its
+Eq. (1.3), and from the amplitude formulas of arXiv:2606.04353. The
 module `D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion` proves the
 conjecture of Section 4: for every such chain and every earliest transfer time
 $T$, the first-site amplitude has no zero in $(0, T)$ exactly when every

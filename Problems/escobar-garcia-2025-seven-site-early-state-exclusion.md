@@ -15,7 +15,8 @@ motivation_gids:
 M. G. Escobar, V. Garcia and A. Minenkova, *Early State Exclusion in 7-Qubit
 Spin Chains*, arXiv:2507.18767v1, Section 4. A Jacobi matrix is a real
 symmetric tridiagonal matrix with positive off-diagonal entries (Eq. (1.1):
-"for $a_i \in \R$ and $b_i > 0$"). The source defines:
+"for $a_i \in \R$ and $b_i > 0$"). The source defines (quoted with its
+displayed equations set inline and without `\emph` and `\label` markup):
 
 > A Jacobi matrix $J$ realizes \textbf{perfect state transfer} (PST) between the end-vertices of the weighted path in Figure \ref{fig:nearestneighbor} at time $T > 0$ if $e^{-iJT}\e_0 = e^{i\phi}\e_N$ for some phase $\phi \in \R$.
 
@@ -27,7 +28,10 @@ and conjectures:
 
 > Let $J$ be a $7 \times 7$ Jacobi matrix with symmetric spectrum realizing PST. Then $J$ does not have ESE if and only if its positive eigenvalues are integer multiples of the smallest positive eigenvalue.
 
-Issue #14487 fixes the reading. The matrix is `pathHamiltonian r q` with
+Issue #14487 fixes the reading. "Symmetric spectrum" is read as closure of the
+spectrum under negation, the definition of arXiv:2606.04353 ("if
+$-\lambda \in \sigma(J)$ whenever $\lambda  \in \sigma(J)$") and the sense in
+which the source uses it for $\{0, \pm x, \pm y, \pm z\}$. The matrix is `pathHamiltonian r q` with
 `r : Fin 6 → ℝ` positive and `q : Fin 7 → ℝ` arbitrary; perfect state transfer
 at time `t` is `HasPST J t 0 (Fin.last 6)`, the modulus-one form of the
 source's condition; the eigenvalues are Mathlib's
@@ -54,17 +58,28 @@ conjecture.
 
 Issue #14487 preregisters the verbatim source, the reading above, the expected
 settlement and the literature check before any formalization. Its recorded
-readings: an arXiv full-text query for "early state exclusion" returns three
-records, arXiv:2411.06047, the source, and arXiv:2606.04353 (Escobar, Garcia,
-Minenkova, June 2026). The last one states
+readings (2026-10-08): an arXiv full-text query for "early state exclusion"
+returns three records, arXiv:2411.06047, the source, and arXiv:2606.04353
+(Escobar, Garcia, Minenkova, June 2026). The last one says of the five- and
+seven-site work
+
+> Based on these examples, it was conjectured that this spectral property characterizes the presence or absence of ESE in systems with symmetric spectra. In this work, we demonstrate that this is not the case in general for larger chains.
+
+and states
 
 > It is known that a Jacobi matrix with a reduced symmetric spectrum $\{0, \pm \lambda_1, \pm \lambda_2\}$ has ESE if and only if $\lambda_1 \neq 1$~\cite{EM25}. This is not true in the general case
 
 and illustrates the failure by appending $\pm 17$ to the nine-site spectrum
-$\{0, \pm1, \pm14, \pm15, \pm16\}$; it proves an upper bound on the number of
-early exclusion times and a stability theorem under appending far eigenvalues,
-and contains no statement on the seven-site case. Semantic Scholar lists that
-paper as the only work citing the source. These readings are
+$\{0, \pm1, \pm14, \pm15, \pm16\}$. Its Section 3 gives, for every persymmetric
+Jacobi matrix with symmetric spectrum of any order, the first-site amplitude
+as a cosine sum with Hochstadt's weights (Proposition "Amplitude Formulas")
+and the reduction to integer spectra of alternating parity with greatest
+common divisor 1, first transfer at $\pi$ and time scaling by a common factor;
+it also proves an upper bound on the number of early exclusion times and a
+stability theorem under appending far eigenvalues. So Route steps 1 to 3 below
+are known mathematics. The paper neither proves nor refutes the seven-site
+conjecture. Semantic Scholar lists that paper as the only work citing the
+source (read 2026-10-08). These readings are
 `not-found-in-searched-scope`; they do not establish an exhaustive literature
 search or priority.
 
@@ -108,17 +123,20 @@ by the Route it would be a reduced triple $(a, b, c)$ with $a = 1$ and a zero
 of $N$ in $(0, \pi)$, or with $a \ge 3$ and none. Reading "symmetric spectrum"
 as symmetric about a point other than $0$ changes the amplitude only by a
 phase (the source's Section 3.3); reading the transfer time as any transfer
-time instead of the earliest one makes the statement false: the spectrum
-$\{0, \pm 3, \pm 6, \pm 9\}$ satisfies the divisibility condition and has
-transfer at $T = \pi$, but its amplitude $\cos^6(3\tau/2)$ vanishes at
-$\tau = \pi/3$, which is its earliest transfer time.
+time instead of the earliest one makes the statement false: the equidistant
+spectrum $\{0, \pm 3, \pm 6, \pm 9\}$ (a figure of arXiv:2606.04353) satisfies
+the divisibility condition and has transfer at $T = \pi$, but its amplitude
+$\cos^6(3\tau/2)$ vanishes at $\tau = \pi/3$, which is its earliest transfer
+time.
 
 ## Evidence
 
 The public theorem `result : claim` is in
 `D5/S3/Quantum/Dynamics/SevenSiteEarlyStateExclusion.lean`. It rests on
 `D5/S3/Quantum/Dynamics/SymmetricSpectrumEndAmplitude.symmetric_spectrum_reduction`
-(Route steps 1–3), on
+(Route steps 1 and 2 and the transfer at $T/g$ of step 3; the two conclusions
+of step 3, $\gcd(a, b, c) = 1$ from the minimality of $T$ and the equivalence
+of the divisibility condition with $a = 1$, are steps of `result`), on
 `D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros.amplitudeNumerator_zero_iff`
 (steps 4–5) and on
 `D5/S3/Quantum/Dynamics/SincSquareChordSlope.sincSq_chord_lt`. The axiom
@@ -188,8 +206,11 @@ paused under CLAUDE.md §3.9.
 ### What the settlement shows
 
 - **Proved** (`D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros.amplitudeNumerator_pos`):
-  when the positive eigenvalues are multiples of the smallest one, the
-  first-site amplitude is strictly positive on $[0, T)$, not merely nonzero.
+  the cosine sum $N(1, b, c; t)$ is strictly positive on $[0, \pi)$.
+  **Immediate consequence** (not a Lean statement): since the amplitude is
+  $\kappa N(\pi\tau/T)$ with $\kappa > 0$, it is strictly positive on $[0, T)$
+  when the positive eigenvalues are multiples of the smallest one, not merely
+  nonzero.
 - **Proved** (`D5/S3/Quantum/Dynamics/SincSquareChordSlope.sincSq_chord_lt`):
   the mechanism is a convexity property of $\operatorname{sinc}^2$ in the
   squared variable. With $f(X) = \sin^2(\theta\sqrt X)/X$ the quantity $B$ of
@@ -197,17 +218,30 @@ paused under CLAUDE.md §3.9.
   $f[1, b^2, c^2]$, and the theorem says that the chord slope of $f$ from the
   node $1$ is increasing.
 - **Proved** (`D5/S3/Quantum/Dynamics/EndAmplitudeCosineSumZeros.exists_amplitudeNumerator_neg`):
-  when $a \ge 3$ the amplitude is negative at an explicit time,
-  $T\,|1 - 2j/a|$ or $T\,|1 - 2l/c|$.
+  when $a \ge 3$ the cosine sum takes a negative value at some point of
+  $(0, \pi)$. The statement is existential; its proof uses the points
+  $|\pi - 2\pi j/a|$ and $|\pi - 2\pi l/c|$ of Route step 5.
 - **Proved** (`D5/S3/Quantum/Dynamics/SymmetricSpectrumEndAmplitude.symmetric_spectrum_end_amplitude`):
-  the amplitude formula of the source's Eq. (2.1) holds for every seven-site
-  chain with positive couplings, real potentials, symmetric spectrum and
-  transfer at some time; the source derives it for the explicit persymmetric
-  matrix with zero diagonal.
+  the amplitude formula for every seven-site chain with positive couplings,
+  real potentials, symmetric spectrum and transfer at some time. The formula is
+  known (the source's Eq. (2.1) for its explicit matrix; arXiv:2606.04353,
+  Proposition "Amplitude Formulas", for every persymmetric Jacobi matrix with
+  symmetric spectrum; Kay's criterion for persymmetry); the declaration is its
+  Lean derivation from the hypothesis of transfer.
 - **Proved** (`D5/S3/Quantum/Dynamics/SymmetricSpectrumEndAmplitude.symmetric_spectrum_reduction`):
   transfer at $T$ with symmetric spectrum forces the spectrum
   $\tfrac{\pi}{T}\{0, \pm a, \pm b, \pm c\}$ with $a$, $c$ odd and $b$ even,
-  and a common divisor $g$ of $a, b, c$ gives transfer at $T/g$.
+  and a common divisor $g$ of $a, b, c$ gives transfer at $T/g$. This
+  reduction is stated in Section 3 of arXiv:2606.04353; the declaration is its
+  Lean proof for seven sites.
+- **Computed** (by hand, not Lean statements): the hypotheses of `claim` are
+  satisfiable on both sides of the equivalence, by the chains with spectra
+  $\{0, \pm 1, \pm 2, \pm 3\}$ (amplitude $\cos^6(\tau/2)$, no zero before
+  $\pi$) and $\{0, \pm 3, \pm 4, \pm 5\}$ (a figure of the source, with early
+  state exclusion). A spectrum symmetric about a point $\mu \neq 0$ is covered
+  after the shift of the potentials by $-\mu$, which multiplies the amplitude
+  by a phase and changes neither the transfer times nor the zeros; `claim` is
+  stated for $\mu = 0$, as the source's conjecture is.
 - **Computed** (algebra, not a Lean statement): for five sites the same
   reduction gives $N_5(\pi - 2\theta) = 2\,(b^2 \sin^2 a\theta - a^2 \sin^2
   b\theta)$; for $a = 1$ this is positive by $|\sin b\theta| < b \sin\theta$,
@@ -226,10 +260,12 @@ paused under CLAUDE.md §3.9.
 - **Open:** the number of zeros for $a \ge 3$. The source's Theorem 3.4 gives
   $2m$ for $(2m+1, 2m+2, 2m+3)$ (reproduced by the script for $m \le 5$);
   arXiv:2606.04353 bounds the number by $c - 3$ and shows it is even.
-- **Effect on the source:** the conjecture of Section 4 becomes a theorem;
+- **Effect on the source** (proved for the first two clauses, computed and
+  literature for the last): the conjecture of Section 4 becomes a theorem;
   Theorem 3.2 and the existence part of Theorem 3.4 are special cases; the
   extension "for an arbitrary Jacobi matrix of odd order" mentioned after the
-  conjecture is false from order 11 on by arXiv:2606.04353 and is undecided at
+  conjecture fails at order 11 (the figure of arXiv:2606.04353 and the exact
+  counts above), fails at order 13 in the scan above, and is undecided at
   order 9.
 
 ## ASSUMED-UNVERIFIED
