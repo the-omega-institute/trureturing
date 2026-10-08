@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:5243728915612c8801de9b898be3d02cc6d013384b4c998494ac61012b77f816
+  normalized_sha256: sha256:5243728915612c8801de9b898be3d02cc6d013384b4c998494ac61012b77f816
+cas_ref: sha256:5243728915612c8801de9b898be3d02cc6d013384b4c998494ac61012b77f816
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'All propositional clauses are bind-only from pinned mathlib db584cd6d46c92f209a44c0f1c829460d327499d: Real.sin_mul_sum_cos, Real.sin_mul_sum_sin, Real.sin_pos_of_pos_of_lt_pi, Real.cos_two_mul, Real.sin_two_mul, Real.sin_sq_add_cos_sq, Real.cos_pi_div_two, Real.cos_pi_sub, Real.cos_pi_div_three, Real.cos_sub, Real.cos_two_pi, Real.sin_two_pi, and Fin.sum_univ_eq_sum_range, with parameter a=0, omega=1, x_j=2*pi*j/m for m>=3 and (0,pi/2) for m=2. Double-angle rewriting and finite-sum normalization give V^T V=(m/2)I_2 and the equality m(m-2)/4; three-point special values are 1/2. This sharpness varies a and omega and asserts no equality for fixed Montgomery-Taylor parameters. No frozen project declaration GID supplies this sharpness clause; the upstream-only clause is settled under CLAUDE.md 3.2, not covered by unrelated project GIDs.'
+    previous_atom_id: c8e401174fd149e560c3abb84ab2b52f9bd37511983b1dd926122fab6a4b1fb5
+    next_atom_id: 2c483095f379439c109e3757ee19a19c84792a40118ad1874ad8d1d40e1f87dc
