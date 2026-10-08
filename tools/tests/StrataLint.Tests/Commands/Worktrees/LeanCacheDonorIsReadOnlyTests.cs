@@ -33,15 +33,19 @@ public sealed partial class LeanCacheEnsureCommandTests
         _ = WriteProjectOlean(repository.Path, "WarmMain");
         var target = AddWorktree(repository.Path, "read-only-donor");
         var runner = new RecordingWorktreeProcessRunner();
+        var cloner = new RecordingDirectoryCloner();
 
         var result = WorktreeCommand.Run(
             repository.Path,
             ["ensure-cache", "--path", target],
-            runner);
+            runner,
+            cloner);
 
         Assert.True(result.Success, result.Error);
+        Assert.Single(cloner.Invocations);
         using var receipt = ParseReceipt(result.Output);
         Assert.Equal("seeded", receipt.RootElement.GetProperty("status").GetString());
+        Assert.Equal("clonefile", receipt.RootElement.GetProperty("method").GetString());
         Assert.Equal(
             LeanCacheGuard.PhysicalPath(repository.Path),
             receipt.RootElement.GetProperty("donor").GetString());
@@ -71,12 +75,15 @@ public sealed partial class LeanCacheEnsureCommandTests
         var warm = AddWorktree(repository.Path, "warm-donor");
         WriteCache(warm, "sibling worktree cache\n");
         var runner = new RecordingWorktreeProcessRunner();
+        var cloner = new RecordingDirectoryCloner();
 
-        var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner);
+        var result = WorktreeCommand.Run(repository.Path, ["ensure-cache"], runner, cloner);
 
         Assert.True(result.Success, result.Error);
+        Assert.Single(cloner.Invocations);
         using var receipt = ParseReceipt(result.Output);
         Assert.Equal("seeded", receipt.RootElement.GetProperty("status").GetString());
+        Assert.Equal("clonefile", receipt.RootElement.GetProperty("method").GetString());
         Assert.Equal(
             LeanCacheGuard.PhysicalPath(warm),
             receipt.RootElement.GetProperty("donor").GetString());
