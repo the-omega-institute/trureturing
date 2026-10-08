@@ -105,8 +105,6 @@ single closed formula replaces the two-piece construction of Theorem 5.6.
   $A\ge192-96\sqrt3>0$; and $\beta^2\le3(13-4\sqrt3+\sqrt{120-48\sqrt3})<(8\sqrt3-6)^2$. Hence
   the tuple is feasible exactly when $\det C_2\ge0$, that is when
   $(1-\sin\theta)(219+9\sin\theta-124\sqrt3)\ge0$, i.e. $\sin\theta\ge(124\sqrt3-219)/9\approx-0.4695$.
-  A floating-point classification of $72\,001$ angles in $[-\pi,\pi]$ (smallest eigenvalue of each
-  $C_i$, tolerance $10^{-12}$) agrees with this arc.
 
 **Open.** The source's conjectures on the optimal constant for larger simplices plus an interval
 (`conj:kSimplexPlusLineOptimum`) and on four-line incompatibility ($s_\mathbb C(2,4)=2/\sqrt{13}$,
