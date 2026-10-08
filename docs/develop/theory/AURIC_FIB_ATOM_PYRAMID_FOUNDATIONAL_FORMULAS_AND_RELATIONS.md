@@ -2058,3 +2058,321 @@ $$
 
 ## 追加锚（本行以下为增补区）
 
+
+## 二十一、二维圆周关系的三点核下界与解析消费者
+
+本节从同一实际核的两个圆周坐标出发，给出无需区间枚举的有限重叠下界，再接入既有简单临界零点计数。Cauchy–Schwarz、正惯性指数及凸迹压缩均为经典中间工具；由此导出该指定核分子的 $3/4$ 平方和、相应跨度消费者及这个指定消费者家族中的三点最优性。
+
+### 定理 21.1：三个圆周向量的切向消去
+
+对任意实数 $a,\omega$，定义
+$$
+F_{a,\omega}(t)=at\sin(\omega t)-\cos(\omega t).
+$$
+则对任意实数 $u,v$，
+$$
+\boxed{F_{a,\omega}(u)^2+F_{a,\omega}(v)^2+
+F_{a,\omega}(u+v)^2\ge\frac34.}
+\tag{21.1}
+$$
+
+**证明。** 取 $x_1=0,x_2=u,x_3=u+v$，令实矩阵 $V,W$ 的第 $i$ 行为
+$$
+V_i=(\cos\omega x_i,\sin\omega x_i),\qquad
+W_i=(-ax_i\sin\omega x_i,ax_i\cos\omega x_i).
+$$
+三个二维行向量线性相关，所以存在单位向量 $z\in\ker V^{\mathsf T}$。构造
+$$
+B=VV^{\mathsf T}+WV^{\mathsf T}+VW^{\mathsf T}.
+$$
+差角公式给出 $B_{ii}=1$ 及
+$$
+B_{ij}=\cos\omega(x_i-x_j)-a(x_i-x_j)\sin\omega(x_i-x_j)
+=-F_{a,\omega}(x_i-x_j).
+$$
+由于 $V^{\mathsf T}z=0$，有 $z^{\mathsf T}Bz=0$。记 $e=\sum_{i<j}B_{ij}^2$，两次 Cauchy–Schwarz 给
+$$
+1=\left|2\sum_{i<j}B_{ij}z_i z_j\right|
+\le2\sqrt e\left(\sum_{i<j}z_i^2z_j^2\right)^{1/2},
+\qquad
+\sum_{i<j}z_i^2z_j^2
+=\frac{1-\sum_i z_i^4}{2}\le\frac13.
+$$
+故 $e\ge3/4$。函数 $F_{a,\omega}$ 为偶函数，三个差值恰为 $u,v,u+v$，得结论。这里的辅助矩阵 $B$ 不要求半正定。证毕。
+
+### 推论 21.2：任意点数的范围、锐性及非负权
+
+对整数 $m\ge2$ 和任意实数 $x_1,\ldots,x_m$，同一函数满足
+$$
+\sum_{i<j}F_{a,\omega}(x_i-x_j)^2\ge\frac{m(m-2)}4.
+\tag{21.2}
+$$
+在允许任意实参数 $a,\omega$ 的这个一般类中，常数为锐界。
+
+**证明。** 按上一证明构造 $m\times2$ 的 $V,W$ 及 $B$。在 $\ker V^{\mathsf T}$ 上，$B$ 的二次型为零；该核的余维至多二，因此 $B$ 的严格正谱子空间维数至多二。否则正谱子空间与该核有非零交，产生矛盾。由 $\operatorname{tr}B=m$，所有正特征值之和至少为 $m$；对至多两个正特征值使用 Cauchy–Schwarz，得到
+$$
+\operatorname{tr}B^2\ge\frac{m^2}{2}.
+$$
+而 $\operatorname{tr}B^2=m+2\sum_{i<j}F_{a,\omega}(x_i-x_j)^2$，得到 (21.2)。
+
+对 $m\ge3$，取 $a=0,\omega=1$、$x_j=2\pi j/m$，则 $W=0$、$V^{\mathsf T}V=(m/2)I_2$，达到等号。三点可取 $0,2\pi/3,4\pi/3$，三个分子均为 $1/2$。$m=2$ 取 $a=0,\omega=1$ 及两点 $0,\pi/2$，同样达到等号。该锐性不宣称固定 Montgomery–Taylor 参数也达到等号。证毕。
+
+若另给非负权 $w_i$，将 $B$ 左右乘 $\operatorname{diag}(\sqrt{w_i})$，同一正惯性与迹证明给
+$$
+\sum_{i<j}w_iw_jF_{a,\omega}(x_i-x_j)^2
+\ge\frac{(\sum_iw_i)^2-2\sum_iw_i^2}{4}.
+\tag{21.3}
+$$
+权重全零时两边为零；右侧为负时另可使用平方和非负。
+
+### 推论 21.3：同一个 Montgomery–Taylor 核的实际重叠
+
+固定既有的实偶概率密度和 Fourier 核
+$$
+f_0(s)=\frac{\cos(\sqrt2s)}{\sqrt2\sin(1/\sqrt2)}
+\mathbf1_{[-1/2,1/2]}(s),\qquad
+K_0(t)=\int_{\mathbb R} f_0(s)e^{-2\pi i ts}\,ds.
+$$
+置 $a_0=\sqrt2\pi\cot(1/\sqrt2)$、$c=2\pi^2$。直接积分并合并分式，得到全实轴恒等式
+$$
+(1-ct^2)K_0(t)=\cos(\pi t)-a_0t\sin(\pi t).
+\tag{21.4}
+$$
+这是 [Wang v1 Lemma 3.2](https://arxiv.org/html/2609.24167v1) 的同一核恒等式；来源当前状态和有限引文范围见 [Wang 条目](../../../Library/Weil/wang2026proportions.md)。在 $ct^2=1$ 处，(21.4) 按连续性成立，下面不在这些点除以零。
+
+对 $u,v\ge0$、$h=u+v$，定义
+$$
+Q(h)=\frac1{\max\{1,(2\pi^2h^2-1)^2\}}.
+$$
+则
+$$
+\boxed{K_0(u)^2+K_0(v)^2+K_0(u+v)^2\ge\frac34Q(h).}
+\tag{21.5}
+$$
+
+**证明。** 对 $0\le t\le h$，有 $|1-ct^2|\le\max\{1,ch^2-1\}$。将 (21.4) 在三个差值上平方求和，使用 (21.1)，即得 (21.5)。证毕。
+
+对同一个 $K_0$ 的三点单位对角 Gram $B$，若跨度为 $h$，则
+$$
+\operatorname{tr}\Psi(B)\ge\frac32Q(h),
+\tag{21.6}
+$$
+其中 $\Psi$ 仍是命题 15.3、定义 19.1 的截断二次函数。因为 (21.5) 给实际能量 $e\ge e_*=3Q(h)/4\le3/4$，数学引文 17.2 的单调三阶包络在这个区间恰为 $2e_*$。亦可直接证明：若最大特征值不超过二，缺陷等于 $2e$；若最大特征值 $\lambda>2$，其余两个特征值之和为 $3-\lambda$，所以
+$$
+\operatorname{tr}\Psi(B)
+\ge2\lambda-3+\frac{(1-\lambda)^2}{2}\ge\frac32.
+$$
+
+对同核的任意 $m\ge3$ 点主块，跨度为 $h$ 时，(21.2) 同样给
+$$
+E_B:=\operatorname{tr}(B-I)^2\ge A_mQ(h),\qquad
+A_m=\frac{m(m-2)}2,
+\qquad
+\operatorname{tr}\Psi(B)\ge\min\{A_mQ(h),1\}.
+\tag{21.7}
+$$
+最后一步只需：若全部特征值不超过二，则谱缺陷等于 $E_B$；若有特征值大于二，其单项缺陷已大于一。
+
+这个结论使用 (21.4) 的指定核关系。一般非负带限密度没有同样的三点正下界：均匀密度 $\mathbf1_{[-1/2,1/2]}$ 的核为 $\sin(\pi t)/(\pi t)$，三点 $0,1,2$ 的 Gram 恰为 $I_3$。因此三维及半正定性本身没有供应 (21.5)。
+
+### 引理 21.4：全域有效的支撑直线
+
+置
+$$
+g(s)=(cs^2-1)^{-2}\quad(s>1/\pi),\qquad c=2\pi^2.
+$$
+对整数 $m\ge3$ 及 $s_0\ge m-1$，有
+$$
+\min\{A_mQ(s),1\}
+\ge A_m\bigl(g(s_0)+g'(s_0)(s-s_0)\bigr)
+\qquad(s\ge0).
+\tag{21.8}
+$$
+
+**证明。** $Q(s)=1$ 当 $0\le s\le1/\pi$，在其余区间 $Q=g$。直接求导得
+$$
+g'(s)=-\frac{4cs}{(cs^2-1)^3}<0,\qquad
+g''(s)=\frac{4c(5cs^2+1)}{(cs^2-1)^4}>0.
+$$
+所以在 $s>1/\pi$，切线位于 $g$ 下方。令 $y=cs_0^2$，切线在零处的截距为
+$$
+g(s_0)-s_0g'(s_0)=\frac{5y-1}{(y-1)^3}.
+$$
+由 $\pi^2>9$、$s_0\ge m-1\ge2$，有 $y\ge18(m-1)^2\ge72$，故
+$$
+A_m\frac{5y-1}{(y-1)^3}
+\le\frac{40A_m}{y^2}
+\le\frac{20m(m-2)}{324(m-1)^4}<1.
+$$
+切线的斜率为负，乘 $A_m$ 后在整个 $s\ge0$ 上都不超过一，也不超过 $A_mQ(s)$，包括 $Q=1$ 的初段。取两者的最小值即得 (21.8)。证毕。
+
+### 定理 21.5：固定点列的连续窗口界
+
+设 $n\ge m\ge3$，$x_1<\cdots<x_n$、$G=(K_0(x_i-x_j))$，总跨度为 $L=x_n-x_1$。对任意
+$$
+s_0\ge\max\left\{m-1,\frac{(m-1)L}{n-m+1}\right\},
+$$
+有
+$$
+\boxed{\operatorname{tr}\Psi(G)
+\ge\frac{(n-m+1)(m-2)}{2(2\pi^2s_0^2-1)^2}.}
+\tag{21.9}
+$$
+
+**证明。** 对全部 $n-m+1$ 个连续 $m$ 点主块应用 (21.7)、(21.8)。每个相邻间隙至多被 $m-1$ 个窗口覆盖，故这些窗口的跨度 $h_i$ 满足
+$$
+\sum_i h_i\le(m-1)L\le(n-m+1)s_0.
+$$
+由于 $g'(s_0)<0$，支撑直线求和后的线性项非负，得到
+$$
+\sum_i\operatorname{tr}\Psi(B_i)\ge(n-m+1)A_m g(s_0).
+$$
+每个点最多属于 $m$ 个窗口，定理 17.3 的同矩阵凸迹压缩给出
+$\operatorname{tr}\Psi(G)\ge m^{-1}\sum_i\operatorname{tr}\Psi(B_i)$。
+代入 $A_m/m=(m-2)/2$ 即得 (21.9)。证毕。
+
+### 数学引文 21.6：实际有限计数与匹配解析输入
+
+令 $N=N(T)$ 为 $0<\Im\rho\le T$ 内全部非平凡零点按重数计数，$n=N_0^s(T)$ 为其中简单临界线零点数。采用 [Lamzouri v2 §3](https://arxiv.org/html/2609.02882v2) 的实偶平滑族
+$$
+f_\varepsilon=\frac{\psi_\varepsilon^2f_0}{A_\varepsilon}
+=\eta_\varepsilon^2,
+\qquad A_\varepsilon=\int\psi_\varepsilon^2f_0,
+\qquad\eta_\varepsilon\in C_c^\infty((-1/2,1/2)),
+$$
+其中 $\int f_\varepsilon=1$、$f_\varepsilon\to f_0$ 于 $L^1\cap L^2$，$K_\varepsilon=\widehat f_\varepsilon$。对同一实际多重集
+$$
+Z_T=\left\{\frac{i(\rho-1/2)\log T}{2\pi}:0<\Im\rho\le T\right\},
+$$
+取恰由其简单实点组成的原维数 Gram $G_\varepsilon$，以及完整能量
+$$
+\mathcal E_\varepsilon=\sum_{z,s\in Z_T}K_\varepsilon(z-s)^2.
+$$
+能量采用复数平方；其总和为非负实数。已有有限计数式及匹配解析输入为
+$$
+n\ge2N-\mathcal E_\varepsilon+\operatorname{tr}\Psi(G_\varepsilon),
+\qquad
+\frac{\mathcal E_\varepsilon}{N}=C_\varepsilon+o_\varepsilon(1),
+\qquad
+C_\varepsilon\longrightarrow2-C_0,
+\tag{21.10}
+$$
+$$
+C_0=\frac32-\frac1{\sqrt2}\cot(1/\sqrt2).
+$$
+归一化点列包含于长度 $B_T=T\log T/(2\pi)=N+o(N)$ 的区间。Lamzouri 的去权论证是实际解析输入的一部分，不可直接从加权配对公式删除权重。以下保留先 $T\to\infty$、再 $\varepsilon\to0$ 的顺序。
+
+**有限截断计数式的复核。** 该有限式来自 Wang v1 的谱修正；亦见 [Knausgård, arXiv:2610.08965, Lemma 2.1](https://arxiv.org/html/2610.08965v1)。以下复核所需代数，解析能量另由上述 Lamzouri 输入承担。固定上述一个 $\eta$，对任何非空共轭对称有限多重集，令 $f_z(t)=\eta(t)e^{-2\pi izt}$，内积第一变量线性，$(v\otimes w)\xi=\langle\xi,w\rangle v$。令 $P$ 为简单实点的 $f_x\otimes f_x$ 之和。完整反射自伴有限秩算子 $A=\sum_{z\text{ distinct}}m_zf_z\otimes f_{\bar z}$ 满足
+$$
+\operatorname{tr}A=N,\qquad \operatorname{tr}A^2=\mathcal E.
+$$
+记 $r_2$ 为非简单实点的不同点数，$k$ 为不同非实共轭对数。写 $f_z=g_z+ih_z$、$f_{\bar z}=g_z-ih_z$，则每对非实项为 $2m_z(g_z\otimes g_z-h_z\otimes h_z)$。故 $Q=A-P$ 是两个半正定算子之差，正项的秩至多 $r_2+k$；它的正谱部分 $Q_+$ 也有秩至多 $r_2+k$。
+
+令 $p_j,\nu_j$ 分别为 $P,Q_-$ 的递减特征值。经典迹重排给 $\operatorname{tr}(PQ_-)\le\sum_jp_j\nu_j$，而 $\operatorname{tr}(PQ_+)\ge0$。使用 $\lambda^2\ge4\lambda-4$ 于 $Q_+$ 的至多 $r_2+k$ 个正特征值，得到
+$$
+\mathcal E\ge4(N-n)-4(r_2+k)
++\sum_j\bigl((p_j-\nu_j)^2+4\nu_j\bigr).
+$$
+对 $p\ge0$，
+$$
+\min_{\nu\ge0}\bigl((p-\nu)^2+4\nu\bigr)
+=2p-1+\Psi(p)=:\Phi(p),\qquad \Phi(0)=0.
+$$
+$P$ 与原维数简单实点 Gram 的非零谱相同，且 $\Phi(0)=0$，所以
+$\sum_j\Phi(p_j)=n+\operatorname{tr}\Psi(G)$。于是
+$$
+\mathcal E\ge4N-3n-4(r_2+k)+\operatorname{tr}\Psi(G).
+$$
+重数预算 $N-n\ge2r_2+2k$ 给 (21.10) 的有限式。同时，不同点数 $N_d=n+r_2+2k$ 满足
+$$
+N_d\ge\frac32N-\frac12\mathcal E+\frac12\operatorname{tr}\Psi(G).
+\tag{21.11}
+$$
+这里保留 $\Psi(0)=1$ 与原 Gram 维数；跨不同维数转运的是 $\Phi$。本段是已有有限计数法的复核，不主张为新增数学。
+
+### 条件推论 21.7：解析比例与三点最优的指定家族
+
+在 (21.10) 的实际解析输入下，对每个固定整数 $m\ge3$，每个子列极限 $r=\lim n/N$ 满足
+$$
+\boxed{r\ge C_0+P_m(r),\qquad
+P_m(r)=\frac{(m-2)r^5}{2(2\pi^2(m-1)^2-r^2)^2}.}
+\tag{21.12}
+$$
+
+**证明。** 丢弃非负谱项先得 $\liminf n/N\ge C_0>0$，故固定 $m$ 下最终 $n\ge m$。对 $K_0$ 使用定理 21.5，取
+$$
+s_0=\max\left\{m-1,\frac{(m-1)B_T}{n-m+1}\right\}.
+$$
+沿任何 $n/N\to r\in(0,1]$ 的子列，有 $s_0\to(m-1)/r$。
+
+记 $d_\varepsilon=\|f_\varepsilon-f_0\|_1$。由于 $|K_\varepsilon-K_0|\le d_\varepsilon$，且两个核在实轴的模长不超过一，每个固定 $m$ 阶块的能量差绝对值至多 $2m(m-1)d_\varepsilon$。函数 $E\mapsto\min(E,1)$ 的 Lipschitz 常数一，所以每个块的 (21.8) 至多损失此量。凸迹压缩的系数为 $1/m$，且 $n\le N$，因而固定 $\varepsilon$，沿所选子列 $\mathcal T$，
+$$
+\liminf_{\substack{T\to\infty\\T\in\mathcal T}}
+\frac{\operatorname{tr}\Psi(G_\varepsilon)}N
+\ge P_m(r)-2(m-1)d_\varepsilon.
+$$
+代回 (21.10) 得 $r\ge2-C_\varepsilon+P_m(r)-2(m-1)d_\varepsilon$，再令 $\varepsilon\to0$ 得 (21.12)。证毕。
+
+对每个 $0<r\le1$，$P_m(r)$ 随整数 $m\ge3$ 严格递减。令 $t=m-1\ge2$，只需比较
+$$
+\frac{t-1}{(ct^2-r^2)^2}.
+$$
+其导数的符号由
+$$
+(ct^2-r^2)-4ct(t-1)=ct(4-3t)-r^2<0
+$$
+决定。因此，(21.2) 的统一总能量、(21.8) 的支撑直线及连续窗口组合所构成的这个指定家族中，三点给出最强下界：
+$$
+\boxed{r\ge C_0+\frac{r^5}{2(8\pi^2-r^2)^2}.}
+\tag{21.13}
+$$
+这个比较不涵盖利用更多局部信息的加权多点证书。
+
+### 推论 21.8：严格有理增益及计数边界
+
+方程 $r=C_0+r^5/[2(8\pi^2-r^2)^2]$ 在 $(C_0,1)$ 有唯一根 $r_{\rm geom}$。事实上
+$$
+P_3'(r)=\frac{r^4(40\pi^2-r^2)}{2(8\pi^2-r^2)^3}>0\quad(0<r\le1),
+\qquad
+P_3'(r)\le\frac5{2\cdot71^2}+\frac2{71^3}<1
+\quad(0\le r\le1).
+$$
+后一界使用 $8\pi^2-r^2>71$。所以 $r-C_0-P_3(r)$ 严格递增；在 $C_0$ 处为负，在一处为正，因为 $C_0<3/4$、$P_3(1)<1/(2\cdot71^2)$。其中 $C_0<3/4$ 也直接来自 $x=1/\sqrt2$ 时 $\cos x>3/4$、$\sin x/x<1$。
+
+展示数值为
+$$
+r_{\rm geom}=0.6725118640844147040062488672407\ldots,
+\qquad
+r_{\rm geom}-C_0=0.00001116040500305827186907643749\ldots.
+$$
+严格比较不依赖小数根。既有短 Taylor 证书给 $C_0>84/125$：写 $C=\cos x$、$S=\sin x/x$，交错级数给
+$$
+C\le\frac{73}{96},\qquad
+S\ge1-\frac1{12}+\frac1{480}-\frac1{40320},
+$$
+$$
+\frac{207}{250}\left(1-\frac1{12}+\frac1{480}-\frac1{40320}\right)
+-\frac{73}{96}=\frac{967}{3360000}>0.
+$$
+因此 $C/S<207/250$，即 $C_0>84/125$。再用 $\pi<22/7$ 和 $P_3$ 的单调性，
+$$
+P_3(C_0)>
+\frac{(84/125)^5}{2(8(22/7)^2-(84/125)^2)^2}
+=\frac{19611853002}{1766862556110125}
+>\frac{11}{10^6}.
+$$
+最后一个严格差为
+$$
+\frac{1410919078309}{14134900448881000000}>0.
+$$
+于是，在所列同核解析输入成立时，
+$$
+\boxed{\liminf_{T\to\infty}\frac{N_0^s(T)}{N(T)}
+\ge r_{\rm geom}>C_0+\frac{11}{10^6}.}
+\tag{21.14}
+$$
+
+式 (21.11) 还给 $\liminf N_d/N\ge(1+r_{\rm geom})/2$。为保留不同计数的量词，先选取 $N_d/N$ 达到下极限的子列，再在其中选取 $n/N\to r$ 的收敛子列。式 (21.12) 给 $r\ge r_{\rm geom}$，$P_3$ 单调给不同零点下界至少为
+$[1+C_0+P_3(r_{\rm geom})]/2=(1+r_{\rm geom})/2$。该值仍弱于本卷 19.5 的九点混合重数消费者。
+
+[《FIB 原子—金字塔—边界演算》](AURIC_FIB_ATOM_PYRAMID_BOUNDARY_CALCULUS.md) §§9、12 要求同一实际来源及合法拼接。本节落实的关系是 (21.4) 的同一核、同一二维圆周坐标和恰为 $u,v,u+v$ 的差值；五模式标签和抽象维数没有替代这些输入。所得简单临界零点比例低于本卷 19.4 的九点数值，独立价值在于有限几何证明短、无需局部区间证书，以及明确了这一基本家族增加点数不能提高下界。它尚未给出全零点位置控制、素数三胞胎的增长下界或 RH 结论。

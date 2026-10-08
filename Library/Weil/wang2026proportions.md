@@ -5,7 +5,7 @@ year: 2026
 title: Proportions of the non-trivial zeros of the Riemann zeta function
 doi: null
 url: https://arxiv.org/abs/2609.24167v1
-claim: A nonnegative spectral correction to the finite-multiset inequality, bounded using three-point kernel overlaps, slightly improves the unconditional lower proportions of simple critical zeros and distinct zeros. It supplies neither full Weil positivity nor a FIB-to-zeta identification.
+claim: Historical v1 reports a spectral correction and a three-point improvement for zero proportions; v2 was withdrawn on 6 October 2026. The retained finite identities are independently checked in Section 21, whose same-kernel analytic consumer uses Lamzouri's energy estimate and supplies no full Weil positivity or FIB-to-zeta identification.
 strata_touched: []
 license: citation-only
 triage: anchor
@@ -13,9 +13,11 @@ triage: anchor
 
 # The September spectral correction to the zero-proportion method
 
+**Version status, checked 8 October 2026.** [arXiv:2609.24167v2](https://arxiv.org/abs/2609.24167v2), dated 6 October 2026, is withdrawn. The author's comments field reads: “New method is need to obtain good improvement”. The theorem and lemma numbers below refer to the preserved [v1 text](https://arxiv.org/html/2609.24167v1), and its displayed mathematical claims retain that historical status. The new [Section 21](../../docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) gives its own finite proof and uses [Lamzouri v2 §3](https://arxiv.org/html/2609.02882v2) for the matching analytic energy. The [trmdy source note](trmdy2026simplezeros.md) records the stronger October proportions and their explicit computational proof assumptions.
+
 This note records the incremental interface beyond the existing [golden-observer research account](../../docs/develop/theory/GOLDEN_OBSERVER_RH_ROUTE.md). The inspected primary versions are [Alpöge–Furman v2](https://arxiv.org/abs/2608.13637v2), submitted 19 August 2026; [Lamzouri v2](https://arxiv.org/abs/2609.02882v2), submitted 8 September; and [Wang v1](https://arxiv.org/abs/2609.24167v1), submitted 21 September. These are the version dates in their arXiv histories checked on 1 October 2026; their internal PDF dates differ. This is a review of statements and selected proof interfaces, without a full independent proof audit or a new Lean build.
 
-## The finite quantity added by Wang
+## The finite correction stated in Wang v1
 
 Let $Z$ be a nonempty finite multiset invariant under complex conjugation, including multiplicities. For real even $\eta\in L^2(\mathbb R)$ supported in $(-\lambda,\lambda)$, with $\lambda>0$ and $\int\eta^2=1$, put $K=\widehat{\eta^2}$ using Fourier phase $e^{-2\pi i\xi u}$. Let $x_1,\ldots,x_n$ be exactly the simple real elements of $Z$, and define
 
@@ -25,7 +27,7 @@ G_K=(K(x_j-x_\ell))_{j,\ell=1}^n,\qquad
 \qquad \Delta_K(Z)=\operatorname{tr}\Psi(G_K).
 $$
 
-Here $G_K$ is positive semidefinite and $\Delta_K\ge0$, with $\Delta_K=0$ when $n=0$. With $N=|Z|$ counting multiplicity and $D$ counting distinct elements, Wang's Proposition 2.1 states
+Here $G_K$ is positive semidefinite and $\Delta_K\ge0$, with $\Delta_K=0$ when $n=0$. With $N=|Z|$ counting multiplicity and $D$ counting distinct elements, Wang v1 Proposition 2.1 states
 
 $$
 n\ge2N-E_K(Z)+\Delta_K(Z),\qquad
@@ -55,7 +57,7 @@ $$
 
 For zeta, the multiset is $Z_T=\{i(\rho-1/2)\log T/(2\pi):0<\operatorname{Im}\rho\le T\}$, with multiplicities. Its simple real points are exactly the simple critical zeros. Splitting their containing interval into cells of fixed length $H>0$ supplies the triples. The smoothing and pair-correlation estimate in Lemma 4.1 give the matching value of $E_K$ for this same multiset. The order is $T\to\infty$ at fixed smoothing, then smoothing tends to zero. Lamzouri's §3 removes the original pair-correlation weight by modifying the test functions; deleting that weight without this argument would not give the required unweighted sum.
 
-Theorem 1.1 therefore states the unconditional lower limiting proportions
+The historical v1 Theorem 1.1 states the unconditional lower limiting proportions
 
 $$
 \liminf_{T\to\infty}\frac{N_0^s(T)}{N(T)}\ge C_0+\delta_0,
@@ -467,3 +469,41 @@ $$
 This comparison concerns the standard guarantee obtained from the number of cells. It does not assert dominance over a cell argument supplied with additional information about the actual distribution of points.
 
 All these averaging identities are structural tools. Better current multi-point certificates, coupling their pressure correctly, and verifying the actual analytic interface are separate tasks. None of these proportion estimates proves RH.
+
+## The independently proved elementary consumer in Section 21
+
+[Section 21 of the finite-structure volume](../../docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md) proves, for arbitrary real $a,u,v$,
+$$
+F_a(u)^2+F_a(v)^2+F_a(u+v)^2\ge\frac34,
+\qquad F_a(t)=at\sin(\pi t)-\cos(\pi t).
+$$
+Its two-dimensional circle-vector proof is independent of the historical v1 estimate $(\sqrt5-2)^2$. The constant $3/4$ is sharp when the parameter $a$ is allowed to vary, as the example $a=0$, $u=v=2/3$ shows. No sharpness assertion is made for the fixed Montgomery–Taylor parameter. The proof also supplies the stated all-point and nonnegative-weight extensions.
+
+The connection to the original kernel is the directly integrated identity
+$$
+(1-2\pi^2t^2)K_0(t)
+=\cos(\pi t)-\sqrt2\pi\cot(1/\sqrt2)\,t\sin(\pi t).
+$$
+Thus, for $u,v\ge0$ and $h=u+v$,
+$$
+K_0(u)^2+K_0(v)^2+K_0(u+v)^2
+\ge\frac{3}{4\max\{1,(2\pi^2h^2-1)^2\}}.
+$$
+The identity holds at its removable singularities by continuity. This is a bound for the same specified kernel; an arbitrary probability-density Fourier kernel need not satisfy it.
+
+The finite counting step is reproved in Section 21.6 using the self-adjoint reflected operator, its positive-inertia budget, and the scalar threshold function $\Phi(t)=2t-1+\Psi(t)$ with $\Phi(0)=0$. An additional primary formulation is [Knausgård, arXiv:2610.08965v1, Lemma 2.1 and equation (5.1)](https://arxiv.org/html/2610.08965v1), with threshold $c=2$. The proof keeps the original simple-real Gram dimension and obtains both finite counting inequalities displayed earlier in this note.
+
+The actual energy estimate comes directly from [Lamzouri v2, Lemma 3.2 and equations (3.3)–(3.4)](https://arxiv.org/html/2609.02882v2). It uses $f_\varepsilon=\psi_\varepsilon^2f_0/A_\varepsilon=\eta_\varepsilon^2$, with $\eta_\varepsilon\in C_c^\infty((-1/2,1/2))$, $\int f_\varepsilon=1$, and convergence to $f_0$ in $L^1\cap L^2$. The two fixed test functions $f_\varepsilon*f_\varepsilon$ and its second derivative give the unweighted complex-square energy after cancellation of the pair-correlation weight. For each fixed smoothing parameter, the energy divided by $N(T)$ tends to $C_\varepsilon$, and $C_\varepsilon\to2-C_0$ as the smoothing is removed. These are the explicit analytic premises of the new consumer. Wang v1's status is historical context for the finite estimate, rather than an additional unresolved premise of this proof.
+
+Let $r$ be any accumulation point of the simple-critical ratio $N_0^s(T)/N(T)$. Section 21 combines fixed-size consecutive windows, their exact point-use cost, and the order $T\to\infty$ followed by smoothing removal to obtain
+$$
+r\ge C_0+\frac{r^5}{2(8\pi^2-r^2)^2}.
+$$
+Its unique threshold $r_{\rm geom}$ satisfies
+$$
+r_{\rm geom}=0.672511864084414704\ldots,
+\qquad r_{\rm geom}>C_0+\frac{11}{10^6}.
+$$
+Consequently the paper-level consumer gives a $67.2511864\ldots\%$ simple-critical lower bound under the matching analytic input. Its distinct-zero consequence is $(1+r_{\rm geom})/2$, using a subsequence for the distinct count itself. The strict gain uses rational inequalities, independently of the displayed decimal root. The finite proof uses no local interval enumeration, and no new Lean verification is claimed here.
+
+The [updated comparison in the trmdy note](trmdy2026simplezeros.md) records both the earlier nine-point conditional consumers and Knausgård's stronger October preprint, with its fixed source revision and theorem-specific `native_decide` assumptions. The elementary Section 21 number is lower than those simple-critical figures. Its proof that three points are optimal concerns only the specified uniform-numerator, support-line, sliding-window family. It supplies no global priority result, no upper limit on other geometric methods, and no control of every zero required for RH.
