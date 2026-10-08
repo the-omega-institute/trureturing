@@ -1965,3 +1965,439 @@ The five-even family has exact block pair $(d+1,2d)$, difference $d-1$, and bit 
 The original exact minimum worst-branch ACTUAL emitted-complete-block objective for every attainable immutable INITIAL target and all original $k\ge2,m\ge1$, separately for adaptive control and ONE GLOBAL preset stream per fixed target under both alphabets [IC, Definition 1.3 and Open Problem 9.1], remains unresolved. Other low-label counts, nonfresh or unequal high/outside labels, low-tail-dependent targets, even widths, other orders or gcds, arbitrary mixed acquired supports, competing roots outside this extension, adaptive prices for arbitrary component tables and history targets without supplied INITIAL factorization remain outside (82.16). No Lean, code delivery, compilation, ingestion, coverage, deposit or freezing accompanies this pure-theory chapter.
 
 ## 追加锚（本行以下为增补区）
+
+## 83. Two even joined classes: safe unsaturated whole-target attainment
+
+The full low cycle in this chapter has $2^h-1$ joined labels, one fewer than the saturated cycle of Chapter 82. Its two positive even classes permit a code with exactly one omitted vector. Root constraints, chronological missing coordinates and even full rows alone do not make every such code physically safe at $h=4$. The selection below omits a unit vector instead. This preserves at least four actual common charged phases at every consecutive boundary, while meeting all accumulated label restrictions. It gives an exact whole-target GLOBAL fee for arbitrary different component tables in the stated two-even class.
+
+**定义 83.1（The original full target and the two-even unsaturated domain）。** Use the original integer weights, matched $V_k\bmod2$ reader, joint complete-history prior, record updates and complete-block fees of [IC, Definitions 1.1–1.3 and Interface 1.4]. Fix
+
+$$
+h\ge4,\qquad N=2^h,\qquad m\ge N-1\text{ odd},\qquad
+k=m+1,\qquad T=m+2,\qquad \gcd(m,T)=1.
+\tag{83.1}
+$$
+
+Let $A=\{0,\ldots,m\}$, $z=m+1$, and let $\lambda_0,\lambda_1:A\to Y$ be finite tables with arbitrary repetitions. Set
+
+$$
+\Gamma(j)=(\lambda_0(j),\lambda_1(j)),\qquad
+\mathcal J=\Gamma[A],\qquad |\mathcal J|=N-2.
+\tag{83.2}
+$$
+
+For $D\in\mathcal J$, let $n_D=|\Gamma^{-1}(D)|$. Exactly two classes, denoted $U,V$, have positive even $n_D$; every other $n_D$ is odd. These are multiplicities of ordered joined phase classes in one actual table, rather than separate component multiplicities.
+
+Choose common distinct $R,C$ fresh relative to both component images. The entire immutable INITIAL target is
+
+$$
+\begin{aligned}
+f(v,-j,s)&=
+\begin{cases}
+R,&s=m,\\
+\lambda_v(j),&0\le s<m,\ j\in A,\\
+C,&0\le s<m,\ j=z,
+\end{cases}
+&&v\in\mathbb F_2,\\
+f(\bot)&=L_\bot,&&F(w)=f(q_{\rm INITIAL}(w)).
+\end{aligned}
+\tag{83.3}
+$$
+
+The label $L_\bot$ is arbitrary and independent, including possible coincidences with other labels. The history pullback in (83.3) is part of the target. It is never reevaluated on a later record. Put
+
+$$
+\widehat C=(C,C),\qquad
+L=\mathcal J\cup\{\widehat C\},\qquad
+\Lambda(j)=\begin{cases}\Gamma(j),&j\in A,\\\widehat C,&j=z.\end{cases}
+\tag{83.4}
+$$
+
+Thus $|L|=N-1$, the outside class has multiplicity one, and the only even classes on the full low cycle are $U,V$.
+
+Index literal words by their actual issued indices $t=0,1,\ldots$. Coordinates of an $h$-bit code are also numbered $0,\ldots,h-1$; let $\varepsilon_i$ be their unit vectors. Since $m\equiv-2\pmod T$, the path $W_t=[tm,(t+1)m]\pmod T$ misses only
+
+$$
+e_0=z,\qquad e_t=m+1-2t\quad(1\le t<h).
+\tag{83.5}
+$$
+
+The latter phases are distinct members of $A$, separate from $0,1,z$: $e_{h-1}\ge N-2h+2\ge10$ at $h=4$, and the bound increases with $h$. A phase calculation uses known issued indices, without reading the unknown INITIAL history length.
+
+Both alphabets contain all width-$m$ words since $m<k$. Only completed endpoints are observed. Every issued word costs one full block and $m$ emitted bits, including waits, padding, repair and a word absorbed before its endpoint. GLOBAL means ONE preset literal stream for this fixed target, on both free INITIAL values and all actual sources, with source-owned endpoint stopping and decoding. There is no reset, copy, intermediate read, hidden INITIAL clock or borrowed sibling observation.
+
+**引理 83.2（Simultaneous root and missing-coordinate selection with a unit omission）。** Under Definition 83.1 there are an index $r\in\{1,\ldots,h-1\}$ and an injection
+
+$$
+c:L\longrightarrow\mathbb F_2^h\setminus\{\varepsilon_r\}
+\tag{83.6}
+$$
+
+onto that set, satisfying
+
+$$
+\begin{aligned}
+c(U)\oplus c(V)&=\varepsilon_r,\\
+c_0(\widehat C)&=0,\qquad
+c_0(\Gamma(0))=c_0(\Gamma(1))=1,\\
+c_t(\Gamma(e_t))&=0\quad(1\le t<h).
+\end{aligned}
+\tag{83.7}
+$$
+
+In particular the omission never has two adjacent coordinates equal to one. Repeated classes accumulate every displayed restriction.
+
+证明。 Let $K=\{\Gamma(0),\Gamma(1)\}$ be the set of root-positive classes. It has one or two members, none equal to $\widehat C$. For each $D\in L$ put
+
+$$
+Z_D=\{t:1\le t<h,\ \Gamma(e_t)=D\},\qquad
+F_D=\{1,\ldots,h-1\}\setminus Z_D.
+\tag{83.8}
+$$
+
+The sets $Z_D$ are pairwise disjoint and partition the suffix-coordinate set. In particular $Z_{\widehat C}=\varnothing$. Before reserving vectors, the list for $D$ consists of all $y\in\mathbb F_2^h$ with $y_t=0$ for $t\in Z_D$, additionally $y_0=1$ for $D\in K$, and $y_0=0$ for $D=\widehat C$.
+
+First reserve the codes of $U,V$ and the omitted vector. Suppose no $D\in K\setminus\{U,V\}$ has $F_D=\varnothing$. Exclude from the choice of $r$ the unique member of $F_D$ whenever such a $D$ has $|F_D|=1$. There are at most two excluded coordinates and $h-1\ge3$ choices, so choose a remaining $r$. At most one of $U,V$ owns the coordinate-$r$ zero restriction. Interchange their names if needed so that $r\notin Z_V$, and reserve
+
+$$
+a=\varepsilon_r,\qquad
+c(U)=\varepsilon_0,\qquad
+c(V)=\varepsilon_0\oplus\varepsilon_r.
+\tag{83.9}
+$$
+
+These codes satisfy all restrictions on these two classes, including either root-positive requirement. Their XOR is $a$. Each remaining root-positive list remains nonempty after reservation: its root-one subcube has $2^{|F_D|}$ vectors; if $|F_D|=1$, the choice of $r$ prevents both its vectors from being reserved; if $|F_D|\ge2$, removal of two vectors cannot empty it.
+
+The other case is a $D\in K\setminus\{U,V\}$ with $F_D=\varnothing$. It owns every suffix zero restriction, so neither even class owns any, and any other root-positive class owns none. Choose distinct $p,r\in\{1,\ldots,h-1\}$ and reserve
+
+$$
+a=\varepsilon_r,\qquad
+c(U)=\varepsilon_0\oplus\varepsilon_p,\qquad
+c(V)=\varepsilon_0\oplus\varepsilon_p\oplus\varepsilon_r.
+\tag{83.10}
+$$
+
+Again the two reserved class codes satisfy all their restrictions and have XOR $a$. The root-positive class owning every zero restriction retains $\varepsilon_0$. Any other remaining root-positive class has the whole root-one half cube before removal of two vectors and therefore retains a vector. This case includes all possible exhausted suffix restrictions, rather than assuming that every root-positive class has a free suffix coordinate.
+
+In either case set
+
+$$
+Q=\mathbb F_2^h\setminus\{a,c(U),c(V)\},\qquad
+\mathcal A_D=\{y\in Q:y\text{ satisfies the restrictions of }D\}
+\quad(D\in L\setminus\{U,V\}).
+\tag{83.11}
+$$
+
+The three deleted vectors are distinct; none is zero, the two reserved class vectors have root coordinate one, and $a$ has root coordinate zero. Thus $|Q|=N-3$, equal to the number of remaining classes. Every non-root-positive list contains zero, including the outside list, and the preceding reservation argument proves that every remaining root-positive list is nonempty.
+
+We verify the union inequalities for the finite Hall theorem [H]. A subfamily containing a list equal to $Q$ has union size $N-3$, at least its number of classes. Otherwise every member owns a restriction. There are at most $h+2$ such classes: at most two root-positive owners, the outside owner, and $h-1$ suffix zero occurrences. Let $q$ be the subfamily size.
+
+For $q=0,1$ the assertion is immediate from the nonemptiness just proved. For $q=2$ with one root-positive and one non-root-positive member, a root-one representative of the former and zero in the latter are distinct. If both are non-root-positive, zero and every $\varepsilon_i$ with $1\le i<h$, $i\ne r$, belong to the union: a suffix coordinate has only one zero owner and cannot be forbidden on both lists; all these vectors remain in $Q$. If both are root-positive, their zero-owner sets are disjoint. One has at most $\lfloor(h-1)/2\rfloor$ zero coordinates, hence a root-one subcube with at least
+
+$$
+2^{h-1-\lfloor(h-1)/2\rfloor}\ge4
+\tag{83.12}
+$$
+
+vectors. At most two root-one vectors were deleted, so its remaining list alone has at least two. This proves every two-list inequality.
+
+For $q=3$, each of the $h$ root-one vectors
+
+$$
+\varepsilon_0,\quad \varepsilon_0\oplus\varepsilon_i
+\quad(1\le i<h)
+\tag{83.13}
+$$
+
+is forbidden on at most two classes: the outside class and at most one suffix zero owner. Every such vector still in $Q$ therefore belongs to the three-list union. Reservation (83.9) deletes two of them, leaving $h-2$; zero is also in the union because only the at most two root-positive classes forbid it. This gives $h-1\ge3$ vectors. Reservation (83.10) deletes only one vector of (83.13), leaving $h-1\ge3$ directly.
+
+For $q\ge4$, consider all vectors with root coordinate zero and suffix weight at most one, together with all vectors with root coordinate one and suffix weight at most two. A vector in the first set violates restrictions on at most three classes: at most two root-positive owners and one suffix zero owner. A vector in the second set also violates at most three: outside and at most two suffix zero owners. Every such vector in $Q$ therefore belongs to the union. Their number after removal is at least
+
+$$
+2h+\binom{h-1}{2}-3\ \ge\ h+2\ \ge\ q
+\qquad(h\ge4).
+\tag{83.14}
+$$
+
+The first inequality already holds at $h=4$, where its left side is eight; its difference from $h+2$ increases thereafter. These cases prove every Hall inequality, including arbitrary identifications among the restriction owners.
+
+Apply the credited finite Hall distinct-representative theorem to (83.11). It assigns the remaining classes different vectors in $Q$, necessarily exhausting $Q$. Add the reserved codes. The resulting injection exhausts the cube except $a=\varepsilon_r$, and (83.7) holds. The finite matching theorem is reused; the reservation, accumulated-constraint inequalities and unit omission are the reader-specific selection proved here. ∎
+
+**定理 83.3（Exact whole GLOBAL price of every target in the two-even class）。** For every target of Definition 83.1, under both original literal alphabets,
+
+$$
+\boxed{C_{\rm pre}(f)=C_{\rm pre}(F)=h.}
+\qquad
+\boxed{\text{Exact worst emitted-bit fee}=mh.}
+\tag{83.15}
+$$
+
+One selected code from Lemma 83.2 gives a single actual $h$-block attaining stream for both free-value fibres and all actual sources. The statement asserts existence of a safe selection, without asserting safety of every injective algebraic witness.
+
+证明（joint sources and all-action lower bound）。 All records in (83.3) are jointly actual by [IC, Convention 1.2; S1, Convention 1.3]. Explicitly choose arbitrarily large $\ell$ with
+
+$$
+\ell\equiv0\pmod m,\qquad \ell\equiv-j\pmod T,\qquad
+\ell\ge s+2,
+\qquad
+\eta=\bigoplus_{i=\ell-s}^{\ell-1}\gamma_i,
+\qquad
+w(v,j,s)=(v\oplus\eta)0^{\ell-s-1}1^s,
+\tag{83.16}
+$$
+
+where $\gamma_i=\mathbf1_{\{0,T-1\}}(i\bmod T)$ is the actual coefficient cycle [S2, Theorem 14.1]. Actual gcd one gives the compatible lengths. The first bit compensates the scalar contribution of the final run, the separating zero makes that run exactly $s<k$, and the length gives phase $-j$. This same legal history realizes value, phase and tail together and splits into complete source blocks under either alphabet. Initial bottom is realized by the two complete words $1^m|1^m$, whose seam rejects. None of these unobserved lengths is a control input.
+
+At every phase and either free INITIAL value, the actual tails $m-1,m$ have different labels: a low label and fresh $R$. No controller can stop freely on that value fibre. A root starting zero merges this pair at its first bit with identical scalar and phase. A root with at least two leading ones, including the all-one word, rejects both before its first endpoint and leaves both permanently absorbed. These losses are irreversible [S1, Lemmas 4.2–4.3; S15, Proposition 4.2]. Consequently every correct root, under arbitrary later words and stopping rules, begins $10$.
+
+Every such root rejects exactly the high band $s=m$. Every low source survives its leading one, reaches its second-bit zero and completes safely; same-phase low-tail mergers preserve the label because (83.3) is tail-independent there. After the root all low sources have the common actual terminal tail of that word. Within an acquired successful output archive they also have a common scalar. Every later complete literal word then either succeeds on the whole archive or rejects the whole archive, because rejection depends on their common tail and the issued bits [S10, Lemma 3.2]. On success there are at most two scalar endpoints, each again with common tail and scalar. Uniform rejection cannot resolve a nonconstant archive, because all later outputs remain bottom. A homogeneous archive may stop at its endpoint. Hence any such archive with $a$ remaining paid blocks can resolve at most $2^a$ different labels. This counts all legal words, all-one words, zero waits, padding, repairs, attempted rejection and endpoint stops.
+
+For the GLOBAL lower bound apply exactly the preset value-join law [IC, Definition 29.1 and Theorem 29.2]. The full joined target has high label $(R,R)$, low table $\Lambda$ and independent initial bottom; its preset fee equals that of $f$. This law operates on the same actual emitted stream, using the value-complement symmetry of the acquired endpoint archive. It performs no copied experiment and borrows no sibling observation.
+
+On either fixed scalar fibre of this joined target there are $N-1$ actual low labels. Its forced root has at most two successful children, and the preceding all-action bound gives at most $2^H$ low-label leaves at total worst fee $H$. Therefore
+
+$$
+N-1=2^h-1\le2^H,\qquad H\ge h.
+\tag{83.17}
+$$
+
+The joined lower bound covers even adaptive choices on the joined target; its transfer to the original two-component target uses only the preset join law. It makes no claim that the arbitrary component adaptive optimum equals $h$.
+
+证明（the selected one-stream attainment and strict physical seams）。 Choose $c$ as in Lemma 83.2. The XOR of the full $h$-cube is zero, since each coordinate has the even number $2^{h-1}$ of ones. Omitting $a=\varepsilon_r$ gives $\bigoplus_{D\in L}c(D)=a$. On the full low phase cycle only $U,V$ have even multiplicity, so
+
+$$
+\bigoplus_{j=0}^{m+1}c(\Lambda(j))
+=\left(\bigoplus_{D\in L}c(D)\right)
+       \oplus c(U)\oplus c(V)
+=a\oplus a=0.
+\tag{83.18}
+$$
+
+Thus each coordinate row $\chi_t(j)=c_t(\Lambda(j))$ has even total charge. It is zero at the sole missing phase of its actual path by (83.7). The supplied original literal inverse [IC, Interface 1.4; S10, Interface 2.1; Definition 82.1] therefore gives the complete words
+
+$$
+B_{t,i}=\bigoplus_{b=0}^i
+ c_t(\Lambda(tm+b\bmod T)),
+\qquad 0\le t<h,\quad0\le i<m.
+\tag{83.19}
+$$
+
+Issue the one preset stream $B_0|\cdots|B_{h-1}$. Its first two bits are $1,0$ by the root restrictions. It has precisely the high-band rejection and low-tail preservation proved above. Every word has exactly $m$ bits and is internally legal since $m<k$.
+
+For each $1\le t<h$, the cube has exactly $2^{h-2}$ vectors whose coordinates $t-1,t$ are both one. The omitted unit $a$ is none of them. All these vectors are therefore assigned to distinct classes of the actual low cycle. Each class has at least one actual phase, with disjoint supports for different classes. It follows that the full arithmetic rows of these very consecutive words satisfy
+
+$$
+\bigl|\{j:\chi_{t-1}(j)=\chi_t(j)=1\}\bigr|
+\ge2^{h-2}\ge4.
+\tag{83.20}
+$$
+
+Inductively suppose the preceding words have succeeded on a low source. At $k=m+1$ its current tail is $\rho(B_{t-1})$, including the all-one case: success of an all-one width-$m$ word forces incoming tail zero and leaves tail $m$. If the next boundary rejected, Lemma 82.2 would put at most three phases in the intersection in (83.20). This contradiction gives the actual strict seam inequality
+
+$$
+\rho(B_{t-1})+\alpha(B_t)<m+1=k
+\quad(1\le t<h).
+\tag{83.21}
+$$
+
+Thus every low source succeeds on the entire concatenation. This argument checks the literal words in (83.19), including boundaries with two adjacent one bits; it adds no clearing, waiting, repair or padding block. Its four-class margin includes $h=4$ because the single omitted vector has no adjacent ones.
+
+The complete stopping rule is explicit. Initial bottom returns $L_\bot$ at the free read. High tails return $R$ at the completed root endpoint and stop; that whole root, including its absorbed suffix, has been issued and paid. All low sources, including phase $z$, issue all $h$ words. Their own successive scalar endpoints give
+
+$$
+(v_1\oplus v_0,\ldots,v_h\oplus v_{h-1})=c(\Lambda(j)).
+\tag{83.22}
+$$
+
+Use the inverse injection to recover the joined label. Return $C$ for $\widehat C$ and otherwise the component selected by the remembered free INITIAL value $v_0$. This is a decoder of one actual archive, without a phase read or another source's outputs. Actual low histories in (83.16) pay exactly $h$ full words under this rule. Final-endpoint stopping needs no cleanup.
+
+The lower bound and this attainment prove the record equality. Explicit factorization (83.3), record-sufficient control evolution and the joint realizations (83.16) give the same history price [S1, Proposition 2.2]. Since each actually issued word emits $m$ bits, the exact worst emitted-bit fee is $mh$. ∎
+
+**命题 83.4（Algebraic witnesses need not be safe at four coordinates）。** Within Definition 83.1 at $(h,m,k,T)=(4,15,16,17)$, there is an injective label-constant four-coordinate code with even full rows, all root and chronological missing-coordinate restrictions, and $c(U)\oplus c(V)$ equal to its omitted vector, whose inverse rejects at the second emitted block. Both successful root children are nonconstant.
+
+证明。 Take distinct component names $A_b,D_b$ for the nonzero bit strings $b$ below, with disjoint component alphabets. For $j\in A$ prescribe $\Gamma(j)=(A_{b(j)},D_{b(j)})$, assign that class code $b(j)$, and assign outside $\widehat C$ code $0000$. The full table is
+
+$$
+\begin{array}{c|rrrrrrrrr}
+j&0&1&2&3&4&5&6&7&8\\\hline
+b(j)&1000&1000&1001&1010&1011&0001&1101&1110&0100
+\end{array}
+\tag{83.23}
+$$
+
+$$
+\begin{array}{c|rrrrrrrr}
+j&9&10&11&12&13&14&15&16\\\hline
+b(j)&0101&0110&0111&0100&0010&0011&1111&0000
+\end{array}
+\tag{83.24}
+$$
+
+There are fourteen positive joined classes. Exactly $1000$ and $0100$ have multiplicity two; all others have multiplicity one. The only omitted vector is $1100=1000\oplus0100$, so the full phase XOR is zero. The root conditions hold at phases $0,1,16$. At the missed phases $e_1=14,e_2=12,e_3=10$, the required coordinates of $0011,0100,0110$ are respectively zero. Thus every prescribed row is an available even full row.
+
+Direct application of the same original inverse (83.19) to its first two rows gives
+
+$$
+B_0=1010110\,1^8,
+\qquad B_1=1^8\,0101010.
+\tag{83.25}
+$$
+
+Both words have fifteen bits. The root begins $10$, succeeds on every low source and has terminal tail eight. Its two successful difference children have respectively eight and seven distinct low joined labels; in this construction each component also separates those labels. Neither child can stop correctly at the root. The next word has leading run eight, so every continuing low source reaches
+
+$$
+8+8=16=k
+\tag{83.26}
+$$
+
+and is absorbed during $B_1$. Subsequent endpoints cannot recover the lost labels. Both full words are paid, including the unobserved absorbed part of $B_1$. The common charged phases of the first two arithmetic rows are exactly $\{6,7,15\}$, consistent with the sharp three-phase bound of Lemma 82.2. These are arithmetic design rows; the rejecting block produces bottom, not its putative scalar difference.
+
+This disproves all-witness safety in the unsaturated class. It does not contradict Theorem 83.3, whose selected witness omits a unit vector and therefore retains the fourth common charged class at this boundary. ∎
+
+**构造 83.5（A uniformly inhabited different-value family at minimal odd width）。** For every integer $d\ge2$, put
+
+$$
+h=2d,\qquad N=2^{2d},\qquad m=N-1,\qquad k=N,\qquad T=N+1.
+\tag{83.27}
+$$
+
+Use the ordered $d$-bit set $I=\mathbb F_2^d$. Choose distinct labels $A_i$ and $D_\ell$ with disjoint alphabets, and fresh common distinct $R,C$. Concatenate $(i,\ell)$ as an $h$-bit word, with coordinate zero the first row coordinate. Exclude the pairs whose concatenated words are $0$ and $a=\varepsilon_{h-1}$, and write
+
+$$
+\mathcal P=\mathbb F_2^h\setminus\{0,a\},\qquad
+u=\varepsilon_0,\qquad w=\varepsilon_0\oplus\varepsilon_{h-1}.
+\tag{83.28}
+$$
+
+Both $\nu,w$ belong to $\mathcal P$. Let $\sigma$ be the fixed-point-free cyclic permutation of $\{1,\ldots,h-2\}$ given by
+
+$$
+\sigma(t)=t+1\ (1\le t<h-2),\qquad \sigma(h-2)=1.
+\tag{83.29}
+$$
+
+Prescribe the phase-pair code table $G:A\to\mathcal P$ by
+
+$$
+\begin{aligned}
+G(0)&=\nu,&G(1)&=w,&G(2)&=w,&G(e_{h-1})&=\nu,\\
+G(e_t)&=\varepsilon_{\sigma(t)}&&&&(1\le t\le h-2).
+\end{aligned}
+\tag{83.30}
+$$
+
+Assign all remaining members of $\mathcal P$ once each to the remaining phases in increasing binary/phase order. For $G(j)=(i,\ell)$ set
+
+$$
+\lambda_0(j)=A_i,\qquad\lambda_1(j)=D_\ell,
+\tag{83.31}
+$$
+
+and use the entire target and history pullback (83.3), with arbitrary independent $L_\bot$.
+
+证明（inhabitation, parity and a specified common code）。 All prescribed phase positions in (83.30) are distinct. The least missed phase is $N-2h+2\ge10$, so none conflicts with $0,1,2$. The units $\varepsilon_{\sigma(t)}$ exhaust $\varepsilon_1,\ldots,\varepsilon_{h-2}$, hence are distinct and different from $0,a,\nu,w$. There are $h+2$ prescribed positions using $h$ different pairs: $\nu,w$ each twice and the $h-2$ units once. The number of remaining positions is $N-h-2$, equal to the number of unused pairs in $\mathcal P$. The ordered bijection is therefore well defined.
+
+The table has exactly $N-2$ joined classes, exactly two with positive even multiplicity, namely the pairs of $\nu,w$, each with two phases. Every other class has one. Each component has all $r=2^d$ labels: the excluded pairs are $(0,0)$ and $(0,(0^{d-1},1))$ in row/column coordinates. Row zero retains $r-2>0$ pairs and every other row retains $r$; each of those two columns retains $r-1>0$ pairs and all other columns retain $r$. Thus the component tables are genuinely different, with exactly $2^d$ labels per fibre. This is one jointly inhabited phase table, rather than two separately realized marginals. Formula (83.16) realizes every required value, phase and INITIAL tail together. The width is odd and actual gcd is $\gcd(N-1,N+1)=1$.
+
+Assign to each joined class its concatenated pair code, and put $c(\widehat C)=0$. The image is exactly $\mathbb F_2^h\setminus\{a\}$, with $c(U)=\nu$, $c(V)=w$ and $\nu\oplus w=a$. Both root phases have coordinate zero one, and outside has coordinate zero zero. For $t\le h-2$, the missed phase has code $\varepsilon_{\sigma(t)}$, whose coordinate $t$ is zero because $\sigma(t)\ne t$. The last missed phase has code $\nu$, whose last coordinate is zero. Every clause of (83.7) therefore holds for this explicit code. The words (83.19) with this table are a fully specified common stream for every $d$, with strict seams supplied by (83.20)–(83.21). No code search is needed for this family. ∎
+
+**定理 83.6（Exact adaptive/GLOBAL pair of the different-value family）。** Construction 83.5 satisfies, under both original alphabets,
+
+$$
+\boxed{
+C_{\rm ad}(f)=C_{\rm ad}(F)=d+1,\qquad
+C_{\rm pre}(f)=C_{\rm pre}(F)=2d.
+}
+\tag{83.32}
+$$
+
+The exact worst emitted-bit pair is $(m(d+1),2md)$ at $m=2^{2d}-1$. The adaptive child fee and suffix are supplied by Chapter 73; the new whole-target content is safe GLOBAL attainment at $2d$ for the two-even unsaturated table.
+
+证明（all-action adaptive lower bound and the supplied physical attainment）。 Fix either free INITIAL value. Its component table has $r=2^d$ labels, plus fresh $C$ on the outside low phase. These $r+1$ low labels all have actual sources. The low/high-tail pair forces a $10$ root, as in the lower-bound proof of Theorem 83.3, independently of any value-dependent root choice. The successful common-tail binary bound for every literal continuation and endpoint stop gives $r+1\le2^H$ at total worst fee $H$. Since $r+1>2^d$, every correct adaptive controller has $H\ge d+1$. This covers all literal words, waits, repairs, uniform rejection and early homogeneous stopping.
+
+For attainment remember the free INITIAL value $v$ and issue the actual alternating root
+
+$$
+P_m=(10)^{(m-1)/2}1.
+\tag{83.33}
+$$
+
+Initial bottom has stopped freely. Root bottom returns $R$ after that full paid word. The successful outside phase has difference zero and returns $C$ at the same endpoint. Its other successful child is precisely the actual full positive window $A$ of Definition 73.1, with common current scalar, terminal tail one and component INITIAL table $\lambda_v$. It has $r$ labels. Lemmas 73.3 and 73.5, Construction 73.4 and Theorem 73.6 supply a lawful fixed $d$-word suffix for this one child.
+
+To specify those physical words, let $b^{(v)}:\lambda_v[A]\to\mathbb F_2^d$ be the credited Chapter 73 selection, with coordinates $q=1,\ldots,d$. For $j\in A$ put $\psi_q^{(v)}(j)=b_q^{(v)}(\lambda_v(j))$, and prescribe the already stopped outside phase and the actual suffix inverse by
+
+$$
+\psi_q^{(v)}(z)=\bigoplus_{j\in A}b_q^{(v)}(\lambda_v(j)),
+\qquad
+S^{(v)}_{q,i}=\bigoplus_{b=0}^i
+ \psi_q^{(v)}(qm+b\bmod T),\qquad0\le i<m.
+\tag{83.34}
+$$
+
+The selected code is zero in coordinate $q$ at the missing phase $m+1-2q$, and in its first coordinate at phase $m$. The compensation in (83.34) makes each full row even; it is a design bit of this word, without an observation on outside. In the ordinary list choice, the Chapter 73 restrictions put a zero among the two adjacent literal boundary bits of every subsequent suffix seam. The first suffix begins zero and clears the actual root tail one. At $d=2$, if the four specified labels of (73.7) are distinct, use exactly the supplied alternative (73.8); its only relaxed suffix seam has terminal run one and leading run two, giving $3<k$ here. These are the two credited physical cases, and together cover this family at every $d\ge2$.
+
+Every root-positive source issues $P_m|S_1^{(v)}|\cdots|S_d^{(v)}$, obtains its code from its own suffix endpoint differences and returns its immutable component label. Every word is complete and paid, all seams are strict, and no terminal clearing word is needed. The selected suffix depends on the remembered free INITIAL value, not a newly interpreted current value. These are lawful separate adaptive policies. The attainment costs exactly $d+1$ on actual positive sources, matching the all-action lower bound.
+
+The explicit common code of Construction 83.5 is instead used in (83.19). Theorem 83.3 gives its GLOBAL fee $h=2d$, using the same stream on both values, with all outside sources continuing to the final decoder and all high sources stopping after the paid rejecting root. This is not a concatenation or maximum of the two adaptive suffix optima. The supplied history factorization gives both history equalities. Multiplication by the actual width gives the bit pair. ∎
+
+**实例 83.7（The safe depth-four consumer on the original reader）。** At $d=2$, $h=4$, $m=15$, $k=16$, $T=17$, the full phase-code table of Construction 83.5 is
+
+$$
+\begin{array}{c|rrrrrrrrr}
+j&0&1&2&3&4&5&6&7&8\\\hline
+c(\Lambda(j))&1000&1001&1001&0011&0101&0110&0111&1010&1011
+\end{array}
+\tag{83.35}
+$$
+
+$$
+\begin{array}{c|rrrrrrrr}
+j&9&10&11&12&13&14&15&16\\\hline
+c(\Lambda(j))&1100&1000&1101&0100&1110&0010&1111&0000
+\end{array}
+\tag{83.36}
+$$
+
+The first two digits select the row label, the last two the column label; $0000$ is the fresh outside class. The omitted vector is $0001$. Inverting at the actual starts $0,15,13,11\pmod{17}$ gives the one GLOBAL stream
+
+$$
+\begin{aligned}
+B_0&=101111101010011,\\
+B_1&=111111010001101,\\
+B_2&=101111100101000,\\
+B_3&=111100010100110.
+\end{aligned}
+\tag{83.37}
+$$
+
+Every word has fifteen bits. The successive pairs of preceding terminal run and next leading run are $(2,6),(1,1),(0,4)$, with seam sums $8,2,4$, all strictly less than sixteen. Every low source emits these four complete words and uses only its own endpoints to recover (83.35)–(83.36); high tails are absorbed on the root's first bit but still emit and pay that full root. Initial bottom stops freely. The exact adaptive/GLOBAL block pair is $3/4$ and the emitted-bit pair is $45/60$. This instance displays the uniform selected attainment; the counterexample (83.23)–(83.26) uses the same reader parameters but a different table and unsafe algebraic witness.
+
+**数学引文 83.8（Exact overlap, source correspondence and the added fee content）。** The source of the reader and cost contract is [IC, Definitions 1.1–1.3, Convention 1.2 and Interface 1.4], with its cited original suppliers [S1, Definitions 1.2–2.1, Convention 1.3, Proposition 2.2, Lemmas 4.2–4.3 and Note 5.3; S2, Theorem 14.1; S10, Interface 2.1 and Lemma 3.2; S15, Section 1, Definition 1.1 and Proposition 4.2]. The relevant published continuation through Chapter 82 is [this volume at revision e3c880e657540852538de79ab2ec2553a9bd3d49](https://github.com/the-omega-institute/trureturing/blob/e3c880e657540852538de79ab2ec2553a9bd3d49/docs/develop/theory/KBONACCI_FULL_POSITIVE_WINDOW_LOGARITHMIC_PRICE.md). The source equations are not replaced.
+
+The correspondence is literal: original sources are the single histories (83.16), their INITIAL records are $(v,-j,s)$, their target is exactly (83.3), actions are the complete words (83.19), (83.33) or (83.34), observations are those actions' completed scalar or bottom endpoints, and the resource is the worst number of those actual emitted words. The actual coefficient period is $T=k+1$, the actual gcd is one, and the histories, phase and tail are jointly realized. Compensating a design row is not a control operation, source answer or extra read.
+
+[IC, Definition 29.1 and Theorem 29.2] supplies the preset value join, including arbitrary stops and absorbed suffixes. It provides no choice of a safe common optimum. [IC, Definitions 36.1–36.2 and Theorem 37.1] supplies the established distinction between actual multiplicities and constant-label code algebra; the elementary XOR identity (83.18) is consistent with that algebra. Its wide literal realization [IC, Theorem 38.1] needs $m\ge k$ and the room-qualified common cut, both unavailable here. The critical-width parity spectra in [IC, Chapters 46–47] have $m=k$ and their own two-child aggregate constraints. None supplies the root/missing-coordinate selection (83.9)–(83.14) at $k=m+1$.
+
+The original acquisition Lean sources `D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/OriginalNarrowCost.lean`, `original_cost_lower` and its local proof suppliers, and `NarrowWindowCost.lean`, `narrow_window_cost`, supply different statement shapes: a first-window/binary lower bound and a noncoprime monochromatic scan law with $g\ge2$, respectively. They do not supply a two-even, coprime, one-GLOBAL-stream attainment. No compilation, exact Lean application or kernel certification is claimed for the present ordinary proof.
+
+Chapter 73 supplies finite Hall-based positive-child selection, its strict literal suffix and the exact additional child fee, including the four-label exception. Chapter 74 supplies the full-source connection at its fresh-label extension. Their consumption in the adaptive part of Theorem 83.6 is credited reuse. Chapter 80 has one even low class, a saturated full low-label set and its additional placement condition. Chapter 81 has three even classes and the stated saturated placement obstruction. Chapter 82 has $N-1$ joined classes on $A$, hence $N$ labels on the full low cycle. Its automatic safety proof uses all $N$ cube vectors. Here $A$ instead has $N-2$ joined classes and the cycle has $N-1$ labels, so none of those numerical whole-target laws applies directly. Lemma 82.2 is reused in its exact original domain, as the sharp upper bound of three common charged phases at a rejecting consecutive seam. Lemma 83.2 supplies the missing safe selection; Proposition 83.4 explains why the saturated all-witness conclusion cannot simply be copied.
+
+The finite Hall distinct-representative theorem is the existing [H], pinned mathlib revision `db584cd6d46c92f209a44c0f1c829460d327499d`, `Mathlib/Combinatorics/Hall/Finite.lean`, theorem `Finset.all_card_le_biUnion_card_iff_existsInjective'`. It is applied to the $N-3$ remaining class lists (83.11). The reservation and every union inequality are proved here. No new generic matching theorem, generic response/seam certificate or Bellman reformulation is counted as fee content.
+
+The related mixed-tail, three-class and four-label root-zero volumes [M, Definitions 1.1–1.3 and Theorem 2.1; T3, Definition 1.2 and Theorem 2.1; F4, Definition 72.1 and Theorem 72.2] use successful archives acquired after an all-one root, with their own mixed-tail and missed-set contracts. The fresh low/high target (83.3) excludes that root. Their shallow fees do not price this two-even cycle. The [phase-coherent full-tail minimax volume](RECURSIVE_RELATIONAL_OBSERVATION_PHASE_COHERENT_FULL_TAIL_MINIMAX.md), Definitions 1.2–1.5 and Theorem 2.1, fixes one random-depth source, paid Read letters, complete stopped-transcript laws and conditional total-variation prediction risk. Its same-update generation compatibility has no supplied source/action/INITIAL/control/risk-to-emitted-block-fee correspondence with this deterministic original reader. No numerical fee or code-selection premise is imported from it.
+
+Petra van den Bos and Frits Vaandrager, *State Identification for Labeled Transition Systems with Inputs and Outputs*, [arXiv:1907.11034v2, Definitions 8–11 and Figure 3](https://arxiv.org/html/1907.11034v2), supplies the mature distinction between legal tests, their actual leaf-reaching observations and simultaneous state distinction; Figure 3 exhibits the destruction of a necessary distinction by each possible first operation. Here one input is one issued complete word and one output is its completed scalar or bottom, while unequal immutable INITIAL labels must remain distinguishable. That comparison does not supply the KBonacci code reservation, strict tail transfer, selection theorem or emitted-fee equality. Finite distinct representatives are credited to [H]; no external zero-sum spectrum or general state-identification algorithm is needed for the new attainment.
+
+The added ordinary reader-specific content is the uniformly selected unit-omission code with every root and missed-phase restriction, its safe physical realization at exactly $h$ fully paid blocks for every table in Definition 83.1, the concrete all-witness-safety counterexample, and the explicit different-value two-even family at $m=2^{2d}-1$ with safe common $2d$-block attainment. The join, binary capacity, arithmetic inverse, three-phase rejecting-seam bound and adaptive child price are reused under their exact hypotheses. These are repo-derived deductions with a scoped source and paper comparison, without exhaustive literature-absence or priority claims.
+
+**边界 83.9（Effective presentation, exact resources and the remaining original objective）。** Theorem 83.3 requires every clause of Definition 83.1: $h\ge4$, odd $m\ge2^h-1$, original $k=m+1$, actual gcd one, exactly $2^h-2$ ordered joined classes on $A$, precisely two positive even classes with all others odd, common fresh distinct $R,C$, low-tail independence, the homogeneous high band and the explicit immutable history pullback. It permits arbitrary placements, positive even multiplicities, other odd multiplicities and different component tables within that domain. It does not classify the adaptive optimum of arbitrary component tables.
+
+For arbitrary semantic labels the selection and price are set-theoretic existence statements. With a finite target-partition presentation or decidable equality on the finite tables, the selection is effective [S1, Note 5.3]: form the actual joined classes and restriction owners, make reservation (83.9) or (83.10), select finite distinct representatives in (83.11), invert the actual rows and store the code decoder. Construction 83.5 instead specifies its finite table and common code by formulas and ordered bijection. Neither description claims polynomial offline complexity, input-acquisition cost or optimal controller memory; offline selection does not issue a paid block.
+
+The GLOBAL attainment observes one free initial output and exactly one completed endpoint per issued word. Every low source in the displayed rule has $h$ paid endpoint reads and emits $mh$ bits; including the free read gives $h+1$ observations. High tails emit the whole root and stop at its first paid endpoint even though absorption occurs on its first bit. All sources stop at complete endpoints, with no final repair. The adaptive family has $d+1$ worst paid endpoints, while GLOBAL has $2d$; their exact bit pair and difference are $(m(d+1),2md)$ and $m(d-1)$. The free value chooses an adaptive suffix but does not choose a GLOBAL stream. Different fixed targets may have different selected streams.
+
+The result does not imply an arbitrary-parity cardinality theorem, a fee law at $k=m+2$ or $k=m+3$, or a generic safety certificate. Proposition 83.4 excludes the stronger all-witness-safety claim even at $h=4$. Other joined counts or parity profiles, nonfresh or unequal high/outside labels, low-tail-dependent tables, even widths, other orders and gcds, arbitrary acquired mixed supports, competing roots outside (83.3), and history targets without the supplied INITIAL factorization remain outside this equality.
+
+The original exact minimum worst-branch ACTUAL emitted-complete-block fees for every attainable immutable INITIAL target and all original $k\ge2,m\ge1$, separately for adaptive control and ONE GLOBAL preset stream per fixed target under both alphabets [IC, Definition 1.3 and Open Problem 9.1], remain unresolved. The unbounded consumer parameter ranges over different finite readers and targets, rather than one stream for their union. All proofs here are ordinary mathematics, without Lean/kernel certification; no compilation, ingestion, coverage, deposit or freezing is asserted.
+
+## 追加锚（本行以下为增补区）
