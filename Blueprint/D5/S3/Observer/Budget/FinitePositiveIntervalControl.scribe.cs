@@ -61,6 +61,8 @@ internal sealed class FinitePositiveIntervalControlDocument : IScribeDocumentDef
                         + "For P=1 the sole first read immediately reaches the correct halt control."))),
                 DescribeRole.Theorem))));
 
+    private static Formula Par(Formula body) => Seq(Left, Open, body, Right, Close);
+
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula All(Formula x, Formula domain, Formula body) =>
         Seq(Forall, Sp, x, Sp, Colon, Sp, domain, Comma, Sp, body);
@@ -71,32 +73,32 @@ internal sealed class FinitePositiveIntervalControlDocument : IScribeDocumentDef
     {
         Formula p = F.Id("p"), P = F.Id("P"), x = F.Id("x"), q = F.Id("q"),
             w = F.Id("w"), v = F.Id("v");
-        Formula h = Call("clog", D(2), P), B = Seq(h, Times, Grp(Seq(P, Minus, D(1))));
+        Formula h = Call("clog", D(2), P), B = Seq(h, Sp, Times, Sp, Par(Seq(P, Sp, Minus, Sp, D(1))));
         Formula Q = Call("Control", p, P, B), C = Call("table", p, P, B);
-        Formula X = Call("ZMod", Seq(p, Times, P));
+        Formula X = Call("ZMod", Seq(p, Sp, Times, Sp, P));
         Formula word = Call("Cons", F.Id("R"), Call("Unit", w));
         Formula sum = Call("sum", w), len = Call("length", w);
         Formula trace = Call("Follows", C, Call("Pair", x, F.Id("Start")), word,
             Call("Pair", Call("Current", q), q));
-        Formula halt = Seq(Call("action", C, q), Eq, F.Id("halt"));
-        Formula waits = All(v, N(), Seq(v, InMacro, w, Implies,
-            Grp(Seq(D(0), Lt, v, Land, v, Lt, P))));
-        Formula behavior = All(x, X, Some(q, Q, Some(w, Call("List", N()), Grp(Seq(
-            trace, Land, halt, Land, Call("Initial", q), Eq, x, Land,
-            Call("Current", q), Eq, Call("Add", x, Call("Cast", sum, X)), Land,
-            len, Leq, h, Land, sum, Leq, B, Land, waits, Land,
-            Call("RCount", word), Eq, D(1), Plus, len, Land,
-            Call("WCount", word), Eq, sum)))));
+        Formula halt = Seq(Call("action", C, q), Sp, Eq, Sp, F.Id("halt"));
+        Formula waits = All(v, N(), Seq(v, Sp, InMacro, Sp, w, Sp, Implies, Sp,
+            Par(Seq(D(0), Sp, Lt, Sp, v, Sp, Land, Sp, v, Sp, Lt, Sp, P))));
+        Formula behavior = All(x, X, Some(q, Q, Some(w, Call("List", N()), Par(Seq(
+            trace, Sp, Land, Sp, halt, Sp, Land, Sp, Call("Initial", q), Sp, Eq, Sp, x, Sp, Land, Sp,
+            Call("Current", q), Sp, Eq, Sp, Call("Add", x, Call("Cast", sum, X)), Sp, Land, Sp,
+            len, Sp, Leq, Sp, h, Sp, Land, Sp, sum, Sp, Leq, Sp, B, Sp, Land, Sp, Par(waits), Sp, Land, Sp,
+            Call("RCount", word), Sp, Eq, Sp, D(1), Sp, Plus, Sp, len, Sp, Land, Sp,
+            Call("WCount", word), Sp, Eq, Sp, sum)))));
         Formula attained = Some(x, X, Some(q, Q, Some(w, Call("List", N()),
-            Grp(Seq(trace, Land, halt, Land, Call("RCount", word), Eq, D(1), Plus, h)))));
-        Formula singleton = Seq(P, Eq, D(1), Implies, All(x, X, Some(q, Q, Grp(Seq(
+            Par(Seq(trace, Sp, Land, Sp, halt, Sp, Land, Sp, Call("RCount", word), Sp, Eq, Sp, D(1), Sp, Plus, Sp, h)))));
+        Formula singleton = Seq(P, Sp, Eq, Sp, D(1), Sp, Implies, Sp, All(x, X, Some(q, Q, Par(Seq(
             Call("Follows", C, Call("Pair", x, F.Id("Start")), Call("Singleton", F.Id("R")),
-                Call("Pair", x, q)), Land, halt, Land, Call("Initial", q), Eq, x,
-                Land, Call("Current", q), Eq, x)))));
+                Call("Pair", x, q)), Sp, Land, Sp, halt, Sp, Land, Sp, Call("Initial", q), Sp, Eq, Sp, x,
+                Sp, Land, Sp, Call("Current", q), Sp, Eq, Sp, x)))));
         return Disp(All(p, N(), All(P, N(), Seq(
-            Grp(Seq(D(2), Leq, p, Land, D(0), Lt, P)), Implies,
-            Grp(Seq(Call("Finite", Q), Land,
-                Call("action", C, F.Id("Start")), Eq, F.Id("R"), Land,
-                Grp(behavior), Land, Grp(attained), Land, Grp(singleton)))))));
+            Par(Seq(D(2), Sp, Leq, Sp, p, Sp, Land, Sp, D(0), Sp, Lt, Sp, P)), Sp, Implies, Sp,
+            Par(Seq(Call("Finite", Q), Sp, Land, Sp,
+                Call("action", C, F.Id("Start")), Sp, Eq, Sp, F.Id("R"), Sp, Land, Sp,
+                Par(behavior), Sp, Land, Sp, Par(attained), Sp, Land, Sp, Par(singleton)))))));
     }
 }

@@ -62,22 +62,24 @@ internal sealed class PositiveIntervalAcquisitionDocument : IScribeDocumentDefin
     private static Formula All(Formula x, Formula domain, Formula body) =>
         Seq(Forall, Sp, x, Sp, Colon, Sp, domain, Comma, Sp, body);
 
+    private static Formula Par(Formula body) => Seq(Left, Open, body, Right, Close);
+
     private static Formula N() => Seq(Mathbb, Grp(F.Id("N")));
 
     private static Formula IntervalStatement()
     {
         Formula P = F.Id("P"), l = F.Id("l"), u = F.Id("u"), n = F.Id("n"),
-            m = Call("div", Seq(l, Plus, u), D(2));
-        Formula w = Call("waitTo", P, n, Seq(P, Minus, m));
+            m = Call("div", Seq(l, Sp, Plus, Sp, u), D(2));
+        Formula w = Call("waitTo", P, n, Seq(P, Sp, Minus, Sp, m));
         Formula phase = Call("mod", n, P);
-        Formula assumptions = Seq(l, Lt, u, Land, u, Leq, P, Land,
-            l, Plus, D(1), Lt, u, Land,
-            Grp(Seq(phase, Eq, Call("mod", Seq(P, Minus, l), P), Lor,
-                phase, Eq, Call("mod", Seq(P, Minus, u), P))));
-        Formula conclusion = Seq(l, Lt, m, Land, m, Lt, u, Land, D(0), Lt, w,
-            Land, w, Lt, P, Land, Call("mod", Seq(n, Plus, w), P), Eq, P, Minus, m);
+        Formula assumptions = Seq(l, Sp, Lt, Sp, u, Sp, Land, Sp, u, Sp, Leq, Sp, P, Sp, Land, Sp,
+            l, Sp, Plus, Sp, D(1), Sp, Lt, Sp, u, Sp, Land, Sp,
+            Par(Seq(phase, Sp, Eq, Sp, Call("mod", Seq(P, Sp, Minus, Sp, l), P), Sp, Lor, Sp,
+                phase, Sp, Eq, Sp, Call("mod", Seq(P, Sp, Minus, Sp, u), P))));
+        Formula conclusion = Seq(l, Sp, Lt, Sp, m, Sp, Land, Sp, m, Sp, Lt, Sp, u, Sp, Land, Sp, D(0), Sp, Lt, Sp, w,
+            Sp, Land, Sp, w, Sp, Lt, Sp, P, Sp, Land, Sp, Call("mod", Seq(n, Sp, Plus, Sp, w), P), Sp, Eq, Sp, P, Sp, Minus, Sp, m);
         return Disp(All(P, N(), All(l, N(), All(u, N(), All(n, N(),
-            Seq(Grp(assumptions), Implies, Grp(conclusion)))))));
+            Seq(Par(assumptions), Sp, Implies, Sp, Par(conclusion)))))));
     }
 
     private static Formula Statement()
@@ -88,28 +90,28 @@ internal sealed class PositiveIntervalAcquisitionDocument : IScribeDocumentDefin
         Formula read = Call("Decoded", p, P, b);
         Formula path = Call("Waits", read, T, D(0), r);
         Formula law = All(b, N(), All(n, N(), All(r, N(), Seq(
-            r, Sp, Lt, Sp, P, Sp, Implies, Sp, Grp(Seq(
-                Call("div", Call("mod", Seq(b, Times, P, Plus, r, Plus, n), Seq(p, Times, P)), P),
-                Sp, Eq, Sp, Call("mod", Seq(b, Plus, Call("div", n, P), Plus,
+            r, Sp, Lt, Sp, P, Sp, Implies, Sp, Par(Seq(
+                Call("div", Call("mod", Seq(b, Sp, Times, Sp, P, Sp, Plus, Sp, r, Sp, Plus, Sp, n), Seq(p, Sp, Times, Sp, P)), P),
+                Sp, Eq, Sp, Call("mod", Seq(b, Sp, Plus, Sp, Call("div", n, P), Sp, Plus, Sp,
                     Call("Cut", P, n, r)), p), Sp, Land, Sp,
                 Call("Decoded", p, P, b, n, r), Sp, Eq, Sp, Call("Cut", P, n, r)))))));
         Formula waits = All(w, N(), Seq(w, Sp, InMacro, Sp, path, Sp, Implies, Sp,
-            Grp(Seq(D(0), Sp, Lt, Sp, w, Sp, Land, Sp, w, Sp, Lt, Sp, P))));
+            Par(Seq(D(0), Sp, Lt, Sp, w, Sp, Land, Sp, w, Sp, Lt, Sp, P))));
         Formula behavior = All(b, N(), All(r, N(), Seq(r, Sp, Lt, Sp, P, Sp, Implies, Sp,
-            Grp(Seq(Call("Answer", read, T, D(0), r), Sp, Eq, Sp, r, Sp, Land, Sp,
+            Par(Seq(Call("Answer", read, T, D(0), r), Sp, Eq, Sp, r, Sp, Land, Sp,
                 Call("Time", read, T, D(0), r), Sp, Leq, Sp,
-                h, Times, Grp(Seq(P, Minus, D(1))), Sp, Land, Sp,
+                h, Sp, Times, Sp, Par(Seq(P, Sp, Minus, Sp, D(1))), Sp, Land, Sp,
                 Call("length", path), Sp, Leq, Sp, h, Sp, Land, Sp, waits)))));
         Formula attained = All(b, N(), Seq(
-            Call("length", Call("Waits", read, T, D(0), Seq(P, Minus, D(1)))),
+            Call("length", Call("Waits", read, T, D(0), Seq(P, Sp, Minus, Sp, D(1)))),
             Sp, Eq, Sp, h));
         Formula singleton = Seq(P, Sp, Eq, Sp, D(1), Sp, Implies, Sp,
             T, Sp, Eq, Sp, Call("Stop", D(0)));
         return Disp(All(p, N(), All(P, N(), Seq(
-            Grp(Seq(D(2), Sp, Leq, Sp, p, Sp, Land, Sp, D(0), Sp, Lt, Sp, P)),
+            Par(Seq(D(2), Sp, Leq, Sp, p, Sp, Land, Sp, D(0), Sp, Lt, Sp, P)),
             Sp, Implies, Sp, Exists, Sp, T, Sp, Colon, Sp, Call("Protocol", h), Comma, Sp,
-            Grp(Seq(T, Sp, Eq, Sp, Call("Acquire", P, h, D(0), P, D(0)),
-                Sp, Land, Sp, Grp(law), Sp, Land, Sp, Grp(behavior), Sp, Land, Sp, Grp(attained), Sp, Land, Sp,
-                Grp(singleton)))))));
+            Par(Seq(T, Sp, Eq, Sp, Call("Acquire", P, h, D(0), P, D(0)),
+                Sp, Land, Sp, Par(law), Sp, Land, Sp, Par(behavior), Sp, Land, Sp, Par(attained), Sp, Land, Sp,
+                Par(singleton)))))));
     }
 }
