@@ -4,18 +4,302 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: General-base stationary execution gives actual terminal slots and root separation. -/
+   digest: Actual stationary reading slots give exact accounting and odd-base capacity bounds. -/
 
 import Mathlib.Data.ZMod.Basic
 import Mathlib.Data.Fintype.Card
 import Mathlib.Logic.Function.Iterate
 import Mathlib.Tactic
-import D5.S3.ObserverMemory.Algorithms.OddSlotTargetDeficit
+import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+import Mathlib.Algebra.Ring.Parity
+import Mathlib.Combinatorics.Enumerative.DoubleCounting
+import Mathlib.Data.Finset.Preimage
+import Mathlib.Data.Fintype.Prod
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 
 namespace D5.S3.ObserverMemory.Algorithms.ActualControlSlots
+
+open scoped BigOperators
+
+section SlotIncidence
+
+variable {p : Nat} {Q : Type} [Fintype Q] [DecidableEq Q]
+
+/-- Directed incidence of used reading slots. No acyclicity or unique-parent
+condition is imposed. Every nonempty successor set has one target control. -/
+structure SlotGraph (p : Nat) (Q : Type) [Fintype Q] [DecidableEq Q] where
+  root : Q
+  used : Finset (Q × Fin p)
+  next : Q × Fin p → Finset (Q × Fin p)
+  target : Q × Fin p → Q
+  target_eq : ∀ u v, v ∈ next u → v.1 = target u
+  source_used : ∀ u, (next u).Nonempty → u ∈ used
+  target_used : ∀ u v, v ∈ next u → v ∈ used
+  root_used : ∀ b, (root, b) ∈ used
+  root_no_incoming : ∀ u b, (root, b) ∉ next u
+  nonroot_incoming : ∀ v ∈ used, v.1 ≠ root → ∃ u, v ∈ next u
+  at_most_two : ∀ u, (next u).card ≤ 2
+
+namespace SlotGraph
+
+variable (G : SlotGraph p Q)
+
+noncomputable def incoming (v : Q × Fin p) : Finset (Q × Fin p) :=
+  Finset.univ.filter (fun u => v ∈ G.next u)
+
+noncomputable def missing (q : Q) : Nat :=
+  (Finset.univ.filter (fun b : Fin p => (q, b) ∉ G.used)).card
+
+noncomputable def excess (q : Q) : Nat :=
+  ∑ b : Fin p, ((G.incoming (q, b)).card - 1)
+
+noncomputable def singles (q : Q) : Nat :=
+  (Finset.univ.filter (fun u => G.target u = q ∧ (G.next u).card = 1)).card
+
+private noncomputable def predecessors (q : Q) : Finset (Q × Fin p) :=
+  Finset.univ.filter (fun u => G.target u = q ∧ (G.next u).Nonempty)
+
+/-- A zero-deficit row is covered exactly once by two-slot successor sets.
+The ownership field makes these sets lie in the same target row. -/
+private theorem zero_deficit_even (q : Q) (hq : q ≠ G.root)
+    (hz : G.missing q = 0) (hh : G.excess q = 0) (hn : G.singles q = 0) :
+    Even p := by
+  classical
+  let rel (u : Q × Fin p) (b : Fin p) := (q,b) ∈ G.next u
+  have all_used : ∀ b : Fin p, (q,b) ∈ G.used := by
+    simpa only [SlotGraph.missing, Finset.card_eq_zero, Finset.filter_eq_empty_iff,
+      Finset.mem_univ, true_implies, not_not] using hz
+  have no_single : ∀ u, G.target u = q → (G.next u).card ≠ 1 := by
+    simpa only [SlotGraph.singles, Finset.card_eq_zero, Finset.filter_eq_empty_iff,
+      Finset.mem_univ, true_implies, not_and] using hn
+  have indegree (b : Fin p) : (G.incoming (q,b)).card = 1 := by
+    have hle := Finset.single_le_sum (fun b _ => Nat.zero_le
+      ((G.incoming (q,b)).card-1)) (Finset.mem_univ b)
+    change (G.incoming (q,b)).card-1 ≤ G.excess q at hle
+    obtain ⟨u,hu⟩ := G.nonroot_incoming (q,b) (all_used b) hq
+    have pos : 0 < (G.incoming (q,b)).card := Finset.card_pos.mpr ⟨u,by
+      simp only [SlotGraph.incoming, Finset.mem_filter, Finset.mem_univ, true_and]
+      exact hu⟩
+    omega
+  have above (u : Q × Fin p) (hu : u ∈ G.predecessors q) :
+      ((Finset.univ : Finset (Fin p)).bipartiteAbove rel u).card = 2 := by
+    have owns := (Finset.mem_filter.mp hu).2.1
+    have pos := Finset.card_pos.mpr (Finset.mem_filter.mp hu).2.2
+    have bound := G.at_most_two u
+    have notone := no_single u owns
+    have two : (G.next u).card = 2 := by omega
+    let f : Fin p → Q × Fin p := fun b => (q,b)
+    have inj : Function.Injective f := fun a b h => Prod.mk.inj h |>.2
+    have preimage : Finset.univ.bipartiteAbove rel u =
+        (G.next u).preimage f inj.injOn := by
+      ext b
+      simp [Finset.bipartiteAbove, Finset.mem_preimage, rel, f]
+    have allrange (v : Q × Fin p) (hv : v ∈ G.next u) : v ∈ Set.range f :=
+      ⟨v.2, Prod.ext ((G.target_eq u v hv).trans owns).symm rfl⟩
+    rw [preimage, Finset.card_preimage, Finset.filter_true_of_mem allrange, two]
+  have below (b : Fin p) (hb : b ∈ (Finset.univ : Finset (Fin p))) :
+      ((G.predecessors q).bipartiteBelow rel b).card = 1 := by
+    have eq : (G.predecessors q).bipartiteBelow rel b = G.incoming (q,b) := by
+      ext u
+      simp only [Finset.bipartiteBelow, predecessors, SlotGraph.incoming, Finset.mem_filter,
+        Finset.mem_univ, true_and, rel]
+      have ownership (h : (q,b) ∈ G.next u) : G.target u = q ∧ (G.next u).Nonempty :=
+        ⟨(G.target_eq u (q,b) h).symm, ⟨(q,b),h⟩⟩
+      exact and_iff_right_of_imp ownership
+    rw [eq, indegree]
+  have count := Finset.card_mul_eq_card_mul rel above below
+  simp only [Finset.card_univ, Fintype.card_fin, mul_one] at count
+  exact ⟨(G.predecessors q).card,by omega⟩
+
+/-- Every nonroot row over an odd alphabet has an unused slot, a repeated
+incoming incidence, or a one-successor predecessor owned by that row. -/
+private theorem target_deficit (hp : Odd p) (q : Q) (hq : q ≠ G.root) :
+    1 ≤ G.missing q + G.excess q + G.singles q := by
+  by_contra bad
+  have hz : G.missing q = 0 := by omega
+  have hh : G.excess q = 0 := by omega
+  have hn : G.singles q = 0 := by omega
+  exact (Nat.not_even_iff_odd.mpr hp) (G.zero_deficit_even q hq hz hh hn)
+
+/-- Local and summed target deficits use the same incidence graph. Cycles
+and mergers contribute to excess and are not removed by a tree unfolding. -/
+private theorem summed_deficit (hp : Odd p) :
+    (∀ q, q ≠ G.root → 1 ≤ G.missing q + G.excess q + G.singles q) ∧
+    Fintype.card Q - 1 ≤
+      (∑ q, G.missing q) + (∑ q, G.excess q) + (∑ q, G.singles q) := by
+  classical
+  refine ⟨G.target_deficit hp, ?_⟩
+  have local_bound : ∀ q ∈ Finset.univ.erase G.root,
+      1 ≤ G.missing q + G.excess q + G.singles q := by
+    intro q hq
+    exact G.target_deficit hp q (Finset.mem_erase.mp hq).1
+  have sum_bound := Finset.sum_le_sum local_bound
+  have extend : (∑ q ∈ Finset.univ.erase G.root,
+      (G.missing q + G.excess q + G.singles q)) ≤
+      ∑ q : Q, (G.missing q + G.excess q + G.singles q) :=
+    Finset.sum_le_sum_of_subset_of_nonneg (Finset.erase_subset _ _)
+      (fun _ _ _ => Nat.zero_le _)
+  have card : (Finset.univ.erase G.root).card = Fintype.card Q - 1 := by simp
+  simp only [Finset.sum_const, smul_eq_mul, mul_one] at sum_bound
+  rw [card] at sum_bound
+  simpa only [Finset.sum_add_distrib] using sum_bound.trans extend
+
+noncomputable def terminalCount : Nat :=
+  (G.used.filter (fun u => (G.next u).card = 0)).card
+
+private theorem edge_balance :
+    (∑ u, (G.next u).card) = ∑ v, (G.incoming v).card := by
+  classical
+  simp only [incoming, Finset.card_eq_sum_ones, Finset.sum_filter]
+  rw [Finset.sum_comm]
+  simp
+
+private theorem incoming_balance :
+    (∑ v, (G.incoming v).card) + p = G.used.card + ∑ q, G.excess q := by
+  classical
+  have point (v : Q × Fin p) :
+      (G.incoming v).card + (if v.1 = G.root then 1 else 0) =
+        (if v ∈ G.used then 1 else 0) + ((G.incoming v).card - 1) := by
+    by_cases root : v.1 = G.root
+    · have empty : G.incoming v = ∅ := by
+        apply Finset.eq_empty_iff_forall_notMem.mpr
+        intro u hu
+        have hv := (Finset.mem_filter.mp hu).2
+        have eq : v = (G.root, v.2) := Prod.ext root rfl
+        rw [eq] at hv
+        exact G.root_no_incoming u v.2 hv
+      have used : v ∈ G.used := by
+        have eq : v = (G.root, v.2) := Prod.ext root rfl
+        rw [eq]
+        exact G.root_used _
+      simp [empty, root, used]
+    · by_cases used : v ∈ G.used
+      · obtain ⟨u, hu⟩ := G.nonroot_incoming v used root
+        have pos : 0 < (G.incoming v).card :=
+          Finset.card_pos.mpr ⟨u, by simp [incoming, hu]⟩
+        simp only [root, used, if_false, if_true]
+        omega
+      · have empty : G.incoming v = ∅ := by
+          apply Finset.eq_empty_iff_forall_notMem.mpr
+          intro u hu
+          exact used (G.target_used u v (Finset.mem_filter.mp hu).2)
+        simp [empty, root, used]
+  have total := Finset.sum_congr (s₁ := Finset.univ) (s₂ := Finset.univ)
+    rfl (fun v _ => point v)
+  simp only [Finset.sum_add_distrib] at total
+  have root_sum : (∑ v : Q × Fin p, if v.1 = G.root then 1 else 0) = p := by
+    rw [Fintype.sum_prod_type, Finset.sum_eq_single G.root]
+    · simp
+    · intro q _ hq
+      simp [hq]
+    · intro h
+      exact False.elim (h (Finset.mem_univ _))
+  have used_sum : (∑ v : Q × Fin p, if v ∈ G.used then 1 else 0) = G.used.card := by
+    simp
+  have excess_sum : (∑ v : Q × Fin p, ((G.incoming v).card - 1)) =
+      ∑ q, G.excess q := by
+    rw [Fintype.sum_prod_type]
+    rfl
+  rwa [root_sum, used_sum, excess_sum] at total
+
+private theorem outgoing_balance :
+    (∑ u, (G.next u).card) + (∑ q, G.singles q) + 2 * G.terminalCount =
+      2 * G.used.card := by
+  classical
+  have point (u : Q × Fin p) :
+      (G.next u).card + (if (G.next u).card = 1 then 1 else 0) +
+        2 * (if u ∈ G.used ∧ (G.next u).card = 0 then 1 else 0) =
+      2 * (if u ∈ G.used then 1 else 0) := by
+    have bound := G.at_most_two u
+    by_cases zero : (G.next u).card = 0
+    · by_cases used : u ∈ G.used <;> simp [zero, used]
+    · have used := G.source_used u (Finset.card_pos.mp (Nat.pos_of_ne_zero zero))
+      by_cases one : (G.next u).card = 1
+      · simp [one, used]
+      · have two : (G.next u).card = 2 := by omega
+        simp [two, used]
+  have total := Finset.sum_congr (s₁ := Finset.univ) (s₂ := Finset.univ)
+    rfl (fun u _ => point u)
+  simp only [Finset.sum_add_distrib, ← Finset.mul_sum] at total
+  have singles_sum : (∑ q, G.singles q) =
+      ∑ u : Q × Fin p, if (G.next u).card = 1 then 1 else 0 := by
+    simp only [singles, Finset.card_eq_sum_ones, Finset.sum_filter]
+    rw [Finset.sum_comm]
+    apply Finset.sum_congr rfl
+    intro u _
+    by_cases one : (G.next u).card = 1 <;> simp [one]
+  have terminal_sum : (∑ u : Q × Fin p,
+      if u ∈ G.used ∧ (G.next u).card = 0 then 1 else 0) = G.terminalCount := by
+    unfold terminalCount
+    rw [Finset.card_filter]
+    have filter : (Finset.univ.filter (fun u => u ∈ G.used)) = G.used := by simp
+    rw [← filter, Finset.sum_filter]
+    apply Finset.sum_congr rfl
+    intro u _
+    by_cases hu : u ∈ G.used <;> by_cases hz : (G.next u).card = 0 <;> simp [hu, hz]
+  have used_sum : (∑ u : Q × Fin p, if u ∈ G.used then 1 else 0) = G.used.card := by
+    simp
+  rwa [← singles_sum, terminal_sum, used_sum] at total
+
+private theorem nominal_balance :
+    p * Fintype.card Q = G.used.card + ∑ q, G.missing q := by
+  classical
+  have split := Finset.card_filter_add_card_filter_not
+    (s := (Finset.univ : Finset (Q × Fin p))) (p := fun v => v ∈ G.used)
+  have first : (Finset.univ.filter (fun v => v ∈ G.used)).card = G.used.card := by simp
+  have second : (Finset.univ.filter (fun v => v ∉ G.used)).card = ∑ q, G.missing q := by
+    simp only [Finset.card_eq_sum_ones, Finset.sum_filter, missing, Fintype.sum_prod_type]
+  rw [first, second] at split
+  simpa [Fintype.card_prod, Nat.mul_comm] using split.symm
+
+/-- Exact incidence accounting and the odd-alphabet improvement. The terminal
+count is the actual number of used slots with empty successor set. -/
+private theorem capacity_accounting (hp : 2 ≤ p) (P : Nat) (hP : 1 ≤ P)
+    (hterminal : G.terminalCount = p * P) :
+    p * Fintype.card Q = 2 * (p * P) - p +
+      (∑ q, G.excess q) + (∑ q, G.singles q) + (∑ q, G.missing q) ∧
+    2 * P - 1 ≤ Fintype.card Q ∧
+    (Odd p →
+      (∀ q, q ≠ G.root → 1 ≤ G.missing q + G.excess q + G.singles q) ∧
+      Fintype.card Q - 1 ≤
+        (∑ q, G.missing q) + (∑ q, G.excess q) + (∑ q, G.singles q) ∧
+      2 * p * (P - 1) ≤ (p - 1) * (Fintype.card Q - 1)) := by
+  classical
+  have inc := G.incoming_balance
+  have out := G.outgoing_balance
+  have edges := G.edge_balance
+  have nominal := G.nominal_balance
+  rw [hterminal] at out
+  have identity : p * Fintype.card Q + p = 2 * (p * P) +
+      (∑ q, G.excess q) + (∑ q, G.singles q) + (∑ q, G.missing q) := by omega
+  have lower : 2 * P - 1 ≤ Fintype.card Q := by
+    have sub : 2 * P - 1 + 1 = 2 * P := by omega
+    have scaled : p * (2 * P - 1) + p = 2 * (p * P) := by
+      calc
+        p * (2 * P - 1) + p = p * (2 * P - 1 + 1) := by ring
+        _ = p * (2 * P) := congrArg (fun n => p * n) sub
+        _ = 2 * (p * P) := by ring
+    have product : p * (2 * P - 1) ≤ p * Fintype.card Q := by omega
+    exact Nat.le_of_mul_le_mul_left product (by omega)
+  have source_identity : p * Fintype.card Q = 2 * (p * P) - p +
+      (∑ q, G.excess q) + (∑ q, G.singles q) + (∑ q, G.missing q) := by
+    have scale : p ≤ 2 * (p * P) := by nlinarith
+    omega
+  refine ⟨source_identity, lower, ?_⟩
+  intro odd
+  obtain ⟨local_bound, global_bound⟩ := G.summed_deficit odd
+  refine ⟨local_bound, global_bound, ?_⟩
+  have qr : 1 ≤ Fintype.card Q := Fintype.card_pos_iff.mpr ⟨G.root⟩
+  have subp : p - 1 + 1 = p := by omega
+  have subP : P - 1 + 1 = P := by omega
+  have subq : Fintype.card Q - 1 + 1 = Fintype.card Q := by omega
+  nlinarith
+
+end SlotGraph
+
+end SlotIncidence
 
 inductive Action where
   | read | wait | halt
@@ -528,7 +812,7 @@ private theorem terminal_successors {u : RC × Fin p}
     exact Finset.notMem_empty _ mem
 
 private noncomputable def slotGraph :
-    OddSlotTargetDeficit.SlotGraph p (RC) := by
+    SlotGraph p (RC) := by
   classical
   let root : RC := ⟨C.initial, C.root_read I⟩
   let target (u : RC × Fin p) : RC :=
@@ -600,7 +884,7 @@ private theorem graph_terminal_count : (C.slotGraph I).terminalCount = p * P := 
     right_inv := fun _ => rfl }
   have count := (C.terminal_root I).1
   have equal : (C.slotGraph I).terminalCount = Nat.card A := by
-    rw [OddSlotTargetDeficit.SlotGraph.terminalCount, Nat.card_eq_fintype_card,
+    rw [SlotGraph.terminalCount, Nat.card_eq_fintype_card,
       Fintype.card_subtype]
     apply congrArg Finset.card
     ext u
@@ -618,7 +902,7 @@ three capacity bounds. The width P is arbitrary positive, including p^k. -/
 theorem result [Fintype Q] [DecidableEq Q] :
     let r := Nat.card {q : Q // ∃ b, C.Used I q b}
     let w := Nat.card {q : Q // C.Waiting I q}
-    ∃ G : OddSlotTargetDeficit.SlotGraph p {q : Q // ∃ b, C.Used I q b},
+    ∃ G : SlotGraph p {q : Q // ∃ b, C.Used I q b},
       G.root.val = C.initial ∧
       (∀ u, u ∈ G.used ↔ ∃ x t, C.Occurs I x t u) ∧
       (∀ u v, v ∈ G.next u ↔ C.Edge I u v) ∧
@@ -639,7 +923,7 @@ theorem result [Fintype Q] [DecidableEq Q] :
   dsimp only
   let G := C.slotGraph I
   have terminal := C.graph_terminal_count I
-  have count := G.result hp P (by omega) terminal
+  have count := G.capacity_accounting hp P (by omega) terminal
   have card : Fintype.card {q : Q // ∃ b, C.Used I q b} =
       Nat.card {q : Q // ∃ b, C.Used I q b} := Nat.card_eq_fintype_card.symm
   obtain ⟨id, lower, odd⟩ := count

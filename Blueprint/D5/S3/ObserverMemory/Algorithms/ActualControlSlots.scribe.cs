@@ -39,6 +39,15 @@ internal sealed class ActualControlSlotsDocument : IScribeDocumentDefinition
                 + "with every intermediate action a wait. Edges count distinct slot pairs, "
                 + "including repeated pairs only once. Reading-control revisits and mergers "
                 + "are unrestricted.")),
+            Paragraph(Text(
+                "A SlotGraph on R times Fin p records its root, used slots, successor sets "
+                + "and one target control for each nonempty successor set. Every successor "
+                + "has a used source and target, the p root slots are used and have no incoming "
+                + "edge, and every used nonroot slot has an incoming edge. Every successor "
+                + "set has at most two elements. At q, missing counts unused digits, excess "
+                + "sums incoming cardinalities minus one, and singles counts one-successor "
+                + "slots assigned to q. terminalCount counts used slots with no successor. "
+                + "All these counts refer to the same graph, with natural subtraction.")),
             Describe.Lean(DescribeId.Create("actual-control-slot-capacity"),
                 DeclarationHandle.Create("D5/S3/ObserverMemory/Algorithms/ActualControlSlots.result"),
                 H("The actual graph, exact identity, and capacity bounds"),
@@ -51,7 +60,10 @@ internal sealed class ActualControlSlotsDocument : IScribeDocumentDefinition
                     + "since every physical value already occurs there initially. Every other "
                     + "reading control has a distinct actual immediate wait predecessor. "
                     + "Incidence accounting gives the displayed identity and the binary lower "
-                    + "bound. For odd p, the target deficit yields the final product inequality, "
+                    + "bound. A zero-deficit nonroot row gives a bipartite incidence relation "
+                    + "of degree two on active predecessor slots and degree one on its p digits. "
+                    + "Double counting makes p even. For odd p, every nonroot target therefore "
+                    + "has a positive deficit, yielding the final product inequality, "
                     + "equivalently r at least 1 plus 2p(P-1)/(p-1). Natural subtraction is used "
                     + "throughout. Here r is NatCard(R), and w counts Waiting controls."))),
                 DescribeRole.Theorem))));
