@@ -4786,3 +4786,110 @@ The signed upper estimate on $Z_\alpha(A)$ is not established here.
 At the same conditional least global Robin maximizer $N>5040$,
 $A=\log N>10^{36}$, the original strict core, complete infinite
 response and target remain unchanged. Neither (G9) nor RH is proved.
+
+
+## An explicit one-sided bound for the combined Gamma remainder
+
+For finite source clocks, the absolute constant in (GR1) need not be
+assigned an unproved numerical value. The following upper bound instead
+uses the existing finite-height verification and zero-count constants in
+[(F3) of the Polak application](../Analytic/polak2026finiterobinca.md#reusing-the-complete-residual-envelope),
+together with (U2), (GR5) and (GR7). These inputs are reused without a new
+zero computation or reconstruction of their source proofs.
+
+Put $H=3\cdot10^{12}$, and let every zero sum retain the full actual
+nontrivial-zero multiset, with multiplicities. Write
+
+$$
+c_0=2+\gamma-\log(4\pi)<0.05,\qquad
+S_2(H)=\sum_{\Im\rho>H}\frac{m_\rho}{(\Im\rho)^2}
+ <1.48\cdot10^{-12}.
+$$
+
+The same sources supply criticality up to $H$ and the classical identity
+$\sum_\rho m_\rho/[\rho(1-\rho)]=c_0$.
+For $\rho=\beta+i\gamma$ in the critical strip,
+
+$$
+\Re\frac1{\rho(1-\rho)}
+=\frac{\gamma^2+\beta(1-\beta)}{|\rho(1-\rho)|^2}>0.
+$$
+
+On the verified head the denominator is the positive real number
+$\gamma^2+1/4$. On the remaining zeros,
+$|\rho||1-\rho|\ge\gamma^2$.
+Consequently the complete absolute weight obeys
+
+$$
+\mathcal C_\zeta:=\sum_\rho
+ \frac{m_\rho}{|\rho||1-\rho|}
+\le c_0+2S_2(H)<0.051.
+\tag{GE1}
+$$
+
+The factor two accounts for the two ordinate signs, not an additional
+independently chosen zero population.
+
+Keep $A\ge e^2$ and $L=\log A$. For the same deterministic dilation
+$r_c(A)=J_c(A)-Z_c(A)$ in (GR5)–(GR7), one has the uniform upper bound
+
+$$
+\boxed{r_c(A)<\frac5{cAL}\qquad(c>0).}
+\tag{GE2}
+$$
+
+If $cA\ge1$, (GR7) immediately gives
+$r_c(A)\le\log(2\pi)/(cAL)<2/(cAL)$, since its logarithmic integral
+is nonpositive. This includes the integrable endpoint $cA=1$.
+
+If $cA<1$, put $B=1/c>A$ and $d=\log(B/A)>0$.
+Since $\psi(cu)-cu=-cu$ on $A<u<B$, (GR5) gives exactly
+
+$$
+r_c(A)=\log(1+d/L)+\frac1L-\frac1{L+d}
+ +r_c(B)-\sum_\rho m_\rho c^{\rho-1}F_{A,B}(\rho).
+\tag{GE3}
+$$
+
+The initial elementary term is at most $2/(cAL)$, as already computed
+in the proof of (GR8). At $cB=1$, (GR7) gives
+$r_c(B)<2/\log B\le2/(cAL)$.
+The finite-endpoint bound (U2), (GE1) and
+$(cA)^{\beta-1}\le(cA)^{-1}$ give
+
+$$
+\left|\sum_\rho m_\rho c^{\rho-1}F_{A,B}(\rho)\right|
+\le\frac{2(1+1/L)\mathcal C_\zeta}{cAL}
+\le\frac{3\mathcal C_\zeta}{cAL}<\frac{0.153}{cAL}.
+$$
+
+Thus (GE2) also holds below the unit cutoff. In particular, no classical
+explicit formula has been extended to $cu<1$ and no small Gamma scales
+have been discarded.
+
+For the same noninteger shapes $\alpha\ge4$ as in (GR1), averaging (GE2)
+by (GR5) and the existing inverse-first Gamma moment yields
+
+$$
+\overline R_\alpha(A)
+\le\frac{5M_1(\alpha)}{AL},\qquad
+M_1(\alpha)=\frac\alpha{\alpha-1}.
+\tag{GE4}
+$$
+
+This is an explicit upper bound, not an absolute bound or a replacement
+for the sharper asymptotic assertion (GR1). With the original full
+prime-integral comparison (GP1), it gives the finite inequality
+
+$$
+\boxed{\sqrt A L[-I_\psi(A)]
+\le\sqrt A L Z_\alpha(A)
+ +\frac{\psi(A)}{(\alpha-1)\sqrt A}
+ +\frac{5M_1(\alpha)}{\sqrt A}.}
+\tag{GE5}
+$$
+
+The full elementary and trivial contributions are paid through
+$\overline R_\alpha$; the left side is the original complete integral.
+No signed main estimate or unbounded source-clock conclusion follows
+from (GE5) alone.
