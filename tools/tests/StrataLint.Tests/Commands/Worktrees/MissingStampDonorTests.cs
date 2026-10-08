@@ -414,7 +414,7 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void FailedMissingBuildCopyFailsClosedAndPreservesClonefileReceipt()
+    public void FailedMissingBuildCloneFailsClosedAndPreservesClonefileReceipt()
     {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
@@ -429,16 +429,26 @@ public sealed partial class LeanCacheEnsureCommandTests
         {
             Results = new Queue<DirectoryCloneResult>(
                 [new DirectoryCloneResult(false, false, 18, 1, "cross-device clone")]),
+            AfterClone = (_, staged) => Directory.CreateDirectory(staged),
         };
+        fixture.WriteTargetOwned("preserve target\n");
+        var runner = new RecordingWorktreeProcessRunner();
 
         var result = WorktreeCommand.Run(
             repository.Path,
             ["ensure-cache", "--path", fixture.Target],
-            new RecordingWorktreeProcessRunner { FailCopy = true },
+            runner,
             cloner);
 
         Assert.False(result.Success);
         Assert.Single(cloner.Invocations);
+        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "cp");
+        AssertNoCacheGet(runner);
+        Assert.Equal("preserve target\n", fixture.TargetOwnedText);
+        Assert.False(fixture.BuildDirectoryExists);
+        Assert.False(fixture.TargetStampExists);
+        Assert.Empty(fixture.BuildStageDirectories);
+        Assert.Equal("warm donor build\n", LeanCacheFixtureFile.ReadCacheText(repository.Path));
         using var receipt = ParseReceipt(result.Error);
         Assert.Equal("failed", receipt.RootElement.GetProperty("status").GetString());
         AssertCrossDeviceCloneReceipt(receipt.RootElement);
@@ -448,7 +458,7 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void FailedMissingBuildCopyPreventsWriterAndPreservesClonefileReceipt()
+    public void FailedMissingBuildClonePreventsWriterAndPreservesClonefileReceipt()
     {
         using var repository = new TemporaryDirectory();
         using var sharedCache = new MathlibCacheFixture();
@@ -464,7 +474,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         var result = LeanCacheEnsureCommand.RunWithWriter(
             repository.Path,
             ["--path", fixture.Target, "--", "lake", "build"],
-            new RecordingWorktreeProcessRunner { FailCopy = true, FailLake = true },
+            new RecordingWorktreeProcessRunner(),
             cloner,
             FileSystemLeanCacheStateProbe.Instance,
             _ => "1");
@@ -493,7 +503,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         var result = LeanCacheEnsureCommand.Run(
             repository.Path,
             ["--path", fixture.Target],
-            new RecordingWorktreeProcessRunner { FailCopy = true, FailLake = true },
+            new RecordingWorktreeProcessRunner(),
             cloner,
             removePartial: null,
             FileSystemLeanCacheStateProbe.Instance);
@@ -515,19 +525,21 @@ public sealed partial class LeanCacheEnsureCommandTests
         _ = WriteProjectOlean(repository.Path, "DonorWarm");
         var target = AddWorktree(repository.Path, "missing-build-busy-race-target");
         Directory.CreateDirectory(Path.Combine(target, ".lake"));
+        var cloneCompleted = false;
         var runner = new RecordingWorktreeProcessRunner
         {
             BusyRoot = repository.Path,
-            BusyOnlyAfterCopy = true,
+            BusyWhen = () => cloneCompleted,
         };
 
         var result = WorktreeCommand.Run(
             repository.Path,
             ["ensure-cache", "--path", target],
             runner,
-            new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
+            new RecordingDirectoryCloner { AfterClone = (_, _) => cloneCompleted = true });
 
         Assert.False(result.Success);
+        Assert.Contains("busy", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.False(File.Exists(Path.Combine(target, ".lake", "cache-get.marker")));
         Assert.False(File.Exists(Path.Combine(target, ".lake", "build", "cache.bin")));
         Assert.Empty(Directory.EnumerateDirectories(Path.Combine(target, ".lake"), "build.stage-*"));
