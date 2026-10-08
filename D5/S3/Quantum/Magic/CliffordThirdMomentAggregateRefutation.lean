@@ -54,7 +54,8 @@ private theorem kappa_graph {d n : ℕ} [NeZero d]
       exact hx.symm
     · intro hx
       exact ⟨y, hx.symm, rfl⟩
-  simp only [kappa, Matrix.trace, Matrix.diag, Matrix.mul_apply]
+  unfold kappa
+  simp only [Matrix.trace, Matrix.diag, Matrix.mul_apply]
   rw [Finset.sum_comm]
   apply Finset.sum_congr rfl
   intro Y _
@@ -116,7 +117,8 @@ private theorem group_five : stochasticOrthogonal 5 = orbit 1 ∪ orbit base := 
       (Qᵀ * Q = 1 ∧ Q *ᵥ (fun _ => 1) = (fun _ => 1)) := by
     decide +kernel
   ext O
-  simp only [stochasticOrthogonal, Finset.mem_filter, Finset.mem_univ, true_and]
+  unfold stochasticOrthogonal
+  simp only [Finset.mem_filter, Finset.mem_univ, true_and]
   constructor
   · rintro ⟨hO, hOne⟩
     have hOO : O * Oᵀ = 1 := mul_eq_one_comm.mp hO
