@@ -469,3 +469,232 @@ slack has been certified. The signed upper bound for
 $\sqrt A L Z_{\epsilon(A)}(A)$, the complete Robin target and RH
 remain unproved. The original response and its accepted (NH1)–(NH18)
 supplier are preserved verbatim in the Nicolas note.
+
+## The same negative-time prime filter has different absolute budgets on different cuts
+
+The common-time comparison (VE10) does not restore coefficient
+positivity. The precise issue is the *total* negative coefficient
+budget, not only the already checked negative coefficient at index
+$6$. The joint estimate below keeps the same finite prime support,
+the same time and the same Dirichlet coefficients throughout.
+
+Reuse Dobner's damped Dirichlet series from (NH7)–(NH8) in
+[the Nicolas note](nicolas2025comparison.md#the-subcritical-full-spectrum-absolute-boundary),
+and the finite Euler coefficient definition inspected in
+[Planat, arXiv:2609.37164v2](https://arxiv.org/html/2609.37164v2),
+Lemma 8.1. The latter's nonnegative-head statement assumes
+nonnegative heat time and a finite head; neither assumption is
+extended here. Its divisor convolution and the previously checked
+two-prime sign identity are reused directly. Euler products,
+Dirichlet norm inequalities and the classical prime number theorem
+are `literature-attested` inputs. The growing-support aggregate
+budget below is a `repo-derived` paper application, without a
+priority, exhaustive literature, numerical-constant or Lean claim.
+
+For $\epsilon>0$, write $a_\epsilon(n)=
+\exp[-\epsilon(\log n)^2/4]$. For a finite set of primes $P$, define
+
+$$
+\mathcal C_{\epsilon,P}(s)=D_\epsilon(s)
+ \prod_{p\in P}(1-a_\epsilon(p)p^{-s})
+=\sum_{n\ge1}c_{\epsilon,P}(n)n^{-s},
+$$
+
+$$
+c_{\epsilon,P}(n)=
+ \sum_{d\mid(n,\prod_{p\in P}p)}\mu(d)
+ \prod_{p\mid d}a_\epsilon(p)\,a_\epsilon(n/d).
+\tag{VF1}
+$$
+
+This coefficient formula agrees with the inspected finite filter
+when $P=\{2,3,5\}$. For fixed $\epsilon>0$ and finite $P$, the
+series is absolutely convergent on every vertical line: Gaussian
+damping makes $\sum_n a_\epsilon(n)n^{-\sigma}$ finite for every
+real $\sigma$, and the finite divisor convolution preserves that
+property. Thus the full negative mass
+
+$$
+\mathcal N_{\epsilon,P}(\sigma)=
+ \sum_{n\ge1}[-c_{\epsilon,P}(n)]_+n^{-\sigma}
+\tag{VF2}
+$$
+
+is finite at each fixed time. No infinite positive-time Dirichlet
+series is asserted.
+
+### The right-of-Euler budget is uniformly small
+
+For every finite $P$, every $0<\eta\le1/2$ and every $\epsilon>0$,
+
+$$
+\boxed{\mathcal N_{\epsilon,P}(1+\eta)
+ \le C\epsilon\eta^{-4}.}
+\tag{VF3}
+$$
+
+To pay the coefficient norm, use
+$\|\sum b_nn^{-s}\|_\sigma=\sum|b_n|n^{-\sigma}$, which is
+submultiplicative for absolutely convergent Dirichlet series.
+At zero time the coefficient of
+$\zeta(s)\prod_{p\in P}(1-p^{-s})$ is the nonnegative indicator
+$\mathbf1_{(n,\prod P)=1}$. The negative part in (VF2) is bounded
+by the coefficient norm of the difference from that zero-time
+series.
+
+Let $E_\epsilon=\prod_{p\in P}(1-a_\epsilon(p)p^{-s})$ and
+$E_0=\prod_{p\in P}(1-p^{-s})$. On $\sigma=1+\eta$, Euler
+products and $1-e^{-x}\le x$ give
+
+$$
+\begin{aligned}
+\|E_\epsilon\|_\sigma&\le\prod_{p\in P}(1+p^{-\sigma})
+ \le\zeta(\sigma)\ll\eta^{-1},\\
+\|D_\epsilon-\zeta\|_\sigma&\le
+ (\epsilon/4)\zeta''(\sigma)\ll\epsilon\eta^{-3},\\
+\|E_\epsilon-E_0\|_\sigma&\le
+ (\epsilon/4)\zeta(\sigma)
+ \sum_p(\log p)^2p^{-\sigma}\ll\epsilon\eta^{-3}.
+\end{aligned}
+$$
+
+For the last bound, keep the Euler logarithmic derivative:
+
+$$
+\sum_p(\log p)^2p^{-\sigma}
+\le(\log\zeta)''(\sigma)
+\le\frac{\zeta''(\sigma)}{\zeta(\sigma)}
+\ll\eta^{-2}.
+$$
+
+The last inequality uses $\zeta''(1+\eta)\ll\eta^{-3}$ and
+$\zeta(1+\eta)\ge1/\eta$. Subtract the two series as
+$(D_\epsilon-\zeta)E_\epsilon+
+\zeta(E_\epsilon-E_0)$. Both products have norm
+$O(\epsilon\eta^{-4})$, independently of $P$, proving (VF3).
+This uses a coefficient norm; a small function-value error alone
+would not pay it.
+
+### Every finite filter containing 2 has a large interior budget
+
+Fix $0<\sigma<1$ and put $d=1-\sigma>0$. Suppose only that
+$2\in P$. For every prime $q\ne2$, the already checked two-prime
+coefficient identity gives
+
+$$
+c_{\epsilon,P}(2q)=a_\epsilon(2)a_\epsilon(q)
+ \bigl(e^{-\epsilon\log2\log q/2}-1\bigr)<0.
+\tag{VF4}
+$$
+
+If $q\notin P$, the two divisor terms are
+$a_\epsilon(2q)-a_\epsilon(2)a_\epsilon(q)$. If $q\in P$, the
+four terms are
+$a_\epsilon(2q)-2a_\epsilon(2)a_\epsilon(q)+
+a_\epsilon(2)a_\epsilon(q)$, giving the same coefficient.
+No other prime of $P$ divides $2q$. Adding more primes to the
+same filter therefore cannot remove this entire negative family.
+These are actual distinct integer indices, not independently
+chosen phases.
+
+Let $X=e^{2d/\epsilon}$ and
+$J=\lfloor\epsilon^{-1/2}\rfloor$. Use the disjoint prime bins
+$[2^jX,2^{j+1}X)$ for $0\le j<J$. The classical prime number
+theorem gives one absolute $b>0$ such that every bin starting at
+$Q\ge X$, for sufficiently small $\epsilon$, contains at least
+$bQ/\log Q$ primes. This is the uniform all-$Q$ consequence of
+that theorem, not a short-interval or RH-dependent estimate.
+Every one of these primes supplies (VF4), regardless of membership
+in $P$; no support deletion or bound on $\max P$ is needed.
+
+Write $h=\log2$, $u_j=\log(2^jX)=2d/\epsilon+jh$.
+For every prime in that bin,
+
+$$
+1-e^{-\epsilon h\log q/2}\ge1-2^{-d},\qquad
+q^{-\sigma}a_\epsilon(q)\ge
+2^{-\sigma}e^{-\sigma u_j-\epsilon(u_j+h)^2/4}.
+$$
+
+Combining this with the bin count, $2^{-\sigma}a_\epsilon(2)$
+from (VF4), and the exact exponent identity
+
+$$
+d u_j-\frac\epsilon4(u_j+h)^2
+=\frac{d^2}\epsilon-\frac\epsilon4(jh)^2
+ -\frac\epsilon2u_jh-\frac\epsilon4h^2
+$$
+
+shows that every bin contributes at least
+$b_\sigma\epsilon e^{d^2/\epsilon}$, for a constant
+$b_\sigma>0$ independent of $P,j,\epsilon$. Indeed,
+$j<\epsilon^{-1/2}$ bounds all subtracted exponents by constants,
+and $u_j\le(2d+h)/\epsilon$ for $\epsilon\le1$. For
+$\epsilon\le1/4$, $J\ge1/(2\sqrt\epsilon)$. Hence
+
+$$
+\boxed{\mathcal N_{\epsilon,P}(\sigma)
+ \ge b_\sigma'\sqrt\epsilon\,
+ e^{(1-\sigma)^2/\epsilon}}
+\tag{VF5}
+$$
+
+for sufficiently small $\epsilon$, uniformly over every finite
+$P$ containing $2$.
+Only a negative subfamily was used; all other coefficients remain
+in (VF2).
+
+### Apply both budgets at the same common Robin clock
+
+At an actual integer $N$ with $2\mid N$, set
+$P=P_N=\{p:p\mid N\}$ and $A=\log N$. The same selected
+least global Robin-ratio maximizer has initial prime support,
+and hence $2\mid N$, by the
+[retained selected-source reduction](../Analytic/polak2026finiterobinca.md#application-at-the-same-critical-source-and-clock).
+No separate maximizing integer or artificial prime profile is
+substituted. The uniformity in (VF5) permits this actual support
+without a cardinality, largest-prime or additional resource
+assumption.
+
+For the common time already chosen in (VE10),
+$\epsilon(A)=\min\{(c/2)L^{-4},A^{-1/2}L^{-10}\}$, the time tends to zero. The two budgets for that
+*same* filtered series are
+
+$$
+\begin{aligned}
+\sqrt A L\,\mathcal N_{\epsilon(A),P_N}(1+1/L)
+ &\le CL^{-5}\longrightarrow0,\\
+\mathcal N_{\epsilon(A),P_N}(\sigma)
+ &\ge b_\sigma'\sqrt{\epsilon(A)}
+ e^{(1-\sigma)^2/\epsilon(A)}\longrightarrow\infty
+ \quad(0<\sigma<1\text{ fixed}).
+\end{aligned}
+\tag{VF6}
+$$
+
+Thus the full raw negative-coefficient cost cannot be treated as a
+vanishing soft correction on a fixed interior cut merely because
+the common negative time tends to zero. It *can* have a small
+coefficient budget on the paid right-of-Euler cut. The Gaussian
+saddle, prime density and full-filter invariance of the two-prime
+coefficient are the joint inputs beyond the isolated sign witness.
+These are uniform eventual estimates over the allowed integer
+family, without assuming an infinite sequence of selected global
+maximizers or certifying the bound at the standing finite clock.
+
+This is an absolute coefficient budget, not a signed trace bound.
+For every real $\sigma>0$ the same filtered value is in fact
+$D_\epsilon(\sigma)\prod_{p\in P}(1-a_\epsilon(p)p^{-\sigma})>0$;
+large negative mass coexists with compensating positive mass.
+Finite-head statements, different groupings, extra kernels and
+paid signed cancellation are not excluded. In particular (VF5)
+does not refute the positive-time source, contradict (VE10),
+establish negative signed divergence, or give a Robin counterexample.
+
+The original full $I_\psi(A)$ target, complete zero coefficients,
+actual real parts, both signs, infinite heights and multiplicities,
+elementary correction and strict core remain unchanged and unproved.
+No bound for the signed main trace in (VE10) or the actual
+$D_a$ lower allowance is obtained. The constants and asymptotic
+starting clocks have not been numerically certified; RH remains
+unproved.
