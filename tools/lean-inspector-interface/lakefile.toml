@@ -4,6 +4,10 @@ defaultTargets = ["LeanInformationAuditInterface"]
 packagesDir = "../../.lake/packages"
 buildDir = "../../.lake/build/lean-inspector/interface"
 
+[[require]]
+name = "trureturing"
+path = "../.."
+
 [[lean_lib]]
 name = "LeanInformationAuditInterface"
 roots = ["LeanInformationAuditInterface"]

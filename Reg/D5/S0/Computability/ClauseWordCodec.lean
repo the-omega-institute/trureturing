@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S0.Computability.ClauseWordCodec
 import Reg.Support.PhysicalParserCells
 
@@ -54,13 +55,31 @@ def sensitivity : FiniteSlotSensitivity arena := by
 def dependence : ∃ b b' : Bool, symbols.readout () b ≠ symbols.readout () b' :=
   ⟨false, true, Bool.false_ne_true⟩
 
-register_information_theorem _root_.PredictiveThermodynamic.ClauseCodec.codec_exact in arena
-  readout via (@cutRealization Bool Bool instDecidableEqBool (fun b => b))
-  primitives symbols.toPrimitiveBundle
-  realization inline (symbols) := by
+private theorem _root_.PredictiveThermodynamic.ClauseCodec.codec_exact.__primitive_realization : D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.{0, 0, 0} Reg.D5.S0.Computability.ClauseWordCodec.arena (∀ (physical : Bool) (w : List.{0} Bool) (n : Nat) (F : PredictiveThermodynamic.UnaryFormula n), Iff (@Eq.{1} (Option.{0} (@Sigma.{0, 0} Nat fun (n : Nat) => PredictiveThermodynamic.UnaryFormula n)) (PredictiveThermodynamic.ClauseCodec.readWord physical w) (@Option.some.{0} (@Sigma.{0, 0} Nat fun (n : Nat) => PredictiveThermodynamic.UnaryFormula n) (@Sigma.mk.{0, 0} Nat (fun (n : Nat) => PredictiveThermodynamic.UnaryFormula n) n F))) (And (@Eq.{1} (List.{0} Bool) w (@PredictiveThermodynamic.ClauseCodec.encodeWord n physical F)) (∀ (c : Std.Sat.CNF.Clause.{0} (Fin n)), @Membership.mem.{0, 0} (Std.Sat.CNF.Clause.{0} (Fin n)) (PredictiveThermodynamic.UnaryFormula n) (@List.instMembership.{0} (Std.Sat.CNF.Clause.{0} (Fin n))) F c → @LE.le.{0} Nat instLENat (@List.length.{0} (Std.Sat.Literal.{0} (Fin n)) c) (@OfNat.ofNat.{0} Nat (nat_lit 3) (instOfNatNat (nat_lit 3)))))) Reg.D5.S0.Computability.ClauseWordCodec.symbols := by
     constructor
     exact ⟨fun _ => sourceLaw, fun _ => codec_exact⟩
-  variation variation sensitivity sensitivity
-  escape from (Bool) escape continues (open)
+
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.PredictiveThermodynamic.ClauseCodec.codec_exact) (type_of% (@cutRealization Bool Bool instDecidableEqBool (fun b => b))) (type_of% (Bool)) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "Computability") "ClauseWordCodec") 0) "PredictiveThermodynamic") "ClauseCodec") "codec_exact") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S0") "Computability") "ClauseWordCodec") 0) "PredictiveThermodynamic") "ClauseCodec") "codec_exact") "__primitive_realization"),
+  realizationSource := none,
+  generated := false,
+  arena := .law ⟨(arena)⟩,
+  objectArena := .law ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (arena) ((symbols)) (symbols.toPrimitiveBundle) ⟨(PredictiveThermodynamic.ClauseCodec.codec_exact.__primitive_realization)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (PredictiveThermodynamic.ClauseCodec.codec_exact.__primitive_realization) (@_root_.PredictiveThermodynamic.ClauseCodec.codec_exact))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((symbols.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (@cutRealization Bool Bool instDecidableEqBool (fun b => b)),
+  variation := .evidence ⟨(variation)⟩ (by first | exact (variation) | exact ⟨_, _, (variation)⟩),
+  sensitivity := .evidence ⟨(sensitivity)⟩ (by exact (sensitivity)),
+  partialSensitivity := none,
+  escapeFrom := some (Bool),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S0.Computability.ClauseWordCodec
