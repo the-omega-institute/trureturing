@@ -22,7 +22,7 @@ open Lean LeanInformationAudit
 /-- Detached import keys remain usable after explicit release and reload. -/
 unsafe def checkTargetRelease : IO Unit := do
   let target := `LeanInformationAudit.Contract.SourceAudit
-  let shared ← RawArtifacts.sharedModules #[(target, #[]), (target, #[])] true
+  let shared ← RawArtifacts.sharedModules #[(target, #[]), (target, #[]), (target, #[])] true
   unless shared.contains target && shared.contains `Init do
     throw <| IO.userError "[FAIL] CompiledTargetRegionRelease: detached import plan"
   let reader ← IO.mkRef ({} : RawArtifacts.Store)
