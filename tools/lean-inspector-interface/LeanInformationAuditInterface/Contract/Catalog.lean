@@ -75,6 +75,7 @@ structure SealCatalog where
 
 structure Seal where
   rootId : Name
+  probeRequired : Nat
   catalogs : Array (SealCatalog.{u,v})
   options : Array OptionSetting
 
