@@ -1,0 +1,13 @@
+## 二十六、实际平滑的有限预算与复轴边界
+
+本节仍使用第21节的实际 Montgomery–Taylor 密度。令
+$$
+f_0(t)=\mathbf1_{[-1/2,1/2]}(t)
+\frac{\cos(\sqrt2t)}{\sqrt2\sin(\sqrt2/2)},\qquad
+A_\psi=\int\psi^2f_0>0,\qquad
+f_\psi=\frac{\psi^2f_0}{A_\psi},\qquad
+d_\psi=\|f_\psi-f_0\|_1,
+$$
+其中 $\psi$ 实、连续且偶，$K_\psi=\widehat f_\psi$。两密度非负且质量一。实偶函数
+$\eta_\psi=\psi\sqrt{f_0}/\sqrt{A_\psi}$ 满足 $\eta_\psi^2=f_\psi$ 与 $\int\eta_\psi^2=1$。这些有限公式适用于第21节的光滑截止族；本节不构造或假定该族的收敛证明已经形式化。
+
