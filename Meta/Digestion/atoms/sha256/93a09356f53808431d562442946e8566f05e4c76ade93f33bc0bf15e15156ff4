@@ -1,0 +1,13 @@
+**数学引文 9.2（路径均值的必要充分条件及 Markov 补全）。** 可实现均值恰满足
+
+```math
+0\le u_i\le1,\qquad u_i+u_{i+1}\le1\quad(1\le i\lt N).
+```
+
+等价地
+
+```math
+\mathrm{conv}\{b\in\{0,1\}^N:b_ib_{i+1}=0\}
+=\{u\in[0,1]^N:u_i+u_{i+1}\le1\}.
+```
+
