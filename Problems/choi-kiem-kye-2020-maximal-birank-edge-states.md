@@ -14,7 +14,7 @@ motivation_gids:
 
 J. Choi, Y.-H. Kiem and S.-H. Kye, *Entangled edge states of corank one
 with positive partial transposes*, J. Math. Phys. 61, 062202 (2020),
-arXiv:1903.10745v2, Conjecture 6.4:
+arXiv:1903.10745v2, Conjecture 6.4 ([Library note](../Library/QuantumBounds/choikiemkye2020maximalbirank.md)):
 
 > For any $n\ge 3$, the open set of parameters
 > $(\alpha_1,\ldots,\alpha_n,\beta_1,\ldots,\beta_n)$ which give PPT entangled
