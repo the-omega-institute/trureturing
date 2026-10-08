@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:5468242dca02c20637c080e5da8731d7d201a3f47e948bfd09e31b13d413daa6
   normalized_sha256: sha256:5468242dca02c20637c080e5da8731d7d201a3f47e948bfd09e31b13d413daa6
 cas_ref: sha256:5468242dca02c20637c080e5da8731d7d201a3f47e948bfd09e31b13d413daa6
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/OptimalLawStrictSlope.result
+    target_statement_id: sha256:7ded4797b571a978114f83c74302ad849e492f0947611ce185957e0dc6737135
 receipts:
   unresolved_subitems: []
