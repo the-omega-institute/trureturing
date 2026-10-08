@@ -427,7 +427,7 @@ CI 的独立入口、固定候选、报告、退出及缓存由 A22 定义。`ma
 
 **A22 CI 单元作业与 current/delta 契约**
 
-**入口与选工。** CI 是一个 workflow `ci-current.yml`，PR 与 push 各自触发。每个独立程序或测试项目是其中一个单元作业，作业之间并行，作业内部可串行。`detect` 作业只取提交与目录树（blobless、sparse 仅检出 `tools/scripts/workflow`），经 `ci-entry.sh` 核对候选并列出改动路径，再由 `ci_detect.py` 按同一 workflow 中写明的单元白名单 `CI_UNITS` 一次判定各单元是否命中，输出命中表；不使用 GitHub 事件级 `on.paths` 过滤。单元作业以 `if:` 读取命中表，未命中即跳过，不占用 runner。改动超过 3000 个路径时检测以 exit 2 失败，须拆分变更。唯一 required check 是始终运行的 `required` 作业：`ci_required.py` 要求检测成功、白名单段与其 needs 中的作业一一对应、命中单元成功、未命中单元跳过，否则红；身份、对象或输入异常以 exit 2 失败，不能静默免跑。FILEMAP 管路径归属、custody、准入面、symlink 和 Evidence 格式，不声明 CI 选工。
+**入口与选工。** CI 是一个 workflow `ci-current.yml`，PR 与 push 各自触发。每个独立程序或测试项目是其中一个单元作业，作业之间并行，作业内部可串行。`detect` 作业只取提交与目录树（blobless、sparse 仅检出 `tools/scripts/workflow`），经 `ci-entry.sh` 核对候选并列出改动路径，再由 `ci_detect.py` 按同一 workflow 中写明的单元白名单 `CI_UNITS` 一次判定各单元是否命中，输出命中表；不使用 GitHub 事件级 `on.paths` 过滤。单元作业以 `if:` 读取命中表，未命中即跳过，不占用 runner。检测校验并按白名单匹配完整改动路径列表，不设路径数量截断。唯一 required check 是始终运行的 `required` 作业：`ci_required.py` 要求检测成功、白名单段与其 needs 中的作业一一对应、命中单元成功、未命中单元跳过，否则红；身份、对象或输入异常以 exit 2 失败，不能静默免跑。FILEMAP 管路径归属、custody、准入面、symlink 和 Evidence 格式，不声明 CI 选工。
 
 PR 检出固定 `GITHUB_SHA=M`，验证 M 有两个父提交，第二父是触发 PR head，第一父 `B=M^1` 只作路径比较和 delta 的数据。push 核对 `HEAD=GITHUB_SHA=event.after`，按完整 `event.before→event.after` 端点差异判 hit；初始 push 的全零 before 使用当前树路径。schedule/dispatch 同样核对 HEAD 与 GITHUB_SHA。取得所需固定对象后移除 remote 与 remote refs；固定对象及显式网络 URL 仍可达，不宣称完全网络隔离。只执行候选代码，不 checkout、编译或执行 base 判官。
 
