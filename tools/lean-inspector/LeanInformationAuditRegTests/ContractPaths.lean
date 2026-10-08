@@ -1,23 +1,8 @@
 import LeanInformationAuditRegTests.CompiledFixtureReader
-import LeanInformationAuditRegTests.ContractGuards
-import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.MissingCatalog.SealedCatalog
-import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.MissingSeal.SealedCatalog
-import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.IndependentExpected.SealedCatalog
-import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.Complete.SealedCatalog
-import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.Complete.RootCatalog
-import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.Ordinary.Entry
-import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.UnexpectedCatalog.Entry
-import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.UnexpectedSeal.RootCatalog
-import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.DuplicateCatalog.RootCatalog
-import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.DuplicateSeal.SealedCatalog
 
-import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.Spelling.Rootcatalog
-import LeanInformationAuditRegTests.ContractPathFixtures.Reg.Catalogs.Spelling.RootCatalogs
-import LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.RootCatalog
-import LeanInformationAuditRegTests.ContractPathFixtures.Reg.D5.Mirror.SealedCatalog
 
 namespace LeanInformationAuditRegTests.ContractPaths
-open Lean Meta Elab Command LeanInformationAudit.Contract
+open Lean LeanInformationAudit.Contract
 private def checkTest (label : String) (ok : Bool) : IO Unit :=
   unless ok do throw <| IO.userError s!"compiled.fixture:{label}"
 

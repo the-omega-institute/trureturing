@@ -1,5 +1,3 @@
-import Reg.Catalogs.PointwiseDisequalityRegistrations.SealedCatalog
-import Reg.Catalogs.SharedInformationRoot.SealedCatalog
 import LeanInformationAudit.ArtifactAssessment
 
 namespace LeanInformationAuditRegTests.CompiledSeal
@@ -24,7 +22,8 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
       (Contract.CompiledExpressions.head (transport (mkConst ``Nat) (mkConst ``Nat)))
     let (different, _) ← Contract.CompiledExpressions.run context
       (Contract.CompiledExpressions.head (transport (mkConst ``Nat) (mkConst ``Bool)))
-    unless (Contract.Literal.nat "transport" same) == .ok 7 && different.isAppOf ``Eq.rec do
+    unless (Contract.Literal.nat "transport" same).toOption == some 7 &&
+        different.isAppOf ``Eq.rec do
       throw <| IO.userError "compiled.transport:invalid_endpoint_behavior"
     let (state, seals) ← ArtifactAssessment.assess store root
     unless seals.size == 1 && seals.all (fun sealRecord =>
@@ -48,14 +47,14 @@ unsafe def check (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
         | .error reason => (reason.splitOn "component=frozen-baseline-contributor-modules").length == 2
         | .ok _ => false) do
       throw <| IO.userError "compiled.seal:baseline_contributor_accepted"
-    -- R54 requires the seal vector to match every imported registration;
+    -- The seal vector must match every imported registration;
     -- snapshot set checks alone cannot detect a repeated vector operand.
     let some (_, input) := snapshot.seals.find? (·.1 == root)
       | throw <| IO.userError "compiled.seal:input_missing"
     let some firstCatalog := input.catalogs[0]?
       | throw <| IO.userError "compiled.seal:catalog_missing"
     let raw ← Contract.Decoder.referencedValue (state.store.constants[·]?) firstCatalog.value
-    let fields ← Contract.Decoder.fields (state.store.constants[·]?) ``Contract.SealCatalog raw 11
+    let fields ← Contract.Decoder.fields (state.store.constants[·]?) `LeanInformationAudit.Contract.SealCatalog raw 11
     let duplicate := mkLambda `index .default (mkApp (mkConst ``Fin) fields[3]!)
       (mkApp fields[4]! (CompiledSeal.indexValue 0 2))
     let arguments := raw.getAppArgs

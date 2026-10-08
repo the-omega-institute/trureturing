@@ -1,12 +1,9 @@
 import LeanInformationAudit.RegistrationData
 import LeanInformationAudit.Contract.Literal
 import LeanInformationAudit.Contract.CompiledExpressions
-import LeanInformationAuditInterface.Contract.Registration
-import LeanInformationAuditInterface.Contract.Catalog
 
 namespace LeanInformationAudit.Contract.Decoder
 open Lean
-open D5.S3.ConceptDynamics.InformationEscape
 
 structure CompanionInput where
   input : RegistrationInput
@@ -54,33 +51,33 @@ The proof field was checked when its containing Reg declaration compiled. -/
 private def obligation (find : Name → Option ConstantInfo) (e : Expr) :
     IO (CompiledObligationState × Option (Name × Expr)) := do
   let e := (← referencedValue find e).consumeMData
-  if e.isAppOf ``Contract.Obligation.evidence then
+  if e.isAppOf `LeanInformationAudit.Contract.Obligation.evidence then
     let args := e.getAppArgs
     return (.evidence, some (← reference find "obligation" args[args.size - 2]!))
-  if e.isAppOf ``Contract.Obligation.unsupported then
+  if e.isAppOf `LeanInformationAudit.Contract.Obligation.unsupported then
     let name ← metadata find e.getAppArgs.back! (Literal.name "obligation.unsupported")
     return (.unsupported, some (name, mkConst name))
-  if e.isAppOf ``Contract.Obligation.unknown then return (.unknown, none)
-  if e.isAppOf ``Contract.Obligation.absent then return (.absent, none)
+  if e.isAppOf `LeanInformationAudit.Contract.Obligation.unknown then return (.unknown, none)
+  if e.isAppOf `LeanInformationAudit.Contract.Obligation.absent then return (.absent, none)
   throw <| IO.userError "contract.literal:obligation"
 
 private def obligationState (find : Name → Option ConstantInfo) (e : Expr) :
     IO CompiledObligationState := do
   let head := (← referencedValue find e).consumeMData.getAppFn.constName?
-  if head == some ``Contract.Obligation.evidence || head == some ``Contract.ExactMatch.evidence then
+  if head == some `LeanInformationAudit.Contract.Obligation.evidence || head == some `LeanInformationAudit.Contract.ExactMatch.evidence then
     return .evidence
-  if head == some ``Contract.Obligation.unsupported || head == some ``Contract.ExactMatch.unsupported then
+  if head == some `LeanInformationAudit.Contract.Obligation.unsupported || head == some `LeanInformationAudit.Contract.ExactMatch.unsupported then
     return .unsupported
-  if head == some ``Contract.Obligation.unknown || head == some ``Contract.ExactMatch.unknown then
+  if head == some `LeanInformationAudit.Contract.Obligation.unknown || head == some `LeanInformationAudit.Contract.ExactMatch.unknown then
     return .unknown
-  if head == some ``Contract.Obligation.absent || head == some ``Contract.ExactMatch.absent then
+  if head == some `LeanInformationAudit.Contract.Obligation.absent || head == some `LeanInformationAudit.Contract.ExactMatch.absent then
     return .absent
   throw <| IO.userError "contract.literal:obligation"
 
 private def arenaReference (find : Name → Option ConstantInfo) (role : String) (e : Expr) : IO (Name × Expr) := do
   let head := (← referencedValue find e).consumeMData.getAppFn.constName?.getD .anonymous
-  unless #[``Contract.ArenaRef.law, ``Contract.ArenaRef.finite, ``Contract.ArenaRef.object,
-      ``Contract.ArenaRef.source].contains head do
+  unless #[`LeanInformationAudit.Contract.ArenaRef.law, `LeanInformationAudit.Contract.ArenaRef.finite, `LeanInformationAudit.Contract.ArenaRef.object,
+      `LeanInformationAudit.Contract.ArenaRef.source].contains head do
     throw <| IO.userError s!"contract.literal:arena:{role}"
   reference find role e.getAppArgs.back!
 
@@ -98,9 +95,9 @@ private def sourceSelection (find : Name → Option ConstantInfo) (e : Expr) : I
 
 private def continuation (find : Name → Option ConstantInfo) (e : Expr) : IO (Bool × Option Expr) := do
   let e := (← referencedValue find e).consumeMData
-  if e.isAppOf ``Contract.Continuation.absent then return (false, none)
-  if e.isAppOf ``Contract.Continuation.unknown then return (true, none)
-  if e.isAppOf ``Contract.Continuation.evidence then
+  if e.isAppOf `LeanInformationAudit.Contract.Continuation.absent then return (false, none)
+  if e.isAppOf `LeanInformationAudit.Contract.Continuation.unknown then return (true, none)
+  if e.isAppOf `LeanInformationAudit.Contract.Continuation.evidence then
     return (false, some (← reference find "continuation" e.getAppArgs.back!).2)
   throw <| IO.userError "unclassified_form:contract.continuation"
 
@@ -126,7 +123,7 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
     (owner : Name) (info : DefinitionVal) (source : String)
     : IO CompanionInput := do
   let find := context.find
-  let all ← fields find ``Contract.Registration info.value 20
+  let all ← fields find `LeanInformationAudit.Contract.Registration info.value 20
   let trusted := axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·)
   let typeArgs := info.type.getAppArgs
   unless typeArgs.size == 5 do throw <| IO.userError "contract.registration:target_arity"
@@ -142,11 +139,11 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
   let localNames ← metadata find fs[3]! (Literal.bool "local_names")
   let implementation := (← referencedValue find fs[4]!).consumeMData
   let head := implementation.getAppFn.constName?.getD .anonymous
-  unless #[``Contract.Implementation.legacy, ``Contract.Implementation.forward,
-      ``Contract.Implementation.source].contains head do
+  unless #[`LeanInformationAudit.Contract.Implementation.legacy, `LeanInformationAudit.Contract.Implementation.forward,
+      `LeanInformationAudit.Contract.Implementation.source].contains head do
     throw <| IO.userError s!"contract.literal:implementation:nonliteral:{head}"
   let implementationArgs := implementation.getAppArgs
-  let sourceBound := head == ``Contract.Implementation.source
+  let sourceBound := head == `LeanInformationAudit.Contract.Implementation.source
   let expectedArity := if sourceBound then 3 else 7
   unless implementationArgs.size == expectedArity do
     throw <| IO.userError "contract.registration:implementation_arity"
@@ -170,8 +167,8 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
   let primitives := if sourceBound then none else some
     implementationArgs[3]!
   let (unit, unitCorrespondence) ← if sourceBound then pure (none, true) else do
-    let bound ← fields find ``Contract.BoundTheoremUnit implementationArgs.back! 3
-    let value ← fields find ``Contract.Ref bound[0]! 1
+    let bound ← fields find `LeanInformationAudit.Contract.BoundTheoremUnit implementationArgs.back! 3
+    let value ← fields find `LeanInformationAudit.Contract.Ref bound[0]! 1
     pure (some value[0]!, (← obligationState find bound[1]!) == .evidence &&
       (← obligationState find bound[2]!) == .evidence &&
       (← obligationState find implementationArgs[5]!) == .evidence)
@@ -179,14 +176,14 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
   let (sensitivityState, sensitivity) ← obligation find fs[9]!
   let partialEvidence ← (← optional find fs[10]!).mapM fun e => do
     if sourceBound then throw <| IO.userError "contract.sensitivity:finite_slots_required"
-    let values ← fields find ``Contract.Implementation.PartialSlotEvidence e 2
+    let values ← fields find `LeanInformationAudit.Contract.Implementation.PartialSlotEvidence e 2
     let computation : CompiledExpressions.M (Array Bool × Array Bool) := do
       let arena := implementationArgs[1]!
-      let signature := Expr.proj ``PrimitiveLawArena 1 arena
+      let signature := Expr.proj `D5.S3.ConceptDynamics.InformationEscape.PrimitiveLawArena 1 arena
       let readouts ← CompiledExpressions.partialSlotStates values[0]!
-        (.proj ``PrimitiveSignature 1 signature)
+        (.proj `D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature 1 signature)
       let anchors ← CompiledExpressions.partialSlotStates values[1]!
-        (.proj ``PrimitiveSignature 8 signature)
+        (.proj `D5.S3.ConceptDynamics.InformationEscape.PrimitiveSignature 8 signature)
       return (readouts, anchors)
     let ((readouts, anchors), _) ← CompiledExpressions.run context computation
     return (readouts, anchors)
@@ -194,7 +191,7 @@ def registration (context : CompiledExpressions.Context) (axioms : Array Name)
   let selection ← (← optional find fs[12]!).mapM (sourceSelection find)
   let (openContinuation, residual) ← continuation find fs[13]!
   let options ← metadata find fs[15]! Literal.options
-  let correspondenceFields ← fields find ``Contract.Implementation.Correspondence fs[5]! 2
+  let correspondenceFields ← fields find `LeanInformationAudit.Contract.Implementation.Correspondence fs[5]! 2
   let stage ← obligationState find correspondenceFields[0]!
   let objectStage ← obligationState find correspondenceFields[1]!
   let correspondence := if stage == .evidence && objectStage == .evidence
@@ -246,7 +243,7 @@ private def compiledArray (find : Name → Option ConstantInfo)
 /-- The original theorem type and identity come from compiled constant data. -/
 def expectedRow (find : Name → Option ConstantInfo) (e : Expr) :
     Except String SnapshotOccurrence := do
-  let fs ← Literal.fields find ``Contract.ExpectedOccurrence e 6
+  let fs ← Literal.fields find `LeanInformationAudit.Contract.ExpectedOccurrence e 6
   let theoremName ← compiledMetadata find fs[2]! (Literal.name "name")
   let info ← checkTarget find theoremName fs[1]!
   let objectArenaName ← compiledMetadata find fs[3]! (Literal.name "name")
@@ -262,8 +259,8 @@ def expectedRow (find : Name → Option ConstantInfo) (e : Expr) :
 
 def rootCatalog (find : Name → Option ConstantInfo) (e : Expr) :
     Except String RootCatalogContract := do
-  let outer ← Literal.fields find ``Contract.RootCatalog e 1
-  let fs ← Literal.fields find ``Contract.RootCatalogData outer[0]! 5
+  let outer ← Literal.fields find `LeanInformationAudit.Contract.RootCatalog e 1
+  let fs ← Literal.fields find `LeanInformationAudit.Contract.RootCatalogData outer[0]! 5
   let rootId ← compiledMetadata find fs[0]! (Literal.name "name")
   let expected ← (← compiledArray find fs[1]!).mapM (expectedRow find)
   let source ← (← compiledArray find fs[2]!).mapM (expectedRow find)
@@ -274,7 +271,7 @@ def rootCatalog (find : Name → Option ConstantInfo) (e : Expr) :
 
 def enrollment (find : Name → Option ConstantInfo) (owner : Name)
     (info : DefinitionVal) (source : String) : Except String TemplateEnrollmentInput := do
-  let fs ← Literal.fields find ``Contract.TemplateEnrollment info.value 4
+  let fs ← Literal.fields find `LeanInformationAudit.Contract.TemplateEnrollment info.value 4
   let name ← compiledMetadata find fs[0]! (Literal.name "name")
   let args := info.type.getAppArgs
   unless args.size ≥ 2 && args[1]!.getAppFn.constName? == some name do
@@ -283,7 +280,7 @@ def enrollment (find : Name → Option ConstantInfo) (owner : Name)
   discard <| compiledConstant find name
   let version ← compiledMetadata find fs[1]! (Literal.nat "nat")
   let constructors ← (← compiledArray find fs[2]!).mapM fun e => do
-    let fs ← Literal.fields find ``Contract.TypeRef e 2
+    let fs ← Literal.fields find `LeanInformationAudit.Contract.TypeRef e 2
     let name ← compiledMetadata find fs[0]! (Literal.name "name")
     unless fs[1]!.getAppFn.constName? == some name do
       throw s!"unclassified_form:contract.constructor_identity:{name}"
@@ -296,11 +293,11 @@ def enrollment (find : Name → Option ConstantInfo) (owner : Name)
 checking, environment access or row-function evaluation occurs here. -/
 def readSeal (find : Name → Option ConstantInfo) (axioms : Array Name)
     (source : Name) (e : Expr) : Except String SealInput := do
-  let fs ← Literal.fields find ``Contract.Seal e 3
+  let fs ← Literal.fields find `LeanInformationAudit.Contract.Seal e 3
   unless axioms.all (#[`propext, `Classical.choice, `Quot.sound].contains ·) do
     throw s!"IE-C009 ProofConstructionFailed: {source} unapproved axiom dependency"
   let catalogs ← (← compiledArray find fs[1]!).mapM fun value => do
-    let cs ← Literal.fields find ``Contract.SealCatalog value 11
+    let cs ← Literal.fields find `LeanInformationAudit.Contract.SealCatalog value 11
     let arenaName ← compiledMetadata find cs[0]! (Literal.name "seal.arena")
     let catalogId ← compiledMetadata find cs[1]! (Literal.name "seal.catalog")
     return ({ source, arenaName, catalogId, value } : CompiledSealCatalog)

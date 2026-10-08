@@ -1,3 +1,5 @@
+import LeanInformationAuditInterface.Contract.Registration
+import LeanInformationAuditInterface.Contract.Catalog
 import LeanInformationAuditRegTests.ContractAssertions
 import LeanInformationAudit.Contract.Decoder
 import LeanInformationAudit.Contract.SourceAudit

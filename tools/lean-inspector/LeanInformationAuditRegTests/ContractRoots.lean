@@ -1,23 +1,7 @@
 import LeanInformationAuditRegTests.CompiledFixtureReader
-import LeanInformationAuditRegTests.ContractGuards
-import Reg.Catalogs.IffRegistrations
-import LeanInformationAuditRegTests.ContractRootFixtures.Complete
-import LeanInformationAuditRegTests.ContractRootFixtures.DuplicateCatalog
-import LeanInformationAuditRegTests.ContractRootFixtures.DuplicateSeal
-import LeanInformationAuditRegTests.ContractRootFixtures.Empty
-import LeanInformationAuditRegTests.ContractRootFixtures.HiddenCatalog
-import LeanInformationAuditRegTests.ContractRootFixtures.HiddenExpected
-import LeanInformationAuditRegTests.ContractRootFixtures.HiddenSeal
-import LeanInformationAuditRegTests.ContractRootFixtures.IndependentExpected
-import LeanInformationAuditRegTests.ContractRootFixtures.MissingCatalog
-import LeanInformationAuditRegTests.ContractRootFixtures.MissingSeal
-import LeanInformationAuditRegTests.ContractRootFixtures.UnexpectedCatalog
-import LeanInformationAuditRegTests.ContractRootFixtures.UnexpectedSeal
-import LeanInformationAuditRegTests.ContractRootFixtures.WrongCatalogOwner
-import LeanInformationAuditRegTests.ContractRootFixtures.WrongSealOwner
 
 namespace LeanInformationAuditRegTests.ContractRoots
-open Lean Meta Elab Command LeanInformationAudit.Contract
+open Lean LeanInformationAudit.Contract
 private def checkTest (label : String) (ok : Bool) : IO Unit :=
   unless ok do throw <| IO.userError s!"compiled.fixture:{label}"
 
