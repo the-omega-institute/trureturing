@@ -29,4 +29,3 @@ internal sealed class RawFiniteAtomLinearRealizationDocument : IScribeDocumentDe
             H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(statement))), DescribeRole.Theorem);
 }
-

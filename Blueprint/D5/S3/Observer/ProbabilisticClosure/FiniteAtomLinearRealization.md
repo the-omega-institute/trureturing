@@ -14,7 +14,7 @@ Lean statement: `D5/S3/Observer/ProbabilisticClosure/FiniteAtomLinearRealization
 
 *Commentary.*
 
-For every finite component family, task, strictly positive root parameter and component parameters, and strictly positive weights summing to one, the full carrier has exactly four times the component count plus the task terminal count coordinates, and normalized nonnegative action-output columns and preserves every native finite-test probability. For every current history, chosen arm and original source, a native step with positive matrix output mass updates the history feature by dividing its joint matrix pushforward by that output mass. This includes zero replies, marker replies and terminal rejection.
+For every finite component family, task, strictly positive root parameter and component parameters, and strictly positive weights summing to one, the full carrier has exactly four times the component count plus the task terminal count coordinates. Its action-output columns are normalized and nonnegative, and it preserves every native finite-test probability. For every current history, chosen arm and original source, a native step with positive matrix output mass updates the history feature by dividing its joint matrix pushforward by that output mass. This includes zero replies, marker replies and terminal rejection.
 
 **Theorem 1.2 (Native feature updates).**
 
