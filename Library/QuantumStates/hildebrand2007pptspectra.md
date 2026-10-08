@@ -7,7 +7,7 @@ doi: 10.1103/PhysRevA.76.052325
 url: https://arxiv.org/abs/quant-ph/0502170
 claim: "For 3-by-n dimensions, absolute PPT is equivalent to two explicitly displayed 3-by-3 spectral linear matrix inequalities."
 strata_touched:
-  - D5/S3/Quantum/Entanglement/AbsolutePPT
+  - D5/S3/Quantum/Entanglement/AbsolutePPT/QutritSpectralReduction
 license: citation-only
 triage: anchor
 ---

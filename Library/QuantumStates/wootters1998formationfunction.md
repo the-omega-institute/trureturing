@@ -7,7 +7,7 @@ doi: 10.1103/PhysRevLett.80.2245
 url: https://arxiv.org/abs/quant-ph/9709029v2
 claim: "Equations (6)–(8) express two-qubit formation using an increasing convex binary-entropy function of concurrence."
 strata_touched:
-  - D5/S3/Quantum/Entanglement/GraphDensity
+  - D5/S3/Quantum/Entanglement/GraphDensity/FormationBounds
 license: citation-only
 triage: anchor
 ---
