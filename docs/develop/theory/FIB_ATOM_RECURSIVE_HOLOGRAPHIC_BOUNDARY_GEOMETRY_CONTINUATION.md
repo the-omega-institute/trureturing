@@ -2255,3 +2255,423 @@ The complete coefficient/enable/digit interpreter, that public field scan and th
 The physical gates, clocks, noise bounds, displacement law, unknown-state ingress and reference acquisition are independent unverified realization premises. Tree degree, local three-dimensional direction, computational wiring, state-sector dimension, coefficient precision and retained population are different objects. In particular no operation-/metric-preserving correspondence from the original local direction interface to a Euclidean region is defined here. The original $\mathcal D_2$ source, independent arbitrary unbounded $a$ including zero, untagged radius-$7/25$ $b$, destructive actions, joint adversarial/history-dependent errors, source-independent initialization, actual Reads and INITIAL/Stop target keep their original domains. No tags, copies of a running source, reset, independent resampling or limit Read is added to that menu. Fixed-$N$ infimum convergence, extensive lower boundedness, old-energy retention, dynamical intertwining, ground-state attainment, precompactness, continuum convergence and thermodynamic/physical stability remain distinct mathematical assertions; only the displayed implications are used.
 
 ## 追加锚（本行以下为增补区）
+
+## 63. Fixed-population cluster escape, attained binding and complete recursive spectral retention
+
+**Definition 63.1 (one commissioned source and its fixed-population operator).** Retain the whole joint source of §§55.1,58.1,60.1 and62.1: immutable ordered INITIAL, actual source packet, authentic addressed versions $D_j(t)$, original preparation, complete candidate guards, every actual Read, acceptance, refusal and Stop. The added occurrence realization has the same root $o$, counting measure, unit parent–child seams, inherited degrees $d_o=2$, $d_p=3$ otherwise, root field $\phi(p)=2^{-|p|}$ and $\lambda=3-2\sqrt2$. Its commissioned parameters are $a,g>0$, $\nu\ge0$. Fix any finite integer $N\ge2$. On $\mathscr H_N=\ell^2(\mathcal C_N(\mathcal P))$ write
+
+$$
+\begin{aligned}
+H_N&=aK_N-g\sum_{p\in S}\phi(p)
+-\nu\sum_{\{p,q\}\subset S}G^{\rm c}(p,q),\\
+G^{\rm c}(p,q)&=G_0(p,q)+\tfrac13\phi(p)\phi(q),\qquad
+G_0(p,q)=\tfrac23\,2^{-d(p,q)},\\
+m_k&=\inf\sigma(H_k),\qquad m_0=0,\qquad
+\Sigma_N=\inf\sigma_{\rm ess}(H_N).
+\end{aligned}
+\tag{63.1}
+$$
+
+Multipliers in this notation act at the occupation $S$. The $k$-particle operators have the same parameters and literal hard-core statistics. By §§62.2–62.3 they are bounded self-adjoint, and $K_k\ge k\lambda I$. An allowed configuration edge replaces one occupied address by one empty adjacent address, with coefficient $-a$. Its graph degree is at most $3k$, but its kinetic diagonal is $\sum_{p\in S}d_p$, including every collision and exterior killing term. The two degrees are not interchangeable. Finite common operators are precisely compressions of $H_N$; finite killed operators retain the same $\phi$ and replace only pair coefficients by $G_D^{\rm k}$. All occupation embeddings below are same-address zero extensions. An index beyond one actual execution belongs to §55.1's mathematical family of separately legal finite prefixes; only actually reached versions belong to that execution.
+
+The task is the missing implication from fixed-$N$ infimum recovery to actual bound states and their complete finite spectral spaces. An escaping group may remain internally adjacent, so its pair multiplier need not tend to zero. Nothing here replaces that group by independent particles or regards the many-particle potential as compact.
+
+**Lemma 63.2 (joint occupation bounds used by the escape certificate).** Put $c_0=b_0=r_0=A_0=0$, and for $m\ge1$ define
+
+$$
+\begin{aligned}
+c_m&=\min\left\{\frac{m(m-1)}6,\frac{m}{2\lambda}-\frac m3\right\},
+&b_m&=am\lambda-\nu c_m,\\
+r_m&=\min\left\{\frac{m(m-1)}4,\frac{m}{2\lambda}-\frac m3\right\}.
+\end{aligned}
+\tag{63.2}
+$$
+
+Order the addresses by increasing depth, breaking ties by left/right lexicographic order; let $S_m$ be the first $m$ addresses and set
+
+$$
+A_m=\sum_{p\in S_m}\phi(p),\qquad
+P_m=\sum_{\{p,q\}\subset S_m}G^{\rm c}(p,q).
+\tag{63.3}
+$$
+
+In particular $A_m=h+(m-2^h+1)2^{-h}$ when $2^h\le m+1<2^{h+1}$. For every actual $m$-site occupation $Y$,
+
+$$
+\sum_{\{p,q\}\subset Y}G_0(p,q)\le c_m,
+\quad
+\sum_{\{p,q\}\subset Y}G^{\rm c}(p,q)\le r_m,
+\quad
+\sum_{p\in Y}\phi(p)\le A_m,
+\quad
+m_m\ge am\lambda-gA_m-\nu r_m.
+\tag{63.4}
+$$
+
+Proof. Off the diagonal, $G_0\le1/3$ and $G^{\rm c}\le1/2$: in the latter case $d(p,q)\ge1$ and distinct addresses satisfy $|p|+|q|\ge1$. These give the first alternatives in (63.2). For $z=\mathbf1_Y$, the already supplied inverse bound gives $z^*G^{\rm c}z\le m/\lambda$, while $G^{\rm c}(p,p)\ge2/3$. Subtracting the diagonal and dividing by two gives the second alternative for $r_m$. Also
+
+$$
+z^*G_0z=z^*G^{\rm c}z-\tfrac13\left(\sum_{p\in Y}\phi(p)\right)^2\le m/\lambda,
+\qquad G_0(p,p)=2/3,
+$$
+
+giving the second alternative for $c_m$. No new positivity assumption on a comparison kernel is needed. The depth ordering maximizes the sum of the $m$ largest field values. Combining these pointwise bounds with $K_m\ge m\lambda I$ proves the operator lower bound. These are consumed consequences of the same-L kernel and occupation bound of §62, rather than an independent stability claim. $\square$
+
+**Theorem 63.3 (all-configuration localization with an explicit exterior error).** Define the joint lower escape certificate
+
+$$
+B_N=\min_{0\le k<N}\{m_k+b_{N-k}\}.
+\tag{63.5}
+$$
+
+For each integer $R\ge2$ let $\mathcal F_R=\mathcal C_N(B_{(2N+1)R})$. Every $f\in\mathscr H_N$ vanishing on this finite configuration core satisfies
+
+$$
+\begin{aligned}
+\langle f,H_Nf\rangle&\ge(B_N-\eta_N(R))\|f\|^2,\\
+\eta_N(R)&=\frac{6aN(9N+1)}{R^2}
++\left(gN+\frac{\nu N^2}4\right)2^{-R}
++\frac{\nu N(N-1)}6\,2^{-2R} \longrightarrow0.
+\end{aligned}
+\tag{63.6}
+$$
+
+The estimate includes partial, multiple and intact cluster escape, with no cluster-separation hypothesis on $f$ and no attainment assumption on any $m_k$.
+
+Proof. For a configuration $S$, sort its depths as $d_1\le\cdots\le d_N$, with $d_0=0$. Define the continuous piecewise affine functions
+
+$$
+\begin{aligned}
+\psi_R(x)&=\begin{cases}
+1,&x\le2NR,\\
+((2N+1)R-x)/R,&2NR<x<(2N+1)R,\\
+0,&x\ge(2N+1)R,
+\end{cases}\\
+\gamma_R(x)&=\begin{cases}
+0,&x\le R,\\
+(x-R)/R,&R<x<2R,\\
+1,&x\ge2R.
+\end{cases}
+\end{aligned}
+\tag{63.7}
+$$
+
+Set $w_N(S)=\psi_R(d_N)$, $w_k(S)=\psi_R(d_k)\gamma_R(d_{k+1}-d_k)$ for $0\le k<N$, and
+
+$$
+\chi_k(S)=\frac{w_k(S)}{\left(\sum_{i=0}^Nw_i(S)^2\right)^{1/2}}.
+\tag{63.8}
+$$
+
+The denominator is at least one. Indeed, if $d_N\le2NR$ then $w_N=1$. Otherwise some consecutive gap is at least $2R$. Before the first such gap all gaps are less than $2R$, so its preceding depth $d_k\le2kR\le2NR$ and $w_k=1$. This covers every configuration, including tied depths, and $\sum\chi_k^2=1$. The support of $\chi_N$ is inside the finite core. On the support of $\chi_k$ for $k<N$, the $k$ shallowest particles form a uniquely determined group $X$, with
+
+$$
+\max_{p\in X}|p|<(2N+1)R,\qquad
+\min_{q\in Y}|q|-\max_{p\in X}|p|>R,\qquad Y=S\setminus X,
+\tag{63.9}
+$$
+
+when $k>0$; for $k=0$ every particle has depth greater than $R$.
+
+A permitted hop changes each depth order statistic by at most one, hence a gap by at most two. Thus each $w_k$, $k<N$, changes by at most $3/R$, and $w_N$ by at most $1/R$. For vectors $u,v$ with norms at least one,
+$\|u/\|u\|-v/\|v\|\|\le2\|u-v\|$; consequently every allowed edge $S\sim T$ satisfies
+
+$$
+\sum_{k=0}^N|\chi_k(S)-\chi_k(T)|^2\le\frac{4(9N+1)}{R^2}.
+\tag{63.10}
+$$
+
+Write $q_N(f)=\langle f,H_Nf\rangle$. All diagonal terms cancel in the discrete IMS identity, leaving exactly
+
+$$
+\sum_kq_N(\chi_kf)-q_N(f)
+=a\sum_{\{S,T\}:S\sim T}\operatorname{Re}(\overline{f(S)}f(T))
+\sum_k(\chi_k(S)-\chi_k(T))^2.
+\tag{63.11}
+$$
+
+Using $2|f(S)f(T)|\le|f(S)|^2+|f(T)|^2$, the configuration degree bound $3N$ and (63.10), its absolute value is at most $6aN(9N+1)\|f\|^2/R^2$. Collision killing and inherited exterior degrees remain on the diagonal throughout this identity.
+
+It remains to estimate each localized piece, rather than assume a cluster formula. For $k<N$ put $m=N-k$ and $h=\chi_kf$. Map its support isometrically by $S\mapsto(X,Y)$ into
+$\ell^2(\mathcal C_k(\mathcal P))\otimes\ell^2(\mathcal C_m(\mathcal P))$, putting zero at every other pair. The gap in (63.9) is greater than two. An allowed hop between two support configurations therefore cannot exchange membership across this split. Conversely every nonzero tensor hopping matrix entry between supported pairs is precisely one allowed original hop. On the support the two groups are disjoint and not adjacent, so no between-group collision term is lost. The diagonal remains the sum of all original site degrees. Hence the kinetic form is exactly the form of $K_k\otimes I+I\otimes K_m$ on this zero-extended tensor vector. For $k=0$ the first factor is the scalar vacuum.
+
+Keep the full root potential and full common pair attraction inside $X$. These terms and its kinetic operator give $H_k\ge m_kI$ in the first factor. Keep *all* $G_0$ pair attractions inside $Y$, even if $Y$ consists of several clusters or one intact cluster; Lemma63.2 and the inherited kinetic gap give $aK_m-\nu\sum_YG_0\ge b_mI$. The remaining attractive terms are small pointwise. Every far address has $\phi(q)\le2^{-R}$. A near/far pair has $d(p,q)>R$ and $|p|+|q|>R$, so $G^{\rm c}(p,q)\le2^{-R}$. Therefore
+
+$$
+q_N(h)\ge\left[m_k+b_m-gm2^{-R}
+-\nu km2^{-R}-\frac\nu3\binom m2\,2^{-2R}\right]\|h\|^2.
+\tag{63.12}
+$$
+
+All estimates refer to the same tensor vector and the same actual occupation; separately optimal configurations were not combined. If $f$ vanishes on $\mathcal F_R$, then $\chi_Nf=0$. Sum (63.12), use $km\le N^2/4$, $m\le N$, the partition norm identity and (63.11). This proves (63.6). In particular the far group never needed an internal partition, so equal-depth clusters and arbitrarily many mutually escaping subgroups are covered. $\square$
+
+**Theorem 63.4 (two-sided certificates and actual escaping trial families).** For every fixed finite $N\ge2$,
+
+$$
+B_N\le\Sigma_N\le
+\min_{0\le k<N}\{m_k+u_{N-k}\},
+\qquad
+u_m:=\min\{am\lambda,3am-\nu w_m\},\qquad
+w_m:=\tfrac23(m-2+2^{1-m}).
+\tag{63.13}
+$$
+
+Proof. First, any weakly null unit sequence $f_n$ has
+
+$$
+\liminf_n q_N(f_n)\ge B_N.
+\tag{63.14}
+$$
+
+For fixed $R$, $\chi_N$ has finite support, so $\chi_Nf_n\to0$ strongly and its energy tends to zero. Apply (63.11)–(63.12) to the other pieces, take the lower limit, then let $R\to\infty$. If the spectral subspace below some $c<B_N$ were infinite dimensional, an orthonormal sequence in it would be weakly null with energies at most $c$, contradicting (63.14). Thus below each such $c$ the full spectral subspace is finite dimensional, proving $\Sigma_N\ge B_N$.
+
+For the upper bounds fix $k<N$, $m=N-k$ and a unit finite-support root trial $f$ for $H_k$ with energy at most $m_k+\epsilon$. For $k=0$ take the scalar vacuum. For the free branch, use the actual radial sine packets of §55.3, each on finitely many levels of a deep descendant subtree. Choose $m$ such subtrees pairwise disjoint and separated by distances tending to infinity, and also escaping the finite support of $f$. Each packet has kinetic expectation tending to $\lambda$ and root-field expectation tending to zero. Their tensor product has exactly one particle in each disjoint support. Union of its occupations with those of $f$ is a literal occupation isometry; there are no factorial normalization or ordering signs. The inherited kinetic expectations add, including support-boundary killing. All far-far and near-far pair terms tend to zero, since the support separations tend to infinity. These weakly null unit trials have limiting energy at most $m_k+\epsilon+am\lambda$.
+
+For the intact-cluster branch take one basis occupation on $m$ consecutive nonroot vertices of a ray, translated to depth tending to infinity. Its diagonal kinetic expectation is exactly $3m$, even though adjacent particles block moves. Its root-field and image-pair terms tend to zero, while
+
+$$
+\sum_{r=1}^{m-1}(m-r)\frac23\,2^{-r}
+=\frac23(m-2+2^{1-m})=w_m.
+\tag{63.15}
+$$
+
+The same union isometry with $f$ gives weakly null unit trials of limiting energy at most $m_k+\epsilon+3am-\nu w_m$. Cross-group attraction tends to zero because $f$ is fixed and finite. These basis occupations are variational trials, not asserted Weyl eigenvectors.
+
+For a bounded self-adjoint operator, any weakly null unit sequence has energy lower limit at least the essential lower edge: its projection onto the finite-dimensional spectral subspace below any number smaller than that edge tends to zero. This also follows directly from the min-max principle of §55.8. Apply it to the two trial families, let $\epsilon\downarrow0$ and minimize over $k$. The constructed finite-energy weakly null families also show the essential spectrum is nonempty. The result is a sufficient sandwich, not an assumed sharp HVZ identity. $\square$
+
+**Theorem 63.5 (an explicit nonempty binding regime for every fixed N).** The actual occupation trial $e_{S_N}$ has energy
+
+$$
+E_N^{\rm root}=a(3N-1)-gA_N-\nu P_N.
+\tag{63.16}
+$$
+
+If, for every $0\le k<N$,
+
+$$
+g(A_N-A_k)>
+a(3N-1-N\lambda)+\nu(r_k+c_{N-k}-P_N),
+\tag{63.17}
+$$
+
+then $m_N\le E_N^{\rm root}<B_N\le\Sigma_N$. This is a nonempty regime for each fixed $N,a,\nu$: every $A_N-A_k$ is strictly positive, so any positive $g$ larger than all the finitely many right-hand-side quotients in (63.17) suffices. No common $g$ for unbounded $N$ is asserted.
+
+Whenever $m_N<B_N$, the infimum is attained, the ground eigenspace is nonzero and finite dimensional, and *every* normalized near-minimizing sequence is strongly precompact. Its cluster points are unit ground states. There is a positive gap from $m_N$ to the spectrum on the orthogonal complement of that entire groundspace.
+
+Proof. The breadth-first occupation includes the root. Its diagonal is $2+3(N-1)$, and a single occupation basis vector has zero hopping expectation, proving (63.16). Lemma63.2 gives
+
+$$
+m_k+b_{N-k}\ge aN\lambda-gA_k-\nu(r_k+c_{N-k}).
+\tag{63.18}
+$$
+
+Inequality(63.17) compares the *one* actual trial (63.16) strictly with every lower channel in (63.18). It proves the claimed gap without assuming the existence of a bound state in any smaller sector.
+
+For attainment, let $f_n$ be any unit near-minimizing sequence, pass to a weak limit $f$ and put $r_n=f_n-f$. Boundedness of $H_N$ makes the cross energy vanish; $\|r_n\|^2\to1-\|f\|^2$. Rescaling (63.14), including the zero-norm case by boundedness, gives
+
+$$
+\begin{aligned}
+m_N&\ge q_N(f)+B_N(1-\|f\|^2)\\
+&\ge m_N\|f\|^2+B_N(1-\|f\|^2).
+\end{aligned}
+\tag{63.19}
+$$
+
+The strict gap forces $\|f\|=1$, hence strong convergence and energy $m_N$. Variation gives $H_Nf=m_Nf$. This argument applies to every near-minimizing sequence. The finite-dimensional subthreshold spectral conclusion in Theorem63.4, applied at a number strictly between $m_N$ and $B_N$, gives finite ground multiplicity and isolates $m_N$ from the rest. No single radial channel, source-label permutation or ground-state preparation was used. $\square$
+
+**Lemma 63.6 (actual-domain buffers for killed coefficients and moving packets).** Set $\varrho=1-\lambda/3<1$. If an authentic domain $D$ contains the occurrence ball of radius $b$ around $p$, then, for every $q\in D$,
+
+$$
+0\le G^{\rm c}(p,q)-G_D^{\rm k}(p,q)
+\le\frac{\varrho^{b+1}}\lambda.
+\tag{63.20}
+$$
+
+For a normalized finite state whose every occupied address has such a buffer, its killed-minus-common energy is at most
+$\nu\binom N2\varrho^{b+1}/\lambda$.
+
+Proof. Consume §62.2's nonnegative path expansion $L^{-1}=\frac13\sum_{n\ge0}P^n$, with $P=I-L/3$ and $\|P\|\le\varrho$. The killed expansion keeps exactly the paths staying in $D$. A path starting at $p$ with at most $b$ steps cannot leave the contained ball; all differences therefore start at $n=b+1$. Bound each matrix entry of $P^n$ by $\|P\|^n$ and sum the geometric tail, using $3(1-\varrho)=\lambda$. Sum this same coefficient bound over the pairs in each actual occupation and then over its probability weights. $\square$
+
+Every finite packet used in Theorem63.4 can consequently be placed on actual, separately commissioned whole-rho prefixes with buffers tending to infinity, giving the same common and killed trial limits. Indeed choose a finite radius $r$ containing all its addresses and a buffer $b$, and a finite accepted index $j\ge2(r+b)$. The already proved $B_{\lfloor j/2\rfloor}\subset D_j(t)$ supplies all required buffers, uniformly in the original finite source $t$. Commission that finite prefix at a cap sufficient for its actual leaf counts. This construction retains the actual irregular domain; it is not a replacement ball or a change to a running cap. A moving address merely belonging to a frontier does not satisfy (63.20) with $b\to\infty$, so no moving-frontier killed limit follows without this buffer.
+
+**Theorem 63.7 (all finite near-minimizers, common and killed).** Suppose $m_N<B_N$, in particular under (63.17). For every sequence of original finite sources $t_n$ and legal-prefix indices $j_n\to\infty$, write $D_n=D_{j_n}(t_n)$. For either prescription $\diamond\in\{\mathrm c,\mathrm k\}$, let $f_n\in\ell^2(\mathcal C_N(D_n))$ be unit and satisfy
+
+$$
+\langle f_n,H^\diamond_{D_n,N}f_n\rangle
+-\inf\sigma(H^\diamond_{D_n,N})\longrightarrow0.
+\tag{63.21}
+$$
+
+Their identical-address zero extensions are strongly precompact in $\mathscr H_N$, and every cluster point is a unit common ground state. In particular this holds along every fixed original source's legal-prefix family.
+
+Proof. Theorem62.6 supplies the finite infimum recovery. Its proof is uniform under contained-ball exhaustion: choose its finite recovery vector first, contain its finitely many occupied addresses in $B_r$, and use (63.20) with $b=\lfloor j_n/2\rfloor-r$. This gives the needed local coefficient recovery for arbitrary varying $t_n$, without a norm limit of the full Green operators. The finite inequalities are exactly
+
+$$
+m_N\le q_N(I_{D_n,N}f_n)
+=\langle f_n,H^{\rm c}_{D_n,N}f_n\rangle
+\le\langle f_n,H^{\rm k}_{D_n,N}f_n\rangle.
+\tag{63.22}
+$$
+
+Thus either near-minimizer family is a common near-minimizer. Apply Theorem63.5. This uses the actual inherited diagonal and the pointwise killed/common ordering, not a claim that all finite pair multipliers converge in operator norm. $\square$
+
+**Theorem 63.8 (uniform tightness of every certified subthreshold eigenvector).** Fix $c<B_N$. For all sufficiently large integers $R$, every unit eigenvector with energy $z\le c$, either of $H_N$ or of any authentic finite common/killed operator, has
+
+$$
+\bigl\|\mathbf1_{\mathcal C_N(\mathcal P)\setminus
+\mathcal C_N(B_{(2N+2)R})}f\bigr\|^2
+\le\frac{3aN}{(B_N-c)R^2}.
+\tag{63.23}
+$$
+
+Finite vectors in this formula are zero extended. No radial, root-visible or occupation-symmetry sector is removed.
+
+Proof. Let $r(S)=\max_{p\in S}|p|$ and let $h_R(S)$ be zero for $r(S)\le(2N+1)R$, one for $r(S)\ge(2N+2)R$, and affine between. It is $1/R$-Lipschitz on allowed configuration edges, and $h_Rf$ vanishes on $\mathcal F_R$. For a finite eigenvector use its *finite* eigen-equation; all diagonal terms, including its killed pair multiplier, cancel in the exact identity
+
+$$
+q^\diamond_D(h_Rf)-z\|h_Rf\|^2
+=a\sum_{\{S,T\}\text{ allowed in }D}
+\operatorname{Re}(\overline{f(S)}f(T))(h_R(S)-h_R(T))^2
+\le\frac{3aN}{2R^2}.
+\tag{63.24}
+$$
+
+The same identity holds for a common infinite eigenvector. Exterior and collision killing stay in both diagonal expressions. The common exterior bound (63.6) applies after zero extension, and killed energy is at least common energy. Hence
+
+$$
+(B_N-z-\eta_N(R))\|h_Rf\|^2\le\frac{3aN}{2R^2}.
+\tag{63.25}
+$$
+
+Choose $R$ so that $\eta_N(R)\le(B_N-c)/2$; where $r(S)\ge(2N+2)R$, $h_R=1$. This proves (63.23). Its finite cores and vanishing tails imply strong precompactness of all such eigenvectors over arbitrary authentic domains. The conclusion is stronger than local convergence of their matrix entries. $\square$
+
+**Theorem 63.9 (complete finite spectral windows on actual recursive domains).** Fix a compact window $W=[\alpha,\beta]$ with $\beta<B_N$ and $\alpha,\beta\notin\sigma(H_N)$. Let $D_n=D_{j_n}(t_n)$ with arbitrary original finite $t_n$ and $j_n\to\infty$. For both common and killed prescriptions, the ordered eigenvalues in $W$ converge to the common eigenvalues, repeated by multiplicity; eventually the total rank in $W$ equals the common rank. More precisely, for every common variational eigenvalue $\lambda_\ell<B_N$, ordered from the bottom and repeated by multiplicity,
+
+$$
+\lambda_\ell(H^\diamond_{D_n,N})\longrightarrow\lambda_\ell(H_N),
+\qquad
+\left\|I_{D_n,N}\mathbf1_W(H^\diamond_{D_n,N})I_{D_n,N}^*
+-\mathbf1_W(H_N)\right\|\longrightarrow0.
+\tag{63.26}
+$$
+
+The projection statement includes every hidden occupation mode and exceptional or degenerate eigenspace. In particular, for an isolated common eigenvalue $z<B_N$, choose gap endpoints enclosing $z$ and no other common eigenvalue. The finite eigenvalues in that interval may split; their total multiplicity eventually equals $\dim\ker(H_N-zI)$, and the projection onto their entire cluster converges to the full common eigenspace projection. An individual split finite eigenspace is not identified with the whole limiting degenerate space. An empty common window is eventually empty in both finite prescriptions.
+
+Proof. The common spectrum below every $c<B_N$ has finite total multiplicity by Theorem63.4. The min-max principle in §55.8 and finite killed/common ordering give the lower inequalities for every finite variational level. For the reverse inequality, choose the finite span of the first $\ell$ common eigenvectors. Truncate it to configurations in $B_r$, with $r\to\infty$. Boundedness of $H_N$ gives uniform norm and form convergence on its finite-dimensional unit sphere; its dimension is eventually preserved. Place this one truncated span in $D_n$. Its common form is unchanged. For fixed $r$, (63.20), with $b=\lfloor j_n/2\rfloor-r$, makes the killed correction tend uniformly to zero on that span. Min-max gives the required limiting upper inequalities, first taking $n\to\infty$ and then $r\to\infty$. This argument neither assumes bound states in all smaller particle sectors nor changes the source realization.
+
+If $c<B_N$ is in a common gap and $r_c$ common eigenvalues lie below it, their convergence supplies at least $r_c$ finite eigenvalues below $c$. There cannot be $r_c+1$: their finite spectral span would, after zero extension, have common Rayleigh values below $c$, contradicting common min-max. Thus the count is eventually exactly $r_c$. Apply this at both window endpoints to get complete rank and exclude spectral pollution or excess multiplicities. All variational levels below $\beta$ have already been controlled, so isolated common gaps inside the window contain no extra finite eigenvalues.
+
+To prove preservation of the spaces, not just their eigenvalues, take any sequence of finite unit eigenvectors with energies in $W$. Theorem63.8 gives a strongly convergent subsequence with unit limit $f$, and the energies have a convergent subsequence, say $z_n\to z$. For any finite-support configuration test $v$, its occupied addresses and every address reached by one hop are eventually in $D_n$. Thus the common compressed test operator is exactly the common operator there. For the killed alternative its difference on this fixed test support tends to zero by (63.20). In the finite eigen-equation, passage to the limit gives
+
+$$
+\langle H_Nv,f\rangle=z\langle v,f\rangle.
+\tag{63.27}
+$$
+
+Density and boundedness yield $H_Nf=zf$. The gap endpoints ensure $z\in W$.
+
+Choose complete finite orthonormal eigenbases in $W$. Their eventually fixed finite size, tightness and subsequence extraction give orthonormal common limits. The rank equality makes those limits a complete basis of the common window space. Strong convergence of these finitely many basis vectors implies operator-norm convergence of their rank-one projection sums. Any subsequence has a further subsequence with this same limiting projection, proving the full projection limit (63.26). Degenerate vectors may rotate within their space; the space itself is preserved. No root resolvent cancellation or radial reduction enters this proof. $\square$
+
+**Corollary 63.10 (recursive groundspace retention for both ideal prescriptions).** Assume $m_N<B_N$, and let $P_0$ be the full common ground projection. Write
+
+$$
+\gamma_N=\inf\sigma(H_N|_{\operatorname{ran}(I-P_0)})-m_N>0.
+\tag{63.28}
+$$
+
+Consider any finite legal whole-rho history with the ideal same-occupation transfer and between-checkpoint finite generators already supplied in §§60,62. At original Reads and refusals there is no actuator change. Use consistently either the common or the killed pair prescription. If the initial supplied unit state has finite energy $E_0^\diamond$, then its actual ideal states $u(\tau)$, zero extended by their same addresses, obey throughout every supplied finite clock interval
+
+$$
+\|(I-P_0)u(\tau)\|^2\le\frac{E_0^\diamond-m_N}{\gamma_N},
+\qquad
+\operatorname{dist}\bigl(u(\tau),\{v\in\operatorname{ran}P_0:\|v\|=1\}\bigr)
+\le\sqrt{\frac{2(E_0^\diamond-m_N)}{\gamma_N}}.
+\tag{63.29}
+$$
+
+Proof. For the common prescription its finite energy is unchanged through every switch, by (62.7). For the killed prescription (62.8) makes every old pair coefficient increase, so its compression on old occupations decreases as a quadratic form. Thus its finite energy can only decrease at a renewal. Each between-event ideal unitary preserves its currently installed energy. At every cut the common energy of the zero extension is at most the current killed energy by (63.22). In either case $q_N(u(\tau))\le E_0^\diamond$. Apply the spectral inequality $H_N-m_NI\ge\gamma_N(I-P_0)$. Normalizing $P_0u$ and the identity $2(1-\|P_0u\|)\le2(1-\|P_0u\|^2)$ give the second bound; if the projection is zero, any unit ground vector has distance $\sqrt2$ and the same inequality still holds. $\square$
+
+Expressly supplied finite ground states, or states satisfying (63.21), make this bound tend to zero along the actual-prefix families of Theorem63.7. The result is a bound on distance to the entire groundspace, for arbitrary finite duration and renewal count under the ideal law. It is not a full-phase dynamical intertwining theorem. Digital-gate checkpoints retain §62.10's accumulated state-error budget, which can be added to the distance bound when its preparation, parameter, hold and clock conditions are actually supplied. Energy monotonicity does not price physical work or prepare an unknown ground state.
+
+**Proposition 63.11 (an actual pair binds although its one-particle sector is unbound).** Take exactly §55.6's INITIAL $t=\langle\beta,\alpha\rangle$ and fixed cap $H=3$, with its actual history
+
+$$
+\operatorname{Read}[BA];\quad\rho[\mathrm{accept}];\quad
+\operatorname{Read}[A+B];\quad\rho[\mathrm{refuse}];\quad
+\operatorname{Read}[A+B];\quad\operatorname{Stop}.
+\tag{63.30}
+$$
+
+Commission $a=1$, $g=1/10$, $\nu=360$, $N=2$, and the existing paid known occupation $S=\{o,L\}$. The accepted domain is precisely $(o,L,R,LL,LR)$, with §55.6's inherited matrix and six exterior seams. Then
+
+$$
+\begin{aligned}
+m_1&=\lambda\quad\text{with no attained one-particle minimum},\\
+B_2&=2\lambda-120=-114-4\sqrt2,\\
+\langle e_S,H^{\rm c}_{D,2}e_S\rangle&=-3503/20<B_2,\\
+\langle e_S,H^{\rm k}_{D,2}e_S\rangle&=-31139/260<B_2,\\
+B_2-\langle e_S,H^{\rm c}_{D,2}e_S\rangle
+&=1223/20-4\sqrt2>0,\\
+B_2-\langle e_S,H^{\rm k}_{D,2}e_S\rangle
+&=1499/260-4\sqrt2>0.
+\end{aligned}
+\tag{63.31}
+$$
+
+Consequently $m_2<B_2$, so the common pair has an attained finite-dimensional groundspace and all-near-minimizer compactness, with the finite common/killed preservation of Theorems63.7–63.9. This is interaction-induced root binding despite the unbound one-particle sector, in a model whose coescaping adjacent pairs also retain attraction.
+
+Proof. The no-binding range (55.18b) applies because $1/10<1/(2+3\sqrt2)$. It gives $m_1=\lambda$ and escape near-minimizers. It also excludes a nonzero threshold eigenvector: its proof gives
+$H_1-\lambda I\ge[1-g(2+3\sqrt2)](L-\lambda I)$, with strictly positive prefactor, and the channel excess forms displayed before (55.18b) have zero kernel. Indeed their sums of squared differences and positive endpoint term can vanish only for the zero sequence. Hence the one-particle infimum is not attained.
+
+Here $c_1=0$, $c_2=1/3$, so the two lower channels are $m_1+b_1=2\lambda$ and $b_2=2\lambda-120$; the latter is $B_2$. The occupied root/left pair has kinetic diagonal five, field sum $3/2$ and common pair coefficient $1/2$. Direct inversion of the actual accepted $L_D$ gives $G_D^{\rm k}(o,L)=9/26$, as in §62.13. Substitution gives
+
+$$
+5-\frac3{20}-180=-\frac{3503}{20},\qquad
+5-\frac3{20}-\frac{360\cdot9}{26}=-\frac{31139}{260}.
+\tag{63.32}
+$$
+
+The killed strict margin is certified without rounding by $1499^2-32\cdot260^2=83801>0$. On the initial three-site domain the killed coefficient is only $1/4$, giving trial energy $-1703/20$; that particular trial does not certify separation from $B_2$. No absence of other initial finite bound trials is inferred from it. The accepted pair trial is a genuine common trial by zero extension; the higher killed value also lies below the same lower escape certificate. All original leaf counts $2,3,5$, numerical replies, refusal and INITIAL target remain exactly §55.6's. No spectrum is inserted into an original Read. $\square$
+
+**Proposition 63.12 (actual coescape distinguishes a retained pair from separated particles).** In separately legal finite prefixes of the same INITIAL of (63.30), let
+
+$$
+S_h^{\rm adj}=\{L^h,L^{h+1}\},\qquad
+S_h^{\rm sep}=\{L^h,R^h\},\qquad h\ge1.
+\tag{63.33}
+$$
+
+Commission a finite cap sufficient to reach an index $j_h\ge2(h+1+b_h)$, where $b_h\to\infty$, and use the authentic $D_{j_h}(t)$. Both known occupation preparations are within that same source-domain family. These are separate finite commissions with this INITIAL, not continuations of the stopped $H=3$ history. Their common, and buffered killed, basis-trial energies have limits
+
+$$
+E_h^{\rm adj}\longrightarrow6a-\nu/3,
+\qquad E_h^{\rm sep}\longrightarrow6a.
+\tag{63.34}
+$$
+
+Proof. All occupied sites are nonroot, so both inherited kinetic diagonals are six. Their root potentials tend to zero. Formula(62.3) gives
+
+$$
+G^{\rm c}(L^h,L^{h+1})=\frac13+\frac13\,2^{-(2h+1)},
+\qquad
+G^{\rm c}(L^h,R^h)=2^{-2h}.
+\tag{63.35}
+$$
+
+The contained global ball supplies the stated buffers; Lemma63.6 makes the killed/common differences tend to zero. Thus (63.34) follows. Each family of basis vectors is weakly null, but no operator-residual estimate or Weyl eigenvector claim is made. For (63.31), these limits are $-114$ and $6$, while the root pair trial lies strictly below the lower certificate $-114-4\sqrt2$. The retained attraction of the adjacent escape family explains why the one-particle essential threshold alone cannot establish pair binding. $\square$
+
+**Definition 63.13 (consumed methods, new relation and remaining correspondence).** The exact suppliers are §§55.1–55.5 for the same-root carrier, gap and actual contained-ball exhaustion; §§58,60 for the separate ideal transfer/actuator/clock contract and its source-record projection; §§62.2,62.4,62.6 for literal statistics, the same-L pair kernel, killed ordering/update and fixed-$N$ variational recovery. They are consumed, not re-delivered as new results. Teschl's primary min-max theorem, already supplied in §55.8, applies to the bounded self-adjoint operators and their full variational subspaces used here. Its compact-perturbation Weyl theorem is not applied to the noncompact many-particle pair multiplier.
+
+The primary comparisons are Mathieu Lewin, [*Geometric methods for nonlinear many-body quantum systems*, arXiv:1009.2836v3, §3.2, Theorem3.1](https://arxiv.org/pdf/1009.2836v3); Christoph Fischbacher and Günter Stolz, [*Droplet states in quantum XXZ spin systems on general graphs*, arXiv:1712.10276v2, §2.1–2.4](https://arxiv.org/pdf/1712.10276v2); and Jonathan Breuer, Sergey Denisov and Latif Eliaz, [*On the essential spectrum of Schrödinger operators on trees*, arXiv:1711.10049v2, Theorems2–4](https://arxiv.org/pdf/1711.10049v2). Lewin's theorem concerns Euclidean many-body operators, with even pair potential, and both external and pair potentials finite sums of $L^p(\mathbb R^d)$ functions with $\max(d/2,1)<p<\infty$, or $L^\infty$ functions tending to zero at infinity; its cluster-localization method motivates retaining the escaping group's energy, but its formula is not imported to this tree. Fischbacher–Stolz supply the mature symmetric-configuration-graph viewpoint for connected countable bounded-degree graphs; their XXZ potential is not (63.1), whose total-degree diagonal and Green attraction remain literal. Breuer–Denisov–Eliaz distinguish general bounded-degree R-limit inclusion from the regular-tree equality and exhibit failure of the reverse inclusion on a general graph. The $N$-occupation graph is not the one-particle regular tree, so that equality does not supply a sharp threshold here. The partition, tensor-form equality, exterior error and spectral tightness needed for this carrier are proved in (63.7)–(63.12), (63.24)–(63.27). These primary methods require no additional Library supplier for the deduction.
+
+The `repo-derived` relation is the joint chain on the already commissioned source: all fixed-$N$ partial/intact/multiple escape is controlled with vanishing error; an explicit nonempty coupling regime and the actual pair witness force strict separation; this gives attained states, compactness of every near-minimizer, and complete common/killed finite spectral spaces through actual whole-rho exhaustion. The primary comparisons and ordinary calculations do not assert global mathematical priority or exhaustive literature absence.
+
+The existing [same-source three-axis interface, §§10.1–10.6](AURIC_FIB_OBSERVER_INTERNAL_THREE_AXIS_GEOMETRY_AND_PREDICTIVE_INTERFACE.md) already supplies a conditional common $\Pi$ under its full-vector, spanning, common-zero, quadratic-distance/PSD-Gram, at least two independent directions, alternating-bilinear/exact-area/Jacobi, actual orthonormal-probe and finite binary-calibration conditions, with every actual linear generator preserving its hidden kernel. Its seven-value native direction image and its five-dimensional direction-plus-count task retain their scopes. It is a genuine conditional task bridge; it is not an isometry or operator transport from this unit occurrence graph to a Euclidean displacement region. [Local Choice, §§9–10](https://github.com/the-omega-institute/trureturing/blob/f41910858bd5ad5592fae12340cfb62c79a8c673/docs/develop/theory/FIB_ATOM_LOCAL_CHOICE_GEOMETRY.md) adds a separately supplied same-label probe-and-guard contract and preserves its missing joint-statistic and single-archive acquisition boundaries. Neither source supplies or contradicts the configuration localization of this chapter. The Robin dyadic resolvent concerns arithmetic weighted recursion; the KBonacci mixed-tail root-zero cut prices concern their own immutable INITIAL reader and complete-block fees. Their inverses and recursive costs are not identified with occurrence transport by shared notation.
+
+The [finite acquisition correspondence, Atomic Generation Acquisition §12](RECURSIVE_RELATIONAL_OBSERVATION_ATOMIC_GENERATION_ACQUISITION.md#12-不可逆根后的被动切口阶梯容量与原生关系呈现) retains its paid positive-root archive, exact nonadvancing cut port, finite stopping/decoding, protected written records after refusal/closure, aligned actual generation, trusted markers, no unrecorded source change, actual write/protect/retain/query rights, closed strong ports and inclusion of every reply-affecting retained source influence in the service price. It is not unknown-state acquisition or preparation of a spectral state. The ideal known occupation preparations in (63.30)–(63.35) consume §62's paid premise; they do not grant ground-state preparation, unknown-source copies, reset or independent sampling.
+
+All infinite quantifiers describe common mathematical operators and families of separately commissioned finite prefixes. A fixed-cap execution can refuse, a stopped source has no later event, and there is no Read after an infinite prefix. The original $\mathcal D_2$ source retains independent arbitrary unbounded $a$, including zero, untagged radius-$7/25$ $b$, destructive actions, joint adversarial/history-dependent errors, source-independent initialization and its actual INITIAL/Read/Stop task. The positive commissioned kinetic parameter in (63.1) is not that actor variable. No extra geometric/quantum controls or physical clock are inferred.
+
+The constants, core size, binding criterion and spectral windows are for each fixed finite $N$. They give neither uniform population/refinement/thermodynamic/continuum control nor a vanishing moving-boundary Green norm, and they do not overturn §62.5's growing-population killed-renewal defect. Full subthreshold eigenspaces are preserved only in certified windows below $B_N$ with common-gap endpoints; (63.29) preserves near-groundspace distance under the supplied ideal law, not global all-energy dynamics or full-phase rho intertwining. Authentic spectral acquisition, operation-/metric-/field-/kinetic-preserving physical transport, calibrated time and matched maintenance/precision/storage prices remain unproved. Local direction dimension, ordered syntax, graph growth/degree, Hilbert dimension and physical cost stay distinct. These ordinary conditional results advance stable native structure on the commissioned carrier; they do not settle Euclidean spatial dimension three or the whole why-three objective.
+
+## 63.99 追加锚（本行以下为增补区）
