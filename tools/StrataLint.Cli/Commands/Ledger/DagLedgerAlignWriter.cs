@@ -174,8 +174,8 @@ internal static class DagLedgerAlignWriter
         var retirementClosure = retirements.IsEmpty
             ? ImmutableHashSet<RepoPath>.Empty
             : DescendantClosure(
-                FrozenLedgerReplacementClosure.DescendantsFrom(baseView, retirements),
-                baseView.ActiveByPath.Keys,
+                retirements,
+                baseView,
                 adjacency).Except(retirements);
 
         var addPaths = appendAlias
@@ -204,23 +204,9 @@ internal static class DagLedgerAlignWriter
             .ToImmutableArray();
         ValidateClosed(considered, truth.Snapshot, states);
 
-        var consistencyConflicts = considered
-            .Where(path => state.Records.TryGetValue(path, out var record)
-                && (!baseView.ActiveByPath.TryGetValue(path, out var active)
-                    || active.Material.StatementId != record.StatementId))
-            .ToImmutableArray();
-        if (!consistencyConflicts.IsEmpty)
-        {
-            return ConflictResult(considered.Length, consistencyConflicts);
-        }
-
         var addedPaths = addPaths
             .Where(path => !state.Records.ContainsKey(path))
             .Distinct()
-            .ToImmutableHashSet();
-        var changedPaths = considered
-            .Where(path => state.Records.TryGetValue(path, out var record)
-                && record.StatementId != catalog.ByPath[path].StatementId)
             .ToImmutableHashSet();
         // Resolve edges from the current report: dangling recorded identities cannot
         // identify their former dependency paths or seed a ledger reverse traversal.
@@ -233,7 +219,7 @@ internal static class DagLedgerAlignWriter
             .ToImmutableHashSet();
         var repairClosure = DescendantClosure(
             prerequisiteRepairs,
-            baseView.ActiveByPath.Keys,
+            baseView,
             adjacency);
         ValidateClosed(repairClosure, truth.Snapshot, states);
         foreach (var path in repairClosure.OrderBy(static path => path.Value, StringComparer.Ordinal))
@@ -261,9 +247,25 @@ internal static class DagLedgerAlignWriter
             .Union(retirementClosure);
         var regeneration = DescendantClosure(
             initialRegeneration,
-            baseView.ActiveByPath.Keys,
+            baseView,
             adjacency);
         ValidateClosed(regeneration, truth.Snapshot, states);
+        considered = considered.Union(regeneration)
+            .OrderBy(static path => path.Value, StringComparer.Ordinal)
+            .ToImmutableArray();
+        var consistencyConflicts = considered
+            .Where(path => state.Records.TryGetValue(path, out var record)
+                && (!baseView.ActiveByPath.TryGetValue(path, out var active)
+                    || active.Material.StatementId != record.StatementId))
+            .ToImmutableArray();
+        if (!consistencyConflicts.IsEmpty)
+        {
+            return ConflictResult(considered.Length, consistencyConflicts);
+        }
+        var changedPaths = considered
+            .Where(path => state.Records.TryGetValue(path, out var record)
+                && record.StatementId != catalog.ByPath[path].StatementId)
+            .ToImmutableHashSet();
         var newEventFiles = BuildAlignedEventFiles(
             regeneration,
             catalog,
@@ -278,7 +280,7 @@ internal static class DagLedgerAlignWriter
             replacementFiles,
             "aligned frozen ledger");
         _ = ReadView(replacementFiles);
-        if ((!prerequisiteRepairs.IsEmpty || !retirements.IsEmpty)
+        if ((!regeneration.IsEmpty || !retirements.IsEmpty)
             && !DagLedgerLoader.TryOrderClosedDag(replacementEvents, [], out _))
         {
             throw new InvalidOperationException(
@@ -446,15 +448,19 @@ internal static class DagLedgerAlignWriter
 
     private static ImmutableHashSet<RepoPath> DescendantClosure(
         ImmutableHashSet<RepoPath> initial,
-        IEnumerable<RepoPath> activePaths,
+        FrozenLedgerBaseView baseView,
         IReadOnlyDictionary<RepoPath, ImmutableArray<RepoPath>> adjacency)
     {
         var closure = initial.ToHashSet();
         var changed = true;
         while (changed)
         {
-            changed = false;
-            foreach (var path in activePaths)
+            // Every replaced identity can have consumers in either relation;
+            // alternating recorded/current edges require a joint fixed point.
+            var before = closure.Count;
+            closure.UnionWith(FrozenLedgerReplacementClosure.DescendantsFrom(baseView, closure));
+            changed = closure.Count != before;
+            foreach (var path in baseView.ActiveByPath.Keys)
             {
                 if (!closure.Contains(path)
                     && adjacency.TryGetValue(path, out var dependencies)
