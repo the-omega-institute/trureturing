@@ -5042,3 +5042,470 @@ priority claim and has no Lean certification. The fixed shape and verified
 height give no uniform bound as $A\to\infty$: the comparison and high-zero
 allowances in (GE5), (GH3) still grow with $\sqrt A$.
 The full unbounded signed Robin target and RH remain unproved.
+
+
+## A one-sided entire envelope retaining the original cutoff
+
+The original prime weight has a derivative jump at its cutoff. A signed
+mixture of published power-function extremals gives entire lower and
+upper envelopes with an exact error while retaining that cutoff. Use
+the power-function corollary in Carneiro, Littmann and Vaaler,
+[arXiv:1008.4969v2](https://arxiv.org/abs/1008.4969v2), Part III,
+“Extremal Functions for $|x|^\sigma$”, can instead be applied before
+mixing the actual second-derivative measure. This is a paper-level
+application of that published corollary and elementary signed-measure
+integration, with no mathematical priority or Lean-verification claim.
+
+Retain $A\ge e^2$, $L=\log A$, and the original weight and derivative
+
+$$
+H_A(x)=\frac1{\max(A,|x|)\log\max(A,|x|)},\qquad
+k(t)=\frac{1+\log t}{t^2\log^2t},\qquad
+\kappa_A=k(A).
+$$
+
+The distributional second derivative is the signed measure
+
+$$
+\mu_A=\mu_A^+-\mu_A^-,\qquad
+\mu_A^+(du)=-k'(|u|)\mathbf1_{\{|u|>A\}}\,du,
+\qquad
+\mu_A^-=\kappa_A(\delta_{-A}+\delta_A).
+\tag{CE1}
+$$
+
+Here $k'<0$. Both parts have mass $2\kappa_A$, and
+$\int(1+|u|)\,d|\mu_A|(u)<\infty$. The negative cutoff atoms have
+not been dropped. Direct integration gives the absolutely convergent
+potential representation
+
+$$
+\boxed{H_A(x)=\frac12\int_{\mathbb R}|x-u|\,d\mu_A(u).}
+\tag{CE2}
+$$
+
+For example, differentiation off $\pm A$ gives the original derivative;
+the value at zero is
+$-A\kappa_A+\int_A^\infty u[-k'(u)]\,du=1/(AL)$.
+These facts and continuity identify the potential with $H_A$.
+
+Use the source corollary at $\sigma=1$, where its normalization is
+$\gamma(-1)=-2\pi$ and $\gamma(2)=1/\pi$. Reversing the inequalities
+when dividing by $-2\pi$, and then rescaling, provides even real entire
+functions $P_\delta,Q_\delta$ of exponential type at most $2\pi\delta$
+for every $\delta>0$, satisfying
+
+$$
+P_\delta(x)\le |x|\le Q_\delta(x),\qquad
+\int_{\mathbb R}(|x|-P_\delta(x))\,dx=\frac1{6\delta^2},\qquad
+\int_{\mathbb R}(Q_\delta(x)-|x|)\,dx=\frac1{12\delta^2}.
+\tag{CE3}
+$$
+
+This reuses the source result rather than reconstructing its proof.
+The two nonnegative errors sum to the integrable entire function
+$Q_\delta-P_\delta$. The standard real-line bound for an integrable
+entire function of finite exponential type makes that difference
+bounded; hence both power extremals are $O_\delta(1+|x|)$ on the real
+line. The usual polynomial-growth version of the Paley–Wiener bound
+then gives $O_{K,\delta}(1+|u|)$ for their translates $z-u$, uniformly
+for $z$ in a fixed compact subset $K$ of the complex plane. This bound
+and the first moment in (CE1) justify locally uniform integration below,
+including differentiation on compact subsets.
+
+Define
+
+$$
+\begin{aligned}
+\ell_{A,\delta}(z)
+ &=\frac12\left[\int P_\delta(z-u)\,d\mu_A^+(u)
+                  -\int Q_\delta(z-u)\,d\mu_A^-(u)\right],\\
+u_{A,\delta}(z)
+ &=\frac12\left[\int Q_\delta(z-u)\,d\mu_A^+(u)
+                  -\int P_\delta(z-u)\,d\mu_A^-(u)\right].
+\end{aligned}
+\tag{CE4}
+$$
+
+They are even real entire functions of exponential type at most
+$2\pi\delta$, and the signs in (CE4) give
+
+$$
+\boxed{\ell_{A,\delta}(x)\le H_A(x)\le u_{A,\delta}(x)
+\qquad(x\in\mathbb R).}
+\tag{CE5}
+$$
+
+Tonelli applies to the nonnegative differences from (CE2). Using the
+actual two masses in (CE1), rather than treating the signed measure as
+positive, gives the exact errors
+
+$$
+\int_{\mathbb R}(H_A-\ell_{A,\delta})\,dx
+=\int_{\mathbb R}(u_{A,\delta}-H_A)\,dx
+=\frac{\kappa_A}{4\delta^2}.
+\tag{CE6}
+$$
+
+Evenness therefore yields
+
+$$
+\boxed{\int_0^\infty(H_A-\ell_{A,\delta})\,dt
+       =\frac{\kappa_A}{8\delta^2}.}
+\tag{CE7}
+$$
+
+These are explicit envelopes for the unchanged cutoff weight. They do
+not assert extremality for $H_A$, arithmetic sampling convergence, a
+compact zero-height cutoff, or a sign estimate on the original complete
+zero response. Fourier support on the additive real variable is not
+spectral truncation at the actual complex zeta zeros.
+
+### A finite centered prime comparison
+
+The lower envelope (CE5) gives a finite arithmetic consumer without
+assuming that an unweighted $L^1$ error controls an infinite
+von-Mangoldt weighted sum. Keep $R\ge A\ge e^2$, $V=\log R$,
+$D(t)=\psi(t)-t$, and the existing unconditional constant $C_\psi$ in
+(GR3). Define the finite centered response
+
+$$
+\mathcal J_{A,\delta}(R)
+=\int_0^R\ell_{A,\delta}(t)\,dt
+ -\sum_{2\le n\le R}\Lambda(n)\ell_{A,\delta}(n).
+\tag{CP1}
+$$
+
+Both terms are finite. No separately divergent pole or prime integral
+has been taken. Set $e=H_A-\ell_{A,\delta}\ge0$. For this same $R$,
+nonnegative von Mangoldt weights and (CE7) give
+
+$$
+\begin{aligned}
+\int_0^R H_A(t)\,dt-\sum_{2\le n\le R}\Lambda(n)H_A(n)
+&=\mathcal J_{A,\delta}(R)+\int_0^R e(t)\,dt
+                -\sum_{2\le n\le R}\Lambda(n)e(n)\\
+&\le\mathcal J_{A,\delta}(R)+\frac{\kappa_A}{8\delta^2}.
+\end{aligned}
+\tag{CP2}
+$$
+
+An atom at $n=A$ satisfies the same pointwise order. No zero real part,
+multiplicity, or height is altered in the original response.
+
+Partial summation, with the right endpoint included in $\psi(R)$,
+keeps the full original integral:
+
+$$
+-I_\psi(A)
+=\left[\int_0^R H_A(t)\,dt
+       -\sum_{2\le n\le R}\Lambda(n)H_A(n)\right]
+ +D(R)H_A(R)-\int_R^\infty D(t)k(t)\,dt.
+\tag{CP3}
+$$
+
+The existing (GR3) implies $|D(t)|\le C_\psi t/\log^2t$ for $t>1$.
+Its boundary allowance is $C_\psi/V^3$, and direct integration pays
+all of the remaining tail by
+
+$$
+\int_R^\infty |D(t)|k(t)\,dt
+\le C_\psi\left(\frac1{2V^2}+\frac1{3V^3}\right).
+$$
+
+Consequently the finite directed upper bound is
+
+$$
+\boxed{\begin{aligned}
+-\sqrt A L I_\psi(A)\le{}&\sqrt A L\mathcal J_{A,\delta}(R)
+ +\frac{1+L}{8A^{3/2}L\delta^2}\\
+&+C_\psi\sqrt A L
+   \left(\frac1{2V^2}+\frac4{3V^3}\right).
+\end{aligned}}
+\tag{CP4}
+$$
+
+This pays the approximation and the entire omitted arithmetic tail for
+any displayed parameters. It neither requires nor proves convergence
+of an infinite prime sample of the envelope error. For instance,
+$\delta=1$ and $R=\exp(A^{1/4}\log A)$ make both displayed added
+allowances tend to zero as $A\to\infty$; this is asymptotic, since
+$C_\psi$ has not been numerically certified. It gives no starting clock
+and no claim that evaluating this finite prime sum is inexpensive.
+
+At the unchanged conditional least global Robin-ratio maximizing
+integer, a sufficiently strong upper estimate on the actual
+$\mathcal J_{A,\delta}(R)$ would still be needed to pay the strict
+core after (CP4). No such main estimate is supplied. The original
+$F_A$, actual zero multiset, complete elementary contributions and
+unbounded Robin/RH goal remain unchanged; no compact spectral
+truncation or RH inference follows from additive exponential type.
+This is a paper-level comparison, not a Lean-verified result.
+
+## Joint short-interval cancellation in the Gamma comparison
+
+The allowance in (GP6) discards the cancellation between the two sides
+of the original cutoff. The uniform short-interval input already
+recorded in the [Guth–Maynard note](../Analytic/guthmaynard2024largevalues.md),
+Corollary 1.3 of [arXiv:2405.20552v2](https://arxiv.org/abs/2405.20552v2),
+supplies a two-sided comparison with a smaller admissible Gamma shape.
+The global PNT input is the Fiori–Jaskari theorem quoted above. These
+source theorems, the absolute centering in (GP4)–(GP5), and the full
+combined remainder (GR1) are reused. The following is a paper-level
+application, without mathematical-priority or Lean-verification claims.
+
+Retain $A\to\infty$, $L=\log A$, $D(t)=\psi(t)-t$, $h_A,w_c,J_\alpha$
+and the Gamma law from (GP1)–(GP5). Define
+
+$$
+\begin{aligned}
+\eta_0(A)&=\sup_{t\ge A}\frac{|D(t)|}{t},\\
+\eta_{\rm si}(A)&=
+\sup_{\substack{A/2\le u<v\le3A/2\\v-u\ge A^{2/3}}}
+\frac{|D(v)-D(u)|}{v-u}.
+\end{aligned}
+\tag{GS1}
+$$
+
+There are absolute constants $K,c>0$ such that, for all sufficiently
+large $A$ and every noninteger $\alpha\ge4$,
+
+$$
+\boxed{\begin{aligned}
+\sqrt A L|J_1(A)-J_\alpha(A)|\le K\bigg\{&
+\frac{\sqrt A}{\alpha}
+ [\eta_0(A)+\eta_{\rm si}(A)+A^{-1/30}]\\
+&+\sqrt{A\alpha}\,A^{-9/10}
+ +\sqrt A e^{-c\alpha}\bigg\}.
+\end{aligned}}
+\tag{GS2}
+$$
+
+The starting value and constants are not numerically certified. This
+is an asymptotic comparison, not an additional finite Robin clock.
+
+### The local prime input and its uniform range
+
+The retained global PNT theorem gives, for some fixed $c_0>0$,
+
+$$
+\eta_0(A)\ll
+\exp\left[-c_0\frac{L^{3/5}}{(\log L)^{1/5}}\right].
+\tag{GS3}
+$$
+
+Use Guth–Maynard Corollary 1.3 with the fixed parameter $\epsilon=1/20$.
+For $u\in[A/2,3A/2]$ and $A^{2/3}\le h\le A^{9/10}$, its required
+range $u^{37/60}\le h\le u^{0.99}$ holds uniformly for sufficiently
+large $A$. Multiplying the prime count by $\log u$ introduces an error
+$O(h^2/(A L))$ from the variation of $\log p$. Thus
+
+$$
+\vartheta(u+h)-\vartheta(u)
+=h+O\bigl(h[L e^{-L^{1/4}}+A^{-1/10}]\bigr).
+$$
+
+Here $(\log u)^{1/4}=L^{1/4}+O(L^{-3/4})$ uniformly. If
+$A^{9/10}<h\le A$, with $u+h\le3A/2$, partition into equal pieces of lengths between
+$A^{9/10}/2$ and $A^{9/10}$ and add the same estimates. The classical
+Chebyshev bound and prime-power identity give
+$\psi(t)-\vartheta(t)=O(\sqrt t)$; paying this at the two endpoints,
+with $h\ge A^{2/3}$, proves
+
+$$
+\boxed{\eta_{\rm si}(A)\ll
+ L e^{-L^{1/4}}+A^{-1/10}+A^{-1/6}.}
+\tag{GS4}
+$$
+
+This uses the uniform corollary, not the separate almost-all theorem.
+It neither assumes a short-interval relative error from global PNT
+nor substitutes $\pi$ or $\vartheta$ for $\psi$ without paying prime
+powers.
+
+### Remove only the exactly centered linear dilation
+
+Choose the following endpoint convention and retain it in the prime
+sum:
+
+$$
+a_A(t)=
+\begin{cases}
+-1/(AL),&0<t\le A,\\
+1/(t\log^2t),&t>A.
+\end{cases}
+\qquad
+B_c(t)=w_c(t)-h_A(t)-(c-1)a_A(t).
+\tag{GS5}
+$$
+
+Both $a_A$ and $w_c-h_A$ are absolutely integrable against $dt$ and
+$d\psi(t)$; for the latter use (GP4). Moreover
+$\int_0^\infty a_A(t)\,dt=-1/L+1/L=0$ and
+$\int_0^\infty(w_c-h_A)\,dt=0$. The absolute $d\psi+dt$ norm of
+$a_A$ is $O(1/L)$ by Chebyshev and partial summation. Consequently
+(GP5), Fubini, and $\mathbb E(C-1)=0$ give the unchanged arithmetic
+difference
+
+$$
+\boxed{J_1-J_\alpha
+ =\mathbb E\int_0^\infty B_C(t)\,dD(t).}
+\tag{GS6}
+$$
+
+No divergent pole and prime quantities are separated in this identity.
+
+For $1/2\le c\le3/2$, put $e=c-1$ and split $B_c=b_c+v_c$, where
+
+$$
+b_c(t)=
+\begin{cases}
+e^2/(cAL),&0<t\le A,\\[2pt]
+\displaystyle\frac1{t(\log t-\log c)}-
+ \frac1{t\log t}-\frac e{t\log^2t},&t>A.
+\end{cases}
+\tag{GS7}
+$$
+
+This regular part agrees with $B_c$ outside the interval between $A$
+and $cA$. Taylor's theorem in $c$, uniformly on $[1/2,3/2]$, gives
+
+$$
+|b_c(t)|\ll\frac{e^2}{t\log^2t},\qquad
+|b_c'(t)|\ll\frac{e^2}{t^2\log^2t}\qquad(t>A).
+$$
+
+Partial summation on $(A,\infty)$, together with the constant part on
+$(0,A]$, therefore yields
+
+$$
+\left|\int_0^\infty b_c(t)\,dD(t)\right|
+\ll\eta_0(A)e^2/L.
+\tag{GS8}
+$$
+
+In particular, the boundary contribution is paid using $D(A)$; the
+change of formula at $A$ has not been ignored.
+
+The local residual $v_c$ is zero outside the closed interval with
+endpoints $A,cA$. Inside that interval its nonzero formula is
+
+$$
+\begin{cases}
+\displaystyle\frac1{cAL}-\frac1{t\log(t/c)},&c>1,\ A<t<cA,\\[4pt]
+\displaystyle\frac1{t\log(t/c)}-\frac1{cAL},&c<1,\ cA<t<A.
+\end{cases}
+$$
+
+The actual endpoint values are those of $B_c-b_c$ in (GS5)–(GS7).
+The first derivative of $1/[t\log(t/c)]$ is $O(1/(A^2L))$ in this
+interval. Including the possible jump at $A$ gives
+
+$$
+\|v_c\|_\infty+\operatorname{Var}(v_c)
+\ll |e|/(AL).
+\tag{GS9}
+$$
+
+### Pay the shrinking cutoff interval, including its atoms
+
+Set $H_0=A^{2/3}$, $H_1=A^{7/10}$ and $h=A|e|$. For
+$h\ge H_1$, (GS1) bounds $|D(t)-D(A)|$ by
+$\eta_{\rm si}(A)h$ whenever $|t-A|\ge H_0$. For smaller distances,
+monotonicity of $\psi$ and (GS4) applied to
+$[A-H_0,A+H_0]$ give the bound $O(H_0)$. Since
+$H_0/H_1=A^{-1/30}$, it follows uniformly on the support of $v_c$ that
+
+$$
+|D(t)-D(A)|\ll
+[\eta_{\rm si}(A)+A^{-1/30}]h.
+$$
+
+The same bound holds for one-sided limits after paying a possible
+endpoint prime-power atom of size at most $\log(2A)=O(\log A)$,
+absorbed in $H_0$. Integration of a bounded-variation function against
+these increments, using (GS9), gives
+
+$$
+\left|\int v_c(t)\,dD(t)\right|
+\ll [\eta_{\rm si}(A)+A^{-1/30}]e^2/L
+\qquad(H_1\le h\le A/2).
+\tag{GS10}
+$$
+
+For $h<H_1$, the support lies in $[A-H_1,A+H_1]$. Its total
+$d\psi+dt$ mass is $O(H_1)$ by (GS4), with the endpoint atom included.
+Therefore
+$|\int v_c\,dD|\ll |e|H_1/(AL)$. The maximum of the Gamma density
+is $O(\sqrt\alpha)$ uniformly for $\alpha\ge4$, by the standard
+Stirling bound at its mode. Hence
+
+$$
+\begin{aligned}
+\mathbb E[|C-1|\mathbf1_{\{|C-1|<H_1/A\}}]
+ &\ll\sqrt\alpha(H_1/A)^2,\\
+\sqrt A L\,
+\mathbb E\left[\left|\int v_C\,dD\right|
+                  \mathbf1_{\{|C-1|<H_1/A\}}\right]
+ &\ll\sqrt{A\alpha}\,A^{-9/10}.
+\end{aligned}
+\tag{GS11}
+$$
+
+For the remaining event $C\notin[1/2,3/2]$, (GP4) and the absolute
+norm of $a_A$ give
+$|\int B_c\,dD|\ll(1+c+c^{-1})/L$ for every $c>0$.
+The Gamma moment-generating function and Chernoff's inequality give
+$\Pr(C\notin[1/2,3/2])\le2e^{-c_1\alpha}$ for an absolute
+$c_1>0$. The second moment of $1+C+C^{-1}$ is bounded uniformly for
+$\alpha\ge4$, using
+$\mathbb EC^2=1+1/\alpha$ and
+$\mathbb EC^{-2}=\alpha^2/[(\alpha-1)(\alpha-2)]$.
+Cauchy–Schwarz thus pays the entire event by
+$O(\sqrt A e^{-c_1\alpha/2})$ after normalization. In particular no
+scales with $cA<1$ have been discarded.
+
+Finally average (GS8) and (GS10), use
+$\mathbb E(C-1)^2=1/\alpha$, and add (GS11) and this Gamma tail.
+This proves (GS2) uniformly over its stated shapes.
+
+### A smaller shape family with vanishing full comparison error
+
+Fix $0<b_-\le b_+<\infty$, and take any noninteger shape satisfying
+
+$$
+b_-a_*(A)\le\alpha\le b_+a_*(A),
+\qquad a_*(A)=\sqrt A\,e^{-L^{1/4}/2}.
+\tag{GS12}
+$$
+
+For $b_-=1/2$ and $b_+=2$, for example,
+$\alpha=\lfloor a_*(A)\rfloor+1/2$ is lawful eventually.
+The first term of (GS2), using (GS3)–(GS4), is
+$O_{b_-,b_+}(L e^{-L^{1/4}/2})$. The small-interval term is
+$O_{b_-,b_+}(A^{-3/20}e^{-L^{1/4}/4})$, and the Gamma tail is smaller.
+Reusing the complete elementary remainder in (GR1) gives
+
+$$
+\boxed{-\sqrt A L I_\psi(A)
+ =\sqrt A L Z_\alpha(A)
+  +O_{b_-,b_+}(L e^{-L^{1/4}/2}) .}
+\tag{GS13}
+$$
+
+Every zero in $Z_\alpha$ still has its actual real part,
+multiplicity and height, and the coefficient remains
+$H_\alpha(\rho)F_A(\rho)$. No main spectral response has been bounded.
+In (GS12) the old allowance $\sqrt A/\alpha$ diverges, whereas the
+joint arithmetic comparison tends to zero. This is the gained
+transport regime; it supplies neither a sign nor a finite numerical
+threshold for the remaining main response.
+
+At the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum, this estimate uses $A=\log N$ without changing
+the selected source, the strict core, or the existing conclusion
+$A>10^{45}$. The asymptotic starting point in (GS2) has not been
+numerically compared with this finite exclusion. A full signed upper
+bound for $Z_\alpha(A)$ with enough strict slack remains required.
+Robin's criterion and RH remain
+unproved by these applications.
