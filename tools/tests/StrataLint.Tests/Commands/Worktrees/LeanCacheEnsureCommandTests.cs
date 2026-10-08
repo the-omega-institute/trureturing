@@ -373,6 +373,7 @@ public sealed partial class LeanCacheEnsureCommandTests
         WriteCache(repository.Path, "same partition donor\n");
         _ = WriteProjectOlean(repository.Path, "WarmMain");
         var runner = new RecordingWorktreeProcessRunner();
+        var cloner = new RecordingDirectoryCloner();
 
         using (var targetJson = JsonDocument.Parse(targetManifest))
         using (var donorJson = JsonDocument.Parse(donorManifest))
@@ -386,9 +387,11 @@ public sealed partial class LeanCacheEnsureCommandTests
         var result = WorktreeCommand.Run(
             repository.Path,
             ["ensure-cache", "--path", target],
-            runner);
+            runner,
+            cloner);
 
-        Assert.True(result.Success);
+        Assert.True(result.Success, result.Error);
+        Assert.Single(cloner.Invocations);
         Assert.Empty(result.Error);
         Assert.Equal("same partition donor\n", LeanCacheFixtureFile.ReadCacheText(target));
         Assert.Equal(targetManifest, File.ReadAllBytes(Path.Combine(target, "lake-manifest.json")));
