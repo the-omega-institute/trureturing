@@ -13,7 +13,6 @@ import Mathlib.Data.Fintype.Powerset
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
-set_option maxHeartbeats 1200000
 open scoped BigOperators
 noncomputable section
 namespace D5.S3.ObserverMemory.Prediction.CausalRepairEnvelopes
@@ -87,11 +86,9 @@ private theorem split_mass {n : ℕ} {A Y : Fin (n + 1) → Type*}
     exact (Nat.not_lt_zero i.1.val i.2).elim
   · exact congrFun (tail_actions f z y) j
 
-
-
 /-- The upper and lower tables have strategy-independent masses attained by the original table. -/
 private theorem common_causal_envelopes (T : ℕ) (A Y : Fin T → Type*)
-    [∀ t, Fintype (A t)] [∀ t, Nonempty (A t)]
+    [∀ t, Finite (A t)] [∀ t, Nonempty (A t)]
     [∀ t, Fintype (Y t)] [∀ t, Nonempty (Y t)]
     (P : (∀ t, Y t) → (∀ t, A t) → ℝ) (hP : ∀ y a, 0 ≤ P y a) :
     ∃ (U L : (∀ t, Y t) → (∀ t, A t) → ℝ)
@@ -100,6 +97,7 @@ private theorem common_causal_envelopes (T : ℕ) (A Y : Fin T → Type*)
       (∀ f, feedbackMass U f = feedbackMass P fu ∧
         feedbackMass L f = feedbackMass P fl) := by
   classical
+  let (t : Fin T) : Fintype (A t) := Fintype.ofFinite (A t)
   induction T with
   | zero =>
     let f : (t : Fin 0) → Prefix Y t.val → A t := fun t => Fin.elim0 t
@@ -160,7 +158,8 @@ private theorem common_causal_envelopes (T : ℕ) (A Y : Fin T → Type*)
       refine ⟨mul_nonneg (hratio (a 0)).1 hc.1, ?_, ?_⟩
       · exact le_trans (mul_le_of_le_one_left hc.1 (hratio (a 0)).2) hc.2.1
       · dsimp [Cplus]
-        exact le_trans hc.2.2 (le_add_of_nonneg_right (by split_ifs <;> linarith [hdu (a 0)]))
+        exact le_trans hc.2.2 (le_add_of_nonneg_right
+          (by split_ifs <;> linarith [hdu (a 0)]))
     · intro f
       let a := f 0 (fun i => (Nat.not_lt_zero i.1.val i.2).elim)
       have ha (y : ∀ t, Y t) : feedbackActions f y 0 = a := by
@@ -201,8 +200,6 @@ private theorem common_causal_envelopes (T : ℕ) (A Y : Fin T → Type*)
         · exact div_mul_cancel₀ l hd
       exact ⟨hu.trans hfu.symm, hl.trans hfl.symm⟩
 
-
-
 /-- Maximum event-mass discrepancy over every deterministic causal strategy and every output event. -/
 def feedbackDistance {T : ℕ} {A Y : Fin T → Type*}
     [∀ t, Fintype (A t)] [∀ t, Nonempty (A t)] [∀ t, Fintype (Y t)]
@@ -221,6 +218,17 @@ def feedbackDefect {T : ℕ} {A Y : Fin T → Type*}
   exact Finset.univ.sup' Finset.univ_nonempty
     (fun f : (t : Fin T) → Prefix Y t.val → A t => |feedbackMass P f - 1|)
 
+private theorem le_feedback_defect {T : ℕ} {A Y : Fin T → Type*}
+    [∀ t, Fintype (A t)] [∀ t, Nonempty (A t)] [∀ t, Fintype (Y t)]
+    (P : (∀ t, Y t) → (∀ t, A t) → ℝ)
+    (f : (t : Fin T) → Prefix Y t.val → A t) :
+    |feedbackMass P f - 1| ≤ feedbackDefect P := by
+  classical
+  unfold feedbackDefect
+  exact Finset.le_sup'
+    (f := fun g : (t : Fin T) → Prefix Y t.val → A t => |feedbackMass P g - 1|)
+    (Finset.mem_univ f)
+
 private theorem normalization_lower_bound {T : ℕ} {A Y : Fin T → Type*}
     [∀ t, Fintype (A t)] [∀ t, Nonempty (A t)] [∀ t, Fintype (Y t)]
     (P Q : (∀ t, Y t) → (∀ t, A t) → ℝ)
@@ -236,8 +244,6 @@ private theorem normalization_lower_bound {T : ℕ} {A Y : Fin T → Type*}
   simp only [Set.mem_univ, if_true, Finset.sum_sub_distrib] at h
   change |feedbackMass P f - feedbackMass Q f| ≤ feedbackDistance P Q at h
   simpa only [hQ f] using h
-
-
 
 /-- A normalized finite response table has a causal repair attaining its feedback defect,
 and every causal probability table has at least that error. -/
@@ -276,13 +282,13 @@ theorem result (T : ℕ) (hT : 1 ≤ T) (A Y : Fin T → Type*)
   have hl1 : l ≤ 1 := hconst ▸ (hbounds fconst).1
   have hu1 : 1 ≤ u := hconst ▸ (hbounds fconst).2
   have hlu : l ≤ u := hl1.trans hu1
-  have hdeltau : u - 1 ≤ feedbackDefect P :=
-    (le_abs_self (u - 1)).trans (Finset.le_sup' (s := Finset.univ)
-      (f := fun f => |feedbackMass P f - 1|) (Finset.mem_univ fu))
+  have hdeltau : u - 1 ≤ feedbackDefect P := by
+    exact (le_abs_self (u - 1)).trans (le_feedback_defect P fu)
   have hdeltal : 1 - l ≤ feedbackDefect P := by
-    have h := (neg_le_abs (l - 1)).trans (Finset.le_sup' (s := Finset.univ)
-      (f := fun f => |feedbackMass P f - 1|) (Finset.mem_univ fl))
-    linarith
+    calc
+      1 - l = -(l - 1) := by ring
+      _ ≤ |l - 1| := neg_le_abs _
+      _ ≤ feedbackDefect P := le_feedback_defect P fl
   obtain ⟨θ, hθ0, hθ1, hθmass⟩ :
       ∃ θ : ℝ, 0 ≤ θ ∧ θ ≤ 1 ∧ l + θ * (u - l) = 1 := by
     by_cases heq : u = l
@@ -316,14 +322,15 @@ theorem result (T : ℕ) (hT : 1 ≤ T) (A Y : Fin T → Type*)
     exact hQmass (fun t _ => a t)
   have hQcausal : ∀ n, n ≤ T → ∀ (x : Prefix Y n) (a b : ∀ t, A t),
       (∀ i, i.val < n → a i = b i) → prefixMarginal Q n x a = prefixMarginal Q n x b :=
-    ((feedback_normalization_prefix_causality_sequential_kernels T hT A Y Q hQ0 hQsum).out 0 2).mp hQmass
+    ((feedback_normalization_prefix_causality_sequential_kernels
+      T hT A Y Q hQ0 hQsum).out 0 2).mp hQmass
   have herror : feedbackDistance P Q ≤ feedbackDefect P := by
     apply Finset.sup'_le
     rintro ⟨f, E⟩ hv
     let act := feedbackActions f
     have hupper : (∑ y, if y ∈ E then P y (act y) - Q y (act y) else 0) ≤ u - 1 := by
       calc
-        _ ≤ ∑ y, U y (act y) - Q y (act y) := by
+        _ ≤ ∑ y, (U y (act y) - Q y (act y)) := by
           apply Finset.sum_le_sum
           intro y hy
           split_ifs
@@ -336,7 +343,7 @@ theorem result (T : ℕ) (hT : 1 ≤ T) (A Y : Fin T → Type*)
     have hlower : -(1 - l) ≤ (∑ y, if y ∈ E then P y (act y) - Q y (act y) else 0) := by
       have hneg : (∑ y, if y ∈ E then Q y (act y) - P y (act y) else 0) ≤ 1 - l := by
         calc
-          _ ≤ ∑ y, Q y (act y) - L y (act y) := by
+          _ ≤ ∑ y, (Q y (act y) - L y (act y)) := by
             apply Finset.sum_le_sum
             intro y hy
             split_ifs
@@ -348,10 +355,7 @@ theorem result (T : ℕ) (hT : 1 ≤ T) (A Y : Fin T → Type*)
             rw [hQmass, (hmass f).2]
       have heq : (∑ y, if y ∈ E then Q y (act y) - P y (act y) else 0) =
           -(∑ y, if y ∈ E then P y (act y) - Q y (act y) else 0) := by
-        rw [← Finset.sum_neg_distrib]
-        apply Finset.sum_congr rfl
-        intro y hy
-        split_ifs <;> ring
+        simp only [← Finset.sum_neg_distrib, neg_ite, neg_sub, neg_zero]
       rw [heq] at hneg
       linarith
     exact (abs_le.mpr ⟨by linarith [hdeltal], hupper.trans hdeltau⟩)
@@ -359,7 +363,7 @@ theorem result (T : ℕ) (hT : 1 ≤ T) (A Y : Fin T → Type*)
     le_antisymm herror (normalization_lower_bound P Q hQmass), ?_⟩
   intro R hR0 hRsum hRcausal
   exact normalization_lower_bound P R
-    (((feedback_normalization_prefix_causality_sequential_kernels T hT A Y R hR0 hRsum).out 0 2).mpr hRcausal)
+    (((feedback_normalization_prefix_causality_sequential_kernels
+      T hT A Y R hR0 hRsum).out 0 2).mpr hRcausal)
 
-#print axioms result
 end D5.S3.ObserverMemory.Prediction.CausalRepairEnvelopes
