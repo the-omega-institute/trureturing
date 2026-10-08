@@ -698,3 +698,222 @@ No bound for the signed main trace in (VE10) or the actual
 $D_a$ lower allowance is obtained. The constants and asymptotic
 starting clocks have not been numerically certified; RH remains
 unproved.
+
+## A uniform shrinking-time cutoff for the complete signed trace
+
+The fixed-parameter tail after (NH11) in
+[the Nicolas note](nicolas2025comparison.md#the-subcritical-full-spectrum-absolute-boundary)
+does not state a bound uniform as the clock and heat time change together.
+The following supplies that interface using the already paid near-Euler
+exterior in (VE6). The complete coefficient, heat convolution, positive
+Fourier kernel, Jensen theorem, contour balance and original response
+comparison are reused; none is reconstructed as a new source theorem.
+This is a `repo-derived` paper-level parameter application, without an
+exhaustive literature, mathematical-priority, numerical-constant or Lean
+claim.
+
+Keep exactly the complete principal continuation $\widehat F_A$ and
+actual multiset of $\xi_{-\epsilon}$ zeros used in (VE1)–(VE10).
+Assume
+
+$$
+A\ge e^2,\qquad L=\log A,\qquad 0<\eta\le\tfrac12,
+\qquad 0<\epsilon\le c\eta^4,\qquad \epsilon L\le1,
+\qquad \kappa=\epsilon L/4.
+$$
+
+Use the absolute $c$ from (VE1), chosen small enough that
+$\epsilon\le1/2$ throughout this domain. There is an absolute $C<\infty$
+such that, for every $T\ge2$,
+
+$$
+\boxed{
+\sum_{\substack{\xi_{-\epsilon}(w)=0\\|\Im w|>T}}
+ |\widehat F_A(w)|
+\le \frac{C A^\eta}{L}
+ T^{\kappa-1}\log(T+2).
+}
+\tag{VG1}
+$$
+
+The sum includes both ordinate signs, every actual real part and every
+multiplicity. Its constant is independent of $A,\eta,\epsilon,T$.
+This strengthens the parameter scope of the fixed-parameter tail;
+it gives no sign to the retained head.
+
+### The existing exterior confines every height uniformly
+
+Put $b=1+\eta$ and write the right boundary from (VE9) as
+$J_\epsilon(b+iu)$. Its ordinate and real part are
+
+$$
+y=u+\frac\epsilon4\arctan(u/b),\qquad
+x=b+\frac\epsilon4\log\frac{\sqrt{b^2+u^2}}{2\pi}.
+$$
+
+The ordinate is strictly increasing and has the sign of $u$, so
+$|u|\le|y|$. The zero-free exterior and reflected boundary already
+proved for (VE9) enclose **all** zeros, including bounded heights.
+As $1<b\le3/2$, their actual coordinates $w=\beta+iy$ obey
+
+$$
+\boxed{
+-\eta-\frac\epsilon4\log(|y|+2)
+\le\beta\le
+1+\eta+\frac\epsilon4\log(|y|+2).
+}
+\tag{VG2}
+$$
+
+No asymptotic exceptional set or new zero trajectory is used.
+The weaker denominator-free upper envelope follows from
+$\sqrt{b^2+u^2}/(2\pi)\le|y|+2$; functional reflection gives the lower
+one. In particular $A^{\beta-1}\le A^\eta(|y|+2)^\kappa$.
+
+The positive-kernel Jensen argument of (NH10) also has a common center
+lower bound on this small-time interval:
+
+$$
+\xi_{-\epsilon}(1/2)\ge\xi_{-1/2}(1/2)>0,
+\qquad
+\max_{|s-1/2|\le R}|\xi_{-\epsilon}(s)|
+\le2\xi_0(1/2+R).
+$$
+
+These are inequalities for the deformed function itself. Real Stirling
+growth and Jensen at radii $R$ and $2R$ therefore give a disk count
+$C R\log(R+2)$ with an absolute constant. By (VG2), for $T\ge2$ and
+$|y|\le T$,
+
+$$
+|\beta-1/2|\le1+\tfrac18\log(T+2)\le T.
+$$
+
+Thus these zeros lie in $|w-1/2|<2T$, and the complete count satisfies
+
+$$
+\boxed{
+\#\{w:\xi_{-\epsilon}(w)=0,\ |\Im w|\le T\}
+\le C T\log(T+2),\qquad T\ge2.
+}
+\tag{VG3}
+$$
+
+Multiplicity is retained in both Jensen and this count. No original-zeta
+zero-count theorem has been assigned to different zeros.
+
+### Keep the cancellation in the complete coefficient
+
+Reuse (NH15), with
+
+$$
+\widehat F_A'(z)=A^{z-1}h_L(z),\qquad
+h_L(z)=\frac1{z(1-z)}-\frac1{Lz^2}.
+$$
+
+For every real $\beta$, $t\ge2$ and $L\ge2$,
+
+$$
+|h_L(\beta+it)|\le\frac{1+1/L}{t^2},\qquad
+|h_L'(\beta+it)|\le\frac{2(1+1/L)}{t^3}.
+$$
+
+On either fixed ordinate sign, the complete coefficient tends to zero
+at the corresponding imaginary infinity by (NH2). Integrate the exact
+derivative along that vertical ray and integrate its $e^{\pm iLt}$
+factor once by parts. Its endpoint and derivative integral give
+
+$$
+|\widehat F_A(\beta+iy)|
+\le\frac{A^{\beta-1}}L
+\left[\frac{1+1/L}{|y|^2}
+ +\int_{|y|}^\infty\frac{2(1+1/L)}{t^3}\,dt\right]
+\le\frac{3A^{\beta-1}}{L|y|^2},\qquad |y|\ge2.
+$$
+
+This bound is uniform in $\beta$ and $L$. The two principal branches
+are kept separately; the positive-height ray crosses no cut, and
+conjugation supplies the same bound at negative height. Neither the
+$A^{z-1}/(zL)$ term nor $E_1((1-z)L)$ is estimated alone.
+
+Combine this bound with (VG2)–(VG3) on the dyadic bands
+$2^jT<|y|\le2^{j+1}T$. Since $0<\kappa\le1/4$, their entire absolute
+mass is at most
+
+$$
+\frac{C A^\eta}{L}
+\sum_{j\ge0}(2^jT)^{\kappa-1}\log(2^{j+1}T+2)
+\le\frac{C A^\eta}{L}T^{\kappa-1}\log(T+2).
+$$
+
+The geometric sums, including their $j$ factors, have common bounds
+because $2^{\kappa-1}\le2^{-3/4}<1$. This proves (VG1) over all omitted
+heights, rather than on a selected subsequence.
+
+### One common time now gives a finite signed head
+
+Use the **same** time already chosen for the full spectrum in (VE10):
+
+$$
+\epsilon(A)=\min\{(c/2)L^{-4},\ A^{-1/2}L^{-10}\},
+\qquad \eta=1/L,\qquad T(A)=\sqrt A\,L^3.
+$$
+
+Here $A^\eta=e$. Moreover $\epsilon(A)\le e^{-L/2}L^{-10}$,
+$\log T=L/2+3\log L$, and $\log L\le L$ for $L\ge2$ give
+$\kappa\log T\le(7/8)e^{-L/2}L^{-8}<1$.
+Also $\log(T+2)\le4L$. Hence (VG1) yields the joint bound
+
+$$
+\boxed{
+\sqrt A L
+\sum_{\substack{\xi_{-\epsilon(A)}(w)=0\\|\Im w|>T(A)}}
+ |\widehat F_A(w)|\le C L^{-2}.
+}
+\tag{VG4}
+$$
+
+It holds throughout the stated parameter domain with an absolute
+constant, without asserting that the second time branch is selected at
+one numerical clock. Define the finite, real signed head
+
+$$
+Z^{\rm head}_{\epsilon(A)}(A)=
+\sum_{\substack{\xi_{-\epsilon(A)}(w)=0\\|\Im w|\le T(A)}}
+ \widehat F_A(w).
+$$
+
+Positivity of the original Fourier kernel excludes real zeros at this
+negative time. The head is real by conjugation; its complete multiplicity
+count is at most $C\sqrt A L^4$ by (VG3). Finiteness is not a claim of a
+practical algorithm, computed zeros or certified numerical constants.
+
+The exact signed tail has absolute normalized bound (VG4). Combining
+it with the unchanged complete comparison (VE10) gives
+
+$$
+\boxed{
+-\sqrt A L I_\psi(A)
+=\sqrt A L Z^{\rm head}_{\epsilon(A)}(A)+r_A+\rho_A,
+\qquad |\rho_A|\le C_1L^{-1}+C_2L^{-2}.
+}
+\tag{VG5}
+$$
+
+The $L^{-1}$ term is the existing whole-trace transport allowance; the
+$L^{-2}$ term pays the entire omitted deformed spectrum. The original
+positive elementary correction $r_A$ is still present. The principal
+cut and pole compensation remain paid by the reused (VE9)–(VE10);
+no additional correction is silently discarded by the head cutoff.
+
+For the same conditional least integer attaining the global Robin-ratio
+maximum under a violation, $A=\log N>(7/2)10^{46}$, this supplies a finite
+head with a joint tail allowance. Its **signed upper bound** remains
+unproved. To reach the original sufficient target one still needs to
+control the head together with $r_A$ and $\rho_A$ against
+$\mathcal E(L)$; the strict core remains required. An asymptotic tail
+allowance is not a numerical finite-clock certificate or a uniform
+positive margin. The original real parts, both signs, all heights and
+multiplicities return through the complete response comparison.
+No RH conclusion or superiority to the already retained original-zero
+cutoffs is asserted.
