@@ -281,7 +281,7 @@ def publish(root, partition, verification=None):
     except (OSError, UnicodeError, json.JSONDecodeError) as error:
         receipt("publish", "failed", reason="current Inspector report is unreadable: " + str(error))
         return 1 if verification is not None else 0
-    if (not isinstance(payload, dict) or payload.get("schema") != "stratalint-raw-lean-report-v2"
+    if (not isinstance(payload, dict) or payload.get("schema") != "stratalint-raw-lean-report-v3"
             or not isinstance(payload.get("modules"), list)):
         receipt("publish", "failed", reason="current Inspector report is malformed")
         return 1 if verification is not None else 0

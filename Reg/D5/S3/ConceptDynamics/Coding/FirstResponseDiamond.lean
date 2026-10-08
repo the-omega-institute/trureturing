@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.FirstResponseDiamond
 import D5.S3.ConceptDynamics.Coding.RectangularNilpotenceBarrier
 import Reg.Support.DependentFamily
@@ -102,17 +103,28 @@ def registration : Registration arena (arena.Law actual) where
     have hh := congrFun (congrFun h 0) 0
     norm_num [actual, realize, z, o] at hh
 
-register_information_theorem first_response_diamond in arena
-  readout via (realize signature (fun _ q C => C) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.FirstResponseDiamond
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "arg", "fn", "arg", "arg"]
-      stateBinder := 3 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.first_response_diamond) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ q C => C) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "FirstResponseDiamond") "first_response_diamond") "Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond/Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.FirstResponseDiamond.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ q C => C) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.FirstResponseDiamond, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body", "fn", "arg", "fn", "arg", "fn", "arg", "arg"], stateBinder := 3, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Observer.Linear.SpectralNoiseAsymptotics
 import Reg.Support.DependentFamily
 import Mathlib.Tactic
@@ -83,14 +84,26 @@ def registration : Registration arena (arena.Law actual) where
   dependence := dependence_proof
 
 
-register_information_theorem _root_.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.spectral_noise_asymptotics in arena
-  readout via (realize signature (fun _ p x => Real.log (1+x/(p.1*p.2.2^p.2.1))) emptyAnchor)
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Observer.Linear.SpectralNoiseAsymptotics,
-    coordinates := #[6,11,12],
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "fn", "arg", "body", "fn", "arg", "arg", "arg", "body"],
-      stateOperand := some #["arg","arg","fn","arg"] }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.spectral_noise_asymptotics) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p x => Real.log (1+x/(p.1*p.2.2^p.2.1))) emptyAnchor)) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Observer") "Linear") "SpectralNoiseAsymptotics") "spectral_noise_asymptotics") "Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics/Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p x => Real.log (1+x/(p.1*p.2.2^p.2.1))) emptyAnchor),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Observer.Linear.SpectralNoiseAsymptotics, definition := none, coordinates := #[6, 11, 12], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "fn", "arg", "body", "fn", "arg", "arg", "arg", "body"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg", "arg", "fn", "arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end Reg.D5.S3.Observer.Linear.SpectralNoiseAsymptotics

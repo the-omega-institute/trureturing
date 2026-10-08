@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.CharacterSelection.TriangleDefectStability
 import Reg.Support.DependentFamily
 import Mathlib.Data.ZMod.Basic
@@ -98,19 +99,28 @@ def registration : Registration arena.{u, v} (arena.{u, v}.Law actual) where
   sensitivity := sensitivity_proof
   dependence := dependence_proof
 
-register_information_theorem
-  _root_.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.triangle_defects_incidence_repair_and_error_bound
-  in arena
-  readout via (realize signature (fun _ _ n => 3 * n) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Fourier.CharacterSelection.TriangleDefectStability
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "arg", "arg", "body", "arg", "fn", "arg"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.triangle_defects_incidence_repair_and_error_bound.{u, v}) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ n => 3 * n) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "CharacterSelection") "TriangleDefectStability") "triangle_defects_incidence_repair_and_error_bound") "Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability/Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Fourier.CharacterSelection.TriangleDefectStability.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u, v})⟩,
+  objectArena := .source ⟨(arena.{u, v})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u, v}) ⟨(registration.{u, v})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ n => 3 * n) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Fourier.CharacterSelection.TriangleDefectStability, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "body", "arg", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms rejected_law
 #print axioms actual_law

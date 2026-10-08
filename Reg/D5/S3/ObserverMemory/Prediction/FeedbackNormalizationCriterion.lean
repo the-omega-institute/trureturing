@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion
 import Reg.Support.DependentFamily
 
@@ -83,18 +84,27 @@ def registration : Registration arena.{u,v} (arena.Law actual) where
     change (∏ _t : Fin 1, (0 : ℝ)) ≠ ∏ _t : Fin 1, (1 : ℝ)
     norm_num
 
-register_information_theorem feedback_normalization_prefix_causality_sequential_kernels in arena
-  readout via (realize signature.{u,v} (fun _ _ f => ∏ t, f t) (fun e => nomatch e.down))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "arg", "arg", "arg",
-        "arg", "fn", "arg", "arg", "body", "arg", "arg", "body",
-        "body", "arg"]
-      stateOperand := some #["arg"] }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1, u_2} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.feedback_normalization_prefix_causality_sequential_kernels.{u_1, u_2}) (type_of% (realize.{0, 0, u_1, 0, u_2} signature.{u_1, u_2} (fun _ _ f => ∏ t, f t) (fun e => nomatch e.down))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ObserverMemory") "Prediction") "FeedbackNormalizationCriterion") "feedback_normalization_prefix_causality_sequential_kernels") "Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion/Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_2})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2}) ⟨(registration.{u_1, u_2})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, u_1, 0, u_2} signature.{u_1, u_2} (fun _ _ f => ∏ t, f t) (fun e => nomatch e.down)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "arg", "arg", "arg", "fn", "arg", "arg", "body", "arg", "arg", "body", "body", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #["arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.ObserverMemory.Prediction.FeedbackNormalizationCriterion
