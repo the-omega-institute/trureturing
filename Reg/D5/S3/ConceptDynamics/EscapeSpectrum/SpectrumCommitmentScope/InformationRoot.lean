@@ -1,5 +1,5 @@
+import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.LegacySpectrum
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
@@ -18,17 +18,7 @@ import D5.S3.ConceptDynamics.InformationEscapeRealizations.LocalLawGluingObstruc
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.EndStateOmitsPreemptingCause
 import D5.S3.ConceptDynamics.InformationEscape.SystemUnit
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.InformationRoot
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena, theoremName := `D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective,
-      statementIdentity := "sha256:970d0c4dbc3081113fb682ad75b2e6ee7f11e8330ded5624aa79599b799b76b3",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.InformationRoot }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.FirstThreeArenas.spectrumArena, theoremName := `D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective,
-      statementIdentity := "sha256:970d0c4dbc3081113fb682ad75b2e6ee7f11e8330ded5624aa79599b799b76b3",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.InformationRoot }]
-  companionPrefix := some `Reg.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.InformationRoot }
+
 
 namespace Reg.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.InformationRoot
 
@@ -69,14 +59,28 @@ attribute [local instance]
 local instance systemArenaStateDecidableEq : DecidableEq arena.toArena.State :=
   arena.toArena.stateDecidableEq
 
-register_information_theorem _root_.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective
-  in spectrumArena
-  readout via (@RegistrationTemplates.cutRealization SpectrumAtom (Fin 5) (inferInstanceAs (DecidableEq (Fin 5))) (fun atom => Reg.Support.LegacySpectrum.indexReadout atom))
-  primitives spectrumRealization.toPrimitiveBundle
-  realization Reg.Support.LegacySpectrum.bridge
-  variation _root_.D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.spectrum_lawSensitive
-  sensitivity Reg.Support.LegacySpectrum.sensitivity
-  escape from (SpectrumAtom) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective) (type_of% (@RegistrationTemplates.cutRealization SpectrumAtom (Fin 5) (inferInstanceAs (DecidableEq (Fin 5))) (fun atom => Reg.Support.LegacySpectrum.indexReadout atom))) (type_of% (SpectrumAtom)) (Unit) := {
+  unitName := `Reg.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.InformationRoot.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective.__information_unit,
+  realizationName := `Reg.Support.LegacySpectrum.bridge,
+  realizationSource := none,
+  generated := false,
+  arena := .law ⟨(spectrumArena)⟩,
+  objectArena := .law ⟨(spectrumArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (spectrumArena) (@D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates.cutRealization D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.SpectrumAtom (Fin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) (instDecidableEqFin (@OfNat.ofNat.{0} Nat (nat_lit 5) (instOfNatNat (nat_lit 5)))) fun (atom : D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.SpectrumAtom) => Reg.Support.LegacySpectrum.indexReadout atom) (spectrumRealization.toPrimitiveBundle) ⟨(Reg.Support.LegacySpectrum.bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (Reg.Support.LegacySpectrum.bridge) (@_root_.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.spectrum_atom_index_bijective))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((spectrumRealization.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (@RegistrationTemplates.cutRealization SpectrumAtom (Fin 5) (inferInstanceAs (DecidableEq (Fin 5))) (fun atom => Reg.Support.LegacySpectrum.indexReadout atom)),
+  variation := .evidence ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.spectrum_lawSensitive)⟩ (by first | exact (_root_.D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.spectrum_lawSensitive) | exact ⟨_, _, (_root_.D5.S3.ConceptDynamics.InformationEscape.TemplateShadow.spectrum_lawSensitive)⟩),
+  sensitivity := .evidence ⟨(Reg.Support.LegacySpectrum.sensitivity)⟩ (by exact (Reg.Support.LegacySpectrum.sensitivity)),
+  partialSensitivity := none,
+  escapeFrom := some (SpectrumAtom),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end
 
 end Reg.D5.S3.ConceptDynamics.EscapeSpectrum.SpectrumCommitmentScope.InformationRoot

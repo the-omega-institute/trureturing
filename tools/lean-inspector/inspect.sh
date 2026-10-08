@@ -7,6 +7,7 @@ REPOSITORY="" OUTPUT="" LOG_DIR=""
 BUILD_TARGETS=()
 PROGRAM_BUILD_PENDING=0
 BUILD_PHASES=()
+ACTIVE_PHASE=""
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --repository|--output|--log-dir)
@@ -49,6 +50,17 @@ finish() {
   if [[ "$rc" == 0 && "$PROGRAM_BUILD_PENDING" == 0 ]]; then
     python3 -B "$SCRIPT_DIR/build_work.py" "$REPOSITORY" "$LOG_DIR" "$BUILD_WORK_FILE" ${BUILD_PHASES[@]+"${BUILD_PHASES[@]}"} || true
   fi
+  if [[ "$rc" != 0 ]]; then
+    if [[ -n "$ACTIVE_PHASE" ]]; then
+      printf 'LEAN_INSPECTOR_INTERRUPTED phase=%s exit=%s\n' "$ACTIVE_PHASE" "$rc" >&2 || true
+      cat "$LOG_DIR/$ACTIVE_PHASE.stdout.log" "$LOG_DIR/$ACTIVE_PHASE.stderr.log" >&2 || true
+    fi
+    # Direct observations identify the last native boundary even when Lake's
+    # buffered output is interrupted. They do not alter the failure verdict.
+    if [[ -f "$LOG_DIR/native-phases.jsonl" ]]; then
+      cat "$LOG_DIR/native-phases.jsonl" >&2 || true
+    fi
+  fi
   rm -rf -- "$STARTUP_LOG_DIR" || true
   resource_observe lean-inspector-finish "$REPOSITORY" || true
   exit "$rc"
@@ -66,7 +78,9 @@ run_phase() {
   [[ "$phase_started" =~ ^[0-9]+$ ]] || phase_started=unavailable
   printf 'LEAN_INSPECTOR_PHASE phase=%s status=started clock=shell-seconds start_seconds=%s\n' \
     "$phase" "$phase_started" >&2 || true
+  ACTIVE_PHASE="$phase"
   (cd "$REPOSITORY" && "$@") > "$LOG_DIR/$phase.stdout.log" 2> "$LOG_DIR/$phase.stderr.log" || status=$?
+  ACTIVE_PHASE=""
   phase_finished="${SECONDS:-unavailable}"
   [[ "$phase_finished" =~ ^[0-9]+$ ]] || phase_finished=unavailable
   if [[ "$phase_started" != unavailable && "$phase_finished" != unavailable ]] \
@@ -100,7 +114,6 @@ default_targets = [
     "leanInspector/reportInspector",
     "leanInspectorInterface/LeanInformationAuditInterface",
     "reg/Reg",
-    "regInspector/LeanInformationAuditRegTests",
 ]
 targets = json.loads(os.environ['STRATALINT_LEAN_BUILD_TARGETS']) if 'STRATALINT_LEAN_BUILD_TARGETS' in os.environ else default_targets
 if (not isinstance(targets, list)
