@@ -533,4 +533,231 @@ theorem necessity {n p : ℕ} (c : Config n p) :
     change j.val + _ = j.val + d.sizeUpTo ((d.index j).val + 1)
     exact congrArg (j.val + ·) (hd j).2.symm
 
+private theorem realization_data {p n : ℕ} (hp : 1 ≤ p) (d : Composition p)
+    (hn : 2 * Nat.clog 2 p + 1 ≤ n) :
+    ∃ (c : Config n p) (q t : ℕ),
+      q + t < n ∧
+      (∀ i : Fin n, i ∈ c.P ↔ i.val < t ∨ i.val = q + t) ∧
+      c.x.val = 0 ∧
+      c.y.val = 2 ^ t * 2 ^ q + (2 ^ t - 1) ∧
+      (∀ j, (c.sigma j).val = 2 ^ t *
+        (2 ^ (q + 1) * (d.index j).val + (d.invEmbedding j).val)) ∧
+      (∀ j, (d.invEmbedding j).val < 2 ^ q) ∧
+      (∀ j, (c.sigma j).val / 2 ^ (q + t + 1) = (d.index j).val) := by
+  classical
+  let a := Finset.univ.sup d.blocksFun
+  let q := Nat.clog 2 a
+  let h := Nat.clog 2 d.length
+  let t := n - (h + q + 1)
+  have hdlen : 0 < d.length := d.length_pos_iff.mpr hp
+  have hblocks : ∀ i : Fin d.length, d.blocksFun i ≤ a :=
+    fun i => Finset.le_sup (Finset.mem_univ i)
+  have ha : 1 ≤ a := (d.one_le_blocksFun ⟨0, hdlen⟩).trans (hblocks _)
+  have hap : a ≤ p := Finset.sup_le (fun i _ => d.blocksFun_le i)
+  have hqp : q ≤ Nat.clog 2 p := Nat.clog_mono_right 2 hap
+  have hhp : h ≤ Nat.clog 2 p := Nat.clog_mono_right 2 d.length_le
+  have hsmall : h + q + 1 ≤ n := by omega
+  have hn_eq : n = h + q + 1 + t := by omega
+  have hqt : q + t < n := by omega
+  have hpowq : a ≤ 2 ^ q := Nat.le_pow_clog (by decide) a
+  have hpowh : d.length ≤ 2 ^ h := Nat.le_pow_clog (by decide) d.length
+  have hoff : ∀ j : Fin p, (d.invEmbedding j).val < 2 ^ q :=
+    fun j => (d.invEmbedding j).isLt.trans_le ((hblocks _).trans hpowq)
+  let P : Finset (Fin n) := Finset.univ.filter (fun i => i.val < t ∨ i.val = q + t)
+  have hP : ∀ i : Fin n, i ∈ P ↔ i.val < t ∨ i.val = q + t := by
+    intro i
+    simp [P]
+  let sigmaNat : Fin p → ℕ := fun j =>
+    2 ^ t * (2 ^ (q + 1) * (d.index j).val + (d.invEmbedding j).val)
+  have hsbound : ∀ j, sigmaNat j < 2 ^ n := by
+    intro j
+    have hidx := (d.index j).isLt.trans_le hpowh
+    have hu := hoff j
+    have hpq := Nat.two_pow_pos q
+    have hpt := Nat.two_pow_pos t
+    have he : 2 ^ n = 2 ^ t * (2 ^ (q + 1) * 2 ^ h) := by
+      rw [hn_eq]
+      simp only [pow_add]
+      ring
+    rw [he]
+    dsimp [sigmaNat]
+    have hb : 2 ^ (q + 1) * (d.index j).val + (d.invEmbedding j).val <
+        2 ^ (q + 1) * 2 ^ h := by
+      rw [pow_succ] at *
+      nlinarith
+    exact Nat.mul_lt_mul_of_pos_left hb hpt
+  let sig : Fin p → BasisString n := fun j => ⟨sigmaNat j, hsbound j⟩
+  have hsbits : ∀ (j : Fin p) (i : Fin n),
+      (sig j).val.testBit i.val =
+        if i.val < t then false else
+        if i.val - t < q + 1 then (d.invEmbedding j).val.testBit (i.val - t)
+        else (d.index j).val.testBit (i.val - t - (q + 1)) := by
+    intro j i
+    change (2 ^ t * (2 ^ (q + 1) * (d.index j).val + (d.invEmbedding j).val)).testBit i.val = _
+    rw [Nat.testBit_two_pow_mul]
+    by_cases hi : i.val < t
+    · simp [hi]
+    · simp only [hi, if_false, show decide (i.val ≥ t) = true from decide_eq_true (Nat.le_of_not_lt hi), Bool.true_and]
+      exact Nat.testBit_two_pow_mul_add _
+        ((hoff j).trans_le (show 2 ^ q ≤ 2 ^ (q + 1) from Nat.pow_le_pow_right (by decide) (by omega))) _
+  have hidxmono : Monotone (fun j : Fin p => d.index j) := by
+    intro i j hij
+    change (d.index i).val ≤ (d.index j).val
+    by_contra hbad
+    have hji : (d.index j).val + 1 ≤ (d.index i).val := by
+      exact Nat.succ_le_of_lt (not_le.mp hbad)
+    have hsz := d.monotone_sizeUpTo hji
+    have hjb := d.lt_sizeUpTo_index_succ j
+    change j.val < d.sizeUpTo ((d.index j).val + 1) at hjb
+    have hib := d.sizeUpTo_index_le i
+    have hij' : i.val ≤ j.val := hij
+    omega
+  have hsmono : StrictMono sig := by
+    intro i j hij
+    have hijv : i.val < j.val := hij
+    have hidx := hidxmono hij.le
+    change sigmaNat i < sigmaNat j
+    apply Nat.mul_lt_mul_of_pos_left _ (Nat.two_pow_pos t)
+    by_cases he : d.index i = d.index j
+    · have hai := d.sizeUpTo_index_le i
+      have haj := d.sizeUpTo_index_le j
+      have heval : (d.index i).val = (d.index j).val := congrArg Fin.val he
+      have hsz : d.sizeUpTo (d.index i).val = d.sizeUpTo (d.index j).val :=
+        congrArg d.sizeUpTo heval
+      simp only [Composition.coe_invEmbedding]
+      rw [heval]
+      omega
+    · have hil : (d.index i).val < (d.index j).val :=
+        lt_of_le_of_ne hidx (fun hh => he (Fin.ext hh))
+      have hu := hoff i
+      have hv := hoff j
+      have hpq := Nat.two_pow_pos q
+      simp only [pow_succ]
+      nlinarith
+  let ynat := 2 ^ t * 2 ^ q + (2 ^ t - 1)
+  have hybound : ynat < 2 ^ n := by
+    have hpt := Nat.two_pow_pos t
+    have hpq := Nat.two_pow_pos q
+    have hlt : ynat < 2 ^ (q + t + 1) := by
+      have hsub : 2 ^ t - 1 < 2 ^ t := by omega
+      have hlarge : 2 ^ t ≤ 2 ^ t * 2 ^ q := by nlinarith
+      dsimp [ynat]
+      simp only [pow_add, pow_one]
+      rw [Nat.mul_comm (2 ^ q) (2 ^ t)]
+      omega
+    exact hlt.trans_le (Nat.pow_le_pow_right (by decide) (by omega))
+  let x : BasisString n := ⟨0, Nat.two_pow_pos n⟩
+  let y : BasisString n := ⟨ynat, hybound⟩
+  have hybits : ∀ i : Fin n, y.val.testBit i.val = if i ∈ P then true else false := by
+    intro i
+    dsimp [y, ynat]
+    rw [Nat.testBit_two_pow_mul_add _ (by have := Nat.two_pow_pos t; omega)]
+    rw [Nat.testBit_two_pow_sub_one, Nat.testBit_two_pow]
+    simp only [hP]
+    by_cases hi : i.val < t
+    · simp [hi]
+    · have he : q = i.val - t ↔ i.val = q + t := by omega
+      simp [hi, he]
+  have hssupported : ∀ j, Supported Pᶜ (sig j) := by
+    intro j i hi
+    have hip : i ∈ P := by simpa using hi
+    rw [hP] at hip
+    rw [hsbits]
+    rcases hip with hit | he
+    · simp [hit]
+    · have hnlt : ¬ i.val < t := by omega
+      have hsub : i.val - t = q := by omega
+      simp only [hnlt, if_false, hsub, Nat.lt_add_one, if_true]
+      exact Nat.testBit_lt_two_pow (hoff j)
+  have hz : ∃ j : Fin p, sigmaNat j = 0 := by
+    let i0 : Fin d.length := ⟨0, hdlen⟩
+    let u0 : Fin (d.blocksFun i0) := ⟨0, d.one_le_blocksFun i0⟩
+    refine ⟨d.embedding i0 u0, ?_⟩
+    simp [sigmaNat, i0, u0, d.index_embedding]
+  have hvar : ∀ i : Fin n, i ∉ P →
+      (∃ j, (sig j).val.testBit i.val = false) ∧
+      (∃ j, (sig j).val.testBit i.val = true) := by
+    intro i hi
+    obtain ⟨jz, hjz⟩ := hz
+    refine ⟨⟨jz, ?_⟩, ?_⟩
+    · change (sigmaNat jz).testBit i.val = false
+      simp [hjz]
+    · have hiP : ¬ (i.val < t ∨ i.val = q + t) := by rwa [← hP]
+      have hit : t ≤ i.val := by omega
+      have hisep : i.val - t ≠ q := by omega
+      by_cases hilow : i.val - t < q
+      · have hb : 2 ^ (i.val - t) < a :=
+          Nat.pow_lt_of_lt_clog (show i.val - t < q from hilow)
+        obtain ⟨b, _, hab⟩ := Finset.exists_mem_eq_sup Finset.univ
+          (Finset.univ_nonempty_iff.mpr ⟨⟨0, hdlen⟩⟩) d.blocksFun
+        have hba : a = d.blocksFun b := hab
+        let u : Fin (d.blocksFun b) := ⟨2 ^ (i.val - t), by rwa [← hba]⟩
+        refine ⟨d.embedding b u, ?_⟩
+        rw [hsbits]
+        simp [Nat.not_lt.mpr hit, show i.val - t < q + 1 by omega,
+          d.index_embedding, u]
+      · have hhigh : q + 1 ≤ i.val - t := by omega
+        have hib : i.val - t - (q + 1) < h := by omega
+        have hb : 2 ^ (i.val - t - (q + 1)) < d.length :=
+          Nat.pow_lt_of_lt_clog hib
+        let b : Fin d.length := ⟨2 ^ (i.val - t - (q + 1)), hb⟩
+        let u : Fin (d.blocksFun b) := ⟨0, d.one_le_blocksFun b⟩
+        refine ⟨d.embedding b u, ?_⟩
+        rw [hsbits]
+        simp [Nat.not_lt.mpr hit, Nat.not_lt.mpr hhigh, d.index_embedding, b]
+  let c : Config n p := {
+    P := P
+    nonempty := ⟨⟨q + t, hqt⟩, (hP _).mpr (Or.inr rfl)⟩
+    x := x
+    y := y
+    x_supported := by intro i hi; simp [x]
+    y_bits := by intro i; simpa [x] using hybits i
+    first_zero := by intro b hb hmax; simp [x]
+    sigma := sig
+    increasing := hsmono
+    sigma_supported := hssupported
+    varying := hvar }
+  have hprefix : ∀ j, (sig j).val / 2 ^ (q + t + 1) = (d.index j).val := by
+    intro j
+    have he : 2 ^ (q + t + 1) = 2 ^ t * 2 ^ (q + 1) := by
+      simp only [pow_add, pow_one]
+      ring
+    change sigmaNat j / 2 ^ (q + t + 1) = _
+    rw [he]
+    dsimp only [sigmaNat]
+    rw [Nat.mul_div_mul_left _ _ (Nat.two_pow_pos t),
+      Nat.mul_add_div (Nat.two_pow_pos (q + 1))]
+    have hu : (d.invEmbedding j).val < 2 ^ (q + 1) :=
+      (hoff j).trans_le (Nat.pow_le_pow_right (by decide) (by omega))
+    simp only [Nat.add_eq_left, Nat.div_eq_zero_iff]
+    exact Or.inr hu
+  exact ⟨c, q, t, hqt, hP, rfl, rfl, fun _ => rfl, hoff, hprefix⟩
+
+
+/-- Every composition is realized at each sufficiently large qubit count. -/
+theorem realization {p : ℕ} (hp : 1 ≤ p) (d : Composition p) (n : ℕ)
+    (hn : 2 * Nat.clog 2 p + 1 ≤ n) : ∃ c : Config n p, form c = formOf d := by
+  classical
+  obtain ⟨c, q, t, hqt, hP, hx, hy, hs, hoff, hprefix⟩ := realization_data hp d hn
+  let qf : Fin n := ⟨q + t, hqt⟩
+  have hq : qf ∈ c.P := (hP qf).mpr (Or.inr rfl)
+  have hmax : ∀ i ∈ c.P, i ≤ qf := by
+    intro i hi
+    have hip := (hP i).mp hi
+    change i.val ≤ q + t
+    omega
+  refine ⟨c, ?_⟩
+  funext r j
+  apply Fin.ext
+  fin_cases r
+  · change (form c 0 j).val = j.val + d.sizeUpTo ((d.index j).val + 0)
+    rw [form_zero_val c qf hq hmax]
+    simp only [qf, hprefix, add_zero]
+    exact congrArg (j.val + ·) (index_counts d j).1
+  · change (form c 1 j).val = j.val + d.sizeUpTo ((d.index j).val + 1)
+    rw [form_one_val c qf hq hmax]
+    simp only [qf, hprefix]
+    exact congrArg (j.val + ·) (index_counts d j).2
+
+
 end D5.S3.Quantum.Entanglement.QubitSupportCoefficientForms
