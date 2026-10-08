@@ -70,4 +70,84 @@ def formOf {p : ℕ} (d : Composition p) : Fin 2 → Fin p → Fin (2 * p) :=
     have := d.sizeUpTo_le ((d.index j).val + r.val)
     omega⟩
 
+private theorem index_lt_iff {p : ℕ} (d : Composition p) (i : Fin p)
+    (b : Fin d.length) :
+    d.index i < b ↔ i.val < d.sizeUpTo b.val := by
+  constructor
+  · intro h
+    have hi := d.lt_sizeUpTo_index_succ i
+    change i.val < d.sizeUpTo ((d.index i).val + 1) at hi
+    exact hi.trans_le
+      (d.monotone_sizeUpTo (by change (d.index i).val < b.val at h; omega))
+  · intro h
+    by_contra hn
+    have hb : b.val ≤ (d.index i).val := by simpa using not_lt.mp hn
+    have := (d.monotone_sizeUpTo hb).trans (d.sizeUpTo_index_le i)
+    omega
+
+private theorem index_le_iff {p : ℕ} (d : Composition p) (i : Fin p)
+    (b : Fin d.length) :
+    d.index i ≤ b ↔ i.val < d.sizeUpTo (b.val + 1) := by
+  constructor
+  · intro h
+    have hi := d.lt_sizeUpTo_index_succ i
+    change i.val < d.sizeUpTo ((d.index i).val + 1) at hi
+    exact hi.trans_le
+      (d.monotone_sizeUpTo (by change (d.index i).val ≤ b.val at h; omega))
+  · intro h
+    by_contra hn
+    have hb : b.val + 1 ≤ (d.index i).val := by
+      change ¬ (d.index i).val ≤ b.val at hn
+      omega
+    have := (d.monotone_sizeUpTo hb).trans (d.sizeUpTo_index_le i)
+    omega
+
+private theorem boundary_iff {p : ℕ} (d : Composition p) (j : Fin (p + 1)) :
+    j ∈ d.boundaries ↔ j.val = p ∨
+      ∃ i : Fin p, i.val = j.val ∧ d.sizeUpTo (d.index i).val = i.val := by
+  constructor
+  · intro hj
+    obtain ⟨b, hb, heq⟩ :=
+      d.toCompositionAsSet.mem_boundaries_iff_exists_blocks_sum_take_eq.mp hj
+    rw [Composition.toCompositionAsSet_blocks] at heq
+    change d.sizeUpTo b = j.val at heq
+    have hbl : b ≤ d.length := by
+      simpa only [Composition.toCompositionAsSet_boundaries,
+        d.card_boundaries_eq_succ_length, Nat.lt_succ_iff] using hb
+    by_cases hlast : b = d.length
+    · left
+      simpa [hlast] using heq.symm
+    · right
+      let bi : Fin d.length := ⟨b, by omega⟩
+      let t : Fin (d.blocksFun bi) := ⟨0, d.one_le_blocksFun bi⟩
+      refine ⟨d.embedding bi t, ?_, ?_⟩
+      · simpa [t, bi] using heq
+      · simp [d.index_embedding, t]
+  · rintro (h | ⟨i, hi, heq⟩)
+    · have hj : j = Fin.last p := Fin.ext h
+      rw [hj]
+      exact d.toCompositionAsSet.getLast_mem
+    · apply d.toCompositionAsSet.mem_boundaries_iff_exists_blocks_sum_take_eq.mpr
+      refine ⟨(d.index i).val, ?_, ?_⟩
+      · rw [Composition.toCompositionAsSet_boundaries, d.card_boundaries_eq_succ_length]
+        omega
+      · rw [Composition.toCompositionAsSet_blocks]
+        change d.sizeUpTo (d.index i).val = j.val
+        omega
+
+/-- The top-row indices recover all the boundaries of the composition. -/
+theorem formOf_injective (p : ℕ) : Function.Injective (@formOf p) := by
+  intro c d h
+  apply (compositionEquiv p).injective
+  apply CompositionAsSet.ext
+  ext j
+  change j ∈ c.boundaries ↔ j ∈ d.boundaries
+  rw [boundary_iff, boundary_iff]
+  have hs (i : Fin p) : c.sizeUpTo (c.index i).val = d.sizeUpTo (d.index i).val := by
+    have hv := congrArg Fin.val (congrFun (congrFun h 0) i)
+    change i.val + c.sizeUpTo ((c.index i).val + 0) =
+      i.val + d.sizeUpTo ((d.index i).val + 0) at hv
+    simpa using hv
+  simp_rw [hs]
+
 end D5.S3.Quantum.Entanglement.QubitSupportCoefficientForms
