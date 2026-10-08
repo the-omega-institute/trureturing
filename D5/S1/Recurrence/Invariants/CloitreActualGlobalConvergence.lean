@@ -4,10 +4,9 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Positive selected jumps bound the global actual Cloitre limsup and characterize golden convergence. -/
+   digest: Positive selected jumps bound the actual Cloitre limsup and characterize convergence. -/
 
 import D5.S1.Recurrence.Invariants.CloitreActualRightProfile
-import D5.S1.Recurrence.Invariants.CloitreActualEndpointPhase
 import Mathlib.Analysis.SpecificLimits.Fibonacci
 import Mathlib.Data.Nat.Fib.Zeckendorf
 
@@ -161,8 +160,8 @@ private theorem global_upper (U : ℕ → ℕ) (h : Hyp21_1 U) :
       (hut.comp hv.tendsto_atTop)
   obtain ⟨t, ht, hmin⟩ := Hcompact.exists_isMinOn Hne continuous_id.continuousOn
   obtain ⟨u, hu, hut⟩ := ht.exists_seq_tendsto
-  have hur : Tendsto (fun i => R (u i)) atTop (nhds b) := tendsto_fst.comp hu
-  have hup : Tendsto (fun i => position (u i)) atTop (nhds t) := tendsto_snd.comp hu
+  have hur : Tendsto (fun i => R (u i)) atTop (nhds b) := (continuous_fst.tendsto (b, t)).comp hu
+  have hup : Tendsto (fun i => position (u i)) atTop (nhds t) := (continuous_snd.tendsto (b, t)).comp hu
   let zseq := fun i => ((g (u i) : ℝ) / u i, R (g (u i)), R (u i - g (u i)))
   have zmem : ∀ᶠ i in atTop, zseq i ∈ Set.Icc ((0 : ℝ), (0 : ℝ), (0 : ℝ)) (1, 1, 1) := by
     filter_upwards [hut.eventually (eventually_ge_atTop 8),
@@ -178,23 +177,28 @@ private theorem global_upper (U : ℕ → ℕ) (h : Hyp21_1 U) :
   have nt : Tendsto n atTop atTop := hut.comp hv.tendsto_atTop
   have nr : Tendsto (fun i => R (n i)) atTop (nhds b) := hur.comp hv.tendsto_atTop
   have np : Tendsto (fun i => position (n i)) atTop (nhds t) := hup.comp hv.tendsto_atTop
-  have wa : Tendsto (fun i => (g (n i) : ℝ) / n i) atTop (nhds z.1) := tendsto_fst.comp hzlim
-  have xr : Tendsto (fun i => R (g (n i))) atTop (nhds z.2.1) := tendsto_fst.comp (tendsto_snd.comp hzlim)
-  have yr : Tendsto (fun i => R (n i - g (n i))) atTop (nhds z.2.2) := tendsto_snd.comp (tendsto_snd.comp hzlim)
+  have wa : Tendsto (fun i => (g (n i) : ℝ) / n i) atTop (nhds z.1) := (continuous_fst.tendsto z).comp hzlim
+  have xr : Tendsto (fun i => R (g (n i))) atTop (nhds z.2.1) := (continuous_fst.tendsto z.2).comp ((continuous_snd.tendsto z).comp hzlim)
+  have yr : Tendsto (fun i => R (n i - g (n i))) atTop (nhds z.2.2) := (continuous_snd.tendsto z.2).comp ((continuous_snd.tendsto z).comp hzlim)
   have aBounds : (1 / 5 : ℝ) ≤ z.1 ∧ z.1 ≤ 4 / 5 := by
-    constructor <;> apply le_of_tendsto wa <;>
+    constructor
+    · apply ge_of_tendsto wa
       filter_upwards [nt.eventually (eventually_ge_atTop 8)] with i hi
-    · have hb := child_bounds U h (n i) hi
+      have hb := child_bounds U h (n i) hi
       have un : (0 : ℝ) < n i := by exact_mod_cast (show 0 < n i by omega)
       apply (le_div_iff₀ un).mpr
       have hb' : (n i : ℝ) ≤ 5 * g (n i) := by exact_mod_cast hb.1
-      linarith
-    · have hb := child_bounds U h (n i) hi
+      linarith only [hb']
+    · apply le_of_tendsto wa
+      
+      filter_upwards [nt.eventually (eventually_ge_atTop 8)] with i hi
+      have hb := child_bounds U h (n i) hi
       have un : (0 : ℝ) < n i := by exact_mod_cast (show 0 < n i by omega)
       apply (div_le_iff₀ un).mpr
       have hb' : (n i : ℝ) ≤ 5 * ((n i : ℝ) - g (n i)) := by
-        exact_mod_cast hb.2.1
-      linarith
+        have cast : (n i : ℝ) ≤ 5 * (n i - g (n i) : ℕ) := by exact_mod_cast hb.2.1
+        simpa only [Nat.cast_sub hb.2.2.2.le] using cast
+      linarith only [hb']
   have xb : z.2.1 ≤ b := by
     apply le_of_forall_pos_le_add
     intro e he
@@ -221,9 +225,11 @@ private theorem global_upper (U : ℕ → ℕ) (h : Hyp21_1 U) :
     have split :=  congrArg (fun k : ℕ => (k : ℝ))
       (actual_foundations.2 (n i) (by omega))
     push_cast at split
-    rw [Nat.cast_sub hb.2.2.2.le]
-    field_simp
-    nlinarith [split]
+    rw [show 1 - (g (n i) : ℝ) / n i = (n i - g (n i) : ℕ) / (n i : ℝ) by
+      rw [Nat.cast_sub hb.2.2.2.le]
+      field_simp [un]
+      <;> ring]
+    rw [div_mul_div_cancel₀' gn, div_mul_div_cancel₀' hn, ← add_div, ← split]
   have xe : z.2.1 = b := by
     have hprod := mul_nonneg (sub_nonneg.mpr (show z.1 ≤ 1 by linarith [aBounds.2]))
       (sub_nonneg.mpr yb)
@@ -278,7 +284,7 @@ private theorem global_upper (U : ℕ → ℕ) (h : Hyp21_1 U) :
     obtain ⟨hq, hlo, hhi, hs, ht'⟩ := block_facts (n i) hn
     have hb := child_bounds U h (n i) hn
     have hc := h.cyclesInside (Q (n i)) (n i - F (Q (n i))) (g (n i)) hq
-      (by simpa [Nat.add_sub_of_le hlo] using actual_foundations.1 (n i) (d (n i)) (by omega))
+      (by simpa only [Nat.add_sub_of_le hlo, g] using actual_foundations.1 (n i) (d (n i)) (by omega))
       (by simpa [Nat.add_sub_of_le hlo] using selected_periodic U h (n i) (by omega))
     have un : (0 : ℝ) < n i := by exact_mod_cast (show 0 < n i by omega)
     have fn : (0 : ℝ) < F (Q (n i)) := by
@@ -286,7 +292,7 @@ private theorem global_upper (U : ℕ → ℕ) (h : Hyp21_1 U) :
     have gh : (g (n i) : ℝ) < F (Q (n i)) := by
       have hi' := (div_lt_iff₀ (mul_pos un fn)).mp
         (show (g (n i) : ℝ) * F (Q (n i) + 1) / ((n i : ℝ) * F (Q (n i))) < 1 by
-          convert hi using 1 <;> ring)
+          simpa only [div_mul_div_comm] using hi)
       have nh : (n i : ℝ) < F (Q (n i) + 1) := by exact_mod_cast hhi
       have gp : (0 : ℝ) < g (n i) := by exact_mod_cast (show 0 < g (n i) by omega)
       nlinarith
@@ -297,14 +303,17 @@ private theorem global_upper (U : ℕ → ℕ) (h : Hyp21_1 U) :
       atTop (nhds Real.goldenRatio) := by
     apply ((adjacent_ratio 2).comp nt).congr'
     filter_upwards [nt.eventually (eventually_ge_atTop 8)] with i hi
+    dsimp only [Function.comp_def]
     rw [show Q (n i) - 2 + 1 = Q (n i) - 1 by have := (block_facts (n i) hi).1; omega]
   have fib2 : Tendsto (fun i => (F (Q (n i)) : ℝ) / F (Q (n i) - 1))
       atTop (nhds Real.goldenRatio) := by
     apply ((adjacent_ratio 1).comp nt).congr'
     filter_upwards [nt.eventually (eventually_ge_atTop 8)] with i hi
+    dsimp only [Function.comp_def]
     rw [show Q (n i) - 1 + 1 = Q (n i) by have := (block_facts (n i) hi).1; omega]
   have descent : Tendsto (fun i => position (g (n i))) atTop
       (nhds (z.1 * (Real.goldenRatio ^ 2 + t * Real.goldenRatio) - Real.goldenRatio)) := by
+    simp only [pow_two]
     apply ((wa.mul ((fib2.mul fib1).add (np.mul fib1))).sub fib1).congr'
     filter_upwards [childBlock, nt.eventually (eventually_ge_atTop 8)] with i hi hn
     have hq := (block_facts (n i) hn).1
@@ -349,17 +358,21 @@ private theorem cycle_control {w : ℕ → ℝ} {p : ℕ} {q e : ℝ}
 
 private theorem convergence_implies_jumps (U : ℕ → ℕ) (h : Hyp21_1 U)
     (hr : Tendsto R atTop (nhds α)) : Tendsto J atTop (nhds 0) := by
-  have a0 : 0 < α := inv_pos.mpr Real.goldenRatio_pos
-  have a1 : α < 1 := inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio
-  have asq : α * α = 1 - α := by
-    have ha : 1 + α = Real.goldenRatio := by
+  let a : ℝ := α
+  have a0 : 0 < a := inv_pos.mpr Real.goldenRatio_pos
+  have a1 : a < 1 := inv_lt_one_of_one_lt₀ Real.one_lt_goldenRatio
+  have asq : a * a = 1 - a := by
+    have ha : 1 + a = Real.goldenRatio := by
+      dsimp only [a]
       rw [Real.inv_goldenRatio]
       linarith [Real.goldenRatio_add_goldenConj]
-    have hc : α * Real.goldenRatio = 1 := inv_mul_cancel₀ Real.goldenRatio_ne_zero
+    have hc : a * Real.goldenRatio = 1 := inv_mul_cancel₀ Real.goldenRatio_ne_zero
     nlinarith
+  change Tendsto R atTop (nhds a) at hr
+  clear_value a
   apply Metric.tendsto_atTop.2
   intro e he
-  let δ := e * (1 - α) / 4
+  let δ := e * (1 - a) / 4
   have dp : 0 < δ := by dsimp [δ]; positivity
   obtain ⟨M, hM⟩ := Metric.tendsto_atTop.1 hr δ dp
   refine ⟨max 8 (3 * M), ?_⟩
@@ -388,9 +401,9 @@ private theorem convergence_implies_jumps (U : ℕ → ℕ) (h : Hyp21_1 U)
     omega
   obtain ⟨p, hp, hperiod⟩ := hgp
   let x := fun i => (T n)^[i] (g n)
-  let w := fun i => |(x i : ℝ) / n - α|
+  let w := fun i => |(x i : ℝ) / n - a|
   have np : (0 : ℝ) < n := by exact_mod_cast (show 0 < n by omega)
-  have step : ∀ i, w (i + 1) ≤ α * w i + δ := by
+  have step : ∀ i, w (i + 1) ≤ a * w i + δ := by
     intro i
     have hx := legal i
     change 1 ≤ x i ∧ x i ≤ n - 1 at hx
@@ -401,31 +414,31 @@ private theorem convergence_implies_jumps (U : ℕ → ℕ) (h : Hyp21_1 U)
     rw [Real.dist_eq] at err
     have cLe : C (x i) ≤ n :=
       ((h.bounds (x i) hx.1).2.2.1.trans (h.bounds (x i) hx.1).2.2.2).trans (by omega)
-    have eqstep : (x (i + 1) : ℝ) / n - α =
-        -α * ((x i : ℝ) / n - α) - (R (x i) - α) * ((x i : ℝ) / n) := by
-      dsimp [x]
-      rw [Function.iterate_succ_apply', T, Nat.cast_sub cLe]
-      field_simp
-      nlinarith [asq]
+    have eqstep : (x (i + 1) : ℝ) / n - a =
+        -a * ((x i : ℝ) / n - a) - (R (x i) - a) * ((x i : ℝ) / n) := by
+      have xs : x (i + 1) = T n (x i) := Function.iterate_succ_apply' (T n) i (g n)
+      rw [xs, T, Nat.cast_sub cLe]
+      field_simp [np.ne', xp.ne']
+      linear_combination -(n : ℝ) * asq
     dsimp [w]
     rw [eqstep]
     calc
-      |-α * ((x i : ℝ) / n - α) - (R (x i) - α) * ((x i : ℝ) / n)|
-          ≤ |-α * ((x i : ℝ) / n - α)| + |(R (x i) - α) * ((x i : ℝ) / n)| := abs_sub _ _
-      _ = α * |(x i : ℝ) / n - α| + |R (x i) - α| * ((x i : ℝ) / n) := by
+      |-a * ((x i : ℝ) / n - a) - (R (x i) - a) * ((x i : ℝ) / n)|
+          ≤ |-a * ((x i : ℝ) / n - a)| + |(R (x i) - a) * ((x i : ℝ) / n)| := abs_sub _ _
+      _ = a * |(x i : ℝ) / n - a| + |R (x i) - a| * ((x i : ℝ) / n) := by
         rw [abs_mul, abs_neg, abs_of_pos a0, abs_mul, abs_of_nonneg ynon]
-      _ ≤ α * |(x i : ℝ) / n - α| + δ := by
-        have hh := mul_le_mul_of_nonneg_left yle (abs_nonneg (R (x i) - α))
+      _ ≤ a * |(x i : ℝ) / n - a| + δ := by
+        have hh := mul_le_mul_of_nonneg_left yle (abs_nonneg (R (x i) - a))
         nlinarith
-  have control : ∀ i, w i ≤ δ / (1 - α) := cycle_control hp a0.le a1
+  have control : ∀ i, w i ≤ δ / (1 - a) := cycle_control hp a0.le a1
     (fun i => by dsimp [w, x]; rw [hperiod.iterate_mod_apply]) step
-  have jbound : J n ≤ 2 * (δ / (1 - α)) := by
+  have jbound : J n ≤ 2 * (δ / (1 - a)) := by
     have w0 := control 0
     have w1 := control 1
-    change |(g n : ℝ) / n - α| ≤ δ / (1 - α) at w0
-    change |(T n (g n) : ℝ) / n - α| ≤ δ / (1 - α) at w1
-    have hh := abs_sub ((g n : ℝ) / n - α) ((T n (g n) : ℝ) / n - α)
-    have gap : ((g n : ℝ) - T n (g n)) / n ≤ 2 * (δ / (1 - α)) := by
+    change |(g n : ℝ) / n - a| ≤ δ / (1 - a) at w0
+    change |(T n (g n) : ℝ) / n - a| ≤ δ / (1 - a) at w1
+    have hh := abs_sub ((g n : ℝ) / n - a) ((T n (g n) : ℝ) / n - a)
+    have gap : ((g n : ℝ) - T n (g n)) / n ≤ 2 * (δ / (1 - a)) := by
       have ha := le_abs_self ((g n : ℝ) / n - (T n (g n) : ℝ) / n)
       rw [sub_sub_sub_cancel_right] at hh
       rw [sub_div]
@@ -435,10 +448,10 @@ private theorem convergence_implies_jumps (U : ℕ → ℕ) (h : Hyp21_1 U)
     · exact (div_le_iff₀ np).mp gap
     · positivity
   rw [Real.dist_eq, sub_zero, abs_of_nonneg (jump_nonneg n)]
-  have simplify : 2 * (δ / (1 - α)) = e / 2 := by
-    dsimp [δ]
-    field_simp
-    ring
+  have simplify : 2 * (δ / (1 - a)) = e / 2 := by
+    dsimp only [δ]
+    field_simp [(sub_pos.mpr a1).ne']
+    <;> ring
   rw [simplify] at jbound
   linarith
 
@@ -463,20 +476,22 @@ theorem result (U : ℕ → ℕ) (h : Hyp21_1 U) :
       have scale : Tendsto (fun n : ℕ => ((n : ℝ) + 1) / n) atTop (nhds 1) := by
         have invn : Tendsto (fun n : ℕ => (n : ℝ)⁻¹) atTop (nhds 0) :=
           tendsto_inv_atTop_zero.comp tendsto_natCast_atTop_atTop
-        simpa only [add_zero] using (tendsto_const_nhds.add invn).congr
-          (fun n => by simp [add_div, div_self, one_div]; split_ifs <;> simp_all)
-      apply (fl.mul scale).congr'
+        apply (show Tendsto (fun n : ℕ => 1 + (n : ℝ)⁻¹) atTop (nhds 1) by
+          simpa only [add_zero] using (tendsto_const_nhds.add invn)).congr'
+        filter_upwards [eventually_ge_atTop 1] with n hn
+        have nn : (n : ℝ) ≠ 0 := by exact_mod_cast (show n ≠ 0 by omega)
+        simp only [add_div, div_self nn, one_div]
+      apply (show Tendsto (fun n : ℕ => ((⌊α * ((n : ℝ) + 1)⌋₊ : ℝ) / ((n : ℝ) + 1)) *
+          (((n : ℝ) + 1) / n)) atTop (nhds α) by
+        simpa only [mul_one, Function.comp_def] using fl.mul scale).congr'
       filter_upwards [eventually_ge_atTop 1] with n hn
-      dsimp [G, D5.S1.Phase.SelfReference.GoldenShellRecurrence.g]
+      dsimp only [G, D5.S1.Phase.SelfReference.GoldenShellRecurrence.g]
       rw [mul_comm α]
-      have nn : (n : ℝ) ≠ 0 := by exact_mod_cast (show n ≠ 0 by omega)
-      have ns : (n : ℝ) + 1 ≠ 0 := by positivity
-      simp only [mul_div_mul_right, ns]
-      field_simp
+      exact div_mul_div_cancel₀ (show (n : ℝ) + 1 ≠ 0 by positivity)
     have gb : IsBoundedUnder (· ≥ ·) atTop (fun n => (G n : ℝ) / n) :=
       isBoundedUnder_of ⟨0, fun n => div_nonneg (Nat.cast_nonneg _) (Nat.cast_nonneg _)⟩
     rw [← glimit.liminf_eq]
-    apply liminf_le_liminf gb rbd
+    apply liminf_le_liminf (hu := gb) (hv := rbd.isCoboundedUnder_ge)
     filter_upwards [eventually_ge_atTop 1] with n hn
     apply div_le_div_of_nonneg_right _ (Nat.cast_nonneg _)
     exact_mod_cast (h.bounds n hn).2.1
