@@ -5509,3 +5509,142 @@ numerically compared with this finite exclusion. A full signed upper
 bound for $Z_\alpha(A)$ with enough strict slack remains required.
 Robin's criterion and RH remain
 unproved by these applications.
+
+## Reusing the coefficient remainder on a larger finite clock
+
+Keep the same conditional least integer $N>5040$ attaining the global
+Robin-ratio maximum under the Robin-violation hypothesis. The preceding
+finite-clock application already gives $A=\log N>10^{45}$; put
+$L=\log A$. The following application uses the existing coefficient
+remainder (H1), directed comparison (GE5), Gamma damping (GH1), verified
+height and complete zero-count bound. It does not construct a new
+smoothing transform or repeat their proofs.
+
+### Use the full coefficient remainder separately on the two height ranges
+
+The existing (H1) and its numerator estimate give, throughout the actual
+critical strip $0<\beta<1$,
+
+$$
+\sqrt A L|F_A(\beta+it)|
+\le(1+1/L)\frac{A^{\beta-1/2}}{|\beta+it||1-\beta-it|}
+\left(1+\frac{2(L+2)}{L(L+1)|1-\beta-it|}\right).
+\tag{GJ1}
+$$
+
+This retains the complete original coefficient, including its remainder;
+it sharpens the coarser factor two in (GH2) by direct use of the already
+available estimate. No zero coefficient is replaced by only its leading
+term. For $L>78$, the verified critical head has
+$|1-\rho|\ge1/2$, so its parenthesized factor is less than $1.054$:
+
+$$
+\frac{4(L+2)}{L(L+1)}
+<\frac{4\cdot80}{78\cdot79}<0.054.
+$$
+
+For the actual unverified tail $|t|>H=3\cdot10^{12}$,
+$|1-\rho|\ge|t|>H$ instead bounds that factor by $1.0001$.
+Criticality is used only on the verified head. The original real parts
+and the complete infinite multiset of tail zeros are retained.
+
+Using the same positive $c_0$ identity, both ordinate signs and (GH1),
+(GJ1) gives the finite bound
+
+$$
+\sqrt A L|Z_\alpha(A)|
+<M_1(\alpha)(1+1/L)
+\left[1.054c_0+2(1.0001)\sqrt A S_2(H)
+ \exp\left(-\frac{H^2}{2(\alpha+H)}\right)\right].
+\tag{GJ2}
+$$
+
+Here $M_1(\alpha)=\alpha/(\alpha-1)$, $c_0<0.05$ and
+$S_2(H)<1.48\cdot10^{-12}$ are the same previously paid quantities.
+In particular, this argument does not need a new verified height or a
+new zero enumeration.
+
+### Pay the complete response on the added interval
+
+Take the exact noninteger shape and additional interval
+
+$$
+\alpha=\frac{29}{20}10^{23}+\frac12,
+\qquad 10^{45}<A\le10^{46}.
+$$
+
+Then $L>78$, $\sqrt A\le10^{23}$,
+$M_1(\alpha)<1.0001$, and
+
+$$
+\frac{H^2}{2(\alpha+H)}>31,
+\qquad e^{31}>10^{13}.
+$$
+
+For the exponential inequality, $e>8/3$ and
+$8^{31}>10^{13}3^{31}$ suffice. The head and complete tail in (GJ2)
+therefore obey the exact rational budgets
+
+$$
+(1.0001)(1.02)(1.054)(0.05)<0.054,
+$$
+
+$$
+2(1.0001)^2(1.02)(10^{23})
+ (1.48\cdot10^{-12})10^{-13}<0.031.
+\tag{GJ3}
+$$
+
+For the arithmetic comparison term, reuse
+[Dusart's Theorem 5.2 and Proposition 3.2](../Weil/dusart2010estimates.md).
+The original v1 theorem's $k=2$, $\eta_2=3.965$, $x_2=2$ row and the
+complete prime-power correction give
+
+$$
+\frac{\psi(A)}A
+<1+\frac{3.965}{L^2}+1.00007A^{-1/2}+1.78A^{-2/3}
+<1.001.
+$$
+
+The final inequality follows from $3.965/78^2<0.0007$ and
+$1.00007\cdot10^{-22}+1.78\cdot10^{-30}<0.0003$.
+The source row applies throughout the added interval; no asymptotic
+starting threshold is substituted for its explicit $x_2=2$.
+Since $\alpha-1>1.4499\cdot10^{23}$, the two remaining terms of (GE5)
+satisfy
+
+$$
+\frac{\psi(A)}{(\alpha-1)\sqrt A}
+<\frac{1.001}{1.4499}<0.691,
+\qquad
+\frac{5M_1(\alpha)}{\sqrt A}<6\cdot10^{-22}.
+\tag{GJ4}
+$$
+
+Combining (GE5) with (GJ2)–(GJ4) pays the original full signed response:
+
+$$
+\boxed{-\sqrt A L I_\psi(A)
+<0.054+0.031+0.691+6\cdot10^{-22}<0.777,
+\qquad 10^{45}<A\le10^{46}.}
+\tag{GJ5}
+$$
+
+All elementary and trivial contributions, including Gamma scales below
+the unit cutoff, are retained through the already proved (GE5).
+The strict core for this same selected source still gives
+$\sqrt A L D^*(A)>\mathcal E(L)>0.778$. Hence
+
+$$
+\boxed{\sqrt A L\Delta(N)>0.001,
+\qquad 10^{45}<A\le10^{46}.}
+\tag{GJ6}
+$$
+
+Together with the preceding $A>10^{45}$ restriction, this forces
+$\log N>10^{46}$ for the same hypothetical least global maximizer.
+It is a paper-level enlargement of the excluded selected-source window,
+with no new classical theorem, priority claim, Lean certification or
+all-integer finite Robin verification. The fixed verified height and
+shape still provide no uniform main bound as $A\to\infty$; the complete
+unbounded signed Robin target and RH remain unproved.
