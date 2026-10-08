@@ -602,7 +602,8 @@ private theorem realization_data {p n : ℕ} (hp : 1 ≤ p) (d : Composition p)
         show decide (i.val ≥ t) = true from decide_eq_true (Nat.le_of_not_lt hi),
         Bool.true_and]
       exact Nat.testBit_two_pow_mul_add _
-        ((hoff j).trans_le (show 2 ^ q ≤ 2 ^ (q + 1) from Nat.pow_le_pow_right (by decide) (by omega))) _
+        ((hoff j).trans_le (show 2 ^ q ≤ 2 ^ (q + 1) from
+          Nat.pow_le_pow_right (by decide) (by omega))) _
   have hidxmono : Monotone (fun j : Fin p => d.index j) := by
     intro i j hij
     change (d.index i).val ≤ (d.index j).val
