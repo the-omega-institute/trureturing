@@ -4020,3 +4020,291 @@ control. The necessary exclusion of (65.5) and its generator consequence
 leave these full operational and physical obligations intact.
 
 ## 65.99 追加锚（本行以下为增补区）
+## 66. Whole-rho transport of the full stratified state, finite histories and the graft boundary
+
+**Definition 66.1 (one actual source and the finite comparison).** The source is the actual labelled, bracketed, ordered nonempty tree of Definitions55.1,60.1 and62.1, installed by PR57 at its declared fixed leaf cap $H$. Its immutable INITIAL, original source-independent actor initialization, current root, epoch, request/context identities, actual candidate, whole-candidate guard, every accepted or refused response, every original Read, retained chronological row and copy, and absorbing Stop remain part of the joint object. Equal-valued occurrences are distinct. An attempted whole-rho is not an accepted renewal; refusal supplies no candidate Read. A beta-empty acceptance changes labels and epoch even when the geometric domain does not change. The full original Left/Right menu is retained, with each named actual positive context supplied and guarded by its original routines. Accepted context grafts are considered separately in Proposition66.8; they are not whole-rho inclusions.
+
+Use exactly the measure, mixed strata, symmetric hard-core form and atomic interaction of Definition64.5, at one density $0<\delta\le1$ for the entire commission. The intrinsic length and conductance of every cable are one. Root incidence is two, nonroot incidence three; every current leaf retains two distinct grounded stubs. The one-body field is always the same $\phi(p)=2^{-|p|}$ on actual atomic addresses and zero on open cables. The separate pair choices are the complete common restriction $G^{\rm c}_D$ and the complete killed inverse $G^{\rm k}_D$, without changing $\phi$. The commissioned $a,g>0,\nu\ge0$ are independent of the original actor's parameters. Retain $\lambda=3-2\sqrt2$ from (62.4). Write
+
+$$
+\mathcal K_{D,1}=L^2(X_D,\mu_\delta),\qquad
+\mathcal K_{D,2}=\mathcal K^{\rm hc}_{D,2},\qquad
+\mathcal Q_{D,N}=\mathcal Q_{D,N}^{(64.5)}.
+$$
+
+A finite commissioned whole-rho trajectory can contain any finite number of original Reads, refused rho/context attempts and accepted whole-rho steps, and supplied idle intervals with total comparison time at most $T<\infty$. It stops at or before an accepted graft, or original Stop. The graft is still executed and recorded by the original source contract; the positive whole-rho amplitude theorem is not asserted across it. Proposition66.8 proves why one natural full-data/full-norm graft requirement fails, rather than treating that event as a reset or omitting it from the original menu. A fixed-cap trajectory never changes its cap, never has an event after an infinite prefix, and has no interaction or readout after Stop. Any commissioned readout precedes Stop.
+
+The preparations $W_{D,N}$, atomic injections $J_{D,N}=R_{D,N}^*$, and constants $\beta_N,s_N,r_N$ below are exactly Theorems64.6–64.7. They are mathematical identifications, not newly acquired coefficients, free controls or physical preparation procedures. Empty $D$ is only a zero-space convention for statements about maps: $X_\varnothing$ and its $N=1,2$ Hilbert/form spaces are empty or zero, with their unique maps. No original source is empty. For a singleton, the full two-position producer space still contains all its slice and cell modes, although $\mathscr H_{D,2}=0$.
+
+**Definition 66.2 (the labelled cable inclusion).** Let the actual whole-rho candidate be accepted, with old source $s$, beta-leaf set $\mathcal B(s)$, and $D'=\operatorname{Pos}(\rho s)$. Retain each old seam with its intrinsic coordinate. At each $p\in\mathcal B(s)$, name its two old grounded stubs by $pL,pR$. Identify the complete open stub named $pz$ with the new unit seam from $p$ to $pz$, preserving its coordinate from $p$ toward its former ground tip. That tip becomes the new atomic port $pz$. Its old zero trace is retained; its newly created atomic coordinate is assigned zero at the transfer. Add the two new grounded stubs at each newborn child. At an old alpha leaf both old grounded stubs remain grounded. This identifies every old open cable with exactly one new open cable and never identifies two occurrences, two stubs or two coordinates.
+
+Define $\mathsf T_{D'D,1}$ on the entire direct-sum Hilbert space by copying all old atomic coordinates and every old open-cable function to these identified strata, and putting zero on every new atomic coordinate and new open cable. This is a direct-sum definition: assigning a new mass-one atom at a former mass-zero ground tip does not copy a value from an $L^2$ representative at that tip. It assigns zero independently. For $N=2$, copy all old distinct atomic pairs, all ordered old atom/cable slices and all old cable/cable cells under the same identification, and put zero on every stratum involving a new atom or a new cable. Same-cable cells keep both dissected triangles and both zero diagonal traces. Denote its symmetric restriction by $\mathsf T_{D'D,2}$. The target occupation injection is the distinct-occurrence map $\jmath_{D'D,N}e_S=e_S$ of Theorem62.4. These definitions specify the full maps before restricting to any calibrated range.
+
+**Theorem 66.3 (full-space isometric kinetic-form and collision-domain transfer).** For every actual accepted whole-rho, $N=1,2$, and every vector in the indicated spaces,
+
+$$
+\begin{aligned}
+\mathsf T_{D'D,N}^*\mathsf T_{D'D,N}&=I,
+& R_{D',N}\mathsf T_{D'D,N}&=\jmath_{D'D,N}R_{D,N},\\
+\mathsf T_{D'D,N}J_{D,N}&=J_{D',N}\jmath_{D'D,N},
+&\mathsf T_{D'D,N}\mathcal Q_{D,N}&\subseteq\mathcal Q_{D',N},\\
+k_{\delta,D',N}(\mathsf T_{D'D,N}F,\mathsf T_{D'D,N}G)
+&=k_{\delta,D,N}(F,G).
+\end{aligned}                                                    \tag{66.1}
+$$
+
+Here the isometry is an injection defined on the whole old Hilbert space, including arbitrary old continuum components, rather than only on $W_{D,N}\mathscr H_{D,N}$. It need not be onto the new space. It preserves the actual form/collision domain, not an asserted equality of operator domains or propagators. If $\mathcal B(s)=\varnothing$, it is the identity on every stratum even though the source version and labels are updated. For successive accepted steps and their canonical cable identifications,
+
+$$
+\mathsf T_{D''D',N}\mathsf T_{D'D,N}=\mathsf T_{D''D,N},\qquad
+\jmath_{D''D',N}\jmath_{D'D,N}=\jmath_{D''D,N}.       \tag{66.2}
+$$
+
+The right-hand cable map means the direct inclusion along this actual source history; it does not identify different sources or different histories.
+
+Proof. The one-position norm is the sum of atomic norm squares and $\delta$ times every open-cable norm square. Each copied stratum keeps exactly its old coefficient and intrinsic coordinate; every added coordinate is zero. Thus its norm is unchanged. In ordered two-position coordinates the same argument applies with weights $1,\delta,\delta^2$, before exchange restriction. Diagonal atomic coordinates are absent on both sides. The map commutes with exchange and is therefore an isometry on its symmetric hard-core subspace, with exactly the old normalization of distinct atomic pairs. This also proves the two identities involving $R,J$.
+
+For the one-particle form, an old stub's value at its old atomic end is unchanged. Its former grounded zero trace is now the trace at a new atom whose assigned value is zero. Each new grounded stub has zero function and zero port value. Every other endpoint equality is the old equality. Derivative integrals are unchanged, and zero new functions contribute no energy.
+
+For two particles consider every trace type of Definition64.5. The boundary of a copied old cell at an old port remains its copied old slice; that slice ends at the copied old atomic pair, or at zero when its two port labels coincide. A copied old cell boundary at a newly atomic former ground tip was a grounded zero boundary and is still zero, now matching the new atom/old-cable slice assigned zero. An old atom/old-stub slice likewise has old grounded endpoint zero, matching the newly created atomic pair assigned zero. A cell involving a new cable is zero: at a newborn child its incident slice is a new-atom slice and hence zero, and its grounded boundary is zero. A slice involving a new cable has zero atomic endpoints for the same reason. These statements include cells between two old stubs which simultaneously become seams, and cells between incident cables meeting an old port. Both traces on an old same-cable diagonal are retained, while new same-cable diagonals have zero function. Distinct-cable shared-port collisions still terminate their slices at the same zero atomic collision coordinate. No corner value of a general two-dimensional $H^1$ function is used. All required trace equalities therefore hold.
+
+The two-coordinate derivative form is the sum of slice derivatives and $\delta$ times both cell derivatives in (64.7). Every old term is copied with its coefficient, including all collision and grounded-end terms. Every new term is zero. Equality follows, and polarization gives (66.1) for complex $F,G$. This proof treats all old mixed and cell functions, not merely separable or interpolated states. The zero-space and singleton conventions satisfy the same statements; in particular the singleton's full two-position space is transported by the preceding stratum argument rather than declared absent.
+
+A cable, once created, is never deleted or split under whole-rho. A currently grounded tip may later become an atom, but a zero assigned coordinate remains zero under further inclusions. Existing atomic coordinates keep their addresses. Copying a stratum twice is consequently the same as copying it directly, and a coordinate introduced after the starting version is zero in both compositions. This proves (66.2). When there is no beta leaf, no stratum changes at all. $\square$
+
+**Proposition 66.3a (a nonzero full two-position transfer with zero atomic target).** For the actual singleton source $s=\beta$, followed by its accepted whole-rho at cap $H=2$, the old target $\mathscr H_{\{o\},2}$ is zero but the full-space transfer in Theorem66.3 has nonzero admissible mixed inputs. Parameterize its two old stubs from the root by $x\in[0,1]$. On every ordered root/stub slice use $g(x)=x(1-x)$, with no atomic pair. On each same-stub cell use
+
+$$
+h(x,y)=|x-y|(1-\max(x,y)),
+$$
+
+and on each different-stub cell use
+
+$$
+b(x,y)=g(y)(1-x)+g(x)(1-y).
+$$
+
+These functions define a symmetric form vector $F$ with
+
+$$
+\|F\|^2=\frac{2\delta}{15}+\frac{17\delta^2}{180},\qquad
+k_{\delta,2}(F)=\frac43+\frac{56\delta}{45}.          \tag{66.1a}
+$$
+
+Both quantities are preserved by its actual whole-rho transfer. In particular at $\delta=1/10$ they are $257/18000$ and $328/225$ respectively. This vector is full retained continuum data, not a unit two-port target preparation.
+
+Proof. The slice has zero trace at both endpoints. The same-stub function has root boundaries $g$, grounded boundaries zero, and zero traces on both sides of the diagonal. The different-stub function has root boundaries $g$ and grounded boundaries zero; its shared-root corner agrees with the missing atomic collision value zero. Exchange symmetry is literal. Each triangular polynomial is $H^1$, as is the different-stub polynomial, so these are the actual domain conditions without a corner trace assumption for general $H^1$ data. Direct polynomial integration gives slice norm/derivative integrals $1/30,1/3$, same-stub full-square integrals $1/90,1/3$, and different-stub integrals $13/360,13/45$. There are four ordered slices, two same-stub cells and two different-stub cells. Multiply their norm integrals by $\delta,\delta^2$ and their derivative integrals by $1,\delta$ as in (64.7), obtaining (66.1a). At renewal all these old functions are copied; their old ground boundaries are zero at the new atoms and all new strata are zero. Thus the positive-mass mixed input meets Theorem66.3, including the zero-target case. $\square$
+
+**Proposition 66.4 (complete potential update, without dynamic intertwining).** Let $q^\diamond_{D,N}=a k_{\delta,D,N}+\langle\cdot,U^\diamond_{D,N}\cdot\rangle$ be the full form of (64.8). For the common prescription,
+
+$$
+U^{\rm c}_{D',N}\mathsf T_{D'D,N}=\mathsf T_{D'D,N}U^{\rm c}_{D,N},\qquad
+q^{\rm c}_{D',N}(\mathsf TF)=q^{\rm c}_{D,N}(F).     \tag{66.3}
+$$
+
+For the killed prescription the one-particle equality is the same, while for $N=2$,
+
+$$
+q^{\rm k}_{D',2}(\mathsf TF)-q^{\rm k}_{D,2}(F)
+=-\nu\sum_{\{p,q\}\subset D}\Delta G(p,q)
+       |(R_{D,2}F)(\{p,q\})|^2,                  \tag{66.4}
+$$
+
+where the entire actual update, not a selected pair fit, is
+
+$$
+\Delta G=GU\left(\tfrac32 I-U^*GU\right)^{-1}U^*G,
+\qquad G=L_D^{-1},\quad U=(e_p)_{p\in\mathcal B(s)}. \tag{66.5}
+$$
+
+An empty beta mask means zero update. All inverse and positivity conditions in (66.5) are supplied by Theorem62.4.
+
+Proof. Every old atomic depth is unchanged. A copied mixed slice has precisely its old additive one-body potential, and a copied cell still has zero atomic one-body multiplier. New strata have zero state. The common inverse is the same infinite $L^{-1}$ at every version, so all old atomic pair multipliers coincide. Theorem66.3 proves the remaining kinetic equality. For the killed choice only the old atomic pair coefficients change on the transferred state. Apply (62.8) with its authentic beta mask and the normalized symmetric atomic coordinates of Lemma64.5b to obtain (66.4)–(66.5). No positive-mass coordinate or trace is dropped in this computation. $\square$
+
+Form equality on the isometric image is a compression statement. After release, the new generator acts on the larger space and may move amplitude out of that image. The actual born-child hopping of (60.7),(62.7) persists. For the killed choice the old pair energy change in (62.9) persists as well; it is not a small-$\delta$ calibration error. Proposition58.3's failure of all-time rho intertwining and Proposition62.5's growing-population killed-energy defect are inherited, not contradicted. The full-space inclusion alone grants neither a physical switching law nor a new common exterior dynamic state.
+
+**Lemma 66.5 (calibration mismatch at an actual enlargement).** Put
+
+$$
+\omega_N=\sqrt{\beta_N^2+s_N^2},\qquad
+s_N=1-(1+\beta_N^2)^{-1/2},\qquad
+\omega=\max(\omega_1,\omega_2).
+$$
+
+For either pair prescription, using the same preparation rule and density on both versions,
+
+$$
+\|W_{D,N}-J_{D,N}\|\le\omega_N,\qquad
+\|\mathsf T_{D'D,N}W_{D,N}-W_{D',N}\jmath_{D'D,N}\|
+\le2\omega_N.                                      \tag{66.6}
+$$
+
+When $D'=D$ the second norm is zero. For $0<\delta\le1$, $\omega\le16\sqrt\delta+128\delta\le144\sqrt\delta$.
+
+Proof. Consume Theorem64.6: $W=(J+Q)S$, $Q=E-J$, $\|Q\|\le\beta_N$, $\|S\|\le1$ and $\|S-I\|\le s_N$. Atomic and continuum ranges are orthogonal, so
+
+$$
+\|(W-J)f\|^2=\|J(S-I)f\|^2+\|QSf\|^2
+\le(s_N^2+\beta_N^2)\|f\|^2.
+$$
+
+Insert $\mathsf TJ=J'\jmath$ from (66.1), and use the full isometry of $\mathsf T$ and $\jmath$ to bound the two remaining differences by $\omega_N$ each. An unchanged geometric domain has literally the same measure, form, restriction and unique harmonic minimizer, so $W'=W$ and $\mathsf T=\jmath=I$. The last bound uses the already supplied $\beta_N\le16\sqrt\delta$ and $s_N\le128\delta$ from §64. No minimization, idle operator relation or continuum-mode elimination is re-proved here. $\square$
+
+**Theorem 66.6 (same-clock finite histories in the full joint norm).** Fix an actual finite legal trajectory of Definition66.1. Let $m$ count its accepted whole-rho steps, and let $q\le m$ count only those with nonempty beta mask. At its idle intervals, use its actual current $D_i$ and the complete $H^\diamond_{D_i,N}$ of (62.2). The exact target history $\mathsf V^\diamond_h$ is the time-ordered composition of $e^{-i\theta_iH^\diamond_{D_i,N}}$, the accepted occurrence injections $\jmath$, and identity at the other source-service cuts. The producer history $\mathsf P^\diamond_{\delta,h}$ uses the actual full unitaries $e^{-i\theta_i\mathcal T^\diamond_{\delta,D_i,N}}$, the full-space inclusions $\mathsf T$, and the same identity cuts. No calibrated state is prepared again at a switch. For every target vector $f$ and every checkpoint of that history,
+
+$$
+\|\mathsf P^\diamond_{\delta,h}W_{D_0,N}f
+     -W_{D_h,N}\mathsf V^\diamond_h f\|
+\le\left(\sum_i\theta_i r_N+2q\omega_N\right)\|f\|. \tag{66.7}
+$$
+
+Use each checkpoint's actual prefix sums. For the joint object, set
+
+$$
+\begin{aligned}
+\mathscr H_D^{\rm joint}
+ &=\mathbb C r\oplus\mathscr H_{D,1}\oplus\mathscr H_{D,2},\\
+\mathcal K_D^{\rm joint}
+ &=\mathbb C r\oplus\mathcal K_{D,1}\oplus\mathcal K_{D,2},\\
+W_D^{\rm joint}&=I_r\oplus W_{D,1}\oplus W_{D,2},
+\end{aligned}
+$$
+
+with zero reference generator and identity reference transfer. Tensor all these maps with identity on any supplied retained auxiliary Hilbert space $\mathcal A$, including unused bank modes, $c,u,v$, clock/reference registers and all quantum retention factors. This requires their supplied fixed-factor identification and identity law across the whole commission, rather than inferring such a law from an idle interval. Newly born atomic coordinates of $\mathcal K_{D',N}$ are not taken from an unknown auxiliary register. Physically promoting a previously retained bank mode into an active atom, or coupling an auxiliary during service, requires its own complete joint transfer certificate; a second copy or reset of that mode is not supplied. For every $f\in\mathscr H_{D_0}^{\rm joint}\otimes\mathcal A$, with arbitrary unknown correlations between its sectors, reference and auxiliaries, the bound is
+
+$$
+\|\mathsf P^\diamond_{\delta,h}W_{D_0}^{\rm joint}f
+-W_{D_h}^{\rm joint}\mathsf V^\diamond_h f\|
+\le (TR\sqrt\delta+2q\omega)\|f\|
+\le(TR+288m)\sqrt\delta\,\|f\|,                   \tag{66.8}
+$$
+
+where $R$ is the common constant displayed after Theorem64.7. The two prescriptions are separate full commissions, each satisfying the same bound; they are not blended or independently optimized marginals. An initial retained component $z$ of norm at most $\eta$ adds at most $\eta$ and is carried through the whole history without projection, reset, resampling or a new copy. If $z$ is a form vector, its form admissibility is retained at every ideal cut and every idle interval. Hilbert vectors without a finite-energy premise still satisfy the norm assertion.
+
+Proof. The one-interval discrepancy is exactly (64.12). Suppose the current discrepancy from $W_Df_i$ is $e$. An idle unitary preserves its norm and adds at most $\theta_i r_N\|f_i\|$; the target unitary has $\|f_i\|=\|f\|$. At an accepted enlargement the full isometry preserves the old discrepancy and (66.6) adds at most $2\omega_N\|f\|$. An identical-domain acceptance, Read or refusal adds zero. Induction gives (66.7). No inference that the actual producer state remains in the calibrated range is made: its entire previous discrepancy is propagated in its full norm. Direct-sum operator norm is the maximum of the two sector bounds, and tensoring with identity leaves the operator norm unchanged, proving the entangled-input statement. Apply the uniform residual $r_N\le R\sqrt\delta$ of Theorem64.7. Every factor in the ideal history is an isometry or a unitary, so $z$ retains its norm. Theorem66.3 and Lemma64.5a retain its form domain when supplied. $\square$
+
+For fixed finite $T,m,a,g,\nu$ and target norm, this bound decreases to zero with the single density $\delta$. No subescape, spectral-gap, localization or visible-state restriction on $f$ is imposed. In particular it includes the hidden phases and complete contrast directions of §§55,58,63, every one/two-particle basis direction, and arbitrary combinations with the same reference. It is not uniform as $T$ or the number of renewals becomes unbounded. Finite cap is a legality condition, not permission to complete an infinite refinement or make an exact limit Read.
+
+**Theorem 66.7 (ingress, service, calibration and comparison-clock errors).** The following explicit certificates extend (66.8) to a supplied finite implementation. They are premises on the actual commission, not conclusions about a native apparatus. Every ideal and actual map acts on the whole declared retained space, including all leakage modes, reference and auxiliaries; actual maps are linear isometries, or contractions without conditioning or postselection. Their source version and all original guards/responses are authentic. A wrong source, lost row or omitted retained mode is not a small calibration error.
+
+Let actual ingress differ from $W_{D_0}^{\rm joint}$ by operator norm at most $\epsilon_{\rm in}$, with additional supplied initial component of norm at most $\eta$. For every service/locking/hold/transfer block $k$, let its actual full map differ from its ideal identity or $\mathsf T$ by operator norm at most $h_k$. A supplied full-space certificate of this kind includes phase/reference faults and any nonidentity auxiliary evolution. At idle interval $i$, let the actual evolution differ by full-space operator norm at most $e_i$ from the evolution of the declared producer with comparison interval $\widehat\theta_i\ge0$, commissioned approximants $\widehat a_i>0,\widehat g_i>0,\widehat\nu_i\ge0$, and its actual approximate atomic pair multiplier. There is no assumed bounded-generator operator-norm clock estimate on arbitrary continuum modes.
+
+Use common finite upper bounds $\bar a,\bar g,\bar\nu$ for the exact and approximate commissioned parameters. Supply
+
+$$
+\begin{gathered}
+|\widehat a_i-a|\le d_{a,i},\quad
+|\widehat g_i-g|\le d_{g,i},\quad
+|\widehat\nu_i-\nu|\le d_{\nu,i},\\
+\max_{\{p,q\}\subset D_i}|\widehat G_i(p,q)-G^\diamond_{D_i}(p,q)|
+\le\kappa_i,\qquad
+|\widehat\theta_i-\theta_i|\le t_i.
+\end{gathered}
+$$
+
+The maximum over an empty pair set is defined as zero. The complete pair certificate covers every actual pair of the selected common or killed law. Suppose any additional bounded multiplier discrepancy, for example a certified implementation departure from the unchanged common one-body field, has full norm at most $v_i$. Define
+
+$$
+\begin{aligned}
+\bar M&=2\bar g+\bar\nu/\lambda,
+&\bar C&=12\bar a+\bar M,\\
+\bar R&=18\bar a+256\bar C+16(\bar C+\bar M),
+& C&=12a+2g+\nu/\lambda,\\
+b_i&=12d_{a,i}+2d_{g,i}+d_{\nu,i}/\lambda
+                 +\bar\nu\kappa_i+v_i,
+&\Delta_\tau&=\sum_i t_i.
+\end{aligned}
+$$
+
+Then at every completed commissioned checkpoint the actual retained vector $\widehat F_h$ satisfies
+
+$$
+\begin{aligned}
+\|\widehat F_h-W_{D_h}^{\rm joint}\mathsf V^\diamond_h f\|
+\le\eta+\Bigl[\epsilon_{\rm in}+\sum_k h_k+\sum_i e_i
+  +(T+\Delta_\tau)\bar R\sqrt\delta
+  +2q\omega+\sum_i\widehat\theta_i b_i
+  +C\Delta_\tau\Bigr]\|f\|.                       \tag{66.9}
+\end{aligned}
+$$
+
+The bound allows jointly correlated, history-dependent certified errors; no independence assumption is used. It covers all target vectors, not just known prepared inputs. Actual acquisition/preparation of an unknown correlated $f$ remains a supplied ingress right, never an inference from that quantifier.
+
+Proof. Apply Theorem64.7 to the exact source pair law with the approximant parameters, at interval $\widehat\theta_i$. Its preparation $W_D$ is unchanged because Theorem64.6 makes it independent of $a,g,\nu$ and pair choice. Its residual is at most $\bar R\sqrt\delta$. Replacing the exact source pair coefficient by $\widehat G_i$ changes the full producer only by a bounded atomic multiplier, of norm at most $\bar\nu\kappa_i$ for $N=2$ and zero for $N=1$. The further multiplier change has norm at most $v_i$. Bounded-perturbation unitary Duhamel gives their contribution $\widehat\theta_i(\bar\nu\kappa_i+v_i)$ on every retained vector. This step applies to unbounded kinetic generators because their difference here is bounded.
+
+On the finite target, $\|K_{D,N}\|\le6N$, $0\le\phi\le1$ and $G^\diamond_D(p,q)\le1/\lambda$. Its coefficient difference is at most $12d_{a,i}+2d_{g,i}+d_{\nu,i}/\lambda$ in the joint sectors. Unitary Duhamel on that bounded target gives the corresponding $\widehat\theta_i$ contribution. Its exact generator norm is at most $C$, so the remaining target clock difference is at most $Ct_i$. Combining these steps yields a one-interval bound on input $W_D f_i$ of
+
+$$
+[\widehat\theta_i\bar R\sqrt\delta
+ +\widehat\theta_i b_i+Ct_i]\|f_i\|.
+$$
+
+This avoids assigning a finite global clock-Lipschitz constant to the unbounded continuum generator. Arbitrary previously accumulated continuum discrepancy is simply propagated by the actual contraction. For a service block, its difference on the ideal comparison vector $W_Df_i$ is at most $h_k\|f\|$, in addition to (66.6) if it is an enlargement. For an idle block its extra discrepancy is $e_i\|f\|$. Telescope as in Theorem66.6; $\sum_i\widehat\theta_i\le T+\Delta_\tau$. The actual maps propagate the ingress component and ingress error without amplification. Direct sums and identity tensors retain the same bounds and all correlations. This proves (66.9). $\square$
+
+At fixed $T,m$ the total bound tends to zero when the single density and all displayed supplied error budgets tend to zero, with bounded parameter envelopes. If an ingress, hold or calibration budget is fixed positive, (66.9) retains it and does not promise vanishing total error. For a desired unit-input tolerance $\varepsilon$, if all terms other than the density terms total at most $\varepsilon/2$, one sufficient single choice is
+
+$$
+0<\delta\le\min\left\{1,
+ \left(\frac{\varepsilon}{2[(T+\Delta_\tau)\bar R+288m]}\right)^2\right\}, \tag{66.10}
+$$
+
+when the denominator is positive; if it is zero, no density restriction beyond $\delta\le1$ is needed. This is a finite mathematical accuracy allocation. The actual supply and price of each certified ingress, multiplier, evolution and hold are independent obligations. A paid service/compilation hold has positive apparatus duration and retention cost. Freezing the comparison clock during it is its stated premise, not zero physical time; any departure must satisfy the indicated clock/hold certificates.
+
+Every original request, source-service routine, record write/copy, refusal, acquisition and Stop remains executed and charged as in §§60,62. Forgetting the additional continuum state and certificates returns that actual original history, rather than synthesizing replies from a Green calculation. The uniform bounds do not depend on an observer acquiring $D$, a beta mask or a coefficient, or having source-specific initialization. Public scheduling must use only the original supplied public data and actually acquired prefix. If new apparatus telemetry, fee labels, preparation data or readout reveals private source influence, source-independent observation needs its own contract, such as the fixed-public-schedule and private-enable boundary of Theorem60.3; the form theorem does not certify that implementation. An already commissioned terminal contraction $C_0$ can be compared mathematically through $C_0(W_{D_h}^{\rm joint})^*$, whose norm is at most one. Its error is bounded by (66.9). An already commissioned effect transports through $W_{D_h}^{\rm joint}F(W_{D_h}^{\rm joint})^*$; for unit normalized inputs its probability error is at most twice the full-state error. These are comparison maps, not new native ports or physical acquisition procedures, and no evolved component is silently discarded.
+
+**Proposition 66.8 (an accepted graft obstructs exact full-data/full-norm inclusion).** Consider an actual accepted original Right$(v)$ graft with its supplied nonempty context $v$, or its Left analogue. The old occurrence injection is respectively $p\mapsto Lp$ or $p\mapsto Rp$. It relocates the old root to a nonroot port and adds a parent seam; it is not the same-address whole-rho injection. Identify the old seams and old grounded stubs with the corresponding seams/stubs in the relocated subtree, with their intrinsic coordinates unchanged. Suppose a candidate transfer is required to retain every old atomic and open-cable component literally under this injection, and to preserve its full norm in the new active producer space, without a separate retained carrier or repreparation. For any old form vector $F$ with nonzero old-root atomic value, no such transfer can belong to the new one-particle form domain. Consequently no transfer meeting these requirements works on the full joint $N=1/N=2$ state space.
+
+Proof. The retained old strata already contribute exactly $\|F\|^2$ to the new norm. Full-norm equality forces every new atomic and open-cable component to be zero in its $L^2$ space. In particular the newly added parent cable is zero almost everywhere. If its function is $H^1$, both endpoint traces are zero. The trace at the relocated old root must instead equal its retained nonzero atomic value. This contradicts the new form-domain equality. The argument uses orthogonal positive-mass strata and does not assume that the transfer is linear. Failure on one one-particle input also rules out a map satisfying the joint all-input requirement. Keeping only old atomic data instead of all old components is a different retention requirement and is not covered by this impossibility. $\square$
+
+This has a minimal actual fixed-cap witness. At $H=2$, initialize the genuine source $t=\alpha$ and supply the named context $v=\alpha$. The original Right$(\alpha)$ candidate $\langle\alpha,\alpha\rangle$ has two leaves and is accepted at equality. Its immutable INITIAL is still the one-leaf source. The old $X_{\{o\}}$ has two grounded stubs. Let $F(o)=c$, with $F_e(x)=c(1-x)$ on both stubs and
+
+$$
+|c|^2=(1+2\delta/3)^{-1}.
+$$
+
+Then $F\in\mathcal Q_{\{o\},1}$, $\|F\|=1$ and $k(F)=2|c|^2$. It is also a calibrated input: the harmonic lift is exactly $E_1e_o$, and normalization gives $W_{\{o\},1}e_o$. The retained old components alone have new norm one. The new parent cable from the current root to $L$ would require trace $c$ at $L$, which zero added norm cannot supply. This is an actually legal source/context pair, not an idle theorem counterexample or an unguarded hypothetical graft. The Left case uses the same construction at $R$.
+
+There is a quantitative boundary if one instead allows added norm but imposes finite kinetic budget. Let $h$ be the new parent-cable function, parameterized with its old-root endpoint at $1$, with $h(1)=c\ne0$, and suppose $\int_0^1|h'|^2\le E<\infty$. Setting $n=\int_0^1|h|^2$, the fundamental theorem and Cauchy--Schwarz give
+
+$$
+|c|^2\le n+2\sqrt{nE},\qquad
+n\ge\left(\sqrt{E+|c|^2}-\sqrt E\right)^2>0.        \tag{66.11}
+$$
+
+Indeed integrate $|h(1)|^2=|h(x)|^2+2\operatorname{Re}\int_x^1h'\overline h$ over $x$, and bound the last integral by $2\|h'\|_2\|h\|_2$. Solve the resulting quadratic in $\sqrt n$. Thus retaining all old components entails squared-norm increase at least $\delta(\sqrt{E+|c|^2}-\sqrt E)^2$, before accounting for any other new strata. Boundary layers can make this addition small only by relaxing exact norm or allowing increasing energy; they do not supply exact full-data/full-norm transfer at a fixed density. Rescaling the whole vector to recover its norm changes its retained old amplitudes and relative reference data.
+
+Even at the finite target level a graft is not the common compression of (62.7). With current-root degrees and field defined as in §55 on the new source, the relocated old root gains degree one, and its old field values become $\phi(Lp)=\phi(Rp)=\phi(p)/2$. For the one-particle occurrence injection $\iota$ this gives
+
+$$
+\iota^*L_{D'}\iota=L_D+|e_o\rangle\langle e_o|,
+\qquad
+\iota^*H_{D',1}\iota-H_{D,1}
+=a|e_o\rangle\langle e_o|+\tfrac g2 M_{\phi|D}.     \tag{66.12}
+$$
+
+Old seams persist, but current-root anchoring does not. If a different graft comparison retains the old physical root/field instead, it must declare that law and all added ports and boundary conditions; it cannot use (62.7) by renaming addresses. Likewise its common and killed pair targets need their own faithful identification/update, rather than importing (66.5). The moving-root realization of legacy §52 is a distinct field/boundary contract. Proposition66.8 is an obstruction to the stated active-space full-retention requirement, not a proof that every physical graft realization is impossible. An alternative would have to specify an actual joint retained carrier, its unknown-state isometric ingress, the location and continued accessibility of all old data, new active generator and field, reference phase, collision conditions, clock, acquisition rights and finite price, and prove its correspondence without copying or resetting the unknown state. That bridge remains unresolved here.
+
+**Proposition 66.9 (a planar incidence realization of the same conditional mathematics).** All the full-space maps, trace domains, atomic multipliers and finite-history bounds above admit a compatible injective planar placement of their one-position supports. The same placement included in $\mathbb R^3$ has identical mathematics. This supplies a two-dimensional ambient incidence comparison, not a physical field-mediated counterrealization or a dimension-three selection.
+
+Proof. For each binary address $p$ of depth $d$, let $I_p$ be its dyadic interval in $[0,1]$ and place its port at $(\operatorname{mid}(I_p),-d)$. Join it by a straight segment to the corresponding centers of $I_{pL},I_{pR}$ at level $-d-1$. In each horizontal level band the two children of one parent remain inside that parent's dyadic strip, different parents have disjoint strip interiors, and the two sibling segments meet only at their parent. Bands meet only at their designated port points. This is an injective embedding of the full binary cable tree; every compact planar region meets only finitely many of its level bands and finitely many edges in those bands. For a finite current $D$, retain all actual seams and the next two segments at each current leaf as its grounded stubs, putting zero mass and zero trace at their outer tips. At whole-rho these very tips become the newborn atoms, so Definition66.2 is compatible with this single drawing. At fixed cap only a finite public address cover and its ground tips are needed; the infinite drawing is a mathematical comparison, not an infinite commissioned apparatus.
+
+Push forward the mass-one atomic measure and $\delta\,dx$ on each intrinsic unit cable. An intrinsic coordinate, not the planar segment's Euclidean length, defines the derivative form. The resulting map is a one-particle Hilbert/form isometry. Its product placement is injective on ordered pairs and carries the actual diagonal to the same-position diagonal, so its symmetric restriction preserves all mixed measures, dissected cells, boundary equalities and collision traces of Definition64.5. Copy the explicitly declared $\phi_A$ and both complete atomic pair multipliers; the transported operators are unitarily equivalent by closed-form representation. The full-space inclusions, calibrated preparations and error estimates therefore transport as well. They are not merely a fit of a root response or a ten-pair scalar table. $\square$
+
+If an edge has Euclidean arclength $\ell_e$, rewriting its intrinsic form in arclength $s$ gives cable density $\delta/\ell_e$ and derivative coefficient $\ell_e$: $\delta\int_0^1|F|^2dx=(\delta/\ell_e)\int_0^{\ell_e}|f|^2ds$ and $\int_0^1|F'|^2dx=\ell_e\int_0^{\ell_e}|f'|^2ds$. These are declared graph weights with singular atomic masses and junction/collision conditions, not an isotropic ambient Laplace operator. No ambient inverse-distance or hyperbolic point Green law is substituted for $G^{\rm c},G^{\rm k}$, so the actual all-pair obstructions of Chapters64–65 remain intact. Positive tube width, transverse modes, leakage, local spatial force, finite packing, displacement metrics and construction resources are absent from an incidence drawing.
+
+For contrast, any injective continuous cable-support embedding with a degree-three port cannot lie in $\mathbb R$. Three distinct incident arc germs must have disjoint interiors. Each image germ is an interval extending to the left or right of the image port; two of the three choose the same side, and their intervals overlap, violating injectivity. Every nonroot port of $X_D$ has incidence three, including its grounded stubs, so a nonsingleton authentic $D$ gives this one-dimensional obstruction. The singleton's two-stub interval has no such obstruction. It is a topological limitation of this particular injective-support contract, not exclusion of every one-dimensional encoded, nonlocal or temporally routed apparatus. A planar placement defeats inference that this graph-support mechanism alone requires three ambient dimensions, but it supplies no full physical two-space counterexample.
+
+**Definition 66.10 (exact suppliers, completed relations and remaining obligations).** Source, occurrence, boundary, record and actual renewal semantics are supplied by Continuation Definition1.1, TM22–23, TM30, PR57 and §§55,58,60,62. The fixed-space harmonic minimizers, actual collision domain, residual operator relation and idle evolution estimate are precisely Definition64.5 and Theorems64.6–64.7. Their mature closed-form and contact-domain methods are credited in Definition64.9, including Bolte--Kerner arXiv:1207.5648v1, Definition3.1 and Proposition3.2 in its Lebesgue-product metric-graph scope. It does not supply the atomic mixed-stratum enlargement map used here. No new third-party theorem about changing atomic cable spaces is assumed. Direct-sum isometry, trace continuity, polarization, bounded-perturbation Duhamel and the endpoint estimate are classical intermediates. The new source-qualified deductions are (66.1)–(66.9), the faithful accepted-graft retention obstruction and finite-energy cost (66.11)–(66.12), and their compatible planar incidence comparison. They are ordinary repo-derived proofs, without mathematical-priority, fresh Lean/kernel, physical or CI claims.
+
+The full whole-rho state-transfer and finite-history gap named in Proposition64.8 is resolved within its explicitly supplied stratified producer: every old mixed component is kept, every new atomic mass is treated, identity versions and composition hold, and one density gives a common full-norm bound for both occupations and both separately commissioned pair prescriptions. This does not construct the source-owned cable switch or license its physical execution. The graft obstruction concerns exactly literal old-stratum retention plus exact norm in the new active cable space; other retained-carrier graft contracts remain unresolved. No idle isometry or old-root relabeling is offered as their proof.
+
+All remaining physical/native bridges of Definition65.9 retain their scope: the operation- and metric-preserving displacement map; an isotropic local physical realization and its packing/transverse/exterior/collision controls; a genuine field mediator producing every common/killed pair coefficient with the unchanged one-body field; actual switching and retained-state graft law; source-independent ingress, unknown-input correlations, preparation, acquisition and readout; same-reference coherence and calibrated physical time; finite precision and every construction, control, service, production, storage, hold, retention, maintenance and total resource cost. A continuum support contains infinite-dimensional interval/cell spaces even at fixed cap. Its mass counts are not finite memory, apparatus mass, a minimum price or an unlimited-resource implementation. Chapter63's binding/spectral conclusions and Chapter65's dimension/reuse limits are consumers and constraints, not new capabilities supplied by the transfer.
+
+In particular the original $\mathcal D_2$ source still has its independent arbitrary unbounded actor $a$, including zero, its untagged radius-$7/25$ $b$, destructive actions, jointly adversarial/history-dependent errors, source-independent initialization and original INITIAL/Read/refusal/Stop. Those variables are not the positive commissioned $a$ and supplied error certificates above. The common $\Pi$ of Definition63.13 retains full-vector, spanning, common-zero, whole quadratic-distance/positive-semidefinite Gram, at least two independent directions, alternating bilinear exact-area/Jacobi, actual orthonormal-probe, finite binary-calibration and hidden-kernel-preserving-generator hypotheses. It supplies no cable ingress, new spatial operation or field mediator.
+
+The immutable composition-promised endpoint acquisition of §57 retains its depth caps, common source-independent initialization, actual query/reply histories, finite correct stopping on every same-composition positive and negative source, and distinct actual-address fees. Definition57.12 supplies no old-source archive. The separate paid promised-family archive/cut acquisition of Atomic Generation Acquisition §12 retains its paid positive-root archive, exact nonadvancing cut port, finite stopping/decoding, protected written records after refusal/closure, aligned actual generation, trusted markers, no unrecorded source change, actual write/protect/retain/query rights, closed strong ports and all reply-affecting retained source influence in the service price. Neither acquisition is unknown-state harmonic preparation, source cloning, reset, independent sampling or an exact limit Read. The phase-coherent full-tail minimax theory uses its own once-sampled-depth actual Read process and paid stopped transcript; none of its radii, finite-state counts, update matrices or clock is transferred to these occurrence/cable states.
+
+The planar comparison is compatible with the exact conditional graph laws and defeats only a graph-incidence inference of dimension three. It neither certifies a full physical lower-dimensional counterrealization nor adds a reason selecting three. The original sustained why-three-dimensions question, with its full source/operation/field/acquisition/resource target, remains open beyond this finite ordinary-proof increment.
+
+## 66.99 追加锚（本行以下为增补区）
+
