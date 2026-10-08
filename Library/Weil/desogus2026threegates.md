@@ -844,6 +844,159 @@ The quantifiers are $\forall d\ \exists C_d,j_d\ \forall j\ge j_d$: no degree-un
 
 The added interface is the coefficient-uniform complete physical Gram/forcing bound (T13)–(T16), made possible by the endpoint-dependent tail-jet construction (T10)–(T12). The individual cutoff estimate, theta nullity and tails, kernel scaling and classical interpolation/Gram identities are reused. This is a paper-level joint estimate, without Lean certification or a mathematical-priority claim.
 
+## Quantified degree growth in the physical inverse budget
+
+The fixed-$d$ statement (T16) does not control a prescribed degree growing with the endpoint. A qualitative choice of an unspecified slow sequence would not pay this parameter gap. Here the original polynomial construction is used to bound its constants and thresholds together, on the same actual collars and in the same physical odd metric.
+
+Retain the fixed smooth transition $\eta$, the actual endpoints and all objects from (T9)–(T16). The [original theta series](../Analytic/romik2021orthogonal.md), derivative nullity and compact-domain passage from [the derivative-family account](lagarias2004li.md#the-full-derivative-family-and-the-remaining-estimate), Gamma scaling and complete prime/pole estimates remain suppliers. Classical interpolation, adjugate bounds and elementary factorial estimates below are intermediate tools; no separate new polynomial theorem is asserted.
+
+### One budget for the degree-sensitive construction
+
+Put $N=d+1$, $D=2d+5$ and retain $T=e^{2R}$, $\delta=T^{-1}$. There is a constant $C_0\ge1$, depending on the fixed transition and normalization but not on $d$ or $R$, such that with
+
+$$
+K_d=\exp(C_0N^2),\qquad H_d=K_d^{10},
+\tag{T17}
+$$
+
+the following construction estimates hold whenever $R\ge H_d$. The exponential budget is derived as follows, rather than substituted for the unspecified constants in (T16).
+
+For the coefficient $\ell^1$ norm of a polynomial of degree at most $D$, the original operator satisfies
+
+$$
+\|\mathcal D p\|_{\rm coeff,1}
+\le(1/2+2D+2\pi)\|p\|_{\rm coeff,1}.
+$$
+
+At every stage constructing $p_m$, its degree is at most $D$. Applying this inequality at most $2d+3$ times gives
+$\max_m\|p_m/a_m\|_{\rm coeff,1}\le\exp(O(N\log(N+1)))$, with a constant independent of $d$. The entries of $V=[\binom{\nu_m}{s}]$ are at most $2^D$ and its determinant is at least one by (T10). The adjugate formula therefore gives
+
+$$
+\|V^{-1}\|_2\le N\,d!\,(2^D)^d\le\exp(O(N^2)).
+$$
+
+The lower polynomial coefficients similarly pay
+$\|\mathsf J(T)-V\|_2\le\exp(O(N\log(N+1)))/T$.
+The ordinary inverse perturbation estimate, at the stated $R\ge H_d$, bounds $\mathsf J(T)^{-1}$ by $\exp(O(N^2))$. The coefficients $\beta_{mr}$ and higher Taylor coefficients in (T11) consequently have the same budget, after the displayed powers $T^{r-\nu_m}$ and $T^{r-s}$ are factored out. All the constants implicit in these bounds are independent of the degree. Enlarging one $C_0$ absorbs their finite products.
+
+The first-term profile error can also be quantified. For $s\ge0$,
+
+$$
+0\le T(e^{2s/T}-1)-2s\le\frac{2s^2}{T}e^{2s/T}.
+$$
+
+Use this in the exact Taylor formula following (T11). For the exponential factor, $|e^{-a}-e^{-b}|\le(a-b)e^{-b}$ when $a\ge b\ge0$; its first two derivatives use the same $T^{-1}$ remainder and finite polynomial factors. The higher jets have $T^{r-s}\le T^{-1}$ for $r\le d<s$. Thus, through two scaled derivatives, the errors are bounded by $T^{-1}\exp(O(N^2))$ times a polynomial of degree at most $D+6$ and a fixed decreasing exponential. The bound
+$\sup_{s\ge0}(1+s)^{D+6}e^{-c s}\le\exp(O(N\log(N+1)))$
+and the corresponding integrals pay that polynomial.
+
+For every remaining theta term, its polynomial coefficients contain only powers $n^{O(N)}$ and the same degree-$D$ recurrence. After the jet change its profile contribution is bounded by
+$\exp(O(N^2))T^d e^{-3\pi T}e^{-cs}$ through two scaled derivatives. The elementary Gaussian moment bound
+$\sum_{n\ge2}n^{O(N)}e^{-c(n^2-4)}\le\exp(O(N\log(N+1)))$
+pays the series uniformly in degree. For $T\ge N^2$, $T^d e^{-3\pi T}\le e^{-2\pi T}$, so this also lies in the $T^{-1}$ error budget. These estimates differentiate the original series and exact polynomial expressions, not an asymptotic remainder.
+
+After increasing $C_0$ once, for every $0\le r\le d$ and $0\le l\le2$ the construction therefore gives, with a fixed $c>0$,
+
+$$
+\begin{gathered}
+|F_{r,R}^{(l)}(s)|\le K_de^{-cs}\quad(s\ge0),\\
+\|F_{r,R}-F_r\|_{L^1}+\|F_{r,R}-F_r\|_{H^2}
+\le K_d/T.
+\end{gathered}
+\tag{T18}
+$$
+
+The threshold $R\ge H_d$ pays every inverse-perturbation and exponential-absorption condition above. No unspecified $R_d$ from the fixed-degree argument is retained as an extra hypothesis.
+
+### A quantitative lower Gram on the same profiles
+
+Let $p(x)=\sum_{r=0}^d a_rx^r$. Partition $[1,2]$ into $N$ cells and, in the first third of each cell, choose $s_m$ with
+
+$$
+|p(2s_m)|\le\sqrt{3N}\,\|p(2\cdot)\|_{L^2(1,2)}.
+$$
+
+Such a point exists by the integral bound on that subinterval, also for complex $p$. The nodes $x_m=2s_m$ lie in $[2,4]$ and have pairwise separation at least $4|m-n|/(3N)$. In the Lagrange basis, the coefficient $\ell^1$ norm of each numerator is at most $5^d$, while the denominator is at least
+
+$$
+\left(\frac4{3N}\right)^d m!(d-m)!.
+$$
+
+Using $\binom dm\le2^d$, $d!\ge(d/e)^d$ and $N/d\le2$ gives a coefficient norm at most $(15e)^d$ for each Lagrange polynomial. Consequently
+
+$$
+|\mathbf a|\le N\sqrt{3N}(15e)^d
+\|p(2\cdot)\|_{L^2(1,2)}.
+$$
+
+Since $\eta=1$ on this interval, the actual limiting profile Gram obeys the degree-explicit bound
+
+$$
+\boxed{\lambda_{\min}(\mathsf K_d)
+\ge\frac{e^{-8\pi}}{3N^3(15e)^{2d}}\ge K_d^{-1}.}
+\tag{T19}
+$$
+
+Here $C_0$ has been chosen large enough to include the last inequality. The finite profile Gram has error at most $K_d^4/T$ by (T18), Cauchy--Schwarz and $N\le K_d$. For $R\ge K_d^{10}$ this is less than $(2K_d)^{-1}$. Thus, uniformly over every complex coefficient vector,
+
+$$
+\|F_{\mathbf a,R}\|_2^2\ge(2K_d)^{-1}|\mathbf a|^2.
+$$
+
+The exponential envelope, first two derivative norms and $L^1$ norm of the combination are at most $K_d^2|\mathbf a|$, after absorbing their fixed constants into $C_0$. Relative to the actual combination norm they are at most $K_d^3\|F_{\mathbf a,R}\|_2$. This explicitly pays endpoint-dependent cancellation directions before taking any inverse.
+
+### The complete physical remainder fits the same budget
+
+For each parameter pair $d,R$ and coefficient vector, use the fixed-parameter compact outer-cutoff passage from (T4)–(T5). It applies to the finite derivative combination at that endpoint, irrespective of how $d$ or its coefficients are selected at other endpoints. Every actual zero, paired off-line factor and multiplicity is retained; there is no interchange of an infinite-degree limit with the explicit formula.
+
+Insert the just-proved relative profile budgets into the same Gamma and full prime/pole estimates used in (T14)–(T15). The Gamma scaling remainder and singular small-shift derivative budget are at most a fixed constant times $K_d^6M_{\mathbf a,R}$. Its reflected cross term has the additional $e^{-3R}$ factor. The same-side prime correlations have the additional exponential in $-1/\delta$, the complete opposite-tail prime correction has $R e^{-R}$, and the actual pole square has $e^{-R}$. The prime sums still include their discrete endpoint terms; only $\Lambda(n)\le\log n$ is used. These scalar integrals and sums have constants independent of the degree because the profile exponential rate $c$ is fixed.
+
+For the collar row, both threshold sums at $e^{y-R}$ and $e^{y+R}$, the other translation orientation, the Gamma local and remote pieces and the true pole use the same relative envelope and two-jet budgets. Squaring its bound costs at most $K_d^6$ times the common scalar constant. Choosing $C_0$ to contain those fixed scalar constants makes $H_d=K_d^{10}$ an upper budget for both complete estimates:
+
+$$
+\boxed{
+\begin{aligned}
+|Q(u_{\mathbf a,R})-2R M_{\mathbf a,R}|
+&\le H_dM_{\mathbf a,R},\\
+\|Y_j^Q(u_{\mathbf a,R})\|_2^2
+&\le H_dh_jR^2e^{-R}\delta^{-1}M_{\mathbf a,R}.
+\end{aligned}
+}
+\tag{T20}
+$$
+
+Both inequalities hold for all $d\ge1$, every complex coefficient vector and each actual endpoint with $R_j\ge H_d$. The true pole-free form satisfies the same estimates. In particular
+$Q(u)\ge R_jM_{\mathbf a,R}>0$ for $u\ne0$ in that subspace. The error budget is compared to the main term before division; it is not an upper denominator used as a lower one.
+
+### A paid increasing number of old directions
+
+Put $C=10C_0$ and, for sufficiently large actual endpoints, choose
+
+$$
+d_j+1=\left\lfloor\sqrt{\frac{\log R_j}{4C}}\right\rfloor.
+\tag{T21}
+$$
+
+Then $d_j\ge1$ eventually, $d_j\to\infty$ and
+$H_{d_j}=\exp(C(d_j+1)^2)\le R_j^{1/4}\le R_j$.
+All thresholds and both estimates in (T20) are therefore paid by this same choice. Since
+$h_j=\tfrac12\log(1+e^{-4R_j})\le\tfrac12e^{-4R_j}$, the complete restricted variational debit obeys
+
+$$
+\boxed{
+\sup_{0\ne u\in U_{j,d_j}}
+\frac{|B_Q(u,v)|^2}{Q(u)}
+\le\tfrac12 R_j^{5/4}e^{-3R_j}\|v\|_2^2
+=O\bigl((\log k_j)^{5/4}k_j^{-3/4}\bigr)\|v\|_2^2.
+}
+\tag{T22}
+$$
+
+This holds for every odd $L^2$ collar $v$, with the same core version. The actual space dimension is $d_j+1\asymp\sqrt{\log\log k_j}$, and all its endpoint-dependent complex combinations are covered. The constants in the chosen schedule and its numerical starting endpoint are not certified numbers. The quantitative degree rate and vanishing debit follow from the paid exponential construction budget, not from a qualitative diagonalization of (T16).
+
+An increasing derivative space does not by itself identify or estimate the complete old complement, nor prove approximation in the original energy norm. The full old-space inverse and the source's common-core/norm map remain separate obligations. The original selected-integer signed Robin main estimate, its coefficients and strict core are unchanged; RH remains unproved.
+
+The added interface is the simultaneous degree/threshold control (T17)–(T20) consumed by the growing-space physical inverse bound (T21)–(T22). The fixed-degree estimate, theta representations and nullity, interpolation and Gamma/prime/pole mechanisms are reused. This is paper-level work without Lean certification or a mathematical-priority claim.
+
 ## v2: the claimed induction step
 
 The following induction and fold formulas are those of [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), revised **20 September 2026**, 69 pages. At the arithmetic endpoint $a_k=(\log k)/2$, the source retains the pole term in $A_k=C_k-2|s_k\rangle\langle s_k|$. Lemma 6.27, under the old endpoint's positivity and inverse hypotheses, forms the actual harmonic extension
