@@ -44,7 +44,7 @@ private theorem raw_canonical_rate (alpha q : unitInterval) (ha : 0 < (alpha : �
   split_ifs with he
   · have hb : (alpha : ℝ) = (1 - (alpha : ℝ)) * (q : ℝ) := he
     cases l <;> cases r <;> cases j <;>
-      simp [markerRate, rootMass, denominator, selectedParity, he] at hd hc ⊢ <;>
+      simp [markerRate, rootMass, denominator, selectedParity] at hd hc ⊢ <;>
       field_simp [hd,hc] <;> nlinarith [hb]
   · rfl
 
@@ -194,7 +194,7 @@ private theorem raw_card {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInt
       2 * exceptionalCount alpha q = 4 * m := by
     rw [exceptionalCount, Finset.card_eq_sum_ones, Finset.mul_sum, Finset.sum_filter]
     rw [← Finset.sum_add_distrib]
-    simp [ite_add_ite]
+    simp [ite_add_ite, Nat.mul_comm]
   omega
 
 private theorem exceptional_count_le_one {m : ℕ} (alpha : unitInterval)
@@ -224,17 +224,34 @@ private theorem raw_matrix_pushforward {m : ℕ} (alpha : unitInterval)
   letI := (fullModel .raw alpha q).finite
   cases c with
   | inl p =>
-      have hp := p.property
-      simp [rawModel, rawSection, fullModel, rawEncode, Fintype.sum_sum_type,
-        Finset.sum_add_distrib, Finset.univ, Fintype.complete, terminalCount,
-        terminalIndex, markerOutput, hp]
-      split_ifs <;> simp_all
+      change _ = ∑ e, if rawEncode alpha q e = d then
+        ((if o = .zero then
+          if e = .inl (p.val.1, flipParity p.val.2 j) then
+            1 - markerRate alpha (q p.val.1) p.val.2 j else 0 else 0) +
+         (if o = .rawMark then
+          if e = .inr (terminalIndex .raw (selectedParity p.val.2 j)) then
+            markerRate alpha (q p.val.1) p.val.2 j else 0 else 0)) else 0
+      simp_rw [ite_add]
+      rw [Finset.sum_add_distrib]
+      by_cases hz : o = .zero <;> by_cases hm : o = .rawMark <;>
+        simp only [hz, hm, ite_true, ite_false, Finset.sum_const_zero, add_zero, zero_add]
+      all_goals
+        simp_rw [ite_comm (rawEncode alpha q _ = d) (_ = _)]
+        simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+        simp [rawModel, rawEncode, p.property, eq_comm]
   | inr u =>
-      cases u
-      cases d with
-      | inl p => simp [rawModel, rawSection, fullModel, rawEncode, Fintype.sum_sum_type, terminalCount]
-      | inr u => cases u; simp [rawModel, rawSection, fullModel, rawEncode, Fintype.sum_sum_type,
-          terminalCount, Finset.univ, Fintype.complete]
+      change _ = ∑ e, if rawEncode alpha q e = d then
+        (if o = .reject then
+          if e = .inr (⟨0, by simp [terminalCount]⟩ : Fin (terminalCount .raw)) then 1 else 0
+         else 0) else 0
+      by_cases ho : o = .reject
+      · simp only [ho, ite_true]
+        simp_rw [ite_comm (rawEncode alpha q _ = d) (_ = _)]
+        simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+        cases u
+        simp [rawModel, rawEncode, ho, eq_comm]
+      · simp only [ho, ite_false, Finset.sum_const_zero]
+        simp [rawModel, ho]
 
 private theorem raw_probability {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (ha : 0 < (alpha : ℝ)) :
@@ -249,6 +266,7 @@ private theorem raw_probability {m : ℕ} (alpha : unitInterval)
   obtain ⟨hc, hn, hp⟩ := full_model_probability .raw alpha q ha
   constructor
   · intro j c
+    change (∑ o, ∑ d, (rawModel alpha q).matrix j o d c) = 1
     simp_rw [raw_matrix_pushforward]
     have he (o : Output) :
         (∑ d, ∑ e, if rawEncode alpha q e = d then
