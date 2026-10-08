@@ -58,37 +58,30 @@ internal sealed class StationaryReadHistoryDocument : IScribeDocumentDefinition
                 + "the actual forest and row geometry; core selection, weighted overlap "
                 + "and the final original83.21 inequality require additional results."))));
 
-    internal static Formula V(string name) => F.Id(name);
-    internal static Formula N => Seq(Mathbb, Sp, Grp(V("N")));
-    internal static Formula Label => Call("ZMod", Seq(D(3), Times, Sp, V("P")));
-    internal static Formula Hist => Call("History", V("C"), V("hP"), V("I"));
-    internal static Formula Trace(string x, Formula t) => Call("trace", V("C"), V("hP"), V(x), t);
-    internal static Formula At(string name, string n) => Call(name, V("C"), V("hP"), V("I"), V(n));
-    internal static Formula Event(string x, Formula i) => Call("event", V("C"), V("hP"), V("I"), Pair(V(x), i));
-    internal static Formula EqF(Formula x, Formula y) => Seq(x, Eq, y);
-    internal static Formula LT(Formula x, Formula y) => Seq(x, Lt, y);
-    internal static Formula Pair(Formula x, Formula y) => Seq(Open, x, Comma, y, Close);
-    internal static Formula Member(Formula x, Formula s) => Seq(x, InMacro, Sp, s);
-    internal static Formula LE(Formula x, Formula y) => Seq(x, Le, Sp, y);
-    internal static Formula Val(Formula x) => Call("val", x);
-    internal static Formula Card(string name, string n) => Call("card", At(name, n));
-    internal static Formula Phase(string x, string n) => Seq(V(x), Plus, At("historyShift", n));
-    internal static Formula Gap(string n, string p) =>
-        Seq(At("time", n), Minus, Grp(Seq(At("time", p), Plus, D(1))));
-    internal static Formula ParentEdge(string n, string p) => EqF(At("parent", n), Call("some", V(p)));
-    internal static Formula RowEq(string n, string m) =>
+    private static Formula V(string name) => F.Id(name);
+    private static Formula N => Seq(Mathbb, Sp, Grp(V("N")));
+    private static Formula Label => Call("ZMod", Seq(D(3), Times, Sp, V("P")));
+    private static Formula Hist => Call("History", V("C"), V("hP"), V("I"));
+    private static Formula At(string name, string n) => Call(name, V("C"), V("hP"), V("I"), V(n));
+    private static Formula EqF(Formula x, Formula y) => Seq(x, Eq, y);
+    private static Formula LT(Formula x, Formula y) => Seq(x, Lt, y);
+    private static Formula Member(Formula x, Formula s) => Seq(x, InMacro, Sp, s);
+    private static Formula LE(Formula x, Formula y) => Seq(x, Le, Sp, y);
+    private static Formula Val(Formula x) => Call("val", x);
+    private static Formula Card(string name, string n) => Call("card", At(name, n));
+    private static Formula Phase(string x, string n) => Seq(V(x), Plus, At("historyShift", n));
+    private static Formula RowEq(string n, string m) =>
         And(EqF(At("readControl", n), At("readControl", m)), EqF(At("color", n), At("color", m)));
-    internal static Formula ReadTime(string x, Formula i) => Call("readTime", V("C"), V("hP"), V("I"), V(x), i);
-    internal static Formula AllH(string[] names, Formula body) =>
+    private static Formula AllH(string[] names, Formula body) =>
         names.Reverse().Aggregate(body, (current, name) => All(name, Hist, current));
-    internal static Formula IntervalMember(string n, string x, Formula lower, Formula upper) =>
+    private static Formula IntervalMember(string n, string x, Formula lower, Formula upper) =>
         And(LE(Seq(Val(At("color", n)), Times, Sp, V("P"), Plus, lower), Val(Phase(x, n))),
             LT(Val(Phase(x, n)), Seq(Val(At("color", n)), Times, Sp, V("P"), Plus, upper)));
-    internal static Formula All(string name, Formula type, Formula body) =>
+    private static Formula All(string name, Formula type, Formula body) =>
         Seq(Forall, Sp, V(name), Colon, type, Comma, Grp(body));
-    internal static Formula Imp(Formula premise, Formula body) => Seq(Grp(premise), Implies, Grp(body));
-    internal static Formula And(Formula a, Formula b) => Seq(Grp(a), Land, Grp(b));
-    internal static Formula Call(string name, params Formula[] args)
+    private static Formula Imp(Formula premise, Formula body) => Seq(Grp(premise), Implies, Grp(body));
+    private static Formula And(Formula a, Formula b) => Seq(Grp(a), Land, Grp(b));
+    private static Formula Call(string name, params Formula[] args)
     {
         var items = new List<Formula> { Operatorname, Sp, Grp(V(name)), Open };
         for (var i = 0; i < args.Length; i++)
@@ -99,16 +92,18 @@ internal sealed class StationaryReadHistoryDocument : IScribeDocumentDefinition
         items.Add(Close);
         return Seq([.. items]);
     }
-    internal static Formula Scope(Formula body) => All("P", N,
+    private static Formula Scope(Formula body) => All("P", N,
         All("Q", Seq(V("Type"), Underscore, Grp(V("u"))),
         All("C", Call("Controller", V("P"), V("Q")), All("hP", LT(D(1), V("P")), body))));
-    internal static Formula InitializedScope(Formula body) => Scope(All("ell", N, All("h", N,
-        All("I", Call("Initialized", V("C"), V("hP"), V("ell"), V("h")), body))));
-    internal static DocumentBlock ResultAt(string owner, string declaration, string id, string title,
+    private static Formula InitializedScope(Formula body) => Scope(All("ell", N, All("h", N,
+        All("I", Call("Initialized", V("C"), V("hP"), V("ell"), V("h")),
+            Seq(OpenBracket, Call("NeZero", Seq(D(3), Times, Sp, V("P"))), CloseBracket, body)))));
+    private static DocumentBlock ResultAt(string owner, string declaration, string id, string title,
         Formula statement, string explanation) => Describe.Lean(DescribeId.Create(id),
         DeclarationHandle.Create("D5/S3/ObserverMemory/Algorithms/" + owner + "." + declaration),
         H(title), StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
         Blocks(Paragraph(Text(explanation))), DescribeRole.Theorem);
+
     private static DocumentBlock Result(string declaration, string id, string title,
-        Formula statement, string explanation) => StationaryReadHistoryDocument.ResultAt("StationaryReadHistory", declaration, id, title, statement, explanation);
+        Formula statement, string explanation) => ResultAt("StationaryReadHistory", declaration, id, title, statement, explanation);
 }

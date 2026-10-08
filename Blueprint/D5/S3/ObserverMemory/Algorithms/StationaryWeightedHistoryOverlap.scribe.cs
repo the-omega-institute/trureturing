@@ -56,11 +56,11 @@ internal sealed class StationaryWeightedHistoryOverlapDocument : IScribeDocument
                 "The event stores (x,i), and its full prefix is uniquely determined. An ancestor "
                 + "and descendant containing the same label still use different indices. The ordinary "
                 + "child injectivity transports the original indexed-history separation without erasing "
-                + "equal-row occurrences. This helper is consumed by the classified event partition."),
+                + "equal-row occurrences. Each classified event therefore retains one full-history identity."),
             Result("actual_event_partition", "actual-event-partition", "Background and ordinary indexed events",
                 Scope(All("q", V("Q"), And(
                     EqF(SetOf("v", At("Event"), And(
-                        Neq(At("parent", At("event", V("v"))), V("none")),
+                        Neq(At("parent", At("event", V("v"))), Call("none")),
                         EqF(At("readControl", At("event", V("v"))), V("q")))),
                         Call("union", At("backgroundEvents", V("q")), At("ordinaryEvents", V("q")))),
                     Call("Disjoint", At("backgroundEvents", V("q")), At("ordinaryEvents", V("q"))),
@@ -87,9 +87,9 @@ internal sealed class StationaryWeightedHistoryOverlapDocument : IScribeDocument
                     All("q", V("Q"), All("c", Fin3, EqF(W("a", V("q"), V("c")),
                         Seq(W("z", V("q"), V("c")), Plus,
                             Call("if", Member(V("c"), At("backgroundDigits", V("q"))), D(0), W("m", V("q"), V("c"))))))),
-                    All("q", V("Q"), All("c", Fin3, Imp(EqF(At("demands", V("q"), V("c")), V("empty")),
+                    All("q", V("Q"), All("c", Fin3, Imp(EqF(At("demands", V("q"), V("c")), Emptyset),
                         EqF(W("m", V("q"), V("c")), D(0))))),
-                    Imp(Call("Nonnegative", V("f")), And(
+                    Imp(Nonnegative, And(
                         EqF(W("Af"), SumOver("d", At("Ordinary"), Call("f", At("delay", Call("val", V("d")))))),
                         All("q", V("Q"), All("c", Fin3,
                             EqF(W("a", V("q"), V("c")), SumOver("d", At("demands", V("q"), V("c")),
@@ -106,9 +106,9 @@ internal sealed class StationaryWeightedHistoryOverlapDocument : IScribeDocument
                 + "weight for literal wait one when f(1)=0, and original same-source-row delay coherence. "
                 + "The wait-one histories remain in Ordinary; no restricted zero-correction transport is asserted."),
             Result("core_retained_bound", "core-retained-bound", "One spare core digit",
-                Scope(All("f", ScoreType, All("hf", Call("Nonnegative", V("f")),
-                    All("hm", Call("Monotone", V("f")), All("hl", Call("LipschitzWith", D(1), V("f")),
-                    All("q", V("Q"), All("hq", Member(V("q"), At("core")),
+                Scope(All("f", ScoreType, Imp(Nonnegative,
+                    Imp(Call("Monotone", V("f")), Imp(Call("LipschitzWith", D(1), V("f")),
+                    All("q", V("Q"), Imp(Member(V("q"), At("core")),
                         LE(W("retained", V("q")), Seq(At("k", V("q")), Times, Sp, Call("score", V("f"), At("baseline", V("q"))), Plus,
                             Grp(Seq(At("tail", V("q")), Minus, At("baseline", V("q"))))))))))))),
                 "Each actual ordinary delay at q is at most its original longest tail L_q. "
@@ -116,9 +116,9 @@ internal sealed class StationaryWeightedHistoryOverlapDocument : IScribeDocument
                 + "if k_q=0 no ordinary weight remains, and if k_q=1 the positive-integer "
                 + "Lipschitz bound gives f(L_q)<=f(l_q)+(L_q-l_q). No reduced wait is charged as a literal tail."),
             Result("extra_retained_bound", "extra-retained-bound", "Three-digit extra target bound",
-                Scope(All("f", ScoreType, All("hf", Call("Nonnegative", V("f")),
-                    All("hm", Call("Monotone", V("f")), All("hcap", Cap,
-                    All("q", V("Q"), All("hq", Member(V("q"), At("extras")),
+                Scope(All("f", ScoreType, Imp(Nonnegative,
+                    Imp(Call("Monotone", V("f")), Imp(Cap,
+                    All("q", V("Q"), Imp(Member(V("q"), At("extras")),
                         LE(W("retained", V("q")), Seq(At("tail", V("q")), Plus, D(1)))))))))),
                 "An extra target has no background digits. Its three retained maxima are "
                 + "individually bounded by f(L_q), and the contract 3f(L)<=L+1 pays their total "
@@ -136,7 +136,7 @@ internal sealed class StationaryWeightedHistoryOverlapDocument : IScribeDocument
                 + "two units from 2e, yielding L_q+1. The disjoint actual partition ensures that "
                 + "every target and tail growth is charged exactly once."),
             Result("necessary_inequality", "necessary-inequality", "Original overlap correction and full nominal charge",
-                Scope(Instances(All("f", ScoreType, All("hf", Call("Admissible", V("f")), And(
+                Scope(Instances(All("f", ScoreType, Imp(Call("Admissible", V("f")), And(
                     LE(Seq(At("E0"), Plus, W("Af"), Minus,
                         SumOver("q", At("core"), Seq(At("k", V("q")), Times, Sp, Call("score", V("f"), At("baseline", V("q"))))), Minus, W("Zf")),
                         Seq(At("E"), Plus, D(2), Times, Sp, At("e"))),
@@ -147,8 +147,7 @@ internal sealed class StationaryWeightedHistoryOverlapDocument : IScribeDocument
                 + "LipschitzWith 1, f(1)=0, and 3f(L)<=L+1 for every positive L. The retained "
                 + "identity, core/extra bounds, and exact tail decomposition yield "
                 + "E+2e>=E0+Af-sum_core k_q f(l_q)-Zf. Score(f,l_q) equals the literal positive "
-                + "f(l_q), and the compiled original-domain application checks that form directly. "
-                + "The exact target-to-NonrootRead equivalence and the frozen full_nominal_resource_embedding "
+                + "f(l_q). The exact target-to-NonrootRead equivalence and the full nominal resource embedding "
                 + "then charge all terminal states, actual reads, common-prefix positions and longest "
                 + "wait-chain units against full Q, including unused states."),
             Paragraph(Text(
@@ -160,21 +159,20 @@ internal sealed class StationaryWeightedHistoryOverlapDocument : IScribeDocument
 
     private static Formula V(string name) => F.Id(name);
     private static Formula Nat => Seq(Mathbb, Sp, Grp(V("N")));
-    private static Formula Hist => At("History");
     private static Formula Fin3 => Call("Fin", D(3));
     private static Formula ScoreType => Seq(Call("PNat"), Rightarrow, Call("Real"));
     private static Formula W(string name, params Formula[] args) =>
         Call(name, [V("C"), V("hP"), V("I"), V("f"), .. args]);
-    private static Formula Neq(Formula a, Formula b) => Call("Not", EqF(a, b));
+    private static Formula Neq(Formula a, Formula b) => Seq(a, F.Neq, Sp, b);
     private static Formula Unique(string name, Formula type, Formula body) =>
-        Call("ExistsUnique", V(name), type, body);
+        Seq(Exists, Bang, Sp, V(name), Colon, type, Comma, Grp(body));
+    private static Formula Nonnegative => All("x", Call("PNat"), LE(D(0), Call("f", V("x"))));
     private static Formula Cap => All("L", Call("PNat"),
         LE(Seq(D(3), Times, Sp, Call("f", V("L"))), Seq(V("L"), Plus, D(1))));
     private static Formula NBinary => Seq(D(3), Times, Sp, Grp(Seq(V("P"), Minus, D(1))));
     private static Formula Emptyset => Call("empty");
     private static Formula At(string name, params Formula[] args) =>
         Call(name, [V("C"), V("hP"), V("I"), .. args]);
-    private static Formula Card(Formula set) => Call("card", set);
     private static Formula EqF(Formula a, Formula b) => Seq(a, Eq, b);
     private static Formula LE(Formula a, Formula b) => Seq(a, Le, Sp, b);
     private static Formula Member(Formula a, Formula b) => Seq(a, InMacro, Sp, b);
@@ -193,7 +191,7 @@ internal sealed class StationaryWeightedHistoryOverlapDocument : IScribeDocument
         Instances(All("C", Call("Controller", V("P"), V("Q")),
         All("hP", Seq(D(1), Lt, V("P")), All("ell", Nat, All("h", Nat,
         All("I", Call("Initialized", V("C"), V("hP"), V("ell"), V("h")), body))))),
-        Call("DecidableEq", V("Q")), Call("NeZero", Seq(D(3), Times, Sp,  Sp, V("P"))))));
+        Call("DecidableEq", V("Q")), Call("NeZero", Seq(D(3), Times, Sp, V("P"))))));
     private static Formula Call(string name, params Formula[] args)
     {
         var items = new List<Formula> { Operatorname, Sp, Grp(V(name)), Open };

@@ -51,12 +51,11 @@ def Action.isWait : Action P → Bool
   | .wait => true
   | _ => false
 
-def replay (q : Q) : List (Action P) → Q
-  | [] => q
-  | a :: w => replay (match C.instruction q, a with
+def replay (q : Q) (w : List (Action P)) : Q :=
+  w.foldl (fun q a => match C.instruction q, a with
       | .wait next, .wait => next
       | .read row, .read c => row c
-      | _, _ => q) w
+      | _, _ => q) q
 
 def shift (w : List (Action P)) : Nat := (w.filter Action.isWait).length
 
@@ -64,9 +63,11 @@ def readNumber (w : List (Action P)) : Nat := (w.filter Action.isRead).length
 
 private theorem replay_append (q : Q) (a b : List (Action P)) :
     replay C q (a ++ b) = replay C (replay C q a) b := by
-  induction a generalizing q with
-  | nil => rfl
-  | cons a w ih => simp only [List.cons_append, replay]; exact ih _
+  simpa only [replay] using
+    (List.foldl_append (f := fun q a => match C.instruction q, a with
+      | .wait next, .wait => next
+      | .read row, .read c => row c
+      | _, _ => q) (b := q) (l := a) (l' := b))
 
 private theorem trace_length (x : ZMod (3 * P)) (t : Nat) :
     (trace C hP x t).length = t := by
@@ -91,6 +92,7 @@ theorem trace_reconstruction (x : ZMod (3 * P)) (t : Nat) :
       Function.iterate_succ_apply' _ _ _
     have qeq : (C.run hP (x, C.initial) t).2 =
         replay C C.initial (trace C hP x t) := congrArg Prod.snd ih
+    simp only [replay] at qeq
     have seq : (C.run hP (x, C.initial) t).1 =
         x + (shift (trace C hP x t) : ZMod (3 * P)) := congrArg Prod.fst ih
     rw [advance, trace, shift_append, replay_append]
@@ -98,17 +100,20 @@ theorem trace_reconstruction (x : ZMod (3 * P)) (t : Nat) :
     | wait next =>
       simp only [action, shift, List.filter, Action.isWait,
         List.length_cons, List.length_nil, Nat.cast_add, Nat.cast_one, zero_add,
-        replay, ← qeq, Controller.next, Controller.step, ins, Option.getD_some,
+        replay, List.foldl_cons, List.foldl_nil, ← qeq,
+        Controller.next, Controller.step, ins, Option.getD_some,
         seq, add_assoc]
     | read row =>
       simp only [action, shift, List.filter, Action.isWait,
         List.length_nil, add_zero,
-        replay, ← qeq, Controller.next, Controller.step, ins, Option.getD_some, seq]
+        replay, List.foldl_cons, List.foldl_nil, ← qeq,
+        Controller.next, Controller.step, ins, Option.getD_some, seq]
     | halt z =>
       simp only [action, shift, List.filter, Action.isWait,
         List.length_nil, add_zero,
-        replay, ← qeq, Controller.next, Controller.step, ins, Option.getD_none]
-      exact ih.trans (by simp only [← qeq, shift])
+        replay, List.foldl_cons, List.foldl_nil, ← qeq,
+        Controller.next, Controller.step, ins, Option.getD_none]
+      exact ih.trans (by simp only [replay, ← qeq, shift])
 
 noncomputable def readTimes (x : ZMod (3 * P)) : Finset Nat :=
   (Finset.range (I.length x)).filter (fun t => IsRead C (C.run hP (x, C.initial) t).2)

@@ -28,13 +28,13 @@ internal sealed class StationaryHistoryIncidenceDocument : IScribeDocumentDefini
                 + "endpoints. J sums incoming degree minus one over actual nonroot rows; Xi sums "
                 + "edge-fiber cardinality minus one over actual edges. These are derived quantities.")),
             Result("actual_edge_incidence", "actual-edge-incidence", "Actual forest-edge multiplicity",
-                StationaryHistorySlotGraphDocument.Scope(StationaryHistorySlotGraphDocument.EqF(StationaryHistorySlotGraphDocument.SumOver("z", StationaryHistorySlotGraphDocument.At("nonrootRows"),
-                    Seq(StationaryHistorySlotGraphDocument.Card(StationaryHistorySlotGraphDocument.SetOf("n", StationaryHistorySlotGraphDocument.At("nonroots"), StationaryHistorySlotGraphDocument.EqF(StationaryHistorySlotGraphDocument.At("row", StationaryHistorySlotGraphDocument.V("n")), StationaryHistorySlotGraphDocument.V("z")))), Minus, D(1))),
-                    Seq(StationaryHistorySlotGraphDocument.At("J"), Plus, StationaryHistorySlotGraphDocument.At("Xi")))),
+                Scope(EqF(SumOver("z", At("nonrootRows"),
+                    Seq(Card(SetOf("n", At("nonroots"), EqF(At("row", V("n")), V("z")))), Minus, D(1))),
+                    Seq(At("J"), Plus, At("Xi")))),
                 "The raw_history_surplus supplier is applied to the actual physicalForest and actual row map. "
                 + "The counted fiber consists of different full prefixes, not source visits or repeated drawings."),
             Result("outgoing_degree", "outgoing-degree", "At most two distinct outgoing slots",
-                StationaryHistorySlotGraphDocument.Scope(StationaryHistorySlotGraphDocument.All("n", StationaryHistorySlotGraphDocument.Hist, StationaryHistorySlotGraphDocument.LE(StationaryHistorySlotGraphDocument.Card(StationaryHistorySlotGraphDocument.At("outgoing", StationaryHistorySlotGraphDocument.At("row", StationaryHistorySlotGraphDocument.V("n")))), D(2)))),
+                Scope(All("n", Hist, LE(Card(At("outgoing", At("row", V("n")))), D(2)))),
                 "One actual source row fixes its literal delay and next read target. Exact reuse of the "
                 + "digit-translation supplier confines all of its children, across every full history and "
                 + "read level, to two absolute target digits. This bound includes pure resolving rows "
@@ -47,9 +47,9 @@ internal sealed class StationaryHistoryIncidenceDocument : IScribeDocumentDefini
                 + "The three roots have no incoming edge and share the first read control. "
                 + "Writing N=3(P-1), the graph degree balance gives the following exact counts.")),
             Result("two_outgoing_count", "two-outgoing-count", "Production and pure resolving counts",
-                StationaryHistorySlotGraphDocument.Scope(StationaryHistorySlotGraphDocument.And(StationaryHistorySlotGraphDocument.EqF(StationaryHistorySlotGraphDocument.Card(StationaryHistorySlotGraphDocument.At("twoRows")), Seq(StationaryHistorySlotGraphDocument.NBinary, Plus, StationaryHistorySlotGraphDocument.At("J"))),
-                    StationaryHistorySlotGraphDocument.EqF(StationaryHistorySlotGraphDocument.Card(StationaryHistorySlotGraphDocument.At("productionRows")), StationaryHistorySlotGraphDocument.NBinary),
-                    StationaryHistorySlotGraphDocument.EqF(StationaryHistorySlotGraphDocument.Card(StationaryHistorySlotGraphDocument.At("resolvingRows")), StationaryHistorySlotGraphDocument.At("J")))),
+                Scope(And(EqF(Card(At("twoRows")), Seq(NBinary, Plus, At("J"))),
+                    EqF(Card(At("productionRows")), NBinary),
+                    EqF(Card(At("resolvingRows")), At("J")))),
                 "The incoming balance is |edges|+3=|rows|+J. The outgoing balance is "
                 + "|edges|+3P=|rows|+|TwoRows|. Their difference forces |TwoRows|=N+J; "
                 + "subtracting N production rows leaves exactly J pure resolving rows."),
@@ -60,14 +60,56 @@ internal sealed class StationaryHistoryIncidenceDocument : IScribeDocumentDefini
                 + "target image of TwoRows. For each q, twoAt(q) is the two-row fiber at q, targetSlots(q) "
                 + "is its nonroot digit-slot fiber, and targetJ(q) sums the incoming surpluses of those slots.")),
             Result("target_incidence", "target-incidence", "Distinct two-row incidence at a target",
-                StationaryHistorySlotGraphDocument.Scope(StationaryHistorySlotGraphDocument.All("q", StationaryHistorySlotGraphDocument.V("Q"), StationaryHistorySlotGraphDocument.And(
-                    StationaryHistorySlotGraphDocument.LE(Seq(D(2), Times, StationaryHistorySlotGraphDocument.Card(StationaryHistorySlotGraphDocument.At("twoAt", StationaryHistorySlotGraphDocument.V("q")))), Seq(D(3), Plus, StationaryHistorySlotGraphDocument.At("targetJ", StationaryHistorySlotGraphDocument.V("q")))),
-                    StationaryHistorySlotGraphDocument.LE(Seq(StationaryHistorySlotGraphDocument.Card(StationaryHistorySlotGraphDocument.At("twoAt", StationaryHistorySlotGraphDocument.V("q"))), Minus, D(1)), StationaryHistorySlotGraphDocument.At("targetJ", StationaryHistorySlotGraphDocument.V("q")))))),
+                Scope(All("q", V("Q"), And(
+                    LE(Seq(D(2), Times, Card(At("twoAt", V("q")))), Seq(D(3), Plus, At("targetJ", V("q")))),
+                    LE(Seq(Card(At("twoAt", V("q"))), Minus, D(1)), At("targetJ", V("q")))))),
                 "t different two-outgoing rows give 2t different incoming edges at their common target. "
                 + "At most three digit slots subtract at most three first incidences. Nonnegative "
                 + "surplus gives t-1<=targetJ(q), including t=0 and t=1. Summing these bounds "
                 + "and the actual J balance proves |G|>=N without degree or collision restrictions."))));
 
+    private static Formula V(string name) => F.Id(name);
+    private static Formula Nat => Seq(Mathbb, Sp, Grp(V("N")));
+    private static Formula Hist => At("History");
+    private static Formula NBinary => Seq(D(3), Times, Grp(Seq(V("P"), Minus, D(1))));
+    private static Formula At(string name, params Formula[] args) =>
+        Call(name, [V("C"), V("hP"), V("I"), .. args]);
+    private static Formula Card(Formula set) => Call("card", set);
+    private static Formula EqF(Formula a, Formula b) => Seq(a, Eq, b);
+    private static Formula LE(Formula a, Formula b) => Seq(a, Le, Sp, b);
+    private static Formula Member(Formula a, Formula b) => Seq(a, InMacro, Sp, b);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, V(name), Colon, type, Comma, Grp(body));
+    private static Formula SetOf(string name, Formula set, Formula condition) =>
+        Seq(OpenBrace, V(name), InMacro, Sp, set, Mid, Grp(condition), CloseBrace);
+    private static Formula SumOver(string name, Formula set, Formula summand) =>
+        Seq(Sum, Underscore, Grp(Member(V(name), set)), Grp(summand));
+    private static Formula And(params Formula[] terms) =>
+        Seq([.. terms.SelectMany((t, i) => i == 0 ? new[] { Grp(t) } : new[] { Land, Grp(t) })]);
+    private static Formula Instances(Formula body, params Formula[] types) =>
+        Seq([.. types.Select(t => Seq(OpenBracket, t, CloseBracket)), body]);
+    private static Formula Scope(Formula body) => All("P", Nat, All("Q", Seq(V("Type"), Underscore, Grp(V("u"))),
+        Instances(All("C", Call("Controller", V("P"), V("Q")),
+        All("hP", Seq(D(1), Lt, V("P")), All("ell", Nat, All("h", Nat,
+        All("I", Call("Initialized", V("C"), V("hP"), V("ell"), V("h")), body))))),
+        Call("DecidableEq", V("Q")), Call("NeZero", Seq(D(3), Times, Sp, V("P"))))));
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var items = new List<Formula> { Operatorname, Sp, Grp(V(name)), Open };
+        for (var i = 0; i < args.Length; i++)
+        {
+            if (i > 0) items.Add(Comma);
+            items.Add(args[i]);
+        }
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+    private static DocumentBlock ResultAt(string owner, string declaration, string id, string title,
+        Formula statement, string explanation) => Describe.Lean(DescribeId.Create(id),
+        DeclarationHandle.Create("D5/S3/ObserverMemory/Algorithms/" + owner + "." + declaration),
+        H(title), StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(explanation))), DescribeRole.Theorem);
+
     private static DocumentBlock Result(string declaration, string id, string title,
-        Formula statement, string explanation) => StationaryHistorySlotGraphDocument.ResultAt("StationaryHistoryIncidence", declaration, id, title, statement, explanation);
+        Formula statement, string explanation) => ResultAt("StationaryHistoryIncidence", declaration, id, title, statement, explanation);
 }

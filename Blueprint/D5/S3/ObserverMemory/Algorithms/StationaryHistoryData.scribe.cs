@@ -11,7 +11,7 @@ internal sealed class StationaryHistoryDataDocument : IScribeDocumentDefinition
         H("StationaryHistoryData"),
         Blocks(
             Result("actual_history_data", "actual-history-data", "Derived actual history data",
-                StationaryReadHistoryDocument.InitializedScope(StationaryReadHistoryDocument.Call("HistoryData", StationaryReadHistoryDocument.V("C"), StationaryReadHistoryDocument.V("hP"), StationaryReadHistoryDocument.V("I"))),
+                InitializedScope(Call("HistoryData", V("C"), V("hP"), V("I"))),
                 "HistoryData derives positive bounded read counts, exact first events, "
                 + "event levels, times and colors, nonempty supports, parent levels and "
                 + "support inclusion, and disjoint indexed event fibers. Event and history-label "
@@ -24,6 +24,34 @@ internal sealed class StationaryHistoryDataDocument : IScribeDocumentDefinition
                 + "All these fields are obtained from C and I; interval propagation and "
                 + "binary-node counts are not fields of HistoryData."))));
 
+    private static Formula V(string name) => F.Id(name);
+    private static Formula N => Seq(Mathbb, Sp, Grp(V("N")));
+    private static Formula LT(Formula x, Formula y) => Seq(x, Lt, y);
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, V(name), Colon, type, Comma, Grp(body));
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var items = new List<Formula> { Operatorname, Sp, Grp(V(name)), Open };
+        for (var i = 0; i < args.Length; i++)
+        {
+            if (i > 0) items.Add(Comma);
+            items.Add(args[i]);
+        }
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+    private static Formula Scope(Formula body) => All("P", N,
+        All("Q", Seq(V("Type"), Underscore, Grp(V("u"))),
+        All("C", Call("Controller", V("P"), V("Q")), All("hP", LT(D(1), V("P")), body))));
+    private static Formula InitializedScope(Formula body) => Scope(All("ell", N, All("h", N,
+        All("I", Call("Initialized", V("C"), V("hP"), V("ell"), V("h")),
+            Seq(OpenBracket, Call("NeZero", Seq(D(3), Times, Sp, V("P"))), CloseBracket, body)))));
+    private static DocumentBlock ResultAt(string owner, string declaration, string id, string title,
+        Formula statement, string explanation) => Describe.Lean(DescribeId.Create(id),
+        DeclarationHandle.Create("D5/S3/ObserverMemory/Algorithms/" + owner + "." + declaration),
+        H(title), StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(explanation))), DescribeRole.Theorem);
+
     private static DocumentBlock Result(string declaration, string id, string title,
-        Formula statement, string explanation) => StationaryReadHistoryDocument.ResultAt("StationaryHistoryData", declaration, id, title, statement, explanation);
+        Formula statement, string explanation) => ResultAt("StationaryHistoryData", declaration, id, title, statement, explanation);
 }

@@ -30,54 +30,131 @@ internal sealed class StationaryHistoryPrefixDocument : IScribeDocumentDefinitio
                 + "identify two different full words. In a physical-phase expression, every "
                 + "natural shift is cast into ZMod(3P); the shift itself remains a literal natural number.")),
             Result("trace_reconstruction", "trace-reconstruction", "Exact prefix replay",
-                StationaryReadHistoryDocument.Scope(StationaryReadHistoryDocument.All("x", StationaryReadHistoryDocument.Label, StationaryReadHistoryDocument.All("t", StationaryReadHistoryDocument.N,
-                    StationaryReadHistoryDocument.EqF(StationaryReadHistoryDocument.Call("run", StationaryReadHistoryDocument.V("C"), StationaryReadHistoryDocument.V("hP"), StationaryReadHistoryDocument.Pair(StationaryReadHistoryDocument.V("x"), StationaryReadHistoryDocument.Call("initial", StationaryReadHistoryDocument.V("C"))), StationaryReadHistoryDocument.V("t")),
-                        StationaryReadHistoryDocument.Pair(Seq(StationaryReadHistoryDocument.V("x"), Plus, StationaryReadHistoryDocument.Call("shift", StationaryReadHistoryDocument.Trace("x", StationaryReadHistoryDocument.V("t")))),
-                            StationaryReadHistoryDocument.Call("replay", StationaryReadHistoryDocument.V("C"), StationaryReadHistoryDocument.Call("initial", StationaryReadHistoryDocument.V("C")), StationaryReadHistoryDocument.Trace("x", StationaryReadHistoryDocument.V("t")))))))),
-                "Replaying the complete action and answer word reconstructs the control. "
+                Scope(All("x", Label, All("t", N,
+                    EqF(Call("run", V("C"), V("hP"), Pair(V("x"), Call("initial", V("C"))), V("t")),
+                        Pair(Seq(V("x"), Plus, Call("shift", Trace("x", V("t")))),
+                            Call("replay", V("C"), Call("initial", V("C")), Trace("x", V("t")))))))),
+                "Replay is the left fold of the controller transition over the complete action "
+                + "and answer word. The list fold concatenation law separates the earlier "
+                + "prefix from its next action, so induction on time reconstructs the control. "
                 + "The physical phase is x plus the number of literal wait actions; reads "
                 + "and absorbing halts contribute no physical increment."),
+            Result("event_surjective", "event-surjective", "Every history has an indexed occurrence",
+                InitializedScope(Call("Surjective", Call("event", V("C"), V("hP"), V("I")))),
+                "History is the finite image of full indexed read prefixes. Every history therefore "
+                + "has an original input and read index producing it."),
+            Result("event_input_injective", "event-input-injective", "One history per read index of an input",
+                InitializedScope(All("x", Label, Call("Injective",
+                    Seq(Open, V("i"), Colon, Call("Fin", Call("reads", V("C"), V("hP"), V("I"), V("x"))),
+                        Mapsto, Event("x", V("i")), Close)))),
+                "For a fixed original input, equal full prefixes have equal lengths and read times. "
+                + "The increasing enumeration of read times then gives the same read index."),
+            Result("event_reconstruction", "event-reconstruction", "An indexed prefix reconstructs its read",
+                InitializedScope(All("v", Call("Event", V("C"), V("hP"), V("I")), And(
+                    EqF(EventRun, Pair(Seq(EventInput, Plus, Call("shift", EventBefore)),
+                        Call("replay", V("C"), Call("initial", V("C")), EventBefore))),
+                    EqF(EventWord, Call("append", EventBefore,
+                        Call("singleton", Call("read", Call("digit", V("hP"), Call("fst", EventRun)))))))), needsNonzero: false),
+                "Removing the last action leaves the exact pre-read trace. Replay reconstructs "
+                + "its configuration, and the final recorded answer is the actual absolute digit there."),
             Result("history_configuration", "history-configuration", "Configuration of a supporting label",
-                StationaryReadHistoryDocument.InitializedScope(StationaryReadHistoryDocument.All("n", StationaryReadHistoryDocument.Hist, StationaryReadHistoryDocument.All("x", StationaryReadHistoryDocument.Label,
-                    StationaryReadHistoryDocument.Imp(StationaryReadHistoryDocument.Member(StationaryReadHistoryDocument.V("x"), StationaryReadHistoryDocument.Call("support", StationaryReadHistoryDocument.V("C"), StationaryReadHistoryDocument.V("hP"), StationaryReadHistoryDocument.V("I"), StationaryReadHistoryDocument.V("n"))),
-                        StationaryReadHistoryDocument.EqF(StationaryReadHistoryDocument.Call("run", StationaryReadHistoryDocument.V("C"), StationaryReadHistoryDocument.V("hP"), StationaryReadHistoryDocument.Pair(StationaryReadHistoryDocument.V("x"), StationaryReadHistoryDocument.Call("initial", StationaryReadHistoryDocument.V("C"))),
-                                StationaryReadHistoryDocument.At("time", "n")),
-                            StationaryReadHistoryDocument.Pair(Seq(StationaryReadHistoryDocument.V("x"), Plus, StationaryReadHistoryDocument.At("historyShift", "n")), StationaryReadHistoryDocument.At("readControl", "n"))))))),
+                InitializedScope(All("n", Hist, All("x", Label,
+                    Imp(Member(V("x"), Call("support", V("C"), V("hP"), V("I"), V("n"))),
+                        EqF(Call("run", V("C"), V("hP"), Pair(V("x"), Call("initial", V("C"))),
+                                At("time", "n")),
+                            Pair(Seq(V("x"), Plus, At("historyShift", "n")), At("readControl", "n"))))))),
                 "Support consists exactly of original labels whose indexed read produces "
                 + "this full prefix. Time is word length minus one, level is the number of "
                 + "recorded reads minus one, and historyShift counts every literal wait."),
             Result("parent_successor", "parent-successor", "Unique prefix parent",
-                StationaryReadHistoryDocument.InitializedScope(StationaryReadHistoryDocument.All("x", StationaryReadHistoryDocument.Label, StationaryReadHistoryDocument.All("i", StationaryReadHistoryDocument.N,
-                    StationaryReadHistoryDocument.All("hi", StationaryReadHistoryDocument.LT(Seq(StationaryReadHistoryDocument.V("i"), Plus, D(1)), StationaryReadHistoryDocument.Call("reads", StationaryReadHistoryDocument.V("C"), StationaryReadHistoryDocument.V("hP"), StationaryReadHistoryDocument.V("I"), StationaryReadHistoryDocument.V("x"))),
-                        StationaryReadHistoryDocument.EqF(StationaryReadHistoryDocument.Call("parent", StationaryReadHistoryDocument.V("C"), StationaryReadHistoryDocument.V("hP"), StationaryReadHistoryDocument.V("I"),
-                                StationaryReadHistoryDocument.Event("x", Seq(StationaryReadHistoryDocument.V("i"), Plus, D(1)))),
-                            StationaryReadHistoryDocument.Call("some", StationaryReadHistoryDocument.Event("x", StationaryReadHistoryDocument.V("i")))))))),
+                InitializedScope(All("x", Label, All("i", N,
+                    Imp(LT(Seq(V("i"), Plus, D(1)), Call("reads", V("C"), V("hP"), V("I"), V("x"))),
+                        EqF(Call("parent", V("C"), V("hP"), V("I"),
+                                Event("x", Seq(V("i"), Plus, D(1)))),
+                            Call("some", Event("x", V("i")))))))),
                 "The parent truncates the full word to the greatest earlier read position. "
                 + "It is defined from the word itself, so every nonroot history has one "
                 + "parent regardless of row sharing or repeated control states."),
             Result("roots_exact", "roots-exact", "Exactly the first-answer roots",
-                StationaryReadHistoryDocument.InitializedScope(StationaryReadHistoryDocument.All("n", StationaryReadHistoryDocument.Hist,
-                    Seq(StationaryReadHistoryDocument.EqF(StationaryReadHistoryDocument.Call("parent", StationaryReadHistoryDocument.V("C"), StationaryReadHistoryDocument.V("hP"), StationaryReadHistoryDocument.V("I"), StationaryReadHistoryDocument.V("n")), StationaryReadHistoryDocument.Call("none")), Iff,
-                        Exists, Sp, StationaryReadHistoryDocument.V("c"), Colon, StationaryReadHistoryDocument.Call("Fin", D(3)), Comma,
-                        StationaryReadHistoryDocument.EqF(StationaryReadHistoryDocument.V("n"), StationaryReadHistoryDocument.Call("root", StationaryReadHistoryDocument.V("C"), StationaryReadHistoryDocument.V("hP"), StationaryReadHistoryDocument.V("I"), StationaryReadHistoryDocument.V("c")))))),
+                InitializedScope(All("n", Hist,
+                    Seq(EqF(Call("parent", V("C"), V("hP"), V("I"), V("n")), Call("none")), Iff,
+                        Exists, Sp, V("c"), Colon, Call("Fin", D(3)), Comma,
+                        EqF(V("n"), Call("root", V("C"), V("hP"), V("I"), V("c")))))),
                 "The three roots are ell literal waits followed by one read with answer c. "
                 + "Every answer occurs because all original input phases are initialized."),
             Result("history_time_decomposition", "history-time-decomposition", "Literal time accounting",
-                StationaryReadHistoryDocument.InitializedScope(StationaryReadHistoryDocument.All("n", StationaryReadHistoryDocument.Hist, StationaryReadHistoryDocument.EqF(StationaryReadHistoryDocument.At("time", "n"),
-                    Seq(StationaryReadHistoryDocument.At("historyShift", "n"), Plus, StationaryReadHistoryDocument.At("level", "n"))))),
+                InitializedScope(All("n", Hist, EqF(At("time", "n"),
+                    Seq(At("historyShift", "n"), Plus, At("level", "n"))))),
                 "Before the current read, each live action is either one wait or an earlier "
                 + "read. Thus time equals physical shift plus read level, without reducing "
                 + "the shift modulo P or modulo 3P."),
             Result("leaf_iff_terminal", "leaf-iff-terminal", "Actual graph leaves",
-                StationaryReadHistoryDocument.InitializedScope(StationaryReadHistoryDocument.All("n", StationaryReadHistoryDocument.Hist,
-                    Seq(StationaryReadHistoryDocument.Call("IsLeaf", StationaryReadHistoryDocument.V("C"), StationaryReadHistoryDocument.V("hP"), StationaryReadHistoryDocument.V("I"), StationaryReadHistoryDocument.V("n")), Iff,
-                        Exists, Sp, StationaryReadHistoryDocument.V("x"), Colon, StationaryReadHistoryDocument.Label, Comma,
-                        StationaryReadHistoryDocument.EqF(StationaryReadHistoryDocument.Call("instruction", StationaryReadHistoryDocument.V("C"), StationaryReadHistoryDocument.Call("replay", StationaryReadHistoryDocument.V("C"), StationaryReadHistoryDocument.Call("initial", StationaryReadHistoryDocument.V("C")),
-                            StationaryReadHistoryDocument.Call("word", StationaryReadHistoryDocument.V("n")))), StationaryReadHistoryDocument.Call("halt", StationaryReadHistoryDocument.V("x")))))),
+                InitializedScope(All("n", Hist,
+                    Seq(Call("IsLeaf", V("C"), V("hP"), V("I"), V("n")), Iff,
+                        Exists, Sp, V("x"), Colon, Label, Comma,
+                        EqF(Call("instruction", V("C"), Call("replay", V("C"), Call("initial", V("C")),
+                            Call("word", V("n")))), Call("halt", V("x")))))),
                 "IsLeaf means that no actual history has this prefix as parent. It is "
                 + "equivalent to halt immediately after the recorded read. A nonfinal "
-                + "read has a later actual child even when its support is a singleton."))));
+                + "read has a later actual child even when its support is a singleton."),
+            Result("leaf_original", "leaf-original", "Every leaf emits its original supporting label",
+                InitializedScope(AllH(["n"], All("x", Label, Imp(
+                    And(At("IsLeaf", "n"), Member(V("x"), At("support", "n"))),
+                    EqF(Call("instruction", V("C"),
+                            Call("replay", V("C"), Call("initial", V("C")), Call("word", V("n")))),
+                        Call("halt", V("x"))))))),
+                "A supporting occurrence of a graph leaf is that input's final read. Its "
+                + "post-read instruction halts with the same original label."))));
+
+    private static Formula EventInput => Call("fst", V("v"));
+    private static Formula EventIndex => Call("snd", V("v"));
+    private static Formula EventWord => Call("eventWord", V("C"), V("hP"), V("I"), V("v"));
+    private static Formula EventBefore => Call("dropLast", EventWord);
+    private static Formula EventRun => Call("run", V("C"), V("hP"),
+        Pair(EventInput, Call("initial", V("C"))),
+        Call("readTime", V("C"), V("hP"), V("I"), EventInput, EventIndex));
+
+    private static Formula V(string name) => F.Id(name);
+    private static Formula N => Seq(Mathbb, Sp, Grp(V("N")));
+    private static Formula Label => Call("ZMod", Seq(D(3), Times, Sp, V("P")));
+    private static Formula Hist => Call("History", V("C"), V("hP"), V("I"));
+    private static Formula Trace(string x, Formula t) => Call("trace", V("C"), V("hP"), V(x), t);
+    private static Formula At(string name, string n) => Call(name, V("C"), V("hP"), V("I"), V(n));
+    private static Formula Event(string x, Formula i) => Call("event", V("C"), V("hP"), V("I"), Pair(V(x), i));
+    private static Formula EqF(Formula x, Formula y) => Seq(x, Eq, y);
+    private static Formula LT(Formula x, Formula y) => Seq(x, Lt, y);
+    private static Formula Pair(Formula x, Formula y) => Seq(Open, x, Comma, y, Close);
+    private static Formula Member(Formula x, Formula s) => Seq(x, InMacro, Sp, s);
+    private static Formula AllH(string[] names, Formula body) =>
+        names.Reverse().Aggregate(body, (current, name) => All(name, Hist, current));
+    private static Formula All(string name, Formula type, Formula body) =>
+        Seq(Forall, Sp, V(name), Colon, type, Comma, Grp(body));
+    private static Formula Imp(Formula premise, Formula body) => Seq(Grp(premise), Implies, Grp(body));
+    private static Formula And(Formula a, Formula b) => Seq(Grp(a), Land, Grp(b));
+    private static Formula Call(string name, params Formula[] args)
+    {
+        var items = new List<Formula> { Operatorname, Sp, Grp(V(name)), Open };
+        for (var i = 0; i < args.Length; i++)
+        {
+            if (i > 0) items.Add(Comma);
+            items.Add(args[i]);
+        }
+        items.Add(Close);
+        return Seq([.. items]);
+    }
+    private static Formula Scope(Formula body) => All("P", N,
+        All("Q", Seq(V("Type"), Underscore, Grp(V("u"))),
+        All("C", Call("Controller", V("P"), V("Q")), All("hP", LT(D(1), V("P")), body))));
+    private static Formula InitializedScope(Formula body, bool needsNonzero = true) => Scope(All("ell", N, All("h", N,
+        All("I", Call("Initialized", V("C"), V("hP"), V("ell"), V("h")), needsNonzero
+            ? Seq(OpenBracket, Call("NeZero", Seq(D(3), Times, Sp, V("P"))), CloseBracket, body)
+            : body))));
+    private static DocumentBlock ResultAt(string owner, string declaration, string id, string title,
+        Formula statement, string explanation) => Describe.Lean(DescribeId.Create(id),
+        DeclarationHandle.Create("D5/S3/ObserverMemory/Algorithms/" + owner + "." + declaration),
+        H(title), StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(explanation))), DescribeRole.Theorem);
 
     private static DocumentBlock Result(string declaration, string id, string title,
-        Formula statement, string explanation) => StationaryReadHistoryDocument.ResultAt("StationaryHistoryPrefix", declaration, id, title, statement, explanation);
+        Formula statement, string explanation) => ResultAt("StationaryHistoryPrefix", declaration, id, title, statement, explanation);
 }

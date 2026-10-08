@@ -178,12 +178,23 @@ private theorem fiber_sum (f : ℕ+ → ℝ) :
   have maps : ∀ d ∈ (Finset.univ : Finset (Ordinary C hP I)),
       slot d ∈ (targets C hP I) ×ˢ (Finset.univ : Finset (Fin 3)) := by
     intro d _
-    have ht := history_target C hP I (n := d.val)
-      (Finset.card_pos.mp (by rw [d.property.1]; omega))
-    have hc := (child_delay_target C hP I (ordinary_child_parent C hP I d)).2.2.1
+    obtain ⟨v, hv⟩ := event_surjective C hP I (ordinaryChild C hP I d)
+    have ho : v ∈ ordinaryEvents C hP I (slot d).1 := by
+      apply Finset.mem_filter.mpr
+      refine ⟨Finset.mem_univ _, ?_⟩
+      rw [hv]
+      exact Finset.mem_image.mpr ⟨d, Finset.mem_filter.mpr ⟨Finset.mem_univ _, rfl⟩, rfl⟩
+    have he : v ∈ Finset.univ.filter (fun e : Event C hP I =>
+        parent C hP I (event C hP I e) ≠ none ∧
+        readControl C hP I (event C hP I e) = (slot d).1) := by
+      rw [(actual_event_partition C hP I (slot d).1).1]
+      exact Finset.mem_union_right _ ho
+    have hn := (Finset.mem_filter.mp he).2.1
+    rw [hv] at hn
     exact Finset.mem_product.mpr ⟨by
-      change readControl C hP I (ordinaryChild C hP I d) ∈ targets C hP I
-      rwa [hc],Finset.mem_univ _⟩
+      exact Finset.mem_image.mpr ⟨slot d, Finset.mem_image.mpr
+        ⟨ordinaryChild C hP I d, Finset.mem_filter.mpr ⟨Finset.mem_univ _, hn⟩, rfl⟩, rfl⟩,
+      Finset.mem_univ _⟩
   have eq := Finset.sum_fiberwise_of_maps_to maps (weight C hP I f)
   rw [Finset.sum_product] at eq
   exact eq.symm
