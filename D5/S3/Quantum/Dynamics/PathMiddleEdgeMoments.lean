@@ -18,16 +18,19 @@ reversal without fixed vertex, the splitting of the product of the weights of a 
 path with an odd number of edges, and a nodal extraction over the class A from the moments
 between the first vertex and the two middle ones; no Mathlib or frozen declaration states it.
 consumer: middle_edge_moments.
-proof_shape: middle_edge_moments: content; escape_witness: the public conclusion itself (form 2;
-the preregistered integrality of the middle-edge moments): ρ times the moment of H ^ p at the
-vector e_a + e_b is the integer [X^k] ((X^p * P_B) mod P_A), by the weight formula and the
+proof_shape: middle_edge_moments: content; escape_witness: the public conclusion itself (form 2; the
+integrality part of the preregistered witness on the middle-edge moments): ρ times the moment of H ^
+p at the vector e_a + e_b is the integer [X^k] ((X^p * P_B) mod P_A), by the weight formula and the
 Lagrange coefficient formula over the class A. consumer:
 D5/S3/Quantum/Dynamics/EvenPathRationalWeightTransfer (private step no_phase_one_transfer).
-proof_shape: middle_edge_gram: content; escape_witness: the public conclusion itself (form 2; the
-preregistered Gram identity): S 0 * S 2 - S 1 ^ 2 = 4 * r' ^ 2 for the moments S p of a
-reversal-invariant path Hamiltonian at e_a + e_b, with r' the weight of the edge following the
-middle edge, by the four-point support of the column H (e_a + e_b). consumer:
-D5/S3/Quantum/Dynamics/EvenPathRationalWeightTransfer (private step no_phase_one_transfer).
+proof_shape: middle_edge_gram: bind-only (the Gram identity S 0 * S 2 - S 1 ^ 2 = 4 * r' ^ 2 of the
+preregistered witness on the middle-edge moments, for a reversal-invariant path Hamiltonian with r'
+the weight of the edge following the middle edge: every atomic fact is an instance of
+pathHamiltonian_pow_apply_column at p = 1, of pathHamiltonian_transpose or of the invariance
+hypothesis, and the rest is a finite-sum expansion and ring); consumer:
+D5/S3/Quantum/Dynamics/EvenPathRationalWeightTransfer (private step no_phase_one_transfer). It
+provides no escape content: the escape witnesses of this module are middle_edge_weights and
+middle_edge_moments.
 Definitions: pairMoment (the moment of H ^ p at the sum of two basis vectors) and nodalMoment
 (the coefficient of degree k of the remainder of X ^ p * P_B modulo P_A); consumers:
 middle_edge_moments, middle_edge_gram and
@@ -59,10 +62,10 @@ Direct frozen dependencies:
   statement_id sha256:c50a132afc123692c13936889ad692366e6fb904fc589bc86bbf43f70e60e980.
   D5/S3/Quantum/Dynamics/ParityNodeDividedDifference.sum_eval_div_nodal_eq_coeff
   statement_id sha256:1299d2cac32c96924333faa7cf62248f785306485913813ee846eef3f944d175.
-  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.propagator_eq_reversal,
-  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.reversal_sign_classes and
-  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.normSq_mul_eq_of_nodal (published in the same
-  delivery; frozen owner module D5/S3/Quantum/Dynamics/PathMiddleVertexMoments).
+Same-delivery dependency:
+  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.propagator_eq_reversal
+  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.reversal_sign_classes
+  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.normSq_eq_div_of_nodal
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
 instance: every statement quantifies over all k, all positive weights and all real potentials.
 -/
@@ -184,37 +187,21 @@ theorem middle_edge_weights (hH : (pathHamiltonian r q).IsHermitian) (hr : ∀ t
       ext
       simp
     · exact (pathHamiltonian_pow_apply_column r q 0 p a).1 (Or.inl (by simp [ha]; omega))
-  have hzc : ∀ j, ((hH.eigenvalues j : ℝ) : ℂ) = ((z j : ℤ) : ℂ) := fun j => by
-    rw [hzΛ j]
-    norm_cast
   have hM2 : ∀ j ∈ A, (W a j + W b j) * starRingEnd ℂ (W 0 j) *
-      ∏ l ∈ A.erase j, (((z j : ℤ) : ℂ) - ((z l : ℤ) : ℂ)) = (Q : ℂ) := fun j hj =>
+      ∏ l ∈ A.erase j, ((hH.eigenvalues j : ℂ) - hH.eigenvalues l) = (Q : ℂ) := fun j hj =>
     mul_prod_sub_eq_of_moments A (fun i => (W a i + W b i) * starRingEnd ℂ (W 0 i))
-      (fun l => ((z l : ℤ) : ℂ)) k hcard _
+      (fun l => (hH.eigenvalues l : ℂ)) k hcard _
       (fun p hp => by
         rw [← hmom2 p hp, spectral_pow_apply hH, spectral_pow_apply hH, ← Finset.sum_add_distrib,
           ← hW]
         symm
         rw [← Finset.sum_subset (Finset.subset_univ A)]
-        · exact Finset.sum_congr rfl fun i _ => by rw [hzc i]; ring
+        · exact Finset.sum_congr rfl fun i _ => by ring
         · intro i _ hi
           rw [← add_mul, hF0 i hi, zero_mul]) j hj
   refine ⟨z, A, hzinj, hcard, hzA, hzB, hzΛ, hF0, fun j hj => ?_⟩
-  have h1 := hfirst j hj
-  rw [hPall] at h1
-  have hDAc : ∏ l ∈ A.erase j, (((z j : ℤ) : ℂ) - ((z l : ℤ) : ℂ)) =
-      ((∏ l ∈ A.erase j, ((z j - z l : ℤ) : ℝ) : ℝ) : ℂ) := by
-    rw [Complex.ofReal_prod]
-    exact Finset.prod_congr rfl fun l _ => by norm_cast
-  have h2 := hM2 j hj
-  rw [hDAc] at h2
-  have key := normSq_mul_eq_of_nodal h1 h2
-  have hDA0 : ∏ l ∈ A.erase j, ((z j - z l : ℤ) : ℝ) ≠ 0 := by
-    intro h0
-    rw [h0, Complex.ofReal_zero, mul_zero] at h2
-    exact hQpos.ne' (by exact_mod_cast h2.symm)
-  rw [eq_div_iff (mul_ne_zero (hr e).ne' hDA0)]
-  exact mul_left_cancel₀ (pow_pos hQpos 2).ne' (by linear_combination key)
+  exact normSq_eq_div_of_nodal hzΛ A j (hr e).ne' hQpos.ne'
+    (by rw [← hPall]; exact hfirst j hj) (hM2 j hj)
 
 /-- **Integer middle-edge moments.** Under the hypotheses of `middle_edge_weights`, the weight of
 the middle edge times the moment of `H ^ p` at `e_a + e_b` is the nodal moment of order `p` of

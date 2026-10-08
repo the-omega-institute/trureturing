@@ -9,42 +9,39 @@
 /-
 proof_shape: result: content; escape_witness: the public conclusion itself (the preregistered
 theorem of research line #14293, node 3), produced on the live path, through the private step
-no_phase_one_transfer, by
-D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments.middle_edge_moments (ρ times the middle-edge moments
-are the integer nodal moments C p of the two spectral classes),
-D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments.middle_edge_gram (hence
-C 0 * C 2 - C 1 ^ 2 = (2 ρ r')^2 with ρ, r' the middle weight and the next one) and
-nodalMoment_det_mod_four (this integer is 3 or 2 modulo 4), ending in the contradiction that an
-integer which is the square of a rational number is 0 or 1 modulo 4.
-proof_shape: nodalMoment_det_mod_four: content; escape_witness: the public conclusion itself
-(form 2; the preregistered residue of the second Hankel determinant): for k + 1 even and k + 1
-odd integer nodes, C 0 * C 2 - C 1 ^ 2 is 3 modulo 4 when k + 1 = 2 (mod 4) and 2 modulo 4 when
-k + 1 = 3, 5 (mod 8), by the reduction of the nodal polynomials to X^k (X + c) and
-(X + 1)^k (X + 1 + d) in (ZMod 4)[X] with c^2 = d^2 = 0, the remainder coefficient modulo
-X^k (X + c), the reflected polynomial (1 - c X) (1 + X)^k (1 + X + d X) and the period 8 of the
-binomial coefficients C(k, j), j ≤ 3, modulo 4; no Mathlib or frozen declaration states it.
-consumer: no_phase_one_transfer.
+no_phase_one_transfer, by D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments.middle_edge_moments (ρ times
+the middle-edge moments are the integer nodal moments C p of the two spectral classes), the
+bind-only Gram identity D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments.middle_edge_gram (hence C 0 * C
+2 - C 1 ^ 2 = (2 ρ r')^2 with ρ, r' the middle weight and the next one) and nodalMoment_det_mod_four
+(this integer is 3 or 2 modulo 4), ending in the contradiction that an integer which is the square
+of a rational number is 0 or 1 modulo 4.
+proof_shape: nodalMoment_det_mod_four: content; escape_witness: the public conclusion itself (form
+2; the preregistered residue of the second Hankel determinant): for k + 1 even and k + 1 odd integer
+nodes, C 0 * C 2 - C 1 ^ 2 is 3 modulo 4 when k + 1 = 2 (mod 4) and 2 modulo 4 when k + 1 = 3, 5
+(mod 8), by the reduction of the nodal polynomials to X^k (X + c) and (X + 1)^k (X + 1 + d) in (ZMod
+4)[X] with c^2 = d^2 = 0, the remainder coefficient modulo X^k (X + c), the reflected polynomial (1
+- c X) (1 + X)^k (1 + X + d X) and the period 8 of the binomial coefficients C(k, j), j ≤ 3, modulo
+4; no Mathlib or frozen declaration states it. consumer: no_phase_one_transfer.
 Private helpers:
 proof_shape: no_phase_one_transfer: content (escape witnesses as for result); consumer: result.
 proof_shape: prod_add_mul_of_sq_zero: content (induction on a nonempty finite set); consumer:
-map_nodal_even, map_nodal_odd.
-proof_shape: map_nodal_even, map_nodal_odd: content (reduction of the nodal polynomials modulo
-4); consumer: nodalMoment_det_mod_four.
-proof_shape: coeff_modByMonic_X_pow_mul: content (division identity with
-(X - c) * (X^k * (X + c)) = X^(k + 2)); consumer: nodalMoment_det_mod_four.
+map_nodal_of_parity.
+proof_shape: map_nodal_of_parity: content (reduction modulo 4 of the nodal polynomial of integers of
+one parity); consumer: nodalMoment_det_mod_four, for the even and for the odd nodes.
+proof_shape: coeff_modByMonic_X_pow_mul: content (division identity with (X - c) * (X^k * (X + c)) =
+X^(k + 2)); consumer: nodalMoment_det_mod_four.
 proof_shape: coeff_top_eq_coeff_reflect: content (reflection of a product with a palindromic
 factor); consumer: nodalMoment_det_mod_four.
-proof_shape: coeff_reflected: content (coefficient extraction); consumer:
+proof_shape: coeff_reflected: bind-only (ring and Mathlib coefficient rewrites); consumer:
 nodalMoment_det_mod_four.
-proof_shape: choose_add_eight: content (Vandermonde identity with 4 | C(8, i), 1 ≤ i ≤ 3);
-consumer: choose_mod_eight.
-proof_shape: choose_mod_eight: content (induction); consumer: nodalMoment_det_mod_four.
-proof_shape: det_residue: content (finite verification over ZMod 4 for the four residues of k
+proof_shape: choose_add_eight: content (Vandermonde identity with 4 | C(8, i), 1 ≤ i ≤ 3); consumer:
+nodalMoment_det_mod_four, through Function.Periodic.map_mod_nat.
+proof_shape: det_residue: bind-only (evaluation by decide over ZMod 4 for the four residues of k
 modulo 8); consumer: nodalMoment_det_mod_four.
 admission_basis: escape-witness (research line #14293, node 3; partial progress on the rational
-weights conjecture of arXiv:1708.03283: the conjecture is settled for n = 2m vertices with
-m = 2 (mod 4) or m = 3, 5 (mod 8), that is n = 4 (mod 8) and n = 6, 10 (mod 16); it remains open
-for n = 0 (mod 8) and n = 2, 14 (mod 16)).
+weights conjecture of arXiv:1708.03283: the conjecture is settled for n = 2m vertices with m = 2
+(mod 4) or m = 3, 5 (mod 8), that is n = 4 (mod 8) and n = 6, 10 (mod 16); it remains open for n = 0
+(mod 8) and n = 2, 14 (mod 16)).
 Direct frozen dependencies:
   D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.hamiltonianPropagator
   statement_id sha256:cda9b54324a60c3d19d82ae43fd312bec7fd42bc7d2748ad663e34115d863ceb.
@@ -52,21 +49,23 @@ Direct frozen dependencies:
   statement_id sha256:2a698170a16b6888380fcc8f26eb4e7fe06d99129518c7579da37d4ef440257a.
   D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.HasPST
   statement_id sha256:757dd0796ec75540b7989b0cc8ff7b30e16f838075ebdaf9dafec9866abcd80e.
-  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.reversal_invariant and
-  D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer.no_end_transfer_of_no_phase_one (published
-  in the same delivery; frozen owner modules D5/S3/Quantum/Dynamics/PathMiddleVertexMoments and
-  D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer).
-  D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments.pairMoment, nodalMoment, middle_edge_moments,
-  middle_edge_gram (first frozen in the same delivery).
+Same-delivery dependency:
+  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.reversal_invariant
+  D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer.no_end_transfer_of_no_phase_one
+  D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments.pairMoment
+  D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments.nodalMoment
+  D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments.middle_edge_moments
+  D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments.middle_edge_gram
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
 instance: the claim quantifies over every m in three residue classes and all real weights and
-potentials; the finite verification det_residue ranges over the residues of a general statement.
+potentials; the evaluation det_residue ranges over the residues of a general statement.
 -/
 
 import D5.S3.Quantum.Dynamics.OddPathRationalWeightTransfer
 import D5.S3.Quantum.Dynamics.PathMiddleEdgeMoments
 import Mathlib.Algebra.Polynomial.Reverse
 import Mathlib.Data.Nat.Choose.Vandermonde
+import Mathlib.Data.Nat.Periodic
 import Mathlib.Data.Rat.Lemmas
 
 set_option autoImplicit false
@@ -98,51 +97,32 @@ private theorem prod_add_mul_of_sq_zero {ι R : Type*} [CommRing R] (y c : R) (h
     simp only [Nat.add_sub_cancel]
     linear_combination (e a * (∑ l ∈ s, e l) * y ^ t) * hc
 
-/-- Modulo `4`, the nodal polynomial of `k + 1` even integers is `X ^ k * (X + c)` with
-`c * c = 0`. -/
-private theorem map_nodal_even {ι : Type*} (z : ι → ℤ) (A : Finset ι) (k : ℕ)
-    (hA : A.card = k + 1) (heven : ∀ l ∈ A, Even (z l)) :
+/-- Modulo `4`, the nodal polynomial of `k + 1` integers congruent to `a` modulo `2` is
+`(X - a) ^ k * (X - a + c)` with `c * c = 0`. -/
+private theorem map_nodal_of_parity {ι : Type*} (z : ι → ℤ) (S : Finset ι) (k : ℕ) (a : ℤ)
+    (hS : S.card = k + 1) (hz : ∀ l ∈ S, (2 : ℤ) ∣ z l - a) :
     ∃ c : ZMod 4, c * c = 0 ∧
-      (∏ l ∈ A, (X - C (z l))).map (Int.castRingHom (ZMod 4)) = X ^ k * (X + C c) := by
+      (∏ l ∈ S, (X - C (z l))).map (Int.castRingHom (ZMod 4)) =
+        (X - C (a : ZMod 4)) ^ k * (X - C (a : ZMod 4) + C c) := by
   have h22 : (C (2 : ZMod 4) : (ZMod 4)[X]) * C 2 = 0 := by
     rw [← C_mul, show (2 : ZMod 4) * 2 = 0 from by decide, C_0]
   have h4 : ∀ s : ZMod 4, 2 * s * (2 * s) = 0 := by decide
-  have hne : A.Nonempty := Finset.card_pos.mp (by omega)
-  choose! μ hμ using heven
-  have hfac : ∀ l ∈ A, (X - C (z l)).map (Int.castRingHom (ZMod 4)) =
-      X + C 2 * C (-(μ l : ZMod 4)) := by
+  have hne : S.Nonempty := Finset.card_pos.mp (by omega)
+  have hz' : ∀ l ∈ S, ∃ μ : ℤ, z l = a + 2 * μ := fun l hl => by
+    obtain ⟨μ, hμ⟩ := hz l hl
+    exact ⟨μ, by linarith⟩
+  choose! μ hμ using hz'
+  have hfac : ∀ l ∈ S, (X - C (z l)).map (Int.castRingHom (ZMod 4)) =
+      X - C (a : ZMod 4) + C 2 * C (-(μ l : ZMod 4)) := by
     intro l hl
-    rw [Polynomial.map_sub, map_X, map_C, eq_intCast, hμ l hl, ← C_mul, sub_eq_add_neg, ← C_neg]
+    rw [Polynomial.map_sub, map_X, map_C, eq_intCast, hμ l hl, ← C_mul, sub_add, ← C_sub]
     congr 2
     push_cast
     ring
-  refine ⟨2 * ∑ l ∈ A, -(μ l : ZMod 4), h4 _, ?_⟩
+  refine ⟨2 * ∑ l ∈ S, -(μ l : ZMod 4), h4 _, ?_⟩
   rw [Polynomial.map_prod, Finset.prod_congr rfl hfac,
-    prod_add_mul_of_sq_zero X (C 2) h22 _ A hne, hA, Nat.add_sub_cancel, C_mul, map_sum]
-
-/-- Modulo `4`, the nodal polynomial of `k + 1` odd integers is `(X + 1) ^ k * (X + 1 + d)` with
-`d * d = 0`. -/
-private theorem map_nodal_odd {ι : Type*} (z : ι → ℤ) (B : Finset ι) (k : ℕ)
-    (hB : B.card = k + 1) (hodd : ∀ l ∈ B, Odd (z l)) :
-    ∃ d : ZMod 4, d * d = 0 ∧
-      (∏ l ∈ B, (X - C (z l))).map (Int.castRingHom (ZMod 4)) =
-        (X + 1) ^ k * (X + 1 + C d) := by
-  have h22 : (C (2 : ZMod 4) : (ZMod 4)[X]) * C 2 = 0 := by
-    rw [← C_mul, show (2 : ZMod 4) * 2 = 0 from by decide, C_0]
-  have h4 : ∀ s : ZMod 4, 2 * s * (2 * s) = 0 := by decide
-  have hne : B.Nonempty := Finset.card_pos.mp (by omega)
-  choose! ν hν using hodd
-  have hfac : ∀ l ∈ B, (X - C (z l)).map (Int.castRingHom (ZMod 4)) =
-      X + 1 + C 2 * C (-((ν l : ZMod 4) + 1)) := by
-    intro l hl
-    rw [Polynomial.map_sub, map_X, map_C, eq_intCast, hν l hl, ← C_mul, sub_eq_add_neg, ← C_neg,
-      add_assoc, ← C_1, ← C_add]
-    congr 2
-    push_cast
-    ring
-  refine ⟨2 * ∑ l ∈ B, -((ν l : ZMod 4) + 1), h4 _, ?_⟩
-  rw [Polynomial.map_prod, Finset.prod_congr rfl hfac,
-    prod_add_mul_of_sq_zero (X + 1) (C 2) h22 _ B hne, hB, Nat.add_sub_cancel, C_mul, map_sum]
+    prod_add_mul_of_sq_zero (X - C (a : ZMod 4)) (C 2) h22 _ S hne, hS, Nat.add_sub_cancel, C_mul,
+    map_sum]
 
 /-- If `c * c = 0`, the coefficient of degree `k` of the remainder of `g` modulo
 `X ^ k * (X + c)` is the coefficient of degree `k + 1` of `(X - c) * g`. -/
@@ -244,17 +224,6 @@ private theorem choose_add_eight (n j : ℕ) (hj : j ≤ 3) :
   · intro h
     exact absurd (Finset.HasAntidiagonal.mem_antidiagonal.mpr (add_zero j)) h
 
-/-- Modulo `4`, the binomial coefficient `C(n, j)` with `j ≤ 3` depends only on `n` modulo
-`8`. -/
-private theorem choose_mod_eight (n j : ℕ) (hj : j ≤ 3) :
-    ((n.choose j : ℕ) : ZMod 4) = (((n % 8).choose j : ℕ) : ZMod 4) := by
-  induction n using Nat.strong_induction_on with
-  | _ n ih =>
-    rcases Nat.lt_or_ge n 8 with h | h
-    · rw [Nat.mod_eq_of_lt h]
-    · obtain ⟨t, rfl⟩ : ∃ t, n = t + 8 := ⟨n - 8, by omega⟩
-      rw [choose_add_eight t j hj, ih t (by omega), Nat.add_mod_right]
-
 /-- The determinant of the three reflected coefficients for the four residues of `k` modulo
 `8`. -/
 private theorem det_residue (K : ℕ) (hK : K = 1 ∨ K = 5 ∨ K = 2 ∨ K = 4) :
@@ -279,8 +248,14 @@ theorem nodalMoment_det_mod_four {ι : Type*} (z : ι → ℤ) (A B : Finset ι)
       if (k + 1) % 4 = 2 then 3 else 2 := by
   have hPAm : (∏ l ∈ A, (X - C (z l))).Monic :=
     monic_prod_of_monic _ _ fun l _ => monic_X_sub_C _
-  obtain ⟨c, hc, hmapA⟩ := map_nodal_even z A k hA heven
-  obtain ⟨d, hd, hmapB⟩ := map_nodal_odd z B k hB hodd
+  obtain ⟨c, hc, hmapA⟩ := map_nodal_of_parity z A k 0 hA fun l hl => by
+    rw [sub_zero]
+    exact even_iff_two_dvd.mp (heven l hl)
+  obtain ⟨d, hd, hmapB⟩ := map_nodal_of_parity z B k (-1) hB fun l hl => by
+    rw [sub_neg_eq_add]
+    exact even_iff_two_dvd.mp (hodd l hl).add_one
+  rw [Int.cast_zero, C_0, sub_zero] at hmapA
+  rw [Int.cast_neg, Int.cast_one, C_neg, C_1, sub_neg_eq_add] at hmapB
   have hmom : ∀ p ≤ 2, ((nodalMoment z A B k p : ℤ) : ZMod 4) =
       ((1 - C c * X) * ((X + 1) ^ k * (1 + X + C d * X))).coeff (p + 1) := by
     intro p hp
@@ -292,10 +267,13 @@ theorem nodalMoment_det_mod_four {ι : Type*} (z : ι → ℤ) (A B : Finset ι)
   have h0 := (hmom 0 (by norm_num)).trans hG1
   have h1 := (hmom 1 (by norm_num)).trans (hGj 0)
   have h2 := (hmom 2 (by norm_num)).trans (hGj 1)
+  have hper : ∀ j ≤ 3, ((k.choose j : ℕ) : ZMod 4) = (((k % 8).choose j : ℕ) : ZMod 4) :=
+    fun j hj => (Function.Periodic.map_mod_nat (f := fun n => ((n.choose j : ℕ) : ZMod 4))
+      (fun n => choose_add_eight n j hj) k).symm
   have hk8 : k % 8 = 1 ∨ k % 8 = 5 ∨ k % 8 = 2 ∨ k % 8 = 4 := by omega
-  rw [Int.cast_sub, Int.cast_mul, Int.cast_pow, h0, h1, h2, choose_mod_eight k 0 (by norm_num),
-    choose_mod_eight k 1 (by norm_num), choose_mod_eight k 2 (by norm_num),
-    choose_mod_eight k 3 (by norm_num), det_residue (k % 8) hk8 c d hc hd]
+  rw [Int.cast_sub, Int.cast_mul, Int.cast_pow, h0, h1, h2, hper 0 (by norm_num),
+    hper 1 (by norm_num), hper 2 (by norm_num), hper 3 (by norm_num),
+    det_residue (k % 8) hk8 c d hc hd]
   exact if_congr (by omega) rfl rfl
 
 end Residues

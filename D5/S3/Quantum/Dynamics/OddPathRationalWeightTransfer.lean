@@ -9,12 +9,11 @@
 /-
 proof_shape: result: content; escape_witness: the public conclusion itself (the preregistered
 odd-path theorem of research line #14293), produced on the live path, through the private step
-no_phase_one_transfer and the reduction no_end_transfer_of_no_phase_one, by
-middle_moment_gram_det (the integer Hankel
-determinant of the middle-vertex moments is 2^j times a rational square),
+no_phase_one_transfer and the reduction no_end_transfer_of_no_phase_one, by middle_moment_gram_det
+(the integer Hankel determinant of the middle-vertex moments is 2^j times a rational square),
 D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.middle_vertex_moments (these moments are integers
-congruent to C(m, a + b) modulo 2) and exists_odd_hankel_size (an odd j with that determinant
-odd), ending in the valuation contradiction 0 = j + 2 v_2(Q).
+congruent to C(m, a + b) modulo 2) and exists_odd_hankel_size (an odd j with that determinant odd),
+ending in the valuation contradiction 0 = j + 2 v_2(Q).
 proof_shape: middle_moment_gram_det: content; escape_witness: the public conclusion itself (form
 2; the preregistered Gram determinant identity):
 det [(H ^ (a + b)) c c]_{a, b ≤ j} = 2^j * (∏_{a ≤ j} ∏_{t < a} r (m + t))^2, from the

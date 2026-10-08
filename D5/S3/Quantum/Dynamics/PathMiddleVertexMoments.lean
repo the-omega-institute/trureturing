@@ -42,8 +42,8 @@ hypothesis of PathMiddleEdgeMoments.middle_edge_gram).
 proof_shape: reversal_symmetric: bind-only (reversal_invariant on 2m + 1 vertices); consumer:
 D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer (private step no_phase_one_transfer, as the
 hypothesis of middle_moment_gram_det).
-proof_shape: normSq_mul_eq_of_nodal: bind-only (algebraic combination of its two hypotheses);
-consumer: middle_vertex_weights, PathMiddleEdgeMoments.middle_edge_weights.
+proof_shape: normSq_eq_div_of_nodal: bind-only (cast normalisation and algebraic combination of
+its two hypotheses); consumer: middle_vertex_weights, PathMiddleEdgeMoments.middle_edge_weights.
 Private helpers:
 proof_shape: eigenvector_rev: bind-only; consumer: reversal_sign_classes.
 proof_shape: sum_phase_eq_trace: bind-only; consumer: reversal_sign_classes.
@@ -143,15 +143,37 @@ private theorem sum_phase_eq_trace :
 
 end Reversal
 
-/-- If `|w|² * (D_A * D_B) = P` and `x * conj w * D_A = Q` for real numbers `D_A`, `D_B`, `P`,
-`Q`, then `|x|² * (P * D_A) = Q² * D_B`. -/
-theorem normSq_mul_eq_of_nodal {x w : ℂ} {DA DB P Q : ℝ}
-    (h1 : Complex.normSq w * (DA * DB) = P) (h2 : x * starRingEnd ℂ w * (DA : ℂ) = (Q : ℂ)) :
-    Complex.normSq x * (P * DA) = Q ^ 2 * DB := by
+/-- **Squared modulus from two nodal relations.** Let `Λ l = z l` be integer nodes, `A` a finite
+set of indices and `j` an index, and put `D_A = ∏_{l ∈ A, l ≠ j} (z j - z l)` and
+`D_B = ∏_{l ∉ A} (z j - z l)`. If `|w|² * (D_A * D_B) = c * Q²` and `x * conj w * D_A = Q` with
+`c ≠ 0` and `Q ≠ 0`, then `|x|² = D_B / (c * D_A)`. -/
+theorem normSq_eq_div_of_nodal {ι : Type*} [Fintype ι] [DecidableEq ι] {Λ : ι → ℝ} {z : ι → ℤ}
+    (hΛ : ∀ l, Λ l = z l) (A : Finset ι) (j : ι) {x w : ℂ} {c Q : ℝ} (hc : c ≠ 0) (hQ : Q ≠ 0)
+    (h1 : Complex.normSq w *
+      ((∏ l ∈ A.erase j, ((z j - z l : ℤ) : ℝ)) * ∏ l ∈ Aᶜ, ((z j - z l : ℤ) : ℝ)) = c * Q ^ 2)
+    (h2 : x * starRingEnd ℂ w * ∏ l ∈ A.erase j, ((Λ j : ℂ) - Λ l) = (Q : ℂ)) :
+    Complex.normSq x =
+      (∏ l ∈ Aᶜ, ((z j - z l : ℤ) : ℝ)) / (c * ∏ l ∈ A.erase j, ((z j - z l : ℤ) : ℝ)) := by
+  have hDAc : ∏ l ∈ A.erase j, ((Λ j : ℂ) - Λ l) =
+      ((∏ l ∈ A.erase j, ((z j - z l : ℤ) : ℝ) : ℝ) : ℂ) := by
+    rw [Complex.ofReal_prod]
+    refine Finset.prod_congr rfl fun l _ => ?_
+    rw [hΛ j, hΛ l]
+    push_cast
+    ring
+  rw [hDAc] at h2
   have h := congrArg Complex.normSq h2
   rw [Complex.normSq_mul, Complex.normSq_mul, Complex.normSq_conj, Complex.normSq_ofReal,
     Complex.normSq_ofReal] at h
-  linear_combination (-(Complex.normSq x * DA)) * h1 + DB * h
+  have hDA0 : ∏ l ∈ A.erase j, ((z j - z l : ℤ) : ℝ) ≠ 0 := by
+    intro h0
+    rw [h0, Complex.ofReal_zero, mul_zero] at h2
+    exact hQ (by exact_mod_cast h2.symm)
+  rw [eq_div_iff (mul_ne_zero hc hDA0)]
+  refine mul_left_cancel₀ (pow_ne_zero 2 hQ) ?_
+  linear_combination
+    (-(Complex.normSq x * ∏ l ∈ A.erase j, ((z j - z l : ℤ) : ℝ))) * h1 +
+      (∏ l ∈ Aᶜ, ((z j - z l : ℤ) : ℝ)) * h
 
 section Classes
 
@@ -407,37 +429,21 @@ theorem middle_vertex_weights (hH : (pathHamiltonian r q).IsHermitian) (hr : ∀
       ext
       simp
     · exact (pathHamiltonian_pow_apply_column r q 0 p c).1 (Or.inl (by simp [hc]; omega))
-  have hzc : ∀ k, ((hH.eigenvalues k : ℝ) : ℂ) = ((z k : ℤ) : ℂ) := fun k => by
-    rw [hzΛ k]
-    norm_cast
   have hM2 : ∀ k ∈ A, W c k * starRingEnd ℂ (W 0 k) *
-      ∏ l ∈ A.erase k, (((z k : ℤ) : ℂ) - ((z l : ℤ) : ℂ)) = (ρ : ℂ) := fun k hk =>
+      ∏ l ∈ A.erase k, ((hH.eigenvalues k : ℂ) - hH.eigenvalues l) = (ρ : ℂ) := fun k hk =>
     mul_prod_sub_eq_of_moments A (fun j => W c j * starRingEnd ℂ (W 0 j))
-      (fun l => ((z l : ℤ) : ℂ)) m hcard _
+      (fun l => (hH.eigenvalues l : ℂ)) m hcard _
       (fun p hp => by
         rw [← hmom2 p hp, spectral_pow_apply hH]
         symm
         rw [← Finset.sum_subset (Finset.subset_univ A)]
-        · exact Finset.sum_congr rfl fun j _ => by rw [hzc j]; ring
+        · exact Finset.sum_congr rfl fun j _ => by ring
         · intro j _ hj
           rw [show (hH.eigenvectorUnitary : Matrix (Fin (2 * m + 1)) (Fin (2 * m + 1)) ℂ) c j = 0
             from hWc j hj, zero_mul]) k hk
   refine ⟨z, A, hzinj, hcard, hzA, hzB, hzΛ, hWc, fun k hk => ?_⟩
-  have h1 := hfirst k hk
-  rw [hPall] at h1
-  have hDAc : ∏ l ∈ A.erase k, (((z k : ℤ) : ℂ) - ((z l : ℤ) : ℂ)) =
-      ((∏ l ∈ A.erase k, ((z k - z l : ℤ) : ℝ) : ℝ) : ℂ) := by
-    rw [Complex.ofReal_prod]
-    exact Finset.prod_congr rfl fun l _ => by norm_cast
-  have h2 := hM2 k hk
-  rw [hDAc] at h2
-  have key := normSq_mul_eq_of_nodal h1 h2
-  have hDA0 : ∏ l ∈ A.erase k, ((z k - z l : ℤ) : ℝ) ≠ 0 := by
-    intro h0
-    rw [h0, Complex.ofReal_zero, mul_zero] at h2
-    exact hρpos.ne' (by exact_mod_cast h2.symm)
-  rw [eq_div_iff hDA0]
-  exact mul_left_cancel₀ (pow_pos hρpos 2).ne' (by linear_combination key)
+  simpa only [one_mul] using normSq_eq_div_of_nodal hzΛ A k one_ne_zero hρpos.ne'
+    (by rw [one_mul, ← hPall]; exact hfirst k hk) (hM2 k hk)
 
 /-- **Integer middle-vertex moments with binomial parity.** Under the hypotheses of
 `middle_vertex_weights`, the diagonal entries of the powers of the Hamiltonian at the middle
