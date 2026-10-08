@@ -593,3 +593,406 @@ The local form keeps the source-specific memory result with its target and fee o
 [MO]: https://www.cs.cmu.edu/~cdm/resources/Moore1956-gedanken-experiments.pdf
 
 ## 追加锚（本行以下为增补区）
+
+## 9. The complete deadline-three criterion for equal lower-label sets
+
+**约定 9.1（Physical data and the unchanged full target）。** Keep exactly Definitions 3.1 and 5.1, with all original joint sources, both free values, every original tail, both alphabets, fresh distinct $R,C$, and arbitrary $L_\bot$. In this section assume $r=2$ and $|\Lambda[O]|\le2$. Fix a notation-only bijection $\kappa:U_Y\to\mathbb F_2$ and write $b_v=\kappa\circ\lambda_v$. Labels are still returned literally. All phase arithmetic is modulo $T$.
+
+For $i\in\mathbb F_2$, let $M_i$ be the unique whole $\lambda_i$ label class on which $\lambda_{1-i}$ is nonconstant. Exactly three occupied corners of a two-by-two rectangle give this unique class; on $J\setminus M_i$ the other component is constant. For an ambient support $E$, write $e_E=\mathbf1_E$, extended by zero outside $E$. If $E\subseteq W_1$ is even and $m\notin E$, the actual inverse $B=\mathcal B_1(E)$ begins zero. Its charge on the next window, when the **same literal word** is repeated, is
+
+$$
+q_2^B(j)=e_E(j-m).
+\tag{9.1}
+$$
+
+This is the physical translation of (1.5), not a separately selectable second charge. Write $\tau(B)$ for the literal terminal one-run and $\alpha(D)$ for the leading one-run of a word $D$, with $\alpha(1^m)=m$. Full ambient even supports are used throughout; their restrictions to $P$ need not be even.
+
+Define the following two explicit compatibility conditions.
+
+* **A, a repeated query with one fixed raw decoder:** there are $i,\eta\in\mathbb F_2$ and an even $E\subseteq W_1$ with $m\notin E$ such that
+
+$$
+\begin{aligned}
+e_E(j)&=b_i(j)\oplus\eta &&(j\in J),\\
+e_E(j-m)&=1\oplus b_0(j)\oplus b_1(j) &&(j\in M_i).
+\end{aligned}
+\tag{9.2}
+$$
+
+* **B, a shared query with one homogeneous scalar child:** there are distinct literal lower labels $L,L'$, a raw endpoint $e\in\mathbb F_2$, $\delta\in\mathbb F_2$, and even full supports $E\subseteq W_1$, $F\subseteq W_2$, with $m\notin E$, such that
+
+$$
+\Lambda[J]=\{(L,L),(L',L),(L,L')\},\qquad
+\mu(j)=\mathbf1_{\{\Lambda(j)\ne(L,L)\}},
+\tag{9.3}
+$$
+$$
+\begin{aligned}
+\lambda_{e\oplus e_E(j)}(j)&=L &&(j\in J),\\
+e_F(j)&=\mu(j)\oplus\delta &&(j\in J),\\
+\tau(\mathcal B_1(E))+\alpha(\mathcal B_2(F))&<k.
+\end{aligned}
+\tag{9.4}
+$$
+
+These conditions involve phase classes, full physical charges and the actual seam of the same inverses. They quantify no controller, archive or extra runtime coordinate. In A one can equivalently test whole label classes: there are $i$ and a $\lambda_i$ class $A$ missing $H$ such that
+
+$$
+M_i\cap(A+m)=\{j\in M_i:\lambda_i(j)=\lambda_{1-i}(j)\}.
+\tag{9.5}
+$$
+
+Indeed (9.2) prescribes $A=\{j:b_i(j)\oplus\eta=1\}$ on $J$. A shifted actual argument $j-m$, with $j\in J$, belongs to $J$, is the excluded vertex $m$, or lies outside $W_1$; it cannot be zero because $j\ne m$. Thus the only unrestricted actual parity donor zero does not affect (9.2)'s second equation. The even completion $\widehat A^{\,0}$ realizes every consistent (9.5). Nonactual vertices introduce no additional constraint on this equivalence. For B, (9.4) retains the central first charge as a free physical coordinate and includes safe all-one final words.
+
+**定理 9.2（Exact complete-state classification at deadline three, $r=2$）。** Under Convention 9.1,
+
+$$
+\boxed{K_{\min}^{\rm GLOBAL}(3;f)=
+\begin{cases}
+N+4,&\text{A or B holds},\\
+N+5,&\text{neither holds}.
+\end{cases}}
+\tag{9.6}
+$$
+
+Proof of all-controller necessity. Lemma 5.3 excludes fewer than four word rows. Suppose a correct deadline-three GLOBAL controller has four. Every initial root installs $1^m$ by Theorem 3.2, and every mandatory root-zero successor emits a word beginning zero: differently labelled phases at the actual maximal surviving tail $h-1$ would otherwise merge in bottom. GLOBAL makes this first suffix one literal $B$ for both values. All its successful images have the literal terminal tail $\tau(B)$.
+
+A two-label scalar child after $B$, with one whole block left, requires a final separating row: its word succeeds and its two scalar updates directly halt with the two different labels. Uniform rejection cannot separate this common-scalar, common-tail child. A root is not a final separating row, since its mandatory root-zero scalar update emits. A first-query row with an emitting scalar update is not one either. These are constraints on fixed raw-response updates at actual occurrences; rows have not been separated by depth.
+
+First allow a shared initial root $a$. Its scalar successor $d_y$ contains $C$ and both lower labels of $\lambda_y$: the lower sources have initial value $y$, and the $C$ sources have initial value $1-y$. Original phase $m$ supplies an actual $C$ source whose charge under the zero-leading $B$ is zero.
+
+If $d_0=d_1=d$, each raw child after $B$ contains this phase-$m$ $C$ source and, for every $j\in J$, one of the complementary-value lower sources. There can be **two** other word rows; allow both as distinct final rows. Even so, a common-tail child can finish in its one remaining block only if it has at most two labels, hence at most one lower label besides $C$. Write these lower labels as $L_0,L_1$ for the raw children. Correctness would give $\lambda_0(j)=L_{q_1^B(j)}$ and $\lambda_1(j)=L_{1\oplus q_1^B(j)}$, so the join has at most two classes. This contradicts (3.1), independently of which last row each child uses.
+
+If $d_0\ne d_1$, each has an emitting scalar update because its actual first support contains three labels. The fourth word row $p$ is the only possible final separator. Each three-label support must therefore split into one homogeneous child and a two-label child whose label pair is exactly the two scalar Halt labels of $p$. Two mixed children could not cover three labels with that same pair. Thus the excluded homogeneous label is the same in both supports; it need not stop immediately for this argument. If it is a lower label $L$, the final pair is $\{C,L'\}$. Phase $m$ puts $C$ in the charge-zero child, forcing $q_1^B(j)=1$ exactly when $\lambda_y(j)=L$ for both $y$. The two literal tables would coincide. If the excluded label is $C$, every $J$ source must have charge one and enter $p$. Their current scalars are complementary, and its fixed successful last word and raw decoder allow at most two joined pairs. Both cases contradict (3.1). Shared roots are therefore impossible at this particular four-row deadline; no root-separation rule for larger controllers is inferred.
+
+Now take distinct roots $a_0,a_1$. Their mandatory first-query rows are not roots, since they begin zero. If these rows are distinct, all four word rows have been used. At least one value $w$ has a mixed child after $B$; otherwise the root and the common $B$ would acquire the full join within two blocks, contrary to Theorem 3.2. Its final separator must be the other value's first-query row $d_i$, $i=1-w$. At the mandatory early occurrence of $d_i$, both scalar updates already halt and return its two lower labels. There is therefore an $\eta$ with $q_1^B=b_i\oplus\eta$ on all $J$, and the installed decoder is
+
+$$
+G_i(x)=\kappa^{-1}(x\oplus i\oplus\eta).
+\tag{9.7}
+$$
+
+The later mixed child is exactly $M_i$. GLOBAL requires the last word of this row to be the same $B$ as at its early occurrence. Its late raw scalar is $w\oplus q_1^B(j)\oplus q_2^B(j)$. Equation (9.7) returns $\lambda_w(j)$ on this whole actual support precisely when the second equation of (9.2) holds. The first equation and even zero-leading full support have already been extracted from the arbitrary actual $B$. This is condition A.
+
+If the two roots share their first-query row $d$, only one other word row $p$ remains. Two mixed scalar children after $B$ would both require $p$. Applying its same word and raw decoder to both complementary-value sources would again allow at most two joined pairs. Hence one raw child, say $e$, is homogeneous, with a common lower label $L$, and the other is mixed. The homogeneous child must halt immediately. If it too entered $p$, the same two-pair contradiction would hold. A root cannot return this lower label in the last block: its mandatory scalar exit emits, any direct other scalar Halt must return fresh $C$, and its bottom continuation has the mandatory eventual label $R$. Sending this child back to $d$ would leave both scalar updates emitting ($d$ and $p$), with no final scalar Halt; bottom cannot return a lower label either. This exhausts possible delays within the four-row budget.
+
+At every $j$, the actual value $e\oplus q_1^B(j)$ enters that homogeneous child with label $L$. Thus $(L',L')$ is absent; since three corners are occupied, (9.3) follows. The other child has current scalar $1-e$, every actual phase in $J$, and immutable label $L$ on the central class and $L'$ on the two leaves. Its final $p$ word must succeed on the common actual tail. Its full even support $F$ and the orientation of its two scalar Halt labels give exactly (9.4), including the strict seam and the no-zero case. This is condition B.
+
+These four sharing cases exhaust four word rows. The argument extracted mandatory unequal-label sources from each possible controller; it neither transforms controllers to a chosen menu nor assumes early $C,R$ stopping. Delayed homogeneous paths, waits, homogeneous rejection and cross-depth identifications were retained whenever they could affect these sources. Lemma 5.3 covers smaller budgets. Necessity is therefore over the full competitor domain.
+
+Proof of complete attainments. Put
+
+$$
+\begin{aligned}
+\mathcal R_v&=\{(f(v,-j,s),(v,-j,s)):j\in P,\ 0\le s<k\},\\
+\mathcal S_v&=\{(\lambda_v(j),(v,-j+m,m+s)):j\in J,\ 0\le s<h\}.
+\end{aligned}
+\tag{9.8}
+$$
+
+For both attainments use two root rows $a_v$, $c(v)=a_v$, $c(\bot)=H_{L_\bot}$, $u(a_v)=1^m$, and
+
+$$
+V(a_v,v)=d_v,\qquad V(a_v,1-v)=H_C,\qquad V(a_v,\bot)=H_R.
+\tag{9.9}
+$$
+
+In A take $w=1-i$, $B=\mathcal B_1(E)$, $\beta=w\oplus e_E(M_i)$, and let $L_S$ be the constant label of $\lambda_w$ on $J\setminus M_i$. There are just two further word rows $d_i,d_w$, both installing $B$, with
+
+$$
+V(d_i,x)=H_{G_i(x)}\quad(x\in\mathbb F_2),\qquad
+V(d_w,\beta)=d_i,\qquad V(d_w,1-\beta)=H_{L_S}.
+\tag{9.10}
+$$
+
+Here $e_E(M_i)$ denotes its constant value, supplied by (9.2). The actual word-row union supports are
+
+$$
+\begin{aligned}
+\Gamma_{a_v}&=\mathcal R_v,&\Gamma_{d_w}&=\mathcal S_w,\\
+\Gamma_{d_i}&=\mathcal S_i\ \cup\
+\{(\lambda_w(j),(\beta,-j+2m,\tau(B))):j\in M_i\}.
+\end{aligned}
+\tag{9.11}
+$$
+
+The same decoder (9.7) works on both parts of $\Gamma_{d_i}$ by (9.2). Both occurrences of $B$ begin zero, clearing every incoming tail, including root tail $k-1$; internal runs are shorter than $k$. Ranks $3,2,1,0$ on $a_v,d_w,d_i,H_y$ strictly decrease. The stream is $1^m\mid B\mid B$; both labels on $M_i$ actually continue, so its worst fee is three.
+
+In B take $B=\mathcal B_1(E)$, $D=\mathcal B_2(F)$ and identify $d_0=d_1=d$ in (9.9). Install $B$ at $d$ and $D$ at $p$. Define $\ell(0)=L$, $\ell(1)=L'$, $\beta=1-e$, and
+
+$$
+V(d,e)=H_L,\qquad V(d,\beta)=p,\qquad
+V(p,x)=H_{\ell(x\oplus\beta\oplus\delta)}
+\quad(x\in\mathbb F_2).
+\tag{9.12}
+$$
+
+The exact actual supports are
+
+$$
+\Gamma_{a_v}=\mathcal R_v,\qquad
+\Gamma_d=\mathcal S_0\cup\mathcal S_1,\qquad
+\Gamma_p=\{(\ell(\mu(j)),(\beta,-j+2m,\tau(B))):j\in J\}.
+\tag{9.13}
+$$
+
+There is one genuine continuing initial value at every $j$ in $\Gamma_p$. Equation (9.4) gives the same raw decoder on this entire support. The zero-leading $B$ clears all original surviving tails. The actual inequality $\tau(B)+\alpha(D)<k$ makes this very $D$ safe, including $D=1^m$; later internal runs are shorter than $k$. Ranks $3,2,1,0$ on roots, $d,p,H_y$ descend. The stream is $1^m\mid B\mid D$, and the nonconstant $\mu$ support actually emits its third block.
+
+For both tables set the unused bottom update of every nonroot word row to $H_R$, install exactly one $H_y$ for every actual $y\in f(Q)$, and make all its updates self-updates. Its actual support is exactly (5.6): the initial-bottom pair if applicable and all routed incoming word images from the displayed unions. Thus all $c,u,V$ entries, every actual source and all stopping outputs are accounted for. Each construction has $N+4$ states and satisfies the existing [FC, Theorem 27.2] conditions. No support or rank is an input. If neither condition holds, the necessity proof excludes four rows and the unchanged full five-row certificate (6.2)–(6.5), including its reverse orientation and safe seam, attains $N+5$. Together with Lemma 5.3 this proves (9.6). ∎
+
+**推论 9.3（An unbounded equal-label consumer with a strict memory premium）。** For every integer $q\ge1$, set
+
+$$
+m=3q,\quad k=5q-1,\quad T=5q,\quad g=q,\quad
+J=\{q,2q,4q\},\quad H=\{2q\},\quad O=\varnothing,
+\tag{9.14}
+$$
+$$
+\lambda_0(q,2q,4q)=(0,1,0),\qquad
+\lambda_1(q,2q,4q)=(0,1,1).
+\tag{9.15}
+$$
+
+Use these literal lower labels, fresh $R,C$ and arbitrary $L_\bot$ on the entire target (3.2). Then
+
+$$
+K_{\min}^{\rm ad}(2;f)=N+4<N+5=K_{\min}^{\rm GLOBAL}(3;f),
+\qquad C_{\rm ad}(f)=2<3=C_{\rm pre}(f).
+\tag{9.16}
+$$
+
+Proof. Both diagonal joined pairs occur, so B fails. For A with $i=0$, $M_0=\{q,4q\}$ and the required repeated charge at $j=q=a$ is one, because the two labels agree there. But $q-m=m$ modulo $T$, and the compulsory leading-zero charge at $m$ is zero. For $i=1$, $M_1=\{2q,4q\}$. The missed phase $2q$ forces $\eta=1$, hence $e_E(4q)=0$; at $j=2q$ the required repeated charge is one while $e_E(2q-m)=e_E(4q)=0$. These are actual-vertex conflicts for every literal word, irrespective of nonactual parity freedom. Theorem 9.2 proves the universal $N+5$ lower bound.
+
+For a complete attainment put $L=1^{3q}$ and $B=0^{2q}1^q$. Use the following five word rows and all actual Halt rows, with $c(v)=a_v$, $c(\bot)=H_{L_\bot}$:
+
+| Row | Word | Endpoint $0$ | Endpoint $1$ | Bottom |
+| --- | --- | --- | --- | --- |
+| $a_0$ | $L$ | $b_0$ | $H_C$ | $H_R$ |
+| $a_1$ | $L$ | $H_C$ | $b_1$ | $H_R$ |
+| $b_0$ | $B$ | $p$ | $H_0$ | $H_R$ |
+| $b_1$ | $B$ | $H_0$ | $H_1$ | $H_R$ |
+| $p$ | $B$ | $H_1$ | $H_0$ | $H_R$ |
+
+The full supports of $B$ at indices one and two are $\{0,q\}$ and $\{3q,4q\}$. Both words begin zero and their terminal tail is $q$. The root and $b_v$ supports are (9.8), and
+
+$$
+\Gamma_p=\{(\lambda_0(j),(0,-j+2m,q)):j\in\{2q,4q\}\}.
+\tag{9.17}
+$$
+
+Ranks $3,2,1,0$ on roots, first queries, $p$ and exact Halt images (5.6) give all-source closure, correct literal outputs and termination. All executions are prefixes of $L\mid B\mid B$, and both labels in (9.17) issue the last word. There are $2|P|k+1=50q-9$ jointly attainable INITIAL records, including bottom; every one is retained. The adaptive count and the two block prices are Theorems 5.2 and 3.2. The complete GLOBAL count is nine for an existing bottom label and ten for a fresh one. This family consumes the new universal exclusion; it is not merely a local archive example. ∎
+
+## 10. Deadline four: compulsory distinct first queries and the disjoint-label minimum
+
+**引理 10.1（The third missed-set class forces safe later words and separates first queries）。** Under the full Definitions 3.1 and 5.1, assume $|\Lambda[O]|=3$. In every correct deadline-four GLOBAL controller, the first suffix charge $q_1$ is nonconstant on $O$. There are $w,d\in\mathbb F_2$ such that
+
+$$
+M=\{j\in O:q_1(j)=d\}
+\quad\text{contains both labels of }\lambda_w.
+\tag{10.1}
+$$
+
+The words at absolute indices two and three succeed on every still-active successful $C$/lower-label source. If $r\ge3$, the mandatory root-zero first-query rows $b_0,b_1$ are distinct, regardless of the controller's other row count or root sharing.
+
+Proof. The root is $1^m$ and the first common suffix $B$ begins zero, by the same mandatory maximal-tail argument as in Theorem 9.2. Hence every active successful $C$/lower source has tail $\tau(B)$. Every literal word at index two has charge zero on $O$, by the full physical window (1.5).
+
+If $q_1$ were constant on $O$, both component tables, which are nonconstant on $O$, would retain a mixed common-tail support after $B$. Its index-two word cannot reject or distinguish it. The index-three word must also succeed on a mixed support. The only further successful distinction on $O$ would be its single binary charge at index three, allowing at most two joined classes. A phase could not evade this argument by stopping earlier: the common earlier responses give the same stopping decision to every phase in that value fibre. Thus $q_1$ is nonconstant. If every $q_1$ fibre on $O$ were homogeneous in both components, the join would again have at most two classes. This proves (10.1).
+
+Its actual sources share one raw scalar $e=w\oplus d$, one control successor after $B$, and the tail $\tau(B)$. Their next word cannot reject them, and its charge zero on $O$ leaves them mixed. They therefore issue index three, whose word cannot reject them either. Safety depends only on the common literal word and incoming tail, not on phase or value. Since GLOBAL uses these same words for every active source, all active successful $C$/lower sources succeed at both indices. After a safe all-one word the tail is the common incoming tail plus $m$; after a safe word containing zero it is the literal terminal tail. This establishes common tails and safety without excluding either kind of word. Homogeneous rejection is allowed in the competitor model; it cannot occur on these active sources at these two indices.
+
+Suppose $b_0=b_1=b$. At an $O$ phase $j$, the raw response after $B$ is $v\oplus q_1(j)$, and the next response is that same scalar. Subsequent control is therefore a function of this raw bit. For each $e,t\in\mathbb F_2$ write $D_e(t)$ for its output when the index-three difference is $t$; if it stopped earlier, extend its actual output constantly. This merely names the fixed control updates and includes delayed stops. Writing $q_3$ for the common last charge, correctness gives
+
+$$
+\Lambda(j)=
+\bigl(D_{q_1(j)}(q_3(j)),D_{1\oplus q_1(j)}(q_3(j))\bigr)
+\quad(j\in O).
+\tag{10.2}
+$$
+
+For a fixed $t$, this pair is one of the two orientations of $(D_0(t),D_1(t))$. Put $U_v=\lambda_v[J]$. If both orientations belong to $U_0\times U_1$, both entries belong to $U_0\cap U_1$. For $r\ge3$ this intersection has at most one label, so the two orientations are identical. Each $t$ can consequently contribute at most one admissible ordered pair, giving $|\Lambda[O]|\le2$, a contradiction. This excludes shared first queries for $r=3,4$. For $r=2$ the orientation argument does not give that conclusion: two orientation families can contain three pairs. ∎
+
+**定理 10.2（Exact complete deadline-four count for disjoint lower-label sets）。** Throughout the full target domain, if $|\Lambda[O]|=3$ and $r=4$, then
+
+$$
+\boxed{K_{\min}^{\rm GLOBAL}(4;f)=N+6.}
+\tag{10.3}
+$$
+
+Proof of the arbitrary-controller lower bound. Here $U_0$ and $U_1$ are disjoint. Take $w,d,M$ from Lemma 10.1 and put $e=w\oplus d$. Let $X=V(b_w,e)$ be the word row issued by these mixed sources at index two. Its $O$ charge is zero, so they still have raw scalar $e$ afterwards and must enter a word row $F=V(X,e)$ at index three. Since that is their last block, both scalar updates of $F$ halt with the two distinct labels in $U_w$. This row is a genuine final separator.
+
+The row $F$ cannot be an initial root, since each root's mandatory root-zero scalar update emits. It cannot be $b_w$, whose mixed-child update emits $X$. Nor can it be $b_i$, $i=1-w$: $q_1$ is nonconstant on $O$, so at the mandatory first occurrence of $b_i$ both raw scalar children contain actual labels of $U_i$, whereas both fixed scalar Halts of $F$ are in the disjoint set $U_w$. Lemma 10.1 makes $b_0,b_1$ distinct, and their zero-leading words distinguish both from the all-one root rows.
+
+The intermediate $X$ is also distinct from all these rows. It is not $F$, since its scalar $e$ successor must emit $F$. If $X=b_w$, the edge $V(b_w,e)=b_w$ would repeat at index two and force $F=b_w$. If $X=b_i$, its mandatory first occurrence has an actual $O$ source with raw response $e$. The fixed edge $V(b_i,e)=F$ sends that source to $F$ at index two. Lemma 10.1 makes its word safe there, and either scalar Halt returns a $U_w$ label instead of the source's $U_i$ label. This is a conflict on an actual cross-depth union, not a ban on cross-depth reuse.
+
+If $X$ is a distinct initial root $a_i$, its raw $e$ edge is either its mandatory root-zero edge to $b_i$, or its positive-root edge containing fresh $C$. The former would identify $F=b_i$, already excluded. The latter sends an actual $C$ source to $F$ at index one. GLOBAL then makes its installed word the common zero-leading first suffix, which succeeds on that source; neither of its $U_w$ scalar Halts can return $C$. If the initial root is shared, both its scalar edges are the already excluded $b_0,b_1$. Thus $X$ is distinct from every root, both first queries and $F$.
+
+With distinct initial roots, the six rows $a_0,a_1,b_0,b_1,X,F$ are therefore compulsory. It remains to allow a shared root $a$. If there were at most five word rows, they would have to be exactly $a,b_0,b_1,X,F$. Both scalar edges of $a$ emit. Each $b_y$ has actual $O$ lower sources in both raw children, so neither edge can directly halt with $C$ or a label of $U_{1-y}$. Its first support also has $C$ and both labels of $U_y$, so it has at most one scalar Halt exit. The row $F$ returns only $U_w$. By Lemma 10.1 no active successful $C$/lower source uses a bottom exit after the root. Hence some scalar Halt exit of $X$ must return the actual label $C$. Its other scalar edge $e$ already emits $F$, leaving no lower Halt exit at $X$. Both labels of $U_i$, $i=1-w$, could then be returned only by $b_i$, which has at most one scalar Halt exit. Contradiction.
+
+Delayed $R$ paths may use other responses but cannot return a $C$/lower source in this argument. Delayed $C$ was explicitly retained in the shared-root case and in the positive-root conflict. Arbitrary waits, repeated literal words, safe all-one actions and attempted row reuse have not been discarded. Six word rows and the $N$ different actual Halt outputs are necessary.
+
+For complete attainment reuse precisely the four-block certificate of Theorem 6.1, with its words (2.2), (2.4), (2.5), the two roots and root updates of §5, first-query updates (6.6) as specified there, and $c(v)=a_v$, $c(\bot)=H_{L_\bot}$. More explicitly, choosing a leaf $S$ absent from $H$, let $i$ be its singleton component, $w=1-i$, and name the remaining joined classes $D_0,E_0$. The six word rows are $a_0,a_1,b_0,b_1,p_2,p_3$; their words are $1^m,1^m,B_1,B_1,B_2,B_3$. Their entire scalar table is
+
+$$
+\begin{aligned}
+V(a_v,v)&=b_v,&V(a_v,1-v)&=H_C,\\
+V(b_i,i)&=H_{(D_0)_i},&V(b_i,1-i)&=H_{S_i},\\
+V(b_w,w)&=p_2,&V(b_w,1-w)&=H_{S_w},\\
+V(p_2,w)&=p_3,&V(p_2,1-w)&=H_{(E_0)_w},\\
+V(p_3,w)&=H_{(D_0)_w},&V(p_3,1-w)&=H_{(E_0)_w}.
+\end{aligned}
+\tag{10.4}
+$$
+
+Every word-row bottom update is $H_R$ and every actual Halt row self-updates. The exact supports are $\Gamma_{a_v}=\mathcal R_v$, $\Gamma_{b_v}=\mathcal S_v$, (6.5) with $\beta=w$, (6.7), and the exact Halt images (5.6). The ranks are $4,3,2,1,0$ on roots, first queries, $p_2,p_3,H_y$. The already proved same-word seams of Theorem 2.1 give all-source closure and safety, including a possible all-one $B_2$, for the single stream $1^m\mid B_1\mid B_2\mid B_3$. This is the existing complete upper certificate consumed at its original hypotheses, with six word rows; it is not imposed on competitors. It matches the new lower bound. ∎
+
+**例 10.3（A full disjoint-label consumer at every scale）。** For $q\ge1$, use $m=6q$, $k=11q-1$, $g=q$, and
+
+$$
+\lambda_0(j)=\mathbf1_{\{9q\}}(j),\qquad
+\lambda_1(j)=2+\mathbf1_{\{10q\}}(j)\quad(j\in J).
+\tag{10.5}
+$$
+
+The label sets are $\{0,1\}$ and $\{2,3\}$. Here $H=\{2q,3q,4q,5q\}$ is homogeneous and $O=\{8q,9q,10q\}$ has all three pairs. Fresh $R,C$ and arbitrary bottom complete the full target. The unchanged certificate (10.4), with isolated leaf $(1,2)$ and $w=1$, uses
+
+$$
+1^{6q}\ \mid\ 0^{3q}1^{2q}0^q\ \mid\ 0^{6q}\ \mid\ 0^{3q}1^q0^{2q}.
+\tag{10.6}
+$$
+
+Its actual supports, ranks and raw decoder are those just specified; no source is omitted. Theorem 10.2 gives twelve complete states when bottom uses an existing output and thirteen when it is fresh. The universal branch proof supplies this minimum; the family illustrates its consumption.
+
+## 11. Deadline four: an exact sufficient region with root and query reuse
+
+**定理 11.1（A sufficient two-block translation condition, without a converse）。** Keep the entire Definitions 3.1 and 5.1 contract, assume $r=2$ and $|\Lambda[O]|=3$, and choose $v\in\mathbb F_2$, $w=1-v$. Let $B$ be a literal length-$m$ word beginning zero, let $q_1=q_1^B$ be its physical charge, put
+
+$$
+I=\{j\in J:q_1(j)=1\},\qquad U=J\setminus I,
+\tag{11.1}
+$$
+
+and let $G:\mathbb F_2\to U_Y$ be a bijection. Suppose there is a literal label $z$ such that
+
+$$
+\begin{aligned}
+\lambda_w(j)&=G(w\oplus q_1(j)) &&(j\in J),\\
+\lambda_v(j)&=z &&(j\in U),\\
+j'=j-2m&\in J,\qquad \lambda_v(j)=\lambda_w(j') &&(j\in I).
+\end{aligned}
+\tag{11.2}
+$$
+
+Then
+
+$$
+\boxed{K_{\min}^{\rm GLOBAL}(4;f)=N+4.}
+\tag{11.3}
+$$
+
+Failure of (11.2) does not exclude any four-row controller. This theorem gives an exact sufficient region inside the original deadline-four classification, not a classification of its complement.
+
+Proof. The actual vertex $a=2m\pmod T$ belongs to $J$. It cannot lie in $I$, because its translated $j'$ would be zero, excluded from $J$. Hence $q_1(a)=0$, which by (1.5) is the actual last bit of $B$. Thus $B$ ends zero as well as begins zero.
+
+Use four word rows $a_v,a_w,b_v,b_w$, all $N$ actual Halt rows, $c(x)=a_x$ for $x\in\mathbb F_2$, and $c(\bot)=H_{L_\bot}$. Install $L=1^m$ at both roots and $B$ at both queries. The complete scalar table is
+
+$$
+\begin{aligned}
+V(a_x,x)&=b_x,&V(a_x,1-x)&=H_C &&(x\in\mathbb F_2),\\
+V(b_v,v)&=H_z,&V(b_v,w)&=a_w,\\
+V(b_w,e)&=H_{G(e)} &&&&(e\in\mathbb F_2).
+\end{aligned}
+\tag{11.4}
+$$
+
+Set every word-row bottom update to $H_R$ and all Halt updates to self-updates. The stream is the single installed $L\mid B\mid L\mid B$. Its actual unions are
+
+$$
+\begin{aligned}
+\Gamma_{a_v}&=\mathcal R_v,&\Gamma_{b_v}&=\mathcal S_v,\\
+\Gamma_{a_w}&=\mathcal R_w\ \cup\
+\{(\lambda_v(j),(w,-j+2m,0)):j\in I\},\\
+\Gamma_{b_w}&=\mathcal S_w\ \cup\
+\{(\lambda_v(j),(w,-j+3m,m)):j\in I\}.
+\end{aligned}
+\tag{11.5}
+$$
+
+Both added sets are already subsets of the corresponding first supports: use $j'=j-2m\in J$, the immutable-label equality in (11.2), and original tail $s=0$. These are actual reachable unions; coincidence with an existing support is a consequence of the target relation, not a free archive or phase input.
+
+At initial value $w$, the root-zero support is decoded by the first equation of (11.2). At value $v$, $q_1=0$ stops with $z$; $q_1=1$ produces scalar $w$, phase $-j+2m$ and tail zero. This is the actual pair already in $\mathcal R_w$ at $j'$. The reused all-one root is safe because its incoming tail is zero and $m<k$. Since $j'\in J$, it has charge zero and reaches the corresponding pair of $\mathcal S_w$ at original tail zero. The same $B$ and the same raw decoder then return $\lambda_v(j)$. The first $B$ clears all root tails, including $k-1$, and its derived final zero makes the reused all-one seam safe; the last $B$ clears tail $m$. No cleaning block is added.
+
+Use ranks $4,3,2,1,0$ on $a_v,b_v,a_w,b_w,H_y$, respectively, with exact Halt images (5.6). Every actual step is closed and strictly descending, even though $a_w$ occurs at indices zero and two and $b_w$ at indices one and three. The two binary tables and the first two equations of (11.2) show that $I$ has both labels of $\lambda_v$: on $U$ one joined class occurs, so its other two classes must occur on $I$. These actual sources emit all four blocks. The full certificate therefore attains $N+4$ states at the original fee four. Lemma 5.3 is the matching universal lower bound, including all other root/word/reuse competitors. No new all-controller restriction is needed for this sufficient region. ∎
+
+**推论 11.2（An unbounded full-source consumer of exact root reuse）。** For every $q\ge1$, set $m=6q$, $k=11q-1$, $T=11q$, $g=q$. On
+
+$$
+J=\{q,2q,3q,4q,5q,7q,8q,9q,10q\},\quad
+H=\{2q,3q,4q,5q\},\quad O=\{8q,9q,10q\},
+\tag{11.6}
+$$
+
+take distinct literal lower labels $A,B$ and
+
+$$
+\lambda_0(j)=\begin{cases}B,&j=8q,\\ A,&j\ne8q,\end{cases}
+\qquad
+\lambda_1(j)=\begin{cases}A,&j\in\{8q,9q\},\\ B,&j\notin\{8q,9q\}.
+\end{cases}
+\tag{11.7}
+$$
+
+Use fresh $R,C$ and arbitrary bottom in the entire target (3.2). The join is $(B,A)$ at $8q$, $(A,A)$ at $9q$, and $(A,B)$ elsewhere; all three occur on $O$ and $H$ is homogeneous. With
+
+$$
+L=1^{6q},\qquad D=0^{2q}1^q0^{3q},
+\tag{11.8}
+$$
+
+the original fees are $C_{\rm ad}=2$, $C_{\rm pre}=4$, while both complete minima at their respective deadlines are $N+4$.
+
+Proof. The actual full physical supports of $L,D,L,D$ at indices zero through three are respectively
+
+$$
+\{0,6q\},\quad\{8q,9q\},\quad\{q,7q\},\quad\{9q,10q\}.
+\tag{11.9}
+$$
+
+Use $v=0$, $w=1$, $G(0)=A$, $G(1)=B$, $z=A$, and $I=\{8q,9q\}$. Translation by $-2m$ sends these two phases to $7q,8q$, with matching labels $B,A$. Thus all of (11.2) holds for the displayed word $D$, not for a substitute representative. The complete raw table is
+
+| Row | Word | Endpoint $0$ | Endpoint $1$ | Bottom |
+| --- | --- | --- | --- | --- |
+| $a_0$ | $L$ | $b_0$ | $H_C$ | $H_R$ |
+| $a_1$ | $L$ | $H_C$ | $b_1$ | $H_R$ |
+| $b_0$ | $D$ | $H_A$ | $a_1$ | $H_R$ |
+| $b_1$ | $D$ | $H_A$ | $H_B$ | $H_R$ |
+
+Initialize and install all actual Halt rows as in Theorem 11.1. The added root pairs are $(B,(1,4q,0))$ and $(A,(1,3q,0))$; the added query pairs are $(B,(1,10q,m))$ and $(A,(1,9q,m))$. They already occur in the full original supports at $j'=7q,8q$, original tail zero. Equations (11.5) and (5.6) are therefore the exact complete union supports. Ranks $4,3,2,1,0$ give the complete stationary certificate. All $22(11q-1)+1$ actual INITIAL records are retained, including all original tails and bottom. Theorem 11.1 gives eight complete states for an existing bottom label and nine for a fresh one; Theorems 5.2 and 3.2 give the credited adaptive minimum and the two fees. The two distinct dictionary words have $12q$ expanded bits and the four-block prefix has $24q$ bits; those representation lengths remain separate from complete states and emitted-block cost. ∎
+
+## 12. Exact coverage, evidence and unchanged residual obligations
+
+**来源 12.1（Reuse and the added compatibility content）。** The definitions and operative suppliers remain those of §§1, 4 and 8. The immutable bytes of [IC], [MC], [FC] and [S1], [S2], [S10], [S13], [S15] agree with their specified source hashes. [IC, Chapter 1] supplies the original integer reader, full-history witnesses and physical charge inverse. [S10, Interface 2.1 and Lemma 3.2] supplies same-word seams and the common-tail all-success/all-rejection constraint. [S13, Theorem 8.4] supplies the already known binary safe-cut interpretation of (9.4); no new generic terminal certificate is claimed. [FC, §§26–27] supplies complete stationary control and actual union-support/rank certificates. Theorem 5.2, Lemma 5.3 and the full upper certificates of Theorem 6.1 are reused. Block-fee value joining is not used to transfer a memory count.
+
+The added ordinary deductions are the exhaustive four-row deadline-three compatibility criterion and strict-price consumer, the deadline-four shared-first-query obstruction for $r\ge3$, the disjoint-label six-row lower bound, and the sufficient translation condition with full root/query reuse. The r=4 proof uses disjoint labels at its actual raw-exit conflicts; it does not transfer those conflicts to overlapping or equal label sets. The sufficient condition (11.2) has a real unbounded full-source consumer and does not assert necessity.
+
+The primary comparisons remain Moore [MO, pp.129–131] and van den Bos–Vaandrager [L1, Definitions 7–11 and Figure 3]: one-machine experiments, completed compatible observations and irreversible mergers are applicable. Multiple-copy experiments are unavailable here; acyclic test nodes do not count stationary control states or justify forbidding row reuse. The inspected primary theory and source-local stationary/certificate results provide no replacement for the target-specific translated-charge and disjoint-label arguments above. This is a bounded overlap assessment, with no exhaustive literature-absence, priority or formal-verification claim.
+
+**开放问题 12.2（Residual map on the original target and parameters）。** At the original deadline three, $|\Lambda[O]|\le2$, Theorems 6.2 and 9.2 now determine every $r=2,3,4$ branch, all seven cross-table equality patterns and every original actual-gcd phase placement satisfying Definition 3.1. This does not price deadline four for a target whose original optimum fee is three.
+
+At the original deadline four, $|\Lambda[O]|=3$, Theorem 10.2 determines all $r=4$ targets as $N+6$, and Theorem 11.1 determines its stated sufficient $r=2$ region as $N+4$. Every $r=2$ target outside that sufficient region, and every $r=3$ target, retains the original exact-choice obligation
+
+$$
+K_{\min}^{\rm GLOBAL}(4;f)\in\{N+4,N+5,N+6\}.
+\tag{12.1}
+$$
+
+No failure of (11.2) is an exclusion theorem. Lemma 10.1 removes shared mandatory first queries for $r=3$ but does not classify its four-/five-row possibilities, shared initial roots, delayed $C,R$, repeated words or other raw-update reuse. The unresolved proofs still require universal four-/five-row existence or exclusion with complete matched attainments, actual immutable-target/current-record unions and the same installed raw updates at every occurrence. They retain arbitrary literal words, actual source seams, homogeneous rejection, safe all-one words, waits, early and delayed stops, both initial values, every original tail and phase, and arbitrary bottom-label equalities. Selected word menus, finite samples and joined block prices do not supply these exclusions.
+
+Tail-dependent low tables, nonhomogeneous $H$, other class counts or target extensions, other parameter regions and the arbitrary-target/all-$k,m$ adaptive/GLOBAL objective of [IC, Open Problem 9.1] keep their full original obligations. The earlier restricted theorems retain their own hypotheses. Exact classification of the whole original goal is not claimed.
+
+**核验 12.3（Ordinary proofs and bounded direct-bit corroboration）。** The proof arguments above are ordinary mathematics. Direct-bit checks execute the original total transitions on every successful INITIAL record of each tested target, preserving its immutable label, using only completed endpoint updates, and checking common-stream prefixes, actual reused union supports and strict row ranks. No finite competitor non-hit is used as an all-controller proof.
+
+The checks include every admissible $r=2$ deadline-three table for all allowed widths $3\le m\le6$, additionally $(m,k)=(8,9)$, with all three-corner placements and homogeneous possibly empty $H$: 3,528 labelled-table cases. Condition A yields 412 checked certificates and condition B yields 1,156; 2,148 tables satisfy neither. The counts for A and B are overlapping. The selected B certificates include 568 final words beginning one and 72 safe all-one final words. For the same parameter set, all 648 deadline-four three-corner placements with disjoint component-label sets use the unchanged complete six-row upper certificate. Each of the three full parameter families in §§9–11 is additionally checked at every scale $1\le q\le8$, including their actual noncoprime phases and all original tails. Across these checks, 2,240 complete attaining controllers execute 365,712 successful INITIAL records; 12,512 separate initial-bottom variants cover every existing output label and one fresh label. The checks pass and corroborate attainments and physical prescriptions; the unbounded necessary statements are supported by their displayed proofs.
+
+Complete states, dictionary/stream bits, descriptor size, offline search, installation and physical work remain different resources. There is no Lean, build, kernel, ingestion, coverage, freezing or CI claim. Independent mathematical review and publication checks are separate obligations. The results stay with the target owner, reuse the existing lower/upper and certificate machinery, and expose exactly which original compatibility obligations remain.
+
+## 追加锚（本行以下为增补区）
