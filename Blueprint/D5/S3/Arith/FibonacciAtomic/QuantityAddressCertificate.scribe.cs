@@ -31,7 +31,7 @@ internal sealed class QuantityAddressCertificateDocument : IScribeDocumentDefini
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("quantity-address-sound"), DeclarationHandle.Create(Prefix + "QuantitySound"),
                 H("Quantity soundness"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
-                    Paragraph(Text("QuantitySound(d,V,h,Q) is S(2,3,d,V,h,Q), the weight pair used for the quantity frontier."))),
+                    Paragraph(Text("S(d,V,h,Q) means that every address in the finite set Q has length at most h, and every complete source U with m(U)=m(V) and matching raw replies at all addresses in Q lies in I(d). Competitors have only this exact scalar promise; their composition, number of leaves, shape and height are unrestricted."))),
                 DescribeRole.Definition),
             Describe.Lean(DescribeId.Create("quantity-address-result"), DeclarationHandle.Create(Prefix + "result"),
                 H("Sharp frontier and all minimum sets"), StatementSource.FromAuthor(ResultFormula()),

@@ -22,28 +22,32 @@ local notation "m(" t ")" => GraftAffineClosure.quantity (composition t)
 local notation "B(" t ")" => Finset.filter (fun u => readout u t = Reply.beta) (leafAddresses t)
 
 /-- Exact scalar quantity is the only promise on the complete competitor tree. -/
+def QuantitySound (d : ℕ) (V : Source) (h : ℕ) (Q : Finset Address) : Prop :=
+  Within h Q ∧ ∀ U : Source, m(U) = m(V) →
+    (∀ u ∈ Q, readout u U = readout u V) → U ∈ ActualImage d
+
+/-- Exact scalar soundness for arbitrary natural weights. -/
 def ScalarSound (f g d : ℕ) (V : Source) (h : ℕ) (Q : Finset Address) : Prop :=
   Within h Q ∧ ∀ U : Source, f * (composition U).1 + g * (composition U).2 =
       f * (composition V).1 + g * (composition V).2 →
     (∀ u ∈ Q, readout u U = readout u V) → U ∈ ActualImage d
-
-/-- Quantity soundness is the original weight pair applied to scalar soundness. -/
-def QuantitySound (d : ℕ) (V : Source) (h : ℕ) (Q : Finset Address) : Prop :=
-  ScalarSound 2 3 d V h Q
 
 /-- Every branch has a beta descendant, recursively through the tree. -/
 def BetaCovered : Source → Prop
   | .of _ => True
   | .mul s t => BetaCovered s ∧ BetaCovered t ∧ ∃ u : Address, readout u (.mul s t) = .beta
 
-theorem mass_pair (f g : ℕ) (s t : Source) :
+private theorem weighted_mass_pair (f g : ℕ) (s t : Source) :
     f * (composition (.mul s t)).1 + g * (composition (.mul s t)).2 =
       (f * (composition s).1 + g * (composition s).2) +
       (f * (composition t).1 + g * (composition t).2) := by
   simp only [composition, Prod.fst_add, Prod.snd_add]
   ring
 
-theorem mass_min (f g : ℕ) (hf : 0 < f) (hfg : f < g)
+private theorem mass_pair (s t : Source) : m(.mul s t) = m(s) + m(t) := by
+  simpa only [GraftAffineClosure.quantity] using weighted_mass_pair 2 3 s t
+
+private theorem weighted_mass_min (f g : ℕ) (hf : 0 < f) (hfg : f < g)
     (t : Source) :
     f ≤ f * (composition t).1 + g * (composition t).2 ∧
     (f * (composition t).1 + g * (composition t).2 = f ↔ t = .of true) ∧
@@ -53,7 +57,7 @@ theorem mass_min (f g : ℕ) (hf : 0 < f) (hfg : f < g)
     simp [composition, show (FreeMagma.of false : Source) ≠ .of true by decide,
       show (FreeMagma.of true : Source) ≠ .of false by decide] <;> omega
   | mul s t hs ht =>
-    rw [mass_pair]
+    rw [weighted_mass_pair]
     refine ⟨by omega, ?_, ?_⟩
     · constructor
       · intro h; omega
@@ -62,6 +66,11 @@ theorem mass_min (f g : ℕ) (hf : 0 < f) (hfg : f < g)
       constructor
       · intro h; omega
       · intro h; cases h
+
+private theorem mass_min (t : Source) : 2 ≤ m(t) ∧ (m(t) = 2 ↔ t = .of true) ∧
+    (m(t) = 3 ↔ t = .of false) := by
+  have h := weighted_mass_min 2 3 (by decide) (by decide) t
+  exact ⟨h.1, h.2.1, h.2.2 (by decide)⟩
 
 theorem beta_structure (t : Source) :
     BetaCovered (substitution (substitution t)) ∧
@@ -85,7 +94,7 @@ theorem beta_spec (t : Source) (u : Address) :
     exact ((ActualImageSevenLeafSeparation.seven_leaf_separation.1 t).2 u).mpr
       ⟨false, by simp [ActualImageSevenLeafSeparation.leafLabel, h]⟩
 
-theorem beta_recovery (f g : ℕ) (hf : 0 < f) (hfg : f < g)
+private theorem weighted_beta_recovery (f g : ℕ) (hf : 0 < f) (hfg : f < g)
     (V U : Source) (hc : BetaCovered V)
     (hm : ∀ u : Address, readout u V = .beta → readout u U = .beta) :
     f * (composition V).1 + g * (composition V).2 ≤
@@ -96,8 +105,8 @@ theorem beta_recovery (f g : ℕ) (hf : 0 < f) (hfg : f < g)
   | of b => cases b with
     | true =>
       simpa only [composition, mul_one, mul_zero, add_zero] using
-        ⟨(mass_min f g hf hfg U).1,
-          fun h => (mass_min f g hf hfg U).2.1.mp h⟩
+        ⟨(weighted_mass_min f g hf hfg U).1,
+          fun h => (weighted_mass_min f g hf hfg U).2.1.mp h⟩
     | false =>
       have hr := hm [] rfl
       have he : U = .of false := by
@@ -117,12 +126,17 @@ theorem beta_recovery (f g : ℕ) (hf : 0 < f) (hfg : f < g)
     | mul x y =>
       obtain ⟨hsl, hse⟩ := hs x hcs (fun u hu => hm (false :: u) hu)
       obtain ⟨htl, hte⟩ := ht y hct (fun u hu => hm (true :: u) hu)
-      refine ⟨by rw [mass_pair, mass_pair]; omega, ?_⟩
+      refine ⟨by rw [weighted_mass_pair, weighted_mass_pair]; omega, ?_⟩
       intro he
-      rw [mass_pair, mass_pair] at he
+      rw [weighted_mass_pair, weighted_mass_pair] at he
       exact congrArg₂ FreeMagma.mul (hse (by omega)) (hte (by omega))
 
-theorem beta_sound (f g : ℕ) (hf : 0 < f) (hfg : f < g)
+private theorem beta_recovery (V U : Source) (hc : BetaCovered V)
+    (hm : ∀ u : Address, readout u V = .beta → readout u U = .beta) :
+    m(V) ≤ m(U) ∧ (m(U) = m(V) → U = V) := by
+  exact weighted_beta_recovery 2 3 (by decide) (by decide) V U hc hm
+
+theorem scalar_beta_sound (f g : ℕ) (hf : 0 < f) (hfg : f < g)
     (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (hV : V ∈ ActualImage (3 * k)) (h : ℕ) (hh : height V ≤ h) :
     ScalarSound f g (3 * k) V h B(V) := by
@@ -137,12 +151,17 @@ theorem beta_sound (f g : ℕ) (hf : 0 < f) (hfg : f < g)
     (Finset.mem_filter.mp hu).1).trans hh, ?_⟩
   intro U hm ho
   have hc : BetaCovered V := he ▸ (beta_structure S).1
-  have hUV := (beta_recovery f g hf hfg V U hc (fun u hu =>
+  have hUV := (weighted_beta_recovery f g hf hfg V U hc (fun u hu =>
     (ho u ((beta_spec V u).mpr hu)).trans hu)).2 hm
   exact hUV ▸ ⟨T, hT⟩
 
+private theorem beta_sound (k : ℕ) (hk : 1 ≤ k) (V : Source)
+    (hV : V ∈ ActualImage (3 * k)) (h : ℕ) (hh : height V ≤ h) :
+    QuantitySound (3 * k) V h B(V) := by
+  exact scalar_beta_sound 2 3 (by decide) (by decide) k hk V hV h hh
 
-theorem leaf_expand (t : Source) (s : Address)
+
+theorem leaf_expand_subtrees (t : Source) (s : Address)
     (hs : subtree s t = some (.of false)) :
     subtree (s ++ [false]) (replace t s (.mul (.of true) (.of true))) = some (.of true) ∧
     composition (replace t s (.mul (.of true) (.of true))) + (0, 1) = composition t + (2, 0) ∧
@@ -208,6 +227,15 @@ theorem leaf_expand (t : Source) (s : Address)
                 (fun he => hR (congrArg (List.cons true) he))
   exact ⟨local_support.1 [false], hc, local_support.2, local_support.1⟩
 
+private theorem leaf_expand (t : Source) (s : Address)
+    (hs : subtree s t = some (.of false)) :
+    subtree (s ++ [false]) (replace t s (.mul (.of true) (.of true))) = some (.of true) ∧
+    composition (replace t s (.mul (.of true) (.of true))) + (0, 1) = composition t + (2, 0) ∧
+    (∀ u : Address, u ≠ s → u ≠ s ++ [false] → u ≠ s ++ [true] →
+      readout u (replace t s (.mul (.of true) (.of true))) = readout u t) := by
+  obtain ⟨hl, hc, ho, _⟩ := leaf_expand_subtrees t s hs
+  exact ⟨hl, hc, ho⟩
+
 private theorem joint_surgery (V : Source) (x y : Address)
     (hx : readout x V = .beta) (hy : readout y V = .beta) (hxy : x ≠ y) :
     ∃ W : Source, m(W) = m(V) ∧
@@ -218,7 +246,7 @@ private theorem joint_surgery (V : Source) (x y : Address)
   obtain ⟨_, hc, ho⟩ := ActualImageAddressCertificate.leaf_change V x false true (leaf_sub V x false hx)
   have hyT : readout y T = .beta := (ho y hxy.symm).trans hy
   let W := replace T y (.mul (.of true) (.of true))
-  obtain ⟨hl, hd, hp, _⟩ := leaf_expand T y (leaf_sub T y false hyT)
+  obtain ⟨hl, hd, hp⟩ := leaf_expand T y (leaf_sub T y false hyT)
   refine ⟨W, ?_, ?_, ?_⟩
   · have ha := congrArg Prod.fst hc
     have hb := congrArg Prod.snd hc
@@ -252,7 +280,7 @@ private theorem immediate_block (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (fun he => hL (he ▸ hu)) (fun he => hR (he ▸ hu))
 
 
-theorem dichotomy (f g : ℕ) (k : ℕ) (hk : 1 ≤ k) (V : Source)
+theorem scalar_dichotomy (f g : ℕ) (k : ℕ) (hk : 1 ≤ k) (V : Source)
     (hV : V ∈ ActualImage (3 * k)) (h : ℕ) (Q : Finset Address)
     (hs : ScalarSound f g (3 * k) V h Q) : alphaLeaves V ⊆ Q ∨ B(V) ⊆ Q := by
   classical
@@ -280,6 +308,11 @@ theorem dichotomy (f g : ℕ) (k : ℕ) (hk : 1 ≤ k) (V : Source)
       (ho₁ u (fun he => hsQ (he ▸ hu))))
   exact ActualImageAddressCertificate.exchange_conflict V W₁ W s t r hst hsr hr htV
     h₁s h₂t ho₁ ho₂ (ActualImageAddressCertificate.image_positive (d := 3 * k) (by omega) W hw)
+
+private theorem dichotomy (k : ℕ) (hk : 1 ≤ k) (V : Source)
+    (hV : V ∈ ActualImage (3 * k)) (h : ℕ) (Q : Finset Address)
+    (hs : QuantitySound (3 * k) V h Q) : alphaLeaves V ⊆ Q ∨ B(V) ⊆ Q := by
+  exact scalar_dichotomy 2 3 k hk V hV h Q hs
 
 theorem alpha_beta_disjoint (V : Source) : Disjoint (alphaLeaves V) B(V) := by
   classical
@@ -419,12 +452,11 @@ private theorem small_sound (Q : Finset Address)
         have hx : x = .of false := root_leaf x false hL
         have hy : y = .of true := root_leaf y true hR
         subst x; subst y
-        dsimp only [GraftAffineClosure.quantity] at hmass
-        rw [mass_pair 2 3, mass_pair 2 3] at hmass
-        have ht : t = .of false := ((mass_min 2 3 (by decide) (by decide) t).2.2 (by decide)).mp (by change m(t) = 3; change 3 + 2 + m(t) = 8 at hmass; omega)
+        rw [mass_pair, mass_pair] at hmass
+        have ht : t = .of false := (mass_min t).2.2.mp (by change 3 + 2 + m(t) = 8 at hmass; omega)
         subst t
         rfl
-  · have hp := beta_recovery 2 3 (by decide) (by decide) (substitution^[3] (.of true)) U
+  · have hp := beta_recovery (substitution^[3] (.of true)) U
       (beta_structure (.of false)).1 (by
         intro u hu
         have he : u = [false, false] ∨ u = [true] := by
@@ -448,9 +480,8 @@ private theorem small_sound (Q : Finset Address)
       | mul x y =>
         have hy : y = .of true := root_leaf y true hL
         subst y
-        dsimp only [GraftAffineClosure.quantity] at hmass
-        rw [mass_pair 2 3, mass_pair 2 3] at hmass
-        have hx : x = .of false := ((mass_min 2 3 (by decide) (by decide) x).2.2 (by decide)).mp (by change m(x) = 3; change m(x) + 2 + 3 = 8 at hmass; omega)
+        rw [mass_pair, mass_pair] at hmass
+        have hx : x = .of false := (mass_min x).2.2.mp (by change m(x) + 2 + 3 = 8 at hmass; omega)
         subst x
         rfl
 
@@ -476,7 +507,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
   classical
   have ha := image_alpha k hk V hV
   have lower (Q : Finset Address) (hs : QuantitySound (3 * k) V h Q) : B(V).card ≤ Q.card := by
-    rcases dichotomy 2 3 k hk V hV h Q hs with hA | hB
+    rcases dichotomy k hk V hV h Q hs with hA | hB
     · have hb := (alpha_branch_bound k hk V h Q hs hA).1
       omega
     · exact Finset.card_le_card hB
@@ -487,12 +518,12 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
     intro U hc ho
     exact hs.2 U (congrArg GraftAffineClosure.quantity hc) ho
   · intro hh hlarge
-    refine ⟨beta_sound 2 3 (by decide) (by decide) k hk V hV h hh, ?_⟩
+    refine ⟨beta_sound k hk V hV h hh, ?_⟩
     intro Q hs
     refine ⟨lower Q hs, ?_⟩
     constructor
     · intro hc
-      rcases dichotomy 2 3 k hk V hV h Q hs with hA | hB
+      rcases dichotomy k hk V hV h Q hs with hA | hB
       · have hb := (alpha_branch_bound k hk V h Q hs hA).1
         omega
       · exact (Finset.eq_of_subset_of_card_le hB (by omega)).symm
@@ -508,7 +539,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (V : Source)
       constructor
       · intro hc
         have hQL : Q ⊆ leafAddresses V := by
-          rcases dichotomy 2 3 k hk V hV h Q hs with hA | hB
+          rcases dichotomy k hk V hV h Q hs with hA | hB
           · have hbound := alpha_branch_bound k hk V h Q hs hA
             have hr : (B(V) \ Q).card < 2 := by
               by_contra hn

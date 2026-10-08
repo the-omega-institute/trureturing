@@ -81,7 +81,7 @@ private theorem expand_many (V : Source) (Y : Finset Address) (hY : Y ⊆ B(V)) 
     have hyT : readout y T = .beta :=
       (ho y hy (fun z hz b => (child_ne_leaf V y z b hyV (hYV hz)).symm)).trans
         ((beta_spec V y).mp hyV)
-    obtain ⟨_, hd, hp, hat⟩ := QuantityAddressCertificate.leaf_expand T y
+    obtain ⟨_, hd, hp, hat⟩ := QuantityAddressCertificate.leaf_expand_subtrees T y
       (leaf_sub T y false hyT)
     let W := replace T y (.mul (.of true) (.of true))
     have hnew (z : Address) : readout (y ++ z) W = readout z (.mul (.of true) (.of true)) := by
@@ -376,9 +376,9 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (L : ℕ) (V : Source)
     intro U hc ho
     exact hs.2 U (congrArg (fun c : ℕ × ℕ => f * c.1 + g * c.2) hc) ho
   · intro hh
-    have hB := QuantityAddressCertificate.beta_sound f g hf0 hfg k hk V hV h hh
+    have hB := QuantityAddressCertificate.scalar_beta_sound f g hf0 hfg k hk V hV h hh
     have lower (Q : Finset Address) (hs : ScalarSound f g (3 * k) V h Q) : M ≤ Q.card := by
-      rcases QuantityAddressCertificate.dichotomy f g k hk V hV h Q hs with hA | hB
+      rcases QuantityAddressCertificate.scalar_dichotomy f g k hk V hV h Q hs with hA | hB
       · exact (Nat.min_le_right _ _).trans
           (alpha_bound f g p q hp hq hf hg k hk V h Q hs hA).1
       · exact (Nat.min_le_left _ _).trans (Finset.card_le_card hB)
@@ -389,7 +389,7 @@ theorem result (k : ℕ) (hk : 1 ≤ k) (L : ℕ) (V : Source)
             Q = alphaLeaves V ∪ C ∧ (alphaLeaves V).card + t = M := by
       constructor
       · rintro ⟨hs, hcard⟩
-        rcases QuantityAddressCertificate.dichotomy f g k hk V hV h Q hs with hA | hBeta
+        rcases QuantityAddressCertificate.scalar_dichotomy f g k hk V hV h Q hs with hA | hBeta
         · have hbound := alpha_bound f g p q hp hq hf hg k hk V h Q hs hA
           have heq : Q.card = (alphaLeaves V).card + t := by
             have hmin := Nat.min_le_right B(V).card ((alphaLeaves V).card + t)

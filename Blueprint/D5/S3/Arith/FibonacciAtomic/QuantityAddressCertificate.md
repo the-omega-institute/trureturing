@@ -28,7 +28,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/QuantityAddressCertificate.Quantity
 
 *Commentary.*
 
-QuantitySound(d,V,h,Q) is S(2,3,d,V,h,Q), the weight pair used for the quantity frontier.
+S(d,V,h,Q) means that every address in the finite set Q has length at most h, and every complete source U with m(U)=m(V) and matching raw replies at all addresses in Q lies in I(d). Competitors have only this exact scalar promise; their composition, number of leaves, shape and height are unrestricted.
 
 **Theorem 1.3 (Sharp frontier and all minimum sets).**
 
