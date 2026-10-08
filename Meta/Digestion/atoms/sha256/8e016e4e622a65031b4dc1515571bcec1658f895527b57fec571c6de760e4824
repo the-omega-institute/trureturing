@@ -1,0 +1,71 @@
+**定义 10.3（指定有理插值及尺子）。** 在 $r>0$ 使用推导 10.1 的 $\widehat f$，在顶点使用连续值 $f_3$；体积分使用 $(X,Y,Z)$ 的坐标 Lebesgue 体积。这是底面双线性、沿顶点收拢线性的一份明确响应模型。[Nigam–Phillips v3 式 (1.2)、(2.3)、(6.1)](../../../Library/Geometry/nigamphillips2007pyramids.md) 供应同坐标参考金字塔及这组有理形函数的经典先例。具体地，取其无限金字塔坐标 $(u,v,h)$，则
+
+```math
+(X,Y,Z)=\left(\frac{u}{1+h},\frac{v}{1+h},\frac{h}{1+h}\right),
+\qquad r=\frac1{1+h}.
+```
+
+原文式 (6.1) 的五个拉回函数按其印刷符号为
+
+```math
+(\widetilde\pi_1,\widetilde\pi_2,\widetilde\pi_3,
+\widetilde\pi_4,\widetilde\pi_5)
+=\frac{((u-1)(v-1),u(v-1),(u-1)v,uv,h)}{1+h}.
+```
+
+本卷按 $(0,2,5,25,3)$ 的非负补全权恰对应
+$(\widetilde\pi_1,-\widetilde\pi_2,-\widetilde\pi_3,\widetilde\pi_4,\widetilde\pi_5)$。
+因此这些有理权也不作为新形函数计数。下面的积分系数由指定函数直接推出；它们不归给该版本未列出的积分表。
+
+对上述 $\widehat f$：
+
+```math
+\boxed{
+\int_{\mathcal P}\widehat f\,dX\,dY\,dZ
+=
+\frac{f_0+f_2+f_5+f_{25}}{16}
++\frac{f_3}{12}.
+}
+```
+
+证明。
+
+设：
+
+```math
+X=ru,\qquad Y=rv,
+\qquad 0\le u,v\le1.
+```
+
+体积元为：
+
+```math
+dX\,dY\,dZ=r^2\,du\,dv\,dZ.
+```
+
+每个底角插值权重都是 $r$ 乘一个正方形双线性权重，其 $u,v$ 积分为 $1/4$。因此：
+
+```math
+\frac14\int_0^1(1-Z)^3\,dZ=\frac1{16}.
+```
+
+顶点权重的积分为：
+
+```math
+\int_0^1Z(1-Z)^2\,dZ=\frac1{12}.
+```
+
+证毕。
+
+取所有 $f_s=1$，恢复：
+
+```math
+4\cdot\frac1{16}+\frac1{12}=\frac13,
+```
+
+即金字塔体积。
+
+**这个公式恢复的是已经明确规定的“底面双线性、向顶点线性收拢”的响应，不是任意未知内部函数。**
+
+---
+

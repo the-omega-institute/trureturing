@@ -1,0 +1,13 @@
+### 定理 21.1：三个圆周向量的切向消去
+
+对任意实数 $a,\omega$，定义
+$$
+F_{a,\omega}(t)=at\sin(\omega t)-\cos(\omega t).
+$$
+则对任意实数 $u,v$，
+$$
+\boxed{F_{a,\omega}(u)^2+F_{a,\omega}(v)^2+
+F_{a,\omega}(u+v)^2\ge\frac34.}
+\tag{21.1}
+$$
+
