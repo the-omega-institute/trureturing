@@ -102,16 +102,14 @@ internal static class LeanCacheProvisioner
         return TimeSpan.FromSeconds(MaxProvisionBudgetSeconds);
     }
 
-    // 以下三个名字**同值**,但继承是显式且带依据的 —— 这正是 #2535 所指「宽域」的收口:
+    // 以下两个名字**同值**,但继承是显式且带依据的 —— 这正是 #2535 所指「宽域」的收口:
     // 病不在「四个点共用一个数」,而在「共用是隐式的、无人说得出为什么」。
     //
-    // 三点的实际发生数(2026-08-23,本会话 47 条 ensure 收据):
-    //   cp -pR 回退      0 次(clonefile_errno 全为 null)
+    // 两点的实际发生数(2026-08-23,本会话 47 条 ensure 收据):
     //   lake cache get  3 次,离预算差两个数量级(ensure 端到端 13 秒)
     //   任意 Lake 命令  常走,是唯一会接近该值的点
     //
-    // 故按第 20″ 条「防的必须是发生过的事」,不为前两者各造一个独立裸数
-    // ——那会把一个无源常数变成三个,是「量腹而食」所禁的第四形乘以三。
+    // 故按第 20″ 条「防的必须是发生过的事」,不为依赖供给另造一个独立裸数。
 
     /// <summary>
     /// 承重点:`worktree with-cache-writer` 包裹的任意 Lake 命令。**该值就是为它定的**,
@@ -120,14 +118,6 @@ internal static class LeanCacheProvisioner
     /// 分类与退出条件见 <see cref="LeanCacheBudgetPolicy"/> 的 policy-override 声明(案号 #2535)。
     /// </summary>
     internal static TimeSpan LeanCommandBudget => ProvisionBudgetForTree();
-
-    /// <summary>
-    /// `cp -pR` 目录复制,即 clonefile 失败时的回退路径。**继承 <see cref="LeanCommandBudget"/>,
-    /// 不是独立取值**:该路径本机实测 **0 次发生**,为零发生路径派生一个末值会新增一个无源常数,
-    /// 违第 20″ 条。若日后收据中出现非 null 的 `clonefile_errno`,该继承即失去依据,
-    /// 须按「量腹而食」三型之一为其单独收口并带新案号。
-    /// </summary>
-    internal static TimeSpan DirectoryCopyBudget => LeanCommandBudget;
 
     /// <summary>
     /// `lake exe cache get`,依赖层公共供给。**继承 <see cref="LeanCommandBudget"/>,不是独立取值**:
@@ -255,7 +245,6 @@ internal static class LeanCacheProvisioner
             source,
             staged,
             target,
-            worktreeRoot,
             pins,
             runner,
             cloner,
@@ -266,14 +255,9 @@ internal static class LeanCacheProvisioner
             out cloneWarning);
         if (cloned is not null) return cloned;
 
-        return Fetch(
-            worktreeRoot,
-            pins,
-            lakeExecutable,
-            runner,
-            Join(selection.Notice, cloneWarning),
-            removePartial,
-            cloneReceipt);
+        throw new LeanCacheProvisionException(
+            Join(Join(selection.Notice, cloneWarning), "donor clonefile seeding failed"),
+            clonefile: cloneReceipt);
     }
 
     internal static LeanCacheProvisionResult ProvisionFromRequiredDonor(
@@ -304,7 +288,6 @@ internal static class LeanCacheProvisioner
             source,
             staged,
             target,
-            worktreeRoot,
             pins,
             runner,
             cloner,
@@ -316,7 +299,7 @@ internal static class LeanCacheProvisioner
         if (cloned is not null) return cloned;
 
         throw new LeanCacheProvisionException(
-            Join(cloneWarning, "required main-checkout donor copy failed"),
+            Join(cloneWarning, "required main-checkout donor clonefile seeding failed"),
             clonefile: cloneReceipt);
     }
 
@@ -348,7 +331,6 @@ internal static class LeanCacheProvisioner
         string source,
         string staged,
         string target,
-        string worktreeRoot,
         LeanPinSet pins,
         IWorktreeProcessRunner runner,
         IDirectoryCloner cloner,
@@ -406,50 +388,6 @@ internal static class LeanCacheProvisioner
         var exit = new CloneReceiptExit(
             cloneReceipt,
             $"clonefile failed ({clone.Message})");
-        if (!exit.TryCleanup(staged, removePartial, "staging cleanup"))
-        {
-            exit.AppendWarning("ordinary copy skipped");
-            cloneReceipt = exit.Receipt;
-            warning = exit.Warning;
-            return null;
-        }
-        ProcessOutput copy;
-        try
-        {
-            copy = runner.Run(
-                "cp",
-                ["-pR", source, staged],
-                worktreeRoot,
-                DirectoryCopyBudget);
-        }
-        catch (Exception exception)
-        {
-            exit.AppendWarning($"ordinary copy failed ({exception.Message})");
-            exit.TryCleanup(staged, removePartial, "staging cleanup");
-            cloneReceipt = exit.Receipt;
-            warning = exit.Warning;
-            return null;
-        }
-
-        if (copy.ExitCode == 0)
-        {
-            return PublishStaged(
-                source,
-                staged,
-                target,
-                selection.Donor!,
-                pins,
-                runner,
-                publisher,
-                "copy",
-                Join(exit.Warning, "used slow ordinary copy"),
-                exit.Receipt,
-                removePartial,
-                out warning);
-        }
-
-        var copyError = Error(copy, "cp -pR failed");
-        exit.AppendWarning($"ordinary copy failed ({copyError})");
         exit.TryCleanup(staged, removePartial, "staging cleanup");
         cloneReceipt = exit.Receipt;
         warning = exit.Warning;

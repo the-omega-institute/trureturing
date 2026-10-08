@@ -13,58 +13,23 @@ public sealed partial class LeanCacheProvisionerTests
 {
     private const string BudgetVariable = "STRATALINT_LEAN_CACHE_TIMEOUT_SECONDS";
 
-    /// <summary>
-    /// #2535 的收口契约:三个消费点各有具名预算,且**当前同值**。
-    ///
-    /// 钉住「同值」不是为了固化它,恰恰相反 —— 是为了让**分开**成为一个显式动作。
-    /// 注释里写明:`DirectoryCopyBudgetFor` 的继承依据是该路径实测零发生,
-    /// `DependencyFetchBudgetFor` 的依据是它差两个数量级;两者一旦失去依据就须单独收口
-    /// **并带新案号**。若有人直接给某一个换上独立字面量而不走那一步,本测试变红,
-    /// 迫使他要么补案号、要么改这里的断言 —— 两条都是显式的。
-    ///
-    /// 反面即病:若不钉,三个访问器会悄悄分叉成三个无源裸数,
-    /// 即「量腹而食」第四形乘以三,比收口前更差。
-    /// </summary>
     [Fact]
-    public void ThreeNamedBudgetsExistAndCurrentlyShareTheLoadBearingValue()
+    public void NamedBudgetsShareTheLoadBearingValue()
     {
         var lean = LeanCacheProvisioner.LeanCommandBudget;
-        var copy = LeanCacheProvisioner.DirectoryCopyBudget;
-        var fetch = LeanCacheProvisioner.DependencyFetchBudget;
-
-        // 承重点即活性上限本身。上一版这里断言的是「模块数算出来的派生值」,
-        // 而那个派生每次都被 clamp 压回上限 —— 断言恒真,「派生」二字不承重。
-        Assert.Equal(
-            PinnedProductionBudgets.LeanCacheProvisionBudget,
-            lean);
-
-        // 另两者继承它。分叉须走注释所述的收口 + 新案号,不得静默发生。
-        Assert.Equal(lean, copy);
-        Assert.Equal(lean, fetch);
+        Assert.Equal(PinnedProductionBudgets.LeanCacheProvisionBudget, lean);
+        Assert.Equal(lean, LeanCacheProvisioner.DependencyFetchBudget);
     }
 
-    /// <summary>
-    /// 具名化不得破坏既有的环境旋钮:三个名字都经同一个 clamp 后的取值,
-    /// 故旋钮一动,三者须同时随动。若某个访问器被改成绕开 `ProvisionBudget`
-    /// 直接返回字面量,本测试变红。
-    /// </summary>
     [Fact]
-    public void AllThreeNamedBudgetsFollowTheClampedEnvironmentOverride()
+    public void NamedBudgetsFollowTheClampedEnvironmentOverride()
     {
-        var previous = Environment.GetEnvironmentVariable(BudgetVariable);
-        try
+        WithBudget("99999", () =>
         {
-            // 下界..上界之外的值须被 clamp;取一个远超上界的数,三者都应落到上界。
-            Environment.SetEnvironmentVariable(BudgetVariable, "99999");
             var clamped = PinnedProductionBudgets.LeanCacheProvisionCeiling;
             Assert.Equal(clamped, LeanCacheProvisioner.LeanCommandBudget);
-            Assert.Equal(clamped, LeanCacheProvisioner.DirectoryCopyBudget);
             Assert.Equal(clamped, LeanCacheProvisioner.DependencyFetchBudget);
-        }
-        finally
-        {
-            Environment.SetEnvironmentVariable(BudgetVariable, previous);
-        }
+        });
     }
 
     /// <summary>
@@ -154,47 +119,8 @@ public sealed partial class LeanCacheProvisionerTests
     }
 
     [Fact]
-    public void ConfiguredBudgetAppliesToEveryProvisioningProcess()
-    {
-        WithBudget("5400", () =>
-        {
-            using var donor = new TemporaryDirectory();
-            using var target = new TemporaryDirectory();
-            using var sharedCache = new MathlibCacheFixture();
-            var root = Path.Combine(target.Path, "worktree");
-            Directory.CreateDirectory(root);
-            WritePins(donor.Path);
-            WritePins(root);
-            var donorLake = Path.Combine(donor.Path, ".lake");
-            Directory.CreateDirectory(donorLake);
-            var pins = ReadPins(root);
-            LeanCacheStamp.Write(donorLake, pins);
-            var runner = new RecordingWorktreeProcessRunner
-            {
-                FailCopy = true,
-            };
-            using var writerGuard = LeanCacheWriterGuard.TryAcquire(Path.Combine(root, ".lake"));
-            Assert.NotNull(writerGuard);
-
-            LeanCacheProvisioner.Provision(
-                new LeanCacheDonorSelection(donor.Path, null),
-                root,
-                pins,
-                "lake",
-                runner,
-                writerGuard,
-                new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
-
-            var provisioning = runner.Invocations
-                .Where(static call => call.FileName is "cp" or "lake")
-                .ToArray();
-            Assert.Equal(2, provisioning.Length);
-            Assert.All(provisioning, static call => Assert.Equal(5400, call.Timeout.TotalSeconds));
-            Assert.DoesNotContain(
-                provisioning,
-                static call => call.Arguments.SequenceEqual(["exe", "cache", "clean"]));
-        });
-    }
+    public void ConfiguredBudgetAppliesToDependencyFetchProcess() =>
+        AssertCacheGetBudget("5400", 5400);
 
     /// <summary>
     /// 旋钮的解析与 clamp:低于下界落到下界,高于上界落到上界(上界 = 声明的 policy-override 值,
