@@ -30,7 +30,22 @@ The oriented Bochner interval integral with respect to Lebesgue measure reconstr
 
 This is the analytic prerequisite for qdo-v1 theorem 36.26 and the named consumer absolutely_continuous_subspace_action_minimum_unique. The extended quadratic action, lower bound, affine attainment and pointwise uniqueness remain downstream. Absolute continuity alone does not imply finite quadratic energy. The private countable-basis helpers are a minimal Apache-2.0 source port from Kitware's immutable revision ef157afc71c3866cb608111ef61462516330ef56; their license and notice trail are retained in the Lean source.
 
+**Theorem 1.3 (Countability of orthonormal families).**
+
+$$\forall K: \operatorname{Type}_{u}, [\operatorname{RCLike}\left(K\right)],\\{}\forall E: \operatorname{Type}_{v}, [\operatorname{NormedAddCommGroup}\left(E\right)], [\operatorname{InnerProductSpace}\left(K, E\right)], [\operatorname{SeparableSpace}\left(E\right)],\\{}\forall s: \operatorname{Set}\left(E\right), \operatorname{Orthonormal}\left(K, \operatorname{SubtypeVal}\left(s\right)\right) \implies \operatorname{SetCountable}\left(s\right).$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/HilbertGeometry/HilbertPathFundamentalTheorem.countable_of_orthonormal` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For arbitrary universe levels u and v, every orthonormal subset s of a separable inner-product space E over a real or complex scalar type K is countable. Completeness is not required. SubtypeVal(s) denotes the inclusion of s into E, and SetCountable(s) denotes countability of the set s. Distinct vectors in s have distance equal to the square root of two; separability forces such a separated set to be countable.
+
+The countability argument is a minimal Apache-2.0 source port from Kitware's immutable revision ef157afc71c3866cb608111ef61462516330ef56. The license and notice trail are retained in the Lean source.
+
 ## References
 
 - Truth anchor: `D5/S3/Observer/HilbertGeometry/HilbertPathFundamentalTheorem.absolutely_continuous_interval_ae_hasDerivAt`
 - Truth anchor: `D5/S3/Observer/HilbertGeometry/HilbertPathFundamentalTheorem.absolutely_continuous_interval_integral_deriv_eq_sub`
+- Truth anchor: `D5/S3/Observer/HilbertGeometry/HilbertPathFundamentalTheorem.countable_of_orthonormal`
