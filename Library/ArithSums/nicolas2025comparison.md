@@ -5042,3 +5042,202 @@ priority claim and has no Lean certification. The fixed shape and verified
 height give no uniform bound as $A\to\infty$: the comparison and high-zero
 allowances in (GE5), (GH3) still grow with $\sqrt A$.
 The full unbounded signed Robin target and RH remain unproved.
+
+
+## A one-sided entire envelope retaining the original cutoff
+
+The original prime weight has a derivative jump at its cutoff. A signed
+mixture of published power-function extremals gives entire lower and
+upper envelopes with an exact error while retaining that cutoff. Use
+the power-function corollary in Carneiro, Littmann and Vaaler,
+[arXiv:1008.4969v2](https://arxiv.org/abs/1008.4969v2), Part III,
+“Extremal Functions for $|x|^\sigma$”, can instead be applied before
+mixing the actual second-derivative measure. This is a paper-level
+application of that published corollary and elementary signed-measure
+integration, with no mathematical priority or Lean-verification claim.
+
+Retain $A\ge e^2$, $L=\log A$, and the original weight and derivative
+
+$$
+H_A(x)=\frac1{\max(A,|x|)\log\max(A,|x|)},\qquad
+k(t)=\frac{1+\log t}{t^2\log^2t},\qquad
+\kappa_A=k(A).
+$$
+
+The distributional second derivative is the signed measure
+
+$$
+\mu_A=\mu_A^+-\mu_A^-,\qquad
+\mu_A^+(du)=-k'(|u|)\mathbf1_{\{|u|>A\}}\,du,
+\qquad
+\mu_A^-=\kappa_A(\delta_{-A}+\delta_A).
+\tag{CE1}
+$$
+
+Here $k'<0$. Both parts have mass $2\kappa_A$, and
+$\int(1+|u|)\,d|\mu_A|(u)<\infty$. The negative cutoff atoms have
+not been dropped. Direct integration gives the absolutely convergent
+potential representation
+
+$$
+\boxed{H_A(x)=\frac12\int_{\mathbb R}|x-u|\,d\mu_A(u).}
+\tag{CE2}
+$$
+
+For example, differentiation off $\pm A$ gives the original derivative;
+the value at zero is
+$-A\kappa_A+\int_A^\infty u[-k'(u)]\,du=1/(AL)$.
+These facts and continuity identify the potential with $H_A$.
+
+Use the source corollary at $\sigma=1$, where its normalization is
+$\gamma(-1)=-2\pi$ and $\gamma(2)=1/\pi$. Reversing the inequalities
+when dividing by $-2\pi$, and then rescaling, provides even real entire
+functions $P_\delta,Q_\delta$ of exponential type at most $2\pi\delta$
+for every $\delta>0$, satisfying
+
+$$
+P_\delta(x)\le |x|\le Q_\delta(x),\qquad
+\int_{\mathbb R}(|x|-P_\delta(x))\,dx=\frac1{6\delta^2},\qquad
+\int_{\mathbb R}(Q_\delta(x)-|x|)\,dx=\frac1{12\delta^2}.
+\tag{CE3}
+$$
+
+This reuses the source result rather than reconstructing its proof.
+The two nonnegative errors sum to the integrable entire function
+$Q_\delta-P_\delta$. The standard real-line bound for an integrable
+entire function of finite exponential type makes that difference
+bounded; hence both power extremals are $O_\delta(1+|x|)$ on the real
+line. The usual polynomial-growth version of the Paley–Wiener bound
+then gives $O_{K,\delta}(1+|u|)$ for their translates $z-u$, uniformly
+for $z$ in a fixed compact subset $K$ of the complex plane. This bound
+and the first moment in (CE1) justify locally uniform integration below,
+including differentiation on compact subsets.
+
+Define
+
+$$
+\begin{aligned}
+\ell_{A,\delta}(z)
+ &=\frac12\left[\int P_\delta(z-u)\,d\mu_A^+(u)
+                  -\int Q_\delta(z-u)\,d\mu_A^-(u)\right],\\
+u_{A,\delta}(z)
+ &=\frac12\left[\int Q_\delta(z-u)\,d\mu_A^+(u)
+                  -\int P_\delta(z-u)\,d\mu_A^-(u)\right].
+\end{aligned}
+\tag{CE4}
+$$
+
+They are even real entire functions of exponential type at most
+$2\pi\delta$, and the signs in (CE4) give
+
+$$
+\boxed{\ell_{A,\delta}(x)\le H_A(x)\le u_{A,\delta}(x)
+\qquad(x\in\mathbb R).}
+\tag{CE5}
+$$
+
+Tonelli applies to the nonnegative differences from (CE2). Using the
+actual two masses in (CE1), rather than treating the signed measure as
+positive, gives the exact errors
+
+$$
+\int_{\mathbb R}(H_A-\ell_{A,\delta})\,dx
+=\int_{\mathbb R}(u_{A,\delta}-H_A)\,dx
+=\frac{\kappa_A}{4\delta^2}.
+\tag{CE6}
+$$
+
+Evenness therefore yields
+
+$$
+\boxed{\int_0^\infty(H_A-\ell_{A,\delta})\,dt
+       =\frac{\kappa_A}{8\delta^2}.}
+\tag{CE7}
+$$
+
+These are explicit envelopes for the unchanged cutoff weight. They do
+not assert extremality for $H_A$, arithmetic sampling convergence, a
+compact zero-height cutoff, or a sign estimate on the original complete
+zero response. Fourier support on the additive real variable is not
+spectral truncation at the actual complex zeta zeros.
+
+### A finite centered prime comparison
+
+The lower envelope (CE5) gives a finite arithmetic consumer without
+assuming that an unweighted $L^1$ error controls an infinite
+von-Mangoldt weighted sum. Keep $R\ge A\ge e^2$, $V=\log R$,
+$D(t)=\psi(t)-t$, and the existing unconditional constant $C_\psi$ in
+(GR3). Define the finite centered response
+
+$$
+\mathcal J_{A,\delta}(R)
+=\int_0^R\ell_{A,\delta}(t)\,dt
+ -\sum_{2\le n\le R}\Lambda(n)\ell_{A,\delta}(n).
+\tag{CP1}
+$$
+
+Both terms are finite. No separately divergent pole or prime integral
+has been taken. Set $e=H_A-\ell_{A,\delta}\ge0$. For this same $R$,
+nonnegative von Mangoldt weights and (CE7) give
+
+$$
+\begin{aligned}
+\int_0^R H_A(t)\,dt-\sum_{2\le n\le R}\Lambda(n)H_A(n)
+&=\mathcal J_{A,\delta}(R)+\int_0^R e(t)\,dt
+                -\sum_{2\le n\le R}\Lambda(n)e(n)\\
+&\le\mathcal J_{A,\delta}(R)+\frac{\kappa_A}{8\delta^2}.
+\end{aligned}
+\tag{CP2}
+$$
+
+An atom at $n=A$ satisfies the same pointwise order. No zero real part,
+multiplicity, or height is altered in the original response.
+
+Partial summation, with the right endpoint included in $\psi(R)$,
+keeps the full original integral:
+
+$$
+-I_\psi(A)
+=\left[\int_0^R H_A(t)\,dt
+       -\sum_{2\le n\le R}\Lambda(n)H_A(n)\right]
+ +D(R)H_A(R)-\int_R^\infty D(t)k(t)\,dt.
+\tag{CP3}
+$$
+
+The existing (GR3) implies $|D(t)|\le C_\psi t/\log^2t$ for $t>1$.
+Its boundary allowance is $C_\psi/V^3$, and direct integration pays
+all of the remaining tail by
+
+$$
+\int_R^\infty |D(t)|k(t)\,dt
+\le C_\psi\left(\frac1{2V^2}+\frac1{3V^3}\right).
+$$
+
+Consequently the finite directed upper bound is
+
+$$
+\boxed{\begin{aligned}
+-\sqrt A L I_\psi(A)\le{}&\sqrt A L\mathcal J_{A,\delta}(R)
+ +\frac{1+L}{8A^{3/2}L\delta^2}\\
+&+C_\psi\sqrt A L
+   \left(\frac1{2V^2}+\frac4{3V^3}\right).
+\end{aligned}}
+\tag{CP4}
+$$
+
+This pays the approximation and the entire omitted arithmetic tail for
+any displayed parameters. It neither requires nor proves convergence
+of an infinite prime sample of the envelope error. For instance,
+$\delta=1$ and $R=\exp(A^{1/4}\log A)$ make both displayed added
+allowances tend to zero as $A\to\infty$; this is asymptotic, since
+$C_\psi$ has not been numerically certified. It gives no starting clock
+and no claim that evaluating this finite prime sum is inexpensive.
+
+At the unchanged conditional least global Robin-ratio maximizing
+integer, a sufficiently strong upper estimate on the actual
+$\mathcal J_{A,\delta}(R)$ would still be needed to pay the strict
+core after (CP4). No such main estimate is supplied. The original
+$F_A$, actual zero multiset, complete elementary contributions and
+unbounded Robin/RH goal remain unchanged; no compact spectral
+truncation or RH inference follows from additive exponential type.
+This is a paper-level comparison, not a Lean-verified result.
