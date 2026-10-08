@@ -11,6 +11,54 @@ namespace StrataLint.DeclaredTemplate.Tests;
 
 public sealed class DeclaredTemplateUnregisteredTests
 {
+    private static string RefutationHeader(string result = "D5/S0/Carrier/Target.target0",
+        string basis = "refutes=task:D5-T0001") =>
+        "/- GID: D5/S0/Carrier/Target\n   generality: G\n   mirror-B: none\n"
+        + "   mirror-E: none\n   anchors: []\n   utility: kind=checker; basis=" + basis
+        + "; result=" + result + "; claim=D5/S0/Carrier/Claim.claim\n   digest: fixture -/\n";
+
+    [Theory]
+    [InlineData("")]
+    [InlineData("Other.Refutations")]
+    [InlineData("D5.S0.Carrier.Target")]
+    public void utility_refutation_result_is_exempt_in_any_namespace(string scope)
+    {
+        var prefix = scope.Length == 0 ? "" : scope + ".";
+        var declarations = "theorem companion : ¬ False := by simp\n"
+            + "theorem other_result : True := by trivial\n";
+        var source = RefutationHeader("D5/S0/Carrier/Target.companion")
+            + (scope.Length == 0 ? declarations : "namespace " + scope + "\n" + declarations + "end " + scope + "\n");
+        var findings = Findings(Build(source: source, declarations:
+            [new(prefix + "companion", "theorem", "Not False", []),
+                new(prefix + "other_result", "theorem", "True", [])]));
+        Assert.Equal("DTR-Unregistered D5.S0.Carrier.Target/" + prefix + "other_result",
+            Assert.Single(findings).Message);
+    }
+
+    [Fact]
+    public void utility_ambiguous_result_selector_does_not_exempt_any_theorem()
+    {
+        var source = RefutationHeader() + Source
+            + "namespace Other\ntheorem target0 : True := by trivial\nend Other\n";
+        var findings = Findings(Build(source: source, declarations:
+            [new(Theorem, "theorem", "True", []), new("Other.target0", "theorem", "True", [])]));
+        Assert.Equal(2, findings.Length);
+        Assert.All(findings, finding => Assert.StartsWith("DTR-Unregistered ", finding.Message));
+    }
+
+    [Fact]
+    public void utility_result_selector_ignores_excluded_declarations() => Empty(Build(
+        source: RefutationHeader() + Source, declarations:
+        [new(Theorem, "theorem", "True", []),
+            new("Other.target0", "theorem", "True", []) { IncludeInStatement = false }]));
+
+    [Theory]
+    [InlineData("D5/S0/Carrier/Other.target0", "refutes=task:D5-T0001")]
+    [InlineData("D5/S0/Carrier/Target.target0", "consumer=D5/S0/Carrier/Claim.claim")]
+    [InlineData("invalid", "refutes=task:D5-T0001")]
+    public void utility_foreign_nonrefuting_or_malformed_result_does_not_exempt(string result, string basis) =>
+        Observes(Build(source: RefutationHeader(result, basis) + Source));
+
     [Fact]
     public void new_public_theorem_without_registration_blocks() => Observes(Build());
 

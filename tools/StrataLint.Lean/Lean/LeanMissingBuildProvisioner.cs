@@ -54,42 +54,14 @@ internal static class LeanMissingBuildProvisioner
             LeanCacheProvisioner.RemovePartial,
             wait,
             out var cloneReceipt);
-        var method = "clonefile";
         string? warning = null;
         if (!clone.Succeeded)
         {
             var exit = new CloneReceiptExit(cloneReceipt, $"clonefile failed ({clone.Message})");
-            if (!exit.TryCleanup(staged, LeanCacheProvisioner.RemovePartial, "staging cleanup"))
-            {
-                return new LeanBuildProvisionAttempt(null, exit.Warning, exit.Receipt);
-            }
-
-            ProcessOutput copy;
-            try
-            {
-                copy = runner.Run(
-                    "cp",
-                    ["-pR", source, staged],
-                    worktreeRoot,
-                    LeanCacheProvisioner.DirectoryCopyBudget);
-            }
-            catch (Exception exception)
-            {
-                exit.AppendWarning($"ordinary copy failed ({exception.Message})");
-                exit.TryCleanup(staged, LeanCacheProvisioner.RemovePartial, "staging cleanup");
-                return new LeanBuildProvisionAttempt(null, exit.Warning, exit.Receipt);
-            }
-
-            if (copy.ExitCode != 0)
-            {
-                exit.AppendWarning(
-                    $"ordinary copy failed ({LeanCacheProvisioner.Error(copy, "cp -pR failed")})");
-                exit.TryCleanup(staged, LeanCacheProvisioner.RemovePartial, "staging cleanup");
-                return new LeanBuildProvisionAttempt(null, exit.Warning, exit.Receipt);
-            }
-            method = "copy";
-            warning = LeanCacheProvisioner.Join(exit.Warning, "used slow ordinary copy");
-            cloneReceipt = exit.Receipt;
+            exit.TryCleanup(staged, LeanCacheProvisioner.RemovePartial, "staging cleanup");
+            throw new LeanCacheProvisionException(
+                LeanCacheProvisioner.Join(exit.Warning, "donor build clonefile seeding failed"),
+                clonefile: exit.Receipt);
         }
 
         try
@@ -151,7 +123,7 @@ internal static class LeanMissingBuildProvisioner
             return new LeanBuildProvisionAttempt(
                 new LeanCacheProvisionResult(
                     "cloned",
-                    method,
+                    "clonefile",
                     warning,
                     LeanCacheProvisioner.InspectMathlibOleans(lake),
                     cloneReceipt),

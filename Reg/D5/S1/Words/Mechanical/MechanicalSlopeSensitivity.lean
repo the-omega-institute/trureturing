@@ -1,23 +1,11 @@
-import LeanInformationAuditInterface.Syntax
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 import D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration
 import Reg.Support.MechanicalDyadicRegistration
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.slopeArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.local_slope_disagreement_law,
-      statementIdentity := "sha256:cd8771064a2ef41ff0a64b8419849ed8b69981f7bf5a40ebfe2d070a43075b25",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.slopeArena,
-      theoremName := `D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.local_slope_disagreement_law,
-      statementIdentity := "sha256:cd8771064a2ef41ff0a64b8419849ed8b69981f7bf5a40ebfe2d070a43075b25",
-      registrationModuleName := `Reg.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity }]
-  companionPrefix := some `Reg.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity }
+
 
 noncomputable section
 namespace Reg.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity
@@ -104,14 +92,29 @@ theorem slopeSensitivity : FiniteSlotSensitivity slopeArena.toPrimitiveLawArena 
   · intro i
     exact Fin.elim0 i
 
-register_information_theorem
-  _root_.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.local_slope_disagreement_law
-  in slopeArena
-  readout via (@mechanicalReadoutRealization SlopeOutput (Classical.decEq _)
-    (fun _ : Unit => MechanicalReadoutSources.slopeReadout))
-  primitives slopeRealization.toPrimitiveBundle
-  realization slopeBridge
-  variation slopeVariation sensitivity slopeSensitivity
-  escape from (ℝ) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.local_slope_disagreement_law) (type_of% (@mechanicalReadoutRealization SlopeOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.slopeReadout))) (type_of% (ℝ)) (Unit) := {
+  unitName := `Reg.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.local_slope_disagreement_law.__information_unit,
+  realizationName := `Reg.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.slopeBridge,
+  realizationSource := none,
+  generated := false,
+  arena := .object ⟨(slopeArena)⟩,
+  objectArena := .object ⟨(slopeArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena.toPrimitiveLawArena.{0, 0, 0, 0} D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.slopeArena) (D5.S3.ConceptDynamics.InformationEscape.MechanicalSlopeCalibrationRegistration.slopeRealization) (slopeRealization.toPrimitiveBundle) ⟨(slopeBridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (slopeBridge) (@_root_.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity.local_slope_disagreement_law))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((slopeRealization.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (@mechanicalReadoutRealization SlopeOutput (Classical.decEq.{1} _)
+    (fun _ : Unit => MechanicalReadoutSources.slopeReadout)),
+  variation := .evidence ⟨(slopeVariation)⟩ (by first | exact (slopeVariation) | exact ⟨_, _, (slopeVariation)⟩),
+  sensitivity := .evidence ⟨(slopeSensitivity)⟩ (by exact (slopeSensitivity)),
+  partialSensitivity := none,
+  escapeFrom := some (ℝ),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 2000000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S1.Words.Mechanical.MechanicalSlopeSensitivity

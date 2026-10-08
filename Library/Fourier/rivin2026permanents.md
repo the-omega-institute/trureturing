@@ -7,7 +7,10 @@ doi: null
 url: https://arxiv.org/abs/2602.10141v3
 claim: "Open Problems 2 and 3: the midpoint formula and a closed form for the universal function."
 strata_touched:
-  - D5/S3/Combinatorics/Permanental/CycleGeodesic
+  - D5/S3/Combinatorics/Permanental/CycleGeodesic/GaudinPermanent
+  - D5/S3/Combinatorics/Permanental/CycleGeodesic/CycleGeodesicProduct
+  - D5/S3/Combinatorics/Permanental/CycleGeodesic/CycleGeodesicMidpoint
+  - D5/S3/Combinatorics/Permanental/CycleGeodesic/CycleGeodesicScaling
 license: citation-only
 triage: anchor
 ---

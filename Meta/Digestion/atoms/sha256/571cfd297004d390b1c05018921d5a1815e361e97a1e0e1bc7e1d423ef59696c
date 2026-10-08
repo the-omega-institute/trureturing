@@ -1,0 +1,2 @@
+**约定 0.1（对象、来源与证明范围）。** 本卷在普通有限组合、实概率、凸几何及有限维复 Hilbert 空间中讨论指定模型。原生语法、HIGH-to-LOW 即时读者及严格接缝使用项目快照 [671ed2dcaf09d2f97799de233fc38e896911c248 的《关系延拓几何》](https://github.com/the-omega-institute/trureturing/blob/671ed2dcaf09d2f97799de233fc38e896911c248/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md) 定义 1.1、1.3、5.1，定义 5.2，定义 7.1、定理 7.2。下文的低到高扫描、外置单位位、概率律、三进制度量和相干仪器各有自己的定义，不由原生语法自动供应。所有证明均为普通数学证明，不赋予本卷 Lean kernel 验证身份，也不推断物理时空或研究原创性。
+

@@ -1,0 +1,15 @@
+**数学引文 5.2（条件行列式）。** 金字塔行列式卷 §四的公式在此为
+
+```math
+\Delta=r\kappa-XY.
+```
+
+仅当 $`r>0`$ 时可以写
+
+```math
+\kappa=\frac{XY+\Delta}{r},\qquad
+\mathop{\mathrm{Cov}}\nolimits_p(x,y\mid z=0)=\frac\Delta{r^2}.
+```
+
+证明。展开四格行列式，二次 $`\kappa`$ 项相消。$`Q/r`$ 是底面条件律，其两个均值为 $`X/r,Y/r`$，共同概率为 $`\kappa/r`$，协方差相减即得。$`r=0`$ 时 $`Q=0,\Delta=0`$，但没有底面条件分布。∎
+

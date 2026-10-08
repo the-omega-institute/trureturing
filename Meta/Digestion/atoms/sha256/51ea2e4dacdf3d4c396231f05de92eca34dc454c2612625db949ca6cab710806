@@ -1,0 +1,16 @@
+**数学引文 6.4（共同条件产生整体相关）。** 即使 $`\Delta=0`$，当 $`r>0`$ 时仍有
+
+```math
+\mathop{\mathrm{Cov}}\nolimits_{p^\star}(x,y)=\kappa^\star-XY
+=XYZ/r.
+```
+
+由 $`\kappa^\star=XY/r`$ 及 $`1-r=Z`$ 得式；它严格正恰当且仅当 $`X,Y,Z`$ 都严格正。五模式均匀律 $`p_s=1/5`$ 给
+
+```math
+X=Y=2/5,\quad Z=1/5,\quad r=4/5,\quad
+\kappa=1/5,\quad \Delta=0,\quad \mathop{\mathrm{Cov}}\nolimits(x,y)=1/25.
+```
+
+条件独立与无条件独立不同；共同顶点使两端一起为零。
+
