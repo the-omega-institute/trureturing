@@ -22,29 +22,14 @@ internal sealed class CarryGraphRealizationDocument : IScribeDocumentDefinition
     public DocumentDefinition Create()
     {
         var m = V("m"); var g = V("gamma"); var d = V("d"); var i = V("i");
-        var tape = V("tape"); var words = V("words");
+        var tape = V("tape");
         var n = Seq(Mathbb, Grp(V("N")));
-        var path = V("Path"); var bits = Call("List", V("Bool"));
-        Formula PD(Formula f) => All(m, n, All(g, path, All(d, n, f)));
+        var path = V("Path");
         Formula PT(Formula f) => All(m, n, All(g, path, All(tape, V("Tape"), f)));
         Formula PI(Formula f) => All(m, n, All(g, path, All(i, Call("Fin", m), f)));
-        var r = Call("r", Call("state", g, d));
-        var e = Call("e", Call("state", g, d));
-        var b = Call("b", Call("action", g, d));
-        var h = Call("h", Call("action", g, d));
-        var c = Call("c", Call("action", g, d));
-        var upper = Seq(e, Sp, Plus, Sp, c);
-        var selected = Par(Seq(
-            Par(Seq(Equal(b, D(1)), Sp, Land, Sp, i, Sp, Lt, Sp, upper)),
-            Sp, Lor, Sp,
-            Par(Seq(b, Sp, Neq, Sp, D(1), Sp, Land, Sp,
-                Seq(e, Sp, Minus, Sp, h), Sp, Le, Sp, i, Sp, Land, Sp, i, Sp, Lt, Sp, upper))));
         return DocumentDefinition.Create(ScribeNode.Create(
             "Fixed one-label intervals determine ordered children and an actual bit-by-bit scan.",
             H("Fixed-label Carry-tree Execution"), Blocks(
-                Def("labelSet", "Fixed labels", PD(All(i, Call("Fin", m),
-                    Seq(i, Sp, InMacro, Sp, Call("labelSet", m, g, d), Sp, Iff, Sp, selected))),
-                    "Indices are zero-based. On an anchor-one column the selected labels start at zero. On an anchor-zero column they start at e-h and stop before e+c."),
                 Def("labelDigit", "Output digits",
                     PI(All(d, n, Equal(Call("labelDigit", g, i, d), Call("indicator", Call("labelSet", m, g, d), i)))) ,
                     "Membership in the selected set gives digit one; every other label has digit zero."),
@@ -52,20 +37,6 @@ internal sealed class CarryGraphRealizationDocument : IScribeDocumentDefinition
                     PT(All(d, n, Seq(Call("scan", m, g, tape, d), Sp, InMacro, Sp,
                         Call("Sum", Call("Product", Call("Fin", m), n), n)))),
                     "The root is active slot zero. At depth d an active slot j reads tape(d), forms z=2j+toNat(tape(d)), and returns the z-th column label with charge d+1 if z is below the label count. Otherwise it continues in slot z minus that count. A returned state stays unchanged and reads no further bits."),
-                Def("children", "Ordered children",
-                    All(words, Call("List", bits), Equal(Call("children", words), Call("flatMap", Par(Seq(V("w"), Sp, Mapsto, Sp, Seq(OpenBracket, Call("append", V("w"), Seq(OpenBracket, V("false"), CloseBracket)),
-                        Comma, Sp, Call("append", V("w"), Seq(OpenBracket, V("true"), CloseBracket)), CloseBracket))), words))),
-                    "Each word contributes first its false child and then its true child, preserving parent order."),
-                Def("continuing", "Continuing words",
-                    PD(Equal(Call("continuing", m, g, Seq(d, Sp, Plus, Sp, D(1))),
-                        Call("drop", Call("length", Call("sort", Call("labelSet", m, g, d))),
-                            Call("children", Call("continuing", m, g, d))))),
-                    "Depth zero consists of the empty word. Every later level expands the continuing parents and removes the initial children assigned to labels."),
-                Def("stopping", "Labelled stopping words",
-                    PD(Equal(Call("stopping", m, g, d),
-                        Call("zip", Call("children", Call("continuing", m, g, d)),
-                            Call("sort", Call("labelSet", m, g, d))))),
-                    "The selected initial children are paired with the increasing output labels. The zip has the shorter of the two input lengths."),
                 Def("sample", "First return",
                     PT(Equal(Call("sample", m, g, tape), Call("firstLeft", Call("scan", m, g, tape)))),
                     "The sample is the first left scan state, with its output label and charged length. It is absent on tapes with no finite return."),

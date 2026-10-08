@@ -172,7 +172,43 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.recipeS
 
 The strategy requests actual representatives, then the selected prototype's complete labelled leaves. Unexpected routing replies and any leaf mismatch begin the all-input fallback. Each verifier and fallback receives its own empty logical history; prior truthful reports only answer addresses it actually requests.
 
-**Theorem 1.15 (Simultaneous attainment and coordinatewise domination).**
+**Theorem 1.15 (Arbitrary prototype query lists).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.verifier`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.verifier` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every prototype, input and finite address list, the verifier accepts exactly when every listed report matches the prototype or the input is a third substitution image.
+
+**Theorem 1.16 (A prototype reproduces its query list).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.matched`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.matched` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every prototype and finite address list, its own verifier returns precisely the truthful reports at those addresses and accepts.
+
+**Theorem 1.17 (Distinct leaves and exact recipe costs).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.cost_foundation`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.cost_foundation` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every tree has a duplicate-free leaf list, and chi of a report is zero exactly at a leaf address. Every recipe on a positive family reproduces its controller outcome on retained prototypes. Its route has distinct joint response vectors and distinct addresses, with length at most the survivor cardinality minus one. Its gain is both the sum of report charges and the number of route addresses outside the leaf set, so its cost is the leaf-list length plus that gain. Every full-family core coordinate lies between its leaf baseline and that baseline plus the family cardinality minus one.
+
+**Theorem 1.18 (Simultaneous attainment and coordinatewise domination).**
 
 $$\forall m, F, (((1 \leq m) \land \\(\operatorname{Injective}\left(F\right)) \land \\(\forall i, (\operatorname{Positive}\left(\operatorname{P}\left(i\right)\right)))) \implies ((\operatorname{Finite}\left(\operatorname{core}\left(F\right)\right)) \land \\(\operatorname{Nonempty}\left(\operatorname{core}\left(F\right)\right)) \land \\(\forall v, ((v \in \operatorname{core}\left(F\right)) \implies (\exists r, sigma, ((\operatorname{Recipe}\left(F, r\right)) \land \\(\operatorname{Strategy}\left(sigma\right)) \land \\(sigma = \operatorname{recipeStrategy}\left(r\right)) \land \\(\forall i, ((\operatorname{C}\left(sigma, \operatorname{P}\left(i\right)\right) = \operatorname{coordinate}\left(v, i\right)) \land \\(\operatorname{J}\left(sigma, \operatorname{P}\left(i\right)\right) = \operatorname{union}\left(\operatorname{B}\left(r, i\right), \operatorname{L}\left(i\right)\right)) \land \\(\operatorname{Nodup}\left(\operatorname{V}\left(r, i\right)\right)) \land \\(\operatorname{Nodup}\left(\operatorname{A}\left(r, i\right)\right)) \land \\(\operatorname{length}\left(\operatorname{T}\left(r, i\right)\right) \leq m - 1) \land \\(\operatorname{card}\left(\operatorname{difference}\left(\operatorname{B}\left(r, i\right), \operatorname{L}\left(i\right)\right)\right) = \operatorname{E}\left(r, i\right)) \land \\(\operatorname{sum}\left(u \in \operatorname{B}\left(r, i\right), \operatorname{chi}\left(\operatorname{readout}\left(u, \operatorname{P}\left(i\right)\right)\right)\right) = \operatorname{card}\left(\operatorname{difference}\left(\operatorname{B}\left(r, i\right), \operatorname{L}\left(i\right)\right)\right)) \land \\(\operatorname{C}\left(sigma, \operatorname{P}\left(i\right)\right) = \operatorname{n}\left(i\right) + \operatorname{card}\left(\operatorname{difference}\left(\operatorname{B}\left(r, i\right), \operatorname{L}\left(i\right)\right)\right)))))))) \land \\(\forall pi, ((\operatorname{Strategy}\left(pi\right)) \implies (\exists v, ((v \in \operatorname{core}\left(F\right)) \land \\(\forall i, (\operatorname{coordinate}\left(v, i\right) \leq \operatorname{C}\left(pi, \operatorname{P}\left(i\right)\right))))))) \land \\(\forall v, ((v \in \operatorname{core}\left(F\right)) \implies (\forall i, ((\operatorname{n}\left(i\right) \leq \operatorname{coordinate}\left(v, i\right)) \land \\(\operatorname{coordinate}\left(v, i\right) \leq \operatorname{n}\left(i\right) + m - 1)))))))$$
 
@@ -205,12 +241,15 @@ Applying the construction to the independently total fallback gives nonemptiness
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.controllerOutcome`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.controllerPolicy`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.core`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.cost_foundation`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.gain`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.matched`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.recipeController`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.recipeStrategy`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.representative`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.result`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.routeTrace`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.survivors`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.verifier`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualJointResponseCostCore.verifyController`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/ActualTreeReadoutAcquisition](ActualTreeReadoutAcquisition.md)

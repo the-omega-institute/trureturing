@@ -1,0 +1,8 @@
+**定理 4.2（完整探针保真性）。** 设 $\mathcal C$ 局部小并固定一个统一宇宙中的完整探针族。自然变换 $\Theta:h_X\to h_Y$ 与态射 $f:X\to Y$ 一一对应，且
+
+$$
+\Theta_P(u)=f\circ u.
+$$
+
+因此 $h_X\cong h_Y$ 蕴含 $X\cong Y$。
+

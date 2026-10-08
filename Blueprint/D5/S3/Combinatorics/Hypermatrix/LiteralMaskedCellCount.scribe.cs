@@ -7,8 +7,6 @@ internal sealed class LiteralMaskedCellCountDocument : IScribeDocumentDefinition
     private const string Prefix = "D5/S3/Combinatorics/Hypermatrix/LiteralMaskedCellCount.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Combinatorics/koprowski2026enumeration");
-    private static readonly LibraryNoteRef Koszul =
-        LibraryNoteRef.Create("D5/L/HomologicalAlgebra/berkesch2013tensorcomplexes");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Exact cell cardinality", H("Exact cell cardinality"),

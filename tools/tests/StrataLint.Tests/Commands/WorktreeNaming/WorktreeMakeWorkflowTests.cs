@@ -1,3 +1,4 @@
+using StrataLint.Runtime;
 using StrataLint.Engine;
 
 namespace StrataLint.Tests;
@@ -88,6 +89,11 @@ public sealed class WorktreeMakeWorkflowTests
             "#!/usr/bin/env bash\nprintf 'called\\n' > \"$DOTNET_MARKER\"\nprintf '%s\\n' \"$@\"\nif [[ -n \"${DOTNET_STDERR:-}\" ]]; then printf '%s\\n' \"$DOTNET_STDERR\" >&2; fi\nexit \"${DOTNET_EXIT:-0}\"\n");
         File.SetUnixFileMode(
             dotnet,
+            UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
+        var python = Path.Combine(binDirectory, "python3");
+        File.WriteAllText(python,
+            "#!/usr/bin/env bash\n[[ \"${2:-}\" == */host-cleanup.py && \"${3:-}\" == check-disk ]] || exit 64\nexit 0\n");
+        File.SetUnixFileMode(python,
             UnixFileMode.UserRead | UnixFileMode.UserWrite | UnixFileMode.UserExecute);
         TestGit.Run(fixtureRoot, "init", "--initial-branch=dev");
         return Path.Combine(fixtureRoot, "dotnet-called");
