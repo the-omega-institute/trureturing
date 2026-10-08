@@ -21,9 +21,8 @@ import publication as public
 
 selection = public.selection
 ROW_SUFFIXES = ('', '.materials.zip', '.provenance.json')
-# Each native invocation imports the batch's environment and joins its whole
-# registration universe; larger batches amortize that fixed cost. Each joined
-# occurrence has its own heartbeat budget, so batch size does not bound it.
+# Each process reads one bounded compiler-artifact closure and assesses its
+# typed input owners directly from the compiled data.
 NATIVE_BATCH_MODULES = 100
 UTILITY_FIELDS = {'modulePath', 'claimGid', 'claimModule', 'claimSelector', 'claimSourcePath',
                   'claimSourceSha256', 'resultGid', 'resultModule', 'resultSelector'}
@@ -35,6 +34,15 @@ def activity(kind, count):
     if path:
         with Path(path).open('a', encoding='utf-8') as target:
             target.write(json.dumps({'kind': kind, 'count': count}) + '\n')
+
+
+def module_work(operation, names):
+    """Live module work, separate from Lake's replayable build logs."""
+    path = os.environ.get('STRATALINT_INSPECTOR_MODULE_WORK')
+    if path:
+        with Path(path).open('a', encoding='utf-8') as target:
+            for name in names:
+                target.write(json.dumps({'operation': operation, 'module': name}) + '\n')
 
 
 def diagnostic_failure(label, error):
@@ -160,7 +168,8 @@ def prepare(root):
             utility = [by_path[path]] if path in by_path else []
             write_if_changed(state(root) / 'inputs' / (name + '.json'), materials.canonical_json({
                 'utilities': utility, 'claims': sorted({u['claimModule'] for u in utility}), 'source_path': path}))
-        write_if_changed(state(root) / 'compatibility', (inputs.compatibility() + '\n').encode('ascii'))
+        write_if_changed(state(root) / 'report-format',
+            (selection.REPORT_FORMAT + '\n').encode('ascii'))
     # Membership and full config identity affect aggregation only. Each module
     # traces compatibility, source, utility inputs and Lake's compiler dependencies.
     with phase('native-input-coordinates'):
@@ -183,6 +192,20 @@ def validate_dependency_paths(root, utility_path):
     materials.require_sorted_strings(sorted(set(paths)), 'native dependency sources')
     if set(paths) - allowed:
         raise ValueError('unregistered native dependency sources: ' + ', '.join(sorted(set(paths) - allowed)))
+
+
+def input_projection(root, name):
+    projection = public.read_json((state(root) / 'judge-inputs' / (name + '.json')).read_bytes())
+    public.validate_input_projection(projection, name)
+    return projection
+
+
+def run_inspector(root, executable, arguments, request_file=None):
+    try:
+        command = ['--request-file', str(request_file)] if request_file else arguments
+        subprocess.run([str(executable), *command], cwd=root, check=True)
+    except subprocess.CalledProcessError as error:
+        raise ValueError(f'raw.reader_failed:exit={error.returncode}') from error
 
 
 def row_binding(rows, root, module_name, utility_path, *, template_inputs=None):
@@ -223,15 +246,19 @@ def module(root, name, source, utility_path, executable, output):
             '--utility-input', str(utility), name, record['source_path'], 'sha256:' + public.digest(source)]
         capture = retain_request(root, executable, arguments, record['utilities'])
         with phase('native-inspect', request_capture=capture):
-            subprocess.run([str(executable), *arguments], check=True, cwd=root)
-        materials.compact(directory / 'spool.json', spool, report, root / 'lean-report-inputs.json')
-        public.write_origin(report, name, public.production_origin(root, executable))
+            run_inspector(root, executable, arguments)
+        materials.compact(directory / 'spool.json', spool, report)
+        public.write_origin(report, name, public.production_origin(root, executable), input_projection(root, name))
         # Like an olean, an artifact is validated once, when it is produced;
         # Lake's trace alone decides later reuse.
         rows, _ = validate_module(report, root, name, utility_path)
         artifact = directory / 'module.zip'
         public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
         os.replace(artifact, output)
+        if input_projection(root, name)['inputs']:
+            print('LEAN_INSPECTOR_ASSESS module=' + name)
+            module_work('assess', [name])
+        module_work('extract', [name])
         activity('extract', 1)
         print(f'LEAN_INSPECTOR_EXTRACT module={name} declarations={len(rows[0]["declarations"])}')
 
@@ -240,8 +267,7 @@ def produce_batch_chunk(requests):
     root = Path(requests[0][0])
     template_inputs = selection.Selection(root)
     executable = requests[0][4]
-    origin = public.production_origin(root, executable)
-    verified_materials = {}
+    origin = public.production_origin(root, executable, inputs=template_inputs)
     if any(Path(row[0]) != root or row[4] != executable for row in requests):
         raise ValueError('mixed native batch owners')
     with tempfile.TemporaryDirectory(prefix='.inspection.', dir=state(root)) as directory:
@@ -267,11 +293,15 @@ def produce_batch_chunk(requests):
         argument_file.write_text(json.dumps(arguments))
         capture = retain_request(root, executable, arguments, utilities, origin)
         with phase('native-inspect', request_capture=capture):
-            subprocess.run([executable, '--request-file', str(argument_file)], cwd=root, check=True)
+            run_inspector(root, executable, arguments, argument_file)
         raw = public.read_json((directory / 'spool.json').read_bytes())
         if [row['module'] for row in raw['modules']] != sorted(bindings):
             raise ValueError('incomplete native inspection batch')
-        for row in raw['modules']:
+        declarations = 0
+        for index in range(len(raw['modules'])):
+            row = raw['modules'][index]
+            raw['modules'][index] = None
+            declarations += len(row['declarations'])
             name = row['module']
             utility_path, output = bindings[name]
             row_dir = directory / name
@@ -284,18 +314,24 @@ def produce_batch_chunk(requests):
             spool_report = row_dir / 'spool.json'
             spool_report.write_bytes(materials.canonical_json({'schema': materials.SPOOL_SCHEMA, 'modules': [row]}))
             report = row_dir / public.RAW
-            materials.compact(spool_report, row_spool, report, root / 'lean-report-inputs.json')
-            public.write_origin(report, name, origin)
-            validate_module(report, root, name, utility_path, verified_materials=verified_materials,
-                            template_inputs=template_inputs)
+            materials.compact(spool_report, row_spool, report)
+            public.write_origin(report, name, origin, input_projection(root, name))
+            validate_module(report, root, name, utility_path, template_inputs=template_inputs)
             output.parent.mkdir(parents=True, exist_ok=True)
             artifact = row_dir / 'module.zip'
             public.zip_files(artifact, [(public.RAW + suffix, public.member(report, suffix)) for suffix in ROW_SUFFIXES])
             os.replace(artifact, output)
+            del row
         if list(spool.iterdir()):
             raise ValueError('unreferenced batch materials')
+        for name in bindings:
+            print('LEAN_INSPECTOR_EXTRACT module=' + name)
+            if input_projection(root, name)['inputs']:
+                print('LEAN_INSPECTOR_ASSESS module=' + name)
+                module_work('assess', [name])
+        module_work('extract', list(bindings))
         activity('extract', len(requests))
-        print(f'LEAN_INSPECTOR_EXTRACT modules={len(requests)} declarations={sum(len(row["declarations"]) for row in raw["modules"])}')
+        print(f'LEAN_INSPECTOR_EXTRACT modules={len(requests)} declarations={declarations}')
 
 
 def produce_batch(requests):
@@ -310,7 +346,13 @@ def produce_batch(requests):
     # Chunks bound per-process memory; each chunk validates its modules
     # before writing their artifacts.
     for start in range(0, len(requests), NATIVE_BATCH_MODULES):
-        produce_batch_chunk(requests[start:start + NATIVE_BATCH_MODULES])
+        chunk = requests[start:start + NATIVE_BATCH_MODULES]
+        raw, judged = [], []
+        for row in chunk:
+            (judged if input_projection(root, row[1])['inputs'] else raw).append(row)
+        for group in (raw, judged):
+            if group:
+                produce_batch_chunk(group)
 
 
 @phase('native-batch')
@@ -351,8 +393,7 @@ def aggregate(root, output, *artifacts):
                 origin = public.read_json(data['.provenance.json'])
                 if [row['module'] for row in current] != [name]:
                     raise ValueError('native aggregate membership mismatch')
-                if origin['compatibility_sha256'] != config['coordinates']['producer']:
-                    raise ValueError('native aggregate compatibility mismatch')
+                public.check_origin(origin, current[0], check_report=False)
                 origins[name] = origin
                 rows.extend(current)
                 # Produced materials matched their content addresses; move their
@@ -423,12 +464,9 @@ def append_compressed(archive, info, data):
 
 
 def validate_module(report, root, name, utility, *, verified_materials=None, template_inputs=None):
-    rows = public.validate_rows(report, public.member(report, '.materials.zip'), verified_materials,
-                                manifest=Path(root) / 'lean-report-inputs.json')
+    rows = public.validate_rows(report, public.member(report, '.materials.zip'), verified_materials)
     row_binding(rows, root, name, utility, template_inputs=template_inputs)
-    # prepare validated the manifest before any facet could accept an artifact.
-    compatibility = (state(root) / 'compatibility').read_text(encoding='ascii').strip()
-    origin = public.validate_origin(report, rows, compatibility)
+    origin = public.validate_origin(report, rows)
     return rows, origin
 
 

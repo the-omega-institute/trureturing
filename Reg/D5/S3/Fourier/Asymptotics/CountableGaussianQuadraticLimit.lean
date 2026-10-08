@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit
 import Mathlib.Probability.HasLawExists
 import Reg.Support.DependentFamily
@@ -85,20 +86,32 @@ def registration : Registration arena (arena.Law actual) where
     refine ⟨⟨ℝ, (fun _ _ ω => ω), (fun _ _ => 1), 0, 0⟩, (0 : ℝ), (1 : ℝ), ?_⟩
     exact (by norm_num : (1 : ℝ) * (0 ^ 2 - 1) ≠ 1 * (1 ^ 2 - 1))
 
-register_information_theorem
-  _root_.D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit.result in arena
-  readout via (realize signature (fun _ p ω =>
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit.result) (type_of% (realize.{1, 0, 0, 0, 0} signature (fun _ p ω =>
     p.2.2.1 p.2.2.2.1 p.2.2.2.2 * ((p.2.1 p.2.2.2.1 p.2.2.2.2 ω) ^ 2 - 1))
-    (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit
-    coordinates := #[0, 4, 5, 12, 13]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "fn", "arg", "body", "body", "fn", "fn", "arg", "body"]
-      stateBinder := 14 }] })
-  escape continues (open)
+    (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Fourier") "Asymptotics") "CountableGaussianQuadraticLimit") "result") "Reg.D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit/Reg.D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{1, 0, 0, 0, 0} signature (fun _ p ω =>
+    p.2.2.1 p.2.2.2.1 p.2.2.2.2 * ((p.2.1 p.2.2.2.1 p.2.2.2.2 ω) ^ 2 - 1))
+    (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit, definition := none, coordinates := #[0, 4, 5, 12, 13], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "fn", "arg", "body", "body", "fn", "fn", "arg", "body"], stateBinder := 14, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

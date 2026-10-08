@@ -100,9 +100,32 @@ class CiDetectTests(unittest.TestCase):
         paths = [f"src/{index}" for index in range(3000)]
         self.assertEqual(self.hits(self.detect("[alpha]\nsrc/*\n", paths)), {"alpha": True})
 
-    def test_more_than_three_thousand_changed_paths_fail(self):
+    def test_more_than_three_thousand_changed_paths_are_accepted(self):
         paths = [f"src/{index}" for index in range(3001)]
-        self.assert_error(self.detect("[alpha]\nsrc/*\n", paths), "3001 changed paths exceed 3000")
+        self.assertEqual(self.hits(self.detect("[alpha]\nsrc/*\n", paths)), {"alpha": True})
+
+    def test_routing_and_exclusions_use_paths_after_three_thousand(self):
+        spec = ("[late]\nsrc/a/*\n!src/a/excluded/*\n"
+                "[docs]\ndocs/*\n[excluded]\ndocs/*\n!docs/skip/*\n"
+                "[unmatched]\nsrc/b/*\n")
+        paths = [f"unrelated/{index}" for index in range(3000)]
+        paths += ["src/a/excluded/x", "docs/skip/x", "src/a/last"]
+        result = self.detect(spec, paths)
+        self.assertEqual(self.hits(result),
+                         {"late": True, "docs": True, "excluded": False, "unmatched": False})
+        self.assertIn("unit=late hit=true path=src/a/last pattern=src/a/*", result.stdout)
+        self.assertIn("unit=excluded hit=false changed=3003", result.stdout)
+        self.assertIn("unit=unmatched hit=false changed=3003", result.stdout)
+
+    def test_malformed_tail_after_three_thousand_fails_before_routing(self):
+        prefix = b"".join(f"src/{index}\0".encode() for index in range(3001))
+        for tail, message in ((b"src/tail", "NUL-terminated"),
+                              (b"src/\xff\0", "cannot read")):
+            with self.subTest(tail=tail):
+                self.changed.write_bytes(prefix + tail)
+                result = self.detect("[alpha]\nsrc/*\n")
+                self.assert_error(result, message)
+                self.assertEqual(result.stdout, "")
 
     def test_log_names_the_first_matching_path_and_pattern(self):
         result = self.detect("[alpha]\nsrc/*\n[beta]\ndocs/*\n", ["src/x", "src/y"])

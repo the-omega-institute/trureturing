@@ -33,7 +33,8 @@ internal static class InspectorNativeTestRunner
         var clock = TimeProvider.System;
         Console.WriteLine("NATIVE_CASE " + JsonSerializer.Serialize(new { phase = "start", suite, utc = clock.GetUtcNow() }));
         var prepared = clock.GetTimestamp();
-        string[] environment = suite.StartsWith("test_native.", StringComparison.Ordinal)
+        var needsCompiler = suite.StartsWith("test_native.", StringComparison.Ordinal);
+        string[] environment = needsCompiler
             ? [$"STRATALINT_NATIVE_COMPILER_SEED={compiler.Path}"] : [];
         Console.WriteLine("NATIVE_CASE " + JsonSerializer.Serialize(new { phase = "compiler-ready", suite,
             utc = clock.GetUtcNow(), elapsed_ms = clock.GetElapsedTime(prepared).TotalMilliseconds }));
