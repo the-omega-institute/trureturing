@@ -64,7 +64,10 @@ internal sealed class StampachWaclawekExpansionRefutationDocument : IScribeDocum
             DescribeId.Create(id), DeclarationHandle.Create(Prefix + name), H(title),
             StatementSource.FromAuthor(formula),
             literature ? AssessedProvenance.FromLiterature(Source) : AssessedProvenance.FromRepo(Source),
-            Commentary(name, prose), role);
+            Commentary(name, prose), role,
+            name == "result" ? new OpenProblemResolutionClaim(
+                ProblemSlugRef.Create("stampach-waclawek-2026-birman-weight-expansion"),
+                ResolutionKind.Refuted) : null);
     private static BlockSequence Commentary(string name, string prose)
     {
         if (name != "claim") return Blocks(Paragraph(Text(prose)));

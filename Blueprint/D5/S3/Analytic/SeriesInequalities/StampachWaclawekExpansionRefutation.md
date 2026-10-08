@@ -86,6 +86,10 @@ $$\neg claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Analytic/SeriesInequalities/StampachWaclawekExpansionRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/stampach-waclawek-2026-birman-weight-expansion` (refuted) by `D5/S3/Analytic/SeriesInequalities/StampachWaclawekExpansionRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"stampach-waclawek-2026-birman-weight-expansion","declaration_gid":"D5/S3/Analytic/SeriesInequalities/StampachWaclawekExpansionRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* František Štampach; Jakub Waclawek (2026). *Optimal discrete p-Hardy–Rellich–Birman inequalities*. URL: <https://arxiv.org/abs/2605.25238v1>.
