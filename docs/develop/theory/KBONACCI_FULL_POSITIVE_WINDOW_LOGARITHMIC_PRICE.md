@@ -1564,7 +1564,7 @@ $$
 \tag{82.7}
 $$
 
-The interval before clipping has at most $m-r-\ell+3\le2$ integer points. Including $m$ proves (82.5). This is a bound on the complete rows of the two actual words; it does not treat rejection as a third binary response.
+The interval before clipping has $\max\{0,m-r-\ell+3\}\le2$ integer points, counting zero when it is empty. Clipping cannot increase this count, so including $m$ proves (82.5). This is a bound on the complete rows of the two actual words; it does not treat rejection as a third binary response.
 
 For sharpness, at every $m\ge5$ use the actual consecutive words
 
