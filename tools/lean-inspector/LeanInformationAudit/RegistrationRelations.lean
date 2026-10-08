@@ -143,7 +143,7 @@ when rejecting insertion; module names are a sorted set, count counts entries. -
 def duplicateRegistrationError (entry : InformationRegistryEntry)
     (entries : Array InformationRegistryEntry) : String :=
   let modules := entries.map (·.registrationModuleName.toString)
-    |>.toList.eraseDups.toArray |>.qsort (· < ·)
+    |>.qsort (· < ·) |>.toList.eraseDups.toArray
   s!"IE-C002 DuplicateRegistration object_arena={entry.canonicalObjectArenaName} \
 theorem_name={entry.theoremName} registration_modules={jsonStringArray modules} \
 count={entries.size}"
