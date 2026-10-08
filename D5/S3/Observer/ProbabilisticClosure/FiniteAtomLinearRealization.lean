@@ -591,6 +591,25 @@ private theorem total_evidence_pos {m : ℕ} (alpha : unitInterval)
   · exact ⟨⟨0, hm⟩, Finset.mem_univ _,
       mul_pos (hw ⟨0, hm⟩) (evidence_pos alpha (q ⟨0, hm⟩) ha (hq ⟨0, hm⟩) actions)⟩
 
+private theorem full_feature_pairing {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (h : State)
+    (f : (fullModel task alpha q).Carrier → ℝ) :
+    (letI := (fullModel task alpha q).finite
+     ∑ c, fullFeature task alpha q w h c * f c) =
+    if h.stopped then f (.inr (terminalIndex task (recoveredRoot h))) else
+      ∑ i, (w i * atomEvidence alpha (q i) h.actions / totalEvidence alpha q w h.actions) *
+        f (.inl (i,parity h.actions)) := by
+  classical
+  letI := (fullModel task alpha q).finite
+  cases hs : h.stopped
+  · simp only [fullFeature, hs, Bool.false_eq_true, ↓reduceIte, true_and, false_and,
+      Fintype.sum_sum_type, zero_mul, Finset.sum_const_zero, add_zero]
+    rw [Fintype.sum_prod_type]
+    simp only [ite_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+  · simp only [fullFeature, hs, Bool.true_eq_false, ↓reduceIte, true_and, false_and,
+      Fintype.sum_sum_type, zero_mul, one_mul, Finset.sum_const_zero, zero_add,
+      ite_mul, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+
 private theorem full_feature_readout {m : ℕ} (task : Task) (alpha : unitInterval)
     (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
     (actions : List Side) (replies : List Bool) (T : Test)
@@ -607,11 +626,9 @@ private theorem full_feature_readout {m : ℕ} (task : Task) (alpha : unitInterv
   classical
   letI := (fullModel task alpha q).finite
   letI := (fullModel task alpha q).finiteOutputs
-  simp only [fullFeature, Bool.false_eq_true, ↓reduceIte, false_and, true_and, and_true,
-    Fintype.sum_sum_type, zero_mul, Finset.sum_const_zero, add_zero,
-    ite_mul, Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, ite_true]
-  rw [Fintype.sum_prod_type, Finset.mul_sum]
-  simp only [ite_mul, Finset.sum_ite_eq', Finset.sum_ite_eq, Finset.mem_univ, ite_true]
+  rw [full_feature_pairing]
+  simp only [Bool.false_eq_true, ↓reduceIte]
+  rw [Finset.mul_sum]
   apply Finset.sum_congr rfl
   intro i hi
   rw [full_row_lift task alpha q ha]
@@ -814,25 +831,6 @@ private theorem atom_evidence_extension (alpha q : unitInterval) (ha : 0 < (alph
     simp only [atomEvidence] at ht ⊢
     linear_combination (1 - (q : ℝ)) * ht
 
-private theorem full_feature_pairing {m : ℕ} (task : Task) (alpha : unitInterval)
-    (q : Fin m → unitInterval) (w : Fin m → ℝ) (h : State)
-    (f : (fullModel task alpha q).Carrier → ℝ) :
-    (letI := (fullModel task alpha q).finite
-     ∑ c, fullFeature task alpha q w h c * f c) =
-    if h.stopped then f (.inr (terminalIndex task (recoveredRoot h))) else
-      ∑ i, (w i * atomEvidence alpha (q i) h.actions / totalEvidence alpha q w h.actions) *
-        f (.inl (i,parity h.actions)) := by
-  classical
-  letI := (fullModel task alpha q).finite
-  cases hs : h.stopped
-  · simp only [fullFeature, hs, Bool.false_eq_true, ↓reduceIte, true_and, false_and,
-      Fintype.sum_sum_type, zero_mul, Finset.sum_const_zero, add_zero]
-    rw [Fintype.sum_prod_type]
-    simp only [ite_mul, zero_mul, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
-  · simp only [fullFeature, hs, Bool.true_eq_false, ↓reduceIte, true_and, false_and,
-      Fintype.sum_sum_type, zero_mul, one_mul, Finset.sum_const_zero, zero_add,
-      ite_mul, Finset.sum_ite_eq', Finset.mem_univ, ite_true]
-
 private theorem full_zero_transport {m : ℕ} (task : Task) (alpha : unitInterval)
     (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
     (h : State) (hs : h.stopped = false) (j : Side) :
@@ -966,6 +964,7 @@ theorem result {m : ℕ} (task : Task) (alpha : unitInterval)
       FeatureUpdates (fullModel task alpha q) (fullFeature task alpha q w) :=
   ⟨native_finite_test_realization task alpha q w ha hq hw hsum,
     full_feature_updates task alpha q w ha hq hw hsum⟩
+
 
 
 

@@ -521,7 +521,7 @@ def Proposition278 : Prop :=
            (∀ j o d c, 0 ≤ R.matrix j o d c)) ∧ FullNativeBridge w R feature ∧ FeatureUpdates R feature ∧ RandomNativeBridge w R feature
 
 
-/-- Exact finite deterministic native-test dimensions for all three interfaces. -/
+/-- Exact finite native-test dimensions for all three interfaces. -/
 theorem result : Proposition278 ∧
     (∀ (m : ℕ) (alpha : unitInterval) (q : Fin m → unitInterval) (w : Fin m → ℝ),
       RootCoupling alpha q w) := by
@@ -548,6 +548,7 @@ theorem result : Proposition278 ∧
         ⟨raw_card alpha q, hn, hp⟩, hb,
         raw_feature_updates alpha q w ha (fun i => (hq i).1) hw hw',
         random_native_bridge (rawModel alpha q) (rawFeature alpha q w) hb hn hp⟩
+
 
 
 end D5.S3.Observer.ProbabilisticClosure.RawFiniteAtomLinearRealization
