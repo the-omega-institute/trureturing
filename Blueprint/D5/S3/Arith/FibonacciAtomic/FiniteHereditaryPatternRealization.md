@@ -200,7 +200,31 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.
 
 A padding column contains U in its owner's row and A elsewhere; original entries retain their face-table values.
 
-**Theorem 1.17 (Composition of the hole table).**
+**Theorem 1.17 (Locating a hole address).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.hole_locate`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.hole_locate` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n, hole j in Fin(n+1) and finite suffix v, locating hole(n,j) concatenated with v returns some(j,v).
+
+**Theorem 1.18 (Reconstruction from a located hole).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.locate_eq`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.locate_eq` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n, finite address w, hole j in Fin(n+1) and finite suffix v, locate(n,w)=some(j,v) if and only if w=hole(n,j) concatenated with v.
+
+**Theorem 1.19 (Composition of the hole table).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.composition_comb`
 
@@ -212,7 +236,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.
 
 For every natural n and every Source-valued table X on Fin(n+1), the composition of B(n,X) is the sum of the compositions of all entries.
 
-**Theorem 1.18 (Full reports and hereditary realization).**
+**Theorem 1.20 (Full reports and hereditary realization).**
 
 $$(\forall n, X, w, (\operatorname{readout}\left(w, \operatorname{B}\left(n, X\right)\right) = \operatorname{read}\left(n, X, w\right))) \land (\forall n, w, ((\operatorname{locate}\left(n, w\right) = none) \iff (\exists j, r, ((\neg(r = empty)) \land (\operatorname{hole}\left(n, j\right) = \operatorname{concat}\left(w, r\right)))))) \land (\forall m, n, X, S, w, ((w \in \operatorname{Delta}\left(\operatorname{Bblocks}\left(n, X\right), S\right)) \iff (\exists j, v, ((w = \operatorname{concat}\left(\operatorname{hole}\left(n, j\right), v\right)) \land (\operatorname{Mixed}\left(\operatorname{Xj}\left(X, j\right), S\right)) \land (v \in D))))) \land (\forall n, j, k, v, u, ((\operatorname{concat}\left(\operatorname{hole}\left(n, j\right), v\right) = \operatorname{concat}\left(\operatorname{hole}\left(n, k\right), u\right)) \implies ((j = k) \land (v = u)))) \land (\forall m, ((2 \leq m) \implies (\forall K, (((\operatorname{Hereditary}\left(K\right)) \land (\operatorname{Singletons}\left(K\right))) \implies (\operatorname{let} T = \operatorname{card}\left(\operatorname{Column}\left(K\right)\right) \operatorname{in} (\operatorname{let} N = \operatorname{M}\left(K\right) \operatorname{in} ((1 \leq T) \land (\forall e, (\operatorname{let} Q = \operatorname{Qtable}\left(K, e\right) \operatorname{in} (\operatorname{let} P = \operatorname{Ptable}\left(K, e\right) \operatorname{in} ((\operatorname{Injective}\left(Q\right)) \land (\operatorname{Injective}\left(P\right)) \land (\forall i, ((\operatorname{rho3}\left(\operatorname{Q}\left(i\right)\right) = \operatorname{P}\left(i\right)) \land (\operatorname{P}\left(i\right) \in \operatorname{I}\left(3\right)) \land (\operatorname{c}\left(\operatorname{Q}\left(i\right)\right) = (T + N, N)) \land (\operatorname{c}\left(\operatorname{P}\left(i\right)\right) = (T + 3 N, 2 T + 5 N)) \land (\operatorname{c1}\left(\operatorname{P}\left(i\right)\right) + \operatorname{c2}\left(\operatorname{P}\left(i\right)\right) = 3 T + 8 N))) \land (\forall i, R, ((\operatorname{rho3}\left(R\right) = \operatorname{P}\left(i\right)) \iff (R = \operatorname{Q}\left(i\right)))) \land (\forall S, ((2 \leq \operatorname{card}\left(S\right)) \implies ((\operatorname{Nonempty}\left(\operatorname{Delta}\left(P, S\right)\right)) \iff (S \in K)))))))))))))))$$
 
@@ -245,7 +269,9 @@ Downward-closed finite set families and Helly terminology are classical backgrou
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.entry`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.faceEntry`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.hole`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.hole_locate`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.locate`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.locate_eq`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.maximalFaces`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.preimage`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/FiniteHereditaryPatternRealization.result`

@@ -16,7 +16,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.agree`
 
 Let P and Q be nonconflicting trees and u an address. If both reports readout(u,P) and readout(u,Q) have charge chi equal to zero, so that u is a leaf of both trees, then the two reports are equal: a common leaf carries the same alpha or beta label in both trees.
 
-**Theorem 1.2 (A split of a nonconflicting family charges some member).**
+**Theorem 1.2 (Slot and tail hole table).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.comb_holes`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.comb_holes` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every natural n, Source-valued table f on Fin(n) and Source q, comb(n,f,q) equals B(n,Fin.snoc(f,q)): the n left slots followed by the terminal hole.
+
+**Theorem 1.3 (A split of a nonconflicting family charges some member).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.root_excess`
 
@@ -28,7 +40,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.root_exce
 
 Let F be a finite family of pairwise nonconflicting trees, S a survivor set with at least two members, and r a recursive response recipe on S. Then some member of S has response excess gain(r,i) at least one. Indeed, if every member had zero excess, every member would report a leaf at the first requested address; common leaves carry equal reports, so that address would not split S.
 
-**Theorem 1.3 (Splitting the scan range at a prefix).**
+**Theorem 1.4 (Splitting the scan range at a prefix).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.divide`
 
@@ -40,7 +52,7 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.divide`
 
 For all natural numbers t <= k, the list 0,1,...,k is the list 0,...,t-1, followed by t, followed by the consecutive list t+1,...,k.
 
-**Theorem 1.4 (Complete sources and exact requested-address bills).**
+**Theorem 1.5 (Complete sources and exact requested-address bills).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.result`
 
@@ -65,6 +77,7 @@ The same controller terminates and decides third-image membership for every fini
 ## References
 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.agree`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.comb_holes`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.divide`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.result`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Scale38NestedCompensation.root_excess`
