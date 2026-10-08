@@ -7,7 +7,9 @@
    digest: Native finite marker tests and finite-atom joint mass coordinates. -/
 
 import D5.S3.Observer.ProbabilisticClosure.AdaptiveMarkerStoppingTails
-import Mathlib.Tactic
+import Mathlib.Tactic.FieldSimp
+import Mathlib.Tactic.LinearCombination
+import Mathlib.Tactic.Positivity
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -797,5 +799,6 @@ def Proposition278 : Prop :=
          Fintype.card R.Carrier = desiredCard task alpha q ∧
            (∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1) ∧
            (∀ j o d c, 0 ≤ R.matrix j o d c)) ∧ FullNativeBridge w R feature
+
 
 end D5.S3.Observer.ProbabilisticClosure.FiniteAtomLinearRealization

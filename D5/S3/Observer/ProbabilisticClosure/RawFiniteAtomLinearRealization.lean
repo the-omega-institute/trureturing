@@ -289,6 +289,5 @@ theorem result : Proposition278 := by
         ⟨raw_card alpha q, hn, hp⟩,
         raw_native_bridge alpha q w ha (fun i => (hq i).1) hw hw'⟩
 
-#print axioms result
 
 end D5.S3.Observer.ProbabilisticClosure.RawFiniteAtomLinearRealization
