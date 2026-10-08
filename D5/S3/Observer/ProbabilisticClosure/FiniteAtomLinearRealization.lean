@@ -396,7 +396,8 @@ private theorem full_terminal_row {m : ℕ} (task : Task) (alpha : unitInterval)
   | read accept => rfl
   | inspect next ih => exact ih ((fullModel task alpha q).mode (.inr t))
   | query j next ih =>
-      simp [testRow, fullModel, Finset.univ, terminalAccept, ih .reject]
+      simp [testRow, fullModel, Finset.univ, Fintype.complete, terminalAccept, ih .reject]
+      split_ifs <;> simp_all
 
 private theorem full_active_row {m : ℕ} (task : Task) (alpha : unitInterval)
     (q : Fin m → unitInterval) (i : Fin m) (eta : Bool × Bool) (j : Side) (next : Output → Test) :
@@ -412,8 +413,9 @@ private theorem full_active_row {m : ℕ} (task : Task) (alpha : unitInterval)
   have ht : (fullModel task alpha q).mode (.inr (terminalIndex task (selectedParity eta j))) =
       terminalMode task (selectedParity eta j) := by
     cases task <;> cases h : selectedParity eta j <;> simp [fullModel, terminalIndex, terminalMode, terminalCount]
-  simp [testRow, fullModel, Finset.univ, Finset.sum_add_distrib, add_mul]
+  simp [testRow, fullModel, Finset.univ, Fintype.complete, Finset.sum_add_distrib, add_mul]
   rw [full_terminal_row, ht]
+  split_ifs <;> ring
 
 private theorem full_row_lift {m : ℕ} (task : Task) (alpha : unitInterval)
     (q : Fin m → unitInterval) (ha : 0 < (alpha : ℝ))
@@ -630,8 +632,157 @@ def FullNativeBridge {m : ℕ} {task : Task} {alpha : unitInterval}
     0 < law.real E →
     (letI := R.finite
      (∑ c, feature h c) = 1 ∧ (∀ c, 0 ≤ feature h c) ∧
+       (∀ T : Test, Measurable (fun source => nativeAccept task source h T)) ∧
        ∀ T : Test, law.real (E ∩ {p | nativeAccept task p.2 h T = true}) =
          law.real E * ∑ c, feature h c * testRow R T c)
+
+private theorem full_feature_probability {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
+    (hq : ∀ i, 0 < (q i : ℝ)) (hw : ∀ i, 0 < w i) (hsum : (∑ i, w i) = 1)
+    (h : State) :
+    (letI := (fullModel task alpha q).finite
+     (∑ c, fullFeature task alpha q w h c) = 1 ∧
+       ∀ c, 0 ≤ fullFeature task alpha q w h c) := by
+  classical
+  letI := (fullModel task alpha q).finite
+  have hZ := total_evidence_pos alpha q w ha hq hw hsum h.actions
+  constructor
+  · cases hs : h.stopped
+    · simp only [fullFeature, hs, Bool.false_eq_true, ↓reduceIte, true_and, false_and,
+        Fintype.sum_sum_type, Finset.sum_const_zero, add_zero]
+      rw [Fintype.sum_prod_type]
+      simp only [Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+      rw [← Finset.sum_div]
+      exact div_self hZ.ne'
+    · simp [fullFeature, hs, Fintype.sum_sum_type]
+  · intro c
+    cases c with
+    | inl p =>
+        dsimp [fullFeature]
+        split_ifs
+        · exact div_nonneg
+            (mul_nonneg (hw p.1).le (evidence_pos alpha (q p.1) ha (hq p.1) h.actions).le) hZ.le
+        · exact le_rfl
+    | inr t => dsimp [fullFeature]; split_ifs <;> norm_num
+
+private theorem full_stopped_readout {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (h : State) (hs : h.stopped = true) (T : Test) :
+    (letI := (fullModel task alpha q).finite
+     ∑ c, fullFeature task alpha q w h c * testRow (fullModel task alpha q) T c) =
+      if terminalAccept (currentMode task h) T then 1 else 0 := by
+  classical
+  letI := (fullModel task alpha q).finite
+  letI := (fullModel task alpha q).finiteOutputs
+  have ht : (fullModel task alpha q).mode (.inr (terminalIndex task (recoveredRoot h))) =
+      currentMode task h := by
+    cases task <;> cases hr : recoveredRoot h <;>
+      simp [currentMode, hs, terminalIndex, terminalCount, hr]
+  simp only [fullFeature, hs, Bool.true_eq_false, ↓reduceIte, true_and, false_and,
+    Fintype.sum_sum_type, ite_mul, zero_mul, one_mul, Finset.sum_const_zero, zero_add,
+    Finset.sum_ite_eq', Finset.mem_univ, ite_true]
+  rw [full_terminal_row, ht]
+
+private theorem full_model_probability {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (ha : 0 < (alpha : ℝ)) :
+    (letI := (fullModel task alpha q).finite
+     letI := (fullModel task alpha q).finiteOutputs
+     Fintype.card (fullModel task alpha q).Carrier = 4 * m + terminalCount task ∧
+       (∀ j c, ∑ o, ∑ d, (fullModel task alpha q).matrix j o d c = 1) ∧
+       ∀ j o d c, 0 ≤ (fullModel task alpha q).matrix j o d c) := by
+  classical
+  letI := (fullModel task alpha q).finite
+  letI := (fullModel task alpha q).finiteOutputs
+  have hrate (i : Fin m) (eta : Bool × Bool) (j : Side) :
+      0 ≤ markerRate alpha (q i) eta j ∧ markerRate alpha (q i) eta j ≤ 1 := by
+    have hroot (root : Bool) : 0 ≤ rootMass alpha (q i) eta root := by
+      have ha' : 0 ≤ 1 - (alpha : ℝ) := sub_nonneg.mpr alpha.property.2
+      have hq' : 0 ≤ (q i : ℝ) := (q i).property.1
+      have hden := (denominator_pos alpha (q i) ha eta).le
+      cases root <;> dsimp [rootMass] <;> positivity
+    have hsum := root_mass_sum alpha (q i) ha eta
+    have hle : rootMass alpha (q i) eta (selectedParity eta j) ≤ 1 := by
+      cases selectedParity eta j <;> linarith [hroot false, hroot true]
+    have hqn := (q i).property.1
+    have hql := (q i).property.2
+    dsimp [markerRate]
+    constructor
+    · exact mul_nonneg (sub_nonneg.mpr hql) (hroot _)
+    · nlinarith [hroot (selectedParity eta j)]
+  refine ⟨?_, ?_, ?_⟩
+  · change Fintype.card ((Fin m × (Bool × Bool)) ⊕ Fin (terminalCount task)) = _
+    simp only [Fintype.card_sum, Fintype.card_prod, Fintype.card_fin, Fintype.card_bool]
+    omega
+  · intro j c
+    cases c with
+    | inl p =>
+        simp [fullModel, Finset.univ, Fintype.complete, Finset.sum_add_distrib]
+    | inr t => simp [fullModel, Finset.univ, Fintype.complete]
+  · intro j o d c
+    cases c with
+    | inl p =>
+        have hr := hrate p.1 p.2 j
+        dsimp [fullModel]
+        split_ifs <;> linarith
+    | inr t => dsimp [fullModel]; split_ifs <;> norm_num
+
+/-- All positive-probability original histories have fixed linear finite-test readouts. -/
+theorem native_finite_test_realization {m : ℕ} (task : Task) (alpha : unitInterval)
+    (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
+    (hq : ∀ i, 0 < (q i : ℝ)) (hw : ∀ i, 0 < w i) (hsum : (∑ i, w i) = 1) :
+    (letI := (fullModel task alpha q).finite
+     letI := (fullModel task alpha q).finiteOutputs
+     Fintype.card (fullModel task alpha q).Carrier = 4 * m + terminalCount task ∧
+       (∀ j c, ∑ o, ∑ d, (fullModel task alpha q).matrix j o d c = 1) ∧
+       (∀ j o d c, 0 ≤ (fullModel task alpha q).matrix j o d c) ∧
+       FullNativeBridge w (fullModel task alpha q) (fullFeature task alpha q w)) := by
+  classical
+  obtain ⟨hcard, hcol, hpos⟩ := full_model_probability task alpha q ha
+  refine ⟨hcard, hcol, hpos, ?_⟩
+  intro Seed inst policy nu prob n h B hB
+  dsimp only
+  intro hE
+  obtain ⟨hsumFeature, hposFeature⟩ := full_feature_probability task alpha q w ha hq hw hsum h
+  refine ⟨hsumFeature, hposFeature, fun T => measurable_native_accept task T h, ?_⟩
+  intro T
+  cases h with
+  | mk actions replies stopped =>
+      cases stopped with
+      | true =>
+          rw [full_stopped_readout task alpha q w _ rfl T]
+          cases he : terminalAccept (currentMode task ⟨actions, replies, true⟩) T
+          · have hev :
+                nativeEvent policy n ⟨actions, replies, true⟩ B ∩
+                  {p | nativeAccept task p.2 ⟨actions, replies, true⟩ T = true} = ∅ := by
+              ext p
+              simp [native_accept_stopped task p.2 ⟨actions, replies, true⟩ rfl T, he]
+            rw [hev]
+            simp [he]
+          · have hev :
+                nativeEvent policy n ⟨actions, replies, true⟩ B ∩
+                  {p | nativeAccept task p.2 ⟨actions, replies, true⟩ T = true} =
+                nativeEvent policy n ⟨actions, replies, true⟩ B := by
+              ext p
+              simp [native_accept_stopped task p.2 ⟨actions, replies, true⟩ rfl T, he]
+            rw [hev]
+            simp [he]
+      | false =>
+          obtain ⟨p, hp⟩ := nonempty_of_measureReal_ne_zero hE.ne'
+          have hrun : actualRun policy p.1 p.2 n = ⟨actions, replies, false⟩ := hp.2
+          have hs : (actualRun policy p.1 p.2 n).stopped = false := by rw [hrun]
+          have hr := (stopped_execution_replay_bridge policy p.1 p.2 n).2.2.1 hs
+          have hreplies : replies = List.replicate n false := by simpa [hrun] using hr.2.1
+          subst replies
+          have hZ := total_evidence_pos alpha q w ha hq hw hsum actions
+          have hmass := native_seed_test_mass task policy nu n actions B alpha q w
+            (fun i => (hw i).le) (.read fun _ => true)
+          simp only [nativeAccept, currentMode, Bool.false_eq_true, ↓reduceIte, rootRow,
+            Set.setOf_true, Set.inter_univ, mul_one] at hmass
+          change (nu.prod (sourceMixture alpha q w)).real
+              (nativeEvent policy n ⟨actions, List.replicate n false, false⟩ B) =
+            nu.real {u | u ∈ B ∧ zeroReplay policy u n = actions} *
+              totalEvidence alpha q w actions at hmass
+          rw [native_seed_test_mass task policy nu n actions B alpha q w (fun i => (hw i).le) T,
+            hmass, mul_assoc, full_feature_readout task alpha q w ha actions _ T hZ.ne']
 
 /-- The complete finite-atom upper bound includes normalized columns and native tests. -/
 def Proposition278 : Prop :=
