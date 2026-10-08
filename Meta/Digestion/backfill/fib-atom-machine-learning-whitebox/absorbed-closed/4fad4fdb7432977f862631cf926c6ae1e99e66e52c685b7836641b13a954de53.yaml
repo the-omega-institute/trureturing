@@ -1,0 +1,15 @@
+fingerprints:
+  raw_sha256: sha256:4fad4fdb7432977f862631cf926c6ae1e99e66e52c685b7836641b13a954de53
+  normalized_sha256: sha256:4fad4fdb7432977f862631cf926c6ae1e99e66e52c685b7836641b13a954de53
+cas_ref: sha256:4fad4fdb7432977f862631cf926c6ae1e99e66e52c685b7836641b13a954de53
+coverage_gids:
+  - gid: D5/S3/Arith/FibonacciAtomic/OptimalLawStrictSlope.alpha_le
+    target_statement_id: sha256:8c96641f07347d183c29fa0a2532a16bf6ff94d04f6917c0c5d29ef5b33e4cfa
+  - gid: D5/S3/Arith/FibonacciAtomic/OptimalLawStrictSlope.attained
+    target_statement_id: sha256:d5838b0209cd6f59ec6ed39868964abf893c609ecb9a55a4f1e6fe4756268062
+  - gid: D5/S3/Arith/FibonacciAtomic/OptimalLawStrictSlope.law_data
+    target_statement_id: sha256:121866dc860a381dc03d0a066aee7946e958e04efa6571d998dc3fe5322bc8bf
+  - gid: D5/S3/Arith/FibonacciAtomic/OptimalLawStrictSlope.result
+    target_statement_id: sha256:7ded4797b571a978114f83c74302ad849e492f0947611ce185957e0dc6737135
+receipts:
+  unresolved_subitems: []
