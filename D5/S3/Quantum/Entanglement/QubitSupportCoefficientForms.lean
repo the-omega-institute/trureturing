@@ -593,11 +593,14 @@ private theorem realization_data {p n : ℕ} (hp : 1 ≤ p) (d : Composition p)
         if i.val - t < q + 1 then (d.invEmbedding j).val.testBit (i.val - t)
         else (d.index j).val.testBit (i.val - t - (q + 1)) := by
     intro j i
-    change (2 ^ t * (2 ^ (q + 1) * (d.index j).val + (d.invEmbedding j).val)).testBit i.val = _
+    change (2 ^ t * (2 ^ (q + 1) * (d.index j).val +
+      (d.invEmbedding j).val)).testBit i.val = _
     rw [Nat.testBit_two_pow_mul]
     by_cases hi : i.val < t
     · simp [hi]
-    · simp only [hi, if_false, show decide (i.val ≥ t) = true from decide_eq_true (Nat.le_of_not_lt hi), Bool.true_and]
+    · simp only [hi, if_false,
+        show decide (i.val ≥ t) = true from decide_eq_true (Nat.le_of_not_lt hi),
+        Bool.true_and]
       exact Nat.testBit_two_pow_mul_add _
         ((hoff j).trans_le (show 2 ^ q ≤ 2 ^ (q + 1) from Nat.pow_le_pow_right (by decide) (by omega))) _
   have hidxmono : Monotone (fun j : Fin p => d.index j) := by
@@ -759,5 +762,34 @@ theorem realization {p : ℕ} (hp : 1 ≤ p) (d : Composition p) (n : ℕ)
     simp only [qf, hprefix]
     exact congrArg (j.val + ·) (index_counts d j).2
 
+
+/-- The forms are exactly the distinct images of compositions. -/
+theorem forms_eq_range (p : ℕ) (hp : 1 ≤ p) :
+    forms p = Set.range (@formOf p) := by
+  ext f
+  constructor
+  · rintro ⟨n, c, rfl⟩
+    obtain ⟨d, hd⟩ := necessity c
+    exact ⟨d, hd.symm⟩
+  · rintro ⟨d, rfl⟩
+    obtain ⟨c, hc⟩ := realization hp d (2 * Nat.clog 2 p + 1) le_rfl
+    exact ⟨2 * Nat.clog 2 p + 1, c, hc⟩
+
+/-- There are one form per composition, and all occur at every sufficiently large qubit count. -/
+theorem result (p : ℕ) (hp : 1 ≤ p) :
+    (forms p).ncard = 2 ^ (p - 1) ∧
+    ∀ n, 2 * Nat.clog 2 p + 1 ≤ n → formsAt n p = forms p := by
+  constructor
+  · rw [forms_eq_range p hp, Set.ncard_range_of_injective (formOf_injective p),
+      Nat.card_eq_fintype_card, composition_card]
+  · intro n hn
+    ext f
+    constructor
+    · rintro ⟨c, hc⟩
+      exact ⟨n, c, hc⟩
+    · rintro ⟨m, c, rfl⟩
+      obtain ⟨d, hd⟩ := necessity c
+      obtain ⟨c', hc'⟩ := realization hp d n hn
+      exact ⟨c', hc'.trans hd.symm⟩
 
 end D5.S3.Quantum.Entanglement.QubitSupportCoefficientForms
