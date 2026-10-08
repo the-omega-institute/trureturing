@@ -6089,3 +6089,215 @@ their real parts and multiplicities, the original elementary
 correction and the strict core at the same $N$. No changing heat time
 per zero, finite-spectrum truncation or unproved positive-time
 certificate is used to discharge that obligation.
+
+## The subcritical full-spectrum absolute boundary
+
+The necessary condition (NH6) has a converse for every fixed $A>1$
+and fixed $\epsilon>0$. The additional step is a uniform right-half-plane
+comparison, not a use of Dobner's Theorem 4 outside its stated
+$|\Re s|\le C(\Im s)^{1/4}$ range. Reuse his exact negative-heat
+convolution (9), the Riemann completion, and the already retained
+(NH1)–(NH6). The [DLMF digamma expansion (5.11.2)](https://dlmf.nist.gov/5.11#E2)
+is used in its fixed sector $|\arg z|\le\pi/2$.
+These are `literature-attested` inputs; the uniform comparison and
+combined convergence boundary below are `repo-derived` paper-level
+applications, with no mathematical-priority or Lean-certification claim.
+
+### A uniform comparison on the entire right half-plane
+
+Write
+
+$$
+\gamma(s)=\tfrac12s(s-1)\pi^{-s/2}\Gamma(s/2),\qquad
+c=\epsilon/4,\qquad
+J_\epsilon(s)=s+c\operatorname{Log}(s/(2\pi)),
+$$
+
+$$
+\gamma_{-\epsilon}(s)=\gamma(s)
+ \exp((s-J_\epsilon(s))^2/\epsilon).
+$$
+
+For fixed $\epsilon>0$, the comparison is
+
+$$
+\boxed{\frac{\xi_{-\epsilon}(J_\epsilon(s))}
+ {\gamma_{-\epsilon}(s)}
+ =D_\epsilon(s)+O_\epsilon(|s|^{-1}),
+ \qquad \Re s\ge2,\quad |s|\longrightarrow\infty.}
+\tag{NH7}
+$$
+
+Uniformity includes arbitrarily large $\Re s$, both ordinate signs,
+and the real axis. It is not uniform in $\epsilon$ as $\epsilon\to0$.
+
+Here is the required interface proof. The DLMF expansion gives uniformly
+in this half-plane
+
+$$
+\frac{\gamma'}{\gamma}(s)
+=\frac1s+\frac1{s-1}-\frac12\log\pi
+ +\frac12\frac{\Gamma'}{\Gamma}(s/2)
+=\frac12\operatorname{Log}(s/(2\pi))+O(|s|^{-1}).
+$$
+
+Its imaginary part is bounded on the whole half-plane: the principal
+argument is bounded, and the remaining bounded part is covered by
+continuity on a compact set. Consequently, for an absolute $M$ and
+all real $v$,
+
+$$
+\left|\frac{\gamma(s+iv)}{\gamma(s)}\right|\le e^{M|v|}.
+$$
+
+Set
+
+$$
+R_s(v)=\frac{\gamma(s+iv)}{\gamma(s)}
+ \exp\!\left(-\frac{iv}{2}\operatorname{Log}(s/(2\pi))\right),
+\qquad r=|s|.
+$$
+
+Then $|R_s(v)|\le e^{(M+\pi/4)|v|}$ for all $v$. Integrating the
+logarithmic derivative along the vertical segment, for
+$|v|\le r^{1/4}$ and large $r$, gives
+
+$$
+|R_s(v)-1|\ll\frac{|v|+v^2}{r}.
+$$
+
+Indeed, $|s+iu|\ge r/2$ on that segment and
+$|\operatorname{Log}(s+iu)-\operatorname{Log}s|\le2|u|/r$.
+The integrated exponent is $O((|v|+v^2)/r)=o(1)$ uniformly on this
+range. No bounded-real-part Stirling estimate is used at an unbounded
+real part.
+
+In Dobner's (9), shift the vertical contour to $\Re z=\Re s$ and
+write $z=s+iv$. For each fixed $s$ this is a finite contour shift;
+the Gaussian and the usual vertical decay kill the horizontal ends.
+After division by $\gamma_{-\epsilon}(s)$ the exact identity is
+
+$$
+\frac{\xi_{-\epsilon}(J_\epsilon(s))}{\gamma_{-\epsilon}(s)}
+=\frac1{\sqrt{\pi\epsilon}}\int_{\mathbb R}
+ e^{-v^2/\epsilon}R_s(v)\zeta(s+iv)\,dv.
+\tag{NH8}
+$$
+
+Replacing $R_s$ by $1$ gives exactly $D_\epsilon(s)$ by the Gaussian
+Fourier integral and the absolutely convergent Dirichlet series.
+On $\Re s\ge2$, $|\zeta(s+iv)|\le\zeta(2)$. The local difference
+therefore has integral $O_\epsilon(r^{-1})$. On $|v|>r^{1/4}$ the
+uniform exponential bound for $R_s$ gives
+$O_\epsilon(\exp(-r^{1/2}/(2\epsilon)))=o_\epsilon(r^{-1})$.
+This proves (NH7), without estimating every Dirichlet term separately.
+
+### Every sufficiently high zero lies in a logarithmic region
+
+On $\Re s\ge2$,
+$|D_\epsilon(s)-1|\le\zeta(2)-1<1$.
+The completion $\gamma_{-\epsilon}$ is nonzero there, so (NH7) shows
+that $\xi_{-\epsilon}(J_\epsilon(s))\ne0$ for all sufficiently large
+$|s|$ in this entire half-plane.
+
+To cover the rightmost region, let $w$ have sufficiently large modulus
+and satisfy
+$\Re w\ge c\log(|w|/(2\pi))+3$.
+Put $s_0=w-c\operatorname{Log}(w/(2\pi))$.
+On $|s-s_0|=1/2$ one has $\Re s\ge5/2$ and
+
+$$
+J_\epsilon(s)-w=(s-s_0)
+ +c[\operatorname{Log}(s/(2\pi))-
+       \operatorname{Log}(w/(2\pi))].
+$$
+
+The second term is $O_\epsilon(\log|w|/|w|)<1/2$.
+The logarithms and the intervening segments stay in the right
+half-plane. Rouché's theorem gives a preimage $s$ inside the circle;
+it satisfies $\Re s\ge2$ and $|s|\asymp|w|$.
+Thus there is no such zero $w$. Apply the same argument to $1-w$ using
+$\xi_{-\epsilon}(1-w)=\xi_{-\epsilon}(w)$.
+Together these bounds imply, for every zero of sufficiently large
+modulus,
+$|\Re w|\le c\log|w|+O_\epsilon(1)$.
+This forces $|\Im w|\to\infty$ with $|w|$ and then gives
+
+$$
+\boxed{1-c\log y-O_\epsilon(1)
+ \le\Re w\le c\log y+O_\epsilon(1),
+ \qquad y=\Im w\longrightarrow+\infty.}
+\tag{NH9}
+$$
+
+All actual zeros are covered; this is not the lower-density subsequence
+in (NH4). To replace $|w|$ by $y$, note that the bound on $|\Re w|$
+precludes $|\Re w|\ge|\Im w|$ at arbitrarily large modulus, and hence
+$|w|\le\sqrt2\,|\Im w|$ eventually.
+
+### Count the whole spectrum and use the complete original coefficient
+
+The original Fourier kernel $\Phi$ in Dobner's (2) is positive for
+$u\ge0$: each summand has the positive factor
+$2\pi n^2e^{4u}-3$. Evenness gives positivity on the whole real line.
+For $|s-1/2|\le R$, its exact Fourier representation implies
+
+$$
+|\xi_{-\epsilon}(s)|
+\le\int_{\mathbb R}\Phi(u)e^{2R|u|}\,du
+\le2\xi_0(1/2+R),
+\qquad \xi_{-\epsilon}(1/2)>0.
+$$
+
+Classical real Stirling growth gives a logarithm
+$O(R\log(R+2))$ for the upper bound. Jensen's zero-count theorem,
+applied at $1/2$ with radii $R$ and $2R$, therefore gives
+$O_\epsilon(R\log(R+2))$ zeros in the disk, counted with multiplicities.
+Together with (NH9), this gives the complete height count
+
+$$
+N_\epsilon(T)=\#\{w:\xi_{-\epsilon}(w)=0,\ 0<\Im w\le T\}
+\ll_\epsilon T\log(T+2).
+\tag{NH10}
+$$
+
+The bounded-height exceptions are finite by (NH9) and analyticity.
+This step reuses the standard Jensen theorem, not an original-zeta
+zero count applied to a different function.
+
+Fix $A>1$ as well, write $L=\log A$ and $\kappa=\epsilon L/4$.
+The retained complete-weight asymptotic (NH2), with (NH9), now gives
+for every sufficiently high actual zero
+
+$$
+|\widehat F_A(w)|\ll_{A,\epsilon} (\Im w)^{\kappa-2}.
+$$
+
+For $\kappa<1$, the mass in a dyadic height band is at most
+$O_{A,\epsilon}(j2^{j(\kappa-1)})$ by (NH10), and these bounds sum.
+Thus the converse to (NH6) is
+
+$$
+\boxed{\sum_{\substack{\xi_{-\epsilon}(w)=0\\\Im w>0}}
+ |\widehat F_A(w)|<\infty
+ \quad\Longleftrightarrow\quad \epsilon\log A<4,
+ \qquad A>1,\quad\epsilon>0.}
+\tag{NH11}
+$$
+
+Every zero has its actual real part and multiplicity, and all positive
+heights are retained. (NH6) supplies divergence at and above the
+boundary; (NH7)–(NH10) supply full-spectrum convergence below it.
+The tail below the boundary is
+$O_{A,\epsilon}(T^{\kappa-1}\log(T+2))$ as $T\to\infty$,
+with fixed parameters. No uniform allowance as $\epsilon\to0$ or
+$\epsilon\log A\to4$ is asserted.
+
+This determines the absolute convergence domain of the particular
+continued complete-weight deformation. It provides no numerical
+Robin budget, signed transport identity, or comparison error returning
+to the original zero multiset. The same selected integer $N$,
+$A=\log N>(7/2)10^{46}$, the original $F_A$, positive elementary
+correction and strict core remain in the unproved target (G9).
+In particular, absolute convergence of the deformed trace does not
+prove its signed upper bound or RH.
