@@ -45,7 +45,6 @@ def recoveredRoot (h : State) : Bool :=
   | j :: actions => decide (sideCount actions j % 2 = 1)
 
 def currentMode (task : Task) (h : State) : Mode := by
-  classical
   exact
     if h.stopped then
       if task = .retained then .root (recoveredRoot h) else .stopped
@@ -53,7 +52,6 @@ def currentMode (task : Task) (h : State) : Mode := by
 
 /-- A native query reads precisely the next unobserved edge of the chosen arm. -/
 def nativeStep (task : Task) (source : Source) (h : State) (j : Side) : Output × State := by
-  classical
   exact
     if h.stopped then (.reject, h) else
       let marked := markerResponse source j (sideCount h.actions j)
@@ -99,12 +97,10 @@ def flipParity (eta : Bool × Bool) (j : Side) : Bool × Bool :=
   if j then (eta.1, !eta.2) else (!eta.1, eta.2)
 
 def terminalMode (task : Task) (root : Bool) : Mode := by
-  classical
   exact
     if task = .retained then .root root else .stopped
 
 def markerOutput (task : Task) (root : Bool) : Output := by
-  classical
   exact
     if task = .raw then .rawMark else .mark root
 
@@ -167,6 +163,11 @@ private theorem conditional_prefix_mass (q : unitInterval) (root : Bool)
   rw [measureReal_def, he, conditional_no_marker_cylinder_mass]
   cases root <;> simp [rootCylinderWeight, ENNReal.toReal_pow]
 
+theorem measurable_marker_response (side : Side) (count : ℕ) :
+    Measurable (fun source => markerResponse source side count) := by
+  unfold markerResponse
+  cases count <;> cases side <;> simp only [endpoint, arm] <;> measurability
+
 private theorem measurable_native_accept (task : Task) (T : Test) (h : State) :
     Measurable (fun source => nativeAccept task source h T) := by
   induction T generalizing h with
@@ -176,9 +177,7 @@ private theorem measurable_native_accept (task : Task) (T : Test) (h : State) :
       by_cases hs : h.stopped = true
       · simpa [nativeAccept, nativeStep, hs] using ih .reject h
       · have hs' : h.stopped = false := by cases he : h.stopped <;> simp_all
-        have hm : Measurable (fun source => markerResponse source j (sideCount h.actions j)) := by
-          unfold markerResponse
-          cases hn : sideCount h.actions j <;> cases j <;> simp [endpoint, arm] <;> measurability
+        have hm := measurable_marker_response j (sideCount h.actions j)
         let hzero : State := ⟨j :: h.actions, false :: h.replies, false⟩
         let hmark : State := ⟨j :: h.actions, true :: h.replies, true⟩
         have hzmeas := ih .zero hzero
@@ -314,7 +313,6 @@ def testRow {m : ℕ} {task : Task} {alpha : unitInterval} {q : Fin m → unitIn
   | .read accept => fun c => if accept (R.mode c) then 1 else 0
   | .query j next => fun c =>
 
-
       ∑ o, ∑ d, R.matrix j o d c * testRow R (next o) d
   | .inspect next => fun c => testRow R (next (R.mode c)) c
 
@@ -364,13 +362,11 @@ def terminalCount : Task → ℕ
   | .emitted | .raw => 1
 
 def terminalIndex (task : Task) (root : Bool) : Fin (terminalCount task) := by
-  classical
   exact ⟨if task = .retained ∧ root = true then 1 else 0, by
     cases task <;> cases root <;> simp [terminalCount]⟩
 
 @[reducible] def fullModel {m : ℕ} (task : Task) (alpha : unitInterval)
     (q : Fin m → unitInterval) : MassModel task alpha q := by
-  classical
   exact {
     Carrier := (Fin m × (Bool × Bool)) ⊕ Fin (terminalCount task)
     finite := inferInstance
@@ -393,8 +389,6 @@ theorem full_terminal_row {m : ℕ} (task : Task) (alpha : unitInterval)
     testRow (fullModel task alpha q) T (.inr t) =
       if terminalAccept ((fullModel task alpha q).mode (.inr t)) T then 1 else 0 := by
   classical
-
-
   induction T with
   | read accept => rfl
   | inspect next ih => exact ih ((fullModel task alpha q).mode (.inr t))
@@ -411,8 +405,6 @@ theorem full_active_row {m : ℕ} (task : Task) (alpha : unitInterval)
         (if terminalAccept (terminalMode task (selectedParity eta j))
           (next (markerOutput task (selectedParity eta j))) then 1 else 0) := by
   classical
-
-
   have ht : (fullModel task alpha q).mode (.inr (terminalIndex task (selectedParity eta j))) =
       terminalMode task (selectedParity eta j) := by
     cases task <;> cases h : selectedParity eta j <;> simp [fullModel, terminalIndex, terminalMode, terminalCount]
@@ -531,7 +523,6 @@ def totalEvidence {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval)
 def fullFeature {m : ℕ} (task : Task) (alpha : unitInterval)
     (q : Fin m → unitInterval) (w : Fin m → ℝ) (h : State) :
     (fullModel task alpha q).Carrier → ℝ := by
-  classical
   exact fun c => match c with
     | .inl ⟨i, eta⟩ => if h.stopped = false ∧ eta = parity h.actions then
         w i * atomEvidence alpha (q i) h.actions / totalEvidence alpha q w h.actions else 0
@@ -599,7 +590,6 @@ private theorem full_feature_pairing {m : ℕ} (task : Task) (alpha : unitInterv
       ∑ i, (w i * atomEvidence alpha (q i) h.actions / totalEvidence alpha q w h.actions) *
         f (.inl (i,parity h.actions)) := by
   classical
-
   cases hs : h.stopped
   · simp only [fullFeature, hs, Bool.false_eq_true, ↓reduceIte, true_and, false_and,
       Fintype.sum_sum_type, zero_mul, Finset.sum_const_zero, add_zero]
@@ -622,8 +612,6 @@ private theorem full_feature_readout {m : ℕ} (task : Task) (alpha : unitInterv
         (1 - (alpha : ℝ)) * rootCylinderWeight (q i) false actions *
           rootRow task (q i) false (parity actions) T) := by
   classical
-
-
   rw [full_feature_pairing]
   simp only [Bool.false_eq_true, ↓reduceIte]
   rw [Finset.mul_sum]
@@ -660,7 +648,6 @@ private theorem full_feature_probability {m : ℕ} (task : Task) (alpha : unitIn
     ((∑ c, fullFeature task alpha q w h c) = 1 ∧
        ∀ c, 0 ≤ fullFeature task alpha q w h c) := by
   classical
-
   have hZ := total_evidence_pos alpha q w ha hq hw hsum h.actions
   constructor
   · cases hs : h.stopped
@@ -686,8 +673,6 @@ private theorem full_stopped_readout {m : ℕ} (task : Task) (alpha : unitInterv
     (∑ c, fullFeature task alpha q w h c * testRow (fullModel task alpha q) T c) =
       if terminalAccept (currentMode task h) T then 1 else 0 := by
   classical
-
-
   have ht : (fullModel task alpha q).mode (.inr (terminalIndex task (recoveredRoot h))) =
       currentMode task h := by
     cases task <;> cases hr : recoveredRoot h <;>
@@ -703,8 +688,6 @@ theorem full_model_probability {m : ℕ} (task : Task) (alpha : unitInterval)
        (∀ j c, ∑ o, ∑ d, (fullModel task alpha q).matrix j o d c = 1) ∧
        ∀ j o d c, 0 ≤ (fullModel task alpha q).matrix j o d c) := by
   classical
-
-
   have hrate (i : Fin m) (eta : Bool × Bool) (j : Side) :
       0 ≤ markerRate alpha (q i) eta j ∧ markerRate alpha (q i) eta j ≤ 1 := by
     have hroot (root : Bool) : 0 ≤ rootMass alpha (q i) eta root := by
@@ -832,7 +815,6 @@ private theorem full_zero_transport {m : ℕ} (task : Task) (alpha : unitInterva
         else 0
       | .inr _ => 0 := by
   classical
-
   funext d
   simp only [Matrix.mulVec, dotProduct]
   simp_rw [mul_comm _ (fullFeature task alpha q w h _)]
@@ -853,7 +835,6 @@ private theorem full_marker_transport {m : ℕ} (task : Task) (alpha : unitInter
         ∑ i, (w i * atomEvidence alpha (q i) h.actions / totalEvidence alpha q w h.actions) *
           markerRate alpha (q i) (parity h.actions) j else 0 := by
   classical
-
   funext d
   simp only [Matrix.mulVec, dotProduct]
   simp_rw [mul_comm _ (fullFeature task alpha q w h _)]
@@ -866,7 +847,6 @@ private theorem full_reject_transport {m : ℕ} (task : Task) (alpha : unitInter
     (Matrix.mulVec ((fullModel task alpha q).matrix j .reject) (fullFeature task alpha q w h)) =
       fullFeature task alpha q w h := by
   classical
-
   funext d
   simp only [Matrix.mulVec, dotProduct]
   simp_rw [mul_comm _ (fullFeature task alpha q w h _)]
@@ -879,7 +859,6 @@ theorem full_feature_updates {m : ℕ} (task : Task) (alpha : unitInterval)
     (hq : ∀ i, 0 < (q i : ℝ)) (hw : ∀ i, 0 < w i) (hsum : (∑ i, w i) = 1) :
     FeatureUpdates (fullModel task alpha q) (fullFeature task alpha q w) := by
   classical
-
   intro h j source
   change (0 < ∑ d, Matrix.mulVec ((fullModel task alpha q).matrix j (nativeStep task source h j).1)
     (fullFeature task alpha q w h) d) → ∀ d,
@@ -950,8 +929,5 @@ theorem result {m : ℕ} (task : Task) (alpha : unitInterval)
       FeatureUpdates (fullModel task alpha q) (fullFeature task alpha q w) :=
   ⟨native_finite_test_realization task alpha q w ha hq hw hsum,
     full_feature_updates task alpha q w ha hq hw hsum⟩
-
-
-
 
 end D5.S3.Observer.ProbabilisticClosure.FiniteAtomLinearRealization

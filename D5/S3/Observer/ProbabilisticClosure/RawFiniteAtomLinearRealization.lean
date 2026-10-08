@@ -9,6 +9,7 @@
 import D5.S3.Observer.ProbabilisticClosure.FiniteAtomLinearRealization
 import Mathlib.Logic.Lemmas
 import Mathlib.MeasureTheory.Integral.Prod
+import Mathlib.Data.W.Basic
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
 noncomputable section
@@ -85,8 +86,6 @@ private theorem raw_terminal_row {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (T : Test) :
     testRow (rawModel alpha q) T (.inr ()) = if terminalAccept .stopped T then 1 else 0 := by
   classical
-
-
   induction T with
   | read accept => rfl
   | inspect next ih => exact ih .stopped
@@ -98,8 +97,6 @@ private theorem raw_row_descends {m : ℕ} (alpha : unitInterval) (q : Fin m →
     (ha : 0 < (alpha : ℝ)) (T : Test) (c : (fullModel .raw alpha q).Carrier) :
     testRow (rawModel alpha q) T (rawEncode alpha q c) = testRow (fullModel .raw alpha q) T c := by
   classical
-
-
   cases c with
   | inr t => rw [rawEncode, raw_terminal_row, full_terminal_row]; simp [fullModel]
   | inl p =>
@@ -127,8 +124,6 @@ private theorem raw_row_descends {m : ℕ} (alpha : unitInterval) (q : Fin m →
 
 def rawFeature {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval)
     (w : Fin m → ℝ) (h : State) : (rawModel alpha q).Carrier → ℝ := by
-  classical
-
   exact fun d => ∑ c, if rawEncode alpha q c = d then fullFeature .raw alpha q w h c else 0
 
 private theorem raw_pushforward_sum {m : ℕ} (alpha : unitInterval)
@@ -137,8 +132,6 @@ private theorem raw_pushforward_sum {m : ℕ} (alpha : unitInterval)
     (∑ d, (∑ c, if rawEncode alpha q c = d then v c else 0) * f d) =
     (∑ c, v c * f (rawEncode alpha q c)) := by
   classical
-
-
   simp_rw [Finset.sum_mul, ite_mul, zero_mul]
   rw [Finset.sum_comm]
   simp
@@ -149,7 +142,6 @@ private theorem raw_joint_descends {m : ℕ} (alpha : unitInterval)
     (rawModel alpha q).matrix j o d (rawEncode alpha q c) =
       (∑ e, if rawEncode alpha q e = d then (fullModel .raw alpha q).matrix j o e c else 0) := by
   classical
-
   have hdelta (e0 : (fullModel .raw alpha q).Carrier) (v : ℝ) :
       (∑ e, if rawEncode alpha q e = d then if e = e0 then v else 0 else 0) =
         if rawEncode alpha q e0 = d then v else 0 := by
@@ -194,8 +186,6 @@ private theorem raw_transport {m : ℕ} (alpha : unitInterval)
       (fun d => ∑ e, if rawEncode alpha q e = d then
          Matrix.mulVec ((fullModel .raw alpha q).matrix j o) v e else 0) := by
   classical
-
-
   funext d
   calc
     Matrix.mulVec ((rawModel alpha q).matrix j o)
@@ -223,8 +213,6 @@ theorem raw_feature_updates {m : ℕ} (alpha : unitInterval)
     (hq : ∀ i, 0 < (q i : ℝ)) (hw : ∀ i, 0 < w i) (hsum : (∑ i, w i) = 1) :
     FeatureUpdates (rawModel alpha q) (rawFeature alpha q w) := by
   classical
-
-
   have hu := full_feature_updates .raw alpha q w ha hq hw hsum
   intro h j source
   dsimp only
@@ -263,8 +251,6 @@ theorem raw_native_bridge {m : ℕ} (alpha : unitInterval)
     (hq : ∀ i, 0 < (q i : ℝ)) (hw : ∀ i, 0 < w i) (hsum : (∑ i, w i) = 1) :
     FullNativeBridge.{u} w (rawModel alpha q) (rawFeature alpha q w) := by
   classical
-
-
   have hb := (native_finite_test_realization .raw alpha q w ha hq hw hsum).2.2.2
   intro Seed inst policy nu prob n h B hB
   dsimp only
@@ -342,8 +328,6 @@ theorem raw_probability {m : ℕ} (alpha : unitInterval)
     ((∀ j c, ∑ o, ∑ d, (rawModel alpha q).matrix j o d c = 1) ∧
        ∀ j o d c, 0 ≤ (rawModel alpha q).matrix j o d c) := by
   classical
-
-
   have hp := (full_model_probability .raw alpha q ha).2.2
   constructor
   · intro j c
@@ -378,8 +362,6 @@ private theorem native_output_mass_bridge {m : ℕ} {task : Task} {alpha : unitI
     (feature : State → R.Carrier → ℝ) (hb : FullNativeBridge.{u} w R feature) :
     OutputMassBridge.{u} w R feature := by
   classical
-
-
   intro Seed inst policy nu prob n h B hB
   dsimp only
   intro hE j o
@@ -427,6 +409,81 @@ private theorem native_unnormalized_bridge {m : ℕ} {task : Task} {alpha : unit
   rw [hm Seed policy nu n h B hB hE j _, hu h j source hv d]
   field_simp [hv.ne']
 
+private theorem finite_tests_countable : Countable Test := by
+  classical
+  let branches : ((Mode → Bool) ⊕ (Side ⊕ Unit)) → Type := fun label =>
+    match label with
+    | .inl _ => Empty
+    | .inr (.inl _) => Output
+    | .inr (.inr _) => Mode
+  letI : ∀ label, Fintype (branches label) := fun label => by
+    rcases label with accept | side | unit <;> dsimp [branches] <;> infer_instance
+  letI : ∀ label, Encodable (branches label) := fun label => Encodable.ofCountable _
+  letI : Encodable ((Mode → Bool) ⊕ (Side ⊕ Unit)) := Encodable.ofCountable _
+  let encode : Test → WType branches := fun T =>
+    T.rec (fun accept => .mk (.inl accept) Empty.elim)
+      (fun side _ children => .mk (.inr (.inl side)) children)
+      (fun _ children => .mk (.inr (.inr ())) children)
+  let decode : WType branches → Test := WType.elim Test fun node =>
+    match node with
+    | ⟨.inl accept, _⟩ => .read accept
+    | ⟨.inr (.inl side), children⟩ => .query side children
+    | ⟨.inr (.inr _), children⟩ => .inspect children
+  have hinv : Function.LeftInverse decode encode := by
+    intro T
+    induction T with
+    | read accept => rfl
+    | query side next ih =>
+        change Test.query side (fun o => decode (encode (next o))) = Test.query side next
+        congr 1
+        funext o
+        exact ih o
+    | inspect next ih =>
+        change Test.inspect (fun mode => decode (encode (next mode))) = Test.inspect next
+        congr 1
+        funext mode
+        exact ih mode
+  exact hinv.injective.countable
+
+private theorem measurable_native_event {Seed : Type*} [MeasurableSpace Seed]
+    (policy : Policy Seed) (n : ℕ) (h : State) (B : Set Seed) (hB : MeasurableSet B) :
+    MeasurableSet (nativeEvent policy n h B) := by
+  classical
+  letI : MeasurableSpace State := ⊤
+  haveI : Countable State :=
+    (show Function.Injective (fun s : State => (s.actions, s.replies, s.stopped)) from by
+      intro s t he
+      cases s
+      cases t
+      simpa using he).countable
+  let step (p : (Seed × Source) × State) : State :=
+    if p.2.stopped then p.2 else
+      let side := policy.choose p.1.1 p.2.actions p.2.replies
+      let response := markerResponse p.1.2 side (sideCount p.2.actions side)
+      ⟨side :: p.2.actions, response :: p.2.replies, response⟩
+  have hstep : Measurable step := by
+    apply measurable_from_prod_countable_left
+    intro state
+    by_cases hs : state.stopped = true
+    · simpa [step, hs] using (measurable_const : Measurable (fun _ : Seed × Source => state))
+    · have hchoose : Measurable (fun p : Seed × Source =>
+          policy.choose p.1 state.actions state.replies) :=
+        (policy.measurable_section state.actions state.replies).comp measurable_fst
+      have hresponse : Measurable (fun p : Source × Side =>
+          markerResponse p.1 p.2 (sideCount state.actions p.2)) := by
+        apply measurable_from_prod_countable_left
+        intro side
+        exact measurable_marker_response side (sideCount state.actions side)
+      simpa [step, hs, Function.comp_def] using (measurable_of_finite (fun p : Side × Bool =>
+        (⟨p.1 :: state.actions, p.2 :: state.replies, p.2⟩ : State))).comp
+          (hchoose.prodMk (hresponse.comp (measurable_snd.prodMk hchoose)))
+  have hrun : ∀ n, Measurable (fun p : Seed × Source => actualRun policy p.1 p.2 n) := by
+    intro n
+    induction n with
+    | zero => exact measurable_const
+    | succ n ih => exact hstep.comp (measurable_id.prodMk ih)
+  exact (hB.preimage measurable_fst).inter ((hrun n) (measurableSet_singleton h))
+
 /-- A fresh independent random seed samples a measurable family of finite tests. -/
 def RandomNativeBridge {m : ℕ} {task : Task} {alpha : unitInterval}
     {q : Fin m → unitInterval} (w : Fin m → ℝ) (R : MassModel task alpha q)
@@ -439,8 +496,6 @@ def RandomNativeBridge {m : ℕ} {task : Task} {alpha : unitInterval}
     0 < law.real E →
     ∀ (Fresh : Type v) [MeasurableSpace Fresh] (rho : Measure Fresh) [IsProbabilityMeasure rho]
       (tests : Fresh → Test), Measurable[(inferInstance : MeasurableSpace Fresh), ⊤] tests →
-      MeasurableSet {p : Fresh × (Seed × Source) |
-        p.2 ∈ E ∧ nativeAccept task p.2.2 h (tests p.1) = true} →
       ((rho.prod law).real {p | p.2 ∈ E ∧ nativeAccept task p.2.2 h (tests p.1) = true} =
          law.real E * ∑ c, feature h c * (∫ u, testRow R (tests u) c ∂rho))
 
@@ -450,8 +505,6 @@ private theorem test_row_bounds {m : ℕ} {task : Task} {alpha : unitInterval}
     (hp : ∀ j o d c, 0 ≤ R.matrix j o d c) (T : Test) (c : R.Carrier) :
     0 ≤ testRow R T c ∧ testRow R T c ≤ 1 := by
   classical
-
-
   induction T generalizing c with
   | read accept => simp only [testRow]; split_ifs <;> norm_num
   | inspect next ih => exact ih (R.mode c) c
@@ -471,10 +524,18 @@ private theorem random_native_bridge {m : ℕ} {task : Task} {alpha : unitInterv
     (hn : ∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1)
     (hp : ∀ j o d c, 0 ≤ R.matrix j o d c) : RandomNativeBridge.{u, v} w R feature := by
   classical
-
   intro Seed inst policy nu prob n h B hB
   dsimp only
-  intro hE Fresh instFresh rho probFresh tests htests hmeas
+  intro hE Fresh instFresh rho probFresh tests htests
+  letI : MeasurableSpace Test := ⊤
+  haveI : Countable Test := finite_tests_countable
+  have haccept : Measurable (fun p : Test × Source => nativeAccept task p.2 h p.1) :=
+    measurable_from_prod_countable_right fun T => (hb Seed policy nu n h B hB hE).2.2.1 T
+  have hmeas : MeasurableSet {p : Fresh × (Seed × Source) |
+      p.2 ∈ nativeEvent policy n h B ∧ nativeAccept task p.2.2 h (tests p.1) = true} :=
+    ((measurable_native_event policy n h B hB).preimage measurable_snd).inter
+      ((haccept.comp ((htests.comp measurable_fst).prodMk
+        (measurable_snd.comp measurable_snd))) (measurableSet_singleton true))
   letI : IsFiniteMeasure (sourceMixture alpha q w) := by unfold sourceMixture; infer_instance
   have hr := (hb Seed policy nu n h B hB hE).2.2.2
   have hi (c : R.Carrier) : Integrable (fun u => testRow R (tests u) c) rho := by
@@ -590,7 +651,6 @@ def FiniteAtomUpperBounds : Prop :=
            (∀ j o d c, 0 ≤ R.matrix j o d c)) ∧ FullNativeBridge.{u} w R feature ∧ FeatureUpdates R feature ∧ RandomNativeBridge.{u, v} w R feature ∧
           OutputMassBridge.{u} w R feature ∧ UnnormalizedBridge.{u} w R feature
 
-
 /-- Finite native-test linear dimension upper bounds for all three interfaces. -/
 theorem result : FiniteAtomUpperBounds.{u, v} ∧
     (∀ (m : ℕ) (alpha : unitInterval) (q : Fin m → unitInterval) (w : Fin m → ℝ),
@@ -626,7 +686,5 @@ theorem result : FiniteAtomUpperBounds.{u, v} ∧
         native_output_mass_bridge _ _ hb,
         native_unnormalized_bridge _ _ (native_output_mass_bridge _ _ hb)
           (raw_feature_updates alpha q w ha (fun i => (hq i).1) hw hw')⟩
-
-
 
 end D5.S3.Observer.ProbabilisticClosure.RawFiniteAtomLinearRealization

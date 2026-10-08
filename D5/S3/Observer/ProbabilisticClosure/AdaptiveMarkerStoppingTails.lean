@@ -379,7 +379,8 @@ theorem arm_alternating_mass (q : unitInterval) (root : Bool) (n : ℕ) :
   rw [hp] at h
   simpa [armLaw, alternatingBit] using h
 
-theorem measurable_set_no_marker_cylinder (left right : ℕ) : MeasurableSet (noMarkerCylinder left right) := by
+theorem measurable_set_no_marker_cylinder (left right : ℕ) :
+    MeasurableSet (noMarkerCylinder left right) := by
   unfold noMarkerCylinder markerResponse
   simp only [Set.ofPred_forall]
   refine MeasurableSet.iInter fun side => ?_
@@ -407,7 +408,8 @@ theorem no_marker_iff_alternating_prefix (root : Bool) (x : Path) (hx0 : x 0 = r
     rw [hp, hn, alternating_bit_succ]
     cases alternatingBit root i <;> simp
 
-theorem paired_path_support (q : unitInterval) (root : Bool) : ∀ᵐ p ∂(armLaw q root).prod (armLaw q root),
+theorem paired_path_support (q : unitInterval) (root : Bool) :
+    ∀ᵐ p ∂(armLaw q root).prod (armLaw q root),
     (p.1 0 = root ∧ ∀ i, ¬(p.1 i = true ∧ p.1 (i + 1) = true)) ∧
     (p.2 0 = root ∧ ∀ i, ¬(p.2 i = true ∧ p.2 (i + 1) = true)) := by
   apply (Measure.ae_prod_iff_ae_ae (by measurability)).mpr
@@ -470,7 +472,8 @@ theorem adaptive_marker_stopping_tails
           (unitInterval.toNNReal q : ℝ≥0∞) ^ ((left + 1) / 2 + (right + 1) / 2) := by
     classical
     simp only [sourceLaw, Measure.add_apply, Measure.smul_apply]
-    rw [conditional_no_marker_cylinder_mass q left right true, conditional_no_marker_cylinder_mass q left right false]
+    rw [conditional_no_marker_cylinder_mass q left right true,
+      conditional_no_marker_cylinder_mass q left right false]
     rfl
   have hchoose : Measurable (fun p : Seed × (List Bool × List Bool) =>
       policy.choose p.1 p.2.1 p.2.2) :=
