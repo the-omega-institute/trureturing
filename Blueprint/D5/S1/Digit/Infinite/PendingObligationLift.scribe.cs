@@ -1,0 +1,59 @@
+using static StrataLint.Scribe.DefinitionDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S1.Digit.Infinite;
+
+internal sealed class PendingObligationLiftDocument : IScribeDocumentDefinition
+{
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Transported exclusions and exact finite observations.",
+        H("Transported exclusions and exact finite observations"),
+        Blocks(
+            Describe.Lean(
+                DescribeId.Create("pendingobligationlift-pending"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/PendingObligationLift.pending"),
+                H("Outstanding endpoint equalities"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let F_j be inverse branch maps, P_j the current pieces, I_j the guard intervals, "
+                    + "and Z_j the forbidden points at the successive observation times. Start with "
+                    + "S_0 empty. Insert Z_j intersect P_j into S_j, apply F_j to the union, and "
+                    + "intersect the image with I_(j+1). Thus only equalities still possible at the "
+                    + "next actual guard remain outstanding."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("pendingobligationlift-result"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/PendingObligationLift.result"),
+                H("Historical avoidance and actual finite records"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(
+                    Paragraph(Text(
+                        "For every natural n, every sequence of injective real maps F_j, and every "
+                        + "single trajectory x_(j+1)=F_j(x_j) with x_j in P_j for j<n and in I_j "
+                        + "for j<=n, the terminal value x_n avoids S_n if and only if x_j avoids "
+                        + "Z_j at every j<n. The assertion includes n=0. A threshold discarded "
+                        + "outside a later guard cannot equal that trajectory's later coordinate.")),
+                    Paragraph(Text(
+                        "Fix any nonnegative real budget b and any map Q from real targets to six "
+                        + "colors. Take a closed observed graph path with color word r and source "
+                        + "word w, and append one lawful source edge l from its last vertex v to u. "
+                        + "Choose any actual legal terminal address y satisfying the guard of u "
+                        + "with kappa(y) in its piece. There is one actual source x realizing the "
+                        + "whole closed path, reading l after w, and equal to y after exactly "
+                        + "three times (length(w)+1) deleted bits.")),
+                    Paragraph(Text(
+                        "Use the successive graph pieces and guard intervals, the actual inverse "
+                        + "branches of x, and Z_j=E_(r_j) minus O_(r_j), where E_i is the closed "
+                        + "expanded cell and O_i is the actual attainable closed-budget relation. "
+                        + "Then kappa(y) avoids S_(length(w)+1) exactly when a single infinite "
+                        + "target stream realizes every specified color, stays in the support, "
+                        + "and differs from that same actual source by at most b at every time. "
+                        + "After the prescribed prefix the target equals the source scalar, so "
+                        + "all subsequent errors are zero.")),
+                    Paragraph(Text(
+                        "There are length(r)=length(w)+1 observed departure coordinates and the "
+                        + "same number of source edges including l. The chosen terminal coordinate "
+                        + "is unobserved. Each component may use its own terminal address, pieces, "
+                        + "guard intervals, and outstanding set while sharing the color word."))),
+                DescribeRole.Theorem))));
+}

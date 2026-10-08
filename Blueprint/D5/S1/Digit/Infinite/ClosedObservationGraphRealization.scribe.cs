@@ -9,6 +9,14 @@ internal sealed class ClosedObservationGraphRealizationDocument : IScribeDocumen
         H("Complete endpoint graphs and joint actual paths"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("closedobservationgraphrealization-bit-shift-add"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/ClosedObservationGraphRealization.hshift"),
+                H("Composing exact bit deletions"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For every actual legal address and all natural m and n, deleting m bits and then n bits equals deleting m+n bits from that same address."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("closedobservationgraphrealization-closed-observation-graph-realization"),
                 DeclarationHandle.Create("D5/S1/Digit/Infinite/ClosedObservationGraphRealization.closed_observation_graph_realization"),
                 H("Complete endpoint graphs and joint actual paths"),

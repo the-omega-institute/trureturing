@@ -9,6 +9,30 @@ internal sealed class ClosedObservationCommonTailWidthDocument : IScribeDocument
         H("Complete closed graph common-tail width"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("closedobservationcommontailwidth-path-read"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.hpath_read"),
+                H("Reading a closed path"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "A closed path has one more color than source labels. Every address realizing its full vertex and label chain reads the prescribed closed colors at the actual three-bit departure coordinates, and its successive windows give exactly the source word."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("closedobservationcommontailwidth-window-shift"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.window_shift"),
+                H("Windows at shifted addresses"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "The first three-bit window of the address shifted by 3j bits is exactly its original window at time j."))), DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("closedobservationcommontailwidth-original-t-shift"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.original_t_shift"),
+                H("One more source step"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Applying the original three-bit deletion after shifting by 3j bits gives the original address shifted by 3(j+1) bits."))), DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("closedobservationcommontailwidth-complete-closed-graph-common-tail-width"),
                 DeclarationHandle.Create("D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.complete_closed_graph_common_tail_width"),
                 H("Complete closed graph common-tail width"),
