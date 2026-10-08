@@ -96,7 +96,10 @@ internal sealed class ProductUnitaryChoiSpectrumDocument : IScribeDocumentDefini
                 DescribeRole.Definition, Lit()),
             Node("result", "The Choi spectrum in every dimension", "result", Disp(V("claim")),
                 "Write ω for the vector of ℂ^n ⊗ ℂ^n with entry 1 at the pairs (i, i) and 0 elsewhere, and K = ωωᵀ. The Choi matrix of D is I/n and that of Q is K − I/n. Grouping the indices of C_Φ by factor turns it into a I + b (I ⊗ K₂) + c (K₁ ⊗ I) + d (K₁ ⊗ K₂). Let e₀ be the basis vector at the pair (0, 0) and u = ω − e₀; since e₀ᵀu = 0, the shear S = I + u e₀ᵀ has inverse I − u e₀ᵀ, sends e₀ to ω, and conjugates K to the matrix whose only nonzero row is the row of (0, 0), with diagonal entry n there. Conjugating by S₁ ⊗ S₂ makes the matrix block upper triangular for the blocks given by whether the first and the second index equals (0, 0). Each diagonal block is a multiple of the identity: of size 1 and value a + bn₂ + cn₁ + dn₁n₂, of size n₂² − 1 and value a + cn₁, of size n₁² − 1 and value a + bn₂, and of size (n₁² − 1)(n₂² − 1) and value a. Substituting a, b, c and d gives the four values of the claim.",
-                DescribeRole.Theorem, Repo()))));
+                DescribeRole.Theorem, Repo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("garcia-velo-2026-product-unitary-choi-spectrum"),
+                    ResolutionKind.Proved)))));
 
     private static AssessedProvenance Lit() => AssessedProvenance.FromLiterature(Source);
     private static AssessedProvenance Repo() => AssessedProvenance.FromRepo(Source);

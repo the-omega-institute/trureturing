@@ -140,6 +140,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/garcia-velo-2026-product-unitary-choi-spectrum` (proved) by `D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"garcia-velo-2026-product-unitary-choi-spectrum","declaration_gid":"D5/S3/Quantum/QuantumChannels/ProductUnitaryChoiSpectrum.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* A. García-Velo, A. Ibort (2026). *Schwarz maps with symmetry*. DOI: [10.48550/arXiv.2601.02282](https://doi.org/10.48550/arXiv.2601.02282). URL: <https://arxiv.org/abs/2601.02282v1>.
