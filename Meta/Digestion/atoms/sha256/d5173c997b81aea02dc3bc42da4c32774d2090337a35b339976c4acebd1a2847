@@ -1,0 +1,7 @@
+**定义 15.1（指定的算术来源）。** 令 $H_A=\{0,2,6\}$、$H_B=\{0,4,6\}$。对奇素数 $q$，在均匀概率空间 $\mathbb F_q$ 上取
+$$
+x(n)=\mathbf1_{q\mid n},\qquad y(n)=\mathbf1_{q\mid n+6},\qquad
+z_A(n)=\mathbf1_{q\mid n+2},\quad z_B(n)=\mathbf1_{q\mid n+4}.
+$$
+模式名 $2,3,5,25$ 沿用定义 2.1 的占位标签；本定义用上述明确的除数事件实现同一事件代数，不把标签数值识别为整数偏移或原生树。记 $X=\mathbb Ex$、$Y=\mathbb Ey$、$Z=\mathbb Ez$、$\kappa=\mathbb E(xy)$。对一般非空有限 $H\subset\mathbb Z$，记 $\nu_H(q)=|H\bmod q|$。
+
