@@ -14,10 +14,14 @@ internal sealed class HistoryTreeRelabelingDocument : IScribeDocumentDefinition
                 + "Relabel the next letter using that permutation and continue in the original history. "
                 + "The inverse decodes a letter before extending the recovered history. These recursions "
                 + "are inverse bijections on words. They preserve lengths and the prefix relation in both directions.")),
-            Paragraph(Text("Let q(h,a) = p(pi(h)(a)). The conditional mass of a word is the product of "
+            Paragraph(Text("Let the real-valued rows q and vector p satisfy q(h,a) = p(pi(h)(a)). "
+                + "The conditional path product of a word is the product of "
                 + "the rows encountered along its actual path. Its relabeled iid mass is the same product. "
                 + "Legal(b,F) uses the canonical prefix-free code condition, excludes the empty word and "
-                + "bounds the number of different words at each depth by b.")),
+                + "bounds the number of different words at each depth by b. The image in the formula "
+                + "is the set image under relabel(pi,[]) from the empty history. The history and iid "
+                + "truncated sums use historyTruncatedMass and truncatedMass respectively; their "
+                + "nonnegative countable sums use historyCodeMass and codeMass.")),
             Describe.Lean(
                 DescribeId.Create("history-tree-relabeling"),
                 DeclarationHandle.Create("D5/S0/Computability/Coding/HistoryTreeRelabeling.result"),
@@ -36,15 +40,17 @@ internal sealed class HistoryTreeRelabelingDocument : IScribeDocumentDefinition
     {
         Formula pi = F.Id("pi"), p = F.Id("p"), q = F.Id("q"), b = F.Id("b");
         Formula code = F.Id("F"), h = F.Id("h"), a = F.Id("a"), n = F.Id("N");
-        Formula image = Call("phi", code);
+        Formula image = Call("image", Call("relabel", pi, F.Seq(OpenBracket, CloseBracket)), code);
         Formula rows = F.Seq(Open, Forall, Sp, h, Comma, Sp, a, Comma, Sp,
             Call("q", h, a), Sp, Eq, Sp, Call("p", Call("pi", h, a)), Close);
         Formula finite = F.Seq(Open, Forall, Sp, n, Comma, Sp,
-            Call("T", q, code, n), Sp, Eq, Sp, Call("T", p, image, n), Close);
+            Call("historyTruncatedMass", q, code, n), Sp, Eq, Sp,
+            Call("truncatedMass", p, image, n), Close);
         return Disp(F.Seq(Forall, Sp, pi, Comma, Sp, p, Comma, Sp, q, Comma, Sp,
             b, Comma, Sp, code, Comma, Sp, rows, Sp, Land, Sp, Call("Legal", b, code),
             Sp, Rightarrow, Sp, Call("Legal", b, image), Sp, Land, Sp, finite,
-            Sp, Land, Sp, Call("S", q, code), Sp, Eq, Sp, Call("S", p, image), Dot));
+            Sp, Land, Sp, Call("historyCodeMass", q, code), Sp, Eq, Sp,
+            Call("codeMass", p, image), Dot));
     }
 
     private static Formula Call(string name, params Formula[] arguments) =>
