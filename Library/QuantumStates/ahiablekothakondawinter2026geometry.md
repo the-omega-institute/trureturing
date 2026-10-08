@@ -7,7 +7,8 @@ doi: 10.48550/arXiv.2608.03390
 url: https://arxiv.org/abs/2608.03390v2
 claim: "Conjecture 6.7 states equality of APPT maximum purity and the inscribed polytope maximum, with the spectra of equation (44)."
 strata_touched:
-  - D5/S3/Quantum/Entanglement/AbsolutePPT
+  - D5/S3/Quantum/Entanglement/AbsolutePPT/QutritPerturbationAttainment
+  - D5/S3/Quantum/Entanglement/AbsolutePPT/QutritQuditMaximumPurity
 license: citation-only
 triage: anchor
 ---

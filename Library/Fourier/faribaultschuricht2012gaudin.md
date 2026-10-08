@@ -7,7 +7,7 @@ doi: 10.1088/1751-8113/45/48/485202
 url: https://arxiv.org/abs/1207.2352v2
 claim: "A Cauchy permanent can be expressed as a determinant with Gaudin-type entries."
 strata_touched:
-  - D5/S3/Combinatorics/Permanental/CycleGeodesic
+  - D5/S3/Combinatorics/Permanental/CycleGeodesic/GaudinPermanent
 license: citation-only
 triage: anchor
 ---
