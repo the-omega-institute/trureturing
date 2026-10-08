@@ -2918,3 +2918,169 @@ $C$ 是两个正半定核的 Schur 乘积，正半定且对角为一，所有元
 **来源与适用范围。** 本节复用第 36.1 节的全操作最优值、共同拆分及投影环境界，以及第 34.1 节的正平衡概率；这些前置不作为新增结果。新增的等号分类、完整编码后信道的测试认证、指数最优性和满支撑边界属于本仓推导。Stinespring 表示、完全有界迹范数和一般通道优化的对偶条件属于已有量子信息理论；比较文献为 Watrous, *The Theory of Quantum Information* (2018)，以及 Coutts–Girard–Watrous, *Certifying optimality for convex quantum channel optimization problems*, Quantum 5, 448 (2021), [arXiv:1810.13295](https://arxiv.org/abs/1810.13295)。后者的全信道最优性条件不替代本节局部乘积混合类的投影环境界。本节不分类局部信道在未使用物理输入上的自由度，不包括通信、共享纠缠或任意全局操作，也不建立连续 CFT 与引力 RT 的实现字典。
 
 ## 追加锚（本行以下为增补区）
+
+## 39. 任意源谱与平坦目标的共同随机粗化
+
+**定义 39.1（源谱的目标尺寸分块）。** 令 $S$ 为非空有限扇区集，$r_s,d_s$ 为正整数，$\lambda_s=(\lambda_{si})_{0\le i<r_s}$ 为非增概率向量，允许零项。两侧源空间为 $A=\bigoplus_s\mathbb C^{r_s}$，输出空间为 $B=\bigoplus_s\mathbb C^{d_s}$。定义源、目标等距
+
+$$
+J|s\rangle=\sum_{i<r_s}\sqrt{\lambda_{si}}|s,i\rangle_X|s,i\rangle_Y,
+\qquad T_s=T|s\rangle=\frac1{\sqrt{d_s}}\sum_{a<d_s}|s,a\rangle_X|s,a\rangle_Y.
+$$
+
+记相应编码信道为 $\mathcal J$、$\mathcal T$。允许两侧独立 CPTP 映射以及有限共享经典随机混合，不允许通信、后选择或额外共享纠缠，竞争输出不必保持旗标或基扇区纯态。误差仍为包含任意被动参考且不除以二的钻石范数。
+
+置 $M=\max_s\lceil r_s/d_s\rceil$，将每个 $\lambda_s$ 补零到 $d_sM$ 项，并定义
+
+$$
+\alpha_{saj}=\sqrt{\lambda_{s,d_sj+a}},\qquad
+b_{sj}=\frac1{\sqrt{d_s}}\sum_{a<d_s}\alpha_{saj},\qquad
+G_{st}=\sum_{j<M}b_{sj}b_{tj},\qquad
+q=\min_{p\in\Delta_S}p^{\mathsf T}Gp.
+$$
+
+每个 $b_s$ 非负且非增。分块 Cauchy–Schwarz 给 $\|b_s\|_2^2\le1$，所以 $G\succeq0$、$0\le G_{st}\le1$；此处一般只有 $G_{ss}\le1$。
+
+单扇区的最佳纯目标保真度 $\sum_jb_{sj}^2$ 是 George–Chitambar 的已有结果：其定理 8 的递减分块系数优化经 Cauchy–Schwarz 达到于与 $b_{sj}^2$ 成比例的辅助概率。定理 4 同时给出该保真度目标下 LO 与 LOSR 的等价性。以下结论研究同一个相干多扇区信道与被动参考，不把这一单态公式认作新增结果。精确来源见 [零通信纯态转化](../../../Library/QuantumChannels/george2024zerocommunication.md)。
+
+**定理 39.2（任意源谱的共同 LOSR 最优值，repo-derived）。** 对定义 39.1 的模型，
+
+$$
+\boxed{\inf_{\Phi\in\operatorname{conv}_{\rm fin}
+\{\Lambda_X\otimes\Lambda_Y:\Lambda_X,\Lambda_Y\ {m CPTP}\}}
+\|\Phi\circ\mathcal J-\mathcal T\|_\diamond=2(1-q).}
+$$
+
+一个同时作用于全部扇区的局部坐标拆分，加上至多 $\prod_s d_s$ 个共享循环移位分支，达到此值。不要求源系数恰好重复 $d_s$ 次，也不要求 $r_s/d_s$ 是整数。此值是乘积信道的共同下界，但不声称乘积类总能达到它。
+
+**证明。** 先固定任意乘积竞争操作及其局部 Stinespring 等距。令 $\Xi_s$ 为源列 $J|s\rangle$ 的扩张输出，$\zeta_s=(\langle T_s|\otimes I)\Xi_s$ 为分析用的投影环境向量，$Z_s$ 为其系数矩阵。跨 $X_{\rm out}E_X\mid Y_{\rm out}E_Y$，$\Xi_s$ 的非零奇异值仍为 $\sqrt{\lambda_{si}}$。将系数矩阵压缩到两侧目标 $s$ 旗标得到 $Q'_s$，则
+
+$$
+Z_s=\frac1{\sqrt{d_s}}\sum_{a<d_s}(Q'_s)_{aa}.
+$$
+
+对环境中的秩 $k$ 部分等距 $W$，$I_{d_s}\otimes W$ 的非零奇异值是一、秩为 $d_sk$。von Neumann 奇异值迹界及压缩不增奇异值给出
+
+$$
+|\operatorname{Tr}(W^*Z_s)|
+\le\frac1{\sqrt{d_s}}\sum_{i<d_sk}\sigma_i(Q'_s)
+\le\frac1{\sqrt{d_s}}\sum_{i<d_sk}\sqrt{\lambda_{si}}
+=\sum_{j<k}b_{sj}.
+$$
+
+所有序列按需补零。Ky Fan 变分公式给出 $\sigma(Z_s)\prec_w b_s$。对非负递减权重作前缀和的分部求和，先后用于两侧，再用奇异值迹界，得到
+
+$$
+|\langle\zeta_t,\zeta_s\rangle|
+\le\sigma(Z_t)\mathbin{\cdot}\sigma(Z_s)
+\le b_t\mathbin{\cdot}b_s=G_{st}.
+$$
+
+这是第 36.1 节同一投影机制在一般源谱上的应用；不把投影当作实现中的后选择。输入 $|\Omega_p\rangle=\sum_s\sqrt{p_s}|s\rangle_R|s\rangle_L$，对理想输出 $|\Theta_p\rangle=\sum_s\sqrt{p_s}|s\rangle_RT_s$ 作投影，成功概率至多 $p^{\mathsf T}Gp$。二元测试给钻石误差至少 $2(1-p^{\mathsf T}Gp)$。取最小点即得 $2(1-q)$。同一个输入与测试对所有竞争乘积操作有效，成功概率又对输出线性，故下界覆盖有限共享混合。
+
+下面构造共同达到操作。每侧在实际源基上定义
+
+$$
+E|s,i\rangle=|s,i\bmod d_s\rangle_{m out}
+|\lfloor i/d_s\rfloor\rangle_E.
+$$
+
+不同 $(s,i)$ 映到不同 $(s,a,j)$，故 $E^*E=I$，丢弃环境得到局部 CPTP 映射。补零只是系数约定，不添加待输入的物理基向量。令
+
+$$
+\psi_{sj}=\sum_{a<d_s}\alpha_{saj}|s,a\rangle_X|s,a\rangle_Y.
+$$
+
+两侧拆分后的矩阵单位作用为 $|s\rangle\langle t|\mapsto\sum_j|\psi_{sj}\rangle\langle\psi_{tj}|$。
+
+对每个 $s$ 令 $X_s$ 为 $d_s$ 个输出坐标的循环移位，均匀选择有限随机变量 $h\in\prod_s\mathbb Z/d_s\mathbb Z$。两侧使用同一个 $h$，各自在丢弃环境后施加 $U_h=\bigoplus_sX_s^{h_s}$。这是至多 $\prod_sd_s$ 个乘积 CPTP 映射的有限混合，各分支对所有逻辑输入相同。
+
+取 $\omega_s=e^{2\pi i/d_s}$，定义相关子空间的正交 Fourier 基
+
+$$
+T_{sk}=\frac1{\sqrt{d_s}}\sum_a\omega_s^{ka}|s,a\rangle_X|s,a\rangle_Y,
+\qquad
+c_{sjk}=\frac1{\sqrt{d_s}}\sum_a\alpha_{saj}\omega_s^{-ka}.
+$$
+
+这里 $T_{s0}=T_s$、$c_{sj0}=b_{sj}$。$X_s^{h_s}\otimes X_s^{h_s}$ 在 $T_{sk}$ 上乘以 $\omega_s^{-kh_s}$。同扇区平均只保留相同 Fourier 指标；不同扇区的独立 $h_s,h_t$ 平均只保留两者均为零的指标。因此最终编码后信道严格为
+
+$$
+\mathcal F_G(X)=T(G\circ X)T^*+\sum_sX_{ss}L_s,
+\qquad
+L_s=\sum_{k\ne0}\left(\sum_j|c_{sjk}|^2\right)|T_{sk}\rangle\langle T_{sk}|.
+$$
+
+$L_s\succeq0$，与全部理想向量 $T_t$ 正交，且 $\operatorname{Tr}L_s=1-G_{ss}$。$d_s=1$ 时非零 Fourier 模集合为空，$L_s=0$、$G_{ss}=1$。整个构造没有连续随机平均或无穷共享随机性。
+
+对任意纯参考输入 $\sum_s|s\rangle|u_s\rangle$，令 $p_s=\|u_s\|^2$。理想减实际输出的理想子空间块等距于
+
+$$
+B_p=D_{\sqrt p}(\mathbf1\mathbf1^{\mathsf T}-G)D_{\sqrt p},
+$$
+
+其余是正交的负半定泄漏块 $-\sum_s|u_s\rangle\langle u_s|\otimes L_s$，泄漏迹为
+
+$$
+\ell_p=\sum_sp_s(1-G_{ss})=\operatorname{Tr}B_p\ge0.
+$$
+
+$B_p$ 是秩一正矩阵减正半定矩阵，至多有一个正本征值；其迹非负，所以包括零情形在内，完整输出差的迹范数是
+
+$$
+\|B_p\|_1+\ell_p
+=2\lambda_{\max}(B_p)-\operatorname{Tr}B_p+\ell_p
+=2\lambda_{\max}(B_p).
+$$
+
+此处不能将 $B_p$ 当作迹零矩阵。记 $A=\mathbf1\mathbf1^{\mathsf T}-G$，它逐项非负，最大 Rayleigh 向量可取非负。置 $y_s=\sqrt{p_s}x_s$，$\|x\|_2=1$，则 $\sum_sy_s\le1$，填补概率质量不会降低 $y^{\mathsf T}Ay$。反向对任意 $z\in\Delta_S$ 取 $p=z$、$x=\sqrt z$，于是
+
+$$
+\max_p\lambda_{\max}(B_p)=\max_{z\in\Delta_S}z^{\mathsf T}Az=1-q.
+$$
+
+混合参考输入由凸性处理；任意算子输入先作 Hermitian 正负谱分解，再对 $\frac12\left(\begin{smallmatrix}0&X\\X^*&0\end{smallmatrix}\right)$ 加一个参考二能级系统即可归约到该界，保持对应迹范数。因此任意有限被动参考均已覆盖，候选钻石误差恰为 $2(1-q)$，达到下界。证毕。
+
+**推论 39.3（非整数平坦秩比，repo-derived）。** 若每个源谱在 $r_s$ 项上均匀，写 $r_s=d_sm_s+k_s$、$0\le k_s<d_s$，则定理 39.2 的核由
+
+$$
+b_{sj}=\begin{cases}
+\sqrt{d_s/r_s},&j<m_s,\\
+k_s/\sqrt{d_sr_s},&j=m_s,\\
+0,&j>m_s
+\end{cases}
+$$
+
+直接计算。单扇区的有限混合最优误差为 $2k(d-k)/(rd)$。若所有 $k_s=0$，则恢复第 34—36 节的残余 Gram 核，全部 $L_s$ 消失，达到操作可取原来的单个乘积信道。
+
+**证明。** 将均匀源幅度代入分块定义。单扇区 $q=(md^2+k^2)/(rd)$，代入定理 39.2。所有余数为零时，各有效块内幅度相等，非零 Fourier 模全部为零。证毕。单态保真度部分仍归属 George–Chitambar 定理 8；这里的非整数多扇区公式是共同信道定理的应用。
+
+**命题 39.4（共享随机性可以严格改善粗化，repo-derived）。** 允许模型中存在共享随机混合最优误差严格小于乘积最优误差的实例；这种严格差异也存在于满 Schmidt 秩三的源到平坦秩二目标之间。
+
+**证明。** 先取单扇区积态源及 Bell 二维目标。定理 39.2 给混合误差一；显式两分支制备 $(|00\rangle\langle00|+|11\rangle\langle11|)/2$ 达到它。乘积操作只能输出 $\tau\otimes\sigma$。密度矩阵对构成紧集，迹距离连续，故乘积最小值 $\mu$ 达到。若 $\mu=1$，理想投影测试迫使
+
+$$
+\frac12\operatorname{Tr}(\tau\sigma^{\mathsf T})\ge\frac12.
+$$
+
+但 $\operatorname{Tr}(\tau\sigma^{\mathsf T})\le\lambda_{\max}(\sigma)\le1$。等号迫使 $\sigma$ 为纯态，且 $\tau$ 支撑于 $\sigma^{\mathsf T}$ 的同一一维空间。输出因而为纯的对齐积态，与 Bell 态的平方重叠为 $1/2$，其不除二迹距离是 $\sqrt2>1$，矛盾。因此 $\mu>1$。
+
+在固定三维源空间中，以
+
+$$
+|\psi_\epsilon\rangle=\sqrt{1-\epsilon}|00\rangle
++\sqrt{\epsilon/2}|11\rangle+\sqrt{\epsilon/2}|22\rangle,
+\qquad 0<\epsilon<2/3
+$$
+
+替换积态。它具有满 Schmidt 秩三，与积态的迹距离为 $2\sqrt\epsilon$。任意乘积信道的迹距离收缩及三角不等式给 $\delta_{\rm prod}(\epsilon)\ge\mu-2\sqrt\epsilon$；分块公式则给
+
+$$
+\delta_{\rm mix}(\epsilon)=1-\sqrt{2\epsilon(1-\epsilon)}<1.
+$$
+
+所以 $0<\epsilon<\min\{2/3,((\mu-1)/2)^2\}$ 时，源秩三大于目标秩二，严格差异仍在。此为由紧性正差给出的存在区间，不声称已求出 $\mu$ 或区间的显式有理端点。它不与 LO、LOSR 最佳纯目标保真度相等矛盾：纯目标保真度是线性目标，迹距离一般不是。证毕。
+
+**来源与范围。** 单态分块保真度、Stinespring 表示、Ky Fan 与 von Neumann 奇异值界、有限 Fourier 正交性均复用已有结果。新增的承重内容是一个共同相干多扇区实现、正交泄漏的迹补偿及包含任意被动参考的精确混合最优值。目标仍须逐扇区平坦；任意非平坦目标、混合源、一般 LOCC 或额外纠缠辅助的优化不在结论内。单扇区 trace-distance 值也可由已有保真度及保持目标的相关酉平均得到，不作为独立文献原创性主张。本节不建立连续 CFT 或引力 RT 字典。
+
+## 追加锚（本行以下为增补区）
