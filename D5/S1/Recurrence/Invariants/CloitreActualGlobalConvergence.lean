@@ -193,7 +193,6 @@ private theorem global_upper (U : ℕ → ℕ) (h : Hyp21_1 U) :
       have hb' : (n i : ℝ) ≤ 5 * g (n i) := by exact_mod_cast hb.1
       linarith only [hb']
     · apply le_of_tendsto wa
-      
       filter_upwards [nt.eventually (eventually_ge_atTop 8)] with i hi
       have hb := child_bounds U h (n i) hi
       have un : (0 : ℝ) < n i := by exact_mod_cast (show 0 < n i by omega)
@@ -476,13 +475,8 @@ theorem result (U : ℕ → ℕ) (h : Hyp21_1 U) :
         tendsto_atTop_add_const_right atTop 1 tendsto_natCast_atTop_atTop
       have fl := (tendsto_nat_floor_mul_div_atTop a0.le).comp natlim
       have scale : Tendsto (fun n : ℕ => ((n : ℝ) + 1) / n) atTop (nhds 1) := by
-        have invn : Tendsto (fun n : ℕ => (n : ℝ)⁻¹) atTop (nhds 0) :=
-          tendsto_inv_atTop_zero.comp tendsto_natCast_atTop_atTop
-        apply (show Tendsto (fun n : ℕ => 1 + (n : ℝ)⁻¹) atTop (nhds 1) by
-          simpa only [add_zero] using (tendsto_const_nhds.add invn)).congr'
-        filter_upwards [eventually_ge_atTop 1] with n hn
-        have nn : (n : ℝ) ≠ 0 := by exact_mod_cast (show n ≠ 0 by omega)
-        simp only [add_div, div_self nn, one_div]
+        simpa only [one_mul, zero_add, add_zero, div_one, add_comm] using
+          (tendsto_add_mul_div_add_mul_atTop_nhds (1 : ℝ) 0 1 (d := 1) one_ne_zero)
       apply (show Tendsto (fun n : ℕ => ((⌊α * ((n : ℝ) + 1)⌋₊ : ℝ) / ((n : ℝ) + 1)) *
           (((n : ℝ) + 1) / n)) atTop (nhds α) by
         simpa only [mul_one, Function.comp_def] using fl.mul scale).congr'
@@ -501,4 +495,3 @@ theorem result (U : ℕ → ℕ) (h : Hyp21_1 U) :
   exact tendsto_of_le_liminf_of_limsup_le lower sup rbd rlower
 
 end D5.S1.Recurrence.Invariants.CloitreActualGlobalConvergence
-
