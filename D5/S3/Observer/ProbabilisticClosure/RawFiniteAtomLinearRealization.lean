@@ -61,7 +61,6 @@ private theorem raw_canonical_rate (alpha q : unitInterval) (ha : 0 < (alpha : �
   exact {
     Carrier := {p : Fin m × (Bool × Bool) // rawCanonical alpha (q p.1) p.2 = p.2} ⊕ Unit
     finite := inferInstance
-    finiteOutputs := (fullModel .raw alpha q).finiteOutputs
     mode := fun c => match c with | .inl _ => .active | .inr _ => .stopped
     matrix := fun j o d c => match c with
       | .inl p =>
@@ -84,8 +83,8 @@ private theorem raw_terminal_row {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (T : Test) :
     testRow (rawModel alpha q) T (.inr ()) = if terminalAccept .stopped T then 1 else 0 := by
   classical
-  letI := (rawModel alpha q).finite
-  letI := (rawModel alpha q).finiteOutputs
+
+
   induction T with
   | read accept => rfl
   | inspect next ih => exact ih .stopped
@@ -97,8 +96,8 @@ private theorem raw_row_descends {m : ℕ} (alpha : unitInterval) (q : Fin m →
     (ha : 0 < (alpha : ℝ)) (T : Test) (c : (fullModel .raw alpha q).Carrier) :
     testRow (rawModel alpha q) T (rawEncode alpha q c) = testRow (fullModel .raw alpha q) T c := by
   classical
-  letI := (rawModel alpha q).finite
-  letI := (rawModel alpha q).finiteOutputs
+
+
   cases c with
   | inr t => rw [rawEncode, raw_terminal_row, full_terminal_row]; simp [fullModel]
   | inl p =>
@@ -127,20 +126,17 @@ private theorem raw_row_descends {m : ℕ} (alpha : unitInterval) (q : Fin m →
 def rawFeature {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval)
     (w : Fin m → ℝ) (h : State) : (rawModel alpha q).Carrier → ℝ := by
   classical
-  letI := (fullModel .raw alpha q).finite
+
   exact fun d => ∑ c, if rawEncode alpha q c = d then fullFeature .raw alpha q w h c else 0
 
 private theorem raw_pushforward_sum {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (v : (fullModel .raw alpha q).Carrier → ℝ)
     (f : (rawModel alpha q).Carrier → ℝ) :
-    (letI := (fullModel .raw alpha q).finite
-     letI := (rawModel alpha q).finite
-     ∑ d, (∑ c, if rawEncode alpha q c = d then v c else 0) * f d) =
-    (letI := (fullModel .raw alpha q).finite
-     ∑ c, v c * f (rawEncode alpha q c)) := by
+    (∑ d, (∑ c, if rawEncode alpha q c = d then v c else 0) * f d) =
+    (∑ c, v c * f (rawEncode alpha q c)) := by
   classical
-  letI := (fullModel .raw alpha q).finite
-  letI := (rawModel alpha q).finite
+
+
   simp_rw [Finset.sum_mul, ite_mul, zero_mul]
   rw [Finset.sum_comm]
   simp
@@ -149,10 +145,9 @@ private theorem raw_joint_descends {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (ha : 0 < (alpha : ℝ)) (j : Side) (o : Output)
     (d : (rawModel alpha q).Carrier) (c : (fullModel .raw alpha q).Carrier) :
     (rawModel alpha q).matrix j o d (rawEncode alpha q c) =
-      (letI := (fullModel .raw alpha q).finite
-       ∑ e, if rawEncode alpha q e = d then (fullModel .raw alpha q).matrix j o e c else 0) := by
+      (∑ e, if rawEncode alpha q e = d then (fullModel .raw alpha q).matrix j o e c else 0) := by
   classical
-  letI := (fullModel .raw alpha q).finite
+
   have hdelta (e0 : (fullModel .raw alpha q).Carrier) (v : ℝ) :
       (∑ e, if rawEncode alpha q e = d then if e = e0 then v else 0 else 0) =
         if rawEncode alpha q e0 = d then v else 0 := by
@@ -192,16 +187,13 @@ private theorem raw_joint_descends {m : ℕ} (alpha : unitInterval)
 private theorem raw_transport {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (ha : 0 < (alpha : ℝ)) (j : Side) (o : Output)
     (v : (fullModel .raw alpha q).Carrier → ℝ) :
-    (letI := (fullModel .raw alpha q).finite
-     letI := (rawModel alpha q).finite
-     Matrix.mulVec ((rawModel alpha q).matrix j o)
+    (Matrix.mulVec ((rawModel alpha q).matrix j o)
        (fun d => ∑ c, if rawEncode alpha q c = d then v c else 0)) =
-      (letI := (fullModel .raw alpha q).finite
-       fun d => ∑ e, if rawEncode alpha q e = d then
+      (fun d => ∑ e, if rawEncode alpha q e = d then
          Matrix.mulVec ((fullModel .raw alpha q).matrix j o) v e else 0) := by
   classical
-  letI := (fullModel .raw alpha q).finite
-  letI := (rawModel alpha q).finite
+
+
   funext d
   calc
     Matrix.mulVec ((rawModel alpha q).matrix j o)
@@ -224,13 +216,13 @@ private theorem raw_transport {m : ℕ} (alpha : unitInterval)
       intro e he
       by_cases hd : rawEncode alpha q e = d <;> simp [hd,Matrix.mulVec,dotProduct,mul_comm]
 
-private theorem raw_feature_updates {m : ℕ} (alpha : unitInterval)
+theorem raw_feature_updates {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
     (hq : ∀ i, 0 < (q i : ℝ)) (hw : ∀ i, 0 < w i) (hsum : (∑ i, w i) = 1) :
     FeatureUpdates (rawModel alpha q) (rawFeature alpha q w) := by
   classical
-  letI := (fullModel .raw alpha q).finite
-  letI := (rawModel alpha q).finite
+
+
   have hu := (FiniteAtomLinearRealization.result .raw alpha q w ha hq hw hsum).2
   intro h j source
   dsimp only
@@ -264,13 +256,13 @@ private theorem raw_feature_updates {m : ℕ} (alpha : unitInterval)
   · rw [if_pos hd, if_pos hd, hupdate e]
   · rw [if_neg hd, if_neg hd, zero_div]
 
-private theorem raw_native_bridge {m : ℕ} (alpha : unitInterval)
+theorem raw_native_bridge {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (w : Fin m → ℝ) (ha : 0 < (alpha : ℝ))
     (hq : ∀ i, 0 < (q i : ℝ)) (hw : ∀ i, 0 < w i) (hsum : (∑ i, w i) = 1) :
     FullNativeBridge w (rawModel alpha q) (rawFeature alpha q w) := by
   classical
-  letI := (fullModel .raw alpha q).finite
-  letI := (rawModel alpha q).finite
+
+
   have hb := (native_finite_test_realization .raw alpha q w ha hq hw hsum).2.2.2
   intro Seed inst policy nu prob n h B hB
   dsimp only
@@ -304,9 +296,8 @@ private theorem raw_component_card (alpha q : unitInterval) :
     decide
   · simp [rawCanonical, he]
 
-private theorem raw_card {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval) :
-    (letI := (rawModel alpha q).finite
-     Fintype.card (rawModel alpha q).Carrier) = 4 * m - 2 * exceptionalCount alpha q + 1 := by
+theorem raw_card {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval) :
+    (Fintype.card (rawModel alpha q).Carrier) = 4 * m - 2 * exceptionalCount alpha q + 1 := by
   classical
   change Fintype.card ({p : Fin m × (Bool × Bool) // rawCanonical alpha (q p.1) p.2 = p.2} ⊕ Unit) = _
   rw [Fintype.card_sum, Fintype.card_unit,
@@ -331,15 +322,13 @@ private theorem exceptional_count_le_one {m : ℕ} (alpha : unitInterval)
   apply Subtype.ext
   have hn : 1 - (alpha : ℝ) ≠ 0 := by linarith
   exact (mul_left_cancel₀ hn (hi.symm.trans hj))
-private theorem raw_probability {m : ℕ} (alpha : unitInterval)
+theorem raw_probability {m : ℕ} (alpha : unitInterval)
     (q : Fin m → unitInterval) (ha : 0 < (alpha : ℝ)) :
-    (letI := (rawModel alpha q).finite
-     letI := (rawModel alpha q).finiteOutputs
-     (∀ j c, ∑ o, ∑ d, (rawModel alpha q).matrix j o d c = 1) ∧
+    ((∀ j c, ∑ o, ∑ d, (rawModel alpha q).matrix j o d c = 1) ∧
        ∀ j o d c, 0 ≤ (rawModel alpha q).matrix j o d c) := by
   classical
-  letI := (rawModel alpha q).finite
-  letI := (rawModel alpha q).finiteOutputs
+
+
   have hp := (full_model_probability .raw alpha q ha).2.2
   constructor
   · intro j c
@@ -360,14 +349,13 @@ private theorem raw_probability {m : ℕ} (alpha : unitInterval)
 def OutputMassBridge {m : ℕ} {task : Task} {alpha : unitInterval}
     {q : Fin m → unitInterval} (w : Fin m → ℝ) (R : MassModel task alpha q)
     (feature : State → R.Carrier → ℝ) : Prop :=
-  ∀ (Seed : Type) [MeasurableSpace Seed] (policy : Policy Seed)
+  ∀ (Seed : Type*) [MeasurableSpace Seed] (policy : Policy Seed)
     (nu : Measure Seed) [IsProbabilityMeasure nu] (n : ℕ) (h : State) (B : Set Seed),
     MeasurableSet B →
     let law := nu.prod (sourceMixture alpha q w)
     let E := nativeEvent policy n h B
     0 < law.real E → ∀ (j : Side) (o : Output),
-      (letI := R.finite
-       law.real (E ∩ {p | (nativeStep task p.2 h j).1 = o}) =
+      (law.real (E ∩ {p | (nativeStep task p.2 h j).1 = o}) =
          law.real E * ∑ d, Matrix.mulVec (R.matrix j o) (feature h) d)
 
 private theorem native_output_mass_bridge {m : ℕ} {task : Task} {alpha : unitInterval}
@@ -375,8 +363,8 @@ private theorem native_output_mass_bridge {m : ℕ} {task : Task} {alpha : unitI
     (feature : State → R.Carrier → ℝ) (hb : FullNativeBridge w R feature) :
     OutputMassBridge w R feature := by
   classical
-  letI := R.finite
-  letI := R.finiteOutputs
+
+
   intro Seed inst policy nu prob n h B hB
   dsimp only
   intro hE j o
@@ -397,18 +385,18 @@ private theorem native_output_mass_bridge {m : ℕ} {task : Task} {alpha : unitI
   intro d hd
   simp [Matrix.mulVec,dotProduct,mul_comm]
 
-/-- Scaling the next feature by its actual event mass gives unnormalized transport. -/
+/-- Joint mass transport under the specified next query `j`, conditioned on its output.
+This is not the next-history mass under the original randomized policy. -/
 def UnnormalizedBridge {m : ℕ} {task : Task} {alpha : unitInterval}
     {q : Fin m → unitInterval} (w : Fin m → ℝ) (R : MassModel task alpha q)
     (feature : State → R.Carrier → ℝ) : Prop :=
-  ∀ (Seed : Type) [MeasurableSpace Seed] (policy : Policy Seed)
+  ∀ (Seed : Type*) [MeasurableSpace Seed] (policy : Policy Seed)
     (nu : Measure Seed) [IsProbabilityMeasure nu] (n : ℕ) (h : State) (B : Set Seed),
     MeasurableSet B →
     let law := nu.prod (sourceMixture alpha q w)
     let E := nativeEvent policy n h B
     0 < law.real E → ∀ (j : Side) (source : Source),
-      (letI := R.finite
-       let step := nativeStep task source h j
+      (let step := nativeStep task source h j
        let v := Matrix.mulVec (R.matrix j step.1) (feature h)
        0 < (∑ d, v d) → ∀ d,
          law.real (E ∩ {p | (nativeStep task p.2 h j).1 = step.1}) * feature step.2 d =
@@ -428,18 +416,17 @@ private theorem native_unnormalized_bridge {m : ℕ} {task : Task} {alpha : unit
 def RandomNativeBridge {m : ℕ} {task : Task} {alpha : unitInterval}
     {q : Fin m → unitInterval} (w : Fin m → ℝ) (R : MassModel task alpha q)
     (feature : State → R.Carrier → ℝ) : Prop :=
-  ∀ (Seed : Type) [MeasurableSpace Seed] (policy : Policy Seed)
+  ∀ (Seed : Type*) [MeasurableSpace Seed] (policy : Policy Seed)
     (nu : Measure Seed) [IsProbabilityMeasure nu] (n : ℕ) (h : State) (B : Set Seed),
     MeasurableSet B →
     let law := nu.prod (sourceMixture alpha q w)
     let E := nativeEvent policy n h B
     0 < law.real E →
-    ∀ (Fresh : Type) [MeasurableSpace Fresh] (rho : Measure Fresh) [IsProbabilityMeasure rho]
+    ∀ (Fresh : Type*) [MeasurableSpace Fresh] (rho : Measure Fresh) [IsProbabilityMeasure rho]
       (tests : Fresh → Test), Measurable[(inferInstance : MeasurableSpace Fresh), ⊤] tests →
       MeasurableSet {p : Fresh × (Seed × Source) |
         p.2 ∈ E ∧ nativeAccept task p.2.2 h (tests p.1) = true} →
-      (letI := R.finite
-       (rho.prod law).real {p | p.2 ∈ E ∧ nativeAccept task p.2.2 h (tests p.1) = true} =
+      ((rho.prod law).real {p | p.2 ∈ E ∧ nativeAccept task p.2.2 h (tests p.1) = true} =
          law.real E * ∑ c, feature h c * (∫ u, testRow R (tests u) c ∂rho))
 
 private theorem test_row_bounds {m : ℕ} {task : Task} {alpha : unitInterval}
@@ -448,8 +435,8 @@ private theorem test_row_bounds {m : ℕ} {task : Task} {alpha : unitInterval}
     (hp : ∀ j o d c, 0 ≤ R.matrix j o d c) (T : Test) (c : R.Carrier) :
     0 ≤ testRow R T c ∧ testRow R T c ≤ 1 := by
   classical
-  letI := R.finite
-  letI := R.finiteOutputs
+
+
   induction T generalizing c with
   | read accept => simp only [testRow]; split_ifs <;> norm_num
   | inspect next ih => exact ih (R.mode c) c
@@ -469,7 +456,7 @@ private theorem random_native_bridge {m : ℕ} {task : Task} {alpha : unitInterv
     (hn : letI := R.finite; letI := R.finiteOutputs; ∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1)
     (hp : ∀ j o d c, 0 ≤ R.matrix j o d c) : RandomNativeBridge w R feature := by
   classical
-  letI := R.finite
+
   intro Seed inst policy nu prob n h B hB
   dsimp only
   intro hE Fresh instFresh rho probFresh tests htests hmeas
@@ -524,7 +511,7 @@ private theorem marker_recovers_root (source : Source) (hn : noAdjacentOnes sour
     have hi' := hp j i hi
     change ¬(endpoint source j i = false ∧ arm source j i = false)
     exact of_decide_eq_false hi'
-  have he := (hchar source.1 (endpoint source j) rfl hx (sideCount actions j)).mp hz
+  have he := (no_marker_iff_alternating_prefix source.1 (endpoint source j) rfl hx (sideCount actions j)).mp hz
     (sideCount actions j) le_rfl
   have hm' := of_decide_eq_true hm
   have hb : alternatingBit source.1 (sideCount actions j) = false := he.symm.trans hm'.1
@@ -533,7 +520,7 @@ private theorem marker_recovers_root (source : Source) (hn : noAdjacentOnes sour
   cases hr : source.1 <;> rcases hmod with hmod | hmod <;>
     simp [alternatingBit,hr,hmod] at hb ⊢
 
-private theorem stopped_root_recovery {Seed : Type} [MeasurableSpace Seed]
+private theorem stopped_root_recovery {Seed : Type*} [MeasurableSpace Seed]
     (policy : Policy Seed) (seed : Seed) (source : Source) (hn : noAdjacentOnes source)
     (n : ℕ) : (actualRun policy seed source n).stopped = true →
       recoveredRoot (actualRun policy seed source n) = source.1 := by
@@ -557,7 +544,7 @@ private theorem stopped_root_recovery {Seed : Type} [MeasurableSpace Seed]
 def RootCoupling {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval)
     (w : Fin m → ℝ) : Prop :=
   ∀ᵐ source ∂sourceMixture alpha q w,
-    ∀ (Seed : Type) [MeasurableSpace Seed] (policy : Policy Seed) (seed : Seed) (n : ℕ),
+    ∀ (Seed : Type*) [MeasurableSpace Seed] (policy : Policy Seed) (seed : Seed) (n : ℕ),
       (actualRun policy seed source n).stopped = true →
         recoveredRoot (actualRun policy seed source n) = source.1
 
@@ -575,23 +562,21 @@ private theorem source_root_coupling {m : ℕ} (alpha : unitInterval)
   exact stopped_root_recovery policy seed source hs n
 
 /-- The complete finite-atom upper bound includes normalized columns and native tests. -/
-def Proposition278 : Prop :=
+def FiniteAtomUpperBounds : Prop :=
   ∀ (m : ℕ) (alpha : unitInterval) (q : Fin m → unitInterval) (w : Fin m → ℝ),
     0 < (alpha : ℝ) → (alpha : ℝ) < 1 →
     (∀ i, 0 < (q i : ℝ) ∧ (q i : ℝ) < 1) → Function.Injective q →
     (∀ i, 0 < w i) → (∑ i, w i) = 1 →
     exceptionalCount alpha q ≤ 1 ∧
       ∀ task : Task, ∃ (R : MassModel task alpha q) (feature : State → R.Carrier → ℝ),
-        (letI := R.finite
-         letI := R.finiteOutputs
-         Fintype.card R.Carrier = desiredCard task alpha q ∧
+        (Fintype.card R.Carrier = desiredCard task alpha q ∧
            (∀ j c, ∑ o, ∑ d, R.matrix j o d c = 1) ∧
            (∀ j o d c, 0 ≤ R.matrix j o d c)) ∧ FullNativeBridge w R feature ∧ FeatureUpdates R feature ∧ RandomNativeBridge w R feature ∧
           OutputMassBridge w R feature ∧ UnnormalizedBridge w R feature
 
 
-/-- Exact finite native-test dimensions for all three interfaces. -/
-theorem result : Proposition278 ∧
+/-- Finite native-test linear dimension upper bounds for all three interfaces. -/
+theorem result : FiniteAtomUpperBounds ∧
     (∀ (m : ℕ) (alpha : unitInterval) (q : Fin m → unitInterval) (w : Fin m → ℝ),
       RootCoupling alpha q w) := by
   refine ⟨?_, fun _ alpha q w => source_root_coupling alpha q w⟩
