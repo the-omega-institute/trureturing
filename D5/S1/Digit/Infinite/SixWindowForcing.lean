@@ -88,14 +88,16 @@ private theorem allow (ν : ℝ) (hν : ν < lambda) (x : LegalDigits)
   have hr := root x j
   obtain ⟨hlo, hhi⟩ := observation_bounds ν i _ hx
   generalize window x j = l at hr ⊢
-  letI : Fintype Label := by
-    unfold Label D5.S1.Digit.Infinite.WindowSuccessorGraph.X
-    infer_instance
-  fin_cases l <;> fin_cases i
-  all_goals norm_num [nullLabel, threeLabel, twoLabel, fiveLabel, twoFiveLabel] at *
-  all_goals try (first | exact Or.inl rfl | exact Or.inr rfl)
+  have hn0 := l.property 0 (by decide)
+  have hn1 := l.property 1 (by decide)
+  cases h0 : l.val 0 <;> cases h1 : l.val 1 <;> cases h2 : l.val 2
+  all_goals simp [h0, h1, h2] at hn0 hn1
+  all_goals fin_cases i
   all_goals
-    exfalso
+    norm_num [Subtype.ext_iff, funext_iff, Fin.forall_fin_succ,
+      Fin.forall_fin_zero, nullLabel, threeLabel, twoLabel, fiveLabel,
+      twoFiveLabel, h0, h1, h2] at hr ⊢
+  all_goals
     norm_num [cellLower, cellUpper, cuts, lambda, ht, ht2] at hlo hhi hν
     norm_num [ht, ht2] at hr
     nlinarith only [hg2, hglo, hghi, hlo, hhi, hν, hr.1, hr.2]
@@ -597,7 +599,7 @@ private theorem six_forcing (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
   have hr : j % 6 = 0 ∨ j % 6 = 1 ∨ j % 6 = 2 ∨
       j % 6 = 3 ∨ j % 6 = 4 ∨ j % 6 = 5 := by omega
   rcases hr with hr | hr | hr | hr | hr | hr
-  all_goals rw [he, hr]; norm_num [blockA, blockB]
+  all_goals simp only [hr]; rw [he, hr]; norm_num [blockA, blockB]
   · exact ⟨hax, hay⟩
   · exact ⟨ht.2.2.2.1, ht.2.2.2.2.1⟩
   · exact ⟨ht.2.2.2.2.2.1, ht.2.2.2.2.2.2⟩
@@ -689,9 +691,9 @@ theorem result (ν : ℝ) (h0 : 0 ≤ ν) (hν : ν < lambda) :
     rw [hn] at h1x h1y
     obtain ⟨ha, hb⟩ := split_bounds ν hν x y j i ⟨hi, hi'⟩ h0x h0y hl hh
     refine ⟨hc, hn, ?_, ?_, common_next ν hν x y j i ⟨hi, hi'⟩ h0x h0y hl hh h1x h1y⟩
-    · have h := (div_le_iff₀ hp).2 ha
+    · have h := (div_le_iff₀' hp).2 ha
       linarith only [h]
-    · have h := (div_le_iff₀ hp).2 hb
+    · have h := (div_le_iff₀' hp).2 hb
       linarith only [h]
   · intro x y j r hs hc hl hh he
     exact (three_bound ν hν x y j r hs 3 (Or.inl rfl) hc hl hh he).1 rfl
