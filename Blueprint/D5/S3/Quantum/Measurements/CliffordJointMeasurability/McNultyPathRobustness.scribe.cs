@@ -19,7 +19,9 @@ internal sealed class McNultyPathRobustnessDocument : IScribeDocumentDefinition
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("result", "result", F1(),
                 "The operator certificate gives the upper bound for P₂ₙ. Restricting a parent to its initial induced path gives the same upper bound for P₂ₙ₊₁ and C₂ₙ₊₂. For the lower bound, each family is represented or extended by 2n+2 Majoranas and compressed from the Fourier-vacuum parent. The even-cycle construction uses the central involution and relabels the final outcome in each central sector.", "result",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mcnulty-2025-path-robustness"), ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string prose,
         string declaration, DescribeRole role, AssessedProvenance provenance,

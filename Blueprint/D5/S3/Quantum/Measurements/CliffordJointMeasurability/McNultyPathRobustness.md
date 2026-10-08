@@ -24,6 +24,10 @@ $$\begin{aligned}\operatorname{claim}\end{aligned}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Measurements/CliffordJointMeasurability/McNultyPathRobustness.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/mcnulty-2025-path-robustness` (proved) by `D5/S3/Quantum/Measurements/CliffordJointMeasurability/McNultyPathRobustness.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"mcnulty-2025-path-robustness","declaration_gid":"D5/S3/Quantum/Measurements/CliffordJointMeasurability/McNultyPathRobustness.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Daniel McNulty (2025). *A Graph-Theoretic Approach to Quantum Measurement Incompatibility*. URL: <https://arxiv.org/abs/2511.15954>.
