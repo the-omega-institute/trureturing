@@ -8,10 +8,13 @@
 
 /- Judgement:
    admission_basis: escape-witness (#14289).
-   result has proof_shape: content; escape_witness: sOne_eq and sZero_eq (explicit finite
-   decompositions of I + K and n I − K as nonnegative sums of Kronecker products of rank-one
-   positive semidefinite matrices) and coeffs_nonneg (the polynomial certificate deriving the
-   nonnegativity of the four separable coefficients of Φ ∘ Φ from the eight PPT inequalities).
+   result has proof_shape: content. escape_witness (independent intermediate propositions on its
+   proof path, preregistered in #14289): sep_sOne and sep_sZero, the existence statements
+   separableCone (I + K) and separableCone (n I − K), whose finite decompositions into Kronecker
+   products of rank-one positive semidefinite matrices are constructed in sOne_eq and sZero_eq and
+   are supplied by no frozen or Mathlib declaration; and coeffs_nonneg, the derivation of the four
+   coefficient inequalities of Φ ∘ Φ from the eight PPT inequalities by explicit products of pairs
+   of hypotheses with polynomial multipliers.
    Definitions have proof_shape: not-applicable; escape_witness: null:
    chi; ex; pv; term; sOne; sZero; zeta; rootv; regroup; choi; grp; qf; kv; i0; i1; flat; claim.
    phi_comp (public; the map identity of the preregistered statement) has proof_shape:
