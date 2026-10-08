@@ -257,7 +257,9 @@ material 校验，`include_in_statement=false` 的声明也须有对应材料。
 不安全或穿越 symlink 的路径、模块冲突或无法解析、无效的 utility/claim 输入均不
 通过；不会猜测输入或把错误降为缓存未命中。只声明为 `optional` 的缺项可被接受。
 Lean、audit、工具构建和发布失败也返回非零。阶段失败输出会指出
-`LEAN_INSPECTOR_FAILED phase=… exit=…` 并打印诊断；ensure 成功后，各阶段诊断保存在
+`LEAN_INSPECTOR_FAILED phase=… exit=…` 并打印诊断；阶段被信号中断时输出
+`LEAN_INSPECTOR_INTERRUPTED phase=… exit=…`、该阶段已有输出及原生阶段观察，保留非零退出码。
+ensure 成功后，各阶段诊断保存在
 所选输出文件名后附的 `.logs/` 目录中。修正具名输入或构建错误后，仍使用同一
 `make lean-report` 入口重试。
 
