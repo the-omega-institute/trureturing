@@ -48,5 +48,6 @@ jobs:
         with:
           name: cold-cost-${{ github.sha }}-${{ github.run_id }}-${{ github.run_attempt }}
           path: ${{ runner.temp }}/cold-cost
+          include-hidden-files: true
           if-no-files-found: error
           retention-days: 14
