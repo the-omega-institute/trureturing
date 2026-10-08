@@ -447,6 +447,403 @@ Equations (O9) and (O11) show that a nearly null raw source metric and a small c
 
 The additional interface is the complete physical collar norm (O11) and its same-source comparison with the isolated actual prime branch (O12)–(O13). Classical mixed nullity, support Cauchy--Schwarz, Riesz representation, zero summability and the accepted moving-slot construction are reused. This is a paper-level application, without Lean certification or a mathematical-priority claim.
 
+## A natural-tail cutoff pays one actual old direction
+
+The small response in (O11) cannot be divided by the old-energy upper bound in (O6). The following chooses a different cutoff of the same odd null function and proves a matching lower denominator. It pays only the resulting one-dimensional old direction; the full inverse supremum remains separate.
+
+Reuse the original theta series and derivative bounds in [the derivative-family account](lagarias2004li.md#the-full-derivative-family-and-the-remaining-estimate), the [compact weighted-jet/domain bridge and complete two-pole formula](frankliebseiringer2006hardy.md#the-exact-auxiliary-line-does-not-replace-the-discarded-residual), and the Gamma scaling calculation underlying [the physical compression benchmark](#full-form-transport-benchmarks-and-the-v2-correspondence-input). The even theta-weighted exterior and commutator estimates in [Lenz's application](lenz2010compactness.md) have a different metric and are not used as odd physical estimates.
+
+Retain $g$, the fixed $M$, and the actual endpoints $k_j,a_j,b_j,h_j,E_j$ from (O1)–(O3) and (O10). Put
+
+$$
+R_j=a_j/2=\tfrac14\log k_j,\qquad
+\delta_j=e^{-2R_j}=k_j^{-1/2}.
+$$
+
+Fix a real smooth function $0\le\eta\le1$, zero on $(-\infty,0]$ and one on $[1,\infty)$. Define a new compact odd old test and its actual error tail by
+
+$$
+\widetilde u_j(y)=\bigl(1-\eta((|y|-R_j)/\delta_j)\bigr)g(y),\qquad
+e_j(y)=g(y)-\widetilde u_j(y).
+\tag{T1}
+$$
+
+The multiplier is constant near zero, so the use of $|y|$ does not impair smoothness. The support of $\widetilde u_j$ lies in $[-R_j-\delta_j,R_j+\delta_j]\Subset(-a_j,a_j)$ for large $j$. It still agrees with $g$ on the actual reflected source slots. This is a change of the chosen test family, not a change of any arithmetic operator, prime branch or earlier cutoff statement.
+
+### The actual tail has one natural width
+
+Suppress $j$ temporarily and write $R=R_j$, $\delta=\delta_j$. Directly differentiating the reused theta series gives
+
+$$
+g(R)=-32\pi^5e^{21R/2}e^{-\pi e^{2R}}(1+O(e^{-2R})).
+$$
+
+Thus $A_R=-g(R)>0$ for large $R$. Let
+
+$$
+H_R(s)=-e_j(R+\delta s)/A_R,\qquad
+H(s)=\eta(s)e^{-2\pi s},\qquad
+c_\eta=\int_0^\infty H(s)^2ds>0,
+$$
+
+with both profiles zero for $s\le0$. The same first theta term and its derivatives, with the remaining normally convergent series exponentially smaller, show
+
+$$
+H_R\longrightarrow H\quad\text{in }L^1\cap H^2,
+\qquad
+|H_R^{(m)}(s)|\le C_m e^{-c s}\quad(s\ge0,\ 0\le m\le2),
+\tag{T2}
+$$
+
+for fixed $c>0$ and constants independent of large $R$. Indeed
+$e^{2R}(e^{2\delta s}-1)\ge2s$ and $\delta e^{2R}=1$; the polynomial factors from each fixed derivative are absorbed by this exponential. On bounded $s$ the leading term tends to $e^{-2\pi s}$, giving the stated dominated convergence. Consequently the actual odd error mass is
+
+$$
+M_R:=\|e_j\|_2^2=2A_R^2\delta(c_\eta+o(1)).
+\tag{T3}
+$$
+
+These theta consequences are intermediate applications, not independent new theta identities.
+
+### A complete-form bridge for this noncompact error
+
+Only $\widetilde u_j$ is an old compact arithmetic test. To calculate its energy, approximate the fixed-$j$ error $e_j$ by real even compact cutoffs times $e_j$. The reused all-order theta tails pay the weighted two-jet error and both pole integrals. They also supply the Gamma small-shift bound by the first derivative and an integrable large-shift majorant.
+
+For the complete prime sum, the same two-tail estimate used in the derivative-family domain passage applies:
+
+$$
+e^{2|y|}+e^{2|y-\log n|}\ge2n.
+$$
+
+Products of fixed theta derivatives therefore have integrated majorant $C_j n^{d_j}e^{-c_j n}$, including every prime power and independent of the outer approximation cutoff. This proves absolute convergence and dominated passage for the prime correlations. The full paired zero sum passes by the weighted-jet bridge and multiplicity-weighted inverse-fourth zero mass.
+
+Write $Q^{\rm tail}(e_j)$ for this particular limit of the complete arithmetic expressions. This defines neither a new closed operator nor positivity on an arbitrary noncompact domain. At every actual zero, (O1) gives $\widehat e_j(z_\rho)=-\widehat{\widetilde u_j}(z_\rho)$, and likewise for the reflected factor. Thus, with actual zero real parts, both signs and multiplicities unchanged,
+
+$$
+Q(\widetilde u_j)=Q^{\rm tail}(e_j),\qquad
+B_Q(\widetilde u_j,v)=-B_Q^{\rm tail}(e_j,v)
+\tag{T4}
+$$
+
+for every compact smooth odd collar probe $v$. The same domain passage supplies the mixed equality. This reuses full mixed nullity rather than replacing the off-line pair by a modulus square.
+
+On this tail the complete expression is
+
+$$
+\begin{aligned}
+Q^{\rm tail}(e_j)={}&c_\Gamma\|e_j\|_2^2
++\int_0^\infty\kappa(t)\|e_j-\tau_t e_j\|_2^2dt\\
+&-2\sum_{n\ge2}\frac{\Lambda(n)}{\sqrt n}
+\Re\langle e_j,\tau_{\log n}e_j\rangle
+-2\left|\int e_j(y)\sinh(y/2)dy\right|^2,
+\end{aligned}
+\tag{T5}
+$$
+
+where $c_\Gamma=\Re\operatorname{digamma}(1/4)-\log\pi$ and $\kappa$ is exactly (O10). The unbounded prime sum is paid by the domain bridge; it is not truncated at the compact old endpoint.
+
+### The lower denominator retains Gamma, every prime and the true pole
+
+For one positive-tail copy $f_R(y)=-A_R H_R((y-R)/\delta)$, the reused Gamma dilation calculation has the explicit form
+
+$$
+\int_0^\infty\kappa(t)\|f_R-\tau_t f_R\|_2^2dt
+=A_R^2\delta\int_0^\infty\delta\kappa(\delta s)
+\|H_R-\tau_sH_R\|_2^2ds
+=\bigl(\log(1/\delta)+O(1)\bigr)\|f_R\|_2^2.
+$$
+
+For completeness, the profile bounds in (T2) pay the uniform remainder: below $s=1$ use the derivative bound; above it write the squared increment as $2\|H_R\|_2^2-2\Re\langle H_R,\tau_sH_R\rangle$, with exponentially decaying correlation. The scalar integral obeys $2\int_\delta^\infty\kappa(t)dt=\log(1/\delta)+O(1)$. This is the existing kernel scaling mechanism, consumed here with a noncompact but controlled profile.
+
+The reflected tail cross term is at separation at least $2R$, so its absolute value is at most $C A_R^2\delta^2e^{-R}=O(e^{-3R}M_R)$. Combining the two tails and the actual $c_\Gamma$ gives the Gamma part $(2R+O(1))M_R$.
+
+The same-side prime correlations satisfy $C A_R^2\delta e^{-c t/\delta}$. Their sum over $t=\log n\ge\log2$, using only $\Lambda(n)\le\log n$, is exponentially small in $1/\delta$ relative to $M_R$. Opposite tails only correlate for $t\ge2R$; putting $v=(t-2R)/\delta$ bounds the correlation by $C A_R^2\delta(1+v)e^{-c v}$. Absorb the polynomial into a smaller exponential. For $T=e^{2R}=1/\delta$, elementary integral comparison then gives
+
+$$
+\sum_{n\ge\lceil T\rceil}\frac{\log n}{\sqrt n}
+e^{-c\log(n/T)/\delta}\le C R e^{-R}.
+$$
+
+Hence the absolute value of the full prime correction is at most $C R e^{-R}M_R$. No prime-distribution hypothesis or finite prime sample is used. The true odd pole is also controlled on this same error:
+
+$$
+\left|\int e_j(y)\sinh(y/2)dy\right|
+\le C A_R\delta e^{R/2},\qquad
+2\left|\int e_j\sinh(y/2)\right|^2\le C e^{-R}M_R.
+$$
+
+Equations (T3)–(T5) therefore give the matching complete lower energy
+
+$$
+\boxed{Q(\widetilde u_j)=(2R_j+O(1))M_{R_j}>0\quad(j\text{ large}).}
+\tag{T6}
+$$
+
+The actual pole-free old energy has the same asymptotic, since it adds precisely the displayed pole square. This establishes positivity only for this specified compact family.
+
+### The complete physical collar row at the same scale
+
+Let $\widetilde Y_j^Q$ be the literal response (O10) with $u_j$ replaced by $\widetilde u_j$. Use (T4) to estimate it from the tail. The whole-line Gamma row of $e_j$ has its local multiplier and symmetric difference integral retained. On $y\in(a_j,b_j)=(2R_j,2R_j+h_j)$ its local small-shift part is negligible by the original theta tails, while the remote part is bounded by
+
+$$
+C A_R\delta e^{-R/2}.
+$$
+
+One can split at $t=R/2$: below it, $y\pm t\ge3R/2$ and the symmetric small-shift difference is paid by the second derivative; above it, (T2) and $\kappa(t)\le C e^{-t/2}$ bound the near-$R$ tail by $A_R\delta e^{-(y-R)/2}$ and its reflected partner by $A_R\delta e^{-(y+R)/2}$. The remaining theta tail is smaller than these budgets.
+
+The full prime row is estimated without deleting the translations beyond the old compact threshold. For $T_-=e^{y-R}$ and $T_+=e^{y+R}$, the two source regions of $e_j(y-\log n)$ give
+
+$$
+\begin{aligned}
+\sum_{2\le n\le T_-}\frac{\Lambda(n)}{\sqrt n}
+|e_j(y-\log n)|&\le C A_R\log T_-\bigl(T_-^{-1/2}+\delta T_-^{1/2}\bigr),\\
+\sum_{n\ge T_+}\frac{\Lambda(n)}{\sqrt n}
+|e_j(y-\log n)|&\le C A_R\log T_+\bigl(T_+^{-1/2}+\delta T_+^{1/2}\bigr).
+\end{aligned}
+$$
+
+These follow by summing the bounds $(n/T_-)^{c/\delta}$ and $(n/T_+)^{-c/\delta}$ from (T2), respectively, and using $\Lambda(n)\le\log n$. Endpoint terms are retained in the integral comparison, including when $\delta T_-<1$. Since $T_-\asymp e^R$, $T_+\asymp e^{3R}$ and $\delta=e^{-2R}$, their total is $C A_R R e^{-R/2}$. The other orientation $e_j(y+\log n)$ is smaller than every exponential in $R$ relative to $A_R$ by the same bound. Odd reflection supplies the negative collar, with no omitted orientation.
+
+Finally the true pole row is bounded by
+$2|\int e_j\sinh(y/2)|\sinh(y/2)\le C A_R e^{-R/2}$ on the positive collar. Thus (T4), with all local, Gamma, prime and pole terms retained, gives
+
+$$
+\boxed{\|\widetilde Y_j^Q\|_2^2
+\le C h_j A_{R_j}^2R_j^2e^{-R_j}.}
+\tag{T7}
+$$
+
+This is a full physical $L^2(E_j)$ row bound, uniform in every collar coefficient. The true pole-free core response satisfies the same bound, since its actual pole-removal term has the just-displayed size. Its identification with source-defined operators still requires the complete common-core map.
+
+### A correctly directed rank-one debit, with the other directions unpaid
+
+Since $h_j\asymp e^{-4R_j}$, (T3), (T6) and (T7) now supply a lower denominator and upper numerator on the same actual test:
+
+$$
+\boxed{
+\frac{|B_Q(\widetilde u_j,v)|^2}{Q(\widetilde u_j)}
+\le C R_j e^{-3R_j}\|v\|_2^2
+\le C(\log k_j)k_j^{-3/4}\|v\|_2^2.
+}
+\tag{T8}
+$$
+
+It holds for every odd $L^2$ collar $v$, by the response representation and density; the denominator is positive for large $j$ by (T6), without an all-support positivity assumption. The same statement holds with the true pole-free form in both numerator and denominator. Constants may depend on the fixed smooth transition and theta kernel, but not on $j$ or $v$.
+
+Equation (T8) pays the variational debit restricted to the line $\mathbb C\widetilde u_j$. It is not the supremum over the full old space, does not remove cross terms with its old complement, and does not bound the entire operator $B_{A,k}^*A_k^{-1}B_{A,k}$. Applying it to that source's restricted line remains conditional on the source's complete form and norm identification. The original signed Robin main estimate and RH remain open.
+
+The additional interface is the matched complete physical old-energy/collar-response quotient (T6)–(T8) at the natural theta-tail width. Theta nullity and tails, Gamma dilation, the full explicit formula and standard comparison/domain arguments are reused as inputs. The calculation is paper-level, without Lean certification or a mathematical-priority claim.
+
+## Joint control of a fixed derivative space at actual collars
+
+Fix an integer $d\ge1$. A separate bound for each of $d+1$ old lines does not control their joint variational debit: their actual energy Gram can have much smaller directions. The following controls every complex combination, including coefficients depending on the endpoint, using the same natural-tail cutoff and physical form as (T1)–(T8).
+
+Reuse the [full theta derivative family and its compact-domain bridge](lagarias2004li.md#the-full-derivative-family-and-the-remaining-estimate), [Romik's original series and natural tail scale](../Analytic/romik2021orthogonal.md#reusable-theta-tail-and-its-local-scale), and the complete Gamma, prime and two-pole bounds in (T4)–(T7). The common negative-edge Gram in the [even critical-space account](lagarias2004li.md) has a different measure, parity and form; its invertibility is not an inverse bound for the present odd physical energy. Classical polynomial interpolation and finite-dimensional Gram stability are used inside the joint estimate, not presented as new supplier theorems.
+
+Let $D=d/dy$ and define
+
+$$
+g_m=D^{2m+1}(D^2-1/4)\Phi,\qquad 0\le m\le d.
+$$
+
+The existing theta transform and tilted integration by parts give
+
+$$
+\int g_m(y)e^{zy}dy
+=-z^{2m+1}(z^2-1/4)\xi(1/2+z).
+$$
+
+Every $g_m$ is odd, vanishes at all actual zeros in this transform, and annihilates both pole arguments. Retain the actual $k_j,a_j,b_j,h_j,E_j$, $R_j=\log(k_j)/4$, $\delta_j=e^{-2R_j}$ and the one fixed smooth transition $\eta$ from (T1). Write
+
+$$
+\chi_j(y)=1-\eta((|y|-R_j)/\delta_j),\qquad
+U_{j,d}=\operatorname{span}_{\mathbb C}\{\chi_jg_0,\ldots,\chi_jg_d\}.
+\tag{T9}
+$$
+
+All these tests have the same compact old support. The coefficients in $U_{j,d}$ are unrestricted at each $j$; no fixed-vector limit is substituted for a uniform estimate.
+
+### Resolve coalescing tails before taking an inverse
+
+Suppress $j$ and put $R=R_j$, $\delta=e^{-2R}$, $T=e^{2R}=1/\delta$. In the original theta series the $n=1$ term is
+
+$$
+\Phi_1(y)=e^{y/2}P(X)e^{-\pi X},\qquad
+X=e^{2y},\quad P(X)=4\pi^2X^2-6\pi X.
+$$
+
+Differentiation acts on its polynomial by
+
+$$
+\mathcal D=\tfrac12+2X\tfrac d{dX}-2\pi X.
+$$
+
+Thus the first-term polynomial for $g_m$ is
+
+$$
+p_m=(\mathcal D^{2m+3}-\tfrac14\mathcal D^{2m+1})P,
+\qquad
+\nu_m=\deg p_m=2m+5,\qquad
+a_m=4\pi^2(-2\pi)^{2m+3}
+$$
+
+with leading coefficient $a_m$. Introduce the scaled jet matrix
+
+$$
+\mathsf J(T)_{s,m}
+=\frac{T^s p_m^{(s)}(T)}{s!\,a_mT^{\nu_m}},\qquad 0\le s,m\le d.
+\tag{T10}
+$$
+
+Since every lower polynomial coefficient is fixed, $\mathsf J(T)_{s,m}=\binom{\nu_m}{s}+O_d(T^{-1})$. The limiting matrix is invertible: the standard polynomial Vandermonde determinant is
+
+$$
+\det\left[\binom{\nu_m}{s}\right]_{s,m=0}^d
+=\frac{\prod_{m<n}(\nu_n-\nu_m)}{\prod_{s=0}^d s!}
+=2^{d(d+1)/2}\ne0.
+$$
+
+For large $R$, define a real change of basis by
+
+$$
+\beta_{mr}(T)=\frac{T^{r-\nu_m}}{a_m}
+[\mathsf J(T)^{-1}]_{mr},\qquad
+G_{r,R}=\sum_{m=0}^d\beta_{mr}(T)g_m,
+\qquad 0\le r\le d.
+$$
+
+Its first-term polynomial $q_{r,T}=\sum_m\beta_{mr}p_m$ has exact jets
+
+$$
+\frac{q_{r,T}^{(s)}(T)}{s!}=\mathbf1_{\{s=r\}}\quad(0\le s\le d),
+\qquad
+|\beta_{mr}(T)|\le C_dT^{r-\nu_m}.
+\tag{T11}
+$$
+
+The higher jets obey $q_{r,T}^{(s)}(T)/s!=O_d(T^{r-s})$ for $d<s\le2d+5$. Consequently its exact Taylor polynomial is
+
+$$
+q_{r,T}(X)=(X-T)^r
++\sum_{s=d+1}^{2d+5}O_d(T^{r-s})(X-T)^s.
+$$
+
+This change of basis is invertible and depends on the same endpoint as the tests. It explicitly retains combinations that cancel the common leading tail; it does not assume the raw derivative Gram is uniformly conditioned.
+
+### A stable common profile Gram
+
+Put $B_R=e^{R/2}e^{-\pi T}$ and define the positive-tail error profiles
+
+$$
+F_{r,R}(s)=\eta(s)G_{r,R}(R+\delta s)/B_R,
+\qquad
+F_r(s)=\eta(s)(2s)^re^{-2\pi s},
+$$
+
+zero for $s\le0$. The first theta term is exactly
+
+$$
+\eta(s)e^{\delta s/2}
+q_{r,T}(Te^{2\delta s})
+e^{-\pi T(e^{2\delta s}-1)}.
+$$
+
+Here $Te^{2\delta s}-T\to2s$ on bounded $s$. Equations (T10)–(T11) give $q_{r,T}(Te^{2\delta s})\to(2s)^r$. For a uniform majorant use
+$T(e^{2\delta s}-1)\ge2s$ and $T(e^{2\delta s}-1)\le2s e^{2\delta s}$. The finite polynomial degree, the higher-jet bounds and two scaled derivatives are absorbed by the exponential. For the remaining theta terms $n\ge2$, the coefficients in (T11) and the normally convergent differentiated series give a bound
+$C_d T^d e^{-3\pi T}e^{-cs}$, also through two scaled derivatives. Thus
+
+$$
+F_{r,R}\longrightarrow F_r\quad\text{in }L^1\cap H^2,
+\qquad |F_{r,R}^{(l)}(s)|\le C_d e^{-cs}\quad(0\le l\le2),
+\tag{T12}
+$$
+
+uniformly in large $R$, with $c>0$ fixed. These are applications of the original series and the new finite jet coordinates; no differentiated asymptotic remainder is used.
+
+The limiting Gram is
+
+$$
+\mathsf K_d(r,t)=\int_0^\infty
+\eta(s)^2(2s)^{r+t}e^{-4\pi s}ds.
+$$
+
+It is positive definite: a nonzero polynomial cannot vanish almost everywhere on $s\ge1$, where $\eta=1$. Strong convergence in (T12) makes the finite Gram converge in operator norm. Hence there are constants $0<c_d<C_d$ and a sufficiently large $R_d$ such that for every $\mathbf a\in\mathbb C^{d+1}$ and $R\ge R_d$,
+
+$$
+c_d|\mathbf a|^2\le
+\left\|\sum_{r=0}^d a_rF_{r,R}\right\|_2^2
+\le C_d|\mathbf a|^2.
+$$
+
+Writing $F_{\mathbf a,R}=\sum_r a_rF_{r,R}$, the pointwise bounds, first two derivative norms and $L^1$ norm are also at most $C_d|\mathbf a|$. In particular they are controlled by $C_d\|F_{\mathbf a,R}\|_2$. This is uniform over coefficients depending on $R$; separate convergence of fixed derivative vectors would not provide it.
+
+Let
+
+$$
+g_{\mathbf a,R}=\sum_r a_rG_{r,R},\qquad
+u_{\mathbf a,R}=\chi_jg_{\mathbf a,R},\qquad
+e_{\mathbf a,R}=g_{\mathbf a,R}-u_{\mathbf a,R}.
+$$
+
+Odd reflection gives the exact mass and its two-sided coefficient comparison
+
+$$
+M_{\mathbf a,R}:=\|e_{\mathbf a,R}\|_2^2
+=2B_R^2\delta\|F_{\mathbf a,R}\|_2^2
+\asymp_d B_R^2\delta|\mathbf a|^2.
+\tag{T13}
+$$
+
+### Joint complete energy and response bounds
+
+For fixed $j,d,\mathbf a$, the compact outer-cutoff passage in (T4)–(T5) applies to this finite linear combination of theta derivatives. Each transform and both pole moments vanish for the uncut combination. Therefore its compact old energy equals the complete tail energy, and its mixed collar pairing is the negative tail pairing. The full paired zero multiset, every prime power and true pole are unchanged.
+
+All estimates in (T6)–(T7) depend on a scaled profile only through its norm, the first two derivative budgets and an exponential envelope. Equations (T12)–(T13) provide those budgets uniformly in $\mathbf a$, relative to its actual tail mass. In the energy calculation the Gamma remainder is $C_dM_{\mathbf a,R}$; the reflected Gamma term is $C_de^{-3R}M_{\mathbf a,R}$; same-side prime correlations are exponentially small in $1/\delta$; the full opposite-tail prime correction is $C_dR e^{-R}M_{\mathbf a,R}$; and the actual negative pole is $C_de^{-R}M_{\mathbf a,R}$. The discrete endpoint term in the prime sum is retained. Thus, uniformly for every coefficient vector,
+
+$$
+\boxed{
+|Q(u_{\mathbf a,R})-2R M_{\mathbf a,R}|
+\le C_d M_{\mathbf a,R}.
+}
+\tag{T14}
+$$
+
+The same estimate holds for the true pole-free core. It pays all cross terms in the complete old Gram, and makes it positive definite for sufficiently large $j$.
+
+For the collar row use the same two source thresholds $e^{y-R}$ and $e^{y+R}$ as (T7), with both translation orientations and their infinite tail. Replace the profile amplitude there by $B_R|\mathbf a|$, justified by (T12); the singular Gamma neighborhood and local multiplier are paid by the uniform second-derivative tail. The true pole moment is at most $C_dB_R|\mathbf a|\delta e^{R/2}$. With $Y_j^Q(u)$ denoting the full physical $L^2(E_j)$ response,
+
+$$
+\boxed{
+\|Y_j^Q(u_{\mathbf a,R})\|_2^2
+\le C_d h_jB_R^2|\mathbf a|^2R^2e^{-R}
+\le C_d h_jR^2e^{-R}\delta^{-1}M_{\mathbf a,R}.
+}
+\tag{T15}
+$$
+
+This is uniform over all old coefficients and all odd collar coefficients. The core response has the same bound after its actual pole-removal term. Neither weighted even commutators nor an independently optimized component budget is substituted for this physical row.
+
+### The actual restricted inverse is paid jointly
+
+Equations (T13)–(T15), $h_j\asymp e^{-4R_j}$ and $\delta_j=e^{-2R_j}$ give, for each fixed $d\ge1$ and all sufficiently large $j$,
+
+$$
+\boxed{
+\sup_{0\ne u\in U_{j,d}}
+\frac{|B_Q(u,v)|^2}{Q(u)}
+\le C_d R_j e^{-3R_j}\|v\|_2^2
+\le C_d(\log k_j)k_j^{-3/4}\|v\|_2^2.
+}
+\tag{T16}
+$$
+
+It holds for every odd $L^2$ collar $v$ by the complete response representation. In any basis $u_r$ of this actual compact old space, put
+$\mathsf G_{rt}=B_Q(u_t,u_r)$ and $b_r(v)=\overline{B_Q(u_r,v)}$. Then $\mathsf G\succ0$ and the standard finite-dimensional variational identity identifies the left side with $b(v)^*\mathsf G^{-1}b(v)$. Consequently (T16) is a bound for the complete restricted inverse, including its smallest-energy combinations, rather than the sum of $d+1$ rank-one bounds. It also holds with the true pole-free form in both Gram and forcing.
+
+The quantifiers are $\forall d\ \exists C_d,j_d\ \forall j\ge j_d$: no degree-uniform constant, growing-degree rate or certified numerical starting endpoint is supplied. The actual full old inverse can have additional directions outside $U_{j,d}$, and its interaction with their complement remains unpaid. Source-operator application still requires the full common-core and physical norm identification. The original selected-integer signed Robin estimate and RH remain unproved.
+
+The added interface is the coefficient-uniform complete physical Gram/forcing bound (T13)–(T16), made possible by the endpoint-dependent tail-jet construction (T10)–(T12). The individual cutoff estimate, theta nullity and tails, kernel scaling and classical interpolation/Gram identities are reused. This is a paper-level joint estimate, without Lean certification or a mathematical-priority claim.
+
 ## v2: the claimed induction step
 
 The following induction and fold formulas are those of [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), revised **20 September 2026**, 69 pages. At the arithmetic endpoint $a_k=(\log k)/2$, the source retains the pole term in $A_k=C_k-2|s_k\rangle\langle s_k|$. Lemma 6.27, under the old endpoint's positivity and inverse hypotheses, forms the actual harmonic extension
