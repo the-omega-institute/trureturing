@@ -550,6 +550,10 @@ $$\forall (n : \mathbb{N}) , 3 \leq n \to \exists (a : Fin n \to \mathbb{C}) (b 
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/ChoiKiemKye/MaximalBirankEdgeStates.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/choi-kiem-kye-2020-maximal-birank-edge-states` (proved) by `D5/S3/Quantum/Entanglement/ChoiKiemKye/MaximalBirankEdgeStates.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"choi-kiem-kye-2020-maximal-birank-edge-states","declaration_gid":"D5/S3/Quantum/Entanglement/ChoiKiemKye/MaximalBirankEdgeStates.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* J. Choi, Y.-H. Kiem, and S.-H. Kye (2020). *Entangled edge states of corank one with positive partial transposes*. DOI: [10.1063/1.5122836](https://doi.org/10.1063/1.5122836). URL: <https://arxiv.org/abs/1903.10745v2>.
