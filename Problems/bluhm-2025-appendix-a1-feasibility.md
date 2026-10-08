@@ -98,7 +98,7 @@ single closed formula replaces the two-piece construction of Theorem 5.6.
 - *Where it is tight.* $\det C_2=0$ exactly when $\sin\theta=1$ (the factor $1-s$), so the tuple is
   on the boundary of the feasible set at $\theta=\pi/2$; elsewhere in $[0,\pi/2)$ $C_2$ and $C_6$
   are positive definite.
-- *How far the formula extends* (argued, not formalized). Positivity of $C_1,C_3,C_4,C_5$, the
+- *How far the formula extends.* Positivity of $C_1,C_3,C_4,C_5$, the
   identity of the Route and the positivity of $A$, $B$ and $\operatorname{tr}C_2$ hold for every
   real $\theta$: the radicand of $\beta$ has minimum $13-4\sqrt3-\sqrt{120-48\sqrt3}>0$ over
   $\theta$, because $(13-4\sqrt3)^2-(120-48\sqrt3)=97-56\sqrt3>0$ ($97^2=9409>9408=3\cdot56^2$);
