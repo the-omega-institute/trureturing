@@ -24,6 +24,14 @@ internal sealed class IncomingLiftAmbiguityCriterionDocument : IScribeDocumentDe
         new Formula.Relation(left, FormulaRelationOperator.LessThan, right);
     private static Formula Twice(Formula value) =>
         new Formula.Binary(D(2), FormulaBinaryOperator.Multiply, value);
+    private static Formula Instances(Formula body, params Formula[] instances)
+    {
+        var items = new List<Formula>();
+        foreach (var instance in instances)
+            items.AddRange([OpenBracket, instance, CloseBracket, Comma, Sp]);
+        items.Add(body);
+        return Seq([.. items]);
+    }
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The original-edge code of a finite incoming lift is classified by unordered fiber ambiguity.",
@@ -36,6 +44,7 @@ internal sealed class IncomingLiftAmbiguityCriterionDocument : IScribeDocumentDe
             Blocks(
                 Paragraph(Text("Let A be an essential directed multigraph on a finite nonempty vertex set, and let the finite state set Q map onto its vertices. Each actual numbered edge a has a predecessor function from its whole terminal fiber to its initial fiber. The lifted graph has one edge with identity (a,q) from the predecessor of q to q. Count all these edges at each pair of endpoints to form C, and assume C is essential as well. Ranking and decoding at fixed endpoints preserve the full edge identity.")),
                 Paragraph(Text("Use all legal bilateral edge histories indexed by the integers, with discrete edge alphabets and the product subspace topology. The code pi reads the original edge a at every position. It is continuous and commutes with the one-step shifts. A conjugacy here is a homeomorphism whose forward function is this pi and which commutes with these shifts.")),
+                Paragraph(Text("In the display, ActualCountedLift(L) is the matrix C obtained by identifying Q with Fin(card(Q)) and counting the actual edges (a,q) at each ordered endpoint pair. OriginalEdgeReadout(L) decodes each numbered C edge at its fixed endpoints and reads a at every integer position. SumFiberChooseTwo(L) is the natural number P defined by the fiber-cardinality sum below. These are fixed values determined by L. ShiftCommutes(pi,C,A) means pi(shift(C,x))=shift(A,pi(x)) for every x. ContinuousInverseWithEdgeWindow includes continuity, both inverse equations, shift commutation and equality of the output edge whenever all d+1 input edges agree.")),
                 Paragraph(Text("A pair vertex is a two-element unordered subset of one state fiber. A numbered edge a gives an arrow from a terminal pair to the image pair under its predecessor function only when the image still has two elements. These arrows trace ambiguity backwards in real time. P counts these vertices exactly: sum over all base vertices of the binomial coefficient of the fiber cardinality and two.")),
                 Paragraph(Text("For every natural depth d, failure of forgetting on a compatible d-edge path is equivalent to a d-edge walk in this pair graph. Forgetting quantifies over every actual numbered path and its entire terminal fiber. At depth zero it uses the identity in every fiber.")),
                 Paragraph(Text("The four equivalent conditions are injectivity of pi, conjugacy of pi, existence of a finite forgetting depth, and absence of directed cycles in the pair graph. If P is zero, the least forgetting depth is zero. If P is positive and the pair graph is acyclic, its attained greatest walk length ell exists, the least forgetting depth is ell plus one, and every depth at most ell fails.")),
@@ -47,7 +56,8 @@ internal sealed class IncomingLiftAmbiguityCriterionDocument : IScribeDocumentDe
 
     private static Formula Claim()
     {
-        Formula l = F.Id("L"), p = F.Id("P"), pi = F.Id("pi");
+        Formula l = F.Id("L"), p = Call("SumFiberChooseTwo", l), pi = F.Id("pi");
+        Formula counted = Call("ActualCountedLift", l);
         Formula d = F.Id("d"), ell = F.Id("ell"), c = F.Id("c");
         Formula forget = Call("Forgets", l, d);
         Formula finiteForget = Some(forget, B("d", F.Id("Nat")));
@@ -70,20 +80,24 @@ internal sealed class IncomingLiftAmbiguityCriterionDocument : IScribeDocumentDe
                         And(Call("Periodic", Call("Apply", pi, F.Id("x")), c),
                             And(Call("Periodic", F.Id("x"), Twice(c)),
                                 Call("Periodic", F.Id("y"), Twice(c)))))),
-                B("x", Call("Path", F.Id("C"))), B("y", Call("Path", F.Id("C")))))),
+                B("x", Call("Path", counted)), B("y", Call("Path", counted))))),
             B("c", F.Id("Nat"))));
-        Formula body = And(Equal(Call("Card", Call("PairVertices", l)), p),
+        Formula codeProperties = And(Equal(pi, Call("OriginalEdgeReadout", l)),
+            And(Call("Continuous", pi), Call("ShiftCommutes", pi, counted, F.Id("A"))));
+        Formula codeConclusion = Some(And(codeProperties,
+            And(equivalences,
+                And(All(Imp(forget, Call("ContinuousInverseWithEdgeWindow", pi, d)),
+                    B("d", F.Id("Nat"))),
+                    And(collision, And(Iff(conjugacy, Call("NoCommonPeriodCollision", pi, Twice(p))),
+                        Iff(conjugacy, Call("NoIndividuallyBoundedPeriodCollision", pi, Twice(p)))))))),
+            B("pi", new Formula.TypeArrow(Call("Path", counted), Call("Path", F.Id("A")))));
+        Formula body = And(Equal(Call("NatCard", Call("PairVertices", l)), p),
             And(All(Iff(Call("NotForgets", l, d), Call("PairWalk", l, d)), B("d", F.Id("Nat"))),
-                And(equivalences, And(exactMemory,
-                    And(All(Imp(forget, Call("ContinuousInverseWithEdgeWindow", pi, d)),
-                        B("d", F.Id("Nat"))),
-                        And(collision, And(Iff(conjugacy, Call("NoCommonPeriodCollision", pi, Twice(p))),
-                            Iff(conjugacy, Call("NoIndividuallyBoundedPeriodCollision", pi, Twice(p))))))))));
-        return All(Imp(And(Call("Essential", F.Id("A")), Call("Essential", F.Id("C"))), body),
-            B("n", F.Id("PositiveNat")), B("Q", F.Id("FiniteType")),
+                And(exactMemory, codeConclusion)));
+        return All(Instances(All(Imp(Lt(D(0), F.Id("n")),
+            Imp(And(Call("Essential", F.Id("A")), Call("Essential", counted)), body)),
             B("A", Call("CountMat", F.Id("n"), F.Id("n"))),
-            B("L", Call("IncomingLift", F.Id("A"), F.Id("Q"))),
-            B("C", Call("ActualCountedLift", l)), B("pi", Call("OriginalEdgeReadout", l)),
-            B("P", Call("SumFiberChooseTwo", l)));
+            B("L", Call("IncomingLift", F.Id("A"), F.Id("Q")))),
+            Call("Fintype", F.Id("Q"))), B("n", F.Id("Nat")), B("Q", F.Id("Type")));
     }
 }
