@@ -18,6 +18,17 @@ internal sealed class OptimalLawStrictSlopeDocument : IScribeDocumentDefinition
         var law = Call("PositiveLaw", Seq(m, Comma, p));
         var least = Call("LeastIndex", Seq(p, Comma, k));
         var simplex = Call("Simplex", Seq(m, Comma, p));
+        var natural = Seq(Mathbb, Grp(F.Id("N")));
+        var real = Seq(Mathbb, Grp(F.Id("R")));
+        var y = F.Id("y");
+        var indices = Call("Fin", m);
+        var ratios = Seq(Left, OpenBrace, y, Sp, InMacro, Sp, real, Sp, Mid, Sp,
+            Seq(Exists, Sp, p, Colon, Sp, Open, indices, Sp, To, Sp, real, Close,
+                Comma, Sp, Exists, Sp, k, Colon, Sp, indices, Comma, Sp,
+                law, Sp, Land, Sp, least, Sp, Land, Sp, Equal(y, ratio)),
+            Right, CloseBrace);
+        var alphaDefinition = Seq(Forall, Sp, m, Colon, Sp, natural, Comma, Sp,
+            Equal(Call("alpha", m), Call("sInf", ratios)));
         var lawData = Seq(Forall, Sp, m, Comma, Sp, p, Comma, Sp,
             simplex, Sp, To, Sp, Open,
             Open, Forall, Sp, d, Comma, Sp, D(0), Sp, Le, Sp, r, Sp, Le, Sp, m, Close,
@@ -36,7 +47,6 @@ internal sealed class OptimalLawStrictSlopeDocument : IScribeDocumentDefinition
         var attainment = Seq(Forall, Sp, m, Comma, Sp, Open, D(2), Sp, Le, Sp, m, Close,
             Sp, To, Sp, Exists, Sp, p, Comma, Sp, k, Comma, Sp,
             law, Sp, Land, Sp, least, Sp, Land, Sp, Equal(ratio, Call("alpha", m)));
-        var natural = Seq(Mathbb, Grp(F.Id("N")));
         var predecessor = Seq(Open, m, Sp, Minus, Sp, D(1), Close);
         var statement = Seq(
             Equal(Call("alpha", D(1)), D(0)), Sp, Land, Sp,
@@ -48,6 +58,12 @@ internal sealed class OptimalLawStrictSlopeDocument : IScribeDocumentDefinition
             "The minimum ratio of dyadic sampling cost to least atom mass grows strictly with the label count.",
             H("Strict Growth of the Optimal Real-law Slope"), Blocks(
                 Paragraph(Text("Simplex(m,p) means that p is a real vector indexed by Fin m with sum one; PositiveLaw adds strict positivity of every coordinate. PositiveSimplex(m) is the set of vectors satisfying PositiveLaw(m,p). LeastIndex(p,k) means p(k) is at most every coordinate. R(p,d) is 2^d minus the sum of the integer floors of 2^d p(i), and L(p) is the sum of R(p,d)/2^d over all natural depths. These definitions include terminating binary coordinates and all real probability laws.")),
+                Describe.Lean(DescribeId.Create("alpha"),
+                    DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLawStrictSlope.alpha"),
+                    H("The full real-law slope"), StatementSource.FromAuthor(Disp(alphaDefinition)),
+                    AssessedProvenance.FromRepo(), Blocks(
+                        Paragraph(Text("For m >= 2, alpha(m) is the infimum of L(p)/p(k) over every strictly positive real law p on Fin m whose coordinates sum to one, with k an index of a smallest coordinate. No rationality, computability, or finite-depth restriction is imposed. The same definition applies to the single-label endpoint."))),
+                    DescribeRole.Definition),
                 Describe.Lean(DescribeId.Create("law-data"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLawStrictSlope.law_data"),
                     H("Normalized floor tails"), StatementSource.FromAuthor(Disp(lawData)),
@@ -81,9 +97,10 @@ internal sealed class OptimalLawStrictSlopeDocument : IScribeDocumentDefinition
                 Describe.Lean(DescribeId.Create("result"),
                     DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/OptimalLawStrictSlope.result"),
                     H("Strict growth with the number of labels"),
-                    StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(), Blocks(
+                    StatementSource.FromAuthor(Disp(statement)),
+                    AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg")), Blocks(
                         Paragraph(Text("For a strictly positive normalized real law p on m labels, the dyadic cost is the sum over depths d of the unassigned floor remainder divided by 2^d. The function alpha is the infimum of this cost divided by the smallest mass. The domain contains all such real laws, without a rationality or finite-depth restriction.")),
-                        Paragraph(Text("A single label has zero cost. For two labels, the cost is at least one and the smallest mass is at most one half. The uniform two-label law has cost one and attains ratio two.")),
-                        Paragraph(Text("Take an attaining law with at least three labels. Merging two atoms never increases any floor remainder. If the smallest atom is unique, merging it with another atom strictly raises the new minimum mass. If two atoms have the same smallest mass, their first positive binary digit produces a strict carry one depth earlier, so merging them strictly reduces the convergent cost sum. In each case the new law has a strictly smaller ratio, proving the strict inequality for consecutive label counts.")))))));
+                        Paragraph(Text("The endpoint values and the nonincrease of cost under merging are standard consequences of the classical Knuth-Yao DDG cost expression recalled by Lumbroso, Section 2.1. A single label has zero cost. For two labels, the cost is at least one and the smallest mass is at most one half. The uniform two-label law has cost one and attains ratio two. Merging two atoms never increases any floor remainder, by the superadditivity of the integer floor.")),
+                        Paragraph(Text("For strict growth, take an attaining law with at least three labels. If the smallest atom is unique, merging it with another atom strictly raises the new minimum mass. If two atoms have the same smallest mass, their first positive binary digit produces a strict carry one depth earlier, so merging them strictly reduces the convergent cost sum. In each case the new law has a strictly smaller ratio, proving the strict inequality for consecutive label counts.")))))));
     }
 }
