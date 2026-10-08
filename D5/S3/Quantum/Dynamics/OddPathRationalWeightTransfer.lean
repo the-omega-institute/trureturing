@@ -364,6 +364,32 @@ private theorem exists_phase (γ : ℂ) (hγ : Complex.normSq γ = 1) :
 
 end Shift
 
+/-- **Reduction of end-to-end transfer to phase one.** If, for every choice of real potentials,
+the propagator at time `π` of the path with weights `r` does not have the entry `1` at the last
+and first vertices, then for every choice of real potentials the path has no perfect state
+transfer at time `π` between its end vertices, in either direction. -/
+theorem no_end_transfer_of_no_phase_one {n : ℕ} (r : Fin n → ℝ)
+    (h : ∀ q : Fin (n + 1) → ℝ,
+      hamiltonianPropagator (pathHamiltonian r q) (-Real.pi) (Fin.last n) 0 ≠ 1)
+    (q : Fin (n + 1) → ℝ) :
+    ¬ HasPST (pathHamiltonian r q) Real.pi 0 (Fin.last n) ∧
+      ¬ HasPST (pathHamiltonian r q) Real.pi (Fin.last n) 0 := by
+  have hmain : ¬ HasPST (pathHamiltonian r q) Real.pi (Fin.last n) 0 := by
+    intro hpst
+    obtain ⟨θ, hθ⟩ := exists_phase _ hpst
+    refine h (fun i => q i - θ) ?_
+    rw [propagator_shift, Matrix.smul_apply, smul_eq_mul, ← hθ, ← Complex.exp_add,
+      neg_add_cancel, Complex.exp_zero]
+  have hT : (hamiltonianPropagator (pathHamiltonian r q) (-Real.pi))ᵀ =
+      hamiltonianPropagator (pathHamiltonian r q) (-Real.pi) := by
+    rw [hamiltonianPropagator_neg, ← Matrix.exp_transpose, Matrix.transpose_smul,
+      pathHamiltonian_transpose]
+  refine ⟨fun h' => hmain ?_, hmain⟩
+  have he := congrFun (congrFun hT (Fin.last n)) 0
+  rw [transpose_apply] at he
+  unfold HasPST at h' ⊢
+  rwa [← he]
+
 /-- **Rational weights rule out perfect state transfer at time `π` on every odd path.** For every
 `m ≥ 1`, a path on `2m + 1` vertices with positive rational edge weights and arbitrary real
 potentials has no perfect state transfer between its end vertices at time `π`. -/
@@ -421,28 +447,8 @@ private theorem no_phase_one_transfer {m : ℕ} (hm : 1 ≤ m) (r : Fin (2 * m) 
   push_cast at hv
   omega
 
-/-- No perfect state transfer at time `π` from the last vertex to the first on a path with
-`2m + 1` vertices and positive rational weights. -/
-private theorem no_transfer_last_first {m : ℕ} (hm : 1 ≤ m) (r : Fin (2 * m) → ℝ)
-    (q : Fin (2 * m + 1) → ℝ) (hrat : ∀ j, ∃ x : ℚ, r j = x) (hpos : ∀ j, 0 < r j) :
-    ¬ HasPST (pathHamiltonian r q) Real.pi (Fin.last (2 * m)) 0 := by
-  intro hpst
-  obtain ⟨θ, hθ⟩ := exists_phase _ hpst
-  refine no_phase_one_transfer hm r (fun i => q i - θ) hrat hpos ?_
-  rw [propagator_shift, Matrix.smul_apply, smul_eq_mul, ← hθ, ← Complex.exp_add, neg_add_cancel,
-    Complex.exp_zero]
-
-theorem result : claim := by
-  intro m hm r q hrat hpos
-  have hmain := no_transfer_last_first hm r q hrat hpos
-  have hT : (hamiltonianPropagator (pathHamiltonian r q) (-Real.pi))ᵀ =
-      hamiltonianPropagator (pathHamiltonian r q) (-Real.pi) := by
-    rw [hamiltonianPropagator_neg, ← Matrix.exp_transpose, Matrix.transpose_smul,
-      pathHamiltonian_transpose]
-  refine ⟨fun h => hmain ?_, hmain⟩
-  have he := congrFun (congrFun hT (Fin.last (2 * m))) 0
-  rw [transpose_apply] at he
-  unfold HasPST at h ⊢
-  rwa [← he]
+theorem result : claim := fun m hm r q hrat hpos =>
+  no_end_transfer_of_no_phase_one r
+    (fun q' => no_phase_one_transfer (m := m) hm r q' hrat hpos) q
 
 end D5.S3.Quantum.Dynamics.OddPathRationalWeightTransfer

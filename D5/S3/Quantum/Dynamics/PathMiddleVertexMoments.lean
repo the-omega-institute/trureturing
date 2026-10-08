@@ -125,35 +125,35 @@ private theorem sum_phase_eq_trace :
 
 end Reversal
 
-section Weights
+section Classes
 
-variable {m : ℕ} (r : Fin (2 * m) → ℝ) (q : Fin (2 * m + 1) → ℝ)
+variable {n : ℕ} (r : Fin n → ℝ) (q : Fin (n + 1) → ℝ)
 
 /-- Transfer with phase one from the last vertex to the first makes the propagator at time `π`
 the reversal permutation and the weights mirror symmetric. -/
-private theorem propagator_eq_reversal (hr : ∀ t, 0 < r t)
-    (hU : hamiltonianPropagator (pathHamiltonian r q) (-Real.pi) (Fin.last (2 * m)) 0 = 1) :
-    (∀ i x : Fin (2 * m + 1),
+theorem propagator_eq_reversal (hr : ∀ t, 0 < r t)
+    (hU : hamiltonianPropagator (pathHamiltonian r q) (-Real.pi) (Fin.last n) 0 = 1) :
+    (∀ i x : Fin (n + 1),
       NormedSpace.exp (((Real.pi : ℂ) * I) • pathHamiltonian r q) x i =
-        if x = i.rev then 1 else 0) ∧ ∀ t : Fin (2 * m), r t = r t.rev := by
+        if x = i.rev then 1 else 0) ∧ ∀ t : Fin n, r t = r t.rev := by
   have hH := pathHamiltonian_isHermitian r q
-  have hpst : HasPST (pathHamiltonian r q) Real.pi (Fin.last (2 * m)) 0 := by
+  have hpst : HasPST (pathHamiltonian r q) Real.pi (Fin.last n) 0 := by
     unfold HasPST
     rw [hU, map_one]
   rw [hamiltonianPropagator_neg] at hU
   have hcol : ∀ x, NormedSpace.exp (((Real.pi : ℂ) * I) • pathHamiltonian r q) x 0 =
-      if x = Fin.last (2 * m) then 1 else 0 := fun x => by
-    rw [pst_column hH (Fin.last (2 * m)) 0 hpst x, hU]
+      if x = Fin.last n then 1 else 0 := fun x => by
+    rw [pst_column hH (Fin.last n) 0 hpst x, hU]
   exact reversal_columns r q hr _ (propagator_star_mul_self hH)
     ((Commute.refl (pathHamiltonian r q)).smul_left ((Real.pi : ℂ) * I)).exp_left.eq 1
     (by simp) hcol
 
-/-- **Mirror symmetry of the Hamiltonian.** A path Hamiltonian with positive weights and transfer
-with phase one from the last vertex to the first at time `π` is invariant under the reversal of
-the vertices. -/
-theorem reversal_symmetric (hr : ∀ t, 0 < r t)
-    (hU : hamiltonianPropagator (pathHamiltonian r q) (-Real.pi) (Fin.last (2 * m)) 0 = 1)
-    (x y : Fin (2 * m + 1)) :
+/-- **Mirror symmetry of the Hamiltonian on any number of vertices.** A path Hamiltonian with
+positive weights and transfer with phase one from the last vertex to the first at time `π` is
+invariant under the reversal of the vertices. -/
+theorem reversal_invariant (hr : ∀ t, 0 < r t)
+    (hU : hamiltonianPropagator (pathHamiltonian r q) (-Real.pi) (Fin.last n) 0 = 1)
+    (x y : Fin (n + 1)) :
     pathHamiltonian r q x.rev y.rev = pathHamiltonian r q x y := by
   obtain ⟨hR, -⟩ := propagator_eq_reversal r q hr hU
   have hcomm : NormedSpace.exp (((Real.pi : ℂ) * I) • pathHamiltonian r q) * pathHamiltonian r q =
@@ -175,6 +175,140 @@ theorem reversal_symmetric (hr : ∀ t, 0 < r t)
     · simp
   rw [← h1, ← h2, hcomm]
 
+/-- **Reversal sign classes of the spectrum.** Let a path on `n + 1` vertices with positive
+weights have transfer with phase one from the last vertex to the first at time `π`. Then its
+eigenvalues are distinct integers `z`, even on a class `A` of indices and odd off `A`; the
+reversal of the vertices fixes the eigenvectors of the class `A` and negates the others; `#A`
+exceeds the number of the remaining indices by the number of vertices fixed by the reversal; and
+for `k ∈ A` the squared modulus of the `k`-th eigenvector at the first vertex, multiplied by
+`∏_{l ≠ k} (z k - z l)`, is the product of all the weights. -/
+theorem reversal_sign_classes (hH : (pathHamiltonian r q).IsHermitian) (hr : ∀ t, 0 < r t)
+    (hU : hamiltonianPropagator (pathHamiltonian r q) (-Real.pi) (Fin.last n) 0 = 1) :
+    ∃ (z : Fin (n + 1) → ℤ) (A : Finset (Fin (n + 1))),
+      Function.Injective z ∧ (∀ k ∈ A, Even (z k)) ∧ (∀ k, k ∉ A → Odd (z k)) ∧
+        (∀ k, hH.eigenvalues k = z k) ∧
+        (∀ x, ∀ k ∈ A,
+          (hH.eigenvectorUnitary : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) x.rev k =
+            (hH.eigenvectorUnitary : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) x k) ∧
+        (∀ x k, k ∉ A →
+          (hH.eigenvectorUnitary : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) x.rev k =
+            -(hH.eigenvectorUnitary : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) x k) ∧
+        A.card = Aᶜ.card + (univ.filter fun x : Fin (n + 1) => x = x.rev).card ∧
+        ∀ k ∈ A, Complex.normSq
+            ((hH.eigenvectorUnitary : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) 0 k) *
+          ∏ l ∈ univ.erase k, ((z k - z l : ℤ) : ℝ) = ∏ t, r t := by
+  classical
+  obtain ⟨hR, -⟩ := propagator_eq_reversal r q hr hU
+  set W : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ := ↑hH.eigenvectorUnitary with hW
+  set Λ := hH.eigenvalues with hΛ
+  set E : Fin (n + 1) → ℂ := fun k => Complex.exp ((Real.pi : ℂ) * I * Λ k) with hE
+  have hrev : ∀ x k, W x.rev k = W x k * E k := fun x k => eigenvector_rev hH hR x k
+  -- the phases are signs
+  have hcolne : ∀ k, ∃ x, W x k ≠ 0 := by
+    intro k
+    by_contra hall
+    push Not at hall
+    have h := congrFun (congrFun (Unitary.coe_star_mul_self hH.eigenvectorUnitary) k) k
+    rw [mul_apply, one_apply_eq] at h
+    simp only [← hW, hall, mul_zero, Finset.sum_const_zero] at h
+    exact zero_ne_one h
+  have hE2 : ∀ k, E k * E k = 1 := by
+    intro k
+    obtain ⟨x, hx⟩ := hcolne k
+    have h := hrev x.rev k
+    rw [Fin.rev_rev, hrev x k, mul_assoc] at h
+    exact (mul_left_cancel₀ hx (by rw [mul_one]; exact h)).symm
+  set A : Finset (Fin (n + 1)) := univ.filter (fun k => E k = 1) with hA
+  have hEA : ∀ k ∈ A, E k = 1 := fun k hk => (Finset.mem_filter.mp hk).2
+  have hEB : ∀ k, k ∉ A → E k = -1 := fun k hk =>
+    (mul_self_eq_one_iff.mp (hE2 k)).resolve_left fun h =>
+      hk (Finset.mem_filter.mpr ⟨mem_univ k, h⟩)
+  have hz : ∀ k, ∃ n : ℤ, Λ k = n ∧ (k ∈ A → Even n) ∧ (k ∉ A → Odd n) := by
+    intro k
+    by_cases hk : k ∈ A
+    · obtain ⟨n, hn⟩ := exists_int_of_exp_eq_one (hEA k hk)
+      exact ⟨2 * n, by rw [hn]; push_cast; ring, fun _ => even_two_mul n, fun h => absurd hk h⟩
+    · obtain ⟨n, hn⟩ := exists_int_of_exp_eq_neg_one (hEB k hk)
+      exact ⟨2 * n + 1, by rw [hn]; push_cast; ring, fun h => absurd h hk,
+        fun _ => odd_two_mul_add_one n⟩
+  choose z hzΛ hzA hzB using hz
+  -- the trace of the reversal counts its fixed vertices
+  have htr : ∑ k, E k = ((univ.filter fun x : Fin (n + 1) => x = x.rev).card : ℂ) := by
+    rw [hE, sum_phase_eq_trace hH, Matrix.trace]
+    simp only [diag_apply, hR]
+    exact Finset.sum_boole _ _
+  have hcount : A.card = Aᶜ.card + (univ.filter fun x : Fin (n + 1) => x = x.rev).card := by
+    have h2 : (A.card : ℂ) - (Aᶜ.card : ℂ) =
+        ((univ.filter fun x : Fin (n + 1) => x = x.rev).card : ℂ) := by
+      rw [← htr, ← Finset.sum_add_sum_compl A E, Finset.sum_congr rfl hEA,
+        Finset.sum_congr rfl fun k hk => hEB k (Finset.mem_compl.mp hk)]
+      simp [sub_eq_add_neg]
+    have h3 : ((A.card : ℕ) : ℂ) =
+        ((Aᶜ.card + (univ.filter fun x : Fin (n + 1) => x = x.rev).card : ℕ) : ℂ) := by
+      push_cast
+      linear_combination h2
+    exact_mod_cast h3
+  -- the moments between the first vertex and the last one
+  have hPpos : 0 < ∏ t, r t := Finset.prod_pos fun t _ => hr t
+  have hmom1 : ∀ p ≤ n, (pathHamiltonian r q ^ p) (Fin.last n) 0 =
+      if p = n then ((∏ t, r t : ℝ) : ℂ) else 0 := by
+    intro p hp
+    split_ifs with hpm
+    · rw [hpm, (pathHamiltonian_pow_apply_column r q 0 n (Fin.last n)).2 (by simp)]
+      push_cast
+      rw [Finset.prod_range]
+      refine Finset.prod_congr rfl fun t _ => ?_
+      simp
+    · exact (pathHamiltonian_pow_apply_column r q 0 p (Fin.last n)).1 (Or.inl (by simp; omega))
+  have hM1 : ∀ k, W (Fin.last n) k * starRingEnd ℂ (W 0 k) *
+      ∏ l ∈ univ.erase k, ((Λ k : ℂ) - Λ l) = ((∏ t, r t : ℝ) : ℂ) := fun k =>
+    mul_prod_sub_eq_of_moments univ (fun j => W (Fin.last n) j * starRingEnd ℂ (W 0 j))
+      (fun l => (Λ l : ℂ)) n (by rw [Finset.card_univ, Fintype.card_fin]) _
+      (fun p hp => by
+        rw [← hmom1 p hp, spectral_pow_apply hH]
+        exact Finset.sum_congr rfl fun j _ => by ring) k (mem_univ k)
+  have hΛinj : Function.Injective Λ := by
+    intro k l hkl
+    by_contra hne
+    have h := hM1 k
+    rw [Finset.prod_eq_zero (Finset.mem_erase.mpr ⟨Ne.symm hne, mem_univ l⟩)
+      (by rw [hkl, sub_self]), mul_zero] at h
+    exact hPpos.ne' (by exact_mod_cast h.symm)
+  have hzinj : Function.Injective z := fun k l hkl => hΛinj (by rw [hzΛ k, hzΛ l, hkl])
+  refine ⟨z, A, hzinj, hzA, hzB, hzΛ, fun x k hk => ?_, fun x k hk => ?_, hcount,
+    fun k hk => ?_⟩
+  · rw [hrev x k, hEA k hk, mul_one]
+  · rw [hrev x k, hEB k hk, mul_neg, mul_one]
+  · have hlast : W (Fin.last n) k = W 0 k := by
+      have h := hrev 0 k
+      rw [Fin.rev_zero, hEA k hk, mul_one] at h
+      exact h
+    have hprod : ∏ l ∈ univ.erase k, ((Λ k : ℂ) - Λ l) =
+        ((∏ l ∈ univ.erase k, ((z k - z l : ℤ) : ℝ) : ℝ) : ℂ) := by
+      rw [Complex.ofReal_prod]
+      refine Finset.prod_congr rfl fun l _ => ?_
+      rw [hzΛ k, hzΛ l]
+      push_cast
+      ring
+    have h1 := hM1 k
+    rw [hlast, Complex.mul_conj, hprod] at h1
+    exact_mod_cast h1
+
+end Classes
+
+section Weights
+
+variable {m : ℕ} (r : Fin (2 * m) → ℝ) (q : Fin (2 * m + 1) → ℝ)
+
+/-- **Mirror symmetry of the Hamiltonian.** A path Hamiltonian with positive weights and transfer
+with phase one from the last vertex to the first at time `π` is invariant under the reversal of
+the vertices. -/
+theorem reversal_symmetric (hr : ∀ t, 0 < r t)
+    (hU : hamiltonianPropagator (pathHamiltonian r q) (-Real.pi) (Fin.last (2 * m)) 0 = 1)
+    (x y : Fin (2 * m + 1)) :
+    pathHamiltonian r q x.rev y.rev = pathHamiltonian r q x y :=
+  reversal_invariant r q hr hU x y
+
 /-- **Middle-vertex spectral weights.** Let a path on `2m + 1` vertices with positive weights
 have transfer with phase one from the last vertex to the first at time `π`. Then its eigenvalues
 are distinct integers `z`, even on a class `A` of `m + 1` indices and odd off `A`; the
@@ -193,88 +327,38 @@ theorem middle_vertex_weights (hH : (pathHamiltonian r q).IsHermitian) (hr : ∀
             ((hH.eigenvectorUnitary : Matrix (Fin (2 * m + 1)) (Fin (2 * m + 1)) ℂ) c k) =
           (∏ l ∈ Aᶜ, ((z k - z l : ℤ) : ℝ)) / ∏ l ∈ A.erase k, ((z k - z l : ℤ) : ℝ) := by
   classical
-  obtain ⟨hR, hsymr⟩ := propagator_eq_reversal r q hr hU
+  obtain ⟨z, A, hzinj, hzA, hzB, hzΛ, -, hrevB, hcount, hfirst⟩ :=
+    reversal_sign_classes r q hH hr hU
+  obtain ⟨-, hsymr⟩ := propagator_eq_reversal r q hr hU
   set W : Matrix (Fin (2 * m + 1)) (Fin (2 * m + 1)) ℂ := ↑hH.eigenvectorUnitary with hW
-  set Λ := hH.eigenvalues with hΛ
-  set E : Fin (2 * m + 1) → ℂ := fun k => Complex.exp ((Real.pi : ℂ) * I * Λ k) with hE
-  have hrev : ∀ x k, W x.rev k = W x k * E k := fun x k => eigenvector_rev hH hR x k
   have hcrev : c.rev = c := Fin.ext (by rw [Fin.val_rev, hc]; omega)
-  -- the phases are signs
-  have hcolne : ∀ k, ∃ x, W x k ≠ 0 := by
-    intro k
-    by_contra hall
-    push Not at hall
-    have h := congrFun (congrFun (Unitary.coe_star_mul_self hH.eigenvectorUnitary) k) k
-    rw [mul_apply, one_apply_eq] at h
-    simp only [← hW, hall, mul_zero, Finset.sum_const_zero] at h
-    exact zero_ne_one h
-  have hE2 : ∀ k, E k * E k = 1 := by
-    intro k
-    obtain ⟨x, hx⟩ := hcolne k
-    have h := hrev x.rev k
-    rw [Fin.rev_rev, hrev x k, mul_assoc] at h
-    exact (mul_left_cancel₀ hx (by rw [mul_one]; exact h)).symm
-  set A : Finset (Fin (2 * m + 1)) := univ.filter (fun k => E k = 1) with hA
-  have hEA : ∀ k ∈ A, E k = 1 := fun k hk => (Finset.mem_filter.mp hk).2
-  have hEB : ∀ k, k ∉ A → E k = -1 := fun k hk =>
-    (mul_self_eq_one_iff.mp (hE2 k)).resolve_left fun h =>
-      hk (Finset.mem_filter.mpr ⟨mem_univ k, h⟩)
-  have hz : ∀ k, ∃ n : ℤ, Λ k = n ∧ (k ∈ A → Even n) ∧ (k ∉ A → Odd n) := by
-    intro k
-    by_cases hk : k ∈ A
-    · obtain ⟨n, hn⟩ := exists_int_of_exp_eq_one (hEA k hk)
-      exact ⟨2 * n, by rw [hn]; push_cast; ring, fun _ => even_two_mul n, fun h => absurd hk h⟩
-    · obtain ⟨n, hn⟩ := exists_int_of_exp_eq_neg_one (hEB k hk)
-      exact ⟨2 * n + 1, by rw [hn]; push_cast; ring, fun h => absurd h hk,
-        fun _ => odd_two_mul_add_one n⟩
-  choose z hzΛ hzA hzB using hz
-  -- the even class has `m + 1` elements: the trace of the reversal is one
-  have htr : ∑ k, E k = 1 := by
-    rw [hE, sum_phase_eq_trace hH, Matrix.trace]
-    simp only [diag_apply, hR]
-    rw [Finset.sum_eq_single c]
-    · rw [if_pos hcrev.symm]
-    · intro x _ hx
-      rw [if_neg]
-      intro h
-      apply hx
+  -- the even class has `m + 1` elements: the middle vertex is the only fixed vertex
+  have hfix : (univ.filter fun x : Fin (2 * m + 1) => x = x.rev) = {c} := by
+    ext x
+    rw [Finset.mem_filter, Finset.mem_singleton]
+    constructor
+    · rintro ⟨-, h⟩
       have h' := congrArg Fin.val h
       rw [Fin.val_rev] at h'
       exact Fin.ext (by omega)
-    · simp
+    · rintro rfl
+      exact ⟨mem_univ _, hcrev.symm⟩
   have hcard : A.card = m + 1 := by
-    have h2 : (A.card : ℂ) - (Aᶜ.card : ℂ) = 1 := by
-      rw [← htr, ← Finset.sum_add_sum_compl A E, Finset.sum_congr rfl hEA,
-        Finset.sum_congr rfl fun k hk => hEB k (Finset.mem_compl.mp hk)]
-      simp [sub_eq_add_neg]
-    have h3 : A.card + Aᶜ.card = 2 * m + 1 := by
-      rw [Finset.card_add_card_compl, Fintype.card_fin]
-    have h4 : (A.card : ℤ) - Aᶜ.card = 1 := by exact_mod_cast h2
+    have h3 := Finset.card_add_card_compl A
+    rw [Fintype.card_fin] at h3
+    rw [hfix, Finset.card_singleton] at hcount
     omega
   -- the odd class vanishes at the middle vertex
   have hWc : ∀ k, k ∉ A → W c k = 0 := by
     intro k hk
-    have h := hrev c k
-    rw [hcrev, hEB k hk] at h
+    have h := hrevB c k hk
+    rw [hcrev] at h
     linear_combination (1 / 2 : ℂ) * h
-  -- the moments between the first vertex and the last and middle ones
+  -- the moments between the first vertex and the middle one
   have hn2 : 2 * m = m + m := two_mul m
   set ρ : ℝ := ∏ i : Fin m, r (Fin.cast hn2.symm (Fin.castAdd m i)) with hρ
   have hρpos : 0 < ρ := Finset.prod_pos fun i _ => hr _
   have hPall : ∏ t, r t = ρ ^ 2 := prod_eq_sq_of_rev hn2 r hsymr
-  have hmom1 : ∀ p ≤ 2 * m,
-      (pathHamiltonian r q ^ p) (Fin.last (2 * m)) 0 =
-        if p = 2 * m then ((ρ ^ 2 : ℝ) : ℂ) else 0 := by
-    intro p hp
-    split_ifs with hpm
-    · rw [hpm, (pathHamiltonian_pow_apply_column r q 0 (2 * m) (Fin.last (2 * m))).2 (by simp),
-        ← hPall]
-      push_cast
-      rw [Finset.prod_range]
-      refine Finset.prod_congr rfl fun t _ => ?_
-      simp
-    · exact (pathHamiltonian_pow_apply_column r q 0 p (Fin.last (2 * m))).1
-        (Or.inl (by simp; omega))
   have hmom2 : ∀ p ≤ m, (pathHamiltonian r q ^ p) c 0 = if p = m then (ρ : ℂ) else 0 := by
     intro p hp
     split_ifs with hpm
@@ -287,34 +371,21 @@ theorem middle_vertex_weights (hH : (pathHamiltonian r q).IsHermitian) (hr : ∀
       ext
       simp
     · exact (pathHamiltonian_pow_apply_column r q 0 p c).1 (Or.inl (by simp [hc]; omega))
-  have hM1 : ∀ k, W (Fin.last (2 * m)) k * starRingEnd ℂ (W 0 k) *
-      ∏ l ∈ univ.erase k, ((Λ k : ℂ) - Λ l) = ((ρ ^ 2 : ℝ) : ℂ) := fun k =>
-    mul_prod_sub_eq_of_moments univ (fun j => W (Fin.last (2 * m)) j * starRingEnd ℂ (W 0 j))
-      (fun l => (Λ l : ℂ)) (2 * m) (by rw [Finset.card_univ, Fintype.card_fin]) _
-      (fun p hp => by
-        rw [← hmom1 p hp, spectral_pow_apply hH]
-        exact Finset.sum_congr rfl fun j _ => by ring) k (mem_univ k)
+  have hzc : ∀ k, ((hH.eigenvalues k : ℝ) : ℂ) = ((z k : ℤ) : ℂ) := fun k => by
+    rw [hzΛ k]
+    norm_cast
   have hM2 : ∀ k ∈ A, W c k * starRingEnd ℂ (W 0 k) *
-      ∏ l ∈ A.erase k, ((Λ k : ℂ) - Λ l) = (ρ : ℂ) := fun k hk =>
+      ∏ l ∈ A.erase k, (((z k : ℤ) : ℂ) - ((z l : ℤ) : ℂ)) = (ρ : ℂ) := fun k hk =>
     mul_prod_sub_eq_of_moments A (fun j => W c j * starRingEnd ℂ (W 0 j))
-      (fun l => (Λ l : ℂ)) m hcard _
+      (fun l => ((z l : ℤ) : ℂ)) m hcard _
       (fun p hp => by
         rw [← hmom2 p hp, spectral_pow_apply hH]
         symm
         rw [← Finset.sum_subset (Finset.subset_univ A)]
-        · exact Finset.sum_congr rfl fun j _ => by ring
+        · exact Finset.sum_congr rfl fun j _ => by rw [hzc j]; ring
         · intro j _ hj
           rw [show (hH.eigenvectorUnitary : Matrix (Fin (2 * m + 1)) (Fin (2 * m + 1)) ℂ) c j = 0
             from hWc j hj, zero_mul]) k hk
-  have hΛinj : Function.Injective Λ := by
-    intro k l hkl
-    by_contra hne
-    have h := hM1 k
-    rw [Finset.prod_eq_zero (Finset.mem_erase.mpr ⟨Ne.symm hne, mem_univ l⟩)
-      (by rw [hkl, sub_self]), mul_zero] at h
-    have h0 : (ρ ^ 2 : ℝ) = 0 := by exact_mod_cast h.symm
-    exact (pow_pos hρpos 2).ne' h0
-  have hzinj : Function.Injective z := fun k l hkl => hΛinj (by rw [hzΛ k, hzΛ l, hkl])
   refine ⟨z, A, hzinj, hcard, hzA, hzB, hzΛ, hWc, fun k hk => ?_⟩
   have hsplit : univ.erase k = A.erase k ∪ Aᶜ := by
     ext l
@@ -323,37 +394,24 @@ theorem middle_vertex_weights (hH : (pathHamiltonian r q).IsHermitian) (hr : ∀
     · simp [h, em]
   have hdisj : Disjoint (A.erase k) Aᶜ := Finset.disjoint_left.mpr fun l h1 h2 =>
     (Finset.mem_compl.mp h2) (Finset.mem_of_mem_erase h1)
-  set DA : ℝ := ∏ l ∈ A.erase k, (Λ k - Λ l) with hDA
-  set DB : ℝ := ∏ l ∈ Aᶜ, (Λ k - Λ l) with hDB
-  have hDAc : ∏ l ∈ A.erase k, ((Λ k : ℂ) - Λ l) = (DA : ℂ) := by
-    rw [hDA]
-    push_cast
-    rfl
-  have hDBc : ∏ l ∈ Aᶜ, ((Λ k : ℂ) - Λ l) = (DB : ℂ) := by
-    rw [hDB]
-    push_cast
-    rfl
-  have hlast : W (Fin.last (2 * m)) k = W 0 k := by
-    have h := hrev 0 k
-    rw [Fin.rev_zero, hEA k hk, mul_one] at h
-    exact h
-  have h1 := hM1 k
-  rw [hsplit, Finset.prod_union hdisj, hDAc, hDBc, hlast, Complex.mul_conj] at h1
-  have h1' : Complex.normSq (W 0 k) * (DA * DB) = ρ ^ 2 := by exact_mod_cast h1
+  have h1 := hfirst k hk
+  rw [hsplit, Finset.prod_union hdisj, hPall] at h1
+  have hDAc : ∏ l ∈ A.erase k, (((z k : ℤ) : ℂ) - ((z l : ℤ) : ℂ)) =
+      ((∏ l ∈ A.erase k, ((z k - z l : ℤ) : ℝ) : ℝ) : ℂ) := by
+    rw [Complex.ofReal_prod]
+    exact Finset.prod_congr rfl fun l _ => by norm_cast
   have h2 := congrArg Complex.normSq (hM2 k hk)
   rw [hDAc, Complex.normSq_mul, Complex.normSq_mul, Complex.normSq_conj, Complex.normSq_ofReal,
     Complex.normSq_ofReal] at h2
+  set DA : ℝ := ∏ l ∈ A.erase k, ((z k - z l : ℤ) : ℝ) with hDA
+  set DB : ℝ := ∏ l ∈ Aᶜ, ((z k - z l : ℤ) : ℝ) with hDB
   have h2' : Complex.normSq (W c k) * Complex.normSq (W 0 k) * DA ^ 2 = ρ ^ 2 := by
     linear_combination h2
   have hDA0 : DA ≠ 0 := fun h0 => (pow_pos hρpos 2).ne' (by rw [← h2', h0]; ring)
   have hn0 : Complex.normSq (W 0 k) ≠ 0 := fun h0 =>
-    (pow_pos hρpos 2).ne' (by rw [← h1', h0]; ring)
+    (pow_pos hρpos 2).ne' (by rw [← h1, h0]; ring)
   have key : Complex.normSq (W c k) * DA = DB :=
-    mul_left_cancel₀ (mul_ne_zero hn0 hDA0) (by linear_combination h2' - h1')
-  have hzD : ∀ l, ((z k - z l : ℤ) : ℝ) = Λ k - Λ l := fun l => by
-    push_cast
-    rw [hzΛ k, hzΛ l]
-  simp only [hzD]
+    mul_left_cancel₀ (mul_ne_zero hn0 hDA0) (by linear_combination h2' - h1)
   rw [eq_div_iff hDA0]
   exact key
 
