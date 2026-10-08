@@ -78,7 +78,8 @@ public sealed partial class CoverBatchCommandTests
         using var resources = new TemporaryDirectory();
         WriteEmissionInputs(world.Root);
         world.WriteReportBundle();
-        var truth = DagLedgerCommandPreparation.BuildTruth(world.Repository, new PrecomputedLeanReportSource(world.Root));
+        var full = Assert.IsType<SnapshotDecodeOutcome.Decoded>(SnapshotDecoder.Decode(world.Repository.ReadCurrent())).Snapshot;
+        var truth = DagLedgerCommandPreparation.BuildTruth(full, new PrecomputedLeanReportSource(world.Root).Load(full));
         var reference = DagRenderCommand.Run(world.Root, truth, false, StatementProjectionFixtureLoader.WithRepositoryRoot(world.Root, () => new DocumentDefinition[] { new BatchClaimDefinition().Create() }));
         Assert.True(reference.Success, reference.Error);
         var paths = new[] { "Generated/DAG.md", "Generated/truth-graph.v1.json" };

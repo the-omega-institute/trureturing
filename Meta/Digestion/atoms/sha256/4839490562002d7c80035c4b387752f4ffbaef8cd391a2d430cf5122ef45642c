@@ -1,0 +1,16 @@
+**证明。** 定理 4.2 的固定根柱权为 $\mu(w)=\lambda^{-|w|}v_{s(w)}$，其中 $\lambda^{-1}\le v_s\le1$。首位零的质量是 $\mu(0)=\lambda^{-1}$；由 $\lambda v_0=1+v_1$、$v_0=1$，首位一的质量是 $\mu(1)=\lambda^{-1}v_1=(\lambda-1)/\lambda$。各页在深度 $m$ 的总柱权仍为 $a_b$，每个词的质量介于 $\lambda^{-m-1}$ 和 $\lambda^{-m}$，所以
+
+$$
+C_b(k,m)\lambda^{-m-1}\le a_b\le C_b(k,m)\lambda^{-m},
+$$
+
+即式（6.13）。又因 $c_{X,b}$ 是整数，
+
+$$
+D_b=\left\lfloor\min\left(c_{X,b},\frac{c_{Y,b}}{M_b}\right)\right\rfloor,
+$$
+
+代入两侧的柱权界即得式（6.14）。当 $T_b\ge2$ 时，$\lfloor T_b\rfloor\ge T_b/2$，上界又不超过 $\lambda T_b$，取自然对数即得式（6.15）。证毕。
+
+这里 $a_b$ 是合法词树的固定柱权，与逻辑输入决定的 $p_b$ 不同。这些长度和熵界计量地址分辨率及编码信息面积，不定义时钟、径向度量或真实视界面积。
+

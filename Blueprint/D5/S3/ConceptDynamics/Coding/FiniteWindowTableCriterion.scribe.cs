@@ -76,6 +76,22 @@ internal sealed class FiniteWindowTableCriterionDocument : IScribeDocumentDefini
     private static Formula Local => Call("LocalCriterion", Pair);
     private static Formula Conjugacy => Call("SameTableConjugacy", Pair);
 
+
+    private static Formula SquareParameters(Formula body) => All(body,
+        B("H", F.Id("Type")), B("group", Call("Group", F.Id("H"))),
+        B("n", F.Id("Nat")), B("A", Call("GroupMat", F.Id("H"), F.Id("n"), F.Id("n"))));
+    private static Formula OrderedSquareParameters(Formula body) => All(body,
+        B("H", F.Id("Type")), B("group", Call("Group", F.Id("H"))),
+        B("finite", Call("Fintype", F.Id("H"))), B("order", Call("LinearOrder", F.Id("H"))),
+        B("n", F.Id("Nat")), B("A", Call("GroupMat", F.Id("H"), F.Id("n"), F.Id("n"))));
+
+    private static Formula OrderedParameters(Formula body) => All(body,
+        B("H", F.Id("Type")), B("group", Call("Group", F.Id("H"))),
+        B("finite", Call("Fintype", F.Id("H"))), B("order", Call("LinearOrder", F.Id("H"))),
+        B("n", F.Id("Nat")), B("m", F.Id("Nat")),
+        B("U", Call("GroupMat", F.Id("H"), F.Id("n"), F.Id("m"))),
+        B("V", Call("GroupMat", F.Id("H"), F.Id("m"), F.Id("n"))));
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Four concrete word tests characterize the same arbitrary pair of finite-window tables as mutually inverse continuous maps commuting with the original unit shift.",
         H("Complete arbitrary-table criterion"),
@@ -107,5 +123,38 @@ internal sealed class FiniteWindowTableCriterionDocument : IScribeDocumentDefini
                 Blocks(
                     Paragraph(Text("With decidable vertex and edge equality, legalWordFintype enumerates exactly the subtype of finite edge tuples satisfying adjacency, and tablePairFintype enumerates every pair of actual functions. The seam tests run before the dependent roundtrip tests. finiteTableExists decides existence at fixed radii by finite quantification over these table pairs. originalExistenceDecidable transports that executable decision to existence of a SameTableConjugacy; the analogous finite-group functions include all group/window equations.")),
                     Paragraph(Text("For certificate extraction the caller supplies complete finite edge lists and a complete group list. tupleWords recursively enumerates tuples; enumerateWords keeps exactly legal words, with a proved completeness theorem. List.choose scans these explicit lists for a failing fact. Every FailureWitness contains a word and the actual failed seam or recovery equality, including the seam proofs needed to type a recovery. EquivariantFailure adds the actual group element, window and failed action equality. The inspector returns either all test proofs or the failed finite test. The rejection theorem equates rejection with existence of such a concrete failure exposed in an actual history; the corresponding finite-group theorem includes group/window failures and their history occurrences. No arbitrary classical Decidable, sampling criterion or graph-only uniform bound on radii is asserted.")),
-                    Paragraph(Text("Loops, parallel edges, disconnected essential components and asymmetric windows stay in scope. All checked word lengths are positive; no statement identifies a zero-edge path with a vertex-free empty edge tuple. The parameter specialization 23.2 introduces no retained wrapper. The unsupported 21.3 claim and the existing matrix-chain construction are outside this module. Authored formulas summarize the exact declarations using the defined record names; SDK admission, script execution and rendering alone do not establish semantic equivalence or canonical admission."))), DescribeRole.Theorem))));
+                    Paragraph(Text("Loops, parallel edges, disconnected essential components and asymmetric windows stay in scope. All checked word lengths are positive; no statement identifies a zero-edge path with a vertex-free empty edge tuple. The parameter specialization 23.2 introduces no retained wrapper. The unsupported 21.3 claim and the existing matrix-chain construction are outside this module. Authored formulas summarize the exact declarations using the defined record names; SDK admission, script execution and rendering alone do not establish semantic equivalence or canonical admission."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-counted-expansion"), DeclarationHandle.Create(Prefix + "countedExpansion"),
+                H("Actual free expansion"), StatementSource.FromAuthor(Disp(SquareParameters(Call("DirectedMultigraph",Call("Prod",Call("Fin",F.Id("n")),F.Id("H")),Call("Prod",Call("Edge",F.Id("A")),F.Id("H")))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For any square natural group-ring matrix A, the vertex of an expanded edge (e,h) is (source(e),h), and its target is (target(e),h times label(e)). This definition is definitionally equal to the existing FixedBlockRigidity.expandedGraph; it imposes no commutativity and forgets no numbered edge."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("orderedforward"), DeclarationHandle.Create(Prefix + "orderedForward"),
+                H("orderedForward"), StatementSource.FromAuthor(Disp(OrderedParameters(new Formula.TypeArrow(Call("LegalWord",Call("countedExpansion",Call("product",F.Id("U"),F.Id("V"))),Num(2)),Call("Prod",Call("Edge",Call("product",F.Id("V"),F.Id("U"))),F.Id("H")))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For the legal two-edge word ((a0,h0),(a1,h1)), split both edges in the prescribed UV order as (u0,v0),(u1,v1). Return (joinVU(v0,u1),h0 times label(u0)). Adjacency supplies the actual shared vertex for joining. This crosses the first actual U half-edge."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("orderedbackward"), DeclarationHandle.Create(Prefix + "orderedBackward"),
+                H("orderedBackward"), StatementSource.FromAuthor(Disp(OrderedParameters(new Formula.TypeArrow(Call("LegalWord",Call("countedExpansion",Call("product",F.Id("V"),F.Id("U"))),Num(2)),Call("Prod",Call("Edge",Call("product",F.Id("U"),F.Id("V"))),F.Id("H")))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The two input edges are preceding and central output. Split them in VU order as (vMinus,u0),(v0,u1). Return (joinUV(u0,v0),k0 times label(u0) inverse), where k0 is the coordinate of the SECOND input edge. The shared U half-edge is constructed by splitting the preceding output, not assumed as an inverse map."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("orderedoverlapinput"), DeclarationHandle.Create(Prefix + "orderedOverlapInput"),
+                H("orderedOverlapInput"), StatementSource.FromAuthor(Disp(OrderedParameters(Call("TablePair",Call("countedExpansion",Call("product",F.Id("U"),F.Id("V"))),Call("countedExpansion",Call("product",F.Id("V"),F.Id("U"))),Num(0),Num(1),Num(1),Num(0))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("This raw TablePair uses orderedForward and orderedBackward on the actual free expansions of UV and VU, at forward radii (0,1) and inverse radii (1,0). No successful criterion is embedded. The transient structural check tests the same maps on three-edge words and recovers center index one."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("d8rank"), DeclarationHandle.Create(Prefix + "d8Rank"),
+                H("d8Rank"), StatementSource.FromAuthor(Disp(new Formula.TypeArrow(Call("DihedralGroup",Num(4)),F.Id("Nat")))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("d8Rank(r i)=i.val and d8Rank(sr i)=4+(-i).val. Since sr i denotes s times r to i, this is exactly e,r,r squared,r cubed,s,rs,r squared s,r cubed s. d8Rank_injective is the consumed private proof used by d8Order, which lifts the natural order through this rank."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("d8order"), DeclarationHandle.Create(Prefix + "d8Order"),
+                H("d8Order"), StatementSource.FromAuthor(Disp(Call("LinearOrder",Call("DihedralGroup",Num(4))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The total order is lifted through the injective d8Rank. It is a finite group order for labels and does not claim a multiplication-compatible group order."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("d8p"), DeclarationHandle.Create(Prefix + "d8P"),
+                H("d8P"), StatementSource.FromAuthor(Disp(Call("GroupMat",Call("DihedralGroup",Num(4)),Num(1),Num(1)))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("In the source order the scalar factor P has coefficients [1,2,1,1,1,1,1,0]. Each nonzero coefficient is a literal MonoidAlgebra.single summand; the r cubed s coefficient is zero."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("d8q"), DeclarationHandle.Create(Prefix + "d8Q"),
+                H("d8Q"), StatementSource.FromAuthor(Disp(Call("GroupMat",Call("DihedralGroup",Num(4)),Num(1),Num(1)))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The scalar factor Q is the sum of the literal unit-labelled and s-labelled singleton coefficients, each one. Its vector is [1,0,0,0,1,0,0,0]."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("orderedd8input"), DeclarationHandle.Create(Prefix + "orderedD8Input"),
+                H("orderedD8Input"), StatementSource.FromAuthor(Disp(Call("TablePair",Call("countedExpansion",Call("product",F.Id("d8P"),F.Id("d8Q"))),Call("countedExpansion",Call("product",F.Id("d8Q"),F.Id("d8P"))),Num(0),Num(1),Num(1),Num(0)))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The independently existing original20.1/20.3/22.2/23.2 problem uses these literal factors, their actual products, prescribed split ranks and asymmetric orderedOverlapInput tables. This declaration is raw input only. Acceptance, coefficient specialization, radii specialization and the same-table soundness application remain transient exact evidence; no positive instance theorem is retained."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("d8groups"), DeclarationHandle.Create(Prefix + "d8Groups"),
+                H("d8Groups"), StatementSource.FromAuthor(Disp(Call("List",Call("DihedralGroup",Num(4))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("The complete dictionary is [r0,r1,r2,r3,sr0,sr3,sr2,sr1], exactly the prescribed source order. Completeness is checked transiently."))), DescribeRole.Definition),
+            Describe.Lean(DescribeId.Create("orderededges"), DeclarationHandle.Create(Prefix + "orderedEdges"),
+                H("orderedEdges"), StatementSource.FromAuthor(Disp(OrderedSquareParameters(Call("List",Call("Prod",Call("Edge",F.Id("A")),F.Id("H")))))),
+                AssessedProvenance.FromRepo(), Blocks(Paragraph(Text("For a square matrix A, enumerate group coordinate h, source i, target j, label g in their supplied finite orders, then every c in Fin(coeff(A[i,j],g)). The list contains every actual expanded numbered edge, including every nonzero fiber and no element of an empty fiber. Its completeness is checked before the inspector call."))), DescribeRole.Definition))));
 }

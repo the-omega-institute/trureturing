@@ -24,6 +24,15 @@ internal sealed class LegalPriorityTeacherDocument : IScribeDocumentDefinition
                 + "Legal(x) is the existing flattened-bit Fibonacci legality predicate with false "
                 + "initial bit. In particular high(x(i)) and low(x(i+1)) cannot both be true. "
                 + "Null windows retain their positions.")),
+            Describe.Lean(DescribeId.Create("legal-priority-teacher-seams"),
+                DeclarationHandle.Create("D5/S3/Arith/FibonacciAtomic/LegalPriorityTeacher.legal_iff"),
+                H("Legality at adjacent window boundaries"),
+                StatementSource.FromAuthor(LegalFormula()),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Each of the five windows has legal internal bits. "
+                    + "With initial bit false, flattened legality therefore holds exactly when "
+                    + "no window ends in one immediately before a window beginning in one."))),
+                DescribeRole.Theorem),
             Paragraph(Text("Roles(n) consists of p,q,r in Fin(n) with p<q<r. The actual teacher "
                 + "first tests high(x(p)) and low(x(q)), returning 1 when both hold. Otherwise it "
                 + "tests high(x(q)) and low(x(r)), returning 2 when both hold, and 0 otherwise. "
@@ -46,6 +55,21 @@ internal sealed class LegalPriorityTeacherDocument : IScribeDocumentDefinition
                     + "by its legal-domain function. Triples with two adjacent gates all give zero. "
                     + "No sampling law, probability bound, or label-noise assumption is used."))),
                 DescribeRole.Theorem))));
+
+    private static Formula LegalFormula()
+    {
+        var n = V("n");
+        var x = V("x");
+        var i = V("i");
+        var j = V("j");
+        var adjacent = EqOf(Seq(Call("val", i), Sp, Plus, Sp, D(1)), Call("val", j));
+        var occupied = Seq(EqOf(Call("last", Call("apply", x, i)), V("true")),
+            Sp, Land, Sp, EqOf(Call("first", Call("apply", x, j)), V("true")));
+        var seams = All(i, Call("Fin", n), All(j, Call("Fin", n),
+            Seq(Par(adjacent), Sp, Implies, Sp, Neg, Sp, Par(occupied))));
+        return All(n, Seq(Mathbb, Grp(V("N"))), All(x, Call("Input", n),
+            Seq(Call("Legal", x), Sp, Iff, Sp, Par(seams))));
+    }
 
     private static Formula ResultFormula()
     {

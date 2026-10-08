@@ -240,3 +240,269 @@ all proper local wells. They give neither an unbounded family nor a
 result restricted to potentially persistent Robin-level sources. The
 full signed source-coverage obligation remains open; these additions have
 no Lean verification or literature originality certification.
+
+### Repetitions can be removed within a bounded multiplier search
+
+The existing layer formula in §2, `eq:layer-data`, and the finite-size
+comparison in §4 give a useful paper-level pruning interface. Keep the
+same integer $N$, put $A=\log N>27/8$, and assume
+$G(Np)\le G(N)$ for every prime $p$. For every positive integer multiplier
+$u$ with $W=\log u\le A/2$, let $\operatorname{rad}(u)$ be the product of
+its distinct prime factors, with $\operatorname{rad}(1)=1$. Then
+
+$$
+G(N\operatorname{rad}(u))\ge G(Nu),
+$$
+
+with strict inequality when $u$ has a repeated prime factor. This uses
+neither a CA hypothesis nor a prior positive Robin margin.
+
+For the calculation, write
+
+$$
+c_A(w)=\log\log(A+w)-\log\log A=\int_A^{A+w}g(t)\,dt,
+\qquad
+h_{p,j}=\log r_{p,j}.
+$$
+
+If $S_{p,j}=p+\cdots+p^j$, the classical formula gives
+$S_{p,j+1}=p(S_{p,j}+1)$. The elementary bounds
+$\log(1+t)<t$ and $\log(1+t)\ge t/(1+t)$, for $t>0$, hence give
+
+$$
+h_{p,j+1}<\frac1{p(S_{p,j}+1)}\le\frac{h_{p,j}}p.
+$$
+
+Source insertion stability says
+$h_{p,v_p(N)+1}\le c_A(\log p)$. If a current multiplier still contains
+at least two copies of $p$, its top inserted layer therefore has reward
+less than $\tfrac12(\log p)g(A)$. The current integer $m$ has
+$A\le\log m\le A+W$, and removing that copy saves the denominator cost
+
+$$
+\int_{\log m-\log p}^{\log m}g(t)\,dt
+\ge(\log p)g(A+W)>\tfrac12(\log p)g(A).
+$$
+
+The last inequality follows from $W\le A/2$ and
+$(3A/2)\log(3A/2)<2A\log A$, which is equivalent to $A>27/8$.
+Thus each such deletion strictly increases $G$. Iterating removes only
+the repeated copies in $u$, retains $N$ and all required stack prefixes,
+and reduces the multiplier budget. Intermediate states need not be
+insertion-stable: the comparison continues to use the original source's
+next-layer bound. When $u$ is squarefree the two integers coincide.
+
+Consequently, within this budget, an improving multiplier with at most
+$k$ inserted layers exists exactly when an improving subset of at most
+$k$ distinct primes exists. A construction with the explicit bound
+$W=O(\log A)$ eventually lies in this budget. A fixed layer count alone
+does not imply that bound. The reduction need not preserve exactly $k$
+layers, a prescribed endpoint, or the structure of an actual return packet;
+it is suitable for the unrestricted-multiple target of `thm:cone-envelope`.
+It supplies no improving subset or critical-source coverage.
+
+This is a derived application of the cited layer and finite-size data,
+not a statement attributed verbatim to the manuscript, a new generic
+inequality, or a Lean result. No originality certification or full
+Robin/RH conclusion is supplied.
+
+## The complete Euler transform of actual GA2 subset losses
+
+This is a scope check using classical Bernstein complete alternation and
+finite Euler expansion, not an additional theorem attributed to the
+archived manuscript or a new Robin estimate. Use the
+[Caveney–Nicolas–Sondow GA2 condition](../Arith/caveney2012sacaga.md)
+at one actual integer $N>5040$, put $A=\log N$, and assume
+$P^+(N)\le A$. For a finite prime set $\mathcal B\subset\{p:p>A\}$,
+define, for every $\mathcal S\subseteq\mathcal B$,
+
+$$
+\begin{aligned}
+q_{\mathcal S}&=\prod_{p\in\mathcal S}p,&
+w_{\mathcal S}&=\log q_{\mathcal S},&
+b_{\mathcal S}&=\sum_{p\in\mathcal S}\log(1+1/p),\\
+C_A(w)&=\log\log(A+w)-\log\log A,&
+L_A(\mathcal S)&=C_A(w_{\mathcal S})-b_{\mathcal S}.
+\end{aligned}
+$$
+
+Multiplicativity and GA2 directly give
+$L_A(\mathcal S)=\log[G(N)/G(Nq_{\mathcal S})]\ge0$.
+All comparisons retain the same $N$. The empty block is included with
+$q_\varnothing=1$ and $L_A(\varnothing)=0$.
+
+The denominator cost has the classical positive representation
+
+$$
+C_A(w)=\int_{(0,\infty)}(1-e^{-wt})\,\nu_A(dt),\qquad w\ge0,
+$$
+
+with a nonzero positive measure. It can be checked without a general
+Bernstein theorem: the classical log integral and the Gamma Laplace
+integral, with $r=s/\log A>0$, give
+
+$$
+\begin{aligned}
+C_A(w)
+&=\int_0^\infty\frac{e^{-s}}s
+\left[1-(1+w/A)^{-s/\log A}\right]ds\\
+&=\int_0^\infty\int_0^\infty
+(1-e^{-wt})\frac{e^{-s}A^r t^{r-1}e^{-At}}{s\Gamma(r)}\,dt\,ds.
+\end{aligned}
+$$
+
+Tonelli applies to this positive integrand. The density on $s,t>0$ is
+strictly positive. For every nonempty $\mathcal U\subseteq\mathcal B$,
+the interaction integral
+
+$$
+I_A(\mathcal U)=\int_{(0,\infty)}
+\prod_{p\in\mathcal U}(1-p^{-t})\,\nu_A(dt)
+$$
+
+is finite and strictly positive: selecting $p_0\in\mathcal U$, its
+integrand lies between zero and $1-p_0^{-t}$, whose integral is
+$C_A(\log p_0)<\infty$.
+
+Set $E_0=\prod_{p\in\mathcal B}(1-1/p)>0$. The actual complete
+Euler-weighted loss transform satisfies
+
+$$
+\begin{aligned}
+\mathsf T_A(\mathcal B)
+&:=\sum_{\mathcal S\subseteq\mathcal B}
+\frac{\mu(q_{\mathcal S})}{q_{\mathcal S}}L_A(\mathcal S)\\
+&=-E_0\left[
+\sum_{p\in\mathcal B}\frac{L_A(\{p\})}{p-1}
++\sum_{\substack{\mathcal U\subseteq\mathcal B\\|\mathcal U|\ge2}}
+\frac{I_A(\mathcal U)}{\prod_{p\in\mathcal U}(p-1)}\right].
+\end{aligned}
+$$
+
+For the finite calculation, keep
+$E_{\mathcal B}(t)=\prod_{p\in\mathcal B}(1-p^{-1-t})$ and use
+
+$$
+\sum_{\mathcal S\subseteq\mathcal B}
+\frac{\mu(q_{\mathcal S})}{q_{\mathcal S}}C_A(w_{\mathcal S})
+=\int_{(0,\infty)}[E_0-E_{\mathcal B}(t)]\,\nu_A(dt),
+$$
+
+$$
+\sum_{\mathcal S\subseteq\mathcal B}
+\frac{\mu(q_{\mathcal S})}{q_{\mathcal S}}b_{\mathcal S}
+=-E_0\sum_{p\in\mathcal B}\frac{\log(1+1/p)}{p-1},\qquad
+\frac{E_{\mathcal B}(t)}{E_0}
+=\prod_{p\in\mathcal B}\left(1+\frac{1-p^{-t}}{p-1}\right).
+$$
+
+Expand the last finite product completely. Its singleton terms integrate
+to $C_A(\log p)$ and combine with the additive benefits to yield the
+displayed loss transform. Keep $E_0-E_{\mathcal B}(t)$ together inside
+the integral; the individual constant integrals need not converge.
+
+Thus $\mathsf T_A(\mathcal B)\le0$, and it is strictly negative if
+$|\mathcal B|\ge2$. This conclusion needs only the actual singleton
+losses to be nonnegative; strict singleton losses are unnecessary.
+For $\mathcal B=\varnothing$ the transform is zero, and for
+$\mathcal B=\{p\}$ it is $-L_A(\{p\})/p$. No subset order is discarded.
+The particular choice $\mathcal B=\{p:A<p\le2A\}$ is allowed; no limit
+over an infinite prime tail is asserted.
+
+Consequently neither pointwise GA2 loss positivity nor the additional
+Bernstein structure makes this particular complete transform nonnegative.
+Its negative has the displayed positive decomposition, but no
+sign-preserving comparison with the already recombined actual
+$I_\psi(A)+R(A)$ has been supplied. The
+[FIB volume's §§434–435](../../docs/develop/theory/FIBONACCI_ATOMIC_RELATION_GENERATION.md)
+pair the native same-filter kernel window with its complete complement;
+those are different quantities and are reused directly. This scope check
+excludes the proposed unflipped loss transform as a positive supplier,
+not other Abel or cumulative transforms, and gives no Robin-critical
+margin, source coverage, new Bernstein theorem, or Lean verification.
+
+## Divisor-record box geometry does not transfer to Robin records
+
+The inspected primary is Marco Mantovanelli, *Prime-Exponent Transition
+Geometry and Divisor Barriers Between Consecutive Highly Composite Numbers*,
+[arXiv:2608.17045v1](https://arxiv.org/html/2608.17045v1),
+17 August 2026. Its definitions in §2, Proposition 4.1, Theorem 4.2,
+Corollary 4.3 and layer spectrum in §7.1 were read. This identifies the
+inspected version; a latest-version comparison and whole-paper proof audit
+are not supplied. No computation from its companion archive is a premise.
+
+The source uses the closed prime-exponent box
+
+$$
+\mathcal B(m,n)=\left\{\prod_p p^{e_p}:
+\min(v_p(m),v_p(n))\le e_p\le\max(v_p(m),v_p(n))\right\}.
+$$
+
+Proposition 4.1 supplies the complementary state $z^\sharp=mn/z$ in
+the same box, with $zz^\sharp=mn$ and
+$d(z)d(z^\sharp)\ge d(m)d(n)$. Theorem 4.2 gives
+$\mathcal B(H,H')\cap(H,H')=\varnothing$ for consecutive strict
+**divisor-count** records. Corollary 4.3 consequently puts every interior
+state of a ceiling-admissible mixed geodesic below $H$. These published
+results are reused, not reproved. The layer reward in §7.1 is
+$\log((j+1)/j)$ for $d(n)$; it is not a layer reward for
+$Z(n)=\sigma(n)/n$ or $G(n)=Z(n)/\log\log n$.
+
+There is already a published actual pair that prevents transferring
+the box-gap conclusion to consecutive XA records. Use $H=n_1$ and
+$H'=n_3$ from Nazardonyavi–Yakubovich, Remark 5.5, printed p.26,
+[arXiv:1211.2147v3](https://arxiv.org/pdf/1211.2147v3), as cited in the
+[existing XA source note](../Arith/caveney2012sacaga.md).
+Their consecutive XA status is the primary's reported numerical result,
+not independently reproduced here. Their published factorizations give
+
+$$
+H'=H\,\frac{149\cdot151}{2},\qquad
+v_2(H)=9,\quad v_2(H')=8.
+$$
+
+The other changed coordinates are $v_{149},v_{151}:0\to1$; all remaining
+coordinates agree. Thus the actual integers
+
+$$
+z=149H,\qquad z^\sharp=\frac{151H}{2}
+$$
+
+both belong to $\mathcal B(H,H')\cap(H,H')$, and satisfy
+$zz^\sharp=HH'$. Membership and the strict size inequalities follow
+directly from those factorizations; no new enumeration is required.
+Conditional on the cited record classification, this is a counterexample
+to the XA version of the proposed box-gap transfer, not to the source's
+HCN theorem or to Robin's inequality.
+
+The normalization explains why the reflected-product argument does not
+force a contradiction here. Each changed exponent has only its two
+endpoint choices, so multiplicativity gives
+$Z(z)Z(z^\sharp)=Z(H)Z(H')$. Set $t=\log n$ and
+$b(t)=\log\log t$ for $t>1$. Ordinary calculus gives
+
+$$
+b''(t)=-\frac{1+\log t}{t^2(\log t)^2}<0.
+$$
+
+The two interior logarithms have the same sum as the endpoint logarithms.
+Strict concavity therefore yields
+$b(\log z)+b(\log z^\sharp)>b(\log H)+b(\log H')$, and consequently
+
+$$
+G(z)G(z^\sharp)<G(H)G(H').
+$$
+
+Thus the size denominator changes the product comparison needed by the
+HCN proof. This is a direct scope application of the published example
+and elementary multiplicativity and calculus, not a new general
+reflection theorem, a signed prime-error estimate, or a Lean result.
+
+There is a separate source-selection obstruction: under a Robin
+counterexample hypothesis, the project's selected least global maximizer
+is the last XA, by the existing source note. It has no later strict
+$G$-record with which to form the required consecutive pair. Neither
+replacing it by a divisor-count record nor assuming a later XA retains
+that source. A usable joint-prime supplier must apply at the same actual
+selected integer and control the full Robin-normalized comparison;
+the cited box geometry does not supply it.

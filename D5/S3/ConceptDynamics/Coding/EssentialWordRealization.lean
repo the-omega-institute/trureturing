@@ -3,9 +3,8 @@
    mirror-B: D5/B/S3/ConceptDynamics/Coding/EssentialWordRealization
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: theorem23.1 prescribed-word necessity
-   digest: Essential finite directed multigraphs admit an actual Int-indexed legal history containing every edge of every positive legal finite word.
--/
+   utility: none
+   digest: Essential finite directed multigraphs admit an actual Int-indexed legal history containing every edge of every positive legal finite word. -/
 
 import Mathlib.Logic.Function.Iterate
 import Mathlib.Data.Int.Basic

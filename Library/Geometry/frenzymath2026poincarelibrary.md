@@ -5931,3 +5931,27 @@ https://github.com/the-omega-institute/trureturing/issues/11339#issuecomment-590
 来源为 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a 的 PoincareLib.Analysis.ODE.LocalFlow.HigherRegularity.VariationalLinearMapSmoothness。原作者为 qinz1yang/differential-geometry 的 DifferentialGeometry contributors，比较版本 1b535dd102b94cc42b107cca27059687888f08b3，Apache-2.0。原完整模块与有序前置已真实编译或复用此前验收，零错误、零警告；固定原字节、Git blob、实际导入源码和 olean 一致。只导入原已接受模块的小检查打印该既有公开定理的完整递归公理闭包，仅含 propext、Classical.choice、Quot.sound，没有新增证明包装或重复编译已接受正文。
 
 proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。统一 C∞／真实流形测地线及 Jacobi 场的实际绑定、全局原指数映射与 H3 分类、完整有限体积尖点和未知 F 的弱正则性、给定 h,d 的完整 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 官方 PO 目标的中心、拓扑与 Haar 复用接口
+
+官方 LeanEval.Geometry.MostowRigidity.mostow_rigidity 的对象是 PO(n,1) = unitary(MatrixSum (Fin n) (Fin 1) ℝ) / center，MatrixSum 的 star 使用实际不定签名矩阵，PO 的可测结构为 Borel、体积为 Haar。目标对所有 n ≥ 3 的原离散子群 Γ、Λ，在原 HasFundamentalDomain Γ (PO n 1)、HasFundamentalDomain Λ (PO n 1) 及两者原 covolume ≠ ⊤ 下，要求实现指定完整群同构的原 PO 共轭，允许挠元。当前原 H3／Mat4 构造只处理三维；普通正定 unitary、另选 Haar 或要求自由作用的覆盖模型均不能直接替代这个对象。
+
+Mathlib 的 Matrix.GeneralLinearGroup.center_eq_range_scalar 处理与全部 GL 元素交换的矩阵；原不定正交群的中心只给出与该正交群元素交换，不能直接套用。待形式化的代数路线是在实际 indefinite-star unitary 中构造每个坐标的符号反射，利用交换方程消去非对角项；再对每个空间坐标与时间坐标构造块矩阵 [[5/4,3/4],[3/4,5/4]] 的 Lorentz boost，利用交换方程对齐对角项，最后用原 unitary 方程约束共同标量。每个反射及 boost 的双侧 unitary 条件、中心恰为 ±I、实际时间分支子群 H = {A | A_tt > 0} 的封闭运算／开放性，以及每个中心陪集唯一的未来分支代表，均仍须证明。此研究路线不加入无挠或保定向前提。
+
+可复用的拓扑入口是 Topology.Algebra.Group.Quotient 中的 QuotientGroup.continuous_mk、QuotientGroup.isOpenMap_coe，Topology.Constructions 中的 IsOpenMap.domRestrict，以及 Topology.Homeomorph.Defs 中的 Equiv.toHomeomorphOfContinuousOpen。它们分别提供实际商映射的连续性／开放性、对开子集的限制及连续开放双射到同胚的升级。实际 H 与 PO 间的双射群同态尚未构造，不能仅由这些入口宣称已有 PO 同胚。
+
+三维坐标对齐可检索 Matrix.reindexAlgEquiv（LinearAlgebra.Matrix.Reindex），但仍须验证 Fin 3 ⊕ Fin 1 与原 Fin 4 的精确重排及实际签名方程。测度侧可检索 ContinuousMulEquiv.isHaarMeasure_map（MeasureTheory.Group.Measure）、Measure.isMulLeftInvariant_eq_smul 与 haarScalarFactor_pos_of_isHaarMeasure（MeasureTheory.Measure.Haar.Unique）；Haar 唯一性需要实际局部紧、第二可数及测度实例，比较系数的正性与有限性也须绑定。基本域侧 IsFundamentalDomain.image_of_equiv 和 IsFundamentalDomain.covolume_eq_volume（MeasureTheory.Group.FundamentalDomain）仍要求实际作用、测度搬运及相应可数性条件；含挠元的原双曲商体积与尖点桥未完成。
+
+来源为官方题目原陈述，以及 Mathlib@db584cd6d46c92f209a44c0f1c829460d327499d 的上述具名模块，Mathlib 为 Apache-2.0；反射／boost 组合是本项待验证研究路线，不归为上游已有中心定理。此项仅完成原陈述与源码接口检索，未新增或编译 Lean 证明；远端 CI 验证 Library 说明。实际中心／PO 拓扑／原 Haar 和余体积绑定、所有维数的几何证明、完整 Mostow–Prasad 与官方验收仍未完成。
+
+
+### 实际立体投影的平面零测集到球面面积零测集
+
+对实际三维欧氏单位球面上的任意极点，使用 Mathlib 原 stereoInvFun 与真实正交归一基给出的复平面图，任意实际复 Lebesgue 外测度零集 N 在图逆映射下的像具有真正球面面积外测度零。N 无需可测；图的原分母约定为 norm² + 4，与此前原立体投影构造一致。
+
+真实正交分解及保体积映射把平面零测集变为环境零测柱体。一个显式全域可微的环境自映射覆盖其实际径向锥，Mathlib Jacobian 的可微自映射零测像定理给出锥体积零。先在平面取可测零测包络，再由实际图逆的可测嵌入和 HaarToSphere 的锥公式得到球面面积零；没有循环假设球面包络的锥零测，也没有把逐点纤维零测当作整个像零测。
+
+来源为 Mathlib@db584cd6d46c92f209a44c0f1c829460d327499d 的 Jacobian 与 Haar.InnerProductSpace（Sébastien Gouëzel）、HaarToSphere 与 Lebesgue.Complex（Yury Kudryashov）、Sphere（Heather Macbeth），Apache-2.0。实际正交柱体到径向锥及立体投影零测消费者为本次证明；固定 Poincare 来源 frenzymath/Poincare-Conjecture@432c38f2aa5a30efb13871292d17b4a3309a496a 仅承担图约定的既有对齐，不冒领本独立 Mathlib 模块的导入。
+
+完整独立临时 Lean 模块真实 exit 0、零错误、零警告，四个新目标的完整递归公理闭包仅含 propext、Classical.choice、Quot.sound。原稿保留；派生源保留给定 MeasurableSpace／BorelSpace 与实际欧氏空间的 WithLp 可测实例，以 convert! 对齐实际正交保测度映射的依赖类型及函数表达式。subtypeL 化简及可测包络表达式显式化，实际可微性证明未使用的有限维／可测实例移除，四个目标结论未改变。实际源码、编译快照、生成 olean、退出结果和五个选中 Mathlib 源码／olean 已独立核验。proof_shape: bind-only，admission_basis: none。本项交付 Library 复用说明，Lean 为临时编译证据，远端 CI 验证说明。真实原 NullSphere 与 compact K Haar 的进一步绑定、未知 F 的实际平面几乎处处性质、完整有限体积尖点和给定 h,d 的 Mostow–Prasad 与官方验收仍未完成。

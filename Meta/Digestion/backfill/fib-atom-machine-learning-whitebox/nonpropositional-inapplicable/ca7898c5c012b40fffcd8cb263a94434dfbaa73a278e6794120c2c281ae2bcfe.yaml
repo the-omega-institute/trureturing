@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:ca7898c5c012b40fffcd8cb263a94434dfbaa73a278e6794120c2c281ae2bcfe
+  normalized_sha256: sha256:ca7898c5c012b40fffcd8cb263a94434dfbaa73a278e6794120c2c281ae2bcfe
+cas_ref: sha256:ca7898c5c012b40fffcd8cb263a94434dfbaa73a278e6794120c2c281ae2bcfe
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 'Closed solely by pinned Mathlib v4.33.0; no usable frozen project GID. Encode the actual five-symbol masses as (u,x,v,1/2,z) with u+x+v+z=1/2, high/low indicators at their original symbols, and the priority teacher h_p*l_q+2*(1-h_p*l_q)*h_q*l_r. The given label-row contrast is alpha*(C-1)/4 by ring normalization. Fin.sum_univ_succ, Finset.mul_sum, Finset.sum_mul and Fintype.prod_sum instantiate the complete finite product law; the centered mean vanishes, arbitrary independent unused coordinates have zero paired moment, and every extra-coordinate product sums to one. Finite sum distribution and ring normalization give all three actual active paired moments: -alpha*x*Kh/4, -alpha*Kh*Kl/4 and alpha*Kl*(1-H*s)/4. Absolute-value rewrites and mul_max_of_nonneg/mul_min_of_nonneg give the exact minimum active position score alpha*gamma/4. le_min_iff/le_max_iff give median as the two-of-three threshold criterion. Ordered-ring mul_nonneg/mul_pos instances at the given positive masses, followed by linarith/nlinarith normalization, give Kh,Kl>0; Kh+Kl>1/4; Kh,Kl>=5*rho/2; and both complementary cases proving gamma>=rho/8 under 0<rho<=1/8. The Kh<1/8 case gives Kh>1/4-z/2, z-Kh>1/8, Kl>1/8 and b3>1/64>=rho/8; the other case gives b1>=rho/8. The third edge may vanish. These supply all statement and combined-proof clauses with no project wrapper or freeze.'
+    previous_atom_id: 7c0e0876befeb1cf915c3d89097b27c6aeb8dbb43f8b473438b72c6b568eb470
+    next_atom_id: d0426343f8fc619b5b6c269e35ac390e3a6609a9ec068bf426109042127404cb

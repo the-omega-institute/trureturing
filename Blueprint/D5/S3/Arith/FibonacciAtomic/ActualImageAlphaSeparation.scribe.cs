@@ -1,0 +1,98 @@
+using static StrataLint.Scribe.DefinitionDsl;
+using static StrataLint.Scribe.FormulaDsl;
+using F = StrataLint.Scribe.FormulaDsl;
+
+namespace StrataLint.Scribe.Blueprint.D5.S3.Arith.FibonacciAtomic;
+
+internal sealed class ActualImageAlphaSeparationDocument : IScribeDocumentDefinition
+{
+    private const string Prefix = "D5/S3/Arith/FibonacciAtomic/ActualImageAlphaSeparation.";
+
+    public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
+        "Sharp alpha separation and all literal two-hole equality cases of actual Fibonacci tree images.",
+        H("Alpha Separation and Literal Two-Hole Equality"), Blocks(
+            Paragraph(Text("Sources are nonempty finite ordered full binary trees with alpha and beta leaves. "
+                + "The substitution rho sends alpha to beta and beta to (beta,alpha), and preserves pairing. "
+                + "I is the range of rho cubed on these complete sources. L(P) is the existing leaf-address set, "
+                + "with root-first Boolean paths: false means left and true means right. Composition counts alpha and beta leaves.")),
+            Paragraph(Text("The leaf length n is FreeMagma.length. Shared leaves, unshared leaves, Nonconflict, E, A and C use ActualImageSevenLeafSeparation. "
+                + "Its seven_leaf_separation theorem supplies the exact address semantics and Theorem 30.4. "
+                + "A is pair(E,beta), C is pair(A,E), and E is pair(beta,alpha).")),
+            Def("delta", "Directed alpha deficit", "delta(P,Q) is the cardinality of the set difference of the original alpha-leaf address sets. The prose notation μ(P) denotes the cardinality of the original alpha-leaf address set."),
+            Def("TwoHole", "Two source holes", "Single-hole contexts reuse ActualLeafHistoryRigidity.OutputContext, its plug filling and its root-first holeAddress. "
+                + "The outer one-hole context leads to the lowest common ancestor. Its left and right one-hole contexts lead to the two distinct holes. A Boolean records their naming order. "
+                + "TwoHole.fill(J,X,Y) plugs the named trees into the left and right contexts and their pair into the outer context, so each tree is inserted exactly once and the entire outer context and each fixed sibling are retained. "
+                + "TwoHole.addresses gives two addresses with the same outer prefix and opposite next bits, and hence neither is a prefix of the other."),
+            Def("frontier", "Canonical divergence frontier", "Comparison is performed on complete preimages. Equal subtrees stop; two branches recurse into the ordered children; an atom-compound comparison records the current address."),
+            Def("forwardCount", "Atomic-side hole count", "forwardCount(S,T) counts frontier holes whose S side is atomic and T side is compound."),
+            Def("NormalForm", "Literal double-hole normal form", "NormalForm(S,T) retains a complete source context J and y equal to beta or (alpha,alpha), with S=fill(J,beta,(alpha,y)) and T=fill(J,(alpha,y),beta). "
+                + "Its frontier is exactly the two named, mutually nonprefix addresses. Writing Y=rho cubed(y) and K=rho cubed(fill(J,beta,beta)), the actual trees are literally replace(replace(K,u,C),v,(A,Y)) and replace(replace(K,u,(A,Y)),v,C). Thus every fixed sibling has an actual preimage."),
+            Describe.Lean(DescribeId.Create("actual-image-alpha-path-replace"),
+                DeclarationHandle.Create(Prefix + "path_replace"), H("Replacement through a context"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every context H, trees M,X and address u, replacement of X in H.plug(M) at H.holeAddress followed by u equals H.plug(replace(M,u,X))."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-image-alpha-context-composition"),
+                DeclarationHandle.Create(Prefix + "context_composition"), H("Composition through a context"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every single-hole context H and trees U,V, composition(H.plug(U)) plus composition(V) equals composition(H.plug(V)) plus composition(U)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-image-alpha-count-facts"),
+                DeclarationHandle.Create(Prefix + "alpha_count_facts"), H("Positive alpha count and its unit case"),
+                StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every complete source p, rho cubed(p) has at least one alpha leaf. If it has exactly one alpha leaf, p is the single leaf alpha."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-image-alpha-separation-result"),
+                DeclarationHandle.Create(Prefix + "result"), H("Sharp Alpha Separation"),
+                StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For all complete preimages S,T, put P=rho cubed(S) and Q=rho cubed(T). Distinct equal-leaf nonconflicting images have at least three alpha addresses missing in each direction. "
+                        + "Either deficit equals three precisely when NormalForm(S,T) holds. The same Y is C or (A,A) at both holes. Equality implies identical compositions of both the actual trees and their preimages.")),
+                    Paragraph(Text("Every complete two-hole source context and each permitted y produce distinct equal-leaf nonconflicting actual images with both directed alpha deficits equal to three. "
+                        + "The canonical preimage frontier consists of exactly their two independent holes, and the actual tree equalities retain both address replacements. The total unshared leaf counts, denoted unsharedCount(y), are seven when y is beta, and eight when y is (alpha,alpha).")),
+                    Paragraph(Text("At every atom-compound hole, the atomic side contributes at least one alpha deficit and the compound side at least two. Equal total leaf counts force both orientations to occur. "
+                        + "A deficit of three forces exactly one hole in each orientation. A compound-side deficit of two forces the comparison C versus (A,Y), with Y=C or (A,A); its leaf increase is three or four. "
+                        + "The other hole must balance this increase, excluding the alpha-atom comparison, whose increase is at least five. The unique five- and six-leaf images force the same Y at both holes. "
+                        + "Deficits and compatibility add over distinct child addresses and are preserved by each common fixed sibling."))),
+                DescribeRole.Theorem))));
+
+    private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
+        DescribeId.Create("actual-image-alpha-" + name.ToLowerInvariant().Replace('.', '-')), DeclarationHandle.Create(Prefix + name),
+        H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(prose))), DescribeRole.Definition);
+    private static Formula V(string x) => F.Id(x);
+    private static Formula Par(Formula x) => Seq(Open, x, Close);
+    private static Formula Call(string name, params Formula[] xs) => new Formula.Apply(
+        Seq(Operatorname, Grp(V(name))), [.. xs]);
+    private static Formula Equal(Formula x, Formula y) => Seq(x, Sp, Eq, Sp, y);
+    private static Formula Le(Formula x, Formula y) => Seq(x, Sp, Leq, Sp, y);
+    private static Formula In(Formula x, Formula y) => Seq(x, Sp, InMacro, Sp, y);
+    private static Formula And(params Formula[] xs) => Seq(xs.Select((x,i) =>
+        i == 0 ? Par(x) : Seq(Sp, Land, Sp, Par(x))).ToArray());
+    private static Formula Imp(Formula x, Formula y) => Seq(Par(x), Sp, Implies, Sp, Par(y));
+    private static Formula All(string x, Formula domain, Formula body) =>
+        Seq(Forall, Sp, V(x), Sp, InMacro, Sp, domain, Comma, Sp, Par(body));
+    private static Formula ResultFormula()
+    {
+        Formula ss=V("S"),tt=V("T"),pp=Call("rho3",ss),qq=Call("rho3",tt);
+        Formula dpq=Call("delta",pp,qq),dqp=Call("delta",qq,pp),nf=Call("NormalForm",ss,tt);
+        Formula alphaHypotheses=And(Seq(Neg,Par(Equal(pp,qq))),
+            Equal(Call("n",pp),Call("n",qq)),Call("NC",pp,qq));
+        Formula alphaConclusions=And(
+            Le(D(3),dpq),Le(D(3),dqp),Seq(Par(Equal(dpq,D(3))),Sp,Leftrightarrow,Sp,Par(nf)),
+            Seq(Par(Equal(dqp,D(3))),Sp,Leftrightarrow,Sp,Par(nf)),Imp(Equal(dpq,D(3)),And(
+                Equal(Call("c",pp),Call("c",qq)),Equal(Call("c",ss),Call("c",tt)))));
+        Formula alpha=All("S",V("Source"),All("T",V("Source"),Imp(alphaHypotheses,alphaConclusions)));
+        Formula j=V("J"),yy=V("y"),small=Seq(Par(Equal(yy,V("beta"))),Sp,Lor,Sp,
+            Par(Equal(yy,Call("pair",V("alpha"),V("alpha")))));
+        Formula sx=Call("fill",j,V("beta"),Call("pair",V("alpha"),yy));
+        Formula tx=Call("fill",j,Call("pair",V("alpha"),yy),V("beta"));
+        Formula px=Call("rho3",sx),qx=Call("rho3",tx),count=Call("unsharedCount",yy);
+        Formula alphaConverse=All("J",V("TwoHole"),All("y",V("Source"),Imp(small,And(
+            In(px,V("I")),In(qx,V("I")),Call("NormalForm",sx,tx),Seq(Neg,Par(Equal(px,qx))),
+            Equal(Call("n",px),Call("n",qx)),Call("NC",px,qx),
+            Equal(Call("delta",px,qx),D(3)),Equal(Call("delta",qx,px),D(3)),
+            Equal(Call("c",px),Call("c",qx)),Equal(Call("c",sx),Call("c",tx)),
+            Equal(Call("nu",px,qx),count),Equal(Call("nu",qx,px),count)))));
+        return Disp(And(alpha,alphaConverse));
+    }
+}
