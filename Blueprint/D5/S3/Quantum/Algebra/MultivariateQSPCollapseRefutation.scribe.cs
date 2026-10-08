@@ -108,7 +108,7 @@ internal sealed class MultivariateQSPCollapseRefutationDocument : IScribeDocumen
     private static Formula EffDimFormula()
     {
         Formula coefficients = Fun("s", Call("Finsupp", Fin(2), Naturals()),
-            Fun("i", Fin(3), Call("coeff", App(F.Id("g"), F.Id("i")), F.Id("s"))));
+            Fun("i", Fin(3), Call("coeff", F.Id("s"), App(F.Id("g"), F.Id("i")))));
         return Disp(All("g", PolyVectors(), Eqn(Call("effDim", F.Id("g")),
             Rank(Call("span", Complexes(), Call("range", coefficients))))));
     }
