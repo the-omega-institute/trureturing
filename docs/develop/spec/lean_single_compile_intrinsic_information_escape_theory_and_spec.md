@@ -31,8 +31,8 @@ refinement、multiplicity spectrum、role histogram 与 ordered layered capture�
 generated joint kernels 按**关系外延相等**取商，形成有限闭包格；其全部 strict generator
 transitions 组成可含 shortcut edges 的 DAG，Hasse cover graph 是该格的传递约简。Hasse diagram
 为 path（因而为 tree）当且仅当格为 chain；存在不可比 kernels 时出现 diamond，因而同一终局
-允许多条合法分解。有限 arena 输出精确计数，
-任意 State 输出 strict-inclusion witness。
+允许多条合法分解。有限 arena 的数学分析使用精确计数，
+任意 State 的结构分析使用 strict-inclusion witness。
 
 每个定理对象包含：
 
@@ -5132,177 +5132,43 @@ Lean 编译的数学输入；StrataLint 消费登记状态和绑定身份，Lean
 
 ## CIRPT-42　结构与独立分析诊断
 
-生产路径的结构诊断由当前 `Compiled*` 模块发出；projection 诊断由下游
-`LeanInformationAuditRegAnalysis/Projection` 与其独立测试消费，不是 Seal 的统计输出协议。
+生产诊断来自编译输入解码与结构评定；数学证明由 Reg 编译期内核检查。
+`Contract.Discovery`／`Decoder` 对缺失编译声明、不可解码输入、未知构造器和不许可的
+公理依赖具名失败。`RootStructure` 核对模块路径、结构条目数量和 root ID。
+生产评定中的 IE 诊断见第 31 节。
 
-IE-C024…IE-C033 的 trigger、deterministic message shape 与 required payload keys 以第 31 节
-三张耦合表为规范定义；本节给出其语义解释。
-
-### IE-C013　MissingPrimitiveBundle
-
-公开 theorem unit 没有 typed primitive bundle。
-
-### IE-C014　PrimitiveKernelNotDecidable
-
-有限硬门无法执行 primitive kernel 判定。
-
-### IE-C015　PrimitiveReflectionMismatch
-
-Boolean kernel 与结构 kernel 的 reflection theorem 失败。
-
-### IE-C016　CertificateLeakIntoObjectKernel
-
-proof、seal certificate、declaration name 或 statement hash 被作为 object primitive coordinate。
-
-### IE-C017　AdmitDomainRestrictionAttempt
-
-试图通过把 `Arena.State` 替换成 admitted subtype 来降低同一 catalog 的硬门逃逸率。
-
-### IE-C018　RoleSignaturePartitionMismatch
-
-角色 signature histogram 未精确分割 unique capture pairs。
-
-### IE-C019　PrimitiveRealizationMissing
-
-legacy theorem 与 primitive bundle 之间没有 Lean realization theorem。
-
-### IE-C020　ShadowPrimitiveAPI
-
-新增了与已有 `Concept`、`conceptKernel`、`jointKernel`、`defectRelation` 或 `blindResidual` 平行的第二真源。
-
-### IE-C021　ClosedTruthAsObjectPrimitive
-
-把一个已证明闭命题的常值 `true` readout 登记为对象层 theorem primitive。
-
-### IE-C022　CrossArenaAggregationAttempt
-
-试图在没有 Lean `Equiv` 或显式新测度理论的情况下，把不同 arena 的 escape rates 聚合成一个硬门标量。
-
-### IE-C023　UnprovedArenaTransport
-
-两个 arena 声称只是表示变化，却没有提供 Lean `Equiv` 及 primitive-kernel transport correctness theorem。
-
-### IE-C024　SplitCanonicalArenaCatalog
-
-同一 root import closure 内属于同一 canonical object `Arena` 的 occurrences 被 namespace、
-wrapper、cloned arena 或 sub-catalog 拆开，或试图用分析 view 替代 maximal catalog 时触发。
-同一 canonical arena declaration 按定义性别名展开判定：`def cloneArena := arena` 及传递别名
-归属展开后解析到的声明，不按 `canonicalObjectArenaName` 的 `Name` 拼写另分 owner。
-`object_arena` 输出该归属声明，`catalog_ids` 收集其全部 catalogs；消息与字段形状不变。
-别名归一扩展定义完成；消费者随判官层落地，当前无机器消费者。
-
-### IE-C025　QualifiedNameCollision
-
-两个不同的合法 occurrences 导出相同 catalog-qualified unit、realization、certificate 或
-其他 generated companion `Name`。同一 `(canonical arena declaration,theoremName)` 的重复
-登记不使用本码，而统一使用 IE-C002。IE-C025 由报告期评定发出；原生形式在记录时自行声明的
-unit 若其地址已被声明，由 Lean 自身的声明检查在记录时拒绝（`… has already been declared`）。
-
-### IE-C026　MissingMaximalCatalog
-
-root import closure 有归属于某 canonical arena 的 occurrence，却没有构造包含全部这些
-occurrences 的唯一 `canonical_maximal` catalog。
-
-### IE-C027　UncertifiedKernelRefinement
-
-refinement cell 没有 inclusion proof，或否定 cell 没有可复查的 witness pair。
-
-### IE-C028　AnalysisCertificateMismatch
-
-当前 `CompiledSnapshots` 或 `CompiledSeal` 的 expected/actual、目录身份、arena、成员顺序或单位向量不一致。
-
-### IE-C029　UnfaithfulCrossArenaRealization
-
-所谓 legacy realization 没有通过 injection/restriction 方程 faithful 地消费输入 law；
-尤其禁止用忽略 hypothesis 的两个既有 existential proofs 拼成空洞 `Iff`。
-
-### IE-C030　KernelAddressUsedAsSemanticEvidence
-
-把 `primitive_kernel_address` 或其 coincidence class 用于 arena grouping、`Equiv`、kernel
-transport、refinement、rate equality 或 accept/reject。
-
-### IE-C031　InvalidLayerChain
-
-有序 kernels 缺少相邻 inclusion proof、顺序与证书不一致，或 layered partition/reflected
-count 未通过 kernel 检查。
-
-### IE-C032　SizeBudgetRequiresReflectedSeal
-
-catalog 的 ordered-pair workload 超过第 33 节声明预算，却没有 refl lane 的 reflected seal。
-
-### IE-C033　IncompleteRedundantIndexSet
-
-zero members 在 IE-C007 前没有完整收集并证明、发生 first-zero 短路，或实际 validation failure 后仍写出 artifact；完整 certified redundant catalog 不触发本码。
-
-### IE-C039　InvalidGeneratedKernelNode
-
-projection node 不是某个 generator subset 的 joint kernel，或两个外延相等 nodes 未取商。
-
-### IE-C040　InvalidGeneratorTransition
-
-edge 不是一次 theorem addition、kernel 没有严格缩小，`is_cover` 与 Hasse cover relation 不符，
-equal-kernel addition 未写入 `collapsed_additions`，certified-schedule／requested strict transition
-未写入 `edges`，或 `complete_lattice_materialized=true` 时 full-DAG edge array 不完整。
-
-### IE-C041　IncompleteKernelProjectionBoundary
-
-bounded projection 缺少 top、bottom、任一 leave-one-out node、certified-schedule node 或显式
-请求 node，或任一 edge endpoint、collapsed-addition node、leave-one-out node、schedule node
-reference 无法解析到 materialized `node_key`。
-
-### IE-C042　KernelProjectionCertificateMismatch
-
-node escape、edge capture、schedule increment、matrix、spectrum、redundant set 或 verdict 与其
-certificate／reflected numeral 不一致。
-
-### IE-C043　KernelProjectionUsedForAdmission
-
-admission path 读取 `kernel_projection`、ASCII、node ID、hash、layout、timing 或 heuristic
-order。projection 只能由已完成的 seal truth 单向生成。
-
-### IE-C045…IE-C047　DualNoveltyGate（RESERVED / OPEN）
-
-`MissingAdmissionCertificate`、`DeadEscapeWitness`、`ForgedProofShape` 的 message contracts 只作
-预留；在 owner 完成 $\tau$ ruling 前不是 active compiler errors，也不得接为 required check。
-批准后必须先以第 39 节的 mutation matrix 证明 missing/dead/forged inputs 均 fail closed，才可
-把这些 codes 从 `RESERVED / OPEN` 改为 active。
+独立下游 `LeanInformationAuditRegAnalysis/Projection` 定义 IE-C039、IE-C040、IE-C041、
+IE-C042 和 IE-C043，分别检查 generated node、generator transition、投影边界、
+投影证据与分析字段的准入误用。其 schema、校验器与测试属于下游分析，
+不进入生产报告的 Seal 字段。
 
 ### IE-C048　RealizationIgnoredByLaw
 
-已注册 law arena 在声明的 intervention domain 内没有 kernel-checked Law-variation witness
-`∃ r₁ r₂, Law r₁ ∧ ¬Law r₂` 时触发：两个 realizations 必须具有同一已注册 signature，
-结构路径还须同属 $\Gamma$ 的 domain；见证缺失、无效或越域均失败。本码适用于 finite 与 structural
-两条注册路径；`Iff.rfl` bridge 不构成见证。定义完成；消费者随判官层落地，当前无机器消费者。
+`CompiledRegistration.validateFinite` 消费契约中的 variation 证据标记。
+缺失标记给出 `reason=missing_witness`，其它非 evidence 标记给出
+`reason=invalid_witness`。具体 Law-variation 证明在 Reg 编译期检查。
+本诊断先于 sensitivity 检查，不在报告期枚举 realizations 证明 variation。
 
 ### IE-C049　UnusedPrimitiveInBundle
 
-已注册 signature 的某个 readout index 或 anchor 不被 Law 消费、违反 exact generated slot support，
-即删去它后 Law 经遗忘该 primitive 的投影在声明域上外延不变，而 bundle kernel 改变时触发。
-语法出现、抵消表达式或死项不算消费；本码适用于 finite 与 structural 两条注册路径。
-优先序 `IE-C048 > IE-C049`：IE-C048 触发时不另判本码——常量 Law 下所有 primitive 皆未被消费，只发
-IE-C048；本码仅在 Law-variation 见证成立后判定，故每个登记至多命中其中一码。
-定义完成；消费者随判官层落地，当前无机器消费者。
+variation 已有 evidence 而 sensitivity 不完整时，`validateFinite` 枚举有限
+readout／anchor 索引，输出首个缺少有效见证的槽位和已检查 support。
+`support` 是契约部分证据所覆盖的索引集合，不是判官重新计算的语义支持。
+完整 sensitivity 证明在 Reg 编译期检查。
 
 ### IE-C050　ClosedTruthReadout
 
-readout 定义依赖已注册 theorem 的 truth、proof term 或 theorem-specific certificate／statement
-identity 时触发，将 AC-CIRPT-011 落为 fail-closed 诊断：provenance 检查取 readout 定义的传递
-常量闭包，闭包不得到达该 theorem、其 proof、该 statement 的 `Decidable` instances 或上述身份来源。
-实现展开的保护边界按声明所属模块及 import 依赖分类：`D5`、`LeanInformationAudit`、当前模块与
-传递导入受保护模块的模块均受保护；缺少 import 元数据也不能取得外部叶节点资格。
-受保护的可执行定义沿类型与 value 走查；外部常量的可执行 value 不展开，但每个 occurrence 仍在原词法
-上下文推断实际类型，并按允许规则递归检查类型参数、type family、显式类型别名与实例化的 constructor
-field types。外部叶节点资格不免除这些检查，也不等于只比较常量名称与未经实例化的声明类型。
-闭包在 `Prop` 类型的子项处停止（证明无关性：readout 只能观察一个证明的存在及其类型，不能观察其实现），
-判官在该处按该子项的类型判定——其类型是上述身份之一或含该 statement identity 时按本码失败——不进入证明实现；
-判官只按允许表识别形式，识别不出的形式（含无法解析的项头、未经审计的抽象 carrier、以计算得到的 statement 拼写）
-一律按本码失败，不得默认放行，每次放行须归到一条具体允许规则，不以定义等价证明「未触及」。
-在 data position，非受保护且未登记为 instance、结果项头属于 `decisionFamily` 的常量须按名称命中 `listedProducers`，
-否则记录 `class=unlisted_decision_producer`；instance 的类型仍须通过允许的 class 及其参数、字段检查。
-名称命中不代替上述类型检查；允许规则的扩展仍属判官层变更，不从未知形式推断准入。
-`reason` 取三值之一：`forbidden_dependency`（直接到达上述身份）、`unclassified_form`（允许表之外的形式，由作者改写 readout 或经判官层变更扩展允许表，不要求判官证明完备）、`incomplete_closure`（闭包无法完整取得，含走查预算耗尽）；多因同时成立时按 `incomplete_closure` > `forbidden_dependency` > `unclassified_form` 取一。本码适用于 finite 与 structural 两条注册路径。
-优先序 `IE-C050 > IE-C021`：IE-C021（常值 `true` readout）是本码的特例，同一登记同时命中时只发 IE-C050。
-定义完成；由判官层的 provenance 走查在登记展开时执行。
+`ReadoutProvenance` 对编译项及其原始常量依赖执行允许表走查。
+受保护定义沿类型与数据 value 走查；证明体保持不透明，证明命题仍参与身份检查。
+外部叶的类型参数、实例与构造器字段仍须通过允许表，不能只按名称放行。
+到达目标 theorem、statement identity、相应判定实例或专用证据时拒绝；
+无法完成闭包或识别形式时同样拒绝。
+
+`reason` 的优先序为 `incomplete_closure`、`forbidden_dependency`、`unclassified_form`。
+前者的 provenance 为 `null`；禁止依赖输出已走查名称的排序数组；
+未分类形式输出具名分类、位置与已走查名称，缺少该证据时为 `null`。
+模板 enrollment 也消费 provenance 检查，使用带 template 名的诊断。
+这些有界计算不调用 Lean conversion 或类型检查器，也不赋予报告数学证明权威。
 
 ---
 
@@ -6569,8 +6435,8 @@ existingTheoremStatement ↔
 ```
 
 不得是字符串说明。跨原 arena 的 legacy realization 必须给出 faithful injection/restriction
-equations，并在 `equivalence` 两个方向实际消费输入 hypothesis；用两个已知 existential
-proof 构造与输入无关的 `Iff` 触发 IE-C029。
+equations，并在 `equivalence` 两个方向实际消费输入 hypothesis。源重构、Law 对应与
+证据绑定由 `CompiledSourceContract`、`CompiledEvidence` 及契约证明字段核对。
 legacy realization 使用同一类型化发现与编译评定路径；IE-C048／IE-C049／IE-C050
 及含别名归一的 IE-C024 的消费者与 §24.1 相同。
 
@@ -6702,9 +6568,9 @@ Seal 的 catalogs 字段含 `SealCatalog`。各 catalog 的 arena、units 与 si
 成员顺序、arena 与每个索引的单位值。数学证据不在报告期生成或重新检查，
 seal 不输出统计数据。
 
-完整零集合得到逐成员 disposition；零成员本身不使合法 catalog 失败，也不取得首次
-冻结的正性资格。kernel 地址、hash、布局、timing 与 schedule 只用于输出，不作为
-grouping 或准入依据。输入缺失、不支持或不一致须具名失败，不输出伪造成功。
+逐成员结论保存在编译契约中；零成员本身不使合法冗余目录失败。报告按编译登记的
+canonical arena 与 catalog identity 分组，不计算数学统计或层级布局。
+输入缺失、不支持或不一致须具名失败，不输出伪造成功。
 
 ### 26.3 单次编译与唯一读取路径
 
@@ -6861,169 +6727,39 @@ StrataLint 消费登记绑定、声明身份、公理闭包与依赖等机器数
 
 ## 31. 契约与评定诊断
 
-诊断码：
+以下诊断由生产编译产物评定路径发出。解码、源绑定、模板和 join 的其它具名
+诊断由各自 `Contract`／`Compiled*` 模块给出；结构检查不代替 Reg 编译期数学证明。
 
-### IE-C001　UnregisteredTheoremUnit
-
-需要审计的 authored theorem 没有 theorem unit。
-
-### IE-C002　DuplicateRegistration
-
-以 `(canonical object arena declaration,theoremName)` 为键；该键在 sealing root 的 import
-closure 中出现至少两次时统一发 IE-C002，与 registration module、root 或 catalog spelling
-无关。同一 theorem 通过分别命名、kernel-checked realization 登记到不同 canonical arena
-是不同 occurrence；其 generated qualified names 若碰撞则发 IE-C025。
-IE-C002 diagnostic 必须列出 `object_arena`、`theorem_name`、完整 canonical-sorted
-`registration_modules` 与 `count`，不得只报告最先遇到的一项。
-IE-C002 由报告期评定对重复登记发出。普通 Lean 声明重用已存在的声明名时，由 Lean
-自身的声明检查拒绝（`… has already been declared`），不产生 IE-C002。
-
-### IE-C003　ArenaResolutionFailed
-
-arena declaration 无法关闭。
-
-### IE-C004　DegenerateArena
-
-$$
-|X|<2.
-$$
-
-### IE-C005　PrimitiveKernelUndecidable
-
-primitive kernel 缺少可执行 relation 判定，或其输出 readout 无法产生经过证明的 `DecidableKernel`。
-
-### IE-C006　StatementProofMismatch
-
-theorem unit 中的 proof 与登记 theorem type 不一致。
-
-### 平凡性与同核证明的消费
-
-零独有捕获与同核关系属于库内数学性质。`SealRow.conclusion` 保存逐索引证明，
-`SealCatalog.collisions` 与 `SealCatalog.conclusion` 保存同核与目录证明。
-生产报告只核对 exact catalog 与编译输入，不输出逐成员 count/disposition 统计。
-
-### IE-C009　ProofConstructionFailed
-
-计算结果存在，但无法构造 kernel proof。
-
-### IE-C010　ArtifactPrematureWrite
-
-数学检查完成前尝试发射产物。
-
-### IE-C011　GeneratedCertificateRegistered
-
-伴随 certificate 被错误地重新加入 theorem unit registry。
-
-### IE-C012　ExternalDecisionAttempt
-
-检测到外部程序试图提供 accept/reject 判词。
-
-IE-C013…IE-C023 的名称与含义由 CIRPT-42 保持不变。v4.2 的新增错误由以下三张耦合表
-完整定义。所有 `{...}` 按 canonical `Name` encoding 输出；数组先 canonical sort 后以 JSON
-compact form 输出，缺少任何 required payload key 本身即 IE-C028。
-
-| code | name | exact fail-closed trigger |
+| code | 现行触发条件 | 实现 |
 |---|---|---|
-| IE-C024 | `SplitCanonicalArenaCatalog` | 同一 root import closure 内归属同一 canonical arena declaration（按定义性别名展开）的 occurrences 被拆入多个 catalogs，含按别名 Name 拆分，或 view 冒充 maximal；别名扩展定义完成、当前无机器消费者 |
-| IE-C025 | `QualifiedNameCollision` | 不同合法 occurrences 导出相同 catalog-qualified generated `Name` |
-| IE-C026 | `MissingMaximalCatalog` | arena 有 import-closure occurrences，但无恰好覆盖全集的唯一 maximal catalog |
-| IE-C027 | `UncertifiedKernelRefinement` | true cell 缺 inclusion proof，或 false cell 缺 witness pair |
-| IE-C028 | `AnalysisCertificateMismatch` | analysis component 缺项、reflected value 不等或 certificate 不闭合 |
-| IE-C029 | `UnfaithfulCrossArenaRealization` | realization 任一方向不消费 hypothesis，或 injection/restriction equation 缺失 |
-| IE-C030 | `KernelAddressUsedAsSemanticEvidence` | kernel address 流入 grouping、transport、refinement、rate 或 verdict |
-| IE-C031 | `InvalidLayerChain` | adjacency proof、顺序、partition、nonemptiness 或 reflected count 失败 |
-| IE-C032 | `SizeBudgetRequiresReflectedSeal` | `pair_budget > 65536` 且无可解析的 refl-lane seal |
-| IE-C033 | `IncompleteRedundantIndexSet` | zero set 未完整认证、first-zero 短路，或实际 validation failure 后写 artifact |
+| IE-C001 | 非 source 登记的目标不是 theorem，或 Seal 的登记集合为空 | `CompiledRegistration.validateCore`、`CompiledSeal.consume` |
+| IE-C002 | 同一 canonical object arena／theorem occurrence 重复 | `CompiledRegistration.validateUnique` |
+| IE-C003 | arena 引用缺失、别名解析失败、不支持或预算耗尽 | `RegistrationRelations.resolveCanonicalArenaName`、`CompiledRegistration.validateCore` |
+| IE-C006 | correspondence 不是 evidence，或具名 unit／realization／目标结构不匹配 | `CompiledRegistration.validateBinding`／`validateCore` |
+| IE-C009 | 契约依赖含不许可公理，或目录数据视图所需常量没有值 | `Contract.Decoder`、`CompiledSeal.consume` |
+| IE-C011 | 登记目标使用保留的 companion 名 | `CompiledRegistration.validateCore` |
+| IE-C013 | Seal 成员的 bundleNonempty 不是 evidence | `CompiledSeal.consume` |
+| IE-C024 | 同一 canonical arena 的 occurrences 分属多个 catalog IDs | `RegistrationRelations.validateMaximalCatalog` |
+| IE-C025 | 不同 occurrences 的 unit／realization／qualified companion 名碰撞 | `CompiledRegistration.validateUnique`、`CompiledSeal.consume` |
+| IE-C026 | 同一 arena 没有 canonicalMaximal 成员 | `RegistrationRelations.validateMaximalCatalog` |
+| IE-C028 | 独立快照的成员、statement identity、贡献模块不一致，或 Seal 的目录、arena、成员数量、顺序及完整单位向量不一致 | `CompiledSnapshots`、`CompiledSeal` |
+| IE-C048 | variation 缺失或不是 evidence | `CompiledRegistration.validateFinite` |
+| IE-C049 | variation 有效而某有限 readout／anchor 缺少 sensitivity 见证 | `CompiledRegistration.validateFinite` |
+| IE-C050 | provenance 闭包不完整、到达禁止依赖或出现允许表之外的形式 | `ReadoutProvenance`、`ArtifactRegistration`、`CompiledAssessment` |
 
-| code | exact deterministic message shape |
-|---|---|
-| IE-C024 | `IE-C024 SplitCanonicalArenaCatalog root={root_id} arena={object_arena} catalogs={catalog_ids}` |
-| IE-C025 | `IE-C025 QualifiedNameCollision root={root_id} catalog={catalog_id} generated_name={generated_name} occurrences={occurrence_keys}` |
-| IE-C026 | `IE-C026 MissingMaximalCatalog root={root_id} arena={object_arena} occurrences={occurrence_names}` |
-| IE-C027 | `IE-C027 UncertifiedKernelRefinement root={root_id} catalog={catalog_id} finer={finer} coarser={coarser} missing={missing}` |
-| IE-C028 | `IE-C028 AnalysisCertificateMismatch root={root_id} catalog={catalog_id} component={component} expected={expected} actual={actual}` |
-| IE-C029 | `IE-C029 UnfaithfulCrossArenaRealization key={root_id}/{catalog_id}/{theorem_name} realization={realization_name} direction={direction}` |
-| IE-C030 | `IE-C030 KernelAddressUsedAsSemanticEvidence root={root_id} catalog={catalog_id} address={address} consumer={consumer}` |
-| IE-C031 | `IE-C031 InvalidLayerChain root={root_id} catalog={catalog_id} chain={chain_id} layer={layer} reason={reason}` |
-| IE-C032 | `IE-C032 SizeBudgetRequiresReflectedSeal root={root_id} catalog={catalog_id} pair_budget={pair_budget} limit=65536 seal={seal_name}` |
-| IE-C033 | `IE-C033 IncompleteRedundantIndexSet key={root_id}/{catalog_id} expected={expected_zero} certified={certified_zero} phase={phase}` |
+IE-C002 的 payload 含 `object_arena`、`theorem_name`、排序后的
+`registration_modules` 与完整 `count`。IE-C024 的 payload 含 root、arena 与排序后的
+catalog IDs；IE-C025 含 root、catalog、generated name 与排序后的 occurrence keys；
+IE-C026 含 root、arena 与排序后的 theorem names。
+IE-C028 按具体检查位置报告 component 与 expected／actual；不能从同一个诊断码
+推导所有消息都采用相同字段或包含数学统计。
 
-| code | required payload keys |
-|---|---|
-| IE-C024 | `root_id, object_arena, catalog_ids` |
-| IE-C025 | `root_id, catalog_id, generated_name, occurrence_keys` |
-| IE-C026 | `root_id, object_arena, occurrence_names` |
-| IE-C027 | `root_id, catalog_id, finer, coarser, missing` |
-| IE-C028 | `root_id, catalog_id, component, expected, actual` |
-| IE-C029 | `root_id, catalog_id, theorem_name, realization_name, direction` |
-| IE-C030 | `root_id, catalog_id, address, consumer` |
-| IE-C031 | `root_id, catalog_id, chain_id, layer, reason` |
-| IE-C032 | `root_id, catalog_id, pair_budget, limit, seal_name` |
-| IE-C033 | `root_id, catalog_id, expected_zero, certified_zero, phase` |
+IE-C048／IE-C049 消费编译契约证据，具体标记与优先序见 CIRPT-42。
+IE-C050 的原因与走查边界也见该节。逐成员降低逃逸、平凡性、剩余目录闭包归属、
+同核碰撞与目录结论保存在 `SealRow`／`SealCatalog` 的编译证明中。
+报告不生成这些证明，不输出逐成员计数或 disposition 统计。
 
-以下三表耦合既有 active additions 与 IE-C048--IE-C050 的注册诊断契约；后三码定义完成，
-消费者随判官层落地，当前无机器消费者，不属于 active errors。
-IE-C045--IE-C047 仍为 reserved/open，不进入三表，也不得由现有 compiler 发出。
-
-| code | name | exact fail-closed trigger |
-|---|---|---|
-| IE-C039 | `InvalidGeneratedKernelNode` | node 非 generated relation，或 extensional equal nodes 未 quotient |
-| IE-C040 | `InvalidGeneratorTransition` | edge 非 single addition/非 strict、stutter 未记 collapsed、required transition 缺失，或 complete-lattice edge array 不完整 |
-| IE-C041 | `IncompleteKernelProjectionBoundary` | 必需 boundary/leave-one-out/schedule/requested node 缺失，或 node reference 无法解析 |
-| IE-C042 | `KernelProjectionCertificateMismatch` | hierarchy component 与 certificate/reflected value 不同 |
-| IE-C043 | `KernelProjectionUsedForAdmission` | admission consumer 读取任何 hierarchy presentation 字段 |
-| IE-C048 | `RealizationIgnoredByLaw` | finite／structural 注册缺少同 signature、声明 intervention domain 内的 kernel-checked Law-variation witness；结构路径两 realizations 均须在 Γ domain，Iff.rfl 不算见证 |
-| IE-C049 | `UnusedPrimitiveInBundle` | signature 的 readout index／anchor 不在 Law 的 exact generated slot support 中，删除后 Law 在声明域外延不变而 bundle kernel 改变；优先序 `IE-C048 > IE-C049`，IE-C048 触发时不判 |
-| IE-C050 | `ClosedTruthReadout` | readout 传递常量闭包到达注册 theorem、其 truth／proof、statement 的 Decidable instances 或 theorem-specific certificate／statement identity，或闭包无法完整取得，或 readout 含判官允许表之外的形式（`reason=unclassified_form`）；优先序 `IE-C050 > IE-C021`，同时命中只发本码 |
-
-| code | exact deterministic message shape |
-|---|---|
-| IE-C039 | `IE-C039 InvalidGeneratedKernelNode root={root_id} catalog={catalog_id} node={node_key} reason={reason}` |
-| IE-C040 | `IE-C040 InvalidGeneratorTransition root={root_id} catalog={catalog_id} from={from} to={to} theorem={theorem_name} reason={reason}` |
-| IE-C041 | `IE-C041 IncompleteKernelProjectionBoundary root={root_id} catalog={catalog_id} missing={missing_nodes}` |
-| IE-C042 | `IE-C042 KernelProjectionCertificateMismatch root={root_id} catalog={catalog_id} component={component} expected={expected} actual={actual}` |
-| IE-C043 | `IE-C043 KernelProjectionUsedForAdmission consumer={consumer} field={field} root={root_id} catalog={catalog_id}` |
-| IE-C048 | `IE-C048 RealizationIgnoredByLaw key={root_id}/{catalog_id}/{theorem_name} law_arena={law_arena} signature={signature} domain={intervention_domain} reason={reason}` |
-| IE-C049 | `IE-C049 UnusedPrimitiveInBundle key={root_id}/{catalog_id}/{theorem_name} signature={signature} primitive={primitive} support={slot_support}` |
-| IE-C050 | `IE-C050 ClosedTruthReadout key={root_id}/{catalog_id}/{theorem_name} readout={readout} reason={reason} provenance={provenance_closure}` |
-
-| code | required payload keys |
-|---|---|
-| IE-C039 | `root_id, catalog_id, node_key, reason` |
-| IE-C040 | `root_id, catalog_id, from, to, theorem_name, reason` |
-| IE-C041 | `root_id, catalog_id, missing_nodes` |
-| IE-C042 | `root_id, catalog_id, component, expected, actual` |
-| IE-C043 | `consumer, field, root_id, catalog_id` |
-| IE-C048 | `root_id, catalog_id, theorem_name, law_arena, signature, intervention_domain, reason` |
-| IE-C049 | `root_id, catalog_id, theorem_name, signature, primitive, slot_support` |
-| IE-C050 | `root_id, catalog_id, theorem_name, readout, reason, provenance_closure` |
-
-IE-C048 的 `reason` 取 `missing_witness`／`invalid_witness`／`signature_mismatch`／`outside_domain`；
-IE-C049 的 `primitive` 标识 signature 内的 readout index 或 anchor，`slot_support` 是 exact generated support。
-sensitivity 见证缺失或未通过 kernel 检查时，`primitive` 取首个无有效见证的 readout index 或 anchor，
-`slot_support` 取已通过 kernel 检查的见证所覆盖的 primitive 集合（checked support），不是语义 exact support；
-判官不枚举 realization 补全语义支持，两个字段不得为 `null`。
-IE-C050 的走查边界、允许规则与 `reason` 优先序见本码定义；上表的六个空格分隔 token 依次为
-`IE-C050`、`ClosedTruthReadout`、`key=…`、`readout=…`、`reason=…`、`provenance=…`。
-`provenanceErrorCurrent` 发射的 `provenance_closure` 按选定 reason 编码：
-
-- `incomplete_closure`：`null`，不输出部分走查数组。
-- `forbidden_dependency`：已走查常量名称的去重、canonical sort 的 compact JSON string array。
-- `unclassified_form`：有未识别证据时为 compact JSON object，键按 canonical sort 为 `class, first, namespace, site, walked`；
-  无该证据的 fallback 为 `null`。
-
-object 的 `class`、`first`、`namespace`、`site` 均为 JSON string。`class` 是首条保留的未识别证据的分类（如 `unlisted_decision_producer`、
-`unclassified_argument_type`、`unresolved_statement_identity`）；`first` 是该证据记录的常量名或形式标记，
-`site` 是该证据记录的走查位置（可为当前定义、readout 地址、statement 所属 theorem 或上下文标记）。
-`namespace` 是该证据的分类标签：模块分类使用 `protected:D5`／`protected:judge`／`protected:current`／
-`external:Classical`／`external:other`；无法建立 occurrence 或 binder context 时使用 `unclassified`。
-`walked` 与 forbidden payload 使用同一已访问名称集合，去重并 canonical sort；它记录拒绝时的走查结果，
-不承诺已展开所有可达定义。上述字段由 `ReadoutProvenance.lean` 的 `unclassifiedJson` 与
-`provenanceErrorCurrent` 发射；本段不替代 declared-template 诊断的独立 message 契约。
-
-所有 arrays 使用 canonical sort 后的 compact JSON；`expected`／`actual` 若是 structured value
-也使用 canonical compact JSON，不退化为不确定的人类散文。reserved IE-C045--IE-C047 只有在
-owner $\tau$ ruling 与 mutation suite 落地后，才可另一个 policy PR 把它们加入这三表。
+---
 
 ## 32. 反平凡化硬规则
 
@@ -7285,7 +7021,7 @@ primitive readout：`Prod.fst`、`Prod.snd`。
 状态：`Bool × Bool`。  
 primitive readout：`Prod.fst` 与 `Bool.not ∘ Prod.fst`。  
 两者 kernel 相同。  
-期望：双方同时零边际，均认证为 `trivial_in_catalog`，已证明的 collision class 以 IE-C008 非致命报告；catalog 以 redundant 结论成功 seal，零对象不获 positive admission。
+数学期望：双方同时零边际；SealRow 携带平凡性与闭包归属证明，SealCatalog 的 collisions 携带同核证明，conclusion 携带冗余证明。报告核对完整目录，不输出 collision 统计。
 
 ### T-005　product 包装过完备
 
@@ -7350,7 +7086,7 @@ primitive readout：`Prod.fst`、`Prod.snd`。
 
 ### T-017　零状态／单状态 arena
 
-期望：IE-C004。
+有限 SealCatalog 的 nondegenerate 字段要求该 arena 非退化；零状态或单状态 arena 无法提供此数学证明。未封印登记不因此取得额外非退化要求。
 
 ### T-018　精确分数
 
@@ -7388,7 +7124,7 @@ $\{0\mapsto0,1\mapsto8,2\mapsto4\}$，catalog verdict 为 irredundant。
 
 同一 catalog 含 `Prod.fst`、`Prod.snd`、`id`。期望三个 unique counts 全为零，
 spectrum 为 $\{0\mapsto0,1\mapsto0,2\mapsto8,3\mapsto4\}$；analysis view 取得
-完整 redundant verdict，canonical seal 同样成功并为全部零成员生成 triviality certificates 与 IE-C007；两 identity 的 collision class 也不触发 catalog failure。
+完整 redundant 数学结论；canonical Seal 的 rows 携带全部零成员的平凡性与闭包归属证明，两 identity 的同核证据可保存在 collisions 中。
 补充 mixed `fst,fst,snd`：unique vector 为 `[0,0,4]`，恰两个 trivial certificates、一个 positive certificate，catalog redundant；错误 polarity/certificate 类型与旧成员集证书均拒绝。
 M3 shared IC fixture 按实际完整 manifest 判定：gold 与全部同核 peers 在 level 0 均 trivial；§6.3 open schemas 下仅 strict-refinement 有 unique exclusion，occurrence 均保留 level-0 trivial class，law verdict 另列。
 
@@ -7456,14 +7192,14 @@ kernel 非 role-preserving 地重标为 `flow` 时，unique count 仍为 4，但
 ### T-030　negative verdict artifact ordering
 
 redundant analysis view 只有在完整 zero set、exact counts 与 negative verdict certificates
-staged 且 kernel-checked 后才写 projection；canonical maximal seal 对同样数据成功；first-zero 短路仍得 IE-C033。
+经数学证明检查后才形成该分析输入；canonical maximal Seal 对同样数据携带完整目录的编译证明。
 
 ### T-031　unified causal hierarchy
 
 第 43.1 节的 `UnifiedBoolSCM := IC.Model ⊕ OI.Model` 有 48 states、2,256 ordered pairs。两个 frozen
 witness 经 injection/restriction faithful transport；$K_{cf}\subsetneq K_{int}\subsetneq
 K_{obs}$，三个 layered increments 均为正，而 cumulative flat catalog 的 observation 与
-intervention members 为零。可选 512-state product 必须因 261,632 pairs 使用 refl seal。
+intervention members 为零。可选 512-state product 的数学证据与其它有限目录使用同一 SealCatalog 契约。
 
 ### T-032　有限目录数学用例
 
@@ -7635,7 +7371,8 @@ $$
 
 ### 36.4 Inspector 复用边界
 
-当前 Lean inspector 的 environment 枚举、declaration kind、依赖及 axiom closure 代码可以复用。
+当前 Lean inspector 从编译部件读取声明 kind、类型、常量依赖及公理闭包；
+生产读取与 assessment 使用 `RawArtifacts.Store`，不构建 Environment。
 
 但：
 
@@ -8489,7 +8226,7 @@ theorem unified_frozen_transition_catalog_irredundant :
 
 每个 `equivalence` 的 forward direction 注入 frozen witness，reverse direction 从 law
 witness restriction 回取原 witness；两向都必须使用其 hypothesis 与 injection/restriction
-equations。空洞地引用两条已证明 existential Props 而忽略输入触发 IE-C029。
+equations。等价证明必须绑定原 statement 与该 realization 的 Law。
 
 `unifiedFrozenTransitionCatalog` 恰有上面两个 occurrences；designated v4.2 root 以
 `catalog_id = causal-unified-transitions` 分别登记它们，且不把累计 chain readouts 加入该
@@ -8504,7 +8241,7 @@ kernel 与累计 `ObsU/IntU/CfU` chain 是两个不同关系，artifact 必须�
 abbrev ProductUnifiedBoolSCM := OI.Model × IC.Model
 ```
 
-它有 512 states、261,632 ordered pairs，只有第 33 节 refl lane seal 就绪后才 admissible。
+它有 512 states、261,632 ordered pairs。有限目录的 SealCatalog 契约携带同一目录上的数学证据，报告核对完整成员与单位向量。
 coproduct 与 product 都只是把两个 frozen encodings 放到一个 typed comparison arena 的
 alignment device；二者都不声称 OI 与 IC 是同一个 causal ontology。
 
