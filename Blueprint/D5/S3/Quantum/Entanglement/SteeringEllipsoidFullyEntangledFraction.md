@@ -98,7 +98,7 @@ $$\forall rho \in \operatorname{Matrix}\left((\operatorname{Fin}\left(2\right) \
 
 *Commentary.*
 
-Section III of the paper: “The fully entangled fraction of a bipartite state rho is defined by f(rho) = max_phi <phi| rho |phi>, where the maximum is taken over all maximally entangled states |phi>.” The definition takes the supremum of the real expectation Re <e| rho |e> = RealPart(star e . (rho e)) over all maximally entangled e; for a density matrix the set is non-empty and bounded, and attainment of the maximum is not used.
+Section III of the paper: “The fully entangled fraction of a bipartite state rho is defined by f(rho) = max_phi <phi| rho |phi>, where the maximum is taken over all maximally entangled states |phi>.” The definition takes the supremum of the real expectation Re <e| rho |e> = re(star e . (rho e)) over all maximally entangled e; for a density matrix the set is non-empty and bounded, and attainment of the maximum is not used.
 
 **Definition 1.9 (Conjecture 2).**
 
