@@ -9,8 +9,8 @@ internal sealed class ClosedObservationGraphRealizationDocument : IScribeDocumen
         H("Complete endpoint graphs and joint actual paths"),
         Blocks(
             Describe.Lean(
-                DescribeId.Create("closedobservationgraphrealization-bit-shift-add"),
-                DeclarationHandle.Create("D5/S1/Digit/Infinite/ClosedObservationGraphRealization.hshift"),
+                DescribeId.Create("closedobservationgraphrealization-bit-shift-bit-shift"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/ClosedObservationGraphRealization.bitShift_bitShift"),
                 H("Composing exact bit deletions"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),

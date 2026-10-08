@@ -6,9 +6,9 @@ Complete endpoint graphs and joint actual paths.
 
 **Theorem 1.1 (Composing exact bit deletions).**
 
-Lean statement: `D5/S1/Digit/Infinite/ClosedObservationGraphRealization.hshift`
+Lean statement: `D5/S1/Digit/Infinite/ClosedObservationGraphRealization.bitShift_bitShift`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/ClosedObservationGraphRealization.hshift` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/ClosedObservationGraphRealization.bitShift_bitShift` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -46,8 +46,8 @@ Every actual eventually-zero address has an integral golden scalar: kappa(x)=emb
 
 ## References
 
+- Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationGraphRealization.bitShift_bitShift`
 - Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationGraphRealization.closed_observation_graph_realization`
-- Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationGraphRealization.hshift`
 - Dependency: [D5/S0/Carrier/Units](../../../S0/Carrier/Units.md)
 - Dependency: [D5/S1/Digit/Infinite/ClosedObservationCommonTailWidthModel](ClosedObservationCommonTailWidthModel.md)
 - Dependency: [D5/S1/Digit/Infinite/WindowCylinderPartition](WindowCylinderPartition.md)

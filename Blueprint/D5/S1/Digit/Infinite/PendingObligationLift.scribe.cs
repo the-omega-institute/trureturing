@@ -60,7 +60,7 @@ internal sealed class PendingObligationLiftDocument : IScribeDocumentDefinition
                     Paragraph(Text(
                         "There are length(r)=length(w)+1 observed departure coordinates and the "
                         + "same number of source edges including l. The chosen terminal coordinate "
-                        + "is unobserved. Each component may use its own terminal address, pieces, "
-                        + "guard intervals, and outstanding set while sharing the color word."))),
+                        + "is unobserved. Apply the third clause separately to each component with "
+                        + "the shared color word."))),
                 DescribeRole.Theorem))));
 }

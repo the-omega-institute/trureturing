@@ -28,7 +28,7 @@ open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open scoped Topology
 
 
-theorem hshift (x : LegalDigits) (m n : ℕ) :
+theorem bitShift_bitShift (x : LegalDigits) (m n : ℕ) :
     bitShift (bitShift x m) n = bitShift x (m + n) := by
   apply Subtype.ext
   funext j
@@ -285,7 +285,7 @@ theorem closed_observation_graph_realization :
       refine ⟨x, ⟨hx.1, hxp, hx.2.1, ?_⟩, ?_⟩
       · simpa [hx.2.2] using hy
       · rw [List.length_cons, show 3 * (w.length + 1) = 3 + 3 * w.length by omega,
-          ← hshift, ← originalT, hx.2.2, hyt]
+          ← bitShift_bitShift, ← originalT, hx.2.2, hyt]
   have hactual (x : LegalDigits) :
       stateAddress (outgoing (window x 0)) (originalT x) := by
     intro h

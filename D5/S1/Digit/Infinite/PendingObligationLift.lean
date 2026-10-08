@@ -7,7 +7,6 @@
    digest: Transported endpoint exclusions characterize exact finite observation histories. -/
 
 import D5.S1.Digit.Infinite.ClosedObservationCommonTailWidth
-import D5.S1.Digit.Infinite.FixedTailClosedBudget
 import D5.S1.Digit.Infinite.LateLabelStateBound
 
 set_option autoImplicit false
@@ -18,7 +17,6 @@ open D5.S1.Digit.Infinite.SuccessorContinuity (LegalDigits)
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
 open D5.S1.Digit.Infinite.ClosedObservationGraphRealization
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidth
-open D5.S1.Digit.Infinite.FixedTailClosedBudget (SourcePath addressPrefix source_path_realization)
 
 /-- Insert the current exclusions, transport all outstanding equalities, and
 discard equalities outside the next guard interval. -/
@@ -129,7 +127,7 @@ private theorem chain_pieces {q : ℕ} {R b : ℝ} {r : List (Fin 6)}
     | succ j =>
       have hh := ih.2 (originalT x) hx.2.2.2 fallback j (by simpa using hj)
       have heq : 3 + 3 * j = 3 * (j + 1) := by omega
-      simpa only [originalT, hshift, heq, List.getElem?_cons_succ] using hh
+      simpa only [originalT, bitShift_bitShift, heq, List.getElem?_cons_succ] using hh
 
 /-- All past exclusions are equivalent to avoiding the transported terminal set.
 A closed observed path followed by one unobserved source edge therefore has an
@@ -174,8 +172,8 @@ theorem result :
           (∀ j, w.length + 1 ≤ j → target j = kappa (bitShift x (3 * j))))) := by
   refine ⟨history_avoidance, exact_targets, ?_⟩
   intro q R b hb Q r vs w hp v hlast l u he y hy hyp
-  obtain ⟨z, hz, hprefix⟩ := source_path_realization
-    (SourcePath.cons he.1 (SourcePath.nil u.val.1)) y hy
+  obtain ⟨z, hz, hprefix⟩ := (closed_observation_graph_realization.2.2.2.1
+    v.val.1 l u.val.1 y he.1 hy).exists
   change window z 0 = l ∧ originalT z = y at hprefix
   have hg : g ≠ 0 := (pow_pos (inv_pos.mpr Real.goldenRatio_pos) 3).ne'
   obtain ⟨a, ha, hay⟩ := he.2.2 hyp
@@ -189,7 +187,7 @@ theorem result :
   obtain ⟨x, hx, hxz⟩ := closed_observation_graph_realization.2.2.2.2.2.2.1
     b r vs w hp v hlast z hz hzp
   have hxy : bitShift x (3 * (w.length + 1)) = y := by
-    rw [show 3 * (w.length + 1) = 3 * w.length + 3 by omega, ← hshift,
+    rw [show 3 * (w.length + 1) = 3 * w.length + 3 by omega, ← bitShift_bitShift,
       hxz, ← originalT, hprefix.2]
   have hlen := (chain_pieces hp).1
   have htrace (j : ℕ) (hj : j ≤ w.length + 1) :
@@ -204,7 +202,7 @@ theorem result :
       kappa (bitShift x (3 * j)) ∈ stateInterval ((vs[j]?).getD u).val.1 := by
     exact Set.Icc_subset_Icc ((vs[j]?).getD u).property.2.2.1.1
       ((vs[j]?).getD u).property.2.2.2.1.2 (htrace j hj)
-  have hread := hpath_read b r vs w hp
+  have hread := closed_path_read b r vs w hp
   have hclosed (j : ℕ) (hj : j < w.length + 1) :
       kappa (bitShift x (3 * j)) ∈ observation b ((r[j]?).getD 0) := by
     have hjr : j < r.length := by rw [← hread.1]; exact hj

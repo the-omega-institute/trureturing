@@ -34,12 +34,11 @@ Fix any nonnegative real budget b and any map Q from real targets to six colors.
 
 Use the successive graph pieces and guard intervals, the actual inverse branches of x, and Z_j=E_(r_j) minus O_(r_j), where E_i is the closed expanded cell and O_i is the actual attainable closed-budget relation. Then kappa(y) avoids S_(length(w)+1) exactly when a single infinite target stream realizes every specified color, stays in the support, and differs from that same actual source by at most b at every time. After the prescribed prefix the target equals the source scalar, so all subsequent errors are zero.
 
-There are length(r)=length(w)+1 observed departure coordinates and the same number of source edges including l. The chosen terminal coordinate is unobserved. Each component may use its own terminal address, pieces, guard intervals, and outstanding set while sharing the color word.
+There are length(r)=length(w)+1 observed departure coordinates and the same number of source edges including l. The chosen terminal coordinate is unobserved. Apply the third clause separately to each component with the shared color word.
 
 ## References
 
 - Truth anchor: `D5/S1/Digit/Infinite/PendingObligationLift.pending`
 - Truth anchor: `D5/S1/Digit/Infinite/PendingObligationLift.result`
 - Dependency: [D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth](ClosedObservationCommonTailWidth.md)
-- Dependency: [D5/S1/Digit/Infinite/FixedTailClosedBudget](FixedTailClosedBudget.md)
 - Dependency: [D5/S1/Digit/Infinite/LateLabelStateBound](LateLabelStateBound.md)

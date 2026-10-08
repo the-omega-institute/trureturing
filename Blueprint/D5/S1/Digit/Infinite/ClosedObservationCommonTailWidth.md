@@ -18,9 +18,9 @@ If an exact finite bit shift of an actual address is eventually zero, the origin
 
 **Theorem 1.2 (Reading a closed path).**
 
-Lean statement: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.hpath_read`
+Lean statement: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.closed_path_read`
 
-*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.hpath_read` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.closed_path_read` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -86,9 +86,9 @@ For every original critical endpoint graph and every such fixed instrument, inve
 
 ## References
 
+- Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.closed_path_read`
 - Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.complete_closed_graph_common_tail_width`
 - Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.finite_tail_unshift`
-- Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.hpath_read`
 - Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.original_t_shift`
 - Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.window_shift`
 - Dependency: [D5/S0/Carrier/Units](../../../S0/Carrier/Units.md)

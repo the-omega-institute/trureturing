@@ -17,8 +17,8 @@ internal sealed class ClosedObservationCommonTailWidthDocument : IScribeDocument
                 Blocks(Paragraph(Text(
                     "If an exact finite bit shift of an actual address is eventually zero, the original address is also eventually zero."))), DescribeRole.Theorem),
             Describe.Lean(
-                DescribeId.Create("closedobservationcommontailwidth-path-read"),
-                DeclarationHandle.Create("D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.hpath_read"),
+                DescribeId.Create("closedobservationcommontailwidth-closed-path-read"),
+                DeclarationHandle.Create("D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.closed_path_read"),
                 H("Reading a closed path"),
                 StatementSource.WithoutFormula(),
                 AssessedProvenance.FromRepo(),
