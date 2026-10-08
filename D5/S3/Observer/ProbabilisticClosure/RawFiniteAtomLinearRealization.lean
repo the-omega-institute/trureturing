@@ -93,7 +93,7 @@ private theorem raw_terminal_row {m : ℕ} (alpha : unitInterval)
       simp [testRow, rawModel, Finset.univ, Fintype.complete, terminalAccept, ih .reject]
       split_ifs <;> simp_all
 
-private theorem raw_row_descends {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval)
+theorem raw_row_descends {m : ℕ} (alpha : unitInterval) (q : Fin m → unitInterval)
     (ha : 0 < (alpha : ℝ)) (T : Test) (c : (fullModel .raw alpha q).Carrier) :
     testRow (rawModel alpha q) T (rawEncode alpha q c) = testRow (fullModel .raw alpha q) T c := by
   classical
@@ -275,7 +275,7 @@ theorem raw_native_bridge {m : ℕ} (alpha : unitInterval)
     rw [raw_pushforward_sum]
     simp_rw [raw_row_descends alpha q ha]
 
-private theorem raw_component_card (alpha q : unitInterval) :
+theorem raw_component_card (alpha q : unitInterval) :
     Fintype.card {eta : Bool × Bool // rawCanonical alpha q eta = eta} =
       if (alpha : ℝ) = (1 - (alpha : ℝ)) * (q : ℝ) then 2 else 4 := by
   classical
@@ -345,7 +345,7 @@ theorem raw_probability {m : ℕ} (alpha : unitInterval)
         split_ifs <;> linarith
     | inr u => dsimp [rawModel]; split_ifs <;> norm_num
 
-/-- Original next-output mass is the total mass of the corresponding matrix column. -/
+/-- Original next-output mass is the total mass after the matrix acts on the feature. -/
 def OutputMassBridge {m : ℕ} {task : Task} {alpha : unitInterval}
     {q : Fin m → unitInterval} (w : Fin m → ℝ) (R : MassModel task alpha q)
     (feature : State → R.Carrier → ℝ) : Prop :=

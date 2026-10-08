@@ -168,7 +168,7 @@ theorem measurable_marker_response (side : Side) (count : ℕ) :
   unfold markerResponse
   cases count <;> cases side <;> simp only [endpoint, arm] <;> measurability
 
-private theorem measurable_native_accept (task : Task) (T : Test) (h : State) :
+theorem measurable_native_accept (task : Task) (T : Test) (h : State) :
     Measurable (fun source => nativeAccept task source h T) := by
   induction T generalizing h with
   | read accept => exact measurable_const
