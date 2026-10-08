@@ -8,19 +8,19 @@
 /-
 proof_shape: rho_nonneg: bind-only; consumer: signedDensity_bound
 proof_shape: rho_le_one: bind-only; consumer: signedDensity_bound
-proof_shape: omega_singleton: content
+proof_shape: omega_singleton: bind-only; consumer: rho_singleton
 proof_shape: rho_singleton: bind-only; consumer: singleton_not_tendsto_half
 proof_shape: singleton_not_tendsto_half: bind-only; consumer: result
 proof_shape: flip_mem_omega: bind-only; consumer: flip_rho_complement
 proof_shape: flip_rho_complement: bind-only; consumer: flip_tendsto_half_iff
 proof_shape: flip_tendsto_half_iff: bind-only; consumer: not_tendsto_half_00
 proof_shape: avoid11_false_cons: bind-only; consumer: omega11_rec
-proof_shape: omega11_rec: content
+proof_shape: omega11_rec: bind-only; consumer: avoidCoeff11_rec, onesTotal11_rec
 proof_shape: avoidCoeff_eval_one: bind-only; consumer: avoidCard11_rec
 proof_shape: omega11_rec_disjoint: bind-only; consumer: avoidCoeff11_rec
-proof_shape: avoidCoeff11_rec: content
+proof_shape: avoidCoeff11_rec: bind-only; consumer: avoidCard11_rec
 proof_shape: avoidCard11_rec: bind-only; consumer: onesTotal11_bound
-proof_shape: onesTotal11_rec: content
+proof_shape: onesTotal11_rec: bind-only; consumer: onesTotal11_bound
 proof_shape: avoidCard11_monotone: content
 proof_shape: onesTotal11_bound: content
 proof_shape: rho11_le_third: bind-only; consumer: not_tendsto_half_11
@@ -43,6 +43,7 @@ proof_shape: avoidDenominator_eval_ne_zero: bind-only; consumer: balanced_signed
 proof_shape: balanced_signedMoment_avoidSeries: content
 proof_shape: balanced_rho_eq_half: bind-only; consumer: balanced_tendsto_half
 proof_shape: balanced_tendsto_half: bind-only; consumer: result
+Classification totals: 3 content, 34 bind-only.
 escape_witness: onesTotal11_bound on result's live proof path.
 admission_basis: escape-witness
 Direct frozen dependencies: none on the protected baseline.
