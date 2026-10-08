@@ -1188,28 +1188,16 @@ $\Theta=\texttt{AddCircle}\ p$：
    对任意 $a\ne0$，$(0,0)\sim(a,a)$ 仅在相对读法成立，故两个 kernels 不等价。
    Law variation 与 exact-use 不选择 observation language，也不把这两种读法变成输出重编码。
 
-**结构注册的非空洞义务（契约；当前无机器消费者）。** 以下义务由结构路径的 registration gate 端到端执法；
-现役机器只检查 `StructuralPrimitiveLawArena.Nondegenerate`（任意两个 realization 的 Law 真假各一），
-没有 $\Gamma$／site／intervention domain／模板来源／slot support／冻结条目／localization／极限存在的检查，
-故在该消费者落地前这些义务由评审守，不得报为已执法：
+**Γ 的数学证据要求。** 一个观测模型的解释须给出 statement／Law 对应、
+允许 intervention domain 上的正负 realizations、逐槽 sensitivity 与适用 transports。
+slot 出现不证明敏感性，carrier 名称不确定观测语言；全局函数到 germ 的局部化与
+germ 到观测商的读数是不同映射。使用极限作为读数时，存在性与唯一性是该解释的前提。
 
-- readouts 不得编码 closed truth、proof 或 theorem-specific certificate；模板从开放 schema 生成 Law，
-  statement／Law bridge 对指定 operation slots 一致成立，不用已证 theorem 的 truth／proof 拼接 `Iff`。
-- Law 不得忽略 realization，也不得以抵消表达式假装消费；必须检查 $\Gamma$ 声明的 intervention
-  domain 上的 Law-variation witness，复用 `StructuralPrimitiveLawArena.Nondegenerate`。
-  其正、负 realizations 均须属于该 domain，固定结构、实例与假设不随 witness 偷换；不另定义竞争谓词。
-- readouts、状态坐标与输出内坐标须具有 exact generated slot support，禁止闲置读数或坐标填充 kernel。
-  slot 出现不证明语义敏感性，所需逐 slot sensitivity 由 $\Gamma$ 规定；exact-use 不冒充输出最小性。
-- $\Gamma$ entries、transports、observation constructors 及假设在 pilots 之前冻结；按 theorem
-  挑 compactification、group、reference point 或 branch 非法，改变这些项或 observation language 是 `CHANGE-Γ`。
-- 全局函数到 germs 的 localization map 与 germs 到观测 quotient 的 map 分开登记；
-  前者遗忘 off-tail／null-set 差别，不能标成 distinct germs 之间的 boundary escape。
-  boundary-value readout 必须在声明域上证明极限存在且唯一，禁止用 default-valued limit 隐藏无极限函数；
-  不得按 theorem 临时限制到成功或收敛子类来制造 bridge。
-
-`StructuralPrimitiveRealization.toTheoremUnit` 接受 statement 与 proof，不要求上述 witness 或 bridge。
-因此 enforcement 在注册门的完整消费链上；构造器能产出 `StructuralTheoremUnit` 不构成非空洞认证。
-结构 admission 仍要求 §6.1 的完整 catalog inclusion proof 与 separating pair；局部 singleton 成功不替代它。
+生产登记通过具体 `Contract.Registration`、已 enrollment 的模板与源选择字段给出
+解释。dependent-family 路径核对完整原 statement、实际 Law、equivalence、
+whole-family intervention／sensitivity 与 observational dependence。
+这些具体检查不构成按 carrier 自动选择任意 Γ 的通用算法。
+`StructuralTheoremUnit` 作为数学对象的构造仍不等于完整登记或目录 strictness 证明。
 
 **§5 的无限载体边界。** 在 §6.1 下，relations、kernel inclusion／equality／incomparability、
 添加读数的单调性、由 separating pair 证明的 strictness、leave-one-out capture 与 overlap 的集合定义保留。
@@ -1221,16 +1209,8 @@ pair counts、denominators、exact rates、数值 gain／overlap／spectra 没�
 无限 cardinality 不能检测 strict inclusion，不能用基数相减恢复 unique capture。
 本款不引入 entropy、measure 或概率；测度接口中的 $\mu$ 只绑定该接口，不产生逃逸率。
 
-**诊断边界。** 本款使用 CIRPT-42 与第 31 节分配的诊断，不把契约定义冒充现役执法。
-IE-C007 指 zero unique capture 的逐成员 disposition record（finite context 带计数，structural context 带 negated-strictness certificate、无计数）；IE-C024 指同一 canonical arena（含定义性别名展开）的 catalog 拆分；
-IE-C029 仅指既有跨 arena realization 未 faithful 消费 hypothesis 或缺 injection／restriction 方程；
-M0 新增结构门的诊断码由本规范分配（IE-C048、IE-C049、IE-C050）：Law-variation witness 缺失、
-未经 kernel 检查或越出 intervention domain 用 IE-C048；不被 Law 消费却改变 bundle kernel 的
-readout index／anchor 用 IE-C049；closed-truth／proof／certificate／statement-identity readout 用 IE-C050。
-这三个码及 IE-C024 的别名归一扩展均定义完成；消费者随判官层落地，当前无机器消费者。
-开放 schema 的 uniform bridge 缺失、其余 unused coordinates、theorem-dependent $\Gamma$ 选择、
-localization loss 误标 boundary escape，以及未证明存在唯一极限的 default-valued readout
-仍是独立注册义务，其诊断分配保持 `OPEN`；不得借用 IE-C029 冒充已覆盖。
+**诊断边界。** 生产诊断按第 31 节的具体编译输入与评定触发条件解释。
+Γ 的抽象数学条件不自动成为生产诊断或准入检查。
 
 ---
 
@@ -1324,11 +1304,10 @@ insertion 或 fixed-definition reinterpretation 触发 CHANGE-Γ；peers 绑定 
 sensitivity。presentation collapse 也改变 level-1 object：registration bridge 不得用 actual
 realization 的 proved facts 把 open statement（例如 reverse inclusion ∧ separation）简化为
 separation；registered OpenLaw 必须是 uniform open schema，template library 不得以 theorem
-truth reduction。IE-C048–050 (M0/G1) 是 prerequisites；本款不分配新 diagnostic code，若需
-level-1 rejection 写「诊断码由本规范分配（待分配）」。
+truth reduction。这些数学模型的证据要求不改变第 31 节的具体生产诊断。
 
-level-1 verdicts 仅是 report fields：`law_unique_exclusion`、`law_entailed_in_catalog`、
-`law_pair_capture`、`law_entailment`。它们永不作为 seal input 或 closed reason；当前无 consumer。
+Law exclusion、entailment、pair capture 与 pair escape 是本节定义的数学关系，
+不属于第 30 节的生产报告字段或 Seal 输入。
 
 规范 fixture：取 $A=\mathrm{Fin}\,3$，$\sigma$ 为两个 Bool 值 readouts $f,g$，$\Omega_\Gamma$ 为全部
 $(f,g)$ 对。下列两个开放 schema 是 distinct level-1 objects，当且仅当 $\Omega_\Gamma$ 含满足
@@ -1624,7 +1603,7 @@ $$
 \delta_i=\delta_j=0.
 $$
 
-因此以下同核形式在完整 catalog 内认证为 `trivial_in_catalog`，并以 IE-C008 非致命报告已证明的 collision class；catalog 以 redundant 结论成功 seal，零成员不获 positive admission：
+以下同核形式在完整数学 catalog 内具有零独有捕获。SealRow 可携带平凡性与闭包归属证明，SealCatalog 的 collisions 与 conclusion 可携带同核和冗余证明：
 
 - 可逆改名；
 - 输出类型同构；
@@ -1670,7 +1649,7 @@ $$
 
 这是正确结果，而不是系统无法决定“保留谁”。当前族确实不是不可约族。
 
-完整合法 catalog 成功 seal，双方均认证为 `trivial_in_catalog`、各有一条 IE-C007，catalog 的 `SealCatalog.conclusion` 携带冗余证明，已证明的 collision class 以 IE-C008 非致命报告；零对象不获 positive admission，完整 peer membership 保持，不删除旧成员。
+完整目录保留双方；SealRow 携带各自的平凡性与闭包归属证明，SealCatalog.conclusion 携带冗余证明，collisions 可携带同核证明。报告核对完整目录，不生成逐成员统计。
 
 ### 10.2 不设置名称优先级
 
@@ -1831,7 +1810,7 @@ $$
 
 所以 kernel-counting 版本与 Shannon 版本在“是否严格提供独有信息”上完全一致。
 
-### 12.5 为什么工程硬门使用 pair counting
+### 12.5 有限非平凡性的 pair counting 刻画
 
 Shannon entropy 包含对数和实数运算，通常是 `noncomputable` 或需要额外解析证明。pair counting：
 
@@ -1841,7 +1820,7 @@ Shannon entropy 包含对数和实数运算，通常是 `noncomputable` 或需�
 - 与严格正条件等价；
 - 不引入浮点误差。
 
-故工程硬门使用 $|U_i|>0$，熵值作为数学等价投影而非判官。
+故有限目录的正增益条件可由 $|U_i|>0$ 刻画；熵值是数学等价投影。
 
 ---
 
@@ -3422,7 +3401,7 @@ $$
 
 而多角色重叠由相应多位为 $1$ 的 signature 直接给出。
 
-因此无需人为交互权重，系统仍能完整报告：
+因此无需人为交互权重，数学 signature 分解仍能区分：
 
 - 单一角色缺陷；
 - 两角色共同缺陷；
@@ -4162,16 +4141,6 @@ $$
 
 对于不等价 arena，不存在本规范内生给出的比较或聚合标量。引入这种标量必然需要额外测度或权重，因而属于另一个数学问题，不能进入本硬门。
 
-v4.2 允许输出 `kernel_address_coincidence_classes` 作为**纯诊断 digest group**：若两个
-occurrences 的 output-only `primitive_kernel_address` 字符串相同，可把它们列在同一
-class，并标记 serializer version 与 `diagnostic_only: true`。这个相等只表示当前
-serializer 的 ordinal-partition bytes 具有同一 SHA-256 digest；即使外部假设 SHA-256
-无碰撞，它也至多是该序列化相同的证据。
-
-kernel address coincidence 绝不证明 carrier `Equiv`、semantic kernel transport、
-theorem equivalence、role equality、refinement 或跨 arena rate equality，也不得参与
-grouping 与 accept/reject。任何语义比较仍须显式 `Equiv` 与 CIRPT-IE-022 proof。
-
 ### 定理 CIRPT-IE-023　Uniform residual valuation uniqueness
 
 固定有限 arena $X$，令：
@@ -4246,7 +4215,7 @@ U_i
 \{p\in U_i:\rho_i(p)(r)=1\}.
 $$
 
-系统可以精确输出 theorem 的 unique information 来自：
+数学角色分解可以精确区分 theorem 的 unique information 来自：
 
 - CUT；
 - FLOW；
@@ -4397,7 +4366,8 @@ $$
 
 一个非常简单但真正切开独有 primitive pair 的 theorem，其 $\delta_i$ 可以为正；它在本系统中不是语义冗余。
 
-一个极长但完全处于其他 theorem 语义闭包中的形式化，其 $\delta_i=0$；它认证为 `trivial_in_catalog` 并有一条 IE-C007，完整合法 catalog 以 redundant 结论成功 seal；若它是待首次冻结对象，则不获 positive admission。
+一个极长但完全处于其他 theorem 语义闭包中的形式化，其 $\delta_i=0$。
+SealRow 可携带其平凡性与闭包归属证明，完整合法目录可携带冗余结论。
 
 ---
 
@@ -7150,13 +7120,10 @@ namespace、wrapper、cloned arena 或 singleton analysis views，以替代唯�
 
 ### T-026　import-closure root scope
 
-`RegistrationPersistence` 与 `RegistryConsumer` fixture 必须继续证明 imported persistent
-entries 对 environment consumers 可见并进入 seal membership。`SealCollision` 保持 landed
-语义：同一 `(canonicalArenaDeclaration,theoremName)` 在 import closure 内重复稳定发
-IE-C002；不同 canonical arenas 上的合法 occurrences 以 catalog-qualified names 区分，若
-qualified name 仍碰撞则发 IE-C025。auxiliary root artifact 固定写
-`seal_scope: import-closure` 与 imported registration modules，且不改变 designated system
-verdict。
+`LeanInformationAuditRegTests.CompiledSeal` 从实际编译产物加载共享 root，
+核对 imported registrations、独立 expected rows、成员数量、顺序及完整单位向量。
+重复 occurrence 与 qualified-name 碰撞按 IE-C002／IE-C025 拒绝；
+辅助 root 的局部导入闭包不证明仓库全局覆盖。
 
 ### T-027　refinement matrix
 
@@ -7602,10 +7569,8 @@ H4 所称 “base-owned consumer” 在当前 `CLAUDE.md` 的永久 base-judge �
 judge/content partition 约束。若 owner 对此解释另有裁决，以新的 $\tau$ ruling 更新规范后才可
 实施，不能在 content PR 中自行选择。
 
-本 GATE 改变 `CLAUDE.md` 21／5⁗／20‴ 的 admission policy 与信任成本。故 v4.3 的完成态是：
-设计、engine、IE-C007 记录／structural disposition、schema 与 fixtures 可落地；
-IE-C045--IE-C047 仍 `RESERVED / OPEN`，**没有 required check**。只有 owner 明示 $\tau$
-ruling、judge-plane 独立 PR、分区合规与 T-042 mutation suite 全绿后，才可另行 activation。
+此抽象 GATE 不是现役 required check。生产准入采用现行 StrataLint 规则；
+本节的 disposition／object-novelty 合取不构成额外机器门。
 
 ---
 

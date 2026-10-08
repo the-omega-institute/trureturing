@@ -241,7 +241,7 @@ Lake 的 `transImports` 为模块及其 utility claim 选择传递源码依赖�
 已用 `make lean-report` 准备好工具和私有 `.lake` 后，可以检查原生报告目标：
 
 ```sh
-tools/scripts/worktree/lean-cache-run.sh lake --no-build build :report
+tools/scripts/worktree/lean-cache-run.sh lake -d tools/lean-inspector-reg --no-build build :report
 ```
 
 该命令经同一 writer 入口运行，只检查原生目标，不发布到 `LEAN_REPORT`。
@@ -292,7 +292,8 @@ Seals retain compiler-checked nondegeneracy, bundle nonemptiness, lowering/trivi
 Utility refutations require the raw claim type `Prop` and the raw result type `Not claim`. The judge compares those compiled types literally, without unfolding or reduction. The utility and DTR exemption use the same selector: the unique included declaration with that final name component in the designated compiled module. Its full name supplies the exemption in every namespace, including no namespace. Other new public theorems remain subject to DTR; an ambiguous selector exempts none.
 
 The implementation library contains the production artifact evaluator and its pure
-support modules. Tests and independent analyses live in the downstream Reg host.
+support modules. Tests and independent analyses live in the downstream host
+`tools/lean-inspector-reg`, which requires both Reg and Impl.
 The production report builds no test library. CI explicitly builds the full
 downstream test library and runs the native compiled judge tests.
 `make compiled-judge-test` builds and runs the native tests against the same
@@ -311,5 +312,5 @@ field only for the exact complete generic Law body. All raw dependencies and
 proper subexpressions retain their identity checks.
 
 Downstream projection tools do not issue registration verdicts. Utility refutations
-compare compiled types by bounded structural computation; Lean checks theorem proof terms during compilation. Unsupported
-comparisons fail by name.
+compare the raw claim type `Prop` and result type `Not claim` literally; Lean checks
+the theorem proof term during compilation. Aliases and expanded negations fail this literal relation.
