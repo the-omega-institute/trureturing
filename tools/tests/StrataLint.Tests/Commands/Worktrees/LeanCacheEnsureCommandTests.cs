@@ -473,33 +473,39 @@ public sealed partial class LeanCacheEnsureCommandTests
     }
 
     [Fact]
-    public void RequiredMainDonorCopyFailureFailsClosedWithoutCacheGet()
+    public void RequiredMainDonorCloneFailureFailsClosedWithoutCopyOrCacheGet()
     {
         using var repository = new TemporaryDirectory();
         InitializeRepository(repository.Path);
         WriteCache(repository.Path, "warm donor\n");
         _ = WriteProjectOlean(repository.Path, "WarmMain");
-        var target = AddWorktree(repository.Path, "copy-failure-target");
-        var runner = new RecordingWorktreeProcessRunner
+        var target = AddWorktree(repository.Path, "clone-failure-target");
+        var runner = new RecordingWorktreeProcessRunner();
+        var cloner = new RecordingDirectoryCloner
         {
-            FailCopy = true,
-            FailLake = true,
+            Results = new Queue<DirectoryCloneResult>(
+                [new(false, false, 18, 1, "cross-device clone")]),
+            AfterClone = (_, staged) => Directory.CreateDirectory(staged),
         };
 
         var result = WorktreeCommand.Run(
             repository.Path,
             ["ensure-cache", "--path", target],
             runner,
-            new RecordingDirectoryCloner { FailureReason = "clonefile unavailable" });
+            cloner);
 
         Assert.False(result.Success);
         Assert.Empty(result.Output);
         Assert.Contains("clonefile failed", result.Error, StringComparison.OrdinalIgnoreCase);
-        Assert.Contains("ordinary copy failed", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("cache get failed", result.Error, StringComparison.OrdinalIgnoreCase);
         Assert.Contains(Remediation(repository.Path), ReceiptReason(result.Error), StringComparison.Ordinal);
+        Assert.DoesNotContain(runner.Invocations, static call => call.FileName == "cp");
         AssertNoCacheGet(runner);
         Assert.False(Directory.Exists(Path.Combine(target, ".lake")));
+        Assert.Empty(Directory.EnumerateDirectories(target, ".lake.stage-*"));
+        using var receipt = ParseReceipt(result.Error);
+        AssertCrossDeviceCloneReceipt(receipt.RootElement);
+        Assert.Equal("failed", receipt.RootElement.GetProperty("status").GetString());
     }
 
     [Fact]
