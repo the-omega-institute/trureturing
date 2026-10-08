@@ -5523,8 +5523,8 @@ Reg 只声明 `Contract.Registration`，不构造或调用该内部投影。
 
 `rootId` 是 RootCatalog 或 Seal 所在模块的 `Name`，由编译产物的模块归属核对。
 `registrationModuleName` 取登记常量的编译模块归属，只用于 import-closure provenance、
-artifact 与 coverage 核对，不能过滤 seal membership。grouping key 只取
-`objectArenaName`；`arenaName` 是 presentation，不能充当 object identity。
+artifact 与 coverage 核对，不能过滤 seal membership。grouping key 取解析后的
+`canonicalObjectArenaName`；`arenaName` 是 presentation，不能充当 object identity。
 
 ### 25.2 编译声明的可见性
 
@@ -5534,8 +5534,8 @@ artifact 与 coverage 核对，不能过滤 seal membership。grouping key 只�
 
 - 每个 seal 消费其 root import closure 中全部类型化登记，不过滤 imported entries；
 - imported 编译模块中的登记通过同一发现路径进入 consumer/seal；
-- 按 canonical `objectArenaName` 将全部可见 peers 合为一个 maximal catalog；
-- 同一 `(objectArenaName,theoremName)` 第二次登记触发 IE-C002；
+- 按 `canonicalObjectArenaName` 将全部可见 peers 合为一个 maximal catalog；
+- 同一 `(canonicalObjectArenaName,theoremName)` 第二次登记触发 IE-C002；
 - 同一 theorem 在不同 canonical arena 的独立 kernel-checked realization 是合法 occurrence；
 - catalog-qualified companion names 不得碰撞，碰撞触发 IE-C025。
 
@@ -5549,23 +5549,23 @@ catalog 只由编译后的类型化登记、声明与实际 import 闭包构造�
 
 ### 25.4 registry 完整性
 
-必须检查：
+`CompiledRegistration.validateCore` 要求已解码的数学义务中 correspondence 为 evidence。
+`sourceBound` 登记要求 theoremName、unitName、realizationName 与 arenaName 均能解析到
+编译常量；源绑定的其余条件由 `CompiledSourceContract` 等源评定路径检查。
+非 sourceBound 登记另核对：
 
-- theoremName 存在；
-- theoremName 的 kind 是 theorem；
-- registrationModuleName 是登记常量的实际编译模块，且位于当前 root import closure；
-- unitName 存在；
-- unitName 的类型是期望的 `TheoremUnit arena`；
-- unit 与目标 theorem 的类型化对应义务已在 Reg 编译期检查，报告期核对其编译证据与引用；
-- arenaName 与 objectArenaName 存在且可从编译数据解析；
-- 舞台对应的契约证据与登记的 realization、arena、objectArena 一致；
-- 没有重复 `(objectArenaName,theoremName)` occurrence key；
-- 没有重复 unitName。
+- theoremName 不使用保留的 companion 名，且编译声明 kind 是 theorem；
+- unitName 与 realizationName 存在；
+- arenaName 与 canonicalObjectArenaName 存在；
+- unitName 的编译类型头是 `TheoremUnit`。
 
-还必须检查 `catalogKind`、catalog membership、maximal grouping 与所有 catalog-qualified
-generated names。一个 theoremName 在不同 canonical arenas 中合法，但 unit/realization/
-certificate name 仍不得碰撞；certificate 还必须绑定成员集合、顺序、arena、primitives 与
-编译输入身份，且不得复用输入身份不匹配的 certificate。
+契约证明字段在 Reg 编译期绑定目标、realization、舞台与 primitive bundle；报告不重验
+这些数学证明。registrationModuleName 来自登记常量的实际编译模块，root 的实际 import
+闭包确定可见登记。`validateUnique` 核对 occurrence key、unitName 与 realizationName 的
+唯一性；同一 theoremName 在不同 canonical arenas 的 occurrences 可以分别存在。
+目录分组使用 canonicalObjectArenaName，`validateMaximalCatalog` 要求组内目录 ID 一致
+并至少有一个 canonicalMaximal 成员。Seal 另核对完整成员、顺序与单位向量，
+生成的 catalog-qualified 名与已有常量或其它 occurrences 碰撞时失败。
 
 ---
 
