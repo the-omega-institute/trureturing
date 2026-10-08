@@ -70,6 +70,18 @@ internal sealed class CloitreActualRightProfileDocument : IScribeDocumentDefinit
                     + "The conditional profile theorem consumes this shared proof."))),
                 DescribeRole.Theorem),
             Describe.Lean(
+                DescribeId.Create("cloitre-selected-periodic"),
+                DeclarationHandle.Create(Prefix + "selected_periodic"),
+                H("Periodicity of the actual selector"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Under Hyp21_1, the prescribed-depth point g(N) is periodic "
+                    + "for T(N) whenever N is at least three. The depth-entry "
+                    + "premise supplies a periodic earlier iterate, and advancing "
+                    + "from that iterate to the prescribed depth preserves periodicity."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("cloitre-actual-full21-3"),
                 DeclarationHandle.Create(Prefix + "full21_3"),
                 H("Every fixed right width"),

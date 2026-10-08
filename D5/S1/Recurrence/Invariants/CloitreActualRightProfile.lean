@@ -219,6 +219,21 @@ theorem actual_foundations :
     rw [e1, e2, selEq]
   exact ⟨orbitDomain, actualRecurrence⟩
 
+/-- The prescribed-depth selector is a periodic point under the full source hypotheses. -/
+theorem selected_periodic (U : ℕ → ℕ) (h : Hyp21_1 U) :
+    ∀ N, 3 ≤ N → g N ∈ Function.periodicPts (T N) := by
+  intro N hN
+  obtain ⟨μ, hp, _, hμ⟩ := h.depthEntry N hN
+  obtain ⟨r, hr, hpr⟩ := hp
+  refine ⟨r, hr, ?_⟩
+  have ht := hpr.apply_iterate (d N - μ)
+  have he : (T N)^[d N - μ] (X N μ) = g N := by
+    unfold X g
+    rw [← Function.iterate_add_apply]
+    congr 1
+    omega
+  rwa [he] at ht
+
 set_option maxHeartbeats 1200000 in
 -- Nested prefix, offset and orbit inductions share substantial arithmetic side conditions.
 /-- Every fixed nonnegative offset has the complete right Fibonacci profile. -/
@@ -249,18 +264,7 @@ theorem full21_3 (U : ℕ → ℕ) (h : Hyp21_1 U) :
     have hl := goldenMono (show F j + 1 ≤ F j + v by omega)
     rw [(h.plusOne j (by omega)).1] at hl
     omega
-  have selectedPeriodic : ∀ N, 3 ≤ N → g N ∈ Function.periodicPts (T N) := by
-    intro N hN
-    obtain ⟨μ, hp, _, hμ⟩ := h.depthEntry N hN
-    obtain ⟨r, hr, hpr⟩ := hp
-    refine ⟨r, hr, ?_⟩
-    have ht := hpr.apply_iterate (d N - μ)
-    have he : (T N)^[d N - μ] (X N μ) = g N := by
-      unfold X g
-      rw [← Function.iterate_add_apply]
-      congr 1
-      omega
-    rwa [he] at ht
+  have selectedPeriodic := selected_periodic U h
   intro t
   induction t using Nat.strong_induction_on with
   | h t ih =>
