@@ -4,7 +4,19 @@
 
 Universal replacement extracts an orthonormal purification family and forces inner capacity growth.
 
-**Definition 1.1 (Universal single-step replacement).**
+**Theorem 1.1 (Trace of a rank-one matrix).**
+
+$$\forall A: Type, [\operatorname{Fintype}\left(A\right)], \forall x: \operatorname{EuclideanSpace}\left(\mathbb{C}, A\right), \operatorname{trace}\left(\operatorname{vecMulVec}\left(\operatorname{ofLp}\left(x\right), \operatorname{star}\left(\operatorname{ofLp}\left(x\right)\right)\right)\right) = \operatorname{ofReal}\left(\left\lVert x \right\rVert\right)^{2}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth.pure_trace` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The rank-one matrix of a finite complex vector has trace equal to its squared Euclidean norm.
+
+**Definition 1.2 (Universal single-step replacement).**
 
 $$\begin{aligned}\forall A, B, R: Type,\\\operatorname{Fintype}\left(A\right), \operatorname{DecidableEq}\left(A\right), \operatorname{Fintype}\left(B\right), \operatorname{Fintype}\left(R\right), \operatorname{DecidableEq}\left(R\right),\\\forall W: \operatorname{Matrix}\left(B \times R, A, \mathbb{C}\right), tau: \operatorname{DensityState}\left(R\right),\\\operatorname{UniversalReplacement}\left(W, tau\right) := (\forall rho \in \operatorname{DensityState}\left(A\right),\; \operatorname{partialTraceFirst}\left(((W \cdot \operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(rho\right)\right)) \cdot \operatorname{conjTranspose}\left(W\right))\right) = \operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(tau\right)\right)).\end{aligned}$$
 
@@ -16,7 +28,7 @@ $$\begin{aligned}\forall A, B, R: Type,\\\operatorname{Fintype}\left(A\right), \
 
 A, B, and R index the previous inner space, next inner space, and emitted space. The product B times R is the finite coordinate realization of their tensor product. DensityState is the existing positive trace-one CStarMatrix subtype. The displayed CStarMatrix.ofMatrix.symm(val(rho)) is exactly CStarMatrix.ofMatrix.symm rho.val, and conjTranspose is the adjoint. This is equation 55.2: the quantifier ranges over every density input, including coherent superpositions, not only the input basis states.
 
-**Theorem 1.2 (Orthonormal extraction and inner capacity).**
+**Theorem 1.3 (Orthonormal extraction and inner capacity).**
 
 $$\begin{aligned}\forall A, B, R: Type,\\\operatorname{Fintype}\left(A\right), \operatorname{DecidableEq}\left(A\right), \operatorname{Fintype}\left(B\right), \operatorname{Fintype}\left(R\right), \operatorname{DecidableEq}\left(R\right),\\\forall W: \operatorname{Matrix}\left(B \times R, A, \mathbb{C}\right), tau: \operatorname{DensityState}\left(R\right),\\\operatorname{UniversalReplacement}\left(W, tau\right) \implies \\\operatorname{let} M := \operatorname{CStarMatrix.ofMatrix.symm}\left(\operatorname{val}\left(tau\right)\right),\\\operatorname{let} E := \operatorname{eigenvectorBasis}\left(M\right), lam := \operatorname{eigenvalues}\left(M\right),\\\operatorname{let} S := \{a: R \mid lam\left(a\right) \neq 0\},\\\operatorname{let} v: A \times S \to \operatorname{EuclideanSpace}\left(\mathbb{C}, B\right) := \\ia \mapsto \operatorname{smul}\left(\operatorname{inv}\left(\operatorname{ofReal}\left(\operatorname{sqrt}\left(lam\left(\operatorname{val}\left(\operatorname{snd}\left(ia\right)\right)\right)\right)\right)\right), \operatorname{toLp}\left(2, b \mapsto \sum_{r \in R} \operatorname{star}\left(E\left(\operatorname{val}\left(\operatorname{snd}\left(ia\right)\right), r\right)\right) \cdot W\left((b, r), \operatorname{fst}\left(ia\right)\right)\right)\right),\\(\operatorname{Orthonormal}\left(\mathbb{C}, v\right)) \land (\operatorname{card}\left(A\right) \cdot \operatorname{rank}\left(M\right) \le \operatorname{card}\left(B\right))\end{aligned}$$
 
@@ -37,6 +49,7 @@ The theorem is the exact finite-dimensional no-hiding capacity bound of quantum-
 ## References
 
 - Truth anchor: `D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth.UniversalReplacement`
+- Truth anchor: `D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth.pure_trace`
 - Truth anchor: `D5/S3/Quantum/Entanglement/UniversalReplacementCapacityGrowth.universal_replacement_capacity_growth`
 - Dependency: [D5/S3/Quantum/Entanglement/LocalObservationPartialTraceEquivalence](LocalObservationPartialTraceEquivalence.md)
 - Dependency: [D5/S3/Quantum/Foundation/FiniteStateChannel](../Foundation/FiniteStateChannel.md)
