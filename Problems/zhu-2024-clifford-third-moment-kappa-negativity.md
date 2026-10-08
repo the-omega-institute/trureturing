@@ -69,11 +69,11 @@ Tier 1 conjecture of an October 2024 paper (kept in the 2026 CMP version), prere
 
 | declaration | proof_shape | escape_witness | admission_basis |
 | --- | --- | --- | --- |
-| result | content | the conclusion itself: the trace collapse `kappa_T` for graph subspaces and the exact sum `gaussian_sum` | open-problem-resolution |
+| result | content | the conclusion itself, produced by the exact sum `gaussian_sum` | open-problem-resolution |
 
 The private declarations (the subspace `T`, its membership criterion `mem_T`, `stochastic_T`, the
-state `psi`, `normalized_psi`, `gaussian_sum`, `kappa_T`, `kappa_psi`) are each used on the proof
-of `result`.
+state `psi`, `norm_v`, `normalized_psi`, `gaussian_sum`, `kappa_T`, `kappa_psi`) are each used on
+the proof of `result`; `mem_T`, `norm_v` and `kappa_T` are bind-only.
 
 Utility is `kind=certified-instance; basis=refutes` (the claim and its refutation). There is no
 digestion atom.
