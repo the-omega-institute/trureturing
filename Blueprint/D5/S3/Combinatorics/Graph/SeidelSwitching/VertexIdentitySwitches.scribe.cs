@@ -28,7 +28,10 @@ internal sealed class VertexIdentitySwitchesDocument : IScribeDocumentDefinition
                 AssessedProvenance.FromRepo(Source),
                 Blocks(Paragraph(Text(
                     "Switching at v leaves the nonincident edges unchanged. The old and new incident-edge counts are the two complementary neighbour counts, whose sum is card(V)−1. Hence the new edge count plus twice degree(v) equals the old edge count plus card(V)−1. An identity switch preserves the edge count; if every vertex is an identity switch, twice every degree equals card(V)−1. If card(V)>1 this forces a positive common degree. Choose a neighbour w of v. Switching at v lowers the degree of w by one, while the isomorphism would send w to a vertex with the original common degree: contradiction. At order one the adjacency relation is empty and the switch equals G. More generally, at a vertex y, switching across S preserves same-side neighbours and exchanges crossing neighbours with crossing non-neighbours. The new degree plus twice the old crossing-neighbour count equals the old degree plus the number of vertices on the opposite side. This identity includes empty and full cuts. Natural subtraction denotes truncated subtraction. The literal conclusion of Lemma 4.4 includes a same-vertex case in the one-vertex graph; an adjacency assertion there needs distinct vertices. The characterization does not answer Problems 6.2–6.4."))),
-                DescribeRole.Theorem)), []));
+                DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("gervacio-2026-vertex-identity-seidel-switches"),
+                    ResolutionKind.Proved))), []));
 
     private static DocumentBlock Node(string id, string title, string declaration, Formula formula,
         string prose, AssessedProvenance provenance) => Describe.Lean(

@@ -48,6 +48,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SeidelSwitching/VertexIdentitySwitches.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/gervacio-2026-vertex-identity-seidel-switches` (proved) by `D5/S3/Combinatorics/Graph/SeidelSwitching/VertexIdentitySwitches.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"gervacio-2026-vertex-identity-seidel-switches","declaration_gid":"D5/S3/Combinatorics/Graph/SeidelSwitching/VertexIdentitySwitches.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Severino V. Gervacio (2026). *On identity Seidel switches*. URL: <https://arxiv.org/abs/2601.04530v1>.
