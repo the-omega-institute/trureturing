@@ -10,30 +10,48 @@
 proof_shape: middle_vertex_weights: content; escape_witness: the public conclusion itself (form
 2; the preregistered middle-vertex weight formula of research line #14293): on the even spectral
 class A, of m + 1 integer eigenvalues, the squared modulus of the eigenvector at the middle vertex
-is ∏_{l ∉ A} (z k - z l) / ∏_{l ∈ A, l ≠ k} (z k - z l). It is produced by the sign classes of
-the eigenvectors under the reversal, the trace count #A = m + 1, and two nodal extractions from
-the moments between the first vertex and the last and middle ones; no Mathlib or frozen
-declaration states it. consumer: middle_vertex_moments.
+is ∏_{l ∉ A} (z k - z l) / ∏_{l ∈ A, l ≠ k} (z k - z l). It is produced by reversal_sign_classes
+(the sign classes of the eigenvectors under the reversal and the weight at the first vertex), the
+count #A = m + 1 for the single vertex fixed by the reversal, and a nodal extraction from the
+moments between the first vertex and the middle one; no Mathlib or frozen declaration states it.
+consumer: middle_vertex_moments.
 proof_shape: middle_vertex_moments: content; escape_witness: the public conclusion itself (form
 2; the preregistered integer-moment parity theorem): the moments (H ^ p) c c at the middle
 vertex are the integers [X^m] ((X^p * P_B) mod P_A), congruent to C(m, p) modulo 2, by the
 Lagrange coefficient formula over the class A and the reduction of the nodal polynomials to
 X^(m+1) and (X + 1)^m in (ZMod 2)[X]. consumer:
 D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer (private step no_phase_one_transfer).
-proof_shape: reversal_symmetric: bind-only (entrywise reading of the commutation of the
+Public helpers, stated for a path with any number of vertices; PathMiddleEdgeMoments and
+EvenPathRationalWeightTransfer abbreviate the modules
+D5/S3/Quantum/Dynamics/PathMiddleEdgeMoments and
+D5/S3/Quantum/Dynamics/EvenPathRationalWeightTransfer:
+proof_shape: reversal_sign_classes: content (the phases of the eigenvectors under the reversal
+are signs, the eigenvalues are distinct integers of the corresponding parity, the class sizes
+differ by the trace of the reversal, and the nodal extraction from the moments between the first
+and last vertices gives the weight at the first vertex); consumer: middle_vertex_weights,
+PathMiddleEdgeMoments.middle_edge_weights.
+proof_shape: propagator_eq_reversal: bind-only (pst_column and reversal_columns of
+D5/S3/Quantum/Dynamics/RationalWeightPathTransfer applied to the propagator); consumer:
+reversal_invariant, reversal_sign_classes, middle_vertex_weights,
+PathMiddleEdgeMoments.middle_edge_weights.
+proof_shape: reversal_invariant: bind-only (entrywise reading of the commutation of the
 Hamiltonian with the reversal form of the propagator given by
 D5/S3/Quantum/Dynamics/RationalWeightPathTransfer.reversal_columns); consumer:
+reversal_symmetric, EvenPathRationalWeightTransfer (private step no_phase_one_transfer, as the
+hypothesis of PathMiddleEdgeMoments.middle_edge_gram).
+proof_shape: reversal_symmetric: bind-only (reversal_invariant on 2m + 1 vertices); consumer:
 D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer (private step no_phase_one_transfer, as the
 hypothesis of middle_moment_gram_det).
+proof_shape: normSq_mul_eq_of_nodal: bind-only (algebraic combination of its two hypotheses);
+consumer: middle_vertex_weights, PathMiddleEdgeMoments.middle_edge_weights.
 Private helpers:
-proof_shape: eigenvector_rev: bind-only; consumer: middle_vertex_weights.
-proof_shape: sum_phase_eq_trace: bind-only; consumer: middle_vertex_weights.
-proof_shape: propagator_eq_reversal: bind-only; consumer: reversal_symmetric,
-middle_vertex_weights.
+proof_shape: eigenvector_rev: bind-only; consumer: reversal_sign_classes.
+proof_shape: sum_phase_eq_trace: bind-only; consumer: reversal_sign_classes.
 admission_basis: escape-witness (research line #14293, partial progress on the rational weights
 conjecture of arXiv:1708.03283: together with
 D5/S3/Quantum/Dynamics/OddPathRationalWeightTransfer the conjecture is settled for every odd
-number of vertices; it remains open for every even number of vertices n >= 6).
+number of vertices; for the even numbers of vertices see
+D5/S3/Quantum/Dynamics/EvenPathRationalWeightTransfer).
 Direct frozen dependencies:
   D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.hamiltonianPropagator
   statement_id sha256:cda9b54324a60c3d19d82ae43fd312bec7fd42bc7d2748ad663e34115d863ceb.
@@ -125,6 +143,16 @@ private theorem sum_phase_eq_trace :
 
 end Reversal
 
+/-- If `|w|² * (D_A * D_B) = P` and `x * conj w * D_A = Q` for real numbers `D_A`, `D_B`, `P`,
+`Q`, then `|x|² * (P * D_A) = Q² * D_B`. -/
+theorem normSq_mul_eq_of_nodal {x w : ℂ} {DA DB P Q : ℝ}
+    (h1 : Complex.normSq w * (DA * DB) = P) (h2 : x * starRingEnd ℂ w * (DA : ℂ) = (Q : ℂ)) :
+    Complex.normSq x * (P * DA) = Q ^ 2 * DB := by
+  have h := congrArg Complex.normSq h2
+  rw [Complex.normSq_mul, Complex.normSq_mul, Complex.normSq_conj, Complex.normSq_ofReal,
+    Complex.normSq_ofReal] at h
+  linear_combination (-(Complex.normSq x * DA)) * h1 + DB * h
+
 section Classes
 
 variable {n : ℕ} (r : Fin n → ℝ) (q : Fin (n + 1) → ℝ)
@@ -181,7 +209,7 @@ eigenvalues are distinct integers `z`, even on a class `A` of indices and odd of
 reversal of the vertices fixes the eigenvectors of the class `A` and negates the others; `#A`
 exceeds the number of the remaining indices by the number of vertices fixed by the reversal; and
 for `k ∈ A` the squared modulus of the `k`-th eigenvector at the first vertex, multiplied by
-`∏_{l ≠ k} (z k - z l)`, is the product of all the weights. -/
+`∏_{l ∈ A, l ≠ k} (z k - z l) * ∏_{l ∉ A} (z k - z l)`, is the product of all the weights. -/
 theorem reversal_sign_classes (hH : (pathHamiltonian r q).IsHermitian) (hr : ∀ t, 0 < r t)
     (hU : hamiltonianPropagator (pathHamiltonian r q) (-Real.pi) (Fin.last n) 0 = 1) :
     ∃ (z : Fin (n + 1) → ℤ) (A : Finset (Fin (n + 1))),
@@ -196,7 +224,8 @@ theorem reversal_sign_classes (hH : (pathHamiltonian r q).IsHermitian) (hr : ∀
         A.card = Aᶜ.card + (univ.filter fun x : Fin (n + 1) => x = x.rev).card ∧
         ∀ k ∈ A, Complex.normSq
             ((hH.eigenvectorUnitary : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ) 0 k) *
-          ∏ l ∈ univ.erase k, ((z k - z l : ℤ) : ℝ) = ∏ t, r t := by
+          ((∏ l ∈ A.erase k, ((z k - z l : ℤ) : ℝ)) * ∏ l ∈ Aᶜ, ((z k - z l : ℤ) : ℝ)) =
+            ∏ t, r t := by
   classical
   obtain ⟨hR, -⟩ := propagator_eq_reversal r q hr hU
   set W : Matrix (Fin (n + 1)) (Fin (n + 1)) ℂ := ↑hH.eigenvectorUnitary with hW
@@ -290,8 +319,15 @@ theorem reversal_sign_classes (hH : (pathHamiltonian r q).IsHermitian) (hr : ∀
       rw [hzΛ k, hzΛ l]
       push_cast
       ring
+    have hsplit : univ.erase k = A.erase k ∪ Aᶜ := by
+      ext l
+      by_cases h : l = k
+      · subst h; simp [hk]
+      · simp [h, em]
+    have hdisj : Disjoint (A.erase k) Aᶜ := Finset.disjoint_left.mpr fun l h1 h2 =>
+      (Finset.mem_compl.mp h2) (Finset.mem_of_mem_erase h1)
     have h1 := hM1 k
-    rw [hlast, Complex.mul_conj, hprod] at h1
+    rw [hlast, Complex.mul_conj, hprod, hsplit, Finset.prod_union hdisj] at h1
     exact_mod_cast h1
 
 end Classes
@@ -387,33 +423,21 @@ theorem middle_vertex_weights (hH : (pathHamiltonian r q).IsHermitian) (hr : ∀
           rw [show (hH.eigenvectorUnitary : Matrix (Fin (2 * m + 1)) (Fin (2 * m + 1)) ℂ) c j = 0
             from hWc j hj, zero_mul]) k hk
   refine ⟨z, A, hzinj, hcard, hzA, hzB, hzΛ, hWc, fun k hk => ?_⟩
-  have hsplit : univ.erase k = A.erase k ∪ Aᶜ := by
-    ext l
-    by_cases h : l = k
-    · subst h; simp [hk]
-    · simp [h, em]
-  have hdisj : Disjoint (A.erase k) Aᶜ := Finset.disjoint_left.mpr fun l h1 h2 =>
-    (Finset.mem_compl.mp h2) (Finset.mem_of_mem_erase h1)
   have h1 := hfirst k hk
-  rw [hsplit, Finset.prod_union hdisj, hPall] at h1
+  rw [hPall] at h1
   have hDAc : ∏ l ∈ A.erase k, (((z k : ℤ) : ℂ) - ((z l : ℤ) : ℂ)) =
       ((∏ l ∈ A.erase k, ((z k - z l : ℤ) : ℝ) : ℝ) : ℂ) := by
     rw [Complex.ofReal_prod]
     exact Finset.prod_congr rfl fun l _ => by norm_cast
-  have h2 := congrArg Complex.normSq (hM2 k hk)
-  rw [hDAc, Complex.normSq_mul, Complex.normSq_mul, Complex.normSq_conj, Complex.normSq_ofReal,
-    Complex.normSq_ofReal] at h2
-  set DA : ℝ := ∏ l ∈ A.erase k, ((z k - z l : ℤ) : ℝ) with hDA
-  set DB : ℝ := ∏ l ∈ Aᶜ, ((z k - z l : ℤ) : ℝ) with hDB
-  have h2' : Complex.normSq (W c k) * Complex.normSq (W 0 k) * DA ^ 2 = ρ ^ 2 := by
-    linear_combination h2
-  have hDA0 : DA ≠ 0 := fun h0 => (pow_pos hρpos 2).ne' (by rw [← h2', h0]; ring)
-  have hn0 : Complex.normSq (W 0 k) ≠ 0 := fun h0 =>
-    (pow_pos hρpos 2).ne' (by rw [← h1, h0]; ring)
-  have key : Complex.normSq (W c k) * DA = DB :=
-    mul_left_cancel₀ (mul_ne_zero hn0 hDA0) (by linear_combination h2' - h1)
+  have h2 := hM2 k hk
+  rw [hDAc] at h2
+  have key := normSq_mul_eq_of_nodal h1 h2
+  have hDA0 : ∏ l ∈ A.erase k, ((z k - z l : ℤ) : ℝ) ≠ 0 := by
+    intro h0
+    rw [h0, Complex.ofReal_zero, mul_zero] at h2
+    exact hρpos.ne' (by exact_mod_cast h2.symm)
   rw [eq_div_iff hDA0]
-  exact key
+  exact mul_left_cancel₀ (pow_pos hρpos 2).ne' (by linear_combination key)
 
 /-- **Integer middle-vertex moments with binomial parity.** Under the hypotheses of
 `middle_vertex_weights`, the diagonal entries of the powers of the Hamiltonian at the middle

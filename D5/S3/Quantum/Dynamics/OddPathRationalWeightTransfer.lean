@@ -8,8 +8,9 @@
 
 /-
 proof_shape: result: content; escape_witness: the public conclusion itself (the preregistered
-odd-path theorem of research line #14293), produced on the live path, through the private steps
-no_phase_one_transfer and no_transfer_last_first, by middle_moment_gram_det (the integer Hankel
+odd-path theorem of research line #14293), produced on the live path, through the private step
+no_phase_one_transfer and the reduction no_end_transfer_of_no_phase_one, by
+middle_moment_gram_det (the integer Hankel
 determinant of the middle-vertex moments is 2^j times a rational square),
 D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.middle_vertex_moments (these moments are integers
 congruent to C(m, a + b) modulo 2) and exists_odd_hankel_size (an odd j with that determinant
@@ -19,11 +20,13 @@ proof_shape: middle_moment_gram_det: content; escape_witness: the public conclus
 det [(H ^ (a + b)) c c]_{a, b ≤ j} = 2^j * (∏_{a ≤ j} ∏_{t < a} r (m + t))^2, from the
 factorisation L * diag(1, 2, ..., 2) * L^T with L the lower triangular matrix of the entries
 (H ^ a) (m + d) c; no Mathlib or frozen declaration states it. consumer: no_phase_one_transfer.
+Public helper, stated for a path with any number of vertices:
+proof_shape: no_end_transfer_of_no_phase_one: bind-only (exists_phase and propagator_shift remove
+the transfer phase by a shift of the potentials, and the transposition symmetry of the propagator
+exchanges the two directions); consumer: result and
+D5/S3/Quantum/Dynamics/EvenPathRationalWeightTransfer.result.
 Private helpers:
-proof_shape: no_phase_one_transfer: content (escape witnesses as for result); consumer:
-no_transfer_last_first.
-proof_shape: no_transfer_last_first: content (escape witnesses as for result; the transfer
-phase is removed by a shift of the potentials); consumer: result.
+proof_shape: no_phase_one_transfer: content (escape witnesses as for result); consumer: result.
 proof_shape: exists_odd_hankel_size: content (choice of the size by the parity of m); consumer:
 no_phase_one_transfer.
 proof_shape: det_choose_antitriangular: content (anti-triangular Hankel matrix modulo 2);
@@ -37,11 +40,11 @@ middle_moment_gram_det.
 proof_shape: det_ne_zero_of_submatrix: bind-only; consumer: det_choose_antitriangular,
 det_choose_two_pow.
 proof_shape: pathHamiltonian_shift: bind-only; consumer: propagator_shift.
-proof_shape: propagator_shift: bind-only; consumer: no_transfer_last_first.
-proof_shape: exists_phase: bind-only; consumer: no_transfer_last_first.
+proof_shape: propagator_shift: bind-only; consumer: no_end_transfer_of_no_phase_one.
+proof_shape: exists_phase: bind-only; consumer: no_end_transfer_of_no_phase_one.
 admission_basis: escape-witness (research line #14293, partial progress on the rational weights
-conjecture of arXiv:1708.03283: the conjecture is settled for every odd number of vertices; it
-remains open for every even number of vertices n >= 6).
+conjecture of arXiv:1708.03283: the conjecture is settled for every odd number of vertices; for
+the even numbers of vertices see D5/S3/Quantum/Dynamics/EvenPathRationalWeightTransfer).
 Direct frozen dependencies:
   D5/S3/Quantum/Dynamics/ProjectionProbabilityFlow.hamiltonianPropagator
   statement_id sha256:cda9b54324a60c3d19d82ae43fd312bec7fd42bc7d2748ad663e34115d863ceb.

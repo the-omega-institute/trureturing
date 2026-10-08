@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Middle-edge weights, integer moments and Gram identity of even paths with end transfer at time pi. -/
+   digest: Middle-edge weights and integer moments of even paths with end transfer at time pi. -/
 
 /-
 proof_shape: middle_edge_weights: content; escape_witness: the public conclusion itself (form 2;
@@ -12,10 +12,12 @@ the preregistered middle-edge weight formula of research line #14293, node 3): o
 2k + 2 vertices the even spectral class A has k + 1 indices, the eigenvectors of the odd class
 are antisymmetric at the two middle vertices a, b, and for j in A
 |W a j + W b j|^2 = ∏_{l ∉ A} (z j - z l) / (ρ * ∏_{l ∈ A, l ≠ j} (z j - z l)) with ρ the weight
-of the middle edge. It is produced by the trace count of a reversal without fixed vertex, the
-splitting of the product of the weights of a mirror-symmetric path with an odd number of edges,
-and a nodal extraction over the class A from the moments between the first vertex and the two
-middle ones; no Mathlib or frozen declaration states it. consumer: middle_edge_moments.
+of the middle edge. It is produced by
+D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.reversal_sign_classes, the trace count of a
+reversal without fixed vertex, the splitting of the product of the weights of a mirror-symmetric
+path with an odd number of edges, and a nodal extraction over the class A from the moments
+between the first vertex and the two middle ones; no Mathlib or frozen declaration states it.
+consumer: middle_edge_moments.
 proof_shape: middle_edge_moments: content; escape_witness: the public conclusion itself (form 2;
 the preregistered integrality of the middle-edge moments): ρ times the moment of H ^ p at the
 vector e_a + e_b is the integer [X^k] ((X^p * P_B) mod P_A), by the weight formula and the
@@ -57,8 +59,9 @@ Direct frozen dependencies:
   statement_id sha256:c50a132afc123692c13936889ad692366e6fb904fc589bc86bbf43f70e60e980.
   D5/S3/Quantum/Dynamics/ParityNodeDividedDifference.sum_eval_div_nodal_eq_coeff
   statement_id sha256:1299d2cac32c96924333faa7cf62248f785306485913813ee846eef3f944d175.
-  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.propagator_eq_reversal and
-  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.reversal_sign_classes (published in the same
+  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.propagator_eq_reversal,
+  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.reversal_sign_classes and
+  D5/S3/Quantum/Dynamics/PathMiddleVertexMoments.normSq_mul_eq_of_nodal (published in the same
   delivery; frozen owner module D5/S3/Quantum/Dynamics/PathMiddleVertexMoments).
 utility: none; no declaration is a bounded enumeration, checker, numeric reduction or certified
 instance: every statement quantifies over all k, all positive weights and all real potentials.
@@ -197,34 +200,21 @@ theorem middle_edge_weights (hH : (pathHamiltonian r q).IsHermitian) (hr : ∀ t
         · intro i _ hi
           rw [← add_mul, hF0 i hi, zero_mul]) j hj
   refine ⟨z, A, hzinj, hcard, hzA, hzB, hzΛ, hF0, fun j hj => ?_⟩
-  have hsplit : univ.erase j = A.erase j ∪ Aᶜ := by
-    ext l
-    by_cases h : l = j
-    · subst h; simp [hj]
-    · simp [h, em]
-  have hdisj : Disjoint (A.erase j) Aᶜ := Finset.disjoint_left.mpr fun l h1 h2 =>
-    (Finset.mem_compl.mp h2) (Finset.mem_of_mem_erase h1)
   have h1 := hfirst j hj
-  rw [hsplit, Finset.prod_union hdisj, hPall] at h1
+  rw [hPall] at h1
   have hDAc : ∏ l ∈ A.erase j, (((z j : ℤ) : ℂ) - ((z l : ℤ) : ℂ)) =
       ((∏ l ∈ A.erase j, ((z j - z l : ℤ) : ℝ) : ℝ) : ℂ) := by
     rw [Complex.ofReal_prod]
     exact Finset.prod_congr rfl fun l _ => by norm_cast
-  have h2 := congrArg Complex.normSq (hM2 j hj)
-  rw [hDAc, Complex.normSq_mul, Complex.normSq_mul, Complex.normSq_conj, Complex.normSq_ofReal,
-    Complex.normSq_ofReal] at h2
-  set DA : ℝ := ∏ l ∈ A.erase j, ((z j - z l : ℤ) : ℝ) with hDA
-  set DB : ℝ := ∏ l ∈ Aᶜ, ((z j - z l : ℤ) : ℝ) with hDB
-  have h2' : Complex.normSq (W a j + W b j) * Complex.normSq (W 0 j) * DA ^ 2 = Q ^ 2 := by
-    linear_combination h2
-  have hQ2 : 0 < Q ^ 2 := pow_pos hQpos 2
-  have hDA0 : DA ≠ 0 := fun h0 => hQ2.ne' (by rw [← h2', h0]; ring)
-  have hn0 : Complex.normSq (W 0 j) ≠ 0 := fun h0 =>
-    (mul_pos (hr e) hQ2).ne' (by rw [← h1, h0]; ring)
-  have key : Complex.normSq (W a j + W b j) * (r e * DA) = DB :=
-    mul_left_cancel₀ (mul_ne_zero hn0 hDA0) (by linear_combination r e * h2' - h1)
+  have h2 := hM2 j hj
+  rw [hDAc] at h2
+  have key := normSq_mul_eq_of_nodal h1 h2
+  have hDA0 : ∏ l ∈ A.erase j, ((z j - z l : ℤ) : ℝ) ≠ 0 := by
+    intro h0
+    rw [h0, Complex.ofReal_zero, mul_zero] at h2
+    exact hQpos.ne' (by exact_mod_cast h2.symm)
   rw [eq_div_iff (mul_ne_zero (hr e).ne' hDA0)]
-  exact key
+  exact mul_left_cancel₀ (pow_pos hQpos 2).ne' (by linear_combination key)
 
 /-- **Integer middle-edge moments.** Under the hypotheses of `middle_edge_weights`, the weight of
 the middle edge times the moment of `H ^ p` at `e_a + e_b` is the nodal moment of order `p` of
@@ -272,16 +262,16 @@ theorem middle_edge_moments (hr : ∀ t, 0 < r t)
   rfl
 
 /-- **Gram identity of the middle-edge moments.** For a reversal-invariant path Hamiltonian on
-`2k + 2` vertices, with `a`, `b` the ends of the middle edge and `e'` the edge following it, the
-moments `S p` at `e_a + e_b` satisfy `S 0 * S 2 - S 1 ^ 2 = 4 * r e' ^ 2`. -/
+`2k + 2` vertices, with `a`, `b` the ends of the middle edge and `f` the edge following it, the
+moments `S p` at `e_a + e_b` satisfy `S 0 * S 2 - S 1 ^ 2 = 4 * r f ^ 2`. -/
 theorem middle_edge_gram
     (hsym : ∀ x y : Fin (2 * k + 1 + 1),
       pathHamiltonian r q x.rev y.rev = pathHamiltonian r q x y)
     (a b : Fin (2 * k + 1 + 1)) (ha : (a : ℕ) = k) (hb : (b : ℕ) = k + 1)
-    (e' : Fin (2 * k + 1)) (he' : (e' : ℕ) = k + 1) :
+    (f : Fin (2 * k + 1)) (hf : (f : ℕ) = k + 1) :
     pairMoment (pathHamiltonian r q) a b 0 * pairMoment (pathHamiltonian r q) a b 2 -
-      pairMoment (pathHamiltonian r q) a b 1 ^ 2 = 4 * (r e' : ℂ) ^ 2 := by
-  have hk : k + 1 < 2 * k + 1 := by have := e'.isLt; omega
+      pairMoment (pathHamiltonian r q) a b 1 ^ 2 = 4 * (r f : ℂ) ^ 2 := by
+  have hk : k + 1 < 2 * k + 1 := by have := f.isLt; omega
   have hab : a ≠ b := Fin.ne_of_val_ne (by omega)
   have harev : a.rev = b := Fin.ext (by rw [Fin.val_rev, ha, hb]; omega)
   have hbrev : b.rev = a := by rw [← harev, Fin.rev_rev]
@@ -304,13 +294,13 @@ theorem middle_edge_gram
   set w : Fin (2 * k + 1 + 1) := ⟨k + 2, by omega⟩ with hw
   have hwv : (w : ℕ) = k + 2 := rfl
   have huv : (w.rev : ℕ) + 1 = k := by rw [Fin.val_rev, hwv]; omega
-  have hvw : v w = (r e' : ℂ) := by
+  have hvw : v w = (r f : ℂ) := by
     have h1 := (pathHamiltonian_pow_apply_column r q a 1 w).1 (Or.inl (by omega))
     have h2 := (pathHamiltonian_pow_apply_column r q b 1 w).2 (by omega)
     rw [pow_one] at h1 h2
     rw [hv, h1, h2, zero_add, Finset.prod_range_one, dif_pos (by omega)]
     congr 2
-    exact Fin.ext (by simp [hb, he'])
+    exact Fin.ext (by simp [hb, hf])
   have hvb : v b = v a := by rw [← harev]; exact hvrev a
   -- the three moments
   have h0 : pairMoment (pathHamiltonian r q) a b 0 = 2 := by

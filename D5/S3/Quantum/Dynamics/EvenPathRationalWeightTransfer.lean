@@ -4,7 +4,7 @@
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
-   digest: Rational positive weights forbid end transfer at time pi on paths with 2m vertices, m = 2 mod 4 or m = 3, 5 mod 8. -/
+   digest: No end transfer at time pi on rational paths with 4 mod 8 or 6, 10 mod 16 vertices. -/
 
 /-
 proof_shape: result: content; escape_witness: the public conclusion itself (the preregistered
