@@ -10,12 +10,22 @@ namespace LeanInformationAudit.RawArtifacts
 extension state. Each store owns only the regions loaded into that store. -/
 structure Store where
   modules : NameMap ModuleData := {}
-  constants : Std.HashMap Name ConstantInfo := {}
-  owners : Std.HashMap Name Name := {}
+  constants : SMap Name ConstantInfo := {}
+  owners : SMap Name Name := {}
   moduleOrder : Array Name := #[]
+  moduleIndices : Std.TreeMap Name Nat Name.quickCmp := {}
+  protectedModules : Std.TreeMap Name Bool Name.quickCmp := {}
   metadata : CompiledMetadata.Store := {}
   active : NameSet := {}
   regions : Array CompactedRegion := #[]
+
+/-- Compiler indexes keep their immutable imported table and put target additions
+in Lean's existing persistent hash stage. No Environment is constructed. -/
+def Store.fork (base : Store) : Store :=
+  { base with constants := base.constants.switch, owners := base.owners.switch, regions := #[] }
+
+def mapSize {α : Type} (map : SMap Name α) : Nat :=
+  map.map₂.foldl (fun count name _ => if map.map₁.contains name then count else count + 1) map.map₁.size
 
 private def checkHeader (path : System.FilePath) : IO Unit := do
   IO.FS.withFile path .read fun file => do
@@ -42,13 +52,13 @@ private def isPropCheap (find : Name → Option ConstantInfo) (type : Expr) : Bo
 
 /-- Same duplicate-theorem preference as the pinned compiler's private import
 view; different definitions or incompatible duplicates are rejected. -/
-private def subsumes (constants : Std.HashMap Name ConstantInfo)
+private def subsumes (constants : SMap Name ConstantInfo)
     (left right : ConstantInfo) : Bool :=
   left.name == right.name && left.type == right.type && left.levelParams == right.levelParams &&
     match left, right with
     | .thmInfo a, .thmInfo b => a.all == b.all
     | .thmInfo a, .axiomInfo b => a.all == [b.name] && !b.isUnsafe
-    | .axiomInfo a, .axiomInfo b => a.isUnsafe == b.isUnsafe && isPropCheap (constants[·]?) a.type
+    | .axiomInfo a, .axiomInfo b => a.isUnsafe == b.isUnsafe && isPropCheap constants.find? a.type
     | _, _ => false
 
 private unsafe def readOwnParts (name : Name) : IO (ModuleData × Array CompactedRegion) := do
@@ -148,6 +158,13 @@ unsafe def release (store : IO.Ref Store) : IO Unit := do
   let regions ← takeRegions store
   for region in regions.reverse do region.free
 
+/-- Dependency-first compiler ownership facts, indexed while reading each module.
+Missing import metadata cannot justify an external provenance leaf. -/
+def moduleIsProtected (name : Name) (data : ModuleData)
+    (classes : Std.TreeMap Name Bool Name.quickCmp) : Bool :=
+  name.getRoot == `D5 || name.getRoot == `LeanInformationAudit ||
+    data.imports.any (fun item => classes[item.module]?.getD true)
+
 unsafe def loadModule (name : Name) (store : IO.Ref Store) : IO Unit := do
   let state ← store.get
   if state.modules.contains name then return
@@ -159,21 +176,25 @@ unsafe def loadModule (name : Name) (store : IO.Ref Store) : IO Unit := do
   for item in data.imports do loadModule item.module store
   let mut constants ← store.modifyGet fun s => (s.constants, { s with constants := {} })
   for info in data.constants do
-    if let some previous := constants[info.name]? then
+    if let some previous := constants.find? info.name then
       if subsumes constants info previous then constants := constants.insert info.name info
       else unless subsumes constants previous info do
         throw <| IO.userError s!"raw.conflicting_constant:{name}:{info.name}"
     else constants := constants.insert info.name info
-  store.modify fun s => { s with
+  store.modify fun s =>
+    let moduleIndices := s.moduleIndices.insert name s.moduleOrder.size
+    { s with
     constants := constants
-    owners := data.constNames.foldl (fun owners constant => owners.insertIfNew constant name) s.owners
+    owners := data.constNames.foldl (fun owners constant => if owners.contains constant then owners else owners.insert constant name) s.owners
     modules := s.modules.insert name data
+    moduleIndices
+    protectedModules := s.protectedModules.insert name (moduleIsProtected name data s.protectedModules)
     moduleOrder := s.moduleOrder.push name
     metadata := CompiledMetadata.readModule s.metadata data
     active := s.active.erase name }
 
 @[noinline] private unsafe def comparePrevious (owner : Name) (info : ConstantInfo)
-    (constants : Std.HashMap Name ConstantInfo) : IO (Bool × Array CompactedRegion) := do
+    (constants : SMap Name ConstantInfo) : IO (Bool × Array CompactedRegion) := do
   let (data, regions) ← readOwn owner
   let compatible := (data.constants.find? (·.name == info.name)).any fun previous =>
     subsumes constants info previous || subsumes constants previous info

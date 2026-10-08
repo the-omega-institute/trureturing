@@ -17,7 +17,7 @@ open Lean LeanInformationAudit
     IO (Array Name × Nat) := do
   RawArtifacts.loadModule `LeanInformationAudit.Contract.SourceAudit reader
   let store ← reader.get
-  return (store.moduleOrder.map RawArtifacts.ownName, store.constants.size)
+  return (store.moduleOrder.map RawArtifacts.ownName, RawArtifacts.mapSize store.constants)
 
 /-- Detached import keys remain usable after explicit release and reload. -/
 unsafe def checkTargetRelease : IO Unit := do
@@ -31,14 +31,64 @@ unsafe def checkTargetRelease : IO Unit := do
     throw <| IO.userError "[FAIL] CompiledTargetRegionRelease: empty fixture"
   RawArtifacts.release reader
   let cleared ← reader.get
-  unless cleared.constants.isEmpty && cleared.modules.isEmpty && cleared.regions.isEmpty
-      && cleared.metadata.axioms.isEmpty && cleared.owners.isEmpty do
+  unless RawArtifacts.mapSize cleared.constants == 0 && cleared.modules.isEmpty && cleared.regions.isEmpty
+      && cleared.metadata.axioms.isEmpty && RawArtifacts.mapSize cleared.owners == 0
+      && cleared.moduleIndices.isEmpty && cleared.protectedModules.isEmpty do
     throw <| IO.userError "[FAIL] CompiledTargetRegionRelease: retained target roots"
   let (reloaded, newCount) ← releaseFixture reader
   unless names == reloaded && count == newCount do
     throw <| IO.userError "[FAIL] CompiledTargetRegionRelease: detached keys or reload changed"
   RawArtifacts.release reader
   IO.println "[PASS] CompiledTargetRegionRelease"
+
+@[noinline] private unsafe def verifyFork (base : RawArtifacts.Store)
+    (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
+  let target := `LeanInformationAudit.Contract.RootStructure
+  RawArtifacts.loadModule target reader
+  let fork ← reader.get
+  unless RawArtifacts.mapSize fork.constants > RawArtifacts.mapSize base.constants &&
+      !base.modules.contains target && fork.modules.contains target do
+    throw <| IO.userError "[FAIL] CompiledTargetIndexIsolation: base changed or target absent"
+  unless fork.constants.map₁.size == base.constants.map₁.size &&
+      fork.owners.map₁.size == base.owners.map₁.size && !fork.constants.map₂.isEmpty do
+    throw <| IO.userError "[FAIL] CompiledTargetIndexIsolation: imported table copied for target"
+  let name := (← base.getModule `LeanInformationAudit.Contract.SourceAudit).constNames[0]!
+  let some info := base.constants.find? name
+    | throw <| IO.userError "[FAIL] CompiledTargetIndexIsolation: shared constant missing"
+  let replaced := fork.constants.insert name info
+  unless RawArtifacts.mapSize replaced == RawArtifacts.mapSize fork.constants &&
+      (replaced.find? name).map (·.type) == some info.type do
+    throw <| IO.userError "[FAIL] CompiledTargetIndexIsolation: shadowed key counted twice"
+  for index in [:fork.moduleOrder.size] do
+    let owner := fork.moduleOrder[index]!
+    unless fork.moduleIndices[owner]? == some index do
+      throw <| IO.userError "[FAIL] CompiledTargetIndexIsolation: compiler order index"
+  unless fork.protectedModules[target]? == some true &&
+      fork.protectedModules[`Init]? == some false do
+    throw <| IO.userError "[FAIL] CompiledTargetIndexIsolation: provenance ownership index"
+  for owner in base.moduleOrder do
+    unless fork.moduleIndices[owner]? == base.moduleIndices[owner]? &&
+        fork.protectedModules[owner]? == base.protectedModules[owner]? do
+      throw <| IO.userError "[FAIL] CompiledTargetIndexIsolation: shared prefix changed"
+
+/-- A target extends immutable compiler indexes and then releases its own regions;
+the original base remains readable for a second independent target. -/
+unsafe def checkTargetIndexIsolation : IO Unit := do
+  let reader ← IO.mkRef ({} : RawArtifacts.Store)
+  RawArtifacts.loadModule `LeanInformationAudit.Contract.SourceAudit reader
+  try
+    let base ← reader.get
+    let fork ← IO.mkRef ({} : RawArtifacts.Store)
+    for _ in [:2] do
+      fork.set base.fork
+      try verifyFork base fork
+      finally RawArtifacts.release fork
+      let cleared ← fork.get
+      unless cleared.moduleIndices.isEmpty && cleared.protectedModules.isEmpty do
+        throw <| IO.userError "[FAIL] CompiledTargetIndexIsolation: completed target index retained"
+      discard <| base.getModule `LeanInformationAudit.Contract.SourceAudit
+    IO.println "[PASS] CompiledTargetIndexIsolation"
+  finally RawArtifacts.release reader
 
 /-- Read names from compiled implementation expressions, without maintaining a
 second list of contract constants. Whole name literals are visited once. -/
@@ -92,12 +142,12 @@ unsafe def checkProgramBoundary (reader : IO.Ref RawArtifacts.Store) : IO Unit :
   IO.println s!"COMPILED_CONTRACT_NAMES {names.toArray.qsort Name.quickLt}"
   IO.println s!"[PASS] compiled contract names: {names.size} references exist in compiler artifacts"
   let missing := `LeanInformationAudit.Contract.AbsentNativeBoundaryConstant
-  let result := Contract.Decoder.checkTarget (contracts.constants[·]?) missing (mkConst missing)
+  let result := Contract.Decoder.checkTarget (contracts.constants.find?) missing (mkConst missing)
   let expected := s!"contract.cannot_decode:{missing}:missing_constant"
   unless (match result with | .error reason => reason == expected | .ok _ => false) do
     throw <| IO.userError "compiled.contract:missing_name_accepted"
   IO.println s!"CONTRACT_DIAGNOSTIC boundary.missing_name {expected}"
-  let result := Contract.Decoder.fields (contracts.constants[·]?)
+  let result := Contract.Decoder.fields (contracts.constants.find?)
     `LeanInformationAudit.Contract.RootCatalog (mkNatLit 0) 1
   let expected := "contract.literal:LeanInformationAudit.Contract.RootCatalog:nonliteral:"
   let error ← try
@@ -130,7 +180,7 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
     RawArtifacts.loadModule `LeanInformationAuditRegTests.Fixtures.TemplateBodies reader
     RawArtifacts.loadModule `Reg.D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit reader
     let store ← reader.get
-    unless store.owners[owners[0]!.str "source0"]? == some owners[0]! do
+    unless store.owners.find? (owners[0]!.str "source0") == some owners[0]! do
       throw <| IO.userError "compiled.metadata:declaration_owner"
     let positions := store.moduleOrder.foldl (init := ({} : NameMap Nat)) fun indices name =>
       indices.insert name indices.size
@@ -149,11 +199,11 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
         store.metadata.externs.contains `Array.usize &&
         store.metadata.reducibility.find? `Array.uget == some .implicitReducible do
       throw <| IO.userError "compiled.metadata:declaration_semantics"
-    IO.println s!"[PASS] compiled metadata owners={store.owners.size} \
+    IO.println s!"[PASS] compiled metadata owners={RawArtifacts.mapSize store.owners} \
       modules={store.moduleOrder.size} projections={store.metadata.projections.size} \
       classes={store.metadata.classes.toArray.size} instances={store.metadata.instances.toArray.size}"
     let context : Contract.CompiledExpressions.Context := {
-      find := (store.constants[·]?)
+      find := (store.constants.find?)
       heartbeatStart := start
       heartbeatLimit := limit }
     let natural := mkConst ``Nat
@@ -301,9 +351,9 @@ unsafe def readFixtures (reader : IO.Ref RawArtifacts.Store) (start limit : Nat)
         | throw <| IO.userError "compiled.source:declaration_missing"
       let some selection := declaration.escapeInput.sourceSelection
         | throw <| IO.userError "compiled.source:selection_missing"
-      let some sourceInfo := store.constants[entry.theoremName]?
+      let some sourceInfo := store.constants.find? entry.theoremName
         | throw <| IO.userError "compiled.source:target_missing"
-      let some recordInfo := store.constants[entry.realizationName]?
+      let some recordInfo := store.constants.find? entry.realizationName
         | throw <| IO.userError "compiled.source:record_missing"
       let sourceContext ← TemplateAudit.CompiledEnrollment.Context.fromArtifacts store sourceOwner
         sourceRow.input.options (({} : NameSet).insert entry.theoremName)
@@ -389,6 +439,7 @@ unsafe def main : IO Unit := do
   let fixturePath ← LeanInformationAudit.Repository.source ".lake/build/lean-inspector/reg/lib/lean"
   Lean.searchPathRef.modify (fixturePath :: ·)
   LeanInformationAuditRegTests.CompiledDiscovery.checkTargetRelease
+  LeanInformationAuditRegTests.CompiledDiscovery.checkTargetIndexIsolation
   LeanInformationAuditRegTests.CompiledDiscovery.checkProductionReport
   let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
   LeanInformationAuditRegTests.CompiledDiscovery.checkProgramBoundary reader
