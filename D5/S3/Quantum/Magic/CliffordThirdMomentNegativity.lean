@@ -90,4 +90,29 @@ private theorem stochastic_T : IsStochasticLagrangian 11 T := by
     rw [T, LinearMap.finrank_range_of_inj hi]
     simp
 
+private def v (a : ZMod 11) : GaussianInt :=
+  ![⟨-2,0⟩, ⟨0,0⟩, ⟨0,-2⟩, ⟨1,-2⟩, ⟨-1,-1⟩, ⟨1,2⟩,
+    ⟨-1,-2⟩, ⟨-2,0⟩, ⟨0,-2⟩, ⟨2,-1⟩, ⟨1,-1⟩] ⟨a.val, ZMod.val_lt a⟩
+
+private noncomputable def psi (x : Fin 1 → ZMod 11) : ℂ :=
+  GaussianInt.toComplex (v (x 0)) / (Real.sqrt 40 : ℂ)
+
+private theorem norm_v : ∑ a : ZMod 11, (v a).norm = 40 := by decide
+
+private theorem normalized_psi : ∑ x, ‖psi x‖ ^ 2 = 1 := by
+  classical
+  rw [← Equiv.sum_comp (Equiv.funUnique (Fin 1) (ZMod 11)).symm]
+  simp only [psi, Equiv.funUnique, Equiv.piUnique, Equiv.coe_fn_symm_mk, uniqueElim_const]
+  simp_rw [norm_div, div_pow, Complex.norm_real, Real.norm_eq_abs, sq_abs,
+    Real.sq_sqrt (by norm_num : (0 : ℝ) ≤ 40), Complex.sq_norm,
+    ← GaussianInt.intCast_real_norm]
+  rw [← Finset.sum_div, ← Int.cast_sum, norm_v]
+  norm_num
+
+set_option maxHeartbeats 4000000 in
+set_option maxRecDepth 100000 in
+private theorem gaussian_sum :
+    (∑ y : Fin 3 → ZMod 11, ∏ k, v (y k) * star (v ((O *ᵥ y) k))) =
+      (-1196 : GaussianInt) := by decide
+
 end D5.S3.Quantum.Magic.CliffordThirdMomentNegativity
