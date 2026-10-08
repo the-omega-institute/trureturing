@@ -36,9 +36,11 @@ $$\forall m \in \mathbb{N},\; \forall r \in \operatorname{Fin}\left(m\right) \to
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* S. Kirkland, D. McLaren, R. Pereira, S. Plosker and X. Zhang (2019). *Perfect quantum state transfer in weighted paths with potentials (loops) using orthogonal polynomials*. DOI: [10.1080/03081087.2018.1442810](https://doi.org/10.1080/03081087.2018.1442810). URL: <https://arxiv.org/abs/1708.03283v2>.
+
 *Commentary.*
 
-Let U be unitary, commute with the path Hamiltonian H, and send the first basis vector to gamma times the last one, with |gamma| = 1. By induction on j, U e_j = gamma e_(m - j) and r t = r (m - 1 - t) for t < j. Indeed r_j U e_(j+1) = U(H e_j - q_j e_j - r_(j-1) e_(j-1)) = gamma (H e_(m-j) - q_j e_(m-j) - r_(j-1) e_(m-j+1)); by the induction hypothesis only the components at m - j - 1 and m - j remain, orthogonality of the columns j and j + 1 of U removes the second one, and the unit norm of column j + 1 together with the positivity of the weights gives r j = r (m - 1 - j). Here rev t is the mirror index m - 1 - t of the edge t, and last(m) is the vertex m.
+Let U be unitary, commute with the path Hamiltonian H, and send the first basis vector to gamma times the last one, with |gamma| = 1. By induction on j, U e_j = gamma e_(m - j) and r t = r (m - 1 - t) for t < j. Indeed r_j U e_(j+1) = U(H e_j - q_j e_j - r_(j-1) e_(j-1)) = gamma (H e_(m-j) - q_j e_(m-j) - r_(j-1) e_(m-j+1)); by the induction hypothesis only the components at m - j - 1 and m - j remain, orthogonality of the columns j and j + 1 of U removes the second one, and the unit norm of column j + 1 together with the positivity of the weights gives r j = r (m - 1 - j). Here rev t is the mirror index m - 1 - t of the edge t, and last(m) is the vertex m. The source records the underlying fact as known, citing Kay: a symmetric tridiagonal Hamiltonian with perfect state transfer between its end vertices is persymmetric. The statement here is its form for an arbitrary unitary commuting with the path Hamiltonian, restricted to the edge weights.
 
 **Theorem 1.4 (Spectral parity classes of a transfer at time pi).**
 
@@ -48,9 +50,11 @@ $$\forall V \in Type,\; [\operatorname{Fintype}\left(V\right)], [\operatorname{D
 
 *Source.* Repository-derived.
 
+*Acknowledgement.* S. Kirkland, D. McLaren, R. Pereira, S. Plosker and X. Zhang (2019). *Perfect quantum state transfer in weighted paths with potentials (loops) using orthogonal polynomials*. DOI: [10.1080/03081087.2018.1442810](https://doi.org/10.1080/03081087.2018.1442810). URL: <https://arxiv.org/abs/1708.03283v2>.
+
 *Commentary.*
 
-Let c k = W a k conj(W b k) for the orthonormal eigenvectors W of H with eigenvalues lambda k. The hypotheses on the powers of H give sum_k c k lambda_k^p = 0 for p < m and = P for p = m; evaluating sum_k c k f(lambda k) on the monic polynomial f = prod_{l != k} (X - lambda l) gives c k prod_{l != k} (lambda k - lambda l) = P, so the eigenvalues are distinct and every c k is a nonzero real number. Transfer at time pi forces exp(i pi lambda_k) conj(W b k) = gamma conj(W a k) with gamma = exp(i pi H)(a, b), since the sum of the squared moduli of their differences vanishes. Hence |c k| = |W a k|^2, whose sum is 1, while sum_k c k = 0. The class A of indices with c k > 0 has sum_{k in A} c k = 1/2, and exp(i pi lambda_k) equals gamma on A and -gamma off A. Shifting the eigenvalues by an eigenvalue of the class A gives integers z, even on A and odd off A, with lambda k - lambda l = z k - z l.
+Let c k = W a k conj(W b k) for the orthonormal eigenvectors W of H with eigenvalues lambda k. The hypotheses on the powers of H give sum_k c k lambda_k^p = 0 for p < m and = P for p = m; evaluating sum_k c k f(lambda k) on the monic polynomial f = prod_{l != k} (X - lambda l) gives c k prod_{l != k} (lambda k - lambda l) = P, so the eigenvalues are distinct and every c k is a nonzero real number. Transfer at time pi forces exp(i pi lambda_k) conj(W b k) = gamma conj(W a k) with gamma = exp(i pi H)(a, b), since the sum of the squared moduli of their differences vanishes. Hence |c k| = |W a k|^2, whose sum is 1, while sum_k c k = 0. The class A of indices with c k > 0 has sum_{k in A} c k = 1/2, and exp(i pi lambda_k) equals gamma on A and -gamma off A. Shifting the eigenvalues by an eigenvalue of the class A gives integers z, even on A and odd off A, with lambda k - lambda l = z k - z l. The source records as known that, after a common shift, the eigenvalues of a path with perfect state transfer at time pi between its end vertices are integers that alternate between even and odd. The identity P sum_{i in A} 1 / prod_{j != i} (z i - z j) = 1/2, stated for a general Hermitian matrix with the given moment data, is derived here.
 
 **Definition 1.5 (The rational weights statement on 2^k + 1 vertices).**
 
