@@ -2265,7 +2265,7 @@ Use the ordered $d$-bit set $I=\mathbb F_2^d$. Choose distinct labels $A_i$ and 
 
 $$
 \mathcal P=\mathbb F_2^h\setminus\{0,a\},\qquad
-u=\varepsilon_0,\qquad w=\varepsilon_0\oplus\varepsilon_{h-1}.
+\nu=\varepsilon_0,\qquad w=\varepsilon_0\oplus\varepsilon_{h-1}.
 \tag{83.28}
 $$
 
