@@ -1,0 +1,33 @@
+**定理 17.3（保留重复使用成本的分数装填）。** 给定同一个 $G$ 的任意有限族非空主块 $B_\alpha=G[S_\alpha]$。若
+$$
+w_\alpha\ge0,\qquad
+\sum_{\alpha:\,i\in S_\alpha}w_\alpha\le1\quad(1\le i\le N),
+\tag{17.2}
+$$
+则
+$$
+D_\Psi(G)\ge\sum_\alpha w_\alpha D_\Psi(B_\alpha).
+\tag{17.3}
+$$
+若各块均为三阶且实际能量满足 $e(B_\alpha)\ge e_\alpha^*\in[0,3]$，则
+$$
+D_\Psi(G)\ge
+\max_{\substack{w_\alpha\ge0\\
+\sum_{\alpha:i\in S_\alpha}w_\alpha\le1}}
+\sum_\alpha w_\alpha F(e_\alpha^*).
+\tag{17.4}
+$$
+此有限线性规划包含每个不交块选取作为可行点；若 $L\ge1$ 且每个索引至多属于 $L$ 个块，统一权重 $1/L$ 可行。
+
+**证明。** 取主块 $G[S]$ 的正交单位特征向量 $v_j$，向 $S$ 外补零。标量凸函数 $\Psi$ 作用于 $G$ 的谱分解给
+$$
+\Psi(v_j^*Gv_j)\le v_j^*\Psi(G)v_j.
+$$
+求和得到 $D_\Psi(G[S])\le\operatorname{tr}(P_S\Psi(G))$。置 $Q=\sum_\alpha w_\alpha P_{S_\alpha}$，式 (17.2) 恰给 $0\le Q\le I$；又 $\Psi(G)\succeq0$，故
+$$
+\sum_\alpha w_\alpha D_\Psi(B_\alpha)
+\le\operatorname{tr}(Q\Psi(G))
+\le\operatorname{tr}\Psi(G).
+$$
+最后一步因为 $\operatorname{tr}(\Psi(G)^{1/2}(I-Q)\Psi(G)^{1/2})\ge0$。式 (17.1) 与可行域的紧性给式 (17.4)；各非空块的权重均不超过一。∎
+

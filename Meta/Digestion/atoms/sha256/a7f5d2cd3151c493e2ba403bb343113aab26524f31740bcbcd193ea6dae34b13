@@ -1,0 +1,9 @@
+**命题 15.4（奇素数限制和有限 CRT 计数）。** 在 $q=2$ 的均匀来源上，$H_A,H_B$ 的三个除数指示函数完全相同，其值为 $000$ 或 $111$。因此它不属于定义 2.1 的五模式域；其归一化 Gram 是三阶全一矩阵，谱为 $3,0,0$，$D_\Psi=5$。若 $W\ge2$ 平方自由，定义
+$$
+a_{H,W}(r)=\prod_{h\in H}\mathbf1_{\gcd(r+h,W)=1},\qquad r\in\mathbb Z/W\mathbb Z.
+$$
+则
+$$
+\sum_{r\bmod W}a_{H,W}(r)=\prod_{q\mid W}\bigl(q-\nu_H(q)\bigr).
+$$
+

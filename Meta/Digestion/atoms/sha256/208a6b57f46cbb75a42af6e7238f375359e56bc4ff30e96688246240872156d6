@@ -1,0 +1,23 @@
+**假设与条件推论 18.4（同一零点配置的比例消费者）。** 采用 [Wang 命题 2.1 的实际有限多重集及核](../../../Library/Weil/wang2026proportions.md)：$\eta$ 为实偶紧支撑 $L^2$ 函数、$\int\eta^2=1$，$K=\widehat{\eta^2}$。对充分大 $T$，取共轭对称多重集
+$$
+Z_T=\left\{\frac{i(\varrho-1/2)\log T}{2\pi}:
+\varrho\text{ 为真实 }\zeta\text{ 零点},\quad0<\Im\varrho\le T\right\}.
+$$
+$N_T=|Z_T|>0$ 保留真实重数，$n_T$ 为简单实元素数，$D_T$ 为不同元素数。$G_T$ 仅取这同一多重集的简单实元素，保留其 $n_T$ 阶维数。令
+$$
+E_T=\sum_{z,s\in Z_T}K(z-s)^2
+$$
+为文献中的完整二次能量，取复数平方而非模平方。紧支撑保证复参数处的 $K$ 有定义。
+
+若在每个同一 $G_T$ 上取得定理 17.3 的实际块能量与可行权重，令其下界为 $L_T$，并另外证明
+$$
+\limsup_{T\to\infty}\frac{E_T}{N_T}\le A,\qquad
+\liminf_{T\to\infty}\frac{L_T}{N_T}\ge\delta_0,
+$$
+则
+$$
+\liminf\frac{n_T}{N_T}\ge2-A+\delta_0,\qquad
+\liminf\frac{D_T}{N_T}\ge\frac32-\frac A2+\frac{\delta_0}2.
+\tag{18.2}
+$$
+

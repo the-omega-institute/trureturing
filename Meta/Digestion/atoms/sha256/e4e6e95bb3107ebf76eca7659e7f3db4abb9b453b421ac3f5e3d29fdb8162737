@@ -1,0 +1,43 @@
+**定理 9.3（整个闭单纯形上的唯一最大熵补全）。** 固定 $`P\in\mathcal P`$，$`p^\star`$ 是该均值纤维上的唯一最大熵律。对 $`r>0`$，
+
+```math
+H(p^\star)=h_2(Z)+r\bigl[h_2(X/r)+h_2(Y/r)\bigr],
+```
+
+```math
+H(p^\star)-H(p)=D_2(p\Vert p^\star)
+=r\,I_p(x:y\mid z=0)\ge0.
+```
+
+这里最后一项是在正质量底面条件律中的互信息，再乘回 $`r`$。$`r=0`$ 时唯一律 $`\delta_3`$，两熵和 KL 都为零；不在该点定义 $`Q/r`$ 或其条件互信息。
+
+证明。若一个底面格在 $`p`$ 中为正，则其行和、列和都正，所以对应乘积格在 $`p^\star`$ 中也正。顶点项两律相同。故支撑包含总成立，即使某行某列为零，也不会遇到正概率除以零。
+
+当 $`r>0`$，令 $`q_{ij}=Q_{ij}/r`$，边缘为 $`u_i,v_j`$。按底面或顶点分组，用 Shannon 的有限链式公式得
+
+```math
+H(p)=h_2(Z)+rH(q),\qquad
+H(p^\star)=h_2(Z)+r[H(u)+H(v)].
+```
+
+在 $`q_{ij}>0`$ 的格上 $`u_iv_j>0`$，展开有限和有
+
+```math
+\begin{aligned}
+D_2(q\Vert u\otimes v)
+&=\sum_{ij:q_{ij}>0}q_{ij}\log_2\frac{q_{ij}}{u_iv_j}\\
+&=H(u)+H(v)-H(q)=I_p(x:y\mid z=0),\\
+D_2(p\Vert p^\star)&=rD_2(q\Vert u\otimes v).
+\end{aligned}
+```
+
+零边缘的项按零贡献处理。非负性及唯一等号可直接证明：对任意支撑包含的有限律 $`a,b`$，由 $`\ln t\le t-1`$，
+
+```math
+-D_2(a\Vert b)\ln2
+=\sum_{i:a_i>0}a_i\ln(b_i/a_i)
+\le\sum_{i:a_i>0}(b_i-a_i)\le0.
+```
+
+等号要求每个正支撑格 $`a_i=b_i`$，且 $`b`$ 在其余格无质量，所以恰为 $`a=b`$。应用于 $`p,p^\star`$ 证明唯一最大熵；退化纤维本来只有一个律也包含在此结论。∎
+
