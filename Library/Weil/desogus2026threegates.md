@@ -4,7 +4,7 @@ authors: Marco Desogus
 year: 2026
 title: "The Three Gates: A Rooted-Operator Approach to Weil Positivity"
 doi: null
-url: https://arxiv.org/abs/2609.20367v2
+url: https://arxiv.org/abs/2609.20367v3
 claim: The preprint claims all-scale odd-channel Weil positivity via a common-cut Schur induction; this note records its actual-operator proof interfaces without adopting its claimed RH proof as a verified input.
 strata_touched: []
 license: citation-only
@@ -13,11 +13,174 @@ triage: anchor
 
 # Common-cut Schur induction: an unadopted all-scale claim
 
-The inspected primary version is [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), submitted **20 September 2026**, 69 pages. The arXiv history still lists v2 as current at the 3 October inspection. Theorem 0.1 and Theorem 8.7 explicitly claim RH through positivity of the actual localized Weil operator on the real odd logarithmic channel. This is an all-zero claim, distinct from a proportion or fixed-window result. The full proof, external inputs and [supplementary certificates](https://doi.org/10.5281/zenodo.22864087) have not been independently verified here. No counterexample to the main proof was established by the bounded interface review either.
+The source claims RH through all-scale positivity of the actual localized Weil operator on the real odd logarithmic channel. The claims below are version-specific: the current arXiv v3 is internally labelled V4; the older two-arm audit applies to arXiv v2. The full proof and supplementary certificates are not independently verified project premises, and no actual-arithmetic counterexample to either main claim is established here.
 
-## The actual induction step
+## Current arXiv v3 interface: one exact source debit
 
-At the arithmetic endpoint $a_k=(\log k)/2$, the source retains the pole term in $A_k=C_k-2|s_k\rangle\langle s_k|$. Lemma 6.27, under the old endpoint's positivity and inverse hypotheses, forms the actual harmonic extension
+The current primary is [arXiv:2609.20367v3](https://arxiv.org/abs/2609.20367v3), revised **6 October 2026** and internally labelled **V4**, 69 pages. Its [supplement](https://doi.org/10.5281/zenodo.23198201) is a different versioned deposit from the v2 archive. The paper still claims RH; the conclusion and the certificates are not independently verified project premises.
+
+Audit statement 6.28 explicitly excludes the special multiplication-minus-rank-one folded Hessian from the active proof. Lemma 8.5 instead uses the exact reduced common-source metric and forcing, after one common-complement short, on the full-operator harmonic vector $F=H_kf$. Its source row and single debit are
+
+$$
+\mathsf C_k^{\rm src}x_k=\lambda_k(c_k),\qquad
+D_k^{\rm src}=\langle\lambda_k(c_k),(\mathsf C_k^{\rm src})^{-1}\lambda_k(c_k)\rangle.
+$$
+
+The square completion in MASTER-P3b is the standard exact Schur identity; (200) is its covariance under a unitary change of source coordinates. The source invokes the positive old block for the source metric's positivity, and treats the endpoint fold solely as unitary transport. Thus the v2 two-arm formulas and their auxiliary physical-pivot condition are not active inputs to this version. The v2 scalar example below is not a counterexample to the v3 construction. No second debit should be imposed just because that older parametrization had two arms.
+
+### The reference term must be part of the actual reduced form
+
+Lemma 8.1, (190)–(193), identifies the inherited row at its exact minimizer with the negative metric energy
+
+$$
+\mathcal I_{k,m}^{\rm act}
+=-\mathscr S_{k,m}^{\rm ex}[r_m c_m^{\rm inh}].
+$$
+
+Corollary 8.2 then asserts an aligned positive reference contribution on the same reduced row and uses
+
+$$
+\mathscr S_{k,m}^{\rm ex}[r_m^0c_m^{\rm inh}]
++\mathcal I_{k,m}^{\rm act}
+=|c_m^{\rm inh}|^2\Delta\mathscr S_{k,m}^{\rm ex}
+\ge(1-\theta_{k,m}^2)\Pi_m^{(0)}|X_m|^2,
+\qquad X_m=\varepsilon_{k,m}\sqrt{C_m}\,c_m^{\rm inh}.
+$$
+
+The equality is quadratic homogeneity once the reference term is present. The quantitative input not supplied by that equality is its provenance and allocation inside the actual full reduced Weil form. In (190) the frozen-coordinate remainder $\mathcal Q_{k,m}^{\rm rest}$ is independent of the varied inherited coordinate. Stationarity supplies the negative response contribution, not an extra positive reference energy. On the harmonic graph the inherited coordinate depends on the prescribed target, so this does not refute the possibility of a valid reference contribution. Its identification requires the actual remainder and target/source transport, with no reuse of the direct target diagonal $\mathfrak B_k\|c_k\|^2$, the same source metric, or a reserve already charged elsewhere.
+
+Theorem 8.6 consumes that reference–actual splice, Lemma 8.3's homogeneous parent estimate, the literal-slot true-ground leakage correction in Corollary 6.57/Certificate 6.58, and the complete one-debit source ledger. Theorem 6.53 states a joint operator lower form, stronger than testing pure directions separately; its statement can be cited as a source claim. Its active obligation is a lower bound on the *whole same harmonic vector*, including every source-row component and every mixed term. Separate bounds for pure target-ground and pure target-transverse data do not by themselves supply that combined lower bound. No additional ground/transverse covariance of the full source metric is inferred from branch ground-line invariance.
+
+The complete archimedean/source correspondence remains necessary: Proposition 5.3 and the one-cell source metric used in Theorem 6.53/Lemma 6.61 must carry the full potential, regular kernel, pole and common-complement domain through to that same reduced vector. The normalization benchmarks below are reused, not recomputed. The v3 generic Schur and unitary identities do not establish this actual-family comparison.
+
+The restricted odd Weil criterion and endpoint closure remain separate consumers; odd-only testing is not dismissed. The bounded primary check supplies no signed Robin main estimate, new positivity theorem, numerical certificate or RH proof. It also establishes no actual-arithmetic counterexample to v3. Its reusable source conclusion is that v2's retired double-arm reduction must not be used to reject v3, while the positive reference contribution and full-form comparison still require verification before Theorem 8.6 can be adopted.
+
+## A full-pole bound for the literal physical collar
+
+Use the physical form defined by (9)–(15) and (61)–(63) of arXiv v3. This calculation concerns its literal old/new compression, not the whole arithmetic target cell and not a free-complement source short. The source's identification of that form with the global Weil form, and its subsequent common-cut transport, retain their separate verification obligations.
+
+For every integer $k\ge7$, set
+
+$$
+a=\frac12\log k,\qquad b=\frac12\log(k+1),\qquad
+h=b-a=\frac{w_k}{2},\qquad w_k=\log(1+1/k).
+$$
+
+Let $\mathcal K_k$ be the odd functions supported in $(-b,-a)\cup(a,b)$, initially on the smooth compactly supported core. Denote by $D_k^A$ the compression of the complete source-defined operator $A_{b,-}$ to this collar; thus this is the new diagonal in the full physical old/new block matrix. Write
+
+$$
+\mathfrak B_k=\frac12+\log(1/w_k),\qquad
+\tau_k=\|s^{\rm ph}\mathbf1_{(-b,-a)\cup(a,b)}\|_2^2
+=\sinh b-\sinh a-h.
+$$
+
+The pole quantity is the source's exact restriction identity (114), not a profile replacement.
+
+### No prime-power term survives inside this new block
+
+A same-side collar overlap would require a displacement smaller than $h<\log2$. A cross-side overlap would require
+
+$$
+2a<\log n<2b,\quad\text{or equivalently}\quad k<n<k+1.
+$$
+
+Neither can hold for an integer prime power $n\ge2$. Boundary contact at $n=k$ has zero measure. Consequently every prime-power translation in the complete new/new compression vanishes, including prime powers at the arithmetic endpoint. The old/new coupling remains present in the full operator.
+
+### Retain the reflected Gamma contribution and the true pole
+
+Identify an odd collar vector isometrically with $u\in L^2(a,b)$ by taking $u(y)/\sqrt2$ on the positive interval and $-u(-y)/\sqrt2$ on the negative interval. Put $g(v)=\sqrt h\,u(a+hv)$ for $0<v<1$. Reuse the [single-interval archimedean compression benchmark](#full-form-transport-benchmarks-and-the-v2-correspondence-input). Combining its two reflected copies gives the complete diagonal identity
+
+$$
+\begin{aligned}
+\langle u,D_k^Au\rangle
+={}&\mathfrak b[g]-[\log(2\pi h)+\gamma]\|u\|_2^2
+-\iint_{(a,b)^2}\rho(|y-z|)u(y)\overline{u(z)}\,dy\,dz\\
+&+\iint_{(a,b)^2}\kappa(y+z)u(y)\overline{u(z)}\,dy\,dz
+-4\left|\int_a^b\sinh(y/2)u(y)\,dy\right|^2,
+\end{aligned}
+\tag{C1}
+$$
+
+where $\rho(r)=e^{-r/2}/(1-e^{-2r})-1/(2r)$ and
+
+$$
+\kappa(r)=\frac1{2r}+\rho(r)
+=\frac{e^{-r/2}}{1-e^{-2r}}
+=\sum_{j\ge0}e^{-(2j+1/2)r}.
+$$
+
+Thus the reflected term is positive as an operator, not merely pointwise:
+
+$$
+\iint\kappa(y+z)u(y)\overline{u(z)}\,dy\,dz
+=\sum_{j\ge0}\left|\int_a^b e^{-(2j+1/2)y}u(y)\,dy\right|^2\ge0.
+\tag{C2}
+$$
+
+The sum converges because $a\ge\frac12\log7>0$. The reflected singular and regular kernels must be combined before using this sign.
+
+For $0\le r\le h<1/2$, the continuous extension of the regular kernel obeys
+
+$$
+0\le\rho(r)\le\frac14.
+\tag{C3}
+$$
+
+For the upper bound, equivalently $(2+r)\sinh r\ge2r e^{r/2}$, the odd power coefficients after the first are $2[1-(2j+1)/4^j]/(2j+1)!$ and the even ones are $[1-1/4^j]/(2j+1)!$, all nonnegative. For the lower bound, $\sinh r/r\le\cosh r\le e^{r^2/2}\le1+r^2\le1+r/2\le e^{r/2}$ for $r\le1/2$. Schur's kernel bound therefore gives an operator norm at most $h/4=w_k/8$ on this interval.
+
+The already supplied one-cell form has $\mathfrak b[g]\ge(\log2)\|g\|_2^2$. Its stronger spectral constant may be retained: the [existing small-window source](frankliebseiringer2006hardy.md#reuse-the-stronger-small-window-spectral-floor) defines $\mu_1>0$ and gives $\mathfrak b[g]\ge(\log2+\mu_1)\|g\|_2^2$ after the affine unitary. No local spectral theorem is reproved here. Finally Cauchy–Schwarz bounds the full negative pole by $2\tau_k\|u\|_2^2$. Hence (C1) yields the all-$k$ literal-collar lower bound
+
+$$
+\boxed{
+D_k^A\succeq
+[\mathfrak B_k-C_k+\mu_1]I,
+\qquad
+C_k=\frac12+\log(\pi/2)+\gamma+\frac{w_k}{8}+2\tau_k.
+}
+\tag{C4}
+$$
+
+Dropping only the known positive $\mu_1$ gives the weaker explicit coefficient. This bound applies on the displayed smooth core and its Friedrichs form closure; it is not an assertion that an unproved transported source domain coincides with that closure.
+
+There is a uniform elementary allowance:
+
+$$
+\begin{aligned}
+2\tau_k
+&=\sqrt{k+1}-\sqrt k+\frac1{\sqrt k}-\frac1{\sqrt{k+1}}-w_k\\
+&<\frac1{2\sqrt k}+\frac1{2k^{3/2}}
+\le\frac4{7\sqrt7}<\frac{20}{91},\qquad
+\frac{w_k}{8}<\frac1{56}.
+\end{aligned}
+$$
+
+Using the standard constant bounds $\gamma<3/5$, $\log(\pi/2)<23/50$ and $\sqrt7>13/5$, one obtains
+
+$$
+C_k<\frac{39}{25}+\frac1{56}+\frac{20}{91}
+=\frac95-\frac{43}{18200}<\frac95.
+\tag{C5}
+$$
+
+Consequently $D_k^A\succeq(\mathfrak B_k-9/5)I$ in this realization. The Gamma reflection sign, vanished prime overlaps and true negative pole all refer to the same physical vector.
+
+### The constant target diagonal is not the whole physical compression
+
+The existing small-window domain argument permits the constant profile in the closed form. Let $u_k=h^{-1/2}$ on $(a,b)$ and take its odd pair as above. Then $\mathfrak b[1]=1$, the self-regular term is $O(h)$, the reflected term is $O(hk^{-1/2})$, and the pole is $O(k^{-1/2})$. Since $h=w_k/2$, (C1) gives
+
+$$
+\langle u_k,D_k^Au_k\rangle-\mathfrak B_k
+\longrightarrow\frac12-\log\pi-\gamma<0.
+\tag{C6}
+$$
+
+Therefore the scalar $\mathfrak B_k I$ is not equal to, or a lower bound for, the complete literal physical new diagonal. This does not refute a decomposition in which $\mathfrak B_k$ is one named primal term accompanied by further diagonal contributions. Any such decomposition must retain those contributions and the actual old/new transport before consuming MASTER-P3c. Nor is (C6) a negative test for the full Weil form: the actual diagonal grows like $\log k$.
+
+The new interface is the complete prime-free odd collar comparison (C1)–(C5), with (C6) specifying its normalization. The one-cell floor, basic compression benchmark, Schur kernel estimate and exact pole restriction are reused. The global signed obligation remains the old/source inverse debit on the same harmonic vector; no positive aligned reference contribution is supplied by this diagonal bound, and no Robin or RH conclusion follows alone. The source's finite MASTER margin must not be transported through (C5) without a paid common-source identification and a compatible all-scale tail.
+
+## v2: the claimed induction step
+
+The following induction and fold formulas are those of [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), revised **20 September 2026**, 69 pages. At the arithmetic endpoint $a_k=(\log k)/2$, the source retains the pole term in $A_k=C_k-2|s_k\rangle\langle s_k|$. Lemma 6.27, under the old endpoint's positivity and inverse hypotheses, forms the actual harmonic extension
 
 $$
 H_k f=\binom{-A_k^{-1}B_{A,k}f}{f},\qquad
@@ -36,7 +199,7 @@ The load-bearing comparisons to inspect before any reuse are:
 
 These are propositions that the source claims to prove. They are not merely extra conjectural hypotheses declared by its author; they also have not become independently verified project premises by being listed here. Checking scalar certificates alone would leave the actual-operator and function-space correspondence obligations untouched.
 
-## Debit multiplicity and physical-pivot inputs
+## v2: debit multiplicity and physical-pivot inputs
 
 The displayed local formulas require a specific reconciliation before they can supply an all-scale estimate. In Lemma 8.4, equations (207)–(212) give two endpoint arms with the same positive target block $P$ and coupling $b$. Completing both squares deducts
 
@@ -63,7 +226,7 @@ $$
 
 Thus the old left-block condition alone does not supply the numerator's positivity. The algebra in Lemma 6.28 is valid under its stated positive-pivot condition; the relation $g=A^{\rm pre}x$ transports the forcing but does not establish that sign. The actual compression/shorting map must identify this pivot as one whose positivity follows from the permitted induction inputs. The review has not completed that identification. This is an unclosed proof input, not a claim that an old-block induction hypothesis is inherently circular.
 
-## A same-vector payment interface
+## v2: a same-vector payment interface
 
 The original square completion (209)–(212) retains two nonnegative arm squares. Write their sum as
 
@@ -131,7 +294,7 @@ The source does not identify an extra factor-of-two normalization in (209)–(21
 
 The [v2 supplementary archive](https://doi.org/10.5281/zenodo.22864087), file `The_Three_Gates_Supplementary_V2.zip`, contains a Gate-II audit of full-comb scalarization. That audit explicitly limits its verdict to that particular risk and says it does not independently reprove every theorem. Its reported PASS therefore does not verify this second-arm payment. The archive describes its `master/` programs as finite scalar sweeps and its `Y7_end_to_end/` calculation as a conservative base-endpoint replication; those stated scopes do not supply the missing all-step, same-vector lower bound. These computations have not been rerun here.
 
-## Full-form transport input
+## Full-form transport benchmarks and the v2 correspondence input
 
 Proposition 5.3 must be read as an obligation about the whole form, including its diagonal. For a change of variables $x=\phi(u)$ with $J=\phi'>0$ and $g(u)=\sqrt{J(u)}f(\phi(u))$, substitution in the singular difference expression produces
 
