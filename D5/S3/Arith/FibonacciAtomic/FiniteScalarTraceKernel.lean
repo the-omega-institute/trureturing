@@ -131,7 +131,8 @@ private theorem legal_pair_eq (m : ℕ) (hm : 3 ≤ m)
 
 private theorem bit_eq_mod_two (a b : Bool)
     (h : (a.toNat : ZMod 2) = (b.toNat : ZMod 2)) : a = b := by
-  cases a <;> cases b <;> simp_all
+  exact (Bool.injective_iff.mpr (by norm_num) :
+    Function.Injective (fun c : Bool => (c.toNat : ZMod 2))) h
 
 private theorem large_modulus_kernel (m r : ℕ) (hm : 3 ≤ m + 1) (hr : 2 ≤ r)
     (p p' : Source) :
@@ -236,8 +237,12 @@ theorem result :
       ρ 1 p = ρ 1 p' → scalarTrace 1 r p = scalarTrace 1 r p' →
         p.1.val 0 = p'.1.val 0) ∧
     (∀ (m r : ℕ) (p p' : Source),
-      p.1 = p'.1 → ρ m p = ρ m p' → scalarTrace m r p = scalarTrace m r p') := by
-  refine ⟨source_kernel, ?_, ?_, ?_, large_modulus_kernel, parity_kernel, ?_, ?_, ?_, ?_⟩
+      p.1 = p'.1 → ρ m p = ρ m p' → scalarTrace m r p = scalarTrace m r p') ∧
+    (∀ m r : ℕ, ∃ p p' : Source,
+      ρ m p = ρ m p' ∧ scalarTrace m r p = scalarTrace m r p' ∧
+        p.1.val r ≠ p'.1.val r) := by
+  refine ⟨source_kernel, ?_, ?_, ?_, large_modulus_kernel, parity_kernel,
+    ?_, ?_, ?_, ?_, ?_⟩
   · intro m p p'
     constructor
     · exact fun h => congrFun h 0
@@ -271,5 +276,23 @@ theorem result :
     unfold scalarTrace
     dsimp only at hz
     rw [hbits, hz]
+  · intro m r
+    let zero : LegalDigits := ⟨fun _ => false, by simp⟩
+    let spike : LegalDigits := ⟨fun j => decide (j = r), by
+      intro j
+      simp only [decide_eq_true_eq]
+      omega⟩
+    let z := D5.S1.Dynamics.ProfiniteIntegers.natEmbedding 0
+    refine ⟨(zero, (z, z)), (spike, (z, z)), rfl, ?_, by simp [zero, spike]⟩
+    by_cases hr : r = 0
+    · subst r
+      funext j
+      have hj : j.val = 0 := by omega
+      simp [scalarTrace, hj, trajectory]
+    · apply (source_kernel m r (by omega) _ _).mpr
+      constructor
+      · apply Prod.ext <;> simp [zero, spike, show 0 ≠ r by omega]
+      · intro j hj
+        simp [zero, spike, show j ≠ r by omega, show j + 1 ≠ r by omega]
 
 end D5.S3.Arith.FibonacciAtomic.FiniteScalarTraceKernel

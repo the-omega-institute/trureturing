@@ -13,6 +13,8 @@ internal sealed class FiniteScalarTraceKernelDocument : IScribeDocumentDefinitio
     private static Formula Par(Formula f) => Seq(Left, Open, f, Right, Close);
     private static Formula All(string x, Formula type, Formula body) =>
         Seq(Forall, Sp, Par(Seq(V(x), Colon, Sp, type)), Comma, Sp, body);
+    private static Formula Some(string x, Formula type, Formula body) =>
+        Seq(Exists, Sp, Par(Seq(V(x), Colon, Sp, type)), Comma, Sp, body);
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
     private static Formula IffOf(Formula a, Formula b) => Seq(Par(a), Sp, F.Iff, Sp, Par(b));
     private static Formula EqOf(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
@@ -78,8 +80,11 @@ internal sealed class FiniteScalarTraceKernelDocument : IScribeDocumentDefinitio
         var residueDependence = All("m", N, All("r", N, Sources(
             Imp(And(EqOf(Call("omega", P), Call("omega", Q)),
                 EqOf(Z(modulus, P), Z(modulus, Q))), TraceEq(modulus, R)))));
+        var blindLastDigit = All("m", N, All("r", N, Some("p", K, Some("s", K,
+            And(EqOf(Z(modulus, P), Z(modulus, Q)), TraceEq(modulus, R),
+                Seq(U(P, R), Sp, Neq, Sp, U(Q, R)))))));
         return And(kernel, zero, one, first, large, parity, shifted, compensation,
-            fixedCoordinate, residueDependence);
+            fixedCoordinate, residueDependence, blindLastDigit);
     }
 
     private static DocumentBlock Definition(string name, string title, string prose) =>
@@ -132,6 +137,11 @@ internal sealed class FiniteScalarTraceKernelDocument : IScribeDocumentDefinitio
                         + "after one deletion. For r=1 that digit interval is empty, and "
                         + "z(1)=(c(0)-c(1),c(1)). Changing the first digit requires the displayed "
                         + "initial-vector compensation; equal fixed initial residues force "
-                        + "the first digits to agree. No clause recovers digit r."))),
+                        + "the first digits to agree. For every modulus and horizon, the "
+                        + "all-zero address and the address with a single one at position r, "
+                        + "both with zero initial profinite coordinates, give identical traces "
+                        + "and different digits at position r. Thus the final observed time "
+                        + "does not reveal that digit; at horizon zero this also demonstrates "
+                        + "that the scalar reading does not determine the address."))),
                 DescribeRole.Theorem))));
 }
