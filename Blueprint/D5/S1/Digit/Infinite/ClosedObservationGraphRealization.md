@@ -4,7 +4,19 @@
 
 Complete endpoint graphs and joint actual paths.
 
-**Theorem 1.1 (Complete endpoint graphs and joint actual paths).**
+**Theorem 1.1 (Composing exact bit deletions).**
+
+Lean statement: `D5/S1/Digit/Infinite/ClosedObservationGraphRealization.hshift`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/ClosedObservationGraphRealization.hshift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every actual legal address and all natural m and n, deleting m bits and then n bits equals deleting m+n bits from that same address.
+
+**Theorem 1.2 (Complete endpoint graphs and joint actual paths).**
 
 Lean statement: `D5/S1/Digit/Infinite/ClosedObservationGraphRealization.closed_observation_graph_realization`
 
@@ -35,6 +47,7 @@ Every actual eventually-zero address has an integral golden scalar: kappa(x)=emb
 ## References
 
 - Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationGraphRealization.closed_observation_graph_realization`
+- Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationGraphRealization.hshift`
 - Dependency: [D5/S0/Carrier/Units](../../../S0/Carrier/Units.md)
 - Dependency: [D5/S1/Digit/Infinite/ClosedObservationCommonTailWidthModel](ClosedObservationCommonTailWidthModel.md)
 - Dependency: [D5/S1/Digit/Infinite/WindowCylinderPartition](WindowCylinderPartition.md)
