@@ -128,6 +128,10 @@ $$\neg \operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/FluidDynamics/ReactionDiffusion/VisomirskiGriffinFrozenWaveRefutation.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/visomirski-griffin-2026-frozen-wave-conjecture` (refuted) by `D5/S3/FluidDynamics/ReactionDiffusion/VisomirskiGriffinFrozenWaveRefutation.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"visomirski-griffin-2026-frozen-wave-conjecture","declaration_gid":"D5/S3/FluidDynamics/ReactionDiffusion/VisomirskiGriffinFrozenWaveRefutation.result","resolution_kind":"refuted"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Matthew Visomirski; Christopher Griffin (2026). *Coherent Structures and Travelling Waves in Spatial Replicators from a Biased Volterra Lattice*. DOI: [10.1016/j.chaos.2026.118260](https://doi.org/10.1016/j.chaos.2026.118260). URL: <https://arxiv.org/abs/2601.06314v1>.
