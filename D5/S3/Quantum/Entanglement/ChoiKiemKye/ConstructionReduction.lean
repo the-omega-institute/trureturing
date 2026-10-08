@@ -6,7 +6,7 @@
    utility: none
    digest: The Section 6 construction and its triangular reduction. -/
 
-/- Judgement form (implementation assessment; each helper retains its own classification).
+/- Judgement form (implementation assessment; own step, live propagation and bind-only bypass assessed per declaration).
    proof_shape: Draft.triangular_pivot: content; consumer=ConstructionReduction.Draft.triangular_minors.
    proof_shape: Spectral.det_pencil: bind-only; consumer=ConstructionReduction.Spectral.det_pencil_re.
    proof_shape: Spectral.pencil_conjugate: bind-only; consumer=ConstructionReduction.Spectral.largest_root_psd.
@@ -17,7 +17,7 @@
    proof_shape: partialTranspose_involutive: bind-only; consumer=ConstructionReduction.edge_from_star.
    proof_shape: Path.scaled_dominance_posDef: bind-only; consumer=ConstructionReduction.Partition.rho_offdiag_posDef.
    proof_shape: Path.sum_indicator_le: bind-only; consumer=ConstructionReduction.Partition.rho_offdiag_posDef.
-   proof_shape: proposition61: content; consumer=MaximalBirankEdgeStates.Small.certificate_sound; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Partition.rho_offdiag_posDef.
+   proof_shape: proposition61: content; consumer=MaximalBirankEdgeStates.Small.certificate_sound; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.edge_from_star.
    proof_shape: Cycle.lap_complex_kernel: bind-only; consumer=ConstructionReduction.Cycle.lap_complex_range.
    proof_shape: Cycle.lap_complex_range: bind-only; consumer=ConstructionReduction.Cycle.P_range.
    proof_shape: Cycle.lap_complex_rank: bind-only; consumer=ConstructionReduction.Cycle.P_rank.
@@ -32,8 +32,19 @@
    proof_shape: Partition.rho_kernel_lift: bind-only; consumer=ConstructionReduction.Partition.rho_range_annihilator.
    proof_shape: Partition.rho_range_annihilator: bind-only; consumer=ConstructionReduction.edge_from_star.
    proof_shape: Partition.rho_reindex: bind-only; consumer=ConstructionReduction.Partition.rho_psd_rank.
-   escape_witness: Draft.triangular_pivot, on proposition61’s triangular support-classification path.
-   Classification totals: 13 content; 111 bind-only.
+   proof_shape: Draft.triangular_minors: content; consumer=ConstructionReduction.alpha_triangular; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Draft.triangular_pivot.
+   proof_shape: alpha_triangular: content; consumer=ConstructionReduction.finite_triangles; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Draft.triangular_minors.
+   proof_shape: beta_triangular: content; consumer=ConstructionReduction.finite_triangles; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.Draft.triangular_minors.
+   proof_shape: finite_triangles: content; consumer=ConstructionReduction.lemma33; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.alpha_triangular.
+   proof_shape: coordinates_from_pivot: bind-only; consumer=ConstructionReduction.classified_of_triangles.
+   proof_shape: classified_of_triangles: content; consumer=ConstructionReduction.lemma33.
+   proof_shape: lemma33: content; consumer=ConstructionReduction.edge_from_range_interface; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.classified_of_triangles.
+   proof_shape: edge_from_range_interface: content; consumer=ConstructionReduction.edge_from_star; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.lemma33.
+   proof_shape: edge_from_star: content; consumer=ConstructionReduction.proposition61; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.edge_from_range_interface.
+   proof_shape: Partition.rho_offdiag_posDef: bind-only; consumer=ConstructionReduction.Partition.rho_psd_rank.
+   proof_shape: Partition.rho_psd_rank: bind-only; consumer=ConstructionReduction.proposition61.
+   escape_witness: Draft.triangular_pivot (Strong induction on q isolates the pivot summand after deriving the smaller triangular minors; those minors are not supplied by the antidiagonal equations.)
+   Classification totals: 10 content; 114 bind-only.
    admission_basis: escape-witness
    Direct frozen dependencies:
    D5/S3/Quantum/Entanglement/StructuredNegativityCoincidenceRefutation.partialTransposeB; statement_id=sha256:894491a0350c31f846bcfc59cbb3e13f12eb0801f6a00517db381f0dc0ecc393

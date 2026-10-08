@@ -6,21 +6,43 @@
    utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/ChoiKiemKye/MaximalBirankEdgeStates.construction; premises=D5/S3/Quantum/Entanglement/ChoiKiemKye/UniformPerturbedParameters.perturbed_kernel_stability
    digest: Perturbation stability and the all-large-dimensions construction. -/
 
-/- Judgement form (implementation assessment; each helper retains its own classification).
+/- Judgement form (implementation assessment; own step, live propagation and bind-only bypass assessed per declaration).
    proof_shape: Anchor.largest_root_psd: bind-only; consumer=MaximalBirankEdgeStates.Finite.root_and_kernel_enclosure.
    proof_shape: Anchor.D_shift: bind-only; consumer=MaximalBirankEdgeStates.Finite.root_and_kernel_enclosure.
-   proof_shape: Anchor.perturbed_kernel_stability: content; consumer=UniformPerturbedParameters.Anchor.n_ge_17; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformParameterAnchor.Anchor.actual_kernel.
+   proof_shape: Anchor.perturbed_kernel_stability: content; consumer=UniformPerturbedParameters.Anchor.n_ge_17; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformParameterAnchor.Uniform.phase_aligned_stability.
    proof_shape: Anchor.n_ge_17: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.proposition61.
    proof_shape: Anchor.block_psd_schur: bind-only; consumer=UniformPerturbedParameters.Anchor.anchor17_root_lower.
    proof_shape: Anchor.anchor17_root_lower: bind-only; consumer=UniformPerturbedParameters.Anchor.anchor_root_lower.
    proof_shape: Anchor.root_schur_identity: bind-only; consumer=UniformPerturbedParameters.Anchor.actual_energy_coercivity.
    proof_shape: Anchor.anchor_tail_root_lower: bind-only; consumer=UniformPerturbedParameters.Anchor.anchor_root_lower.
    proof_shape: Anchor.anchor_root_lower: bind-only; consumer=UniformPerturbedParameters.Anchor.actual_energy_coercivity.
-   escape_witness: Anchor.perturbed_kernel_stability, consumed by Anchor.n_ge_17.
+   proof_shape: Anchor.coordinate_bounds: content; consumer=UniformPerturbedParameters.Anchor.block_energy_coercivity; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformParameterAnchor.Uniform.anchorInterior_positive.
+   proof_shape: Anchor.ell_bounds: content; consumer=UniformPerturbedParameters.Anchor.imaginary_bounds; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformParameterAnchor.Uniform.anchorInterior_positive.
+   proof_shape: Anchor.zeta_norm_upper: content; consumer=UniformPerturbedParameters.Anchor.imaginary_bounds; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformParameterAnchor.Anchor.ell_positive.
+   proof_shape: Anchor.k_ell_upper: bind-only; consumer=UniformPerturbedParameters.Anchor.root_square_upper.
+   proof_shape: Anchor.root_square_upper: bind-only; consumer=UniformPerturbedParameters.Anchor.actual_energy_coercivity.
+   proof_shape: Anchor.imaginary_bounds: content; consumer=UniformPerturbedParameters.Anchor.delta_lower; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformParameterAnchor.Uniform.anchorInterior_positive.
+   proof_shape: Anchor.raw_halfplane_margins: content; consumer=UniformPerturbedParameters.Anchor.normalized_halfplanes; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformParameterAnchor.Uniform.anchorInterior_positive.
+   proof_shape: Anchor.block_kernel_span: bind-only; consumer=UniformPerturbedParameters.Anchor.actual_kernel_span.
+   proof_shape: Anchor.actual_kernel_span: bind-only; consumer=UniformPerturbedParameters.Anchor.anchor_sorted_gap.
+   proof_shape: Anchor.schur_energy: bind-only; consumer=UniformPerturbedParameters.Anchor.block_energy_coercivity.
+   proof_shape: Anchor.zeta_norm_lower: content; consumer=UniformPerturbedParameters.Anchor.block_energy_coercivity; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformParameterAnchor.Anchor.ell_positive.
+   proof_shape: Anchor.block_energy_coercivity: content; consumer=UniformPerturbedParameters.Anchor.actual_energy_coercivity.
+   proof_shape: Anchor.actual_energy_coercivity: content; consumer=UniformPerturbedParameters.Anchor.actual_residual_coercivity; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformPerturbedParameters.Anchor.block_energy_coercivity.
+   proof_shape: Anchor.actual_residual_coercivity: content; consumer=UniformPerturbedParameters.Anchor.anchor_sorted_gap; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformPerturbedParameters.Anchor.actual_energy_coercivity.
+   proof_shape: Anchor.kernel_norm_upper: bind-only; consumer=UniformPerturbedParameters.Anchor.normalized_halfplanes.
+   proof_shape: Anchor.direction_bounds: bind-only; consumer=UniformPerturbedParameters.Anchor.normalized_halfplanes.
+   proof_shape: Anchor.delta_lower: content; consumer=UniformPerturbedParameters.Anchor.normalized_halfplanes; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformPerturbedParameters.Anchor.imaginary_bounds.
+   proof_shape: Anchor.normalized_halfplanes: content; consumer=UniformPerturbedParameters.Anchor.stable_halfplanes; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformParameterAnchor.Uniform.anchorInterior_positive.
+   proof_shape: Anchor.anchor_sorted_gap: content; consumer=UniformPerturbedParameters.Anchor.perturbed_sorted_gap; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformPerturbedParameters.Anchor.actual_residual_coercivity.
+   proof_shape: Anchor.perturbed_sorted_gap: content; consumer=UniformPerturbedParameters.Anchor.perturbed_top_simple; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformParameterAnchor.Uniform.negative_eigenvalue_perturbation.
+   proof_shape: Anchor.perturbed_top_simple: content; consumer=UniformPerturbedParameters.Anchor.perturbed_kernel_stability; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformPerturbedParameters.Anchor.perturbed_sorted_gap.
+   proof_shape: Anchor.stable_halfplanes: content; consumer=UniformPerturbedParameters.Anchor.n_ge_17; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformPerturbedParameters.Anchor.normalized_halfplanes.
+   escape_witness: Anchor.perturbed_kernel_stability (The phase-aligned orthogonal-residual estimate supplies the quantitative nearby kernel vector, together with the coercivity-based spectral gap.); Anchor.n_ge_17 (The perturbed kernel stability and triangular support induction supply the edge property for every dimension in this range.)
    Computational utility: private Anchor.U17_value, k17_value, ell17_value
    and schur17_negative are n=17 numeric reductions carried by public
    Anchor.perturbed_kernel_stability on Anchor.n_ge_17’s live path.
-   Classification totals: 24 content; 37 bind-only.
+   Classification totals: 17 content; 44 bind-only.
    admission_basis: escape-witness
    Direct frozen dependencies: none; dependencies are pinned Mathlib and same-delivery modules.
    Information-escape registration is paused under CLAUDE.md §3.9.

@@ -6,13 +6,17 @@
    utility: none
    digest: Weyl bounds for the sorted eigenvalues of finite Hermitian matrices. -/
 
-/- Judgement form (implementation assessment; each helper retains its own classification).
+/- Judgement form (implementation assessment; own step, live propagation and bind-only bypass assessed per declaration).
    proof_shape: abs_eigenvalue_sub_eigenvalue_le_norm: content; consumer=UniformPerturbedParameters.Anchor.perturbed_kernel_stability; same-delivery-content=D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalue_sub_eigenvalue_le.
-   proof_shape: norm_toEuclideanLin_le_of_entry_le: content; consumer=MaximalBirankEdgeStates.Finite.entry_norm_bound.
+   proof_shape: norm_toEuclideanLin_le_of_entry_le: bind-only; consumer=MaximalBirankEdgeStates.Finite.entry_norm_bound.
    proof_shape: abs_eigenvalues0_sub_le_norm: content; consumer=HermitianEigenvaluePerturbation.abs_eigenvalues0_sub_le_of_entry_le; same-delivery-content=D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalue_sub_eigenvalue_le_norm.
    proof_shape: abs_eigenvalues0_sub_le_of_entry_le: content; consumer=UniformParameterAnchor.Uniform.negative_eigenvalue_perturbation; same-delivery-content=D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.abs_eigenvalues0_sub_le_norm.
-   escape_witness: abs_eigenvalues0_sub_le_norm, via the two spectral subspaces and their nonzero intersection.
-   Classification totals: 8 content; 7 bind-only.
+   proof_shape: exists_unit_vector_re_inner_le_eigenvalue: content; consumer=HermitianEigenvaluePerturbation.eigenvalues_sub_le.
+   proof_shape: exists_submodule_forall_unit_eigenvalue_le_re_inner: content; consumer=HermitianEigenvaluePerturbation.eigenvalues_sub_le.
+   proof_shape: eigenvalues_sub_le: content; consumer=HermitianEigenvaluePerturbation.abs_eigenvalue_sub_eigenvalue_le; same-delivery-content=D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.exists_submodule_forall_unit_eigenvalue_le_re_inner.
+   proof_shape: abs_eigenvalue_sub_eigenvalue_le: content; consumer=HermitianEigenvaluePerturbation.abs_eigenvalue_sub_eigenvalue_le_norm; same-delivery-content=D5.S3.SpectralTopology.HermitianEigenvaluePerturbation.eigenvalues_sub_le.
+   escape_witness: abs_eigenvalues0_sub_le_norm (The complementary spectral subspaces are constructed and dimension counting produces their common nonzero vector; the indexed comparison needs this joint vector.)
+   Classification totals: 7 content; 8 bind-only.
    admission_basis: escape-witness
    Direct frozen dependencies: none; dependencies are pinned Mathlib and same-delivery modules.
    Ported proofs: LeanPool (github.com/LeanPool/lean-pool, Apache-2.0,

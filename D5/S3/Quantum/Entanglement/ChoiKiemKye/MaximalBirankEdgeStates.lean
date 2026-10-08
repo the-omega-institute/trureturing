@@ -6,8 +6,8 @@
    utility: kind=checker; basis=terminal=gid:D5/S3/Quantum/Entanglement/ChoiKiemKye/MaximalBirankEdgeStates.result; instance=D5/S3/Quantum/Entanglement/ChoiKiemKye/MaximalBirankEdgeStates.valid3
    digest: The CKK conjecture for all dimensions n ≥ 3. -/
 
-/- Judgement form (implementation assessment; each helper retains its own classification).
-   proof_shape: Small.certificate_sound: content; consumer=MaximalBirankEdgeStates.Small.case10; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.ConstructionReduction.proposition61.
+/- Judgement form (implementation assessment; own step, live propagation and bind-only bypass assessed per declaration).
+   proof_shape: Small.certificate_sound: content; consumer=MaximalBirankEdgeStates.Small.case10; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Finite.root_and_kernel_enclosure.
    proof_shape: Small.valid3: bind-only; consumer=MaximalBirankEdgeStates.Small.case3.
    proof_shape: Small.valid4: bind-only; consumer=MaximalBirankEdgeStates.Small.case4.
    proof_shape: Small.valid5: bind-only; consumer=MaximalBirankEdgeStates.Small.case5.
@@ -25,8 +25,26 @@
    proof_shape: Full.construction: content; consumer=MaximalBirankEdgeStates.Full.result; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.case10.
    proof_shape: Full.result: content; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Full.construction.
    proof_shape: Finite.last_nonzero: bind-only; consumer=MaximalBirankEdgeStates.Finite.root_and_kernel_enclosure.
-   escape_witness: Small.certificate_sound, via Finite.kernel_close on its residual-enclosure path.
-   Classification totals: 21 content; 50 bind-only.
+   proof_shape: Finite.kernel_close: content; consumer=MaximalBirankEdgeStates.Finite.root_and_kernel_enclosure.
+   proof_shape: Finite.entry_norm_bound: bind-only; consumer=MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Finite.posDef_of_approx: bind-only; consumer=MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Finite.root_and_kernel_enclosure: content; consumer=MaximalBirankEdgeStates.Small.certificate_sound; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Finite.kernel_close.
+   proof_shape: Small.case3: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Small.case4: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Small.case5: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Small.case6: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Small.case7: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Small.case8: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Small.case9: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Small.case10: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Small.case11: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Small.case12: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Small.case13: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Small.case14: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Small.case15: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.certificate_sound.
+   proof_shape: Small.case16: content; consumer=MaximalBirankEdgeStates.Full.construction; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.MaximalBirankEdgeStates.Small.certificate_sound.
+   escape_witness: Small.certificate_sound (The zero-last-coordinate residual estimate supplies the root/kernel enclosure, and triangular support induction supplies the edge exclusion.); Full.result (The all-dimension construction requires both the uniform perturbed-kernel stability and sound small-dimension root/kernel enclosure.)
+   Classification totals: 19 content; 52 bind-only.
    admission_basis: open-problem-resolution (#13859; Proved)
    Direct frozen dependencies:
    D5/S3/Weil/ZetaLinear/Sylvester.hermForm; statement_id=sha256:80fb2c125caa6f180274d058b22d584cf1572b3089380febbc5dfae997f03ebf
