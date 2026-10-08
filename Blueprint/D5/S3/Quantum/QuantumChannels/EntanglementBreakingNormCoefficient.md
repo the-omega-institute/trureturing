@@ -70,6 +70,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/QuantumChannels/EntanglementBreakingNormCoefficient.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/kopel-2026-eb-norm-coefficient` (proved) by `D5/S3/Quantum/QuantumChannels/EntanglementBreakingNormCoefficient.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"kopel-2026-eb-norm-coefficient","declaration_gid":"D5/S3/Quantum/QuantumChannels/EntanglementBreakingNormCoefficient.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* E. Kopel (2026). *A sharp norm inequality for entanglement-breaking channels*. DOI: [10.48550/arXiv.2609.27906](https://doi.org/10.48550/arXiv.2609.27906). URL: <https://arxiv.org/abs/2609.27906v1>.

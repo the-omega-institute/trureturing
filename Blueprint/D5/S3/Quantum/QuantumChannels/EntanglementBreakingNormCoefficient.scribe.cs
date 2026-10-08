@@ -33,7 +33,10 @@ internal sealed class EntanglementBreakingNormCoefficientDocument : IScribeDocum
                 DescribeRole.Definition, Lit()),
             Node("result", "The coefficient d(d − 1)/2 is optimal", "result", Disp(V("claim")),
                 "Let P be the matrix unit E₀₀ and φ(X) = tr(X) P. φ has the Holevo form with the one-element measurement {I} and the state P. Every λⱼ is traceless, so φ(λⱼ) = 0 and A = 0, whose trace norm is 0. Since φ(I/d) = P, cᵢ = Re tr(λᵢP) = Re (λᵢ)₀₀, and (λᵢ)₀₀ is real because λᵢ is Hermitian. The d² matrices I/√d and λᵢ/√2 are orthonormal for the Hilbert–Schmidt inner product ⟨M, N⟩ = tr(M†N), hence an orthonormal basis of the d²-dimensional space of d × d matrices, and Parseval's identity for P gives 1 = tr(P†P) = 1/d + ½ Σᵢ (λᵢ)₀₀². Therefore |c|² = 2(d − 1)/d and ‖A‖_*² + B|c|² = 2(d − 1)B/d, which exceeds (d − 1)² exactly when B > d(d − 1)/2.",
-                DescribeRole.Theorem, Repo()))));
+                DescribeRole.Theorem, Repo(),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("kopel-2026-eb-norm-coefficient"),
+                    ResolutionKind.Proved)))));
 
     private static Formula BlochBasisFormula()
     {
