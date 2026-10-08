@@ -44,11 +44,11 @@ internal sealed class HilbertPathFundamentalTheoremDocument : IScribeDocumentDef
                     + "separation give pointwise reconstruction; differentiation of that Bochner "
                     + "primitive identifies the velocity with the actual derivative.")),
                     Paragraph(Text(
-                    "This is the analytic prerequisite for qdo-v1 theorem 36.26 and the named "
-                    + "consumer absolutely_continuous_subspace_action_minimum_unique. The extended "
+                    "This is the analytic prerequisite for the named consumer "
+                    + "absolutely_continuous_subspace_action_minimum_unique. The extended "
                     + "quadratic action, lower bound, affine attainment and pointwise uniqueness "
                     + "remain downstream. Absolute continuity alone does not imply finite "
-                    + "quadratic energy. The private countable-basis helpers are a minimal "
+                    + "quadratic energy. The countable-basis helpers are a minimal "
                     + "Apache-2.0 source port from Kitware's immutable revision "
                     + "ef157afc71c3866cb608111ef61462516330ef56; their license and notice trail "
                     + "are retained in the Lean source."))),
