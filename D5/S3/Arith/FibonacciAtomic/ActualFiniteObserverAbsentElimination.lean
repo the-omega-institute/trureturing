@@ -114,6 +114,97 @@ structure Admissible (N : Nat) (M : Observer E) : Prop where
       Run M U M.e0 t f b ∧ (b = true ↔ Positive U)
   coarse : Function.FactorsThrough (historyAction M) kappa_hist
 
+private theorem queryReply_eq_readout (cache : RawHistory) (U : Source)
+    (truth : CacheTruth cache U) (q : Address) :
+    queryReply cache q U = readout q U := by
+  unfold queryReply
+  cases hit : cache.find? (fun a => a.1 == q) with
+  | none => rfl
+  | some a =>
+    have address : a.1 = q := by simpa using List.find?_some hit
+    simpa only [address] using truth a (List.mem_of_find?_eq_some hit)
+
+/-- Actual chronological prefixes decode to their exact first-occurrence replay,
+and their raw replies agree with the same source. Their rows are the absorbing
+response folds even though the controller never receives the external trace. -/
+theorem actualPrefix_semantics (M : Observer E) (U : Source) (legal : Legal M U)
+    {e : E} {h : RawHistory} (pref : ActualPrefix M U e h) :
+    historyState M h = e ∧
+    M.decoder e = h.foldl (fun cache a => cacheUpdate cache a.1 a.2) [] ∧
+    CacheTruth h U := by
+  induction pref with
+  | initial =>
+    exact ⟨rfl, legal.1, by simp [CacheTruth]⟩
+  | @query e h q prior row ih =>
+    have at_prefix := legal.2 e h prior
+    refine ⟨?_, ?_, ?_⟩
+    · simp only [historyState, responseState, List.map_append, List.map_cons,
+        List.map_nil, List.foldl_append, List.foldl_cons, List.foldl_nil]
+      change barStep M (historyState M h) (queryReply (M.decoder e) q U) = _
+      rw [ih.1]
+      simp only [barStep, row]
+    · rw [at_prefix.2 q row, ih.2.1]
+      simp only [List.foldl_append, List.foldl_cons, List.foldl_nil]
+    · intro a member
+      rcases List.mem_append.mp member with member | member
+      · exact ih.2.2 a member
+      · obtain rfl := List.mem_singleton.mp member
+        exact queryReply_eq_readout (M.decoder e) U at_prefix.1 q
+
+/-- A head/tail execution extends any actual chronological prefix to its final
+halt row, retaining every report and repetition in their original order. -/
+theorem run_from_actualPrefix (M : Observer E) (U : Source)
+    {e f : E} {t h : RawHistory} {b : Bool}
+    (run : Run M U e t f b) (pref : ActualPrefix M U e h) :
+    ActualPrefix M U f (h ++ t) ∧ M.action f = .inr b := by
+  induction run generalizing h with
+  | halt row => exact ⟨by simpa only [List.append_nil] using pref, row⟩
+  | query row tail ih =>
+    have extended := ih (ActualPrefix.query pref row)
+    simpa only [List.append_assoc, List.singleton_append] using extended
+
+/-- The immutable source and fixed observer determine the entire finite trace,
+final nominal row and output bit from any given starting row. -/
+theorem run_deterministic (M : Observer E) (U : Source)
+    {e f g : E} {t s : RawHistory} {b c : Bool}
+    (left : Run M U e t f b) (right : Run M U e s g c) :
+    t = s ∧ f = g ∧ b = c := by
+  induction left generalizing s g c with
+  | halt row =>
+    cases right with
+    | halt other =>
+      have bits := row.symm.trans other
+      exact ⟨rfl, rfl, Sum.inr.inj bits⟩
+    | query other tail => simp only [row, Sum.inr_ne_inl] at other
+  | @query e f q t b row tail ih =>
+    cases right with
+    | halt other => simp only [row, Sum.inl_ne_inr] at other
+    | @query _ g r s c other rest =>
+      have queries : q = r := Sum.inl.inj (row.symm.trans other)
+      subst r
+      obtain ⟨trace, final, bit⟩ := ih rest
+      exact ⟨congrArg (List.cons _) trace, final, bit⟩
+
+/-- Every run from the original initial row of an admissible observer realizes
+the actual-prefix and absorbing-fold semantics, has the exact ordered cache,
+and returns the correct bit for the same original allowed source. -/
+theorem admissible_run_contract (N : Nat) (M : Observer E)
+    (admissible : Admissible N M) (U : Source) (allowed : Allowed N U)
+    {t : RawHistory} {f : E} {b : Bool} (run : Run M U M.e0 t f b) :
+    ActualPrefix M U f t ∧ historyState M t = f ∧
+    M.action f = .inr b ∧ historyAction M t = .inr b ∧
+    M.decoder f = t.foldl (fun cache a => cacheUpdate cache a.1 a.2) [] ∧
+    CacheTruth (M.decoder f) U ∧ CacheTruth t U ∧ (b = true ↔ Positive U) := by
+  obtain ⟨pref, halt⟩ := run_from_actualPrefix M U run ActualPrefix.initial
+  simp only [List.nil_append] at pref
+  have legal := admissible.legal U allowed
+  obtain ⟨state, cache, reports⟩ := actualPrefix_semantics M U legal pref
+  obtain ⟨s, g, c, correctRun, correct⟩ := admissible.correct U allowed
+  have bit := (run_deterministic M U run correctRun).2.2
+  refine ⟨pref, state, halt, ?_, cache, (legal.2 f t pref).1, reports, ?_⟩
+  · simpa only [historyAction, state] using halt
+  · simpa only [bit] using correct
+
 /-- Every edge of a native subtree path leaves a nonempty sibling behind. -/
 theorem subtree_leaf_count (U : Source) (q : Address) (T : Source)
     (present : subtree q U = some T) : q.length + T.length ≤ U.length := by

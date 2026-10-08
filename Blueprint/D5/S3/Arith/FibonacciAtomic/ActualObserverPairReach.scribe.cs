@@ -18,7 +18,7 @@ internal sealed class ActualObserverPairReachDocument : IScribeDocumentDefinitio
             Def("coarseResponseWord", "Coarse response words", "Map the existing kappa over a raw reply word. Alpha and beta retain their distinct Boolean leaf labels; absent and branch both map to none. Address labels are not part of a response word."),
             Describe.Lean(DescribeId.Create("observer-pair-reach-response-words"), DeclarationHandle.Create(Prefix + "pairReach_response_words"),
                 H("Equal-coarse words extend a generated pair"), StatementSource.FromAuthor(ExtensionFormula()), AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For any generated starting pair, folding any two finite raw words with equal coarse images yields another generated pair. Induction matches their coarse-equal heads and applies the generating step before processing their tails. The same statement applies to words continuing beyond a halt."))), DescribeRole.Theorem),
+                Blocks(Paragraph(Text("For any generated starting pair, folding any two finite raw words with equal coarse images yields another generated pair. The existing list map and equality lemmas turn equal coarse images into Forall2 of the raw words with relation kappa(y)=kappa(z). Mathlib List.rel_foldl then applies directly with state relation PairReach, both folds barStep, the generating step as relation closure and the starting pair as initial premise. The same statement applies to words continuing beyond a halt."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("observer-pair-reach-word-characterization"), DeclarationHandle.Create(Prefix + "pairReach_iff_equal_coarse_response_words"),
                 H("Exact equal-coarse response-word characterization"), StatementSource.FromAuthor(CharacterizationFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("A generated pair is exactly a pair of folds from e0 of two finite raw words having equal coarse images. Induction on the generated relation appends the edge replies to the two words. In the reverse direction, the equal-coarse word extension applied to the initial pair constructs the required pair. Raw words need not be equal, and their final rows need not be equal."))), DescribeRole.Theorem),
@@ -36,10 +36,14 @@ internal sealed class ActualObserverPairReachDocument : IScribeDocumentDefinitio
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
     private static Formula EqOf(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula And(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
-    private static Formula All(string names, Formula f) => Seq(Forall, Sp,
-        Seq(names.Split(',').Select((name, i) => i == 0 ? V(name) : Seq(Comma, Sp, V(name))).ToArray()), Comma, Sp, Par(f));
-    private static Formula Some(string names, Formula f) => Seq(Exists, Sp,
-        Seq(names.Split(',').Select((name, i) => i == 0 ? V(name) : Seq(Comma, Sp, V(name))).ToArray()), Comma, Sp, Par(f));
+    private static Formula All(string names, Formula type, Formula f) => Seq(Forall, Sp,
+        Seq(names.Split(',').Select((name, i) => i == 0 ? V(name) : Seq(Comma, Sp, V(name))).ToArray()), Colon, Sp, type, Comma, Sp, Par(f));
+    private static Formula Some(string names, Formula type, Formula f) => Seq(Exists, Sp,
+        Seq(names.Split(',').Select((name, i) => i == 0 ? V(name) : Seq(Comma, Sp, V(name))).ToArray()), Colon, Sp, type, Comma, Sp, Par(f));
+    private static Formula Observers(Formula f) => All("E", V("Type"),
+        Seq(OpenBracket, Call("Fintype", V("E")), CloseBracket, Comma, Sp,
+            All("M", Call("Observer", V("E")), f)));
+    private static Formula Words => Call("List", V("Reply"));
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
     private static Formula Coarse(Formula w) => Call("map", V("kappa"), w);
     private static Formula State(Formula e, Formula w) => Call("responseState", V("M"), e, w);
@@ -49,7 +53,7 @@ internal sealed class ActualObserverPairReachDocument : IScribeDocumentDefinitio
         Formula same = EqOf(Coarse(V("w")), Coarse(V("v")));
         Formula premise = And(Reach(V("e"), V("f")), same);
         Formula conclusion = Reach(State(V("e"), V("w")), State(V("f"), V("v")));
-        return Disp(All("M,e,f,w,v", Imp(premise, conclusion)));
+        return Disp(Observers(All("e,f", V("E"), All("w,v", Words, Imp(premise, conclusion)))));
     }
     private static Formula CharacterizationFormula()
     {
@@ -58,15 +62,15 @@ internal sealed class ActualObserverPairReachDocument : IScribeDocumentDefinitio
         Formula right = EqOf(State(initial, V("v")), V("f"));
         Formula same = EqOf(Coarse(V("w")), Coarse(V("v")));
         Formula witness = And(left, And(right, same));
-        Formula represented = Some("w,v", witness);
+        Formula represented = Some("w,v", Words, witness);
         Formula equivalence = Seq(Par(Reach(V("e"), V("f"))), Sp, Iff, Sp, Par(represented));
-        return Disp(All("M,e,f", equivalence));
+        return Disp(Observers(All("e,f", V("E"), equivalence)));
     }
     private static Formula FactorizationFormula()
     {
         Formula invariant = Call("pairActionInvariant", V("M"));
         Formula through = Call("FactorsThrough", Call("historyAction", V("M")), Seq(V("kappa"), Underscore, Grp(V("hist"))));
         Formula equivalence = Seq(Par(invariant), Sp, Iff, Sp, Par(through));
-        return Disp(All("M", equivalence));
+        return Disp(Observers(equivalence));
     }
 }

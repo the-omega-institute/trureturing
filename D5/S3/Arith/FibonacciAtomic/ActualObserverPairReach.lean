@@ -7,6 +7,7 @@
    digest: Absorbing paired response reachability and exact all-history coarse factorization. -/
 
 import D5.S3.Arith.FibonacciAtomic.ActualFiniteObserverAbsentElimination
+import Mathlib.Data.List.Forall2
 
 set_option autoImplicit false
 set_option relaxedAutoImplicit false
@@ -42,18 +43,12 @@ theorem pairReach_response_words (M : Observer E) {e f : E}
     (prior : PairReach M e f) (w v : List Reply)
     (same : coarseResponseWord w = coarseResponseWord v) :
     PairReach M (responseState M e w) (responseState M f v) := by
-  induction w generalizing e f v with
-  | nil =>
-    cases v with
-    | nil => exact prior
-    | cons z v => simp [coarseResponseWord] at same
-  | cons y w ih =>
-    cases v with
-    | nil => simp [coarseResponseWord] at same
-    | cons z v =>
-      have parts : kappa y = kappa z ∧ coarseResponseWord w = coarseResponseWord v := by
-        simpa only [coarseResponseWord, List.map_cons, List.cons.injEq] using same
-      exact ih (PairReach.step prior parts.1) v parts.2
+  have related : List.Forall₂ (fun y z : Reply => kappa y = kappa z) w v := by
+    simpa only [List.forall₂_map_left_iff, List.forall₂_map_right_iff] using
+      (show List.Forall₂ Eq (w.map kappa) (v.map kappa) from
+        List.forall₂_eq_eq_eq.symm ▸ same)
+  exact List.rel_foldl (P := PairReach M) (R := fun y z => kappa y = kappa z)
+    (fun _ _ reached _ _ equal => PairReach.step reached equal) prior related
 
 /-- A pair is generated exactly when two equal-coarse finite raw words
 fold from the initial row to its components. -/

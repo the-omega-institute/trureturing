@@ -27,6 +27,18 @@ internal sealed class ActualFiniteObserverAbsentEliminationDocument : IScribeDoc
             Def("Run", "Sourcewise finite runs", "A finite inductive run follows those exact query transitions until an original halt, retaining every repeat and hit in order. No uniform fuel, clock, jump log or acyclic-row restriction is assumed."),
             Def("Legal", "Actual cache premises", "The initial decoded cache is empty. At every actual prefix its entries are true of the same source and each query successor decodes to exactly the first-occurrence update. Truth and update are not imposed on arbitrary counterfactual rows."),
             Def("Admissible", "Original complete bounded contract", "N is at least one. On every allowed source the observer is legal and has a finite run returning true exactly for the original third-substitution Positive target. Its action factors through the existing coarse history map on all finite histories. Nominal states are retained in full; no source port or canonical controller is installed."),
+            Describe.Lean(DescribeId.Create("finite-observer-actual-prefix-semantics"), DeclarationHandle.Create(Prefix + "actualPrefix_semantics"),
+                H("Actual prefixes realize folds and exact raw caches"), StatementSource.FromAuthor(PrefixSemanticsFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a legal observer on a fixed original source, every actual prefix ends at the row obtained by folding its raw replies with absorbing barStep. The decoded cache equals the chronological fold of cacheUpdate from the empty list, so repeated addresses retain their first entry and new addresses append in order. Every report in the external trace is true of that same source. Induction over chronological prefix extension uses the exact decoded-cache update law; an exact hit is true by cache truth and a miss is the original source readout."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("finite-observer-run-prefix-extension"), DeclarationHandle.Create(Prefix + "run_from_actualPrefix"),
+                H("Head and tail runs extend chronological prefixes"), StatementSource.FromAuthor(RunExtensionFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A run from the row of any existing actual prefix extends that prefix by its entire ordered trace and ends at a halt row with its stated output bit. Induction on the run appends each current report to the prefix before extending through the tail; list append associativity aligns this chronological construction with head and tail execution. No legality or termination bound is needed for this correspondence."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("finite-observer-run-deterministic"), DeclarationHandle.Create(Prefix + "run_deterministic"),
+                H("Unique finite trace, final row and output"), StatementSource.FromAuthor(DeterminismFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Any two finite runs from the same nominal row on the same immutable original source have equal traces, final rows and output bits. Induction on one run compares the other run's first constructor. Query and halt actions cannot coincide; two query actions have the same literal address and therefore the same decoded-cache reply and successor. The tail induction then gives equality of the complete ordered traces and outputs."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("finite-observer-admissible-run-contract"), DeclarationHandle.Create(Prefix + "admissible_run_contract"),
+                H("Every admissible actual run has the original semantics"), StatementSource.FromAuthor(RunContractFormula()), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For every original allowed source and every run from e0 of an admissible observer, the final row is an actual prefix row and is exactly historyState of the run trace. Its action and historyAction both halt with the run's bit. Its decoded cache is exactly the first-occurrence cacheUpdate fold from the empty list, and both this cache and every external trace report are true of the same original source. The output is true exactly for Positive of that source. Run extension and actual-prefix semantics establish the trace and cache conclusions. Admissible supplies existence of a correct run; finite-run uniqueness transfers its correct bit to the arbitrary run under consideration. No correspondence or correctness premise for that particular run is assumed."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("finite-observer-subtree-leaf-count"), DeclarationHandle.Create(Prefix + "subtree_leaf_count"),
                 H("Native subtree leaf-count geometry"), StatementSource.FromAuthor(GeometryFormula()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("Every edge on a native subtree path leaves a nonempty sibling subtree. Induction on the original FreeMagma tree bounds address length plus retained subtree leaf count by the original leaf count."))), DescribeRole.Theorem),
@@ -42,20 +54,75 @@ internal sealed class ActualFiniteObserverAbsentEliminationDocument : IScribeDoc
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Seq(Operatorname, Grp(V(name))), [.. args]);
     private static Formula EqOf(Formula a, Formula b) => Seq(a, Sp, Eq, Sp, b);
     private static Formula And(Formula a, Formula b) => Seq(Par(a), Sp, Land, Sp, Par(b));
-    private static Formula All(string names, Formula f) => Seq(Forall, Sp,
+    private static Formula All(string names, Formula type, Formula f) => Seq(Forall, Sp,
         Seq(names.Split(',').Select((name, i) => i == 0 ? V(name) : Seq(Comma, Sp, V(name))).ToArray()),
-        Comma, Sp, Par(f));
+        Colon, Sp, type, Comma, Sp, Par(f));
     private static Formula Imp(Formula a, Formula b) => Seq(Par(a), Sp, Implies, Sp, Par(b));
-    private static Formula GeometryFormula() => Disp(All("U,q,T", Imp(
+    private static Formula Observers(Formula f) => All("E", V("Type"),
+        Seq(OpenBracket, Call("Fintype", V("E")), CloseBracket, Comma, Sp,
+            All("M", Call("Observer", V("E")), f)));
+    private static Formula Report => Call("Sigma", Call("const", V("Address"), V("Reply")));
+    private static Formula Replay(Formula trace)
+    {
+        Formula update = Call("cacheUpdate", V("cache"), Call("fst", V("a")), Call("snd", V("a")));
+        Formula entryFunction = Par(Seq(V("a"), Colon, Sp, Report, Sp, Mapsto, Sp, update));
+        Formula foldFunction = Par(Seq(V("cache"), Colon, Sp, V("RawHistory"), Sp, Mapsto, Sp, entryFunction));
+        return Call("foldl", foldFunction, Seq(OpenBracket, CloseBracket), trace);
+    }
+    private static Formula PrefixSemanticsFormula()
+    {
+        Formula premise = And(Call("Legal", V("M"), V("U")), Call("ActualPrefix", V("M"), V("U"), V("e"), V("h")));
+        Formula result = And(EqOf(Call("historyState", V("M"), V("h")), V("e")),
+            And(EqOf(Call("decoder", V("M"), V("e")), Replay(V("h"))), Call("CacheTruth", V("h"), V("U"))));
+        return Disp(Observers(All("U", V("Source"), All("e", V("E"), All("h", V("RawHistory"), Imp(premise, result))))));
+    }
+    private static Formula RunExtensionFormula()
+    {
+        Formula run = Call("Run", V("M"), V("U"), V("e"), V("t"), V("f"), V("b"));
+        Formula prefix = Call("ActualPrefix", V("M"), V("U"), V("e"), V("h"));
+        Formula result = And(Call("ActualPrefix", V("M"), V("U"), V("f"), Call("append", V("h"), V("t"))),
+            EqOf(Call("action", V("M"), V("f")), Call("inr", V("b"))));
+        return Disp(Observers(All("U", V("Source"), All("e,f", V("E"), All("t,h", V("RawHistory"),
+            All("b", V("Bool"), Imp(And(run, prefix), result)))))));
+    }
+    private static Formula DeterminismFormula()
+    {
+        Formula left = Call("Run", V("M"), V("U"), V("e"), V("t"), V("f"), V("b"));
+        Formula right = Call("Run", V("M"), V("U"), V("e"), V("s"), V("g"), V("c"));
+        Formula result = And(EqOf(V("t"), V("s")), And(EqOf(V("f"), V("g")), EqOf(V("b"), V("c"))));
+        return Disp(Observers(All("U", V("Source"), All("e,f,g", V("E"), All("t,s", V("RawHistory"),
+            All("b,c", V("Bool"), Imp(And(left, right), result)))))));
+    }
+    private static Formula RunContractFormula()
+    {
+        Formula initial = Call("e0", V("M"));
+        Formula premise = And(Call("Admissible", V("N"), V("M")),
+            And(Call("Allowed", V("N"), V("U")), Call("Run", V("M"), V("U"), initial, V("t"), V("f"), V("b"))));
+        Formula halt = Call("inr", V("b"));
+        Formula correct = Seq(Par(EqOf(V("b"), V("true"))), Sp, Iff, Sp, Par(Call("Positive", V("U"))));
+        Formula result = And(Call("ActualPrefix", V("M"), V("U"), V("f"), V("t")),
+            And(EqOf(Call("historyState", V("M"), V("t")), V("f")),
+            And(EqOf(Call("action", V("M"), V("f")), halt),
+            And(EqOf(Call("historyAction", V("M"), V("t")), halt),
+            And(EqOf(Call("decoder", V("M"), V("f")), Replay(V("t"))),
+            And(Call("CacheTruth", Call("decoder", V("M"), V("f")), V("U")),
+            And(Call("CacheTruth", V("t"), V("U")), correct)))))));
+        return Disp(All("N", V("Nat"), Observers(All("U", V("Source"), All("t", V("RawHistory"),
+            All("f", V("E"), All("b", V("Bool"), Imp(premise, result))))))));
+    }
+    private static Formula GeometryFormula() => Disp(All("U,T", V("Source"), All("q", V("Address"), Imp(
         EqOf(Call("subtree", V("q"), V("U")), Call("some", V("T"))),
-        Seq(Call("length", V("q")), Plus, Call("length", V("T")), Sp, Le, Sp, Call("length", V("U"))))));
+        Seq(Call("length", V("q")), Plus, Call("length", V("T")), Sp, Le, Sp, Call("length", V("U")))))));
     private static Formula AbsenceFormula()
     {
         Formula absent = V("absent"), q = V("q"), u = V("U"), c = V("cache"), a = V("a");
-        Formula hit = All("a", Imp(And(Call("member", a, c), EqOf(Call("fst", a), q)), EqOf(Call("snd", a), absent)));
+        Formula report = Call("Sigma", Call("const", V("Address"), V("Reply")));
+        Formula hit = All("a", report, Imp(And(Call("member", a, c), EqOf(Call("fst", a), q)), EqOf(Call("snd", a), absent)));
         Formula budget = Seq(V("Q"), Underscore, Grp(V("N")));
-        return Disp(All("N,U,q", Imp(And(Call("Allowed", V("N"), u), Seq(Neg, Call("member", q, budget))),
-            And(EqOf(Call("readout", q, u), absent), All("cache", Imp(Call("CacheTruth", c, u),
-                And(EqOf(Call("queryReply", c, q, u), absent), hit)))))));
+        return Disp(All("N", V("Nat"), All("U", V("Source"), All("q", V("Address"),
+            Imp(And(Call("Allowed", V("N"), u), Seq(Neg, Sp, Call("member", q, budget))),
+                And(EqOf(Call("readout", q, u), absent), All("cache", V("RawHistory"),
+                    Imp(Call("CacheTruth", c, u),
+                        And(EqOf(Call("queryReply", c, q, u), absent), hit)))))))));
     }
 }
