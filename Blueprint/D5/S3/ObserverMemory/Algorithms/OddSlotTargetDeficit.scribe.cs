@@ -45,16 +45,16 @@ internal sealed class OddSlotTargetDeficitDocument : IScribeDocumentDefinition
             LE(D(1), Add(At("missing"), At("excess"), At("singles")))));
         var global = LE(Sub(r, D(1)), Add(z, h, n));
         var body = And(
-            EqF(Add(Mul(V("p"), r), V("p")),
-                Add(Mul(D(2), Mul(V("p"), V("P"))), h, n, z)),
+            EqF(Mul(V("p"), r),
+                Add(Sub(Mul(D(2), Mul(V("p"), V("P"))), V("p")), h, n, z)),
             LE(Sub(Mul(D(2), V("P")), D(1)), r),
             Imp(Call("Odd", V("p")), And(local, global,
                 LE(Mul(Mul(D(2), V("p")), Sub(V("P"), D(1))),
                     Mul(Sub(V("p"), D(1)), Sub(r, D(1)))))));
         return All("p", N, All("Q", V("Type"), Instances(
             All("G", Call("SlotGraph", V("p"), V("Q")),
-            All("hp", LE(D(2), V("p")), All("P", N,
-            All("hP", LE(D(1), V("P")), All("hterminal",
+            Imp(LE(D(2), V("p")), All("P", N,
+            Imp(LE(D(1), V("P")), Imp(
                 EqF(Call("terminalCount", V("G")), Mul(V("p"), V("P"))), body))))))));
     }
     private static Formula V(string s) => F.Id(s);
@@ -79,5 +79,5 @@ internal sealed class OddSlotTargetDeficitDocument : IScribeDocumentDefinition
     private static Formula Join(Formula separator, Formula[] args) =>
         Seq([.. args.SelectMany((x, i) => i == 0 ? new[] { x } : new[] { separator, x })]);
     private static Formula Add(params Formula[] args) => Join(Plus, args);
-    private static Formula And(params Formula[] args) => Join(Land, [.. args.Select(Grp)]);
+    private static Formula And(params Formula[] args) => Join(Land, [.. args.Select(x => Grp(x))]);
 }

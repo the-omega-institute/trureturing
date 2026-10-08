@@ -264,7 +264,7 @@ private theorem nominal_balance :
 count is the actual number of used slots with empty successor set. -/
 theorem result (hp : 2 ≤ p) (P : Nat) (hP : 1 ≤ P)
     (hterminal : G.terminalCount = p * P) :
-    p * Fintype.card Q + p = 2 * (p * P) +
+    p * Fintype.card Q = 2 * (p * P) - p +
       (∑ q, G.excess q) + (∑ q, G.singles q) + (∑ q, G.missing q) ∧
     2 * P - 1 ≤ Fintype.card Q ∧
     (Odd p →
@@ -289,7 +289,11 @@ theorem result (hp : 2 ≤ p) (P : Nat) (hP : 1 ≤ P)
         _ = 2 * (p * P) := by ring
     have product : p * (2 * P - 1) ≤ p * Fintype.card Q := by omega
     exact Nat.le_of_mul_le_mul_left product (by omega)
-  refine ⟨identity, lower, ?_⟩
+  have source_identity : p * Fintype.card Q = 2 * (p * P) - p +
+      (∑ q, G.excess q) + (∑ q, G.singles q) + (∑ q, G.missing q) := by
+    have scale : p ≤ 2 * (p * P) := by nlinarith
+    omega
+  refine ⟨source_identity, lower, ?_⟩
   intro odd
   obtain ⟨local_bound, global_bound⟩ := G.summed_deficit odd
   refine ⟨local_bound, global_bound, ?_⟩

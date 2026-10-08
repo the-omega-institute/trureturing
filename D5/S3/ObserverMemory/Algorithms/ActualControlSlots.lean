@@ -308,15 +308,16 @@ attribute [local instance] Classical.propDecidable
 
 local notation "RC" => {q : Q // ∃ b, C.Used I q b}
 
-private def Occurs (x : ZMod (p * P)) (t : Nat)
+def Occurs (x : ZMod (p * P)) (t : Nat)
     (s : RC × Fin p) : Prop :=
   t < I.length x ∧ (C.run hp hP x t).2 = s.1.val ∧
     digit hp hP (C.run hp hP x t).1 = s.2
 
-private def Edge (u v : RC × Fin p) : Prop :=
+def Edge (u v : RC × Fin p) : Prop :=
   ∃ x i j, C.Occurs I x i u ∧ C.Occurs I x j v ∧ i < j ∧
     ∀ t, i < t → t < j → C.action (C.run hp hP x t).2 = .wait
 
+omit [Fintype Q] [DecidableEq Q] in
 private theorem edge_tail {u v : RC × Fin p} (he : C.Edge I u v) :
     ∃ x i d, C.Occurs I x i u ∧ 0 < d ∧
       (C.run hp hP x (i + 1 + d)).2 = v.1.val ∧
@@ -355,6 +356,7 @@ private theorem edge_tail {u v : RC × Fin p} (he : C.Edge I u v) :
     exact state.symm.trans (by simpa only [eq] using hj.2.1)
   · exact congrArg Prod.fst (pure d le_rfl)
 
+omit [Fintype Q] [DecidableEq Q] in
 private theorem tail_unique {q : Q} {d e : Nat}
     (hd : ∀ n, n < d → C.action (C.waitNext^[n] q) = .wait)
     (he : ∀ n, n < e → C.action (C.waitNext^[n] q) = .wait)
@@ -369,6 +371,7 @@ private theorem tail_unique {q : Q} {d e : Nat}
     rw [re] at clash
     cases clash
 
+omit [Fintype Q] [DecidableEq Q] in
 private theorem edge_target_unique {u v w : RC × Fin p}
     (hv : C.Edge I u v) (hw : C.Edge I u w) : v.1 = w.1 := by
   obtain ⟨x, i, d, _, _, _, _, waits, endpoint, _⟩ := C.edge_tail I hv
@@ -381,31 +384,40 @@ private theorem edge_target_unique {u v w : RC × Fin p}
 private noncomputable def successors (u : RC × Fin p) :
     Finset (RC × Fin p) := Finset.univ.filter (C.Edge I u)
 
+private theorem successor_pair (u : RC × Fin p) (empty : (C.successors I u).Nonempty) :
+    ∃ q b c, C.successors I u ⊆ {(q, b), (q, c)} ∧ c.val = (b.val + 1) % p := by
+  classical
+  obtain ⟨v, hv⟩ := empty
+  have edge := (Finset.mem_filter.mp hv).2
+  obtain ⟨x, i, d, hi, _, _, _, waits, endpoint, _⟩ := C.edge_tail I edge
+  let b : Fin p := ⟨(u.2.val + d / P) % p, Nat.mod_lt _ (by omega)⟩
+  let c : Fin p := ⟨(u.2.val + d / P + 1) % p, Nat.mod_lt _ (by omega)⟩
+  have subset : C.successors I u ⊆ {(v.1, b), (v.1, c)} := by
+    intro w hw
+    have ew := (Finset.mem_filter.mp hw).2
+    have target := C.edge_target_unique I ew edge
+    obtain ⟨y, j, e, hj, _, _, digitw, waitw, endw, physical⟩ := C.edge_tail I ew
+    have de := C.tail_unique waits waitw (endpoint ▸ C.read_action I v.1.property)
+      (endw ▸ C.read_action I w.1.property)
+    have digits := shift_digit (hp := hp) (hP := hP) e (C.run hp hP y j).1 hj.2.2
+    rw [← physical, digitw, ← de] at digits
+    rcases digits with h | h
+    · exact Finset.mem_insert.mpr (Or.inl (Prod.ext target (Fin.ext h)))
+    · exact Finset.mem_insert.mpr (Or.inr (Finset.mem_singleton.mpr
+        (Prod.ext target (Fin.ext h))))
+  exact ⟨v.1, b, c, subset, by simp only [b, c, Nat.mod_add_mod]⟩
+
+omit [DecidableEq Q] in
 private theorem successor_binary (u : RC × Fin p) :
     (C.successors I u).card ≤ 2 := by
   classical
-  by_cases empty : (C.successors I u).Nonempty
-  · obtain ⟨v, hv⟩ := empty
-    have edge := (Finset.mem_filter.mp hv).2
-    obtain ⟨x, i, d, hi, _, _, _, waits, endpoint, _⟩ := C.edge_tail I edge
-    let b : Fin p := ⟨(u.2.val + d / P) % p, Nat.mod_lt _ (by omega)⟩
-    let c : Fin p := ⟨(u.2.val + d / P + 1) % p, Nat.mod_lt _ (by omega)⟩
-    have subset : C.successors I u ⊆ {(v.1, b), (v.1, c)} := by
-      intro w hw
-      have ew := (Finset.mem_filter.mp hw).2
-      have target := C.edge_target_unique I ew edge
-      obtain ⟨y, j, e, hj, _, _, digitw, waitw, endw, physical⟩ := C.edge_tail I ew
-      have de := C.tail_unique waits waitw (endpoint ▸ C.read_action I v.1.property)
-        (endw ▸ C.read_action I w.1.property)
-      have digits := shift_digit hp hP e (C.run hp hP y j).1 hj.2.2
-      rw [← physical, digitw, ← de] at digits
-      rcases digits with h | h
-      · exact Finset.mem_insert.mpr (Or.inl (Prod.ext target (Fin.ext h)))
-      · exact Finset.mem_insert.mpr (Or.inr (Finset.mem_singleton.mpr
-          (Prod.ext target (Fin.ext h))))
+  by_cases nonempty : (C.successors I u).Nonempty
+  · obtain ⟨q, b, c, subset, _⟩ := C.successor_pair I u nonempty
     exact (Finset.card_le_card subset).trans (Finset.card_insert_le _ _ |>.trans (by simp))
-  · exact (Finset.card_eq_zero.mpr (Finset.not_nonempty_iff_eq_empty.mp empty)).le
+  · rw [Finset.not_nonempty_iff_eq_empty.mp nonempty]
+    simp
 
+omit [Fintype Q] [DecidableEq Q] in
 private theorem digit_surjective (b : Fin p) : ∃ x : ZMod (p * P), digit hp hP x = b := by
   have : NeZero (p * P) := ⟨by positivity⟩
   refine ⟨(b.val * P : Nat), ?_⟩
@@ -415,11 +427,13 @@ private theorem digit_surjective (b : Fin p) : ∃ x : ZMod (p * P), digit hp hP
   rw [ZMod.val_natCast, Nat.mod_eq_of_lt bound, Nat.mul_div_cancel]
   exact hP
 
+omit [Fintype Q] [DecidableEq Q] in
 private theorem earlier_edge {v : RC × Fin p}
     (hv : ∃ x t, C.Occurs I x t v) (hn : v.1.val ≠ C.initial) :
     ∃ u, C.Edge I u v := by
   classical
   obtain ⟨x, j, hj⟩ := hv
+  have jlen := hj.1
   have pos : 0 < j := by
     by_contra bad
     have eq : j = 0 := by omega
@@ -429,7 +443,8 @@ private theorem earlier_edge {v : RC × Fin p}
   let S := (Finset.range j).filter (fun i => C.action (C.run hp hP x i).2 = .read)
   have nonempty : S.Nonempty := by
     refine ⟨0, ?_⟩
-    simp [S, pos, run, I.first_read]
+    simp only [S, Finset.mem_filter, Finset.mem_range]
+    exact ⟨pos, by simpa only [run, Function.iterate_zero, id_eq] using I.first_read⟩
   let i := S.max' nonempty
   have mem : i ∈ S := Finset.max'_mem S nonempty
   have before : i < j := Finset.mem_range.mp (Finset.mem_filter.mp mem).1
@@ -450,12 +465,14 @@ private theorem earlier_edge {v : RC × Fin p}
   | halt => exact False.elim (I.live x t (by omega) ha)
   | wait => rfl
 
+omit [Fintype Q] [DecidableEq Q] in
 private theorem later_edge {u : RC × Fin p}
     (hu : ∃ x t, C.Occurs I x t u)
     (hn : C.action (C.readNext u.1.val u.2) ≠ .halt) :
     ∃ v, C.Edge I u v := by
   classical
   obtain ⟨x, i, hi⟩ := hu
+  have ilen := hi.1
   have read := C.read_action I u.1.property
   have advance := C.read_advance (x := x) (t := i) (hi.2.1 ▸ read)
   have early : i + 1 < I.length x := by
@@ -490,6 +507,7 @@ private theorem later_edge {u : RC × Fin p}
   | halt => exact False.elim (I.live x t (by omega) ha)
   | wait => rfl
 
+omit [DecidableEq Q] in
 private theorem terminal_successors {u : RC × Fin p}
     (hu : ∃ x t, C.Occurs I x t u) :
     C.action (C.readNext u.1.val u.2) = .halt ↔ C.successors I u = ∅ := by
@@ -543,7 +561,7 @@ private noncomputable def slotGraph :
     simp only [Finset.mem_filter, Finset.mem_univ, true_and]
     exact ⟨x, j, hj⟩
   · intro b
-    obtain ⟨x, hx⟩ := digit_surjective hp hP b
+    obtain ⟨x, hx⟩ := digit_surjective (hp := hp) (hP := hP) b
     simp only [Finset.mem_filter, Finset.mem_univ, true_and]
     exact ⟨x, 0, C.positive_length I x, rfl, hx⟩
   · intro u b hv
@@ -563,7 +581,9 @@ private theorem graph_terminal_count : (C.slotGraph I).terminalCount = p * P := 
   have terminal_iff (u : RC × Fin p) :
       u ∈ (C.slotGraph I).used ∧ ((C.slotGraph I).next u).card = 0 ↔
         C.Terminal I u.1.val u.2 := by
-    change (∃ x t, C.Occurs I x t u) ∧ (C.successors I u).card = 0 ↔ _
+    change (u ∈ Finset.univ.filter (fun u => ∃ x t, C.Occurs I x t u)) ∧
+      (C.successors I u).card = 0 ↔ _
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
     constructor
     · rintro ⟨used, empty⟩
       obtain ⟨x, t, ht, hq, hb⟩ := used
@@ -591,15 +611,49 @@ private theorem graph_terminal_count : (C.slotGraph I).terminalCount = p * P := 
 
 end FiniteCarrier
 
-/-- Actual terminal slots are in bijection with original sources. The common
-start is never revisited, and every other reading control needs a distinct
-reachable immediate wait predecessor. -/
-theorem result [Finite Q] :
-    Nat.card {s : Q × Fin p // C.Terminal I s.1 s.2} = p * P ∧
-    (∀ x t, t ≤ I.length x → (C.run hp hP x t).2 = C.initial → t = 0) ∧
-    Nat.card {q : Q // ∃ b, C.Used I q b} - 1 ≤ Nat.card {q : Q // C.Waiting I q} := by
-  obtain ⟨terminal, root⟩ := C.terminal_root I
-  exact ⟨terminal, root, C.wait_bound I⟩
+
+attribute [local instance] Classical.propDecidable
+
+/-- The actual reading-slot graph, its exact incidence identity, and all
+three capacity bounds. The width P is arbitrary positive, including p^k. -/
+theorem result [Fintype Q] [DecidableEq Q] :
+    let r := Nat.card {q : Q // ∃ b, C.Used I q b}
+    let w := Nat.card {q : Q // C.Waiting I q}
+    ∃ G : OddSlotTargetDeficit.SlotGraph p {q : Q // ∃ b, C.Used I q b},
+      G.root.val = C.initial ∧
+      (∀ u, u ∈ G.used ↔ ∃ x t, C.Occurs I x t u) ∧
+      (∀ u v, v ∈ G.next u ↔ C.Edge I u v) ∧
+      (∀ u, (G.next u).Nonempty → ∃ q b c,
+        G.next u ⊆ {(q, b), (q, c)} ∧ c.val = (b.val + 1) % p) ∧
+      G.terminalCount = p * P ∧
+      Nat.card {s : Q × Fin p // C.Terminal I s.1 s.2} = p * P ∧
+      (∀ x t, t ≤ I.length x → (C.run hp hP x t).2 = C.initial → t = 0) ∧
+      r - 1 ≤ w ∧
+      p * r = 2 * (p * P) - p +
+        (∑ q, G.excess q) + (∑ q, G.singles q) + (∑ q, G.missing q) ∧
+      2 * P - 1 ≤ r ∧
+      (Odd p →
+        (∀ q, q ≠ G.root → 1 ≤ G.missing q + G.excess q + G.singles q) ∧
+        r - 1 ≤ (∑ q, G.missing q) + (∑ q, G.excess q) + (∑ q, G.singles q) ∧
+        2 * p * (P - 1) ≤ (p - 1) * (r - 1)) := by
+  classical
+  dsimp only
+  let G := C.slotGraph I
+  have terminal := C.graph_terminal_count I
+  have count := G.result hp P (by omega) terminal
+  have card : Fintype.card {q : Q // ∃ b, C.Used I q b} =
+      Nat.card {q : Q // ∃ b, C.Used I q b} := Nat.card_eq_fintype_card.symm
+  obtain ⟨id, lower, odd⟩ := count
+  rw [card] at id lower odd
+  obtain ⟨terminal_slots, root⟩ := C.terminal_root I
+  refine ⟨G, rfl, ?_, ?_, C.successor_pair I, terminal, terminal_slots, root,
+    C.wait_bound I, id, lower, odd⟩
+  · intro u
+    change u ∈ Finset.univ.filter (fun u => ∃ x t, C.Occurs I x t u) ↔ _
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
+  · intro u v
+    change v ∈ Finset.univ.filter (C.Edge I u) ↔ _
+    simp only [Finset.mem_filter, Finset.mem_univ, true_and]
 
 end Controller
 end D5.S3.ObserverMemory.Algorithms.ActualControlSlots
