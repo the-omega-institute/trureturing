@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/ChoiKiemKye/UniformPerturbedParameters
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
-   utility: none
+   utility: kind=numeric-reduction; basis=consumer=D5/S3/Quantum/Entanglement/ChoiKiemKye/MaximalBirankEdgeStates.construction; premises=D5/S3/Quantum/Entanglement/ChoiKiemKye/UniformPerturbedParameters.perturbed_kernel_stability
    digest: Perturbation stability and the all-large-dimensions construction. -/
 
 /- Judgement form (implementation assessment; each helper retains its own classification).
@@ -12,6 +12,9 @@
    proof_shape: Anchor.perturbed_kernel_stability: content.
    proof_shape: Anchor.n_ge_17: content.
    escape_witness: Anchor.perturbed_kernel_stability, consumed by Anchor.n_ge_17.
+   Computational utility: private Anchor.U17_value, k17_value, ell17_value
+   and schur17_negative are n=17 numeric reductions carried by public
+   Anchor.perturbed_kernel_stability on Anchor.n_ge_17’s live path.
    admission_basis: escape-witness
    Direct frozen dependencies: none; dependencies are pinned Mathlib and same-delivery modules.
    Information-escape registration is paused under CLAUDE.md §3.9.

@@ -22,8 +22,8 @@
    proof_shape: Small.valid14: bind-only; consumer=MaximalBirankEdgeStates.Small.case14.
    proof_shape: Small.valid15: bind-only; consumer=MaximalBirankEdgeStates.Small.case15.
    proof_shape: Small.valid16: bind-only; consumer=MaximalBirankEdgeStates.Small.case16.
-   proof_shape: Full.construction: bind-only; consumer=MaximalBirankEdgeStates.Full.result.
-   proof_shape: Full.result: bind-only.
+   proof_shape: Full.construction: content; consumer=MaximalBirankEdgeStates.Full.result; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformPerturbedParameters.Anchor.n_ge_17.
+   proof_shape: Full.result: content; same-delivery-content=D5.S3.Quantum.Entanglement.ChoiKiemKye.UniformPerturbedParameters.Anchor.n_ge_17.
    escape_witness: none.
    admission_basis: open-problem-resolution (#13859; Proved)
    Direct frozen dependencies:
