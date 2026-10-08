@@ -3,7 +3,7 @@
    mirror-B: D5/B/S3/Quantum/Entanglement/QubitSupportCoefficientForms
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: [mathlib/module/Mathlib.Combinatorics.Enumerative.Composition]
-   utility: kind=none
+   utility: none
    digest: Ordered complementary two-row supports have one form per composition. -/
 
 import Mathlib.Combinatorics.Enumerative.Composition
