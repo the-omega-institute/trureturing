@@ -93,13 +93,15 @@ private theorem allow (ν : ℝ) (hν : ν < lambda) (x : LegalDigits)
   cases h0 : l.val 0 <;> cases h1 : l.val 1 <;> cases h2 : l.val 2
   all_goals simp [h0, h1, h2] at hn0 hn1
   all_goals fin_cases i
+  all_goals first
+    | (left; apply Subtype.ext; funext k; fin_cases k <;>
+        simp [nullLabel, threeLabel, twoLabel, fiveLabel, twoFiveLabel, h0, h1, h2]; done)
+    | (right; apply Subtype.ext; funext k; fin_cases k <;>
+        simp [nullLabel, threeLabel, twoLabel, fiveLabel, twoFiveLabel, h0, h1, h2]; done)
+    | skip
   all_goals
-    norm_num [Subtype.ext_iff, funext_iff, Fin.forall_fin_succ,
-      Fin.forall_fin_zero, nullLabel, threeLabel, twoLabel, fiveLabel,
-      twoFiveLabel, h0, h1, h2] at hr ⊢
-  all_goals
-    norm_num [cellLower, cellUpper, cuts, lambda, ht, ht2] at hlo hhi hν
-    norm_num [ht, ht2] at hr
+    simp [cellLower, cellUpper, cuts, lambda, ht2, ht] at hlo hhi hν
+    simp [h0, h1, h2, ht] at hr
     nlinarith only [hg2, hglo, hghi, hlo, hhi, hν, hr.1, hr.2]
 
 
@@ -121,14 +123,14 @@ private theorem end_labels (ν : ℝ) (hν : ν < lambda) (x : LegalDigits)
     · norm_num at h
       rw [h] at hr
       obtain ⟨hlo, hhi⟩ := observation_bounds ν 0 _ hx
-      norm_num [nullLabel, cellUpper, cellLower, cuts, lambda, ht, ht2] at hr hhi hν
+      simp [nullLabel, cellUpper, cellLower, cuts, lambda, ht, ht2] at hr hhi hν
       linarith [hr.1]
   · intro hx
     rcases allow ν hν x j 5 hx with h | h
     · norm_num at h
       rw [h] at hr
       obtain ⟨hlo, hhi⟩ := observation_bounds ν 5 _ hx
-      norm_num [twoLabel, cellUpper, cellLower, cuts, lambda, ht, ht2] at hr hlo hν
+      simp [twoLabel, cellUpper, cellLower, cuts, lambda, ht, ht2] at hr hlo hν
       linarith [hr.2]
     · exact h
 
@@ -146,7 +148,7 @@ private theorem split_bounds (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
   rw [hl] at ha
   rw [hh] at hb
   fin_cases i <;> norm_num at hi
-  all_goals norm_num [cellLower, cellUpper, cuts, lambda, offset, nullLabel,
+  all_goals simp [cellLower, cellUpper, cuts, lambda, offset, nullLabel,
     threeLabel, twoLabel, fiveLabel, twoFiveLabel, ht, ht2] at ha hb hxl hxu hyl hyu ⊢
   all_goals constructor <;> nlinarith only [ha, hb, hxl, hxu, hyl, hyu, hg2]
 
@@ -164,8 +166,9 @@ private theorem next_color (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
   have hsy : -1 + i.val * (1 + t) / 5 < X y (j + 1) := by nlinarith
   obtain ⟨hxl, hxu⟩ := observation_bounds ν c _ hx'
   obtain ⟨hyl, hyu⟩ := observation_bounds ν c _ hy'
-  fin_cases i <;> fin_cases c <;> norm_num at hi ⊢
-  all_goals norm_num [cellLower, cellUpper, cuts, lambda, ht, ht2] at hxl hxu hyl hyu hν hsx hsy
+  fin_cases i <;> fin_cases c <;> simp at hi
+  all_goals try simp [Fin.ext_iff]
+  all_goals simp [cellLower, cellUpper, cuts, lambda, ht, ht2] at hxl hxu hyl hyu hν hsx hsy
   all_goals nlinarith only [hg2, hxl, hxu, hyl, hyu, hν, hsx, hsy, hglo, hghi]
 
 private theorem common_next (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
@@ -185,12 +188,13 @@ private theorem common_next (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
   have hr := root y (j + 1)
   rw [← he] at hr
   have ha' := allow ν hν x (j + 1) (N i) hx'
-  fin_cases i <;> norm_num at hi ha' hx' hy' ⊢
+  fin_cases i <;> simp at hi
+  all_goals simp at ha' hx' hy' ⊢
   · exact (end_labels ν hν x (j + 1)).1 hx'
   all_goals rcases ha' with h | h
   all_goals try exact h
   all_goals rw [h] at hr
-  all_goals norm_num [nullLabel, threeLabel, fiveLabel, twoLabel,
+  all_goals simp [nullLabel, threeLabel, fiveLabel, twoLabel,
     twoFiveLabel, ht, ht2] at hr hsx
   all_goals exfalso; linarith only [hr.2, hsx, hglo, hghi]
 
@@ -209,14 +213,15 @@ private theorem second_bounds (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
   obtain ⟨ha, hb⟩ := split_bounds ν hν x y j i hi hx hy hl hh
   have hcenter : g * Z i = offset (C i) - (-1 + i.val * (1 + t) / 5) := by
     fin_cases i <;> norm_num at hi
-    all_goals norm_num [offset, threeLabel, nullLabel, fiveLabel, ht, ht2]
+    all_goals simp [offset, threeLabel, nullLabel, fiveLabel, ht, ht2]
     all_goals nlinarith only [hg2]
+  have hcenter2 := congrArg (fun z : ℝ => g * z) hcenter
   have hra := congrArg (fun z : ℝ => g * z) (residual x (j + 1))
   have hrb := congrArg (fun z : ℝ => g * z) (residual y (j + 1))
   rw [hc] at hra
   rw [hd] at hrb
   simp only [show j + 1 + 1 = j + 2 by omega] at hra hrb
-  constructor <;> nlinarith only [ha, hb, hra, hrb, hcenter]
+  constructor <;> nlinarith only [ha, hb, hra, hrb, hcenter2]
 
 private theorem third_color (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
     (j : ℕ) (i c : Fin 6) (hi : 1 ≤ i.val ∧ i.val ≤ 4)
@@ -232,8 +237,9 @@ private theorem third_color (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
   have hsy : X y (j + 2) < Z i := by nlinarith
   obtain ⟨hxl, hxu⟩ := observation_bounds ν c _ hx
   obtain ⟨hyl, hyu⟩ := observation_bounds ν c _ hy
-  fin_cases i <;> fin_cases c <;> norm_num at hi ⊢
-  all_goals norm_num [cellLower, cellUpper, cuts, lambda, ht, ht2] at hxl hxu hyl hyu hν hsx hsy
+  fin_cases i <;> fin_cases c <;> simp at hi
+  all_goals try simp [Fin.ext_iff]
+  all_goals simp [cellLower, cellUpper, cuts, lambda, ht, ht2] at hxl hxu hyl hyu hν hsx hsy
   all_goals nlinarith only [hg2, hxl, hxu, hyl, hyu, hν, hsx, hsy, hglo, hghi]
 
 
@@ -273,43 +279,43 @@ private theorem three_bound (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
   have hg0 : 0 ≤ g ^ 2 := sq_nonneg g
   obtain ⟨hk31, hk32, hk4⟩ := clearance_constants
   rcases hi with rfl | rfl
-  · refine ⟨?_, by norm_num⟩
+  · refine ⟨?_, by intro h; have h := congrArg Fin.val h; norm_num at h⟩
     intro _
     rcases hthird.1 rfl with h | h
     · rw [h] at h2x
       have hu := (observation_bounds ν 1 _ h2x).2
       have hm := mul_le_mul_of_nonneg_left hu hg0
-      norm_num [cellUpper, cuts, lambda] at hm ha
+      simp [cellUpper, cuts, lambda] at hm ha
       have heq : g ^ 2 * (g - t ^ 2 / 5 - t / 5) = K31 * (1 + g ^ 2) := by
-        rw [ht2]
+        rw [ht2, ht]
         convert hk31 using 1 <;> ring
       have hclear : (lambda - ν) * (1 + g ^ 2) ≤ K31 * (1 + g ^ 2) := by
         unfold lambda
         nlinarith only [ha, hm, heq]
-      exact ((mul_le_mul_right hp).mp hclear).trans (le_max_left _ _)
+      exact ((mul_le_mul_iff_of_pos_right hp).mp hclear).trans (le_max_left _ _)
     · rw [h] at h2y
       have hu := (observation_bounds ν 2 _ h2y).1
       have hm := mul_le_mul_of_nonneg_left hu hg0
-      norm_num [cellLower, cuts, lambda] at hm hb
+      simp [cellLower, cuts, lambda] at hm hb
       have hclear : (lambda - ν) * (1 + g ^ 2) ≤ K32 * (1 + g ^ 2) := by
         unfold lambda
         nlinarith only [hb, hm, hk32]
-      exact ((mul_le_mul_right hp).mp hclear).trans (le_max_right _ _)
-  · refine ⟨by norm_num, ?_⟩
+      exact ((mul_le_mul_iff_of_pos_right hp).mp hclear).trans (le_max_right _ _)
+  · refine ⟨by intro h; have h := congrArg Fin.val h; norm_num at h, ?_⟩
     intro _
     have h := hthird.2 (by decide)
     norm_num at h
     rw [h] at h2x
     have hu := (observation_bounds ν 2 _ h2x).2
     have hm := mul_le_mul_of_nonneg_left hu hg0
-    norm_num [cellUpper, cuts, lambda] at hm ha
+    simp [cellUpper, cuts, lambda] at hm ha
     have heq : g ^ 2 * (t - 2 * t ^ 2 / 5 - 3 * t / 5) = K4 * (1 + g ^ 2) := by
       rw [ht2, ht]
       convert hk4 using 1 <;> ring
     have hclear : (lambda - ν) * (1 + g ^ 2) ≤ K4 * (1 + g ^ 2) := by
       unfold lambda
       nlinarith only [ha, hm, heq]
-    exact (mul_le_mul_right hp).mp hclear
+    exact (mul_le_mul_iff_of_pos_right hp).mp hclear
 
 
 private theorem four_bound (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
@@ -333,7 +339,7 @@ private theorem four_bound (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
   have hp : 0 < g := by linarith
   let w : ℝ := (g - 5) / 10
   have hw : g * w = offset twoFiveLabel - (1 + 4 * t / 5) := by
-    norm_num [w, offset, twoFiveLabel, ht, ht2]
+    simp [w, offset, twoFiveLabel, ht, ht2]
     nlinarith only [hq]
   have hra := congrArg (fun z : ℝ => g ^ 2 * z) (residual x (j + 2))
   have hrb := congrArg (fun z : ℝ => g ^ 2 * z) (residual y (j + 2))
@@ -357,20 +363,21 @@ private theorem four_bound (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
     obtain ⟨hyl, hyu⟩ := observation_bounds ν (r (j + 3)) _ h3y
     generalize r (j + 3) = c at hxl hxu hyl hyu ⊢
     fin_cases c <;> norm_num
-    all_goals norm_num [w, cellLower, cellUpper, cuts, lambda, ht, ht2] at hxl hxu hyl hyu hν hsx hsy
+    all_goals simp [w, cellLower, cellUpper, cuts, lambda, ht, ht2] at hxl hxu hyl hyu hν hsx hsy
     all_goals nlinarith only [hq, hxl, hxu, hyl, hyu, hν, hsx, hsy, hglo, hghi]
   rw [hc3] at h3y
   have hu := (observation_bounds ν 0 _ h3y).2
   have hm := mul_le_mul_of_nonneg_left hu hp3.le
-  norm_num [cellUpper, cuts, lambda] at hm
+  simp [cellUpper, cuts, lambda] at hm
   have hwclear : -t ^ 2 - w = 2 * g / 5 := by rw [ht2]; dsimp [w]; ring
+  have hwclear3 := congrArg (fun z : ℝ => g ^ 3 * z) hwclear
   have hJ : J * (1 + g ^ 3) = 2 * g ^ 4 / 5 := by
     unfold J
     field_simp [show 1 + g ^ 3 ≠ 0 by positivity]
   have hclear : (lambda - ν) * (1 + g ^ 3) ≤ J * (1 + g ^ 3) := by
-    unfold lambda
-    nlinarith only [hb3, hm, hwclear, hJ]
-  exact (mul_le_mul_right (by positivity : 0 < 1 + g ^ 3)).mp hclear
+    unfold lambda at hb3 ⊢
+    nlinarith only [hb3, hm, hwclear3, hJ]
+  exact (mul_le_mul_iff_of_pos_right (by positivity : 0 < 1 + g ^ 3)).mp hclear
 
 private theorem budget_clearance (ν : ℝ) (hν : ν ≤ rho) :
     max K31 K32 < K4 ∧ J < K4 ∧ g ^ 4 / 5 < K4 ∧ K4 < lambda - ν := by
@@ -391,7 +398,7 @@ private theorem budget_clearance (ν : ℝ) (hν : ν ≤ rho) :
     unfold K4
     rw [hg3, hg4]
     nlinarith only [hq, hglo]
-  · apply (mul_lt_mul_right (by positivity : 0 < 1 + g ^ 2)).mp
+  · apply (mul_lt_mul_iff_of_pos_right (by positivity : 0 < 1 + g ^ 2)).mp
     calc
       g ^ 4 / 5 * (1 + g ^ 2) = g ^ 3 / 5 * (g * (1 + g ^ 2)) := by ring
       _ < g ^ 3 / 5 * 2 := by
@@ -431,23 +438,40 @@ private theorem pair_color (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
     (j : ℕ) (i c : Fin 6) (hi : 1 ≤ i.val ∧ i.val ≤ 4)
     (hx : X x j ∈ observation ν c) (hy : X y j ∈ observation ν c)
     (hl : window x j = L i) (hh : window y j = H i) : c = i := by
+  have hc0 : c.val ≠ 0 := by
+    intro he
+    have hec : c = 0 := Fin.ext he
+    have he := (end_labels ν hν y j).1 (hec ▸ hy)
+    rw [hh] at he
+    have he1 := congrArg (fun l : Label => l.val 1) he
+    have he2 := congrArg (fun l : Label => l.val 2) he
+    fin_cases i <;> simp at hi
+    all_goals simp [nullLabel, threeLabel, fiveLabel, twoLabel, twoFiveLabel] at he1 he2
+  have hc5 : c.val ≠ 5 := by
+    intro he
+    have hec : c = 5 := Fin.ext he
+    have he := (end_labels ν hν x j).2 (hec ▸ hx)
+    rw [hl] at he
+    have he0 := congrArg (fun l : Label => l.val 0) he
+    have he2 := congrArg (fun l : Label => l.val 2) he
+    fin_cases i <;> simp at hi
+    all_goals simp [nullLabel, threeLabel, fiveLabel, twoLabel, twoFiveLabel] at he0 he2
   have ha := allow ν hν x j c hx
   have hb := allow ν hν y j c hy
   rw [hl] at ha
   rw [hh] at hb
-  fin_cases i <;> fin_cases c <;> norm_num at hi ⊢
+  fin_cases i <;> fin_cases c <;> simp at hi hc0 hc5
+  all_goals try simp [Fin.ext_iff]
+  all_goals rcases ha with ha | ha <;> rcases hb with hb | hb
   all_goals
-    simp only [Subtype.ext_iff, funext_iff, Fin.forall_fin_succ,
-      Fin.forall_fin_zero, nullLabel, threeLabel, fiveLabel, twoLabel, twoFiveLabel] at ha hb
-    norm_num at ha hb
-  · have he := (end_labels ν hν y j).1 hy
-    rw [hh] at he
-    have he' := congrArg (fun l : Label => l.val 1) he
-    norm_num [nullLabel, threeLabel] at he'
-  · have he := (end_labels ν hν x j).2 hx
-    rw [hl] at he
-    have he' := congrArg (fun l : Label => l.val 2) he
-    norm_num [twoLabel, twoFiveLabel] at he'
+    have ha0 := congrArg (fun l : Label => l.val 0) ha
+    have ha1 := congrArg (fun l : Label => l.val 1) ha
+    have ha2 := congrArg (fun l : Label => l.val 2) ha
+    have hb0 := congrArg (fun l : Label => l.val 0) hb
+    have hb1 := congrArg (fun l : Label => l.val 1) hb
+    have hb2 := congrArg (fun l : Label => l.val 2) hb
+    simp [nullLabel, threeLabel, fiveLabel, twoLabel, twoFiveLabel]
+      at ha0 ha1 ha2 hb0 hb1 hb2
 
 private theorem high_next (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
     (j : ℕ) (i : Fin 6) (hi : 2 ≤ i.val ∧ i.val ≤ 4)
@@ -462,11 +486,12 @@ private theorem high_next (ν : ℝ) (hν : ν < lambda) (x y : LegalDigits)
   have hs : -1 + i.val * (1 + t) / 5 < X y (j + 1) := by nlinarith
   have hr := root y (j + 1)
   have hc := allow ν hν y (j + 1) (N i) hy'
-  fin_cases i <;> norm_num at hi hc ⊢
+  fin_cases i <;> simp at hi
+  all_goals simp at hc ⊢
   all_goals rcases hc with h | h
   all_goals try exact h
   all_goals rw [h] at hr
-  all_goals norm_num [nullLabel, threeLabel, fiveLabel, twoLabel,
+  all_goals simp [nullLabel, threeLabel, fiveLabel, twoLabel,
     twoFiveLabel, ht, ht2] at hr hs
   all_goals exfalso; nlinarith only [hq, hr.2, hs, hglo, hghi]
 
@@ -488,7 +513,8 @@ private theorem forced_next (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
   have hne : window x (j + 1) ≠ window y (j + 1) := by
     intro he
     have hb := budget_clearance ν hρ
-    fin_cases i <;> norm_num at hi hs hl hh
+    fin_cases i <;> simp at hi
+    all_goals simp at hs hl hh
     · exact (not_le_of_gt (hb.2.1.trans hb.2.2.2))
         (four_bound ν hν x y j r hs hc hl hh he)
     · exact (not_le_of_gt (hb.1.trans hb.2.2.2))
@@ -527,14 +553,23 @@ private theorem three_forcing (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
   have hδ4 : g ^ 4 / 5 < lambda - ν :=
     (budget_clearance ν hρ).2.2.1.trans (budget_clearance ν hρ).2.2.2
   have hz : 2 * t / 5 - g = g ^ 2 / 5 := by rw [ht]; nlinarith only [hq]
-  have hxg : g < X x (j + 2) := by norm_num at ha; nlinarith only [ha, hz, hδ, hp]
-  have hyg : X y (j + 2) < g := by norm_num at hb; nlinarith only [hb, hz, hδ4, hp]
+  have hz2 := congrArg (fun z : ℝ => g ^ 2 * z) hz
+  have hxg : g < X x (j + 2) := by
+    change lambda - ν ≤ g ^ 2 * (X x (j + 2) - 2 * t / 5) at ha
+    have hs := (mul_pos_iff_of_pos_left hp).mp (lt_of_lt_of_le hδ ha)
+    linarith only [hs, hz, hp]
+  have hyg : X y (j + 2) < g := by
+    change lambda - ν ≤ g ^ 2 * (2 * t / 5 - X y (j + 2)) at hb
+    have hs : 0 < g ^ 2 * (g - X y (j + 2)) := by
+      nlinarith only [hb, hz2, hδ4]
+    have hh := (mul_pos_iff_of_pos_left hp).mp hs
+    linarith only [hh]
   have hxl : window x (j + 2) = fiveLabel := by
     rcases allow ν hν x (j + 2) 2 h2x with h | h
     · have hr := root x (j + 2)
       norm_num at h
       rw [h] at hr
-      norm_num [nullLabel] at hr
+      simp [nullLabel] at hr
       exact False.elim (not_le_of_gt hxg hr.2)
     · exact h
   have hyl : window y (j + 2) = nullLabel := by
@@ -543,7 +578,7 @@ private theorem three_forcing (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
     · have hr := root y (j + 2)
       norm_num at h
       rw [h] at hr
-      norm_num [fiveLabel] at hr
+      simp [fiveLabel] at hr
       exact False.elim (not_le_of_gt hyg hr.1)
   exact ⟨hc, hn, hn2, hx1, hy1, hxl, hyl⟩
 
@@ -566,7 +601,7 @@ private theorem six_forcing (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
       exact ((hsub (a + 2) 4 (by omega)) k hk).symm
     have hf := forced_next ν hν hρ y x (a + 2) 2 (by decide) r hrev ht.2.2.2.2.2.2
       ht.2.2.2.2.2.1
-    simpa only [Nat.add_assoc] using And.intro hf.2.2 hf.2.1
+    simpa [Nat.add_assoc] using And.intro hf.2.2 hf.2.1
   have hstart : ∀ b, b < m →
       window x (6 * b) = threeLabel ∧ window y (6 * b) = nullLabel := by
     intro b
@@ -582,9 +617,9 @@ private theorem six_forcing (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
       have ht := three_forcing ν hν hρ y x (6 * b + 3) r hrev hy3 hx3
       have hf := forced_next ν hν hρ x y (6 * b + 5) 2 (by decide) r
         (hsub (6 * b + 5) 4 (by omega))
-        (by simpa only [Nat.add_assoc] using ht.2.2.2.2.2.2)
-        (by simpa only [Nat.add_assoc] using ht.2.2.2.2.2.1)
-      simpa only [Nat.mul_succ, Nat.add_assoc] using And.intro hf.2.1 hf.2.2
+        (by simpa [Nat.add_assoc] using ht.2.2.2.2.2.2)
+        (by simpa [Nat.add_assoc] using ht.2.2.2.2.2.1)
+      simpa [Nat.mul_succ, Nat.add_assoc] using And.intro hf.2.1 hf.2.2
   intro j hj
   let b := j / 6
   have hb : b < m := by dsimp [b]; omega
@@ -599,13 +634,13 @@ private theorem six_forcing (ν : ℝ) (hν : ν < lambda) (hρ : ν ≤ rho)
   have hr : j % 6 = 0 ∨ j % 6 = 1 ∨ j % 6 = 2 ∨
       j % 6 = 3 ∨ j % 6 = 4 ∨ j % 6 = 5 := by omega
   rcases hr with hr | hr | hr | hr | hr | hr
-  all_goals simp only [hr]; rw [he, hr]; norm_num [blockA, blockB]
+  all_goals simp only [hr]; rw [he, hr]; simp [blockA, blockB]
   · exact ⟨hax, hay⟩
   · exact ⟨ht.2.2.2.1, ht.2.2.2.2.1⟩
   · exact ⟨ht.2.2.2.2.2.1, ht.2.2.2.2.2.2⟩
   · exact ⟨hx3, hy3⟩
-  · simpa only [Nat.add_assoc] using And.intro ht'.2.2.2.2.1 ht'.2.2.2.1
-  · simpa only [Nat.add_assoc] using And.intro ht'.2.2.2.2.2.2 ht'.2.2.2.2.2.1
+  · simpa [Nat.add_assoc] using And.intro ht'.2.2.2.2.1 ht'.2.2.2.1
+  · simpa [Nat.add_assoc] using And.intro ht'.2.2.2.2.2.2 ht'.2.2.2.2.2.1
 
 
 local notation "B" => (![(-1 : ℝ), -6 * t ^ 2 / 5, g - 2 * t ^ 2 / 5,
@@ -620,14 +655,16 @@ private theorem intervals (ν : ℝ) (h0 : 0 ≤ ν) (hν : ν ≤ lambda) (i : 
   obtain ⟨hq, hglo, hghi, ht, ht2⟩ := algebra
   have hlo : max (-1) (cellLower i - ν) =
       if i = 0 then -1 else B i + (lambda - ν) := by
-    fin_cases i <;> norm_num [cellLower, cuts, lambda]
+    fin_cases i <;> simp [cellLower, cuts, lambda]
+    all_goals try exact h0
     all_goals first
       | rw [max_eq_left (by linarith only [h0])]
       | rw [max_eq_right (by dsimp [lambda] at hν; nlinarith only [hν, hq, ht, ht2, hglo, hghi])]
     all_goals ring
   have hhi : min (1 + t) (cellUpper i + ν) =
       if i = 5 then 1 + t else U i - (lambda - ν) := by
-    fin_cases i <;> norm_num [cellUpper, cuts, lambda]
+    fin_cases i <;> simp [cellUpper, cuts, lambda]
+    all_goals try exact h0
     all_goals first
       | rw [min_eq_left (by linarith only [h0])]
       | rw [min_eq_right (by dsimp [lambda] at hν; nlinarith only [hν, hq, ht, ht2, hglo, hghi])]
@@ -677,7 +714,7 @@ theorem result (ν : ℝ) (h0 : 0 ≤ ν) (hν : ν < lambda) :
   obtain ⟨_, hglo, _, _, _⟩ := algebra
   have hp : 0 < g := by linarith
   refine ⟨?_, intervals ν h0 hν.le, end_labels ν hν, ordered_pairs ν hν, ?_, ?_, ?_,
-    four_bound ν hν, forced_next ν hν, six_forcing ν hν⟩
+    four_bound ν hν, ?_, six_forcing ν hν⟩
   · intro i
     have h := intervals lambda (by dsimp [lambda]; positivity) le_rfl i
     fin_cases i <;> simpa using h
@@ -699,6 +736,8 @@ theorem result (ν : ℝ) (h0 : 0 ≤ ν) (hν : ν < lambda) :
     exact (three_bound ν hν x y j r hs 3 (Or.inl rfl) hc hl hh he).1 rfl
   · intro x y j r hs hc hl hh he
     exact (three_bound ν hν x y j r hs 4 (Or.inr rfl) hc hl hh he).2 rfl
+  · intro hρ x y j i r hi hi' hs hl hh
+    exact forced_next ν hν hρ x y j i ⟨hi, hi'⟩ r hs hl hh
 
 #print axioms result
 
