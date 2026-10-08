@@ -1,20 +1,94 @@
-import Reg.D5.S3.Fourier.Asymptotics.CountableGaussianQuadraticLimit
 import LeanInformationAuditRegTests.ContractRoots
 import LeanInformationAuditRegTests.ContractPaths
 import LeanInformationAuditRegTests.ContractTypeCarrier
-import LeanInformationAuditRegTests.ContractFixtures
 import LeanInformationAuditRegTests.CompiledCalculations
 import LeanInformationAuditRegTests.CompiledSeal
 import LeanInformationAudit.Contract.Discovery
 import LeanInformationAudit.RawArtifacts
 import LeanInformationAudit.CompiledAxioms
-import LeanInformationAuditRegTests.Fixtures.TemplateBodies
 import LeanInformationAudit.CompiledSourceOperands
 import LeanInformationAudit.CompiledEvidence
 import LeanInformationAudit.ArtifactRegistration
 
 namespace LeanInformationAuditRegTests.CompiledDiscovery
 open Lean LeanInformationAudit
+
+/-- Read names from compiled implementation expressions, without maintaining a
+second list of contract constants. Whole name literals are visited once. -/
+private def contractNames (value : Expr) : NameSet := Id.run do
+  let mut pending := #[value]
+  let mut names : NameSet := {}
+  while !pending.isEmpty do
+    let value := pending.back!
+    pending := pending.pop
+    if let .ok name := Contract.Literal.name "contract_name" value then
+      let scope := `LeanInformationAudit.Contract
+      if scope != name && scope.isPrefixOf name then names := names.insert name
+      continue
+    match value with
+    | .app function argument => pending := pending.push function |>.push argument
+    | .lam _ type body _ | .forallE _ type body _ =>
+        pending := pending.push type |>.push body
+    | .letE _ type assigned body _ => pending := pending.push type |>.push assigned |>.push body
+    | .mdata _ body | .proj _ _ body => pending := pending.push body
+    | _ => pure ()
+  return names
+
+/-- Executable imports determine native linking. Contract data is instead read
+from its compiler artifacts, and every quoted contract constant must exist. -/
+unsafe def checkProgramBoundary (reader : IO.Ref RawArtifacts.Store) : IO Unit := do
+  let roots := #[`Inspector, `LeanInformationAuditRegTests.CompiledDiscovery]
+  let mut names : NameSet := {}
+  for root in roots do
+    -- Each executable owns a different `main` in its own compiler closure.
+    let programReader ← IO.mkRef ({} : RawArtifacts.Store)
+    RawArtifacts.loadModule root programReader
+    let programs ← programReader.get
+    let closure := reachableModules (ArtifactRegistration.importsOf programs) root
+    let forbidden := closure.toArray.filter fun name =>
+      #[`D5, `Reg, `Mathlib].any (·.isPrefixOf name)
+    unless forbidden.isEmpty do
+      throw <| IO.userError s!"compiled.program:mathematical_import:{root}:{forbidden}"
+    IO.println s!"COMPILED_PROGRAM_IMPORTS root={root} total={closure.size} D5=0 Reg=0 Mathlib=0"
+    for owner in programs.moduleOrder do
+      unless (`LeanInformationAudit).isPrefixOf owner do continue
+      for info in (← programs.getModule owner).constants do
+        if let some value := info.value? (allowOpaque := true) then
+          names := (contractNames value).toArray.foldl (fun acc name => acc.insert name) names
+  unless !names.isEmpty do throw <| IO.userError "compiled.contract:no_names_checked"
+  RawArtifacts.loadModule `LeanInformationAuditInterface.Contract.Catalog reader
+  RawArtifacts.loadModule `LeanInformationAuditInterface.Contract.Registration reader
+  let contracts ← reader.get
+  for name in names.toArray.qsort Name.quickLt do
+    unless contracts.constants.contains name do
+      throw <| IO.userError s!"compiled.contract:missing_constant:{name}"
+  IO.println s!"COMPILED_CONTRACT_NAMES {names.toArray.qsort Name.quickLt}"
+  IO.println s!"[PASS] compiled contract names: {names.size} references exist in compiler artifacts"
+  let missing := `LeanInformationAudit.Contract.AbsentNativeBoundaryConstant
+  let result := Contract.Decoder.checkTarget (contracts.constants[·]?) missing (mkConst missing)
+  let expected := s!"contract.cannot_decode:{missing}:missing_constant"
+  unless (match result with | .error reason => reason == expected | .ok _ => false) do
+    throw <| IO.userError "compiled.contract:missing_name_accepted"
+  IO.println s!"CONTRACT_DIAGNOSTIC boundary.missing_name {expected}"
+  let result := Contract.Decoder.fields (contracts.constants[·]?)
+    `LeanInformationAudit.Contract.RootCatalog (mkNatLit 0) 1
+  let expected := "contract.literal:LeanInformationAudit.Contract.RootCatalog:nonliteral:"
+  let error ← try
+    discard <| result
+    pure "accepted"
+  catch error => pure error.toString
+  unless error.startsWith expected do
+    throw <| IO.userError "compiled.contract:wrong_structure_accepted"
+  IO.println s!"CONTRACT_DIAGNOSTIC boundary.wrong_structure {error}"
+  let missingModule := `LeanInformationAuditRegTests.AbsentNativeBoundaryModule
+  let error ← try
+    discard <| RawArtifacts.readOwn missingModule
+    pure "accepted"
+  catch error => pure error.toString
+  unless error.startsWith s!"raw.read_failed:{missingModule}:" do
+    throw <| IO.userError "compiled.contract:missing_data_accepted"
+  IO.println s!"CONTRACT_DIAGNOSTIC boundary.missing_data {error}"
+  IO.println "[PASS] compiled boundary: missing names, structures and artifacts fail by name"
 
 /-- Exercise the standalone artifact-reader boundary on every contract input
 kind, including an indexed partial-slot family and rigid theorem universes. -/
@@ -289,6 +363,7 @@ unsafe def main : IO Unit := do
   Lean.searchPathRef.modify (fixturePath :: ·)
   LeanInformationAuditRegTests.CompiledDiscovery.checkProductionReport
   let reader ← IO.mkRef ({} : LeanInformationAudit.RawArtifacts.Store)
+  LeanInformationAuditRegTests.CompiledDiscovery.checkProgramBoundary reader
   LeanInformationAuditRegTests.CompiledDiscovery.readFixtures reader
     (← IO.getNumHeartbeats) (Lean.Core.getMaxHeartbeats ({} : Lean.Options))
   LeanInformationAuditRegTests.CompiledCalculations.check reader
