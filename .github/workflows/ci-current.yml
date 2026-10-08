@@ -1626,7 +1626,9 @@ jobs:
             tools/scripts/workflow/install-lean-toolchain.sh
             tools/Architecture/BannedSymbols.txt
             tools/Architecture/BannedSymbols.Guid.txt
-        run: python3 tools/scripts/workflow/ci_detect.py --changed "$RUNNER_TEMP/changed-paths"
+        run: |
+          python3 tools/scripts/workflow/ci_detect.py --changed "$RUNNER_TEMP/changed-paths"
+          python3 -c 'import json,os,re; spec=os.environ["CI_UNITS"]; names=[m for m in re.findall(r"^\s*\[([a-z0-9-]+)\]\s*$", spec, re.M)]; print("hits="+json.dumps({n: n=="current" for n in names}, separators=(",",":")))' >> "$GITHUB_OUTPUT"
 
   # Lean report, current-tree rules and Scribe checks; on pull requests also the
   # delta rules against B = first parent of the event merge commit. The report is
@@ -1635,7 +1637,7 @@ jobs:
     needs: detect
     if: fromJSON(needs.detect.outputs.hits || '{}').current
     runs-on: ubuntu-24.04-arm
-    timeout-minutes: 180
+    timeout-minutes: 300
     env:
       # This job writes project seeds only on dev/integration pushes.
       # Dependency and elan writes also use the PR's own merge-ref scope.
@@ -1644,19 +1646,483 @@ jobs:
       CLI: tools/StrataLint.Cli/bin/Release/net10.0/StrataLint.dll
       SCRIBE: tools/StrataLint.Scribe/bin/Release/net10.0/StrataLint.Scribe.dll
       # The judge build recipe: the build step runs it and the judge cache key hashes it.
-      JUDGE_BUILD_ARGS: tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo
+      JUDGE_BUILD_ARGS: tools/StrataLint.Cli/StrataLint.Cli.csproj --configuration Release -p:RestoreLockedMode=true -nologo -p:ProbeTrace=2
     steps:
       - uses: actions/checkout@v5
         with:
           ref: ${{ github.sha }}
           fetch-depth: 2
           persist-credentials: false
+      - name: Install the probe tracer
+        run: |
+          set -euo pipefail
+          command -v strace >/dev/null || { sudo apt-get update -qq && sudo apt-get install -y -qq strace; }
+          strace -V | head -1
+          mkdir -p /tmp/probe/trace
+          cat > /tmp/probe/shell.sh <<'PROBE_EOF'
+          #!/bin/bash
+          dir="/tmp/probe/trace/$(date +%s%N)-$$"
+          mkdir -p "$dir"
+          export UseSharedCompilation=false MSBUILDDISABLENODEREUSE=1 DOTNET_CLI_USE_MSBUILD_SERVER=0
+          exec strace -f -ff -qq -y -s 4096 -e trace=%file,getdents64,fchdir,clone,clone3,fork,vfork -e signal=none -o "$dir/t" bash --noprofile --norc -eo pipefail "$1"
+          PROBE_EOF
+          chmod +x /tmp/probe/shell.sh
+          cat > /tmp/probe/strace_extract.py <<'PROBE_EOF'
+          #!/usr/bin/env python3
+          """Extract repository path accesses from `strace -ff -y` traces.
+
+          Usage: strace_extract.py --repository DIR --traces DIR --unit NAME --output FILE
+
+          Reads every trace file under --traces (one file per traced task, written by
+          `strace -f -ff -qq -y -s 4096 -e trace=%file,getdents64,fchdir`) and writes one
+          JSON object describing the accesses that fall inside --repository:
+
+            read     paths opened successfully for reading (files)
+            write    paths opened with a write or create flag
+            stat     paths whose metadata or existence was queried successfully
+            missing  paths probed that did not exist (ENOENT / ENOTDIR)
+            listed   directories whose entries were read (getdents64)
+            exec     executed programs with argv and working directory
+          """
+          import argparse
+          import json
+          import os
+          import re
+          import sys
+          from pathlib import Path
+
+          SYSCALL = re.compile(r"^(?P<name>[a-z0-9_]+)\((?P<args>.*)\)\s+=\s+(?P<ret>-?\d+|\?)(?P<rest>.*)$")
+          FD_PATH = re.compile(r"^(?:AT_FDCWD|-?\d+)<(?P<path>(?:[^>\\]|\\.)*)>")
+          CSTRING = re.compile(r'"((?:[^"\\]|\\.)*)"')
+          ERRNO = re.compile(r"^\s*([A-Z0-9_]+)\s")
+
+          AT_CALLS = {
+              "openat", "openat2", "newfstatat", "fstatat64", "statx", "faccessat", "faccessat2",
+              "readlinkat", "mkdirat", "unlinkat", "utimensat", "fchmodat", "fchownat",
+              "name_to_handle_at", "inotify_add_watch", "execveat",
+          }
+          PLAIN_CALLS = {"open", "stat", "lstat", "access", "readlink", "chdir", "execve", "truncate",
+                         "statfs", "getxattr", "lgetxattr", "listxattr", "llistxattr", "creat"}
+          WRITE_FLAGS = ("O_WRONLY", "O_RDWR", "O_CREAT", "O_TRUNC", "O_APPEND")
+
+
+          def unescape(text):
+              out = bytearray()
+              i = 0
+              raw = text.encode("utf-8", "surrogateescape")
+              while i < len(raw):
+                  c = raw[i]
+                  if c != 0x5C:
+                      out.append(c)
+                      i += 1
+                      continue
+                  nxt = raw[i + 1:i + 2]
+                  if nxt == b"x" and i + 3 < len(raw) + 1:
+                      out.append(int(raw[i + 2:i + 4], 16))
+                      i += 4
+                  elif nxt and nxt in b"01234567":
+                      j = i + 1
+                      while j < len(raw) and j < i + 4 and raw[j:j + 1] in b"01234567":
+                          j += 1
+                      out.append(int(raw[i + 1:j], 8))
+                      i = j
+                  else:
+                      mapping = {b"n": 10, b"t": 9, b"r": 13, b"v": 11, b"f": 12, b'"': 34, b"\\": 92}
+                      out.append(mapping.get(nxt, nxt[0] if nxt else 92))
+                      i += 2
+              return out.decode("utf-8", "surrogateescape")
+
+
+          def split_args(args):
+              parts, depth, cur, in_str, esc = [], 0, [], False, False
+              for ch in args:
+                  if in_str:
+                      cur.append(ch)
+                      if esc:
+                          esc = False
+                      elif ch == "\\":
+                          esc = True
+                      elif ch == '"':
+                          in_str = False
+                      continue
+                  if ch == '"':
+                      in_str = True
+                  elif ch in "[{(<":
+                      depth += 1
+                  elif ch in "]})>":
+                      depth -= 1
+                  elif ch == "," and depth == 0:
+                      parts.append("".join(cur).strip())
+                      cur = []
+                      continue
+                  cur.append(ch)
+              if cur:
+                  parts.append("".join(cur).strip())
+              return parts
+
+
+          def fd_dir(arg):
+              m = FD_PATH.match(arg)
+              return unescape(m.group("path")) if m else None
+
+
+          def first_string(arg):
+              m = CSTRING.match(arg.strip())
+              return unescape(m.group(1)) if m else None
+
+
+          class Collector:
+              def __init__(self, repository):
+                  self.repository = os.path.normpath(repository)
+                  self.sets = {k: set() for k in ("read", "write", "stat", "missing", "listed")}
+                  self.exec = []
+                  self.programs = {}
+                  self.current_program = None
+
+              def rel(self, absolute):
+                  if absolute is None:
+                      return None
+                  norm = os.path.normpath(absolute)
+                  root = self.repository
+                  if norm == root:
+                      return "."
+                  if norm.startswith(root + os.sep):
+                      return norm[len(root) + 1:]
+                  return None
+
+              def add(self, kind, absolute):
+                  rel = self.rel(absolute)
+                  if rel is not None:
+                      self.sets[kind].add(rel)
+                      if self.current_program:
+                          self.programs.setdefault(kind + "\t" + rel, set()).add(self.current_program)
+
+
+          def resolve(base, path):
+              if path is None:
+                  return None
+              if path.startswith("/"):
+                  return path
+              if base is None:
+                  return None
+              return os.path.join(base, path)
+
+
+          def program_label(argv):
+              if not argv:
+                  return None
+              first = os.path.basename(argv[0])
+              if first in ("dotnet", "python3", "python", "bash", "sh") and len(argv) > 1:
+                  return first + " " + os.path.basename(argv[1])
+              return first
+
+
+          def process_file(trace, col, unresolved, label=None):
+              cwd = None
+              pending_exec = None
+              col.current_program = label
+              for raw in trace.open("r", encoding="utf-8", errors="surrogateescape"):
+                  line = raw.rstrip("\n")
+                  m = SYSCALL.match(line)
+                  if not m:
+                      continue
+                  name, args, ret, rest = m.group("name"), m.group("args"), m.group("ret"), m.group("rest")
+                  parts = split_args(args)
+                  ok = ret != "?" and not ret.startswith("-")
+                  errno = None
+                  if not ok:
+                      em = ERRNO.match(rest)
+                      errno = em.group(1) if em else None
+                  # Track the working directory from AT_FDCWD annotations.
+                  for part in parts[:1]:
+                      if part.startswith("AT_FDCWD<"):
+                          cwd = fd_dir(part)
+                          if pending_exec is not None and pending_exec.get("cwd") is None:
+                              pending_exec["cwd"] = col.rel(cwd) if col.rel(cwd) is not None else cwd
+                  if name == "getdents64":
+                      if ok and parts:
+                          col.add("listed", fd_dir(parts[0]))
+                      continue
+                  if name == "fchdir":
+                      if ok and parts:
+                          cwd = fd_dir(parts[0]) or cwd
+                      continue
+                  if name == "execve" or name == "execveat":
+                      path = first_string(parts[0] if name == "execve" else parts[1])
+                      argv = CSTRING.findall(parts[1] if name == "execve" else parts[2]) if len(parts) > 1 else []
+                      absolute = resolve(cwd, path)
+                      entry = {"path": col.rel(absolute) if col.rel(absolute) is not None else path,
+                               "argv": [unescape(a) for a in argv], "ok": ok, "cwd": None}
+                      if ok:
+                          col.exec.append(entry)
+                          pending_exec = entry
+                          col.current_program = program_label(entry["argv"])
+                          col.add("read", absolute)
+                      elif errno in ("ENOENT", "ENOTDIR"):
+                          col.add("missing", absolute)
+                      continue
+                  if name == "chdir":
+                      path = first_string(parts[0]) if parts else None
+                      if ok:
+                          cwd = resolve(cwd, path)
+                      continue
+                  if name in AT_CALLS:
+                      if len(parts) < 2:
+                          continue
+                      base = fd_dir(parts[0])
+                      path = first_string(parts[1])
+                      if path is None:
+                          continue
+                      if path == "" and base is not None:
+                          absolute = base
+                      else:
+                          absolute = resolve(base if not path.startswith("/") else None, path)
+                          if absolute is None:
+                              unresolved.append(line[:300])
+                              continue
+                  elif name in PLAIN_CALLS:
+                      path = first_string(parts[0]) if parts else None
+                      absolute = resolve(cwd, path)
+                      if absolute is None:
+                          if path is not None:
+                              unresolved.append(line[:300])
+                          continue
+                  else:
+                      continue
+                  if not ok:
+                      if errno in ("ENOENT", "ENOTDIR"):
+                          col.add("missing", absolute)
+                      continue
+                  if name in ("openat", "openat2", "open", "creat"):
+                      flags = parts[2] if name != "open" and len(parts) > 2 else (parts[1] if len(parts) > 1 else "")
+                      if name == "creat" or any(flag in flags for flag in WRITE_FLAGS):
+                          col.add("write", absolute)
+                      elif "O_DIRECTORY" in flags:
+                          col.add("stat", absolute)
+                      else:
+                          col.add("read", absolute)
+                  elif name in ("mkdirat", "unlinkat"):
+                      col.add("write", absolute)
+                  else:
+                      col.add("stat", absolute)
+
+
+          CLONE = re.compile(r"^(clone3?|vfork|fork)\((?P<args>.*)\)\s+=\s+(?P<ret>\d+)")
+          EXECVE = re.compile(r'^execve\("[^"]*", \[(?P<argv>[^\]]*)\]')
+
+
+          def label_tasks(files):
+              """Label each task file with the program its process last executed before the task began."""
+              by_tid = {}
+              for f in files:
+                  name = f.name
+                  if name.startswith("t.") and name[2:].isdigit():
+                      by_tid[(f.parent, int(name[2:]))] = f
+              first_exec = {}
+              children = {}
+              for (parent_dir, tid), f in by_tid.items():
+                  label = None
+                  for raw in f.open("r", encoding="utf-8", errors="surrogateescape"):
+                      m = EXECVE.match(raw)
+                      if m and " = 0" in raw[-12:] or (m and raw.rstrip().endswith("= 0")):
+                          argv = [unescape(a) for a in CSTRING.findall(m.group("argv"))]
+                          label = program_label(argv)
+                          first_exec.setdefault(f, label)
+                      c = CLONE.match(raw)
+                      if c:
+                          children[(parent_dir, int(c.group("ret")))] = label
+              labels = {}
+              for key, f in by_tid.items():
+                  if f in first_exec:
+                      labels[f] = None  # its own execve sets the label when reached
+                  if key in children:
+                      labels[f] = children[key]
+              return labels
+
+
+          def main():
+              parser = argparse.ArgumentParser()
+              parser.add_argument("--repository", required=True)
+              parser.add_argument("--traces", required=True)
+              parser.add_argument("--unit", required=True)
+              parser.add_argument("--output", required=True)
+              args = parser.parse_args()
+              col = Collector(args.repository)
+              unresolved = []
+              files = sorted(p for p in Path(args.traces).rglob("*") if p.is_file())
+              labels = label_tasks(files)
+              for trace in files:
+                  process_file(trace, col, unresolved, labels.get(trace))
+              result = {"unit": args.unit, "repository": col.repository, "trace_files": len(files),
+                        "unresolved_samples": unresolved[:50], "unresolved": len(unresolved)}
+              for key, values in col.sets.items():
+                  result[key] = sorted(values)
+              seen = set()
+              execs = []
+              for entry in col.exec:
+                  key = json.dumps(entry, sort_keys=True)
+                  if key not in seen:
+                      seen.add(key)
+                      execs.append(entry)
+              result["exec"] = execs
+              result["programs"] = {k: sorted(v) for k, v in sorted(col.programs.items())}
+              Path(args.output).write_text(json.dumps(result, indent=1, sort_keys=True), encoding="utf-8")
+              print(f"PROBE_EXTRACT unit={args.unit} files={len(files)} " +
+                    " ".join(f"{k}={len(v)}" for k, v in col.sets.items()) + f" exec={len(execs)} unresolved={len(unresolved)}")
+              return 0
+
+
+          if __name__ == "__main__":
+              sys.exit(main())
+          PROBE_EOF
+          cat > /tmp/probe/mutations.sh <<'PROBE_EOF'
+          #!/bin/bash
+          # One-off probe (never merged): does any change confined to an excluded region
+          # change the verdict of the program that the exclusion skips?
+          # Each scenario commits a synthetic change on top of the event commit M and
+          # reruns the skipped programs; outputs go to /tmp/probe/mutations/<scenario>.
+          set -uo pipefail
+          cd "$GITHUB_WORKSPACE"
+          : "${CLI:?}" "${SCRIBE:?}" "${REPORT:?}"
+          M="$(git rev-parse HEAD)"
+          OUT=/tmp/probe/mutations
+          mkdir -p "$OUT"
+          git config user.email probe@example.invalid
+          git config user.name probe
+
+          first() { git ls-files -- "$@" | head -n 1; }
+
+          run_checks() {
+            local name="$1" kinds="$2" dir="$OUT/$1"
+            mkdir -p "$dir"
+            git add -A -- . ':!:.lake' >/dev/null 2>&1 || true
+            git commit -q --allow-empty -m "probe $name" >/dev/null 2>&1
+            git diff --name-status --no-renames "$M" HEAD > "$dir/changed.txt"
+            git diff --name-only --no-renames -z "$M" HEAD > "$dir/changed.z"
+            tools/scripts/workflow/scribe-scope-paths.sh "$dir/changed.z" > "$dir/scribe-paths" 2> "$dir/scribe-scope.err"
+            echo $? > "$dir/scribe-scope.rc"
+            if [[ "$kinds" == *current* ]]; then
+              dotnet "$CLI" check-current --candidate-lean-report "$REPORT" --scribe-paths-from "$dir/scribe-paths" > "$dir/current.log" 2>&1
+              echo $? > "$dir/current.rc"
+              tools/scripts/workflow/scribe-content-checks.sh "$REPORT" "$SCRIBE" "$dir/scribe-paths" > "$dir/scribe.log" 2>&1
+              echo $? > "$dir/scribe.rc"
+            fi
+            if [[ "$kinds" == *filemap* ]]; then
+              make filemap-conform > "$dir/filemap.log" 2>&1
+              echo $? > "$dir/filemap.rc"
+            fi
+            if [[ "$kinds" == *delta* ]]; then
+              dotnet "$CLI" check-delta --protected-base "$M" --candidate-lean-report "$REPORT" > "$dir/delta.log" 2>&1
+              echo $? > "$dir/delta.rc"
+            fi
+            echo "PROBE_SCENARIO $name current=$(cat "$dir/current.rc" 2>/dev/null) scribe=$(cat "$dir/scribe.rc" 2>/dev/null) filemap=$(cat "$dir/filemap.rc" 2>/dev/null) delta=$(cat "$dir/delta.rc" 2>/dev/null)"
+            git reset -q --hard "$M"
+          }
+
+          append() { local f; for f in "$@"; do [[ -f "$f" ]] && printf '\nprobe\n' >> "$f"; done; }
+
+          # Baseline at M itself.
+          run_checks S00-baseline current,filemap,delta
+
+          # Regions excluded from current, filemap and delta.
+          append README.md docs/VISION.md docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md \
+            docs/develop/spec/trureturing_engineering_optimization_v1.md tools/lean-inspector/README.md \
+            tools/scripts/agent/openproblem/README.md tools/scripts/agent/openproblem/SCREENED-OUT.md \
+            tools/scripts/agent/prime_slabs/CPU.md
+          printf '<!-- probe -->\n' >> docs/assets/inquiry-cycle.svg
+          rts="$(first 'tools/TestSupport/StrataLint.RuleTestSupport/*.cs')"
+          [[ -n "$rts" ]] && printf '\n// probe\n' >> "$rts"
+          report="$(first 'docs/reports/*')"
+          [[ -n "$report" ]] && printf '\nprobe\n' >> "$report"
+          run_checks C01-modify-excluded current,filemap,delta
+
+          git rm -q -- README.md docs/VISION.md docs/assets/inquiry-cycle.svg \
+            docs/develop/spec/lean_single_compile_intrinsic_information_escape_theory_and_spec.md \
+            docs/develop/spec/trureturing_engineering_optimization_v1.md tools/lean-inspector/README.md \
+            tools/scripts/agent/openproblem/README.md tools/scripts/agent/prime_slabs/CPU.md \
+            tools/scripts/agent/openproblem/SCREENED-OUT-R52.md
+          run_checks C02-delete-excluded current,filemap,delta
+
+          mkdir -p docs/reports
+          printf 'probe\n' > docs/reports/probe-unregistered.md
+          printf 'probe\n' > tools/TestSupport/StrataLint.RuleTestSupport/probe.txt
+          printf 'probe\n' > tools/scripts/agent/openproblem/SCREENED-OUT-PROBE.md
+          run_checks C03-add-unregistered current,filemap,delta
+
+          rtsproj="$(first 'tools/TestSupport/StrataLint.RuleTestSupport/*.csproj')"
+          if [[ -n "$rtsproj" ]]; then
+            sed -i 's#</Project>#  <ItemGroup><ProjectReference Include="../../StrataLint.Cli/StrataLint.Cli.csproj" /></ItemGroup>\n</Project>#' "$rtsproj"
+          fi
+          printf 'namespace Probe; public sealed class Broken { this is not csharp }\n' > tools/TestSupport/StrataLint.RuleTestSupport/ProbeBroken.cs
+          run_checks C04-rule-test-support-code current,filemap,delta
+
+          ln -s ../../../README.md docs/develop/theory/probe-link.md
+          printf '\x00\x01probe' > docs/develop/theory/probe.bin
+          run_checks C05-theory-filemap filemap
+
+          for count in $(seq 1 150); do printf 'probe %s\n' "$count" > "docs/reports/probe-$count.md"; done
+          run_checks C06-reports-capacity current,filemap,delta
+
+          # Regions excluded only from delta.
+          bp="$(first 'Blueprint/*.scribe.cs')"
+          append "$bp" "${bp%.scribe.cs}.md"
+          run_checks D01-blueprint-modify delta
+
+          bpmd="$(first 'Blueprint/*.md')"
+          git rm -q -- "$bpmd"
+          mkdir -p Blueprint/D5/ProbeOrphan
+          printf '// probe orphan\n' > Blueprint/D5/ProbeOrphan/Orphan.scribe.cs
+          run_checks D02-blueprint-delete-orphan delta
+
+          ev="$(first 'Evidence/*')"
+          append "$ev"
+          mkdir -p Evidence/probe
+          printf 'probe\n' > Evidence/probe/unknown.format
+          run_checks D03-evidence delta
+
+          gp="$(first 'Golden/Projection/*.json')"
+          [[ -n "$gp" ]] && printf '{ not json\n' >> "$gp"
+          run_checks D04-golden-projection delta
+
+          lib="$(first 'Library/*/*.md')"
+          append "$lib"
+          libdir="$(dirname "$lib")"
+          printf 'not a library note\n' > "$libdir/probe-malformed.md"
+          run_checks D05-library delta
+
+          pb="$(first 'Problems/*')"
+          git rm -q -- "$pb"
+          printf 'not a dossier\n' > Problems/probe-malformed.md
+          run_checks D06-problems delta
+
+          bpdir="$(dirname "$bp")"
+          for count in $(seq 1 200); do printf '// probe %s\n' "$count" > "$bpdir/Probe$count.scribe.cs"; done
+          run_checks D07-blueprint-capacity delta
+
+
+          printf '\n// 中文叙事 probe\n' >> "$bp"
+          run_checks D08-blueprint-cjk delta
+
+          newbp="$(dirname "$bp")/ProbeCjkNew.scribe.cs"
+          printf '// 中文\nnamespace Probe;\n' > "$newbp"
+          run_checks D09-blueprint-cjk-added delta
+
+          lib2="$(first 'Library/*/*.md')"
+          git rm -q -- "$lib2"
+          run_checks D10-library-delete delta
+
+          ev2="$(first 'Evidence/*')"
+          git rm -q -- "$ev2"
+          run_checks D11-evidence-delete delta
+          echo "PROBE_MUTATIONS_DONE base=$M"
+          PROBE_EOF
       - name: Verify the candidate and list the changed paths
         env:
           CI_HIT_PATHS: '*'
           CI_PR_HEAD: ${{ github.event.pull_request.head.sha }}
           CI_PUSH_BEFORE: ${{ github.event.before }}
           CI_CHANGED_PATHS_FILE: ${{ runner.temp }}/changed-paths
+        shell: bash /tmp/probe/shell.sh {0}
         run: bash tools/scripts/workflow/ci-entry.sh
       - id: delta_entry
         name: Check delta inputs
@@ -1681,11 +2147,13 @@ jobs:
             !tools/scripts/agent/openproblem/README.md
             !tools/scripts/agent/openproblem/SCREENED-OUT*.md
             !tools/scripts/agent/prime_slabs/CPU.md
+        shell: bash /tmp/probe/shell.sh {0}
         run: bash tools/scripts/workflow/ci-entry.sh
       - name: Validate the delta entry result
         if: github.event_name == 'pull_request'
         env:
           DELTA_HIT: ${{ steps.delta_entry.outputs.hit }}
+        shell: bash /tmp/probe/shell.sh {0}
         run: case "$DELTA_HIT" in true|false) ;; *) echo "CI_ENTRY_ERROR delta hit output is '$DELTA_HIT'" >&2; exit 2 ;; esac
       # The judge cache key binds the resolved SDK, the build recipe and the
       # paths and blob ids of the tracked judge compile inputs listed in
@@ -1792,6 +2260,7 @@ jobs:
             tools/Trureturing.Truth/.globalconfig
             tools/Trureturing.Truth/Directory.Build.*
             tools/Trureturing.Truth/Directory.Packages.props
+        shell: bash /tmp/probe/shell.sh {0}
         run: |
           sdk="$(dotnet --version)"
           [[ "$sdk" =~ ^[0-9]+\.[0-9]+\.[0-9]+ ]] || { echo "unexpected SDK version '$sdk'" >&2; exit 2; }
@@ -1814,6 +2283,7 @@ jobs:
       - id: keys
         env:
           GH_TOKEN: ${{ github.token }}
+        shell: bash /tmp/probe/shell.sh {0}
         run: python3 tools/scripts/worktree/lean_actions.py keys --repository "$GITHUB_WORKSPACE"
       - id: elan
         if: steps.keys.outputs.elan_key != ''
@@ -1823,6 +2293,7 @@ jobs:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
       - id: toolchain
+        shell: bash /tmp/probe/shell.sh {0}
         run: tools/scripts/workflow/install-lean-toolchain.sh lean-toolchain --github-path "$GITHUB_PATH"
       - id: dependency
         if: steps.keys.outputs.dependency_key != ''
@@ -1848,9 +2319,11 @@ jobs:
           PROJECT_RESTORE_KEY: ${{ steps.keys.outputs.project_restore_key }}
           DEPENDENCY_OUTCOME: ${{ steps.dependency.outcome }}
           PROJECT_OUTCOME: ${{ steps.project.outcome }}
+        shell: bash /tmp/probe/shell.sh {0}
         run: python3 tools/scripts/worktree/lean_actions.py restore --repository "$GITHUB_WORKSPACE" --dependency-key "$DEPENDENCY_KEY" --project-key "$PROJECT_KEY" --project-restore-key "$PROJECT_RESTORE_KEY" --dependency-outcome "$DEPENDENCY_OUTCOME" --project-outcome "$PROJECT_OUTCOME"
       - name: Build the judge
         if: steps.judge.outputs.cache-hit != 'true'
+        shell: bash /tmp/probe/shell.sh {0}
         run: dotnet build $JUDGE_BUILD_ARGS
       # The judge outputs are a function of the keyed sources, so they are saved
       # as soon as the build succeeds.
@@ -1868,6 +2341,7 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
           STRATALINT_ACCEPT_COLD_BUILD: '1'
+        shell: bash /tmp/probe/shell.sh {0}
         run: |
           producer="$(bash tools/scripts/workflow/judge-lean-producer.sh "$GITHUB_WORKSPACE/tools/StrataLint.Cli/bin/Release/net10.0")"
           if [[ -n "$producer" ]]; then
@@ -1883,6 +2357,7 @@ jobs:
         env:
           STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
           STRATALINT_REPORT_SUCCEEDED: 'true'
+        shell: bash /tmp/probe/shell.sh {0}
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers project
       - name: Publish the push project seed
         if: ${{ !cancelled() && steps.project_snapshot_push.outcome == 'success' && steps.project_snapshot_push.outputs.project_ready == 'true' }}
@@ -1892,16 +2367,20 @@ jobs:
           path: ${{ steps.keys.outputs.project_archive_path }}
           key: ${{ steps.keys.outputs.project_key }}
       - name: Prepare the Scribe scope
+        shell: bash /tmp/probe/shell.sh {0}
         run: tools/scripts/workflow/scribe-scope-paths.sh "$RUNNER_TEMP/changed-paths" > "$RUNNER_TEMP/scribe-paths"
       - name: Current-tree rules
+        shell: bash /tmp/probe/shell.sh {0}
         run: dotnet "$CLI" check-current --candidate-lean-report "$REPORT" --scribe-paths-from "$RUNNER_TEMP/scribe-paths"
       - name: Scribe content
         if: ${{ !cancelled() }}
         env:
           SCRIBE_PATHS: ${{ runner.temp }}/scribe-paths
+        shell: bash /tmp/probe/shell.sh {0}
         run: tools/scripts/workflow/scribe-content-checks.sh "$REPORT" "$SCRIBE" "$SCRIBE_PATHS"
       - name: Delta rules
         if: ${{ !cancelled() && steps.delta_entry.outputs.hit == 'true' }}
+        shell: bash /tmp/probe/shell.sh {0}
         run: |
           rc=0
           dotnet "$CLI" check-delta --protected-base "$(git rev-parse HEAD^1)" --candidate-lean-report "$REPORT" || rc=$?
@@ -1915,6 +2394,7 @@ jobs:
         env:
           STRATALINT_CACHE_WRITES: ${{ env.CACHE_WRITES }}
           STRATALINT_CHECK_SUCCEEDED: 'true'
+        shell: bash /tmp/probe/shell.sh {0}
         run: python3 tools/scripts/worktree/lean_actions.py snapshot --repository "$GITHUB_WORKSPACE" --layers dependency
       - if: ${{ success() && steps.snapshot.outcome == 'success' && steps.snapshot.outputs.dependency_ready == 'true' }}
         continue-on-error: true
@@ -1925,6 +2405,7 @@ jobs:
       - name: List toolchains in the elan cache
         if: ${{ success() && env.CACHE_WRITES == 'true' && steps.toolchain.outcome == 'success' }}
         continue-on-error: true
+        shell: bash /tmp/probe/shell.sh {0}
         run: bash tools/scripts/workflow/elan-cache-inventory.sh "$HOME/.elan"
       - if: ${{ success() && env.CACHE_WRITES == 'true' && steps.toolchain.outcome == 'success' && steps.elan.outputs.cache-hit != 'true' }}
         continue-on-error: true
@@ -1932,6 +2413,31 @@ jobs:
         with:
           path: ~/.elan
           key: ${{ steps.keys.outputs.elan_key }}
+
+      - name: Probe exclusion mutations
+        if: ${{ !cancelled() && steps.lean_report.outcome == 'success' }}
+        timeout-minutes: 150
+        run: bash /tmp/probe/mutations.sh
+      - name: Extract the probe trace
+        if: always()
+        run: |
+          set -euo pipefail
+          python3 /tmp/probe/strace_extract.py --repository "$GITHUB_WORKSPACE" --traces /tmp/probe/trace --unit current --output /tmp/probe/current.json
+          git -C "$GITHUB_WORKSPACE" ls-files -z > /tmp/probe/current.tracked
+          tar -C /tmp/probe -cf - trace | zstd -T0 -3 -q -o /tmp/probe/current.trace.tar.zst
+          ls -la /tmp/probe
+      - name: Upload the probe trace
+        if: always()
+        uses: actions/upload-artifact@v6
+        with:
+          name: probe2-current
+          path: |
+            /tmp/probe/*.json
+            /tmp/probe/*.tracked
+            /tmp/probe/*.trace.tar.zst
+            /tmp/probe/mutations/**
+          retention-days: 5
+          if-no-files-found: error
 
   banned-api-proof:
     needs: detect
