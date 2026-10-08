@@ -5648,3 +5648,190 @@ with no new classical theorem, priority claim, Lean certification or
 all-integer finite Robin verification. The fixed verified height and
 shape still provide no uniform main bound as $A\to\infty$; the complete
 unbounded signed Robin target and RH remain unproved.
+
+## An effective directed Gamma comparison retaining the cutoff sign
+
+Retain the original $h_A,w_c,J_1,J_\alpha,D=\psi-\mathrm{id}$ and
+the endpoint convention in (GS5). Reuse the absolutely convergent
+centering (GP4)–(GP5), (GS6), and the decomposition (GS7)–(GS9).
+The following explicit upper comparison preserves the sign of the local
+residual against the actual nonnegative prime-power measure. No new
+short-interval theorem or smoothing transform is required.
+
+For $A\ge e^{78}$, $L=\log A$, and every noninteger $\alpha\ge4$, put
+$\eta_0(A)=\sup_{t\ge A}|\psi(t)-t|/t$ as in (GS1). Then
+
+$$
+\boxed{\sqrt A L[J_1(A)-J_\alpha(A)]
+\le [0.52+2\eta_0(A)]\frac{\sqrt A}{\alpha}
+ +400\sqrt A\,e^{-\alpha/60000}.}
+\tag{GK1}
+$$
+
+This is a directed inequality. The absolute asymptotic comparison
+(GS2) retains its stated scope; (GK1) supplies explicit constants without
+assigning a numerical starting point to that asymptotic result.
+
+### Pay the regular part using only the global error
+
+Fix $99/100\le c\le101/100$ and write $e=c-1$. For $t>A$, put
+$v=\log t$ and $u(c,t)=1/[t(v-\log c)]$. Its derivatives are
+
+$$
+\partial_c^2u=
+\frac{2-(v-\log c)}{t c^2(v-\log c)^3},\qquad
+\partial_t\partial_c^2u=
+\frac{(v-\log c)^2-6}{t^2c^2(v-\log c)^4}.
+$$
+
+Throughout the segment joining $1$ to $c$, one has
+$v-\log c\ge v-1/100\ge(999/1000)v$ and $c\ge99/100$.
+Taylor's formula and
+$[(99/100)^2(999/1000)^2]^{-1}<1.024$ therefore give
+
+$$
+|b_c(t)|\le\frac{0.512e^2}{t\log^2t},\qquad
+|b_c'(t)|\le\frac{0.512e^2}{t^2\log^2t}\quad(t>A).
+\tag{GK2}
+$$
+
+On $(0,A]$, the same existing regular part equals
+$e^2/(cAL)$. Partial summation against $D$, including its actual value
+at $A$ and the change of formula there, gives
+
+$$
+\int b_c\,dD=
+\left[\frac{e^2}{cAL}-b_c(A+)\right]D(A)
+ -\int_A^\infty D(t)b_c'(t)\,dt.
+$$
+
+The upper boundary vanishes by the global PNT input already used in
+(GS3). Applying (GK2), $|D(t)|\le\eta_0(A)t$ for all $t\ge A$, and
+$\int_A^\infty dt/(t\log^2t)=1/L$ yields
+
+$$
+\left|\int b_c\,dD\right|
+\le\frac{\eta_0(A)e^2}{L}
+ \left[\frac{100}{99}+0.512+\frac{0.512}{L}\right]
+ \le\frac{2\eta_0(A)e^2}{L}.
+\tag{GK3}
+$$
+
+This uses a bound on the regular part against the global error; no
+short-interval bound has been inferred from global PNT.
+
+### Retain the negative local residual, including the endpoint atoms
+
+The actual local residual $v_c=B_c-b_c$ from (GS5)–(GS7) is
+nonpositive. For $c>1$ its formula on $A<t<cA$ is
+$1/(cAL)-1/[t\log(t/c)]$, and $v_c(A)=v_c(cA)=0$.
+For $c<1$ its formula on $cA<t\le A$ is
+$1/[t\log(t/c)]-1/(cAL)$, with $v_c(cA)=0$.
+It is zero elsewhere. Since $1/[t\log(t/c)]$ decreases with $t$ on
+these intervals, both displayed formulas are nonpositive. These values
+also fix the sign at a possible prime-power atom at $A$ or $cA$.
+
+Consequently the actual measure $d\psi\ge0$ gives
+
+$$
+\int v_c\,dD=\int v_c\,d\psi-\int v_c\,dt
+\le-\int v_c\,dt.
+$$
+
+On the entire interval with endpoints $A,cA$,
+$t\ge(99/100)A$ and $\log(t/c)\ge L-1/100$. Thus
+
+$$
+\left|\frac{d}{dt}\frac1{t\log(t/c)}\right|
+\le\frac{1.034}{A^2L}.
+$$
+
+Indeed, the ratio to $1/(A^2L)$ is at most
+$[(99/100)^2]^{-1}[L/(L-1/100)][1+1/(L-1/100)]<1.034$
+for $L\ge78$. The local residual vanishes at $cA$, so integrating
+the resulting triangular upper bound gives
+
+$$
+\boxed{\int v_c\,dD
+\le\frac{1.034(A|e|)^2}{2A^2L}
+ \le\frac{0.52e^2}{L}.}
+\tag{GK4}
+$$
+
+An atom contributes to the nonpositive prime term; it is not replaced
+by a Lebesgue density or discarded with an unknown sign.
+
+### Pay all Gamma scales outside the narrow interval
+
+An explicit global bound needed only for this tail follows directly
+from the existing Dusart Theorem 5.2 $k=0$ row and Proposition 3.2:
+$\psi(t)\le4t$ for $t>0$. For $t<2$, $\psi(t)=0$; for $t\ge2$ use
+$\vartheta(t)<2t$ and
+$1.00007t^{-1/2}+1.78t^{-2/3}<2$.
+Applying the already established (GP4) estimates with this constant
+gives, for every $c>0$,
+
+$$
+\int|w_c-h_A|\,d\psi\le\frac{16(c+c^{-1})}{L},\qquad
+\int|w_c-h_A|\,dt\le\frac{4(c+c^{-1})}{L}.
+$$
+
+For clarity, below $A\max(1,c)$ the corresponding bound with
+$\psi(t)\le Bt$ is $2B(c+c^{-1})/L$. Above that point it is also
+$2B(c+c^{-1})/L$: use the logarithmic difference and
+$|\log c|+\tfrac12(\log c)^2\le c+c^{-1}$, since $L\ge2$.
+This is a numerical use of the existing all-scale convergence argument.
+The affine derivative in (GS5) satisfies
+$\int|a_A|\,(d\psi+dt)\le14/L$ by the same partial summation.
+Since $|c-1|\le c+c^{-1}$, these estimates pay the complete centered
+kernel, with room in the constant:
+
+$$
+\left|\int B_c\,dD\right|
+\le\frac{100(c+c^{-1})}{L}\qquad(c>0).
+\tag{GK5}
+$$
+
+This includes every scale with $cA<1$. Only absolutely convergent
+differences are integrated, as in (GP4)–(GP5).
+
+Let $C$ have the same mean-one Gamma law with shape and rate $\alpha$.
+Use its existing moment-generating function and Chernoff bound with
+$\delta=1/100$. The two exponents satisfy
+$\delta-\log(1+\delta)\ge\delta^2/[2(1+\delta)]>1/30000$ and
+$-\delta-\log(1-\delta)\ge\delta^2/2>1/30000$. Therefore
+
+$$
+\Pr(C\notin[99/100,101/100])\le2e^{-\alpha/30000},\qquad
+\mathbb E(C+C^{-1})^2
+\le\frac54+2+\frac83<6.
+$$
+
+Cauchy–Schwarz and (GK5) bound the normalized contribution from that
+whole event by $400\sqrt A e^{-\alpha/60000}$. On its complement,
+(GK3)–(GK4) apply. Averaging with
+$\mathbb E(C-1)^2=1/\alpha$ proves (GK1) using the globally centered
+identity (GS6). No conditional mean-one assertion has been used.
+
+### Preserve the complete original zero response
+
+Reusing $J_1=-I_\psi$, $J_\alpha=Z_\alpha+\overline R_\alpha$ and
+the full elementary upper bound (GE4) gives
+
+$$
+\boxed{\begin{aligned}
+-\sqrt A L I_\psi(A)\le{}&\sqrt A L Z_\alpha(A)
+ +[0.52+2\eta_0(A)]\frac{\sqrt A}{\alpha}\\
+&+400\sqrt A e^{-\alpha/60000}
+ +\frac{5M_1(\alpha)}{\sqrt A}.
+\end{aligned}}
+\tag{GK6}
+$$
+
+Here $Z_\alpha$ retains the original $H_\alpha(\rho)F_A(\rho)$,
+every actual real part, multiplicity and height. The improvement is an
+effective directed arithmetic payment obtained from the retained local
+sign, not a new bound on the main response. The unbounded signed Robin
+estimate and RH remain unproved. This is a paper-level application of
+the existing prime bounds and kernel identities, without a mathematical
+priority or Lean-certification claim.
