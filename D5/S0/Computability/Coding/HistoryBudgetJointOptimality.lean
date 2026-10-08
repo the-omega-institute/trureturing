@@ -7,7 +7,9 @@
    digest: All-history rows have the same joint code optimum as an extreme iid law. -/
 
 import D5.S0.Computability.Coding.HistoryTreeRelabeling
+import D5.S0.Computability.Coding.DepthBudgetIidGreedyOptimality
 import D5.S0.History.FinitePrefixAntichainBudget
+import Mathlib.Order.Iterate
 
 open scoped BigOperators ENNReal
 
@@ -89,18 +91,18 @@ theorem value_le_envelope (δ : ℝ) (hδ : 0 ≤ δ)
     (q : List α → α → ℝ) (hq : Admissible δ q) (z : List α → ℝ) :
     ∀ n h, value q z n h ≤ envelope δ z n h := by
   intro n
-  induction n with
-  | zero => intro h; exact le_rfl
-  | succ n ih =>
-    intro h
-    simp only [value, envelope]
+  let f : (List α → ℝ) → List α → ℝ :=
+    fun V h => z h + ∑ a, q h a * V (h ++ [a])
+  have monotone : Monotone f := by
+    intro V W hVW h
     apply add_le_add le_rfl
-    calc
-      _ ≤ ∑ a, q h a * envelope δ z n (h ++ [a]) := by
-        apply Finset.sum_le_sum
-        intro a _
-        exact mul_le_mul_of_nonneg_left (ih _) (hδ.trans ((hq h).1 a))
-      _ ≤ _ := row_bound δ (q h) _ (hq h).1 (hq h).2
+    apply Finset.sum_le_sum
+    intro a _
+    exact mul_le_mul_of_nonneg_left (hVW _) (hδ.trans ((hq h).1 a))
+  exact monotone.seq_le_seq (x := value q z) (y := envelope δ z) n le_rfl
+    (fun _ _ => le_rfl)
+    (fun k _ h => add_le_add le_rfl (row_bound δ (q h)
+      (fun a => envelope δ z k (h ++ [a])) (hq h).1 (hq h).2))
 
 /-- The finite choices attain the envelope simultaneously on the same tree. -/
 theorem optimizing_process_attains (δ : ℝ)
