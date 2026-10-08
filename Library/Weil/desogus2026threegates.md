@@ -2747,6 +2747,114 @@ Thus an asymptotically nonnegative full finite **compression**, allowing small n
 
 The actual finite compression must still retain its complete prime translations, Gamma potential and coefficient-$2$ pole on the common coarse space. Its cofinal negative-eigenvalue control, the source's full collar correspondence, the original selected-maximizer signed Robin estimate and RH remain unproved. All original coefficients, actual zero real parts, both signs, all heights and multiplicities, elementary correction and strict core are preserved. These are conditional paper-level actual-row and finite-short estimates, without Lean, numerical certification, a full old inverse or a mathematical-priority claim.
 
+## An offcritical zero forces exponential descent of the actual compression
+
+Reuse the compact odd zero-isolation argument in the primary's proof of its restricted Weil criterion, together with the same complete zero-side identity and physical realization used above. The extra estimate here concerns the physical $L^2$ normalization of those witnesses and their transfer to the **actual** finite compression (T88)–(T89). It keeps every actual zero, both ordinate signs and all multiplicities. It does not establish a lower bound for that compression or adopt the source's full RH argument.
+
+### Normalize the isolating bump with a contracting convolution norm
+
+Suppose one actual centered zero is $z_0=\rho_0-1/2=\delta+i\gamma$, $\delta>0$. There are no real nontrivial zeta zeros, so $\gamma\ne0$. Choose a real even nonnegative $\eta\in C_c^\infty(-r_0,r_0)$, $\int\eta=1$, whose bilateral Laplace transform $E(z)=\int\eta(x)e^{zx}dx$ has $d=|E(z_0)|>0$. A sufficiently narrow unit bump supplies this nonvanishing.
+
+For fixed sufficiently large $b$ put
+
+$$
+\begin{aligned}
+\eta_b(x)&=\tfrac12[\eta(x-b)+\eta(x+b)],\\
+R_b&=|E(z_0)\cosh(bz_0)|,\qquad
+\psi_b=\eta_b/R_b,\qquad r=b+r_0.
+\end{aligned}
+$$
+
+Since $|\cosh(bz_0)|^2=\sinh^2(b\delta)+\cos^2(b\gamma)$, one has
+
+$$
+\boxed{
+|\Psi_b(z_0)|=1,\qquad
+q_b:=\|\psi_b\|_1=R_b^{-1}<1,\qquad
+\kappa_b:=\frac{2\log R_b}{r}\longrightarrow2\delta
+\quad(b\to\infty).
+}
+\tag{T91}
+$$
+
+The limit uses $\log R_b=\delta b+\log(d/2)+o(1)$; it requires no choice of an ordinate phase or a largest zero real part.
+
+Write $\Psi_b$ for the bilateral Laplace transform of $\psi_b$. For this one fixed bump, reuse the source's fixed height cut, even zero-killing polynomial $P$, and real even polynomials $U_M(z)=u_M+v_Mz^2$ with uniformly bounded coefficients. Its real odd compact tests have transforms
+
+$$
+F_M(z)=zP(z)U_M(z)\Psi_b(z)^M,\qquad F_M(z_0)=1.
+$$
+
+The coefficient bound follows from the fixed invertible real-linear map $(u,v)\mapsto u+vz_0^2$, since $\Im(z_0^2)=2\delta\gamma\ne0$. The existing isolation step includes all other zeros: the polynomial removes the finite head, and a fixed rapid-decay majorant times $q_{\rm tail}^{2(M-M_0)}$, $q_{\rm tail}<1$, pays the whole infinite-height remainder. Thus $\mathcal Q(f_M)\le-2m_{\rho_0}$ for sufficiently large $M$.
+
+Put the fixed-order differential operator corresponding to $zPU_M$ on just one convolution factor. Its $L^2$ norm has an $M$-independent bound, because the bump and polynomial are fixed and the two coefficients of $U_M$ are bounded. Young's inequality then gives fixed $C_b<\infty$ with
+
+$$
+\boxed{
+\operatorname{supp}f_M\subset[-Mr,Mr],\qquad
+\|f_M\|_2\le C_bq_b^{M-1},\qquad
+\mathcal Q(f_M)\le-2m_{\rho_0}<0.
+}
+\tag{T92}
+$$
+
+No estimate for a growing derivative order is used. Constants and the starting index may depend on the chosen zero, bump and fixed height cut; uniformity over zero heights is not asserted. The same test has a fixed negative zero response while its physical norm decreases geometrically.
+
+### Transfer the witness to the same full finite matrix
+
+Let $m_a^{\rm odd}$ denote the infimum of $\mathcal Q_a(f)/\|f\|_2^2$ over nonzero admitted real odd tests; no existence of an extremizing vector is needed. Fix $0<\kappa<2\delta$ and choose $b$ with $\kappa_b>\kappa$. At an endpoint $a$, take $M=\lfloor a/r\rfloor-1$, so that the corresponding test is strictly inside the admitted interval. Equation (T92) gives its physical Rayleigh quotient at most $-c_\kappa e^{\kappa a}$ for every sufficiently large endpoint.
+
+Let $u=\Pi_af_M$. It is nonzero, because a vector wholly in the actual positive tail cannot have negative energy. Exact tail completion gives $S_a^{\rm part}(u)\le\mathcal Q(f_M)$, and $\|u\|_2\le\|f_M\|_2$. Dividing the negative energy by the smaller norm strengthens the inequality. The whole-finite comparison (T89), with its original pole and common metric, therefore yields
+
+$$
+\boxed{
+\lambda_{\min}(D_a)
+\le-c_\kappa e^{\kappa a}+\frac{C_*}{1+a}
+\le-\tfrac12c_\kappa e^{\kappa a}
+\quad\text{for all sufficiently large }a.
+}
+\tag{T93}
+$$
+
+The full infinite-height contribution was paid before this projection. No shifted metric, replacement zero spectrum or whole-old inverse appears in this transfer.
+
+Consequently an actual lower allowance on an unbounded cofinal sequence,
+
+$$
+\boxed{
+D_{a_j}\succeq-M_j\Pi_{a_j},\qquad M_j\ge0,\qquad
+\frac{\log(1+M_j)}{a_j}\longrightarrow0,
+}
+\tag{T94}
+$$
+
+would exclude every offcritical zero. This sufficient input allows growing negative finite eigenvalues; it need not tend to zero as in (T90). More generally a logarithmic allowance rate at most $\nu$ would exclude zeros with $\Re\rho>1/2+\nu/2$, and reflection gives the corresponding left bound. With the arithmetic clock $k=e^{2a}$, an offcritical displacement $\delta$ forces descent at least $k^\eta$ for every $0<\eta<\delta$; (T94) asks for a $k^{o(1)}$ negative allowance. Selecting a cofinal FIB schedule supplies none of this actual joint estimate.
+
+### The available conservative allowance still has rate one
+
+The existing whole Gamma floor, complete prime norm bound and true pole give
+
+$$
+\begin{aligned}
+\|s_a^{\rm ph}\|_2^2&=\sinh a-a,\\
+D_a&\succeq
+[c_\Gamma-2W_a-2(\sinh a-a)]\Pi_a.
+\end{aligned}
+$$
+
+Using the already-retained unconditional $W_a\sim2e^a$, the corresponding nonnegative lower allowance satisfies
+
+$$
+\boxed{
+M_a^{\rm raw}:=2W_a+2(\sinh a-a)+|c_\Gamma|
+\sim5e^a,\qquad
+\frac{\log(1+M_a^{\rm raw})}{a}\longrightarrow1.
+}
+\tag{T95}
+$$
+
+It cannot contradict the forced rate $\kappa<2\delta<1$. The vanishing coupling debit pays the finite-short transfer but does not change this finite diagonal allowance. A joint arithmetic estimate reaching (T94), the source's independent full-form correspondence, and the original selected-maximizer signed Robin budget remain unproved. The witness rate and actual-matrix transfer are conditional paper deductions, without mathematical-priority or Lean-certification claims; the sufficient growth interface is not an achieved lower estimate.
+
 ## v2: the claimed induction step
 
 The following induction and fold formulas are those of [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), revised **20 September 2026**, 69 pages. At the arithmetic endpoint $a_k=(\log k)/2$, the source retains the pole term in $A_k=C_k-2|s_k\rangle\langle s_k|$. Lemma 6.27, under the old endpoint's positivity and inverse hypotheses, forms the actual harmonic extension
