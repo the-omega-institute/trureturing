@@ -186,7 +186,7 @@ private theorem finite_support_pgf_norm_le_one
     (z : Real) (hz0 : 0 <= z) (hz1 : z <= 1) (P : Finset Nat.Primes) (n : Nat) :
     ‖∏ p ∈ P, supportPGFCoordinate z p n‖ <= 1 := by
   rw [Real.norm_eq_abs, abs_of_nonneg]
-  · exact Finset.prod_le_one
+  · exact Finset.prod_le_one₀
       (fun p hp => by
         unfold supportPGFCoordinate
         split <;> linarith)

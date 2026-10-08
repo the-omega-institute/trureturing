@@ -142,8 +142,6 @@ private theorem signed_measure_integral_polynomial_eq_sum
   have hterm (j : ℕ) : VectorMeasure.Integrable epsilon
       (fun u => (Polynomial.hasseDeriv j p).eval b * (u - b) ^ j) := by
     convert (hpower j).smul ((Polynomial.hasseDeriv j p).eval b) using 1
-    ext u
-    simp only [Pi.smul_apply, smul_eq_mul]
   calc
     (∫ᵛ u, p.eval u ∂<•epsilon) =
         ∫ᵛ u, ∑ j ∈ Finset.range (K + 1),

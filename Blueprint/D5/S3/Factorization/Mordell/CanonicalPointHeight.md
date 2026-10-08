@@ -21,5 +21,4 @@ The symmetric-square identity and projective height estimates give a uniform two
 ## References
 
 - Truth anchor: `D5/S3/Factorization/Mordell/CanonicalPointHeight.canonicalHeight_properties`
-- Dependency: [D5/S3/Factorization/Mordell/SymmetricSquareAddition](SymmetricSquareAddition.md)
 - Dependency: [D5/S3/QuadraticForms/ParallelogramConstruction](../../QuadraticForms/ParallelogramConstruction.md)

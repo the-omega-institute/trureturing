@@ -59,7 +59,7 @@ private theorem log_primeRadical_nonneg (n : ℕ) :
   apply Real.log_nonneg
   exact_mod_cast (show 1 ≤ primeRadical n by
     rw [primeRadical]
-    apply Finset.one_le_prod
+    apply Finset.one_le_prod₀
     intro p hp
     exact (Nat.prime_of_mem_primeFactors hp).one_le)
 

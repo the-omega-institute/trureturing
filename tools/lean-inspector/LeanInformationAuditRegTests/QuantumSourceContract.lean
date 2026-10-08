@@ -21,9 +21,9 @@ run_meta do
   let name := if isCurrent then current else historical
   let absent := if isCurrent then historical else current
   let hash := if isCurrent then
-      "4f45e964a8a60de2e526fa8ecc9d7290e89b061a1a687359917d065453126fb0"
+      "636287da6222c24346d62adfd7968290c3162de12450359b056e5740530729dc"
     else "e38587117aa2fd85bf40596abc5c556725faafbfabcaddb21ae96b9f9211f61b"
-  let expectedSize := if isCurrent then 36217 else 22806
+  let expectedSize := if isCurrent then 35786 else 22806
   let source ← IO.FS.readBinFile ((← Repository.root) /
     "D5/S3/Quantum/Information/ActualQubitChordObstruction.lean")
   unless Sha256.hex source == hash && source.size == expectedSize do

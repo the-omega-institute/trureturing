@@ -210,7 +210,9 @@ theorem actual_compositum_data (j : ℕ) (a : (ZMod (modulus j))ˣ)
       exact QuadraticAlgebra.det_toLinearMap_eq_norm _
     have hPnorm : Ideal.absNorm P = p.1 := by
       change Ideal.absNorm (Ideal.span {π p.1}) = p.1
-      rw [Ideal.absNorm_span_singleton, hAlgNorm, hπ.2.1]
+      rw [Ideal.absNorm_span_singleton]
+      change (Algebra.norm ℤ (π p.1)).natAbs = p.1
+      rw [hAlgNorm, hπ.2.1]
       simp
     have hPne : P ≠ ⊥ := by
       intro h
@@ -227,7 +229,9 @@ theorem actual_compositum_data (j : ℕ) (a : (ZMod (modulus j))ˣ)
         have h := Ideal.absNorm_dvd_absNorm_of_le
           ((Ideal.span_singleton_le_iff_mem _).mpr hmem)
         have h' : p.1 ∣ Int.natAbs (3 : ℤ) := by
-          simpa only [hPnorm, Ideal.absNorm_span_singleton, hLamNorm] using h
+          rw [hPnorm, Ideal.absNorm_span_singleton] at h
+          change p.1 ∣ (Algebra.norm ℤ lam).natAbs at h
+          simpa only [hLamNorm] using h
         norm_num at h'
         exact h'
       have hp3 : p.1 = 3 :=

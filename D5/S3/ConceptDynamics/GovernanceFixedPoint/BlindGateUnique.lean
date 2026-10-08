@@ -6,7 +6,7 @@
    digest: Status-blind self-reading derivation has one gate-compatible handwritten map. -/
 
 import D5.S3.ConceptDynamics.GovernanceFixedPoint.Core
-import Mathlib.Logic.ExistsUnique
+import Mathlib.Basic.ExistsUnique
 
 /- Library-search audit trail (2026-08-30):
    * Exact searches for `StatusBlind`, `liftBlind`, and

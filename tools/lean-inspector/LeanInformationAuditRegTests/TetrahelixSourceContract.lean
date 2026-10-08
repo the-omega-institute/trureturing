@@ -25,7 +25,7 @@ run_meta do
   let owner := `Reg.D5.S1.Recurrence.BoerdijkCoxeterGeneratingFunctions
   let source ← IO.FS.readBinFile ((← Repository.root) /
     "D5/S1/Recurrence/BoerdijkCoxeterGeneratingFunctions.lean")
-  unless Sha256.hex source == "b0b9950cbe5055e4067a07d5f6598995daa854b0157a8d8778d36470842d6740" do
+  unless Sha256.hex source == "048bdc1fc53afdc90ced1c7f3db6eadd02458372eaa12984eac2f4826d41d1ce" do
     throwError "Tetrahelix original source changed"
   let env ← getEnv
   let #[event] := (TemplateBinding.inventory env).filter (·.key.theoremName == target)
