@@ -1,0 +1,21 @@
+fingerprints:
+  raw_sha256: sha256:0ddd937049ffb31aef8ed49c00a38f93c13e312965e1fb44c2c461f18c5904cd
+  normalized_sha256: sha256:0ddd937049ffb31aef8ed49c00a38f93c13e312965e1fb44c2c461f18c5904cd
+cas_ref: sha256:0ddd937049ffb31aef8ed49c00a38f93c13e312965e1fb44c2c461f18c5904cd
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/SemanticTransportCertificateValidity.failure
+    target_statement_id: sha256:7c1b9e2b5c6470e2178ba23c3a464e9b3980b84566debc3ce54575fdfeeebd50
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/SemanticTransportCertificateValidity.refutesClaim
+    target_statement_id: sha256:d8e205d1e81fba05d96aec17278a7b9189c2ed8521100661aa331621bb21af84
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/TransportRefutationProjection.evidence
+    target_statement_id: sha256:4b5aaf205e8f088fc63e3194aa3a3437a22ba755b6fd6178f4b0cc23666b668b
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/TransportRefutationProjection.failed
+    target_statement_id: sha256:08a0a4a59c610dd8e4b59ebe0d4c506e4f471c09ef7ff4d87178c28b4f9f30ea
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/TransportRefutationProjection.newOnly
+    target_statement_id: sha256:34aa152cf1ecaa3fc373fa0bccd2ea0ef2553751d946c79c3e2c00edb12bf65e
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/TransportRefutationProjection.observed
+    target_statement_id: sha256:b2cb47c94e82afd65396b85e38efeb70da9a1c0794f41212ff8cb66d9a8843ad
+  - gid: D5/S3/ConceptDynamics/DefinitionEscapeSemantics/TransportRefutationProjection.result
+    target_statement_id: sha256:363ffd13dd362fdb87a5bf22f678b56f86e1c07060df3eec492f62daf6737229
+receipts:
+  unresolved_subitems: []
