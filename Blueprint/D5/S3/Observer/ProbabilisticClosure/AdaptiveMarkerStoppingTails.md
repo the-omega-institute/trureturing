@@ -34,8 +34,112 @@ The joint law is the product of this source law and the original arbitrary proba
 
 Lambda is the original seed measure of the event that zeroReplay at depth twice m has odd counts on both arms. Its definition contains no q, source, or survival conditioning. The proof derives trajectory support from the Markov kernel, calculates alternating finite-prefix masses, and integrates the actual survival event over the original seed law. The formulas hold on the closed unit interval and therefore for the chapter's strictly interior parameters.
 
+**Theorem 1.3 (One-query all-zero extension).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hstep`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hstep` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every source, finite action history and chosen arm, the extended all-zero prefix holds exactly when the old prefix holds and the next native marker response is false.
+
+**Theorem 1.4 (Root and forbidden-adjacency support).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.path_support`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.path_support` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every unit-interval parameter and Boolean root, almost every arm starts at that root and contains no adjacent pair of true bits.
+
+**Theorem 1.5 (Successive alternating bits).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hs`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hs` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every Boolean root and natural index, the next alternating bit is the Boolean negation of the current bit.
+
+**Theorem 1.6 (Alternating arm cylinder mass).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.arm_alternating_mass`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.arm_alternating_mass` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every unit-interval parameter, Boolean root and natural length, the alternating prefix mass is the parameter raised to half the length rounded down for a true root and up for a false root.
+
+**Theorem 1.7 (Measurable zero cylinders).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hmeas`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hmeas` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every pair of natural arm lengths, the all-zero marker cylinder is measurable.
+
+**Theorem 1.8 (Alternation characterizes no marker).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hchar`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hchar` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every Boolean path starting at a fixed root and forbidding adjacent true bits, absence of adjacent false bits before a finite length is equivalent to the alternating prefix through that length.
+
+**Theorem 1.9 (Both independent arms satisfy support).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.paired_path_support`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.paired_path_support` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every unit-interval parameter and Boolean root, almost every pair under the product arm law consists of two paths starting at that root and forbidding adjacent true bits.
+
+**Theorem 1.10 (Two-arm root-conditioned cylinder mass).**
+
+Lean statement: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hconditional`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hconditional` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every unit-interval parameter, Boolean root and two natural arm lengths, the two-arm all-zero marker cylinder has mass equal to the parameter raised to the sum of the root-dependent half-length exponents.
+
 ## References
 
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.adaptive_marker_stopping_tails`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.arm_alternating_mass`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hchar`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hconditional`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hmeas`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hs`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.hstep`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.paired_path_support`
+- Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.path_support`
 - Truth anchor: `D5/S3/Observer/ProbabilisticClosure/AdaptiveMarkerStoppingTails.stopped_execution_replay_bridge`
 - Dependency: [D5/S3/Observer/ProbabilisticClosure/TrajectoryLaws/MarkovPrefixMass](TrajectoryLaws/MarkovPrefixMass.md)
