@@ -4,7 +4,7 @@
    mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.claim; result=D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.result; claim=D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.claim
-   digest: A normalized two-qudit state in dimension five has aggregate isotropic third moment below six. -/
+   digest: An isotropic aggregate of a two-qudit state in dimension five is below six. -/
 
 import D5.S3.Quantum.Magic.CliffordThirdMomentNegativity
 import Mathlib.Logic.Equiv.Fin.Basic
@@ -469,7 +469,6 @@ private theorem integer_sum :
     · exact integer_slice_42
     · exact integer_slice_43
     · exact integer_slice_44
-
   rw [show (∑ a : Fin 3 → ZMod 5, ∑ b : Fin 3 → ZMod 5,
       ∏ k, v (a k) (b k) * v ((base *ᵥ a) k) ((base *ᵥ b) k)) =
       ∑ a, partialValues a from Finset.sum_congr rfl (fun a _ => inner a)]
@@ -494,5 +493,43 @@ private theorem kappa_base : kappa 5 2 psi (graphSubspace base) = -2577430 / 458
     exact integer_sum
   rw [compute]
   norm_num
+
+private theorem kappa_iso : kappaIso 5 2 psi = 140241723 / 24017978 := by
+  classical
+  have disjoint : Disjoint (orbit 1) (orbit base) := by decide +kernel
+  have orbit_value (O : Matrix (Fin 3) (Fin 3) (ZMod 5)) (hi : Function.Injective O) :
+      (∑ Q ∈ orbit O, kappa 5 2 psi (graphSubspace Q)) =
+        6 * kappa 5 2 psi (graphSubspace O) := by
+    rw [orbit, Finset.sum_image]
+    · simp_rw [kappa_rows]
+      simp only [Finset.sum_const, Finset.card_univ, Fintype.card_perm, Fintype.card_fin]
+      norm_num
+    · intro e _ f _ heq
+      apply Equiv.ext
+      intro i
+      exact hi (congrFun heq i)
+  have hi : Function.Injective (1 : Matrix (Fin 3) (Fin 3) (ZMod 5)) := by
+    have h : ∀ i j : Fin 3,
+        (1 : Matrix (Fin 3) (Fin 3) (ZMod 5)) i i =
+          (1 : Matrix (Fin 3) (Fin 3) (ZMod 5)) j i → i = j := by decide +kernel
+    intro i j he
+    exact h i j (congrFun he i)
+  have hb : Function.Injective base := by
+    have h : ∀ i j : Fin 3, base i i = base j i → i = j := by decide +kernel
+    intro i j he
+    exact h i j (congrFun he i)
+  rw [kappaIso, group_five, Finset.sum_union disjoint, orbit_value 1 hi,
+    orbit_value base hb, kappa_identity psi normalized_psi, kappa_base]
+  norm_num
+
+/-- The aggregate isotropic lower bound fails for a normalized two-qudit state at `d = 5`. -/
+theorem result : ¬ claim := by
+  let : Fact (Nat.Prime 5) := ⟨by decide⟩
+  intro h
+  have hbound := h 5 (by decide) 2 psi normalized_psi
+  rw [kappa_iso, Complex.le_def] at hbound
+  norm_num at hbound
+
+#print axioms result
 
 end D5.S3.Quantum.Magic.CliffordThirdMomentAggregateRefutation
