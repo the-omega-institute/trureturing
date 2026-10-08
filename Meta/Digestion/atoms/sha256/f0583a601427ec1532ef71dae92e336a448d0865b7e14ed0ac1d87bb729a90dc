@@ -1,0 +1,9 @@
+**数学引文 5.5（生成函数的均值和二阶响应）。** 在自然对数参数 $`\theta=(\ln a,\ln b,\ln c,\ln\eta)\in\mathbb R^4`$ 上，特征次序固定为 $`(x,z,y,xy)`$，有
+
+```math
+\nabla_\theta\ln\mathcal Z=\mathbb E(x,z,y,xy),\qquad
+\nabla_\theta^2\ln\mathcal Z=\mathrm{Cov}(x,z,y,xy).
+```
+
+推导。每个权为 $`\exp(\theta\cdot\phi_s)`$，对五项有限和逐项求导，第一次求导给归一化特征均值，第二次给 $`\mathbb E\phi\phi^{\mathsf T}-\mathbb E\phi\,\mathbb E\phi^{\mathsf T}`$。五个特征向量仿射独立，严格正律下协方差正定。该式只在严格正域使用有限对数参数；边界律可取极限，不能直接代入上述比值。参数化和最大熵均不意味着已取得未知真实概率。证毕。
+

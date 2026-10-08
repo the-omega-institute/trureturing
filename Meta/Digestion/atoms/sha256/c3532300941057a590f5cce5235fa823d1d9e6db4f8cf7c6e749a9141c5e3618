@@ -1,0 +1,10 @@
+**数学引文 5.3（精确目标误差）。** 当 $`r>0`$ 时，
+
+```math
+\mathbb E_p f-\mathbb E_{p^\star}f
+=J_f(\kappa-XY/r)=\frac{J_f\Delta}{r},\qquad
+\left|\mathbb E_p f-\mathbb E_{p^\star}f\right|\le |J_f|r/4.
+```
+
+在顶点误差为零。推导只需将 4.4 的两期望相减，再用 4.3；没有独立性假设时，$`p^\star`$ 是补全准则而非实际来源律。对联合事件 $`f=xy`$，$`J_f=1`$，4.2 的两个同均值实例正好展示来源关联乘以目标敏感性的遗漏。证毕。
+

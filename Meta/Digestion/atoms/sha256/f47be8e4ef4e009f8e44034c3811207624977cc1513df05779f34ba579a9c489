@@ -1,0 +1,13 @@
+**定义 5.1（底面四格）。** 以行表示 $`x=0,1`$，列表示 $`y=0,1`$，置
+
+```math
+Q=\begin{pmatrix}p_0&p_5\\p_2&p_{25}\end{pmatrix}
+=\begin{pmatrix}r-X-Y+\kappa&Y-\kappa\\X-\kappa&\kappa\end{pmatrix},
+```
+
+```math
+Q\mathbf1=(r-X,X)^{\mathsf T},\qquad
+\mathbf1^{\mathsf T}Q=(r-Y,Y),\qquad
+\Delta=\det Q=p_0p_{25}-p_2p_5.
+```
+
