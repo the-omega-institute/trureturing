@@ -1,5 +1,5 @@
+import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.LegacyCausalMapping
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
@@ -18,17 +18,7 @@ import D5.S3.ConceptDynamics.InformationEscapeRealizations.LocalLawGluingObstruc
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.EndStateOmitsPreemptingCause
 import D5.S3.ConceptDynamics.InformationEscape.SystemUnit
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.InformationRoot
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena, theoremName := `D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention,
-      statementIdentity := "sha256:65c74f1a6b6342639e4c773a4de5bbcd925ebae300eebf640b0cab6f5e4b2984",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.InformationRoot }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena, theoremName := `D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention,
-      statementIdentity := "sha256:65c74f1a6b6342639e4c773a4de5bbcd925ebae300eebf640b0cab6f5e4b2984",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.InformationRoot }]
-  companionPrefix := some `Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.InformationRoot }
+
 
 namespace Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.InformationRoot
 
@@ -69,14 +59,30 @@ attribute [local instance]
 local instance systemArenaStateDecidableEq : DecidableEq arena.toArena.State :=
   arena.toArena.stateDecidableEq
 
-register_information_theorem _root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention in _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionLawArena
-  object_arena _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena catalog D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena
-  readout via (@_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaFiniteTemplates.observationFiniteRealization _root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.DeterministicBoolSCM
-    (fun M => _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.oiObsCode M) (fun M => _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.oiIntCode M))
-  primitives _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationRealization.toPrimitiveBundle realization _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservation_bridge
-  variation _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservation_law_sensitive
-  sensitivity _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservation_slot_sensitive
-  escape from (_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.DeterministicBoolSCM) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention) (type_of% (@_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaFiniteTemplates.observationFiniteRealization _root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.DeterministicBoolSCM
+    (fun M => _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.oiObsCode M) (fun M => _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.oiIntCode M))) (type_of% (_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.DeterministicBoolSCM)) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Interventions") "ObservationInterventionSeparation") "observation_strictly_weaker_than_intervention") "Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.InformationRoot/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Interventions") "ObservationInterventionSeparation") "observation_strictly_weaker_than_intervention") "Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.InformationRoot/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena/D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena") "__primitive_realization"),
+  realizationSource := some `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservation_bridge,
+  generated := false,
+  arena := .law ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionLawArena)⟩,
+  objectArena := .finite ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena)⟩,
+  catalog := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionArena,
+  localNames := false,
+  realization := .legacy (_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationInterventionLawArena) (D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationRealization) (_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationRealization.toPrimitiveBundle) ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservation_bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservation_bridge) (@_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.observation_strictly_weaker_than_intervention))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservationRealization.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (@_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaFiniteTemplates.observationFiniteRealization _root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.DeterministicBoolSCM
+    (fun M => _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.oiObsCode M) (fun M => _root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.oiIntCode M)),
+  variation := .evidence ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservation_law_sensitive)⟩ (by first | exact (_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservation_law_sensitive) | exact ⟨_, _, (_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservation_law_sensitive)⟩),
+  sensitivity := .evidence ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservation_slot_sensitive)⟩ (by exact (_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaPeers.finiteObservation_slot_sensitive)),
+  partialSensitivity := none,
+  escapeFrom := some (_root_.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.DeterministicBoolSCM),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end
 
 end Reg.D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.InformationRoot

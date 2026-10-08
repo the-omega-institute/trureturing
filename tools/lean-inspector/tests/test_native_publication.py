@@ -83,8 +83,8 @@ class NativePublicationConsumerTests:
             'missing_materials': ({key: value for key, value in original.items()
                                    if not key.endswith('.materials.zip')}, 'invalid native artifact members'),
             'other_module': (entries(artifacts[1]), 'membership mismatch'),
-            'compatibility': (dict(original, **{provenance: materials.canonical_json(
-                dict(origin, compatibility_sha256='0' * 64))}), 'compatibility mismatch')}
+            'input_projection': (dict(original, **{provenance: materials.canonical_json(
+                dict(origin, input_projection={}))}), 'unexpected fields')}
         for damage, (members, message) in cases.items():
             with self.subTest(damage=damage):
                 candidate = self.root / (damage + '.zip')
@@ -179,7 +179,7 @@ class NativePublicationConsumerTests:
         origins = {row['module']: dict(module=row['module'],
             report_sha256=hashlib.sha256(materials.canonical_json(
                 dict(schema=materials.REPORT_SCHEMA, modules=[row]))).hexdigest(),
-            compatibility_sha256=inputs.compatibility(), producer_sources_sha256='a' * 64,
+            input_projection=dict(schema='stratalint-judge-input-projection-v1', module=row['module'], inputs=[]), producer_sources_sha256='a' * 64,
             inspector_executable_sha256='b' * 64) for row in rows}
         coordinates = publication.coordinates(self.root)
         with tempfile.TemporaryDirectory(dir=self.root) as directory:
@@ -339,29 +339,14 @@ class NativePublicationConsumerTests:
                     self.assertEqual(before, {suffix: publication.member(destination, suffix).read_bytes()
                                              for suffix in publication.SUFFIXES})
 
-    def test_native_semantic_version_and_config(self):
+    def test_native_config(self):
         self.build()
+        self.publish()
         self.write('activity.jsonl', '')
         self.run_lake('--no-build', 'build', ':report')
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
         before = self.stamps()
         original = self.report()[1:]
-        origins = self.origins()
-        policy = json.loads((self.root / 'lean-report-inputs.json').read_text())
-        policy['report_cache_release_semantic_version'] = 2
-        self.write('lean-report-inputs.json', json.dumps(policy))
-        self.run_lake('--no-build', 'build', ':report', success=False)
-        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
-        self.build()
-        self.assertEqual({name for name, value in self.stamps().items() if value != before[name]}, set(before))
-        records = [json.loads(line) for line in (self.root / 'activity.jsonl').read_text().splitlines()]
-        self.assertEqual(sum(r['count'] for r in records if r['kind'] == 'extract'), len(before))
-        self.assertEqual(original, self.report()[1:])
-        self.assertNotEqual(origins['Fixture']['compatibility_sha256'], self.origins()['Fixture']['compatibility_sha256'])
-        self.publish()
-        self.build()
-        self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
-        before = self.stamps()
         origins = self.origins()
         oleans = {str(path.relative_to(self.root)): (path.stat().st_mtime_ns, publication.digest(path))
                   for path in (self.root / '.lake/build/lib/lean').rglob('*.olean*')}
@@ -398,23 +383,6 @@ class NativePublicationConsumerTests:
         self.build()
         self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
         self.assertEqual(before, self.stamps())
-    def test_native_invalid_semantic_versions(self):
-        self.build()
-        before = self.stamps()
-        original = (self.root / 'lean-report-inputs.json').read_text()
-        for value in ['0', '-1', 'true', 'null', '"1"', '1.0', '1e0']:
-            self.write('lean-report-inputs.json', original.replace('"report_cache_release_semantic_version": 1', '"report_cache_release_semantic_version": ' + value))
-            result = self.build(success=False)
-            self.assertIn('report_cache_release_semantic_version', result.stdout + result.stderr)
-            self.assertEqual(before, self.stamps())
-            self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
-        for invalid in [original.replace('"report_cache_release_semantic_version": 1, ', ''),
-                        original.replace('"report_cache_release_semantic_version": 1', '"report_cache_release_semantic_version": 1, "report_cache_release_semantic_version": 1')]:
-            self.write('lean-report-inputs.json', invalid)
-            result = self.build(success=False)
-            self.assertIn('report_cache_release_semantic_version', result.stdout + result.stderr)
-            self.assertEqual(before, self.stamps())
-            self.assertEqual((self.root / 'activity.jsonl').read_text(), '')
 
 
 class NativeArtifactConsumerTests:
@@ -488,8 +456,8 @@ class NativeArtifactConsumerTests:
             else: environment.pop(name, None)
         state = native.state(self.root)
         write_origin = publication.write_origin
-        def damaged(report, name, origin):
-            write_origin(report, name, origin)
+        def damaged(report, name, origin, projection):
+            write_origin(report, name, origin, projection)
             provenance = publication.member(report, '.provenance.json')
             provenance.write_bytes(materials.canonical_json(
                 dict(json.loads(provenance.read_bytes()), report_sha256='0' * 64)))
@@ -525,7 +493,7 @@ class NativeArtifactConsumerTests:
         inspector = self.root / 'tools/lean-inspector/Inspector.lean'
         # A real implementation edit changes executable bytes while preserving
         # valid report semantics. Compilation must still succeed.
-        inspector.write_text(inspector.read_text().replace('expected bodies or names', 'expected census bodies or names'))
+        inspector.write_text(inspector.read_text().replace('at least one module is required', 'a report module is required'))
         self.build()
         self.assertNotEqual(executable_before, publication.digest(executable))
         self.assertEqual(before, self.stamps())

@@ -1,5 +1,5 @@
+import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.LegacyContextReplacement
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ExactRate
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
@@ -10,17 +10,7 @@ import D5.S3.ConceptDynamics.InformationEscapeHierarchy.LayeredCapture
 import D5.S3.ConceptDynamics.InformationEscapeHierarchy.RefinementMatrix
 import D5.S3.ConceptDynamics.RegistrationWitnesses
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.InformationRoot
-  expected := #[
-    { objectArenaName := `Reg.Support.LegacyContextReplacement.objectArena, theoremName := `D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points,
-      statementIdentity := "sha256:778398ffe72817b135e29453ae9a3b796de14383670686abbf230840cb7ee515",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.InformationRoot }]
-  source := #[
-    { objectArenaName := `Reg.Support.LegacyContextReplacement.objectArena, theoremName := `D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points,
-      statementIdentity := "sha256:778398ffe72817b135e29453ae9a3b796de14383670686abbf230840cb7ee515",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.InformationRoot }]
-  companionPrefix := some `Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.InformationRoot }
+
 
 
 namespace Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.InformationRoot
@@ -28,12 +18,27 @@ open _root_.D5.S3.ConceptDynamics.InformationEscape.RegistrationTemplates
 open Reg.Support.LegacyContextReplacement
 open LeanInformationAudit
 
-register_information_theorem _root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points
-  in domainArena
-  object_arena objectArena catalog Reg.Support.LegacyContextReplacement.objectArena
-  readout via (cutRealization (fun x : ContextData => Reg.Support.LegacyContextCausalCodes.contextCode x))
-  primitives actual.toPrimitiveBundle realization bridge
-  variation variation sensitivity sensitivity
-  escape from (_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.baselineContext) escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points) (type_of% (cutRealization (fun x : ContextData => Reg.Support.LegacyContextCausalCodes.contextCode x))) (type_of% (_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.baselineContext)) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Interpretation") "InterpretationFixedPoint") "context_parameters_can_select_distinct_fixed_points") "Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.InformationRoot/Reg.Support.LegacyContextReplacement.objectArena/Reg.Support.LegacyContextReplacement.objectArena") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Interpretation") "InterpretationFixedPoint") "context_parameters_can_select_distinct_fixed_points") "Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.InformationRoot/Reg.Support.LegacyContextReplacement.objectArena/Reg.Support.LegacyContextReplacement.objectArena") "__primitive_realization"),
+  realizationSource := some `Reg.Support.LegacyContextReplacement.bridge,
+  generated := false,
+  arena := .object ⟨(domainArena)⟩,
+  objectArena := .finite ⟨(objectArena)⟩,
+  catalog := `Reg.Support.LegacyContextReplacement.objectArena,
+  localNames := false,
+  realization := .legacy (Reg.Support.LegacyContextReplacement.lawArena) (Reg.Support.LegacyContextReplacement.actual) (actual.toPrimitiveBundle) ⟨(bridge)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (bridge) (@_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.context_parameters_can_select_distinct_fixed_points))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((actual.toPrimitiveBundle)).Nonempty; decide),
+  readout := some (cutRealization (fun x : ContextData => Reg.Support.LegacyContextCausalCodes.contextCode x)),
+  variation := .evidence ⟨(variation)⟩ (by first | exact (variation) | exact ⟨_, _, (variation)⟩),
+  sensitivity := .evidence ⟨(sensitivity)⟩ (by exact (sensitivity)),
+  partialSensitivity := none,
+  escapeFrom := some (_root_.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.baselineContext),
+  sourceSelection := none,
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 end Reg.D5.S3.ConceptDynamics.Interpretation.InterpretationFixedPoint.InformationRoot
