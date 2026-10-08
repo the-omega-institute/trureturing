@@ -1,0 +1,230 @@
+"""Local make entry guards and explicit build policies at real process boundaries."""
+import json
+import os
+from pathlib import Path
+import shutil
+import subprocess
+import sys
+import unittest
+
+import test_reuse
+
+ROOT = test_reuse.ROOT
+import publication
+
+
+class LocalEntryTests(unittest.TestCase):
+    def setUp(self):
+        self.fixture = test_reuse.ReuseTests()
+        self.fixture.setUp()
+        self.addCleanup(self.fixture.doCleanups)
+        self.root = self.fixture.root
+        self.api = self.fixture.receipt()
+        self.seed = self.fixture.report
+        self.output = self.root / '.lake/build/stratalint' / publication.RAW
+        for name in ('Makefile', 'tools/scripts/report/lean-report.sh',
+                     'tools/lean-inspector/inspect.sh', 'tools/lean-inspector/reuse.py',
+                     'tools/lean-inspector/publication.py', 'tools/lean-inspector/materials.py',
+                     'tools/lean-inspector/build_work.py', 'tools/scripts/lib/resource-observation-lib.sh',
+                     'tools/scripts/worktree/lean_cache_release.py',
+                     'tools/scripts/worktree/lean_cache.py', 'tools/scripts/worktree/cache_material.py'):
+            target = self.root / name
+            target.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(ROOT / name, target)
+        self.restore = self.root / 'dev-seed'
+        shutil.copytree(self.seed.parent, self.restore)
+        self.script('tools/scripts/worktree/lean-cache-publish.sh',
+                    'printf "fetch %s\\n" "$*" >> calls\n'
+                    'exit 1\n')
+        self.script('tools/scripts/worktree/lean-cache-ensure.sh',
+                    'printf "ensure\\n" >> calls\nmkdir -p .lake\n')
+        self.script('tools/scripts/worktree/lean-cache-run.sh',
+                    'printf "lake %s\\n" "$*" >> calls\nexit 23\n')
+        producer = self.root / 'producer.dll'
+        producer.touch()
+        self.environment = dict(os.environ, LAKE_BIN=str(self.fixture.lake),
+            PATH=str(Path(sys.executable).parent) + os.pathsep + os.environ['PATH'],
+            STRATALINT_INSPECTOR_SUPERVISED='1', STRATALINT_LEAN_PRODUCER_DLL=str(producer),
+            STRATALINT_LEAN_REPORT_REUSE=str(self.seed), STRATALINT_LEAN_BUILD_TARGETS='[]',
+            STRATALINT_LEAN_REPORT_LOG_DIR=str(self.root / 'logs'))
+
+    def script(self, name, body):
+        target = self.root / name
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text('#!/bin/bash\nset -euo pipefail\n' + body)
+        target.chmod(0o755)
+
+    def run_entry(self, *options, direct=False):
+        command = (['bash', str(self.root / 'tools/lean-inspector/inspect.sh'),
+                    '--repository', str(self.root), '--output', str(self.output), *options]
+                   if direct else ['make', '--no-print-directory', 'lean-report', *options])
+        result = subprocess.run(command, cwd=self.root, env=self.environment,
+                                text=True, capture_output=True, timeout=30)
+        self.calls = ((self.root / 'calls').read_text().splitlines()
+                      if (self.root / 'calls').exists() else [])
+        return result
+
+    def damage(self, kind):
+        receipt = publication.member(self.seed, '.reuse.json')
+        if kind == 'missing':
+            shutil.rmtree(self.seed.parent)
+        elif kind == 'receipt-missing':
+            receipt.unlink()
+        elif kind == 'member-missing':
+            publication.member(self.seed, '.materials.zip').unlink()
+        elif kind == 'invalid':
+            receipt.write_text('invalid JSON')
+        elif kind == 'incomplete':
+            record = json.loads(receipt.read_text())
+            record['completed'] = ['report']
+            receipt.write_text(json.dumps(record))
+        elif kind == 'format':
+            record = json.loads(receipt.read_text())
+            record['inputs']['report_format'] = 'incompatible-report-format'
+            receipt.write_text(json.dumps(record))
+
+    def restore_seed(self):
+        self.script('tools/scripts/worktree/lean-cache-publish.sh',
+                    'printf "fetch %s\\n" "$*" >> calls\n'
+                    'mkdir -p .lake/build/stratalint\n'
+                    'cp dev-seed/* .lake/build/stratalint/\n')
+
+    def assert_guarded(self, result):
+        self.assertNotEqual(result.returncode, 0, '[FAIL] incompatible_entry_must_fail')
+        self.assertIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr,
+                      '[FAIL] incompatible_entry_names_diagnostic')
+        self.assertIn('REBUILD_REPORT_CACHE=1', result.stdout + result.stderr)
+        self.assertEqual(len(self.calls), 1, '[FAIL] local_miss_only_fetches_before_failure')
+        self.assertTrue(self.calls[0].startswith('fetch fetch --mode production'))
+        self.assertIn('--refresh-stale', self.calls[0])
+        self.assertNotIn('phase=report ', result.stderr, '[FAIL] incompatible_entry_never_extracts')
+
+    def test_missing_seed_fetches_then_fails_without_lake(self):
+        self.damage('missing')
+        self.assert_guarded(self.run_entry())
+        self.assertFalse((self.root / '.lake').exists())
+
+    def test_format_mismatch_fetches_then_fails_without_lake(self):
+        self.damage('format')
+        self.assert_guarded(self.run_entry())
+
+    def test_incomplete_or_invalid_seed_cannot_enable_full_build(self):
+        for kind in ('receipt-missing', 'member-missing', 'invalid', 'incomplete'):
+            with self.subTest(kind=kind):
+                self.setUp()
+                self.damage(kind)
+                self.assert_guarded(self.run_entry())
+
+    def test_fetched_seed_still_incompatible_fails_before_lake(self):
+        self.damage('format')
+        shutil.rmtree(self.restore)
+        shutil.copytree(self.seed.parent, self.restore)
+        self.restore_seed()
+        self.assert_guarded(self.run_entry())
+
+    def test_fetched_matching_seed_reuses_complete_report(self):
+        self.damage('missing')
+        self.restore_seed()
+        result = self.run_entry()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(len(self.calls), 1, '[FAIL] fetched_matching_seed_must_skip_report_build')
+        self.assertIn('LEAN_INSPECTOR_WORK extracted_modules=0 aggregates=0', result.stdout)
+        self.assertTrue(publication.member(self.output, '.reuse.json').is_file())
+
+    def test_fetched_matching_format_with_changed_inputs_uses_incremental_entry(self):
+        self.damage('format')
+        self.fixture.write('D5/A.lean', 'def a := 2\n')
+        self.restore_seed()
+        result = self.run_entry()
+        self.assertNotEqual(result.returncode, 0)  # Native build stub preserves failure.
+        self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr,
+                         '[FAIL] matching_restored_format_must_allow_incremental_build')
+        self.assertEqual(len(self.calls), 3)
+        self.assertEqual(self.calls[1], 'ensure')
+        self.assertIn('build :report', self.calls[2], '[FAIL] compatible_fetch_keeps_lake_incremental_path')
+        self.assertIn('changed_inputs=1', result.stdout)
+
+    def test_matching_local_seed_with_changed_inputs_does_not_fetch(self):
+        self.fixture.write('D5/A.lean', 'def a := 2\n')
+        result = self.run_entry()
+        self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr,
+                         '[FAIL] matching_local_format_must_allow_incremental_build')
+        self.assertEqual(len(self.calls), 2)
+        self.assertEqual(self.calls[0], 'ensure')
+        self.assertIn('build :report', self.calls[1])
+
+    def test_same_format_program_changes_preserve_complete_reuse(self):
+        self.fixture.write('producer.py', '# changed producer\n')
+        result = self.run_entry()
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(self.calls, [])
+        self.assertIn('extracted_modules=0 aggregates=0', result.stdout)
+
+    def test_rebuild_opt_in_enters_full_path_without_fetch_or_receipt_reuse(self):
+        result = self.run_entry('REBUILD_REPORT_CACHE=1')
+        self.assertNotEqual(result.returncode, 0, '[FAIL] explicit_build_propagates_lake_failure')
+        self.assertEqual(len(self.calls), 2, '[FAIL] explicit_build_must_enter_report_path')
+        self.assertEqual(self.calls[0], 'ensure')
+        self.assertIn('build :report', self.calls[1])
+        self.assertNotIn('complete-entry-reused', result.stdout)
+
+    def test_reuse_or_build_is_explicit_and_never_fetches(self):
+        self.damage('format')
+        result = self.run_entry('LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build')
+        self.assertNotIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr,
+                         '[FAIL] explicit_reuse_or_build_must_allow_full_path')
+        self.assertEqual(len(self.calls), 2)
+        self.assertEqual(self.calls[0], 'ensure')
+        self.assertIn('build :report', self.calls[1])
+
+    def test_ci_environment_does_not_change_local_policy(self):
+        self.damage('missing')
+        self.environment['GITHUB_ACTIONS'] = 'true'
+        self.assert_guarded(self.run_entry())
+
+    def test_direct_guard_returns_dedicated_status_before_program_builds(self):
+        self.damage('format')
+        self.environment['STRATALINT_LEAN_BUILD_TARGETS'] = '["Probe"]'
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertEqual(result.returncode, 4, '[FAIL] dedicated_guard_status_reaches_direct_caller')
+        self.assert_guarded(result)
+
+    def test_invalid_make_options_fail_before_fetch_or_build(self):
+        for option in ('REBUILD_REPORT_CACHE=2', 'LEAN_REPORT_CACHE_MISS_POLICY=invalid'):
+            result = self.run_entry(option)
+            self.assertNotEqual(result.returncode, 0, '[FAIL] invalid_option_must_fail_fast')
+            self.assertEqual(self.calls, [])
+
+    def test_custom_output_uses_fetched_canonical_seed(self):
+        self.damage('missing')
+        self.restore_seed()
+        destination = self.root / 'custom/report.json'
+        result = self.run_entry('LEAN_REPORT=' + str(destination))
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertTrue(destination.is_file(), '[FAIL] fetched_seed_publishes_requested_output')
+
+    def test_refresh_option_reaches_canonical_release_reader(self):
+        result = subprocess.run(['make', '--no-print-directory',
+                                 'lean-cache-from-github-without-mathlib', 'REFRESH_STALE=1'],
+                                cwd=self.root, env=self.environment, text=True, capture_output=True, timeout=30)
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn('--refresh-stale', (self.root / 'calls').read_text(),
+                      '[FAIL] explicit_refresh_must_replace_existing_build')
+
+    def test_busy_cache_preserves_other_writer_receipt(self):
+        sys.path.insert(0, str(ROOT / 'tools/scripts/worktree'))
+        from lean_cache_release import cache_guard
+        self.api.reuse(self.root, self.seed, self.output)
+        receipt = publication.member(self.output, '.reuse.json')
+        before = receipt.read_bytes()
+        self.environment.pop('STRATALINT_LEAN_REPORT_REUSE')
+        with cache_guard(self.root):
+            result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertEqual(result.returncode, 4)
+        self.assertEqual(self.calls, [])
+        self.assertTrue(receipt.is_file(), '[FAIL] busy_guard_must_preserve_other_writer_receipt')
+        self.assertEqual(receipt.read_bytes(), before)
+
+
+if __name__ == '__main__':
+    unittest.main()
