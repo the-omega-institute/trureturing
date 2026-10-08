@@ -44,31 +44,30 @@ internal sealed class CliffordThirdMomentAggregateRefutationDocument : IScribeDo
     private static Formula Named(string name) => Seq(Operatorname, Grp(F.Id(name)));
     private static Formula Call(string name, params Formula[] args) => new Formula.Apply(Named(name), [.. args]);
     private static Formula Of(Formula f, params Formula[] args) => new Formula.Apply(f, [.. args]);
-    private static Formula Par(Formula x) => Seq(Open, x, Close);
+    private static Formula Parenthesized(Formula value) => Seq(Open, value, Close);
     private static Formula Eq(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.Equal, b);
     private static Formula Le(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.LessThanOrEqual, b);
     private static Formula Ne(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.NotEqual, b);
-    private static Formula Mem(Formula a, Formula b) => new Formula.Relation(a, FormulaRelationOperator.MemberOf, b);
-    private static Formula Logic(Formula a, FormulaLogicOperator op, Formula b) => new Formula.Logic(Par(a), op, Par(b));
+    private static Formula Logic(Formula a, FormulaLogicOperator op, Formula b) => new Formula.Logic(Parenthesized(a), op, Parenthesized(b));
     private static Formula And(Formula a, Formula b) => Logic(a, FormulaLogicOperator.And, b);
     private static Formula Imp(Formula a, Formula b) => Logic(a, FormulaLogicOperator.Implies, b);
     private static Formula Iff(Formula a, Formula b) => Logic(a, FormulaLogicOperator.Iff, b);
     private static Formula All(Formula x, Formula type, Formula body) =>
         Seq(Forall, Sp, x, Sp, Colon, Sp, type, Comma, Sp, body);
-    private static Formula Arrow(Formula a, Formula b) => Seq(Par(a), Sp, To, Sp, b);
+    private static Formula Arrow(Formula a, Formula b) => Seq(Parenthesized(a), Sp, To, Sp, b);
     private static Formula Nat() => Seq(Mathbb, Grp(F.Id("N")));
     private static Formula Complex() => Seq(Mathbb, Grp(F.Id("C")));
     private static Formula Fin(Formula n) => Call("Fin", n);
     private static Formula Field(Formula d) => Call("ZMod", d);
     private static Formula Config(Formula d, Formula n) => Arrow(Fin(n), Field(d));
     private static Formula Vectors(Formula d, Formula n) => Arrow(Config(d, n), Complex());
-    private static Formula Pair(Formula x, Formula y) => Seq(Open, x, Comma, Sp, y, Close);
+    private static Formula Pair(Formula x, Formula y) => Parenthesized(Seq(x, Comma, Sp, y));
     private static Formula Mul(Formula a, Formula b) => new Formula.Binary(a, FormulaBinaryOperator.Multiply, b);
     private static Formula Square(Formula a) => new Formula.Power(a, D(2));
     private static Formula Sum(Formula x, Formula type, Formula body) =>
-        Seq(F.Sum, Underscore, Grp(Seq(x, Sp, Colon, Sp, type)), Sp, Par(body));
+        Seq(F.Sum, Underscore, Grp(Seq(x, Sp, Colon, Sp, type)), Sp, Parenthesized(body));
     private static Formula Lambda(Formula x, Formula type, Formula body) =>
-        Seq(Open, x, Sp, Colon, Sp, type, Sp, Mapsto, Sp, body, Close);
+        Parenthesized(Seq(x, Sp, Colon, Sp, type, Sp, Mapsto, Sp, body));
 
     private static Formula Mat(Formula d) => Call("Matrix", Fin(D(3)), Fin(D(3)), Field(d));
     private static Formula Instance(string name, Formula argument) =>
@@ -98,9 +97,9 @@ internal sealed class CliffordThirdMomentAggregateRefutationDocument : IScribeDo
     {
         Formula d = F.Id("d"), n = F.Id("n"), psi = F.Id("Psi"), o = F.Id("O");
         Formula domain = Seq(o, Sp, Colon, Sp, Mat(d), Comma, Sp,
-            Mem(o, Call("stochasticOrthogonal", d)));
+            o, Sp, InMacro, Sp, Call("stochasticOrthogonal", d));
         Formula sum = Seq(F.Sum, Underscore, Grp(domain), Sp,
-            Par(Call("kappa", d, n, psi, Call("graphSubspace", o))));
+            Parenthesized(Call("kappa", d, n, psi, Call("graphSubspace", o))));
         return All(d, Nat(), All(n, Nat(), Seq(Instance("NeZero", d),
             All(psi, Vectors(d, n), Eq(Call("kappaIso", d, n, psi), sum)))));
     }
