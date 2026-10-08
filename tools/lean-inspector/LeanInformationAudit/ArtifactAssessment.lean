@@ -17,12 +17,12 @@ def discover (store : RawArtifacts.Store) (target : Name) : IO Discovery.Snapsho
   let owners := store.moduleOrder.filter (fun owner =>
     reachable.contains owner && ((`Reg).isPrefixOf owner ||
       (store.modules.find? owner).any RawArtifacts.hasTypedInputs))
-  let context := CompiledRegistration.expressionContext (store.constants[·]?)
+  let context := CompiledRegistration.expressionContext (store.constants.find?)
     (← IO.getNumHeartbeats) {}
   let axioms ← IO.mkRef ({ closure := store.metadata.axioms } : CompiledAxioms.AxiomClosureState)
   Discovery.discoverCompiled (requirements owners) owners context
     (fun owner => return (← store.getModule owner).constants)
-    (CompiledAxioms.collectAxiomsShared (store.constants[·]?) axioms)
+    (CompiledAxioms.collectAxiomsShared (store.constants.find?) axioms)
     (fun owner => pure (System.FilePath.mk (TemplateBinding.sourcePath owner)))
 
 /-- A fresh target assessment rebuilds plans, registrations, all reachable
