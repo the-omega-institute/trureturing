@@ -55,6 +55,129 @@ The complete archimedean/source correspondence remains necessary: Proposition 5.
 
 The restricted odd Weil criterion and endpoint closure remain separate consumers; odd-only testing is not dismissed. The bounded primary check supplies no signed Robin main estimate, new positivity theorem, numerical certificate or RH proof. It also establishes no actual-arithmetic counterexample to v3. Its reusable source conclusion is that v2's retired double-arm reduction must not be used to reject v3, while the positive reference contribution and full-form comparison still require verification before Theorem 8.6 can be adopted.
 
+## A full-pole bound for the literal physical collar
+
+Use the physical form defined by (9)–(15) and (61)–(63) of arXiv v3. This calculation concerns its literal old/new compression, not the whole arithmetic target cell and not a free-complement source short. The source's identification of that form with the global Weil form, and its subsequent common-cut transport, retain their separate verification obligations.
+
+For every integer $k\ge7$, set
+
+$$
+a=\frac12\log k,\qquad b=\frac12\log(k+1),\qquad
+h=b-a=\frac{w_k}{2},\qquad w_k=\log(1+1/k).
+$$
+
+Let $\mathcal K_k$ be the odd functions supported in $(-b,-a)\cup(a,b)$, initially on the smooth compactly supported core. Denote by $D_k^A$ the compression of the complete source-defined operator $A_{b,-}$ to this collar; thus this is the new diagonal in the full physical old/new block matrix. Write
+
+$$
+\mathfrak B_k=\frac12+\log(1/w_k),\qquad
+\tau_k=\|s^{\rm ph}\mathbf1_{(-b,-a)\cup(a,b)}\|_2^2
+=\sinh b-\sinh a-h.
+$$
+
+The pole quantity is the source's exact restriction identity (114), not a profile replacement.
+
+### No prime-power term survives inside this new block
+
+A same-side collar overlap would require a displacement smaller than $h<\log2$. A cross-side overlap would require
+
+$$
+2a<\log n<2b,\quad\text{or equivalently}\quad k<n<k+1.
+$$
+
+Neither can hold for an integer prime power $n\ge2$. Boundary contact at $n=k$ has zero measure. Consequently every prime-power translation in the complete new/new compression vanishes, including prime powers at the arithmetic endpoint. The old/new coupling remains present in the full operator.
+
+### Retain the reflected Gamma contribution and the true pole
+
+Identify an odd collar vector isometrically with $u\in L^2(a,b)$ by taking $u(y)/\sqrt2$ on the positive interval and $-u(-y)/\sqrt2$ on the negative interval. Put $g(v)=\sqrt h\,u(a+hv)$ for $0<v<1$. Reuse the [single-interval archimedean compression benchmark](#full-form-transport-benchmarks-and-the-v2-correspondence-input). Combining its two reflected copies gives the complete diagonal identity
+
+$$
+\begin{aligned}
+\langle u,D_k^Au\rangle
+={}&\mathfrak b[g]-[\log(2\pi h)+\gamma]\|u\|_2^2
+-\iint_{(a,b)^2}\rho(|y-z|)u(y)\overline{u(z)}\,dy\,dz\\
+&+\iint_{(a,b)^2}\kappa(y+z)u(y)\overline{u(z)}\,dy\,dz
+-4\left|\int_a^b\sinh(y/2)u(y)\,dy\right|^2,
+\end{aligned}
+\tag{C1}
+$$
+
+where $\rho(r)=e^{-r/2}/(1-e^{-2r})-1/(2r)$ and
+
+$$
+\kappa(r)=\frac1{2r}+\rho(r)
+=\frac{e^{-r/2}}{1-e^{-2r}}
+=\sum_{j\ge0}e^{-(2j+1/2)r}.
+$$
+
+Thus the reflected term is positive as an operator, not merely pointwise:
+
+$$
+\iint\kappa(y+z)u(y)\overline{u(z)}\,dy\,dz
+=\sum_{j\ge0}\left|\int_a^b e^{-(2j+1/2)y}u(y)\,dy\right|^2\ge0.
+\tag{C2}
+$$
+
+The sum converges because $a\ge\frac12\log7>0$. The reflected singular and regular kernels must be combined before using this sign.
+
+For $0\le r\le h<1/2$, the continuous extension of the regular kernel obeys
+
+$$
+0\le\rho(r)\le\frac14.
+\tag{C3}
+$$
+
+For the upper bound, equivalently $(2+r)\sinh r\ge2r e^{r/2}$, the odd power coefficients after the first are $2[1-(2j+1)/4^j]/(2j+1)!$ and the even ones are $[1-1/4^j]/(2j+1)!$, all nonnegative. For the lower bound, $\sinh r/r\le\cosh r\le e^{r^2/2}\le1+r^2\le1+r/2\le e^{r/2}$ for $r\le1/2$. Schur's kernel bound therefore gives an operator norm at most $h/4=w_k/8$ on this interval.
+
+The already supplied one-cell form has $\mathfrak b[g]\ge(\log2)\|g\|_2^2$. Its stronger spectral constant may be retained: the [existing small-window source](frankliebseiringer2006hardy.md#reuse-the-stronger-small-window-spectral-floor) defines $\mu_1>0$ and gives $\mathfrak b[g]\ge(\log2+\mu_1)\|g\|_2^2$ after the affine unitary. No local spectral theorem is reproved here. Finally Cauchy–Schwarz bounds the full negative pole by $2\tau_k\|u\|_2^2$. Hence (C1) yields the all-$k$ literal-collar lower bound
+
+$$
+\boxed{
+D_k^A\succeq
+[\mathfrak B_k-C_k+\mu_1]I,
+\qquad
+C_k=\frac12+\log(\pi/2)+\gamma+\frac{w_k}{8}+2\tau_k.
+}
+\tag{C4}
+$$
+
+Dropping only the known positive $\mu_1$ gives the weaker explicit coefficient. This bound applies on the displayed smooth core and its Friedrichs form closure; it is not an assertion that an unproved transported source domain coincides with that closure.
+
+There is a uniform elementary allowance:
+
+$$
+\begin{aligned}
+2\tau_k
+&=\sqrt{k+1}-\sqrt k+\frac1{\sqrt k}-\frac1{\sqrt{k+1}}-w_k\\
+&<\frac1{2\sqrt k}+\frac1{2k^{3/2}}
+\le\frac4{7\sqrt7}<\frac{20}{91},\qquad
+\frac{w_k}{8}<\frac1{56}.
+\end{aligned}
+$$
+
+Using the standard constant bounds $\gamma<3/5$, $\log(\pi/2)<23/50$ and $\sqrt7>13/5$, one obtains
+
+$$
+C_k<\frac{39}{25}+\frac1{56}+\frac{20}{91}
+=\frac95-\frac{43}{18200}<\frac95.
+\tag{C5}
+$$
+
+Consequently $D_k^A\succeq(\mathfrak B_k-9/5)I$ in this realization. The Gamma reflection sign, vanished prime overlaps and true negative pole all refer to the same physical vector.
+
+### The constant target diagonal is not the whole physical compression
+
+The existing small-window domain argument permits the constant profile in the closed form. Let $u_k=h^{-1/2}$ on $(a,b)$ and take its odd pair as above. Then $\mathfrak b[1]=1$, the self-regular term is $O(h)$, the reflected term is $O(hk^{-1/2})$, and the pole is $O(k^{-1/2})$. Since $h=w_k/2$, (C1) gives
+
+$$
+\langle u_k,D_k^Au_k\rangle-\mathfrak B_k
+\longrightarrow\frac12-\log\pi-\gamma<0.
+\tag{C6}
+$$
+
+Therefore the scalar $\mathfrak B_k I$ is not equal to, or a lower bound for, the complete literal physical new diagonal. This does not refute a decomposition in which $\mathfrak B_k$ is one named primal term accompanied by further diagonal contributions. Any such decomposition must retain those contributions and the actual old/new transport before consuming MASTER-P3c. Nor is (C6) a negative test for the full Weil form: the actual diagonal grows like $\log k$.
+
+The new interface is the complete prime-free odd collar comparison (C1)–(C5), with (C6) specifying its normalization. The one-cell floor, basic compression benchmark, Schur kernel estimate and exact pole restriction are reused. The global signed obligation remains the old/source inverse debit on the same harmonic vector; no positive aligned reference contribution is supplied by this diagonal bound, and no Robin or RH conclusion follows alone. The source's finite MASTER margin must not be transported through (C5) without a paid common-source identification and a compatible all-scale tail.
+
 ## v2: the claimed induction step
 
 The following induction and fold formulas are those of [arXiv:2609.20367v2](https://arxiv.org/abs/2609.20367v2), revised **20 September 2026**, 69 pages. At the arithmetic endpoint $a_k=(\log k)/2$, the source retains the pole term in $A_k=C_k-2|s_k\rangle\langle s_k|$. Lemma 6.27, under the old endpoint's positivity and inverse hypotheses, forms the actual harmonic extension
