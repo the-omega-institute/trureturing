@@ -1,0 +1,15 @@
+**约定 2.6（硬核测度与参数化）。** 对 $\lambda>0$，置
+
+$$
+Z_n(\lambda)=\sum_{b\in B_n}\lambda^{k(b)},\qquad
+\mu^{(n)}_\lambda(b)=\frac{\lambda^{k(b)}}{Z_n(\lambda)},
+$$
+
+$\mathbb E^{(n)}_\lambda$ 为关于 $\mu^{(n)}_\lambda$ 的期望。每个 $\lambda>0$ 唯一对应 $r=\bigl(1+\sqrt{1+4\lambda}\bigr)/2>1$，反之 $\lambda=r(r-1)$；记 $s=1-r$、$\vartheta=(r-1)/r\in(0,1)$，并令
+
+$$
+g(r)=\frac{r-1}{(r^2-r+1)(2r-1)},\qquad
+p(r)=4r^3-9r^2+6r-2\qquad(r>1).
+\tag{2.3}
+$$
+

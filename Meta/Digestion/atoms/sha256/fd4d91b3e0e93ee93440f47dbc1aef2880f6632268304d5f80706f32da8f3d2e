@@ -1,0 +1,163 @@
+## 11. 有限精确核验
+
+以下代码只用 Python 标准库，固定输入，末行打印哨兵。段号与第 10 章「核验边界」的段号一致。
+
+```python
+from fractions import Fraction as Q
+import math
+
+
+def legal(n):
+    return [w for w in range(1 << n) if not (w & (w >> 1))]
+
+
+def flipmask(w, n):
+    return ~(w | (w << 1) | (w >> 1)) & ((1 << n) - 1)
+
+
+def edges(n):
+    return [(w, w | (1 << i)) for w in legal(n) for i in range(n)
+            if (flipmask(w, n) >> i) & 1]
+
+
+def fib(k):
+    a, b = 0, 1
+    for _ in range(k):
+        a, b = b, a + b
+    return a
+
+
+def ones(w):
+    return bin(w).count("1")
+
+
+def rev(w, n):
+    return int(format(w, "0%db" % n)[::-1], 2) if n else 0
+
+
+def h(s, t):
+    return s * t / (s + t) if s + t else 0
+
+
+def phi(E, mu):
+    return sum(h(mu[b], mu[c]) for b, c in E)
+
+
+# 1. counts, edge formula, reversal, degree = u + k, u + 2k <= n + 1
+for n in range(1, 17):
+    V, E = legal(n), edges(n)
+    S, ES = set(V), set(E)
+    assert len(V) == fib(n + 2)
+    assert 5 * len(E) == n * fib(n + 1) + 2 * (n + 1) * fib(n)
+    deg = dict.fromkeys(V, 0)
+    for b, c in E:
+        assert c in S and ones(c) == ones(b) + 1
+        deg[b] += 1
+        deg[c] += 1
+        x, y = rev(b, n), rev(c, n)
+        assert (min(x, y), max(x, y)) in ES
+    alt = sum(1 << i for i in range(0, n, 2)) if n % 2 else None
+    for w in V:
+        u, k = ones(flipmask(w, n)), ones(w)
+        assert deg[w] == u + k
+        assert u + 2 * k <= n + 1 and ((u + 2 * k == n + 1) == (w == alt))
+
+# 2. b0c lands in B_{n+m+1}; a word of B_{n+m} splits into B_n x B_m
+for n in range(0, 7):
+    for m in range(0, 7):
+        Sb, Sn, Sm = set(legal(n + m + 1)), set(legal(n)), set(legal(m))
+        assert all((b | (c << (n + 1))) in Sb for b in Sn for c in Sm)
+        assert all((w & ((1 << n) - 1)) in Sn and (w >> n) in Sm
+                   for w in legal(n + m))
+
+# 3. hard-core measure: partition function, dual value, window counts
+for lam in [Q(1, 3), Q(1, 2), Q(1, 1), Q(2, 1), Q(5, 1)]:
+    Z = [Q(1), 1 + lam]
+    for k in range(2, 13):
+        Z.append(Z[-1] + lam * Z[-2])
+    for n in range(1, 13):
+        V, E = legal(n), edges(n)
+        assert sum(lam ** ones(w) for w in V) == Z[n]
+        mu = {w: lam ** ones(w) / Z[n] for w in V}
+        Eu = sum(mu[w] * ones(flipmask(w, n)) for w in V)
+        assert phi(E, mu) == lam / (1 + lam) * Eu
+        for i in range(1, n - 1):
+            win = sum(lam ** ones(w) for w in V if not (w >> (i - 1)) & 7)
+            assert win == Z[i - 1] * Z[n - i - 2]
+
+# 4. stars K_{1,m}, m = k^2: primal and dual values coincide
+for k in range(1, 6):
+    m, t, val = k * k, Q(1, 1 + k), Q(k * k, (1 + k) ** 2)
+    assert m * t * t == val and (1 - t) ** 2 == val
+    mc, ml = Q(1, 1 + k), Q(1, k * (1 + k))
+    assert mc + m * ml == 1 and m * h(mc, ml) == val
+
+# 5. exact inequalities and the maximiser of g
+assert 5 * 12559 ** 2 > 26795 ** 2 and 1800 * 50 - 7 * 12559 == 2087
+assert 4335 ** 2 < 288 * 256 ** 2 and 8 * 16 > 11 ** 2
+assert 3631 ** 2 > 200 * 256 ** 2 and 2925 ** 2 > 128 * 256 ** 2
+assert 183 ** 2 > 64 * 512 and 223606 ** 2 < 5 * 10 ** 10 < 22361 ** 2 * 100
+p = lambda r: 4 * r ** 3 - 9 * r ** 2 + 6 * r - 2
+g = lambda r: (r - 1) / ((r * r - r + 1) * (2 * r - 1))
+lo, hi = Q(14, 10), Q(15, 10)
+assert p(lo) < 0 < p(hi)
+for _ in range(40):
+    mid = (lo + hi) / 2
+    lo, hi = (mid, hi) if p(mid) < 0 else (lo, mid)
+glo, ghi = g(lo), (hi - 1) / ((lo * lo - lo + 1) * (2 * lo - 1))
+assert Q(14333115, 10 ** 8) < glo <= ghi < Q(14333116, 10 ** 8)
+assert g(Q(29, 20)) == Q(1800, 12559)
+
+# 6. n = 3: hard-core values stay below 507/1000, explicit measure reaches 13/25
+eta, xi = Q(507, 1000), Q(39, 50)
+q2, q1, q0 = 4 * eta - 2, 3 * eta * xi * xi + 4 * eta - 3, eta - 2 * eta * xi ** 3
+assert q2 > 0 and q1 * q1 - 4 * q2 * q0 == Q(-4476989919, 6250000000000)
+assert (q2, q1, q0) == (Q(7, 250), Q(-116559, 2500000), Q(1612767, 62500000))
+mu3 = {0: Q(249, 1000), 1: Q(221, 1000), 4: Q(221, 1000),
+       5: Q(213, 1000), 2: Q(96, 1000)}
+assert sum(mu3.values()) == 1
+assert phi(edges(3), mu3) == Q(76293117, 146610625) >= Q(13, 25)
+
+# 7. n = 12: an explicit allocation and an explicit measure, checked exactly
+n, T = 12, 6000
+V, E = legal(n), edges(n)
+ix = {x: i for i, x in enumerate(V)}
+P = [(ix[b], ix[c]) for b, c in E]
+mu = [1.0 / len(V)] * len(V)
+acc = [0.0] * len(E)
+for t in range(T):
+    L = [0.0] * len(V)
+    sh = [mu[j] / (mu[i] + mu[j]) for i, j in P]
+    for (i, j), x in zip(P, sh):
+        L[i] += x * x
+        L[j] += (1 - x) * (1 - x)
+    if t >= T // 2:
+        acc = [x + y for x, y in zip(acc, sh)]
+    top = max(L)
+    mu = [x * math.exp(0.5 * (y - top)) for x, y in zip(mu, L)]
+    tot = sum(mu)
+    mu = [x / tot for x in mu]
+D = 2 ** 40
+alloc = [Q(round(x / (T - T // 2) * D), D) for x in acc]
+load = [Q(0)] * len(V)
+for (i, j), x in zip(P, alloc):
+    assert 0 <= x <= 1
+    load[i] += x * x
+    load[j] += (1 - x) * (1 - x)
+assert max(load) <= Q(180488, 100000)
+qm = [Q(round(x * D), D) for x in mu]
+tot = sum(qm)
+assert phi(E, {V[i]: x / tot for i, x in enumerate(qm)}) >= Q(180487, 100000)
+print("FIB_LEGAL_EDGE_LOAD_CHECKS_PASSED")
+```
+
+[Minimax]: https://github.com/the-omega-institute/trureturing/blob/ae7d7572bd7f0d638e32e9fd724b64dae592b0f9/docs/develop/theory/FIB_ATOM_WHITEBOX_LEGAL_EDGE_MINIMAX.md
+[Recovery]: https://github.com/the-omega-institute/trureturing/blob/ae7d7572bd7f0d638e32e9fd724b64dae592b0f9/docs/develop/theory/FIB_ATOM_WHITEBOX_CORRELATED_WORD_RECOVERY.md
+[KMP]: https://users.fmf.uni-lj.si/klavzar/preprints/DegSeqRevised.pdf
+[Hsu]: https://doi.org/10.1109/71.205649
+[Survey]: https://doi.org/10.1007/s10878-011-9433-z
+[Sion]: https://doi.org/10.2140/pjm.1958.8.171
+[ScottSokal]: https://arxiv.org/abs/cond-mat/0309352
+[DF]: https://www.microsoft.com/en-us/research/publication/log-n-algorithm-load-balancing-problem-paths/
+[DynOri]: https://arxiv.org/abs/2504.16720
+

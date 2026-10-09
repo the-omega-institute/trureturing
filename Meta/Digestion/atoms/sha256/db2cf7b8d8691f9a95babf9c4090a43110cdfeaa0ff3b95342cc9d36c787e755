@@ -1,0 +1,17 @@
+**证明。** 由母卷式（1.1）所复用的边数公式 $e_n=\bigl(nF_{n+1}+2(n+1)F_n\bigr)/5$（对每个 $n\ge1$ 成立的 Fibonacci 立方计数，文献步骤见第 10 章，第 11 章对 $n\le16$ 逐一核对）与 $|B_n|=F_{n+2}$，
+
+$$
+C_n=\frac{e_n}{2F_{n+2}}=\frac{n\,(F_{n+2}+F_n)+2F_n}{10\,F_{n+2}}.
+\tag{7.6}
+$$
+
+Binet 公式给出 $F_n/F_{n+2}\to\varphi^{-2}=(3-\sqrt5)/2$，故 $C_n/n\to\bigl(1+\frac{3-\sqrt5}2\bigr)/10=\frac{5-\sqrt5}{20}$。又 $\varphi^2-\varphi=1$、$2\varphi-1=\sqrt5$，所以 $g(\varphi)=\frac{\varphi-1}{2\sqrt5}=\frac{5-\sqrt5}{20}$。
+
+(i) $F_n/F_{n+2}\le2/5$ 对 $n\ge2$ 成立：它等价于 $3F_n\le2F_{n+1}$，即 $\rho_n=F_{n+1}/F_n\ge3/2$；$\rho_2=2$，且若 $\rho_n\in[3/2,2]$ 则 $\rho_{n+1}=1+1/\rho_n\in[3/2,5/3]$。代入 (7.6) 得 $C_n\le(7n/5+4/5)/10=(7n+4)/50$。与定理 7.3 的 $\kappa_n\ge\frac{1800}{12559}n$ 相减，$\frac{1800}{12559}-\frac7{50}=\frac{90000-87913}{627950}=\frac{2087}{627950}$。
+
+(ii) 由定理 5.2 与上面的极限，$\lim(\kappa_n-C_n)/n=c_\star-g(\varphi)\ge g(r_\star)-g(\varphi)$；又由定理 7.3，$g(r_\star)\ge\frac{1800}{12559}>0.1433$（因 $1433\cdot12559=17997047<18000000$），而 $g(\varphi)=\frac{5-\sqrt5}{20}<0.1382$ 等价于 $\sqrt5>2.236$，即 $5>4.999696$；故 $g(r_\star)-g(\varphi)>0.1433-0.1382=0.0051$。
+
+(iii) 两个极限之比，分母极限为正。
+
+由推论 7.4(i)，$n\ge25$ 时 $\kappa_n-C_n>0$ 的线性下界本身已为正；对一切 $n\ge2$ 的严格性 $\kappa_n>C_n$ 另由推论 4.3(ii) 与 $\Gamma_n$ 的不规则性得到，与母卷 §3.1 一致。
+
