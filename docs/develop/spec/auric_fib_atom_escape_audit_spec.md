@@ -310,7 +310,7 @@ $$
 
 ### 5.3 分层捕获谱
 
-给定严格细化的 kernel 链
+给定允许相邻核相等的弱细化 kernel 链
 
 $$
 K_0\supseteq K_1\supseteq\cdots\supseteq K_m,
@@ -329,6 +329,8 @@ $$
 \operatorname{CapRate}(j)=
 \frac{|L_j|}{|H_L|(|H_L|-1)}.
 $$
+
+相邻核相等时，该层作为 collapsed layer 保留在链和谱中，\(L_j=\varnothing\)、\(\operatorname{Cap}(j)=0\)，且在有限非退化 arena 中 \(\operatorname{CapRate}(j)=0\)。原生 guard 读出由此前读出决定时也属此情形；只有相邻核严格包含时，该层捕获数才为正。
 
 最终未解析率为
 
@@ -366,11 +368,13 @@ R_{\mathrm{guard}}
 =P_p(\bot\mid A)-P_{p^\ast}(\bot\mid A).
 $$
 
-在固定的金字塔续接合同中，若其条件质量为 \(Y+Z>0\)，则
+在固定的金字塔续接合同中，若 \(r>0\) 且条件事件 \(A\) 的质量为 \(Y+Z>0\)，则
 
 $$
 R_{\mathrm{guard}}=\frac{\Delta}{r(Y+Z)}.
 $$
+
+若 \(Y+Z=0\)，事件 \(A\) 为零质量，条件回复律及其残差不适用，不计算该条件分式。若 \(r=0\)，按 §2.4 直接使用唯一顶点：\(p=p^\ast\)、\(Y+Z=1\)，以该顶点的原生回复律得到零残差，不作除以 \(r\) 的运算。
 
 这不是任意评分函数，而是该具体 continuation 任务对隐藏关联坐标的响应。更换读向、初态、后缀或条件事件时，必须重新证明响应式；不得搬用原式。
 
@@ -380,19 +384,33 @@ $$
 
 ## 7. 两层桥接结构
 
-规范性实现应具有下列逻辑图：
+固定同一实际来源在 \(H_L\) 上已声明的概率律 \(\mu\in\operatorname{Law}(H_L)\)。令 \(c:H_L\to O\) 为原子、接缝和回复的联合状态读出，\(\pi_{\mathrm{atom}}:O\to\Sigma\) 为原子分量投影，并令 \(a=\pi_{\mathrm{atom}}\circ c\)。状态观察保持为状态映射：
 
 $$
 H_L
-\xrightarrow{\text{atom/seam/reply readouts}}
+\xrightarrow{c}
 O
-\xrightarrow{\text{pushforward}}
+\xrightarrow{\pi_{\mathrm{atom}}}
+\Sigma.
+$$
+
+对应的概率律推前从来源律空间出发：
+
+$$
+\operatorname{Law}(H_L)
+\xrightarrow{c_*}
+\operatorname{Law}(O)
+\xrightarrow{(\pi_{\mathrm{atom}})_*}
 \operatorname{Law}(\Sigma)
 \xrightarrow{\text{pyramid projection}}
 \mathcal P.
 $$
 
+其中 \(p=a_*\mu=(\pi_{\mathrm{atom}})_*(c_*\mu)\)，且 \(p_s=\mu(\{h\in H_L:a(h)=s\})\)。单个 \(h\) 或 \(c(h)\) 不识别未知来源律 \(\mu\) 或 \(p\)；档案经验律的推前只给出经验五模式律，不认证真实来源律。
+
 微观逃逸分析作用于 \(H_L\) 或其明确的有限商；宏观纤维分析作用于 \(\operatorname{Law}(\Sigma)\)。推前会丢失区别，因此宏观相等不能反推微观历史相等。
+
+单窗推前律 \(p\) 也不能恢复来源 \(\mu\) 的多窗联合关系；跨窗任务仍须遵守 §§3.3、8.3 的联合来源合同。
 
 实现不得把 \(\Delta\) 偷塞进单个微观 readout 来绕过这一点。允许的做法有两种：
 
@@ -460,7 +478,7 @@ $$
 
 必须保持以下不变量：
 
-1. 加入读出只能细化或保持 kernel，不能增加残余逃逸；
+1. 加入读出只能细化或保持 kernel，不能增加残余逃逸；有限分析保留保持 kernel 的 collapsed layer 及其零捕获数；
 2. 删去成员的逃逸率增量等于其 unique-capture 率；
 3. FIB 粗坐标相同不推出完整概率律相同；
 4. \(\Delta\) 的取值、符号和零点只在声明的来源律与边界条件下解释；
