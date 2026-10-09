@@ -26,8 +26,7 @@ open scoped Kronecker ComplexOrder
 namespace D5.S3.Quantum.Entanglement.QutritWeylBlochNormSeparableBound
 
 open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
-open D5.S3.QuantumContext.HesseSicCertificate (omega)
-open private omega_pow_four from D5.S3.QuantumContext.HesseSicCertificate
+open D5.S3.QuantumContext.HesseSicCertificate (omega omega_pow_four)
 
 def W (k l : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
   fun j c => if c = j + l then omega ^ (j.val * k.val) else 0
