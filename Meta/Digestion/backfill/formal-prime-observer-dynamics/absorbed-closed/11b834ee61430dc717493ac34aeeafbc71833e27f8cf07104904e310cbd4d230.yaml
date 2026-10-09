@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:11b834ee61430dc717493ac34aeeafbc71833e27f8cf07104904e310cbd4d230
   normalized_sha256: sha256:11b834ee61430dc717493ac34aeeafbc71833e27f8cf07104904e310cbd4d230
 cas_ref: sha256:11b834ee61430dc717493ac34aeeafbc71833e27f8cf07104904e310cbd4d230
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/Analytic/PrimeProducts/GlobalPrimeExponentRealizability.prime_exponent_realization_mass
+    target_statement_id: sha256:384b18d5c77eef605433f91e3d6af6190aec64620c9f87de970caad478617b6a
 receipts:
   unresolved_subitems: []

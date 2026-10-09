@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:7ca327ca21ebd8abf4401f52f0a7ced5b06a4af70b0847b2d802b7877950f0cb
   normalized_sha256: sha256:7ca327ca21ebd8abf4401f52f0a7ced5b06a4af70b0847b2d802b7877950f0cb
 cas_ref: sha256:7ca327ca21ebd8abf4401f52f0a7ced5b06a4af70b0847b2d802b7877950f0cb
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/PrimeForms/Splitting/ModFiveOrientationBit.mod_five_orientation_separates_fibers_but_is_not_homomorphic
+    target_statement_id: sha256:efdace5747d30ca7c678a9f92568f38584a7c6efa2cc182c8cc25b061944e358
 receipts:
   unresolved_subitems: []
