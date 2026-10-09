@@ -18,7 +18,7 @@ internal sealed class ComplementaryDyadicSecondSupportDocument : IScribeDocument
     private static Formula Div(Formula x, Formula y) => new Formula.Fraction(x, y);
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "A uniform low-side affine bound for the dyadic cost on Fin(2^a+1).",
+        "A global affine bound and exact high-side recursion for the dyadic cost on Fin(2^a+1).",
         H("Complementary Dyadic Second Support"),
         Blocks(Describe.Lean(DescribeId.Create("low-side-second-support"),
             DeclarationHandle.Create(
@@ -65,11 +65,125 @@ internal sealed class ComplementaryDyadicSecondSupportDocument : IScribeDocument
                     + "N delta>=1, gives Nk/B>=4-(2B+a+2)delta. Adding the first "
                     + "a layers yields exactly [B(a+2)+2B^2]t-2(B-1). The upper "
                     + "endpoint is included in this argument.")),
-                Paragraph(Text("This theorem concerns the low interval only. It does not "
-                    + "establish the same inequality above (B-1)/B^2, classify equality, "
+                Paragraph(Text("The low-side statement includes its upper endpoint. The global statement below does not "
+                    + "classify equality, "
                     + "compute the optimum first coefficient, or assert an effective "
                     + "sampler for every arbitrary real law."))),
-            DescribeRole.Theorem))));
+            DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("strict-high-scaling"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.high_scaling"),
+                H("Strict high-side scaling"), StatementSource.FromAuthor(HighFormula()),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg")),
+                Blocks(Paragraph(Text("Put B=2^a, t0=(B-1)/B^2, C=B(a+2)+2B^2, "
+                    + "d0=2(B-1), H0=a+2-a/B-2/B^2 and D(p)=L(p)-C min(p)+d0. "
+                    + "For a>=3 and a normalized law with min(p)>t0, define "
+                    + "q(i)=B^2 p(i)-(B-1). Then q is strictly positive and normalized, "
+                    + "L(p)=H0+L(q)/B^2 and D(p)=D(q)/B^2. The minimum also transforms "
+                    + "as min(q)=B^2 min(p)-(B-1).")),
+                    Paragraph(Text("Every p(i) lies between t0 and 1/B. Floors vanish "
+                    + "before depth a and equal 2^j-1 at depth a+j, for j<a. These "
+                    + "first 2a layers sum to H0. At depth 2a+e, the integer translation "
+                    + "formula for floor gives floor(2^(2a+e) p(i))="
+                    + "floor(2^e q(i))+(B-1)2^e, so the residual becomes R(q,e). "
+                    + "Splitting the convergent series proves the cost identity; the "
+                    + "minimum transformation gives the gap identity. The threshold "
+                    + "inequality is strict, so this recursion does not apply to its boundary."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("uniform-zero-gap"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.uniform_gap_zero"),
+                H("Uniform fixed point"), StatementSource.FromAuthor(UniformFormula()),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg")),
+                Blocks(Paragraph(Text("The uniform law u(i)=1/(B+1) is strictly high "
+                    + "and is fixed by q. Its gap satisfies D(u)=D(u)/B^2. Since B>=8, "
+                    + "this forces D(u)=0. Equivalently, L(u)=[B(a+2)+2]/(B+1)."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("finite-high-exit"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.finite_exit"),
+                H("Finite positive exit"), StatementSource.FromAuthor(ExitFormula()),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg")),
+                Blocks(Paragraph(Text("Let r_k(i)=1/(B+1)+(B^2)^k[p(i)-1/(B+1)]. "
+                    + "Then r_0=p, r_(k+1)=q(r_k), and every r_k has total mass one. "
+                    + "Its minimum is 1/(B+1)-(B^2)^k[1/(B+1)-min(p)]. For a "
+                    + "nonuniform normalized law, min(p)<1/(B+1). Powers of B^2 "
+                    + "therefore force a finite first index n>0 with min(r_n)<=t0. "
+                    + "All earlier laws are strictly high. Their successive images are "
+                    + "positive, so the first exit remains positive and normalized, with "
+                    + "0<min(r_n)<=t0 and D(p)=D(r_n)/(B^2)^n."))),
+                DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("global-second-support"),
+                DeclarationHandle.Create(
+                    "D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.global_support"),
+                H("Global second supporting inequality"), StatementSource.FromAuthor(GlobalFormula()),
+                AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg")),
+                Blocks(Paragraph(Text("For every a>=3 and every nonnegative normalized "
+                    + "real law on B+1 labels, L(p)>=[B(a+2)+2B^2] min(p)-2(B-1). "
+                    + "If the minimum is at most t0, apply the low-side theorem. A "
+                    + "uniform law has zero gap. Every other strictly high law exits "
+                    + "after finitely many rescalings to a positive low-side law; its "
+                    + "nonnegative gap transfers back by a positive factor. Thus no "
+                    + "low-side hypothesis remains. Zero atoms and dyadic boundaries "
+                    + "are included. This inequality alone does not determine the "
+                    + "optimal first coefficient or the full cost envelope."))),
+                DescribeRole.Theorem))));
+
+    private static Formula Context(Formula body, bool nonnegative = false)
+    {
+        var a = V("a"); var p = V("p"); var i = V("i");
+        var indices = Call("Fin", Par(Seq(Pow(D(2), a), Sp, Plus, Sp, D(1))));
+        var law = Seq(indices, Sp, To, Sp, Real);
+        var sum = Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, indices)), Call("p", i));
+        Formula assumptions = Equal(sum, D(1));
+        if (nonnegative)
+            assumptions = And(All(i, indices, Seq(D(0), Sp, Le, Sp, Call("p", i))), assumptions);
+        return All(a, Nat, Imp(Seq(D(3), Sp, Le, Sp, a), All(p, law, Imp(assumptions, body))));
+    }
+
+    private static Formula HighFormula()
+    {
+        var a = V("a"); var p = V("p"); var i = V("i");
+        var b = Pow(D(2), a); var q = Call("q", p);
+        var indices = Call("Fin", Par(Seq(b, Sp, Plus, Sp, D(1))));
+        var positive = All(i, indices, Seq(D(0), Sp, Lt, Sp, Call("q", p, i)));
+        var sum = Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, indices)), Call("q", p, i));
+        return Disp(Context(Imp(Seq(V("t0"), Sp, Lt, Sp, Call("min", p)),
+            And(positive, And(Equal(sum, D(1)), And(
+                Equal(Call("L", p), Seq(V("H0"), Sp, Plus, Sp, Div(Call("L", q), Pow(b, D(2))))),
+                Equal(Call("D", p), Div(Call("D", q), Pow(b, D(2))))))))));
+    }
+
+    private static Formula UniformFormula() => Disp(All(V("a"), Nat,
+        Imp(Seq(D(3), Sp, Le, Sp, V("a")), Equal(Call("D", V("u")), D(0)))));
+
+    private static Formula ExitFormula()
+    {
+        var a = V("a"); var p = V("p"); var n = V("n"); var k = V("k"); var i = V("i");
+        var b = Pow(D(2), a);
+        var indices = Call("Fin", Par(Seq(b, Sp, Plus, Sp, D(1))));
+        var rn = Call("r", p, n); var rk = Call("r", p, k);
+        var before = All(k, Nat, Imp(Seq(k, Sp, Lt, Sp, n),
+            Seq(V("t0"), Sp, Lt, Sp, Call("min", rk))));
+        var positive = All(i, indices, Seq(D(0), Sp, Lt, Sp, Call("r", p, n, i)));
+        var sum = Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, indices)), Call("r", p, n, i));
+        var exit = And(Seq(D(0), Sp, Lt, Sp, Call("min", rn)),
+            Seq(Call("min", rn), Sp, Le, Sp, V("t0")));
+        var gap = Equal(Call("D", p), Div(Call("D", rn), Pow(Pow(b, D(2)), n)));
+        var witness = Seq(Exists, Sp, n, Colon, Sp, Nat, Comma, Sp,
+            And(Seq(D(0), Sp, Lt, Sp, n), And(before, And(positive, And(Equal(sum, D(1)), And(exit, gap))))));
+        return Disp(Context(Imp(And(Seq(V("t0"), Sp, Lt, Sp, Call("min", p)),
+            Seq(p, Sp, Neq, Sp, V("u"))), witness)));
+    }
+
+    private static Formula GlobalFormula()
+    {
+        var a = V("a"); var p = V("p"); var b = Pow(D(2), a);
+        var coefficient = Par(Seq(b, Sp, Par(Seq(a, Sp, Plus, Sp, D(2))),
+            Sp, Plus, Sp, D(2), Sp, Pow(b, D(2))));
+        return Disp(Context(Seq(coefficient, Sp, Call("min", p), Sp, Minus, Sp, D(2), Sp,
+            Par(Seq(b, Sp, Minus, Sp, D(1))), Sp, Le, Sp, Call("L", p)), true));
+    }
 
     private static Formula ResultFormula()
     {

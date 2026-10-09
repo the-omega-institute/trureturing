@@ -2,7 +2,7 @@
 
 ## Abstract
 
-A uniform low-side affine bound for the dyadic cost on Fin(2^a+1).
+A global affine bound and exact high-side recursion for the dyadic cost on Fin(2^a+1).
 
 **Theorem 1.1 (Low-side supporting inequality).**
 
@@ -28,10 +28,72 @@ For (B-2)/B^2<t<=(B-1)/B^2, put delta=1-Bt and S={i:Bp(i)<1}, with N=|S|. Then 1
 
 The factorization k-B delta[4-(2B+a+2)delta]=(B delta-1)[(2B+a+2)B delta-2(B-1)]/B>=0, together with N delta>=1, gives Nk/B>=4-(2B+a+2)delta. Adding the first a layers yields exactly [B(a+2)+2B^2]t-2(B-1). The upper endpoint is included in this argument.
 
-This theorem concerns the low interval only. It does not establish the same inequality above (B-1)/B^2, classify equality, compute the optimum first coefficient, or assert an effective sampler for every arbitrary real law.
+The low-side statement includes its upper endpoint. The global statement below does not classify equality, compute the optimum first coefficient, or assert an effective sampler for every arbitrary real law.
+
+**Theorem 1.2 (Strict high-side scaling).**
+
+$$\forall a: \mathbb{N}, (3 \le a \Rightarrow \forall p: \operatorname{Fin}\left((2^{a} + 1)\right) \to \mathbb{R}, (\sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{p}\left(i\right) = 1 \Rightarrow (t0 < \operatorname{min}\left(p\right) \Rightarrow (\forall i: \operatorname{Fin}\left((2^{a} + 1)\right), 0 < \operatorname{q}\left(p, i\right) \land (\sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{q}\left(p, i\right) = 1 \land (\operatorname{L}\left(p\right) = H0 + \frac{\operatorname{L}\left(\operatorname{q}\left(p\right)\right)}{\left(2^{a}\right)^{2}} \land \operatorname{D}\left(p\right) = \frac{\operatorname{D}\left(\operatorname{q}\left(p\right)\right)}{\left(2^{a}\right)^{2}}))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.high_scaling` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Jeremie Lumbroso (2013). *Optimal Discrete Uniform Generation from Coin Flips, and Applications*. URL: <https://arxiv.org/abs/1304.1916v1>.
+
+*Commentary.*
+
+Put B=2^a, t0=(B-1)/B^2, C=B(a+2)+2B^2, d0=2(B-1), H0=a+2-a/B-2/B^2 and D(p)=L(p)-C min(p)+d0. For a>=3 and a normalized law with min(p)>t0, define q(i)=B^2 p(i)-(B-1). Then q is strictly positive and normalized, L(p)=H0+L(q)/B^2 and D(p)=D(q)/B^2. The minimum also transforms as min(q)=B^2 min(p)-(B-1).
+
+Every p(i) lies between t0 and 1/B. Floors vanish before depth a and equal 2^j-1 at depth a+j, for j<a. These first 2a layers sum to H0. At depth 2a+e, the integer translation formula for floor gives floor(2^(2a+e) p(i))=floor(2^e q(i))+(B-1)2^e, so the residual becomes R(q,e). Splitting the convergent series proves the cost identity; the minimum transformation gives the gap identity. The threshold inequality is strict, so this recursion does not apply to its boundary.
+
+**Theorem 1.3 (Uniform fixed point).**
+
+$$\forall a: \mathbb{N}, (3 \le a \Rightarrow \operatorname{D}\left(u\right) = 0)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.uniform_gap_zero` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Jeremie Lumbroso (2013). *Optimal Discrete Uniform Generation from Coin Flips, and Applications*. URL: <https://arxiv.org/abs/1304.1916v1>.
+
+*Commentary.*
+
+The uniform law u(i)=1/(B+1) is strictly high and is fixed by q. Its gap satisfies D(u)=D(u)/B^2. Since B>=8, this forces D(u)=0. Equivalently, L(u)=[B(a+2)+2]/(B+1).
+
+**Theorem 1.4 (Finite positive exit).**
+
+$$\forall a: \mathbb{N}, (3 \le a \Rightarrow \forall p: \operatorname{Fin}\left((2^{a} + 1)\right) \to \mathbb{R}, (\sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{p}\left(i\right) = 1 \Rightarrow ((t0 < \operatorname{min}\left(p\right) \land p \neq u) \Rightarrow \exists n: \mathbb{N}, (0 < n \land (\forall k: \mathbb{N}, (k < n \Rightarrow t0 < \operatorname{min}\left(\operatorname{r}\left(p, k\right)\right)) \land (\forall i: \operatorname{Fin}\left((2^{a} + 1)\right), 0 < \operatorname{r}\left(p, n, i\right) \land (\sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{r}\left(p, n, i\right) = 1 \land ((0 < \operatorname{min}\left(\operatorname{r}\left(p, n\right)\right) \land \operatorname{min}\left(\operatorname{r}\left(p, n\right)\right) \le t0) \land \operatorname{D}\left(p\right) = \frac{\operatorname{D}\left(\operatorname{r}\left(p, n\right)\right)}{\left(\left(2^{a}\right)^{2}\right)^{n}}))))))))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.finite_exit` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Jeremie Lumbroso (2013). *Optimal Discrete Uniform Generation from Coin Flips, and Applications*. URL: <https://arxiv.org/abs/1304.1916v1>.
+
+*Commentary.*
+
+Let r_k(i)=1/(B+1)+(B^2)^k[p(i)-1/(B+1)]. Then r_0=p, r_(k+1)=q(r_k), and every r_k has total mass one. Its minimum is 1/(B+1)-(B^2)^k[1/(B+1)-min(p)]. For a nonuniform normalized law, min(p)<1/(B+1). Powers of B^2 therefore force a finite first index n>0 with min(r_n)<=t0. All earlier laws are strictly high. Their successive images are positive, so the first exit remains positive and normalized, with 0<min(r_n)<=t0 and D(p)=D(r_n)/(B^2)^n.
+
+**Theorem 1.5 (Global second supporting inequality).**
+
+$$\forall a: \mathbb{N}, (3 \le a \Rightarrow \forall p: \operatorname{Fin}\left((2^{a} + 1)\right) \to \mathbb{R}, ((\forall i: \operatorname{Fin}\left((2^{a} + 1)\right), 0 \le \operatorname{p}\left(i\right) \land \sum_{i \in \operatorname{Fin}\left((2^{a} + 1)\right)}\operatorname{p}\left(i\right) = 1) \Rightarrow (2^{a} (a + 2) + 2 \left(2^{a}\right)^{2}) \operatorname{min}\left(p\right) - 2 (2^{a} - 1) \le \operatorname{L}\left(p\right)))$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.global_support` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Acknowledgement.* Jeremie Lumbroso (2013). *Optimal Discrete Uniform Generation from Coin Flips, and Applications*. URL: <https://arxiv.org/abs/1304.1916v1>.
+
+*Commentary.*
+
+For every a>=3 and every nonnegative normalized real law on B+1 labels, L(p)>=[B(a+2)+2B^2] min(p)-2(B-1). If the minimum is at most t0, apply the low-side theorem. A uniform law has zero gap. Every other strictly high law exits after finitely many rescalings to a positive low-side law; its nonnegative gap transfers back by a positive factor. Thus no low-side hypothesis remains. Zero atoms and dyadic boundaries are included. This inequality alone does not determine the optimal first coefficient or the full cost envelope.
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.finite_exit`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.global_support`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.high_scaling`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.result`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.uniform_gap_zero`
 - Dependency: [D5/S3/Arith/FibonacciAtomic/MersenneDyadicSupportLines](../MersenneDyadicSupportLines.md)
 - Dependency: [D5/S3/Arith/FibonacciAtomic/OptimalLawStrictSlope](../OptimalLawStrictSlope.md)

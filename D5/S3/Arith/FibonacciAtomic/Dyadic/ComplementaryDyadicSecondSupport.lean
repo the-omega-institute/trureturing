@@ -4,7 +4,7 @@
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
    utility: none
-   digest: Uniform low-side second support for real laws on a complementary dyadic simplex. -/
+   digest: Global second support and strict high-side scaling for complementary dyadic real laws. -/
 
 import D5.S3.Arith.FibonacciAtomic.MersenneDyadicSupportLines
 import D5.S3.Arith.FibonacciAtomic.OptimalLawStrictSlope
@@ -437,6 +437,363 @@ theorem result (a : ℕ) (ha : 3 ≤ a) (p : Fin (2 ^ a + 1) → ℝ)
   intro hlow
   exact low_side_lower a ha p hp hs _
     (fun i => Finset.inf'_le _ (Finset.mem_univ i)) hlow
+
+local notation "B" => (fun a : ℕ => (2 : ℝ) ^ a)
+local notation "C" => (fun a : ℕ => B a * ((a : ℝ) + 2) + 2 * B a ^ 2)
+local notation "d0" => (fun a : ℕ => 2 * (B a - 1))
+local notation "t0" => (fun a : ℕ => (B a - 1) / B a ^ 2)
+local notation "H0" => (fun a : ℕ => (a : ℝ) + 2 - a / B a - 2 / B a ^ 2)
+local notation "mn" => (fun (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ) =>
+  Finset.univ.inf' Finset.univ_nonempty p)
+
+/-- The affine high-side rescaling of a complementary dyadic law. -/
+noncomputable def high_transform (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ) :
+    Fin (2 ^ a + 1) → ℝ := fun i => B a ^ 2 * p i - (B a - 1)
+
+/-- The excess over the second affine support line. -/
+noncomputable def support_gap (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ) : ℝ :=
+  cost p - C a * mn a p + d0 a
+
+private theorem bpos (a : ℕ) : 0 < B a := by dsimp only; positivity
+private theorem bcast (a : ℕ) : ((2 ^ a + 1 : ℕ) : ℝ) = B a + 1 := by simp
+private theorem bge (a : ℕ) (ha : 3 ≤ a) : 8 ≤ B a := by
+  have H := pow_le_pow_right₀ (by norm_num : (1 : ℝ) ≤ 2) ha
+  norm_num at H
+  exact H
+private theorem mn_le (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ) (i : Fin (2 ^ a + 1)) : mn a p ≤ p i :=
+  Finset.inf'_le _ (Finset.mem_univ i)
+
+private theorem high_data (a : ℕ) (ha : 3 ≤ a) (p : Fin (2 ^ a + 1) → ℝ)
+    (hs : ∑ i, p i = 1) (ht : t0 a < mn a p) :
+    (∀ i, 0 < high_transform a p i) ∧ (∑ i, high_transform a p i = 1) ∧
+    (∀ i, t0 a < p i ∧ p i < 1 / B a) := by
+  have hB := bpos a
+  have hB8 := bge a ha
+  have hmin (i : Fin (2 ^ a + 1)) := mn_le a p i
+  have hut (i : Fin (2 ^ a + 1)) : p i ≤ 1 - B a * mn a p := by
+    have H := atom_upper p hs (mn a p) (fun j => mn_le a p j) i
+    simpa only [bcast, add_sub_cancel_right] using H
+  have hstrict : B a - 1 < B a ^ 2 * mn a p := by
+    simpa [mul_comm] using (div_lt_iff₀ (sq_pos_of_pos hB)).mp ht
+  refine ⟨?_, ?_, ?_⟩
+  · intro i
+    unfold high_transform
+    have H := mul_le_mul_of_nonneg_left (hmin i) (sq_nonneg (B a))
+    linarith
+  · simp only [high_transform, Finset.sum_sub_distrib, ← Finset.mul_sum,
+      Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, hs,
+      mul_one, bcast]
+    ring
+  · intro i
+    refine ⟨ht.trans_le (hmin i), ?_⟩
+    have H := hut i
+    have HH := mul_le_mul_of_nonneg_left H hB.le
+    apply (lt_div_iff₀ hB).mpr
+    nlinarith
+
+private theorem floor_head (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ)
+    (hi : ∀ i, 0 ≤ p i ∧ p i < 1 / B a)
+    (i : Fin (2 ^ a + 1)) (d : ℕ) (hd : d < a) :
+    ⌊(2 : ℝ) ^ d * p i⌋ = 0 := by
+  apply head_zero a (p i) (hi i).1 ?_ d hd
+  have H := (lt_div_iff₀ (bpos a)).mp (hi i).2
+  dsimp only at H ⊢
+  nlinarith
+
+private theorem floor_middle (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ)
+    (hi : ∀ i, t0 a < p i ∧ p i < 1 / B a)
+    (i : Fin (2 ^ a + 1)) (j : ℕ) (hj : j < a) :
+    ⌊(2 : ℝ) ^ (a + j) * p i⌋ = (2 : ℤ) ^ j - 1 := by
+  have hB := bpos a
+  have hJ : (2 : ℝ) ^ j < B a := by
+    exact pow_lt_pow_right₀ (by norm_num : (1 : ℝ) < 2) hj
+  have hp := (div_lt_iff₀ (sq_pos_of_pos hB)).mp (hi i).1
+  have hu := (lt_div_iff₀ hB).mp (hi i).2
+  have lo := mul_pos (by positivity : (0 : ℝ) < 2 ^ j)
+    (show 0 < B a ^ 2 * p i - (B a - 1) by linarith)
+  have gap := mul_pos hB (sub_pos.mpr hJ)
+  have hB2 := sq_pos_of_pos hB
+  apply Int.floor_eq_iff.mpr
+  push_cast
+  rw [pow_add]
+  change (2 : ℝ) ^ j - 1 ≤ B a * (2 : ℝ) ^ j * p i ∧
+    B a * (2 : ℝ) ^ j * p i < (2 : ℝ) ^ j - 1 + 1
+  constructor
+  · nlinarith
+  · nlinarith [pow_pos (by norm_num : (0 : ℝ) < 2) j]
+
+private theorem floor_tail (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ)
+    (i : Fin (2 ^ a + 1)) (e : ℕ) :
+    ⌊(2 : ℝ) ^ (e + a * 2) * p i⌋ =
+      ⌊(2 : ℝ) ^ e * high_transform a p i⌋ + ((2 : ℤ) ^ a - 1) * (2 : ℤ) ^ e := by
+  have E : (2 : ℝ) ^ (e + a * 2) * p i =
+      (2 : ℝ) ^ e * high_transform a p i +
+        ((((2 : ℤ) ^ a - 1) * (2 : ℤ) ^ e : ℤ) : ℝ) := by
+    simp only [high_transform, pow_add, pow_mul]
+    push_cast
+    ring
+  rw [E, Int.floor_add_intCast]
+
+private theorem residual_tail (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ) (e : ℕ) :
+    DyadicSupportLines.residual p (e + a * 2) = DyadicSupportLines.residual (high_transform a p) e := by
+  unfold DyadicSupportLines.residual
+  simp_rw [floor_tail]
+  simp only [Finset.sum_add_distrib, Finset.sum_const, Finset.card_univ,
+    Fintype.card_fin, nsmul_eq_mul, pow_add, pow_mul]
+  push_cast
+  ring
+
+private theorem head_sum (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ)
+    (hi : ∀ i, t0 a < p i ∧ p i < 1 / B a) (ha : 3 ≤ a) :
+    ∑ d ∈ Finset.range (2 * a), DyadicSupportLines.residual p d / (2 : ℝ) ^ d = H0 a := by
+  have hB := bpos a
+  have htpos : 0 < t0 a := div_pos (by have := bge a ha; linarith) (sq_pos_of_pos hB)
+  have hz := floor_head a p (fun i => ⟨(htpos.trans (hi i).1).le, (hi i).2⟩)
+  have first : ∑ d ∈ Finset.range a, DyadicSupportLines.residual p d / (2 : ℝ) ^ d = a := by
+    have layer_term (d : ℕ) (hd : d ∈ Finset.range a) : DyadicSupportLines.residual p d / (2 : ℝ) ^ d = 1 := by
+      simp only [DyadicSupportLines.residual, hz _ d (Finset.mem_range.mp hd), Int.cast_zero,
+        Finset.sum_const_zero, sub_zero]
+      exact div_self (by positivity)
+    rw [Finset.sum_congr rfl (fun d hd => layer_term d hd)]
+    simp
+  have mid (j : ℕ) (hj : j ∈ Finset.range a) :
+      DyadicSupportLines.residual p (a + j) / (2 : ℝ) ^ (a + j) =
+        (B a + 1) / B a * (1 / 2 : ℝ) ^ j - 1 / B a := by
+    simp_rw [DyadicSupportLines.residual,
+      floor_middle a p hi _ j (Finset.mem_range.mp hj)]
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, pow_add]
+    push_cast
+    have HP : (1 / 2 : ℝ) ^ j = 1 / (2 : ℝ) ^ j := by simp
+    rw [HP]
+    change (B a * (2 : ℝ) ^ j - (B a + 1) * ((2 : ℝ) ^ j - 1)) /
+      (B a * (2 : ℝ) ^ j) = _
+    field_simp
+    ring
+  have geo : ∑ j ∈ Finset.range a, (1 / 2 : ℝ) ^ j = 2 - 2 / B a := by
+    rw [geom_sum_eq (by norm_num : (1 / 2 : ℝ) ≠ 1)]
+    simp only [div_pow, one_pow]
+    ring
+  rw [show 2 * a = a + a by omega, Finset.sum_range_add, first]
+  have second : ∑ j ∈ Finset.range a, DyadicSupportLines.residual p (a + j) / (2 : ℝ) ^ (a + j) =
+      (B a + 1) / B a * (2 - 2 / B a) - a / B a := by
+    rw [Finset.sum_congr rfl (fun j hj => mid j hj)]
+    simp only [Finset.sum_sub_distrib, ← Finset.mul_sum, geo, Finset.sum_const,
+      Finset.card_range, nsmul_eq_mul]
+    ring
+  rw [second]
+  dsimp only
+  field_simp
+  ring
+
+private theorem scaling (a : ℕ) (ha : 3 ≤ a) (p : Fin (2 ^ a + 1) → ℝ)
+    (hs : ∑ i, p i = 1) (ht : t0 a < mn a p) :
+    (∀ i, 0 < high_transform a p i) ∧ (∑ i, high_transform a p i = 1) ∧
+      cost p = H0 a + cost (high_transform a p) / B a ^ 2 := by
+  have H := high_data a ha p hs ht
+  have tail (e : ℕ) : DyadicSupportLines.residual p (e + a * 2) / (2 : ℝ) ^ (e + a * 2) =
+      (DyadicSupportLines.residual (high_transform a p) e / (2 : ℝ) ^ e) / B a ^ 2 := by
+    rw [residual_tail, pow_add, pow_mul]
+    dsimp only
+    ring
+  have tails : (∑' e, DyadicSupportLines.residual p (e + a * 2) / (2 : ℝ) ^ (e + a * 2)) =
+      cost (high_transform a p) / B a ^ 2 := by
+    simp_rw [tail]
+    exact tsum_div_const
+  have split := Summable.sum_add_tsum_nat_add (2 * a) (law_data _ p hs).2.1
+  have tails' : (∑' e, DyadicSupportLines.residual p (e + 2 * a) / (2 : ℝ) ^ (e + 2 * a)) = cost (high_transform a p) / B a ^ 2 := by
+    simpa [Nat.mul_comm] using tails
+  rw [head_sum a p H.2.2 ha, tails'] at split
+  exact ⟨H.1, H.2.1, split.symm⟩
+
+
+private theorem min_q (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ) :
+    mn a (high_transform a p) = B a ^ 2 * mn a p - (B a - 1) := by
+  let f : ℝ →o ℝ := ⟨fun x => B a ^ 2 * x - (B a - 1),
+    fun _ _ h => sub_le_sub_right (mul_le_mul_of_nonneg_left h (sq_nonneg _)) _⟩
+  exact (map_finset_inf' f _ p).symm
+
+private theorem d_scaling (a : ℕ) (ha : 3 ≤ a) (p : Fin (2 ^ a + 1) → ℝ)
+    (hs : ∑ i, p i = 1) (ht : t0 a < mn a p) :
+    support_gap a p = support_gap a (high_transform a p) / B a ^ 2 := by
+  have H := (scaling a ha p hs ht).2.2
+  unfold support_gap
+  rw [H, min_q]
+  dsimp only
+  field_simp [(bpos a).ne']
+  ring
+
+/-- Strictly high laws remain positive and normalized, with exact cost and gap scaling. -/
+theorem high_scaling (a : ℕ) (ha : 3 ≤ a) (p : Fin (2 ^ a + 1) → ℝ)
+    (hs : ∑ i, p i = 1) (ht : t0 a < mn a p) :
+    (∀ i, 0 < high_transform a p i) ∧ (∑ i, high_transform a p i = 1) ∧
+      cost p = H0 a + cost (high_transform a p) / B a ^ 2 ∧
+      support_gap a p = support_gap a (high_transform a p) / B a ^ 2 := by
+  have H := scaling a ha p hs ht
+  exact ⟨H.1, H.2.1, H.2.2, d_scaling a ha p hs ht⟩
+
+private theorem minimum_upper (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ) (hs : ∑ i, p i = 1) :
+    mn a p ≤ 1 / (B a + 1) := by
+  have H := Finset.sum_le_sum (s := Finset.univ) (fun i _ => mn_le a p i)
+  simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul,
+    bcast, hs] at H
+  exact (le_div_iff₀ (by have := bpos a; linarith)).mpr (by simpa [mul_comm] using H)
+
+private theorem uniform_of_min (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ) (hs : ∑ i, p i = 1)
+    (ht : mn a p = 1 / (B a + 1)) : p = fun _ => 1 / (B a + 1) := by
+  classical
+  have csum : ∑ _i : Fin (2 ^ a + 1), (1 / (B a + 1)) = 1 := by
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, bcast]
+    exact mul_one_div_cancel (by have := bpos a; linarith)
+  ext i
+  have H := (Finset.sum_eq_sum_iff_of_le (s := Finset.univ)
+    (fun j _ => show 1 / (B a + 1) ≤ p j by rw [← ht]; exact mn_le a p j)).mp
+    (csum.trans hs.symm) i (Finset.mem_univ i)
+  exact H.symm
+
+private theorem fixed (a : ℕ) :
+    high_transform a (fun _ => 1 / (B a + 1)) = fun _ => 1 / (B a + 1) := by
+  ext i
+  unfold high_transform
+  field_simp [show B a + 1 ≠ 0 by have := bpos a; linarith]
+  ring
+
+private theorem mn_const (a : ℕ) (c : ℝ) : mn a (fun _ => c) = c := by
+  simp only [Finset.inf'_const]
+
+private theorem uniform_high (a : ℕ) :
+    t0 a < mn a (fun _ => 1 / (B a + 1)) := by
+  rw [mn_const]
+  dsimp only
+  apply (div_lt_div_iff₀ (sq_pos_of_pos (bpos a)) (by have := bpos a; linarith)).mpr
+  nlinarith
+
+/-- The uniform law has zero excess over the second supporting line. -/
+theorem uniform_gap_zero (a : ℕ) (ha : 3 ≤ a) :
+    support_gap a (fun _ => 1 / (B a + 1)) = 0 := by
+  have hs : ∑ _i : Fin (2 ^ a + 1), (1 / (B a + 1)) = 1 := by
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, bcast]
+    exact mul_one_div_cancel (by have := bpos a; linarith)
+  have H := (high_scaling a ha _ hs (uniform_high a)).2.2.2
+  rw [fixed] at H
+  have HE := (eq_div_iff (sq_pos_of_pos (bpos a)).ne').mp H
+  have Hne : B a ^ 2 - 1 ≠ 0 := by have := bge a ha; nlinarith
+  have HM : (B a ^ 2 - 1) * support_gap a (fun _ => 1 / (B a + 1)) = 0 := by linarith
+  exact (mul_eq_zero.mp HM).resolve_left Hne
+
+/-- The closed-form orbit of the high-side affine transformation. -/
+noncomputable def scaled_iterate (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ) (k : ℕ) :
+    Fin (2 ^ a + 1) → ℝ :=
+  fun i => 1 / (B a + 1) + (B a ^ 2) ^ k * (p i - 1 / (B a + 1))
+local notation "T" => (fun (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ) (k : ℕ) =>
+  1 / (B a + 1) - (B a ^ 2) ^ k * (1 / (B a + 1) - mn a p))
+
+private theorem r_zero (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ) :
+    scaled_iterate a p 0 = p := by
+  ext i
+  simp [scaled_iterate]
+private theorem r_next (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ) (k : ℕ) :
+    scaled_iterate a p (k + 1) = high_transform a (scaled_iterate a p k) := by
+  ext i
+  unfold scaled_iterate high_transform
+  rw [pow_succ]
+  field_simp [show B a + 1 ≠ 0 by have := bpos a; linarith]
+  ring
+private theorem r_sum (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ) (hs : ∑ i, p i = 1) (k : ℕ) :
+    ∑ i, scaled_iterate a p k i = 1 := by
+  have csum : ∑ _i : Fin (2 ^ a + 1), (1 / (B a + 1)) = 1 := by
+    simp only [Finset.sum_const, Finset.card_univ, Fintype.card_fin, nsmul_eq_mul, bcast]
+    exact mul_one_div_cancel (by have := bpos a; linarith)
+  simp only [scaled_iterate, Finset.sum_add_distrib, ← Finset.mul_sum, Finset.sum_sub_distrib,
+    csum, hs, sub_self, mul_zero, add_zero]
+private theorem r_min (a : ℕ) (p : Fin (2 ^ a + 1) → ℝ) (k : ℕ) :
+    mn a (scaled_iterate a p k) = T a p k := by
+  let f : ℝ →o ℝ := ⟨fun x => 1 / (B a + 1) + (B a ^ 2) ^ k *
+    (x - 1 / (B a + 1)), fun _ _ h => add_le_add le_rfl
+      (mul_le_mul_of_nonneg_left (sub_le_sub_right h _) (pow_nonneg (sq_nonneg _) k))⟩
+  have H := (map_finset_inf' f (Finset.univ_nonempty :
+    (Finset.univ : Finset (Fin (2 ^ a + 1))).Nonempty) p).symm
+  change mn a (scaled_iterate a p k) =
+    1 / (B a + 1) + (B a ^ 2) ^ k * (mn a p - 1 / (B a + 1)) at H
+  rw [H]
+  ring
+
+/-- Every nonuniform strictly high law has a finite positive first exit to the low interval. -/
+theorem finite_exit (a : ℕ) (ha : 3 ≤ a) (p : Fin (2 ^ a + 1) → ℝ)
+    (hs : ∑ i, p i = 1) (ht : t0 a < mn a p)
+    (hnu : p ≠ fun _ => 1 / (B a + 1)) :
+    ∃ n : ℕ, 0 < n ∧ (∀ k < n, t0 a < mn a (scaled_iterate a p k)) ∧
+      (∀ i, 0 < scaled_iterate a p n i) ∧ (∑ i, scaled_iterate a p n i = 1) ∧
+      0 < mn a (scaled_iterate a p n) ∧ mn a (scaled_iterate a p n) ≤ t0 a ∧
+      support_gap a p = support_gap a (scaled_iterate a p n) / (B a ^ 2) ^ n := by
+  have hB := bpos a
+  have hB8 := bge a ha
+  have hlt : mn a p < 1 / (B a + 1) := by
+    refine lt_of_le_of_ne (minimum_upper a p hs) ?_
+    intro H
+    exact hnu (uniform_of_min a p hs H)
+  have gap : 0 < 1 / (B a + 1) - mn a p := sub_pos.mpr hlt
+  obtain ⟨j, hj⟩ := pow_unbounded_of_one_lt
+    ((1 / (B a + 1) - t0 a) / (1 / (B a + 1) - mn a p))
+    (show 1 < B a ^ 2 by nlinarith)
+  have ex : ∃ j : ℕ, T a p j ≤ t0 a := by
+    refine ⟨j, ?_⟩
+    have H := (div_lt_iff₀ gap).mp hj
+    dsimp only
+    linarith
+  let n := Nat.find ex
+  have hn : T a p n ≤ t0 a := Nat.find_spec ex
+  have before (k : ℕ) (hk : k < n) : t0 a < mn a (scaled_iterate a p k) := by
+    rw [r_min]
+    exact lt_of_not_ge (Nat.find_min ex hk)
+  have hnpos : 0 < n := by
+    by_contra H
+    have HZ : n = 0 := by omega
+    have HE : T a p 0 = mn a p := by simp
+    rw [HZ, HE] at hn
+    linarith
+  have propagated (k : ℕ) (hk : k ≤ n) :
+      (∀ i, 0 < scaled_iterate a p k i) ∧
+        support_gap a p = support_gap a (scaled_iterate a p k) / (B a ^ 2) ^ k := by
+    induction k with
+    | zero =>
+      rw [r_zero]
+      refine ⟨?_, by simp⟩
+      intro i
+      have htpos : 0 < t0 a := div_pos (by linarith) (sq_pos_of_pos hB)
+      exact htpos.trans (ht.trans_le (mn_le a p i))
+    | succ k ih =>
+      have hklt : k < n := by omega
+      have HD := high_scaling a ha (scaled_iterate a p k) (r_sum a p hs k) (before k hklt)
+      have HE := HD.2.2.2
+      have ih' := ih (by omega)
+      rw [r_next]
+      refine ⟨HD.1, ?_⟩
+      rw [ih'.2, HE, pow_succ]
+      field_simp [hB.ne']
+      rw [pow_succ]
+      ring
+  have HP := propagated n le_rfl
+  refine ⟨n, hnpos, before, HP.1, r_sum a p hs n, ?_, ?_, HP.2⟩
+  · exact (Finset.lt_inf'_iff _).mpr (fun i _ => HP.1 i)
+  · rwa [r_min]
+
+/-- The second affine support holds on the entire real probability simplex. -/
+theorem global_support (a : ℕ) (ha : 3 ≤ a)
+    (p : Fin (2 ^ a + 1) → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) :
+    C a * mn a p - d0 a ≤ cost p := by
+  by_cases hlo : mn a p ≤ t0 a
+  · exact result a ha p hp hs hlo
+  by_cases hu : p = fun _ => 1 / (B a + 1)
+  · rw [hu]
+    have H := uniform_gap_zero a ha
+    unfold support_gap at H
+    linarith
+  obtain ⟨n, _, _, hpn, hsn, _, htn, hd⟩ := finite_exit a ha p hs (lt_of_not_ge hlo) hu
+  have HL := result a ha (scaled_iterate a p n) (fun i => (hpn i).le) hsn htn
+  have HD : 0 ≤ support_gap a (scaled_iterate a p n) := by unfold support_gap; linarith
+  have H : 0 ≤ support_gap a p := by rw [hd]; positivity
+  unfold support_gap at H
+  linarith
 
 
 end D5.S3.Arith.FibonacciAtomic.Dyadic.ComplementaryDyadicSecondSupport
