@@ -140,6 +140,27 @@ class HostCleanupTests(unittest.TestCase):
         self.assertIn("--lanes-only", run.call_args.args[0])
         self.assertIn("--force", run.call_args.args[0])
 
+    def test_clean_lanes_receives_large_activity_through_one_file(self):
+        active = {self.root / ("active-" + str(index) + "-" + "x" * 160) for index in range(20000)}
+        observed = {}
+
+        def run(arguments, **_):
+            position = arguments.index("--active-paths-file")
+            source = Path(arguments[position + 1])
+            observed.update(arguments=arguments, source=source, paths=json.loads(source.read_text()),
+                            mode=source.stat().st_mode & 0o777)
+            return subprocess.CompletedProcess(arguments, 0)
+
+        with patch.object(cleanup.subprocess, "run", side_effect=run):
+            self.assertEqual(0, cleanup.clean_worktrees(self.root, "base", True, active))
+        self.assertNotIn("--active-path", observed["arguments"], "[FAIL] clean_lanes_activity_not_in_argv")
+        self.assertLess(sum(len(os.fsencode(argument)) + 1 for argument in observed["arguments"]), 4096,
+                        "[FAIL] clean_lanes_argv_bounded")
+        self.assertEqual(sorted(str(path.resolve()) for path in active), observed["paths"],
+                         "[FAIL] clean_lanes_activity_file_content")
+        self.assertEqual(0o600, observed["mode"], "[FAIL] clean_lanes_activity_file_private")
+        self.assertFalse(observed["source"].exists(), "[FAIL] clean_lanes_activity_file_removed")
+
     def test_invalid_age_is_rejected(self):
         for age in ("-1", "nan", "inf"):
             result = subprocess.run([sys.executable, str(SCRIPT), "clean", "--min-age-hours", age], capture_output=True)
@@ -268,17 +289,23 @@ class HostCleanupTests(unittest.TestCase):
             args = json.loads(result.stdout)
             self.assertEqual(["clean-lanes", "--base", "HEAD"] + (["--force"] if force else []),
                              args[args.index("--") + 1:])
-        paths = [str(self.root / "active path"), str(self.root / "literal $(touch sentinel) `touch other`")]
+        activity = str(self.root / "literal $(touch sentinel) `touch other` activity.json")
         result = subprocess.run(
             ["/bin/bash", str(scripts / "clean-lanes.sh"), "--base", "HEAD", "--lanes-only",
-             "--active-path", paths[0], "--active-path", paths[1]],
+             "--active-paths-file", activity],
             cwd=repository, env=env, capture_output=True, text=True)
         self.assertEqual(0, result.returncode, result.stderr)
         args = json.loads(result.stdout)
-        self.assertEqual(["clean-lanes", "--base", "HEAD", "--lanes-only", "--active-path", paths[0],
-                          "--active-path", paths[1]], args[args.index("--") + 1:])
+        self.assertEqual(["clean-lanes", "--base", "HEAD", "--lanes-only", "--active-paths-file", activity],
+                         args[args.index("--") + 1:])
         self.assertFalse((repository / "sentinel").exists())
         self.assertFalse((repository / "other").exists())
+        for rejected in (["--active-path", activity], ["--active-paths-file", activity, "--active-paths-file", activity]):
+            with self.subTest(rejected=rejected[0]):
+                result = subprocess.run(
+                    ["/bin/bash", str(scripts / "clean-lanes.sh"), "--base", "HEAD", *rejected],
+                    cwd=repository, env=env, capture_output=True, text=True)
+                self.assertEqual(2, result.returncode, "[FAIL] clean_lanes_wrapper_rejects_unsupported_activity")
 
     def test_activity_command_reuses_sampler_and_fails_closed(self):
         output = io.StringIO()
