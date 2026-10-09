@@ -687,4 +687,27 @@ theorem rMinus_eq (l N : ℕ) (hl : 2 ≤ l) (hlN : l < N) :
   rw [hdim]
   field_simp [hn0, hd0, hl0]
 
+/-- The averaged Zeitlin Ricci curvature has the harmonic limit and is eventually negative. -/
+theorem result : claim := by
+  intro l hl
+  have hminus : Tendsto (fun N => rMinus l N / ((N : ℝ)^2-1)) atTop
+      (nhds (((harmonic l : ℝ)-1)/2)) := by
+    apply tendsto_const_nhds.congr'
+    filter_upwards [eventually_gt_atTop l] with N hN
+    exact (rMinus_eq l N hl hN).symm
+  have hlimit : Tendsto (fun N : ℕ => rTilde l N) atTop
+      (nhds (-((harmonic l : ℝ)-1)/2)) := by
+    simpa only [rTilde, sub_div, zero_sub, neg_div] using
+      (rPlus_tendsto_zero l hl).sub hminus
+  have hh : 1 < (harmonic l : ℝ) := by
+    have hm : harmonic 2 ≤ harmonic l := by
+      unfold harmonic
+      apply sum_le_sum_of_subset_of_nonneg (range_mono hl)
+      intro i _ _
+      exact inv_nonneg.mpr (Nat.cast_nonneg _)
+    have hq : 1 < harmonic l := lt_of_lt_of_le (by norm_num [harmonic, sum_range_succ]) hm
+    exact_mod_cast hq
+  have hnegative : -((harmonic l : ℝ)-1)/2 < 0 := by linarith
+  exact ⟨hlimit, eventually_atTop.mp (hlimit.eventually_lt_const hnegative)⟩
+
 end D5.S3.Quantum.Algebra.ZeitlinSixJ.RicciLimit
