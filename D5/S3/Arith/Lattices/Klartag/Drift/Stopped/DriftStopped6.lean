@@ -74,10 +74,10 @@ theorem det_bounds_of_stateBounds {A : Matrix (Fin n) (Fin n) ℝ} {m M : ℝ}
   have hm0 : (0 : ℝ) ≤ m := hSB.mpos.le
   constructor
   · have h : ∏ _i : Fin n, m ≤ ∏ i, hH.eigenvalues i :=
-      Finset.prod_le_prod (fun i _ => hm0) (fun i _ => hlow i)
+      Finset.prod_le_prod₀ (fun i _ => hm0) (fun i _ => hlow i)
     simpa [hdet] using h
   · have h : ∏ i, hH.eigenvalues i ≤ ∏ _i : Fin n, M :=
-      Finset.prod_le_prod (fun i _ => le_trans hm0 (hlow i)) (fun i _ => hup i)
+      Finset.prod_le_prod₀ (fun i _ => le_trans hm0 (hlow i)) (fun i _ => hup i)
     simpa [hdet] using h
 
 /-- `symMat` is linear in the Frobenius coordinates and `det` is a polynomial, so the composite is

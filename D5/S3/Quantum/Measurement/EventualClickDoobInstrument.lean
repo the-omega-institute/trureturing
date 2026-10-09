@@ -218,7 +218,7 @@ theorem eventual_click_doob_instrument
     rw [hdark.1 d, LinearMap.mem_ker, Matrix.mulVecLin_apply]
     have hdefectPsd : (1 - survival Q d).PosSemidef := by
       exact Matrix.nonneg_iff_posSemidef.mp (sub_nonneg.mpr (hchain d).2.2.1)
-    apply (hdefectPsd.dotProduct_mulVec_zero_iff v).mp
+    apply (hdefectPsd.dotProduct_mulVec_zero_iff (x := v)).mp
     have hresidualPsd : (survival Q d - F).PosSemidef := by
       exact Matrix.nonneg_iff_posSemidef.mp (sub_nonneg.mpr (hchain d).2.2.2)
     have hdefectQuad := hdefectPsd.dotProduct_mulVec_nonneg v

@@ -65,6 +65,7 @@ proof_shape: selected_compressionGram: bind-only; consumer: upper_three_columns.
 import Mathlib.Analysis.InnerProductSpace.SingularValues
 import D5.S3.Weil.ZetaLinear.PosIndex
 import Mathlib.Data.Matrix.ColumnRowPartitioned
+import Mathlib.Analysis.Matrix.Order
 
 noncomputable section
 namespace D5.S3.Quantum.NormCompression.UpperBranchReduction
