@@ -17,6 +17,7 @@ namespace D5.S3.Arith.FibonacciAtomic.OptimalLaw.LeafExchange
 private noncomputable def exchanged {m : ℕ} (p q : Fin m → ℝ) (j : Fin m) (D : ℕ) : Fin m → ℝ :=
   fun i => p i + (1 / (2 : ℝ) ^ D) * q i - if i = j then 1 / (2 : ℝ) ^ D else 0
 
+/-- Subtracting one depth-D donor cylinder preserves every coarser floor prefix. -/
 lemma donor_prefix (x : ℝ) (D : ℕ) (hD : 1 ≤ D)
     (hbit : ⌊(2 : ℝ) ^ D * x⌋ = 2 * ⌊(2 : ℝ) ^ (D - 1) * x⌋ + 1)
     (d : ℕ) (hd : d < D) :
@@ -187,6 +188,7 @@ private lemma minimum_lower (m D : ℕ) (p q : Fin m → ℝ) (j : Fin m)
 end D5.S3.Arith.FibonacciAtomic.OptimalLaw.LeafExchange
 
 namespace D5.S3.Arith.FibonacciAtomic.OptimalLaw.LeafExchange
+/-- A cheaper receiver cannot exploit a one digit of an attaining law while raising its minimum. -/
 lemma profitable_leaf_impossible (m D : ℕ) (hm : 2 ≤ m)
     (p q : Fin m → ℝ) (j : Fin m) (hD : 1 ≤ D)
     (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1)

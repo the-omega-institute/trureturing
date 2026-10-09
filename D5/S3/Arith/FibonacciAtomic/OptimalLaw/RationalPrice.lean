@@ -127,6 +127,7 @@ private lemma root_bdd_below (m : ℕ) (hm : 2≤m) (x : ℝ) :
   change -|x| ≤pathCost δ-x*anchorMass δ
   linarith
 
+/-- The triangular root value vanishes at exactly the full-real optimum. -/
 theorem zero_iff_alpha (m : ℕ) (hm : 2≤m) (x : ℝ) :
     W x m 1=0 ↔ x=OptimalLawStrictSlope.alpha m := by
   constructor
@@ -334,6 +335,7 @@ private lemma rational_fraction_cost (q : ℚ) (hq : 0≤q) :
   rw [frac]
   ring
 
+/-- Every nonnegative normalized law with rational coordinates has rational dyadic cost. -/
 theorem rational_law_cost (m : ℕ) (p : Fin m → ℝ)
     (hp : ∀ i,0≤p i) (hs : ∑ i,p i=1)
     (hr : ∀ i,∃ q:ℚ,(q:ℝ)=p i) : ∃ v:ℚ,(v:ℝ)=cost p := by
@@ -365,6 +367,7 @@ open D5.S3.Arith.FibonacciAtomic
 open DyadicSupportLines OptimalLawStrictSlope
 namespace D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice
 
+/-- The full-real optimum has a positive rational representative. -/
 theorem rational_alpha (m : ℕ) (hm : 2≤m) : ∃ A:ℚ, 0<A ∧ (A:ℝ)=alpha m := by
   obtain ⟨p,k,hp,hs,hk,ho⟩ := attained m hm
   have hr := D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice.optimizer_rational m hm p k hp hs hk ho
@@ -383,6 +386,7 @@ end D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice
 open D5.S3.Arith.FibonacciAtomic
 namespace D5.S3.Arith.FibonacciAtomic.OptimalLaw.RationalPrice
 
+/-- One positive rational equals the full-real optimum and is the unique real root price. -/
 theorem result (m : ℕ) (hm : 2≤m) : ∃ A:ℚ,
     0<A ∧ (A:ℝ)=OptimalLawStrictSlope.alpha m ∧
     ∀ x:ℝ, TriangularFirstSplitRecurrence.W x m 1=0 ↔ x=(A:ℝ) := by

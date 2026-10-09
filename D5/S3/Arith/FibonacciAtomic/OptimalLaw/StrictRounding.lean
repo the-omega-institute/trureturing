@@ -219,6 +219,7 @@ noncomputable def round (t : ℝ) (D : ℕ) : ℝ :=
 
 def OnGrid (x : ℝ) (D : ℕ) : Prop := ∃ z : ℤ, (2 : ℝ) ^ D * x = z
 
+/-- A terminating dyadic coordinate lies on every finer grid. -/
 lemma grid_up (x : ℝ) (D E : ℕ) (h : D ≤ E) (hx : OnGrid x D) : OnGrid x E := by
   obtain ⟨z, hz⟩ := hx
   refine ⟨(2 : ℤ) ^ (E - D) * z, ?_⟩
@@ -252,6 +253,7 @@ private lemma round_le_grid (t x : ℝ) (D : ℕ) (h : t < x) (hx : OnGrid x D) 
 private lemma round_antitone (t : ℝ) (D E : ℕ) (h : D ≤ E) : round t E ≤ round t D :=
   round_le_grid t (round t D) E (round_gt t D) (grid_up _ D E h (round_grid t D))
 
+/-- The last digit at the least positive terminating depth is one. -/
 lemma least_grid_bit (x : ℝ) (D : ℕ) (hD : 1 ≤ D) (hx : OnGrid x D)
     (hmin : ∀ d < D, ¬OnGrid x d) :
     ⌊(2 : ℝ) ^ D * x⌋ = 2 * ⌊(2 : ℝ) ^ (D - 1) * x⌋ + 1 := by
