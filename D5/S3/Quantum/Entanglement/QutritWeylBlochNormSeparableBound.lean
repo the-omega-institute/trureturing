@@ -1,7 +1,7 @@
 /- GID: D5/S3/Quantum/Entanglement/QutritWeylBlochNormSeparableBound
    generality: I
    mirror-B: D5/B/S3/Quantum/Entanglement/QutritWeylBlochNormSeparableBound
-   mirror-E: none
+   mirror-E: none(waiver:external-open-problem-resolution)
    anchors: []
    utility: none
    digest: Two-qutrit Weyl–Bloch ℓ1 norm has sharp separable bound 25. -/
@@ -10,6 +10,7 @@ import Mathlib.Analysis.Matrix.PosDef
 import Mathlib.Analysis.SpecialFunctions.Trigonometric.Basic
 import Mathlib.Algebra.Order.Chebyshev
 import Mathlib.Tactic
+import D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound
 import D5.S3.QuantumContext.HesseSicCertificate
 import D5.S3.Weil.ZetaLinear.PosIndex
 
@@ -25,6 +26,8 @@ open scoped Kronecker ComplexOrder
 
 namespace D5.S3.Quantum.Entanglement.QutritWeylBlochNormSeparableBound
 
+open D5.S3.Quantum.Entanglement.GHZMeasureBiseparableBound (IsDensity)
+
 def omega : ℂ := Complex.exp (2 * Real.pi * Complex.I / 3)
 
 def W (k l : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
@@ -37,9 +40,6 @@ def bloch
 
 def l1 (ρ : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ) : ℝ :=
   ∑ i, ∑ j, ∑ k, ∑ l, ‖bloch ρ i j k l‖
-
-def IsDensity {n : Type*} [Fintype n] (ρ : Matrix n n ℂ) : Prop :=
-  ρ.PosSemidef ∧ ρ.trace = 1
 
 def IsSeparable
     (ρ : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ) : Prop :=
