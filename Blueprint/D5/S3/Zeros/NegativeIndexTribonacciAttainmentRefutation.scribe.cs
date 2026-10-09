@@ -61,7 +61,10 @@ internal sealed class NegativeIndexTribonacciAttainmentRefutationDocument
                     + "and nonempty, so ζ is strictly less than 5. The proposed equality "
                     + "at s = 5 therefore fails. The upper-bound inequality holds at this "
                     + "instance; its general validity is not asserted."))),
-                DescribeRole.Theorem))));
+                DescribeRole.Theorem,
+                openProblemResolutionClaim: new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("mane-2026-negative-index-fibonacci-root-amplitude"),
+                    ResolutionKind.Refuted)))));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose) =>
         Describe.Lean(DescribeId.Create(name is "F" ? "source-index" : name),
