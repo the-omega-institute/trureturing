@@ -18,20 +18,6 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.PrimeTripletWheel
 
-/-- The two diameter-six offset templates. -/
-def tripletPlus : Finset ℕ := {0, 2, 6}
-
-def tripletMinus : Finset ℕ := {0, 4, 6}
-
-/-- Ordered gap difference for a three-point template. -/
-def gapDifference (g₁ g₂ : ℤ) : ℤ := g₂ - g₁
-
-/-- Reversing the ordered gaps negates the three-point direction. -/
-theorem reflected_gapDifference (g₁ g₂ : ℤ) :
-    gapDifference g₂ g₁ = -gapDifference g₁ g₂ := by
-  dsimp [gapDifference]
-  ring
-
 /-- Wheel admissibility for the three-point orientation H-plus. -/
 def plusAdmissible (W : ℕ) [NeZero W] (a : ZMod W) : Prop :=
   IsUnit a ∧ IsUnit (a + 2) ∧ IsUnit (a + 6)
