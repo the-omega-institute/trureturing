@@ -7,14 +7,13 @@
    digest: A fixed Parikh matrix and its Chen coordinates recover legal golden factors. -/
 
 import D5.S1.Words.GoldenRecovery.GoldenFactorSecondOrderBinomialRigidity
+import D5.S1.Words.Palindromes.GoldenPalindromicFactorComplexity
 import D5.S3.Observer.GoldenChronology.BinaryParikhStepTwoBridge
 
 /-!
 # Golden-language faithfulness of the fixed Parikh observer
 
-This recovers the unmerged #5014 adapter, reusing the unique binary observer.
-The companion uploaded GoldenFactorHeisenbergReadout candidate is not copied:
-it defines the same matrix readout again. The first two entries recover length
+The first two entries recover length
 and counts, and the central entry recovers the scattered-pair statistic.
 The conclusion concerns word content, not absolute starts or prime labels.
 -/
@@ -28,28 +27,18 @@ open D5.S1.Words
 open D5.S1.Words.GoldenRecovery.GoldenFactorSecondOrderBinomialRigidity
 open D5.S3.Observer.Chronology.StepTwoChronologicalSignature
 open D5.S3.Observer.GoldenChronology.BinaryParikhStepTwoBridge
+open private goldenFactor_succ goldenFactor_count_true from
+  D5.S1.Words.Palindromes.GoldenPalindromicFactorComplexity
 open scoped BigOperators
 
 private theorem golden_factor_append_letter (n i : ℕ) :
-    goldenFactor (n + 1) i = goldenFactor n i ++ [goldenWord (i + n)] := by
-  simp only [goldenFactor, List.ofFn_succ', List.concat_eq_append,
-    Fin.val_castSucc, Fin.val_last]
-
-private theorem golden_count_succ (i n : ℕ) :
-    goldenWindowTrueCount i (n + 1) = goldenWindowTrueCount i n +
-      if goldenWord (i + n) = true then 1 else 0 := by
-  classical
-  by_cases h : goldenWord (i + n) = true <;>
-    simp [goldenWindowTrueCount, Finset.range_add_one, Finset.filter_insert, h]
+    goldenFactor (n + 1) i = goldenFactor n i ++ [goldenWord (i + n)] :=
+  goldenFactor_succ n i
 
 /-- The actual word count is the canonical Beatty-window count. -/
 theorem golden_factor_true_count (n i : ℕ) :
-    (goldenFactor n i).count true = goldenWindowTrueCount i n := by
-  induction n with
-  | zero => simp [goldenFactor, goldenWindowTrueCount]
-  | succ n ih =>
-      rw [golden_factor_append_letter, List.count_append, golden_count_succ, ih]
-      cases h : goldenWord (i + n) <;> simp [h]
+    (goldenFactor n i).count true = goldenWindowTrueCount i n :=
+  goldenFactor_count_true n i
 
 /-- The actual pair counter is the canonical golden binomial statistic. -/
 theorem golden_factor_scattered_count (n i : ℕ) :

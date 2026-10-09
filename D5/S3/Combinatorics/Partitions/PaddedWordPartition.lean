@@ -106,12 +106,14 @@ theorem oddRows_fin (l : List ℕ) :
 
 theorem odd_range (n : ℕ) :
     (∑ i ∈ Finset.range n, ((2*i+1 : ℕ) : ℝ)) = (n : ℝ)^2 := by
-  induction n with
-  | zero => simp
-  | succ n ih =>
-    rw [Finset.sum_range_succ, ih]
-    push_cast
-    ring
+  have hs : (∑ i ∈ Finset.range n, (2*i+1)) = n^2 := by
+    rw [Finset.sum_add_distrib, ← Finset.mul_sum, Nat.mul_comm 2,
+      Finset.sum_range_id_mul_two]
+    simp only [Finset.sum_const, Finset.card_range, smul_eq_mul, mul_one]
+    cases n with
+    | zero => simp
+    | succ n => simp only [Nat.succ_sub_one, Nat.succ_eq_add_one]; ring
+  exact_mod_cast hs
 
 theorem filtered_odd_range (m n : ℕ) (hmn : m ≤ n) :
     (∑ i ∈ Finset.range n, if i < m then ((2*i+1 : ℕ) : ℝ) else 0) =

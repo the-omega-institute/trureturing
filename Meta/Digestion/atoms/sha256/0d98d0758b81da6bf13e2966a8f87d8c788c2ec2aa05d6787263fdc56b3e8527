@@ -1,0 +1,16 @@
+The proof explains why.
+
+At one fixed length, golden balance gives `abs(r-s) <= 1` for the true counts of any two factors. Equal centers imply
+
+```text
+2P - r(n-r) = 2Q - s(n-s).
+```
+
+If `s=r+1`, this simplifies to
+
+```text
+2P - 2Q = 2r + 1 - n.
+```
+
+For even n, the right side is odd and the left side is even. Therefore adjacent different counts cannot have equal centers. Counts agree, pair counts agree, and the already recovered binomial theorem yields the same full factor.
+

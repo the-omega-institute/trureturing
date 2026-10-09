@@ -1,5 +1,5 @@
 /- GID: D5/S3/Combinatorics/Partitions/WordPartitionInverse
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Combinatorics/Partitions/WordPartitionInverse
    mirror-E: none(waiver:list-recursion-proof)
    anchors: []
@@ -7,6 +7,7 @@
    digest: Guarded prefix rows reconstruct the same word and its finite native joint image. -/
 
 import D5.S3.Combinatorics.Partitions.PaddedWordPartition
+import D5.S3.Observer.GoldenChronology.GoldenMagnusParityRecovery
 import D5.S3.Arith.FibonacciAtomic.GenealogicalFiberTransport
 import Mathlib.Data.Set.Finite.List
 import Mathlib.Data.Set.Card
@@ -93,38 +94,10 @@ theorem wordOfRows_padding (u : ℕ) (l : List ℕ) (m : ℕ) :
   | nil => simp [wordOfRows_zero_rows, wordOfRows]
   | cons a l ih => simp [wordOfRows, ih, List.append_assoc]
 
-theorem zero_rows_cells (m : ℕ) :
-    YoungDiagram.cellsOfRowLens (List.replicate m 0) = ∅ := by
-  induction m with
-  | zero => rfl
-  | succ m ih => simp [List.replicate_succ, YoungDiagram.cellsOfRowLens, ih]
-
-theorem padding_cells (l : List ℕ) (m : ℕ) :
-    YoungDiagram.cellsOfRowLens (l ++ List.replicate m 0) =
-      YoungDiagram.cellsOfRowLens l := by
-  induction l with
-  | nil => exact zero_rows_cells m
-  | cons a l ih => simp [YoungDiagram.cellsOfRowLens, ih]
-
-theorem padding_sorted (l : List ℕ) (hl : l.SortedGE) (m : ℕ) :
-    (l ++ List.replicate m 0).SortedGE := by
-  apply List.Pairwise.sortedGE
-  simpa [List.pairwise_append, List.pairwise_replicate] using hl.pairwise
-
-theorem padding_diagram (l : List ℕ) (hl : l.SortedGE) (m : ℕ) :
-    YoungDiagram.ofRowLens (l ++ List.replicate m 0) (padding_sorted l hl m) =
-      YoungDiagram.ofRowLens l hl := by
-  apply YoungDiagram.ext
-  exact padding_cells l m
-
 theorem pair_count_bound (w : List Bool) :
     scatteredTrueFalseCount w ≤ w.count true * w.count false := by
-  induction w with
-  | nil => rfl
-  | cons c w ih =>
-    cases c <;> simp [scatteredTrueFalseCount]
-    · exact ih.trans (Nat.mul_le_mul_left _ (by omega))
-    · nlinarith
+  have h := D5.S3.Observer.GoldenChronology.GoldenMagnusParityRecovery.scattered_pair_reversal_sum w
+  omega
 
 theorem outer_reverse_contract (w : List Bool) :
     w.reverse.count true = w.count true ∧ w.reverse.count false = w.count false ∧
@@ -299,14 +272,6 @@ end D5.S3.Combinatorics.Partitions.WordPartitionInverse
 #print axioms D5.S3.Combinatorics.Partitions.WordPartitionInverse.wordOfRows_zero_rows
 #check D5.S3.Combinatorics.Partitions.WordPartitionInverse.wordOfRows_padding
 #print axioms D5.S3.Combinatorics.Partitions.WordPartitionInverse.wordOfRows_padding
-#check D5.S3.Combinatorics.Partitions.WordPartitionInverse.zero_rows_cells
-#print axioms D5.S3.Combinatorics.Partitions.WordPartitionInverse.zero_rows_cells
-#check D5.S3.Combinatorics.Partitions.WordPartitionInverse.padding_cells
-#print axioms D5.S3.Combinatorics.Partitions.WordPartitionInverse.padding_cells
-#check D5.S3.Combinatorics.Partitions.WordPartitionInverse.padding_sorted
-#print axioms D5.S3.Combinatorics.Partitions.WordPartitionInverse.padding_sorted
-#check D5.S3.Combinatorics.Partitions.WordPartitionInverse.padding_diagram
-#print axioms D5.S3.Combinatorics.Partitions.WordPartitionInverse.padding_diagram
 #check D5.S3.Combinatorics.Partitions.WordPartitionInverse.pair_count_bound
 #print axioms D5.S3.Combinatorics.Partitions.WordPartitionInverse.pair_count_bound
 #check D5.S3.Combinatorics.Partitions.WordPartitionInverse.outer_reverse_contract
