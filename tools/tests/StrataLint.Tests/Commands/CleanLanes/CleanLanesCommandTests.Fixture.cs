@@ -251,6 +251,15 @@ public sealed partial class CleanLanesCommandTests
             return path;
         }
 
+        internal string AddOrphanTempDirectory(string name)
+        {
+            var path = Path.Combine(temp.Path, name);
+            Directory.CreateDirectory(path);
+            File.WriteAllText(Path.Combine(path, ".git"),
+                $"gitdir: {Path.Combine(repository.Path, ".git", "worktrees", "unregistered")}\n");
+            return path;
+        }
+
         internal string AddGitlessJudgeSnapshot(string name)
         {
             var path = Path.Combine(temp.Path, name);

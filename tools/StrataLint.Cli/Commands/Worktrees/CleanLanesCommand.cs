@@ -66,7 +66,7 @@ internal static partial class CleanLanesCommand
                 protectedInventory.Add(observed);
             }
 
-            InspectRegisteredLanes(
+            var extraSweepsAllowed = InspectRegisteredLanes(
                 root,
                 currentGitDirectory,
                 commonGitDirectory,
@@ -79,7 +79,7 @@ internal static partial class CleanLanesCommand
                 options.ActivePaths,
                 readHostActivity,
                 ProtectObservedWorktree);
-            if (!options.LanesOnly)
+            if (!options.LanesOnly && extraSweepsAllowed)
             {
                 // 建树时的回收够不到这两类:判官树的判据(未注册 / 无 .git 的快照)
                 // 区分不了「跑完了」和「正在跑」,而建树常发生在派席前后;孤儿分支
@@ -126,6 +126,10 @@ internal static partial class CleanLanesCommand
                 @event = "clean_lanes_summary",
                 mode = options.Force ? "force" : "dry_run",
                 scope = options.LanesOnly ? "lanes_only" : "full",
+                extra_sweeps = options.LanesOnly ? "not_requested"
+                    : extraSweepsAllowed ? "completed" : "deferred",
+                extra_sweeps_reason = !options.LanesOnly && !extraSweepsAllowed
+                    ? "lane_preservation_unresolved" : null,
                 base_revision = options.Base,
                 base_commit = baseCommit,
                 item_count = events.Count,
@@ -195,7 +199,7 @@ internal static partial class CleanLanesCommand
         return new CleanLanesOptions(baseRevision, force, lanesOnly, activePaths);
     }
 
-    private static void InspectRegisteredLanes(
+    private static bool InspectRegisteredLanes(
         string repositoryRoot,
         string currentGitDirectory,
         string commonGitDirectory,
@@ -210,6 +214,25 @@ internal static partial class CleanLanesCommand
         Action<RegisteredWorktree> protectObservedWorktree)
     {
         var remainingPaths = inventory.Select(static item => item.Path).ToHashSet(StringComparer.Ordinal);
+        var retainedLocks = inventory.Where(static item => item.Locked)
+            .Select(static item => item.Path).ToHashSet(StringComparer.Ordinal);
+        var incomplete = false;
+        void Observe(RegisteredWorktree observed)
+        {
+            protectObservedWorktree(observed);
+            if (observed.Locked) retainedLocks.Add(observed.Path);
+        }
+
+        void CompleteRemoval(RegisteredWorktree item, LaneRemovalResult removal)
+        {
+            if (removal.Outcome == LaneRemovalOutcome.Removed)
+            {
+                remainingPaths.Remove(item.Path);
+                retainedLocks.Remove(item.Path);
+            }
+            else incomplete = true;
+        }
+
         foreach (var item in inventory.OrderByDescending(static item => item.Path.Length))
         {
             if (string.Equals(item.Path, repositoryRoot, StringComparison.Ordinal)
@@ -227,18 +250,21 @@ internal static partial class CleanLanesCommand
 
             if (!Directory.Exists(item.Path))
             {
+                incomplete = true;
                 events.Add(BlockedWorktree(item, "missing"));
                 continue;
             }
 
             if (!HasGitMarker(item.Path))
             {
+                incomplete = true;
                 events.Add(BlockedWorktree(item, "unreadable"));
                 continue;
             }
 
             if (item.GitDirectory is null)
             {
+                incomplete = true;
                 events.Add(BlockedWorktree(item, "unreadable"));
                 continue;
             }
@@ -277,9 +303,9 @@ internal static partial class CleanLanesCommand
                         lockedLane,
                         activePaths,
                         readHostActivity,
-                        protectObservedWorktree);
+                        Observe);
                     events.Add(RemovalEvent(item, removal));
-                    if (removal.Outcome == LaneRemovalOutcome.Removed) remainingPaths.Remove(item.Path);
+                    CompleteRemoval(item, removal);
                     continue;
                 }
 
@@ -303,9 +329,10 @@ internal static partial class CleanLanesCommand
 
             if (force)
             {
-                var removal = RemoveLane(repositoryRoot, item, baseCommit, runner, now);
+                var removal = RemoveLane(repositoryRoot, item, baseCommit, runner, now,
+                    protectObservedWorktree: Observe);
                 events.Add(RemovalEvent(item, removal));
-                if (removal.Outcome == LaneRemovalOutcome.Removed) remainingPaths.Remove(item.Path);
+                CompleteRemoval(item, removal);
                 continue;
             }
 
@@ -318,6 +345,10 @@ internal static partial class CleanLanesCommand
                 "stale_behind"));
             remainingPaths.Remove(item.Path);
         }
+
+        // Preview does not discharge a lock. Only that path's complete native removal
+        // can do so; an unrelated success cannot clear incomplete attachment evidence.
+        return !incomplete && retainedLocks.Count == 0;
     }
 
     private static void InspectOrphanBranches(

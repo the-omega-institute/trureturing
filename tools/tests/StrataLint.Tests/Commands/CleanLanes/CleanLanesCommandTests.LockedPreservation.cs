@@ -107,7 +107,10 @@ public sealed partial class CleanLanesCommandTests
         Assert.Equal("locked_history", ReasonFor(result.Output, lane));
         Assert.Equal(uniqueTip, fixture.Head(lane));
         Assert.True(fixture.BranchExists("harness/unique-history"));
-        Assert.False(fixture.BranchExists("harness/transient-base"));
+        Assert.True(fixture.BranchExists("harness/transient-base"));
+        Assert.Equal("deferred", ReadSummary(result.Output).GetProperty("extra_sweeps").GetString());
+        Assert.Equal(InitializationLock,
+            File.ReadAllText(Path.Combine(fixture.WorktreeGitDirectory(lane), "locked")).Trim());
     }
 
     [Theory]
