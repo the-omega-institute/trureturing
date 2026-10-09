@@ -43,7 +43,7 @@ private theorem triangular_lower (m : ℕ) (hm : 2 ≤ m) (γ : RootPath m) :
     rw [hz, mul_zero]
     exact tsum_nonneg (fun d => by positivity)
 
-private def rootPath (m : ℕ) (γ : TriangularFirstSplitRecurrence.Path m 1) : RootPath m where
+private def root_path (m : ℕ) (γ : TriangularFirstSplitRecurrence.Path m 1) : RootPath m where
   state := γ.state
   action := γ.action
   root := γ.start
@@ -56,10 +56,10 @@ private theorem below_alpha_nonnegative (m : ℕ) (hm : 2 ≤ m) (x : ℝ)
   apply le_csInf
   · exact ⟨_, ⟨TriangularFirstSplitRecurrence.noSplit m 1 (by omega), rfl⟩⟩
   · rintro y ⟨γ, rfl⟩
-    have H := triangular_lower m hm (rootPath m γ)
-    have ht : 0 ≤ anchorMass (rootPath m γ) := tsum_nonneg (fun d => by positivity)
+    have H := triangular_lower m hm (root_path m γ)
+    have ht : 0 ≤ anchorMass (root_path m γ) := tsum_nonneg (fun d => by positivity)
     have HM := mul_le_mul_of_nonneg_right hx ht
-    change 0 ≤ pathCost (rootPath m γ) - x * anchorMass (rootPath m γ)
+    change 0 ≤ pathCost (root_path m γ) - x * anchorMass (root_path m γ)
     linarith
 
 private theorem zero_if_optimum_embeds (m : ℕ) (hm : 2 ≤ m)
@@ -77,9 +77,9 @@ private theorem zero_if_optimum_embeds (m : ℕ) (hm : 2 ≤ m)
     apply csInf_le
     · refine ⟨0, ?_⟩
       rintro y ⟨η, rfl⟩
-      have HH := triangular_lower m hm (rootPath m η)
-      change 0 ≤ pathCost (rootPath m η) -
-        OptimalLawStrictSlope.alpha m * anchorMass (rootPath m η)
+      have HH := triangular_lower m hm (root_path m η)
+      change 0 ≤ pathCost (root_path m η) -
+        OptimalLawStrictSlope.alpha m * anchorMass (root_path m η)
       linarith
     · exact ⟨δ, rfl⟩
   linarith
@@ -112,11 +112,11 @@ private theorem at_alpha_zero (m : ℕ) (hm : 2≤m) : W (OptimalLawStrictSlope.
   have H := (div_eq_iff (hp k).ne').mp ho
   simpa [mul_comm] using H
 
-private lemma root_bddBelow (m : ℕ) (hm : 2≤m) (x : ℝ) :
+private lemma root_bdd_below (m : ℕ) (hm : 2≤m) (x : ℝ) :
     BddBelow (Set.range (fun γ : TriangularFirstSplitRecurrence.Path m 1 => pathValue x γ)) := by
   refine ⟨-(|x|),?_⟩
   rintro y ⟨γ,rfl⟩
-  let δ := rootPath m γ
+  let δ := root_path m γ
   have hc := root_cost m hm δ
   have ht := anchor_bounds m δ
   have hprod : x*anchorMass δ≤|x| := by
@@ -133,7 +133,7 @@ theorem zero_iff_alpha (m : ℕ) (hm : 2≤m) (x : ℝ) :
   · intro hz
     rcases lt_trichotomy x (OptimalLawStrictSlope.alpha m) with hlt|heq|hgt
     · obtain ⟨γ,hγ⟩ := (TriangularFirstSplitRecurrence.result m hm x m ⟨by omega,le_rfl⟩ 1 (by omega)).2.2
-      let δ := rootPath m γ
+      let δ := root_path m γ
       have hc := root_cost m hm δ
       have ht := (anchor_bounds m δ).1
       have lower := triangular_lower m hm δ
@@ -157,7 +157,7 @@ theorem zero_iff_alpha (m : ℕ) (hm : 2≤m) (x : ℝ) :
         have H := mul_lt_mul_of_pos_right hgt (hp k)
         nlinarith only [HC,H]
       have HW : W x m 1 ≤ pathValue x δ :=
-        csInf_le (root_bddBelow m hm x) ⟨δ,rfl⟩
+        csInf_le (root_bdd_below m hm x) ⟨δ,rfl⟩
       rw [hz] at HW
       linarith
   · intro H

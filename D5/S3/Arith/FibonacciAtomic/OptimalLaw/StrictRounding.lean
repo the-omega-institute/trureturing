@@ -21,15 +21,15 @@ open D5.S3.Arith.FibonacciAtomic.DyadicSupportLines
 open D5.S3.Arith.FibonacciAtomic.OptimalLawStrictSlope
 
 /-- A coordinate is dyadic with the displayed least terminating depth. -/
-def DyadicTerminalAbove (x t : ℝ) : Prop :=
+def DyadicStrictRound (x t : ℝ) : Prop :=
   ∃ D : ℕ, 1 ≤ D ∧
     (∃ z : ℤ, (2 : ℝ) ^ D * x = z) ∧
     (∀ d : ℕ, d < D → ¬∃ z : ℤ, (2 : ℝ) ^ d * x = z) ∧
     x = (((⌊(2 : ℝ) ^ D * t⌋ : ℤ) + 1 : ℤ) : ℝ) / (2 : ℝ) ^ D
 
-/-- Exact Lean target corresponding to the source's strict-rounding conclusion. -/
-def StrictRoundingTarget (m : ℕ) (p : Fin m → ℝ) (k : Fin m) : Prop :=
-  ∀ i : Fin m, p k < p i → DyadicTerminalAbove (p i) (p k)
+/-- Every coordinate above the minimum has the indicated strict dyadic rounding. -/
+def StrictlyRoundedLaw (m : ℕ) (p : Fin m → ℝ) (k : Fin m) : Prop :=
+  ∀ i : Fin m, p k < p i → DyadicStrictRound (p i) (p k)
 
 /-- The full public proposition, with the frozen optimizer hypotheses explicit. -/
 
@@ -109,22 +109,17 @@ private lemma receiver_law (m : ℕ) (S : Finset (Fin m)) (hS : S.Nonempty) :
   · intro i hi
     simp [q, hi]
 
-lemma bit_bounds (x : ℝ) (d : ℕ) :
+private lemma bit_bounds (x : ℝ) (d : ℕ) :
     2 * ⌊(2 : ℝ) ^ d * x⌋ ≤ ⌊(2 : ℝ) ^ (d + 1) * x⌋ ∧
     ⌊(2 : ℝ) ^ (d + 1) * x⌋ ≤ 2 * ⌊(2 : ℝ) ^ d * x⌋ + 1 := by
-  have low := Int.floor_le ((2 : ℝ) ^ d * x)
-  have high := Int.lt_floor_add_one ((2 : ℝ) ^ d * x)
-  constructor
-  · apply Int.le_floor.mpr
-    push_cast
-    rw [pow_succ]
-    nlinarith
-  · have H : ⌊(2 : ℝ) ^ (d + 1) * x⌋ < 2 * ⌊(2 : ℝ) ^ d * x⌋ + 2 := by
-      apply Int.floor_lt.mpr
-      push_cast
-      rw [pow_succ]
-      nlinarith
-    omega
+  have H := D5.S1.Digit.RadixFloorDigit.radix_floor_digit_bounds_and_decomposition
+    2 (by decide) ((2 : ℝ) ^ d * x)
+  simp only [D5.S1.Digit.RadixFloorDigit.digitInt] at H
+  rw [pow_succ]
+  have scale : (2 : ℝ) ^ d * 2 * x = 2 * ((2 : ℝ) ^ d * x) := by ring
+  rw [scale]
+  norm_num only [Nat.cast_ofNat] at H
+  omega
 
 private lemma non_dyadic_deep_leaf (x : ℝ)
     (hx : ¬∃ D : ℕ, ∃ z : ℤ, (2 : ℝ) ^ D * x = z) (N : ℕ) :
@@ -362,7 +357,7 @@ private lemma fractional_margin (m D : ℕ) (p : Fin m → ℝ) (t : ℝ)
 theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ) (k : Fin m)
     (hp : ∀ i, 0 < p i) (hs : ∑ i, p i = 1)
     (hk : ∀ i, p k ≤ p i) (ho : cost p / p k = alpha m) :
-    StrictRoundingTarget m p k := by
+    StrictlyRoundedLaw m p k := by
   classical
   have term (i : Fin m) (hi : p k < p i) : ∃ D : ℕ, OnGrid (p i) D :=
     larger_terminal m hm p k hp hs hk ho i hi
@@ -373,12 +368,10 @@ theorem result (m : ℕ) (hm : 2 ≤ m) (p : Fin m → ℝ) (k : Fin m)
     rw [dif_pos hi]
     exact ⟨Nat.find_spec (term i hi), fun d hd => Nat.find_min (term i hi) hd⟩
   have small (i : Fin m) : p i < 1 := by
-    have : Nontrivial (Fin m) := Fin.nontrivial_iff_two_le.mpr hm
+    haveI : Nontrivial (Fin m) := Fin.nontrivial_iff_two_le.mpr hm
     obtain ⟨j, hj⟩ := exists_ne i
-    have H := Finset.add_le_sum (s := Finset.univ) (fun a _ => (hp a).le)
-      (Finset.mem_univ i) (Finset.mem_univ j) (Ne.symm hj)
-    rw [hs] at H
-    linarith [hp j]
+    simpa only [hs] using Finset.single_lt_sum hj (Finset.mem_univ i)
+      (Finset.mem_univ j) (hp j) (fun a _ _ => (hp a).le)
   have positive_depth (i : Fin m) (hi : p k < p i) : 1 ≤ depth i := by
     by_contra H
     have z := (spec i hi).1
