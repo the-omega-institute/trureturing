@@ -223,6 +223,43 @@ class SignalDiagnosticContractTests(unittest.TestCase):
             self.assertTrue(all(v == -signal.SIGTERM for v in row["target_returncodes"]))
             self.assertEqual(len(row["targets"]), 1 if row["mode"] == "individual" else 2)
 
+    def test_fixture_receives_sender_sigterm_before_default_signal_exit(self):
+        # Read the target's own receipt from its normal entry point.
+        # This portable reachability check does not supply kernel trace evidence.
+        for mode in ("individual", "group"):
+            with self.subTest(mode=mode):
+                targets = []
+                try:
+                    command = [sys.executable, "-B", str(PROGRAM), "fixture-target"]
+                    leader = subprocess.Popen(command, stdout=subprocess.PIPE,
+                                              stderr=subprocess.PIPE, process_group=0)
+                    targets.append(leader)
+                    if mode == "group":
+                        targets.append(subprocess.Popen(command, stdout=subprocess.PIPE,
+                                       stderr=subprocess.PIPE, process_group=leader.pid))
+                    for target in targets:
+                        self.assertTrue(select.select([target.stdout], [], [], 5)[0])
+                        identity = json.loads(target.stdout.readline())
+                        self.assertEqual(identity["pid"], target.pid)
+                        self.assertEqual(identity["pgid"], leader.pid)
+                    sender = subprocess.run([sys.executable, "-B", str(PROGRAM),
+                                            "fixture-sender", str(leader.pid), mode],
+                                            capture_output=True, timeout=5)
+                    self.assertEqual(sender.returncode, 0)
+                    self.assertNotIn(json.loads(sender.stdout)["pid"], [t.pid for t in targets])
+                    for target in targets:
+                        stdout, stderr = target.communicate(timeout=5)
+                        self.assertEqual(target.returncode, -signal.SIGTERM)
+                        self.assertEqual(stderr, b"")
+                        self.assertTrue(stdout, "sender SIGTERM must reach the target's handler")
+                        self.assertEqual(json.loads(stdout),
+                                         {"kind": "fixture-received-signal", "signal": 15})
+                finally:
+                    for target in targets:
+                        if target.poll() is None:
+                            target.kill()
+                        target.communicate(timeout=5)
+
     def test_wire_event_identifies_sender_target_and_signed_group_request(self):
         line = "D\tsignal\t100\t15\t0\t0\t1\t0\t20\t20\t1\t20\t20\t90\tbash\t21\t21\t20\t21\t21\t91\tpython\n"
         event = cost.parse_signal_wire(line)
@@ -284,6 +321,38 @@ class SignalDiagnosticContractTests(unittest.TestCase):
         reused = [dict(e, target=dict(target, start_ns=3000000000)) if e["kind"] == "signal" else e for e in events]
         with self.assertRaises(ValueError):
             cost.validate_fixture_attribution(reused, fixtures)
+
+    def test_each_individual_and_group_attribution_bridge_remains_required(self):
+        def ident(pid):
+            return {"pid": pid, "tgid": pid, "ppid": 1, "pgid": 40,
+                    "sid": 1, "start_ns": pid * 1000000000, "comm": "python"}
+        sender = ident(20)
+        for mode in ("individual", "group"):
+            targets = [ident(pid) for pid in ((21,) if mode == "individual" else (21, 22))]
+            signed = targets[0]["pid"] if mode == "individual" else -40
+            fixtures = [{"mode": mode, "pgid": 40, "sender": sender, "targets": targets}]
+            events = [{"kind": "kill", "signal": 15, "requested_target": signed, "sender": sender}]
+            for target in targets:
+                events.extend([
+                    {"kind": "signal", "signal": 15, "group": 1, "result": 0,
+                     "sender": sender, "target": target},
+                    {"kind": "delivery", "signal": 15, "target": target},
+                    {"kind": "exit", "kernel_exit_code": 15, "actor": target},
+                ])
+            cost.validate_fixture_attribution(events, fixtures)
+            # Default-fatal delivery 9 remains raw evidence, never delivery 15.
+            cases = [[dict(e, signal=9) if e["kind"] == "delivery" else e for e in events],
+                     [dict(e, requested_target=40) if e["kind"] == "kill" else e for e in events]]
+            if mode == "individual":
+                cases.pop()  # The signed group request assertion applies to group mode.
+            for index, event in enumerate(events):
+                cases.append(events[:index] + events[index + 1:])
+                field = "actor" if event["kind"] == "exit" else "target" if event["kind"] != "kill" else "sender"
+                reused = dict(event, **{field: dict(event[field], start_ns=99000000000)})
+                cases.append(events[:index] + [reused] + events[index + 1:])
+            for index, case in enumerate(cases):
+                with self.subTest(mode=mode, case=index), self.assertRaises(ValueError):
+                    cost.validate_fixture_attribution(case, fixtures)
 
     def test_kernel_oom_pid_schema_does_not_invent_victim_start_identity(self):
         event = cost.parse_signal_wire("D\toom-victim\t100\t77\t20\t20\t1\t20\t20\t90\tkworker\n")

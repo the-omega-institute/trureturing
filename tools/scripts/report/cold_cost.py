@@ -1494,6 +1494,15 @@ def main():
     if len(sys.argv) > 1 and sys.argv[1] == "owned-supervisor":
         return owned_supervisor(int(sys.argv[2]), sys.argv[3:])
     if len(sys.argv) > 1 and sys.argv[1] == "fixture-target":
+        # A caught first SIGTERM is delivered as SIGTERM. The kernel's default
+        # fatal group-exit path can instead report an internal SIGKILL delivery.
+        # Restore default disposition only after receiving the sender's signal,
+        # preserving the real SIGTERM termination status for the exit consumer.
+        def terminate(signum, _frame):
+            print(json.dumps({"kind": "fixture-received-signal", "signal": signum}), flush=True)
+            signal.signal(signum, signal.SIG_DFL)
+            os.kill(os.getpid(), signum)
+        signal.signal(signal.SIGTERM, terminate)
         print(json.dumps(fixture_identity()), flush=True)
         time.sleep(30)
         return 0
