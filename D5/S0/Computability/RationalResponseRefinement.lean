@@ -108,6 +108,7 @@ theorem post_word_run (w : List ResponseSymbol) :
           dsimp [postMachine,TM2.stepAux,postCfg,postStacks,isSymbol,symbolEq,
             readSymbol,clearSymbol]
           simp only [List.replicate_succ]
+          simp only [cond_true, cond_false]
           congr 1
           funext k
           cases k <;> rfl
@@ -135,6 +136,7 @@ theorem post_word_run (w : List ResponseSymbol) :
               (List.replicate t .zero) []) := by
           apply congrArg some
           dsimp [postMachine,TM2.stepAux,postCfg,postStacks,isSymbol,symbolEq,readSymbol]
+          simp only [cond_true, cond_false]
           congr 1
           funext k
           cases k <;> rfl
@@ -152,6 +154,7 @@ theorem post_word_run (w : List ResponseSymbol) :
               (List.replicate t .zero) []) := by
           apply congrArg some
           dsimp [postMachine,TM2.stepAux,postCfg,postStacks,isSymbol,symbolEq,readSymbol]
+          simp only [cond_true, cond_false]
           congr 1
           funext k
           cases k <;> rfl
@@ -172,6 +175,7 @@ theorem post_word_run (w : List ResponseSymbol) :
           some (postCfg .badInput (readSymbol st none) [] (binaryWord q) [] []) := by
         apply congrArg some
         dsimp [postMachine,TM2.stepAux,postCfg,postStacks,isSymbol,symbolEq,readSymbol]
+        simp only [cond_true, cond_false]
         congr 1
         funext k
         cases k <;> rfl
@@ -186,6 +190,7 @@ theorem post_word_run (w : List ResponseSymbol) :
             some (postCfg .badInput (readSymbol st (some .zero)) input (binaryWord q) [] []) := by
           apply congrArg some
           dsimp [postMachine,TM2.stepAux,postCfg,postStacks,isSymbol,symbolEq,readSymbol]
+          simp only [cond_true, cond_false]
           congr 1
           funext k
           cases k <;> rfl
@@ -198,6 +203,7 @@ theorem post_word_run (w : List ResponseSymbol) :
             some (postCfg .badInput (readSymbol st (some .slash)) input (binaryWord q) [] []) := by
           apply congrArg some
           dsimp [postMachine,TM2.stepAux,postCfg,postStacks,isSymbol,symbolEq,readSymbol]
+          simp only [cond_true, cond_false]
           congr 1
           funext k
           cases k <;> rfl
@@ -219,6 +225,7 @@ theorem post_word_run (w : List ResponseSymbol) :
             apply congrArg some
             dsimp [postMachine,TM2.stepAux,postCfg,postStacks,isSymbol,symbolEq,
               readSymbol,clearSymbol]
+            simp only [cond_true, cond_false]
             congr 1
             funext k
             cases k <;> rfl
@@ -311,6 +318,7 @@ theorem post_word_run (w : List ResponseSymbol) :
           some (postCfg .badInput (readSymbol st none) [] (binaryWord q) [] []) := by
         apply congrArg some
         dsimp [postMachine,TM2.stepAux,postCfg,postStacks,isSymbol,symbolEq,readSymbol]
+        simp only [cond_true, cond_false]
         congr 1
         funext k
         cases k <;> rfl
@@ -364,6 +372,7 @@ theorem post_word_run (w : List ResponseSymbol) :
           dsimp [postMachine,TM2.stepAux,postCfg,postStacks,isSymbol,symbolEq,
             readSymbol,advance]
           simp only [binaryWord,List.map_cons,bitSymbol]
+          simp only [cond_true, cond_false]
           congr 1
           funext k
           cases k <;> rfl
@@ -379,6 +388,7 @@ theorem post_word_run (w : List ResponseSymbol) :
           dsimp [postMachine,TM2.stepAux,postCfg,postStacks,isSymbol,symbolEq,
             readSymbol,advance]
           simp only [binaryWord,List.map_cons,bitSymbol]
+          simp only [cond_true, cond_false]
           congr 1
           funext k
           cases k <;> rfl
@@ -393,6 +403,7 @@ theorem post_word_run (w : List ResponseSymbol) :
           some (postCfg .badInput (readSymbol default none) [] [] [] []) := by
         apply congrArg some
         dsimp [postMachine,TM2.stepAux,initList,postCfg,postStacks,isSymbol,symbolEq,readSymbol]
+        simp only [cond_true, cond_false]
         congr 1
         funext k
         cases k <;> rfl
@@ -405,6 +416,7 @@ theorem post_word_run (w : List ResponseSymbol) :
             some (postCfg .badInput (readSymbol default (some .zero)) input [] [] []) := by
           apply congrArg some
           dsimp [postMachine,TM2.stepAux,initList,postCfg,postStacks,isSymbol,symbolEq,readSymbol]
+          simp only [cond_true, cond_false]
           congr 1
           funext k
           cases k <;> rfl
@@ -416,6 +428,7 @@ theorem post_word_run (w : List ResponseSymbol) :
             some (postCfg .badInput (readSymbol default (some .slash)) input [] [] []) := by
           apply congrArg some
           dsimp [postMachine,TM2.stepAux,initList,postCfg,postStacks,isSymbol,symbolEq,readSymbol]
+          simp only [cond_true, cond_false]
           congr 1
           funext k
           cases k <;> rfl
@@ -428,6 +441,7 @@ theorem post_word_run (w : List ResponseSymbol) :
           apply congrArg some
           dsimp [postMachine,TM2.stepAux,initList,postCfg,postStacks,isSymbol,symbolEq,
             readSymbol,binaryWord,bitSymbol]
+          simp only [cond_true, cond_false]
           congr 1
           funext k
           cases k <;> rfl

@@ -45,7 +45,7 @@ private theorem birkhoffSum_mono_of_nonnegative
   intro m n hmn
   obtain ⟨d, rfl⟩ := Nat.exists_eq_add_of_le hmn
   change birkhoffSum T roof m k <= birkhoffSum T roof (m + d) k
-  rw [birkhoffSum_add]
+  rw [birkhoffSum_add_right_apply]
   apply le_add_of_nonneg_right
   simp only [birkhoffSum]
   exact Finset.sum_nonneg fun i _ => hroof ((T^[i]) ((T^[m]) k))
@@ -219,7 +219,7 @@ private theorem crossingIndex_step
           (crossingIndex T roof roof_continuous roof_positive q + 1) p.1 =
           roof p.1 + birkhoffSum T roof
             (crossingIndex T roof roof_continuous roof_positive q) (T p.1) :=
-        birkhoffSum_succ' T roof _ p.1
+        birkhoffSum_succ_apply' T roof _ p.1
       _ = roof p.1 + birkhoffSum T roof
             (crossingIndex T roof roof_continuous roof_positive q) q.1 := by
         rw [← hpq.1]
@@ -239,7 +239,7 @@ private theorem crossingIndex_step
         rw [← hpq.1]
       _ = birkhoffSum T roof
           ((crossingIndex T roof roof_continuous roof_positive q + 1) + 1) p.1 :=
-        (birkhoffSum_succ' T roof _ p.1).symm
+        (birkhoffSum_succ_apply' T roof _ p.1).symm
 
 private theorem normalizedBase_step
     {K : Type*} [TopologicalSpace K] [CompactSpace K]
@@ -262,7 +262,7 @@ private theorem crossingResidual_step
       crossingResidual T roof roof_continuous roof_positive q := by
   rw [crossingResidual, crossingResidual,
     crossingIndex_step T roof roof_continuous roof_positive hpq,
-    birkhoffSum_succ']
+    birkhoffSum_succ_apply']
   rw [hpq.1]
   linarith [hpq.2]
 

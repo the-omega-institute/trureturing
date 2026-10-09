@@ -576,13 +576,16 @@ public sealed partial class LedgerAlignWriterTests
 
         internal AlignFixture(params ModuleSpec[] modules) : this(modules, []) { }
 
-        internal AlignFixture(ModuleSpec[] modules, Dictionary<string, LeanFileReport> additionalReports)
+        internal AlignFixture(ModuleSpec[] modules, Dictionary<string, LeanFileReport> additionalReports,
+            RawRepositorySnapshot? protectedBase = null, bool adoptedPin = false)
         {
             var files = new Dictionary<string, string>(StringComparer.Ordinal)
             {
                 ["lean-toolchain"] = "leanprover/lean4:v4.24.0\n",
                 ["lakefile.toml"] = "name = \"Fixture\"\n",
-                ["lake-manifest.json"] = "{}\n",
+                ["lake-manifest.json"] = adoptedPin
+                    ? "{\"packages\":[{\"name\":\"mathlib\",\"type\":\"git\",\"rev\":\"" + new string('b', 40) + "\"}]}\n"
+                    : "{}\n",
             };
             var reports = new Dictionary<string, LeanFileReport>(StringComparer.Ordinal);
             foreach (var module in modules)
@@ -618,7 +621,7 @@ public sealed partial class LedgerAlignWriterTests
                 RawChangeSet.CreateWithKinds(modules.Select(module =>
                     (PathFor(module.Name), RawChangeKind.Modified))),
                 raw,
-                null);
+                protectedBase);
             Directory.CreateDirectory(AcceptedPath);
         }
 

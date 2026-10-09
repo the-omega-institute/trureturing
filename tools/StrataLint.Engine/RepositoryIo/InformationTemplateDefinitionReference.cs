@@ -72,6 +72,7 @@ internal static class InformationTemplateDefinitionReference
     {
         var bytes = new StringBuilder();
         var tokens = new Dictionary<string, int>(StringComparer.Ordinal);
+        var names = new Dictionary<string, int>(StringComparer.Ordinal);
         void Emit(string token)
         {
             if (tokens.TryGetValue(token, out var index))
@@ -83,13 +84,36 @@ internal static class InformationTemplateDefinitionReference
                 tokens.Add(token, tokens.Count);
             }
         }
+        void Name((string Kind, string Value)[] parts, int count)
+        {
+            var key = "n0";
+            for (var i = 0; i < count; i++)
+                key = parts[i].Kind == "ns"
+                    ? "ns(" + key + "," + Encoding.UTF8.GetByteCount(parts[i].Value)
+                        .ToString(CultureInfo.InvariantCulture) + ":" + parts[i].Value + ")"
+                    : "nn(" + key + "," + parts[i].Value + ")";
+            if (names.TryGetValue(key, out var index))
+            {
+                Emit("name-ref");
+                Emit(index.ToString(CultureInfo.InvariantCulture));
+                return;
+            }
+            Emit("name-node");
+            names.Add(key, names.Count);
+            if (count == 0) Emit("anonymous");
+            else
+            {
+                var part = parts[count - 1];
+                Emit(part.Kind == "ns" ? "str" : "num");
+                Name(parts, count - 1);
+                Emit(part.Value);
+            }
+        }
         void Constant((string Kind, string Value)[] parts, int levelCount)
         {
             Emit("expr-node");
             Emit("const");
-            foreach (var part in parts.Reverse()) Emit(part.Kind == "ns" ? "str" : "num");
-            Emit("anonymous");
-            foreach (var part in parts) Emit(part.Value);
+            Name(parts, parts.Length);
             Emit(levelCount.ToString(CultureInfo.InvariantCulture));
             for (var i = 0; i < levelCount; i++)
             {
@@ -97,7 +121,7 @@ internal static class InformationTemplateDefinitionReference
                 Emit(i.ToString(CultureInfo.InvariantCulture));
             }
         }
-        Emit("DTR-source-expr-dag-v1");
+        Emit("DTR-source-expr-dag-v2");
         if (negated)
         {
             Emit("expr-node");

@@ -375,11 +375,10 @@ theorem result (Ω : Type*) [MeasurableSpace Ω] (P : Measure Ω) [IsProbability
   have hLq (q : ℝ≥0∞) (hq : q ≤ 4) :
       Tendsto (fun s : Finset ℕ => eLpNorm (T s - ⇑X) q P) atTop (𝓝 0) := by
     exact tendsto_of_tendsto_of_tendsto_of_le_of_le tendsto_const_nhds hL4
-      (fun _ => bot_le) (fun s => eLpNorm_le_eLpNorm_of_exponent_le hq
-        ((hT s 4).aestronglyMeasurable.sub (Lp.memLp X).aestronglyMeasurable))
+      (fun _ => bot_le) (fun s => eLpNorm_le_eLpNorm_of_exponent_le hq)
   have hX2 : MemLp (⇑X) 2 P := (Lp.memLp X).mono_exponent (by norm_num)
   have hXmean : (∫ ω, X ω ∂P) = 0 := by
-    have h := tendsto_integral_of_L1' (⇑X) (Lp.memLp X).aestronglyMeasurable
+    have h := tendsto_integral_of_L1' (⇑X)
       (Filter.Eventually.of_forall (fun s => (hT s 1).integrable (by norm_num)))
       (hLq 1 (by norm_num))
     simp only [hTmean] at h

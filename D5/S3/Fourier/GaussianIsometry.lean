@@ -149,7 +149,7 @@ theorem exists_gaussian_isometry (H : Type u) [NormedAddCommGroup H]
   constructor
   · constructor
     intro I
-    constructor
+    refine ⟨AEMeasurable.of_eval (fun i => (Lp.aestronglyMeasurable (W i)).aemeasurable), ?_⟩
     apply isGaussian_of_isGaussian_map
     intro L
     let a : I → ℝ := fun i => L (fun j => if i = j then 1 else 0)

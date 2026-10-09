@@ -417,24 +417,24 @@ private theorem recurrence_parity_iff_three_dvd (n : Nat) : Even (a n) ↔ 3 ∣
     simpa using hz
 private theorem recurrence_defined_parity_conjecture : ∀ n ≥ 1, Even (a n) ↔ 3 ∣ n := by intro n hn; exact recurrence_parity_iff_three_dvd n
 /-- The formal power-series equation stated in OEIS A392208 (2026-01-24). -/
-def ExpDefines (A : PowerSeries ℚ) : Prop := PowerSeries.constantCoeff A = 0 ∧ PowerSeries.derivative ℚ A =
-  (PowerSeries.exp ℚ).subst (A * (PowerSeries.derivative ℚ A) ^ 3)
+def ExpDefines (A : PowerSeries ℚ) : Prop := PowerSeries.constantCoeff A = 0 ∧ PowerSeries.derivative (R := ℚ) A =
+  (PowerSeries.exp ℚ).subst (A * (PowerSeries.derivative (R := ℚ) A) ^ 3)
 /-- Differentiating the equation in OEIS A392208 (2026-01-24) yields its autonomous ODE. -/
 theorem exp_definition_implies_ode {A : PowerSeries ℚ} (h : ExpDefines A) :
-    (1 - 3 * A * (PowerSeries.derivative ℚ A) ^ 3) * PowerSeries.derivative ℚ (PowerSeries.derivative ℚ A) = (PowerSeries.derivative ℚ A) ^ 5 := by
-  rcases h with ⟨hA0, hexp⟩; let B : PowerSeries ℚ := PowerSeries.derivative ℚ A
+    (1 - 3 * A * (PowerSeries.derivative (R := ℚ) A) ^ 3) * PowerSeries.derivative (R := ℚ) (PowerSeries.derivative (R := ℚ) A) = (PowerSeries.derivative (R := ℚ) A) ^ 5 := by
+  rcases h with ⟨hA0, hexp⟩; let B : PowerSeries ℚ := PowerSeries.derivative (R := ℚ) A
   let U : PowerSeries ℚ := A * B ^ 3
   have hU0 : PowerSeries.constantCoeff U = 0 := by simp [U, hA0]
   have hsubst : PowerSeries.HasSubst U := PowerSeries.HasSubst.of_constantCoeff_zero' hU0
-  have hd := congrArg (PowerSeries.derivative ℚ) hexp
-  change PowerSeries.derivative ℚ B = PowerSeries.derivative ℚ ((PowerSeries.exp ℚ).subst U) at hd
+  have hd := congrArg (PowerSeries.derivative (R := ℚ)) hexp
+  change PowerSeries.derivative (R := ℚ) B = PowerSeries.derivative (R := ℚ) ((PowerSeries.exp ℚ).subst U) at hd
   rw [PowerSeries.derivative_subst hsubst, PowerSeries.derivative_exp] at hd
-  have hUder : PowerSeries.derivative ℚ U = B ^ 4 + 3 * A * B ^ 2 * PowerSeries.derivative ℚ B := by
-    rw [show U = A * B ^ 3 by rfl, (PowerSeries.derivative ℚ).leibniz,
+  have hUder : PowerSeries.derivative (R := ℚ) U = B ^ 4 + 3 * A * B ^ 2 * PowerSeries.derivative (R := ℚ) B := by
+    rw [show U = A * B ^ 3 by rfl, (PowerSeries.derivative (R := ℚ)).leibniz,
       PowerSeries.derivative_pow]
-    simp only [smul_eq_mul]; change A * (3 * B ^ (3 - 1) * PowerSeries.derivative ℚ B) + B ^ 3 * B = _; ring
+    simp only [smul_eq_mul]; change A * (3 * B ^ (3 - 1) * PowerSeries.derivative (R := ℚ) B) + B ^ 3 * B = _; ring
   rw [hUder, ← hexp] at hd
-  change (1 - 3 * A * B ^ 3) * PowerSeries.derivative ℚ B = B ^ 5
+  change (1 - 3 * A * B ^ 3) * PowerSeries.derivative (R := ℚ) B = B ^ 5
   linear_combination hd
 /-- The rational exponential generating function used for OEIS A392208 (2026-01-24). -/
 def egfSeries (s : Nat → ℚ) : PowerSeries ℚ := PowerSeries.mk (fun n => s n / Nat.factorial n)
@@ -467,13 +467,13 @@ private theorem egfSeries_pow (f : Nat → ℚ) (m : Nat) : egfSeries (egfPow f 
   | zero =>
       ext n; cases n <;> simp [egfPow, egfOne, egfSeries]
   | succ m ih => rw [egfPow, egfSeries_mul, ih, pow_succ']
-private theorem derivative_egfSeries (f : Nat → ℚ) : PowerSeries.derivative ℚ (egfSeries f) = egfSeries (fun n => f (n + 1)) := by
+private theorem derivative_egfSeries (f : Nat → ℚ) : PowerSeries.derivative (R := ℚ) (egfSeries f) = egfSeries (fun n => f (n + 1)) := by
   ext n; rw [PowerSeries.coeff_derivative]; simp only [coeff_egfSeries]
   rw [Nat.factorial_succ]; push_cast; field_simp
 /-- The equation in OEIS A392208 (2026-01-24) forces the first coefficient to be one. -/
 theorem exp_definition_derivative_zero {A : PowerSeries ℚ} (h : ExpDefines A) :
-    PowerSeries.constantCoeff (PowerSeries.derivative ℚ A) = 1 := by
-  rcases h with ⟨hA0, hexp⟩; let B : PowerSeries ℚ := PowerSeries.derivative ℚ A
+    PowerSeries.constantCoeff (PowerSeries.derivative (R := ℚ) A) = 1 := by
+  rcases h with ⟨hA0, hexp⟩; let B : PowerSeries ℚ := PowerSeries.derivative (R := ℚ) A
   let U : PowerSeries ℚ := A * B ^ 3
   have hU0 : PowerSeries.constantCoeff U = 0 := by simp [U, hA0]
   have hsubst : PowerSeries.HasSubst U := PowerSeries.HasSubst.of_constantCoeff_zero' hU0
@@ -563,9 +563,9 @@ private theorem recurrence_rational_egfOde : EgfOde (fun n => (a n : ℚ)) := by
   exact h
 private theorem egfOde_implies_egfSeries_ode {s : Nat → ℚ} (h : EgfOde s) :
     (1 - 3 * egfSeries s *
-          (PowerSeries.derivative ℚ (egfSeries s)) ^ 3) *
-          PowerSeries.derivative ℚ (PowerSeries.derivative ℚ (egfSeries s)) =
-        (PowerSeries.derivative ℚ (egfSeries s)) ^ 5 := by
+          (PowerSeries.derivative (R := ℚ) (egfSeries s)) ^ 3) *
+          PowerSeries.derivative (R := ℚ) (PowerSeries.derivative (R := ℚ) (egfSeries s)) =
+        (PowerSeries.derivative (R := ℚ) (egfSeries s)) ^ 5 := by
   let s1 : Nat → ℚ := fun n => s (n + 1)
   let s2 : Nat → ℚ := fun n => s (n + 2)
   have hseq : s2 = fun n => egfPow s1 5 n +
@@ -586,8 +586,8 @@ private theorem egfOde_implies_egfSeries_ode {s : Nat → ℚ} (h : EgfOde s) :
 private theorem powerSeries_linear_ode_unique
     (U f g : PowerSeries ℚ)
     (h0 : PowerSeries.constantCoeff f = PowerSeries.constantCoeff g)
-    (hf : PowerSeries.derivative ℚ f = U * f)
-    (hg : PowerSeries.derivative ℚ g = U * g) : f = g := by
+    (hf : PowerSeries.derivative (R := ℚ) f = U * f)
+    (hg : PowerSeries.derivative (R := ℚ) g = U * g) : f = g := by
   ext n
   induction n using Nat.strong_induction_on with
   | h n ih =>
@@ -608,34 +608,34 @@ private theorem powerSeries_linear_ode_unique
 private theorem exp_definition_of_ode
     (A : PowerSeries ℚ)
     (hA0 : PowerSeries.constantCoeff A = 0)
-    (hA1 : PowerSeries.constantCoeff (PowerSeries.derivative ℚ A) = 1)
-    (hode : (1 - 3 * A * (PowerSeries.derivative ℚ A) ^ 3) *
-          PowerSeries.derivative ℚ (PowerSeries.derivative ℚ A) =
-        (PowerSeries.derivative ℚ A) ^ 5) : ExpDefines A := by
-  let B : PowerSeries ℚ := PowerSeries.derivative ℚ A
+    (hA1 : PowerSeries.constantCoeff (PowerSeries.derivative (R := ℚ) A) = 1)
+    (hode : (1 - 3 * A * (PowerSeries.derivative (R := ℚ) A) ^ 3) *
+          PowerSeries.derivative (R := ℚ) (PowerSeries.derivative (R := ℚ) A) =
+        (PowerSeries.derivative (R := ℚ) A) ^ 5) : ExpDefines A := by
+  let B : PowerSeries ℚ := PowerSeries.derivative (R := ℚ) A
   let U : PowerSeries ℚ := A * B ^ 3
   let E : PowerSeries ℚ := (PowerSeries.exp ℚ).subst U
   have hU0 : PowerSeries.constantCoeff U = 0 := by simp [U, hA0]
   have hsubst : PowerSeries.HasSubst U :=
     PowerSeries.HasSubst.of_constantCoeff_zero' hU0
-  have hUder : PowerSeries.derivative ℚ U =
-      B ^ 4 + 3 * A * B ^ 2 * PowerSeries.derivative ℚ B := by
-    rw [show U = A * B ^ 3 by rfl, (PowerSeries.derivative ℚ).leibniz,
+  have hUder : PowerSeries.derivative (R := ℚ) U =
+      B ^ 4 + 3 * A * B ^ 2 * PowerSeries.derivative (R := ℚ) B := by
+    rw [show U = A * B ^ 3 by rfl, (PowerSeries.derivative (R := ℚ)).leibniz,
       PowerSeries.derivative_pow]
     simp only [smul_eq_mul]
-    change A * (3 * B ^ (3 - 1) * PowerSeries.derivative ℚ B) + B ^ 3 * B = _
+    change A * (3 * B ^ (3 - 1) * PowerSeries.derivative (R := ℚ) B) + B ^ 3 * B = _
     ring
-  have hBder : PowerSeries.derivative ℚ B =
-      PowerSeries.derivative ℚ U * B := by
+  have hBder : PowerSeries.derivative (R := ℚ) B =
+      PowerSeries.derivative (R := ℚ) U * B := by
     rw [hUder]
-    change PowerSeries.derivative ℚ B =
-      (B ^ 4 + 3 * A * B ^ 2 * PowerSeries.derivative ℚ B) * B
-    change (1 - 3 * A * B ^ 3) * PowerSeries.derivative ℚ B = B ^ 5 at hode
+    change PowerSeries.derivative (R := ℚ) B =
+      (B ^ 4 + 3 * A * B ^ 2 * PowerSeries.derivative (R := ℚ) B) * B
+    change (1 - 3 * A * B ^ 3) * PowerSeries.derivative (R := ℚ) B = B ^ 5 at hode
     linear_combination hode
-  have hEder : PowerSeries.derivative ℚ E =
-      PowerSeries.derivative ℚ U * E := by
-    change PowerSeries.derivative ℚ ((PowerSeries.exp ℚ).subst U) =
-      PowerSeries.derivative ℚ U * (PowerSeries.exp ℚ).subst U
+  have hEder : PowerSeries.derivative (R := ℚ) E =
+      PowerSeries.derivative (R := ℚ) U * E := by
+    change PowerSeries.derivative (R := ℚ) ((PowerSeries.exp ℚ).subst U) =
+      PowerSeries.derivative (R := ℚ) U * (PowerSeries.exp ℚ).subst U
     rw [PowerSeries.derivative_subst hsubst, PowerSeries.derivative_exp]
     ring
   have hE0 : PowerSeries.constantCoeff E = 1 := by
@@ -647,18 +647,18 @@ private theorem exp_definition_of_ode
     simp
   refine ⟨hA0, ?_⟩
   change B = E
-  exact powerSeries_linear_ode_unique (PowerSeries.derivative ℚ U) B E
+  exact powerSeries_linear_ode_unique (PowerSeries.derivative (R := ℚ) U) B E
     (hA1.trans hE0.symm) hBder hEder
 private theorem egfSeries_ode_implies_egfOde {s : Nat → ℚ}
     (h : (1 - 3 * egfSeries s *
-          (PowerSeries.derivative ℚ (egfSeries s)) ^ 3) *
-          PowerSeries.derivative ℚ (PowerSeries.derivative ℚ (egfSeries s)) =
-        (PowerSeries.derivative ℚ (egfSeries s)) ^ 5) : EgfOde s := by
+          (PowerSeries.derivative (R := ℚ) (egfSeries s)) ^ 3) *
+          PowerSeries.derivative (R := ℚ) (PowerSeries.derivative (R := ℚ) (egfSeries s)) =
+        (PowerSeries.derivative (R := ℚ) (egfSeries s)) ^ 5) : EgfOde s := by
   let s1 : Nat → ℚ := fun n => s (n + 1)
   let s2 : Nat → ℚ := fun n => s (n + 2)
-  have hd1 : PowerSeries.derivative ℚ (egfSeries s) = egfSeries s1 := by
+  have hd1 : PowerSeries.derivative (R := ℚ) (egfSeries s) = egfSeries s1 := by
     simpa [s1] using derivative_egfSeries s
-  have hd12 : PowerSeries.derivative ℚ (egfSeries s1) =
+  have hd12 : PowerSeries.derivative (R := ℚ) (egfSeries s1) =
       egfSeries s2 := by
     simpa [s1, s2, Nat.add_assoc] using derivative_egfSeries s1
   rw [hd1, hd12] at h
@@ -684,17 +684,17 @@ private theorem egfSeries_egfCoeffs (A : PowerSeries ℚ) : egfSeries (egfCoeffs
   simp only [coeff_egfSeries, egfCoeffs]
   field_simp
 private theorem powerSeries_ode_implies_egfOde {A : PowerSeries ℚ}
-    (h : (1 - 3 * A * (PowerSeries.derivative ℚ A) ^ 3) *
-          PowerSeries.derivative ℚ (PowerSeries.derivative ℚ A) =
-        (PowerSeries.derivative ℚ A) ^ 5) : EgfOde (egfCoeffs A) := by
+    (h : (1 - 3 * A * (PowerSeries.derivative (R := ℚ) A) ^ 3) *
+          PowerSeries.derivative (R := ℚ) (PowerSeries.derivative (R := ℚ) A) =
+        (PowerSeries.derivative (R := ℚ) A) ^ 5) : EgfOde (egfCoeffs A) := by
   apply egfSeries_ode_implies_egfOde
   simpa only [egfSeries_egfCoeffs] using h
 private theorem ode_solution_unique (A : PowerSeries ℚ)
     (hA0 : PowerSeries.constantCoeff A = 0)
-    (hA1 : PowerSeries.constantCoeff (PowerSeries.derivative ℚ A) = 1)
-    (hode : (1 - 3 * A * (PowerSeries.derivative ℚ A) ^ 3) *
-          PowerSeries.derivative ℚ (PowerSeries.derivative ℚ A) =
-        (PowerSeries.derivative ℚ A) ^ 5) :
+    (hA1 : PowerSeries.constantCoeff (PowerSeries.derivative (R := ℚ) A) = 1)
+    (hode : (1 - 3 * A * (PowerSeries.derivative (R := ℚ) A) ^ 3) *
+          PowerSeries.derivative (R := ℚ) (PowerSeries.derivative (R := ℚ) A) =
+        (PowerSeries.derivative (R := ℚ) A) ^ 5) :
     A = egfSeries (fun n => (a n : ℚ)) := by
   let s : Nat → ℚ := egfCoeffs A
   have hs0 : s 0 = 0 := by
@@ -726,7 +726,7 @@ theorem oeis_defined_eq_recurrence {s : Nat → Int} (h : OEISDefines s) : s = a
   let A : PowerSeries ℚ := egfSeries (fun n => (s n : ℚ))
   have hexp : ExpDefines A := h
   have hA0 : PowerSeries.constantCoeff A = 0 := hexp.1
-  have hA1 : PowerSeries.constantCoeff (PowerSeries.derivative ℚ A) = 1 :=
+  have hA1 : PowerSeries.constantCoeff (PowerSeries.derivative (R := ℚ) A) = 1 :=
     exp_definition_derivative_zero hexp
   have hode := exp_definition_implies_ode hexp
   have hseries := ode_solution_unique A hA0 hA1 hode

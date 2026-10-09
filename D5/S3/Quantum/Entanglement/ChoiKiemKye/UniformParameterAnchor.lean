@@ -204,8 +204,8 @@ open scoped Matrix.Norms.L2Operator
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
 private theorem geometric_dominates_identity {A : Matrix ι ι ℝ} (hA : ∀ i j, 0 ≤ A i j) (hsmall : ‖A‖ < 1) (i j : ι) : (1 : Matrix ι ι ℝ) i j ≤
     (∑' k : ℕ, A^k) i j := by
-  have hs := summable_geometric_of_norm_lt_one hsmall; have hsrow := Pi.summable.mp hs i; have hsentry := Pi.summable.mp hsrow j; have hrow : (∑' k : ℕ, A^k) i = ∑' k : ℕ, (A^k) i := tsum_apply hs
-  have hentry : (∑' k : ℕ, (A^k) i) j = ∑' k : ℕ, (A^k) i j := tsum_apply hsrow; have heq : (∑' k : ℕ, A^k) i j = ∑' k : ℕ, (A^k) i j :=
+  have hs := summable_geometric_of_norm_lt_one hsmall; have hsrow := Pi.summable.mp hs i; have hsentry := Pi.summable.mp hsrow j; have hrow : (∑' k : ℕ, A^k) i = ∑' k : ℕ, (A^k) i := Pi.tsum_apply hs
+  have hentry : (∑' k : ℕ, (A^k) i) j = ∑' k : ℕ, (A^k) i j := Pi.tsum_apply hsrow; have heq : (∑' k : ℕ, A^k) i j = ∑' k : ℕ, (A^k) i j :=
     (congrFun hrow j).trans hentry
   rw [heq]
   simpa only [pow_zero] using hsentry.le_tsum 0 (fun k _ => Matrix.pow_apply_nonneg hA k i j)
@@ -674,14 +674,12 @@ theorem k_value : Uniform.spike 15 ⬝ᵥ u = (knum:ℝ)/den := by
   apply Finset.sum_congr rfl
   intro i hi; unfold cint Uniform.spike
   split_ifs <;> norm_num
-  norm_num [knum]
 theorem ell_value : Uniform.spike 15 ⬝ᵥ (fun i => u i.rev) = (lnum:ℝ)/den := by
   have h := congrArg (fun x : ℤ => (x:ℝ)) ell_integer; push_cast at h; unfold dotProduct u; simp only [← mul_div_assoc]; rw [← Finset.sum_div]; congr 1
   convert h using 1
   apply Finset.sum_congr rfl
   intro i hi; unfold cint Uniform.spike
   split_ifs <;> norm_num
-  norm_num [lnum]
 def aa : ℂ := (Real.sqrt 2/2:ℝ) + (Real.sqrt 2/2:ℝ)*Complex.I
 theorem aa_anchor : aa=Complex.exp (Complex.I*(Real.pi/4:ℝ)) := by
   rw [mul_comm,Complex.exp_mul_I]; change aa=Complex.cos ((Real.pi/4:ℝ):ℂ)+Complex.sin ((Real.pi/4:ℝ):ℂ)*Complex.I; rw [←Complex.ofReal_cos,←Complex.ofReal_sin,Real.cos_pi_div_four,Real.sin_pi_div_four]; simp [aa]

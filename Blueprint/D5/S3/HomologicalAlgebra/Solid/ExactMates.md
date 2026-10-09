@@ -4,6 +4,8 @@
 
 Compatibility of an exact adjunction and its mates with the unbounded derived localization. New proofs, released under the Apache 2.0 license. The localization constructions used here are Mathlib's proved constructions.
 
+The degreewise composition comparison is supplied directly by Mathlib's Functor.mapHomologicalComplexCompIso under zero-morphism-preservation assumptions. Derived natural transformations, their shift compatibility and the complex-representative formula are supplied by Mathlib.Algebra.Homology.DerivedCategory.ExactFunctor.
+
 **Theorem 1.1 (exact Adjunction Derived unit mate).**
 
 Lean statement: `D5/S3/HomologicalAlgebra/Solid/ExactMates.exactAdjunctionDerived_unit_mate`
@@ -32,4 +34,3 @@ Under the localized exact adjunction, precomposition by the left mate is postcom
 
 - Truth anchor: `D5/S3/HomologicalAlgebra/Solid/ExactMates.exactAdjunctionDerived_homEquiv_mate`
 - Truth anchor: `D5/S3/HomologicalAlgebra/Solid/ExactMates.exactAdjunctionDerived_unit_mate`
-- Dependency: [D5/S3/HomologicalAlgebra/Solid/ExactFunctorNatTrans](ExactFunctorNatTrans.md)
