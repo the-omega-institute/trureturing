@@ -98,4 +98,32 @@ theorem code_cost_radial_lower_bound
   rintro z ⟨c, hc, rfl⟩
   exact feasible_code_energy_lower_bound lam n e D c he hlam hn hc
 
+/- Once the two target directions are separated, witnesses for both directions
+must occupy different slots. This is the finite matching step used after the
+quantitative near-equality estimates. -/
+theorem two_slot_matching_from_separate_witnesses
+    {E : Type*} [PseudoMetricSpace E]
+    (D : AtomIndex → E) (u w : E) (δ : ℝ)
+    (hsep : 2 * δ ≤ dist u w)
+    (hu : ∃ i, dist (D i) u < δ) (hw : ∃ i, dist (D i) w < δ) :
+    (dist (D 0) u < δ ∧ dist (D 1) w < δ) ∨
+      (dist (D 0) w < δ ∧ dist (D 1) u < δ) := by
+  rcases hu with ⟨i, hi⟩
+  rcases hw with ⟨j, hj⟩
+  fin_cases i <;> fin_cases j
+  · exfalso
+    have htri := dist_triangle u (D 0) w
+    rw [dist_comm u (D 0)] at htri
+    have hi' : dist (D 0) u < δ := by simpa using hi
+    have hj' : dist (D 0) w < δ := by simpa using hj
+    linarith
+  · exact Or.inl ⟨hi, hj⟩
+  · exact Or.inr ⟨hj, hi⟩
+  · exfalso
+    have htri := dist_triangle u (D 1) w
+    rw [dist_comm u (D 1)] at htri
+    have hi' : dist (D 1) u < δ := by simpa using hi
+    have hj' : dist (D 1) w < δ := by simpa using hj
+    linarith
+
 end D5.S3.Estimation.WhiteBoxLossFiberLaw.TwoAtomMatching

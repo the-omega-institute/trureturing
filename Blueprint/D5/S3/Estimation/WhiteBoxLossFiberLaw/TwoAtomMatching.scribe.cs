@@ -53,6 +53,20 @@ internal sealed class TwoAtomMatchingDocument : IScribeDocumentDefinition
                     "Taking the infimum over all feasible nonnegative two-coordinate codes " +
                     "preserves the radial lower bound. The zero code supplies a nonempty family, " +
                     "while the pointwise square-completion inequality supplies the common floor."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("two-slot-matching-from-separated-witnesses"),
+                DeclarationHandle.Create(
+                    "D5/S3/Estimation/WhiteBoxLossFiberLaw/TwoAtomMatching.two_slot_matching_from_separate_witnesses"),
+                H("Separated target witnesses occupy different slots"),
+                StatementSource.FromAuthor(Disp(Seq(
+                    F.Id("separatedTargets"), Sp, Rightarrow, Sp, F.Id("identityOrSwap"), Dot))),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "For two target directions whose distance is at least twice the tolerance, " +
+                    "if each target has a dictionary slot within the tolerance, the slots are " +
+                    "distinct. Consequently the ordered dictionary matches the targets either in " +
+                    "the identity order or after swapping its two entries."))),
                 DescribeRole.Theorem)
         )));
 }
