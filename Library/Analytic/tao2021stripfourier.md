@@ -29,7 +29,7 @@ the stated theorem. Parts (iii)–(v) concern partial/full inversion and
 Poisson summation under the same hypotheses.
 
 For the unitary angular-frequency convention used in the
-[original-theta root supplier](../../docs/reports/theta-mixed-matrix/strip-root.md),
+[original-theta root supplier](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/strip-root.md),
 part (i) reads
 $\widehat{f(\cdot+iy)}(\xi)=e^{-y\xi}\widehat f(\xi)$.
 Plancherel then expresses the two horizontal-line squared norms as

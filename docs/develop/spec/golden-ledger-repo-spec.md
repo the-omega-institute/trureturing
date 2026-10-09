@@ -645,11 +645,11 @@ current 生产一份 Lean 报告供 check-current、Scribe 与适用的 PR check
 
 每份文件内部的 pattern 按 Ordinal 排序；合并后 pattern 和非 `none` 的 artifact_id 全局唯一，重叠匹配仍由原检查拒绝，不存在覆盖优先级。主文件与分片均为普通文件、属判官面；缺失分片、非法命名、重复引入及坏格式均失败。工作树加载读取同一工作树，历史检查读取同一 Git 快照，禁止用当前文件补齐历史缺项。reports 登记保存在 `Meta/FILEMAP.docs.reports.toml`。
 
-整个系统遵守 `CLAUDE.md` 第 2.10 条，只留结果，不留过程。`docs/reports/` 只保留有明确用途的实验程序、结果数据及正式源码引用的第三方许可证。正式成果归入对应的代码、理论正文或文献条目；实施日记、构建日志、席位回执、转录和重复快照直接删除，不搬到其他目录，也不在正文保留历史链接。
+整个系统遵守 `CLAUDE.md` 第 2.10 条，只留结果，不留过程。实验程序、结果数据及其说明归入独立的私有仓库 `the-omega-institute/trureturing-experiments`，原相对路径保留。主仓库的 `docs/reports/` 只保留入口说明和正式源码引用的第三方许可证。正式成果归入对应的代码、理论正文或文献条目；实施日记、构建日志、席位回执、转录和重复快照直接删除，不搬到其他目录，也不在正文保留历史链接。
 
 保留依据是实际用途和后续研究价值。独立的数据搜索、候选枚举、反例发现和数值边界探针，无须以正文引用或主构建依赖证明其价值。登记同时简述用途；缺少引用不作为删除判据。可重建且无独立用途的输出副本不必保留。
 
-保留文件在 `Meta/FILEMAP.toml` 登记到目录级即可，可用递归通配符并按扩展名区分程序与数据，无须逐文件列出完整路径。每个文件须唯一匹配一条登记；`filemap-conform` 对未覆盖文件报 `FILEMAP-REPORT-UNREGISTERED`，对重复覆盖报 `FILEMAP-AMBIGUOUS`。实验程序记 `kind=program`，数据和许可证记 `kind=data`，均属内容面；登记本身属判官面。
+主仓库准入拒绝 `experiments/`、`Evidence/D5/experiments/` 和 `docs/reports/` 下的实验材料，显式 FILEMAP 登记不提供豁免。`docs/reports/README.md`、名称含 `LICENSE` 或 `NOTICE` 的 `.txt` 文件及 `docs/reports/licenses/` 下的 `.md` 许可证说明可保留。`filemap-conform` 对实验材料报 `FILEMAP-EXPERIMENT-EXTERNAL`，路径准入报 `SL-000`，消息指向独立实验仓库。保留文件仍须唯一匹配一条 FILEMAP 登记；未覆盖报 `FILEMAP-REPORT-UNREGISTERED`，重复覆盖报 `FILEMAP-AMBIGUOUS`。许可证记 `kind=data`、属内容面；登记本身属判官面。
 
 需要新增或调整登记规则时，允许登记与材料在一个完整拉取请求中交付；合法混面按 SL-029 报 Warning/Observe 并继续全部验证。已被目录规则覆盖的文件可直接走内容拉取请求。报告的精确路径和目录通配登记均允许暂时无文件，供预登记及删除后的分步清账使用。目录规则仍有匹配文件时，增删单个文件无须调整登记。
 
