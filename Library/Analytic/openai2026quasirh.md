@@ -1805,3 +1805,144 @@ $$
 最终 $\sigma$ 取各实际剩余裕度的共同正下界，须包含 principal 槽余量 $\mu$、另两份 principal 裕度、normalizer、累计高度和 dyadic multiplicity 成本；中央例子 $(49/440640)/4$ 不是自动适用的全局节省。
 
 这只支付上述相容阶段、实际细槽系统和所引供给下的新平方自由探针高端比较。没有把阶段扩展到 $7/8$ 下方，也没有补齐更低比较层所需的同一探针低端节省；现有 $19/64$ 低端界的 $\beta_*\le7/8$ 前提不在本阶段使用。原完整有符号 Robin 响应、实际零点数据、正 $r_A$ 和严格核心仍未证明，RH 未证明。
+
+## 同一探针的带掩码 plain 反射低端
+
+本节复用主稿的 natural plain reflection、positive-slot plain moment、一般 sixth-power amplification，以及前节已经支付的完整平方自由立方索引相位运输、标记重叠与 Gaussian 分离。本节建立对实际 plain 列先删除其原掩码、反射后再恢复共同掩码的完整低端消费；不重证这些文献输入。只使用主稿 Part I 的全族 $\beta_*\le11/12$，不使用 $\beta_*\le7/8$。整篇源证明及 Lean 未独立认证，不主张历史原创性。
+
+对每个指定 $\varepsilon>0$，在原构造中预先选择满足所引 plain mesh 及下述舍入损失的足够细固定偶数槽数 $K$，同一完整探针满足
+$$
+\boxed{
+|I_{\eta,\mathrm{modified}}^{\mathrm{sf}}(Z)|
+\ll_{\eta,\varepsilon,\mathrm{data},K} Z^{37/128+\varepsilon}.
+}
+$$
+固定槽系在所需损失和固定算术数据给定后、$Z$ 之前选定；不声称一个已经固定的粗槽系实现任意小损失。总长仍为 $\ell=1/6$，几何仍为 $l_x=17/48,l_y=23/48,h=13/16$，所有原字符、零延拓、物理归一化及高端主信号保持。
+
+### 完整来源上的实际长度
+
+沿用重缩放槽总长 $q$、自动槽总长 $z_A$，非自动槽可用总长为 $z_K=\ell-q-z_A$。取活动短子集 $\mathcal L$，长为 $z$；冻结其余实际素数积 $P_R$。原相位运输给出逆列 $M_{\eta\overline\chi}$、plain 列 $S_\chi$ 与负方向素乘积 $Q_{\mathcal L}$。原补偿的 $\overline{\eta(p)}$ 已抵消逆列抽出的 $\eta(p)$，故素系数仍为 $1$，不另插入 Möbius 系数。这里先保留 $Q_{\mathcal L}$ 的原方向。
+
+写 $H=\zeta u_0a^6$，固定 unit 扇区及 $a$，令
+$$
+t=\log_Zq_a,\qquad m=\frac{13}{16}-6t,
+\qquad0\le t\le\frac{13}{96}.
+$$
+$a$ 的计数成本为 $Z^{t+\varepsilon}$。沿用实际标签 $u,v,e,d_b,w$，其同一实现约束及剩余长度为
+$$
+d_b\le u,\qquad z_A\le u+e,
+$$
+$$
+r=1+z_A-3u-v-e-w,\qquad
+n=\frac{23}{48}-q-d_b-e-w.
+$$
+固定 annular 偏移及 Gaussian collar 计入预留损失。非空单位窗口以下的尺度只在固定范围内裁切；无界负长度不进入矩定理。原 $d$ 标量仍为 $\mu(d)^2\eta(d)\mathbf1_{\gcd(d,H)=1}$；一般 $\eta$ 下它不恒等于 $1$，先保留其相位，再使用模长界。$q_{P_R}^{-1},q_d^{-1}$ 支付整条标签质量，原重缩放元组提供 $-q/2$；活动素乘积的额外外幂是 $-z/2$。
+
+### 先删除原掩码，再反射和恢复
+
+在 plain 列尚未为共同矩增加 $d$ 掩码时，其实际额外掩码是
+$$
+R_S=\operatorname{rad}(aP_R).
+$$
+复用主稿的有限删除等式，保留所有 natural 零：
+$$
+S_{\chi,R_S}(D;W)
+=\sum_{\lambda\mid R_S}
+\mu(\lambda)\chi(\lambda)q_\lambda^{-1/2}
+T_\chi(D/q_\lambda;W).
+$$
+固定 $a,P_R,d,\lambda$ 后再调用矩。该标量的行相关字符值模不超过 $1$，总系数质量由所引 deleted-factor bound 支付为小幂；不把增长掩码吸收到固定 ray 数据。
+
+非 unit 的 $u_0$ 在某个 good prime 上分歧，其诱导字符不属于固定 $\Theta$。所引 natural reflection 保留根数、实际本原导子及全部 redundant natural divisor/geometric 项。其导子尺度满足
+$$
+C_{u_0}q_{R_{0,u_0}}\ll Z^m,
+$$
+每个保留的反射 annulus 因而具有
+$$
+n_{\mathrm{ref}}\le m-n+\log_Zq_\lambda+\xi.
+$$
+$\xi>0$ 是预先保留的小损失。中心归一化在反射两边一致，没有新增 $D$ 或导子的实平方根。根数只作为有界行标量保留；row-dependent 导子与自然冗余项的尺度由所引 scale supremum 和参数 Sobolev 支付。$W^\sharp$ 在零处有界、在无穷处快速衰减；低 annulus 的中心归一化系数可求和，高 annulus 及尾部由有限阶衰减支付。
+
+反射后的 plain 方向是 $\overline\chi$，与原 $Q_{\mathcal L}$ 一致，连同 unit twist 一起运输。此时才恢复更大的共同掩码 $R_Q=\operatorname{rad}(aP_Rd)$：
+$$
+T_{\overline\chi}(Y;W^\sharp)
+=\sum_{\operatorname{rad}(h_0)\mid R_Q}
+\overline\chi(h_0)q_{h_0}^{-1/2}
+S_{\overline\chi,R_Q}(Y/q_{h_0};W^\sharp).
+$$
+整条几何系数质量是小幂，恢复只降低反射后的长度。不能先恢复 $d$ 再反射，却不计那一步增加的反射长度。逆列保留自己的实际 puncture，分别调用其矩；不要求两份矩的固定 twist 相同。
+
+使用充分的保守界
+$$
+\log_Zq_{R_S}\le t+\ell-q-z_A-z+w+O_{\rm fixed}(1/\log Z).
+$$
+取 $\kappa=5/6$；所引 positive-slot 假设 $\beta_*\le(1+\kappa)/2$ 由 Part I 供给。其第二个 plain 因子只选单位理想。对原固定字符列表、共同掩码及槽系，容量 $n_{\mathrm{ref}}+5z\le m$ 因而由
+$$
+\boxed{4z\le\frac5{16}-t+z_A-d_b-e-2w}
+$$
+保证，另以微小 decrement 支付反射、box、collar 与舍入损失。
+
+### 所有活动素槽重叠
+
+仍对 $(P_{\mathcal L},n_1s_1)=1$ 作完整有限展开。冻结 $B_n\cup B_s$，长度记为 $z_O$，两列抽取长度为 $z_n,z_s$。原净幂为 $-z_\cap/2\le0$，其中 $z_\cap=z_n+z_s-z_O$；全局 $-z/2$ 不变。剩余长度为 $r-z_n,n-z_s,z-z_O$。
+
+以 $z_O$ 保守包住 plain 自身删除掩码长度的重叠成本，其反射容量左侧也只增加
+$$
+z_s+z_O-5z_O=z_s-4z_O\le0.
+$$
+这是删除掩码长度的上界，不授权在反射前给原 plain 列插入新零。故同一容量足够。共同掩码的其他冻结素数在反射后用完整几何恢复，继续降低长度。逆列只保留其实际必要的零掩码，不因 plain 的共同掩码而删除额外逆项。所有双列重叠、plain 素幂、自动槽与原字符零都保留。
+
+### 同一行上的长度分配
+
+共同 profile 分离及尺度控制先于正矩，行约数重数不代替这一步。固定实际标签 dyads 和自动槽模式后选择一个固定槽子集，其素系数与行无关；不同模式通过有限子集和覆盖，不逐行另选系数或轮廓。复用
+$$
+E(m,r)=\max\{m,(m+5r)/6\}
+$$
+与反射后的 plain 矩，在同一 $u_0$ 行上 Cauchy。计入全部外幂、$a$ 计数与重缩放元组，非 unit allowance 是下列两式的最大值：
+$$
+B_1=\frac14-\frac{q+z_A+z}{2}-5t,
+$$
+$$
+B_2=\frac{21}{64}-\mathcal P-\frac z2,
+\qquad
+\mathcal P=\frac q2+\frac{z_A}{12}
++\frac{5u}{4}+\frac{5(v+e+w)}{12}+\frac{5t}{2}.
+$$
+$B_1\le1/4<37/128$。对第二式选择
+$$
+z_*=\max\{0,5/64-2\mathcal P\}.
+$$
+若 $z_*=0$，不保留槽的旧矩界已经足够；否则取整槽 $z\in[z_*-\eta,z_*]$，再以预留微小 decrement 留出容量 slack。舍入只增加已指定损失。
+
+供给与容量由同一实际标签同时保证。正目标时有
+$$
+z_K-z_*=
+\frac{17}{192}-\frac{5z_A}{6}
++\frac{5u}{2}+\frac{5(v+e+w)}6+5t
+\ge\frac{17}{192},
+$$
+以及
+$$
+\begin{aligned}
+&\frac5{16}-t+z_A-d_b-e-2w-4z_*\\
+&=4q+\frac{5z_A}3+10u+\frac{10v}3
++\frac{7e}3+\frac{4w}3+19t-d_b\ge0.
+\end{aligned}
+$$
+分别使用 $z_A\le u+e$ 和 $d_b\le u$。不是把分别可达的极值拼接。因此 $B_2\le37/128$，加上全部指定损失。
+
+### 有限 unit 行与完整尾部
+
+所有有限 unit 诱导字符，包括属于 $\Theta$ 的非主字符，使用 Part I 的 $11/12$ 半平面及 reciprocal/logarithmic-control 界，在 $\sigma=11/12+\varepsilon_0<1$ 处理。复用前节已完整运输的单位行公式：
+$$
+\begin{aligned}
+&\frac{17/48-q}{2}+\sigma-1+t+(\sigma-1)(z_A+\theta_N)\\
+&\quad-3(\sigma-1/2)u-(\sigma-1/2)v
+-d_b/2-\sigma e-\sigma w.
+\end{aligned}
+$$
+后续非 collar 项非正，$t\le13/96$，故其 allowance 至多为 $11/48-q/2$ 加预留损失，低于 $37/128$ 的余量为 $23/384$。保留全部 $a^6$、固定 unit twist 和零值，不假设单位行响应为零。
+
+原完整 Gaussian/Fourier 分离仍支付实际外频率、未保留 annuli 与全部标签。新增反射的 annular、有限删除、整条几何恢复与尺度 supremum 均使用前述统一有限 seminorm 和高度阶数；小的齐次 profile 系数保留一次。先定矩、反射及舍入损失，选足够细固定槽系，固定全部内部阶数，再选小的共同高度/collar 参数，最后选外部尾阶数及 $Z$ 阈值。后续外部尾阶数只提高外部输入 seminorm，不扩大已经分配的内部高度阶数。所有负长度尾部用衰减支付，不送入有界长度矩。有限子集、全部重叠、对数个 norm dyads 与整条 $a^6$ 和给出本节完整界。
+
+相较 $19/64$，allowance 改善 $1/128$；没有改变主信号 $C(s)=s-11/16$。名义门槛是 $125/128$，仍高于所用 $11/12$ 半平面；在该阶段最大主信号 $11/48$ 与新上界仍差 $23/384$。这是估计强度不足，不是真实响应的下界。没有产生新无零区域、低于 $7/8$ 的高端合同、完整有符号 Robin 上界或 RH 证明；实际零点数据、正 $r_A$ 与严格核心仍为原目标。
