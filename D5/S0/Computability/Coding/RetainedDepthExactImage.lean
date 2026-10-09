@@ -92,17 +92,9 @@ private theorem band_unique (s : ℕ → ℕ) (hs : StrictMono s) (w : List A)
 
 private theorem positive_has_band (s : ℕ → ℕ) (h : Retained s) (n : ℕ)
     (hn : 0 < n) : ∃ j, s j < n ∧ n ≤ s (j + 1) := by
-  classical
-  let k := Nat.find (h.2.2 n)
-  have hk : n ≤ s k := Nat.find_spec (h.2.2 n)
-  have hkpos : 0 < k := by
-    by_contra hh
-    have : k = 0 := by omega
-    have : n ≤ 0 := by simpa [this, h.1] using hk
-    omega
-  refine ⟨k - 1, ?_, ?_⟩
-  · exact Nat.lt_of_not_ge (Nat.find_min (h.2.2 n) (by dsimp [k]; omega))
-  · simpa [Nat.sub_add_cancel hkpos] using hk
+  obtain ⟨j, hj, hjnext⟩ := Nat.exists_not_and_succ_of_not_zero_of_exists
+    (p := fun k => n ≤ s k) (by rw [h.1]; omega) (h.2.2 n)
+  exact ⟨j, Nat.lt_of_not_ge hj, hjnext⟩
 
 private theorem firstDepth_eq (s : ℕ → ℕ) (h : Retained s) {j n : ℕ}
     (hl : s j < n) (hr : n ≤ s (j + 1)) : firstDepth s h n = s (j + 1) := by
