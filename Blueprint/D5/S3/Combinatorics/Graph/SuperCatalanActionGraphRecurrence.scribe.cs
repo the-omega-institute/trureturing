@@ -36,7 +36,10 @@ internal sealed class SuperCatalanActionGraphRecurrenceDocument : IScribeDocumen
             Node("claim", "Caldwell and coauthors' conjecture", ClaimFormula(), "claim",
                 "ArXiv v1, page 17: “" + ClaimQuote + "” The quantifier includes n = 0. Both finite sums range from zero through n, and the weights and path counts are interpreted in ℚ.", DescribeRole.Definition),
             Node("result", "Proof of the weighted column identity", Disp(F.Id("claim")), "result",
-                "At every subtree, 2^r divides the number of length-r paths to the current generation. This makes every growth count an exact quotient. Removing the last edge gives the weighted path recurrence. Summing over starting vertices and inducting on n yields the column formula 2^r times Nat.choose(2n − r, n) for 0 ≤ r ≤ n. The hockey-stick identity then gives twice Nat.choose(2n + 1, n + 1), equal to S(0, n + 1). The per-label path recurrence of Conjecture 5.5 has a posted proof at MathDB p/369567; the same last-edge mechanism supplies the recurrence used here.", DescribeRole.Theorem)),
+                "At every subtree, 2^r divides the number of length-r paths to the current generation. This makes every growth count an exact quotient. Removing the last edge gives the weighted path recurrence. Summing over starting vertices and inducting on n yields the column formula 2^r times Nat.choose(2n − r, n) for 0 ≤ r ≤ n. The hockey-stick identity then gives twice Nat.choose(2n + 1, n + 1), equal to S(0, n + 1). The per-label path recurrence of Conjecture 5.5 has a posted proof at MathDB p/369567; the same last-edge mechanism supplies the recurrence used here.", DescribeRole.Theorem,
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("caldwell-2024-super-catalan-action-graph-ntable"),
+                    ResolutionKind.Proved))),
         []));
 
     private static DocumentBlock Node(string id, string title, Formula formula, string declaration,

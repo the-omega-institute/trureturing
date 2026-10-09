@@ -106,6 +106,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Graph/SuperCatalanActionGraphRecurrence.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/caldwell-2024-super-catalan-action-graph-ntable` (proved) by `D5/S3/Combinatorics/Graph/SuperCatalanActionGraphRecurrence.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"caldwell-2024-super-catalan-action-graph-ntable","declaration_gid":"D5/S3/Combinatorics/Graph/SuperCatalanActionGraphRecurrence.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* D. Caldwell, A. Cochran, N. Glisson, B. Jennings, K. McDicken, L. Proctor, S. Klanderman, A. Tebbe (2024). *Catalan Number Sequences and Generalized Action Graphs*. DOI: [10.48550/arXiv.2507.22719](https://doi.org/10.48550/arXiv.2507.22719). URL: <https://arxiv.org/abs/2507.22719v1>.
