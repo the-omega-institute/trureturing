@@ -1605,6 +1605,7 @@ jobs:
             tools/scripts/worktree/cache_material.py
             tools/scripts/worktree/lean_actions.py
             tools/scripts/worktree/lean_cache.py
+            tools/scripts/worktree/lean_cache_dedupe.py
             tools/scripts/worktree/lean_cache_release.py
             .editorconfig
             .globalconfig

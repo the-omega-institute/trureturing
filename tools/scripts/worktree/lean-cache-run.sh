@@ -52,6 +52,7 @@ donor=()
 [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || donor=(--donor-repository "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
 if [[ "$1" == --build ]]; then
   shift
+  build_started="$(date +%s)"
   root_targets=() impl_targets=() reg_targets=() downstream_targets=()
   for target in "$@"; do
     case "$target" in
@@ -73,6 +74,12 @@ if [[ "$1" == --build ]]; then
   if [[ ${#downstream_targets[@]} != 0 || $# == 0 ]]; then
     "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- lake -d "$ROOT/tools/lean-inspector-reg" build ${downstream_targets[@]+"${downstream_targets[@]}"}
   fi
+  # Keep the worktree incremental: artifacts this build wrote that are identical to the
+  # donor go back to sharing its blocks. The pass prints its own receipt and never
+  # changes the build result.
+  dedupe_donor=()
+  [[ -z "${STRATALINT_LEAN_CACHE_DONOR_REPOSITORY:-}" ]] || dedupe_donor=(--donor "$STRATALINT_LEAN_CACHE_DONOR_REPOSITORY")
+  python3 -B "$ROOT/tools/scripts/worktree/lean_cache_dedupe.py" --root "$ROOT" --since "$build_started" --build-only ${dedupe_donor[@]+"${dedupe_donor[@]}"} || :
   exit 0
 fi
 exec "${cli[@]}" with-cache-reader ${donor[@]+"${donor[@]}"} -- "$@"

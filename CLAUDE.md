@@ -26,6 +26,7 @@
 | 建 PR | `make pr HEAD=<分支> MESSAGE=<消息文件>`（首行为标题；默认自动合并并等 required CI；`AUTO_MERGE=0` 关闭自动合并；`DRAFT=1` 创建草稿后直接返回；`pr-open` 同义） |
 | 等指定 PR 提交的 CI | `make pr-watch PR=<编号> HEAD_SHA=<40位commit-SHA>` |
 | 预览可回收 worktree | `make -C tools clean-lanes`（加 `FORCE=1` 会删除；未锁定树沿用含未提交改动的旧策略，初始化锁需内容核验） |
+| worktree `.lake` 与 donor 重新共享相同文件 | `make lean-cache-dedupe [ALL=1]`（`make lean` 成功后与 `make warm-donor` 后自动执行） |
 
 常用独立脚本（以下 `bash tools/scripts/agent/…` 均在仓库根运行）：
 
@@ -672,6 +673,8 @@ workflow/脚本/make 永久不得物化或执行 base 树代码,不得以兜底/
 本地 `make lean-report` 显式选择 `fetch-or-fail`。报告种子缺失、不完整或收据中的报告格式标识不符时，先在私有缓存写锁内取回 dev 同分区、缓存 key 一致的 Release 快照，重新检查后仍缺失或不符即以 `LEAN_REPORT_CACHE_INCOMPATIBLE` 非零退出，不进入 Lake 报告提取。相符的种子按原生增量路径处理源码、配置与执行环境差量。`make lean-report REBUILD_REPORT_CACHE=1` 跳过整份收据复用，显式允许完整报告构建路径；`make lean-cache-from-github-without-mathlib REFRESH_STALE=1` 显式替换已存在的私有 build。CI 和 Release publisher 显式选择 `LEAN_REPORT_CACHE_MISS_POLICY=reuse-or-build`，不取回 Release。入口策略由参数选择，不由环境变量判断本地或 CI；直接 `inspect.sh` 默认 `reuse-or-build`，可用 `--cache-miss-policy fetch-or-fail` 选择本地守护。
 
 **开工先利器**:先按第 6.1 条查找并复用当前 session 的 worktree;仅首次创建时经 `make worktree` 显式指定含完整 session ID 的 `DEST`(钉版校验;创建阶段永不物化 Lean 缓存,canonical Lean wrapper 按需 ensure;`make lean-cache-ensure` 仅作可选显式预热;永不 symlink),不手搓。**Lean 构建一律走本层门(`make lean` / `make lean-report`,内含 lean-cache ensure 走缓存;预热即 `make lean-cache-ensure`),禁止任何冷裸 `lake build`/`lake env lean`(案号 #2762)**:ensure 的 donor clonefile 播种只在 `.lake` **不存在**时可达(`LeanCacheEnsureCommand`;`.lake` 存在而 stamp 缺失时按「missing ≠ stale」保守原地重产,永不 clonefile——该 fail-safe 是对的,不改);故冷树上第一条裸 lake 命令会创建无 stamp 的 `.lake`,**当场作废 donor 资格**,代价为内容层全量重编(2026-08-22 实测两 lane 3h+,收据 `donor:null, clonefile_attempts:0`,worker rollout 在案)。裸 `lake` 仅允许在 stamp 在位的热树上做增量调试;凡 `.lake` 缺失或无 stamp,一律先过 `make lean-cache-ensure`。〔守护:**软 + 硬投影**·意图不可 lint;硬投影=派席 brief 的构建步骤必须写 make 目标而非裸 lake,评审席按 #2762 打回;worker 侧违律的判据即 ensure 收据 `stamp_miss:missing` + `clonefile_attempts:0` 同现〕;
+
+**worktree 只保留增量**:clonefile 播种的共享会随本树重编与 donor 重建而失去。`make lean` 成功后对本树本次写出的 `.lake/build` 文件、`make warm-donor` 重建 donor 后对全部链接 worktree 的整个 `.lake` 执行 `tools/scripts/worktree/lean_cache_dedupe.py`:`.lake` 内与 donor 同相对路径且字节相同的文件换成 donor 文件的 clone(保留本树 mode 与时间戳),只有真实差异占私有空间。该步持本树 writer guard 与 donor 共享 guard,任一忙即跳过;改名前复核目标未变;收据为 `LEAN_CACHE_DEDUPE`,失败不改变构建结果。手动入口 `make lean-cache-dedupe [ALL=1]`。仅 macOS clonefile(2) 可用,其它平台报 `unsupported`。〔守护:**软+测试**·`LeanCacheDedupeScriptTests` 钉住重新共享、差异保留、构建后范围、guard 忙跳过与 donor 不被处理;覆盖率与节省量只由收据报告〕
 
 ### 8.4 诊断信号与产生处的质量
 

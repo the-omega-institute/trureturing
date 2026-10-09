@@ -60,6 +60,8 @@ public sealed class WarmDonorScriptTests
         var calls = ScriptHarnessScratch.ReadScratchLines(run.Calls);
         Assert.Equal("git pull --ff-only origin dev", calls[2]);
         Assert.EndsWith(" lean", calls[3], StringComparison.Ordinal);
+        Assert.EndsWith(" lean-cache-dedupe ALL=1", calls[4], StringComparison.Ordinal);
+        Assert.Equal(5, calls.Length);
     }
 
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]

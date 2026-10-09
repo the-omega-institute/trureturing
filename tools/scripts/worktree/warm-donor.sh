@@ -48,4 +48,8 @@ if (( lean_rc != 0 )); then
   exit "$lean_rc"
 fi
 
+# A rebuilt donor no longer shares blocks with existing worktrees; re-share what is identical.
+make -C "$ROOT" lean-cache-dedupe ALL=1 \
+  || printf 'warm-donor: worktree re-share failed; the donor itself is warm\n' >&2
+
 receipt warmed complete
