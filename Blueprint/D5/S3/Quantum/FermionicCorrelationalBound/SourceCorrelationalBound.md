@@ -68,6 +68,10 @@ $$\operatorname{claim}$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Quantum/FermionicCorrelationalBound/SourceCorrelationalBound.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/christiansen-2025-fermionic-correlational-bound` (proved) by `D5/S3/Quantum/FermionicCorrelationalBound/SourceCorrelationalBound.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"christiansen-2025-fermionic-correlational-bound","declaration_gid":"D5/S3/Quantum/FermionicCorrelationalBound/SourceCorrelationalBound.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Martin Ravn Christiansen (2025). *A Correlational Bound for Eigenvalues of Fermionic 2-Body Operators*. URL: <https://arxiv.org/abs/2505.21167v1>.
