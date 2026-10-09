@@ -367,7 +367,7 @@ class SignalTrace:
         self.sink = SignalSink(self.output / "signal-trace.jsonl")
         self.sink.emit({"kind": "trace-contract", "seconds": self.seconds, "limit_bytes": TRACE_LIMIT,
                        "limit_scope": "trace file/live stream; not aggregate artifacts",
-                       "kernel_event_clock": "bpftrace 0.20.2 default nsecs: CLOCK_BOOTTIME",
+                       "kernel_event_clock": "bpftrace default nsecs: CLOCK_BOOTTIME",
                        "python_stamp_clock": "CLOCK_MONOTONIC; realtime separately CLOCK_REALTIME",
                        "identity_start_clock": "task_struct.start_boottime; boot-nanoseconds",
                        "ordering": "collector arrival; no global cross-CPU causal order",
