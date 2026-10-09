@@ -26,7 +26,8 @@ internal sealed class ComplementaryDyadicSecondSupportDocument : IScribeDocument
                     "D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.high_transform"),
                 H("Affine high-side transformation"), StatementSource.FromAuthor(TransformFormula()),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("For a natural a and any real vector p on Fin(2^a+1), "
+                Blocks(Paragraph(Text("The displayed highTransform denotes high_transform. For a natural a "
+                    + "and any real vector p on Fin(2^a+1), "
                     + "high_transform(a,p)(i)=(2^a)^2 p(i)-(2^a-1). The definition "
                     + "does not require positivity or normalization; the scaling theorem "
                     + "below supplies both under its strict minimum hypothesis."))),
@@ -36,7 +37,8 @@ internal sealed class ComplementaryDyadicSecondSupportDocument : IScribeDocument
                     "D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.support_gap"),
                 H("Second support gap"), StatementSource.FromAuthor(GapFormula()),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("support_gap(a,p) is the dyadic cost minus "
+                Blocks(Paragraph(Text("The displayed supportGap denotes support_gap. support_gap(a,p) "
+                    + "is the dyadic cost minus "
                     + "[2^a(a+2)+2(2^a)^2] min_i p(i), plus 2(2^a-1). The minimum "
                     + "is over all indices in Fin(2^a+1). Nonnegativity of this gap "
                     + "is equivalent to the second supporting inequality."))),
@@ -46,7 +48,8 @@ internal sealed class ComplementaryDyadicSecondSupportDocument : IScribeDocument
                     "D5/S3/Arith/FibonacciAtomic/Dyadic/ComplementaryDyadicSecondSupport.scaled_iterate"),
                 H("Closed affine orbit"), StatementSource.FromAuthor(IterateFormula()),
                 AssessedProvenance.FromRepo(),
-                Blocks(Paragraph(Text("scaled_iterate(a,p,k)(i)=1/(2^a+1) "
+                Blocks(Paragraph(Text("The displayed scaledIterate denotes scaled_iterate. "
+                    + "scaled_iterate(a,p,k)(i)=1/(2^a+1) "
                     + "+[(2^a)^2]^k[p(i)-1/(2^a+1)]. It is defined for every natural "
                     + "k and every real vector p. The exit theorem restricts to the "
                     + "positive part of this orbit up to its first low-side index."))),
@@ -175,17 +178,17 @@ internal sealed class ComplementaryDyadicSecondSupportDocument : IScribeDocument
     private static Formula HighFormula()
     {
         var a = V("a"); var p = V("p"); var i = V("i");
-        var b = Pow(D(2), a); var q = Call("high_transform", a, p);
+        var b = Pow(D(2), a); var q = Call("highTransform", a, p);
         var indices = Call("Fin", Par(Seq(b, Sp, Plus, Sp, D(1))));
-        var positive = Par(All(i, indices, Seq(D(0), Sp, Lt, Sp, Call("high_transform", a, p, i))));
-        var sum = Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, indices)), Call("high_transform", a, p, i));
+        var positive = Par(All(i, indices, Seq(D(0), Sp, Lt, Sp, Call("highTransform", a, p, i))));
+        var sum = Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, indices)), Call("highTransform", a, p, i));
         var threshold = Div(Par(Seq(b, Sp, Minus, Sp, D(1))), Pow(b, D(2)));
         var head = Seq(a, Sp, Plus, Sp, D(2), Sp, Minus, Sp, Div(a, b),
             Sp, Minus, Sp, Div(D(2), Pow(b, D(2))));
         return Disp(Context(Imp(Seq(threshold, Sp, Lt, Sp, Call("min", p)),
             And(positive, And(Equal(sum, D(1)), And(
                 Equal(Call("L", p), Seq(head, Sp, Plus, Sp, Div(Call("L", q), Pow(b, D(2))))),
-                Equal(Call("support_gap", a, p), Div(Call("support_gap", a, q), Pow(b, D(2))))))))));
+                Equal(Call("supportGap", a, p), Div(Call("supportGap", a, q), Pow(b, D(2))))))))));
     }
 
     private static Formula DefinitionContext(Formula a, Formula p, Formula body)
@@ -199,7 +202,7 @@ internal sealed class ComplementaryDyadicSecondSupportDocument : IScribeDocument
         var a = V("a"); var p = V("p"); var i = V("i"); var b = Pow(D(2), a);
         var indices = Call("Fin", Par(Seq(b, Sp, Plus, Sp, D(1))));
         return Disp(DefinitionContext(a, p, All(i, indices,
-            Equal(Call("high_transform", a, p, i), Seq(Pow(b, D(2)), Sp, Call("p", i),
+            Equal(Call("highTransform", a, p, i), Seq(Pow(b, D(2)), Sp, Call("p", i),
                 Sp, Minus, Sp, Par(Seq(b, Sp, Minus, Sp, D(1))))))));
     }
 
@@ -208,7 +211,7 @@ internal sealed class ComplementaryDyadicSecondSupportDocument : IScribeDocument
         var a = V("a"); var p = V("p"); var b = Pow(D(2), a);
         var coefficient = Par(Seq(b, Sp, Par(Seq(a, Sp, Plus, Sp, D(2))),
             Sp, Plus, Sp, D(2), Sp, Pow(b, D(2))));
-        return Disp(DefinitionContext(a, p, Equal(Call("support_gap", a, p),
+        return Disp(DefinitionContext(a, p, Equal(Call("supportGap", a, p),
             Seq(Call("L", p), Sp, Minus, Sp, coefficient, Sp, Call("min", p),
                 Sp, Plus, Sp, D(2), Sp, Par(Seq(b, Sp, Minus, Sp, D(1)))))));
     }
@@ -219,7 +222,7 @@ internal sealed class ComplementaryDyadicSecondSupportDocument : IScribeDocument
         var b = Pow(D(2), a); var u = Div(D(1), Par(Seq(b, Sp, Plus, Sp, D(1))));
         var indices = Call("Fin", Par(Seq(b, Sp, Plus, Sp, D(1))));
         return Disp(DefinitionContext(a, p, All(k, Nat, All(i, indices,
-            Equal(Call("scaled_iterate", a, p, k, i), Seq(u, Sp, Plus, Sp,
+            Equal(Call("scaledIterate", a, p, k, i), Seq(u, Sp, Plus, Sp,
                 Pow(Par(Pow(b, D(2))), k), Sp, Par(Seq(Call("p", i), Sp, Minus, Sp, u))))))));
     }
 
@@ -233,22 +236,22 @@ internal sealed class ComplementaryDyadicSecondSupportDocument : IScribeDocument
 
     private static Formula UniformFormula() => Disp(All(V("a"), Nat,
         Imp(Seq(D(3), Sp, Le, Sp, V("a")),
-            Equal(Call("support_gap", V("a"), UniformLaw(V("a"))), D(0)))));
+            Equal(Call("supportGap", V("a"), UniformLaw(V("a"))), D(0)))));
 
     private static Formula ExitFormula()
     {
         var a = V("a"); var p = V("p"); var n = V("n"); var k = V("k"); var i = V("i");
         var b = Pow(D(2), a);
         var indices = Call("Fin", Par(Seq(b, Sp, Plus, Sp, D(1))));
-        var rn = Call("scaled_iterate", a, p, n); var rk = Call("scaled_iterate", a, p, k);
+        var rn = Call("scaledIterate", a, p, n); var rk = Call("scaledIterate", a, p, k);
         var threshold = Div(Par(Seq(b, Sp, Minus, Sp, D(1))), Pow(b, D(2)));
         var before = Par(All(k, Nat, Imp(Seq(k, Sp, Lt, Sp, n),
             Seq(threshold, Sp, Lt, Sp, Call("min", rk)))));
-        var positive = Par(All(i, indices, Seq(D(0), Sp, Lt, Sp, Call("scaled_iterate", a, p, n, i))));
-        var sum = Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, indices)), Call("scaled_iterate", a, p, n, i));
+        var positive = Par(All(i, indices, Seq(D(0), Sp, Lt, Sp, Call("scaledIterate", a, p, n, i))));
+        var sum = Seq(new Formula.Subscript(Sum, Seq(i, Sp, InMacro, Sp, indices)), Call("scaledIterate", a, p, n, i));
         var exit = And(Seq(D(0), Sp, Lt, Sp, Call("min", rn)),
             Seq(Call("min", rn), Sp, Le, Sp, threshold));
-        var gap = Equal(Call("support_gap", a, p), Div(Call("support_gap", a, rn), Pow(Pow(b, D(2)), n)));
+        var gap = Equal(Call("supportGap", a, p), Div(Call("supportGap", a, rn), Pow(Pow(b, D(2)), n)));
         var witness = Seq(Exists, Sp, n, Colon, Sp, Nat, Comma, Sp,
             And(Seq(D(0), Sp, Lt, Sp, n), And(before, And(positive, And(Equal(sum, D(1)), And(exit, gap))))));
         return Disp(Context(Imp(And(Seq(threshold, Sp, Lt, Sp, Call("min", p)),
