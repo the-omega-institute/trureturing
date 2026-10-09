@@ -1,0 +1,40 @@
+**Claim status: open.** 对以上来源，
+
+$$
+\|\mathcal A(T_n)-\mathcal A(U_n)\|_2=\sqrt2,
+\qquad \|\mathcal A(T_n)-\mathcal A(U_n)\|_\infty=1.
+$$
+
+证明。发生旋转的三个子树都是单叶，因此定理 5 中 $a=b=c=1$。面积变化恰为 $e_i-e_j$。证毕。
+
+深度差却为 $|\nu(T_n)-\nu(U_n)|=n$。因此不存在统一有限常数 $L$，使所有规模的同叶数来源都满足
+
+$$
+|\nu(s)-\nu(t)|\le L\|\mathcal A(s)-\mathcal A(t)\|_2.
+$$
+
+令 $m_n=\ell(T_n)=F_{n+1}$，定义总面积归一化
+
+$$
+\widehat{\mathcal A}(t)=\frac{\mathcal A(t)}{\binom{m_n}{2}}.
+$$
+
+则
+
+$$
+\|\widehat{\mathcal A}(T_n)-\widehat{\mathcal A}(U_n)\|_\infty
+=\frac1{\binom{F_{n+1}}2}\longrightarrow0,
+$$
+
+而深度差 $n$ 无界增长。任何固定的归一化读数精度，都不足以在所有规模上稳定恢复准确深度。
+
+若每个坐标的误差允许达到
+
+$$
+\varepsilon\ge\frac1{2\binom{F_{n+1}}2},
+$$
+
+两个精确向量的中点就能同时作为二者的合格观测值。任何只使用这份有误差摘要的估计器，对这两个来源至少有一个深度误差达到 $n/2$。
+
+这是限定读口的误差下界，不是所有观察方法的普遍下界。来源结构越深，决定它是否仍属于同一条生成射线的区别，可能只集中在一个很小的局部括号中。
+

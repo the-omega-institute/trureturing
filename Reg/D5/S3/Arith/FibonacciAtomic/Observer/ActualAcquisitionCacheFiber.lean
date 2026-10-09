@@ -74,7 +74,7 @@ def compatible_cache_card_registration : LeanInformationAudit.Contract.Registrat
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some CoarseHistory
+  escapeFrom := none
   sourceSelection := some {
     owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber
     definition := none
@@ -106,25 +106,25 @@ abbrev projectionArena : Arena where
   signature := projectionSignature
   Law R := ∀ (g : CoarseHistory) (c : CompatCache g), R.readout () () (decode g c) = g
 
+private theorem projection_rejected_law : ¬ projectionArena.Law projectionRejected := by
+  intro h
+  have impossible := h [⟨[], none⟩] (⟨.branch, rfl⟩, PUnit.unit)
+  cases impossible
+
 def projectionProof : Registration projectionArena
     (∀ (g : CoarseHistory) (c : CompatCache g),
-      D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutHistory.kappa_hist (decode g c) = g) := by
-  have rejected : ¬ projectionArena.Law projectionRejected := by
-    intro h
-    have impossible := h [⟨[], none⟩] (⟨.branch, rfl⟩, PUnit.unit)
+      D5.S3.Arith.FibonacciAtomic.ActualCoarseReadoutHistory.kappa_hist (decode g c) = g) where
+  actual := projectionActual
+  bridge := Iff.rfl
+  variation := ⟨decode_projection, projectionRejected, projection_rejected_law⟩
+  sensitivity := ⟨fun i => ⟨projectionRejected,
+    fun j h => (h (Subsingleton.elim j i)).elim, rfl, projection_rejected_law⟩,
+    fun i => nomatch i⟩
+  dependence := by
+    intro i
+    refine ⟨(), [], [⟨[], .alpha⟩], ?_⟩
+    intro impossible
     cases impossible
-  exact {
-    actual := projectionActual
-    bridge := Iff.rfl
-    variation := ⟨decode_projection, projectionRejected, rejected⟩
-    sensitivity := ⟨fun i => ⟨projectionRejected,
-      fun j h => (h (Subsingleton.elim j i)).elim, rfl, rejected⟩,
-      fun i => nomatch i⟩
-    dependence := by
-      intro i
-      refine ⟨(), [], [⟨[], .alpha⟩], ?_⟩
-      intro impossible
-      cases impossible }
 
 def decode_projection_registration : LeanInformationAudit.Contract.Registration.{0,1,1,0,0,0,0,0,0,0,0,0}
     (@D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber.decode_projection)
@@ -144,7 +144,7 @@ def decode_projection_registration : LeanInformationAudit.Contract.Registration.
   variation := .absent
   sensitivity := .absent
   partialSensitivity := none
-  escapeFrom := some CoarseHistory
+  escapeFrom := none
   sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.Observer.ActualAcquisitionCacheFiber, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "fn", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
