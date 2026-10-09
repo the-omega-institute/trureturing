@@ -3022,3 +3022,761 @@ V_{j+1}(f,x(\sigma))}{V_j(f,s)}.
 [C26-A16]: AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md#16-同一有序前缀的接缝余数组成图
 
 ## 追加锚（本行以下为增补区）
+
+## 27. 五模式、闭合相位与共同关系体的存在性
+
+**记号约定（本章）。** 数学字母保持斜体、无衬线体、花体及黑板体的区别；下标与上标按通常含义读取。conj(𝑥) 表示整个括号内表达式的复共轭，hat(𝑤) 表示原归一化向量 ŵ。分式 ((𝑎)/(𝑏)) 的分子、分母分别由括号完整界定；√(𝑥) 的根号作用于完整括号。带外侧圆括号的表格按行、列顺序表示矩阵，单列二行表格表示列向量；分情形表的每行保留条件。箭头 ⟶[条件] 的方括号标注其所需判据。
+
+### 27.1 共同归一化记录与最小实现
+
+**定义 C-27.1.1（共同关系报告及记号）。** 固定整数 <span>𝑁≥1</span>、同一组带标号记录和一个共同复内积载体，采用
+
+<div>
+⟨𝑢,𝑣⟩=𝑢<sup>†</sup>𝑣,  (𝐺<sub>rec</sub>)<sub>𝑖𝑗</sub>=⟨𝑒<sub>𝑖</sub>,𝑒<sub>𝑗</sub>⟩,  ⟨𝑒<sub>𝑖</sub>,𝑒<sub>𝑖</sub>⟩=1.
+</div>
+
+内积共轭线性于第一槽、线性于第二槽。本章局部简记 <span>𝐺=𝐺<sub>rec</sub></span>；它不是概率函数的评价 Gram。相邻重叠模长记 <span>𝑟<sub>𝑔</sub></span>，区别于底面质量 <span>𝑟=1-𝑍</span>；记录环相位记 <span>Φ<sub>𝐺</sub></span>，区别于振幅表的四角相位。位置选择写 <span>𝖥[𝐼]</span>，Fibonacci 数写 <span> Fib <sub>𝑛</sub></span>，其中 <span> Fib <sub>0</sub>=0, Fib <sub>1</sub>=1</span>。
+
+本章消费 [§26.5](#265-原有取迹接口中的有符号谱项与非一致极限) 的带标号匹配取迹接口，但记录报告另供复重叠、单位对角和非邻零条件。§26 的事件排斥边与本章的非零 Gram 支撑边各有自己的类型；二者的具体五环向量联系在 §27.11.7 证明。
+
+给定一个完整的 Hermitian 单位对角矩阵时，先称它为候选关系报告。所有条目须声称来自同一组记录、同一来源和相容的比较标架；分别为每一对选择不同环境，即使各对均合法，也没有供应这个共同关系。另行给定的内积模型可以直接供应条目；实际量子记录则还须供应相位相容准备、共同环境、允许比较、精度及取得资源。形式条目不产生这些操作。[^GL-Q]
+
+**约定 C-27.1.2（调用共同 Gram 判据）。** 使用命题 [C-9.6](#9-共同记录的圆盘与参考递归) 证明中的共同 Gram 必要性、谱平方根实现与秩最小性，以及固定源 [^GL-Q] §109.2 的任意有限标签版本：共同单位纯记录实现一个给定 <span>𝐺</span> 当且仅当
+
+<div>
+𝐺=𝐺<sup>†</sup>,  𝐺≽0,  𝐺<sub>𝑖𝑖</sub>=1.
+</div>
+
+存在时，最小复记录张成空间维数为 <span> rank 𝐺</span>；若预先固定载体 <span>ℂ<sup>𝑑</sup></span>，还必须且只须 <span> rank 𝐺≤𝑑</span>。该共同证明以 <span>𝑎<sup>†</sup>𝐺𝑎=‖∑<sub>𝑖</sub>𝑎<sub>𝑖</sub>𝑒<sub>𝑖</sub>‖<sup>2</sup></span> 给必要性，以 <span>𝐺=𝐸<sup>†</sup>𝐸</span> 的谱因子列给反向实现，以 <span> rank (𝐸<sup>†</sup>𝐸)= rank 𝐸</span> 给最小性；以下所有专门实现均调用这一个结果。
+
+固定源的通道矩阵定义为 <span>Γ<sub>ℎ𝑘</sub>=⟨𝑒<sub>𝑘</sub>,𝑒<sub>ℎ</sub>⟩</span>，故
+
+<div>
+Γ=𝐺<sup>𝖳</sup>=conj(𝐺).
+</div>
+
+对于任意 <span>𝑎</span>，
+
+<div>
+𝑎<sup>†</sup>conj(𝐺)𝑎=conj((conj(𝑎))<sup>†</sup>𝐺 conj(𝑎))≥0 当 𝐺≽0.
+</div>
+
+共轭反向也成立；谱、行列式和秩相同。沿同一取向的 <span>Γ</span> 环乘积是 <span>𝐺</span> 环乘积的共轭，因而相位反号。实际通道的密度非对角因子仍使用其原有 <span>Γ</span> 索引，本章使用标准 <span>𝐺</span>，不将两者条目次序混用。[^GL-Q] §§109.1–109.3。
+
+**约定 C-27.1.3（Gram 体积的适用范围）。** 对实向量列 <span>𝐸</span>，标准 Gram 恒等式给
+
+<div>
+ det (𝐸<sup>𝖳</sup>𝐸)=‖𝑒<sub>1</sub>∧⋯∧𝑒<sub>𝑁</sub>‖<sup>2</sup>.
+</div>
+
+右侧是这些实向量在其内积张成空间中的 <span>𝑁</span> 维平行多面体体积平方；线性相关时为零。复向量列对应 Hermitian 外积范数平方，称为 Gram 体积量。记录秩不是物理位置坐标维数，也不是任意任务的通用存储下界；共同关系可以决定还剩多少独立记录方向，而不需要先给每种记录指定一根轴。
+
+### 27.2 四记录开放链与五个 FIB 匹配项
+
+**定义 C-27.2.1（完全给定的路径支撑）。** 四记录路径 <span>𝑒<sub>1</sub>-𝑒<sub>2</sub>-𝑒<sub>3</sub>-𝑒<sub>4</sub></span> 的候选关系仅允许相邻条目 <span>𝑔<sub>𝑖</sub>=𝐺<sub>𝑖,𝑖+1</sub></span> 及其共轭非零。三个非邻对的条目明确供应为零。按 §27.5 的路径重标相，令 <span>𝑟<sub>𝑖</sub>=|𝑔<sub>𝑖</sub>|≥0</span>，得到
+
+<div>
+𝐺<sub>4</sub>=
+<table><tbody>
+<tr><td>⎛</td><td>1</td><td>𝑟<sub>1</sub></td><td>0</td><td>0</td><td>⎞</td></tr>
+<tr><td>⎜</td><td>𝑟<sub>1</sub></td><td>1</td><td>𝑟<sub>2</sub></td><td>0</td><td>⎟</td></tr>
+<tr><td>⎜</td><td>0</td><td>𝑟<sub>2</sub></td><td>1</td><td>𝑟<sub>3</sub></td><td>⎟</td></tr>
+<tr><td>⎝</td><td>0</td><td>0</td><td>𝑟<sub>3</sub></td><td>1</td><td>⎠</td></tr>
+</tbody></table>
+.
+</div>
+
+这里的零是声明的模型或来源条件；尚未测量一个条目不能把它写成零。若给的是部分报告，则该条目应作为待补变量保留。
+
+**命题 C-27.2.2（五模式到行列式的逐项桥）。** 对定义 C-27.2.1 的完整候选，
+
+<div>
+ det 𝐺<sub>4</sub>=1-𝑟<sub>1</sub><sup>2</sup>-𝑟<sub>2</sub><sup>2</sup>-𝑟<sub>3</sub><sup>2</sup>+𝑟<sub>1</sub><sup>2</sup>𝑟<sub>3</sub><sup>2</sup>=𝑍(-𝑟<sub>1</sub><sup>2</sup>,-𝑟<sub>2</sub><sup>2</sup>,-𝑟<sub>3</sub><sup>2</sup>),  𝑍(𝑎,𝑏,𝑐)=1+𝑎+𝑏+𝑐+𝑎𝑐.
+</div>
+
+三个位置现在标记三条记录边，而不是四个记录顶点。它们与 [A 卷 §1](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md#1-有序原子五种选择与标准窗口) 的低、中、高位置保持顺序对应：
+
+| 位置选择 | 被交换的记录边 | 行列式贡献 | 原生旧标签 | 标准窗原生数量 |
+| --- | --- | ---: | --- | ---: |
+| <span>𝖥[∅]</span> | 无 | <span>1</span> | <span>[𝑛𝑢𝑙𝑙]</span> | <span>0</span> |
+| <span>𝖥[1]</span> | <span>{1,2}</span> | <span>-𝑟<sub>1</sub><sup>2</sup></span> | <span>[2]</span> | <span>2</span> |
+| <span>𝖥[2]</span> | <span>{2,3}</span> | <span>-𝑟<sub>2</sub><sup>2</sup></span> | <span>[3]</span> | <span>3</span> |
+| <span>𝖥[3]</span> | <span>{3,4}</span> | <span>-𝑟<sub>3</sub><sup>2</sup></span> | <span>[5]</span> | <span>5</span> |
+| <span>𝖥[1,3]</span> | <span>{1,2},{3,4}</span> | <span>𝑟<sub>1</sub><sup>2</sup>𝑟<sub>3</sub><sup>2</sup></span> | <span>[25]</span> | <span>7</span> |
+
+**证明。** 将 Leibniz 展开中的置换分解为互不相交的循环。一个非固定循环要沿矩阵支撑中的边走；长度至少三的置换循环会给路径图中的图循环，而路径没有这种循环。因此每个可能非零的置换只含固定点和相邻记录的二换位。
+
+固定点贡献对角一。交换第 <span>𝑖,𝑖+1</span> 个指标贡献置换符号 <span>-1</span> 和权重
+
+<div>
+𝐺<sub>𝑖,𝑖+1</sub>𝐺<sub>𝑖+1,𝑖</sub>=𝑔<sub>𝑖</sub>conj(𝑔<sub>𝑖</sub>)=𝑟<sub>𝑖</sub><sup>2</sup>.
+</div>
+
+换位不能共用记录指标，故相邻两条边不能同时选择。三条边上的合法集合恰为
+
+<div>
+∅, {1}, {2}, {3}, {1,3}.
+</div>
+
+最后一种有两个换位、符号为正。这穷尽全部支撑允许的置换，给出五行贡献；某条边为零时相应贡献为零，有限多项式恒等式仍成立。记录路径边的冲突图是 <span>𝐿(𝑃<sub>4</sub>)=𝑃<sub>3</sub></span>，所以“不许相邻位置同时占用”与“不许换位共用指标”由一个明确双射连接，而不只是项数均为五。<span>□</span>
+
+固定源 [^GL-F] §8.3、[^GL-S] §§2.1–2.2 供应这个五项形式响应及方向字典。代入负实权重是交换环中的多项式评价，不是负概率。表中的原生数量、选择标签、形式权重和归一化概率属于不同类型；例如联合原生数量为 <span>2+5=7</span>，不等于因子化权重 <span>2·5</span>。辅助低到高印字与原生高到低读取的区别继续保留。
+
+### 27.3 加权 continuant、Fibonacci 与有限长度
+
+**定义 C-27.3.1（路径行列式与选择响应）。** <span>𝑚</span> 为记录数。对有 <span>𝑚-1</span> 条有序边的单位对角路径候选，记行列式 <span>𝐷<sub>𝑚</sub></span>，并置
+
+<div>
+𝐷<sub>0</sub>=𝐷<sub>1</sub>=1,  𝑃<sub>0</sub>(𝑡)=𝑃<sub>1</sub>(𝑡)=1,  𝑃<sub>𝑚</sub>(𝑡)=𝑃<sub>𝑚-1</sub>(𝑡)+𝑡𝑃<sub>𝑚-2</sub>(𝑡) (𝑚≥2).
+</div>
+
+<span>𝐷<sub>0</sub></span> 是空行列式的代数约定，不是一项空记录实验；<span>𝑚=1</span> 的矩阵为 <span>[1]</span>，没有相邻重叠参数。
+
+**命题 C-27.3.2（同一匹配骨架的加权递推和参数表达）。** 一般加权路径满足
+
+<div>
+𝐷<sub>𝑚</sub>=𝐷<sub>𝑚-1</sub>-|𝑔<sub>𝑚-1</sub>|<sup>2</sup>𝐷<sub>𝑚-2</sub>  (𝑚≥2).
+</div>
+
+均匀模长 <span>𝑟<sub>𝑔</sub>≥0</span> 时，
+
+<div>
+𝐷<sub>𝑚</sub>(𝑟<sub>𝑔</sub>)=𝑃<sub>𝑚</sub>(-𝑟<sub>𝑔</sub><sup>2</sup>),  𝑃<sub>𝑚</sub>(1)= Fib <sub>𝑚+1</sub>.
+</div>
+
+对 <span>𝑟<sub>𝑔</sub>&gt;0</span>，使用第二类 Chebyshev 多项式的标准中间结果 [^GL-D]，
+
+<div>
+𝐷<sub>𝑚</sub>(𝑟<sub>𝑔</sub>)=𝑟<sub>𝑔</sub><sup>𝑚</sup>𝑈<sub>𝑚</sub>(((1)/(2𝑟<sub>𝑔</sub>))).
+</div>
+
+其各参数域为
+
+<div>
+𝑟<sub>𝑔</sub>&gt;((1)/(2)):  𝐷<sub>𝑚</sub>=𝑟<sub>𝑔</sub><sup>𝑚</sup>(( sin ((𝑚+1)θ))/( sin θ)),   cos θ=((1)/(2𝑟<sub>𝑔</sub>)), 0&lt;θ&lt;((π)/(2));<br>
+0&lt;𝑟<sub>𝑔</sub>&lt;((1)/(2)):  𝐷<sub>𝑚</sub>=𝑟<sub>𝑔</sub><sup>𝑚</sup>(( sinh ((𝑚+1)η))/( sinh η)),   cosh η=((1)/(2𝑟<sub>𝑔</sub>)), η&gt;0;<br>
+𝑟<sub>𝑔</sub>=((1)/(2)):  𝐷<sub>𝑚</sub>=((𝑚+1)/(2<sup>𝑚</sup>));<br>
+𝑟<sub>𝑔</sub>=0:  𝐷<sub>𝑚</sub>=1.
+</div>
+
+**证明。** 路径置换已在命题 C-27.2.2 中分类。末记录指标固定时，留下前 <span>𝑚-1</span> 个记录；它若不固定，只能与前一记录交换，贡献 <span>-|𝑔<sub>𝑚-1</sub>|<sup>2</sup></span> 并留下前 <span>𝑚-2</span> 个记录。这两类互斥且穷尽，证明加权递推。同一末边选择的分解在形式权重 <span>𝑡</span> 下给 <span>𝑃<sub>𝑚</sub></span>；在 <span>𝑡=1</span> 时初值为一、一，故按 Fibonacci 递推归纳得到 <span> Fib <sub>𝑚+1</sub></span>。均匀负权重的同初值递推证明 <span>𝐷<sub>𝑚</sub>=𝑃<sub>𝑚</sub>(-𝑟<sub>𝑔</sub><sup>2</sup>)</span>。
+
+经典 <span>𝑈<sub>0</sub>=1,𝑈<sub>1</sub>=2𝑥,𝑈<sub>𝑚</sub>=2𝑥𝑈<sub>𝑚-1</sub>-𝑈<sub>𝑚-2</sub></span> 使 <span>𝑟<sub>𝑔</sub><sup>𝑚</sup>𝑈<sub>𝑚</sub>(1/(2𝑟<sub>𝑔</sub>))</span> 满足同一初值和递推，证明 Chebyshev 表达。DLMF 18.5.2 的 <span>𝑈<sub>𝑚</sub>( cos θ)= sin ((𝑚+1)θ)/ sin θ</span> 给正弦式；令 <span>θ=𝑖η</span>，或直接用双曲加法与同初值递推，给双曲式。<span>𝑈<sub>𝑚</sub>(1)=𝑚+1</span> 由其递推归纳给临界式。<span>𝑟<sub>𝑔</sub>=0</span> 时矩阵为 <span>𝐼<sub>𝑚</sub></span>，直接给一，不使用含 <span>1/𝑟<sub>𝑔</sub></span> 的表达。<span>□</span>
+
+**命题 C-27.3.3（有限长度的完整正性域）。** 对整数 <span>𝑚≥2</span> 和 <span>𝑟<sub>𝑔</sub>≥0</span>，均匀记录路径的完整谱为
+
+<div>
+λ<sub>𝑘</sub>=1+2𝑟<sub>𝑔</sub> cos ((𝑘π)/(𝑚+1)),  𝑘=1,…,𝑚.
+</div>
+
+因此
+
+<div>
+𝐺<sub>𝑚</sub>≽0⇔0≤𝑟<sub>𝑔</sub>≤((1)/(2 cos (π/(𝑚+1)))) (𝑚≥2).
+</div>
+
+同一个固定模长的模式对每个有限长度分别可实现，当且仅当 <span>0≤𝑟<sub>𝑔</sub>≤1/2</span>。
+
+**证明。** 取正弦向量
+
+<div>
+𝑣<sup>(𝑘)</sup><sub>𝑗</sub>=√(((2)/(𝑚+1))) sin ((𝑗𝑘π)/(𝑚+1)),  𝑗,𝑘=1,…,𝑚.
+</div>
+
+有限正弦正交关系给 <span>∑<sub>𝑗</sub>𝑣<sup>(𝑘)</sup><sub>𝑗</sub>𝑣<sup>(ℓ)</sup><sub>𝑗</sub>=δ<sub>𝑘ℓ</sub></span>，故它们是完整基；该关系也可将正弦积化为两个余弦和后求有限几何级数得到。端点 <span>𝑣<sub>0</sub>=𝑣<sub>𝑚+1</sub>=0</span>，逐行乘矩阵并用 <span> sin (𝑥-𝑦)+ sin (𝑥+𝑦)=2 sin 𝑥 cos 𝑦</span>，即得上式特征值。<span>𝑟<sub>𝑔</sub>=0</span> 时同一基仍对角化恒等矩阵。最小值为 <span>1-2𝑟<sub>𝑔</sub> cos (π/(𝑚+1))</span>，于是得 PSD 的充要域。
+
+阈值随 <span>𝑚</span> 增大下降至 <span>1/2</span>。<span>𝑟<sub>𝑔</sub>≤1/2</span> 时每个有限路径均正定，包括 <span>𝑟<sub>𝑔</sub>=1/2</span>；固定 <span>𝑟<sub>𝑔</sub>&gt;1/2</span> 则在某个有限长度出现负特征值，所以不能任意长地延长。<span>𝑚=1</span> 只有 <span>[1]</span>、总是正定，不能代入分母为零的阈值式。<span>□</span>
+
+圆周振荡、双曲伸缩和 Fibonacci 计数是同一递推的不同权重与参数域，并不等于同一个物理对象。上述代数式可以在 PSD 域外计算；此时描述的是候选矩阵，而不是已经存在的记录。
+
+### 27.4 五记录的首尾补全圆盘
+
+**定义 C-27.4.1（内部固定、闭合待补）。** 取四条已给相邻边 <span>𝑔<sub>1</sub>=𝑔<sub>2</sub>=𝑔<sub>3</sub>=𝑔<sub>4</sub>=𝑟<sub>𝑔</sub></span>，并明确规定其他非邻条目为零，仅留
+
+<div>
+𝑐=⟨𝑒<sub>5</sub>,𝑒<sub>1</sub>⟩
+</div>
+
+为未知关系。候选矩阵为
+
+<div>
+𝐺<sub>5</sub>(𝑐)=
+<table><tbody>
+<tr><td>⎛</td><td>1</td><td>𝑟<sub>𝑔</sub></td><td>0</td><td>0</td><td>conj(𝑐)</td><td>⎞</td></tr>
+<tr><td>⎜</td><td>𝑟<sub>𝑔</sub></td><td>1</td><td>𝑟<sub>𝑔</sub></td><td>0</td><td>0</td><td>⎟</td></tr>
+<tr><td>⎜</td><td>0</td><td>𝑟<sub>𝑔</sub></td><td>1</td><td>𝑟<sub>𝑔</sub></td><td>0</td><td>⎟</td></tr>
+<tr><td>⎜</td><td>0</td><td>0</td><td>𝑟<sub>𝑔</sub></td><td>1</td><td>𝑟<sub>𝑔</sub></td><td>⎟</td></tr>
+<tr><td>⎝</td><td>𝑐</td><td>0</td><td>0</td><td>𝑟<sub>𝑔</sub></td><td>1</td><td>⎠</td></tr>
+</tbody></table>
+,  φ=((1+√(5))/(2)).
+</div>
+
+**命题 C-27.4.2（首尾圆盘、行列式及秩）。** 对 <span>0≤𝑟<sub>𝑔</sub>≤φ<sup>-1</sup></span>，置
+
+<div>
+𝐷<sub>3</sub>=1-2𝑟<sub>𝑔</sub><sup>2</sup>,  𝐷<sub>4</sub>=1-3𝑟<sub>𝑔</sub><sup>2</sup>+𝑟<sub>𝑔</sub><sup>4</sup>,  μ=((𝑟<sub>𝑔</sub><sup>4</sup>)/(𝐷<sub>3</sub>)),  α=((𝐷<sub>4</sub>)/(𝐷<sub>3</sub>)).
+</div>
+
+则
+
+<div>
+𝐺<sub>5</sub>(𝑐)≽0⇔|𝑐-μ|≤α,
+</div>
+
+且
+
+<div>
+ det 𝐺<sub>5</sub>(𝑐)=𝐷<sub>3</sub>(α<sup>2</sup>-|𝑐-μ|<sup>2</sup>),   rank 𝐺<sub>5</sub>(𝑐)=3+ rank 𝒮, 𝒮=
+<table><tbody>
+<tr><td>⎛</td><td>α</td><td>conj(𝑐)-μ</td><td>⎞</td></tr>
+<tr><td>⎝</td><td>𝑐-μ</td><td>α</td><td>⎠</td></tr>
+</tbody></table>
+.
+</div>
+
+在 <span>0≤𝑟<sub>𝑔</sub>&lt;φ<sup>-1</sup></span> 时圆盘内部秩五、圆周秩四；在黄金端点圆盘缩为 <span>𝑐=𝑟<sub>𝑔</sub></span> 一点，秩三。
+
+**证明。** 重排为内部记录 <span>(2,3,4)</span> 与两端 <span>(1,5)</span>。内部块和耦合为
+
+<div>
+𝐴=
+<table><tbody>
+<tr><td>⎛</td><td>1</td><td>𝑟<sub>𝑔</sub></td><td>0</td><td>⎞</td></tr>
+<tr><td>⎜</td><td>𝑟<sub>𝑔</sub></td><td>1</td><td>𝑟<sub>𝑔</sub></td><td>⎟</td></tr>
+<tr><td>⎝</td><td>0</td><td>𝑟<sub>𝑔</sub></td><td>1</td><td>⎠</td></tr>
+</tbody></table>
+, 𝐿=
+<table><tbody>
+<tr><td>⎛</td><td>𝑟<sub>𝑔</sub></td><td>0</td><td>⎞</td></tr>
+<tr><td>⎜</td><td>0</td><td>0</td><td>⎟</td></tr>
+<tr><td>⎝</td><td>0</td><td>𝑟<sub>𝑔</sub></td><td>⎠</td></tr>
+</tbody></table>
+, 𝐶=
+<table><tbody>
+<tr><td>⎛</td><td>1</td><td>conj(𝑐)</td><td>⎞</td></tr>
+<tr><td>⎝</td><td>𝑐</td><td>1</td><td>⎠</td></tr>
+</tbody></table>
+.
+</div>
+
+<span>𝐴</span> 的顺序主子式为 <span>1,1-𝑟<sub>𝑔</sub><sup>2</sup>,𝐷<sub>3</sub></span>，在整个闭区间都严格正，因为 <span>φ<sup>-1</sup>&lt;1/√(2)</span>。其余子式计算给
+
+<div>
+(𝐴<sup>-1</sup>)<sub>11</sub>=(𝐴<sup>-1</sup>)<sub>33</sub>=((1-𝑟<sub>𝑔</sub><sup>2</sup>)/(𝐷<sub>3</sub>)),  (𝐴<sup>-1</sup>)<sub>13</sub>=((𝑟<sub>𝑔</sub><sup>2</sup>)/(𝐷<sub>3</sub>)).
+</div>
+
+代入命题 [C-9.5](#9-共同记录的圆盘与参考递归) 的可逆 Schur 同余，剩余块为 <span>𝐶-𝐿<sup>†</sup>𝐴<sup>-1</sup>𝐿=𝒮</span>；因此 <span>𝐺<sub>5</sub>(𝑐)</span> 的正性等价于 <span>𝒮</span> 的正性，行列式和秩由相同同余给出。这个调用保留了共享参考的完整同余证明，不把概率求和消元换成记录投影。
+
+由于 <span>𝒮</span> 的特征值为 <span>α±|𝑐-μ|</span>，且所给区间内 <span>α≥0</span>，其正性恰为圆盘条件。严格区间内 <span>α&gt;0</span>，故内部两个剩余特征值为正、圆周恰一个为零，得秩五／四。在 <span>𝑟<sub>𝑔</sub>=φ<sup>-1</sup></span>，<span>𝐷<sub>3</sub>=√(5)-2&gt;0</span>，<span>𝐷<sub>4</sub>=0</span>，并由 <span>𝑟<sub>𝑔</sub><sup>2</sup>=1-𝑟<sub>𝑔</sub></span> 得 <span>𝑟<sub>𝑔</sub><sup>4</sup>=𝑟<sub>𝑔</sub>𝐷<sub>3</sub></span>；所以 <span>α=0,μ=𝑟<sub>𝑔</sub></span>，唯一剩余块为零，得秩三。这里只逆 <span>𝐴</span>，没有逆零的 <span>𝐷<sub>4</sub></span>，也没有把严格域的结论未经证明延伸到端点。<span>𝑟<sub>𝑔</sub>=0</span> 则直接是 <span>|𝑐|≤1</span>，同样有内部／圆周秩五／四。<span>□</span>
+
+圆心 <span>μ</span> 是两端投影到共同内部参考后已解释的重叠；半径 <span>α</span> 是两端等长剩余部分所允许的关系余量。这是代数消元，不是测量、删去记录、条件化或准备操作。圆盘是一项复内积自由度，不是物理位置上的圆。
+
+**命题 C-27.4.3（有理圆盘强迫未知关系非零）。** 取 <span>𝑟<sub>𝑔</sub>=3/5</span>，则
+
+<div>
+𝐷<sub>3</sub>=((7)/(25)), 𝐷<sub>4</sub>=((31)/(625)),  |𝑐-((81)/(175))|≤((31)/(175)).
+</div>
+
+所有允许的复 <span>𝑐</span> 满足 <span>|𝑐|≥2/7</span>；实补全区间为 <span>[2/7,16/25]</span>，最近点 <span>𝑐=2/7</span> 达到下界。
+
+**证明。** 直接代入中心与半径。反三角不等式给 <span>|𝑐|≥μ-α=(81-31)/175=2/7</span>，正实左端点达到。<span>𝑐=3/5</span> 位于圆盘内部，证明部分报告可补全；<span>𝑐=0</span> 被排除。若把未知边零填，得到的五记录开放候选有
+
+<div>
+𝐷<sub>5</sub><sup>open</sup>=𝐷<sub>4</sub>-((9)/(25))𝐷<sub>3</sub>=((31-63)/(625))=-((32)/(625)).
+</div>
+
+它的失败不能当作原部分报告无补全的证据。<span>□</span>
+
+<div>
+尚未取得关系≠已经证明关系为零.
+</div>
+
+### 27.5 局部重标相与唯一循环相位
+
+**定义 C-27.5.1（有向记录闭环）。** 固定标号和取向的简单循环，<span>𝑁≥3</span>，令
+
+<div>
+𝑔<sub>𝑖</sub>=⟨𝑒<sub>𝑖</sub>,𝑒<sub>𝑖+1</sub>⟩,  𝑒<sub>𝑁+1</sub>=𝑒<sub>1</sub>,  Ω<sub>𝑁</sub>=∏<sub>𝑖=1</sub><sup>𝑁</sup>𝑔<sub>𝑖</sub>.
+</div>
+
+仅当每条 <span>𝑔<sub>𝑖</sub>≠0</span> 时定义 <span>Φ<sub>𝐺</sub>= arg Ω<sub>𝑁</sub></span> 模 <span>2π</span>。这是同一关系报告的 Bargmann 环积；反向取向给 <span>conj(Ω<sub>𝑁</sub>)</span> 和 <span>-Φ<sub>𝐺</sub></span>。[^GL-B]
+
+**命题 C-27.5.2（开放相位消去与单环分类）。** 记录重标相
+
+<div>
+𝑒<sub>𝑖</sub>↦𝑒<sup>𝑖α<sub>𝑖</sub></sup>𝑒<sub>𝑖</sub>,  𝑔<sub>𝑖</sub>↦𝑒<sup>𝑖(α<sub>𝑖+1</sub>-α<sub>𝑖</sub>)</sup>𝑔<sub>𝑖</sub>,  𝐺↦𝐷<sup>†</sup>𝐺𝐷
+</div>
+
+不改变正性、秩及完整循环乘积。开放路径全部非零边都能标为正实。在一个固定简单循环上，固定各非零模长时，两份边相位赋值规范等价，当且仅当它们的 <span>Φ<sub>𝐺</sub></span> 相同。[^GL-R] §1、Lemma 1.1、Lemma 2.2、Lemma 3.1 提供标准单位增益图的规范背景；这里的增益是 <span>𝑔<sub>𝑖</sub>/|𝑔<sub>𝑖</sub>|</span>，不是任意模长的 <span>𝑔<sub>𝑖</sub></span> 本身。
+
+**证明。** 写 <span>𝑔<sub>𝑖</sub>=|𝑔<sub>𝑖</sub>|𝑒<sup>𝑖θ<sub>𝑖</sub></sup></span>。在路径上任选根相位，再依次令 <span>α<sub>𝑖+1</sub>=α<sub>𝑖</sub>-θ<sub>𝑖</sub></span>，每一步消去下一边的相位。在闭环上先消前 <span>𝑁-1</span> 条边，最后一条留下相位 <span>∑<sub>𝑖</sub>θ<sub>𝑖</sub></span>。循环乘积中的每个顶点相位一正一负、全部抵消，证明必要性。反之，两份模长相同、环相位相同的赋值都能消前 <span>𝑁-1</span> 边，留下同一个末边，因此属于同一个规范类，证明充分性。
+
+若某条边为零，删除零支撑边后的图是森林，可在各分支重复路径构造；<span>Ω<sub>𝑁</sub>=0</span> 的辐角无定义，也没有此单环的残余相位。均匀 <span>𝑟<sub>𝑔</sub>=0</span> 时矩阵为 <span>𝐼<sub>𝑁</sub></span>，所有名义相位参数给同一矩阵。<span>□</span>
+
+开放乘积 <span>𝑃=∏<sub>𝑖=1</sub><sup>𝑁-1</sup>𝑔<sub>𝑖</sub></span> 会乘以 <span>𝑒<sup>𝑖(α<sub>𝑁</sub>-α<sub>1</sub>)</sup></span>，它不是单独的规范不变量。闭合 <span>𝑐=𝑔<sub>𝑁</sub></span> 乘以相反因子，故 <span>𝑃𝑐</span> 不变。实际相位参照和比较探针须共同变换；表示重标相不提供免费的物理控制。固定叠加 <span>∑<sub>𝑖</sub>𝑎<sub>𝑖</sub>𝑒<sub>𝑖</sub></span> 的系数同时变为 <span>𝑒<sup>-𝑖α<sub>𝑖</sub></sup>𝑎<sub>𝑖</sub></span>。
+
+若全部复 <span>𝑔<sub>𝑖</sub></span> 已经在同一标架中供应，<span>Ω<sub>𝑁</sub></span> 已由乘法确定，不能再称为额外独立未知数。这里的信息遗漏是相对于只给模长、或各开放局部独立规范后的报告而言。形式相位变量、来源名称与矩阵书写均不供应实际相干取得。
+
+### 27.6 五环行列式：循环匹配加两个定向项
+
+**命题 C-27.6.1（闭环的完整匹配分解）。** 对单位对角、非邻条目明确为零的简单 <span>𝐶<sub>𝑁</sub></span> 候选，<span>𝑁≥3</span>，每个无向邻对只赋一个条目和其共轭，有
+
+<div>
+ det 𝐺<sub>𝑁</sub>=∑<sub>𝑀 为 𝐶<sub>𝑁</sub> 的匹配</sub>∏<sub>𝑖∈𝑀</sub>(-|𝑔<sub>𝑖</sub>|<sup>2</sup>)+2(-1)<sup>𝑁-1</sup> Re Ω<sub>𝑁</sub>.
+</div>
+
+因此均匀五环满足
+
+<div>
+ det 𝐺<sub>5</sub>=1-5𝑟<sub>𝑔</sub><sup>2</sup>+5𝑟<sub>𝑔</sub><sup>4</sup>+2𝑟<sub>𝑔</sub><sup>5</sup> cos Φ<sub>𝐺</sub>=𝑍<sub>𝐶<sub>5</sub></sub>(-𝑟<sub>𝑔</sub><sup>2</sup>)+2𝑟<sub>𝑔</sub><sup>5</sup> cos Φ<sub>𝐺</sub>,  𝑍<sub>𝐶<sub>5</sub></sub>(𝑡)=1+5𝑡+5𝑡<sup>2</sup>,
+</div>
+
+其中余弦写法只用于 <span>𝑟<sub>𝑔</sub>&gt;0</span>；<span>𝑟<sub>𝑔</sub>=0</span> 用 <span> Re Ω<sub>5</sub>=0</span> 的无辐角式。
+
+**证明。** 支撑允许的置换仍分解为互不相交循环。所有二换位是一组不共用顶点的邻边，恰为图匹配；它们的权重与符号给 <span>∏<sub>𝑖∈𝑀</sub>(-|𝑔<sub>𝑖</sub>|<sup>2</sup>)</span>。若有长度至少三的置换循环，它必须在无弦简单环中走一圈，使用全部 <span>𝑁</span> 个顶点。只有两个取向，无法再和其他换位并存；每个 <span>𝑁</span> 循环的符号为 <span>(-1)<sup>𝑁-1</sup></span>，两个权重分别是 <span>Ω<sub>𝑁</sub></span> 和 <span>conj(Ω<sub>𝑁</sub>)</span>。这两类穷尽非零置换项。
+
+五环有一个空匹配、五个单边匹配，双边匹配恰为
+
+<div>
+{1,3}, {1,4}, {2,4}, {2,5}, {3,5}.
+</div>
+
+没有三边匹配，故匹配部分为 <span>1-5𝑟<sub>𝑔</sub><sup>2</sup>+5𝑟<sub>𝑔</sub><sup>4</sup></span>；两个五循环的符号为正，给 <span>2 Re Ω<sub>5</sub>=2𝑟<sub>𝑔</sub><sup>5</sup> cos Φ<sub>𝐺</sub></span>。零边情形仍由同一个多项式恒等式涵盖。<span>□</span>
+
+**约定 C-27.6.2（实际 FIB 周期响应的消费）。** 边槽冲突图 <span>𝐿(𝐶<sub>𝑁</sub>)=𝐶<sub>𝑁</sub></span>，所以匹配与固定源 [^GL-S] 定义 4.1、命题 4.2 的带起点循环禁相邻选择一一对应。其核
+
+<div>
+𝐵(𝑡)=
+<table><tbody>
+<tr><td>⎛</td><td>1</td><td>𝑡</td><td>⎞</td></tr>
+<tr><td>⎝</td><td>1</td><td>0</td><td>⎠</td></tr>
+</tbody></table>
+,  𝑍<sub>𝐶<sub>𝑁</sub></sub>(𝑡<sub>1</sub>,…,𝑡<sub>𝑁</sub>)= tr (𝐵(𝑡<sub>1</sub>)⋯𝐵(𝑡<sub>𝑁</sub>))
+</div>
+
+经 <span>𝑡<sub>𝑖</sub>=-|𝑔<sub>𝑖</sub>|<sup>2</sup></span> 的有限多项式代入，给完整匹配部分。新增的两项属于 Gram 置换展开的两个整圈取向，不是两份额外经典 FIB 配置。三位置开放窗的五模式、五位置循环的十一配置、五份记录是三个不同对象。
+
+本卷 [§26.5](#265-原有取迹接口中的有符号谱项与非一致极限) 的约定 C-26.11 保留同一有序核和共同切口；本章只消费该有限多项式恒等式，另供负实权重，不调用其正活动来源的归一化概率或高活动极限。
+
+简单环条件排除 <span>𝑁=1,2</span>。<span>𝑁=3</span> 是普通三角图：每对不同记录均相邻，没有非邻零条件，三个无向条目各计一次；源的长度一自环和长度二接续约定不能移植成这里的 Gram 环。
+
+**命题 C-27.6.3（正行列式不能代替正性域）。** 取均匀五环 <span>𝑟<sub>𝑔</sub>=4/5,Φ<sub>𝐺</sub>=0</span>，则
+
+<div>
+ det 𝐺<sub>5</sub>=((1573)/(3125))&gt;0,  𝐷<sub>4</sub>=-((319)/(625))&lt;0,
+</div>
+
+所以此候选无共同记录实现。
+
+**证明。** 分别代入命题 C-27.6.1 和 C-27.2.2。PSD 矩阵的每个主子矩阵均 PSD，不允许负的四阶主子式，故完整正行列式不足以实现。相反，若已限制 <span>0≤𝑟<sub>𝑔</sub>≤φ<sup>-1</sup></span>，每个真主子块是由长度至多四的路径组成，经局部规范均 PSD；此时连同这些既定条件，所有主子式的判据才使剩余完整行列式非负成为充分条件。独立的充要检验仍以 §27.4 圆盘或 §27.9 完整谱最清楚。<span>□</span>
+
+### 27.7 局部全正而整体不可能及锐修复预算
+
+**命题 C-27.7.1（正负闭合模板）。** 令 <span>𝑟<sub>𝑔</sub>=3/5</span>，
+
+<div>
+𝐺<sub>+</sub>=𝐺<sub>5</sub>(𝑐=𝑟<sub>𝑔</sub>),  𝐺<sub>-</sub>=𝐺<sub>5</sub>(𝑐=-𝑟<sub>𝑔</sub>).
+</div>
+
+两者全部非空真主子矩阵正定，对应局部限制各自在重标相后同谱；但只有 <span>𝐺<sub>+</sub></span> 是共同记录的 Gram 矩阵。
+
+**证明。** 删除任意记录后得到四记录路径，负边可用该路径自己的对角酉规范消去。其顺序主子式为
+
+<div>
+𝐷<sub>1</sub>=1, 𝐷<sub>2</sub>=((16)/(25)), 𝐷<sub>3</sub>=((7)/(25)), 𝐷<sub>4</sub>=((31)/(625)).
+</div>
+
+均正，Sylvester 判据给每个四记录删除块正定。任何更小非空真主块都是其中一个正定删除块的主子矩阵，故也正定。固定任意真子集时，两模板的剩余支撑为森林，模长相同、相位均可局部消去，故对应谱相同。该子集各自的规范不要求也不能据此断言全局拼接；矩阵条目并非处处相同。
+
+完整行列式为
+
+<div>
+ det 𝐺<sub>+</sub>=((11)/(3125)),   det 𝐺<sub>-</sub>=-((961)/(3125)).
+</div>
+
+给 <span>𝐺<sub>+</sub></span> 一个完整正性见证：<span>𝐴&gt;0</span>，其 Schur 剩余块为
+
+<div>
+𝒮<sub>+</sub>=((1)/(175))
+<table><tbody>
+<tr><td>⎛</td><td>31</td><td>24</td><td>⎞</td></tr>
+<tr><td>⎝</td><td>24</td><td>31</td><td>⎠</td></tr>
+</tbody></table>
+,   spec 𝒮<sub>+</sub>={((55)/(175)),((7)/(175))}.
+</div>
+
+两者严格正，故 <span>𝐺<sub>+</sub>&gt;0</span>，共同记录最小维数为五。亦可给具体 Fourier 实现：令
+
+<div>
+λ<sub>𝑘</sub>=1+((6)/(5)) cos ((2π𝑘)/(5)),  (𝑓<sub>𝑗</sub>)<sub>𝑘</sub>=√(λ<sub>𝑘</sub>/5) 𝑒<sup>2π𝑖𝑘𝑗/5</sup>, 𝑘,𝑗=0,…,4.
+</div>
+
+五个 <span>λ<sub>𝑘</sub></span> 为
+
+<div>
+((11)/(5)), ((7+3√(5))/(10)), ((7+3√(5))/(10)), ((7-3√(5))/(10)), ((7-3√(5))/(10)).
+</div>
+
+最后两值由 <span>49&gt;45</span> 为正。有限 Fourier 正交和给 <span>⟨𝑓<sub>𝑖</sub>,𝑓<sub>𝑗</sub>⟩</span> 对角一、邻边 <span>3/5</span>、非邻零，因此实现 <span>𝐺<sub>+</sub></span>。
+
+对 <span>𝐺<sub>-</sub></span>，令 <span>𝑤=(1,-1,1,-1,1)<sup>𝖳</sup></span>。逐行计算给
+
+<div>
+𝐺<sub>-</sub>𝑤=-((1)/(5))𝑤,  𝑤<sup>†</sup>𝐺<sub>-</sub>𝑤=5-10𝑟<sub>𝑔</sub>=-1.
+</div>
+
+若共同记录存在，这会等于 <span>‖𝑒<sub>1</sub>-𝑒<sub>2</sub>+𝑒<sub>3</sub>-𝑒<sub>4</sub>+𝑒<sub>5</sub>‖<sup>2</sup></span>，与平方范数非负矛盾。<span>𝐺<sub>-</sub></span> 是被声明记录模型拒绝的报告，而不是实际量子记录违反正性。<span>□</span>
+
+**命题 C-27.7.2（稀疏 Hermitian 误差模型中的最小修复）。** 保持单位对角和所有非邻零，允许每条无向循环边的复条目改变至多 <span>ε</span>，反向条目始终取共轭。将 <span>𝐺<sub>-</sub></span> 修复成 PSD 至少需要
+
+<div>
+ε≥((1)/(10)),
+</div>
+
+且该下界可达。
+
+**证明。** 扰动 <span>Δ</span> 每行、每列最多两个非零条目，故
+
+<div>
+‖Δ‖<sub>∞</sub>≤2ε,  ‖Δ‖<sub>1</sub>≤2ε,  ‖Δ‖<sub>op</sub>≤√(‖Δ‖<sub>1</sub>‖Δ‖<sub>∞</sub>)≤2ε.
+</div>
+
+在单位向量 <span>hat(𝑤)=𝑤/√(5)</span> 上，PSD 必须满足
+
+<div>
+0≤hat(𝑤)<sup>†</sup>(𝐺<sub>-</sub>+Δ)hat(𝑤)=-((1)/(5))+hat(𝑤)<sup>†</sup>Δhat(𝑤)≤-((1)/(5))+2ε.
+</div>
+
+故有必要下界。将四条正边改为 <span>+1/2</span>、负闭合边改为 <span>-1/2</span>，每边恰改 <span>1/10</span>，仍为 <span>Φ<sub>𝐺</sub>=π</span>。§27.9 的完整谱给最小值 <span>1-2𝑟<sub>𝑔</sub>=0</span>，其余四值严格正，因而这是秩四的 PSD 修复并达到下界。<span>□</span>
+
+这个预算只适用于所声明的复条目误差、Hermitian 条件、固定对角与固定非邻零；改变零支撑或对角时不是同一个修复问题。矛盾有有限误差间隔，不只存在于无限精度的极限。
+
+### 27.8 黄金临界、强制闭合与三维锥面实现
+
+**命题 C-27.8.1（五环最大共同重叠）。** 在五个单位纯记录、所有邻边同模长 <span>𝑟<sub>𝑔</sub></span>、所有非邻记录正交的共同模型中，允许选择候选环相位时，
+
+<div>
+𝑟<sub> max </sub>=φ<sup>-1</sup>.
+</div>
+
+达到最大值必须 <span>Φ<sub>𝐺</sub>=0</span> 模 <span>2π</span>，此时 Gram 秩和最小复记录维数恰为三。
+
+**证明。** 二记录主块 PSD 给 <span>𝑟<sub>𝑔</sub>≤1</span>。任意四记录删除块规范为路径，必须满足
+
+<div>
+𝐷<sub>4</sub>=1-3𝑟<sub>𝑔</sub><sup>2</sup>+𝑟<sub>𝑔</sub><sup>4</sup>=(1-φ<sup>2</sup>𝑟<sub>𝑔</sub><sup>2</sup>)(1-φ<sup>-2</sup>𝑟<sub>𝑔</sub><sup>2</sup>)≥0.
+</div>
+
+在 <span>0≤𝑟<sub>𝑔</sub>≤1</span>，第二因子严格正，因此 <span>𝑟<sub>𝑔</sub>≤φ<sup>-1</sup></span>。规范前四边为正实后，在临界点内部 <span>𝐴</span> 仍正定，§27.4 的已证明闭区间计算给 <span>α=0,μ=𝑟<sub>𝑔</sub></span>，故强迫 <span>𝑐=𝑟<sub>𝑔</sub></span>。于是 <span>Ω<sub>5</sub>=𝑟<sub>𝑔</sub><sup>5</sup>&gt;0</span>，<span>Φ<sub>𝐺</sub>=0</span>，剩余块为零，秩为三。下述显式向量证明这个必要上界确实可达。<span>□</span>
+
+**命题 C-27.8.2（精确实三维实现）。** 令 <span>𝑡=1/√(5)</span>，
+
+<div>
+𝑒<sub>𝑗</sub>=(√(1-𝑡) cos ((2π𝑗)/(5)),√(1-𝑡) sin ((2π𝑗)/(5)),√(𝑡)),  𝑗=0,…,4.
+</div>
+
+则它们在 <span>ℝ<sup>3</sup>⊂ℂ<sup>3</sup></span> 中单位归一，满足临界五环的全部关系：
+
+<div>
+‖𝑒<sub>𝑗</sub>‖=1,  ⟨𝑒<sub>𝑗</sub>,𝑒<sub>𝑗+1</sub>⟩=φ<sup>-1</sup>,  ⟨𝑒<sub>𝑗</sub>,𝑒<sub>𝑗+2</sub>⟩=0
+</div>
+
+（下标模五）。
+
+**证明。** 归一平方为 <span>(1-𝑡)( cos <sup>2</sup>+ sin <sup>2</sup>)+𝑡=1</span>。两向量内积为 <span>(1-𝑡) cos (2π(𝑗-𝑘)/5)+𝑡</span>。使用
+
+<div>
+ cos ((2π)/(5))=((√(5)-1)/(4)),   cos ((4π)/(5))=-((√(5)+1)/(4)),
+</div>
+
+相邻内积为 <span>(√(5)-1)/2=φ<sup>-1</sup></span>，两步内积为零。内部三记录主块行列式 <span>𝐷<sub>3</sub>=√(5)-2&gt;0</span>，证明这些向量实际张成三维，而不只是被写成三个坐标。<span>□</span>
+
+五向量位于同一圆锥面上，它们不是五根正交轴。这里三维由五记录、等邻模长、非邻正交和最大化共同重叠联合决定；这些前提没有证明真实空间或所有观察者必须三维。
+
+### 27.9 完整五环相位允许区间
+
+**命题 C-27.9.1（循环谱与五环正性域）。** 对简单 <span>𝐶<sub>𝑁</sub></span>、<span>𝑁≥3</span>、均匀 <span>𝑟<sub>𝑔</sub>&gt;0</span>，共同环相位为 <span>Φ<sub>𝐺</sub></span> 的候选谱是
+
+<div>
+λ<sub>𝑘</sub>=1+2𝑟<sub>𝑔</sub> cos ((Φ<sub>𝐺</sub>+2π𝑘)/(𝑁)),  𝑘=0,…,𝑁-1.
+</div>
+
+这是 [^GL-R] Theorem 5.1 的单位增益环邻接谱在 <span>𝐺=𝐼+𝑟<sub>𝑔</sub>𝐴<sub>gain</sub></span> 中的应用。对于五环，取代表 <span>-π≤Φ<sub>𝐺</sub>≤π</span>，最小值为
+
+<div>
+λ<sub> min </sub>=1-2𝑟<sub>𝑔</sub> cos ((π-|Φ<sub>𝐺</sub>|)/(5)).
+</div>
+
+所以完整允许域为
+
+<div>
+
+<table><tbody>
+<tr><td>0&lt;𝑟<sub>𝑔</sub>≤((1)/(2)):</td><td>每个环相位均可实现;</td></tr>
+<tr><td>((1)/(2))&lt;𝑟<sub>𝑔</sub>≤φ<sup>-1</sup>:</td><td>|Φ<sub>𝐺</sub>|≤π-5 arccos (((1)/(2𝑟<sub>𝑔</sub>)));</td></tr>
+<tr><td>𝑟<sub>𝑔</sub>&gt;φ<sup>-1</sup>:</td><td>没有可实现相位.</td></tr>
+</tbody></table>
+
+</div>
+
+<span>𝑟<sub>𝑔</sub>=0</span> 时单列为 <span>𝐺=𝐼<sub>5</sub></span>，所有形式相位标签均给同一矩阵，记录环乘积没有辐角。
+
+**证明。** 按 §27.5 的单环分类，可将每个有向条目标为 <span>𝑟<sub>𝑔</sub>𝑒<sup>𝑖Φ<sub>𝐺</sub>/𝑁</sup></span>。取 Fourier 向量 <span>𝑣<sub>𝑗</sub><sup>(𝑘)</sup>=𝑁<sup>-1/2</sup>𝑒<sup>2π𝑖𝑘𝑗/𝑁</sup></span>，<span>𝑗=0,…,𝑁-1</span>。两邻项之和为
+
+<div>
+𝑟<sub>𝑔</sub>𝑒<sup>𝑖Φ<sub>𝐺</sub>/𝑁</sup>𝑣<sub>𝑗+1</sub><sup>(𝑘)</sup>+𝑟<sub>𝑔</sub>𝑒<sup>-𝑖Φ<sub>𝐺</sub>/𝑁</sup>𝑣<sub>𝑗-1</sub><sup>(𝑘)</sup>=2𝑟<sub>𝑔</sub> cos ((Φ<sub>𝐺</sub>+2π𝑘)/(𝑁)) 𝑣<sub>𝑗</sub><sup>(𝑘)</sup>.
+</div>
+
+模 <span>𝑁</span> 端点保持同样等式，完整 Fourier 基给全部谱。五环的等距谱角中，距 <span>π</span> 最近的角距为 <span>(π-|Φ<sub>𝐺</sub>|)/5</span>；它给最小余弦，因而给最小特征值。<span>𝑟<sub>𝑔</sub>≤1/2</span> 时该值始终非负。<span>𝑟<sub>𝑔</sub>&gt;1/2</span> 时余弦在 <span>[0,π/5]</span> 单调，解其非负条件得到所列相位界。允许界非负当且仅当 <span>𝑟<sub>𝑔</sub>≤[2 cos (π/5)]<sup>-1</sup>=φ<sup>-1</sup></span>，故更大模长无解。<span>□</span>
+
+**命题 C-27.9.2（有理相位界与秩分支）。** 在 <span>𝑟<sub>𝑔</sub>=3/5</span>，
+
+<div>
+ det 𝐺<sub>5</sub>=((486 cos Φ<sub>𝐺</sub>-475)/(3125)),   cos Φ<sub>𝐺</sub>≥((475)/(486)).
+</div>
+
+允许端点为
+
+<div>
+θ<sub>*</sub>= arccos ((475)/(486))=π-5 arccos ((5)/(6))≈0.213164936304038 弧度.
+</div>
+
+五环的秩分支如下：<span>0≤𝑟<sub>𝑔</sub>&lt;1/2</span> 全部候选为秩五；<span>𝑟<sub>𝑔</sub>=1/2</span> 除 <span>Φ<sub>𝐺</sub>=π</span> 模 <span>2π</span> 为秩四外均秩五；<span>1/2&lt;𝑟<sub>𝑔</sub>&lt;φ<sup>-1</sup></span> 的允许区间内部秩五、两个端点秩四；黄金端点仅 <span>Φ<sub>𝐺</sub>=0</span>、秩三。
+
+**证明。** 有理值直接代入行列式。此处所有真主块严格正定，所以完整行列式条件连同它们是充分的；亦可在 <span>|𝑐|=𝑟<sub>𝑔</sub></span> 的圆盘式中展开得到同一余弦界。其在 <span>[-π,π]</span> 的解集与完整谱解集相同，证明两个精确角式相等。小数仅为该精确角的近似。秩分支逐项由上一命题的完整谱得到：非临界允许端点恰一个最近谱角给零；<span>Φ<sub>𝐺</sub>=π</span> 的最近角直接为 <span>π</span>；黄金点的两个最近角等距并同时给零。其余特征值严格正。<span>□</span>
+
+相邻重叠强度与整体相位不是可独立指定的两项关系。加强重叠会缩小许可区间；在黄金点，保留的内部关系把闭合相位完全锁定。
+
+### 27.10 一般简单环：奇偶最佳相位与极值秩
+
+**定义 C-27.10.1（一般等模长循环模型）。** 采用 §27.6 的简单 <span>𝐶<sub>𝑁</sub></span> 支撑，<span>𝑁≥3</span>，单位对角、每条邻边模长 <span>𝑟<sub>𝑔</sub>≥0</span>、非邻条目明确为零。三角环的三个不同无向邻对覆盖全部记录对，其非邻条件为空；<span>𝑁=1,2</span> 不在此模型中。相位优化表示比较不同供应的候选关系表，不是对固定实验免费施加操作。
+
+**命题 C-27.10.2（最佳闭合、最大模长和秩表）。** 允许选候选环相位时，
+
+<div>
+𝑟<sub> max </sub>(𝑁)=((1)/(2 cos (π/𝑁))),  Φ<sub>𝐺</sub>≡
+<table><tbody>
+<tr><td>⎧</td><td>0,</td><td>𝑁 奇;</td></tr>
+<tr><td>⎩</td><td>π,</td><td>𝑁 偶</td></tr>
+</tbody></table>
+ (mod 2π)
+</div>
+
+是达到最大值的必要且充分相位。临界矩阵恰有两个零特征值，故
+
+<div>
+ rank 𝐺=𝑁-2.
+</div>
+
+| 记录闭环 | 最大共同重叠 | 临界闭合相位（模 <span>2π</span>） | 临界最小记录维数 |
+| --- | ---: | ---: | ---: |
+| 三角环 <span>𝑁=3</span> | <span>1</span> | <span>0</span> | <span>1</span> |
+| 四边环 <span>𝑁=4</span> | <span>1/√(2)</span> | <span>π</span> | <span>2</span> |
+| 五边环 <span>𝑁=5</span> | <span>1/φ</span> | <span>0</span> | <span>3</span> |
+| 六边环 <span>𝑁=6</span> | <span>1/√(3)</span> | <span>π</span> | <span>4</span> |
+
+**证明。** 使用已在命题 C-27.9.1 证明的 <span>𝑁</span> 阶完整 Fourier 谱。等距谱角的间隔为 <span>2π/𝑁</span>，<span>π</span> 到最近谱角的距离 <span>δ</span> 总满足 <span>0≤δ≤π/𝑁</span>。最小余弦为 <span>- cos δ</span>，故 PSD 要求
+
+<div>
+𝑟<sub>𝑔</sub>≤((1)/(2 cos δ))≤((1)/(2 cos (π/𝑁))).
+</div>
+
+达到上界必须 <span>δ=π/𝑁</span>，即把 <span>π</span> 恰放在两个相邻谱角的中点。中点条件是 <span>𝑁π-Φ<sub>𝐺</sub>≡π</span> 模 <span>2π</span>，即 <span>Φ<sub>𝐺</sub>≡(𝑁-1)π</span>，给奇偶相位规则。反之该相位使两个最近角的余弦均为 <span>- cos (π/𝑁)</span>，临界模长下它们特征值为零，其他角更远、余弦严格大，特征值严格正。因此矩阵 PSD，恰有两个零值，谱因子给实现并得到秩。
+
+<span>𝑁=3</span> 时临界 <span>𝑟<sub>𝑔</sub>=1,Φ<sub>𝐺</sub>=0</span>，规范后全一矩阵谱为 <span>3,0,0</span>，三份同一单位记录实现秩一，和表一致。<span>𝑟<sub>𝑔</sub>=0</span> 的恒等矩阵秩为 <span>𝑁</span>、无环辐角，不是这个正模长极值。<span>□</span>
+
+表中维数是指定关系图和极值条件下的最小纯记录维数。改变关系图会改变极值秩；这里没有素数条件，也没有一般物理维数或任意奇环事件实验的维数结论。
+
+### 27.11 完整加权闭合与声明的 FIB 关系消费者
+
+**命题 C-27.11.1（开放、内部与闭合乘积的完整分解）。** 对任意加权简单环 <span>𝑁≥3</span>，令 <span>𝐷<sub>𝑁</sub><sup>open</sup></span> 为只代数切去末边 <span>𝑔<sub>𝑁</sub></span> 后的路径行列式，<span>𝐷<sub>𝑁-2</sub><sup>mid</sup></span> 为记录 <span>2,…,𝑁-1</span> 的内部路径行列式。则
+
+<div>
+ det 𝐺<sub>𝑁</sub>=𝐷<sub>𝑁</sub><sup>open</sup>-|𝑔<sub>𝑁</sub>|<sup>2</sup>𝐷<sub>𝑁-2</sub><sup>mid</sup>+2(-1)<sup>𝑁-1</sup> Re (∏<sub>𝑖=1</sub><sup>𝑁</sup>𝑔<sub>𝑖</sub>).
+</div>
+
+内部边恰为 <span>𝑔<sub>2</sub>,…,𝑔<sub>𝑁-2</sub></span>；<span>𝑁=3</span> 时内部只有一记录、<span>𝐷<sub>1</sub>=1</span>。末边模长是另供的数据，不能把本式解释为三个未指定标量就恢复整份关系矩阵。
+
+**证明。** 在 §27.6 的全部置换分类中，不用末边的匹配恰给开放行列式。把末边作首尾二换位的匹配贡献 <span>-|𝑔<sub>𝑁</sub>|<sup>2</sup></span>，剩余任意允许置换在内部路径上，恰给 <span>𝐷<sub>𝑁-2</sub><sup>mid</sup></span>。其余使用末边的置换只能沿整个环走两种取向，符号均为 <span>(-1)<sup>𝑁-1</sup></span>，贡献环积与其共轭。三类不交且穷尽。三角环的两个三循环正是末类，零边仍按无辐角多项式式处理。<span>□</span>
+
+**定义 C-27.11.2（有限带标号关系报告任务）。** 声明消费者 <span>𝒞<sub>GramClose</sub></span>：它消费固定源 [^GL-S] 的形式匹配响应，以及另外供应的同一记录族候选条目；目标是有限简单环的开放／闭合行列式读出，并在另行指定均匀五环模型时返回 PSD 和秩。输入合同保留：
+
+1. 有限终点 <span>𝑁≥3</span>、记录标号、环取向、共同来源身份、切口及端点相位标架；
+2. 单位对角和给定非邻零掩码、候选数据类型及校准；报告可能不相容，故共同实现不作为验证任务的既知前提；
+3. 已供应的精确复条目，或声明误差合同的报告；下述点值响应计算给定候选中心，真实未知值的区间／相关误差结构须另保留，不能把中心当成无条件精确读数；
+4. 输入可用性、当前阶段、停止状态，以及精度、资源和实际取得成本。
+
+有限菜单为折叠下一份已供应且同标号的边报告、终端闭合读出、或停止。开放折叠仅在 <span>𝑞&lt;𝑁-1</span> 且下一报告可用时启用；闭合仅在 <span>𝑞=𝑁-1</span> 且全部 <span>𝑁</span> 条边包括末边已经供应时启用，随后标记为终端。缺读数记为不可用，格式或支撑不符记为合同错误，均不替换为零。上述是给定关系数据上的代数消费者；实际取得未知重叠不是这个菜单的操作。[A 卷 §19.4](AURIC_FIB_ATOM_OBSERVER_AND_ARITHMETIC_RELATIONS.md#19-算术精度未来深度与任务充分边界) 的任务下降界限、[^GL-G] §§3、5 的动态纤维判据在此按声明菜单使用。
+
+**命题 C-27.11.3（有序匹配核加端点乘积的任务充分性）。** 在固定合同下初始化
+
+<div>
+𝐻<sub>0</sub>=𝐼<sub>2</sub>,  𝑃<sub>0</sub>=1.
+</div>
+
+扫描前 <span>𝑞</span> 条开放边后保留
+
+<div>
+𝐻<sub>𝑞</sub>=𝐵(-|𝑔<sub>1</sub>|<sup>2</sup>)⋯𝐵(-|𝑔<sub>𝑞</sub>|<sup>2</sup>),  𝑃<sub>𝑞</sub>=𝑔<sub>1</sub>⋯𝑔<sub>𝑞</sub>,
+</div>
+
+并保留 <span>𝑁,𝑞</span>、阶段／菜单、类型、共同来源、标架、输入可用性及精度资源合同。在相同后续供应边值下，它对于上述有限行列式任务的所有已声明接续充分。开放路径有 <span>𝑞+1</span> 记录，读出为
+
+<div>
+𝐷<sub>𝑞+1</sub><sup>open</sup>=(1,0)𝐻<sub>𝑞</sub>
+<table><tbody>
+<tr><td>⎛</td><td>1</td><td>⎞</td></tr>
+<tr><td>⎝</td><td>1</td><td>⎠</td></tr>
+</tbody></table>
+.
+</div>
+
+当 <span>𝑞=𝑁-1</span> 且末边 <span>𝑐</span> 已供应时，
+
+<div>
+ det 𝐺<sub>𝑁</sub>= tr (𝐻<sub>𝑁-1</sub>𝐵(-|𝑐|<sup>2</sup>))+2(-1)<sup>𝑁-1</sup> Re (𝑃<sub>𝑁-1</sub>𝑐).
+</div>
+
+**证明。** 固定源核的条目 <span>𝐵(𝑡)<sub>𝑎𝑏</sub></span> 在新位 <span>𝑏=0</span> 时为一，在 <span>𝑎=0,𝑏=1</span> 时为 <span>𝑡</span>，在 <span>𝑎=𝑏=1</span> 时为零。矩阵展开共享同一个中间占用指标，故初始零／末端自由的收缩逐一枚举开放边槽匹配；取迹识别末位与首位的同一切口，逐一枚举带标号循环匹配。每个配置只出现一次。该证明是有限系数恒等式，允许交换环中的 signed 代入；非负活动的概率结论不因这个代入自动延伸。将完整匹配响应加上命题 C-27.6.1 的两个定向循环项，给所列读出。
+
+同一下一份供应边 <span>ℎ</span> 使
+
+<div>
+(𝐻<sub>𝑞</sub>,𝑃<sub>𝑞</sub>,𝑞)↦(𝐻<sub>𝑞</sub>𝐵(-|ℎ|<sup>2</sup>), 𝑃<sub>𝑞</sub>ℎ, 𝑞+1).
+</div>
+
+相同保留合同和摘要决定相同启用状态、合同错误／不可用状态、相同读出及相同后继摘要；按有限词长归纳，全部允许接续保持这一点。开放 <span>𝑃<sub>𝑞</sub></span> 是端点规范协变量，所以端点标架与闭合 <span>𝑐</span> 必须一起变换，闭合乘积才不变。若未来菜单加入仪器、随机来源预测或新的相位控制，必须另证其启用、结果律和更新在该摘要纤维上下降；当前代数证明没有自动供应这种结论。<span>□</span>
+
+同一三位置标记响应在辅助顺序为 <span>𝐵(𝑎)𝐵(𝑏)𝐵(𝑐)</span>，在原生高到低顺序为 <span>𝐾(𝑐,𝑏,𝑎)</span>；反向整链还须反转整份有序边序列和端点角色，不能把两个在线前缀认作同一过程。<span>𝐻<sub>𝑞</sub>,𝑃<sub>𝑞</sub></span> 不代替原生组成 <span>𝑀</span>、数量、真实状态、接缝和历史档案。
+
+加权 continuant 递推与乘积累计
+
+<div>
+𝐷<sub>𝑚</sub>=𝐷<sub>𝑚-1</sub>-|𝑔<sub>𝑚-1</sub>|<sup>2</sup>𝐷<sub>𝑚-2</sub>,  Ω<sub>𝑗</sub>=Ω<sub>𝑗-1</sub>𝑔<sub>𝑗</sub>
+</div>
+
+给所声明行列式目标线性个数的算术步骤；也可保存开放与准确内部链的 continuant 对，用命题 C-27.11.1 读出。固定大小的累加器个数不是常数比特成本：数值表示、精度、取得档案、输入输出和另需的 PSD 数据仍计入。
+
+**命题 C-27.11.4（两种信息遗漏的不同论域）。** 匹配核、模长和开放行列式不能单独决定完整候选报告的共同实现。即使限制为已可实现的共同记录族，它们也不能单独决定闭合行列式或最小记录秩。
+
+**证明。** 对报告验证任务，<span>𝑟<sub>𝑔</sub>=3/5</span> 的 <span>𝐺<sub>+</sub>,𝐺<sub>-</sub></span> 具有相同模长、同一开放四边矩阵、全部相同匹配核，以及局部规范后的真主块谱；它们的闭合环积变号，一个正定、一个不可能。这里 <span>𝐺<sub>-</sub></span> 是被拒的候选，不是第二个实际合法来源。代数切口也不意味着物理地把末边置零：其 <span>𝐷<sub>5</sub><sup>open</sup>=-32/625</span>，而未知闭合的部分报告有非零可行补全。
+
+对已实现论域，取
+
+<div>
+𝑐<sub>0</sub>=((3)/(5)),  𝑐<sub>*</sub>=((475+𝑖 31√(11))/(810)).
+</div>
+
+因 <span>475<sup>2</sup>+31<sup>2</sup>·11=486<sup>2</sup></span>，二者模长均为 <span>3/5</span>。<span>𝑐<sub>0</sub></span> 在圆盘内、矩阵正定，秩五、行列式 <span>11/3125</span>；<span>𝑐<sub>*</sub></span> 给
+
+<div>
+ cos Φ<sub>𝐺</sub>=(( Re 𝑐<sub>*</sub>)/(3/5))=((475)/(486)),
+</div>
+
+正好在允许相位端点和补全圆周，矩阵 PSD、秩四、行列式零。两组都由共同 Gram 谱因子实现，所有模长和对应真主块谱一致，却有不同闭合行列式和最小秩。在已正确供应实际 Gram 的论域，“存在实现”本身已为真；此时遗漏见证针对行列式／秩，而非针对这个恒真命题。
+
+一个终端实行列式只消费 <span> Re (𝑃𝑐)</span>，不一定需要保留整个辐角。但开放接续中只保存 <span> Re 𝑃</span> 一般不足：<span>𝑃=+𝑖𝑅,-𝑖𝑅</span>（<span>𝑅&gt;0</span>）的实部和模长相同，同乘未来闭合因子 <span>𝑖</span> 却给 <span>-𝑅,+𝑅</span>。保留复 <span>𝑃</span> 或等价端点协变数据足以处理任意已供应复闭合。此为任务相对充分构造，不是全部相位在每个任务中都最小必要的结论；例如 <span>𝑟<sub>𝑔</sub>&lt;1/2</span> 的均匀 PSD 判断对相位不敏感。<span>□</span>
+
+**约定 C-27.11.5（行列式、PSD／秩与实际取得分别定型）。** <span>𝐻<sub>𝑞</sub>,𝑃<sub>𝑞</sub></span> 的数值输出不认证一般加权候选的完整 PSD 或秩。一般查询须保留完整共同关系表，或适用的全部主子式／Schur 证据。均匀五环查询另保留共同 <span>𝑟<sub>𝑔</sub></span> 和已声明零支撑；§27.4、§27.9 才给其确切正性和秩分支。固定三维载体还须秩至多三，不能实现一般补全盘内秩五或圆周秩四的关系。
+
+若另供同一组纯态 <span>ρ<sub>𝑖</sub>=|𝑒<sub>𝑖</sub>⟩⟨𝑒<sub>𝑖</sub>|</span> 的相容准备，则秩一相乘给
+
+<div>
+ρ<sub>1</sub>⋯ρ<sub>𝑁</sub>=(∏<sub>𝑖=1</sub><sup>𝑁-1</sup>⟨𝑒<sub>𝑖</sub>,𝑒<sub>𝑖+1</sub>⟩)|𝑒<sub>1</sub>⟩⟨𝑒<sub>𝑁</sub>|,   tr (ρ<sub>1</sub>⋯ρ<sub>𝑁</sub>)=Ω<sub>𝑁</sub>.
+</div>
+
+[^GL-B] 的 cycle tests 以额外供应的多份准备、受控循环比较及其取向读取实部／虚部；有限样本、误差和失败律须由实际合同给定。该标准接口不从 FIB 名称导出新仪器，也不把估计值当作精确未知条目。[^GL-H] §125 的权重、作用、共同记录和实际取得合同继续分别保留。
+
+**命题 C-27.11.6（五环零接缝阻止三角恢复）。** 在 <span>𝑟<sub>𝑔</sub>&gt;0</span> 的无弦五环中，所有三个不同记录的三角 Bargmann 积都为零，而 <span>Ω<sub>5</sub></span> 可非零。因此命题 [C-10.2](#10-闭路恢复须保留内部接缝权重) 的无除法扇形恒等式仍正确，但本模型不能由一个三角剖分除去接缝恢复整圈相位。
+
+**证明。** 五环没有三角形，每三个不同顶点间至少一个非邻条目为零，故每个三角积为零。每条内部剖分对角线都是零条目，扇形等式两边均为零；除以其平方模或取它的辐角均无定义，其他剖分也仍有零接缝。全部五邻边非零时，其整圈积非零。
+
+例如前一命题的 <span>𝑐<sub>0</sub>,𝑐<sub>*</sub></span> 均可实现、模长全同、三角积全零，却有不同非零环积。另取 <span>𝑐=(3/5)𝑒<sup>𝑖/10</sup></span>：<span> cos (1/10)≥1-(1/10)<sup>2</sup>/2=199/200&gt;475/486</span>，故它和 <span>𝑐<sub>0</sub></span> 都是秩五合法实现，同样全零三角积但环相位分别 <span>1/10,0</span>。这说明某个其他模型中的替代扇形成功，不能证明任意记录族总有可逆三角恢复。<span>□</span>
+
+**命题 C-27.11.7（临界五环与排斥射线的条件性对接）。** 对 §27.8 的具体实锥向量，重标
+
+<div>
+𝑣<sub>𝑗</sub>=𝑒<sub>2𝑗 mod 5</sub>=(√(1-𝑡) cos ((4π𝑗)/(5)),√(1-𝑡) sin ((4π𝑗)/(5)),√(𝑡)).
+</div>
+
+则相邻 <span>𝑣<sub>𝑗</sub></span> 正交、两步 <span>𝑣<sub>𝑗</sub></span> 重叠为 <span>φ<sup>-1</sup></span>。若另外供应态 <span>ψ=(0,0,1)</span> 和效应 <span>𝑃<sub>𝑗</sub>=|𝑣<sub>𝑗</sub>⟩⟨𝑣<sub>𝑗</sub>|</span>，则
+
+<div>
+𝑃<sub>𝑗</sub>𝑃<sub>𝑗+1</sub>=0,  ⟨ψ,𝑃<sub>𝑗</sub>ψ⟩=𝑡=((1)/(√(5))),  ∑<sub>𝑗=0</sub><sup>4</sup>⟨ψ,𝑃<sub>𝑗</sub>ψ⟩=√(5).
+</div>
+
+这是标准正交五元组构造的具体向量对接 [^GL-K]，其事件合同与记录合同分别供应。
+
+这里的 <span>𝑣<sub>𝑗</sub>,𝑡,ψ,𝑃<sub>𝑗</sub></span> 逐项对应本卷 [§26.7](#267-另供的共同-qutrit-实现与边测量) 的假设 C-26.14 及命题 C-26.15。仅在该共同准备、设置、效果身份和允许测量合同另已供应时，才同时得到其中的事件概率；当前记录向量恒等式单独不供应这些合同。
+
+**证明。** 重标后的邻对在原标号中差二，故内积零；重标后的两步差四，等于原邻对，故内积 <span>φ<sup>-1</sup></span>。秩一投影乘法把相邻正交变成 <span>𝑃<sub>𝑗</sub>𝑃<sub>𝑗+1</sub>=0</span>。轴向态内积为 <span>√(𝑡)</span>，平方为 <span>𝑡</span>，求和得 <span>√(5)</span>。
+
+原非零重叠支撑图为 <span>𝐶<sub>5</sub></span>，零关系图为其补图；乘二重标在五个顶点上互换边与非边，逆重标为乘三。一般 <span>𝐶<sub>𝑁</sub></span> 的补图度为 <span>𝑁-3</span>，要仍为二正则简单环必须 <span>𝑁=5</span>，故该特殊对接不能延伸为任意 <span>𝑁</span> 的同一循环结构。<span>□</span>
+
+记录支撑边表示可能非零的向量内积，事件排斥边表示另供共同测量中的正交效应或共同经典赋值限制；这里两者在原标号中恰是相反关系。精确向量／重标恒等式不等于准备、测量、跨设置事件、原生 FIB 历史或取得实验相同。一般稀疏记录环的临界秩 <span>𝑁-2</span> 也不能替代另一种奇环事件构造的载体维数。§7–8 的有限概率求和消元与 §9 的记录 Schur 投影分别消费各自来源，不能因同称消元或同用二阶核就认作同一操作。
+
+[§26.9](#269-一般奇环三四五的分工与最小-hilbert-载体) 的命题 C-26.19–C-26.20 在相邻投影正交且每个投影非零的奇环域中给三维达到与最小载体；本章 §27.10 的 <span>𝑁-2</span> 则属于单位对角、非邻正交和最大邻重叠的记录域。例如三角记录临界秩一，而三个非零两两正交事件投影需要三维，两份结论分别适用于各自明确的合同。
+
+### 27.12 三种隐藏关系与完整综合
+
+**定义 C-27.12.1（相对供给的三种隐藏）。** 对指定关系报告及其取得合同，区分：
+
+| 情形 | 已供应数据与数学判别 | 仍须保留的义务 |
+| --- | --- | --- |
+| 未知但可补全 | 内部关系给非空的 <span>𝑐</span> 圆盘 | 某个补全存在不等于实际 <span>𝑐</span> 已取得 |
+| 全局相位尚未供应 | 模长或独立局部规范报告不决定非零 <span>Ω<sub>𝑁</sub></span> | 共同标架条目或声明相干比较及其精度／成本 |
+| 没有共同实现 | 完整候选如 <span>𝑟<sub>𝑔</sub>=3/5,Φ<sub>𝐺</sub>=π</span> 有负二次式 | 已指定条目必须拒绝或按声明误差合同修复 |
+
+第三类不是第一类的一项有利选择，第二类也不是已知同标架复条目之外另添自由数。新的角度或读口只有在同来源、同记录族的允许操作中供应可检验关系，才会缩小补全区、确定环不变量或排除候选；选择有利的隐藏补全不能当作恢复实际读数。
+
+**命题 C-27.12.2（局部组合到共同存在的条件性综合）。** 本章的完整关系链为
+
+<div>
+三条相邻关系⟶五种不相邻边选择⟶四记录 Gram 行列式,
+</div>
+
+以及
+
+<div>
+FIB 循环 signed 匹配响应+两个定向环乘积⟶完整闭合行列式 ⟶[适用的 Schur／全谱正性判据] 共同存在及最小记录秩.
+</div>
+
+三个核心式分别承担不同接口：
+
+<div>
+ det 𝐺<sub>4</sub>=1-𝑟<sub>1</sub><sup>2</sup>-𝑟<sub>2</sub><sup>2</sup>-𝑟<sub>3</sub><sup>2</sup>+𝑟<sub>1</sub><sup>2</sup>𝑟<sub>3</sub><sup>2</sup>,
+</div>
+
+<div>
+|𝑐-((𝑟<sub>𝑔</sub><sup>4</sup>)/(1-2𝑟<sub>𝑔</sub><sup>2</sup>))|≤((1-3𝑟<sub>𝑔</sub><sup>2</sup>+𝑟<sub>𝑔</sub><sup>4</sup>)/(1-2𝑟<sub>𝑔</sub><sup>2</sup>)),  0≤𝑟<sub>𝑔</sub>≤φ<sup>-1</sup>,
+</div>
+
+<div>
+ det 𝐺<sub>5</sub>=1-5𝑟<sub>𝑔</sub><sup>2</sup>+5𝑟<sub>𝑔</sub><sup>4</sup>+2𝑟<sub>𝑔</sub><sup>5</sup> cos Φ<sub>𝐺</sub>  (𝑟<sub>𝑔</sub>&gt;0).
+</div>
+
+**证明。** 第一条链是路径置换到匹配的逐项双射，负权重评价保留其全部系数。内部参考的 Schur 剩余关系给第二个核心式，计算未知末边的允许区域；在黄金点它缩为唯一闭合。循环的带切口 trace 只给匹配部分，两个整圈置换给最后的相位项，证明第二条链前半。圆盘／完整谱而非孤立行列式提供其最后存在性箭头，再由共同 Gram 判据得到最小秩。
+
+正负模板说明全部局部主块合法仍可没有共同实现，有限修复预算量化了该矛盾；两个合法秩五／秩四闭合说明在真实可实现论域内，模长也可能遗漏行列式和维数。它们与补全盘、相位区间、临界锥面共同证明上述三种隐藏必须分别处理。<span>□</span>
+
+五模式承担局部选择组合骨架；Gram 行列式将这些选择变为声明的关系体积量；圆盘表示扣除共同内部参考后的余量；整圈乘积检验局部标架怎样闭合；黄金比例是指定五环的共同实现极限。由这些式子可以计算隐藏关系的许可区域、何时被锁定、以及忽略它会造成多大正性矛盾，仍须保留图支撑、共同来源、模型和实际取得合同。
+
+[^GL-F]: 《Auric FIB ATOM 金字塔：关联纤维与原生接续》，[固定源正文](https://github.com/the-omega-institute/trureturing/blob/e8472a1600d662931dc225bc31e95d5c00ca48ec/docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_CORRELATION_AND_NATIVE_CONTINUATION.md)，§8.3；五个位置权重与概率／原生数量区分。共同五模式字典使用 A 卷 §1，不重复来源树证明。
+
+[^GL-S]: 《Auric FIB 接缝、循环与算术边界重建》，[固定源正文](https://github.com/the-omega-institute/trureturing/blob/e8472a1600d662931dc225bc31e95d5c00ca48ec/docs/develop/theory/AURIC_FIB_SEAMS_CYCLES_ARITHMETIC_BOUNDARY_RECONSTRUCTION.md)，定义 2.1、命题 2.2、定义 4.1、命题 4.2；消费带标号 <span>𝐵(𝑡)</span>、方向、共享接缝及 trace 配置恒等式。原源的非负活动合同不自动延伸为 signed 概率。
+
+[^GL-G]: 《FIB 关系延拓几何》，[固定源正文](https://github.com/the-omega-institute/trureturing/blob/e8472a1600d662931dc225bc31e95d5c00ca48ec/docs/develop/theory/FIB_RELATIONAL_CONTINUATION_GEOMETRY.md)，定义 3.1–3.3、5.1–5.2、定理 5.3–5.4；消费目标相对纤维、完整菜单的读出／更新下降和有限词归纳，不供应未知复重叠。
+
+[^GL-Q]: 《Auric FIB-ATOM 续篇：二元来源的三维二阶关系完成》，[固定源正文](https://github.com/the-omega-institute/trureturing/blob/e8472a1600d662931dc225bc31e95d5c00ca48ec/docs/develop/theory/AURIC_FIB_SECOND_ORDER_RELATION_COMPLETION.md)，§68.1、§§107–110，特别是定义 109.1、定理 109.2、命题 109.3；消费共同记录的转置约定、PSD／单位对角与最小纯记录秩、相干比较和环境合同。共同参考圆盘、Schur 同余及三记录循环判据分别归命题 C-9.2、C-9.5、C-9.6；任意有限记录的 PSD／秩判据使用该固定源定理 109.2。共同使用的 Schur 先例为 Boyd–Vandenberghe，*Convex Optimization*，2004，附录 A.5.5，见本卷 [§25 的 C-L1](#25-数学引文及直接使用范围)。
+
+[^GL-H]: 《Auric FIB-ATOM：差异边界、记录几何与时间箭头》，[固定源正文](https://github.com/the-omega-institute/trureturing/blob/e8472a1600d662931dc225bc31e95d5c00ca48ec/docs/develop/theory/AURIC_FIB_HISTORY_RECORDS_TIME_ARROW.md)，定义 125.1、定理 125.2–125.3、假设 125.4–125.5；消费有限共同历史的权重、作用、记录分离和实际取得边界。以上仓库来源均为 repo-derived 接口；本章的专门匹配／候选报告结论由正文普通证明承担。
+
+[^GL-D]: NIST *Digital Library of Mathematical Functions*，版本 1.2.8（2026-09-15），[18.5.2](https://dlmf.nist.gov/18.5.E2) 给 <span>𝑈<sub>𝑛</sub></span> 的正弦表达；独立的 [18.5.4_5](https://dlmf.nist.gov/18.5.E4_5) 给 <span>𝑖<sup>𝑛</sup>𝑈<sub>𝑛</sub>(1/(2𝑖))= Fib <sub>𝑛+1</sub></span>。这些 literature-attested 中间结果承担 §27.3 的参数表达，不赋予计数与记录相同的物理语义。
+
+[^GL-R]: Nathan Reff，*Spectral Properties of Complex Unit Gain Graphs*，[arXiv:1110.4554v2](https://arxiv.org/abs/1110.4554v2)，版本日期 2011-11-15；§1 的 switching 与 walk gain、Lemma 1.1、Lemma 2.2、Lemma 3.1，及 Theorem 5.1、式 (5.1)–(5.2)。适用对象为有限简单图、单位模增益、反向共轭；本章先归一化非零边，再将其标准谱用作匹配消费者正性判据的中间步骤。
+
+[^GL-B]: Michał Oszmaniec、Daniel J. Brod、Ernesto F. Galvão，*Measuring relational information between quantum states, and applications*，[arXiv:2109.10006v1](https://arxiv.org/abs/2109.10006v1)，式 (1)、Fig. 1 的 cycle tests；消费 Bargmann 环积与额外供应受控循环比较的标准背景。实际准备、探针、有限精度及成本仍由单独合同承担。
+
+[^GL-K]: Alexander A. Klyachko、M. Ali Can、Sinem Binicioğlu、Alexander S. Shumovsky，*A simple test for hidden variables in spin-1 system*，[arXiv:0706.0126v4](https://arxiv.org/abs/0706.0126v4)，2008-07-15，Fig. 1 后的循环正交五元组及轴态概率 <span>1/√(5)</span>；仅承担 §27.11.7 的标准向量／投影对接先例，不将事件实验与记录验证等同。
+
+## 追加锚（本行以下为增补区）
