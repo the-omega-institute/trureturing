@@ -4,7 +4,7 @@
    mirror-E: none(waiver:kernel-checked-refutation)
    anchors: []
    utility: kind=certified-instance; basis=refutes=gid:D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.claim; result=D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.result; claim=D5/S3/Quantum/Entanglement/WitnessKernelTraceCriteriaRefutation.claim
-   digest: A filtered two-qubit reduction witness satisfies the kernel criterion but not the trace criterion. -/
+   digest: A two-qubit witness satisfies the kernel criterion but not the trace criterion. -/
 import D5.S3.Quantum.Information.PartialTraceMutualInformation
 import Mathlib.LinearAlgebra.Matrix.Rank
 import Mathlib.Analysis.InnerProductSpace.PiL2
@@ -14,7 +14,6 @@ import Mathlib.Tactic.NormNum
 import Mathlib.Tactic.LinearCombination
 
 set_option autoImplicit false
-set_option maxHeartbeats 400000
 noncomputable section
 namespace D5.S3.Quantum.Entanglement.WitnessKernelTraceCriteriaRefutation
 open Matrix
@@ -59,7 +58,7 @@ def maximallyEntangled {m n : ℕ} (Ω : Fin m × Fin n → ℂ) : Prop :=
   ∃ (u : Fin (min m n) → (Fin m → ℂ)) (w : Fin (min m n) → (Fin n → ℂ)),
     Orthonormal ℂ (fun j => (WithLp.toLp 2 (u j) : EuclideanSpace ℂ (Fin m))) ∧
     Orthonormal ℂ (fun j => (WithLp.toLp 2 (w j) : EuclideanSpace ℂ (Fin n))) ∧
-    Ω = ∑ j, (((min m n : ℕ) : ℝ) ^ (-(1 / 2 : ℝ)) : ℂ) •
+    Ω = ∑ j, (Real.rpow ((min m n : ℕ) : ℝ) (-(1 / 2 : ℝ)) : ℂ) •
       (fun p : Fin m × Fin n => u j p.1 * w j p.2)
 
 /-- Equality in the source's trace bound. -/
@@ -84,7 +83,7 @@ private theorem product_expectation (x y : Fin 2 → ℂ) :
   norm_num [finProdFinEquiv, Matrix.cons_val_two, Matrix.cons_val_three,
     Matrix.head_cons, Matrix.tail_cons]
   rw [Complex.normSq_eq_conj_mul_self]
-  simp only [Complex.star_def, map_mul, map_sub, map_ofNat, Complex.conj_conj]
+  simp only [map_mul, map_sub, map_ofNat, Complex.conj_conj]
   ring
 
 private def bellVector : Fin 2 × Fin 2 → ℂ :=
@@ -131,5 +130,85 @@ private theorem kernel : kernelCriterion counterexample := by
     apply (Matrix.rank_of_isUnit _ ?_).trans (by simp)
     apply (Matrix.isUnit_iff_isUnit_det _).mpr
     norm_num [Matrix.det_fin_two]
+
+private theorem maximal_unit {Ω : Fin 2 × Fin 2 → ℂ} (hΩ : maximallyEntangled Ω) :
+    star Ω ⬝ᵥ Ω = 1 := by
+  simp only [maximallyEntangled, min_self] at hΩ
+  obtain ⟨u, w, hu, hw, hΩ⟩ := hΩ
+  have ui (j k : Fin 2) : star (u j) ⬝ᵥ u k = if j = k then 1 else 0 := by
+    rw [dotProduct_comm]
+    exact orthonormal_iff_ite.mp hu j k
+  have wi (j k : Fin 2) : star (w j) ⬝ᵥ w k = if j = k then 1 else 0 := by
+    rw [dotProduct_comm]
+    exact orthonormal_iff_ite.mp hw j k
+  let t (j : Fin 2) : Fin 2 × Fin 2 → ℂ := fun p => u j p.1 * w j p.2
+  have ti (j k : Fin 2) : star (t j) ⬝ᵥ t k = if j = k then 1 else 0 := by
+    have he : star (t j) ⬝ᵥ t k = (star (u j) ⬝ᵥ u k) * (star (w j) ⬝ᵥ w k) := by
+      simp only [t, dotProduct, Pi.star_apply, star_mul, Fintype.sum_prod_type,
+        Finset.sum_mul_sum]
+      apply Finset.sum_congr rfl
+      intro i hi
+      apply Finset.sum_congr rfl
+      intro l hl
+      ring
+    rw [he, ui, wi]
+    split_ifs <;> norm_num
+  have hcR : (2 : ℝ) ^ (-(1 / 2 : ℝ)) * (2 : ℝ) ^ (-(1 / 2 : ℝ)) = 1 / 2 := by
+    rw [← Real.rpow_add (by norm_num : (0 : ℝ) < 2)]
+    norm_num [Real.rpow_neg_one]
+  have hc : (Real.rpow 2 (-(1 / 2 : ℝ)) : ℂ) *
+      (Real.rpow 2 (-(1 / 2 : ℝ)) : ℂ) = 1 / 2 := by
+    simpa only [Real.rpow_eq_pow, Complex.ofReal_mul, Complex.ofReal_div, Complex.ofReal_one,
+      Complex.ofReal_ofNat] using congrArg Complex.ofReal hcR
+  rw [hΩ]
+  change star (∑ j : Fin 2, (Real.rpow 2 (-(1 / 2 : ℝ)) : ℂ) • t j) ⬝ᵥ
+    (∑ j : Fin 2, (Real.rpow 2 (-(1 / 2 : ℝ)) : ℂ) • t j) = 1
+  simp only [Fin.sum_univ_two, star_add, star_smul, add_dotProduct, dotProduct_add,
+    smul_dotProduct, dotProduct_smul, smul_eq_mul, ti]
+  norm_num only [Complex.star_def, Complex.conj_ofReal, if_pos, if_false,
+    Fin.zero_ne_one, one_ne_zero, one_mul, zero_mul, mul_zero, add_zero, zero_add]
+  linear_combination 2 * hc
+
+private theorem shifted_expectation (z : Fin 2 × Fin 2 → ℂ) :
+    star z ⬝ᵥ ((counterexample + (2 : ℂ) • (1 : Matrix (Fin 2 × Fin 2)
+      (Fin 2 × Fin 2) ℂ)) *ᵥ z) =
+    ((2 * Complex.normSq (z (0, 0) - z (1, 1)) +
+      3 * Complex.normSq (z (0, 1)) + 6 * Complex.normSq (z (1, 0)) : ℝ) : ℂ) := by
+  rw [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
+    dotProduct_add, dotProduct_smul, smul_eq_mul]
+  simp only [counterexample, Matrix.mulVec, dotProduct,
+    Fintype.sum_prod_type, Fin.sum_univ_two, Pi.star_apply]
+  norm_num [finProdFinEquiv, Matrix.cons_val_two, Matrix.cons_val_three,
+    Matrix.head_cons, Matrix.tail_cons]
+  simp only [Complex.ofReal_add, Complex.ofReal_mul, Complex.ofReal_ofNat,
+    Complex.normSq_eq_conj_mul_self, Complex.star_def, map_sub]
+  ring
+
+private theorem no_trace : ¬ traceCriterion counterexample := by
+  unfold traceCriterion
+  rintro ⟨Ω, hΩ, he⟩
+  have hn := maximal_unit hΩ
+  have hp : 0 ≤ (star Ω ⬝ᵥ ((counterexample + (2 : ℂ) •
+      (1 : Matrix (Fin 2 × Fin 2) (Fin 2 × Fin 2) ℂ)) *ᵥ Ω)).re := by
+    rw [shifted_expectation]
+    simp only [Complex.ofReal_re]
+    exact add_nonneg (add_nonneg (mul_nonneg (by norm_num) (Complex.normSq_nonneg _))
+      (mul_nonneg (by norm_num) (Complex.normSq_nonneg _)))
+      (mul_nonneg (by norm_num) (Complex.normSq_nonneg _))
+  have ht : counterexample.trace = 5 := by
+    simp only [counterexample, Matrix.trace, Matrix.diag_apply, Fintype.sum_prod_type,
+      Fin.sum_univ_two]
+    norm_num [finProdFinEquiv, Matrix.cons_val_two, Matrix.cons_val_three,
+      Matrix.head_cons, Matrix.tail_cons]
+  rw [Matrix.add_mulVec, Matrix.smul_mulVec, Matrix.one_mulVec,
+    dotProduct_add, dotProduct_smul, smul_eq_mul, hn, he, ht] at hp
+  norm_num at hp
+
+/-- A two-qubit witness separates the kernel and trace criteria. -/
+theorem result : ¬ claim := by
+  intro h
+  exact no_trace ((h 2 2 counterexample witness).mp kernel)
+
+#print axioms result
 
 end D5.S3.Quantum.Entanglement.WitnessKernelTraceCriteriaRefutation
