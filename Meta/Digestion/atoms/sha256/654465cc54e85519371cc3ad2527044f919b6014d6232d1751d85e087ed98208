@@ -1,0 +1,64 @@
+## 一、先固定：来源自由度与模型自由度不是一回事
+
+沿用五模式：
+
+```math
+\Sigma=
+\left\{
+\mathsf F[\mathrm{null}],
+\mathsf F[1],
+\mathsf F[2],
+\mathsf F[3],
+\mathsf F[1,3]
+\right\}.
+```
+
+低端、高端、中间占位为 $x,y,z$，满足：
+
+```math
+xz=yz=0.
+```
+
+令：
+
+```math
+X=\mathbb E[x],\qquad
+Y=\mathbb E[y],\qquad
+Z=\mathbb E[z],\qquad
+\kappa=\mathbb E[xy].
+```
+
+完整概率恢复为：
+
+```math
+\boxed{
+\begin{aligned}
+p_0&=1-X-Y-Z+\kappa,\\
+p_1&=X-\kappa,\\
+p_2&=Z,\\
+p_3&=Y-\kappa,\\
+p_{13}&=\kappa.
+\end{aligned}
+}
+```
+
+因此，一般五模式律不能由三个金字塔均值唯一决定。项目的观察更新卷也明确指出：读取 $x$ 后，要预测另一端 $y$，会重新用到 $\kappa$。
+
+但如果额外验证来源属于：
+
+```math
+p\propto(1,a,b,c,ac),
+```
+
+那么：
+
+```math
+p_0p_{13}=p_1p_3,
+```
+
+从而：
+
+```math
+\boxed{\kappa=\frac{XY}{1-Z}.}
+```
+
