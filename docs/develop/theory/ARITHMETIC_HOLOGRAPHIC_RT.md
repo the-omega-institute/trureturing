@@ -2592,7 +2592,7 @@ $$
 
 ### 36.6 实际有限相位、取向覆盖胶合与隐藏层边界
 
-`docs/reports/fib-canonical-budget/certificate.py` 的 `weight_orbit`
+`https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/fib-canonical-budget/certificate.py` 的 `weight_orbit`
 使用初值 $(2,3)$ 及以下模 $m>0$ 递推：
 
 $$
@@ -2947,7 +2947,8 @@ $$
 
 $$
 \boxed{\inf_{\Phi\in\operatorname{conv}_{\rm fin}
-\{\Lambda_X\otimes\Lambda_Y:\Lambda_X,\Lambda_Y\ {m CPTP}\}}
+\{\Lambda_X\otimes\Lambda_Y:\Lambda_X,\Lambda_Y\ {
+m CPTP}\}}
 \|\Phi\circ\mathcal J-\mathcal T\|_\diamond=2(1-q).}
 $$
 
@@ -2981,7 +2982,8 @@ $$
 下面构造共同达到操作。每侧在实际源基上定义
 
 $$
-E|s,i\rangle=|s,i\bmod d_s\rangle_{m out}
+E|s,i\rangle=|s,i\bmod d_s\rangle_{
+m out}
 |\lfloor i/d_s\rfloor\rangle_E.
 $$
 
@@ -3082,5 +3084,42 @@ $$
 所以 $0<\epsilon<\min\{2/3,((\mu-1)/2)^2\}$ 时，源秩三大于目标秩二，严格差异仍在。此为由紧性正差给出的存在区间，不声称已求出 $\mu$ 或区间的显式有理端点。它不与 LO、LOSR 最佳纯目标保真度相等矛盾：纯目标保真度是线性目标，迹距离一般不是。证毕。
 
 **来源与范围。** 单态分块保真度、Stinespring 表示、Ky Fan 与 von Neumann 奇异值界、有限 Fourier 正交性均复用已有结果。新增的承重内容是一个共同相干多扇区实现、正交泄漏的迹补偿及包含任意被动参考的精确混合最优值。目标仍须逐扇区平坦；任意非平坦目标、混合源、一般 LOCC 或额外纠缠辅助的优化不在结论内。单扇区 trace-distance 值也可由已有保真度及保持目标的相关酉平均得到，不作为独立文献原创性主张。本节不建立连续 CFT 或引力 RT 字典。
+
+## 追加锚（本行以下为增补区）
+
+## 40. 有限共享随机性的分支压缩与精确障碍
+
+**定理 40.1（受控循环移位的精确判据）。** 沿用定理 39.2 的共同块拆分。令每个扇区 $s$ 的目标维数为 $d_s$，并考虑一个均匀分布的单循环共享随机变量 $h\in\mathbb Z/L\mathbb Z$，其中 $d_s\mid L$，两侧在扇区 $s$ 上同时施加坐标循环移位 $h\bmod d_s$。若要求该有限混合对**每一种允许的源谱**都在所有编码矩阵单位上产生定理 39.2 的目标信道 $\mathcal F_G$（包括消除不同扇区之间全部非零 Fourier 模），则当且仅当
+
+$$
+\gcd(d_s,d_t)=1\qquad\text{for every }s\ne t.
+$$
+
+在这一情形，取 $L=\operatorname{lcm}_s d_s=\prod_s d_s$ 即可；所以原来的随机支撑可由一个循环表述而不增加分支数。若某一对 $d_s,d_t$ 有公因子 $g>1$，任意这样的单循环平均都保留一项跨扇区 Fourier 模；因此对某个允许源谱（且该碰撞模的两个系数非零）不能实现定理 39.2 的 $\mathcal F_G$。对一个固定的特殊源谱，碰撞模的系数可能恰为零，此时不能从 gcd 单独推出失败。
+
+**证明。** 扇区 $s$ 的 Fourier 模 $k\in\mathbb Z/d_s\mathbb Z$ 在移位下获得特征值 $\exp(2\pi i kh/d_s)$。平均跨扇区 $(s,t)$ 的模 $(k,l)$ 时，所得系数为
+
+$$
+\frac1L\sum_{h=0}^{L-1}
+\exp\!\left(2\pi i h\left(\frac{k}{d_s}-\frac{l}{d_t}\right)\right),
+$$
+
+等于 $1$ 当且仅当 $k/d_s-l/d_t\in\mathbb Z$，否则为零。因为 $0\le k/d_s,l/d_t<1$，这里只可能相等。若 $\gcd(d_s,d_t)=1$，两个分数的最小分母互质，故相等只在 $k=l=0$。这保留正是 $b_{sj}b_{tj}|T_s\rangle\langle T_t|$ 的目标项。
+
+反之，若 $g>1$，令 $k=d_s/g$、$l=d_t/g$。二者均为合法非零模且 $k/d_s=l/d_t=1/g$，所以该跨扇区项平均后系数为 $1$。取各自首个目标块内具有两个不等幅坐标的源谱，使该碰撞模的 Fourier 系数均非零；该项不为零，故单循环不能对所有源谱给出 $\mathcal F_G$。证毕。
+
+**推论 40.2（两扇区受控移位族的最小支撑）。** 对两个扇区 $s,t$，令 $H$ 为有限群，并令控制移位由满射同态 $\pi_s:H\twoheadrightarrow\mathbb Z/d_s\mathbb Z$、$\pi_t:H\twoheadrightarrow\mathbb Z/d_t\mathbb Z$ 给出。若 $H$ 平均必须消灭所有非零跨扇区 Fourier 模，则联合同态
+
+$$
+\Pi:H\longrightarrow\mathbb Z/d_s\mathbb Z\times\mathbb Z/d_t\mathbb Z
+$$
+
+必须满射。因此 $|H|\ge d_sd_t$，且 $H=\mathbb Z/d_s\mathbb Z\times\mathbb Z/d_t\mathbb Z$ 达到下界。
+
+**证明。** 若 $\Pi(H)$ 是真子群，其湮灭子中存在非平凡角色 $(k,l)$。满射性排除了 $k=0$ 或 $l=0$ 的情形，所以 $k,l$ 都非零；该角色正是一个非零跨扇区 Fourier 模，并在 $H$ 上恒为一，矛盾。故 $\Pi$ 满射，按基数得到下界。证毕。
+
+For three or more sectors, the analogous statement requires an explicit hypothesis that the joint map is surjective onto the full product (or an equivalent annihilator condition for every nonempty multi-coordinate support). Pair-supported character cancellation alone is insufficient: for example $H=\{(x,y,z)\in(\mathbb Z/2)^3:x+y+z=0\}$ has order $4<8$.
+
+**范围。** This is a finite-character implementation theorem for the arbitrary-source coherent channel of §39. It does not claim a lower bound on the number of branches of arbitrary product channels, nor does it alter the exact diamond optimum. No CFT, gravitational, communication-assisted, or shared-entanglement interpretation is added.
 
 ## 追加锚（本行以下为增补区）

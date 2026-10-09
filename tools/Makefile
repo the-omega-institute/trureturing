@@ -24,7 +24,8 @@ SLAB_CHUNK ?= 64
 SLAB_MAX_CHUNKS ?= 0
 SLAB_PRECISIONS ?= 128,256,512
 SLAB_STATE ?= $(HOME)/.local/state/qgh-prime-slab-pilot-0909
-SLAB_INPUT ?= $(HERE)/../docs/reports/prime-slab-corner-order-0909.json
+EXPERIMENTS_ROOT ?= $(HERE)/../../trureturing-experiments
+SLAB_INPUT ?= $(EXPERIMENTS_ROOT)/docs/reports/prime-slab-corner-order-0909.json
 SLAB_INPUT_SHA ?= 9d28055d5255580ed58274822359961483d1deecbb7b4e38ce497948a4808672
 SLAB_ENV = PYTHONDONTWRITEBYTECODE=1 PYTORCH_ENABLE_MPS_FALLBACK=0 uv run --python 3.12 --with torch==2.8.0 --with numpy==2.0.2 --with python-flint==0.8.0 python
 CPU_SLAB_INPUT ?=

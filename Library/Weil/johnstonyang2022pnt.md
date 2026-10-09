@@ -42,7 +42,7 @@ $$
 \quad t\ge\log2.
 $$
 
-The [signed-discrepancy application](../../docs/reports/theta-mixed-matrix/signed-discrepancy-window.md)
+The [signed-discrepancy application](https://github.com/the-omega-institute/trureturing-experiments/blob/main/docs/reports/theta-mixed-matrix/signed-discrepancy-window.md)
 retains the endpoint in Stieltjes integration and places its derivative
 on a specified compact low row. The original theta weight then gives
 a tail allowance uniform in the complement's support radius. Those
