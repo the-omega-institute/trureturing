@@ -8,7 +8,7 @@ All paths use the original finite-past memories and both original guard conventi
 
 **Theorem 1.1 (core path witness dictionary equiv).**
 
-$$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real, T \in Nat,\; \left(\operatorname{lt}\left(0, K\right) \land \operatorname{le}\left(K, n\right)\right) \Rightarrow \operatorname{Nonempty}\left(\operatorname{Equiv}\left(\operatorname{CorePathWitnessDictionary}\left(side, n, K, d, T\right), \operatorname{RetainedPathDictionary}\left(side, n, K, d, T\right)\right)\right)$$
+$$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real, T \in Nat,\; \operatorname{Nonempty}\left(\operatorname{Equiv}\left(\operatorname{CorePathWitnessDictionary}\left(side, n, K, d, T\right), \operatorname{RetainedPathDictionary}\left(side, n, K, d, T\right)\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/WordWeightRegrouping.core_path_witness_dictionary_equiv` (`✓ std3`). ∎
 
@@ -20,7 +20,7 @@ The recursive constructor rebuilds the actual successive memory vertices of ever
 
 **Theorem 1.2 (core path witness dictionary card).**
 
-$$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real, T \in Nat,\; \left(\operatorname{lt}\left(0, K\right) \land \operatorname{le}\left(K, n\right)\right) \Rightarrow \operatorname{NatCard}\left(\operatorname{CorePathWitnessDictionary}\left(side, n, K, d, T\right)\right) = \operatorname{NatCard}\left(\operatorname{RetainedPathDictionary}\left(side, n, K, d, T\right)\right)$$
+$$\forall side \in MemorySide, n \in Nat, K \in Nat, d \in Real, T \in Nat,\; \operatorname{NatCard}\left(\operatorname{CorePathWitnessDictionary}\left(side, n, K, d, T\right)\right) = \operatorname{NatCard}\left(\operatorname{RetainedPathDictionary}\left(side, n, K, d, T\right)\right)$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/WordWeightRegrouping.core_path_witness_dictionary_card` (`✓ std3`). ∎
 

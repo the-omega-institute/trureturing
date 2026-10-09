@@ -151,7 +151,7 @@ internal sealed class FibonacciFactorCompletionDocument : IScribeDocumentDefinit
         var alpha=Call("address",Call("append",prefix,I("w")));var record=Call("recordWithTail",I("o"),cs,I("w"));
         var word=Call("apply",u,I("i"));var lowWord=Call("apply",v,I("i"));var colorWord=Call("apply",I("W"),I("i"));
         var data=And(Call("LegalWord",I("G0"),I("s1"),I("P")),Call("LegalWord",I("G0"),I("s2"),I("Q")),
-            Equal(Call("length",I("P")),Call("length",I("h"))),Equal(Call("length",I("Q")),Call("length",I("h"))),
+            Equal(Call("length",I("P")),Call("length",I("h"))),
             Call("lt",D(0),length),
             All(And(Equal(Call("length",word),length),Equal(Call("length",lowWord),length),
                 Call("LegalWord",I("s1"),I("s1"),word),Call("LegalWord",I("s2"),I("s2"),lowWord),
@@ -302,9 +302,6 @@ internal sealed class FibonacciFactorCompletionDocument : IScribeDocumentDefinit
     private static Formula AutomaticMarginAnchorCost =>
         Sub(I("lam"), Mul(Mul(AutomaticMarginG2, I("chi")), Call("xSide", I("high"))));
     private static Formula AutomaticMarginQ => Sub(I("lam"), Mul(AutomaticMarginScale, Call("hSide", I("high"))));
-    private static Formula AutomaticMarginPsi => Sub(I("lam"), Mul(AutomaticMarginScale,
-        Call("divide", Call("aSide", I("high")),
-            Sub(D(1), Mul(I("rho"), Pow(I("chi"), I("K")))))));
     private static Formula AutomaticMarginCap(Formula xs) =>
         All(Imp(Call("member", I("a"), xs), Call("le", Call("r", I("a")), I("K"))),
             B("a", I("Return")));
@@ -344,7 +341,7 @@ internal sealed class FibonacciFactorCompletionDocument : IScribeDocumentDefinit
             Call("ActualPairSupply", I("model"), I("o"), Sub(I("b"), eps),
                 I("strict"), I("execution"))), B("execution", Returns));
         return Disp(All(Imp(And(Call("le", D(2), I("K")), Call("lt", AutomaticMarginQ, I("b")),
-            Call("lt", I("b"), AutomaticMarginPsi), cap, Call("lt", D(0), delta)),
+            cap, Call("lt", D(0), delta)),
             And(Call("lt", D(0), eps), supplied)),
             B("model", I("Model")), B("o", I("Ownership")), B("b", I("Real")),
             B("K", I("Nat")), B("family", MarginFamilies)));

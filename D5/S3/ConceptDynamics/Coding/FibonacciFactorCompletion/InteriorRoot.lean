@@ -476,7 +476,6 @@ theorem word_weight_bounds (w : List CuLetter) :
   | cons a w ih => cases a <;> simp only [wordWeight,List.length_cons] <;> omega
 
 private theorem mass_monomial_comparison (side : MemorySide) (n K : ℕ) (d x y s : ℝ)
-    (sp : 0 ≤ s)
     (weights : ∀ w : List CuLetter, x^wordWeight w ≤ s^w.length*y^wordWeight w) :
     ∀ k, pathMass side n K d x k ≤ s^k*pathMass side n K d y k := by
   classical
@@ -524,9 +523,9 @@ theorem original_radius_scaling (side : MemorySide) (n K : ℕ) (d x y : ℝ)
       _ ≤ (x/y)^(6*w.length)*y^wordWeight w := mul_le_mul_of_nonneg_right hb (pow_nonneg yp.le _)
       _ = _ := by rw [pow_mul]
   have up := radius_mass_comparison side n K d y x ((y/x)^20) yp.le xp.le (pow_pos qpos _)
-    (mass_monomial_comparison side n K d y x ((y/x)^20) (pow_nonneg qpos.le _) upweights)
+    (mass_monomial_comparison side n K d y x ((y/x)^20) upweights)
   have down := radius_mass_comparison side n K d x y ((x/y)^6) xp.le yp.le (pow_pos ppos _)
-    (mass_monomial_comparison side n K d x y ((x/y)^6) (pow_nonneg ppos.le _) downweights)
+    (mass_monomial_comparison side n K d x y ((x/y)^6) downweights)
   have inverse : (y/x)^6*(x/y)^6=1 := by rw [← mul_pow]; field_simp
   refine ⟨?_,up⟩
   calc

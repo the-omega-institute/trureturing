@@ -41,7 +41,7 @@ internal sealed class WordWeightRegroupingDocument : IScribeDocumentDefinition
         var choices=Fn(Call("Fin",I("k")),Call("Product",I("CuLetter"),Vertex));
         return Sum("v",Vertex,Sum("choices",choices,Call("coreMonomial",I("side"),I("K"),I("d"),I("z"),I("k"),I("v"),I("choices"))));
     }
-    private static Formula Base(Formula p) => All(Imp(And(Lt(D(0),I("K")),Le(I("K"),I("n"))),p),B("side",I("MemorySide")),B("n",Nat),B("K",Nat),B("d",Real),B("T",Nat));
+    private static Formula Base(Formula p) => All(p,B("side",I("MemorySide")),B("n",Nat),B("K",Nat),B("d",Real),B("T",Nat));
     private static Formula BaseZ(Formula p) => All(Imp(And(Lt(D(0),I("K")),Le(I("K"),I("n"))),p),B("side",I("MemorySide")),B("n",Nat),B("K",Nat),B("d",Real),B("z",Real),B("T",Nat));
     private static Formula Series(Formula p) => All(Imp(And(Lt(D(0),I("K")),Le(I("K"),I("n")),Le(D(0),I("z"))),p),B("side",I("MemorySide")),B("n",Nat),B("K",Nat),B("d",Real),B("z",Real));
     private static Formula Regrouping() => Series(And(

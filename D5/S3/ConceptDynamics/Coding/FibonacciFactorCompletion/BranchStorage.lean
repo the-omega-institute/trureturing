@@ -194,7 +194,7 @@ theorem nondegenerate_branch_storage {Configuration : Type*}
         ∀ c ∈ vertices, ((encoding c).length : WithTop ℕ) ≤
           Peak action initialConfiguration (OperationRecord o b .closed) encoding H) := by
   classical
-  obtain ⟨hb0,_,cP,cU,cQ,cV⟩ := family_endpoint_certificates o s1 s2 P Q h hP hQ hPlen hQlen
+  obtain ⟨hb0,_,cP,cU,cQ,cV⟩ := family_endpoint_certificates s1 s2 P Q h hP hQ
     U V W L hL hUlen hVlen hU hV (fun i => (hUlen i).trans (hWlen i).symm)
   have hb := hb0.trans hbudget
   have hullU := canonical_legal_return_hull s1 U L hL hUlen hU

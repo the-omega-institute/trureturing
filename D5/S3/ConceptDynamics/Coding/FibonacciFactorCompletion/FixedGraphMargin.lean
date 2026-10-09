@@ -2,7 +2,7 @@
    generality: G
    mirror-B: D5/B/S3/ConceptDynamics/Coding/FibonacciFactorCompletion/FixedGraphMargin
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: ["mathlib/module/Mathlib.Data.Finset.Max"]
+   anchors: [mathlib/module/Mathlib.Data.Finset.Max]
    utility: none
    digest: A fixed lower graph gives every actual factor completion a common positive margin. -/
 

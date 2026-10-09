@@ -59,18 +59,24 @@ internal sealed class EvenLengthAsymptoticsDocument : IScribeDocumentDefinition
     private static Formula H => Call("hSide", I("high"));
     private static Formula A => Call("aSide", I("high"));
     private static Formula Scale => Mul(Pow(I("g"), D(2)), Pow(I("chi"), I("K")));
-    private static Formula Threshold => Div(Div(Sub(I("lam"), I("b")), Pow(I("g"), D(2))), Pow(I("chi"), I("K")));
+    private static Formula ThresholdValue => Div(Div(Sub(I("lam"), I("b")), Pow(I("g"), D(2))), Pow(I("chi"), I("K")));
+    private static Formula Threshold => Call("d",I("b"),I("K"));
     private static Formula Floor => Sub(H, Mul(Pow(I("rho"), Call("m", I("R"))), Sub(H, Mul(I("chi"), A))));
-    private static Formula Delta => Sub(Floor, Start(I("sourceModel")));
-    private static Formula Gamma => Mul(Delta, Pow(I("g"), I("N")));
-    private static Formula Epsilon => Div(Call("min", Sub(I("b"), Call("actualAutomaticCost", I("K"))), Mul(Scale, Gamma)), D(2));
-    private static Formula L => Add(Add(I("N"), D(2, 0)), Mul(D(6), Call("m", I("R"))));
+    private static Formula DeltaValue => Sub(Floor, Start(I("sourceModel")));
+    private static Formula Delta => Call("delta",I("R"),I("sourceModel"));
+    private static Formula GammaValue => Mul(Delta, Pow(I("g"), I("N")));
+    private static Formula Gamma => Call("gamma",I("R"),I("sourceModel"),I("N"));
+    private static Formula EpsilonValue => Div(Call("min", Sub(I("b"), Call("actualAutomaticCost", I("K"))), Mul(Scale, Gamma)), D(2));
+    private static Formula Epsilon => Call("epsilon",I("R"),I("sourceModel"),I("b"),I("K"),I("N"));
+    private static Formula LValue => Add(Add(I("N"), D(2, 0)), Mul(D(6), Call("m", I("R"))));
+    private static Formula L => Call("blockWeight",I("R"),I("N"));
     private static Formula KCopies => Copies(L, I("T"));
     private static Formula FillWeight => Remainder(L, I("T"));
     private static Formula ACount => Count(I("sourceModel"), I("false"), I("N"));
     private static Formula PowerCount => Pow(ACount, KCopies);
-    private static Formula Book => Call("Subtype", Lam("xs", Returns,
+    private static Formula BookValue => Call("Subtype", Lam("xs", Returns,
         And(Trace(Threshold, I("false"), I("xs"), Start(I("sourceModel"))), Equal(W(I("xs")), I("N")))));
+    private static Formula Book => Call("weakBook",I("sourceModel"),I("b"),I("K"),I("N"));
     private static Formula Choices => Fn(Call("Fin", KCopies), Book);
     private static Formula ChoiceWords => Call("ofFn", Lam("i", Call("Fin", KCopies), Call("val", Ap(I("z"), I("i")))));
     private static Formula Unpadded => Call("resetConcatenation", I("R"), ChoiceWords);
@@ -244,6 +250,14 @@ internal sealed class EvenLengthAsymptoticsDocument : IScribeDocumentDefinition
             All(RawAsymptotics(SrcCount(I("side"), m, c, EvenIndex)), B("side", Side)),
             RawAsymptotics(PairCount(m, c, EvenIndex))), B("model", Model), B("contract", Contract)));
     }
+    private static DocumentBlock Notation() => new DocumentBlock.Section(H("Shared notation"),Blocks(
+        Paragraph(Text("The following functions abbreviate exactly the displayed expressions. Every occurrence uses the arguments shown, within the scope of the same quantified parameters and witnesses. Expanding these definitions recovers all guards, weights and shared margins.")),
+        Paragraph(Math(Disp(All(Equal(Threshold,ThresholdValue),B("b",Real),B("K",Nat))))),
+        Paragraph(Math(Disp(All(Equal(Delta,DeltaValue),B("R",I("Return")),B("sourceModel",I("Model")))))),
+        Paragraph(Math(Disp(All(Equal(Gamma,GammaValue),B("R",I("Return")),B("sourceModel",I("Model")),B("N",Nat))))),
+        Paragraph(Math(Disp(All(Equal(Epsilon,EpsilonValue),B("R",I("Return")),B("sourceModel",I("Model")),B("b",Real),B("K",Nat),B("N",Nat))))),
+        Paragraph(Math(Disp(All(Equal(L,LValue),B("R",I("Return")),B("N",Nat))))),
+        Paragraph(Math(Disp(All(Equal(Book,BookValue),B("sourceModel",I("Model")),B("b",Real),B("K",Nat),B("N",Nat)))))));
     private static DocumentBlock Node(string name, Formula formula, string prose, bool definition = false) => Describe.Lean(
         DescribeId.Create("fib-even-length-" + name.Replace('_', '-').ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(name.Replace('_', ' ')), StatementSource.FromAuthor(Disp(formula)), AssessedProvenance.FromRepo(),
@@ -252,6 +266,7 @@ internal sealed class EvenLengthAsymptoticsDocument : IScribeDocumentDefinition
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The raw logarithms of actual strict and weak complete-list counts equal eta_b times the literal weight plus a little-o error on all even weights. Actual histories and both literal sources retain the same coefficient at the original observation offsets twenty-six and fifty-two.",
         H("Actual complete counts on all even lengths"), Blocks(
+        Notation(),
         Paragraph(Text("Return lists are in execution order from the literal tail outward. Their literal weights are six times m plus twenty times r. The two models start at X_H and Y_H on the high side and at the corresponding X_L and Y_L on the low side. All source supplies use the original U/V and C blocks, the same stems and paid anchors, and the original literal tails. The external source reverses the return list without reversing the labels inside any block. Natural-number division and subtraction below use the natural quotient and truncated subtraction.")),
         Paragraph(Text("The weak complete-list count uses the non-strict high guard. It corresponds to the closed source contract when the nearest high endpoint is owned, o(0)=true; otherwise the closed contract uses the strict high guard. The strict and recordMargin source contracts always use the strict high guard.")),
         Node("fillerJ", All(Equal(J(I("F")), Call("ifThenElse", Equal(Mod3(Half(I("F"))), D(0)), D(3), Mod3(Half(I("F"))))), B("F", Nat)),

@@ -338,7 +338,7 @@ open Filter Topology
 theorem canonical_high_fixed_finite_tail
     (o : Ownership) (s1 s2 : Guard) (P Q : List Label) (h : List Color)
     (hP : LegalWord .G0 s1 P) (hQ : LegalWord .G0 s2 Q)
-    (hPlen : P.length = h.length) (hQlen : Q.length = h.length)
+    (hPlen : P.length = h.length)
     (U V : Bool → List Label) (W : Bool → List Color)
     (L : ℕ) (hL : 0 < L) (hlen : ∀ i, (U i).length = L)
     (hVlen : ∀ i, (V i).length = L)
@@ -358,7 +358,7 @@ theorem canonical_high_fixed_finite_tail
           ((h ++ choiceBlocks W zs).length+p) = observe o (coordinate w p) 0 := by
   let θ := familyEndpointBudget P Q h U V W L
   obtain ⟨hθ,count,highStem,highReturns,lowStem,lowReturns⟩ :=
-    family_endpoint_certificates o s1 s2 P Q h hP hQ hPlen hQlen U V W L hL
+    family_endpoint_certificates s1 s2 P Q h hP hQ U V W L hL
       hlen hVlen hlegal hV hcolors
   have highHull := canonical_legal_return_hull s1 U L hL hlen hlegal
   refine ⟨hθ,count,lowStem,lowReturns,?_⟩
@@ -427,7 +427,7 @@ theorem canonical_synchronous_common_stem {Configuration : Type*}
         (∀ c, c ∈ states ↔ ∃ z, (cuts z).state = c) ∧
         2^n ≤ states.card*(k+1) := by
   obtain ⟨budgetNonnegative,entryCount,stemBase,returnsBase,lowStemBase,lowReturnsBase⟩ :=
-    family_endpoint_certificates o s1 s2 P Q h hP hQ hPlen hQlen U V W L hL
+    family_endpoint_certificates s1 s2 P Q h hP hQ U V W L hL
       hUlen hVlen hU hV hUWlen
   have hθ : 0 ≤ θ := budgetNonnegative.trans hbudget
   have stemCert := endpoint_certificate_mono _ θ _ _ P h hbudget stemBase
@@ -448,7 +448,7 @@ theorem canonical_synchronous_common_stem {Configuration : Type*}
     rw [← competingSingleton] at atLo
     exact le_antisymm atLo.2 atLo.1
   have result := original_synchronous_common_stem action initialConfiguration o θ hθ
-    s1 s2 P Q h hP hQ hPlen hQlen U (V false) W L hL hU (hV false)
+    s1 s2 P Q h hP hQ hPlen hQlen U (V false) W L hU (hV false)
     hUlen (hVlen false) hUWlen differentReturns
     (canonicalReturnLo U L) (canonicalReturnHi U L) (highHull.2.1 differentReturns)
     highHull.2.2.1 highHull.2.2.2.1 stemCert returnCert
@@ -856,8 +856,6 @@ whole paired record and its original zero-error future, across the entire family
 theorem actual_exact_uniform_family_margin
     (model : Model) (o : Ownership) (b : ℝ) (K : ℕ) (hK : 2 ≤ K)
     (hqb : lam - g ^ 2 * chi ^ K * hSide .high < b)
-    (hbp : b < lam - g ^ 2 * chi ^ K *
-      (aSide .high / (1 - rho * chi ^ K)))
     (family : Set (List Return))
     (hcap : ∀ execution ∈ family, ∀ a ∈ execution, a.r ≤ K)
     (hdelta : 0 < actualFamilyDelta model b K family) :
@@ -978,7 +976,7 @@ theorem actual_uniform_family_margin_iff
     exact hpos.trans_le hinf
   · intro hdelta
     obtain ⟨heps, hsupply⟩ := actual_exact_uniform_family_margin
-      model o b K hK hqb hbp family hcap hdelta
+      model o b K hK hqb family hcap hdelta
     refine ⟨actualExactFamilyMargin model b K family, heps, ?_⟩
     intro execution hexecution j
     rcases hsupply execution hexecution j with ⟨err, herr, hread, hzero, hfuture⟩

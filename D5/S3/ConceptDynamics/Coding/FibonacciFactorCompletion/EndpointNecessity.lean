@@ -306,7 +306,6 @@ indexed endpoint maximum. Their scalars need not lie in either canonical hull.
 The same finite maximum belongs to the original field Q(t). -/
 theorem original_fixed_tail_endpoint_budget
     (s1 s2 : Guard) (P Q : List Label) (h : List Color)
-    (_hP : LegalWord .G0 s1 P) (_hQ : LegalWord .G0 s2 Q)
     (hPlen : P.length = h.length) (hQlen : Q.length = h.length)
     (U V : Bool → List Label) (W : Bool → List Color)
     (L : ℕ) (hL : 0 < L)
@@ -314,7 +313,6 @@ theorem original_fixed_tail_endpoint_budget
     (hWlen : ∀ i, (W i).length = L)
     (hU : ∀ i, LegalWord s1 s1 (U i)) (hV : ∀ i, LegalWord s2 s2 (V i))
     (ξ η : ℕ → Label) (x y : ℕ → ℝ) (path1 path2 : ℕ → Guard)
-    (_hpath1 : path1 0 = s1) (_hpath2 : path2 0 = s2)
     (b : ℝ) (hb : 0 ≤ b)
     (feasible : ∀ zs : List Bool,
       ClosedOriginalTailExtension b (P ++ choiceBlocks U zs) (h ++ choiceBlocks W zs) ξ x path1 ∧

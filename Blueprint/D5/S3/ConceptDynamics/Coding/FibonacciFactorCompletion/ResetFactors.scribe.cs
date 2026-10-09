@@ -58,14 +58,20 @@ internal sealed class ResetFactorsDocument : IScribeDocumentDefinition
     private static Formula H => Call("hSide",I("high"));
     private static Formula A => Call("aSide",I("high"));
     private static Formula Scale => Mul(Pow(I("g"),D(2)),Pow(I("chi"),I("K")));
-    private static Formula Threshold => Div(Div(Sub(I("lam"),I("b")),Pow(I("g"),D(2))),Pow(I("chi"),I("K")));
+    private static Formula ThresholdValue => Div(Div(Sub(I("lam"),I("b")),Pow(I("g"),D(2))),Pow(I("chi"),I("K")));
+    private static Formula Threshold => Call("d",I("b"),I("K"));
     private static Formula Start => Call("initial",I("high"),I("sourceModel"));
-    private static Formula Delta => Sub(Sub(H,Mul(Pow(I("rho"),Call("m",I("R"))),Sub(H,Mul(I("chi"),A)))),Start);
-    private static Formula Gamma => Mul(Delta,Pow(I("g"),I("N")));
-    private static Formula Epsilon => Div(Call("min",Sub(I("b"),Call("actualAutomaticCost",I("K"))),Mul(Scale,Gamma)),D(2));
-    private static Formula BlockWeight => Add(Add(I("N"),D(2,0)),Mul(D(6),Call("m",I("R"))));
+    private static Formula DeltaValue => Sub(Sub(H,Mul(Pow(I("rho"),Call("m",I("R"))),Sub(H,Mul(I("chi"),A)))),Start);
+    private static Formula Delta => Call("delta",I("R"),I("sourceModel"));
+    private static Formula GammaValue => Mul(Delta,Pow(I("g"),I("N")));
+    private static Formula Gamma => Call("gamma",I("R"),I("sourceModel"),I("N"));
+    private static Formula EpsilonValue => Div(Call("min",Sub(I("b"),Call("actualAutomaticCost",I("K"))),Mul(Scale,Gamma)),D(2));
+    private static Formula Epsilon => Call("epsilon",I("R"),I("sourceModel"),I("b"),I("K"),I("N"));
+    private static Formula BlockWeightValue => Add(Add(I("N"),D(2,0)),Mul(D(6),Call("m",I("R"))));
+    private static Formula BlockWeight => Call("blockWeight",I("R"),I("N"));
     private static Formula Trace(Formula d,Formula xs) => Call("GuardTrace",I("K"),d,I("false"),I("high"),xs,Start);
-    private static Formula Book => Subtype("xs",Returns,And(Trace(Threshold,I("xs")),Equal(ListWeight(I("xs")),I("N"))));
+    private static Formula BookValue => Subtype("xs",Returns,And(Trace(Threshold,I("xs")),Equal(ListWeight(I("xs")),I("N"))));
+    private static Formula Book => Call("weakBook",I("sourceModel"),I("b"),I("K"),I("N"));
     private static Formula ChoiceType => Fn(Call("Fin",I("q")),Book);
     private static Formula ChoiceFactor => Lambda("z",ChoiceType,Reset(I("R"),Call("ofFn",Lambda("i",Call("Fin",I("q")),Val(Ap(I("z"),I("i")))))));
     private static Formula ChosenWord => Ap(ChoiceFactor,I("z"));
@@ -151,12 +157,21 @@ internal sealed class ResetFactorsDocument : IScribeDocumentDefinition
             Lt(Call("max",Call("max",Call("xSide",I("high")),Call("ySide",I("high"))),Threshold),floor),All(Imp(Lt(D(0),I("N")),body),
             B("sourceModel",I("Model")),B("N",Nat))),B("R",I("Return")))),B("o",I("Ownership")),B("b",Real),B("K",Nat)));
     }
+    private static DocumentBlock Notation() => new DocumentBlock.Section(H("Shared notation"),Blocks(
+        Paragraph(Text("The following functions abbreviate exactly the displayed expressions. Every occurrence uses the arguments shown, within the scope of the same quantified parameters and witnesses. Expanding these definitions recovers all guards, weights and shared margins.")),
+        Paragraph(Math(Disp(All(Equal(Threshold,ThresholdValue),B("b",Real),B("K",Nat))))),
+        Paragraph(Math(Disp(All(Equal(Delta,DeltaValue),B("R",I("Return")),B("sourceModel",I("Model")))))),
+        Paragraph(Math(Disp(All(Equal(Gamma,GammaValue),B("R",I("Return")),B("sourceModel",I("Model")),B("N",Nat))))),
+        Paragraph(Math(Disp(All(Equal(Epsilon,EpsilonValue),B("R",I("Return")),B("sourceModel",I("Model")),B("b",Real),B("K",Nat),B("N",Nat))))),
+        Paragraph(Math(Disp(All(Equal(BlockWeight,BlockWeightValue),B("R",I("Return")),B("N",Nat))))),
+        Paragraph(Math(Disp(All(Equal(Book,BookValue),B("sourceModel",I("Model")),B("b",Real),B("K",Nat),B("N",Nat)))))));
     private static DocumentBlock Node(string name,Formula formula,string prose,bool definition=false) => Describe.Lean(
         DescribeId.Create("fib-reset-factors-"+name.Replace('_','-').ToLowerInvariant()),DeclarationHandle.Create(Prefix+name),H(name.Replace('_',' ')),
         StatementSource.FromAuthor(formula),AssessedProvenance.FromRepo(),Blocks(Paragraph(Text(prose))),definition?DescribeRole.Definition:DescribeRole.Theorem);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "The original equal-weight weak codebook has distinct factors in one lower-memory language, with exact reset overhead and a weighted limsup bound.",
         H("Same-reset weighted factor dictionaries"),Blocks(
+        Notation(),
         Node("FactorDictionary",DictionaryDefinition(),"The dictionary contains every word of exact original weight T that occurs in a bilateral sequence of X. Occurrence retains a single sequence and one integer starting position; transient graph paths are not substituted.",true),
         Node("factorCount",CountDefinition(),"The count is the natural cardinality of that entire factor dictionary, including the empty word at weight zero when the language is nonempty.",true),
         Node("weightedFactorRate",RateDefinition(),"The rate is the real upper limit over total actual weight T, with max(1,count) and total real division at T=0. It uses the original weights 20 and 6, rather than letter length.",true),

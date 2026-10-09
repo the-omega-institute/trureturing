@@ -42,13 +42,18 @@ internal sealed class LowerRateLimitDocument : IScribeDocumentDefinition
     private static Formula Log(Formula a) => Call("logb",D(2),Cast(a));
     private static Formula Hh => Call("hSide",I("high"));
     private static Formula A => Call("aSide",I("high"));
-    private static Formula Threshold => Div(Div(Sub(I("lam"),I("b")),Pow(I("g"),D(2))),Pow(I("chi"),I("K")));
+    private static Formula ThresholdValue => Div(Div(Sub(I("lam"),I("b")),Pow(I("g"),D(2))),Pow(I("chi"),I("K")));
+    private static Formula Threshold => Call("d",I("b"),I("K"));
     private static Formula Scale => Mul(Pow(I("g"),D(2)),Pow(I("chi"),I("K")));
     private static Formula Floor => Sub(Hh,Mul(Pow(I("rho"),Call("m",I("R"))),Sub(Hh,Mul(I("chi"),A))));
-    private static Formula Delta => Sub(Floor,Call("initial",I("high"),I("model")));
-    private static Formula Gain => Mul(Delta,Pow(I("g"),I("N")));
-    private static Formula Error => Div(Call("min",Sub(I("b"),Call("actualAutomaticCost",I("K"))),Mul(Scale,Gain)),D(2));
-    private static Formula L => Add(Add(I("N"),D(2,0)),Mul(D(6),Call("m",I("R"))));
+    private static Formula DeltaValue => Sub(Floor,Call("initial",I("high"),I("model")));
+    private static Formula Delta => Call("delta",I("R"),I("model"));
+    private static Formula GainValue => Mul(Delta,Pow(I("g"),I("N")));
+    private static Formula Gain => Call("gamma",I("R"),I("model"),I("N"));
+    private static Formula ErrorValue => Div(Call("min",Sub(I("b"),Call("actualAutomaticCost",I("K"))),Mul(Scale,Gain)),D(2));
+    private static Formula Error => Call("epsilon",I("R"),I("model"),I("b"),I("K"),I("N"));
+    private static Formula LValue => Add(Add(I("N"),D(2,0)),Mul(D(6),Call("m",I("R"))));
+    private static Formula L => Call("blockWeight",I("R"),I("N"));
     private static Formula Book => Call("ActualDictionary",I("model"),I("K"),Threshold,I("false"),I("N"));
     private static Formula Count(Formula t,Formula strict) => Call("actualCount",I("model"),I("K"),Threshold,strict,t);
     private static Formula Eta => Call("etaB",I("K"),I("b"));
@@ -152,12 +157,20 @@ internal sealed class LowerRateLimitDocument : IScribeDocumentDefinition
             All(Imp(Le(I("n0"),I("n")),And(Lt(Sub(Eta,I("epsilon")),LowerRate(I("n"))),Le(LowerRate(I("n")),Eta))),B("n",Nat))),B("n0",Nat))),B("epsilon",Real));
         return Disp(UnderBudget(And(Le(Div(D(1),D(5,8)),Eta),Call("Monotone",lower),uniform,Tendsto(lower,Eta),roots),false));
     }
+    private static DocumentBlock Notation() => new DocumentBlock.Section(H("Shared notation"),Blocks(
+        Paragraph(Text("The following functions abbreviate exactly the displayed expressions. Every occurrence uses the arguments shown, within the scope of the same quantified parameters and witnesses. Expanding these definitions recovers all guards, weights and shared margins.")),
+        Paragraph(Math(Disp(All(Equal(Threshold,ThresholdValue),B("b",Real),B("K",Nat))))),
+        Paragraph(Math(Disp(All(Equal(Delta,DeltaValue),B("R",I("Return")),B("model",I("Model")))))),
+        Paragraph(Math(Disp(All(Equal(Gain,GainValue),B("R",I("Return")),B("model",I("Model")),B("N",Nat))))),
+        Paragraph(Math(Disp(All(Equal(Error,ErrorValue),B("R",I("Return")),B("model",I("Model")),B("b",Real),B("K",Nat),B("N",Nat))))),
+        Paragraph(Math(Disp(All(Equal(L,LValue),B("R",I("Return")),B("N",Nat)))))));
     private static DocumentBlock Node(string name,Formula formula,string prose,bool definition=false) => Describe.Lean(
         DescribeId.Create("fib-lower-rate-"+name.Replace('_','-').ToLowerInvariant()),DeclarationHandle.Create(Prefix+name),H(name.Replace('_',' ')),
         StatementSource.FromAuthor(formula),AssessedProvenance.FromRepo(),Blocks(Paragraph(Text(prose))),definition?DescribeRole.Definition:DescribeRole.Theorem);
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Actual complete low words have positive rate, and codebooks from the original weak limsup approximate that rate with one fixed reset. The original lower-memory rates converge increasingly to the same value.",
         H("Actual codebooks and the lower rate limit"),Blocks(
+        Notation(),
         Node("lowReturns",LowDefinition(),"The false choice is the complete return list (1,1),(2,1), and the true choice is (2,1),(1,1). Both m and r are positive. Their execution words are exactly c u c u u and c u u c u, and each has weight 58. Execution goes from the original tail toward the outside; the literal source uses the reversed list and retains each original block's label order.",true),
         Node("lowChoices",ChoicesDefinition(),"Flatten the chosen complete lists in their finite execution order. The empty choice has the empty list and weight zero. Both actual initial models retain their original high and low tails, with observation offsets 26 and 52.",true),
         Node("actual_low_choice_count",LowCountStatement(),"Every return has r=1<K, so every finite choice is strictly legal from either actual start. The actual paired-source supply includes the common prescribed history, all departure slots, and each original tail with zero future error. Positive weighted cuts and the complete execution parser recover every binary choice; the original history parser also distinguishes them. There are at least 2 to q strict lists and at least as many weak lists at weight 58q, including q=0 and q=1."),

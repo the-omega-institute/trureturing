@@ -133,17 +133,11 @@ private theorem actualToRetained_injective (side : MemorySide) (n K : ℕ) (d : 
 /-- The actual CorePath choice witness is present for every retained dictionary;
 the map forgetting that witness is a bijection, including empty walks and
 finite walks crossing transient bridges. -/
-theorem core_path_witness_dictionary_equiv (side : MemorySide) (n K : ℕ) (d : ℝ) (T : ℕ)
-    (positive : 0 < K) (memory : K ≤ n) :
+theorem core_path_witness_dictionary_equiv (side : MemorySide) (n K : ℕ) (d : ℝ) (T : ℕ) :
     Nonempty (CorePathWitnessDictionary side n K d T ≃
       RetainedPathDictionary side n K d T) := by
-  letI : Finite (RetainedPathDictionary side n K d T) :=
-    (original_weighted_path_count side n K d positive memory T).1
   let f : CorePathWitnessDictionary side n K d T →
       RetainedPathDictionary side n K d T := actualToRetained side n K d T
-  have fin : Finite (CorePathWitnessDictionary side n K d T) :=
-    Finite.of_injective f (actualToRetained_injective side n K d T)
-  letI : Finite (CorePathWitnessDictionary side n K d T) := fin
   exact ⟨Equiv.ofBijective f ⟨
     (actualToRetained_injective side n K d T),
     (fun x => by
@@ -151,12 +145,11 @@ theorem core_path_witness_dictionary_equiv (side : MemorySide) (n K : ℕ) (d : 
       refine ⟨y, Subtype.ext ?_⟩
       exact Prod.ext hv hw)⟩⟩
 
-theorem core_path_witness_dictionary_card (side : MemorySide) (n K : ℕ) (d : ℝ) (T : ℕ)
-    (positive : 0 < K) (memory : K ≤ n) :
+theorem core_path_witness_dictionary_card (side : MemorySide) (n K : ℕ) (d : ℝ) (T : ℕ) :
     Nat.card (CorePathWitnessDictionary side n K d T) =
       Nat.card (RetainedPathDictionary side n K d T) := by
   exact Nat.card_congr (Classical.choice
-    (core_path_witness_dictionary_equiv side n K d T positive memory))
+    (core_path_witness_dictionary_equiv side n K d T))
 
 /-- At one fixed actual weight, the finite witness dictionary sums the
 constant monomial z^T once for each retained path. -/
@@ -177,7 +170,7 @@ theorem actual_weight_regrouping (side : MemorySide) (n K : ℕ) (d z : ℝ) (T 
   have card : Fintype.card (CorePathWitnessDictionary side n K d T) =
       Fintype.card (RetainedPathDictionary side n K d T) := by
     simpa only [Nat.card_eq_fintype_card] using
-      core_path_witness_dictionary_card side n K d T positive memory
+      core_path_witness_dictionary_card side n K d T
   rw [card]
   simp [nsmul_eq_mul]
 
@@ -250,7 +243,7 @@ theorem actual_monomial_series_regrouping (side : MemorySide) (n K : ℕ) (d z :
   have fiberFinite (T : ℕ) : Finite {x : ActualCorePath side n K d // weight x = T} := by
     letI : Finite (RetainedPathDictionary side n K d T) :=
       (original_weighted_path_count side n K d positive memory T).1
-    let e := Classical.choice (core_path_witness_dictionary_equiv side n K d T positive memory)
+    let e := Classical.choice (core_path_witness_dictionary_equiv side n K d T)
     exact Finite.of_injective (e ∘ coreWeightFiberEquiv side n K d T)
       (e.injective.comp (coreWeightFiberEquiv side n K d T).injective)
   have fiberSum (T : ℕ) :

@@ -478,7 +478,7 @@ theorem original_synchronous_common_stem {Configuration : Type*}
     (hP : LegalWord .G0 s1 P) (hQ : LegalWord .G0 s2 Q)
     (hPlen : P.length = h.length) (hQlen : Q.length = h.length)
     (U : Bool → List Label) (V : List Label) (W : Bool → List Color)
-    (L : ℕ) (hL : 0 < L) (hU : ∀ i, LegalWord s1 s1 (U i))
+    (L : ℕ) (hU : ∀ i, LegalWord s1 s1 (U i))
     (hV : LegalWord s2 s2 V) (hUlen : ∀ i, (U i).length = L)
     (hVlen : V.length = L) (hUWlen : ∀ i, (U i).length = (W i).length)
     (differentReturns : U false ≠ U true)

@@ -428,9 +428,8 @@ theorem endpoint_certificate_mono (a b lo hi : ℝ) (w : List Label) (cs : List 
   exact ⟨⟨hslo,hblo.trans hab⟩,⟨hshi,hbhi.trans hab⟩⟩
 
 theorem family_endpoint_certificates
-    (o : Ownership) (s1 s2 : Guard) (P Q : List Label) (h : List Color)
+    (s1 s2 : Guard) (P Q : List Label) (h : List Color)
     (hP : LegalWord .G0 s1 P) (hQ : LegalWord .G0 s2 Q)
-    (hPlen : P.length = h.length) (hQlen : Q.length = h.length)
     (U V : Bool → List Label) (W : Bool → List Color)
     (L : ℕ) (hL : 0 < L) (hlen : ∀ i, (U i).length = L)
     (hVlen : ∀ i, (V i).length = L)

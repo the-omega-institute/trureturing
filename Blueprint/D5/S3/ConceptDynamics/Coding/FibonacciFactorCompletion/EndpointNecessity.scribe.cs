@@ -31,15 +31,12 @@ private static Formula OriginalFixedTailEndpointBudget()
     var lowPrefix=Call("append",I("Q"),Call("choiceBlocks",v,I("zs")));
     var colors=Call("append",I("h"),Call("choiceBlocks",w,I("zs")));
     var theta=Call("familyEndpointBudget",I("P"),I("Q"),I("h"),u,v,w,length);
-    var data=And(Call("LegalWord",I("G0"),I("s1"),I("P")),
-        Call("LegalWord",I("G0"),I("s2"),I("Q")),
-        Equal(Call("length",I("P")),Call("length",I("h"))),
+    var data=And(Equal(Call("length",I("P")),Call("length",I("h"))),
         Equal(Call("length",I("Q")),Call("length",I("h"))),Call("lt",D(0),length),
         All(And(Equal(Call("length",ui),length),Equal(Call("length",vi),length),
             Equal(Call("length",wi),length),Call("LegalWord",I("s1"),I("s1"),ui),
             Call("LegalWord",I("s2"),I("s2"),vi)),B("i",I("Bool"))),
-        Equal(Call("apply",I("path1"),D(0)),I("s1")),
-        Equal(Call("apply",I("path2"),D(0)),I("s2")),Call("le",D(0),b),
+        Call("le",D(0),b),
         All(And(Call("ClosedOriginalTailExtension",b,highPrefix,colors,I("xi"),I("x"),I("path1")),
             Call("ClosedOriginalTailExtension",b,lowPrefix,colors,I("eta"),I("y"),I("path2"))),
             B("zs",Call("List",I("Bool")))));
