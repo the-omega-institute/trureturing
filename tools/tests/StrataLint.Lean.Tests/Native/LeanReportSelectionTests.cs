@@ -350,6 +350,7 @@ public sealed class LeanReportSelectionTests
                 --repository) repository="$2" ;;
                 --output) output="$2" ;;
                 --log-dir) log_dir="$2" ;;
+                --cache-miss-policy) [[ "$2" == fetch-or-fail ]] || exit 97 ;;
                 *) exit 97 ;;
               esac
               shift 2
@@ -387,7 +388,8 @@ public sealed class LeanReportSelectionTests
         var recorded = ScriptHarnessScratch.ReadRecordedCalls(argumentLog);
         Assert.True(recorded.Length >= 4, Encoding.UTF8.GetString(result.StandardError));
         Assert.Equal(fixture, ScriptHarnessScratch.ReadScratchText(Path.Combine(recorded[1], "fixture.identity")));
-        var expected = new List<string> { "--repository", recorded[1], "--output", output };
+        var expected = new List<string> { "--repository", recorded[1], "--output", output,
+            "--cache-miss-policy", "fetch-or-fail" };
         if (!string.IsNullOrEmpty(logDirectory)) expected.AddRange(["--log-dir", logDirectory]);
         Assert.Equal(expected, recorded);
         var expectedLogDirectory = string.IsNullOrEmpty(logDirectory) ? output + ".logs" : logDirectory;

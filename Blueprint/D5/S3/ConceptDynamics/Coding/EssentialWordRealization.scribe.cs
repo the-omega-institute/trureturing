@@ -13,15 +13,22 @@ internal sealed class EssentialWordRealizationDocument : IScribeDocumentDefiniti
         new Formula.BindMany(FormulaQuantifier.ForAll, [.. variables], body);
     private static Formula Exists(string name, Formula type, Formula body) =>
         new Formula.Bind(FormulaQuantifier.Exists, FormulaIdentifier.Create(name), type, body);
-    private static Formula Parameters(Formula body) => All(body,
-        B("V", F.Id("Type")), B("E", F.Id("Type")),
-        B("finiteVertices", Call("Fintype", F.Id("V"))),
-        B("finiteEdges", Call("Fintype", F.Id("E"))),
-        B("vertexEquality", Call("DecidableEq", F.Id("V"))),
+    private static Formula Instances(Formula body, params Formula[] instances)
+    {
+        var items = new List<Formula>();
+        foreach (var instance in instances)
+            items.AddRange([OpenBracket, instance, CloseBracket, Comma, Sp]);
+        items.Add(body);
+        return Seq([.. items]);
+    }
+    private static Formula Parameters(Formula body) => All(Instances(All(
+        new Formula.Logic(Call("Essential", F.Id("G")), FormulaLogicOperator.Implies,
+            new Formula.Logic(new Formula.Relation(F.D(0), FormulaRelationOperator.LessThan,
+                F.Id("n")), FormulaLogicOperator.Implies, body)),
         B("G", Call("DirectedMultigraph", F.Id("V"), F.Id("E"))),
-        B("essential", Call("Essential", F.Id("G"))), B("n", F.Id("Nat")),
-        B("word", Call("LegalWord", F.Id("G"), F.Id("n"))),
-        B("positive", new Formula.Relation(F.D(0), FormulaRelationOperator.LessThan, F.Id("n"))));
+        B("n", F.Id("Nat")), B("word", Call("LegalWord", F.Id("G"), F.Id("n")))),
+        Call("Fintype", F.Id("V")), Call("Fintype", F.Id("E")),
+        Call("DecidableEq", F.Id("V"))), B("V", F.Id("Type")), B("E", F.Id("Type")));
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "An essential directed multigraph realizes every prescribed positive legal word as one actual bi-infinite history, retaining every edge label.",
@@ -36,6 +43,6 @@ internal sealed class EssentialWordRealizationDocument : IScribeDocumentDefiniti
             Blocks(
                 Paragraph(Text("Essential means that each vertex has an actual outgoing edge and an actual incoming edge. Edges are elements of the supplied edge type, so loops and distinct parallel edges remain distinct. LegalWord stores all those edges and each target/source adjacency equation. History is the subtype of Int-indexed actual edges satisfying every adjacency equation.")),
                 Paragraph(Text("In the display, historyEdge(x,j) is x evaluated at the integer cast of j; wordEdge(word,j) is the j-th prescribed edge. The history uses iterated incoming choices at negative times, the entire prescribed word at times 0 through n minus 1, and iterated outgoing choices afterward. The proof verifies both outer seams and every interior seam. No strong connectivity, word-extension assumption or redefinition by globally realizable words is present.")),
-                Paragraph(Text("The positive-length requirement suffices for theorem 23.1: both table lengths, both seam lengths and the common recovery length are positive for all four natural radii, including zero. The empty LegalWord type is not asserted to model a zero-edge path with a specified vertex."))),
+                Paragraph(Text("The positive-length requirement covers both table lengths, both seam lengths and the common recovery length in the finite-window criterion, for all four natural radii including zero. The empty LegalWord type does not specify a vertex for a zero-edge path."))),
             DescribeRole.Theorem))));
 }
