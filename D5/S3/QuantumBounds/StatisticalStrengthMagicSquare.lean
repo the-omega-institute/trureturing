@@ -338,9 +338,27 @@ private theorem observable_facts (obs : Fin 4 → Fin 2 → Matrix (Fin 2 × Fin
   all_goals first
     | fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l
     | skip
-  all_goals norm_num [aliceObservable,bobObservable,square,pauliMatrix,qubitX,qubitZ,
+  all_goals norm_num only [aliceObservable, bobObservable, ↓reduceDIte, ↓reduceIte]
+  all_goals dsimp only [square, pauliMatrix, qubitX, qubitZ, Matrix.of_apply,
+    Fin.val_zero, Fin.val_one, Fin.val_two,
+    Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.cons_val_zero', Matrix.cons_val_succ']
+  all_goals norm_num only [
     Matrix.mul_apply,Matrix.conjTranspose_apply,Matrix.kronecker_apply,
-    Matrix.trace,Matrix.diag,Fintype.sum_prod_type,Fin.sum_univ_two]
+    Matrix.trace,Matrix.diag,Fintype.sum_prod_type,Fin.sum_univ_two,
+    Matrix.of_apply, Matrix.cons_val_zero, Matrix.cons_val_one, Matrix.cons_val_two,
+    Matrix.cons_val_zero', Matrix.cons_val_succ',
+    Matrix.one_apply, Matrix.star_eq_conjTranspose, Commute, SemiconjBy,
+    Matrix.smul_apply, smul_eq_mul, Prod.mk.injEq,
+    Fin.ext_iff, Fin.val_zero, Fin.val_one, Fin.val_two,
+    ite_true, ite_false, and_true, true_and, and_false, false_and,
+    Complex.ext_iff, Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im,
+    Complex.neg_re, Complex.neg_im, Complex.conj_re, Complex.conj_im,
+    Complex.one_re, Complex.one_im, Complex.zero_re, Complex.zero_im,
+    Complex.I_re, Complex.I_im, star_zero, star_one, star_neg,
+    Complex.star_def, Complex.conj_I, Complex.I_mul_I,
+    zero_mul, mul_zero, one_mul, mul_one, zero_add, add_zero,
+    neg_mul, mul_neg, neg_neg]
 
 private theorem singlet_unitary :
     star (((ModularGroup.S : Matrix (Fin 2) (Fin 2) ℤ).map (Int.castRingHom ℂ)) ⊗ₖ ((ModularGroup.S : Matrix (Fin 2) (Fin 2) ℤ).map (Int.castRingHom ℂ))) * (((ModularGroup.S : Matrix (Fin 2) (Fin 2) ℤ).map (Int.castRingHom ℂ)) ⊗ₖ ((ModularGroup.S : Matrix (Fin 2) (Fin 2) ℤ).map (Int.castRingHom ℂ))) = 1 ∧

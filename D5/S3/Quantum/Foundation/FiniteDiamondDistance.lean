@@ -254,7 +254,7 @@ theorem result {a b : Type u} [Fintype a] [DecidableEq a] [Fintype b] [Decidable
     let col (j : a) : L.range :=
       ⟨L (EuclideanSpace.single j 1), ⟨EuclideanSpace.single j 1, rfl⟩⟩
     have hcol (j : a) (x : R) : (col j : EuclideanSpace ℂ R) x = A x j := by
-      simp [col, L, Matrix.toEuclideanLin_apply, Matrix.mulVec, dotProduct,
+      simp [col, L, Matrix.toEuclideanLin, Matrix.toLpLin_apply, Matrix.mulVec, dotProduct,
         EuclideanSpace.single_apply]
     let V : Matrix R (Fin r) ℂ := fun x i => (basis i : EuclideanSpace ℂ R) x
     let U : Matrix (Fin r) a ℂ := fun i j => basis.repr (col j) i

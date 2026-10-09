@@ -36,7 +36,6 @@ set_option maxRecDepth 100000
 private lemma ref_eval_normPoly /- proof_shape: bind-only; consumer: ReflectionEvaluation.ref_eval_lhs -/ (z : Fin 16 → ℂ) :
     ref_eval (ref_vars z) ref_normPoly = dotProduct z (star z) := by
   norm_num (config := {decide := true}) [ref_eval, ref_evalTerm, ref_vars, ref_normPoly, dotProduct, Fin.sum_univ_succ]
-  ring!
 open private ref_m0 ref_m1 ref_m2 ref_m3 ref_m4 ref_m5 ref_m6 ref_m7 ref_m8 ref_m9 ref_m10 ref_m11 ref_m12 ref_m13 ref_m14 ref_m15 ref_m16 ref_m17 ref_m18 ref_m19 ref_m20 ref_m21 ref_m22 ref_m23 ref_m24 ref_m25 ref_m26 ref_m27 ref_m28 ref_m29 ref_m30 ref_m31 ref_m32 ref_m33 ref_m34 ref_m35 ref_m36 ref_m37 ref_m38 ref_m39 ref_m40 ref_m41 ref_m42 ref_m43 ref_m44 ref_m45 ref_m46 ref_m47 from D5.S3.Quantum.Entanglement.HiguchiSudbery.SparseReflection
 private lemma ref_eval_m0 /- proof_shape: bind-only; consumer: ReflectionEvaluation.ref_eval_lhs -/ (z : Fin 16 → ℂ) : ref_eval (ref_vars z) ref_m0 = literalMinor z 0 0 0 := by
   norm_num (config := {decide := true}) [ref_eval, ref_evalTerm, literalMinor, cutFlatten, cutIndex, Fin.rev, Fin.succAbove, Matrix.det_fin_three, Matrix.submatrix, Matrix.cons_val_two, Matrix.vecHead, Matrix.vecTail, ref_vars, ref_m0]
@@ -248,7 +247,6 @@ private lemma ref_eval_lhs /- proof_shape: bind-only; consumer: HiguchiSudberyEn
   simp only [Complex.ofReal_sub, Complex.ofReal_mul, Complex.ofReal_pow, Complex.ofReal_ofNat]
   simp only [Complex.star_def, Complex.mul_conj]
   norm_num [totalMinorE3, Fin.sum_univ_succ, Complex.ofReal_add]
-  simp only [show (Fin.succ (2 : Fin 3) : Fin 4) = 3 from rfl]
   ring
 private lemma ref_block_nonneg0 /- proof_shape: bind-only; consumer: ReflectionEvaluation.ref_eval_rhs_nonneg -/ (z : Fin 16 → ℂ) : 0 ≤ (ref_eval (ref_vars z) ref_rawBlock0).re := by
   simp only [ref_rawBlock0, ref_eval_add, Complex.add_re]

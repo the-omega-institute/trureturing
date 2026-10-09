@@ -60,6 +60,71 @@ class NativeBatchPartitionTests:
 
 
 class NativeRecoveryConsumerTests:
+    def test_report_registers_pending_compiler_and_classification_jobs(self):
+        # Hold an early target's real compiler/classifier until Lake has
+        # registered the whole batch. A serial prerequisite await cannot cross
+        # this barrier; no wall-time speedup or source spelling is the oracle.
+        barrier = r'''    let some phasePath ← IO.getEnv "STRATALINT_INSPECTOR_PHASES"
+      | throw <| IO.userError "registration fixture requires phase observations"
+    IO.FS.writeFile (phasePath ++ ".started") "started"
+    let mut registered := false
+    for _ in [:200] do
+      for line in (← IO.FS.readFile phasePath).splitOn "\n" do
+        if let .ok row := Lean.Json.parse line then
+          if (row.getObjValAs? String "phase").toOption == some "lake-prepare-register" &&
+              (row.getObjValAs? String "boundary").toOption == some "finish" then
+            registered := true
+      if registered then break
+      IO.sleep 50
+    unless registered do
+      throw <| IO.userError "report registration awaited an unfinished prerequisite"
+    IO.FS.writeFile (phasePath ++ ".released") "registered"
+'''
+        expected = ['D5.A', 'D5.Alone', 'D5.B', 'Fixture']
+        module = self.root / 'D5/A.lean'
+        classifier = self.root / 'tools/lean-inspector/LeanInformationAudit/Contract/InputDiscovery.lean'
+        original_module, original_classifier = module.read_text(), classifier.read_text()
+        for obligation in ['compiler', 'classification']:
+            with self.subTest(obligation=obligation):
+                phases = self.root / (obligation + '-phases.jsonl')
+                phases.write_text('')
+                self.env['STRATALINT_INSPECTOR_PHASES'] = str(phases)
+                if obligation == 'compiler':
+                    module.write_text('import Lean\n' + original_module + '\n#eval show IO Unit from do\n' +
+                                      '\n'.join(line[2:] for line in barrier.splitlines()) + '\n')
+                else:
+                    module.write_text(original_module)
+                    entry = '    let mut paths := #[]\n'
+                    classifier.write_text(original_classifier.replace(entry,
+                        '    if moduleName == "D5.A" then\n' +
+                        '\n'.join('  ' + line for line in barrier.splitlines()) + '\n' + entry))
+                # Every case starts with cold target/classification artifacts;
+                # the class-owned producer seed remains a Lake-managed input.
+                shutil.rmtree(self.root / '.lake/build/lib', ignore_errors=True)
+                shutil.rmtree(self.root / '.lake/build/lean-inspector/judge-inputs', ignore_errors=True)
+                shutil.rmtree(self.root / '.lake/build/lean-inspector/modules', ignore_errors=True)
+                result = self.build(success=None)
+                observations = [json.loads(line) for line in phases.read_text().splitlines()]
+                data = dict(obligation=obligation, raw_exit=result.returncode,
+                    stdout=result.stdout, stderr=result.stderr, phases=observations,
+                    barrier_started=Path(str(phases) + '.started').exists(),
+                    barrier_released=Path(str(phases) + '.released').exists())
+                if result.returncode == 0:
+                    data['report_modules'] = [row['module'] for row in self.report()[0]]
+                    data['classified_modules'] = sorted(path.stem for path in
+                        (self.root / '.lake/build/lean-inspector/judge-inputs').glob('*.json'))
+                self.record_result(obligation, data, [phases])
+                self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+                self.assertTrue(data['barrier_started'], 'fixture must execute the actual prerequisite')
+                self.assertTrue(data['barrier_released'], 'registration must finish while prerequisite is pending')
+                self.assertEqual(data['report_modules'], expected)
+                self.assertEqual(data['classified_modules'], expected)
+                for phase in ['lake-prepare-register', 'lake-prepare', 'lake-source-whitelists']:
+                    self.assertEqual([row['boundary'] for row in observations if row['phase'] == phase],
+                                     ['start', 'finish'])
+        classifier.write_text(original_classifier)
+        module.write_text(original_module)
+
     def test_release_stage_and_verify_preserve_absent_lake(self):
         self.build()
         self.publish()
@@ -140,6 +205,30 @@ class NativeRecoveryConsumerTests:
         self.write('D5/A.lean', 'def invalid : False := True.intro\n')
         self.build(success=False)
         self.write('D5/A.lean', 'import D5.B\ndef value : Nat := D5.hidden\n')
+        self.write('External.lean', 'def claim : False := True.intro\n')
+        self.utility()
+        rejected = self.build(success=False)
+        self.assertIn('External.lean', rejected.stdout + rejected.stderr)
+        self.record_result('claim-compiler-failure', dict(raw_exit=rejected.returncode,
+            stdout=rejected.stdout, stderr=rejected.stderr))
+        self.write('External.lean', 'import ClaimSupport\ndef claim : Prop := claimSupport\n')
+        self.utility()
+
+        # Even existing warm reports require successful input classification.
+        classifier = self.root / 'tools/lean-inspector/LeanInformationAudit/Contract/InputDiscovery.lean'
+        original = classifier.read_text()
+        classifier.write_text(original.replace('    let mut paths := #[]\n',
+            '    if moduleName == "D5.A" then\n'
+            '      throw <| IO.userError "required fixture classification failure"\n'
+            '    let mut paths := #[]\n'))
+        (self.root / '.lake/build/lean-inspector/judge-inputs/D5.A.json').unlink(missing_ok=True)
+        for scope, target in [('module', 'D5.A:report'), ('package', ':report')]:
+            rejected = self.run_lake('build', target, success=False)
+            self.assertIn('required fixture classification failure', rejected.stdout + rejected.stderr)
+            self.record_result('classification-' + scope + '-failure',
+                dict(target=target, raw_exit=rejected.returncode,
+                     stdout=rejected.stdout, stderr=rejected.stderr))
+        classifier.write_text(original)
         self.write('utility.json', '{invalid')
         self.build(success=False)
         self.utility()
