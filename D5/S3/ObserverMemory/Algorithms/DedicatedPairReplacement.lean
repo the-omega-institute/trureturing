@@ -131,7 +131,7 @@ private theorem common_chain (hp : 2 ≤ p) (hP : 0 < P) (hd : 0 < d)
 private theorem nextDigit_ne (hp : 2 ≤ p) (b : Fin p) : nextDigit(hp, b) ≠ b := by
   let : NeZero p := ⟨by omega⟩
   have one : (1 : Fin p) ≠ 0 := by
-    simp [Fin.ext_iff, Fin.val_one, Nat.mod_eq_of_lt (by omega : 1 < p)]
+    simp [Fin.ext_iff, Nat.mod_eq_of_lt (by omega : 1 < p)]
   simpa [Fin.add_def, Fin.val_one, Nat.mod_eq_of_lt (by omega : 1 < p)] using
     (add_ne_left.mpr one : b + 1 ≠ b)
 
