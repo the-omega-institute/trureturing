@@ -8,9 +8,14 @@ import random
 import shutil
 import shlex
 import subprocess
+import sys
 import tarfile
+from unittest.mock import patch
 
 from lean_seed_support import OTHER, PUBLISH, REV, ROOT, PartitionFixture, digest, prepare_release_report, write
+
+sys.path.insert(0, str(PUBLISH.parent))
+from lean_cache_release import checkout_topology
 
 
 class ReleaseTransportCases(PartitionFixture):
@@ -83,7 +88,7 @@ exit "${FAKE_BUILD_EXIT:-0}"
                         str(linked), "HEAD"], check=True, capture_output=True)
         self.root = linked
 
-    def test_linked_production_fetch_refuses_before_gh_or_lake_writes(self):
+    def assert_linked_fetch_guarded(self, unknown_main=False):
         self.linked_checkout()
         log = self.main_checkout / "linked-gh-calls"
         lake = self.root / ".lake"
@@ -100,13 +105,23 @@ exit "${FAKE_BUILD_EXIT:-0}"
                     receipt = json.loads(line.partition(" ")[2])
                     self.assertEqual("refused", receipt["status"], '[FAIL] linked_fetch_must_refuse')
                     self.assertEqual("linked worktree: release archive disabled", receipt["reason"])
-                    self.assertEqual("sync dev and warm the dev cache: make -C "
-                                     + shlex.quote(str(self.main_checkout)) + " warm-donor", receipt["remediation"])
+                    remediation = ("sync dev and warm the dev cache in this repository's dev main checkout: "
+                                   "make warm-donor there (its location cannot be determined from this worktree)"
+                                   if unknown_main else "sync dev and warm the dev cache: make -C "
+                                   + shlex.quote(str(self.main_checkout)) + " warm-donor")
+                    self.assertEqual(remediation, receipt["remediation"],
+                                     '[FAIL] linked_fetch_names_real_main_checkout')
+                    if unknown_main:
+                        self.assertNotIn(str(self.git_store), receipt["remediation"],
+                                         '[FAIL] linked_fetch_never_names_git_store')
                     self.assertFalse(log.exists(), '[FAIL] linked_fetch_never_calls_gh')
                     self.assertEqual(occupied, lake.exists(), '[FAIL] linked_fetch_never_creates_lake')
                     after = {str(path.relative_to(lake)): (path.read_bytes(), path.stat())
                              for path in lake.rglob("*") if path.is_file()}
                     self.assertEqual(before, after, '[FAIL] linked_fetch_preserves_lake')
+
+    def test_linked_production_fetch_refuses_before_gh_or_lake_writes(self):
+        self.assert_linked_fetch_guarded()
 
     def test_main_production_fetch_reaches_release_listing(self):
         log = self.root / "main-gh-calls"
@@ -115,6 +130,74 @@ exit "${FAKE_BUILD_EXIT:-0}"
         calls = [json.loads(line) for line in log.read_text().splitlines()]
         self.assertTrue(any(call[:2] == ["release", "list"] for call in calls),
                         '[FAIL] main_fetch_keeps_release_listing')
+
+    def separate_git_directory(self):
+        store = self.root / "repository store" / "git directory"
+        store.parent.mkdir()
+        subprocess.run(["git", "init", "-q", "--separate-git-dir", str(store), str(self.root)],
+                       check=True, capture_output=True)
+        self.git_store = store.resolve()
+
+    def test_separate_git_dir_main_production_fetch_reaches_release_listing(self):
+        self.separate_git_directory()
+        self.test_main_production_fetch_reaches_release_listing()
+
+    def test_separate_git_dir_linked_production_fetch_omits_unvalidated_main_checkout(self):
+        self.separate_git_directory()
+        self.assert_linked_fetch_guarded(unknown_main=True)
+
+    def test_checkout_classification_preserves_physical_path_aliases(self):
+        self.assertEqual((False, None), checkout_topology(self.root), '[FAIL] main_path_is_main')
+        self.assertEqual((False, None), checkout_topology(self.root.resolve()), '[FAIL] physical_main_path_is_main')
+        self.linked_checkout()
+        for root in (self.root, self.root.resolve()):
+            self.assertEqual((True, self.main_checkout), checkout_topology(root),
+                             '[FAIL] linked_path_names_physical_main')
+
+    def test_bare_main_checkout_refuses(self):
+        bare = self.root / "bare repository"
+        subprocess.run(["git", "init", "--bare", "-q", str(bare)], check=True, capture_output=True)
+        with self.assertRaises(ValueError, msg='[FAIL] bare_main_must_refuse'):
+            checkout_topology(bare)
+
+    def test_invalid_worktree_records_refuse(self):
+        real_run = subprocess.run
+        main = str(self.root.resolve())
+        head = "HEAD " + self.producer_commit
+        valid = "worktree " + main + "\0" + head + "\0branch refs/heads/main\0\0"
+        records = ("", "\0\0", "worktree \0" + head + "\0detached\0\0",
+                   "worktree relative\0" + head + "\0detached\0\0",
+                   "worktree " + main + "\0detached\0\0",
+                   "worktree " + main + "\0HEAD invalid\0detached\0\0",
+                   "worktree " + main + "\0" + head + "\0\0",
+                   valid.rstrip("\0"), valid + "unparseable\0\0",
+                   valid.replace(head, head + "\0" + head),
+                   valid.replace("branch refs/heads/main", "unknown field"))
+        for record in records:
+            def git_run(command, **options):
+                if command[-4:] == ["worktree", "list", "--porcelain", "-z"]:
+                    return subprocess.CompletedProcess(command, 0, stdout=record, stderr="")
+                return real_run(command, **options)
+            with self.subTest(record=record), patch('lean_cache_release.subprocess.run', side_effect=git_run):
+                with self.assertRaises(ValueError, msg='[FAIL] invalid_worktree_record_must_refuse'):
+                    checkout_topology(self.root)
+
+    def test_linked_main_candidate_requires_same_common_directory(self):
+        foreign = self.root / "foreign repository"
+        subprocess.run(["git", "init", "-q", str(foreign)], check=True, capture_output=True)
+        self.linked_checkout()
+        real_run = subprocess.run
+        record = ("worktree " + str(foreign.resolve()) + "\0HEAD " + self.producer_commit
+                  + "\0branch refs/heads/main\0\0")
+
+        def git_run(command, **options):
+            if command[-4:] == ["worktree", "list", "--porcelain", "-z"]:
+                return subprocess.CompletedProcess(command, 0, stdout=record, stderr="")
+            return real_run(command, **options)
+
+        with patch('lean_cache_release.subprocess.run', side_effect=git_run):
+            self.assertEqual((True, None), checkout_topology(self.root),
+                             '[FAIL] foreign_main_candidate_is_not_a_remediation_path')
 
     def test_undetermined_production_checkout_refuses_before_gh_or_lake_writes(self):
         self.failing_git("rev-parse", 17, "topology unavailable")

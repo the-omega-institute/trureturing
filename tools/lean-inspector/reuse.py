@@ -248,26 +248,31 @@ def seed_format(report):
 def recover_and_reuse(repository, report, output):
     """Restore and consume a checked seed under the existing private-cache lock."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
-    from lean_cache_release import cache_guard, linked_main_checkout, warm_dev_remediation
+    from lean_cache_release import cache_guard, checkout_topology, warm_dev_remediation
     # Authored registration failures must precede optional network recovery.
     capture(repository)
     local = seed_format(report)
     try:
-        main_checkout = linked_main_checkout(repository)
+        linked, main_checkout = checkout_topology(repository)
     except ValueError as error:
         raise CacheIncompatible(local['report_format'], 'unavailable', 'checkout-undetermined',
                                 str(error)) from error
     remediation = None
-    if main_checkout is not None:
-        remediation = (warm_dev_remediation(main_checkout)
-                       + '; then reseed from the warm main checkout: rm -rf -- '
+    if linked:
+        warm_report = ("sync dev and warm the dev cache in this repository's dev main checkout: "
+                       'make warm-donor && make lean-report there '
+                       '(its location cannot be determined from this worktree); then reseed: rm -rf -- '
+                       if main_checkout is None else warm_dev_remediation(main_checkout)
+                       + ' && make -C ' + shlex.quote(str(main_checkout)) + ' lean-report'
+                       + '; then reseed from the warm main checkout: rm -rf -- ')
+        remediation = (warm_report
                        + shlex.quote(str(repository / '.lake')) + ' && make -C '
                        + shlex.quote(str(repository)) + ' lean-cache-ensure')
     try:
         with cache_guard(repository):
             checked = seed_format(report)
             if not checked['compatible']:
-                if main_checkout is not None:
+                if linked:
                     raise CacheIncompatible(local['report_format'], checked['report_format'],
                                             'linked-worktree', remediation)
                 recovery_environment = os.environ.copy()

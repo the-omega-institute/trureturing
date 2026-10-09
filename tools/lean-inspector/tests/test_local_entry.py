@@ -75,7 +75,14 @@ class LocalEntryTests(unittest.TestCase):
         self.output = self.root / '.lake/build/stratalint' / publication.RAW
         self.environment['STRATALINT_LEAN_REPORT_REUSE'] = str(self.seed)
 
-    def assert_linked_guarded(self, kind):
+    def separate_git_directory(self):
+        store = self.root / 'repository store' / 'git directory'
+        store.parent.mkdir()
+        subprocess.run(['git', 'init', '-q', '--separate-git-dir', str(store), str(self.root)],
+                       check=True, capture_output=True)
+        self.git_store = store.resolve()
+
+    def assert_linked_guarded(self, kind, unknown_main=False):
         self.linked_checkout()
         self.damage(kind)
         result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
@@ -83,8 +90,22 @@ class LocalEntryTests(unittest.TestCase):
                          + result.stdout + result.stderr)
         diagnostic = result.stdout + result.stderr
         self.assertIn('reason=linked-worktree', diagnostic, '[FAIL] linked_miss_names_policy')
-        self.assertIn('sync dev and warm the dev cache: make -C '
-                      + shlex.quote(str(self.main_checkout)) + ' warm-donor', diagnostic)
+        remediation = ('sync dev and warm the dev cache in this repository\'s dev main checkout: '
+                       'make warm-donor && make lean-report there '
+                       '(its location cannot be determined from this worktree); then reseed: rm -rf -- '
+                       + shlex.quote(str(self.root / '.lake')) + ' && make -C '
+                       + shlex.quote(str(self.root)) + ' lean-cache-ensure'
+                       if unknown_main else 'sync dev and warm the dev cache: make -C '
+                      + shlex.quote(str(self.main_checkout)) + ' warm-donor && make -C '
+                      + shlex.quote(str(self.main_checkout)) + ' lean-report'
+                      + '; then reseed from the warm main checkout: rm -rf -- '
+                      + shlex.quote(str(self.root / '.lake')) + ' && make -C '
+                      + shlex.quote(str(self.root)) + ' lean-cache-ensure')
+        self.assertIn(remediation, diagnostic,
+                      '[FAIL] linked_remediation_builds_main_report_before_reseed')
+        if unknown_main:
+            self.assertNotIn(str(self.git_store), diagnostic,
+                             '[FAIL] linked_remediation_never_names_git_store')
         self.assertIn('rm -rf -- ' + shlex.quote(str(self.root / '.lake'))
                       + ' && make -C ' + shlex.quote(str(self.root)) + ' lean-cache-ensure', diagnostic)
         self.assertNotIn('lean-cache-from-github-without-mathlib', diagnostic)
@@ -102,6 +123,20 @@ class LocalEntryTests(unittest.TestCase):
 
     def test_linked_incomplete_seed_refuses_without_fetch_or_lake(self):
         self.assert_linked_guarded('incomplete')
+
+    def test_separate_git_dir_linked_report_refusal_omits_unvalidated_main_checkout(self):
+        self.separate_git_directory()
+        self.assert_linked_guarded('missing', unknown_main=True)
+
+    def test_separate_git_dir_main_report_recovery_still_fetches(self):
+        self.separate_git_directory()
+        self.damage('missing')
+        self.restore_seed()
+        result = self.run_entry('--cache-miss-policy', 'fetch-or-fail', direct=True)
+        self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
+        self.assertEqual(len(self.calls), 1, '[FAIL] separate_git_dir_main_fetches_report')
+        self.assertTrue(self.calls[0].startswith('fetch fetch --mode production'))
+        self.assertIn('complete-entry-reused', result.stdout)
 
     def test_linked_explicit_rebuild_never_fetches(self):
         self.linked_checkout()
