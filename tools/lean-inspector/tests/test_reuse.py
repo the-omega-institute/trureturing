@@ -316,7 +316,7 @@ class ReuseTests(unittest.TestCase):
         api.warn_mismatch(api.probe(self.root, self.report), output)
         self.assertEqual(output.getvalue(), '')
 
-    def test_registered_file_mode_changes_invalidate_reuse_and_sealing(self):
+    def test_registered_file_executable_bit_changes_invalidate_reuse_and_sealing(self):
         api = self.receipt()
         captured = api.capture(self.root)
         source = self.root / 'D5/A.lean'
@@ -325,6 +325,24 @@ class ReuseTests(unittest.TestCase):
                         '[FAIL] report_module_mode_change_invalidates_reuse')
         with self.assertRaisesRegex(ValueError, 'inputs changed'):
             api.seal(self.root, self.report, captured)
+
+    def test_checkout_permission_differences_keep_reuse(self):
+        # Two checkouts of one commit may differ in permission bits other than
+        # the owner executable bit Git records; the report is unchanged.
+        paths = ('D5/A.lean', 'lean-toolchain', 'lakefile.toml')
+        for path in paths:
+            (self.root / path).chmod(0o644)
+        api = self.receipt()
+        for path, changed in ((path, mode) for path in paths for mode in (0o600, 0o654)):
+            source = self.root / path
+            with self.subTest(path=path, mode=oct(changed)):
+                source.chmod(changed)
+                try:
+                    self.assertEqual(api.probe(self.root, self.report),
+                                     dict(needs_lake=False, reason='receipt-matched'),
+                                     '[FAIL] checkout_permission_difference_keeps_reuse')
+                finally:
+                    source.chmod(0o644)
 
     def test_producer_program_bytes_never_gate_reuse(self):
         api = self.receipt()
