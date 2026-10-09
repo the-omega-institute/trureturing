@@ -151,13 +151,18 @@ internal static partial class CleanLanesCommand
 
         try
         {
-            RunGit(
-                repositoryRoot,
-                lockedObservation is null
-                    ? ["worktree", "remove", "--force", "--", item.Path]
-                    : ["worktree", "remove", "--force", "--force", "--", item.Path],
-                runner,
-                "could not remove stale worktree");
+            var arguments = new List<string> { "remove", "--path", item.Path };
+            arguments.Add("--expected");
+            arguments.Add(System.Text.Json.JsonSerializer.Serialize(new
+            {
+                path = item.Path, head = item.Head,
+                branch = item.Branch is null ? null : "refs/heads/" + item.Branch,
+            }));
+            if (lockedObservation is not null) arguments.Add("--initialization");
+            var removal = WorktreeProtocolCommand.Run(repositoryRoot, arguments, runner, TimeSpan.FromSeconds(600));
+            if (!removal.Success)
+                return removal.ExitCode == 73 ? Refused("preservation_or_use_unconfirmed")
+                    : new(LaneRemovalOutcome.WorktreeRemoveFailed, "worktree_remove_failed_state_indeterminate");
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)
         {
@@ -169,7 +174,8 @@ internal static partial class CleanLanesCommand
         {
             if (item.Branch is not null && WorktreeCommand.IsManagedBranch(item.Branch))
             {
-                DeleteObservedRef(repositoryRoot, item.Branch, item.Head, runner);
+                if (!DeleteObservedRef(repositoryRoot, item.Branch, item.Head, runner))
+                    return new(LaneRemovalOutcome.BranchRefRetained, "branch_ref_retained");
             }
         }
         catch (Exception exception) when (exception is not OutOfMemoryException)

@@ -268,6 +268,60 @@ os.execv({real_git!r},[{real_git!r}]+sys.argv[1:])
         self.remove(73)
         self.assertTrue(self.g(self.tree, "ls-files", "--unmerged"))
 
+    def recovery_clean_index_with_resolved_conflict_is_preserved(self):
+        oid = self.g(self.tree, "rev-parse", "HEAD:owned").strip()
+        protocol.git(self.tree, "update-index", "--index-info",
+                     input=f"0 {'0' * len(oid)}\towned\n100644 {oid} 1\towned\n100644 {oid} 2\towned\n".encode())
+        (self.tree / "owned").write_text("resolved\n")
+        self.g(self.tree, "add", "owned")
+        (self.tree / "owned").write_text("original\n")
+        self.g(self.tree, "add", "owned")
+        self.assertEqual("", self.g(self.tree, "status", "--porcelain"))
+        self.assertTrue(self.g(self.tree, "ls-files", "--resolve-undo"))
+        self.assertIn("resolve_undo_recovery", self.remove(73).stderr)
+        self.assertTrue(self.tree.exists())
+
+    def recovery_published_prior_commit_message_is_reconstructable(self):
+        (self.tree / "owned").write_text("native commit\n")
+        self.g(self.tree, "add", "owned")
+        self.g(self.tree, "commit", "-m", "native unit")
+        (self.tree / "owned").write_text("checkpoint unit\n")
+        self.checkpoint()
+        self.run_protocol("publish", "--path", self.tree, "--branch", self.branch)
+        self.remove()
+        self.assertFalse(self.tree.exists())
+
+    def recovery_local_repository_is_not_a_remote(self):
+        (self.tree / "owned").write_text("local recovery\n")
+        self.checkpoint()
+        local = self.g(self.tree, "rev-parse", "HEAD").strip()
+        self.g(self.main, "remote", "set-url", "origin", self.main)
+        result = self.run_protocol("publish", "--path", self.tree, "--branch", self.branch, expect=73)
+        self.assertIn("remote_is_local_repository", result.stderr)
+        self.remove(73)
+        self.assertEqual("local recovery\n", (self.tree / "owned").read_text())
+        self.g(self.main, "worktree", "remove", self.tree)
+        self.run_protocol("retire-branch", "--branch", self.branch, "--commit", local, expect=73)
+        self.assertEqual(local, self.g(self.main, "rev-parse", "refs/heads/" + self.branch).strip())
+
+    def recovery_checkpoint_protects_input_reads(self):
+        (self.tree / "owned").write_text("authorized\n")
+        input_file = self.tree / "checkpoint-input"
+        input_file.write_text("unit message\n")
+        writer = self.hold("--write", input_file.name)
+        self.checkpoint("--message-file", input_file, expect=73)
+        input_file.write_bytes(b"owned\0")
+        message = self.root / "message"
+        message.write_text("unit message\n")
+        self.run_protocol("checkpoint", "--path", self.tree, "--paths-from", input_file,
+                          "--message-file", message, expect=73)
+        self.assertEqual(self.base, self.g(self.tree, "rev-parse", "HEAD").strip())
+        writer.communicate("joined\n", timeout=10)
+        self.run_protocol("checkpoint", "--path", self.tree, "--paths-from", input_file,
+                          "--message-file", message)
+        self.assertEqual("authorized\n", self.g(self.tree, "show", "HEAD:owned"))
+        self.assertNotEqual(0, protocol.git(self.tree, "cat-file", "-e", "HEAD:checkpoint-input", check=False).returncode)
+
     def test_external_cwd_user_is_preserved(self):
         job = subprocess.Popen([sys.executable, "-c", 'import sys;print("ready",flush=True);sys.stdin.readline()'],
             cwd=self.tree, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
@@ -511,6 +565,30 @@ os.execv({real_git!r}, [{real_git!r}] + sys.argv[1:])
         self.run_protocol(*args, "--writers-joined")
         self.assertIsNone(other.poll())
         self.remove(73)
+
+    def runlocal_consumer(self):
+        with tempfile.TemporaryDirectory(prefix="worktree-runlocal-", dir="/tmp") as directory:
+            root = Path(directory)
+            dirty, snapshot, unknown = root / "dirty", root / "snapshot", root / "unknown"
+            self.g(self.main, "worktree", "add", "--detach", dirty, self.base)
+            (dirty / "owned").write_text("unpublished recovery\n")
+            snapshot.mkdir()
+            (snapshot / "owned").write_text("original\n")
+            unknown.mkdir()
+            (unknown / "private").write_text("private recovery\n")
+            artifact = root / "artifact"
+            artifact.write_text("unconfirmed file\n")
+            manifest = root / "manifest.json"
+            manifest.write_text(json.dumps(dict(paths=list(map(str, [dirty, snapshot, unknown, artifact])))))
+            command = ["/bin/bash", str(ROOT / "tools/scripts/agent/clean-runlocal.sh"), "--manifest", str(manifest),
+                "--root", str(root), "--source", str(self.main), "--base", self.base, "--min-age-min", "0", "--delete"]
+            result = subprocess.run(command, capture_output=True, text=True, timeout=30)
+            self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+            self.assertEqual([str(snapshot)], json.loads(result.stdout)["removed"])
+            self.assertFalse(snapshot.exists())
+            self.assertEqual("unpublished recovery\n", (dirty / "owned").read_text())
+            self.assertEqual("private recovery\n", (unknown / "private").read_text())
+            self.assertEqual("unconfirmed file\n", artifact.read_text())
 
     def initializer_lifetime(self, cli):
         # Exercise the production .NET launcher, not just Python fork/exec.

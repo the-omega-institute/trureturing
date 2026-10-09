@@ -40,6 +40,9 @@ public sealed partial class CleanLanesCommandTests
                              + ('from '+tip+'\n' if i == 0 else '') + '\n' for i in range(300))
             subprocess.run(['git', 'fast-import', '--quiet', '--force'], cwd=repo, env=env,
                            input=stream, text=True, capture_output=True, check=True)
+            git('init', '--bare', str(store/'remote.git'))
+            git('remote', 'add', 'origin', str(store/'remote.git'))
+            git('push', 'origin', 'dev')
             lock = 'worktree-init:'+'a'*32
             git('worktree', 'lock', '--reason', lock, str(lane))
             scripts = repo/'tools/scripts'; scripts.mkdir(parents=True)
@@ -88,7 +91,7 @@ public sealed partial class CleanLanesCommandTests
                 "root=pathlib.Path(__file__).parent\n"
                 "spec=importlib.util.spec_from_file_location('fixture_host',root/'fixture-host-cleanup.py')\n"
                 "module=importlib.util.module_from_spec(spec); spec.loader.exec_module(module)\n"
-                "def activity(codex):\n"
+                "def activity(codex, *scopes):\n"
                 "    state=json.loads((root/'activity.json').read_text())\n"
                 "    observed={pathlib.Path(p) for p in state['paths']}\n"
                 "    if not state['complete']: raise OSError('incomplete controlled activity evidence')\n"
@@ -190,7 +193,7 @@ public sealed partial class CleanLanesCommandTests
             os.mkfifo(ready); os.mkfifo(release)
             git_shim = bin_dir/'git'
             git_shim.write_text('#!'+sys.executable+'\nimport os, pathlib, sys\n'
-                "if os.environ.get('ENTRY_PAUSE') and sys.argv[1:3]==['worktree','remove']:\n"
+                "if os.environ.get('ENTRY_PAUSE') and 'worktree' in sys.argv and 'remove' in sys.argv:\n"
                 "    with open(os.environ['ENTRY_READY'],'w') as p: p.write('ready\\n')\n"
                 "    with open(os.environ['ENTRY_RELEASE']) as p: p.read()\n"
                 + 'os.execv('+repr(real_git)+', ['+repr(real_git)+']+sys.argv[1:])\n')

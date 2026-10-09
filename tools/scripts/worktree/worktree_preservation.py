@@ -11,7 +11,7 @@ import subprocess
 import time
 
 from worktree_protocol import (Refused, git, value, common, inventory, identity,
-                               acquire, tree_scope, lock_file)
+                               acquire, tree_scope, lock_file, remote_endpoint)
 
 
 def unreadable(error):
@@ -21,16 +21,17 @@ def unreadable(error):
 def remote_roots(source, branch):
     roots = []
     for remote in value(source, "remote").splitlines():
+        endpoint = remote_endpoint(source, remote)
         refs = ["refs/heads/dev"]
         if branch:
             refs.append(branch)
-        result = git(source, "ls-remote", "--heads", remote, *refs)
+        result = git(source, "ls-remote", "--heads", "--", endpoint, *refs)
         for row in result.stdout.splitlines():
             oid, reference = row.split(b"\t")
             if os.fsdecode(reference) not in refs:
                 raise Refused("unexpected_remote_ref")
             tip = oid.decode("ascii")
-            git(source, "fetch", "--no-write-fetch-head", "--no-tags", remote, tip)
+            git(source, "fetch", "--no-write-fetch-head", "--no-tags", "--", endpoint, tip)
             roots.append(tip)
     if not roots:
         raise Refused("remote_preservation_unknown")
@@ -85,15 +86,18 @@ def recovery_objects(source, metadata, branch, head):
         raise Refused("unfinished_index_lock")
     if original.exists():
         oids.add(original.read_text().strip())
-    message = metadata / "COMMIT_EDITMSG"
-    if message.exists():
-        expected = git(source, "show", "-s", "--format=%B", head).stdout
-        if message.read_bytes().rstrip(b"\n") != expected.rstrip(b"\n"):
-            raise Refused("unpublished_commit_message")
     if branch:
         log = common(source) / "logs" / branch
         if log.exists():
             oids.update(reflog_oids(log))
+    message = metadata / "COMMIT_EDITMSG"
+    if message.exists():
+        actual = message.read_bytes()
+        # A checkpoint can leave the last successful native commit's message.
+        # Every candidate below must itself pass remote retention qualification.
+        if not any(actual == git(source, "cat-file", "commit", oid).stdout.partition(b"\n\n")[2]
+                   for oid in [head, *sorted(oids - {head})] if set(oid) != {"0"}):
+            raise Refused("unpublished_commit_message")
     return oids
 
 
@@ -110,6 +114,8 @@ def clean_content(path, metadata, head, object_source=None):
         expected[name] = (mode, oid)
     index = {}
     if (metadata / "index").exists():
+        if git(path, "ls-files", "--resolve-undo", "-z").stdout:
+            raise Refused("resolve_undo_recovery")
         for entry in git(path, "ls-files", "--stage", "-z").stdout.split(b"\0"):
             if not entry:
                 continue
