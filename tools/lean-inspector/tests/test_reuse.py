@@ -39,7 +39,8 @@ class ReuseTests(unittest.TestCase):
                 'scribe-content': dict(include=[], exclude=[])}, report_execution=copy.deepcopy(EXECUTION))
         for path, value in {'D5/A.lean': 'def a := 1\n', 'Audit.lean': 'def audit := 1\n',
                 'Inspector.lean': 'def inspector := 1\n', 'producer.py': '# producer\n',
-                'lean-toolchain': 'fixture\n', 'lakefile.toml': 'name = "fixture"\n'}.items():
+                'lean-toolchain': 'fixture\n', 'lakefile.toml': 'name = "fixture"\n',
+                'lake-manifest.json': json.dumps({'packages': [{'name': 'mathlib', 'rev': 'a' * 40}]})}.items():
             self.write(path, value)
         self.write_policy()
         for name in ['tools/scripts/report/lean-report-selection.py', 'tools/scripts/report/lean-report-input.sh',
@@ -196,6 +197,32 @@ class ReuseTests(unittest.TestCase):
                 report_format=publication.selection.REPORT_FORMAT, compatible=True),
                 '[FAIL] complete_seed_format_does_not_compare_current_inputs')
             self.assertTrue(api.probe(self.root, self.report)['needs_lake'])
+
+    def test_seed_base_record_is_written_after_successful_dev_seal(self):
+        subprocess.run(['git', 'init', '-q', str(self.root)], check=True, capture_output=True)
+        subprocess.run(['git', '-C', str(self.root), 'add', '-A'], check=True, capture_output=True)
+        subprocess.run(['git', '-C', str(self.root), '-c', 'user.name=Fixture',
+                        '-c', 'user.email=fixture@example.invalid', '-c', 'commit.gpgsign=false',
+                        'commit', '-qm', 'seed base fixture'], check=True, capture_output=True)
+        subprocess.run(['git', '-C', str(self.root), 'branch', '-M', 'dev'],
+                       check=True, capture_output=True)
+        api = self.receipt()
+        record = json.loads((self.root / '.lake/lean-report-seed-base.json').read_text())
+        self.assertEqual(record['schema'], 'stratalint-lean-report-seed-base-v1')
+        self.assertEqual(record['producer_commit_sha'],
+                         subprocess.check_output(['git', '-C', str(self.root), 'rev-parse', 'HEAD'],
+                                                 text=True).strip())
+        self.assertEqual(api.seed_format(self.report)['compatible'], True)
+
+    def test_seed_base_record_does_not_participate_in_reuse_or_compatibility(self):
+        api = self.receipt()
+        before = api.probe(self.root, self.report)
+        path = self.root / '.lake/lean-report-seed-base.json'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text('{"schema":"invalid","producer_commit_sha":"not-a-sha"}\n')
+        self.assertEqual(api.probe(self.root, self.report), before)
+        self.assertEqual(api.seed_format(self.report),
+                         {'report_format': publication.selection.REPORT_FORMAT, 'compatible': True})
 
     def test_standalone_program_entry_builds_the_producer_once_before_ensure(self):
         process, calls = self.entry_with_program_build(['leanInspector/LeanInformationAudit'], prebuilt=False)

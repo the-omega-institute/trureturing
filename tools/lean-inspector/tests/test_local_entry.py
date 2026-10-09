@@ -283,6 +283,85 @@ class LocalEntryTests(unittest.TestCase):
                     'mkdir -p .lake/build/stratalint\n'
                     'cp dev-seed/* .lake/build/stratalint/\n')
 
+    def write_base(self, commit):
+        path = self.root / '.lake/lean-report-seed-base.json'
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(json.dumps({
+            'schema': 'stratalint-lean-report-seed-base-v1',
+            'producer_commit_sha': commit,
+        }) + '\n')
+
+    def git_commit(self, message, *, empty=False):
+        if empty:
+            subprocess.run(['git', '-C', str(self.root), 'commit', '--allow-empty', '-qm', message],
+                           check=True, capture_output=True)
+        else:
+            subprocess.run(['git', '-C', str(self.root), 'add', '-A'], check=True, capture_output=True)
+            subprocess.run(['git', '-C', str(self.root), 'commit', '-qm', message],
+                           check=True, capture_output=True)
+        return subprocess.check_output(['git', '-C', str(self.root), 'rev-parse', 'HEAD'], text=True).strip()
+
+    def release_stub(self, producer, *, failure=None):
+        sys.path.insert(0, str(ROOT / 'tools/scripts/worktree'))
+        import lean_cache_release
+        from lean_cache import partition_path
+        cache_key = lean_cache_release.release_key(self.root)
+        partition = partition_path(self.root)
+        tag = lean_cache_release.prefix(partition, cache_key) + 'local-' + producer[:12] + '-20261010T120000000000Z'
+        manifest = self.root / 'release-manifest.json'
+        manifest.write_text(json.dumps({
+            'schema': 'lean-release-seed-v4', 'partition': partition,
+            'cache_key': cache_key, 'producer_commit_sha': producer,
+            'publication_id': tag.rsplit('-', 2)[-3] + '-' + tag.rsplit('-', 2)[-2] + '-' + tag.rsplit('-', 2)[-1],
+            'archive_sha256': 'a' * 64, 'archive_bytes': 1,
+            'parts': [{'name': 'lean-build.tgz', 'sha256': 'a' * 64, 'bytes': 1}],
+        }))
+        # The publication id is fixed by the tag suffix; use a valid local id.
+        manifest_record = json.loads(manifest.read_text())
+        manifest_record['publication_id'] = 'local-' + producer[:12] + '-20261010T120000000000Z'
+        manifest.write_text(json.dumps(manifest_record))
+        digest = __import__('hashlib').sha256(manifest.read_bytes()).hexdigest()
+        self.environment['FAKE_RELEASE_TAG'] = tag
+        self.environment['FAKE_RELEASE_MANIFEST'] = str(manifest)
+        self.environment['FAKE_RELEASE_MANIFEST_DIGEST'] = digest
+        self.environment['FAKE_RELEASE_FAILURE'] = failure or ''
+        self.script('bin/gh', '''
+if [ -n "${FAKE_RELEASE_FAILURE:-}" ]; then echo "$FAKE_RELEASE_FAILURE" >&2; exit 77; fi
+case "$1 $2" in
+  "release list") printf '[{"tagName":"%s","createdAt":"2026-10-10T12:00:00Z","isDraft":false}]\\n' "$FAKE_RELEASE_TAG" ;;
+  api\ repos/the-omega-institute/trureturing/releases/tags/*)
+    printf '{"draft":false,"tag_name":"%s","assets":[{"name":"manifest.json","digest":"sha256:%s"},{"name":"lean-build.tgz","digest":"sha256:%s","size":1}]}\\n' "$FAKE_RELEASE_TAG" "$FAKE_RELEASE_MANIFEST_DIGEST" "$(printf a%.0s {1..64})" ;;
+  "release download")
+    while [ "$#" -gt 0 ]; do
+      if [ "$1" = --dir ]; then dir="$2"; fi
+      shift
+    done
+    cp "$FAKE_RELEASE_MANIFEST" "$dir/manifest.json" ;;
+  *) echo "unsupported gh invocation: $*" >&2; exit 78 ;;
+esac
+''')
+        self.environment['PATH'] = str(self.root / 'bin') + os.pathsep + self.environment['PATH']
+        return tag
+
+    def stale_release_fixture(self, *, local_base=None, producer=None, failure=None, fetch_failure=None):
+        subprocess.run(['git', '-C', str(self.root), 'branch', '-M', 'dev'], check=True, capture_output=True)
+        initial = subprocess.check_output(['git', '-C', str(self.root), 'rev-parse', 'HEAD'], text=True).strip()
+        local_base = local_base or initial
+        if producer is None:
+            producer = self.git_commit('published release', empty=True)
+        self.fixture.write('D5/A.lean', 'def a := 2\n')
+        self.write_base(local_base)
+        self.environment['STRATALINT_LEAN_REPORT_REUSE'] = str(self.seed)
+        self.release_stub(producer, failure=failure)
+        if fetch_failure is not None:
+            self.environment['FAKE_FETCH_FAILURE'] = str(fetch_failure)
+        self.script('tools/scripts/worktree/lean-cache-publish.sh',
+                    'if [ -n "${FAKE_FETCH_FAILURE:-}" ]; then exit "$FAKE_FETCH_FAILURE"; fi\n'
+                    'printf "fetch %s\\n" "$*" >> calls\n'
+                    'mkdir -p .lake/build/stratalint\n'
+                    'cp dev-seed/* .lake/build/stratalint/\n')
+        return initial, producer
+
     def assert_guarded(self, result):
         self.assertNotEqual(result.returncode, 0, '[FAIL] incompatible_entry_must_fail')
         self.assertIn('LEAN_REPORT_CACHE_INCOMPATIBLE', result.stdout + result.stderr,
@@ -446,6 +525,67 @@ class LocalEntryTests(unittest.TestCase):
         result = self.run_entry('LEAN_REPORT=' + str(destination))
         self.assertEqual(result.returncode, 0, result.stdout + result.stderr)
         self.assertTrue(destination.is_file(), '[FAIL] fetched_seed_publishes_requested_output')
+
+    def test_stale_seed_fetches_newer_compatible_release_then_uses_incremental_path(self):
+        initial, release = self.stale_release_fixture()
+        result = self.run_entry()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.calls[0].split()[0], 'fetch')
+        self.assertIn('ensure', self.calls)
+        self.assertTrue(any(call.startswith('lake ') for call in self.calls))
+        self.assertIn('"action":"fetch"', result.stdout)
+        self.assertIn(release, result.stdout)
+        self.assertNotEqual(initial, release)
+
+    def test_stale_seed_keeps_local_when_release_is_older_than_local_base(self):
+        subprocess.run(['git', '-C', str(self.root), 'branch', '-M', 'dev'], check=True, capture_output=True)
+        older = subprocess.check_output(['git', '-C', str(self.root), 'rev-parse', 'HEAD'], text=True).strip()
+        newer = self.git_commit('local newer base', empty=True)
+        self.fixture.write('D5/A.lean', 'def a := 2\n')
+        self.write_base(newer)
+        self.release_stub(older)
+        result = self.run_entry()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.calls[0], 'ensure')
+        self.assertNotIn('fetch ', '\n'.join(self.calls))
+        self.assertIn('"reason":"release-not-newer"', result.stdout)
+
+    def test_stale_seed_keeps_local_when_release_is_not_head_ancestor(self):
+        self.stale_release_fixture(producer='f' * 40)
+        result = self.run_entry()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.calls[0], 'ensure')
+        self.assertNotIn('fetch ', '\n'.join(self.calls))
+        self.assertIn('"reason":"release-not-head-ancestor"', result.stdout)
+
+    def test_stale_seed_with_unknown_base_keeps_local_conservatively(self):
+        _, release = self.stale_release_fixture()
+        (self.root / '.lake/lean-report-seed-base.json').unlink()
+        result = self.run_entry()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.calls[0], 'ensure')
+        self.assertNotIn('fetch ', '\n'.join(self.calls))
+        self.assertIn('"action":"keep"', result.stdout)
+        self.assertIn('"reason":"local-base-unknown"', result.stdout)
+        self.assertIn(release, result.stdout)
+
+    def test_stale_seed_release_listing_failure_keeps_local_and_continues(self):
+        self.stale_release_fixture(failure='listing failed')
+        result = self.run_entry()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.calls[0], 'ensure')
+        self.assertNotIn('fetch ', '\n'.join(self.calls))
+        self.assertIn('"action":"keep"', result.stdout)
+        self.assertIn('listing failed', result.stdout)
+
+    def test_stale_seed_release_download_failure_keeps_local_and_continues(self):
+        self.stale_release_fixture(fetch_failure=19)
+        result = self.run_entry()
+        self.assertNotEqual(result.returncode, 0)
+        self.assertEqual(self.calls[0], 'ensure')
+        self.assertNotIn('fetch ', '\n'.join(self.calls))
+        self.assertIn('"action":"keep"', result.stdout)
+        self.assertIn('"reason":"release-download-failed"', result.stdout)
 
     def test_refresh_option_reaches_canonical_release_reader(self):
         result = subprocess.run(['make', '--no-print-directory',

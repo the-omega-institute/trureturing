@@ -62,8 +62,23 @@ public sealed class WarmDonorScriptTests
         Assert.EndsWith(" lean", calls[3], StringComparison.Ordinal);
     }
 
+    [Fact]
+    public void CleanDevPullsFetchesAStaleReportSeedBeforeBuild()
+    {
+        if (OperatingSystem.IsWindows()) return;
+
+        using var run = Run("dev", "", pullExit: 0, leanExit: 0, staleSeed: true);
+
+        Assert.Equal(0, run.Process.ExitCode);
+        var calls = ScriptHarnessScratch.ReadScratchLines(run.Calls);
+        Assert.Equal("git pull --ff-only origin dev", calls[2]);
+        Assert.Contains("python3 -B", calls[3], StringComparison.Ordinal);
+        Assert.Contains(" refresh-stale-seed --repository ", calls[3], StringComparison.Ordinal);
+        Assert.EndsWith(" lean", calls[4], StringComparison.Ordinal);
+    }
+
     [System.Runtime.Versioning.UnsupportedOSPlatform("windows")]
-    private static ScriptRun Run(string branch, string status, int pullExit, int leanExit)
+    private static ScriptRun Run(string branch, string status, int pullExit, int leanExit, bool staleSeed = false)
     {
         var fixture = new TemporaryDirectory();
         var repository = Path.Combine(fixture.Path, "repository");
@@ -71,6 +86,12 @@ public sealed class WarmDonorScriptTests
         var bin = Path.Combine(fixture.Path, "bin");
         var calls = Path.Combine(fixture.Path, "calls");
         ScriptHarnessScratch.EnsureDirectory(bin);
+        if (staleSeed)
+        {
+            var seed = Path.Combine(repository, ".lake", "build", "stratalint", "raw-lean-report.json");
+            ScriptHarnessScratch.EnsureDirectory(Path.GetDirectoryName(seed)!);
+            File.WriteAllText(seed, "seed");
+        }
         ScriptHarnessScratch.CopyScriptInto(
             Path.Combine(TestRepositoryLayout.FindRoot(), "tools/scripts/worktree/warm-donor.sh"),
             script);
@@ -85,6 +106,9 @@ public sealed class WarmDonorScriptTests
         WriteExecutable(
             Path.Combine(bin, "make"),
             "printf 'make %s\\n' \"$*\" >> \"$WARM_CALLS\"\nexit \"$WARM_LEAN_EXIT\"");
+        WriteExecutable(
+            Path.Combine(bin, "python3"),
+            "printf 'python3 %s\\n' \"$*\" >> \"$WARM_CALLS\"\nexit 0");
         var process = TestProcessRunner.Run(
             "/bin/bash",
             [
