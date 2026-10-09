@@ -618,13 +618,17 @@ private theorem gamma_exact (N : ℕ) (l : ℝ) (hl : 0 ≤ l) :
     · exact le_iInf (fun s => all_controller_lower s.val N l hl)
 
 private theorem some_cost_22 (pi : Strategy) : ∃ i : Fin 5, 22 ≤ cost pi (prototypes i) := by
-  obtain ⟨a,ha⟩ := profile_domination pi
-  have distinct : ∃ i : Fin 5, a ≠ i := by
-    by_cases h : a=0
-    · exact ⟨1,by rw [h]; decide⟩
-    · exact ⟨0,h⟩
-  obtain ⟨i,hi⟩ := distinct
-  exact ⟨i,by simpa [hi] using ha i⟩
+  have core := ActualJointResponseCostCore.result 5 (by omega) prototypes
+    (fun i => (prototype_facts.2.1 i).1) prototype_facts.1
+  obtain ⟨v,hv,dom⟩ := core.2.2.2.1 pi
+  obtain ⟨r,hr⟩ := hv
+  obtain ⟨i,_,hgain⟩ := Scale38NestedCompensation.root_excess prototypes
+    prototype_facts.2.2 Finset.univ r (by simp)
+  refine ⟨i,?_⟩
+  have bound := dom i
+  rw [hr i,(prototype_facts.2.1 i).2] at bound
+  dsimp only at bound ⊢
+  omega
 
 private theorem all_H_lower (s : PrefixSampler Strategy) (N : ℕ) (l : ℝ) :
     ENNReal.ofReal (22*N) ≤ H s N l := by
