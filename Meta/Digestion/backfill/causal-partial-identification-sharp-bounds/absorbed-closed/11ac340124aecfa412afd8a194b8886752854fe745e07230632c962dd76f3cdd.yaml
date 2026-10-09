@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:11ac340124aecfa412afd8a194b8886752854fe745e07230632c962dd76f3cdd
   normalized_sha256: sha256:11ac340124aecfa412afd8a194b8886752854fe745e07230632c962dd76f3cdd
 cas_ref: sha256:11ac340124aecfa412afd8a194b8886752854fe745e07230632c962dd76f3cdd
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Causal/ConvexSharpIdentification.sharp_interval_of_valid_bounds_and_endpoint_witnesses
+    target_statement_id: sha256:3a7b29a48875969f6756c46476c0f74290027cf920f430c16896d469aecec1be
 receipts:
   unresolved_subitems: []
