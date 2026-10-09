@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/Dyadic/WhiteboxDyadicPrefixTail
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/Dyadic/WhiteboxDyadicPrefixTail
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
@@ -8,6 +8,7 @@
 
 import D5.S3.Arith.FibonacciAtomic.MersenneDyadicSupportLines
 import D5.S3.Arith.FibonacciAtomic.CarryGraphRealization
+import D5.S0.Naming.GreenClassMeasure
 import Mathlib.MeasureTheory.Integral.Lebesgue.Add
 
 set_option autoImplicit false
@@ -19,16 +20,18 @@ open scoped BigOperators ENNReal Classical
 open D5.S0.Tower.DBonacci.TerminalSampling (Tape fairTape fairBit)
 open D5.S3.Arith.FibonacciAtomic.DyadicSupportLines
 
+/-- The literal observed fair-bit prefix. -/
 def readPrefix (d : ℕ) (t : Tape) : Fin d → Bool := fun i => t i.val
 
-def cylinder (d : ℕ) (w : Fin d → Bool) : Set Tape := {t | readPrefix d t = w}
+local notation "cylinder" =>
+  (fun (d : ℕ) (w : Fin d → Bool) => Set.ofPred (fun t : Tape => readPrefix d t = w))
 
 private theorem cylinder_data (d : ℕ) (w : Fin d → Bool) :
     MeasurableSet (cylinder d w) ∧ fairTape (cylinder d w) = (2 : ℝ≥0∞)⁻¹ ^ d := by
   have eqn : cylinder d w = Set.pi (↑(Finset.range d) : Set ℕ)
       (fun n => {if h : n < d then w ⟨n,h⟩ else false}) := by
     ext t
-    simp only [cylinder, Set.mem_setOf_eq, Set.mem_pi, Finset.mem_coe,
+    simp only [Set.mem_setOf_eq, Set.mem_pi, Finset.mem_coe,
       Finset.mem_range, Set.mem_singleton_iff]
     constructor
     · intro h n hn
@@ -40,12 +43,13 @@ private theorem cylinder_data (d : ℕ) (w : Fin d → Bool) :
   rw [eqn]
   constructor
   · exact MeasurableSet.pi (Finset.countable_toSet _) (fun _ _ => measurableSet_singleton _)
-  · rw [fairTape, Measure.infinitePi_pi _ (fun _ _ => measurableSet_singleton _)]
-    have mass (x : Bool) : fairBit {x} = (2 : ℝ≥0∞)⁻¹ := by
-      cases x <;> simp [fairBit]
-    simp_rw [mass]
-    simp
+  · simpa [D5.S0.Naming.GreenClassMeasure.stringMeasure,
+      D5.S0.Naming.GreenClassMeasure.uniformAlphabet,
+      D5.S0.Naming.GreenClassMeasure.greenClass, fairTape, fairBit] using
+      D5.S0.Naming.GreenClassMeasure.greenClass_measure (Finset.range d)
+        (fun n => if h : n < d then w ⟨n,h⟩ else false)
 
+/-- Number of depth-d prefixes carrying a specified output. -/
 def layerCount {α : Type*} (d : ℕ) (f : (Fin d → Bool) → α) (a : α) : ℕ :=
   (Finset.univ.filter fun w => f w = a).card
 
@@ -57,7 +61,7 @@ private theorem finite_event {α : Type*} (d : ℕ) (f : (Fin d → Bool) → α
   let W := {w : Fin d → Bool // f w = a}
   have event : {t : Tape | f (readPrefix d t) = a} = ⋃ w : W, cylinder d w.val := by
     ext t
-    simp only [Set.mem_setOf_eq, Set.mem_iUnion, cylinder]
+    simp only [Set.mem_setOf_eq, Set.mem_iUnion]
     exact ⟨fun h => ⟨⟨readPrefix d t,h⟩,rfl⟩, fun ⟨w,h⟩ => h ▸ w.property⟩
   have disj : Pairwise fun u v : W => Disjoint (cylinder d u.val) (cylinder d v.val) := by
     intro u v huv
@@ -71,23 +75,29 @@ private theorem finite_event {α : Type*} (d : ℕ) (f : (Fin d → Bool) → α
   rw [tsum_fintype]
   simp [W, Fintype.card_subtype, layerCount]
 
+/-- An input-independent persistent finite-prefix observer with almost-sure return. -/
 structure PrefixSampler (α : Type*) where
   observe : (d : ℕ) → (Fin d → Bool) → Option α
   persistent : ∀ (d e : ℕ) (hde : d ≤ e) (w : Fin e → Bool) (i : α),
     observe d (fun j => w ⟨j.val,lt_of_lt_of_le j.isLt hde⟩) = some i → observe e w = some i
   terminates : ∀ᵐ t ∂fairTape, ∃ d i, observe d (readPrefix d t) = some i
 
+/-- Tapes on which a label is emitted at a finite depth. -/
 def emitted {α : Type*} (s : PrefixSampler α) (i : α) : Set Tape :=
   {t | ∃ d, s.observe d (readPrefix d t) = some i}
 
+/-- The common finite output probability law. -/
 def law {m : ℕ} (s : PrefixSampler (Fin m)) (i : Fin m) : ℝ := (fairTape (emitted s i)).toReal
 
+/-- Tapes that have not emitted at depth d. -/
 def active {α : Type*} (s : PrefixSampler α) (d : ℕ) : Set Tape :=
   {t | s.observe d (readPrefix d t) = none}
 
+/-- Extended bit charge, including exceptional infinite executions. -/
 def bill {α : Type*} (s : PrefixSampler α) (t : Tape) : ℝ≥0∞ :=
   ∑' d : ℕ, (active s d).indicator (fun _ => 1) t
 
+/-- Every eventual emitted-label event is measurable. -/
 theorem emitted_measurable {α : Type*} (s : PrefixSampler α) (i : α) :
     MeasurableSet (emitted s i) := by
   have ev : emitted s i = ⋃ d, {t : Tape | s.observe d (readPrefix d t) = some i} := by
@@ -112,6 +122,7 @@ open scoped BigOperators ENNReal Classical
 open D5.S0.Tower.DBonacci.TerminalSampling (Tape fairTape)
 open D5.S3.Arith.FibonacciAtomic.DyadicSupportLines
 
+/-- Persistence makes the eventual labels mutually exclusive. -/
 theorem emitted_disjoint {α : Type*} (s : PrefixSampler α) :
     Pairwise fun i j => Disjoint (emitted s i) (emitted s j) := by
   intro i j hij
@@ -123,6 +134,7 @@ theorem emitted_disjoint {α : Type*} (s : PrefixSampler α) :
     s.persistent e (max d e) (le_max_right _ _) (readPrefix (max d e) t) j he
   exact hij (Option.some.inj (h1.symm.trans h2))
 
+/-- Almost-sure termination gives a nonnegative unit-mass finite law. -/
 theorem law_simplex {m : ℕ} (s : PrefixSampler (Fin m)) :
     (∀ i, 0 ≤ law s i) ∧ ∑ i, law s i = 1 := by
   have all : (⋃ i, emitted s i) =ᵐ[fairTape] Set.univ := by
@@ -179,6 +191,7 @@ private theorem layer_partition {m : ℕ} (s : PrefixSampler (Fin m)) (d : ℕ) 
     intro i hi
     congr 1; ext w; simp
 
+/-- Every sampler pays at least the common-law residual cylinder mass at every depth. -/
 theorem cylinder_tail_lower {m : ℕ} (s : PrefixSampler (Fin m)) (d : ℕ) :
     ENNReal.ofReal (D5.S3.Arith.FibonacciAtomic.DyadicSupportLines.residual (law s) d / (2 : ℝ)^d) ≤ fairTape (active s d) := by
   have part : ((layerCount d (s.observe d) none : ℕ) : ℤ) +
@@ -208,6 +221,7 @@ private theorem residual_nonnegative {m : ℕ} (s : PrefixSampler (Fin m)) (d : 
   rw [← Finset.mul_sum, (law_simplex s).2, mul_one] at H
   simpa [D5.S3.Arith.FibonacciAtomic.DyadicSupportLines.residual, Int.cast_sum] using sub_nonneg.mpr H
 
+/-- The expected bit charge dominates the summable common-law dyadic cost. -/
 theorem ddg_lower {m : ℕ} (s : PrefixSampler (Fin m))
     (hs : Summable (fun d : ℕ => D5.S3.Arith.FibonacciAtomic.DyadicSupportLines.residual (law s) d / (2 : ℝ)^d)) :
     ENNReal.ofReal (cost (law s)) ≤ ∫⁻ t, bill s t ∂fairTape := by
@@ -225,6 +239,7 @@ open scoped BigOperators ENNReal Classical
 open MeasureTheory
 open D5.S0.Tower.DBonacci.TerminalSampling (Tape fairTape)
 
+/-- Map emitted labels while retaining every observation depth. -/
 def relabel {α β : Type*} (f : α → β) (s : PrefixSampler α) : PrefixSampler β where
   observe d w := (s.observe d w).map f
   persistent d e hde w i h := by
@@ -238,6 +253,7 @@ def relabel {α β : Type*} (f : α → β) (s : PrefixSampler α) : PrefixSampl
     obtain ⟨d,a,ha⟩ := ht
     exact ⟨d,f a,by simp [ha]⟩
 
+/-- The relabelled event is exactly the union over its original label fiber. -/
 theorem relabel_emitted {α β : Type*} (f : α → β) (s : PrefixSampler α) (i : β) (t : Tape) :
     t ∈ emitted (relabel f s) i ↔ ∃ a, t ∈ emitted s a ∧ f a = i := by
   constructor
@@ -247,6 +263,7 @@ theorem relabel_emitted {α β : Type*} (f : α → β) (s : PrefixSampler α) (
   · rintro ⟨a,⟨d,ha⟩,hi⟩
     exact ⟨d,by simp [relabel,ha,hi]⟩
 
+/-- Relabelling preserves the entire bit charge on every tape. -/
 theorem relabel_bill {α β : Type*} (f : α → β) (s : PrefixSampler α) :
     bill (relabel f s) = bill s := by
   funext t
@@ -255,6 +272,7 @@ theorem relabel_bill {α β : Type*} (f : α → β) (s : PrefixSampler α) :
   funext d
   simp [active,relabel]
 
+/-- The nonnegative extended bit charge is measurable. -/
 theorem bill_measurable {α : Type*} (s : PrefixSampler α) : Measurable (bill s) :=
   Measurable.ennreal_tsum fun d => measurable_const.indicator
     ((finite_event d (s.observe d) none).1)
@@ -448,7 +466,6 @@ theorem path_expectation (m : ℕ) (g : Path) (hm : 2 ≤ m) (hg : IsRootPath m 
   let s := fromPath m g hm hg
   have stop : s.observe (a+1) (readPrefix (a+1) t) = some i :=
     (observation m g hm hg (a+1) t i).mpr ⟨a,by omega,hs⟩
-  have exists_stop : ∃ d j, s.observe d (readPrefix d t) = some j := ⟨a+1,i,stop⟩
   have before (d : ℕ) (hd : d < a+1) : s.observe d (readPrefix d t) = none := by
     cases hh : s.observe d (readPrefix d t) with
     | none => rfl

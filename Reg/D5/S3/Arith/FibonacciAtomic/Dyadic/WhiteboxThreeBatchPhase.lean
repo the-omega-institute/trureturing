@@ -54,7 +54,7 @@ private theorem rejected (r : Fin 4) : ¬ arena.Law (changed r) := by
   intro h
   have data := h 1 (by decide) 1 (by norm_num)
   fin_cases r <;>
-    simp [changed, realize, Phase.sharp] at data
+    norm_num [changed, realize, Phase.sharp, Fin.ext_iff] at data
 
 private theorem nonconstant (r : Fin 4) :
     actual.readout r 10 1 ≠ actual.readout r 10 2 := by
@@ -101,17 +101,30 @@ def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0,
     owner := `D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase
     definition := some {
       owner := `D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase
-      name := `D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Claim }
+      name := `D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Claim
+      path := #[] }
     coordinates := #[2]
     readouts := #[
       { path := #["body", "body", "body", "body", "fn", "arg", "fn", "arg"]
-        stateOperand := some #["fn", "arg"] },
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := some #["fn", "arg"]
+        booleanPredicate := false },
       { path := #["body", "body", "body", "body", "arg", "fn", "arg", "fn", "arg"]
-        stateOperand := some #["fn", "arg"] },
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := some #["fn", "arg"]
+        booleanPredicate := false },
       { path := #["body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
-        stateOperand := some #["fn", "arg"] },
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := some #["fn", "arg"]
+        booleanPredicate := false },
       { path := #["body", "body", "body", "body", "arg", "arg", "arg", "arg", "arg", "arg", "arg", "fn", "arg", "fn", "arg"]
-        stateOperand := some #["fn", "arg"] }] }
+        stateBinder := 0
+        functionOperand := false
+        stateOperand := some #["fn", "arg"]
+        booleanPredicate := false }] }
   continuation := .unknown
   familyRecord := none
   options := #[]

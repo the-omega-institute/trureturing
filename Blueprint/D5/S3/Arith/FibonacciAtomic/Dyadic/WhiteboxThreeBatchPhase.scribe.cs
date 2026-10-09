@@ -65,7 +65,8 @@ internal sealed class WhiteboxThreeBatchPhaseDocument : IScribeDocumentDefinitio
                     + "rawH take infima over all input-independent almost-surely stopping prefix samplers; "
                     + "coarseGamma and coarseH restrict to coarse samplers. Expectations and infima use "
                     + "nonnegative extended reals, so infinite expected bit costs remain included.")),
-                MathBlock(Disp(Equal(sharp, Call("min", first, Call("min", middle, last))))),
+                MathBlock(Disp(All(n, Nat, All(l, Real,
+                    Equal(sharp, Call("min", first, Call("min", middle, last))))))),
                 Describe.Lean(DescribeId.Create("result"), DeclarationHandle.Create(Prefix + "result"),
                     H("Exact values, thresholds, and attained infima"),
                     StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),

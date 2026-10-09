@@ -1,5 +1,5 @@
 /- GID: D5/S3/Arith/FibonacciAtomic/Dyadic/WhiteboxThreeBatchPhase
-   generality: G
+   generality: I
    mirror-B: D5/B/S3/Arith/FibonacciAtomic/Dyadic/WhiteboxThreeBatchPhase
    mirror-E: none(waiver:unbounded-symbolic-proof)
    anchors: []
@@ -81,8 +81,6 @@ private theorem uniform_law (i : Fin 3) : Real.ofDigits (labelDigit uniformThree
     funext d
     have hi : (i.val : ℤ) < 3 := by exact_mod_cast i.isLt
     have hj : (j.val : ℤ) < 3 := by exact_mod_cast j.isLt
-    have hi0 : (0 : ℤ) ≤ i.val := by positivity
-    have hj0 : (0 : ℤ) ≤ j.val := by positivity
     by_cases hd : d%2=0 <;> simp [labelDigit,labelSet,uniformThree,hd,hi,hj,not_le_of_gt hi,not_le_of_gt hj,
       Nat.not_le_of_lt i.isLt,Nat.not_le_of_lt j.isLt]
   have H := (D5.S3.Arith.FibonacciAtomic.CarryGraphRealization.result 3 (by omega)
@@ -126,8 +124,6 @@ open scoped BigOperators
 open D5.S3.Arith.FibonacciAtomic
 
 def sharp (N l : ℝ) : ℝ := min (17*N) (min (67*N/4+3*l/2) (50*N/3+8*l/3))
-
-
 
 private theorem support (p : Fin 3 → ℝ) (hp : ∀ i, 0 ≤ p i) (hs : ∑ i, p i = 1) :
     0 ≤ minimumMass p ∧ minimumMass p ≤ 1/3 ∧
@@ -224,9 +220,9 @@ def coarseH (N : ℕ) (l : ℝ) : ℝ≥0∞ := ⨅ s : {s : PrefixSampler Strat
 
 /-- Exact all-sampler/controller target. No conclusion is included among its assumptions. -/
 def Claim : Prop := ∀ N : ℕ, 1 ≤ N → ∀ l : ℝ, 0 < l →
-  rawGamma N l = ENNReal.ofReal (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.sharp N l) ∧
-  coarseGamma N l = ENNReal.ofReal (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.sharp N l) ∧
-  (∃ s : PrefixSampler Strategy, Coarse s ∧ G s N l = ENNReal.ofReal (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.sharp N l)) ∧
+  rawGamma N l = ENNReal.ofReal (Phase.sharp N l) ∧
+  coarseGamma N l = ENNReal.ofReal (Phase.sharp N l) ∧
+  (∃ s : PrefixSampler Strategy, Coarse s ∧ G s N l = ENNReal.ofReal (Phase.sharp N l)) ∧
   (N ≤ 6*l → rawGamma N l = ENNReal.ofReal (17*N)) ∧
   (6*l ≤ N → N ≤ 14*l → rawGamma N l = ENNReal.ofReal (67*N/4+3*l/2)) ∧
   (14*l ≤ N → rawGamma N l = ENNReal.ofReal (50*N/3+8*l/3)) ∧
@@ -290,10 +286,6 @@ private theorem restrict_recipe {m : ℕ} {F : Fin m → Source} {S : Finset (Fi
       have same (i : Fin m) (hi : i ∈ T) : a.val i = a.val i0 :=
         Finset.card_le_one.mp card _ (Finset.mem_image.mpr ⟨i,hi,rfl⟩)
           _ (Finset.mem_image.mpr ⟨i0,hi0,rfl⟩)
-      have eqn : survivors T a.val (a.val i0) = T := by
-        ext i
-        simp only [survivors,Finset.mem_filter]
-        exact ⟨fun h => h.1,fun h => ⟨h,same i h⟩⟩
       have hchild : T ⊆ survivors S a.val (a.val i0) := by
         intro i hi
         simp only [survivors,Finset.mem_filter]
@@ -358,8 +350,6 @@ private theorem actual_endpoints (a : Fin 3) : ∃ pi : Strategy,
   have H := (hcost (row3 i)).2
   simpa only [Nat.reduceMul,Nat.reduceAdd,row3_injective.eq_iff] using H
 
-
-
 def endpointIndex (pi : Strategy) : Fin 3 := Classical.choose (profile_domination pi)
 
 local notation "labelSampler" => (fun s : PrefixSampler Strategy => relabel endpointIndex s)
@@ -403,9 +393,6 @@ private theorem profileRead_le (s : PrefixSampler Strategy) (i : Fin 3) :
   have H := endpointIndex_bound pi i
   unfold profileCost
   by_cases hh : endpointIndex pi=i <;> simp [hh] at H ⊢ <;> exact_mod_cast H
-
-
-
 
 private theorem profileRead_measurable (s : PrefixSampler (Fin 3)) (i : Fin 3) :
     Measurable (profileRead s i) := Finset.measurable_sum _
@@ -457,7 +444,7 @@ private theorem fixed_tuple_lower (s : PrefixSampler Strategy) (N : ℕ) (l : �
     (f := fun q : Tuple N => ∫⁻ t, paidTuple s N l q t ∂fairTape) (Finset.mem_univ q))
 
 private theorem all_controller_lower (s : PrefixSampler Strategy) (N : ℕ) (l : ℝ) (hl : 0 ≤ l) :
-    ENNReal.ofReal (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.sharp N l) ≤ G s N l := by
+    ENNReal.ofReal (Phase.sharp N l) ≤ G s N l := by
   let p := law (labelSampler s)
   let t := minimumMass p
   have hp := law_simplex (labelSampler s)
@@ -467,14 +454,14 @@ private theorem all_controller_lower (s : PrefixSampler Strategy) (N : ℕ) (l :
   norm_num only [Nat.reducePow,Nat.reduceSub,Nat.cast_ofNat] at H
   have costpos : 0 ≤ DyadicSupportLines.cost p :=
     (MersenneDyadicSupportLines.simplex_data 2 p hp.2).2.2
-  have ht17 : 0 ≤ 17-t := by have hh := (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.support p hp.1 hp.2).2.1; dsimp [t]; linarith
-  have real_lower := D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.affine_lower N l t (DyadicSupportLines.cost p) hl
-    (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.support p hp.1 hp.2).1 (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.support p hp.1 hp.2).2.1
-    (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.support p hp.1 hp.2).2.2.1 (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.support p hp.1 hp.2).2.2.2
+  have ht17 : 0 ≤ 17-t := by have hh := (Phase.support p hp.1 hp.2).2.1; dsimp [t]; linarith
+  have real_lower := Phase.affine_lower N l t (DyadicSupportLines.cost p) hl
+    (Phase.support p hp.1 hp.2).1 (Phase.support p hp.1 hp.2).2.1
+    (Phase.support p hp.1 hp.2).2.2.1 (Phase.support p hp.1 hp.2).2.2.2
   have paid := ddg_lower (labelSampler s) H.1
   simp only [relabel_bill] at paid
   calc
-    ENNReal.ofReal (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.sharp N l) ≤
+    ENNReal.ofReal (Phase.sharp N l) ≤
         ENNReal.ofReal ((N : ℝ)*(17-t)+l*DyadicSupportLines.cost p) := by
       apply ENNReal.ofReal_le_ofReal
       nlinarith only [real_lower]
@@ -486,11 +473,9 @@ private theorem all_controller_lower (s : PrefixSampler Strategy) (N : ℕ) (l :
     _ ≤ ENNReal.ofReal l*(∫⁻ x, bill s x ∂fairTape)+(N : ℝ≥0∞)*ENNReal.ofReal (17-t) := by
       have mult : ENNReal.ofReal l*ENNReal.ofReal (DyadicSupportLines.cost p) ≤
           ENNReal.ofReal l*(∫⁻ x, bill s x ∂fairTape) := by
-        exact mul_le_mul_left' paid (ENNReal.ofReal l)
+        gcongr
       exact add_le_add mult le_rfl
     _ ≤ G s N l := by simpa only [ht,p] using fixed_tuple_lower s N l i
-
-
 
 def endpoint (a : Fin 3) : Strategy := Classical.choose (actual_endpoints a)
 
@@ -589,17 +574,15 @@ private theorem point_law (i : Fin 3) : law point i = if i=0 then 1 else 0 := by
   rw [evt]
   split_ifs <;> simp
 
+local notation "biased" => Paths.fromPath 3 Codes.biasedThree (by omega) Codes.biased_legal
 
-
-local notation "biased" => D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxDyadicPrefixTail.Paths.fromPath 3 D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Codes.biasedThree (by omega) D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Codes.biased_legal
-
-local notation "uniform" => D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxDyadicPrefixTail.Paths.fromPath 3 D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Codes.uniformThree (by omega) D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Codes.uniform_legal
+local notation "uniform" => Paths.fromPath 3 Codes.uniformThree (by omega) Codes.uniform_legal
 
 private theorem biased_law (i : Fin 3) : law biased i = if i=2 then (1/2 : ℝ) else 1/4 := by
-  rw [D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxDyadicPrefixTail.Paths.path_law,D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Codes.biased_law]
+  rw [Paths.path_law,Codes.biased_law]
 
 private theorem uniform_law (i : Fin 3) : law uniform i = (1/3 : ℝ) := by
-  rw [D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxDyadicPrefixTail.Paths.path_law,D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Codes.uniform_law]
+  rw [Paths.path_law,Codes.uniform_law]
 
 private theorem code_bills :
     (∫⁻ t, bill biased t ∂fairTape) = ENNReal.ofReal (3/2) ∧
@@ -645,8 +628,8 @@ private theorem three_lines (N : ℕ) (l : ℝ) (hl : 0 ≤ l) :
       congr 1; ring
 
 private theorem phase_attainment (N : ℕ) (l : ℝ) (hl : 0 ≤ l) :
-    ∃ s : PrefixSampler Strategy, Coarse s ∧ G s N l = ENNReal.ofReal (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.sharp N l) := by
-  have P := D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.phase_switches N l hl
+    ∃ s : PrefixSampler Strategy, Coarse s ∧ G s N l = ENNReal.ofReal (Phase.sharp N l) := by
+  have P := Phase.phase_switches N l hl
   have L := three_lines N l hl
   by_cases low : (N : ℝ) ≤ 6*l
   · exact ⟨endpointSampler point,endpointSampler_coarse _,by rw [L.1,P.1 low]⟩
@@ -655,8 +638,8 @@ private theorem phase_attainment (N : ℕ) (l : ℝ) (hl : 0 ≤ l) :
     · exact ⟨endpointSampler biased,endpointSampler_coarse _,by rw [L.2.1,P.2.1 (by linarith) (by linarith)]⟩
 
 private theorem gamma_exact (N : ℕ) (l : ℝ) (hl : 0 ≤ l) :
-    rawGamma N l = ENNReal.ofReal (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.sharp N l) ∧
-    coarseGamma N l = ENNReal.ofReal (D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.sharp N l) := by
+    rawGamma N l = ENNReal.ofReal (Phase.sharp N l) ∧
+    coarseGamma N l = ENNReal.ofReal (Phase.sharp N l) := by
   obtain ⟨s,hcoarse,he⟩ := phase_attainment N l hl
   constructor
   · apply le_antisymm
@@ -727,10 +710,11 @@ private theorem H_exact (N : ℕ) (l : ℝ) :
         ⟨endpointSampler point,endpointSampler_coarse _⟩).trans_eq (H_attainment N l)
     · exact le_iInf (fun s => all_H_lower s.val N l)
 
+/-- Sharp raw/coarse batch infima, phase thresholds, and coarse attainment. -/
 theorem result : Claim := by
   intro N hN l hl
   have gamma := gamma_exact N l hl.le
-  have phases := D5.S3.Arith.FibonacciAtomic.Dyadic.WhiteboxThreeBatchPhase.Phase.phase_switches N l hl.le
+  have phases := Phase.phase_switches N l hl.le
   exact ⟨gamma.1,gamma.2,phase_attainment N l hl.le,
     fun h => by rw [gamma.1,phases.1 h],
     fun h1 h2 => by rw [gamma.1,phases.2.1 h1 h2],

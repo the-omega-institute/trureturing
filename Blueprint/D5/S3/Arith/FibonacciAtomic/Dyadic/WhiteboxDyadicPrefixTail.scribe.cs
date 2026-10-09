@@ -31,7 +31,7 @@ internal sealed class WhiteboxDyadicPrefixTailDocument : IScribeDocumentDefiniti
         var m = V("m"); var d = V("d"); var i = V("i"); var a = V("a"); var t = V("t");
         var s = V("s"); var f = V("f"); var alpha = V("A"); var beta = V("B");
         var fin = Call("Fin", m); var sampler = Call("PrefixSampler", fin);
-        var p = Call("law", s); var mu = V("mu");
+        var p = Call("law", s);
         Formula General(Formula body) => All(alpha, V("Type"), All(s, Call("PrefixSampler", alpha), body));
         Formula Finite(Formula body) => All(m, Nat, All(s, sampler, body));
         Formula Relabel(Formula body) => All(alpha, V("Type"), All(beta, V("Type"),
@@ -63,11 +63,11 @@ internal sealed class WhiteboxDyadicPrefixTailDocument : IScribeDocumentDefiniti
                     General(Call("PairwiseDisjoint", Seq(i, Sp, Mapsto, Sp, Call("emitted", s, i)))),
                     "Two finite emissions on one tape agree after both prefixes are extended to their common maximum depth."),
                 Thm("law_simplex", "The common finite output law",
-                    Finite(And(All(i, fin, Seq(D(0), Sp, Le, Sp, Call("p", i))),
-                        Equal(Sum(i, fin, Call("p", i)), D(1)))),
+                    Finite(And(All(i, fin, Seq(D(0), Sp, Le, Sp, Call("law", s, i))),
+                        Equal(Sum(i, fin, Call("law", s, i)), D(1)))),
                     "Almost-sure termination and disjoint emission events make p a nonnegative probability vector."),
                 Thm("cylinder_tail_lower", "Every depth pays its dyadic residual",
-                    Finite(All(d, Nat, Seq(Call("ofReal", ratio), Sp, Le, Sp, Call("mu", survival)))),
+                    Finite(All(d, Nat, Seq(Call("ofReal", ratio), Sp, Le, Sp, Call("fairTape", survival)))),
                     "The floor bound on every stopped-label cylinder count leaves at least R(p,d) active cylinders, each of mass 2^(-d)."),
                 Thm("ddg_lower", "The expected bit bill dominates the dyadic cost",
                     Finite(Imp(Call("Summable", Seq(d, Colon, Sp, Nat, Sp, Mapsto, Sp, ratio)),
