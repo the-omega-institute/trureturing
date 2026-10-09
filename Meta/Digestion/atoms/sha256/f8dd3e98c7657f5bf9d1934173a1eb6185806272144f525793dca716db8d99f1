@@ -1,0 +1,6 @@
+## 六、$p$ 进精度的损失，可以直接读出是哪几位
+
+Claim status: open
+
+设 $J_f\in\mathbb Z\setminus\{0\}$，$p$ 为素数，$e=v_p(J_f)\ge0$，$J_f=p^eu$，$p\nmid u$；有限精度指数 $k\ge1$。
+

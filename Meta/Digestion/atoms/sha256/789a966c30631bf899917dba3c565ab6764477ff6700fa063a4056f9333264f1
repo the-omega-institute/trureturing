@@ -1,0 +1,10 @@
+### 定义 4（提升后的关系体）
+
+取实值函数 $f:\Sigma\to\mathbb R$，令 $v_s=(x(s),y(s),z(s))$。把每个模式提升为 $(v_s,f_s)\in\mathbb R^4$，定义：
+
+$$
+\mathcal K_f=\operatorname{conv}\{(v_s,f_s):s\in\Sigma\}.
+$$
+
+如果 $f$ 没有新增关系，这五个提升点仍落在同一个三维仿射空间中。
+

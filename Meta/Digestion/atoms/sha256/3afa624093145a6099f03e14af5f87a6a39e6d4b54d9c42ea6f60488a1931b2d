@@ -1,0 +1,24 @@
+### theorem 8（两个边界秩都为四，但遗漏不同；合并以后恢复全部五模式概率）
+
+Claim status: open
+
+$$
+\boxed{\dim\mathcal R_{\mathrm{geo}}=\dim\mathcal R_{\mathrm{beh}}=4,}
+$$
+
+$$
+\boxed{\dim(\mathcal R_{\mathrm{geo}}\cap\mathcal R_{\mathrm{beh}})=3,}
+$$
+
+$$
+\boxed{\mathcal R_{\mathrm{geo}}+\mathcal R_{\mathrm{beh}}=\operatorname{span}\{1,x,y,z,xy\}=K^\Sigma.}
+$$
+
+**证明。**
+
+两者的公共部分包含 $1,x,y+z$。
+
+几何边界区分 $y$ 与 $z$，但没有 $xy$。行为边界保留 $xy$，但不能区分两个具有同样 $y+z$ 的中间、高端模式。
+
+直接比较五个模式上的函数值，得到所列维数。证毕。
+
