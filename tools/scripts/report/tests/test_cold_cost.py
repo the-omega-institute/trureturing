@@ -72,6 +72,124 @@ def portable_control_flow(test):
         test.addCleanup(patcher.stop)
 
 
+class TraceRepresentationTests(unittest.TestCase):
+    """Portable field/consumer correspondence, without native probe evidence."""
+    def setUp(self):
+        self.tmp = tempfile.TemporaryDirectory(prefix="trace representation ")
+        self.addCleanup(self.tmp.cleanup)
+        self.output = Path(self.tmp.name)
+        self.console = io.StringIO()
+        self.trace = cost.SignalTrace(self.output)
+        self.trace.sink = cost.SignalSink(self.output / "trace.jsonl", console=self.console,
+                                          limit=1536 * 1024)
+        self.addCleanup(self.trace.stop)
+
+    def records(self):
+        return [json.loads(line) for line in (self.output / "trace.jsonl").read_text().splitlines()]
+
+    def test_full_task_domain_fits_without_sampling_or_loss(self):
+        expected = []
+        for index in range(4096):
+            # Distinct external sender threads and short-lived target tasks;
+            # exact births remain distinct even when a numeric PID is reused.
+            sender = f"{200 + index % 2}\t20\t1\t20\t1\t{9000000000000 + index}\texternal-thread"
+            target = f"{400 + index % 2}\t40\t30\t40\t1\t{9100000000000 + index}\tworker-thread"
+            line = f"D\tsignal\t{9200000000000 + index}\t17\t0\t0\t1\t0\t{sender}\t{target}"
+            expected.append(cost.parse_signal_wire(line))
+            self.trace._line(line)
+        self.assertEqual(self.trace.sink.dropped_events, 0)
+        self.trace.health.update(HEALTHY)
+        cost.require_trace_health(self.trace.stop())
+        records = self.records()
+        self.assertEqual([cost.decode_signal_record(row) for row in records[:-1]], expected)
+        self.assertEqual(len(records), 4097)
+        self.assertEqual(self.console.getvalue(), "".join(
+            "SIGNAL_DIAGNOSTIC " + line for line in (self.output / "trace.jsonl").read_text().splitlines(keepends=True)))
+        self.assertEqual(self.trace.sink.bytes, len(self.console.getvalue().encode()))
+        expanded_bytes = sum(len(("SIGNAL_DIAGNOSTIC " + json.dumps(row, sort_keys=True) + "\n").encode())
+                             for row in expected)
+        self.assertLess(self.trace.sink.bytes, expanded_bytes * .6)
+
+    def test_all_nine_probe_records_recover_clocks_identities_and_raw_values(self):
+        sender = "21\t20\t1\t20\t1\t18446744073709551614\texternal"
+        target = "41\t40\t30\t40\t1\t18446744073709551615\tworker"
+        lines = [f"D\tsignal\t100\t15\t7\t-6\t1\t2\t{sender}\t{target}",
+                 f"D\tdelivery\t99\t9\t8\t128\t{target}",
+                 f"D\tfork\t98\t{sender}\t{target}",
+                 f"D\texit\t97\t{target}\t15",
+                 f"D\toom-victim\t96\t40\t{sender}"]
+        for kind in ("kill", "tkill", "tgkill", "pidfd_send_signal"):
+            lines.append(f"D\t{kind}\t95\t0\t-40\t40\t4294967295\t{sender}")
+        self.trace.fixture = True
+        for line in lines:
+            self.trace._line(line)
+        self.trace.stop()
+        rows = self.records()[:-1]
+        self.assertEqual([row["wire"] for row in rows], lines)
+        decoded = [cost.decode_signal_record(row) for row in rows]
+        self.assertEqual(decoded, [cost.parse_signal_wire(line) for line in lines])
+        self.assertEqual(decoded[0]["sender"]["pid"], 21)
+        self.assertEqual(decoded[0]["sender"]["tgid"], 20)
+        self.assertEqual(decoded[0]["target"]["start_ns"], 18446744073709551615)
+        self.assertEqual((decoded[0]["signal"], decoded[1]["signal"], decoded[3]["kernel_exit_code"]), (15, 9, 15))
+        self.assertNotIn("target", decoded[4])
+        self.assertTrue(all(row["requested_target"] == -40 for row in decoded[5:]))
+        self.assertEqual(self.trace.events, [row for row in decoded
+                         if row["kind"] in ("signal", "delivery", "kill", "fork", "exit")])
+
+    def test_retained_wire_is_consumed_by_fixture_attribution_and_rejects_missing_bridges(self):
+        sender = "20\t20\t1\t40\t1\t1000000000\tpython"
+        target = "21\t21\t1\t40\t1\t2000000000\tpython"
+        lines = [f"D\tkill\t1\t15\t-40\t0\t0\t{sender}",
+                 f"D\tsignal\t2\t15\t0\t0\t1\t0\t{sender}\t{target}",
+                 f"D\tdelivery\t3\t15\t0\t0\t{target}",
+                 f"D\texit\t4\t{target}\t15"]
+        for line in lines:
+            self.trace._line(line)
+        self.trace.stop()
+        rows = self.records()[:-1]
+        fixtures = [{"mode": "group", "pgid": 40,
+                     "sender": cost.parse_signal_wire(lines[0])["sender"],
+                     "targets": [cost.parse_signal_wire(lines[1])["target"]]}]
+        cost.validate_fixture_attribution(rows, fixtures)
+        for index in range(len(rows)):
+            with self.subTest(missing=index), self.assertRaises(ValueError):
+                cost.validate_fixture_attribution(rows[:index] + rows[index + 1:], fixtures)
+        for before, after in (("\t-40\t", "\t40\t"), ("\t15\t", "\t9\t"),
+                              ("\t2000000000\t", "\t3000000000\t")):
+            changed = [dict(row, wire=row["wire"].replace(before, after)) for row in rows]
+            with self.subTest(change=(before, after)), self.assertRaises(ValueError):
+                cost.validate_fixture_attribution(changed, fixtures)
+
+    def test_decoder_refuses_ambiguous_wire_and_preserves_other_records(self):
+        wire = "D\tkill\t1\t15\t-40\t0\t0\t20\t20\t1\t40\t1\t100\tpython"
+        for row in ({"kind": "exit", "wire": wire},
+                    {"kind": "kill", "wire": wire, "signal": 9},
+                    {"kind": "kill", "wire": None},
+                    {"kind": "kill", "wire": wire + "\textra"},
+                    {"kind": "kill", "wire": wire.replace("\t100\t", "\t-100\t")}):
+            with self.subTest(row=row), self.assertRaises(ValueError):
+                cost.decode_signal_record(row)
+        for row in ({"kind": "trace-terminal", **HEALTHY, "dropped_events": 1, "retention": "censored"},
+                    {"kind": "stage-process", "pid": 20, "start_ticks": 100},
+                    {"kind": "event-loss", "lost_events": 7}):
+            self.assertEqual(cost.decode_signal_record(row), row)
+
+    def test_packed_events_still_exhaust_fixed_budget_and_refuse_workload(self):
+        self.trace.sink.limit = 4096
+        self.trace.sink.reserve = 1024
+        line = "D\tkill\t1\t15\t-40\t0\t0\t20\t20\t1\t40\t1\t100\tpython"
+        for _ in range(100):
+            self.trace._line(line)
+        self.trace.health.update(HEALTHY)
+        health = self.trace.stop()
+        self.assertGreater(health["dropped_events"], 0)
+        self.assertLessEqual(self.trace.sink.bytes, 4096)
+        self.assertEqual(self.records()[-1]["retention"], "censored")
+        with self.assertRaises(ValueError):
+            cost.require_trace_health(health)
+
+
 class ProviderStartupTests(unittest.TestCase):
     """Portable launch/stdio fixtures; no hosted ARM or privilege evidence."""
     def setUp(self):

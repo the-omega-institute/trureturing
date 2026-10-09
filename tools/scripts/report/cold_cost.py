@@ -289,6 +289,22 @@ def parse_signal_wire(line):
     return row
 
 
+def decode_signal_record(record):
+    """Expand a self-contained retained wire record for evidence consumers.
+
+    The existing wire parser supplies the clocks and complete task identities.
+    Legacy expanded events and non-kernel records retain their original shape.
+    """
+    if "wire" not in record:
+        return record
+    if set(record) != {"kind", "wire"} or not isinstance(record["wire"], str):
+        raise ValueError("ambiguous retained signal record")
+    event = parse_signal_wire(record["wire"])
+    if event["kind"] != record["kind"]:
+        raise ValueError("retained signal kind mismatch")
+    return event
+
+
 def require_trace_health(health):
     required = {"ready", "lost_events", "dropped_events", "parse_errors", "reader_error", "collector_returncode"}
     if (not required <= health.keys() or not health.get("ready") or any(health.get(k, 0) for k in
@@ -372,6 +388,7 @@ class SignalTrace:
                        "identity_start_clock": "task_struct.start_boottime; boot-nanoseconds",
                        "ordering": "collector arrival; no global cross-CPU causal order",
                        "event_scope": "system-wide signal generation/delivery, fork, exit, signal syscalls and OOM victim",
+                       "kernel_record_encoding": "JSON kind/wire; decode_signal_record restores parse_signal_wire fields; each record is self-contained",
                        "limitations": "no IPC contents, actor motive, provider identity or historical events; absent terminal is censored",
                        "clock_ticks_per_second": os.sysconf("SC_CLK_TCK")})
         try:
@@ -545,7 +562,11 @@ class SignalTrace:
                 self.events.append(event)
             else:
                 self.health["parse_errors"] += 1
-        self.sink.emit(event)
+        # Retain every validated kernel record without repeating its expanded
+        # clock/identity field names. Fixture memory consumes the parsed event;
+        # file/live consumers recover exactly that event through the decoder.
+        self.sink.emit(event if event["kind"] == "trace-ready" else
+                       {"kind": event["kind"], "wire": line})
 
     def snapshot(self):
         health = dict(self.health, dropped_events=self.sink.dropped_events if self.sink else 0,
@@ -666,6 +687,7 @@ def known_sender_fixture(output, sink=None):
 
 
 def validate_fixture_attribution(events, fixtures):
+    events = [decode_signal_record(event) for event in events]
     hz = os.sysconf("SC_CLK_TCK")
     def matches(actual, expected):
         return (actual.get("pid") == expected.get("pid", expected["tgid"])
