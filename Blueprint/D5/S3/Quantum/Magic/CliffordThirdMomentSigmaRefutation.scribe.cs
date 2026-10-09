@@ -35,7 +35,7 @@ internal sealed class CliffordThirdMomentSigmaRefutationDocument : IScribeDocume
             Node("classification", "All subspaces are graphs in dimension five",
                 Eq(Call("sigmaSubspaces", D(5)), Call("isoSubspaces", D(5))),
                 "A vector in ZMod 5 cubed with zero coordinate sum and zero sum of squares is zero. In a stochastic Lagrangian subspace this makes the second projection injective: apply the quadratic condition to a pair with second component zero and to its sum with the all-ones pair. Both domain and codomain have dimension three, so the projection is a linear equivalence. Its inverse gives a matrix whose graph is the subspace; the quadratic condition makes this matrix an isometry, and the all-ones pair makes it stochastic. Conversely, every stochastic orthogonal graph satisfies all three defining conditions.",
-                "sigmaSubspaces_five", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
+                "sigmaSubspaces_five", DescribeRole.Theorem, AssessedProvenance.FromLiterature(Source)),
             Node("result", "Both lower bounds fail", new Formula.Not(F.Id("claim")),
                 "Use the normalized two-qudit state psi in dimension five. The graph classification identifies the full aggregate with the isotropic aggregate 140241723/24017978. There are six distinct permutation graphs, each with expectation one, so their removal gives nonsymmetric aggregate -3866145/24017978. The first value is less than six and the second is negative. Thus both universally quantified lower bounds fail.",
                 "result", DescribeRole.Theorem, AssessedProvenance.FromRepo(),
