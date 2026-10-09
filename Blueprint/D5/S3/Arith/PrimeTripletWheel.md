@@ -95,20 +95,20 @@ prime triplets.
 The Lean declarations in
 D5/S3/Arith/PrimeTripletWheel.lean are:
 
-- tripletPlus_chirality;
-- tripletMinus_chirality;
+- reflected_gapDifference;
 - reflect_involutive;
 - plus_reflect_iff;
 - reflectEquiv;
 - candidate_space_card_eq.
 
-The first two declarations use the unnormalised gap difference
+The general direction declaration uses the integer gap difference
 \[
-\chi_L(a,b,c)=(c-b)-(b-a).
+d(g_1,g_2)=g_2-g_1
 \]
-Thus the values are \(+2\) and \(-2\). The normalised theory convention
-\(\chi=(g_2-g_1)/2\) has values \(+1\) and \(-1\), so
-\(\chi_L=2\chi\) on these templates.
+and proves that reversing the ordered gaps negates the direction. The concrete
+templates in the finite audit use the normalised theory convention
+\(\chi=(g_2-g_1)/2\), with values \(+1\) and \(-1\). If the unnormalised
+integer difference is used instead, its values are \(+2\) and \(-2\).
 
 The pair-distance object in the original finite audit is an unordered distance
 support, a Finset, rather than a multiplicity-sensitive multiset. In this
