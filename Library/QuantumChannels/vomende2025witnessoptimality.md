@@ -20,8 +20,8 @@ Source: https://arxiv.org/abs/2505.15615v2
 
 Version 2 (27 June 2025; v1 21 May 2025), comments "submitted to Phys. Rev. A."; Crossref lists no
 journal version (checked 2026-10-09). The quotations are from the v2 TeX source (`main.tex`); page
-numbers refer to the v2 PDF. Witnesses and block positivity: Section II.2, p. 3. Theorem 2: Section
-III.A, p. 8. Remark 3(i): p. 8. Corollary 2: p. 9. The question: Section IV, p. 12.
+numbers refer to the v2 PDF. Witnesses and block positivity: Section II B, p. 3. Theorem 2: Section
+III A, p. 8. Remark 3(i): p. 8. Corollary 2: p. 9. The question: Section IV, p. 12.
 
 Witnesses (p. 3):
 
