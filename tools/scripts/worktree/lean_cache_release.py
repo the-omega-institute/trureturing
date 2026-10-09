@@ -9,6 +9,7 @@ import json
 import os
 import pathlib
 import re
+import shlex
 import shutil
 import subprocess
 import sys
@@ -104,6 +105,28 @@ def gh(deadline, *args):
 
 def receipt(verb, status, **fields):
     print("LEAN_CACHE_" + verb.upper() + " " + json.dumps({"status": status, **fields}, separators=(",", ":")))
+
+
+def linked_main_checkout(root):
+    """Return the main checkout for a linked tree; refuse unknown Git topology."""
+    try:
+        directories = []
+        for arguments in (("--absolute-git-dir",), ("--path-format=absolute", "--git-common-dir")):
+            result = subprocess.run(["git", "-C", str(root), "rev-parse", *arguments],
+                                    check=True, capture_output=True, text=True, timeout=10)
+            value = result.stdout.strip()
+            if not value or "\n" in value or not pathlib.Path(value).is_absolute():
+                raise ValueError("Git directory is not an absolute path")
+            directories.append(pathlib.Path(value).resolve())
+        git_directory, common_directory = directories
+        return common_directory.parent if git_directory != common_directory else None
+    except (OSError, ValueError, subprocess.SubprocessError) as error:
+        detail = getattr(error, "stderr", None) or str(error)
+        raise ValueError(f"cannot determine checkout Git directories: {detail}") from error
+
+
+def warm_dev_remediation(main_checkout):
+    return "sync dev and warm the dev cache: make -C " + shlex.quote(str(main_checkout)) + " warm-donor"
 
 
 def existing_release(tag, deadline):
@@ -558,6 +581,15 @@ def fetch(root, partition, writer_owned=False, refresh_stale=False):
     if os.environ.get("GITHUB_ACTIONS") == "true":
         receipt("fetch", "skipped", reason="CI does not consume Release seeds")
         return 0
+    try:
+        main_checkout = linked_main_checkout(root)
+    except ValueError as error:
+        receipt("fetch", "refused", reason=str(error))
+        return 1
+    if main_checkout is not None:
+        receipt("fetch", "refused", reason="linked worktree: release archive disabled",
+                remediation=warm_dev_remediation(main_checkout))
+        return 1
     if os.environ.get("STRATALINT_ACTIONS_CACHE_SEEDED", "").lower() in ("1", "true"):
         receipt("fetch", "skipped", reason="Actions supplied an applicable seed")
         return 0

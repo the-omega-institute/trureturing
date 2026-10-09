@@ -14,6 +14,7 @@ import json
 import os
 from pathlib import Path
 import platform
+import shlex
 import subprocess
 import sys
 import tempfile
@@ -193,11 +194,13 @@ def reuse(repository, report, output):
 
 
 class CacheIncompatible(ValueError):
-    def __init__(self, local, restored, reason):
+    def __init__(self, local, restored, reason, remediation=None):
+        if remediation is None:
+            remediation = 'Restore with make lean-cache-from-github-without-mathlib REFRESH_STALE=1'
         super().__init__(f'LEAN_REPORT_CACHE_INCOMPATIBLE local_format={local} '
                          f'current_format={publication.selection.REPORT_FORMAT} '
                          f'restored_format={restored} reason={reason}\n'
-                         'Restore with make lean-cache-from-github-without-mathlib REFRESH_STALE=1 '
+                         f'{remediation} '
                          'or rebuild explicitly with make lean-report REBUILD_REPORT_CACHE=1')
 
 
@@ -245,14 +248,28 @@ def seed_format(report):
 def recover_and_reuse(repository, report, output):
     """Restore and consume a checked seed under the existing private-cache lock."""
     sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts/worktree'))
-    from lean_cache_release import cache_guard
+    from lean_cache_release import cache_guard, linked_main_checkout, warm_dev_remediation
     # Authored registration failures must precede optional network recovery.
     capture(repository)
     local = seed_format(report)
     try:
+        main_checkout = linked_main_checkout(repository)
+    except ValueError as error:
+        raise CacheIncompatible(local['report_format'], 'unavailable', 'checkout-undetermined',
+                                str(error)) from error
+    remediation = None
+    if main_checkout is not None:
+        remediation = (warm_dev_remediation(main_checkout)
+                       + '; then reseed from the warm main checkout: rm -rf -- '
+                       + shlex.quote(str(repository / '.lake')) + ' && make -C '
+                       + shlex.quote(str(repository)) + ' lean-cache-ensure')
+    try:
         with cache_guard(repository):
             checked = seed_format(report)
             if not checked['compatible']:
+                if main_checkout is not None:
+                    raise CacheIncompatible(local['report_format'], checked['report_format'],
+                                            'linked-worktree', remediation)
                 recovery_environment = os.environ.copy()
                 recovery_environment['STRATALINT_ACTIONS_CACHE_SEEDED'] = '0'
                 fetched = subprocess.run(['/bin/bash', str(repository / 'tools/scripts/worktree/lean-cache-publish.sh'),
@@ -266,7 +283,7 @@ def recover_and_reuse(repository, report, output):
             # Input differences select Lake's incremental path, not a new cache key.
             return reuse(repository, report, output)
     except BlockingIOError as error:
-        raise CacheIncompatible(local['report_format'], 'unavailable', 'cache-busy') from error
+        raise CacheIncompatible(local['report_format'], 'unavailable', 'cache-busy', remediation) from error
 
 
 def main():
