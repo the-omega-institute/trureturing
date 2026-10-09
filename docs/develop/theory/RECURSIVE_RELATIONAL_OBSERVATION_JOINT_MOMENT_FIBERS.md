@@ -4223,7 +4223,7 @@ D_{YZ}^{\rm coarse}&=\{L,LLL,LLR,LR,RL,RLL,RLRL,RLRR\}.
 \tag{JM.191}
 $$
 
-$Z_p$ 与 $T_n$ 的相应支持恰为 $pD_{YZ}^s$。它们在 $h_{n,S}$ 的粗回复完全相同；对每个 $p\in K$ 加入 $pLLR=\alpha$，或者加入 $\kappa r(pL,U)=\mathsf{none}$，均使该位置的旧 $pLL=\mathsf{none}$ 在所有匹配来源中只能是原始 $\mathsf{br}$。若每个 hidden 位置都至少采用其中一种细化，则整个 $W_n$ 的相容来源只有 $T_n$。
+对每个 $p\in E_b$，$Z_p$ 与 $T_n$ 的相应支持恰为 $pD_{YZ}^s$。当 $p\in K$ 时，它们在 $h_{n,S}$ 的粗回复完全相同；当 $p\in S$ 时，它们在已查询地址 $pLLR$ 的粗回复分别为 $\mathsf{none}$ 与 $\alpha$，故粗前缀不同。对每个 $p\in K$ 加入 $pLLR=\alpha$，或者加入 $\kappa r(pL,U)=\mathsf{none}$，均使该位置的旧 $pLL=\mathsf{none}$ 在所有匹配来源中只能是原始 $\mathsf{br}$。若每个 hidden 位置都至少采用其中一种细化，则整个 $W_n$ 的相容来源只有 $T_n$。
 
 证明。全部非缺席地址及标签如下，表外均为 $\mathsf{abs}$。
 
@@ -4233,6 +4233,8 @@ $Z_p$ 与 $T_n$ 的相应支持恰为 $pD_{YZ}^s$。它们在 $h_{n,S}$ 的粗�
 | $Z$ | $\varepsilon,R,RL,RLR$ | $L,RLRL,RLRR$ | $RLL,RR$ |
 
 逐列比较给（JM.191）；$LL$ 与 $RLR$ 仅交换分支／缺席，恰被粗投影删除，其余八列均有不同叶读数。最大节点深度为四，更长地址双方都缺席。块根和真祖先均仍为分支，锥外不变，所以这也是在整树上的完整支持。
+
+若 $p\in K$，该锥在（JM.189）中只查询 $pLL,pRR$：前者在 $T_n,Z_p$ 上分别为 $\mathsf{br},\mathsf{abs}$，粗回复同为 $\mathsf{none}$；后者在两源上均为 $\alpha$。其余查询都在不变的锥中，故整个粗前缀相同。若 $p\in S$，该锥改查询 $pLLR,pRR$；$pLLR$ 在 $T_n$ 上为 $\alpha$，在 $Z_p$ 上为 $\mathsf{abs}$，而 $pRR$ 仍同为 $\alpha$，故整个粗前缀不同。
 
 匹配 $pRR=\alpha$ 已强制 $p$ 为分支，因满二叉而强制 $pL$ 存在。故在同一实际来源上，$pL=\mathsf{none}$ 排除叶标签后只能是分支；它又强制 $pLL$ 存在，旧 $pLL=\mathsf{none}$ 因而只能是分支。若改用 $pLLR=\alpha$，其父 $pLL$ 直接被强制为分支。两种细化都是合法地址请求；推断出的分支不补写到缓存，缓存只保留实际取得的回复。全部 hidden 块细化后，旧缓存的粗约束已经蕴含61.1的全部原始约束，故该定理强制 $U=T_n$。$\square$
 
