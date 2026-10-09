@@ -46,8 +46,56 @@ public sealed partial class CleanLanesCommandTests
     [InlineData("--base")]
     [InlineData("--force", "--force")]
     [InlineData("--lanes-only", "--lanes-only")]
+    [InlineData("--active-paths-file")]
+    [InlineData("--active-path", "/active")]
     public void ParseRejectsUnknownMissingOrDuplicateArguments(params string[] arguments)
     {
+        var exception = Assert.Throws<InvalidOperationException>(() =>
+            CleanLanesCommand.ParseArguments(arguments));
+
+        Assert.Contains("USAGE: StrataLint clean-lanes", exception.Message, StringComparison.Ordinal);
+    }
+
+    [Fact]
+    public void ParseReadsActivePathsFromOneFile()
+    {
+        using var directory = new TemporaryDirectory(TestScratchRoot.Current);
+        var first = Path.Combine(directory.Path, "active path");
+        var second = Path.Combine(directory.Path, "nested", "lane") + Path.DirectorySeparatorChar;
+        var file = Path.Combine(directory.Path, "activity.json");
+        File.WriteAllText(file, System.Text.Json.JsonSerializer.Serialize(new[] { first, second }));
+
+        var options = CleanLanesCommand.ParseArguments(["--active-paths-file", file]);
+
+        Assert.Equal(
+            new[] { first, Path.TrimEndingDirectorySeparator(second) }.Order(StringComparer.Ordinal),
+            options.ActivePaths.Order(StringComparer.Ordinal));
+    }
+
+    [Theory]
+    [InlineData("missing")]
+    [InlineData("not-json")]
+    [InlineData("object")]
+    [InlineData("relative")]
+    [InlineData("empty-entry")]
+    [InlineData("duplicate-option")]
+    public void ParseRejectsUnusableActivePathsFile(string shape)
+    {
+        using var directory = new TemporaryDirectory(TestScratchRoot.Current);
+        var file = Path.Combine(directory.Path, "activity.json");
+        var content = shape switch
+        {
+            "not-json" => "[",
+            "object" => "{}",
+            "relative" => "[\"relative/lane\"]",
+            "empty-entry" => "[\"\"]",
+            _ => "[]",
+        };
+        if (shape != "missing") File.WriteAllText(file, content);
+        string[] arguments = shape == "duplicate-option"
+            ? ["--active-paths-file", file, "--active-paths-file", file]
+            : ["--active-paths-file", file];
+
         var exception = Assert.Throws<InvalidOperationException>(() =>
             CleanLanesCommand.ParseArguments(arguments));
 
