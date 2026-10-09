@@ -11,7 +11,7 @@ internal sealed class ChenKatoBrandaoTraceNormCMIRefutationDocument : IScribeDoc
         LibraryNoteRef.Create("D5/L/QuantumChannels/chen2020mpdoparent");
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
-        "Local trace-norm contraction and trace-norm conditional mutual information define a proposed uniform data-processing inequality for finite Kraus channels.",
+        "A flagged measurement in two qubit bases strictly contracts local trace distance while preserving the trace-norm conditional mutual information of a tripartite state.",
         H("Trace-norm CMI contraction conjecture"),
         Blocks(
             Node("localContraction", "Local trace-norm contraction ratio", LocalContractionFormula(),
@@ -22,7 +22,14 @@ internal sealed class ChenKatoBrandaoTraceNormCMIRefutationDocument : IScribeDoc
                 DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("claim", "Chen–Kato–Brandão Conjecture III.2", ClaimFormula(),
                 "Conjecture III.2, PDF p. 17, verbatim: For any channel E: C to CPrime with local contraction ratio eta_1,C < 1, there exists a global constant eta < 1 such that for any tripartite system ABC and any state rho_ABC, I_1(A:CPrime|B)_E(rho) <= eta I_1(A:C|B)_rho. All dimensions range over natural numbers. The finite Kraus family is arbitrary and its completeness equation is the channel hypothesis. L_i is the literal identity on AB kronecker K_i, and the bound applies uniformly to every DensityState on the input product carrier, including singular states.",
-                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source))),
+                DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
+            Node("result", "A flagged qubit measurement refutes the conjecture",
+                Disp(new Formula.Not(F.Id("claim"))),
+                "Take the channel from a qubit to four classical outcomes that measures the computational basis with probability 1/2 and the plus-minus basis with probability 1/2, recording both the basis and the outcome. Its local trace-norm contraction ratio is at most 1/sqrt(2), strictly less than one. Let A and B be qubits and let the input state be the equal mixture of the Bell state phi-plus on BC flagged by A = 0 and the Bell state psi-minus on BC flagged by A = 1. The AB marginal is the identity divided by four, so the second trace-norm term vanishes both before and after the channel. The input trace-norm conditional mutual information equals one. The centered output is Hermitian and its square is the identity divided by 256; multiplying it by 16 gives a unitary whose real trace pairing with the centered output is one. Thus the output trace-norm conditional mutual information is at least one. The asserted uniform bound would force 1 <= eta for eta < 1, a contradiction.",
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("chen-kato-brandao-2020-trace-norm-cmi-contraction"),
+                    ResolutionKind.Refuted))),
         []));
 
     private static DocumentBlock Node(string name, string title, Formula formula, string prose,
