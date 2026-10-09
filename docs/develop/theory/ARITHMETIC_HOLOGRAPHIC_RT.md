@@ -3122,4 +3122,23 @@ For three or more sectors, the analogous statement requires an explicit hypothes
 
 **范围。** 这是 §39 任意源谱相干信道的有限特征实现定理。它不对任意乘积信道的分支数给出下界，也不改变精确钻石范数最优值；不增加 CFT、引力、通信辅助或共享纠缠的解释。
 
+## 41. 全多坐标特征湮灭下的多扇区最小支撑
+
+**定理 41.1（完整多坐标正交性的充要条件）。** 设 $S$ 为有限扇区集，$d_s\ge2$，$H$ 为有限阿贝尔群。每个扇区的受控循环移位由满射同态
+$$
+\pi_s:H\twoheadrightarrow\mathbb Z/d_s\mathbb Z
+$$
+给出，并令联合同态为 $\Pi=(\pi_s)_s:H\to A:=\prod_{s\in S}\mathbb Z/d_s\mathbb Z$。令 $h$ 在 $H$ 上均匀分布。对 $A$ 的角色 $\chi=(\chi_s)_s\in\widehat A=\prod_s\widehat{\mathbb Z/d_s\mathbb Z}$，定义 $\operatorname{supp}\chi=\{s:\chi_s\ne1\}$。则对给定的 $(H,\Pi)$，下列两条件等价：
+1. 对每个 $\chi\in\widehat A$ 满足 $|\operatorname{supp}\chi|\ge2$，有 $|H|^{-1}\sum_{h\in H}\chi(\Pi(h))=0$；
+2. $\Pi$ 满射。
+此外，任一满足这些条件的实现都有 $|H|\ge|A|=\prod_s d_s$，且下界由 $H=A$、$\Pi=\mathrm{id}_A$ 达到。
+
+因此，对于 §39 的任意源谱，若要求一个有限受控移位混合消灭全部非零多坐标 Fourier 模，而不仅是两坐标模，则乘积群既是充分实现，也是该实现类中的最小支撑。若各 $d_s$ 两两互质，Chinese remainder theorem 将这个乘积群识别为单个循环群 $\mathbb Z/\prod_s d_s\mathbb Z$；若存在公因子，单循环方案仍受定理 40.1 的碰撞障碍约束。
+
+**证明。** $1\Rightarrow2$：若 $\Pi(H)$ 是直积 $A$ 的真子群，则有限阿贝尔群的角色分离性给出一个非平凡角色 $\chi\in\widehat A$，在 $\Pi(H)$ 上恒等于 $1$。由于每个 $\pi_s$ 满射，$\chi$ 不可能只在一个坐标上非平凡：若其唯一非平凡坐标为 $s$，则 $\chi_s\circ\pi_s$ 仍是 $\mathbb Z/d_s\mathbb Z$ 上的非平凡角色，不能在 $H$ 上恒为 $1$。所以 $|\operatorname{supp}\chi|\ge2$，与条件 1 矛盾。$2\Rightarrow1$：满射时 $\Pi(h)$ 在 $A$ 上均匀，非平凡角色的均匀 Haar 平均为零。满射还给出 $|H|\ge|A|$；取 $H=A$ 与恒等联合同态达到下界。证毕。
+
+**推论 41.2（§39 的多扇区充分条件）。** 若 $d_s$ 两两互质，则对任意有限源谱族，取 $H=\mathbb Z/L\mathbb Z$、$L=\prod_sd_s$，并令扇区 $s$ 的移位参数为 $h\bmod d_s$。均匀循环混合消灭全部非零多坐标 Fourier 模，故严格复现 §39 的共同信道 $\mathcal F_G$。其共享随机分支数为 $L$，并且在完整多坐标正交条件下达到定理 41.1 的支撑下界。
+
+**范围。** 这里的最小性只针对受控移位与完整多坐标特征湮灭条件，不是对任意 LOSR 或一般乘积信道分支数的下界。结论保持 §39 的平坦逐扇区目标与有限维模型，不引入 CFT、引力或通信辅助解释。
+
 ## 追加锚（本行以下为增补区）
