@@ -1,0 +1,11 @@
+fingerprints:
+  raw_sha256: sha256:9db3959c4156b1bfd5ccc802b3d65d31b9b6914b87721f3762b1e3d6da4130e8
+  normalized_sha256: sha256:9db3959c4156b1bfd5ccc802b3d65d31b9b6914b87721f3762b1e3d6da4130e8
+cas_ref: sha256:9db3959c4156b1bfd5ccc802b3d65d31b9b6914b87721f3762b1e3d6da4130e8
+coverage_gids: []
+receipts:
+  unresolved_subitems: []
+  nonpropositional:
+    justification: 档位、检索对象、OEIS 定义与所引用猜想的逐字出处，以及文献检索状态；所引 conjecture 是被反驳对象的记录，不是本段断言该数学猜想成立。本收据只结算来源与档位说明，不替代冻结反驳定理或数值证书。
+    previous_atom_id: f48453678eea9876df309d18ead9731d44900b8b15acd0b99d6146ebceb94088
+    next_atom_id: 702c36f61b6a92df23553a0dd28fa8fd2b4e0bd036d05cd287a246be280c8138
