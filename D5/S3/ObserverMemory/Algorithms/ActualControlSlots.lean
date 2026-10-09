@@ -557,7 +557,7 @@ private theorem wait_bound [Finite Q] :
   simpa only [nr, R, W] using count
 
 
-private theorem wait_segment (x : ZMod (p * P)) (t n : Nat)
+theorem wait_segment (x : ZMod (p * P)) (t n : Nat)
     (hw : ∀ i, i < n → C.action (C.run hp hP x (t + i)).2 = .wait) :
     C.run hp hP x (t + n) =
       ((C.run hp hP x t).1 + (n : ZMod (p * P)),
@@ -606,7 +606,7 @@ def Edge (u v : RC × Fin p) : Prop :=
     ∀ t, i < t → t < j → C.action (C.run hp hP x t).2 = .wait
 
 omit [Fintype Q] [DecidableEq Q] in
-private theorem edge_tail {u v : RC × Fin p} (he : C.Edge I u v) :
+theorem edge_tail {u v : RC × Fin p} (he : C.Edge I u v) :
     ∃ x i d, C.Occurs I x i u ∧ 0 < d ∧
       (C.run hp hP x (i + 1 + d)).2 = v.1.val ∧
       digit hp hP (C.run hp hP x (i + 1 + d)).1 = v.2 ∧
@@ -645,7 +645,7 @@ private theorem edge_tail {u v : RC × Fin p} (he : C.Edge I u v) :
   · exact congrArg Prod.fst (pure d le_rfl)
 
 omit [Fintype Q] [DecidableEq Q] in
-private theorem tail_unique {q : Q} {d e : Nat}
+theorem tail_unique {q : Q} {d e : Nat}
     (hd : ∀ n, n < d → C.action (C.waitNext^[n] q) = .wait)
     (he : ∀ n, n < e → C.action (C.waitNext^[n] q) = .wait)
     (rd : C.action (C.waitNext^[d] q) = .read)
@@ -660,7 +660,7 @@ private theorem tail_unique {q : Q} {d e : Nat}
     cases clash
 
 omit [Fintype Q] [DecidableEq Q] in
-private theorem edge_target_unique {u v w : RC × Fin p}
+theorem edge_target_unique {u v w : RC × Fin p}
     (hv : C.Edge I u v) (hw : C.Edge I u w) : v.1 = w.1 := by
   obtain ⟨x, i, d, _, _, _, _, waits, endpoint, _⟩ := C.edge_tail I hv
   obtain ⟨y, j, e, _, _, _, _, waits', endpoint', _⟩ := C.edge_tail I hw
