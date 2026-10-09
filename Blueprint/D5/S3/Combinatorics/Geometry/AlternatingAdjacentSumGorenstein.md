@@ -48,6 +48,10 @@ $$claim$$
 
 *Proof.* Machine-checked in Lean as `D5/S3/Combinatorics/Geometry/AlternatingAdjacentSumGorenstein.result` (`✓ std3`). ∎
 
+*Resolves.* `Problems/jiang-wen-zhong-2026-alternating-polytope-gorenstein-pairs` (proved) by `D5/S3/Combinatorics/Geometry/AlternatingAdjacentSumGorenstein.result`.
+
+<!-- scribe-open-problem-resolution-v1 {"problem_slug":"jiang-wen-zhong-2026-alternating-polytope-gorenstein-pairs","declaration_gid":"D5/S3/Combinatorics/Geometry/AlternatingAdjacentSumGorenstein.result","resolution_kind":"proved"} -->
+
 *Source.* Repository-derived.
 
 *Acknowledgement.* Xinru Jiang, Suzhen Wen, Yueming Zhong (2026). *Alternating adjacent-sum polytopes: transfer matrices and Ehrhart series*. URL: <https://arxiv.org/abs/2607.14887v1>.

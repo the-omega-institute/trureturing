@@ -26,13 +26,17 @@ internal sealed class AlternatingAdjacentSumGorensteinDocument : IScribeDocument
                 DescribeRole.Definition, AssessedProvenance.FromRepo(Source)),
             Node("result", "The unique Gorenstein pair", "result", Disp(F.Id("claim")),
                 "At n = 0 the translation identity makes the interior lattice point of qP unique. Positivity forces each coordinate of c to be at least one and qs ≥ 3. The all-ones point is interior, so uniqueness gives c = 1. If qs ≥ 4, the point (2,1,…,1) is a second interior lattice point. Thus qs = 3, and s ≥ 2 forces q = 1 and s = 3. In every dimension d ≥ 3, the integral point (1,4,3,1,…,1) belongs to the interior of 2P: its adjacent sums are 5, 7, 4, 2, …, below the alternating capacities 6, 8, 6, 8, …. After subtracting one, its second adjacent sum is 5, exceeding capacity 4. This contradicts the n = 1 translation identity. In dimension two, q = 1 and c = (1,1) give the required identity for every n, including n = 0. The classification concerns the stated lattice-translation characterization; no assertion about unimodality or real-rootedness is needed.",
-                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source)))));
+                DescribeRole.Theorem, AssessedProvenance.FromRepo(Source),
+                new OpenProblemResolutionClaim(
+                    ProblemSlugRef.Create("jiang-wen-zhong-2026-alternating-polytope-gorenstein-pairs"),
+                    ResolutionKind.Proved)))));
 
     private static DocumentBlock Node(string id, string title, string name, Formula formula,
-        string prose, DescribeRole role, AssessedProvenance provenance) =>
+        string prose, DescribeRole role, AssessedProvenance provenance,
+        OpenProblemResolutionClaim? resolution = null) =>
         Describe.Lean(DescribeId.Create("alternating-adjacent-sum-" + id),
             DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(formula),
-            provenance, Blocks(Paragraph(Text(prose))), role);
+            provenance, Blocks(Paragraph(Text(prose))), role, resolution);
 
     private static Formula Call(string name, params Formula[] args) =>
         new Formula.FunctionCall(FormulaIdentifier.Create(name), [.. args]);
