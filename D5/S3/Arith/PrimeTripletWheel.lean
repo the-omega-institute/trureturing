@@ -1,16 +1,15 @@
 /- GID: D5/S3/Arith/PrimeTripletWheel
-   generality: I
-   mirror-B: none(waiver:finite-witness-only)
-   mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
-   anchors: []
-   digest: Finite wheel witnesses separate the two prime-triplet orientations.
+   generality: G
+   mirror-B: none
+   mirror-E: none(waiver:general-reflection-theorem)
+   anchors: [docs/develop/theory/AURIC_FIB_ATOM_PYRAMID_FOUNDATIONAL_FORMULAS_AND_RELATIONS.md#十六-轮筛三点相关绝对原点与-fibonacci-窗口]
+   digest: Reflection identifies the two diameter-six wheel candidate spaces at every nonzero modulus.
 
-   This proposal deliberately formalizes wheel candidates rather than actual
-   prime-triplet counts.  The latter would require an additional arithmetic
-   theorem and is outside the finite witness layer.
+   The arithmetic statement is about wheel-admissible residues in ZMod W.
+   It does not assert infinitude or asymptotics for actual prime triplets.
 -/
 
-import Mathlib.Data.Finset.Interval
+import Mathlib.Data.ZMod.Basic
 import Mathlib.Tactic
 
 set_option autoImplicit false
@@ -18,93 +17,84 @@ set_option relaxedAutoImplicit false
 
 namespace D5.S3.Arith.PrimeTripletWheel
 
-/-! ### The two minimal diameter-six templates -/
-
+/-- The two diameter-six offset templates. -/
 def tripletPlus : Finset ℕ := {0, 2, 6}
 
 def tripletMinus : Finset ℕ := {0, 4, 6}
 
-/-- Signed difference of the two consecutive gaps. -/
+/-- Ordered gap difference for a template whose entries are read left-to-right. -/
 def chirality (a b c : ℕ) : ℤ :=
   ((c - b : ℕ) : ℤ) - ((b - a : ℕ) : ℤ)
 
-/-- The unordered pair-distance support of an ordered three-point template. -/
-def pairDistances (a b c : ℕ) : Finset ℕ := {b - a, c - b, c - a}
-
+/-- The two templates carry opposite ordered gap differences. -/
 theorem tripletPlus_chirality : chirality 0 2 6 = 2 := by
   norm_num [chirality]
 
 theorem tripletMinus_chirality : chirality 0 4 6 = -2 := by
   norm_num [chirality]
 
-theorem triplet_pairDistances_equal :
-    pairDistances 0 2 6 = pairDistances 0 4 6 := by
-  native_decide
+/-- Wheel admissibility for the three-point orientation H-plus. -/
+def plusAdmissible (W : ℕ) [NeZero W] (a : ZMod W) : Prop :=
+  IsUnit a ∧ IsUnit (a + 2) ∧ IsUnit (a + 6)
 
-/-- Reflect an offset set about the midpoint 3. -/
-def reflectedOffsets (H : Finset ℕ) : Finset ℕ :=
-  H.image (fun h => 6 - h)
+/-- Wheel admissibility for the reflected orientation H-minus. -/
+def minusAdmissible (W : ℕ) [NeZero W] (a : ZMod W) : Prop :=
+  IsUnit a ∧ IsUnit (a + 4) ∧ IsUnit (a + 6)
 
-theorem reflected_tripletPlus :
-    reflectedOffsets tripletPlus = tripletMinus := by
-  native_decide
+/-- The affine reflection sending H-plus to H-minus. -/
+def reflect (W : ℕ) [NeZero W] (a : ZMod W) : ZMod W :=
+  -a - 6
 
-/-! ### Finite wheel candidates -/
+theorem reflect_involutive (W : ℕ) [NeZero W] (a : ZMod W) :
+    reflect W (reflect W a) = a := by
+  dsimp [reflect]
+  ring
 
-/-- A residue is a wheel candidate for every offset in `H`. -/
-def wheelAdmissible (W : ℕ) (H : Finset ℕ) (r : ℕ) : Prop :=
-  ∀ h ∈ H, Nat.Coprime (r + h) W
+/-- Reflection exchanges the two orientation predicates at every nonzero modulus. -/
+theorem plus_reflect_iff (W : ℕ) [NeZero W] (a : ZMod W) :
+    plusAdmissible W a ↔ minusAdmissible W (reflect W a) := by
+  constructor
+  · rintro ⟨h0, h2, h6⟩
+    refine ⟨?_, ?_, ?_⟩
+    · convert h6.neg using 1 <;> dsimp [reflect] <;> ring
+    · convert h2.neg using 1 <;> dsimp [reflect] <;> ring
+    · convert h0.neg using 1 <;> dsimp [reflect] <;> ring
+  · rintro ⟨h0, h4, h6⟩
+    refine ⟨?_, ?_, ?_⟩
+    · convert h6.neg using 1 <;> dsimp [reflect] <;> ring
+    · convert h4.neg using 1 <;> dsimp [reflect] <;> ring
+    · convert h0.neg using 1 <;> dsimp [reflect] <;> ring
 
-/-- Candidate residues in the canonical range `0, ..., W - 1`. -/
-def wheelResidues (W : ℕ) (H : Finset ℕ) : Finset ℕ :=
-  (Finset.range W).filter (wheelAdmissible W H)
+/-- The plus and minus candidate residues as finite subtypes. -/
+def PlusResidue (W : ℕ) [NeZero W] :=
+  {a : ZMod W // plusAdmissible W a}
 
-/-- Prefix count with the fixed origin convention used by the foundational theory. -/
-def wheelPrefixCount (W b : ℕ) (H : Finset ℕ) : ℕ :=
-  ((Finset.Icc 1 b).filter (wheelAdmissible W H)).card
+def MinusResidue (W : ℕ) [NeZero W] :=
+  {a : ZMod W // minusAdmissible W a}
 
-/-- Two-point wheel correlation at a labelled positive shift. -/
-def wheelPairCount (W s : ℕ) (H : Finset ℕ) : ℕ :=
-  ((Finset.range W).filter fun r =>
-    wheelAdmissible W H r ∧
-      wheelAdmissible W H ((r + s) % W)).card
+/-- The reflection is an equivalence between the two candidate spaces. -/
+noncomputable def reflectEquiv (W : ℕ) [NeZero W] :
+    PlusResidue W ≃ MinusResidue W where
+  toFun := fun a =>
+    ⟨reflect W a.1, (plus_reflect_iff W a.1).mp a.2⟩
+  invFun := fun b =>
+    ⟨reflect W b.1, by
+      apply (plus_reflect_iff W (reflect W b.1)).mpr
+      rw [reflect_involutive W b.1]
+      exact b.2⟩
+  left_inv := by
+    intro a
+    apply Subtype.ext
+    exact reflect_involutive W a.1
+  right_inv := by
+    intro b
+    apply Subtype.ext
+    exact reflect_involutive W b.1
 
-/-- Three-point wheel correlation at labelled shifts `s,t`. -/
-def wheelTripleCount (W s t : ℕ) (H : Finset ℕ) : ℕ :=
-  ((Finset.range W).filter fun r =>
-    wheelAdmissible W H r ∧
-      wheelAdmissible W H ((r + s) % W) ∧
-      wheelAdmissible W H ((r + t) % W)).card
-
-/-! ### Machine-checked finite escape witnesses -/
-
-theorem wheelResidues_30_plus :
-    wheelResidues 30 tripletPlus = {11, 17} := by
-  native_decide
-
-theorem wheelResidues_30_minus :
-    wheelResidues 30 tripletMinus = {7, 13} := by
-  native_decide
-
-/-- The first positive labelled prefix separates the two orientations. -/
-theorem wheelPrefix_30_separates :
-    wheelPrefixCount 30 10 tripletPlus = 0 ∧
-      wheelPrefixCount 30 10 tripletMinus = 1 := by
-  native_decide
-
-/-- At modulus 210, the labelled three-point correlation `(6,30)` separates. -/
-theorem wheelTriple_210_separates :
-    wheelTripleCount 210 6 30 tripletPlus = 1 ∧
-      wheelTripleCount 210 6 30 tripletMinus = 0 := by
-  native_decide
-
-/-- No positive pair of labelled spans below 30 has a nonzero three-point
-correlation for either orientation. -/
-theorem wheelTriple_no_smaller_positive_span :
-    ∀ s t : Fin 30,
-      0 < s.val → s.val < t.val →
-        wheelTripleCount 210 s.val t.val tripletPlus = 0 ∧
-          wheelTripleCount 210 s.val t.val tripletMinus = 0 := by
-  native_decide
+/-- The two oriented wheel candidate spaces have equal cardinality for every nonzero modulus. -/
+theorem candidate_space_card_eq (W : ℕ) [NeZero W] :
+    Fintype.card (PlusResidue W) = Fintype.card (MinusResidue W) := by
+  classical
+  exact Fintype.card_congr (reflectEquiv W)
 
 end D5.S3.Arith.PrimeTripletWheel
