@@ -108,63 +108,8 @@ dependence evidence. No validated four-slot registration is claimed.
 
 ### Reproducible vector-program evidence
 
-Save the following exact UTF-8 source as
-`.lake/scratch/op-bekmn-stageb/VectorProgram.lean` after creating its directory.
-Command: `lake env lean .lake/scratch/op-bekmn-stageb/VectorProgram.lean`.
-Exit code: 0. Source SHA-256: `e4bbc7efd743e7bb977aa36f5bb5cdd8f671b5158fd4e72bcc716484c09587af`.
-The tested scope is exactly four vectors in $\mathbb R^3$ and four dichotomic
-qubit measurements. The three `example` proofs are transient kernel checks of
-existing delivered declarations; they add no mathematical declaration to the delivery.
-
-```lean
-import D5.S3.Quantum.Measurement.FourQubitCompatibilityDegree
-open Lean Elab Term
-open scoped BigOperators
-elab "lane_const " s:str : term => do
-  let env ← getEnv
-  let suffix := "D5.S3.Quantum.Measurement.FourQubitCompatibilityDegree." ++ s.getString
-  let candidateNames := env.constants.toList.filter fun (n, _) =>
-    n.toString == suffix || n.toString.endsWith ("." ++ suffix)
-  let [(n, _)] := candidateNames | throwError "expected one compiled declaration for {suffix}"
-  return mkConst n
-open D5.S3.Geometry.FourVectorSignSumBound
-open D5.S3.Quantum.Measurement.FourQubitCompatibilityDegree
-open D5.S3.Quantum.Measurement.FourQubitParentConstruction
-open scoped BigOperators
-example : IsGreatest
-    {q : ℝ | ∃ x : Fin 4 → EuclideanSpace ℝ (Fin 3),
-      (∀ ε, ‖signedSum x ε‖ ≤ 1) ∧ q = ∑ i, ‖x i‖}
-    (Real.sqrt 13 / 2) := by
-  have hs : 0 < Real.sqrt 52 := Real.sqrt_pos.2 (by norm_num)
-  have h13 : 0 < Real.sqrt 13 := Real.sqrt_pos.2 (by norm_num)
-  constructor
-  · refine ⟨fun i => (Real.sqrt 52)⁻¹ • (lane_const "optimum") i, ?_, ?_⟩
-    · intro ε
-      have heq : signedSum (fun i => (Real.sqrt 52)⁻¹ • (lane_const "optimum") i) ε =
-          (Real.sqrt 52)⁻¹ • signedSum (lane_const "optimum") ε := by
-        simp [signedSum, Finset.smul_sum, smul_smul, mul_comm]
-      rw [heq, norm_smul, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr hs)]
-      calc
-        _ ≤ (Real.sqrt 52)⁻¹ * Real.sqrt 52 :=
-          mul_le_mul_of_nonneg_left ((signedSum_le_max (lane_const "optimum") ε).trans_eq (lane_const "optimum_max"))
-            (inv_nonneg.mpr hs.le)
-        _ = 1 := inv_mul_cancel₀ hs.ne'
-    · simp_rw [norm_smul, Real.norm_eq_abs, abs_of_pos (inv_pos.mpr hs)]
-      rw [← Finset.mul_sum, (lane_const "optimum_sum"), (lane_const "sqrt52_eq")]
-      have hsq : (Real.sqrt 13)^2 = 13 := Real.sq_sqrt (by norm_num)
-      field_simp
-      nlinarith [hsq]
-  · rintro q ⟨x, hx, rfl⟩
-    have hm : maxNorm x ≤ 1 := Finset.sup'_le _ _ fun ε _ => hx ε
-    exact (four_vector_inequality x).trans
-      (by simpa using mul_le_mul_of_nonneg_left hm (by positivity : 0 ≤ Real.sqrt 13 / 2))
-
-example : 1 / minCompatDegree = Real.sqrt 13 / 2 := by
-  rw [D5.S3.Quantum.Measurement.FourQubitCompatibilityDegree.result]
-  field_simp
-
-example : IsLeast (compatDegree '' povmTuples) endpoint := lane_const "minimum_attained"
-```
+Experiment entry: [`docs/reports/bluhm-2025-four-qubit-compatibility-degree/check.lean`](https://github.com/the-omega-institute/trureturing-experiments/blob/602ec65402d492351ebc19230b04caa93001cda8/docs/reports/bluhm-2025-four-qubit-compatibility-degree/check.lean) in `the-omega-institute/trureturing-experiments` at `602ec65402d492351ebc19230b04caa93001cda8`. The program is run from a trureturing checkout with `lake env lean <path>/check.lean`. Exit code: 0. Source SHA-256: `e4bbc7efd743e7bb977aa36f5bb5cdd8f671b5158fd4e72bcc716484c09587af`.
+The tested scope is exactly four vectors in $\mathbb R^3$ and four dichotomic qubit measurements. Its three `example` proofs are kernel checks of delivered declarations: the optimum value √13/2, `1 / minCompatDegree = √13/2`, and attainment of the minimum. They add no mathematical declaration to the delivery.
 
 ## ASSUMED-UNVERIFIED
 
