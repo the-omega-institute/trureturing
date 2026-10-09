@@ -11,7 +11,7 @@ open scoped BigOperators
 
 noncomputable section
 
-abbrev signature : Signature where
+abbrev signature : Signature.{0, 0, 0, 0, 0} where
   Params := ℕ
   State a := Fin (2 ^ a + 1) → ℝ
   Role := Unit
@@ -21,7 +21,7 @@ abbrev signature : Signature where
   Anchor := Empty
   finiteAnchor := inferInstance
 
-abbrev arena : Arena where
+abbrev arena : Arena.{0, 0, 0, 0, 0} where
   signature := signature
   Law R := ∀ (a : ℕ), 3 ≤ a → ∀ (p : Fin (2 ^ a + 1) → ℝ),
     (∀ i, 0 ≤ p i) → (∑ i, p i = 1) →
@@ -79,7 +79,7 @@ def proof_record : Registration arena
     rw [hz]
     exact ne_of_lt (lt_of_lt_of_le (by norm_num : (0 : ℝ) < 1) H)
 
-def registration : LeanInformationAudit.Contract.Registration
+def registration : LeanInformationAudit.Contract.Registration.{_, _, _, 0, 0, 0, _, _, _, _, _, 0}
     (@_root_.D5.S3.Arith.FibonacciAtomic.Dyadic.ComplementaryDyadicSecondSupport.result)
     (Realization signature) Unit Unit where
   unitName := `D5.S3.Arith.FibonacciAtomic.Dyadic.ComplementaryDyadicSecondSupport.result
