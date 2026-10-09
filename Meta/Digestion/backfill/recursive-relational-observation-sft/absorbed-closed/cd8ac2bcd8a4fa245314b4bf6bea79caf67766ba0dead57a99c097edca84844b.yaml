@@ -1,0 +1,9 @@
+fingerprints:
+  raw_sha256: sha256:cd8ac2bcd8a4fa245314b4bf6bea79caf67766ba0dead57a99c097edca84844b
+  normalized_sha256: sha256:cd8ac2bcd8a4fa245314b4bf6bea79caf67766ba0dead57a99c097edca84844b
+cas_ref: sha256:cd8ac2bcd8a4fa245314b4bf6bea79caf67766ba0dead57a99c097edca84844b
+coverage_gids:
+  - gid: D5/S3/ConceptDynamics/Coding/InertGroupBlockConjugacy.original18_1
+    target_statement_id: sha256:efe4cd5a091f4cc152a1a4e498bde3e5e37d76dd8c787ec79e426cc185b47948
+receipts:
+  unresolved_subitems: []
