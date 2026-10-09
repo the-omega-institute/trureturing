@@ -198,7 +198,7 @@ private theorem palindrome_eq_cons_trim_append {alpha : Type*} {w : List alpha}
   | singleton x => simp at hlarge
   | cons_concat x hinner => exact ⟨x, by simp [palindromeTrim]⟩
 
-private theorem goldenFactor_succ (n i : Nat) :
+theorem goldenFactor_succ (n i : Nat) :
     goldenFactor (n + 1) i = goldenFactor n i ++ [goldenWord (i + n)] := by
   unfold goldenFactor
   rw [List.ofFn_succ']
@@ -237,7 +237,7 @@ private theorem goldenWindowTrueCount_succ (i n : Nat) :
   by_cases h : goldenWord (i + n) = true <;>
     simp [goldenWindowTrueCount, Finset.range_add_one, Finset.filter_insert, h]
 
-private theorem goldenFactor_count_true (n i : Nat) :
+theorem goldenFactor_count_true (n i : Nat) :
     (goldenFactor n i).count true = goldenWindowTrueCount i n := by
   induction n with
   | zero => simp [goldenFactor, goldenWindowTrueCount]
