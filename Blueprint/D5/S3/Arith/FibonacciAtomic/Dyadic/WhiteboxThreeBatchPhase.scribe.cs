@@ -56,7 +56,7 @@ internal sealed class WhiteboxThreeBatchPhaseDocument : IScribeDocumentDefinitio
 
     private static DocumentBlock Helper(string name, string title, Formula statement, string text) =>
         Describe.Lean(DescribeId.Create(name.Replace('_', '-')), DeclarationHandle.Create(Prefix + name),
-            H(title), StatementSource.FromAuthor(Disp(And(Call("CodeClaim"), statement))), AssessedProvenance.FromRepo(),
+            H(title), StatementSource.FromAuthor(Disp(statement)), AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(text))), DescribeRole.Theorem);
     private static Formula RecipeRestriction()
     {
