@@ -1,6 +1,6 @@
-/- GID: D5/S1/Dynamics/TridiagonalSweeps/FinitePathDynamics
+/- GID: D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics
    generality: G
-   mirror-B: D5/B/S1/Dynamics/TridiagonalSweeps/FinitePathDynamics
+   mirror-B: D5/B/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -18,7 +18,7 @@ powers_tendsto_zero_of_spectralRadius_lt_one: proof_shape: bind-only;
 complex_matrix_powers_tendsto_zero: proof_shape: bind-only;
   consumer: real_mulVec_powers_tendsto_zero.
 real_mulVec_powers_tendsto_zero: proof_shape: bind-only;
-  consumer: D5.S1.Dynamics.TridiagonalSweeps.TokenDampedSweepContraction.result.
+  consumer: D5.S3.Quantum.Dynamics.TridiagonalSweeps.TokenDampedSweepContraction.result.
 admission_basis: escape-witness (harmonic_dirichlet_zero; boundary_zero_observability).
 Escape audit unfinished: https://github.com/the-omega-institute/trureturing/issues/14784
 Direct frozen dependencies: none (pinned Mathlib only).
@@ -29,7 +29,7 @@ import Mathlib.Analysis.Normed.Algebra.GelfandFormula
 import Mathlib.Analysis.Matrix.Normed
 
 open Matrix Filter Topology
-namespace D5.S1.Dynamics.TridiagonalSweeps.FinitePathDynamics
+namespace D5.S3.Quantum.Dynamics.TridiagonalSweeps.FinitePathDynamics
 
 def zeroExtend {m : ℕ} (z : Fin m → ℂ) : Fin (m + 2) → ℂ :=
   Fin.cases 0 (Fin.snoc z 0)
@@ -195,4 +195,4 @@ theorem real_mulVec_powers_tendsto_zero {m : ℕ} (hm : 1 ≤ m)
 #print axioms harmonic_dirichlet_zero
 #print axioms boundary_zero_observability
 #print axioms real_mulVec_powers_tendsto_zero
-end D5.S1.Dynamics.TridiagonalSweeps.FinitePathDynamics
+end D5.S3.Quantum.Dynamics.TridiagonalSweeps.FinitePathDynamics

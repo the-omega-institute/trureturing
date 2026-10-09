@@ -1,6 +1,6 @@
-/- GID: D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction
+/- GID: D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction
    generality: G
-   mirror-B: D5/B/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction
+   mirror-B: D5/B/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction
    mirror-E: none(waiver:evidence-not-specified-by-formal-manifest)
    anchors: []
    utility: none
@@ -26,14 +26,14 @@ This is a general theorem for every n = m + 1 with m >= 1, every positive veloci
 vector, and every damping parameter strictly between zero and one; utility is none.
 -/
 
-import D5.S1.Dynamics.TridiagonalSweeps.FinitePathDynamics
+import D5.S3.Quantum.Dynamics.TridiagonalSweeps.FinitePathDynamics
 import D5.S3.Quantum.Measurements.CliffordJointMeasurability.CliffordPathRealizations
 import D5.S3.ConceptDynamics.Coding.FixedPositivePartitionSseDistance
 import Mathlib.LinearAlgebra.Eigenspace.Matrix
 
 open Matrix Filter Topology
-open D5.S1.Dynamics.TridiagonalSweeps.FinitePathDynamics
-namespace D5.S1.Dynamics.TridiagonalSweeps.TokenDampedSweepContraction
+open D5.S3.Quantum.Dynamics.TridiagonalSweeps.FinitePathDynamics
+namespace D5.S3.Quantum.Dynamics.TridiagonalSweeps.TokenDampedSweepContraction
 
 noncomputable def A (m : ℕ) (v : Fin (m + 1) → ℝ) : Matrix (Fin m) (Fin m) ℝ :=
   fun i j => if i.val % 2 = 0 then
@@ -807,7 +807,7 @@ private lemma fixed_reflection_slopes {m : ℕ} (v : Fin (m + 1) → ℝ) (hv : 
 
 private lemma dirichlet_fixed_zero {m : ℕ} (v : Fin (m + 1) → ℝ) (hv : ∀ j, 0 < v j)
     (z : Fin m → ℂ) (hfix : ∀ i : Fin m, reflectAt v i z = z i) : z = 0 := by
-  apply D5.S1.Dynamics.TridiagonalSweeps.FinitePathDynamics.harmonic_dirichlet_zero v hv z
+  apply D5.S3.Quantum.Dynamics.TridiagonalSweeps.FinitePathDynamics.harmonic_dirichlet_zero v hv z
   intro i
   have h := fixed_reflection_slopes v hv z i (hfix i)
   have heq : i.succ.castSucc = i.castSucc.succ := by ext; rfl
@@ -862,7 +862,7 @@ private lemma source_eigen_zero_of_first_zero {m : ℕ} (v : Fin (m + 1) → ℝ
     (he : ((A m v).map (algebraMap ℝ ℂ)).mulVec (c • z) =
       ((B m v).map (algebraMap ℝ ℂ)).mulVec z)
     (hz : z ((⟨0, hm⟩ : Fin m)) = 0) : z = 0 := by
-  apply D5.S1.Dynamics.TridiagonalSweeps.FinitePathDynamics.boundary_zero_observability hm z hz
+  apply D5.S3.Quantum.Dynamics.TridiagonalSweeps.FinitePathDynamics.boundary_zero_observability hm z hz
   intro i hi hl
   exact zero_propagates v hv z c hc he i hi hl
 
@@ -933,4 +933,4 @@ theorem result : claim := by
   exact ⟨hspec, real_mulVec_powers_tendsto_zero hm _ hspec⟩
 
 #print axioms result
-end D5.S1.Dynamics.TridiagonalSweeps.TokenDampedSweepContraction
+end D5.S3.Quantum.Dynamics.TridiagonalSweeps.TokenDampedSweepContraction

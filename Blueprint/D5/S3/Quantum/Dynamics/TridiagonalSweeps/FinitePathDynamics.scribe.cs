@@ -2,11 +2,11 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.TridiagonalSweeps;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Dynamics.TridiagonalSweeps;
 
 internal sealed class FinitePathDynamicsDocument : IScribeDocumentDefinition
 {
-    private const string Prefix = "D5/S1/Dynamics/TridiagonalSweeps/FinitePathDynamics.";
+    private const string Prefix = "D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics.";
 
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Weighted finite-path rigidity, boundary observability, and spectral power decay.",

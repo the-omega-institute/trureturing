@@ -2,12 +2,12 @@ using static StrataLint.Scribe.DefinitionDsl;
 using static StrataLint.Scribe.FormulaDsl;
 using F = StrataLint.Scribe.FormulaDsl;
 
-namespace StrataLint.Scribe.Blueprint.D5.S1.Dynamics.TridiagonalSweeps;
+namespace StrataLint.Scribe.Blueprint.D5.S3.Quantum.Dynamics.TridiagonalSweeps;
 
 internal sealed class TokenDampedSweepContractionDocument : IScribeDocumentDefinition
 {
     private const string Prefix =
-        "D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.";
+        "D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.";
     private static readonly LibraryNoteRef Source =
         LibraryNoteRef.Create("D5/L/Dynamics/wallner2026passbucket");
     private const string Conjecture =
@@ -85,7 +85,7 @@ internal sealed class TokenDampedSweepContractionDocument : IScribeDocumentDefin
                 DescribeRole.Theorem)),
         [
             DocumentEdge.Dependency.Create(
-                GidRef.Create("D5/S1/Dynamics/TridiagonalSweeps/FinitePathDynamics")),
+                GidRef.Create("D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics")),
             DocumentEdge.Dependency.Create(
                 GidRef.Create("D5/S3/Quantum/Measurements/CliffordJointMeasurability/CliffordPathRealizations")),
             DocumentEdge.Dependency.Create(

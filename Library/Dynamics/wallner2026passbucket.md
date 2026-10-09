@@ -7,8 +7,8 @@ doi: 10.48550/arXiv.2608.27085
 url: https://arxiv.org/abs/2608.27085v1
 claim: "Conjecture 1 asserts strict spectral contraction and decay of centered trajectories under repeated Token-1 damped transfers."
 strata_touched:
-  - D5/S1/Dynamics/TridiagonalSweeps/FinitePathDynamics
-  - D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction
+  - D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics
+  - D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction
 license: citation-only
 triage: anchor
 ---

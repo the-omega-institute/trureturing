@@ -8,7 +8,7 @@ Token-1 damping strictly contracts the spectrum and every centered trajectory.
 
 $$\forall m \in \mathbb{N},\; \forall v \in \operatorname{Fin}\left(m + 1\right) \to \mathbb{R},\; \forall i \in \operatorname{Fin}\left(m\right),\; \forall j \in \operatorname{Fin}\left(m\right),\; \operatorname{A}\left(m, v, i, j\right) = \operatorname{ite}\left(\operatorname{val}\left(i\right) \bmod 2 = 0, \operatorname{ite}\left(i = j, 1, 0\right), \operatorname{ite}\left(i = j, v\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right) + v\left(\operatorname{Fin}.\operatorname{succ}\left(i\right)\right), \operatorname{ite}\left(\operatorname{val}\left(j\right) + 1 = \operatorname{val}\left(i\right), -\left(2 \cdot v\left(\operatorname{Fin}.\operatorname{succ}\left(i\right)\right)\right), \operatorname{ite}\left(\operatorname{val}\left(i\right) + 1 = \operatorname{val}\left(j\right), -\left(2 \cdot v\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right)\right), 0\right)\right)\right)\right)$$
 
-*Formalization.* `D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.A` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.A` (`✓ std3`).
 
 *Citation.* T. Wallner, D. Krupke, A. Schmidt, and S. P. Fekete (2026). *Pass the Bucket: Efficient, Robust, Local Load Balancing for Teams of Heterogeneous Robots*. DOI: [10.48550/arXiv.2608.27085](https://doi.org/10.48550/arXiv.2608.27085). URL: <https://arxiv.org/abs/2608.27085v1>.
 
@@ -20,7 +20,7 @@ Stacking these m relations yields a three-banded system A x′ = B x + c ⇔ x�
 
 $$\forall m \in \mathbb{N},\; \forall v \in \operatorname{Fin}\left(m + 1\right) \to \mathbb{R},\; \forall i \in \operatorname{Fin}\left(m\right),\; \forall j \in \operatorname{Fin}\left(m\right),\; \operatorname{B}\left(m, v, i, j\right) = \operatorname{ite}\left(\operatorname{val}\left(i\right) \bmod 2 = 0, \operatorname{ite}\left(i = j, -1, \operatorname{ite}\left(\operatorname{val}\left(j\right) + 1 = \operatorname{val}\left(i\right), \frac{2 \cdot v\left(\operatorname{Fin}.\operatorname{succ}\left(i\right)\right)}{v\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right) + v\left(\operatorname{Fin}.\operatorname{succ}\left(i\right)\right)}, \operatorname{ite}\left(\operatorname{val}\left(i\right) + 1 = \operatorname{val}\left(j\right), \frac{2 \cdot v\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right)}{v\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right) + v\left(\operatorname{Fin}.\operatorname{succ}\left(i\right)\right)}, 0\right)\right)\right), \operatorname{ite}\left(i = j, -\left(v\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right) + v\left(\operatorname{Fin}.\operatorname{succ}\left(i\right)\right)\right), 0\right)\right)$$
 
-*Formalization.* `D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.B` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.B` (`✓ std3`).
 
 *Citation.* T. Wallner, D. Krupke, A. Schmidt, and S. P. Fekete (2026). *Pass the Bucket: Efficient, Robust, Local Load Balancing for Teams of Heterogeneous Robots*. DOI: [10.48550/arXiv.2608.27085](https://doi.org/10.48550/arXiv.2608.27085). URL: <https://arxiv.org/abs/2608.27085v1>.
 
@@ -32,7 +32,7 @@ Stacking these m relations yields a three-banded system A x′ = B x + c ⇔ x�
 
 $$\forall m \in \mathbb{N},\; \forall v \in \operatorname{Fin}\left(m + 1\right) \to \mathbb{R},\; \forall a \in \mathbb{R},\; \forall i \in \operatorname{Fin}\left(m\right),\; \forall j \in \operatorname{Fin}\left(m\right),\; \left(B_{\alpha}\right)\left(m, v, a, i, j\right) = \operatorname{ite}\left(\operatorname{val}\left(i\right) = 0, \operatorname{ite}\left(i = j, \frac{v\left(\operatorname{Fin}.\operatorname{succ}\left(i\right)\right) \cdot \left(1 - 2 \cdot a\right) - a \cdot v\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right)}{v\left(\operatorname{Fin}.\operatorname{succ}\left(i\right)\right) + a \cdot v\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right)}, \operatorname{ite}\left(\operatorname{val}\left(i\right) + 1 = \operatorname{val}\left(j\right), \frac{2 \cdot a \cdot v\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right)}{v\left(\operatorname{Fin}.\operatorname{succ}\left(i\right)\right) + a \cdot v\left(\operatorname{Fin}.\operatorname{castSucc}\left(i\right)\right)}, 0\right)\right), \operatorname{B}\left(m, v, i, j\right)\right)$$
 
-*Formalization.* `D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.Balpha` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.Balpha` (`✓ std3`).
 
 *Citation.* T. Wallner, D. Krupke, A. Schmidt, and S. P. Fekete (2026). *Pass the Bucket: Efficient, Robust, Local Load Balancing for Teams of Heterogeneous Robots*. DOI: [10.48550/arXiv.2608.27085](https://doi.org/10.48550/arXiv.2608.27085). URL: <https://arxiv.org/abs/2608.27085v1>.
 
@@ -44,7 +44,7 @@ This changes only the first pair’s relation: 2x₁/v₁ + (x′₁ − x₁)/(
 
 $$\forall m \in \mathbb{N},\; \forall v \in \operatorname{Fin}\left(m + 1\right) \to \mathbb{R},\; \forall a \in \mathbb{R},\; \left(M_{\alpha}\right)\left(m, v, a\right) = \operatorname{A}\left(m, v\right)^{-1} \cdot \left(B_{\alpha}\right)\left(m, v, a\right)$$
 
-*Formalization.* `D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.Malpha` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.Malpha` (`✓ std3`).
 
 *Citation.* T. Wallner, D. Krupke, A. Schmidt, and S. P. Fekete (2026). *Pass the Bucket: Efficient, Robust, Local Load Balancing for Teams of Heterogeneous Robots*. DOI: [10.48550/arXiv.2608.27085](https://doi.org/10.48550/arXiv.2608.27085). URL: <https://arxiv.org/abs/2608.27085v1>.
 
@@ -56,7 +56,7 @@ This changes only the first pair’s relation: 2x₁/v₁ + (x′₁ − x₁)/(
 
 $$\operatorname{claim}\left(\right) = (\forall m \in \mathbb{N},\; 1 \le m \Rightarrow \left(\forall v \in \operatorname{Fin}\left(m + 1\right) \to \mathbb{R},\; \left(\forall j \in \operatorname{Fin}\left(m + 1\right),\; 0 < v\left(j\right)\right) \Rightarrow \left(\forall a \in \mathbb{R},\; 0 < a \Rightarrow \left(a < 1 \Rightarrow \left(\left(\forall c \in \mathbb{C},\; c \in \operatorname{spectrum}\left(\mathbb{C}, \operatorname{Matrix}.\operatorname{map}\left(\left(M_{\alpha}\right)\left(m, v, a\right), \operatorname{algebraMap}\left(\mathbb{R}, \mathbb{C}\right)\right)\right) \Rightarrow \left\lVert c \right\rVert < 1\right) \land \left(\forall u \in \operatorname{Fin}\left(m\right) \to \mathbb{R},\; \operatorname{Filter}.\operatorname{Tendsto}\left((\lambda k:\mathbb{N},\operatorname{Matrix}.\operatorname{mulVec}\left(\left(M_{\alpha}\right)\left(m, v, a\right)^{k}, u\right)), \operatorname{Filter}.\operatorname{atTop}, \operatorname{nhds}\left(0\right)\right)\right)\right)\right)\right)\right))$$
 
-*Formalization.* `D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.claim` (`✓ std3`).
+*Formalization.* `D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.claim` (`✓ std3`).
 
 *Citation.* T. Wallner, D. Krupke, A. Schmidt, and S. P. Fekete (2026). *Pass the Bucket: Efficient, Robust, Local Load Balancing for Teams of Heterogeneous Robots*. DOI: [10.48550/arXiv.2608.27085](https://doi.org/10.48550/arXiv.2608.27085). URL: <https://arxiv.org/abs/2608.27085v1>.
 
@@ -68,7 +68,7 @@ Conjecture 1 (Spectral contraction): The damped transfer map Mα is repeatedly a
 
 $$\operatorname{claim}\left(\right)$$
 
-*Proof.* Machine-checked in Lean as `D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.result` (`✓ std3`). ∎
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.result` (`✓ std3`). ∎
 
 *Source.* Repository-derived.
 
@@ -80,12 +80,12 @@ The weighted Dirichlet form Q(z) is the sum of |zⱼ − zⱼ₋₁|²/vⱼ with
 
 ## References
 
-- Truth anchor: `D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.A`
-- Truth anchor: `D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.B`
-- Truth anchor: `D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.Balpha`
-- Truth anchor: `D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.Malpha`
-- Truth anchor: `D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.claim`
-- Truth anchor: `D5/S1/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.result`
-- Dependency: [D5/S1/Dynamics/TridiagonalSweeps/FinitePathDynamics](FinitePathDynamics.md)
-- Dependency: [D5/S3/ConceptDynamics/Coding/FixedPositivePartitionSseDistance](../../../S3/ConceptDynamics/Coding/FixedPositivePartitionSseDistance.md)
-- Dependency: [D5/S3/Quantum/Measurements/CliffordJointMeasurability/CliffordPathRealizations](../../../S3/Quantum/Measurements/CliffordJointMeasurability/CliffordPathRealizations.md)
+- Truth anchor: `D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.A`
+- Truth anchor: `D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.B`
+- Truth anchor: `D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.Balpha`
+- Truth anchor: `D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.Malpha`
+- Truth anchor: `D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.claim`
+- Truth anchor: `D5/S3/Quantum/Dynamics/TridiagonalSweeps/TokenDampedSweepContraction.result`
+- Dependency: [D5/S3/ConceptDynamics/Coding/FixedPositivePartitionSseDistance](../../../ConceptDynamics/Coding/FixedPositivePartitionSseDistance.md)
+- Dependency: [D5/S3/Quantum/Dynamics/TridiagonalSweeps/FinitePathDynamics](FinitePathDynamics.md)
+- Dependency: [D5/S3/Quantum/Measurements/CliffordJointMeasurability/CliffordPathRealizations](../../Measurements/CliffordJointMeasurability/CliffordPathRealizations.md)
