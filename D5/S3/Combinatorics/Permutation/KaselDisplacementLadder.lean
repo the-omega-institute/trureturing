@@ -4,8 +4,7 @@
    mirror-E: none(waiver:open-problem-resolution)
    anchors: []
    utility: none
-   digest: Kasel displacement ladder has the conjectured value m minus two
-     at every horizon four to the m. -/
+   digest: Kasel displacement ladder has the conjectured value m minus two at every horizon four to the m. -/
 
 import D5.S3.Combinatorics.Permutation.KaselDisplacementLadderLower
 import D5.S3.Combinatorics.Permutation.KaselDisplacementLadderUpper

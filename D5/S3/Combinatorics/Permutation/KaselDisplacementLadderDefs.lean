@@ -4,8 +4,7 @@
    mirror-E: none(waiver:definitions-for-open-problem-resolution)
    anchors: []
    utility: none
-   digest: Kasel stage schemes, dyadic blocks, validity and normalization
-     at horizon four to the m. -/
+   digest: Kasel stage schemes, dyadic blocks, validity and normalization at horizon four to the m. -/
 
 import Mathlib.Data.Finset.Interval
 import Mathlib.Data.Nat.Log
