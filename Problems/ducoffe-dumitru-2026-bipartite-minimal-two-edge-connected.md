@@ -1,6 +1,6 @@
 ---
 slug: ducoffe-dumitru-2026-bipartite-minimal-two-edge-connected
-bibkey: ducoffeDumitru2026structuredSearch
+bibkey: ducoffe2026erdosgyarfas
 doi: 10.48550/arXiv.2609.28594
 url: https://arxiv.org/abs/2609.28594v1
 triage: theorem
