@@ -2,6 +2,8 @@ fingerprints:
   raw_sha256: sha256:d6aae3e6dc19f28a8f145f1c209cc08a7b311bcf8b9f1d204f56b984283ded42
   normalized_sha256: sha256:d6aae3e6dc19f28a8f145f1c209cc08a7b311bcf8b9f1d204f56b984283ded42
 cas_ref: sha256:d6aae3e6dc19f28a8f145f1c209cc08a7b311bcf8b9f1d204f56b984283ded42
-coverage_gids: []
+coverage_gids:
+  - gid: D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotPeriodClassification.period_classification
+    target_statement_id: sha256:4cb63990e81942a32aabb29e9b86757d5fc515a3801be9f9d647c774622a1df9
 receipts:
   unresolved_subitems: []
