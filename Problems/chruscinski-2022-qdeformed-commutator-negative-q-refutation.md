@@ -87,9 +87,10 @@ non-traceless $B$ commuting with it.
 - *Mechanism.* The source's extremal family has both traces zero. A partner with nonzero trace
   concentrated on the large eigenvalue of $A$ raises the ratio, and the single trace condition does
   not prevent it.
-- *What survives (bounded numerics, not proof).* At $n=3$, $q=-1$, numerical maximization gives a
-  supremum $\approx2.0000$ of the ratio when both matrices are traceless, equal to the conjectured
-  coefficient, and $\approx2.6667=8/3$ when only $A$ is traceless; the witness above attains $8/3$.
+- *What survives (bounded numerics, not proof).* At $n=3$, $q=-1$, numerical maximization over random
+  complex pairs found ratios approaching $2$, the conjectured coefficient, when both matrices are
+  traceless, and approaching $8/3$ when only $A$ is traceless; the witness above attains $8/3$. These
+  readings certify neither a supremum nor an upper bound.
 
 **Open.** Whether the conjectured bound holds when both $A$ and $B$ are traceless, and the optimal
 constant under a single trace condition for $n\ge3$.
