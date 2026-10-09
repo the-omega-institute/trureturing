@@ -56,8 +56,8 @@ def seriesDerivation (D : LatticeData) (d : Derivation ℂ (Oscillator D) (Oscil
 
 theorem derivative_commute (D : LatticeData)
     (d : Derivation ℂ (Oscillator D) (Oscillator D)) (f : PowerSeries (Oscillator D)) :
-    seriesDerivation D d (PowerSeries.derivative (Oscillator D) f) =
-      PowerSeries.derivative (Oscillator D) (seriesDerivation D d f) := by
+    seriesDerivation D d (PowerSeries.derivative f) =
+      PowerSeries.derivative (seriesDerivation D d f) := by
   apply PowerSeries.ext
   intro n
   simp only [series_coeff, PowerSeries.coeff_derivative, Derivation.leibniz,
@@ -72,18 +72,18 @@ theorem actual_exponential_derivation (D : LatticeData)
       creationExponential D α * seriesDerivation D d (creationSeries D α) := by
   let E := creationExponential D α
   let S := creationSeries D α
-  let A := PowerSeries.derivative (Oscillator D) S
+  let A := PowerSeries.derivative S
   let H := seriesDerivation D d E - E * seriesDerivation D d S
   have hS : PowerSeries.constantCoeff S = 0 := by
     simp [S, creationSeries, ← PowerSeries.coeff_zero_eq_constantCoeff_apply]
-  have hE : PowerSeries.derivative (Oscillator D) E = E*A := by
+  have hE : PowerSeries.derivative E = E*A := by
     dsimp [E,creationExponential,A,S]
     rw [PowerSeries.derivative_subst (PowerSeries.HasSubst.of_constantCoeff_zero' hS),
       PowerSeries.derivative_exp]
-  have hH : PowerSeries.derivative (Oscillator D) H = H*A := by
+  have hH : PowerSeries.derivative H = H*A := by
     dsimp only [H]
     rw [map_sub, ← derivative_commute, hE, (seriesDerivation D d).leibniz,
-      (PowerSeries.derivative (Oscillator D)).leibniz, hE,
+      (PowerSeries.derivative (R := Oscillator D)).leibniz, hE,
       ← derivative_commute]
     change _ = (seriesDerivation D d E - E * seriesDerivation D d S)*A
     simp only [smul_eq_mul]

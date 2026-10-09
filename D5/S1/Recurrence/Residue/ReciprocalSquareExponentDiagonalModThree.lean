@@ -71,15 +71,15 @@ theorem inverse_cube_diagonal (S Q : PowerSeries (ZMod 3))
         conv_lhs => rw [hS]
         ring
       _ = _ := by rw [hSQ]; ring
-  have hder : X * derivative (ZMod 3) Q = Q * (Q - 1) := by
-    have hds := congrArg (derivative (ZMod 3)) hS
+  have hder : X * PowerSeries.derivative (R := (ZMod 3)) Q = Q * (Q - 1) := by
+    have hds := congrArg (PowerSeries.derivative (R := (ZMod 3))) hS
     simp only [map_add, derivative_one, derivative_X, Derivation.leibniz,
       derivative_pow, smul_eq_mul, Nat.cast_ofNat, hthree, zero_mul, mul_zero,
       zero_add, mul_one] at hds
-    have hdq := congrArg (derivative (ZMod 3)) hSQ
+    have hdq := congrArg (PowerSeries.derivative (R := (ZMod 3))) hSQ
     simp only [Derivation.leibniz, derivative_one, smul_eq_mul] at hdq
     linear_combination X * Q * hdq - X * Q ^ 2 * hds + Q ^ 2 * hS -
-      (Q + X * derivative (ZMod 3) Q) * hSQ
+      (Q + X * PowerSeries.derivative (R := (ZMod 3)) Q) * hSQ
   have hvanish : ∀ m : ℕ, 0 < m → ∀ t : ℕ, t % 3 = 1 →
       coeff m (Q ^ (m * t) * (1 + Q)) = 0 := by
     intro m
@@ -101,7 +101,7 @@ theorem inverse_cube_diagonal (S Q : PowerSeries (ZMod 3))
         have ht1 : (t : ZMod 3) = 1 := by
           rw [← ZMod.natCast_mod t 3, ht]; rfl
         have hmt : 0 < m * t := Nat.mul_pos hm (by omega)
-        have he : X * derivative (ZMod 3) (Q ^ (m * t)) =
+        have he : X * PowerSeries.derivative (R := (ZMod 3)) (Q ^ (m * t)) =
             C (m : ZMod 3) * (Q ^ (m * t + 1) - Q ^ (m * t)) := by
           rw [derivative_pow]
           have hc : ((m * t : ℕ) : PowerSeries (ZMod 3)) = C (m : ZMod 3) := by
@@ -109,7 +109,7 @@ theorem inverse_cube_diagonal (S Q : PowerSeries (ZMod 3))
           rw [hc]
           calc
             _ = C (m : ZMod 3) * Q ^ (m * t - 1) *
-                (X * derivative (ZMod 3) Q) := by ring
+                (X * PowerSeries.derivative (R := (ZMod 3)) Q) := by ring
             _ = _ := by
               rw [hder]
               have hp : Q ^ (m * t - 1) * Q = Q ^ (m * t) := by
@@ -117,7 +117,7 @@ theorem inverse_cube_diagonal (S Q : PowerSeries (ZMod 3))
               rw [pow_succ]
               linear_combination C (m : ZMod 3) * (Q - 1) * hp
         have hc := congrArg (coeff m) he
-        have hleft : coeff m (X * derivative (ZMod 3) (Q ^ (m * t))) =
+        have hleft : coeff m (X * PowerSeries.derivative (R := (ZMod 3)) (Q ^ (m * t))) =
             coeff m (Q ^ (m * t)) * (m : ZMod 3) := by
           conv_lhs => arg 1; rw [show m = (m - 1) + 1 by omega]
           rw [coeff_succ_X_mul, coeff_derivative, show m - 1 + 1 = m by omega]
@@ -302,7 +302,6 @@ theorem a397356_mod_three (n : ℕ) :
     · have := hordered v u z w h h' (by omega); omega
   have hdiv : (a n : ZMod 3) = 0 ↔ (3 : ℤ) ∣ a n := by
     convert ZMod.intCast_zmod_eq_zero_iff_dvd (a n) 3 using 1
-    norm_num
   rw [← hdiv]
   have hcoeff : (a n : ZMod 3) = coeff n (S ^ 2) := by
     simpa only [a, coeff_map, Int.coe_castRingHom] using congrArg (coeff n) hA
