@@ -336,7 +336,8 @@ private theorem saturated_children (h : Nat)
       (∀ z, C.Edge I u z ↔ z = v ∨ z = w) ∧
       (∀ e ∈ events hp hP C I v ∪ events hp hP C I w,
         ∃ d ∈ events hp hP C I u, e.1 = d.1 ∧ d.2 < e.2 ∧
-          ∀ t, d.2 < t → t < e.2 → C.action (C.run hp hP d.1 t).2 = .wait) := by
+          ∀ t, d.2 < t → t < e.2 → C.action (C.run hp hP d.1 t).2 = .wait) ∧
+      (events hp hP C I u).card = (events hp hP C I v).card + (events hp hP C I w).card := by
   classical
   let f := fun e => (advance hp hP C I u active e).1
   let A := (events hp hP C I u).image f
@@ -428,7 +429,7 @@ private theorem saturated_children (h : Nat)
     have eqz := event_slot_unique hp hP C I (eq ▸ occurs)
       ((mem_events hp hP C I).mp ha)
     exact eqz ▸ old
-  refine ⟨v,w,different,incoming v (Or.inl rfl),incoming w (Or.inr rfl),vs,ws,?_,?_⟩
+  refine ⟨v,w,different,incoming v (Or.inl rfl),incoming w (Or.inr rfl),vs,ws,?_,?_,?_⟩
   · intro z
     refine ⟨fun hz => ?_, incoming z⟩
     simpa only [Finset.mem_insert,Finset.mem_singleton,v,w] using cover ((edges u z).mpr hz)
@@ -439,6 +440,11 @@ private theorem saturated_children (h : Nat)
     exact ⟨d,hd,by rw [← eq]; exact s.1,
       by rw [← eq]; exact s.2.2.1,by rw [← eq]; exact s.2.2.2.1⟩
 
+
+  · have cardinal := Finset.card_image_of_injOn (advance_injective hp hP C I active)
+    change A.card = (events hp hP C I u).card at cardinal
+    rw [full_image,Finset.card_union_of_disjoint separated] at cardinal
+    exact cardinal.symm
 
 private theorem index_edge {x : Source} {i j : Nat} {u v : Slot}
     (hu : C.Occurs I x i u) (hv : C.Occurs I x j v) (before : i < j)
@@ -497,7 +503,7 @@ private theorem full_edge (h : Nat)
   have active : C.action (C.readNext u.1.val u.2) ≠ .halt := by
     intro halt
     exact terminal_no_edge hp hP C I halt edge
-  obtain ⟨l,r,ne,el,er,lf,rf,exhaustive,complete⟩ :=
+  obtain ⟨l,r,ne,el,er,lf,rf,exhaustive,complete,balance⟩ :=
     saturated_children hp hP C I h budget u active full
   have choice := (exhaustive v).mp edge
   have vf : mass hp hP C I h v = 1 := by rcases choice with rfl | rfl <;> assumption
@@ -556,8 +562,8 @@ private theorem same_target (h : Nat)
     fun halt => terminal_no_edge hp hP C I halt uv
   have za : C.action (C.readNext z.1.val z.2) ≠ .halt :=
     fun halt => terminal_no_edge hp hP C I halt zw
-  obtain ⟨a,b,ab,ua',ub,af,bf,ex,comp⟩ := saturated_children hp hP C I h budget u ua uf
-  obtain ⟨c,d,cd,zc,zd,cf,df,ex',comp'⟩ := saturated_children hp hP C I h budget z za zf
+  obtain ⟨a,b,ab,ua',ub,af,bf,ex,comp,balance⟩ := saturated_children hp hP C I h budget u ua uf
+  obtain ⟨c,d,cd,zc,zd,cf,df,ex',comp',balance'⟩ := saturated_children hp hP C I h budget z za zf
   have ac : a.1 = c.1 := (C.edge_target_unique I ua' uv).trans
     (target.trans (C.edge_target_unique I zw zc))
   have abq := C.edge_target_unique I ua' ub
@@ -605,6 +611,69 @@ private theorem saturated_card (h : Nat)
   exact_mod_cast lower
 
 
+private theorem literal_interval {u v : Slot} {x : Source} {i j : Nat}
+    (hi : C.Occurs I x i u) (hj : C.Occurs I x j v) (before : i < j)
+    (waits : ∀ t, i < t → t < j → C.action (C.run hp hP x t).2 = .wait) :
+    let d := j - (i + 1)
+    0 < d ∧ j = i + 1 + d ∧
+      (∀ n, n < d → C.action (C.waitNext^[n] (C.readNext u.1.val u.2)) = .wait) ∧
+      C.waitNext^[d] (C.readNext u.1.val u.2) = v.1.val := by
+  obtain ⟨_,_,_,_,_,ur,_⟩ := u.1.property
+  obtain ⟨_,_,_,_,_,vr,_⟩ := v.1.property
+  have read := C.read_advance (hi.2.1 ▸ ur)
+  have live := hj.1
+  have strict : i + 1 < j := by
+    by_contra bad
+    have ij : j = i + 1 := by omega
+    have after := I.after_read x i (by omega) (hi.2.1 ▸ ur)
+    rw [← ij,hj.2.1,vr] at after
+    cases after
+  let d := j - (i + 1)
+  have endtime : j = i + 1 + d := by dsimp [d]; omega
+  have positions (n : Nat) (hn : n ≤ d) :
+      (C.run hp hP x (i + 1 + n)).2 = C.waitNext^[n] (C.readNext u.1.val u.2) := by
+    have segment := C.wait_segment (hp := hp) (hP := hP) x (i + 1) n
+      (fun k hk => waits _ (by omega) (by omega))
+    rw [read] at segment
+    exact congrArg Prod.snd segment |>.trans (by rw [hi.2.1,hi.2.2])
+  refine ⟨by omega,endtime,?_,?_⟩
+  · intro n hn
+    rw [← positions n hn.le]
+    exact waits _ (by omega) (by omega)
+  · rw [← positions d le_rfl,← endtime]
+    exact hj.2.1
+
+private theorem literal_transport (h : Nat)
+    (budget : ∀ x, (readEvents hp hP C I x).card ≤ h) (u : Slot)
+    (active : C.action (C.readNext u.1.val u.2) ≠ .halt)
+    (full : mass hp hP C I h u = 1) :
+    ∃ v w : Slot, ∃ delay : Nat, v ≠ w ∧ 0 < delay ∧
+      C.Edge I u v ∧ C.Edge I u w ∧ mass hp hP C I h v = 1 ∧ mass hp hP C I h w = 1 ∧
+      (∀ z, C.Edge I u z ↔ z = v ∨ z = w) ∧
+      (∀ e ∈ events hp hP C I v ∪ events hp hP C I w,
+        ∃ d ∈ events hp hP C I u, e.1 = d.1 ∧ e.2 = d.2 + 1 + delay ∧
+          ∀ t, d.2 < t → t < e.2 → C.action (C.run hp hP d.1 t).2 = .wait) := by
+  obtain ⟨v,w,ne,uv,uw,vf,wf,ex,complete,balance⟩ :=
+    saturated_children hp hP C I h budget u active full
+  obtain ⟨x,i,delay,hi,pos,endpoint,digit,waits,control,physical⟩ := C.edge_tail I uv
+  refine ⟨v,w,delay,ne,pos,uv,uw,vf,wf,ex,?_⟩
+  intro e he
+  obtain ⟨d,hd,xy,before,actual⟩ := complete e he
+  have ev : C.Occurs I d.1 e.2 v ∨ C.Occurs I d.1 e.2 w := by
+    rcases Finset.mem_union.mp he with he | he
+    · exact Or.inl (xy ▸ (mem_events hp hP C I).mp he)
+    · exact Or.inr (xy ▸ (mem_events hp hP C I).mp he)
+  have fixed (z : Slot) (ev : C.Occurs I d.1 e.2 z) : e.2 = d.2 + 1 + delay := by
+    have interval := literal_interval hp hP C I ((mem_events hp hP C I).mp hd)
+      ev before actual
+    obtain ⟨_,_,_,_,_,read,_⟩ := z.1.property
+    obtain ⟨_,_,_,_,_,vread,_⟩ := v.1.property
+    have same := C.tail_unique interval.2.2.1 waits
+      (interval.2.2.2 ▸ read) (control ▸ vread)
+    rw [← same]
+    exact interval.2.1
+  exact ⟨d,hd,xy,ev.elim (fixed v) (fixed w),actual⟩
+
 private theorem terminal_deadline (h : Nat)
     (budget : ∀ x, (readEvents hp hP C I x).card ≤ h) {u : Slot}
     (full : mass hp hP C I h u = 1)
@@ -643,6 +712,110 @@ private theorem target_nonroot {u v : Slot} (edge : C.Edge I u v) : v.1.val ≠ 
   have forbidden := G.root_no_incoming u v.2
   exact forbidden (by simpa only [← eq,Prod.eta] using entry)
 
+private theorem saturated_budget (h : Nat)
+    (budget : ∀ x, (readEvents hp hP C I x).card ≤ h) {u : Slot}
+    (full : mass hp hP C I h u = 1) :
+    ∀ e ∈ events hp hP C I u, (readEvents hp hP C I e.1).card = h := by
+  classical
+  by_cases active : C.action (C.readNext u.1.val u.2) ≠ .halt
+  · obtain ⟨G,root,used,edges,rest⟩ := C.result I
+    have upper := suffix_kraft hp hP C I G edges u active
+    have termwise : ∀ e ∈ events hp hP C I u,
+        (1 / 2 : Real) ^ (h - readIndex hp hP C I e) ≤
+          (1 / 2 : Real) ^ (laterReads hp hP C I e.1 e.2).card := by
+      intro e he
+      have split := index_split hp hP C I e
+      have bound := budget e.1
+      exact pow_le_pow_of_le_one (by norm_num) (by norm_num) (by omega)
+    have equality : (∑ e ∈ events hp hP C I u,
+        (1 / 2 : Real) ^ (h - readIndex hp hP C I e)) =
+      ∑ e ∈ events hp hP C I u, (1 / 2 : Real) ^ (laterReads hp hP C I e.1 e.2).card := by
+      have lower := Finset.sum_le_sum termwise
+      change mass hp hP C I h u ≤ _ at lower
+      change mass hp hP C I h u = _
+      rw [full] at lower ⊢
+      linarith
+    intro e he
+    have point := (Finset.sum_eq_sum_iff_of_le termwise).mp equality e he
+    have exponents := (pow_right_strictAnti₀ (by norm_num : (0 : Real) < 1 / 2)
+      (by norm_num : (1 / 2 : Real) < 1)).injective point
+    have split := index_split hp hP C I e
+    have bound := budget e.1
+    omega
+  · have halt := not_ne_iff.mp active
+    obtain ⟨d,singleton,index,last⟩ := terminal_deadline hp hP C I h budget full halt
+    intro e he
+    have eq := Finset.mem_singleton.mp (singleton ▸ he)
+    subst e
+    have split := index_split hp hP C I d
+    have empty : laterReads hp hP C I d.1 d.2 = ∅ := by
+      ext t
+      simp only [laterReads,Finset.mem_filter,Finset.mem_range,Finset.notMem_empty,iff_false,not_and]
+      omega
+    rw [empty,Finset.card_empty,index] at split
+    omega
+
+/-- A full binary expansion of the complete actual successor relation.
+Leaves retain their entire singleton event fiber; forks retain both actual
+edges, the exhaustive successor list and the exact event-count balance. -/
+inductive ConeTree : Slot → Type where
+  | leaf {u : Slot} (e : Source × Nat)
+      (events_eq : events hp hP C I u = {e})
+      (halt : C.action (C.readNext u.1.val u.2) = .halt) : ConeTree u
+  | fork {u l r : Slot} (different : l ≠ r) (left_edge : C.Edge I u l)
+      (right_edge : C.Edge I u r) (exhaustive : ∀ z, C.Edge I u z ↔ z = l ∨ z = r)
+      (balance : (events hp hP C I u).card =
+        (events hp hP C I l).card + (events hp hP C I r).card)
+      (left : ConeTree l) (right : ConeTree r) : ConeTree u
+
+def leafCount {u : Slot} : ConeTree hp hP C I u → Nat
+  | .leaf _ _ _ => 1
+  | .fork _ _ _ _ _ left right => leafCount left + leafCount right
+
+def internalCount {u : Slot} : ConeTree hp hP C I u → Nat
+  | .leaf _ _ _ => 0
+  | .fork _ _ _ _ _ left right => 1 + internalCount left + internalCount right
+
+private theorem rank_le (h : Nat)
+    (budget : ∀ x, (readEvents hp hP C I x).card ≤ h) {u : Slot}
+    (full : mass hp hP C I h u = 1) : rank hp hP C I u ≤ h := by
+  obtain ⟨e,he,min⟩ := (rank_spec hp hP C I (mass_nonempty hp hP C I h full)).1
+  have split := index_split hp hP C I e
+  have bound := budget e.1
+  omega
+
+private theorem cone_tree_exists (h : Nat)
+    (budget : ∀ x, (readEvents hp hP C I x).card ≤ h) {u : Slot}
+    (full : mass hp hP C I h u = 1) : Nonempty (ConeTree hp hP C I u) := by
+  have construct : ∀ n v, mass hp hP C I h v = 1 → h - rank hp hP C I v = n →
+      Nonempty (ConeTree hp hP C I v) := by
+    intro n
+    induction n using Nat.strong_induction_on with
+    | h n ih =>
+      intro v vf measure
+      by_cases halt : C.action (C.readNext v.1.val v.2) = .halt
+      · obtain ⟨e,singleton,index,last⟩ := terminal_deadline hp hP C I h budget vf halt
+        exact ⟨.leaf e singleton halt⟩
+      · obtain ⟨l,r,ne,vl,vr,lf,rf,ex,complete,balance⟩ :=
+          saturated_children hp hP C I h budget v halt vf
+        have ls := (full_edge hp hP C I h budget vf vl).2.1
+        have rs := (full_edge hp hP C I h budget vf vr).2.1
+        have lb := rank_le hp hP C I h budget lf
+        have rb := rank_le hp hP C I h budget rf
+        obtain ⟨L⟩ := ih (h - rank hp hP C I l) (by omega) l lf rfl
+        obtain ⟨R⟩ := ih (h - rank hp hP C I r) (by omega) r rf rfl
+        exact ⟨.fork ne vl vr ex balance L R⟩
+  exact construct _ u full rfl
+
+private theorem tree_counts {u : Slot} (T : ConeTree hp hP C I u) :
+    leafCount hp hP C I T = (events hp hP C I u).card ∧
+      internalCount hp hP C I T + 1 = leafCount hp hP C I T := by
+  induction T with
+  | leaf e singleton halt => simp [leafCount,internalCount,singleton]
+  | fork ne left_edge right_edge exhaustive balance left right ihl ihr =>
+    simp only [leafCount,internalCount]
+    exact ⟨by rw [ihl.1,ihr.1,← balance],by omega⟩
+
 /-- A saturated actual cone has complete child fibers, unique incoming edges,
 no slot cycle, and distinct next-reading controls when p is two or three. -/
 theorem result (h : Nat)
@@ -651,26 +824,30 @@ theorem result (h : Nat)
     (full : mass hp hP C I h u = 1) :
     2 ≤ (events hp hP C I u).card ∧
     (∀ v, Relation.ReflTransGen (C.Edge I) u v →
-      mass hp hP C I h v = 1 ∧ ¬ Relation.TransGen (C.Edge I) v v ∧
+      mass hp hP C I h v = 1 ∧
+      (∀ e ∈ events hp hP C I v, (readEvents hp hP C I e.1).card = h) ∧
+      ¬ Relation.TransGen (C.Edge I) v v ∧
       (C.action (C.readNext v.1.val v.2) = .halt →
         ∃ e : Source × Nat, events hp hP C I v = {e} ∧
           readIndex hp hP C I e = h ∧ e.2 + 1 = I.length e.1) ∧
       (C.action (C.readNext v.1.val v.2) ≠ .halt →
-        ∃ l r : Slot, l ≠ r ∧ C.Edge I v l ∧ C.Edge I v r ∧
+        ∃ l r : Slot, ∃ delay : Nat, l ≠ r ∧ 0 < delay ∧ C.Edge I v l ∧ C.Edge I v r ∧
           mass hp hP C I h l = 1 ∧ mass hp hP C I h r = 1 ∧
           (∀ z, C.Edge I v z ↔ z = l ∨ z = r) ∧
           (∀ e ∈ events hp hP C I l ∪ events hp hP C I r,
-            ∃ d ∈ events hp hP C I v, e.1 = d.1 ∧ d.2 < e.2 ∧
+            ∃ d ∈ events hp hP C I v, e.1 = d.1 ∧ e.2 = d.2 + 1 + delay ∧
               ∀ t, d.2 < t → t < e.2 → C.action (C.run hp hP d.1 t).2 = .wait)) ∧
       (∀ w, C.Edge I v w → (∀ z, C.Edge I z w → z = v) ∧ w.1.val ≠ C.initial)) ∧
     (∀ v w a b, Relation.ReflTransGen (C.Edge I) u v →
       Relation.ReflTransGen (C.Edge I) u w → C.Edge I v a → C.Edge I w b →
-      a.1 = b.1 → v = w) := by
-  refine ⟨saturated_card hp hP C I h budget active full,?_,?_⟩
+      a.1 = b.1 → v = w) ∧
+    (∃ T : ConeTree hp hP C I u, leafCount hp hP C I T = (events hp hP C I u).card ∧
+      internalCount hp hP C I T + 1 = leafCount hp hP C I T) := by
+  refine ⟨saturated_card hp hP C I h budget active full,?_,?_,?_⟩
   · intro v path
     have vf := reachable_full hp hP C I h budget full path
-    refine ⟨vf,?_,terminal_deadline hp hP C I h budget vf,
-      (fun va => saturated_children hp hP C I h budget v va vf),?_⟩
+    refine ⟨vf,saturated_budget hp hP C I h budget vf,?_,terminal_deadline hp hP C I h budget vf,
+      (fun va => literal_transport hp hP C I h budget v va vf),?_⟩
     · intro loop
       have strict := path_rank hp hP C I h budget loop vf
       exact Nat.lt_irrefl _ strict
@@ -681,5 +858,8 @@ theorem result (h : Nat)
     exact same_target hp hP C I h budget small
       (reachable_full hp hP C I h budget full vp)
       (reachable_full hp hP C I h budget full wp) va wb eq
+
+  · obtain ⟨T⟩ := cone_tree_exists hp hP C I h budget full
+    exact ⟨T,tree_counts hp hP C I T⟩
 
 end D5.S3.ObserverMemory.Algorithms.SaturatedActualCone
