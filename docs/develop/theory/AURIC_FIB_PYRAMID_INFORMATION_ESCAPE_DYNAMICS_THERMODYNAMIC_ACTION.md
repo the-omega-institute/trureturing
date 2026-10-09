@@ -590,6 +590,48 @@ q_{00}q_{11}-q_{10}q_{01}=0
 
 宏观三维金字塔可以看成底部 binary marginal square 加上 apex state 的锥化。\(Z\) 是 apex mass，\(r=1-Z\) 是底部质量。这个 toric 解释把概率几何、信息丢失、质量作用和整数素数障碍放在同一张代数图上。
 
+## 8.2. Prime seam 的 p-adic 形式
+
+在有限整数载体中，整数 determinant 是
+
+\[
+D_{\mathrm{int}}=Rk-AB,
+\]
+
+而金字塔中的概率 determinant 为
+
+\[
+\Delta=r^2\frac{D_{\mathrm{int}}}{R^2}.
+\]
+
+对素数 \(p\)，若
+
+\[
+e=v_p(R)>u=v_p(AB),
+\]
+
+则对任意整数 \(k\) 都有
+
+\[
+v_p(Rk)\ge e>u.
+\]
+
+因此 \(Rk\) 与 \(AB\) 在 p-adic 方向上不可能相消为零，并且
+
+\[
+v_p(D_{\mathrm{int}})=u.
+\]
+
+这给出一个精确的非闭合判据：
+
+\[
+\Omega_p=\max(0,v_p(R)-v_p(AB))
+\]
+
+是该 prime chart 上的最小 valuation obstruction。只有在 \(e\le u\) 时，进一步的 residue cancellation 才可能提高 \(v_p(D_{\mathrm{int}})\)。所以 p-adic seam 不是简单的“某个素数出现了”，而是 toric binomial independence 方程在该素数方向上无法闭合。
+
+这可以称为 tropical/p-adic seam。它是算术几何中的离散障碍，不能直接当成连续物理距离，但它给出了素数如何进入可达性判据的精确方式。
+
 ## 9. 层间径向捕获与层内关联耗散
 
 要让轨迹真正从金字塔底部走向顶点，定义一个额外的径向捕获生成元。令 \(\mu(t)\ge0\)，底部四态统一向 apex 3 泄漏：
