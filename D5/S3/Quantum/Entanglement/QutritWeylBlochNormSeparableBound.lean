@@ -340,4 +340,123 @@ private lemma bipartite_coefficient
     simp
   · intro h; exact (h (Finset.mem_univ _)).elim
 
+private def rawVector : Fin 3 × Fin 3 → ℂ :=
+  fun q => (![![2, 0, 1], ![0, 1, 0], ![-1, 0, 0]] :
+    Matrix (Fin 3) (Fin 3) ℂ) q.1 q.2
+
+private def violationVector : Fin 3 × Fin 3 → ℂ :=
+  fun q => (Real.sqrt 7 / 7 : ℝ) * rawVector q
+
+private def violationMatrix : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ :=
+  (1 / 7 : ℂ) • vecMulVec rawVector (star rawVector)
+
+private lemma violation_matrix : vecMulVec violationVector (star violationVector) =
+    violationMatrix := by
+  have hs : Real.sqrt 7 ^ 2 = 7 := Real.sq_sqrt (by norm_num)
+  have hc : ((Real.sqrt 7 / 7 : ℝ) : ℂ) * ((Real.sqrt 7 / 7 : ℝ) : ℂ) = 1 / 7 := by
+    apply Complex.ext <;> norm_num [Complex.mul_re, Complex.mul_im] <;> nlinarith
+  ext q r
+  simp only [Matrix.vecMulVec_apply, violationVector, Pi.star_apply, violationMatrix,
+    Matrix.smul_apply, smul_eq_mul, star_mul, Complex.star_def, Complex.conj_ofReal]
+  linear_combination hc * (rawVector q * (starRingEnd ℂ) (rawVector r))
+
+private lemma violation_normalized : star violationVector ⬝ᵥ violationVector = 1 := by
+  rw [dotProduct_comm, ← Matrix.trace_vecMulVec, violation_matrix]
+  norm_num [violationMatrix, rawVector, Matrix.trace, Matrix.diag_apply,
+    Matrix.vecMulVec_apply, Matrix.smul_apply, Pi.star_apply,
+    Fintype.sum_prod_type, Fin.sum_univ_succ, smul_eq_mul, map_ofNat]
+
+private def violationNumerator : Fin 3 → Fin 3 → Fin 3 → Fin 3 → ℝ :=
+  ![![![![49, 4, 4], ![16, 4, 4], ![16, 4, 4]],
+    ![![4, 4, 1], ![4, 4, 4], ![4, 4, 4]],
+    ![![4, 1, 4], ![4, 4, 4], ![4, 4, 4]]],
+    ![![![16, 4, 4], ![13, 4, 4], ![16, 4, 4]],
+    ![![4, 4, 4], ![4, 4, 1], ![4, 4, 4]],
+    ![![4, 4, 4], ![4, 1, 4], ![4, 4, 4]]],
+    ![![![16, 4, 4], ![16, 4, 4], ![13, 4, 4]],
+    ![![4, 4, 4], ![4, 4, 4], ![4, 4, 1]],
+    ![![4, 4, 4], ![4, 4, 4], ![4, 1, 4]]]]
+
+private def violationPhase : Fin 3 → Fin 3 → Fin 3 → Fin 3 → ℝ × ℝ :=
+  ![![![![(7, 0), (2, 0), (2, 0)], ![(4, 0), (0, 2), (2, 0)], ![(4, 0), (-2, -2), (2, 0)]],
+      ![![(-2, 0), (2, 0), (-1, 0)], ![(-2, 0), (2, 0), (0, 2)], ![(-2, 0), (2, 0), (-2, -2)]],
+      ![![(-2, 0), (-1, 0), (2, 0)], ![(-2, 0), (-2, -2), (-2, -2)], ![(-2, 0), (0, 2), (0, 2)]]],
+    ![![![(4, 0), (2, 0), (2, 0)], ![(4, 3), (0, 2), (2, 0)], ![(4, 0), (-2, -2), (2, 0)]],
+      ![![(0, -2), (2, 0), (2, 0)], ![(0, -2), (2, 0), (0, -1)], ![(0, -2), (2, 0), (-2, -2)]],
+      ![![(-2, 0), (-2, -2), (-2, -2)], ![(-2, 0), (0, -1), (0, 2)], ![(-2, 0), (2, 0), (2, 0)]]],
+    ![![![(4, 0), (2, 0), (2, 0)], ![(4, 0), (0, 2), (2, 0)], ![(1, -3), (-2, -2), (2, 0)]],
+      ![![(2, 2), (2, 0), (2, 0)], ![(2, 2), (2, 0), (0, 2)], ![(2, 2), (2, 0), (1, 1)]],
+      ![![(-2, 0), (0, 2), (0, 2)], ![(-2, 0), (2, 0), (2, 0)], ![(-2, 0), (1, 1), (-2, -2)]]]]
+
+private lemma phase_norm_sq (x y : ℝ) :
+    ‖(x : ℂ) + (y : ℂ) * ω‖ ^ 2 = x ^ 2 - x * y + y ^ 2 := by
+  have hs : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  rw [omega_value, ← Complex.normSq_eq_norm_sq]
+  simp only [Complex.normSq_apply, Complex.add_re, Complex.add_im,
+    Complex.mul_re, Complex.mul_im, Complex.ofReal_re, Complex.ofReal_im,
+    zero_mul, mul_zero, add_zero, sub_zero]
+  ring_nf
+  rw [hs]
+  ring
+
+private lemma violation_coefficients (i j k l : Fin 3) :
+    bloch violationMatrix i j k l =
+      ((violationPhase i j k l).1 + (violationPhase i j k l).2 * ω) / 7 := by
+  have hs : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
+  have hs3 : Real.sqrt 3 ^ 3 = 3 * Real.sqrt 3 := by
+    rw [pow_succ, hs]
+  have hs4 : Real.sqrt 3 ^ 4 = 9 := by
+    rw [show Real.sqrt 3 ^ 4 = (Real.sqrt 3 ^ 2) ^ 2 by ring, hs]
+    norm_num
+  have hs6 : Real.sqrt 3 ^ 6 = 27 := by
+    rw [show Real.sqrt 3 ^ 6 = (Real.sqrt 3 ^ 2) ^ 3 by ring, hs]
+    norm_num
+  have hs8 : Real.sqrt 3 ^ 8 = 81 := by
+    rw [show Real.sqrt 3 ^ 8 = (Real.sqrt 3 ^ 2) ^ 4 by ring, hs]
+    norm_num
+  rw [bipartite_coefficient, omega_value]
+  simp only [violationMatrix, Matrix.smul_apply, Matrix.vecMulVec_apply, smul_eq_mul,
+    Pi.star_apply, rawVector]
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    apply Complex.ext <;>
+    norm_num [Fin.sum_univ_succ, Fin.add_def, violationPhase, pow_succ,
+      Complex.add_re, Complex.add_im, Complex.mul_re, Complex.mul_im,
+      Complex.div_re, Complex.div_im, Complex.star_def, Complex.conj_re, Complex.conj_im] <;>
+    ring_nf <;> norm_num [hs, hs3, hs4, hs6, hs8] <;> ring
+
+private lemma violation_squared (i j k l : Fin 3) :
+    ‖bloch violationMatrix i j k l‖ ^ 2 = violationNumerator i j k l / 49 := by
+  rw [violation_coefficients, norm_div, div_pow, phase_norm_sq]
+  norm_num
+  fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+    norm_num [violationPhase, violationNumerator]
+
+private lemma violation_norms (i j k l : Fin 3) :
+    ‖bloch violationMatrix i j k l‖ = Real.sqrt (violationNumerator i j k l) / 7 := by
+  have hnonneg : 0 ≤ violationNumerator i j k l := by
+    fin_cases i <;> fin_cases j <;> fin_cases k <;> fin_cases l <;>
+      norm_num [violationNumerator]
+  have hs := Real.sq_sqrt hnonneg
+  have hsq := violation_squared i j k l
+  have hn := norm_nonneg (bloch violationMatrix i j k l)
+  have hr := Real.sqrt_nonneg (violationNumerator i j k l)
+  nlinarith
+
+private lemma nonvacuity : ∃ ψ : Fin 3 × Fin 3 → ℂ,
+    star ψ ⬝ᵥ ψ = 1 ∧ 25 < l1 (vecMulVec ψ (star ψ)) := by
+  refine ⟨violationVector, violation_normalized, ?_⟩
+  rw [violation_matrix]
+  have he : l1 violationMatrix = (169 + 2 * Real.sqrt 13) / 7 := by
+    simp only [l1, violation_norms]
+    norm_num [Fin.sum_univ_succ, violationNumerator]
+    ring
+  rw [he]
+  have hs : Real.sqrt 13 ^ 2 = 13 := Real.sq_sqrt (by norm_num)
+  have hn := Real.sqrt_nonneg 13
+  nlinarith
+
+theorem result : claim := ⟨separable_bound, sharpness, nonvacuity⟩
+
+#print axioms result
+
 end D5.S3.Quantum.Entanglement.QutritWeylBlochNormSeparableBound
