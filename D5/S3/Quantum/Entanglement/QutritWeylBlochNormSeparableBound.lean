@@ -25,10 +25,10 @@ open scoped Kronecker ComplexOrder
 
 namespace D5.S3.Quantum.Entanglement.QutritWeylBlochNormSeparableBound
 
-def ω : ℂ := Complex.exp (2 * Real.pi * Complex.I / 3)
+def omega : ℂ := Complex.exp (2 * Real.pi * Complex.I / 3)
 
 def W (k l : Fin 3) : Matrix (Fin 3) (Fin 3) ℂ :=
-  fun j c => if c = j + l then ω ^ (j.val * k.val) else 0
+  fun j c => if c = j + l then omega ^ (j.val * k.val) else 0
 
 def bloch
     (ρ : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ)
@@ -57,11 +57,11 @@ def claim : Prop :=
     (∃ ψ : Fin 3 × Fin 3 → ℂ,
       star ψ ⬝ᵥ ψ = 1 ∧ 25 < l1 (vecMulVec ψ (star ψ)))
 
-private lemma omega_parts : ω.re = -1 / 2 ∧ ω.im = Real.sqrt 3 / 2 := by
+private lemma omega_parts : omega.re = -1 / 2 ∧ omega.im = Real.sqrt 3 / 2 := by
   have harg : (2 * Real.pi * Complex.I / 3 : ℂ) =
       (2 * Real.pi / 3 : ℝ) * Complex.I := by push_cast; ring
   have hangle : (2 * Real.pi / 3 : ℝ) = 2 * (Real.pi / 3) := by ring
-  unfold ω
+  unfold omega
   rw [harg]
   constructor
   · rw [Complex.exp_ofReal_mul_I_re, hangle, Real.cos_two_mul, Real.cos_pi_div_three]
@@ -70,7 +70,7 @@ private lemma omega_parts : ω.re = -1 / 2 ∧ ω.im = Real.sqrt 3 / 2 := by
       Real.sin_pi_div_three, Real.cos_pi_div_three]
     ring
 
-private lemma omega_value : ω = ⟨-1 / 2, Real.sqrt 3 / 2⟩ :=
+private lemma omega_value : omega = ⟨-1 / 2, Real.sqrt 3 / 2⟩ :=
   Complex.ext omega_parts.1 omega_parts.2
 
 private abbrev a (σ : Matrix (Fin 3) (Fin 3) ℂ) (k l : Fin 3) : ℂ :=
@@ -80,7 +80,7 @@ private abbrev loc (σ : Matrix (Fin 3) (Fin 3) ℂ) : ℝ :=
   ∑ k, ∑ l, ‖a σ k l‖
 
 private lemma coefficient_formula (σ : Matrix (Fin 3) (Fin 3) ℂ) (k l : Fin 3) :
-    a σ k l = ∑ j, σ j (j + l) * star (ω ^ (j.val * k.val)) := by
+    a σ k l = ∑ j, σ j (j + l) * star (omega ^ (j.val * k.val)) := by
   classical
   simp only [a, Matrix.trace, Matrix.diag_apply, Matrix.mul_apply,
     Matrix.conjTranspose_apply]
@@ -96,18 +96,18 @@ private lemma coefficient_formula (σ : Matrix (Fin 3) (Fin 3) ℂ) (k l : Fin 3
     exact (h (Finset.mem_univ _)).elim
 
 private lemma parseval_three (d : Fin 3 → ℂ) :
-    (∑ k : Fin 3, ‖∑ j : Fin 3, d j * star (ω ^ (j.val * k.val))‖ ^ 2) =
+    (∑ k : Fin 3, ‖∑ j : Fin 3, d j * star (omega ^ (j.val * k.val))‖ ^ 2) =
       3 * ∑ j : Fin 3, ‖d j‖ ^ 2 := by
   have hs : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
   have hs4 : Real.sqrt 3 ^ 4 = 9 := by
     calc
       Real.sqrt 3 ^ 4 = (Real.sqrt 3 ^ 2) ^ 2 := by ring
       _ = 9 := by rw [hs]; norm_num
-  have h3 : ω ^ 3 = 1 := D5.S3.QuantumContext.HesseSicCertificate.omega_cubed
-  have h4 : ω ^ 4 = ω := by
+  have h3 : omega ^ 3 = 1 := D5.S3.QuantumContext.HesseSicCertificate.omega_cubed
+  have h4 : omega ^ 4 = omega := by
     calc
-      ω ^ 4 = ω ^ 3 * ω := by ring
-      _ = ω := by rw [h3]; ring
+      omega ^ 4 = omega ^ 3 * omega := by ring
+      _ = omega := by rw [h3]; ring
   simp only [Fin.sum_univ_succ]
   norm_num only [Fin.val_zero, Fin.val_succ, Nat.zero_mul, Nat.mul_zero, Nat.one_mul,
     Nat.mul_one, pow_zero, pow_one, star_one, mul_one]
@@ -319,7 +319,7 @@ private lemma sharpness : ∃ ρ, IsSeparable ρ ∧ l1 ρ = 25 := by
 private lemma bipartite_coefficient
     (ρ : Matrix (Fin 3 × Fin 3) (Fin 3 × Fin 3) ℂ) (i j k l : Fin 3) :
     bloch ρ i j k l = ∑ a : Fin 3, ∑ b : Fin 3,
-      ρ (a, b) (a + j, b + l) * star (ω ^ (a.val * i.val + b.val * k.val)) := by
+      ρ (a, b) (a + j, b + l) * star (omega ^ (a.val * i.val + b.val * k.val)) := by
   classical
   unfold bloch
   simp only [Matrix.trace, Matrix.diag_apply, Matrix.mul_apply,
@@ -389,7 +389,7 @@ private def violationPhase : Fin 3 → Fin 3 → Fin 3 → Fin 3 → ℝ × ℝ 
       ![![(-2, 0), (0, 2), (0, 2)], ![(-2, 0), (2, 0), (2, 0)], ![(-2, 0), (1, 1), (-2, -2)]]]]
 
 private lemma phase_norm_sq (x y : ℝ) :
-    ‖(x : ℂ) + (y : ℂ) * ω‖ ^ 2 = x ^ 2 - x * y + y ^ 2 := by
+    ‖(x : ℂ) + (y : ℂ) * omega‖ ^ 2 = x ^ 2 - x * y + y ^ 2 := by
   have hs : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
   rw [omega_value, ← Complex.normSq_eq_norm_sq]
   simp only [Complex.normSq_apply, Complex.add_re, Complex.add_im,
@@ -401,7 +401,7 @@ private lemma phase_norm_sq (x y : ℝ) :
 
 private lemma violation_coefficients (i j k l : Fin 3) :
     bloch violationMatrix i j k l =
-      ((violationPhase i j k l).1 + (violationPhase i j k l).2 * ω) / 7 := by
+      ((violationPhase i j k l).1 + (violationPhase i j k l).2 * omega) / 7 := by
   have hs : Real.sqrt 3 ^ 2 = 3 := Real.sq_sqrt (by norm_num)
   have hs3 : Real.sqrt 3 ^ 3 = 3 * Real.sqrt 3 := by
     rw [pow_succ, hs]
