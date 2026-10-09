@@ -807,8 +807,8 @@ v2 评注指向 Mollard 2025 的先证。
 
 - **GPT Pro 席不能去重,已两次把仓内已落地的结果当候选**(Kok 2.12、CRIM Conjecture 3)。它的候选一律先过 `git grep -il '<arXiv 号>|<对象名>' origin/dev -- D5 Blueprint Problems Library`,
   命中即读该模块的 `claim` 与卷宗;这一步不能交给席位。
-- `chatgpt-pro-pool` 当日 `online_workers = 0`,两票排队 100 分钟 `Attempts: 0`;派前查 `nyxid oracle pool show <slug> --output json` 的 `online_workers`,
-  `NYX_TIMEOUT` 两次即查任务状态,`queued + Attempts 0` 是死池不是慢。
+- `chatgpt-pro-pool` 当日 `online_workers = 0`,两票排队 100 分钟 `Attempts: 0`:零在线 worker 的池是死池不是慢。
+  派前用 `python3 tools/scripts/agent/nyx/nyx.py pools` 看各池 `online_workers`;`nyx.py ask` 只投在线 worker 最多的 active 池。
 
 ## R52 起的各轮已移入 `SCREENED-OUT-R52.md`
 

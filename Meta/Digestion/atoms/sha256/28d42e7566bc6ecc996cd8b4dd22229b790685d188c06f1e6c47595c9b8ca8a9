@@ -1,0 +1,36 @@
+### theorem 5: 观察三角形与似然三角形的定向始终相反
+
+Claim status: open（参考候选，未经本稿的 Lean kernel 核验）。
+
+```math
+\boxed{
+L(a,b,c)
+=
+-\int_a^b\int_b^c
+\frac{t-s}{s(1-s)t(1-t)}\,dt\,ds
+<0.
+}
+```
+
+#### 证明
+
+将行列式写成两个区间增量的乘积差：
+
+```math
+L
+=
+\log\frac ba\log\frac{1-c}{1-b}
+-
+\log\frac cb\log\frac{1-b}{1-a}.
+```
+
+用积分表示各对数增量，被积函数为：
+
+```math
+-\frac1{s(1-t)}+\frac1{t(1-s)}
+=
+-\frac{t-s}{s(1-s)t(1-t)}.
+```
+
+在 $a<s<b<t<c$ 上严格为负。证毕。
+

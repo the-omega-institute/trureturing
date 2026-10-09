@@ -212,7 +212,7 @@ R54 的 903 条无人认领集里再取「陈述短、无渐近记号、无悬�
 - **开 lane**:Mohan–Neetu, arXiv:2607.11194v1(2026-07-13),§6 **Conjectures 6.1/6.2/6.3**(任意 torsion-free 群的 small doubling `3k−3`/`3k−4` ⟹ ⟨S⟩ 交换)——Klein 瓶群 `Z ⋊ Z`(论文 §5 群律取 `q = −1`)中 `{e,(0,1),(1,1)}` 有 `|S²| = 6 = 3·3−3`、`e ∈ S` 而 `⟨S⟩` 非交换;论文自己的 Example 6.2(`k = 3`)拆成三个单点集反驳 6.2(#8686;orchestrator 按群律亲算三例)。Barket–Grimaldi–Hendi–Hirst–Onus–Singh, arXiv:2607.12026v1,**Conjecture 4.4**(幂零群 Cayley 图归一化 Laplacian 首个 `>1` 间隙指标 ∈ {|G|−1} ∪ {|G/Z_j|})——`Z/5`、`S = {1}` 的 `C₅` 谱 `[0,(5−√5)/4,(5−√5)/4,(5+√5)/4,(5+√5)/4]` 在 `k = 3`,允许值只有 4 与 1(#8688;orchestrator SymPy 精确复算 + 四个对照)。
 - **正向证明候选、暂缓**:Hughes, arXiv:2608.27755v1 §10「Iteration-Depth No-Gap Conjecture」(插入迭代深度谱是初始区间)——席位给出固定次数合并 + 空块填充的证明草图,`{ε,a,b}` 子集全对 64 组到深度 4 通过;定义(k-插入、迭代深度)转写量大,排在反驳型 lane 之后。
 - **已结算**:Das–Nath–Sarma, arXiv:2609.05302v1 Conjecture 5.1(`cφ₁₈(30n+19) ≡ cφ₁₈(30n+25) ≡ 0 (mod 16)`)已由 Saikia arXiv:2609.11813v1 Theorems 1.3–1.4 证明(同文 Conjecture 1.2 / 式 (7))。
-- **载体读数**:`chrono-chatgpt-pro-pool` 当日一次 `model_unavailable`(15 次尝试),同 brief 改投 `company-chatgpt-pro` 即答;派 GPT Pro 席前 `nyxid oracle pool show` 看 `online_workers`,失败后换池不换载体。
+- **载体读数**:`chrono-chatgpt-pro-pool` 当日一次 `model_unavailable`(15 次尝试),同 brief 改投 `company-chatgpt-pro` 即答;派 GPT Pro 席前用 `python3 tools/scripts/agent/nyx/nyx.py pools` 看 `online_workers`,失败后用 `NYX_POOL` 换池不换载体。
 
 ## R57(2026-09-19):#850 推到 10¹²、新筛的差分测试、#677 零命中,以及选靶判据的收口
 

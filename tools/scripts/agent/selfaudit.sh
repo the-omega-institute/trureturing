@@ -45,7 +45,7 @@ path,n=sys.argv[1],int(sys.argv[2])
 # ---- 唯一真源:三种违规形的判据 ------------------------------------------
 LONG=r'(^|;|&&|\|\s*)\s*(bash [^\n]*(land\.sh|run-codex-worker\.sh)'\
      r'|make (lean|gate|ingest|cover|deposit|emit|test)\b'\
-     r'|nyxid oracle ask(?![^\n;|&]*--help)|dotnet test(?![^\n;|&]*--help))'
+     r'|python3 [^\n]*(nyx\.py ask|run-oracle-worker\.py)(?![^\n;|&]*--help)|dotnet test(?![^\n;|&]*--help))'
 
 def normalize(cmd):
     """剥 heredoc 体与引号字面量,只留命令位置的字节。
@@ -81,7 +81,8 @@ if path=='--selftest':
       ("负 后台长任务",        "make lean-report > x.log",             True,  (False,False,False)),
       ("负 引号内(grep模式)",  "grep -n 'x\\|make lean' ci.yml",        False, (False,False,False)),
       ("负 引号内(命令位置)",  'echo "step 1; make lean; step 2"',      False, (False,False,False)),
-      ("负 --help 不是长任务",   "nyxid oracle ask --help 2>&1 | grep -E usage | head -3", False, (False,False,False)),
+      ("真ii 前台 oracle 提问", "python3 tools/scripts/agent/nyx/nyx.py ask b.md a.txt", False, (False,True,False)),
+      ("负 --help 不是长任务",   "python3 tools/scripts/agent/nyx/nyx.py ask --help 2>&1 | head -3", False, (False,False,False)),
       ("负 引号内(py -c体)",   'python3 -c "x=1; make test"',           False, (False,False,False)),
       # ---- (iii) 叠第二条等待通道:阳性 ----
       ("真iii sleep 后读任务输出", "sleep 90; cat /tmp/p/tasks/babc.output",              False, (False,False,True)),
