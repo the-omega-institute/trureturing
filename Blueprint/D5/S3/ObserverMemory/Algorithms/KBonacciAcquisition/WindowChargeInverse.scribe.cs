@@ -113,6 +113,37 @@ internal sealed class WindowChargeInverseDocument : IScribeDocumentDefinition
             "Prefix-parity inverses realize short-window charges by actual shared endpoint words.",
             H("Literal inverses and safe shared charge suffixes"),
             Blocks(
+            Describe.Lean(
+                DescribeId.Create("charge-inverse-short-legal"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse.short_legal"),
+                H("Short words are legal in either alphabet"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For k at least two and m less than k, every complete m-bit word is DBonacciAdmissible. Both the exceptional first-zero execution and the fixed suffix use this internal admissibility."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("charge-inverse-short-safe-execution"),
+                DeclarationHandle.Create("D5/S3/ObserverMemory/Algorithms/KBonacciAcquisition/WindowChargeInverse.short_safe_execution"),
+                H("A cleared incoming seam succeeds"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For a valid incoming tail and a short nonempty word, either incoming tail zero or literal first bit zero gives the exact successful native scalar, phase and tail updates. The terminal tail equals its zero-tail evaluation and remains below k. For the exceptional first word, its actual first bit is zero."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("window-charge-bit-scalar"),
+                DeclarationHandle.Create(Owner + "bitScalar"),
+                H("Literal bit scalars"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("A true literal bit contributes one in ZMod 2; a false bit contributes zero."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("window-charge-extended-bit"),
+                DeclarationHandle.Create(Owner + "extendedBit"),
+                H("The zero extension of one word"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("Offsets inside the word carry that literal bit scalar; all offsets beyond the word carry zero."))), DescribeRole.Definition),
+            Describe.Lean(
+                DescribeId.Create("window-charge-increment-derivative"),
+                DeclarationHandle.Create(Owner + "increment_derivative"),
+                H("The native ordered adjacent-bit charge"), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text("For k at least three and a word shorter than k, its original matched scalar increment at negative phase j is the sum of the bit scalar at offset j and its predecessor, with zero extension at both ends. The formula applies to every modular phase."))), DescribeRole.Theorem),
                 Paragraph(Text(
                     "The reader uses the original integer KBonacci weights and the matched scalar "
                     + "in ZMod(2). The period is k+1. A row q is a function from natural offsets "
