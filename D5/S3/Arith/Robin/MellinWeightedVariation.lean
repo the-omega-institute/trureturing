@@ -35,7 +35,7 @@ noncomputable def scaleDerivative (s y : ℝ) : ℝ :=
   -((Real.log (s * y))⁻¹ + 2 * (Real.log (s * y))⁻¹ ^ 2 +
     2 * (Real.log (s * y))⁻¹ ^ 3) / (s ^ 2 * y ^ 2)
 
-private lemma scaleWeight_eq (s y : ℝ) : scaleWeight s y = s * weight (s * y) := by
+lemma scaleWeight_eq (s y : ℝ) : scaleWeight s y = s * weight (s * y) := by
   unfold scaleWeight weight
   by_cases hs : s = 0
   · simp [hs]
@@ -46,7 +46,7 @@ private lemma scaleWeight_eq (s y : ℝ) : scaleWeight s y = s * weight (s * y) 
   field_simp
   <;> ring
 
-private lemma hasDerivAt_scaleWeight {s y : ℝ} (hs : 0 < s) (hy : 0 < y)
+lemma hasDerivAt_scaleWeight {s y : ℝ} (hs : 0 < s) (hy : 0 < y)
     (hsy : 1 < s * y) : HasDerivAt (fun r => scaleWeight r y) (scaleDerivative s y) s := by
   have hl : 0 < Real.log (s * y) := Real.log_pos hsy
   have hp : 0 < s * y := mul_pos hs hy

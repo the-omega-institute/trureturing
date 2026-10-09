@@ -13,7 +13,7 @@ internal sealed class LatticeFiniteNegativeGenerationDocument : IScribeDocumentD
         H("Finite Negative-Mode Generation of the Lattice Carrier"),
         Blocks(
             Paragraph(Text("Let D have finite rank r, an integral symmetric Gram matrix G "
-                + "with even diagonal, and positive-definite real Gram matrix. Rank zero "
+                + "with even diagonal. Norm positivity and finite generation additionally require a positive-definite real Gram matrix. Rank zero "
                 + "is included. Charges form L=(Fin(r) to Z), and the oscillator algebra "
                 + "P is the complex multivariate polynomial algebra on Fin(r) times N. "
                 + "The carrier V is the space of finite-support functions L to P, with "
@@ -29,6 +29,38 @@ internal sealed class LatticeFiniteNegativeGenerationDocument : IScribeDocumentD
                 + "gives a statewise bound and hence a vertex operator. The charged "
                 + "fields F_beta are the actual exponential and polynomial-translation "
                 + "fields of Actual Lattice Creation Coefficients.")),
+            Describe.Lean(
+                DescribeId.Create("latticefinitenegativegeneration-bilinear-symmetric"),
+                DeclarationHandle.Create(Prefix + "bilinear_symmetric"),
+                H("bilinear symmetric"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("For every ordinary D and charges alpha,beta, B(alpha,beta)=B(beta,alpha), directly from symmetry of the integral Gram matrix. No positive-form or nondegeneracy premise is used."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("latticefinitenegativegeneration-bilinear-neg-left"),
+                DeclarationHandle.Create(Prefix + "bilinear_neg_left"),
+                H("bilinear neg left"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("For every ordinary D and charges alpha,beta, B(-alpha,beta)=-B(alpha,beta). This is integral bilinearity without any positive-form premise."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("latticefinitenegativegeneration-bilinear-neg-right"),
+                DeclarationHandle.Create(Prefix + "bilinear_neg_right"),
+                H("bilinear neg right"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("For every ordinary D and charges alpha,beta, B(alpha,-beta)=-B(alpha,beta). This is integral bilinearity without any positive-form premise."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("latticefinitenegativegeneration-norm-positive"),
+                DeclarationHandle.Create(Prefix + "norm_positive"),
+                H("norm positive"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromLiterature(Source),
+                Blocks(Paragraph(Text("If the real Gram matrix is positive definite, every nonzero integral charge alpha has B(alpha,alpha)>0. The real quadratic-form inequality is transported through the exact integral cast; rank zero remains allowed."))),
+                DescribeRole.Theorem),
             Describe.Lean(
                 DescribeId.Create("lattice-finite-negative-generation"),
                 DeclarationHandle.Create(Prefix + "finite_negative_generation"),

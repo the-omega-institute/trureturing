@@ -1,7 +1,6 @@
 using System.Text;
 using StrataLint.FileMap;
 using StrataLint.Engine;
-using StrataLint.Scribe;
 
 namespace StrataLint.RepositoryFileMap.Tests;
 
@@ -68,7 +67,7 @@ public sealed partial class FileMapPolicyTests(CanonicalFileMapFixture fixture)
     {
         var expectedPaths = new HashSet<string>(
             [
-                ScribeEmitter.AttestationRelativePath,
+                GeneratedArtifactInventory.ScribeAttestation.Path,
                 "Generated/truth-graph.v1.json",
             ],
             StringComparer.Ordinal);

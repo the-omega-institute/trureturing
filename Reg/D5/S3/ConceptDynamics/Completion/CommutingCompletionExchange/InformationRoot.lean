@@ -1,5 +1,5 @@
+import LeanInformationAuditInterface.Contract.Registration
 import Reg.Support.LegacyRelations.Completion
-import LeanInformationAuditInterface.Syntax
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
@@ -18,17 +18,7 @@ import D5.S3.ConceptDynamics.InformationEscapeRealizations.LocalLawGluingObstruc
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.EndStateOmitsPreemptingCause
 import D5.S3.ConceptDynamics.InformationEscape.SystemUnit
 
-run_cmd LeanInformationAudit.RootCatalogs.declare {
-  rootId := `Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot
-  expected := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena, theoremName := `D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary,
-      statementIdentity := "sha256:1aed443dafdf76d41d4cca3a5a8bbf76e5a0f33e4a90453061b57fc3f432fb0a",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot }]
-  source := #[
-    { objectArenaName := `D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.commutingCompletionArena, theoremName := `D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary,
-      statementIdentity := "sha256:1aed443dafdf76d41d4cca3a5a8bbf76e5a0f33e4a90453061b57fc3f432fb0a",
-      registrationModuleName := `Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot }]
-  companionPrefix := some `Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot }
+
 
 namespace Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot
 
@@ -69,15 +59,30 @@ attribute [local instance]
 local instance systemArenaStateDecidableEq : DecidableEq arena.toArena.State :=
   arena.toArena.stateDecidableEq
 
-register_information_theorem _root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary
-  in commutingCompletionArena
-  readout via (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize
-    Reg.Support.LegacyRelations.Completion.signature Reg.Support.LegacyRelations.Completion.actual.readout Reg.Support.LegacyRelations.Completion.actual.anchor)
-  realizes Reg.Support.LegacyRelations.Completion.registration
-  finite via commutativity_hypothesis_is_necessary_realization
-  variation Reg.Support.LegacyRelations.Completion.finite_variation sensitivity Reg.Support.LegacyRelations.Completion.finite_sensitivity
-  escape from source (Reg.Support.LegacyRelations.Completion.selection)
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,_,_,_,0,0,0,0,0,0} (@_root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary) (type_of% (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{0, 0, 0, 0, 0}
+    Reg.Support.LegacyRelations.Completion.signature Reg.Support.LegacyRelations.Completion.actual.readout Reg.Support.LegacyRelations.Completion.actual.anchor)) (Unit) (Unit) := {
+  unitName := `Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary.__information_unit,
+  realizationName := `D5.S3.ConceptDynamics.InformationEscapeRealizations.CommutingCompletionExchange.commutativity_hypothesis_is_necessary_realization,
+  realizationSource := none,
+  generated := false,
+  arena := .law ⟨(commutingCompletionArena)⟩,
+  objectArena := .law ⟨(commutingCompletionArena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := true,
+  realization := .legacy (commutingCompletionArena) (D5.S3.ConceptDynamics.InformationEscapeRealizations.CommutingCompletionExchange.commutingCompletionRealization) (@D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle.{0, 0, 0} D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.FourState D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.completionSignature D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.instDecidableEqFourState D5.S3.ConceptDynamics.InformationEscapeRealizations.CommutingCompletionExchange.commutingCompletionRealization) ⟨(commutativity_hypothesis_is_necessary_realization)⟩ (.evidence) { value := ⟨(_root_.D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization.toTheoremUnit (commutativity_hypothesis_is_necessary_realization) (@_root_.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.commutativity_hypothesis_is_necessary))⟩, statement := .evidence, bundle := .evidence },
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .evidence ⟨(by trivial : True)⟩ (by change ((@D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.toPrimitiveBundle.{0, 0, 0} D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.FourState D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.completionSignature D5.S3.ConceptDynamics.InformationEscapeArenas.CommutingCompletionExchange.instDecidableEqFourState D5.S3.ConceptDynamics.InformationEscapeRealizations.CommutingCompletionExchange.commutingCompletionRealization)).Nonempty; decide),
+  readout := some (_root_.D5.S3.ConceptDynamics.InformationEscape.DependentFamily.realize.{0, 0, 0, 0, 0}
+    Reg.Support.LegacyRelations.Completion.signature Reg.Support.LegacyRelations.Completion.actual.readout Reg.Support.LegacyRelations.Completion.actual.anchor),
+  variation := .evidence ⟨(Reg.Support.LegacyRelations.Completion.finite_variation)⟩ (by first | exact (Reg.Support.LegacyRelations.Completion.finite_variation) | exact ⟨_, _, (Reg.Support.LegacyRelations.Completion.finite_variation)⟩),
+  sensitivity := .evidence ⟨(Reg.Support.LegacyRelations.Completion.finite_sensitivity)⟩ (by exact (Reg.Support.LegacyRelations.Completion.finite_sensitivity)),
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange, definition := none, coordinates := #[], readouts := #[{ path := #["fn", "arg", "arg", "fn", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }, { path := #["fn", "arg", "arg", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }, { path := #["arg", "arg", "fn", "fn", "fn", "arg", "fn", "fn", "arg", "arg"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := some ⟨_, ⟨(Reg.Support.LegacyRelations.Completion.registration)⟩⟩,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end
 
 end Reg.D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange.InformationRoot

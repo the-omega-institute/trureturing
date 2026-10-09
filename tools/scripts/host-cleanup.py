@@ -179,12 +179,34 @@ def active_paths(codex):
             try:
                 if process.stat().st_uid != os.getuid():
                     continue
-                for link in [process / "cwd", *list((process / "fd").iterdir())]:
-                    target = os.readlink(link).removesuffix(" (deleted)")
-                    if target.startswith("/"):
-                        protected.add(Path(target).resolve())
             except (FileNotFoundError, ProcessLookupError):
                 continue
+            try:
+                descriptors = list((process / "fd").iterdir())
+            except (FileNotFoundError, ProcessLookupError) as error:
+                try:
+                    process.stat()
+                except (FileNotFoundError, ProcessLookupError):
+                    continue
+                raise OSError("cannot inspect live process descriptors: " + str(process)) from error
+            cwd = process / "cwd"
+            missing_cwd = None
+            for link in [cwd, *descriptors]:
+                try:
+                    target = os.readlink(link).removesuffix(" (deleted)")
+                except (FileNotFoundError, ProcessLookupError) as error:
+                    # Closing one handle must not hide the remaining handles.
+                    if link == cwd:
+                        missing_cwd = error
+                    continue
+                if target.startswith("/"):
+                    protected.add(Path(target).resolve())
+            if missing_cwd is not None:
+                try:
+                    process.stat()
+                except (FileNotFoundError, ProcessLookupError):
+                    continue
+                raise OSError("cannot inspect live process cwd: " + str(process)) from missing_cwd
     elif sys.platform == "darwin":
         result = subprocess.run(["lsof", "-nP", "-a", "-u", str(os.getuid()), "-Fn"],
                                 capture_output=True, text=True, timeout=120)
@@ -235,11 +257,13 @@ def registered_worktrees(repository):
             for field in result.stdout.split(b"\0") if field.startswith(b"worktree ")}
 
 
-def clean_worktrees(repository, base, delete):
+def clean_worktrees(repository, base, delete, active_paths=()):
     arguments = ["/bin/bash", str(repository / "tools/scripts/clean-lanes.sh"),
                  "--base", base, "--lanes-only"]
     if delete:
         arguments.append("--force")
+    for path in sorted({Path(path).resolve() for path in active_paths}):
+        arguments.extend(["--active-path", str(path)])
     return subprocess.run(arguments, cwd=repository, check=False).returncode
 
 
@@ -265,14 +289,15 @@ def run_clean(options):
             raise OSError("artifact root must be a directory: " + str(root))
     roots = {path for path in roots if not any(parent in roots for parent in path.parents)}
     worktrees = registered_worktrees(options.repository)
-    protected = active_paths(codex) | worktrees
+    active = active_paths(codex)
+    protected = active | worktrees
     protections = {"codex": ProtectedPaths(protected), "sshx": ProtectedPaths(protected),
                    "tmp": ProtectedPaths(protected | {codex, sshx})}
     cutoff = time.time() - options.min_age_hours * 3600
     before = shutil.disk_usage(options.repository).free
     counts, skipped = Counter(), Counter()
     apparent_bytes = 0
-    lanes_exit = clean_worktrees(options.repository, options.base, options.delete)
+    lanes_exit = clean_worktrees(options.repository, options.base, options.delete, active)
     seen = set()
     inventory_error = None
     try:
@@ -309,6 +334,7 @@ def main(arguments=None):
     disk = commands.add_parser("check-disk", help="reject worktree creation below 5%% available disk space")
     disk.add_argument("--path", type=Path, action="append", required=True)
     disk.add_argument("--allow-low-disk", action="store_true")
+    commands.add_parser("active-paths", help="read current host activity for locked worktree reclamation")
     clean = commands.add_parser("clean", help="preview inactive owned artifacts; --delete executes")
     clean.add_argument("--repository", type=Path, default=REPOSITORY)
     clean.add_argument("--base", default="origin/dev")
@@ -322,6 +348,10 @@ def main(arguments=None):
     clean.add_argument("--verbose", action="store_true", help="list individual paths, including kept artifacts")
     options = parser.parse_args(arguments)
     try:
+        if options.command == "active-paths":
+            codex = Path(os.environ.get("CODEX_HOME") or Path.home() / ".codex")
+            print(json.dumps(sorted(str(path) for path in active_paths(codex))))
+            return 0
         if options.command == "check-disk":
             for report in check_disk(options.path, options.allow_low_disk):
                 emit("worktree_disk", **report)

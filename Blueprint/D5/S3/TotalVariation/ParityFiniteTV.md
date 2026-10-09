@@ -29,3 +29,4 @@ Finite Jensen gives a likelihood normalizer at least exp(-D). The exponential me
 ## References
 
 - Truth anchor: `D5/S3/TotalVariation/ParityFiniteTV.parity_finite_tv`
+- Dependency: [D5/S3/TotalVariation/ParityKernelMasses](ParityKernelMasses.md)

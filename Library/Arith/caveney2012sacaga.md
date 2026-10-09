@@ -357,3 +357,89 @@ same-source gain. The Alaoglu–Erdős conjecture, alternative proofs,
 and the actual selected Robin source are not settled by this auxiliary
 counterexample. The original full signed-tail target and RH remain
 unproved; no new general criterion or certified theorem is claimed.
+
+## Relaxed forward records and the unfilled Robin step
+
+Nazardonyavi and Yakubovich's later note,
+*Delicacy of the Riemann hypothesis and certain subsequences of
+superabundant numbers*,
+[arXiv:1306.3434v2](https://arxiv.org/abs/1306.3434v2), is distinct from
+the earlier `1211.2147v3` source used for XA above. Definition 1.3 and
+Lemma 1.4, printed pp.2–3, use the same actual pair of integers $m<n$:
+
+$$
+\frac{Z(n)}{Z(m)}>
+1+\frac{\log(n/m)}{\log n\,\log\log m},
+\qquad Z(j)=\frac{\sigma(j)}j.
+$$
+
+Lemma 1.4 gives such a successor for a member $m$ of the source's $X'$;
+Theorem 1.5 states that $X'$ is infinite without an RH premise. Definition
+1.6, printed p.4, uses the stronger relaxed threshold
+
+$$
+\frac{Z(n)}{Z(m)}>
+1+\frac{2\log(n/m)}{(\log n+\log m)\log\log m}
+$$
+
+to define $X''$. The displayed Theorem 1.5 concerns $X'$, not $X''$;
+the latter's reported finite counts are not adopted as an infinitude
+or a uniform jump estimate. The printed definitions say to find the
+next integer and do not explicitly specify least successors. No
+canonical-selection or arbitrary-branch SA assertion is used here.
+
+The exact normalization shows what these rules guarantee. Put
+
+$$
+\ell=\log\log m>0,\qquad r=\frac{\log n}{\log m}>1,
+\qquad G(j)=\frac{Z(j)}{\log\log j}.
+$$
+
+An actual Robin-ratio improvement needs
+$Z(n)/Z(m)>1+\log r/\ell$. The two published relaxed rules instead use
+
+$$
+\phi_1(r)=1-r^{-1},\qquad
+\phi_2(r)=\frac{2(r-1)}{r+1},
+\qquad \phi_1(r)<\phi_2(r)<\log r.
+$$
+
+For either rule, on the same pair $m,n$, the exact readout is
+
+$$
+\frac{Z(n)}{Z(m)}>1+\frac{\phi_j(r)}\ell
+\iff
+\frac{G(n)}{G(m)}>
+1-\frac{\log r-\phi_j(r)}{\ell+\log r}.
+$$
+
+The allowed loss is positive. With $h=\log r\downarrow0$, its two
+numerators are respectively
+
+$$
+h-1+e^{-h}=\frac{h^2}{2}+O(h^3),\qquad
+h-2\tanh(h/2)=\frac{h^3}{12}+O(h^5).
+$$
+
+These are normalizations of the published rules and standard elementary
+expansions, not a new record theorem or analytic prime-error estimate.
+They distinguish an available forward increase of $Z$ from an increase
+of the normalized Robin quotient.
+
+In particular, retain the same conditional least global maximizer $N$
+from the earlier reduction. If an actual forward pair starts at $m=N$
+and meets either rule, its lower bound for $G(n)/G(N)$ is below one and
+is compatible with the known global upper bound $G(n)/G(N)\le1$.
+This supplies no improving multiple or contradiction to GA2. No new
+membership or successor-selection theorem at $N$ is asserted.
+
+A usable recursive estimate still requires control of the actual
+logarithmic jumps and their accumulated loss along one realized path,
+or another jointly signed bound. The statements inspected here supply
+no such uniform jump control and no bound for the complete original
+$I_\psi(\log N)$. The earlier XA criterion and the later relaxed
+infinitude statement are reused without reconstructing their proofs.
+The same selected integer, actual zero real parts and multiplicities,
+all heights, explicit-formula terms and strict Robin core remain
+unchanged. RH remains unproved; this source application is not Lean
+verified and claims no mathematical originality.

@@ -4,7 +4,19 @@
 
 For every n >= 1, the Euclidean operator-norm inequality for all positive block completions forces the off-diagonal complex n-by-n matrix to be essentially Hermitian. No invertibility or distinct-singular-value assumption is required.
 
-**Definition 1.1 (Essentially Hermitian matrices).**
+**Theorem 1.1 (Rank-one trace pairing).**
+
+$$\forall (iota : Type), [\operatorname{Fintype}\left(iota\right)], [\operatorname{DecidableEq}\left(iota\right)], \forall (S : \operatorname{Matrix}\left(iota, iota, \mathbb{C}\right)), \forall (u : \operatorname{EuclideanSpace}\left(\mathbb{C}, iota\right)), \operatorname{Matrix}.\operatorname{trace}\left(\operatorname{Matrix}.\operatorname{vecMulVec}\left(\operatorname{WithLp}.\operatorname{ofLp}\left(u\right), \operatorname{star}\left(\operatorname{WithLp}.\operatorname{ofLp}\left(u\right)\right)\right) \cdot S\right) = \operatorname{inner}\left(\mathbb{C}, u, \operatorname{Matrix}.\operatorname{toEuclideanCLM}\left(S\right)\left(u\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/BlockNorm/EssentiallyHermitian.outer_pairing_trace` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Pairing a matrix with a rank-one matrix under the trace equals its Euclidean inner-product expectation.
+
+**Definition 1.2 (Essentially Hermitian matrices).**
 
 $$\forall (n : \mathbb{N}), \forall (X : \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), \operatorname{EssentiallyHermitian}\left(X\right) = (\exists (\alpha : \mathbb{C}), \exists (\beta : \mathbb{C}), \exists (H : \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), (\operatorname{Matrix}.\operatorname{IsHermitian}\left(H\right)) \land (X = \alpha \cdot H + \beta \cdot 1))$$
 
@@ -16,7 +28,7 @@ $$\forall (n : \mathbb{N}), \forall (X : \operatorname{Matrix}\left(\operatornam
 
 Printed page 6, verbatim: "If W(T) is line segment, then T is a so-called essentially Hermitian matrix." The affine Hermitian expression fixed for this notion is X = α • H + β • 1, where α and β are complex and H is Hermitian. A point is allowed, including α = 0.
 
-**Definition 1.2 (All positive block completions).**
+**Definition 1.3 (All positive block completions).**
 
 $$\forall (n : \mathbb{N}), \forall (X : \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), \operatorname{CompletionBound}\left(X\right) = (\forall (A : \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), \forall (B : \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), (\operatorname{Matrix}.\operatorname{PosSemidef}\left(\operatorname{Matrix}.\operatorname{fromBlocks}\left(A, X, \operatorname{Matrix}.\operatorname{conjTranspose}\left(X\right), B\right)\right)) \Rightarrow (\left\lVert \operatorname{Matrix}.\operatorname{fromBlocks}\left(A, X, \operatorname{Matrix}.\operatorname{conjTranspose}\left(X\right), B\right) \right\rVert \le \left\lVert A + B \right\rVert))$$
 
@@ -28,7 +40,7 @@ $$\forall (n : \mathbb{N}), \forall (X : \operatorname{Matrix}\left(\operatornam
 
 The displayed hypothesis in Conjecture 3.3 uses Matrix.fromBlocks A X (Matrix.conjTranspose X) B and Matrix.PosSemidef. Both norms are the Euclidean operator norm: Matrix.Norms.L2Operator, definitionally the norm of Matrix.toEuclideanCLM. A and B range over all complex n-by-n matrices; positivity supplies their Hermitian and positive properties.
 
-**Definition 1.3 (Conjecture 3.3).**
+**Definition 1.4 (Conjecture 3.3).**
 
 $$claim = (\forall (n : \mathbb{N}), (1 \le n) \Rightarrow (\forall (X : \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), (\operatorname{CompletionBound}\left(X\right)) \Rightarrow (\operatorname{EssentiallyHermitian}\left(X\right))))$$
 
@@ -42,7 +54,7 @@ Printed page 6, Conjecture 3.3, verbatim: "Let $X \in \mathbb{M}_{n}$. If the in
 
 The source's 2-by-2 array has n-by-n complex matrix blocks, and its X* denotes Matrix.conjTranspose X. The Lean sentence explicitly quantifies every natural n >= 1 and every X; the positivity, universal completion quantifier and affine Hermitian conclusion are encoded by the two preceding definitions.
 
-**Theorem 1.4 (The conjecture holds in every positive dimension).**
+**Theorem 1.5 (The conjecture holds in every positive dimension).**
 
 $$\forall (n : \mathbb{N}), (1 \le n) \Rightarrow (\forall (X : \operatorname{Matrix}\left(\operatorname{Fin}\left(n\right), \operatorname{Fin}\left(n\right), \mathbb{C}\right)), (\operatorname{CompletionBound}\left(X\right)) \Rightarrow (\operatorname{EssentiallyHermitian}\left(X\right)))$$
 
@@ -65,5 +77,6 @@ Positive scalar shifts make the two real spectral edges of K X D sum to zero for
 - Truth anchor: `D5/S3/Quantum/BlockNorm/EssentiallyHermitian.CompletionBound`
 - Truth anchor: `D5/S3/Quantum/BlockNorm/EssentiallyHermitian.EssentiallyHermitian`
 - Truth anchor: `D5/S3/Quantum/BlockNorm/EssentiallyHermitian.claim`
+- Truth anchor: `D5/S3/Quantum/BlockNorm/EssentiallyHermitian.outer_pairing_trace`
 - Truth anchor: `D5/S3/Quantum/BlockNorm/EssentiallyHermitian.result`
 - Dependency: [D5/S3/Quantum/BlockNorm/SpikeEdgeEstimate](SpikeEdgeEstimate.md)

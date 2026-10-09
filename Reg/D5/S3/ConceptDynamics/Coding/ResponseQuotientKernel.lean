@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel
 import Reg.Support.DependentFamily
 
@@ -76,16 +77,28 @@ def registration : Registration arena (arena.Law actual) where
     change (1 : Nat) ≠ 2
     decide
 
-register_information_theorem response_zero_and_step in arena
-  readout via (realize signature (fun _ _ d => d + 1) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "arg", "body", "arg", "arg"]
-      stateBinder := 4 }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel.response_zero_and_step) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ d => d + 1) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "ConceptDynamics") "Coding") "ResponseQuotientKernel") "response_zero_and_step") "Reg.D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel/Reg.D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ d => d + 1) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.ConceptDynamics.Coding.ResponseQuotientKernel, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "arg", "body", "arg", "arg"], stateBinder := 4, functionOperand := false, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

@@ -1,28 +1,15 @@
 import LeanInformationAudit.ReadoutProvenance.State
 namespace LeanInformationAudit.RegistrationGates
 open Lean
+open Contract.CompiledExpressions (typeShape propositionShape)
 
-/-- Retained syntax from one successful statement-alias walk. No argument
-inference, provenance verdict, or caller-local expression is shared. -/
-private structure StatementAliasMemo where
-  theoremName : Name
-  statement : Expr
-  constants : ConstMap
-  isExporting : Bool
-  forms : Array Expr
-  recognized : ProvenanceAdmissionWitness
-
-private initialize statementAliasMemo : EnvExtension (Bool × Option StatementAliasMemo) ←
-  registerEnvExtension (pure (false, none))
-
-/-- The binding validator performs several audits of the same immutable theorem.
-Scope syntax reuse to that validation only; restore the enclosing state on every
-exit, including exceptions. The validator does not replace declarations. -/
-def withStatementAliasMemo (action : MetaM α) : MetaM α := do
-  let previous := statementAliasMemo.getState (← getEnv)
-  modifyEnv fun env => statementAliasMemo.setState env (true, none)
+/-- Reuse statement syntax only within one binding-validation scope. -/
+def withCompiledAliasMemo (action : QueryM α) : QueryM α := do
+  let session ← querySession
+  let previous := (← session.get).aliasMemo
+  session.modify fun state => { state with aliasMemo := (true, none) }
   try action
-  finally modifyEnv fun env => statementAliasMemo.setState env previous
+  finally session.modify fun state => { state with aliasMemo := previous }
 
 -- Pointer equality is only a sufficient cache-hit key. A miss runs the original
 -- bounded normalizer; unlike hash equality, it cannot confuse distinct syntax.
@@ -47,7 +34,7 @@ partial def representationType (type : Expr) : WalkM (Option Expr) := do
   match type with
   | .mdata _ body => representationType body
   | .fvar id =>
-    let some value := (← id.getDecl).value? (allowNondep := true) | return some type
+    let some value := (← localDeclaration id).value? (allowNondep := true) | return some type
     representationType value
   | _ => return some type
 
@@ -56,7 +43,7 @@ partial def representationType (type : Expr) : WalkM (Option Expr) := do
 -- deciding the role; no recursor or opaque carrier is evaluated. These witnesses
 -- discharge only the role check. observedType still checks all parameters,
 -- proof identities and nominal fields of the recognized value type.
-partial def nominalFieldShape (env : Environment) (type : Expr)
+partial def nominalFieldShape (env : CompiledView) (type : Expr)
     (parameters : Array Expr) : WalkM (Option ProvenanceAdmissionWitness) := do
   let some concrete ← representationType type | return none
   let some kind ← occurrenceType concrete | return none
@@ -66,7 +53,7 @@ partial def nominalFieldShape (env : Environment) (type : Expr)
   match concrete with
   | .sort _ => return none
   | .forallE n domain body bi =>
-    let result ← Meta.withLocalDecl n bi domain fun x => do
+    let result ← withCompiledLocal n bi domain fun x => do
       let some body ← substitute body #[x] | return none
       -- admission-exit: nominalFieldShape.forward.1 rule=retained-witness.rule
       nominalFieldShape env body parameters
@@ -99,7 +86,7 @@ partial def nominalFieldShape (env : Environment) (type : Expr)
       -- admission-exit: nominalFieldShape.6 rule=fieldConcrete
       return some (witness .fieldConcrete concrete)
     | .defnInfo _ =>
-      let value ← Core.instantiateValueLevelParams declaration levels (allowOpaque := false)
+      let value ← compiledValue declaration levels (allowOpaque := false)
       let some body ← aliasBody value args | return none
       if body == concrete then return none
       let some _ ← nominalFieldShape env body parameters | return none
@@ -123,9 +110,9 @@ private def statementUnknown (head : Expr) : WalkM StatementStep := do
     | .lam .. => `lambda
     | _ => `unrecognized_head)
   return .unclassified ⟨"unclassified_statement_head", name,
-    namespaceLabel (← getEnv) name, (← get).theoremName⟩
+    namespaceLabel (← getCompiledView) name, (← get).theoremName⟩
 
-def statementStep (env : Environment) (current : Expr) : WalkM StatementStep := do
+def statementStep (env : CompiledView) (current : Expr) : WalkM StatementStep := do
   let some (head, args) ← applicationParts current | return .incomplete
   match head with
   -- admission-exit: statementStep.1 rule=statementForall
@@ -135,7 +122,7 @@ def statementStep (env : Environment) (current : Expr) : WalkM StatementStep := 
     -- admission-exit: statementStep.2 rule=statementInductive
     | some (.inductInfo _) => return .recognized (witness .statementInductive current)
     | some (.defnInfo info) =>
-      let value ← Core.instantiateValueLevelParams (.defnInfo info) levels
+      let value ← compiledValue (.defnInfo info) levels
       let some body ← aliasBody value args | return .incomplete
       return .next body
     | _ => return ← statementUnknown head
@@ -149,7 +136,7 @@ def statementStep (env : Environment) (current : Expr) : WalkM StatementStep := 
     let some body ← aliasBody body args | return .incomplete
     return .next body
   | .proj structureName index receiver =>
-    let (record, work) := ReadoutFamily.carrier env receiver (← get).exprFuel
+    let (record, work) := ReadoutFamily.carrier env.find? receiver (← get).exprFuel
     unless ← chargeTraversal work do return .incomplete
     let some record := record | return ← statementUnknown head
     let some (ctor, fields) ← applicationParts record | return .incomplete
@@ -161,7 +148,7 @@ def statementStep (env : Environment) (current : Expr) : WalkM StatementStep := 
     return .next body
   | _ => return ← statementUnknown head
 
-private partial def statementOuter (env : Environment) (type : Expr) :
+private partial def statementOuter (env : CompiledView) (type : Expr) :
     WalkM (Option ProvenanceAdmissionWitness) := do
   unless ← chargeTraversal do return none
   if type.getAppFn.isConstOf `Multiset.Mem then
@@ -180,21 +167,21 @@ private partial def statementOuter (env : Environment) (type : Expr) :
 -- Equality-only List metadata has recursive List premises and disequalities
 -- ending in False. These explicit positive conclusions, or negations of known
 -- non-equality heads, cannot be those premises. Unknown predicate heads stop.
-partial def listStatementBoundary (env : Environment) (type : Expr)
+partial def listStatementBoundary (env : CompiledView) (type : Expr)
     (binders : Nat := 0) : WalkM (Option ProvenanceAdmissionWitness) := do
   let some evidence ← statementOuter env type | return none
   let type := evidence.matchedType
   match type with
   | .forallE n domain body bi =>
     if binders == 0 then
-      let some firstProof ← boundedMeta (Meta.isProp domain) `list_statement_domain | return none
+      let some firstProof ← boundedQuery (compiledQuery (propositionShape domain)) `list_statement_domain | return none
       if !firstProof then
-        let twoDataBinders ← Meta.withLocalDecl n bi domain fun x => do
+        let twoDataBinders ← withCompiledLocal n bi domain fun x => do
           let some body ← substitute body #[x] | return false
           let some evidence ← statementOuter env body | return false
           let body := evidence.matchedType
           let .forallE _ secondDomain _ _ := body | return false
-          let some secondProof ← boundedMeta (Meta.isProp secondDomain) `list_statement_domain
+          let some secondProof ← boundedQuery (compiledQuery (propositionShape secondDomain)) `list_statement_domain
             | return false
           return !secondProof
         -- admission-exit: listStatementBoundary.1 rule=listForall
@@ -207,7 +194,7 @@ partial def listStatementBoundary (env : Environment) (type : Expr)
         -- admission-exit: listStatementBoundary.2 rule=listNegated
         return some (witness .listNegated type)
       return none
-    Meta.withLocalDecl n bi domain fun x => do
+    withCompiledLocal n bi domain fun x => do
       let some body ← substitute body #[x] | return none
       -- admission-exit: listStatementBoundary.forward.1 rule=retained-witness.rule
       listStatementBoundary env body (binders + 1)
@@ -223,7 +210,7 @@ partial def listStatementBoundary (env : Environment) (type : Expr)
 -- type fold has already checked actual parameters and statement-bearing fields.
 -- Nominal carriers with proof/type-valued fields are excluded here; intrinsic
 -- scalar bounds and quotient containers have explicit representation boundaries.
-partial def dataCarrier (env : Environment) (type : Expr)
+partial def dataCarrier (env : CompiledView) (type : Expr)
     (active : Array Expr := #[]) : WalkM (Option ProvenanceAdmissionWitness) := do
   unless ← chargeTraversal do return none
   let some type ← representationType type | return none
@@ -233,7 +220,7 @@ partial def dataCarrier (env : Environment) (type : Expr)
   match type with
   | .sort _ => return none
   | .fvar id =>
-    if (← id.getDecl).value? (allowNondep := true) |>.isNone then
+    if (← localDeclaration id).value? (allowNondep := true) |>.isNone then
       -- admission-exit: dataCarrier.1 rule=rigidCarrier
       return some (witness .rigidCarrier type)
     return none
@@ -252,7 +239,7 @@ partial def dataCarrier (env : Environment) (type : Expr)
     unless audited do return none
     let some receiver ← representationType receiver | return none
     if let .fvar id := receiver then
-      if (← id.getDecl).value? (allowNondep := true) |>.isNone then
+      if (← localDeclaration id).value? (allowNondep := true) |>.isNone then
         -- admission-exit: dataCarrier.2 rule=carrierProjection
         return some (witness .carrierProjection type)
     let .next field ← statementStep env (.proj structureName index receiver) | return none
@@ -261,7 +248,7 @@ partial def dataCarrier (env : Environment) (type : Expr)
     dataCarrier env field active
   | .forallE n domain body bi =>
     unless (← dataCarrier env domain active).isSome do return none
-    Meta.withLocalDecl n bi domain fun x => do
+    withCompiledLocal n bi domain fun x => do
       let some body ← substitute body #[x] | return none
       -- admission-exit: dataCarrier.forward.2 rule=retained-witness.rule
       dataCarrier env body active
@@ -279,14 +266,14 @@ partial def dataCarrier (env : Environment) (type : Expr)
       return ← dataCarrier env args[0]! active
     if active.contains type then return none
     if let some (.defnInfo info) := env.find? name then
-      let value ← Core.instantiateValueLevelParams (.defnInfo info) levels
+      let value ← compiledValue (.defnInfo info) levels
       let some body ← aliasBody value args | return none
       -- admission-exit: dataCarrier.6 rule=retained-witness.rule
       return ← dataCarrier env body (active.push type)
     let some branches ← caseFields type | return none
-    for (lctx, instances, fields) in branches do
+    for (lctx, fields) in branches do
       for field in fields do
-        let clean ← Meta.withLCtx lctx instances do
+        let clean ← withCompiledLocals lctx do
           let some fieldType ← occurrenceType field | return none
           -- admission-exit: dataCarrier.forward.3 rule=retained-witness.rule
           dataCarrier env fieldType (active.push type)
@@ -296,7 +283,7 @@ partial def dataCarrier (env : Environment) (type : Expr)
 
 -- Record explicit proposition-alias spellings only as rejection witnesses.
 -- These hashes never certify non-mention and never normalize data operands.
-private def statementAliasesCore (env : Environment) : WalkM Unit := do
+private def statementAliasesCore (env : CompiledView) : WalkM Unit := do
   let mut current := (← get).statement
   let mut seen : Std.HashSet UInt64 := {}
   repeat
@@ -316,14 +303,14 @@ private def statementAliasesCore (env : Environment) : WalkM Unit := do
 
 /-- Reuse a completed normalization only inside its binding-validation scope.
 Every hit pays a lookup debit; all subsequent occurrence checks still run. -/
-def statementAliases (env : Environment) : WalkM Unit := do
+def statementAliases (env : CompiledView) : WalkM Unit := do
   let state ← get
-  let (enabled, cached) := statementAliasMemo.getState (← getEnv)
+  let (enabled, cached) := (← (← querySession).get).aliasMemo
   if enabled then
     if let some cached := cached then
       if cached.theoremName == state.theoremName &&
           sameStatementObject cached.statement state.statement &&
-          sameStatementObject cached.constants env.constants &&
+          cached.constants.constantsIdentity == env.constantsIdentity &&
           cached.isExporting == env.isExporting then
         unless ← chargeTraversal do return
         modify fun s => { s with
@@ -336,9 +323,9 @@ def statementAliases (env : Environment) : WalkM Unit := do
     if let some recognized := state.recognizedStatement then
       let cached : StatementAliasMemo :=
         { theoremName := state.theoremName, statement := state.statement,
-          constants := env.constants, isExporting := env.isExporting,
+          constants := env, isExporting := env.isExporting,
           forms := state.statementForms, recognized }
-      modifyEnv fun env => statementAliasMemo.setState env (true, some cached)
+      (← querySession).modify fun state => { state with aliasMemo := (true, some cached) }
 
 -- The final supported outer spelling is used for structural family fences.
 -- Computed operands remain untouched and cannot establish non-mention.
@@ -350,12 +337,12 @@ def statementBoundary : WalkM (Option ProvenanceAdmissionWitness) := do
 -- type application. This recognizes Unit/PUnit without evaluating data or
 -- admitting arbitrary computed carriers. The ordinary type fold still checks
 -- every parameter and nominal field before this narrower List boundary is used.
-partial def namedCarrier (env : Environment) (type : Expr) : WalkM (Option Expr) := do
+partial def namedCarrier (env : CompiledView) (type : Expr) : WalkM (Option Expr) := do
   unless ← chargeTraversal do return none
   let some type ← representationType type | return none
   let .const name levels := type.getAppFn | return some type
   let some (.defnInfo info) := env.find? name | return some type
-  let value ← Core.instantiateValueLevelParams (.defnInfo info) levels
+  let value ← compiledValue (.defnInfo info) levels
   let some body ← aliasBody value type.getAppArgs | return none
   unless body.getAppFn.isConst do return some type
   if body == type then return none
@@ -372,41 +359,40 @@ private partial def buildBinderContext (context : Array Expr) (k : Array Expr �
     match context[index] with
     | .lam n t _ bi | .forallE n t _ bi =>
       let some t ← substitute t locals | return none
-      Meta.withLocalDecl n bi t fun x => next (locals.push x)
+      withCompiledLocal n bi t fun x => next (locals.push x)
     | .letE n t v _ nd =>
       let some t ← substitute t locals | return none
       let some v ← substitute v locals | return none
-      Meta.withLetDecl n t v (fun _ => next (locals.push v)) (nondep := nd)
+      withCompiledLet n t v (fun _ => next (locals.push v)) (nondep := nd)
     | _ =>
       noteUnclassified ⟨"unclassified_binder_context", `binder, "unclassified", `binder⟩
       return none
   else return some (← k locals)
 
 -- Reuse reconstructed binders only when the original parent context is empty.
--- Restoring both locals and local instances preserves their actual types and
+-- Restoring the lexical binder table preserves actual types and
 -- stable fvar identities; nested callers retain their existing parent context.
 partial def inBinderContext (context : Array Expr) (k : Array Expr → WalkM α) :
     WalkM (Option α) := do
   if context.isEmpty then return some (← k #[])
-  if !(← getLCtx).isEmpty then return ← buildBinderContext context k
+  if !(← getQueryLocals).isEmpty then return ← buildBinderContext context k
   unless ← chargeTraversal (2 * context.size + 1) do return none
-  if let some (lctx, instances, locals) := (← get).binderContexts[context]? then
-    return some (← Meta.withLCtx lctx instances (k locals))
+  if let some (lctx, locals) := (← get).binderContexts[context]? then
+    return some (← withCompiledLocals lctx (k locals))
   unless ← chargeTraversal context.size do return none
   -- Canonicalize the parent first: extending a lexical prefix must retain
   -- its immutable local identities so shared occurrences reuse inference.
   let parent := context.pop
   let result ← inBinderContext parent fun locals =>
     buildBinderContext context (fun locals => do
-      let lctx ← getLCtx
-      let instances ← Meta.getLocalInstances
-      modify fun s => { s with binderContexts := s.binderContexts.insert context (lctx, instances, locals) }
+      let lctx ← getQueryLocals
+      modify fun s => { s with binderContexts := s.binderContexts.insert context (lctx, locals) }
       k locals) parent.size locals
   return result.join
 
 -- The syntax scan checks TERM occurrences inside types. They are not themselves
 -- assumed to be types (e.g. Classical constants on either side of an equality).
-def typeMentions (env : Environment) (e : Expr) : WalkM Bool := do
+def typeMentions (env : CompiledView) (e : Expr) : WalkM Bool := do
   unless ← chargeSummaryWork (fun c => { c with recheckedNodes := c.recheckedNodes + 1 }) do return false
   if let .const n _ := e.getAppFn then directConstant env n
   if let .proj n _ _ := e.getAppFn then directProjection env n
@@ -431,18 +417,18 @@ def noteFamilyAssumption (depth : Nat) : WalkM Unit := do
 private partial def rigidStatementLocal (expression : Expr) : WalkM Bool := do
   unless ← chargeTraversal do return false
   match expression with
-  | .fvar id => return ((← id.getDecl).value? (allowNondep := true)).isNone
+  | .fvar id => return ((← localDeclaration id).value? (allowNondep := true)).isNone
   | .proj _ _ receiver => rigidStatementLocal receiver
   | .app function _ => rigidStatementLocal function
   | _ => return false
 
-private partial def statementIdentityForm (env : Environment) (expression : Expr) :
+private partial def statementIdentityForm (env : CompiledView) (expression : Expr) :
     WalkM (Option Expr) := do
   unless ← chargeTraversal do return none
   let some expression ← representationType expression | return none
   let some (head, args) ← applicationParts expression | return none
   if let .fvar id := head then
-    if let some value := (← id.getDecl).value? (allowNondep := true) then
+    if let some value := (← localDeclaration id).value? (allowNondep := true) then
       let some body ← aliasBody value args | return none
       return ← statementIdentityForm env body
     return some expression
@@ -475,7 +461,7 @@ private partial def statementIdentityForm (env : Environment) (expression : Expr
     return none
   | .incomplete => noteIncomplete `incomplete_classification `statement_identity; return none
 
-private partial def statementApart (env : Environment) (left right : Expr) :
+private partial def statementApart (env : CompiledView) (left right : Expr) :
     WalkM (Option ProvenanceAdmissionWitness) := do
   unless ← chargeTraversal do return none
   -- Equal fingerprints include possible collisions, so they never admit.
@@ -545,7 +531,7 @@ private partial def statementApart (env : Environment) (left right : Expr) :
     -- Congruence is conditional on equal domains. In that case one shared
     -- binder gives both well-typed bodies; unequal domains already distinguish
     -- the binders. This does not decide domain equality or normalize a carrier.
-    Meta.withLocalDecl n bi da fun x => do
+    withCompiledLocal n bi da fun x => do
       let some ab ← substitute ab #[x] | return none
       let some bb ← substitute bb #[x] | return none
       if (← statementApart env ab bb).isSome then
@@ -577,7 +563,7 @@ private partial def statementApart (env : Environment) (left right : Expr) :
     return none
   | _, _ => return none
 
-def checkedStatementType (env : Environment) (type : Expr) :
+def checkedStatementType (env : CompiledView) (type : Expr) :
     WalkM (Option ProvenanceAdmissionWitness) := do
   unless ← chargeTraversal do return none
   -- admission-exit: checkedStatementType.1 rule=retained-witness.rule
@@ -592,7 +578,7 @@ def checkedStatementType (env : Environment) (type : Expr) :
     if let some site := (← get).identityUnknown then noteUnclassified site
   if evidence.isNone && !(← get).identityFailureTraced then
     modify fun s => { s with identityFailureTraced := true }
-    trace[InformationProvenance.check]
+    auditTrace s!
       "statement_identity_unresolved first={(← get).currentFirst} site={(← get).currentOrigin} type={type} registered={(← get).statement}"
   if let some evidence := evidence then
     if !type.hasLooseBVars && !type.hasMVar && !type.hasLevelMVar then

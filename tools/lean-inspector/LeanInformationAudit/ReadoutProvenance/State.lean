@@ -1,27 +1,32 @@
+import Lean.Data.Options
+import Lean.Data.Json
+import LeanInformationAudit.ReadoutProvenance.View
+import LeanInformationAudit.Contract.CompiledExpressions
 import LeanInformationAudit.ReadoutProvenance.Family
 /-!
-Occurrences are inferred in their original binder context at the existing native
-work limit. An allowlist checks structural type families, specialized constructor
-fields and explicit carrier projections. Independent proofs stop at the inferred
+Occurrence type shapes are projected from compiled declarations in their original
+lexical binder context at the existing work limit. An allowlist checks structural
+type families, specialized constructor fields and explicit carrier projections. Independent proofs stop at the compiled
 Prop boundary. Their implementations never enter executable provenance. Unknown
 forms fail closed; exhausted work returns an incomplete closure. Reusable caches
-contain declaration syntax only, while inferred types and verdicts are query-local.
+contain declaration syntax only, while projected types and verdicts are query-local.
 -/
 
 namespace LeanInformationAudit.RegistrationGates
 open Lean
+open Contract.CompiledExpressions (typeShape propositionShape)
 
 -- §10.1 budget record: safety limit outside the capacity domain; owner=governance lane;
--- date=2026-09-13; basis=the existing 4100-link closure-exhaustion fixture;
+-- basis=the existing 4100-link closure-exhaustion fixture;
 -- exit condition=the supported closure corpus or pinned Lean version changes,
 -- then rerun that fixture and review the safety ceiling before changing it.
 def provenanceConstantFuel : Nat := 4096
--- Completed InformationRoot and TemplateShadow profiles, Lean 4.33.0,
--- 2026-09-13: the context-selection query consumed 8,034,836 work units;
+-- InformationRoot and TemplateShadow profiles, Lean 4.33.0:
+-- the context-selection query consumed 8,034,836 work units;
 -- InformationRoot's largest query consumed 3,247,448.
 private def provenanceReferenceQueryWork : Nat := 8034836
 -- §10.1 budget record: safety limit outside the capacity domain; owner=governance lane;
--- date=2026-09-13; basis=the measured 8,034,836 work-unit maximum plus 25%
+-- basis=the measured 8,034,836 work-unit maximum plus 25%
 -- safety headroom, rounded upward; exit condition=the pinned Lean version,
 -- supported readout corpus, or measurement profile changes, then remeasure.
 def provenanceExpressionFuel : Nat := (5 * provenanceReferenceQueryWork + 3) / 4
@@ -29,21 +34,15 @@ register_option provenanceExpressionLimit : Nat := {
   defValue := provenanceExpressionFuel
   descr := "Readout work limit, capped by the production expression policy" }
 
--- §10.1 budget record: safety limit outside the capacity domain; owner=governance lane;
--- date=2026-09-13; basis=bounded raw Lean allocation per native inference operation;
--- exit condition=the supported readout corpus or pinned Lean version changes,
--- then rerun real heartbeat-exhaustion and boundary fixtures. This is exempt
--- from capacity derivation because it is a correctness fail-closed limit.
+-- Allocation per compiled type-shape query is independently bounded.
+-- Exhaustion produces an incomplete result at the original operation address.
 def provenanceDefEqHeartbeats : Nat := 20000
 
 register_option provenanceDefEqLimit : Nat := {
   defValue := provenanceDefEqHeartbeats
-  descr := "Maximum raw heartbeats for native occurrence inference; legacy option name; zero is incomplete" }
+  descr := "Maximum raw heartbeats for compiled type-shape queries; legacy option name; zero is incomplete" }
 
 def provenanceJudgeAPIs : Array Name := #[
-  `LeanInformationAudit.RegistrationInputs.owned,
-  `LeanInformationAudit.TemplateEnrollmentInputs.owned,
-  `LeanInformationAudit.SealInputs.owned,
   `LeanInformationAudit.InformationRegistry.entries,
   `LeanInformationAudit.InformationRegistry.find?,
   `LeanInformationAudit.InformationRegistry.hasTheorem,
@@ -56,8 +55,8 @@ def provenanceJudgeAPIs : Array Name := #[
   `LeanInformationAudit.TemplateAudit.assessedPlanBytes,
   `LeanInformationAudit.TemplateBinding.inventory,
   `LeanInformationAudit.TemplateBinding.records,
-  `LeanInformationAudit.replayRegistrationInputs,
-  `LeanInformationAudit.assessRecordedRegistrations,
+  `LeanInformationAudit.TypedAssessment.assessSnapshot,
+  `LeanInformationAudit.assessTypedRegistrations,
   `LeanInformationAudit.TemplateBinding.assessJoined,
   `LeanInformationAudit.TemplateBinding.exportSnapshot,
   `LeanInformationAudit.TemplateBinding.joinedSnapshot,
@@ -75,7 +74,6 @@ def provenanceJudgeAPIs : Array Name := #[
   `LeanInformationAudit.BoundedFiniteTruncationDisposition.mk,
   `LeanInformationAudit.UnreachableDisposition.mk]
 
-initialize registerTraceClass `InformationProvenance.check
 
 private def generatedAddress : Name → Bool
   | .str parent suffix =>
@@ -101,15 +99,8 @@ private def judgePayloadType (name : Name) : Bool :=
       `LeanInformationAudit.TemplateBinding.JoinedRecords,
       `LeanInformationAudit.AutoDerivedSemanticCertificate,
       `LeanInformationAudit.CatalogUnitRecord, `LeanInformationAudit.CatalogRecord,
-      `LeanInformationAudit.SealTheoremRecord, `LeanInformationAudit.SealArenaRecord,
-      `LeanInformationAudit.SealedOccurrenceState, `LeanInformationAudit.StagedAnalysisState,
-      `LeanInformationAudit.StructuralProvenanceEntry,
-      `LeanInformationAudit.StructuralRegistrationEvidence,
-      `LeanInformationAudit.BoundedTruncationFamily,
-      `LeanInformationAudit.UnreachableElaborationEvidence,
-      `LeanInformationAudit.AnalysisDisposition, `LeanInformationAudit.CensusAssessment,
-      `LeanInformationAudit.AnalysisObservation, `LeanInformationAudit.DispositionInventory,
-      `LeanInformationAudit.TruncationCertification].contains name
+      `LeanInformationAudit.SealArenaRecord,
+      `LeanInformationAudit.SealedOccurrenceState, `LeanInformationAudit.StagedAnalysisState].contains name
 
 private def judgePayload (info : ConstantInfo) : Bool :=
   match info with
@@ -118,7 +109,7 @@ private def judgePayload (info : ConstantInfo) : Bool :=
 
 /-- Raw judge identities are rejection witnesses shared by enrollment and
 occurrence auditing. A negative answer grants no grammar admission. -/
-def isJudgeIdentity (env : Environment) (name : Name) : Bool :=
+def isJudgeIdentity (env : CompiledView) (name : Name) : Bool :=
   provenanceJudgeAPIs.contains name || generatedAddress name || judgePayloadType name ||
     (env.find? name).any judgePayload ||
     ((env.getProjectionFnInfo? name).bind (fun p => env.find? p.ctorName)).any judgePayload
@@ -139,45 +130,27 @@ def listedProducers : Array Name := #[
   ``decEq, ``Nat.decEq, ``Nat.decLt, ``Nat.decLe, ``Bool.decEq,
   ``instDecidableEqOfLawfulBEq, ``inferInstance, `Equiv.decidableEq]
 
-def isCtorOrInductive (env : Environment) (n : Name) : Bool :=
+def isCtorOrInductive (env : CompiledView) (n : Name) : Bool :=
   match env.find? n with
   | some (.inductInfo _) | some (.ctorInfo _) | some (.recInfo _) | some (.quotInfo _) => true
   | _ => false
 
-private def moduleName (env : Environment) (n : Name) : Name :=
-  (env.getModuleIdxFor? n).map (env.header.modules[·.toNat]!.module) |>.getD env.header.mainModule
+private def moduleName (env : CompiledView) (name : Name) : Name :=
+  (env.ownerOf name).getD env.mainModule
 
--- Lean orders imported modules after their dependencies. Protect every module
--- importing a protected module, regardless of its library or declaration names.
--- Missing import metadata is protected too; it cannot justify an external leaf.
-def classifyModules (env : Environment) : Std.HashMap Name Bool := Id.run do
-  let mut classes : Std.HashMap Name Bool := {}
-  for index in [:env.header.modules.size] do
-    let name := env.header.modules[index]!.module
-    let inherited := match env.header.moduleData[index]? with
-      | none => true
-      | some data => data.imports.any (fun i => classes[i.module]?.getD true)
-    classes := classes.insert name
-      (name.getRoot == `D5 || name.getRoot == `LeanInformationAudit || inherited)
-  return classes
-
-initialize moduleScopeCache : EnvExtension (Option (Std.HashMap Name Bool)) ←
-  registerEnvExtension (pure none)
-
-def inProtected (env : Environment) (n : Name) : Bool :=
-  if (env.getModuleIdxFor? n).isNone then true else
-    let m := moduleName env n
-    m == env.header.mainModule ||
-      ((moduleScopeCache.getState env).bind (·[m]?)).getD true
+def inProtected (env : CompiledView) (name : Name) : Bool :=
+  match env.ownerOf name with
+  | none => true
+  | some owner => owner == env.mainModule || env.protectedModules[owner]?.getD true
 
 -- These producers expose their implementations or have kernel-controlled
 -- computation rules. Arbitrary external definitions have no such permission.
-def carrierProducerAllowed (env : Environment) (name : Name) : Bool :=
+def carrierProducerAllowed (env : CompiledView) (name : Name) : Bool :=
   inProtected env name || isCtorOrInductive env name || name == ``Nat.brecOn
 
-def namespaceLabel (env : Environment) (n : Name) : String :=
+def namespaceLabel (env : CompiledView) (n : Name) : String :=
   if inProtected env n then
-    if moduleName env n == env.header.mainModule then "protected:current"
+    if moduleName env n == env.mainModule then "protected:current"
     else if (moduleName env n).getRoot == `LeanInformationAudit then "protected:judge" else "protected:D5"
   else if n.getRoot == `Classical then "external:Classical"
   else "external:other"
@@ -252,8 +225,8 @@ structure Summary where
   incomplete : Bool := false
   deriving Inhabited
 
-def summarise (_env : Environment) (inputs : Array (Position × Expr)) (fuel : Nat) :
-    CoreM Summary := do
+def summarise (_env : CompiledView) (inputs : Array (Position × Expr)) (fuel : Nat) :
+    IO Summary := do
   if inputs.size > fuel then return { incomplete := true }
   let nodes := inputs.map fun (position, expr) => ({ expr, position } : SyntaxNode)
   return { nodes, roots := (List.range nodes.size).toArray, visits := nodes.size, constructionWork := nodes.size }
@@ -279,14 +252,73 @@ structure ProvenanceCounters where
   familyMemoHits : Nat := 0
   deriving Inhabited, Repr
 
--- Ordinary environment extensions are compilation-local and not serialized.
-initialize summaryCache : EnvExtension (Std.HashMap (Name × List Level) Summary) ←
-  registerEnvExtension (pure {})
-initialize countersCache : EnvExtension ProvenanceCounters ←
-  registerEnvExtension (pure {})
+/-- Retained statement syntax scoped to one binding validation. -/
+structure StatementAliasMemo where
+  theoremName : Name
+  statement : Expr
+  /-- Keep the identified declaration table alive for the memo's lifetime. -/
+  constants : CompiledView
+  isExporting : Bool
+  forms : Array Expr
+  recognized : ProvenanceAdmissionWitness
 
-def getProvenanceCounters : CoreM ProvenanceCounters := do
-  return countersCache.getState (← getEnv)
+/-- Process-local syntax caches and output observations. Query verdicts and
+lexical occurrence types remain in WalkState. -/
+structure ProvenanceSession where
+  summaries : Std.HashMap (Name × List Level) Summary := {}
+  counters : ProvenanceCounters := {}
+  aliasMemo : Bool × Option StatementAliasMemo := (false, none)
+  wholeReadoutCalls : Nat := 0
+  expressions : Option (CompiledView × Contract.CompiledExpressions.Memo ×
+    Std.HashMap USize (LocalContext × Contract.CompiledExpressions.Memo)) := none
+  deriving Inhabited
+
+structure QueryContext where
+  view : CompiledView
+  session : IO.Ref ProvenanceSession
+  locals : LocalContext := {}
+  options : Options := {}
+  heartbeatStart : Nat
+  heartbeatLimit : Nat
+  trace : String → IO Unit := fun _ => pure ()
+
+abbrev QueryM := ReaderT QueryContext IO
+
+def getCompiledView [Monad m] [MonadReaderOf QueryContext m] : m CompiledView :=
+  return (← read).view
+
+def getQueryOptions [Monad m] [MonadReaderOf QueryContext m] : m Options :=
+  return (← read).options
+
+def getQueryLocals [Monad m] [MonadReaderOf QueryContext m] : m LocalContext :=
+  return (← read).locals
+
+def querySession [Monad m] [MonadReaderOf QueryContext m] : m (IO.Ref ProvenanceSession) :=
+  return (← read).session
+
+def auditTrace [Monad m] [MonadReaderOf QueryContext m] [MonadLiftT IO m]
+    (message : String) : m Unit := do
+  let context ← read
+  if context.options.getBool `trace.InformationProvenance.check false then
+    context.trace message
+
+def localDeclaration (id : FVarId) : QueryM LocalDecl := do
+  let some declaration := (← getQueryLocals).find? id
+    | throw <| IO.userError s!"incomplete_closure:provenance.local:{id.name}"
+  return declaration
+
+def queryConstant (name : Name) : QueryM ConstantInfo := do
+  let some info := (← getCompiledView).find? name
+    | throw <| IO.userError s!"incomplete_closure:provenance.constant:{name}"
+  return info
+
+def compiledValue (info : ConstantInfo) (levels : List Level)
+    (allowOpaque : Bool := false) : QueryM Expr := do
+  unless info.levelParams.length == levels.length do
+    throw <| IO.userError s!"incomplete_closure:provenance.levels:{info.name}"
+  let some value := info.value? (allowOpaque := allowOpaque)
+    | throw <| IO.userError s!"incomplete_closure:provenance.value:{info.name}"
+  return value.instantiateLevelParams info.levelParams levels
 
 structure WalkState where
   theoremName : Name
@@ -324,15 +356,41 @@ structure WalkState where
   certifiedNullaryCarriers : Std.HashMap Expr ProvenanceAdmissionWitness := {}
   dataFunctionTypes : Std.HashMap (Expr × Option Name) ProvenanceAdmissionWitness := {}
   cleanFamilies : Std.HashMap (Expr × Expr × Option Name) ProvenanceAdmissionWitness := {}
-  binderContexts : Std.HashMap (Array Expr) (LocalContext × LocalInstances × Array Expr) := {}
+  binderContexts : Std.HashMap (Array Expr) (LocalContext × Array Expr) := {}
+  nextLocal : Nat := 0
   exprFuel : Nat := provenanceExpressionFuel
   constFuel : Nat := provenanceConstantFuel
 
-abbrev WalkM := StateRefT WalkState MetaM
+abbrev WalkM := StateRefT WalkState QueryM
+
+def freshLocalId : WalkM FVarId := do
+  let mut index := (← get).nextLocal
+  let locals ← getQueryLocals
+  while locals.contains ⟨Name.num `compiledProvenanceLocal index⟩ do index := index + 1
+  modify fun state => { state with nextLocal := index + 1 }
+  return ⟨Name.num `compiledProvenanceLocal index⟩
+
+def withCompiledLocal (name : Name) (info : BinderInfo) (type : Expr)
+    (action : Expr → WalkM α) : WalkM α := do
+  let id ← freshLocalId
+  withReader (fun context : QueryContext =>
+    { context with locals := context.locals.mkLocalDecl id name type info })
+    (action (mkFVar id))
+
+def withCompiledLet (name : Name) (type value : Expr) (action : Expr → WalkM α)
+    (nondep : Bool := false) : WalkM α := do
+  let id ← freshLocalId
+  withReader (fun context : QueryContext =>
+    { context with locals := context.locals.mkLetDecl id name type value nondep })
+    (action (mkFVar id))
+
+def withCompiledLocals (locals : LocalContext) (action : WalkM α) : WalkM α :=
+  withReader (fun context : QueryContext => { context with locals }) action
+
 
 def noteIncomplete (cause operation : Name) : WalkM Unit := do
   modify fun s => { s with incomplete := true }
-  trace[InformationProvenance.check]
+  auditTrace s!
     "incomplete cause={cause} operation={operation} first={(← get).currentFirst} site={(← get).currentOrigin}"
 
 -- Every pass over a summary is charged to the same per-query expression fuel
@@ -342,7 +400,7 @@ def noteIncomplete (cause operation : Name) : WalkM Unit := do
 def chargeSummaryWork (update : ProvenanceCounters → ProvenanceCounters) (amount : Nat := 1) :
     WalkM Bool := do
   if amount > (← get).exprFuel then
-    trace[InformationProvenance.check] "incomplete cause=expression_budget operation=work_reservation first={(← get).currentFirst} site={(← get).currentOrigin}"
+    auditTrace s! "incomplete cause=expression_budget operation=work_reservation first={(← get).currentFirst} site={(← get).currentOrigin}"
     modify fun s => { s with incomplete := true }
     return false
   modify fun s => { s with
@@ -480,7 +538,7 @@ def unknownType (type : Expr) (className : String := "unclassified_argument_type
   let state ← get
   let first := if state.currentFirst.isAnonymous then
     type.getAppFn.constName?.getD state.theoremName else state.currentFirst
-  return .unclassified ⟨className, first, namespaceLabel (← getEnv) first, state.currentOrigin⟩
+  return .unclassified ⟨className, first, namespaceLabel (← getCompiledView) first, state.currentOrigin⟩
 
 -- A rule discharges a structural obligation only when every child was
 -- classified. Rejection flags are projections of typed child verdicts; a
@@ -497,12 +555,12 @@ def queue (name : Name) (levels : List Level) : WalkM Unit := do
   let s ← get
   if s.queued.contains n then return
   if s.constFuel == 0 then
-    trace[InformationProvenance.check] "incomplete cause=constant_budget operation=constant_enqueue first={name} site={s.currentOrigin}"
+    auditTrace s! "incomplete cause=constant_budget operation=constant_enqueue first={name} site={s.currentOrigin}"
     modify fun s => { s with incomplete := true }
   else
     modify fun s => { s with queued := s.queued.insert n, pending := List.cons n s.pending, constFuel := s.constFuel - 1 }
 
--- No failed or exhausted Meta query can supply a positive allowlist verdict.
+-- No failed or exhausted compiled query can supply a positive allowlist verdict.
 -- Open subterms are checked structurally below, without inventing a context
 -- for their loose bound variables. Alias spellings only supply rejection witnesses.
 -- Syntactic identity is only a rejection witness. A mismatch supplies no
@@ -516,11 +574,11 @@ def compareCanonical (a b : Expr) : WalkM Bool := do
 
 -- Preserve constant provenance before reduction, including constants discovered
 -- only in a constructor field's type. Direct forbidden sources take precedence.
-def directConstant (env : Environment) (n : Name) : WalkM Unit := do
+def directConstant (env : CompiledView) (n : Name) : WalkM Unit := do
   if n == (← get).theoremName || isJudgeIdentity env n then
     modify fun s => { s with forbidden := true, walked := s.walked.insert n }
 
-def directProjection (env : Environment) (n : Name) : WalkM Unit := do
+def directProjection (_env : CompiledView) (n : Name) : WalkM Unit := do
   if isJudgeProjection n then
     modify fun s => { s with forbidden := true, walked := s.walked.insert n }
 
@@ -556,40 +614,67 @@ def listedTypeClasses : Array Name := #[
   `GroupWithZero, `CommGroupWithZero, `CommMonoidWithZero, `Nontrivial,
   `Fact, `CharP]
 
-def boundedMeta (action : MetaM α) (site : Name := `type_classification)
+/-- Share completed closed calculations in this immutable-table session.
+Local expressions retain their own query memo and current lexical table. -/
+def compiledQueryWork (action : Contract.CompiledExpressions.M α)
+    (fuel : Nat := 524288) : QueryM (α × Nat) := do
+  let context ← read
+  let (closed, scopes) := match (← context.session.get).expressions with
+    | some (view, closed, scopes) =>
+      if view.constantsIdentity == context.view.constantsIdentity then (closed, scopes)
+      else (default, {})
+    | none => (default, {})
+  let address := unsafe ptrAddrUnsafe context.locals
+  let localMemo := (scopes[address]?).map (·.2) |>.getD default
+  let (value, work, closed, localMemo) ← Contract.CompiledExpressions.runScoped {
+    find := context.view.find?
+    local? := context.locals.find?
+    heartbeatStart := context.heartbeatStart
+    heartbeatLimit := context.heartbeatLimit } action closed localMemo fuel
+  context.session.modify fun session => { session with
+    expressions := some (context.view, closed, scopes.insert address (context.locals, localMemo)) }
+  return (value, work)
+
+/-- Project compiler-owned type shapes through the current lexical table. -/
+def compiledQuery (action : Contract.CompiledExpressions.M α) : QueryM α := do
+  return (← compiledQueryWork action).1
+
+def boundedQuery (action : QueryM α) (site : Name := `type_classification)
     (operations : Nat := 1) : WalkM (Option α) := do
   unless ← chargeSummaryWork (fun c => { c with canonicalizations := c.canonicalizations + operations }) operations do
     return none
-  let budget := min provenanceDefEqHeartbeats (provenanceDefEqLimit.get (← getOptions))
+  let budget := min provenanceDefEqHeartbeats (provenanceDefEqLimit.get (← getQueryOptions))
   if budget == 0 then
     modify fun s => { s with incomplete := true }
-    trace[InformationProvenance.check] "incomplete cause=heartbeat_exhaustion operation={site} first={(← get).currentFirst} site={(← get).currentOrigin}"
+    auditTrace s!"incomplete cause=heartbeat_exhaustion operation={site} first={(← get).currentFirst} site={(← get).currentOrigin}"
     return none
-  let result ← (tryCatchRuntimeEx (do
-    let start ← IO.getNumHeartbeats
-    controlAt CoreM fun runInBase => withReader (fun ctx : Core.Context =>
-      { ctx with initHeartbeats := start, maxHeartbeats := budget * operations }) do
-      let result ← runInBase action
-      Core.checkMaxHeartbeats "readout type classification"
-      pure (Except.ok result)) (fun ex => pure (Except.error ex)) : MetaM (Except Exception α))
+  let start ← IO.getNumHeartbeats
+  let result : Except IO.Error α ← try
+    let value ← withReader (fun context : QueryContext =>
+      { context with heartbeatStart := start, heartbeatLimit := budget * operations }) action
+    if (← IO.getNumHeartbeats) - start > budget * operations then
+      throw <| IO.userError "incomplete_closure:E8.compiled_expression_heartbeats"
+    pure (.ok value)
+  catch error => pure (.error error)
   match result with
   | .ok value => return some value
-  | .error ex =>
-    trace[InformationProvenance.check] "meta_failure operation={site}: {ex.toMessageData}"
+  | .error error =>
+    (← read).trace s!"query_failure operation={site}: {error}"
+    let heartbeat := error.toString.contains "compiled_expression_heartbeats"
     modify fun s => { s with incomplete := true }
-    trace[InformationProvenance.check] "incomplete cause={if ex.isMaxHeartbeat then "heartbeat_exhaustion" else "meta_runtime_exception"} operation={site} first={(← get).currentFirst} site={(← get).currentOrigin}"
+    auditTrace s!"incomplete cause={if heartbeat then "heartbeat_exhaustion" else "query_runtime_exception"} operation={site} first={(← get).currentFirst} site={(← get).currentOrigin}"
     return none
 
--- This is the only source of types used for occurrence admission. Expressions
--- contain their actual levels and stable local identities; no inference cache
--- survives the registered-statement query. Failed inference is never cached.
+-- This is the only source of types used for occurrence admission. Compiled
+-- types contain actual levels and stable local identities. Failed projections
+-- are never cached; projected types are scoped to the statement query.
 def occurrenceType (e : Expr) : WalkM (Option Expr) := do
   unless ← chargeTraversal do return none
   if e.hasLooseBVars || e.hasMVar || e.hasLevelMVar then
     noteUnclassified ⟨"unclassified_occurrence", `occurrence, "unclassified", `occurrence⟩
     return none
   if let some type := (← get).inferredTypes[e]? then return some type
-  let some type ← boundedMeta (Meta.inferType e) `infer_type | return none
+  let some type ← boundedQuery (compiledQuery (typeShape e)) `type_shape | return none
   modify fun s => { s with
     inferredTypes := s.inferredTypes.insert e type
     counters.inferredOccurrences := s.counters.inferredOccurrences + 1 }
@@ -621,7 +706,7 @@ def exactScalarStatement (e : Expr) : WalkM Bool := do
   let some recognized := (← get).recognizedStatement | return false
   return scalarStatement recognized.matchedType == some shape
 
--- Constructor telescopes are inferred from native occurrences. Only literal
+-- Constructor telescopes are projected from compiled occurrences. Only literal
 -- constructor-index patterns are supported; no metavariables, equation solver,
 -- dependent elimination, or semantic index normalization is used.
 private partial def bindIndex (pattern actual : Expr)
@@ -660,20 +745,20 @@ private partial def constructorFields (ctor : Expr) (args : Array Expr)
       let some arg := args[0]? | return none
       constructorFields (mkApp ctor arg) (args.extract 1 args.size) (parameters - 1) k fields
     else
-      Meta.withLocalDecl n bi domain fun field =>
+      withCompiledLocal n bi domain fun field =>
         constructorFields (mkApp ctor field) args 0 k (fields.push field)
   | _ => return some (← k fields type)
 
 def caseFields (type : Expr) :
-    WalkM (Option (Array (LocalContext × LocalInstances × Array Expr))) := do
+    WalkM (Option (Array (LocalContext × Array Expr))) := do
   let some (head, args) ← applicationParts type | return none
   let .const name levels := head | return none
-  let some (.inductInfo family) := (← getEnv).find? name | return none
+  let some (.inductInfo family) := (← getCompiledView).find? name | return none
   let mut branches := #[]
   for ctor in family.ctors do
     unless ← chargeTraversal do return none
     let result ← constructorFields (mkConst ctor levels) args family.numParams fun fields result => do
-      if fields.isEmpty then return some (← getLCtx, ← Meta.getLocalInstances, #[])
+      if fields.isEmpty then return some (← getQueryLocals, #[])
       let some (_, indices) ← applicationParts result | return none
       let mut bindings : Std.HashMap FVarId Expr := {}
       for i in [family.numParams:args.size] do
@@ -682,17 +767,17 @@ def caseFields (type : Expr) :
         bindings := next
       -- Only substitute already fixed index binders, never solve new equations.
       let mut actualFields := #[]
-      let mut lctx ← getLCtx
+      let mut lctx ← getQueryLocals
       for field in fields do
         let some fieldType ← occurrenceType field | return none
         unless ← chargeExpression fieldType do return none
         let fieldType := fieldType.replace fun e => match e with
           | .fvar id => bindings[id]?
           | _ => none
-        let id ← mkFreshFVarId
+        let id ← freshLocalId
         lctx := lctx.mkLocalDecl id `field fieldType
         actualFields := actualFields.push (mkFVar id)
-      return some (lctx, ← Meta.getLocalInstances, actualFields)
+      return some (lctx, actualFields)
     let some result := result | return none
     -- A constructor with a distinct literal index has no fields at this index.
     if let some branch := result then branches := branches.push branch

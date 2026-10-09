@@ -11,7 +11,7 @@ namespace StrataLint.Cli;
 /// only the immutable commit and tree identities.
 internal static class TruthExportCommand
 {
-    private const string FileName = "truth-export.v1.json";
+    private static string FileName => Path.GetFileName(GeneratedArtifactInventory.TruthExport.Path);
 
     internal static ExplicitCommandResult Run(
         IRepositoryGateway repository,

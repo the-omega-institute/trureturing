@@ -8,6 +8,28 @@ internal sealed class OddColorThreeSourceDocument : IScribeDocumentDefinition
         "Odd color words and actual periodic sources.",
         H("Odd color words and actual periodic sources"),
         Blocks(Describe.Lean(
+            DescribeId.Create("oddcolorthreesource-root-bounds"),
+            DeclarationHandle.Create("D5/S1/Digit/Infinite/OddColorThreeSource.root_bounds"),
+            H("Actual root intervals"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(
+                "Every actual legal source lies in the closed root interval of its "
+                + "first three-bit label. The intervals for labels 3, 0, 5, 2, and 25 "
+                + "are respectively [-1,t-1], [t-1,g], [g,t], [t,2t], and "
+                + "[2t,1+t]."))),
+            DescribeRole.Lemma),
+        Describe.Lean(
+            DescribeId.Create("oddcolorthreesource-color-labels"),
+            DeclarationHandle.Create("D5/S1/Digit/Infinite/OddColorThreeSource.color_labels"),
+            H("Fixed allowed label pairs"),
+            StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+            Blocks(Paragraph(Text(
+                "For every beta strictly below lambda, a legal source in closed color "
+                + "c has one of its two fixed allowed labels. In color order 0 through "
+                + "5, these pairs are (3,0), (3,0), (0,5), (5,2), (2,25), and "
+                + "(2,25). The branch intervals exclude all other labels."))),
+            DescribeRole.Lemma),
+        Describe.Lean(
             DescribeId.Create("oddcolorthreesource-result"),
             DeclarationHandle.Create("D5/S1/Digit/Infinite/OddColorThreeSource.result"),
             H("At most two sources for an odd color word"),

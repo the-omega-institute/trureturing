@@ -89,7 +89,7 @@ private instance isStarNormal_toEuclideanLin {𝕜 : Type*} [RCLike 𝕜] (A : M
       Module.End.mul_eq_comp, Module.End.mul_eq_comp, ← toLpLin_mul_same, ← toLpLin_mul_same, h]
 /-- **The spectral theorem for normal matrices.** A normal complex matrix is unitarily
 diagonalizable: there is a unitary matrix `U` with `star U * A * U` diagonal. -/
-private theorem exists_mem_unitaryGroup_star_mul_mul_eq_diagonal (A : Matrix n n ℂ) [IsStarNormal A] :
+theorem exists_mem_unitaryGroup_star_mul_mul_eq_diagonal (A : Matrix n n ℂ) [IsStarNormal A] :
     ∃ U ∈ unitaryGroup n ℂ, ∃ d : n → ℂ, star U * A * U = diagonal d := by
   obtain ⟨b, μ, hb⟩ := LinearMap.exists_orthonormalBasis_apply_eq_smul_of_isStarNormal
     (toEuclideanLin A) (ι := n) finrank_euclideanSpace.symm
@@ -448,7 +448,7 @@ private theorem completion_bound_normal {n : ℕ} [NeZero n]
     exact star_comm_self' T
   exact (toEuclideanCLM (n := Fin n) (𝕜 := ℂ)).injective hm
 variable {ι : Type*} [Fintype ι] [DecidableEq ι]
-private theorem outer_pairing_trace (S : Matrix ι ι ℂ) (u : EuclideanSpace ℂ ι) :
+theorem outer_pairing_trace (S : Matrix ι ι ℂ) (u : EuclideanSpace ℂ ι) :
     ((Matrix.vecMulVec (u).ofLp (star (u).ofLp))*S).trace=⟪u,toEuclideanCLM (𝕜 := ℂ) S u⟫_ℂ := by
   rw [Matrix.trace_mul_comm]
   simp only [mul_vecMulVec,trace_vecMulVec,

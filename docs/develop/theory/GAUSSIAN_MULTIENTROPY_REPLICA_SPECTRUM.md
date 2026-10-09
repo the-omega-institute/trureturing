@@ -339,3 +339,215 @@ which vanishes identically for $\beta=\tfrac14$, $\alpha=\tfrac1{12}$. Stance: s
 <!-- 追加区自下一行的「追加锚」开始。每批增补写在锚之后,并以一行新的、逐字相同的追加锚结尾。 -->
 
 ## 追加锚（本行以下为增补区）
+
+## 10. Party multiplicities in the tripartite Gaussian formulas
+
+The explicit numeric-set sums in Theorems 6.4 and 6.5 are superseded by the party-indexed formulas below. Equal weights do not identify parties or bipartitions. Every unqualified $\sum_p$ or $\prod_p$ in the tripartite formulas and proofs of Theorem 6.5 and Corollary 6.6 means one term for each of $A,B,C$, including repeated values. In particular, the tree expression in Theorem 6.5 has three denominator factors. The party-indexed determinant factorization of Corollary 5.4 is unchanged.
+
+**Convention 10.1 (Labels, model and parameter range).** Let $I=\{A,B,C\}$ be a set of three distinct party labels, let $N_k\in\mathbb Z_{\ge1}$ for $k\in I$, and put $N=N_A+N_B+N_C\ge3$ and $x_k=N_k/N$. Fix an integer $n\ge2$ and a real $a>1$. Use exactly the fully symmetric pure bosonic Gaussian state and normalized replica integrals of Definition 6.3: $\psi_a(y)=\exp(-y^\top Wy/2)$, $W=(a-e^-)I_N+e^-J_N$, with $e^-$ and $\varepsilon(a)$ of Definition 6.1. The twists are the two coordinate translations and the identity on $\mathbb Z_n^2$; a bipartite cut uses the cyclic twist on $\mathbb Z_n$. All logarithms are natural. Thus $0<\varepsilon(a)<1$ by Lemma 6.2. A sum indexed by $k\in I$ has three summands. Equivalently, for the numeric set $V=\{x_A,x_B,x_C\}$ and $m(v)=|\{k\in I:x_k=v\}|$,
+
+$$
+\sum_{k\in I}f(x_k)=\sum_{v\in V}m(v)f(v),\qquad
+\prod_{k\in I}h(x_k)=\prod_{v\in V}h(v)^{m(v)}.
+$$
+
+The large-squeezing limit below fixes $n$ and the three party sizes; none of them varies with $a$.
+
+**Theorem 10.2 (Exact formula retaining every party).** For every datum of Convention 10.1, put $\varepsilon=\varepsilon(a)$ and
+
+$$
+\begin{aligned}
+b_k&=(1-\varepsilon)^2x_k(1-x_k),\\
+d_k(\varepsilon)&=\prod_{c=1}^{n-1}\left(\varepsilon+b_k\sin^2\frac{\pi c}{n}\right)
+=4^{1-n}b_k^n\varepsilon^{-1}\sinh^2\left(n\,\mathrm{arsinh}\sqrt{\varepsilon/b_k}\right),\\
+\mathcal O_n&=\{(j_1,j_2)\in\mathbb Z_n^2:0,j_1,j_2\text{ are pairwise distinct}\},\\
+\nu_{j_1,j_2}&=x_Ax_C\sin^2\frac{\pi j_1}{n}+x_Bx_C\sin^2\frac{\pi j_2}{n}
++x_Ax_B\sin^2\frac{\pi(j_1-j_2)}{n},\\
+\Omega(\varepsilon)&=\prod_{j\in\mathcal O_n}\left(\varepsilon+(1-\varepsilon)^2\nu_j\right).
+\end{aligned}
+$$
+
+Then, with genuine tripartite multi-entropy defined by Definition 6.3,
+
+$$
+\mathrm{GM}^{(3)}_n
+=\frac{n-2}{4n}\log\varepsilon
++\frac{\log\Omega(\varepsilon)}{2n(n-1)}
++\frac{2-n}{4n(n-1)}\sum_{k\in I}\log d_k(\varepsilon).
+$$
+
+Here $d_k=D_2^{(x_k)}$, $\Omega=\Omega_3$, and the empty product is $1$. The formula holds with any ties among the $x_k$.
+
+**Proof.** Proposition 5.1 gives $D_3=\prod_{j\ne(0,0)}(\varepsilon+(1-\varepsilon)^2\nu_j)$. Its indices split into the three disjoint punctured lines $(c,0)$, $(0,c)$, $(c,c)$, $c\ne0$, and $\mathcal O_n$. The line factors have weights $x_A(1-x_A)$, $x_B(1-x_B)$, and $x_C(1-x_C)$, respectively. Thus
+
+$$
+D_3(\varepsilon)=d_A(\varepsilon)d_B(\varepsilon)d_C(\varepsilon)\Omega(\varepsilon).
+$$
+
+This is Corollary 5.4, with its distinct lines retained even when their factors agree. The closed form of $d_k$ is Theorem 5.2 divided by $\varepsilon$, since $b_k>0$. Every factor is positive for $\varepsilon>0$, so logarithms of these products are sums of the logarithms of all their factors.
+
+Theorem 3.8 gives $Z_n^{(3)}=(\varepsilon^{n^2-1}/D_3)^{1/2}$ and, for the cut $k{:}I\setminus\{k\}$, $Z_{n,k}^{(2)}=(\varepsilon^{n-1}/d_k)^{1/2}$. Inserting the normalizations $S_n^{(3)}=\log Z_n^{(3)}/(n(1-n))$ and $S_{n,k}^{(2)}=\log Z_{n,k}^{(2)}/(1-n)$ gives
+
+$$
+\begin{aligned}
+S_n^{(3)}&=-\frac{n+1}{2n}\log\varepsilon+\frac{\log D_3}{2n(n-1)},\\
+S_{n,k}^{(2)}&=-\frac12\log\varepsilon+\frac{\log d_k}{2(n-1)},\\
+\mathrm{GM}^{(3)}_n&=S_n^{(3)}-\frac12\sum_{k\in I}S_{n,k}^{(2)}
+=\frac{n-2}{4n}\log\varepsilon+\frac{\log D_3}{2n(n-1)}-\frac{\sum_{k\in I}\log d_k}{4(n-1)}.
+\end{aligned}
+$$
+
+Substitute the displayed factorization and combine the two coefficients of each $\log d_k$. This gives the asserted coefficient $(2-n)/(4n(n-1))$. ∎
+
+**Theorem 10.3 (Constant at fixed replica order and party sizes).** For every fixed integer $n\ge2$ and fixed positive integer triple $(N_A,N_B,N_C)$ in Convention 10.1,
+
+$$
+\begin{aligned}
+\mathrm{GM}^{(3)}_n(a)&=\frac{2-n}{2n}\log a+K_n+o(1)\qquad(a\to\infty),\\
+K_n&=\frac{n-2}{4n}\left(\log\frac{N-1}{N^2}-\frac{6\log n}{n-1}
+-\sum_{k\in I}\log\frac{x_k(1-x_k)}4\right)
++\frac{\log\Omega(0)}{2n(n-1)},\\
+\Omega(0)&=\prod_{j\in\mathcal O_n}\nu_j
+=\frac{\kappa(\Gamma_3)}{n^4\,4^{(n-1)(n-2)}\prod_{k\in I}\big(x_k(1-x_k)\big)^{n-1}}.
+\end{aligned}
+$$
+
+The graph and tree weight are exactly those of Definitions 3.2 and 2.2 and Proposition 5.1, including parallel edges. At $n=2$, $\mathrm{GM}^{(3)}_2(a)=K_2=0$ for every $a>1$.
+
+**Proof.** Regard $d_k$ and $\Omega$ as polynomials in $\varepsilon$ using their finite products. Theorem 5.2 gives
+
+$$
+d_k(0)=n^2\left(\frac{x_k(1-x_k)}4\right)^{n-1}>0.
+$$
+
+For every $j\in\mathcal O_n$, $j_1\ne0$ and $x_Ax_C>0$, so $\nu_j>0$; hence $\Omega(0)>0$, including the empty-product case. Lemma 6.2 gives $\varepsilon(a)\to0$ and $a^2\varepsilon(a)\to(N-1)/N^2>0$. Subtract the leading term from Theorem 10.2 and use $\log\varepsilon=\log(a^2\varepsilon)-2\log a$. Continuity of the logarithm at these positive limits then gives
+
+$$
+K_n=\frac{n-2}{4n}\log\frac{N-1}{N^2}
++\frac{\log\Omega(0)}{2n(n-1)}
++\frac{2-n}{4n(n-1)}\sum_{k\in I}\log d_k(0).
+$$
+
+There are exactly three terms, so $\sum_{k\in I}\log d_k(0)=6\log n+(n-1)\sum_{k\in I}\log(x_k(1-x_k)/4)$, proving the constant formula. For the tree form, Proposition 5.1 gives $D_3(0)=n^2\kappa(\Gamma_3)/4^{n^2-1}$. Divide by
+
+$$
+\prod_{k\in I}d_k(0)=n^6\,4^{-3(n-1)}\prod_{k\in I}\big(x_k(1-x_k)\big)^{n-1}
+$$
+
+and use $n^2-1-3(n-1)=(n-1)(n-2)$. For $n=2$ there are no two distinct nonzero residues, so $\mathcal O_2=\varnothing$ and $\Omega\equiv1$; both remaining coefficients in Theorem 10.2 vanish. ∎
+
+**Proposition 10.4 (Exact scope of the literal set defect).** Let $F_{\mathrm{set}}(a)$ be the displayed right side of Theorem 6.4 when $\{x_A,x_B,x_C\}$ is an ordinary numeric set, and let $K_{\mathrm{set}}$ be the displayed constant in Theorem 6.5 with the same literal reading, leaving its finite-product definition of $\Omega(0)$ unchanged. With $V$ and $m$ of Convention 10.1 and $d_v=D_2^{(v)}$, their discrepancies are
+
+$$
+\begin{aligned}
+F_{\mathrm{set}}(a)-\mathrm{GM}^{(3)}_n(a)
+&=\frac{n-2}{4n(n-1)}\sum_{v\in V}(m(v)-1)\log d_v(\varepsilon(a)),\\
+K_{\mathrm{set}}-K_n
+&=\frac{n-2}{4n}\sum_{v\in V}(m(v)-1)\log\frac{v(1-v)}4.
+\end{aligned}
+$$
+
+For $n>2$, both discrepancies are strictly negative if any two party weights agree, and both are zero if the three weights are pairwise distinct. For $n=2$, these two discrepancies are zero regardless of ties. A product in the tree formula must still retain party multiplicities at $n=2$.
+
+**Proof.** Replace each party sum by $\sum_{v\in V}m(v)$ times its summand and subtract the two formulas. For $0<\varepsilon<1$ and $0<v<1$, every nonzero-residue factor of $d_v$ satisfies
+
+$$
+0<\varepsilon+(1-\varepsilon)^2v(1-v)\sin^2\frac{\pi c}{n}
+\le\varepsilon+\frac{(1-\varepsilon)^2}{4}
+=\frac{(1+\varepsilon)^2}{4}<1.
+$$
+
+Consequently $0<d_v<1$, and $0<v(1-v)/4\le1/16<1$. The logarithms are strictly negative; a tie supplies a positive integer $m(v)-1$. The coefficient is positive precisely when $n>2$. At $n=2$ it is zero, but no such zero coefficient protects the separate tree-product identity. ∎
+
+**Proposition 10.5 (Exact equal-party falsification).** Take $N_A=N_B=N_C=1$ and $n=3$. For any $a>1$, write $\varepsilon=\varepsilon(a)$ and
+
+$$
+d=\varepsilon+\frac{(1-\varepsilon)^2}{6},\qquad
+t=\varepsilon+\frac{(1-\varepsilon)^2}{4}=\frac{(1+\varepsilon)^2}{4}.
+$$
+
+Then
+
+$$
+\mathrm{GM}^{(3)}_3=\frac1{12}\log\frac{\varepsilon t^2}{d^3},\qquad
+F_{\mathrm{set}}-\mathrm{GM}^{(3)}_3=\frac16\log d<0.
+$$
+
+In particular at $a=2$,
+
+$$
+\varepsilon=\frac{31-3\sqrt{105}}4\in(0,1),\qquad
+d=\frac{13\varepsilon}{4},\qquad
+\mathrm{GM}^{(3)}_3=\frac1{12}\log\frac{1225}{2197},\qquad
+F_{\mathrm{set}}=\frac1{12}\log\frac{1225}{2197}+\frac16\log\frac{13\varepsilon}{4}.
+$$
+
+For this same fixed party triple, $K_3=\frac1{12}\log3$ whereas $K_{\mathrm{set}}=-\frac1{12}\log108$.
+
+**Proof.** The two nonzero residues modulo $3$ have squared sine $3/4$. Each punctured line therefore contributes $d^2$. The two off-line indices $(1,2),(2,1)$ each have $\nu_j=1/4$ and contribute $t$, so $D_3=d^6t^2$ and $\Omega=t^2$. Directly from the normalized Gaussian replica integral of Theorem 3.8, $Z_3^{(3)}=\varepsilon^4/(d^3t)$ and each $Z_3^{(2)}=\varepsilon/d$. Definition 6.3 consequently gives
+
+$$
+-\frac16\log\frac{\varepsilon^4}{d^3t}+\frac34\log\frac{\varepsilon}{d}
+=\frac1{12}\log\frac{\varepsilon t^2}{d^3}.
+$$
+
+The literal set has one occurrence of $1/3$ where there must be three, so its discrepancy is $\frac1{12}\log(d^2)=\frac16\log d$, which is strictly negative by Proposition 10.4. For $N=3,a=2$, Definition 6.1 gives $e^-=(3-\sqrt{105})/8$ and the stated $\varepsilon$. It satisfies $2\varepsilon^2-31\varepsilon+2=0$, whence $d=(\varepsilon^2+4\varepsilon+1)/6=13\varepsilon/4$. Also $(1+\varepsilon)^2=(35/2)\varepsilon$, so
+
+$$
+\frac{\varepsilon t^2}{d^3}
+=\frac{\varepsilon(35\varepsilon/8)^2}{(13\varepsilon/4)^3}
+=\frac{1225}{2197}.
+$$
+
+Finally $\Omega(0)=1/16$ and $x_k(1-x_k)/4=1/18$. Theorem 10.3 gives $12K_3=\log(2/9)-3\log3+3\log18-\log16=\log3$. With only one numeric-set summand it gives $12K_{\mathrm{set}}=\log(2/9)-3\log3+\log18-\log16=-\log108$. These are exact analytic identities, not numerical approximations. The value $\frac1{12}\log((9a^2-1)^2/(3a^2+1)^3)$ in Camargo and Nishida, Table 1, independently agrees at $a=2$. ∎
+
+**Remark 10.6 (The surviving order-three and order-four constants).** Corollary 6.6 retains its full fixed-party-size scope when every implicit weight sum or product is party-indexed. Explicitly, with its $\sigma_2,\sigma_3,e_2,\tau_k$,
+
+$$
+\begin{aligned}
+K_3&=\frac1{12}\log\frac{4(N-1)\sigma_2^2}{3\sigma_3\prod_{k\in I}(N-N_k)},\\
+K_4&=\frac18\left(\log\frac{N-1}{N^2}-\log16-\sum_{k\in I}\log\frac{x_k(1-x_k)}4\right)
++\frac1{24}\sum_{k\in I}2\log\frac{e_2+\tau_k}{2}.
+\end{aligned}
+$$
+
+Indeed, for $n=3$ both off-line eigenvalues are $3e_2/4$, and $\prod_{k\in I}x_k(1-x_k)=\sigma_3\prod_{k\in I}(N-N_k)/N^6$, yielding the first expression from Theorem 10.3. For $n=4$ the six off-line eigenvalues are $(e_2+\tau_A)/2$, $(e_2+\tau_B)/2$, $(e_2+\tau_C)/2$, each occurring twice; substitution in Theorem 10.3 gives the second expression. The examples $K_3=\frac1{12}\log3$ for $(1,1,1)$ and $K_3=\frac16\log(5/3)$ for $(2,1,1)$ remain valid. A numeric-set interpretation inherited from Theorem 6.5 is superseded; the explicitly size-indexed $K_3$ expression itself is unchanged.
+
+## 11. Primary definitions and surviving scopes
+
+**Definition 11.1 (The four-party convention and its primary citation).** For distinct parties $A,B,C,D$, let $\mathcal M$ be the six choices of an unordered pair $XY$ to merge, let $\mathcal P=\{AB{:}CD,AC{:}BD,AD{:}BC\}$, and let $\mathcal C=\{ABC{:}D,ABD{:}C,ACD{:}B,BCD{:}A\}$. For the normalized Rényi multi-entropies and parameters $\alpha,\beta\in\mathbb R$ with $\alpha+\beta=1/3$, the convention of Corollary 7.2 is
+
+$$
+\mathrm{GM}^{(4)}_n=S^{(4)}_n
+-\frac13\sum_{XY\in\mathcal M}S^{(3)}_n(XY{:}Z{:}W)
++\alpha\sum_{P\in\mathcal P}S^{(2)}_n(P)
++\beta\sum_{C\in\mathcal C}S^{(2)}_n(C),
+$$
+
+where $Z,W$ are the complementary two parties. Its primary source is N. Iizuka and M. Nishida, *Genuine multi-entropy and holography*, [arXiv:2502.07995v1, §5, Eqs. (65)–(66)](https://arxiv.org/html/2502.07995v1#S5.E65). Their coefficients $a,b$ are denoted here by $\alpha,\beta$ to distinguish them from the Gaussian squeezing parameter. This citation supersedes the attribution of this $S^{(3)}$-based definition to Eqs. (67)–(68) in the Iizuka–Nishida row of §9. Those latter equations use $\mathrm{GM}^{(3)}$ in place of $S^{(3)}$, with coefficients $\widetilde\alpha+\widetilde\beta=-1/2$.
+
+The two conventions agree for $\widetilde\alpha=\alpha-1/3$, $\widetilde\beta=\beta-1/2$. To see this, expand $\mathrm{GM}^{(3)}_n(XY{:}Z{:}W)$ by its three bipartite subtractions. In the sum over the six merges each pair cut occurs twice and each single cut three times. Thus
+
+$$
+\sum_{XY\in\mathcal M}\mathrm{GM}^{(3)}_n(XY{:}Z{:}W)
+=\sum_{XY\in\mathcal M}S^{(3)}_n(XY{:}Z{:}W)
+-\sum_{P\in\mathcal P}S^{(2)}_n(P)-\frac32\sum_{C\in\mathcal C}S^{(2)}_n(C).
+$$
+
+Substitution proves the shifts and gives $\widetilde\alpha+\widetilde\beta=1/3-1/3-1/2=-1/2$. All cut occurrences are retained even if their entropies agree.
+
+**Remark 11.2 (Four-party order-two scope).** Corollary 7.2 remains valid for every positive integer quadruple of party sizes, every $a>1$ in the fully symmetric Gaussian model of Definition 6.3, $n=2$, and every real $\alpha,\beta$ with $\alpha+\beta=1/3$. Write $T_{\mathcal P}=\sum_{P\in\mathcal P}S^{(2)}_2(P)$ and $T_{\mathcal C}=\sum_{C\in\mathcal C}S^{(2)}_2(C)$. Theorem 7.1 gives $S^{(4)}_2=(T_{\mathcal P}+T_{\mathcal C})/4$. For each merge it gives $S^{(3)}_2(XY{:}Z{:}W)=(S^{(2)}_2(XY{:}ZW)+S^{(2)}_2(Z{:}XYW)+S^{(2)}_2(W{:}XYZ))/2$. Counting the two pair-cut and three single-cut occurrences gives $\sum_{XY\in\mathcal M}S^{(3)}_2=T_{\mathcal P}+3T_{\mathcal C}/2$, and therefore
+
+$$
+\mathrm{GM}^{(4)}_2=(\beta-1/4)(T_{\mathcal C}-T_{\mathcal P}).
+$$
+
+It vanishes for $\beta=1/4$, $\alpha=1/12$. The citation correction changes neither this definition nor this Gaussian conclusion.
+
+**Remark 11.3 (Sources, reuse and boundaries).** The primary conditions for the tripartite quantities are those in H. A. Camargo and M. Nishida, *Genuine Multi-Entropy of Fully Symmetric Gaussian States*, [arXiv:2609.30754v1](https://arxiv.org/pdf/2609.30754v1), §2.1 Eqs. (2.1)–(2.5), (2.10), §2.3 Eqs. (2.21)–(2.23), and §3.1 Eq. (3.1): the normalized replica contraction on $n^{\mathtt q-1}$ copies, the factor $1/(n^{\mathtt q-2}(1-n))$, the three separate bipartite terms, and the real positive Gaussian matrix with diagonal $a$ and off-diagonal $e^-$. The restriction here is to integer $n\ge2$, positive integer party sizes, and this fully symmetric pure bosonic Gaussian model with $a>1$. Table 1 supplies the equal-party $n=3$ value used in Proposition 10.5. The leading term in Theorem 10.3 matches their conjecture in Eq. (3.8); its fixed-parameter proof here reuses Lemma 6.2 and the determinant factors, rather than assuming the conjecture.
+
+The multiplicity correction does not alter the definitions and determinant, graph, character and labelled-bipartition results of §§2–5, Definitions 6.1 and 6.3, or Lemma 6.2: their indices distinguish parties, edges, cuts or characters before any numeric weights are evaluated. Theorem 7.1 likewise sums over labelled cuts, so its order-two identity and the Gaussian zero in Theorems 6.5 and 10.3 survive ties. Corollary 6.6 survives exactly as stated in Remark 10.6, and Corollary 7.2 survives with Definition 11.1's citation. These are dependency and scope statements for this correction, not a separate audit of every claim in the volume. The boundaries of §8 are retained: no $n\to1$ continuation, no $n\to\infty$ or joint $(n,N,a)$ asymptotics, no large-squeezing law for genuine $\mathtt q\ge4,n\ge3$ combinations, and no extension of Theorem 7.1 to arbitrary pure states or to general pure Gaussian states with $\mathtt q\ge4$ is established here. Camargo–Nishida's broader pure-Gaussian tripartite $n=2$ result in §4 is a separate literature-attested result.
+
+The formulas and ordinary proofs in §10 are a correction and reuse of Theorem 3.8, Proposition 5.1, Theorem 5.2, Corollary 5.4 and Lemma 6.2; Remark 11.2 reuses Theorem 7.1 and the cut counts of Corollary 7.2. The primary definitions and the Table 1 example are literature-attested. No independent-priority, worldwide-novelty or kernel-verification claim is made for this correction.
+
+## 追加锚（本行以下为增补区）

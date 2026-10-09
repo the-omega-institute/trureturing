@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Combinatorics.OeisA398589EventualPeriodicity
 import Reg.Support.DependentFamily
 
@@ -72,17 +73,28 @@ noncomputable def registration : Registration arena
     rw [he] at hbad
     omega
 
-register_information_theorem
-  _root_.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.eventual_periodicity in arena
-  readout via (realize signature (fun _ k t => row k t) (fun a => nomatch a))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Combinatorics.OeisA398589EventualPeriodicity
-    coordinates := #[0]
-    readouts := #[{
-      path := #["body", "arg", "body", "arg", "body", "arg", "body", "body", "arg", "fn"]
-      functionOperand := true }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.eventual_periodicity) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ k t => row k t) (fun a => nomatch a))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Combinatorics") "OeisA398589EventualPeriodicity") "eventual_periodicity") "Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity/Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ k t => row k t) (fun a => nomatch a)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Combinatorics.OeisA398589EventualPeriodicity, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "arg", "body", "arg", "body", "arg", "body", "body", "arg", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms _root_.D5.S3.Combinatorics.OeisA398589EventualPeriodicity.eventual_periodicity
 #print axioms registration

@@ -23,8 +23,61 @@ open D5.S0.Carrier (GoldenInt conj conjEquiv phiUnit)
 open D5.S1.Scale (embedding embedding_injective)
 open private prependBlock from D5.S1.Digit.Infinite.SignedSeriesFibres
 open D5.S1.Digit.Infinite.ClosedObservationCommonTailWidthModel
+open D5.S1.Digit.Infinite.ClosedObservationGraphRealization (bitShift_bitShift)
 open scoped Topology
 
+theorem closed_path_read {q : ℕ} {R : ℝ} (b0 : ℝ) (r : List (Fin 6))
+    (vs : List (Vertex q R)) (w : List Label) (hp : ClosedPath b0 r vs w) :
+    w.length + 1 = r.length ∧ ∀ x : LegalDigits, addressChain x vs w →
+      w = (List.range w.length).map (window x) ∧
+      ∀ j : Fin r.length, kappa (bitShift x (3 * j)) ∈ observation b0 (r.get j) := by
+  induction hp with
+  | point i v hi =>
+    refine ⟨rfl, ?_⟩
+    intro x hx
+    refine ⟨rfl, ?_⟩
+    intro j
+    have hj : j.val = 0 := by have h := j.isLt; change j.val < 1 at h; omega
+    simpa [hj, bitShift] using hi hx.2
+  | step i r v u vs l w hi he hp ih =>
+    refine ⟨by simp; omega, ?_⟩
+    intro x hx
+    change stateAddress v.val.1 x ∧ kappa x ∈ piece v ∧ window x 0 = l ∧
+      addressChain (originalT x) (u :: vs) w at hx
+    obtain ⟨hw, ho⟩ := ih.2 (originalT x) hx.2.2.2
+    constructor
+    · rw [List.length_cons, List.range_succ_eq_map, List.map_cons, List.map_map,
+        ← hx.2.2.1, hw, List.length_map, List.length_range]
+      congr 1
+    · intro j
+      by_cases hj : j.val = 0
+      · simpa [hj, bitShift] using hi hx.2.1
+      · have hk : j.val - 1 < r.length := by have := j.isLt; simp at this; omega
+        have hh := ho ⟨j.val - 1, hk⟩
+        have heq : 3 + 3 * (j.val - 1) = 3 * j.val := by omega
+        have hjp : j.val = (j.val - 1) + 1 := by omega
+        change kappa (bitShift (originalT x) (3 * (j.val - 1))) ∈
+          observation b0 r[j.val - 1] at hh
+        have hecolor : (i :: r).get j = r[j.val - 1] := by
+          rw [List.get_eq_getElem]
+          simpa only [← hjp] using
+            (show (i :: r)[(j.val - 1) + 1] = r[j.val - 1] from by simp)
+        rw [hecolor]
+        simpa only [originalT, bitShift_bitShift, heq] using hh
+
+theorem window_shift (x : LegalDigits) (j : ℕ) : window (bitShift x (3 * j)) 0 = window x j := by
+  apply Subtype.ext; funext i; simp [window, bitShift]
+
+theorem original_t_shift (x : LegalDigits) (j : ℕ) : originalT (bitShift x (3 * j)) = bitShift x (3 * (j + 1)) := by
+  rw [originalT, bitShift_bitShift]; congr 1 <;> omega
+
+theorem finite_tail_unshift (x : LegalDigits) (n : ℕ) (hx : finiteTail (bitShift x n)) :
+    finiteTail x := by
+  obtain ⟨N, hN⟩ := hx
+  refine ⟨N + n, ?_⟩
+  intro j hj
+  have hh := hN (j - n) (by omega)
+  simpa [bitShift, Nat.sub_add_cancel (by omega : n ≤ j)] using hh
 
 set_option maxHeartbeats 1600000 in
 /-- The complete graph and actual common-tail relation have a strict width bound
@@ -149,11 +202,6 @@ theorem complete_closed_graph_common_tail_width :
     D5.S1.Digit.Infinite.ClosedObservationGraphRealization.closed_observation_graph_realization
   have hrec (x : LegalDigits) := (hrecActual x).1
   have hactual (x : LegalDigits) := (hrecActual x).2.1
-  have hshift (x : LegalDigits) (m n : ℕ) :
-      bitShift (bitShift x m) n = bitShift x (m + n) := by
-    apply Subtype.ext
-    funext j
-    simp [bitShift, Nat.add_assoc, Nat.add_comm, Nat.add_left_comm]
   have hfiniteShift (x : LegalDigits) (M : ℕ) (hx : finiteTail x) :
       finiteTail (bitShift x M) := by
     obtain ⟨N, hN⟩ := hx
@@ -292,10 +340,6 @@ theorem complete_closed_graph_common_tail_width :
         ⟨(hmem j).1.trans hzi.2, min_le_left _ _⟩ hzi
       exact fun y hy => ⟨(le_max_right _ _).trans (hclip hy).1,
         (hclip hy).2.trans (min_le_right _ _)⟩
-    have hwin (j : ℕ) : window (bitShift x (3 * j)) 0 = window x j := by
-      apply Subtype.ext; funext i; simp [window, bitShift]
-    have htail (j : ℕ) : originalT (bitShift x (3 * j)) = bitShift x (3 * (j + 1)) := by
-      rw [originalT, hshift]; congr 1 <;> omega
     have hguard (j : ℕ) : actualGuard s x (j + 1) = outgoing (window x j) := by
       have he : 3 * (j + 1) - 1 = 2 + 3 * j := by omega
       simp [actualGuard, outgoing, window,
@@ -314,13 +358,13 @@ theorem complete_closed_graph_common_tail_width :
     · intro j
       have hl : lawful (v j).val.1 (window x j) (v (j + 1)).val.1 := by
         rw [(hv j).1, (hv (j + 1)).1, hguard]
-        exact ⟨fun h => by simpa [← hwin j, window,
+        exact ⟨fun h => by simpa [← window_shift x j, window,
           D5.S1.Digit.Infinite.WindowSuccessorGraph.P, bitShift] using hstate j h, rfl⟩
       have hd : piece (v j) ⊆ branch (window x j) '' stateInterval (v (j + 1)).val.1 := by
         rw [(hv (j + 1)).1, hguard, hrootImageExact]
         apply hconstraint j _ _ (hrootB _).1 (hrootB _).2
         have hh := hroot (window x j) _ (by simpa [hguard] using hmem (j + 1))
-        rwa [← hwin j, ← htail j, ← hrec] at hh
+        rwa [← window_shift x j, ← original_t_shift x j, ← hrec] at hh
       have hinv (a : ℝ) (ha : a ∈ piece (v j)) :
           inverseBranch (window x j) a ∈ stateInterval (v (j + 1)).val.1 := by
         obtain ⟨y, hy, rfl⟩ := hd ha
@@ -356,7 +400,7 @@ theorem complete_closed_graph_common_tail_width :
       rw [← he]
       refine ⟨kappa (bitShift x (3 * j)), (hv j).2.1, ?_⟩
       have hh := hrec (bitShift x (3 * j))
-      rw [hwin, htail] at hh
+      rw [window_shift x, original_t_shift x] at hh
       dsimp [branch] at hh
       dsimp [inverseBranch]
       apply (div_eq_iff hgpos.ne').2
@@ -397,12 +441,8 @@ theorem complete_closed_graph_common_tail_width :
         have hd : (3 * (j + 1) - 1) / 3 = j := by omega
         have hm : (3 * (j + 1) - 1) % 3 = 2 := by omega
         simpa [actualGuard, x, raw, hd, hm, outgoing] using (he j).1.2.symm
-    have htshift (j : ℕ) : originalT (bitShift x (3 * j)) = bitShift x (3 * (j + 1)) := by
-      rw [originalT, hshift]; congr 1 <;> omega
     have hwshift (j : ℕ) : window (bitShift x (3 * j)) 0 = l j := by
-      have hh : window (bitShift x (3 * j)) 0 = window x j := by
-        apply Subtype.ext; funext i; simp [window, bitShift]
-      exact hh.trans (hw j)
+      exact (window_shift x j).trans (hw j)
     let z : ℕ → ℕ → ℝ := Nat.rec (fun j => (v j).val.2.1)
       (fun _ f j => branch (l j) (f (j + 1)))
     have hz (N j : ℕ) : z N j ∈ piece (v j) := by
@@ -421,7 +461,7 @@ theorem complete_closed_graph_common_tail_width :
       | zero => simp [z]
       | succ N ih =>
         have hh := hrec (bitShift x (3 * j))
-        rw [hwshift, htshift] at hh
+        rw [hwshift, original_t_shift x] at hh
         change kappa (bitShift x (3 * j)) - branch (l j) (z N (j + 1)) = _
         rw [hh]
         have halg : branch (l j) (kappa (bitShift x (3 * (j + 1)))) -
@@ -472,11 +512,11 @@ theorem complete_closed_graph_common_tail_width :
       let r' : Fin (M + 1) → Fin 6 := fun j => r ⟨j.val + 1, by omega⟩
       have ht' : bitShift (originalT x) (3 * M) =
           bitShift (originalT y) (3 * M) := by
-        simpa [originalT, hshift, Nat.mul_add, Nat.add_comm] using htail
+        simpa [originalT, bitShift_bitShift, Nat.mul_add, Nat.add_comm] using htail
       have ho' (j : Fin (M + 1)) :
           kappa (bitShift (originalT x) (3 * j)) ∈ observation b0 (r' j) ∧
           kappa (bitShift (originalT y) (3 * j)) ∈ observation b0 (r' j) := by
-        simpa [r', originalT, hshift, Nat.mul_add, Nat.add_comm] using
+        simpa [r', originalT, bitShift_bitShift, Nat.mul_add, Nat.add_comm] using
           hobs ⟨j.val + 1, by omega⟩
       have hxy := ih (originalT x) (originalT y) r' ht' ho'
       have hxr : kappa (originalT x) ∈ stateInterval (outgoing (window x 0)) := by
@@ -499,44 +539,6 @@ theorem complete_closed_graph_common_tail_width :
         simpa [window, D5.S1.Digit.Infinite.WindowSuccessorGraph.P, bitShift] using hh
       · have hh := congrArg (fun z : LegalDigits => z.val (j - 3)) hxy
         simpa [originalT, bitShift, Nat.sub_add_cancel (by omega : 3 ≤ j)] using hh
-  have hpathRead {q : ℕ} {R : ℝ} (b0 : ℝ) (r : List (Fin 6))
-      (vs : List (Vertex q R)) (w : List Label) (hp : ClosedPath b0 r vs w) :
-      w.length + 1 = r.length ∧ ∀ x : LegalDigits, addressChain x vs w →
-        w = (List.range w.length).map (window x) ∧
-        ∀ j : Fin r.length, kappa (bitShift x (3 * j)) ∈ observation b0 (r.get j) := by
-    induction hp with
-    | point i v hi =>
-      refine ⟨rfl, ?_⟩
-      intro x hx
-      refine ⟨rfl, ?_⟩
-      intro j
-      have hj : j.val = 0 := by have h := j.isLt; change j.val < 1 at h; omega
-      simpa [hj, bitShift] using hi hx.2
-    | step i r v u vs l w hi he hp ih =>
-      refine ⟨by simp; omega, ?_⟩
-      intro x hx
-      change stateAddress v.val.1 x ∧ kappa x ∈ piece v ∧ window x 0 = l ∧
-        addressChain (originalT x) (u :: vs) w at hx
-      obtain ⟨hw, ho⟩ := ih.2 (originalT x) hx.2.2.2
-      constructor
-      · rw [List.length_cons, List.range_succ_eq_map, List.map_cons, List.map_map,
-          ← hx.2.2.1, hw, List.length_map, List.length_range]
-        congr 1
-      · intro j
-        by_cases hj : j.val = 0
-        · simpa [hj, bitShift] using hi hx.2.1
-        · have hk : j.val - 1 < r.length := by have := j.isLt; simp at this; omega
-          have hh := ho ⟨j.val - 1, hk⟩
-          have heq : 3 + 3 * (j.val - 1) = 3 * j.val := by omega
-          have hjp : j.val = (j.val - 1) + 1 := by omega
-          change kappa (bitShift (originalT x) (3 * (j.val - 1))) ∈
-            observation b0 r[j.val - 1] at hh
-          have hecolor : (i :: r).get j = r[j.val - 1] := by
-            rw [List.get_eq_getElem]
-            simpa only [← hjp] using
-              (show (i :: r)[(j.val - 1) + 1] = r[j.val - 1] from by simp)
-          rw [hecolor]
-          simpa only [originalT, hshift, heq] using hh
   have hpairUnique {q : ℕ} {R : ℝ} (b0 : ℝ) (r : List (Fin 6))
       (v : Vertex q R) (z : LegalDigits) (hz : stateAddress v.val.1 z)
       (hzp : kappa z ∈ piece v)
@@ -556,8 +558,8 @@ theorem complete_closed_graph_common_tail_width :
           by simpa [histories, hr] using hw)
       obtain ⟨x, hx, hxt⟩ := hlift b0 r _ u ha v halast z hz hzp
       obtain ⟨y, hy, hyt⟩ := hlift b0 r _ w hb v hblast z hz hzp
-      have hxread := hpathRead b0 r _ u ha
-      have hyread := hpathRead b0 r _ w hb
+      have hxread := closed_path_read b0 r _ u ha
+      have hyread := closed_path_read b0 r _ w hb
       have hlen : w.length = u.length := by omega
       let c : Fin (u.length + 1) → Fin 6 :=
         fun j => r.get ⟨j.val, by rw [← hxread.1]; exact j.isLt⟩
@@ -630,14 +632,7 @@ theorem complete_closed_graph_common_tail_width :
       obtain ⟨v,vs,_,_,hp⟩ := (show ∃ v vs, v.val.1 = false ∧
         (v :: vs).getLast? = some vw.1 ∧ ClosedPath b0 r (v :: vs) vw.2 from
         by simpa [histories, hr] using hvw)
-      exact (hpathRead b0 r _ vw.2 hp).1
-  have hfiniteUnshift (x : LegalDigits) (n : ℕ) (hx : finiteTail (bitShift x n)) :
-      finiteTail x := by
-    obtain ⟨N, hN⟩ := hx
-    refine ⟨N + n, ?_⟩
-    intro j hj
-    have hh := hN (j - n) (by omega)
-    simpa [bitShift, Nat.sub_add_cancel (by omega : n ≤ j)] using hh
+      exact (closed_path_read b0 r _ vw.2 hp).1
   have hfiniteExtremes (x : LegalDigits) (hx : finiteTail x) :
       kappa x ≠ -1 ∧ kappa x ≠ 1 + t := by
     obtain ⟨N, hN⟩ := hx
@@ -737,12 +732,12 @@ theorem complete_closed_graph_common_tail_width :
       let r' : Fin (M + 1) → Fin 6 := fun j => r ⟨j.val + 1, by omega⟩
       have ht' : bitShift (originalT x) (3 * M) =
           bitShift (originalT y) (3 * M) := by
-        simpa [originalT, hshift, Nat.mul_add, Nat.add_comm] using htail
+        simpa [originalT, bitShift_bitShift, Nat.mul_add, Nat.add_comm] using htail
       have hf' : finiteTail (bitShift (originalT x) (3 * M)) := by
-        simpa [originalT, hshift, Nat.mul_add, Nat.add_comm] using hf
+        simpa [originalT, bitShift_bitShift, Nat.mul_add, Nat.add_comm] using hf
       have ho' (j : Fin (M + 1)) := hobs ⟨j.val + 1, by omega⟩
       have hxy := ih (originalT x) (originalT y) r' ht' hf'
-        (fun j => by simpa [r', originalT, hshift, Nat.mul_add, Nat.add_comm] using ho' j)
+        (fun j => by simpa [r', originalT, bitShift_bitShift, Nat.mul_add, Nat.add_comm] using ho' j)
       have hxr : kappa (originalT x) ∈ stateInterval (outgoing (window x 0)) :=
         hrange _ ▸ ⟨_, hactual x, rfl⟩
       have hyr : kappa (originalT x) ∈ stateInterval (outgoing (window y 0)) := by
@@ -752,7 +747,7 @@ theorem complete_closed_graph_common_tail_width :
         apply Subtype.ext; funext j; simp [bitShift]
       simp only [Fin.val_zero, Nat.mul_zero] at h0
       rw [hs0 x, hs0 y, hrec x, hrec y, ← hxy] at h0
-      have hw := hsingleCritical (originalT x) (hfiniteUnshift _ _ hf') (r 0)
+      have hw := hsingleCritical (originalT x) (finite_tail_unshift _ _ hf') (r 0)
         (window x 0) (window y 0) hxr hyr h0.1 h0.2
       apply Subtype.ext; funext j
       by_cases hj : j < 3

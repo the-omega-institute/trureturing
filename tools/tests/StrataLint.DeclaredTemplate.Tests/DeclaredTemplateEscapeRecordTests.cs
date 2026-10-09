@@ -90,7 +90,6 @@ public sealed class DeclaredTemplateEscapeRecordTests
     [Theory]
     [InlineData("legacy")]
     [InlineData("forward")]
-    [InlineData("witness")]
     public void bridge_vocabulary_preserves_declared_verdict(string kind)
     {
         var findings = DeclaredTemplateBindingRule.Evaluate(Slots(

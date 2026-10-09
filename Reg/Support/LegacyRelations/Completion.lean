@@ -1,3 +1,4 @@
+import Reg.Support.SourceSelection
 import Reg.Support.DependentFamily
 import D5.S3.ConceptDynamics.InformationEscapeRealizations.CommutingCompletionExchange
 
@@ -141,7 +142,7 @@ def registration : Registration arena CommutativityNecessaryStatement where
   sensitivity := sensitivity
   dependence := dependence
 
-def selection : LeanInformationAudit.SourceSelection :=
+def selection : _root_.Reg.Support.SourceSelection :=
   {
     owner := `D5.S3.ConceptDynamics.Completion.CommutingCompletionExchange
     coordinates := #[]

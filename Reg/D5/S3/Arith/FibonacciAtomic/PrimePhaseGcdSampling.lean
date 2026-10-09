@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Arith.FibonacciAtomic.PrimePhaseGcdSampling
 import Reg.Support.DependentFamily
 
@@ -92,19 +93,28 @@ def registration : Registration arena (arena.Law actual) where
     have h := congrFun (congrFun heq 0) 2
     norm_num [actual, realize, localGcd] at h
 
-register_information_theorem prime_phase_gcd_sampling in arena
-  readout via (realize signature (fun _ p n => localGcd p n) (fun e => nomatch e))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Arith.FibonacciAtomic.PrimePhaseGcdSampling
-    coordinates := #[0]
-    readouts := #[
-      { path := #["body", "body", "body", "body", "body", "body", "body",
-          "fn", "arg", "fn", "arg", "body", "body", "body",
-          "body", "domain", "body", "body", "fn", "arg", "fn",
-          "fn", "fn"]
-        functionOperand := true }] })
-  escape continues (open)
+noncomputable def registration_1 : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Arith.FibonacciAtomic.PrimePhaseGcdSampling.prime_phase_gcd_sampling) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ p n => localGcd p n) (fun e => nomatch e))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Arith") "FibonacciAtomic") "PrimePhaseGcdSampling") "prime_phase_gcd_sampling") "Reg.D5.S3.Arith.FibonacciAtomic.PrimePhaseGcdSampling/Reg.D5.S3.Arith.FibonacciAtomic.PrimePhaseGcdSampling.arena/[anonymous]") "__information_unit"),
+  realizationName := `Reg.D5.S3.Arith.FibonacciAtomic.PrimePhaseGcdSampling.registration,
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena)⟩,
+  objectArena := .source ⟨(arena)⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena) ⟨(registration)⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ p n => localGcd p n) (fun e => nomatch e)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Arith.FibonacciAtomic.PrimePhaseGcdSampling, definition := none, coordinates := #[0], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "fn", "arg", "fn", "arg", "body", "body", "body", "body", "domain", "body", "body", "fn", "arg", "fn", "fn", "fn"], stateBinder := 0, functionOperand := true, stateOperand := none, booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 

@@ -1,4 +1,4 @@
-using StrataLint.Engine;
+using StrataLint.Runtime;
 using Xunit;
 
 namespace StrataLint.TestSupport;

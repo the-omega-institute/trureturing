@@ -1,0 +1,41 @@
+# Exact memory and bounded periodic collisions
+
+## Abstract
+
+The original-edge code of a finite incoming lift is classified by unordered fiber ambiguity.
+
+**Theorem 1.1 (The specified code and the longest surviving ambiguity).**
+
+$$\forall n \in Nat, Q \in Type,\; [\operatorname{Fintype}\left(Q\right)], \forall A \in \operatorname{CountMat}\left(n, n\right), L \in \operatorname{IncomingLift}\left(A, Q\right),\; 0 < n \Rightarrow \left(\left(\operatorname{Essential}\left(A\right) \land \operatorname{Essential}\left(\operatorname{ActualCountedLift}\left(L\right)\right)\right) \Rightarrow \left(\operatorname{NatCard}\left(\operatorname{PairVertices}\left(L\right)\right) = \operatorname{SumFiberChooseTwo}\left(L\right) \land \left(\left(\forall d \in Nat,\; \operatorname{NotForgets}\left(L, d\right) \Leftrightarrow \operatorname{PairWalk}\left(L, d\right)\right) \land \left(\left(\left(\operatorname{SumFiberChooseTwo}\left(L\right) = 0 \Rightarrow \operatorname{IsLeastForgets}\left(L, 0\right)\right) \land \left(\left(0 < \operatorname{SumFiberChooseTwo}\left(L\right) \land \operatorname{Acyclic}\left(\operatorname{PairGraph}\left(L\right)\right)\right) \Rightarrow \left(\exists ell \in Nat,\; \operatorname{GreatestPairWalkLength}\left(L, ell\right) \land \left(\operatorname{IsLeastForgets}\left(L, ell + 1\right) \land \left(\forall d \in Nat,\; d \le ell \Rightarrow \operatorname{NotForgets}\left(L, d\right)\right)\right)\right)\right)\right) \land \left(\exists pi \in \operatorname{Path}\left(\operatorname{ActualCountedLift}\left(L\right)\right) \to \operatorname{Path}\left(A\right),\; \left(pi = \operatorname{OriginalEdgeReadout}\left(L\right) \land \left(\operatorname{Continuous}\left(pi\right) \land \operatorname{ShiftCommutes}\left(pi, \operatorname{ActualCountedLift}\left(L\right), A\right)\right)\right) \land \left(\left(\left(\operatorname{Injective}\left(pi\right) \Leftrightarrow \operatorname{SpecifiedConjugacy}\left(pi\right)\right) \land \left(\left(\operatorname{SpecifiedConjugacy}\left(pi\right) \Leftrightarrow \left(\exists d \in Nat,\; \operatorname{Forgets}\left(L, d\right)\right)\right) \land \left(\left(\exists d \in Nat,\; \operatorname{Forgets}\left(L, d\right)\right) \Leftrightarrow \operatorname{Acyclic}\left(\operatorname{PairGraph}\left(L\right)\right)\right)\right)\right) \land \left(\left(\forall d \in Nat,\; \operatorname{Forgets}\left(L, d\right) \Rightarrow \operatorname{ContinuousInverseWithEdgeWindow}\left(pi, d\right)\right) \land \left(\left(\operatorname{NotFiniteForgetting}\left(L\right) \Rightarrow \left(\exists c \in Nat,\; 0 < c \land \left(c \le \operatorname{SumFiberChooseTwo}\left(L\right) \land \left(\exists x \in \operatorname{Path}\left(\operatorname{ActualCountedLift}\left(L\right)\right), y \in \operatorname{Path}\left(\operatorname{ActualCountedLift}\left(L\right)\right),\; \operatorname{Distinct}\left(x, y\right) \land \left(\operatorname{Apply}\left(pi, x\right) = \operatorname{Apply}\left(pi, y\right) \land \left(\operatorname{Periodic}\left(\operatorname{Apply}\left(pi, x\right), c\right) \land \left(\operatorname{Periodic}\left(x, 2 \cdot c\right) \land \operatorname{Periodic}\left(y, 2 \cdot c\right)\right)\right)\right)\right)\right)\right)\right) \land \left(\left(\operatorname{SpecifiedConjugacy}\left(pi\right) \Leftrightarrow \operatorname{NoCommonPeriodCollision}\left(pi, 2 \cdot \operatorname{SumFiberChooseTwo}\left(L\right)\right)\right) \land \left(\operatorname{SpecifiedConjugacy}\left(pi\right) \Leftrightarrow \operatorname{NoIndividuallyBoundedPeriodCollision}\left(pi, 2 \cdot \operatorname{SumFiberChooseTwo}\left(L\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/ConceptDynamics/Coding/IncomingLiftAmbiguityCriterion.incoming_lift_ambiguity_criterion` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let A be an essential directed multigraph on a finite nonempty vertex set, and let the finite state set Q map onto its vertices. Each actual numbered edge a has a predecessor function from its whole terminal fiber to its initial fiber. The lifted graph has one edge with identity (a,q) from the predecessor of q to q. Count all these edges at each pair of endpoints to form C, and assume C is essential as well. Ranking and decoding at fixed endpoints preserve the full edge identity.
+
+Use all legal bilateral edge histories indexed by the integers, with discrete edge alphabets and the product subspace topology. The code pi reads the original edge a at every position. It is continuous and commutes with the one-step shifts. A conjugacy here is a homeomorphism whose forward function is this pi and which commutes with these shifts.
+
+In the display, ActualCountedLift(L) is the matrix C obtained by identifying Q with Fin(card(Q)) and counting the actual edges (a,q) at each ordered endpoint pair. OriginalEdgeReadout(L) decodes each numbered C edge at its fixed endpoints and reads a at every integer position. SumFiberChooseTwo(L) is the natural number P defined by the fiber-cardinality sum below. These are fixed values determined by L. ShiftCommutes(pi,C,A) means pi(shift(C,x))=shift(A,pi(x)) for every x. ContinuousInverseWithEdgeWindow includes continuity, both inverse equations, shift commutation and equality of the output edge whenever all d+1 input edges agree.
+
+A pair vertex is a two-element unordered subset of one state fiber. A numbered edge a gives an arrow from a terminal pair to the image pair under its predecessor function only when the image still has two elements. These arrows trace ambiguity backwards in real time. P counts these vertices exactly: sum over all base vertices of the binomial coefficient of the fiber cardinality and two.
+
+For every natural depth d, failure of forgetting on a compatible d-edge path is equivalent to a d-edge walk in this pair graph. Forgetting quantifies over every actual numbered path and its entire terminal fiber. At depth zero it uses the identity in every fiber.
+
+The four equivalent conditions are injectivity of pi, conjugacy of pi, existence of a finite forgetting depth, and absence of directed cycles in the pair graph. If P is zero, the least forgetting depth is zero. If P is positive and the pair graph is acyclic, its attained greatest walk length ell exists, the least forgetting depth is ell plus one, and every depth at most ell fails.
+
+At any forgetting depth d, the inverse exists on every legal base history, is continuous, satisfies both inverse laws, and commutes with the shifts. Its output edge at position i depends only on the base edges at positions i through i+d, including the last edge. The case d equal to zero uses the singleton base fibers.
+
+If no finite depth forgets, a simple pair cycle has a positive length c at most P. Reverse its actual edge labels to obtain a closed base word. The incoming composite either fixes the two starting states or exchanges them. Its square fixes both, so two copies of the word have two distinct closed lifted words of length 2c.
+
+Index each rooted actual lifted edge word by residues modulo 2c, and compose with the integer-to-residue map to repeat it in both directions. Finite-path induction supplies adjacent-edge compatibility and both endpoint equations; the final-to-first seam therefore also holds at negative indices. The index-zero sources distinguish the two histories. Reading either lifted word gives the doubled original edge word, whose half-period relation factors the readout through residues modulo c. Thus the two histories have the same pi-image with period c, and both lifted histories have period 2c; smaller least periods are allowed.
+
+Consequently pi is a conjugacy exactly when no two distinct histories with the same pi-image have a common positive lift period at most 2P. The equivalent test may instead bound each lift period separately by 2P. These tests concern only this specified original-edge code.
+
+## References
+
+- Truth anchor: `D5/S3/ConceptDynamics/Coding/IncomingLiftAmbiguityCriterion.incoming_lift_ambiguity_criterion`
+- Dependency: [D5/S3/ConceptDynamics/Coding/CommonNilpotencyForgettingBound](CommonNilpotencyForgettingBound.md)
+- Dependency: [D5/S3/ConceptDynamics/Coding/CompatibleResponseForgetting](CompatibleResponseForgetting.md)

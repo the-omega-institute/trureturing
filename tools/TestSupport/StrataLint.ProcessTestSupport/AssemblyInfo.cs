@@ -20,3 +20,9 @@ using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("StrataLint.CoverBatch.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.TruthRelease.Tests")]
 [assembly: InternalsVisibleTo("StrataLint.RepositoryFileMap.Tests")]
+
+[assembly: InternalsVisibleTo("StrataLint.Runtime.Tests")]
+
+[assembly: InternalsVisibleTo("StrataLint.Engineering.Tests")]
+
+[assembly: InternalsVisibleTo("StrataLint.FileMap.Tests")]

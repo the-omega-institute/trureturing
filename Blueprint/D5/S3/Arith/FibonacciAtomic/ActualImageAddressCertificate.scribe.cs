@@ -26,6 +26,27 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
             Def("replace", "Subtree replacement", "Replacement changes the complete subtree at a valid address and retains the surrounding ordered tree. Invalid paths leave the tree unchanged."),
             Def("AlphaCovered", "Alpha coverage of branches", "Every internal node has an alpha leaf descendant, recursively throughout the tree."),
             Def("rightComb", "Right comb source", "The zero comb is beta. The successor comb pairs alpha on the left with the preceding comb on the right, giving m alpha side leaves and one terminal beta at m right steps."),
+            Helper("image_positive", "Third-image inclusion", "For every natural d at least three and every U in I(d), U is a third substitution image."),
+            Helper("alpha_card", "Alpha cardinality", "For every complete source t, the cardinality of alphaLeaves(t) equals the alpha component of composition(t)."),
+            Helper("leaf_data", "Leaf depth and beta cardinality", "For every source t, all its leaf addresses have length at most height(t), and its beta-filtered leaf set has cardinality equal to the beta composition component."),
+            Helper("no_left_alpha", "Left alpha obstruction", "For every third image t and every address r, the left child of r cannot be an alpha leaf."),
+            Helper("leaf_change", "Changing a leaf label", "Replacing the leaf b at address s by c retains a leaf c there, adds composition(c) while removing composition(b), and preserves every readout away from s."),
+            Helper("image_structure", "Image alpha structure", "For every k at least one and every U in I(3k), U is AlphaCovered and each alpha address is the right child of a terminal pair(beta,alpha)."),
+            Helper("beta_surplus", "Strict beta surplus", "For every k at least one and every V in I(3k), the beta composition count is strictly larger than its alpha count."),
+            Helper("exchange_composition", "Exchange composition", "For every source V and two addresses s,t, the two leaf-change composition equations for alpha to beta at s and beta to alpha at t imply that the resulting composition equals composition(V)."),
+            Helper("exchange_conflict", "Exchange obstruction", "Let V,Wone,W be sources, s and t distinct addresses and s the right child of r. Suppose the subtree at r in V is pair(beta,alpha), t has beta reply in V, s is beta in Wone, t is alpha in W, Wone matches V away from s, and W matches Wone away from t. Then W cannot be a third image."),
+            Describe.Lean(DescribeId.Create("actual-image-alpha-mul"),
+                DeclarationHandle.Create(Prefix + "alpha_mul"), H("Alpha addresses of a pair"),
+                StatementSource.FromAuthor(AlphaMulFormula()), AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("The alpha address set of pair(s,t) is the union of the left-prefixed alpha addresses of s "
+                        + "and the right-prefixed alpha addresses of t. The two prefixes are disjoint."))), DescribeRole.Theorem),
+            Describe.Lean(DescribeId.Create("actual-image-composition-positive"),
+                DeclarationHandle.Create(Prefix + "positive"), H("Nonempty composition"),
+                StatementSource.FromAuthor(Disp(All("t",V("Source"),Seq(D(0),Sp,Lt,Sp,
+                    Call("a",V("t")),Sp,Plus,Sp,Call("b",V("t")))))),
+                AssessedProvenance.FromRepo(), Blocks(
+                    Paragraph(Text("For every complete source t, a(t) and b(t) count its alpha and beta leaves. "
+                        + "Their sum is positive because a free magma tree has at least one leaf."))), DescribeRole.Theorem),
             Describe.Lean(DescribeId.Create("actual-image-address-certificate-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Sharp cardinality and depth"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(
@@ -88,6 +109,11 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
                         + "The universal lower bound together with the explicit attaining image characterizes the minimum "
                         + "leaf budget over images whose height exceeds h."))), DescribeRole.Theorem))));
 
+    private static DocumentBlock Helper(string name, string title, string prose) => Describe.Lean(
+        DescribeId.Create("actual-image-address-helper-" + name.Replace("_", "-")), DeclarationHandle.Create(Prefix + name),
+        H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
+        Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
+
     private static DocumentBlock Def(string name, string title, string prose) => Describe.Lean(
         DescribeId.Create("actual-image-address-" + name.ToLowerInvariant()), DeclarationHandle.Create(Prefix + name),
         H(title), StatementSource.WithoutFormula(), AssessedProvenance.FromRepo(),
@@ -107,6 +133,13 @@ internal sealed class ActualImageAddressCertificateDocument : IScribeDocumentDef
         Seq(Forall, Sp, V(x), Sp, InMacro, Sp, domain, Comma, Sp, Par(body));
     private static Formula Exists(string x, Formula domain, Formula body) =>
         Seq(F.Exists, Sp, V(x), Sp, InMacro, Sp, domain, Comma, Sp, Par(body));
+    private static Formula AlphaMulFormula()
+    {
+        Formula s=V("s"),t=V("t");
+        return Disp(All("s",V("Source"),All("t",V("Source"),EqOf(
+            Call("alphaLeaves",Call("pair",s,t)),Call("union",
+                Call("prefixLeft",Call("alphaLeaves",s)),Call("prefixRight",Call("alphaLeaves",t)))))));
+    }
     private static Formula ResultFormula()
     {
         Formula k=V("k"), t=V("V"), h=V("h"), q=V("Q"), d=Seq(D(3),Sp,Cdot,Sp,k);

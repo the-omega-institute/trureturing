@@ -14,6 +14,8 @@ internal sealed class EssentiallyHermitianDocument : IScribeDocumentDefinition
         "For every n >= 1, the Euclidean operator-norm inequality for all positive block completions forces the off-diagonal complex n-by-n matrix to be essentially Hermitian. No invertibility or distinct-singular-value assumption is required.",
         H("Bourin–Lee Conjecture 3.3"),
         Blocks(
+            Node("outer_pairing_trace", "Rank-one trace pairing", OuterPairingTrace(),
+                "Pairing a matrix with a rank-one matrix under the trace equals its Euclidean inner-product expectation.", DescribeRole.Theorem, AssessedProvenance.FromRepo()),
             Node("EssentiallyHermitian", "Essentially Hermitian matrices", Over(Eq(Call("EssentiallyHermitian", X), Parenthesized(Affine()))),
                 "Printed page 6, verbatim: \"If W(T) is line segment, then T is a so-called essentially Hermitian matrix.\" The affine Hermitian expression fixed for this notion is X = α • H + β • 1, where α and β are complex and H is Hermitian. A point is allowed, including α = 0.", DescribeRole.Definition, AssessedProvenance.FromLiterature(Source)),
             Node("CompletionBound", "All positive block completions", Over(Eq(Call("CompletionBound", X), Parenthesized(Completion()))),
@@ -43,6 +45,20 @@ internal sealed class EssentiallyHermitianDocument : IScribeDocumentDefinition
             Text(" holds for all positive block-matrix with "), Math(X),
             Text(" as off-diagonal block, then "), Math(X),
             Text(" is essentially Hermitian.\"")), Paragraph(Text(encoding)));
+    }
+    private static Formula OuterPairingTrace()
+    {
+        Formula index = F.Id("iota"), matrix = F.Id("S"), vector = F.Id("u");
+        Formula coords = QCall("WithLp", "ofLp", vector);
+        Formula outer = QCall("Matrix", "vecMulVec", coords, Call("star", coords));
+        Formula pairing = Call("inner", Complex(), vector,
+            App(QCall("Matrix", "toEuclideanCLM", matrix), vector));
+        return All(index, F.Id("Type"), Seq(
+            OpenBracket, Call("Fintype", index), CloseBracket, Comma, Sp,
+            OpenBracket, Call("DecidableEq", index), CloseBracket, Comma, Sp,
+            All(matrix, Mat(index), All(vector, Call("EuclideanSpace", Complex(), index),
+                Eq(QCall("Matrix", "trace", new Formula.Binary(outer,
+                    FormulaBinaryOperator.Multiply, matrix)), pairing)))));
     }
     private static Formula Index() => Call("Fin", N);
     private static Formula Over(Formula body) => All(N, Nat(), All(X, Mat(Index()), body));

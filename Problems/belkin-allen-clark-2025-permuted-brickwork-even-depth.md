@@ -1,7 +1,7 @@
 ---
 slug: belkin-allen-clark-2025-permuted-brickwork-even-depth
 bibkey: belkinallenclark2025secondmoments
-doi: 10.48550/arXiv.2510.23726
+doi: null
 url: https://arxiv.org/abs/2510.23726v2
 triage: theorem
 motivation_gids:

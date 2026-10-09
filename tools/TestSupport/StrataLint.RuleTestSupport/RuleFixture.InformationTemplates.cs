@@ -13,7 +13,6 @@ internal sealed partial class RuleFixture
         var wire = JsonSerializer.SerializeToElement(new
         {
             schema_version = 1,
-            compatibility_version = InformationTemplateFixture.ManifestVersion(InformationTemplateFixture.PolicyFiles()),
             inventory = Array.Empty<object>(), registered = Array.Empty<object>(), records = Array.Empty<object>(),
         });
         return Reports.ToDictionary(pair => pair.Key, pair => pair.Value.InformationTemplates is not null ? pair.Value

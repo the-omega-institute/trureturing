@@ -1,0 +1,20 @@
+**数学引文 5.2（唯一最大熵及支撑边界）。** 这个补全属于原纤维，且在整个闭概率单纯形上唯一最大化固定三均值的 Shannon 熵。对 $`r>0`$，
+
+```math
+\begin{aligned}
+H(p^\star)&=h_2(Z)+r\bigl[h_2(X/r)+h_2(Y/r)\bigr],\\ H(p^\star)-H(p)&=D_2(p\Vert p^\star)
+=r I(x:y\mid z=0)\ge0.
+\end{aligned}
+```
+
+推导。$`XY/r\le\min(X,Y)`$，且 $`(r-X)(r-Y)\ge0`$ 给 $`XY/r\ge X+Y-r`$，所以可实现。任一实际正质量底面格的行列边缘均正，故其乘积补全格亦正；顶点格质量原样保留。因此 $`\mathrm{supp}(p)\subseteq\mathrm{supp}(p^\star)`$，上式相对熵有限。
+
+底面条件律 $`q_{ij}=p_{ij}/r`$ 的边缘为 $`(1-X/r,X/r)`$ 和 $`(1-Y/r,Y/r)`$。先按 $`z`$ 分解熵，再对底面用
+
+```math
+I=\sum_{q_{ij}>0}q_{ij}\log_2\frac{q_{ij}}{q_{i\cdot}q_{\cdot j}}
+=H(q_{i\cdot})+H(q_{\cdot j})-H(q).
+```
+
+这个经典恒等式是 [Shannon 文献注](../../../Library/Estimation/shannon1948communication.md) 的有限熵链式法则与 [Wainwright–Jordan 文献注](../../../Library/Estimation/wainwrightjordan2008graphical.md) 的现代散度定义的具体消费。直接代入 $`p^\star`$ 也给 $`D_2(p\Vert p^\star)=rI`$。由 $`\ln u\le u-1`$，对正支撑项求和得散度非负；等号要求支撑内每个概率比为一且补全在支撑外无剩余质量，即 $`p=p^\star`$。这证明唯一性，也涵盖退化边缘。顶点只有一个律，熵和散度均零；$`rI`$ 在此作为零的加权贡献，不定义零质量事件的 $`I`$。证毕。
+

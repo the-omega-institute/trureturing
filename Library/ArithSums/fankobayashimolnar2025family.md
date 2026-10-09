@@ -130,13 +130,49 @@ $U(s)$ by an actual estimate, rather than replacing $W$ by $U$ in the
 cited theorem. This card makes no claim that a uniform theorem for $U$
 is absent from the wider literature.
 
-The older Balakrishnan–Pétermann article has DOI
-[10.4064/aa-75-1-39-69](https://doi.org/10.4064/aa-75-1-39-69), and Crossref
-also indexes an erratum,
-[10.4064/aa-87-3-287-289](https://doi.org/10.4064/aa-87-3-287-289).
-Those two original texts have not been inspected here; a direct reuse of
-their general theorem still requires checking both texts and the parameter
-range. The citation through the 2025 paper is not that check.
+### The original error theorem requires its corrected hypothesis
+
+Balakrishnan–Pétermann's original article,
+[Acta Arithmetica 75 (1996), 39–69](https://doi.org/10.4064/aa-75-1-39-69),
+Theorem 2, page 50, gives a general error estimate for a real
+multiplicative function $v$. Its first hypothesis is
+$\sum_{n\le x}|v(n)|=O((\log x)^\eta)$, with $\eta>0$;
+the other hypotheses control $\sum_{n\le x}(nv(n))^2$ and the
+prime-power values of $v$.
+
+The authors' [erratum, Acta Arithmetica 87 (1999), 287–289](https://doi.org/10.4064/aa-87-3-287-289),
+§1, pages 287–288, explicitly says that the first hypothesis is
+insufficient for the printed proof. It replaces that hypothesis by the
+following asymptotic expansion, for every positive integer $m$:
+
+$$
+\sum_{n\le x}n|v(n)|
+=x\sum_{j=0}^{m+\lfloor\eta\rfloor}
+ F_j(\log x)^{\eta-j}+O\!\left(x(\log x)^{-m}\right).
+\tag{BP*}
+$$
+
+Thus polylogarithmic absolute mass, the second-moment condition and
+prime-power monotonicity alone are not the corrected theorem's input.
+For the actual increment source $v=b_s\ge0$, the relevant instance of
+(BP*) has $\eta=s$ and concerns $\sum_{n\le x}n b_s(n)$.
+This condition must be supplied when invoking the corrected general
+error theorem; the identity $Z^s=1*b_s$ alone does not supply it.
+
+The erratum expressly states that the strengthened hypothesis still
+holds for the examples treated in the original paper, including
+$a(n)=(1*v)(n)=(\sigma(n)/n)^s$. It therefore preserves the fixed-$s$
+application underlying Corollary 1, page 66, and the 2025 paper's
+Proposition 3.1; it does not refute those fixed-parameter formulas.
+Neither the corrected hypothesis nor Corollary 1 supplies uniform
+bounds for its constants and coefficients as $s\to\infty$.
+In particular, they do not by themselves pay the required error at
+$s=y\log y$ or the same selected integer's signed Robin response.
+
+These are direct reports of the original theorem, Corollary 1 and the
+erratum's corrected hypothesis and preservation statement. Their proofs
+have not been independently reverified, and no Lean certification is
+claimed.
 
 Section 8, pages 41–42, explicitly proposes studying
 $\sigma_{-1}^{[\kappa]}$ and its Robin analogues. It records, for fixed

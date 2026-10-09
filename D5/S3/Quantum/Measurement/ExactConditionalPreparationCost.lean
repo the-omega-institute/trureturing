@@ -47,6 +47,12 @@ noncomputable def greatestEigenvalue {ι : Type*} [Fintype ι] [DecidableEq ι]
     [Nonempty ι] (R : Matrix ι ι ℂ) (hR : R.PosDef) : ℝ :=
   Finset.univ.sup' Finset.univ_nonempty hR.isHermitian.eigenvalues
 
+lemma hsandwich {ι : Type*} [Fintype ι] (A : Matrix ι ι ℂ) (w : ι → ℂ) (q : ℂ) :
+    A * (q • rankOneDensity w) * Aᴴ = q • rankOneDensity (A *ᵥ w) := by
+  rw [rankOneDensity, Matrix.mul_smul, Matrix.smul_mul,
+    Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, ← Matrix.star_mulVec]
+  rfl
+
 /-- The exact universal conditional preparation operations are scalar square-root filters;
 their optimal worst-case success is the ratio of the least and greatest eigenvalues, and
 deterministic preparation is possible exactly for positive scalar effects. -/
@@ -103,11 +109,6 @@ theorem exact_conditional_preparation_cost {ι : Type*} [Fintype ι] [DecidableE
     have hGdet : IsUnit G.det := (Matrix.isUnit_iff_isUnit_det G).mp hGunit
     have hGinvG : G⁻¹ * G = 1 := Matrix.nonsing_inv_mul G hGdet
     have hGGinv : G * G⁻¹ = 1 := Matrix.mul_nonsing_inv G hGdet
-    have hsandwich (A : Matrix ι ι ℂ) (w : ι → ℂ) (q : ℂ) :
-        A * (q • rankOneDensity w) * Aᴴ = q • rankOneDensity (A *ᵥ w) := by
-      rw [rankOneDensity, Matrix.mul_smul, Matrix.smul_mul,
-        Matrix.mul_vecMulVec, Matrix.vecMulVec_mul, ← Matrix.star_mulVec]
-      rfl
     have hparallel (j : Fin m) (ψ : ι → ℂ) :
         ∃ a : ℂ, K j *ᵥ ψ = a • (G *ᵥ ψ) := by
       by_cases hψ : ψ = 0

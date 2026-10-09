@@ -4,7 +4,31 @@
 
 Odd color words and actual periodic sources.
 
-**Theorem 1.1 (At most two sources for an odd color word).**
+**Lemma 1.1 (Actual root intervals).**
+
+Lean statement: `D5/S1/Digit/Infinite/OddColorThreeSource.root_bounds`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/OddColorThreeSource.root_bounds` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Every actual legal source lies in the closed root interval of its first three-bit label. The intervals for labels 3, 0, 5, 2, and 25 are respectively [-1,t-1], [t-1,g], [g,t], [t,2t], and [2t,1+t].
+
+**Lemma 1.2 (Fixed allowed label pairs).**
+
+Lean statement: `D5/S1/Digit/Infinite/OddColorThreeSource.color_labels`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/OddColorThreeSource.color_labels` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every beta strictly below lambda, a legal source in closed color c has one of its two fixed allowed labels. In color order 0 through 5, these pairs are (3,0), (3,0), (0,5), (5,2), (2,25), and (2,25). The branch intervals exclude all other labels.
+
+**Theorem 1.3 (At most two sources for an odd color word).**
 
 Lean statement: `D5/S1/Digit/Infinite/OddColorThreeSource.result`
 
@@ -24,7 +48,9 @@ For three distinct values, either all three belong to one root group or one grou
 
 ## References
 
+- Truth anchor: `D5/S1/Digit/Infinite/OddColorThreeSource.color_labels`
 - Truth anchor: `D5/S1/Digit/Infinite/OddColorThreeSource.result`
+- Truth anchor: `D5/S1/Digit/Infinite/OddColorThreeSource.root_bounds`
 - Dependency: [D5/S1/Digit/Infinite/ClosedObservationGraphRealization](ClosedObservationGraphRealization.md)
 - Dependency: [D5/S1/Digit/Infinite/SignedSeriesFibres](SignedSeriesFibres.md)
 - Dependency: [D5/S1/Digit/Infinite/WindowCylinderPartition](WindowCylinderPartition.md)

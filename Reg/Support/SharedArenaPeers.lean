@@ -1,4 +1,4 @@
-import LeanInformationAuditInterface.Syntax
+import LeanInformationAuditInterface.Contract.Catalog
 import D5.S3.ConceptDynamics.InformationEscape.ObjectDomainArena
 import D5.S3.ConceptDynamics.InformationEscape.TheoremUnit
 import D5.S3.ConceptDynamics.RegistrationWitnesses
@@ -19,8 +19,10 @@ open SharedArenaFiniteTemplates
 open EscapeRecord
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.CIRPT
-register_information_template interventionFiniteRealization constructors 1
-  [D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.DeterministicBoolSCM]
+noncomputable def _root_.Reg.Support.SharedArenaPeers.enrollment_1 : LeanInformationAudit.Contract.TemplateEnrollment.{2, max 0 0} (@_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaFiniteTemplates.interventionFiniteRealization) := {
+  name := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaFiniteTemplates.interventionFiniteRealization, version := 1, constructors := #[{ name := `D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.DeterministicBoolSCM, type := (D5.S3.ConceptDynamics.Interventions.InterventionCounterfactualSeparation.DeterministicBoolSCM) }],
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency.types, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 2000000 }, { name := `maxRecDepth, value := .nat 100000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end
 
 section
@@ -38,7 +40,8 @@ open SharedArenaFiniteTemplates
 open EscapeRecord
 open LeanInformationAudit
 open _root_.D5.S3.ConceptDynamics.CIRPT
-register_information_template observationFiniteRealization constructors 1
-  [D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.CausalDirection,
-   D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.DeterministicBoolSCM]
+noncomputable def _root_.Reg.Support.SharedArenaPeers.enrollment_2 : LeanInformationAudit.Contract.TemplateEnrollment.{2, max (max 0 0) 0} (@_root_.D5.S3.ConceptDynamics.InformationEscape.SharedArenaFiniteTemplates.observationFiniteRealization) := {
+  name := `D5.S3.ConceptDynamics.InformationEscape.SharedArenaFiniteTemplates.observationFiniteRealization, version := 1, constructors := #[{ name := `D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.CausalDirection, type := (D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.CausalDirection) }, { name := `D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.DeterministicBoolSCM, type := (D5.S3.ConceptDynamics.Interventions.ObservationInterventionSeparation.DeterministicBoolSCM) }],
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `backward.isDefEq.respectTransparency.types, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxHeartbeats, value := .nat 2000000 }, { name := `maxRecDepth, value := .nat 100000 }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 end

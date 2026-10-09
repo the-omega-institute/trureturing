@@ -1,0 +1,10 @@
+### 数学引文 19.2：缩放压力与精确窗口计数
+
+设 $x_1<\cdots<x_n$，$n\ge m$，$G=(K(x_i-x_j))_{i,j=1}^n$，$L=x_n-x_1$。在 (19.1) 下，
+$$
+ \boxed{\operatorname{tr}\Psi(G)\ge
+ \frac{n-m+1}{m}R-\frac{\eta pq(m-q)}{m}L.}
+ \tag{19.4}
+$$
+这里每个连续 $m$ 点主块都以权 $1/m$ 使用。边界损失为 $R(m-1)/m$，无需点列平稳、随机或等距。
+

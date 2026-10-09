@@ -1,0 +1,32 @@
+**命题 18.2（模三秩二目标的精确与定量实现边界）。** 定义 18.1 的 $G$ 严格正定，故三个互异点不能精确实现命题 15.3 的 $U_1$。若进一步有
+$$
+\rho(u)\ge m>0\quad\text{几乎处处于 }[-a,a],\qquad
+a>0,\quad |x_1-x_2|\ge d>0,
+$$
+置
+$$
+\delta=\frac{ma}{4}\min\{(2\pi ad)^2,1\},
+$$
+则相应三阶主块 $B$ 满足
+$$
+\|B-U_c\|_{\mathrm{op}}\ge(c-1+\delta)_+,\qquad
+\|B-U_c\|_F\ge\sqrt2\,(c-1+\delta)_+.
+\tag{18.1}
+$$
+特别在 $c=1$ 时，误差不能任意趋零而同时保留这些 $m,a,d$。
+
+**证明。** 对系数向量 $v$，
+$$
+v^*Gv=\int\rho(u)\left|\sum_jv_je^{-2\pi ix_ju}\right|^2\,du.
+$$
+若为零，括号中的指数多项式在 $\{\rho>0\}$ 的一个正测度集合上为零。其解析性迫使它恒为零；在零点取前 $N$ 个导数，互异 $x_j$ 的 Vandermonde 矩阵迫使每个 $v_j=0$。故严格正定。
+
+置 $t=x_1-x_2$。由于 $1-\cos(2\pi ut)\ge0$，
+$$
+1-K(t)\ge 2ma\left(1-\frac{\sin(2\pi at)}{2\pi at}\right).
+$$
+对实数 $s$ 有 $1-\sin s/s\ge\frac18\min(s^2,1)$，零点取连续值。为验证常数，对 $0\le s\le2$ 使用交错 Taylor 界
+$1-\sin s/s\ge s^2/6-s^4/120$；$s\le1$ 时至少为 $19s^2/120$，$1\le s\le2$ 时该多项式递增且至少为 $19/120$。$s\ge2$ 时 $\sin s/s\le1/2$，负 $s$ 用偶性。因此 $1-K(t)\ge\delta$。
+
+对单位向量 $(1,-1,0)/\sqrt2$，$B-U_c$ 的 Rayleigh 商为 $c-K(t)\ge c-1+\delta$，给算子范数界。两个对应非对角项给 Frobenius 界；右侧为负时改取正部即可。∎
+

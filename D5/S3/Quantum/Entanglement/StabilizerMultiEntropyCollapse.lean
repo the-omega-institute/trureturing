@@ -139,10 +139,6 @@ Direct frozen dependencies:
     statement_id: sha256:e975fc48104d0cb1a40271fdfb5ec7fcfe2730a1c600ee81758d5e89253bd60f
   GID: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.SignQuotient.complexSign.eq_1
     statement_id: sha256:47b1c4360f7294d639daaa81a4dc00aa903f52ef7b53aeca8f2a321008db2233
-  GID: D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.result._simp_1_2
-    statement_id: sha256:b6d398a580b6082cdf28a5f507b45bd399f1ae7037e5a5319384011b96fc19a3
-  GID: D5/S3/Quantum/Information/StabilizerPairLocalUnitaryInequivalence.result._simp_1_4
-    statement_id: sha256:2eef85eac594a0afbcfd3444522525aacba24337dc294a1cf3f33407694d1fea
   GID: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.sign_sum
     statement_id: sha256:cca15d93bbe8896cad48b7dfd75c8053ab080db717fab32f9ace58b5aaeec0b9
   GID: D5/S3/VertexAlgebra/LatticeTwistedGroundRealization.SignQuotient.complexSign_add
@@ -226,7 +222,7 @@ private lemma replica_unitary {R : Type*} [Fintype R] [DecidableEq R] {N : ℕ}
     star (∏ r, ∏ u, U u (x r u) (y r u)) *
       (∏ r, ∏ u, U u (x r u) (t r u))) = if y = t then 1 else 0
   simp_rw [star_prod,
-    D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.result._simp_1_2]
+    ← Finset.prod_mul_distrib]
   rw [← Fintype.prod_sum (fun r (v : Fin N → Fin 2) =>
     ∏ u, star (U u (v u) (y r u)) * U u (v u) (t r u))]
   have hrow (r : R) :
@@ -568,7 +564,7 @@ private theorem representatives_exist (d : ℕ) :
     have hi : t i = -(t i) := congrFun he i
     exact (show ∀ a : ZMod 3, a = -a → a = 0 from by decide) (t i) hi
   simp only [P, Finset.mem_filter,
-    D5.S3.Quantum.Information.StabilizerPairLocalUnitaryInequivalence.result._simp_1_4,
+    Finset.mem_univ,
     true_and, neg_neg]
   exact ⟨fun h => not_lt.mpr h.le, fun h => lt_of_le_of_ne (not_lt.mp h) hn⟩
 

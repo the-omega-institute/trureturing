@@ -949,7 +949,8 @@ theorem actual_twisted_ground_representation (D : LatticeData) (hu : IsUnit D.G.
   refine ⟨n, quotientRepresentation D e he, hr,
     quotient_representation_irreducible D e he, ?_, ?_, ?_, quotient_charge_square D e he,
     quotient_charge_commutation D e he⟩
-  · rw [quotient_sign_action, sign_one, neg_one_smul]
+  · rw [quotient_sign_action, sign_one]
+    exact neg_one_smul ℂ (1 : Module.End ℂ (Ground n))
   · have hd : Module.finrank ℂ (Ground n) = 2 ^ n := by
       simp [Ground, Half, Module.finrank_fintype_fun_eq_card, F₂]
     rw [hd, hr]

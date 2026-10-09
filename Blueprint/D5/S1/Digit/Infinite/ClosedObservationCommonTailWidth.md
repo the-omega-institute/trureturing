@@ -4,7 +4,55 @@
 
 Complete closed graph common-tail width.
 
-**Theorem 1.1 (Complete closed graph common-tail width).**
+**Theorem 1.1 (Finite tails before deletion).**
+
+Lean statement: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.finite_tail_unshift`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.finite_tail_unshift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+If an exact finite bit shift of an actual address is eventually zero, the original address is also eventually zero.
+
+**Theorem 1.2 (Reading a closed path).**
+
+Lean statement: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.closed_path_read`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.closed_path_read` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+A closed path has one more color than source labels. Every address realizing its full vertex and label chain reads the prescribed closed colors at the actual three-bit departure coordinates, and its successive windows give exactly the source word.
+
+**Theorem 1.3 (Windows at shifted addresses).**
+
+Lean statement: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.window_shift`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.window_shift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The first three-bit window of the address shifted by 3j bits is exactly its original window at time j.
+
+**Theorem 1.4 (One more source step).**
+
+Lean statement: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.original_t_shift`
+
+*Proof.* Machine-checked in Lean as `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.original_t_shift` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Applying the original three-bit deletion after shifting by 3j bits gives the original address shifted by 3(j+1) bits.
+
+**Theorem 1.5 (Complete closed graph common-tail width).**
 
 Lean statement: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.complete_closed_graph_common_tail_width`
 
@@ -38,7 +86,11 @@ For every original critical endpoint graph and every such fixed instrument, inve
 
 ## References
 
+- Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.closed_path_read`
 - Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.complete_closed_graph_common_tail_width`
+- Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.finite_tail_unshift`
+- Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.original_t_shift`
+- Truth anchor: `D5/S1/Digit/Infinite/ClosedObservationCommonTailWidth.window_shift`
 - Dependency: [D5/S0/Carrier/Units](../../../S0/Carrier/Units.md)
 - Dependency: [D5/S1/Digit/Infinite/ClosedObservationGraphRealization](ClosedObservationGraphRealization.md)
 - Dependency: [D5/S1/Digit/Infinite/WindowCylinderPartition](WindowCylinderPartition.md)

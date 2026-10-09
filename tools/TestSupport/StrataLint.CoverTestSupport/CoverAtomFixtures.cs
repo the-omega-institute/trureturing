@@ -191,7 +191,7 @@ internal static partial class CoverWorld
             [targetPath] = Encoding.UTF8.GetString(targetBytes),
             [ScribeEmissionAttestation.DefinitionPath(spec.ModuleGid)] = Encoding.UTF8.GetString(definition),
             [ScribeEmissionAttestation.EmissionPath(spec.ModuleGid)] = Encoding.UTF8.GetString(emission),
-            [ScribeEmissionAttestation.RelativePath] = Encoding.UTF8.GetString(attestation.AsSpan()),
+            [GeneratedArtifactInventory.ScribeAttestation.Path] = Encoding.UTF8.GetString(attestation.AsSpan()),
         };
         DirectoryLedgerTestSupport.ReplaceWithProjection(files, document);
         if (otherAtom is not null)

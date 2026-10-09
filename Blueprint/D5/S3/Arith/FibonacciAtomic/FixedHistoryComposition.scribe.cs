@@ -23,6 +23,28 @@ internal sealed class FixedHistoryCompositionDocument : IScribeDocumentDefinitio
                 + "W3(t)=(E(t),E(rho(t)),E(rho(rho(t)))). S=B*A, D=A+B, "
                 + "g=(A,B,S), h=(B,S,D), and R00=1, R10=g, R01=h, R11=g*h. "
                 + "L(u,v,w)=((-1)^v*S^(2u),(-1)^w*S^(2v),(-1)^u*S^(2w)).")),
+            Paragraph(Text("Write phi for the real golden ratio and psi for its conjugate. "
+                + "The notation mat(a,b,c,d) lists a two-by-two real matrix in row order.")),
+            MatrixEntry("K", "Golden-ratio vector representation", DescribeRole.Definition,
+                All("a", RealDomain, All("b", RealDomain,
+                    Equal(Call("K", Tuple(V("a"), V("b"))), Call("mat", Num(0),
+                        Add(V("a"), Multiply(V("b"), V("phi"))),
+                        Add(V("a"), Multiply(V("b"), V("psi"))), Num(0))))),
+                "K is real linear and sends the two coordinate vectors to off-diagonal matrices."),
+            MatrixEntry("k_square", "Quadratic relation", DescribeRole.Theorem,
+                All("x", Seq(RealDomain, Sp, Times, Sp, RealDomain),
+                    Equal(Multiply(Call("K", V("x")), Call("K", V("x"))),
+                        Call("algebraMap", Call("Q", V("x"))))),
+                "The scalar algebra map has target the two-by-two real matrix algebra."),
+            MatrixEntry("sep", "Clifford matrix representation", DescribeRole.Definition,
+                Equal(V("sep"), Call("CliffordLift", V("Q"), V("K"))),
+                "The quadratic relation extends K to a real algebra homomorphism from C."),
+            MatrixEntry("sep_a", "Image of the alpha vector", DescribeRole.Theorem,
+                Equal(Call("sep", V("A")), Call("mat", Num(0), Num(1), Num(1), Num(0))),
+                "The alpha image exchanges the two matrix coordinates."),
+            MatrixEntry("sep_b", "Image of the beta vector", DescribeRole.Theorem,
+                Equal(Call("sep", V("B")), Call("mat", Num(0), V("phi"), V("psi"), Num(0))),
+                "The beta image uses the two conjugate roots in its off-diagonal entries."),
             Describe.Lean(DescribeId.Create("fixed-history-composition-result"),
                 DeclarationHandle.Create(Prefix + "result"), H("Complete same-source criterion"),
                 StatementSource.FromAuthor(ResultFormula()), AssessedProvenance.FromRepo(), Blocks(
@@ -56,6 +78,12 @@ internal sealed class FixedHistoryCompositionDocument : IScribeDocumentDefinitio
                         + "Flow balance alone is insufficient: unit history at composition (4,0) gives two disconnected alpha cycles."))),
                 DescribeRole.Theorem))));
 
+    private static DocumentBlock MatrixEntry(string name, string title, DescribeRole role,
+        Formula formula, string prose) => Describe.Lean(
+            DescribeId.Create("fixed-history-composition-" + name.Replace('_', '-').ToLowerInvariant()),
+            DeclarationHandle.Create(Prefix + name), H(title), StatementSource.FromAuthor(Disp(formula)),
+            AssessedProvenance.FromRepo(), Blocks(Paragraph(Text(prose))), role);
+    private static Formula RealDomain => Seq(Mathbb, Grp(V("R")));
     private static Formula V(string name) => F.Id(name);
     private static Formula Bits => new Formula.SetLiteral([Num(0), Num(1)]);
     private static Formula State => Seq(Bits, Sp, Times, Sp, Bits);

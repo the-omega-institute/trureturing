@@ -2919,3 +2919,2078 @@ Gamma 对数积分保持 §462 所述 Mertens.Gamma、PrimeNumberTheoremAnd
 上述递归关系、严格改进及误差界均由同一实际曲率的完整积分导出。
 
 ## 追加锚（本行以下为增补区）
+
+### 464 最新 Lean 供应与原 Robin 尾项的有向 Abel 接口
+
+本节接续 §463 的同一原曲率、原常数 A 和实际有符号尾。
+2026-10-07 的库检索得到四类准确供应。库名、README 或上游 CI
+本身不支付本题的原对象匹配、完整尾项或新工具链上的 kernel 验收。
+
+#### 464.1 可消费的供应及其边界
+
+OpenAI/math 的不可变修订
+[`adc7f1241b42e322a6451854ab7e4b4c146bf78a`](https://github.com/openai/math/tree/adc7f1241b42e322a6451854ab7e4b4c146bf78a)
+在 `lean/OAI/Analysis/VlasovMaxwell/Regularity/VolterraSup.lean`
+给出 `OAI.RVM.integral_Icc_factorial_tail`。对所有实数 C、自然数 d
+和 t≥0，其准确合同是
+
+$$
+C\int_{[0,t]}\frac{(Cu)^d}{d!}\,du
+=\frac{(Ct)^{d+1}}{(d+1)!}.
+\tag{RLB.1}
+$$
+
+这条供应不要求 C≥0；用于正积分比较时另支付 C≥0。
+同文件的 `volterra_uniform_bound` 则要求非负 D、C、每个窗口上的
+实际有限上界和真实积分递推不等式。其前置
+`Retarded/VolterraMajorant.lean` 构造连续单调的全局 majorant。
+这些是经典 Volterra 工具；两个小文件只依赖 Mathlib，适合按 Apache-2.0
+保留来源后移植所消费的私有证明。上游 Lean 为 4.34.1；本库保持
+自身钉版工具链，移植后的实际编译另验。
+
+RLB.1 的自然消费是规范化单项式 v^d/d!。原 T 的内层 lift 增加
+两个积分次数，外层增加一个，因此每次真实递归是 d→d+3。
+系数 a≤1/3 和 exp(−v)≤1 另给每层的 1/3。这正是 §463 中
+`v^(3n)/(2·3^n·(3n)!)` 的结构，而非把原递归改成别的 n! 模型。
+规范化阶乘积分的私有移植由同一实际 T 的归纳证明消费；
+完整对数矩和算术有符号尾仍需各自支付，不从紧区间一致收敛推出。
+
+dbsanfte/RiemannGaussian 的不可变修订
+[`24444671cee3bf643ff1307909b961a329372a9e`](https://github.com/dbsanfte/RiemannGaussian/tree/24444671cee3bf643ff1307909b961a329372a9e)
+在 `RiemannGaussian/MoebiusHarmonicMonotoneTail.lean` 给出保留两端点
+的有限 Abel 恒等式，以及实际调和 Möbius 前缀有界时的完整单调权尾界。
+其 `abs_sum_moebiusHarmonic_antitone_le` 保留 D<M、权非负、权在
+[D+1,M] 递减和全部 n∈[D,M] 上的实际前缀界；结论是
+`2·e·b(D+1)`。前缀界仍是输入，不能由该尾界反向冒领已经得到消去。
+
+同修订 `MoebiusHarmonicCancellation.lean` 的
+`exists_moebiusHarmonicPrefix_cubic_rate` 确实提供实际 H 的统一衰减：
+
+$$
+\exists h_0\ge22\ \forall h\ge h_0\ \forall D\in\mathbb N:\quad
+e^{2\cdot10^{15}h^3}\le D
+\Longrightarrow |H(D)|\le C_{\rm harmonic}e^{-h/8}.
+\tag{RLB.7}
+$$
+
+其中 h₀、h∈ℝ，C_harmonic=6+4 C_finite 是上游证明为正的固定实常数，
+不依赖 h 或 D。
+因此满足该阈值的同一 D 对全部后继 n∈[D,M] 支付 Abel 的
+前缀小量输入；这不是任意序列上的假设。上游实际 exact-head CI
+构建成功，本次尚未将该证明闭包移植并在本库 kernel 验收。
+消去率随 log D 的立方根衰减，保留了巨大的准确阈值。
+其原核 variation、odd/full 运输和临界归一化仍须独立支付。
+
+AlexKontorovich/PrimeNumberTheoremAnd 的不可变修订
+[`c39a751132c88b6e8080b74c74023fd95b3d8be0`](https://github.com/AlexKontorovich/PrimeNumberTheoremAnd/tree/c39a751132c88b6e8080b74c74023fd95b3d8be0)
+在 `PrimeNumberTheoremAnd/StrongPNT.lean` 的 `StrongPNT` 给出
+
+$$
+\exists c>0:\qquad
+\psi(x)-x=O\!\left(xe^{-c\sqrt{\log x}}\right).
+\tag{RLB.2}
+$$
+
+这比本库已有 MediumPNT 的对数指数 1/10 更强。
+它可补无条件背景尾估计，但尚不直接供给临界平方根消去。
+对固定 c>0，令 y=√log x，比较尺度满足
+
+$$
+\frac{xe^{-c\sqrt{\log x}}}{\sqrt{x}/\log x}
+=y^2e^{y^2/2-cy}\longrightarrow\infty.
+\tag{RLB.3}
+$$
+
+因此仅从 RLB.2 的上界不能推出本题所需的该临界量级。
+上游 StrongPNT 的直接对象也是 ψ；真实 Möbius 权运输仍须单独证明。
+
+OVVO-Financial/mobius-synthesis 的不可变修订
+[`516191483bd7c3f82e0e3891c8e1f7266063c335`](https://github.com/OVVO-Financial/mobius-synthesis/tree/516191483bd7c3f82e0e3891c8e1f7266063c335)
+包含从实际 Mertens 能量界及平方前缀能量界通往 Mathlib RH 的条件桥。
+可复用的是准确归约和对象匹配方式；全尺度能量合同仍是其假设。
+有限范围验证不支付全尺度假设，本节也未证明该假设。
+
+#### 464.2 完整有限 Abel 式可以保留单向符号信息
+
+令 μ 为标准算术 Möbius 函数，
+
+$$
+H(n)=\sum_{1\le k\le n}\frac{\mu(k)}k,
+\qquad Q_D(n)=H(n)-H(D).
+$$
+
+对自然数 D<M 和任意实权 b，已读上游合同给出
+
+$$
+\begin{aligned}
+S_{D,M}(b)
+&:=\sum_{D<n\le M}\frac{\mu(n)}n b(n)\\
+&=b(M)H(M)-b(D+1)H(D)\\
+&\quad-\sum_{D<n\le M-1}[b(n+1)-b(n)]H(n).
+\end{aligned}
+\tag{RLB.4}
+$$
+
+把 H(n)=Q_D(n)+H(D) 逐项代入，有限望远镜身份
+
+$$
+\sum_{D<n\le M-1}[b(n)-b(n+1)]=b(D+1)-b(M)
+$$
+
+使所有 H(D) 项准确抵消，得到
+
+$$
+\boxed{\quad
+S_{D,M}(b)=b(M)Q_D(M)
++\sum_{D<n\le M-1}[b(n)-b(n+1)]Q_D(n).
+\quad}
+\tag{RLB.5}
+$$
+
+这里没有删除终端项 b(M)Q_D(M)。当 M=D+1 时内和为空，
+RLB.5 就是单个真实 Möbius 项，端点同样成立。
+
+若 b 在 [D+1,M] 非负递减，RLB.5 中全部系数非负，系数总和
+准确等于 b(D+1)。故只要同一区间实际满足
+`Q_D(n)≥−e`（D<n≤M，e≥0），就有
+
+$$
+S_{D,M}(b)\ge-e\,b(D+1).
+\tag{RLB.6}
+$$
+
+证明是分别以非负系数乘这个下界，再用有限望远镜求和。
+它保持单向目标；并不额外要求 Q_D 的上界。若 b(D+1)>0，
+`S/b(D+1)` 是这些实际有向前缀差的一个凸组合。
+若 b(D+1)=0，非负递减使整段 b 都为零，S=0。
+若只知道原 H 在 [D,M] 满足 |H|≤e，则 |Q_D|≤2e，
+这解释上游完整绝对值尾界的因子 2。更强的有向前缀差输入
+可以避免先取绝对值造成的这一信息损失。
+
+若原 H 的后继统一界是 |H(n)|≤δ，保留准确锚 H(D) 还给
+
+$$
+Q_D(n)\ge-\delta-H(D),\qquad
+S_{D,M}(b)\ge-[\delta+H(D)]b(D+1).
+\tag{RLB.8}
+$$
+
+这里 δ+H(D)≥0 由同一 D 上的界支付。当 H(D)<0 时，
+这个准确有向预算比先把 H(D) 替成 |H(D)| 再合并的 2δ 更小。
+RLB.7 确实在其存在阈值以后对所有后继 n 同时提供
+δ=C_harmonic exp(−h/8)。其 h₀ 仍是存在常数；这条供应
+不自行给出一个可枚举的有限阈值或本题最终符号。
+
+RLB.5–6 是从完整有限 Abel 合同和望远镜身份得到的经典推论，
+不作新的文献优先权声明。本节给出它们的完整有限证明；
+尚未把它们绑定并冻结为本库原 Robin 核的正式结果。
+
+#### 464.3 与正递归的联系及准确缺口
+
+§463 的正算子 T 从实际曲率的正残差生成下一层正残差。
+RLB.5 则让非负递减权作用于实际算术前缀差 Q_D。
+两者都允许保留输入的一个方向，但所作用的对象不同：
+前者的正性来自已经证明的解析积分；后者需要真实 Möbius
+前缀差的有向下界。RLB.5 没有把 μ 本身变成非负系数。
+
+原 Robin 配对若要消费 RLB.6，必须支付同一索引和截断下的
+准确权重身份、非负递减域、全部有向前缀差下界及完整终端项。
+若原权不单调，则仍使用 RLB.5 的有符号增量，而不能套用 RLB.6。
+有限公式也不自行准许无限重排或交换极限与积分。
+这把下一步供应需求具体化为原核上的有向前缀运输，
+而不是继续扩大已经为正的 A 储备来替代算术消去。
+
+Fibonacci 的递归和原曲率的三重积分递归可帮助发现合适的
+分层语言。它们不提供 μ 的真实相位，也不自动证明上述有向前缀差界。
+5040 是 Robin 定理中已知有限例外范围的最后整数边界；
+本节没有从 7!、Fibonacci 索引或拓扑染色例外推导算术尾控制。
+
+OpenAI/math 同修订还公开了一个声称 `Re(s)>7/8` 时实际 ζ 不为零
+的入口。其源码及显式 import 闭包已作静态检查；尚无本次对该完整
+闭包的实际 kernel 验收。它不参与本节或本库 RH 结论的承重推导。
+上述小供应的移植各自按本库钉版真实编译；RH 和原 Robin 全尾
+的最终符号仍保持开放。
+
+
+## 追加锚（本行以下为增补区）
+
+## 465. 完整剩余预算与有向前缀运输
+
+本节沿用同一个实际函数 Φ、曲率 B=Φ''、正递归 Bₙ 及残差 Rₙ=B−Bₙ。令 C=e^γ、k=C−1。既有完整轴恒等式为 ∫₀∞B=k、∫₀∞vB=1、A=−∫₀∞log(v)B(v)dv。这里的 A 始终是原解析主项；算术 Möbius 尾的符号须另行支付。
+
+#### 465.1 尾积分的精确剩余量
+
+**命题 465.1（同一曲率的完整尾）。** 对每个 V≥0，定义
+
+$$
+Q(V)=\int_V^\infty B(v)\,dv,\qquad
+M(V)=\int_V^\infty vB(v)\,dv.
+$$
+
+这些积分绝对可积，且
+
+$$
+Q(V)=C-\Phi'(V),\qquad
+M(V)=\Phi(V)-V\Phi'(V)=\Phi(V)e^{-V},
+\qquad 0<M(V)\le e(1+V)e^{-V}.
+\tag{RB.1}
+$$
+
+对 V≥1，完整绝对对数尾满足
+
+$$
+0\le\int_V^\infty|\log v|B(v)\,dv\le M(V),
+\tag{RB.2}
+$$
+
+M(V) 及 RB.2 的完整绝对对数尾都趋于零。V=0 同样包含在 RB.1 中：Q(0)=k、M(0)=1。
+
+证明由有限区间微积分与已有全轴可积性得 Q(V)；对 vB 分部积分给 M(V)=Φ(V)−VΦ'(V)。同一 Φ 的微分身份 VΦ'(V)=(1−e⁻ⱽ)Φ(V) 给最后一个等号，V=0 由 Φ(0)=1 直接支付。原上界 Φ(V)≤e(1+V) 给指数包络。V≥1 时 0≤log v≤v，逐点比较得到 RB.2。
+
+RB.1 给出另一个读法：正轴上的 vB(v)dv 是总质量为 1 的实际正测度，M(V) 正是其剩余质量。这个读法使用已支付的一阶矩，不能把 B 本身误归一成总质量 1。
+
+#### 465.2 递归对完整轴的恢复
+
+**命题 465.2（实际残差的完整矩消失）。** 令 Dₙ=Bₙ₊₁−Bₙ，并定义
+
+$$
+r_n=\int_0^\infty R_n(v)\,dv,\quad
+m_n=\int_0^\infty vR_n(v)\,dv,\quad
+\ell_n=\int_0^\infty|\log v|R_n(v)\,dv.
+$$
+
+Bₙ、Rₙ、Dₙ 的质量、一阶矩及对数矩均可积；Rₙ 另有完整绝对对数矩。每个有限 n 上 rₙ>0、0<mₙ≤1，Dₙ 的质量和一阶矩也严格为正，并有准确分裂
+
+$$
+r_n=r_{n+1}+\int_0^\infty D_n(v)\,dv,\qquad
+m_n=m_{n+1}+\int_0^\infty vD_n(v)\,dv.
+\tag{RB.3}
+$$
+
+同时 rₙ→0、mₙ→0、ℓₙ→0，且 ∫₀∞log(v)Rₙ(v)dv→0。
+
+证明使用原严格递归的 0<Rₙ≤B、0<Dₙ≤Rₙ、0≤Bₙ≤B，以及 §464 的实际残差逐点趋零。三个主导函数分别是 B、vB 和 |log v|B，均在完整正轴可积。分别应用主导收敛，最后用 |∫log(v)Rₙ|≤ℓₙ 支付有符号对数矩。这里需要完整主导；紧区间一致收敛本身不能代替这一步。严格正预算也表明任何有限层尚有剩余，极限恢复须另由收敛证明。
+
+#### 465.3 离散尾怎样消费正预算
+
+**命题 465.3（真实 Möbius 前缀差的有限运输）。** 令 H(N)=Σ₁≤ⱼ≤ᴺ μ(j)/j，Q_D(n)=H(n)−H(D)。对自然数 D<M 及任意实权 b，有限尾满足
+
+$$
+\sum_{D<n\le M}\frac{\mu(n)}n b(n)
+=b(M)Q_D(M)
+ +\sum_{D<n\le M-1}[b(n)-b(n+1)]Q_D(n).
+\tag{RB.4}
+$$
+
+若 b 在 [D+1,M] 非负递减，且 Q_D(n)≥−ε 对全部 D<n≤M 成立、ε≥0，则
+
+$$
+\sum_{D<n\le M}\frac{\mu(n)}n b(n)\ge-\varepsilon b(D+1).
+\tag{RB.5}
+$$
+
+若改用含锚 D 的统一输入 |H(n)|≤δ（D≤n≤M），则 δ+H(D)≥0，并得到保留准确锚的更具体预算
+
+$$
+\sum_{D<n\le M}\frac{\mu(n)}n b(n)
+\ge-[\delta+H(D)]b(D+1).
+\tag{RB.6}
+$$
+
+证明是有限分部求和与望远镜相消。RB.4 中系数均非负，系数总和恰为 b(D+1)，所以逐项乘有向下界得 RB.5；Q_D(n)≥−δ−H(D) 给 RB.6。终端 b(M)Q_D(M) 全程保留。M=D+1 时内和为空；b(D+1)=0 时非负递减强制整段权为零，尾和也为零。
+
+在上述非负递减条件下且 b(D+1)>0 时，RB.4 除以 b(D+1) 就是实际前缀差的一个凸组合。它与 RB.1 的概率读法共享“非负系数及其准确总量”这一结构，但输入分别是曲率密度和算术前缀差；它们之间的实际对象桥尚须证明。
+
+#### 465.4 五分类、递归与下一供应接口
+
+RB.3 的预算向量 (r,m) 按逐层正块相加。有限分类可视为给同一预算增加分块；有效改进须来自块的真实正性、矩和误差控制。正预算加法有交换律与结合律，但非零正预算没有同域加法逆元，因而不能把这个结构直接称为群。分类数 5 本身不支付消去估计。
+
+外部 Gaussian 库的调和 Möbius 前缀衰减能提供 RB.6 所需的一类输入；本节的有限运输并未移植其完整衰减证明。要作用到原 Robin 有符号尾，仍须识别同一截断下的实际权 b，证明其非负递减性或支付准确变差，处理 odd/full 前缀转换，并保留无限极限的全部终端。一般素数定理或解析正储备都不能直接替代这些合同。
+
+5040=7!、Fibonacci 递归和拓扑例外可以提出比较问题。本节实际闭合的是完整曲率剩余预算及有限 Möbius 运输；没有从数字 7、分类数 5 或 Fibonacci 原子推出 Robin 的无限判据。
+
+## 追加锚（本行以下为增补区）
+
+## 466. 奇调和 Möbius 的有限收缩与原增长权的完整变差
+
+本节接续 §§464–465 的实际调和前缀与 §§453–455 的原阶乘核。
+先证明准确有限收缩，再在实际奇调和衰减假设下控制原增长权。
+固定 x 的尾存在性与同时增长尺度下的 Robin 临界符号须分别支付。
+
+#### 466.1 同一去素数 2 操作的准确有限递归
+
+保持标准算术 Möbius 函数 μ，令
+
+$$
+H(N)=\sum_{1\le n\le N}\frac{\mu(n)}n,
+\qquad H_{\mathrm o}(N)=
+\sum_{\substack{1\le n\le N\\n\text{ 奇}}}\frac{\mu(n)}n,
+\qquad H(0)=H_{\mathrm o}(0)=0.
+$$
+
+**命题 466.1（两个准确有限身份）。** 对全部自然数 N、K，
+
+$$
+\boxed{H(N)=H_{\mathrm o}(N)
+-\frac12H_{\mathrm o}(\lfloor N/2\rfloor),}
+\tag{HG.1}
+$$
+
+$$
+\boxed{H_{\mathrm o}(N)
+=\sum_{a=0}^{K-1}2^{-a}H(\lfloor N/2^a\rfloor)
++2^{-K}H_{\mathrm o}(\lfloor N/2^K\rfloor).}
+\tag{HG.2}
+$$
+
+这里 K=0 时和为空；HG.2 的末项为原 H_o(N)，身份同样成立。
+
+**证明。** 将 H(N) 的有限整数集合拆为奇数与偶数。
+每个偶数 n 唯一写成 n=2m，端点准确为
+1≤m≤⌊N/2⌋。奇数 m 与 2 互素，Mathlib 的实际 μ 乘法性及
+μ(2)=−1 给 μ(2m)=−μ(m)；偶数 m 时 4∣2m，所以
+μ(2m)=0。因而包括全部偶端点的和恰为
+
+$$
+\sum_{m=1}^{\lfloor N/2\rfloor}\frac{\mu(2m)}{2m}
+=-\frac12\sum_{\substack{m\le\lfloor N/2\rfloor\\m\text{ 奇}}}
+\frac{\mu(m)}m.
+$$
+
+加入原奇数部分就是 HG.1；N=0 时两部分都为空。
+
+HG.2 对 K 作归纳。K=0 已说明。若 K 层身份成立，
+将其末项里的 H_o(⌊N/2^K⌋) 依 HG.1 改写为
+
+$$
+H(\lfloor N/2^K\rfloor)
++\frac12H_{\mathrm o}(\lfloor N/2^{K+1}\rfloor).
+$$
+
+这里整数除法恒等式
+⌊⌊N/2^K⌋/2⌋=⌊N/2^(K+1)⌋ 保留准确截止。
+乘原 2^(−K) 后，第一项加入有限和的 a=K 项，
+第二项正是 K+1 层末项，归纳完成。
+
+取 K=N+1，初等归纳给 2^(N+1)≥N+2>N，
+所以最后一个整数商为零，末项准确消失。
+那些满足 2^a>N 的和项也为 H(0)=0。
+全程是有限重索引与有限代入，没有使用无限级数重排。证毕。
+
+§453 的同一原始前缀满足
+M(N)=O(N)−O(⌊N/2⌋)，其中 O 为未加权的实际奇 Möbius 前缀。
+其递归系数是 1；把同一整数系数乘以实际倒数指标后，
+HG.1 的系数变为 1/2。HG.2 因而给出有限几何权，
+其总量准确为 2(1−2^(−K))≤2，末项系数为 2^(−K)。
+这是去素数 2 与调和权之间的真实收缩关系。
+它说明选择不同但准确匹配的权会改变递归运输的成本；
+算术 μ 的符号与小指标末项仍须保留。
+
+#### 466.2 原 Robin 的增长权
+
+保持 §§453–455 的全部原对象，对实数 x≥e、s>0，
+
+$$
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,
+\qquad w(t)=\frac{1+\log t}{t^2\log^2t},
+$$
+
+$$
+P_x^\eta(s)=\int_x^\infty\eta(t/s)w(t)\,dt,
+\qquad\mathscr D_x(s)=P_x^\eta(s)-P_x^\eta(2s),
+\qquad b_x(s)=s\mathscr D_x(s).
+\tag{HG.3}
+$$
+
+实际奇来源逐项满足
+μ(n)𝒟_x(n)=[μ(n)/n]b_x(n)。这只是同一完整核的准确换权。
+固定 x，记 ℓ=log x、r=log s、L=log 2，设
+
+$$
+c_x=\ell^{-1}-\log\ell-1,
+\qquad d_x=\ell^{-1}+\ell-1.
+$$
+
+§453 的 DP.9–DP.10 给 s≥x 时
+
+$$
+sP_x^\eta(s)=r\log r+c_xr+d_x-r^{-1}+E_x(r),
+\qquad |E_x(r)|\le2(r^{-1}+r^{-2}).
+\tag{HG.4}
+$$
+
+将 r+L 的同一身份减去一半，使用
+(r+L)log(r+L)=r log r+L log r+L+O(r^(−1))，得
+
+$$
+b_x(s)=\frac12r\log r+\frac12c_xr
+-\frac L2\log r+\frac12d_x-\frac L2(c_x+1)+O_x(r^{-1}).
+\tag{HG.5}
+$$
+
+故 b_x(s)→+∞。§465 非负递减权的完整尾比较不能直接用于这个
+全部远端权；这里需要完整变差。
+
+该变差不从 HG.5 的渐近猜测导数。复用 §453 的 DP.4：
+s>x 时 −(P_x^η)'(s)=G_{η,x}(log s)/s²，且对 v=log(s/x)≥0，
+|ℓG_{η,x}(ℓ+v)|≤v²/2+v+12。
+此 G_{η,x} 为原核变换，区别于 H_o。
+令
+
+$$
+K_x=6+|c_x|+|d_x|,\qquad V_x=3K_x+39.
+$$
+
+r≥ℓ≥1 时 HG.4 给 |P_x^η(s)|≤K_x(1+r)²/s；
+同一个导数界给 |(P_x^η)'(s)|≤13(1+r)²/s²。
+在 2s 使用 1+log(2s)≤2(1+log s)，并对 HG.3 求导，得到
+
+$$
+\boxed{|b_x(s)|\le3K_x(1+\log s)^2,
+\qquad |b'_x(s)|\le V_x\frac{(1+\log s)^2}{s}\quad(s>x).}
+\tag{HG.6}
+$$
+
+这些常数明确允许依赖固定 x。HG.6 依赖同一原核的完整可积性和
+求导身份，不能通过对 HG.5 的渐近余项直接求导得到。
+
+#### 466.3 固定 x 的完整变差合同与临界边界
+
+**命题 466.2（实际奇来源的条件尾合同）。** 固定 x≥e。
+令整数 D>x，另行支付实际奇调和前缀的准确全后继合同
+
+$$
+|H_{\mathrm o}(n)|\le C_{\mathrm o}
+ e^{-c_{\mathrm o}(\log n)^{1/3}}\quad(n\ge D),
+\qquad C_{\mathrm o}\ge0,\ c_{\mathrm o}>0.
+\tag{HG.7}
+$$
+
+则同一原奇来源的自然截止尾存在。
+写 c=c_o，z₀=(log(D+1))^(1/3)，并定义完整积分
+
+$$
+J_j(c,z_0)=\int_{z_0}^\infty z^j e^{-cz}dz
+=e^{-cz_0}\sum_{k=0}^j\frac{j!}{k!c^{j-k+1}}z_0^k,
+\qquad j\in\mathbb N.
+\tag{HG.8}
+$$
+
+其准确锚与完整预算为
+
+$$
+\begin{aligned}
+\mathscr T_{D,\infty}(x)
+&=-b_x(D+1)H_{\mathrm o}(D)
+-\sum_{n=D+1}^\infty[b_x(n+1)-b_x(n)]H_{\mathrm o}(n),\\
+|\mathscr T_{D,\infty}(x)|
+&\le |b_x(D+1)|\,|H_{\mathrm o}(D)|\\
+&\quad+3C_{\mathrm o}V_xe^c
+ [J_2(c,z_0)+2J_5(c,z_0)+J_8(c,z_0)].
+\end{aligned}
+\tag{HG.9}
+$$
+
+**证明。** 对 M>D，有限 Abel 恒等式给同一奇来源尾
+
+$$
+\begin{aligned}
+\mathscr T_{D,M}(x)
+&:=\sum_{\substack{D<n\le M\\n\text{ 奇}}}\mu(n)\mathscr D_x(n)\\
+&=b_x(M)H_{\mathrm o}(M)-b_x(D+1)H_{\mathrm o}(D)\\
+&\quad-\sum_{n=D+1}^{M-1}[b_x(n+1)-b_x(n)]H_{\mathrm o}(n).
+\end{aligned}
+\tag{HG.10}
+$$
+
+终端与锚均保留。HG.6–HG.7 给 b_x(M)H_o(M)→0，
+因为置 z=(log M)^(1/3) 后只是多项式乘 e^(−cz)。
+每个整数单元上，将 b_x 与连续主导函数
+V_x(1+log t)²/t 的原函数作导数比较，得到增量的积分界。
+对 n≤t≤n+1、n≥1，非负立方根的次可加性给
+(log t)^(1/3)−(log n)^(1/3)≤[log(t/n)]^(1/3)<1。
+于是整个变差和满足
+
+$$
+\begin{aligned}
+&\sum_{n=D+1}^\infty
+ |b_x(n+1)-b_x(n)|\,|H_{\mathrm o}(n)|\\
+&\quad\le C_{\mathrm o}V_xe^c\int_{D+1}^\infty
+ e^{-c(\log t)^{1/3}}\frac{(1+\log t)^2}{t}dt\\
+&\quad=3C_{\mathrm o}V_xe^c\int_{z_0}^\infty
+ e^{-cz}(z^2+2z^5+z^8)dz<\infty.
+\end{aligned}
+\tag{HG.11}
+$$
+
+最后一个等号先用 u=log t，再用 z=u^(1/3)。
+完整积分 HG.8 由 J₀=e^(−cz₀)/c 以及保留无穷端点的递推
+J_j=z₀^j e^(−cz₀)/c+(j/c)J_(j−1) 得到；
+端点 z^j e^(−cz)→0，归纳给其准确有限多项式。
+因此 HG.10 中变差级数绝对收敛，终端趋零，
+取自然截止极限并用三角不等式就是 HG.9。证毕。
+
+HG.11 只证明 Abel 变差项的绝对可和与原子尾的自然截止存在；
+不声称原子和本身绝对收敛。连接 §453 的累计 Mertens 配对时，
+仍须支付其准确 clipped 端点，不能借此许可独立的无限素数—合数分拆。
+
+§464 的 Gaussian 供应 RLB.7 给实际完整 H 的立方对数衰减。
+HG.2 给从完整 H 到实际 H_o 的准确有限运输，
+但其中的小指标末项必须另行估计。
+命题 466.2 的结论依赖 HG.7 对实际奇调和前缀的全部后继界；
+有限身份本身不提供这个衰减假设。
+
+即使支付了 HG.7，固定 x 的 HG.9 也不自动支付原
+√x log x 临界共同精度。对固定 q>1 的整数截止 D=⌈x^q⌉，
+即便 C_o 和 K_x 只造成对数因素，
+√x 仍压过 exp[−c_o(q log x)^(1/3)]；这个上界本身
+无法给出所需共同临界预算。增长更快的来源截止仍留下整个有限头部的
+真实符号或消去任务。原 Robin 完整符号和 RH 保持开放。
+
+实际 μ 与有限重索引复用 Mathlib 及 §453 的
+ActualOddMobiusFinitePairing；Abel 代数保持 Mathlib 的来源。
+Gaussian 的不可变修订 24444671cee3bf643ff1307909b961a329372a9e
+及完整 Apache-2.0 归属见
+[原调和 Abel 来源记录](../../../Library/Analytic/sanftenberg2026harmonicabel.md)。
+本节有限收缩和固定尺度变差推导不提出文献优先权主张。
+
+## 追加锚（本行以下为增补区）
+
+## 467. 同一原 A 的残差、size-bias 与分类链律
+
+本节保留 §§463–465 的同一实际函数 $\Phi$、曲率 $B=\Phi''$、递归 $B_n$ 和残差 $R_n=B-B_n$。以下积分均在完整正轴 $(0,\infty)$ 对 Lebesgue 测度进行。本节把同一原 $A-L_n$ 绑定到实际残差的相对熵，并把真实递归的四个新增层与剩余尾项组成五类。
+
+#### 467.1 原完整误差的概率读法
+
+令 $C=e^\gamma$、$k=C-1>0$，保持同一个原完整常数
+
+$$
+\begin{aligned}
+A
+&=\int_0^1\frac{\Phi(v)(1-e^{-v})-v}{v^2}\,dv
+ +\int_1^\infty\left[\frac{\Phi(v)(1-e^{-v})}{v^2}-\frac C v\right]dv\\
+&=-\int_0^\infty\log(v)B(v)\,dv.
+\end{aligned}
+\tag{RSK.1}
+$$
+
+§465 给每个自然数 $n$ 的完整预算
+
+$$
+r_n=\int_0^\infty R_n(v)\,dv>0,\qquad
+m_n=\int_0^\infty vR_n(v)\,dv>0,\qquad
+\ell_n=\int_0^\infty|\log v|R_n(v)\,dv<\infty.
+$$
+
+实际 $R_n(v)>0$ 对每个 $v>0$ 成立。定义同一完整下界
+
+$$
+L_n=-\int_0^\infty\log(v)B_n(v)\,dv
+      -r_n\log(m_n/r_n),
+\qquad \mu_n=m_n/r_n.
+\tag{RSK.2}
+$$
+
+**命题 467.1（实际残差与其 size-bias 的完整相对熵）。** 对全部自然数 $n$，定义正轴上的密度
+
+$$
+p_n(v)=\frac{R_n(v)}{r_n},\qquad
+q_n(v)=\frac{vR_n(v)}{m_n}.
+\tag{RSK.3}
+$$
+
+二者都是概率密度，且 $q_n=vp_n/\mu_n$，即 $p_n$ 的 size-bias 密度。取自然对数，定义
+
+$$
+D(p\Vert q)=\int_0^\infty p(v)\log\frac{p(v)}{q(v)}\,dv.
+$$
+
+本命题中该积分绝对可积，并且
+
+$$
+\boxed{
+A-L_n
+=r_n D(p_n\Vert q_n)
+=\int_0^\infty h(v/\mu_n)R_n(v)\,dv>0,
+\qquad h(x)=x-1-\log x.
+}
+\tag{RSK.4}
+$$
+
+在 $n=0$ 时，$R_0=B$、$r_0=k$、$m_0=1$、$L_0=k\log k$，所以
+
+$$
+\boxed{A-k\log k=kD(B/k\Vert vB).}
+\tag{RSK.5}
+$$
+
+**证明。** 完整质量与一阶矩分别给 $\int p_n=1$、$\int q_n=1$。正轴上每个分母都严格正，故逐点有
+
+$$
+\frac{p_n(v)}{q_n(v)}=\frac{\mu_n}{v},\qquad
+\log\frac{p_n(v)}{q_n(v)}=\log\mu_n-\log v.
+$$
+
+完整绝对可积性由已支付的预算直接控制：
+
+$$
+\int_0^\infty p_n(v)
+ \left|\log\frac{p_n(v)}{q_n(v)}\right|dv
+\le |\log\mu_n|+\frac{\ell_n}{r_n}<\infty.
+\tag{RSK.6}
+$$
+
+这里同时保留零附近和无穷远端，不要求 $R_n\log R_n$ 可积。计算的是对数比的完整积分，没有将两个可能发散的微分熵相减。
+
+由 $B=B_n+R_n$ 及完整对数积分的线性性，RSK.1–RSK.2 给
+
+$$
+\begin{aligned}
+A-L_n
+&=-\int_0^\infty\log(v)R_n(v)\,dv+r_n\log\mu_n\\
+&=r_nD(p_n\Vert q_n).
+\end{aligned}
+$$
+
+另一方面 $h(v/\mu_n)R_n(v)$ 的可积性由 $vR_n$、$R_n$ 和 $|\log v|R_n$ 支付；其线性项的完整积分恰为
+
+$$
+\int_0^\infty(v/\mu_n-1)R_n(v)\,dv
+=m_n/\mu_n-r_n=0.
+$$
+
+展开 $h$ 就得到 RSK.4 的第二个等号。对 $x>0$，对数切线不等式给 $h(x)\ge0$，且 $x\ne1$ 时严格大于零。实际 $R_n$ 在正轴严格正，故在正测度集合 $v>2\mu_n$ 上被积函数严格正，完整积分也严格正。
+
+最后 $B_0=0$、$\int B=k$ 和 $\int vB=1$ 给全部零层预算及 RSK.5。特别是 $B/k$ 与 $vB$ 分别被正确归一化；$B$ 的质量是 $k$。证毕。
+
+RSK.4 的方向是 $p_n\Vert q_n$。若反向取 $q_n\Vert p_n$，其对数期望变成一阶矩加权的 $v\log v$ 积分，须另行支付这一可积性。当前完整误差所消费的是 RSK.6 的已付绝对对数矩。
+
+#### 467.2 同一实际残差的非空有限正分类
+
+**命题 467.2（实际 $R_n$ 的完整分类恒等式）。** 固定任意自然数 $n$，令 $I$ 为非空有限集合。对每个 $i\in I$，设 $f_i$ 是正轴上严格正的可测函数，并且对全部 $v>0$ 有准确分解
+
+$$
+\sum_{i\in I}f_i(v)=R_n(v).
+$$
+
+不另设各块的矩假设。置
+
+$$
+\begin{gathered}
+r_i=\int_0^\infty f_i(v)\,dv,\qquad
+m_i=\int_0^\infty vf_i(v)\,dv,\qquad
+\mu_i=m_i/r_i,\\
+p_i=f_i/r_i,\qquad q_i=vf_i/m_i,\\
+a_i=r_i/r_n,\qquad b_i=m_i/m_n,
+\qquad F(r,m)=-r\log(m/r).
+\end{gathered}
+$$
+
+则各 $r_i,m_i$ 严格正，各 $f_i$、$vf_i$ 和 $|\log v|f_i$ 在完整正轴可积，且
+
+$$
+\sum_{i\in I}r_i=r_n,\qquad \sum_{i\in I}m_i=m_n.
+$$
+
+因此 $p_i,q_i$ 都是概率密度，$a,b$ 都是严格正的有限概率向量。全部相对熵均有限，同一原完整误差有准确分类
+
+$$
+\boxed{
+A-L_n
+=\sum_{i\in I}r_iD(p_i\Vert q_i)
+  +r_nD(a\Vert b).
+}
+\tag{RSK.8}
+$$
+
+离散项恰为这些实际块的预算合并缺口：
+
+$$
+\begin{aligned}
+H_I
+&:=\sum_{i\in I}F(r_i,m_i)-F(r_n,m_n)\\
+&=r_nD(a\Vert b)
+=\sum_{i\in I}r_i h(\mu_i/\mu_n)\ge0.
+\end{aligned}
+\tag{RSK.7}
+$$
+
+此项等于零当且仅当各块均值全部等于 $\mu_n$。这些身份涵盖单一类别，且不依赖有限合并的顺序。
+
+**证明。** 每个 $v>0$ 都有 $0<f_i(v)\le R_n(v)$。因而三个非负被积函数分别受已知可积函数支配：
+
+$$
+0<f_i\le R_n,\qquad
+0<vf_i\le vR_n,\qquad
+0\le |\log v|f_i\le |\log v|R_n.
+$$
+
+可测性和支配可积性给三份完整积分存在；其中前两者在整个正轴严格正，所以 $r_i,m_i>0$。又
+$|\log(v)f_i(v)|=|\log v|f_i(v)$，故有符号对数矩也绝对可积，包含零附近和无穷远两端。有限积分可加性给准确质量和一阶矩预算。各概率密度与有限向量的归一化随之成立。
+
+以下有限相对熵链式公式是经典先例，亦有 §467.4 所引 Mathlib 的一般测度版本；在这里把它用于上述实际 $R_n$ 分解。逐项展开
+
+$$
+\log(a_i/b_i)=\log(r_i/m_i)-\log(r_n/m_n),
+$$
+
+乘 $r_i$ 后求有限和，得到 RSK.7 的第一个身份。又
+
+$$
+\sum_{i\in I}r_i(\mu_i/\mu_n-1)
+=m_n/\mu_n-r_n=0.
+$$
+
+这给 RSK.7 的 $h$ 身份及非负性；$r_i>0$ 与 $h(x)=0\iff x=1$ 给等号条件。
+
+各块的对数比完整可积，因为
+
+$$
+\int_0^\infty p_i(v)
+  \left|\log\frac{p_i(v)}{q_i(v)}\right|dv
+\le |\log\mu_i|
+  +\frac1{r_i}\int_0^\infty|\log v|f_i(v)\,dv<\infty.
+$$
+
+令 $J(g)=-\int_0^\infty\log(v)g(v)dv$。对数比的逐点公式给
+
+$$
+r_iD(p_i\Vert q_i)=J(f_i)-F(r_i,m_i),\qquad
+r_nD(p_n\Vert q_n)=J(R_n)-F(r_n,m_n).
+$$
+
+由 $J(R_n)=\sum_iJ(f_i)$ 及 RSK.7，得到经典链式公式在这些实际密度上的身份
+
+$$
+r_nD(p_n\Vert q_n)
+=\sum_{i\in I}r_iD(p_i\Vert q_i)+r_nD(a\Vert b).
+$$
+
+最后代入命题 467.1 的 $r_nD(p_n\Vert q_n)=A-L_n$ 就是 RSK.8。
+
+也可核对两个联合概率密度
+
+$$
+P(i,v)=\frac{f_i(v)}{r_n}=a_ip_i(v),\qquad
+Q(i,v)=\frac{vf_i(v)}{m_n}=b_iq_i(v).
+$$
+
+给定类别 $i$，对数比拆为 $\log(a_i/b_i)+\log(p_i/q_i)$。给定同一 $v>0$，则
+
+$$
+P(i\mid v)=\frac{f_i(v)}{R_n(v)}=Q(i\mid v),
+\tag{RSK.9}
+$$
+
+因为共同因子 $v$ 在归一化中消去。故给定 $v$ 后的类别相对熵为零，联合分布的相对熵恰等于总残差密度的相对熵。
+
+对任意二叉合并树，把每次合并的
+$F(\text{左预算})+F(\text{右预算})-F(\text{合预算})$
+相加。每个内部节点的 $F$ 在自身合并中出现一次负号、在父节点合并中出现一次正号，准确相消；最后只剩 RSK.7 的 $H_I$。若只有一个类别，$f_i=R_n$，于是 $H_I=0$，RSK.8 退回 RSK.4。证毕。
+
+这里的分类是同一实际残差的全正轴严格正解析块。对不相交单元的零密度分类，须另定义零密度处的对数比；它不包含于本命题的严格正假设。
+
+#### 467.3 实际递归的相对熵收益与五分类
+
+**推论 467.3（实际每一层的相对熵收益）。** 对全部自然数 $n$，令
+
+$$
+D_n=B_{n+1}-B_n,\qquad
+z_n=\int_0^\infty D_n(v)\,dv>0,\qquad
+t_n=\int_0^\infty vD_n(v)\,dv>0.
+$$
+
+则实际相邻分裂 $R_n=R_{n+1}+D_n$ 满足
+
+$$
+\begin{aligned}
+L_{n+1}-L_n
+&=z_nD\left(\frac{D_n}{z_n}\,\middle\Vert\,\frac{vD_n}{t_n}\right)\\
+&\quad+r_nD\left(
+\left(\frac{r_{n+1}}{r_n},\frac{z_n}{r_n}\right)
+\,\middle\Vert\,
+\left(\frac{m_{n+1}}{m_n},\frac{t_n}{m_n}\right)
+\right)>0.
+\end{aligned}
+\tag{RSK.10}
+$$
+
+**证明。** §465 的准确预算分裂给 $r_n=r_{n+1}+z_n$、$m_n=m_{n+1}+t_n$。实际 $R_{n+1}$ 与 $D_n$ 在完整正轴严格正，且准确相加为 $R_n$，因此满足命题 467.2。应用 RSK.8，再用 RSK.4 把剩余块的缺口改写为 $A-L_{n+1}$，与原 $A-L_n$ 相减即得 RSK.10。新增层 $D_n$ 的连续相对熵严格正，证明同命题 467.1 的 $h$ 支撑论证；离散项非负，故实际收益严格正，包括 $n=0$。证毕。
+
+**推论 467.4（四个实际新增层与剩余尾项的五分类）。** 对每个自然数 $n$，同一残差有完整正分解
+
+$$
+R_n=D_n+D_{n+1}+D_{n+2}+D_{n+3}+R_{n+4}.
+$$
+
+定义五项严格正概率向量
+
+$$
+\begin{aligned}
+\mathbf a_n
+&=\frac{(z_n,z_{n+1},z_{n+2},z_{n+3},r_{n+4})}{r_n},\\
+\mathbf b_n
+&=\frac{(t_n,t_{n+1},t_{n+2},t_{n+3},m_{n+4})}{m_n}.
+\end{aligned}
+$$
+
+实际四步下界收益准确为
+
+$$
+\boxed{
+L_{n+4}-L_n
+=\sum_{j=0}^{3}z_{n+j}
+ D\left(\frac{D_{n+j}}{z_{n+j}}
+ \,\middle\Vert\,\frac{vD_{n+j}}{t_{n+j}}\right)
+ +r_nD(\mathbf a_n\Vert\mathbf b_n)>0.
+}
+\tag{RSK.11}
+$$
+
+此外，定义同一准确预算上的逐层合并缺口
+
+$$
+H_s:=F(r_{s+1},m_{s+1})+F(z_s,t_s)-F(r_s,m_s).
+$$
+
+则它们满足
+
+$$
+\boxed{
+\sum_{j=0}^{3}H_{n+j}
+=r_nD(\mathbf a_n\Vert\mathbf b_n).
+}
+\tag{RSK.12}
+$$
+
+**证明。** 连续应用四次 $R_s=D_s+R_{s+1}$，逐点得到所述五块分解。各块均在正轴严格正，因而命题 467.2 自动支付其质量、一阶矩及完整绝对对数矩；准确预算为
+
+$$
+r_n=\sum_{j=0}^{3}z_{n+j}+r_{n+4},\qquad
+m_n=\sum_{j=0}^{3}t_{n+j}+m_{n+4}.
+$$
+
+对这五块应用 RSK.8。其中尾块贡献
+$r_{n+4}D(p_{n+4}\Vert q_{n+4})=A-L_{n+4}$，
+把它从 $A-L_n$ 中移去便得到 RSK.11，同一原 $A$ 准确消去。四个新增层的连续项各严格正，预算项非负，所以总收益严格正。
+
+逐层预算合并缺口的准确形式是
+
+$$
+H_s=F(r_{s+1},m_{s+1})+F(z_s,t_s)-F(r_s,m_s).
+$$
+
+令 $s=n,n+1,n+2,n+3$ 后求和，中间三个剩余预算的 $F$ 正负相消，故
+
+$$
+\sum_{j=0}^{3}H_{n+j}
+=\sum_{j=0}^{3}F(z_{n+j},t_{n+j})
+ +F(r_{n+4},m_{n+4})-F(r_n,m_n).
+$$
+
+右边正是这五块的 RSK.7，给 RSK.12。证毕。
+
+五分类与四次二分由此给出同一个离散信息差：前者一次比较五个质量份额与一阶矩份额，后者逐步累加预算合并缺口。连续项比较每个实际层与其 size-bias。分类数五在此表示四个真实剥离层加一份尾项；相同推导适用于任意有限层数。正预算加法的交换、结合性质来自准确求和，正预算域中没有与一般块相加后为零的逆元。
+
+**推论 467.5（加权相对熵的完整极限）。** 同一实际残差满足
+
+$$
+0<r_nD(p_n\Vert q_n)
+=A-L_n
+\le\ell_n+\frac{m_n}{e},\qquad
+r_nD(p_n\Vert q_n)\longrightarrow0.
+\tag{RSK.13}
+$$
+
+**证明。** 命题 467.1 给等号与严格正性。完整对数比公式给
+
+$$
+A-L_n=-\int_0^\infty\log(v)R_n(v)\,dv
+       +r_n\log(m_n/r_n).
+$$
+
+首项不超过 $\ell_n$。令 $x=r_n/m_n>0$，用经典标量不等式 $x\log x\ge-1/e$，得到
+
+$$
+r_n\log(m_n/r_n)=-m_nx\log x\le m_n/e.
+$$
+
+两项相加即为所述上界；§465 的完整预算极限 $\ell_n,m_n\to0$ 给夹逼极限。这个极限保留 $r_n$ 权重；因 $r_n\to0$，它本身不给 $D(p_n\Vert q_n)\to0$，也不给两列概率测度共同弱极限。证毕。
+
+#### 467.4 倾斜测度先例与原算术尾的数学边界
+
+上述通用恒等式属于经典相对熵与变换测度理论。当前钉版 Mathlib 的 [`Measure.Tilted`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/Tilted.lean) 定义
+
+$$
+\frac{d(P^{\mathrm{tilt},g})}{dP}(v)
+=\frac{e^{g(v)}}{\int e^g\,dP}.
+$$
+
+其 [`LogLikelihoodRatio`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/MeasureTheory/Measure/LogLikelihoodRatio.lean) 已有 `llr_tilted_right`、`integrable_llr_tilted_right` 和 `integral_llr_tilted_right`：在原概率测度 $P$ 下，取基测度同为 $P$，便在 $P$ 几乎处处意义下及完整积分意义下得到
+
+$$
+\log\frac{dP}{dP^{\mathrm{tilt},g}}
+=-g+\log\int e^g\,dP,
+\qquad
+D(P\Vert P^{\mathrm{tilt},g})
+=-\int g\,dP+\log\int e^g\,dP,
+\tag{RSK.14}
+$$
+
+其输入是 $g$ 与 $e^g$ 的相应完整可积性。这里取实际 $P_n=p_n(v)dv$、$g(v)=\log v$：正轴上 $e^g=v$，且 $\int e^g\,dP_n=m_n/r_n$，所以其倾斜测度准确为 $Q_n=q_n(v)dv$。§465 的完整对数矩与一阶矩已给出所需纸面输入。
+
+Mathlib 的 [`KullbackLeibler.Basic`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/Basic.lean) 使用扩展非负实数值的 `klDiv`；有限测度的公式另有总质量修正，概率测度时修正为零。RSK.6 给出实际对数似然比的完整可积性，故上述实际概率测度的相对熵有限，并且 $Q_n=P_n^{\mathrm{tilt},\log}$。
+
+有限分类也有现成先例：[`KullbackLeibler.ChainRule`](https://github.com/leanprover-community/mathlib4/blob/db584cd6d46c92f209a44c0f1c829460d327499d/Mathlib/InformationTheory/KullbackLeibler/ChainRule.lean) 的 `klDiv_compProd_left` 给共同条件核下的相对熵不变，`klDiv_compProd_eq_add` 给完整链律。上述经典链式公式在这里的对象为 RSK.3 的原残差归一化与 RSK.8 的实际正分解；RSK.10–RSK.12 进一步把同一原 $A-L_n$ 的分类精确写成真实相邻层及实际五分类的收益。
+
+上述概率构造依赖真实非负密度和准确正预算。算术 Möbius 原子的系数有符号，不能直接归一成这里的概率密度；改为绝对值也会改变原有符号问题。若要控制原 Robin 尾，仍需保持同一来源、同一截止及完整端点的算术运输定理。§466 的固定尺度尾合同和共同临界精度要求继续承担各自的算术义务。RSK.4–RSK.13 解释了实际解析储备怎样随递归与分类变化；原无限算术尾的最终符号仍是独立未决问题。
+
+## 追加锚（本行以下为增补区）
+
+## 468. 同一 Möbius 前缀的有限素数剥离群、Euler 终点与 Fibonacci 分块
+
+沿用 §466 的标准算术 Möbius 函数及完整调和前缀
+
+$$
+H(k)=\sum_{1\le n\le k}\frac{\mu(n)}n,\qquad H(0)=0.
+$$
+
+§467 的概率归一化依赖正密度；本节保留实际有符号的 Möbius 系数，在固定整数截止的同一个有限线性空间上研究准确运输。下列证明使用经典有限 Möbius 分解、几何和及交换幺幂算子，不提出文献优先权主张。所构造的群作用于这些有限算术状态；整个 RH 判据集合的群结构不属于本节的结论。
+
+#### 468.1 固定截止上的整数商算子
+
+固定自然数 $N$，定义实线性空间
+
+$$
+V_N=\{f:\{0,1,\ldots,N\}\to\mathbb R:f(0)=0\}.
+$$
+
+对每个正整数 $d$，定义
+
+$$
+(T_df)(k)=f(\lfloor k/d\rfloor),\qquad 0\le k\le N.
+$$
+
+这是 $V_N$ 上的线性自映射，且 $T_1=I$。以下经典有限算子身份用于同一实际前缀的运输：对任意正整数 $d,e$，
+
+$$
+\boxed{T_dT_e=T_{de}=T_eT_d.}
+\tag{FG.1}
+$$
+
+**证明。** 对每个 $0\le k\le N$，准确整数除法恒等式
+
+$$
+\left\lfloor\frac{\lfloor k/d\rfloor}{e}\right\rfloor
+=\left\lfloor\frac{k}{de}\right\rfloor
+$$
+
+给逐坐标相等，包括 $k=0$。证毕。
+
+若 $p\ge2$，则 $T_p^j=T_{p^j}$。每当 $p^K>N$，所有坐标都落在 $f(0)=0$，故 $T_p^K=0$。定义
+
+$$
+A_p=p^{-1}T_p,\qquad U_p=I-A_p,\qquad
+G_{p,K}=\sum_{0\le j<K}A_p^j.
+$$
+
+对全部自然数 $K$，包括 $K=0$，有
+
+$$
+\boxed{U_pG_{p,K}=G_{p,K}U_p=I-A_p^K.}
+\tag{FG.2}
+$$
+
+**证明。** 在有限和中展开 $(I-A_p)\sum_{j<K}A_p^j$，相邻幂次正负抵消，只剩 $I-A_p^K$；反向乘积相同。若 $K=0$，和为空，且 $I-A_p^0=0$。证毕。
+
+若 $p^K>N$，FG.2 的右边为 $I$，所以
+
+$$
+\boxed{U_p^{-1}=G_{p,K}.}
+\tag{FG.3}
+$$
+
+FG.1 给不同 $p$ 的 $T_p,A_p,U_p,G_{p,K}$ 全部交换。在 $V_N$ 的递增非零坐标基中，$T_p$ 严格下三角，$U_p$ 对角线恒为一，且上述有限几何和给其实际两侧逆。$N=0$ 时 $V_0$ 为零空间，这些身份仍作为零空间上的映射成立；以下范数及最小非零阶的陈述取 $N\ge1$。
+
+#### 468.2 实际素数剥离的准确前缀运输
+
+令 $S$ 为有限素数集合，定义 $Q_S=\prod_{q\in S}q$，空积为一，并令
+
+$$
+H_S(k)=\sum_{\substack{1\le n\le k\\(n,Q_S)=1}}\frac{\mu(n)}n,
+\qquad H_S(0)=0.
+$$
+
+把这些实际函数限制到 $0,\ldots,N$，就得到同一个 $V_N$ 中的状态。$H_\varnothing=H$，且 $H_{\{2\}}$ 正是 §466 的实际奇调和前缀 $H_{\mathrm o}$。
+
+**命题 468.1（实际素数一步与有限集合运输）。** 若 $p$ 是不属于 $S$ 的素数，则在 $V_N$ 上
+
+$$
+\boxed{H_S=U_pH_{S\cup\{p\}}.}
+\tag{FG.4}
+$$
+
+对任意有限素数集合 $S$，有准确双向身份
+
+$$
+\boxed{H=\left(\prod_{p\in S}U_p\right)H_S,
+\qquad H_S=\left(\prod_{p\in S}U_p^{-1}\right)H.}
+\tag{FG.5}
+$$
+
+**证明。** 对每个 $k$，把与 $Q_S$ 互素的整数 $1\le n\le k$ 分为 $p$ 不整除和 $p$ 整除两部分。第一部分正是 $H_{S\cup\{p\}}(k)$。第二部分准确写成 $n=pm$，其中 $1\le m\le\lfloor k/p\rfloor$。
+
+若 $p\mid m$，则 $p^2\mid pm$，所以 $\mu(pm)=0$。若 $p\nmid m$，标准 Möbius 函数的互素乘法性给 $\mu(pm)=-\mu(m)$。因为 $p\notin S$，有 $(pm,Q_S)=1$ 当且仅当 $(m,Q_S)=1$。因此整个第二部分准确等于
+
+$$
+-p^{-1}H_{S\cup\{p\}}(\lfloor k/p\rfloor),
+$$
+
+包括全部正端点以及 $k=0$ 的空和。这就是 FG.4。
+
+从空集合开始，依次使用 FG.4，得到 FG.5 的第一个身份；FG.1 消去剥离顺序的影响。每个 $U_p$ 的实际两侧逆由 FG.3 给出，故再应用有限逆算子积得到第二个身份。全部整数商和几何层均保留。证毕。
+
+#### 468.3 全部素数剥离的实际 Euler 终点
+
+令 $P_N=\{p:p\text{ 素且 }p\le N\}$，并定义
+
+$$
+u_N(0)=0,\qquad u_N(k)=1\quad(1\le k\le N).
+$$
+
+**命题 468.2（原始前缀的有限 Euler 算子积）。** 对每个自然数 $N$，
+
+$$
+H_{P_N}=u_N,\qquad
+\boxed{H=\left(\prod_{p\le N}U_p\right)u_N.}
+\tag{FG.6}
+$$
+
+此外，对 $0\le k\le N$，准确有限展开为
+
+$$
+\left(\prod_{p\le N}(I-p^{-1}T_p)\right)u_N(k)
+=\sum_{\substack{1\le d\le k\\d\text{ squarefree}}}
+  \frac{\mu(d)}d
+=H(k).
+\tag{FG.7}
+$$
+
+**证明。** 对每个 $1\le k\le N$，任何 $2\le n\le k$ 都有素因子 $p\le n\le N$，所以该 $n$ 不与 $Q_{P_N}$ 互素。只有 $n=1$ 留下，其系数 $\mu(1)/1=1$。在 $k=0$ 时两边都为零。因此 $H_{P_N}=u_N$，再用 FG.5 就得 FG.6。
+
+也可直接展开有限算子积。每个素数子集产生唯一的平方自由整数 $d$，相应算子积为 $T_d$，系数为 $\mu(d)/d$。若 $d>k$，则 $u_N(\lfloor k/d\rfloor)=u_N(0)=0$；若 $d\le k$，则该值为一。所有 $d\le k$ 的素因子都属于 $P_N$，故没有漏项。非平方自由的 $d$ 满足 $\mu(d)=0$，所以此展开正是原始完整和，得到 FG.7。
+
+当 $N=0$ 时，$V_0$ 为零空间，产品为空积，且 $H=u_0=0$。当 $N=1$ 时，同样是空积，且 $H=u_1$。整个推导只含有限项，没有使用无穷积或无穷换序。证毕。
+
+#### 468.4 正逆算子的准确完整范数
+
+对 $N\ge1$，在 $V_N$ 上取最大值范数及相应算子范数。对 $p\ge2$，记
+
+$$
+K_p(N)=\min\{K\ge1:p^K>N\}.
+$$
+
+**命题 468.3（实际单素数与有限素数集合的逆预算）。** $T_p$ 的幂零阶准确为 $K_p(N)$，并且
+
+$$
+\boxed{\|U_p^{-1}\|_\infty
+=\sum_{j=0}^{K_p(N)-1}p^{-j}
+=\frac{1-p^{-K_p(N)}}{1-p^{-1}}
+<\frac p{p-1}.}
+\tag{FG.8}
+$$
+
+若 $S$ 为有限素数集合，则对全部 $f\in V_N$ 和 $0\le k\le N$，
+
+$$
+\left(\prod_{p\in S}U_p^{-1}\right)f(k)
+=\sum_{\substack{1\le d\le k\\\text{every prime divisor of }d\text{ lies in }S}}
+  \frac1d f(\lfloor k/d\rfloor).
+\tag{FG.9}
+$$
+
+相应完整范数准确为
+
+$$
+\boxed{\left\|\prod_{p\in S}U_p^{-1}\right\|_\infty
+=\sum_{\substack{1\le d\le N\\\operatorname{supp}(d)\subseteq S}}\frac1d
+\le\prod_{p\in S}\frac p{p-1}.}
+\tag{FG.10}
+$$
+
+其中 $\operatorname{supp}(d)$ 表示 $d$ 的素因子集合，故 $d=1$ 在每个 $S$ 的和中出现一次。
+
+**证明。** 令 $K=K_p(N)$。由 $p^K>N$，已有 $T_p^K=0$；由最小性，$p^{K-1}\le N$。取 $f=u_N$，在 $k=p^{K-1}$ 处得到 $T_p^{K-1}f(k)=1$，所以此幂不为零，幂零阶恰为 $K$。
+
+FG.3 中各系数 $p^{-j}$ 非负，所以逆算子的范数不超过全部有限几何权之和。在 $k=N$ 处取 $f=u_N$，其范数为一，且对每个 $j<K$，$\lfloor N/p^j\rfloor\ge1$，因而达到全部权和。这证明 FG.8 的准确等号，有限几何求和给其闭式与严格上界。
+
+对有限 $S$，每个逆算子都是有限幂和。唯一素分解把各 $p$ 的幂次元组组合成唯一整数 $d$，权恰为 $1/d$。若 $d\le k\le N$，每个幂次自动小于 $K_p(N)$；其余元组的整数商为零，相应项为 $f(0)=0$。这给出 FG.9，没有漏掉任何可行 $d$，也没有重计系数。
+
+FG.9 的权全部非负，故算子范数不超过 $d\le N$ 的完整权和。在 $k=N$ 处取 $f=u_N$，每个允许的 $d$ 都给 $f(\lfloor N/d\rfloor)=1$，所以此上界准确达到。与各素数的完整几何和比较便得到 FG.10。证毕。
+
+固定有限小素数集合 $S$ 的去除因而有固定预算；若 $S=P_N$ 随截止增长，则每个 $d\le N$ 的素因子都在 $S$ 中，准确逆算子范数变为普通调和和 $\sum_{d\le N}1/d$，随 $N$ 增长。
+
+FG.6 结合 FG.9 还给同一实际前缀的完整卷积：
+
+$$
+\boxed{\sum_{1\le d\le k}\frac1d H(\lfloor k/d\rfloor)=1
+\quad(1\le k\le N).}
+\tag{FG.11}
+$$
+
+**证明。** 用 $S=P_N$ 的实际逆算子积作用于 FG.6，右边恢复 $u_N$，左边由 FG.9 展开。对 $d\le k\le N$，素因子条件自动成立，且 $u_N(k)=1$，就是 FG.11。对任意整数 $k\ge1$，取 $N=k$，即得该卷积身份在所有正截止上的陈述。证毕。
+
+#### 468.5 实际素数生成元的忠实交换群
+
+**命题 468.4（固定截止上的自由交换群表示）。** 设 $N\ge1$。$U_p$（$p\in P_N$）生成 $GL(V_N)$ 的交换子群，并且自然群同态
+
+$$
+\mathbb Z^{P_N}\longrightarrow GL(V_N),\qquad
+(m_p)_{p\in P_N}\longmapsto\prod_{p\in P_N}U_p^{m_p}
+$$
+
+是单射。因此该子群同构于自由交换群 $\mathbb Z^{\pi(N)}$。
+
+**证明。** 各 $U_p$ 交换且可逆，故所述映射是群同态。若有非零指数，取指数非零的最小素数 $p$。较小素数的指数全为零。对 $q>p$，$T_q$ 在全部坐标 $k\le p$ 上为零，故 $U_q$ 及其有限几何逆在这些坐标上恒等，其全部整数幂同样恒等。
+
+在同一坐标段上，$T_p^2=0$。因此对全部整数 $m$，包括正、零和负指数，有
+
+$$
+U_p^m=I-(m/p)T_p\qquad\text{在坐标 }k\le p\text{ 上}.
+$$
+
+非负指数由平方为零的二项式展开得到；负指数由此段上的 $(I-A_p)^{-1}=I+A_p$ 得到。取 $e_1(1)=1$，其余坐标为零。产品在坐标 $p$ 的值为 $-m_p/p\ne0$，而恒等作用给 $e_1(p)=0$。因此产品不是恒等，得到单射。若 $N=1$，素数集合为空，陈述是平凡群的情形。证毕。
+
+这个群包含有符号线性状态与反向运输。FG.3 的正有限几何预算是其中具体的重构；所有群元素不能因此被视为非负预算，也没有无费用的逆操作。
+
+#### 468.6 同一有限逆算子的 Fibonacci 分块与完整余项
+
+**推论 468.5（准确分块与原余项运输）。** 对同一个 $A_p$，取 $G_{p,0}=0$。对全部自然数 $a,b$，
+
+$$
+\boxed{G_{p,a+b}=G_{p,a}+A_p^aG_{p,b}.}
+\tag{FG.12}
+$$
+
+按标准 Fibonacci 数列 $F_0=0$、$F_1=1$、$F_{j+2}=F_{j+1}+F_j$，对全部自然数 $j$，
+
+$$
+\boxed{G_{p,F_{j+2}}
+=G_{p,F_{j+1}}+A_p^{F_{j+1}}G_{p,F_j}.}
+\tag{FG.13}
+$$
+
+若 $U_pf=g$，则对全部自然数 $K$ 有完整余项身份
+
+$$
+\boxed{f=G_{p,K}g+A_p^Kf.}
+\tag{FG.14}
+$$
+
+**证明。** 将 $G_{p,a+b}$ 的有限和拆成前 $a$ 项及其余 $b$ 项，并从后一部分提出 $A_p^a$，即得 FG.12，包括 $a=0$ 或 $b=0$。把 $a=F_{j+1}$、$b=F_j$ 代入，得到 FG.13。
+
+对 $N\ge1$，明确取 $K=K_p(N)$，就有 $A_p^{K_p(N)}=0$。若 $F_j\ge K_p(N)$，则 $A_p^{F_j}=0$，所以 $G_{p,F_j}=U_p^{-1}$；继续分块只是追加零层。Fibonacci 因而给同一个实际有限逆算子的准确分块顺序；任意其它自然数拆分也满足 FG.12。
+
+若 $U_pf=g$，用 $G_{p,K}$ 作用于两边，再使用 FG.2，得到 $G_{p,K}g=(I-A_p^K)f$，移项就是 FG.14。当 $K=0$ 时，它是 $f=0+f$。证毕。
+
+Fibonacci 分块必须运输 FG.14 的同一余项；只有达到实际幂零阶以后，才可将其置零。$p=2$、$f=H_{\mathrm o}$、$g=H$ 时，FG.14 正是 §466 的完整奇调和递归。Fibonacci 身份本身没有给出新的 Möbius 符号相消或 Robin 临界符号界。
+
+#### 468.7 截止 5040 的估值、递归阶与分块长度
+
+**命题 468.6（5040 的两种准确容量）。** $5040=2^4\cdot3^2\cdot5\cdot7$，因此整数本身在素数 $2,3,5,7$ 上的估值为 $(4,2,1,1)$。在整个空间 $V_{5040}$ 上，各整数商算子的幂零阶与首个覆盖该阶的 Fibonacci 长度为
+
+| $p$ | $p^{K-1}\le5040<p^K$ | $K_p(5040)$ | 首个覆盖的 Fibonacci 长度 |
+| --- | --- | ---: | ---: |
+| $2$ | $4096\le5040<8192$ | $13$ | $F_7=13$ |
+| $3$ | $2187\le5040<6561$ | $8$ | $F_6=8$ |
+| $5$ | $3125\le5040<15625$ | $6$ | $F_6=8$ |
+| $7$ | $2401\le5040<16807$ | $5$ | $F_5=5$ |
+
+最大非零整数商幂次为 $(12,7,5,4)$。对 $S=\{2,3,5,7\}$，固定完整几何预算为
+
+$$
+\prod_{p\in S}\frac p{p-1}=\frac{35}{8},
+$$
+
+而 FG.10 的实际有限预算是完整 $S$-smooth 倒数和，严格小于 $35/8$。
+
+**证明。** 上述因子分解直接给四个素数估值。各行的相邻素数幂分别为 $2^{12}=4096$、$2^{13}=8192$，$3^7=2187$、$3^8=6561$，$5^5=3125$、$5^6=15625$，以及 $7^4=2401$、$7^5=16807$。由 $K_p$ 的定义得到四个幂零阶，并由 $F_5=5$、$F_6=8$、$F_7=13$ 得表中的首个覆盖长度。最大非零幂次是各 $K_p-1$。
+
+乘四个几何上界得到
+
+$$
+2\cdot\frac32\cdot\frac54\cdot\frac76=\frac{35}{8}.
+$$
+
+实际有限和由 FG.10 给出；完整几何积还包含超过截止的正权项，故该有限和严格小于 $35/8$。证毕。
+
+整数本身的估值容量与整个区间的递归容量因而分别为 $(4,2,1,1)$ 与 $(12,7,5,4)$。同一有限算子构造适用于其它截止 $N$；上述表并未解释 $5040$ 在 Robin 判据中的极端性，也未给拓扑上的 Klein 瓶染色例外与 FG.1–FG.14 的数学映射。
+
+#### 468.8 完整算术衰减与原临界尾的边界
+
+FG.5 与 FG.8–FG.10 准确运输固定有限素数剥离的预算。它们保留标准 Möbius 系数、同一整数截止及全部端点；§466 的 $p=2$ 身份是其中实际的一步及完整递归。任意素数集合的这类有限运输不自动给出随截止增长的统一逆预算，正如 $S=P_N$ 时的准确范数为增长的普通调和和。
+
+对同一完整 $H$ 的 Gaussian 型定量衰减仍是另一项算术义务。同时增长的素数集合 $S$、Robin 增长权、共同临界尺度以及原有符号尾的符号也各须控制。有限交换群与 Fibonacci 分块没有自行履行这些义务；原 RH 目标仍需相应的准确估计。
+
+## 追加锚（本行以下为增补区）
+
+## 469. 实际素数运输的幂次衰减类、完整逆成本与同一 H 的商区间变差
+
+保持 §468 的同一空间 $V_N$、整数商算子 $T_d$、$A_p=p^{-1}T_p$、$U_p=I-A_p$，以及标准 Möbius 调和前缀 $H,H_S$。任意向量只用于计算算子范数；前缀运输仍消费 FG.4–FG.5 的实际算术身份。本节使用经典加权最大范数、有限几何和及矩阵行范数，给出这些实际有限算子的准确成本，不提出文献优先权主张。
+
+#### 469.1 加权范数与完整整数商估计
+
+固定 $0\le\alpha<1$ 和自然数 $N$，在 $V_N$ 上定义
+
+$$
+\|f\|_{\alpha,N}
+=\max\left(\{0\}\cup
+ \{(k+1)^\alpha|f(k)|:1\le k\le N\}\right).
+$$
+
+对 $N\ge1$，各权严格正，此式是范数；齐次性与三角不等式由各坐标的绝对值及有限最大值给出。对 $N=0$，$V_0$ 为零空间，此式给其唯一向量范数零。用同一记号表示诱导算子范数；零空间上包括恒等及逆映射在内的全部算子范数均为零。以下非空行最大值公式取 $N\ge1$。
+
+对每个正整数 $d$ 和 $k\ge0$，写 $k=dq+r$，其中 $0\le r<d$。准确整数商给
+
+$$
+k+1=dq+r+1\le d(q+1),\qquad
+\lfloor k/d\rfloor+1\ge(k+1)/d.
+\tag{WN.1}
+$$
+
+若 $q=0$，则 $T_df(k)=f(0)=0$。若 $q\ge1$，则
+
+$$
+(k+1)^\alpha|T_df(k)|
+\le\left(\frac{k+1}{q+1}\right)^\alpha\|f\|_{\alpha,N}
+\le d^\alpha\|f\|_{\alpha,N}.
+$$
+
+因此 $\|T_d\|_{\alpha,N}\le d^\alpha$，包括 $\alpha=0$。这一估计保留准确 floor 和零坐标。
+
+#### 469.2 整数商算子的准确分段范数
+
+**命题 469.1（同一实际 $T_d$ 的完整范数）。** 对 $N\ge1$ 及正整数 $d$，
+
+$$
+\|T_d\|_{\alpha,N}
+=\begin{cases}
+0,&N<d,\\
+\displaystyle\max_{d\le k\le N}
+ \left(\frac{k+1}{\lfloor k/d\rfloor+1}\right)^\alpha,&N\ge d,
+\end{cases}
+\tag{WN.2}
+$$
+
+并有准确闭式
+
+$$
+\boxed{
+\|T_d\|_{\alpha,N}
+=\begin{cases}
+0,&N<d,\\
+((N+1)/2)^\alpha,&d\le N<2d-1,\\
+d^\alpha,&N\ge2d-1.
+\end{cases}}
+\tag{WN.3}
+$$
+
+所以对 $p\ge2$，
+
+$$
+\|A_p\|_{\alpha,N}=p^{-1}\|T_p\|_{\alpha,N}
+\le p^{\alpha-1}<1.
+\tag{WN.4}
+$$
+
+**证明。** 若 $N<d$，所有商为零，算子为零。其余情形的上界由 WN.1 的坐标估计给出。对任一最大行 $k$，令 $q=\lfloor k/d\rfloor\ge1$，取仅在 $q$ 非零的向量 $f(q)=(q+1)^{-\alpha}$。其范数为一，且输出在 $k$ 处达到该行权比，证明 WN.2 的准确等号。
+
+当 $d\le N<2d-1$ 时，唯一非零商为一，最大权比在 $k=N$ 处为 $(N+1)/2$。当 $N\ge2d-1$ 时，取 $k=2d-1$，商为一且权比为 $d$，达到 WN.1 的上界。这给 WN.3。$d=1$ 时中间区间为空，且 $T_1=I$。$\alpha=0$ 时每个非零情形的范数均为一，零算子的情形仍为零。
+
+标量乘法给 $\|A_p\|=p^{-1}\|T_p\|$。因为 $p>1$ 且 $\alpha-1<0$，有 $p^{\alpha-1}<1$，得到 WN.4。若 $p>N$，则 $A_p=0$。证毕。
+
+#### 469.3 一个素数的正向成本与完整正逆成本
+
+**命题 469.2（实际 $U_p$ 及其逆的准确加权范数）。** 对 $N\ge1$、$p\ge2$，
+
+$$
+\boxed{\|U_p\|_{\alpha,N}
+=1+p^{-1}\|T_p\|_{\alpha,N}
+\le1+p^{\alpha-1}.}
+\tag{WN.5}
+$$
+
+取 $K=K_p(N)$、$q=p^{\alpha-1}$，则
+
+$$
+\boxed{\|U_p^{-1}\|_{\alpha,N}
+=\max_{1\le k\le N}
+ \sum_{\substack{0\le j<K\\p^j\le k}}
+ p^{-j}
+ \left(\frac{k+1}{\lfloor k/p^j\rfloor+1}\right)^\alpha.}
+\tag{WN.6}
+$$
+
+相应有限几何上界为
+
+$$
+\boxed{\|U_p^{-1}\|_{\alpha,N}
+\le\sum_{j=0}^{K-1}q^j
+=\frac{1-q^K}{1-q}
+<\frac1{1-p^{\alpha-1}}.}
+\tag{WN.7}
+$$
+
+在 $0<\alpha<1$ 时，WN.7 的有限几何上界准确达到，当且仅当
+
+$$
+N\ge2p^{K-1}-1.
+\tag{WN.8}
+$$
+
+**证明。** $k\ge p$ 的行有两个不同的非零坐标 $k$ 和 $\lfloor k/p\rfloor$，系数分别为 $1$ 和 $-1/p$。其加权绝对行和等于一加该整数商行的权比除以 $p$。取这两个输入坐标具有相反符号及相应逆权，就达到该行和。$k<p$ 的行仅有对角系数一，所以 WN.2 给 WN.5，包括 $p>N$ 时范数为一。
+
+FG.3 的逆算子系数全为正，每个范数不超过一的向量给 WN.6 中相应的行和上界。取
+
+$$
+f_\alpha(0)=0,\qquad
+f_\alpha(k)=(k+1)^{-\alpha}\quad(1\le k\le N),
+$$
+
+其加权范数为一，且同时达到每个正系数行和。因此 WN.6 给准确范数。这里 $f_\alpha$ 是范数见证，不替代原实际 Möbius 前缀。
+
+对每个 $d=p^j$ 应用 WN.1，得到行和各项不超过 $q^j$，有限求和就是 WN.7。$\alpha=0$ 时各非零权比均为一，最大行 $k=N$ 包含全部 $j<K$，准确恢复 FG.8。
+
+若 $\alpha>0$，达到全部 $K$ 项的几何上界需要 $k\ge p^{K-1}$，且最高幂次的 floor 权比达到 $p^{K-1}$。后者等价于 $k+1$ 可被 $p^{K-1}$ 整除；使该商非零的最小这样的 $k$ 是 $2p^{K-1}-1$。此坐标还同时达到所有低幂次的权比。若它超过 $N$，少于 $K$ 项的行缺少正项，而含全部 $K$ 项的行在最高幂次处有严格权比损失，有限最大值就严格小于几何上界。这证明 WN.8。$K=1$ 时阈值为一。
+
+当 $N=1$ 时，每个 $p\ge2$ 都给 $T_p=0$、$U_p=U_p^{-1}=I$，加权范数为一。$N=0$ 时这些映射在零空间的算子范数为零；统一上界仍有效，非空行最大值公式则取 $N\ge1$。证毕。
+
+#### 469.4 完整有限余项及其收缩预算
+
+**命题 469.3（同一原余项的加权运输）。** 对全部自然数 $K$，若 $f,g\in V_N$ 且 $U_pf=g$，则保持 FG.14 的完整身份
+
+$$
+f=G_{p,K}g+A_p^Kf,
+$$
+
+并且
+
+$$
+\boxed{\|f-G_{p,K}g\|_{\alpha,N}
+\le p^{(\alpha-1)K}\|f\|_{\alpha,N}.}
+\tag{WN.9}
+$$
+
+对 $N\ge1$，余项算子准确范数为 $p^{-K}\|T_{p^K}\|_{\alpha,N}$，其中 $\|T_{p^K}\|$ 由 WN.2–WN.3 给出；当 $p^K>N$ 时，余项准确为零。
+
+**证明。** FG.2 给 $G_{p,K}g=(I-A_p^K)f$，移项即为原完整身份。又 $A_p^K=p^{-K}T_{p^K}$，应用 WN.1 及标量范数齐次性得到 WN.9 和准确余项范数。$K=0$ 时 $G_{p,0}=0$，身份为 $f=0+f$，估计为 $\|f\|\le\|f\|$。在零空间上两边均为零。证毕。
+
+部分几何和的准确范数也由 WN.6 的正行和论证给出：把范围 $j<K_p(N)$ 改为 $j<K$ 即可，其上界是对应的有限 $q^j$ 和。超过实际幂零阶的项准确为零。因此 FG.12–FG.13 的 Fibonacci 分块可以同时运输这一收缩估计与同一有限余项；达到真实截止阈值以后才可删去余项。
+
+对实际素数一步，取 $p\notin S$、$f=H_{S\cup\{p\}}$、$g=H_S$，就是 FG.4 的原算术状态。幂零以前，WN.9 消费的是 $f$ 的实际有限范数，没有据此设定它的统一衰减。幂零以后，余项消失，完整逆运输由 $g$ 的预算独立控制。
+
+#### 469.5 固定素数集合保持同一幂次衰减类
+
+对固定有限素数集合 $S$，定义
+
+$$
+B_\alpha(S)=\prod_{p\in S}(1-p^{\alpha-1})^{-1},\qquad
+C_\alpha(S)=\prod_{p\in S}(1+p^{\alpha-1}).
+$$
+
+二者均有限，空积为一，且不依赖截止 $N$。
+
+**命题 469.4（实际前缀的双向幂次运输）。** 对全部自然数 $N$，
+
+$$
+\boxed{
+\|H_S\|_{\alpha,N}\le B_\alpha(S)\|H\|_{\alpha,N},\qquad
+\|H\|_{\alpha,N}\le C_\alpha(S)\|H_S\|_{\alpha,N}.}
+\tag{WN.10}
+$$
+
+因此，对每个固定 $S$，两个实际前缀的给定衰减类满足
+
+$$
+H(k)=O((k+1)^{-\alpha})
+\quad\Longleftrightarrow\quad
+H_S(k)=O((k+1)^{-\alpha}).
+$$
+
+**证明。** 对 FG.5 的同一双向身份应用算子范数的次乘性，再分别使用 WN.5 与 WN.7，就得 WN.10。若 $|H(k)|\le C(k+1)^{-\alpha}$ 对所有 $k\ge1$ 成立，则各截止的 $\|H\|_{\alpha,N}\le C$；对每个 $k$ 取 $N=k$，WN.10 给
+
+$$
+|H_S(k)|\le B_\alpha(S)C(k+1)^{-\alpha}.
+$$
+
+反向同理，常数为 $C_\alpha(S)C$。这证明两方向的衰减类身份，包括 $\alpha=0$、$\alpha=1/2$。$N=0$ 时两边范数均为零；$N=1$ 时各前缀唯一正坐标都等于一，逆与正向算子均为恒等。空集合 $S$ 给两个预算一及 $H_S=H$。证毕。
+
+$\alpha=1/2$ 表示这项条件运输的平方根幂次尺度。这里没有证明实际 $H$ 或 $H_S$ 具有该衰减，也没有给出此端点与 RH 的等价定理；原 Robin 有符号尾的符号仍须另证。
+
+#### 469.6 完整正逆行范数与随截止增长的成本
+
+**命题 469.5（实际有限素数逆成本及全素数增长）。** 对 $N\ge1$ 和有限素数集合 $S$，
+
+$$
+\boxed{
+\left\|\prod_{p\in S}U_p^{-1}\right\|_{\alpha,N}
+=\max_{1\le k\le N}
+ \sum_{\substack{1\le d\le k\\\operatorname{supp}(d)\subseteq S}}
+ \frac1d
+ \left(\frac{k+1}{\lfloor k/d\rfloor+1}\right)^\alpha.}
+\tag{WN.11}
+$$
+
+此准确范数不超过
+
+$$
+\sum_{\substack{1\le d\le N\\\operatorname{supp}(d)\subseteq S}}
+ d^{\alpha-1}
+\le B_\alpha(S).
+\tag{WN.12}
+$$
+
+若 $S=P_N$ 且 $0<\alpha<1$，则
+
+$$
+\boxed{
+\frac{(N+1)^\alpha}{2^{\alpha+1}}
+\le\left\|\prod_{p\le N}U_p^{-1}\right\|_{\alpha,N}
+\le\sum_{d=1}^{N}d^{\alpha-1}
+\le1+\frac{N^\alpha-1}{\alpha}.}
+\tag{WN.13}
+$$
+
+所以对每个固定 $0<\alpha<1$，全素数逆范数为 $\Theta(N^\alpha)$，在 $\alpha=1/2$ 时为 $\Theta(\sqrt N)$。$\alpha=0$ 时，它准确等于普通调和和 $\sum_{d=1}^N1/d$。
+
+**证明。** FG.9 给完整正系数逆展开。每个范数不超过一的向量给 WN.11 的行和上界；同一 $f_\alpha(k)=(k+1)^{-\alpha}$ 同时达到各行，因而最大行和就是准确算子范数。WN.1 把每个权比控制为 $d^\alpha$，给 WN.12 的第一个上界。对各素数的非负几何和求有限积，完整 $S$-smooth 和不超过 $B_\alpha(S)$，得到第二个上界。
+
+当 $\alpha=0$ 时，各非零权比等于一，行和随 $k$ 增加，最大值在 $N$，准确恢复 FG.10。当 $S=P_N$ 时，所有 $d\le k$ 的素因子条件自动成立，因此此范数为普通调和和。其增长也由初等积分比较给出。
+
+对 $\alpha>0$ 的全素数下界，取 WN.11 的行 $k=N$，仅保留 $d>\lfloor N/2\rfloor$。每个这样的 $d$ 都有 $\lfloor N/d\rfloor=1$，共有 $\lceil N/2\rceil$ 项，每项倒数至少为 $1/N$，所以其倒数和至少为 $1/2$。该行贡献因而至少为 $(N+1)^\alpha/2^{\alpha+1}$。
+
+上界由 WN.12 保留全部整数 $d\le N$ 给出。因为 $x^{\alpha-1}$ 递减，
+
+$$
+\sum_{d=1}^N d^{\alpha-1}
+\le1+\int_1^N x^{\alpha-1}\,dx
+=1+\frac{N^\alpha-1}{\alpha}.
+$$
+
+这证明 WN.13 及所述阶数，包括 $N=1$ 的上界等号；不需要任何素数分布渐近。证毕。
+
+正 $\alpha$ 时，准确逆范数是完整行最大值。floor 权比会跳变，不能把 WN.11 的最大值未经证明地替换为 $k=N$。零空间 $N=0$ 的算子范数仍为零；$N=1$ 的实际逆为恒等，范数为一。
+
+固定 $S$ 的 WN.10 因而不能直接作为增长集合 $S_N$ 的统一预算。全素数情形给出明确的逆成本增长；同时增长的素数集合、实际衰减率与原截止需要联合估计，有限可逆身份本身保持成立。
+
+#### 469.7 同列有符号系数与原 H 的完整商区间变差
+
+**命题 469.6（实际正向成本的商区间身份）。** 取 $N\ge1$ 和有限素数集合 $S$。定义
+
+$$
+c_{k,j}(S)=
+\sum_{\substack{1\le d\le k\\d\text{ squarefree}\\
+ \operatorname{supp}(d)\subseteq S\\\lfloor k/d\rfloor=j}}
+ \frac{\mu(d)}d,
+\qquad 1\le j\le k\le N.
+$$
+
+则实际正向算子范数准确为
+
+$$
+\left\|\prod_{p\in S}U_p\right\|_{\alpha,N}
+=\max_{1\le k\le N}(k+1)^\alpha
+ \sum_{j=1}^{k}\frac{|c_{k,j}(S)|}{(j+1)^\alpha}.
+\tag{WN.14}
+$$
+
+在 $S=P_N$ 时，全部完整系数来自同一原始前缀：
+
+$$
+\boxed{c_{k,j}(P_N)
+=H(\lfloor k/j\rfloor)-H(\lfloor k/(j+1)\rfloor).}
+\tag{WN.15}
+$$
+
+因此完整正向成本正是
+
+$$
+\boxed{
+\left\|\prod_{p\le N}U_p\right\|_{\alpha,N}
+=\max_{1\le k\le N}(k+1)^\alpha
+\sum_{j=1}^{k}
+\frac{|H(\lfloor k/j\rfloor)-H(\lfloor k/(j+1)\rfloor)|}
+ {(j+1)^\alpha}.}
+\tag{WN.16}
+$$
+
+**证明。** 展开有限 $U_p$ 积，每个素数子集产生平方自由 $d$，系数为标准 $\mu(d)/d$。若 $d>k$，输出为 $f(0)=0$；其余项按相同输出坐标 $j=\lfloor k/d\rfloor$ 合并，便得到系数 $c_{k,j}(S)$。因此每行输出是 $\sum_{j=1}^k c_{k,j}(S)f(j)$，加权绝对行和给 WN.14 的上界。取最大行，令输入坐标具有该行系数的符号与对应逆权 $(j+1)^{-\alpha}$，其范数为一并达到该行和，证明准确等号。每行对角系数 $c_{k,k}=1$，所以范数见证不是零向量。
+
+若 $S=P_N$，每个 $d\le k\le N$ 的素因子都属于 $S$，且非平方自由项的 Möbius 系数为零。准确整数商条件为
+
+$$
+\lfloor k/d\rfloor=j
+\quad\Longleftrightarrow\quad
+\lfloor k/(j+1)\rfloor<d\le\lfloor k/j\rfloor.
+$$
+
+把这段原始有限和写成两个完整前缀之差，就得到 WN.15，两个端点均保留。$j=k$ 时，它给 $H(1)-H(0)=1$；若两个整数商相同，区间为空，系数准确为零。将 WN.15 代入 WN.14 就是 WN.16。证毕。
+
+WN.14 的绝对值作用于同列的有符号系数合并以后；WN.11 的逆系数则全部为正。这将正向成本落实为同一实际 $H$ 的完整有限加权商区间变差，没有把 Möbius 系数改成无符号模型。$\alpha=0$ 时这些式子同样成立；$N=1$ 时唯一行系数为一；$N=0$ 时无正坐标，原零空间算子范数为零。
+
+#### 469.8 衰减输入、完整变差估计与原有符号尾的义务
+
+固定有限素数剥离可以保持已经给定的幂次衰减类。剥离全部素数时，平方根加权逆成本却随截止按 $\sqrt N$ 增长。WN.16 给正向成本的同源完整变差身份，但尚无使该变差足够小的估计；恒等式没有自行建立原实际 $H$ 的衰减。
+
+原 Robin 有符号尾仍有自己的增长权、截止、完整端点及共同临界尺度义务。要把这里的变差成本用于该尾，仍须准确控制同一来源、同一尺度的运输；有限绝对范数也不提供所需算术符号。对实际商区间系数的定量估计和增长集合 $S_N$ 的联合预算是尚未完成的数学问题，RH 及原尾的最终符号继续开放。
+
+## 追加锚（本行以下为增补区）
+
+## 470. 单点商块与增长素数剥离的统一算子预算障碍
+
+保持 §468–§469 的实际空间 $V_N$、$T_d$、$U_p$、$P_N$ 与标准 Möbius 调和前缀 $H$。本节给出 WN.16 中完整正向成本的下界，确定随截止增长的全素数剥离不能在任意输入的加权最大范数上拥有统一预算。所用素数倒数发散是经典定理，见 Aigner–Ziegler《Proofs from THE BOOK》第一章的 Erdős 证明；有限最大范数及商块恒等式沿用 §469。本节不提出这些经典结果的数学优先权主张。
+
+#### 470.1 同一实际前缀的行预算
+
+对自然数 $k$ 与正整数 $j$，定义
+
+$$
+c_{k,j}=H(\lfloor k/j\rfloor)-H(\lfloor k/(j+1)\rfloor),
+\qquad
+V_k(w)=\sum_{j=1}^{k}|c_{k,j}|w(j).
+\tag{QO.1}
+$$
+
+由 WN.15，$c_{k,j}$ 正是所有 $1\le d\le k$ 且 $\lfloor k/d\rfloor=j$ 的实际有符号系数 $\mu(d)/d$ 之和。正整数商的完整区间为 $(\lfloor k/(j+1)\rfloor,\lfloor k/j\rfloor]$。商零的实际纤维为空；QO.1 的前缀差公式只对正 $j$ 使用。
+
+对 $\alpha\ge0$，定义完整加权行成本
+
+$$
+w_{k,\alpha}(j)=\left(\frac{k+1}{j+1}\right)^\alpha,
+\qquad
+R_\alpha(k)=V_k(w_{k,\alpha}).
+\tag{QO.2}
+$$
+
+$k=0$ 时这些行和均为空，值为零；$k\ge1$ 时 WN.16 给
+
+$$
+\left\|\prod_{p\le N}U_p\right\|_{\alpha,N}
+=\max_{1\le k\le N}R_\alpha(k)
+\qquad(N\ge1).
+\tag{QO.3}
+$$
+
+当 $\alpha\ge1$ 时，仍用 §469.1 的显示公式定义有限加权最大范数。QO.3 的正权有限行最大值证明不使用 $\alpha<1$，因此也适用于这一范围。
+
+这里单位输入盒为 $|f(j)|\le(j+1)^{-\alpha}$；$R_\alpha(k)$ 包括输出坐标的因子 $(k+1)^\alpha$。对每个固定行，其系数符号的有限选择达到该行成本。达到某一行的输入可以依赖该行，QO.3 不要求一个输入同时达到全部行。
+
+#### 470.2 小分母的实际商纤维为单点
+
+**命题 470.1（完整单点商块）。** 设 $L\ge1$、$k\ge L(L+1)$ 为整数。对每个 $1\le d\le L$，写 $q_d=\lfloor k/d\rfloor$，则 $1\le q_d\le k$，并且
+
+$$
+\{e:1\le e\le k,\ \lfloor k/e\rfloor=q_d\}=\{d\}.
+\tag{QO.4}
+$$
+
+这些 $q_d$ 互不相同，实际商块系数满足
+
+$$
+c_{k,q_d}=\frac{\mu(d)}d.
+\tag{QO.5}
+$$
+
+**证明。** 因为 $k\ge L(L+1)\ge d(d+1)$，
+
+$$
+\frac{k}{d}-\frac{k}{d+1}=\frac{k}{d(d+1)}\ge1.
+$$
+
+对实数 $x\ge y+1$ 有 $\lfloor x\rfloor\ge\lfloor y\rfloor+1$，因此
+
+$$
+\lfloor k/d\rfloor>\lfloor k/(d+1)\rfloor.
+\tag{QO.6}
+$$
+
+若 $d>1$，同理由 $k\ge d(d-1)$ 得
+
+$$
+\lfloor k/(d-1)\rfloor>\lfloor k/d\rfloor.
+\tag{QO.7}
+$$
+
+函数 $e\mapsto\lfloor k/e\rfloor$ 在正整数上递减。任何 $e>d$ 的商不超过 QO.6 的右项，任何 $e<d$ 的商在 $d>1$ 时不小于 QO.7 的左项，因而都不能等于 $q_d$。当 $d=1$ 时不存在正整数 $e<d$。分母 $d$ 本身满足原窗口条件，故纤维准确为 $\{d\}$。
+
+$1\le d\le k$ 给 $q_d\ge1$，且 $q_d\le k$。若两个小分母给同一个商，QO.4 强制它们相等，所以这些商互异。对原有符号纤维求和即得 QO.5；其中没有其它分母的项可以抵消。证毕。
+
+#### 470.3 完整有限下界与加权预算发散
+
+**命题 470.2（同一行预算的准确来源下界）。** 对命题 470.1 的 $L,k$ 和每个 $\alpha\ge0$，
+
+$$
+\boxed{
+R_\alpha(k)\ge
+2^{-\alpha}\sum_{d=1}^{L}|\mu(d)|d^{\alpha-1}
+\ge2^{-\alpha}\sum_{\substack{p\le L\\p\ \mathrm{prime}}}
+p^{\alpha-1}.}
+\tag{QO.8}
+$$
+
+完整有限上界仍为
+
+$$
+R_\alpha(k)\le\sum_{d=1}^{k}|\mu(d)|d^{\alpha-1}
+\le\sum_{d=1}^{k}d^{\alpha-1}.
+\tag{QO.9}
+$$
+
+对每个固定 $\alpha\ge0$，$R_\alpha(k)\to+\infty$，特别是普通行预算 $V_k(1)=R_0(k)$ 不统一有界。于是
+
+$$
+\boxed{
+\left\|\prod_{p\le N}U_p\right\|_{\alpha,N}
+\longrightarrow+\infty\quad(N\to\infty).}
+\tag{QO.10}
+$$
+
+**证明。** QO.4–QO.5 给互异的单点坐标，故在完整非负行和中只保留这些坐标，得到
+
+$$
+R_\alpha(k)\ge\sum_{d=1}^{L}\frac{|\mu(d)|}{d}
+\left(\frac{k+1}{q_d+1}\right)^\alpha.
+$$
+
+准确整数商给 $dq_d\le k$，而 $d\le k$，所以
+
+$$
+d(q_d+1)\le k+d\le2(k+1),\qquad
+\frac{k+1}{q_d+1}\ge\frac d2.
+$$
+
+因为 $\alpha\ge0$，提升到该幂次保持不等号，便得 QO.8 的第一个下界。素数 $p$ 满足 $\mu(p)=-1$，只保留素数项给第二个下界。$\alpha=0$ 时因子 $2^{-\alpha}$ 为一，直接得到
+
+$$
+V_k(1)\ge\sum_{d=1}^{L}\frac{|\mu(d)|}d
+\ge\sum_{\substack{p\le L\\p\ \mathrm{prime}}}\frac1p.
+\tag{QO.11}
+$$
+
+为证 QO.9，在每个完整纤维内使用三角不等式，随后对原全部分母求和。WN.1 给 $(k+1)/(\lfloor k/d\rfloor+1)\le d$，因此
+
+$$
+R_\alpha(k)\le\sum_{d=1}^{k}\frac{|\mu(d)|}d
+\left(\frac{k+1}{\lfloor k/d\rfloor+1}\right)^\alpha
+\le\sum_{d=1}^{k}|\mu(d)|d^{\alpha-1}.
+$$
+
+$|\mu(d)|\le1$ 给剩余上界，未移除任何实际有限项。
+
+对每个素数 $p$，$p^\alpha\ge1$，故 $p^{\alpha-1}\ge1/p$。经典素数倒数发散定理说明 QO.8 的素数部分和随 $L$ 趋于正无穷。对任给实数 $B$，选 $L\ge1$ 使该下界大于 $B$；然后每个 $k\ge L(L+1)$ 都满足 $R_\alpha(k)>B$。这证明整条序列趋于正无穷，而不只是某个子列无界。
+
+最后，对任意 $N\ge1$，QO.3 的完整行最大值至少为 $R_\alpha(N)$。因此行成本的发散推出 QO.10。此处只是用末行提供下界，没有把准确最大值替换为末行。证毕。
+
+#### 470.4 平方自由计数给出完整量化增长
+
+写 $a_d=|\mu(d)|$，并定义
+
+$$
+Q(L)=\sum_{d=1}^{L}a_d,\qquad
+\mathcal H_L=\sum_{d=1}^{L}\frac1d,
+$$
+
+两者在 $L=0$ 时均为零。对正 $d$，$a_d$ 是平方自由整数的指示系数。
+
+**命题 470.3（实际有符号算子的量化成本）。** 对每个自然数 $L$，
+
+$$
+Q(L)\ge\frac L4,\qquad
+\sum_{d=1}^{L}\frac{|\mu(d)|}d\ge\frac14\mathcal H_L.
+\tag{QO.14}
+$$
+
+因此，当 $L\ge1$、$k\ge L(L+1)$ 时，
+
+$$
+R_0(k)\ge\frac14\mathcal H_L,\qquad
+R_\alpha(k)\ge2^{-\alpha-2}L^\alpha\quad(0<\alpha<1).
+\tag{QO.15}
+$$
+
+记 $F_{\alpha,N}=\|\prod_{p\le N}U_p\|_{\alpha,N}$。对每个 $N\ge16$，有完整界
+
+$$
+\boxed{\frac1{16}\log N\le F_{0,N}\le\mathcal H_N\le1+\log N,}
+\tag{QO.16}
+$$
+
+以及
+
+$$
+\boxed{
+2^{-2\alpha-2}N^{\alpha/2}\le F_{\alpha,N}
+\le1+\frac{N^\alpha-1}{\alpha}
+\quad(0<\alpha<1).}
+\tag{QO.17}
+$$
+
+特别地，普通正向范数为 $\Theta(\log N)$；对 $\alpha=1/2$，正向范数至少为 $N^{1/4}/8$。QO.17 没有断言正 $\alpha$ 的准确增长阶等于 $N^{\alpha/2}$。
+
+**证明。** 每个正的非平方自由整数 $d\le L$ 都有某个整数 $n\ge2$ 满足 $n^2\mid d$，且 $n\le d\le L$。因此全部非平方自由整数被有限集合
+
+$$
+B_n(L)=\{d:1\le d\le L,\ n^2\mid d\},\qquad2\le n\le L,
+$$
+
+覆盖。每个 $B_n(L)$ 的基数准确为 $\lfloor L/n^2\rfloor$，由 $m\mapsto mn^2$ 与 $1\le m\le\lfloor L/n^2\rfloor$ 的双射给出。当 $n^2>L$ 时，该集合及其计数均为零。有限并集的基数不超过各基数之和，故
+
+$$
+L-Q(L)\le\sum_{n=2}^{L}\lfloor L/n^2\rfloor
+\le L\sum_{n=2}^{L}\frac1{n^2}\le\frac{3L}4.
+$$
+
+最后一步在 $L\ge2$ 时由完整有限望远镜和给出：
+
+$$
+\sum_{n=2}^{L}\frac1{n^2}
+\le\frac14+\sum_{n=3}^{L}\frac1{n(n-1)}
+=\frac34-\frac1L\le\frac34.
+$$
+
+$L=2$ 时中间和为空，等式右端为 $1/4$。$L=0,1$ 的非平方自由集合为空，且 $Q(0)=0$、$Q(1)=1$，直接满足计数界。这证明 QO.14 的第一式，未用无穷并集，也未把实数界替换为未证明的整数取整界。
+
+对 $L\ge1$，完整有限 Abel 恒等式保留终端项：
+
+$$
+\sum_{d=1}^{L}\frac{a_d}d
+=\frac{Q(L)}L+
+\sum_{m=1}^{L-1}Q(m)\left(\frac1m-\frac1{m+1}\right).
+$$
+
+括号内系数非负，把每个 $Q(m)$ 的计数界及终端 $Q(L)\ge L/4$ 代入，得到
+
+$$
+\sum_{d=1}^{L}\frac{a_d}d
+\ge\frac14+\frac14\sum_{m=1}^{L-1}\frac1{m+1}
+=\frac14\mathcal H_L.
+$$
+
+$L=1$ 时内部和为空；$L=0$ 时原两边均为零，独立成立。对 $0<\alpha<1$ 和 $L\ge1$，因为 $d^{\alpha-1}\ge L^{\alpha-1}$ 对 $1\le d\le L$ 成立，
+
+$$
+\sum_{d=1}^{L}a_dd^{\alpha-1}
+\ge L^{\alpha-1}Q(L)\ge\frac14L^\alpha.
+$$
+
+将这两个界代入 QO.8 或 QO.11，得到 QO.15。
+
+现在取 $N\ge16$，令 $s=\lfloor\sqrt N\rfloor$、$L=s-1$。因为 $\sqrt N\ge4$，有 $L\ge\sqrt N-2\ge\sqrt N/2\ge1$，并且 $L(L+1)=s(s-1)\le s^2\le N$。QO.3 与 QO.15 给
+
+$$
+F_{\alpha,N}\ge R_\alpha(N)
+\ge2^{-\alpha-2}L^\alpha
+\ge2^{-2\alpha-2}N^{\alpha/2}
+\quad(0<\alpha<1).
+$$
+
+普通调和和的积分比较给 $\mathcal H_L\ge\log(L+1)$ 和 $\mathcal H_N\le1+\log N$。又 $L+1=s\ge\sqrt N/2$，所以
+
+$$
+F_{0,N}\ge\frac14\log(L+1)
+\ge\frac18\log N-\frac14\log2
+\ge\frac1{16}\log N,
+$$
+
+最后一步使用 $\log N\ge\log16=4\log2$。完整 QO.9 对每个 $k\le N$ 给 $R_0(k)\le\mathcal H_k\le\mathcal H_N$，得到 QO.16 的上界。对正 $\alpha<1$，同样对全部行使用 QO.9，然后用递减函数 $x^{\alpha-1}$ 的积分比较，得到
+
+$$
+F_{\alpha,N}\le\sum_{d=1}^{N}d^{\alpha-1}
+\le1+\int_1^N x^{\alpha-1}\,dx
+=1+\frac{N^\alpha-1}{\alpha}.
+$$
+
+这证明 QO.17。$\alpha=1/2$ 时下界系数为 $2^{-3}=1/8$。证毕。
+
+#### 470.5 任意输入盒、固定剥离及实际算术状态的不同量词
+
+**推论 470.4（统一任意输入预算的障碍）。** 对每个固定 $\alpha\ge0$， 不存在不依赖 $N$ 的实数 $C$，使每个 $N\ge1$ 和每个 $f\in V_N$ 都满足
+
+$$
+\left\|\left(\prod_{p\le N}U_p\right)f\right\|_{\alpha,N}
+\le C\|f\|_{\alpha,N}.
+\tag{QO.12}
+$$
+
+**证明。** 如果这样的 $C$ 存在，取单位输入的上确界，全部诱导范数不超过 $C$，与 QO.10 矛盾。等价地，在 QO.3 的最大行按合并系数选择有限输入符号，即得违反任何给定统一 $C$ 的向量。证毕。
+
+对 $0\le\alpha<1$ 及固定有限素数集合 $S$，WN.10 的双向运输常数 $B_\alpha(S)$、$C_\alpha(S)$ 仍然有限且不依赖 $N$，给定幂次衰减类的等价性保持成立。QO.10 使用的是随 $N$ 增长的 $P_N$，因此没有否定固定集合的运输结论。
+
+实际算术输入也可以与最大范数见证具有不同的符号结构。令 $\mathbf1_+(0)=0$、$\mathbf1_+(j)=1$ 对所有正 $j$，则同一实际算子满足
+
+$$
+\left(\prod_{p\le N}U_p\right)\mathbf1_+(k)
+=\sum_{d=1}^{k}\frac{\mu(d)}d=H(k),\qquad1\le k\le N.
+\tag{QO.13}
+$$
+
+经典 Möbius floor 恒等式 $\sum_{d=1}^{k}\mu(d)\lfloor k/d\rfloor=1$ 保留完整小数余项，给
+
+$$
+kH(k)=1+\sum_{d=1}^{k}\mu(d)\{k/d\},\qquad
+|H(k)|\le1+1/k\le2\quad(k\ge1).
+$$
+
+因此在普通最大范数中，这个特定输入的输出统一有界，而 QO.10 的算子范数仍然发散。对于实际 $H$ 的更强衰减或原 Robin 权族，需要直接控制它们的相关符号与完整端点；任意输入盒的绝对范数会允许独立选择符号，不能代替这些算术条件。
+
+QO.8–QO.12 排除的是增长全素数剥离在任意输入盒上的统一算子预算。它们没有排除附带实际输入结构的变差估计、随截止增长的定量预算或原 Robin 有符号尾的其它估计。RH 以及该原尾的最终符号仍未由这些有限算子结论确定。
+
+## 追加锚（本行以下为增补区）
+
+### 471. 实际阶乘余项的固定域求导与完整尾的较低衰减门槛
+
+本节保持原阶乘余项、原 Robin 权及全部无限积分，证明一条固定 $x$ 的充分尾条件。阶乘跳跃留在积分变量中，尺度导数落在光滑权上；这允许直接支付完整导数，而不对一个误差上界求导。所有对数均为自然对数。
+
+#### 471.1 实际对象与完整低高分解
+
+对 $y>0$ 定义
+
+$$
+\eta(y)=\log(\lfloor y\rfloor!)-y\log y+y,
+\qquad w(t)=\frac{1+\log t}{t^2\log^2t}.
+$$
+
+对 $x\ge e$、$s\ge x$ 保持
+
+$$
+P_x(s)=\int_x^\infty\eta(t/s)w(t)\,dt,
+\quad Q_x(s)=sP_x(s),
+\quad b_x(s)=s[P_x(s)-P_x(2s)].
+\tag{FD.1}
+$$
+
+有限恒等式 $\sum_{n=1}^{N}\log n=\log(N!)$ 将 $\eta$ 识别为实际对数前缀的余项。经典有限阶乘误差给出
+
+$$
+\eta(y)=y(1-\log y)\quad(0<y\le1),
+\qquad |\eta(y)|\le1+\log y\quad(y\ge1).
+\tag{FD.2}
+$$
+
+第一式包含 $y=1$，因为 $0!=1!=1$。第二式使用完整有限阶乘误差，不要求 $y$ 是整数。本节直接采用已有有限对数恒等式和阶乘误差，不提出经典标量公式的优先权主张。
+
+令 $\ell=\log x\ge1$、$r=\log s\ge\ell$、$L=\log2$，并令
+
+$$
+c_\ell=\ell^{-1}-\log\ell-1,\quad d_\ell=\ell^{-1}+\ell-1,
+\qquad F_\ell(r)=r\log r+c_\ell r+d_\ell-r^{-1}.
+$$
+
+对每个 $r>0$ 定义完整有符号积分
+
+$$
+E(r)=\int_1^\infty\frac{\eta(y)}{y^2}
+\left[(r+\log y)^{-1}+(r+\log y)^{-2}\right]dy.
+\tag{FD.3}
+$$
+
+**命题 471.1。** 上述实际积分绝对可积，并满足
+
+$$
+Q_x(s)=F_\ell(r)+E(r),\qquad
+|E(r)|\le2(r^{-1}+r^{-2}).
+\tag{FD.4}
+$$
+
+**证明。** 在 $x<t<s$ 使用 FD.2 的低域式，再令 $u=\log t$，得到
+
+$$
+s\int_x^s\eta(t/s)w(t)\,dt
+=\int_\ell^r[(1+r)u^{-2}+r/u-1]du=F_\ell(r).
+$$
+
+在 $t>s$ 令 $t=sy$，则原高域恰为 FD.3；$t=s$ 的单点对 Lebesgue 积分无贡献。FD.2 与 $\log y\ge0$ 给出
+
+$$
+|\eta(y)|y^{-2}[(r+\log y)^{-1}+(r+\log y)^{-2}]
+\le(r^{-1}+r^{-2})(1+\log y)y^{-2}.
+$$
+
+完整主控函数的积分 $\int_1^\infty(1+\log y)y^{-2}dy=2$ 支付绝对可积性和上界。低域连续积分可积，故原 $P_x$ 也绝对可积。证毕。
+
+#### 471.2 求导支付的是原有符号高域
+
+**命题 471.2。** 对每个 $r>0$，
+
+$$
+E'(r)=-\int_1^\infty\frac{\eta(y)}{y^2}
+[(r+\log y)^{-2}+2(r+\log y)^{-3}]dy,
+\qquad |E'(r)|\le2(r^{-2}+2r^{-3}).
+\tag{FD.5}
+$$
+
+**证明。** 固定 $r_0>0$，在邻域 $r_0/2<r<3r_0/2$ 上，逐点导数的绝对值不超过
+
+$$
+(4r_0^{-2}+16r_0^{-3})(1+\log y)y^{-2}.
+$$
+
+该函数在完整 $(1,\infty)$ 可积，$\eta$ 可测，基点的原积分可积。参数积分求导定理因此适用；积分导数的上界再由积分为 $2$ 得出。这里 $\eta(y)$ 始终是固定乘子，没有对阶乘、floor 或 FD.4 的误差不等式求导。证毕。
+
+同一实际 dyadic 权满足
+
+$$
+b_x(s)=F_\ell(r)-\tfrac12F_\ell(r+L)+E(r)-\tfrac12E(r+L).
+\tag{FD.6}
+$$
+
+其中 $1/2$ 来自 $sP_x(2s)=Q_x(2s)/2$，不能删去。对 $s>x$ 求导，得到
+
+$$
+sb'_x(s)=S_\ell(r)+E'(r)-\tfrac12E'(r+L),
+$$
+$$
+S_\ell(r)=\tfrac12\log(r/\ell)+\frac1{2\ell}
+-\tfrac12\log(1+L/r)+r^{-2}-\tfrac12(r+L)^{-2}.
+\tag{FD.7}
+$$
+
+这是对实际 $b_x$ 的恒等式。由 FD.5，完整高域导数误差满足
+
+$$
+|sb'_x(s)-S_\ell(r)|\le3r^{-2}+6r^{-3}.
+\tag{FD.8}
+$$
+
+因为 $0<L<1$、$\log(1+L/r)\le L/r$ 和 $r\ge\ell\ge1$，
+
+$$
+0\le\tfrac12\log(r/\ell)+\frac{1-L}{2\ell}
+\le S_\ell(r)\le\tfrac12\log(r/\ell)+\frac1{2\ell}+r^{-2}.
+$$
+
+故得到完整且显式的导数预算
+
+$$
+\boxed{|sb'_x(s)|\le\tfrac12\log(r/\ell)+\frac1{2\ell}+4r^{-2}+6r^{-3}
+\le\tfrac12\log(r/\ell)+\frac{21}{2\ell}.}
+\tag{FD.9}
+$$
+
+固定 $x$ 时，该界为 $|b'_x(s)|=O_x(\log\log s/s)$；固定 $u>1$ 而取 $s=ux$ 时，它为 $O_u(1/(s\log x))$。
+
+**推论 471.3。** 若 $x\ge\exp22$，则实际 $b_x$ 在 $(x,\infty)$ 严格递增。
+
+**证明。** FD.7–FD.8 给
+
+$$
+sb'_x(s)\ge\tfrac12\log(r/\ell)+\frac{1-L}{2\ell}-3r^{-2}-6r^{-3}.
+$$
+
+使用经典 $\log2<7/10$，非对数部分在 $\ell\ge22$ 时至少为
+
+$$
+\frac{(3/20)\ell^2-3\ell-6}{\ell^3}\ge\frac3{5\ell^3}>0.
+$$
+
+分子在 $[22,\infty)$ 递增，并在 $22$ 等于 $3/5$。因此导数严格为正，由中值定理得到结论。权的正导数不确定 Möbius 加权尾的符号。证毕。
+
+#### 471.3 对固定 x 支付全部端点、变差与原整数截止
+
+令 $G(n)=\sum_{1\le d\le n,\ d\text{ odd}}\mu(d)/d$ 为实际奇数调和 Möbius 前缀。假定某个算术估计已给出 $A\ge0$、$p>1$ 和整数 $D>x$，使
+
+$$
+|G(n)|\le A/(\log n)^p\qquad(n\ge D).
+\tag{FD.10}
+$$
+
+这是本命题的显式算术前提；有限全截止界 $|G(n)|\le4$ 不推出它。令 $q=\log R$，直接代换 $u=\log t$ 并作完整分部积分，得到
+
+$$
+I(R):=\int_R^\infty
+\frac{\tfrac12\log(\log t/\ell)+21/(2\ell)}{t(\log t)^p}dt
+=q^{1-p}\left[\frac{\log(q/\ell)}{2(p-1)}
++\frac1{2(p-1)^2}+\frac{21}{2\ell(p-1)}\right].
+\tag{FD.11}
+$$
+
+该公式对 $R\ge x$ 成立；无穷端点 $u^{1-p}\log u\to0$ 由 $p>1$ 支付。对每个整数 $n\ge D$，FD.9 在完整 $[n,n+1]$ 上成立。令其连续非负主控函数为 $m(t)$，对 $b_x\pm\int m$ 应用导数符号与中值定理，得到 $|b_x(n+1)-b_x(n)|\le\int_n^{n+1}m(t)dt$。这一步不要求另行假定 $b'_x$ 连续。
+
+又 $\log t\le2\log n$ 对 $n\le t\le n+1$、$n\ge D>e$ 成立，因此
+
+$$
+\sum_{n>D}|G(n)|\,|b_x(n+1)-b_x(n)|\le A2^p I(D+1)<\infty.
+\tag{FD.12}
+$$
+
+由 FD.4–FD.6，固定 $x$ 时 $b_x(s)=O_x(\log s\log\log s)$，所以 FD.10 支付完整终端 $b_x(M)G(M)\to0$。对每个自然截止 $M>D$，原有限 Abel 恒等式为
+
+$$
+\sum_{\substack{D<n\le M\\n\text{ odd}}}\mu(n)[P_x(n)-P_x(2n)]
+=b_x(M)G(M)-b_x(D+1)G(D)
+-\sum_{n=D+1}^{M-1}[b_x(n+1)-b_x(n)]G(n).
+\tag{FD.13}
+$$
+
+这里偶数系数为零，$G$ 仍保留所有整数截止；$M=D+1$ 时内部和为空。FD.12 和终端极限证明原自然截止极限 $T_D(x)$ 存在，且
+
+$$
+T_D(x)=-b_x(D+1)G(D)-\sum_{n>D}[b_x(n+1)-b_x(n)]G(n),
+$$
+$$
+|T_D(x)|\le|b_x(D+1)|\,|G(D)|+A2^p I(D+1).
+\tag{FD.14}
+$$
+
+第二个级数绝对收敛；原 Möbius 原子序列只证明按自然截止收敛，没有声称无条件或绝对可和。原 signed anchor $-b_x(D+1)G(D)$ 和整个无限尾均被保留。
+
+这一充分对数幂门槛是 $p>1$。此前粗主控 $(1+\log s)^2/s$ 会要求 $p>3$；FD.9 改变了所需算术供应的强度，但没有构造 FD.10，也没有证明 $p>1$ 是必要条件。
+
+#### 471.4 固定域机制与 RH 临界尺度的界限
+
+固定域代换把全部阶乘跳跃放入与 $r$ 无关的 $\eta(y)$，把参数变化放入可求导、可主控的实际权核。因此准确有符号积分保留下来，同时完整导数可估计。这与有限 Möbius 剥离保留实际前缀和端点的做法相容：重组改变待控接口，不消除算术抵消义务。
+
+对 $D$ 与 $x$ 可比的临界问题，若同一个固定 $A>0$、有限 $p>1$ 的算术界用于 $x\to\infty$，FD.11 给 $I(D+1)=\Theta_p((\log x)^{1-p})$。因此 FD.14 中这一绝对上界项乘以目标 $\sqrt{x}\log x$ 后为 $\Theta_{A,p}(\sqrt{x}(\log x)^{2-p})$，这条估计无法推出临界误差消失；这不是原有符号尾不消失的断言。固定 $x$ 的尾收敛、权的正导数与临界有符号补偿是不同的数学结论。原 prime panel 与其补集的完整有符号补偿以及 RH 的最终符号仍待证明。
+
+## 追加锚（本行以下为增补区）
+
+---
+
+## 472. 外部 RH 库接入口：有限 Euler 剥离可逆，统一储备另需证明
+
+OpenAI/math 固定版本 `adc7f1241b42e322a6451854ab7e4b4c146bf78a` 的 `OAI/NumberTheory/DirichletL/EulerFactors.lean` 给出有限带权 Euler 因子的非零和零点运输。普通 ζ 的同类结论已有本库 `PrimeAddress.finite_prime_modification_preserves_global_zero_set` 与 `EulerWindows.finite_euler_window_ne_zero`，应直接复用。本节仅使用这些有限因子性质，不以 OpenAI 的完整 $7/8$ 主链作为已验收供应。
+
+**定义 472.1（有限带权修改）。** 对有限素数集 $S$、复系数 $|a_p|\le1$，令 $E_S(s)=\prod_{p\in S}(1-a_pp^{-s})$，其中 $p^{-s}=\exp(-s\log p)$。
+
+**定理 472.2（有限级定量可逆性）。** 若 $\operatorname{Re}s\ge\sigma>0$，则
+
+$$
+|E_S(s)|\ge\prod_{p\in S}(1-p^{-\sigma})>0,
+\qquad |E_S(s)^{-1}|\le\prod_{p\in S}(1-p^{-\sigma})^{-1}.
+$$
+
+*证明。* 对每个 $p$，有 $|a_pp^{-s}|=|a_p|p^{-\operatorname{Re}s}\le p^{-\sigma}<1$。反三角不等式给 $|1-a_pp^{-s}|\ge1-p^{-\sigma}>0$，再取有限乘积和倒数。空集给两端恰为 $1$。因此同一实际身份 $L_S=E_SL$ 双向保持这个半平面内的零点。
+
+**定理 472.3（有限可逆性不支付增长素数集的统一逆界）。** 固定 $0<\sigma\le1$，令 $S_P=\{p\le P:p\text{ 为素数}\}$。在允许的实际输入 $a_p=1,s=\sigma$ 上，$E_{S_P}(\sigma)\to0$，故其倒数趋于正无穷。
+
+*证明。* 每个因子为正，由 $\log(1-u)\le-u$，
+
+$$
+\log E_{S_P}(\sigma)\le-\sum_{p\le P}p^{-\sigma}\le-\sum_{p\le P}p^{-1}\longrightarrow-\infty.
+$$
+
+最后一步复用素数调和级数发散；Mathlib 原供应为 `not_summable_one_div_on_primes`。对一般复系数，这个比较只说明保证下界趋零，不能推出实际乘积趋零；上述实际输入专门证明了全体允许输入上的统一正下界不存在。
+
+固定 $\sigma>1$ 时，$\sum_p p^{-\sigma}<\infty$，且 $0\le-\log(1-p^{-\sigma})\le p^{-\sigma}/(1-2^{-\sigma})$，所以保证下界的无限乘积有严格正极限。临界开带的有限零点运输与绝对收敛半平面的统一逆界有不同的解析门槛。
+
+这给“等价形态像群”的直觉一个可检验版本：有限非零乘子的乘除可组合、可逆，保存零点；相应范数常数随素数集增长，不能由可逆性自动控制。§470 的商块范数增长与这里的 Euler 逆界缺口指向同一问题：把有限层之间的精确关系提升到无界层，需要支付实际输入上的抵消或统一储备。
+
+Gaussian 的完整 Möbius 调和衰减是 §471 固定 $x$ 变差与端点的候选算术供应；它仍须经过准确的全体／奇数传输和本库核验。固定 $x$ 的收敛也不支付共同临界尺度上的有符号补偿。以上关系未建立 $5040$、Fibonacci 与拓扑例外的数值同构，亦未证明 Robin 最终符号或 RH。
+
+## 追加锚（本行以下为增补区）
+
+## 473. §472 引文定位勘正
+
+所引固定版本的正确仓库相对路径为 [`lean/OAI/NumberTheory/DirichletL/EulerFactors.lean`](https://github.com/openai/math/blob/adc7f1241b42e322a6451854ab7e4b4c146bf78a/lean/OAI/NumberTheory/DirichletL/EulerFactors.lean)；原引文省略了 `lean/` 前缀。本增补仅修正文献定位，不新增数学内容，也不补足算术或权重桥梁。
+
+## 追加锚（本行以下为增补区）

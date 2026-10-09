@@ -1,0 +1,31 @@
+**数学引文 1.2（结构递归及组成桥）。** 按关系延拓几何定理 1.2、1.4，令 $`T_n=\rho^n(\alpha)`$，则对所有整数 $`n\ge0`$，
+
+```math
+T_0=\alpha,\qquad T_1=\beta,\qquad
+T_{n+2}=\langle T_{n+1},T_n\rangle.
+```
+
+定义组成和数量行
+
+```math
+c(\alpha)=\binom10,\quad c(\beta)=\binom01,\quad
+c(\langle s,t\rangle)=c(s)+c(t),\quad q=(2,3),
+```
+
+得到
+
+```math
+c(\rho t)=Mc(t),\qquad
+M=\begin{pmatrix}0&1\\1&1\end{pmatrix},\qquad
+M^2=M+I,\quad \det M=-1,\quad M^{-1}=M-I.
+```
+
+证明的对应如下：结构递归在 $`n=0`$ 是替换定义，施加保持有序括号的 $`\rho`$ 即完成归纳；组成式在两叶成立，在二叉节点由加法继续成立。矩阵恒等式直接相乘得到。若 $`F_0=0,F_1=1,F_{n+2}=F_{n+1}+F_n`$，则
+
+```math
+q c(\alpha)=2,\qquad q c(\beta)=3,\qquad q c(\rho^2\alpha)=5,
+\qquad qM^n c(\alpha)=F_{n+3}\quad(n\ge0).
+```
+
+最后一式由初值二、三及 $`M^2=M+I`$ 的递推得到。矩阵逆只在组成表示上给逆线性运算；例如原生树 $`\alpha`$ 不在 $`\rho`$ 的像中，故没有对全部树的逆替换。来源到组成已合并两种叶序，组成到数量又合并 $`(3,0)`$ 与 $`(0,2)`$。后文的平均式不会恢复被这些映射删除的区别。
+

@@ -86,6 +86,12 @@ theorem singletMatrix_posSemidef : singletMatrix.PosSemidef := by
   fail_if_success ((try simp); done)
   exact Matrix.posSemidef_vecMulVec_self_star antisymmetricVector
 
+lemma hswap_trace (C D : Matrix (Fin 2) (Fin 2) ℂ) :
+    Matrix.trace (swapMatrix * (C ⊗ₖ D)) = Matrix.trace (C * D) := by
+  simp [Matrix.trace, Matrix.diag, Matrix.mul_apply, swapMatrix,
+    Matrix.kroneckerMap, Fintype.sum_prod_type, Fin.sum_univ_two]
+  ring
+
 theorem singletMatrix_not_separable : ¬separableCone singletMatrix := by
   fail_if_success rfl
   fail_if_success ((try simp); done)
@@ -103,11 +109,6 @@ theorem singletMatrix_not_separable : ¬separableCone singletMatrix := by
     rw [Matrix.vecMulVec_mul, Matrix.trace_vecMulVec, dotProduct_comm,
       ← Matrix.dotProduct_mulVec]
     exact hquad
-  have hswap_trace (C D : Matrix (Fin 2) (Fin 2) ℂ) :
-      Matrix.trace (swapMatrix * (C ⊗ₖ D)) = Matrix.trace (C * D) := by
-    simp [Matrix.trace, Matrix.diag, Matrix.mul_apply, swapMatrix,
-      Matrix.kroneckerMap, Fintype.sum_prod_type, Fin.sum_univ_two]
-    ring
   have hdetector_nonneg :
       0 ≤ RCLike.re (Matrix.trace (swapMatrix * singletMatrix)) := by
     rw [hsum, Finset.mul_sum, Matrix.trace_sum]

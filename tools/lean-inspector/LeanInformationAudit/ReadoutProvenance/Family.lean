@@ -1,14 +1,11 @@
-import Lean
+import Lean.Declaration
+import Lean.Util.InstantiateLevelParams
 
 
 namespace LeanInformationAudit.RegistrationGates.ReadoutFamily
 open Lean
 
--- §10.1 budget record: safety limit outside the capacity domain; owner=governance lane;
--- date=2026-09-13; basis=the realization decoder's 256-step structural-depth
--- ceiling; exit condition=the supported realization encoding or pinned Lean
--- version changes, then rerun decoder depth and malformed-encoding fixtures.
--- Deeper or unrecognized encodings fail closed; shared fuel also bounds width.
+-- Structural depth and shared work bound unrecognized encodings.
 private def depthLimit : Nat := 256
 
 private inductive WeightNode where
@@ -154,31 +151,31 @@ private def beta (s : Spine) : DecodeM Expr := do
   charge s.arity
   return s.head.betaRev s.reversed.toArray
 
-private def recordHead (env : Environment) : Nat → Expr → DecodeM Expr
+private def recordHead (find : Name → Option ConstantInfo) : Nat → Expr → DecodeM Expr
   | 0, _ => failure
   | depth + 1, e => do
     charge
     let s ← spine e
     match s.head with
-    | .mdata _ body => recordHead env depth (← applySpine body s)
+    | .mdata _ body => recordHead find depth (← applySpine body s)
     | .letE _ _ value body _ =>
-      recordHead env depth (← applySpine (← instantiate body value) s)
+      recordHead find depth (← applySpine (← instantiate body value) s)
     | .lam .. =>
       if s.arity == 0 then return e
-      recordHead env depth (← beta s)
+      recordHead find depth (← beta s)
     | .const name levels =>
-      match env.find? name with
+      match find name with
       | some (.defnInfo info) =>
-        recordHead env depth (← applySpine (← instantiateLevels info.value info.levelParams levels) s)
+        recordHead find depth (← applySpine (← instantiateLevels info.value info.levelParams levels) s)
       | some _ => return e
       | none => failure
     | .proj _ index value =>
-      let value ← recordHead env depth value
+      let value ← recordHead find depth value
       let constructor ← spine value
       let .const name _ := constructor.head | return e
-      let some (.ctorInfo info) := env.find? name | return e
+      let some (.ctorInfo info) := find name | return e
       let field ← argument constructor (info.numParams + index)
-      recordHead env depth (← applySpine field s)
+      recordHead find depth (← applySpine field s)
     | _ => return e
 
 def carrierHeads : Array Name := #[
@@ -194,19 +191,19 @@ def carrierHeads : Array Name := #[
   `D5.S3.ConceptDynamics.InformationEscape.StructuralPrimitiveSignature.Index,
   `D5.S3.ConceptDynamics.InformationEscape.StructuralPrimitiveSignature.Output]
 
-private def decode (env : Environment) (realization : Name) : DecodeM Expr := do
+private def decode (find : Name → Option ConstantInfo) (realization : Name) : DecodeM Expr := do
   charge
-  let some info := env.find? realization | failure
+  let some info := find realization | failure
   let root ← match info with
     | .thmInfo info => do
-      let type ← recordHead env depthLimit info.type
+      let type ← recordHead find depthLimit info.type
       let s ← spine type
       unless s.arity == 3 && s.head.constName? ==
           some `D5.S3.ConceptDynamics.InformationEscape.LegacyPrimitiveRealization do failure
       argument s 2
     | .defnInfo _ => pure (mkConst realization)
     | _ => failure
-  let value ← recordHead env depthLimit root
+  let value ← recordHead find depthLimit root
   let s ← spine value
   unless s.head.constName? == some `D5.S3.ConceptDynamics.InformationEscape.PrimitiveRealization.mk ||
       s.head.constName? == some `LeanInformationAudit.StructuralPrimitiveRealization.mk do failure
@@ -214,9 +211,9 @@ private def decode (env : Environment) (realization : Name) : DecodeM Expr := do
 
 /-- Decode a readout and return the work already debited from the supplied fuel.
 The caller transfers this debit even when decoding fails; caches are query-local. -/
-def extract (env : Environment) (realization : Name) (fuel : Nat) : Option (Expr × Name) × Nat :=
+def extract (find : Name → Option ConstantInfo) (realization : Name) (fuel : Nat) : Option (Expr × Name) × Nat :=
   let action : DecodeM (Expr × Name) := do
-    let value ← decode env realization
+    let value ← decode find realization
     let view ← spine value
     return (value, view.head.constName?.getD realization)
   let (result, state) := action.run.run { fuel, cap := fuel + 1 }
@@ -224,8 +221,8 @@ def extract (env : Environment) (realization : Name) (fuel : Nat) : Option (Expr
 
 -- Only the declared carrier selectors may enter the record decoder from type
 -- classification. Arbitrary data expressions have no such reduction boundary.
-def carrier (env : Environment) (e : Expr) (fuel : Nat) : Option Expr × Nat :=
-  let action : DecodeM Expr := recordHead env depthLimit e
+def carrier (find : Name → Option ConstantInfo) (e : Expr) (fuel : Nat) : Option Expr × Nat :=
+  let action : DecodeM Expr := recordHead find depthLimit e
   let (result, state) := action.run.run { fuel, cap := fuel + 1 }
   (result, state.spent)
 

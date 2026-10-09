@@ -1,3 +1,4 @@
+import LeanInformationAuditInterface.Contract.Registration
 import D5.S3.Resource.SimplexCoverageRoot
 import Reg.Support.DependentFamily
 import Mathlib.Algebra.Field.ULift
@@ -75,17 +76,30 @@ private def registration : Registration arena.{w} (arena.Law actual) where
       exact nomatch anchor
   dependence := dependence
 
-register_information_theorem evaluateAt_line_hasDerivAt in arena
-  readout via (realize signature (fun _ _ value => value)
-    (fun impossible => nomatch impossible))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Resource.SimplexCoverageRoot
-    coordinates := #[]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "fn", "arg"]
-      stateOperand := some #[] }] })
-  escape continues (open)
+noncomputable def registration_1.{u_1} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Resource.SimplexCoverageRoot.evaluateAt_line_hasDerivAt.{u_1}) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ _ value => value)
+    (fun impossible => nomatch impossible))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Resource") "SimplexCoverageRoot") "evaluateAt_line_hasDerivAt") "Reg.D5.S3.Resource.SimplexCoverageRoot/_private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Line.arena/[anonymous]") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Resource") "SimplexCoverageRoot") 0) "Reg") "D5") "S3") "Resource") "SimplexCoverageRoot") "Line") "registration"),
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1})⟩,
+  objectArena := .source ⟨(arena.{u_1})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1}) ⟨(registration.{u_1})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ _ value => value)
+    (fun impossible => nomatch impossible)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Resource.SimplexCoverageRoot, definition := none, coordinates := #[], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "fn", "arg"], stateBinder := 0, functionOperand := false, stateOperand := some #[], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
@@ -179,18 +193,30 @@ private def registration : Registration arena.{w,u,v} (arena.Law actual) where
       exact nomatch anchor
   dependence := dependence
 
-register_information_theorem spanningPolynomial_root_concaveOn in arena
-  readout via (realize signature (fun _ degree value => value ^ (1 / (degree : ℝ)))
-    (fun impossible => nomatch impossible))
-  realizes registration
-  escape from source ({
-    owner := `D5.S3.Resource.SimplexCoverageRoot
-    coordinates := #[11]
-    readouts := #[{
-      path := #["body", "body", "body", "body", "body", "body", "body", "body",
-        "body", "body", "body", "body", "body", "arg", "body"]
-      stateOperand := some #["fn", "arg"] }] })
-  escape continues (open)
+noncomputable def registration_2.{u_1, u_2, u_3} : LeanInformationAudit.Contract.Registration.{_,_,_,0,0,0,_,_,_,_,_,0} (@_root_.D5.S3.Resource.SimplexCoverageRoot.spanningPolynomial_root_concaveOn.{u_1, u_2, u_3}) (type_of% (realize.{0, 0, 0, 0, 0} signature (fun _ degree value => value ^ (1 / (degree : ℝ)))
+    (fun impossible => nomatch impossible))) (Unit) (Unit) := {
+  unitName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "D5") "S3") "Resource") "SimplexCoverageRoot") "spanningPolynomial_root_concaveOn") "Reg.D5.S3.Resource.SimplexCoverageRoot/_private.Reg.D5.S3.Resource.SimplexCoverageRoot.0.Reg.D5.S3.Resource.SimplexCoverageRoot.Root.arena/[anonymous]") "__information_unit"),
+  realizationName := (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.num (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str (Lean.Name.str Lean.Name.anonymous "_private") "Reg") "D5") "S3") "Resource") "SimplexCoverageRoot") 0) "Reg") "D5") "S3") "Resource") "SimplexCoverageRoot") "Root") "registration"),
+  realizationSource := none,
+  generated := false,
+  arena := .source ⟨(arena.{u_1, u_2, u_3})⟩,
+  objectArena := .source ⟨(arena.{u_1, u_2, u_3})⟩,
+  catalog := Lean.Name.anonymous,
+  localNames := false,
+  realization := .source (arena.{u_1, u_2, u_3}) ⟨(registration.{u_1, u_2, u_3})⟩,
+  correspondence := { stage := .evidence, objectStage := .evidence },
+  bundleNonempty := .absent,
+  readout := some (realize.{0, 0, 0, 0, 0} signature (fun _ degree value => value ^ (1 / (degree : ℝ)))
+    (fun impossible => nomatch impossible)),
+  variation := .absent,
+  sensitivity := .absent,
+  partialSensitivity := none,
+  escapeFrom := none,
+  sourceSelection := some { owner := `D5.S3.Resource.SimplexCoverageRoot, definition := none, coordinates := #[11], readouts := #[{ path := #["body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "body", "arg", "body"], stateBinder := 0, functionOperand := false, stateOperand := some #["fn", "arg"], booleanPredicate := false }] },
+  continuation := .unknown,
+  familyRecord := none,
+  options := #[{ name := `Elab.async, value := .bool true }, { name := `autoImplicit, value := .bool false }, { name := `internal.cmdlineSnapshots, value := .bool true }, { name := `linter.mathlibStandardSet, value := .bool true }, { name := `maxSynthPendingDepth, value := .nat 3 }, { name := `pp.unicode.fun, value := .bool true }, { name := `relaxedAutoImplicit, value := .bool false }] }
+
 
 #print axioms registration
 
