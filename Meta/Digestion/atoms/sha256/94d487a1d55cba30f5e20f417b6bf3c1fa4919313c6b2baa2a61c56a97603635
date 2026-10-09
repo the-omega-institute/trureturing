@@ -1,0 +1,16 @@
+### 定义 5（两个不同的边界函数空间）
+
+在任意系数域 $K$ 上比较以下两个函数空间；模式的行为等价仍由前述原生模二合同定义。占位几何边界：
+
+$$
+\boxed{\mathcal R_{\mathrm{geo}}=\operatorname{span}\{1,x,y,z\}.}
+$$
+
+原生模二行为边界，在这五个当前来源上为：
+
+$$
+\boxed{\mathcal R_{\mathrm{beh}}=\operatorname{span}\{1,x,y+z,xy\}.}
+$$
+
+后者是四个行为类上的全部函数。
+

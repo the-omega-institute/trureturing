@@ -1,0 +1,24 @@
+### theorem 6（整数恢复与模数恢复，由 $J_f$ 的可逆性决定）
+
+Claim status: open
+
+假设 $f_s\in\mathbb Z$。
+
+当 $J_f\ne0$，完整整数边界映射的像在 $\mathbb Z^5$ 中的指数为：
+
+$$
+\boxed{|J_f|.}
+$$
+
+取整数 $m\ge2$，在完整代数计数域 $(\mathbb Z/m\mathbb Z)^5$ 上，每个处于 $B_f$ 像中的边界恰有：
+
+$$
+\boxed{\gcd(m,J_f)}
+$$
+
+个原像。因此：
+
+$$
+\boxed{\text{模 }m\text{ 唯一恢复}\iff\gcd(m,J_f)=1.}
+$$
+
