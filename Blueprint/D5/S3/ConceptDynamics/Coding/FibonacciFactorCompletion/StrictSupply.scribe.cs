@@ -95,6 +95,56 @@ internal sealed class StrictSupplyDocument : IScribeDocumentDefinition
             B("model", I("Model")), B("o", I("Ownership")), B("budget", I("Real")),
             B("execution", Returns)));
     }
+
+    private static Formula Ex(Formula body, params Formula.BoundVariable[] variables) =>
+        new Formula.BindMany(FormulaQuantifier.Exists, [.. variables], body);
+    private static Formula SingletonReturn(Formula m, Formula r) =>
+        Call("cons", Call("Return", m, r), Call("nil", I("Return")));
+    private static Formula ActualDisplacementExtrema()
+    {
+        var j = I("j"); var xs = I("xs"); var d = I("D");
+        var state = Call("execute", j, xs, Call("initial", j, I("original")));
+        var values = Seq(OpenBrace, d, Sp, Colon, Sp, I("Real"), Sp, Mid, Sp,
+            Ex(Equal(d, state), B("xs", Returns)), CloseBrace);
+        return Disp(All(And(Equal(Call("sInf", values), Call("aSide", j)),
+            Equal(Call("sSup", values), Call("hSide", j)),
+            All(And(Call("lt", Call("aSide", j), state),
+                Call("lt", state, Call("hSide", j))), B("xs", Returns))), B("j", I("Side"))));
+    }
+    private static Formula HighSingletonSlot()
+    {
+        var r = I("R");
+        var z = Call("coordinate", Call("sourcePrefix", I("high"), I("original"),
+            SingletonReturn(D(1), r)), D(3,0));
+        var cost = Sub(I("lam"), Mul(Mul(Pow(I("g"), D(2)), Pow(I("chi"), r)),
+            Call("xSide", I("high"))));
+        return Disp(All(Imp(Call("lt", D(0), r), And(
+            Equal(z, Sub(Call("cut", D(1)), cost)),
+            Call("lt", z, Call("cut", D(1))),
+            Equal(Call("max", Sub(Call("cut", D(1)), z),
+                Call("max", D(0), Sub(z, Call("cut", D(2))))), cost))), B("R", I("Nat"))));
+    }
+    private static Formula HighHistory(Formula xs)
+    {
+        var p = I("p"); var err = I("err");
+        var history = Call("history", I("original"), xs);
+        return And(Call("ErrorBound", I("b"), I("contract"), err),
+            All(Imp(Call("lt", p, Call("length", history)),
+                Equal(Call("observe", I("o"),
+                    Call("coordinate", Call("sourcePrefix", I("high"), I("original"), xs), p),
+                    Call("apply", err, p)), Call("getElem", history, p))), B("p", I("Nat"))));
+    }
+    private static Formula HighFiniteCap()
+    {
+        var xs = I("xs"); var a = I("a");
+        var bounded = All(Imp(And(Call("member", a, xs), HighHistory(xs)),
+            Call("le", Call("r", a), I("K"))),
+            B("o", I("Ownership")), B("contract", I("Contract")), B("xs", Returns),
+            B("err", new Formula.TypeArrow(I("Nat"), I("Real"))), B("a", I("Return")));
+        return Disp(All(Imp(Call("lt", I("b"), I("lam")), Ex(bounded, B("K", I("Nat")))),
+            B("b", I("Real"))));
+    }
+
     public DocumentDefinition Create() => DocumentDefinition.Create(ScribeNode.Create(
         "Both actual Fibonacci starts retain the complete-boundary, closed and strict source laws and one finite actual reset map.",
         H("Actual boundaries for Fibonacci completion"),
@@ -115,6 +165,19 @@ internal sealed class StrictSupplyDocument : IScribeDocumentDefinition
                 H("Complete actual source costs above the nonactive-slot bound"),
                 StatementSource.FromAuthor(AutomaticMarginStrictCostSupplier()), AssessedProvenance.FromRepo(),
                 Blocks(Paragraph(Text("This supplier exposes the existing whole-source cost construction with its actual lower-budget hypothesis budget>lam-rho. It is the same fixed source, history, external block order and literal tail used by the strict record theorem. StrictControl recursively tests lam-g^2*chi^r*D at each actual return start. The stem tests chi times the final whole-list state, and the paid anchor tests chi times X_H, not its output Y_H.")),
-                    Paragraph(Text("For a six-block input D<h_j, the nth outer input is h_j-rho^n*(h_j-D). Its active cost minus the next active cost is g^2*rho^n*(1-rho)*(h_j-D)>0. The local activeCostDrops proof is consumed by the bound for arbitrary repetitions. literal_full_slot_readout supplies every six-slot and twenty-slot departure above lam-rho. High/low ordering transports the high costs to the actual paired low source, and pairErrors chooses the finite errors and appends the unchanged zero-error future."))),
-                DescribeRole.Theorem))));
+                    Paragraph(Text("For a six-block input D<h_j, the nth outer input is h_j-rho^n*(h_j-D). Its active cost minus the next active cost is g^2*rho^n*(1-rho)*(h_j-D)>0. literal_full_slot_readout supplies every six-slot and twenty-slot departure above lam-rho. High/low ordering transports the high costs to the actual paired low source, and the finite departure errors extend by zero on the prescribed future."))),
+                DescribeRole.Theorem),
+            Paragraph(Text("Sharp endpoints of the original fixed-tail family")),
+            Paragraph(Text("For j equal to high or low, A_j=(1-rho)h_j and X_j=A_j+rho*chi^3*E_j. The original initial displacement is X_j. The set below contains every finite positive Return list, including the empty list; it concerns complete right suffixes on the prescribed actual sources.")),
+            Paragraph(Math(ActualDisplacementExtrema())),
+            Paragraph(Text("The singleton lists [Return(1,R)] have displacement A_j+rho*chi^R*X_j, which tends to A_j as R tends to infinity. The lists [Return(M,1)] have displacement h_j-rho^M*(h_j-chi*X_j), which tends to h_j. The strict complete-boundary bounds exclude both endpoints for every finite list. X_j is not a valid lower bound: the original list [Return(1,3)] has displacement below X_j. Internal C inputs can be below A_j, while remaining positive.")),
+            Paragraph(Text("Actual finite departure costs")),
+            Paragraph(Text("For each side j, list xs and p less than length(history original xs), let z=coordinate(sourcePrefix j original xs,p) and i=history original xs[p]. Its closed-cell cost is max(cut(i)-z,max(0,z-cut(i+1))). actual_strict_cost_supply at budget lam supplies errors of absolute value strictly below lam at every such slot on the same source. literal_address_path supplies support, and owned_color_error, owned_color_interval and expanded_distance_formula imply that the cost is at most the absolute value of that actual error. Thus every finite departure cost is strictly below lam, including the stem and every repeated internal block. The terminal slot at history length is not included.")),
+            Paragraph(Text("For the high singleton [Return(1,R)], R>0, departure 30 is the color-1 position in the U immediately next to C^R. Its complete right suffix is C^R followed by the prescribed high tail. The coordinate and closed distance are:")),
+            Paragraph(Math(HighSingletonSlot())),
+            Paragraph(Text("A bound from one prescribed high history")),
+            Paragraph(Text("Suppose only that err satisfies ErrorBound b contract err and reads history original xs on the prescribed high source at every departure. No low history or future condition is needed. Write xs=before++[a]++after in execution order. External reversal places the selected return after externalWord high after, and its right complete suffix has displacement D=execute high before (initial high original). The active departure is q=26+length(externalWord high after)+6*(a.m-1)+4, in the last U next to C^(a.r), and its history color is 1. Its coordinate is cut(1)-(lam-g^2*chi^(a.r)*D). Closed-distance necessity gives lam-g^2*chi^(a.r)*D<=b. Since D<h_H, this forces g^2*chi^(a.r)*h_H>lam-b.")),
+            Paragraph(Text("For each b<lam, geometric convergence permits an integer K with g^2*chi^r*h_H<lam-b whenever r>=K. Every return in any such high history then has r<K, and hence r<=K. This K depends only on b and the fixed system, uniformly over lists, m, ownership and all three error contracts. The empty list has no return to bound.")),
+            Paragraph(Math(HighFiniteCap())),
+            Paragraph(Text("This bound is necessary only. It supplies no subcritical sufficiency criterion, no rate transfer, and no assertion that restricted subfamilies have zero rate. Increasing m cannot remove the bound on r.")))));
 }
