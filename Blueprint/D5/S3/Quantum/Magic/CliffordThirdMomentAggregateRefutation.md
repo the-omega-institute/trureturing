@@ -76,7 +76,79 @@ $$\forall d : \mathbb{N}, \forall n : \mathbb{N}, [\operatorname{NeZero}\left(d\
 
 The collection of isotropic subspaces is the set of graphs of stochastic orthogonal matrices. Its aggregate is the sum of kappa over exactly those graphs. The expectation kappa, the tensor operator R and the density tensor stateCube use the source trace convention.
 
-**Definition 1.7 (The aggregate lower bound in Conjecture 2).**
+**Definition 1.7 (Integer amplitudes).**
+
+$$\forall a : \operatorname{ZMod}\left(5\right), \forall b : \operatorname{ZMod}\left(5\right), \operatorname{v}\left(a, b\right) = !![8,-5,0,4,5;0,3,6,4,-4;-2,-5,-3,0,3;-3,0,5,-8,-6;5,-4,2,-5,0]\left(\langle \operatorname{val}\left(a\right), \operatorname{ZMod.val_{lt}}\left(a\right) \rangle, \langle \operatorname{val}\left(b\right), \operatorname{ZMod.val_{lt}}\left(b\right) \rangle\right)$$
+
+*Formalization.* `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.v` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The integer amplitudes are indexed by the canonical representatives of the two coordinates in ZMod 5.
+
+**Definition 1.8 (The normalized two-qudit state).**
+
+$$\forall x : (\operatorname{Fin}\left(2\right)) \to \operatorname{ZMod}\left(5\right), \operatorname{psi}\left(x\right) = \frac{(\operatorname{v}\left(x\left(0\right), x\left(1\right)\right) : \mathbb{C})}{(\operatorname{sqrt}\left(458\right) : \mathbb{C})}$$
+
+*Formalization.* `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.psi` (`✓ std3`).
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Divide the integer amplitudes by the complex image of the positive real square root of 458.
+
+**Theorem 1.9 (Unit squared norm).**
+
+$$\sum_{x : (\operatorname{Fin}\left(2\right)) \to \operatorname{ZMod}\left(5\right)} (\left\lVert psi\left(x\right) \right\rVert^{2}) = 1$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.normalized_psi` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The sum of the squared integer amplitudes is 458, so the scaled state has unit squared norm.
+
+**Theorem 1.10 (The exact isotropic aggregate).**
+
+$$\operatorname{kappaIso}\left(5, 2, psi\right) = \frac{140241723}{24017978}$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.kappa_iso` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+The aggregate of this state over the isotropic graph subspaces is 140241723/24017978.
+
+**Theorem 1.11 (The identity graph expectation).**
+
+$$\forall d : \mathbb{N}, \forall n : \mathbb{N}, [\operatorname{NeZero}\left(d\right)] \forall Psi : ((\operatorname{Fin}\left(n\right)) \to \operatorname{ZMod}\left(d\right)) \to \mathbb{C}, (hn : \sum_{x : (\operatorname{Fin}\left(n\right)) \to \operatorname{ZMod}\left(d\right)} (\left\lVert Psi\left(x\right) \right\rVert^{2}) = 1) \Rightarrow (\operatorname{kappa}\left(d, n, Psi, \operatorname{graphSubspace}\left(1\right)\right) = 1)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.kappa_identity` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every normalized state, the identity graph has third-moment expectation one.
+
+**Theorem 1.12 (Row permutation invariance).**
+
+$$\forall d : \mathbb{N}, \forall n : \mathbb{N}, [\operatorname{NeZero}\left(d\right)] \forall O : \operatorname{Matrix}\left(\operatorname{Fin}\left(3\right), \operatorname{Fin}\left(3\right), \operatorname{ZMod}\left(d\right)\right), \forall Psi : ((\operatorname{Fin}\left(n\right)) \to \operatorname{ZMod}\left(d\right)) \to \mathbb{C}, \forall e : \operatorname{Perm}\left(\operatorname{Fin}\left(3\right)\right), \operatorname{kappa}\left(d, n, Psi, \operatorname{graphSubspace}\left(\operatorname{submatrix}\left(O, e, \operatorname{id}\right)\right)\right) = \operatorname{kappa}\left(d, n, Psi, \operatorname{graphSubspace}\left(O\right)\right)$$
+
+*Proof.* Machine-checked in Lean as `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.kappa_rows` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Permuting the three output rows leaves the product of three state amplitudes unchanged, and therefore preserves the graph expectation.
+
+**Definition 1.13 (The aggregate lower bound in Conjecture 2).**
 
 $$(claim) \Leftrightarrow (\forall d : \mathbb{N}, [\operatorname{Fact}\left(\operatorname{Prime}\left(d\right)\right)] (d \ne 2) \Rightarrow (\forall n : \mathbb{N}, \forall Psi : ((\operatorname{Fin}\left(n\right)) \to \operatorname{ZMod}\left(d\right)) \to \mathbb{C}, (\sum_{x : (\operatorname{Fin}\left(n\right)) \to \operatorname{ZMod}\left(d\right)} (\left\lVert Psi\left(x\right) \right\rVert^{2}) = 1) \Rightarrow ((6 : \mathbb{C}) \le \operatorname{kappaIso}\left(d, n, Psi\right))))$$
 
@@ -88,7 +160,7 @@ $$(claim) \Leftrightarrow (\forall d : \mathbb{N}, [\operatorname{Fact}\left(\op
 
 The assertion quantifies over every prime dimension other than two, every number of qudits and every normalized complex state. The complex order requires that the aggregate have zero imaginary part and real part at least six.
 
-**Theorem 1.8 (A two-qudit state refutes the bound).**
+**Theorem 1.14 (A two-qudit state refutes the bound).**
 
 $$\neg claim$$
 
@@ -111,7 +183,13 @@ Take d = 5 and n = 2. The row labels the first qudit and the column labels the s
 - Truth anchor: `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.graphSubspace_injective`
 - Truth anchor: `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.isoSubspaces`
 - Truth anchor: `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.kappaIso`
+- Truth anchor: `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.kappa_identity`
+- Truth anchor: `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.kappa_iso`
+- Truth anchor: `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.kappa_rows`
+- Truth anchor: `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.normalized_psi`
+- Truth anchor: `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.psi`
 - Truth anchor: `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.result`
 - Truth anchor: `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.stochasticOrthogonal`
 - Truth anchor: `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.stochasticOrthogonal_five_iff`
+- Truth anchor: `D5/S3/Quantum/Magic/CliffordThirdMomentAggregateRefutation.v`
 - Dependency: [D5/S3/Quantum/Magic/CliffordThirdMomentNegativity](CliffordThirdMomentNegativity.md)
