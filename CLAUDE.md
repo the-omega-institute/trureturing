@@ -264,7 +264,7 @@ harness 维护此图:admission 检验有效证明且与冻结一致(保守扩展
 
 ### 3.9 登记即声明模板与 delta 判官
 
-**信息逃逸审计**：本节 delta/first-pin 选中 D5 源模块中，相对受保护基线新作者的每条公开 `theorem`/`lemma` 声明，除下款指定反驳 result 豁免外，须在同一交付中尝试忠实的四槽登记，提交源码所有者对应的 `Reg/D5/<镜像路径>.lean`、已编译的登记证明及当前 binding evidence。交付须完成登记，或按下款「登记受阻的交付边界」关联 issue 并明确披露审计未完成。已有 Reg 源码、成功登记、证明与机器状态保留，未完成登记不得冒报 `declared_validated`；Lean kernel、`sorry`、axiom、冻结及其它现役检查照常执行。第 3.2 条的数学判形、逃逸见证与准入依据以及第 3.3 条的用途规则独立适用。
+**信息逃逸审计**：本节 delta/first-pin 选中 D5 源模块中，相对受保护基线新作者的每条公开 `theorem`/`lemma` 声明，除下款指定反驳 result 豁免外，须由写出该定理的 agent 在同一交付中按判官格式尝试忠实的四槽登记，提交源码所有者对应的 `Reg/D5/<镜像路径>.lean`、已编译的登记证明及当前 binding evidence；不得先交裸 D5 定理，再把登记责任留给后续 agent 或审计者。交付须完成登记，或按下款「登记受阻的交付边界」关联 issue 并明确披露审计未完成。已有 Reg 源码、成功登记、证明与机器状态保留，未完成登记不得冒报 `declared_validated`；Lean kernel、`sorry`、`axiom`、冻结及其它现役检查照常执行。第 3.2 条的数学判形、逃逸见证与准入依据以及第 3.3 条的用途规则独立适用。
 
 **登记的模板契约**：带类型的 `Contract.Registration` 必须以 `readout` 字段指明所用的已 enroll 模板，模板由 `Contract.TemplateEnrollment` 声明；判官只核对这一条声明的 enrollment 判断(E1–E8)与编译产物证据,绝不替登记去搜索或猜测模板。模板是内容面数据,不是判官;判官不为某个语料模块放宽文法(第 3.4 条允许表原则)。
 **delta 律**:判官只评估候选相对受保护基线**新增、字节变化**的 `Reg` 模块里的登记;另按 SL-031 的 changed/first-pin D5 选择源识别新增公开定理,只到其源码所有者的镜像 `Reg/D5/<同路径>.lean` 及该镜像显式 import 的 Reg 模块找登记,不读取 D5 的登记 payload;已在 git 里的登记**不读、不判、在任何层(加载器、读者、规则)都不因它失败**。整工件完整性检查(报告的 canonical 字节、内容寻址、封套 schema)仍是全局的——它们守 producer 的工件,不守登记。被选中的登记:未声明 ⇒ `DTR-Undeclared`;声明了但未解析/证据缺失、畸形、不一致或无有效证书 ⇒ `DTR-Evidence`;声明且验证通过 ⇒ `DTR-Declared`;新增公开定理无登记 ⇒ `DTR-Unregistered`(下款)。判词名单封闭为这四个,无别的名字;**四个判词全部为 Observe(告警)**,判官只收集登记状态、不阻断准入。判官的改动权限收归 #5214 登记即程序线,其他 lane 不改判官、只提供告警读数(τ=0 owner 2026-09-20 裁决,原话「把判官从block 改成warning … 把改的权限全部收到你这边来吧, 否则太乱了. 你只要收集他们的warning就可以了」)。
@@ -473,13 +473,14 @@ backfill 条目由 residual-open 迁入 absorbed-closed        消化闭合
 
 ### 5.11 sshx 载体、公开证据与运行契约
 
-**多模型对抗共识**:`/sshx`(`consensus-rnd:sshx`)派 codex-cli/nyxid-oracle 隔离席设计、实施、评审。
+**多模型对抗共识**:`/sshx`(`consensus-rnd:sshx`)派 codex-cli/nyxid-oracle 隔离席设计、实施、评审;nyxid-oracle 只承担推理,不承担验证。
 
+- **oracle 默认只用于推理,不用于验证**:nyxid-oracle(ChatGPT Pro)默认只接推理任务——思考面板、设计、研究、文献地图、搜题与证明路线推演;sshx 的 oracle 席同样只排在推理阶段。验证任务——评审与复审各席(含 architecture/quality/tests)、适用的独立终止或完成审计、判形与忠实性核对——不派 oracle,全部由 codex-cli 承担。oracle 的推理结论不算验证结果,进入验证前须由能执行的载体或 orchestrator 亲验。验证席因此同属一个模型族时,按第 5.2、5.8 条如实披露,不冒充多样性。
 - **目标迭代无总轮数上限**:覆盖 skill 的有限 `pass_budget`/耗尽停机规则,设计/修复/复审/适用独立终止审计不得因轮数停止仍可推进的目标。按证据修真实缺口,无进展须查根因换法,不原样空转。独立实施/评审、无未解 reject、适用完成审计及 PR MERGED 要求仍在;真实能力/授权/资源缺口按第 5.9 条。单次调用、有限重试、失败回退仍按各自契约,不等于目标轮数上限。
-- **默认不用 `isolated-token-subagent`**:覆盖 skill 的每多席阶段一 subagent+一 nyxid+其余 codex 布局,subagent 名额给 codex-cli。`WorkerMode` 失败回退优先序不变;codex-cli 与 nyxid-oracle 皆不可用则阶段 abstain,不得回退 subagent 顶替。
+- **默认不用 `isolated-token-subagent`**:覆盖 skill 的每多席阶段一 subagent+一 nyxid+其余 codex 布局,subagent 名额给 codex-cli;推理阶段为一 nyxid+其余 codex,验证阶段全部 codex-cli。`WorkerMode` 失败回退优先序不变,但验证阶段不回退 nyxid-oracle;推理阶段 codex-cli 与 nyxid-oracle 皆不可用、验证阶段 codex-cli 不可用,则该阶段 abstain,不得回退 subagent 顶替。
 - **tests 席只能 codex-cli**:须在 `work_target` 真跑验证;nyxid-oracle 无工作树执行能力,其“跑过什么”一律 `ASSUMED-UNVERIFIED`。
-- **每个 nyxid/ChatGPT Pro brief 必含 `https://github.com/the-omega-institute/trureturing`**,搜题/评审/研究均适用;按需给 `/blob/<head-sha>/<path>`、PR/issue/checks 具体 URL,缺仓库地址即不合格。让席位独立取公开状态,不只转述状态;前提是实测仓库 `visibility=public`,私有时另测可达性,不假定。
-- **公开证据边界**:nyxid 可读已发布状态,不能核本地未推送分支/工作树。要评审的内容能推就先推(可用 draft PR/临时分支);不能公开须在 brief 明写,相关结论标假设,由能执行的载体或 orchestrator 亲验。
+- **每个 nyxid/ChatGPT Pro brief 必含 `https://github.com/the-omega-institute/trureturing`**,搜题/设计/研究等推理任务均适用;按需给 `/blob/<head-sha>/<path>`、PR/issue/checks 具体 URL,缺仓库地址即不合格。让席位独立取公开状态,不只转述状态;前提是实测仓库 `visibility=public`,私有时另测可达性,不假定。
+- **公开证据边界**:nyxid 可读已发布状态,不能核本地未推送分支/工作树。要交它推理的内容能推就先推(可用 draft PR/临时分支);不能公开须在 brief 明写,相关结论标假设,由能执行的载体或 orchestrator 亲验。
 - **池名先实测**:`nyxid oracle pool list` 决定 slug,不凭想象。既有读数为 `chatgpt-pro-pool`/`company-chatgpt-pro`;`chatgpt-pro` 不存在、返回 HTTP 403 private,不是可用名保证。
 - **codex prompt 以文件 stdin 喂入**:`codex exec [flags] < promptfile`,不作位置参数,避免 shell 破坏美元号/反引号/尖括号/引号/换行后造成空 prompt 与无输入挂起。
 - **flight 在飞时 caller 对该 work_target 的读数不作数**:测试可能置树于瞬时变异态。要读须取 sha256 并交回后复读比对,或只读派发前 diff 快照;读数冲突先核自己的采集条件,再判对方。临时快照不按过程档案留存(第 2.10 条)。
