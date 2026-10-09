@@ -34,7 +34,9 @@ internal sealed class BudgetMarginNoncomputabilityDocument : IScribeDocumentDefi
                 + "promise is unrestricted, and different indices of the same budget may yield "
                 + "different answers.")),
             Paragraph(Text(
-                "CauchySelector(d,A) requires a partial recursive operator on budget codes. It returns a name program q. At every precision k, that program returns an encoded triple of naturals. "
+                "CauchySelector(d,A) requires a partial recursive operator on budget codes. It "
+                + "returns a name program q. At every precision k, that program returns an "
+                + "encoded triple of naturals. "
                 + "For every promised e,b and every natural precision k, "
                 + "the query must terminate with (u,v,w) such that the signed rational "
                 + "(u-v)/(w+1) differs from optimalMass(d,b) by at most 2^(-k). This encoding "
