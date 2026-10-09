@@ -26,10 +26,10 @@ def blockPositive {m n : ℕ} (W : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ)
     0 ≤ star (fun p : Fin m × Fin n => x p.1 * y p.2) ⬝ᵥ
       (W *ᵥ (fun p : Fin m × Fin n => x p.1 * y p.2))
 
-/-- The negative trace is expressed by its real part; traces of Hermitian products are real. -/
+/-- Block positivity and a strictly negative trace pairing with a positive semidefinite matrix. -/
 def IsWitness {m n : ℕ} (W : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) : Prop :=
   blockPositive W ∧ ∃ σ : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ,
-    σ.PosSemidef ∧ (W * σ).trace.re < 0
+    σ.PosSemidef ∧ (W * σ).trace < 0
 
 /-- Trace out the second factor, using the existing partial-trace definition. -/
 def trTwo {m n : ℕ} (W : Matrix (Fin m × Fin n) (Fin m × Fin n) ℂ) :
@@ -110,7 +110,7 @@ private theorem witness : IsWitness counterexample := by
         Matrix.head_cons, Matrix.tail_cons, Complex.star_def, map_inv₀]
       field_simp
       linear_combination hs
-    rw [ht]
+    rw [ht, Complex.neg_iff]
     norm_num
 
 private theorem kernel : kernelCriterion counterexample := by

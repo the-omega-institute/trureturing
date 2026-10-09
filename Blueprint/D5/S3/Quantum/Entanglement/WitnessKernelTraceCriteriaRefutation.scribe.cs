@@ -16,9 +16,9 @@ internal sealed class WitnessKernelTraceCriteriaRefutationDocument : IScribeDocu
         Blocks(
             Paragraph(Text("The dimensions m and n are arbitrary natural numbers. Fin m and Fin n index the two factors, and all matrices and vectors have complex entries. A product vector has coordinate x(p.1)y(p.2). star denotes complex conjugation, dotProduct is the bilinear coordinate sum, mulVec is matrix action, and kronecker is the Kronecker product of matrices. Complex nonnegativity requires a nonnegative real part and zero imaginary part. toLp places a coordinate vector in EuclideanSpace with its standard inner product. The Lean names trTwo and trOne have notation tr₂ and tr₁, respectively. ofReal and natCastComplex display the scalar embeddings used in Lean.")),
             Definition("blockPositive", "Block positivity", BlockPositiveFormula(),
-                "Section II.2 requires a nonnegative complex expectation on every product vector, without normalization assumptions on either factor."),
+                "Section II B requires a nonnegative complex expectation on every product vector, without normalization assumptions on either factor."),
             Definition("IsWitness", "Entanglement witnesses", WitnessFormula(),
-                "A block-positive matrix is a witness when some positive semidefinite matrix sigma has negative pairing with it. The trace inequality is expressed by its real part. For products of Hermitian matrices the trace is real, and then this is precisely the source's strict negative trace inequality."),
+                "A block-positive matrix is a witness when some positive semidefinite matrix sigma satisfies the strict negative trace inequality tr(W sigma) < 0."),
             Definition("trTwo", "Trace over the second factor", PartialTraceFormula(false),
                 "trTwo is the existing partialTraceRight: sum over the repeated second index while retaining the first factor."),
             Definition("trOne", "Trace over the first factor", PartialTraceFormula(true),
@@ -94,8 +94,8 @@ internal sealed class WitnessKernelTraceCriteriaRefutationDocument : IScribeDocu
     }
     private static Formula WitnessFormula() => WithMatrix(IffTo(Call("IsWitness", V("W")),
         And(Call("blockPositive", V("W")), Ex("sigma", Mat(),
-            And(Call("PosSemidef", V("sigma")), Lt(Call("re", Call("trace",
-                Multiply(V("W"), V("sigma")))), D(0)))))));
+            And(Call("PosSemidef", V("sigma")), Lt(Call("trace",
+                Multiply(V("W"), V("sigma"))), D(0)))))));
     private static Formula PartialTraceFormula(bool left)
     {
         var first = left ? "j" : "i"; var second = left ? "l" : "k";
