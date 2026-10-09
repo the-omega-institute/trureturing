@@ -22,10 +22,12 @@ internal sealed class WhiteboxDyadicPrefixTailDocument : IScribeDocumentDefiniti
     private static Formula E(Formula f) => Call("E", f);
     private static DocumentBlock Thm(string n, string title, Formula f, string prose) =>
         Describe.Lean(DescribeId.Create(n.Replace('.', '-').Replace('_', '-').ToLowerInvariant()),
-            DeclarationHandle.Create(Prefix + n.Replace("Paths.", "")), H(title), StatementSource.FromAuthor(Disp(f)),
-            n is "cylinder_tail_lower" or "ddg_lower"
-                ? AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg"))
-                : AssessedProvenance.FromRepo(),
+            DeclarationHandle.Create(Prefix + n), H(title), StatementSource.FromAuthor(Disp(f)),
+            n == "ddg_lower"
+                ? AssessedProvenance.FromLiterature(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg"))
+                : n == "cylinder_tail_lower"
+                    ? AssessedProvenance.FromRepo(LibraryNoteRef.Create("D5/L/Computability/lumbroso2013ddg"))
+                    : AssessedProvenance.FromRepo(),
             Blocks(Paragraph(Text(prose))), DescribeRole.Theorem);
 
     public DocumentDefinition Create()
@@ -76,8 +78,9 @@ internal sealed class WhiteboxDyadicPrefixTailDocument : IScribeDocumentDefiniti
                         Seq(Call("ofReal", Call("L", p)), Sp, Le, Sp, E(Call("bill", s))))),
                     "Tonelli identifies the expected bill with the sum of the survival probabilities. "
                     + "Termwise cylinder bounds give the cost inequality when the real dyadic series is summable. "
-                    + "The classical DDG cost expression is recalled in Lumbroso, Section 2.1; "
-                    + "the statement here retains the full prefix execution and its common output law."),
+                    + "This is the classical optimal random-bit cost lower bound recalled in Lumbroso, "
+                    + "Section 2.1, equations (1)-(2). Its formalization here connects PrefixSampler, "
+                    + "emitted, active, and bill to that cost expression on the same execution and output law."),
                 Thm("relabel_emitted", "Relabelling the emitted event",
                     Relabel(All(i, beta, All(t, V("Tape"), Seq(
                         t, Sp, InMacro, Sp, Call("emitted", Call("relabel", f, s), i), Sp, Iff,
