@@ -28,9 +28,9 @@ zero charge. Translating the argument rotates the same physical window. -/
 def windowCharge (k m : ℕ) (q : ℕ → ZMod 2) (j : ZMod (k + 1)) : ZMod 2 :=
   if j.val ≤ m then q j.val else 0
 
-private def bitScalar (b : Bool) : ZMod 2 := if b then 1 else 0
+def bitScalar (b : Bool) : ZMod 2 := if b then 1 else 0
 
-private def extendedBit {m : ℕ} (w : Fin m → Bool) (i : ℕ) : ZMod 2 :=
+def extendedBit {m : ℕ} (w : Fin m → Bool) (i : ℕ) : ZMod 2 :=
   if h : i < m then bitScalar (w ⟨i, h⟩) else 0
 
 private theorem scalar_decide (x : ZMod 2) : bitScalar (decide (x ≠ 0)) = x := by
@@ -51,7 +51,7 @@ private theorem sum_pick {m : ℕ} (w : Fin m → Bool) (r : ℕ) :
   · have hz : ∀ i : Fin m, i.val ≠ r := by intro i h; have := i.isLt; omega
     simp [hz, extendedBit, hr]
 
-private theorem increment_derivative (k : ℕ) (hk : 3 ≤ k) (m : ℕ)
+theorem increment_derivative (k : ℕ) (hk : 3 ≤ k) (m : ℕ)
     (hshort : m < k) (w : Fin m → Bool) (j : ZMod (k + 1)) :
     wordIncrement k (-j) w = extendedBit w j.val +
       (if j.val = 0 then 0 else extendedBit w (j.val - 1)) := by
@@ -162,9 +162,10 @@ theorem short_window_charge_inverse (k : ℕ) (hk : 3 ≤ k) (m : ℕ)
     exact increment_injective k hk m hshort w (prefixWord m q)
       (fun j => (hw j).trans (inverse j).symm)
 
+#print axioms increment_derivative
 #print axioms short_window_charge_inverse
 
-private theorem short_legal (k m : ℕ) (hk : 2 ≤ k) (hshort : m < k)
+theorem short_legal (k m : ℕ) (hk : 2 ≤ k) (hshort : m < k)
     (w : Fin m → Bool) : DBonacciAdmissible k m w := by
   obtain ⟨a, rfl⟩ := Nat.exists_eq_succ_of_ne_zero (by omega : k ≠ 0)
   exact runAdmissible_eq_true_of_length_le a a m w (by omega) le_rfl
@@ -180,7 +181,7 @@ private theorem last_false_tail : ∀ (n : ℕ) (w : Fin (n + 1) → Bool) (s : 
       apply ih
       exact h
 
-private theorem short_safe_execution (k : ℕ) (hk : 2 ≤ k) (m : ℕ)
+theorem short_safe_execution (k : ℕ) (hk : 2 ≤ k) (m : ℕ)
     (hm : 1 ≤ m) (hshort : m < k) (w : Fin m → Bool)
     (v : ZMod 2) (phase : ZMod (k + 1)) (s : ℕ) (hs : s < k)
     (incoming : s = 0 ∨ w ⟨0, by omega⟩ = false) :
@@ -233,7 +234,7 @@ def chargeArchive (k m : ℕ) : List (ℕ → ZMod 2) → ZMod 2 →
       let next := v + windowCharge k m q j
       some next :: chargeArchive k m rest next (j - (m : ℕ))
 
-private theorem charge_archive_live (k m : ℕ) (rows : List (ℕ → ZMod 2))
+theorem charge_archive_live (k m : ℕ) (rows : List (ℕ → ZMod 2))
     (v : ZMod 2) (j : ZMod (k + 1)) :
     (chargeArchive k m rows v j).length = rows.length ∧
     none ∉ chargeArchive k m rows v j := by
