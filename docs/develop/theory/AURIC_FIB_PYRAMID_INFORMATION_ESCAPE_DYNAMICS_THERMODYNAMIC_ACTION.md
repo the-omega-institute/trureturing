@@ -845,6 +845,64 @@ Q_n=\frac{F_n}{\gcd(F_n,F_aF_b)}
 
 这里必须保留尺度限制。对于最近整数格点，lattice seam 通常是有限分辨率障碍，随着 \(R\) 增大，KL 残差密度可能趋于零。要得到宏观的非零自由能密度，需要额外的同余约束或使允许纤维距离保持 \(O(R)\)。因此 primitive prime 证明的是 exact independence 不可达，不自动证明物理相变或宏观能垒。
 
+## 11.1. 统一混合生成元与三种逃逸
+
+定义连续状态
+
+\[
+m=(r,\alpha,\beta,\eta)
+\]
+
+和离散状态
+
+\[
+s=(K,\text{prime seam},\text{Fibonacci phase}).
+\]
+
+候选混合状态空间为
+
+\[
+\mathcal M
+=
+\{(m,s):
+0\le r\le1,\ 
+\eta\in I(\alpha,\beta)\}.
+\]
+
+对连续观测量 \(f\)，可以把候选生成元写成
+
+\[
+\mathcal Gf
+=
+u_r\partial_r f
++
+u_\alpha H_\alpha f
++
+u_\beta H_\beta f
+-
+\gamma r\Lambda_q A_q\,\partial_\eta f
++
+\sum_{s'}\lambda_{s,s'}
+\bigl(f(m,s')-f(m,s)\bigr).
+\]
+
+这里：
+
+- \(u_r\partial_r\) 是层间径向运动；
+- \(H_\alpha,H_\beta\) 是 Fisher 水平提升，负责沿宏观底面移动并避免把坐标搬运误当成隐藏相关；
+- \(-\gamma r\Lambda_q A_q\partial_\eta\) 是隐藏纤维上的 Onsager/KL 梯度流；
+- 最后一项是 prime seam、Fibonacci phase 或 kernel layer 的离散跳跃。
+
+当前文档已经严格推导了径向捕获和纤维耗散两个特例。把 kernel 跳跃和 prime 跳跃加入同一个 \(\mathcal G\) 仍是候选框架，需要为每个离散跳跃指定高度更新、fiber lift 和成本单位。
+
+在这个统一框架中，必须区分三种逃逸：
+
+1. **quotient escape**：观察投影忘掉 \(\kappa\) 或 Fibonacci scalar phase，状态可以不变，但信息进入 kernel；
+2. **dynamical escape**：生成元沿 \((r,\alpha,\beta,\eta)\) 移动，把状态带到另一层或另一条纤维；
+3. **arithmetic escape**：宏观目标在连续空间存在，但在整数 toric fiber 上没有合法 lift，或者 projective closure 与 full linear closure 不一致。
+
+素数只有在改变 arithmetic lift、phase closure 或 successor relation 时才是动力学变量。单纯出现在 \(R\) 或 \(F_n\) 的支持中，只是标签。
+
 ## 12. 可逐步形式化的定理包
 
 建议在 D5/S3/Arith/FibonacciAtomic/AuricPyramid/ 下建立以下文件，先做静态线性代数，再做解析流：
