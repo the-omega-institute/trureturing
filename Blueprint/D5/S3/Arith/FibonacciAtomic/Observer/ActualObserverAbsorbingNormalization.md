@@ -162,7 +162,55 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNor
 
 J_N(N,M,tau,c) equals c times card(E) plus maxFee(N,M,tau). It charges every nominal configuration, including unreachable rows and cycles. The domain and each source are the original ones; there is no interchange of maximization with a per-address sum.
 
-**Definition 1.14 (Complete same-carrier normalization contract).**
+**Theorem 1.14 (Exact bounded source membership).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.allowedSources_exact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.allowedSources_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every N and original U, U belongs to allowedSources N if and only if Allowed N U. The composition-fiber enumeration covers every original shape and label under the same leaf budget.
+
+**Theorem 1.15 (Positive budget has an original source).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.allowedSources_nonempty`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.allowedSources_nonempty` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For N at least one, allowedSources N is nonempty; the original true-labelled singleton tree supplies a member.
+
+**Theorem 1.16 (Fee of any original terminating run).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.fee_run`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.fee_run` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For any original Observer M, real address price tau, source U and initial Run with trace t, Fee M tau U equals charge tau t. Original finite-run determinism identifies this run with the fee's selected termination witness.
+
+**Theorem 1.17 (Same-domain maximum bound and attainment).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.maximum_exact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.maximum_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For N at least one and any original M and real tau, every allowed source fee is at most maxFee N M tau, and some original allowed source attains exactly this maximum. Nonnegative prices and admissibility are not required for this finite maximum identity.
+
+**Definition 1.18 (Complete same-carrier normalization contract).**
 
 Lean statement: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.NormalizationContract`
 
@@ -178,7 +226,7 @@ The contract gives both prefix directions. Every old actual prefix h at e has a 
 
 The contract also transports every unrestricted new PairReach into old PairReach and states exact allowedSources membership. For every real address price tau with tau(q) at least zero, it gives Fee(new,tau,U) at most Fee(old,tau,U) for every allowed U, an allowed source attaining each of the old and new maxima, and J_N(new) at most J_N(old) for every strictly positive nominal price c. Zero address prices are included. The paid set of a filtered trace is exactly the old paid set restricted to Q_N; nonnegative finite-sum domination proves the sourcewise inequality. Attainment on the exact finite original source domain then proves the joint inequality.
 
-**Theorem 1.15 (Complete normalization for every original competitor).**
+**Theorem 1.19 (Complete normalization for every original competitor).**
 
 $$\forall E: Type, ([\operatorname{Fintype}\left(E\right)], \forall N: Nat, (\forall M: \operatorname{Observer}\left(E\right), ((\operatorname{Admissible}\left(N, M\right)) \implies (\exists H: \operatorname{Observer}\left(E\right), ((H = \operatorname{normalized}\left(N, M\right)) \land (\operatorname{NormalizationContract}\left(N, M, H\right)))))))$$
 
@@ -198,8 +246,12 @@ Every original Admissible observer has the specified normalized Observer on the 
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.absentStep`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.absent_normalization_contract`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.allowedSources`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.allowedSources_exact`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.allowedSources_nonempty`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.charge`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.fee_run`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.maxFee`
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.maximum_exact`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.normalize_run_from_actual_prefix`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.normalized`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/Observer/ActualObserverAbsorbingNormalization.normalized_pair_transport`

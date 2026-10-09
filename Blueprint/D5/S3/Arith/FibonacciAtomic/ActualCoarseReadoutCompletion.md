@@ -54,7 +54,19 @@ Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion.cache
 
 For every raw policy and source, any finite run from a logical history can be reproduced from a cache with distinct addresses and truthful replies. The cached run returns the same trace and answer, preserves distinct truthful cache entries, and its final paid set is the union of the initial cache addresses and the run's requested addresses.
 
-**Theorem 1.5 (All-source completion and exact prototype fees).**
+**Theorem 1.5 (Representatives fix original acquisition prefixes).**
+
+Lean statement: `D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion.acquisition_prefix_representative`
+
+*Proof.* Machine-checked in Lean as `D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion.acquisition_prefix_representative` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+For every original U and every raw prefix h of acquisitionTrace [] U, encodeHistory (kappa_hist h) equals h literally. Original acquisition reports are leaf labels or branch, so choosing branch as the none representative changes no report on these prefixes. This is the original completion proof's representative supplier, also consumed by the finite pure-acquisition compiler. It asserts no representative identity for arbitrary histories containing absent.
+
+**Theorem 1.6 (All-source completion and exact prototype fees).**
 
 $$\forall m: Nat, (\forall F: \operatorname{Function}\left(\operatorname{Fin}\left(m\right), \operatorname{Source}\left(\right)\right), ((\forall i: \operatorname{Fin}\left(m\right), (\operatorname{Positive}\left(\operatorname{F}\left(i\right)\right))) \implies (\forall p: \operatorname{PassiveProtocol}\left(\operatorname{Address}\left(\right), \operatorname{Option}\left(Bool\right)\right), (\forall decode: \operatorname{Function}\left(CH, \operatorname{Option}\left(\operatorname{Fin}\left(m\right)\right)\right), (\exists pi: \operatorname{Strategy}\left(\right), ((\operatorname{policy}\left(pi\right) = \operatorname{compose}\left(\operatorname{CP}\left(C\right), N\right)) \land (\operatorname{FactorsThrough}\left(\operatorname{policy}\left(pi\right), K\right)) \land (\forall U: \operatorname{Source}\left(\right), (\exists n: Nat, (\exists t: RH, (\exists b: Bool, (\exists cache: RH, ((\operatorname{E}\left(pi, n, U\right) = \operatorname{some}\left(\operatorname{pair}\left(t, b\right)\right)) \land (\operatorname{CE}\left(pi, n, U\right) = \operatorname{some}\left(\operatorname{pair}\left(\operatorname{pair}\left(t, b\right), cache\right)\right)) \land (\operatorname{pair}\left(t, b\right) = \operatorname{T}\left(pi, U\right)) \land ((b = true) \iff (\operatorname{Positive}\left(U\right))) \land (\operatorname{ND}\left(cache\right)) \land (\operatorname{Truth}\left(U, cache\right)) \land (\operatorname{paid}\left(cache\right) = \operatorname{paid}\left(t\right)))))))) \land (\forall U: \operatorname{Source}\left(\right), (\forall h: RH, (\forall s: RH, (\operatorname{Phase}\left(U, h, s\right))))) \land (\forall V: \operatorname{Source}\left(\right), (\forall pre: \operatorname{List}\left(\operatorname{Address}\left(\right)\right), (\forall rest: \operatorname{List}\left(\operatorname{Address}\left(\right)\right), (\forall q: \operatorname{Address}\left(\right), (\forall y: \operatorname{Reply}\left(\right), (\forall s: RH, (\operatorname{Failed}\left(V, pre, rest, q, y, s\right)))))))) \land (\forall U: \operatorname{Source}\left(\right), (\forall h: RH, (\forall q: \operatorname{Address}\left(\right), (\operatorname{Acq}\left(U, h, q\right))))) \land (\forall i: \operatorname{Fin}\left(m\right), (\operatorname{Prototype}\left(pi, i\right)))))))))$$
 
@@ -76,6 +88,7 @@ The full result quantifies every finite coarse route, every decoder and every po
 
 ## References
 
+- Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion.acquisition_prefix_representative`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion.cache_run`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion.cachedExecute`
 - Truth anchor: `D5/S3/Arith/FibonacciAtomic/ActualCoarseReadoutCompletion.compileRaw`
