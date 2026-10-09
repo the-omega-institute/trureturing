@@ -4,7 +4,31 @@
 
 Exact decoding and source injectivity are characterized by collisions on reachable branches.
 
-**Theorem 1.1 (Exact recovery is equivalent to the branch collision conditions).**
+**Theorem 1.1 (A reachable branch recovers the sum on its parity fibre).**
+
+Lean statement: `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.branch_exact_of_decoder`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.branch_exact_of_decoder` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Let D decode every source exactly. Fix a reachable receiver a, clock t and query label c. Two sender tuples with characteristic chi(t-a) and the same replies in that branch have the same sum. Complete each tuple with its kernel offset t-a-sum to obtain actual sources, then apply D.
+
+**Theorem 1.2 (Branch exactness separates local characteristic fibres).**
+
+Lean statement: `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.fiber_separated_of_branch_exact`
+
+*Proof.* Machine-checked in Lean as `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.fiber_separated_of_branch_exact` (`✓ std3`). ∎
+
+*Source.* Repository-derived.
+
+*Commentary.*
+
+Suppose a family recovers the sum on characteristic fibre p, and every local input embeds in some tuple in that fibre. A sender cannot merge two inputs with equal characteristic: replace that one coordinate in an embedding, preserve all replies and parity, and cancel the equal sums. The sender-count assumption is replaced here by the explicit embedding hypothesis.
+
+**Theorem 1.3 (Exact recovery is equivalent to the branch collision conditions).**
 
 Lean statement: `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.exact_recovery_iff_branch_conditions`
 
@@ -22,7 +46,7 @@ For sufficiency with one possible exceptional sender, all other coordinates are 
 
 The reverse implication constructs a decoder by assigning to each observation the unique target value on its source fibre; observations outside the image receive an arbitrary value. Empty branches therefore impose no condition. Only actual collision pairs are constrained: not every pair differing by tau must be merged. Both the exceptional sender and tau may depend on the branch.
 
-**Theorem 1.2 (Source injectivity is equivalent to at most one noninjective sender per branch).**
+**Theorem 1.4 (Source injectivity is equivalent to at most one noninjective sender per branch).**
 
 Lean statement: `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.source_injective_iff_branch_single`
 
@@ -38,6 +62,8 @@ If two senders collide, the common odd involution and a third sender produce two
 
 ## References
 
+- Truth anchor: `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.branch_exact_of_decoder`
 - Truth anchor: `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.exact_recovery_iff_branch_conditions`
+- Truth anchor: `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.fiber_separated_of_branch_exact`
 - Truth anchor: `D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.source_injective_iff_branch_single`
 - Dependency: [D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotPeriodClassification](ExactSnapshotPeriodClassification.md)

@@ -9,6 +9,35 @@ internal sealed class ExactSnapshotCollisionClassificationDocument : IScribeDocu
         H("Exact Snapshot Collision Classification"),
         Blocks(
             Describe.Lean(
+                DescribeId.Create("reachable-branch-exact-sum"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification."
+                    + "branch_exact_of_decoder"),
+                H("A reachable branch recovers the sum on its parity fibre"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Let D decode every source exactly. Fix a reachable receiver a, clock t "
+                    + "and query label c. Two sender tuples with characteristic chi(t-a) and "
+                    + "the same replies in that branch have the same sum. Complete each tuple "
+                    + "with its kernel offset t-a-sum to obtain actual sources, then apply D."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
+                DescribeId.Create("branch-exact-fibre-separation"),
+                DeclarationHandle.Create(
+                    "D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification."
+                    + "fiber_separated_of_branch_exact"),
+                H("Branch exactness separates local characteristic fibres"),
+                StatementSource.WithoutFormula(),
+                AssessedProvenance.FromRepo(),
+                Blocks(Paragraph(Text(
+                    "Suppose a family recovers the sum on characteristic fibre p, and every "
+                    + "local input embeds in some tuple in that fibre. A sender cannot merge "
+                    + "two inputs with equal characteristic: replace that one coordinate in "
+                    + "an embedding, preserve all replies and parity, and cancel the equal sums. "
+                    + "The sender-count assumption is replaced here by the explicit embedding hypothesis."))),
+                DescribeRole.Theorem),
+            Describe.Lean(
                 DescribeId.Create("exact-recovery-iff-branches"),
                 DeclarationHandle.Create(
                     "D5/S3/ObserverMemory/ContextUpdates/ExactSnapshotCollisionClassification.exact_recovery_iff_branch_conditions"),

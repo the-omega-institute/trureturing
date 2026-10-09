@@ -1821,3 +1821,784 @@ composition supplies neither physical validation nor completion of the
 sustained programme.
 
 ## 73.99 追加锚（本行以下为增补区）
+
+## 74. Scattering strength and support range obstruct the literal hard-core limit
+
+**Definition 74.1 (fixed data, unchanged target and full comparisons).** Fix
+an arbitrary authentic finite nonempty $D$, commissioned $a>0$, one
+$0<\delta\le1$, one integer $s\ge3$, and precisely the physical geometry,
+grounding and fixed reference volumes of Definition72.1. All these data are
+fixed as $\varepsilon\downarrow0$. Put $\beta=a/\delta$ and fix $M\ge0$.
+Write $\Omega=\Omega_\varepsilon^+$,
+$\mathcal P_\varepsilon=L^2_{\rm sym}(\Omega^2)$, and
+$\mathcal Q_{\rm mix,\varepsilon}$ for the symmetric $H^1(\Omega^2)$
+domain with the two grounded zero traces specified in (73.5). Its kinetic
+form is
+
+$$
+q_{0,\varepsilon}[U]=\beta\int_{\Omega^2}
+ (|\nabla_xU|^2+|\nabla_yU|^2).
+\tag{74.1}
+$$
+
+Use exactly $E$ of Theorem73.3 and $J_{\varepsilon,2}$ of
+(73.3)/(73.6). For each of the three original operators separately put
+
+$$
+\begin{aligned}
+ C&\in\{A_{\delta,D,2},\mathcal T^{\rm c}_{\delta,D,2},
+                         \mathcal T^{\rm k}_{\delta,D,2}\},\\
+ K_{\varepsilon,C}
+   &=J_{\varepsilon,2}E(C-i)^{-1}E^*J_{\varepsilon,2}^*.
+\end{aligned}
+\tag{74.2}
+$$
+
+Thus the target is the actual $\mathcal K_{D,2}^{\rm hc}$ of
+Definition64.5: all distinct atomic pairs, both orders of mixed slices,
+all different-cable rectangles and both triangles of every same-cable
+square, with norm weights $1,\delta,\delta^2$, unchanged kinetic
+coefficients, all port and ground matching, zero same-cable collision
+traces and the shared-port zero atomic collision endpoint conditions.
+There is no rectangle-corner point-trace assumption. Both pair laws
+retain their entire original source functions and the same one-body field:
+
+$$
+ U^\diamond_{D,2}(x,y)=-g(\phi_A(x)+\phi_A(y))
+ -\nu\mathbf1_{x=p,y=q\in D,\ p\ne q}G_D^\diamond(p,q),
+ \qquad \diamond\in\{\mathrm c,\mathrm k\}.
+\tag{74.3}
+$$
+
+Here $\phi(p)=2^{-|p|}$ and $\phi_A$ is zero on open cables; the pair
+term is zero off distinct atomic pairs. In particular, on the original
+five-port witness $(o,L,R,LL,LR)$ all ten entries remain
+
+$$
+\begin{array}{c|cccccccccc}
+\{p,q\}&oL&oR&oLL&oLR&LR&L\,LL&L\,LR&R\,LL&R\,LR&LL\,LR\\ \hline
+G^{\rm c}&1/2&1/2&1/4&1/4&1/4&3/8&3/8&1/8&1/8&3/16\\
+G_D^{\rm k}&9/26&7/26&3/26&3/26&3/26&5/26&5/26&1/26&1/26&5/78
+\end{array}
+$$
+
+This table records Definition64.1's witness; for general $D$ the complete
+original laws, rather than a selected table or a fitted coefficient,
+are the comparators. The physical multipliers introduced next are
+additional model hypotheses and do not supply (74.3) or a native force.
+
+**Definition 74.2 (the two interaction models and Dirichlet exclusion).**
+In the soft scattering model let $h_\varepsilon\ge0$ satisfy
+$h_\varepsilon=o(\varepsilon)$. Let
+$v_\varepsilon:\mathbb R^s\to[0,\infty)$ be radial, measurable,
+supported in $\{|r|\le h_\varepsilon\}$ and bounded for each individual
+$\varepsilon$; its bound may grow without restriction. Let
+$W_\varepsilon(x,y)$ be real, exchange symmetric and
+$\|W_\varepsilon\|_\infty\le M$. The physical operator
+$\mathsf H_\varepsilon$ is represented by exactly
+
+$$
+q_\varepsilon[U]=q_{0,\varepsilon}[U]
+ +\int_{\Omega^2}(v_\varepsilon(x-y)+W_\varepsilon(x,y))|U|^2,
+ \qquad U\in\mathcal Q_{\rm mix,\varepsilon}.
+\tag{74.4}
+$$
+
+There is no additional form restriction. For the separate support-range
+model take any $R_\varepsilon\to0$ and any nonnegative measurable
+exchange-symmetric $V_\varepsilon(x,y)$ supported in
+$|x-y|\le R_\varepsilon$. Its form is (74.4) with $v_\varepsilon(x-y)$
+replaced by $V_\varepsilon$, on the natural sum domain
+
+$$
+\mathcal Q_{V,\varepsilon}
+ =\left\{U\in\mathcal Q_{\rm mix,\varepsilon}:
+                    \int V_\varepsilon|U|^2<\infty\right\}.
+\tag{74.5}
+$$
+
+The stipulated model requires this natural sum form to be densely
+defined on $\mathcal P_\varepsilon$. Its closedness follows by taking
+limits in both the mixed $H^1$ form norm and the closed multiplication
+norm $\|\sqrt{V_\varepsilon}U\|_2$. No other form restriction is
+permitted. In particular there is no radiality, height bound or
+$R_\varepsilon=o(\varepsilon)$ hypothesis in this model. Dense definition
+is a stated domain requirement, not an inference from measurability
+alone. Bounded $W_\varepsilon$ leaves both form domains unchanged.
+Both represented operators are self-adjoint and bounded below by $-M$.
+For either soft model define the discrepancy
+
+$$
+\Delta_{\varepsilon,C}
+ =\| (\mathsf H_\varepsilon-i)^{-1}-K_{\varepsilon,C}\|
+                      _{\mathcal B(\mathcal P_\varepsilon)}.
+\tag{74.6}
+$$
+
+An ideal hard ball of radius $r>0$ has a different Hilbert carrier. Put
+
+$$
+\begin{aligned}
+ G_{\varepsilon,r}&=\{(x,y)\in\Omega^2:|x-y|>r\},
+ &\mathcal P_{\varepsilon,r}&=L^2_{\rm sym}(G_{\varepsilon,r}),\\
+ \iota_r&:\mathcal P_{\varepsilon,r}\longrightarrow\mathcal P_\varepsilon,
+ &\iota_r U&=\text{zero extension},\\
+ \mathcal Q_{\varepsilon,r}^{\rm D}
+ &=\{U\in\mathcal P_{\varepsilon,r}:
+                     \iota_rU\in\mathcal Q_{\rm mix,\varepsilon}\}.
+\end{aligned}
+\tag{74.7}
+$$
+
+The hard-ball form is $q_{0,\varepsilon}[\iota_rU]
++\int_{G_{\varepsilon,r}}W_\varepsilon|U|^2$ on this domain.
+This is the declared Dirichlet exclusion: the zero extension is $H^1$
+across the inner wall, so its inner trace is zero wherever that wall has
+a trace chart. The original exterior walls retain the mixed-ground form.
+The domain is closed, since its zero extensions form the closed subspace
+$\{U\in\mathcal Q_{\rm mix,\varepsilon}:U=0\text{ a.e. on }|x-y|\le r\}$.
+It is dense in the allowed carrier: smooth functions compactly supported
+in the open set $G_{\varepsilon,r}$ are $L^2$-dense, their zero extensions
+belong to the domain, and exchange averaging proves the symmetric
+assertion. This specifies a closed Dirichlet form without assuming an
+identification with another boundary-core closure. Denote its
+self-adjoint operator by $\mathsf H_{\varepsilon,r}^{\rm D}\ge-M$.
+The two hard-ball discrepancies are
+
+$$
+\begin{aligned}
+ \Delta^0_{\varepsilon,C}(r)
+ &=\|\iota_r(\mathsf H_{\varepsilon,r}^{\rm D}-i)^{-1}\iota_r^*
+                                 -K_{\varepsilon,C}\|_{\mathcal B(\mathcal P_\varepsilon)},\\
+ \Delta^{\rm a}_{\varepsilon,C}(r)
+ &=\|(\mathsf H_{\varepsilon,r}^{\rm D}-i)^{-1}
+                    -\iota_r^*K_{\varepsilon,C}\iota_r\|
+                                  _{\mathcal B(\mathcal P_{\varepsilon,r})}.
+\end{aligned}
+\tag{74.8}
+$$
+
+The first physical term is a zero-extended resolvent, not the resolvent
+of a densely defined self-adjoint operator on the full product.
+The allowed-carrier comparator is exactly the compression in (74.8).
+Although $\iota_r$ is an isometry, the restricted target lift
+$\iota_r^*J_{\varepsilon,2}E$ is only a contraction and is not assumed
+isometric.
+
+Zero support radius means a zero multiplier almost everywhere. At zero
+radius use the correlation $\chi=1$ and strength $S=0$; the hard model
+has Chapter73's zero-radius carrier and mixed form. The assertions below
+include these cases with zero overlap loss and zero range quotient.
+
+**Lemma 74.3 (the form estimate at the specified nonreal parameter).**
+Let $H\ge-M$ be self-adjoint on a Hilbert space, with closed form $q$.
+If $\|z\|\le1$ and $u$ is in its form domain, then
+
+$$
+ \|(H-i)^{-1}z\|
+ \ge\frac{|\langle z,u\rangle|^2}
+ {\sqrt{M^2+1}\,[q[u]+(M+1)\|u\|^2]}.
+\tag{74.9}
+$$
+
+The quotient is taken only for $u\ne0$; a zero lower bound is automatic.
+Indeed put $T=H+M+1\ge1$. For $\lambda\ge-M$,
+
+$$
+ \frac{\sqrt{\lambda^2+1}}{\lambda+M+1}\le\sqrt{M^2+1}.
+$$
+
+Writing $t=\lambda+M\ge0$, the difference between the squares of the
+right and left denominators after cross multiplication is
+$M^2t^2+2(M^2+M+1)t\ge0$. Spectral calculus and form Cauchy--Schwarz give
+
+$$
+\begin{aligned}
+ \langle z,T^{-1}z\rangle
+ &\le\|z\|\,\|T^{-1}z\|
+ \le\sqrt{M^2+1}\,\|(H-i)^{-1}z\|,\\
+ |\langle z,u\rangle|^2
+ &\le\langle z,T^{-1}z\rangle\,\|T^{1/2}u\|^2.
+\end{aligned}
+$$
+
+Their combination proves (74.9). In particular, if a comparison
+operator annihilates $z$, (74.9) is a lower bound for its full operator
+norm discrepancy from the physical resolvent. $\square$
+
+**Lemma 74.4 (scattering normalization and a local correlation).**
+For $h>0$ and radial nonnegative bounded $v$ supported in the radius-$h$ ball,
+define, with the physical $\beta$ fixed,
+
+$$
+ S(v)=\inf_{1-u\in\mathcal D^{1,2}(\mathbb R^s)}
+       \int_{\mathbb R^s}(2\beta|\nabla u|^2+v|u|^2).
+\tag{74.10}
+$$
+
+Here $\mathcal D^{1,2}$ is the completion of compactly supported smooth
+functions in the gradient norm, with its Sobolev
+$L^{2s/(s-2)}$ representative. For an ideal hard ball impose $u=0$
+a.e. on $B_h$ and omit the potential term outside that constraint.
+There is a minimizing radial $u_0$, $0\le u_0\le1$, and a number
+$0\le\alpha\le h^{s-2}$ such that
+
+$$
+ u_0(r)=1-\frac{\alpha}{r^{s-2}}\quad(r\ge h),\qquad
+ S=2\beta(s-2)|\mathbb S^{s-1}|\alpha.
+\tag{74.11}
+$$
+
+For $L=2h$ the correlation
+
+$$
+ \chi_h(r)=
+ \begin{cases}u_0(r)/u_0(L),&r<L,\\1,&r\ge L\end{cases}
+ \quad\text{satisfies}\quad
+ 0\le\chi_h\le1,\qquad
+ \int(2\beta|\nabla\chi_h|^2+v\chi_h^2)
+       =\frac{S}{1-\alpha/L^{s-2}}\le2S.
+\tag{74.12}
+$$
+
+For the hard ball $\chi_h=0$ on $B_h$, and (74.12) holds with just
+its gradient integral. Its exact strength is
+
+$$
+ S_{\rm hard}(h)=2\beta(s-2)|\mathbb S^{s-1}|h^{s-2}.
+\tag{74.13}
+$$
+
+**Proof.** Write $w=1-u$. The gradient term is coercive on
+$\mathcal D^{1,2}$; the Sobolev inequality makes restriction to $B_h$
+a bounded map into $L^2(B_h)$. Thus the bounded potential term is weakly
+lower semicontinuous there. The direct method gives a minimizer; strict
+convexity of the gradient norm gives uniqueness. Taking real parts and
+truncating $u$ to $[0,1]$ decreases the energy and preserves the affine
+space. Rotational invariance and uniqueness give radiality. The weak
+Euler equation and its radial version are
+
+$$
+ -2\beta\Delta u_0+vu_0=0,\qquad
+ (r^{s-1}u_0')'=\frac1{2\beta}r^{s-1}vu_0\ge0.
+\tag{74.14}
+$$
+
+Finite gradient energy excludes a nonzero flux singularity at zero;
+hence $r^{s-1}u_0'$ starts at zero and $u_0$ is increasing. Outside
+$B_h$ it is radial harmonic. Membership of $1-u_0$ in the Sobolev
+space fixes its constant at infinity to one, giving the first formula
+of (74.11). Nonnegativity at $h$ and $u_0\le1$ give the bounds on
+$\alpha$. Bounded $v$ also gives $u_0'(r)=O(r)$ near zero from (74.14),
+so the boundary term there vanishes. Multiplying (74.14) by $u_0$
+and integrating to any $L>h$ gives
+
+$$
+ \int_{B_L}(2\beta|\nabla u_0|^2+vu_0^2)
+ =2\beta|\mathbb S^{s-1}|L^{s-1}u_0(L)u_0'(L)
+ =2\beta(s-2)|\mathbb S^{s-1}|\alpha
+                          (1-\alpha/L^{s-2}).
+\tag{74.15}
+$$
+
+The exterior gradient energy is
+$2\beta(s-2)|\mathbb S^{s-1}|\alpha^2/L^{s-2}$.
+Adding it proves (74.11). Dividing (74.15) by $u_0(L)^2$ proves
+(74.12), since $1-\alpha/(2h)^{s-2}\ge1-2^{2-s}\ge1/2$.
+The piecewise correlation is continuous at $L$ and Lipschitz for each
+fixed $h,v$, as follows from (74.14) and the explicit exterior formula.
+
+For the hard ball the affine constraint $u=0$ on $B_h$ is nonempty
+and closed in the homogeneous Sobolev space, by its local $L^2$
+embedding. The same direct method and strict convexity give a unique
+minimizer. Rotation invariance makes it radial, and exterior variations
+make it harmonic for $r>h$. Its full local $H^1$ representative, zero
+inside the ball, has zero exterior trace at $h$. The Sobolev condition
+at infinity fixes the other constant. Hence it is zero for $r\le h$
+and $1-(h/r)^{s-2}$ for $r>h$. This function belongs to the stated
+affine space. Radial integration gives (74.13), and (74.15) has zero
+inner boundary term because $u_0(h)=0$. This proves the hard version
+of (74.12).
+The same hard function is an admissible test in (74.10), so also
+$S(v)\le S_{\rm hard}(h)$. $\square$
+
+**Lemma 74.5 (one physical port witness and its allowed restriction).**
+Fix any actual port $p$ and put
+
+$$
+ k=d_p,\quad N=1+\frac{13}{35}\delta k,\quad
+ A_p=(2M+1)N^2+\frac{24}{5}akN,\quad
+ c_\varepsilon=\sqrt\delta\,\varepsilon^{-(s-1)/2}.
+\tag{74.16}
+$$
+
+Use the function $f$ of the proof of Theorem73.3: its atomic value at
+$p$ is one, all other atomic values are zero, and on every incident
+cable, in distance $t$ from $p$, it is
+$b(t)=1-3t^2+2t^3$; it vanishes on other cables. Set
+$F_\varepsilon=J_\varepsilon f$ and
+$G_\varepsilon(x,y)=F_\varepsilon(x)F_\varepsilon(y)$. Then
+
+$$
+\begin{aligned}
+ 0\le F_\varepsilon\le c_\varepsilon,&\qquad
+ \|F_\varepsilon\|_2^2=N,\qquad
+ \beta\|\nabla F_\varepsilon\|_2^2=\frac65ak,\\
+ \|G_\varepsilon\|_2^2=N^2,&\qquad
+ q_{0,\varepsilon}[G_\varepsilon]=\frac{12}{5}akN.
+\end{aligned}
+\tag{74.17}
+$$
+
+Let $Z_p$ be the actual source chamber, so
+$|Z_p|=\varepsilon^{s-1}/\delta=c_\varepsilon^{-2}$, and let
+
+$$
+ z_\varepsilon=J_{\varepsilon,2}e_{pp}
+       =c_\varepsilon^2\mathbf1_{Z_p\times Z_p},\qquad
+ \|z_\varepsilon\|=1,
+ \qquad K_{\varepsilon,C}z_\varepsilon=0.
+\tag{74.18}
+$$
+
+For any $0\le\chi\le1$ equal to one for $|x-y|\ge2r$, the product
+$U=G_\varepsilon\chi(x-y)$ satisfies
+
+$$
+ \langle z_\varepsilon,U\rangle
+ \ge\left[1-\frac{2^s\omega_s\delta r^s}
+                         {\varepsilon^{s-1}}\right]_+,
+ \qquad \|U\|^2\le N^2,
+\tag{74.19}
+$$
+
+provided it is the nonnegative product under consideration. Here
+$\omega_s=|B_1\subset\mathbb R^s|$ and $[t]_+=\max\{t,0\}$.
+If $\chi=0$ on $B_r$ and the product is in
+$\mathcal Q_{\rm mix,\varepsilon}$, its allowed restriction lies in
+$\mathcal Q_{\varepsilon,r}^{\rm D}$. Put
+$z_{\varepsilon,r}=\iota_r^*z_\varepsilon$. Then
+
+$$
+ \|z_{\varepsilon,r}\|\le1,\qquad
+ (\iota_r^*K_{\varepsilon,C}\iota_r)z_{\varepsilon,r}=0,\qquad
+ \langle z_{\varepsilon,r},\iota_r^*U\rangle
+                       =\langle z_\varepsilon,U\rangle.
+\tag{74.20}
+$$
+
+**Proof.** Direct gluing gives $F_\varepsilon\in H^1(\Omega)$:
+its constant chamber and longitudinal cylinder traces match, and it
+vanishes on all ground half-chambers and grounded cuts. The integrals
+$\int_0^1 b^2=13/35$ and $\int_0^1|b'|^2=6/5$, with the actual
+cross-sectional measure $\varepsilon^{s-1}$, prove (74.17).
+The tensor product is symmetric and has both grounded traces zero.
+No operator-domain regularity of the physical lift is needed.
+Equation (73.6) gives (74.18), since $E^*e_{pp}=0$.
+On $Z_p\times Z_p$ the product $G_\varepsilon$ equals
+$c_\varepsilon^2$. For each $x\in Z_p$, at most
+$\omega_s(2r)^s$ of the $y$-volume can lose any overlap. Thus the
+loss is at most
+$c_\varepsilon^4|Z_p|\omega_s(2r)^s
+=2^s\omega_s\delta r^s/\varepsilon^{s-1}$. The integrand is
+nonnegative, proving (74.19).
+
+For the hard carrier the asserted membership is exactly the definition
+(74.7). Moreover $\iota_rz_{\varepsilon,r}$ is still supported
+entirely in $Z_p\times Z_p$. By (73.6) its $J_{\varepsilon,2}^*$
+image is a scalar multiple of $e_{pp}$, even though the restriction is
+not constant on that chamber product. Consequently
+$K_{\varepsilon,C}\iota_rz_{\varepsilon,r}=0$.
+This proves (74.20) for the actual compressed comparator, without an
+isometry claim for the restricted lift. $\square$
+
+**Theorem 74.6 (source-normalized scattering-strength obstruction).**
+In the soft scattering model define $S_\varepsilon=S(v_\varepsilon)$
+by (74.10) and put
+
+$$
+ \Gamma_\varepsilon=\frac{S_\varepsilon}{\varepsilon^{s-1}},
+ \qquad b_\varepsilon(r)=
+       \left[1-\frac{2^s\omega_s\delta r^s}
+                          {\varepsilon^{s-1}}\right]_+.
+\tag{74.21}
+$$
+
+For every actual port $p$, every comparator $C$ in (74.2), every
+admissible $v_\varepsilon,W_\varepsilon$, and every sufficiently small
+$\varepsilon$ for which the fixed geometry is defined,
+
+$$
+ \Delta_{\varepsilon,C}
+ \ge\frac{b_\varepsilon(h_\varepsilon)^2}
+ {\sqrt{M^2+1}\,[A_p+4\delta N\Gamma_\varepsilon]}.
+\tag{74.22}
+$$
+
+The identical bound holds for each of
+$\Delta^0_{\varepsilon,C}(h_\varepsilon)$ and
+$\Delta^{\rm a}_{\varepsilon,C}(h_\varepsilon)$ for an ideal hard ball,
+using $S_\varepsilon=S_{\rm hard}(h_\varepsilon)$.
+
+**Proof.** Take the actual physical function
+$U_\varepsilon=G_\varepsilon\chi_{h_\varepsilon}(x-y)$ from
+Lemma74.4. Its correlation is Lipschitz for each $\varepsilon$;
+multiplication and the matched ground traces put it in precisely the
+soft form domain. The elementary derivative inequality
+$|\xi+\eta|^2\le2|\xi|^2+2|\eta|^2$ gives
+
+$$
+\begin{aligned}
+ q_{0,\varepsilon}[G_\varepsilon\chi]
+       +\int v_\varepsilon G_\varepsilon^2\chi^2
+ &\le2q_{0,\varepsilon}[G_\varepsilon]
+       +\int_{\Omega^2}G_\varepsilon^2
+            (4\beta|\nabla\chi(x-y)|^2
+                           +v_\varepsilon(x-y)\chi(x-y)^2)\\
+ &\le\frac{24}{5}akN
+       +2c_\varepsilon^2N
+             \int_{\mathbb R^s}(2\beta|\nabla\chi|^2
+                                      +v_\varepsilon\chi^2)\\
+ &\le\frac{24}{5}akN+4\delta N\Gamma_\varepsilon.
+\end{aligned}
+\tag{74.23}
+$$
+
+In the first line the gradient inside the last integral is the
+relative-variable gradient: the two physical coordinate gradients of
+$\chi(x-y)$ have the same magnitude. For any nonnegative relative
+integrand $e$, the estimate used in the second line is
+
+$$
+ \int_{\Omega^2}F_\varepsilon(x)^2F_\varepsilon(y)^2e(x-y)
+ \le c_\varepsilon^2\|F_\varepsilon\|_2^2
+                                      \int_{\mathbb R^s}e.
+\tag{74.24}
+$$
+
+It follows by fixing $x$, bounding $F_\varepsilon(y)^2$ by
+$c_\varepsilon^2$, and enlarging only that relative integral to
+$\mathbb R^s$. Thus no fixed-domain limit, extension of a Neumann
+state, or trap theorem is implicit in (74.23).
+Since $W_\varepsilon\le M$ and $\|U_\varepsilon\|^2\le N^2$,
+(74.23) implies
+
+$$
+ q_\varepsilon[U_\varepsilon]+(M+1)\|U_\varepsilon\|^2
+                   \le A_p+4\delta N\Gamma_\varepsilon.
+\tag{74.25}
+$$
+
+Apply Lemma74.3 to $z_\varepsilon$ and this trial function, and use
+(74.18)--(74.19). The comparator kills the input, so this proves the
+full norm bound (74.22).
+
+For an ideal hard ball the same function is zero for $|x-y|\le h$,
+and is an $H^1$ zero extension with both grounded traces zero.
+Its allowed restriction therefore belongs to the declared Dirichlet
+form domain (74.7); this proves the required membership directly.
+Use the hard version of (74.12) in (74.23), omitting the potential term.
+On the allowed carrier, Lemma74.3 and (74.20) prove the bound for
+$\Delta^{\rm a}$. On the full carrier, apply the allowed resolvent to
+$\iota_h^*z_\varepsilon$ and extend the output by zero; meanwhile
+$K_{\varepsilon,C}z_\varepsilon=0$ and $\|z_\varepsilon\|=1$.
+The same estimate proves the bound for $\Delta^0$. Both comparisons
+use the actual hard carrier and the same Dirichlet form. $\square$
+
+**Theorem 74.7 (broader support-range obstruction).** In the separate
+range model, with no further condition on $R_\varepsilon\to0$, put
+
+$$
+ \tau_\varepsilon=\frac{R_\varepsilon^{s-2}}{\varepsilon^{s-1}},
+ \qquad B_p=2^{s+2}a\omega_sN.
+\tag{74.26}
+$$
+
+For every $C$ in (74.2) the full soft discrepancy obeys
+
+$$
+ \Delta_{\varepsilon,C}
+ \ge\frac{b_\varepsilon(R_\varepsilon)^2}
+                  {\sqrt{M^2+1}\,[A_p+B_p\tau_\varepsilon]}.
+\tag{74.27}
+$$
+
+The same bound holds for each hard-ball discrepancy in (74.8) at
+$r=R_\varepsilon$. Consequently, along any subsequence on which
+$\tau_\varepsilon\le T<\infty$, each applicable discrepancy satisfies
+
+$$
+ \liminf\Delta
+ \ge\frac1{\sqrt{M^2+1}\,[A_p+2^{s+2}a\omega_sNT]}>0.
+\tag{74.28}
+$$
+
+**Proof.** Use the radial Lipschitz cutoff, without a scattering
+hypothesis on the actual potential,
+
+$$
+ \chi_R(r)=
+ \begin{cases}
+ 0,&|r|\le R,\\
+ (|r|-R)/R,&R<|r|<2R,\\
+ 1,&|r|\ge2R.
+ \end{cases}
+ \qquad
+ \int_{\mathbb R^s}|\nabla\chi_R|^2
+                      \le2^s\omega_sR^{s-2}.
+\tag{74.29}
+$$
+
+The product $U=G_\varepsilon\chi_R(x-y)$ belongs to the mixed form
+domain and $\int V_\varepsilon|U|^2=0$. Hence it belongs to the exact
+natural sum domain (74.5), regardless of the permitted singularity or
+height of $V_\varepsilon$. The same zero extension proves its hard
+Dirichlet membership. The derivative estimate and (74.24) now give
+
+$$
+ q_{0,\varepsilon}[U]
+ \le\frac{24}{5}akN
+        +4\beta c_\varepsilon^2N\int|\nabla\chi_R|^2
+ \le\frac{24}{5}akN+B_p\tau_\varepsilon.
+\tag{74.30}
+$$
+
+Adding the shifted bounded-potential term gives the denominator of
+(74.27). Lemma74.3 with (74.19), and (74.20) in the hard case, proves
+all three assertions about finite $\varepsilon$ exactly as above.
+On the specified subsequence the overlap loss obeys
+
+$$
+ 1-b_\varepsilon(R_\varepsilon)
+ \le2^s\omega_s\delta\,\tau_\varepsilon R_\varepsilon^2
+ \longrightarrow0.
+$$
+
+Using $\tau_\varepsilon\le T$ in the denominator proves (74.28).
+In particular, this step needs only $R_\varepsilon\to0$ and the
+subsequence bound, not $R_\varepsilon=o(\varepsilon)$. $\square$
+
+**Corollary 74.8 (necessary strength, range and finite-error conditions).**
+Within the soft scattering model, convergence of (74.6) to zero for
+even one of the unchanged comparators requires
+$\Gamma_\varepsilon\to\infty$. The same is true for convergence of
+either hard-ball discrepancy at radius $h_\varepsilon=o(\varepsilon)$.
+Indeed
+$h_\varepsilon^s/\varepsilon^{s-1}
+=\varepsilon(h_\varepsilon/\varepsilon)^s\to0$;
+if $\Gamma_\varepsilon$ does not tend to infinity, a bounded
+subsequence in (74.22) gives a strictly positive lower limit.
+Within the broader range model, or its hard-ball version, convergence
+requires $\tau_\varepsilon\to\infty$, by (74.28).
+
+For a finite error tolerance $\eta>0$, each applicable scattering
+comparison satisfying $\Delta\le\eta$ must satisfy
+
+$$
+ \Gamma_\varepsilon\ge\frac1{4\delta N}
+ \left[\frac{b_\varepsilon(h_\varepsilon)^2}
+                         {\sqrt{M^2+1}\,\eta}-A_p\right]_+.
+\tag{74.31}
+$$
+
+Each applicable range comparison satisfying $\Delta\le\eta$ must
+likewise satisfy
+
+$$
+ \tau_\varepsilon\ge\frac1{B_p}
+ \left[\frac{b_\varepsilon(R_\varepsilon)^2}
+                         {\sqrt{M^2+1}\,\eta}-A_p\right]_+.
+\tag{74.32}
+$$
+
+These follow by rearranging the respective positive denominators;
+when the overlap factor is zero they give only the trivial condition.
+They hold separately for every port, without any change of comparator.
+
+In $s=3$, $\alpha$ in (74.11) is the scattering length $\ell$ with
+the relative kinetic normalization $2\beta$. Thus
+
+$$
+ S=8\pi\beta\ell,\qquad
+ \Gamma_\varepsilon=8\pi\beta
+                 \frac{\ell_\varepsilon}{\varepsilon^2},\qquad
+ \frac{\ell_\varepsilon}{\varepsilon^2}\longrightarrow\infty
+                       \quad\hbox{is necessary}.
+\tag{74.33}
+$$
+
+For an ideal hard ball $\ell=h$, and in every fixed $s\ge3$ its
+strength is precisely (74.13). Since $S(v)\le S_{\rm hard}(h)$,
+strength divergence also entails divergence of the corresponding
+normalized support range in the radial model. The converse is not
+implied. These are necessary obstructions; they establish neither a
+sufficient convergence criterion nor a sharp threshold. All assertions
+have fixed $D,\delta,a,s,M$ and fixed geometry. There is no
+source-growth, $\delta\to0$, growing-$M$, or dimension-uniform assertion.
+
+**Proposition 74.9 (growing height and normalized range can have vanishing
+strength).** In $s=3$, for any fixed $\beta>0$, take
+
+$$
+ h_\varepsilon=\varepsilon^{3/2},\qquad
+ v_\varepsilon(r)=\varepsilon^{-1}
+                          \mathbf1_{\{|r|\le h_\varepsilon\}}.
+\tag{74.34}
+$$
+
+The height tends to infinity and
+$h_\varepsilon/\varepsilon^2=\varepsilon^{-1/2}\to\infty$, while
+$h_\varepsilon/\varepsilon=\varepsilon^{1/2}\to0$.
+Nevertheless
+
+$$
+ \ell_\varepsilon
+   =\frac{\varepsilon^{7/2}}{6\beta}(1+O(\varepsilon^2)),
+ \qquad
+ \Gamma_\varepsilon
+   =\frac{4\pi}{3}\varepsilon^{3/2}(1+O(\varepsilon^2))
+       \longrightarrow0.
+\tag{74.35}
+$$
+
+Consequently Theorem74.6 obstructs full resolvent convergence for this
+model for every allowed $W_\varepsilon$, separately for all three
+comparators. The growing range here is the ratio to the
+$\varepsilon^2$ scale; the actual support radius tends to zero.
+
+**Proof.** For a constant barrier of height $H>0$ and radius $h$, let
+$\kappa=\sqrt{H/(2\beta)}$. Solving (74.14) in three dimensions with
+finite value at zero gives the candidate
+
+$$
+ u_0(r)=
+ \begin{cases}
+ \displaystyle\frac{\sinh(\kappa r)}
+                   {\kappa r\cosh(\kappa h)},&0<r\le h,\\[4pt]
+ 1-\ell/r,&r\ge h,
+ \end{cases}
+ \quad u_0(0)=\frac1{\cosh(\kappa h)},\qquad
+ \ell=h-\frac{\tanh(\kappa h)}{\kappa}.
+\tag{74.36}
+$$
+
+The interior solves $u_0''+2u_0'/r=\kappa^2u_0$.
+At $h$ its value is $\tanh(\kappa h)/(\kappa h)=1-\ell/h$
+and its derivative is
+$1/h-\tanh(\kappa h)/(\kappa h^2)=\ell/h^2$.
+Thus value and flux match, the weak equation holds across $h$, and
+$1-u_0\in\mathcal D^{1,2}$. Uniqueness in Lemma74.4 identifies it
+with the variational minimizer, not merely a radial trial estimate.
+For (74.34), $\kappa h=\varepsilon/\sqrt{2\beta}$.
+The Taylor expansion with its analytic remainder,
+$\tanh z=z-z^3/3+O(z^5)$ as $z\to0$, gives
+$\ell=Hh^3/(6\beta)(1+O(Hh^2/\beta))$.
+Substituting $H=\varepsilon^{-1}$ and $h=\varepsilon^{3/2}$,
+and then using (74.33), proves (74.35). This analytical computation
+also agrees with the elementary upper bound
+$S(v)\le\int v=(4\pi/3)\varepsilon^{7/2}$ from the admissible
+constant function $u=1$. No numerical experiment or trap convergence
+theorem is a premise of the network conclusion. $\square$
+
+**Definition 74.10 (primary reuse, exact scope and remaining obligations).**
+Robert Seiringer and Jun Yin,
+[*The Lieb--Liniger Model as a Limit of Dilute Bosons in Three Dimensions*,
+arXiv:0709.4022v1](https://arxiv.org/pdf/0709.4022v1), Section3, PDF
+pp7--9, uses distance-dependent scattering correlations, normalized at a
+finite cutoff, with norm-loss and energy estimates. That local method is
+mature supplier mathematics. Section2, Theorems1--2 and Corollaries1--2,
+PDF pp3--5, and the norm-resolvent paragraph after Corollary2 concern fixed
+particle number and longitudinal scale with separable transverse and
+longitudinal confinement. Their effective coupling is
+$8\pi a_{\rm SY}\|b_{\rm SY}\|_4^4/r_{\rm SY}^2$; the stated limit
+includes infinite coupling while retaining the separation
+$a_{\rm SY}/r_{\rm SY}\to0$. The paper permits hard spheres and discusses
+interval and transverse-boundary variants on PDF p6. These results do
+not supply an interacting massive-port network theorem, either pair
+law of (74.3), or a native operation. No eigenfunction-error formula from
+its equation(2.8) is used here.
+
+The physical geometry, exact chamber volumes, original identifications
+and grounded form are the already supplied72.1--72.10 and73.2--73.3;
+the entire free limit and fixed-thickness coincidence-capacity result
+are not reproved or extended to interactions. Closed-form representation
+is used in the same scope as the Teschl supplier in Definition68.7.
+The Sobolev Dirichlet principle, product differentiation, spectral
+calculus and Cauchy--Schwarz are classical. Lemma74.4 proves the required
+general-$s$ normalization directly. The additional ordinary repo-derived
+results are the source-normalized full-carrier bounds (74.22),
+(74.27)--(74.28), their actual hard-carrier versions, and their necessary
+precision consequences. Scoped overlap with the supplied boundary
+continuations and relation geometry gives no world-priority claim.
+A witness lower-bounds the norm on the entire declared carrier; it does
+not replace that carrier or the literal target by a harmonic,
+atomic-only, occupation-label or test-subclass surrogate. The radial
+scattering-strength scope and the broader nonradial support-range scope
+remain distinct. Neither result asserts a generic fixed-domain
+obstruction or a sufficient interacting realization.
+
+Every obligation of72.13,66.10,67.11,68.7 and Chapter73's final scope
+remains in force. Retain the full source with every literal label,
+bracket, left/right order and distinct occurrence, immutable INITIAL,
+one fixed original cap, source-independent original initialization,
+complete supplied contexts, whole candidates and original guards,
+every acceptance and refusal, original Read, absorbing Stop and every
+actually acquired record. The original actor's arbitrary, unbounded or
+possibly zero $a$, its untagged radius-$7/25$ $b$, destructive actions
+and joint history-dependent errors are distinct from the fixed positive
+commissioned $a$ here. No mathematical potential, chamber identification
+or cutoff acquires a native source service or changes a legal operation.
+Actual graft changes of root, degrees and field values, whole-rho and
+distinct Left/Right operations keep their original correspondence duties.
+The prescribed planar metric and grounding-line problem of72.13 remains
+unresolved, with its exact lengths, clearance and port margins.
+
+All field modes and spectators, unknown particle/field/auxiliary
+correlations, complete norms, common reference and actual clock remain.
+Unknown-state ingress and recovery, original Read/Stop covariance,
+operation-preserving and metric-preserving maps, Hilbert-valued domain
+and dynamic bridges, preparation, harmonic/projection control, retained
+complements and both cross blocks remain independent requirements.
+There is no supplied reset, cloning, independent resampling,
+calibrated-state re-preparation or exact-limit Read. An encoded or
+separate carrier still owes all recovery, read, operation and dynamic
+relations; an abstract Hilbert-space isomorphism or static Green fit
+supplies none of them. The common $\Pi$ of63.13 retains its full-vector
+and spanning, common-zero, whole quadratic-distance/positive-semidefinite
+Gram, at least two independent directions, alternating bilinear
+exact-area/Jacobi, actual orthonormal-probe, finite binary-calibration
+and hidden-kernel-preserving generator hypotheses.
+
+The distinct acquisition contracts remain separate. Section57's
+immutable composition-promised endpoint acquisition retains depth caps,
+common source-independent initialization, actual query/reply histories,
+correct finite stopping on every promised positive and negative source,
+and distinct actual-address fees without an old-source archive. The
+paid positive-root archive/nonadvancing-cut acquisition retains its exact
+port, finite stopping and decoding, protected records after refusal or
+closure, aligned actual generation, trusted markers, no unrecorded
+source change, closed strong ports and actual write/protect/retain/query
+rights. Every reply-affecting retained source influence belongs in its
+service price. The phase-coherent full-tail acquisition retains its
+once-sampled-depth actual Read process and paid stopped transcript.
+Their radii, state counts, update rules and clocks are not transferred
+to this continuum model.
+
+The unresolved spatial realization still owes isotropic local physical
+mediators for both complete common and killed laws with the unchanged
+one-body field, genuine switching, packing, transverse and exterior
+control, leakage and collision control, reference preparation and clock
+calibration. Every construction, acquisition, preparation,
+field/compensation/stiffness installation, control, service, production,
+storage, hold, retention, maintenance, precision and total lifetime
+resource remains to be supplied, together with the original joint error
+guarantees and actual finite execution certificates. In particular growing barrier height,
+shrinking range, increasing scattering strength and form admissibility
+are mathematical parameters, not acquired controls or apparatus prices.
+The fixed-$s\ge3$ obstructions select no unique dimension and prove no
+global physical impossibility. They supply no positive interacting
+realization, physical validation, fresh Lean/kernel result, independent
+prior or model-diversity certificate, or completion of the sustained
+why-three/source/native/field/acquisition/resource objective.
+
+## 74.99 追加锚（本行以下为增补区）
