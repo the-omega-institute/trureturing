@@ -135,7 +135,7 @@ private theorem relabel_response {n : Nat} (M : Observer E) (r : E ≃ Fin n)
   simp only [barStep, relabel, Equiv.symm_apply_apply]
   cases M.action x <;> rfl
 
-private theorem relabel_admissible {n : Nat} (N : Nat) (M : Observer E)
+theorem relabel_admissible {n : Nat} (N : Nat) (M : Observer E)
     (r : E ≃ Fin n) (admissible : Admissible N M) : Admissible N (relabel M r) := by
   refine ⟨admissible.budget_pos, ?_, ?_, ?_⟩
   · intro U allowed
@@ -155,7 +155,7 @@ private theorem relabel_admissible {n : Nat} (N : Nat) (M : Observer E)
     rw [actions h, actions h']
     exact admissible.coarse same
 
-private theorem relabel_fee {n : Nat} (M : Observer E) (r : E ≃ Fin n)
+theorem relabel_fee {n : Nat} (M : Observer E) (r : E ≃ Fin n)
     (tau : Address → ℝ) (U : Source) : Fee (relabel M r) tau U = Fee M tau U := by
   classical
   let old : RawHistory → Prop := fun t => ∃ f b, Run M U M.e0 t f b
