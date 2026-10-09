@@ -1,0 +1,17 @@
+fingerprints:
+  raw_sha256: sha256:f3473002fd85d0ab951ac8afbe06b91a8a6270776319215f93eb8abf656ea698
+  normalized_sha256: sha256:f3473002fd85d0ab951ac8afbe06b91a8a6270776319215f93eb8abf656ea698
+cas_ref: sha256:f3473002fd85d0ab951ac8afbe06b91a8a6270776319215f93eb8abf656ea698
+coverage_gids:
+  - gid: D5/S3/Quantum/Recovery/MatrixUnitDecoder.decoder_kraus_gram
+    target_statement_id: sha256:cf13c80146277175938f21c3687e729269628b8bdf67b1ab8e2782757823e900
+  - gid: D5/S3/Quantum/Recovery/MatrixUnitDecoder.decoder_recovers_commutant_weight
+    target_statement_id: sha256:0798a65578217dbad60896d1ba3200528f8f0c343557fd91da473e0ffacfde26
+  - gid: D5/S3/Quantum/Recovery/MatrixUnitDecoder.decoder_trace_pairing
+    target_statement_id: sha256:013e25dddb71c86709373e964173413bc4c2b4c5c04a7e6575da99aaa5494097
+  - gid: D5/S3/Quantum/Recovery/MatrixUnitDecoder.matrix_unit_decoder_channel
+    target_statement_id: sha256:aa56d1e1c14dbe9bb2388f28e9cec38b1b8839a824d26d2c75977539d590714b
+  - gid: D5/S3/Quantum/Recovery/MatrixUnitDecoder.represented_matrix_mul
+    target_statement_id: sha256:2ea2a8fc7dffb104f4aa34f28c70343f84d380f02b4598cc0e25c7e0cae1f42a
+receipts:
+  unresolved_subitems: []
