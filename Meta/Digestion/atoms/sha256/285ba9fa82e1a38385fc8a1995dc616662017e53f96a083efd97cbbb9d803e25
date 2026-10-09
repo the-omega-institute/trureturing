@@ -1,0 +1,57 @@
+## 本轮最重要的隐藏关系
+
+这次不是再增加一种基础元素，而是把此前的几种元素接进同一套计算：
+
+```math
+\boxed{
+\text{候选响应点 }r
+\longrightarrow
+\text{关系曲线 }(r,r^2)
+\longrightarrow
+\text{三来源面积}
+\longrightarrow
+\text{Gram 体积}
+\longrightarrow
+\text{反演灵敏度}.
+}
+```
+
+其中三项核心结果是：
+
+```math
+\boxed{
+\det H_2
+=
+4\sum_{i<j<k}
+\nu_i\nu_j\nu_k\,\mathcal A_{ijk}^{\,2};
+}
+```
+
+```math
+\boxed{
+\frac{625}{72}\det H_2
+\le
+-\det\frac{\partial(m_1,m_2)}{\partial(A,B)}
+\le
+\frac{81}{8}\det H_2;
+}
+```
+
+```math
+\boxed{
+\mathcal A_n
+=
+\frac1{
+2(F_{n+3}F_{n+4}F_{n+5})^2
+}.
+}
+```
+
+第一式说明内部候选如何共同贡献观察面积；第二式说明这些面积怎样控制证据到读数的反演；第三式说明 FIB 递归如何使这种分离迅速变小。
+
+> 以下检查数量、精度及“未重跑仓库 Lean，也未修改仓库”的自述均引自原始供稿，属于供稿者报告；脚本与结果不可取得，本稿未复现这些检查。
+
+本次完成了40组连续深度面积与实际后验构造、60组加权三角 Gram 恒等式、60组三来源概率反演、50组金字塔四面体协方差公式，以及有限矩反例和原生长度公式的有理数精确核验。另用100位精度检查了80组对数雅可比公式和40组完整长度律距离界；涉及对数的检查是高精度数值检查，不是符号证明。**本轮未重跑仓库 Lean，也未修改仓库。**
+
+复核材料：fib_moment_triangle_inverse_checks.py[验证脚本](sandbox:/mnt/data/fib_moment_triangle_inverse_checks.py) · fib_moment_triangle_inverse_checks.json[验证结果](sandbox:/mnt/data/fib_moment_triangle_inverse_checks.json)。
+
