@@ -1,0 +1,50 @@
+### theorem 4.1: 后验独立性的四角条件
+
+**Claim status: open.** 对严格正的五模式概率和似然，令 $q_o=\sum_sp_s\ell_o(s)$。则
+
+$$
+\boxed{
+\Delta^{,o}=\frac{p_0p_{13}\ell_0\ell_{13}-p_1p_3\ell_1\ell_3}{q_o^2}.
+}
+$$
+
+若原来源满足 $\Delta=0$，后验仍满足 $\Delta^{,o}=0$ 当且仅当
+
+$$
+\boxed{\ell_0\ell_{13}=\ell_1\ell_3.}
+$$
+
+**证明。** 将 $p_s^{,o}=p_s\ell_o(s)/q_o$ 代入四格行列式。证毕。
+
+写成对数对角比
+
+$$
+\Theta(p)=\log\frac{p_0p_{13}}{p_1p_3}
+$$
+
+则
+
+$$
+\boxed{\Theta(p^{\,o})-\Theta(p)=\log\frac{\ell_0\ell_{13}}{\ell_1\ell_3}.}
+$$
+
+一个没有显式 $xy$ 项的读口也能产生后验联合项。五模式均匀时，取结果一似然
+
+$$
+\ell(s)=\frac{1+x(s)+y(s)}3.
+$$
+
+它只含 $1,x,y$，但 $q=3/5$，后验为
+
+$$
+p^{,1}=\left(\frac19,\frac29,\frac19,\frac29,\frac39\right),
+$$
+
+从而
+
+$$
+\Delta^{,1}=\frac1{9}\frac3{9}-\frac2{9}\frac2{9}=-\frac1{81}.
+$$
+
+这是一种条件化倾斜，不是新增物理作用力。
+

@@ -1,0 +1,26 @@
+### theorem 8.1: 配置预测移动的三角下界
+
+**Claim status: open.** 设返回前后的完整未来律为 $T_h,T_{hw}$，实际配置解码律为 $D_z,D_{z'}$。令
+
+$$
+\mathcal V_h=\mathbb E[\operatorname{TV}(D_z,D_{z'})\mid h,w].
+$$
+
+则
+
+$$
+\boxed{\mathcal V_h\ge
+\operatorname{TV}(T_h,T_{hw})-e_{\mathrm{conf}}(h)-e_{\mathrm{conf}}(hw).}
+$$
+
+**证明。** 对每个实际配置使用三角不等式，再按同一实际返回的联合配置律求平均。项目原生条件独立关系保证返回词不会偷偷重加权返回前私人配置。证毕。
+
+因为“下一次读取为 $\alpha$”是完整未来律中的事件，$\operatorname{TV}(T_h,T_{hw})\ge m_{hw}-m_h$。项目原生风险卷的更强必要不等式为
+
+$$
+\gamma\le\frac{1183}{121}e+\frac6{11}\mathcal V,
+\qquad\gamma>0,
+$$
+
+其中 $e$ 是两项配置风险超出各自基准的较大值；本卷不重证它，也不为 $\gamma$ 声称数值化。
+
